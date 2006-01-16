@@ -24,7 +24,6 @@ dom/xpathtests.cpp
 extension/api.cpp
 extension/dxf2svg
 extension/internal/gnome.cpp
-extension/script/js
 extension/script/bindtest.cpp
 extension/script/cpptest.cpp
 extension/plugin
