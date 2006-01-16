@@ -1,0 +1,49 @@
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+#ifndef WIN32
+#define WIN32
+#endif
+
+/**
+ * This is for require-config.h, whose
+ * purpose I cannot fathom.
+ */
+#define PACKAGE_TARNAME
+
+/*######################################
+#### RESOURCE DIRECTORIES
+######################################*/
+
+#define INKSCAPE_DATADIR       "."
+#define PACKAGE_LOCALE_DIR     "locale"
+
+
+/*######################################
+#### OTHER DEFINITIONS
+######################################*/
+
+#define GETTEXT_PACKAGE "inkscape"
+
+#define PACKAGE_STRING                VERSION
+
+#define HAVE_STRING_H                 1
+#define HAVE_MALLOC_H                 1
+#define HAVE_STDLIB_H                 1
+#define HAVE_SYS_STAT_H               1
+
+#define ENABLE_NLS                    1
+#define HAVE_BIND_TEXTDOMAIN_CODESET  1
+
+/* keep binreloc off */
+#define BR_PTHREADS 0
+#undef ENABLE_BINRELOC
+
+#define PANGO_ENABLE_ENGINE           1
+
+#define HAVE_GTK_WINDOW_FULLSCREEN    1
+
+#define g_ascii_strtod fixed_g_ascii_strtod
+
+
+#endif /* _CONFIG_H_ */

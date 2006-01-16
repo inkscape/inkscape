@@ -1,0 +1,12 @@
+<inkscape-extension>
+    <_name>Embed Images</_name>
+    <id>org.ekips.filter.embedimage</id>
+	<dependency type="executable" location="extensions">embedimage.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+    <effect>
+		<object-type>all</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">embedimage.py</command>
+    </script>
+</inkscape-extension>

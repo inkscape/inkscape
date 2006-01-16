@@ -1,0 +1,16 @@
+<inkscape-extension>
+    <_name>AI Output</_name>
+    <id>org.inkscape.output.ai</id>
+    <dependency type="executable" location="path">gs</dependency>
+    <dependency type="extension">org.inkscape.output.ps</dependency>
+    <output>
+        <extension>.ai</extension>
+        <mimetype>image/x-adobe-illustrator</mimetype>
+        <_filetypename>Adobe Illustrator (*.ai)</_filetypename>
+        <_filetypetooltip>Write Adobe Illustrator</_filetypetooltip>
+    </output>
+    <script>
+        <command reldir="path">gs -q -dNODISPLAY -dSAFER ps2ai.ps</command>
+        <helper_extension>org.inkscape.output.ps</helper_extension>
+    </script>
+</inkscape-extension>

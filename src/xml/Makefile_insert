@@ -1,0 +1,86 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+#
+# Sodipodi xml wrapper
+# Author: Lauris Kaplinski <lauris@ariman.ee>
+#
+# Implements xml backbone of inkscape document. In future will be
+# repaced with (wrapper of?) DOM
+#
+
+xml/all: xml/libspxml.a
+
+xml/clean:
+	rm -f xml/libspxml.a xml/libtest-xml.a $(xml_libspxml_a_OBJECTS) $(xml_libtest_xml_a_OBJECTS)
+
+xml_libspxml_a_SOURCES =	\
+	algorithms/find-if-before.h	\
+	xml/comment-node.h \
+	xml/composite-node-observer.cpp xml/composite-node-observer.h \
+	xml/element-node.h \
+	xml/node-observer.h \
+	xml/quote.cpp	\
+	xml/quote.h	\
+	xml/repr-css.cpp	\
+	xml/log-builder.cpp	\
+	xml/log-builder.h	\
+	xml/node-fns.cpp	\
+	xml/node-fns.h	\
+	xml/repr-io.cpp	\
+	xml/repr-sorting.cpp    \
+	xml/repr-sorting.h      \
+	xml/repr-util.cpp	\
+	xml/repr.cpp	\
+	xml/repr.h	\
+	xml/session.h \
+	xml/simple-document.h \
+	xml/simple-document.cpp \
+	xml/simple-node.h \
+	xml/simple-node.cpp \
+	xml/simple-session.cpp \
+	xml/simple-session.h \
+	xml/node.h \
+	xml/croco-node-iface.cpp	\
+	xml/croco-node-iface.h	\
+	xml/attribute-record.h \
+	xml/sp-css-attr.h \
+	xml/event.cpp xml/event.h xml/event-fns.h	\
+	xml/document.h \
+	xml/node-event-vector.h \
+	xml/node-iterators.h	\
+	xml/sp-css-attr.h \
+	xml/text-node.h \
+	xml/transaction-logger.h \
+	xml/invalid-operation-exception.h
+
+xml/test-xml-main.cpp: xml/test-xml.cpp $(xml_test_xml_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --error-printer -root -o xml/test-xml-main.cpp $(xml_test_xml_includes)
+
+xml/test-xml.cpp: $(xml_test_xml_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o xml/test-xml.cpp $(xml_test_xml_includes)
+
+xml_test_xml_includes = \
+	$(srcdir)/xml/repr-action-test.h	\
+	$(srcdir)/xml/quote-test.h
+
+xml_libtest_xml_a_SOURCES =	\
+	xml/test-xml.cpp \
+	$(xml_test_xml_includes)
+
+xml_test_xml_SOURCES =	\
+	xml/test-xml-main.cpp \
+	$(xml_test_xml_includes)
+
+xml_test_xml_LDADD =	\
+	xml/libtest-xml.a	\
+	xml/libspxml.a	\
+	util/libinkutil.a	\
+	libinkpost.a	\
+	$(INKSCAPE_LIBS)
+
+
+xml_repr_action_test_SOURCES = xml/repr-action-test.cpp
+xml_repr_action_test_LDADD = xml/libspxml.a svg/libspsvg.a util/libinkutil.a libinkpost.a debug/libinkdebug.a $(INKSCAPE_LIBS)
+
+xml_quote_test_SOURCES = xml/quote-test.cpp
+xml_quote_test_LDADD = $(INKSCAPE_LIBS)

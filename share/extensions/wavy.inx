@@ -1,0 +1,17 @@
+<inkscape-extension>
+    <_name>Function Plotter</_name>
+    <id>org.ekips.filter.wavy</id>
+	<dependency type="executable" location="extensions">wavy.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="periods" type="float" min="0.0" max="1000.0" _gui-text="Periods (2*Pi each)">4.0</param>
+	<param name="samples" type="int" min="1" max="1000" _gui-text="Nodes per period">8</param>
+	<param name="fofx" type="string" _gui-text="Function">sin(x)</param>
+	<param name="fponum" type="boolean" _gui-text="Calculate first derivative numerically">true</param>
+	<param name="fpofx" type="string" _gui-text="First derivative">cos(x)</param>
+    <effect>
+		<object-type>rect</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">wavy.py</command>
+    </script>
+</inkscape-extension>

@@ -1,0 +1,5 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+utest/all:
+
+utest/clean:

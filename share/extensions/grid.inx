@@ -1,0 +1,16 @@
+<inkscape-extension>
+    <_name>Grid</_name>
+    <id>org.inkscape.effect.grid</id>
+    <dependency type="plugin" location="plugins">grid</dependency>
+    <param name="lineWidth" type="float">1.0</param>
+    <param name="xspacing" type="float">10.0</param>
+    <param name="yspacing" type="float">10.0</param>
+    <param name="xoffset" type="float">5.0</param>
+    <param name="yoffset" type="float">5.0</param>
+    <effect>
+        <object-type>all</object-type>
+    </effect>
+    <plugin>
+        <name>grid</name>
+    </plugin>
+</inkscape-extension>

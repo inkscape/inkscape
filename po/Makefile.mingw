@@ -1,0 +1,23 @@
+include ../Makefile.mingw.common
+
+INKLANG = am az be ca cs da de el es es_MX et fr ga gl hu it ja mk \
+nb nl nn pa pl pt pt_BR ru sk sl sr sr@Latn sv tr uk zh_CN
+
+LOBJ := $(foreach a, $(INKLANG),$(a).mo )
+
+all: $(LOBJ)
+
+clean:
+	$(RM) *.mo
+
+%.mo: %.po
+	$(MSGFMT) -o $@ $<
+
+
+dist: $(LOBJ)
+	$(foreach a, $(INKLANG), $(shell $(MKDIR) ..$(S)inkscape$(S)locale$(S)$(a)))
+	$(foreach a, $(INKLANG), $(shell $(MKDIR) ..$(S)inkscape$(S)locale$(S)$(a)$(S)LC_MESSAGES))
+	-$(foreach a, $(INKLANG), $(shell $(CP) $(a).mo ..$(S)inkscape$(S)locale$(S)$(a)$(S)LC_MESSAGES$(S)inkscape.mo))
+
+
+

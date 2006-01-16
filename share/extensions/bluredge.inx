@@ -1,0 +1,13 @@
+<inkscape-extension>
+    <_name>Blur Edge</_name>
+    <id>org.inkscape.effect.bluredge</id>
+    <dependency type="plugin" location="plugins">bluredge</dependency>
+    <param name="blur-width" type="float">1.0</param>
+    <param name="num-steps" type="int">11</param>
+    <effect>
+        <object-type>all</object-type>
+    </effect>
+    <plugin>
+        <name>bluredge</name>
+    </plugin>
+</inkscape-extension>

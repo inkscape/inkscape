@@ -1,0 +1,38 @@
+This package was debianized by Wolfram Quester <wolfi@mittelerde.physik.uni-konstanz.de> on
+Wed, 12 Nov 2003 10:39:40 +0100.
+
+It was downloaded from http://inkscape.sourceforge.net/
+
+Upstream Authors:
+	Hans Breuer
+	Bulia Byak
+	Chema Celorio
+	Zbigniew Chyla
+	Robert Crosbie
+	Danilo Egan
+	Frank Felfe
+	Ted Gould
+	Bryce Harrington
+	Nathan Hurst
+	Bob Jamison
+	Lauris Kaplinski
+	Lynn Kerby
+	Petr Kovar
+	Raph Levien
+	Vitaly Lipatov
+	Dmitry G. Mastrukov
+	Michael Meeks
+	Frederico Mena
+	MenTaLguY
+	Yukihiro Nakai
+	Christian Neumair
+	Mitsuru Oka
+	Christian Schaller
+	Tom von Schwerdtner
+	Daniel Yacob
+	Masatake Yamato
+
+License: GNU GPL
+
+On Debian systems, the text of the Gnu GPL can be found in
+/usr/share/common-licenses/GPL.

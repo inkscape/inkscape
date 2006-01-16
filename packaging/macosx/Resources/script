@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# Author: Aaron Voisine <aaron@voisine.org>
+# Inkscape Modifications: Michael Wybrow <mjwybrow@users.sourceforge.net>
+
+CWD="`dirname \"$0\"`"
+
+ps -wx -ocommand | grep -e '[X]11' > /dev/null
+if [ "$?" != "0" -a ! -f ~/.xinitrc ]; then
+    echo "rm -f ~/.xinitrc" > ~/.xinitrc
+    sed 's/xterm/# xterm/' /usr/X11R6/lib/X11/xinit/xinitrc >> ~/.xinitrc
+fi
+
+cp -f "$CWD/bin/getdisplay.sh" /tmp/
+rm -f /tmp/display.$UID
+open-x11 /tmp/getdisplay.sh || \
+open -a XDarwin /tmp/getdisplay.sh || \
+echo ":0" > /tmp/display.$UID
+
+while [ "$?" == "0" -a ! -f /tmp/display.$UID ]; do
+    sleep 1
+done
+export "DISPLAY=`cat /tmp/display.$UID`"
+
+ps -wx -ocommand | grep -e '[X]11' > /dev/null || exit 11
+
+VERSION=`/usr/bin/sw_vers | grep ProductVersion | cut -f2 -d'.'`
+if [ "$VERSION" -eq "4" ]; then
+  # We're on tiger.  So need to update fc-cache if it hasn't been done
+  test -f ~/.inkscape/.fccache || exit 12
+fi
+
+BASE="`echo "$0" | sed -e 's/\/Contents\/Resources\/script/\//'`"
+cd "$BASE"
+exec "$CWD/bin/inkscape" "$@"

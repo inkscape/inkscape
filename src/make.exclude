@@ -1,0 +1,80 @@
+######################################################################
+# File: make.exclude
+#
+# This is a list of files to exclude from
+# building using the Makedep scheme.
+# To use, run:
+# perl mkfiles.pl
+# then
+# perl mkdep.pl
+#
+######################################################################
+
+
+ast
+bonobo
+
+dialogs/filedialog-win32.cpp
+display/testnr.cpp
+display/bezier-utils-test.cpp
+dom/testdom.cpp
+dom/testsvg.cpp
+dom/xpathtest.cpp
+dom/xpathtests.cpp
+extension/api.cpp
+extension/dxf2svg
+extension/internal/gnome.cpp
+extension/script/js
+extension/script/bindtest.cpp
+extension/script/cpptest.cpp
+extension/plugin
+extract-uri-test.cpp
+helper/units-test.cpp
+inkview.cpp
+libnr/in-svg-plane-test.cpp
+libnr/nr-matrix-test.cpp
+libnr/nr-point-fns-test.cpp
+libnr/nr-rotate-fns-test.cpp
+libnr/nr-rotate-test.cpp
+libnr/nr-scale-test.cpp
+libnr/nr-translate-test.cpp
+libnr/nr-types-test.cpp
+livarot/Path-test.cpp
+main.cpp
+mod360-test.cpp
+trace/potrace/potest.cpp
+round-test.cpp
+sp-gradient-test.cpp
+svg/ftos.cpp
+utest
+widgets/test-widgets.cpp
+winmain.cpp
+xml/quote-test.cpp
+xml/repr-action-test.cpp
+io/streamtest.cpp
+
+
+###############################################
+# Bob:
+# Uncomment these to build Inkboard
+# For the moment, DO NOT remove these from cvs
+# until those files compile everywhere
+###############################################
+dialogs/whiteboard-connect-dialog.cpp
+dialogs/whiteboard-common-dialog.cpp
+dialogs/whiteboard-sharewithchat-dialog.cpp
+dialogs/whiteboard-sharewithuser-dialog.cpp
+jabber_whiteboard
+ui/dialog/session-player.cpp
+ui/dialog/whiteboard-connect.cpp
+ui/dialog/whiteboard-sharewithchat.cpp
+ui/dialog/whiteboard-sharewithuser.cpp
+
+###############################################
+# Various test harnesses in removeoverlap
+###############################################
+removeoverlap/placement_SolveVPSC.cpp
+removeoverlap/placement_SolveVPSC.h
+removeoverlap/test.cpp
+removeoverlap/remove_rectangle_overlap-test.cpp
+removeoverlap/remove_rectangle_overlap-test.h

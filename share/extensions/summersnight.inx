@@ -1,0 +1,12 @@
+<inkscape-extension>
+    <_name>Summer's Night</_name>
+    <id>org.ekips.filter.summersnight</id>
+	<dependency type="executable" location="extensions">summersnight.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+    <effect>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">summersnight.py</command>
+    </script>
+</inkscape-extension>

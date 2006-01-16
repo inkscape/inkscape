@@ -1,0 +1,7 @@
+*.dll
+*.la
+*.lo
+.deps
+.dirstamp
+.libs
+makefile

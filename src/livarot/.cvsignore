@@ -1,0 +1,7 @@
+*~
+.deps
+.dirstamp
+.libs
+Makefile
+Makefile.in
+makefile

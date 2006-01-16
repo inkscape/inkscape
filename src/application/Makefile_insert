@@ -1,0 +1,14 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+application/all: application/libinkapp.a
+
+application/clean:
+	rm -f application/libinkapp.a $(application_libinkapp_a_OBJECTS)
+
+application_libinkapp_a_SOURCES = \
+	application/editor.cpp		\
+	application/editor.h		\
+	application/application.cpp	\
+	application/application.h	\
+	application/app-prototype.cpp	\
+	application/app-prototype.h

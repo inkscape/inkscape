@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Author: Aaron Voisine <aaron@voisine.org>
+
+export "DISPLAY=`cat /tmp/display.$UID`"
+BASE="`echo "$0" | sed -e 's/\/[A-Za-z]*.app\/Contents\/Resources\/script/\//'`"
+cd "$BASE"
+exec "$CWD/bin/inkscape" "$@"

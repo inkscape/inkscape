@@ -1,0 +1,30 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+plugindir = $(libdir)/inkscape/plugins
+
+plugin_LTLIBRARIES = \
+	extension/plugin/libgimpgrad.la \
+	extension/plugin/libgrid.la \
+	extension/plugin/libbluredge.la \
+	extension/plugin/librandompnt.la \
+	extension/plugin/librandompos.la
+
+extension/plugin/clean:
+	rm -f $(plugin_LTLIBRARIES)
+
+extension_plugin_libgimpgrad_la_SOURCES = \
+	extension/plugin/gimpgrad.cpp
+
+extension_plugin_libgrid_la_SOURCES = \
+	extension/plugin/grid.cpp
+
+extension_plugin_libbluredge_la_SOURCES = \
+	extension/plugin/bluredge.cpp
+
+extension_plugin_librandompnt_la_SOURCES = \
+	extension/plugin/randompnt.cpp
+
+extension_plugin_librandompos_la_SOURCES = \
+	extension/plugin/randompos.cpp
+
+## extension_plugin_libtest_la_LDFLAGS = $(PLUGIN_LIBTOOL_FLAGS)

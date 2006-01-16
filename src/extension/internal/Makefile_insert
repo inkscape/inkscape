@@ -1,0 +1,42 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+extension/internal/all: extension/internal/libinternal.a
+
+extension/internal/clean:
+	rm -f extension/internal/libinternal.a $(extension_internal_libinternal_OBJECTS)
+
+if USE_GNOME_PRINT
+extension_internal_gnome_print_sources =	\
+	extension/internal/gnome.cpp	\
+	extension/internal/gnome.h
+endif
+
+extension_internal_libinternal_a_SOURCES =	\
+	extension/internal/bluredge.h	\
+	extension/internal/bluredge.cpp	\
+	extension/internal/grid.h	\
+	extension/internal/grid.cpp	\
+\
+	extension/internal/gimpgrad.h	\
+	extension/internal/gimpgrad.cpp	\
+	extension/internal/svg.h	\
+	extension/internal/svg.cpp	\
+	extension/internal/svgz.h	\
+	extension/internal/svgz.cpp	\
+	extension/internal/ps.h	\
+	extension/internal/ps.cpp	\
+	extension/internal/ps-out.h	\
+	extension/internal/ps-out.cpp	\
+	extension/internal/eps-out.h	\
+	extension/internal/eps-out.cpp	\
+	extension/internal/gdkpixbuf-input.h	\
+	extension/internal/gdkpixbuf-input.cpp	\
+	extension/internal/pov-out.cpp	\
+	extension/internal/pov-out.h	\
+	extension/internal/latex-pstricks.cpp	\
+	extension/internal/latex-pstricks.h	\
+	extension/internal/latex-pstricks-out.cpp	\
+	extension/internal/latex-pstricks-out.h	\
+\
+	$(extension_internal_gnome_print_sources)
+

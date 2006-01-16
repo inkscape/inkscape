@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   id="svg559"
+   width="400pt"
+   height="400pt"
+  xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<g transform="translate(-10 , -20) scale(2) rotate(45) translate( 5  10 )">
+  <!-- graphics elements go here -->
+</g>
+<g transform="translate(-10 , -20) ,scale(2), rotate(45) translate( 5  10 ),">
+  <!-- graphics elements go here -->
+</g>
+<g transform="skewX( -23.5 ) skewY( -100.234 )">
+  <!-- graphics elements go here -->
+</g>
+<g transform="matrix(1 2 3 4 5 6) matrix(6, 5, 4 3, 3, 1)"/>
+<g transform="matrix(1 2 3 4 5 6) matrix(6, 5, 4 3, 3, 1,)"/>
+<g transform="translate(123456.0) translate(654321.0, 333) "/>
+<g transform="scale(123456.0) scale(654321.0, 333) "/>
+<g transform="rotate(123456.0)"/>
+<g transform="rotate(123456.0 333)"/>
+<g transform="rotate(123456.0 333 444)"/>
+
+<g transform="translate(-10,-20)">
+  <g transform="scale(2)">
+    <g transform="rotate(45)">
+      <g transform="translate(5,10)">
+        <!-- graphics elements go here -->
+      </g>
+    </g>
+  </g>
+</g>
+</svg>

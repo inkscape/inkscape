@@ -1,0 +1,63 @@
+# autopackage specfile, (C) 2004 Mike Hearn <mike@navi.cx>
+
+[Meta]
+RootName: @inkscape.org/inkscape:$SOFTWAREVERSION
+ShortName: inkscape
+DisplayName: Inkscape Vector Graphics Editor
+Summary: Inkscape is an open source SVG editor with capabilities similar to Illustrator, CorelDraw and Visio
+SoftwareVersion: @VERSION@
+Maintainer: The Inkscape team <inkscape-devel@lists.sourceforge.net>
+Packager: Aaron Spike <aaron@ekips.org>
+AutopackageTarget: 1.0
+
+[Description]
+Inkscape is an open source SVG editor with capabilities
+similar to Illustrator, CorelDraw, Visio, etc. Supported SVG features
+include basic shapes, paths, text, alpha blending, transforms,
+gradients, node editing, svg-to-png export, grouping, and more.
+
+[BuildPrepare]
+if [ ! -x configure ]; then
+    ./autogen.sh
+fi
+export APBUILD_STATIC="popt gc gccpp gtkmm-2.4 gdkmm-2.4 atkmm-1.6 pangomm-1.4 glibmm-2.4 sigc-2.0 loudmouth-1 Xrender"
+PATH=/usr/local/src/inkscape/extra/static/bin:$PATH
+PKG_CONFIG_PATH=/usr/local/src/inkscape/extra/static/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+CPPFLAGS="-I/usr/local/src/inkscape/extra/static/include"
+LDFLAGS="-L/usr/local/src/inkscape/extra/static/lib"
+export PATH PKG_CONFIG_PATH CPPFLAGS LDFLAGS
+prepareBuild --enable-binreloc --with-gnome-vfs=no --enable-inkboard
+
+[BuildUnprepare]
+unprepareBuild
+
+[Imports]
+echo '*' | import   # import everything
+
+[Prepare]
+require @gnu.org/libstdc++ 3
+require @xmlsoft.org/libxml2 2.6
+require @xmlsoft.org/libxslt 1.0
+require @gtk.org/gtk 2.4
+# statically linked for now: require @rpm.org/popt 0.0
+# statically linked: require @libsigc.sourceforge.net/libsigc 3
+require @libpng.org/libpng 3
+# statically linked: require @gtkmm.org/gtkmm2 3
+require @zlib.org/zlib 1
+# require @xfree86.org/xft 2
+# require @freetype.org/freetype 6
+# require @freedesktop.org/fontconfig 1
+
+[Install]
+installExe bin/inkscape bin/inkview
+installMan 1 man/man1/*
+installIcon share/pixmaps/inkscape.png
+installDesktop "Graphics" share/applications/inkscape.desktop
+
+copyFiles --nobackup share/locale $PREFIX/share
+copyFiles share/inkscape $PREFIX/share
+# copyFiles lib/inkscape $PREFIX/lib
+
+[Uninstall]
+uninstallFromLog
+

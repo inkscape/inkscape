@@ -1,0 +1,112 @@
+#ifndef SEEN_EEK_PREVIEW_H
+#define SEEN_EEK_PREVIEW_H
+/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+ *
+ */
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Eek Preview Stuffs.
+ *
+ * The Initial Developer of the Original Code is
+ * Jon A. Cruz.
+ * Portions created by the Initial Developer are Copyright (C) 2005
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+#include <gtk/gtkdrawingarea.h>
+
+G_BEGIN_DECLS
+
+
+#define EEK_PREVIEW_TYPE            (eek_preview_get_type())
+#define EEK_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST( (obj), EEK_PREVIEW_TYPE, EekPreview))
+#define EEK_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST( (klass), EEK_PREVIEW_TYPE, EekPreviewClass))
+#define IS_EEK_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE( (obj), EEK_PREVIEW_TYPE))
+#define IS_EEK_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE( (klass), EEK_PREVIEW_TYPE))
+#define EEK_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS( (obj), EEK_PREVIEW_TYPE, EekPreviewClass))
+
+typedef enum {
+    PREVIEW_STYLE_ICON = 0,
+    PREVIEW_STYLE_PREVIEW,
+    PREVIEW_STYLE_NAME,
+    PREVIEW_STYLE_BLURB,
+    PREVIEW_STYLE_ICON_NAME,
+    PREVIEW_STYLE_ICON_BLURB,
+    PREVIEW_STYLE_PREVIEW_NAME,
+    PREVIEW_STYLE_PREVIEW_BLURB
+} PreviewStyle;
+
+typedef enum {
+    VIEW_TYPE_LIST = 0,
+    VIEW_TYPE_GRID
+} ViewType;
+
+
+typedef struct _EekPreview       EekPreview;
+typedef struct _EekPreviewClass  EekPreviewClass;
+
+
+struct _EekPreview
+{
+    GtkDrawingArea drawing;
+
+    int _r;
+    int _g;
+    int _b;
+
+    gboolean _hot;
+    gboolean _within;
+    gboolean _takesFocus;
+
+    PreviewStyle _prevstyle;
+    ViewType _view;
+    GtkIconSize _size;
+};
+
+struct _EekPreviewClass
+{
+    GtkDrawingAreaClass parent_class;
+
+    void (*clicked) (EekPreview* splat);
+};
+
+
+GType      eek_preview_get_type(void) G_GNUC_CONST;
+GtkWidget* eek_preview_new(void);
+
+void eek_preview_set_details( EekPreview* splat, PreviewStyle prevstyle, ViewType view, GtkIconSize size );
+void eek_preview_set_color( EekPreview* splat, int r, int g, int b );
+
+gboolean eek_preview_get_focus_on_click( EekPreview* preview );
+void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_click );
+
+G_END_DECLS
+
+
+#endif /* SEEN_EEK_PREVIEW_H */

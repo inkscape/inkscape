@@ -1,0 +1,11 @@
+<inkscape-extension>
+    <_name>Random Position</_name>
+    <id>org.inkscape.effect.randompos</id>
+    <dependency type="plugin" location="plugins">randompos</dependency>
+    <effect>
+        <object-type>all</object-type>
+    </effect>
+    <plugin>
+        <name>randompos</name>
+    </plugin>
+</inkscape-extension>

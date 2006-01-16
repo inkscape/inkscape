@@ -1,0 +1,12 @@
+<inkscape-extension>
+    <_name>Draw Handles</_name>
+    <id>org.ekips.filter.handles</id>
+	<dependency type="executable" location="extensions">handles.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+    <effect>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">handles.py</command>
+    </script>
+</inkscape-extension>

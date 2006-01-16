@@ -1,0 +1,158 @@
+; #######################################
+; german.nsh
+; german language strings for inkscape installer
+; windows code page: 1252
+; Authors:
+; Adib Taraben theAdib@yahoo.com
+;
+!insertmacro MUI_LANGUAGE "German"
+
+; Product name
+LangString lng_Caption   ${LANG_GERMAN}  "${PRODUCT_NAME} -- Open Source SVG-Vektorillustrator"
+
+; Button text "Next >" for the license page
+LangString lng_LICENSE_BUTTON   ${LANG_GERMAN} "Weiter >"
+
+; Bottom text for the license page
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_GERMAN} "$(^Name) wird unter der GNU General Public License (GPL) veröffentlicht. Die Lizenz dient hier nur der Information. $_CLICK"
+
+; Full install type
+LangString lng_Full $(LANG_GERMAN) "Komplett"
+
+; Optimal install type
+LangString lng_Optimal $(LANG_GERMAN) "Optimal"
+
+; Minimal install type
+LangString lng_Minimal $(LANG_GERMAN) "Minimal"
+
+
+; Core section
+LangString lng_Core $(LANG_GERMAN) "${PRODUCT_NAME} Vektorillustrator (erforderlich)"
+
+; Core section description
+LangString lng_CoreDesc $(LANG_GERMAN) "${PRODUCT_NAME} Basis-Dateien und -DLLs"
+
+
+; GTK+ section
+LangString lng_GTKFiles $(LANG_GERMAN) "GTK+ Runtime Umgebung (erforderlich)"
+
+; GTK+ section description
+LangString lng_GTKFilesDesc $(LANG_GERMAN) "Ein Multi-Plattform GUI Toolkit, verwendet von ${PRODUCT_NAME}"
+
+
+; shortcuts section
+LangString lng_Shortcuts $(LANG_GERMAN) "Verknüpfungen"
+
+; shortcuts section description
+LangString lng_ShortcutsDesc $(LANG_GERMAN) "Verknüpfungen zum Start von ${PRODUCT_NAME}"
+
+; multi user installation
+LangString lng_Alluser  ${LANG_GERMAN}  "für Alle Benutzer"
+
+; multi user installation description
+LangString lng_AlluserDesc  ${LANG_GERMAN}  "Installiert diese Anwendung für alle Benutzer dieses Computers (all users)"
+
+; Start Menu  section
+LangString lng_Startmenu $(LANG_GERMAN) "Startmenü"
+
+; Start Menu section description
+LangString lng_StartmenuDesc $(LANG_GERMAN) "Erstellt einen Eintrag für ${PRODUCT_NAME} im Startmenü"
+
+; Desktop section
+LangString lng_Desktop $(LANG_GERMAN) "Desktop"
+
+; Desktop section description
+LangString lng_DesktopDesc $(LANG_GERMAN) "Erstellt eine Verknüpfung zu ${PRODUCT_NAME} auf dem Desktop"
+
+; Quick launch section
+LangString lng_Quicklaunch $(LANG_GERMAN) "Schnellstartleiste"
+
+; Quick launch section description
+LangString lng_QuicklaunchDesc $(LANG_GERMAN) "Erstellt eine Verknüpfung zu ${PRODUCT_NAME} auf der Schnellstartleiste"
+
+; File type association for editing
+LangString lng_SVGWriter    ${LANG_GERMAN}  "Öffne SVG Dateien mit ${PRODUCT_NAME}"
+
+;LangString lng_UseAs ${LANG_ENGLISH} "Select ${PRODUCT_NAME} as default application for:"
+LangString lng_SVGWriterDesc    ${LANG_GERMAN}  "Wählen Sie ${PRODUCT_NAME} als Standardanwendung für SVG Dateien"
+
+; Context Menu
+LangString lng_ContextMenu ${LANG_GERMAN} "Kontext-Menü"
+
+; Context Menu description
+LangString lng_ContextMenuDesc ${LANG_GERMAN} "Fügt ${PRODUCT_NAME} in das Kontext-Menü für SVG Dateien ein"
+
+
+; Additional Files section
+LangString lng_Addfiles $(LANG_GERMAN) "weitere Dateien"
+
+; additional files section dscription
+LangString lng_AddfilesDesc $(LANG_GERMAN) "weitere Dateien"
+
+; Examples section
+LangString lng_Examples $(LANG_GERMAN) "Beispiele"
+
+; Examples section dscription
+LangString lng_ExamplesDesc $(LANG_GERMAN) "Beispiele mit ${PRODUCT_NAME}"
+
+; Tutorials section
+LangString lng_Tutorials $(LANG_GERMAN) "Tutorials"
+
+; Tutorials section dscription
+LangString lng_TutorialsDesc $(LANG_GERMAN) "Tutorials für die Benutzung mit ${PRODUCT_NAME}"
+
+
+; Languages section
+LangString lng_Languages $(LANG_GERMAN) "Übersetzungen"
+
+; Languages section dscription
+LangString lng_LanguagesDesc $(LANG_GERMAN) "Installiert verschiedene Übersetzungen für ${PRODUCT_NAME}"
+
+LangString lng_am $(LANG_GERMAN) "am  Amharisch"
+LangString lng_az $(LANG_GERMAN) "az  Aserbaidschanisch"
+LangString lng_be $(LANG_GERMAN) "be  Weißrussisch"
+LangString lng_ca $(LANG_GERMAN) "ca  Katalanisch"
+LangString lng_cs $(LANG_GERMAN) "cs  Tschechisch"
+LangString lng_da $(LANG_GERMAN) "da  Dänisch"
+LangString lng_de $(LANG_GERMAN) "de  Deutsch"
+LangString lng_el $(LANG_GERMAN) "el  Griechisch"
+LangString lng_en $(LANG_GERMAN) "en  Englisch"
+LangString lng_es $(LANG_GERMAN) "es  Spanisch"
+LangString lng_es_MX $(LANG_GERMAN) "es_MX  Spanisch-Mexio"
+LangString lng_et $(LANG_GERMAN) "es  Estonisch"
+LangString lng_fr $(LANG_GERMAN) "fr  Französisch"
+LangString lng_ga $(LANG_GERMAN) "ga  Irisch"
+LangString lng_gl $(LANG_GERMAN) "gl  Galizisch"
+LangString lng_hu $(LANG_GERMAN) "hu  Ungarisch"
+LangString lng_it $(LANG_GERMAN) "it  Italienisch"
+LangString lng_ja $(LANG_GERMAN) "ja  Japanisch"
+LangString lng_mk $(LANG_GERMAN) "mk  Mazedonisch"
+LangString lng_nb $(LANG_GERMAN) "nb  Norwegisch-Bokmal"
+LangString lng_nl $(LANG_GERMAN) "nl  Holländisch"
+LangString lng_nn $(LANG_GERMAN) "nn  Nynorsk-Norwegisch"
+LangString lng_pa $(LANG_GERMAN) "pa  Panjabi"
+LangString lng_pl $(LANG_GERMAN) "po  Polnisch"
+LangString lng_pt $(LANG_GERMAN) "pt  Portugiesisch"
+LangString lng_pt_BR $(LANG_GERMAN) "pt_BR  Portugiesisch Brazilien"
+LangString lng_ru $(LANG_GERMAN) "ru  Russisch"
+LangString lng_sk $(LANG_GERMAN) "sk  Slowakisch"
+LangString lng_sl $(LANG_GERMAN) "sl  Slowenisch"
+LangString lng_sr $(LANG_GERMAN) "sr  Serbisch"
+LangString lng_sr@Latn $(LANG_GERMAN) "sr@Latn Serbisch mit lat. Buchstaben"
+LangString lng_sv $(LANG_GERMAN) "sv  Schwedisch"
+LangString lng_tr $(LANG_GERMAN) "tr  Türkisch"
+LangString lng_uk $(LANG_GERMAN) "uk  Ukrainisch"
+LangString lng_zh_CN $(LANG_GERMAN) "zh_CH  Chinesisch (vereinfacht)"
+
+
+; uninstallation options
+;LangString lng_UInstOpt   ${LANG_ENGLISH} "Uninstallation Options"
+LangString lng_UInstOpt   ${LANG_GERMAN} "Deinstallations Optionen"
+
+; uninstallation options subtitle
+;LangString lng_UInstOpt1  ${LANG_ENGLISH} "Please make your choices for additional options"
+LangString lng_UInstOpt1  ${LANG_GERMAN} "Bitte wählen Sie die optionalen Deinstalltionsparameter"
+
+; Ask to purge the personal preferences
+;LangString lng_PurgePrefs ${LANG_ENGLISH} "Keep Inkscape preferences"
+LangString lng_PurgePrefs ${LANG_GERMAN}  "behalte persönliche Inkscape-Vorgaben"

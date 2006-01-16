@@ -1,0 +1,439 @@
+                                 Release Notes
+                                 Inkscape 0.43
+
+In brief
+
+   The focus of this release is on the exciting new features sponsored by
+   Google via their Summer of Code program. However, we have quite a bunch of
+   other stuff too. Here are the highlights:
+
+     * Connectors: A new Connector tool implements creation, editing, and
+       autorouting (object-avoiding) of connector lines between objects.
+       Indispensable for diagramming. (A Google SoC project.)
+     * Inkboard collaborative editing: You can now connect to other Inkscape
+       users over the Net and edit a shared document together, watching
+       others' changes and making yours! (A Google SoC project.)
+     * Pressure and tilt sensitivity: the Calligraphy tool can now use a
+       tablet pen with pressure/tilt support to vary the width and angle of
+       the calligraphic stroke.
+     * Better node editing: You can freely drag/bend/stretch a Bezier curve
+       by any point (not only by a node), as well as add a new node at any
+       point on the curve.
+     * New extensions for envelope distortion, whirling, and adding nodes.
+     * Improved precision, expanded limits, many usability improvements and
+       bugfixes.
+
+   Tavmjong Bah has updated his online book, A Guide to Inkscape 
+   (http://tavmjong.free.fr/INKSCAPE/MANUAL/html/index.php), to cover
+   the Inkscape 0.43 features. This guide is not included with the Inkscape
+   release. Users are encouraged to read the guide in addition to these
+   release notes and the help included with Inkscape.
+
+Connectors
+
+     * Inkscape now includes preliminary support for connectors. Connectors
+       are lines drawn between objects, that stay connected to the objects as
+       these objects are manipulated. Any object may have a "connector-avoid"
+       property, which, when set, causes connectors to automatically route
+       around the object.
+
+     * The Connector tool (Ctrl+F2 or the o key) is a new way of creating and
+       rerouting connectors, as well as marking objects "avoided" for the
+       purpose of routing connectors.
+
+        * A new connector can be drawn by clicking and dragging from any
+          point on the canvas. The connector is finalized when the mouse is
+          released. Connectors can also be created with two clicks, rather
+          than click-and-drag, if this is preferred. In this case, click once
+          on an empty point on the canvas to begin drawing the connector,
+          then move the mouse to the new connector's target point and then
+          click again to finalize the connector. Single clicking on a canvas
+          object selects/deselects that object, just as in other tools.
+
+        * Connection point handles are shown while the mouse cursor is
+          hovering over a non-connector object in the connector tool.
+          Currently they are shown only at the center of objects. When
+          creating a connector, if the connector is started or ended over a
+          connection point then the connector will be attached to that
+          object. From then on the connector will be automatically rerouted
+          whenever the attached object is moved.
+
+        * Connectors attached to objects are currently drawn to the bounding
+          box of those objects. It is planned that they will be drawn instead
+          to the edges of objects.
+
+        * A selected connector will show two endpoint handles. By clicking
+          and dragging these, the connector can be rerouted and
+          attached/detached from objects.
+
+        * The Make connectors avoid selected objects button marks all objects
+          in the selection as "avoided", causing all current and future
+          connectors to automatically avoid these objects.
+
+        * The Make connectors ignore selected objects button marks all
+          objects in the selection as "ignored", causing all current and
+          future connectors to completely ignore these objects. This is the
+          default for all canvas items, i.e., no objects are automatically
+          routed around by default.
+
+Inkboard
+
+   A first release of the Inkboard collaborative editing system (also known
+   as a "white board") is present in this version of Inkscape.
+
+     * Inkboard must be enabled at compile time by passing --enable-inkboard
+       to the configure script: Inkboard has known bugs, and may present
+       security issues.
+
+     * Inkboard uses the XMPP (http://www.xmpp.org/) protocol (used by Jabber
+       (http://www.jabber.org/)) to link together Inkscape clients in a 
+       shared document session. Therefore, if you have a Jabber account, you
+       can use Inkboard. (There are some exceptions, which are listed below
+       in the "Known issues" section.) Inkboard uses the Loudmouth 
+       (http://loudmouth.imendio.org/) library for Jabber connectivity;
+       versions 0.17.2 and above of the Loudmouth library are known to work.
+
+     * Inkboard sessions may occur between two users or a group of users in a
+       chatroom setting.
+
+  Inkboard usage
+
+     * You must first connect to a Jabber server before sharing a document.
+       To do this, go to Whiteboard -> Connect to Jabber server. You will be
+       prompted to enter a server name, your username, and password. You may
+       specify a specific port to connect on, and whether or not you would
+       like to connect via SSL.
+
+     * After connecting, you may establish a session with another user or a
+       chatroom. To connect to another user, go to Whiteboard -> Share with
+       user. Inkboard can import your Jabber contact list, and will present a
+       list of online contacts to you. You may select any contact in the
+       contact list, or enter a Jabber ID to connect to.
+
+     * Similarly, you can establish a connection with a chatroom by going to
+       Whiteboard -> Share with chatroom.
+
+     * If you are contacted by another user, Inkscape will present a dialog
+       telling you that you have received an invitation. The dialog contains
+       the Jabber ID of the user contacting you, and offers you three
+       choices: decline the invitation, accept the invitation, or accept the
+       invitation in a new window.
+
+     * Inkboard can record a session's contents for playback at a later time.
+
+          * If you are establishing a session, click the Write session file
+            checkbox in the share with user dialog to enable session
+            recording. You will need to provide the name of a file to which
+            the session contents can be written.
+          * If you are accepting a session invitation, click the Write
+            session file checkbox in the invitation dialog to enable session
+            recording. You will need to provide the name of a file to which
+            the session contents can be written.
+          * To play back a session, go to Whiteboard -> Open session file.
+
+     * The Whiteboard -> Dump XML tracker menu item is intended for debugging
+       purposes only.
+
+Pressure and tilt sensitivity
+
+   Support for extended input devices has been added.
+
+     * The Calligraphy tool now has optional pressure and tilt support from
+       an input device such as a tablet. Pressure can be used to alter the
+       width of the pen and tilt can be used to alter the angle of the pen's
+       nib.
+
+     * A standard input device dialog has been added (in File menu). Input
+       device settings are saved to and loaded from the preferences.
+
+Node tool
+
+     * Clicking on a selected path selects the two nodes closest to the click
+       point. Shift+click adds or removes these two nodes to the node
+       selection (when only one path is selected; otherwise Shift+click works
+       as in Selector).
+
+     * Double click or Ctrl+Alt+click anywhere on the selected path (even if
+       it is under other objects) creates a new node at the click point,
+       without changing the shape of the path. (Previously, you could only
+       add a node in the middle of a segment by using a toolbar button.)
+
+     * You can now edit the selected path (even if it's under other objects)
+       by dragging any curve point, not only node(s) as before. In many cases
+       it's a much more convenient way to reshape paths than anything
+       available before. When you drag a curve close enough to one of the
+       nodes, only that node's handle(s) are affected; if you drag a point
+       midway between two nodes, both nodes' handles are adjusted.
+
+          * When mouse is over a draggable path, the cursor is changed to
+            include a hand.
+
+     * As in Selector, if you press Shift before starting to drag, you always
+       get a node selection rubberband rectangle (even if you start on a path
+       but not a node!).
+
+     * After duplicating (Shift+D) an endnode, the selected node is always
+       the new endnode, so you can move it at once.
+
+     * Selected nodes are displayed a little larger than non-selected ones.
+
+Extensions
+
+     * Add Nodes: Adds nodes to the selected paths. Each segment of the
+       selected path is subdivided into ceil(Length/Max) equal length
+       segments. Lengths are measured in SVG User Units calculated from the
+       path data and does not take into account any transforms.
+
+     * Whirl: Twists the selected paths around the specified center point.
+
+     * Summer's Night: Linearly distorts a path into the destination
+       quadrilateral. The destination quadrilateral is specified by a four
+       node path (closed or not). To use, draw and position a four node path.
+       Select the four node path first and then add to selection the path you
+       wish to distort. The original position of the four nodes is considered
+       to be clockwise around the bounding box of the path to distort
+       beginning in the upper left corner.
+
+     * The Wavy extension is renamed to Function Plotter and got many fixes
+       and improvements. Importantly, now you don't have to provide an
+       analytic formula for the derivative; instead, check the "Calculate the
+       first derivative numerically" checkbox and it will itself calculate
+       the angle at each node. In the function/derivative formulas, you can
+       use functions from the math (http://docs.python.org/lib/module-math.html)
+       and random (http://docs.python.org/lib/module-random.html) Python 
+       modules. As before, you need to have a rectangle selected before calling
+       this extension.
+
+     * Development continues on SVGSlice but it has not yet been fully
+       integrated into Inkscape. Please visit Digital Unleashed 
+       (http://www.digitalunleashed.com/giving.php) for details and downloads.
+
+More new functionality
+
+     * A separate project, the Open Clip Art Library Browser provides an easy
+       way to browse local and remote clipart collections and insert clipart
+       into Inkscape. Please visit 
+       http://www.python.org/pypi/clipartbrowser/0.41 for details and
+       downloads. (A Google SoC project.)
+
+     * A separate utility has been developed to convert between DXF and SVG
+       formats. Please visit http://sourceforge.net/projects/dxf-svg-convert 
+       for details and downloads. (A Google SoC project.)
+
+     * Improved support for viewBox: If the root <svg> element of your
+       document has width/height attributes set in percentage units and
+       there's a viewBox on that element, then:
+
+          * The canvas size is set to the value of the viewBox attribute.
+          * Changing the canvas size in Document Preferences sets the
+            viewBox, without touching the width/height values.
+
+           This does not affect regular documents created in Inkscape, but
+           makes it easier to edit other SVG files that use viewBox.
+
+     * The new command line parameter, --export-area-snap, used with bitmap
+       export to snap the export area outwards to the nearest integer SVG
+       user unit (px) values. If you are using the default export resolution
+       of 90dpi and your graphics are pixel-snapped to minimize antialiasing,
+       this switch allows you to preserve this alignment even if you are
+       exporting an area (for example, with --export-id or
+       --export-area-drawing) which is itself not pixel-aligned.
+
+     * When saving as Postscript, you now have the option to convert or not
+       convert texts to paths (previously only available for EPS export).
+
+Interface and usability
+
+     * The Icon Preview dialog has been improved. A toggle has been added to
+       switch between previewing the entire document or just the current
+       selection. A larger 128x128 size has been added to the defaults. The
+       sizes are now read from the preferences file and can be customized.
+
+     * Rectangles and ellipses now use different handle shapes, so it's much
+       easier to see which handle does what. The two square handles change
+       the size of the object, while the two round handles adjust the
+       rounding corners (in rectangles) and arc/segment ends (in ellipses).
+
+     * The controls for the Rectangle tool now include W and H fields for
+       setting the width/height of selected rectangle(s) numerically.
+
+     * In the controls of Rectangle and Ellipse tools, the "Not rounded" and
+       "Make whole" buttons are now grayed out when the selected object
+       cannot use the corresponding function (i.e. when a rectangle is
+       already not rounded and the ellipse is already whole, which are the
+       defaults).
+
+     * When editing text with the Text tool, the keypad + and - keys type the
+       corresponding characters if NumLock is on (otherwise they zoom in and
+       out as before). (Still does not work on Windows.)
+
+     * In the Text tool, Ctrl+Up and Ctrl+Down now move one paragraph up or
+       down correspondingly.
+
+     * The Calligraphic tool, in addition to the Ctrl+F6 shortcut, has a new
+       one-letter shortcut, `c'.
+
+     * The Pen, Pencil, and Calligraphy tools finally have mouse cursors of
+       their own.
+
+     * The canvas width/height fields in Document Preferences are never
+       grayed out. Instead, the menu of the canvas sizes scrolls itself to
+       "Custom" or to an appropriate standard size as you edit width/height.
+
+     * Rectangle editing handles now snap to grid/guides (snapping for other
+       shapes' handles is expected to come in subsequent releases).
+
+     * The pattern move handle is restricted to horizontal/vertical when Ctrl
+       is pressed.
+
+     * In the Selector, dragging the rotation center handle snaps to the
+       edges and central axes of the selection's bounding box.
+
+     * In the Pen tool, while you are drawing a path, the statusbar displays
+       the distance and angle of the current mouse point from the last
+       created node of the path. This makes it easy to create a path from the
+       given lengths and angles of linear segments. When you are dragging to
+       create a curve handle, the statusbar also displays the length and the
+       angle of the handle.
+
+     * A new preference option, Compass-like angle display (in the Steps
+       tab), allows you to have absolute angles specified in a compass
+       notation (0 at north, 0 to 360 range, increasing clockwise) instead of
+       the default trigonometric notation (0 at east, -180 to 180 range,
+       increasing counterclockwise). This affects the statusbar angle display
+       for path segments and the handles in Pen and Node tools.
+
+     * The Pen and Pencil tools now display helpful statusbar hints when the
+       mouse is over one of the end anchors of the selected path.
+
+     * The precision of most editable length fields is increased from 0.01 to
+       0.001.
+
+     * The minimum zoom is extended from 4% to 1%.
+
+     * Work has begun on menu sensitivity and configurability, but has been
+       disabled in the release.
+
+Packaging, documentation, examples
+
+     * The windows installer has now a modular structure that allows the
+       selection of separate features such as examples, tutorials, or
+       translations. All options are supported for a silent installation.
+     * Windows packages now contain the release notes (NEWS file), authors
+       and translators lists, the README file, the GPL and the LGPL license
+       files.
+     * The Inkscape man page is updated with additional examples.
+     * The About dialog now more closely resembles the stock Gtk About
+       dialog. A full list of authors and translators, as well as the license
+       are now viewable.
+
+Translations
+
+     * The MacOS X package now includes interface translations and reads the
+       user language setting, as specified in System Preferences, to use the
+       corresponding translation language.
+     * Many interface and tutorial translations have been updated.
+
+Important bugfixes
+
+     * A systematic error when scaling objects with stroke via the Selector
+       controls panel (W and H fields) is fixed.
+     * In stroke dash patterns in CSS, comma separators were erroneously
+       replaced by spaces upon writing the document. For now, Inkscape will
+       still be capable of reading both space-separated and comma-separated
+       lists (for compatibility with old files), but it now always writes
+       correct comma-separated lists on output.
+     * Due to a bug, Inkscape tended to replace relative paths to embedded
+       images by absolute, which made them fail after moving a document to
+       another computer; this is fixed.
+     * The precision of most boolean operations and offsets is improved,
+       especially noticeably for small paths.
+     * In text on path, in some cases letters were distributed unevenly along
+       a curve; this is now fixed.
+     * Searching by text in the Find dialog (Ctrl+F) was broken, now fixed.
+     * Some of the stock markers were missing in the marker menus in the Fill
+       & Stroke dialog.
+     * The bounding box of a stroke with markers now includes the markers.
+
+Internal progress
+
+     * Source documentation: the big goal is to have a brief description for
+       classes and most functions in every source file; this now holds for
+       more than 100 files of the 1350 files in the source code. The doxygen
+       index file now shows many useful links to external documentation and a
+       categorization of main directory files which should be useful for
+       beginners in particular.
+     * Removed trailing fractional zeros in SVG for cleaner and more compact
+       markup.
+     * C++ Encapsulation: the View class hierarchy has been reimplemented in
+       C++, after separating the widget classes from each class. The number
+       of dependencies on the central file desktop.h (about 100) was reduced
+       by half.
+
+Known issues
+
+    Windows 95/98/ME support
+
+     * Due to issues in GTK 2.8 beyond our control this version of Inkscape
+       will not work on Windows 95/98/ME. Please do not send us crash reports
+       from those platforms. We hope to be able to resume support for these
+       platforms in the future, but no specific committments can be made at
+       this point.
+
+    Problems on Linux under KDE
+
+     * SuSE, Fedora Core 4: Inkscape and other GTK programs are known to
+       crash if the KDE Baghira theme and the package gtk_qt_engine are
+       installed. If you experience Inkscape crashes on KDE, please try to
+       install a different theme from Baghira, or uninstall the gtk_qt_engine
+       package from your system.
+     * Kubuntu: For similar reasons, Inkscape can crash on Kubuntu Breezy
+       when, at the same time, the gtk2-engines-smooth package is installed.
+       Removing it resolves the problem. Both problems also affect older
+       versions of Inkscape.
+
+    Pressure and tilt sensitivity
+
+     * Pressure and tilt sensitivity do not currently work on MacOS X, due to
+       a limitation of the MacOS X version of X11.
+     * There are known issues with the current version of the X.org server
+       not releasing events on extended devices that use pressure
+       sensitivity. What that translates to is you can start a stroke, but
+       when you lift your pen, the stroke won't end (and will just continue
+       when you put your pen back on the tablet). This seem to be linked to
+       the usage of /dev/psaux for the mouse instead of /dev/input/mouseXX,
+       see http://linuxwacom.sourceforge.net/index.php/howto/mouse1)
+     * The current version of GTK for Windows has a bug that affects tilt
+       sensitivity.
+
+    Inkboard
+
+     * Imported bitmaps are not transmitted to other users in a whiteboard
+       session.
+     * At present, Inkboard relies on Loudmouth 
+       (http://loudmouth.imendio.org/) to provide Jabber connectivity, 
+       which means that it is limited to Linux builds of Inkscape. 
+       Inkboard is currently being redesigned to use a cross-platform 
+       Jabber client; this redesign will be present in a future release.
+     * Inkboard cannot yet connect to Google Talk clients. This will be
+       remedied in a future release. (The reason is because it expects the
+       "server" portion of a Jabber ID to be the same as the server that it
+       contacts, which is not the case for the Google Talk network.)
+     * Inkboard's handling of concurrent modifications is still very rough.
+       Future releases will make this more robust.
+
+   See http://sourceforge.net/tracker/?group_id=93438&atid=604306 for a
+   full list of known issues. If you find a bug not listed here, then please
+   report the bug: see instructions at http://inkscape.org/report_bugs.php 
+   (the Report Bugs link from http://inkscape.org/).
+
+Previous releases
+
+     * ReleaseNotes042 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes042)
+     * ReleaseNotes041 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes041)
+     * ReleaseNotes040 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes040)
+     * ReleaseNotes039 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes039)
+     * ReleaseNotes038 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes038)
+     * ReleaseNotes037 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes037)
+     * ReleaseNotes036 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes036)
+     * ReleaseNotes035 (http://inkscape.org/cgi-bin/wiki.pl?ReleaseNotes035)

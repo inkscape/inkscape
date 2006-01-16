@@ -1,0 +1,17 @@
+<inkscape-extension>
+    <_name>EPS Input</_name>
+    <id>org.inkscape.input.eps</id>
+    <dependency type="extension">org.inkscape.input.ps</dependency>
+    <dependency type="executable">gs</dependency>
+    <input>
+        <extension>.eps</extension>
+        <mimetype>image/x-encapsulated-postscript</mimetype>
+        <_filetypename>Encapsulated Postscript (*.eps)</_filetypename>
+        <_filetypetooltip>Encapsulated Postscript</_filetypetooltip>
+        <output_extension>org.inkscape.output.eps</output_extension>
+    </input>
+    <script>
+        <command reldir="path">gs -q -sDEVICE=pswrite -sOutputFile=- -dNOPAUSE -dBATCH -dSAFER -dDEVICEWIDTH=250000 -dDEVICEHEIGHT=250000</command>
+        <helper_extension>org.inkscape.input.ps</helper_extension>
+    </script>
+</inkscape-extension>

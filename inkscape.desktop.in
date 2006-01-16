@@ -1,0 +1,19 @@
+[Desktop Entry]
+_Name=Inkscape SVG Vector Illustrator
+_Comment=Create and edit Scalable Vector Graphics images
+
+Encoding=UTF-8
+Version=1.0
+
+Type=Application
+Categories=Application;Graphics;VectorGraphics;GTK;
+
+MimeType=image/svg+xml
+
+FilePattern=inkscape
+Exec=inkscape %F
+TryExec=inkscape
+Terminal=false
+StartupNotify=true
+
+Icon=inkscape.png

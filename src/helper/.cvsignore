@@ -1,0 +1,9 @@
+Makefile
+Makefile.in
+.deps
+.libs
+sp-marshal.cpp
+sp-marshal.h
+makefile
+.dirstamp
+*-test

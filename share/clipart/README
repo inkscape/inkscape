@@ -1,0 +1,25 @@
+This directory is for collecting user-supplied clipart for use with
+SVG editors such as Inkscape.  
+
+Where possible please organize clipart collections into
+topic-oriented sub-directories.  For example, "street_signs",
+"landscape_symbols", "flowchart_symbols", or "geometric_shapes".
+
+The the time of submission please send an email containing your email
+address, a copyright statement with your real name and the current year,
+and the license you permit reuse of the art under.  
+
+We will only include clipart submissions under open source or public
+domain licenses.  We prefer Public Domain for simplicity, but will take
+work under licenses such as Artistic, BSD or LGPL.  If you have
+questions about the meaning of various licenses, please see
+www.open-source.org and www.creativecommons.org.
+
+If you choose to place your work In the Public Domain, you will need to
+fill out a form at the CC site to make it legal:
+
+    http://creativecommons.org/license/publicdomain-2 
+
+This will generate an RDF receipt that you should include with your
+submission.  If you submit a package of clipart, you need only include
+one copy of the public domain receipt for the whole package.

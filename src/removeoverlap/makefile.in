@@ -1,0 +1,17 @@
+# Convenience stub makefile to call the real Makefile.
+
+@SET_MAKE@
+
+# Explicit so that it's the default rule.
+all:
+	cd .. && $(MAKE) removeoverlap/all
+
+clean %.a %.o:
+	cd .. && $(MAKE) removeoverlap/$@
+
+.PHONY: all clean
+
+OBJEXT = @OBJEXT@
+
+.SUFFIXES:
+.SUFFIXES: .a .$(OBJEXT)

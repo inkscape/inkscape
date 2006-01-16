@@ -1,0 +1,13 @@
+<inkscape-extension>
+    <_name>Extract One Image</_name>
+    <id>org.ekips.filter.extractimage</id>
+	<dependency type="executable" location="extensions">extractimage.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="filepath" type="string" _gui-text="Path to Save Image">none</param>
+    <effect>
+		<object-type>all</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">extractimage.py</command>
+    </script>
+</inkscape-extension>

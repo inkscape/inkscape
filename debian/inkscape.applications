@@ -1,0 +1,7 @@
+inkscape
+	command=inkscape
+	name=inkscape
+	can_open_multiple_files=true
+	expects_uris=false
+	requires_terminal=false
+	mime_types=image/svg,image/svg+xml

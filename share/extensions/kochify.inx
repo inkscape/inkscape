@@ -1,0 +1,12 @@
+<inkscape-extension>
+    <_name>Kochify</_name>
+    <id>org.ekips.filter.kochify</id>
+	<dependency type="executable" location="extensions">kochify.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+    <effect>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">kochify.py</command>
+    </script>
+</inkscape-extension>

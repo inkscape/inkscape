@@ -1,0 +1,343 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+[encoding: UTF-8] +
+inkscape.desktop.in
+src/application/editor.cpp
+src/arc-context.cpp
+src/attributes.cpp
+src/color.cpp
+src/connector-context.cpp
+src/desktop-affine.cpp
+src/desktop-events.cpp
+src/desktop-handles.cpp
+src/desktop.cpp
+src/dialogs/clonetiler.cpp
+src/dialogs/debugdialog.cpp
+src/dialogs/dialog-events.cpp
+src/dialogs/display-settings.cpp
+src/dialogs/export.cpp
+src/dialogs/filedialog-win32.cpp
+src/dialogs/filedialog.cpp
+src/dialogs/fill-style.cpp
+src/dialogs/find.cpp
+src/dialogs/iconpreview.cpp
+src/dialogs/in-dt-coordsys.cpp
+src/dialogs/item-properties.cpp
+src/dialogs/layer-properties.cpp
+src/dialogs/object-attributes.cpp
+src/dialogs/object-properties.cpp
+src/dialogs/rdf.cpp
+src/dialogs/sp-attribute-widget.cpp
+src/dialogs/stroke-style.cpp
+src/dialogs/swatches.cpp
+src/dialogs/text-edit.cpp
+src/dialogs/tiledialog.cpp
+src/dialogs/xml-tree.cpp
+src/dir-util.cpp
+src/display/bezier-utils.cpp
+src/display/canvas-arena.cpp
+src/display/canvas-bpath.cpp
+src/display/canvas-grid.cpp
+src/display/curve.cpp
+src/display/gnome-canvas-acetate.cpp
+src/display/guideline.cpp
+src/display/nr-arena-glyphs.cpp
+src/display/nr-arena-group.cpp
+src/display/nr-arena-image.cpp
+src/display/nr-arena-item.cpp
+src/display/nr-arena-shape.cpp
+src/display/nr-arena.cpp
+src/display/nr-gradient-gpl.cpp
+src/display/nr-plain-stuff-gdk.cpp
+src/display/nr-plain-stuff.cpp
+src/display/sodipodi-ctrl.cpp
+src/display/sodipodi-ctrlrect.cpp
+src/display/sp-canvas-util.cpp
+src/display/sp-canvas.cpp
+src/display/sp-ctrlline.cpp
+src/document-undo.cpp
+src/document.cpp
+src/draw-anchor.cpp
+src/draw-context.cpp
+src/dropper-context.cpp
+src/dyna-draw-context.cpp
+src/event-context.cpp
+src/extension/db.cpp
+src/extension/dependency.cpp
+src/extension/extension.cpp
+src/extension/error-file.cpp
+src/extension/implementation/implementation.cpp
+src/extension/implementation/script.cpp
+src/extension/init.cpp
+src/extension/internal/eps-out.cpp
+src/extension/internal/gdkpixbuf-input.cpp
+src/extension/internal/gnome.cpp
+src/extension/internal/grid.cpp
+src/extension/internal/ps-out.cpp
+src/extension/internal/ps.cpp
+src/extension/internal/svg.cpp
+src/extension/internal/win32.cpp
+src/extension/prefdialog.cpp
+src/extension/system.cpp
+src/extract-uri.cpp
+src/file.cpp
+src/fixes.cpp
+src/geom.cpp
+src/gradient-chemistry.cpp
+src/gradient-context.cpp
+src/gradient-drag.cpp
+src/help.cpp
+src/helper/action.cpp
+src/helper/gnome-utils.cpp
+src/helper/png-write.cpp
+src/helper/stock-items.cpp
+src/helper/unit-menu.cpp
+src/helper/units.cpp
+src/helper/window.cpp
+src/inkjar/jar.cpp
+src/inkscape-stock.cpp
+src/inkscape.cpp
+src/inkview.cpp
+src/interface.cpp
+src/jabber_whiteboard/callbacks.cpp
+src/jabber_whiteboard/chat-handler.cpp
+src/jabber_whiteboard/connection-establishment.cpp
+src/jabber_whiteboard/invitation-confirm-dialog.cpp
+src/jabber_whiteboard/message-handler.cpp
+src/jabber_whiteboard/message-processors.cpp
+src/jabber_whiteboard/message-queue.cpp
+src/jabber_whiteboard/message-utilities.cpp
+src/jabber_whiteboard/session-file.cpp
+src/jabber_whiteboard/session-file-player.cpp
+src/jabber_whiteboard/session-file-selector.cpp
+src/jabber_whiteboard/session-manager.cpp
+src/knot.cpp
+src/knotholder.cpp
+src/libnr/nr-blit.cpp
+src/libnr/nr-compose-transform.cpp
+src/libnr/nr-compose.cpp
+src/libnr/nr-gradient.cpp
+src/libnr/nr-matrix-fns.cpp
+src/libnr/nr-matrix.cpp
+src/libnr/nr-object.cpp
+src/libnr/nr-path.cpp
+src/libnr/nr-pixblock-line.cpp
+src/libnr/nr-pixblock-pattern.cpp
+src/libnr/nr-pixblock-pixel.cpp
+src/libnr/nr-pixblock.cpp
+src/libnr/nr-point-fns.cpp
+src/libnr/nr-rect-l.cpp
+src/libnr/nr-rect.cpp
+src/libnr/nr-rotate-fns.cpp
+src/libnr/nr-svp-render.cpp
+src/libnr/nr-svp.cpp
+src/libnr/nr-types.cpp
+src/libnr/nr-values.cpp
+src/libnrtype/FontFactory.cpp
+src/libnrtype/FontInstance.cpp
+src/libnrtype/RasterFont.cpp
+src/libnrtype/TextWrapper.cpp
+src/libnrtype/font-style-to-pos.cpp
+src/libnrtype/nr-type-pos-def.cpp
+src/libnrtype/nr-type-primitives.cpp
+src/livarot/AVL.cpp
+src/livarot/AlphaLigne.cpp
+src/livarot/BitLigne.cpp
+src/livarot/MySeg.cpp
+src/livarot/Path.cpp
+src/livarot/PathConversion.cpp
+src/livarot/PathCutting.cpp
+src/livarot/PathOutline.cpp
+src/livarot/PathSimplify.cpp
+src/livarot/PathStroke.cpp
+src/livarot/Shape.cpp
+src/livarot/ShapeDraw.cpp
+src/livarot/ShapeMisc.cpp
+src/livarot/ShapeRaster.cpp
+src/livarot/ShapeSweep.cpp
+src/main.cpp
+src/marker-status.cpp
+src/menus-skeleton.h
+src/message-context.cpp
+src/message-stack.cpp
+src/mod360.cpp
+src/node-context.cpp
+src/nodepath.cpp
+src/object-edit.cpp
+src/object-ui.cpp
+src/path-chemistry.cpp
+src/pen-context.cpp
+src/pencil-context.cpp
+src/prefix.cpp
+src/prefs-utils.cpp
+src/print.cpp
+src/rect-context.cpp
+src/rubberband.cpp
+src/satisfied-guide-cns.cpp
+src/selcue.cpp
+src/select-context.cpp
+src/selection-chemistry.cpp
+src/selection-describer.cpp
+src/selection.cpp
+src/seltrans-handles.cpp
+src/seltrans.cpp
+src/shortcuts.cpp
+src/slideshow.cpp
+src/sp-anchor.cpp
+src/sp-clippath.cpp
+src/sp-cursor.cpp
+src/sp-defs.cpp
+src/sp-ellipse.cpp
+src/sp-flowregion.cpp
+src/sp-flowtext.cpp
+src/sp-gradient.cpp
+src/sp-guide.cpp
+src/sp-image.cpp
+src/sp-item-group.cpp
+src/sp-item-notify-moveto.cpp
+src/sp-item-rm-unsatisfied-cns.cpp
+src/sp-item-transform.cpp
+src/sp-item-update-cns.cpp
+src/sp-item.cpp
+src/sp-line.cpp
+src/sp-marker.cpp
+src/sp-mask.cpp
+src/sp-metrics.cpp
+src/sp-namedview.cpp
+src/sp-object-group.cpp
+src/sp-object-repr.cpp
+src/sp-object.cpp
+src/sp-offset.cpp
+src/sp-paint-server.cpp
+src/sp-path.cpp
+src/sp-pattern.cpp
+src/sp-polygon.cpp
+src/sp-polyline.cpp
+src/sp-rect.cpp
+src/sp-root.cpp
+src/sp-shape.cpp
+src/sp-spiral.cpp
+src/sp-star.cpp
+src/sp-symbol.cpp
+src/sp-text.cpp
+src/sp-use-reference.cpp
+src/sp-use.cpp
+src/spiral-context.cpp
+src/splivarot.cpp
+src/star-context.cpp
+src/streams-gzip.cpp
+src/streams-handles.cpp
+src/streams-jar.cpp
+src/streams-zlib.cpp
+src/style.cpp
+src/svg-view.cpp
+src/svg/gnome-canvas-bpath-util.cpp
+src/svg/itos.cpp
+src/svg/round.cpp
+src/svg/svg-affine.cpp
+src/svg/svg-color.cpp
+src/svg/svg-length.cpp
+src/svg/svg-path.cpp
+src/text-chemistry.cpp
+src/text-context.cpp
+src/tools-switch.cpp
+src/trace/potrace/inkscape-potrace.cpp
+src/trace/trace.cpp
+src/ui/dialog/aboutbox.cpp
+src/ui/dialog/align-and-distribute.cpp
+src/ui/dialog/document-preferences.cpp
+src/ui/dialog/export.cpp
+src/ui/dialog/fill-and-stroke.cpp
+src/ui/dialog/find.cpp
+src/ui/dialog/inkscape-preferences.cpp
+src/ui/dialog/memory.cpp
+src/ui/dialog/messages.cpp
+src/ui/dialog/scriptdialog.cpp
+src/ui/dialog/session-player.cpp
+src/ui/dialog/text-properties.cpp
+src/ui/dialog/tracedialog.cpp
+src/ui/dialog/transformation.cpp
+src/ui/dialog/whiteboard-connect.cpp
+src/ui/dialog/whiteboard-sharewithchat.cpp
+src/ui/dialog/whiteboard-sharewithuser.cpp
+src/ui/stock-items.cpp
+src/ui/view/edit.cpp
+src/ui/widget/panel.cpp
+src/ui/widget/color-picker.cpp
+src/ui/widget/selected-style.cpp
+src/ui/widget/page-sizer.cpp
+src/ui/widget/panel.cpp
+src/ui/widget/toolbox.cpp
+src/ui/widget/zoom-status.cpp
+src/uri-references.cpp
+src/uri.cpp
+src/verbs.cpp
+src/version.cpp
+src/widgets/button.cpp
+src/widgets/dash-selector.cpp
+src/widgets/desktop-widget.cpp
+src/widgets/font-selector.cpp
+src/widgets/gradient-image.cpp
+src/widgets/gradient-selector.cpp
+src/widgets/gradient-toolbar.cpp
+src/widgets/gradient-vector.cpp
+src/widgets/icon.cpp
+src/widgets/layer-selector.cpp
+src/widgets/paint-selector.cpp
+src/widgets/ruler.cpp
+src/widgets/select-toolbar.cpp
+src/widgets/sp-color-gtkselector.cpp
+src/widgets/sp-color-notebook.cpp
+src/widgets/sp-color-preview.cpp
+src/widgets/sp-color-scales.cpp
+src/widgets/sp-color-selector.cpp
+src/widgets/sp-color-slider.cpp
+src/widgets/sp-color-wheel-selector.cpp
+src/widgets/sp-color-wheel.cpp
+src/widgets/sp-widget.cpp
+src/widgets/sp-xmlview-attr-list.cpp
+src/widgets/sp-xmlview-content.cpp
+src/widgets/sp-xmlview-tree.cpp
+src/widgets/spinbutton-events.cpp
+src/widgets/spw-utilities.cpp
+src/widgets/toolbox.cpp
+src/winmain.cpp
+src/xml/repr-css.cpp
+src/xml/repr-io.cpp
+src/xml/repr-util.cpp
+src/xml/repr.cpp
+src/zoom-context.cpp
+[type: gettext/xml] share/extensions/addnodes.inx
+[type: gettext/xml] share/extensions/ai_input.inx
+[type: gettext/xml] share/extensions/ai_output.inx
+[type: gettext/xml] share/extensions/dia.inx
+[type: gettext/xml] share/extensions/dots.inx
+[type: gettext/xml] share/extensions/dropshadow.inx
+[type: gettext/xml] share/extensions/dxf_input.inx
+[type: gettext/xml] share/extensions/dxf_output.inx
+[type: gettext/xml] share/extensions/embedimage.inx
+[type: gettext/xml] share/extensions/eps_input.inx
+[type: gettext/xml] share/extensions/epsi_output.inx
+[type: gettext/xml] share/extensions/ffmet.inx
+[type: gettext/xml] share/extensions/ffms.inx
+[type: gettext/xml] share/extensions/ffset.inx
+[type: gettext/xml] share/extensions/ffss.inx
+[type: gettext/xml] share/extensions/handles.inx
+[type: gettext/xml] share/extensions/interp.inx
+[type: gettext/xml] share/extensions/kochify.inx
+[type: gettext/xml] share/extensions/kochify_load.inx
+[type: gettext/xml] share/extensions/lindenmayer.inx
+[type: gettext/xml] share/extensions/motion.inx
+[type: gettext/xml] share/extensions/pdf_output.inx
+[type: gettext/xml] share/extensions/ps_input.inx
+[type: gettext/xml] share/extensions/radiusrand.inx
+[type: gettext/xml] share/extensions/rtree.inx
+[type: gettext/xml] share/extensions/sk_input.inx
+[type: gettext/xml] share/extensions/straightseg.inx
+[type: gettext/xml] share/extensions/summersnight.inx
+[type: gettext/xml] share/extensions/svgz_input.inx
+[type: gettext/xml] share/extensions/svgz_output.inx
+[type: gettext/xml] share/extensions/txt2svg.inx
+[type: gettext/xml] share/extensions/wavy.inx
+[type: gettext/xml] share/extensions/whirl.inx
+[type: gettext/xml] share/extensions/wmf_input.inx

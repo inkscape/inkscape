@@ -1,0 +1,71 @@
+###########################################################################
+#
+# Makefile for testing DOM code
+#
+###########################################################################
+
+
+CC = gcc
+CXX = g++
+
+INC = -I.
+CFLAGS = -g -Wall
+LIBS =
+
+OBJ = \
+charclass.o      \
+cssparser.o      \
+domimpl.o        \
+domstream.o      \
+domstring.o      \
+lsimpl.o         \
+smilimpl.o       \
+stringstream.o   \
+svgimpl.o        \
+svglsimpl.o      \
+svgparser.o      \
+uri.o            \
+uristream.o      \
+xmlreader.o      \
+xpathimpl.o      \
+xpathparser.o
+
+all: testsvg uritest xpathtest
+
+testdom: libdom.a testdom.o
+	$(CXX) -o testdom testdom.o libdom.a $(LIBS)
+
+testsvg: libdom.a testsvg.o
+	$(CXX) -o testsvg testsvg.o libdom.a $(LIBS)
+
+uritest: libdom.a uritest.o
+	$(CXX) -o uritest uritest.o libdom.a $(LIBS)
+
+xpathtest: libdom.a xpathtest.o
+	$(CXX) -o xpathtest xpathtest.o libdom.a $(LIBS)
+
+libdom.a: $(OBJ)
+	ar crv libdom.a $(OBJ)
+
+.cpp.o:
+	$(CXX) $(CFLAGS) $(INC) -c -o $@ $<
+
+clean:
+	-$(RM) *.o
+	-$(RM) *.a
+	-$(RM) *.gch
+	-$(RM) *.class
+	-$(RM) testdom
+	-$(RM) testdom.exe
+	-$(RM) testsvg
+	-$(RM) testsvg.exe
+	-$(RM) uritest
+	-$(RM) uritest.exe
+	-$(RM) xpathtest
+	-$(RM) xpathtest.exe
+	-$(RM) core.*
+
+###########################################################################
+# E N D    O F    F I L E
+###########################################################################
+

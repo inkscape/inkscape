@@ -1,0 +1,20 @@
+# Simple unit configuration file
+#
+# This is a space-delimited list of unit definitions.
+
+# name        name_plural  abbr type           factor   PRI description
+# ---------------------------------------------------------------------------
+  %           %            %    DIMENSIONLESS  1.00     Y   Percentage
+  pixel       pixels       px   LINEAR         1.00     Y   CSS Pixels (90/inch)
+  point       points       pt   LINEAR         1.25     N   PostScript points (72/inch)
+  pica        picas        pc   LINEAR         15.0     N   12 points
+  inch        inches       in   LINEAR         90.0     N   Inches (90 px/in)
+  millimeter  millimeters  mm   LINEAR         3.543307 N   Millimeters (25.4 mm/in)
+  centimeter  centimeters  cm   LINEAR         35.43307 N   Centimeters (10 mm/cm)
+  meter       meters       m    LINEAR         3543.307 N   Meters (100 cm/m)
+  foot        feet         ft   LINEAR         1080     N   Feet (12 in/ft)
+  degree      degrees      deg  RADIAL         1.00     Y   Degrees
+  radian      radians      rad  RADIAL         57.296   N   Radians (57.296 deg/rad)
+  font-height font-heights em   FONT_HEIGHT    1.00     Y   Font height
+  x-height    x-heights    ex   FONT_HEIGHT    0.50     N   Height of letter 'x'
+  half-em     half-ems     en   FONT_HEIGHT    0.50     N   Half of font height

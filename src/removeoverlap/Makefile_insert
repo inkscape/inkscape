@@ -1,0 +1,31 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+removeoverlap/all: removeoverlap/libremoveoverlap.a
+
+removeoverlap/clean:
+	rm -f removeoverlap/libremoveoverlap.a $(removeoverlap_libremoveoverlap_a_OBJECTS)
+
+removeoverlap_libremoveoverlap_a_SOURCES =	\
+	removeoverlap/block.cpp	\
+	removeoverlap/block.h	\
+	removeoverlap/blocks.cpp	\
+	removeoverlap/blocks.h	\
+	removeoverlap/constraint.cpp	\
+	removeoverlap/constraint.h	\
+	removeoverlap/generate-constraints.cpp	\
+	removeoverlap/generate-constraints.h	\
+	removeoverlap/remove_rectangle_overlap.cpp	\
+	removeoverlap/remove_rectangle_overlap.h	\
+	removeoverlap/removeoverlap.cpp	\
+	removeoverlap/removeoverlap.h	\
+	removeoverlap/solve_VPSC.cpp	\
+	removeoverlap/solve_VPSC.h	\
+	removeoverlap/variable.cpp	\
+	removeoverlap/variable.h	\
+	removeoverlap/pairingheap/dsexceptions.h	\
+	removeoverlap/pairingheap/PairingHeap.cpp	\
+	removeoverlap/pairingheap/PairingHeap.h
+
+removeoverlap_remove_rectangle_overlap_test_SOURCES =	\
+	removeoverlap/remove_rectangle_overlap-test.cpp
+removeoverlap_remove_rectangle_overlap_test_LDADD = removeoverlap/libremoveoverlap.a -lglib-2.0

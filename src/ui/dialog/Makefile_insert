@@ -1,0 +1,63 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ui/dialog/all: ui/dialog/libuidialog.a
+
+ui/dialog/clean:
+	rm -f ui/dialog/libuidialog.a $(ui_libuidialog_a_OBJECTS)
+
+if WITH_INKBOARD
+inkboard_dialogs = \
+	ui/dialog/session-player.cpp	\
+	ui/dialog/session-player.h	\
+	ui/dialog/whiteboard-connect.cpp \
+	ui/dialog/whiteboard-connect.h \
+	ui/dialog/whiteboard-sharewithuser.cpp \
+	ui/dialog/whiteboard-sharewithuser.h \
+	ui/dialog/whiteboard-sharewithchat.cpp \
+	ui/dialog/whiteboard-sharewithchat.h
+endif
+
+ui_dialog_libuidialog_a_SOURCES =		\
+	ui/dialog/dialog-manager.cpp		\
+	ui/dialog/dialog-manager.h		\
+	ui/dialog/dialog.cpp			\
+	ui/dialog/dialog.h			\
+	ui/dialog/align-and-distribute.cpp	\
+	ui/dialog/align-and-distribute.h	\
+	ui/dialog/document-metadata.cpp  	\
+	ui/dialog/document-metadata.h    	\
+	ui/dialog/document-properties.cpp	\
+	ui/dialog/document-properties.h	\
+	ui/dialog/export.cpp			\
+	ui/dialog/export.h			\
+	ui/dialog/extension-editor.cpp		\
+	ui/dialog/extension-editor.h		\
+	ui/dialog/fill-and-stroke.cpp		\
+	ui/dialog/fill-and-stroke.h		\
+	ui/dialog/find.cpp			\
+	ui/dialog/find.h			\
+	ui/dialog/inkscape-preferences.cpp	\
+	ui/dialog/inkscape-preferences.h	\
+	ui/dialog/layer-editor.cpp		\
+	ui/dialog/layer-editor.h		\
+	ui/dialog/memory.cpp			\
+	ui/dialog/memory.h			\
+	ui/dialog/messages.cpp			\
+	ui/dialog/messages.h			\
+	ui/dialog/scriptdialog.cpp		\
+	ui/dialog/scriptdialog.h		\
+	ui/dialog/text-properties.cpp		\
+	ui/dialog/text-properties.h		\
+	ui/dialog/tracedialog.cpp		\
+	ui/dialog/tracedialog.h			\
+	ui/dialog/transformation.cpp		\
+	ui/dialog/transformation.h		\
+	ui/dialog/tree-editor.cpp		\
+	ui/dialog/tree-editor.h			\
+	$(inkboard_dialogs)	\
+	ui/dialog/xml-editor.cpp		\
+	ui/dialog/xml-editor.h			\
+	ui/dialog/aboutbox.cpp		\
+	ui/dialog/aboutbox.h
+
+ui/dialog/aboutbox.$(OBJEXT): inkscape_version.h

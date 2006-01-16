@@ -1,0 +1,10 @@
+.deps
+.dirstamp
+.libs
+Makefile
+Makefile.in
+makefile
+*-test
+test-xml
+test-xml.cpp
+test-xml-main.cpp

@@ -1,0 +1,339 @@
+## Makefile.am fragment, included by src/Makefile.am.
+
+
+# ################################################
+#
+#  E X T R A 
+#
+# ################################################
+
+if PLATFORM_WIN32
+win32_sources = winmain.cpp
+win32ldflags = -lcomdlg32
+endif 
+
+if INKJAR
+inkjar_dir = inkjar
+inkjar_libs = inkjar/libinkjar.a
+endif
+
+
+# ################################################
+#
+#  I N K S C A P E
+#
+# ################################################
+
+# libinkpre.a: any object that's sharable between inkscape & inkview,
+# and isn't needed by object files in subdirectories (i.e. libinkpre.a
+# comes before subdirectory libraries on the link line).
+#
+# Excludes winmain.cpp (a gui wrapper around main): I'm guessing that
+# it needs to be explicitly listed as a source of each graphical
+# binary: it isn't (to my knowledge) called by main (whether directly
+# or indirectly), so I don't think that putting it in a library will
+# suffice to get it linked in.  Windows devel please confirm.  -- pjrm.
+
+libinkpre_a_SOURCES =	\
+	algorithms/find-last-if.h	\
+	algorithms/longest-common-suffix.h	\
+	approx-equal.h remove-last.h	\
+	arc-context.cpp arc-context.h	\
+	attributes.cpp attributes.h	\
+	bad-uri-exception.h	\
+	brokenimage.xpm	\
+	color-rgba.h	\
+	conn-avoid-ref.cpp conn-avoid-ref.h	\
+	connector-context.cpp connector-context.h	\
+	context-fns.cpp context-fns.h \
+	desktop-affine.cpp desktop-affine.h	\
+	desktop-events.cpp desktop-events.h	\
+	desktop-handles.cpp desktop-handles.h	\
+	desktop-style.cpp desktop-style.h	\
+	desktop.cpp desktop.h	\
+	document-undo.cpp	\
+	document.cpp document.h document-private.h	\
+	draw-anchor.cpp	\
+	draw-anchor.h	\
+	draw-context.cpp draw-context.h	\
+	dropper-context.cpp dropper-context.h	\
+	dyna-draw-context.cpp dyna-draw-context.h	\
+	enums.h	\
+	event-context.cpp event-context.h	\
+	extract-uri.cpp extract-uri.h	\
+	file.cpp file.h	\
+	fontsize-expansion.cpp fontsize-expansion.h	\
+	forward.h	\
+	geom.cpp geom.h	\
+	gnuc-attribute.h	\
+	gradient-context.cpp gradient-context.h \
+	gradient-drag.cpp gradient-drag.h \
+	help.cpp help.h	\
+	inkscape-stock.cpp inkscape-stock.h\
+	inkscape.cpp inkscape.h inkscape-private.h	\
+	interface.cpp interface.h	\
+	isnan.h \
+	knot-enums.h	\
+	knot-holder-entity.h	\
+	knot.cpp knot.h	\
+	knotholder.cpp knotholder.h	\
+	layer-fns.cpp layer-fns.h	\
+	macros.h	\
+	marker-status.cpp marker-status.h	\
+	media.cpp media.h	\
+	message-context.cpp message-context.h \
+	message-stack.cpp message-stack.h \
+	message.h \
+	mod360.cpp mod360.h	\
+	modifier-fns.h	\
+	node-context.cpp node-context.h	\
+	nodepath.cpp nodepath.h	\
+	object-edit.cpp object-edit.h	\
+	object-hierarchy.cpp object-hierarchy.h \
+	object-ui.cpp object-ui.h	\
+	path-chemistry.cpp path-chemistry.h	\
+	path-prefix.h	\
+	pen-context.cpp	\
+	pen-context.h	\
+	pencil-context.cpp	\
+	pencil-context.h	\
+	preferences.cpp preferences.h \
+	preferences-skeleton.h	\
+	menus-skeleton.h	\
+	prefix.cpp	\
+	prefix.h	\
+	prefs-utils.cpp	\
+	prefs-utils.h	\
+	print.cpp print.h	\
+	rect-context.cpp rect-context.h	\
+	require-config.h \
+	rubberband.cpp rubberband.h	\
+	satisfied-guide-cns.cpp satisfied-guide-cns.h	\
+	selcue.cpp selcue.h \
+	select-context.cpp select-context.h	\
+	selection-chemistry.cpp selection-chemistry.h	\
+	selection-describer.cpp selection-describer.h   \
+	selection.cpp selection.h	\
+	seltrans-handles.cpp seltrans-handles.h	\
+	seltrans.cpp seltrans.h	\
+	shortcuts-default-xml.cpp	\
+	shortcuts.cpp shortcuts.h	\
+	slideshow.cpp slideshow.h	\
+	snap.cpp snap.h	\
+	snapped-point.cpp snapped-point.h \
+	snapper.cpp snapper.h \
+	line-snapper.cpp line-snapper.h \
+	grid-snapper.cpp grid-snapper.h \
+	guide-snapper.cpp guide-snapper.h \
+	object-snapper.cpp object-snapper.h \
+	sp-anchor.cpp sp-anchor.h	\
+	sp-clippath.cpp sp-clippath.h	\
+	sp-conn-end-pair.cpp sp-conn-end-pair.h	\
+	sp-conn-end.cpp sp-conn-end.h	\
+	sp-cursor.cpp sp-cursor.h	\
+	sp-defs.cpp sp-defs.h	\
+	sp-ellipse.cpp sp-ellipse.h	\
+	sp-flowdiv.h sp-flowdiv.cpp \
+	sp-flowregion.h sp-flowregion.cpp \
+	sp-flowtext.h sp-flowtext.cpp \
+	sp-gradient-fns.h	\
+	sp-gradient-reference.cpp	\
+	sp-gradient-reference.h	\
+	sp-gradient-spread.h	\
+	sp-gradient-units.h	\
+	sp-gradient-vector.h	\
+	sp-gradient.cpp sp-gradient.h	\
+	sp-guide-attachment.h	\
+	sp-guide-constraint.h	\
+	sp-guide.cpp sp-guide.h	\
+	sp-image.cpp sp-image.h	\
+	sp-item-group.cpp sp-item-group.h	\
+	sp-item-notify-moveto.cpp sp-item-notify-moveto.h	\
+	sp-item-rm-unsatisfied-cns.cpp sp-item-rm-unsatisfied-cns.h	\
+	sp-item-transform.cpp sp-item-transform.h	\
+	sp-item-update-cns.cpp sp-item-update-cns.h	\
+	sp-item.cpp sp-item.h	\
+	sp-line.cpp sp-line.h	\
+	sp-linear-gradient-fns.h	\
+	sp-linear-gradient.h	\
+	sp-marker-loc.h	\
+	sp-marker.cpp sp-marker.h	\
+	sp-mask.cpp sp-mask.h	\
+	sp-metadata.cpp sp-metadata.h	\
+	sp-metric.h	\
+	sp-metrics.cpp sp-metrics.h	\
+	sp-namedview.cpp sp-namedview.h	\
+	sp-object-group.cpp sp-object-group.h	\
+	sp-object-repr.cpp sp-object-repr.h	\
+	sp-object.cpp sp-object.h	\
+	sp-offset.cpp sp-offset.h	\
+	sp-paint-server.cpp sp-paint-server.h	\
+	sp-path.cpp sp-path.h	\
+	sp-pattern.cpp sp-pattern.h	\
+	sp-polygon.cpp sp-polygon.h	\
+	sp-polyline.cpp sp-polyline.h	\
+	sp-radial-gradient-fns.h	\
+	sp-radial-gradient.h	\
+	sp-rect.cpp sp-rect.h	\
+	sp-root.cpp sp-root.h	\
+	sp-shape.cpp sp-shape.h	\
+	sp-spiral.cpp sp-spiral.h	\
+	sp-star.cpp sp-star.h	\
+	sp-stop-fns.h	\
+	sp-stop.h	\
+	sp-string.cpp sp-string.h	\
+	sp-symbol.cpp sp-symbol.h	\
+	sp-text.cpp sp-text.h	\
+	sp-textpath.h	\
+	sp-tspan.cpp sp-tspan.h	\
+	sp-use-reference.cpp sp-use-reference.h	\
+	sp-use.cpp sp-use.h	\
+	spiral-context.cpp spiral-context.h	\
+	splivarot.cpp splivarot.h	\
+	star-context.cpp star-context.h	\
+	streams-gzip.h streams-gzip.cpp	\
+	streams-handles.h streams-handles.cpp	\
+	streams-jar.h streams-jar.cpp	\
+	streams-zlib.h streams-zlib.cpp	\
+	style.cpp style.h	\
+	sp-style-elem.cpp sp-style-elem.h	\
+	svg-profile.h \
+	svg-view.cpp svg-view.h	\
+	svg-view-widget.cpp svg-view-widget.h	\
+	text-chemistry.cpp text-chemistry.h	\
+	text-context.cpp text-context.h	\
+	text-editing.cpp text-editing.h	\
+	text-tag-attributes.h	\
+	tools-switch.cpp tools-switch.h\
+	uri-references.cpp uri-references.h	\
+	verbs.cpp verbs.h	\
+	version.cpp version.h	\
+	zoom-context.cpp zoom-context.h
+
+# Force libinkpost.a to be rebuilt if we add files to libinkpost_a_SOURCES.
+libinkpost_a_DEPENDENCIES = Makefile_insert
+
+# libinkpost.a: Any object file that needs to be near the end of the link line.
+# gradient-chemistry.o is called by some things in display/.
+libinkpost_a_SOURCES =	\
+	color.cpp color.h	\
+	decimal-round.h	\
+	dir-util.cpp dir-util.h	\
+	fill-or-stroke.h	\
+	fixes.cpp \
+	gc-alloc.h	\
+	gc-anchored.h gc-anchored.cpp	\
+	gc-core.h	\
+	gc-finalized.h	\
+	gc-managed.h	\
+	gc.cpp	\
+	gradient-chemistry.cpp gradient-chemistry.h	\
+	memeq.h	\
+	round.h	\
+	streq.h	\
+	strneq.h	\
+	composite-undo-stack-observer.h \
+	composite-undo-stack-observer.cpp \
+	undo-stack-observer.h \
+	unit-constants.h	\
+	uri.cpp uri.h
+
+inkscape_private_libs =	\
+	libinkpre.a		\
+	application/libinkapp.a	\
+	ui/dialog/libuidialog.a	\
+	dialogs/libspdialogs.a	\
+        dom/libdom.a            \
+	jabber_whiteboard/libjabber_whiteboard.a \
+	trace/libtrace.a	\
+	svg/libspsvg.a		\
+	widgets/libspwidgets.a	\
+	display/libspdisplay.a	\
+	helper/libspchelp.a	\
+	libcroco/libcroco.a	\
+	libnrtype/libnrtype.a	\
+	libnr/libnr.a		\
+	libavoid/libavoid.a	\
+	livarot/libvarot.a	\
+	ui/view/libuiview.a	\
+	ui/libui.a		\
+	ui/widget/libuiwidget.a	\
+	removeoverlap/libremoveoverlap.a		\
+	extension/libextension.a	\
+	extension/implementation/libimplementation.a	\
+	extension/internal/libinternal.a	\
+	extension/script/libscript.a	\
+	xml/libspxml.a		\
+	util/libinkutil.a	\
+	io/libio.a	        \
+	$(inkjar_libs)		\
+	libinkpost.a		\
+	debug/libinkdebug.a
+
+all_libs =			\
+	$(inkscape_private_libs)	\
+	$(INKSCAPE_LIBS)	\
+	$(GNOME_PRINT_LIBS)	\
+	$(GNOME_VFS_LIBS)	\
+	$(XFT_LIBS)		\
+	$(FREETYPE_LIBS)	\
+	$(kdeldadd)		\
+	$(win32ldflags)		\
+	$(PERL_LDFLAGS)		\
+	$(PYTHON_LIBS)	\
+	$(LIBLOUDMOUTH_LIBS) 
+
+desktop.$(OBJEXT): helper/sp-marshal.h
+document.$(OBJEXT): helper/sp-marshal.h inkscape_version.h
+extension/internal/latex-pstricks.$(OBJEXT): inkscape_version.h
+extension/internal/ps.$(OBJEXT): inkscape_version.h
+inkscape.$(OBJEXT): helper/sp-marshal.h inkscape_version.h
+knot.$(OBJEXT): helper/sp-marshal.h
+main.$(OBJEXT): inkscape_version.h
+selection.$(OBJEXT): helper/sp-marshal.h
+sp-object.$(OBJEXT): helper/sp-marshal.h
+sp-root.$(OBJEXT): inkscape_version.h
+view.$(OBJEXT): helper/sp-marshal.h
+help.$(OBJEXT): inkscape_version.h
+
+
+# ################################################
+#
+#  B I N A R I E S
+#
+# ################################################
+
+
+inkscape_SOURCES = main.cpp $(win32_sources)
+inkscape_LDADD = $(all_libs)
+inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
+
+inkview_SOURCES = inkview.cpp $(win32_sources)
+inkview_LDADD = $(all_libs)
+
+attributes_test_SOURCES = attributes-test.cpp
+attributes_test_LDADD = attributes.$(OBJEXT) -lglib-2.0
+
+dir_util_test_SOURCES = dir-util-test.cpp utest/test-2ary-cases.h
+dir_util_test_LDADD = dir-util.$(OBJEXT) -lglib-2.0
+
+mod360_test_SOURCES = mod360-test.cpp
+mod360_test_LDADD = libinkpre.a -lglib-2.0
+
+extract_uri_test_SOURCES = extract-uri-test.cpp
+extract_uri_test_LDADD = libinkpre.a -lglib-2.0
+
+round_test_SOURCES = round-test.cpp
+round_test_LDADD = libinkpost.a
+
+sp_gradient_test_SOURCES = sp-gradient-test.cpp
+sp_gradient_test_LDADD = $(all_libs) 
+
+sp_style_elem_test_SOURCES = sp-style-elem-test.cpp
+sp_style_elem_test_LDADD = $(all_libs)
+
+style_test_SOURCES = style-test.cpp
+style_test_LDADD = $(all_libs)
+
+inkscape_version.h: ../configure.ac
+	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h

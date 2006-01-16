@@ -1,0 +1,232 @@
+###########################################################################
+# $Id$
+# File: Makefile.mingw.common
+# Does: Common definitions for all Makefile.mingw files
+# Author: Bob Jamison & the Inkscape Guys
+###########################################################################
+
+####### Sense whether we are on a DOS box or cross-compiling
+ifdef ComSpec
+BUILD=native
+DOSSHELL=CMD_EXE
+else
+ifdef COMSPEC
+BUILD=native
+DOSSHELL=COMMAND_COM
+else
+BUILD=cross
+endif
+endif
+
+
+
+
+##########################################################################
+# FILE SEPARATORS
+# $(S) will be set to one of these
+##########################################################################
+BSLASH := \\#
+FSLASH := /
+
+
+
+##########################################################################
+# CROSS / NATIVE    SWITCHES
+##########################################################################
+ifeq ($(BUILD),cross)
+
+
+
+##########################################################################
+# CROSS COMPILER SETTINGS
+##########################################################################
+
+CC      = i686-pc-mingw32-gcc
+CXX     = i686-pc-mingw32-g++
+AS      = i686-pc-mingw32-as
+AR      = i686-pc-mingw32-ar
+RANLIB  = i686-pc-mingw32-ranlib
+WINDRES = i686-pc-mingw32-windres
+LD      = i686-pc-mingw32-ld
+DLLWRAP = i686-pc-mingw32-dllwrap
+DLLTOOL = i686-pc-mingw32-dlltool
+
+####### file separator
+S = $(FSLASH)
+
+####### escape character for echo
+E = /
+
+####### file manipulation programs
+CP     = cp
+RMDIR  = rm -rf 
+MKDIR  = mkdir
+CPDIR  = cp -rf 
+MSGFMT = msgfmt
+RMREC  = find ./inkscape -type f -name 
+RMREC1 = |xargs $(RM)
+RMDIRREC = find ./inkscape -type d -name
+RMDIRREC1 = |xargs $(RMDIR)
+
+####### Where is your GTK directory?
+GTK=/target
+
+####### Same thing, file system style
+GTKDOS=$(GTK)
+
+DTG := $(shell date +%y%m%d.%H%M)
+
+else
+
+##########################################################################
+# NATIVE COMPILER SETTINGS
+##########################################################################
+
+CC      = mingw32-gcc
+CXX     = mingw32-g++
+AS      = as
+AR      = mingw32-ar
+RANLIB  = ranlib
+WINDRES = windres
+DLLWRAP = dllwrap
+DLLTOOL = dlltool
+
+####### file separator
+S = $(BSLASH)
+
+####### escape character for echo
+E = 
+
+####### file manipulation programs
+CP = copy
+
+####### are we on WinNt and beyond?
+ifeq ($(DOSSHELL),CMD_EXE)
+RMDIR = rmdir /s /q
+RM    = del
+else
+RMDIR = deltree /y
+RM    = del
+endif
+MKDIR = mkdir
+CPDIR = xcopy /e /i
+RMREC = cd  inkscape & $(RM) /s /q 
+RMREC1 = & cd ..
+RMDIRREC = cd inkscape & $(RMDIR) /s 
+RMDIRREC1 = & cd ..
+
+#######  Where is your GTK directory?
+GTK=c:/gtk28
+
+####### Same thing, DOS style
+GTKDOS=c:\gtk28
+
+####### Command to process .po files --> .mo
+MSGFMT = $(GTKDOS)$(S)bin$(S)msgfmt
+
+####### change me!!
+DTG := 20050626
+
+endif
+##########################################################################
+# END    CROSS / NATIVE    SWITCHES
+##########################################################################
+
+
+###### VERSION NUMBER
+# VERSION_NR = 0.41+devel
+# VERSION = \"$(VERSION_NR)-${DTG}\"
+
+VERSION_NR = 0.43+devel
+VERSION = \"$(VERSION_NR)\"
+
+####### the XP_WIN def is necessary for libjs.a
+CFLAGS = -O3  -Wall -mms-bitfields -DVERSION=$(VERSION) \
+-DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
+
+####### Inkboard abilities.
+####### You must 'make -f Makefile.mingw clean' when turning this on or off
+#CFLAGS += -DWITH_INKBOARD
+
+
+####### IMPLICIT RULES
+.cpp.o:
+	$(CXX) $(CFLAGS) $(INC) -c -o $@ $<
+
+.c.o:
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+
+
+
+
+##########################################################################
+# INCLUDES AND LIBRARIES
+##########################################################################
+
+GTKINC = -DGLIBMM_DLL \
+-I$(GTK)/include/glibmm-2.4 -I$(GTK)/lib/glibmm-2.4/include \
+-I$(GTK)/include/gtkmm-2.4  -I$(GTK)/lib/gtkmm-2.4/include \
+-I$(GTK)/include/gdkmm-2.4  -I$(GTK)/lib/gdkmm-2.4/include \
+-I$(GTK)/include/pangomm-1.4 \
+-I$(GTK)/include/atkmm-1.6 -I$(GTK)/include/cairo  \
+-I$(GTK)/include/sigc++-2.0 -I$(GTK)/lib/sigc++-2.0/include \
+-I$(GTK)/include/gtk-2.0 -I$(GTK)/lib/gtk-2.0/include \
+-I$(GTK)/include/atk-1.0 -I$(GTK)/include/pango-1.0 \
+-I$(GTK)/include/glib-2.0 -I$(GTK)/lib/glib-2.0/include
+
+
+####### Our Gtk libs
+####### we removed the '-Wl,--enable-runtime-pseudo-reloc' option, as
+####### it proved to be very dangerous
+####### with Gtk::TreeViewColumn
+GTKLIB = -L$(GTK)/lib -lloudmouth-1 \
+-lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4 \
+-latkmm-1.6 -lpangomm-1.4 -lsigc-2.0 \
+-lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0 \
+-lgdk_pixbuf-2.0 -lm -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0 \
+-lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0
+
+####### For PERL
+####### (note: perl's config.h has some nested comments)
+PERLINC = -Wno-comment -I$(GTK)/perl/lib/CORE
+PERLLIB = -L$(GTK)/perl/lib/CORE -lperl58
+
+####### For Python
+PYTHONINC = -I$(GTK)/python/include
+PYTHONLIB = -L$(GTK)/python/libs -lpython24
+#PYTHONLIB = -L$(GTK)/python/libs/libpython24.a
+
+####### remove -DLIBXML_STATIC 
+INC = -I. -I.. -I../.. $(GTKINC) -I$(GTK)/include \
+$(PERLINC) $(PYTHONINC) -I$(GTK)/include/loudmouth-1.0 \
+-I$(GTK)/include/libxml2 -I$(GTK)/include/freetype2 \
+
+
+LIBS = $(GTKLIB) $(PERLLIB) $(PYTHONLIB) \
+$(GTK)/bin/libxml2.dll \
+$(GTK)/lib/iconv.lib	\
+-lfreetype.dll -lfontconfig.dll  \
+-lpng -lpopt $(GTK)/lib/zdll.lib \
+-lgc -mwindows -lws2_32 -lintl
+
+
+##########################################################################
+# END INCLUDES AND LIBRARIES
+##########################################################################
+
+
+
+
+##########################################################################
+# E N D     O F     F I L E
+##########################################################################
+
+
+
+
+
+
+
+
+

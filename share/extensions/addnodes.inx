@@ -1,0 +1,13 @@
+<inkscape-extension>
+    <_name>Add Nodes</_name>
+    <id>org.ekips.filter.addnodes</id>
+	<dependency type="executable" location="extensions">addnodes.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="max" type="float" min="0.0" max="10000.0" _gui-text="Maximum Segment Length">10.0</param>
+    <effect>
+		<object-type>path</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">addnodes.py</command>
+    </script>
+</inkscape-extension>

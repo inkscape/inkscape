@@ -1,0 +1,51 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+#
+# Miscellaneous unsystematized and temporary helper utilities
+#
+# libspchelp - canvas utilities, specific canvas items
+#
+
+helper/all: helper/libspchelp.a
+
+helper/clean:
+	rm -f helper/libspchelp.a $(helper_libspchelp_a_OBJECTS)
+
+helper/unit-menu.$(OBJEXT): helper/sp-marshal.h
+
+helper_libspchelp_a_SOURCES =	\
+	helper/action.cpp	\
+	helper/action.h	\
+	helper/gnome-utils.cpp	\
+	helper/gnome-utils.h	\
+	helper/helper-forward.h	\
+	helper/png-write.cpp	\
+	helper/png-write.h	\
+	helper/sp-marshal.cpp	\
+	helper/sp-marshal.h	\
+	helper/stlport.h	\
+	helper/unit-menu.cpp	\
+	helper/unit-menu.h	\
+	helper/units.cpp	\
+	helper/units.h	\
+	helper/window.cpp	\
+	helper/window.h		\
+	helper/stock-items.cpp	\
+	helper/stock-items.h	
+
+
+# TODO: Check that the generated sp-marshal.h is the same as before.
+helper/sp-marshal.h: helper/sp-marshal.list
+	glib-genmarshal --prefix=sp_marshal --header $(srcdir)/helper/sp-marshal.list > helper/tmp.$$$$	\
+	 && mv helper/tmp.$$$$ helper/sp-marshal.h
+
+helper/sp-marshal.cpp: helper/sp-marshal.list helper/sp-marshal.h
+	( echo '#include "helper/sp-marshal.h"' &&	\
+	  glib-genmarshal --prefix=sp_marshal --body $(srcdir)/helper/sp-marshal.list )	\
+	 > helper/tmp.$$$$	\
+	 && mv helper/tmp.$$$$ helper/sp-marshal.cpp
+
+helper/sp-marshal.cpp helper/sp-marshal.h: Makefile
+
+helper_units_test_SOURCES = helper/units-test.cpp
+helper_units_test_LDADD = helper/libspchelp.a -lglib-2.0

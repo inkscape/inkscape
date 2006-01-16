@@ -1,0 +1,207 @@
+#ifndef __INK_EXTENSION_H__
+#define __INK_EXTENSION_H__
+
+/** \file
+ * Frontend to certain, possibly pluggable, actions.
+ */
+
+/*
+ * Authors:
+ *   Ted Gould <ted@gould.cx>
+ *
+ * Copyright (C) 2002-2005 Authors
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
+#include <ostream>
+#include <fstream>
+#include <vector>
+#include <gtkmm/widget.h>
+#include <glibmm/ustring.h>
+#include "xml/repr.h"
+#include "extension/extension-forward.h"
+
+/** The key that is used to identify that the I/O should be autodetected */
+#define SP_MODULE_KEY_AUTODETECT "autodetect"
+/** This is the key for the SVG input module */
+#define SP_MODULE_KEY_INPUT_SVG "org.inkscape.input.svg"
+#define SP_MODULE_KEY_INPUT_SVGZ "org.inkscape.input.svgz"
+/** Specifies the input module that should be used if none are selected */
+#define SP_MODULE_KEY_INPUT_DEFAULT SP_MODULE_KEY_AUTODETECT
+/** The key for outputing standard W3C SVG */
+#define SP_MODULE_KEY_OUTPUT_SVG "org.inkscape.output.svg.plain"
+#define SP_MODULE_KEY_OUTPUT_SVGZ "org.inkscape.output.svgz.plain"
+/** This is an output file that has SVG data with the Sodipodi namespace extensions */
+#define SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE "org.inkscape.output.svg.inkscape"
+#define SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE "org.inkscape.output.svgz.inkscape"
+/** Which output module should be used? */
+#define SP_MODULE_KEY_OUTPUT_DEFAULT SP_MODULE_KEY_AUTODETECT
+
+/** Defines the key for Postscript printing */
+#define SP_MODULE_KEY_PRINT_PS    "org.inkscape.print.ps"
+/** Defines the key for LaTeX printing */
+#define SP_MODULE_KEY_PRINT_LATEX    "org.inkscape.print.latex"
+/** Defines the key for printing with GNOME Print */
+#define SP_MODULE_KEY_PRINT_GNOME "org.inkscape.print.gnome"
+/** Defines the key for printing under Win32 */
+#define SP_MODULE_KEY_PRINT_WIN32 "org.inkscape.print.win32"
+#ifdef WIN32
+/** Defines the default printing to use */
+#define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_WIN32
+#else
+#ifdef WITH_GNOME_PRINT
+/** Defines the default printing to use */
+#define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_GNOME
+#else
+/** Defines the default printing to use */
+#define SP_MODULE_KEY_PRINT_DEFAULT  SP_MODULE_KEY_PRINT_PS
+#endif
+#endif
+
+/** Mime type for SVG */
+#define MIME_SVG "image/svg+xml"
+
+/** Name of the extension error file */
+#define EXTENSION_ERROR_LOG_FILENAME  "extension-errors.log"
+
+namespace Inkscape {
+namespace Extension {
+
+/** The object that is the basis for the Extension system.  This object
+    contains all of the information that all Extension have.  The
+    individual items are detailed within. This is the interface that
+    those who want to _use_ the extensions system should use.  This
+    is most likely to be those who are inside the Inkscape program. */
+class Extension {
+public:
+    /** An enumeration to identify if the Extension has been loaded or not. */
+    typedef enum {
+        STATE_LOADED,      /**< The extension has been loaded successfully */
+        STATE_UNLOADED,    /**< The extension has not been loaded */
+        STATE_DEACTIVATED  /**< The extension is missing something which makes it unusable */
+    } state_t;
+    static std::vector<const gchar *> search_path; /**< A vector of paths to search for extensions */
+
+private:
+    gchar     *id;                        /**< The unique identifier for the Extension */
+    gchar     *name;                      /**< A user friendly name for the Extension */
+    state_t    _state;                    /**< Which state the Extension is currently in */
+    std::vector<Dependency *>  _deps;     /**< Dependencies for this extension */
+    static std::ofstream error_file;      /**< This is the place where errors get reported */
+
+protected:
+    Inkscape::XML::Node *repr;                         /**< The XML description of the Extension */
+    Implementation::Implementation * imp; /**< An object that holds all the functions for making this work */
+    ExpirationTimer * timer;              /**< Timeout to unload after a given time */
+
+public:
+                  Extension    (Inkscape::XML::Node * in_repr,
+                                Implementation::Implementation * in_imp);
+    virtual      ~Extension    (void);
+
+    void          set_state    (state_t in_state);
+    state_t       get_state    (void);
+    bool          loaded       (void);
+    virtual bool  check        (void);
+    Inkscape::XML::Node *      get_repr     (void);
+    gchar *       get_id       (void);
+    gchar *       get_name     (void);
+    void          deactivate   (void);
+    bool          deactivated  (void);
+    void          printFailure (Glib::ustring reason);
+
+
+/* Parameter Stuff */
+private:
+    GSList * parameters; /**< A table to store the parameters for this extension.
+                              This only gets created if there are parameters in this
+                              extension */
+
+public:
+    /** An error class for when a parameter is called on a type it is not */
+    class param_wrong_type {};
+    
+    /** An error class for when a parameter is looked for that just 
+     * simply doesn't exist */
+    class param_not_exist {};
+    
+    /** An error class for when a filename already exists, but the user 
+     * doesn't want to overwrite it */
+    class no_overwrite {};
+
+private:
+    void             make_param       (Inkscape::XML::Node * paramrepr);
+#if 0
+    inline param_t * param_shared     (const gchar * name,
+                                       GSList * list);
+#endif
+public:
+    bool             get_param_bool   (const gchar * name,
+                                       const Inkscape::XML::Document *   doc = NULL);
+    int              get_param_int    (const gchar * name,
+                                       const Inkscape::XML::Document *   doc = NULL);
+    float            get_param_float  (const gchar * name,
+                                       const Inkscape::XML::Document *   doc = NULL);
+    const gchar *    get_param_string (const gchar * name,
+                                       const Inkscape::XML::Document *   doc = NULL);
+    bool             set_param_bool   (const gchar * name,
+                                       bool          value,
+                                       Inkscape::XML::Document *   doc = NULL);
+    int              set_param_int    (const gchar * name,
+                                       int           value,
+                                       Inkscape::XML::Document *   doc = NULL);
+    float            set_param_float  (const gchar * name,
+                                       float         value,
+                                       Inkscape::XML::Document *   doc = NULL);
+    const gchar *    set_param_string (const gchar * name,
+                                       const gchar * value,
+                                       Inkscape::XML::Document *   doc = NULL);
+
+    /* Error file handling */
+public:
+    static void      error_file_open  (void);
+    static void      error_file_close (void);
+
+public:
+    Gtk::Widget *    autogui (void);
+    Glib::ustring *  paramString (void);
+};
+
+
+
+/*
+
+This is a prototype for how collections should work.  Whoever gets
+around to implementing this gets to decide what a 'folder' and an
+'item' really is.  That is the joy of implementing it, eh?
+
+class Collection : public Extension {
+
+public:
+    folder  get_root (void);
+    int     get_count (folder);
+    thumbnail get_thumbnail(item);
+    item[]  get_items(folder);
+    folder[]  get_folders(folder);
+    metadata get_metadata(item);
+    image   get_image(item);
+
+};
+*/
+
+}  /* namespace Extension */
+}  /* namespace Inkscape */
+
+#endif /* __INK_EXTENSION_H__ */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

@@ -1,0 +1,25 @@
+
+util/all: util/libinkutil.a
+
+util/clean:
+	rm -f util/libinkutil.a $(util_libinkutil_a_OBJECTS)
+
+util_libinkutil_a_SOURCES = \
+	util/compose.hpp	\
+	util/ucompose.hpp	\
+	util/filter-list.h \
+	util/forward-pointer-iterator.h \
+	util/glib-list-iterators.h \
+	util/list.h \
+	util/list-container.h \
+	util/map-list.h \
+	util/reverse-list.h \
+	util/shared-c-string-ptr.h \
+	util/shared-c-string-ptr.cpp \
+	util/tuple.h \
+	util/units.cpp \
+	util/units.h
+
+util_list_container_test_SOURCES = util/list-container-test.cpp
+util_list_container_test_LDADD = gc.o $(INKSCAPE_LIBS)
+

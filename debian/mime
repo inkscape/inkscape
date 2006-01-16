@@ -1,0 +1,2 @@
+image/svg+xml; inkscape '%s'; description="Scalable Vector Graphics"; test=test "$DISPLAY" != ""
+image/svg; inkscape '%s'; description="Scalable Vector Graphics"; test=test "$DISPLAY" != ""

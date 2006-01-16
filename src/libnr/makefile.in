@@ -1,0 +1,17 @@
+# Convenience stub makefile to call the real Makefile.
+
+@SET_MAKE@
+
+# Explicit so that it's the default rule.
+all:
+	cd .. && $(MAKE) libnr/all
+
+clean %.a %.o:
+	cd .. && $(MAKE) libnr/$@
+
+.PHONY: all clean
+
+OBJEXT = @OBJEXT@
+
+.SUFFIXES:
+.SUFFIXES: .a .$(OBJEXT)
