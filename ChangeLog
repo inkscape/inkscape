@@ -1,11 +1,16 @@
+2006-01-16  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/svg/Makefile_insert: Updated to reflect a previous header
+	  file renaming.
+
 2006-01-12 Marco Scholten <mscholtn@xs4all.nl>
 
-    * /src/ui/dialog/inkscape-preferences.cpp & .h
-      Converted preferences dialog to gtkmm
-    * added /src/ui/widget/preferences-widget.cpp & .h
-    * src/verbs.cpp 
-      updated to start new dialog.
- 
+	* /src/ui/dialog/inkscape-preferences.cpp & .h:
+	  Converted preferences dialog to gtkmm
+	* src/ui/widget/preferences-widget.cpp & .h:
+	  New files.
+	* src/verbs.cpp: updated to start new dialog.
+
 2006-01-11  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/sp-item-group.cpp, src/sp-path.cpp, src/sp-star.cpp,
