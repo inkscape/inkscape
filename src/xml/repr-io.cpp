@@ -279,7 +279,7 @@ sp_repr_read_mem (const gchar * buffer, gint length, const gchar *default_ns)
 namespace Inkscape {
 
 struct compare_quark_ids {
-    bool operator()(Glib::QueryQuark const &a, Glib::QueryQuark const &b) {
+    bool operator()(Glib::QueryQuark const &a, Glib::QueryQuark const &b) const {
         return a.id() < b.id();
     }
 };
