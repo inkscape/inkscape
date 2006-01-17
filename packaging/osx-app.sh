@@ -158,8 +158,8 @@ ModuleFiles = "\${HOME}/.inkscape-etc/pango.modules"
 AliasFiles = "\${HOME}/.inkscape-etc/pangox.aliases"
 END_PANGO
 
-mkdir -p $pkgetc/fonts/
-cp /etc/fonts/* $pkgetc/fonts/
+# We use a modified fonts.conf file so only need the dtd
+cp /etc/fonts/fonts.dtd $pkgetc/fonts/
 
 mkdir -p $pkgetc/gtk-2.0
 sed -e "s,$SW,\${CWD},g" $SW/etc/gtk-2.0/gdk-pixbuf.loaders > $pkgetc/gtk-2.0/gdk-pixbuf.loaders

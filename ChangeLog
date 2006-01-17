@@ -1,3 +1,9 @@
+2006-01-17  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* packaging/osx-app.sh, packaging/macosx/Resources/etc/fonts/fonts.conf:
+	  Use a modified fonts.conf file for Mac OS X that includes the 
+	  standard user font directory ~/Library/Fonts.
+
 2006-01-16  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/svg/Makefile_insert: Updated to reflect a previous header
