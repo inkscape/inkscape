@@ -14,7 +14,9 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <gtk/gtk.h>
+#include <gtk/gtksignal.h>
+#include <gtk/gtkinputdialog.h>
+#include <glibmm/ustring.h>
 
 #include "../inkscape.h"
 #include "../macros.h"
@@ -91,8 +93,8 @@ sp_input_load_from_preferences (void)
             }
 
             const gchar *temp_ptr;
-            std::string::size_type pos0;
-            std::string::size_type pos1;
+            Glib::ustring::size_type pos0;
+            Glib::ustring::size_type pos1;
             gint i;
             gint j;
 
@@ -100,11 +102,11 @@ sp_input_load_from_preferences (void)
 
             temp_ptr = repr->attribute("axes");
             if (temp_ptr != NULL) {
-                const std::string temp_str = temp_ptr;
+                const Glib::ustring temp_str = temp_ptr;
                 pos0 = pos1 = 0;
                 for (i=0; i < device->num_axes; i++) {
                     pos1 = temp_str.find(";", pos0);
-                    if (pos1 == std::string::npos)
+                    if (pos1 == Glib::ustring::npos)
                         break;  // Too few axis specifications
 
                     axis_use = GDK_AXIS_IGNORE;
@@ -123,11 +125,11 @@ sp_input_load_from_preferences (void)
 
             temp_ptr = repr->attribute("keys");
             if (temp_ptr != NULL) {
-                const std::string temp_str = temp_ptr;
+                const Glib::ustring temp_str = temp_ptr;
                 pos0 = pos1 = 0;
                 for (i=0; i < device->num_keys; i++) {
                     pos1 = temp_str.find(";", pos0);
-                    if (pos1 == std::string::npos)
+                    if (pos1 == Glib::ustring::npos)
                         break;  // Too few key specifications
 
                     gtk_accelerator_parse(temp_str.substr(pos0, pos1-pos0).c_str(), &keyval, &modifier);
@@ -153,7 +155,7 @@ sp_input_save_to_preferences (void)
 
     for (list_ptr = gdk_devices_list(); list_ptr != NULL; list_ptr = list_ptr->next) {
         gint i;
-        std::string temp_attribute;
+        Glib::ustring temp_attribute;
         GdkDevice *device = static_cast<GdkDevice *>(list_ptr->data);
 
         repr = sp_repr_lookup_child(devices, "id", device->name);
