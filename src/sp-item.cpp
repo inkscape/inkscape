@@ -889,6 +889,7 @@ sp_item_adjust_stroke (SPItem *item, gdouble ex)
     if (style && style->stroke.type != SP_PAINT_TYPE_NONE && !NR_DF_TEST_CLOSE (ex, 1.0, NR_EPSILON)) {
 
         style->stroke_width.computed *= ex;
+        style->stroke_width.set = TRUE;
 
         if (style->stroke_dash.n_dash != 0) {
             int i;
