@@ -467,7 +467,7 @@ void InkscapePreferences::initPageMisc()
     _misc_recent.init("options.maxrecentdocuments", "value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
     _page_misc.add_line( false, _("Max recent documents:"), _misc_recent, "", 
                            _("The maximum length of the Open Recent list in the File menu"), false);
-    _misc_simpl.init("options.simplifythreshold", "value", 0.0, 1.0, 0.001, 0.01, 0.002, false, false);
+    _misc_simpl.init("options.simplifythreshold", "value", 0.0001, 1.0, 0.0001, 0.001, 0.001, false, false);
     _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "", 
                            _("How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
     int const num_items = 5;

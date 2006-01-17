@@ -215,7 +215,7 @@ void PrefSpinButton::init(const std::string& prefs_path, const std::string& attr
     if (is_int) 
         this->set_digits(0);
     else if (step_increment < 0.1)
-        this->set_digits(3);
+        this->set_digits(4);
     else
         this->set_digits(2);
 
