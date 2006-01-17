@@ -7,7 +7,7 @@
 #
 # ################################################
 
-if PLATFORM_WIN32
+if OS_WIN32
 win32_sources = winmain.cpp
 win32ldflags = -lcomdlg32
 endif 
@@ -279,7 +279,7 @@ all_libs =			\
 	$(FREETYPE_LIBS)	\
 	$(kdeldadd)		\
 	$(win32ldflags)		\
-	$(PERL_LDFLAGS)		\
+	$(PERL_LIBS)		\
 	$(PYTHON_LIBS)	\
 	$(LIBLOUDMOUTH_LIBS) 
 
