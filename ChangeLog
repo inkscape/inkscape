@@ -1,3 +1,12 @@
+2006-01-15 Marco Scholten <mscholtn@xs4all.nl>
+
+    * /src/ui/dialog/inkscape-preferences.cpp
+      Added style swatches,
+      Changed Gtk::Requisition Gtk::Widget::size_request() to 	
+      void Gtk::Widget::size_request(const Requisition& requisition)	
+    * /src/ui/dialog/preferences-widget.cpp & .h
+      Added DialogPage::set_tip()
+
 2006-01-17  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* packaging/osx-app.sh, packaging/macosx/Resources/etc/fonts/fonts.conf:

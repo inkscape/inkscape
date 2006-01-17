@@ -94,6 +94,7 @@ public:
     DialogPage();
     void add_line(bool indent, const Glib::ustring label, Gtk::Widget& widget, const Glib::ustring suffix, const Glib::ustring& tip, bool expand = true);
     void add_group_header(Glib::ustring name);
+    void set_tip(Gtk::Widget& widget, const Glib::ustring& tip);
 protected:
     Gtk::Tooltips _tooltips;
 };

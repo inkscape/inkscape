@@ -16,6 +16,7 @@
 
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/alignment.h>
 
 #include "prefs-utils.h"
 #include "inkscape-preferences.h"
@@ -30,6 +31,7 @@
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "xml/repr.h"
+#include "ui/widget/style-swatch.h"
 
 namespace Inkscape {
 namespace UI {
@@ -46,7 +48,9 @@ InkscapePreferences::InkscapePreferences()
     sb->set_width_chars(6);
     this->get_vbox()->add(*sb);
     this->show_all_children();
-    _sb_width = sb->size_request().width;
+    Gtk:: Requisition sreq;
+    sb->size_request(sreq);
+    _sb_width = sreq.width;
     this->get_vbox()->remove(*sb);
     delete sb;
 
@@ -203,28 +207,7 @@ void InkscapePreferences::AddGradientCheckbox(DialogPage& p, const std::string& 
     p.add_line( false, "", *cb, "", _("Whether selected objects display gradient editing controls"));
 }
 
-void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& prefs_path)
-{
-    PrefRadioButton* current = Gtk::manage( new PrefRadioButton);
-    PrefRadioButton* own = Gtk::manage( new PrefRadioButton);
-    Gtk::Button* button = Gtk::manage( new Gtk::Button(_("Take from selection"),true));
-
-    own->changed_signal.connect( sigc::mem_fun(*button, &Gtk::Button::set_sensitive) );
-    button->signal_clicked().connect(sigc::bind( sigc::ptr_fun(InkscapePreferences::StyleFromSelectionToTool), prefs_path.c_str() ) );
-
-    current->init ( _("Last used style"), prefs_path, "usecurrent", 1, true, 0);
-    own->init ( _("This tool's own style:"), prefs_path, "usecurrent", 0, false, current);
-
-    p.add_group_header( _("Create new objects with:"));
-    p.add_line( true, "", *current, "",
-                _("Apply the style you last set on an object"));
-    p.add_line( true, "", *own, "",
-                _("Each tool may store its own style to apply to the newly created objects. Use the button below to set it."));
-    p.add_line( true, "", *button, "",
-                _("Remember the style of the (first) selected object as this tool's style"));
-}
-
-void InkscapePreferences::StyleFromSelectionToTool(gchar const *prefs_path)
+void StyleFromSelectionToTool(gchar const *prefs_path, StyleSwatch *swatch)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)
@@ -261,6 +244,53 @@ void InkscapePreferences::StyleFromSelectionToTool(gchar const *prefs_path)
 
     sp_repr_css_change (inkscape_get_repr (INKSCAPE, prefs_path), css, "style");
     sp_repr_css_attr_unref (css);
+
+    // update the swatch
+    if (swatch) {
+        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, prefs_path);
+        if (tool_repr) {
+            SPCSSAttr *css = sp_repr_css_attr_inherited(tool_repr, "style");
+            swatch->setStyle (css);
+            sp_repr_css_attr_unref(css);
+        }
+    }
+}
+
+void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& prefs_path)
+{
+
+
+    p.add_group_header( _("Create new objects with:"));
+    PrefRadioButton* current = Gtk::manage( new PrefRadioButton);
+    current->init ( _("Last used style"), prefs_path, "usecurrent", 1, true, 0);
+    p.add_line( true, "", *current, "",
+                _("Apply the style you last set on an object"));
+
+    PrefRadioButton* own = Gtk::manage( new PrefRadioButton);
+    Gtk::HBox* hb = Gtk::manage( new Gtk::HBox);
+    Gtk::Alignment* align = Gtk::manage( new Gtk::Alignment);
+    own->init ( _("This tool's own style:"), prefs_path, "usecurrent", 0, false, current);
+    align->set(0,0,0,0);    
+    align->add(*own);
+    hb->add(*align);
+    p.set_tip( *own, _("Each tool may store its own style to apply to the newly created objects. Use the button below to set it."));
+    p.add_line( true, "", *hb, "", "");
+
+    // style swatch
+    Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, prefs_path.c_str());
+    Gtk::Button* button = Gtk::manage( new Gtk::Button(_("Take from selection"),true));
+    StyleSwatch *swatch = 0;
+    if (tool_repr) {
+        SPCSSAttr *css = sp_repr_css_attr_inherited(tool_repr, "style");
+        swatch = new StyleSwatch(css);
+        hb->add(*swatch);
+        sp_repr_css_attr_unref(css);
+    }
+
+    button->signal_clicked().connect( sigc::bind( sigc::ptr_fun(StyleFromSelectionToTool), prefs_path.c_str(), swatch)  );
+    own->changed_signal.connect( sigc::mem_fun(*button, &Gtk::Button::set_sensitive) );
+    p.add_line( true, "", *button, "",
+                _("Remember the style of the (first) selected object as this tool's style"));
 }
 
 void InkscapePreferences::initPageTools()
@@ -486,8 +516,10 @@ bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
     DialogPage* page = row[_page_list_columns._col_page];
     _page_frame.add(*page);
     this->show_all_children();
-    _max_dialog_width=std::max(_max_dialog_width, this->size_request().width);
-    _max_dialog_height=std::max(_max_dialog_height, this->size_request().height);
+    Gtk:: Requisition sreq;
+    this->size_request(sreq);
+    _max_dialog_width=std::max(_max_dialog_width, sreq.width);
+    _max_dialog_height=std::max(_max_dialog_height, sreq.height);
     _page_frame.remove();
     return false;
 }

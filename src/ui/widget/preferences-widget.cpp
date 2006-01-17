@@ -121,6 +121,11 @@ void DialogPage::add_group_header(Glib::ustring name)
     }
 }
 
+void DialogPage::set_tip(Gtk::Widget& widget, const Glib::ustring& tip)
+{
+    _tooltips.set_tip (widget, tip);
+}
+
 void PrefCheckButton::init(const Glib::ustring& label, const std::string& prefs_path, const std::string& attr, 
                            bool default_value)
 {
