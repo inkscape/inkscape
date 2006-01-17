@@ -1283,7 +1283,7 @@ cc_selection_changed(Inkscape::Selection *selection, gpointer data)
     
     if (cc->active_conn == item)
     {
-        // Noting to change.
+        // Nothing to change.
         return;
     }
     if (item == NULL)
