@@ -14,11 +14,19 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stdio.h>
-
-#include "forward.h"
-#include <extension/extension-forward.h>
+#include <glib/gslist.h>
 #include <gtk/gtkwidget.h>
+
+#include "extension/extension-forward.h"
+
+struct SPDesktop;
+struct SPDocument;
+
+namespace Inkscape {
+    namespace Extension {
+        struct Extension;
+    }
+}
 
 /*######################
 ## N E W

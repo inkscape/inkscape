@@ -22,9 +22,6 @@
 
 #include <helper/action.h>
 
-#include <glib.h>
-
-
 
 typedef enum {
 	SP_BUTTON_TYPE_NORMAL,

@@ -25,19 +25,19 @@ class SnappedPoint
 {
 public:
     SnappedPoint() {}
-    SnappedPoint(NR::Point p, NR::Coord d);
+    SnappedPoint(::NR::Point p, ::NR::Coord d);
     ~SnappedPoint();
 
     void addHighlightGroup(HighlightGroup *group);
     void addHighlightGroups(std::vector<HighlightGroup*> *groups);
 
-    NR::Coord getDistance() const;
+    ::NR::Coord getDistance() const;
     NR::Point getPoint() const;
     std::vector<HighlightGroup*> getHighlightGroups() const;
 
 private:
-    NR::Coord _distance;
-    NR::Point _point;
+    ::NR::Coord _distance;
+    ::NR::Point _point;
     std::vector<HighlightGroup*> _hightlight_groups;
 };
 

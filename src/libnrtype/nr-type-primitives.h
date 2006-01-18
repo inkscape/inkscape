@@ -11,7 +11,7 @@
  * This code is in public domain
  */
 
-#include <glib.h>
+#include <glib/gtypes.h>
 
 struct NRNameList;
 struct NRStyleList;

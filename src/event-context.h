@@ -18,27 +18,24 @@
  */
 
 #include <glib-object.h>
-#include <gtk/gtkwidget.h>
-
-#include "forward.h"
-
-namespace Inkscape {
-namespace XML {
-class Node;
-}
-}
-
-namespace NR {
-class Point;
-}
+#include <gdk/gdktypes.h>
+#include <gdk/gdkevents.h>
 
 struct GrDrag;
-
+struct SPDesktop;
+struct SPItem;
 struct SPKnotHolder;
 
+namespace NR {
+    class Point;
+}
+
 namespace Inkscape {
-  class MessageContext;
-  class SelCue;
+    class MessageContext;
+    class SelCue;
+    namespace XML {
+        class Node;
+    }
 }
 
 /**

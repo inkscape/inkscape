@@ -18,12 +18,7 @@
 #include <math.h>
 #include <glib/gstrfuncs.h>
 #include <glib/ghash.h>
-
 #include <glib/gutils.h>
-#if GLIB_CHECK_VERSION(2,9,0)
-#else
-# include <glib/gprintf.h>
-#endif
 
 #include "svg.h"
 

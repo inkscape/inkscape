@@ -12,15 +12,19 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "forward.h"
+#include <glib/gtypes.h>
+
+struct SPDesktop;
+struct SPDocument;
+struct SPEventContext;
 
 namespace Inkscape {
-namespace XML {
-class Node;
-class Document;
+    struct Application;
+    namespace XML {
+        class Node;
+        class Document;
+        }
 }
-}
-
 
 #define INKSCAPE inkscape_get_instance()
 

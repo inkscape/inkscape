@@ -10,7 +10,7 @@
 #ifndef SEEN_INKSCAPE_VERSION_H
 #define SEEN_INKSCAPE_VERSION_H
 
-#include <glib.h>
+#include <glib/gtypes.h>
 
 #define SVG_VERSION "1.0"
 #define SODIPODI_VERSION "0.32"

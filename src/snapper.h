@@ -27,7 +27,7 @@ namespace Inkscape
 class Snapper
 {
 public:
-    Snapper(SPNamedView const *nv, NR::Coord const d);
+    Snapper(SPNamedView const *nv, ::NR::Coord const d);
     virtual ~Snapper() {}
 
     /// Point types to snap.
@@ -38,10 +38,10 @@ public:
     typedef std::pair<PointType, NR::Point> PointWithType;
 
     void setSnapTo(PointType t, bool s);
-    void setDistance(NR::Coord d);
+    void setDistance(::NR::Coord d);
 
     bool getSnapTo(PointType t) const;
-    NR::Coord getDistance() const;
+    ::NR::Coord getDistance() const;
 
     bool willSnapSomething() const;
 
@@ -93,7 +93,7 @@ private:
                                             NR::Point const &c,
                                             std::list<SPItem const *> const &it) const = 0;
     
-    NR::Coord _distance; ///< snap distance (desktop coordinates)
+    ::NR::Coord _distance; ///< snap distance (desktop coordinates)
     int _snap_to; ///< bitmap of point types that we will snap to 
 };
 

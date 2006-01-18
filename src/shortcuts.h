@@ -10,8 +10,14 @@
  * This code is in public domain
  */
 
-#include <forward.h>
-
+namespace Inkscape {
+    class Verb;
+    namespace UI {
+        namespace View {
+            class View;
+        }
+    }
+}
 
 /* We define high-bit mask for packing into single int */
 

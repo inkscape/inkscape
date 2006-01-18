@@ -16,18 +16,20 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#include <vector>
 
+#include "display/nr-arena-forward.h"
+#include "sp-object.h"
 #include <libnr/nr-matrix.h>
 #include <libnr/nr-rect.h>
 
-#include "display/nr-arena-forward.h"
-#include "forward.h"
-#include "sp-object.h"
-#include <vector>
-
-namespace Inkscape { class URIReference; }
 class SPGuideConstraint;
-
+struct SPClipPathReference;
+struct SPMaskReference;
+struct SPAvoidRef;
+struct SPPrintContext;
+namespace Inkscape { class URIReference; }
+ 
 enum {
     SP_EVENT_INVALID,
     SP_EVENT_NONE,

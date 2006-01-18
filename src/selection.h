@@ -221,7 +221,7 @@ public:
     /** @brief Returns the bounding rectangle of the selection */
     NRRect *bounds(NRRect *dest) const;
     /** @brief Returns the bounding rectangle of the selection */
-    NR::Rect bounds() const;
+    ::NR::Rect bounds() const;
 
     /**
      * @brief Returns the bounding rectangle of the selection
@@ -235,7 +235,7 @@ public:
      *
      * \todo how is this different from bounds()?
      */
-    NR::Rect boundsInDocument() const;
+    ::NR::Rect boundsInDocument() const;
 
     /**
      * @brief Gets the selection's snap points.
