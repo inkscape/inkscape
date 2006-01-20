@@ -100,6 +100,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_OBJECT_NODES, "inkscape:object-nodes"},
     {SP_ATTR_INKSCAPE_CURRENT_LAYER, "inkscape:current-layer"},
     {SP_ATTR_INKSCAPE_DOCUMENT_UNITS, "inkscape:document-units"},
+    {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},
     /* SPGuide */
     {SP_ATTR_ORIENTATION, "orientation"},
     {SP_ATTR_POSITION, "position"},

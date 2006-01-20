@@ -323,6 +323,7 @@ static struct {char const *attr; bool supported;} const all_attrs[] = {
     {"inkscape:connection-start", true},
     {"inkscape:connection-end", true},
     {"inkscape:connector-avoid", true},
+    {"inkscape:connector-spacing", true},
     {"sodipodi:cx", true},
     {"sodipodi:cy", true},
     {"sodipodi:rx", true},

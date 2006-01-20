@@ -31,8 +31,9 @@
 #include "sp-namedview.h"
 #include "prefs-utils.h"
 #include "desktop.h"
+#include "conn-avoid-ref.h" // for defaultConnSpacing.
 
-#include "isnan.h" //temp fox for isnan().  include last
+#include "isnan.h" //temp fix for isnan().  include last
 
 #define DEFAULTTOLERANCE 0.4
 #define DEFAULTGRIDCOLOR 0x3f3fff25
@@ -117,6 +118,8 @@ static void sp_namedview_init(SPNamedView *nv)
     
     nv->default_layer_id = 0;
     
+    nv->connector_spacing = defaultConnSpacing;
+    
     new (&nv->grid_snapper) Inkscape::GridSnapper(nv, 0);
     new (&nv->guide_snapper) Inkscape::GuideSnapper(nv, 0);
     new (&nv->object_snapper) Inkscape::ObjectSnapper(nv, 0);
@@ -176,6 +179,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:object-paths");
     sp_object_read_attr(object, "inkscape:object-nodes");
     sp_object_read_attr(object, "inkscape:current-layer");
+    sp_object_read_attr(object, "inkscape:connector-spacing");
     
     /* Construct guideline list */
     
@@ -490,6 +494,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
 	case SP_ATTR_INKSCAPE_CURRENT_LAYER:
             nv->default_layer_id = value ? g_quark_from_string(value) : 0;
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+	case SP_ATTR_INKSCAPE_CONNECTOR_SPACING:
+            nv->connector_spacing = value ? g_ascii_strtod(value, NULL) :
+                    defaultConnSpacing;
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_DOCUMENT_UNITS: {

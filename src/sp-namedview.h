@@ -81,6 +81,8 @@ struct SPNamedView : public SPObjectGroup {
     bool has_abs_tolerance;
     
     GQuark default_layer_id;
+    
+    double connector_spacing;
 
     guint32 gridcolor;
     guint32 gridempcolor;

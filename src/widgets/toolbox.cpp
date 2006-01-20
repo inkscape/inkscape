@@ -47,6 +47,8 @@
 #include "helper/unit-menu.h"
 #include "helper/units.h"
 
+#include "inkscape.h"
+#include "conn-avoid-ref.h"
 
 
 #include "select-toolbar.h"
@@ -789,7 +791,7 @@ sp_stb_magnitude_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     // in turn, prevent listener from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    bool modmade = FALSE;
+    bool modmade = false;
 
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     GSList const *items = selection->itemList();
@@ -828,7 +830,7 @@ sp_stb_proportion_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     // in turn, prevent listener from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    bool modmade = FALSE;
+    bool modmade = false;
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
@@ -879,7 +881,7 @@ sp_stb_sides_flat_state_changed(GtkWidget *widget, GtkObject *tbl)
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     GSList const *items = selection->itemList();
     GtkWidget *prop_widget = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "prop_widget");
-    bool modmade = FALSE;
+    bool modmade = false;
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
         gtk_widget_set_sensitive(GTK_WIDGET(prop_widget), FALSE);
         for (; items != NULL; items = items->next) {
@@ -925,7 +927,7 @@ sp_stb_rounded_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     // in turn, prevent listener from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    bool modmade = FALSE;
+    bool modmade = false;
 
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     GSList const *items = selection->itemList();
@@ -962,7 +964,7 @@ sp_stb_randomized_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     // in turn, prevent listener from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    bool modmade = FALSE;
+    bool modmade = false;
 
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     GSList const *items = selection->itemList();
@@ -1603,7 +1605,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_n
 
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
-    bool modmade = FALSE;
+    bool modmade = false;
     for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
          items != NULL;
          items = items->next)
@@ -2098,7 +2100,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const 
 
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
-    bool modmade = FALSE;
+    bool modmade = false;
     for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
          items != NULL;
          items = items->next)
@@ -2173,7 +2175,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
     // in turn, prevent listener from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    bool modmade = FALSE;
+    bool modmade = false;
 
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
         for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
@@ -2991,11 +2993,89 @@ static void sp_connector_path_set_ignore(void)
 }
 
 
+static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
+{
+    // quit if run by the _changed callbacks
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+        
+    SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl),
+            "desktop");
+    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+
+    if (!sp_document_get_undo_sensitive(doc))
+    {
+        return;
+    }
+
+    // in turn, prevent callbacks from responding
+    g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
+    
+    double old_spacing = desktop->namedview->connector_spacing;
+        
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
+    
+    sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
+    SP_OBJECT(desktop->namedview)->updateRepr();
+    
+    GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
+    for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
+        SPItem *item = reinterpret_cast<SPItem *>(iter->data);
+        avoid_item_move(&NR::identity(), item);
+    }
+
+    if (items) {
+        g_slist_free(items);
+    }
+    
+    sp_document_done(doc);
+
+    g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
+    
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+
+static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
+        gchar const *name, gchar const *old_value, gchar const *new_value,
+        bool is_interactive, gpointer data)
+{
+    GtkWidget *tbl = GTK_WIDGET(data);
+
+    if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+        return;
+    }
+    if (strcmp(name, "inkscape:connector-spacing") != 0) {
+        return;
+    }
+
+    GtkAdjustment *adj = (GtkAdjustment*)
+            gtk_object_get_data(GTK_OBJECT(tbl), "spacing");
+    gdouble spacing = defaultConnSpacing;
+    sp_repr_get_double(repr, "inkscape:connector-spacing", &spacing);
+    
+    gtk_adjustment_set_value(adj, spacing);
+}
+
+
+static Inkscape::XML::NodeEventVector connector_tb_repr_events = {
+    NULL, /* child_added */
+    NULL, /* child_removed */
+    connector_tb_event_attr_changed,
+    NULL, /* content_changed */
+    NULL  /* order_changed */
+};
+
+
 static GtkWidget *
 sp_connector_toolbox_new(SPDesktop *desktop)
 {
     GtkTooltips *tt = gtk_tooltips_new();
     GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    
+    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
 
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
             AUX_BETWEEN_BUTTON_GROUPS);
@@ -3008,8 +3088,47 @@ sp_connector_toolbox_new(SPDesktop *desktop)
             "connector_ignore", GTK_SIGNAL_FUNC(sp_connector_path_set_ignore),
             tt, _("Make connectors ignore selected objects"));
 
-    gtk_widget_show_all(tbl);
+    //  interval
+    gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
+            AUX_BETWEEN_BUTTON_GROUPS);
 
+    // Spacing spinbox
+    {
+        GtkWidget *object_spacing = sp_tb_spinbutton(_("Spacing:"),
+                _("The amount of space left around objects by auto-routing connectors"),
+                "tools.connector", "spacing", 10, NULL, tbl, TRUE,
+                "inkscape:connector-spacing", 0, 100, 1.0, 10.0,
+                connector_spacing_changed, 1, 0);
+
+        gtk_box_pack_start(GTK_BOX(tbl), object_spacing, FALSE, FALSE,
+                AUX_SPACING);
+    }
+
+    gtk_widget_show_all(tbl);
+    sp_set_font_size_smaller (tbl);
+    
+    // Code to watch for changes to the connector-spacing attribute in
+    // the XML.
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
+    g_assert(repr != NULL);
+        
+    Inkscape::XML::Node *oldrepr = (Inkscape::XML::Node *)
+            gtk_object_get_data(GTK_OBJECT(tbl), "repr");
+    
+    if (oldrepr) { // remove old listener
+        sp_repr_remove_listener_by_data(oldrepr, tbl);
+        Inkscape::GC::release(oldrepr);
+        oldrepr = NULL;
+        g_object_set_data(G_OBJECT(tbl), "repr", NULL);
+    }
+
+    if (repr) {
+        g_object_set_data(G_OBJECT(tbl), "repr", repr);
+        Inkscape::GC::anchor(repr);
+        sp_repr_add_listener(repr, &connector_tb_repr_events, tbl);
+        sp_repr_synthesize_events(repr, &connector_tb_repr_events, tbl);
+    }
+    
     return tbl;
 
 } // end of sp_connector_toolbox_new()

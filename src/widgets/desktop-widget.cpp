@@ -46,6 +46,7 @@
 #include "ui/widget/selected-style.h"
 #include "sp-item.h"
 #include "dialogs/swatches.h"
+#include "conn-avoid-ref.h"
 
 #ifdef WITH_INKBOARD
 #endif
@@ -912,6 +913,10 @@ sp_desktop_widget_new (SPNamedView *namedview)
     dtw->desktop->init (namedview, dtw->canvas);
     inkscape_add_desktop (dtw->desktop);
 
+    // Add the shape geometry to libavoid for autorouting connectors.
+    // This needs desktop set for its spacing preferences.
+    init_avoided_shape_geometry(dtw->desktop);
+    
     dtw->selected_style->setDesktop(dtw->desktop);
 
     /* Once desktop is set, we can update rulers */

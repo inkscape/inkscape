@@ -18,10 +18,15 @@
 #include "libavoid/incremental.h"
 #include "xml/simple-node.cpp"
 #include "document.h"
+#include "prefs-utils.h"
+
+#include "desktop.h"
+#include "desktop-handles.h"
+#include "sp-namedview.h"
+#include "inkscape.h"
 
 
 static Avoid::Polygn avoid_item_poly(SPItem const *item);
-static void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item);
 
 
 SPAvoidRef::SPAvoidRef(SPItem *spitem)
@@ -61,6 +66,11 @@ void SPAvoidRef::setAvoid(char const *value)
 
 void SPAvoidRef::handleSettingChange(void)
 {
+    SPDesktop *desktop = inkscape_active_desktop();
+    if (desktop == NULL) {
+        return;
+    }
+    
     if (new_setting == setting) {
         // Don't need to make any changes
         return;
@@ -100,6 +110,9 @@ void SPAvoidRef::handleSettingChange(void)
 
 static Avoid::Polygn avoid_item_poly(SPItem const *item)
 {
+    SPDesktop *desktop = inkscape_active_desktop();
+    g_assert(desktop != NULL);
+
     Avoid::Polygn poly;
 
     // TODO: The right way to do this is to return the convex hull of
@@ -116,9 +129,12 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
     sp_document_ensure_up_to_date(item->document);
     
     NR::Rect rHull = item->invokeBbox(sp_item_i2doc_affine(item));
-    
+
+
+    double spacing = desktop->namedview->connector_spacing;
+
     // Add a little buffer around the edge of each object.
-    NR::Rect rExpandedHull = NR::expand(rHull, -10.0); 
+    NR::Rect rExpandedHull = NR::expand(rHull, -spacing); 
     poly = Avoid::newPoly(4);
 
     for (unsigned n = 0; n < 4; ++n) {
@@ -151,7 +167,31 @@ static Avoid::Polygn avoid_item_poly(SPItem const *item)
 }
 
 
-static void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item)
+GSList *get_avoided_items(GSList *list, SPObject *from, SPDesktop *desktop, 
+        bool initialised)
+{
+    for (SPObject *child = sp_object_first_child(SP_OBJECT(from)) ;
+            child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        if (SP_IS_ITEM(child) &&
+            !desktop->isLayer(SP_ITEM(child)) &&
+            !SP_ITEM(child)->isLocked() && 
+            !desktop->itemIsHidden(SP_ITEM(child)) &&
+            (!initialised || SP_ITEM(child)->avoidRef->shapeRef)
+            )
+        {
+            list = g_slist_prepend (list, SP_ITEM(child));
+        }
+
+        if (SP_IS_ITEM(child) && desktop->isLayer(SP_ITEM(child))) {
+            list = get_avoided_items(list, child, desktop, initialised);
+        }
+    }
+
+    return list;
+}
+
+
+void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item)
 {
     Avoid::ShapeRef *shapeRef = moved_item->avoidRef->shapeRef;
     g_assert(shapeRef);
@@ -163,7 +203,32 @@ static void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item)
         Avoid::freePoly(poly);
     }
 }
- 
+
+
+void init_avoided_shape_geometry(SPDesktop *desktop)
+{
+    // Don't count this as changes to the document,
+    // it is basically just llate initialisation.
+    SPDocument *document = SP_DT_DOCUMENT(desktop);
+    gboolean saved = sp_document_get_undo_sensitive(document);
+    sp_document_set_undo_sensitive(document, FALSE);
+    
+    bool initialised = false;
+    GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop,
+            initialised);
+
+    for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
+        SPItem *item = reinterpret_cast<SPItem *>(iter->data);
+        item->avoidRef->handleSettingChange();
+    }
+
+    if (items) {
+        g_slist_free(items);
+    }
+    sp_document_set_undo_sensitive(document, saved);
+}
+
+
 /*
   Local Variables:
   mode:c++

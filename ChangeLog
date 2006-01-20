@@ -1,11 +1,22 @@
-2006-01-15 Marco Scholten <mscholtn@xs4all.nl>
+2006-01-20  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
-    * /src/ui/dialog/inkscape-preferences.cpp
+	* src/widgets/toolbox.cpp, src/widgets/desktop-widget.cpp,
+	  src/conn-avoid-ref.cpp, src/conn-avoid-ref.h, src/sp-namedview.cpp,
+	  src/sp-namedview.h, src/attributes.cpp, src/attributes.h,
+	  src/attributes-test.cpp:
+
+	  Added a "Spacing" control to the connector toolbar which allows
+	  the user to adjust the amount of space left around avoided shapes
+	  for the purpose of determining auto-routing connector paths.
+
+2006-01-17  Marco Scholten  <mscholtn@xs4all.nl>
+
+	* /src/ui/dialog/inkscape-preferences.cpp:
       Added style swatches,
       Changed Gtk::Requisition Gtk::Widget::size_request() to 	
       void Gtk::Widget::size_request(const Requisition& requisition)	
-    * /src/ui/dialog/preferences-widget.cpp & .h
-      Added DialogPage::set_tip()
+	* /src/ui/dialog/preferences-widget.cpp & .h:
+	  Added DialogPage::set_tip()
 
 2006-01-17  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
@@ -18,7 +29,7 @@
 	* src/svg/Makefile_insert: Updated to reflect a previous header
 	  file renaming.
 
-2006-01-12 Marco Scholten <mscholtn@xs4all.nl>
+2006-01-12  Marco Scholten  <mscholtn@xs4all.nl>
 
 	* /src/ui/dialog/inkscape-preferences.cpp & .h:
 	  Converted preferences dialog to gtkmm
