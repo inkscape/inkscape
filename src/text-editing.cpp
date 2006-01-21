@@ -879,10 +879,13 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     SPObject *source_obj;
     unsigned nb_let;
     layout->getSourceOfCharacter(std::min(start, end), (void**)&source_obj);
-    if (source_obj == NULL)    // end of text
+
+    if (source_obj == NULL) {   // end of text
         source_obj = text->lastChild();
-    else if (SP_IS_STRING(source_obj))
+    }
+    if (SP_IS_STRING(source_obj)) {
         source_obj = source_obj->parent;
+    }
 
     SPStyle *style = SP_OBJECT_STYLE (source_obj);
 
