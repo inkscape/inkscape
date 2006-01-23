@@ -62,7 +62,7 @@ dist:
 	-$(RMDIR) inkscape
 	$(MKDIR) inkscape
 	$(CP) src$(S)inkscape.exe inkscape
-	$(CP) src$(S)inkview.exe inkscape
+#	$(CP) src$(S)inkview.exe inkscape
 	$(CP) AUTHORS inkscape
 	$(CP) COPYING inkscape
 	$(CP) COPYING.LIB inkscape
@@ -104,8 +104,22 @@ dist:
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape$(S)intl.dll
 	$(CP) $(GTKDOS)$(S)bin$(S)popt1.dll inkscape
+#
+#       PERL
+#
 	$(CP) $(GTKDOS)$(S)perl$(S)bin$(S)perl58.dll inkscape
+#
+#       PYTHON
+#
 	$(CP) $(GTKDOS)$(S)python$(S)python24.dll inkscape
+	$(MKDIR) inkscape$(S)python
+	$(CP) $(GTKDOS)$(S)python$(S)python.exe inkscape$(S)python
+	$(CPDIR) $(GTKDOS)$(S)python$(S)Lib inkscape$(S)python$(S)Lib
+	$(CPDIR) $(GTKDOS)$(S)python$(S)DLLs inkscape$(S)python$(S)DLLs
+	$(CPDIR) $(GTKDOS)$(S)python$(S)Scripts inkscape$(S)python$(S)Scripts
+#
+#       GTK items
+#
 	$(CPDIR) $(GTKDOS)$(S)etc inkscape$(S)etc
 	$(CP) $(GTKDOS)$(S)share$(S)themes$(S)MS-Windows$(S)gtk-2.0$(S)gtkrc inkscape$(S)etc$(S)gtk-2.0
 #	echo #### Inserted by Inkscape Makefile.mingw > inkscape$(S)etc$(S)gtk-2.0$(S)gtkrc
