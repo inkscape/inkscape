@@ -290,7 +290,7 @@ NRRect *Selection::bounds(NRRect *bbox) const
     bbox->x0 = b.min()[NR::X];
     bbox->y0 = b.min()[NR::Y];
     bbox->x1 = b.max()[NR::X];
-    bbox->x1 = b.max()[NR::Y];
+    bbox->y1 = b.max()[NR::Y];
     return bbox;
 }
 
