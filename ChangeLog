@@ -1,3 +1,8 @@
+2006-01-23  Carl Hetherington  <inkscape@carlh.net>
+
+	* src/selection.cpp: fix a typo in one of my previous commits.
+	Closes #1401357.
+
 2006-01-20  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/widgets/toolbox.cpp, src/widgets/desktop-widget.cpp,
