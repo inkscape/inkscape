@@ -3,6 +3,9 @@
 	* src/selection.cpp: fix a typo in one of my previous commits.
 	Closes #1401357.
 
+	* src/xml/repr-io.cpp: catch failures in fopen of XML files.
+	Closes #1374551.
+
 2006-01-20  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/widgets/toolbox.cpp, src/widgets/desktop-widget.cpp,

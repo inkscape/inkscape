@@ -16,7 +16,7 @@
 # include <config.h>
 #endif
 
-
+#include <stdexcept>
 
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
@@ -80,9 +80,13 @@ private:
     Inkscape::IO::GzipInputStream* gzin;
 };
 
-void XmlSource::setFile( char const * filename ) {
+void XmlSource::setFile(char const *filename)
+{
     this->filename = filename;
     fp = Inkscape::IO::fopen_utf8name(filename, "r");
+    if (fp == NULL) {
+        throw std::runtime_error("Could not open file for reading");
+    }
     first = true;
 }
 
@@ -214,7 +218,14 @@ sp_repr_read_file (const gchar * filename, const gchar *default_ns)
     Inkscape::IO::dump_fopen_call( filename, "N" );
 
     XmlSource src;
-    src.setFile(filename);
+    try
+    {
+        src.setFile(filename);
+    }
+    catch (...)
+    {
+        return NULL;
+    }
 
     xmlDocPtr doubleDoc = xmlReadIO( XmlSource::readCb,
                                      XmlSource::closeCb,
