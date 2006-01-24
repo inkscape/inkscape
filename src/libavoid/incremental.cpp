@@ -29,7 +29,7 @@ namespace Avoid {
 
 void addShape(ShapeRef *shape)
 {
-    uint pid = shape->id();
+    unsigned int pid = shape->id();
     Polygn poly = shape->poly();
     
     adjustContainsWithAdd(poly, pid);
@@ -53,7 +53,7 @@ void addShape(ShapeRef *shape)
 
 void delShape(ShapeRef *shape)
 {
-    uint pid = shape->id();
+    unsigned int pid = shape->id();
 
     // o  Remove entries related to this shape's vertices
     shape->removeFromGraph();
@@ -81,14 +81,14 @@ void delShape(ShapeRef *shape)
 }
 
 
-ShapeRef *moveShape(ShapeRef *oldShape, Polygn *newPoly)
+ShapeRef *moveShape(ShapeRef *oldShape, Polygn *newPoly, const bool first_move)
 {
-    uint pid = oldShape->id();
+    unsigned int pid = oldShape->id();
     
     // o  Remove entries related to this shape's vertices
     oldShape->removeFromGraph();
     
-    if (SelectiveReroute && !(PartialFeedback && PartialTime))
+    if (SelectiveReroute && (!(PartialFeedback && PartialTime) || first_move))
     {
         markConnectors(oldShape);
     }

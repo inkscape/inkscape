@@ -30,8 +30,6 @@
 
 namespace Avoid {
 
-typedef unsigned int uint;
-    
 class ConnRef;
 
 typedef std::list<ConnRef *> ConnRefList;
@@ -40,8 +38,8 @@ typedef std::list<ConnRef *> ConnRefList;
 class ConnRef
 {
     public:
-        ConnRef(const uint id);
-        ConnRef(const uint id, const Point& src, const Point& dst);
+        ConnRef(const unsigned int id);
+        ConnRef(const unsigned int id, const Point& src, const Point& dst);
         ~ConnRef();
         
         PolyLine& route(void);
@@ -49,7 +47,7 @@ class ConnRef
         void moveRoute(const int& diff_x, const int& diff_y);
         void freeRoute(void);
         void calcRouteDist(void);
-        void updateEndPoint(const uint type, const Point& point);
+        void updateEndPoint(const unsigned int type, const Point& point);
         void makeActive(void);
         void makeInactive(void);
         void lateSetup(const Point& src, const Point& dst);
@@ -66,7 +64,7 @@ class ConnRef
         friend void markConnectors(ShapeRef *shape);
 
     private:
-        uint _id;
+        unsigned int _id;
         bool _needs_reroute_flag;
         bool _false_path;
         bool _active;

@@ -448,7 +448,7 @@ void vertexSweep(VertInf *vert)
         VertID kID = k->id;
         if (!(centerID.isShape) && (ss.find(kID.objID) != ss.end()))
         {
-            uint shapeID = kID.objID;
+            unsigned int shapeID = kID.objID;
             db_printf("Center is inside shape %u so ignore shape edges.\n",
                     shapeID);
             // One of the endpoints is inside this shape so ignore it.

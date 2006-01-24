@@ -31,7 +31,7 @@ namespace Avoid {
 ShapeRefList shapeRefs;
 
 
-ShapeRef::ShapeRef(uint id, Polygn& ply)
+ShapeRef::ShapeRef(unsigned int id, Polygn& ply)
     : _id(id)
     , _poly(copyPoly(ply))
     , _active(false)
@@ -130,7 +130,7 @@ VertInf *ShapeRef::lastVert(void)
 }
 
 
-uint ShapeRef::id(void)
+unsigned int ShapeRef::id(void)
 {
     return _id;
 }

@@ -36,7 +36,7 @@ void CreateVisGraph(Polygn **obs, int n_obs)
 {
     for (int poly_i = 0; poly_i < n_obs; poly_i++)
     {
-        uint id = obs[poly_i]->id;
+        unsigned int id = obs[poly_i]->id;
         
         new ShapeRef(id, *(obs[poly_i]));
     }

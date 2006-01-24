@@ -31,7 +31,8 @@ namespace Avoid {
 
 extern void addShape(ShapeRef *shape);
 extern void delShape(ShapeRef *shape);
-extern ShapeRef *moveShape(ShapeRef *oldShape, Polygn *newPoly);
+extern ShapeRef *moveShape(ShapeRef *oldShape, Polygn *newPoly,
+        const bool first_move = false);
 
 }
 

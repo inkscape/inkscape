@@ -1,3 +1,13 @@
+2006-01-24  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/libavoid/connector.cpp, src/libavoid/connector.h, 
+	  src/libavoid/shape.cpp, src/libavoid/graph.cpp,
+	  src/libavoid/incremental.cpp, src/libavoid/incremental.h,
+	  src/libavoid/static.cpp, src/libavoid/visibility.cpp, 
+	  src/libavoid/makepath.cpp:
+
+	Some minor upstream libavoid fixes.  
+
 2006-01-23  Carl Hetherington  <inkscape@carlh.net>
 
 	* src/selection.cpp: fix a typo in one of my previous commits.
@@ -13,9 +23,9 @@
 	  src/sp-namedview.h, src/attributes.cpp, src/attributes.h,
 	  src/attributes-test.cpp:
 
-	  Added a "Spacing" control to the connector toolbar which allows
-	  the user to adjust the amount of space left around avoided shapes
-	  for the purpose of determining auto-routing connector paths.
+	Added a "Spacing" control to the connector toolbar which allows
+	the user to adjust the amount of space left around avoided shapes
+	for the purpose of determining auto-routing connector paths.
 
 2006-01-17  Marco Scholten  <mscholtn@xs4all.nl>
 

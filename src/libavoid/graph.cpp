@@ -340,7 +340,7 @@ int EdgeInf::firstBlocker(void)
         VertID kID = k->id;
         if ((ss.find(kID.objID) != ss.end()))
         {
-            uint shapeID = kID.objID;
+            unsigned int shapeID = kID.objID;
             db_printf("Endpoint is inside shape %u so ignore shape edges.\n",
                     kID.objID);
             // One of the endpoints is inside this shape so ignore it.
@@ -914,7 +914,7 @@ void printInfo(void)
     fprintf(fp, "\nVisibility Graph info:\n");
     fprintf(fp, "----------------------\n");
 
-    uint currshape = 0;
+    unsigned int currshape = 0;
     int st_shapes = 0;
     int st_vertices = 0;
     int st_endpoints = 0;

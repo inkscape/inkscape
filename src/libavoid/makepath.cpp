@@ -429,6 +429,10 @@ void makePath(ConnRef *lineRef, bool *flag)
         // each other.  This is true if we are here.
         if (!IncludeEndpoints && InvisibilityGrph)
         {
+            if (!directEdge)
+            {
+                directEdge = new EdgeInf(src, tar);
+            }
             directEdge->addBlocker(0);
         }
 

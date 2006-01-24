@@ -32,7 +32,7 @@ namespace Avoid {
 ConnRefList connRefs;
 
 
-ConnRef::ConnRef(const uint id)
+ConnRef::ConnRef(const unsigned int id)
     : _id(id)
     , _needs_reroute_flag(true)
     , _false_path(false)
@@ -50,7 +50,7 @@ ConnRef::ConnRef(const uint id)
 }
 
 
-ConnRef::ConnRef(const uint id, const Point& src, const Point& dst)
+ConnRef::ConnRef(const unsigned int id, const Point& src, const Point& dst)
     : _id(id)
     , _needs_reroute_flag(true)
     , _false_path(false)
@@ -102,16 +102,23 @@ ConnRef::~ConnRef()
     }
 }
 
-void ConnRef::updateEndPoint(const uint type, const Point& point)
+void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
 {
-    assert((type == (uint) VertID::src) || (type == (uint) VertID::tar));
+    assert((type == (unsigned int) VertID::src) ||
+           (type == (unsigned int) VertID::tar));
     //assert(IncludeEndpoints);
 
+    if (!_initialised)
+    {
+        makeActive();
+        _initialised = true;
+    }
+    
     VertInf *altered = NULL;
     VertInf *partner = NULL;
     bool isShape = false;
 
-    if (type == (uint) VertID::src)
+    if (type == (unsigned int) VertID::src)
     {
         if (_srcVert)
         {
@@ -126,7 +133,7 @@ void ConnRef::updateEndPoint(const uint type, const Point& point)
         altered = _srcVert;
         partner = _dstVert;
     }
-    else // if (type == (uint) VertID::dst)
+    else // if (type == (unsigned int) VertID::dst)
     {
         if (_dstVert)
         {
@@ -311,10 +318,10 @@ int ConnRef::generatePath(Point p0, Point p1)
 
     _false_path = false;
     _needs_reroute_flag = false;
-    
+
     VertInf *src = _srcVert;
     VertInf *tar = _dstVert;
-   
+
     if (!IncludeEndpoints)
     {
         lateSetup(p0, p1);
