@@ -62,7 +62,9 @@ RegisteredCheckButton::init (const Glib::ustring& label, const Glib::ustring& ti
 {
     _button = new Gtk::CheckButton;
     _tt.set_tip (*_button, tip);
-    _button->add (*manage (new Gtk::Label (label)));
+    Gtk::Label *l = new Gtk::Label (label);
+    l->set_use_underline (true);
+    _button->add (*manage (l));
     _button->set_alignment (right? 1.0 : 0.0, 0.5);
     _key = key;
     _wr = &wr;
@@ -117,7 +119,9 @@ void
 RegisteredUnitMenu::init (const Glib::ustring& label, const Glib::ustring& key, Registry& wr)
 {
     _label = new Gtk::Label (label, 1.0, 0.5);
+    _label->set_use_underline (true);
     _sel = new UnitMenu ();
+    _label->set_mnemonic_widget (*_sel);
     _sel->setUnitType (UNIT_TYPE_LINEAR);
     _wr = &wr;
     _key = key;
@@ -240,7 +244,9 @@ void
 RegisteredColorPicker::init (const Glib::ustring& label, const Glib::ustring& title, const Glib::ustring& tip, const Glib::ustring& ckey, const Glib::ustring& akey, Registry& wr)
 {
     _label = new Gtk::Label (label, 1.0, 0.5);
+    _label->set_use_underline (true);
     _cp = new ColorPicker (title,tip,0,true);
+    _label->set_mnemonic_widget (*_cp);
     _ckey = ckey;
     _akey = akey;
     _wr = &wr;
@@ -295,7 +301,9 @@ RegisteredSuffixedInteger::init (const Glib::ustring& label, const Glib::ustring
     _key = key;
     _label = new Gtk::Label (label);
     _label->set_alignment (1.0, 0.5);
+    _label->set_use_underline();
     _sb = new Gtk::SpinButton (_adj, 1.0, 0);
+    _label->set_mnemonic_widget (*_sb);
     _suffix = new Gtk::Label (suffix);
     _hbox.pack_start (*_sb, true, true, 0);
     _hbox.pack_start (*_suffix, false, false, 0);
@@ -348,10 +356,10 @@ const Glib::ustring& key, Registry& wr)
 {
     _hbox = new Gtk::HBox;
     _hbox->add (*manage (new Gtk::Label (label)));
-    _rb1 = manage (new Gtk::RadioButton (label1));
+    _rb1 = manage (new Gtk::RadioButton (label1, true));
     _hbox->add (*_rb1);
     Gtk::RadioButtonGroup group = _rb1->get_group();
-    _rb2 = manage (new Gtk::RadioButton (group, label2, false));
+    _rb2 = manage (new Gtk::RadioButton (group, label2, true));
     _hbox->add (*_rb2);
     _rb2->set_active();
     _tt.set_tip (*_rb1, tip1);

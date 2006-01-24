@@ -181,15 +181,15 @@ DocumentProperties::build_page()
 {
     _page_page.show();
 
-    _rcp_bg.init (_("Background:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"),
+    _rcp_bg.init (_("Back_ground:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"),
                    "pagecolor", "inkscape:pageopacity", _wr);
-    _rcb_canb.init (_("Show page border"), _("If set, rectangular page border is shown"), "showborder", _wr, false);
-    _rcb_bord.init (_("Border on top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false);
-    _rcp_bord.init (_("Border color:"), _("Page border color"),
+    _rcb_canb.init (_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false);
+    _rcb_bord.init (_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false);
+    _rcp_bord.init (_("Border _color:"), _("Page border color"),
                     _("Color of the page border"),
                     "bordercolor", "borderopacity", _wr);
-    _rcb_shad.init (_("Show border shadow"), "If set, page border shows a shadow on its right and lower side", "inkscape:showpageshadow", _wr, false);
-    _rum_deflt.init (_("Default units:"), "inkscape:document-units", _wr);
+    _rcb_shad.init (_("_Show border shadow"), "If set, page border shows a shadow on its right and lower side", "inkscape:showpageshadow", _wr, false);
+    _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
     Gtk::Label* label_bor = manage (new Gtk::Label);
@@ -225,26 +225,26 @@ DocumentProperties::build_grid()
     /// \todo FIXME: gray out snapping when grid is off.
     /// Dissenting view: you want snapping without grid.
     
-    _rcbgrid.init (_("Show grid"), _("Show or hide grid"), "showgrid", _wr);
-    _rumg.init (_("Grid units:"), "grid_units", _wr);
-    _rsu_ox.init (_("Origin X:"), _("X coordinate of grid origin"), 
+    _rcbgrid.init (_("_Show grid"), _("Show or hide grid"), "showgrid", _wr);
+    _rumg.init (_("Grid _units:"), "grid_units", _wr);
+    _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"), 
                   "gridoriginx", _rumg, _wr);
-    _rsu_oy.init (_("Origin Y:"), _("Y coordinate of grid origin"), 
+    _rsu_oy.init (_("O_rigin Y:"), _("Y coordinate of grid origin"), 
                   "gridoriginy", _rumg, _wr);
-    _rsu_sx.init (_("Spacing X:"), _("Distance of vertical grid lines"), 
+    _rsu_sx.init (_("Spacing _X:"), _("Distance of vertical grid lines"), 
                   "gridspacingx", _rumg, _wr);
-    _rsu_sy.init (_("Spacing Y:"), _("Distance of horizontal grid lines"), 
+    _rsu_sy.init (_("Spacing _Y:"), _("Distance of horizontal grid lines"), 
                   "gridspacingy", _rumg, _wr);
-    _rcp_gcol.init (_("Grid line color:"), _("Grid line color"), 
+    _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"), 
                     _("Color of grid lines"), "gridcolor", "gridopacity", _wr);
-    _rcp_gmcol.init (_("Major grid line color:"), _("Major grid line color"), 
+    _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"), 
                      _("Color of the major (highlighted) grid lines"), 
                      "gridempcolor", "gridempopacity", _wr);
-    _rsi.init (_("Major grid line every:"), _("lines"), "gridempspacing", _wr);
-    _rcb_sgui.init (_("Show guides"), _("Show or hide guides"), "showguides", _wr);
-    _rcp_gui.init (_("Guide color:"), _("Guideline color"), 
+    _rsi.init (_("_Major grid line every:"), _("lines"), "gridempspacing", _wr);
+    _rcb_sgui.init (_("Show _guides"), _("Show or hide guides"), "showguides", _wr);
+    _rcp_gui.init (_("Guide co_lor:"), _("Guideline color"), 
                    _("Color of guidelines"), "guidecolor", "guideopacity", _wr);
-    _rcp_hgui.init (_("Highlight color:"), _("Highlighted guideline color"), 
+    _rcp_hgui.init (_("_Highlight color:"), _("Highlighted guideline color"), 
                     _("Color of a guideline when it is under mouse"),
                     "guidehicolor", "guidehiopacity", _wr);
     Gtk::Label *label_grid = manage (new Gtk::Label);
@@ -280,39 +280,39 @@ DocumentProperties::build_snap()
 {
     _page_snap.show();
 
-    _rcbsnbo.init (_("Snap bounding boxes to objects"), 
+    _rcbsnbo.init (_("_Snap bounding boxes to objects"), 
                 _("Snap the edges of the object bounding boxes to other objects"), 
                 "inkscape:object-bbox", _wr);
-    _rcbsnnob.init (_("Snap nodes to objects"), 
+    _rcbsnnob.init (_("Snap nodes _to objects"), 
                 _("Snap the nodes of objects to other objects"), 
                 "inkscape:object-points", _wr);
-    _rcbsnop.init (_("Snap to object paths"), 
+    _rcbsnop.init (_("Snap to object _paths"), 
                 _("Snap to other object paths"), 
                 "inkscape:object-paths", _wr);
-    _rcbsnon.init (_("Snap to object nodes"), 
+    _rcbsnon.init (_("Snap to object _nodes"), 
                 _("Snap to other object nodes"), 
                 "inkscape:object-nodes", _wr);
-    _rsu_sno.init (_("Snap sensitivity:"), _(""),
+    _rsu_sno.init (_("Snap s_ensitivity:"), _(""),
                   _("Controls max. snapping distance from object"),
                   "objecttolerance", _wr);
-    _rcbsnbb.init (_("Snap bounding boxes to grid"), 
+    _rcbsnbb.init (_("Snap _bounding boxes to grid"), 
                 _("Snap the edges of the object bounding boxes"), 
                 "inkscape:grid-bbox", _wr);
-    _rcbsnnod.init (_("Snap nodes to grid"), 
+    _rcbsnnod.init (_("Snap nodes to _grid"), 
                 _("Snap path nodes, text baselines, ellipse centers, etc."), 
                 "inkscape:grid-points", _wr);
-    _rsu_sn.init (_("Snap sensitivity:"),  _(""),
+    _rsu_sn.init (_("Snap sens_itivity:"),  _(""),
                   _("Controls max. snapping distance from grid"),
                   "gridtolerance", _wr);
-    _rcb_snpgui.init (_("Snap bounding boxes to guides"),  
+    _rcb_snpgui.init (_("Snap bounding boxes to g_uides"),  
                      _("Snap the edges of the object bounding boxes"), 
                      "inkscape:guide-bbox", _wr);
-    _rcb_snbgui.init (_("Snap points to guides"), 
+    _rcb_snbgui.init (_("Snap p_oints to guides"), 
                 _("Snap path nodes, text baselines, ellipse centers, etc."), 
                 "inkscape:guide-points", _wr);
-    _rsu_gusn.init (_("Snap sensitivity:"), _(""), 
+    _rsu_gusn.init (_("Snap sensiti_vity:"), _(""), 
                 _("Controls max. snapping distance from guides"), "guidetolerance", _wr);
-    _rrb_pix.init (_("Sensitivity:"), _("Screen pixels"), _("px units"),
+    _rrb_pix.init (_("Sensitivity:"), _("S_creen pixels"), _("p_x units"),
                 _("Sensitivity is always the same, regardless of zoom."),
                 _("Sensitivity changes with zoom; zooming in will enlarge max. snapping distance."),
                 _("inkscape:has_abs_tolerance"), _wr);

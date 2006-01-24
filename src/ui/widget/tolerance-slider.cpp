@@ -58,8 +58,10 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
 {
     _hbox = new Gtk::HBox;
     Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
+    theLabel1->set_use_underline();
     _hbox->add (*theLabel1);
     _hscale = manage (new Gtk::HScale (0.4, 50.1, 0.1));
+    theLabel1->set_mnemonic_widget (*_hscale);
     _hscale->set_draw_value (true);
     _hscale->set_value_pos (Gtk::POS_RIGHT);
     _hscale->set_size_request (100, -1);

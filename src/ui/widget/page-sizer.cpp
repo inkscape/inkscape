@@ -190,9 +190,11 @@ PageSizer::PageSizer()
 {
     Gtk::HBox *hbox_size = manage (new Gtk::HBox (false, 4));
     pack_start (*hbox_size, false, false, 0);
-    Gtk::Label *label_size = manage (new Gtk::Label (_("Page size:"), 1.0, 0.5)); 
+    Gtk::Label *label_size = manage (new Gtk::Label (_("P_age size:"), 1.0, 0.5)); 
+    label_size->set_use_underline();
     hbox_size->pack_start (*label_size, false, false, 0);
     _omenu_size = manage (new Gtk::OptionMenu);
+    label_size->set_mnemonic_widget (*_omenu_size);
     hbox_size->pack_start (*_omenu_size, true, true, 0);
     Gtk::Menu *menu_size = manage (new Gtk::Menu);
 
@@ -220,10 +222,10 @@ PageSizer::init (Registry& reg)
     pack_start (*hbox_ori, false, false, 0);
     Gtk::Label *label_ori = manage (new Gtk::Label (_("Page orientation:"), 0.0, 0.5)); 
     hbox_ori->pack_start (*label_ori, false, false, 0);
-    _rb_land = manage (new Gtk::RadioButton (_("Landscape")));
+    _rb_land = manage (new Gtk::RadioButton (_("_Landscape"), true));
     Gtk::RadioButton::Group group = _rb_land->get_group();
     hbox_ori->pack_end (*_rb_land, false, false, 5);
-    _rb_port = manage (new Gtk::RadioButton (_("Portrait")));
+    _rb_port = manage (new Gtk::RadioButton (_("_Portrait"), true));
     hbox_ori->pack_end (*_rb_port, false, false, 5);
     _rb_port->set_group (group);
     _rb_port->set_active (true);
@@ -239,9 +241,9 @@ PageSizer::init (Registry& reg)
     
     _wr = &reg;
 
-    _rum.init (_("Units:"), "units", *_wr);
-    _rusw.init (_("Width:"), _("Width of paper"), "width", _rum, *_wr);
-    _rush.init (_("Height:"), _("Height of paper"), "height", _rum, *_wr);
+    _rum.init (_("U_nits:"), "units", *_wr);
+    _rusw.init (_("_Width:"), _("Width of paper"), "width", _rum, *_wr);
+    _rush.init (_("_Height:"), _("Height of paper"), "height", _rum, *_wr);
 
     table->attach (*_rum._label, 0,1,0,1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
     table->attach (*_rum._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
