@@ -129,14 +129,12 @@ Constraint *Block::findMinInConstraint() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 			f<<" ... skipping internal constraint"<<endl;
 #endif
-		} else if(lb->timeStamp > rb->timeStamp 
-			&& v->timeStamp < lb->timeStamp 
-			|| v->timeStamp < rb->timeStamp) {
+		} else if(v->timeStamp < lb->timeStamp) {
 			// block at other end of constraint has been moved since this
 			in->deleteMin();
 			outOfDate.push_back(v);
 #ifdef RECTANGLE_OVERLAP_LOGGING
-			f<<"    reinserting out of date constraint"<<endl;
+			f<<"    reinserting out of date (reinsert later)"<<endl;
 #endif
 		} else {
 			break;

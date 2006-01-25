@@ -96,9 +96,10 @@ void Blocks::mergeLeft(Block *r) {
 			dist=-dist;
 			std::swap(l, r);
 		}
+		blockTimeCtr++;
 		r->merge(l, c, dist);
 		r->mergeIn(l);
-		r->timeStamp=++blockTimeCtr;
+		r->timeStamp=blockTimeCtr;
 		removeBlock(l);
 		c=r->findMinInConstraint();
 	}		
