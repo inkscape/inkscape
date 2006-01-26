@@ -134,8 +134,8 @@ sp_item_init(SPItem *item)
 
     item->sensitive = TRUE;
 
-    item->r_cx = 0;
-    item->r_cx = 0;
+    item->transform_center_x = 0;
+    item->transform_center_y = 0;
 
     item->transform = NR::identity();
 
@@ -234,6 +234,42 @@ SPItem::setExplicitlyHidden(bool const val) {
     this->updateRepr();
 }
 
+/**
+ * Sets the transform_center_x and transform_center_y properties to retain the rotation centre
+ */
+void
+SPItem::setCenter(NR::Point object_centre) {
+    NR::Rect bbox = invokeBbox(sp_item_i2d_affine(this));
+    if (!bbox.isEmpty()) {
+        transform_center_x = object_centre[NR::X] - bbox.midpoint()[NR::X];
+        if (fabs(transform_center_x) < 1e-5) // rounding error
+            transform_center_x = 0;
+        transform_center_y = object_centre[NR::Y] - bbox.midpoint()[NR::Y];
+        if (fabs(transform_center_y) < 1e-5) // rounding error
+            transform_center_y = 0;
+    }
+}
+
+void
+SPItem::unsetCenter() {
+    transform_center_x = 0;
+    transform_center_y = 0;
+}
+
+bool SPItem::isCenterSet() {
+    return (transform_center_x != 0 || transform_center_y != 0);
+}
+
+NR::Point SPItem::getCenter() {
+    NR::Rect bbox = invokeBbox(sp_item_i2d_affine(this));
+    if (!bbox.isEmpty()) {
+        return bbox.midpoint() + NR::Point (this->transform_center_x, this->transform_center_y);
+    } else {
+        return NR::Point (0, 0); // something's wrong!
+    }
+}
+
+
 namespace {
 
 bool is_item(SPObject const &object) {
@@ -313,8 +349,8 @@ sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
     sp_object_read_attr(object, "mask");
     sp_object_read_attr(object, "sodipodi:insensitive");
     sp_object_read_attr(object, "sodipodi:nonprintable");
-    sp_object_read_attr(object, "inkscape:r_cx");
-    sp_object_read_attr(object, "inkscape:r_cy");
+    sp_object_read_attr(object, "inkscape:transform-center-x");
+    sp_object_read_attr(object, "inkscape:transform-center-y");
     sp_object_read_attr(object, "inkscape:connector-avoid");
 
     if (((SPObjectClass *) (parent_class))->build) {
@@ -415,6 +451,16 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
             break;
         case SP_ATTR_CONNECTOR_AVOID:
             item->avoidRef->setAvoid(value);
+            break;
+        case SP_ATTR_TRANSFORM_CENTER_X:
+            if (value) {
+                item->transform_center_x = g_strtod(value, NULL);
+            }
+            break;
+        case SP_ATTR_TRANSFORM_CENTER_Y:
+            if (value) {
+                item->transform_center_y = g_strtod(value, NULL);
+            }
             break;
         default:
             if (SP_ATTRIBUTE_IS_CSS(key)) {
@@ -583,8 +629,14 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
 
     if (flags & SP_OBJECT_WRITE_EXT) {
         repr->setAttribute("sodipodi:insensitive", ( item->sensitive ? NULL : "true" ));
-        repr->setAttribute("inkscape:r_cx", ( item->r_cx ? NULL : "true" ));
-        repr->setAttribute("inkscape:r_cy", ( item->r_cy ? NULL : "true" ));
+        if (item->transform_center_x != 0)
+            sp_repr_set_svg_double (repr, "inkscape:transform-center-x", item->transform_center_x);
+        else 
+            repr->setAttribute ("inkscape:transform-center-x", NULL);
+        if (item->transform_center_y != 0)
+            sp_repr_set_svg_double (repr, "inkscape:transform-center-y", item->transform_center_y);
+        else 
+            repr->setAttribute ("inkscape:transform-center-y", NULL);    
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

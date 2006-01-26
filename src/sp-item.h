@@ -91,9 +91,9 @@ struct SPItemCtx {
 struct SPItem : public SPObject {
     unsigned int sensitive : 1;
     unsigned int stop_paint: 1;
-    double r_cx;
-    double r_cy;
-    
+    double transform_center_x;
+    double transform_center_y;
+
     NR::Matrix transform;
     
     SPClipPathReference *clip_ref;
@@ -119,7 +119,12 @@ struct SPItem : public SPObject {
     bool isExplicitlyHidden() const;
     
     void setExplicitlyHidden(bool val);
-    
+
+    void setCenter(NR::Point object_centre);
+    void unsetCenter();
+    bool isCenterSet();
+    NR::Point getCenter();
+
     bool isVisibleAndUnlocked() const;
     
     bool isVisibleAndUnlocked(unsigned display_key) const;

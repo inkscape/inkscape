@@ -50,6 +50,7 @@ static void sp_remove_handles(SPKnot *knot[], gint num);
 
 static void sp_sel_trans_handle_grab(SPKnot *knot, guint state, gpointer data);
 static void sp_sel_trans_handle_ungrab(SPKnot *knot, guint state, gpointer data);
+static void sp_sel_trans_handle_click(SPKnot *knot, guint state, gpointer data);
 static void sp_sel_trans_handle_new_event(SPKnot *knot, NR::Point *position, guint32 state, gpointer data);
 static gboolean sp_sel_trans_handle_request(SPKnot *knot, NR::Point *p, guint state, gboolean *data);
 
@@ -99,8 +100,6 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     }
 
     _updateVolatileState();
-
-    _center = _box.midpoint();
 
     _updateHandles();
 
@@ -210,6 +209,15 @@ void Inkscape::SelTrans::increaseState()
 void Inkscape::SelTrans::setCenter(NR::Point const &p)
 {
     _center = p;
+
+    // Write the new center position into all selected items
+    for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
+        SPItem *it = (SPItem*)sp_object_ref(SP_OBJECT(l->data), NULL);
+        it->setCenter(p);
+        SP_OBJECT(it)->updateRepr();
+    }
+    sp_document_maybe_done (SP_DT_DOCUMENT(_desktop), "center::move");
+
     _updateHandles();
 }
 
@@ -301,44 +309,30 @@ void Inkscape::SelTrans::transform(NR::Matrix const &rel_affine, NR::Point const
     _updateHandles();
 }
 
-void Inkscape::SelTrans::_centreTrans(Inkscape::XML::Node *current) const
-{
-    for ( Inkscape::XML::Node *child = sp_repr_children(current) ; child ; child = sp_repr_next(child) ) {
-        _centreTrans(child);
-    }
-    double const cx = sp_repr_get_double_attribute(current, "inkscape:c_rx", 9999999);
-    double const cy = sp_repr_get_double_attribute(current, "inkscape:c_ry", 9999999);
-    if (cx != 9999999) {
-        NR::Point object_centre = NR::Point(cx, cy) * _current;
-        sp_repr_set_svg_double(current, "inkscape:c_rx", object_centre[NR::X]);
-        sp_repr_set_svg_double(current, "inkscape:c_ry", object_centre[NR::Y]);
-    }
- }
-
-
-
-
 void Inkscape::SelTrans::ungrab()
 {
     g_return_if_fail(_grabbed);
 
     Inkscape::Selection *selection = SP_DT_SELECTION(_desktop);
-
     bool updh = true;
     if (!_empty && _changed) {
         sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
         _center *= _current;
+
+        // Transform may have changed the objects' bboxes, so we need to write the _center into them again
+        for (unsigned i = 0; i < _items.size(); i++) {
+            SPItem *currentItem = _items[i].first;
+            if (currentItem->isCenterSet() || _current[1] != 0 || _current[2] != 0) { // only if it's already set, or if it's a rotation/skew
+                currentItem->setCenter (_center);
+                SP_OBJECT(currentItem)->updateRepr();
+            }
+        }
+
         sp_document_done(SP_DT_DOCUMENT(_desktop));
         updh = false;
     }
 
-    for (unsigned i = 0; i < _items.size(); i++)
-    {
-        Inkscape::XML::Node *current = SP_OBJECT_REPR(_items[i].first);
-        if (current != NULL) {
-            _centreTrans(current);
-        }
-
+    for (unsigned i = 0; i < _items.size(); i++) {
         sp_object_unref(SP_OBJECT(_items[i].first), NULL);
     }
     _items.clear();
@@ -455,6 +449,8 @@ void Inkscape::SelTrans::_updateHandles()
                          G_CALLBACK(sp_sel_trans_handle_grab), (gpointer) &handle_center);
         g_signal_connect(G_OBJECT(_chandle), "ungrabbed",
                          G_CALLBACK(sp_sel_trans_handle_ungrab), (gpointer) &handle_center);
+        g_signal_connect(G_OBJECT(_chandle), "clicked",
+                         G_CALLBACK(sp_sel_trans_handle_click), (gpointer) &handle_center);
     }
 
     sp_remove_handles(&_chandle, 1);
@@ -469,16 +465,23 @@ void Inkscape::SelTrans::_updateHandles()
                     _("<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"),
                     _("<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"));
     }
+
+    // Extract the position of the center from the first selected object
+    GSList *items = (GSList *) _desktop->selection->itemList();
+    if (items) {
+        SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
+        if (first->isCenterSet()) { // only if set explicitly
+            _center =  first->getCenter(); 
+        } else {
+            _center = _box.midpoint();
+        }
+    } else {
+        _center = _box.midpoint();
+    }
+
     if ( _state == STATE_SCALE ) {
         sp_knot_hide(_chandle);
     } else {
-        Inkscape::Selection *selection = _desktop->selection;
-        Inkscape::XML::Node *current = selection->singleRepr();
-        if (current != NULL && sp_repr_get_double_attribute(current, "inkscape:c_rx", 99999999) != 99999999) {
-            double cx = sp_repr_get_double_attribute(current, "inkscape:c_rx", _center[NR::X]);
-            double cy = sp_repr_get_double_attribute(current, "inkscape:c_ry", _center[NR::Y]);
-            _center = NR::Point(cx, cy);
-        }
         sp_knot_show(_chandle);
         sp_knot_moveto(_chandle, &_center);
     }
@@ -581,6 +584,32 @@ static gboolean sp_sel_trans_handle_request(SPKnot *knot, NR::Point *position, g
         );
 }
 
+static void sp_sel_trans_handle_click(SPKnot *knot, guint state, gpointer data)
+{
+    SP_SELECT_CONTEXT(knot->desktop->event_context)->_seltrans->handleClick(
+        knot, state, *(SPSelTransHandle const *) data
+        );
+}
+
+void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle const &handle)
+{
+    switch (handle.anchor) {
+        case GTK_ANCHOR_CENTER:
+            if (state & GDK_SHIFT_MASK) {
+                // Unset the  center position for all selected items
+                for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
+                    SPItem *it = (SPItem*)sp_object_ref(SP_OBJECT(l->data), NULL);
+                    it->unsetCenter();
+                    SP_OBJECT(it)->updateRepr();
+                }
+                sp_document_maybe_done (SP_DT_DOCUMENT(_desktop), "center::unset");
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle)
 {
     switch (handle.anchor) {
@@ -657,7 +686,6 @@ void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
 {
     if (!_grabbed) {
         _updateVolatileState();
-        _center = _box.midpoint();
         _updateHandles();
     }
 }
@@ -666,17 +694,6 @@ void Inkscape::SelTrans::_selModified(Inkscape::Selection *selection, guint flag
 {
     if (!_grabbed) {
         _updateVolatileState();
-
-        if (
-             (flags != (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG)) &&
-             (flags != SP_OBJECT_PARENT_MODIFIED_FLAG) &&
-             (flags != SP_OBJECT_CHILD_MODIFIED_FLAG) &&
-             !_changed) {
-            // Only reset center if object itself is modified (not style, parent or child),
-            // and this is not a local change by seltrans
-            // (still annoyingly recenters on keyboard transforms, fixme)
-            _center = _box.midpoint();
-        }
 
         // reset internal flag
         _changed = false;
@@ -1030,14 +1047,6 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
         } else {
             pt[X] = _point[X];
         }
-    }
-
-    Inkscape::Selection *selection = _desktop->selection;
-    Inkscape::XML::Node *current = selection->singleRepr();
-    if (current != NULL){
-        sp_repr_set_svg_double(current, "inkscape:c_rx", pt[X]);
-        sp_repr_set_svg_double(current, "inkscape:c_ry", pt[Y]);
-
     }
 
     if (!(state & GDK_SHIFT_MASK)) {

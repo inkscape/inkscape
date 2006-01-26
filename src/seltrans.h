@@ -65,6 +65,7 @@ public:
 
     gboolean handleRequest(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);
     void handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle);
+    void handleClick(SPKnot *knot, guint state, SPSelTransHandle const &handle);
     void handleNewEvent(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);
 
     enum Show
@@ -87,8 +88,7 @@ private:
     void _selModified(Inkscape::Selection *selection, guint flags);
     void _showHandles(SPKnot *knot[], SPSelTransHandle const handle[], gint num,
                       gchar const *even_tip, gchar const *odd_tip);
-    void _centreTrans(Inkscape::XML::Node *current) const;
-    
+
     enum State {
         STATE_SCALE,
 	STATE_ROTATE

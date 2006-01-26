@@ -36,6 +36,8 @@ static SPStyleProp const props[] = {
     {SP_ATTR_SODIPODI_NONPRINTABLE, "sodipodi:nonprintable"},
     {SP_ATTR_CONNECTOR_AVOID, "inkscape:connector-avoid"},
     {SP_ATTR_STYLE, "style"},
+    {SP_ATTR_TRANSFORM_CENTER_X, "inkscape:transform-center-x"},
+    {SP_ATTR_TRANSFORM_CENTER_Y, "inkscape:transform-center-y"},
     /* SPAnchor */
     {SP_ATTR_XLINK_HREF, "xlink:href"},
     {SP_ATTR_XLINK_TYPE, "xlink:type"},
