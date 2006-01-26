@@ -101,6 +101,8 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 
     _updateVolatileState();
 
+    _center_is_set = false; // reread _center from items, or set to bbox midpoint
+
     _updateHandles();
 
     _selection = SP_DT_SELECTION(desktop);
@@ -188,6 +190,7 @@ Inkscape::SelTrans::~SelTrans()
     }
 
     _items.clear();
+    _items_centers.clear();
 }
 
 void Inkscape::SelTrans::resetState()
@@ -203,12 +206,15 @@ void Inkscape::SelTrans::increaseState()
         _state = STATE_SCALE;
     }
 
+    _center_is_set = true; // no need to reread center
+
     _updateHandles();
 }
 
 void Inkscape::SelTrans::setCenter(NR::Point const &p)
 {
     _center = p;
+    _center_is_set = true;
 
     // Write the new center position into all selected items
     for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
@@ -240,6 +246,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     for (GSList const *l = selection->itemList(); l; l = l->next) {
         SPItem *it = (SPItem*)sp_object_ref(SP_OBJECT(l->data), NULL);
         _items.push_back(std::pair<SPItem *, NR::Matrix>(it, sp_item_i2d_affine(it)));
+        _items_centers.push_back(std::pair<SPItem *, NR::Point>(it, it->getCenter())); // for content-dragging, we need to remember original centers
     }
 
     _current.set_identity();
@@ -318,13 +325,18 @@ void Inkscape::SelTrans::ungrab()
     if (!_empty && _changed) {
         sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
         _center *= _current;
+        _center_is_set = true;
 
-        // Transform may have changed the objects' bboxes, so we need to write the _center into them again
-        for (unsigned i = 0; i < _items.size(); i++) {
-            SPItem *currentItem = _items[i].first;
-            if (currentItem->isCenterSet() || _current[1] != 0 || _current[2] != 0) { // only if it's already set, or if it's a rotation/skew
-                currentItem->setCenter (_center);
-                SP_OBJECT(currentItem)->updateRepr();
+// If dragging showed content live, sp_selection_apply_affine cannot change the centers
+// appropriately - it does not know the original positions of the centers (all objects already have
+// the new bboxes). So we need to reset the centers from our saved array.
+        if (_show != SHOW_OUTLINE && !_current.is_translation()) { 
+            for (unsigned i = 0; i < _items_centers.size(); i++) {
+                SPItem *currentItem = _items_centers[i].first;
+                if (currentItem->isCenterSet()) { // only if it's already set
+                    currentItem->setCenter (_items_centers[i].second * _current);
+                    SP_OBJECT(currentItem)->updateRepr();
+                }
             }
         }
 
@@ -336,6 +348,7 @@ void Inkscape::SelTrans::ungrab()
         sp_object_unref(SP_OBJECT(_items[i].first), NULL);
     }
     _items.clear();
+    _items_centers.clear();
 
     _grabbed = false;
     _show_handles = true;
@@ -466,17 +479,20 @@ void Inkscape::SelTrans::_updateHandles()
                     _("<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"));
     }
 
-    // Extract the position of the center from the first selected object
-    GSList *items = (GSList *) _desktop->selection->itemList();
-    if (items) {
-        SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
-        if (first->isCenterSet()) { // only if set explicitly
-            _center =  first->getCenter(); 
+    if (!_center_is_set) {
+        // Extract the position of the center from the first selected object
+        GSList *items = (GSList *) _desktop->selection->itemList();
+        if (items) {
+            SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
+            if (first->isCenterSet()) { // only if set explicitly
+                _center =  first->getCenter(); 
+            } else {
+                _center = _box.midpoint();
+            }
         } else {
             _center = _box.midpoint();
         }
-    } else {
-        _center = _box.midpoint();
+        _center_is_set = true;
     }
 
     if ( _state == STATE_SCALE ) {
@@ -686,6 +702,7 @@ void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
 {
     if (!_grabbed) {
         _updateVolatileState();
+        _center_is_set = false; // center(s) may have changed
         _updateHandles();
     }
 }
@@ -697,6 +714,8 @@ void Inkscape::SelTrans::_selModified(Inkscape::Selection *selection, guint flag
 
         // reset internal flag
         _changed = false;
+
+        _center_is_set = false;  // center(s) may have changed
 
         _updateHandles();
     }

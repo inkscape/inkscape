@@ -97,6 +97,7 @@ private:
     SPDesktop *_desktop;
 
     std::vector<std::pair<SPItem *, NR::Matrix> > _items;
+    std::vector<std::pair<SPItem *, NR::Point> > _items_centers;
     
     std::vector<NR::Point> _snap_points;
     std::vector<NR::Point> _bbox_points;
@@ -116,7 +117,10 @@ private:
     gdouble _strokewidth;
     NR::Matrix _current;
     NR::Point _opposite; ///< opposite point to where a scale is taking place
+
     NR::Point _center;
+    bool _center_is_set; ///< we've already set _center, no need to reread it from items
+
     SPKnot *_shandle[8];
     SPKnot *_rhandle[8];
     SPKnot *_chandle;
