@@ -28,6 +28,7 @@
 #endif
 
 #include <gtk/gtkwindow.h>
+#include <gtk/gtkversion.h>
 #include <gtkmm/radioaction.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/messagedialog.h>
@@ -1156,7 +1157,9 @@ EditWidget::initStatusbar()
     _select_status.property_yalign() = 0.5;
     _select_status.set_markup (_("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
     // include this again with Gtk+-2.6
-    //_select_status.property_ellipsize() = Pango::ELLIPSIZE_END;
+#if GTK_MAJOR_VERSION == 2 && GTK_MINOR_VERSION >= 6
+    _select_status.property_ellipsize() = Pango::ELLIPSIZE_END;
+#endif
     _select_status.set_size_request (1, -1);
     _statusbar.pack_start (_select_status, true, true, 0);
     
