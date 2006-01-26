@@ -57,7 +57,7 @@ template <class T>
 class Comparator
 {
 public:
-	virtual bool isLessThan(const T &lhs, const T &rhs) const = 0;
+	virtual bool isLessThan(T &lhs, T &rhs) const = 0;
 };
 
 template <class T>

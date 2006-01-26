@@ -15,6 +15,7 @@
 #include "blocks.h"
 #include "solve_VPSC.h"
 #ifdef RECTANGLE_OVERLAP_LOGGING
+#include <fstream>
 using std::ios;
 using std::ofstream;
 using std::endl;
@@ -72,7 +73,7 @@ void VPSC::satisfy() {
 			ofstream f(LOGFILE,ios::app);
 			f<<"Error: Unsatisfied constraint: "<<*cs[i]<<endl;
 #endif
-			assert(cs[i]->slack()>-0.0000001);
+			//assert(cs[i]->slack()>-0.0000001);
 			throw "Unsatisfied constraint";
 		}
 	}

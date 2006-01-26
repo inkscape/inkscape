@@ -10,9 +10,12 @@
  */
 
 #include "constraint.h"
-
+#include <cassert>
 Constraint::Constraint(Variable *left, Variable *right, double gap)
 {
+	if(gap>1e40) {
+		int i=0; // this would most probably indicate a divide by zero somewhere
+	}
 	this->left=left; 
 	left->out.push_back(this);
 	this->right=right;

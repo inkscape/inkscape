@@ -8,13 +8,13 @@
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
-
-
+#include <cassert>
 #include "constraint.h"
 #include "block.h"
 #include "blocks.h"
 #include "pairingheap/PairingHeap.h"
 #ifdef RECTANGLE_OVERLAP_LOGGING
+#include <fstream>
 using std::ios;
 using std::ofstream;
 using std::endl;
@@ -125,6 +125,13 @@ Constraint *Block::findMinInConstraint() {
 #endif
 		if(lb == rb) {
 			// constraint has been merged into the same block
+#ifdef RECTANGLE_OVERLAP_LOGGING
+			if(v->slack()<0) {
+				f<<"  violated internal constraint found! "<<*v<<endl;
+				f<<"     lb="<<*lb<<endl;
+				f<<"     rb="<<*rb<<endl;
+			}
+#endif
 			in->deleteMin();
 #ifdef RECTANGLE_OVERLAP_LOGGING
 			f<<" ... skipping internal constraint"<<endl;

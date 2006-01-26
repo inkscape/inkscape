@@ -35,6 +35,8 @@ public:
 		: id(id)
 		, desiredPosition(desiredPos)
 		, weight(weight)
+		, offset(0)
+		, visited(false)
 	{
 	}
 	double position() const;

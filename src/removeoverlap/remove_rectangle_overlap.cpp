@@ -5,6 +5,8 @@
 #include "variable.h"
 #include "constraint.h"
 #ifdef RECTANGLE_OVERLAP_LOGGING
+#include <fstream>
+#include <blocks.h>
 using std::ios;
 using std::ofstream;
 using std::endl;

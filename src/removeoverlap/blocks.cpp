@@ -17,6 +17,7 @@
 #include "block.h"
 #include "constraint.h"
 #ifdef RECTANGLE_OVERLAP_LOGGING
+#include <fstream>
 using std::ios;
 using std::ofstream;
 using std::endl;
@@ -37,6 +38,7 @@ Blocks::Blocks(Variable *vs[], const int n) : vs(vs),nvs(n) {
 }
 Blocks::~Blocks(void)
 {
+	blockTimeCtr=0;
 	for(set<Block*>::iterator i=begin();i!=end();i++) {
 		delete *i;
 	}
@@ -69,7 +71,11 @@ void Blocks::dfsVisit(Variable *v, list<Variable*> *order) {
 		if(!c->right->visited) {
 			dfsVisit(c->right, order);
 		}
-	}
+	}	
+#ifdef RECTANGLE_OVERLAP_LOGGING
+	ofstream f(LOGFILE,ios::app);
+	f<<"  order="<<*v<<endl;
+#endif
 	order->push_front(v);
 }
 /**

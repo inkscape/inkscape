@@ -43,6 +43,7 @@ struct Node {
 	Node(Variable *v, Rectangle *r, double p) : v(v),r(r),pos(p) {
 		firstAbove=firstBelow=NULL;
 		leftNeighbours=rightNeighbours=NULL;
+		assert(r->width()<1e40);
 	}
 	~Node() {
 		delete leftNeighbours;
@@ -139,7 +140,12 @@ Event **events;
 int compare_events(const void *a, const void *b) {
 	Event *ea=*(Event**)a;
 	Event *eb=*(Event**)b;
-	if(ea->pos > eb->pos) {
+	if(ea->v->r==ea->v->r) {
+		// when comparing opening and closing from the same rect
+		// open must come first
+		if(ea->type==Open) return -1;
+		return 1;
+	} else if(ea->pos > eb->pos) {
 		return 1;
 	} else if(ea->pos < eb->pos) {
 		return -1;
@@ -148,11 +154,6 @@ int compare_events(const void *a, const void *b) {
 		return ( isNaN(ea->pos)
 			 ? -1
 			 : 1 );
-	} else if(ea->v->r==ea->v->r) {
-		// when comparing opening and closing from the same rect
-		// open must come first
-		if(ea->type==Open) return -1;
-		return 1;
 	}
 	return 0;
 }
@@ -168,12 +169,14 @@ int generateXConstraints(Rectangle *rs[], double weights[], const int n, Variabl
 	vector<Constraint*> constraints;
 	vars=new Variable*[n];
 	for(i=0;i<n;i++) {
+		assert(rs[i]->width()<1e40);
 		vars[i]=new Variable(i,rs[i]->getCentreX(),weights[i]);
 		Node *v = new Node(vars[i],rs[i],rs[i]->getCentreX());
 		events[ctr++]=new Event(Open,v,rs[i]->getMinY());
 		events[ctr++]=new Event(Close,v,rs[i]->getMaxY());
 	}
 	qsort((Event*)events, (size_t)2*n, sizeof(Event*), compare_events );
+
 	NodeSet scanline;
 	for(i=0;i<2*n;i++) {
 		Event *e=events[i];
@@ -186,15 +189,19 @@ int generateXConstraints(Rectangle *rs[], double weights[], const int n, Variabl
 					getRightNeighbours(scanline,v)
 				);
 			} else {
-				NodeSet::iterator i=scanline.find(v);
-				if(i--!=scanline.begin()) {
-					Node *u=*i;
+				NodeSet::iterator it=scanline.find(v);
+				assert(*it==v);
+				if(it--!=scanline.begin()) {
+					assert(scanline.size()>1);
+					Node *u=*it;
 					v->firstAbove=u;
 					u->firstBelow=v;
 				}
-				i=scanline.find(v);
-				if(++i!=scanline.end())	 {
-					Node *u=*i;
+				it=scanline.find(v);
+				assert(*it==v);
+				if(++it!=scanline.end()) {
+					assert(scanline.size()>1);
+					Node *u=*it;
 					v->firstBelow=u;
 					u->firstAbove=v;
 				}
@@ -223,11 +230,13 @@ int generateXConstraints(Rectangle *rs[], double weights[], const int n, Variabl
 			} else {
 				Node *l=v->firstAbove, *r=v->firstBelow;
 				if(l!=NULL) {
+					assert(l->firstBelow==v);
 					double sep = (v->r->width()+l->r->width())/2.0;
 					constraints.push_back(new Constraint(l->v,v->v,sep));
 					l->firstBelow=v->firstBelow;
 				}
 				if(r!=NULL) {
+					assert(r->firstAbove==v);
 					double sep = (v->r->width()+r->r->width())/2.0;
 					constraints.push_back(new Constraint(v->v,r->v,sep));
 					r->firstAbove=v->firstAbove;

@@ -32,11 +32,16 @@ public:
 	bool visited;
 };
 #include <float.h>
+#include "block.h"
 static inline bool compareConstraints(Constraint *&l, Constraint *&r) {
-	double sl = l->slack();
-	double sr = r->slack();
-	if(l->left->block==l->right->block) sl=DBL_MIN;
-	if(r->left->block==r->right->block) sr=DBL_MIN;
+	double const sl = 
+		l->left->block->timeStamp > l->timeStamp
+		||l->left->block==l->right->block
+		?DBL_MIN:l->slack();
+	double const sr = 
+		r->left->block->timeStamp > r->timeStamp
+		||r->left->block==r->right->block
+		?DBL_MIN:r->slack();
 	if(sl==sr) {
 		// arbitrary choice based on id
 		if(l->left->id==r->left->id) {
