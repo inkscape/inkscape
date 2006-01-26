@@ -455,11 +455,15 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
         case SP_ATTR_TRANSFORM_CENTER_X:
             if (value) {
                 item->transform_center_x = g_strtod(value, NULL);
+            } else {
+                item->transform_center_x = 0;
             }
             break;
         case SP_ATTR_TRANSFORM_CENTER_Y:
             if (value) {
                 item->transform_center_y = g_strtod(value, NULL);
+            } else {
+                item->transform_center_y = 0;
             }
             break;
         default:
