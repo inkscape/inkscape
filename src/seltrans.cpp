@@ -1144,11 +1144,12 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
         s[!dim] = fabs(s[dim]);
     }
 
-    NR::Rect new_bbox = _box * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    NR::Point new_bbox_min = _box.min() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
+    NR::Point new_bbox_max = _box.max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
 
     int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
     NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke, 
-                   new_bbox.min()[NR::X], new_bbox.min()[NR::Y], new_bbox.max()[NR::X], new_bbox.max()[NR::Y]);
+                   new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
@@ -1164,11 +1165,12 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
         if (fabs(s[i]) < 1e-9)
             s[i] = 1e-9;
     }
-    NR::Rect new_bbox = _box * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_min = _box.min() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
+    NR::Point new_bbox_max = _box.max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
 
     int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
     NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke, 
-                   new_bbox.min()[NR::X], new_bbox.min()[NR::Y], new_bbox.max()[NR::X], new_bbox.max()[NR::Y]);
+                   new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
 }
