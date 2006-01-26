@@ -1167,6 +1167,12 @@ void sp_selection_to_prev_layer ()
     g_slist_free ((GSList *) items);
 }
 
+/** Apply matrix to the selection.  \a set_i2d is normally true, which means objects are in the
+original transform, synced with their reprs, and need to jump to the new transform in one go. A
+value of set_i2d==false is only used by seltrans when it's dragging objects live (not outlines); in
+that case, items are already in the new position, but the repr is in the old, and this function
+then simply updates the repr from item->transform.
+ */
 void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const &affine, bool set_i2d)
 {
     if (selection->isEmpty())
@@ -1174,6 +1180,10 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
 
     for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
         SPItem *item = SP_ITEM(l->data);
+
+        NR::Point old_center(0,0);
+        if (set_i2d && item->isCenterSet()) 
+            old_center = item->getCenter();
 
 #if 0 /* Re-enable this once persistent guides have a graphical indication.
 	 At the time of writing, this is the only place to re-enable. */
@@ -1253,6 +1263,13 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
                 sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
             }
             sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform, NULL);
+        }
+
+        // if we're moving the actual object, not just updating the repr, we can transform the
+        // center by the same matrix (only necessary for non-translations)
+        if (set_i2d && item->isCenterSet() && !affine.is_translation()) {
+            item->setCenter(old_center * affine);
+            SP_OBJECT(item)->updateRepr();
         }
     }
 }
