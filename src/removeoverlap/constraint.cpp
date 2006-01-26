@@ -12,18 +12,15 @@
 #include "constraint.h"
 #include <cassert>
 Constraint::Constraint(Variable *left, Variable *right, double gap)
+: left(left),
+  right(right),
+  gap(gap),
+  timeStamp(0),
+  active(false),
+  visited(false)
 {
-	if(gap>1e40) {
-		int i=0; // this would most probably indicate a divide by zero somewhere
-	}
-	this->left=left; 
 	left->out.push_back(this);
-	this->right=right;
 	right->in.push_back(this);
-	this->gap=gap;
-	active=false;
-	visited=false;
-	timeStamp=0;
 }
 std::ostream& operator <<(std::ostream &os, const Constraint &c)
 {
