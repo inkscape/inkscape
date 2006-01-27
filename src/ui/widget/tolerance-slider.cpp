@@ -54,7 +54,7 @@ ToleranceSlider::~ToleranceSlider()
 }
 
 void
-ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr)
+ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr)
 {
     _hbox = new Gtk::HBox;
     Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
@@ -66,8 +66,8 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     _hscale->set_value_pos (Gtk::POS_RIGHT);
     _hscale->set_size_request (100, -1);
     _hbox->add (*_hscale);
-    Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
-    _hbox->add (*theLabel2);
+//    Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
+//    _hbox->add (*theLabel2);
     _key = key;
     _scale_changed_connection = _hscale->signal_value_changed().connect (sigc::mem_fun (*this, &ToleranceSlider::update));
     _wr = &wr;

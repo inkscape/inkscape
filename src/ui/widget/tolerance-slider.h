@@ -25,7 +25,7 @@ public:
     ToleranceSlider();
     ~ToleranceSlider();
     void init (const Glib::ustring& label1, 
-            const Glib::ustring& label2, 
+//            const Glib::ustring& label2, 
             const Glib::ustring& tip, 
             const Glib::ustring& key, 
             Registry& wr);

@@ -292,7 +292,7 @@ DocumentProperties::build_snap()
     _rcbsnon.init (_("Snap to object _nodes"), 
                 _("Snap to other object nodes"), 
                 "inkscape:object-nodes", _wr);
-    _rsu_sno.init (_("Snap s_ensitivity:"), _(""),
+    _rsu_sno.init (_("Snap s_ensitivity:"), 
                   _("Controls max. snapping distance from object"),
                   "objecttolerance", _wr);
     _rcbsnbb.init (_("Snap _bounding boxes to grid"), 
@@ -301,7 +301,7 @@ DocumentProperties::build_snap()
     _rcbsnnod.init (_("Snap nodes to _grid"), 
                 _("Snap path nodes, text baselines, ellipse centers, etc."), 
                 "inkscape:grid-points", _wr);
-    _rsu_sn.init (_("Snap sens_itivity:"),  _(""),
+    _rsu_sn.init (_("Snap sens_itivity:"), 
                   _("Controls max. snapping distance from grid"),
                   "gridtolerance", _wr);
     _rcb_snpgui.init (_("Snap bounding boxes to g_uides"),  
@@ -310,7 +310,7 @@ DocumentProperties::build_snap()
     _rcb_snbgui.init (_("Snap p_oints to guides"), 
                 _("Snap path nodes, text baselines, ellipse centers, etc."), 
                 "inkscape:guide-points", _wr);
-    _rsu_gusn.init (_("Snap sensiti_vity:"), _(""), 
+    _rsu_gusn.init (_("Snap sensiti_vity:"), 
                 _("Controls max. snapping distance from guides"), "guidetolerance", _wr);
     _rrb_pix.init (_("Sensitivity:"), _("S_creen pixels"), _("p_x units"),
                 _("Sensitivity is always the same, regardless of zoom."),
