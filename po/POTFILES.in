@@ -245,7 +245,8 @@ src/trace/potrace/inkscape-potrace.cpp
 src/trace/trace.cpp
 src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
-src/ui/dialog/document-preferences.cpp
+src/ui/dialog/document-metadata.cpp
+src/ui/dialog/document-properties.cpp
 src/ui/dialog/export.cpp
 src/ui/dialog/fill-and-stroke.cpp
 src/ui/dialog/find.cpp
