@@ -76,19 +76,20 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& tip, co
 void 
 ToleranceSlider::setValue (double val, bool is_absolute)
 {
+fprintf(stderr,"val=%f, isabs=%d\n",val,is_absolute?1:0);
     _hscale->set_value (val);
     Gtk::Adjustment *adj = _hscale->get_adjustment();
     if (is_absolute) 
     { 
-        adj->set_lower (0.4); 
-        adj->set_upper (50.1);
-        adj->set_step_increment (0.1);
-    }
-    else             
-    { 
         adj->set_lower (1.0); 
         adj->set_upper (51.0);
         adj->set_step_increment (1.0);
+    }
+    else             
+    { 
+        adj->set_lower (0.4); 
+        adj->set_upper (50.1);
+        adj->set_step_increment (0.1);
     }
     update();
 }
