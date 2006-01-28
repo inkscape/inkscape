@@ -166,9 +166,6 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
 
     widget = GTK_WIDGET (dtw);
 
-    Gtk::VPaned* pane = manage( new Gtk::VPaned() );
-    pane->show_all();
-
     dtw->window = 0;
     
     dtw->desktop = NULL;
@@ -177,11 +174,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
 
     /* Main table */
     dtw->vbox = gtk_vbox_new (FALSE, 0);
-    gtk_container_add( GTK_CONTAINER(dtw), GTK_WIDGET(pane->gobj()) );
-
-    Gtk::VBox* tmp = Glib::wrap( GTK_VBOX(dtw->vbox) );
-    Gtk::VBox* boxWrap = manage( tmp );
-    pane->pack1( *boxWrap, true, true );
+    gtk_container_add( GTK_CONTAINER(dtw), GTK_WIDGET(dtw->vbox) );
 
     dtw->statusbar = gtk_hbox_new (FALSE, 0);
     //gtk_widget_set_usize (dtw->statusbar, -1, BOTTOM_BAR_HEIGHT);
@@ -190,9 +183,9 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     {
         using Inkscape::UI::Dialogs::SwatchesPanel;
 
-        SwatchesPanel* swatches = manage( new SwatchesPanel() );
+        SwatchesPanel* swatches = new SwatchesPanel();
         dtw->panels = GTK_WIDGET(swatches->gobj());
-        pane->pack2( *swatches, false, true );
+        gtk_box_pack_end( GTK_BOX( dtw->vbox ), dtw->panels, FALSE, TRUE, 0 );
     }
 
     hbox = gtk_hbox_new (FALSE, 0);
