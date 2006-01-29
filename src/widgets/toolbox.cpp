@@ -3012,8 +3012,6 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     // in turn, prevent callbacks from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
     
-    double old_spacing = desktop->namedview->connector_spacing;
-        
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(desktop->namedview);
     
     sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
@@ -3022,7 +3020,8 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     GSList *items = get_avoided_items(NULL, desktop->currentRoot(), desktop);
     for ( GSList const *iter = items ; iter != NULL ; iter = iter->next ) {
         SPItem *item = reinterpret_cast<SPItem *>(iter->data);
-        avoid_item_move(&NR::identity(), item);
+        NR::Matrix m = NR::identity();
+        avoid_item_move(&m, item);
     }
 
     if (items) {
