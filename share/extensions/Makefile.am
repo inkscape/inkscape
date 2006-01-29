@@ -44,7 +44,8 @@ extensions = \
 	ps2dxf.sh \
 	embedimage.py \
 	extractimage.py \
-	svg_and_media_zip_output.py
+	svg_and_media_zip_output.py \
+	dxf_outlines.py
 
 otherstuff =
 
@@ -84,7 +85,8 @@ modules = \
 	dxf_input.inx \
 	embedimage.inx \
 	extractimage.inx \
-	svg_and_media_zip_output.inx
+	svg_and_media_zip_output.inx \
+	dxf_outlines.py
 
 extension_SCRIPTS = \
 	$(extensions)

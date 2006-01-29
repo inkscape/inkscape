@@ -1,0 +1,18 @@
+<inkscape-extension>
+    <_name>Dxf Outlines</_name>
+    <id>org.ekips.output.dxf_outlines</id>
+	<dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
+	<dependency type="executable" location="extensions">dxf_outlines.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+    <output>
+                <extension>.dxf</extension>
+                <mimetype>application/x-dxf</mimetype>
+                <_filetypename>Path outlines converted to DXF splines (*.DXF)</_filetypename>
+                <_filetypetooltip>Path outlines converted to DXF splines</_filetypetooltip>
+                <dataloss>TRUE</dataloss>
+    </output>
+    <script>
+        <command reldir="extensions" interpreter="python">dxf_outlines.py</command>
+        <helper_extension>org.inkscape.output.svg.inkscape</helper_extension>
+    </script>
+</inkscape-extension>
