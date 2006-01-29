@@ -35,6 +35,7 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/accelmap.h>
 #include <gtkmm/separator.h>
+#include <gtkmm/base.h>
 
 #include "macros.h"
 #include "path-prefix.h"
@@ -1157,7 +1158,7 @@ EditWidget::initStatusbar()
     _select_status.property_yalign() = 0.5;
     _select_status.set_markup (_("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
     // include this again with Gtk+-2.6
-#if GTK_MAJOR_VERSION == 2 && GTK_MINOR_VERSION >= 6
+#if GTK_VERSION_GE(2,6)
     _select_status.property_ellipsize() = Pango::ELLIPSIZE_END;
 #endif
     _select_status.set_size_request (1, -1);
