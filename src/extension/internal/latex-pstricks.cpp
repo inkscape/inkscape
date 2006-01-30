@@ -327,6 +327,8 @@ PrintLatex::textToPath(Inkscape::Extension::Print * ext)
     return ext->get_param_bool("textToPath");
 }
 
+#include "clear-n_.h"
+
 void
 PrintLatex::init (void)
 {
@@ -335,7 +337,7 @@ PrintLatex::init (void)
 	/* SVG in */
     ext = Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
-			"<name>LaTeX Print</name>\n"
+			"<name>" N_("LaTeX Print") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_LATEX "</id>\n"
         		"<param name=\"destination\" type=\"string\"></param>\n"
                         "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"

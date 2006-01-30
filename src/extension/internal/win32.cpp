@@ -477,6 +477,8 @@ PrintWin32::get_save_filename (unsigned char *dir, unsigned int *spns)
 	return g_strdup (fnbuf);
 }
 
+#include "clear-n_.h"
+
 void
 PrintWin32::init (void)
 {
@@ -485,7 +487,7 @@ PrintWin32::init (void)
 	/* SVG in */
     ext = Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
-			"<name>Windows 32-bit Print</name>\n"
+			"<name>" N_("Windows 32-bit Print") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_WIN32 "</id>\n"
 			"<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
 			"<print/>\n"

@@ -388,6 +388,8 @@ PrintGNOME::image (Inkscape::Extension::Print *mod, unsigned char *px, unsigned 
     return 0;
 }
 
+#include "clear-n_.h"
+
 void
 PrintGNOME::init (void)
 {
@@ -396,7 +398,7 @@ PrintGNOME::init (void)
 	/* SVG in */
     ext = Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
-			"<name>GNOME Print</name>\n"
+			"<name>" N_("GNOME Print") "</name>\n"
 			"<id>" SP_MODULE_KEY_PRINT_GNOME "</id>\n"
 			"<print/>\n"
 		"</inkscape-extension>", new PrintGNOME());

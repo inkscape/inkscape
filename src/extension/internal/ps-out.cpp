@@ -65,6 +65,8 @@ PsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *
 	return;
 }
 
+#include "clear-n_.h"
+
 /**
 	\brief   A function allocate a copy of this function.
 
@@ -77,14 +79,14 @@ PsOutput::init (void)
 {
 	Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"
-			"<name>Postscript Output</name>\n"
+			"<name>" N_("Postscript Output") "</name>\n"
 			"<id>org.inkscape.output.ps</id>\n"
-			"<param name=\"textToPath\" gui-text=\"Text to Path\" type=\"boolean\">true</param>\n"
+			"<param name=\"textToPath\" gui-text=\"" N_("Text to Path") "\" type=\"boolean\">true</param>\n"
 			"<output>\n"
 				"<extension>.ps</extension>\n"
 				"<mimetype>image/x-postscript</mimetype>\n"
-				"<filetypename>Postscript (*.ps)</filetypename>\n"
-				"<filetypetooltip>Postscript File</filetypetooltip>\n"
+				"<filetypename>" N_("Postscript (*.ps)") "</filetypename>\n"
+				"<filetypetooltip>" N_("Postscript File") "</filetypetooltip>\n"
 			"</output>\n"
 		"</inkscape-extension>", new PsOutput());
 

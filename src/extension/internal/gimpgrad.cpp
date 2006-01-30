@@ -201,19 +201,20 @@ GimpGrad::open (Inkscape::Extension::Input *module, gchar const *filename)
     return sp_document_new_from_mem(outsvg.c_str(), outsvg.length(), TRUE);
 }
 
+#include "clear-n_.h"
+
 void
 GimpGrad::init (void)
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>GIMP Gradients</name>\n"
+            "<name>" N_("GIMP Gradients") "</name>\n"
             "<id>org.inkscape.input.gimpgrad</id>\n"
-            "<dependency type=\"plugin\" location=\"plugins\">gimpgrad</dependency>\n"
             "<input>\n"
                 "<extension>.ggr</extension>\n"
                 "<mimetype>application/x-gimp-gradient</mimetype>\n"
-                "<filetypename>GIMP Gradient (*.ggr)</filetypename>\n"
-                "<filetypetooltip>Gradients used in GIMP</filetypetooltip>\n"
+                "<filetypename>" N_("GIMP Gradient (*.ggr)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Gradients used in GIMP") "</filetypetooltip>\n"
             "</input>\n"
         "</inkscape-extension>\n", new GimpGrad());
     return;

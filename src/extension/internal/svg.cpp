@@ -29,6 +29,8 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
+#include "clear-n_.h"
+
 /**
     \return   None
     \brief    What would an SVG editor be without loading/saving SVG
@@ -49,13 +51,13 @@ Svg::init(void)
     /* SVG in */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>SVG Input</name>\n"
+            "<name>" N_("SVG Input") "</name>\n"
             "<id>" SP_MODULE_KEY_INPUT_SVG "</id>\n"
             "<input>\n"
                 "<extension>.svg</extension>\n"
                 "<mimetype>image/x-svg</mimetype>\n"
-                "<filetypename>Scalable Vector Graphic (*.svg)</filetypename>\n"
-                "<filetypetooltip>Inkscape native file format and W3C standard</filetypetooltip>\n"
+                "<filetypename>" N_("Scalable Vector Graphic (*.svg)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Inkscape native file format and W3C standard") "</filetypetooltip>\n"
                 "<output_extension>" SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE "</output_extension>\n"
             "</input>\n"
         "</inkscape-extension>", new Svg());
@@ -63,13 +65,13 @@ Svg::init(void)
     /* SVG out Inkscape */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>SVG Output Inkscape</name>\n"
+            "<name>" N_("SVG Output Inkscape") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE "</id>\n"
             "<output>\n"
                 "<extension>.svg</extension>\n"
                 "<mimetype>image/x-svg</mimetype>\n"
-                "<filetypename>Inkscape SVG (*.svg)</filetypename>\n"
-                "<filetypetooltip>SVG format with Inkscape extensions</filetypetooltip>\n"
+                "<filetypename>" N_("Inkscape SVG (*.svg)") "</filetypename>\n"
+                "<filetypetooltip>" N_("SVG format with Inkscape extensions") "</filetypetooltip>\n"
                 "<dataloss>FALSE</dataloss>\n"
             "</output>\n"
         "</inkscape-extension>", new Svg());
@@ -77,13 +79,13 @@ Svg::init(void)
     /* SVG out */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>SVG Output</name>\n"
+            "<name>" N_("SVG Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVG "</id>\n"
             "<output>\n"
                 "<extension>.svg</extension>\n"
                 "<mimetype>image/x-svg</mimetype>\n"
-                "<filetypename>Plain SVG (*.svg)</filetypename>\n"
-                "<filetypetooltip>Scalable Vector Graphics format as defined by the W3C</filetypetooltip>\n"
+                "<filetypename>" N_("Plain SVG (*.svg)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Scalable Vector Graphics format as defined by the W3C") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>", new Svg());
 

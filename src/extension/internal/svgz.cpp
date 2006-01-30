@@ -22,6 +22,8 @@ namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
+#include "clear-n_.h"
+
 /**
     \return   None
     \brief    What would an SVG editor be without loading/saving SVG
@@ -42,14 +44,14 @@ Svgz::init(void)
     /* SVGZ in */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>SVGZ Input</name>\n"
+            "<name>" N_("SVGZ Input") "</name>\n"
             "<id>" SP_MODULE_KEY_INPUT_SVGZ "</id>\n"
             "<dependency type=\"extension\">" SP_MODULE_KEY_INPUT_SVG "</dependency>\n"
             "<input>\n"
                 "<extension>.svgz</extension>\n"
                 "<mimetype>image/x-svgz</mimetype>\n"
-                "<filetypename>Compressed Inkscape SVG (*.svgz)</filetypename>\n"
-                "<filetypetooltip>SVG file format compressed with GZip</filetypetooltip>\n"
+                "<filetypename>" N_("Compressed Inkscape SVG (*.svgz)") "</filetypename>\n"
+                "<filetypetooltip>" N_("SVG file format compressed with GZip") "</filetypetooltip>\n"
                 "<output_extension>" SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE "</output_extension>\n"
             "</input>\n"
         "</inkscape-extension>", new Svgz());
@@ -57,13 +59,13 @@ Svgz::init(void)
 	/* SVGZ out Inkscape */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>SVGZ Output</name>\n"
+            "<name>" N_("SVGZ Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE "</id>\n"
             "<output>\n"
                 "<extension>.svgz</extension>\n"
                 "<mimetype>image/x-svgz</mimetype>\n"
-                "<filetypename>Compressed Inkscape SVG (*.svgz)</filetypename>\n"
-                "<filetypetooltip>Inkscape's native file format compressed with GZip</filetypetooltip>\n"
+                "<filetypename>" N_("Compressed Inkscape SVG (*.svgz)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Inkscape's native file format compressed with GZip") "</filetypetooltip>\n"
                 "<dataloss>FALSE</dataloss>\n"
             "</output>\n"
         "</inkscape-extension>", new Svgz());
@@ -71,13 +73,13 @@ Svgz::init(void)
 	/* SVGZ out */
     ext = Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>SVGZ Output</name>\n"
+            "<name>" N_("SVGZ Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVGZ "</id>\n"
             "<output>\n"
                 "<extension>.svgz</extension>\n"
                 "<mimetype>image/x-svgz</mimetype>\n"
-                "<filetypename>Compressed plain SVG (*.svgz)</filetypename>\n"
-                "<filetypetooltip>Scalable Vector Graphics format compressed with GZip</filetypetooltip>\n"
+                "<filetypename>" N_("Compressed plain SVG (*.svgz)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Scalable Vector Graphics format compressed with GZip") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>\n", new Svgz());
 

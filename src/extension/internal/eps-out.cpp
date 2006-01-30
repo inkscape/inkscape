@@ -67,6 +67,8 @@ EpsOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar 
     return;
 }
 
+#include "clear-n_.h"
+
 /**
     \brief   A function allocate a copy of this function.
 
@@ -79,15 +81,15 @@ EpsOutput::init (void)
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>Encapsulated Postscript Output</name>\n"
+            "<name>" N_("Encapsulated Postscript Output") "</name>\n"
             "<id>org.inkscape.output.eps</id>\n"
-            "<param name=\"pageBoundingBox\" type=\"boolean\" gui-text=\"Make bounding box around full page\">FALSE</param>\n"
-            "<param name=\"textToPath\" type=\"boolean\" gui-text=\"Convert text to path\">TRUE</param>\n"
+            "<param name=\"pageBoundingBox\" type=\"boolean\" gui-text=\"" N_("Make bounding box around full page") "\">FALSE</param>\n"
+            "<param name=\"textToPath\" type=\"boolean\" gui-text=\"" N_("Convert text to path") "\">TRUE</param>\n"
             "<output>\n"
                 "<extension>.eps</extension>\n"
                 "<mimetype>image/x-e-postscript</mimetype>\n"
-                "<filetypename>Encapsulated Postscript (*.eps)</filetypename>\n"
-                "<filetypetooltip>Encapsulated Postscript File</filetypetooltip>\n"
+                "<filetypename>" N_("Encapsulated Postscript (*.eps)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Encapsulated Postscript File") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>", new EpsOutput());
 

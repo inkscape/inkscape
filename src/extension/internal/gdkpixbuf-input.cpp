@@ -97,6 +97,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
     return doc;
 }
 
+#include "clear-n_.h"
 
 void
 GdkpixbufInput::init(void)
@@ -131,7 +132,7 @@ GdkpixbufInput::init(void)
 
             gchar *xmlString = g_strdup_printf(
                 "<inkscape-extension>\n"
-                    "<name>%s GDK pixbuf Input</name>\n"
+                    "<name>" N_("%s GDK pixbuf Input") "</name>\n"
                     "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
                     "<input>\n"
                         "<extension>.%s</extension>\n"

@@ -439,6 +439,8 @@ PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
     fclose(f);
 }
 
+#include "clear-n_.h"
+
 /**
  * This is the definition of PovRay output.  This function just
  * calls the extension system with the memory allocated XML that
@@ -449,13 +451,13 @@ PovOutput::init()
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>PovRay Output</name>\n"
+            "<name>" N_("PovRay Output") "</name>\n"
             "<id>org.inkscape.output.pov</id>\n"
             "<output>\n"
                 "<extension>.pov</extension>\n"
                 "<mimetype>text/x-povray-script</mimetype>\n"
-                "<filetypename>PovRay (*.pov) (export splines)</filetypename>\n"
-                "<filetypetooltip>PovRay Raytracer File</filetypetooltip>\n"
+                "<filetypename>" N_("PovRay (*.pov) (export splines)") "</filetypename>\n"
+                "<filetypetooltip>" N_("PovRay Raytracer File") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>",
         new PovOutput());

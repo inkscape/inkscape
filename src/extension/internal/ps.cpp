@@ -1227,13 +1227,15 @@ PrintPS::textToPath(Inkscape::Extension::Print * ext)
     return ext->get_param_bool("textToPath");
 }
 
+#include "clear-n_.h"
+
 void
 PrintPS::init(void)
 {
     /* SVG in */
     (void) Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-        "<name>Postscript Print</name>\n"
+        "<name>" N_("Postscript Print") "</name>\n"
         "<id>" SP_MODULE_KEY_PRINT_PS "</id>\n"
         "<param name=\"bitmap\" type=\"boolean\">FALSE</param>\n"
         "<param name=\"resolution\" type=\"string\">72</param>\n"

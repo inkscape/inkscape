@@ -125,17 +125,22 @@ BlurEdge::prefs_effect(Inkscape::Extension::Effect * module, Inkscape::UI::View:
     return module->autogui();
 }
 
+#include "clear-n_.h"
+
 void
 BlurEdge::init (void)
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>Blur Edge</name>\n"
+            "<name>" N_("Blur Edge") "</name>\n"
             "<id>org.inkscape.effect.bluredge</id>\n"
-            "<param name=\"blur-width\" gui-text=\"Blur Width\" type=\"float\" min=\"1.0\" max=\"50.0\">1.0</param>\n"
-            "<param name=\"num-steps\" gui-text=\"Number of Steps\" type=\"int\" min=\"5\" max=\"100\">11</param>\n"
+            "<param name=\"blur-width\" gui-text=\"" N_("Blur Width") "\" type=\"float\" min=\"1.0\" max=\"50.0\">1.0</param>\n"
+            "<param name=\"num-steps\" gui-text=\"" N_("Number of Steps") "\" type=\"int\" min=\"5\" max=\"100\">11</param>\n"
             "<effect>\n"
                 "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                    "<submenu name=\"" N_("Enhance Path") "\" />\n"
+                "</effects-menu>\n"
             "</effect>\n"
         "</inkscape-extension>\n" , new BlurEdge());
     return;

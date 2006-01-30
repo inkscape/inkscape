@@ -237,12 +237,14 @@ Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View
     return vbox;
 }
 
+#include "clear-n_.h"
+
 void
 Grid::init (void)
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>Grid</name>\n"
+            "<name>" N_("Grid") "</name>\n"
             "<id>org.inkscape.effect.grid</id>\n"
             "<param name=\"lineWidth\" type=\"float\">1.0</param>\n"
             "<param name=\"xspacing\" type=\"float\">10.0</param>\n"
@@ -251,6 +253,9 @@ Grid::init (void)
             "<param name=\"yoffset\" type=\"float\">5.0</param>\n"
             "<effect>\n"
                 "<object-type>all</object-type>\n"
+                "<effects-menu>\n"
+                    "<submenu name=\"" N_("Render") "\" />\n"
+                "</effects-menu>\n"
             "</effect>\n"
         "</inkscape-extension>\n", new Grid());
     return;

@@ -89,6 +89,8 @@ LatexOutput::save (Inkscape::Extension::Output *mod2, SPDocument *doc, const gch
     return;
 }
 
+#include "clear-n_.h"
+
 /**
     \brief   A function allocate a copy of this function.
 
@@ -101,13 +103,13 @@ LatexOutput::init (void)
 {
     Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
-            "<name>LaTeX Output</name>\n"
+            "<name>" N_("LaTeX Output") "</name>\n"
             "<id>org.inkscape.output.latex</id>\n"
             "<output>\n"
                 "<extension>.tex</extension>\n"
                 "<mimetype>text/plain</mimetype>\n"
-                "<filetypename>LaTeX With PSTricks macros (*.tex)</filetypename>\n"
-                "<filetypetooltip>LaTeX PSTricks File</filetypetooltip>\n"
+                "<filetypename>" N_("LaTeX With PSTricks macros (*.tex)") "</filetypename>\n"
+                "<filetypetooltip>" N_("LaTeX PSTricks File") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>", new LatexOutput());
 
