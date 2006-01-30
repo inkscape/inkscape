@@ -6,7 +6,9 @@
     <effect>
 		<object-type>path</object-type>
 		<effects-menu>
-			<submenu _name="Fractal" />
+			<submenu _name="Render">
+				<submenu _name="Fractal" />
+			</submenu>
 		</effects-menu>
     </effect>
     <script>
