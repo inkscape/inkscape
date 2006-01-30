@@ -6,7 +6,7 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
     <output>
                 <extension>.dxf</extension>
-                <mimetype>application/x-dxf</mimetype>
+	        <mimetype>image/dxf</mimetype>
                 <_filetypename>Path outlines converted to DXF splines (*.DXF)</_filetypename>
                 <_filetypetooltip>Path outlines converted to DXF splines</_filetypetooltip>
                 <dataloss>TRUE</dataloss>
