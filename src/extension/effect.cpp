@@ -30,9 +30,14 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         find_effects_list(inkscape_get_menus(INKSCAPE));
 
     if (_effects_list != NULL) {
+        unsigned start_pos = _effects_list->position();
+
         _menu_node = sp_repr_new("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
         _effects_list->parent()->appendChild(_menu_node);
+
+        _menu_node->setPosition(start_pos + 1);
+
         Inkscape::GC::release(_menu_node);
     } /*else {
         printf("Effect %s not added\n", get_name());
@@ -137,7 +142,7 @@ Effect::find_effects_list (Inkscape::XML::Node * menustruct)
             child != NULL;
             child = child->next()) {
         if (!strcmp(child->name(), EFFECTS_LIST)) {
-            _effects_list = menustruct;
+            _effects_list = child;
             return true;
         }
         Inkscape::XML::Node * firstchild = child->firstChild();
