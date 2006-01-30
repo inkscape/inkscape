@@ -6,6 +6,9 @@
 	<param name="max" type="float" min="0.0" max="10000.0" _gui-text="Maximum Segment Length">10.0</param>
     <effect>
 		<object-type>path</object-type>
+		<effects-menu>
+			<submenu _name="Enhance Path"/>
+		</effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">addnodes.py</command>
