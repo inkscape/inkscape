@@ -17,7 +17,7 @@
     <effect>
 		<object-type>all</object-type>
 		<effects-menu>
-			<submenu _name="Fret Finder"/>
+			<submenu _name="Fretboard Designer"/>
 		</effects-menu>
     </effect>
     <script>
