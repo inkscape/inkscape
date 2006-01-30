@@ -291,6 +291,8 @@ public:
     unsigned int get_code (void) { return _code; }
     /** \brief Accessor to get the internal variable. */
     gchar const * get_id (void) { return _id; }
+    /** \brief Accessor to get the internal variable. */
+    gchar const * get_name (void) { return _name; }
 
 protected:
     SPAction * make_action_helper (Inkscape::UI::View::View * view, SPActionEventVector * vector, void * in_pntr = NULL);
