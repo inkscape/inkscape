@@ -53,6 +53,7 @@ libinkpre_a_SOURCES =	\
 	desktop.cpp desktop.h	\
 	document-undo.cpp	\
 	document.cpp document.h document-private.h	\
+        doxygen-main.cpp \
 	draw-anchor.cpp	\
 	draw-anchor.h	\
 	draw-context.cpp draw-context.h	\
