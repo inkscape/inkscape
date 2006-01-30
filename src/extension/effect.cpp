@@ -26,22 +26,100 @@ Inkscape::XML::Node * Effect::_effects_list = NULL;
 Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
     : Extension(in_repr, in_imp), _verb(get_id(), get_name(), NULL, NULL, this), _menu_node(NULL)
 {
+    Inkscape::XML::Node * local_effects_menu = NULL;
+
+    // This is a weird hack
+    if (!strcmp(this->get_id(), "org.inkscape.filter.dropshadow"))
+        return;
+
+    if (repr != NULL) {
+        Inkscape::XML::Node * child_repr;
+
+        for (child_repr = sp_repr_children(repr); child_repr != NULL; child_repr = child_repr->next()) {
+            if (!strcmp(child_repr->name(), "effect")) {
+                for (child_repr = sp_repr_children(child_repr); child_repr != NULL; child_repr = child_repr->next()) {
+                    if (!strcmp(child_repr->name(), "effects-menu")) {
+                        printf("Found local effects menu in %s\n", this->get_name());
+                        local_effects_menu = sp_repr_children(child_repr);
+                    }
+                } // children of "effect"
+                break; // there can only be one effect
+            } // find "effect"
+        } // children of "inkscape-extension"
+    } // if we have an XML file
+
     if (_effects_list == NULL)
         find_effects_list(inkscape_get_menus(INKSCAPE));
 
     if (_effects_list != NULL) {
-        unsigned start_pos = _effects_list->position();
-
         _menu_node = sp_repr_new("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
-        _effects_list->parent()->appendChild(_menu_node);
 
-        _menu_node->setPosition(start_pos + 1);
+        merge_menu(_effects_list, local_effects_menu, _menu_node);
+    }
 
-        Inkscape::GC::release(_menu_node);
-    } /*else {
-        printf("Effect %s not added\n", get_name());
-    }*/
+    return;
+}
+
+void
+Effect::merge_menu (Inkscape::XML::Node * base,
+                    Inkscape::XML::Node * patern,
+                    Inkscape::XML::Node * mergee) {
+    Glib::ustring mergename;
+    Inkscape::XML::Node * tomerge = NULL;
+
+    if (patern == NULL) {
+        // Merge the verb name
+        tomerge = mergee;
+        mergename = _(this->get_name());
+    } else {
+        gchar const * menuname = patern->attribute("name");
+        if (menuname == NULL) menuname = patern->attribute("_name");
+        if (menuname == NULL) return;
+
+        tomerge = sp_repr_new("submenu");
+        tomerge->setAttribute("name", menuname, false);
+
+        mergename = _(menuname);
+    }
+
+    base->parent()->appendChild(tomerge);
+    Inkscape::GC::release(tomerge);
+
+    Inkscape::XML::Node * menupass;
+    for (menupass = base->next(); menupass != NULL; menupass = menupass->next()) {
+        gchar const * compare_char = NULL;
+        if (!strcmp(menupass->name(), "verb")) {
+            gchar const * verbid = menupass->attribute("verb-id");
+            Inkscape::Verb * verb = Inkscape::Verb::getbyid(verbid);
+            if (verb == NULL) {
+                printf("Unable to find verb\n");
+                return;
+            }
+            compare_char = verb->get_name();
+        } else { // submenu
+            compare_char = menupass->attribute("name");
+            if (compare_char == NULL)
+                compare_char = menupass->attribute("_name");
+        }
+
+        if (compare_char == NULL) {
+            printf("Nothing to compare against\n");
+            return;
+        }
+
+        Glib::ustring compare(_(compare_char));
+
+        if (mergename < compare) {
+            tomerge->setPosition(menupass->position());
+            break;
+        }
+    }
+
+    if (patern != NULL) {
+        printf("Going recursive\n");
+        merge_menu(tomerge, patern->firstChild(), mergee);
+    }
 
     return;
 }

@@ -34,6 +34,7 @@ class Effect : public Extension {
     static Effect * _last_effect;
     static Inkscape::XML::Node * _effects_list;
     bool find_effects_list (Inkscape::XML::Node * menustruct);
+    void merge_menu (Inkscape::XML::Node * base, Inkscape::XML::Node * patern, Inkscape::XML::Node * mergee);
 
     class EffectVerb : public Inkscape::Verb {
         private:
