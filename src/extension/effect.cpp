@@ -56,6 +56,8 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         _menu_node->setAttribute("verb-id", this->get_id(), false);
 
         merge_menu(_effects_list, local_effects_menu, _menu_node);
+        if (!strcmp(this->get_id(), "org.ekips.filter.interp"))
+            sp_repr_print(_effects_list->parent());
     }
 
     return;
@@ -67,6 +69,11 @@ Effect::merge_menu (Inkscape::XML::Node * base,
                     Inkscape::XML::Node * mergee) {
     Glib::ustring mergename;
     Inkscape::XML::Node * tomerge = NULL;
+
+    /* printf("Merge menu with '%s' '%s' '%s'\n",
+            base != NULL ? base->name() : "NULL",
+            patern != NULL ? patern->name() : "NULL",
+            mergee != NULL ? mergee->name() : "NULL"); */
 
     if (patern == NULL) {
         // Merge the verb name
@@ -117,7 +124,6 @@ Effect::merge_menu (Inkscape::XML::Node * base,
     }
 
     if (patern != NULL) {
-        printf("Going recursive\n");
         merge_menu(tomerge, patern->firstChild(), mergee);
     }
 
