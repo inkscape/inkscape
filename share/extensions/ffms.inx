@@ -16,6 +16,9 @@
 	<param name="pxperunit" type="float" min="0" max="1000" _gui-text="px per Unit">90</param>
     <effect>
 		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Fret Finder"/>
+		</effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">fretfind.py</command>
