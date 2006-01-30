@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2002-2005 Authors
+ * Copyright (C) 2002-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -39,7 +39,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
             if (!strcmp(child_repr->name(), "effect")) {
                 for (child_repr = sp_repr_children(child_repr); child_repr != NULL; child_repr = child_repr->next()) {
                     if (!strcmp(child_repr->name(), "effects-menu")) {
-                        printf("Found local effects menu in %s\n", this->get_name());
+                        // printf("Found local effects menu in %s\n", this->get_name());
                         local_effects_menu = sp_repr_children(child_repr);
                     }
                 } // children of "effect"
@@ -55,9 +55,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         _menu_node = sp_repr_new("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
 
-        merge_menu(_effects_list, local_effects_menu, _menu_node);
-        if (!strcmp(this->get_id(), "org.ekips.filter.interp"))
-            sp_repr_print(_effects_list->parent());
+        merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
     }
 
     return;
@@ -65,6 +63,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
 
 void
 Effect::merge_menu (Inkscape::XML::Node * base,
+                    Inkscape::XML::Node * start,
                     Inkscape::XML::Node * patern,
                     Inkscape::XML::Node * mergee) {
     Glib::ustring mergename;
@@ -90,41 +89,42 @@ Effect::merge_menu (Inkscape::XML::Node * base,
         mergename = _(menuname);
     }
 
-    base->parent()->appendChild(tomerge);
+    base->appendChild(tomerge);
     Inkscape::GC::release(tomerge);
 
-    Inkscape::XML::Node * menupass;
-    for (menupass = base->next(); menupass != NULL; menupass = menupass->next()) {
-        gchar const * compare_char = NULL;
-        if (!strcmp(menupass->name(), "verb")) {
-            gchar const * verbid = menupass->attribute("verb-id");
-            Inkscape::Verb * verb = Inkscape::Verb::getbyid(verbid);
-            if (verb == NULL) {
-                printf("Unable to find verb\n");
-                return;
+    if (start != NULL) {
+        Inkscape::XML::Node * menupass;
+        for (menupass = start->next(); menupass != NULL; menupass = menupass->next()) {
+            gchar const * compare_char = NULL;
+            if (!strcmp(menupass->name(), "verb")) {
+                gchar const * verbid = menupass->attribute("verb-id");
+                Inkscape::Verb * verb = Inkscape::Verb::getbyid(verbid);
+                if (verb == NULL) {
+                    continue;
+                }
+                compare_char = verb->get_name();
+            } else if (!strcmp(menupass->name(), "submenu")) {
+                compare_char = menupass->attribute("name");
+                if (compare_char == NULL)
+                    compare_char = menupass->attribute("_name");
             }
-            compare_char = verb->get_name();
-        } else { // submenu
-            compare_char = menupass->attribute("name");
-            if (compare_char == NULL)
-                compare_char = menupass->attribute("_name");
-        }
 
-        if (compare_char == NULL) {
-            printf("Nothing to compare against\n");
-            return;
-        }
+            /* This will cause us to skip tags we don't understand */
+            if (compare_char == NULL) {
+                continue;
+            }
 
-        Glib::ustring compare(_(compare_char));
+            Glib::ustring compare(_(compare_char));
 
-        if (mergename < compare) {
-            tomerge->setPosition(menupass->position());
-            break;
-        }
-    }
+            if (mergename < compare) {
+                tomerge->setPosition(menupass->position());
+                break;
+            }
+        } // for menu items
+    } // start != NULL
 
     if (patern != NULL) {
-        merge_menu(tomerge, patern->firstChild(), mergee);
+        merge_menu(tomerge, tomerge->firstChild(), patern->firstChild(), mergee);
     }
 
     return;
