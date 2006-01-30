@@ -68,6 +68,7 @@ Effect::merge_menu (Inkscape::XML::Node * base,
                     Inkscape::XML::Node * mergee) {
     Glib::ustring mergename;
     Inkscape::XML::Node * tomerge = NULL;
+    Inkscape::XML::Node * submenu = NULL;
 
     /* printf("Merge menu with '%s' '%s' '%s'\n",
             base != NULL ? base->name() : "NULL",
@@ -89,8 +90,7 @@ Effect::merge_menu (Inkscape::XML::Node * base,
         mergename = _(menuname);
     }
 
-    base->appendChild(tomerge);
-    Inkscape::GC::release(tomerge);
+    int position = -1;
 
     if (start != NULL) {
         Inkscape::XML::Node * menupass;
@@ -116,15 +116,31 @@ Effect::merge_menu (Inkscape::XML::Node * base,
 
             Glib::ustring compare(_(compare_char));
 
+            if (mergename == compare) {
+                Inkscape::GC::release(tomerge);
+                tomerge = NULL;
+                submenu = menupass;
+                break;
+            }
+
             if (mergename < compare) {
-                tomerge->setPosition(menupass->position());
+                position = menupass->position();
                 break;
             }
         } // for menu items
     } // start != NULL
 
+    if (tomerge != NULL) {
+        base->appendChild(tomerge);
+        Inkscape::GC::release(tomerge);
+        if (position != -1)
+            tomerge->setPosition(position);
+    }
+
     if (patern != NULL) {
-        merge_menu(tomerge, tomerge->firstChild(), patern->firstChild(), mergee);
+        if (submenu == NULL)
+            submenu = tomerge;
+        merge_menu(submenu, submenu->firstChild(), patern->firstChild(), mergee);
     }
 
     return;
