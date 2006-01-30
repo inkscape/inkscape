@@ -5,6 +5,9 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
     <effect>
 		<object-type>path</object-type>
+		<effects-menu>
+			<submenu _name="Fractal" />
+		</effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">kochify_load.py</command>

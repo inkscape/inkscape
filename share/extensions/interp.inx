@@ -10,6 +10,9 @@
 	<param name="style" type="boolean" _gui-text="Interpolate Style (Experimental)">false</param>
     <effect>
 		<object-type>path</object-type>
+		<effects-menu>
+			<submenu _name="Enhance Path" />
+		</effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">interp.py</command>
