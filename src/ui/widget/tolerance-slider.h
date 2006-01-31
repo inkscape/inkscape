@@ -14,6 +14,7 @@
 #ifndef INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 #define INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 
+#include <gtkmm/tooltips.h>
 
 namespace Inkscape {
 namespace UI {
@@ -38,6 +39,7 @@ protected:
     void update();
     sigc::connection  _scale_changed_connection;
     Gtk::HScale      *_hscale;
+    Gtk::Tooltips     _tt;
     Registry         *_wr;
     Glib::ustring     _key;
 };

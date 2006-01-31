@@ -65,6 +65,7 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& tip, co
     _hscale->set_draw_value (true);
     _hscale->set_value_pos (Gtk::POS_RIGHT);
     _hscale->set_size_request (100, -1);
+    _tt.set_tip (*_hscale, tip);
     _hbox->add (*_hscale);
 //    Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
 //    _hbox->add (*theLabel2);
