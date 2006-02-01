@@ -33,7 +33,7 @@ public:
 };
 #include <float.h>
 #include "block.h"
-static inline bool compareConstraints(Constraint *&l, Constraint *&r) {
+static inline bool compareConstraints(Constraint *const &l, Constraint *const &r) {
 	double const sl = 
 		l->left->block->timeStamp > l->timeStamp
 		||l->left->block==l->right->block

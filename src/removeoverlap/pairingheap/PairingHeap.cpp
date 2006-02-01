@@ -28,7 +28,7 @@ using namespace std;
 * Construct the pairing heap.
 */
 template <class T>
-PairingHeap<T>::PairingHeap( bool (*lessThan)(T &lhs, T &rhs) )
+PairingHeap<T>::PairingHeap( bool (*lessThan)(T const &lhs, T const &rhs) )
 {
 	root = NULL;
 	counter=0;

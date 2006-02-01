@@ -57,14 +57,14 @@ template <class T>
 class Comparator
 {
 public:
-	virtual bool isLessThan(T &lhs, T &rhs) const = 0;
+	virtual bool isLessThan(T const &lhs, T const &rhs) const = 0;
 };
 
 template <class T>
 class PairingHeap
 {
 public:
-	PairingHeap( bool (*lessThan)(T &lhs, T &rhs) );
+	PairingHeap( bool (*lessThan)(T const &lhs, T const &rhs) );
 	PairingHeap( const PairingHeap & rhs );
 	~PairingHeap( );
 
@@ -99,7 +99,7 @@ protected:
 	}
 private:
 	PairNode<T> *root;
-	bool (*lessThan)(T &lhs, T &rhs);
+	bool (*lessThan)(T const &lhs, T const &rhs);
 	int counter;
 	void reclaimMemory( PairNode<T> *t ) const;
 	void compareAndLink( PairNode<T> * & first, PairNode<T> *second ) const;
