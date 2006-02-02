@@ -292,8 +292,9 @@ DocumentProperties::build_snap()
     _rcbsnon.init (_("Snap to object _nodes"), 
                 _("Snap to other object nodes"), 
                 "inkscape:object-nodes", _wr);
-    _rsu_sno.init (_("Snap s_ensitivity:"), 
+    _rsu_sno.init (_("Snap s_ensitivity:"), _("Always snap"),
                   _("Controls max. snapping distance from object"),
+                  _("If set, objects snap to the nearest object when moved, regardless of distance"),
                   "objecttolerance", _wr);
     _rcbsnbb.init (_("Snap _bounding boxes to grid"), 
                 _("Snap the edges of the object bounding boxes"), 
@@ -301,8 +302,9 @@ DocumentProperties::build_snap()
     _rcbsnnod.init (_("Snap nodes to _grid"), 
                 _("Snap path nodes, text baselines, ellipse centers, etc."), 
                 "inkscape:grid-points", _wr);
-    _rsu_sn.init (_("Snap sens_itivity:"), 
+    _rsu_sn.init (_("Snap sens_itivity:"), _("Always snap"),
                   _("Controls max. snapping distance from grid"),
+                  _("If set, objects snap to the nearest grid line when moved, regardless of distance"),
                   "gridtolerance", _wr);
     _rcb_snpgui.init (_("Snap bounding boxes to g_uides"),  
                      _("Snap the edges of the object bounding boxes"), 
@@ -310,12 +312,14 @@ DocumentProperties::build_snap()
     _rcb_snbgui.init (_("Snap p_oints to guides"), 
                 _("Snap path nodes, text baselines, ellipse centers, etc."), 
                 "inkscape:guide-points", _wr);
-    _rsu_gusn.init (_("Snap sensiti_vity:"), 
-                _("Controls max. snapping distance from guides"), "guidetolerance", _wr);
-    _rrb_pix.init (_("Sensitivity:"), _("S_creen pixels"), _("p_x units"),
-                _("Sensitivity is always the same, regardless of zoom."),
-                _("Sensitivity changes with zoom; zooming in will enlarge max. snapping distance."),
-                _("inkscape:has_abs_tolerance"), _wr);
+    _rsu_gusn.init (_("Snap sensiti_vity:"), _("Always snap"),
+                _("Controls max. snapping distance from guides"), 
+                _("If set, objects snap to the nearest guide when moved, regardless of distance"),
+                "guidetolerance", _wr);
+//    _rrb_pix.init (_("Sensitivity:"), _("S_creen pixels"), _("p_x units"),
+//                _("Sensitivity is always the same, regardless of zoom."),
+//                _("Sensitivity changes with zoom; zooming in will enlarge max. snapping distance."),
+//                _("inkscape:has_abs_tolerance"), _wr);
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Object Snapping</b>"));
     Gtk::Label *label_gr = manage (new Gtk::Label);
@@ -330,19 +334,19 @@ DocumentProperties::build_snap()
         0,                  _rcbsnnob._button,
         0,                  _rcbsnop._button,
         0,                  _rcbsnon._button,
-        0,                  _rsu_sno._hbox,
+        0,                  _rsu_sno._vbox,
         0, 0,
         label_gr,           0,
         0,                  _rcbsnbb._button,
         0,                  _rcbsnnod._button,
-        0,                  _rsu_sn._hbox,
+        0,                  _rsu_sn._vbox,
         0, 0,
         label_gu,         0,
         0,                _rcb_snpgui._button,
         0,                _rcb_snbgui._button,
-        0,                _rsu_gusn._hbox,
-        0, 0,
-        0,                _rrb_pix._hbox,
+        0,                _rsu_gusn._vbox,
+//        0, 0,
+//        0,                _rrb_pix._hbox,
     };
 
     attach_all (_page_snap.table(), array, sizeof(array));
@@ -416,7 +420,7 @@ DocumentProperties::update()
      _rcb_snpgui.setActive (nv->snap_guide_bbox);
     _rcb_snbgui.setActive (nv->snap_guide_point);
     _rsu_gusn.setValue (nv->guidetolerance, nv->has_abs_tolerance);
-    _rrb_pix.setValue (true);
+//    _rrb_pix.setValue (true);
 
     _wr.setUpdating (false);
 }

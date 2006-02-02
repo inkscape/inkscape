@@ -43,20 +43,21 @@ namespace Widget {
 //====================================================
 
 ToleranceSlider::ToleranceSlider()
-: _hbox(0)
+: _vbox(0)
 {
 }
 
 ToleranceSlider::~ToleranceSlider()
 {
-    if (_hbox) delete _hbox;
+    if (_vbox) delete _vbox;
     _scale_changed_connection.disconnect();
 }
 
 void
-ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& tip, const Glib::ustring& key, Registry& wr)
+ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& key, Registry& wr)
 {
-    _hbox = new Gtk::HBox;
+    _vbox = new Gtk::VBox;
+    _hbox = manage (new Gtk::HBox);
     Gtk::Label *theLabel1 = manage (new Gtk::Label (label1));
     theLabel1->set_use_underline();
     _hbox->add (*theLabel1);
@@ -65,19 +66,26 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& tip, co
     _hscale->set_draw_value (true);
     _hscale->set_value_pos (Gtk::POS_RIGHT);
     _hscale->set_size_request (100, -1);
-    _tt.set_tip (*_hscale, tip);
+    _tt.set_tip (*_hscale, tip1);
     _hbox->add (*_hscale);
-//    Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
-//    _hbox->add (*theLabel2);
+    _vbox->add (*_hbox);
+    Gtk::Label *theLabel2 = manage (new Gtk::Label (label2));
+    theLabel2->set_use_underline();
+    _button = manage (new Gtk::CheckButton);
+    _tt.set_tip (*_button, tip2);
+    _button->add (*theLabel2);
+    _button->set_alignment (0.0, 0.5);
+    _vbox->add (*_button);
     _key = key;
-    _scale_changed_connection = _hscale->signal_value_changed().connect (sigc::mem_fun (*this, &ToleranceSlider::update));
+    _scale_changed_connection = _hscale->signal_value_changed().connect (sigc::mem_fun (*this, &ToleranceSlider::on_scale_changed));
+    _btn_toggled_connection = _button->signal_toggled().connect (sigc::mem_fun (*this, &ToleranceSlider::on_toggled));
     _wr = &wr;
+    _vbox->show_all_children();
 }
 
 void 
 ToleranceSlider::setValue (double val, bool is_absolute)
 {
-    _hscale->set_value (val);
     Gtk::Adjustment *adj = _hscale->get_adjustment();
     if (is_absolute) 
     { 
@@ -91,7 +99,20 @@ ToleranceSlider::setValue (double val, bool is_absolute)
         adj->set_upper (50.1);
         adj->set_step_increment (0.1);
     }
-    update();
+
+    if (val > 9999.9) // magic value 10000.0
+    {
+        _button->set_active (true);
+        _hbox->set_sensitive (false);
+        val = 50.0;
+    }
+    else
+    {
+        _button->set_active (false);
+        _hbox->set_sensitive (true);
+    }
+    _hscale->set_value (val);
+    _hbox->show_all();
 }
 
 void
@@ -102,7 +123,32 @@ ToleranceSlider::setLimits (double theMin, double theMax)
 }
 
 void
-ToleranceSlider::update()
+ToleranceSlider::on_scale_changed()
+{
+    update (_hscale->get_value());
+}
+
+void
+ToleranceSlider::on_toggled()
+{
+    if (_button->get_active())
+    {
+        _hbox->set_sensitive (false);
+        _hbox->show_all();
+        setValue (10000.0);
+        update (10000.0);
+    }
+    else
+    {
+        _hbox->set_sensitive (true);
+        _hbox->show_all();
+        setValue (50.0);
+        update (50.0);
+    }
+}
+
+void
+ToleranceSlider::update (double val)
 {
     if (_wr->isUpdating())
         return;
@@ -112,7 +158,7 @@ ToleranceSlider::update()
         return;
 
     Inkscape::SVGOStringStream os;
-    os << _hscale->get_value();
+    os << val;
 
     _wr->setUpdating (true);
 

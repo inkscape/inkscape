@@ -15,33 +15,40 @@
 #define INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 
 #include <gtkmm/tooltips.h>
+#include <gtkmm/checkbutton.h>
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
 class Registry;
+
 class ToleranceSlider {
 public:
     ToleranceSlider();
     ~ToleranceSlider();
     void init (const Glib::ustring& label1, 
-//            const Glib::ustring& label2, 
-            const Glib::ustring& tip, 
+            const Glib::ustring& label2, 
+            const Glib::ustring& tip1,
+            const Glib::ustring& tip2, 
             const Glib::ustring& key, 
             Registry& wr);
-    void setValue (double, bool);
+    void setValue (double, bool=true);
     void setLimits (double, double);
-    Gtk::HBox* _hbox;
+    Gtk::VBox* _vbox;
 
 protected:
     void on_scale_changed();
-    void update();
-    sigc::connection  _scale_changed_connection;
-    Gtk::HScale      *_hscale;
-    Gtk::Tooltips     _tt;
-    Registry         *_wr;
-    Glib::ustring     _key;
+    void on_toggled();
+    void update (double val);
+    Gtk::HBox         *_hbox;
+    Gtk::HScale       *_hscale;
+    Gtk::CheckButton  *_button;
+    Gtk::Tooltips      _tt;
+    Registry          *_wr;
+    Glib::ustring      _key;
+    sigc::connection   _scale_changed_connection;
+    sigc::connection   _btn_toggled_connection;
 };
 
 
