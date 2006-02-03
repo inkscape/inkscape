@@ -76,7 +76,7 @@ sub make_files {
     close FILES;
 
     # sort out header and source files
-    @hdr = sort grep(/\.(h|hpp|icc|ia)$/i,@lines);
+    @hdr = sort grep(/\.(h|hpp|icc|ia|xpm)$/i,@lines);
     @src = sort grep(/\.(c|cpp|cc|s)$/i,@lines);
 
     print STDERR scalar @lines ." files found (".scalar @src." sources and ".scalar @hdr." headers) in \"make.files\".\n";

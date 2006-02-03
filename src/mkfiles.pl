@@ -76,7 +76,7 @@ sub doMakeFiles
     #    print "$key => $value\n";
     #    }
     
-    $patterns = '.c$|.cpp$|.h$|.hpp$';
+    $patterns = '.c$|.cpp$|.h$|.hpp$|.xpm$';
     
     @files = &find_files(".", $patterns, $excludes, \@excluded);
     
