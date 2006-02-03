@@ -174,18 +174,35 @@ sp_event_context_update_cursor(SPEventContext *ec)
     if (w->window) {
         /* fixme: */
         if (ec->cursor_shape) {
-            GdkBitmap *bitmap = NULL;
-            GdkBitmap *mask = NULL;
-            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, ec->cursor_shape);
-            if ((bitmap != NULL) && (mask != NULL)) {
-                if (ec->cursor)
-                    gdk_cursor_unref (ec->cursor);
-                ec->cursor = gdk_cursor_new_from_pixmap(bitmap, mask,
-                                                        &w->style->black, 
-                                                        &w->style->white,
-                                                        ec->hot_x, ec->hot_y);
-                g_object_unref (bitmap);
-                g_object_unref (mask);
+            GdkDisplay *display=gdk_display_get_default();
+            if (
+                    gdk_display_supports_cursor_alpha(display) & 
+                    gdk_display_supports_cursor_color(display)
+               )
+            {
+                GdkPixbuf *pixbuf =NULL;
+                pixbuf=gdk_pixbuf_new_from_xpm_data((const char**)ec->cursor_shape);
+                if (pixbuf !=NULL) { 
+                ec->cursor = gdk_cursor_new_from_pixbuf(display,pixbuf,
+                        ec->hot_x,
+                        ec->hot_y); 
+                }
+            }
+            else 
+            {
+                    GdkBitmap *bitmap = NULL;
+                GdkBitmap *mask = NULL;
+                sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, ec->cursor_shape);
+                if ((bitmap != NULL) && (mask != NULL)) {
+                    if (ec->cursor)
+                        gdk_cursor_unref (ec->cursor);
+                    ec->cursor = gdk_cursor_new_from_pixmap(bitmap, mask,
+                            &w->style->black, 
+                            &w->style->white,
+                            ec->hot_x, ec->hot_y);
+                    g_object_unref (bitmap);
+                    g_object_unref (mask);
+                }
             }
         }
         gdk_window_set_cursor(w->window, ec->cursor);

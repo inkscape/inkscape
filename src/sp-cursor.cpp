@@ -84,22 +84,38 @@ void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, g
 
 GdkCursor *sp_cursor_new_from_xpm (gchar **xpm, gint hot_x, gint hot_y)
 {
-    GdkColor const fg = { 0, 0, 0, 0 };
-    GdkColor const bg = { 0, 65535, 65535, 65535 };
-    
-    GdkBitmap *bitmap = NULL;
-    GdkBitmap *mask = NULL;
-
-    sp_cursor_bitmap_and_mask_from_xpm (&bitmap, &mask, xpm);
-    if ( bitmap != NULL && mask != NULL ) {
-        GdkCursor *new_cursor = gdk_cursor_new_from_pixmap (bitmap, mask,
-                                           &fg, &bg,
-                                           hot_x, hot_y);
-        g_object_unref (bitmap);
-        g_object_unref (mask);
+GdkDisplay *display=gdk_display_get_default();
+    if (
+            gdk_display_supports_cursor_alpha(display) & 
+            gdk_display_supports_cursor_color(display)
+       )
+    {
+        GdkPixbuf *pixbuf=NULL;
+        GdkCursor *new_cursor=NULL;
+        pixbuf=gdk_pixbuf_new_from_xpm_data((const char**)xpm);
+        if (pixbuf != NULL){
+            new_cursor = gdk_cursor_new_from_pixbuf(display,pixbuf,hot_x,hot_y);
+        }
         return new_cursor;
     }
+    else
+    {
+        GdkColor const fg = { 0, 0, 0, 0 };
+        GdkColor const bg = { 0, 65535, 65535, 65535 };
+ 
+        GdkBitmap *bitmap = NULL;
+        GdkBitmap *mask = NULL;
 
+        sp_cursor_bitmap_and_mask_from_xpm (&bitmap, &mask, xpm);
+        if ( bitmap != NULL && mask != NULL ) {
+            GdkCursor *new_cursor = gdk_cursor_new_from_pixmap (bitmap, mask,
+                    &fg, &bg,
+                    hot_x, hot_y);
+            g_object_unref (bitmap);
+            g_object_unref (mask);
+            return new_cursor;
+        }
+    }
     return NULL;
 }
 
