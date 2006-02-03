@@ -103,6 +103,7 @@ sp_flowtext_class_init(SPFlowtextClass *klass)
 static void
 sp_flowtext_init(SPFlowtext *group)
 {
+    group->par_indent = 0;
     new (&group->layout) Inkscape::Text::Layout();
 }
 
@@ -252,6 +253,7 @@ sp_flowtext_set(SPObject *object, unsigned key, gchar const *value)
                     }
                 }
             }
+            */
             {   // This would probably translate to padding-left, if SPStyle had it.
                 gchar const *val = sp_repr_css_property(opts, "par-indent", NULL);
                 if ( val == NULL ) {
@@ -260,7 +262,6 @@ sp_flowtext_set(SPObject *object, unsigned key, gchar const *value)
                     sp_repr_get_double((Inkscape::XML::Node*)opts, "par-indent", &group->par_indent);
                 }
             }
-            */
             sp_repr_css_attr_unref(opts);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -371,11 +372,31 @@ sp_flowtext_hide(SPItem *item, unsigned int key)
 
 void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape, std::list<Shape> *shapes, SPObject **pending_line_break_object)
 {
+    Inkscape::Text::Layout::OptionalTextTagAttrs pi;
+    bool with_indent = false;
+
+    if (SP_IS_FLOWPARA(root)) {
+        // emulate par-indent with the first char's kern
+        SPObject *t = root;
+        for ( ; t != NULL && !SP_IS_FLOWTEXT(t); t = SP_OBJECT_PARENT(t));
+        if (SP_IS_FLOWTEXT(t)) {
+            double indent = SP_FLOWTEXT(t)->par_indent;
+            if (indent != 0) {
+                with_indent = true;
+                SVGLength sl;
+                sl.value = sl.computed = indent;
+                sl._set = true;
+                pi.dx.push_back(sl);
+            }
+        }
+    }
+
     if (*pending_line_break_object) {
-        if (SP_IS_FLOWREGIONBREAK(*pending_line_break_object))
+        if (SP_IS_FLOWREGIONBREAK(*pending_line_break_object)) {
             layout.appendControlCode(Inkscape::Text::Layout::SHAPE_BREAK, *pending_line_break_object);
-        else
+        } else {
             layout.appendControlCode(Inkscape::Text::Layout::PARAGRAPH_BREAK, *pending_line_break_object);
+        }
         *pending_line_break_object = NULL;
     }
 
@@ -384,11 +405,15 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
             if (*pending_line_break_object) {
                 if (SP_IS_FLOWREGIONBREAK(*pending_line_break_object))
                     layout.appendControlCode(Inkscape::Text::Layout::SHAPE_BREAK, *pending_line_break_object);
-                else
+                else {
                     layout.appendControlCode(Inkscape::Text::Layout::PARAGRAPH_BREAK, *pending_line_break_object);
+                }
                 *pending_line_break_object = NULL;
             }
-            layout.appendText(SP_STRING(child)->string, root->style, child);
+            if (with_indent)
+                layout.appendText(SP_STRING(child)->string, root->style, child, &pi);
+            else 
+                layout.appendText(SP_STRING(child)->string, root->style, child);
         } else if (SP_IS_FLOWREGION(child)) {
             std::vector<Shape*> const &computed = SP_FLOWREGION(child)->computed;
             for (std::vector<Shape*>::const_iterator it = computed.begin() ; it != computed.end() ; it++) {

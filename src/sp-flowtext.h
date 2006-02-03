@@ -35,6 +35,8 @@ struct SPFlowtext : public SPItem {
     /** discards the NRArena objects representing this text. */
 	void _clearFlow(NRArenaGroup* in_arena);
 
+	double par_indent;
+
 private:
     /** Recursively walks the xml tree adding tags and their contents. */
     void _buildLayoutInput(SPObject *root, Shape const *exclusion_shape, std::list<Shape> *shapes, SPObject **pending_line_break_object);
