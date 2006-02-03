@@ -389,6 +389,7 @@ sp_style_new()
     sp_style_clear(style);
 
     style->cloned = false;
+    style->hreffed = false;
 
     return style;
 }
@@ -2000,6 +2001,7 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
             paint->value.paint.uri = parent->value.paint.uri;
             if (paint->value.paint.server) {
                 if (style->object && !style->cloned) { // href paintserver for style of non-clones only
+                    style->hreffed = true;
                     sp_object_href(SP_OBJECT(paint->value.paint.server), style);
                 }
                 if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
@@ -2854,6 +2856,7 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                 paint->value.paint.server = SP_PAINT_SERVER(ps);
                 if (style->object && !style->cloned) {
                     sp_object_href(SP_OBJECT(paint->value.paint.server), style);
+                    style->hreffed = true;
                 }
                 if (style->object || style->cloned) {
                     g_signal_connect(G_OBJECT(paint->value.paint.server), "release",
@@ -3396,7 +3399,7 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint,
                      unsigned hunref, unsigned unset)
 {
     if (hunref && (paint->type == SP_PAINT_TYPE_PAINTSERVER) && paint->value.paint.server) {
-        if (style->object && !style->cloned) {
+        if (style->hreffed) {
             sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
         }
         if (style->object || style->cloned) {

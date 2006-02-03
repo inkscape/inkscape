@@ -321,6 +321,8 @@ struct SPStyle {
 
     /// style belongs to a cloned object, must not href anything
     bool cloned; 
+    /// style has hreffed its paintservers, needs to release
+    bool hreffed; 
 };
 
 SPStyle *sp_style_new();
