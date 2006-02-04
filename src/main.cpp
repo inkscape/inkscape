@@ -738,7 +738,8 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
 
     if (o) {
         sp_document_ensure_up_to_date (doc);
-        NR::Rect area = sp_item_bbox_desktop((SPItem *) o);
+        SPItem *item = ((SPItem *) o);
+        NR::Rect area = item->invokeBbox(sp_item_i2doc_affine(item)); // "true" SVG bbox for scripting
 
         Inkscape::SVGOStringStream os;
         if (extent) {
@@ -746,7 +747,7 @@ do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gch
         } else {
             os << area.min()[axis];
         }
-        g_print ("%s\n", os.str().c_str());
+        g_print ("%s", os.str().c_str());
     }
 }
 
