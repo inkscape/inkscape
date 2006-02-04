@@ -8,7 +8,16 @@
 
 #ifndef my_defs
 #define my_defs
-#include <inttypes.h>
+
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#ifdef HAVE_STDINT_H
+# include <stdint.h>
+#else
+# include <inttypes.h>
+#endif
 
 // error codes (mostly obsolete)
 enum

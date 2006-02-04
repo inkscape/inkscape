@@ -10,12 +10,6 @@
 #ifndef my_alpha_ligne
 #define my_alpha_ligne
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
-#include <string.h>
-//#include <iostream.h>
-
 #include "LivarotDefs.h"
 
 /*

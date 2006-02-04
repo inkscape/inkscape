@@ -12,7 +12,6 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <inttypes.h>
 #include <cstring>
 #include <vector>
 

@@ -9,12 +9,19 @@
 #ifndef my_math
 #define my_math
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
-#include <string.h>
-//#include <iostream.h>
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
+#ifdef HAVE_STDINT_H
+# include <stdint.h>
+#else
+# include <inttypes.h>
+#endif
+
+#ifdef HAVE_STDLIB_H
+# include <stdlib.h>
+#endif
 
 typedef struct vec2
 {

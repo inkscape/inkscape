@@ -10,11 +10,6 @@
 #ifndef my_bit_ligne
 #define my_bit_ligne
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <inttypes.h>
-#include <string.h>
-
 #include "LivarotDefs.h"
 
 /*

@@ -8,9 +8,10 @@
  */
 
 #include "AlphaLigne.h"
-//#include "Buffer.h"
 
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <glib/gmem.h>
 
 AlphaLigne::AlphaLigne(int iMin,int iMax)

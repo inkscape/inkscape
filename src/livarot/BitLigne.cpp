@@ -10,6 +10,8 @@
 #include "BitLigne.h"
 
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
 #include <glib/gmem.h>
 
 BitLigne::BitLigne(int ist,int ien,float iScale)

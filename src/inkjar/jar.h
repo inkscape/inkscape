@@ -6,10 +6,22 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#ifdef HAVE_ZLIB_H
+# include <zlib.h>
+#endif
+
+#ifdef HAVE_STDINT_H
+# include <stdint.h>
+#else
+# include <inttypes.h>
+#endif
+
 #include <glib/garray.h>
 #include <glib/gtypes.h>
-#include <zlib.h>
-#include <inttypes.h>
 
 namespace Inkjar {
 
