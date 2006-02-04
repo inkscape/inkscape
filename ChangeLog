@@ -1,3 +1,8 @@
+2006-02-03  Jon Phillips  <jon@rejon.org>
+
+	* src/verbs.cpp: Added "..." to "Trace Bitmap" text. Yes, what a
+	simple and dumb thing to add for consistency.
+
 2006-01-24  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/libavoid/connector.cpp, src/libavoid/connector.h, 
