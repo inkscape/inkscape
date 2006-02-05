@@ -83,10 +83,16 @@ void Layout::show(NRArenaGroup *in_arena, NRRect const *paintbox) const
     nr_arena_item_request_update(NR_ARENA_ITEM(in_arena), NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
-void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform) const
+void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, int start, int length) const
 {
     for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; glyph_index++) {
         if (_characters[_glyphs[glyph_index].in_character].in_glyph == -1) continue;
+        if (start != -1 && _glyphs[glyph_index].in_character < start) continue;
+        if (length != -1) {
+            if (start == -1)
+                start = 0;
+            if (_glyphs[glyph_index].in_character > start + length) continue;
+        }
         // this could be faster
         NRMatrix glyph_matrix;
         _getGlyphTransformMatrix(glyph_index, &glyph_matrix);

@@ -314,7 +314,7 @@ public:
       \param transform     The transform to be applied to the entire object
                            prior to calculating its bounds.
     */
-    void getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform) const;
+    void getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, int start = -1, int length = -1) const;
 
     /** Sends all the glyphs to the given print context.
      \param ctx   I have
