@@ -182,6 +182,30 @@ unsigned sp_text_get_length(SPObject const *item)
     return length;
 }
 
+/** Recursively gets the length of all the SPStrings at or below the given
+\a item. Also adds 1 for each line break encountered. */
+unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto)
+{
+    unsigned length = 0;
+
+    if (SP_IS_STRING(item)) return SP_STRING(item)->string.length();
+    if (is_line_break_object(item)) length++;
+    for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
+        if (child == upto) 
+            return length;
+        if (SP_IS_STRING(child)) length += SP_STRING(child)->string.length();
+        else {
+            if (child->isAncestorOf(upto)) {
+                length += sp_text_get_length(child);
+                return length;
+            } else {
+                length += sp_text_get_length(child);
+            }
+        }
+    }
+    return length;
+}
+
 static Inkscape::XML::Node* duplicate_node_without_children(Inkscape::XML::Node const *old_node)
 {
     switch (old_node->type()) {
