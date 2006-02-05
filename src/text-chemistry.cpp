@@ -55,6 +55,18 @@ flowtext_in_selection(Inkscape::Selection *selection)
 }
 
 SPItem *
+text_or_flowtext_in_selection(Inkscape::Selection *selection)
+{
+    for (GSList *items = (GSList *) selection->itemList();
+         items != NULL;
+         items = items->next) {
+        if (SP_IS_TEXT(items->data) || SP_IS_FLOWTEXT(items->data))
+            return ((SPItem *) items->data);
+    }
+    return NULL;
+}
+
+SPItem *
 shape_in_selection(Inkscape::Selection *selection)
 {
     for (GSList *items = (GSList *) selection->itemList();
@@ -75,7 +87,7 @@ text_put_on_path()
 
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
 
-    SPItem *text = text_in_selection(selection);
+    SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) != 2) {
@@ -84,7 +96,12 @@ text_put_on_path()
     }
 
     if (SP_IS_TEXT_TEXTPATH(text)) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("This text object is <b>already put to a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."));
+        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."));
+        return;
+    }
+
+    if (SP_IS_FLOWTEXT(text)) {
+        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put flowtext on a path. Convert flowtext to text first."));
         return;
     }
 
