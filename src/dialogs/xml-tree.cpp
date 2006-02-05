@@ -807,15 +807,11 @@ void set_dt_select(Inkscape::XML::Node *repr)
 
     blocked++;
     if ( object && in_dt_coordsys(*object)
-         && !( SP_IS_TSPAN(object)  ||
-               SP_IS_STRING(object) ||
-               SP_IS_ROOT(object)     ) )
+         && !(SP_IS_STRING(object) ||
+                SP_IS_ROOT(object)     ) )
     {
-            /* We cannot set selection to tspan, string, or root; failures and
-             * crashes will occur. */
-            /* TODO: when a tspan is highlighted, set selection to its parent
-             * text
-             */
+            /* We cannot set selection to root or string - they are not items and selection is not
+             * equipped to deal with them */
             selection->set(SP_ITEM(object));
     }
     blocked--;
