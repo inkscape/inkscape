@@ -45,8 +45,6 @@ static void sp_string_release(SPObject *object);
 static void sp_string_read_content(SPObject *object);
 static void sp_string_update(SPObject *object, SPCtx *ctx, unsigned flags);
 
-static void sp_string_calculate_dimensions(SPString *string);
-
 static SPObjectClass *string_parent_class;
 
 GType
@@ -78,7 +76,6 @@ sp_string_class_init(SPStringClass *classname)
     SPItemClass   *item_class;
 
     sp_object_class = (SPObjectClass *) classname;
-    item_class      = (SPItemClass *) classname;
 
     string_parent_class = (SPObjectClass*)g_type_class_ref(SP_TYPE_OBJECT);
 
@@ -157,14 +154,9 @@ sp_string_update(SPObject *object, SPCtx *ctx, unsigned flags)
     if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG)) {
         /* Parent style or we ourselves changed, so recalculate */
         flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // won't be "just a transformation" anymore, we're going to recompute "x" and "y" attributes
-        sp_string_calculate_dimensions(SP_STRING(object));
     }
 }
 
-static void
-sp_string_calculate_dimensions(SPString *)
-{
-}
 
 /*
   Local Variables:
