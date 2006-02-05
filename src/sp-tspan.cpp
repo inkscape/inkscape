@@ -33,6 +33,9 @@
 #include "sp-use-reference.h"
 #include "sp-tspan.h"
 #include "sp-textpath.h"
+#include "text-editing.h"
+#include "style.h"
+#include "libnr/nr-matrix-fns.h"
 #include "xml/repr.h"
 
 
@@ -48,6 +51,7 @@ static void sp_tspan_release(SPObject *object);
 static void sp_tspan_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_tspan_modified(SPObject *object, unsigned flags);
+static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
 static SPItemClass *tspan_parent_class;
@@ -94,6 +98,8 @@ sp_tspan_class_init(SPTSpanClass *classname)
     sp_object_class->update = sp_tspan_update;
     sp_object_class->modified = sp_tspan_modified;
     sp_object_class->write = sp_tspan_write;
+
+    item_class->bbox = sp_tspan_bbox;
 }
 
 static void
@@ -186,6 +192,32 @@ sp_tspan_modified(SPObject *object, unsigned flags)
     for ( ochild = sp_object_first_child(object) ; ochild ; ochild = SP_OBJECT_NEXT(ochild) ) {
         if (flags || (ochild->mflags & SP_OBJECT_MODIFIED_FLAG)) {
             ochild->emitModified(flags);
+        }
+    }
+}
+
+static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+{
+    SPObject *parent_text = SP_OBJECT(item);
+    for (; parent_text != NULL && !SP_IS_TEXT(parent_text); parent_text = SP_OBJECT_PARENT (parent_text));
+    if (parent_text == NULL) return;
+
+    Inkscape::Text::Layout layout = SP_TEXT(parent_text)->layout;
+
+    SP_TEXT(parent_text)->layout.getBoundingBox(bbox, transform, sp_text_get_length_upto(parent_text, item) - 1, sp_text_get_length(item));
+
+    // Add stroke width
+    SPStyle* style=SP_OBJECT_STYLE (item);
+    if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+        double const scale = expansion(transform);
+        if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
+            double const width = MAX(0.125, style->stroke_width.computed * scale);
+            if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {
+                bbox->x0-=0.5*width;
+                bbox->x1+=0.5*width;
+                bbox->y0-=0.5*width;
+                bbox->y1+=0.5*width;
+            }
         }
     }
 }
