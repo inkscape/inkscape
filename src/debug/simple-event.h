@@ -21,17 +21,17 @@ namespace Debug {
 template <Event::Category C=Event::OTHER>
 class SimpleEvent : public Event {
 public:
-    SimpleEvent(Util::SharedCStringPtr name) : _name(name) {}
-    SimpleEvent(char const *name) : _name(Util::SharedCStringPtr::copy(name)) {}
+    SimpleEvent(Util::shared_ptr<char> name) : _name(name) {}
+    SimpleEvent(char const *name) : _name(Util::share_string(name)) {}
 
     static Category category() { return C; }
 
-    Util::SharedCStringPtr name() const { return _name; }
+    Util::shared_ptr<char> name() const { return _name; }
     unsigned propertyCount() const { return 0; }
     PropertyPair property(unsigned property) const { return PropertyPair(); }
 
 private:
-    Util::SharedCStringPtr _name;
+    Util::shared_ptr<char> _name;
 };
 
 }

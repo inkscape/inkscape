@@ -14,7 +14,7 @@
 
 #include "xml/node-observer.h"
 
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 
 #include "jabber_whiteboard/node-tracker.h"
 #include "jabber_whiteboard/typedefs.h"
@@ -39,12 +39,12 @@ public:
                                          XML::Node *old_prev, XML::Node *new_prev);
 
     void notifyContentChanged(XML::Node &node,
-                                      Util::SharedCStringPtr old_content,
-                                      Util::SharedCStringPtr new_content);
+                                      Util::shared_ptr<char> old_content,
+                                      Util::shared_ptr<char> new_content);
 
     void notifyAttributeChanged(XML::Node &node, GQuark name,
-                                        Util::SharedCStringPtr old_value,
-                                        Util::SharedCStringPtr new_value);
+                                        Util::shared_ptr<char> old_value,
+                                        Util::shared_ptr<char> new_value);
 
 	void synthesizeChildNodeAddEvents();
 

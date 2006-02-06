@@ -114,15 +114,15 @@ public:
 	}
 
 	void notifyAttributeChanged(Node &node, GQuark name,
-			            Inkscape::Util::SharedCStringPtr old_value,
-				    Inkscape::Util::SharedCStringPtr new_value)
+			            Inkscape::Util::shared_ptr<char> old_value,
+				    Inkscape::Util::shared_ptr<char> new_value)
 	{
 		node.setAttribute(g_quark_to_string(name), new_value);
 	}
 
 	void notifyContentChanged(Node &node,
-			          Inkscape::Util::SharedCStringPtr old_value,
-				  Inkscape::Util::SharedCStringPtr new_value)
+			          Inkscape::Util::shared_ptr<char> old_value,
+				  Inkscape::Util::shared_ptr<char> new_value)
 	{
 		node.setContent(new_value);
 	}
@@ -458,22 +458,22 @@ public:
 	}
 
 	void notifyAttributeChanged(Node &node, GQuark name,
-	                            Inkscape::Util::SharedCStringPtr old_value,
-				    Inkscape::Util::SharedCStringPtr new_value)
+	                            Inkscape::Util::shared_ptr<char> old_value,
+				    Inkscape::Util::shared_ptr<char> new_value)
 	{
 		if (new_value) {
-			g_warning("Event: Set attribute %s to \"%s\" on %s", g_quark_to_string(name), new_value.cString(), node_to_string(node).c_str());
+			g_warning("Event: Set attribute %s to \"%s\" on %s", g_quark_to_string(name), new_value.pointer(), node_to_string(node).c_str());
 		} else {
 			g_warning("Event: Unset attribute %s on %s", g_quark_to_string(name), node_to_string(node).c_str());
 		}
 	}
 
 	void notifyContentChanged(Node &node,
-			          Inkscape::Util::SharedCStringPtr old_value,
-				  Inkscape::Util::SharedCStringPtr new_value)
+			          Inkscape::Util::shared_ptr<char> old_value,
+				  Inkscape::Util::shared_ptr<char> new_value)
 	{
 		if (new_value) {
-			g_warning("Event: Set content of %s to \"%s\"", node_to_string(node).c_str(), new_value.cString());
+			g_warning("Event: Set content of %s to \"%s\"", node_to_string(node).c_str(), new_value.pointer());
 		} else {
 			g_warning("Event: Unset content of %s", node_to_string(node).c_str());
 		}

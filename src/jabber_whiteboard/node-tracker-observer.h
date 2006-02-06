@@ -45,12 +45,12 @@ public:
                                          XML::Node *old_prev, XML::Node *new_prev)=0;
 
     virtual void notifyContentChanged(XML::Node &node,
-                                      Util::SharedCStringPtr old_content,
-                                      Util::SharedCStringPtr new_content)=0;
+                                      Util::shared_ptr<char> old_content,
+                                      Util::shared_ptr<char> new_content)=0;
 
     virtual void notifyAttributeChanged(XML::Node &node, GQuark name,
-                                        Util::SharedCStringPtr old_value,
-                                        Util::SharedCStringPtr new_value)=0;
+                                        Util::shared_ptr<char> old_value,
+                                        Util::shared_ptr<char> new_value)=0;
 
 
 	// ...but we do provide node tracking facilities

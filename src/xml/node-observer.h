@@ -16,7 +16,7 @@
 #define SEEN_INKSCAPE_XML_NODE_OBSERVER_H
 
 #include <glib/gquark.h>
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 
 namespace Inkscape {
 namespace XML {
@@ -43,12 +43,12 @@ public:
                                          Node *old_prev, Node *new_prev)=0;
 
     virtual void notifyContentChanged(Node &node,
-                                      Util::SharedCStringPtr old_content,
-                                      Util::SharedCStringPtr new_content)=0;
+                                      Util::shared_ptr<char> old_content,
+                                      Util::shared_ptr<char> new_content)=0;
 
     virtual void notifyAttributeChanged(Node &node, GQuark name,
-                                        Util::SharedCStringPtr old_value,
-                                        Util::SharedCStringPtr new_value)=0;
+                                        Util::shared_ptr<char> old_value,
+                                        Util::shared_ptr<char> new_value)=0;
 };
 
 }

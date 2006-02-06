@@ -12,7 +12,7 @@
 
 #include <glibmm/i18n.h>
 
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 #include "util/list.h"
 
 #include "xml/node.h"
@@ -297,7 +297,7 @@ MessageUtilities::objectDeleteMessage(Glib::ustring* msgbuf, XMLNodeTracker* xmt
 }
 
 void
-MessageUtilities::contentChangeMessage(Glib::ustring& msgbuf, std::string const nodeid, Util::SharedCStringPtr old_value, Util::SharedCStringPtr new_value)
+MessageUtilities::contentChangeMessage(Glib::ustring& msgbuf, std::string const nodeid, Util::shared_ptr<char> old_value, Util::shared_ptr<char> new_value)
 {
 	if (!nodeid.empty()) {
 		// <MESSAGE_NODECONTENT>

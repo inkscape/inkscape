@@ -13,7 +13,7 @@
 #define SEEN_INKSCAPE_DEBUG_EVENT_H
 
 #include <utility>
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 
 namespace Inkscape {
 
@@ -37,23 +37,23 @@ public:
     struct PropertyPair {
     public:
         PropertyPair() {}
-        PropertyPair(Util::SharedCStringPtr n, Util::SharedCStringPtr v)
+        PropertyPair(Util::shared_ptr<char> n, Util::shared_ptr<char> v)
         : name(n), value(v) {}
-        PropertyPair(char const *n, Util::SharedCStringPtr v)
-        : name(Util::SharedCStringPtr::copy(n)), value(v) {}
-        PropertyPair(Util::SharedCStringPtr n, char const *v)
-        : name(n), value(Util::SharedCStringPtr::copy(v)) {}
+        PropertyPair(char const *n, Util::shared_ptr<char> v)
+        : name(Util::share_string(n)), value(v) {}
+        PropertyPair(Util::shared_ptr<char> n, char const *v)
+        : name(n), value(Util::share_string(v)) {}
         PropertyPair(char const *n, char const *v)
-        : name(Util::SharedCStringPtr::copy(n)),
-          value(Util::SharedCStringPtr::copy(v)) {}
+        : name(Util::share_string(n)),
+          value(Util::share_string(v)) {}
 
-        Util::SharedCStringPtr name;
-        Util::SharedCStringPtr value;
+        Util::shared_ptr<char> name;
+        Util::shared_ptr<char> value;
     };
 
     static Category category() { return OTHER; }
 
-    virtual Util::SharedCStringPtr name() const=0;
+    virtual Util::shared_ptr<char> name() const=0;
     virtual unsigned propertyCount() const=0;
     virtual PropertyPair property(unsigned property) const=0;
 };

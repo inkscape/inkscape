@@ -14,8 +14,8 @@ util_libinkutil_a_SOURCES = \
 	util/list-container.h \
 	util/map-list.h \
 	util/reverse-list.h \
-	util/shared-c-string-ptr.h \
-	util/shared-c-string-ptr.cpp \
+	util/share.h \
+	util/share.cpp \
 	util/tuple.h \
 	util/units.cpp \
 	util/units.h

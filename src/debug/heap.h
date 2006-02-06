@@ -13,7 +13,7 @@
 #define SEEN_INKSCAPE_DEBUG_HEAP_H
 
 #include <cstddef>
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 
 namespace Inkscape {
 
@@ -36,7 +36,7 @@ public:
 
     virtual int features() const=0;
 
-    virtual Util::SharedCStringPtr name() const=0;
+    virtual Util::shared_ptr<char> name() const=0;
     virtual Stats stats() const=0;
     virtual void force_collect()=0;
 };

@@ -14,7 +14,7 @@
 #include "xml/node.h"
 #include "xml/repr.h"
 
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 
 #include "gc-anchored.h"
 
@@ -284,7 +284,7 @@ Deserializer::deserializeEventChgContent(Glib::ustring const& msg)
 {
 	// 1.  Extract required attributes: node ID.  If we do not know these, return.
 	std::string id;
-	Util::SharedCStringPtr oldval, newval;
+	Util::shared_ptr<char> oldval, newval;
 	Node buf;
 
 	buf.tag = MESSAGE_ID;
@@ -297,16 +297,16 @@ Deserializer::deserializeEventChgContent(Glib::ustring const& msg)
 	// 2.  Extract optional attributes: old value, new value.
 	buf.tag = MESSAGE_OLDVAL;
 	if (MessageUtilities::findTag(buf, msg)) {
-		oldval = Util::SharedCStringPtr::copy(buf.data.c_str());
+		oldval = Util::share_string(buf.data.c_str());
 	} else {
-		oldval = Util::SharedCStringPtr::copy("");
+		oldval = Util::share_static("");
 	}
 
 	buf.tag = MESSAGE_NEWVAL;
 	if (MessageUtilities::findTag(buf, msg)) {
-		newval = Util::SharedCStringPtr::copy(buf.data.c_str());
+		newval = Util::share_string(buf.data.c_str());
 	} else {
-		newval = Util::SharedCStringPtr::copy("");
+		newval = Util::share_static("");
 	}
 
 	// 3.  Find the node identified by the ID.  If we cannot find it, return.
@@ -344,21 +344,21 @@ Deserializer::deserializeEventChgAttr(Glib::ustring const& msg)
 	// 2.  Extract optional attributes: new value.  If we do not find it in the message,
 	// assume there is no new value.
 	buf.tag = MESSAGE_NEWVAL;
-	Util::SharedCStringPtr newval;
+	Util::shared_ptr<char> newval;
 	if (MessageUtilities::findTag(buf, msg)) {
-		newval = Util::SharedCStringPtr::copy(buf.data.c_str());
+		newval = Util::share_string(buf.data.c_str());
 	} else {
-		newval = Util::SharedCStringPtr::copy("");
+		newval = Util::share_static("");
 	}
 
 	// 3.  Extract optional attributes: old value.  If we do not find it in the message,
 	// assume that there is no old value.
 	buf.tag = MESSAGE_OLDVAL;
-	Util::SharedCStringPtr oldval;
+	Util::shared_ptr<char> oldval;
 	if (MessageUtilities::findTag(buf, msg)) {
-		oldval = Util::SharedCStringPtr::copy(buf.data.c_str());
+		oldval = Util::share_string(buf.data.c_str());
 	} else {
-		oldval = Util::SharedCStringPtr::copy("");
+		oldval = Util::share_static("");
 	}
 
 	// 4.  Look up this node in the local node database and external tracker.

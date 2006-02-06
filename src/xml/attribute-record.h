@@ -4,7 +4,7 @@
 #include <glib/gquark.h>
 #include <glib/gtypes.h>
 #include "gc-managed.h"
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 
 #define SP_REPR_ATTRIBUTE_KEY(a) g_quark_to_string((a)->key)
 #define SP_REPR_ATTRIBUTE_VALUE(a) ((a)->value)
@@ -13,11 +13,11 @@ namespace Inkscape {
 namespace XML {
 
 struct AttributeRecord : public Inkscape::GC::Managed<> {
-    AttributeRecord(GQuark k, Inkscape::Util::SharedCStringPtr v)
+    AttributeRecord(GQuark k, Inkscape::Util::shared_ptr<char> v)
     : key(k), value(v) {}
 
     GQuark key;
-    Inkscape::Util::SharedCStringPtr value;
+    Inkscape::Util::shared_ptr<char> value;
 
     // accept default copy constructor and assignment operator
 };

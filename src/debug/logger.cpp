@@ -25,7 +25,7 @@ bool Logger::_category_mask[Event::N_CATEGORIES];
 
 namespace {
 
-static void write_escaped_value(std::ostream &os, Util::SharedCStringPtr value) {
+static void write_escaped_value(std::ostream &os, Util::shared_ptr<char> value) {
     for ( char const *current=value ; *current ; ++current ) {
         switch (*current) {
         case '&':
@@ -57,7 +57,7 @@ static void write_indent(std::ostream &os, unsigned depth) {
 
 static std::ofstream log_stream;
 static bool empty_tag=false;
-typedef std::vector<Util::SharedCStringPtr, GC::Alloc<Util::SharedCStringPtr, GC::MANUAL> > TagStack;
+typedef std::vector<Util::shared_ptr<char>, GC::Alloc<Util::shared_ptr<char>, GC::MANUAL> > TagStack;
 static TagStack &tag_stack() {
     static TagStack stack;
     return stack;
@@ -128,7 +128,7 @@ void Logger::init() {
                 log_stream << "<?xml version=\"1.0\"?>\n";
                 log_stream.flush();
                 _enabled = true;
-                start<SimpleEvent<Event::CORE> >(Util::SharedCStringPtr::coerce("session"));
+                start<SimpleEvent<Event::CORE> >(Util::share_static("session"));
                 std::atexit(&do_shutdown);
             }
         }
@@ -136,7 +136,7 @@ void Logger::init() {
 }
 
 void Logger::_start(Event const &event) {
-    Util::SharedCStringPtr name=event.name();
+    Util::shared_ptr<char> name=event.name();
 
     if (empty_tag) {
         log_stream << ">\n";
@@ -144,12 +144,12 @@ void Logger::_start(Event const &event) {
 
     write_indent(log_stream, tag_stack().size());
 
-    log_stream << "<" << name.cString();
+    log_stream << "<" << name.pointer();
 
     unsigned property_count=event.propertyCount();
     for ( unsigned i = 0 ; i < property_count ; i++ ) {
         Event::PropertyPair property=event.property(i);
-        log_stream << " " << property.name.cString() << "=\"";
+        log_stream << " " << property.name.pointer() << "=\"";
         write_escaped_value(log_stream, property.value);
         log_stream << "\"";
     }
@@ -161,7 +161,7 @@ void Logger::_start(Event const &event) {
 }
 
 void Logger::_skip() {
-    tag_stack().push_back(Util::SharedCStringPtr());
+    tag_stack().push_back(Util::shared_ptr<char>());
 }
 
 void Logger::_finish() {
@@ -170,7 +170,7 @@ void Logger::_finish() {
             log_stream << "/>\n";
         } else {
             write_indent(log_stream, tag_stack().size() - 1);
-            log_stream << "</" << tag_stack().back().cString() << ">\n";
+            log_stream << "</" << tag_stack().back().pointer() << ">\n";
         }
         log_stream.flush();
 

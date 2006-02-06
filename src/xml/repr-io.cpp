@@ -585,7 +585,7 @@ repr_quote_write (Writer &out, const gchar * val)
 namespace {
 
 typedef std::map<Glib::QueryQuark, gchar const *, Inkscape::compare_quark_ids> LocalNameMap;
-typedef std::map<Glib::QueryQuark, Inkscape::Util::SharedCStringPtr, Inkscape::compare_quark_ids> NSMap;
+typedef std::map<Glib::QueryQuark, Inkscape::Util::shared_ptr<char>, Inkscape::compare_quark_ids> NSMap;
 
 gchar const *qname_local_name(Glib::QueryQuark qname) {
     static LocalNameMap local_name_map;
@@ -604,7 +604,8 @@ gchar const *qname_local_name(Glib::QueryQuark qname) {
 }
 
 void add_ns_map_entry(NSMap &ns_map, Glib::QueryQuark prefix) {
-    using Inkscape::Util::SharedCStringPtr;
+    using Inkscape::Util::shared_ptr;
+    using Inkscape::Util::share_unsafe;
 
     static const Glib::QueryQuark xml_prefix("xml");
 
@@ -613,12 +614,12 @@ void add_ns_map_entry(NSMap &ns_map, Glib::QueryQuark prefix) {
         if (prefix.id()) {
             gchar const *uri=sp_xml_ns_prefix_uri(g_quark_to_string(prefix));
             if (uri) {
-                ns_map.insert(NSMap::value_type(prefix, SharedCStringPtr::coerce(uri)));
+                ns_map.insert(NSMap::value_type(prefix, share_unsafe(uri)));
             } else if ( prefix != xml_prefix ) {
                 g_warning("No namespace known for normalized prefix %s", g_quark_to_string(prefix));
             }
         } else {
-            ns_map.insert(NSMap::value_type(prefix, SharedCStringPtr()));
+            ns_map.insert(NSMap::value_type(prefix, shared_ptr<char>()));
         }
     }
 }
@@ -647,7 +648,7 @@ void populate_ns_map(NSMap &ns_map, Node &repr) {
 void
 sp_repr_write_stream_root_element (Node *repr, Writer &out, gboolean add_whitespace, gchar const *default_ns)
 {
-    using Inkscape::Util::SharedCStringPtr;
+    using Inkscape::Util::shared_ptr;
     g_assert(repr != NULL);
     Glib::QueryQuark xml_prefix=g_quark_from_static_string("xml");
 
@@ -663,7 +664,7 @@ sp_repr_write_stream_root_element (Node *repr, Writer &out, gboolean add_whitesp
     for ( NSMap::iterator iter=ns_map.begin() ; iter != ns_map.end() ; ++iter ) 
     {
         Glib::QueryQuark prefix=(*iter).first;
-        SharedCStringPtr ns_uri=(*iter).second;
+        shared_ptr<char> ns_uri=(*iter).second;
 
         if (prefix.id()) {
             if ( prefix != xml_prefix ) {

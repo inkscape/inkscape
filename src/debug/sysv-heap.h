@@ -23,8 +23,8 @@ public:
     
     int features() const;
 
-    Util::SharedCStringPtr name() const {
-        return Util::SharedCStringPtr::coerce("standard malloc()");
+    Util::shared_ptr<char> name() const {
+        return Util::share_static("standard malloc()");
     }
     Stats stats() const;
     void force_collect() {}

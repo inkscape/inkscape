@@ -28,7 +28,7 @@
 #include "xml/comment-node.h"
 #include "xml/simple-document.h"
 
-using Inkscape::Util::SharedCStringPtr;
+using Inkscape::Util::share_string;
 
 /// Returns new node.
 Inkscape::XML::Node *
@@ -45,7 +45,7 @@ Inkscape::XML::Node *
 sp_repr_new_text(gchar const *content)
 {
     g_return_val_if_fail(content != NULL, NULL);
-    return new Inkscape::XML::TextNode(SharedCStringPtr::copy(content));
+    return new Inkscape::XML::TextNode(share_string(content));
 }
 
 /// Returns new commentnode with comment. See Inkscape::XML::CommentNode.
@@ -53,7 +53,7 @@ Inkscape::XML::Node *
 sp_repr_new_comment(gchar const *comment)
 {
     g_return_val_if_fail(comment != NULL, NULL);
-    return new Inkscape::XML::CommentNode(SharedCStringPtr::copy(comment));
+    return new Inkscape::XML::CommentNode(share_string(comment));
 }
 
 /// Returns new document having as first child a node named rootname.

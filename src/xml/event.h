@@ -6,7 +6,7 @@
 #include <glibmm/ustring.h>
 
 #include <iterator>
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 #include "util/forward-pointer-iterator.h"
 #include "gc-managed.h"
 #include "xml/node.h"
@@ -96,15 +96,15 @@ private:
 class EventChgAttr : public Event {
 public:
 	EventChgAttr(Node *repr, GQuark k,
-		     Inkscape::Util::SharedCStringPtr ov,
-                     Inkscape::Util::SharedCStringPtr nv,
+		     Inkscape::Util::shared_ptr<char> ov,
+                     Inkscape::Util::shared_ptr<char> nv,
                      Event *next)
 	: Event(repr, next), key(k),
 	  oldval(ov), newval(nv) {}
 
 	GQuark key;
-	Inkscape::Util::SharedCStringPtr oldval;
-	Inkscape::Util::SharedCStringPtr newval;
+	Inkscape::Util::shared_ptr<char> oldval;
+	Inkscape::Util::shared_ptr<char> newval;
 
 private:
 	Event *_optimizeOne();
@@ -115,13 +115,13 @@ private:
 class EventChgContent : public Event {
 public:
 	EventChgContent(Node *repr,
-                        Inkscape::Util::SharedCStringPtr ov,
-                        Inkscape::Util::SharedCStringPtr nv,
+                        Inkscape::Util::shared_ptr<char> ov,
+                        Inkscape::Util::shared_ptr<char> nv,
                         Event *next)
 	: Event(repr, next), oldval(ov), newval(nv) {}
 
-	Inkscape::Util::SharedCStringPtr oldval;
-	Inkscape::Util::SharedCStringPtr newval;
+	Inkscape::Util::shared_ptr<char> oldval;
+	Inkscape::Util::shared_ptr<char> newval;
 
 private:
 	Event *_optimizeOne();

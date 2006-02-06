@@ -52,11 +52,11 @@ Node *SimpleSession::createElementNode(char const *name) {
 }
 
 Node *SimpleSession::createTextNode(char const *content) {
-    return new TextNode(Util::SharedCStringPtr::copy(content));
+    return new TextNode(Util::share_string(content));
 }
 
 Node *SimpleSession::createCommentNode(char const *content) {
-    return new CommentNode(Util::SharedCStringPtr::copy(content));
+    return new CommentNode(Util::share_string(content));
 }
 
 void SimpleSession::notifyChildAdded(Node &parent,
@@ -88,8 +88,8 @@ void SimpleSession::notifyChildOrderChanged(Node &parent,
 }
 
 void SimpleSession::notifyContentChanged(Node &node,
-                                         Util::SharedCStringPtr old_content,
-                                         Util::SharedCStringPtr new_content)
+                                         Util::shared_ptr<char> old_content,
+                                         Util::shared_ptr<char> new_content)
 {
     if (_in_transaction) {
         _log_builder.setContent(node, old_content, new_content);
@@ -98,8 +98,8 @@ void SimpleSession::notifyContentChanged(Node &node,
 
 void SimpleSession::notifyAttributeChanged(Node &node,
                                            GQuark name,
-                                           Util::SharedCStringPtr old_value,
-                                           Util::SharedCStringPtr new_value)
+                                           Util::shared_ptr<char> old_value,
+                                           Util::shared_ptr<char> new_value)
 {
     if (_in_transaction) {
         _log_builder.setAttribute(node, name, old_value, new_value);

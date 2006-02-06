@@ -10,7 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "util/shared-c-string-ptr.h"
+#include "util/share.h"
 #include "util/list.h"
 
 #include "xml/node-observer.h"

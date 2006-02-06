@@ -52,12 +52,12 @@ public:
                                  Inkscape::XML::Node *old_prev, Inkscape::XML::Node *new_prev);
 
     void notifyContentChanged(Inkscape::XML::Node &node,
-                              Util::SharedCStringPtr old_content,
-                              Util::SharedCStringPtr new_content);
+                              Util::shared_ptr<char> old_content,
+                              Util::shared_ptr<char> new_content);
 
     void notifyAttributeChanged(Inkscape::XML::Node &node, GQuark name,
-                                Util::SharedCStringPtr old_value,
-                                Util::SharedCStringPtr new_value);
+                                Util::shared_ptr<char> old_value,
+                                Util::shared_ptr<char> new_value);
 
 private:
     SimpleSession(SimpleSession const &); // no copy

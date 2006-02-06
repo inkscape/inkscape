@@ -23,8 +23,8 @@ public:
     int features() const {
         return SIZE_AVAILABLE | USED_AVAILABLE | GARBAGE_COLLECTED;
     }
-    Util::SharedCStringPtr name() const {
-        return Util::SharedCStringPtr::coerce("libgc");
+    Util::shared_ptr<char> name() const {
+        return Util::share_static("libgc");
     }
     Heap::Stats stats() const {
         Stats stats;

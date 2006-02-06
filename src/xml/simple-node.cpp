@@ -28,7 +28,7 @@ namespace XML {
 
 namespace {
 
-Util::SharedCStringPtr stringify_node(Node const &node) {
+Util::shared_ptr<char> stringify_node(Node const &node) {
     gchar *string;
     switch (node.type()) {
     case ELEMENT_NODE: {
@@ -51,14 +51,14 @@ Util::SharedCStringPtr stringify_node(Node const &node) {
     default:
         string = g_strdup_printf("unknown(%p)", &node);
     }
-    Util::SharedCStringPtr result=Util::SharedCStringPtr::copy(string);
+    Util::shared_ptr<char> result=Util::share_string(string);
     g_free(string);
     return result;
 }
 
-Util::SharedCStringPtr stringify_unsigned(unsigned n) {
+Util::shared_ptr<char> stringify_unsigned(unsigned n) {
     gchar *string = g_strdup_printf("%u", n);
-    Util::SharedCStringPtr result=Util::SharedCStringPtr::copy(string);
+    Util::shared_ptr<char> result=Util::share_string(string);
     g_free(string);
     return result;
 }
@@ -75,8 +75,8 @@ public:
 
     static Category category() { return XML; }
 
-    Util::SharedCStringPtr name() const {
-        return Util::SharedCStringPtr::coerce("add-child");
+    Util::shared_ptr<char> name() const {
+        return Util::share_static("add-child");
     }
     unsigned propertyCount() const { return 3; }
     PropertyPair property(unsigned i) const {
@@ -92,8 +92,8 @@ public:
         }
     }
 private:
-    Util::SharedCStringPtr _parent;
-    Util::SharedCStringPtr _child;
+    Util::shared_ptr<char> _parent;
+    Util::shared_ptr<char> _child;
     unsigned _position;
 };
 
@@ -106,8 +106,8 @@ public:
 
     static Category category() { return XML; }
 
-    Util::SharedCStringPtr name() const {
-        return Util::SharedCStringPtr::coerce("remove-child");
+    Util::shared_ptr<char> name() const {
+        return Util::share_static("remove-child");
     }
     unsigned propertyCount() const { return 2; }
     PropertyPair property(unsigned i) const {
@@ -121,8 +121,8 @@ public:
         }
     }
 private:
-    Util::SharedCStringPtr _parent;
-    Util::SharedCStringPtr _child;
+    Util::shared_ptr<char> _parent;
+    Util::shared_ptr<char> _child;
 };
 
 class DebugSetChildPosition : public Debug::Event {
@@ -140,8 +140,8 @@ public:
 
     static Category category() { return XML; }
 
-    Util::SharedCStringPtr name() const {
-        return Util::SharedCStringPtr::coerce("set-child-position");
+    Util::shared_ptr<char> name() const {
+        return Util::share_static("set-child-position");
     }
     unsigned propertyCount() const { return 3; }
     PropertyPair property(unsigned i) const {
@@ -157,25 +157,25 @@ public:
         }
     }
 private:
-    Util::SharedCStringPtr _parent;
-    Util::SharedCStringPtr _child;
+    Util::shared_ptr<char> _parent;
+    Util::shared_ptr<char> _child;
     unsigned _position;
 };
 
 class DebugSetContent : public Debug::Event {
 public:
     DebugSetContent(Node const &node,
-                    Util::SharedCStringPtr old_content,
-                    Util::SharedCStringPtr new_content)
+                    Util::shared_ptr<char> old_content,
+                    Util::shared_ptr<char> new_content)
     : _node(stringify_node(node)), _content(new_content) {}
 
     static Category category() { return XML; }
 
-    Util::SharedCStringPtr name() const {
+    Util::shared_ptr<char> name() const {
         if (_content) {
-            return Util::SharedCStringPtr::coerce("set-content");
+            return Util::share_static("set-content");
         } else {
-            return Util::SharedCStringPtr::coerce("clear-content");
+            return Util::share_static("clear-content");
         }
     }
     unsigned propertyCount() const {
@@ -196,26 +196,26 @@ public:
         }
     }
 private:
-    Util::SharedCStringPtr _node;
-    Util::SharedCStringPtr _content;
+    Util::shared_ptr<char> _node;
+    Util::shared_ptr<char> _content;
 };
 
 class DebugSetAttribute : public Debug::Event {
 public:
     DebugSetAttribute(Node const &node, GQuark name,
-                      Util::SharedCStringPtr old_value,
-                      Util::SharedCStringPtr new_value)
+                      Util::shared_ptr<char> old_value,
+                      Util::shared_ptr<char> new_value)
     : _node(stringify_node(node)),
-      _name(Util::SharedCStringPtr::coerce(g_quark_to_string(name))),
+      _name(Util::share_unsafe(g_quark_to_string(name))),
       _value(new_value) {}
 
     static Category category() { return XML; }
 
-    Util::SharedCStringPtr name() const {
+    Util::shared_ptr<char> name() const {
         if (_value) {
-            return Util::SharedCStringPtr::coerce("set-attribute");
+            return Util::share_static("set-attribute");
         } else {
-            return Util::SharedCStringPtr::coerce("clear-attribute");
+            return Util::share_static("clear-attribute");
         }
     }
     unsigned propertyCount() const {
@@ -239,12 +239,15 @@ public:
     }
 
 private:
-    Util::SharedCStringPtr _node;
-    Util::SharedCStringPtr _name;
-    Util::SharedCStringPtr _value;
+    Util::shared_ptr<char> _node;
+    Util::shared_ptr<char> _name;
+    Util::shared_ptr<char> _value;
 };
 
-using Inkscape::Util::SharedCStringPtr;
+using Inkscape::Util::shared_ptr;
+using Inkscape::Util::share_string;
+using Inkscape::Util::share_unsafe;
+using Inkscape::Util::share_static;
 using Inkscape::Util::List;
 using Inkscape::Util::MutableList;
 using Inkscape::Util::cons;
@@ -363,8 +366,8 @@ bool SimpleNode::matchAttributeName(gchar const *partial_name) const {
 }
 
 void SimpleNode::setContent(gchar const *content) {
-    SharedCStringPtr old_content=_content;
-    SharedCStringPtr new_content = ( content ? SharedCStringPtr::copy(content) : SharedCStringPtr() );
+    shared_ptr<char> old_content=_content;
+    shared_ptr<char> new_content = ( content ? share_string(content) : shared_ptr<char>() );
 
     Debug::EventTracker<DebugSetContent> tracker(
         *this, old_content, new_content
@@ -399,11 +402,11 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_in
 
     Debug::EventTracker<> tracker;
 
-    SharedCStringPtr old_value=( existing ? existing->value : SharedCStringPtr() );
+    shared_ptr<char> old_value=( existing ? existing->value : shared_ptr<char>() );
 
-    SharedCStringPtr new_value=SharedCStringPtr();
+    shared_ptr<char> new_value=shared_ptr<char>();
     if (value) {
-        new_value = SharedCStringPtr::copy(value);
+        new_value = share_string(value);
         tracker.set<DebugSetAttribute>(*this, key, old_value, new_value);
         if (!existing) {
             if (ref) {
@@ -613,11 +616,11 @@ void child_removed(Node *node, Node *child, Node *ref, void *data) {
 }
 
 void content_changed(Node *node, gchar const *old_content, gchar const *new_content, void *data) {
-    reinterpret_cast<NodeObserver *>(data)->notifyContentChanged(*node, Util::SharedCStringPtr::coerce((const char *)old_content), Util::SharedCStringPtr::coerce((const char *)new_content));
+    reinterpret_cast<NodeObserver *>(data)->notifyContentChanged(*node, Util::share_unsafe((const char *)old_content), Util::share_unsafe((const char *)new_content));
 }
 
 void attr_changed(Node *node, gchar const *name, gchar const *old_value, gchar const *new_value, bool is_interactive, void *data) {
-    reinterpret_cast<NodeObserver *>(data)->notifyAttributeChanged(*node, g_quark_from_string(name), Util::SharedCStringPtr::coerce((const char *)old_value), Util::SharedCStringPtr::coerce((const char *)new_value));
+    reinterpret_cast<NodeObserver *>(data)->notifyAttributeChanged(*node, g_quark_from_string(name), Util::share_unsafe((const char *)old_value), Util::share_unsafe((const char *)new_value));
 }
 
 void order_changed(Node *node, Node *child, Node *old_ref, Node *new_ref, void *data) {

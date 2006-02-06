@@ -225,16 +225,16 @@ sp_object_finalize(GObject *object)
 
 namespace {
 
-Inkscape::Util::SharedCStringPtr stringify(SPObject *obj) {
+Inkscape::Util::shared_ptr<char> stringify(SPObject *obj) {
     char *temp=g_strdup_printf("%p", obj);
-    Inkscape::Util::SharedCStringPtr result=Inkscape::Util::SharedCStringPtr::copy(temp);
+    Inkscape::Util::shared_ptr<char> result=Inkscape::Util::share_string(temp);
     g_free(temp);
     return result;
 }
 
-Inkscape::Util::SharedCStringPtr stringify(unsigned n) {
+Inkscape::Util::shared_ptr<char> stringify(unsigned n) {
     char *temp=g_strdup_printf("%u", n);
-    Inkscape::Util::SharedCStringPtr result=Inkscape::Util::SharedCStringPtr::copy(temp);
+    Inkscape::Util::shared_ptr<char> result=Inkscape::Util::share_string(temp);
     g_free(temp);
     return result;
 }
@@ -250,11 +250,11 @@ public:
 
     static Category category() { return REFCOUNT; }
 
-    Inkscape::Util::SharedCStringPtr name() const {
+    Inkscape::Util::shared_ptr<char> name() const {
         if ( _type == REF) {
-            return Inkscape::Util::SharedCStringPtr::coerce("sp-object-ref");
+            return Inkscape::Util::share_static("sp-object-ref");
         } else {
-            return Inkscape::Util::SharedCStringPtr::coerce("sp-object-unref");
+            return Inkscape::Util::share_static("sp-object-unref");
         }
     }
     unsigned propertyCount() const { return 2; }
@@ -270,7 +270,7 @@ public:
     }
 
 private:
-    Inkscape::Util::SharedCStringPtr _object;
+    Inkscape::Util::shared_ptr<char> _object;
     unsigned _refcount;
     Type _type;
 };
