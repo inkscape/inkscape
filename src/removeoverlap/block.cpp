@@ -104,6 +104,9 @@ void Block::mergeIn(Block *b) {
 	findMinInConstraint();
 	b->findMinInConstraint();
 	in->merge(b->in);
+#ifdef RECTANGLE_OVERLAP_LOGGING
+	f<<"  merged heap: "<<*in<<endl;
+#endif
 }
 void Block::mergeOut(Block *b) {	
 	findMinOutConstraint();
@@ -171,6 +174,11 @@ Constraint *Block::findMinOutConstraint() {
 }
 void Block::deleteMinInConstraint() {
 	in->deleteMin();
+#ifdef RECTANGLE_OVERLAP_LOGGING
+	ofstream f(LOGFILE,ios::app);
+	f<<"deleteMinInConstraint... "<<endl;
+	f<<"  result: "<<*in<<endl;
+#endif
 }
 void Block::deleteMinOutConstraint() {
 	out->deleteMin();

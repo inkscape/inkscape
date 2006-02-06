@@ -17,7 +17,7 @@
  */
 
 #include <vector>
-
+#include <list>
 #include "dsexceptions.h"
 #include "PairingHeap.h"
 
@@ -305,5 +305,29 @@ PairingHeap<T>::clone( PairNode<T> * t ) const
 		return p;
 	}
 }
-
+template <class T>
+ostream& operator <<(ostream &os, const PairingHeap<T> &b)
+{
+	os<<"Heap:";
+	if (b.root != NULL) {
+		PairNode<T> *r = b.root;
+		list<PairNode<T>*> q;
+		q.push_back(r);
+		while (!q.empty()) {
+			r = q.front();
+			q.pop_front();
+			if (r->leftChild != NULL) {
+				os << *r->element << ">";
+				PairNode<T> *c = r->leftChild;
+				while (c != NULL) {
+					q.push_back(c);
+					os << "," << *c->element;
+					c = c->nextSibling;
+				}
+				os << "|";
+			}
+		}
+	}
+    return os;
+}
 #endif

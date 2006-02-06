@@ -24,6 +24,6 @@ Constraint::Constraint(Variable *left, Variable *right, double gap)
 }
 std::ostream& operator <<(std::ostream &os, const Constraint &c)
 {
-	os<<*c.left<<"+"<<c.gap<<"<="<<*c.right<<"("<<c.slack()<<")";
+	os<<*c.left<<"+"<<c.gap<<"<="<<*c.right<<"("<<c.slack()<<"):lts="<<c.left->block->timeStamp<<",cts="<<c.timeStamp;
 	return os;
 }

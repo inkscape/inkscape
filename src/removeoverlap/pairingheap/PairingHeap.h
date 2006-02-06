@@ -43,6 +43,7 @@ class PairingHeap;
 template <class T>
 class PairNode
 {
+	friend std::ostream& operator <<(std::ostream &os,const PairingHeap<T> &b);
 	T   element;
 	PairNode    *leftChild;
 	PairNode    *nextSibling;
@@ -63,6 +64,7 @@ public:
 template <class T>
 class PairingHeap
 {
+	friend std::ostream& operator <<(std::ostream &os,const PairingHeap<T> &b);
 public:
 	PairingHeap( bool (*lessThan)(T const &lhs, T const &rhs) );
 	PairingHeap( const PairingHeap & rhs );

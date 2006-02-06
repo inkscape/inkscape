@@ -37,11 +37,11 @@ static inline bool compareConstraints(Constraint *const &l, Constraint *const &r
 	double const sl = 
 		l->left->block->timeStamp > l->timeStamp
 		||l->left->block==l->right->block
-		?DBL_MIN:l->slack();
+		?-DBL_MAX:l->slack();
 	double const sr = 
 		r->left->block->timeStamp > r->timeStamp
 		||r->left->block==r->right->block
-		?DBL_MIN:r->slack();
+		?-DBL_MAX:r->slack();
 	if(sl==sr) {
 		// arbitrary choice based on id
 		if(l->left->id==r->left->id) {
