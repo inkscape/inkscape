@@ -10,6 +10,10 @@
 # include "config.h"
 #endif
 
+#if defined(WIN32) || defined(__WIN32__)
+# include <zlib.h>
+#endif
+
 #ifdef HAVE_ZLIB_H
 # include <zlib.h>
 #endif
