@@ -503,6 +503,7 @@ clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
             nr_arena_item_set_clip(v->arenaitem, ai);
             nr_arena_item_unref(ai);
             sp_clippath_set_bbox(SP_CLIPPATH(clip), NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
+            SP_OBJECT(clip)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
 }
@@ -677,6 +678,13 @@ sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &tra
 
     if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox) {
         ((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox(item, bbox, transform, flags);
+    }
+
+    // crop the bbox by clip path, if any
+    if (item->clip_ref->getObject()) {
+        NRRect b;
+        sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
+        nr_rect_d_intersect (bbox, bbox, &b);
     }
 }
 
