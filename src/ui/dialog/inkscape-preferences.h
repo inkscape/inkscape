@@ -28,6 +28,36 @@
 
 #include "dialog.h"
 
+// UPDATE THIS IF YOU'RE ADDING PREFS PAGES.
+// Otherwise the commands that open the dialog with the new page will fail.
+
+enum {
+    PREFS_PAGE_MOUSE,
+    PREFS_PAGE_SCROLLING,
+    PREFS_PAGE_STEPS,
+    PREFS_PAGE_TOOLS,
+    PREFS_PAGE_TOOLS_SELECTOR,
+    PREFS_PAGE_TOOLS_NODE,
+    PREFS_PAGE_TOOLS_ZOOM,
+    PREFS_PAGE_TOOLS_SHAPES,
+    PREFS_PAGE_TOOLS_SHAPES_RECT,
+    PREFS_PAGE_TOOLS_SHAPES_ELLIPSE,
+    PREFS_PAGE_TOOLS_SHAPES_STAR,
+    PREFS_PAGE_TOOLS_SHAPES_SPIRAL,
+    PREFS_PAGE_TOOLS_PENCIL,
+    PREFS_PAGE_TOOLS_PEN,
+    PREFS_PAGE_TOOLS_CALLIGRAPHY,
+    PREFS_PAGE_TOOLS_TEXT,
+    PREFS_PAGE_TOOLS_GRADIENT,
+    PREFS_PAGE_TOOLS_CONNECTOR,
+    PREFS_PAGE_TOOLS_DROPPER,
+    PREFS_PAGE_WINDOWS,
+    PREFS_PAGE_CLONES,
+    PREFS_PAGE_TRANSFORMS,
+    PREFS_PAGE_SELECTING,
+    PREFS_PAGE_MISC
+};
+
 using namespace Inkscape::UI::Widget;
 
 namespace Inkscape {
@@ -39,6 +69,7 @@ public:
     virtual ~InkscapePreferences();
 
     static InkscapePreferences *create() {return new InkscapePreferences(); }
+    void present();
 
 protected:
     Gtk::Frame _page_frame;
@@ -51,11 +82,15 @@ protected:
     {
     public:
         PageListModelColumns()
-        { Gtk::TreeModelColumnRecord::add(_col_id); Gtk::TreeModelColumnRecord::add(_col_page); }
-        Gtk::TreeModelColumn<Glib::ustring> _col_id;
+        { Gtk::TreeModelColumnRecord::add(_col_name); Gtk::TreeModelColumnRecord::add(_col_page); Gtk::TreeModelColumnRecord::add(_col_id); }
+        Gtk::TreeModelColumn<Glib::ustring> _col_name;
+        Gtk::TreeModelColumn<int> _col_id;
         Gtk::TreeModelColumn<DialogPage*> _col_page;
     };
     PageListModelColumns _page_list_columns;
+
+    Gtk::TreeModel::Path _path_tools;
+    Gtk::TreeModel::Path _path_shapes;
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
                _page_clones, _page_transforms, _page_select, _page_misc;
@@ -96,9 +131,10 @@ protected:
     int _sb_width;
     DialogPage* _current_page;
 
-    Gtk::TreeModel::iterator AddPage(DialogPage& p, Glib::ustring title);
-    Gtk::TreeModel::iterator AddPage(DialogPage& p, Glib::ustring title, Gtk::TreeModel::iterator parent);
+    Gtk::TreeModel::iterator AddPage(DialogPage& p, Glib::ustring title, int id);
+    Gtk::TreeModel::iterator AddPage(DialogPage& p, Glib::ustring title, Gtk::TreeModel::iterator parent, int id);
     bool SetMaxDialogSize(const Gtk::TreeModel::iterator& iter);
+    bool PresentPage(const Gtk::TreeModel::iterator& iter);
 
     static void AddSelcueCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value);
     static void AddGradientCheckbox(DialogPage& p, const std::string& prefs_path, bool def_value);

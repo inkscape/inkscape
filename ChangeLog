@@ -1,3 +1,13 @@
+2006-02-05  Marco Scholten  <mscholtn@xs4all.nl>
+
+    * src/verbs.cpp: updated to make double clicking a tool button
+      open the new preferences dialog.
+    * src/ui/dialog/inkscape-preferences.cpp: updated to enable opening
+      the dialog on the correct page.
+    * src/ui/dialog/dialog.cpp: added virtual void present() so that
+      InkscapePreferences::present() will be called from 
+      DialogManager::showDialog()
+
 2006-02-05  MenTaLguY  <mental@rydia.net>
 
     * src/debug/event.h, src/debug/gc-heap.h, src/debug/heap.h,

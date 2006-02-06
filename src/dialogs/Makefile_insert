@@ -18,8 +18,6 @@ dialogs_libspdialogs_a_SOURCES = \
 	dialogs/debugdialog.h	\
 	dialogs/dialog-events.cpp	\
 	dialogs/dialog-events.h	\
-	dialogs/display-settings.cpp	\
-	dialogs/display-settings.h	\
 	dialogs/eek-preview.h	\
 	dialogs/eek-preview.cpp	\
 	dialogs/export.cpp	\

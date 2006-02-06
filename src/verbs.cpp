@@ -38,7 +38,6 @@
 #include "dialogs/text-edit.h"
 #include "dialogs/xml-tree.h"
 #include "dialogs/object-properties.h"
-#include "dialogs/display-settings.h"
 #include "dialogs/item-properties.h"
 #include "dialogs/find.h"
 #include "dialogs/layer-properties.h"
@@ -70,6 +69,7 @@
 #include "path-chemistry.h"
 #include "text-chemistry.h"
 #include "ui/dialog/dialog-manager.h"
+#include "ui/dialog/inkscape-preferences.h"
 #include "interface.h"
 #include "prefs-utils.h"
 #include "splivarot.h"
@@ -1273,78 +1273,60 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
             break;
 
         case SP_VERB_CONTEXT_SELECT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_SELECTOR);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SELECTOR);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_NODE_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_NODE);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_NODE);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_RECT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_SHAPES);
-            prefs_set_int_attribute("dialogs.preferences", "page_shapes", PREFS_PAGE_TOOLS_SHAPES_RECT);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_RECT);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_ARC_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_SHAPES);
-            prefs_set_int_attribute("dialogs.preferences", "page_shapes", PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_STAR_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_SHAPES);
-            prefs_set_int_attribute("dialogs.preferences", "page_shapes", PREFS_PAGE_TOOLS_SHAPES_STAR);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_STAR);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_SPIRAL_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_SHAPES);
-            prefs_set_int_attribute("dialogs.preferences", "page_shapes", PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_PENCIL_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_PENCIL);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PENCIL);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_PEN_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_PEN);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_PEN);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_CALLIGRAPHIC_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_CALLIGRAPHY);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_CALLIGRAPHY);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_TEXT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_TEXT);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_TEXT);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_GRADIENT_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_GRADIENT);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_GRADIENT);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_ZOOM_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_ZOOM);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_ZOOM);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_DROPPER_PREFS:
-            prefs_set_int_attribute("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_DROPPER);
-            sp_display_dialog();
+            prefs_set_int_attribute("dialogs.preferences", "page", PREFS_PAGE_TOOLS_DROPPER);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_CONNECTOR_PREFS:
-            prefs_set_int_attribute ("dialogs.preferences", "page_top", PREFS_PAGE_TOOLS);
-            prefs_set_int_attribute ("dialogs.preferences", "page_tools", PREFS_PAGE_TOOLS_CONNECTOR);
-            sp_display_dialog ();
+            prefs_set_int_attribute ("dialogs.preferences", "page", PREFS_PAGE_TOOLS_CONNECTOR);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
 
         default:

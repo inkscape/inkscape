@@ -72,10 +72,10 @@ InkscapePreferences::InkscapePreferences()
     list_frame->add(*scrolled_window);
     _page_list_model = Gtk::TreeStore::create(_page_list_columns);
     _page_list.set_model(_page_list_model);
-    _page_list.append_column("id",_page_list_columns._col_id);
-	Glib::RefPtr<Gtk::TreeSelection> _page_list_selection = _page_list.get_selection();
-	_page_list_selection->signal_changed().connect(sigc::mem_fun(*this, &InkscapePreferences::on_pagelist_selection_changed));
-	_page_list_selection->set_mode(Gtk::SELECTION_BROWSE);
+    _page_list.append_column("name",_page_list_columns._col_name);
+	Glib::RefPtr<Gtk::TreeSelection> page_list_selection = _page_list.get_selection();
+	page_list_selection->signal_changed().connect(sigc::mem_fun(*this, &InkscapePreferences::on_pagelist_selection_changed));
+	page_list_selection->set_mode(Gtk::SELECTION_BROWSE);
     
     //Pages
     Gtk::VBox* vbox_page = Gtk::manage(new Gtk::VBox());
@@ -103,38 +103,40 @@ InkscapePreferences::InkscapePreferences()
     _page_list_model->foreach_iter(sigc::mem_fun(*this, &InkscapePreferences::SetMaxDialogSize)); 
     this->set_size_request(_max_dialog_width, _max_dialog_height);
     _page_list.collapse_all();
-
-    //Select page todo: select last 
-    Gtk::TreeModel::iterator iter = _page_list_model->children().begin();
-    if(iter)
-      _page_list_selection->select(iter);
 }
 
 InkscapePreferences::~InkscapePreferences()
 {
 }
 
-Gtk::TreeModel::iterator InkscapePreferences::AddPage(DialogPage& p, Glib::ustring title)
+void InkscapePreferences::present()
 {
-    Gtk::TreeModel::iterator iter = _page_list_model->append();
-    Gtk::TreeModel::Row row = *iter;
-    row[_page_list_columns._col_id] = title;
-    row[_page_list_columns._col_page] = &p;
-    return iter;
+    _page_list_model->foreach_iter(sigc::mem_fun(*this, &InkscapePreferences::PresentPage)); 
+    Dialog::present();
 }
 
-Gtk::TreeModel::iterator InkscapePreferences::AddPage(DialogPage& p, Glib::ustring title, Gtk::TreeModel::iterator parent)
+Gtk::TreeModel::iterator InkscapePreferences::AddPage(DialogPage& p, Glib::ustring title, int id)
 {
-    Gtk::TreeModel::iterator iter = _page_list_model->append((*parent).children());
+    return AddPage(p, title, Gtk::TreeModel::iterator() , id);
+}
+
+Gtk::TreeModel::iterator InkscapePreferences::AddPage(DialogPage& p, Glib::ustring title, Gtk::TreeModel::iterator parent, int id)
+{
+    Gtk::TreeModel::iterator iter;
+    if (parent)
+       iter = _page_list_model->append((*parent).children());
+    else
+       iter = _page_list_model->append();
     Gtk::TreeModel::Row row = *iter;
-    row[_page_list_columns._col_id] = title;
+    row[_page_list_columns._col_name] = title;
+    row[_page_list_columns._col_id] = id;
     row[_page_list_columns._col_page] = &p;
     return iter;
 }
 
 void InkscapePreferences::initPageMouse()
 {
-    this->AddPage(_page_mouse, _("Mouse"));
+    this->AddPage(_page_mouse, _("Mouse"), PREFS_PAGE_MOUSE);
     _mouse_sens.init ( "options.cursortolerance", "value", 0.0, 30.0, 1.0, 1.0, 8.0, true, false);
     _page_mouse.add_line( false, _("Grab sensitivity:"), _mouse_sens, _("pixels"), 
                            _("How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"), false);
@@ -145,7 +147,7 @@ void InkscapePreferences::initPageMouse()
 
 void InkscapePreferences::initPageScrolling()
 {
-    this->AddPage(_page_scrolling, _("Scrolling"));
+    this->AddPage(_page_scrolling, _("Scrolling"), PREFS_PAGE_SCROLLING);
     _scroll_wheel.init ( "options.wheelscroll", "value", 0.0, 1000.0, 1.0, 1.0, 40.0, true, false);
     _page_scrolling.add_line( false, _("Mouse wheel scrolls by:"), _scroll_wheel, _("pixels"), 
                            _("One mouse wheel notch scrolls by this distance in screen pixels (horizontally with Shift)"), false);
@@ -167,7 +169,7 @@ void InkscapePreferences::initPageScrolling()
 
 void InkscapePreferences::initPageSteps()
 {
-    this->AddPage(_page_steps, _("Steps"));
+    this->AddPage(_page_steps, _("Steps"), PREFS_PAGE_STEPS);
 
     _steps_arrow.init ( "options.nudgedistance", "value", 0.0, 3000.0, 0.01, 1.0, 2.0, false, false);
     _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, _("px"), 
@@ -295,10 +297,11 @@ void InkscapePreferences::AddNewObjectsStyle(DialogPage& p, const std::string& p
 
 void InkscapePreferences::initPageTools()
 {
-    Gtk::TreeModel::iterator iter_tools = this->AddPage(_page_tools, _("Tools"));    
+    Gtk::TreeModel::iterator iter_tools = this->AddPage(_page_tools, _("Tools"), PREFS_PAGE_TOOLS);    
+    _path_tools = _page_list.get_model()->get_path(iter_tools);
 
     //Selector
-    this->AddPage(_page_selector, _("Selector"), iter_tools);
+    this->AddPage(_page_selector, _("Selector"), iter_tools, PREFS_PAGE_TOOLS_SELECTOR);
 
     AddSelcueCheckbox(_page_selector, "tools.select", false);
     _page_selector.add_group_header( _("When transforming, show:"));
@@ -326,31 +329,32 @@ void InkscapePreferences::initPageTools()
     _page_selector.add_line( true, "", _t_sel_org_node, "", 
                             _("Default scale origin will be on the bounding box of the item's points"));
     //Node
-    this->AddPage(_page_node, _("Node"), iter_tools);
+    this->AddPage(_page_node, _("Node"), iter_tools, PREFS_PAGE_TOOLS_NODE);
     AddSelcueCheckbox(_page_node, "tools.nodes", true);
     AddGradientCheckbox(_page_node, "tools.nodes", true);
     //Zoom
-    this->AddPage(_page_zoom, _("Zoom"), iter_tools);
+    this->AddPage(_page_zoom, _("Zoom"), iter_tools, PREFS_PAGE_TOOLS_ZOOM);
     AddSelcueCheckbox(_page_zoom, "tools.zoom", true);
     AddGradientCheckbox(_page_zoom, "tools.zoom", false);
     //Shapes
-    Gtk::TreeModel::iterator iter_shapes = this->AddPage(_page_shapes, _("Shapes"), iter_tools);
+    Gtk::TreeModel::iterator iter_shapes = this->AddPage(_page_shapes, _("Shapes"), iter_tools, PREFS_PAGE_TOOLS_SHAPES);
+    _path_shapes = _page_list.get_model()->get_path(iter_shapes);
     this->AddSelcueCheckbox(_page_shapes, "tools.shapes", true);
     this->AddGradientCheckbox(_page_shapes, "tools.shapes", true);
     //Rectangle
-    this->AddPage(_page_rectangle, _("Rectangle"), iter_shapes);
+    this->AddPage(_page_rectangle, _("Rectangle"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_RECT);
     this->AddNewObjectsStyle(_page_rectangle, "tools.shapes.rect");
     //ellipse
-    this->AddPage(_page_ellipse, _("Ellipse"), iter_shapes);
+    this->AddPage(_page_ellipse, _("Ellipse"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_ELLIPSE);
     this->AddNewObjectsStyle(_page_ellipse, "tools.shapes.arc");
     //star
-    this->AddPage(_page_star, _("Star"), iter_shapes);
+    this->AddPage(_page_star, _("Star"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_STAR);
     this->AddNewObjectsStyle(_page_star, "tools.shapes.star");
     //spiral
-    this->AddPage(_page_spiral, _("Spiral"), iter_shapes);
+    this->AddPage(_page_spiral, _("Spiral"), iter_shapes, PREFS_PAGE_TOOLS_SHAPES_SPIRAL);
     this->AddNewObjectsStyle(_page_spiral, "tools.shapes.spiral");
     //Pencil
-    this->AddPage(_page_pencil, _("Pencil"), iter_tools);
+    this->AddPage(_page_pencil, _("Pencil"), iter_tools, PREFS_PAGE_TOOLS_PENCIL);
     this->AddSelcueCheckbox(_page_pencil, "tools.freehand.pencil", true);
     _t_pencil_tolerance.init ( "tools.freehand.pencil", "tolerance", 0.0, 100.0, 0.5, 1.0, 10.0, false, false);
     _page_pencil.add_line( false, _("Tolerance:"), _t_pencil_tolerance, "", 
@@ -358,25 +362,25 @@ void InkscapePreferences::initPageTools()
                            false );
     this->AddNewObjectsStyle(_page_pencil, "tools.freehand.pencil");
     //Pen
-    this->AddPage(_page_pen, _("Pen"), iter_tools);
+    this->AddPage(_page_pen, _("Pen"), iter_tools, PREFS_PAGE_TOOLS_PEN);
     this->AddSelcueCheckbox(_page_pen, "tools.freehand.pen", true);
     this->AddNewObjectsStyle(_page_pen, "tools.freehand.pen");
     //Calligraphy
-    this->AddPage(_page_calligraphy, _("Calligraphy"), iter_tools);
+    this->AddPage(_page_calligraphy, _("Calligraphy"), iter_tools, PREFS_PAGE_TOOLS_CALLIGRAPHY);
     this->AddNewObjectsStyle(_page_calligraphy, "tools.calligraphic");
     //Text
-    this->AddPage(_page_text, _("Text"), iter_tools);
+    this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "tools.text", true);
     this->AddGradientCheckbox(_page_text, "tools.text", true);
     this->AddNewObjectsStyle(_page_text, "tools.text");
     //Gradient
-    this->AddPage(_page_gradient, _("Gradient"), iter_tools);
+    this->AddPage(_page_gradient, _("Gradient"), iter_tools, PREFS_PAGE_TOOLS_GRADIENT);
     this->AddSelcueCheckbox(_page_gradient, "tools.gradient", true);
     //Connector
-    this->AddPage(_page_connector, _("Connector"), iter_tools);
+    this->AddPage(_page_connector, _("Connector"), iter_tools, PREFS_PAGE_TOOLS_CONNECTOR);
     this->AddSelcueCheckbox(_page_connector, "tools.connector", true);
     //Dropper
-    this->AddPage(_page_dropper, _("Dropper"), iter_tools);
+    this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "tools.dropper", true);
     this->AddGradientCheckbox(_page_dropper, "tools.dropper", true);
 }
@@ -404,7 +408,7 @@ void InkscapePreferences::initPageWindows()
     _page_windows.add_line( true, "", _win_ontop_agressive, "", 
                             _("Same as Normal but may work better with some window managers"));
 
-    this->AddPage(_page_windows, _("Windows"));
+    this->AddPage(_page_windows, _("Windows"), PREFS_PAGE_WINDOWS);
 }
 
 void InkscapePreferences::initPageClones()
@@ -433,7 +437,7 @@ void InkscapePreferences::initPageClones()
     _page_clones.add_line( true, "", _clone_option_delete, "", 
                            _("Orphaned clones are deleted along with their original."));
 
-    this->AddPage(_page_clones, _("Clones"));
+    this->AddPage(_page_clones, _("Clones"), PREFS_PAGE_CLONES);
 }
 
 void InkscapePreferences::initPageTransforms()
@@ -459,7 +463,7 @@ void InkscapePreferences::initPageTransforms()
     _page_transforms.add_line( true, "", _trans_preserved, "", 
                                _("Always store transformation as a transform= attribute on objects"));
 
-    this->AddPage(_page_transforms, _("Transforms"));
+    this->AddPage(_page_transforms, _("Transforms"), PREFS_PAGE_TRANSFORMS);
 }
 
 void InkscapePreferences::initPageSelecting()
@@ -476,7 +480,7 @@ void InkscapePreferences::initPageSelecting()
     _page_select.add_line( true, "", _sel_locked, "", 
                            _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked group or layer)"));
 
-    this->AddPage(_page_select, _("Selecting"));
+    this->AddPage(_page_select, _("Selecting"), PREFS_PAGE_SELECTING);
 }
 
 
@@ -507,7 +511,7 @@ void InkscapePreferences::initPageMisc()
     _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
     _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
 
-    this->AddPage(_page_misc, _("Misc"));
+    this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
 
 bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
@@ -524,6 +528,22 @@ bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
     return false;
 }
 
+bool InkscapePreferences::PresentPage(const Gtk::TreeModel::iterator& iter)
+{
+    Gtk::TreeModel::Row row = *iter;
+    int desired_page = prefs_get_int_attribute("dialogs.preferences", "page", 0);
+    if (desired_page == row[_page_list_columns._col_id])
+    {
+        if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_DROPPER)
+            _page_list.expand_row(_path_tools, false);
+        if (desired_page >= PREFS_PAGE_TOOLS_SHAPES && desired_page <= PREFS_PAGE_TOOLS_SHAPES_SPIRAL)
+            _page_list.expand_row(_path_shapes, false);
+        _page_list.get_selection()->select(iter);
+        return true;
+    }
+    return false;
+}
+
 void InkscapePreferences::on_pagelist_selection_changed()
 {
     // show new selection
@@ -535,7 +555,8 @@ void InkscapePreferences::on_pagelist_selection_changed()
             _page_frame.remove();
         Gtk::TreeModel::Row row = *iter;
         _current_page = row[_page_list_columns._col_page];
-        _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_id] + "</b></span>");
+        prefs_set_int_attribute("dialogs.preferences", "page", row[_page_list_columns._col_id]);
+        _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
         _page_frame.add(*_current_page);
         _current_page->show();
     }

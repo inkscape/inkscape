@@ -59,6 +59,12 @@ sp_dialog_shutdown (GtkObject *object, gpointer dlgPtr)
     dlg->onShutdown();
 }
 
+void 
+Dialog::present()
+{
+    Gtk::Dialog::present();
+}
+
 void
 Dialog::save_geometry()
 {

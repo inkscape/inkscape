@@ -34,6 +34,8 @@ public:
     virtual void onDesktopActivated (SPDesktop*);
     virtual void onShutdown();
 
+    virtual void present();
+
     /** Hide and show dialogs */
     virtual void   onHideF12();
     virtual void   onShowF12();
