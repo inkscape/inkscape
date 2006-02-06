@@ -9,6 +9,10 @@
 #ifndef my_defs
 #define my_defs
 
+#if defined(WIN32) || defined(__WIN32__)
+# include <inttypes.h>
+#endif
+
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
