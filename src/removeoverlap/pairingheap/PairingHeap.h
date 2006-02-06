@@ -18,6 +18,7 @@
 #ifndef PAIRING_HEAP_H_
 #define PAIRING_HEAP_H_
 #include <stdlib.h>
+#include <fstream>
 // Pairing heap class
 //
 // CONSTRUCTION: with no parameters
