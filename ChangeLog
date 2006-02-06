@@ -1,3 +1,27 @@
+2006-02-05  MenTaLguY  <mental@rydia.net>
+
+    * src/debug/event.h, src/debug/gc-heap.h, src/debug/heap.h,
+	  src/debug/logger.cpp, src/debug/simple-event.h, src/debug/sysv-heap.h,
+	  src/jabber_whiteboard/deserializer.cpp,
+	  src/jabber_whiteboard/message-utilities.cpp,
+	  src/jabber_whiteboard/message-utilities.h,
+	  src/jabber_whiteboard/node-tracker-observer.h,
+	  src/jabber_whiteboard/node-utilities.cpp,
+	  src/jabber_whiteboard/serializer.cpp,
+	  src/jabber_whiteboard/serializer.h,
+	  src/sp-object.cpp, src/util/Makefile_insert, src/util/share.cpp,
+	  src/util/shared-c-string-ptr.cpp, src/util/shared-c-string-ptr.h,
+	  src/util/share.h, src/xml/attribute-record.h, src/xml/comment-node.h,
+	  src/xml/composite-node-observer.cpp, src/xml/composite-node-observer.h,
+	  src/xml/event.cpp, src/xml/event.h, src/xml/log-builder.cpp,
+	  src/xml/log-builder.h, src/xml/node-observer.h, src/xml/repr.cpp,
+	  src/xml/repr-io.cpp, src/xml/simple-node.cpp, src/xml/simple-node.h,
+	  src/xml/simple-session.cpp, src/xml/simple-session.h,
+	  src/xml/text-node.h:
+
+	  replace Util::SharedCStringPtr with the nicer and more general
+	  Util::shared_ptr<>
+
 2006-02-03  Jon Phillips  <jon@rejon.org>
 
 	* src/verbs.cpp: Added "..." to "Trace Bitmap" text. Yes, what a
