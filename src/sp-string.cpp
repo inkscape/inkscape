@@ -73,7 +73,6 @@ static void
 sp_string_class_init(SPStringClass *classname)
 {
     SPObjectClass *sp_object_class;
-    SPItemClass   *item_class;
 
     sp_object_class = (SPObjectClass *) classname;
 
