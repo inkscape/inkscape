@@ -352,11 +352,21 @@ sp_clippath_set_bbox(SPClipPath *cp, unsigned int key, NRRect *bbox)
                 !NR_DF_TEST_CLOSE(v->bbox.x1, bbox->x1, NR_EPSILON) ||
                 !NR_DF_TEST_CLOSE(v->bbox.y1, bbox->y1, NR_EPSILON)) {
                 v->bbox = *bbox;
-                SP_OBJECT(cp)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             }
             break;
         }
     }
+}
+
+void
+sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
+{
+	for (SPObject *o = sp_object_first_child(SP_OBJECT(cp)); o != NULL; o = SP_OBJECT_NEXT(o)) {
+		if (SP_IS_ITEM(o)) {
+			SPItem *child = SP_ITEM(o);
+			sp_item_invoke_bbox_full(child, bbox, transform, flags, FALSE);
+		}
+	}
 }
 
 /* ClipPath views */

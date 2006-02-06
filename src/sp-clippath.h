@@ -57,5 +57,6 @@ NRArenaItem *sp_clippath_show(SPClipPath *cp, NRArena *arena, unsigned int key);
 void sp_clippath_hide(SPClipPath *cp, unsigned int key);
 
 void sp_clippath_set_bbox(SPClipPath *cp, unsigned int key, NRRect *bbox);
+void sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 
 #endif
