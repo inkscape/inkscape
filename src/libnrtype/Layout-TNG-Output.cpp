@@ -87,11 +87,11 @@ void Layout::getBoundingBox(NRRect *bounding_box, NR::Matrix const &transform, i
 {
     for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; glyph_index++) {
         if (_characters[_glyphs[glyph_index].in_character].in_glyph == -1) continue;
-        if (start != -1 && (int) _glyphs[glyph_index].in_character < start) continue;
+        if (start != -1 && _glyphs[glyph_index].in_character < start) continue;
         if (length != -1) {
             if (start == -1)
                 start = 0;
-            if ((int) _glyphs[glyph_index].in_character > start + length) continue;
+            if (_glyphs[glyph_index].in_character > start + length) continue;
         }
         // this could be faster
         NRMatrix glyph_matrix;

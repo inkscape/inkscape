@@ -198,13 +198,13 @@ sp_tspan_modified(SPObject *object, unsigned flags)
 
 static void sp_tspan_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
 {
-    // find out the ancestor text which holds our layout
     SPObject *parent_text = SP_OBJECT(item);
     for (; parent_text != NULL && !SP_IS_TEXT(parent_text); parent_text = SP_OBJECT_PARENT (parent_text));
     if (parent_text == NULL) return;
 
-    // get the bbox of our portion of the layout
-    SP_TEXT(parent_text)->layout.getBoundingBox(bbox, transform, sp_text_get_length_upto(parent_text, item), sp_text_get_length_upto(item, NULL) - 1);
+    Inkscape::Text::Layout layout = SP_TEXT(parent_text)->layout;
+
+    SP_TEXT(parent_text)->layout.getBoundingBox(bbox, transform, sp_text_get_length_upto(parent_text, item) - 1, sp_text_get_length(item));
 
     // Add stroke width
     SPStyle* style=SP_OBJECT_STYLE (item);

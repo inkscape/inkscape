@@ -323,8 +323,6 @@ struct SPStyle {
     bool cloned; 
     /// style has hreffed its paintservers, needs to release
     bool hreffed; 
-    /// style is listening to changes in paintservers, need to disconnect
-    bool listening; 
 };
 
 SPStyle *sp_style_new();

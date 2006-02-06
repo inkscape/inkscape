@@ -183,36 +183,23 @@ unsigned sp_text_get_length(SPObject const *item)
 }
 
 /** Recursively gets the length of all the SPStrings at or below the given
-\a item, before and not including \a upto. Also adds 1 for each line break encountered. */
+\a item. Also adds 1 for each line break encountered. */
 unsigned sp_text_get_length_upto(SPObject const *item, SPObject const *upto)
 {
     unsigned length = 0;
 
-    if (SP_IS_STRING(item)) {
-        return SP_STRING(item)->string.length();
-    }
-    if (is_line_break_object(item) && !SP_IS_TEXT(item)) {
-        if (item != SP_OBJECT_PARENT(item)->firstChild()) {
-            // add 1 for each newline
-            length++;
-        }
-    }
+    if (SP_IS_STRING(item)) return SP_STRING(item)->string.length();
+    if (is_line_break_object(item)) length++;
     for (SPObject const *child = item->firstChild() ; child ; child = SP_OBJECT_NEXT(child)) {
-        if (upto && child == upto) {
-            // hit upto, return immediately
+        if (child == upto) 
             return length;
-        }
-        if (SP_IS_STRING(child)) {
-            length += SP_STRING(child)->string.length();
-        }
+        if (SP_IS_STRING(child)) length += SP_STRING(child)->string.length();
         else {
-            if (upto && child->isAncestorOf(upto)) {
-                // upto is below us, recurse and break loop
-                length += sp_text_get_length_upto(child, upto);
+            if (child->isAncestorOf(upto)) {
+                length += sp_text_get_length(child);
                 return length;
             } else {
-                // recurse and go to the next sibling
-                length += sp_text_get_length_upto(child, upto);
+                length += sp_text_get_length(child);
             }
         }
     }

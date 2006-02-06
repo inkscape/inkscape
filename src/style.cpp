@@ -390,7 +390,6 @@ sp_style_new()
 
     style->cloned = false;
     style->hreffed = false;
-    style->listening = false;
 
     return style;
 }
