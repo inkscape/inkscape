@@ -14,10 +14,12 @@
 # include <zlib.h>
 #endif
 
-#ifdef HAVE_STDINT_H
-# include <stdint.h>
-#else
+#ifdef HAVE_INTTYPES_H
 # include <inttypes.h>
+#else
+# ifdef HAVE_STDINT_H
+#  include <stdint.h>
+# endif
 #endif
 
 #include <glib/garray.h>

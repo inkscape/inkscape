@@ -15,7 +15,18 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stdint.h>
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#ifdef HAVE_INTTYPES_H
+# include <inttypes.h>
+#else
+# ifdef HAVE_STDINT_H
+#  include <stdint.h>
+# endif
+#endif
+
 #include <glib/gtypes.h>
 #include <gdk/gdkevents.h>
 #include <gdk/gdkgc.h>
