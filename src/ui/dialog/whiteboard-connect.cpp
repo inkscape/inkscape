@@ -52,6 +52,11 @@ WhiteboardConnectDialogImpl::~WhiteboardConnectDialogImpl()
 {
 }
 
+void WhiteboardConnectDialogImpl::present()
+{
+    Dialog::present();
+}
+
 void
 WhiteboardConnectDialogImpl::setSessionManager()
 {

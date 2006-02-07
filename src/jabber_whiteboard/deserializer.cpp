@@ -372,7 +372,7 @@ Deserializer::deserializeEventChgAttr(Glib::ustring const& msg)
 	// 5.  If this node is in the actions queue and is marked as "new", we need to apply
 	// _all_ received attributes to it _before_ adding it to the document tree.
 	if (this->_newnodes.find(id) != this->_newnodes.end()) {
-		node->setAttribute(key.c_str(), newval.cString());	
+		node->setAttribute(key.c_str(), newval.pointer());	
 	}
 
 	// 6.  Deserialize the event.

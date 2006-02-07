@@ -26,7 +26,8 @@ namespace Inkscape {
 
 namespace Util {
 
-class shared_ptr<char>;
+template <typename T>
+class shared_ptr;
 
 }
 
@@ -80,5 +81,5 @@ private:
   fill-column:99
   End:
 */
-// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 #endif

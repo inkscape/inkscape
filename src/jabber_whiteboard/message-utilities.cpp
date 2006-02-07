@@ -310,12 +310,12 @@ MessageUtilities::contentChangeMessage(Glib::ustring& msgbuf, std::string const 
 
 		// <MESSAGE_OLDVAL>old_value</MESSAGE_OLDVAL>
 		msgbuf = msgbuf + "<" + MESSAGE_OLDVAL + ">";
-		msgbuf += old_value.cString();
+		msgbuf += old_value.pointer();
 		msgbuf = msgbuf + "</" + MESSAGE_OLDVAL + ">";
 
 		// <MESSAGE_NEWVAL>new_value</MESSAGE_NEWVAL>
 		msgbuf = msgbuf + "<" + MESSAGE_NEWVAL + ">";
-		msgbuf += new_value.cString();
+		msgbuf += new_value.pointer();
 		msgbuf = msgbuf + "</" + MESSAGE_NEWVAL + ">";
 
 		// </MESSAGE_NODECONTENT>

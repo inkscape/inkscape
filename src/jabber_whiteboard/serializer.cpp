@@ -201,19 +201,19 @@ Serializer::notifyContentChanged(XML::Node& node, Util::shared_ptr<char> old_con
 		return;
 	}
 
-	if (old_content.cString() != NULL && new_content.cString() != NULL) {
-		if (strcmp(old_content.cString(), new_content.cString()) == 0) {
+	if (old_content.pointer() != NULL && new_content.pointer() != NULL) {
+		if (strcmp(old_content.pointer(), new_content.pointer()) == 0) {
 			return;
 		}
 	}
 
 	// 3.  Serialize the event.
-	if (old_content.cString() != NULL) {
-		oldvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_OLDVAL, old_content.cString());
+	if (old_content.pointer() != NULL) {
+		oldvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_OLDVAL, old_content.pointer());
 	}
 
-	if (new_content.cString() != NULL) {
-		newvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_NEWVAL, new_content.cString());
+	if (new_content.pointer() != NULL) {
+		newvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_NEWVAL, new_content.pointer());
 	}
 
 	Glib::ustring nodeidmsg = MessageUtilities::makeTagWithContent(MESSAGE_ID, nodeid);
@@ -233,8 +233,8 @@ Serializer::notifyAttributeChanged(XML::Node& node, GQuark name, Util::shared_pt
 		Glib::ustring key = g_quark_to_string(name);
 
 		// 3.  If oldval == newval, don't echo this change.
-		if (new_value.cString() != NULL && old_value.cString() != NULL) {
-			if (strcmp(new_value.cString(), old_value.cString()) == 0) {
+		if (new_value.pointer() != NULL && old_value.pointer() != NULL) {
+			if (strcmp(new_value.pointer(), old_value.pointer()) == 0) {
 				return;
 			}
 		}
@@ -243,12 +243,12 @@ Serializer::notifyAttributeChanged(XML::Node& node, GQuark name, Util::shared_pt
 		Glib::ustring keymsg = MessageUtilities::makeTagWithContent(MESSAGE_KEY, key);
 		Glib::ustring oldvalmsg, newvalmsg;
 
-		if (old_value.cString() != NULL) {
-			oldvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_OLDVAL, old_value.cString());
+		if (old_value.pointer() != NULL) {
+			oldvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_OLDVAL, old_value.pointer());
 		}
 
-		if (new_value.cString() != NULL) {
-			newvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_NEWVAL, new_value.cString());
+		if (new_value.pointer() != NULL) {
+			newvalmsg = MessageUtilities::makeTagWithContent(MESSAGE_NEWVAL, new_value.pointer());
 		}
 
 		Glib::ustring nodeidmsg = MessageUtilities::makeTagWithContent(MESSAGE_ID, nodeid);

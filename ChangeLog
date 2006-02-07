@@ -1,16 +1,27 @@
+2006-02-07  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/jabber_whiteboard/message-utilities.h,
+	  src/jabber_whiteboard/serializer.cpp,
+	  src/jabber_whiteboard/deserializer.cpp,
+	  src/jabber_whiteboard/message-utilities.cpp,
+	  src/ui/dialog/whiteboard-connect.cpp:
+	
+	Some fixes to allow the codebase to compile with Inkboard support
+	after the recent Util::shared_ptr<> and Dialog::present() changes.
+
 2006-02-05  Marco Scholten  <mscholtn@xs4all.nl>
 
-    * src/verbs.cpp: updated to make double clicking a tool button
+	* src/verbs.cpp: updated to make double clicking a tool button
       open the new preferences dialog.
-    * src/ui/dialog/inkscape-preferences.cpp: updated to enable opening
+	* src/ui/dialog/inkscape-preferences.cpp: updated to enable opening
       the dialog on the correct page.
-    * src/ui/dialog/dialog.cpp: added virtual void present() so that
+	* src/ui/dialog/dialog.cpp: added virtual void present() so that
       InkscapePreferences::present() will be called from 
       DialogManager::showDialog()
 
 2006-02-05  MenTaLguY  <mental@rydia.net>
 
-    * src/debug/event.h, src/debug/gc-heap.h, src/debug/heap.h,
+	* src/debug/event.h, src/debug/gc-heap.h, src/debug/heap.h,
 	  src/debug/logger.cpp, src/debug/simple-event.h, src/debug/sysv-heap.h,
 	  src/jabber_whiteboard/deserializer.cpp,
 	  src/jabber_whiteboard/message-utilities.cpp,
