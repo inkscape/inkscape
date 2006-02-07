@@ -446,8 +446,8 @@ void InkscapePreferences::initPageTransforms()
     _trans_scale_corner.init ( _("Scale rounded corners in rectangles"), "options.transform", "rectcorners", false);
     _trans_gradient.init ( _("Transform gradients"), "options.transform", "gradient", true);
     _trans_pattern.init ( _("Transform patterns"), "options.transform", "pattern", false);
-    _trans_optimized.init ( _("Normal"), "options.preservetransform", "value", 0, true, 0);
-    _trans_preserved.init ( _("Aggressive"), "options.preservetransform", "value", 1, false, &_trans_optimized);
+    _trans_optimized.init ( _("Optimized"), "options.preservetransform", "value", 0, true, 0);
+    _trans_preserved.init ( _("Preserved"), "options.preservetransform", "value", 1, false, &_trans_optimized);
 
     _page_transforms.add_line( false, "", _trans_scale_stroke, "", 
                                _("When scaling objects, scale the stroke width by the same proportion"));
