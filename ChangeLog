@@ -1,5 +1,9 @@
 2006-02-07  MenTaLguY  <mental@rydia.net>
 
+	* src/widgets/icon.cpp: get rid of icon prerender time messages
+
+2006-02-07  MenTaLguY  <mental@rydia.net>
+
     * src/debug/gc-heap.h, src/debug/logger.cpp, src/debug/sysv-heap.h,
       src/jabber_whiteboard/deserializer.cpp, src/sp-object.cpp,
       src/util/share.h, src/xml/simple-node.cpp:

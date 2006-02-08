@@ -861,15 +861,12 @@ public:
 
 static std::queue<preRenderItem> pendingRenders;
 static bool callbackHooked = false;
-static Glib::Timer *prerender_timer=NULL;
 
 static void addPreRender( GtkIconSize lsize, gchar const *name )
 {
 
     if ( !callbackHooked )
     {
-        g_message("Beginning icon prerendering");
-        prerender_timer = new Glib::Timer();
         callbackHooked = true;
         g_idle_add_full( G_PRIORITY_LOW, &icon_prerender_task, NULL, NULL );
     }
@@ -877,36 +874,17 @@ static void addPreRender( GtkIconSize lsize, gchar const *name )
     pendingRenders.push(preRenderItem(lsize, name));
 }
 
-// in seconds; 10msec is roughly the threshold for human-perceptible lag,
-// but up to 60-70msec is tolerable
-#define INTERACTIVE_LIMIT 0.07
-
-static inline int seconds_to_msec(double seconds) {
-    return (int)(seconds * 1000 + 0.5);
-}
-
 gboolean icon_prerender_task(gpointer data) {
-    Glib::Timer timer;
-
     if (!pendingRenders.empty()) {
         preRenderItem single=pendingRenders.front();
         pendingRenders.pop();
         int psize = sp_icon_get_phys_size(single._lsize);
         prerender_icon(single._name.c_str(), single._lsize, psize);
-
-        double elapsed=timer.elapsed();
-        if ( elapsed > INTERACTIVE_LIMIT ) {
-            g_warning("Prerendering of icon \"%s\" at %dx%d pixels exceeded %dmsec (%dmsec)", single._name.c_str(), psize, psize, seconds_to_msec(INTERACTIVE_LIMIT), seconds_to_msec(elapsed));
-        }
     }
 
     if (!pendingRenders.empty()) {
         return TRUE;
     } else {
-        prerender_timer->stop();
-        g_message("Icon prerendering complete after %g seconds", prerender_timer->elapsed());
-        delete prerender_timer;
-        prerender_timer = NULL;
         callbackHooked = false;
         return FALSE;
     }
