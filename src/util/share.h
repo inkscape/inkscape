@@ -113,9 +113,8 @@ inline shared_ptr<T> share_unsafe(T const *obj) {
     return shared_ptr<T>::share_unsafe(obj);
 }
 
-template <typename T>
-inline shared_ptr<T> share_static(T const *obj) {
-    return shared_ptr<T>::share_unsafe(obj);
+inline shared_ptr<char> share_static_string(char const *string) {
+    return share_unsafe(string);
 }
 
 template <typename T1, typename T2>

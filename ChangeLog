@@ -1,3 +1,11 @@
+2006-02-07  MenTaLguY  <mental@rydia.net>
+
+    * src/debug/gc-heap.h, src/debug/logger.cpp, src/debug/sysv-heap.h,
+      src/jabber_whiteboard/deserializer.cpp, src/sp-object.cpp,
+      src/util/share.h, src/xml/simple-node.cpp:
+
+      share_static -> share_static_string
+
 2006-02-07  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/jabber_whiteboard/message-utilities.h,

@@ -299,14 +299,14 @@ Deserializer::deserializeEventChgContent(Glib::ustring const& msg)
 	if (MessageUtilities::findTag(buf, msg)) {
 		oldval = Util::share_string(buf.data.c_str());
 	} else {
-		oldval = Util::share_static("");
+		oldval = Util::share_static_string("");
 	}
 
 	buf.tag = MESSAGE_NEWVAL;
 	if (MessageUtilities::findTag(buf, msg)) {
 		newval = Util::share_string(buf.data.c_str());
 	} else {
-		newval = Util::share_static("");
+		newval = Util::share_static_string("");
 	}
 
 	// 3.  Find the node identified by the ID.  If we cannot find it, return.
@@ -348,7 +348,7 @@ Deserializer::deserializeEventChgAttr(Glib::ustring const& msg)
 	if (MessageUtilities::findTag(buf, msg)) {
 		newval = Util::share_string(buf.data.c_str());
 	} else {
-		newval = Util::share_static("");
+		newval = Util::share_static_string("");
 	}
 
 	// 3.  Extract optional attributes: old value.  If we do not find it in the message,
@@ -358,7 +358,7 @@ Deserializer::deserializeEventChgAttr(Glib::ustring const& msg)
 	if (MessageUtilities::findTag(buf, msg)) {
 		oldval = Util::share_string(buf.data.c_str());
 	} else {
-		oldval = Util::share_static("");
+		oldval = Util::share_static_string("");
 	}
 
 	// 4.  Look up this node in the local node database and external tracker.

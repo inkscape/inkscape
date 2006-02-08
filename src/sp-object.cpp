@@ -252,9 +252,9 @@ public:
 
     Inkscape::Util::shared_ptr<char> name() const {
         if ( _type == REF) {
-            return Inkscape::Util::share_static("sp-object-ref");
+            return Inkscape::Util::share_static_string("sp-object-ref");
         } else {
-            return Inkscape::Util::share_static("sp-object-unref");
+            return Inkscape::Util::share_static_string("sp-object-unref");
         }
     }
     unsigned propertyCount() const { return 2; }

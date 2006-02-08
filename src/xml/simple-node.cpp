@@ -76,7 +76,7 @@ public:
     static Category category() { return XML; }
 
     Util::shared_ptr<char> name() const {
-        return Util::share_static("add-child");
+        return Util::share_static_string("add-child");
     }
     unsigned propertyCount() const { return 3; }
     PropertyPair property(unsigned i) const {
@@ -107,7 +107,7 @@ public:
     static Category category() { return XML; }
 
     Util::shared_ptr<char> name() const {
-        return Util::share_static("remove-child");
+        return Util::share_static_string("remove-child");
     }
     unsigned propertyCount() const { return 2; }
     PropertyPair property(unsigned i) const {
@@ -141,7 +141,7 @@ public:
     static Category category() { return XML; }
 
     Util::shared_ptr<char> name() const {
-        return Util::share_static("set-child-position");
+        return Util::share_static_string("set-child-position");
     }
     unsigned propertyCount() const { return 3; }
     PropertyPair property(unsigned i) const {
@@ -173,9 +173,9 @@ public:
 
     Util::shared_ptr<char> name() const {
         if (_content) {
-            return Util::share_static("set-content");
+            return Util::share_static_string("set-content");
         } else {
-            return Util::share_static("clear-content");
+            return Util::share_static_string("clear-content");
         }
     }
     unsigned propertyCount() const {
@@ -213,9 +213,9 @@ public:
 
     Util::shared_ptr<char> name() const {
         if (_value) {
-            return Util::share_static("set-attribute");
+            return Util::share_static_string("set-attribute");
         } else {
-            return Util::share_static("clear-attribute");
+            return Util::share_static_string("clear-attribute");
         }
     }
     unsigned propertyCount() const {
@@ -247,7 +247,7 @@ private:
 using Inkscape::Util::shared_ptr;
 using Inkscape::Util::share_string;
 using Inkscape::Util::share_unsafe;
-using Inkscape::Util::share_static;
+using Inkscape::Util::share_static_string;
 using Inkscape::Util::List;
 using Inkscape::Util::MutableList;
 using Inkscape::Util::cons;

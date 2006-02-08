@@ -24,7 +24,7 @@ public:
         return SIZE_AVAILABLE | USED_AVAILABLE | GARBAGE_COLLECTED;
     }
     Util::shared_ptr<char> name() const {
-        return Util::share_static("libgc");
+        return Util::share_static_string("libgc");
     }
     Heap::Stats stats() const {
         Stats stats;

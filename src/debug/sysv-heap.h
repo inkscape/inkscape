@@ -24,7 +24,7 @@ public:
     int features() const;
 
     Util::shared_ptr<char> name() const {
-        return Util::share_static("standard malloc()");
+        return Util::share_static_string("standard malloc()");
     }
     Stats stats() const;
     void force_collect() {}

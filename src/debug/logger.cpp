@@ -128,7 +128,7 @@ void Logger::init() {
                 log_stream << "<?xml version=\"1.0\"?>\n";
                 log_stream.flush();
                 _enabled = true;
-                start<SimpleEvent<Event::CORE> >(Util::share_static("session"));
+                start<SimpleEvent<Event::CORE> >(Util::share_static_string("session"));
                 std::atexit(&do_shutdown);
             }
         }
