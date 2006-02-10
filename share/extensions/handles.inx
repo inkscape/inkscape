@@ -6,7 +6,7 @@
     <effect>
 		<object-type>path</object-type>
 		<effects-menu>
-			<submenu _name="Enhance Path" />
+			<submenu _name="Visualize Path" />
 		</effects-menu>
     </effect>
     <script>

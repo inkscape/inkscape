@@ -7,6 +7,9 @@
 	<param name="behavior" type="int" min="1" max="2" _gui-text="Behavior">1</param>
     <effect>
 		<object-type>path</object-type>
+                <effects-menu>
+                    <submenu _name="Modify Path"/>
+                </effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">straightseg.py</command>

@@ -10,6 +10,9 @@
 	<param name="rules" type="string" _gui-text="Rules">F=FF-[-F+F+F]+[+F-F-F]</param>
     <effect>
 		<object-type>all</object-type>
+                <effects-menu>
+                    <submenu _name="Render"/>
+                </effects-menu>						    		
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">lindenmayer.py</command>

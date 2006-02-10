@@ -1,10 +1,13 @@
 <inkscape-extension>
-    <_name>Embed Images</_name>
+    <_name>Embed All Images</_name>
     <id>org.ekips.filter.embedimage</id>
 	<dependency type="executable" location="extensions">embedimage.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
     <effect>
 		<object-type>all</object-type>
+                <effects-menu>
+                    <submenu _name="Images"/>
+                </effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">embedimage.py</command>

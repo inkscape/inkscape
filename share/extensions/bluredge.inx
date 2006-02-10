@@ -6,6 +6,9 @@
     <param name="num-steps" type="int">11</param>
     <effect>
         <object-type>all</object-type>
+        <effects-menu>
+                <submenu _name="Generate from Path"/>
+        </effects-menu>
     </effect>
     <plugin>
         <name>bluredge</name>

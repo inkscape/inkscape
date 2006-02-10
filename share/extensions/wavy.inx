@@ -10,9 +10,9 @@
 	<param name="fpofx" type="string" _gui-text="First derivative">cos(x)</param>
     <effect>
 		<object-type>rect</object-type>
-		<effects-menu>
-			<submenu _name="Render" />
-		</effects-menu>
+                <effects-menu>
+                        <submenu _name="Render"/>
+                </effects-menu>
     </effect>
     <script>
         <command reldir="extensions" interpreter="python">wavy.py</command>

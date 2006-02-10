@@ -139,7 +139,7 @@ BlurEdge::init (void)
             "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
-                    "<submenu name=\"" N_("Enhance Path") "\" />\n"
+                    "<submenu name=\"" N_("Generate from Path") "\" />\n"
                 "</effects-menu>\n"
             "</effect>\n"
         "</inkscape-extension>\n" , new BlurEdge());
