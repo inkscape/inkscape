@@ -349,7 +349,8 @@ void font_instance::InitTheFace()
     SelectObject(daddy->hScreenDC,theFace);
 #else
 	theFace=pango_ft2_font_get_face(pFont);
-	FT_Select_Charmap(theFace,ft_encoding_unicode) && FT_Select_Charmap(theFace,ft_encoding_symbol);
+    if ( theFace )
+        FT_Select_Charmap(theFace,ft_encoding_unicode) && FT_Select_Charmap(theFace,ft_encoding_symbol);
 #endif
 }
 
