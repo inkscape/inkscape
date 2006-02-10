@@ -211,9 +211,30 @@ SPConnEndPair::update(void)
             _connRef->lateSetup(src, dst);
             _connRef->setCallback(&emitPathInvalidationNotification, _path);
         }
+        // Store the ID of the objects attached to the connector.
+        storeIds();
     }
 }
-    
+
+
+void SPConnEndPair::storeIds(void)
+{
+    if (_connEnd[0]->href) {
+        GQuark itemId = g_quark_from_string(_connEnd[0]->href);
+        _connRef->setEndPointId(Avoid::VertID::src, itemId);
+    }
+    else {
+        _connRef->setEndPointId(Avoid::VertID::src, 0);
+    }
+    if (_connEnd[1]->href) {
+        GQuark itemId = g_quark_from_string(_connEnd[1]->href);
+        _connRef->setEndPointId(Avoid::VertID::tar, itemId);
+    }
+    else {
+        _connRef->setEndPointId(Avoid::VertID::tar, 0);
+    }
+}
+
 
 bool
 SPConnEndPair::isAutoRoutingConn(void)

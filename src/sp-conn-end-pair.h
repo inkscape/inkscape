@@ -64,6 +64,8 @@ private:
     
     // A sigc connection for transformed signal.
     sigc::connection _transformed_connection;
+    
+    void storeIds(void);
 };
 
 

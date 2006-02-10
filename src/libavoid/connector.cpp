@@ -20,6 +20,7 @@
  * 
 */
 
+#include "libavoid/connector.h"
 #include "libavoid/graph.h"
 #include "libavoid/makepath.h"
 #include "libavoid/visibility.h"
@@ -34,6 +35,8 @@ ConnRefList connRefs;
 
 ConnRef::ConnRef(const unsigned int id)
     : _id(id)
+    , _srcId(0)
+    , _dstId(0)
     , _needs_reroute_flag(true)
     , _false_path(false)
     , _active(false)
@@ -52,6 +55,8 @@ ConnRef::ConnRef(const unsigned int id)
 
 ConnRef::ConnRef(const unsigned int id, const Point& src, const Point& dst)
     : _id(id)
+    , _srcId(0)
+    , _dstId(0)
     , _needs_reroute_flag(true)
     , _false_path(false)
     , _active(false)
@@ -151,6 +156,19 @@ void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
 
     bool knownNew = false;
     vertexVisibility(altered, partner, knownNew, true);
+}
+
+
+void ConnRef::setEndPointId(const unsigned int type, const unsigned int id)
+{
+    if (type == (unsigned int) VertID::src)
+    {
+        _srcId = id;
+    }
+    else  // if (type == (unsigned int) VertID::dst)
+    {
+        _dstId = id;
+    }
 }
 
 
@@ -397,6 +415,26 @@ int ConnRef::generatePath(Point p0, Point p1)
 
 
 //============================================================================
+
+const unsigned int ConnRef::runningTo = 1;
+const unsigned int ConnRef::runningFrom = 2;
+const unsigned int ConnRef::runningToAndFrom =
+        ConnRef::runningTo | ConnRef::runningFrom;
+
+
+void attachedToShape(IntList &conns, const unsigned int shapeId,
+        const unsigned int type)
+{
+    ConnRefList::iterator fin = connRefs.end();
+    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
+        if ((type & ConnRef::runningTo) && ((*i)->_dstId == shapeId)) {
+            conns.push_back((*i)->_id);
+        }
+        else if ((type & ConnRef::runningFrom) && ((*i)->_srcId == shapeId)) {
+            conns.push_back((*i)->_id);
+        }
+    }
+}
 
 
     // It's intended this function is called after shape movement has 

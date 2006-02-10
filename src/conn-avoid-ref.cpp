@@ -16,6 +16,7 @@
 #include "libnr/nr-rect-ops.h"
 #include "libavoid/polyutil.h"
 #include "libavoid/incremental.h"
+#include "libavoid/connector.h"
 #include "xml/simple-node.cpp"
 #include "document.h"
 #include "prefs-utils.h"
@@ -105,6 +106,25 @@ void SPAvoidRef::handleSettingChange(void)
         shapeRef = NULL;
     }
     setting = new_setting;
+}
+
+
+GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
+{
+    GSList *list = NULL;
+
+    Avoid::IntList conns;
+    GQuark shapeId = g_quark_from_string(item->id);
+    Avoid::attachedToShape(conns, shapeId, type);
+    
+    Avoid::IntList::iterator finish = conns.end();
+    for (Avoid::IntList::iterator i = conns.begin(); i != finish; ++i) {
+        const gchar *connId = g_quark_to_string(*i);
+        SPItem *item = SP_ITEM(item->document->getObjectById(connId));
+        g_assert(item != NULL);
+        list = g_slist_prepend(list, item);
+    }
+    return list;
 }
 
 

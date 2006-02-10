@@ -26,7 +26,9 @@
 #include "libavoid/shape.h"
 #include "libavoid/debug.h"
 #include "libavoid/visibility.h"
+#include "libavoid/vertices.h"
 #include "libavoid/graph.h"
+#include "libavoid/geometry.h"
 
 #include <math.h>
 
@@ -602,7 +604,9 @@ void vertexSweep(VertInf *vert)
             EdgeSet::iterator ePtr;
             if (prevDir == BEHIND)
             {
-                ePtr = e.find(prevPair);
+                // XXX: Strangely e.find does not return the correct results.
+                // ePtr = e.find(prevPair);
+                ePtr = std::find(e.begin(), e.end(), prevPair);
                 if (ePtr != e.end())
                 {
                     e.erase(ePtr);
@@ -625,7 +629,9 @@ void vertexSweep(VertInf *vert)
 
             if (nextDir == BEHIND)
             {
-                ePtr = e.find(nextPair);
+                // XXX: Strangely e.find does not return the correct results.
+                // ePtr = e.find(nextPair);
+                ePtr = std::find(e.begin(), e.end(), nextPair);
                 if (ePtr != e.end())
                 {
                     e.erase(ePtr);

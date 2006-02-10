@@ -1,12 +1,24 @@
+2006-02-10  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/sp-conn-end-pair.cpp, src/sp-conn-end-pair.h,
+	  src/conn-avoid-ref.cpp, src/conn-avoid-ref.h,
+	  src/libavoid/connector.cpp, src/libavoid/connector.h,
+	  src/libavoid/visibility.cpp:
+
+	Add some code to allow querying of items and connectors to find
+	out what is attached to them.  This will allow graph layout
+	algorithms (currently being work on by Tim Dwyer) to determine 
+	a graph structure from the diagram.
+
 2006-02-07  MenTaLguY  <mental@rydia.net>
 
 	* src/widgets/icon.cpp: get rid of icon prerender time messages
 
 2006-02-07  MenTaLguY  <mental@rydia.net>
 
-    * src/debug/gc-heap.h, src/debug/logger.cpp, src/debug/sysv-heap.h,
-      src/jabber_whiteboard/deserializer.cpp, src/sp-object.cpp,
-      src/util/share.h, src/xml/simple-node.cpp:
+	* src/debug/gc-heap.h, src/debug/logger.cpp, src/debug/sysv-heap.h,
+	  src/jabber_whiteboard/deserializer.cpp, src/sp-object.cpp,
+	  src/util/share.h, src/xml/simple-node.cpp:
 
       share_static -> share_static_string
 

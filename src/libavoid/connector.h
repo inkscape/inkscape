@@ -33,6 +33,7 @@ namespace Avoid {
 class ConnRef;
 
 typedef std::list<ConnRef *> ConnRefList;
+typedef std::list<unsigned int> IntList;
 
 
 class ConnRef
@@ -48,6 +49,7 @@ class ConnRef
         void freeRoute(void);
         void calcRouteDist(void);
         void updateEndPoint(const unsigned int type, const Point& point);
+        void setEndPointId(const unsigned int type, const unsigned int id);
         void makeActive(void);
         void makeInactive(void);
         void lateSetup(const Point& src, const Point& dst);
@@ -62,9 +64,16 @@ class ConnRef
         void makePathInvalid(void);
         
         friend void markConnectors(ShapeRef *shape);
+        friend void attachedToShape(IntList &conns,
+                const unsigned int shapeId, const unsigned int type);
 
+        static const unsigned int runningTo;
+        static const unsigned int runningFrom;
+        static const unsigned int runningToAndFrom;
+        
     private:
         unsigned int _id;
+        unsigned int _srcId, _dstId;
         bool _needs_reroute_flag;
         bool _false_path;
         bool _active;
@@ -82,6 +91,8 @@ class ConnRef
 extern ConnRefList connRefs;
 
 extern void callbackAllInvalidConnectors(void);
+extern void attachedToShape(IntList &conns, const unsigned int shapeId,
+        const unsigned int type);
 
 }
 
