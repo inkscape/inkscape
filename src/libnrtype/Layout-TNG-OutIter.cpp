@@ -753,7 +753,7 @@ bool Layout::iterator::prevLineCursor()
         for ( ; ; ) {                                                                            \
             if (_char_index == 0) {                                                              \
                 _glyph_index = 0;                                                                \
-                return true;                                                                     \
+                return false;                                                                    \
             }                                                                                    \
             _char_index--;                                                                       \
             if (_parent_layout->_characters[_char_index].char_attributes.attr) break;            \
