@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>Dxf Outlines</_name>
+    <_name>Desktop Cutting Plotter</_name>
     <id>org.ekips.output.dxf_outlines</id>
 	<dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
 	<dependency type="executable" location="extensions">dxf_outlines.py</dependency>
@@ -7,8 +7,8 @@
     <output>
                 <extension>.dxf</extension>
 	        <mimetype>image/dxf</mimetype>
-                <_filetypename>Path outlines converted to DXF splines (*.DXF)</_filetypename>
-                <_filetypetooltip>Path outlines converted to DXF splines</_filetypetooltip>
+                <_filetypename>Desktop Cutting Plotter (*.DXF)</_filetypename>
+                <_filetypetooltip>Desktop Cutting Plotter</_filetypetooltip>
                 <dataloss>TRUE</dataloss>
     </output>
     <script>
