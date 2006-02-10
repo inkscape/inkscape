@@ -68,6 +68,11 @@ initialize_received_message_contexts(MessageContextMap& mcm)
 	// Message: CONNECT_REQUEST_USER
 	std::bitset< NUM_FLAGS > m5;
 	m5.set(LOGGED_IN);
+
+	// We should still _accept_ CONNECT_REQUEST_USER messages even if we're already
+	// waiting for a response.  It is up to the higher-level handler (i.e. the connection
+	// request handler) to properly handle it.
+	m5.set(WAITING_FOR_INVITE_RESPONSE);
 	mcm[CONNECT_REQUEST_USER] = m5;
 
 	// Message: CONNECT_REQUEST_RESPONSE_USER

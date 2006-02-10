@@ -121,8 +121,45 @@ SessionManager::receiveConnectRequest(gchar const* requesterJID)
 		return;
 	}
 
+	if (this->session_data->status[WAITING_FOR_INVITE_RESPONSE]) {
+		// Whoops.  Someone tried to invite us while we were inviting someone else 
+		// (maybe it was the someone we were trying to invite, maybe it was someone else).
+		//
+		// Our response is to reject the second request, as we can only handle one
+		// invitation at a time.  Also, we notify the user (who is waiting for an invitation 
+		// response) of the rejection event.
+		this->sendMessage(CONNECT_REQUEST_REFUSED_BY_PEER, 0, "", requesterJID, false);
+
+		Glib::ustring primary = "<span weight=\"bold\" size=\"larger\">";
+
+		// TRANSLATORS: This string is used to inform an Inkboard user that the following
+		// scenario has occurred:
+		// 1.  Alice invites Bob to an Inkboard session.
+		// 2.  While Alice's invitation is en route, Bob invites Alice to an Inkboard session.
+		//
+		// Or, we might have the following scenario:
+		// 1.  Alice invites Bob to an Inkboard session.
+		// 2.  While Alice is waiting for Bob's response, Carol sends Alice an invitation.
+		//
+		// In the current implementation, we can only handle one invitation at a time,
+		// so we reject all others.  
+		//
+		// This is a fix for bug #1352522.  Probably not the friendliest, but it's about
+		// the best we can do without changing the protocol.
+		primary += _("<b>An invitation conflict has occurred.</b>");
+		primary += "</span>\n\n";
+
+		// TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
+		primary += String::ucompose(_("The Jabber user <b>%1</b> attempted to invite you to a whiteboard session while you were waiting on an invitation response.\n\nThe invitation from <b>%1</b> has been rejected."), requesterJID); 
+
+		Gtk::MessageDialog dialog(primary, true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_CLOSE, false);
+		dialog.run();
+		return;
+	}
+
 	if (this->session_data->status[IN_WHITEBOARD]) {
 		this->sendMessage(ALREADY_IN_SESSION, 0, "", requesterJID, false);
+		return;
 	}
 
 	// Check to see if the user made any modifications to this document.  If so, 

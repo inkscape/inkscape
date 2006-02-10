@@ -86,10 +86,9 @@ MessageHandler::_hasValidReceiveContext(LmMessage* message)
 		
 		// TODO: remove this debug block
 		if ((status & recvcontext).to_ulong() < status.to_ulong()) {
-			g_warning("Received message in incorrect context (current is not a subset of required); discarding message.");
+			g_warning("Received message in incorrect context; discarding message.");
 
 			std::string s2 = recvcontext.to_string< char, std::char_traits< char >, std::allocator< char > >();
-
 
 			g_warning("current context=%s required context=%s (msgtype %s)", s1.c_str(), s2.c_str(), MessageHandler::ink_type_to_string(type));
 		}
