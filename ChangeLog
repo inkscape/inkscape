@@ -7,7 +7,7 @@
 
 	Add some code to allow querying of items and connectors to find
 	out what is attached to them.  This will allow graph layout
-	algorithms (currently being work on by Tim Dwyer) to determine 
+	algorithms (currently being worked on by Tim Dwyer) to determine 
 	a graph structure from the diagram.
 
 2006-02-07  MenTaLguY  <mental@rydia.net>
