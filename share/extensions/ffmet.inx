@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>FretFind Multi Length ET</_name>
+    <_name>Multi Length Equal Temperament</_name>
     <id>org.ekips.filter.fretfind.multi.et</id>
 	<dependency type="executable" location="extensions">fretfind.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>

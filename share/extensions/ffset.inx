@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>FretFind Single Length ET</_name>
+    <_name>Single Length Equal Temperament</_name>
     <id>org.ekips.filter.fretfind.single.et</id>
 	<dependency type="executable" location="extensions">fretfind.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>

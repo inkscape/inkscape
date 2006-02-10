@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>FretFind Multi Length Scala</_name>
+    <_name>Multi Length Scala</_name>
     <id>org.ekips.filter.fretfind.multi.scala</id>
 	<dependency type="executable" location="extensions">fretfind.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
