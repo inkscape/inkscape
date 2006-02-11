@@ -6,7 +6,7 @@
 	<param name="centerx" type="float" min="0.0" max="10000.0" _gui-text="Center X">100.0</param>
 	<param name="centery" type="float" min="0.0" max="10000.0" _gui-text="Center Y">100.0</param>
 	<param name="whirl" type="float" min="0.00" max="1000.00" _gui-text="Amount of whirl">100.0</param>
-	<param name="rotation" type="boolean" _gui-text="Direction of rotation">true</param>
+	<param name="rotation" type="boolean" _gui-text="Rotation is clockwise">true</param>
     <effect>
 		<object-type>path</object-type>
                 <effects-menu>

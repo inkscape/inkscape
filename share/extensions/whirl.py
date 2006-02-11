@@ -39,9 +39,9 @@ class Whirl(inkex.Effect):
 						help="direction of rotation")
 	def effect(self):
 		for id, node in self.selected.iteritems():
-			rotation = 1
+			rotation = -1
 			if self.options.rotation == True:
-				rotation = -1
+				rotation = 1
 			whirl = self.options.whirl / 1000
 			if node.tagName == 'path':
 				d = node.attributes.getNamedItem('d')
