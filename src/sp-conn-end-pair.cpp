@@ -220,14 +220,18 @@ SPConnEndPair::update(void)
 void SPConnEndPair::storeIds(void)
 {
     if (_connEnd[0]->href) {
-        GQuark itemId = g_quark_from_string(_connEnd[0]->href);
+        // href begins with a '#' which we don't want.
+        const char *startId = _connEnd[0]->href + 1;
+        GQuark itemId = g_quark_from_string(startId);
         _connRef->setEndPointId(Avoid::VertID::src, itemId);
     }
     else {
         _connRef->setEndPointId(Avoid::VertID::src, 0);
     }
     if (_connEnd[1]->href) {
-        GQuark itemId = g_quark_from_string(_connEnd[1]->href);
+        // href begins with a '#' which we don't want.
+        const char *endId = _connEnd[1]->href + 1;
+        GQuark itemId = g_quark_from_string(endId);
         _connRef->setEndPointId(Avoid::VertID::tar, itemId);
     }
     else {

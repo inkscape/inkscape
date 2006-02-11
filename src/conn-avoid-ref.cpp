@@ -120,9 +120,9 @@ GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
     Avoid::IntList::iterator finish = conns.end();
     for (Avoid::IntList::iterator i = conns.begin(); i != finish; ++i) {
         const gchar *connId = g_quark_to_string(*i);
-        SPItem *item = SP_ITEM(item->document->getObjectById(connId));
-        g_assert(item != NULL);
-        list = g_slist_prepend(list, item);
+        SPItem *citem = SP_ITEM(item->document->getObjectById(connId));
+        g_assert(citem != NULL);
+        list = g_slist_prepend(list, citem);
     }
     return list;
 }

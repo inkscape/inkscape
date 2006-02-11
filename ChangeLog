@@ -1,3 +1,8 @@
+2006-02-11  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/sp-conn-end-pair.cpp, src/conn-avoid-ref.cpp:
+	  Fix two bugs from my commit yesterday.
+
 2006-02-10  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/sp-conn-end-pair.cpp, src/sp-conn-end-pair.h,
