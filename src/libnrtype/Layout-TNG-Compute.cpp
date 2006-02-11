@@ -524,7 +524,6 @@ class Layout::Calculator
 
                         if (unbroken_span.glyph_string->log_clusters[glyph_index] < (int)unbroken_span.text_bytes
                             && *iter_source_text == UNICODE_SOFT_HYPHEN
-                            && it_span + 1 != it_chunk->broken_spans.end()
                             && glyph_index + 1 != it_span->end_glyph_index) {
                             // if we're looking at a soft hyphen and it's not the last glyph in the
                             // chunk we don't draw the glyph but we still need to add to _characters
