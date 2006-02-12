@@ -986,6 +986,9 @@ sp_document_remove_resource(SPDocument *document, gchar const *key, SPObject *ob
     g_return_val_if_fail(object != NULL, FALSE);
     g_return_val_if_fail(SP_IS_OBJECT(object), FALSE);
 
+    if (SP_OBJECT_IS_CLONED(object))
+        return FALSE;
+
     rlist = (GSList*)g_hash_table_lookup(document->priv->resources, key);
     g_return_val_if_fail(rlist != NULL, FALSE);
     g_return_val_if_fail(g_slist_find(rlist, object), FALSE);
