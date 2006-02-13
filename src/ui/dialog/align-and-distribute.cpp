@@ -22,6 +22,7 @@
 
 #include "dialogs/unclump.h"
 #include "removeoverlap/removeoverlap.h"
+#include "graphlayout/graphlayout.h"
 
 #include <gtkmm/spinbutton.h>
 
@@ -487,6 +488,35 @@ private :
     }
 };
 
+class ActionGraphLayout : public Action {
+public:
+    ActionGraphLayout(Glib::ustring const &id,
+                         Glib::ustring const &tiptext,
+                         guint row,
+                         guint column,
+                         AlignAndDistribute &dialog) :
+        Action(id, tiptext, row, column + 4,
+               dialog.graphLayout_table(), dialog.tooltips(), dialog)
+    {}
+
+private :
+    virtual void on_button_click()
+    {
+        if (!SP_ACTIVE_DESKTOP) return;
+
+        // see comment in ActionAlign above
+        int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+        prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+
+        graphlayout(SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->itemList());
+
+        // restore compensation setting
+        prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+
+        sp_document_done(SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP));
+    }
+};
+
 class ActionUnclump : public Action {
 public :
     ActionUnclump(const Glib::ustring &id,
@@ -717,10 +747,12 @@ AlignAndDistribute::AlignAndDistribute()
       _alignFrame(_("Align")),
       _distributeFrame(_("Distribute")),
       _removeOverlapFrame(_("Remove overlaps")),
+      _graphLayoutFrame(_("Connector network layout")),
       _nodesFrame(_("Nodes")),
       _alignTable(2, 6, true),
       _distributeTable(3, 6, true),
       _removeOverlapTable(1, 5, false),
+      _graphLayoutTable(1, 5, false),
       _nodesTable(1, 4, true),
       _anchorLabel(_("Relative to: "))
 {
@@ -814,6 +846,10 @@ AlignAndDistribute::AlignAndDistribute()
     addRemoveOverlapsButton("remove_overlaps",
                             _("Move objects as little as possible so that their bounding boxes do not overlap"),
                             0, 0);
+    //Graph Layout
+    addGraphLayoutButton("graph_layout",
+                            _("Nicely arrange selected connector network"),
+                            0, 0);
 
     //Node Mode buttons
     addNodeButton("node_halign",
@@ -851,6 +887,7 @@ AlignAndDistribute::AlignAndDistribute()
     _alignFrame.add(_alignBox);
     _distributeFrame.add(_distributeTable);
     _removeOverlapFrame.add(_removeOverlapTable);
+    _graphLayoutFrame.add(_graphLayoutTable);
     _nodesFrame.add(_nodesTable);
 
     // Top level vbox
@@ -862,6 +899,7 @@ AlignAndDistribute::AlignAndDistribute()
     vbox->pack_start(_alignFrame, true, true);
     vbox->pack_start(_distributeFrame, true, true);
     vbox->pack_start(_removeOverlapFrame, true, true);
+    vbox->pack_start(_graphLayoutFrame, true, true);
     vbox->pack_start(_nodesFrame, true, true);
 
     //Connect to the global tool change signal
@@ -908,6 +946,7 @@ void AlignAndDistribute::setMode(bool nodeEdit)
     ((_alignFrame).*(mSel))();
     ((_distributeFrame).*(mSel))();
     ((_removeOverlapFrame).*(mSel))();
+    ((_graphLayoutFrame).*(mSel))();
     ((_nodesFrame).*(mNode))();
 
 }
@@ -946,6 +985,15 @@ void AlignAndDistribute::addRemoveOverlapsButton(const Glib::ustring &id, const 
 {
     _actionList.push_back(
         new ActionRemoveOverlaps(
+            id, tiptext, row, col, *this)
+        );
+}
+
+void AlignAndDistribute::addGraphLayoutButton(const Glib::ustring &id, const Glib::ustring tiptext,
+                                      guint row, guint col)
+{
+    _actionList.push_back(
+        new ActionGraphLayout(
             id, tiptext, row, col, *this)
         );
 }

@@ -428,10 +428,10 @@ void attachedToShape(IntList &conns, const unsigned int shapeId,
     ConnRefList::iterator fin = connRefs.end();
     for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
         if ((type & ConnRef::runningTo) && ((*i)->_dstId == shapeId)) {
-            conns.push_back((*i)->_id);
+            conns.push_back((*i)->_srcId);
         }
         else if ((type & ConnRef::runningFrom) && ((*i)->_srcId == shapeId)) {
-            conns.push_back((*i)->_id);
+            conns.push_back((*i)->_dstId);
         }
     }
 }

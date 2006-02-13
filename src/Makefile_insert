@@ -259,6 +259,7 @@ inkscape_private_libs =	\
 	ui/view/libuiview.a	\
 	ui/libui.a		\
 	ui/widget/libuiwidget.a	\
+	graphlayout/libgraphlayout.a	\
 	removeoverlap/libremoveoverlap.a		\
 	extension/libextension.a	\
 	extension/implementation/libimplementation.a	\
