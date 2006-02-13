@@ -437,8 +437,9 @@ build_from_file(gchar const *filename)
        DTD in general for this stuff */
     Inkscape::XML::Document *doc = sp_repr_read_file(filename, NULL);
     Extension *ext = build_from_reprdoc(doc, NULL);
-    Inkscape::GC::release(doc);
-    if (ext == NULL)
+    if (ext != NULL)
+        Inkscape::GC::release(doc);
+    else
         g_warning("Unable to create extension from definition file %s.\n", filename);
     return ext;
 }
