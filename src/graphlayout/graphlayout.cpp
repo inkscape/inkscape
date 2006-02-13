@@ -79,16 +79,13 @@ void graphlayout(GSList const *const items) {
 		++it)
 	{
 		SPItem *u=*it;
-		std::cout<<"id:"<<u->id<<std::endl;
 		if(!isConnector(u)) {
-			std::cout<<"  is a node."<<std::endl;
+			std::cout<<"Creating node for id: "<<u->id<<std::endl;
 			nodelookup[u->id]=add_vertex(g);
 		}
 	}
-	WeightMap weightmap=get(edge_weight, g);
-	std::cout<<"Added vertices: Graph has |V|="<<num_vertices(g)<<std::endl;
 
-	NR::Point const gap(0, 0);
+	WeightMap weightmap=get(edge_weight, g);
 	int i=0;
 	for (std::list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();
@@ -100,15 +97,12 @@ void graphlayout(GSList const *const items) {
 		GSList *nlist=itu->avoidRef->getAttachedConnectors(Avoid::ConnRef::runningFrom);
 		std::list<SPItem *> neighbours;
 		neighbours.insert<GSListConstIterator<SPItem *> >(neighbours.end(),nlist,NULL);
-		std::cout<<"  Node "<<itu->id<<" has "<<neighbours.size()<<" neighbours"<<std::endl;
 		for (std::list<SPItem *>::iterator ne(neighbours.begin());
 				ne != neighbours.end();
 				++ne) {
 			
 			SPItem *itv=*ne;
-			std::cout<<"neighbour: "<<itv->id<<std::endl;
 			Vertex v=nodelookup[itv->id];
-			std::cout<<"    Neighbour: "<<v;
 			Graph::edge_descriptor e; bool inserted;
 			tie(e, inserted)=add_edge(u,v,g);
 			weightmap[e]=1.0;
