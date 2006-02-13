@@ -41,6 +41,13 @@ typedef std::vector<simple_point<double> > PositionVec;
 typedef iterator_property_map<PositionVec::iterator, property_map<Graph, vertex_index_t>::type> PositionMap;
 #endif // HAVE_BOOST_GRAPH_LIB
 
+bool isConnector(SPItem *i) {
+	SPPath *path = NULL;
+	if(SP_IS_PATH(i)) {
+		path = SP_PATH(i);
+	}
+	return path && path->connEndPair.isAutoRoutingConn();
+}
 /**
 * Takes a list of inkscape items, extracts the graph defined by 
 * connectors between them, and uses graph layout techniques to find
@@ -73,12 +80,7 @@ void graphlayout(GSList const *const items) {
 	{
 		SPItem *u=*it;
 		std::cout<<"id:"<<u->id<<std::endl;
-		SPPath *path = NULL;
-		if(SP_IS_PATH(u)) {
-			path = SP_PATH(u);
-		}
-		bool isConn = path && path->connEndPair.isAutoRoutingConn();
-		if(!isConn) {
+		if(!isConnector(u)) {
 			std::cout<<"  is a node."<<std::endl;
 			nodelookup[u->id]=add_vertex(g);
 		}
@@ -139,7 +141,7 @@ void graphlayout(GSList const *const items) {
 		++it)
 	{
 		SPItem *u=*it;
-		if(strncmp(u->id,"path",4)) {
+		if(!isConnector(u)) {
 			NR::Rect const item_box(sp_item_bbox_desktop(u));
 			NR::Point const curr(item_box.midpoint());
 			NR::Point const dest(minX+width/2.0+position[nodelookup[u->id]].x,
