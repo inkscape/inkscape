@@ -29,7 +29,6 @@
 #include <vector>
 #include <algorithm>
 #include <float.h>
-#include <string.h>
 
 using namespace boost;
 // create a typedef for the Graph type
@@ -39,7 +38,6 @@ typedef property_map<Graph, edge_weight_t>::type WeightMap;
 typedef graph_traits<Graph>::vertex_descriptor Vertex;
 typedef std::vector<simple_point<double> > PositionVec;
 typedef iterator_property_map<PositionVec::iterator, property_map<Graph, vertex_index_t>::type> PositionMap;
-#endif // HAVE_BOOST_GRAPH_LIB
 
 bool isConnector(SPItem *i) {
 	SPPath *path = NULL;
@@ -48,6 +46,7 @@ bool isConnector(SPItem *i) {
 	}
 	return path && path->connEndPair.isAutoRoutingConn();
 }
+#endif // HAVE_BOOST_GRAPH_LIB
 /**
 * Takes a list of inkscape items, extracts the graph defined by 
 * connectors between them, and uses graph layout techniques to find
@@ -64,16 +63,13 @@ void graphlayout(GSList const *const items) {
 	std::list<SPItem *> selected;
 	selected.insert<GSListConstIterator<SPItem *> >(selected.end(), items, NULL);
 	if (selected.empty()) return;
-	int n=selected.size();
-
-	//Check 2 or more selected objects
-	if (n < 2) return;
 
 	Graph g;
 
 	double minX=DBL_MAX, minY=DBL_MAX, maxX=-DBL_MAX, maxY=-DBL_MAX;
 
 	std::map<std::string,Vertex> nodelookup;
+	std::vector<std::string> labels;
 	for (std::list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();
 		++it)
@@ -82,8 +78,13 @@ void graphlayout(GSList const *const items) {
 		if(!isConnector(u)) {
 			std::cout<<"Creating node for id: "<<u->id<<std::endl;
 			nodelookup[u->id]=add_vertex(g);
+			labels.push_back(u->id);
 		}
 	}
+
+	int n=labels.size();
+	//Check 2 or more selected objects
+	if (n < 2) return;
 
 	WeightMap weightmap=get(edge_weight, g);
 	int i=0;
@@ -124,7 +125,7 @@ void graphlayout(GSList const *const items) {
 	std::cout<<"Graph has |V|="<<num_vertices(g)<<" Width="<<width<<" Height="<<height<<std::endl;
   	PositionVec position_vec(num_vertices(g));
   	PositionMap position(position_vec.begin(), get(vertex_index, g));
-  	write_graphviz(std::cout, g);
+  	write_graphviz(std::cout, g, make_label_writer<std::vector<std::string>>(labels));
 	circle_graph_layout(g, position, width/2.0);
 	kamada_kawai_spring_layout(g, position, weightmap, side_length(width));
 
