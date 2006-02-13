@@ -41,7 +41,7 @@ static SPGroupClass *parent_class;
 GType sp_anchor_get_type(void)
 {
     static GType type = 0;
-    
+
     if (!type) {
         GTypeInfo info = {
             sizeof(SPAnchorClass),
@@ -57,17 +57,17 @@ GType sp_anchor_get_type(void)
         };
         type = g_type_register_static(SP_TYPE_GROUP, "SPAnchor", &info, (GTypeFlags) 0);
     }
-    
+
     return type;
 }
 
 static void sp_anchor_class_init(SPAnchorClass *ac)
 {
-    SPObjectClass *sp_object_class = (SPObjectClass *) ac; 
+    SPObjectClass *sp_object_class = (SPObjectClass *) ac;
     SPItemClass *item_class = (SPItemClass *) ac;
-    
+
     parent_class = (SPGroupClass *) g_type_class_ref(SP_TYPE_GROUP);
-    
+
     sp_object_class->build = sp_anchor_build;
     sp_object_class->release = sp_anchor_release;
     sp_object_class->set = sp_anchor_set;
@@ -187,7 +187,7 @@ static gchar *sp_anchor_description(SPItem *item)
 static gint sp_anchor_event(SPItem *item, SPEvent *event)
 {
     SPAnchor *anchor = SP_ANCHOR(item);
-    
+
     switch (event->type) {
 	case SP_EVENT_ACTIVATE:
             if (anchor->href) {
@@ -204,7 +204,7 @@ static gint sp_anchor_event(SPItem *item, SPEvent *event)
 	default:
             break;
     }
-    
+
     return FALSE;
 }
 

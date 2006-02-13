@@ -130,7 +130,7 @@ sp_fill_style_widget_construct ( SPWidget *spw, SPPaintSelector *psel )
 
         sp_fill_style_widget_update (spw);
 
-    } 
+    }
 
 } // end of sp_fill_style_widget_construct()
 
@@ -149,7 +149,7 @@ sp_fill_style_widget_modify_selection ( SPWidget *spw,
 }
 
 static void
-sp_fill_style_widget_change_subselection ( Inkscape::Application *inkscape, 
+sp_fill_style_widget_change_subselection ( Inkscape::Application *inkscape,
                                         SPDesktop *desktop,
                                         SPWidget *spw )
 {
@@ -398,7 +398,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
                 undo_label = undo_label_2;
-            else 
+            else
                 undo_label = undo_label_1;
 
             break;

@@ -172,7 +172,7 @@ sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
 
     group->rebuildLayout();
 
-    // pass the bbox of the flowtext object as paintbox (used for paintserver fills)	
+    // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
     NRRect paintbox;
     sp_item_invoke_bbox(group, &paintbox, NR::identity(), TRUE);
     for (SPItemView *v = group->display; v != NULL; v = v->next) {
@@ -350,7 +350,7 @@ sp_flowtext_show(SPItem *item, NRArena *arena, unsigned/* key*/, unsigned /*flag
     NRArenaGroup *flowed = NRArenaGroup::create(arena);
     nr_arena_group_set_transparent(flowed, FALSE);
 
-    // pass the bbox of the flowtext object as paintbox (used for paintserver fills)	
+    // pass the bbox of the flowtext object as paintbox (used for paintserver fills)
     NRRect paintbox;
     sp_item_invoke_bbox(item, &paintbox, NR::identity(), TRUE);
     group->layout.show(flowed, &paintbox);
@@ -503,7 +503,7 @@ void SPFlowtext::convert_to_text()
     sp_repr_set_svg_double(repr, "y", anchor_point[NR::Y]);
 
     for (Inkscape::Text::Layout::iterator it = group->layout.begin() ; it != group->layout.end() ; ) {
-        
+
 	    Inkscape::XML::Node *line_tspan = sp_repr_new("svg:tspan");
         line_tspan->setAttribute("sodipodi:role", "line");
 

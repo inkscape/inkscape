@@ -82,21 +82,21 @@ sp_flowregion_class_init (SPFlowregionClass *klass)
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
 	SPItemClass * item_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
-	
+
 	flowregion_parent_class = (SPItemClass *)g_type_class_ref (SP_TYPE_ITEM);
-	
+
 	object_class->dispose = sp_flowregion_dispose;
-	
+
 	sp_object_class->child_added = sp_flowregion_child_added;
 	sp_object_class->remove_child = sp_flowregion_remove_child;
 	sp_object_class->update = sp_flowregion_update;
 	sp_object_class->modified = sp_flowregion_modified;
 	sp_object_class->write = sp_flowregion_write;
-	
+
 	item_class->description = sp_flowregion_description;
 }
 
@@ -119,12 +119,12 @@ static void
 sp_flowregion_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
 	SPItem *item;
-	
+
 	item = SP_ITEM (object);
-	
+
 	if (((SPObjectClass *) (flowregion_parent_class))->child_added)
 		(* ((SPObjectClass *) (flowregion_parent_class))->child_added) (object, child, ref);
-	
+
 	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -135,7 +135,7 @@ sp_flowregion_remove_child (SPObject * object, Inkscape::XML::Node * child)
 {
 	if (((SPObjectClass *) (flowregion_parent_class))->remove_child)
 		(* ((SPObjectClass *) (flowregion_parent_class))->remove_child) (object, child);
-	
+
 	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -147,17 +147,17 @@ sp_flowregion_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 	SPObject *child;
 	SPItemCtx *ictx, cctx;
 	GSList *l;
-	
+
 	group = SP_FLOWREGION (object);
 	ictx = (SPItemCtx *) ctx;
 	cctx = *ictx;
-	
+
 	if (((SPObjectClass *) (flowregion_parent_class))->update)
 		((SPObjectClass *) (flowregion_parent_class))->update (object, ctx, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -186,14 +186,14 @@ sp_flowregion_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 void             SPFlowregion::UpdateComputed(void)
 {
 	SPObject* object=SP_OBJECT(this);
-	
+
 	NR::Matrix itr_mat=sp_item_i2root_affine (SP_ITEM(object));
 	itr_mat=itr_mat.inverse();
-	
+
     for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; it++)
         delete *it;
     computed.clear();
-	
+
 	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
         Shape *shape = NULL;
 		GetDest(child,&shape,itr_mat);
@@ -207,12 +207,12 @@ sp_flowregion_modified (SPObject *object, guint flags)
 	SPFlowregion *group;
 	SPObject *child;
 	GSList *l;
-	
-	group = SP_FLOWREGION (object);	
-	
+
+	group = SP_FLOWREGION (object);
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -298,21 +298,21 @@ sp_flowregionexclude_class_init (SPFlowregionExcludeClass *klass)
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
 	SPItemClass * item_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
-	
+
 	flowregionexclude_parent_class = (SPItemClass *)g_type_class_ref (SP_TYPE_ITEM);
-	
+
 	object_class->dispose = sp_flowregionexclude_dispose;
-	
+
 	sp_object_class->child_added = sp_flowregionexclude_child_added;
 	sp_object_class->remove_child = sp_flowregionexclude_remove_child;
 	sp_object_class->update = sp_flowregionexclude_update;
 	sp_object_class->modified = sp_flowregionexclude_modified;
 	sp_object_class->write = sp_flowregionexclude_write;
-	
+
 	item_class->description = sp_flowregionexclude_description;
 }
 
@@ -336,12 +336,12 @@ static void
 sp_flowregionexclude_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
 	SPItem *item;
-	
+
 	item = SP_ITEM (object);
-	
+
 	if (((SPObjectClass *) (flowregionexclude_parent_class))->child_added)
 		(* ((SPObjectClass *) (flowregionexclude_parent_class))->child_added) (object, child, ref);
-	
+
 	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -352,7 +352,7 @@ sp_flowregionexclude_remove_child (SPObject * object, Inkscape::XML::Node * chil
 {
 	if (((SPObjectClass *) (flowregionexclude_parent_class))->remove_child)
 		(* ((SPObjectClass *) (flowregionexclude_parent_class))->remove_child) (object, child);
-	
+
 	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -364,17 +364,17 @@ sp_flowregionexclude_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 	SPObject *child;
 	SPItemCtx *ictx, cctx;
 	GSList *l;
-	
+
 	group = SP_FLOWREGIONEXCLUDE (object);
 	ictx = (SPItemCtx *) ctx;
 	cctx = *ictx;
-		
+
 	if (((SPObjectClass *) (flowregionexclude_parent_class))->update)
 		((SPObjectClass *) (flowregionexclude_parent_class))->update (object, ctx, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -402,14 +402,14 @@ sp_flowregionexclude_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 void             SPFlowregionExclude::UpdateComputed(void)
 {
 	SPObject* object=SP_OBJECT(this);
-	
+
 	if (computed) {
         delete computed;
         computed = NULL;
     }
 	NR::Matrix itr_mat=sp_item_i2root_affine (SP_ITEM(object));
 	itr_mat=itr_mat.inverse();
-	
+
 	for (SPObject* child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		GetDest(child,&computed,itr_mat);
 	}
@@ -421,12 +421,12 @@ sp_flowregionexclude_modified (SPObject *object, guint flags)
 	SPFlowregionExclude *group;
 	SPObject *child;
 	GSList *l;
-	
+
 	group = SP_FLOWREGIONEXCLUDE (object);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -502,11 +502,11 @@ static void         UnionShape(Shape **base_shape, Shape const *add_shape)
 }
 
 static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
-{	
+{
 	if ( child == NULL ) return;
-	
+
 	SPCurve *curve=NULL;
-		
+
 	SPObject* u_child=child;
 	if ( SP_IS_USE(u_child) ) {
 		u_child=SP_USE(u_child)->child;
@@ -516,7 +516,7 @@ static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
 	} else if ( SP_IS_TEXT (u_child) ) {
 	curve = SP_TEXT (u_child)->getNormalizedBpath ();
 	}
-	
+
 	if ( curve ) {
 		Path*   temp=new Path;
 		NR::Matrix tr_mat=sp_item_i2root_affine (SP_ITEM(u_child));

@@ -118,7 +118,7 @@ public:
                     //g_message( " __read %d bytes", (int)got );
                     if ( !gdk_pixbuf_loader_write( loader, scratch + used, got, &err ) )
                     {
-                        //g_message("_error writing pixbuf data"); 
+                        //g_message("_error writing pixbuf data");
                     }
                 }
 
@@ -306,7 +306,7 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
                                         "unknown", // PNG_SCALE_UNKNOWN
                                         "meter", // PNG_SCALE_METER
                                         "radian", // PNG_SCALE_RADIAN
-                                        "last", // 
+                                        "last", //
                                         NULL
                                     };
 
@@ -729,7 +729,7 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 				}
 			}
 	}
-	
+
 	sp_image_update_canvas_image ((SPImage *) object);
 }
 
@@ -788,13 +788,13 @@ sp_image_print (SPItem *item, SPPrintContext *ctx)
 
 	if (!image->pixbuf) return;
 	if ((image->width.computed <= 0.0) || (image->height.computed <= 0.0)) return;
-	
+
 	px = gdk_pixbuf_get_pixels (image->pixbuf);
 	w = gdk_pixbuf_get_width (image->pixbuf);
 	h = gdk_pixbuf_get_height (image->pixbuf);
 	rs = gdk_pixbuf_get_rowstride (image->pixbuf);
 	pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
-       
+
 	if (image->aspect_align == SP_ASPECT_NONE) {
 		/* fixme: (Lauris) */
 		nr_matrix_set_translate (&tp, image->x.computed, image->y.computed);

@@ -129,7 +129,7 @@ void sp_selection_copy_impl (const GSList *items, GSList **clip, GSList **defs_c
 /**
 Add gradients/patterns/markers referenced by copied objects to defs
 */
-void 
+void
 paste_defs (GSList **defs_clip, SPDocument *doc)
 {
     if (!defs_clip)
@@ -299,7 +299,7 @@ get_all_items (GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisibl
     for (SPObject *child = sp_object_first_child(SP_OBJECT(from)) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
         if (SP_IS_ITEM(child) &&
             !desktop->isLayer(SP_ITEM(child)) &&
-            (!onlysensitive || !SP_ITEM(child)->isLocked()) && 
+            (!onlysensitive || !SP_ITEM(child)->isLocked()) &&
             (!onlyvisible || !desktop->itemIsHidden(SP_ITEM(child))) &&
             (!exclude || !g_slist_find ((GSList *) exclude, child))
             )
@@ -809,7 +809,7 @@ void sp_copy_gradient (GSList **defs_clip, SPGradient *gradient)
 {
     SPGradient *ref = gradient;
 
-    while (ref) { 
+    while (ref) {
         // climb up the refs, copying each one in the chain
         Inkscape::XML::Node *grad_repr = SP_OBJECT_REPR(ref)->duplicate();
         *defs_clip = g_slist_prepend (*defs_clip, grad_repr);
@@ -858,9 +858,9 @@ void sp_copy_textpath_path (GSList **defs_clip, SPTextPath *tp, const GSList *it
 
 void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList *items)
 {
-    SPStyle *style = SP_OBJECT_STYLE (item); 
+    SPStyle *style = SP_OBJECT_STYLE (item);
 
-    if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+    if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
         SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
         if (SP_IS_LINEARGRADIENT (server) || SP_IS_RADIALGRADIENT (server))
             sp_copy_gradient (defs_clip, SP_GRADIENT(server));
@@ -868,7 +868,7 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
             sp_copy_pattern (defs_clip, SP_PATTERN(server));
     }
 
-    if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+    if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
         SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER(item);
         if (SP_IS_LINEARGRADIENT (server) || SP_IS_RADIALGRADIENT (server))
             sp_copy_gradient (defs_clip, SP_GRADIENT(server));
@@ -876,7 +876,7 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
             sp_copy_pattern (defs_clip, SP_PATTERN(server));
     }
 
-    if (SP_IS_SHAPE (item)) { 
+    if (SP_IS_SHAPE (item)) {
         SPShape *shape = SP_SHAPE (item);
         for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
             if (shape->marker[i]) {
@@ -959,7 +959,7 @@ void sp_selection_copy()
     const GSList *items = g_slist_copy ((GSList *) selection->itemList());
 
     // 0. Copy text to system clipboard
-    // FIXME: for non-texts, put serialized XML as text to the clipboard; 
+    // FIXME: for non-texts, put serialized XML as text to the clipboard;
     //for this sp_repr_write_stream needs to be rewritten with iostream instead of FILE
     Glib::ustring text;
     if (tools_isactive (desktop, TOOLS_TEXT)) {
@@ -998,8 +998,8 @@ void sp_selection_copy()
         sp_repr_css_attr_unref (style_clipboard);
         style_clipboard = NULL;
     }
-  
-    //clear main clipboard 
+
+    //clear main clipboard
     while (clipboard) {
         Inkscape::GC::release((Inkscape::XML::Node *) clipboard->data);
         clipboard = g_slist_remove(clipboard, clipboard->data);
@@ -1103,7 +1103,7 @@ void sp_selection_paste_style()
     sp_document_done(SP_DT_DOCUMENT (desktop));
 }
 
-void sp_selection_to_next_layer () 
+void sp_selection_to_next_layer ()
 {
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
@@ -1135,7 +1135,7 @@ void sp_selection_to_next_layer ()
     g_slist_free ((GSList *) items);
 }
 
-void sp_selection_to_prev_layer () 
+void sp_selection_to_prev_layer ()
 {
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
@@ -1153,7 +1153,7 @@ void sp_selection_to_prev_layer ()
     if (next) {
         GSList *temp_clip = NULL;
         sp_selection_copy_impl (items, &temp_clip, NULL, NULL); // we're in the same doc, so no need to copy defs
-        sp_selection_delete_impl (items); 
+        sp_selection_delete_impl (items);
         GSList *copied = sp_selection_paste_impl (SP_DT_DOCUMENT (dt), next, &temp_clip, NULL);
         selection->setReprList((GSList const *) copied);
         g_slist_free (copied);
@@ -1562,7 +1562,7 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
                   bool only_in_viewport, bool inlayer, bool onlyvisible, bool onlysensitive);
 
 template <typename D>
-SPItem *next_item_from_list(SPDesktop *desktop, GSList const *items, SPObject *root, 
+SPItem *next_item_from_list(SPDesktop *desktop, GSList const *items, SPObject *root,
                   bool only_in_viewport, bool inlayer, bool onlyvisible, bool onlysensitive);
 
 struct Forward {
@@ -2026,7 +2026,7 @@ sp_selection_untile()
 
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (!style || style->fill.type != SP_PAINT_TYPE_PAINTSERVER) 
+        if (!style || style->fill.type != SP_PAINT_TYPE_PAINTSERVER)
             continue;
 
         SPObject *server = SP_OBJECT_STYLE_FILL_SERVER(item);
@@ -2046,7 +2046,7 @@ sp_selection_untile()
             SPItem *i = SP_ITEM (desktop->currentLayer()->appendChildRepr(copy));
 
            // FIXME: relink clones to the new canvas objects
-           // use SPObject::setid when mental finishes it to steal ids of 
+           // use SPObject::setid when mental finishes it to steal ids of
 
             // this is needed to make sure the new item has curve (simply requestDisplayUpdate does not work)
             sp_document_ensure_up_to_date (document);
@@ -2105,7 +2105,7 @@ sp_selection_create_bitmap_copy ()
     // multiple times, and this is done so that they don't clash)
     GTimeVal cu;
     g_get_current_time (&cu);
-    guint current = (int) (cu.tv_sec * 1000000 + cu.tv_usec) % 1024; 
+    guint current = (int) (cu.tv_sec * 1000000 + cu.tv_usec) % 1024;
 
     // Create the filename
     gchar *filename = g_strdup_printf ("%s-%s-%u.png", document->name, SP_OBJECT_REPR(items->data)->attribute("id"), current);

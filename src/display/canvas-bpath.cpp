@@ -34,7 +34,7 @@ static void sp_canvas_bpath_destroy (GtkObject *object);
 static void sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
 static void sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf);
 static double sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item);
- 
+
 static SPCanvasItemClass *parent_class;
 
 GtkType
@@ -97,7 +97,7 @@ sp_canvas_bpath_destroy (GtkObject *object)
 	delete cbp->fill_shp;
 	cbp->fill_shp = NULL;
     }
-  
+
     if (cbp->stroke_shp) {
 	delete cbp->stroke_shp;
 	cbp->stroke_shp = NULL;
@@ -126,7 +126,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 	delete cbp->fill_shp;
 	cbp->fill_shp = NULL;
     }
-  
+
     if (cbp->stroke_shp) {
 	delete cbp->stroke_shp;
 	cbp->stroke_shp = NULL;
@@ -179,7 +179,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 	    thePath->Stroke(cbp->stroke_shp,false,0.5*cbp->stroke_width, join,butt,cbp->stroke_width*cbp->stroke_miterlimit );
 	    //     thePath->Stroke(theShape,false,0.5*cbp->stroke_width, join,butt,cbp->stroke_width*cbp->stroke_miterlimit );
 	    //     cbp->stroke_shp->ConvertToShape(theShape,fill_nonZero);
-      
+
 	    cbp->stroke_shp->CalcBBox();
 	    if ( cbp->stroke_shp->leftX < cbp->stroke_shp->rightX ) {
 		if ( dbox.x0 >= dbox.x1 ) {
@@ -197,7 +197,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 	delete thePath;
     }
 
-	
+
     item->x1 = (int)dbox.x0;
     item->y1 = (int)dbox.y0;
     item->x2 = (int)dbox.x1;
@@ -233,7 +233,7 @@ static double
 sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_item)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
-	
+
     if (cbp->fill_shp && (cbp->fill_shp->PtWinding(p) > 0 )) {
 	*actual_item = item;
 	return 0.0;
@@ -248,7 +248,7 @@ sp_canvas_bpath_point (SPCanvasItem *item, NR::Point p, SPCanvasItem **actual_it
     if (cbp->fill_shp) {
         return distance(cbp->fill_shp, p);
     }
-	
+
     return BIGVAL;
 }
 
@@ -326,10 +326,10 @@ bpath_run_A8_OR (raster_info &dest,void *data,int st,float vst,int en,float ven)
     b = NR_RGBA32_B (tempCol.col);
     a = NR_RGBA32_A (tempCol.col);
     if (a == 0) return;
-  
+
     vst*=a;
     ven*=a;
-  
+
     if ( vst < 0 ) vst=0;
     if ( vst > 255 ) vst=255;
     if ( ven < 0 ) ven=0;
@@ -409,7 +409,7 @@ void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,cha
     if ( it < area.y0 ) it=area.y0;
     if ( ir > area.x1 ) ir=area.x1;
     if ( ib > area.y1 ) ib=area.y1;
-  
+
 /*  // version par FloatLigne
     int    curPt;
     float  curY;
@@ -449,27 +449,27 @@ void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,cha
     int    curPt;
     float  curY;
     theS->BeginQuickRaster(curY, curPt);
-  
+
     BitLigne*   theI[4];
     for (int i=0;i<4;i++) theI[i]=new BitLigne(il,ir);
     IntLigne*   theIL=new IntLigne();
-  
+
     theS->DirectQuickScan(curY,curPt,(float)(it),true,0.25);
-  
+
     char* mdata=(char*)destBuf;
     uint32_t* ligStart=((uint32_t*)(mdata+(3*(il-area.x0)+stride*(it-area.y0))));
     for (int y=it;y<ib;y++) {
 	for (int i = 0; i < 4; i++)
 	    theI[i]->Reset();
-	
+
 	for (int i = 0; i < 4; i++)
-	    theS->QuickScan(curY, curPt, ((float)(y+0.25*(i+1))), 
+	    theS->QuickScan(curY, curPt, ((float)(y+0.25*(i+1))),
 			    fill_oddEven, theI[i], 0.25);
-	
+
 	theIL->Copy(4,theI);
 	//   theI[0]->Affiche();
 	//   theIL->Affiche();
-     
+
 	raster_info  dest;
 	dest.startPix=il;
 	dest.endPix=ir;
@@ -481,5 +481,5 @@ void nr_pixblock_render_bpath_rgba (Shape* theS,uint32_t color,NRRectL &area,cha
     }
     theS->EndQuickRaster();
     for (int i=0;i<4;i++) delete theI[i];
-    delete theIL;    
+    delete theIL;
 }

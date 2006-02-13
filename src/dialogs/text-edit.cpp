@@ -78,7 +78,7 @@ static const gchar *spacings[] = {"50%", "80%", "90%", "100%", "110%", "120%", "
 static GtkWidget *dlg = NULL;
 static win_data wd;
 // impossible original values to make sure they are read from prefs
-static gint x = -1000, y = -1000, w = 0, h = 0; 
+static gint x = -1000, y = -1000, w = 0, h = 0;
 static gchar const *prefs_path = "dialogs.textandfont";
 
 
@@ -136,7 +136,7 @@ sp_text_edit_dialog (void)
 {
 
     if (!dlg) {
-    
+
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_TEXT), title);
 
@@ -145,32 +145,32 @@ sp_text_edit_dialog (void)
             x = prefs_get_int_attribute (prefs_path, "x", 0);
             y = prefs_get_int_attribute (prefs_path, "y", 0);
         }
-        
+
         if (w ==0 || h == 0) {
             w = prefs_get_int_attribute (prefs_path, "w", 0);
             h = prefs_get_int_attribute (prefs_path, "h", 0);
         }
-        
+
         if (x != 0 || y != 0) {
             gtk_window_move ((GtkWindow *) dlg, x, y);
         } else {
             gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
         }
-        
-        if (w && h) 
+
+        if (w && h)
             gtk_window_resize ((GtkWindow *) dlg, w, h);
-        
+
         sp_transientize (dlg);
         wd.win = dlg;
         wd.stop = 0;
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd );
-                           
+
         gtk_signal_connect ( GTK_OBJECT (dlg), "event", GTK_SIGNAL_FUNC (sp_dialog_event_handler), dlg );
-                             
+
         gtk_signal_connect ( GTK_OBJECT (dlg), "destroy", G_CALLBACK (sp_text_edit_dialog_destroy), dlg );
         gtk_signal_connect ( GTK_OBJECT (dlg), "delete_event", G_CALLBACK (sp_text_edit_dialog_delete), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_text_edit_dialog_delete), dlg );
-                           
+
         g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg );
 
@@ -325,8 +325,8 @@ sp_text_edit_dialog (void)
                         g_list_free (sl);
                     }
 
-                    g_signal_connect ( (GObject *) ((GtkCombo *) c)->entry, 
-                                       "changed", 
+                    g_signal_connect ( (GObject *) ((GtkCombo *) c)->entry,
+                                       "changed",
                                        (GCallback) sp_text_edit_dialog_line_spacing_changed,
                                        dlg );
                     gtk_box_pack_start (GTK_BOX (row), c, FALSE, FALSE, VB_MARGIN);
@@ -378,7 +378,7 @@ sp_text_edit_dialog (void)
             gtk_text_view_set_editable (GTK_TEXT_VIEW (txt), TRUE);
             gtk_container_add (GTK_CONTAINER (scroller), txt);
             gtk_box_pack_start (GTK_BOX (vb), scroller, TRUE, TRUE, 0);
-            g_signal_connect ( G_OBJECT (tb), "changed", 
+            g_signal_connect ( G_OBJECT (tb), "changed",
                                G_CALLBACK (sp_text_edit_dialog_text_changed), dlg );
             g_signal_connect (G_OBJECT (txt), "focus-in-event", G_CALLBACK (text_view_focus_in), dlg);
             g_signal_connect (G_OBJECT (txt), "focus-out-event", G_CALLBACK (text_view_focus_out), dlg);
@@ -393,8 +393,8 @@ sp_text_edit_dialog (void)
 
         {
             GtkWidget *b = gtk_button_new_with_label (_("Set as default"));
-            g_signal_connect ( G_OBJECT (b), "clicked", 
-                               G_CALLBACK (sp_text_edit_dialog_set_default), 
+            g_signal_connect ( G_OBJECT (b), "clicked",
+                               G_CALLBACK (sp_text_edit_dialog_set_default),
                                dlg );
             gtk_box_pack_start (GTK_BOX (hb), b, FALSE, FALSE, 0);
             g_object_set_data (G_OBJECT (dlg), "default", b);
@@ -481,7 +481,7 @@ sp_text_edit_dialog_update_object_text ( SPItem *text )
             gtk_text_buffer_get_bounds (tb, &start, &end);
             str = gtk_text_buffer_get_text (tb, &start, &end, TRUE);
             sp_te_set_repr_text_multiline (text, str);
-            g_free (str);    
+            g_free (str);
             gtk_text_buffer_set_modified (tb, FALSE);
         }
 }
@@ -538,9 +538,9 @@ sp_get_text_dialog_style ()
                 sp_repr_css_set_property (css, "text-align", "end");
             }
         }
-        
+
         b = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), INKSCAPE_STOCK_WRITING_MODE_LR );
-        
+
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (b))) {
             sp_repr_css_set_property (css, "writing-mode", "lr");
         } else {
@@ -591,7 +591,7 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
 
     sp_desktop_set_style(desktop, css, true);
 
-    for (; item_list != NULL; item_list = item_list->next) { 
+    for (; item_list != NULL; item_list = item_list->next) {
         // apply style to the reprs of all text objects in the selection
         if (SP_IS_TEXT (item_list->data)) {
 
@@ -604,8 +604,8 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
             // no need to set sodipodi:linespacing, because Inkscape never supported it on flowtext
             ++items;
     }
-    
-    if (items == 0) { 
+
+    if (items == 0) {
         // no text objects; apply style to prefs for new objects
         sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
         gtk_widget_set_sensitive (def, FALSE);
@@ -615,7 +615,7 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
         if (SP_IS_TEXT (item) || SP_IS_FLOWTEXT(item)) {
             sp_text_edit_dialog_update_object_text (item);
         }
-    } 
+    }
 
     // complete the transaction
     sp_document_done (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP));
@@ -636,13 +636,13 @@ sp_text_edit_dialog_close (GtkButton *button, GtkWidget *dlg)
 }
 
 static void
-sp_text_edit_dialog_read_selection ( GtkWidget *dlg, 
-                                     gboolean dostyle, 
+sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
+                                     gboolean dostyle,
                                      gboolean docontent )
 {
-    if (g_object_get_data (G_OBJECT (dlg), "blocked")) 
+    if (g_object_get_data (G_OBJECT (dlg), "blocked"))
         return;
-    
+
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (TRUE));
 
     GtkWidget *notebook = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "notebook");
@@ -689,7 +689,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
             }
         } // end of if (docontent)
         repr = SP_OBJECT_REPR (text);
-        
+
     } else {
         gtk_widget_set_sensitive (textw, FALSE);
         gtk_widget_set_sensitive (apply, FALSE);
@@ -767,7 +767,7 @@ sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
     GtkTextIter start, end;
     gchar *str;
 
-    if (g_object_get_data (G_OBJECT (dlg), "blocked")) 
+    if (g_object_get_data (G_OBJECT (dlg), "blocked"))
         return;
 
     SPItem *text = sp_ted_get_selected_text_item ();
@@ -797,13 +797,13 @@ sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
 
 
 static void
-sp_text_edit_dialog_font_changed ( SPFontSelector *fsel, 
-                                   font_instance *font, 
+sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
+                                   font_instance *font,
                                    GtkWidget *dlg )
 {
     GtkWidget *preview, *apply, *def;
 
-    if (g_object_get_data (G_OBJECT (dlg), "blocked")) 
+    if (g_object_get_data (G_OBJECT (dlg), "blocked"))
         return;
 
     SPItem *text = sp_ted_get_selected_text_item ();
@@ -849,7 +849,7 @@ sp_text_edit_dialog_line_spacing_changed (GtkEditable *editable, GtkWidget *dlg)
 {
     GtkWidget *apply, *def;
 
-    if (g_object_get_data ((GObject *) dlg, "blocked")) 
+    if (g_object_get_data ((GObject *) dlg, "blocked"))
         return;
 
     SPItem *text = sp_ted_get_selected_text_item ();
@@ -887,7 +887,7 @@ sp_ted_get_selected_text_item (void)
 static unsigned
 sp_ted_get_selected_text_count (void)
 {
-    if (!SP_ACTIVE_DESKTOP) 
+    if (!SP_ACTIVE_DESKTOP)
         return 0;
 
     unsigned int items = 0;

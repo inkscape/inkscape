@@ -495,7 +495,7 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
     /* fixme: But Canvas actualle does get key events, so all we need is routing these here */
     gdk_pointer_grab (SP_CANVAS_WINDOW (item->canvas), FALSE,
                       (GdkEventMask)(event_mask & (~(GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK))),
-                      NULL, cursor, etime);   
+                      NULL, cursor, etime);
 
     item->canvas->grabbed_item = item;
     item->canvas->grabbed_event_mask = event_mask;
@@ -587,7 +587,7 @@ sp_canvas_item_grab_focus (SPCanvasItem *item)
         ev.focus_change.window = SP_CANVAS_WINDOW (item->canvas);
         ev.focus_change.send_event = FALSE;
         ev.focus_change.in = TRUE;
-		
+
         emit_event (item->canvas, &ev);
     }
 }
@@ -995,7 +995,7 @@ shutdown_transients (SPCanvas *canvas)
     canvas->tiles=NULL;
     canvas->tLeft=canvas->tTop=canvas->tRight=canvas->tBottom=0;
     canvas->tileH=canvas->tileV=0;
-  
+
     if (canvas->grabbed_item) {
         canvas->grabbed_item = NULL;
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
@@ -1825,7 +1825,7 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear)
     canvas->y0 = iy;
 
     sp_canvas_resize_tiles(canvas,canvas->x0,canvas->y0,canvas->x0+canvas->widget.allocation.width,canvas->y0+canvas->widget.allocation.height);
-  
+
     if (!clear) {
         // scrolling without zoom; redraw only the newly exposed areas
         if ((dx != 0) || (dy != 0)) {
@@ -1861,7 +1861,7 @@ sp_canvas_update_now (SPCanvas *canvas)
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
-    if (!(canvas->need_update || 
+    if (!(canvas->need_update ||
           canvas->need_redraw))
         return;
 
@@ -2051,9 +2051,9 @@ void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb)
     if ( tr > canvas->tRight ) tr=canvas->tRight;
     if ( tt < canvas->tTop ) tt=canvas->tTop;
     if ( tb > canvas->tBottom ) tb=canvas->tBottom;
-  
+
     canvas->need_redraw = TRUE;
-  
+
     for (int i=tl;i<tr;i++) {
         for (int j=tt;j<tb;j++) {
             canvas->tiles[(i-canvas->tLeft)+(j-canvas->tTop)*canvas->tileH]=1;

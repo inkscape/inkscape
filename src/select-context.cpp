@@ -191,7 +191,7 @@ sp_select_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
         } else {
             sc->_seltrans->setShow(Inkscape::SelTrans::SHOW_CONTENT);
         }
-    } 
+    }
 }
 
 static bool
@@ -238,7 +238,7 @@ sp_select_context_abort(SPEventContext *event_context)
     return false;
 }
 
-bool 
+bool
 key_is_a_modifier (guint key) {
     return (key == GDK_Alt_L ||
                 key == GDK_Alt_R ||

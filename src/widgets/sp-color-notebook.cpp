@@ -197,7 +197,7 @@ void ColorNotebook::init()
 	SP_TYPE_COLOR_SCALES;
 	SP_TYPE_COLOR_WHEEL_SELECTOR;
 
-	/* REJON: Comment out the next line to not use the normal GTK Color 
+	/* REJON: Comment out the next line to not use the normal GTK Color
            wheel. */
 
 //        SP_TYPE_COLOR_GTKSELECTOR;
@@ -245,7 +245,7 @@ void ColorNotebook::init()
 
 	for ( i = 0; i < _trackerList->len; i++ )
 	{
-		SPColorNotebookTracker *entry = 
+		SPColorNotebookTracker *entry =
           reinterpret_cast< SPColorNotebookTracker* > (g_ptr_array_index (_trackerList, i));
 		if ( entry )
 		{
@@ -300,7 +300,7 @@ void ColorNotebook::init()
 		gtk_widget_show (align);
 		gtk_container_add (GTK_CONTAINER (align), _btn);
 
-		// uncomment to reenable the "show/hide modes" menu, 
+		// uncomment to reenable the "show/hide modes" menu,
 		// but first fix it so it remembers its settings in prefs and does not take that much space (entire vertical column!)
 		//gtk_table_attach (GTK_TABLE (table), align, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
 

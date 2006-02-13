@@ -34,7 +34,7 @@ Plugin::Plugin(void)
     return;
 }
 
-/** 
+/**
     \brief  Oh, so someone actually wants to use this plugin!  We better
             go and grab it then!
     \param  module  Unused except to pass to the plugin's load function.

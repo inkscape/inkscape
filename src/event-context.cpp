@@ -346,7 +346,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         case GDK_BUTTON_PRESS:
 
             // save drag origin
-            xp = (gint) event->button.x; 
+            xp = (gint) event->button.x;
             yp = (gint) event->button.y;
             within_tolerance = true;
 
@@ -522,7 +522,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
-                case GDK_Left: // Ctrl Left 
+                case GDK_Left: // Ctrl Left
                 case GDK_KP_Left:
                 case GDK_KP_4:
                     if (MOD__CTRL_ONLY) {
@@ -570,7 +570,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     if (MOD__SHIFT_ONLY) {
                         sp_event_root_menu_popup(desktop, NULL, event);
                         ret= TRUE;
-                    } 
+                    }
                     break;
                 case GDK_space:
                     sp_toggle_selector(desktop);
@@ -605,13 +605,13 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             } else if (event->scroll.state & GDK_CONTROL_MASK) {
                 double rel_zoom;
                 switch (event->scroll.direction) {
-                    case GDK_SCROLL_UP:   
+                    case GDK_SCROLL_UP:
                         rel_zoom = zoom_inc;
                         break;
-                    case GDK_SCROLL_DOWN: 
+                    case GDK_SCROLL_DOWN:
                         rel_zoom = 1 / zoom_inc;
                         break;
-                    default:              
+                    default:
                         rel_zoom = 0.0;
                         break;
                 }
@@ -914,7 +914,7 @@ sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
                 || (keyval == GDK_Meta_L) 
                 || (keyval == GDK_Meta_R));
 
-    gchar *tip = g_strdup_printf("%s%s%s%s%s", 
+    gchar *tip = g_strdup_printf("%s%s%s%s%s",
                                  ( ctrl ? ctrl_tip : "" ),
                                  ( ctrl && (shift || alt) ? "; " : "" ),
                                  ( shift ? shift_tip : "" ),
@@ -936,7 +936,7 @@ sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
  * work regardless of layouts (e.g., in Cyrillic).
  */
 guint
-get_group0_keyval(GdkEventKey *event) 
+get_group0_keyval(GdkEventKey *event)
 {
     guint keyval = 0;
     gdk_keymap_translate_keyboard_state(

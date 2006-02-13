@@ -94,7 +94,7 @@ sp_ctrlquadr_destroy (GtkObject *object)
         delete ctrlquadr->shp;
         ctrlquadr->shp = NULL;
     }
-  
+
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
@@ -141,7 +141,7 @@ sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int 
     thePath->LineTo(cl->p3 * affine);
     thePath->LineTo(cl->p4 * affine);
     thePath->LineTo(cl->p1 * affine);
-  
+
     thePath->Convert(1.0);
 
     if ( cl->shp == NULL ) cl->shp=new Shape;
@@ -160,7 +160,7 @@ sp_ctrlquadr_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int 
         }
     }
     delete thePath;
-  
+
     item->x1 = (int)dbox.x0;
     item->y1 = (int)dbox.y0;
     item->x2 = (int)dbox.x1;

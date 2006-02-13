@@ -210,8 +210,8 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, co
 				} else {
 					// calculate premultiplied from two premultiplieds:
 					d[0] = NR_COMPOSEPPP(NR_PREMUL (s[0], alpha), a, NR_PREMUL (d[0], d[3]), 0); // last parameter not used
-					d[1] = NR_COMPOSEPPP(NR_PREMUL (s[1], alpha), a, NR_PREMUL (d[1], d[3]), 0); 
-					d[2] = NR_COMPOSEPPP(NR_PREMUL (s[2], alpha), a, NR_PREMUL (d[2], d[3]), 0); 
+					d[1] = NR_COMPOSEPPP(NR_PREMUL (s[1], alpha), a, NR_PREMUL (d[1], d[3]), 0);
+					d[2] = NR_COMPOSEPPP(NR_PREMUL (s[2], alpha), a, NR_PREMUL (d[2], d[3]), 0);
 					// total opacity:
 					d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
 					// un-premultiply channels:
@@ -498,8 +498,8 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs,
 				} else {
 					// calculate premultiplied from two premultiplieds:
 					d[0] = NR_COMPOSEPPP(NR_PREMUL (s[0], m[0]), a, NR_PREMUL (d[0], d[3]), 0); // last parameter not used
-					d[1] = NR_COMPOSEPPP(NR_PREMUL (s[1], m[0]), a, NR_PREMUL (d[1], d[3]), 0); 
-					d[2] = NR_COMPOSEPPP(NR_PREMUL (s[2], m[0]), a, NR_PREMUL (d[2], d[3]), 0); 
+					d[1] = NR_COMPOSEPPP(NR_PREMUL (s[1], m[0]), a, NR_PREMUL (d[1], d[3]), 0);
+					d[2] = NR_COMPOSEPPP(NR_PREMUL (s[2], m[0]), a, NR_PREMUL (d[2], d[3]), 0);
 					// total opacity:
 					d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
 					// un-premultiply channels:

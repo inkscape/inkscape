@@ -1,8 +1,8 @@
 #define __SPW_UTILITIES_C__
 
-/* 
+/*
  * Inkscape Widget Utilities
- * 
+ *
  * Authors:
  *   Bryce W. Harrington <brycehar@bryceharrington.com>
  *   bulia byak <buliabyak@users.sf.net>
@@ -23,8 +23,8 @@
 
 #include "helper/unit-menu.h"
 
-/** 
- * Creates a label widget with the given text, at the given col, row 
+/**
+ * Creates a label widget with the given text, at the given col, row
  * position in the table.
  */
 GtkWidget *
@@ -36,7 +36,7 @@ spw_label(GtkWidget * table, const gchar *label_text, int col, int row)
   g_assert(label_widget != NULL);
   gtk_misc_set_alignment (GTK_MISC (label_widget), 1.0, 0.5);
   gtk_widget_show (label_widget);
-  gtk_table_attach (GTK_TABLE (table), label_widget, col, col+1, row, row+1, 
+  gtk_table_attach (GTK_TABLE (table), label_widget, col, col+1, row, row+1,
 		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 4, 0);
   return label_widget;
 }
@@ -53,7 +53,7 @@ spw_hbox(GtkWidget * table, int width, int col, int row)
   hb = gtk_hbox_new (FALSE, 4);
   g_assert(hb != NULL);
   gtk_widget_show (hb);
-  gtk_table_attach (GTK_TABLE (table), hb, col, col+width, row, row+1, 
+  gtk_table_attach (GTK_TABLE (table), hb, col, col+width, row, row+1,
 		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
   return hb;
 }
@@ -132,7 +132,7 @@ spw_dropdown(GtkWidget * dialog, GtkWidget * table,
   spw_label(table, label_text, 0, row);
 
   gtk_widget_show (selector);
-  gtk_table_attach (GTK_TABLE (table), selector, 1, 2, row, row+1, 
+  gtk_table_attach (GTK_TABLE (table), selector, 1, 2, row, row+1,
 		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
   gtk_object_set_data (GTK_OBJECT (dialog), key, selector);
   return selector;
@@ -140,7 +140,7 @@ spw_dropdown(GtkWidget * dialog, GtkWidget * table,
 
 /**
  * Creates a unit selector widget, used for selecting whether one wishes
- * to measure screen elements in millimeters, points, etc.  This is a 
+ * to measure screen elements in millimeters, points, etc.  This is a
  * compound unit that includes a label as well as the dropdown selector.
  */
 GtkWidget *
@@ -166,7 +166,7 @@ spw_unit_selector(GtkWidget * dialog, GtkWidget * table,
   sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 4);
   g_assert(sb != NULL);
   gtk_widget_show (sb);
-  gtk_table_attach (GTK_TABLE (table), sb, 1, 2, row, row+1, 
+  gtk_table_attach (GTK_TABLE (table), sb, 1, 2, row, row+1,
 		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
   g_signal_connect (G_OBJECT (a), "value_changed", cb, dialog);
   return sb;
@@ -216,7 +216,7 @@ sp_search_by_data_recursive (GtkWidget *w, gpointer key)
 		r = gtk_object_get_data (GTK_OBJECT(w), (gchar *) key);
 	}
 	if (r) return r;
-	
+
 	if (GTK_IS_CONTAINER(w)) {
 		GList *ch = gtk_container_get_children (GTK_CONTAINER(w));
 		for (GList *i = ch; i != NULL; i = i->next) {
@@ -241,7 +241,7 @@ sp_search_by_value_recursive (GtkWidget *w, gchar *key, gchar *value)
 		r = (gchar *) gtk_object_get_data (GTK_OBJECT(w), key);
 	}
 	if (r && !strcmp (r, value)) return w;
-	
+
 	if (GTK_IS_CONTAINER(w)) {
 		GList *ch = gtk_container_get_children (GTK_CONTAINER(w));
 		for (GList *i = ch; i != NULL; i = i->next) {

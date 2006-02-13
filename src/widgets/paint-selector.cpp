@@ -298,7 +298,7 @@ sp_paint_selector_new (bool is_fill)
      // This silliness is here because I don't know how to pass a parameter to the
      // GtkObject "constructor" (sp_paint_selector_init). Remove it when paint_selector
      // becomes a normal class.
-	sp_paint_selector_show_fillrule (psel, is_fill); 
+	sp_paint_selector_show_fillrule (psel, is_fill);
 
 	return GTK_WIDGET (psel);
 }
@@ -480,7 +480,7 @@ static void
 sp_paint_selector_clear_frame(SPPaintSelector *psel)
 {
 	g_return_if_fail ( psel != NULL);
-	
+
 	if (psel->selector) {
 
 		/* before we destroy the frame contents, we must detach
@@ -939,7 +939,7 @@ sp_style_determine_paint_selector_mode (SPStyle *style, bool isfill)
         case SP_PAINT_TYPE_PAINTSERVER:
         {
             SPPaintServer *server = isfill? SP_STYLE_FILL_SERVER (style) : SP_STYLE_STROKE_SERVER (style);
-    
+
             if (SP_IS_LINEARGRADIENT (server)) {
                 return SP_PAINT_SELECTOR_MODE_GRADIENT_LINEAR;
             } else if (SP_IS_RADIALGRADIENT (server)) {

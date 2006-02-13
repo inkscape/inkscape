@@ -239,7 +239,7 @@ PrintGNOME::fill(Inkscape::Extension::Print *mod,
 	dpbox.y0 = pbox->y0;
 	dpbox.x1 = pbox->x1;
 	dpbox.y1 = pbox->y1;
-	painter = sp_paint_server_painter_new(SP_STYLE_FILL_SERVER(style), 
+	painter = sp_paint_server_painter_new(SP_STYLE_FILL_SERVER(style),
 						// FIXME: the second matrix below must be the parent (context) transform.
 						// I don't know what it must be for gnome-print. --bb
 						ctm, NR::identity(),
@@ -394,7 +394,7 @@ void
 PrintGNOME::init (void)
 {
 	Inkscape::Extension::Extension * ext;
-	
+
 	/* SVG in */
     ext = Inkscape::Extension::build_from_mem(
 		"<inkscape-extension>\n"

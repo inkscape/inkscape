@@ -88,12 +88,12 @@ sp_flowdiv_class_init (SPFlowdivClass *klass)
 {
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
-	
+
 	flowdiv_parent_class = (SPItemClass *)g_type_class_ref (SP_TYPE_ITEM);
-	
+
 	sp_object_class->build = sp_flowdiv_build;
 	sp_object_class->set = sp_flowdiv_set;
 	sp_object_class->release = sp_flowdiv_release;
@@ -121,10 +121,10 @@ sp_flowdiv_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 
 	if (((SPObjectClass *) (flowdiv_parent_class))->update)
 		((SPObjectClass *) (flowdiv_parent_class))->update (object, ctx, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	GSList* l = NULL;
 	for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -152,13 +152,13 @@ sp_flowdiv_modified (SPObject *object, guint flags)
 {
 	SPObject *child;
 	GSList *l;
-	
+
 	if (((SPObjectClass *) (flowdiv_parent_class))->modified)
 		((SPObjectClass *) (flowdiv_parent_class))->modified (object, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -195,7 +195,7 @@ static Inkscape::XML::Node *
 sp_flowdiv_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
 //	SPFlowdiv *group = SP_FLOWDIV (object);
-	
+
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
 		if ( repr == NULL ) repr = sp_repr_new ("svg:flowDiv");
 		GSList *l = NULL;
@@ -226,10 +226,10 @@ sp_flowdiv_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 			}
 		}
 	}
-		
+
 	if (((SPObjectClass *) (flowdiv_parent_class))->write)
 		((SPObjectClass *) (flowdiv_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }
 
@@ -265,12 +265,12 @@ sp_flowtspan_class_init (SPFlowtspanClass *klass)
 {
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 
 	flowtspan_parent_class = (SPItemClass *)g_type_class_ref (SP_TYPE_ITEM);
-	
+
 	sp_object_class->build = sp_flowtspan_build;
 	sp_object_class->set = sp_flowtspan_set;
 	sp_object_class->release = sp_flowtspan_release;
@@ -296,13 +296,13 @@ sp_flowtspan_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 //	SPFlowtspan *group=SP_FLOWTSPAN (object);
 	SPItemCtx *ictx=(SPItemCtx *) ctx;
 	SPItemCtx cctx=*ictx;
-	
+
 	if (((SPObjectClass *) (flowtspan_parent_class))->update)
 		((SPObjectClass *) (flowtspan_parent_class))->update (object, ctx, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	GSList* l = NULL;
 	for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -330,13 +330,13 @@ sp_flowtspan_modified (SPObject *object, guint flags)
 {
 	SPObject *child;
 	GSList *l;
-	
+
 	if (((SPObjectClass *) (flowtspan_parent_class))->modified)
 		((SPObjectClass *) (flowtspan_parent_class))->modified (object, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -397,10 +397,10 @@ sp_flowtspan_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 			}
 		}
 	}
-		
+
 	if (((SPObjectClass *) (flowtspan_parent_class))->write)
 		((SPObjectClass *) (flowtspan_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }
 
@@ -437,12 +437,12 @@ sp_flowpara_class_init (SPFlowparaClass *klass)
 {
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
-	
+
 	flowpara_parent_class = (SPItemClass *)g_type_class_ref (SP_TYPE_ITEM);
-	
+
 	sp_object_class->build = sp_flowpara_build;
 	sp_object_class->set = sp_flowpara_set;
 	sp_object_class->release = sp_flowpara_release;
@@ -467,13 +467,13 @@ sp_flowpara_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
 	SPItemCtx *ictx=(SPItemCtx *) ctx;
 	SPItemCtx cctx=*ictx;
-	
+
 	if (((SPObjectClass *) (flowpara_parent_class))->update)
 		((SPObjectClass *) (flowpara_parent_class))->update (object, ctx, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	GSList* l = NULL;
 	for (SPObject *child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -501,13 +501,13 @@ sp_flowpara_modified (SPObject *object, guint flags)
 {
 	SPObject *child;
 	GSList *l;
-	
+
 	if (((SPObjectClass *) (flowpara_parent_class))->modified)
 		((SPObjectClass *) (flowpara_parent_class))->modified (object, flags);
 
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
-	
+
 	l = NULL;
 	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
 		g_object_ref (G_OBJECT (child));
@@ -539,7 +539,7 @@ static Inkscape::XML::Node *
 sp_flowpara_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
 	//	SPFlowpara *group = SP_FLOWPARA (object);
-	
+
 	if ( flags&SP_OBJECT_WRITE_BUILD ) {
 		if ( repr == NULL ) repr = sp_repr_new ("svg:flowPara");
 		GSList *l = NULL;
@@ -570,10 +570,10 @@ sp_flowpara_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 			}
 		}
 	}
-		
+
 	if (((SPObjectClass *) (flowpara_parent_class))->write)
 		((SPObjectClass *) (flowpara_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }
 
@@ -608,12 +608,12 @@ sp_flowline_class_init (SPFlowlineClass *klass)
 {
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
-	
+
 	flowline_parent_class = (SPObjectClass *)g_type_class_ref (SP_TYPE_OBJECT);
-	
+
 	sp_object_class->release = sp_flowline_release;
 	sp_object_class->write = sp_flowline_write;
 	sp_object_class->modified = sp_flowline_modified;
@@ -635,7 +635,7 @@ sp_flowline_modified (SPObject *object, guint flags)
 {
 	if (((SPObjectClass *) (flowline_parent_class))->modified)
 		((SPObjectClass *) (flowline_parent_class))->modified (object, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
 }
@@ -646,10 +646,10 @@ sp_flowline_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 		if ( repr == NULL ) repr = sp_repr_new ("svg:flowLine");
 	} else {
 	}
-		
+
 	if (((SPObjectClass *) (flowline_parent_class))->write)
 		((SPObjectClass *) (flowline_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }
 
@@ -684,12 +684,12 @@ sp_flowregionbreak_class_init (SPFlowregionbreakClass *klass)
 {
 	GObjectClass * object_class;
 	SPObjectClass * sp_object_class;
-	
+
 	object_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
-	
+
 	flowregionbreak_parent_class = (SPObjectClass *)g_type_class_ref (SP_TYPE_OBJECT);
-	
+
 	sp_object_class->release = sp_flowregionbreak_release;
 	sp_object_class->write = sp_flowregionbreak_write;
 	sp_object_class->modified = sp_flowregionbreak_modified;
@@ -711,7 +711,7 @@ sp_flowregionbreak_modified (SPObject *object, guint flags)
 {
 	if (((SPObjectClass *) (flowregionbreak_parent_class))->modified)
 		((SPObjectClass *) (flowregionbreak_parent_class))->modified (object, flags);
-	
+
 	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 	flags &= SP_OBJECT_MODIFIED_CASCADE;
 }
@@ -722,9 +722,9 @@ sp_flowregionbreak_write (SPObject *object, Inkscape::XML::Node *repr, guint fla
 		if ( repr == NULL ) repr = sp_repr_new ("svg:flowLine");
 	} else {
 	}
-		
+
 	if (((SPObjectClass *) (flowregionbreak_parent_class))->write)
 		((SPObjectClass *) (flowregionbreak_parent_class))->write (object, repr, flags);
-	
+
 	return repr;
 }

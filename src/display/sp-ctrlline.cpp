@@ -97,7 +97,7 @@ sp_ctrlline_destroy (GtkObject *object)
         delete ctrlline->shp;
         ctrlline->shp = NULL;
     }
-  
+
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
@@ -141,7 +141,7 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
     Path* thePath = new Path;
     thePath->MoveTo(NR::Point(cl->s.x, cl->s.y) * affine);
     thePath->LineTo(NR::Point(cl->e.x, cl->e.y) * affine);
-  
+
     thePath->Convert(1.0);
     if ( cl->shp == NULL ) cl->shp=new Shape;
     thePath->Stroke(cl->shp,false,0.5,join_straight,butt_straight,20.0,false);
@@ -158,7 +158,7 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
         }
     }
     delete thePath;
-  
+
     item->x1 = (int)dbox.x0;
     item->y1 = (int)dbox.y0;
     item->x2 = (int)dbox.x1;

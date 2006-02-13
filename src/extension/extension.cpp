@@ -313,7 +313,7 @@ Extension::get_name (void)
     \return  None
 	\brief   This function diactivates the extension (which makes it
 	         unusable, but not deleted)
-	
+
     This function is used to removed an extension from functioning, but
 	not delete it completely.  It sets the state to \c STATE_DEACTIVATED to
 	mark to the world that it has been deactivated.  It also removes
@@ -377,7 +377,7 @@ Parameter *
 param_shared (const gchar * name, GSList * list)
 {
     Parameter * output;
-    
+
     if (name == NULL) {
         throw Extension::param_not_exist();
     }
@@ -407,7 +407,7 @@ const gchar *
 Extension::get_param_string (const gchar * name, const Inkscape::XML::Document * doc)
 {
     Parameter * param;
-    
+
     param = param_shared(name, parameters);
 	return param->get_string(doc);
 }
@@ -426,7 +426,7 @@ bool
 Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * doc)
 {
     Parameter * param;
-    
+
     param = param_shared(name, parameters);
     return param->get_bool(doc);
 }
@@ -445,7 +445,7 @@ int
 Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * doc)
 {
     Parameter * param;
-    
+
     param = param_shared(name, parameters);
     return param->get_int(doc);
 }
@@ -553,7 +553,7 @@ Extension::error_file_open (void)
 	error_file.open(filename);
 	if (!error_file.is_open()) {
 		g_warning(_("Could not create extension error log file '%s'"),
-		          filename);	
+		          filename);
 	}
 	g_free(filename);
 	g_free(ext_error_file);

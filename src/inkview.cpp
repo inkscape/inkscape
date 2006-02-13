@@ -161,9 +161,9 @@ main (int argc, const char **argv)
     if (argc == 1) {
 	usage();
     }
-    
-    struct SPSlideShow ss; 
-	
+
+    struct SPSlideShow ss;
+
     GtkWidget *w;
     int i;
 
@@ -172,7 +172,7 @@ main (int argc, const char **argv)
     textdomain (GETTEXT_PACKAGE);
 
     LIBXML_TEST_VERSION
-    
+
     Inkscape::GC::init();
     Inkscape::Preferences::loadSkeleton();
 
@@ -202,8 +202,8 @@ main (int argc, const char **argv)
 
     for (i = 1; i < argc; i++) {
 	struct stat st;
-	if (stat (argv[i], &st) 
-	      || !S_ISREG (st.st_mode) 
+	if (stat (argv[i], &st)
+	      || !S_ISREG (st.st_mode)
 	      || (st.st_size < 64)) {
 		fprintf(stderr, "could not open file %s\n", argv[i]);
 	} else {
@@ -232,8 +232,8 @@ main (int argc, const char **argv)
 			    ss.size <<= 1;
 			    ss.slides = nr_renew (ss.slides, char *, ss.size);
 			}
-			
-			ss.doc = sp_document_new_from_mem ((const gchar *)gba->data, 
+
+			ss.doc = sp_document_new_from_mem ((const gchar *)gba->data,
 							   gba->len,
 							   TRUE);
 			gchar *last_filename = jar_file_reader.get_last_filename();
@@ -253,12 +253,12 @@ main (int argc, const char **argv)
 		    /* Expand */
 		    ss.size <<= 1;
 		    ss.slides = nr_renew (ss.slides, char *, ss.size);
-		    
+
 		}
-		
+
 		ss.slides[ss.length++] = strdup (argv[i]);
 		ss.doc = sp_document_new (ss.slides[ss.current], TRUE, false);
-		
+
 		if (!ss.doc && ++ss.current >= ss.length) {
 		    /* No loadable documents */
 		    return 1;
@@ -268,7 +268,7 @@ main (int argc, const char **argv)
 #endif
 	}
     }
-    
+
     if(!ss.doc)
        return 1; /* none of the slides loadable */
 
@@ -313,29 +313,29 @@ sp_svgview_control_show (struct SPSlideShow *ss)
 	t = gtk_table_new (1, 4, TRUE);
 	gtk_container_add ((GtkContainer *) ctrlwin, t);
 	b = gtk_button_new_from_stock (GTK_STOCK_GOTO_FIRST);
-	gtk_table_attach ((GtkTable *) t, b, 0, 1, 0, 1, 
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+	gtk_table_attach ((GtkTable *) t, b, 0, 1, 0, 1,
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
 			  0, 0);
-	g_signal_connect ((GObject *) b, "clicked", (GCallback) sp_svgview_goto_first_cb, ss); 
+	g_signal_connect ((GObject *) b, "clicked", (GCallback) sp_svgview_goto_first_cb, ss);
 	b = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
 	gtk_table_attach ((GtkTable *) t, b, 1, 2, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
 			  0, 0);
-	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_prev_cb, ss); 
+	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_prev_cb, ss);
 	b = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
 	gtk_table_attach ((GtkTable *) t, b, 2, 3, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
 			  0, 0);
-	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_next_cb, ss); 
+	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_next_cb, ss);
 	b = gtk_button_new_from_stock (GTK_STOCK_GOTO_LAST);
 	gtk_table_attach ((GtkTable *) t, b, 3, 4, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
 			  0, 0);
-	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_last_cb, ss); 
+	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_last_cb, ss);
 	gtk_widget_show_all (ctrlwin);
     } else {
 	gtk_window_present ((GtkWindow *) ctrlwin);
@@ -344,28 +344,28 @@ sp_svgview_control_show (struct SPSlideShow *ss)
     return NULL;
 }
 
-static int 
+static int
 sp_svgview_show_next_cb (GtkWidget *widget, void *data)
 {
     sp_svgview_show_next(static_cast<struct SPSlideShow *>(data));
     return FALSE;
 }
 
-static int 
+static int
 sp_svgview_show_prev_cb (GtkWidget *widget, void *data)
 {
     sp_svgview_show_prev(static_cast<struct SPSlideShow *>(data));
     return FALSE;
 }
 
-static int 
+static int
 sp_svgview_goto_first_cb (GtkWidget *widget, void *data)
 {
     sp_svgview_goto_first(static_cast<struct SPSlideShow *>(data));
     return FALSE;
 }
 
-static int 
+static int
 sp_svgview_goto_last_cb (GtkWidget *widget, void *data)
 {
     sp_svgview_goto_last(static_cast<struct SPSlideShow *>(data));
@@ -458,7 +458,7 @@ is_jar(char const *filename)
 
 static void usage()
 {
-    fprintf(stderr, 
+    fprintf(stderr,
 	    "Usage: inkview [FILES ...]\n"
 	    "\twhere FILES are SVG (.svg or .svgz)"
 #ifdef WITH_INKJAR

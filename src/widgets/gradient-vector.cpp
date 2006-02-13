@@ -482,7 +482,7 @@ select_stop_in_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_stop)
 			if (SP_OBJECT (ochild) == SP_OBJECT(new_stop)) {
 				gtk_option_menu_set_history (GTK_OPTION_MENU (mnu), i);
 				break;
-			} 
+			}
 			i++;
 		}
 	}
@@ -519,7 +519,7 @@ update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_stop)
 		gtk_menu_append (GTK_MENU (m), i);
 		gtk_widget_set_sensitive (mnu, FALSE);
 	} else {
-     
+
 		for (; sl != NULL; sl = sl->next){
 			SPStop *stop;
 			GtkWidget *i;
@@ -596,7 +596,7 @@ sp_grad_edit_select (GtkOptionMenu *mnu,  GtkWidget *tbl)
 
 	SPStop *next = NULL;
 	next = sp_next_stop(stop);
-	if (next != NULL ) { 
+	if (next != NULL ) {
 	  adj->upper = next->offset;
 	} else {
 	  isEndStop = true;
@@ -663,7 +663,7 @@ sp_grd_ed_add_stop (GtkWidget *widget,  GtkWidget *vb)
 
 	SPStop *stop = (SPStop *) g_object_get_data (G_OBJECT(gtk_menu_get_active (GTK_MENU(gtk_option_menu_get_menu (mnu)))), "stop");
 
-	if (stop == NULL) 
+	if (stop == NULL)
 		return;
 
 	Inkscape::XML::Node *new_stop_repr = NULL;
@@ -688,7 +688,7 @@ sp_grd_ed_add_stop (GtkWidget *widget,  GtkWidget *vb)
 	}
 
 	SPStop *newstop = (SPStop *) SP_OBJECT_DOCUMENT(gradient)->getObjectByRepr(new_stop_repr);
-   
+
 	newstop->offset = (stop->offset + next->offset) * 0.5 ;
 
 	guint32 const c1 = sp_stop_get_rgba32(stop);
@@ -878,7 +878,7 @@ sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop)
 			w = prefs_get_int_attribute (prefs_path, "w", 0);
 			h = prefs_get_int_attribute (prefs_path, "h", 0);
 		}
-		if (x != 0 || y != 0) 
+		if (x != 0 || y != 0)
 			gtk_window_move ((GtkWindow *) dlg, x, y);
 		else
 			gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
@@ -903,8 +903,8 @@ sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop)
 		gtk_container_add (GTK_CONTAINER (dlg), wid);
 	} else {
 		// FIXME: temp fix for 0.38
-		// Simply load_gradient into the editor does not work for multi-stop gradients, 
-		// as the stop list and other widgets are in a wrong state and crash readily. 
+		// Simply load_gradient into the editor does not work for multi-stop gradients,
+		// as the stop list and other widgets are in a wrong state and crash readily.
 		// Instead we just delete the window (by sending the delete signal)
 		// and call sp_gradient_vector_editor_new again, so it creates the window anew.
 
@@ -951,7 +951,7 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
 		SPStop *stop = SP_STOP(g_object_get_data (G_OBJECT(gtk_menu_get_active (GTK_MENU(gtk_option_menu_get_menu (mnu)))), "stop"));
 		guint32 const c = sp_stop_get_rgba32(stop);
 
-		/// get the color selector 
+		/// get the color selector
 		SPColorSelector *csel = SP_COLOR_SELECTOR(g_object_get_data (G_OBJECT (widget), "cselector"));
 		// set alpha
 		csel->base->setAlpha(SP_RGBA32_A_F (c));

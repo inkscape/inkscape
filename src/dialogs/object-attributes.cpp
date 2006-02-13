@@ -71,8 +71,8 @@ window_destroyed (GtkObject *window, GtkObject *object)
 
 
 static void
-sp_object_attr_show_dialog ( SPObject *object, 
-                             const SPAttrDesc *desc, 
+sp_object_attr_show_dialog ( SPObject *object,
+                             const SPAttrDesc *desc,
                              const gchar *tag )
 {
     const gchar **labels, **attrs;
@@ -99,10 +99,10 @@ sp_object_attr_show_dialog ( SPObject *object,
     gtk_widget_show (t);
     gtk_container_add (GTK_CONTAINER (w), t);
 
-    g_signal_connect ( G_OBJECT (w), "destroy", 
+    g_signal_connect ( G_OBJECT (w), "destroy",
                        G_CALLBACK (window_destroyed), object );
-                       
-    g_signal_connect ( G_OBJECT (object), "release", 
+
+    g_signal_connect ( G_OBJECT (object), "release",
                        G_CALLBACK (object_released), w );
 
     gtk_widget_show (w);

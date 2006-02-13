@@ -236,13 +236,13 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     Parameter * param = NULL;
     if (!strcmp(type, "boolean")) {
         param = new ParamBool(name, guitext, in_ext, in_repr);
-    } else if (!strcmp(type, "int")) { 
+    } else if (!strcmp(type, "int")) {
         param = new ParamInt(name, guitext, in_ext, in_repr);
-    } else if (!strcmp(type, "float")) { 
+    } else if (!strcmp(type, "float")) {
         param = new ParamFloat(name, guitext, in_ext, in_repr);
-    } else if (!strcmp(type, "string")) { 
+    } else if (!strcmp(type, "string")) {
         param = new ParamString(name, guitext, in_ext, in_repr);
-    } 
+    }
 
     /* Note: param could equal NULL */
     return param;
@@ -348,7 +348,7 @@ Parameter::get_bool (const Inkscape::XML::Document * doc)
     boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
         throw Extension::param_wrong_type();
-    return boolpntr->get(doc); 
+    return boolpntr->get(doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -359,7 +359,7 @@ Parameter::get_int (const Inkscape::XML::Document * doc)
     intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
         throw Extension::param_wrong_type();
-    return intpntr->get(doc); 
+    return intpntr->get(doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -370,7 +370,7 @@ Parameter::get_float (const Inkscape::XML::Document * doc)
     floatpntr = dynamic_cast<ParamFloat *>(this);
     if (floatpntr == NULL)
         throw Extension::param_wrong_type();
-    return floatpntr->get(doc); 
+    return floatpntr->get(doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -381,7 +381,7 @@ Parameter::get_string (const Inkscape::XML::Document * doc)
     stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
         throw Extension::param_wrong_type();
-    return stringpntr->get(doc); 
+    return stringpntr->get(doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -392,7 +392,7 @@ Parameter::set_bool (bool in, Inkscape::XML::Document * doc)
     boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
         throw Extension::param_wrong_type();
-    return boolpntr->set(in, doc); 
+    return boolpntr->set(in, doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -403,7 +403,7 @@ Parameter::set_int (int in, Inkscape::XML::Document * doc)
     intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
         throw Extension::param_wrong_type();
-    return intpntr->set(in, doc); 
+    return intpntr->set(in, doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -414,7 +414,7 @@ Parameter::set_float (float in, Inkscape::XML::Document * doc)
     floatpntr = dynamic_cast<ParamFloat *>(this);
     if (floatpntr == NULL)
         throw Extension::param_wrong_type();
-    return floatpntr->set(in, doc); 
+    return floatpntr->set(in, doc);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -425,7 +425,7 @@ Parameter::set_string (const gchar * in, Inkscape::XML::Document * doc)
     stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
         throw Extension::param_wrong_type();
-    return stringpntr->set(in, doc); 
+    return stringpntr->set(in, doc);
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */
@@ -504,7 +504,7 @@ public:
                 describing the parameter. */
     ParamFloatAdjustment (ParamFloat * param) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 0.1), _pref(param) {
-        this->set_value(_pref->get(NULL) /* \todo fix */); 
+        this->set_value(_pref->get(NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamFloatAdjustment::val_changed));
         return;
     };
@@ -535,7 +535,7 @@ public:
                 describing the parameter. */
     ParamIntAdjustment (ParamInt * param) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param) {
-        this->set_value(_pref->get(NULL) /* \todo fix */); 
+        this->set_value(_pref->get(NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
         return;
     };
@@ -559,7 +559,7 @@ ParamIntAdjustment::val_changed (void)
 
 /**
     \brief  Creates a Float Adjustment for a float parameter
-    
+
     Builds a hbox with a label and a float adjustment in it.
 */
 Gtk::Widget *
@@ -583,7 +583,7 @@ ParamFloat::get_widget (void)
 
 /**
     \brief  Creates a Int Adjustment for a int parameter
-    
+
     Builds a hbox with a label and a int adjustment in it.
 */
 Gtk::Widget *
@@ -615,7 +615,7 @@ private:
 public:
     /** \brief  Initialize the check button
         \param  param  Which parameter to adjust on changing the check button
-        
+
         This function sets the value of the checkbox to be that of the
         parameter, and then sets up a callback to \c on_toggle.
     */
@@ -642,7 +642,7 @@ ParamBoolCheckButton::on_toggle (void)
 
 /**
     \brief  Creates a bool check button for a bool parameter
-    
+
     Builds a hbox with a label and a check button in it.
 */
 Gtk::Widget *
@@ -696,7 +696,7 @@ ParamStringEntry::changed_text (void)
 
 /**
     \brief  Creates a text box for the string parameter
-    
+
     Builds a hbox with a label and a text box in it.
 */
 Gtk::Widget *
@@ -722,12 +722,12 @@ Glib::ustring *
 ParamBool::string (void)
 {
     Glib::ustring * mystring;
-    
-    if (_value) 
+
+    if (_value)
         mystring = new Glib::ustring("true");
     else
         mystring = new Glib::ustring("false");
-    
+
     return mystring;
 }
 
@@ -757,7 +757,7 @@ ParamString::string (void)
 {
     Glib::ustring * mystring = new Glib::ustring("");
     *mystring += "\"";
-    *mystring += _value; 
+    *mystring += _value;
     *mystring += "\"";
     return mystring;
 }

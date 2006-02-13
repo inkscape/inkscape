@@ -116,7 +116,7 @@ sp_dash_selector_init (SPDashSelector *dsel)
 	GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (dsel->offset), 0.1, 2);
 	gtk_tooltips_set_tip (tt, sb, _("Pattern offset"), NULL);
 
-	sp_dialog_defocus_on_enter (sb); 
+	sp_dialog_defocus_on_enter (sb);
 	gtk_widget_show (sb);
 	gtk_box_pack_start (GTK_BOX (dsel), sb, FALSE, FALSE, 0);
 	gtk_signal_connect (dsel->offset, "value_changed", GTK_SIGNAL_FUNC (sp_dash_selector_offset_value_changed), dsel);
@@ -264,7 +264,7 @@ sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 
 	// FIXME: all of the below twibblering is due to the limitations of gdk_gc_set_dashes (only integers, no zeroes).
 	// Perhaps would make sense to rework this with manually drawn dashes.
-	
+
 	// Fill in the integer array of pixel-lengths, for display
 	gint8 pixels_i[64];
 	gdouble pixels_d[64];
@@ -284,7 +284,7 @@ sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 		gdouble pixels = DASH_PREVIEW_WIDTH * pattern[i_s];
 
 		if (pixels > 0.0)
-			pixels_d [i_p] += pixels; 
+			pixels_d [i_p] += pixels;
 		else {
 			if (i_p >= 1) {
 				// dash is zero, skip this element in the array, and set pointer backwards so the next dash is added to the previous
@@ -300,13 +300,13 @@ sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 	n_pixel_dashes = i_p;
 
 	gdouble longest_dash = 0.0;
-	
+
 	// after summation, convert double dash lengths to ints
 	for (i_p = 0; i_p < n_pixel_dashes; i_p ++) {
 		pixels_i [i_p] = (gint8) (pixels_d [i_p] + 0.5);
 		// zero-length dashes are already eliminated, so the <1 dash is short but not zero;
 		// we approximate it with a one-pixel mark
-		if (pixels_i [i_p] < 1) 
+		if (pixels_i [i_p] < 1)
 			pixels_i [i_p] = 1;
 		if (i_p % 2 == 0) { // it's a dash
 			if (pixels_d [i_p] > longest_dash)
@@ -329,21 +329,21 @@ sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 		} else if (all_odd_are_zero (pattern, n_source_dashes)) {
 			// draw solid line, only dashes are non-zero
 			gdk_gc_set_line_attributes (gc, DASH_PREVIEW_WIDTH,
-										GDK_LINE_SOLID, GDK_CAP_BUTT, 
+										GDK_LINE_SOLID, GDK_CAP_BUTT,
 										GDK_JOIN_MITER);
 			gdk_draw_line (pixmap, gc, 4, 8, DASH_PREVIEW_LENGTH, 8);
 		} else {
 			// regular pattern with both gaps and dashes non-zero
-			gdk_gc_set_line_attributes (gc, DASH_PREVIEW_WIDTH, 
-										GDK_LINE_ON_OFF_DASH, GDK_CAP_BUTT, 
+			gdk_gc_set_line_attributes (gc, DASH_PREVIEW_WIDTH,
+										GDK_LINE_ON_OFF_DASH, GDK_CAP_BUTT,
 										GDK_JOIN_MITER);
 			gdk_gc_set_dashes (gc, 0, pixels_i, n_pixel_dashes);
 			gdk_draw_line (pixmap, gc, 4, 8, DASH_PREVIEW_LENGTH, 8);
 		}
 	} else {
 		// no pattern, draw solid line
-		gdk_gc_set_line_attributes (gc, DASH_PREVIEW_WIDTH, 
-									GDK_LINE_SOLID, GDK_CAP_BUTT, 
+		gdk_gc_set_line_attributes (gc, DASH_PREVIEW_WIDTH,
+									GDK_LINE_SOLID, GDK_CAP_BUTT,
 									GDK_JOIN_MITER);
 		gdk_draw_line (pixmap, gc, 4, 8, DASH_PREVIEW_LENGTH, 8);
 	}
@@ -351,9 +351,9 @@ sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 	gdk_gc_unref (gc);
 
 	GtkWidget *px = gtk_pixmap_new (pixmap, NULL);
-	
+
 	gdk_pixmap_unref (pixmap);
-	
+
 	gtk_widget_show (px);
 	gtk_container_add (GTK_CONTAINER (mi), px);
 

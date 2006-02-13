@@ -28,11 +28,11 @@
 
 
 /**
-* \brief  This function is called to zero the transientize semaphore by a 
+* \brief  This function is called to zero the transientize semaphore by a
 *         timeout.
 */
-gboolean 
-sp_allow_again (gpointer *wd) 
+gboolean
+sp_allow_again (gpointer *wd)
 {
     ((win_data *) wd)->stop = 0;
     return FALSE; // so that it is only called once
@@ -51,7 +51,7 @@ sp_dialog_defocus (GtkWindow *win)
     //find out the document window we're transient for
     w = gtk_window_get_transient_for ((GtkWindow *) win);
     //switch to it
-    
+
     if (w) {
         gtk_window_present (w);
     }
@@ -66,7 +66,7 @@ sp_dialog_defocus (GtkWindow *win)
 void
 sp_dialog_defocus_callback (GtkWindow *win, gpointer data)
 {
-    sp_dialog_defocus ((GtkWindow *) 
+    sp_dialog_defocus ((GtkWindow *)
         gtk_widget_get_toplevel ((GtkWidget *) data));
 }
 
@@ -75,7 +75,7 @@ sp_dialog_defocus_callback (GtkWindow *win, gpointer data)
 void
 sp_dialog_defocus_on_enter (GtkWidget *w)
 {
-    g_signal_connect ( G_OBJECT (w), "activate", 
+    g_signal_connect ( G_OBJECT (w), "activate",
                        G_CALLBACK (sp_dialog_defocus_callback), w );
 }
 
@@ -91,26 +91,26 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
         return FALSE;
     }
 
-    gboolean ret = FALSE; 
+    gboolean ret = FALSE;
 
     switch (event->type) {
-    
+
         case GDK_KEY_PRESS:
-        
+
             switch (get_group0_keyval (&event->key)) {
-                case GDK_Escape: 
+                case GDK_Escape:
                     sp_dialog_defocus (win);
-                    ret = TRUE; 
+                    ret = TRUE;
                     break;
                 case GDK_F4:
                 case GDK_w:
                 case GDK_W:
                     // close dialog
                     if (MOD__CTRL_ONLY) {
-                    
-                        /* this code sends a delete_event to the dialog, 
-                         * instead of just destroying it, so that the 
-                         * dialog can do some housekeeping, such as remember 
+
+                        /* this code sends a delete_event to the dialog,
+                         * instead of just destroying it, so that the
+                         * dialog can do some housekeeping, such as remember
                          * its position.
                          */
                         GdkEventAny event;
@@ -122,7 +122,7 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
                         gtk_main_do_event ((GdkEvent*)&event);
                         g_object_unref (G_OBJECT (event.window));
 
-                        ret = TRUE; 
+                        ret = TRUE;
                     }
                     break;
                 default: // pass keypress to the canvas
@@ -131,15 +131,15 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
     default:
         ;
     }
-    
-    return ret; 
-    
+
+    return ret;
+
 }
 
 
 
 /**
- * \brief  Make the argument dialog transient to the currently active document 
+ * \brief  Make the argument dialog transient to the currently active document
            window.
  */
 void
@@ -214,10 +214,10 @@ gboolean
 sp_dialog_hide (GtkObject *object, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;
-    
+
     if (dlg)
         gtk_widget_hide (dlg);
-    
+
     return TRUE;
 }
 
@@ -230,7 +230,7 @@ sp_dialog_unhide (GtkObject *object, gpointer data)
 
     if (dlg)
         gtk_widget_show (dlg);
-    
+
     return TRUE;
 }
 
