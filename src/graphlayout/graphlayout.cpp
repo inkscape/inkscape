@@ -20,10 +20,10 @@
 #include "sp-conn-end-pair.h"
 #include "conn-avoid-ref.h"
 #include "libavoid/connector.h"
+#include "libavoid/geomtypes.h"
 #include <boost/graph/kamada_kawai_spring_layout.hpp>
 #include <boost/graph/circle_layout.hpp>
 #include <boost/graph/adjacency_list.hpp>
-//#include <boost/graph/simple_point.hpp>
 #include <boost/graph/graphviz.hpp>
 #include <map>
 #include <vector>
@@ -32,16 +32,12 @@
 
 using namespace boost;
 
-struct simple_point {
-	double x;
-	double y;
-};
 // create a typedef for the Graph type
 typedef adjacency_list<vecS, vecS, undirectedS, no_property, 
 	property<edge_weight_t, double> > Graph;
 typedef property_map<Graph, edge_weight_t>::type WeightMap;
 typedef graph_traits<Graph>::vertex_descriptor Vertex;
-typedef std::vector<simple_point> PositionVec;
+typedef std::vector<Avoid::Point> PositionVec;
 typedef iterator_property_map<PositionVec::iterator, property_map<Graph, vertex_index_t>::type> PositionMap;
 
 bool isConnector(SPItem *i) {
