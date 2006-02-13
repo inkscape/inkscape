@@ -159,10 +159,14 @@ MessageHandler::_isValidMessage(LmMessage* message)
 	// such a message.
 	offline = lm_message_node_get_child(root, "x");
 	if (offline != NULL) {
-		if (strcmp(lm_message_node_get_value(offline), "Offline Storage") == 0) {
-			return false;
+		gchar const* val = lm_message_node_get_value(offline);
+		if (val != NULL) {
+			if (strcmp(val, "Offline Storage") == 0) {
+				return false;
+			}
 		}
 	}
+
 
 	// 4.  If this is a regular chat message...
 	msubtype = lm_message_get_sub_type(message);
