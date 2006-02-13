@@ -519,7 +519,7 @@ static gint sp_font_preview_expose(GtkWidget *widget, GdkEventExpose *event)
                  * text has been entered) to get a preview of the font.  Choose
                  * some representative characters that users of your locale will be
                  * interested in. */
-                p = _("AaBbCcIiPpQq12368.;/()");
+		p = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
             }
             int len = 0;
             
