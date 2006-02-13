@@ -457,7 +457,7 @@ dnl ******************************
 
 dnl *** NOTE: when we move to gtk 2.6 or later, we can remove the 
 dnl ********* the override for g_ascii_strtod below...
-PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.4.0  libxml-2.0 >= 2.6.0  libxslt >= 1.0.15  sigc++-2.0 >= 2.0.3  $ink_spell_pkg  gthread-2.0 >= 2.0)
+PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.4.0  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  sigc++-2.0 >= 2.0.3  $ink_spell_pkg  gthread-2.0 >= 2.0)
 
 dnl Shouldn't we test for libpng and libz?
 INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz"
