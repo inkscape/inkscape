@@ -14,6 +14,7 @@
 #include <config.h>
 
 #ifdef HAVE_BOOST_GRAPH_LIB
+#include "sp-path.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
 #include "sp-conn-end-pair.h"
@@ -63,7 +64,6 @@ void graphlayout(GSList const *const items) {
 
 	Graph g;
 
-	std::cout<<"Building graph with "<<n<<" nodes"<<std::endl;
 	double minX=DBL_MAX, minY=DBL_MAX, maxX=-DBL_MAX, maxY=-DBL_MAX;
 
 	std::map<std::string,Vertex> nodelookup;
@@ -73,7 +73,13 @@ void graphlayout(GSList const *const items) {
 	{
 		SPItem *u=*it;
 		std::cout<<"id:"<<u->id<<std::endl;
-		if(strncmp(u->id,"path",4)) {
+		SPPath *path = NULL;
+		if(SP_IS_PATH(u)) {
+			path = SP_PATH(u);
+		}
+		bool isConn = path && path->connEndPair.isAutoRoutingConn();
+		if(!isConn) {
+			std::cout<<"  is a node."<<std::endl;
 			nodelookup[u->id]=add_vertex(g);
 		}
 	}
