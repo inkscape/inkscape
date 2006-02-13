@@ -429,7 +429,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_in
         }
     }
 
-    if ( new_value != old_value ) {
+    if ( new_value != old_value && (!old_value || !new_value || strcmp(old_value, new_value))) {
         if (_logger) {
             _logger->notifyAttributeChanged(*this, key, old_value, new_value);
         }
