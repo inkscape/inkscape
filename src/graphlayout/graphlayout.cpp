@@ -138,7 +138,7 @@ void graphlayout(GSList const *const items) {
 	std::cout<<"Graph has |V|="<<num_vertices(g)<<" Width="<<width<<" Height="<<height<<std::endl;
   	PositionVec position_vec(num_vertices(g));
   	PositionMap position(position_vec.begin(), get(vertex_index, g));
-  	//write_graphviz(std::cout, g, make_label_writer<std::vector<std::string>>(labels));
+  	write_graphviz(std::cout, g);
 	circle_graph_layout(g, position, width/2.0);
 	kamada_kawai_spring_layout(g, position, weightmap, side_length(width));
 
