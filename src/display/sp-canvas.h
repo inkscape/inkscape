@@ -161,6 +161,14 @@ struct SPCanvas {
     /* For use by internal pick_current_item() function */
     unsigned int in_repick : 1;
 
+    // In most tools Inkscape only generates enter and leave events
+    // on the current item, but no other enter events if a mouse button
+    // is depressed -- see function pick_current_item().  Some tools
+    // may wish the canvas to generate to all enter events, (e.g., the
+    // connector tool).  If so, they may temporarily set this flag to
+    // 'true'.
+    bool gen_all_enter_events;
+    
     int rendermode;
     
     NR::Rect getViewbox() const;

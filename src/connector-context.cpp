@@ -279,6 +279,10 @@ sp_connector_context_setup(SPEventContext *ec)
     if (prefs_get_int_attribute("tools.connector", "selcue", 0) != 0) {
         ec->enableSelectionCue();
     }
+
+    // Make sure we see all enter events for canvas items,
+    // even if a mouse button is depressed.
+    dt->canvas->gen_all_enter_events = true;
 }
 
 
@@ -298,6 +302,10 @@ sp_connector_context_finish(SPEventContext *ec)
     }
     cc_clear_active_shape(cc);
     cc_clear_active_conn(cc);
+
+    // Restore the default event generating behaviour.
+    SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(ec);
+    desktop->canvas->gen_all_enter_events = false;
 }
 
 

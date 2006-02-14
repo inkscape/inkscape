@@ -960,6 +960,9 @@ sp_canvas_init (SPCanvas *canvas)
 
     canvas->need_repick = TRUE;
 
+    // See comment at in sp-canvas.h.
+    canvas->gen_all_enter_events = false;
+
     canvas->tiles=NULL;
     canvas->tLeft=canvas->tTop=canvas->tRight=canvas->tBottom=0;
     canvas->tileH=canvas->tileV=0;
@@ -1251,9 +1254,21 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
 static int
 pick_current_item (SPCanvas *canvas, GdkEvent *event)
 {
+    int button_down;
     double x, y;
 
     int retval = FALSE;
+
+    if (canvas->gen_all_enter_events == false) {
+        // If a button is down, we'll perform enter and leave events on the
+        // current item, but not enter on any other item.  This is more or
+        // less like X pointer grabbing for canvas items.
+        //
+        button_down = canvas->state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK |
+                GDK_BUTTON3_MASK | GDK_BUTTON4_MASK | GDK_BUTTON5_MASK);
+
+        if (!button_down) canvas->left_grabbed_item = FALSE;
+    }
 
     /* Save the event in the canvas.  This is used to synthesize enter and
      * leave events in case the current item changes.  It is also used to
@@ -1340,6 +1355,15 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         canvas->in_repick = TRUE;
         retval = emit_event (canvas, &new_event);
         canvas->in_repick = FALSE;
+    }
+
+    if (canvas->gen_all_enter_events == false) {
+        // new_current_item may have been set to NULL during the call to
+        // emit_event() above
+        if ((canvas->new_current_item != canvas->current_item) && button_down) {
+            canvas->left_grabbed_item = TRUE;
+            return retval;
+        }
     }
 
     /* Handle the rest of cases */
