@@ -31,11 +31,12 @@ public:
     void setAvoid(char const *value);
     void handleSettingChange(void);
     
-    // Returns a list of SPItems of all connectors attached to this
-    // object.  Pass one of the following for 'type':
+    // Returns a list of SPItems of all connectors/shapes attached to
+    // this object.  Pass one of the following for 'type':
     //     Avoid::ConnRef::runningTo
     //     Avoid::ConnRef::runningFrom
     //     Avoid::ConnRef::runningToAndFrom
+    GSList *getAttachedShapes(const unsigned int type);
     GSList *getAttachedConnectors(const unsigned int type);
 
 private:

@@ -109,20 +109,49 @@ void SPAvoidRef::handleSettingChange(void)
 }
 
 
+GSList *SPAvoidRef::getAttachedShapes(const unsigned int type)
+{
+    GSList *list = NULL;
+
+    Avoid::IntList shapes;
+    GQuark shapeId = g_quark_from_string(item->id);
+    Avoid::attachedShapes(shapes, shapeId, type);
+    
+    Avoid::IntList::iterator finish = shapes.end();
+    for (Avoid::IntList::iterator i = shapes.begin(); i != finish; ++i) {
+        const gchar *connId = g_quark_to_string(*i);
+        SPObject *obj = item->document->getObjectById(connId);
+        if (obj == NULL) {
+            g_warning("getAttachedShapes: Object with id=\"%s\" is not "
+                    "found. Skipping.", connId);
+            continue;
+        }
+        SPItem *shapeItem = SP_ITEM(obj);
+        list = g_slist_prepend(list, shapeItem);
+    }
+    return list;
+}
+
+
 GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
 {
     GSList *list = NULL;
 
     Avoid::IntList conns;
     GQuark shapeId = g_quark_from_string(item->id);
-    Avoid::attachedToShape(conns, shapeId, type);
+    Avoid::attachedConns(conns, shapeId, type);
     
     Avoid::IntList::iterator finish = conns.end();
     for (Avoid::IntList::iterator i = conns.begin(); i != finish; ++i) {
         const gchar *connId = g_quark_to_string(*i);
-        SPItem *citem = SP_ITEM(item->document->getObjectById(connId));
-        g_assert(citem != NULL);
-        list = g_slist_prepend(list, citem);
+        SPObject *obj = item->document->getObjectById(connId);
+        if (obj == NULL) {
+            g_warning("getAttachedConnectors: Object with id=\"%s\" is not "
+                    "found. Skipping.", connId);
+            continue;
+        }
+        SPItem *connItem = SP_ITEM(obj);
+        list = g_slist_prepend(list, connItem);
     }
     return list;
 }

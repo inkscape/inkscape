@@ -421,8 +421,14 @@ const unsigned int ConnRef::runningFrom = 2;
 const unsigned int ConnRef::runningToAndFrom =
         ConnRef::runningTo | ConnRef::runningFrom;
 
+// XXX: attachedShapes and attachedConns both need to be rewritten
+//      for constant time lookup of attached objects once this info
+//      is stored better within libavoid.
 
-void attachedToShape(IntList &conns, const unsigned int shapeId,
+
+    // Returns a list of connector Ids of all the connectors of type
+    // 'type' attached to the shape with the ID 'shapeId'.
+void attachedConns(IntList &conns, const unsigned int shapeId,
         const unsigned int type)
 {
     ConnRefList::iterator fin = connRefs.end();
@@ -432,6 +438,31 @@ void attachedToShape(IntList &conns, const unsigned int shapeId,
         }
         else if ((type & ConnRef::runningFrom) && ((*i)->_srcId == shapeId)) {
             conns.push_back((*i)->_dstId);
+        }
+    }
+}
+
+
+    // Returns a list of shape Ids of all the shapes attached to the
+    // shape with the ID 'shapeId' with connection type 'type'.
+void attachedShapes(IntList &shapes, const unsigned int shapeId,
+        const unsigned int type)
+{
+    ConnRefList::iterator fin = connRefs.end();
+    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
+        if ((type & ConnRef::runningTo) && ((*i)->_dstId == shapeId)) {
+            if ((*i)->_srcId != 0)
+            {
+                // Only if there is a shape attached to the other end.
+                shapes.push_back((*i)->_srcId);
+            }
+        }
+        else if ((type & ConnRef::runningFrom) && ((*i)->_srcId == shapeId)) {
+            if ((*i)->_dstId != 0)
+            {
+                // Only if there is a shape attached to the other end.
+                shapes.push_back((*i)->_dstId);
+            }
         }
     }
 }

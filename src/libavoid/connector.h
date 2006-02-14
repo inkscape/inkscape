@@ -64,7 +64,9 @@ class ConnRef
         void makePathInvalid(void);
         
         friend void markConnectors(ShapeRef *shape);
-        friend void attachedToShape(IntList &conns,
+        friend void attachedShapes(IntList &shapes,
+                const unsigned int shapeId, const unsigned int type);
+        friend void attachedConns(IntList &conns,
                 const unsigned int shapeId, const unsigned int type);
 
         static const unsigned int runningTo;
@@ -91,7 +93,9 @@ class ConnRef
 extern ConnRefList connRefs;
 
 extern void callbackAllInvalidConnectors(void);
-extern void attachedToShape(IntList &conns, const unsigned int shapeId,
+extern void attachedConns(IntList &conns, const unsigned int shapeId,
+        const unsigned int type);
+extern void attachedShapes(IntList &shapes, const unsigned int shapeId,
         const unsigned int type);
 
 }
