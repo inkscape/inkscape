@@ -135,7 +135,7 @@ arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPSVGView
 	static gboolean active = FALSE;
 	SPEvent spev;
 
-	SPItem *spitem = (ai) ? (SPItem*)NR_ARENA_ITEM_GET_DATA (ai) : NULL;
+	SPItem *spitem = (ai) ? (SPItem*)NR_ARENA_ITEM_GET_DATA (ai) : 0;
 
 	switch (event->type) {
 	case GDK_BUTTON_PRESS:
@@ -147,10 +147,14 @@ arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPSVGView
 		break;
 	case GDK_BUTTON_RELEASE:
 		if (event->button.button == 1) {
-			if (active && (event->button.x == x) && (event->button.y == y)) {
+			if (active && (event->button.x == x) && 
+                                      (event->button.y == y)) {
 				spev.type = SP_EVENT_ACTIVATE;
-				sp_item_event (spitem, &spev);
-			}
+                                if ( spitem != 0 )
+				{
+				  sp_item_event (spitem, &spev);
+                                }
+      			}
 		}
 		active = FALSE;
 		break;
@@ -160,12 +164,18 @@ arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPSVGView
 	case GDK_ENTER_NOTIFY:
 		spev.type = SP_EVENT_MOUSEOVER;
 		spev.data = svgview;
-		sp_item_event (spitem, &spev);
+                if ( spitem != 0 )
+		{
+		  sp_item_event (spitem, &spev);
+                }
 		break;
 	case GDK_LEAVE_NOTIFY:
 		spev.type = SP_EVENT_MOUSEOUT;
 		spev.data = svgview;
-		sp_item_event (spitem, &spev);
+                if ( spitem != 0 )
+		{
+		  sp_item_event (spitem, &spev);
+                }
 		break;
 	default:
 		break;
