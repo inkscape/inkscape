@@ -11,7 +11,11 @@
 
 #ifndef SEEN_GRAPHLAYOUT_H
 #define SEEN_GRAPHLAYOUT_H
-#include "util/glib-list-iterators.h"
 
-void graphlayout(GSList const *const items);
+struct _GSList;
+void graphlayout(_GSList const *const items);
+class SPItem;
+bool isConnector(SPItem const *const item);
+#include <list>
+void filterConnectors(_GSList const *const items, std::list<SPItem *> &filtered);
 #endif // SEEN_GRAPHLAYOUT_H

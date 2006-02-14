@@ -14,6 +14,7 @@
 #include <config.h>
 
 #ifdef HAVE_BOOST_GRAPH_LIB
+#include "util/glib-list-iterators.h"
 #include "sp-path.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
@@ -40,14 +41,29 @@ typedef graph_traits<Graph>::vertex_descriptor Vertex;
 typedef std::vector<Avoid::Point> PositionVec;
 typedef iterator_property_map<PositionVec::iterator, property_map<Graph, vertex_index_t>::type> PositionMap;
 
-bool isConnector(SPItem *i) {
+/**
+ * Returns true if item is a connector
+ */
+bool isConnector(SPItem const *const i) {
 	SPPath *path = NULL;
 	if(SP_IS_PATH(i)) {
 		path = SP_PATH(i);
 	}
 	return path && path->connEndPair.isAutoRoutingConn();
 }
-#endif // HAVE_BOOST_GRAPH_LIB
+
+/**
+ * Scans the items list and places those items that are 
+ * not connectors in filtered
+ */
+void filterConnectors(GSList const *const items, std::list<SPItem *> &filtered) {
+	for(GSList *i=(GSList *)items; i!=NULL; i=i->next) {
+		SPItem *item=SP_ITEM(i->data);
+		if(!isConnector(item)) {
+			filtered.push_back(item);
+		}
+	}
+}
 /**
 * Takes a list of inkscape items, extracts the graph defined by 
 * connectors between them, and uses graph layout techniques to find
@@ -57,54 +73,50 @@ void graphlayout(GSList const *const items) {
 	if(!items) {
 		return;
 	}
-#ifdef HAVE_BOOST_GRAPH_LIB
-
 
 	using Inkscape::Util::GSListConstIterator;
 	std::list<SPItem *> selected;
-	selected.insert<GSListConstIterator<SPItem *> >(selected.end(), items, NULL);
+	filterConnectors(items,selected);
 	if (selected.empty()) return;
+
+	int n=selected.size();
+	std::cout<<"|V|="<<n<<std::endl;
 
 	Graph g;
 
 	double minX=DBL_MAX, minY=DBL_MAX, maxX=-DBL_MAX, maxY=-DBL_MAX;
 
 	std::map<std::string,Vertex> nodelookup;
-	std::vector<std::string> labels;
-	for (std::list<SPItem *>::iterator it(selected.begin());
-		it != selected.end();
-		++it)
+	for (std::list<SPItem *>::iterator i(selected.begin());
+		i != selected.end();
+		++i)
 	{
-		SPItem *u=*it;
-		if(!isConnector(u)) {
-			std::cout<<"Creating node for id: "<<u->id<<std::endl;
-			nodelookup[u->id]=add_vertex(g);
-			labels.push_back(u->id);
-		}
+		SPItem *u=*i;
+		std::cout<<"Creating node for id: "<<u->id<<std::endl;
+		nodelookup[u->id]=add_vertex(g);
 	}
 
-	int n=labels.size();
 	//Check 2 or more selected objects
 	if (n < 2) return;
 
 	WeightMap weightmap=get(edge_weight, g);
-	int i=0;
-	for (std::list<SPItem *>::iterator it(selected.begin());
-		it != selected.end();
-		++it)
+	for (std::list<SPItem *>::iterator i(selected.begin());
+		i != selected.end();
+		++i)
 	{
 		using NR::X; using NR::Y;
-		SPItem *itu=*it;
-		Vertex u=nodelookup[itu->id];
-		GSList *nlist=itu->avoidRef->getAttachedShapes(Avoid::ConnRef::runningFrom);
+		SPItem *iu=*i;
+		std::cout<<"Getting neighbours for id: "<<iu->id<<std::endl;
+		Vertex u=nodelookup[iu->id];
+		GSList *nlist=iu->avoidRef->getAttachedShapes(Avoid::ConnRef::runningFrom);
 		std::list<SPItem *> neighbours;
 		neighbours.insert<GSListConstIterator<SPItem *> >(neighbours.end(),nlist,NULL);
-		for (std::list<SPItem *>::iterator ne(neighbours.begin());
-				ne != neighbours.end();
-				++ne) {
+		for (std::list<SPItem *>::iterator j(neighbours.begin());
+				j != neighbours.end();
+				++j) {
 			
-			SPItem *itv=*ne;
-			Vertex v=nodelookup[itv->id];
+			SPItem *iv=*j;
+			Vertex v=nodelookup[iv->id];
 			Graph::edge_descriptor e; bool inserted;
 			tie(e, inserted)=add_edge(u,v,g);
 			weightmap[e]=1.0;
@@ -112,7 +124,7 @@ void graphlayout(GSList const *const items) {
 		if(nlist) {
 			g_slist_free(nlist);
 		}
-		NR::Rect const item_box(sp_item_bbox_desktop(*it));
+		NR::Rect const item_box(sp_item_bbox_desktop(*i));
 			
 		NR::Point ll(item_box.min());
 		minX=std::min(ll[0],minX);
@@ -131,7 +143,6 @@ void graphlayout(GSList const *const items) {
 	kamada_kawai_spring_layout(g, position, weightmap, side_length(width));
 
 	graph_traits<Graph>::vertex_iterator vi, vi_end;
-	i=0;
 	for (std::list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();
 		++it)
@@ -145,7 +156,9 @@ void graphlayout(GSList const *const items) {
 			sp_item_move_rel(u, NR::translate(dest - curr));
 		}
 	}
-#else
-	std::cout<<"Connector network layout not available!  Install boost graph library and recompile to enable."<<std::endl;
-#endif // HAVE_BOOST_GRAPH_LIB
 }
+#else
+void graphlayout(GSList const *const items) {
+	std::cout<<"Connector network layout not available!  Install boost graph library and recompile to enable."<<std::endl;
+}
+#endif // HAVE_BOOST_GRAPH_LIB
