@@ -9,12 +9,12 @@
 *
 * Released under GNU GPL.  Read the file 'COPYING' for more information.
 */
+#include "util/glib-list-iterators.h"
 #include "graphlayout/graphlayout.h"
 #include <iostream>
 #include <config.h>
 
 #ifdef HAVE_BOOST_GRAPH_LIB
-#include "util/glib-list-iterators.h"
 #include "sp-path.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
