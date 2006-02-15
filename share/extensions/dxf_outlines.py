@@ -62,7 +62,7 @@ class MyEffect(inkex.Effect):
         #              NURB Curves: A Guide for the Uninitiated By Philip J. Schneider
         self.dxf_add("999\nDXF created by Inkscape\n0\nSECTION\n2\nENTITIES")
         
-        scale = 5.0/18.0
+        scale = 25.4/90.0
         h = unittouu(inkex.xml.xpath.Evaluate('/svg/@height',self.document)[0].value)
 
         path = '//path'
