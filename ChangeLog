@@ -1,3 +1,28 @@
+2006-02-15  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	*  src/document.cpp, src/document.h, src/sp-conn-end-pair.cpp, 
+	   src/connector-context.cpp, src/conn-avoid-ref.cpp:
+
+	Keep a seperate connector router for each document.
+	   
+	*  src/libavoid/Makefile_insert, src/libavoid/connector.cpp,
+	   src/libavoid/connector.h, src/libavoid/debug.h,
+	   src/libavoid/geometry.cpp, src/libavoid/geometry.h,
+	   src/libavoid/geomtypes.h, src/libavoid/graph.cpp,
+	   src/libavoid/graph.h, src/libavoid/incremental.cpp,
+	   src/libavoid/incremental.h, src/libavoid/libavoid.h,
+	   src/libavoid/makepath.cpp, src/libavoid/makepath.h,
+	   src/libavoid/polyutil.cpp, src/libavoid/polyutil.h,
+	   src/libavoid/router.cpp, src/libavoid/router.h,
+	   src/libavoid/shape.cpp, src/libavoid/shape.h,
+	   src/libavoid/static.cpp, src/libavoid/static.h,
+	   src/libavoid/timer.cpp, src/libavoid/timer.h,
+	   src/libavoid/vertices.cpp, src/libavoid/vertices.h,
+	   src/libavoid/visibility.cpp, src/libavoid/visibility.h:
+	   
+	Upstream changes to libavoid that allow multiple connector 
+	router instances, as well a few other minor bugfixes.
+
 2006-02-14  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/display/sp-canvas.cpp, display/sp-canvas.h, connector-context.cpp:
