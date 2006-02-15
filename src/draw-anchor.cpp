@@ -1,4 +1,4 @@
-/** \file 
+/** \file
  * Anchors implementation.
  */
 
@@ -63,7 +63,7 @@ sp_draw_anchor_destroy(SPDrawAnchor *anchor)
 #define A_SNAP 4.0
 
 /**
- * Test if point is near anchor, if so fill anchor on canvas and return 
+ * Test if point is near anchor, if so fill anchor on canvas and return
  * pointer to it or NULL.
  */
 SPDrawAnchor *

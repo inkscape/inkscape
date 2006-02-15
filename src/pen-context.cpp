@@ -1,5 +1,5 @@
-/** \file 
- * Pen event context implementation. 
+/** \file
+ * Pen event context implementation.
  */
 
 /*
@@ -126,7 +126,7 @@ sp_pen_context_init(SPPenContext *pc)
     event_context->cursor_shape = cursor_pen_xpm;
     event_context->hot_x = 4;
     event_context->hot_y = 4;
-    
+
     pc->npoints = 0;
     pc->mode = SP_PEN_CONTEXT_MODE_CLICK;
     pc->state = SP_PEN_CONTEXT_POINT;
@@ -235,7 +235,7 @@ sp_pen_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
     }
 }
 
-/** 
+/**
  * Snaps new node relative to the previous node.
  */
 static void
@@ -248,7 +248,7 @@ spdc_endpoint_snap(SPPenContext const *const pc, NR::Point &p, guint const state
     spdc_endpoint_snap_free(pc, p, state);
 }
 
-/** 
+/**
  * Snaps new node's handle relative to the new node.
  */
 static void
@@ -321,7 +321,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
             return TRUE;
         }
-        
+
         NR::Point const event_w(bevent.x, bevent.y);
         pen_drag_origin_w = event_w;
         pen_within_tolerance = true;
@@ -352,12 +352,12 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                         /* This is allowed, if we just cancelled curve */
                     case SP_PEN_CONTEXT_POINT:
                         if (pc->npoints == 0) {
-                            
+
                             /* Set start anchor */
                             pc->sa = anchor;
                             NR::Point p;
                             if (anchor) {
-                                
+
                                 /* Adjust point to anchor if needed */
                                 p = anchor->dp;
                                 desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Continuing selected path"));
@@ -369,7 +369,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 // anchor, which is handled by the sibling branch above)
                                 Inkscape::Selection * const selection = SP_DT_SELECTION(desktop);
                                 if (!(bevent.state & GDK_SHIFT_MASK)) {
-                                    
+
                                     selection->clear();
                                     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Creating new path"));
 
@@ -385,12 +385,12 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                             }
                             spdc_pen_set_initial_point(pc, p);
                         } else {
-                            
+
                             /* Set end anchor */
                             pc->ea = anchor;
                             NR::Point p;
                             if (anchor) {
-                                
+
                                 p = anchor->dp;
                                 // we hit an anchor, will finish the curve (either with or without closing)
                                 // in release handler
@@ -399,18 +399,18 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 if (pc->green_anchor && pc->green_anchor->active) {
                                     // we clicked on the current curve start, so close it even if
                                     // we drag a handle away from it
-                                    dc->green_closed = TRUE; 
+                                    dc->green_closed = TRUE;
                                 }
                                 ret = TRUE;
                                 break;
-                                
+
                             } else {
-                                
+
                                 p = event_dt;
                                 spdc_endpoint_snap(pc, p, bevent.state); /* Snap node only if not hitting anchor. */
                                 spdc_pen_set_subsequent_point(pc, p, true);
                             }
-                            
+
                         }
                         pc->state = SP_PEN_CONTEXT_CONTROL;
                         ret = TRUE;
@@ -434,7 +434,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
             ret = TRUE;
         }
     }
-    
+
     return ret;
 }
 
@@ -864,7 +864,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                     if (pc->green_bpaths->data)
                         gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
                     pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
-                }    
+                }
                 /* Get last segment */
                 NArtBpath const *const p = SP_CURVE_BPATH(pc->green_curve);
                 gint const e = SP_CURVE_LENGTH(pc->green_curve);
@@ -1031,7 +1031,7 @@ spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const s
     if (!sp_curve_empty(pc->red_curve)) {
         sp_curve_append_continuous(pc->green_curve, pc->red_curve, 0.0625);
         SPCurve *curve = sp_curve_copy(pc->red_curve);
-        /// \todo fixme: 
+        /// \todo fixme:
         SPCanvasItem *cshape = sp_canvas_bpath_new(SP_DT_SKETCH(pc->desktop), curve);
         sp_curve_unref(curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);

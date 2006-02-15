@@ -3,7 +3,7 @@
 
 /*
  * SPMetric handling and stuff
- * I hope this will be usefull :-) 
+ * I hope this will be usefull :-)
  */
 
 gdouble
@@ -73,7 +73,7 @@ sp_metric_to_metric_string(gdouble const length,
 {
     gdouble const len = sp_absolute_metric_to_metric(length, metric_src, metric_dst);
     GString *str = g_string_new("");
-    g_string_printf(str, "%0.02f", len); 
+    g_string_printf(str, "%0.02f", len);
     /* We need a fixed number of fractional digits, because otherwise the live statusbar display of
      * lengths will be too jerky */
 

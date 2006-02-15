@@ -39,7 +39,7 @@ SPSVGView::SPSVGView (SPCanvasGroup *parent)
 
 SPSVGView::~SPSVGView()
 {
-    if (doc() && _drawing) 
+    if (doc() && _drawing)
     {
         sp_item_invoke_hide (SP_ITEM (sp_document_root (doc())), _dkey);
         _drawing = NULL;
@@ -63,7 +63,7 @@ SPSVGView::setScale (gdouble hscale, gdouble vscale)
  * Rescales SPSVGView and keeps aspect ratio.
  */
 void
-SPSVGView::setRescale 
+SPSVGView::setRescale
 (bool rescale, bool keepaspect, gdouble width, gdouble height)
 {
     g_return_if_fail (!rescale || (width >= 0.0));
@@ -147,7 +147,7 @@ arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPSVGView
 		break;
 	case GDK_BUTTON_RELEASE:
 		if (event->button.button == 1) {
-			if (active && (event->button.x == x) && 
+			if (active && (event->button.x == x) &&
                                       (event->button.y == y)) {
 				spev.type = SP_EVENT_ACTIVATE;
                                 if ( spitem != 0 )
@@ -201,11 +201,11 @@ SPSVGView::setDocument (SPDocument *document)
 
     if (document) {
         NRArenaItem *ai = sp_item_invoke_show (
-                SP_ITEM (sp_document_root (document)), 
+                SP_ITEM (sp_document_root (document)),
                 SP_CANVAS_ARENA (_drawing)->arena,
-                _dkey, 
+                _dkey,
                 SP_ITEM_SHOW_DISPLAY);
-        
+
         if (ai) {
             nr_arena_item_add_child (SP_CANVAS_ARENA (_drawing)->root, ai, NULL);
             nr_arena_item_unref (ai);

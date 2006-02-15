@@ -108,7 +108,7 @@ static void sp_paint_server_painter_free(SPPaintServer *ps, SPPainter *painter)
     g_return_if_fail(painter != NULL);
 
     SPPaintServerClass *psc = (SPPaintServerClass *) G_OBJECT_GET_CLASS(ps);
-    
+
     SPPainter *r = NULL;
     for (SPPainter *p = ps->painters; p != NULL; p = p->next) {
         if (p == painter) {
@@ -125,7 +125,7 @@ static void sp_paint_server_painter_free(SPPaintServer *ps, SPPainter *painter)
         }
         r = p;
     }
-    
+
     g_assert_not_reached();
 }
 

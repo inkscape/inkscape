@@ -48,7 +48,7 @@ SPConnEndPair::~SPConnEndPair()
         delete _connRef;
         _connRef = NULL;
     }
-    
+
     _invalid_path_connection.disconnect();
     _transformed_connection.disconnect();
 }
@@ -75,7 +75,7 @@ sp_conn_end_pair_build(SPObject *object)
 }
 
 
-static void 
+static void
 avoid_conn_move(NR::Matrix const *mp, SPItem *moved_item)
 {
     // Detach from objects if attached.
@@ -94,7 +94,7 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
     if (key == SP_ATTR_CONNECTOR_TYPE) {
         if (value && (strcmp(value, "polyline") == 0)) {
             _connType = SP_CONNECTOR_POLYLINE;
-            
+
             Avoid::Router *router = _path->document->router;
             GQuark itemID = g_quark_from_string(SP_OBJECT(_path)->id);
             _connRef = new Avoid::ConnRef(router, itemID);
@@ -105,7 +105,7 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
         }
         else {
             _connType = SP_CONNECTOR_NOAVOID;
-            
+
             if (_connRef) {
                 _connRef->removeFromGraph();
                 delete _connRef;
@@ -117,7 +117,7 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
         return;
 
     }
-    
+
     unsigned const handle_ix = key - SP_ATTR_CONNECTION_START;
     g_assert( handle_ix <= 1 );
     this->_connEnd[handle_ix]->setAttacherHref(value);
@@ -149,13 +149,13 @@ SPConnEndPair::getEndpoints(NR::Point endPts[]) const {
     SPCurve *curve = _path->curve;
     SPItem *h2attItem[2];
     getAttachedItems(h2attItem);
-    
+
     for (unsigned h = 0; h < 2; ++h) {
         if ( h2attItem[h] ) {
             NR::Rect const bbox = h2attItem[h]->invokeBbox(sp_item_i2doc_affine(h2attItem[h]));
             endPts[h] = bbox.midpoint();
         }
-        else 
+        else
         {
             if (h == 0) {
                 endPts[h] = sp_curve_first_point(curve);
@@ -180,7 +180,7 @@ static void emitPathInvalidationNotification(void *ptr)
     // then all connectors (that require it) will be rerouted.  Otherwise,
     // one connector could get rerouted several times as a result of
     // dragging a couple of shapes.
-   
+
     SPPath *path = SP_PATH(ptr);
     path->connEndPair._invalid_path_signal.emit(path);
 }
@@ -251,7 +251,7 @@ SPConnEndPair::isAutoRoutingConn(void)
     }
     return false;
 }
-    
+
 void
 SPConnEndPair::makePathInvalid(void)
 {
@@ -273,7 +273,7 @@ SPConnEndPair::reroutePath(void)
 
     Avoid::Point src = { endPt[0][NR::X], endPt[0][NR::Y] };
     Avoid::Point dst = { endPt[1][NR::X], endPt[1][NR::Y] };
-    
+
     _connRef->updateEndPoint(Avoid::VertID::src, src);
     _connRef->updateEndPoint(Avoid::VertID::tar, dst);
 
@@ -281,7 +281,7 @@ SPConnEndPair::reroutePath(void)
 
     Avoid::PolyLine route = _connRef->route();
     _connRef->calcRouteDist();
-    
+
     sp_curve_reset(curve);
     sp_curve_moveto(curve, endPt[0]);
 

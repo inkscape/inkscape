@@ -22,7 +22,7 @@ Inkscape::Rubberband *Inkscape::Rubberband::_instance = NULL;
 Inkscape::Rubberband::Rubberband()
     : _desktop(NULL), _canvas(NULL)
 {
-    
+
 }
 
 void Inkscape::Rubberband::start(SPDesktop *d, NR::Point const &p)

@@ -227,12 +227,12 @@ static void sp_rect_rx_set(SPItem *item, NR::Point const &p, NR::Point const &or
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
         rect->rx.computed = rect->ry.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, temp);
         rect->rx._set = rect->ry._set = true;
-        
+
     } else {
         rect->rx.computed = CLAMP(rect->x.computed + rect->width.computed - p[NR::X], 0.0, rect->width.computed / 2.0);
         rect->rx._set = true;
     }
-    
+
     ((SPObject*)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
@@ -248,7 +248,7 @@ static void sp_rect_ry_set(SPItem *item, NR::Point const &p, NR::Point const &or
 {
     SPRect *rect = SP_RECT(item);
 
-    if (state & GDK_CONTROL_MASK) {        
+    if (state & GDK_CONTROL_MASK) {
         gdouble temp = MIN(rect->height.computed, rect->width.computed) / 2.0;
         rect->rx.computed = rect->ry.computed = CLAMP(p[NR::Y] - rect->y.computed, 0.0, temp);
         rect->ry._set = rect->rx._set = true;

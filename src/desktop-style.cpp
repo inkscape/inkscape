@@ -82,7 +82,7 @@ sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines)
 
     // 2. Generally we allow setting style on clones, but when it's inside flowRegion, do not touch
     // it, be it clone or not; it's just styleless shape (because that's how Inkscape does
-    // flowtext). 
+    // flowtext).
 
     if (!(skip_lines
           && ((SP_IS_TSPAN(o) && SP_TSPAN(o)->role == SP_TSPAN_ROLE_LINE)
@@ -164,8 +164,8 @@ sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change, bool write
     bool intercepted = desktop->_set_style_signal.emit(css);
 
 /** \todo
- * FIXME: in set_style, compensate pattern and gradient fills, stroke width, 
- * rect corners, font size for the object's own transform so that pasting 
+ * FIXME: in set_style, compensate pattern and gradient fills, stroke width,
+ * rect corners, font size for the object's own transform so that pasting
  * fills does not depend on preserve/optimize.
  */
 
@@ -241,7 +241,7 @@ sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char 
 }
 
 /**
- * Returns the font size (in SVG pixels) of the text tool style (if text 
+ * Returns the font size (in SVG pixels) of the text tool style (if text
  * tool uses its own style) or desktop style (otherwise).
 */
 double
@@ -374,7 +374,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
 
                 if (!SP_IS_PATTERN(server))
                    return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different kind of server
- 
+
                 SPPattern *pat = pattern_getroot (SP_PATTERN (server));
                 SPPattern *pat_res = pattern_getroot (SP_PATTERN (server_res));
                 if (pat_res != pat)
@@ -437,7 +437,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
         if (num > 1) {
             if (same_color)
                 return QUERY_STYLE_MULTIPLE_SAME;
-            else 
+            else
                 return QUERY_STYLE_MULTIPLE_AVERAGED;
         } else {
             return QUERY_STYLE_SINGLE;
@@ -493,7 +493,7 @@ objects_query_opacity (GSList *objects, SPStyle *style_res)
     } else {
         if (same_opacity)
             return QUERY_STYLE_MULTIPLE_SAME;
-        else 
+        else
             return QUERY_STYLE_MULTIPLE_AVERAGED;
     }
 }
@@ -524,7 +524,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
 
         if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
             continue;
-        } 
+        }
 
         n_stroked ++;
 
@@ -551,7 +551,7 @@ objects_query_strokewidth (GSList *objects, SPStyle *style_res)
     } else {
         if (same_sw)
             return QUERY_STYLE_MULTIPLE_SAME;
-        else 
+        else
             return QUERY_STYLE_MULTIPLE_AVERAGED;
     }
 }
@@ -581,7 +581,7 @@ objects_query_miterlimit (GSList *objects, SPStyle *style_res)
 
         if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
             continue;
-        } 
+        }
 
         n_stroked ++;
 
@@ -605,7 +605,7 @@ objects_query_miterlimit (GSList *objects, SPStyle *style_res)
     } else {
         if (same_ml)
             return QUERY_STYLE_MULTIPLE_SAME;
-        else 
+        else
             return QUERY_STYLE_MULTIPLE_AVERAGED;
     }
 }
@@ -634,7 +634,7 @@ objects_query_strokecap (GSList *objects, SPStyle *style_res)
 
         if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
             continue;
-        } 
+        }
 
         n_stroked ++;
 
@@ -655,7 +655,7 @@ objects_query_strokecap (GSList *objects, SPStyle *style_res)
     } else {
         if (same_cap)
             return QUERY_STYLE_MULTIPLE_SAME;
-        else 
+        else
             return QUERY_STYLE_MULTIPLE_DIFFERENT;
     }
 }
@@ -684,7 +684,7 @@ objects_query_strokejoin (GSList *objects, SPStyle *style_res)
 
         if ( style->stroke.type == SP_PAINT_TYPE_NONE ) {
             continue;
-        } 
+        }
 
         n_stroked ++;
 
@@ -705,7 +705,7 @@ objects_query_strokejoin (GSList *objects, SPStyle *style_res)
     } else {
         if (same_join)
             return QUERY_STYLE_MULTIPLE_SAME;
-        else 
+        else
             return QUERY_STYLE_MULTIPLE_DIFFERENT;
     }
 }
@@ -754,7 +754,7 @@ objects_query_fontnumbers (GSList *objects, SPStyle *style_res)
             letterspacing_normal = false;
         }
 
-        double linespacing_current; 
+        double linespacing_current;
         if (style->line_height.normal) {
             linespacing_current = Inkscape::Text::Layout::LINE_HEIGHT_NORMAL;
             if (!different && (linespacing_prev == 0 || linespacing_prev == linespacing_current))
@@ -838,7 +838,7 @@ objects_query_fontstyle (GSList *objects, SPStyle *style_res)
 
         texts ++;
 
-        if (set && 
+        if (set &&
             font_style_to_pos(*style_res).signature() != font_style_to_pos(*style).signature() ) {
             different = true;  // different styles
         }
@@ -892,7 +892,7 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
 
         texts ++;
 
-        if (style_res->text->font_family.value && style->text->font_family.value && 
+        if (style_res->text->font_family.value && style->text->font_family.value &&
             strcmp (style_res->text->font_family.value, style->text->font_family.value)) {
             different = true;  // different fonts
         }
@@ -965,7 +965,7 @@ sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property)
 {
     int ret = desktop->_query_style_signal.emit(style, property);
 
-    if (ret != QUERY_STYLE_NOTHING)  
+    if (ret != QUERY_STYLE_NOTHING)
         return ret; // subselection returned a style, pass it on
 
     // otherwise, do querying and averaging over selection
@@ -980,8 +980,8 @@ bool
 sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
 {
         int result_family = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        int result_fstyle = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
-        int result_fnumbers = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+        int result_fstyle = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
+        int result_fnumbers = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
         int result_fill = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_FILL);
         int result_stroke = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKE);
         int result_strokewidth = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKEWIDTH);

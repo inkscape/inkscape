@@ -42,7 +42,7 @@ sp_conn_end_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
     //       that have internal representations that are updated later
     //       by the sp_*_update functions, e.g., text.
     sp_document_ensure_up_to_date(path->document);
-    
+
     // Get the new route around obstacles.
     path->connEndPair.reroutePath();
 
@@ -108,10 +108,10 @@ sp_conn_end_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
         NR::Rect otherpt_rect = NR::Rect(other_endpt, other_endpt);
         NR::Rect h2bbox_icoordsys[2] = { otherpt_rect, otherpt_rect };
         h2bbox_icoordsys[ind] = h2attItem[ind]->invokeBbox(NR::identity());
-        
+
         h2i2anc = i2anc_affine(h2attItem[ind], ancestor);
         h2endPt_icoordsys[ind] = h2bbox_icoordsys[ind].midpoint();
-        
+
         h2endPt_icoordsys[!ind] = other_endpt;
 
         // For the attached object, change the corresponding point to be
@@ -120,10 +120,10 @@ sp_conn_end_move_compensate(NR::Matrix const *mp, SPItem *moved_item,
         h2endPt_icoordsys[ind] = calc_bbox_conn_pt(h2bbox_icoordsys[ind],
                                                  ( last_seg_pt / h2i2anc ));
         h2endPt_pcoordsys[ind] = h2endPt_icoordsys[ind] * h2i2anc / path2anc;
-        
+
         // Leave the other where it is.
         h2endPt_pcoordsys[!ind] = other_endpt;
-        
+
         change_endpts(path->curve, h2endPt_pcoordsys);
     }
     if (updatePathRepr) {
@@ -236,7 +236,7 @@ sp_conn_end_detach(SPObject *const owner, unsigned const handle_ix)
 
 void
 SPConnEnd::setAttacherHref(gchar const *value)
-{    
+{
     if ( value && href && ( strcmp(value, href) == 0 ) ) {
         /* No change, do nothing. */
     } else {

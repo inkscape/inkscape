@@ -174,11 +174,11 @@ sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_MARKERWIDTH:
-	        marker->markerWidth.readOrUnset(value, SVGLength::NONE, 3.0, 3.0); 
+	        marker->markerWidth.readOrUnset(value, SVGLength::NONE, 3.0, 3.0);
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_MARKERHEIGHT:
-	        marker->markerHeight.readOrUnset(value, SVGLength::NONE, 3.0, 3.0); 
+	        marker->markerHeight.readOrUnset(value, SVGLength::NONE, 3.0, 3.0);
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	case SP_ATTR_ORIENT:
@@ -518,7 +518,7 @@ sp_marker_print (SPItem *item, SPPrintContext *ctx)
 /* fixme: Remove link if zero-sized (Lauris) */
 
 /**
-* First of all, removes any SPMarkerViews that a marker has with a specific key.   
+* First of all, removes any SPMarkerViews that a marker has with a specific key.
 * Set up the NRArenaItem array's size in the specified SPMarker's SPMarkerView.
 * \param marker Marker to create views in.
 * \param key Key to give each SPMarkerView.
@@ -562,7 +562,7 @@ sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 			}
 			if (!v->items[pos]) {
 				/* Parent class ::show method */
-				v->items[pos] = ((SPItemClass *) parent_class)->show ((SPItem *) marker, 
+				v->items[pos] = ((SPItemClass *) parent_class)->show ((SPItem *) marker,
 										      parent->arena, key,
 										      SP_ITEM_REFERENCE_FLAGS);
 				if (v->items[pos]) {

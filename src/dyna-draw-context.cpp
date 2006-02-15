@@ -136,7 +136,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     event_context->cursor_shape = cursor_calligraphy_xpm;
     event_context->hot_x = 4;
     event_context->hot_y = 4;
-    
+
     ddc->accumulated = NULL;
     ddc->segments = NULL;
     ddc->currentcurve = NULL;
@@ -490,7 +490,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
                 return TRUE;
             }
-            
+
             NR::Point const button_w(event->button.x,
                                      event->button.y);
             NR::Point const button_dt(desktop->w2d(button_w));
@@ -510,7 +510,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                                   ? ( GDK_KEY_PRESS_MASK |
                                       GDK_BUTTON_RELEASE_MASK |
                                       GDK_BUTTON_PRESS_MASK    )
-                                  : ( GDK_KEY_PRESS_MASK | 
+                                  : ( GDK_KEY_PRESS_MASK |
                                       GDK_BUTTON_RELEASE_MASK |
                                       GDK_POINTER_MOTION_MASK |
                                       GDK_BUTTON_PRESS_MASK    ) ),
@@ -596,7 +596,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         case GDK_KP_Up:
             if (!MOD__CTRL_ONLY) {
                 dc->angle += 5.0;
-                if (dc->angle > 90.0) 
+                if (dc->angle > 90.0)
                     dc->angle = 90.0;
                 sp_ddc_update_toolbox (desktop, "calligraphy-angle", dc->angle);
                 ret = TRUE;
@@ -606,7 +606,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         case GDK_KP_Down:
             if (!MOD__CTRL_ONLY) {
                 dc->angle -= 5.0;
-                if (dc->angle < -90.0) 
+                if (dc->angle < -90.0)
                     dc->angle = -90.0;
                 sp_ddc_update_toolbox (desktop, "calligraphy-angle", dc->angle);
                 ret = TRUE;
@@ -616,7 +616,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         case GDK_KP_Right:
             if (!MOD__CTRL_ONLY) {
                 dc->width += 0.01;
-                if (dc->width > 1.0) 
+                if (dc->width > 1.0)
                     dc->width = 1.0;
                 sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width); // the same spinbutton is for alt+x
                 ret = TRUE;
@@ -626,9 +626,9 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         case GDK_KP_Left:
             if (!MOD__CTRL_ONLY) {
                 dc->width -= 0.01;
-                if (dc->width < 0.01) 
+                if (dc->width < 0.01)
                     dc->width = 0.01;
-                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width); 
+                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width);
                 ret = TRUE;
             }
             break;

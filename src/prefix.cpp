@@ -3,7 +3,7 @@
  * Written by: Mike Hearn <mike@theoretic.com>
  *             Hongli Lai <h.lai@chello.nl>
  * http://autopackage.org/
- * 
+ *
  * This source code is public domain. You can relicense this code
  * under whatever license you want.
  *
@@ -41,7 +41,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <limits.h> 
+#include <limits.h>
 #include <string.h>
 #include "prefix.h"
 

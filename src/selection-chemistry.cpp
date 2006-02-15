@@ -1030,7 +1030,7 @@ void sp_selection_copy()
 void sp_selection_paste(bool in_place)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    
+
     if (desktop == NULL) {
         return;
     }
@@ -1182,7 +1182,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
         SPItem *item = SP_ITEM(l->data);
 
         NR::Point old_center(0,0);
-        if (set_i2d && item->isCenterSet()) 
+        if (set_i2d && item->isCenterSet())
             old_center = item->getCenter();
 
 #if 0 /* Re-enable this once persistent guides have a graphical indication.
@@ -1232,7 +1232,7 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
 
             // calculate the matrix we need to apply to the clone to cancel its induced transform from its original
             NR::Matrix t = matrix_to_desktop (matrix_from_desktop (affine, item), item);
-            NR::Matrix t_inv = matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item); 
+            NR::Matrix t_inv = matrix_to_desktop (matrix_from_desktop (affine.inverse(), item), item);
             NR::Matrix result = t_inv * item->transform * t;
 
             if ((prefs_parallel || prefs_unmoved) && affine.is_translation()) {
@@ -1301,7 +1301,7 @@ sp_selection_scale_absolute(Inkscape::Selection *selection,
 
     NR::Rect const bbox(selection->bounds());
     if (bbox.isEmpty()) {
-        return; 
+        return;
     }
 
     NR::translate const p2o(-bbox.min());
@@ -2164,7 +2164,7 @@ sp_selection_create_bitmap_copy ()
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
     NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
-    NR::Matrix t = NR::scale (1/res, -1/res) * NR::translate (bbox.x0, bbox.y1) * eek.inverse(); 
+    NR::Matrix t = NR::scale (1/res, -1/res) * NR::translate (bbox.x0, bbox.y1) * eek.inverse();
 
     // Do the export
     sp_export_png_file(document, filepath,
@@ -2197,12 +2197,12 @@ sp_selection_create_bitmap_copy ()
         gchar c[256];
         if (sp_svg_transform_write(c, 256, t)) {
             repr->setAttribute("transform", c);
-        } 
+        }
 
         // add the new repr to the parent
         parent->appendChild(repr);
 
-        // move to the saved position 
+        // move to the saved position
         repr->setPosition(pos > 0 ? pos + 1 : 1);
 
         // Set selection to the new image

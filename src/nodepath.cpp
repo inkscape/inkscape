@@ -47,7 +47,7 @@ class NR::Matrix;
 /// evil evil evil. FIXME: conflict of two different Path classes!
 /// There is a conflict in the namespace between two classes named Path.
 /// #include "sp-flowtext.h"
-/// #include "sp-flowregion.h" 
+/// #include "sp-flowregion.h"
 
 #define SP_TYPE_FLOWREGION            (sp_flowregion_get_type ())
 #define SP_IS_FLOWREGION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FLOWREGION))
@@ -131,7 +131,7 @@ static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Ink
 static Inkscape::NodePath::Node *active_node = NULL;
 
 /**
- * \brief Creates new nodepath from item 
+ * \brief Creates new nodepath from item
  */
 Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
 {
@@ -182,7 +182,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
     np->nodeContext = NULL; //Let the context that makes this set it
 
     // we need to update item's transform from the repr here,
-    // because they may be out of sync when we respond 
+    // because they may be out of sync when we respond
     // to a change in repr by regenerating nodepath     --bb
     sp_object_read_attr(SP_OBJECT(item), "transform");
 
@@ -257,7 +257,7 @@ static gint sp_nodepath_get_node_count(Inkscape::NodePath::Path *np)
 
 /**
  * Clean up a nodepath after editing.
- * 
+ *
  * Currently we are deleting trivial subpaths.
  */
 static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
@@ -284,11 +284,11 @@ static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
 
 
 /**
- * \brief Returns true if the argument nodepath and the d attribute in 
- * its repr do not match. 
+ * \brief Returns true if the argument nodepath and the d attribute in
+ * its repr do not match.
  *
- * This may happen if repr was changed in, e.g., XML editor or by undo. 
- * 
+ * This may happen if repr was changed in, e.g., XML editor or by undo.
+ *
  * \todo
  * UGLY HACK, think how we can eliminate it.
  */
@@ -307,7 +307,7 @@ gboolean nodepath_repr_d_changed(Inkscape::NodePath::Path *np, char const *newd)
     gboolean ret;
     if (attr_d && svgpath)
         ret = strcmp(attr_d, svgpath);
-    else 
+    else
         ret = TRUE;
 
     g_free(svgpath);
@@ -317,8 +317,8 @@ gboolean nodepath_repr_d_changed(Inkscape::NodePath::Path *np, char const *newd)
 }
 
 /**
- * \brief Returns true if the argument nodepath and the sodipodi:nodetypes 
- * attribute in its repr do not match. 
+ * \brief Returns true if the argument nodepath and the sodipodi:nodetypes
+ * attribute in its repr do not match.
  *
  * This may happen if repr was changed in, e.g., the XML editor or by undo.
  */
@@ -681,7 +681,7 @@ static void sp_nodepath_line_midpoint(Inkscape::NodePath::Node *new_path,Inkscap
 }
 
 /**
- * Adds new node on direct line between two nodes, activates handles of all 
+ * Adds new node on direct line between two nodes, activates handles of all
  * three nodes.
  */
 static Inkscape::NodePath::Node *sp_nodepath_line_add_node(Inkscape::NodePath::Node *end, gdouble t)
@@ -847,7 +847,7 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
 }
 
 /**
- * Same as sp_nodepath_set_node_type(), but also converts, if necessary, 
+ * Same as sp_nodepath_set_node_type(), but also converts, if necessary,
  * adjacent segments from lines to curves.
 */
 void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeType type)
@@ -859,7 +859,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
             NR::Point delta;
             if (node->n.other != NULL)
                 delta = node->n.other->pos - node->p.other->pos;
-            else 
+            else
                 delta = node->pos - node->p.other->pos;
             node->p.pos = node->pos - delta / 4;
             sp_node_ensure_ctrls(node);
@@ -871,7 +871,7 @@ void sp_nodepath_convert_node_type(Inkscape::NodePath::Node *node, Inkscape::Nod
             NR::Point delta;
             if (node->p.other != NULL)
                 delta = node->p.other->pos - node->n.other->pos;
-            else 
+            else
                 delta = node->pos - node->n.other->pos;
             node->n.pos = node->pos - delta / 4;
             sp_node_ensure_ctrls(node);
@@ -1227,7 +1227,7 @@ sp_nodepath_select_segment_near_point(SPItem * item, NR::Point p, bool toggle)
     gboolean force = FALSE;
     if (!(e->selected && (!e->p.other || e->p.other->selected))) {
         force = TRUE;
-    } 
+    }
     sp_nodepath_node_select(e, (gboolean) toggle, force);
     if (e->p.other)
         sp_nodepath_node_select(e->p.other, TRUE, force);
@@ -1252,7 +1252,7 @@ sp_nodepath_add_node_near_point(SPItem * item, NR::Point p)
 
     //find segment to split
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
-   
+
     //don't know why but t seems to flip for lines
     if (sp_node_path_code_from_side(e, sp_node_get_side(e, -1)) == NR_LINETO) {
         position.t = 1.0 - position.t;
@@ -1276,7 +1276,7 @@ sp_nodepath_add_node_near_point(SPItem * item, NR::Point p)
  * cf. app/vectors/gimpbezierstroke.c, gimp_bezier_stroke_point_move_relative()
  */
 void
-sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta, char * key) 
+sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta, char * key)
 {
     /* feel good is an arbitrary parameter that distributes the delta between handles
      * if t of the drag point is less than 1/6 distance form the endpoint only
@@ -1291,7 +1291,7 @@ sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta, 
         feel_good = (1 - pow((6 * (1-t) - 1) / 2.0, 3)) / 2 + 0.5;
     else
         feel_good = 1;
-    
+
     //if we're dragging a line convert it to a curve
     if (sp_node_path_code_from_side(e, sp_node_get_side(e, -1))==NR_LINETO) {
         sp_nodepath_set_line_type(e, NR_CURVETO);
@@ -1901,10 +1901,10 @@ sp_nodepath_select_all(Inkscape::NodePath::Path *nodepath, bool invert)
     }
 }
 
-/** 
- * If nothing selected, does the same as sp_nodepath_select_all(); 
- * otherwise selects/inverts all nodes in all subpaths that have selected nodes 
- * (i.e., similar to "select all in layer", with the "selected" subpaths 
+/**
+ * If nothing selected, does the same as sp_nodepath_select_all();
+ * otherwise selects/inverts all nodes in all subpaths that have selected nodes
+ * (i.e., similar to "select all in layer", with the "selected" subpaths
  * being treated as "layers" in the path).
  */
 void
@@ -1940,7 +1940,7 @@ sp_nodepath_select_all_from_subpath(Inkscape::NodePath::Path *nodepath, bool inv
 }
 
 /**
- * \brief Select the node after the last selected; if none is selected, 
+ * \brief Select the node after the last selected; if none is selected,
  * select the first within path.
  */
 void sp_nodepath_select_next(Inkscape::NodePath::Path *nodepath)
@@ -1997,7 +1997,7 @@ void sp_nodepath_select_next(Inkscape::NodePath::Path *nodepath)
 }
 
 /**
- * \brief Select the node before the first selected; if none is selected, 
+ * \brief Select the node before the first selected; if none is selected,
  * select the last within path
  */
 void sp_nodepath_select_prev(Inkscape::NodePath::Path *nodepath)
@@ -2439,7 +2439,7 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
    // If either (Shift and some handle retracted), or (we're already dragging out a handle)
-   if (((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos))) || n->dragging_out) { 
+   if (((state & GDK_SHIFT_MASK) && ((n->n.other && n->n.pos == n->pos) || (n->p.other && n->p.pos == n->pos))) || n->dragging_out) {
 
        NR::Point mouse = (*p);
 
@@ -2950,7 +2950,7 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
 
         Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
         NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) { 
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             box.expandTo (n->pos); // contain all selected nodes
         }
@@ -2965,12 +2965,12 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
             rot = angle;
         }
 
-        NR::Matrix t = 
-            NR::Matrix (NR::translate(-box.midpoint())) * 
-            NR::Matrix (NR::rotate(rot)) * 
+        NR::Matrix t =
+            NR::Matrix (NR::translate(-box.midpoint())) *
+            NR::Matrix (NR::rotate(rot)) *
             NR::Matrix (NR::translate(box.midpoint()));
 
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) { 
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             n->pos *= t;
             n->n.pos *= t;
@@ -3002,14 +3002,14 @@ static void node_scale_one (Inkscape::NodePath::Node *n, gdouble grow, int which
     } else if (!n->p.other) {
         me = &(n->n);
         other = &(n->p);
-        if (n->n.other)    
+        if (n->n.other)
             n->n.other->code = NR_CURVETO;
     } else {
         if (which > 0) { // right handle
             if (xn > xp) {
                 me = &(n->n);
                 other = &(n->p);
-                if (n->n.other)    
+                if (n->n.other)
                     n->n.other->code = NR_CURVETO;
             } else {
                 me = &(n->p);
@@ -3020,7 +3020,7 @@ static void node_scale_one (Inkscape::NodePath::Node *n, gdouble grow, int which
             if (xn <= xp) {
                 me = &(n->n);
                 other = &(n->p);
-                if (n->n.other)    
+                if (n->n.other)
                     n->n.other->code = NR_CURVETO;
             } else {
                 me = &(n->p);
@@ -3032,7 +3032,7 @@ static void node_scale_one (Inkscape::NodePath::Node *n, gdouble grow, int which
             other = &(n->p);
             both = true;
             n->code = NR_CURVETO;
-            if (n->n.other)    
+            if (n->n.other)
                 n->n.other->code = NR_CURVETO;
         }
     }
@@ -3083,19 +3083,19 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
 
         Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
         NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) { 
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             box.expandTo (n->pos); // contain all selected nodes
         }
 
         double scale = (box.maxExtent() + grow)/box.maxExtent();
 
-        NR::Matrix t = 
-            NR::Matrix (NR::translate(-box.midpoint())) * 
-            NR::Matrix (NR::scale(scale, scale)) * 
+        NR::Matrix t =
+            NR::Matrix (NR::translate(-box.midpoint())) *
+            NR::Matrix (NR::scale(scale, scale)) *
             NR::Matrix (NR::translate(box.midpoint()));
 
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) { 
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             n->pos *= t;
             n->n.pos *= t;
@@ -3134,17 +3134,17 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
 
         Inkscape::NodePath::Node *n0 = (Inkscape::NodePath::Node *) nodepath->selected->data;
         NR::Rect box (n0->pos, n0->pos); // originally includes the first selected node
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) { 
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             box.expandTo (n->pos); // contain all selected nodes
         }
 
-        NR::Matrix t = 
-            NR::Matrix (NR::translate(-box.midpoint())) * 
-            NR::Matrix ((axis == NR::X)? NR::scale(-1, 1) : NR::scale(1, -1)) * 
+        NR::Matrix t =
+            NR::Matrix (NR::translate(-box.midpoint())) *
+            NR::Matrix ((axis == NR::X)? NR::scale(-1, 1) : NR::scale(1, -1)) *
             NR::Matrix (NR::translate(box.midpoint()));
 
-        for (GList *l = nodepath->selected; l != NULL; l = l->next) { 
+        for (GList *l = nodepath->selected; l != NULL; l = l->next) {
             Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
             n->pos *= t;
             n->n.pos *= t;
@@ -3253,7 +3253,7 @@ static void sp_nodepath_subpath_open(Inkscape::NodePath::SubPath *sp,Inkscape::N
  * Returns area in triangle given by points; may be negative.
  */
 inline double
-triangle_area (NR::Point p1, NR::Point p2, NR::Point p3) 
+triangle_area (NR::Point p1, NR::Point p2, NR::Point p3)
 {
     return (p1[NR::X]*p2[NR::Y] + p1[NR::Y]*p3[NR::X] + p2[NR::X]*p3[NR::Y] - p2[NR::Y]*p3[NR::X] - p1[NR::Y]*p2[NR::X] - p1[NR::X]*p3[NR::Y]);
 }
@@ -3514,11 +3514,11 @@ static NRPathcode sp_node_path_code_from_side(Inkscape::NodePath::Node *node,Ink
 /**
  * Call sp_nodepath_line_add_node() at t on the segment denoted by piece
  */
-Inkscape::NodePath::Node * 
+Inkscape::NodePath::Node *
 sp_nodepath_get_node_by_index(int index)
 {
     Inkscape::NodePath::Node *e = NULL;
-    
+
     Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) {
         return e;
@@ -3526,13 +3526,13 @@ sp_nodepath_get_node_by_index(int index)
 
     //find segment
     for (GList *l = nodepath->subpaths; l ; l=l->next) {
-        
+
         Inkscape::NodePath::SubPath *sp = (Inkscape::NodePath::SubPath *)l->data;
         int n = g_list_length(sp->nodes);
         if (sp->closed) {
             n++;
-        } 
-        
+        }
+
         //if the piece belongs to this subpath grab it
         //otherwise move onto the next subpath
         if (index < n) {
@@ -3549,7 +3549,7 @@ sp_nodepath_get_node_by_index(int index)
             }
         }
     }
-    
+
     return e;
 }
 

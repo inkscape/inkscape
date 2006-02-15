@@ -5,7 +5,7 @@
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 2005 Authors 
+ * Copyright (C) 2005 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -24,7 +24,7 @@
 Inkscape::ObjectSnapper::ObjectSnapper(SPNamedView const *nv, NR::Coord const d)
     : Snapper(nv, d), _snap_to_nodes(true), _snap_to_paths(true)
 {
-    
+
 }
 
 
@@ -45,7 +45,7 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
             while (i != it.end() && *i != o) {
                 i++;
             }
-            
+
             if (i == it.end()) {
                 /* See if the item is within range */
                 NR::Rect const b = NR::expand(sp_item_bbox_desktop(SP_ITEM(o)), -getDistance());
@@ -54,7 +54,7 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                 }
             }
         }
-        
+
         _findCandidates(c, o, it, p);
     }
 }
@@ -77,7 +77,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
 
                 int j = 0;
                 NR::Matrix const i2doc = sp_item_i2doc_affine(*i);
-                
+
                 while (sh->curve->bpath[j].code != NR_END) {
 
                     /* Get this node in desktop coordinates */
@@ -89,7 +89,7 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
                     if (dist < getDistance() && dist < s.getDistance()) {
                         s = SnappedPoint(n, dist);
                     }
-                    
+
                     j++;
                 }
             }
@@ -122,7 +122,7 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
             /* Convert the nearest point back to desktop coordinates */
             NR::Point const o_it = get_point_on_Path(*i, o.assume().piece, o.assume().t);
             NR::Point const o_dt = desktop->doc2dt(o_it * i2doc);
-            
+
             NR::Coord const dist = NR::L2(o_dt - p);
             if (dist < getDistance() && dist < s.getDistance()) {
                 s = SnappedPoint(o_dt, dist);

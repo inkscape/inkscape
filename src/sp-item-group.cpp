@@ -613,7 +613,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 		}
 
 		Inkscape::GC::release(repr);
-		if (children && SP_IS_ITEM (nitem)) 
+		if (children && SP_IS_ITEM (nitem))
 			*children = g_slist_prepend (*children, nitem);
 
 		items = g_slist_remove (items, items->data);

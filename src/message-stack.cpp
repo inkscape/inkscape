@@ -104,11 +104,11 @@ MessageId MessageStack::_push(MessageType type, guint lifetime, gchar const *mes
     m->message = g_strdup(message);
 
     if (lifetime) {
-        m->timeout_id = g_timeout_add(lifetime, &MessageStack::_timeout, m);        
+        m->timeout_id = g_timeout_add(lifetime, &MessageStack::_timeout, m);
     } else {
         m->timeout_id = 0;
     }
-        
+
     m->next = _messages;
     _messages = m;
 

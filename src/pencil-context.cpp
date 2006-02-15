@@ -1,4 +1,4 @@
-/** \file 
+/** \file
  * Pencil event context implementation.
  */
 
@@ -110,7 +110,7 @@ sp_pencil_context_init(SPPencilContext *pc)
     event_context->cursor_shape = cursor_pencil_xpm;
     event_context->hot_x = 4;
     event_context->hot_y = 4;
-    
+
     pc->npoints = 0;
     pc->state = SP_PENCIL_CONTEXT_IDLE;
     pc->req_tangent = NR::Point(0, 0);
@@ -207,7 +207,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
         }
 
         NR::Point const button_w(bevent.x, bevent.y);
-        
+
         /* Find desktop coordinates */
         NR::Point p = pc->desktop->w2d(button_w);
 
@@ -295,8 +295,8 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                     /* Create green anchor */
                     pc->green_anchor = sp_draw_anchor_new(pc, pc->green_curve, TRUE, pc->p[0]);
                 }
-                /** \todo 
-                 * fixme: I am not sure whether we want to snap to anchors 
+                /** \todo
+                 * fixme: I am not sure whether we want to snap to anchors
                  * in middle of freehand (Lauris)
                  */
                 if (anchor) {
@@ -480,8 +480,8 @@ spdc_set_endpoint(SPPencilContext *const pc, NR::Point const p)
 
 /**
  * Finalize addline.
- * 
- * \todo 
+ *
+ * \todo
  * fixme: I'd like remove red reset from concat colors (lauris).
  * Still not sure, how it will make most sense.
  */
@@ -567,7 +567,7 @@ fit_and_split(SPPencilContext *pc)
         sp_curve_append_continuous(pc->green_curve, pc->red_curve, 0.0625);
         SPCurve *curve = sp_curve_copy(pc->red_curve);
 
-        /// \todo fixme: 
+        /// \todo fixme:
         SPCanvasItem *cshape = sp_canvas_bpath_new(SP_DT_SKETCH(pc->desktop), curve);
         sp_curve_unref(curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);

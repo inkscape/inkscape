@@ -13,10 +13,10 @@
 Inkscape::SnappedPoint::SnappedPoint(NR::Point p, NR::Coord d)
     : _distance(d), _point(p)
 {
-    
+
 }
 
-Inkscape::SnappedPoint::~SnappedPoint() 
+Inkscape::SnappedPoint::~SnappedPoint()
 {
     /// TODO : empty the _hightlight_groups vector and destroy the
     ///                 HighlightGroup items it holds

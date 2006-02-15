@@ -46,24 +46,24 @@ class SPDocument;
 
 /** \note
  * SPOffset is a derivative of SPShape, much like the SPSpiral or SPRect.
- * The goal is to have a source shape (= originalPath), an offset (= radius) 
- * and compute the offset of the source by the radius. To get it to work, 
- * one needs to know what the source is and what the radius is, and how it's 
- * stored in the xml representation. The object itself is a "path" element, 
- * to get lots of shape functionality for free. The source is the easy part: 
- * it's stored in a "inkscape:original" attribute in the path. In case of 
+ * The goal is to have a source shape (= originalPath), an offset (= radius)
+ * and compute the offset of the source by the radius. To get it to work,
+ * one needs to know what the source is and what the radius is, and how it's
+ * stored in the xml representation. The object itself is a "path" element,
+ * to get lots of shape functionality for free. The source is the easy part:
+ * it's stored in a "inkscape:original" attribute in the path. In case of
  * "linked" offset, as they've been dubbed, there is an additional
- * "inkscape:href" that contains the id of an element of the svg. 
- * When built, the object will attach a listener vector to that object and 
- * rebuild the "inkscape:original" whenever the href'd object changes. This 
- * is of course grossly inefficient, and also does not react to changes 
- * to the href'd during context stuff (like changing the shape of a star by 
- * dragging control points) unless the path of that object is changed during 
- * the context (seems to be the case for SPEllipse). The computation of the 
- * offset is done in sp_offset_set_shape(), a function that is called whenever 
+ * "inkscape:href" that contains the id of an element of the svg.
+ * When built, the object will attach a listener vector to that object and
+ * rebuild the "inkscape:original" whenever the href'd object changes. This
+ * is of course grossly inefficient, and also does not react to changes
+ * to the href'd during context stuff (like changing the shape of a star by
+ * dragging control points) unless the path of that object is changed during
+ * the context (seems to be the case for SPEllipse). The computation of the
+ * offset is done in sp_offset_set_shape(), a function that is called whenever
  * a change occurs to the offset (change of source or change of radius).
- * just like the sp-star and other, this path derivative can make control 
- * points, or more precisely one control point, that's enough to define the 
+ * just like the sp-star and other, this path derivative can make control
+ * points, or more precisely one control point, that's enough to define the
  * radius (look in object-edit).
  */
 
@@ -209,19 +209,19 @@ sp_offset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 {
     if (((SPObjectClass *) parent_class)->build)
         ((SPObjectClass *) parent_class)->build (object, document, repr);
-  
+
     if (object->repr->attribute("inkscape:radius")) {
         sp_object_read_attr (object, "inkscape:radius");
     } else {
         gchar const *oldA = object->repr->attribute("sodipodi:radius");
         object->repr->setAttribute("inkscape:radius",oldA);
         object->repr->setAttribute("sodipodi:radius",NULL);
-    
+
         sp_object_read_attr (object, "inkscape:radius");
     }
     if (object->repr->attribute("inkscape:original")) {
         sp_object_read_attr (object, "inkscape:original");
-    } else {    
+    } else {
         gchar const *oldA = object->repr->attribute("sodipodi:original");
         object->repr->setAttribute("inkscape:original",oldA);
         object->repr->setAttribute("sodipodi:original",NULL);
@@ -315,7 +315,7 @@ sp_offset_release(SPObject *object)
 }
 
 /**
- * Set callback: the function that is called whenever a change is made to 
+ * Set callback: the function that is called whenever a change is made to
  * the description of the object.
  */
 static void
@@ -430,7 +430,7 @@ sp_offset_description(SPItem *item)
 }
 
 /**
- * Converts an NArtBpath (like the one stored in a SPCurve) into a 
+ * Converts an NArtBpath (like the one stored in a SPCurve) into a
  * livarot Path. Duplicate of splivarot.
  */
 Path *
@@ -438,7 +438,7 @@ bpath_to_liv_path(NArtBpath *bpath)
 {
     if (bpath == NULL)
         return NULL;
-  
+
     Path *dest = new Path;
     dest->SetBackData (false);
     {
@@ -545,7 +545,7 @@ sp_offset_set_shape(SPShape *shape)
         Path *originaux[1];
         Path *res = new Path;
         res->SetBackData (false);
-  
+
         // and now: offset
         float o_width;
         if (offset->rad >= 0)
@@ -608,8 +608,8 @@ sp_offset_set_shape(SPShape *shape)
         // version par makeoffset
         Shape *theShape = new Shape;
         Shape *theRes = new Shape;
-    
-    
+
+
         // and now: offset
         float o_width;
         if (offset->rad >= 0)
@@ -620,7 +620,7 @@ sp_offset_set_shape(SPShape *shape)
         {
             o_width = -offset->rad;
         }
-    
+
         // one has to have a measure of the details
         if (o_width >= 1.0)
         {
@@ -795,21 +795,21 @@ static void sp_offset_snappoints(SPItem const *item, SnapPointsIter p)
 // utilitaires pour les poignees
 // used to get the distance to the shape: distance to polygon give the fabs(radius), we still need
 // the sign. for edges, it's easy to determine which side the point is on, for points of the polygon
-// it's trickier: we need to identify which angle the point is in; to that effect, we take each 
+// it's trickier: we need to identify which angle the point is in; to that effect, we take each
 // successive clockwise angle (A,C) and check if the vector B given by the point is in the angle or
 // outside.
-// another method would be to use the Winding() function to test whether the point is inside or outside 
+// another method would be to use the Winding() function to test whether the point is inside or outside
 // the polygon (it would be wiser to do so, in fact, but i like being stupid)
 
-/** 
+/**
  *
  * \todo
  * FIXME: This can be done using linear operations, more stably and
  *  faster.  method: transform A and C into B's space, A should be
  *  negative and B should be positive in the orthogonal component.  I
- *  think this is equivalent to 
- *  dot(A, rot90(B))*dot(C, rot90(B)) == -1.  
- *    -- njh 
+ *  think this is equivalent to
+ *  dot(A, rot90(B))*dot(C, rot90(B)) == -1.
+ *    -- njh
  */
 bool
 vectors_are_clockwise (NR::Point A, NR::Point B, NR::Point C)
@@ -851,12 +851,12 @@ vectors_are_clockwise (NR::Point A, NR::Point B, NR::Point C)
     return false;
 }
 
-/** 
- * Distance to the original path; that function is called from object-edit 
+/**
+ * Distance to the original path; that function is called from object-edit
  * to set the radius when the control knot moves.
  *
- * The sign of the result is the radius we're going to offset the shape with, 
- * so result > 0 ==outset and result < 0 ==inset. thus result<0 means 
+ * The sign of the result is the radius we're going to offset the shape with,
+ * so result > 0 ==outset and result < 0 ==inset. thus result<0 means
  * 'px inside source'.
  */
 double
@@ -868,14 +868,14 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
     double dist = 1.0;
     Shape *theShape = new Shape;
     Shape *theRes = new Shape;
-  
-    /** \todo 
-     * Awfully damn stupid method: uncross the source path EACH TIME you 
-     * need to compute the distance. The good way to do this would be to 
+
+    /** \todo
+     * Awfully damn stupid method: uncross the source path EACH TIME you
+     * need to compute the distance. The good way to do this would be to
      * store the uncrossed source path somewhere, and delete it when the
-     * context is finished. Hopefully this part is much faster than actually 
-     * computing the offset (which happen just after), so the time spent in 
-     * this function should end up being negligible with respect to the 
+     * context is finished. Hopefully this part is much faster than actually
+     * computing the offset (which happen just after), so the time spent in
+     * this function should end up being negligible with respect to the
      * delay of one context.
      */
     // move
@@ -995,8 +995,8 @@ sp_offset_distance_to_original (SPOffset * offset, NR::Point px)
     return dist;
 }
 
-/** 
- * Computes a point on the offset;  used to set a "seed" position for 
+/**
+ * Computes a point on the offset;  used to set a "seed" position for
  * the control knot.
  *
  * \return the topmost point on the offset.
@@ -1142,7 +1142,7 @@ sp_offset_source_modified (SPObject *iSource, guint flags, SPItem *item)
     sp_shape_set_shape ((SPShape *) offset);
 }
 
-static void 
+static void
 refresh_offset_source(SPOffset* offset)
 {
     if ( offset == NULL ) return;
@@ -1195,21 +1195,21 @@ refresh_offset_source(SPOffset* offset)
         {
             theRes->ConvertToShape (theShape, fill_nonZero);
         }
-    
+
         Path *originaux[1];
         originaux[0] = orig;
         Path *res = new Path;
         theRes->ConvertToForme (res, 1, originaux);
-    
+
         delete theShape;
         delete theRes;
-    
+
         char *res_d = res->svg_dump_path ();
         delete res;
         delete orig;
-    
+
         SP_OBJECT (offset)->repr->setAttribute("inkscape:original", res_d);
-    
+
         free (res_d);
     }
 }

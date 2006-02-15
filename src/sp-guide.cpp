@@ -48,7 +48,7 @@ static SPObjectClass *parent_class;
 GType sp_guide_get_type(void)
 {
     static GType guide_type = 0;
-    
+
     if (!guide_type) {
         GTypeInfo guide_info = {
             sizeof(SPGuideClass),
@@ -62,7 +62,7 @@ GType sp_guide_get_type(void)
         };
         guide_type = g_type_register_static(SP_TYPE_OBJECT, "SPGuide", &guide_info, (GTypeFlags) 0);
     }
-    
+
     return guide_type;
 }
 
@@ -70,12 +70,12 @@ static void sp_guide_class_init(SPGuideClass *gc)
 {
     GObjectClass *gobject_class = (GObjectClass *) gc;
     SPObjectClass *sp_object_class = (SPObjectClass *) gc;
-    
+
     parent_class = (SPObjectClass*) g_type_class_ref(SP_TYPE_OBJECT);
-    
+
     gobject_class->set_property = sp_guide_set_property;
     gobject_class->get_property = sp_guide_get_property;
-    
+
     sp_object_class->build = sp_guide_build;
     sp_object_class->release = sp_guide_release;
     sp_object_class->set = sp_guide_set;
@@ -87,7 +87,7 @@ static void sp_guide_class_init(SPGuideClass *gc)
                                                       0xffffffff,
                                                       0xff000000,
                                                       (GParamFlags) G_PARAM_READWRITE));
-    
+
     g_object_class_install_property(gobject_class,
                                     PROP_HICOLOR,
                                     g_param_spec_uint("hicolor", "HiColor", "HiColor",
@@ -144,7 +144,7 @@ static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML
     if (((SPObjectClass *) (parent_class))->build) {
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
     }
-    
+
     sp_object_read_attr(object, "orientation");
     sp_object_read_attr(object, "position");
 }
@@ -152,12 +152,12 @@ static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void sp_guide_release(SPObject *object)
 {
     SPGuide *guide = (SPGuide *) object;
-    
+
     while (guide->views) {
         gtk_object_destroy(GTK_OBJECT(guide->views->data));
         guide->views = g_slist_remove(guide->views, guide->views->data);
     }
-    
+
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
     }
@@ -197,7 +197,7 @@ void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler)
              ( guide->normal == component_vectors[NR::Y] ) );
     SPCanvasItem *item = sp_guideline_new(group, guide->position, vertical_line_p);
     sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
-    
+
     g_signal_connect(G_OBJECT(item), "event", G_CALLBACK(handler), guide);
 
     guide->views = g_slist_prepend(guide->views, item);
@@ -209,7 +209,7 @@ void sp_guide_hide(SPGuide *guide, SPCanvas *canvas)
     g_assert(SP_IS_GUIDE(guide));
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
-    
+
     for (GSList *l = guide->views; l != NULL; l = l->next) {
         if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
             gtk_object_destroy(GTK_OBJECT(l->data));
@@ -217,7 +217,7 @@ void sp_guide_hide(SPGuide *guide, SPCanvas *canvas)
             return;
         }
     }
-    
+
     g_assert_not_reached();
 }
 
@@ -227,14 +227,14 @@ void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
     g_assert(SP_IS_GUIDE(guide));
     g_assert(canvas != NULL);
     g_assert(SP_IS_CANVAS(canvas));
-    
+
     for (GSList *l = guide->views; l != NULL; l = l->next) {
         if (canvas == SP_CANVAS_ITEM(l->data)->canvas) {
             sp_guideline_set_sensitive(SP_GUIDELINE(l->data), sensitive);
             return;
         }
     }
-    
+
     g_assert_not_reached();
 }
 
@@ -263,7 +263,7 @@ void sp_guide_moveto(SPGuide const &guide, gdouble const position, bool const co
         sp_repr_set_svg_double(SP_OBJECT(&guide)->repr,
                            "position", position);
     }
-    
+
     for (vector<SPGuideAttachment>::const_iterator i(guide.attached_items.begin()),
              iEnd(guide.attached_items.end());
          i != iEnd; ++i)
@@ -282,7 +282,7 @@ char *sp_guide_description(SPGuide const *guide)
 {
     using NR::X;
     using NR::Y;
-    
+
     if ( guide->normal == component_vectors[X] ) {
         return g_strdup(_("vertical guideline"));
     } else if ( guide->normal == component_vectors[Y] ) {
@@ -301,7 +301,7 @@ char *sp_guide_description(SPGuide const *guide)
 void sp_guide_remove(SPGuide *guide)
 {
     g_assert(SP_IS_GUIDE(guide));
-    
+
     for (vector<SPGuideAttachment>::const_iterator i(guide->attached_items.begin()),
              iEnd(guide->attached_items.end());
          i != iEnd; ++i)
@@ -310,7 +310,7 @@ void sp_guide_remove(SPGuide *guide)
         remove_last(att.item->constraints, SPGuideConstraint(guide, att.snappoint_ix));
     }
     guide->attached_items.clear();
-    
+
     sp_repr_unparent(SP_OBJECT(guide)->repr);
 }
 

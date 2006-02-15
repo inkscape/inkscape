@@ -190,7 +190,7 @@ sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
 	spiral = SP_SPIRAL (object);
 	shape  = SP_SHAPE (object);
 
-	/// \todo fixme: we should really collect updates 
+	/// \todo fixme: we should really collect updates
 	switch (key) {
 	case SP_ATTR_SODIPODI_CX:
 		if (!sp_svg_length_read_computed_absolute (value, &spiral->cx)) {
@@ -206,11 +206,11 @@ sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
 		break;
 	case SP_ATTR_SODIPODI_EXPANSION:
 		if (value) {
-			/** \todo 
-                         * FIXME: check that value looks like a (finite) 
-                         * number. Create a routine that uses strtod, and 
+			/** \todo
+                         * FIXME: check that value looks like a (finite)
+                         * number. Create a routine that uses strtod, and
                          * accepts a default value (if strtod finds an error).
-                         * N.B. atof/sscanf/strtod consider "nan" and "inf" 
+                         * N.B. atof/sscanf/strtod consider "nan" and "inf"
                          * to be valid numbers.
                          */
 			spiral->exp = g_ascii_strtod (value, NULL);
@@ -239,11 +239,11 @@ sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
 		if (value) {
 			spiral->arg = g_ascii_strtod (value, NULL);
 			/** \todo
-                         * FIXME: We still need some bounds on arg, for 
-                         * numerical reasons. E.g., we don't want inf or NaN, 
-                         * nor near-infinite numbers. I'm inclined to take 
-                         * modulo 2*pi.  If so, then change the knot editors, 
-                         * which use atan2 - revo*2*pi, which typically 
+                         * FIXME: We still need some bounds on arg, for
+                         * numerical reasons. E.g., we don't want inf or NaN,
+                         * nor near-infinite numbers. I'm inclined to take
+                         * modulo 2*pi.  If so, then change the knot editors,
+                         * which use atan2 - revo*2*pi, which typically
                          * results in very negative arg.
                          */
 		} else {
@@ -257,9 +257,9 @@ sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
 			spiral->t0 = CLAMP (spiral->t0, 0.0, 0.999);
 			/** \todo
                          * Have shared constants for the allowable bounds for
-                         * attributes. There was a bug here where we used -1.0 
-                         * as the minimum (which leads to NaN via, e.g., 
-                         * pow(-1.0, 0.5); see sp_spiral_get_xy for 
+                         * attributes. There was a bug here where we used -1.0
+                         * as the minimum (which leads to NaN via, e.g.,
+                         * pow(-1.0, 0.5); see sp_spiral_get_xy for
                          * requirements.
                          */
 		} else {
@@ -300,7 +300,7 @@ sp_spiral_description (SPItem * item)
 }
 
 
-/** 
+/**
  * Fit beziers together to spiral and draw it.
  *
  * \pre dstep \> 0.
@@ -336,20 +336,20 @@ sp_spiral_fit_and_draw (SPSpiral const *spiral,
 		    && (d < 1.0)) {
 			i--;
 			d += dstep;
-			/** We mustn't increase dstep for subsequent values of 
-                         * i: for large spiral.exp values, rate of growth 
-                         * increases very rapidly.  
+			/** We mustn't increase dstep for subsequent values of
+                         * i: for large spiral.exp values, rate of growth
+                         * increases very rapidly.
                          */
-                        /** \todo 
-                         * Get the function itself to decide what value of d 
-                         * to use next: ensure that we move at least 0.25 * 
-                         * stroke width, for example.  The derivative (as used 
-                         * for get_tangent before normalization) would be 
-                         * useful for estimating the appropriate d value.  Or 
-                         * perhaps just start with a small dstep and scale by 
-                         * some small number until we move >= 0.25 * 
-                         * stroke_width.  Must revert to the original dstep 
-                         * value for next iteration to avoid the problem 
+                        /** \todo
+                         * Get the function itself to decide what value of d
+                         * to use next: ensure that we move at least 0.25 *
+                         * stroke width, for example.  The derivative (as used
+                         * for get_tangent before normalization) would be
+                         * useful for estimating the appropriate d value.  Or
+                         * perhaps just start with a small dstep and scale by
+                         * some small number until we move >= 0.25 *
+                         * stroke_width.  Must revert to the original dstep
+                         * value for next iteration to avoid the problem
                          * mentioned above.
                          */
 		}
@@ -452,7 +452,7 @@ sp_spiral_position_set       (SPSpiral          *spiral,
 	g_return_if_fail (SP_IS_SPIRAL (spiral));
 
 	/** \todo
-         * Consider applying CLAMP or adding in-bounds assertions for 
+         * Consider applying CLAMP or adding in-bounds assertions for
          * some of these parameters.
          */
 	spiral->cx         = cx;
@@ -476,12 +476,12 @@ static void sp_spiral_snappoints(SPItem const *item, SnapPointsIter p)
 	}
 }
 
-/** 
+/**
  * Return one of the points on the spiral.
  *
  * \param t specifies how far along the spiral.
- * \pre \a t in [0.0, 2.03].  (It doesn't make sense for t to be much more 
- * than 1.0, though some callers go slightly beyond 1.0 for curve-fitting 
+ * \pre \a t in [0.0, 2.03].  (It doesn't make sense for t to be much more
+ * than 1.0, though some callers go slightly beyond 1.0 for curve-fitting
  * purposes.)
  */
 NR::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
@@ -503,7 +503,7 @@ NR::Point sp_spiral_get_xy (SPSpiral const *spiral, gdouble t)
 }
 
 
-/** 
+/**
  * Returns the derivative of sp_spiral_get_xy with respect to t,
  *  scaled to a unit vector.
  *
@@ -536,11 +536,11 @@ sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
 		NR::Point unrotated(spiral->exp, t_scaled);
 		double const s_len = L2 (unrotated);
 		g_assert (s_len != 0);
-		/** \todo 
-                 * Check that this isn't being too hopeful of the hypot 
-                 * function.  E.g. test with numbers around 2**-1070 
-                 * (denormalized numbers), preferably on a few different 
-                 * platforms.  However, njh says that the usual implementation 
+		/** \todo
+                 * Check that this isn't being too hopeful of the hypot
+                 * function.  E.g. test with numbers around 2**-1070
+                 * (denormalized numbers), preferably on a few different
+                 * platforms.  However, njh says that the usual implementation
                  * does handle both very big and very small numbers.
                  */
 		unrotated /= s_len;
@@ -556,8 +556,8 @@ sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t)
 		   so ret is already of unit length other than numerical
 		   error in the above matrix multiplication. */
 
-		/** \todo 
-                 * I haven't checked how important it is for ret to be very 
+		/** \todo
+                 * I haven't checked how important it is for ret to be very
                  * near unit length; we could get rid of the below.
                  */
 

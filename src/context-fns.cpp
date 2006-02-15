@@ -22,13 +22,13 @@
 bool Inkscape::have_viable_layer(SPDesktop *desktop, MessageContext *message)
 {
     SPItem const *layer = SP_ITEM(desktop->currentLayer());
-    
+
     if ( !layer || desktop->itemIsHidden(layer) ) {
             message->flash(Inkscape::ERROR_MESSAGE,
                          _("<b>Current layer is hidden</b>. Unhide it to be able to draw on it."));
             return false;
     }
-    
+
     if ( !layer || layer->isLocked() ) {
             message->flash(Inkscape::ERROR_MESSAGE,
                          _("<b>Current layer is locked</b>. Unlock it to be able to draw on it."));
@@ -51,13 +51,13 @@ bool Inkscape::have_viable_layer(SPDesktop *desktop, MessageContext *message)
 bool Inkscape::have_viable_layer(SPDesktop *desktop, MessageStack *message)
 {
     SPItem const *layer = SP_ITEM(desktop->currentLayer());
-    
+
     if ( !layer || desktop->itemIsHidden(layer) ) {
             message->flash(Inkscape::WARNING_MESSAGE,
                          _("<b>Current layer is hidden</b>. Unhide it to be able to draw on it."));
             return false;
     }
-    
+
     if ( !layer || layer->isLocked() ) {
             message->flash(Inkscape::WARNING_MESSAGE,
                          _("<b>Current layer is locked</b>. Unlock it to be able to draw on it."));
@@ -94,7 +94,7 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
 
         /* p[1] is the dragged point with the integer-ratio constraint */
         p[1] = center + delta;
-        
+
         if (shift) {
 
             /* Shift is down, so our origin is the centre point rather than the corner
@@ -103,7 +103,7 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
 
             /* p[0] is the opposite corner of our box */
             p[0] = center - delta;
-            
+
             Inkscape::SnappedPoint s[2];
 
             /* Try to snap p[0] (the opposite corner) along the constraint vector */
@@ -122,20 +122,20 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
                 p[0] = 2 * center - s[1].getPoint();
                 p[1] = s[1].getPoint();
             }
-            
+
         } else {
 
             /* Our origin is the opposite corner.  Snap the drag point along the constraint vector */
             p[0] = center;
             p[1] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT, p[1], p[1] - p[0], item).getPoint();
         }
-        
+
     } else if (shift) {
 
         /* Shift is down, so our origin is the centre point rather than the corner point;
         ** this means that corner-point movements are bound to each other.
         */
-        
+
         p[1] = pt;
         p[0] = 2 * center - p[1];
 
@@ -151,9 +151,9 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
             p[0] = 2 * center - s[1].getPoint();
             p[1] = s[1].getPoint();
         }
-        
+
     } else {
-        
+
         /* There's no constraint on the corner point, so just snap it to anything */
         p[0] = center;
         p[1] = m.freeSnap(Inkscape::Snapper::SNAP_POINT, pt, item).getPoint();

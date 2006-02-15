@@ -636,12 +636,12 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
         repr->setAttribute("sodipodi:insensitive", ( item->sensitive ? NULL : "true" ));
         if (item->transform_center_x != 0)
             sp_repr_set_svg_double (repr, "inkscape:transform-center-x", item->transform_center_x);
-        else 
+        else
             repr->setAttribute ("inkscape:transform-center-x", NULL);
         if (item->transform_center_y != 0)
             sp_repr_set_svg_double (repr, "inkscape:transform-center-y", item->transform_center_y);
-        else 
-            repr->setAttribute ("inkscape:transform-center-y", NULL);    
+        else
+            repr->setAttribute ("inkscape:transform-center-y", NULL);
     }
 
     if (((SPObjectClass *) (parent_class))->write) {

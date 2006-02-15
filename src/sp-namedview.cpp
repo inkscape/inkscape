@@ -91,12 +91,12 @@ static void sp_namedview_class_init(SPNamedViewClass * klass)
 {
     GObjectClass * gobject_class;
     SPObjectClass * sp_object_class;
-    
+
     gobject_class = (GObjectClass *) klass;
     sp_object_class = (SPObjectClass *) klass;
-    
+
     parent_class = (SPObjectGroupClass*) g_type_class_ref(SP_TYPE_OBJECTGROUP);
-    
+
     sp_object_class->build = sp_namedview_build;
     sp_object_class->release = sp_namedview_release;
     sp_object_class->set = sp_namedview_set;
@@ -112,14 +112,14 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->showguides = TRUE;
     nv->showborder = TRUE;
     nv->showpageshadow = TRUE;
-    
+
     nv->guides = NULL;
     nv->viewcount = 0;
-    
+
     nv->default_layer_id = 0;
-    
+
     nv->connector_spacing = defaultConnSpacing;
-    
+
     new (&nv->grid_snapper) Inkscape::GridSnapper(nv, 0);
     new (&nv->guide_snapper) Inkscape::GuideSnapper(nv, 0);
     new (&nv->object_snapper) Inkscape::ObjectSnapper(nv, 0);
@@ -129,11 +129,11 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
 {
     SPNamedView *nv = (SPNamedView *) object;
     SPObjectGroup *og = (SPObjectGroup *) object;
-    
+
     if (((SPObjectClass *) (parent_class))->build) {
         (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
     }
-    
+
     sp_object_read_attr(object, "inkscape:document-units");
     sp_object_read_attr(object, "viewonly");
     sp_object_read_attr(object, "showgrid");
@@ -180,9 +180,9 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:object-nodes");
     sp_object_read_attr(object, "inkscape:current-layer");
     sp_object_read_attr(object, "inkscape:connector-spacing");
-    
+
     /* Construct guideline list */
-    
+
     for (SPObject *o = sp_object_first_child(SP_OBJECT(og)) ; o != NULL; o = SP_OBJECT_NEXT(o) ) {
         if (SP_IS_GUIDE(o)) {
             SPGuide * g = SP_GUIDE(o);
@@ -195,21 +195,21 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
 static void sp_namedview_release(SPObject *object)
 {
     SPNamedView *namedview = (SPNamedView *) object;
-    
+
     if (namedview->guides) {
         g_slist_free(namedview->guides);
         namedview->guides = NULL;
     }
-    
+
     while (namedview->gridviews) {
         gtk_object_unref(GTK_OBJECT(namedview->gridviews->data));
         namedview->gridviews = g_slist_remove(namedview->gridviews, namedview->gridviews->data);
     }
-    
+
     namedview->grid_snapper.~GridSnapper();
     namedview->guide_snapper.~GuideSnapper();
     namedview->object_snapper.~ObjectSnapper();
-    
+
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
     }
@@ -520,7 +520,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
              * doc_units.
              */
             SPUnit const *new_unit = &sp_unit_get_by_id(SP_UNIT_PX);
-            
+
             if (value) {
                 SPUnit const *const req_unit = sp_unit_get_by_abbreviation(value);
                 if ( req_unit == NULL ) {
@@ -553,15 +553,15 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
 static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
     SPNamedView *nv = (SPNamedView *) object;
-    
+
     if (((SPObjectClass *) (parent_class))->child_added) {
         (* ((SPObjectClass *) (parent_class))->child_added)(object, child, ref);
     }
-    
+
     const gchar *id = child->attribute("id");
     SPObject *no = object->document->getObjectById(id);
     g_assert(SP_IS_OBJECT(no));
-    
+
     if (SP_IS_GUIDE(no)) {
         SPGuide *g = (SPGuide *) no;
         nv->guides = g_slist_prepend(nv->guides, g);
@@ -569,9 +569,9 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
         if (nv->editable) {
             for (GSList *l = nv->views; l != NULL; l = l->next) {
                 sp_guide_show(g, static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
-                if (static_cast<SPDesktop*>(l->data)->guides_active) 
-                    sp_guide_sensitize(g, 
-                                       SP_DT_CANVAS(static_cast<SPDesktop*> (l->data)), 
+                if (static_cast<SPDesktop*>(l->data)->guides_active)
+                    sp_guide_sensitize(g,
+                                       SP_DT_CANVAS(static_cast<SPDesktop*> (l->data)),
                                        TRUE);
                 if (nv->showguides) {
                     for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
@@ -590,7 +590,7 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
 static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     SPNamedView *nv = (SPNamedView *) object;
-    
+
     GSList **ref = &nv->guides;
     for ( GSList *iter = nv->guides ; iter ; iter = iter->next ) {
         if ( SP_OBJECT_REPR((SPObject *)iter->data) == child ) {
@@ -601,7 +601,7 @@ static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *chi
         }
         ref = &iter->next;
     }
-    
+
     if (((SPObjectClass *) (parent_class))->remove_child) {
         (* ((SPObjectClass *) (parent_class))->remove_child)(object, child);
     }
@@ -618,7 +618,7 @@ static Inkscape::XML::Node *sp_namedview_write(SPObject *object, Inkscape::XML::
             repr = SP_OBJECT_REPR(object)->duplicate();
         }
     }
-    
+
     return repr;
 }
 
@@ -639,9 +639,9 @@ void SPNamedView::show(SPDesktop *desktop)
             }
         }
     }
-    
+
     views = g_slist_prepend(views, desktop);
-    
+
     SPCanvasItem *item = sp_canvas_item_new(SP_DT_GRID(desktop), SP_TYPE_CGRID, NULL);
     // since we're keeping a copy, we need to bump up the ref count
     gtk_object_ref(GTK_OBJECT(item));
@@ -656,7 +656,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 {
     SPNamedView *nv = desktop->namedview;
     gint save_geometry = prefs_get_int_attribute("options.savewindowgeometry", "value", 0);
-    
+
     // restore window size and position
     if (save_geometry) {
         if (nv->window_width != -1 && nv->window_height != -1)
@@ -664,22 +664,22 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
         if (nv->window_x != -1 && nv->window_y != -1)
             desktop->setWindowPosition(NR::Point(nv->window_x, nv->window_y));
     }
-    
+
     // restore zoom and view
     if (nv->zoom != 0 && nv->zoom != HUGE_VAL && !isNaN(nv->zoom)
-        && nv->cx != HUGE_VAL && !isNaN(nv->cx) 
+        && nv->cx != HUGE_VAL && !isNaN(nv->cx)
         && nv->cy != HUGE_VAL && !isNaN(nv->cy)) {
         desktop->zoom_absolute(nv->cx, nv->cy, nv->zoom);
     } else if (SP_DT_DOCUMENT(desktop)) { // document without saved zoom, zoom to its page
         desktop->zoom_page();
     }
-    
+
     // cancel any history of zooms up to this point
     if (desktop->zooms_past) {
         g_list_free(desktop->zooms_past);
         desktop->zooms_past = NULL;
     }
-    
+
     SPObject *layer = NULL;
     SPDocument *document = desktop->doc();
     if ( nv->default_layer_id != 0 ) {
@@ -708,15 +708,15 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     gint save_geometry = prefs_get_int_attribute("options.savewindowgeometry", "value", 0);
     Inkscape::XML::Node *view = SP_OBJECT_REPR(desktop->namedview);
     NR::Rect const r = desktop->get_display_area();
-    
+
     // saving window geometry is not undoable
     gboolean saved = sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop));
     sp_document_set_undo_sensitive(SP_DT_DOCUMENT(desktop), FALSE);
-    
+
     sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
     sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[NR::X]);
     sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[NR::Y]);
-    
+
     if (save_geometry) {
         gint w, h, x, y;
         desktop->getWindowGeometry(x, y, w, h);
@@ -725,9 +725,9 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
         sp_repr_set_int(view, "inkscape:window-x", x);
         sp_repr_set_int(view, "inkscape:window-y", y);
     }
-    
+
     view->setAttribute("inkscape:current-layer", SP_OBJECT_ID(desktop->currentLayer()));
-    
+
     // restore undoability
     sp_document_set_undo_sensitive(SP_DT_DOCUMENT(desktop), saved);
 }
@@ -736,11 +736,11 @@ void SPNamedView::hide(SPDesktop const *desktop)
 {
     g_assert(desktop != NULL);
     g_assert(g_slist_find(views, desktop));
-    
+
     for (GSList *l = guides; l != NULL; l = l->next) {
         sp_guide_hide(SP_GUIDE(l->data), SP_DT_CANVAS(desktop));
     }
-    
+
     views = g_slist_remove(views, desktop);
 
     GSList *l;
@@ -751,7 +751,7 @@ void SPNamedView::hide(SPDesktop const *desktop)
     }
 
     g_assert(l);
-    
+
     sp_canvas_item_hide(SP_CANVAS_ITEM(l->data));
     gtk_object_unref(GTK_OBJECT(l->data));
     gridviews = g_slist_remove(gridviews, l->data);
@@ -761,9 +761,9 @@ void SPNamedView::activateGuides(gpointer desktop, gboolean active)
 {
     g_assert(desktop != NULL);
     g_assert(g_slist_find(views, desktop));
-    
+
     SPDesktop *dt = static_cast<SPDesktop*>(desktop);
-    
+
     for (GSList *l = guides; l != NULL; l = l->next) {
         sp_guide_sensitize(SP_GUIDE(l->data), SP_DT_CANVAS(dt), active);
     }
@@ -793,12 +793,12 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
     } else {
         v = !v;
     }
-    
+
     gboolean saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, FALSE);
-    
+
     sp_repr_set_boolean(repr, "showguides", v);
-    
+
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive(doc, saved);
 }
@@ -808,12 +808,12 @@ void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
     unsigned int v;
     sp_repr_get_boolean(repr, "showgrid", &v);
     v = !v;
-    
+
     gboolean saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, FALSE);
-    
+
     sp_repr_set_boolean(repr, "showgrid", v);
-    
+
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive(doc, saved);
 }
@@ -832,7 +832,7 @@ static void sp_namedview_setup_grid_item(SPNamedView *nv, SPCanvasItem *item)
     } else {
         sp_canvas_item_hide(item);
     }
-    
+
     sp_canvas_item_set((GtkObject *) item,
                        "color", nv->gridcolor,
                        "originx", nv->gridorigin[NR::X],
@@ -873,7 +873,7 @@ static gboolean sp_str_to_bool(const gchar *str)
             return TRUE;
         }
     }
-    
+
     return FALSE;
 }
 
@@ -893,13 +893,13 @@ static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, co
     while (isspace(*u)) {
         u += 1;
     }
-    
+
     if (!*u) {
         /* No unit specified - keep default */
         *val = v;
         return TRUE;
     }
-    
+
     if (base & SP_UNIT_DEVICE) {
         if (u[0] && u[1] && !isalnum(u[2]) && !strncmp(u, "px", 2)) {
             *unit = &sp_unit_get_by_id(SP_UNIT_PX);
@@ -907,7 +907,7 @@ static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, co
             return TRUE;
         }
     }
-    
+
     if (base & SP_UNIT_ABSOLUTE) {
         if (!strncmp(u, "pt", 2)) {
             *unit = &sp_unit_get_by_id(SP_UNIT_PT);
@@ -925,7 +925,7 @@ static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, co
         *val = v;
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
@@ -941,27 +941,27 @@ static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
         return FALSE;
     }
     v = CLAMP(v, 0.0, 1.0);
-    
+
     *color = (*color & 0xffffff00) | (guint32) floor(v * 255.9999);
-    
+
     return TRUE;
 }
 
 SPNamedView *sp_document_namedview(SPDocument *document, const gchar *id)
 {
     g_return_val_if_fail(document != NULL, NULL);
-    
+
     SPObject *nv = sp_item_group_get_child_by_name((SPGroup *) document->root, NULL, "sodipodi:namedview");
     g_assert(nv != NULL);
-    
+
     if (id == NULL) {
         return (SPNamedView *) nv;
     }
-    
+
     while (nv && strcmp(nv->id, id)) {
         nv = sp_item_group_get_child_by_name((SPGroup *) document->root, nv, "sodipodi:namedview");
     }
-    
+
     return (SPNamedView *) nv;
 }
 

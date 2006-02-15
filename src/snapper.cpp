@@ -23,7 +23,7 @@ Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_vi
 {
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
-    
+
     setSnapTo(BBOX_POINT, true);
 }
 

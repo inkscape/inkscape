@@ -89,7 +89,7 @@ static void sp_dropper_context_class_init(SPDropperContextClass *klass)
     SPEventContextClass *ec_class = (SPEventContextClass *) klass;
 
     parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
-    
+
     ec_class->setup = sp_dropper_context_setup;
     ec_class->finish = sp_dropper_context_finish;
     ec_class->root_handler = sp_dropper_context_root_handler;
@@ -117,11 +117,11 @@ static void sp_dropper_context_setup(SPEventContext *ec)
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(dc->area), 0x00000000,(SPWindRule)0);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_item_hide(dc->area);
-        
+
     if (prefs_get_int_attribute("tools.dropper", "selcue", 0) != 0) {
         ec->enableSelectionCue();
     }
-    
+
     if (prefs_get_int_attribute("tools.dropper", "gradientdrag", 0) != 0) {
         ec->enableGrDrag();
     }
@@ -130,9 +130,9 @@ static void sp_dropper_context_setup(SPEventContext *ec)
 static void sp_dropper_context_finish(SPEventContext *ec)
 {
     SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
-    
+
     ec->enableGrDrag(false);
-    
+
     if (dc->area) {
         gtk_object_destroy(GTK_OBJECT(dc->area));
         dc->area = NULL;
@@ -153,14 +153,14 @@ void sp_dropper_context_copy(SPEventContext *ec)
                                        SP_DROPPER_PICK_VISIBLE);
 
     gchar c[64];
-    g_snprintf(c, 64, "%06x%02x", c32 >> 8, 
+    g_snprintf(c, 64, "%06x%02x", c32 >> 8,
                pick == SP_DROPPER_PICK_ACTUAL? SP_COLOR_F_TO_U(dc->alpha) : 255);
 
     Glib::ustring text;
     text += c;
-    if (!text.empty()) 
+    if (!text.empty())
     {
-        Glib::RefPtr<Gtk::Clipboard> refClipboard = 
+        Glib::RefPtr<Gtk::Clipboard> refClipboard =
             Gtk::Clipboard::get();
         refClipboard->set_text(text);
     }
@@ -171,11 +171,11 @@ void sp_dropper_context_copy(SPEventContext *ec)
  */
 void sp_dropper_c32_color_copy(guint32 c32)
 {
-    int const pick = prefs_get_int_attribute("tools.dropper", "pick", 
+    int const pick = prefs_get_int_attribute("tools.dropper", "pick",
                                              SP_DROPPER_PICK_VISIBLE);
 
     gchar c[64];
-    g_snprintf(c, 64, "%06x%02x", c32 >> 8, 
+    g_snprintf(c, 64, "%06x%02x", c32 >> 8,
         pick == SP_DROPPER_PICK_ACTUAL? SP_RGBA32_A_U(c32) : 255);
 
     Glib::ustring text;
@@ -194,13 +194,13 @@ void sp_dropper_c32_color_copy(guint32 c32)
 void sp_dropper_c32_color_copy_hex(guint32 c32)
 {
     /*
-    int pick = prefs_get_int_attribute ("tools.dropper", "pick", 
+    int pick = prefs_get_int_attribute ("tools.dropper", "pick",
                                     SP_DROPPER_PICK_VISIBLE);
-   
+
     if ( pick == SP_DROPPER_PICK_ACTUAL )
         ; // process c32 so that it computes against page
     // else just can cut off that last 2 hex digits....
-    
+
     */
 
     gchar c[48];
@@ -237,33 +237,33 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 break;
             } else {
                 // otherwise, constantly calculate color no matter is any button pressed or not
-                
+
                 double rw = 0.0;
                 double W(0), R(0), G(0), B(0), A(0);
-                
-                if (dc->dragging) { 
+
+                if (dc->dragging) {
                     // calculate average
-                    
+
                     // radius
                     rw = std::min(NR::L2(NR::Point(event->button.x, event->button.y) - dc->centre), 400.0);
-                    
+
                     if (rw == 0) { // happens sometimes, little idea why...
                         break;
                     }
-                    
+
                     NR::Point const cd = ec->desktop->w2d(dc->centre);
                     NR::Matrix const w2dt = ec->desktop->w2d();
                     const double scale = rw * NR_MATRIX_DF_EXPANSION(&w2dt);
                     NR::Matrix const sm( NR::scale(scale, scale) * NR::translate(cd) );
                     sp_canvas_item_affine_absolute(dc->area, sm);
                     sp_canvas_item_show(dc->area);
-                    
+
                     /* Get buffer */
                     const int x0 = (int) floor(dc->centre[NR::X] - rw);
                     const int y0 = (int) floor(dc->centre[NR::Y] - rw);
                     const int x1 = (int) ceil(dc->centre[NR::X] + rw);
                     const int y1 = (int) ceil(dc->centre[NR::Y] + rw);
-                    
+
                     if ((x1 > x0) && (y1 > y0)) {
                         NRPixBlock pb;
                         nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1, TRUE);
@@ -284,7 +284,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                             }
                         }
                         nr_pixblock_release(&pb);
-                        
+
                         R = (R + 0.001) / (255.0 * W);
                         G = (G + 0.001) / (255.0 * W);
                         B = (B + 0.001) / (255.0 * W);
@@ -304,13 +304,13 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
                     sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(SP_DT_DRAWING(ec->desktop)), &pb);
                     const unsigned char *s = NR_PIXBLOCK_PX(&pb);
-                    
+
                     R = s[0] / 255.0;
                     G = s[1] / 255.0;
                     B = s[2] / 255.0;
                     A = s[3] / 255.0;
                 }
-                
+
                 if (pick == SP_DROPPER_PICK_VISIBLE) {
                     // compose with page color
                     guint32 bg = SP_DT_NAMEDVIEW(ec->desktop)->pagecolor;
@@ -326,7 +326,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                         B /= A;
                     }
                 }
-                
+
                 if (fabs(A) < 1e-4) {
                     A = 0; // suppress exponentials, CSS does not allow that
                 }
@@ -336,10 +336,10 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 dc->G = G;
                 dc->B = B;
                 dc->alpha = A;
-                
+
                 // status message
                 guint32 c32 = SP_RGBA32_F_COMPOSE(R, G, B, A);
-                
+
                 gchar c[64];
                 sp_svg_write_color(c, 64, c32);
 
@@ -356,28 +356,28 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     (pick == SP_DROPPER_PICK_VISIBLE)? "" : alpha,
                     where, message
                     );
-                
+
                 g_free(where);
                 g_free(alpha);
-                
+
                 ret = TRUE;
             }
             break;
 	case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1) 
+            if (event->button.button == 1)
             {
                 sp_canvas_item_hide(dc->area);
                 dc->dragging = FALSE;
-                
+
                 // do the actual color setting
-                sp_desktop_set_color(ec->desktop, 
+                sp_desktop_set_color(ec->desktop,
                                      (event->button.state & GDK_MOD1_MASK)?
                                      ColorRGBA(1 - dc->R, 1 - dc->G, 1 - dc->B, dc->alpha) : ColorRGBA(dc->R, dc->G, dc->B, dc->alpha),
                                      false,  !(event->button.state & GDK_SHIFT_MASK));
-                
+
                 // REJON: set aux. toolbar input to hex color!
-                
-                
+
+
                 if (!(SP_DT_SELECTION(ec->desktop)->isEmpty())) {
                     sp_document_done(SP_DT_DOCUMENT(ec->desktop));
                 }
@@ -387,10 +387,10 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
             break;
 	case GDK_KEY_PRESS:
             switch (get_group0_keyval(&event->key)) {
-		case GDK_Up: 
-		case GDK_Down: 
-		case GDK_KP_Up: 
-		case GDK_KP_Down: 
+		case GDK_Up:
+		case GDK_Down:
+		case GDK_KP_Up:
+		case GDK_KP_Down:
                     // prevent the zoom field from activation
                     if (!MOD__CTRL_ONLY) {
                         ret = TRUE;
@@ -405,13 +405,13 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
 	default:
             break;
     }
-    
+
     if (!ret) {
         if (((SPEventContextClass *) parent_class)->root_handler) {
             ret = ((SPEventContextClass *) parent_class)->root_handler(ec, event);
         }
     }
-    
+
     return ret;
 }
 

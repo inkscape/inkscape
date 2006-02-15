@@ -138,7 +138,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 	default:
             break;
     }
-    
+
     return FALSE;
 }
 
@@ -159,7 +159,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
     static bool dragging = false;
     static bool moved = false;
     gint ret = FALSE;
-    
+
     SPGuide *guide = SP_GUIDE(data);
     SPDesktop *desktop = static_cast<SPDesktop*>(gtk_object_get_data(GTK_OBJECT(item->canvas), "SPDesktop"));
 
@@ -221,7 +221,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             }
 	case GDK_ENTER_NOTIFY:
 	{
-            
+
             sp_guideline_set_color(SP_GUIDELINE(item), guide->hicolor);
 
             GString *position_string = SP_PX_TO_METRIC_STRING(guide->position, desktop->namedview->getDefaultMetric());
@@ -240,7 +240,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 	default:
             break;
     }
-    
+
     return ret;
 }
 
@@ -311,7 +311,7 @@ static void guide_dialog_delete(GtkWidget *widget, SPGuide **guide)
 static void guide_dialog_response(GtkDialog *dialog, gint response, gpointer data)
 {
     GtkWidget *widget = GTK_WIDGET(dialog);
-    
+
     switch (response) {
 	case GTK_RESPONSE_OK:
             guide_dialog_ok(widget, data);
@@ -349,31 +349,31 @@ static void sp_dt_simple_guide_dialog(SPGuide *guide, SPDesktop *desktop)
                                         NULL);
         sp_transientize(d);
         gtk_widget_hide(d);
-        
+
         GtkWidget *b1 = gtk_hbox_new(FALSE, 4);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox), b1, FALSE, FALSE, 0);
         gtk_container_set_border_width(GTK_CONTAINER(b1), 4);
         gtk_widget_show(b1);
-        
+
         GtkWidget *b2 = gtk_vbox_new(FALSE, 4);
         gtk_box_pack_end(GTK_BOX(b1), b2, TRUE, TRUE, 0);
         gtk_widget_show(b2);
-        
+
         //labels
         GtkWidget *b3 = gtk_hbox_new(FALSE, 4);
         gtk_box_pack_start(GTK_BOX(b2), b3, TRUE, TRUE, 0);
         gtk_widget_show(b3);
-        
+
         l1 = gtk_label_new("foo1");
         gtk_box_pack_start(GTK_BOX(b3), l1, TRUE, TRUE, 0);
         gtk_misc_set_alignment(GTK_MISC(l1), 1.0, 0.5);
         gtk_widget_show(l1);
-        
+
         l2 = gtk_label_new("foo2");
         gtk_box_pack_start(GTK_BOX(b3), l2, TRUE, TRUE, 0);
         gtk_misc_set_alignment(GTK_MISC(l2), 0.0, 0.5);
         gtk_widget_show(l2);
-        
+
         GtkWidget *b4 = gtk_hbox_new(FALSE, 4);
         gtk_box_pack_start(GTK_BOX(b2), b4, FALSE, FALSE, 0);
         gtk_widget_show(b4);
@@ -381,19 +381,19 @@ static void sp_dt_simple_guide_dialog(SPGuide *guide, SPDesktop *desktop)
         GtkWidget *but = gtk_button_new();
         gtk_button_set_relief(GTK_BUTTON(but), GTK_RELIEF_NONE);
         gtk_box_pack_start(GTK_BOX(b4), but, FALSE, TRUE, 0);
-        gtk_signal_connect_while_alive(GTK_OBJECT(but), "clicked", GTK_SIGNAL_FUNC(guide_dialog_mode_changed), 
+        gtk_signal_connect_while_alive(GTK_OBJECT(but), "clicked", GTK_SIGNAL_FUNC(guide_dialog_mode_changed),
                                        NULL , GTK_OBJECT(but));
         gtk_widget_show(but);
         m = gtk_label_new(_(" absolute to "));
         mode = true;
         gtk_container_add(GTK_CONTAINER(but), m);
         gtk_widget_show(m);
-        
+
         // unitmenu
         /* fixme: We should allow percents here too, as percents of the canvas size */
         u = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
         sp_unit_selector_set_unit(SP_UNIT_SELECTOR(u), desktop->namedview->doc_units);
-        
+
         // spinbutton
         GtkObject *a = gtk_adjustment_new(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0);
         sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(u), GTK_ADJUSTMENT(a));
@@ -402,20 +402,20 @@ static void sp_dt_simple_guide_dialog(SPGuide *guide, SPDesktop *desktop)
         gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(e), TRUE);
         gtk_box_pack_start(GTK_BOX(b4), e, TRUE, TRUE, 0);
         gtk_signal_connect_object(GTK_OBJECT(e), "activate",
-                                  GTK_SIGNAL_FUNC(gtk_window_activate_default), 
+                                  GTK_SIGNAL_FUNC(gtk_window_activate_default),
                                   GTK_OBJECT(d));
 /*  		gnome_dialog_editable_enters(GNOME_DIALOG(d), GTK_EDITABLE(e));  */
-        
+
         gtk_widget_show(u);
         gtk_box_pack_start(GTK_BOX(b4), u, FALSE, FALSE, 0);
-        
-        
+
+
         // dialog
         gtk_dialog_set_default_response(GTK_DIALOG(d), GTK_RESPONSE_OK);
         gtk_signal_connect(GTK_OBJECT(d), "response", GTK_SIGNAL_FUNC(guide_dialog_response), &g);
         gtk_signal_connect(GTK_OBJECT(d), "delete_event", GTK_SIGNAL_FUNC(gtk_widget_hide_on_delete), GTK_WIDGET(d));
     }
-    
+
     // initialize dialog
     g = guide;
     oldpos = guide->position;
@@ -426,7 +426,7 @@ static void sp_dt_simple_guide_dialog(SPGuide *guide, SPDesktop *desktop)
         gtk_label_set(GTK_LABEL(l1), label);
         g_free(label);
     }
-    
+
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
     gdouble const val = sp_pixels_get_units(oldpos, unit);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(e), val);
@@ -434,7 +434,7 @@ static void sp_dt_simple_guide_dialog(SPGuide *guide, SPDesktop *desktop)
     gtk_widget_grab_focus(e);
     gtk_editable_select_region(GTK_EDITABLE(e), 0, 20);
     gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_MOUSE);
-    
+
     gtk_widget_show(d);
 }
 

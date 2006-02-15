@@ -119,7 +119,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
                                "stroke_color", 0x000000a0,
                                "pixbuf", handles[12],
                                NULL);
-    
+
     _grip = sp_canvas_item_new(SP_DT_CONTROLS(desktop),
                                SP_TYPE_CTRL,
                                "anchor", GTK_ANCHOR_CENTER,
@@ -132,7 +132,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
                                "stroke_color", 0xffffffff,
                                "pixbuf", handles[12],
                                NULL);
-    
+
     sp_canvas_item_hide(_grip);
     sp_canvas_item_hide(_norm);
 
@@ -330,7 +330,7 @@ void Inkscape::SelTrans::ungrab()
 // If dragging showed content live, sp_selection_apply_affine cannot change the centers
 // appropriately - it does not know the original positions of the centers (all objects already have
 // the new bboxes). So we need to reset the centers from our saved array.
-        if (_show != SHOW_OUTLINE && !_current.is_translation()) { 
+        if (_show != SHOW_OUTLINE && !_current.is_translation()) {
             for (unsigned i = 0; i < _items_centers.size(); i++) {
                 SPItem *currentItem = _items_centers[i].first;
                 if (currentItem->isCenterSet()) { // only if it's already set
@@ -485,7 +485,7 @@ void Inkscape::SelTrans::_updateHandles()
         if (items) {
             SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
             if (first->isCenterSet()) { // only if set explicitly
-                _center =  first->getCenter(); 
+                _center =  first->getCenter();
             } else {
                 _center = _box.midpoint();
             }
@@ -678,7 +678,7 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, gu
     knot->desktop->set_coordinate_status(*position);
     knot->desktop->setPosition(*position);
 
-    
+
     if (state & GDK_MOD1_MASK) {
         *position = _point + ( *position - _point ) / 10;
     }
@@ -888,7 +888,7 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     for (GSList const *i = _selection->itemList(); i != NULL; i = i->next) {
         it.push_back(reinterpret_cast<SPItem*>(i->data));
     }
-    
+
     if ( state & GDK_CONTROL_MASK ) {
         s[perp] = fabs(s[axis]);
 
@@ -1122,7 +1122,7 @@ void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 {
     seltrans->rotate(pt, state);
 }
-    
+
 void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
     using NR::X;
@@ -1167,7 +1167,7 @@ void Inkscape::SelTrans::stretch(SPSelTransHandle const &handle, NR::Point &pt, 
     NR::Point new_bbox_max = _box.max() * (NR::translate(-scale_origin) * NR::Matrix(s) * NR::translate(scale_origin));
 
     int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-    NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke, 
+    NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke,
                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
@@ -1188,7 +1188,7 @@ void Inkscape::SelTrans::scale(NR::Point &pt, guint state)
     NR::Point new_bbox_max = _box.max() * (NR::translate(-_origin) * NR::Matrix(s) * NR::translate(_origin));
 
     int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
-    NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke, 
+    NR::Matrix scaler = get_scale_transform_with_stroke (_box, _strokewidth, transform_stroke,
                    new_bbox_min[NR::X], new_bbox_min[NR::Y], new_bbox_max[NR::X], new_bbox_max[NR::Y]);
 
     transform(scaler, NR::Point(0, 0)); // we have already accounted for origin, so pass 0,0
@@ -1258,7 +1258,7 @@ void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 {
     SnapManager const m(_desktop->namedview);
-    
+
     /* The amount that we've moved by during this drag */
     NR::Point dxy = xy - _point;
 
@@ -1291,9 +1291,9 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 
         /* This will be our list of possible translations */
         std::list<std::pair<NR::Point, bool> > s;
-        
+
         if (control) {
-            
+
             /* Snap to things, and also constrain to horizontal or vertical movement */
 
             for (unsigned int dim = 0; dim < 2; dim++) {
@@ -1304,7 +1304,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
                                                          _snap_points,
                                                          component_vectors[dim], it, dxy));
             }
-            
+
         } else {
 
             /* Snap to things with no constraint */
@@ -1327,7 +1327,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             }
         }
     }
-    
+
     if (control) {
         /* Ensure that the horizontal and vertical constraint has been applied */
         if (fabs(dxy[NR::X]) > fabs(dxy[NR::Y])) {
@@ -1336,7 +1336,7 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             dxy[NR::X] = 0;
         }
     }
-    
+
     NR::Matrix const move((NR::translate(dxy)));
     NR::Point const norm(0, 0);
     transform(move, norm);

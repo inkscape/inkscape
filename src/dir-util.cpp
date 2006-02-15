@@ -86,8 +86,8 @@ static char const *const current = dots + 1;
 
 \comment
  based on functions by Shigio Yamaguchi.
- FIXME:TODO: force it to also do path normalization of the entire resulting path, 
- i.e. get rid of any .. and . in any place, even if 'path' is already absolute 
+ FIXME:TODO: force it to also do path normalization of the entire resulting path,
+ i.e. get rid of any .. and . in any place, even if 'path' is already absolute
  (now it returns it unchanged in this case)
 
  */

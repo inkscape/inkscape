@@ -1,4 +1,4 @@
-/** \file 
+/** \file
  * Implementation of sp_item_notify_moveto().
  */
 
@@ -51,13 +51,13 @@ void sp_item_notify_moveto(SPItem &item, SPGuide const &mv_g, int const snappoin
         {
             sp_item_write_transform(&item, SP_OBJECT_REPR(&item), item.transform);
         }
-        
+
         sp_item_rm_unsatisfied_cns(item);
 #if 0 /* nyi */
         move_cn_to_front(mv_g, snappoint_ix, item.constraints);
-        /** \note If the guideline is connected to multiple snappoints of 
-         * this item, then keeping those cns in order requires that the 
-         * guide send notifications in order of increasing importance. 
+        /** \note If the guideline is connected to multiple snappoints of
+         * this item, then keeping those cns in order requires that the
+         * guide send notifications in order of increasing importance.
          */
 #endif
     }

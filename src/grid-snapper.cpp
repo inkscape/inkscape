@@ -7,7 +7,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 1999-2002 Authors 
+ * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -39,7 +39,7 @@ Inkscape::LineSnapper::LineList Inkscape::GridSnapper::_getSnapLines(NR::Point c
 {
     LineList s;
 
-    SPCGrid *griditem = NULL; 
+    SPCGrid *griditem = NULL;
     for (GSList *l = _named_view->gridviews; l != NULL; l = l->next) {
         // FIXME : this is a hack since there is only one view for now
         //                 but when we'll handle multiple views, snapping should
@@ -50,7 +50,7 @@ Inkscape::LineSnapper::LineList Inkscape::GridSnapper::_getSnapLines(NR::Point c
     }
 
     g_assert(griditem != NULL);
-    
+
     for (unsigned int i = 0; i < 2; ++i) {
 
         /* This is to make sure we snap to only visible grid lines */
@@ -59,7 +59,7 @@ Inkscape::LineSnapper::LineList Inkscape::GridSnapper::_getSnapLines(NR::Point c
         NR::Coord const rounded = round_to_nearest_multiple_plus(p[i],
                                                                  _named_view->gridspacing[i] * scale,
                                                                  _named_view->gridorigin[i]);
-        
+
         s.push_back(std::make_pair(NR::Dim2(i), rounded));
     }
 

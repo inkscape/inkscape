@@ -233,7 +233,7 @@ sp_select_context_abort(SPEventContext *event_context)
             rb_escaped = 1;
             SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selection canceled."));
             return true;
-        } 
+        }
     }
     return false;
 }
@@ -319,7 +319,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     sc->moved = FALSE;
 
                     // remember the clicked item in sc->item:
-                    sc->item = sp_event_context_find_item (desktop, 
+                    sc->item = sp_event_context_find_item (desktop,
                                               NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
                     sp_object_ref(sc->item, NULL);
 
@@ -470,7 +470,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     item_at_point = desktop->item_at_point(NR::Point(event->button.x, event->button.y), FALSE);
                     if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
                         item_at_point = desktop->item_at_point(NR::Point(xp, yp), FALSE);
-                    if (item_at_point || sc->moved || sc->button_press_alt) { 
+                    if (item_at_point || sc->moved || sc->button_press_alt) {
                         // drag only if starting from an item, or if something is already grabbed, or if alt-dragging
                         if (!sc->moved) {
                             item_in_group = desktop->item_at_point(NR::Point(event->button.x, event->button.y), TRUE);
@@ -564,12 +564,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                             if (sc->button_press_ctrl) {
                                 // go into groups, honoring Alt
-                                item = sp_event_context_find_item (desktop, 
+                                item = sp_event_context_find_item (desktop,
                                                    NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, TRUE);
                                 sc->button_press_ctrl = FALSE;
                             } else {
                                 // don't go into groups, honoring Alt
-                                item = sp_event_context_find_item (desktop, 
+                                item = sp_event_context_find_item (desktop,
                                                    NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
                             }
 
@@ -582,7 +582,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                             sc->button_press_ctrl = FALSE;
 
-                            item = sp_event_context_find_item (desktop, 
+                            item = sp_event_context_find_item (desktop,
                                          NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, TRUE);
 
                             if (item) {

@@ -134,7 +134,7 @@ SPDesktop::SPDesktop()
     selection = Inkscape::GC::release (new Inkscape::Selection (this));
 }
 
-void 
+void
 SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
 {
@@ -144,7 +144,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
     namedview = nv;
     canvas = aCanvas;
-   
+
     SPDocument *document = SP_OBJECT_DOCUMENT (namedview);
     /* Kill flicker */
     sp_document_ensure_up_to_date (document);
@@ -206,7 +206,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
     NR::Rect const d(NR::Point(0.0, 0.0),
                      NR::Point(sp_document_width(document), sp_document_height(document)));
-    
+
     SP_CTRLRECT(page)->setRectangle(d);
     SP_CTRLRECT(page_border)->setRectangle(d);
 
@@ -219,7 +219,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     if ( namedview->pageshadow != 0 && namedview->showpageshadow ) {
         SP_CTRLRECT(page_border)->setShadow(namedview->pageshadow, 0x3f3f3fff);
     }
-    
+
 
     /* Connect event for page resize */
     _doc2dt[5] = sp_document_height (document);
@@ -229,8 +229,8 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
 
     NRArenaItem *ai = sp_item_invoke_show (SP_ITEM (sp_document_root (document)),
-            SP_CANVAS_ARENA (drawing)->arena, 
-            dkey, 
+            SP_CANVAS_ARENA (drawing)->arena,
+            dkey,
             SP_ITEM_SHOW_DISPLAY);
     if (ai) {
         nr_arena_item_add_child (SP_CANVAS_ARENA (drawing)->root, ai, NULL);
@@ -243,9 +243,9 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     /* Ugly hack */
     _namedview_modified (namedview, SP_OBJECT_MODIFIED_FLAG, this);
 
-	/* Construct SessionManager 
-	 * 
-	 * SessionManager construction needs to be done after document connection 
+	/* Construct SessionManager
+	 *
+	 * SessionManager construction needs to be done after document connection
 	 */
 #ifdef WITH_INKBOARD
 	_whiteboard_session_manager = new Inkscape::Whiteboard::SessionManager(this);
@@ -356,7 +356,7 @@ void SPDesktop::setDisplayModeOutline()
 /**
  * Returns current root (=bottom) layer.
  */
-SPObject *SPDesktop::currentRoot() const 
+SPObject *SPDesktop::currentRoot() const
 {
     return _layer_hierarchy ? _layer_hierarchy->top() : NULL;
 }
@@ -405,7 +405,7 @@ bool SPDesktop::isLayer(SPObject *object) const {
 /**
  * True if desktop viewport fully contains \a item's bbox.
  */
-bool SPDesktop::isWithinViewport (SPItem *item) const 
+bool SPDesktop::isWithinViewport (SPItem *item) const
 {
     NR::Rect const viewport = get_display_area();
     NR::Rect const bbox = sp_item_bbox_desktop(item);
@@ -538,7 +538,7 @@ SPDesktop::group_at_point (NR::Point const p) const
 }
 
 /**
- * \brief  Returns the mouse point in document coordinates; if mouse is 
+ * \brief  Returns the mouse point in document coordinates; if mouse is
  * outside the canvas, returns the center of canvas viewpoint
  */
 NR::Point
@@ -726,10 +726,10 @@ SPDesktop::zoom_absolute_keep_point (double cx, double cy, double px, double py,
     double const width2 = viewbox.dimensions()[NR::X] / zoom;
     double const height2 = viewbox.dimensions()[NR::Y] / zoom;
 
-    set_display_area(cx - px * width2, 
-                     cy - py * height2, 
-                     cx + (1 - px) * width2, 
-                     cy + (1 - py) * height2, 
+    set_display_area(cx - px * width2,
+                     cy - py * height2,
+                     cx + (1 - px) * width2,
+                     cy + (1 - py) * height2,
                      0.0);
 }
 
@@ -788,7 +788,7 @@ SPDesktop::zoom_page()
 {
     NR::Rect d(NR::Point(0, 0),
                NR::Point(sp_document_width(doc()), sp_document_height(doc())));
-                         
+
     if (d.dimensions()[NR::X] < 1.0 || d.dimensions()[NR::Y] < 1.0) {
         return;
     }
@@ -810,7 +810,7 @@ SPDesktop::zoom_page_width()
 
     NR::Rect d(NR::Point(0, a.midpoint()[NR::Y]),
                NR::Point(sp_document_width(doc()), a.midpoint()[NR::Y]));
-               
+
     set_display_area(d, 10);
 }
 
@@ -825,7 +825,7 @@ SPDesktop::zoom_selection()
     if (d.dimensions()[NR::X] < 0.1 || d.dimensions()[NR::Y] < 0.1) {
         return;
     }
-    
+
     set_display_area(d, 10);
 }
 
@@ -863,10 +863,10 @@ SPDesktop::zoom_drawing()
 /**
  * Scroll canvas by specific coordinate amount.
  */
-void 
+void
 SPDesktop::scroll_world (double dx, double dy)
 {
-    g_assert(_widget); 
+    g_assert(_widget);
 
     NR::Rect const viewbox = canvas->getViewbox();
 
@@ -926,14 +926,14 @@ SPDesktop::fullscreen()
 {
     _widget->setFullscreen();
 }
-    
-void 
+
+void
 SPDesktop::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 {
     _widget->getGeometry (x, y, w, h);
 }
 
-void 
+void
 SPDesktop::setWindowPosition (NR::Point p)
 {
     _widget->setPosition (p);
@@ -999,7 +999,7 @@ SPDesktop::setToolboxFocusTo (gchar const *label)
     _widget->setToolboxFocusTo (label);
 }
 
-void 
+void
 SPDesktop::setToolboxAdjustmentValue (gchar const* id, double val)
 {
     _widget->setToolboxAdjustmentValue (id, val);
@@ -1011,8 +1011,8 @@ SPDesktop::isToolboxButtonActive (gchar const *id)
     return _widget->isToolboxButtonActive (id);
 }
 
-void 
-SPDesktop::emitToolSubselectionChanged(gpointer data) 
+void
+SPDesktop::emitToolSubselectionChanged(gpointer data)
 {
 	_tool_subselection_changed.emit(data);
 	inkscape_subselection_changed (this);
@@ -1021,7 +1021,7 @@ SPDesktop::emitToolSubselectionChanged(gpointer data)
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.
 
-void 
+void
 SPDesktop::onPositionSet (double x, double y)
 {
     _widget->viewSetPosition (NR::Point(x,y));
@@ -1030,7 +1030,7 @@ SPDesktop::onPositionSet (double x, double y)
 void
 SPDesktop::onResized (double x, double y)
 {
-   // Nothing called here 
+   // Nothing called here
 }
 
 /**
@@ -1075,9 +1075,9 @@ SPDesktop::setDocument (SPDocument *doc)
         g_signal_connect (G_OBJECT (namedview), "modified", G_CALLBACK (_namedview_modified), this);
         number = namedview->getViewCount();
 
-        ai = sp_item_invoke_show (SP_ITEM (sp_document_root (doc)), 
+        ai = sp_item_invoke_show (SP_ITEM (sp_document_root (doc)),
                 SP_CANVAS_ARENA (drawing)->arena,
-                dkey, 
+                dkey,
                 SP_ITEM_SHOW_DISPLAY);
         if (ai) {
             nr_arena_item_add_child (SP_CANVAS_ARENA (drawing)->root, ai, NULL);
@@ -1139,18 +1139,18 @@ SPDesktop::_onDeactivate (SPDesktop* dt)
 }
 
 void
-SPDesktop::_onSelectionModified 
+SPDesktop::_onSelectionModified
 (Inkscape::Selection *selection, guint flags, SPDesktop *dt)
 {
     if (!dt->_widget) return;
     dt->_widget->updateScrollbars (expansion(dt->_d2w));
 }
 
-static void 
+static void
 _onSelectionChanged
 (Inkscape::Selection *selection, SPDesktop *desktop)
 {
-    /** \todo 
+    /** \todo
      * only change the layer for single selections, or what?
      * This seems reasonable -- for multiple selections there can be many
      * different layers involved.
@@ -1180,21 +1180,21 @@ _arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPDeskto
     }
 }
 
-static void 
+static void
 _layer_activated(SPObject *layer, SPDesktop *desktop) {
     g_return_if_fail(SP_IS_GROUP(layer));
     SP_GROUP(layer)->setLayerDisplayMode(desktop->dkey, SPGroup::LAYER);
 }
 
 /// Callback
-static void 
+static void
 _layer_deactivated(SPObject *layer, SPDesktop *desktop) {
     g_return_if_fail(SP_IS_GROUP(layer));
     SP_GROUP(layer)->setLayerDisplayMode(desktop->dkey, SPGroup::GROUP);
 }
 
 /// Callback
-static void 
+static void
 _layer_hierarchy_changed(SPObject *top, SPObject *bottom,
                                          SPDesktop *desktop)
 {
@@ -1291,14 +1291,14 @@ _namedview_modified (SPNamedView *nv, guint flags, SPDesktop *desktop)
         }
 
         if (SP_RGBA32_A_U(nv->pagecolor) < 128 ||
-            (SP_RGBA32_R_U(nv->pagecolor) + 
-             SP_RGBA32_G_U(nv->pagecolor) + 
-             SP_RGBA32_B_U(nv->pagecolor)) >= 384) { 
+            (SP_RGBA32_R_U(nv->pagecolor) +
+             SP_RGBA32_G_U(nv->pagecolor) +
+             SP_RGBA32_B_U(nv->pagecolor)) >= 384) {
             // the background color is light or transparent, use black outline
             SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = 0xff;
         } else { // use white outline
             SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = 0xffffffff;
-        }        
+        }
     }
 }
 

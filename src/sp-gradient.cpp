@@ -44,7 +44,7 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
-/// Has to be power of 2 
+/// Has to be power of 2
 #define NCOLORS NR_GRADIENT_VECTOR_LENGTH
 
 static void sp_stop_class_init(SPStopClass *klass);
@@ -135,8 +135,8 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
          * We need presentation attributes etc.
          * \par
          * remove the hackish "style reading" from here: see comments in
-         * sp_object_get_style_property about the bugs in our current 
-         * approach.  However, note that SPStyle doesn't currently have 
+         * sp_object_get_style_property about the bugs in our current
+         * approach.  However, note that SPStyle doesn't currently have
          * stop-color and stop-opacity properties.
          */
             {
@@ -144,7 +144,7 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
                 if (streq(p, "currentColor")) {
                     stop->currentColor = true;
                 } else {
-                    guint32 const color = sp_svg_read_color(p, 0);                    
+                    guint32 const color = sp_svg_read_color(p, 0);
                     sp_color_set_rgb_rgba32(&stop->specified_color, color);
                 }
             }
@@ -844,7 +844,7 @@ sp_gradient_repr_clear_vector(SPGradient *gr)
 }
 
 /**
- * Writes the gradient's internal vector (whether from its own stops, or 
+ * Writes the gradient's internal vector (whether from its own stops, or
  * inherited from refs) into the gradient repr as svg:stop elements.
  */
 void
@@ -1073,7 +1073,7 @@ sp_gradient_ensure_colors(SPGradient *gr)
 
 /**
  * Renders gradient vector to buffer as line.
- * 
+ *
  * RGB buffer background should be set up beforehand.
  *
  * @param len,width,height,rowstride Buffer parameters (1 or 2 dimensional).
@@ -1149,7 +1149,7 @@ sp_gradient_render_vector_block_rgba(SPGradient *const gradient, guchar *buf,
 
 /**
  * Render rectangular RGB area from gradient vector.
- */ 
+ */
 void
 sp_gradient_render_vector_block_rgb(SPGradient *gradient, guchar *buf,
                                     gint const width, gint const height, gint const rowstride,
@@ -1402,7 +1402,7 @@ sp_lineargradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
 
 /**
  * Create linear gradient context.
- * 
+ *
  * Basically we have to deal with transformations
  *
  * 1) color2norm - maps point in (0,NCOLORS) vector to (0,1) vector
@@ -1410,10 +1410,10 @@ sp_lineargradient_write(SPObject *object, Inkscape::XML::Node *repr, guint flags
  * 2) gradientTransform
  * 3) bbox2user
  * 4) ctm == userspace to pixel grid
- * 
+ *
  * See also (*) in sp-pattern about why we may need parent_transform.
- * 
- * \todo (point 1 above) fixme: I do not know how to deal with start > 0 
+ *
+ * \todo (point 1 above) fixme: I do not know how to deal with start > 0
  * and end < 1.
  */
 static SPPainter *
@@ -1435,10 +1435,10 @@ sp_lineargradient_painter_new(SPPaintServer *ps,
     lgp->lg = lg;
 
     /** \todo
-     * Technically speaking, we map NCOLORS on line [start,end] onto line 
-     * [0,1].  I almost think we should fill color array start and end in 
-     * that case. The alternative would be to leave these just empty garbage 
-     * or something similar. Originally I had 1023.9999 here - not sure 
+     * Technically speaking, we map NCOLORS on line [start,end] onto line
+     * [0,1].  I almost think we should fill color array start and end in
+     * that case. The alternative would be to leave these just empty garbage
+     * or something similar. Originally I had 1023.9999 here - not sure
      * whether we have really to cut out ceil int (Lauris).
      */
     NR::Matrix color2norm(NR::identity());
@@ -1723,7 +1723,7 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
 
     if (gr->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
         /** \todo
-         * fixme: We may try to normalize here too, look at 
+         * fixme: We may try to normalize here too, look at
          * linearGradient (Lauris)
          */
 
@@ -1736,7 +1736,7 @@ sp_radialgradient_painter_new(SPPaintServer *ps,
     } else {
         /** \todo
          * Problem: What to do, if we have mixed lengths and percentages?
-         * Currently we do ignore percentages at all, but that is not 
+         * Currently we do ignore percentages at all, but that is not
          * good (lauris)
          */
 

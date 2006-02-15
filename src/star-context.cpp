@@ -253,7 +253,7 @@ sp_star_context_set (SPEventContext *ec, const gchar *key, const gchar *val)
         sc->rounded = (val) ? g_ascii_strtod (val, NULL) : 0.0;
     } else if (!strcmp (key, "randomized")) {
         sc->randomized = (val) ? g_ascii_strtod (val, NULL) : 0.0;
-    }    
+    }
 }
 
 static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent *event)
@@ -272,11 +272,11 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
     switch (event->type) {
     case GDK_BUTTON_PRESS:
         if (event->button.button == 1) {
-            
+
             dragging = TRUE;
 
             sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
-            
+
             SnapManager const m(desktop->namedview);
             sc->center = m.freeSnap(Inkscape::Snapper::SNAP_POINT, sc->center, sc->item).getPoint();
 
@@ -432,7 +432,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
     NR::Point const d = p1 - p0;
     NR::Coord const r1 = NR::L2(d);
     double arg1 = atan2(d);
-    
+
     if (state & GDK_CONTROL_MASK) {
         /* Snap angle */
         arg1 = sp_round(arg1, M_PI / snaps);
@@ -448,7 +448,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
                                  _("<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle")
                                  : _("<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle") ),
                                rads->str, sp_round((arg1) * 180 / M_PI, 0.0001));
-    
+
     g_string_free(rads, FALSE);
 }
 

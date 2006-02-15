@@ -180,9 +180,9 @@ sp_text_context_dispose(GObject *obj)
         sp_canvas_item_ungrab(tc->grabbed, GDK_CURRENT_TIME);
         tc->grabbed = NULL;
     }
-    
+
     Inkscape::Rubberband::get()->stop();
-    
+
     if (ec->shape_knot_holder) {
         sp_knot_holder_destroy(ec->shape_knot_holder);
         ec->shape_knot_holder = NULL;
@@ -413,14 +413,14 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
                     if (new_end < tc->text_sel_start) {
                         if (!layout->isStartOfWord(new_end))
                             new_end.prevStartOfWord();
-                    } else 
+                    } else
                         if (!layout->isEndOfWord(new_end))
                             new_end.nextEndOfWord();
                 } else if (tc->dragging == 3) {
                     // triple-click dragging: go by line
                     if (new_end < tc->text_sel_start)
                         new_end.thisStartOfLine();
-                    else 
+                    else
                         new_end.thisEndOfLine();
                 }
                 // update display
@@ -619,7 +619,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                 return TRUE;
             }
             break;
-        case GDK_MOTION_NOTIFY: 
+        case GDK_MOTION_NOTIFY:
             if (tc->over_text) {
                 tc->over_text = 0;
                 // update cursor and statusbar: we are not over a text object now
@@ -656,7 +656,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
 
             }
             break;
-        case GDK_BUTTON_RELEASE: 
+        case GDK_BUTTON_RELEASE:
             if (event->button.button == 1) {
 
                 if (tc->grabbed) {
@@ -1004,7 +1004,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (tc->text) {
                                     if (MOD__CTRL)
                                         cursor_movement_operator = &Inkscape::Text::Layout::iterator::thisStartOfShape;
-                                    else 
+                                    else
                                         cursor_movement_operator = &Inkscape::Text::Layout::iterator::thisStartOfLine;
                                     break;
                                 }
@@ -1014,7 +1014,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 if (tc->text) {
                                     if (MOD__CTRL)
                                         cursor_movement_operator = &Inkscape::Text::Layout::iterator::nextStartOfShape;
-                                    else 
+                                    else
                                         cursor_movement_operator = &Inkscape::Text::Layout::iterator::thisEndOfLine;
                                     break;
                                 }
@@ -1040,7 +1040,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                                 sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -10);
                                             } else {
                                                 sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -1);
-                                            } 
+                                            }
                                         } else {
                                             sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -90);
                                         }
@@ -1048,7 +1048,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         return TRUE;
-                                    } 
+                                    }
                                 }
                                 break;
                             case GDK_bracketright:
@@ -1060,7 +1060,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                                 sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 10);
                                             } else {
                                                 sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 1);
-                                            } 
+                                            }
                                         } else {
                                             sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 90);
                                         }
@@ -1151,7 +1151,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                             tc->grabbed = NULL;
                         }
                         Inkscape::Rubberband::get()->stop();
-                    } 
+                    }
                 }
             }
             break;

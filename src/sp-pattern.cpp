@@ -332,7 +332,7 @@ sp_pattern_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::
 }
 
 /* TODO: do we need a ::remove_child handler? */
- 
+
 /* fixme: We need ::order_changed handler too (Lauris) */
 
 GSList *
@@ -458,7 +458,7 @@ sp_pattern_clone_if_necessary (SPItem *item, SPPattern *pattern, const gchar *pr
 		SPCSSAttr *css = sp_repr_css_attr_new ();
 		sp_repr_css_set_property (css, property, href);
 		sp_repr_css_change_recursive (SP_OBJECT_REPR (item), css, "style");
-	} 
+	}
 	return pattern;
 }
 
@@ -512,7 +512,7 @@ pattern_tile (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix t
 		SPItem *copy = SP_ITEM(pat_object->appendChildRepr(node));
 
 		NR::Matrix dup_transform;
-		if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform)) 
+		if (!sp_svg_transform_read (node->attribute("transform"), &dup_transform))
 			dup_transform = NR::identity();
 		dup_transform *= move;
 
@@ -524,7 +524,7 @@ pattern_tile (GSList *reprs, NR::Rect bounds, SPDocument *document, NR::Matrix t
 }
 
 SPPattern *
-pattern_getroot (SPPattern *pat) 
+pattern_getroot (SPPattern *pat)
 {
 	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
 		if (sp_object_first_child(SP_OBJECT(pat_i))) { // find the first one with children
@@ -708,7 +708,7 @@ sp_pattern_painter_new (SPPaintServer *ps, NR::Matrix const &full_transform, NR:
 			pcs2px = pattern_patternTransform(pat) * full_transform;
 		}
 
-		pcs2px = NR::translate (pattern_x (pat), pattern_y (pat)) * pcs2px; 
+		pcs2px = NR::translate (pattern_x (pat), pattern_y (pat)) * pcs2px;
 
 		pcs2px.copyto (&pp->pcs2px);
 	}
@@ -964,10 +964,10 @@ sp_pat_fill (SPPainter *painter, NRPixBlock *pb)
 				area.x1 = area.x0 + pb->area.x1 - pb->area.x0;
 				area.y1 = area.y0 + pb->area.y1 - pb->area.y0;
 				
-				// We do not update here anymore 
+				// We do not update here anymore
 
-				// Set up buffer 
-				// fixme: (Lauris) 
+				// Set up buffer
+				// fixme: (Lauris)
 				nr_pixblock_setup_extern (&ppb, pb->mode, area.x0, area.y0, area.x1, area.y1, NR_PIXBLOCK_PX (pb), pb->rs, FALSE, FALSE);
 				
 				nr_arena_item_invoke_render (pp->root, &area, &ppb, 0);

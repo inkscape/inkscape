@@ -67,12 +67,12 @@
 /*
  * Undo & redo
  */
-/** 
+/**
  * Set undo sensitivity.
  *
- * \note 
+ * \note
  *   Since undo sensitivity needs to be nested, setting undo sensitivity
- *   should be done like this: 
+ *   should be done like this:
  *\verbatim
         gboolean saved = sp_document_get_undo_sensitive(document);
         sp_document_set_undo_sensitive(document, FALSE);
@@ -231,7 +231,7 @@ sp_document_undo (SPDocument *doc)
 
 	doc->priv->sensitive = TRUE;
 
-	if (ret) 
+	if (ret)
 		inkscape_external_change();
 
 	return ret;
@@ -275,7 +275,7 @@ sp_document_redo (SPDocument *doc)
 
 	doc->priv->sensitive = TRUE;
 
-	if (ret) 
+	if (ret)
 		inkscape_external_change();
 
 	return ret;

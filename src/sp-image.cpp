@@ -821,13 +821,13 @@ sp_image_description(SPItem *item)
 	SPImage *image = SP_IMAGE(item);
 	char *href_desc;
         if (image->href) {
-            href_desc = (strncmp(image->href, "data:", 5) == 0) 
+            href_desc = (strncmp(image->href, "data:", 5) == 0)
                 ? g_strdup(_("embedded"))
                 : xml_quote_strdup(image->href);
         } else {
             g_warning("Attempting to call strncmp() with a null pointer.");
             href_desc = g_strdup(_("(null_pointer)")); // we call g_free() on href_desc
-        }                
+        }
 
 	char *ret = ( image->pixbuf == NULL
 		      ? g_strdup_printf(_("<b>Image with bad reference</b>: %s"), href_desc)

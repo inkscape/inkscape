@@ -103,7 +103,7 @@ sp_desktop_controls (SPDesktop const * desktop)
 	return desktop->controls;
 }
 
-Inkscape::MessageStack * 
+Inkscape::MessageStack *
 sp_desktop_message_stack (SPDesktop const * desktop)
 {
 	g_return_val_if_fail (desktop != NULL, NULL);
@@ -111,7 +111,7 @@ sp_desktop_message_stack (SPDesktop const * desktop)
 	return desktop->messageStack();
 }
 
-SPNamedView * 
+SPNamedView *
 sp_desktop_namedview (SPDesktop const * desktop)
 {
 	g_return_val_if_fail (desktop != NULL, NULL);

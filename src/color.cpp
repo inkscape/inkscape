@@ -25,7 +25,7 @@ static SPColorSpace const RGB = {"RGB"};
 static SPColorSpace const CMYK = {"CMYK"};
 
 /**
- * Returns one of three values depending on if color is valid and if it 
+ * Returns one of three values depending on if color is valid and if it
  * has a valid color space. Likely redundant as soon as this is C++.
  */
 SPColorSpaceClass
@@ -85,8 +85,8 @@ sp_color_is_equal (SPColor const *c0, SPColor const *c1)
 }
 
 /**
- * Returns TRUE if no RGB value differs epsilon or more in both colors, 
- * with CMYK aditionally comparing opacity, or if c0 or c1 is NULL. 
+ * Returns TRUE if no RGB value differs epsilon or more in both colors,
+ * with CMYK aditionally comparing opacity, or if c0 or c1 is NULL.
  * \note Do we want the latter?
  */
 gboolean
@@ -128,7 +128,7 @@ sp_color_set_rgb_float(SPColor *color, float r, float g, float b)
 
 /**
  * Converts 32bit value to RGB floats and sets color.
- * \pre color != NULL 
+ * \pre color != NULL
  */
 void
 sp_color_set_rgb_rgba32(SPColor *color, guint32 value)
@@ -349,9 +349,9 @@ sp_color_rgb_to_hsl_floatv (float *hsl, float r, float g, float b)
         hsl[0] = 0;
         hsl[1] = 0;
     } else {
-        if (hsl[2] <= 0.5) 
+        if (hsl[2] <= 0.5)
             hsl[1] = delta / (max + min);
-        else 
+        else
             hsl[1] = delta / (2 - max - min);
 
         if (r == max) hsl[0] = (g - b) / delta;

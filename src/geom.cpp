@@ -23,34 +23,34 @@
  * convert lines to form
  * ax + by = c
  * dx + ey = f
- * 
+ *
  * (
  *  e.g. a = (x2 - x1), b = (y2 - y1), c = (x2 - x1)*x1 + (y2 - y1)*y1
  * )
- * 
+ *
  * In our case we use:
  *   a = n0.x     d = n1.x
  *   b = n0.y     e = n1.y
  *   c = d0        f = d1
- * 
+ *
  * so:
- * 
+ *
  * adx + bdy = cd
  * adx + aey = af
- * 
+ *
  * bdy - aey = cd - af
  * (bd - ae)y = cd - af
- * 
- * y = (cd - af)/(bd - ae)
- * 
- * repeat for x and you get:
- * 
- * x = (fb - ce)/(bd - ae)                \endverbatim
- * 
- * If the denominator (bd-ae) is 0 then the lines are parallel, if the
- * numerators are then 0 then the lines coincide. 
  *
- * \todo Why not use existing but outcommented code below 
+ * y = (cd - af)/(bd - ae)
+ *
+ * repeat for x and you get:
+ *
+ * x = (fb - ce)/(bd - ae)                \endverbatim
+ *
+ * If the denominator (bd-ae) is 0 then the lines are parallel, if the
+ * numerators are then 0 then the lines coincide.
+ *
+ * \todo Why not use existing but outcommented code below
  * (HAVE_NEW_INTERSECTOR_CODE)?
  */
 IntersectorKind intersector_line_intersection(NR::Point const &n0, double const d0,
@@ -69,12 +69,12 @@ IntersectorKind intersector_line_intersection(NR::Point const &n0, double const 
             return PARALLEL;
         }
     }
-    
+
     double Y = n0[NR::X] * d1 -
                n1[NR::X] * d0;
-    
+
     result = NR::Point(X, Y) / denominator;
-    
+
     return INTERSECTS;
 }
 

@@ -51,7 +51,7 @@ void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, g
 	if (strcmp(p, "None") == 0) {
             transparent_color = ccode;
         }
-        
+
         if (strcmp(p, "#000000") == 0) {
             black_color = ccode;
         }
@@ -59,7 +59,7 @@ void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, g
 
     for (int y = 0; y < 32; y++) {
         for (int x = 0; x < 32; ) {
-            
+
             char value = 0;
             char maskv = 0;
 			
@@ -72,7 +72,7 @@ void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, g
                     }
                 }
             }
-            
+
             pixmap_buffer[(y * 4 + x/8)-1] = value;
             mask_buffer[(y * 4 + x/8)-1] = maskv;
         }
@@ -86,7 +86,7 @@ GdkCursor *sp_cursor_new_from_xpm (gchar **xpm, gint hot_x, gint hot_y)
 {
     GdkColor const fg = { 0, 0, 0, 0 };
     GdkColor const bg = { 0, 65535, 65535, 65535 };
-    
+
     GdkBitmap *bitmap = NULL;
     GdkBitmap *mask = NULL;
 

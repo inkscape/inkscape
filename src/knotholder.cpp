@@ -73,7 +73,7 @@ void sp_knot_holder_destroy(SPKnotHolder *kh)
             g_free(e);
             kh->entity = g_slist_remove(kh->entity, e);
         }
-        
+
         g_free(kh);
     }
 }
@@ -146,11 +146,11 @@ void sp_knot_holder_add_full(
 static void knotholder_update_knots(SPKnotHolder *knot_holder, SPItem *item)
 {
     NR::Matrix const i2d(sp_item_i2d_affine(item));
-    
+
     for (GSList *el = knot_holder->entity; el; el = el->next) {
         SPKnotHolderEntity *e = (SPKnotHolderEntity *) el->data;
         GObject *kob = G_OBJECT(e->knot);
-        
+
         NR::Point dp( e->knot_get(item) * i2d );
         g_signal_handler_block(kob, e->handler_id);
         sp_knot_set_position(e->knot, &dp, SP_KNOT_STATE_NORMAL);
@@ -180,7 +180,7 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
     knotholder_update_knots(knot_holder, item);
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
-    sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item)); 
+    sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item));
 }
 
 static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data)
@@ -188,8 +188,8 @@ static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gp
     SPKnotHolder *knot_holder = (SPKnotHolder *) data;
     SPItem *item  = SP_ITEM (knot_holder->item);
     // this was a local change and the knotholder does not need to be recreated:
-    knot_holder->local_change = TRUE; 
-    
+    knot_holder->local_change = TRUE;
+
     for (GSList *el = knot_holder->entity; el; el = el->next) {
         SPKnotHolderEntity *e = (SPKnotHolderEntity *) el->data;
         if (e->knot == knot) {

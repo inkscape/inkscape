@@ -114,10 +114,10 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
     g_return_if_fail(SP_IS_VIEW_WIDGET(vw));
 
     w = sp_window_new("", TRUE);
-    
+
     if (editable) {
       g_object_set_data(G_OBJECT(vw), "window", w);
-      reinterpret_cast<SPDesktopWidget*>(vw)->window = 
+      reinterpret_cast<SPDesktopWidget*>(vw)->window =
         static_cast<GtkWindow*>((void*)w);
     }
 
@@ -993,7 +993,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
             SPDesktop *desktop = SP_ACTIVE_DESKTOP;
             // Add it to the current layer
-           
+
             // Greg's edits to add intelligent positioning of svg drops
             SPObject *new_obj = NULL;
             new_obj = desktop->currentLayer()->appendChildRepr(newgroup);

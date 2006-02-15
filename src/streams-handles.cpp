@@ -29,7 +29,7 @@ int FileHandle::open(URI const& uri, char const* mode)
 }
 
 FILE *FileHandle::sys_open(URI const& uri, char const* mode)
-{    
+{
     gchar *filename = uri.toNativeFilename();
 
     if ((fp = std::fopen(filename, mode)) == 0) {
@@ -83,8 +83,8 @@ int FileHandle::sys_write (void const *buf, int buflen) throw(WriteException)
 	error("fwrite");
 	throw WriteException();
     }
-    
-    return nbytes;    
+
+    return nbytes;
 }
 
 int FileHandle::seek(long offset, int whence)

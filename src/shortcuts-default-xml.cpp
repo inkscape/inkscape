@@ -1,4 +1,4 @@
-extern char const shortcuts_default_xml[]= 
+extern char const shortcuts_default_xml[]=
 "<?xml version=\"1.0\"?>\n"
 "<keybindings name=\"Inkscape default\">\n"
 "  <primary keyval=\"n\" modifiers=\"control\" verb=\"FileNew\" />\n"

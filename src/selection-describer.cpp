@@ -63,19 +63,19 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         if (!items->next) { // one item
             char *item_desc = sp_item_description(item);
             if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref)) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.", 
+                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, layer_phrase,
                               _("Use <b>Shift+D</b> to look up original"), when_selected);
             } else if (SP_IS_TEXT_TEXTPATH(item)) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.", 
+                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, layer_phrase,
                               _("Use <b>Shift+D</b> to look up path"), when_selected);
             } else if (SP_IS_FLOWTEXT(item) && !SP_FLOWTEXT(item)->has_internal_frame()) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.", 
+                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, layer_phrase,
                               _("Use <b>Shift+D</b> to look up frame"), when_selected);
             } else {
-                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.", 
+                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
                               item_desc, layer_phrase, when_selected);
             }
             g_free(item_desc);
@@ -89,12 +89,12 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                                 object_count);
 
             if (selection->numberOfLayers() == 1) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."), 
+                _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."),
                               object_count_str, layer_phrase, when_selected);
             } else {
-                _context.setF(Inkscape::NORMAL_MESSAGE, 
+                _context.setF(Inkscape::NORMAL_MESSAGE,
                               ngettext("%s in <b>%i</b> layer. %s.",
-                                       "%s in <b>%i</b> layers. %s.", 
+                                       "%s in <b>%i</b> layers. %s.",
                                        selection->numberOfLayers()),
                               object_count_str, selection->numberOfLayers(), when_selected);
             }

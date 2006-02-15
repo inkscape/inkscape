@@ -603,7 +603,7 @@ sp_root_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         Inkscape::SVGOStringStream os;
         os << root->viewBox.x0 << " " << root->viewBox.y0 << " " << root->viewBox.x1 - root->viewBox.x0 << " " << root->viewBox.y1 - root->viewBox.y0;
         repr->setAttribute("viewBox", os.str().c_str());
-    } 
+    }
 
     if (((SPObjectClass *) (parent_class))->write)
         ((SPObjectClass *) (parent_class))->write(object, repr, flags);

@@ -302,9 +302,9 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             SnapManager const m(desktop->namedview);
             rc->center = m.freeSnap(Inkscape::Snapper::SNAP_POINT | Inkscape::Snapper::BBOX_POINT,
                                     button_dt, rc->item).getPoint();
-            
+
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                ( GDK_KEY_PRESS_MASK | 
+                                ( GDK_KEY_PRESS_MASK |
                                   GDK_BUTTON_RELEASE_MASK       |
                                   GDK_POINTER_MOTION_MASK       |
                                   GDK_POINTER_MOTION_HINT_MASK  |
@@ -451,7 +451,7 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
     }
 
     NR::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
-    
+
     sp_rect_position_set(SP_RECT(rc.item), r.min()[NR::X], r.min()[NR::Y], r.dimensions()[NR::X], r.dimensions()[NR::Y]);
     if ( rc.rx != 0.0 ) {
         sp_rect_set_rx (SP_RECT(rc.item), TRUE, rc.rx);
@@ -459,7 +459,7 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
     if ( rc.ry != 0.0 ) {
         if (rc.rx == 0.0)
             sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, MIN(r.dimensions()[NR::X], r.dimensions()[NR::Y])/2));
-        else 
+        else
             sp_rect_set_ry (SP_RECT(rc.item), TRUE, CLAMP(rc.ry, 0, r.dimensions()[NR::Y]));
     }
 

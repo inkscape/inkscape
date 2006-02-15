@@ -234,19 +234,19 @@ sp_flowregion_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
 		if ( repr == NULL ) repr = sp_repr_new ("svg:flowRegion");
-        
+
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *crepr = child->updateRepr(NULL, flags);
             if (crepr) l = g_slist_prepend(l, crepr);
         }
-        
+
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
             Inkscape::GC::release((Inkscape::XML::Node *) l->data);
             l = g_slist_remove(l, l->data);
         }
-        
+
     } else {
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             child->updateRepr(flags);
@@ -448,19 +448,19 @@ sp_flowregionexclude_write (SPObject *object, Inkscape::XML::Node *repr, guint f
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
 		if ( repr == NULL ) repr = sp_repr_new ("svg:flowRegionExclude");
-        
+
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *crepr = child->updateRepr(NULL, flags);
             if (crepr) l = g_slist_prepend(l, crepr);
         }
-        
+
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
             Inkscape::GC::release((Inkscape::XML::Node *) l->data);
             l = g_slist_remove(l, l->data);
         }
-        
+
     } else {
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             child->updateRepr(flags);

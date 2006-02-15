@@ -25,7 +25,7 @@ static NR::translate inverse(NR::translate const m)
 	return NR::translate(-m[0], -m[1]);
 }
 
-void 
+void
 sp_item_rotate_rel(SPItem *item, NR::rotate const &rotation)
 {
 	NR::translate const s(sp_item_bbox_desktop(item).midpoint());
@@ -46,7 +46,7 @@ sp_item_scale_rel (SPItem *item, NR::scale const &scale)
 	sp_item_set_i2d_affine(item,
 			       sp_item_i2d_affine(item) * inverse(s) * scale * s);
 	sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
-} 
+}
 
 void
 sp_item_skew_rel (SPItem *item, double skewX, double skewY)
@@ -60,7 +60,7 @@ sp_item_skew_rel (SPItem *item, double skewX, double skewY)
 	sp_item_set_i2d_affine(item,
 			       sp_item_i2d_affine(item) * inverse(s) * skew * s);
 	sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
-} 
+}
 
 void sp_item_move_rel(SPItem *item, NR::translate const &tr)
 {
@@ -76,7 +76,7 @@ preference value passed to it. Has to solve a quadratic equation to make sure
 the goal is met exactly and the stroke scaling is obeyed.
 */
 
-NR::Matrix 
+NR::Matrix
 get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool transform_stroke, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
     NR::Rect bbox (bbox_param);
@@ -93,9 +93,9 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
     gdouble h1 = y1 - y0;
     gdouble r0 = strokewidth;
 
-    if (bbox.isEmpty() || bbox.extent(NR::X) < 1e-06 || bbox.extent(NR::Y) < 1e-06 || 
+    if (bbox.isEmpty() || bbox.extent(NR::X) < 1e-06 || bbox.extent(NR::Y) < 1e-06 ||
         fabs(w0 - r0) < 1e-6 || fabs(h0 - r0) < 1e-6 ||
-        (!transform_stroke && (fabs(w1 - r0) < 1e-6 || fabs(h1 - r0) < 1e-6)) 
+        (!transform_stroke && (fabs(w1 - r0) < 1e-6 || fabs(h1 - r0) < 1e-6))
         ) {
         NR::Matrix move = NR::Matrix(NR::translate(x0 - bbox.min()[NR::X], y0 - bbox.min()[NR::Y]));
         return (move); // sorry, cannot scale from or to empty boxes, so only translate

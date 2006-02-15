@@ -18,7 +18,7 @@
 /** \class SPDocument
  * SPDocument serves as the container of both model trees (agnostic XML
  * and typed object tree), and implements all of the document-level
- * functionality used by the program. Many document level operations, like 
+ * functionality used by the program. Many document level operations, like
  * load, save, print, export and so on, use SPDocument as their basic datatype.
  *
  * SPDocument implements undo and redo stacks and an id-based object
@@ -201,7 +201,7 @@ void SPDocument::reset_key (void *dummy)
 {
     actionkey = NULL;
 }
-    
+
 static SPDocument *
 sp_document_create(Inkscape::XML::Document *rdoc,
                    gchar const *uri,
@@ -316,7 +316,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
 }
 
 /**
- * Fetches document from URI, or creates new, if NULL; public document 
+ * Fetches document from URI, or creates new, if NULL; public document
  * appears in document list.
  */
 SPDocument *

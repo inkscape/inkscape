@@ -17,12 +17,12 @@
  *
  * Copyright (C) 1999-2002 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
- * 
+ *
  * Inkscape authors:
  *   Johan Ceuppens
- * 
+ *
  * Copyright (C) 2004 Inkscape authors
- * 
+ *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 

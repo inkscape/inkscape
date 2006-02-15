@@ -17,9 +17,9 @@ namespace Inkscape {
  * ZlibBuffer
  */
 
-ZlibBuffer::ZlibBuffer(URIHandle& urih) 
+ZlibBuffer::ZlibBuffer(URIHandle& urih)
   : _urihandle(&urih), _putsize(BUFSIZE_STREAM), _getsize(BUFSIZE_STREAM)
-{ 
+{
     init_inflation();
 }
 
@@ -38,15 +38,15 @@ int ZlibBuffer::allocate_buffers()
 int ZlibBuffer::reallocate_buffers(int new_getsize, int new_putsize)
 {
     char *new_buffer = new char[new_getsize + new_putsize];
-    
+
     std::memcpy(new_buffer, eback(), _getsize);
     std::memcpy(new_buffer, eback() + _getsize, _putsize);
-    
-    setg(new_buffer, new_buffer + (gptr() - eback()), 
+
+    setg(new_buffer, new_buffer + (gptr() - eback()),
 	 new_buffer + new_getsize);
     new_buffer += new_getsize;
     setp(new_buffer, new_buffer + new_putsize);
-    
+
     _getsize = new_getsize;
     _putsize = new_putsize;
 
@@ -57,10 +57,10 @@ int ZlibBuffer::underflow()
 {
     if (eback() == 0 && allocate_buffers() == 0)
     	return EOF;
-    
+
     if (consume_and_inflate() == EOF)
 	return EOF;
-        
+
     return *(unsigned char *)gptr();
 }
 
@@ -72,13 +72,13 @@ int ZlibBuffer::overflow(int c)
     if (pbase() == 0 && allocate_buffers() == 0)
 	return EOF;
 
-    if (pptr() >= epptr() && 
+    if (pptr() >= epptr() &&
 	flush_output() == EOF)
 	return EOF;
 
     putchar(c);
-    
-    if (pptr() >= epptr() && 
+
+    if (pptr() >= epptr() &&
 	flush_output() == EOF)
 	return EOF;
 
@@ -93,7 +93,7 @@ int ZlibBuffer::consume(guint8 *buf, int nbytes)
 int ZlibBuffer::do_consume(guint8 *buf, int nbytes)
 {
     nbytes = _urihandle->read(buf, nbytes);
-    
+
     if (nbytes == EOF)
 	return EOF;
     else if (nbytes == 0)
@@ -107,10 +107,10 @@ int ZlibBuffer::do_consume_and_inflate(int nbytes)
     guint8 buf[nbytes];
     if (consume(buf, nbytes) == EOF)
 	return EOF;
-    
+
     GByteArray *gba = inflate(buf, nbytes);
     copy_to_get(gba->data, gba->len);
-    
+
     g_byte_array_free(gba, TRUE);
     return 1;
 }
@@ -136,11 +136,11 @@ int ZlibBuffer::flush_output()
 void ZlibBuffer::init_inflation() throw(ZlibBufferException)
 {
     memset(&_zs, 0, sizeof(z_stream));
-    
+
     _zs.zalloc = Z_NULL;
     _zs.zfree = Z_NULL;
     _zs.opaque = Z_NULL;
-    
+
     if(inflateInit2(&_zs, -15) != Z_OK) {
 	throw ZlibBufferException();
     }
@@ -149,7 +149,7 @@ void ZlibBuffer::init_inflation() throw(ZlibBufferException)
 
 void ZlibBuffer::reset_inflation() throw(ZlibBufferException)
 {
-    if (inflateReset(&_zs) != Z_OK) 
+    if (inflateReset(&_zs) != Z_OK)
 	throw ZlibBufferException();
 }
 
@@ -162,10 +162,10 @@ GByteArray *ZlibBuffer::do_inflate(guint8 *data, int nbytes)
 {
     GByteArray *gba = g_byte_array_new();
     guint8 out_buffer[BUFSIZE_STREAM];
-        
+
     _zs.avail_in = 0;
     guint32 crc = crc32(0, Z_NULL, 0);
-    
+
     if (!_zs.avail_in) {
 	_zs.avail_in = nbytes;
 	_zs.next_in = (Bytef *)data;
@@ -200,10 +200,10 @@ int ZlibBuffer::copy_to_get(guint8 *data, int nbytes)
 
 int ZlibBuffer::do_copy_to_get(guint8 *data, int nbytes)
 {
-    if (nbytes + gptr() - eback() > _getsize) 
+    if (nbytes + gptr() - eback() > _getsize)
 	reallocate_buffers(nbytes + gptr() - eback() + BUFSIZE_STREAM,
 			   _putsize);
-    
+
     std::memcpy(gptr(), data, nbytes);
     setg(eback(), gptr(), gptr() + nbytes);
     return 1;

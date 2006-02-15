@@ -284,7 +284,7 @@ sp_flowtext_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
             Inkscape::XML::Node *c_repr = NULL;
             if ( SP_IS_FLOWDIV(child) || SP_IS_FLOWPARA(child) || SP_IS_FLOWREGION(child) || SP_IS_FLOWREGIONEXCLUDE(child)) {
                 c_repr = child->updateRepr(NULL, flags);
-            } 
+            }
             if ( c_repr ) l = g_slist_prepend(l, c_repr);
         }
         while ( l ) {
@@ -339,7 +339,7 @@ static gchar *sp_flowtext_description(SPItem *item)
     int const nChars = layout.iteratorToCharIndex(layout.end());
     if (SP_FLOWTEXT(item)->has_internal_frame())
         return g_strdup_printf(_("<b>Flowed text</b> (%d characters)"), nChars);
-    else 
+    else
         return g_strdup_printf(_("<b>Linked flowed text</b> (%d characters)"), nChars);
 }
 
@@ -412,7 +412,7 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
             }
             if (with_indent)
                 layout.appendText(SP_STRING(child)->string, root->style, child, &pi);
-            else 
+            else
                 layout.appendText(SP_STRING(child)->string, root->style, child);
         } else if (SP_IS_FLOWREGION(child)) {
             std::vector<Shape*> const &computed = SP_FLOWREGION(child)->computed;

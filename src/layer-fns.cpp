@@ -20,9 +20,9 @@
 
 namespace Inkscape {
 
-/** 
+/**
  *  Creates a new layer.  Advances to the next layer id indicated
- *  by the string "layerNN", then creates a new group object of 
+ *  by the string "layerNN", then creates a new group object of
  *  that id with attribute inkscape:groupmode='layer', and finally
  *  appends the new group object to \a root after object \a layer.
  *
@@ -167,7 +167,7 @@ SPObject *previous_layer(SPObject *root, SPObject *layer) {
         } else {
             return last_elder_layer(root, SP_OBJECT_PARENT(layer));
         }
-    } 
+    }
 
     return NULL;
 }

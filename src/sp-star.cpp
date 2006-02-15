@@ -259,8 +259,8 @@ sp_star_set (SPObject *object, unsigned int key, const gchar *value)
 static void
 sp_star_update (SPObject *object, SPCtx *ctx, guint flags)
 {
-	if (flags & (SP_OBJECT_MODIFIED_FLAG | 
-		     SP_OBJECT_STYLE_MODIFIED_FLAG | 
+	if (flags & (SP_OBJECT_MODIFIED_FLAG |
+		     SP_OBJECT_STYLE_MODIFIED_FLAG |
 		     SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 		sp_shape_set_shape ((SPShape *) object);
 	}
@@ -305,9 +305,9 @@ Obvious (but acceptable for my purposes) limits to uniqueness:
 static guint32
 point_unique_int (NR::Point o)
 {
-	return ((guint32) 
-	65536 * 
-		(((int) floor (o[NR::X] * 64)) % 1024 + ((int) floor (o[NR::X] * 1024)) % 64) 
+	return ((guint32)
+	65536 *
+		(((int) floor (o[NR::X] * 64)) % 1024 + ((int) floor (o[NR::X] * 1024)) % 64)
 	+
      		(((int) floor (o[NR::Y] * 64)) % 1024 + ((int) floor (o[NR::Y] * 1024)) % 64)
 	);
@@ -358,7 +358,7 @@ sp_star_get_curvepoint (SPStar *star, SPStarPoint point, gint index, bool previ)
 
 	// point to which we direct the bissector of the curve handles;
 	// it's far enough outside the star on the perpendicular to prev-next through mid
-	NR::Point biss =  mid + 100000 * rot90_rel (mid, next); 
+	NR::Point biss =  mid + 100000 * rot90_rel (mid, next);
 
 	// lengths of vectors to prev and next
 	gdouble prev_len = NR::L2 (prev - o);
@@ -416,7 +416,7 @@ sp_star_set_shape (SPShape *shape)
 		if (not_rounded) {
 			sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT2, 0, true));
 		} else {
-			sp_curve_curveto (c, 
+			sp_curve_curveto (c,
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, NEXT),
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, 0, PREV),
 				sp_star_get_xy (star, SP_STAR_POINT_KNOT2, 0, true));
@@ -429,12 +429,12 @@ sp_star_set_shape (SPShape *shape)
 			sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
 		} else {
 			if (star->flatsided == false) {
-				sp_curve_curveto (c, 
+				sp_curve_curveto (c,
 						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, i - 1, NEXT),
 						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i, PREV),
 						sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
 			} else {
-				sp_curve_curveto (c, 
+				sp_curve_curveto (c,
 						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i - 1, NEXT),
 						sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, i, PREV),
 						sp_star_get_xy (star, SP_STAR_POINT_KNOT1, i, true));
@@ -458,12 +458,12 @@ sp_star_set_shape (SPShape *shape)
 			sp_curve_lineto (c, sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
 		} else {
 			if (star->flatsided == false) {
-			sp_curve_curveto (c, 
+			sp_curve_curveto (c,
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT2, sides - 1, NEXT),
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, PREV),
 				sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));
 			} else {
-			sp_curve_curveto (c, 
+			sp_curve_curveto (c,
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, sides - 1, NEXT),
 				sp_star_get_curvepoint (star, SP_STAR_POINT_KNOT1, 0, PREV),
 				sp_star_get_xy (star, SP_STAR_POINT_KNOT1, 0, true));

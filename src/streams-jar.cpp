@@ -21,14 +21,14 @@ void JarBuffer::consume_header() throw(JarHeaderException)
 	flags = unpack_2bytes(data, LOC_EXTRA);
 	method = unpack_2bytes(data, LOC_COMP);
 	
-#ifdef DEBUG_STREAMS    
+#ifdef DEBUG_STREAMS
 	std::printf("Compressed size is %u\n", compressed_size);
 	std::printf("Filename length is %hu\n", filename_length);
 	std::printf("Extra field length is %hu\n", eflen);
 	std::printf("Flags are %#hx\n", flags);
 	std::printf("Compression method is %#hx\n", method);
 #endif
-    
+
 	//guint32 crc = check_crc(data, flags);
 	gchar filename[filename_length+1];
 	_urihandle->read(filename, filename_length);
@@ -75,12 +75,12 @@ void JarBuffer::reset()//resets zlib and buffer (also skips archived directories
 int JarBuffer::consume_and_inflate()
 {
     int nbytes;
-    
+
     reset();
 
-    nbytes = compressed_left > BUFSIZE_STREAM ? BUFSIZE_STREAM 
+    nbytes = compressed_left > BUFSIZE_STREAM ? BUFSIZE_STREAM
 	    : compressed_left;
-    
+
     if (is_compressed())
 	return consume_compressed(nbytes);
     else
@@ -95,7 +95,7 @@ int JarBuffer::consume_compressed(int nbytes)
 	guint8 efbuf[eflen];
 	_urihandle->read(efbuf, eflen);
 	return 1;
-    } 
+    }
 
     return ret;
 }
@@ -105,7 +105,7 @@ int JarBuffer::consume_uncompressed(int nbytes)
     guint8 data[nbytes];
     if (consume(data, nbytes) == EOF)
 	return EOF;
-    
+
     copy_to_get(data, nbytes);
     compressed_left -= nbytes;
 
@@ -119,11 +119,11 @@ GByteArray *JarBuffer::inflate(guint8 *data, const int nbytes)
     return gba;
 }
 
-guint32 JarBuffer::unpack_4bytes(guint8 *data, const int offset) 
+guint32 JarBuffer::unpack_4bytes(guint8 *data, const int offset)
 {
-    return ((guint32)data[offset] 
+    return ((guint32)data[offset]
 	    + (((guint32)data[offset + 1]) << 8)
-	    + (((guint32)data[offset + 2]) << 16) 
+	    + (((guint32)data[offset + 2]) << 16)
 	    + (((guint32)data[offset + 3]) << 24));
 }
 

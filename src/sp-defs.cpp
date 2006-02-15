@@ -32,7 +32,7 @@ static SPObjectClass *parent_class;
 GType sp_defs_get_type(void)
 {
     static GType defs_type = 0;
-    
+
     if (!defs_type) {
         GTypeInfo defs_info = {
             sizeof(SPDefsClass),
@@ -48,7 +48,7 @@ GType sp_defs_get_type(void)
         };
         defs_type = g_type_register_static(SP_TYPE_OBJECT, "SPDefs", &defs_info, (GTypeFlags) 0);
     }
-    
+
     return defs_type;
 }
 
@@ -56,7 +56,7 @@ static void sp_defs_class_init(SPDefsClass *dc)
 {
     parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
     SPObjectClass *sp_object_class = (SPObjectClass *) dc;
-    
+
     sp_object_class->release = sp_defs_release;
     sp_object_class->update = sp_defs_update;
     sp_object_class->modified = sp_defs_modified;
@@ -65,7 +65,7 @@ static void sp_defs_class_init(SPDefsClass *dc)
 
 static void sp_defs_init(SPDefs *defs)
 {
-    
+
 }
 
 static void sp_defs_release(SPObject *object)
@@ -88,9 +88,9 @@ static void sp_defs_update(SPObject *object, SPCtx *ctx, guint flags)
         g_object_ref(G_OBJECT(child));
         l = g_slist_prepend(l, child);
     }
-    
+
     l = g_slist_reverse(l);
-    
+
     while (l) {
         SPObject *child = SP_OBJECT(l->data);
         l = g_slist_remove(l, child);
@@ -106,17 +106,17 @@ static void sp_defs_modified(SPObject *object, guint flags)
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
-    
+
     flags &= SP_OBJECT_MODIFIED_CASCADE;
-    
+
     GSList *l = NULL;
     for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
         g_object_ref(G_OBJECT(child));
         l = g_slist_prepend(l, child);
     }
-    
+
     l = g_slist_reverse(l);
-    
+
     while (l) {
         SPObject *child = SP_OBJECT(l->data);
         l = g_slist_remove(l, child);
@@ -130,23 +130,23 @@ static void sp_defs_modified(SPObject *object, guint flags)
 static Inkscape::XML::Node *sp_defs_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
     if (flags & SP_OBJECT_WRITE_BUILD) {
-        
+
         if (!repr) {
             repr = sp_repr_new("svg:defs");
         }
-        
+
         GSList *l = NULL;
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *crepr = child->updateRepr(NULL, flags);
             if (crepr) l = g_slist_prepend(l, crepr);
         }
-        
+
         while (l) {
             repr->addChild((Inkscape::XML::Node *) l->data, NULL);
             Inkscape::GC::release((Inkscape::XML::Node *) l->data);
             l = g_slist_remove(l, l->data);
         }
-        
+
     } else {
         for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             child->updateRepr(flags);

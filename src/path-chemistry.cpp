@@ -161,13 +161,13 @@ sp_selected_path_break_apart (void)
 
 		SPItem *item = (SPItem *) items->data;
 
-		if (!SP_IS_PATH (item)) 
+		if (!SP_IS_PATH (item))
 			continue;
 
 		SPPath *path = SP_PATH (item);
 
 		SPCurve *curve = sp_shape_get_curve (SP_SHAPE (path));
-		if (curve == NULL) 
+		if (curve == NULL)
 			continue;
 
 		did = true;
@@ -205,7 +205,7 @@ sp_selected_path_break_apart (void)
 			// add the new repr to the parent
 			parent->appendChild(repr);
 
-			// move to the saved position 
+			// move to the saved position
 			repr->setPosition(pos > 0 ? pos : 0);
 
 			// if it's the first one, restore id
@@ -227,7 +227,7 @@ sp_selected_path_break_apart (void)
 	} else {
 	    SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
 	    return;
-	} 
+	}
 }
 
 /* This function is an entry point from GUI */
@@ -280,7 +280,7 @@ sp_selected_path_to_curves0 (gboolean interactive, guint32 text_grouping_policy)
 		repr->setAttribute("id", id);
 		// add the new repr to the parent
 		parent->appendChild(repr);
-		// move to the saved position 
+		// move to the saved position
 		repr->setPosition(pos > 0 ? pos : 0);
 
 		selection->add(repr);
@@ -317,7 +317,7 @@ sp_selected_item_to_curved_repr(SPItem * item, guint32 text_grouping_policy)
 	/* Transformation */
 	repr->setAttribute("transform", SP_OBJECT_REPR (item)->attribute("transform"));
 	/* Style */
-	gchar *style_str = sp_style_write_difference (SP_OBJECT_STYLE (item), 
+	gchar *style_str = sp_style_write_difference (SP_OBJECT_STYLE (item),
 					       SP_OBJECT_STYLE (SP_OBJECT_PARENT (item)));
 	repr->setAttribute("style", style_str);
 	g_free (style_str);
@@ -365,5 +365,5 @@ sp_selected_path_reverse ()
 		sp_document_done (SP_DT_DOCUMENT (desktop));
 	} else {
 	    SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
-	} 
+	}
 }

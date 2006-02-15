@@ -130,7 +130,7 @@ sp_file_new_default()
             char *default_template = g_build_filename(dirname, _("default.svg"), NULL);
             if (Inkscape::IO::file_test(default_template, G_FILE_TEST_IS_REGULAR)) {
                 return sp_file_new(default_template);
-            } 
+            }
         }
         g_free(dirname);
         sources.pop_front();
@@ -180,7 +180,7 @@ sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_
     if (doc) {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         SPDocument *existing = desktop ? SP_DT_DOCUMENT(desktop) : NULL;
-        
+
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
             desktop->change_document(doc);
@@ -194,7 +194,7 @@ sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_
                 desktop = Inkscape::NSApplication::Editor::createDesktop (doc);
             }
         }
-        
+
         doc->virgin = FALSE;
         // everyone who cares now has a reference, get rid of ours
         sp_document_unref(doc);
@@ -404,7 +404,7 @@ sp_file_open_dialog(gpointer object, gpointer data)
         {
 
 #ifdef INK_DUMP_FILENAME_CONV
-            g_message(" FileName: %s",(const char *)list->data);           
+            g_message(" FileName: %s",(const char *)list->data);
 #endif
 
             fileName=(gchar *)g_strdup((gchar *)list->data);
@@ -432,7 +432,7 @@ sp_file_open_dialog(gpointer object, gpointer data)
                     g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
                 }
 
-#ifdef INK_DUMP_FILENAME_CONV                
+#ifdef INK_DUMP_FILENAME_CONV
                 g_message("Opening File %s\n",fileName);
 #endif
 
@@ -443,7 +443,7 @@ sp_file_open_dialog(gpointer object, gpointer data)
             {
                 g_message("Cannot Open Directory %s\n",fileName);
             }
-            
+
             list=list->next;
         }
 

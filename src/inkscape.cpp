@@ -98,7 +98,7 @@ static void inkscape_dispose (GObject *object);
 static void inkscape_activate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
 static void inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
 
-static bool inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, const gchar *skeleton, 
+static bool inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, const gchar *skeleton,
 				  unsigned int skel_size,
 				  const gchar *e_mkdir,
 				  const gchar *e_notdir,
@@ -152,7 +152,7 @@ static void (* segv_handler) (int) = NULL;
 
 /**
  *  Retrieves the GType for the Inkscape Application object.
- */ 
+ */
 GType
 inkscape_get_type (void)
 {
@@ -544,13 +544,13 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
 {
     inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
     /* fixme: load application defaults */
-  
+
     segv_handler = signal (SIGSEGV, inkscape_segv_handler);
     signal (SIGFPE,  inkscape_segv_handler);
     signal (SIGILL,  inkscape_segv_handler);
-#ifndef WIN32    
+#ifndef WIN32
     signal (SIGBUS,  inkscape_segv_handler);
-#endif    
+#endif
     signal (SIGABRT, inkscape_segv_handler);
 
     inkscape->use_gui = use_gui;
@@ -596,24 +596,24 @@ gboolean inkscape_app_use_gui( Inkscape::Application const * app )
 /**
  * Preference management
  * We use '.' as separator
- * 
+ *
  * Returns TRUE if the config file was successfully loaded, FALSE if not.
  */
 bool
-inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton, 
-		      unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml, 
+inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, const gchar *skeleton,
+		      unsigned int skel_size, const gchar *e_notreg, const gchar *e_notxml,
 		      const gchar *e_notsp, const gchar *warn)
 {
     gchar *fn = profile_path(filename);
     if (!Inkscape::IO::file_test(fn, G_FILE_TEST_EXISTS)) {
         bool result;
         /* No such file */
-        result = inkscape_init_config (config, filename, skeleton, 
+        result = inkscape_init_config (config, filename, skeleton,
                                        skel_size,
                                        _("Cannot create directory %s.\n%s"),
                                        _("%s is not a valid directory.\n%s"),
                                        _("Cannot create file %s.\n%s"),
-                                       _("Cannot write file %s.\n%s"), 
+                                       _("Cannot write file %s.\n%s"),
                                        _("Although Inkscape will run, it will use default settings,\n"
                                          "and any changes made in preferences will not be saved."));
         g_free (fn);
@@ -672,7 +672,7 @@ inkscape_load_config (const gchar *filename, Inkscape::XML::Document *config, co
 
 /**
  *  Menus management
- * 
+ *
  */
 bool
 inkscape_load_menus (Inkscape::Application *inkscape)
@@ -680,9 +680,9 @@ inkscape_load_menus (Inkscape::Application *inkscape)
     gchar *fn = profile_path(MENUS_FILE);
     bool retval = false;
     if (Inkscape::IO::file_test(fn, G_FILE_TEST_EXISTS)) {
-        retval = inkscape_load_config (MENUS_FILE, 
-				 inkscape->menus, 
-				 menus_skeleton, 
+        retval = inkscape_load_config (MENUS_FILE,
+				 inkscape->menus,
+				 menus_skeleton,
 				 MENUS_SKELETON_SIZE,
 				 _("%s is not a regular file.\n%s"),
 				 _("%s not a valid XML file, or\n"
@@ -724,7 +724,7 @@ inkscape_get_repr (Inkscape::Application *inkscape, const gchar *key)
         } else {
             len = strlen (s);
         }
-        
+
         Inkscape::XML::Node* child;
         for (child = repr->firstChild(); child != NULL; child = child->next()) {
             gchar const *id = child->attribute("id");
@@ -825,7 +825,7 @@ void
 inkscape_add_desktop (SPDesktop * desktop)
 {
     g_return_if_fail (desktop != NULL);
-    
+
     if (Inkscape::NSApplication::Application::getNewGui())
     {
         Inkscape::NSApplication::Editor::addDesktop (desktop);
@@ -1183,12 +1183,12 @@ inkscape_active_event_context (void)
 #####################*/
 
 static bool
-inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, const gchar *skeleton, 
+inkscape_init_config (Inkscape::XML::Document *doc, const gchar *config_name, const gchar *skeleton,
 		      unsigned int skel_size,
-		      const gchar *e_mkdir, 
-		      const gchar *e_notdir, 
-		      const gchar *e_ccf, 
-		      const gchar *e_cwf, 
+		      const gchar *e_mkdir,
+		      const gchar *e_notdir,
+		      const gchar *e_ccf,
+		      const gchar *e_cwf,
 		      const gchar *warn)
 {
     gchar *dn = profile_path(NULL);
@@ -1290,7 +1290,7 @@ void
 inkscape_exit (Inkscape::Application *inkscape)
 {
     g_assert (INKSCAPE);
-        
+
     //emit shutdown signal so that dialogs could remember layout
     g_signal_emit (G_OBJECT (INKSCAPE), inkscape_signals[SHUTDOWN_SIGNAL], 0);
 

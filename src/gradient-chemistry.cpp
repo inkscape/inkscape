@@ -245,7 +245,7 @@ sp_gradient_fork_vector_if_necessary (SPGradient *gr)
 
 /**
  * Convert an item's gradient to userspace _without_ preserving coords, setting them to defaults
- * instead. No forking or reapplying is done because this is only called for newly created privates.  
+ * instead. No forking or reapplying is done because this is only called for newly created privates.
  * @return The new gradient.
  */
 SPGradient *
@@ -271,8 +271,8 @@ sp_gradient_reset_to_userspace (SPGradient *gr, SPItem *item)
         sp_repr_set_svg_double(repr, "r", width/2);
 
         // we want it to be elliptic, not circular
-        NR::Matrix squeeze = NR::Matrix (NR::translate (-center)) * 
-            NR::Matrix (NR::scale(1, height/width)) * 
+        NR::Matrix squeeze = NR::Matrix (NR::translate (-center)) *
+            NR::Matrix (NR::scale(1, height/width)) *
             NR::Matrix (NR::translate (center));
 
         gr->gradientTransform = squeeze;
@@ -449,7 +449,7 @@ sp_item_gradient (SPItem *item, bool fill_or_stroke)
             }
         }
     }
- 
+
    return gradient;
 }
 
@@ -467,7 +467,7 @@ sp_first_stop(SPGradient *gradient)
 SPStop*
 sp_prev_stop(SPStop *stop, SPGradient *gradient)
 {
-	if (sp_object_first_child(SP_OBJECT(gradient)) == SP_OBJECT(stop)) 
+	if (sp_object_first_child(SP_OBJECT(gradient)) == SP_OBJECT(stop))
 		return NULL;
 	SPObject *found = NULL;
 	for ( SPObject *ochild = sp_object_first_child(SP_OBJECT(gradient)) ; ochild != NULL ; ochild = SP_OBJECT_NEXT(ochild) ) {
@@ -702,7 +702,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
                 if (scale) {
                     lg->x2.computed += (lg->x1.computed - p[NR::X]);
                     lg->y2.computed += (lg->y1.computed - p[NR::Y]);
-                } 
+                }
                 lg->x1.computed = p[NR::X];
                 lg->y1.computed = p[NR::Y];
                 if (write_repr) {
@@ -720,7 +720,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
                 if (scale) {
                     lg->x1.computed += (lg->x2.computed - p[NR::X]);
                     lg->y1.computed += (lg->y2.computed - p[NR::Y]);
-                } 
+                }
                 lg->x2.computed = p[NR::X];
                 lg->y2.computed = p[NR::Y];
                 if (write_repr) {
@@ -782,13 +782,13 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
 				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r1_w - c_w);
 
 				NR::Matrix move = NR::Matrix (NR::translate (-c_w)) *
-												 NR::Matrix (NR::rotate(-r1_angle)) * 
+												 NR::Matrix (NR::rotate(-r1_angle)) *
 												 NR::Matrix (NR::scale(move_stretch, scale? move_stretch : 1)) *
-												 NR::Matrix (NR::rotate(r1_angle)) * 
-												 NR::Matrix (NR::rotate(move_angle)) * 
+												 NR::Matrix (NR::rotate(r1_angle)) *
+												 NR::Matrix (NR::rotate(move_angle)) *
 												 NR::Matrix (NR::translate (c_w));
 
-				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse(); 
+				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
 
 				break;
@@ -801,13 +801,13 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
 				double move_stretch = NR::L2(p_w - c_w) / NR::L2(r2_w - c_w);
 
 				NR::Matrix move = NR::Matrix (NR::translate (-c_w)) *
-												 NR::Matrix (NR::rotate(-r2_angle)) * 
+												 NR::Matrix (NR::rotate(-r2_angle)) *
 												 NR::Matrix (NR::scale(move_stretch, scale? move_stretch : 1)) *
-												 NR::Matrix (NR::rotate(r2_angle)) * 
-												 NR::Matrix (NR::rotate(move_angle)) * 
+												 NR::Matrix (NR::rotate(r2_angle)) *
+												 NR::Matrix (NR::rotate(move_angle)) *
 												 NR::Matrix (NR::translate (c_w));
 
-				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse(); 
+				new_transform = gradient->gradientTransform * i2d * move * i2d.inverse();
 				transform_set = true;
 
 				break;
@@ -815,7 +815,7 @@ sp_item_gradient_set_coords (SPItem *item, guint point_num, NR::Point p_w, bool 
 		}
 
 		if (transform_set) {
-				gradient->gradientTransform = new_transform; 
+				gradient->gradientTransform = new_transform;
 				gradient->gradientTransform_set = TRUE;
 				if (write_repr) {
 					gchar s[256];
@@ -841,7 +841,7 @@ sp_item_gradient_get_vector (SPItem *item, bool fill_or_stroke)
     return NULL;
 }
 
-SPGradientSpread 
+SPGradientSpread
 sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke)
 {
     SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
@@ -853,7 +853,7 @@ sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke)
 
 
 /**
-Returns the position of point point_num of the gradient applied to item (either fill_or_stroke), 
+Returns the position of point point_num of the gradient applied to item (either fill_or_stroke),
 in desktop coordinates.
 */
 
@@ -940,7 +940,7 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
 
         //g_print("hrefcount %d   count %d\n", SP_OBJECT_HREFCOUNT(ig), count_gradient_hrefs(SP_OBJECT(item), ig));
 
-        if (SP_OBJECT_HREFCOUNT(current) == 1 || 
+        if (SP_OBJECT_HREFCOUNT(current) == 1 ||
             SP_OBJECT_HREFCOUNT(current) == count_gradient_hrefs(SP_OBJECT(item), current)) {
 
             // current is private and it's either used once, or all its uses are by children of item;

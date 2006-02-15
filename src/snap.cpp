@@ -57,7 +57,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              std::list<SPItem const *> const &it) const
 {
     Inkscape::SnappedPoint r(p, NR_HUGE);
-    
+
     SPNamedView::SnapperList snappers = namedview->getSnappers();
     for (SPNamedView::SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         Inkscape::SnappedPoint const s = (*i)->freeSnap(t, p, it);
@@ -87,7 +87,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
                                                     std::list<SPItem const *> const &it) const
 {
     Inkscape::SnappedPoint r(p, NR_HUGE);
-    
+
     SPNamedView::SnapperList snappers = namedview->getSnappers();
     for (SPNamedView::SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
         Inkscape::SnappedPoint const s = (*i)->constrainedSnap(t, p, c, it);
@@ -195,7 +195,7 @@ NR::Coord namedview_dim_snap(SPNamedView const *nv, Inkscape::Snapper::PointType
 }
 
 
-NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, 
+NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t,
                                 NR::Point &req, NR::Point const &d,
                                 SPItem const *it)
 {
@@ -213,7 +213,7 @@ NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointT
  *
  * \pre d Å‚âÅ† (0, 0).
  */
-NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, 
+NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t,
                                 NR::Point &req, NR::Point const &d,
                                 std::list<SPItem const *> const &it)
 {
@@ -239,14 +239,14 @@ NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointT
  * functions for lists of points
  *
  * All functions take a list of NR::Point and parameter indicating the proposed transformation.
- * They return the updated transformation parameter. 
+ * They return the updated transformation parameter.
  */
 
 /**
  * Snap list of points in one dimension.
  * \return Coordinate difference.
  */
-std::pair<NR::Coord, bool> namedview_dim_snap_list(SPNamedView const *nv, Inkscape::Snapper::PointType t, 
+std::pair<NR::Coord, bool> namedview_dim_snap_list(SPNamedView const *nv, Inkscape::Snapper::PointType t,
                                                    const std::vector<NR::Point> &p,
                                                    NR::Coord const dx, NR::Dim2 const dim,
                                                    std::list<SPItem const *> const &it
@@ -256,7 +256,7 @@ std::pair<NR::Coord, bool> namedview_dim_snap_list(SPNamedView const *nv, Inksca
     NR::Coord xdist = dx;
 
     SnapManager const m(nv);
-    
+
     if (m.willSnapSomething()) {
         for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
             NR::Point q = *i;
@@ -276,8 +276,8 @@ std::pair<NR::Coord, bool> namedview_dim_snap_list(SPNamedView const *nv, Inksca
 /**
  * Snap list of points in two dimensions.
  */
-std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inkscape::Snapper::PointType t, 
-                                                   const std::vector<NR::Point> &p, NR::Point const &norm, 
+std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inkscape::Snapper::PointType t,
+                                                   const std::vector<NR::Point> &p, NR::Point const &norm,
                                                    NR::scale const &s, std::list<SPItem const *> const &it)
 {
     using NR::X;
@@ -288,7 +288,7 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inksca
     if (m.willSnapSomething() == false) {
         return std::make_pair(s[X], false);
     }
-    
+
     NR::Coord dist = NR_HUGE;
     double ratio = fabs(s[X]);
     for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
@@ -307,7 +307,7 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inksca
             }
         }
     }
-    
+
     return std::make_pair(ratio, dist < NR_HUGE);
 }
 
@@ -318,8 +318,8 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inksca
  *
  * \return Pair containing snapped scale and a flag which is true if a snap was made.
  */
-std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv, Inkscape::Snapper::PointType t, 
-                                                      const std::vector<NR::Point> &p, NR::Point const &norm, 
+std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv, Inkscape::Snapper::PointType t,
+                                                      const std::vector<NR::Point> &p, NR::Point const &norm,
                                                       double const sx, NR::Dim2 dim,
                                                       std::list<const SPItem *> const &it)
 {
@@ -339,13 +339,13 @@ std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv, Ink
 
         /* Scaled version of the point we are looking at */
         check[dim] = (sx * (q - norm) + norm)[dim];
-        
+
         if (fabs (q[dim] - norm[dim]) > MIN_DIST_NORM) {
             /* Snap this point */
             const NR::Coord d = namedview_dim_snap (nv, t, check, dim, it);
             /* Work out the resulting scale factor */
             double snapped_scale = (check[dim] - norm[dim]) / (q[dim] - norm[dim]);
-            
+
             if (dist == NR_HUGE || fabs(snapped_scale - sx) < fabs(scale - sx)) {
                 /* This is either the first point, or the snapped scale
                 ** is the closest yet to the original.
@@ -362,12 +362,12 @@ std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv, Ink
 /**
  * Try to snap points after they have been skewed.
  */
-double namedview_dim_snap_list_skew(SPNamedView const *nv, Inkscape::Snapper::PointType t, 
-                                    const std::vector<NR::Point> &p, NR::Point const &norm, 
+double namedview_dim_snap_list_skew(SPNamedView const *nv, Inkscape::Snapper::PointType t,
+                                    const std::vector<NR::Point> &p, NR::Point const &norm,
                                     double const sx, NR::Dim2 const dim)
 {
     SnapManager const m(nv);
-    
+
     if (m.willSnapSomething() == false) {
         return sx;
     }
@@ -376,7 +376,7 @@ double namedview_dim_snap_list_skew(SPNamedView const *nv, Inkscape::Snapper::Po
 
     gdouble dist = NR_HUGE;
     gdouble skew = sx;
-    
+
     for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
         NR::Point q = *i;
         NR::Point check = q;

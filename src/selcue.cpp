@@ -95,7 +95,7 @@ void Inkscape::SelCue::_updateItemBboxes()
                                       NULL);
             sp_canvas_item_show(box);
             SP_CTRL(box)->moveto(NR::Point(b.min()[NR::X], b.max()[NR::Y]));
-            
+
             sp_canvas_item_move_to_z(box, 0); // just low enough to not get in the way of other draggable knots
 
         } else if (mode == BBOX) {
@@ -104,14 +104,14 @@ void Inkscape::SelCue::_updateItemBboxes()
                 SP_TYPE_CTRLRECT,
                 NULL
                 );
-            
+
             SP_CTRLRECT(box)->setRectangle(b);
             SP_CTRLRECT(box)->setColor(0x000000a0, 0, 0);
             SP_CTRLRECT(box)->setDashed(true);
-            
+
             sp_canvas_item_move_to_z(box, 0);
         }
-                
+
         if (box) {
             _item_bboxes.push_back(box);
         }
@@ -128,13 +128,13 @@ void Inkscape::SelCue::_updateItemBboxes()
                                                     "stroked", 1,
                                                     "stroke_color", 0x000000ff,
                                                     NULL);
-                
+
                 sp_canvas_item_show(baseline_point);
                 SP_CTRL(baseline_point)->moveto(a);
                 sp_canvas_item_move_to_z(baseline_point, 0);
             }
         }
-        
+
         if (baseline_point) {
                _text_baselines.push_back(baseline_point);
         }

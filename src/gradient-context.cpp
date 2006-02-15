@@ -130,7 +130,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
- 
+
     SPGradientContext *rc = SP_GRADIENT_CONTEXT(event_context);
 
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
@@ -200,7 +200,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
             NR::Point const motion_w(event->motion.x,
                                      event->motion.y);
             NR::Point const motion_dt = event_context->desktop->w2d(motion_w);
-            
+
             sp_gradient_drag(*rc, motion_dt, event->motion.state, event->motion.time);
 
             ret = TRUE;
@@ -441,8 +441,8 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
             ec->_grdrag->local_change = true;
             // give the grab out-of-bounds values of xp/yp because we're already dragging
             // and therefore are already out of tolerance
-            ec->_grdrag->grabKnot (SP_ITEM(selection->itemList()->data), 
-                                   type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_P2 : POINT_RG_R1, 
+            ec->_grdrag->grabKnot (SP_ITEM(selection->itemList()->data),
+                                   type == SP_GRADIENT_TYPE_LINEAR? POINT_LG_P2 : POINT_RG_R1,
                                    fill_or_stroke, 99999, 99999, etime);
         }
         // We did an undoable action, but sp_document_done will be called by the knot when released

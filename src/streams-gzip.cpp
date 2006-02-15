@@ -19,9 +19,9 @@ static int const GZIP_IS_ASCII	     = 0x01; //file contains text
 static int const GZIP_HEADER_CRC     = 0x02; //there is a CRC in the header
 static int const GZIP_EXTRA_FIELD    = 0x04; //there is an 'extra' field
 static int const GZIP_ORIGINAL_NAME  = 0x08; //the original is stored
-static int const GZIP_HAS_COMMENT    = 0x10; //There is a comment in the header 
-static unsigned int const GZIP_HEADER_FLAGS = (GZIP_IS_ASCII 
-					       |GZIP_HEADER_CRC 
+static int const GZIP_HAS_COMMENT    = 0x10; //There is a comment in the header
+static unsigned int const GZIP_HEADER_FLAGS = (GZIP_IS_ASCII
+					       |GZIP_HEADER_CRC
 					       |GZIP_EXTRA_FIELD
 					       |GZIP_ORIGINAL_NAME
 					       |GZIP_HAS_COMMENT);
@@ -34,7 +34,7 @@ void GZipBuffer::consume_header() throw(GZipHeaderException)
 {
     unsigned int flags;
     guint8 data[4];
-    
+
     try {
 	_urihandle->read(data, 4);
 	check_signature(data);

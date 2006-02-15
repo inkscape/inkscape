@@ -267,7 +267,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 SnapManager const m(desktop->namedview);
                 sc->center = m.freeSnap(Inkscape::Snapper::SNAP_POINT, sc->center, sc->item).getPoint();
-                
+
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     ( GDK_KEY_PRESS_MASK |
                                       GDK_BUTTON_RELEASE_MASK |

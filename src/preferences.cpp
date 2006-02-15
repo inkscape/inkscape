@@ -49,9 +49,9 @@ void
 Preferences::load()
 {
     /// \todo this still uses old Gtk+ code which should be somewhere else
-    if (inkscape_load_config (PREFERENCES_FILE, 
+    if (inkscape_load_config (PREFERENCES_FILE,
                               _preferences,
-                              preferences_skeleton, 
+                              preferences_skeleton,
                               PREFERENCES_SKELETON_SIZE,
                               _("%s is not a regular file.\n%s"),
                               _("%s not a valid XML file, or\n"
@@ -71,7 +71,7 @@ Preferences::save()
 {
     if (!_preferences || ! _save_preferences)
         return;
-    
+
     gchar *fn = profile_path (PREFERENCES_FILE);
     (void) sp_repr_save_file (_preferences, fn);
     g_free (fn);

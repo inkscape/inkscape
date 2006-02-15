@@ -7,7 +7,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
- * Copyright (C) 1999-2002 Authors 
+ * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -25,7 +25,7 @@ Inkscape::GuideSnapper::GuideSnapper(SPNamedView const *nv, NR::Coord const d) :
 Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point const &p) const
 {
     LineList s;
-    
+
     for (GSList const *l = _named_view->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
 

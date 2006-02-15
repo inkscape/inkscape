@@ -61,7 +61,7 @@ void ObjectHierarchy::setTop(SPObject *object) {
 }
 
 /**
- * Add hierarchy from junior's parent to senior to this 
+ * Add hierarchy from junior's parent to senior to this
  * hierarchy's top.
  */
 void ObjectHierarchy::_addTop(SPObject *senior, SPObject *junior) {

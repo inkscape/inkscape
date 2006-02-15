@@ -13,7 +13,7 @@
  */
 
 /** \class SPObject
- * 
+ *
  * SPObject is an abstract base class of all of the document nodes at the
  * SVG document level. Each SPObject subclass implements a certain SVG
  * element node type, or is an abstract base class for different node
@@ -327,7 +327,7 @@ sp_object_unref(SPObject *object, SPObject *owner)
  *
  * Hrefcount is used for weak references, for example, to
  * determine whether any graphical element references a certain gradient
- * node.  
+ * node.
  * \param owner Ignored.
  * \return object, NULL is error
  * \pre object points to real object
@@ -347,7 +347,7 @@ sp_object_href(SPObject *object, gpointer owner)
 /**
  * Decrease weak refcount.
  *
- * Hrefcount is used for weak references, for example, to determine whether 
+ * Hrefcount is used for weak references, for example, to determine whether
  * any graphical element references a certain gradient node.
  * \param owner Ignored.
  * \return always NULL
@@ -369,7 +369,7 @@ sp_object_hunref(SPObject *object, gpointer owner)
 /**
  * Adds increment to _total_hrefcount of object and its parents.
  */
-void 
+void
 SPObject::_updateTotalHRefCount(int increment) {
     SPObject *topmost_collectable = NULL;
     for ( SPObject *iter = this ; iter ; iter = SP_OBJECT_PARENT(iter) ) {
@@ -391,7 +391,7 @@ SPObject::_updateTotalHRefCount(int increment) {
 /**
  * True if object is non-NULL and this is some in/direct parent of object.
  */
-bool 
+bool
 SPObject::isAncestorOf(SPObject const *object) const {
     g_return_val_if_fail(object != NULL, false);
     object = SP_OBJECT_PARENT(object);
@@ -433,8 +433,8 @@ SPObject const *AncestorSon(SPObject const *obj, SPObject const *ancestor) {
 
 /**
  * Compares height of objects in tree.
- * 
- * Works for different-parent objects, so long as they have a common ancestor. 
+ *
+ * Works for different-parent objects, so long as they have a common ancestor.
  * \return \verbatim
  *    0    positions are equivalent
  *    1    first object's position is greater than the second
@@ -505,33 +505,33 @@ SPObject::defaultLabel() const {
 }
 
 /** Sets the label property for the object */
-void 
+void
 SPObject::setLabel(gchar const *label) {
     SP_OBJECT_REPR(this)->setAttribute("inkscape:label", label, false);
 }
 
 
 /** Queues the object for orphan collection */
-void 
+void
 SPObject::requestOrphanCollection() {
     g_return_if_fail(document != NULL);
     document->queueForOrphanCollection(this);
 
     /** \todo
-     * This is a temporary hack added to make fill&stroke rebuild its 
-     * gradient list when the defs are vacuumed.  gradient-vector.cpp 
-     * listens to the modified signal on defs, and now we give it that 
+     * This is a temporary hack added to make fill&stroke rebuild its
+     * gradient list when the defs are vacuumed.  gradient-vector.cpp
+     * listens to the modified signal on defs, and now we give it that
      * signal.  Mental says that this should be made automatic by
-     * merging SPObjectGroup with SPObject; SPObjectGroup would issue 
-     * this signal automatically. Or maybe just derive SPDefs from 
+     * merging SPObjectGroup with SPObject; SPObjectGroup would issue
+     * this signal automatically. Or maybe just derive SPDefs from
      * SPObjectGroup?
      */
-     
+
     this->requestModified(SP_OBJECT_CHILD_MODIFIED_FLAG);
 }
 
 /** Sends the delete signal to all children of this object recursively */
-void 
+void
 SPObject::_sendDeleteSignalRecursive() {
     for (SPObject *child = sp_object_first_child(this); child; child = SP_OBJECT_NEXT(child)) {
         child->_delete_signal.emit(child);
@@ -541,12 +541,12 @@ SPObject::_sendDeleteSignalRecursive() {
 
 /**
  * Deletes the object reference, unparenting it from its parent.
- * 
+ *
  * If the \a propagate parameter is set to true, it emits a delete
  * signal.  If the \a propagate_descendants parameter is true, it
  * recursively sends the delete signal to children.
  */
-void 
+void
 SPObject::deleteObject(bool propagate, bool propagate_descendants)
 {
     sp_object_ref(this, NULL);
@@ -606,7 +606,7 @@ sp_object_attach(SPObject *parent, SPObject *object, SPObject *prev)
 /**
  * In list of object's siblings, move object behind prev.
  */
-void 
+void
 sp_object_reorder(SPObject *object, SPObject *prev) {
     g_return_if_fail(object != NULL);
     g_return_if_fail(SP_IS_OBJECT(object));
@@ -649,7 +649,7 @@ sp_object_reorder(SPObject *object, SPObject *prev) {
 /**
  * Remove object from parent's children, release and unref it.
  */
-void 
+void
 sp_object_detach(SPObject *parent, SPObject *object) {
     g_return_if_fail(parent != NULL);
     g_return_if_fail(SP_IS_OBJECT(parent));
@@ -707,7 +707,7 @@ sp_object_get_child_by_repr(SPObject *object, Inkscape::XML::Node *repr)
  * Callback for child_added event.
  * Invoked whenever the given mutation event happens in the XML tree.
  */
-static void 
+static void
 sp_object_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
     GType type = sp_repr_type_lookup(child);
@@ -742,14 +742,14 @@ static void sp_object_release(SPObject *object)
 }
 
 /**
- * Remove object's child whose node equals repr, release and 
+ * Remove object's child whose node equals repr, release and
  * unref it.
  *
  * Invoked whenever the given mutation event happens in the XML
- * tree, BEFORE removal from the XML tree happens, so grouping 
+ * tree, BEFORE removal from the XML tree happens, so grouping
  * objects can safely release the child data.
  */
-static void 
+static void
 sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
@@ -759,7 +759,7 @@ sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child)
 }
 
 /**
- * Move object corresponding to child after sibling object corresponding 
+ * Move object corresponding to child after sibling object corresponding
  * to new_ref.
  * Invoked whenever the given mutation event happens in the XML tree.
  * \param old_ref Ignored
@@ -775,7 +775,7 @@ static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child
 
 /**
  * Virtual build callback.
- * 
+ *
  * This has to be invoked immediately after creation of an SPObject. The
  * frontend method ensures that the new object is properly attached to
  * the document and repr; implementation then will parse all of the attributes,
@@ -932,7 +932,7 @@ sp_object_repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *chi
 
 /**
  * Callback for order_changed node event.
- * 
+ *
  * \todo fixme:
  */
 static void
@@ -1181,8 +1181,8 @@ SPObject::updateRepr(Inkscape::XML::Node *repr, unsigned int flags) {
 
 /* Modification */
 
-/** 
- * Add \a flags to \a object's as dirtiness flags, and 
+/**
+ * Add \a flags to \a object's as dirtiness flags, and
  * recursively add CHILD_MODIFIED flag to
  * parent and ancestors (as far up as necessary).
  */
@@ -1233,8 +1233,8 @@ SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
 
     // Merge style if we have good reasons to think that parent style is changed */
     /** \todo
-     * I am not sure whether we should check only propagated 
-     * flag. We are currently assuming that style parsing is 
+     * I am not sure whether we should check only propagated
+     * flag. We are currently assuming that style parsing is
      * done immediately. I think this is correct (Lauris).
      */
     if ((flags & SP_OBJECT_STYLE_MODIFIED_FLAG) && (flags & SP_OBJECT_PARENT_MODIFIED_FLAG)) {
@@ -1424,33 +1424,33 @@ sp_object_get_unique_id(SPObject *object, gchar const *id)
  * Returns an object style property.
  *
  * \todo
- * fixme: Use proper CSS parsing.  The current version is buggy 
- * in a number of situations where key is a substring of the 
+ * fixme: Use proper CSS parsing.  The current version is buggy
+ * in a number of situations where key is a substring of the
  * style string other than as a property name (including
- * where key is a substring of a property name), and is also 
- * buggy in its handling of inheritance for properties that 
+ * where key is a substring of a property name), and is also
+ * buggy in its handling of inheritance for properties that
  * aren't inherited by default.  It also doesn't allow for
- * the case where the property is specified but with an invalid 
- * value (in which case I believe the CSS2 error-handling 
+ * the case where the property is specified but with an invalid
+ * value (in which case I believe the CSS2 error-handling
  * behaviour applies, viz. behave as if the property hadn't
- * been specified).  Also, the current code doesn't use CRSelEng 
- * stuff to take a value from stylesheets.  Also, we aren't 
- * setting any hooks to force an update for changes in any of 
- * the inputs (i.e., in any of the elements that this function 
+ * been specified).  Also, the current code doesn't use CRSelEng
+ * stuff to take a value from stylesheets.  Also, we aren't
+ * setting any hooks to force an update for changes in any of
+ * the inputs (i.e., in any of the elements that this function
  * queries).
  *
  * \par
- * Given that the default value for a property depends on what 
- * property it is (e.g., whether to inherit or not), and given 
- * the above comment about ignoring invalid values, and that the 
- * repr parent isn't necessarily the right element to inherit 
- * from (e.g., maybe we need to inherit from the referencing 
- * <use> element instead), we should probably make the caller 
+ * Given that the default value for a property depends on what
+ * property it is (e.g., whether to inherit or not), and given
+ * the above comment about ignoring invalid values, and that the
+ * repr parent isn't necessarily the right element to inherit
+ * from (e.g., maybe we need to inherit from the referencing
+ * <use> element instead), we should probably make the caller
  * responsible for ascending the repr tree as necessary.
  */
 gchar const *
 sp_object_get_style_property(SPObject const *object, gchar const *key, gchar const *def)
-{    
+{
     g_return_val_if_fail(object != NULL, NULL);
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
     g_return_val_if_fail(key != NULL, NULL);
@@ -1490,7 +1490,7 @@ sp_object_get_style_property(SPObject const *object, gchar const *key, gchar con
 /**
  * Lifts SVG version of all root objects to version.
  */
-void 
+void
 SPObject::_requireSVGVersion(Inkscape::Version version) {
     for ( SPObject::ParentIterator iter=this ; iter ; ++iter ) {
         SPObject *object=iter;

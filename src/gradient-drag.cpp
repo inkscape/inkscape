@@ -62,7 +62,7 @@ const gchar *gr_knot_descr [] = {
     N_("Radial gradient <b>focus</b>") // POINT_RG_FOCUS
 };
 
-static void 
+static void
 gr_drag_sel_changed(Inkscape::Selection *selection, gpointer data)
 {
 	GrDrag *drag = (GrDrag *) data;
@@ -195,7 +195,7 @@ gr_drag_style_set (const SPCSSAttr *css, gpointer data)
     if (css->attribute("fill-opacity")) // TODO: multiply
         sp_repr_css_set_property (stop, "stop-opacity", css->attribute("fill-opacity"));
 
-    if ((css->attribute("fill") && !strcmp(css->attribute("fill"), "none")) || 
+    if ((css->attribute("fill") && !strcmp(css->attribute("fill"), "none")) ||
         (css->attribute("stroke") && !strcmp(css->attribute("stroke"), "none")))
         sp_repr_css_set_property (stop, "stop-opacity", "0"); // if set to none, don't change color, set opacity to 0
 
@@ -236,7 +236,7 @@ GrDrag::GrDrag(SPDesktop *desktop) {
 
     this->sel_changed_connection = this->selection->connectChanged(
         sigc::bind (
-            sigc::ptr_fun(&gr_drag_sel_changed), 
+            sigc::ptr_fun(&gr_drag_sel_changed),
             (gpointer)this )
 
         );
@@ -267,7 +267,7 @@ GrDrag::GrDrag(SPDesktop *desktop) {
     }
 }
 
-GrDrag::~GrDrag() 
+GrDrag::~GrDrag()
 {
     this->sel_changed_connection.disconnect();
     this->sel_modified_connection.disconnect();
@@ -317,7 +317,7 @@ NR::Point *
 get_snap_vector (NR::Point p, NR::Point o, double snap, double initial)
 {
     double r = NR::L2 (p - o);
-    if (r < 1e-3) 
+    if (r < 1e-3)
         return NULL;
     double angle = NR::atan2 (p - o);
     // snap angle to snaps increments, starting from initial:
@@ -364,7 +364,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                     GrDraggable *draggable = (GrDraggable *) i->data;
                     // copy draggable to d_new:
                     GrDraggable *da_new = new GrDraggable (draggable->item, draggable->point_num, draggable->fill_or_stroke);
-                    d_new->addDraggable (da_new); 
+                    d_new->addDraggable (da_new);
                 }
 
                 // unlink and delete this dragger
@@ -384,7 +384,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
         }
     }
 
-    if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) { 
+    if (!((state & GDK_SHIFT_MASK) || ((state & GDK_CONTROL_MASK) && (state & GDK_MOD1_MASK)))) {
         // See if we need to snap to any of the levels
         for (guint i = 0; i < dragger->parent->hor_levels.size(); i++) {
             if (fabs(p[NR::Y] - dragger->parent->hor_levels[i]) < snap_dist) {
@@ -417,7 +417,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                     GrDragger *d_new = (GrDragger *) di->data;
                     if (d_new == dragger)
                         continue;
-                    if (d_new->isA (draggable->item, 
+                    if (d_new->isA (draggable->item,
                                     draggable->point_num == POINT_LG_P1? POINT_LG_P2 : POINT_LG_P1,
                                     draggable->fill_or_stroke)) {
                         // found the other end of the linear gradient;
@@ -436,7 +436,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                     GrDragger *d_new = (GrDragger *) di->data;
                     if (d_new == dragger)
                         continue;
-                    if (d_new->isA (draggable->item, 
+                    if (d_new->isA (draggable->item,
                                     POINT_RG_CENTER,
                                     draggable->fill_or_stroke)) {
                         // found the center of the radial gradient;
@@ -542,7 +542,7 @@ gr_knot_doubleclicked_handler (SPKnot *knot, guint state, gpointer data)
    sp_item_gradient_edit_stop (draggable->item, draggable->point_num, draggable->fill_or_stroke);
 }
 
-/**  
+/**
 Act upon all draggables of the dragger, setting them to the dragger's point
 */
 void
@@ -556,7 +556,7 @@ GrDragger::fireDraggables (bool write_repr, bool scale_radial, bool merging_focu
 
         // change gradient, optionally writing to repr; prevent focus from moving if it's snapped
         // to the center, unless it's the first update upon merge when we must snap it to the point
-        if (merging_focus || 
+        if (merging_focus ||
             !(draggable->point_num == POINT_RG_FOCUS && this->isA(draggable->item, POINT_RG_CENTER, draggable->fill_or_stroke)))
             sp_item_gradient_set_coords (draggable->item, draggable->point_num, this->point, draggable->fill_or_stroke, write_repr, scale_radial);
     }
@@ -648,7 +648,7 @@ GrDragger::updateTip ()
     if (g_slist_length (this->draggables) == 1) {
         GrDraggable *draggable = (GrDraggable *) this->draggables->data;
         char *item_desc = sp_item_description(draggable->item);
-        this->knot->tip = g_strdup_printf (_("%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"), 
+        this->knot->tip = g_strdup_printf (_("%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to preserve angle, with <b>Ctrl+Shift</b> to scale around center"),
                                            _(gr_knot_descr[draggable->point_num]),
                                            item_desc,
                                            draggable->fill_or_stroke == false ? _(" (stroke)") : "");
@@ -656,7 +656,7 @@ GrDragger::updateTip ()
     } else if (g_slist_length (draggables) == 2 && isA (POINT_RG_CENTER) && isA (POINT_RG_FOCUS)) {
         this->knot->tip = g_strdup_printf (_("Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"));
     } else {
-        this->knot->tip = g_strdup_printf (_("Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"), 
+        this->knot->tip = g_strdup_printf (_("Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"),
                                            g_slist_length (this->draggables));
     }
 }
@@ -747,7 +747,7 @@ GrDragger::updateDependencies (bool write_repr)
 
 
 
-GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable) 
+GrDragger::GrDragger (GrDrag *parent, NR::Point p, GrDraggable *draggable)
 {
     this->draggables = NULL;
 
@@ -823,7 +823,7 @@ GrDragger::moveOtherToDraggable (SPItem *item, guint point_num, bool fill_or_str
     GrDragger *d = this->parent->getDraggerFor (item, point_num, fill_or_stroke);
     if (d && d !=  this) {
         d->moveThisToDraggable (item, point_num, fill_or_stroke, write_repr);
-    } 
+    }
 }
 
 
@@ -831,7 +831,7 @@ GrDragger::moveOtherToDraggable (SPItem *item, guint point_num, bool fill_or_str
 Set selected dragger
 */
 void
-GrDrag::setSelected (GrDragger *dragger) 
+GrDrag::setSelected (GrDragger *dragger)
 {
     if (this->selected) {
        this->selected->knot->fill [SP_KNOT_STATE_NORMAL] = GR_KNOT_COLOR_NORMAL;
@@ -850,7 +850,7 @@ GrDrag::setSelected (GrDragger *dragger)
 Create a line from p1 to p2 and add it to the lines list
  */
 void
-GrDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba) 
+GrDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
 {
     SPCanvasItem *line = sp_canvas_item_new(SP_DT_CONTROLS(this->desktop),
                                                             SP_TYPE_CTRLLINE, NULL);
@@ -865,7 +865,7 @@ GrDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
 If there already exists a dragger within MERGE_DIST of p, add the draggable to it; otherwise create
 new dragger and add it to draggers list
  */
-void 
+void
 GrDrag::addDragger (GrDraggable *draggable)
 {
     NR::Point p = sp_item_gradient_get_coords (draggable->item, draggable->point_num, draggable->fill_or_stroke);
@@ -887,7 +887,7 @@ GrDrag::addDragger (GrDraggable *draggable)
 /**
 Add draggers for the radial gradient rg on item
 */
-void 
+void
 GrDrag::addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke)
 {
     addDragger (new GrDraggable (item, POINT_RG_CENTER, fill_or_stroke));
@@ -899,7 +899,7 @@ GrDrag::addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stro
 /**
 Add draggers for the linear gradient lg on item
 */
-void 
+void
 GrDrag::addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke)
 {
     addDragger (new GrDraggable (item, POINT_LG_P1, fill_or_stroke));
@@ -940,7 +940,7 @@ GrDrag::updateDraggers ()
         SPItem *item = SP_ITEM(i->data);
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 addDraggersLinear (SP_LINEARGRADIENT (server), item, true);
@@ -949,7 +949,7 @@ GrDrag::updateDraggers ()
             }
         }
 
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 addDraggersLinear (SP_LINEARGRADIENT (server), item, false);
@@ -984,7 +984,7 @@ GrDrag::updateLines ()
 
         SPStyle *style = SP_OBJECT_STYLE (item);
 
-        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+        if (style && (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)) {
             SPObject *server = SP_OBJECT_STYLE_FILL_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 this->addLine (sp_item_gradient_get_coords (item, POINT_LG_P1, true), sp_item_gradient_get_coords (item, POINT_LG_P2, true), GR_LINE_COLOR_FILL);
@@ -995,7 +995,7 @@ GrDrag::updateLines ()
             }
         }
 
-        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) { 
+        if (style && (style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)) {
             SPObject *server = SP_OBJECT_STYLE_STROKE_SERVER (item);
             if (SP_IS_LINEARGRADIENT (server)) {
                 this->addLine (sp_item_gradient_get_coords (item, POINT_LG_P1, false), sp_item_gradient_get_coords (item, POINT_LG_P2, false), GR_LINE_COLOR_STROKE);

@@ -5,17 +5,17 @@
  * $Id$
  *
  * 2004 Kees Cook
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -63,36 +63,36 @@ fixed_g_ascii_strtod (const gchar *nptr,
   decimal_point_len = strlen (decimal_point);
 
   g_assert (decimal_point_len != 0);
-  
+
   decimal_point_pos = NULL;
-  if (decimal_point[0] != '.' || 
+  if (decimal_point[0] != '.' ||
       decimal_point[1] != 0)
     {
       p = nptr;
       /* Skip leading space */
       while (g_ascii_isspace (*p))
 	p++;
-      
+
       /* Skip leading optional sign */
       if (*p == '+' || *p == '-')
 	p++;
-      
-      if (p[0] == '0' && 
+
+      if (p[0] == '0' &&
 	  (p[1] == 'x' || p[1] == 'X'))
 	{
 	  p += 2;
 	  /* HEX - find the (optional) decimal point */
-	  
+	
 	  while (g_ascii_isxdigit (*p))
 	    p++;
-	  
+	
 	  if (*p == '.')
 	    {
 	      decimal_point_pos = p++;
-	      
+	
 	      while (g_ascii_isxdigit (*p))
 		p++;
-	      
+	
 	      if (*p == 'p' || *p == 'P')
 		p++;
 	      if (*p == '+' || *p == '-')
@@ -105,14 +105,14 @@ fixed_g_ascii_strtod (const gchar *nptr,
 	{
 	  while (g_ascii_isdigit (*p))
 	    p++;
-	  
+	
 	  if (*p == '.')
 	    {
 	      decimal_point_pos = p++;
-	      
+	
 	      while (g_ascii_isdigit (*p))
 		p++;
-	      
+	
 	      if (*p == 'e' || *p == 'E')
 		p++;
 	      if (*p == '+' || *p == '-')
@@ -128,14 +128,14 @@ fixed_g_ascii_strtod (const gchar *nptr,
   /* Set errno to zero, so that we can distinguish zero results
      and underflows */
   errno = 0;
-  
+
   if (decimal_point_pos)
     {
       char *copy, *c;
 
       /* We need to convert the '.' to the locale specific decimal point */
       copy = (char*)g_malloc (end - nptr + 1 + decimal_point_len);
-      
+
       c = copy;
       memcpy (c, nptr, decimal_point_pos - nptr);
       c += decimal_point_pos - nptr;
@@ -154,26 +154,26 @@ fixed_g_ascii_strtod (const gchar *nptr,
 	  else
 	    fail_pos = (char *)nptr + (fail_pos - copy);
 	}
-      
+
       g_free (copy);
-	  
+	
     }
   else if (decimal_point[0] != '.' ||
 	   decimal_point[1] != 0)
     {
       char *copy;
-      
+
       copy = (char*)g_malloc (end - (char *)nptr + 1);
       memcpy (copy, nptr, end - nptr);
       *(copy + (end - (char *)nptr)) = 0;
-      
+
       val = strtod (copy, &fail_pos);
-      
+
       if (fail_pos)
 	{
 	  fail_pos = (char *)nptr + (fail_pos - copy);
 	}
-      
+
       g_free (copy);
     }
   else
@@ -183,7 +183,7 @@ fixed_g_ascii_strtod (const gchar *nptr,
 
   if (endptr)
     *endptr = fail_pos;
-  
+
   return val;
 }
 }

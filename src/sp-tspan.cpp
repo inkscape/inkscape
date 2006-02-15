@@ -453,7 +453,7 @@ void   refresh_textpath_source(SPTextPath* tp)
     tp->sourcePath->sourceDirty=false;
 	
     // finalisons
-    if ( tp->sourcePath->originalPath ) { 
+    if ( tp->sourcePath->originalPath ) {
         if (tp->originalPath) {
             delete tp->originalPath;
         }
@@ -574,7 +574,7 @@ sp_textpath_to_text(SPObject *tp)
         // make a copy of each textpath child
         Inkscape::XML::Node *copy = ((Inkscape::XML::Node *) i->data)->duplicate();
         // remove the old repr from under textpath
-        SP_OBJECT_REPR(tp)->removeChild((Inkscape::XML::Node *) i->data); 
+        SP_OBJECT_REPR(tp)->removeChild((Inkscape::XML::Node *) i->data);
         // put its copy into under textPath
         SP_OBJECT_REPR(text)->addChild(copy, NULL); // fixme: copy id
     }
@@ -583,7 +583,7 @@ sp_textpath_to_text(SPObject *tp)
     tp->deleteObject();
     g_slist_free(tp_reprs);
 
-    // set x/y on text 
+    // set x/y on text
     /* fixme: Yuck, is this really the right test? */
     if (xy[NR::X] != 1e18 && xy[NR::Y] != 1e18) {
         sp_repr_set_svg_double(SP_OBJECT_REPR(text), "x", xy[NR::X]);

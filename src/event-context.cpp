@@ -181,7 +181,7 @@ sp_event_context_update_cursor(SPEventContext *ec)
                 if (ec->cursor)
                     gdk_cursor_unref (ec->cursor);
                 ec->cursor = gdk_cursor_new_from_pixmap(bitmap, mask,
-                                                        &w->style->black, 
+                                                        &w->style->black,
                                                         &w->style->white,
                                                         ec->hot_x, ec->hot_y);
                 g_object_unref (bitmap);
@@ -213,7 +213,7 @@ gint gobble_key_events(guint keyval, gint mask)
     event_next = gdk_event_get();
     // while the next event is also a key notify with the same keyval and mask,
     while (event_next && event_next->type == GDK_KEY_PRESS
-           && event_next->key.keyval == keyval 
+           && event_next->key.keyval == keyval
            && (event_next->key.state & mask)) {
         // kill it
         gdk_event_free(event_next);
@@ -255,7 +255,7 @@ gint gobble_motion_events(gint mask)
  * Toggles current tool between active tool and selector tool.
  * Subroutine of sp_event_context_private_root_handler().
  */
-static void 
+static void
 sp_toggle_selector(SPDesktop *dt)
 {
     if (!dt->event_context) return;
@@ -294,16 +294,16 @@ static gdouble accelerate_scroll(GdkEvent *event, gdouble acceleration)
 }
 
 // This is a hack that is necessary because when middle-clicking too fast,
-// button_press events come for all clicks but there's button_release only 
-// for the first one. So after a release, we must prohibit the next grab for 
-// some time, or the grab will be stuck.  Perhaps this is caused by some 
-// wrong handling of events among contexts and not by a GDK bug; 
+// button_press events come for all clicks but there's button_release only
+// for the first one. So after a release, we must prohibit the next grab for
+// some time, or the grab will be stuck.  Perhaps this is caused by some
+// wrong handling of events among contexts and not by a GDK bug;
 // if someone can fix this properly this would be great.
 static gint dontgrab = 0;
-static bool 
-grab_allow_again() 
+static bool
+grab_allow_again()
 {
-    dontgrab--; 
+    dontgrab--;
     if (dontgrab < 0) dontgrab = 0;
     return FALSE; // so that it is only called once
 }
@@ -336,7 +336,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         case GDK_2BUTTON_PRESS:
             if (panning) {
                 panning = 0;
-                sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 
+                sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                         event->button.time);
                 ret = TRUE;
             } else {
@@ -353,11 +353,11 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             switch (event->button.button) {
                 case 2:
 
-                    if (dontgrab) 
-                        // double-click, still not permitted to grab; 
+                    if (dontgrab)
+                        // double-click, still not permitted to grab;
                         // increase the counter to guard against triple click
                     {
-                        dontgrab ++; 
+                        dontgrab ++;
                         gtk_timeout_add(250, (GtkFunction) grab_allow_again, NULL);
                         break;
                     }
@@ -375,7 +375,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     ret = TRUE;
                     break;
                 case 3:
-                    if (event->button.state & GDK_SHIFT_MASK 
+                    if (event->button.state & GDK_SHIFT_MASK
                             || event->button.state & GDK_CONTROL_MASK) {
                         button_w = NR::Point(event->button.x,
                                              event->button.y);
@@ -394,12 +394,12 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             break;
         case GDK_MOTION_NOTIFY:
             if (panning) {
-                if ((panning == 2 && !(event->motion.state & GDK_BUTTON2_MASK)) 
+                if ((panning == 2 && !(event->motion.state & GDK_BUTTON2_MASK))
                         || (panning == 3 && !(event->motion.state & GDK_BUTTON3_MASK))) {
                     /* Gdk seems to lose button release for us sometimes :-( */
                     panning = 0;
                     dontgrab = 0;
-                    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 
+                    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                             event->button.time);
                     ret = TRUE;
                 } else {
@@ -408,17 +408,17 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                          && ( abs( (gint) event->motion.y - yp ) < tolerance ))
                     {
                         // do not drag if we're within tolerance from origin
-                        break; 
+                        break;
                     }
-                    // Once the user has moved farther than tolerance from 
-                    // the original location (indicating they intend to move 
-                    // the object, not click), then always process the motion 
+                    // Once the user has moved farther than tolerance from
+                    // the original location (indicating they intend to move
+                    // the object, not click), then always process the motion
                     // notify coordinates as given (no snapping back to origin)
-                    within_tolerance = false; 
+                    within_tolerance = false;
 
-                    // gobble subsequent motion events to prevent "sticking" 
+                    // gobble subsequent motion events to prevent "sticking"
                     // when scrolling is slow
-                    gobble_motion_events(panning == 2 ? 
+                    gobble_motion_events(panning == 2 ?
                             GDK_BUTTON2_MASK : GDK_BUTTON3_MASK);
 
                     NR::Point const motion_w(event->motion.x,
@@ -443,10 +443,10 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     Inkscape::Rubberband::get()->move(motion_dt);
                 }
 
-                // Once the user has moved farther than tolerance from the original location 
-                // (indicating they intend to move the object, not click), then always process the 
+                // Once the user has moved farther than tolerance from the original location
+                // (indicating they intend to move the object, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
-                within_tolerance = false; 
+                within_tolerance = false;
             }
             break;
         case GDK_BUTTON_RELEASE:
@@ -462,7 +462,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             }
             if (panning == event->button.button) {
                 panning = 0;
-                sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 
+                sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
                 ret = TRUE;
             } else if (zoom_rb == event->button.button) {
@@ -473,7 +473,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 }
                 Inkscape::Rubberband::get()->stop();
             }
-            xp = yp = 0; 
+            xp = yp = 0;
             break;
         case GDK_KEY_PRESS:
             switch (get_group0_keyval(&event->key)) {
@@ -481,11 +481,11 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_F1:
                     /* Grab it away from Gtk */
                     shortcut = get_group0_keyval(&event->key);
-                    if (event->key.state & GDK_SHIFT_MASK) 
+                    if (event->key.state & GDK_SHIFT_MASK)
                         shortcut |= SP_SHORTCUT_SHIFT_MASK;
-                    if (event->key.state & GDK_CONTROL_MASK) 
+                    if (event->key.state & GDK_CONTROL_MASK)
                         shortcut |= SP_SHORTCUT_CONTROL_MASK;
-                    if (event->key.state & GDK_MOD1_MASK) 
+                    if (event->key.state & GDK_MOD1_MASK)
                         shortcut |= SP_SHORTCUT_ALT_MASK;
                     ret = sp_shortcut_invoke(shortcut, desktop);
                     break;
@@ -497,11 +497,11 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     } else {
                         /* Grab it away from Gtk */
                         shortcut = get_group0_keyval(&event->key);
-                        if (event->key.state & GDK_SHIFT_MASK) 
+                        if (event->key.state & GDK_SHIFT_MASK)
                             shortcut |= SP_SHORTCUT_SHIFT_MASK;
-                        if (event->key.state & GDK_CONTROL_MASK) 
+                        if (event->key.state & GDK_CONTROL_MASK)
                             shortcut |= SP_SHORTCUT_CONTROL_MASK;
-                        if (event->key.state & GDK_MOD1_MASK) 
+                        if (event->key.state & GDK_MOD1_MASK)
                             shortcut |= SP_SHORTCUT_ALT_MASK;
                         ret = sp_shortcut_invoke(shortcut, desktop);
                     }
@@ -527,7 +527,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_4:
                     if (MOD__CTRL_ONLY) {
                         int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
-                        gobble_key_events(get_group0_keyval(&event->key), 
+                        gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(i, 0);
                         ret = TRUE;
@@ -538,7 +538,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_8:
                     if (MOD__CTRL_ONLY) {
                         int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
-                        gobble_key_events(get_group0_keyval(&event->key), 
+                        gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(0, i);
                         ret = TRUE;
@@ -549,7 +549,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_6:
                     if (MOD__CTRL_ONLY) {
                         int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
-                        gobble_key_events(get_group0_keyval(&event->key), 
+                        gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(-i, 0);
                         ret = TRUE;
@@ -560,7 +560,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 case GDK_KP_2:
                     if (MOD__CTRL_ONLY) {
                         int i = (int) floor(key_scroll * accelerate_scroll(event, acceleration));
-                        gobble_key_events(get_group0_keyval(&event->key), 
+                        gobble_key_events(get_group0_keyval(&event->key),
                                 GDK_CONTROL_MASK);
                         event_context->desktop->scroll_world(0, -i);
                         ret = TRUE;
@@ -646,7 +646,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
 }
 
 /**
- * Handles item specific events. Gets called from Gdk. 
+ * Handles item specific events. Gets called from Gdk.
  *
  * Only reacts to right mouse button at the moment.
  * \todo Fixme: do context sensitive popup menu on items.
@@ -658,7 +658,7 @@ sp_event_context_private_item_handler(SPEventContext *ec, SPItem *item, GdkEvent
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
-            if ((event->button.button == 3) 
+            if ((event->button.button == 3)
                     && !(event->button.state & GDK_SHIFT_MASK || event->button.state & GDK_CONTROL_MASK)) {
                 sp_event_root_menu_popup(ec->desktop, item, event);
                 ret = TRUE;
@@ -896,22 +896,22 @@ sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event)
  * Show tool context specific modifier tip.
  */
 void
-sp_event_show_modifier_tip(Inkscape::MessageContext *message_context, 
-        GdkEvent *event, gchar const *ctrl_tip, gchar const *shift_tip, 
+sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
+        GdkEvent *event, gchar const *ctrl_tip, gchar const *shift_tip,
         gchar const *alt_tip)
 {
     guint keyval = get_group0_keyval(&event->key);
-    
-    bool ctrl = ctrl_tip && (MOD__CTRL 
-            || (keyval == GDK_Control_L) 
+
+    bool ctrl = ctrl_tip && (MOD__CTRL
+            || (keyval == GDK_Control_L)
             || (keyval == GDK_Control_R));
-    bool shift = shift_tip 
+    bool shift = shift_tip
         && (MOD__SHIFT || (keyval == GDK_Shift_L) || (keyval == GDK_Shift_R));
-    bool alt = alt_tip 
-        && (MOD__ALT 
-                || (keyval == GDK_Alt_L) 
-                || (keyval == GDK_Alt_R) 
-                || (keyval == GDK_Meta_L) 
+    bool alt = alt_tip
+        && (MOD__ALT
+                || (keyval == GDK_Alt_L)
+                || (keyval == GDK_Alt_R)
+                || (keyval == GDK_Meta_L)
                 || (keyval == GDK_Meta_R));
 
     gchar *tip = g_strdup_printf("%s%s%s%s%s",
@@ -929,10 +929,10 @@ sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
 }
 
 /**
- * Return the keyval corresponding to the key event in group 0, i.e., 
- * in the main (English) layout.  
+ * Return the keyval corresponding to the key event in group 0, i.e.,
+ * in the main (English) layout.
  *
- * Use this instead of simply event->keyval, so that your keyboard shortcuts 
+ * Use this instead of simply event->keyval, so that your keyboard shortcuts
  * work regardless of layouts (e.g., in Cyrillic).
  */
 guint
@@ -941,8 +941,8 @@ get_group0_keyval(GdkEventKey *event)
     guint keyval = 0;
     gdk_keymap_translate_keyboard_state(
             gdk_keymap_get_for_display(gdk_display_get_default()),
-            event->hardware_keycode, 
-            (GdkModifierType) event->state, 
+            event->hardware_keycode,
+            (GdkModifierType) event->state,
             0   /*event->key.group*/,
             &keyval, NULL, NULL, NULL);
     return keyval;
@@ -951,23 +951,23 @@ get_group0_keyval(GdkEventKey *event)
 /**
  * Returns item at point p in desktop.
  *
- * If state includes alt key mask, cyclically selects under; honors 
+ * If state includes alt key mask, cyclically selects under; honors
  * into_groups.
  */
 SPItem *
-sp_event_context_find_item (SPDesktop *desktop, NR::Point const p, 
+sp_event_context_find_item (SPDesktop *desktop, NR::Point const p,
         bool select_under, bool into_groups)
 {
     SPItem *item;
 
     if (select_under) {
-        SPItem *selected_at_point = 
+        SPItem *selected_at_point =
             desktop->item_from_list_at_point_bottom (desktop->selection->itemList(), p);
         item = desktop->item_at_point(p, into_groups, selected_at_point);
         if (item == NULL) { // we may have reached bottom, flip over to the top
             item = desktop->item_at_point(p, into_groups, NULL);
         }
-    } else 
+    } else
         item = desktop->item_at_point(p, into_groups, NULL);
 
     return item;
@@ -992,13 +992,13 @@ sp_event_context_over_item (SPDesktop *desktop, SPItem *item, NR::Point const p)
 /**
  * Called when SPEventContext subclass node attribute changed.
  */
-void 
-ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr, gchar const *name, 
+void
+ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr, gchar const *name,
         gchar const *old_value, gchar const *new_value,
         bool const is_interactive, gpointer const data)
 {
-    if (!name 
-            || !strcmp(name, "style") 
+    if (!name
+            || !strcmp(name, "style")
             || SP_ATTRIBUTE_IS_CSS(sp_attribute_lookup(name))) {
         // no need to regenrate knotholder if only style changed
         return;

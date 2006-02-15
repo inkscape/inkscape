@@ -191,7 +191,7 @@ sp_node_context_setup(SPEventContext *ec)
             if (ec->shape_knot_holder)
                 repr = ec->shape_knot_holder->repr;
             else
-                repr = SP_OBJECT_REPR(item); 
+                repr = SP_OBJECT_REPR(item);
             if (repr) {
                 Inkscape::GC::anchor(repr);
                 sp_repr_add_listener(repr, &nodepath_repr_events, ec);
@@ -256,7 +256,7 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
             if (ec->shape_knot_holder)
                 repr = ec->shape_knot_holder->repr;
             else
-                repr = SP_OBJECT_REPR(item); 
+                repr = SP_OBJECT_REPR(item);
             if (repr) {
                 Inkscape::GC::anchor(repr);
                 sp_repr_add_listener(repr, &nodepath_repr_events, ec);
@@ -369,8 +369,8 @@ sp_node_context_show_modifier_tip(SPEventContext *event_context, GdkEvent *event
          _("<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"));
 }
 
-bool 
-sp_node_context_is_over_stroke (SPNodeContext *nc, SPItem *item, NR::Point event_p, bool remember) 
+bool
+sp_node_context_is_over_stroke (SPNodeContext *nc, SPItem *item, NR::Point event_p, bool remember)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT (nc)->desktop;
 
@@ -385,11 +385,11 @@ sp_node_context_is_over_stroke (SPNodeContext *nc, SPItem *item, NR::Point event
 
     delta = desktop->d2w(delta);
 
-    double stroke_tolerance = 
-        (SP_OBJECT_STYLE (item)->stroke.type != SP_PAINT_TYPE_NONE? 
-         desktop->current_zoom() * 
-         SP_OBJECT_STYLE (item)->stroke_width.computed * 
-         sp_item_i2d_affine (item).expansion() * 0.5 
+    double stroke_tolerance =
+        (SP_OBJECT_STYLE (item)->stroke.type != SP_PAINT_TYPE_NONE?
+         desktop->current_zoom() *
+         SP_OBJECT_STYLE (item)->stroke_width.computed *
+         sp_item_i2d_affine (item).expansion() * 0.5
          : 0.0)
         + (double) SP_EVENT_CONTEXT(nc)->tolerance;
 
@@ -424,11 +424,11 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                 if (!nc->drag) {
 
                     // find out clicked item, disregarding groups, honoring Alt
-                    SPItem *item_clicked = sp_event_context_find_item (desktop, 
+                    SPItem *item_clicked = sp_event_context_find_item (desktop,
                             NR::Point(event->button.x, event->button.y),
                             (event->button.state & GDK_MOD1_MASK) && !(event->button.state & GDK_CONTROL_MASK), TRUE);
                     // find out if we're over the selected item, disregarding groups
-                    SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(), 
+                    SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
                                                                     NR::Point(event->button.x, event->button.y));
                     bool over_stroke = false;
                     if (item_over && nc->nodepath) {
@@ -453,7 +453,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                                         sp_nodepath_select_segment_near_point(item_over, nc->curvepoint_doc, false);
                                     }
                                 }
-                                break; 
+                                break;
                             case GDK_2BUTTON_PRESS:
                                 //add a node
                                 sp_nodepath_add_node_near_point(item_over, nc->curvepoint_doc);
@@ -461,7 +461,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                                 break;
                             default:
                                 break;
-                        } 
+                        }
                     } else if (event->button.state & GDK_SHIFT_MASK) {
                         selection->toggle(item_clicked);
                     } else {
@@ -483,7 +483,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
 
                 if (!nc->drag) {
                     // find out if we're over the selected item, disregarding groups
-                    SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(), 
+                    SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
                                                                     NR::Point(event->button.x, event->button.y));
 
                         if (nc->nodepath && selection->single() && item_over) {
@@ -566,7 +566,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                          event->motion.y - nc->curvepoint_event[NR::Y]);
                     NR::Point const delta_dt(desktop->w2d(delta_w));
                     sp_nodepath_curve_drag (nc->grab_node, nc->grab_t, delta_dt, undo_label);
-                    nc->curvepoint_event[NR::X] = (gint) event->motion.x;   
+                    nc->curvepoint_event[NR::X] = (gint) event->motion.x;
                     nc->curvepoint_event[NR::Y] = (gint) event->motion.y;
                     gobble_motion_events(GDK_BUTTON1_MASK);
                 } else {
@@ -582,7 +582,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 }
 
-                SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(), 
+                SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
                                                                 NR::Point(event->motion.x, event->motion.y));
                 bool over_stroke = false;
                 if (item_over && nc->nodepath) {
@@ -609,11 +609,11 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (event->button.button == 1) {
 
                 NR::Maybe<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
-                    
+
                 if (nc->hit && !event_context->within_tolerance) { //drag curve
                     if (undo_label == undo_label_1)
                         undo_label = undo_label_2;
-                    else 
+                    else
                         undo_label = undo_label_1;
                 } else if (b != NR::Nothing() && !event_context->within_tolerance) { // drag to select
                     if (nc->nodepath) {
