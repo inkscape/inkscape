@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,19 +20,21 @@
  * 
 */
 
+#include <cassert>
 
+#include "libavoid/shape.h"
 #include "libavoid/graph.h"  // For alertConns
+#include "libavoid/vertices.h"
 #include "libavoid/polyutil.h"
+#include "libavoid/router.h"
 
 
 namespace Avoid {
 
 
-ShapeRefList shapeRefs;
-
-
-ShapeRef::ShapeRef(unsigned int id, Polygn& ply)
-    : _id(id)
+ShapeRef::ShapeRef(Router *router, unsigned int id, Polygn& ply)
+    : _router(router)
+    , _id(id)
     , _poly(copyPoly(ply))
     , _active(false)
     , _firstVert(NULL)
@@ -45,7 +47,7 @@ ShapeRef::ShapeRef(unsigned int id, Polygn& ply)
     VertInf *node = NULL;
     for (int pt_i = 0; pt_i < _poly.pn; pt_i++)
     {
-        node = new VertInf(i, _poly.ps[pt_i]);
+        node = new VertInf(_router, i, _poly.ps[pt_i]);
 
         if (!_firstVert)
         {
@@ -58,7 +60,7 @@ ShapeRef::ShapeRef(unsigned int id, Polygn& ply)
             //node->lstPrev = last;
             //last->lstNext = node;
         }
-        vertices.addVertex(node);
+        _router->vertices.addVertex(node);
         
         last = node;
         i++;
@@ -86,7 +88,7 @@ ShapeRef::~ShapeRef()
 
         // XXX: This could possibly be done less
         //      safely but faster, all at once.
-        vertices.removeVertex(tmp);
+        _router->vertices.removeVertex(tmp);
         delete tmp;
     }
     while (it != _firstVert);
@@ -103,7 +105,7 @@ void ShapeRef::makeActive(void)
     assert(!_active);
     
     // Add to connRefs list.
-    _pos = shapeRefs.insert(shapeRefs.begin(), this);
+    _pos = _router->shapeRefs.insert(_router->shapeRefs.begin(), this);
     _active = true;
 }
 
@@ -113,7 +115,7 @@ void ShapeRef::makeInactive(void)
     assert(_active);
     
     // Remove from connRefs list.
-    shapeRefs.erase(_pos);
+    _router->shapeRefs.erase(_pos);
     _active = false;
 }
     
@@ -139,6 +141,32 @@ unsigned int ShapeRef::id(void)
 Polygn ShapeRef::poly(void)
 {
     return _poly;
+}
+
+
+Router *ShapeRef::router(void)
+{
+    return _router;
+}
+
+
+void ShapeRef::boundingBox(BBox& bbox)
+{
+    assert(_poly.pn > 0);
+
+    bbox.a = bbox.b = _poly.ps[0];
+    Point& a = bbox.a;
+    Point& b = bbox.b;
+
+    for (int i = 1; i < _poly.pn; ++i)
+    {
+        const Point& p = _poly.ps[i];
+
+        a.x = (p.x < a.x) ? p.x : a.x;
+        a.y = (p.y < a.y) ? p.y : a.y;
+        b.x = (p.x > b.x) ? p.x : b.x;
+        b.y = (p.y > b.y) ? p.y : b.y;
+    }
 }
 
 

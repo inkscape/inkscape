@@ -17,6 +17,8 @@
 #include "xml/repr.h"
 #include "sp-path.h"
 #include "libavoid/vertices.h"
+#include "libavoid/router.h"
+#include "document.h"
 
 
 SPConnEndPair::SPConnEndPair(SPPath *const owner)
@@ -93,8 +95,9 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
         if (value && (strcmp(value, "polyline") == 0)) {
             _connType = SP_CONNECTOR_POLYLINE;
             
+            Avoid::Router *router = _path->document->router;
             GQuark itemID = g_quark_from_string(SP_OBJECT(_path)->id);
-            _connRef = new Avoid::ConnRef(itemID);
+            _connRef = new Avoid::ConnRef(router, itemID);
             _invalid_path_connection = connectInvalidPath(
                     sigc::ptr_fun(&sp_conn_adjust_invalid_path));
             _transformed_connection = _path->connectTransformed(

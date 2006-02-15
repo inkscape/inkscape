@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,29 +23,34 @@
 #include "libavoid/debug.h"
 #include "libavoid/graph.h"
 #include "libavoid/connector.h"
+#include "libavoid/geometry.h"
 #include "libavoid/polyutil.h"
 #include "libavoid/timer.h"
+#include "libavoid/vertices.h"
+#include "libavoid/router.h"
 
 #include <math.h>
 
 namespace Avoid {
 
 
-static int st_checked_edges = 0;
-
-EdgeList visGraph;
-EdgeList invisGraph;
-
-
 EdgeInf::EdgeInf(VertInf *v1, VertInf *v2)
     : lstPrev(NULL)
     , lstNext(NULL)
+    , _router(NULL)
     , _added(false)
     , _visible(false)
     , _v1(v1)
     , _v2(v2)
     , _dist(-1)
 {
+    // Not passed NULL values.
+    assert(v1 && v2);
+
+    // We are in the same instance
+    assert(_v1->_router == _v2->_router);
+    _router = _v1->_router;
+
     _blockers.clear();
     _conns.clear();
 }
@@ -66,7 +71,7 @@ void EdgeInf::makeActive(void)
 
     if (_visible)
     {
-        visGraph.addEdge(this);
+        _router->visGraph.addEdge(this);
         _pos1 = _v1->visList.insert(_v1->visList.begin(), this);
         _v1->visListSize++;
         _pos2 = _v2->visList.insert(_v2->visList.begin(), this);
@@ -74,7 +79,7 @@ void EdgeInf::makeActive(void)
     }
     else // if (invisible)
     {
-        invisGraph.addEdge(this);
+        _router->invisGraph.addEdge(this);
         _pos1 = _v1->invisList.insert(_v1->invisList.begin(), this);
         _v1->invisListSize++;
         _pos2 = _v2->invisList.insert(_v2->invisList.begin(), this);
@@ -90,7 +95,7 @@ void EdgeInf::makeInactive(void)
 
     if (_visible)
     {
-        visGraph.removeEdge(this);
+        _router->visGraph.removeEdge(this);
         _v1->visList.erase(_pos1);
         _v1->visListSize--;
         _v2->visList.erase(_pos2);
@@ -98,7 +103,7 @@ void EdgeInf::makeInactive(void)
     }
     else // if (invisible)
     {
-        invisGraph.removeEdge(this);
+        _router->invisGraph.removeEdge(this);
         _v1->invisList.erase(_pos1);
         _v1->invisListSize--;
         _v2->invisList.erase(_pos2);
@@ -159,7 +164,7 @@ void EdgeInf::addCycleBlocker(void)
 
 void EdgeInf::addBlocker(int b)
 {
-    assert(InvisibilityGrph);
+    assert(_router->InvisibilityGrph);
 
     if (_added && _visible)
     {
@@ -178,7 +183,7 @@ void EdgeInf::addBlocker(int b)
 
 bool EdgeInf::hasBlocker(int b)
 {
-    assert(InvisibilityGrph);
+    assert(_router->InvisibilityGrph);
 
     ShapeList::iterator finish = _blockers.end();
     for (ShapeList::iterator it = _blockers.begin(); it != finish; ++it)
@@ -245,16 +250,16 @@ void EdgeInf::checkVis(void)
     const Point& iPoint = i->point;
     const Point& jPoint = j->point;
 
-    st_checked_edges++;
+    _router->st_checked_edges++;
 
     if (iID.isShape)
     {
-        cone1 = inValidRegion(i->shPrev->point, iPoint, i->shNext->point,
-                jPoint);
+        cone1 = inValidRegion(_router->IgnoreRegions, i->shPrev->point,
+                iPoint, i->shNext->point, jPoint);
     }
     else
     {
-        ShapeSet& ss = contains[iID];
+        ShapeSet& ss = _router->contains[iID];
 
         if ((jID.isShape) && (ss.find(jID.objID) != ss.end()))
         {
@@ -270,12 +275,12 @@ void EdgeInf::checkVis(void)
         // If outside the first cone, don't even bother checking.
         if (jID.isShape)
         {
-            cone2 = inValidRegion(j->shPrev->point, jPoint, j->shNext->point,
-                    iPoint);
+            cone2 = inValidRegion(_router->IgnoreRegions, j->shPrev->point,
+                    jPoint, j->shNext->point, iPoint);
         }
         else
         {
-            ShapeSet& ss = contains[jID];
+            ShapeSet& ss = _router->contains[jID];
 
             if ((iID.isShape) && (ss.find(iID.objID) != ss.end()))
             {
@@ -299,7 +304,7 @@ void EdgeInf::checkVis(void)
         setDist(d);
 
     }
-    else if (InvisibilityGrph)
+    else if (_router->InvisibilityGrph)
     {
 #if 0
         db_printf("%d, %d, %d\n", cone1, cone2, blocker);
@@ -325,6 +330,7 @@ int EdgeInf::firstBlocker(void)
     VertID& iID = _v1->id;
     VertID& jID = _v2->id;
 
+    ContainsMap &contains = _router->contains;
     if (!(iID.isShape))
     {
         ss.insert(contains[iID].begin(), contains[iID].end());
@@ -334,8 +340,8 @@ int EdgeInf::firstBlocker(void)
         ss.insert(contains[jID].begin(), contains[jID].end());
     }
 
-    VertInf *last = vertices.end();
-    for (VertInf *k = vertices.shapesBegin(); k != last; )
+    VertInf *last = _router->vertices.end();
+    for (VertInf *k = _router->vertices.shapesBegin(); k != last; )
     {
         VertID kID = k->id;
         if ((ss.find(kID.objID) != ss.end()))
@@ -391,6 +397,7 @@ VertInf *EdgeInf::otherVert(VertInf *vert)
 
 EdgeInf *EdgeInf::checkEdgeVisibility(VertInf *i, VertInf *j, bool knownNew)
 {
+    Router *router = i->_router;
     EdgeInf *edge = NULL;
 
     if (knownNew)
@@ -407,7 +414,7 @@ EdgeInf *EdgeInf::checkEdgeVisibility(VertInf *i, VertInf *j, bool knownNew)
         }
     }
     edge->checkVis();
-    if (!(edge->_added) && !InvisibilityGrph)
+    if (!(edge->_added) && !(router->InvisibilityGrph))
     {
         delete edge;
         edge = NULL;
@@ -543,441 +550,6 @@ EdgeInf *EdgeList::begin(void)
 EdgeInf *EdgeList::end(void)
 {
     return NULL;
-}
-
-
-// General visibility graph utility functions
-
-
-void newBlockingShape(Polygn *poly, int pid)
-{
-    // o  Check all visibility edges to see if this one shape
-    //    blocks them.
-    EdgeInf *finish = visGraph.end();
-    for (EdgeInf *iter = visGraph.begin(); iter != finish ; )
-    {
-        EdgeInf *tmp = iter;
-        iter = iter->lstNext;
-
-        if (tmp->getDist() != 0)
-        {
-            pair<VertID, VertID> ids(tmp->ids());
-            VertID eID1 = ids.first;
-            VertID eID2 = ids.second;
-            pair<Point, Point> points(tmp->points());
-            Point e1 = points.first;
-            Point e2 = points.second;
-            bool blocked = false;
-
-            bool ep_in_poly1 = !(eID1.isShape) ? inPoly(*poly, e1) : false;
-            bool ep_in_poly2 = !(eID2.isShape) ? inPoly(*poly, e2) : false;
-            if (ep_in_poly1 || ep_in_poly2)
-            {
-                // Don't check edges that have a connector endpoint
-                // and are inside the shape being added.
-                continue;
-            }
-
-            for (int pt_i = 0; pt_i < poly->pn; pt_i++)
-            {
-                int pt_n = (pt_i == (poly->pn - 1)) ? 0 : pt_i + 1;
-                if (segmentIntersect(e1, e2, poly->ps[pt_i], poly->ps[pt_n]))
-                {
-                    blocked = true;
-                    break;
-                }
-            }
-            if (blocked)
-            {
-                db_printf("\tRemoving newly blocked edge (by shape %3d)"
-                        "... \n\t\t", pid);
-                tmp->alertConns();
-                tmp->db_print();
-                if (InvisibilityGrph)
-                {
-                    tmp->addBlocker(pid);
-                }
-                else
-                {
-                    delete tmp;
-                }
-            }
-        }
-    }
-}
-
-
-void checkAllBlockedEdges(int pid)
-{
-    assert(InvisibilityGrph);
-
-    for (EdgeInf *iter = invisGraph.begin(); iter != invisGraph.end() ; )
-    {
-        EdgeInf *tmp = iter;
-        iter = iter->lstNext;
-
-        if (tmp->hasBlocker(pid))
-        {
-            tmp->checkVis();
-        }
-    }
-}
-
-
-void checkAllMissingEdges(void)
-{
-    assert(!InvisibilityGrph);
-
-    VertInf *first = NULL;
-
-    if (IncludeEndpoints)
-    {
-        first = vertices.connsBegin();
-    }
-    else
-    {
-        first = vertices.shapesBegin();
-    }
-
-    VertInf *pend = vertices.end();
-    for (VertInf *i = first; i != pend; i = i->lstNext)
-    {
-        VertID iID = i->id;
-
-        // Check remaining, earlier vertices
-        for (VertInf *j = first ; j != i; j = j->lstNext)
-        {
-            VertID jID = j->id;
-            if (!(iID.isShape) && (iID.objID != jID.objID))
-            {
-                // Don't keep visibility between edges of different conns
-                continue;
-            }
-
-            // See if the edge is already there?
-            bool found = (EdgeInf::existingEdge(i, j) != NULL);
-
-            if (!found)
-            {
-                // Didn't already exist, check.
-                bool knownNew = true;
-                EdgeInf::checkEdgeVisibility(i, j, knownNew);
-            }
-        }
-    }
-}
-
-
-void generateContains(VertInf *pt)
-{
-    contains[pt->id].clear();
-
-    ShapeRefList::iterator finish = shapeRefs.end();
-    for (ShapeRefList::iterator i = shapeRefs.begin(); i != finish; ++i)
-    {
-        Polygn poly = copyPoly(*i);
-        if (inPoly(poly, pt->point))
-        {
-            contains[pt->id].insert((*i)->id());
-        }
-        freePoly(poly);
-    }
-}
-
-
-void adjustContainsWithAdd(const Polygn& poly, const int p_shape)
-{
-    for (VertInf *k = vertices.connsBegin(); k != vertices.shapesBegin();
-            k = k->lstNext)
-    {
-        if (inPoly(poly, k->point))
-        {
-            contains[k->id].insert(p_shape);
-        }
-    }
-}
-
-
-void adjustContainsWithDel(const int p_shape)
-{
-    for (VertInf *k = vertices.connsBegin(); k != vertices.shapesBegin();
-            k = k->lstNext)
-    {
-        contains[k->id].erase(p_shape);
-    }
-}
-
-
-// Maybe this one should be in with the connector stuff, but it may later
-// need to operate on a particular section of the visibility graph so it
-// may have to stay here.
-//
-#define MIN(a, b) (((a) <= (b)) ? (a) : (b))
-#define MAX(a, b) (((a) >= (b)) ? (a) : (b))
-
-#ifdef SELECTIVE_DEBUG
-static double AngleAFromThreeSides(const double a, const double b,
-        const double c)
-{
-    // returns angle A, the angle opposite from side a, in radians
-    return acos((pow(b, 2) + pow(c, 2) - pow(a, 2)) / (2 * b * c));
-}
-#endif
-
-void markConnectors(ShapeRef *shape)
-{
-    assert(SelectiveReroute);
-
-    ConnRefList::iterator end = connRefs.end();
-    for (ConnRefList::iterator it = connRefs.begin(); it != end; ++it)
-    {
-        ConnRef *conn = (*it);
-
-        if (conn->_route.pn == 0)
-        {
-            // Ignore uninitialised connectors.
-            continue;
-        }
-
-        Point start = conn->_route.ps[0];
-        Point end = conn->_route.ps[conn->_route.pn - 1];
-
-        double conndist = conn->_route_dist;
-
-        double estdist;
-        double e1, e2;
-
-        VertInf *beginV = shape->firstVert();
-        VertInf *endV = shape->lastVert()->lstNext;
-        for (VertInf *i = beginV; i != endV; i = i->lstNext)
-        {
-            const Point& p1 = i->point;
-            const Point& p2 = i->shNext->point;
-
-            double offy;
-            double a;
-            double b;
-            double c;
-            double d;
-
-            double min;
-            double max;
-
-            if (p1.y == p2.y)
-            {
-                // Standard case
-                offy = p1.y;
-                a = start.x;
-                b = start.y - offy;
-                c = end.x;
-                d = end.y - offy;
-
-                min = MIN(p1.x, p2.x);
-                max = MAX(p1.x, p2.x);
-            }
-            else if (p1.x == p2.x)
-            {
-                // Other Standard case
-                offy = p1.x;
-                a = start.y;
-                b = start.x - offy;
-                c = end.y;
-                d = end.x - offy;
-
-                min = MIN(p1.y, p2.y);
-                max = MAX(p1.y, p2.y);
-            }
-            else
-            {
-                // Need to do rotation
-                Point n_p2 = { p2.x - p1.x, p2.y - p1.y };
-                Point n_start = { start.x - p1.x, start.y - p1.y };
-                Point n_end = { end.x - p1.x, end.y - p1.y };
-                //printf("n_p2:    (%.1f, %.1f)\n", n_p2.x, n_p2.y);
-                //printf("n_start: (%.1f, %.1f)\n", n_start.x, n_start.y);
-                //printf("n_end:   (%.1f, %.1f)\n", n_end.x, n_end.y);
-
-                double theta = 0 - atan2(n_p2.y, n_p2.x);
-                //printf("theta = %.2f\n", theta * (180 / PI));
-
-                Point r_p1 = {0, 0};
-                Point r_p2 = n_p2;
-                start = n_start;
-                end = n_end;
-
-                double cosv = cos(theta);
-                double sinv = sin(theta);
-
-                r_p2.x = cosv * n_p2.x - sinv * n_p2.y;
-                r_p2.y = cosv * n_p2.y + sinv * n_p2.x;
-                start.x = cosv * n_start.x - sinv * n_start.y;
-                start.y = cosv * n_start.y + sinv * n_start.x;
-                end.x = cosv * n_end.x - sinv * n_end.y;
-                end.y = cosv * n_end.y + sinv * n_end.x;
-                //printf("r_p2:    (%.1f, %.1f)\n", r_p2.x, r_p2.y);
-                //printf("r_start: (%.1f, %.1f)\n", start.x, start.y);
-                //printf("r_end:   (%.1f, %.1f)\n", end.x, end.y);
-
-                if (((int) r_p2.y) != 0)
-                {
-                    printf("r_p2.y: %f != 0\n", r_p2.y);
-                    abort();
-                }
-                // This might be slightly off.
-                r_p2.y = 0;
-
-                offy = r_p1.y;
-                a = start.x;
-                b = start.y - offy;
-                c = end.x;
-                d = end.y - offy;
-
-                min = MIN(r_p1.x, r_p2.x);
-                max = MAX(r_p1.x, r_p2.x);
-
-            }
-
-            double x;
-            if ((b + d) == 0)
-            {
-                db_printf("WARNING: (b + d) == 0\n");
-                d = d * -1;
-            }
-
-            if ((b == 0) && (d == 0))
-            {
-                db_printf("WARNING: b == d == 0\n");
-                if (((a < min) && (c < min)) ||
-                        ((a > max) && (c > max)))
-                {
-                    // It's going to get adjusted.
-                    x = a;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                x = ((b*c) + (a*d)) / (b + d);
-            }
-
-            //printf("%.1f, %.1f, %.1f, %.1f\n", a, b, c, d);
-            //printf("x = %.1f\n", x);
-
-            // XXX: Use MAX and MIN
-            x = (x < min) ? min : x;
-            x = (x > max) ? max : x;
-
-            //printf("x = %.1f\n", x);
-
-            Point xp;
-            if (p1.x == p2.x)
-            {
-                xp.x = offy;
-                xp.y = x;
-            }
-            else
-            {
-                xp.x = x;
-                xp.y = offy;
-            }
-            //printf("(%.1f, %.1f)\n", xp.x, xp.y);
-
-            e1 = dist(start, xp);
-            e2 = dist(xp, end);
-            estdist = e1 + e2;
-
-
-            //printf("is %.1f < %.1f\n", estdist, conndist);
-            if (estdist < conndist)
-            {
-#ifdef SELECTIVE_DEBUG
-                //double angle = AngleAFromThreeSides(dist(start, end),
-                //        e1, e2);
-                printf("[%3d] - Possible better path found (%.1f < %.1f)\n",
-                        conn->_id, estdist, conndist);
-#endif
-                conn->_needs_reroute_flag = true;
-                break;
-            }
-
-        }
-    }
-}
-
-
-void printInfo(void)
-{
-    FILE *fp = stdout;
-    fprintf(fp, "\nVisibility Graph info:\n");
-    fprintf(fp, "----------------------\n");
-
-    unsigned int currshape = 0;
-    int st_shapes = 0;
-    int st_vertices = 0;
-    int st_endpoints = 0;
-    int st_valid_shape_visedges = 0;
-    int st_valid_endpt_visedges = 0;
-    int st_invalid_visedges = 0;
-    VertInf *finish = vertices.end();
-    for (VertInf *t = vertices.connsBegin(); t != finish; t = t->lstNext)
-    {
-        VertID pID = t->id;
-
-        if ((pID.isShape) && (pID.objID != currshape))
-        {
-            currshape = pID.objID;
-            st_shapes++;
-        }
-        if (pID.isShape)
-        {
-            st_vertices++;
-        }
-        else
-        {
-            // The shape 0 ones are temporary and not considered.
-            st_endpoints++;
-        }
-    }
-    for (EdgeInf *t = visGraph.begin(); t != visGraph.end();
-            t = t->lstNext)
-    {
-        std::pair<VertID, VertID> idpair = t->ids();
-
-        if (!(idpair.first.isShape) || !(idpair.second.isShape))
-        {
-            st_valid_endpt_visedges++;
-        }
-        else
-        {
-            st_valid_shape_visedges++;
-        }
-    }
-    for (EdgeInf *t = invisGraph.begin(); t != invisGraph.end();
-            t = t->lstNext)
-    {
-        st_invalid_visedges++;
-    }
-    fprintf(fp, "Number of shapes: %d\n", st_shapes);
-    fprintf(fp, "Number of vertices: %d (%d real, %d endpoints)\n",
-            st_vertices + st_endpoints, st_vertices, st_endpoints);
-    fprintf(fp, "Number of vis_edges: %d (%d valid [%d normal, %d endpt], "
-            "%d invalid)\n", st_valid_shape_visedges + st_invalid_visedges +
-            st_valid_endpt_visedges, st_valid_shape_visedges +
-            st_valid_endpt_visedges, st_valid_shape_visedges,
-            st_valid_endpt_visedges, st_invalid_visedges);
-    fprintf(fp, "----------------------\n");
-    fprintf(fp, "checkVisEdge tally: %d\n", st_checked_edges);
-    fprintf(fp, "----------------------\n");
-
-    fprintf(fp, "ADDS:  "); timers.Print(tmAdd);
-    fprintf(fp, "DELS:  "); timers.Print(tmDel);
-    fprintf(fp, "MOVS:  "); timers.Print(tmMov);
-    fprintf(fp, "***S:  "); timers.Print(tmSev);
-    fprintf(fp, "PTHS:  "); timers.Print(tmPth);
-    fprintf(fp, "\n");
 }
 
 

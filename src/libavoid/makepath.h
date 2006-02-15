@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,13 +23,10 @@
 #ifndef AVOID_MAKEPATH_H
 #define AVOID_MAKEPATH_H
 
-#include "libavoid/connector.h"
 
 namespace Avoid {
 
-
-extern double segmt_penalty;
-extern double angle_penalty;
+class ConnRef;
 
 extern void makePath(ConnRef *lineRef, bool *flag);
 

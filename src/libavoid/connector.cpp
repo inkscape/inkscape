@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,21 +20,21 @@
  * 
 */
 
-#include "libavoid/connector.h"
 #include "libavoid/graph.h"
+#include "libavoid/connector.h"
 #include "libavoid/makepath.h"
 #include "libavoid/visibility.h"
 #include "libavoid/debug.h"
+#include "libavoid/router.h"
 
 
 namespace Avoid {
 
     
-ConnRefList connRefs;
-
-
-ConnRef::ConnRef(const unsigned int id)
-    : _id(id)
+ConnRef::ConnRef(Router *router, const unsigned int id)
+    : _router(router)
+    , _id(id)
+    , _type(ConnType_PolyLine)
     , _srcId(0)
     , _dstId(0)
     , _needs_reroute_flag(true)
@@ -53,8 +53,11 @@ ConnRef::ConnRef(const unsigned int id)
 }
 
 
-ConnRef::ConnRef(const unsigned int id, const Point& src, const Point& dst)
-    : _id(id)
+ConnRef::ConnRef(Router *router, const unsigned int id,
+        const Point& src, const Point& dst)
+    : _router(router)
+    , _id(id)
+    , _type(ConnType_PolyLine)
     , _srcId(0)
     , _dstId(0)
     , _needs_reroute_flag(true)
@@ -70,13 +73,13 @@ ConnRef::ConnRef(const unsigned int id, const Point& src, const Point& dst)
     _route.pn = 0;
     _route.ps = NULL;
 
-    if (IncludeEndpoints)
+    if (_router->IncludeEndpoints)
     {
         bool isShape = false;
-        _srcVert = new VertInf(VertID(id, isShape, 1), src);
-        _dstVert = new VertInf(VertID(id, isShape, 2), dst);
-        vertices.addVertex(_srcVert);
-        vertices.addVertex(_dstVert);
+        _srcVert = new VertInf(_router, VertID(id, isShape, 1), src);
+        _dstVert = new VertInf(_router, VertID(id, isShape, 2), dst);
+        _router->vertices.addVertex(_srcVert);
+        _router->vertices.addVertex(_dstVert);
         makeActive();
         _initialised = true;
     }
@@ -89,14 +92,14 @@ ConnRef::~ConnRef()
 
     if (_srcVert)
     {
-        vertices.removeVertex(_srcVert);
+        _router->vertices.removeVertex(_srcVert);
         delete _srcVert;
         _srcVert = NULL;
     }
 
     if (_dstVert)
     {
-        vertices.removeVertex(_dstVert);
+        _router->vertices.removeVertex(_dstVert);
         delete _dstVert;
         _dstVert = NULL;
     }
@@ -106,6 +109,13 @@ ConnRef::~ConnRef()
         makeInactive();
     }
 }
+
+
+void ConnRef::setType(unsigned int type)
+{
+    _type = type;
+}
+
 
 void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
 {
@@ -131,8 +141,8 @@ void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
         }
         else
         {
-            _srcVert = new VertInf(VertID(_id, isShape, type), point);
-            vertices.addVertex(_srcVert);
+            _srcVert = new VertInf(_router, VertID(_id, isShape, type), point);
+            _router->vertices.addVertex(_srcVert);
         }
         
         altered = _srcVert;
@@ -146,8 +156,8 @@ void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
         }
         else
         {
-            _dstVert = new VertInf(VertID(_id, isShape, type), point);
-            vertices.addVertex(_dstVert);
+            _dstVert = new VertInf(_router, VertID(_id, isShape, type), point);
+            _router->vertices.addVertex(_dstVert);
         }
         
         altered = _dstVert;
@@ -177,7 +187,7 @@ void ConnRef::makeActive(void)
     assert(!_active);
     
     // Add to connRefs list.
-    _pos = connRefs.insert(connRefs.begin(), this);
+    _pos = _router->connRefs.insert(_router->connRefs.begin(), this);
     _active = true;
 }
 
@@ -187,7 +197,7 @@ void ConnRef::makeInactive(void)
     assert(_active);
     
     // Remove from connRefs list.
-    connRefs.erase(_pos);
+    _router->connRefs.erase(_pos);
     _active = false;
 }
 
@@ -240,10 +250,10 @@ void ConnRef::lateSetup(const Point& src, const Point& dst)
     assert(!_initialised);
 
     bool isShape = false;
-    _srcVert = new VertInf(VertID(_id, isShape, 1), src);
-    _dstVert = new VertInf(VertID(_id, isShape, 2), dst);
-    vertices.addVertex(_srcVert);
-    vertices.addVertex(_dstVert);
+    _srcVert = new VertInf(_router, VertID(_id, isShape, 1), src);
+    _dstVert = new VertInf(_router, VertID(_id, isShape, 2), dst);
+    _router->vertices.addVertex(_srcVert);
+    _router->vertices.addVertex(_dstVert);
     makeActive();
     _initialised = true;
 }
@@ -269,8 +279,8 @@ bool ConnRef::isInitialised(void)
 
 void ConnRef::unInitialise(void)
 {
-    vertices.removeVertex(_srcVert);
-    vertices.removeVertex(_dstVert);
+    _router->vertices.removeVertex(_srcVert);
+    _router->vertices.removeVertex(_dstVert);
     makeInactive();
     _initialised = false;
 }
@@ -327,6 +337,12 @@ void ConnRef::makePathInvalid(void)
 }
 
 
+Router *ConnRef::router(void)
+{
+    return _router;
+}
+
+
 int ConnRef::generatePath(Point p0, Point p1)
 {
     if (!_false_path && !_needs_reroute_flag) {
@@ -340,7 +356,7 @@ int ConnRef::generatePath(Point p0, Point p1)
     VertInf *src = _srcVert;
     VertInf *tar = _dstVert;
 
-    if (!IncludeEndpoints)
+    if ( !(_router->IncludeEndpoints) )
     {
         lateSetup(p0, p1);
         
@@ -368,7 +384,7 @@ int ConnRef::generatePath(Point p0, Point p1)
             db_printf("Warning: Path not found...\n");
             pathlen = 2;
             tar->pathNext = src;
-            if (InvisibilityGrph)
+            if (_router->InvisibilityGrph)
             {
                 // TODO:  Could we know this edge already?
                 EdgeInf *edge = EdgeInf::existingEdge(src, tar);
@@ -389,7 +405,7 @@ int ConnRef::generatePath(Point p0, Point p1)
     int j = pathlen - 1;
     for (VertInf *i = tar; i != src; i = i->pathNext)
     {
-        if (InvisibilityGrph)
+        if (_router->InvisibilityGrph)
         {
             // TODO: Again, we could know this edge without searching.
             EdgeInf *edge = EdgeInf::existingEdge(i, i->pathNext);
@@ -415,69 +431,6 @@ int ConnRef::generatePath(Point p0, Point p1)
 
 
 //============================================================================
-
-const unsigned int ConnRef::runningTo = 1;
-const unsigned int ConnRef::runningFrom = 2;
-const unsigned int ConnRef::runningToAndFrom =
-        ConnRef::runningTo | ConnRef::runningFrom;
-
-// XXX: attachedShapes and attachedConns both need to be rewritten
-//      for constant time lookup of attached objects once this info
-//      is stored better within libavoid.
-
-
-    // Returns a list of connector Ids of all the connectors of type
-    // 'type' attached to the shape with the ID 'shapeId'.
-void attachedConns(IntList &conns, const unsigned int shapeId,
-        const unsigned int type)
-{
-    ConnRefList::iterator fin = connRefs.end();
-    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
-        if ((type & ConnRef::runningTo) && ((*i)->_dstId == shapeId)) {
-            conns.push_back((*i)->_srcId);
-        }
-        else if ((type & ConnRef::runningFrom) && ((*i)->_srcId == shapeId)) {
-            conns.push_back((*i)->_dstId);
-        }
-    }
-}
-
-
-    // Returns a list of shape Ids of all the shapes attached to the
-    // shape with the ID 'shapeId' with connection type 'type'.
-void attachedShapes(IntList &shapes, const unsigned int shapeId,
-        const unsigned int type)
-{
-    ConnRefList::iterator fin = connRefs.end();
-    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
-        if ((type & ConnRef::runningTo) && ((*i)->_dstId == shapeId)) {
-            if ((*i)->_srcId != 0)
-            {
-                // Only if there is a shape attached to the other end.
-                shapes.push_back((*i)->_srcId);
-            }
-        }
-        else if ((type & ConnRef::runningFrom) && ((*i)->_srcId == shapeId)) {
-            if ((*i)->_dstId != 0)
-            {
-                // Only if there is a shape attached to the other end.
-                shapes.push_back((*i)->_dstId);
-            }
-        }
-    }
-}
-
-
-    // It's intended this function is called after shape movement has 
-    // happened to alert connectors that they need to be rerouted.
-void callbackAllInvalidConnectors(void)
-{
-    ConnRefList::iterator fin = connRefs.end();
-    for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
-        (*i)->handleInvalid();
-    }
-}
-
 
 }
 

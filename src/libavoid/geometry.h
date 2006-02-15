@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * --------------------------------------------------------------------
  * Much of the code in this module is based on code published with
@@ -39,8 +39,8 @@ extern double dist(const Point& a, const Point& b);
 extern bool segmentIntersect(const Point& a, const Point& b,
         const Point& c, const Point& d);
 extern bool inPoly(const Polygn& poly, const Point& q);
-extern bool inValidRegion(const Point& a0, const Point& a1, const Point& a2,
-        const Point& b);
+extern bool inValidRegion(bool IgnoreRegions, const Point& a0,
+        const Point& a1, const Point& a2, const Point& b);
 
 
 // Direction from vector.

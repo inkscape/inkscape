@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,8 +29,12 @@
 
 namespace Avoid {
 
-extern void CreateVisGraph(Polygn **obstacles, int n_obstacles);
-extern void DestroyVisGraph(void);
+class Router;
+
+
+extern void CreateVisGraph(Router *router, Polygn **obstacles,
+        int n_obstacles);
+extern void DestroyVisGraph(Router *router);
 
 }
 

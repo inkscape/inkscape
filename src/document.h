@@ -27,6 +27,10 @@
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 
+namespace Avoid {
+class Router;
+}
+
 struct SPDesktop;
 struct SPItem;
 struct SPObject;
@@ -78,6 +82,9 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	const gchar *actionkey;
 	/// Handler ID
 	guint modified_id;
+
+	// Instance of the connector router
+	Avoid::Router *router;
 
 	sigc::connection connectModified(ModifiedSignal::slot_type slot);
 	sigc::connection connectURISet(URISetSignal::slot_type slot);

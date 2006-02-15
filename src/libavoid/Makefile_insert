@@ -14,12 +14,12 @@ libavoid_libavoid_a_SOURCES =	\
 	libavoid/geomtypes.h	\
 	libavoid/graph.cpp	\
 	libavoid/graph.h	\
-	libavoid/incremental.cpp	\
-	libavoid/incremental.h	\
 	libavoid/makepath.cpp	\
 	libavoid/makepath.h	\
 	libavoid/polyutil.cpp	\
 	libavoid/polyutil.h	\
+	libavoid/router.cpp	\
+	libavoid/router.h	\
 	libavoid/shape.cpp	\
 	libavoid/shape.h	\
 	libavoid/static.cpp	\

@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,12 @@
  * 
 */
 
+#include <cassert>
+#include <cstdlib>
 
+#include "libavoid/polyutil.h"
+#include "libavoid/geomtypes.h"
+#include "libavoid/vertices.h"
 #include "libavoid/shape.h"
 
 namespace Avoid {

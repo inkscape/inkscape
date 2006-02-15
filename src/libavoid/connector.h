@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,7 @@
 #ifndef AVOID_CONNECTOR_H
 #define AVOID_CONNECTOR_H
 
+#include "libavoid/router.h"
 #include "libavoid/geometry.h"
 #include "libavoid/shape.h"
 #include <list>
@@ -30,19 +31,20 @@
 
 namespace Avoid {
 
-class ConnRef;
 
-typedef std::list<ConnRef *> ConnRefList;
-typedef std::list<unsigned int> IntList;
+static const int ConnType_PolyLine   = 1;
+static const int ConnType_Orthogonal = 2;
 
 
 class ConnRef
 {
     public:
-        ConnRef(const unsigned int id);
-        ConnRef(const unsigned int id, const Point& src, const Point& dst);
+        ConnRef(Router *router, const unsigned int id);
+        ConnRef(Router *router, const unsigned int id,
+                const Point& src, const Point& dst);
         ~ConnRef();
         
+        void setType(unsigned int type);
         PolyLine& route(void);
         bool needsReroute(void);
         void moveRoute(const int& diff_x, const int& diff_y);
@@ -62,19 +64,18 @@ class ConnRef
         void handleInvalid(void);
         int generatePath(Point p0, Point p1);
         void makePathInvalid(void);
+        Router *router(void);
         
-        friend void markConnectors(ShapeRef *shape);
-        friend void attachedShapes(IntList &shapes,
+        friend void Router::attachedShapes(IntList &shapes,
                 const unsigned int shapeId, const unsigned int type);
-        friend void attachedConns(IntList &conns,
+        friend void Router::attachedConns(IntList &conns,
                 const unsigned int shapeId, const unsigned int type);
-
-        static const unsigned int runningTo;
-        static const unsigned int runningFrom;
-        static const unsigned int runningToAndFrom;
+        friend void Router::markConnectors(ShapeRef *shape);
         
     private:
+        Router *_router;
         unsigned int _id;
+        unsigned int _type;
         unsigned int _srcId, _dstId;
         bool _needs_reroute_flag;
         bool _false_path;
@@ -89,14 +90,6 @@ class ConnRef
         void *_connector;
 };
 
-
-extern ConnRefList connRefs;
-
-extern void callbackAllInvalidConnectors(void);
-extern void attachedConns(IntList &conns, const unsigned int shapeId,
-        const unsigned int type);
-extern void attachedShapes(IntList &shapes, const unsigned int shapeId,
-        const unsigned int type);
 
 }
 

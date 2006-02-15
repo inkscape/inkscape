@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,23 +29,23 @@
 
 namespace Avoid {
 
-typedef unsigned int uint;
-    
-class ShapeRef;
 class VertInf;
-
+class Router;
+class ShapeRef;
 typedef std::list<ShapeRef *> ShapeRefList;
 
-    
+
 class ShapeRef
 {
     public:
-        ShapeRef(uint id, Polygn& poly);
+        ShapeRef(Router *router, uint id, Polygn& poly);
         ~ShapeRef();
         VertInf *firstVert(void);
         VertInf *lastVert(void);
         uint id(void);
         Polygn poly(void);
+        Router *router(void);
+        void boundingBox(BBox& bbox);
         
         void makeActive(void);
         void makeInactive(void);
@@ -53,6 +53,7 @@ class ShapeRef
         void removeFromGraph(void);
         
     private:
+        Router *_router;
         uint _id;
         Polygn _poly;
         bool _active;
@@ -60,9 +61,6 @@ class ShapeRef
         VertInf *_firstVert;
         VertInf *_lastVert;
 };
-
-
-extern ShapeRefList shapeRefs;
 
 
 }

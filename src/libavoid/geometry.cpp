@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * --------------------------------------------------------------------
  * Much of the code in this module is based on code published with
@@ -27,6 +27,7 @@
 */
 
 #include "libavoid/graph.h"
+#include "libavoid/geometry.h"
 #include "libavoid/polyutil.h"
 
 #include <math.h>
@@ -103,8 +104,8 @@ bool segmentIntersect(const Point& a, const Point& b, const Point& c,
 //
 // Based on the code of 'InCone'.
 //
-bool inValidRegion(const Point& a0, const Point& a1, const Point& a2,
-        const Point& b)
+bool inValidRegion(bool IgnoreRegions, const Point& a0, const Point& a1,
+        const Point& a2, const Point& b)
 {
     int rSide = vecDir(b, a0, a1);
     int sSide = vecDir(b, a1, a2);

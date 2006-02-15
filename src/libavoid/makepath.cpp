@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * --------------------------------------------------------------------
  * The dijkstraPath function is based on code published and described
@@ -25,8 +25,12 @@
  *
 */
 
+#include "libavoid/vertices.h"
+#include "libavoid/makepath.h"
+#include "libavoid/geometry.h"
 #include "libavoid/connector.h"
 #include "libavoid/graph.h"
+#include "libavoid/router.h"
 #include <vector>
 #include <math.h>
 
@@ -108,11 +112,13 @@ double cost(const double dist, VertInf *inf1,
 //
 static void dijkstraPath(VertInf *src, VertInf *tar)
 {
+    Router *router = src->_router;
+
     double unseen = (double) INT_MAX;
 
     // initialize arrays
-    VertInf *finish = vertices.end();
-    for (VertInf *t = vertices.connsBegin(); t != finish; t = t->lstNext)
+    VertInf *finish = router->vertices.end();
+    for (VertInf *t = router->vertices.connsBegin(); t != finish; t = t->lstNext)
     {
         t->pathNext = NULL;
         t->pathDist = -unseen;
@@ -399,12 +405,13 @@ static void aStarPath(VertInf *src, VertInf *tar)
 //
 void makePath(ConnRef *lineRef, bool *flag)
 {
+    Router *router = lineRef->router();
     VertInf *src = lineRef->src();
     VertInf *tar = lineRef->dst();
 
     // TODO: Could be more efficient here.
     EdgeInf *directEdge = EdgeInf::existingEdge(src, tar);
-    if (!IncludeEndpoints && directVis(src, tar))
+    if (!(router->IncludeEndpoints) && directVis(src, tar))
     {
         Point p = src->point;
         Point q = tar->point;
@@ -418,7 +425,8 @@ void makePath(ConnRef *lineRef, bool *flag)
 
         return;
     }
-    else if (IncludeEndpoints && directEdge && (directEdge->getDist() > 0))
+    else if (router->IncludeEndpoints && directEdge &&
+            (directEdge->getDist() > 0))
     {
         tar->pathNext = src;
         directEdge->addConn(flag);
@@ -427,7 +435,7 @@ void makePath(ConnRef *lineRef, bool *flag)
     {
         // Mark the path endpoints as not being able to see
         // each other.  This is true if we are here.
-        if (!IncludeEndpoints && InvisibilityGrph)
+        if (!(router->IncludeEndpoints) && router->InvisibilityGrph)
         {
             if (!directEdge)
             {
@@ -436,7 +444,7 @@ void makePath(ConnRef *lineRef, bool *flag)
             directEdge->addBlocker(0);
         }
 
-        if (UseAStarSearch)
+        if (router->UseAStarSearch)
         {
             aStarPath(src, tar);
         }

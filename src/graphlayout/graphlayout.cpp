@@ -108,7 +108,7 @@ void graphlayout(GSList const *const items) {
 		SPItem *iu=*i;
 		std::cout<<"Getting neighbours for id: "<<iu->id<<std::endl;
 		Vertex u=nodelookup[iu->id];
-		GSList *nlist=iu->avoidRef->getAttachedShapes(Avoid::ConnRef::runningFrom);
+		GSList *nlist=iu->avoidRef->getAttachedShapes(Avoid::runningFrom);
 		std::list<SPItem *> neighbours;
 		neighbours.insert<GSListConstIterator<SPItem *> >(neighbours.end(),nlist,NULL);
 		for (std::list<SPItem *>::iterator j(neighbours.begin());

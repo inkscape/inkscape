@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,6 +29,7 @@
 #include "libavoid/vertices.h"
 #include "libavoid/graph.h"
 #include "libavoid/geometry.h"
+#include "libavoid/router.h"
 
 #include <math.h>
 
@@ -39,38 +40,11 @@
 namespace Avoid {
 
 
-bool UseAStarSearch   = true;
-bool IgnoreRegions    = true;
-bool SelectiveReroute = true;
-bool IncludeEndpoints = true;
-bool UseLeesAlgorithm = false;
-bool InvisibilityGrph = true;
-bool PartialFeedback  = false;
-
-bool PartialTime = false;
-
-
-void computeCompleteVis(void)
-{
-    VertInf *beginVert = vertices.shapesBegin();
-    VertInf *endVert = vertices.end();
-    for (VertInf *i = beginVert; i != endVert; i = i->lstNext)
-    {
-        db_printf("-- CONSIDERING --\n");
-        i->id.db_print();
-
-        for (VertInf *j = i->lstPrev ; j != NULL; j = j->lstPrev)
-        {
-            bool knownNew = true;
-            EdgeInf::checkEdgeVisibility(i, j, knownNew);
-        }
-    }
-}
-
-
 void shapeVis(ShapeRef *shape)
 {
-    if (!InvisibilityGrph)
+    Router *router = shape->router();
+
+    if ( !(router->InvisibilityGrph) )
     {
         // Clear shape from graph.
         shape->removeFromGraph();
@@ -80,13 +54,13 @@ void shapeVis(ShapeRef *shape)
     VertInf *shapeEnd = shape->lastVert()->lstNext;
 
     VertInf *pointsBegin = NULL;
-    if (IncludeEndpoints)
+    if (router->IncludeEndpoints)
     {
-        pointsBegin = vertices.connsBegin();
+        pointsBegin = router->vertices.connsBegin();
     }
     else
     {
-        pointsBegin = vertices.shapesBegin();
+        pointsBegin = router->vertices.shapesBegin();
     }
 
     for (VertInf *curr = shapeBegin; curr != shapeEnd; curr = curr->lstNext)
@@ -103,7 +77,7 @@ void shapeVis(ShapeRef *shape)
         }
 
         db_printf("\tSecond Half:\n");
-        VertInf *pointsEnd = vertices.end();
+        VertInf *pointsEnd = router->vertices.end();
         for (VertInf *k = shapeEnd; k != pointsEnd; k = k->lstNext)
         {
             EdgeInf::checkEdgeVisibility(curr, k, knownNew);
@@ -114,7 +88,9 @@ void shapeVis(ShapeRef *shape)
 
 void shapeVisSweep(ShapeRef *shape)
 {
-    if (!InvisibilityGrph)
+    Router *router = shape->router();
+
+    if ( !(router->InvisibilityGrph) )
     {
         // Clear shape from graph.
         shape->removeFromGraph();
@@ -133,34 +109,35 @@ void shapeVisSweep(ShapeRef *shape)
 void vertexVisibility(VertInf *point, VertInf *partner, bool knownNew,
         const bool gen_contains)
 {
+    Router *router = point->_router;
     const VertID& pID = point->id;
 
     // Make sure we're only doing ptVis for endpoints.
     assert(!(pID.isShape));
 
-    if (!InvisibilityGrph)
+    if ( !(router->InvisibilityGrph) )
     {
         point->removeFromGraph();
     }
 
     if (gen_contains && !(pID.isShape))
     {
-        generateContains(point);
+        router->generateContains(point);
     }
 
-    if (UseLeesAlgorithm)
+    if (router->UseLeesAlgorithm)
     {
         vertexSweep(point);
     }
     else
     {
-        VertInf *shapesEnd = vertices.end();
-        for (VertInf *k = vertices.shapesBegin(); k != shapesEnd;
+        VertInf *shapesEnd = router->vertices.end();
+        for (VertInf *k = router->vertices.shapesBegin(); k != shapesEnd;
                 k = k->lstNext)
         {
             EdgeInf::checkEdgeVisibility(point, k, knownNew);
         }
-        if (IncludeEndpoints && partner)
+        if (router->IncludeEndpoints && partner)
         {
             EdgeInf::checkEdgeVisibility(point, partner, knownNew);
         }
@@ -176,10 +153,6 @@ static VertInf *centerInf;
 static Point centerPoint;
 static VertID centerID;
 static double centerAngle;
-
-#ifdef LINEDEBUG
-    SDL_Surface *avoid_screen = NULL;
-#endif
 
 
 class PointPair
@@ -385,6 +358,7 @@ static bool sweepVisible(EdgeSet& T, VertInf *currInf, VertInf *lastInf,
 
 void vertexSweep(VertInf *vert)
 {
+    Router *router = vert->_router;
     VertID& pID = vert->id;
     Point& pPoint = vert->point;
 
@@ -399,8 +373,8 @@ void vertexSweep(VertInf *vert)
     VertList v;
 
     // Initialise the vertex list
-    VertInf *beginVert = vertices.connsBegin();
-    VertInf *endVert = vertices.end();
+    VertInf *beginVert = router->vertices.connsBegin();
+    VertInf *endVert = router->vertices.end();
     for (VertInf *inf = beginVert; inf != endVert; inf = inf->lstNext)
     {
         if (inf->id == centerID)
@@ -416,7 +390,7 @@ void vertexSweep(VertInf *vert)
         }
         else
         {
-            if (IncludeEndpoints)
+            if (router->IncludeEndpoints)
             {
                 if (centerID.isShape)
                 {
@@ -441,11 +415,11 @@ void vertexSweep(VertInf *vert)
     v.sort(ppCompare);
 
     EdgeSet e;
-    ShapeSet& ss = contains[centerID];
+    ShapeSet& ss = router->contains[centerID];
 
     // And edge to T that intersect the initial ray.
-    VertInf *last = vertices.end();
-    for (VertInf *k = vertices.shapesBegin(); k != last; )
+    VertInf *last = router->vertices.end();
+    for (VertInf *k = router->vertices.shapesBegin(); k != last; )
     {
         VertID kID = k->id;
         if (!(centerID.isShape) && (ss.find(kID.objID) != ss.end()))
@@ -497,7 +471,7 @@ void vertexSweep(VertInf *vert)
     bool     lastVisible = false;
     int      lastBlocker = 0;
 
-    isBoundingShape isBounding(contains[centerID]);
+    isBoundingShape isBounding(router->contains[centerID]);
     VertList::iterator vfst = v.begin();
     VertList::iterator vfin = v.end();
     for (VertList::iterator t = vfst; t != vfin; ++t)
@@ -526,7 +500,7 @@ void vertexSweep(VertInf *vert)
         // Ignore vertices from bounding shapes, if sweeping round an endpoint.
         if (!(centerID.isShape) && isBounding(*t))
         {
-            if (InvisibilityGrph)
+            if (router->InvisibilityGrph)
             {
                 // if p and t can't see each other, add blank edge
                 db_printf("\tSkipping visibility edge... \n\t\t");
@@ -540,19 +514,21 @@ void vertexSweep(VertInf *vert)
         bool cone1 = true, cone2 = true;
         if (centerID.isShape)
         {
-            cone1 = inValidRegion(centerInf->shPrev->point, centerPoint,
+            cone1 = inValidRegion(router->IgnoreRegions,
+                    centerInf->shPrev->point, centerPoint,
                     centerInf->shNext->point, currInf->point);
         }
         if (currInf->id.isShape)
         {
-            cone2 = inValidRegion(currInf->shPrev->point, currInf->point,
+            cone2 = inValidRegion(router->IgnoreRegions,
+                    currInf->shPrev->point, currInf->point,
                     currInf->shNext->point, centerPoint);
         }
 
         if (!cone1 || !cone2)
         {
             lastInf = NULL;
-            if (InvisibilityGrph)
+            if (router->InvisibilityGrph)
             {
                 db_printf("\tSetting invisibility edge... \n\t\t");
                 edge->addBlocker(0);
@@ -578,7 +554,7 @@ void vertexSweep(VertInf *vert)
                 edge->setDist(currDist);
                 edge->db_print();
             }
-            else if (InvisibilityGrph)
+            else if (router->InvisibilityGrph)
             {
                 db_printf("\tSetting invisibility edge... \n\t\t");
                 edge->addBlocker(blocker);

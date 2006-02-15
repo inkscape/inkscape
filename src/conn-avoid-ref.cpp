@@ -15,7 +15,7 @@
 #include "conn-avoid-ref.h"
 #include "libnr/nr-rect-ops.h"
 #include "libavoid/polyutil.h"
-#include "libavoid/incremental.h"
+#include "libavoid/router.h"
 #include "libavoid/connector.h"
 #include "xml/simple-node.cpp"
 #include "document.h"
@@ -26,6 +26,8 @@
 #include "sp-namedview.h"
 #include "inkscape.h"
 
+
+using Avoid::Router;
 
 static Avoid::Polygn avoid_item_poly(SPItem const *item);
 
@@ -44,9 +46,10 @@ SPAvoidRef::~SPAvoidRef()
 {
     _transformed_connection.disconnect();
     if (shapeRef) {
+        Router *router = shapeRef->router();
         // shapeRef is finalised by delShape,
         // so no memory is lost here.
-        Avoid::delShape(shapeRef);
+        router->delShape(shapeRef);
         shapeRef = NULL;
     }
 }
@@ -71,6 +74,8 @@ void SPAvoidRef::handleSettingChange(void)
     if (desktop == NULL) {
         return;
     }
+
+    Router *router = item->document->router;
     
     if (new_setting == setting) {
         // Don't need to make any changes
@@ -90,10 +95,10 @@ void SPAvoidRef::handleSettingChange(void)
             // Get a unique ID for the item.
             GQuark itemID = g_quark_from_string(id);
 
-            shapeRef = new Avoid::ShapeRef(itemID, poly);
+            shapeRef = new Avoid::ShapeRef(router, itemID, poly);
             Avoid::freePoly(poly);
         
-            Avoid::addShape(shapeRef);
+            router->addShape(shapeRef);
         }
     }
     else
@@ -102,7 +107,7 @@ void SPAvoidRef::handleSettingChange(void)
         
         // shapeRef is finalised by delShape,
         // so no memory is lost here.
-        Avoid::delShape(shapeRef);
+        router->delShape(shapeRef);
         shapeRef = NULL;
     }
     setting = new_setting;
@@ -115,7 +120,7 @@ GSList *SPAvoidRef::getAttachedShapes(const unsigned int type)
 
     Avoid::IntList shapes;
     GQuark shapeId = g_quark_from_string(item->id);
-    Avoid::attachedShapes(shapes, shapeId, type);
+    item->document->router->attachedShapes(shapes, shapeId, type);
     
     Avoid::IntList::iterator finish = shapes.end();
     for (Avoid::IntList::iterator i = shapes.begin(); i != finish; ++i) {
@@ -139,7 +144,7 @@ GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
 
     Avoid::IntList conns;
     GQuark shapeId = g_quark_from_string(item->id);
-    Avoid::attachedConns(conns, shapeId, type);
+    item->document->router->attachedConns(conns, shapeId, type);
     
     Avoid::IntList::iterator finish = conns.end();
     for (Avoid::IntList::iterator i = conns.begin(); i != finish; ++i) {
@@ -245,10 +250,11 @@ void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item)
     Avoid::ShapeRef *shapeRef = moved_item->avoidRef->shapeRef;
     g_assert(shapeRef);
 
+    Router *router = moved_item->document->router;
     Avoid::Polygn poly = avoid_item_poly(moved_item);
     if (poly.pn > 0) {
         // moveShape actually destroys the old shapeRef and returns a new one.
-        moved_item->avoidRef->shapeRef = Avoid::moveShape(shapeRef, &poly);
+        moved_item->avoidRef->shapeRef = router->moveShape(shapeRef, &poly);
         Avoid::freePoly(poly);
     }
 }

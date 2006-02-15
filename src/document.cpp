@@ -50,6 +50,7 @@
 #include "dir-util.h"
 #include "unit-constants.h"
 #include "prefs-utils.h"
+#include "libavoid/router.h"
 
 #include "display/nr-arena-item.h"
 
@@ -85,6 +86,9 @@ SPDocument::SPDocument() {
     name = NULL;
 
     _collection_queue = NULL;
+
+    // Initialise instance of connector router.
+    router = new Avoid::Router();
 
     p = new SPDocumentPrivate();
 
@@ -162,6 +166,11 @@ SPDocument::~SPDocument() {
     if (keepalive) {
         inkscape_unref();
         keepalive = FALSE;
+    }
+
+    if (router) {
+        delete router;
+        router = NULL;
     }
 
     //delete this->_whiteboard_session_manager;

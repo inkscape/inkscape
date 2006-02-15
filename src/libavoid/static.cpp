@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,10 +21,19 @@
 */
 
 #include <cassert>
+#include <iostream>
+#include "libavoid/vertices.h"
 #include "libavoid/connector.h"
+#include "libavoid/graph.h"
+#include "libavoid/static.h"
+#include "libavoid/shape.h"
 #include "libavoid/visibility.h"
+#include "libavoid/debug.h"
+#include "libavoid/router.h"
 
 namespace Avoid {
+
+static void computeCompleteVis(Router *router);
 
 
 // This should only be used for the static algorithm.
@@ -32,24 +41,42 @@ namespace Avoid {
 // XXX: If to set up the vis graph for incremental it would need 
 //      the shapeRef ppinters in obs.
 //
-void CreateVisGraph(Polygn **obs, int n_obs)
+void CreateVisGraph(Router *router, Polygn **obs, int n_obs)
 {
     for (int poly_i = 0; poly_i < n_obs; poly_i++)
     {
         unsigned int id = obs[poly_i]->id;
         
-        new ShapeRef(id, *(obs[poly_i]));
+        new ShapeRef(router, id, *(obs[poly_i]));
     }
-    computeCompleteVis();
+    computeCompleteVis(router);
 }
 
 
-void DestroyVisGraph(void)
+static void computeCompleteVis(Router *router)
 {
-    ShapeRefList::iterator sFinish = shapeRefs.end();
+    VertInf *beginVert = router->vertices.shapesBegin();
+    VertInf *endVert = router->vertices.end();
+    for (VertInf *i = beginVert; i != endVert; i = i->lstNext)
+    {
+        db_printf("-- CONSIDERING --\n");
+        i->id.db_print();
+
+        for (VertInf *j = i->lstPrev ; j != NULL; j = j->lstPrev)
+        {
+            bool knownNew = true;
+            EdgeInf::checkEdgeVisibility(i, j, knownNew);
+        }
+    }
+}
+
+
+void DestroyVisGraph(Router *router)
+{
+    ShapeRefList::iterator sFinish = router->shapeRefs.end();
     ShapeRefList::iterator sCurr;
     
-    while ((sCurr = shapeRefs.begin()) != sFinish)
+    while ((sCurr = router->shapeRefs.begin()) != sFinish)
     {
         ShapeRef *shape = (*sCurr);
 
@@ -57,10 +84,10 @@ void DestroyVisGraph(void)
         delete shape;
     }
     
-    ConnRefList::iterator cFinish = connRefs.end();
+    ConnRefList::iterator cFinish = router->connRefs.end();
     ConnRefList::iterator cCurr;
     
-    while ((cCurr = connRefs.begin())!= cFinish)
+    while ((cCurr = router->connRefs.begin())!= cFinish)
     {
         ConnRef *conn = (*cCurr);
 
@@ -68,7 +95,7 @@ void DestroyVisGraph(void)
         conn->unInitialise();
     }
 
-    assert(vertices.connsBegin() == NULL);
+    assert(router->vertices.connsBegin() == NULL);
 }
 
 

@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,20 +28,12 @@
 #include <list>
 #include <utility>
 using std::pair;
-
 #include "libavoid/vertices.h"
-
 
 namespace Avoid {
 
-
-extern bool UseAStarSearch;
-extern bool IgnoreRegions;
-extern bool SelectiveReroute;
-extern bool IncludeEndpoints;
-extern bool UseLeesAlgorithm;
-extern bool InvisibilityGrph;
-extern bool PartialFeedback;
+class ConnRef;
+class Router;
 
 
 typedef std::list<int> ShapeList;
@@ -72,6 +64,7 @@ class EdgeInf
         EdgeInf *lstPrev;
         EdgeInf *lstNext;
     private:
+        Router *_router;
         bool _added;
         bool _visible;
         VertInf *_v1;
@@ -102,21 +95,6 @@ class EdgeList
         EdgeInf *_lastEdge;
         unsigned int _count;
 };
-
-
-extern EdgeList visGraph;
-extern EdgeList invisGraph;
-
-class ShapeRef;
-
-extern void newBlockingShape(Polygn *poly, int pid);
-extern void checkAllBlockedEdges(int pid);
-extern void checkAllMissingEdges(void);
-extern void generateContains(VertInf *pt);
-extern void adjustContainsWithAdd(const Polygn& poly, const int p_shape);
-extern void adjustContainsWithDel(const int p_shape);
-extern void markConnectors(ShapeRef *shape);
-extern void printInfo(void);
 
 
 }

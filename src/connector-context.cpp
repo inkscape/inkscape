@@ -788,7 +788,8 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
     Avoid::Point dst = { d[NR::X], d[NR::Y] };
 
     if (!cc->newConnRef) {
-        cc->newConnRef = new Avoid::ConnRef(0, src, dst);
+        Avoid::Router *router = SP_DT_DOCUMENT(dt)->router;
+        cc->newConnRef = new Avoid::ConnRef(router, 0, src, dst);
         cc->newConnRef->updateEndPoint(Avoid::VertID::src, src);
     }
     cc->newConnRef->updateEndPoint(Avoid::VertID::tar, dst);

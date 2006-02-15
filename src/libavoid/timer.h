@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -37,10 +37,10 @@ namespace Avoid {
 
 #else
    
-  #define register_timer(t) timers.Register(t)
-  #define regstart_timer(t) timers.Register(t, timerStart)
-  #define start_timer() timers.Start()
-  #define stop_timer() timers.Stop()
+  #define register_timer(t) router->timers.Register(t)
+  #define regstart_timer(t) router->timers.Register(t, timerStart)
+  #define start_timer() router->timers.Start()
+  #define stop_timer() router->timers.Stop()
 
 #endif
 
@@ -85,7 +85,6 @@ class Timer
         int type, lasttype;
 };
 
-extern Timer timers;
 
 }
 

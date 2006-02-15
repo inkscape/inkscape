@@ -2,7 +2,7 @@
  * vim: ts=4 sw=4 et tw=0 wm=0
  *
  * libavoid - Fast, Incremental, Object-avoiding Line Router
- * Copyright (C) 2004-2005  Michael Wybrow <mjwybrow@users.sourceforge.net>
+ * Copyright (C) 2004-2006  Michael Wybrow <mjwybrow@users.sourceforge.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,16 +20,18 @@
  *
 */
 
+#include "libavoid/vertices.h"
 #include "libavoid/geometry.h"
 #include "libavoid/graph.h"  // For alertConns
 #include "libavoid/debug.h"
+#include "libavoid/router.h"
 
+#include <iostream>
+#include <cstdlib>
+#include <cassert>
 
 
 namespace Avoid {
-
-
-ContainsMap contains;
 
 
 VertID::VertID()
@@ -134,8 +136,9 @@ const int VertID::src = 1;
 const int VertID::tar = 2;
 
 
-VertInf::VertInf(const VertID& vid, const Point& vpoint)
-    : id(vid)
+VertInf::VertInf(Router *router, const VertID& vid, const Point& vpoint)
+    : _router(router)
+    , id(vid)
     , point(vpoint)
     , lstPrev(NULL)
     , lstNext(NULL)
@@ -195,6 +198,11 @@ bool directVis(VertInf *src, VertInf *dst)
     VertID& pID = src->id;
     VertID& qID = dst->id;
 
+    // We better be part of the same instance of libavoid.
+    Router *router = src->_router;
+    assert(router == dst->_router);
+
+    ContainsMap& contains = router->contains;
     if (!(pID.isShape))
     {
         ss.insert(contains[pID].begin(), contains[pID].end());
@@ -206,8 +214,9 @@ bool directVis(VertInf *src, VertInf *dst)
 
     // The "beginning" should be the first shape vertex, rather
     // than an endpoint, which are also stored in "vertices".
-    VertInf *endVert = vertices.end();
-    for (VertInf *k = vertices.shapesBegin(); k != endVert; k = k->lstNext)
+    VertInf *endVert = router->vertices.end();
+    for (VertInf *k = router->vertices.shapesBegin(); k != endVert;
+            k = k->lstNext)
     {
         if ((ss.find(k->id.objID) == ss.end()))
         {
@@ -428,9 +437,6 @@ VertInf *VertInfList::end(void)
 {
     return NULL;
 }
-
-
-VertInfList vertices;
 
 
 }

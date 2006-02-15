@@ -33,9 +33,9 @@ public:
     
     // Returns a list of SPItems of all connectors/shapes attached to
     // this object.  Pass one of the following for 'type':
-    //     Avoid::ConnRef::runningTo
-    //     Avoid::ConnRef::runningFrom
-    //     Avoid::ConnRef::runningToAndFrom
+    //     Avoid::runningTo
+    //     Avoid::runningFrom
+    //     Avoid::runningToAndFrom
     GSList *getAttachedShapes(const unsigned int type);
     GSList *getAttachedConnectors(const unsigned int type);
 
