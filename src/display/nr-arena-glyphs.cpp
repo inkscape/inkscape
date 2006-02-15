@@ -147,6 +147,8 @@ nr_arena_glyphs_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state,
 	bbox.x0 = bbox.y0 = NR_HUGE;
 	bbox.x1 = bbox.y1 = -NR_HUGE;
 
+	const float scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
+
 	if (glyphs->style->fill.type != SP_PAINT_TYPE_NONE) {
 		NRMatrix t;
 		nr_matrix_multiply (&t, &glyphs->g_transform, &gc->transform);
@@ -158,7 +160,7 @@ nr_arena_glyphs_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state,
 		if (glyphs->rfont) glyphs->rfont->Unref();
 		glyphs->rfont = rfont;
 
-		if (glyphs->style->stroke.type == SP_PAINT_TYPE_NONE) { // Optimization: do fill bbox only if there's no stroke
+		if (glyphs->style->stroke.type == SP_PAINT_TYPE_NONE || fabs(glyphs->style->stroke_width.computed * scale) <= 0.01) { // Optimization: do fill bbox only if there's no stroke
 			NRRect narea;
 			if ( glyphs->rfont ) glyphs->rfont->BBox(glyphs->glyph, &narea);
 			bbox.x0 = narea.x0 + glyphs->x;
@@ -177,7 +179,6 @@ nr_arena_glyphs_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state,
 		t.c[4]=0;
 		t.c[5]=0;
 
-		const float scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
 		if ( fabs(glyphs->style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
 			font_style nstyl;
 			nstyl.transform = t;
