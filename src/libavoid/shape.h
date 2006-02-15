@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
 */
 
 #ifndef AVOID_SHAPE_H
@@ -38,23 +38,23 @@ typedef std::list<ShapeRef *> ShapeRefList;
 class ShapeRef
 {
     public:
-        ShapeRef(Router *router, uint id, Polygn& poly);
+        ShapeRef(Router *router, unsigned int id, Polygn& poly);
         ~ShapeRef();
         VertInf *firstVert(void);
         VertInf *lastVert(void);
-        uint id(void);
+        unsigned int id(void);
         Polygn poly(void);
         Router *router(void);
         void boundingBox(BBox& bbox);
-        
+
         void makeActive(void);
         void makeInactive(void);
 
         void removeFromGraph(void);
-        
+
     private:
         Router *_router;
-        uint _id;
+        unsigned int _id;
         Polygn _poly;
         bool _active;
         ShapeRefList::iterator _pos;
