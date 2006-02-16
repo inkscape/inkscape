@@ -156,6 +156,9 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 		sp_repr_set_svg_double(repr, "sodipodi:t0", spiral->t0);
 	}
 
+     // make sure the curve is rebuilt with all up-to-date parameters
+     sp_spiral_set_shape ((SPShape *) spiral);
+
         //Duplicate the path
         SPCurve *curve = ((SPShape *) spiral)->curve;
         //Nulls might be possible if this called iteratively
