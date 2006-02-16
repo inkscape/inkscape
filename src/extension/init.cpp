@@ -33,6 +33,7 @@
 #endif
 #include "internal/ps-out.h"
 #include "internal/pov-out.h"
+#include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
 #include "internal/latex-pstricks.h"
 #include "internal/eps-out.h"
@@ -109,6 +110,7 @@ init()
     Internal::PrintWin32::init();
 #endif
     Internal::PovOutput::init();
+    Internal::OdfOutput::init();
     Internal::PrintLatex::init();
     Internal::LatexOutput::init();
 
@@ -116,7 +118,7 @@ init()
     Internal::BlurEdge::init();
     Internal::GimpGrad::init();
     Internal::Grid::init();
-    
+
     /* Load search path for extensions */
     if (Inkscape::Extension::Extension::search_path.size() == 0)
     {
@@ -169,7 +171,7 @@ build_module_from_dir(gchar const *dirname)
     }
 
     //# Hopefully doing this the Glib way is portable
-        
+
     GError *err;
     GDir *directory = g_dir_open(dirname, 0, &err);
     if (!directory) {
