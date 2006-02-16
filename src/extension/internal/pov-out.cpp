@@ -32,16 +32,19 @@
 
 #include "io/sys.h"
 
-namespace Inkscape {
-namespace Extension {
-namespace Internal {
+namespace Inkscape
+{
+namespace Extension
+{
+namespace Internal
+{
 
 
 
 static const char *
 dstr(gchar *sbuffer, double d)
 {
-    return (const char *)g_ascii_formatd(sbuffer, 
+    return (const char *)g_ascii_formatd(sbuffer,
 	         G_ASCII_DTOSTR_BUF_SIZE, "%.8g", (gdouble)d);
 
 }
@@ -147,13 +150,13 @@ PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
     gchar s6[G_ASCII_DTOSTR_BUF_SIZE + 1];
     gchar s7[G_ASCII_DTOSTR_BUF_SIZE + 1];
     gchar s8[G_ASCII_DTOSTR_BUF_SIZE + 1];
-	
+
     double bignum = 1000000.0;
     double minx  =  bignum;
     double maxx  = -bignum;
     double miny  =  bignum;
     double maxy  = -bignum;
-    
+
 
 
     unsigned indx;

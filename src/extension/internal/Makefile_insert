@@ -33,6 +33,8 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/gdkpixbuf-input.cpp	\
 	extension/internal/pov-out.cpp	\
 	extension/internal/pov-out.h	\
+	extension/internal/odf.cpp	\
+	extension/internal/odf.h	\
 	extension/internal/latex-pstricks.cpp	\
 	extension/internal/latex-pstricks.h	\
 	extension/internal/latex-pstricks-out.cpp	\
