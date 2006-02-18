@@ -30,6 +30,7 @@ public:
     virtual void clear();
     virtual void addPreview( Previewable* preview );
     virtual void setStyle(Gtk::BuiltinIconSize size, ViewType view);
+    virtual void setOrientation( Gtk::AnchorType how );
     virtual Gtk::BuiltinIconSize getPreviewSize() const { return _baseSize; }
     virtual ViewType getPreviewType() const { return _view; }
 
@@ -39,6 +40,7 @@ private:
     std::vector<Previewable*> items;
     Gtk::Bin *_scroller;
     Gtk::Table *_insides;
+    Gtk::AnchorType _anchor;
     Gtk::BuiltinIconSize _baseSize;
     ViewType _view;
 };

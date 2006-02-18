@@ -482,6 +482,15 @@ SwatchesPanel::~SwatchesPanel()
 {
 }
 
+void SwatchesPanel::Temp()
+{
+    if ( _holder )
+    {
+        _holder->setOrientation( Gtk::ANCHOR_SOUTH );
+    }
+}
+
+
 void SwatchesPanel::_handleAction( int setId, int itemId )
 {
     switch( setId ) {

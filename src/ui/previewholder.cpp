@@ -24,6 +24,7 @@ PreviewHolder::PreviewHolder() :
     VBox(),
     PreviewFillable(),
     _scroller(0),
+    _anchor(Gtk::ANCHOR_CENTER),
     _baseSize(Gtk::ICON_SIZE_MENU),
     _view(VIEW_TYPE_LIST)
 {
@@ -84,6 +85,33 @@ void PreviewHolder::setStyle(Gtk::BuiltinIconSize size, ViewType view)
     }
 }
 
+void PreviewHolder::setOrientation( Gtk::AnchorType how )
+{
+    if ( _anchor != how )
+    {
+        switch ( _anchor )
+        {
+            case Gtk::ANCHOR_NORTH:
+            case Gtk::ANCHOR_SOUTH:
+            {
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
+            }
+            break;
+
+            case Gtk::ANCHOR_EAST:
+            case Gtk::ANCHOR_WEST:
+            {
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC );
+            }
+            break;
+
+            default:
+            {
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+            }
+        }
+    }
+}
 
 void PreviewHolder::rebuildUI()
 {

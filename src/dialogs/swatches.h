@@ -61,6 +61,8 @@ public:
 
     static SwatchesPanel& getInstance();
 
+    void Temp();
+
 protected:
     virtual void _handleAction( int setId, int itemId );
 
