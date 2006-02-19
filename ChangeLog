@@ -1,10 +1,18 @@
 2006-02-18  Jon A. Cruz  <jon@joncruz.org>
 	* src/widgets/desktop-widget.cpp, src/dialogs/swatches.cpp,
+	  src/dialogs/swatches.h, src/ui/widget/panel.cpp,
+	  src/ui/widget/panel.h, src/ui/previewholder.cpp,
+	  src/ui/previewholder.h:
+
+	  Adding spacer to get swatches scrollbar enough room to move.
+	  Tuning up API for better embedding.
+
+2006-02-18  Jon A. Cruz  <jon@joncruz.org>
+	* src/widgets/desktop-widget.cpp, src/dialogs/swatches.cpp,
 	  src/dialogs/swatches.h, src/ui/previewholder.cpp, 
 	  src/ui/previewfillable.h, src/ui/previewholder.h:
 
 	  Removed horizontal scroll bar from swatches when embedded.
-
 
 2006-02-15  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 

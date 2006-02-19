@@ -184,7 +184,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
         using Inkscape::UI::Dialogs::SwatchesPanel;
 
         SwatchesPanel* swatches = new SwatchesPanel();
-        swatches->Temp();
+        swatches->setOrientation( Gtk::ANCHOR_SOUTH );
         dtw->panels = GTK_WIDGET(swatches->gobj());
         gtk_box_pack_end( GTK_BOX( dtw->vbox ), dtw->panels, FALSE, TRUE, 0 );
     }

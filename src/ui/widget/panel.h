@@ -38,6 +38,8 @@ public:
     void setLabel(Glib::ustring const &label);
     Glib::ustring const &getLabel() const;
 
+    virtual void setOrientation( Gtk::AnchorType how );
+
     const gchar *_prefs_path;
     void restorePanelPrefs();
 
@@ -47,6 +49,7 @@ protected:
 
     virtual void _handleAction( int setId, int itemId );
 
+    Gtk::AnchorType _anchor;
 
 private:
     void init();

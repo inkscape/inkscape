@@ -482,14 +482,16 @@ SwatchesPanel::~SwatchesPanel()
 {
 }
 
-void SwatchesPanel::Temp()
+void SwatchesPanel::setOrientation( Gtk::AnchorType how )
 {
+    // Must call the parent class or bad things might happen
+    Inkscape::UI::Widget::Panel::setOrientation( how );
+
     if ( _holder )
     {
         _holder->setOrientation( Gtk::ANCHOR_SOUTH );
     }
 }
-
 
 void SwatchesPanel::_handleAction( int setId, int itemId )
 {

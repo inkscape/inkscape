@@ -60,8 +60,7 @@ public:
     virtual ~SwatchesPanel();
 
     static SwatchesPanel& getInstance();
-
-    void Temp();
+    virtual void setOrientation( Gtk::AnchorType how );
 
 protected:
     virtual void _handleAction( int setId, int itemId );

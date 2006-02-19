@@ -134,6 +134,14 @@ void Panel::setLabel(Glib::ustring const &label)
     tabTitle.set_label(this->label);
 }
 
+void Panel::setOrientation( Gtk::AnchorType how )
+{
+    if ( _anchor != how )
+    {
+        _anchor = how;
+    }
+}
+
 void Panel::_regItem( Gtk::MenuItem* item, int group, int id )
 {
     menu.append( *item );

@@ -40,6 +40,9 @@ private:
     std::vector<Previewable*> items;
     Gtk::Bin *_scroller;
     Gtk::Table *_insides;
+    Gtk::Box *_zee0;
+    Gtk::Box *_zee1;
+    Gtk::Box *_zee2;
     Gtk::AnchorType _anchor;
     Gtk::BuiltinIconSize _baseSize;
     ViewType _view;

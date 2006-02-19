@@ -14,6 +14,8 @@
 #include "previewholder.h"
 
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/sizegroup.h>
+#include <gtkmm/scrollbar.h>
 
 
 namespace Inkscape {
@@ -24,6 +26,9 @@ PreviewHolder::PreviewHolder() :
     VBox(),
     PreviewFillable(),
     _scroller(0),
+    _zee0(0),
+    _zee1(0),
+    _zee2(0),
     _anchor(Gtk::ANCHOR_CENTER),
     _baseSize(Gtk::ICON_SIZE_MENU),
     _view(VIEW_TYPE_LIST)
@@ -32,9 +37,15 @@ PreviewHolder::PreviewHolder() :
     Gtk::Table* stuff = manage(new Gtk::Table( 1, 2 ));
     stuff->set_col_spacings( 8 );
     _insides = stuff;
-    _scroller->add(*stuff);
 
-    pack_start(*_scroller, Gtk::PACK_EXPAND_WIDGET);
+    // Add a container with the scroller and a spacer
+    Gtk::Table* spaceHolder = manage( new Gtk::Table(1, 2) );
+    _zee0 = manage( new Gtk::VBox() );
+    _scroller->add(*stuff);
+    spaceHolder->attach( *_scroller, 0, 1, 0, 1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+    spaceHolder->attach( *_zee0, 1, 2, 0, 1, Gtk::SHRINK, Gtk::FILL|Gtk::EXPAND );
+
+    pack_start(*spaceHolder, Gtk::PACK_EXPAND_WIDGET);
 }
 
 PreviewHolder::~PreviewHolder()
@@ -89,12 +100,31 @@ void PreviewHolder::setOrientation( Gtk::AnchorType how )
 {
     if ( _anchor != how )
     {
+        _anchor = how;
         switch ( _anchor )
         {
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
+                //dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC );
+                if ( !_zee1 )
+                {
+                    _zee1 = manage( new Gtk::VBox() );
+                    _zee2 = manage( new Gtk::VBox() );
+
+                    // Trick to get the scrolled window to a minimum height larger than the scrollbar
+
+                    Gtk::VScrollbar* vs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_vscrollbar(); 
+                    // TODO fix leakage
+                    Glib::RefPtr<Gtk::SizeGroup> sizer = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_VERTICAL);
+                    sizer->add_widget( *_zee1 );
+                    sizer->add_widget( *_zee2 );
+                    sizer->add_widget( *vs );
+
+                    _zee0->pack_start( *_zee1 );
+                    _zee0->pack_start( *_zee2 );
+                }
             }
             break;
 
