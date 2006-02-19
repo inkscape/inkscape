@@ -1,4 +1,10 @@
 2006-02-18  Jon A. Cruz  <jon@joncruz.org>
+	* src/dialogs/swatches.cpp, src/dialogs/iconpreview.cpp,
+	  src/ui/widget/panel.cpp, src/ui/widget/panel.h:
+
+	  Refactoring panel containment. Purged ugly 'X'.
+	
+2006-02-18  Jon A. Cruz  <jon@joncruz.org>
 	* src/widgets/desktop-widget.cpp, src/dialogs/swatches.cpp,
 	  src/dialogs/swatches.h, src/ui/widget/panel.cpp,
 	  src/ui/widget/panel.h, src/ui/previewholder.cpp,

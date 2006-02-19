@@ -470,7 +470,7 @@ SwatchesPanel::SwatchesPanel() :
     }
 
 
-    pack_start(*_holder, Gtk::PACK_EXPAND_WIDGET);
+    _getContents()->pack_start(*_holder, Gtk::PACK_EXPAND_WIDGET);
     _setTargetFillable(_holder);
 
     show_all_children();

@@ -113,14 +113,21 @@ void Panel::init()
     one->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 1, 0) );
     two->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 1, 1) );
 
-    closeButton.set_label("X");
+    //closeButton.set_label("X");
 
     topBar.pack_start(tabTitle);
 
-    topBar.pack_end(closeButton, false, false);
+    //topBar.pack_end(closeButton, false, false);
     topBar.pack_end(tabButton, false, false);
 
     pack_start( topBar, false, false );
+
+    Gtk::HBox* boxy = manage( new Gtk::HBox() );
+
+    boxy->pack_start( contents, true, true );
+    boxy->pack_start( rightBar, false, true );
+
+    pack_start( *boxy, true, true );
 
     show_all_children();
 
@@ -139,6 +146,23 @@ void Panel::setOrientation( Gtk::AnchorType how )
     if ( _anchor != how )
     {
         _anchor = how;
+        switch ( _anchor )
+        {
+            case Gtk::ANCHOR_NORTH:
+            case Gtk::ANCHOR_SOUTH:
+            {
+                tabButton.reference();
+                topBar.remove(tabButton);
+                rightBar.pack_start(tabButton, false, false);
+                tabButton.unreference();
+
+                topBar.remove(tabTitle);
+            }
+            break;
+
+            default:
+                ; // nothing for now
+        }
     }
 }
 

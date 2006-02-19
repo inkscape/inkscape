@@ -185,7 +185,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
 
     Gtk::HButtonBox* holder = new Gtk::HButtonBox( Gtk::BUTTONBOX_END );
-    pack_end( *holder, false, false );
+    _getContents()->pack_end( *holder, false, false );
 
     selectionButton = new Gtk::ToggleButton(_("Selection")); // , GTK_RESPONSE_APPLY
     holder->pack_start( *selectionButton, false, false );
@@ -201,7 +201,7 @@ IconPreviewPanel::IconPreviewPanel() :
     refreshButton->signal_clicked().connect( sigc::mem_fun(*this, &IconPreviewPanel::refreshPreview) );
 
 
-    pack_start(iconBox, Gtk::PACK_EXPAND_WIDGET);
+    _getContents()->pack_start(iconBox, Gtk::PACK_EXPAND_WIDGET);
 
     show_all_children();
 }

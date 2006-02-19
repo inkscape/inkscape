@@ -44,6 +44,7 @@ public:
     void restorePanelPrefs();
 
 protected:
+    Gtk::Box* _getContents() { return &contents; }
     void _setTargetFillable( PreviewFillable *target );
     void _regItem( Gtk::MenuItem* item, int group, int id );
 
@@ -58,6 +59,8 @@ private:
     Glib::ustring   label;
 
     Gtk::HBox       topBar;
+    Gtk::VBox       rightBar;
+    Gtk::VBox       contents;
     Gtk::Label      tabTitle;
     Gtk::OptionMenu tabButton;
     Gtk::Menu       menu;
