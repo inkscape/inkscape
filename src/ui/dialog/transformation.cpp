@@ -168,7 +168,7 @@ Transformation::~Transformation()
 ########################################################################*/
 
 void
-Transformation::present(Transformation::PageType page)
+Transformation::presentPage(Transformation::PageType page)
 {
     _notebook.set_current_page(page);
     Gtk::Dialog::show();

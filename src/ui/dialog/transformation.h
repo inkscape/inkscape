@@ -65,33 +65,33 @@ public:
      * Show the Move panel
      */
     void setPageMove()
-        { present(PAGE_MOVE);      }
+        { presentPage(PAGE_MOVE);      }
 
 
     /**
      * Show the Scale panel
      */
     void setPageScale()
-        { present(PAGE_SCALE);     }
+        { presentPage(PAGE_SCALE);     }
 
 
     /**
      * Show the Rotate panel
      */
     void setPageRotate()
-        { present(PAGE_ROTATE);    }
+        { presentPage(PAGE_ROTATE);    }
 
     /**
      * Show the Skew panel
      */
     void setPageSkew()
-        { present(PAGE_SKEW);      }
+        { presentPage(PAGE_SKEW);      }
 
     /**
      * Show the Transform panel
      */
     void setPageTransform()
-        { present(PAGE_TRANSFORM); }
+        { presentPage(PAGE_TRANSFORM); }
 
 
     int getCurrentPage()
@@ -148,7 +148,7 @@ protected:
     void layoutPageTransform();
 
     virtual void _apply();
-    void present(PageType page);
+    void presentPage(PageType page);
 
     void onSelectionChanged(Inkscape::NSApplication::Application *inkscape,
                             Inkscape::Selection *selection);
