@@ -660,9 +660,9 @@ PrintPS::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
     {
         int i = 0;
         while (LineSolid && (i < style->stroke_dash.n_dash)) {
-                i++;
                 if (style->stroke_dash.dash[i] > 0.00000001)
                     LineSolid = false;
+                i++;
         }
         if (!LineSolid) {
             os << "[";
