@@ -1,0 +1,16 @@
+<inkscape-extension>
+    <_name>XFIG Input</_name>
+    <id>org.inkscape.input.fig</id>
+    <dependency type="executable" location="path">fig2dev</dependency>
+    <dependency type="executable" location="extensions">fig2svg.sh</dependency>
+    <input>
+        <extension>.fig</extension>
+        <mimetype>image/x-xfig</mimetype>
+        <_filetypename>XFIG Graphic File (*.fig)</_filetypename>
+        <_filetypetooltip>Open files saved with XFIG</_filetypetooltip>
+        <output_extension>org.inkscape.output.fig</output_extension>
+    </input>
+    <script>
+        <command reldir="extensions">fig2svg.sh</command>
+    </script>
+</inkscape-extension>

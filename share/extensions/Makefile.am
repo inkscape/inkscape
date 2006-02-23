@@ -45,7 +45,9 @@ extensions = \
 	embedimage.py \
 	extractimage.py \
 	svg_and_media_zip_output.py \
-	dxf_outlines.py
+	dxf_outlines.py \
+	fig2svg.sh \
+	fig_input.inx
 
 otherstuff =
 
