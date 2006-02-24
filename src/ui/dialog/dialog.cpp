@@ -76,6 +76,9 @@ Dialog::save_geometry()
 
 //    g_print ("write %d %d %d %d\n", x, y, w, h);
 
+    if (x<0) x=0;
+    if (y<0) y=0;
+
     prefs_set_int_attribute (_prefs_path, "x", x);
     prefs_set_int_attribute (_prefs_path, "y", y);
     prefs_set_int_attribute (_prefs_path, "w", w);

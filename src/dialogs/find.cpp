@@ -93,6 +93,9 @@ static gboolean sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer data)
     gtk_window_get_position (GTK_WINDOW (dlg), &x, &y);
     gtk_window_get_size (GTK_WINDOW (dlg), &w, &h);
 
+    if (x<0) x=0;
+    if (y<0) y=0;
+
     prefs_set_int_attribute (prefs_path, "x", x);
     prefs_set_int_attribute (prefs_path, "y", y);
     prefs_set_int_attribute (prefs_path, "w", w);

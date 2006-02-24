@@ -68,6 +68,9 @@ sp_object_properties_dialog_delete ( GtkObject *object,
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
 
+    if (x<0) x=0;
+    if (y<0) y=0;
+
     prefs_set_int_attribute (prefs_path, "x", x);
     prefs_set_int_attribute (prefs_path, "y", y);
     prefs_set_int_attribute (prefs_path, "w", w);
