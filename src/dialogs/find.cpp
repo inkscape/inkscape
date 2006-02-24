@@ -652,6 +652,10 @@ sp_find_dialog_old (void)
             w = prefs_get_int_attribute (prefs_path, "w", 0);
             h = prefs_get_int_attribute (prefs_path, "h", 0);
         }
+        
+        if (x<0) x=0;
+        if (y<0) y=0;
+
         if (x != 0 || y != 0) {
             gtk_window_move ((GtkWindow *) dlg, x, y);
         } else {

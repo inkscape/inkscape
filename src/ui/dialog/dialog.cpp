@@ -97,6 +97,9 @@ Dialog::read_geometry()
 
 //    g_print ("read %d %d %d %d\n", x, y, w, h);
 
+        if (x<0) x=0;
+        if (y<0) y=0;
+
     // If there are stored height and width values for the dialog,
     // resize the window to match; otherwise we leave it at its default
     if (w != 0 && h != 0) {
