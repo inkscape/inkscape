@@ -15,7 +15,6 @@
 # include <config.h>
 #endif
 
-#include <typeinfo>
 #include <gtkmm/stock.h>
 #include <gtk/gtk.h>
 
@@ -118,9 +117,7 @@ Dialog::read_geometry()
 
 void hideCallback(GtkObject *object, gpointer dlgPtr)
 {
-    Dialog* example;
-    if ((void*)dlgPtr == 0 || typeid(dlgPtr) != typeid(example))
-            return;
+    g_return_if_fail( dlgPtr != NULL );
 
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onHideF12();
@@ -128,9 +125,7 @@ void hideCallback(GtkObject *object, gpointer dlgPtr)
 
 void unhideCallback(GtkObject *object, gpointer dlgPtr)
 {
-    Dialog* example;
-    if ((void*)dlgPtr == 0 || typeid(dlgPtr) != typeid(example))
-            return;
+    g_return_if_fail( dlgPtr != NULL );
 
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onShowF12();
