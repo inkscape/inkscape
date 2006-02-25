@@ -47,7 +47,8 @@ extensions = \
 	svg_and_media_zip_output.py \
 	dxf_outlines.py \
 	fig2svg.sh \
-	fig_input.inx
+    cspsubdiv.py \
+    flatten.py
 
 otherstuff =
 
@@ -88,7 +89,9 @@ modules = \
 	embedimage.inx \
 	extractimage.inx \
 	svg_and_media_zip_output.inx \
-	dxf_outlines.py
+	dxf_outlines.inx \
+    fig_input.inx \
+    flatten.inx
 
 extension_SCRIPTS = \
 	$(extensions)
