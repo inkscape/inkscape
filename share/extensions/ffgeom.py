@@ -78,6 +78,15 @@ class Segment:
 			return self[1]['y'] - (self[0]['x'] * self.slope())
 		return NaN
 	def distanceToPoint(self, p):
+		s2 = Segment(self[0],p)
+		c1 = dot(s2,self)
+		if c1 <= 0:
+			return Segment(p,self[0]).length()
+		c2 = dot(self,self)
+		if c2 <= c1:
+			return Segment(p,self[1]).length()
+		return self.perpDistanceToPoint(p)
+	def perpDistanceToPoint(self, p):
 		len = self.length()
 		if len == 0: return NaN
 		return math.fabs(((self[1]['x'] - self[0]['x']) * (self[0]['y'] - p['y'])) - \
@@ -125,3 +134,5 @@ def intersectSegments(s1, s2):
 		return Point(x, y)
 	return Point(NaN, NaN)
 
+def dot(s1, s2):
+	return s1.delta_x() * s2.delta_x() + s1.delta_y() * s2.delta_y()

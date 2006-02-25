@@ -37,7 +37,7 @@ def FindFrets(strings, meta, scale, tuning, numfrets):
 		Point((nut[1]['x']+nut[0]['x'])/2.0,(nut[1]['y']+nut[0]['y'])/2.0),
 		Point((bridge[1]['x']+bridge[0]['x'])/2.0,(bridge[1]['y']+bridge[0]['y'])/2.0))
 	for s in strings:
-		if nut.distanceToPoint(s[0])>=threshold or bridge.distanceToPoint(s[1])>=threshold:
+		if nut.perpDistanceToPoint(s[0])>=threshold or bridge.perpDistanceToPoint(s[1])>=threshold:
 			doPartials = False
 			break
 
