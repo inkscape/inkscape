@@ -43,6 +43,7 @@ protected:
 
 private:
     void rebuildUI();
+    void calcGridSize( const Gtk::Widget* thing, int itemCount, int& width, int& height );
 
     std::vector<Previewable*> items;
     Gtk::Bin *_scroller;

@@ -63,8 +63,8 @@ void PreviewHolder::clear()
 void PreviewHolder::addPreview( Previewable* preview )
 {
     items.push_back(preview);
-
     int i = items.size() - 1;
+
     if ( _view == VIEW_TYPE_LIST ) {
         Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize));
         Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize));
@@ -73,15 +73,22 @@ void PreviewHolder::addPreview( Previewable* preview )
         _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
     } else {
         Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize));
-        int width = _baseSize == Gtk::ICON_SIZE_MENU ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
-        if ( _prefCols > 0 ) {
-            width = _prefCols;
-        }
+
+        int width = 1;
+        int height = 1;
+        calcGridSize( thing, items.size(), width, height );
         int col = i % width;
         int row = i / width;
+
+        if ( i < 10 ) {
+            g_message( "i:%d  width:%d  height:%d   prop cols:%d", i, width, height, (int)_insides->property_n_columns() );
+        }
+
         if ( col == 0 ) {
             // we just started a new row
             _insides->resize( row + 1, width );
+        } else if ( _insides && width > (int)_insides->property_n_columns() ) {
+            _insides->resize( height, width );
         }
         _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
     }
@@ -150,6 +157,46 @@ void PreviewHolder::on_size_request( Gtk::Requisition* requisition )
 //     g_message("             items:%d", (int)items.size());
 }
 
+void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& width, int& height )
+{
+    width = itemCount;
+    height = 1;
+
+    if ( _anchor == Gtk::ANCHOR_SOUTH || _anchor == Gtk::ANCHOR_NORTH ) {
+        Gtk::Requisition req = _scroller->size_request();
+        int currW = _scroller->get_width();
+        if ( currW > req.width ) {
+            req.width = currW;
+        }
+
+        Gtk::HScrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
+        if ( hs ) {
+            Gtk::Requisition scrollReq = hs->size_request();
+
+            // the +8 is a temporary hack
+            req.height -= scrollReq.height + 8;
+        }
+
+        Gtk::Requisition req2 = thing->size_request();
+
+        int h2 = req.height / req2.height;
+        int w2 = req.width / req2.width;
+        width = (itemCount + (h2 - 1)) / h2;
+        if ( width < w2 ) {
+            width = w2;
+        }
+    } else {
+        width = _baseSize == Gtk::ICON_SIZE_MENU ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
+        if ( _prefCols > 0 ) {
+            width = _prefCols;
+        }
+        height = (itemCount + (width - 1)) / width;
+        if ( height < 1 ) {
+            height = 1;
+        }
+    }
+}
+
 void PreviewHolder::rebuildUI()
 {
     _scroller->remove();
@@ -172,44 +219,14 @@ void PreviewHolder::rebuildUI()
     } else {
         int col = 0;
         int row = 0;
-        int width = items.size();
+        int width = 2;
         int height = 1;
 
         for ( unsigned int i = 0; i < items.size(); i++ ) {
             Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize));
 
             if ( !_insides ) {
-                if ( _anchor == Gtk::ANCHOR_SOUTH || _anchor == Gtk::ANCHOR_NORTH ) {
-                    // pad on out
-                    Gtk::Requisition req = _scroller->size_request();
-
-                    //Gtk::VScrollbar* vs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_vscrollbar();
-                    Gtk::HScrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
-                    if ( hs ) {
-                        Gtk::Requisition scrollReq = hs->size_request();
-
-                        // the +8 is a temporary hack
-                        req.height -= scrollReq.height + 8;
-                    }
-
-                    Gtk::Requisition req2 = thing->size_request();
-
-                    int h2 = req.height / req2.height;
-                    int w2 = req.width / req2.width;
-                    if ( (h2 > 1) && (w2 < (int)items.size()) ) {
-                        width = (items.size() + (h2 - 1)) / h2;
-                    }
-
-                } else {
-                    width = _baseSize == Gtk::ICON_SIZE_MENU ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
-                    if ( _prefCols > 0 ) {
-                        width = _prefCols;
-                    }
-                    height = (items.size() + (width - 1)) / width;
-                    if ( height < 1 ) {
-                        height = 1;
-                    }
-                }
+                calcGridSize( thing, items.size(), width, height );
                 _insides = manage(new Gtk::Table( height, width ));
             }
 
