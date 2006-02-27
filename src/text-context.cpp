@@ -519,7 +519,8 @@ insert_uni_char(SPTextContext *const tc)
     tc->unipos = 0;
     tc->uni[tc->unipos] = '\0';
 
-    if (!g_unichar_isprint((gunichar) uv)) {
+    if ( !g_unichar_isprint(static_cast<gunichar>(uv))
+         && !(g_unichar_validate(static_cast<gunichar>(uv)) && (g_unichar_type(static_cast<gunichar>(uv)) == G_UNICODE_PRIVATE_USE) ) ) {
         // This may be due to bad input, so it goes to statusbar.
         tc->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE,
                                            _("Non-printable character"));
