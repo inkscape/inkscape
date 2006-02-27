@@ -12,6 +12,8 @@
 # include <config.h>
 #endif
 
+#include <errno.h>
+
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <gtk/gtkdnd.h>
 
