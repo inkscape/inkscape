@@ -276,7 +276,10 @@ bool parseNum( char*& str, int& val ) {
 class JustForNow
 {
 public:
+    JustForNow() : _prefWidth(0) {}
+
     Glib::ustring _name;
+    int _prefWidth;
     std::vector<ColorItem*> _colors;
 };
 
@@ -354,8 +357,21 @@ static void loadPaletteFile( gchar const *filename )
                                         char* val = trim(sep + 1);
                                         char* name = trim(result);
                                         if ( *name ) {
-                                            if ( strcmp( "Name", name ) == 0 ) {
+                                            if ( strcmp( "Name", name ) == 0 )
+                                            {
                                                 onceMore->_name = val;
+                                            }
+                                            else if ( strcmp( "Columns", name ) == 0 )
+                                            {
+                                                gchar* endPtr = 0;
+                                                guint64 numVal = g_ascii_strtoull( val, &endPtr, 10 );
+                                                if ( (numVal == G_MAXUINT64) && (ERANGE == errno) ) {
+                                                    // overflow
+                                                } else if ( (numVal == 0) && (endPtr == val) ) {
+                                                    // failed conversion
+                                                } else {
+                                                    onceMore->_prefWidth = numVal;
+                                                }
                                             }
                                         } else {
                                             // error
@@ -454,6 +470,9 @@ SwatchesPanel::SwatchesPanel() :
 
     if ( !possible.empty() ) {
         JustForNow* first = possible.front();
+        if ( first->_prefWidth > 0 ) {
+            _holder->setColumnPref( first->_prefWidth );
+        }
         for ( std::vector<ColorItem*>::iterator it = first->_colors.begin(); it != first->_colors.end(); it++ ) {
             _holder->addPreview(*it);
         }
@@ -501,6 +520,9 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
             if ( itemId >= 0 && itemId < static_cast<int>(possible.size()) ) {
                 _holder->clear();
                 JustForNow* curr = possible[itemId];
+                if ( curr->_prefWidth > 0 ) {
+                    _holder->setColumnPref( curr->_prefWidth );
+                }
                 for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
                     _holder->addPreview(*it);
                 }

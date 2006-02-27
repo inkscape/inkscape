@@ -1,4 +1,10 @@
 2006-02-26  Jon A. Cruz  <jon@joncruz.org>
+	* src/dialogs/swatches.cpp, src/ui/previewholder.h,
+	  src/ui/previewholder.cpp:
+
+	  Changing embedded swatches resizing.
+	
+2006-02-26  Jon A. Cruz  <jon@joncruz.org>
 	* src/text-context.cpp:
 
 	  Allow Private Use Area characters. Fixes bug #1439016.

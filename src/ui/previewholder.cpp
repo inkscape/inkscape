@@ -17,6 +17,11 @@
 #include <gtkmm/sizegroup.h>
 #include <gtkmm/scrollbar.h>
 
+#define COLUMNS_FOR_SMALL 16
+#define COLUMNS_FOR_LARGE 8
+//#define COLUMNS_FOR_SMALL 48
+//#define COLUMNS_FOR_LARGE 32
+
 
 namespace Inkscape {
 namespace UI {
@@ -26,24 +31,18 @@ PreviewHolder::PreviewHolder() :
     VBox(),
     PreviewFillable(),
     _scroller(0),
-    _zee0(0),
-    _zee1(0),
-    _zee2(0),
     _anchor(Gtk::ANCHOR_CENTER),
     _baseSize(Gtk::ICON_SIZE_MENU),
     _view(VIEW_TYPE_LIST)
 {
     _scroller = manage(new Gtk::ScrolledWindow());
-    Gtk::Table* stuff = manage(new Gtk::Table( 1, 2 ));
-    stuff->set_col_spacings( 8 );
-    _insides = stuff;
+    _insides = manage(new Gtk::Table( 1, 2 ));
+    _insides->set_col_spacings( 8 );
 
     // Add a container with the scroller and a spacer
     Gtk::Table* spaceHolder = manage( new Gtk::Table(1, 2) );
-    _zee0 = manage( new Gtk::VBox() );
-    _scroller->add(*stuff);
+    _scroller->add( *_insides );
     spaceHolder->attach( *_scroller, 0, 1, 0, 1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-    spaceHolder->attach( *_zee0, 1, 2, 0, 1, Gtk::SHRINK, Gtk::FILL|Gtk::EXPAND );
 
     pack_start(*spaceHolder, Gtk::PACK_EXPAND_WIDGET);
 }
@@ -57,6 +56,7 @@ PreviewHolder::~PreviewHolder()
 void PreviewHolder::clear()
 {
     items.clear();
+    _prefCols = 0;
     rebuildUI();
 }
 
@@ -73,7 +73,10 @@ void PreviewHolder::addPreview( Previewable* preview )
         _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
     } else {
         Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize));
-        int width = _baseSize == Gtk::ICON_SIZE_MENU ? 16 : 8;
+        int width = _baseSize == Gtk::ICON_SIZE_MENU ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
+        if ( _prefCols > 0 ) {
+            width = _prefCols;
+        }
         int col = i % width;
         int row = i / width;
         if ( col == 0 ) {
@@ -106,25 +109,7 @@ void PreviewHolder::setOrientation( Gtk::AnchorType how )
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                //dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
-                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC );
-                if ( !_zee1 )
-                {
-                    _zee1 = manage( new Gtk::VBox() );
-                    _zee2 = manage( new Gtk::VBox() );
-
-                    // Trick to get the scrolled window to a minimum height larger than the scrollbar
-
-                    Gtk::VScrollbar* vs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_vscrollbar(); 
-                    // TODO fix leakage
-                    Glib::RefPtr<Gtk::SizeGroup> sizer = Gtk::SizeGroup::create(Gtk::SIZE_GROUP_VERTICAL);
-                    sizer->add_widget( *_zee1 );
-                    sizer->add_widget( *_zee2 );
-                    sizer->add_widget( *vs );
-
-                    _zee0->pack_start( *_zee1 );
-                    _zee0->pack_start( *_zee2 );
-                }
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_ALWAYS, Gtk::POLICY_AUTOMATIC );
             }
             break;
 
@@ -140,17 +125,39 @@ void PreviewHolder::setOrientation( Gtk::AnchorType how )
                 dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
             }
         }
+        rebuildUI();
     }
+}
+
+void PreviewHolder::setColumnPref( int cols )
+{
+    _prefCols = cols;
+}
+
+void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
+{
+//     g_message( "on_size_allocate(%d, %d) (%d, %d)", allocation.get_x(), allocation.get_y(), allocation.get_width(), allocation.get_height() );
+//     g_message("            anchor:%d", _anchor);
+    Gtk::VBox::on_size_allocate( allocation );
+}
+
+void PreviewHolder::on_size_request( Gtk::Requisition* requisition )
+{
+//     g_message( "on_size_request(%d, %d)", requisition->width, requisition->height );
+    Gtk::VBox::on_size_request( requisition );
+//     g_message( "   super       (%d, %d)", requisition->width, requisition->height );
+//     g_message("            anchor:%d", _anchor);
+//     g_message("             items:%d", (int)items.size());
 }
 
 void PreviewHolder::rebuildUI()
 {
     _scroller->remove();
+    _insides = 0; // remove() call should have deleted the Gtk::Table.
 
     if ( _view == VIEW_TYPE_LIST ) {
-        Gtk::Table* stuff = manage(new Gtk::Table( 1, 2 ));
-        _insides = stuff;
-        stuff->set_col_spacings( 8 );
+        _insides = manage(new Gtk::Table( 1, 2 ));
+        _insides->set_col_spacings( 8 );
 
         for ( unsigned int i = 0; i < items.size(); i++ ) {
             Gtk::Widget* label = manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize));
@@ -158,33 +165,65 @@ void PreviewHolder::rebuildUI()
 
             Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize));
 
-            stuff->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-            stuff->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
+            _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+            _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
         }
-        _scroller->add(*stuff);
+        _scroller->add( *_insides );
     } else {
-        int width = _baseSize == Gtk::ICON_SIZE_MENU ? 16 : 8;
-        int height = (items.size() + (width - 1)) / width;
-        if ( height < 1 ) {
-            height = 1;
-        }
-
-        Gtk::Table* stuff = manage(new Gtk::Table( height, width ));
-        _insides = stuff;
         int col = 0;
         int row = 0;
+        int width = items.size();
+        int height = 1;
 
         for ( unsigned int i = 0; i < items.size(); i++ ) {
             Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize));
 
-            stuff->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-            col++;
-            if ( col >= width ) {
+            if ( !_insides ) {
+                if ( _anchor == Gtk::ANCHOR_SOUTH || _anchor == Gtk::ANCHOR_NORTH ) {
+                    // pad on out
+                    Gtk::Requisition req = _scroller->size_request();
+
+                    //Gtk::VScrollbar* vs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_vscrollbar();
+                    Gtk::HScrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
+                    if ( hs ) {
+                        Gtk::Requisition scrollReq = hs->size_request();
+
+                        // the +8 is a temporary hack
+                        req.height -= scrollReq.height + 8;
+                    }
+
+                    Gtk::Requisition req2 = thing->size_request();
+
+                    int h2 = req.height / req2.height;
+                    int w2 = req.width / req2.width;
+                    if ( (h2 > 1) && (w2 < (int)items.size()) ) {
+                        width = (items.size() + (h2 - 1)) / h2;
+                    }
+
+                } else {
+                    width = _baseSize == Gtk::ICON_SIZE_MENU ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
+                    if ( _prefCols > 0 ) {
+                        width = _prefCols;
+                    }
+                    height = (items.size() + (width - 1)) / width;
+                    if ( height < 1 ) {
+                        height = 1;
+                    }
+                }
+                _insides = manage(new Gtk::Table( height, width ));
+            }
+
+            _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+            if ( ++col >= width ) {
                 col = 0;
                 row++;
             }
         }
-        _scroller->add(*stuff);
+        if ( !_insides ) {
+            _insides = manage(new Gtk::Table( 1, 2 ));
+        }
+
+        _scroller->add( *_insides );
     }
 
     _scroller->show_all_children();

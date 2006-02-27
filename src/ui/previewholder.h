@@ -31,8 +31,15 @@ public:
     virtual void addPreview( Previewable* preview );
     virtual void setStyle(Gtk::BuiltinIconSize size, ViewType view);
     virtual void setOrientation( Gtk::AnchorType how );
+    virtual int getColumnPref() const { return _prefCols; }
+    virtual void setColumnPref( int cols );
     virtual Gtk::BuiltinIconSize getPreviewSize() const { return _baseSize; }
     virtual ViewType getPreviewType() const { return _view; }
+
+protected:
+    virtual void on_size_allocate( Gtk::Allocation& allocation );
+    virtual void on_size_request( Gtk::Requisition* requisition );
+
 
 private:
     void rebuildUI();
@@ -40,9 +47,7 @@ private:
     std::vector<Previewable*> items;
     Gtk::Bin *_scroller;
     Gtk::Table *_insides;
-    Gtk::Box *_zee0;
-    Gtk::Box *_zee1;
-    Gtk::Box *_zee2;
+    int _prefCols;
     Gtk::AnchorType _anchor;
     Gtk::BuiltinIconSize _baseSize;
     ViewType _view;
