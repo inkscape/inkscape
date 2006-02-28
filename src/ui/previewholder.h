@@ -29,6 +29,8 @@ public:
 
     virtual void clear();
     virtual void addPreview( Previewable* preview );
+    virtual void freezeUpdates();
+    virtual void thawUpdates();
     virtual void setStyle(Gtk::BuiltinIconSize size, ViewType view);
     virtual void setOrientation( Gtk::AnchorType how );
     virtual int getColumnPref() const { return _prefCols; }
@@ -49,6 +51,7 @@ private:
     Gtk::Bin *_scroller;
     Gtk::Table *_insides;
     int _prefCols;
+    bool _updatesFrozen;
     Gtk::AnchorType _anchor;
     Gtk::BuiltinIconSize _baseSize;
     ViewType _view;

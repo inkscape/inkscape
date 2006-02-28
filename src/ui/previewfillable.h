@@ -25,6 +25,8 @@ public:
     virtual ~PreviewFillable() {}
     virtual void clear() = 0;
     virtual void addPreview( Previewable* preview ) = 0;
+    virtual void freezeUpdates() = 0;
+    virtual void thawUpdates() = 0;
     virtual void setStyle(Gtk::BuiltinIconSize size, ViewType type) = 0;
     virtual void setOrientation( Gtk::AnchorType how ) = 0;
     virtual Gtk::BuiltinIconSize getPreviewSize() const = 0;

@@ -475,9 +475,11 @@ SwatchesPanel::SwatchesPanel() :
         if ( first->_prefWidth > 0 ) {
             _holder->setColumnPref( first->_prefWidth );
         }
+        _holder->freezeUpdates();
         for ( std::vector<ColorItem*>::iterator it = first->_colors.begin(); it != first->_colors.end(); it++ ) {
             _holder->addPreview(*it);
         }
+        _holder->thawUpdates();
 
         Gtk::RadioMenuItem::Group groupOne;
         int i = 0;
@@ -525,9 +527,11 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
                 if ( curr->_prefWidth > 0 ) {
                     _holder->setColumnPref( curr->_prefWidth );
                 }
+                _holder->freezeUpdates();
                 for ( std::vector<ColorItem*>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
                     _holder->addPreview(*it);
                 }
+                _holder->thawUpdates();
             }
         }
         break;

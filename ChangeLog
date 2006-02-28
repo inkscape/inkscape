@@ -1,3 +1,9 @@
+2006-02-27  Jon A. Cruz  <jon@joncruz.org>
+	* src/dialogs/swatches.cpp, src/ui/previewfillable.h,
+	  src/ui/previewholder.h, src/ui/previewholder.cpp:
+
+	  Finished cleanup of embedded swatches when switching palettes.
+	
 2006-02-26  Jon A. Cruz  <jon@joncruz.org>
 	* src/dialogs/swatches.cpp, src/ui/previewholder.h,
 	  src/ui/previewholder.cpp:

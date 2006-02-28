@@ -31,6 +31,9 @@ PreviewHolder::PreviewHolder() :
     VBox(),
     PreviewFillable(),
     _scroller(0),
+    _insides(0),
+    _prefCols(0),
+    _updatesFrozen(false),
     _anchor(Gtk::ANCHOR_CENTER),
     _baseSize(Gtk::ICON_SIZE_MENU),
     _view(VIEW_TYPE_LIST)
@@ -63,38 +66,61 @@ void PreviewHolder::clear()
 void PreviewHolder::addPreview( Previewable* preview )
 {
     items.push_back(preview);
-    int i = items.size() - 1;
+    if ( !_updatesFrozen )
+    {
+        int i = items.size() - 1;
 
-    if ( _view == VIEW_TYPE_LIST ) {
-        Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize));
-        Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize));
+        if ( _view == VIEW_TYPE_LIST ) {
+            Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize));
+            Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize));
 
-        _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-        _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
-    } else {
-        Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize));
+            _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+            _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
+        } else {
+            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize));
 
-        int width = 1;
-        int height = 1;
-        calcGridSize( thing, items.size(), width, height );
-        int col = i % width;
-        int row = i / width;
+            int width = 1;
+            int height = 1;
+            calcGridSize( thing, items.size(), width, height );
+            int col = i % width;
+            int row = i / width;
 
-        if ( i < 10 ) {
-            g_message( "i:%d  width:%d  height:%d   prop cols:%d", i, width, height, (int)_insides->property_n_columns() );
+            if ( _insides && width > (int)_insides->property_n_columns() ) {
+                std::vector<Gtk::Widget*>kids = _insides->get_children();
+                int oldWidth = (int)_insides->property_n_columns();
+                int childCount = (int)kids.size();
+//             g_message("  %3d  resize from %d to %d  (r:%d, c:%d)  with %d children", i, oldWidth, width, row, col, childCount );
+                _insides->resize( height, width );
+
+                for ( int j = oldWidth; j < childCount; j++ ) {
+                    Gtk::Widget* target = kids[childCount - (j + 1)];
+                    int col2 = j % width;
+                    int row2 = j / width;
+                    Glib::RefPtr<Gtk::Widget> handle(target);
+                    _insides->remove( *target );
+                    _insides->attach( *target, col2, col2+1, row2, row2+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+                }
+            } else if ( col == 0 ) {
+                // we just started a new row
+                _insides->resize( row + 1, width );
+            }
+            _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
         }
 
-        if ( col == 0 ) {
-            // we just started a new row
-            _insides->resize( row + 1, width );
-        } else if ( _insides && width > (int)_insides->property_n_columns() ) {
-            _insides->resize( height, width );
-        }
-        _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+        _scroller->show_all_children();
+        _scroller->queue_draw();
     }
+}
 
-    _scroller->show_all_children();
-    _scroller->queue_draw();
+void PreviewHolder::freezeUpdates()
+{
+    _updatesFrozen = true;
+}
+
+void PreviewHolder::thawUpdates()
+{
+    _updatesFrozen = false;
+    rebuildUI();
 }
 
 void PreviewHolder::setStyle(Gtk::BuiltinIconSize size, ViewType view)
