@@ -1,3 +1,8 @@
+2006-02-28  Jon A. Cruz  <jon@joncruz.org>
+	* src/dialogs/swatches.cpp:
+
+	  Fixed drag-n-drop out of color to match GTK+ standard.
+	
 2006-02-27  Jon A. Cruz  <jon@joncruz.org>
 	* src/dialogs/swatches.cpp, src/ui/previewfillable.h,
 	  src/ui/previewholder.h, src/ui/previewholder.cpp:

@@ -101,19 +101,15 @@ static void dragGetColorData( GtkWidget *widget,
         g_free(tmp);
         tmp = 0;
     } else {
-        guchar tmp[8];
-        tmp[0] = item->_r;
-        tmp[1] = item->_r;
-        tmp[2] = item->_g;
-        tmp[3] = item->_g;
-        tmp[4] = item->_b;
-        tmp[5] = item->_b;
-        tmp[6] = 0x0ff;
-        tmp[7] = 0x0ff;
+        guint16 tmp[4];
+        tmp[0] = (item->_r << 8) | item->_r;
+        tmp[1] = (item->_g << 8) | item->_g;
+        tmp[2] = (item->_b << 8) | item->_b;
+        tmp[3] = 0xffff;
         gtk_selection_data_set( data,
                                 typeXColor,
-                                8, // format
-                                tmp,
+                                16, // format
+                                reinterpret_cast<const guchar*>(tmp),
                                 (3+1) * 2);
     }
 }
