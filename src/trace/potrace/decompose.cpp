@@ -86,7 +86,7 @@ static void xor_to_ref(potrace_bitmap_t *bm, int x, int y, int xa) {
   int xhi = x & -BM_WORDBITS;
   int xlo = x & (BM_WORDBITS-1);  /* = x % BM_WORDBITS */
   int i;
-  
+
   if (xhi<xa) {
     for (i = xhi; i < xa; i+=BM_WORDBITS) {
       *bm_index(bm, i, y) ^= BM_ALLBITS;
@@ -183,11 +183,13 @@ static path_t *findpath(potrace_bitmap_t *bm, int x0, int y0, int sign, int turn
   len = size = 0;
   pt = NULL;
   area = 0;
-  
+
   while (1) {
     /* add point to path */
     if (len>=size) {
       size+=100;
+      //size*=1.3;
+      size = size * 13 / 10;
       pt1 = (point_t *)realloc(pt, size * sizeof(point_t));
       if (!pt1) {
 	goto error;
@@ -197,21 +199,21 @@ static path_t *findpath(potrace_bitmap_t *bm, int x0, int y0, int sign, int turn
     pt[len].x = x;
     pt[len].y = y;
     len++;
-    
+
     /* move to next point */
     x += dirx;
     y += diry;
     area += x*diry;
-    
+
     /* path complete? */
     if (x==x0 && y==y0) {
       break;
     }
-    
+
     /* determine next direction */
     c = BM_GET(bm, x + (dirx+diry-1)/2, y + (diry-dirx-1)/2);
     d = BM_GET(bm, x + (dirx-diry-1)/2, y + (diry+dirx-1)/2);
-    
+
     if (c && !d) {               /* ambiguous turn */
       if (turnpolicy == POTRACE_TURNPOLICY_RIGHT
 	  || (turnpolicy == POTRACE_TURNPOLICY_BLACK && sign == '+')
@@ -250,10 +252,10 @@ static path_t *findpath(potrace_bitmap_t *bm, int x0, int y0, int sign, int turn
   p->sign = sign;
 
   return p;
- 
+
  error:
    free(pt);
-   return NULL; 
+   return NULL;
 }
 
 /* Give a tree structure to the given path list, based on "insideness"
@@ -279,7 +281,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
   path_t *head;
   path_t **hook, **hook_in, **hook_out; /* for fast appending to linked list */
   bbox_t bbox;
-  
+
   bm_clear(bm, 0);
 
   /* save original "next" pointers */
@@ -287,7 +289,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
     p->sibling = p->next;
     p->childlist = NULL;
   }
-  
+
   heap = plist;
 
   /* the heap holds a list of lists of paths. Use "childlist" field
@@ -302,7 +304,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
     cur = heap;
     heap = heap->childlist;
     cur->childlist = NULL;
-  
+
     /* unlink first path */
     head = cur;
     cur = cur->next;
@@ -345,7 +347,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
       heap = head->childlist;
     }
   }
-  
+
   /* copy sibling structure from "next" to "sibling" component */
   p = plist;
   while (p) {
@@ -371,7 +373,7 @@ static void pathlist_to_tree(path_t *plist, potrace_bitmap_t *bm) {
       /* p is a positive path */
       /* append to linked list */
       list_insert_beforehook(p, hook);
-      
+
       /* go through its children */
       for (p1=p->childlist; p1; p1=p1->sibling) {
 	/* append to linked list */
@@ -439,7 +441,7 @@ int bm_to_pathlist(const potrace_bitmap_t *bm, path_t **plistp, const potrace_pa
 
   /* iterate through components */
   y = bm1->h - 1;
-  while (findnext(bm1, &x, &y) == 0) { 
+  while (findnext(bm1, &x, &y) == 0) {
     /* calculate the sign by looking at the original */
     sign = BM_GET(bm, x, y) ? '+' : '-';
 

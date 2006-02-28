@@ -32,7 +32,7 @@ static const potrace_param_t param_default = {
 potrace_param_t *potrace_param_default() {
   potrace_param_t *p;
 
-  p = (potrace_param_t *) malloc(sizeof(potrace_param_t));
+  p = (potrace_param_t *) malloc(sizeof(potrace_param_t *));
   if (!p) {
     return NULL;
   }
@@ -51,7 +51,7 @@ potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitma
   potrace_state_t *st;
   progress_t prog;
   progress_t subprog;
-  
+
   /* prepare private progress bar state */
   prog.callback = param->progress.callback;
   prog.data = param->progress.data;
@@ -77,6 +77,7 @@ potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitma
 
   st->status = POTRACE_STATUS_OK;
   st->plist = plist;
+  st->priv  = NULL;
 
   progress_subrange_end(&prog, &subprog);
 
