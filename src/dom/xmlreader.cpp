@@ -30,13 +30,17 @@
 
 
 #include "xmlreader.h"
+#include "charclass.h"
 #include "svgimpl.h"
 
 #include <stdarg.h>
 
-namespace org {
-namespace w3c {
-namespace dom {
+namespace org
+{
+namespace w3c
+{
+namespace dom
+{
 
 
 //#########################################################################
@@ -188,7 +192,7 @@ int XmlReader::skipwhite(int p)
   while (p < len)
     {
     int b = get(p);
-    if (!isspace(b))
+    if (!isWhitespace(b))
         break;
     p++;
     }

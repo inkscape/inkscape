@@ -43,6 +43,7 @@
 #include <stdarg.h>
 
 #include "domstream.h"
+#include "charclass.h"
 
 namespace org
 {
@@ -245,7 +246,7 @@ DOMString BasicReader::readWord()
     while (available() > 0)
         {
         XMLCh ch = get();
-        if (!isprint(ch))
+        if (isWhitespace(ch))
             break;
         str.push_back(ch);
         }

@@ -178,7 +178,7 @@ int XPathParser::skipwhite(int p0)
     while (p < parselen)
         {
         int ch = peek(p);
-        if (!isspace(ch))
+        if (!isWhitespace(ch))
             break;
         ch = get(p++);
         }
@@ -191,7 +191,7 @@ int XPathParser::getword(int p0, DOMString &str)
     while (p < parselen)
         {
         int ch = peek(p);
-        if (!isalnum(ch))
+        if (!isLetterOrDigit(ch))
             break;
         ch = get(p++);
         str.push_back(ch);
@@ -1817,7 +1817,7 @@ bool XPathParser::parse(const DOMString &xpathString)
     int p0 = 0;
 
     DOMString str = xpathString;
-    
+
     parsebuf = (char *)str.c_str();
     parselen = (int)   str.size();
     position = 0;
@@ -1828,7 +1828,7 @@ bool XPathParser::parse(const DOMString &xpathString)
     lexicalTokenDump();
 
     tokens.clear();//Get ready to store new tokens
-    
+
     int p = getLocationPath(p0, 0);
 
     parsebuf = NULL;
@@ -1853,21 +1853,21 @@ bool XPathParser::parse(const DOMString &xpathString)
 /**
  *  This method "executes" a list of Tokens in the context of a DOM root
  *  Node, returning a list of Nodes that match the xpath expression.
- */ 
-NodeList XPathParser::execute(const Node *root, 
+ */
+NodeList XPathParser::execute(const Node *root,
                               std::vector<Token> &toks)
 {
     NodeList list;
 
     if (!root)
         return list;
-        
+
     //### Execute the token list
     std::vector<Token>::iterator iter;
     for (iter = toks.begin() ; iter != toks.end() ; iter++)
         {
         }
-        
+
     return list;
 }
 
@@ -1883,7 +1883,7 @@ NodeList XPathParser::evaluate(const Node *root, const DOMString &xpathString)
     NodeList list;
 
     //### Maybe do caching for speed here
-    
+
     //### Parse and execute
     //### Error message can be generated as a side effect
     if (!parse(xpathString))
@@ -1891,7 +1891,7 @@ NodeList XPathParser::evaluate(const Node *root, const DOMString &xpathString)
 
     //### Execute the token list
     list = execute(root, tokens);
-        
+
     return list;
 }
 

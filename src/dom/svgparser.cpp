@@ -150,7 +150,7 @@ int SvgParser::skipwhite(int p)
             return -1;
             }
         }
-    else if (!isspace(get(p)))
+    else if (!isWhitespace(get(p)))
         break;
     else
         p++;

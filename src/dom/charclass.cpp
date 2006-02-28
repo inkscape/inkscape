@@ -442,6 +442,117 @@ bool isExtender(int ch)
 
 
 
+/**
+ *
+ * Following are from unicode.org, in the UnicodeData file
+ * in the Unicode Database
+ */
+
+/**
+ * UNICODE general class Zs
+ */
+bool isSpaceSeparator(int ch)
+{
+    if (ch == 0x0020 ||
+        ch == 0x200A ||
+        ch == 0x2003 ||
+        ch == 0x205F ||
+        ch == 0x2005 ||
+        ch == 0x202F ||
+        ch == 0x2000 ||
+        ch == 0x180E ||
+        ch == 0x2001 ||
+        ch == 0x2004 ||
+        ch == 0x3000 ||
+        ch == 0x2008 ||
+        ch == 0x2006 ||
+        ch == 0x2002 ||
+        ch == 0x2007 ||
+        ch == 0x2009 ||
+        ch == 0x00A0 ||
+        ch == 0x1680)
+        return true;
+    return false;
+}
+
+/**
+ * UNICODE general class Zl
+ */
+bool isLineSeparator(int ch)
+{
+    if (ch == 0x2028)
+        return true;
+    return false;
+}
+
+/**
+ * UNICODE general class Zp
+ */
+bool isParagraphSeparator(int ch)
+{
+    if (ch == 0x2029)
+        return true;
+    return false;
+}
+
+/**
+ * The union of the 3 space types.
+ */
+bool isSpaceChar(int ch)
+{
+    if ( isSpaceSeparator(ch) ||
+         isLineSeparator(ch)  ||
+         isParagraphSeparator(ch))
+        return true;
+    return false;
+}
+
+/**
+ * 3 spaces in isSpaceChar() which don't break
+ */
+bool isNonBreakingSpace(int ch)
+{
+    if (ch == 0x00A0 || ch == 0x2007 || ch == 0x202F)
+        return true;
+    return false;
+}
+
+/**
+ *
+ */
+bool isWhitespace(int ch)
+{
+    if (isSpaceChar(ch) && !isNonBreakingSpace(ch))
+        return true;
+    if (ch == 0x0009 || // HORIZONTAL TABULATION
+        ch == 0x000A || // LINE FEED.
+        ch == 0x000B || // VERTICAL TABULATION.
+        ch == 0x000C || // FORM FEED.
+        ch == 0x000D || // CARRIAGE RETURN.
+        ch == 0x001C || // FILE SEPARATOR.
+        ch == 0x001D || // GROUP SEPARATOR.
+        ch == 0x001E || // RECORD SEPARATOR.
+        ch == 0x001F)   // UNIT SEPARATOR.
+        return true;
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -165,6 +165,44 @@ bool isExtender(int ch);
 
 
 
+/**
+ *
+ * Following are from unicode.org, in the UnicodeData file
+ * in the Unicode Database
+ */
+
+/**
+ *
+ */
+bool isSpaceSeparator(int ch);
+
+/**
+ *
+ */
+bool isLineSeparator(int ch);
+
+/**
+ *
+ */
+bool isParagraphSeparator(int ch);
+
+/**
+ *
+ */
+bool isSpaceChar(int ch);
+
+/**
+ *
+ */
+bool isNonBreakingSpace(int ch);
+
+/**
+ *
+ */
+bool isWhitespace(int ch);
+
+
+
 #endif  /* __CHARCLASS_H__ */
 
 
