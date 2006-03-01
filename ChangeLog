@@ -1,3 +1,8 @@
+2006-02-28  Jon A. Cruz  <jon@joncruz.org>
+	* src/ui/widget/selected-style.h, src/ui/widget/selected-style.cpp:
+
+	  Made the style minibar a target for color drag-n-drop.
+	
 2006-03-01  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/conn-avoid-ref.cpp, src/libavoid/connector.h,

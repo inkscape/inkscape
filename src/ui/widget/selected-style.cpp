@@ -13,6 +13,7 @@
 # include <config.h>
 #endif
 
+#include <gtk/gtkdnd.h>
 
 #include "selected-style.h"
 
@@ -61,6 +62,25 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+
+typedef struct {
+    SelectedStyle* parent;
+    int item;
+} DropTracker;
+
+/* Drag and Drop */
+typedef enum {
+    APP_X_COLOR
+} ui_drop_target_info;
+
+static GtkTargetEntry ui_drop_target_entries [] = {
+    {"application/x-color", 0, APP_X_COLOR}
+};
+
+#define ENTRIES_SIZE(n) sizeof(n)/sizeof(n[0])
+static guint nui_drop_target_entries = ENTRIES_SIZE(ui_drop_target_entries);
+
+
 SelectedStyle::SelectedStyle(bool layout)
     : _desktop (NULL),
 
@@ -89,7 +109,10 @@ SelectedStyle::SelectedStyle(bool layout)
 
       _sw_unit(NULL),
 
-      _tooltips ()
+      _tooltips (),
+
+      _dropF(0),
+      _dropS(0)
 {
     _fill_label.set_alignment(0.0, 0.5);
     _fill_label.set_padding(0, 0);
@@ -307,6 +330,36 @@ SelectedStyle::SelectedStyle(bool layout)
     sp_set_font_size_smaller (GTK_WIDGET(_stroke_width.gobj()));
     sp_set_font_size_smaller (GTK_WIDGET(_fill_label.gobj()));
     sp_set_font_size_smaller (GTK_WIDGET(_stroke_label.gobj()));
+
+    _dropF = new DropTracker();
+    ((DropTracker*)_dropF)->parent = this;
+    ((DropTracker*)_dropF)->item = SS_FILL;
+
+    _dropS = new DropTracker();
+    ((DropTracker*)_dropS)->parent = this;
+    ((DropTracker*)_dropS)->item = SS_STROKE;
+
+    {
+        gtk_drag_dest_set(GTK_WIDGET(_stroke_place.gobj()),
+                          GTK_DEST_DEFAULT_ALL,
+                          ui_drop_target_entries,
+                          nui_drop_target_entries,
+                          GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
+        g_signal_connect(_stroke_place.gobj(),
+                         "drag_data_received",
+                         G_CALLBACK(dragDataReceived),
+                         _dropS);
+
+        gtk_drag_dest_set(GTK_WIDGET(_fill_place.gobj()),
+                          GTK_DEST_DEFAULT_ALL,
+                          ui_drop_target_entries,
+                          nui_drop_target_entries,
+                          GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
+        g_signal_connect(_fill_place.gobj(),
+                         "drag_data_received",
+                         G_CALLBACK(dragDataReceived),
+                         _dropF);
+    }
 }
 
 SelectedStyle::~SelectedStyle()
@@ -321,6 +374,9 @@ SelectedStyle::~SelectedStyle()
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
         delete _color_preview[i];
     }
+
+    delete (DropTracker*)_dropF;
+    delete (DropTracker*)_dropS;
 }
 
 void
@@ -348,6 +404,43 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
     ));
 
     //_sw_unit = (SPUnit *) SP_DT_NAMEDVIEW(desktop)->doc_units;
+}
+
+void SelectedStyle::dragDataReceived( GtkWidget *widget,
+                                      GdkDragContext *drag_context,
+                                      gint x, gint y,
+                                      GtkSelectionData *data,
+                                      guint info,
+                                      guint event_time,
+                                      gpointer user_data )
+{
+    DropTracker* tracker = (DropTracker*)user_data;
+
+    switch ( (int)tracker->item ) {
+        case SS_FILL:
+        case SS_STROKE:
+        {
+            if ( data->length == 8 ) {
+                gchar c[64];
+                // Careful about endian issues.
+                guint16* dataVals = (guint16*)data->data;
+                sp_svg_write_color( c, 64,
+                                    SP_RGBA32_U_COMPOSE(
+                                        0x0ff & (dataVals[0] >> 8),
+                                        0x0ff & (dataVals[1] >> 8),
+                                        0x0ff & (dataVals[2] >> 8),
+                                        0xff // can't have transparency in the color itself
+                                        //0x0ff & (data->data[3] >> 8),
+                                        ));
+                SPCSSAttr *css = sp_repr_css_attr_new();
+                sp_repr_css_set_property( css, (tracker->item == SS_FILL) ? "fill":"stroke", c );
+                sp_desktop_set_style( tracker->parent->_desktop, css );
+                sp_repr_css_attr_unref( css );
+                sp_document_done( SP_DT_DOCUMENT(tracker->parent->_desktop) );
+            }
+        }
+        break;
+    }
 }
 
 void SelectedStyle::on_fill_remove() {

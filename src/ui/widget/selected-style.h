@@ -125,6 +125,14 @@ protected:
     sigc::connection *selection_modified_connection;
     sigc::connection *subselection_changed_connection;
 
+    static void dragDataReceived( GtkWidget *widget,
+                                  GdkDragContext *drag_context,
+                                  gint x, gint y,
+                                  GtkSelectionData *data,
+                                  guint info,
+                                  guint event_time,
+                                  gpointer user_data );
+
     bool on_fill_click(GdkEventButton *event);
     bool on_stroke_click(GdkEventButton *event);
     bool on_opacity_click(GdkEventButton *event);
@@ -191,6 +199,9 @@ protected:
     SPUnit *_sw_unit;
 
     Gtk::Tooltips _tooltips;
+
+    void *_dropF;
+    void *_dropS;
 };
 
 
