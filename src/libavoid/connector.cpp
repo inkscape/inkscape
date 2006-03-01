@@ -235,16 +235,6 @@ bool ConnRef::needsReroute(void)
 }
 
 
-void ConnRef::moveRoute(const int& diff_x, const int& diff_y)
-{
-    for (int i = 0; i < _route.pn; i++)
-    {
-        _route.ps[i].x += diff_x;
-        _route.ps[i].y += diff_y;
-    }
-}
-
-
 void ConnRef::lateSetup(const Point& src, const Point& dst)
 {
     assert(!_initialised);

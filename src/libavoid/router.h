@@ -29,6 +29,8 @@
 #include "libavoid/shape.h"
 #include "libavoid/graph.h"
 #include "libavoid/timer.h"
+#include <list>
+#include <utility>
 #ifdef LINEDEBUG       
     #include <SDL.h>
 #endif
@@ -39,6 +41,7 @@ namespace Avoid {
 class ConnRef;
 typedef std::list<ConnRef *> ConnRefList;
 typedef std::list<unsigned int> IntList;
+typedef std::pair<ShapeRef *, Polygn *> MoveInfo;
 
 
 static const unsigned int runningTo = 1;
@@ -67,6 +70,7 @@ class Router {
         bool IncludeEndpoints;
         bool UseLeesAlgorithm;
         bool InvisibilityGrph;
+        bool ConsolidateMoves;
         bool PartialFeedback;
 
         // Instrumentation:
@@ -78,7 +82,7 @@ class Router {
 
         void addShape(ShapeRef *shape);
         void delShape(ShapeRef *shape);
-        ShapeRef *moveShape(ShapeRef *oldShape, Polygn *newPoly,
+        void moveShape(ShapeRef *shape, Polygn *newPoly,
                 const bool first_move = false);
         
         void attachedConns(IntList &conns, const unsigned int shapeId,

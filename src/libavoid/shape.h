@@ -40,6 +40,7 @@ class ShapeRef
     public:
         ShapeRef(Router *router, unsigned int id, Polygn& poly);
         ~ShapeRef();
+        void setNewPoly(Polygn& poly);
         VertInf *firstVert(void);
         VertInf *lastVert(void);
         unsigned int id(void);

@@ -37,6 +37,7 @@ namespace Avoid {
 EdgeInf::EdgeInf(VertInf *v1, VertInf *v2)
     : lstPrev(NULL)
     , lstNext(NULL)
+    , _blocker(0)
     , _router(NULL)
     , _added(false)
     , _visible(false)
@@ -51,7 +52,6 @@ EdgeInf::EdgeInf(VertInf *v1, VertInf *v2)
     assert(_v1->_router == _v2->_router);
     _router = _v1->_router;
 
-    _blockers.clear();
     _conns.clear();
 }
 
@@ -109,15 +109,9 @@ void EdgeInf::makeInactive(void)
         _v2->invisList.erase(_pos2);
         _v2->invisListSize--;
     }
-    _blockers.clear();
+    _blocker = 0;
     _conns.clear();
     _added = false;
-}
-
-
-double EdgeInf::getDist(void)
-{
-    return _dist;
 }
 
 
@@ -135,13 +129,14 @@ void EdgeInf::setDist(double dist)
         makeActive();
     }
     _dist = dist;
-    _blockers.clear();
+    _blocker = 0;
 }
 
 
 void EdgeInf::alertConns(void)
 {
-    for (FlagList::iterator i = _conns.begin(); i != _conns.end(); ++i)
+    FlagList::iterator finish = _conns.end();
+    for (FlagList::iterator i = _conns.begin(); i != finish; ++i)
     {
         *(*i) = true;
     }
@@ -176,29 +171,7 @@ void EdgeInf::addBlocker(int b)
         makeActive();
     }
     _dist = 0;
-    _blockers.clear();
-    _blockers.push_back(b);
-}
-
-
-bool EdgeInf::hasBlocker(int b)
-{
-    assert(_router->InvisibilityGrph);
-
-    ShapeList::iterator finish = _blockers.end();
-    for (ShapeList::iterator it = _blockers.begin(); it != finish; ++it)
-    {
-        if ((*it) == -1)
-        {
-            alertConns();
-            return true;
-        }
-        else if ((*it) == b)
-        {
-            return true;
-        }
-    }
-    return false;
+    _blocker = b;
 }
 
 

@@ -24,13 +24,7 @@
 #define AVOID_DEBUG_H
 
 
-
-#ifndef NDEBUG
-  //#define DBPRINTF_DEBUG
-#endif
-
-
-#ifdef DBPRINTF_DEBUG
+#ifdef LIBAVOID_DEBUG
 
 #include <stdarg.h>
 #include <iostream>
@@ -39,7 +33,7 @@
 
 namespace Avoid {
 
-#ifdef DBPRINTF_DEBUG
+#ifdef LIBAVOID_DEBUG
 inline void db_printf(const char *fmt, ...)
 {
     va_list ap;

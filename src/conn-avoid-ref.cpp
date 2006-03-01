@@ -253,8 +253,7 @@ void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item)
     Router *router = moved_item->document->router;
     Avoid::Polygn poly = avoid_item_poly(moved_item);
     if (poly.pn > 0) {
-        // moveShape actually destroys the old shapeRef and returns a new one.
-        moved_item->avoidRef->shapeRef = router->moveShape(shapeRef, &poly);
+        router->moveShape(shapeRef, &poly);
         Avoid::freePoly(poly);
     }
 }

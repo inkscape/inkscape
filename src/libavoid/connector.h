@@ -47,7 +47,6 @@ class ConnRef
         void setType(unsigned int type);
         PolyLine& route(void);
         bool needsReroute(void);
-        void moveRoute(const int& diff_x, const int& diff_y);
         void freeRoute(void);
         void calcRouteDist(void);
         void updateEndPoint(const unsigned int type, const Point& point);

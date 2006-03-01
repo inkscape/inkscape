@@ -45,13 +45,16 @@ class EdgeInf
     public:
         EdgeInf(VertInf *v1, VertInf *v2);
         ~EdgeInf();
-        double getDist(void);
+        inline double getDist(void)
+        {
+            return _dist;
+        }
         void setDist(double dist);
         void alertConns(void);
         void addConn(bool *flag);
         void addCycleBlocker(void);
         void addBlocker(int b);
-        bool hasBlocker(int b);
+
         pair<VertID, VertID> ids(void);
         pair<Point, Point> points(void);
         void db_print(void);
@@ -63,6 +66,7 @@ class EdgeInf
 
         EdgeInf *lstPrev;
         EdgeInf *lstNext;
+        int _blocker;
     private:
         Router *_router;
         bool _added;
@@ -71,7 +75,6 @@ class EdgeInf
         VertInf *_v2;
         EdgeInfList::iterator _pos1;
         EdgeInfList::iterator _pos2;
-        ShapeList _blockers;
         FlagList  _conns;
         double  _dist;
 

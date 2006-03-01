@@ -100,6 +100,31 @@ ShapeRef::~ShapeRef()
 }
 
 
+void ShapeRef::setNewPoly(Polygn& poly)
+{
+    assert(_firstVert != NULL);
+    assert(_poly.pn == poly.pn);
+    
+    VertInf *curr = _firstVert;
+    for (int pt_i = 0; pt_i < _poly.pn; pt_i++)
+    {
+        assert(curr->visListSize == 0);
+        assert(curr->invisListSize == 0);
+
+        // Reset with the new polygon point.
+        curr->Reset(poly.ps[pt_i]);
+        curr->pathNext = NULL;
+        curr->pathDist = 0;
+        
+        curr = curr->shNext;
+    }
+    assert(curr == _firstVert);
+        
+    freePoly(_poly);
+    _poly = copyPoly(poly);
+}
+
+
 void ShapeRef::makeActive(void)
 {
     assert(!_active);

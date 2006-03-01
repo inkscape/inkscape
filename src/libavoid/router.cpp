@@ -28,6 +28,7 @@
 #include "libavoid/debug.h"
 #include "math.h"
 
+//#define ORTHOGONAL_ROUTING
 
 namespace Avoid {
 
@@ -41,6 +42,7 @@ Router::Router()
     , IncludeEndpoints(true)
     , UseLeesAlgorithm(false)
     , InvisibilityGrph(true)
+    , ConsolidateMoves(false)
     , PartialFeedback(false)
     // Instrumentation:
     , st_checked_edges(0)
@@ -62,6 +64,10 @@ void Router::addShape(ShapeRef *shape)
     // o  Check all visibility edges to see if this one shape
     //    blocks them.
     newBlockingShape(&poly, pid);
+
+#ifdef ORTHOGONAL_ROUTING
+    Region::addShape(shape);
+#endif
 
     // o  Calculate visibility for the new vertices.
     if (UseLeesAlgorithm)
@@ -90,6 +96,10 @@ void Router::delShape(ShapeRef *shape)
 
     adjustContainsWithDel(pid);
     
+#ifdef ORTHOGONAL_ROUTING
+    Region::removeShape(shape);
+#endif
+
     delete shape;
     
     // o  Check all edges that were blocked by this shape.
@@ -106,22 +116,26 @@ void Router::delShape(ShapeRef *shape)
 }
 
 
-ShapeRef *Router::moveShape(ShapeRef *oldShape, Polygn *newPoly, const bool first_move)
+void Router::moveShape(ShapeRef *shape, Polygn *newPoly, const bool first_move)
 {
-    unsigned int pid = oldShape->id();
-    
+    unsigned int pid = shape->id();
+    bool notPartialTime = !(PartialFeedback && PartialTime);
+
     // o  Remove entries related to this shape's vertices
-    oldShape->removeFromGraph();
+    shape->removeFromGraph();
     
-    if (SelectiveReroute && (!(PartialFeedback && PartialTime) || first_move))
+    if (SelectiveReroute && (notPartialTime || first_move))
     {
-        markConnectors(oldShape);
+        markConnectors(shape);
     }
 
     adjustContainsWithDel(pid);
     
-    delete oldShape;
-    oldShape = NULL;
+#ifdef ORTHOGONAL_ROUTING
+    Region::removeShape(shape);
+#endif
+
+    shape->setNewPoly(*newPoly);
 
     adjustContainsWithAdd(*newPoly, pid);
     
@@ -135,12 +149,14 @@ ShapeRef *Router::moveShape(ShapeRef *oldShape, Polygn *newPoly, const bool firs
         // check all edges not in graph
         checkAllMissingEdges();
     }
-    
-    ShapeRef *newShape = new ShapeRef(this, pid, *newPoly);
+
+#ifdef ORTHOGONAL_ROUTING
+    Region::addShape(shape);
+#endif
 
     // o  Check all visibility edges to see if this one shape
     //    blocks them.
-    if (!(PartialFeedback && PartialTime))
+    if (notPartialTime)
     {
         newBlockingShape(newPoly, pid);
     }
@@ -148,15 +164,13 @@ ShapeRef *Router::moveShape(ShapeRef *oldShape, Polygn *newPoly, const bool firs
     // o  Calculate visibility for the new vertices.
     if (UseLeesAlgorithm)
     {
-        shapeVisSweep(newShape);
+        shapeVisSweep(shape);
     }
     else
     {
-        shapeVis(newShape);
+        shapeVis(shape);
     }
     callbackAllInvalidConnectors();
-
-    return newShape;
 }
 
 
@@ -289,7 +303,12 @@ void Router::checkAllBlockedEdges(int pid)
         EdgeInf *tmp = iter;
         iter = iter->lstNext;
 
-        if (tmp->hasBlocker(pid))
+        if (tmp->_blocker == -1)
+        {
+            tmp->alertConns();
+            tmp->checkVis();
+        }
+        else if (tmp->_blocker == pid)
         {
             tmp->checkVis();
         }
