@@ -141,7 +141,7 @@ VERSION_NR = 0.43+devel
 VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
-CFLAGS = -O3  -Wall -mms-bitfields -DVERSION=$(VERSION) \
+CFLAGS = -O3 -g -Wall -mms-bitfields -DVERSION=$(VERSION) \
 -DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
 
 ####### Inkboard abilities.
