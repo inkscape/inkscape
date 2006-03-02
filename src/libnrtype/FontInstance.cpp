@@ -384,7 +384,7 @@ bool	font_instance::IsOutlineFont(void)
     InitTheFace();
 #ifdef USE_PANGO_WIN32
     TEXTMETRIC tm;
-    return GetTextMetrics(daddy->hScreenDC,&tm) && tm.tmPitchAndFamily&TMPF_TRUETYPE;
+    return GetTextMetrics(daddy->hScreenDC,&tm) && tm.tmPitchAndFamily&(TMPF_TRUETYPE|TMPF_DEVICE);
 #else
 	return FT_IS_SCALABLE(theFace);
 #endif
