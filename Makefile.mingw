@@ -62,6 +62,7 @@ dist:
 	-$(RMDIR) inkscape
 	$(MKDIR) inkscape
 	$(CP) src$(S)inkscape.exe inkscape
+	$(CP) src$(S)inkscape.dbg inkscape
 #	$(CP) src$(S)inkview.exe inkscape
 	$(CP) AUTHORS inkscape
 	$(CP) COPYING inkscape
