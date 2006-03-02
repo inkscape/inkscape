@@ -50,7 +50,8 @@ RES=inkres.o
 
 inkscape.exe: libinkscape.a main.o winmain.o $(RES) 
 	$(CXX) --export-dynamic -o inkscape.exe main.o winmain.o $(RES) libinkscape.a $(LIBS)
-#	strip inkscape.exe
+	$(OBJCOPY) --only-keep-debug inkscape.exe inkscape.dbg
+	strip inkscape.exe
 
 # DLL version.  we need to make this work
 #inkscape.exe: inkscape.dll main.o winmain.o $(RES) 
@@ -59,7 +60,8 @@ inkscape.exe: libinkscape.a main.o winmain.o $(RES)
 
 inkview.exe: libinkscape.a inkview.o $(RES) 
 	$(CXX) -o inkview.exe inkview.o $(RES) libinkscape.a $(LIBS)
-#	strip inkview.exe
+	$(OBJCOPY) --only-keep-debug inkview.exe inkview.dbg
+	strip inkview.exe
 
 # DLL version.  we need to make this work
 # inkview.exe: inkscape.dll inkview.o $(RES) 
