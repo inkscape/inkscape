@@ -16,40 +16,65 @@
 
 #include <sigc++/sigc++.h>
 #include <gtkmm/button.h>
+#include <gtkmm/dialog.h>
 #include <gtkmm/tooltips.h>
+#include "widgets/sp-color-selector.h"
 #include "ui/widget/color-preview.h"
+//#include "ui/dialog/dialog.h"
 
-class SPColorSelector;
-namespace Inkscape {
-    namespace UI {
-        namespace Widget {
-            class ColorPickerWindow;
+
+
+namespace Inkscape
+{
+namespace UI
+{
+namespace Widget
+{
+
 
 class ColorPicker : public Gtk::Button {
 public:
-    ColorPicker (const Glib::ustring& title, const Glib::ustring& tip, const guint32 rgba, bool undo);
+
+    ColorPicker (const Glib::ustring& title,
+                 const Glib::ustring& tip,
+                 const guint32 rgba,
+                 bool undo);
+
     virtual ~ColorPicker();
+
     void setRgba32 (guint32 rgba);
+
     void closeWindow();
-    sigc::connection connectChanged (const sigc::slot<void,guint>& slot) 
+
+    sigc::connection connectChanged (const sigc::slot<void,guint>& slot)
         { return _changed_signal.connect (slot); }
 
 protected:
+
     friend void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp);
     virtual void on_clicked();
     virtual void on_changed (guint32);
-    
+
     ColorPreview        _preview;
     Gtk::Tooltips       _tt;
-    ColorPickerWindow   *_window;
-    
+
     const Glib::ustring _title;
     sigc::signal<void,guint32> _changed_signal;
     guint32             _rgba;
     bool                _undo;
+
+
+    //Dialog
+    void setupDialog(const Glib::ustring &title);
+    //Inkscape::UI::Dialog::Dialog _colorSelectorDialog;
+    Gtk::Dialog _colorSelectorDialog;
+    SPColorSelector *_colorSelector;
+
 };
 
-}}}
+}//namespace Widget
+}//namespace UI
+}//namespace Inkscape
 
 #endif /* !__COLOR_PICKER_H__ */
 
