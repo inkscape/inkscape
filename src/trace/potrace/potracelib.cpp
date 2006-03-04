@@ -32,7 +32,7 @@ static const potrace_param_t param_default = {
 potrace_param_t *potrace_param_default() {
   potrace_param_t *p;
 
-  p = (potrace_param_t *) malloc(sizeof(potrace_param_t *));
+  p = (potrace_param_t *) malloc(sizeof(potrace_param_t));
   if (!p) {
     return NULL;
   }
