@@ -61,7 +61,7 @@ potrace_state_t *potrace_trace(const potrace_param_t *param, const potrace_bitma
   prog.d_prev = param->progress.min;
 
   /* allocate state object */
-  st = (potrace_state_t *)malloc(sizeof(potrace_state_t *));
+  st = (potrace_state_t *)malloc(sizeof(potrace_state_t));
   if (!st) {
     return NULL;
   }
