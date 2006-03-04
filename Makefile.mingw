@@ -14,8 +14,7 @@ $(GTKDOS)$(S)bin$(S)intl.dll:
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll $(GTKDOS)$(S)bin$(S)intl.dll
 
 dist-strip: dist
-	-$(RMDIRREC) CVS $(RMDIRREC1)
-	-$(RMREC) .cvsignore $(RMREC1)
+	-$(RMDIRREC) .svn $(RMDIRREC1)
 	-$(RMREC) Makefile $(RMREC1)
 	-$(RMREC) Makefile.am $(RMREC1)
 	-$(RMREC) Makefile.in $(RMREC1)
