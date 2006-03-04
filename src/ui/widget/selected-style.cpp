@@ -111,8 +111,8 @@ SelectedStyle::SelectedStyle(bool layout)
 
       _tooltips (),
 
-      _dropF(0),
-      _dropS(0)
+      _drop((void*[]){0,0}),
+      _dropEnabled((bool[]){false, false})
 {
     _fill_label.set_alignment(0.0, 0.5);
     _fill_label.set_padding(0, 0);
@@ -331,35 +331,23 @@ SelectedStyle::SelectedStyle(bool layout)
     sp_set_font_size_smaller (GTK_WIDGET(_fill_label.gobj()));
     sp_set_font_size_smaller (GTK_WIDGET(_stroke_label.gobj()));
 
-    _dropF = new DropTracker();
-    ((DropTracker*)_dropF)->parent = this;
-    ((DropTracker*)_dropF)->item = SS_FILL;
+    _drop[SS_FILL] = new DropTracker();
+    ((DropTracker*)_drop[SS_FILL])->parent = this;
+    ((DropTracker*)_drop[SS_FILL])->item = SS_FILL;
 
-    _dropS = new DropTracker();
-    ((DropTracker*)_dropS)->parent = this;
-    ((DropTracker*)_dropS)->item = SS_STROKE;
+    _drop[SS_STROKE] = new DropTracker();
+    ((DropTracker*)_drop[SS_STROKE])->parent = this;
+    ((DropTracker*)_drop[SS_STROKE])->item = SS_STROKE;
 
-    {
-        gtk_drag_dest_set(GTK_WIDGET(_stroke_place.gobj()),
-                          GTK_DEST_DEFAULT_ALL,
-                          ui_drop_target_entries,
-                          nui_drop_target_entries,
-                          GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
-        g_signal_connect(_stroke_place.gobj(),
-                         "drag_data_received",
-                         G_CALLBACK(dragDataReceived),
-                         _dropS);
+    g_signal_connect(_stroke_place.gobj(),
+                     "drag_data_received",
+                     G_CALLBACK(dragDataReceived),
+                     _drop[SS_STROKE]);
 
-        gtk_drag_dest_set(GTK_WIDGET(_fill_place.gobj()),
-                          GTK_DEST_DEFAULT_ALL,
-                          ui_drop_target_entries,
-                          nui_drop_target_entries,
-                          GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE));
-        g_signal_connect(_fill_place.gobj(),
-                         "drag_data_received",
-                         G_CALLBACK(dragDataReceived),
-                         _dropF);
-    }
+    g_signal_connect(_fill_place.gobj(),
+                     "drag_data_received",
+                     G_CALLBACK(dragDataReceived),
+                     _drop[SS_FILL]);
 }
 
 SelectedStyle::~SelectedStyle()
@@ -375,8 +363,8 @@ SelectedStyle::~SelectedStyle()
         delete _color_preview[i];
     }
 
-    delete (DropTracker*)_dropF;
-    delete (DropTracker*)_dropS;
+    delete (DropTracker*)_drop[SS_FILL];
+    delete (DropTracker*)_drop[SS_STROKE];
 }
 
 void
@@ -678,6 +666,8 @@ void SelectedStyle::on_stroke_paste() {
 void SelectedStyle::on_fillstroke_swap() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
+    g_message("on_fillstroke_swap()");
+
     switch (_mode[SS_FILL]) {
     case SS_NA:
     case SS_MANY:
@@ -859,10 +849,22 @@ SelectedStyle::update()
             place->add(_na[i]);
             _tooltips.set_tip(*place, __na[i]);
             _mode[i] = SS_NA;
+            if ( _dropEnabled[i] ) {
+                gtk_drag_dest_unset( GTK_WIDGET((i==SS_FILL) ? _fill_place.gobj():_stroke_place.gobj()) );
+                _dropEnabled[i] = false;
+            }
             break;
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED:
         case QUERY_STYLE_MULTIPLE_SAME: 
+            if ( !_dropEnabled[i] ) {
+                gtk_drag_dest_set( GTK_WIDGET( (i==SS_FILL) ? _fill_place.gobj():_stroke_place.gobj()),
+                                   GTK_DEST_DEFAULT_ALL,
+                                   ui_drop_target_entries,
+                                   nui_drop_target_entries,
+                                   GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE) );
+                _dropEnabled[i] = true;
+            }
             SPIPaint *paint;
             if (i == SS_FILL) {
                 paint = &(query->fill);

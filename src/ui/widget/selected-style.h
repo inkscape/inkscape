@@ -200,8 +200,8 @@ protected:
 
     Gtk::Tooltips _tooltips;
 
-    void *_dropF;
-    void *_dropS;
+    void *_drop[2];
+    bool _dropEnabled[2];
 };
 
 

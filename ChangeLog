@@ -1,3 +1,9 @@
+2006-03-04  Jon A. Cruz  <jon@joncruz.org>
+	* src/ui/widget/selected-style.h, src/ui/widget/selected-style.cpp:
+
+	  Style minibar now only accepts color drag-n-drop when not N/A.
+	  Final tweak for completing RFE #1429027.
+	
 2006-02-28  Jon A. Cruz  <jon@joncruz.org>
 	* src/ui/widget/selected-style.h, src/ui/widget/selected-style.cpp:
 
