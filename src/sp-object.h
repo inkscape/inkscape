@@ -322,6 +322,10 @@ struct SPObject : public GObject {
         return _delete_signal.connect(slot);
     }
 
+    sigc::connection connectPositionChanged(sigc::slot<void, SPObject *> slot) {
+        return _position_changed_signal.connect(slot);
+    }
+
     /** @brief Returns the object which supercedes this one (if any).
      *
      * This is mainly useful for ensuring we can correctly perform a series of moves or deletes,
@@ -442,6 +446,7 @@ struct SPObject : public GObject {
     void _requireSVGVersion(Inkscape::Version version);
 
     sigc::signal<void, SPObject *> _delete_signal;
+    sigc::signal<void, SPObject *> _position_changed_signal;
     SPObject *_successor;
     CollectionPolicy _collection_policy;
     gchar *_label;

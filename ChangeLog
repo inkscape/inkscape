@@ -1,5 +1,11 @@
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
+	* src/sp-object.h, src/sp-object.cpp:
+
+	  Add signal for notification of object position changes.
+
+2006-03-05  MenTaLguY  <mental@rydia.net>
+
 	* src/Makefile_insert, src/document-subset.cpp, src/document-subset.h:
 
 	  Add DocumentSubset as groundwork for layers.

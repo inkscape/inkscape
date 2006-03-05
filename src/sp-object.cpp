@@ -192,6 +192,7 @@ sp_object_init(SPObject *object)
     object->_collection_policy = SPObject::COLLECT_WITH_PARENT;
 
     new (&object->_delete_signal) sigc::signal<void, SPObject *>();
+    new (&object->_position_changed_signal) sigc::signal<void, SPObject *>();
     object->_successor = NULL;
 
     object->_label = NULL;
@@ -221,6 +222,7 @@ sp_object_finalize(GObject *object)
     }
 
     spobject->_delete_signal.~signal();
+    spobject->_position_changed_signal.~signal();
 }
 
 namespace {
@@ -771,6 +773,7 @@ static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child
     g_return_if_fail(ochild != NULL);
     SPObject *prev = new_ref ? sp_object_get_child_by_repr(object, new_ref) : NULL;
     sp_object_reorder(ochild, prev);
+    ochild->_position_changed_signal.emit(ochild);
 }
 
 /**
