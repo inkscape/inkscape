@@ -1,3 +1,9 @@
+2006-03-05  MenTaLguY  <mental@rydia.net>
+
+	* src/Makefile_insert, src/document-subset.cpp, src/document-subset.h:
+
+	  Add DocumentSubset as groundwork for layers.
+
 2006-03-04  Jon A. Cruz  <jon@joncruz.org>
 	* src/ui/widget/selected-style.h, src/ui/widget/selected-style.cpp:
 
