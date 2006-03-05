@@ -1,5 +1,12 @@
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
+    * src/document-subset.cpp:
+
+	  Wire up new SPObject signal to DocumentSubset, so order changes
+	  will be reflected in the subset.
+
+2006-03-05  MenTaLguY  <mental@rydia.net>
+
 	* src/sp-object.h, src/sp-object.cpp:
 
 	  Add signal for notification of object position changes.

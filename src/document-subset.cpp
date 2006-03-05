@@ -15,6 +15,7 @@
 #include <glib/gmessages.h>
 
 #include <sigc++/signal.h>
+#include <sigc++/functors/mem_fun.h>
 
 #include "util/list.h"
 #include "util/reverse-list.h"
@@ -36,6 +37,7 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
         Siblings children;
 
         gulong release_connection;
+        sigc::connection position_changed_connection;
 
         Record() : parent(NULL), release_connection(0) {}
 
@@ -148,6 +150,10 @@ private:
         record.release_connection
           = g_signal_connect(obj, "release",
                              (GCallback)&Relations::_release_object, this);
+        record.position_changed_connection
+          = obj->connectPositionChanged(
+              sigc::mem_fun(this, &Relations::reorder)
+            );
         return record;
     }
 
@@ -161,6 +167,7 @@ private:
             g_signal_handler_disconnect(obj, record.release_connection);
             record.release_connection = 0;
         }
+        record.position_changed_connection.disconnect();
         records.erase(obj);
         removed_signal.emit(obj);
         sp_object_unref(obj);
