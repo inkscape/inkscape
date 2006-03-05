@@ -189,7 +189,8 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
     height = 1;
 
     if ( _anchor == Gtk::ANCHOR_SOUTH || _anchor == Gtk::ANCHOR_NORTH ) {
-        Gtk::Requisition req = _scroller->size_request();
+        Gtk::Requisition req;
+        _scroller->size_request(req);
         int currW = _scroller->get_width();
         if ( currW > req.width ) {
             req.width = currW;
@@ -197,13 +198,15 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
 
         Gtk::HScrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
         if ( hs ) {
-            Gtk::Requisition scrollReq = hs->size_request();
+            Gtk::Requisition scrollReq;
+            hs->size_request(scrollReq);
 
             // the +8 is a temporary hack
             req.height -= scrollReq.height + 8;
         }
 
-        Gtk::Requisition req2 = thing->size_request();
+        Gtk::Requisition req2;
+        thing->size_request(req2);
 
         int h2 = req.height / req2.height;
         int w2 = req.width / req2.width;
