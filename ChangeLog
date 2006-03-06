@@ -1,3 +1,8 @@
+2006-03-06  MenTaLguY  <mental@rydia.net>
+
+    * src/document-subset.h, src/document-subset.cpp:
+      add DocumentSubset::_clear
+
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
     * src/document-subset.h, src/document-subset.cpp:

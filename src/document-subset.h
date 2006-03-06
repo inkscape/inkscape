@@ -42,6 +42,7 @@ protected:
     void _addOne(SPObject *obj);
     void _removeOne(SPObject *obj) { _remove(obj, false); }
     void _removeSubtree(SPObject *obj) { _remove(obj, true); }
+    void _clear();
 
 private:
     DocumentSubset(DocumentSubset const &); // no copy

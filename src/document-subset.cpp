@@ -142,6 +142,7 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
     void addOne(SPObject *obj);
     void remove(SPObject *obj, bool subtree);
     void reorder(SPObject *obj);
+    void clear();
 
 private:
     Record &_doAdd(SPObject *obj) {
@@ -277,6 +278,16 @@ void DocumentSubset::Relations::remove(SPObject *obj, bool subtree) {
     changed_signal.emit();
 }
 
+void DocumentSubset::Relations::clear() {
+    Record &root=records[NULL];
+
+    while (!root.children.empty()) {
+        _doRemoveSubtree(root.children.front());
+    }
+
+    changed_signal.emit();
+}
+
 void DocumentSubset::Relations::reorder(SPObject *obj) {
     SPObject::ParentIterator parent=obj;
 
@@ -314,6 +325,10 @@ void DocumentSubset::_addOne(SPObject *obj) {
 
 void DocumentSubset::_remove(SPObject *obj, bool subtree) {
     _relations->remove(obj, subtree);
+}
+
+void DocumentSubset::_clear() {
+    _relations->clear();
 }
 
 bool DocumentSubset::includes(SPObject *obj) const {
