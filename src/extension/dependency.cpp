@@ -235,14 +235,16 @@ Dependency::check (void) const
 std::ostream &
 operator<< (std::ostream &out_file, const Dependency & in_dep)
 {
-    out_file << _("Dependency::") << std::endl;
-    out_file << _("  type: ") << _(in_dep._type_str[in_dep._type]) << std::endl;
-    out_file << _("  location: ") << _(in_dep._location_str[in_dep._location]) << std::endl;
-    out_file << _("  string: ") << in_dep._string << std::endl;
+    out_file << _("Dependency::") << '\n';
+    out_file << _("  type: ") << _(in_dep._type_str[in_dep._type]) << '\n';
+    out_file << _("  location: ") << _(in_dep._location_str[in_dep._location]) << '\n';
+    out_file << _("  string: ") << in_dep._string << '\n';
 
     if (in_dep._description != NULL) {
-        out_file << _("  description: ") << _(in_dep._description) << std::endl;
+        out_file << _("  description: ") << _(in_dep._description) << '\n';
     }
+
+    out_file << std::flush;
 
     return out_file;
 }
