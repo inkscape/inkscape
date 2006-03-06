@@ -1,7 +1,7 @@
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
-    * src/document-subset.cpp: remove unneeded document parameter from
-	  constructor
+    * src/document-subset.h, src/document-subset.cpp:
+	  remove unneeded document parameter from constructor
 
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
