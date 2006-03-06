@@ -37,7 +37,7 @@ public:
     sigc::connection connectRemoved(sigc::slot<void, SPObject *> slot) const;
 
 protected:
-    explicit DocumentSubset(SPDocument *document);
+    DocumentSubset();
 
     void _addOne(SPObject *obj);
     void _removeOne(SPObject *obj) { _remove(obj, false); }
@@ -51,7 +51,6 @@ private:
 
     class Relations;
 
-    SPDocument *_document;
     Relations *_relations;
 };
 

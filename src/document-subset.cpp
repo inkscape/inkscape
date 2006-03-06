@@ -194,8 +194,8 @@ private:
     }
 };
 
-DocumentSubset::DocumentSubset(SPDocument *document)
-: _document(document), _relations(new DocumentSubset::Relations())
+DocumentSubset::DocumentSubset()
+: _relations(new DocumentSubset::Relations())
 {
 }
 
