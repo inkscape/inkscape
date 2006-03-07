@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-18 13:47+0100\n"
+"POT-Creation-Date: 2006-03-07 22:58+0100\n"
 "PO-Revision-Date: 2005-11-16 00:21+0900\n"
 "Last-Translator: shivaken <shivaken@owls-nest.net>\n"
 "Language-Team: Japanese <shivaken@owls-nest.net>\n"
@@ -113,37 +113,37 @@ msgstr "前のズームはありません。"
 msgid "No next zoom."
 msgstr "次のズームはありません。"
 
-#: ../src/dialogs/clonetiler.cpp:156
+#: ../src/dialogs/clonetiler.cpp:159
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>何も選択されていません。</small>"
 
-#: ../src/dialogs/clonetiler.cpp:162
+#: ../src/dialogs/clonetiler.cpp:165
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>二つ以上のオブジェクトが選択されています。</small>"
 
-#: ../src/dialogs/clonetiler.cpp:169
+#: ../src/dialogs/clonetiler.cpp:172
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr ""
 "<small>オブジェクトは <b>%d</b> 個のタイルクローンを持っています。</small>"
 
-#: ../src/dialogs/clonetiler.cpp:174
+#: ../src/dialogs/clonetiler.cpp:177
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>オブジェクトはタイルクローンを持っていません。</small>"
 
-#: ../src/dialogs/clonetiler.cpp:839
+#: ../src/dialogs/clonetiler.cpp:842
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "タイルクローンを解除する<b>オブジェクト</b>を選択してください。"
 
-#: ../src/dialogs/clonetiler.cpp:890
+#: ../src/dialogs/clonetiler.cpp:893
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "タイルクローンを解除する<b>オブジェクト</b>を選択してください。"
 
-#: ../src/dialogs/clonetiler.cpp:958 ../src/selection-chemistry.cpp:1781
+#: ../src/dialogs/clonetiler.cpp:961 ../src/selection-chemistry.cpp:1781
 msgid "Select an <b>object</b> to clone."
 msgstr "クローンするオブジェクトを選択してください。"
 
-#: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1787
+#: ../src/dialogs/clonetiler.cpp:967 ../src/selection-chemistry.cpp:1787
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
@@ -151,19 +151,19 @@ msgstr ""
 "複数のオブジェクトのクローンを作る場合、グループ化してクローンをしてくださ"
 "い。"
 
-#: ../src/dialogs/clonetiler.cpp:1457
+#: ../src/dialogs/clonetiler.cpp:1460
 msgid "<small>Per row:</small>"
 msgstr "<small>行ごと:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1470
+#: ../src/dialogs/clonetiler.cpp:1473
 msgid "<small>Per column:</small>"
 msgstr "<small>列ごと:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1478
+#: ../src/dialogs/clonetiler.cpp:1481
 msgid "<small>Randomize:</small>"
 msgstr "<small>ランダマイズ:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1629
+#: ../src/dialogs/clonetiler.cpp:1635
 msgid "_Symmetry"
 msgstr "対称化方法(_S)"
 
@@ -172,273 +172,273 @@ msgstr "対称化方法(_S)"
 #. * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
 #. * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
 #.
-#: ../src/dialogs/clonetiler.cpp:1637
+#: ../src/dialogs/clonetiler.cpp:1643
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "対称化方法を選んでください"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1648
+#: ../src/dialogs/clonetiler.cpp:1654
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: シンプル"
 
-#: ../src/dialogs/clonetiler.cpp:1649
+#: ../src/dialogs/clonetiler.cpp:1655
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: 180&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1650
+#: ../src/dialogs/clonetiler.cpp:1656
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: 反射"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1653
+#: ../src/dialogs/clonetiler.cpp:1659
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: 映進"
 
-#: ../src/dialogs/clonetiler.cpp:1654
+#: ../src/dialogs/clonetiler.cpp:1660
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: 反転 + 映進"
 
-#: ../src/dialogs/clonetiler.cpp:1655
+#: ../src/dialogs/clonetiler.cpp:1661
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: 反転 + 反転"
 
-#: ../src/dialogs/clonetiler.cpp:1656
+#: ../src/dialogs/clonetiler.cpp:1662
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: 反転 + 180&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1657
+#: ../src/dialogs/clonetiler.cpp:1663
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: 滑らか反転 + 180&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1658
+#: ../src/dialogs/clonetiler.cpp:1664
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: 反転 + 反転 + 180&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1659
+#: ../src/dialogs/clonetiler.cpp:1665
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: 90&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1660
+#: ../src/dialogs/clonetiler.cpp:1666
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: 90&#176; 回転 + 45&#176; 反転"
 
-#: ../src/dialogs/clonetiler.cpp:1661
+#: ../src/dialogs/clonetiler.cpp:1667
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: 90&#176; 回転 + 90&#176; 反転"
 
-#: ../src/dialogs/clonetiler.cpp:1662
+#: ../src/dialogs/clonetiler.cpp:1668
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: 120&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1663
+#: ../src/dialogs/clonetiler.cpp:1669
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: 反転 + 120&#176; 回転, 濃く"
 
-#: ../src/dialogs/clonetiler.cpp:1664
+#: ../src/dialogs/clonetiler.cpp:1670
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P31M1</b>: 反転 + 120&#176; 回転, 薄く"
 
-#: ../src/dialogs/clonetiler.cpp:1665
+#: ../src/dialogs/clonetiler.cpp:1671
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: 60&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1666
+#: ../src/dialogs/clonetiler.cpp:1672
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: 反転 + 60&#176; 回転"
 
-#: ../src/dialogs/clonetiler.cpp:1694
+#: ../src/dialogs/clonetiler.cpp:1700
 msgid "S_hift"
 msgstr "シフト(_S)"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1704
+#: ../src/dialogs/clonetiler.cpp:1710
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>水平シフト:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1712
+#: ../src/dialogs/clonetiler.cpp:1718
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "行ごとの水平方向へのシフト(幅に対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1720
+#: ../src/dialogs/clonetiler.cpp:1726
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "列ごとの水平方向へのシフト(幅に対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1727
+#: ../src/dialogs/clonetiler.cpp:1733
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "水平へのシフトをこの割合でランダムにする"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1737
+#: ../src/dialogs/clonetiler.cpp:1743
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>垂直シフト:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1745
+#: ../src/dialogs/clonetiler.cpp:1751
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "行ごとの垂直方向へのシフト(高さに対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1753
+#: ../src/dialogs/clonetiler.cpp:1759
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "列ごとの垂直方向へのシフト(高さに対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1760
+#: ../src/dialogs/clonetiler.cpp:1766
 msgid "Randomize the vertical shift by this percentage"
 msgstr "垂直へのシフトをこの割合でランダムにする"
 
-#: ../src/dialogs/clonetiler.cpp:1768
+#: ../src/dialogs/clonetiler.cpp:1774
 msgid "<b>Exponent:</b>"
 msgstr "<b>指数:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1775
+#: ../src/dialogs/clonetiler.cpp:1781
 #, fuzzy
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "行間隔: 枚(1) or 1点(<1) or 分岐(>1) "
 
-#: ../src/dialogs/clonetiler.cpp:1782
+#: ../src/dialogs/clonetiler.cpp:1788
 #, fuzzy
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "列間隔: 枚(1) or 1点(<1) or 分岐(>1) "
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:1790 ../src/dialogs/clonetiler.cpp:1880
-#: ../src/dialogs/clonetiler.cpp:1939 ../src/dialogs/clonetiler.cpp:1995
-#: ../src/dialogs/clonetiler.cpp:2126
+#: ../src/dialogs/clonetiler.cpp:1796 ../src/dialogs/clonetiler.cpp:1886
+#: ../src/dialogs/clonetiler.cpp:1945 ../src/dialogs/clonetiler.cpp:2001
+#: ../src/dialogs/clonetiler.cpp:2132
 msgid "<small>Alternate:</small>"
 msgstr "<small>交互にする:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1796
+#: ../src/dialogs/clonetiler.cpp:1802
 msgid "Alternate the sign of shifts for each row"
 msgstr "行ごとに交互にシフト"
 
-#: ../src/dialogs/clonetiler.cpp:1801
+#: ../src/dialogs/clonetiler.cpp:1807
 msgid "Alternate the sign of shifts for each column"
 msgstr "列ごとに交互にシフト"
 
-#: ../src/dialogs/clonetiler.cpp:1810
+#: ../src/dialogs/clonetiler.cpp:1816
 msgid "Sc_ale"
 msgstr "拡大縮小(_a)"
 
-#: ../src/dialogs/clonetiler.cpp:1818
+#: ../src/dialogs/clonetiler.cpp:1824
 msgid "<b>Scale X:</b>"
 msgstr "<b>水平方向での拡大縮小:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1826
+#: ../src/dialogs/clonetiler.cpp:1832
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "行ごとの水平方向での拡大縮小(幅に対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1834
+#: ../src/dialogs/clonetiler.cpp:1840
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "列ごとの水平方向での拡大縮小(幅に対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1841
+#: ../src/dialogs/clonetiler.cpp:1847
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "水平方向での拡大縮小をこの割合でランダムにする"
 
-#: ../src/dialogs/clonetiler.cpp:1849
+#: ../src/dialogs/clonetiler.cpp:1855
 msgid "<b>Scale Y:</b>"
 msgstr "<b>垂直方向での拡大縮小:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1857
+#: ../src/dialogs/clonetiler.cpp:1863
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "行ごとの垂直方向での拡大縮小(高さに対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1865
+#: ../src/dialogs/clonetiler.cpp:1871
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "列ごとの垂直方向での拡大縮小(高さに対するパーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1872
+#: ../src/dialogs/clonetiler.cpp:1878
 msgid "Randomize the vertical scale by this percentage"
 msgstr "垂直方向での拡大縮小をこの割合でランダムにする"
 
-#: ../src/dialogs/clonetiler.cpp:1886
+#: ../src/dialogs/clonetiler.cpp:1892
 msgid "Alternate the sign of scales for each row"
 msgstr "行ごとに交互に拡大縮小"
 
-#: ../src/dialogs/clonetiler.cpp:1891
+#: ../src/dialogs/clonetiler.cpp:1897
 msgid "Alternate the sign of scales for each column"
 msgstr "列ごとに交互に拡大縮小"
 
-#: ../src/dialogs/clonetiler.cpp:1900
+#: ../src/dialogs/clonetiler.cpp:1906
 msgid "_Rotation"
 msgstr "回転(_R)"
 
-#: ../src/dialogs/clonetiler.cpp:1908
+#: ../src/dialogs/clonetiler.cpp:1914
 msgid "<b>Angle:</b>"
 msgstr "<b>角度:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1916
+#: ../src/dialogs/clonetiler.cpp:1922
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "行ごとにこの角度回転"
 
-#: ../src/dialogs/clonetiler.cpp:1924
+#: ../src/dialogs/clonetiler.cpp:1930
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "列ごとにこの角度回転"
 
-#: ../src/dialogs/clonetiler.cpp:1931
+#: ../src/dialogs/clonetiler.cpp:1937
 msgid "Randomize the rotation angle by this percentage"
 msgstr "回転角度をランダマイズ(パーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1945
+#: ../src/dialogs/clonetiler.cpp:1951
 msgid "Alternate the rotation direction for each row"
 msgstr "行ごとに交互に回転"
 
-#: ../src/dialogs/clonetiler.cpp:1950
+#: ../src/dialogs/clonetiler.cpp:1956
 msgid "Alternate the rotation direction for each column"
 msgstr "列ごとに交互に回転"
 
-#: ../src/dialogs/clonetiler.cpp:1958
+#: ../src/dialogs/clonetiler.cpp:1964
 msgid "_Opacity"
 msgstr "不透明度(_O)"
 
-#: ../src/dialogs/clonetiler.cpp:1966
+#: ../src/dialogs/clonetiler.cpp:1972
 msgid "<b>Fade out:</b>"
 msgstr "<b>フェードアウト:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1973
+#: ../src/dialogs/clonetiler.cpp:1979
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "行ごとに不透明度を減少(パーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1980
+#: ../src/dialogs/clonetiler.cpp:1986
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "列ごとに不透明度を減少(パーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:1987
+#: ../src/dialogs/clonetiler.cpp:1993
 msgid "Randomize the tile opacity by this percentage"
 msgstr "不透明度の変化をランダマイズ(パーセンテージ)"
 
-#: ../src/dialogs/clonetiler.cpp:2001
+#: ../src/dialogs/clonetiler.cpp:2007
 msgid "Alternate the sign of opacity change for each row"
 msgstr "行ごとに交互に不透明度を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2006
+#: ../src/dialogs/clonetiler.cpp:2012
 msgid "Alternate the sign of opacity change for each column"
 msgstr "行ごとに交互に不透明度を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2014
+#: ../src/dialogs/clonetiler.cpp:2020
 msgid "Co_lor"
 msgstr "色"
 
-#: ../src/dialogs/clonetiler.cpp:2019
+#: ../src/dialogs/clonetiler.cpp:2025
 msgid "Initial color: "
 msgstr "始めの色:"
 
-#: ../src/dialogs/clonetiler.cpp:2023
+#: ../src/dialogs/clonetiler.cpp:2029
 msgid "Initial color of tiled clones"
 msgstr "始めのタイルクローンの色"
 
-#: ../src/dialogs/clonetiler.cpp:2023
+#: ../src/dialogs/clonetiler.cpp:2029
 msgid ""
 "Initial color for clones (works only if the original has unset fill or "
 "stroke)"
@@ -446,261 +446,261 @@ msgstr ""
 "クローンの始めの色(クローンのオリジナルのフィル／ストロークが未設定の場合のみ"
 "有効)"
 
-#: ../src/dialogs/clonetiler.cpp:2038
+#: ../src/dialogs/clonetiler.cpp:2044
 msgid "<b>H:</b>"
 msgstr "<b>色相:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2045
+#: ../src/dialogs/clonetiler.cpp:2051
 msgid "Change the tile hue by this percentage for each row"
 msgstr "行ごとに色相を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2052
+#: ../src/dialogs/clonetiler.cpp:2058
 msgid "Change the tile hue by this percentage for each column"
 msgstr "列ごとに色相を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2059
+#: ../src/dialogs/clonetiler.cpp:2065
 msgid "Randomize the tile hue by this percentage"
 msgstr "色相の変化度をランダマイズ"
 
-#: ../src/dialogs/clonetiler.cpp:2068
+#: ../src/dialogs/clonetiler.cpp:2074
 msgid "<b>S:</b>"
 msgstr "<b>彩度:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2075
+#: ../src/dialogs/clonetiler.cpp:2081
 msgid "Change the color saturation by this percentage for each row"
 msgstr "行ごとに彩度を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2082
+#: ../src/dialogs/clonetiler.cpp:2088
 msgid "Change the color saturation by this percentage for each column"
 msgstr "列ごとに彩度を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2089
+#: ../src/dialogs/clonetiler.cpp:2095
 msgid "Randomize the color saturation by this percentage"
 msgstr "彩度の変化度をランダマイズ"
 
-#: ../src/dialogs/clonetiler.cpp:2097
+#: ../src/dialogs/clonetiler.cpp:2103
 msgid "<b>L:</b>"
 msgstr "<b>明度:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2104
+#: ../src/dialogs/clonetiler.cpp:2110
 msgid "Change the color lightness by this percentage for each row"
 msgstr "行ごとに明度を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2111
+#: ../src/dialogs/clonetiler.cpp:2117
 msgid "Change the color lightness by this percentage for each column"
 msgstr "列ごとに明度を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2118
+#: ../src/dialogs/clonetiler.cpp:2124
 msgid "Randomize the color lightness by this percentage"
 msgstr "明度の変化度をランダマイズ"
 
-#: ../src/dialogs/clonetiler.cpp:2132
+#: ../src/dialogs/clonetiler.cpp:2138
 msgid "Alternate the sign of color changes for each row"
 msgstr "行ごと交互に色を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2137
+#: ../src/dialogs/clonetiler.cpp:2143
 msgid "Alternate the sign of color changes for each column"
 msgstr "列ごと交互に色を変化させる"
 
-#: ../src/dialogs/clonetiler.cpp:2145
+#: ../src/dialogs/clonetiler.cpp:2151
 msgid "_Trace"
 msgstr "トレース(_T)"
 
-#: ../src/dialogs/clonetiler.cpp:2152
+#: ../src/dialogs/clonetiler.cpp:2158
 msgid "Trace the drawing under the tiles"
 msgstr "タイル下の状態をトレース"
 
-#: ../src/dialogs/clonetiler.cpp:2156
+#: ../src/dialogs/clonetiler.cpp:2162
 msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
 msgstr "全てのクローンがその場の色の値を抽出し適用"
 
-#: ../src/dialogs/clonetiler.cpp:2170
+#: ../src/dialogs/clonetiler.cpp:2176
 msgid "1. Pick from the drawing:"
 msgstr "1. その場から抽出:"
 
 #. ----Hbox2
-#: ../src/dialogs/clonetiler.cpp:2181 ../src/dialogs/clonetiler.cpp:2328
+#: ../src/dialogs/clonetiler.cpp:2187 ../src/dialogs/clonetiler.cpp:2334
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Color"
 msgstr "色"
 
-#: ../src/dialogs/clonetiler.cpp:2182
+#: ../src/dialogs/clonetiler.cpp:2188
 msgid "Pick the visible color and opacity"
 msgstr "表示可能な色を抽出(透過属性を含まない)"
 
-#: ../src/dialogs/clonetiler.cpp:2189 ../src/dialogs/clonetiler.cpp:2338
+#: ../src/dialogs/clonetiler.cpp:2195 ../src/dialogs/clonetiler.cpp:2344
 #: ../share/extensions/dropshadow.inx.h:3
 msgid "Opacity"
 msgstr "不透明度"
 
-#: ../src/dialogs/clonetiler.cpp:2190
+#: ../src/dialogs/clonetiler.cpp:2196
 msgid "Pick the total accumulated opacity"
 msgstr "場の不透明度の合計を抽出"
 
-#: ../src/dialogs/clonetiler.cpp:2197
+#: ../src/dialogs/clonetiler.cpp:2203
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2198
+#: ../src/dialogs/clonetiler.cpp:2204
 msgid "Pick the Red component of the color"
 msgstr "Rを抽出"
 
-#: ../src/dialogs/clonetiler.cpp:2205
+#: ../src/dialogs/clonetiler.cpp:2211
 msgid "G"
 msgstr "G"
 
-#: ../src/dialogs/clonetiler.cpp:2206
+#: ../src/dialogs/clonetiler.cpp:2212
 msgid "Pick the Green component of the color"
 msgstr "Gを抽出"
 
-#: ../src/dialogs/clonetiler.cpp:2213
+#: ../src/dialogs/clonetiler.cpp:2219
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2214
+#: ../src/dialogs/clonetiler.cpp:2220
 msgid "Pick the Blue component of the color"
 msgstr "Bを抽出"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2223
+#: ../src/dialogs/clonetiler.cpp:2229
 msgid "clonetiler|H"
 msgstr "色相"
 
-#: ../src/dialogs/clonetiler.cpp:2224
+#: ../src/dialogs/clonetiler.cpp:2230
 msgid "Pick the hue of the color"
 msgstr "色相を抽出"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2233
+#: ../src/dialogs/clonetiler.cpp:2239
 msgid "clonetiler|S"
 msgstr "彩度"
 
-#: ../src/dialogs/clonetiler.cpp:2234
+#: ../src/dialogs/clonetiler.cpp:2240
 msgid "Pick the saturation of the color"
 msgstr "彩度を抽出"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2243
+#: ../src/dialogs/clonetiler.cpp:2249
 msgid "clonetiler|L"
 msgstr "明度"
 
-#: ../src/dialogs/clonetiler.cpp:2244
+#: ../src/dialogs/clonetiler.cpp:2250
 msgid "Pick the lightness of the color"
 msgstr "明度を抽出"
 
-#: ../src/dialogs/clonetiler.cpp:2254
+#: ../src/dialogs/clonetiler.cpp:2260
 msgid "2. Tweak the picked value:"
 msgstr "2. 抽出値の補正:"
 
-#: ../src/dialogs/clonetiler.cpp:2264
+#: ../src/dialogs/clonetiler.cpp:2270
 msgid "Gamma-correct:"
 msgstr "ガンマ補正"
 
-#: ../src/dialogs/clonetiler.cpp:2269
+#: ../src/dialogs/clonetiler.cpp:2275
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "抽出値の中間を補正(+ or -)"
 
-#: ../src/dialogs/clonetiler.cpp:2276
+#: ../src/dialogs/clonetiler.cpp:2282
 msgid "Randomize:"
 msgstr "ランダマイズ:"
 
-#: ../src/dialogs/clonetiler.cpp:2281
+#: ../src/dialogs/clonetiler.cpp:2287
 msgid "Randomize the picked value by this percentage"
 msgstr "抽出値をランダマイズ"
 
-#: ../src/dialogs/clonetiler.cpp:2288
+#: ../src/dialogs/clonetiler.cpp:2294
 msgid "Invert:"
 msgstr "反転:"
 
-#: ../src/dialogs/clonetiler.cpp:2292
+#: ../src/dialogs/clonetiler.cpp:2298
 msgid "Invert the picked value"
 msgstr "抽出値を反転"
 
-#: ../src/dialogs/clonetiler.cpp:2298
+#: ../src/dialogs/clonetiler.cpp:2304
 msgid "3. Apply the value to the clones':"
 msgstr "3. 抽出値の適応範囲:"
 
-#: ../src/dialogs/clonetiler.cpp:2308
+#: ../src/dialogs/clonetiler.cpp:2314
 msgid "Presence"
 msgstr "全て"
 
-#: ../src/dialogs/clonetiler.cpp:2311
+#: ../src/dialogs/clonetiler.cpp:2317
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
 msgstr "全てのクローンをその場から抽出した値を元に生成"
 
-#: ../src/dialogs/clonetiler.cpp:2318
+#: ../src/dialogs/clonetiler.cpp:2324
 msgid "Size"
 msgstr "サイズ"
 
-#: ../src/dialogs/clonetiler.cpp:2321
+#: ../src/dialogs/clonetiler.cpp:2327
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "その場から抽出した値を元にサイズを決定"
 
-#: ../src/dialogs/clonetiler.cpp:2331
+#: ../src/dialogs/clonetiler.cpp:2337
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
 msgstr ""
 "その場から抽出した色を元に色を決定(オリジナルは無着色でなければならない)"
 
-#: ../src/dialogs/clonetiler.cpp:2341
+#: ../src/dialogs/clonetiler.cpp:2347
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "全てのクローンの不透明度をその場の値を元に決定"
 
-#: ../src/dialogs/clonetiler.cpp:2368
+#: ../src/dialogs/clonetiler.cpp:2374
 msgid "How many rows in the tiling"
 msgstr "タイルの行数"
 
-#: ../src/dialogs/clonetiler.cpp:2388
+#: ../src/dialogs/clonetiler.cpp:2394
 msgid "How many columns in the tiling"
 msgstr "タイルの列数"
 
-#: ../src/dialogs/clonetiler.cpp:2418
+#: ../src/dialogs/clonetiler.cpp:2424
 msgid "Width of the rectangle to be filled"
 msgstr "タイルで埋める幅"
 
-#: ../src/dialogs/clonetiler.cpp:2443
+#: ../src/dialogs/clonetiler.cpp:2449
 msgid "Height of the rectangle to be filled"
 msgstr "タイルで埋める高さ"
 
-#: ../src/dialogs/clonetiler.cpp:2458
+#: ../src/dialogs/clonetiler.cpp:2464
 msgid "Rows, columns: "
 msgstr "行、列:"
 
-#: ../src/dialogs/clonetiler.cpp:2459
+#: ../src/dialogs/clonetiler.cpp:2465
 msgid "Create the specified number of rows and columns"
 msgstr "設定された数のタイルを生成"
 
-#: ../src/dialogs/clonetiler.cpp:2468
+#: ../src/dialogs/clonetiler.cpp:2474
 msgid "Width, height: "
 msgstr "幅、高さ:"
 
-#: ../src/dialogs/clonetiler.cpp:2469
+#: ../src/dialogs/clonetiler.cpp:2475
 msgid "Fill the specified width and height with the tiling"
 msgstr "タイルで埋めつくす範囲を指定"
 
-#: ../src/dialogs/clonetiler.cpp:2485
+#: ../src/dialogs/clonetiler.cpp:2491
 msgid "Use saved size and position of the tile"
 msgstr ""
 
-#: ../src/dialogs/clonetiler.cpp:2488
+#: ../src/dialogs/clonetiler.cpp:2494
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
 msgstr ""
 
-#: ../src/dialogs/clonetiler.cpp:2512
+#: ../src/dialogs/clonetiler.cpp:2518
 msgid " <b>_Create</b> "
 msgstr " <b>適用(_C)</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2514
+#: ../src/dialogs/clonetiler.cpp:2520
 msgid "Create and tile the clones of the selection"
 msgstr "選択オブジェクトのクローンタイルを作成、配置"
 
@@ -709,28 +709,28 @@ msgstr "選択オブジェクトのクローンタイルを作成、配置"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2529
+#: ../src/dialogs/clonetiler.cpp:2535
 msgid " _Unclump "
 msgstr "凝集(_U)"
 
-#: ../src/dialogs/clonetiler.cpp:2530
+#: ../src/dialogs/clonetiler.cpp:2536
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "散らばったクローンを徐々に集合(繰り返し可能)"
 
-#: ../src/dialogs/clonetiler.cpp:2536
+#: ../src/dialogs/clonetiler.cpp:2542
 msgid " Re_move "
 msgstr " 削除(_M) "
 
-#: ../src/dialogs/clonetiler.cpp:2537
+#: ../src/dialogs/clonetiler.cpp:2543
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "選択オブジェクトのクローンタイルを削除"
 
-#: ../src/dialogs/clonetiler.cpp:2553
+#: ../src/dialogs/clonetiler.cpp:2559
 msgid " R_eset "
 msgstr " リセット(_E) "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2555
+#: ../src/dialogs/clonetiler.cpp:2561
 msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
@@ -747,7 +747,7 @@ msgid "_File"
 msgstr "ファイル(_F)"
 
 #. TRANSLATORS: "Clear" is a verb here
-#: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:741
+#: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
 #: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Clear"
 msgstr "ログをクリア(_C)"
@@ -777,105 +777,105 @@ msgstr "選択"
 msgid "_Custom"
 msgstr "カスタム(_C)"
 
-#: ../src/dialogs/export.cpp:244
+#: ../src/dialogs/export.cpp:247
 msgid "Export area"
 msgstr "指定範囲を出力"
 
-#: ../src/dialogs/export.cpp:259
+#: ../src/dialogs/export.cpp:262
 msgid "Units:"
 msgstr "単位:"
 
-#: ../src/dialogs/export.cpp:290
+#: ../src/dialogs/export.cpp:293
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:295
+#: ../src/dialogs/export.cpp:298
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:300 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:303 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:1925
 msgid "Width:"
 msgstr "幅:"
 
-#: ../src/dialogs/export.cpp:306
+#: ../src/dialogs/export.cpp:309
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:311
+#: ../src/dialogs/export.cpp:314
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:316 ../src/dialogs/export.cpp:421
+#: ../src/dialogs/export.cpp:319 ../src/dialogs/export.cpp:427
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "高さ:"
 
-#: ../src/dialogs/export.cpp:396
+#: ../src/dialogs/export.cpp:402
 msgid "Bitmap size"
 msgstr "ビットマップサイズ"
 
-#: ../src/dialogs/export.cpp:406 ../src/ui/widget/page-sizer.cpp:245
+#: ../src/dialogs/export.cpp:412 ../src/ui/widget/page-sizer.cpp:245
 msgid "_Width:"
 msgstr "幅(_W):"
 
-#: ../src/dialogs/export.cpp:406 ../src/dialogs/export.cpp:421
+#: ../src/dialogs/export.cpp:412 ../src/dialogs/export.cpp:427
 msgid "pixels at"
 msgstr "ピクセル"
 
-#: ../src/dialogs/export.cpp:416
+#: ../src/dialogs/export.cpp:422
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:432 ../src/ui/dialog/inkscape-preferences.cpp:490
+#: ../src/dialogs/export.cpp:438 ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "dpi"
 msgstr "dpi"
 
-#: ../src/dialogs/export.cpp:438
+#: ../src/dialogs/export.cpp:444
 msgid "_Filename"
 msgstr "ファイル名(_F)"
 
-#: ../src/dialogs/export.cpp:502
+#: ../src/dialogs/export.cpp:508
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: ../src/dialogs/export.cpp:529
+#: ../src/dialogs/export.cpp:535
 msgid " <b>_Export</b> "
 msgstr " <b>エクスポート(_E)</b> "
 
-#: ../src/dialogs/export.cpp:531
+#: ../src/dialogs/export.cpp:537
 msgid "Export the bitmap file with these settings"
 msgstr "この設定でビットマップファイルにエクスポートする"
 
-#: ../src/dialogs/export.cpp:958
+#: ../src/dialogs/export.cpp:964
 msgid "You have to enter a filename"
 msgstr "ファイル名を入力してください"
 
-#: ../src/dialogs/export.cpp:963
+#: ../src/dialogs/export.cpp:969
 msgid "The chosen area to be exported is invalid"
 msgstr "指定された範囲のエクスポートはできません"
 
-#: ../src/dialogs/export.cpp:972
+#: ../src/dialogs/export.cpp:978
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "%s は存在しないか、ディレクトリではありません。\n"
 
-#: ../src/dialogs/export.cpp:988
+#: ../src/dialogs/export.cpp:994
 msgid "Export in progress"
 msgstr "エクスポートの進捗"
 
-#: ../src/dialogs/export.cpp:994
+#: ../src/dialogs/export.cpp:1000
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "エクスポート %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1021
+#: ../src/dialogs/export.cpp:1027
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "%sにエクスポートできませんでした。\n"
 
-#: ../src/dialogs/export.cpp:1127
+#: ../src/dialogs/export.cpp:1133
 msgid "Select a filename for exporting"
 msgstr "エクスポートするファイルを選択"
 
@@ -911,201 +911,201 @@ msgid "Append filename extension automatically"
 msgstr "自動的に拡張子を追加"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
-#: ../src/dialogs/find.cpp:366
+#: ../src/dialogs/find.cpp:369
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
 msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
 
-#: ../src/dialogs/find.cpp:369
+#: ../src/dialogs/find.cpp:372
 msgid "exact"
 msgstr "完全"
 
-#: ../src/dialogs/find.cpp:369
+#: ../src/dialogs/find.cpp:372
 msgid "partial"
 msgstr "一部"
 
-#: ../src/dialogs/find.cpp:376
+#: ../src/dialogs/find.cpp:379
 msgid "No objects found"
 msgstr "オブジェクトが見付かりませんでした"
 
-#: ../src/dialogs/find.cpp:534
+#: ../src/dialogs/find.cpp:537
 msgid "T_ype: "
 msgstr "タイプ:"
 
-#: ../src/dialogs/find.cpp:541
+#: ../src/dialogs/find.cpp:544
 msgid "Search in all object types"
 msgstr "全てのオブジェクトタイプから検索"
 
-#: ../src/dialogs/find.cpp:541
+#: ../src/dialogs/find.cpp:544
 msgid "All types"
 msgstr "全てのタイプ"
 
-#: ../src/dialogs/find.cpp:552
+#: ../src/dialogs/find.cpp:555
 msgid "Search all shapes"
 msgstr "全てのシェイプから検索"
 
-#: ../src/dialogs/find.cpp:552
+#: ../src/dialogs/find.cpp:555
 msgid "All shapes"
 msgstr "全てのシェイプツール"
 
-#: ../src/dialogs/find.cpp:569
+#: ../src/dialogs/find.cpp:572
 msgid "Search rectangles"
 msgstr "矩形を検索"
 
-#: ../src/dialogs/find.cpp:569
+#: ../src/dialogs/find.cpp:572
 msgid "Rectangles"
 msgstr "矩形"
 
-#: ../src/dialogs/find.cpp:574
+#: ../src/dialogs/find.cpp:577
 msgid "Search ellipses, arcs, circles"
 msgstr "楕・円を検索"
 
-#: ../src/dialogs/find.cpp:574
+#: ../src/dialogs/find.cpp:577
 msgid "Ellipses"
 msgstr "楕円"
 
-#: ../src/dialogs/find.cpp:579
+#: ../src/dialogs/find.cpp:582
 msgid "Search stars and polygons"
 msgstr "星型やポリゴンを検索"
 
-#: ../src/dialogs/find.cpp:579
+#: ../src/dialogs/find.cpp:582
 msgid "Stars"
 msgstr "星"
 
-#: ../src/dialogs/find.cpp:584
+#: ../src/dialogs/find.cpp:587
 msgid "Search spirals"
 msgstr "螺旋を検索"
 
-#: ../src/dialogs/find.cpp:584
+#: ../src/dialogs/find.cpp:587
 msgid "Spirals"
 msgstr "螺旋"
 
 #. TRANSLATORS: polyline is a set of connected straight line segments
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
-#: ../src/dialogs/find.cpp:597
+#: ../src/dialogs/find.cpp:600
 msgid "Search paths, lines, polylines"
 msgstr "パスや線を検索"
 
-#: ../src/dialogs/find.cpp:597
+#: ../src/dialogs/find.cpp:600
 msgid "Paths"
 msgstr "パス"
 
-#: ../src/dialogs/find.cpp:602
+#: ../src/dialogs/find.cpp:605
 msgid "Search text objects"
 msgstr "テキストを検索"
 
-#: ../src/dialogs/find.cpp:602
+#: ../src/dialogs/find.cpp:605
 msgid "Texts"
 msgstr "テキスト"
 
-#: ../src/dialogs/find.cpp:607
+#: ../src/dialogs/find.cpp:610
 msgid "Search groups"
 msgstr "グループを検索"
 
-#: ../src/dialogs/find.cpp:607
+#: ../src/dialogs/find.cpp:610
 msgid "Groups"
 msgstr "グループ"
 
-#: ../src/dialogs/find.cpp:612
+#: ../src/dialogs/find.cpp:615
 msgid "Search clones"
 msgstr "クローンを検索"
 
-#: ../src/dialogs/find.cpp:612 ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Clones"
 msgstr "クローン"
 
-#: ../src/dialogs/find.cpp:617
+#: ../src/dialogs/find.cpp:620
 msgid "Search images"
 msgstr "画像を検索"
 
-#: ../src/dialogs/find.cpp:617 ../share/extensions/embedimage.inx.h:2
+#: ../src/dialogs/find.cpp:620 ../share/extensions/embedimage.inx.h:2
 msgid "Images"
 msgstr "画像"
 
-#: ../src/dialogs/find.cpp:622
+#: ../src/dialogs/find.cpp:625
 msgid "Search offset objects"
 msgstr "オフセットオブジェクトを検索"
 
-#: ../src/dialogs/find.cpp:622
+#: ../src/dialogs/find.cpp:625
 msgid "Offsets"
 msgstr "オフセット"
 
-#: ../src/dialogs/find.cpp:682
+#: ../src/dialogs/find.cpp:689
 msgid "_Text: "
 msgstr "テキスト: "
 
-#: ../src/dialogs/find.cpp:682
+#: ../src/dialogs/find.cpp:689
 msgid "Find objects by their text content (exact or partial match)"
 msgstr "含まれる文字列で検索"
 
-#: ../src/dialogs/find.cpp:683
+#: ../src/dialogs/find.cpp:690
 msgid "_ID: "
 msgstr "_ID: "
 
-#: ../src/dialogs/find.cpp:683
+#: ../src/dialogs/find.cpp:690
 msgid "Find objects by the value of the id attribute (exact or partial match)"
 msgstr "IDで検索(完全／一部一致)"
 
-#: ../src/dialogs/find.cpp:684
+#: ../src/dialogs/find.cpp:691
 msgid "_Style: "
 msgstr "スタイル: "
 
-#: ../src/dialogs/find.cpp:684
+#: ../src/dialogs/find.cpp:691
 msgid ""
 "Find objects by the value of the style attribute (exact or partial match)"
 msgstr "スタイルで検索(完全／一部一致)"
 
-#: ../src/dialogs/find.cpp:685
+#: ../src/dialogs/find.cpp:692
 msgid "_Attribute: "
 msgstr "属性: "
 
-#: ../src/dialogs/find.cpp:685
+#: ../src/dialogs/find.cpp:692
 msgid "Find objects by the name of an attribute (exact or partial match)"
 msgstr "名前で検索(完全／一部一致)"
 
-#: ../src/dialogs/find.cpp:699
+#: ../src/dialogs/find.cpp:706
 msgid "Search in s_election"
 msgstr "選択オブジェクトから検索"
 
-#: ../src/dialogs/find.cpp:703
+#: ../src/dialogs/find.cpp:710
 msgid "Limit search to the current selection"
 msgstr "選択したなかから検索"
 
-#: ../src/dialogs/find.cpp:708
+#: ../src/dialogs/find.cpp:715
 msgid "Search in current _layer"
 msgstr "現在のレイヤー上を検索"
 
-#: ../src/dialogs/find.cpp:712
+#: ../src/dialogs/find.cpp:719
 msgid "Limit search to the current layer"
 msgstr "検索対象を現在のレイヤー上に限定"
 
-#: ../src/dialogs/find.cpp:717
+#: ../src/dialogs/find.cpp:724
 msgid "Include _hidden"
 msgstr "非表示のオブジェクトを含む"
 
-#: ../src/dialogs/find.cpp:721
+#: ../src/dialogs/find.cpp:728
 msgid "Include hidden objects in search"
 msgstr "非表示のオブジェクトを検索対象にする"
 
-#: ../src/dialogs/find.cpp:726
+#: ../src/dialogs/find.cpp:733
 msgid "Include l_ocked"
 msgstr "ロックされたオブジェクトを含む"
 
-#: ../src/dialogs/find.cpp:730
+#: ../src/dialogs/find.cpp:737
 msgid "Include locked objects in search"
 msgstr "ロックされたオブジェクトを検索対象にする"
 
-#: ../src/dialogs/find.cpp:741
+#: ../src/dialogs/find.cpp:748
 msgid "Clear values"
 msgstr "値をクリア"
 
-#: ../src/dialogs/find.cpp:742
+#: ../src/dialogs/find.cpp:749
 msgid "_Find"
 msgstr "検索"
 
-#: ../src/dialogs/find.cpp:742
+#: ../src/dialogs/find.cpp:749
 msgid "Select objects matching all of the fields you filled in"
 msgstr "入力した項目を対象に検索"
 
@@ -1129,71 +1129,71 @@ msgid "Refresh the icons"
 msgstr "アイコンをリフレッシュ"
 
 #. Create the label for the object id
-#: ../src/dialogs/item-properties.cpp:115
-#: ../src/dialogs/item-properties.cpp:316
-#: ../src/dialogs/item-properties.cpp:385
-#: ../src/dialogs/item-properties.cpp:392
+#: ../src/dialogs/item-properties.cpp:118
+#: ../src/dialogs/item-properties.cpp:319
+#: ../src/dialogs/item-properties.cpp:388
+#: ../src/dialogs/item-properties.cpp:395
 msgid "_Id"
 msgstr "ID(_I)"
 
-#: ../src/dialogs/item-properties.cpp:124
+#: ../src/dialogs/item-properties.cpp:127
 msgid ""
 "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "ID属性 (文字、数字、.-_:が使用可能)"
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:138
+#: ../src/dialogs/item-properties.cpp:141
 msgid "_Set"
 msgstr "セット(_S)"
 
 #. Create the label for the object label
-#: ../src/dialogs/item-properties.cpp:147
+#: ../src/dialogs/item-properties.cpp:150
 msgid "_Label"
 msgstr "ラベル(_L)"
 
-#: ../src/dialogs/item-properties.cpp:156
+#: ../src/dialogs/item-properties.cpp:159
 msgid "A freeform label for the object"
 msgstr "任意のラベル"
 
 #. Create the label for the object title
-#: ../src/dialogs/item-properties.cpp:168 ../src/dialogs/rdf.cpp:238
+#: ../src/dialogs/item-properties.cpp:171 ../src/dialogs/rdf.cpp:238
 msgid "Title"
 msgstr "タイトル"
 
 #. Create the frame for the object description
-#: ../src/dialogs/item-properties.cpp:185 ../src/dialogs/rdf.cpp:282
+#: ../src/dialogs/item-properties.cpp:188 ../src/dialogs/rdf.cpp:282
 msgid "Description"
 msgstr "記述"
 
 #. Hide
-#: ../src/dialogs/item-properties.cpp:212
+#: ../src/dialogs/item-properties.cpp:215
 msgid "_Hide"
 msgstr "隠す(_H)"
 
-#: ../src/dialogs/item-properties.cpp:213
+#: ../src/dialogs/item-properties.cpp:216
 msgid "Check to make the object invisible"
 msgstr "オブジェクトを隠す"
 
 #. Lock
 #. TRANSLATORS: "Lock" is a verb here
-#: ../src/dialogs/item-properties.cpp:222
+#: ../src/dialogs/item-properties.cpp:225
 msgid "L_ock"
 msgstr "ロック(_O)"
 
-#: ../src/dialogs/item-properties.cpp:223
+#: ../src/dialogs/item-properties.cpp:226
 msgid "Check to make the object insensitive (not selectable by mouse)"
 msgstr "マウスで選択できなくする"
 
-#: ../src/dialogs/item-properties.cpp:299
-#: ../src/dialogs/item-properties.cpp:306
+#: ../src/dialogs/item-properties.cpp:302
+#: ../src/dialogs/item-properties.cpp:309
 msgid "Ref"
 msgstr "リファレンス"
 
-#: ../src/dialogs/item-properties.cpp:387
+#: ../src/dialogs/item-properties.cpp:390
 msgid "Id invalid! "
 msgstr "無効なIDです！"
 
-#: ../src/dialogs/item-properties.cpp:389
+#: ../src/dialogs/item-properties.cpp:392
 msgid "Id exists! "
 msgstr "存在するIDです!"
 
@@ -1281,19 +1281,19 @@ msgstr "Y:"
 msgid "%s attributes"
 msgstr "%sの属性"
 
-#: ../src/dialogs/object-properties.cpp:154
+#: ../src/dialogs/object-properties.cpp:161
 msgid "_Fill"
 msgstr "フィル(_F)"
 
-#: ../src/dialogs/object-properties.cpp:161
+#: ../src/dialogs/object-properties.cpp:168
 msgid "Stroke _paint"
 msgstr "ストロークペイント(_P)"
 
-#: ../src/dialogs/object-properties.cpp:168
+#: ../src/dialogs/object-properties.cpp:175
 msgid "Stroke st_yle"
 msgstr "ストロークスタイル(_Y)"
 
-#: ../src/dialogs/object-properties.cpp:179
+#: ../src/dialogs/object-properties.cpp:186
 msgid "Master _opacity"
 msgstr "透過性(_O)"
 
@@ -1449,7 +1449,7 @@ msgstr "ドキュメントが選択されていません"
 #: ../src/ui/dialog/inkscape-preferences.cpp:315
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
-#: ../src/ui/widget/selected-style.cpp:111
+#: ../src/ui/widget/selected-style.cpp:134
 #: ../src/ui/widget/style-swatch.cpp:169 ../src/verbs.cpp:1821
 msgid "None"
 msgstr "なし"
@@ -1544,53 +1544,53 @@ msgstr "中心"
 msgid "End Markers:"
 msgstr "終端"
 
-#: ../src/dialogs/swatches.cpp:404
+#: ../src/dialogs/swatches.cpp:418
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr ""
 
 #. TODO:  Insert widgets
-#: ../src/dialogs/text-edit.cpp:194 ../src/ui/dialog/text-properties.cpp:36
+#: ../src/dialogs/text-edit.cpp:200 ../src/ui/dialog/text-properties.cpp:36
 msgid "Font"
 msgstr "フォント"
 
-#: ../src/dialogs/text-edit.cpp:211
+#: ../src/dialogs/text-edit.cpp:217
 msgid "Layout"
 msgstr "レイアウト"
 
-#: ../src/dialogs/text-edit.cpp:224
+#: ../src/dialogs/text-edit.cpp:230
 msgid "Align lines left"
 msgstr "左に整列"
 
 #. TRANSLATORS: `Center' here is a verb.
-#: ../src/dialogs/text-edit.cpp:238
+#: ../src/dialogs/text-edit.cpp:244
 msgid "Center lines"
 msgstr "中心線"
 
-#: ../src/dialogs/text-edit.cpp:251
+#: ../src/dialogs/text-edit.cpp:257
 msgid "Align lines right"
 msgstr "右に整列"
 
-#: ../src/dialogs/text-edit.cpp:273
+#: ../src/dialogs/text-edit.cpp:279
 msgid "Horizontal text"
 msgstr "横書"
 
-#: ../src/dialogs/text-edit.cpp:287
+#: ../src/dialogs/text-edit.cpp:293
 msgid "Vertical text"
 msgstr "縦書"
 
-#: ../src/dialogs/text-edit.cpp:302
+#: ../src/dialogs/text-edit.cpp:308
 msgid "Line spacing:"
 msgstr "線の間隔:"
 
 #. Text
-#: ../src/dialogs/text-edit.cpp:348
+#: ../src/dialogs/text-edit.cpp:354
 #: ../src/ui/dialog/inkscape-preferences.cpp:372
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2048
 msgid "Text"
 msgstr "テキスト"
 
-#: ../src/dialogs/text-edit.cpp:395
+#: ../src/dialogs/text-edit.cpp:401
 msgid "Set as default"
 msgstr "デフォルトに設定"
 
@@ -1672,81 +1672,81 @@ msgid ""
 "commit changes."
 msgstr "<b>%s</b>属性を選択しています。<b>Ctrl+Enter</b>で反映させてください。"
 
-#: ../src/dialogs/xml-tree.cpp:277
+#: ../src/dialogs/xml-tree.cpp:281
 msgid "Drag to reorder nodes"
 msgstr "再編成ノードへドラッグ"
 
-#: ../src/dialogs/xml-tree.cpp:297
+#: ../src/dialogs/xml-tree.cpp:301
 msgid "New element node"
 msgstr "要素の新規作成"
 
-#: ../src/dialogs/xml-tree.cpp:319
+#: ../src/dialogs/xml-tree.cpp:323
 msgid "New text node"
 msgstr "テキストノードの新規作成"
 
-#: ../src/dialogs/xml-tree.cpp:340
+#: ../src/dialogs/xml-tree.cpp:344
 msgid "Duplicate node"
 msgstr "ノードを複製"
 
-#: ../src/dialogs/xml-tree.cpp:361
+#: ../src/dialogs/xml-tree.cpp:365
 msgid "Delete node"
 msgstr "ノードの削除"
 
-#: ../src/dialogs/xml-tree.cpp:377
+#: ../src/dialogs/xml-tree.cpp:381
 msgid "Unindent node"
 msgstr "ノードのインデントを除去"
 
-#: ../src/dialogs/xml-tree.cpp:392
+#: ../src/dialogs/xml-tree.cpp:396
 msgid "Indent node"
 msgstr "ノードのインデント"
 
-#: ../src/dialogs/xml-tree.cpp:404
+#: ../src/dialogs/xml-tree.cpp:408
 msgid "Raise node"
 msgstr "ノードを上げる"
 
-#: ../src/dialogs/xml-tree.cpp:416
+#: ../src/dialogs/xml-tree.cpp:420
 msgid "Lower node"
 msgstr "ノードを下げる"
 
-#: ../src/dialogs/xml-tree.cpp:461
+#: ../src/dialogs/xml-tree.cpp:465
 msgid "Delete attribute"
 msgstr "属性を削除"
 
 #. TRANSLATORS: "Attribute" is a noun here
-#: ../src/dialogs/xml-tree.cpp:506
+#: ../src/dialogs/xml-tree.cpp:510
 msgid "Attribute name"
 msgstr "属性名"
 
 #. TRANSLATORS: "Set" is a verb here
-#: ../src/dialogs/xml-tree.cpp:526
+#: ../src/dialogs/xml-tree.cpp:530
 msgid "Set attribute"
 msgstr "属性を追加"
 
 #. TRANSLATORS: "Set" is a verb here
-#: ../src/dialogs/xml-tree.cpp:528
+#: ../src/dialogs/xml-tree.cpp:532
 msgid "Set"
 msgstr "セット"
 
 #. TRANSLATORS: "Attribute" is a noun here
-#: ../src/dialogs/xml-tree.cpp:551
+#: ../src/dialogs/xml-tree.cpp:555
 msgid "Attribute value"
 msgstr "属性値"
 
-#: ../src/dialogs/xml-tree.cpp:1307
+#: ../src/dialogs/xml-tree.cpp:1314
 msgid "New element node..."
 msgstr "要素ノードの新規作成..."
 
-#: ../src/dialogs/xml-tree.cpp:1328
+#: ../src/dialogs/xml-tree.cpp:1335
 #: ../src/ui/dialog/whiteboard-connect.cpp:106
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:96
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: ../src/dialogs/xml-tree.cpp:1334
+#: ../src/dialogs/xml-tree.cpp:1341
 msgid "Create"
 msgstr "作成"
 
-#: ../src/dialogs/xml-tree.cpp:1447
+#: ../src/dialogs/xml-tree.cpp:1454
 #, c-format
 msgid ""
 "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
@@ -2410,7 +2410,7 @@ msgstr "ユニット"
 msgid "Point"
 msgstr "ポイント"
 
-#: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:233
+#: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:256
 msgid "pt"
 msgstr "ポイント"
 
@@ -2429,7 +2429,7 @@ msgstr "ピクセル"
 #: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:175
 #: ../src/ui/dialog/inkscape-preferences.cpp:178
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
-#: ../src/ui/widget/selected-style.cpp:229
+#: ../src/ui/widget/selected-style.cpp:252
 msgid "px"
 msgstr "ピクセル"
 
@@ -2458,7 +2458,7 @@ msgstr "パーセント"
 msgid "Millimeter"
 msgstr "ミリメートル"
 
-#: ../src/helper/units.cpp:41 ../src/ui/widget/selected-style.cpp:237
+#: ../src/helper/units.cpp:41 ../src/ui/widget/selected-style.cpp:260
 msgid "mm"
 msgstr "mm"
 
@@ -4309,47 +4309,47 @@ msgid ""
 "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr "<b>クリック</b>: ノードを選択、または編集"
 
-#: ../src/text-context.cpp:525
+#: ../src/text-context.cpp:526
 msgid "Non-printable character"
 msgstr "印刷不可能な文字"
 
-#: ../src/text-context.cpp:574
+#: ../src/text-context.cpp:575
 #, c-format
 msgid "Unicode: %s: %s"
 msgstr "ユニコード: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:577 ../src/text-context.cpp:833
 msgid "Unicode: "
 msgstr "ユニコード: "
 
-#: ../src/text-context.cpp:653
+#: ../src/text-context.cpp:654
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:686 ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "テキスト入力: <b>Enter</b>で新しい行を開始。"
 
-#: ../src/text-context.cpp:696
+#: ../src/text-context.cpp:697
 msgid "Flowed text is created."
 msgstr "フローテキストを作成しました。"
 
-#: ../src/text-context.cpp:699
+#: ../src/text-context.cpp:700
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:819
 msgid "No-break space"
 msgstr "非分割スペース"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
 #, fuzzy
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
@@ -5994,7 +5994,7 @@ msgstr "実際にトレースせずにプレビューを見る"
 
 #. #### swap black and white ####
 #: ../src/ui/dialog/tracedialog.cpp:484
-#: ../src/ui/widget/selected-style.cpp:168
+#: ../src/ui/widget/selected-style.cpp:191
 msgid "Invert"
 msgstr "復帰"
 
@@ -6496,256 +6496,256 @@ msgstr "インセット"
 msgid "Proprietary"
 msgstr "プロプライエタリ"
 
-#: ../src/ui/widget/selected-style.cpp:68 ../src/ui/widget/style-swatch.cpp:48
+#: ../src/ui/widget/selected-style.cpp:88 ../src/ui/widget/style-swatch.cpp:48
 msgid "F:"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:69 ../src/ui/widget/style-swatch.cpp:49
+#: ../src/ui/widget/selected-style.cpp:89 ../src/ui/widget/style-swatch.cpp:49
 msgid "S:"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:70
+#: ../src/ui/widget/selected-style.cpp:90
 msgid "O:"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:106
+#: ../src/ui/widget/selected-style.cpp:129
 msgid "N/A"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:109
-#: ../src/ui/widget/selected-style.cpp:849
+#: ../src/ui/widget/selected-style.cpp:132
+#: ../src/ui/widget/selected-style.cpp:944
 #, fuzzy
 msgid "Nothing selected"
 msgstr "グラデーションが選択されていません"
 
-#: ../src/ui/widget/selected-style.cpp:114
+#: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:171
 msgid "No fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:114
+#: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:171
 #, fuzzy
 msgid "No stroke"
 msgstr " (ストローク)"
 
-#: ../src/ui/widget/selected-style.cpp:116
+#: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:163 ../src/widgets/paint-selector.cpp:176
 msgid "Pattern"
 msgstr "パターン"
 
-#: ../src/ui/widget/selected-style.cpp:119
+#: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:165 ../src/widgets/paint-selector.cpp:871
 msgid "Pattern fill"
 msgstr "パターン"
 
-#: ../src/ui/widget/selected-style.cpp:119
+#: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:165
 #, fuzzy
 msgid "Pattern stroke"
 msgstr "間隔"
 
-#: ../src/ui/widget/selected-style.cpp:121
+#: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:155
 #, fuzzy
 msgid "L Gradient"
 msgstr "グラデーション"
 
-#: ../src/ui/widget/selected-style.cpp:124
+#: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:157
 #, fuzzy
 msgid "Linear gradient fill"
 msgstr "線形グラデーション"
 
-#: ../src/ui/widget/selected-style.cpp:124
+#: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:157
 #, fuzzy
 msgid "Linear gradient stroke"
 msgstr "線形グラデーション"
 
-#: ../src/ui/widget/selected-style.cpp:126
+#: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:159
 #, fuzzy
 msgid "R Gradient"
 msgstr "グラデーション"
 
-#: ../src/ui/widget/selected-style.cpp:129
+#: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:161
 #, fuzzy
 msgid "Radial gradient fill"
 msgstr "放射グラデーション"
 
-#: ../src/ui/widget/selected-style.cpp:129
+#: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:161
 #, fuzzy
 msgid "Radial gradient stroke"
 msgstr "放射グラデーション"
 
-#: ../src/ui/widget/selected-style.cpp:131
+#: ../src/ui/widget/selected-style.cpp:154
 #, fuzzy
 msgid "Different"
 msgstr "差分(_D)"
 
-#: ../src/ui/widget/selected-style.cpp:134
+#: ../src/ui/widget/selected-style.cpp:157
 #, fuzzy
 msgid "Different fills"
 msgstr "差分(_D)"
 
-#: ../src/ui/widget/selected-style.cpp:134
+#: ../src/ui/widget/selected-style.cpp:157
 #, fuzzy
 msgid "Different strokes"
 msgstr "差分(_D)"
 
-#: ../src/ui/widget/selected-style.cpp:136
+#: ../src/ui/widget/selected-style.cpp:159
 #: ../src/ui/widget/style-swatch.cpp:174
 #, fuzzy
 msgid "Unset"
 msgstr "インセット"
 
 #. TRANSLATORS COMMENT: unset is a verb here
-#: ../src/ui/widget/selected-style.cpp:139
-#: ../src/ui/widget/selected-style.cpp:197
+#: ../src/ui/widget/selected-style.cpp:162
+#: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/style-swatch.cpp:176
 msgid "Unset fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:139
-#: ../src/ui/widget/selected-style.cpp:197
+#: ../src/ui/widget/selected-style.cpp:162
+#: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/style-swatch.cpp:176
 #, fuzzy
 msgid "Unset stroke"
 msgstr " (ストローク)"
 
-#: ../src/ui/widget/selected-style.cpp:142
+#: ../src/ui/widget/selected-style.cpp:165
 #, fuzzy
 msgid "Flat color fill"
 msgstr "フラットカラー"
 
-#: ../src/ui/widget/selected-style.cpp:142
+#: ../src/ui/widget/selected-style.cpp:165
 #, fuzzy
 msgid "Flat color stroke"
 msgstr "フラットカラー"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
-#: ../src/ui/widget/selected-style.cpp:145
+#: ../src/ui/widget/selected-style.cpp:168
 #, fuzzy
 msgid "<b>a</b>"
 msgstr "<b>明度:</b>"
 
-#: ../src/ui/widget/selected-style.cpp:148
+#: ../src/ui/widget/selected-style.cpp:171
 #, fuzzy
 msgid "Fill is averaged over selected objects"
 msgstr "オブジェクトの重なる部分を切りぬく"
 
-#: ../src/ui/widget/selected-style.cpp:148
+#: ../src/ui/widget/selected-style.cpp:171
 #, fuzzy
 msgid "Stroke is averaged over selected objects"
 msgstr "オブジェクトの重なる部分を切り出す"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
-#: ../src/ui/widget/selected-style.cpp:151
+#: ../src/ui/widget/selected-style.cpp:174
 #, fuzzy
 msgid "<b>m</b>"
 msgstr "<b>明度:</b>"
 
-#: ../src/ui/widget/selected-style.cpp:154
+#: ../src/ui/widget/selected-style.cpp:177
 #, fuzzy
 msgid "Multiple selected objects have the same fill"
 msgstr "選択オブジェクトを垂直に反転"
 
-#: ../src/ui/widget/selected-style.cpp:154
+#: ../src/ui/widget/selected-style.cpp:177
 #, fuzzy
 msgid "Multiple selected objects have the same stroke"
 msgstr "選択オブジェクトを垂直に反転"
 
-#: ../src/ui/widget/selected-style.cpp:156
+#: ../src/ui/widget/selected-style.cpp:179
 #, fuzzy
 msgid "Edit fill..."
 msgstr "編集"
 
-#: ../src/ui/widget/selected-style.cpp:156
+#: ../src/ui/widget/selected-style.cpp:179
 #, fuzzy
 msgid "Edit stroke..."
 msgstr "編集"
 
-#: ../src/ui/widget/selected-style.cpp:160
+#: ../src/ui/widget/selected-style.cpp:183
 #, fuzzy
 msgid "Last set color"
 msgstr "フラットカラー"
 
-#: ../src/ui/widget/selected-style.cpp:164
+#: ../src/ui/widget/selected-style.cpp:187
 #, fuzzy
 msgid "Last selected color"
 msgstr "最後の選択部分"
 
-#: ../src/ui/widget/selected-style.cpp:172
+#: ../src/ui/widget/selected-style.cpp:195
 msgid "White"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:176
+#: ../src/ui/widget/selected-style.cpp:199
 #: ../src/widgets/sp-color-scales.cpp:458
 #: ../src/widgets/sp-color-scales.cpp:459
 msgid "Black"
 msgstr "黒:"
 
-#: ../src/ui/widget/selected-style.cpp:180
+#: ../src/ui/widget/selected-style.cpp:203
 #, fuzzy
 msgid "Copy color"
 msgstr "色"
 
-#: ../src/ui/widget/selected-style.cpp:184
+#: ../src/ui/widget/selected-style.cpp:207
 #, fuzzy
 msgid "Paste color"
 msgstr "フラットカラー"
 
-#: ../src/ui/widget/selected-style.cpp:188
+#: ../src/ui/widget/selected-style.cpp:211
 #, fuzzy
 msgid "Swap fill and stroke"
 msgstr "フィル／ストローク"
 
-#: ../src/ui/widget/selected-style.cpp:192
+#: ../src/ui/widget/selected-style.cpp:215
 msgid "Make fill opaque"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:192
+#: ../src/ui/widget/selected-style.cpp:215
 msgid "Make stroke opaque"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:201
+#: ../src/ui/widget/selected-style.cpp:224
 #, fuzzy
 msgid "Remove fill"
 msgstr " 削除(_M) "
 
-#: ../src/ui/widget/selected-style.cpp:201
+#: ../src/ui/widget/selected-style.cpp:224
 #, fuzzy
 msgid "Remove stroke"
 msgstr "リンクを除去"
 
-#: ../src/ui/widget/selected-style.cpp:254
+#: ../src/ui/widget/selected-style.cpp:277
 #, fuzzy
 msgid "Remove"
 msgstr " 削除(_M) "
 
-#: ../src/ui/widget/selected-style.cpp:855
+#: ../src/ui/widget/selected-style.cpp:950
 #, fuzzy
 msgid "Master opacity"
 msgstr "透過性(_O)"
 
-#: ../src/ui/widget/selected-style.cpp:885
+#: ../src/ui/widget/selected-style.cpp:980
 #, fuzzy, c-format
 msgid "Stroke width: %.5g%s%s"
 msgstr "線の幅"
 
-#: ../src/ui/widget/selected-style.cpp:889
+#: ../src/ui/widget/selected-style.cpp:984
 #, fuzzy
 msgid " (averaged)"
 msgstr "適用範囲"
 
-#: ../src/ui/widget/selected-style.cpp:917
+#: ../src/ui/widget/selected-style.cpp:1012
 msgid "0 (transparent)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:941
+#: ../src/ui/widget/selected-style.cpp:1036
 msgid "1.0 (opaque)"
 msgstr ""
 
