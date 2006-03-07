@@ -25,7 +25,7 @@
 #endif
 
 
-
+#include "sp-item.h"
 #include "svg/svg.h"
 #include "print.h"
 #include "display/nr-arena.h"
