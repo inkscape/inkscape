@@ -19,16 +19,16 @@ AUTOMAKE_REQUIRED_VERSION=1.7
 GLIB_REQUIRED_VERSION=2.0.0
 INTLTOOL_REQUIRED_VERSION=0.17
 
-srcdir=`dirname $0`
+srcdir=`dirname "$0"`
 test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
-cd $srcdir
+cd "$srcdir"
 
-${srcdir}/tools-version.sh
+./tools-version.sh
 
 check_version ()
 {
-    if expr $1 \>= $2 > /dev/null; then
+    if expr "$1" \>= "$2" > /dev/null; then
         echo "yes (version $1)"
     else
         echo "Too old (found version $1)!"
@@ -68,8 +68,8 @@ DIE=0
 echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if (autoconf --version) < /dev/null > /dev/null 2>&1; then
     VER=`autoconf --version \
-         | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    check_version $VER $AUTOCONF_REQUIRED_VERSION
+         | grep -iw autoconf | sed -n 's/.* \([0-9.]*\)[-a-z0-9]*$/\1/p'`
+    check_version "$VER" "$AUTOCONF_REQUIRED_VERSION"
 else
     echo
     echo "  You must have autoconf installed to compile $PROJECT."
@@ -102,8 +102,8 @@ else
 fi
 if test x$AUTOMAKE != x; then
     VER=`$AUTOMAKE --version \
-         | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
-    check_version $VER $AUTOMAKE_REQUIRED_VERSION
+         | grep automake | sed -n 's/.* \([0-9.]*\)[-a-z0-9]*$/\1/p'`
+    check_version "$VER" "$AUTOMAKE_REQUIRED_VERSION"
 
     # Exclude automake 1.9.[0-6]
     if expr $VER \>= 1.9.0 >/dev/null && expr $VER \<= 1.9.6 >/dev/null ; then
@@ -118,8 +118,8 @@ fi
 echo -n "checking for glib-gettextize >= $GLIB_REQUIRED_VERSION ... "
 if (glib-gettextize --version) < /dev/null > /dev/null 2>&1; then
     VER=`glib-gettextize --version \
-         | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
-    check_version $VER $GLIB_REQUIRED_VERSION
+         | grep glib-gettextize | sed -n 's/.* \([0-9.]*\)/\1/p'`
+    check_version "$VER" "$GLIB_REQUIRED_VERSION"
 else
     echo
     echo "  You must have glib-gettextize installed to compile $PROJECT."
@@ -131,8 +131,8 @@ fi
 echo -n "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
 if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
     VER=`intltoolize --version \
-         | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
-    check_version $VER $INTLTOOL_REQUIRED_VERSION
+         | grep intltoolize | sed -n 's/.* \([0-9.]*\)/\1/p'`
+    check_version "$VER" "$INTLTOOL_REQUIRED_VERSION"
 else
     echo
     echo "  You must have intltool installed to compile $PROJECT."
@@ -196,5 +196,3 @@ attempt_command '' intltoolize --copy --force --automake
 
 echo ""
 echo "Done!  Please run './configure' now."
-
-cd $ORIGDIR
