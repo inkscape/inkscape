@@ -338,7 +338,7 @@ sp_selected_path_reverse()
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     GSList *items = (GSList *) selection->itemList();
 
-    if (g_slist_length(items) == 0) {
+    if (!items) {
         SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
         return;
     }
@@ -347,16 +347,17 @@ sp_selected_path_reverse()
     bool did = false;
     for (GSList *i = items; i != NULL; i = i->next) {
 
-        if (!SP_IS_SHAPE(items->data))
+        if (!SP_IS_SHAPE(i->data))
             continue;
 
         did = true;
-        SPShape *shape = SP_SHAPE(items->data);
+        SPShape *shape = SP_SHAPE(i->data);
 
         SPCurve *rcurve = sp_curve_reverse(shape->curve);
 
-        char *str = sp_svg_write_path(rcurve->bpath);
+        gchar *str = sp_svg_write_path(rcurve->bpath);
         SP_OBJECT_REPR(shape)->setAttribute("d", str);
+        g_free(str);
 
         sp_curve_unref(rcurve);
     }

@@ -1,16 +1,22 @@
+2006-03-09  Peter Moulder  <pmoulder@mail.csse.monash.edu.au>
+
+	* src/path-chemistry.cpp (sp_selected_path_reverse):
+	  Fix when multiple paths are selected.
+	  Also fix a small memory leak.
+
 2006-03-06  MenTaLguY  <mental@rydia.net>
 
-    * src/document-subset.h, src/document-subset.cpp:
-      add DocumentSubset::_clear
+	* src/document-subset.h, src/document-subset.cpp:
+	  add DocumentSubset::_clear
 
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
-    * src/document-subset.h, src/document-subset.cpp:
+	* src/document-subset.h, src/document-subset.cpp:
 	  remove unneeded document parameter from constructor
 
 2006-03-05  MenTaLguY  <mental@rydia.net>
 
-    * src/document-subset.cpp:
+	* src/document-subset.cpp:
 
 	  Wire up new SPObject signal to DocumentSubset, so order changes
 	  will be reflected in the subset.
@@ -162,7 +168,7 @@
 	  src/jabber_whiteboard/deserializer.cpp, src/sp-object.cpp,
 	  src/util/share.h, src/xml/simple-node.cpp:
 
-      share_static -> share_static_string
+	  share_static -> share_static_string
 
 2006-02-07  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
@@ -178,12 +184,12 @@
 2006-02-05  Marco Scholten  <mscholtn@xs4all.nl>
 
 	* src/verbs.cpp: updated to make double clicking a tool button
-      open the new preferences dialog.
+	  open the new preferences dialog.
 	* src/ui/dialog/inkscape-preferences.cpp: updated to enable opening
-      the dialog on the correct page.
+	  the dialog on the correct page.
 	* src/ui/dialog/dialog.cpp: added virtual void present() so that
-      InkscapePreferences::present() will be called from 
-      DialogManager::showDialog()
+	  InkscapePreferences::present() will be called from 
+	  DialogManager::showDialog()
 
 2006-02-05  MenTaLguY  <mental@rydia.net>
 
@@ -246,9 +252,9 @@
 2006-01-17  Marco Scholten  <mscholtn@xs4all.nl>
 
 	* /src/ui/dialog/inkscape-preferences.cpp:
-      Added style swatches,
-      Changed Gtk::Requisition Gtk::Widget::size_request() to 	
-      void Gtk::Widget::size_request(const Requisition& requisition)	
+	  Added style swatches,
+	  Changed Gtk::Requisition Gtk::Widget::size_request() to 	
+	  void Gtk::Widget::size_request(const Requisition& requisition)	
 	* /src/ui/dialog/preferences-widget.cpp & .h:
 	  Added DialogPage::set_tip()
 
@@ -286,7 +292,7 @@
 2006-01-06  Mathieu Dimanche  <mdimanche@free.fr>
 
 	* src/util/units.cpp: forcin 'C' locale for reading units.txt file
-       Fixes bug #1391348.
+	   Fixes bug #1391348.
 
 2006-01-05  MenTaLguY  <mental@rydia.net>
 
@@ -297,7 +303,7 @@
 	* src/Makefile_insert, src/shortcuts-default-xml.cpp,
 	  src/shortcuts.cpp, src/shortcuts.xml:
 
-      Moved default shortcuts XML file into a string constant (for now);
+	  Moved default shortcuts XML file into a string constant (for now);
 	  replaced hard-coded structure with code to read XML file.
 
 2006-01-04  Peter Moulder  <pmoulder@mail.csse.monash.edu.au>
@@ -450,7 +456,7 @@
 
 2005-12-12  MenTaLguY  <mental@rydia.net>
 
-    * src/widgets/desktop-widget.cpp: moved some widgets into statusbar
+	* src/widgets/desktop-widget.cpp: moved some widgets into statusbar
 	  widget for more aesthetic appearance
 
 2005-12-12  Carl Hetherington <inkscape@carlh.net>
@@ -625,26 +631,26 @@
 
 2005-12-01  MenTaLguY  <mental@rydia.net>
 
-    * src/widgets/desktop-widget.cpp: shuffle status bar around again;
+	* src/widgets/desktop-widget.cpp: shuffle status bar around again;
 	  add a grippie so we don't have to care about the corner of the window
 	  getting covered up
 
 2005-12-01  MenTaLguY  <mental@rydia.net>
 
-    * src/widgets/icon.cpp: refactored a bit around the icon prerendering
+	* src/widgets/icon.cpp: refactored a bit around the icon prerendering
 	  code and added a timer; also kick off the task immediately rather
 	  than waiting for the first expose event
 
 2005-12-01  MenTaLguY  <mental@rydia.net>
 
-    * src/widgets/desktop-widget.cpp:
+	* src/widgets/desktop-widget.cpp:
 
 	  moved zoom selector away from the right edge so it won't get covered
 	  by window manager decorations
 
 2005-12-01  MenTaLguY  <mental@rydia.net>
 
-    * src/help.cpp, src/ui/dialog/aboutbox.h, src/ui/dialog/aboutbox.cpp:
+	* src/help.cpp, src/ui/dialog/aboutbox.h, src/ui/dialog/aboutbox.cpp:
 
 	  Moved creation of the splash widget into the about dialog code,
 	  and tweaked the appearance of the dialog in a lot of subtle ways
@@ -662,8 +668,8 @@
 
 2005-11-30  MenTaLguY  <mental@rydia.net>
 
-   * src/ui/dialog/aboutbox.cpp: make 'close' button default widget,
-     and rename "About" tab to "_Splash"
+	* src/ui/dialog/aboutbox.cpp: make 'close' button default widget,
+	  and rename "About" tab to "_Splash"
 
 2005-11-30  Carl Hetherington <inkscape@carlh.net>
 
@@ -686,7 +692,7 @@
 	
 2005-11-26  MenTaLguY <mental@rydia.net>
 
-    * src/ui/dialog/aboutbox.cpp, src/ui/dialog/aboutbox.h:
+	* src/ui/dialog/aboutbox.cpp, src/ui/dialog/aboutbox.h:
 	  clean up and simplify About dialog; fix memory management (mostly)
 
 2005-11-25  Robert Crosbie <swingincelt@gmail.com>
@@ -697,20 +703,20 @@
 
 2005-11-24  MenTaLguY  <mental@rydia.net>
 
-    * src/shortcuts.cpp, src/interface.cpp: prune back shortcuts API in
+	* src/shortcuts.cpp, src/interface.cpp: prune back shortcuts API in
 	  preparation for configurable key bindings work
 
 2005-11-24  MenTaLguY  <mental@rydia.net>
 
-    * src/sp-item.cpp: remedy erroneous initialization of doubles with NULL
+	* src/sp-item.cpp: remedy erroneous initialization of doubles with NULL
 
 2005-11-24  MenTaLguY  <mental@rydia.net>
 
-    * src/seltrans.cpp: prune dead wood (sp_sel_trans_handle_click)
+	* src/seltrans.cpp: prune dead wood (sp_sel_trans_handle_click)
 
 2005-11-24  MenTaLguY  <mental@rydia.net>
 
-    * src/display/canvas-arena.cpp, src/display/canvas-bpath.cpp,
+	* src/display/canvas-arena.cpp, src/display/canvas-bpath.cpp,
 	  src/display/canvas-grid.cpp, src/display/guideline.cpp,
 	  src/display/sodipodi-ctrl.cpp, src/display/sodipodi-ctrlrect.cpp,
 	  src/display/sp-canvas-util.cpp, src/display/sp-canvas-util.h,
@@ -793,7 +799,7 @@
 
 2005-11-08  Ralf Stephan <ralf@ark.in-berlin.de>
 
-    merged with branch CXXIFICATION_VIEW_AND_WIDGET
+	merged with branch CXXIFICATION_VIEW_AND_WIDGET
 	* src/arc-context.cpp, src/dyna-draw-context.cpp, src/event-context.cpp,
 	  src/file.cpp, gradient-context.cpp, src/inkscape.cpp, src/interface.cpp,
 	  src/rect-context.cpp, src/select-context.cpp, src/seltrans.cpp,
