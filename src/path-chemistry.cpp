@@ -84,7 +84,7 @@ sp_selected_path_combine (void)
 	gint topmost = (SP_OBJECT_REPR ((SPItem *) g_slist_last(items)->data))->position();
 
 	// remember the id of the bottomost object
-	const char *id = SP_OBJECT_REPR ((SPItem *) items->data)->attribute("id");
+	char const *id = SP_OBJECT_REPR ((SPItem *) items->data)->attribute("id");
 
 	// FIXME: merge styles of combined objects instead of using the first one's style
 	gchar *style = g_strdup (SP_OBJECT_REPR ((SPItem *) items->data)->attribute("style"));
@@ -174,7 +174,7 @@ sp_selected_path_break_apart (void)
 
 		Inkscape::XML::Node *parent = SP_OBJECT_REPR (item)->parent();
 		gint pos = SP_OBJECT_REPR (item)->position();
-		const char *id = SP_OBJECT_REPR (item)->attribute("id");
+		char const *id = SP_OBJECT_REPR (item)->attribute("id");
 
 		gchar *style = g_strdup (SP_OBJECT (item)->repr->attribute("style"));
 
@@ -269,7 +269,7 @@ sp_selected_path_to_curves0 (gboolean interactive, guint32 text_grouping_policy)
 		// remember parent
 		Inkscape::XML::Node *parent = SP_OBJECT_REPR (item)->parent();
 		// remember id
-		const char *id = SP_OBJECT_REPR (item)->attribute("id");
+		char const *id = SP_OBJECT_REPR (item)->attribute("id");
 
 		selection->remove(item);
 
