@@ -53,6 +53,13 @@
 
 #include "message-context.h"
 
+// Added for color drag-n-drop
+#include "display/sp-canvas.h"
+#include "color.h"
+#include "svg/svg.h"
+#include "desktop-style.h"
+#include "style.h"
+
 
 using Inkscape::IO::StringOutputStream;
 using Inkscape::IO::Base64OutputStream;
@@ -67,7 +74,8 @@ typedef enum {
     SVG_DATA,
     PNG_DATA,
     JPEG_DATA,
-    IMAGE_DATA
+    IMAGE_DATA,
+    APP_X_COLOR
 } ui_drop_target_info;
 
 static GtkTargetEntry ui_drop_target_entries [] = {
@@ -76,6 +84,7 @@ static GtkTargetEntry ui_drop_target_entries [] = {
     {"image/svg",     0, SVG_DATA},
     {"image/png",     0, PNG_DATA},
     {"image/jpeg",    0, JPEG_DATA},
+    {"application/x-color", 0, APP_X_COLOR}
 };
 
 static GtkTargetEntry *completeDropTargets = 0;
@@ -965,6 +974,42 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          gpointer user_data)
 {
     switch (info) {
+        case APP_X_COLOR:
+        {
+            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+            int destX = 0;
+            int destY = 0;
+            gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+            NR::Point where( sp_canvas_window_to_world( desktop->canvas, NR::Point( destX, destY ) ) );
+
+            SPItem *item = desktop->item_at_point( where, true );
+            if ( item )
+            {
+                if ( data->length == 8 ) {
+                    gchar c[64] = {0};
+                    // Careful about endian issues.
+                    guint16* dataVals = (guint16*)data->data;
+                    sp_svg_write_color( c, 64,
+                                        SP_RGBA32_U_COMPOSE(
+                                            0x0ff & (dataVals[0] >> 8),
+                                            0x0ff & (dataVals[1] >> 8),
+                                            0x0ff & (dataVals[2] >> 8),
+                                            0xff // can't have transparency in the color itself
+                                            //0x0ff & (data->data[3] >> 8),
+                                            ));
+                    SPCSSAttr *css = sp_repr_css_attr_new();
+                    sp_repr_css_set_property( css, (true) ? "fill":"stroke", c );
+
+                    sp_desktop_apply_css_recursive( item, css, true );
+                    item->updateRepr();
+
+                    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+                    sp_document_done( doc );
+                }
+            }
+        }
+        break;
+
         case SVG_DATA:
         case SVG_XML_DATA: {
             gchar *svgdata = (gchar *)data->data;
