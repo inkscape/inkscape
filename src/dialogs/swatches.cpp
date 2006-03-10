@@ -18,6 +18,7 @@
 #include <gtk/gtkdnd.h>
 
 #include <glibmm/i18n.h>
+#include <gdkmm/pixbuf.h>
 #include "inkscape.h"
 #include "document.h"
 #include "desktop-handles.h"
@@ -114,6 +115,21 @@ static void dragGetColorData( GtkWidget *widget,
     }
 }
 
+static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
+{
+    ColorItem* item = reinterpret_cast<ColorItem*>(data);
+    if ( item )
+    {
+        Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, 32, 24 );
+        guint32 fillWith = (0xff000000 & (item->_r << 24))
+                         | (0x00ff0000 & (item->_g << 16))
+                         | (0x0000ff00 & (item->_b <<  8));
+        thumb->fill( fillWith );
+        gtk_drag_set_icon_pixbuf( dc, thumb->gobj(), 0, 0 );
+    }
+
+}
+
 //"drag-drop"
 gboolean dragDropColorData( GtkWidget *widget,
                             GdkDragContext *drag_context,
@@ -205,6 +221,11 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
                           "drag-data-get",
                           G_CALLBACK(dragGetColorData),
                           this);
+
+        g_signal_connect( G_OBJECT(newBlot->gobj()),
+                          "drag-begin",
+                          G_CALLBACK(dragBegin),
+                          this );
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "drag-drop",
