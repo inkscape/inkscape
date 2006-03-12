@@ -114,9 +114,13 @@ public:
     bool operator== (const ColorRGBA other) const {
         for (int i = 0; i < 4; i++) {
             if (_c[i] != other[i])
-                return FALSE;
+                return false;
         }
-        return TRUE;
+        return true;
+    }
+
+    bool operator!=(ColorRGBA const &o) const {
+        return !(*this == o);
     }
 
     /**
