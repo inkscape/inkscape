@@ -659,6 +659,8 @@ sp_object_detach(SPObject *parent, SPObject *object) {
     g_return_if_fail(SP_IS_OBJECT(object));
     g_return_if_fail(object->parent == parent);
 
+    sp_object_invoke_release(object);
+
     SPObject *prev=NULL;
     for ( SPObject *child = parent->children ; child && child != object ;
           child = child->next )
@@ -679,7 +681,6 @@ sp_object_detach(SPObject *parent, SPObject *object) {
     object->next = NULL;
     object->parent = NULL;
 
-    sp_object_invoke_release(object);
     parent->_updateTotalHRefCount(-object->_total_hrefcount);
     sp_object_unref(object, parent);
 }
@@ -870,9 +871,6 @@ sp_object_invoke_release(SPObject *object)
     g_assert(object != NULL);
     g_assert(SP_IS_OBJECT(object));
 
-    // we need to remember our parent
-    // g_assert(!object->parent);
-    g_assert(!object->next);
     g_assert(object->document);
     g_assert(object->repr);
 

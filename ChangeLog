@@ -1,9 +1,16 @@
+2006-03-11  MenTaLguY  <mental@rydia.net>
+
+	* src/sp-object.cpp: experiment to verify that we can safely release
+	  before removing object from document tree
+
 2006-03-10  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/dialogs/swatches.cpp:
 
 	  Changed color dragging to have a color preview.
 	
 2006-03-09  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/interface.cpp:
 
 	  Initial cut of color drag-n-drop to items on canvas.
