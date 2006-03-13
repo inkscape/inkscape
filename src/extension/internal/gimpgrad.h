@@ -23,15 +23,12 @@ namespace Internal {
             just creates a namespace for the GIMP gradient plugin today.
 */
 class GimpGrad : public Inkscape::Extension::Implementation::Implementation {
-private:
-    Glib::ustring new_stop (ColorRGBA in_color, float location);
-
 public:
     bool load(Inkscape::Extension::Extension *module);
     void unload(Inkscape::Extension::Extension *module);
     SPDocument *open(Inkscape::Extension::Input *module, gchar const *filename);
 
-	static void init (void);
+    static void init();
 };
 
 
@@ -46,4 +43,4 @@ public:
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
