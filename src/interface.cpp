@@ -998,7 +998,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                             //0x0ff & (data->data[3] >> 8),
                                             ));
                     SPCSSAttr *css = sp_repr_css_attr_new();
-                    sp_repr_css_set_property( css, (true) ? "fill":"stroke", c );
+                    sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
 
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
