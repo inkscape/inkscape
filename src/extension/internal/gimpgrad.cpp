@@ -19,7 +19,7 @@
 #include "io/sys.h"
 #include "extension/system.h"
 #include "svg/css-ostringstream.h"
-#include "svg/svg.h" // svg-color.h
+#include "svg/svg-color.h"
 
 #include "gimpgrad.h"
 #include "streq.h"

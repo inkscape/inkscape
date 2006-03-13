@@ -23,6 +23,7 @@
 #include "xml/croco-node-iface.h"
 
 #include "svg/svg.h"
+#include "svg/svg-color.h"
 
 #include "display/canvas-bpath.h"
 #include "attributes.h"

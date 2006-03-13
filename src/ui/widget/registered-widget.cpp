@@ -24,7 +24,7 @@
 
 #include "helper/units.h"
 #include "xml/repr.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "svg/stringstream.h"
 
 #include "inkscape.h"

@@ -20,7 +20,7 @@
 
 #include "display/canvas-grid.h"
 #include "helper/units.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "xml/repr.h"
 #include "attributes.h"
 #include "document.h"

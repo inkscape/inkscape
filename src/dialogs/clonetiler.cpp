@@ -40,6 +40,7 @@
 #include "xml/repr.h"
 
 #include "svg/svg.h"
+#include "svg/svg-color.h"
 
 #include "libnr/nr-matrix-fns.h"
 #include "libnr/nr-matrix-ops.h"

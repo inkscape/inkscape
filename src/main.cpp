@@ -65,6 +65,7 @@
 #include "unit-constants.h"
 
 #include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "svg/stringstream.h"
 
 #include "inkscape-private.h"

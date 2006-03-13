@@ -14,7 +14,7 @@
 #include "desktop.h"
 #include "color-rgba.h"
 #include "svg/css-ostringstream.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "selection.h"
 #include "sp-tspan.h"
 #include "sp-textpath.h"

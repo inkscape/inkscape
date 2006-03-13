@@ -41,7 +41,7 @@
 #include <document-private.h>
 #include <desktop-style.h>
 #include <style.h>
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 
 #include "paint-selector.h"

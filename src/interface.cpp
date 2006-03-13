@@ -56,7 +56,7 @@
 // Added for color drag-n-drop
 #include "display/sp-canvas.h"
 #include "color.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "style.h"
 

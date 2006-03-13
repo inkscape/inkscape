@@ -393,7 +393,7 @@ sp_gvs_defs_modified (SPObject *defs, guint flags, SPGradientVectorSelector *gvs
 #include "../widgets/sp-color-preview.h"
 #include "../widgets/widget-sizes.h"
 #include "../xml/node-event-vector.h"
-#include "../svg/svg.h"
+#include "../svg/svg-color.h"
 
 
 #define PAD 4

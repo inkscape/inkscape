@@ -29,6 +29,7 @@
 
 #include "display/nr-gradient-gpl.h"
 #include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "attributes.h"
 #include "document-private.h"

@@ -27,7 +27,7 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "display/curve.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "color.h"
 #include "color-rgba.h"
 #include "desktop-style.h"

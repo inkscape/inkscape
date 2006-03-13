@@ -24,7 +24,7 @@
 #include "desktop-handles.h"
 #include "extension/db.h"
 #include "inkscape.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "io/sys.h"
 #include "path-prefix.h"

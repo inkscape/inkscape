@@ -29,6 +29,7 @@
 #include <libnr/nr-matrix-fns.h>
 #include "xml/repr.h"
 #include "svg/svg.h"
+#include "svg/svg-color.h"
 
 
 // Terminology:

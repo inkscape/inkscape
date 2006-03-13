@@ -32,7 +32,7 @@
 #include "document.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
-#include "svg/svg.h"
+#include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "helper/units.h"
 
