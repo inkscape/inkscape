@@ -17,13 +17,13 @@
 # include "config.h"
 #endif
 
+#include "svg-color.h"
 #include <math.h>
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 #include <glib/ghash.h>
 #include <glib/gutils.h>
-
-#include "svg.h"
+#include "strneq.h"
 
 struct SPSVGColor {
     unsigned long rgb;
@@ -220,7 +220,7 @@ sp_svg_read_color(gchar const *str, guint32 def)
             /* must be either 3 or 6 digits. */
             return def;
         }
-    } else if (!strncmp(str, "rgb(", 4)) {
+    } else if (strneq(str, "rgb(", 4)) {
         gboolean hasp, hasd;
         gchar *s, *e;
         gdouble r, g, b;
