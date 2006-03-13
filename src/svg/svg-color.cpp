@@ -18,6 +18,7 @@
 #endif
 
 #include <math.h>
+#include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 #include <glib/ghash.h>
 #include <glib/gutils.h>
@@ -182,8 +183,6 @@ static SPSVGColor const sp_svg_color_named[] = {
     { 0x9ACD32, "yellowgreen" }
 };
 
-#define SP_SVG_NUMCOLORS (sizeof(sp_svg_color_named) / sizeof(sp_svg_color_named[0]))
-
 static GHashTable *sp_svg_create_color_hash();
 
 guint32
@@ -192,11 +191,6 @@ sp_svg_read_color(gchar const *str, guint32 def)
     static GHashTable *colors = NULL;
     gchar c[32];
     guint32 val = 0;
-
-    /*
-     * todo: handle the rgb (r, g, b) and rgb ( r%, g%, b%), syntax
-     * defined in http://www.w3.org/TR/REC-CSS2/syndata.html#color-units
-     */
 
     if (str == NULL) return def;
     while ((*str <= ' ') && *str) str++;
@@ -306,9 +300,13 @@ sp_svg_read_color(gchar const *str, guint32 def)
     return (val << 8);
 }
 
+/**
+ * \pre buflen \>= 8.
+ */
 gint
-sp_svg_write_color(gchar *buf, gint buflen, guint32 color)
+sp_svg_write_color(gchar *buf, unsigned const buflen, guint32 const color)
 {
+    g_assert(8 <= buflen);
     return g_snprintf(buf, buflen, "#%06x", color >> 8);
 }
 
@@ -317,7 +315,7 @@ sp_svg_create_color_hash()
 {
     GHashTable *colors = g_hash_table_new(g_str_hash, g_str_equal);
 
-    for (unsigned i = 0 ; i < SP_SVG_NUMCOLORS ; i++) {
+    for (unsigned i = 0 ; i < G_N_ELEMENTS(sp_svg_color_named) ; i++) {
         g_hash_table_insert(colors,
                             (gpointer)(sp_svg_color_named[i].name),
                             (gpointer)(&sp_svg_color_named[i].rgb));
