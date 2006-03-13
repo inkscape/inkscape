@@ -4,7 +4,7 @@
 #include <glib/gtypes.h>
 
 unsigned int sp_svg_read_color(gchar const *str, unsigned int dfl);
-int sp_svg_write_color(char *buf, unsigned buflen, unsigned int color);
+void sp_svg_write_color(char *buf, unsigned int buflen, unsigned int rgba32);
 
 
 #endif /* !SVG_SVG_COLOR_H_SEEN */
