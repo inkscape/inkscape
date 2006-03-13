@@ -3325,12 +3325,13 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
             return g_snprintf(b, len, "%s:currentColor;", key);
         } else {
             switch (paint->type) {
-                case SP_PAINT_TYPE_COLOR:
-                    return g_snprintf(b, len, "%s:#%06x;", key, sp_color_get_rgba32_falpha(&paint->value.color, 0.0) >> 8);
-                    break;
+                case SP_PAINT_TYPE_COLOR: {
+                    char color_buf[8];
+                    sp_svg_write_color(color_buf, sizeof(color_buf), sp_color_get_rgba32_ualpha(&paint->value.color, 0));
+                    return g_snprintf(b, len, "%s:%s;", key, color_buf);
+                }
                 case SP_PAINT_TYPE_PAINTSERVER:
                     return g_snprintf(b, len, "%s:url(%s);", key, paint->value.paint.uri);
-                    break;
                 default:
                     break;
             }

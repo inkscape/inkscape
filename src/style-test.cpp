@@ -249,7 +249,7 @@ static void
 color_val(char const prop[], char const *const dummy_vals[])
 {
     assert(dummy_vals == NULL);
-    char const *const extra_vals[] = {"#0000ff", NULL};
+    char const *const extra_vals[] = {"blue", "#234", "#0100ff", NULL};
     enum_val(prop, extra_vals);
 #if 0
     char const *color_vals[G_N_ELEMENTS(color_keywords) + G_N_ELEMENTS(extra_vals)];
@@ -540,10 +540,10 @@ test_style()
         char const *const *tst_fn_arg;
         bool can_explicitly_inherit;
     } const props[] = {
-        {"color", "#000000", "#000000", color_val, NULL, true},
+        {"color", "black", "black", color_val, NULL, true},
         // initial value "depends on user agent"
         {"display", "inline", "inline", enum_val, display_vals, true},
-        {"fill", "#000000", "black", paint_val, NULL, true},
+        {"fill", "black", "black", paint_val, NULL, true},
         {"fill-opacity", "1", "1", opacity_val, NULL, true},
         {"fill-rule", "nonzero", "nonzero", enum_val, fill_rule_vals, true},
         {"font-family", "Bitstream Vera Sans", "Bitstream Vera Sans", font_family_val, NULL, true},
@@ -595,8 +595,8 @@ test_style()
         "writing-mode:lr-tb;"
         "text-anchor:start;"
         "opacity:1;"
-        "color:#000000;"
-        "fill:#000000;"
+        "color:black;"
+        "fill:black;"
         "fill-opacity:1;"
         "fill-rule:nonzero;"
         "stroke:none;"
@@ -687,7 +687,7 @@ test_style()
                                                bad[i], bad[i]);
             UTEST_TEST(tst_name) {
                 gchar *str0_set = merge_then_write_string(style_str, SP_STYLE_FLAG_IFSET);
-                UTEST_ASSERT(streq(str0_set, "color:#112233"));
+                UTEST_ASSERT(streq(str0_set, "color:#123"));
                 g_free(str0_set);
             }
             g_free(style_str);
