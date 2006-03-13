@@ -146,7 +146,7 @@ static gint sp_style_write_ifontsize(gchar *p, gint len, gchar const *key, SPIFo
 static gint sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const *const key, SPILengthOrNormal const *const val, SPILengthOrNormal const *const base, guint const flags);
 static gint sp_style_write_itextdecoration(gchar *p, gint const len, gchar const *const key, SPITextDecoration const *const val, SPITextDecoration const *const base, guint const flags);
 
-void css2_unescape_unquote (SPIString *val);
+static void css2_unescape_unquote(SPIString *val);
 
 static void sp_style_paint_clear(SPStyle *style, SPIPaint *paint, unsigned hunref, unsigned unset);
 
@@ -726,7 +726,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             if (!style->text_private) sp_style_privatize_text(style);
             if (!style->text->font_family.set) {
                 sp_style_read_istring(&style->text->font_family, val);
-                css2_unescape_unquote (&style->text->font_family);
+                css2_unescape_unquote(&style->text->font_family);
             }
             break;
         case SP_PROP_FONT_SIZE:
@@ -1240,15 +1240,15 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
         // expressible in the current font family, but that's difficult to
         // find out, so jumping by 3 seems an appropriate approximation
         style->font_weight.computed = (parent_val <= SP_CSS_FONT_WEIGHT_100 + 3
-                           ? (unsigned)SP_CSS_FONT_WEIGHT_100
-                           : parent_val - 3);
+                                       ? (unsigned)SP_CSS_FONT_WEIGHT_100
+                                       : parent_val - 3);
         g_assert(style->font_weight.computed <= (unsigned) SP_CSS_FONT_WEIGHT_900);
     } else if (style->font_weight.value == SP_CSS_FONT_WEIGHT_BOLDER) {
         unsigned const parent_val = parent->font_weight.computed;
         g_assert(parent_val <= SP_CSS_FONT_WEIGHT_900);
         style->font_weight.computed = (parent_val >= SP_CSS_FONT_WEIGHT_900 - 3
-                           ? (unsigned)SP_CSS_FONT_WEIGHT_900
-                           : parent_val + 3);
+                                       ? (unsigned)SP_CSS_FONT_WEIGHT_900
+                                       : parent_val + 3);
         g_assert(style->font_weight.computed <= (unsigned) SP_CSS_FONT_WEIGHT_900);
     }
 
@@ -1258,15 +1258,15 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     } else if (style->font_stretch.value == SP_CSS_FONT_STRETCH_NARROWER) {
         unsigned const parent_val = parent->font_stretch.computed;
         style->font_stretch.computed = (parent_val == SP_CSS_FONT_STRETCH_ULTRA_CONDENSED
-                        ? parent_val
-                        : parent_val - 1);
+                                        ? parent_val
+                                        : parent_val - 1);
         g_assert(style->font_stretch.computed <= (unsigned) SP_CSS_FONT_STRETCH_ULTRA_EXPANDED);
     } else if (style->font_stretch.value == SP_CSS_FONT_STRETCH_WIDER) {
         unsigned const parent_val = parent->font_stretch.computed;
         g_assert(parent_val <= SP_CSS_FONT_STRETCH_ULTRA_EXPANDED);
         style->font_stretch.computed = (parent_val == SP_CSS_FONT_STRETCH_ULTRA_EXPANDED
-                        ? parent_val
-                        : parent_val + 1);
+                                        ? parent_val
+                                        : parent_val + 1);
         g_assert(style->font_stretch.computed <= (unsigned) SP_CSS_FONT_STRETCH_ULTRA_EXPANDED);
     }
 
@@ -1848,7 +1848,7 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 
         /* display is in principle similar to opacity, but implementation is easier. */
         if ( parent->display.set && !parent->display.inherit
-                    && parent->display.value == SP_CSS_DISPLAY_NONE ) {
+             && parent->display.value == SP_CSS_DISPLAY_NONE ) {
             style->display.value = SP_CSS_DISPLAY_NONE;
             style->display.set = true;
             style->display.inherit = false;
@@ -3325,14 +3325,14 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
             return g_snprintf(b, len, "%s:currentColor;", key);
         } else {
             switch (paint->type) {
-            case SP_PAINT_TYPE_COLOR:
-                return g_snprintf(b, len, "%s:#%06x;", key, sp_color_get_rgba32_falpha(&paint->value.color, 0.0) >> 8);
-                break;
-            case SP_PAINT_TYPE_PAINTSERVER:
+                case SP_PAINT_TYPE_COLOR:
+                    return g_snprintf(b, len, "%s:#%06x;", key, sp_color_get_rgba32_falpha(&paint->value.color, 0.0) >> 8);
+                    break;
+                case SP_PAINT_TYPE_PAINTSERVER:
                     return g_snprintf(b, len, "%s:url(%s);", key, paint->value.paint.uri);
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
             }
             return g_snprintf(b, len, "%s:none;", key);
         }
@@ -3528,7 +3528,7 @@ sp_css_attr_from_object(SPObject *object, guint const flags)
     SPStyle const *const style = SP_OBJECT_STYLE(object);
     if (style == NULL)
         return NULL;
-    return sp_css_attr_from_style (style, flags);
+    return sp_css_attr_from_style(style, flags);
 }
 
 /**
@@ -3683,18 +3683,18 @@ sp_css_attr_scale(SPCSSAttr *css, double ex)
  * ALL strings (check CSS spec), in which case this should be part of
  * read_istring.
  */
-void
-css2_unescape_unquote (SPIString *val)
+static void
+css2_unescape_unquote(SPIString *val)
 {
     if (val->set && val->value && strlen(val->value) >= 2) {
 
-       /// \todo unescape all \-escaped chars
+        /// \todo unescape all \-escaped chars
 
         int l = strlen(val->value);
-        if ((val->value[0] == '"' && val->value[l - 1] == '"') ||
-            (val->value[0] == '\'' && val->value[l - 1] == '\'')) {
-                memcpy (val->value, val->value+1, l - 2);
-                val->value[l - 2] = '\0';
+        if ( ( val->value[0] == '"' && val->value[l - 1] == '"' )  ||
+             ( val->value[0] == '\'' && val->value[l - 1] == '\'' )  ) {
+            memcpy(val->value, val->value + 1, l - 2);
+            val->value[l - 2] = '\0';
         }
     }
 }
