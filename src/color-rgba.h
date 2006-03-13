@@ -145,25 +145,7 @@ public:
         return ColorRGBA(returnval[0], returnval[1], returnval[2], returnval[3]);
     }
 
-   /**
-        \brief  Create a ColorRGBA with the inverse color of the current ColorRGBA
-
-        do 1 minus each color components (but not the alpha) and put it into \c _c.
-    */
-    ColorRGBA getInverse() const {
-        return ColorRGBA( (1.0 - _c[0]), (1.0 - _c[1]), (1.0 - _c[2]), _c[3] );
-    }
-
-   /**
-        \brief  Create a ColorRGBA with the inverse color of a given ColorRGBA
-
-        do 1 minus each color components (but not the alpha) and put it into \c _c.
-    */
-    ColorRGBA getInverse(const ColorRGBA ref) const {
-        return getInverse(ref);
-    }
-
-   /**
+    /**
         \brief  Give the rgba32 "unsigned int" representation of the color
 
         round each components*255 and combine them (RRGGBBAA).
