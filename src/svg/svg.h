@@ -63,7 +63,7 @@ unsigned sp_svg_transform_write(gchar str[], unsigned size, NRMatrix const *tran
 double sp_svg_read_percentage (const char * str, double def);
 
 unsigned int sp_svg_read_color (const gchar * str, unsigned int def);
-int sp_svg_write_color (char * buf, int buflen, unsigned int color);
+int sp_svg_write_color(char *buf, unsigned buflen, unsigned int color);
 
 /* NB! As paths can be long, we use here dynamic string */
 
