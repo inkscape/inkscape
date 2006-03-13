@@ -30,7 +30,7 @@ struct SPSVGColor {
 /*
  * These are the colors defined in the SVG standard
  */
-static SPSVGColor sp_svg_color_named[] = {
+static SPSVGColor const sp_svg_color_named[] = {
 	{ 0xF0F8FF, "aliceblue" },
 	{ 0xFAEBD7, "antiquewhite" },
 	{ 0x00FFFF, "aqua" },
@@ -182,10 +182,10 @@ static SPSVGColor sp_svg_color_named[] = {
 
 #define SP_SVG_NUMCOLORS (sizeof (sp_svg_color_named) / sizeof (sp_svg_color_named[0]))
 
-static GHashTable *sp_svg_create_color_hash (void);
+static GHashTable *sp_svg_create_color_hash();
 
 guint32
-sp_svg_read_color (const gchar *str, guint32 def)
+sp_svg_read_color (gchar const *str, guint32 def)
 {
 	static GHashTable *colors = NULL;
 	gchar c[32];
@@ -311,14 +311,14 @@ sp_svg_write_color (gchar * buf, gint buflen, guint32 color)
 }
 
 static GHashTable *
-sp_svg_create_color_hash (void)
+sp_svg_create_color_hash()
 {
 	GHashTable * colors = g_hash_table_new (g_str_hash, g_str_equal);
 
 	for (unsigned i = 0 ; i < SP_SVG_NUMCOLORS ; i++) {
-		void const *name = sp_svg_color_named[i].name;
-		gpointer val = &(sp_svg_color_named[i].rgb);
-		g_hash_table_insert(colors, const_cast<gpointer>(name), val);
+		g_hash_table_insert(colors,
+				    (gpointer)(sp_svg_color_named[i].name),
+				    (gpointer)(&sp_svg_color_named[i].rgb));
 	}
 
 	return colors;
