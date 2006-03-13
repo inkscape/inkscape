@@ -13,7 +13,6 @@
  */
 #include <glib/gtypes.h>
 #include "svg/svg-length.h"
-#include "svg/svg-color.h"
 #include <vector>
 
 struct NArtBpath;
