@@ -390,8 +390,14 @@ sp_style_new()
     sp_style_clear(style);
 
     style->cloned = false;
-    style->hreffed = false;
-    style->listening = false;
+
+    style->color_hreffed = false;
+    style->fill_hreffed = false;
+    style->stroke_hreffed = false;
+
+    style->color_listening = false;
+    style->fill_listening = false;
+    style->stroke_listening = false;
 
     return style;
 }
@@ -2003,15 +2009,27 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
             paint->value.paint.uri = parent->value.paint.uri;
             if (paint->value.paint.server) {
                 if (style->object && !style->cloned) { // href paintserver for style of non-clones only
-                    style->hreffed = true;
                     sp_object_href(SP_OBJECT(paint->value.paint.server), style);
+                    if (paint == &style->fill) {
+                        style->fill_hreffed = true;
+                    } else if (paint == &style->stroke) {
+                        style->stroke_hreffed = true;
+                    } else if (paint == &style->color) {
+                        style->color_hreffed = true;
+                    }
                 }
                 if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
                     g_signal_connect(G_OBJECT(paint->value.paint.server), "release",
                                      G_CALLBACK(sp_style_paint_server_release), style);
                     g_signal_connect(G_OBJECT(paint->value.paint.server), "modified",
                                      G_CALLBACK(sp_style_paint_server_modified), style);
-                    style->listening = true;
+                    if (paint == &style->fill) {
+                        style->fill_listening = true;
+                    } else if (paint == &style->stroke) {
+                        style->stroke_listening = true;
+                    } else if (paint == &style->color) {
+                        style->color_listening = true;
+                    }
                 }
             }
             break;
@@ -2859,14 +2877,26 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                 paint->value.paint.server = SP_PAINT_SERVER(ps);
                 if (style->object && !style->cloned) {
                     sp_object_href(SP_OBJECT(paint->value.paint.server), style);
-                    style->hreffed = true;
+                    if (paint == &style->fill) {
+                        style->fill_hreffed = true;
+                    } else if (paint == &style->stroke) {
+                        style->stroke_hreffed = true;
+                    } else if (paint == &style->color) {
+                        style->color_hreffed = true;
+                    }
                 }
                 if (style->object || style->cloned) {
                     g_signal_connect(G_OBJECT(paint->value.paint.server), "release",
                                      G_CALLBACK(sp_style_paint_server_release), style);
                     g_signal_connect(G_OBJECT(paint->value.paint.server), "modified",
                                      G_CALLBACK(sp_style_paint_server_modified), style);
-                    style->listening = true;
+                    if (paint == &style->fill) {
+                        style->fill_listening = true;
+                    } else if (paint == &style->stroke) {
+                        style->stroke_listening = true;
+                    } else if (paint == &style->color) {
+                        style->color_listening = true;
+                    }
                 }
             } else {
                 paint->value.paint.server = NULL;
@@ -3404,15 +3434,38 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint,
                      unsigned hunref, unsigned unset)
 {
     if (hunref && (paint->type == SP_PAINT_TYPE_PAINTSERVER) && paint->value.paint.server) {
-        if (style->hreffed) {
-            sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
-            style->hreffed = false;
-        }
-        if (style->listening) {
-            g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
+        if (paint == &style->fill) {
+            if (style->fill_hreffed) {
+                sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
+                style->fill_hreffed = false;
+            }
+            if (style->fill_listening) {
+                g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
                                                  G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
-            style->listening = false;
+                style->fill_listening = false;
+            }
+        } else if (paint == &style->stroke) {
+            if (style->stroke_hreffed) {
+                sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
+                style->stroke_hreffed = false;
+            }
+            if (style->stroke_listening) {
+                g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
+                                                 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
+                style->stroke_listening = false;
+            }
+        } else if (paint == &style->color) {
+            if (style->color_hreffed) {
+                sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
+                style->color_hreffed = false;
+            }
+            if (style->color_listening) {
+                g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
+                                                 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
+                style->color_listening = false;
+            }
         }
+
         paint->value.paint.server = NULL;
         paint->value.paint.uri = NULL;
         paint->type = SP_PAINT_TYPE_NONE;
