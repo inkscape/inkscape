@@ -294,7 +294,7 @@ sp_use_description(SPItem *item)
     char *ret;
     if (use->child) {
         static unsigned recursion_depth = 0;
-        if (recursion_depth >= 2) {
+        if (recursion_depth >= 4) {
             /* TRANSLATORS: Used for statusbar description for long <use> chains:
              * "Clone of: Clone of: ... in Layer 1". */
             return g_strdup(_("..."));
