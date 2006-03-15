@@ -40,7 +40,7 @@ namespace GC {
  *
  * Note that a cycle involving an anchored object (with nonzero refcount)
  * cannot be collected.  To avoid this, don't increment refcounts for
- * pointers between two garbage-collected objects.
+ * pointers between two GC-managed objects.
  *
  * @see Inkscape::GC::Managed
  * @see Inkscape::GC::Finalized
