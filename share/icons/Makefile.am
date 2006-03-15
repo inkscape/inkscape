@@ -8,11 +8,11 @@ icons_DATA = \
 	inkscape.svg \
 	\
 	icons.svg \
-	crispy_icons.svg \
+	legacy_icons.svg \
 	David_icons.svg \
 	\
 	README.icon_themes \
-	README.crispy_icons \
+	README.legacy_icons \
 	README.David_icons
 	
 EXTRA_DIST = $(icons_DATA)

@@ -1,3 +1,8 @@
+2006-03-15  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* share/icons/Makefile.am: Update a makefile after the icon file
+	  renaming.
+
 2005-03-14  MenTaLguY  <mental@rydia.net>
 
 	* src/layer-fns.h, src/dialogs/layer-properties.cpp,
