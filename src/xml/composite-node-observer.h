@@ -51,12 +51,12 @@ public:
                                  Node *old_prev, Node *new_prev);
 
     void notifyContentChanged(Node &node,
-                              Util::shared_ptr<char> old_content,
-                              Util::shared_ptr<char> new_content);
+                              Util::ptr_shared<char> old_content,
+                              Util::ptr_shared<char> new_content);
 
     void notifyAttributeChanged(Node &node, GQuark name,
-                                Util::shared_ptr<char> old_value,
-                                Util::shared_ptr<char> new_value);
+                                Util::ptr_shared<char> old_value,
+                                Util::ptr_shared<char> new_value);
 
 private:
     unsigned _iterating;

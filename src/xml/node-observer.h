@@ -43,12 +43,12 @@ public:
                                          Node *old_prev, Node *new_prev)=0;
 
     virtual void notifyContentChanged(Node &node,
-                                      Util::shared_ptr<char> old_content,
-                                      Util::shared_ptr<char> new_content)=0;
+                                      Util::ptr_shared<char> old_content,
+                                      Util::ptr_shared<char> new_content)=0;
 
     virtual void notifyAttributeChanged(Node &node, GQuark name,
-                                        Util::shared_ptr<char> old_value,
-                                        Util::shared_ptr<char> new_value)=0;
+                                        Util::ptr_shared<char> old_value,
+                                        Util::ptr_shared<char> new_value)=0;
 };
 
 }

@@ -140,7 +140,7 @@ private:
 
     Inkscape::Util::MutableList<AttributeRecord> _attributes;
 
-    Inkscape::Util::shared_ptr<char> _content;
+    Inkscape::Util::ptr_shared<char> _content;
 
     unsigned _child_count;
     mutable bool _cached_positions_valid;

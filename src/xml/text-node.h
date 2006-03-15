@@ -23,7 +23,7 @@ namespace Inkscape {
 namespace XML {
 
 struct TextNode : public SimpleNode {
-    TextNode(Util::shared_ptr<char> content)
+    TextNode(Util::ptr_shared<char> content)
     : SimpleNode(g_quark_from_static_string("string"))
     {
         setContent(content);

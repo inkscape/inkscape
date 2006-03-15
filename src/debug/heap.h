@@ -36,7 +36,7 @@ public:
 
     virtual int features() const=0;
 
-    virtual Util::shared_ptr<char> name() const=0;
+    virtual Util::ptr_shared<char> name() const=0;
     virtual Stats stats() const=0;
     virtual void force_collect()=0;
 };

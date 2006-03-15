@@ -1,5 +1,5 @@
 /*
- * Inkscape::Util::shared_ptr<T> - like T const *, but stronger
+ * Inkscape::Util::ptr_shared<T> - like T const *, but stronger
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
@@ -15,12 +15,12 @@
 namespace Inkscape {
 namespace Util {
 
-shared_ptr<char> share_string(char const *string) {
+ptr_shared<char> share_string(char const *string) {
     g_return_val_if_fail(string != NULL, share_unsafe<char>(NULL));
     return share_string(string, std::strlen(string));
 }
 
-shared_ptr<char> share_string(char const *string, std::size_t length) {
+ptr_shared<char> share_string(char const *string, std::size_t length) {
     g_return_val_if_fail(string != NULL, share_unsafe<char>(NULL));
     char *new_string=new (GC::ATOMIC) char[length+1];
     std::memcpy(new_string, string, length);

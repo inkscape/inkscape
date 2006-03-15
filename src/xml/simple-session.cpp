@@ -88,8 +88,8 @@ void SimpleSession::notifyChildOrderChanged(Node &parent,
 }
 
 void SimpleSession::notifyContentChanged(Node &node,
-                                         Util::shared_ptr<char> old_content,
-                                         Util::shared_ptr<char> new_content)
+                                         Util::ptr_shared<char> old_content,
+                                         Util::ptr_shared<char> new_content)
 {
     if (_in_transaction) {
         _log_builder.setContent(node, old_content, new_content);
@@ -98,8 +98,8 @@ void SimpleSession::notifyContentChanged(Node &node,
 
 void SimpleSession::notifyAttributeChanged(Node &node,
                                            GQuark name,
-                                           Util::shared_ptr<char> old_value,
-                                           Util::shared_ptr<char> new_value)
+                                           Util::ptr_shared<char> old_value,
+                                           Util::ptr_shared<char> new_value)
 {
     if (_in_transaction) {
         _log_builder.setAttribute(node, name, old_value, new_value);

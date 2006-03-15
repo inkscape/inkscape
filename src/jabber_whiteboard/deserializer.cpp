@@ -284,7 +284,7 @@ Deserializer::deserializeEventChgContent(Glib::ustring const& msg)
 {
 	// 1.  Extract required attributes: node ID.  If we do not know these, return.
 	std::string id;
-	Util::shared_ptr<char> oldval, newval;
+	Util::ptr_shared<char> oldval, newval;
 	Node buf;
 
 	buf.tag = MESSAGE_ID;
@@ -344,7 +344,7 @@ Deserializer::deserializeEventChgAttr(Glib::ustring const& msg)
 	// 2.  Extract optional attributes: new value.  If we do not find it in the message,
 	// assume there is no new value.
 	buf.tag = MESSAGE_NEWVAL;
-	Util::shared_ptr<char> newval;
+	Util::ptr_shared<char> newval;
 	if (MessageUtilities::findTag(buf, msg)) {
 		newval = Util::share_string(buf.data.c_str());
 	} else {
@@ -354,7 +354,7 @@ Deserializer::deserializeEventChgAttr(Glib::ustring const& msg)
 	// 3.  Extract optional attributes: old value.  If we do not find it in the message,
 	// assume that there is no old value.
 	buf.tag = MESSAGE_OLDVAL;
-	Util::shared_ptr<char> oldval;
+	Util::ptr_shared<char> oldval;
 	if (MessageUtilities::findTag(buf, msg)) {
 		oldval = Util::share_string(buf.data.c_str());
 	} else {

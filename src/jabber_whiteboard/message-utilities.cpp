@@ -297,7 +297,7 @@ MessageUtilities::objectDeleteMessage(Glib::ustring* msgbuf, XMLNodeTracker* xmt
 }
 
 void
-MessageUtilities::contentChangeMessage(Glib::ustring& msgbuf, std::string const nodeid, Util::shared_ptr<char> old_value, Util::shared_ptr<char> new_value)
+MessageUtilities::contentChangeMessage(Glib::ustring& msgbuf, std::string const nodeid, Util::ptr_shared<char> old_value, Util::ptr_shared<char> new_value)
 {
 	if (!nodeid.empty()) {
 		// <MESSAGE_NODECONTENT>

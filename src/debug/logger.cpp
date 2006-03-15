@@ -25,7 +25,7 @@ bool Logger::_category_mask[Event::N_CATEGORIES];
 
 namespace {
 
-static void write_escaped_value(std::ostream &os, Util::shared_ptr<char> value) {
+static void write_escaped_value(std::ostream &os, Util::ptr_shared<char> value) {
     for ( char const *current=value ; *current ; ++current ) {
         switch (*current) {
         case '&':
@@ -57,7 +57,7 @@ static void write_indent(std::ostream &os, unsigned depth) {
 
 static std::ofstream log_stream;
 static bool empty_tag=false;
-typedef std::vector<Util::shared_ptr<char>, GC::Alloc<Util::shared_ptr<char>, GC::MANUAL> > TagStack;
+typedef std::vector<Util::ptr_shared<char>, GC::Alloc<Util::ptr_shared<char>, GC::MANUAL> > TagStack;
 static TagStack &tag_stack() {
     static TagStack stack;
     return stack;
@@ -136,7 +136,7 @@ void Logger::init() {
 }
 
 void Logger::_start(Event const &event) {
-    Util::shared_ptr<char> name=event.name();
+    Util::ptr_shared<char> name=event.name();
 
     if (empty_tag) {
         log_stream << ">\n";
@@ -161,7 +161,7 @@ void Logger::_start(Event const &event) {
 }
 
 void Logger::_skip() {
-    tag_stack().push_back(Util::shared_ptr<char>());
+    tag_stack().push_back(Util::ptr_shared<char>());
 }
 
 void Logger::_finish() {

@@ -23,7 +23,7 @@ namespace Inkscape {
 namespace XML {
 
 struct CommentNode : public SimpleNode {
-    explicit CommentNode(Util::shared_ptr<char> content)
+    explicit CommentNode(Util::ptr_shared<char> content)
     : SimpleNode(g_quark_from_static_string("comment"))
     {
         setContent(content);

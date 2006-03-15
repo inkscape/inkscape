@@ -48,16 +48,16 @@ void LogBuilder::setChildOrder(Node &node, Node &child,
 }
 
 void LogBuilder::setContent(Node &node,
-                            Util::shared_ptr<char> old_content,
-                            Util::shared_ptr<char> new_content)
+                            Util::ptr_shared<char> old_content,
+                            Util::ptr_shared<char> new_content)
 {
     _log = new Inkscape::XML::EventChgContent(&node, old_content, new_content, _log);
     _log = _log->optimizeOne();
 }
 
 void LogBuilder::setAttribute(Node &node, GQuark name,
-                              Util::shared_ptr<char> old_value,
-                              Util::shared_ptr<char> new_value)
+                              Util::ptr_shared<char> old_value,
+                              Util::ptr_shared<char> new_value)
 {
     _log = new Inkscape::XML::EventChgAttr(&node, name, old_value, new_value, _log);
     _log = _log->optimizeOne();

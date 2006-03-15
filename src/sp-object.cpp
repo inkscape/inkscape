@@ -227,16 +227,16 @@ sp_object_finalize(GObject *object)
 
 namespace {
 
-Inkscape::Util::shared_ptr<char> stringify(SPObject *obj) {
+Inkscape::Util::ptr_shared<char> stringify(SPObject *obj) {
     char *temp=g_strdup_printf("%p", obj);
-    Inkscape::Util::shared_ptr<char> result=Inkscape::Util::share_string(temp);
+    Inkscape::Util::ptr_shared<char> result=Inkscape::Util::share_string(temp);
     g_free(temp);
     return result;
 }
 
-Inkscape::Util::shared_ptr<char> stringify(unsigned n) {
+Inkscape::Util::ptr_shared<char> stringify(unsigned n) {
     char *temp=g_strdup_printf("%u", n);
-    Inkscape::Util::shared_ptr<char> result=Inkscape::Util::share_string(temp);
+    Inkscape::Util::ptr_shared<char> result=Inkscape::Util::share_string(temp);
     g_free(temp);
     return result;
 }
@@ -252,7 +252,7 @@ public:
 
     static Category category() { return REFCOUNT; }
 
-    Inkscape::Util::shared_ptr<char> name() const {
+    Inkscape::Util::ptr_shared<char> name() const {
         if ( _type == REF) {
             return Inkscape::Util::share_static_string("sp-object-ref");
         } else {
@@ -272,7 +272,7 @@ public:
     }
 
 private:
-    Inkscape::Util::shared_ptr<char> _object;
+    Inkscape::Util::ptr_shared<char> _object;
     unsigned _refcount;
     Type _type;
 };

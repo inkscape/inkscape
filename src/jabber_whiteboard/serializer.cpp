@@ -91,11 +91,11 @@ Serializer::_newObjectEventHelper(XML::Node& node, XML::Node& child, XML::Node* 
 	Inkscape::Util::List<Inkscape::XML::AttributeRecord const> attrlist = child.attributeList();
 
 	for(; attrlist; attrlist++) {
-		this->notifyAttributeChanged(child, attrlist->key, Util::shared_ptr<char>(), attrlist->value);
+		this->notifyAttributeChanged(child, attrlist->key, Util::ptr_shared<char>(), attrlist->value);
 	}
 	
 	if (child.content()) {
-		this->notifyContentChanged(child, Util::shared_ptr<char>(), Util::share_string(child.content()));
+		this->notifyContentChanged(child, Util::ptr_shared<char>(), Util::share_string(child.content()));
 	}
 
 	this->_attributes_scanned.insert(childid);
@@ -188,7 +188,7 @@ Serializer::notifyChildOrderChanged(XML::Node& node, XML::Node& child, XML::Node
 }
 
 void
-Serializer::notifyContentChanged(XML::Node& node, Util::shared_ptr<char> old_content, Util::shared_ptr<char> new_content)
+Serializer::notifyContentChanged(XML::Node& node, Util::ptr_shared<char> old_content, Util::ptr_shared<char> new_content)
 {
 	// 1.  Find the ID of the node, or generate it if it does not exist.
 	std::string nodeid = this->_findOrGenerateNodeID(node);
@@ -221,7 +221,7 @@ Serializer::notifyContentChanged(XML::Node& node, Util::shared_ptr<char> old_con
 }
 
 void
-Serializer::notifyAttributeChanged(XML::Node& node, GQuark name, Util::shared_ptr<char> old_value, Util::shared_ptr<char> new_value)
+Serializer::notifyAttributeChanged(XML::Node& node, GQuark name, Util::ptr_shared<char> old_value, Util::ptr_shared<char> new_value)
 {
 	// 1.  Find the ID of the node that has had an attribute modified, or generate it if it
 	// does not exist.

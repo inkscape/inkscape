@@ -28,7 +28,7 @@ namespace XML {
 
 namespace {
 
-Util::shared_ptr<char> stringify_node(Node const &node) {
+Util::ptr_shared<char> stringify_node(Node const &node) {
     gchar *string;
     switch (node.type()) {
     case ELEMENT_NODE: {
@@ -51,14 +51,14 @@ Util::shared_ptr<char> stringify_node(Node const &node) {
     default:
         string = g_strdup_printf("unknown(%p)", &node);
     }
-    Util::shared_ptr<char> result=Util::share_string(string);
+    Util::ptr_shared<char> result=Util::share_string(string);
     g_free(string);
     return result;
 }
 
-Util::shared_ptr<char> stringify_unsigned(unsigned n) {
+Util::ptr_shared<char> stringify_unsigned(unsigned n) {
     gchar *string = g_strdup_printf("%u", n);
-    Util::shared_ptr<char> result=Util::share_string(string);
+    Util::ptr_shared<char> result=Util::share_string(string);
     g_free(string);
     return result;
 }
@@ -75,7 +75,7 @@ public:
 
     static Category category() { return XML; }
 
-    Util::shared_ptr<char> name() const {
+    Util::ptr_shared<char> name() const {
         return Util::share_static_string("add-child");
     }
     unsigned propertyCount() const { return 3; }
@@ -92,8 +92,8 @@ public:
         }
     }
 private:
-    Util::shared_ptr<char> _parent;
-    Util::shared_ptr<char> _child;
+    Util::ptr_shared<char> _parent;
+    Util::ptr_shared<char> _child;
     unsigned _position;
 };
 
@@ -106,7 +106,7 @@ public:
 
     static Category category() { return XML; }
 
-    Util::shared_ptr<char> name() const {
+    Util::ptr_shared<char> name() const {
         return Util::share_static_string("remove-child");
     }
     unsigned propertyCount() const { return 2; }
@@ -121,8 +121,8 @@ public:
         }
     }
 private:
-    Util::shared_ptr<char> _parent;
-    Util::shared_ptr<char> _child;
+    Util::ptr_shared<char> _parent;
+    Util::ptr_shared<char> _child;
 };
 
 class DebugSetChildPosition : public Debug::Event {
@@ -140,7 +140,7 @@ public:
 
     static Category category() { return XML; }
 
-    Util::shared_ptr<char> name() const {
+    Util::ptr_shared<char> name() const {
         return Util::share_static_string("set-child-position");
     }
     unsigned propertyCount() const { return 3; }
@@ -157,21 +157,21 @@ public:
         }
     }
 private:
-    Util::shared_ptr<char> _parent;
-    Util::shared_ptr<char> _child;
+    Util::ptr_shared<char> _parent;
+    Util::ptr_shared<char> _child;
     unsigned _position;
 };
 
 class DebugSetContent : public Debug::Event {
 public:
     DebugSetContent(Node const &node,
-                    Util::shared_ptr<char> old_content,
-                    Util::shared_ptr<char> new_content)
+                    Util::ptr_shared<char> old_content,
+                    Util::ptr_shared<char> new_content)
     : _node(stringify_node(node)), _content(new_content) {}
 
     static Category category() { return XML; }
 
-    Util::shared_ptr<char> name() const {
+    Util::ptr_shared<char> name() const {
         if (_content) {
             return Util::share_static_string("set-content");
         } else {
@@ -196,22 +196,22 @@ public:
         }
     }
 private:
-    Util::shared_ptr<char> _node;
-    Util::shared_ptr<char> _content;
+    Util::ptr_shared<char> _node;
+    Util::ptr_shared<char> _content;
 };
 
 class DebugSetAttribute : public Debug::Event {
 public:
     DebugSetAttribute(Node const &node, GQuark name,
-                      Util::shared_ptr<char> old_value,
-                      Util::shared_ptr<char> new_value)
+                      Util::ptr_shared<char> old_value,
+                      Util::ptr_shared<char> new_value)
     : _node(stringify_node(node)),
       _name(Util::share_unsafe(g_quark_to_string(name))),
       _value(new_value) {}
 
     static Category category() { return XML; }
 
-    Util::shared_ptr<char> name() const {
+    Util::ptr_shared<char> name() const {
         if (_value) {
             return Util::share_static_string("set-attribute");
         } else {
@@ -239,12 +239,12 @@ public:
     }
 
 private:
-    Util::shared_ptr<char> _node;
-    Util::shared_ptr<char> _name;
-    Util::shared_ptr<char> _value;
+    Util::ptr_shared<char> _node;
+    Util::ptr_shared<char> _name;
+    Util::ptr_shared<char> _value;
 };
 
-using Inkscape::Util::shared_ptr;
+using Inkscape::Util::ptr_shared;
 using Inkscape::Util::share_string;
 using Inkscape::Util::share_unsafe;
 using Inkscape::Util::share_static_string;
@@ -366,8 +366,8 @@ bool SimpleNode::matchAttributeName(gchar const *partial_name) const {
 }
 
 void SimpleNode::setContent(gchar const *content) {
-    shared_ptr<char> old_content=_content;
-    shared_ptr<char> new_content = ( content ? share_string(content) : shared_ptr<char>() );
+    ptr_shared<char> old_content=_content;
+    ptr_shared<char> new_content = ( content ? share_string(content) : ptr_shared<char>() );
 
     Debug::EventTracker<DebugSetContent> tracker(
         *this, old_content, new_content
@@ -402,9 +402,9 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_in
 
     Debug::EventTracker<> tracker;
 
-    shared_ptr<char> old_value=( existing ? existing->value : shared_ptr<char>() );
+    ptr_shared<char> old_value=( existing ? existing->value : ptr_shared<char>() );
 
-    shared_ptr<char> new_value=shared_ptr<char>();
+    ptr_shared<char> new_value=ptr_shared<char>();
     if (value) {
         new_value = share_string(value);
         tracker.set<DebugSetAttribute>(*this, key, old_value, new_value);

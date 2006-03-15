@@ -1,3 +1,24 @@
+2006-03-14  MenTaLguY  <mental@rydia.net>
+
+	* src/debug/event.h, src/debug/gc-heap.h, src/debug/heap.h,
+	  src/debug/logger.cpp, src/debug/simple-event.h,
+	  src/debug/sysv-heap.h, src/jabber_whiteboard/deserializer.cpp,
+	  src/jabber_whiteboard/message-utilities.cpp,
+	  src/jabber_whiteboard/message-utilities.h,
+	  src/jabber_whiteboard/node-tracker-observer.h,
+	  src/jabber_whiteboard/serializer.cpp,
+	  src/jabber_whiteboard/serializer.h,
+	  src/sp-object.cpp, src/util/share.cpp, src/util/share.h,
+	  src/xml/attribute-record.h, src/xml/comment-node.h,
+	  src/xml/composite-node-observer.cpp, src/xml/composite-node-observer.h,
+	  src/xml/event.cpp, src/xml/event.h, src/xml/log-builder.cpp,
+	  src/xml/log-builder.h, src/xml/node-observer.h, src/xml/repr-io.cpp,
+	  src/xml/simple-node.cpp, src/xml/simple-node.h,
+	  src/xml/simple-session.cpp, src/xml/simple-session.h,
+	  src/xml/text-node.h:
+
+	  shared_ptr -> ptr_shared
+
 2006-03-13  Peter Moulder  <pmoulder@mail.csse.monash.edu.au>
 
 	* src/svg/svg-color.cpp (sp_svg_write_color): More readable colour

@@ -27,7 +27,7 @@ namespace Inkscape {
 namespace Util {
 
 template <typename T>
-class shared_ptr;
+class ptr_shared;
 
 }
 
@@ -47,7 +47,7 @@ public:
 	static void newObjectMessage(ustring* msgbuf, KeyToNodeMap& newidsbuf, NodeToKeyMap& newnodesbuf, NewChildObjectMessageList& childmsgbuf, XMLNodeTracker* xmt, Inkscape::XML::Node const* node, bool only_collect_nodes = false, bool collect_children = true);	
 	static void objectChangeMessage(ustring* msgbuf, XMLNodeTracker* xmt, std::string const id, gchar const* key, gchar const* oldval, gchar const* newval, bool is_interactive);
 	static void objectDeleteMessage(ustring* msgbuf, XMLNodeTracker* xmt, Inkscape::XML::Node const& parent, Inkscape::XML::Node const& child, Inkscape::XML::Node const* prev);
-	static void contentChangeMessage(ustring& msgbuf, std::string const nodeid, Util::shared_ptr<char> old_value, Util::shared_ptr<char> new_value);
+	static void contentChangeMessage(ustring& msgbuf, std::string const nodeid, Util::ptr_shared<char> old_value, Util::ptr_shared<char> new_value);
 	static void childOrderChangeMessage(ustring& msgbuf, std::string const childid, std::string const oldprevid, std::string const newprevid);
 
 	// Message parsing utilities

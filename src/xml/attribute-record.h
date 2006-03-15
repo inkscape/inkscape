@@ -13,11 +13,11 @@ namespace Inkscape {
 namespace XML {
 
 struct AttributeRecord : public Inkscape::GC::Managed<> {
-    AttributeRecord(GQuark k, Inkscape::Util::shared_ptr<char> v)
+    AttributeRecord(GQuark k, Inkscape::Util::ptr_shared<char> v)
     : key(k), value(v) {}
 
     GQuark key;
-    Inkscape::Util::shared_ptr<char> value;
+    Inkscape::Util::ptr_shared<char> value;
 
     // accept default copy constructor and assignment operator
 };

@@ -96,15 +96,15 @@ private:
 class EventChgAttr : public Event {
 public:
 	EventChgAttr(Node *repr, GQuark k,
-		     Inkscape::Util::shared_ptr<char> ov,
-                     Inkscape::Util::shared_ptr<char> nv,
+		     Inkscape::Util::ptr_shared<char> ov,
+                     Inkscape::Util::ptr_shared<char> nv,
                      Event *next)
 	: Event(repr, next), key(k),
 	  oldval(ov), newval(nv) {}
 
 	GQuark key;
-	Inkscape::Util::shared_ptr<char> oldval;
-	Inkscape::Util::shared_ptr<char> newval;
+	Inkscape::Util::ptr_shared<char> oldval;
+	Inkscape::Util::ptr_shared<char> newval;
 
 private:
 	Event *_optimizeOne();
@@ -115,13 +115,13 @@ private:
 class EventChgContent : public Event {
 public:
 	EventChgContent(Node *repr,
-                        Inkscape::Util::shared_ptr<char> ov,
-                        Inkscape::Util::shared_ptr<char> nv,
+                        Inkscape::Util::ptr_shared<char> ov,
+                        Inkscape::Util::ptr_shared<char> nv,
                         Event *next)
 	: Event(repr, next), oldval(ov), newval(nv) {}
 
-	Inkscape::Util::shared_ptr<char> oldval;
-	Inkscape::Util::shared_ptr<char> newval;
+	Inkscape::Util::ptr_shared<char> oldval;
+	Inkscape::Util::ptr_shared<char> newval;
 
 private:
 	Event *_optimizeOne();
