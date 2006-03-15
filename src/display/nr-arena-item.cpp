@@ -63,13 +63,6 @@ nr_arena_item_class_init (NRArenaItemClass *klass)
 	object_class->cpp_ctor = NRObject::invoke_ctor<NRArenaItem>;
 }
 
-NRArenaItem::NRArenaItem() {
-	// clear all reverse-pointing pointers before finalization
-	clearOnceInaccessible(&arena);
-	clearOnceInaccessible(&parent);
-	clearOnceInaccessible(&prev);
-}
-
 static void
 nr_arena_item_init (NRArenaItem *item)
 {

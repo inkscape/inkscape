@@ -40,22 +40,17 @@ namespace GC {
  *
  *      The best way to limit this effect is to only make "leaf" objects
  *      (i.e. those that don't point to other finalizaable objects)
- *      finalizable, or if the object also derives from GC::Managed<>,
- *      use GC::Managed<>::clearOnceInaccessible to register those links
- *      to be cleared once the object is made inacecssible (and before it's
- *      finalized).
+ *      finalizable, and otherwise use GC::soft_ptr<> instead of a regular
+ *      pointer for "backreferences" (e.g. parent pointers in a tree
+ *      structure), so that those references can be cleared to break any
+ *      finalization cycles.
  *
- *      In a tree structure that has parent links and finalized nodes,
- *      you will almost always want to do this with the parent links
- *      if you can't avoid having them.
- *
- *      @see Inkscape::GC::Managed<>::clearOnceInaccessible
- *      @see Inkscape::GC::Managed<>::cancelClearOnceInacessible
+ *      @see Inkscape::GC::soft_ptr<>
  *
  *   2. Because there is no guarantee when the collector will destroy
  *      objects, there is no guarantee when the destructor will get called.
  *
- *      It may not get called until the very end of the program, or never.
+ *      It may not get called until the very end of the program, or ever.
  *
  *   3. If allocated in arrays, only the first object in the array will
  *      have its destructor called, unless you make other arrangements by

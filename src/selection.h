@@ -25,6 +25,7 @@
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
+#include "gc-soft-ptr.h"
 #include "util/list.h"
 
 class SPItem;
@@ -324,7 +325,7 @@ private:
     mutable GSList *_reprs;
     mutable GSList *_items;
 
-    SPDesktop *_desktop;
+    GC::soft_ptr<SPDesktop> _desktop;
     guint _flags;
     guint _idle;
 

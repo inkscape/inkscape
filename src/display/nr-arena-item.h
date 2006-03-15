@@ -56,6 +56,7 @@
 #include <libnr/nr-rect-l.h>
 #include <libnr/nr-pixblock.h>
 #include <libnr/nr-object.h>
+#include "gc-soft-ptr.h"
 #include "nr-arena-forward.h"
 
 // My testing shows that disabling cache reduces the amount 
@@ -70,12 +71,10 @@ struct NRGC {
 };
 
 struct NRArenaItem : public NRObject {
-	NRArenaItem();
-
-	NRArena *arena;
-	NRArenaItem *parent;
+	Inkscape::GC::soft_ptr<NRArena> arena;
+	Inkscape::GC::soft_ptr<NRArenaItem> parent;
 	NRArenaItem *next;
-	NRArenaItem *prev;
+	Inkscape::GC::soft_ptr<NRArenaItem> prev;
 
 	/* Item state */
 	unsigned int state : 16;

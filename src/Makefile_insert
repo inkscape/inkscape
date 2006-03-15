@@ -228,6 +228,7 @@ libinkpost_a_SOURCES =	\
 	gc-core.h	\
 	gc-finalized.h	\
 	gc-managed.h	\
+	gc-soft-ptr.h	\
 	gc.cpp	\
 	gradient-chemistry.cpp gradient-chemistry.h	\
 	memeq.h	\

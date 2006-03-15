@@ -1,5 +1,13 @@
 2006-03-14  MenTaLguY  <mental@rydia.net>
 
+	* src/Makefile_insert, src/display/nr-arena-item.cpp,
+	  src/display/nr-arena-item.cpp, src/gc-finalized.h, src/gc-managed.h,
+	  src/gc-soft-ptr.h, src/selection.h, src/selection.cpp:
+
+	  Replace GC::Managed<>::clearOnceInaccessible with GC::soft_ptr<>
+
+2006-03-14  MenTaLguY  <mental@rydia.net>
+
 	* src/debug/event.h, src/debug/gc-heap.h, src/debug/heap.h,
 	  src/debug/logger.cpp, src/debug/simple-event.h,
 	  src/debug/sysv-heap.h, src/jabber_whiteboard/deserializer.cpp,

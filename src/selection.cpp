@@ -39,7 +39,6 @@ Selection::Selection(SPDesktop *desktop) :
     _flags(0),
     _idle(0)
 {
-    clearOnceInaccessible(&_desktop);
 }
 
 Selection::~Selection() {
