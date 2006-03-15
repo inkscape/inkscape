@@ -1782,27 +1782,37 @@ sp_selection_clone()
         return;
     }
 
-    // Check if more than one object is selected.
-    if (g_slist_length((GSList *) selection->itemList()) > 1) {
-        desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."));
-        return;
+    GSList *reprs = g_slist_copy((GSList *) selection->reprList());
+  
+    selection->clear();
+  
+    // sorting items from different parents sorts each parent's subset without possibly mixing them, just what we need
+    reprs = g_slist_sort(reprs, (GCompareFunc) sp_repr_compare_position);
+
+    GSList *newsel = NULL;
+ 
+    while (reprs) {
+        Inkscape::XML::Node *sel_repr = (Inkscape::XML::Node *) reprs->data;
+        Inkscape::XML::Node *parent = sp_repr_parent(sel_repr);
+
+        Inkscape::XML::Node *clone = sp_repr_new("svg:use");
+        sp_repr_set_attr(clone, "x", "0");
+        sp_repr_set_attr(clone, "y", "0");
+        sp_repr_set_attr(clone, "xlink:href", g_strdup_printf("#%s", sel_repr->attribute("id")));
+        
+        // add the new clone to the top of the original's parent
+        parent->appendChild(clone);
+
+        newsel = g_slist_prepend(newsel, clone);
+        reprs = g_slist_remove(reprs, sel_repr);
+        Inkscape::GC::release(clone);
     }
-
-    Inkscape::XML::Node *sel_repr = SP_OBJECT_REPR(selection->singleItem());
-    Inkscape::XML::Node *parent = sp_repr_parent(sel_repr);
-
-    Inkscape::XML::Node *clone = sp_repr_new("svg:use");
-    clone->setAttribute("x", "0");
-    clone->setAttribute("y", "0");
-    clone->setAttribute("xlink:href", g_strdup_printf("#%s", sel_repr->attribute("id")));
-
-    // add the new clone to the top of the original's parent
-    parent->appendChild(clone);
-
+    
     sp_document_done(SP_DT_DOCUMENT(desktop));
 
-    selection->set(clone);
-    Inkscape::GC::release(clone);
+    selection->setReprList(newsel);
+ 
+    g_slist_free(newsel);
 }
 
 void
