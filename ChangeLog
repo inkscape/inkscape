@@ -1,3 +1,10 @@
+2005-03-14  MenTaLguY  <mental@rydia.net>
+
+	* src/layer-fns.h, src/dialogs/layer-properties.cpp,
+	  src/dialogs/layer-properties.h, src/layer-fns.cpp:
+
+	  merged patch #1447043 from Andrius "knutux" R. to create sub-layers
+
 2006-03-14  MenTaLguY  <mental@rydia.net>
 
 	* src/Makefile_insert, src/display/nr-arena-item.cpp,

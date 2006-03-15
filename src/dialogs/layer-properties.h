@@ -20,8 +20,11 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
+#include <gtkmm/combobox.h>
+#include <gtkmm/liststore.h>
 
 #include "selection.h"
+#include "layer-fns.h"
 
 namespace Inkscape {
 namespace UI {
@@ -65,9 +68,25 @@ protected:
     SPDesktop *_desktop;
     SPObject *_layer;
 
-    Gtk::HBox         _layer_name_hbox;
+    class PositionDropdownColumns : public Gtk::TreeModel::ColumnRecord {
+    public:
+        Gtk::TreeModelColumn<LayerRelativePosition> position;
+        Gtk::TreeModelColumn<Glib::ustring> name;
+
+        PositionDropdownColumns() {
+            add(position); add(name);
+        }
+    };
+
     Gtk::Label        _layer_name_label;
     Gtk::Entry        _layer_name_entry;
+    Gtk::Label        _layer_position_label;
+    Gtk::ComboBox     _layer_position_combo;
+    Gtk::Table        _layout_table;
+
+    PositionDropdownColumns _dropdown_columns;
+    Gtk::CellRendererText _label_renderer;
+    Glib::RefPtr<Gtk::ListStore> _dropdown_list;
 
     Gtk::Button       _close_button;
     Gtk::Button       _apply_button;
@@ -85,6 +104,9 @@ protected:
     static void _showDialog(Strategy &strategy, SPDesktop *desktop, SPObject *layer);
     void _apply();
     void _close();
+
+    void _setup_position_controls();
+    void _prepareLabelRenderer(Gtk::TreeModel::const_iterator const &row);
 
 private:
     LayerPropertiesDialog(LayerPropertiesDialog const &); // no copy

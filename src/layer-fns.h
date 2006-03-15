@@ -16,8 +16,14 @@ class SPObject;
 
 namespace Inkscape {
 
-SPObject *create_layer(SPObject *root, SPObject *layer);
-
+enum LayerRelativePosition {
+    LPOS_ABOVE,
+    LPOS_BELOW,
+    LPOS_CHILD,
+};
+    
+SPObject *create_layer(SPObject *root, SPObject *layer, LayerRelativePosition position);
+    
 SPObject *next_layer(SPObject *root, SPObject *layer);
 
 SPObject *previous_layer(SPObject *root, SPObject *layer);

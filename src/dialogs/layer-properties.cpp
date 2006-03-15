@@ -4,8 +4,10 @@
  *
  * Author:
  *   Bryce W. Harrington <bryce@bryceharrington.com>
+ *   Andreas R. <knutux@users.sourceforge.net>
  *
  * Copyright (C) 2004 Bryce Harrington
+ * Copyright (C) 2006 Andreas R.
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
@@ -22,8 +24,8 @@
 #include "document.h"
 #include "message-stack.h"
 #include "desktop-handles.h"
-#include "layer-fns.h"
 #include "sp-object.h"
+#include "sp-item.h"
 
 #include "layer-properties.h"
 
@@ -39,12 +41,19 @@ LayerPropertiesDialog::LayerPropertiesDialog()
 
     Gtk::VBox *mainVBox = get_vbox();
 
+    _layout_table.set_spacings(4);
+    _layout_table.resize (1, 2);
+
     // Layer name widgets
     _layer_name_entry.set_activates_default(true);
-    _layer_name_hbox.pack_end(_layer_name_entry, false, false, 4);
     _layer_name_label.set_label(_("Layer name:"));
-    _layer_name_hbox.pack_end(_layer_name_label, false, false, 4);
-    mainVBox->pack_start(_layer_name_hbox, false, false, 4);
+    _layer_name_label.set_alignment(1.0, 0.5);
+
+    _layout_table.attach(_layer_name_label,
+                         0, 1, 0, 1, Gtk::FILL, Gtk::FILL);
+    _layout_table.attach(_layer_name_entry,
+                         1, 2, 0, 1, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
+    mainVBox->pack_start(_layout_table, false, false, 4);
 
     // Buttons
     _close_button.set_use_stock(true);
@@ -123,6 +132,51 @@ LayerPropertiesDialog::_close()
     );
 }
 
+void
+LayerPropertiesDialog::_setup_position_controls() {
+    if ( NULL == _layer || _desktop->currentRoot() == _layer ) {
+        // no layers yet, so option above/below/sublayer is useless
+        return;
+        }
+        
+    _dropdown_list = Gtk::ListStore::create(_dropdown_columns);
+    _layer_position_combo.set_model(_dropdown_list);
+    _layer_position_combo.pack_start(_label_renderer);
+    _layer_position_combo.set_cell_data_func(_label_renderer,
+                                             sigc::mem_fun(*this, &LayerPropertiesDialog::_prepareLabelRenderer));
+
+    _layout_table.resize (2, 2);
+
+    Gtk::ListStore::iterator row;
+    row = _dropdown_list->append();
+    row->set_value(_dropdown_columns.position, LPOS_ABOVE);
+    row->set_value(_dropdown_columns.name, Glib::ustring(_("Above current")));
+    _layer_position_combo.set_active(row);
+    row = _dropdown_list->append();
+    row->set_value(_dropdown_columns.position, LPOS_BELOW);
+    row->set_value(_dropdown_columns.name, Glib::ustring(_("Below current")));
+    row = _dropdown_list->append();
+    row->set_value(_dropdown_columns.position, LPOS_CHILD);
+    row->set_value(_dropdown_columns.name, Glib::ustring(_("As sublayer of current")));
+
+    _layout_table.attach(_layer_position_combo,
+                         1, 2, 1, 2, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
+    _layer_position_label.set_label(_("Position:"));
+    _layer_position_label.set_alignment(1.0, 0.5);
+    _layout_table.attach(_layer_position_label,
+                         0, 1, 1, 2, Gtk::FILL, Gtk::FILL);
+    show_all_children();
+}
+
+/** Formats the label for a given layer row 
+ */
+void LayerPropertiesDialog::_prepareLabelRenderer(
+    Gtk::TreeModel::const_iterator const &row
+) {
+    Glib::ustring name=(*row)[_dropdown_columns.name];
+    _label_renderer.property_markup() = name.c_str();
+}
+
 void LayerPropertiesDialog::Rename::setup(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
     dialog.set_title(_("Rename Layer"));
@@ -146,13 +200,17 @@ void LayerPropertiesDialog::Create::setup(LayerPropertiesDialog &dialog) {
     dialog.set_title(_("Add Layer"));
     dialog._layer_name_entry.set_text("");
     dialog._apply_button.set_label(_("_Add"));
+    dialog._setup_position_controls();
 }
 
 void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
-    SPObject *new_layer=Inkscape::create_layer(
-        desktop->currentRoot(), dialog._layer
-    );
+
+    Gtk::ListStore::iterator activeRow(dialog._layer_position_combo.get_active());
+    LayerRelativePosition position = activeRow->get_value(dialog._dropdown_columns.position);
+
+    SPObject *new_layer=Inkscape::create_layer(desktop->currentRoot(), dialog._layer, position);
+    
     Glib::ustring name(dialog._layer_name_entry.get_text());
     if (!name.empty()) {
         new_layer->setLabel((gchar *)name.c_str());
