@@ -87,8 +87,8 @@ sp_mask_init (SPMask *mask)
 	mask->maskUnits_set = FALSE;
 	mask->maskUnits = SP_CONTENT_UNITS_OBJECTBOUNDINGBOX;
 
-	mask->maskUnits_set = FALSE;
-	mask->maskUnits = SP_CONTENT_UNITS_USERSPACEONUSE;
+	mask->maskContentUnits_set = FALSE;
+	mask->maskContentUnits = SP_CONTENT_UNITS_USERSPACEONUSE;
 
 	mask->display = NULL;
 }
@@ -117,7 +117,7 @@ sp_mask_release (SPObject * object)
 
 	SPMask *cp = SP_MASK (object);
 	while (cp->display) {
-		/* We simply unref and let item to manage this in handler */
+		/* We simply unref and let item manage this in handler */
 		cp->display = sp_mask_view_list_remove (cp->display, cp->display);
 	}
 
@@ -332,7 +332,6 @@ sp_mask_set_bbox (SPMask *mask, unsigned int key, NRRect *bbox)
 			    !NR_DF_TEST_CLOSE (v->bbox.x1, bbox->x1, NR_EPSILON) ||
 			    !NR_DF_TEST_CLOSE (v->bbox.y1, bbox->y1, NR_EPSILON)) {
 				v->bbox = *bbox;
-				SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 			}
 			break;
 		}
@@ -373,3 +372,13 @@ sp_mask_view_list_remove (SPMaskView *list, SPMaskView *view)
 	return list;
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
