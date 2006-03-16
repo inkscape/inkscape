@@ -531,6 +531,7 @@ mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
             nr_arena_item_set_mask(v->arenaitem, ai);
             nr_arena_item_unref(ai);
             sp_mask_set_bbox(SP_MASK(mask), NR_ARENA_ITEM_GET_KEY(v->arenaitem), &bbox);
+            SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
     }
 }
