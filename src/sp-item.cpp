@@ -788,7 +788,18 @@ sp_item_description(SPItem *item)
     g_assert(SP_IS_ITEM(item));
 
     if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->description) {
-        return ((SPItemClass *) G_OBJECT_GET_CLASS(item))->description(item);
+        gchar *s = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->description(item);
+        if (s && item->clip_ref->getObject()) {
+            gchar *snew = g_strdup_printf ("%s; <i>clipped</i>", s);
+            g_free (s);
+            s = snew;
+        }
+        if (s && item->mask_ref->getObject()) {
+            gchar *snew = g_strdup_printf ("%s; <i>masked</i>", s);
+            g_free (s);
+            s = snew;
+        }
+        return s;
     }
 
     g_assert_not_reached();
