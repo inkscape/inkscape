@@ -183,7 +183,9 @@ sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_
 
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
+            sp_document_ensure_up_to_date (doc);
             desktop->change_document(doc);
+            sp_document_resized_signal_emit (doc, sp_document_width(doc), sp_document_height(doc));
         } else {
             if (!Inkscape::NSApplication::Application::getNewGui()) {
                 // create a whole new desktop and window
