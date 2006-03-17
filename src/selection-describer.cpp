@@ -23,6 +23,68 @@
 #include "sp-offset.h"
 #include "sp-flowtext.h"
 #include "sp-use.h"
+#include "sp-rect.h"
+#include "sp-ellipse.h"
+#include "sp-star.h"
+#include "sp-anchor.h"
+#include "sp-image.h"
+#include "sp-path.h"
+#include "sp-line.h"
+#include "sp-use.h"
+#include "sp-polyline.h"
+#include "sp-spiral.h"
+
+const gchar *
+type2term(GType type)
+{
+    if (type == SP_TYPE_ANCHOR)
+        { return _("Link"); }
+    if (type == SP_TYPE_CIRCLE)
+        { return _("Circle"); }
+    if (type == SP_TYPE_ELLIPSE)
+        { return _("Ellipse"); }
+    if (type == SP_TYPE_FLOWTEXT)
+        { return _("Flowed text"); }
+    if (type == SP_TYPE_GROUP)
+        { return _("Group"); }
+    if (type == SP_TYPE_IMAGE)
+        { return _("Image"); }
+    if (type == SP_TYPE_LINE)
+        { return _("Line"); }
+    if (type == SP_TYPE_PATH)
+        { return _("Path"); }
+    if (type == SP_TYPE_POLYGON)
+        { return _("Polygon"); }
+    if (type == SP_TYPE_POLYLINE)
+        { return _("Polyline"); }
+    if (type == SP_TYPE_RECT)
+        { return _("Rectangle"); }
+    if (type == SP_TYPE_TEXT)
+        { return _("Text"); }
+    if (type == SP_TYPE_USE)
+        { return _("Clone"); }
+    if (type == SP_TYPE_ARC)
+        { return _("Ellipse"); }
+    if (type == SP_TYPE_OFFSET)
+        { return _("Offset path"); }
+    if (type == SP_TYPE_SPIRAL)
+        { return _("Spiral"); }
+    if (type == SP_TYPE_STAR)
+        { return _("Star"); }
+    return NULL;
+}
+
+GSList *collect_terms (GSList *items)
+{
+    GSList *r = NULL;
+    for (GSList *i = items; i != NULL; i = i->next) {
+        const gchar *term = type2term (G_OBJECT_TYPE(i->data));
+        if (term != NULL && g_slist_find (r, term) == NULL)
+            r = g_slist_prepend (r, (void *) term);
+    }
+    return r;
+}
+
 
 namespace Inkscape {
 
@@ -81,26 +143,36 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             g_free(item_desc);
         } else { // multiple items
             int object_count = g_slist_length((GSList *)items);
-            const gchar *object_count_str = NULL;
-            object_count_str = g_strdup_printf (
-                                ngettext("<b>%i</b> object selected",
-                                         "<b>%i</b> objects selected",
-                                         object_count),
-                                object_count);
+
+            const gchar *objects_str = NULL;
+            GSList *terms = collect_terms ((GSList *)items);
+            int n_terms = g_slist_length(terms);
+            if (n_terms == 0) {
+                objects_str = g_strdup_printf (_("<b>%i</b> objects selected"), object_count);
+            } else if (n_terms == 1) {
+                objects_str = g_strdup_printf (_("<b>%i</b> objects of type <b>%s</b>"), object_count, (gchar *) terms->data);
+            } else if (n_terms == 2) {
+                objects_str = g_strdup_printf (_("<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"), object_count, (gchar *) terms->data, (gchar *) terms->next->data);
+            } else if (n_terms == 3) {
+                objects_str = g_strdup_printf (_("<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"), object_count, (gchar *) terms->data, (gchar *) terms->next->data, (gchar *) terms->next->next->data);
+            } else {
+                objects_str = g_strdup_printf (_("<b>%i</b> objects of <b>%i</b> types"), object_count, n_terms);
+            }
+            g_slist_free (terms);
 
             if (selection->numberOfLayers() == 1) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."),
-                              object_count_str, layer_phrase, when_selected);
+                              objects_str, layer_phrase, when_selected);
             } else {
                 _context.setF(Inkscape::NORMAL_MESSAGE,
                               ngettext("%s in <b>%i</b> layer. %s.",
                                        "%s in <b>%i</b> layers. %s.",
                                        selection->numberOfLayers()),
-                              object_count_str, selection->numberOfLayers(), when_selected);
+                              objects_str, selection->numberOfLayers(), when_selected);
             }
 
-            if (object_count_str)
-                g_free ((gchar *) object_count_str);
+            if (objects_str)
+                g_free ((gchar *) objects_str);
         }
 
         g_free(layer_phrase);
