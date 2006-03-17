@@ -831,18 +831,42 @@ sp_item_invoke_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
         nr_arena_item_set_visible(ai, !item->isHidden());
         nr_arena_item_set_sensitive(ai, item->sensitive);
         if (item->clip_ref->getObject()) {
-            NRArenaItem *ac;
-            if (!item->display->arenaitem->key) NR_ARENA_ITEM_SET_KEY(item->display->arenaitem, sp_item_display_key_new(3));
-            ac = sp_clippath_show(item->clip_ref->getObject(), arena, NR_ARENA_ITEM_GET_KEY(item->display->arenaitem));
+            SPClipPath *cp = item->clip_ref->getObject();
+
+            if (!item->display->arenaitem->key) {
+                NR_ARENA_ITEM_SET_KEY(item->display->arenaitem, sp_item_display_key_new(3));
+            }
+            int clip_key = NR_ARENA_ITEM_GET_KEY(item->display->arenaitem);
+
+            // Show and set clip
+            NRArenaItem *ac = sp_clippath_show(cp, arena, clip_key);
             nr_arena_item_set_clip(ai, ac);
             nr_arena_item_unref(ac);
+
+            // Update bbox, in case the clip uses bbox units
+            NRRect bbox;
+            sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+            sp_clippath_set_bbox(SP_CLIPPATH(cp), clip_key, &bbox);
+            SP_OBJECT(cp)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         if (item->mask_ref->getObject()) {
-            NRArenaItem *ac;
-            if (!item->display->arenaitem->key) NR_ARENA_ITEM_SET_KEY(item->display->arenaitem, sp_item_display_key_new(3));
-            ac = sp_mask_show(item->mask_ref->getObject(), arena, NR_ARENA_ITEM_GET_KEY(item->display->arenaitem));
+            SPMask *mask = item->mask_ref->getObject();
+
+            if (!item->display->arenaitem->key) {
+                NR_ARENA_ITEM_SET_KEY(item->display->arenaitem, sp_item_display_key_new(3));
+            }
+            int mask_key = NR_ARENA_ITEM_GET_KEY(item->display->arenaitem);
+
+            // Show and set mask
+            NRArenaItem *ac = sp_mask_show(mask, arena, mask_key);
             nr_arena_item_set_mask(ai, ac);
             nr_arena_item_unref(ac);
+
+            // Update bbox, in case the mask uses bbox units
+            NRRect bbox;
+            sp_item_invoke_bbox(item, &bbox, NR::identity(), TRUE);
+            sp_mask_set_bbox(SP_MASK(mask), mask_key, &bbox);
+            SP_OBJECT(mask)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         }
         NR_ARENA_ITEM_SET_DATA(ai, item);
     }
