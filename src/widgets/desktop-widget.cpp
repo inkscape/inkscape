@@ -249,8 +249,6 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_table_attach (GTK_TABLE (tbl), dtw->vscrollbar_box, 2, 3, 0, 2, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 
     /* Canvas */
-    w = gtk_frame_new (NULL);
-    gtk_table_attach (GTK_TABLE (tbl), w, 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
     dtw->canvas = SP_CANVAS (sp_canvas_new_aa ());
     GTK_WIDGET_SET_FLAGS (GTK_WIDGET (dtw->canvas), GTK_CAN_FOCUS);
     style = gtk_style_copy (GTK_WIDGET (dtw->canvas)->style);
@@ -258,7 +256,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
     gtk_widget_set_extension_events(GTK_WIDGET (dtw->canvas) , GDK_EXTENSION_EVENTS_ALL);
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
-    gtk_container_add (GTK_CONTAINER (w), GTK_WIDGET (dtw->canvas));
+    gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 
     dtw->selected_style = new Inkscape::UI::Widget::SelectedStyle(true);
     GtkHBox *ss_ = dtw->selected_style->gobj();
