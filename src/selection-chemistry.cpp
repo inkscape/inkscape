@@ -8,8 +8,9 @@
  *   Frank Felfe <innerspace@iname.com>
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Andrius R. <knutux@gmail.com>
  *
- * Copyright (C) 1999-2005 authors
+ * Copyright (C) 1999-2006 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -58,9 +59,12 @@
 #include "sp-namedview.h"
 #include "prefs-utils.h"
 #include "sp-offset.h"
+#include "sp-clippath.h"
+#include "sp-mask.h"
 #include "file.h"
 #include "layer-fns.h"
 #include "context-fns.h"
+#include <set>
 using NR::X;
 using NR::Y;
 
@@ -786,14 +790,14 @@ void sp_selection_lower_to_bottom()
 }
 
 void
-sp_undo(SPDesktop *desktop, SPDocument *doc)
+sp_undo(SPDesktop *desktop, SPDocument *)
 {
         if (!sp_document_undo(SP_DT_DOCUMENT(desktop)))
             desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to undo."));
 }
 
 void
-sp_redo(SPDesktop *desktop, SPDocument *doc)
+sp_redo(SPDesktop *desktop, SPDocument *)
 {
         if (!sp_document_redo(SP_DT_DOCUMENT(desktop)))
             desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing to redo."));
@@ -2231,6 +2235,172 @@ sp_selection_create_bitmap_copy ()
     g_free (filepath);
 }
 
+/**
+ * \brief sp_selection_set_mask
+ *
+ * This function creates a mask or clipPath from selection
+ * Two different modes:
+ *  if applyToLayer, all selection is moved to DEFS as mask/clippath
+ *       and is applied to current layer
+ *  otherwise, topmost object is used as mask for other objects
+ * If \a apply_clip_path parameter is true, clipPath is created, otherwise mask
+ * 
+ */
+void
+sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL)
+        return;
+
+    SPDocument *document = SP_DT_DOCUMENT(desktop);
+    
+    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+
+    // check if something is selected
+    bool is_empty = selection->isEmpty();
+    if ( apply_to_layer && is_empty) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to create mask from."));
+        return;
+    } else if (!apply_to_layer && ( is_empty || NULL == selection->itemList()->next )) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select mask object and <b>object(s)</b> to apply mask to."));
+        return;
+    }
+    
+    sp_document_ensure_up_to_date(document);
+
+    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    
+    items = g_slist_sort (items, (GCompareFunc) sp_object_compare_position);
+
+    // create a list of duplicates
+    GSList *mask_items = NULL;
+    GSList *apply_to_items = NULL;
+    bool topmost = prefs_get_int_attribute ("options.maskobject", "topmost", 1);
+    bool remove_original = prefs_get_int_attribute ("options.maskobject", "remove", 1);
+    
+    if (apply_to_layer) {
+        // all selected items are used for mask, which is applied to a layer
+        apply_to_items = g_slist_prepend (apply_to_items, SP_OBJECT_REPR(desktop->currentLayer()));
+
+        for (GSList *i = items; i != NULL; i = i->next) {
+            Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate();
+            mask_items = g_slist_prepend (mask_items, dup);
+
+            if (remove_original) {
+                SPObject *item = SP_OBJECT (i->data);
+                item->deleteObject (false);
+            }
+        }
+    } else if (!topmost) {
+        // topmost item is used as a mask, which is applied to other items in a selection
+        GSList *i = items;
+        Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate();
+        mask_items = g_slist_prepend (mask_items, dup);
+
+        if (remove_original) {
+            SPObject *item = SP_OBJECT (i->data);
+            item->deleteObject (false);
+        }
+        
+        for (i = i->next; i != NULL; i = i->next) {
+            apply_to_items = g_slist_prepend (apply_to_items, SP_OBJECT_REPR (i->data));
+        }
+    } else {
+        GSList *i = NULL;
+        for (i = items; NULL != i->next; i = i->next) {
+            apply_to_items = g_slist_prepend (apply_to_items, SP_OBJECT_REPR (i->data));
+        }
+
+        Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate();
+        mask_items = g_slist_prepend (mask_items, dup);
+
+        if (remove_original) {
+            SPObject *item = SP_OBJECT (i->data);
+            item->deleteObject (false);
+        }
+    }
+    
+    g_slist_free (items);
+            
+    const gchar *mask_id = NULL;
+    if (apply_clip_path) {
+        mask_id = sp_clippath_create(mask_items, document);
+    } else {
+        mask_id = sp_mask_create(mask_items, document);
+    }
+    g_slist_free (mask_items);
+
+    gchar const* attributeName = apply_clip_path ? "clip-path" : "mask";
+    for (GSList *i = apply_to_items; NULL != i; i = i->next) {
+        ((Inkscape::XML::Node *)i->data)->setAttribute(attributeName, g_strdup_printf("url(#%s)", mask_id));
+    }
+
+    g_slist_free (apply_to_items);
+
+    sp_document_done (document);
+}
+
+void sp_selection_unset_mask(bool apply_clip_path) {
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL)
+        return;
+    
+    SPDocument *document = SP_DT_DOCUMENT(desktop);    
+    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to remove mask from."));
+        return;
+    }
+    
+    bool remove_original = prefs_get_int_attribute ("options.maskobject", "remove", 1);
+    sp_document_ensure_up_to_date(document);
+
+    gchar const* attributeName = apply_clip_path ? "clip-path" : "mask";
+    std::set<SPObject*> referenced_objects;
+    for (GSList const*i = selection->itemList(); NULL != i; i = i->next) {
+        if (remove_original) {
+            // remember referenced mask/clippath, so orphaned masks can be moved back to document
+            SPItem *item = reinterpret_cast<SPItem *>(i->data);
+            Inkscape::URIReference *uri_ref = NULL;
+        
+            if (apply_clip_path) {
+                uri_ref = item->clip_ref;
+            } else {
+                uri_ref = item->mask_ref;
+            }
+    
+            if (NULL != uri_ref && referenced_objects.end() == referenced_objects.find(uri_ref->getObject())) {
+                referenced_objects.insert(uri_ref->getObject());
+            }
+        }
+
+        SP_OBJECT_REPR(i->data)->setAttribute(attributeName, "none");
+    }
+
+    for ( std::set<SPObject*>::iterator it = referenced_objects.begin() ; it != referenced_objects.end() ; ++it) {
+        SPObject *obj = (*it);
+        if (!obj->isReferenced()) {
+            GSList *items_to_move = NULL;
+            for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+                Inkscape::XML::Node *copy = SP_OBJECT_REPR(child)->duplicate();
+                items_to_move = g_slist_prepend (items_to_move, copy);
+            }
+            
+            obj->deleteObject(false);
+
+            for (GSList *i = items_to_move; NULL != i; i = i->next) {
+                desktop->currentLayer()->appendChildRepr((Inkscape::XML::Node *)i->data);
+            }
+
+            g_slist_free (items_to_move);
+        }
+    }
+
+    sp_document_done (document);
+}
 
 /*
   Local Variables:

@@ -511,6 +511,14 @@ void InkscapePreferences::initPageMisc()
     _misc_overs_bitmap.init("options.bitmapoversample", "value", labels, values, num_items, 1);
     _page_misc.add_line( false, _("Oversample bitmaps:"), _misc_overs_bitmap, "", "", false);
 
+    _page_misc.add_group_header( _("Clipping and masking:"));
+    _misc_mask_on_top.init ( _("Use the topmost selected object as a clipping path or mask"), "options.maskobject", "topmost", true);
+    _page_misc.add_line(true, "", _misc_mask_on_top, "", 
+                        _("Uncheck this to use the bottom selected object as the clipping path or mask"));
+    _misc_mask_remove.init ( _("Remove clipping path or mask after applying"), "options.maskobject", "remove", true);
+    _page_misc.add_line(true, "", _misc_mask_remove, "", 
+                        _("Affter applying, remove the object used as the clipping path or mask from the drawing"));
+
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
 

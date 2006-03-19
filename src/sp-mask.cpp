@@ -19,6 +19,7 @@
 #include "enums.h"
 #include "attributes.h"
 #include "document.h"
+#include "document-private.h"
 #include "sp-item.h"
 
 #include "sp-mask.h"
@@ -264,6 +265,28 @@ sp_mask_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 		((SPObjectClass *) (parent_class))->write (object, repr, flags);
 
 	return repr;
+}
+
+// Create a mask element (using passed elements), add it to <defs>
+const gchar *
+sp_mask_create (GSList *reprs, SPDocument *document)
+{
+    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+
+    Inkscape::XML::Node *repr = sp_repr_new ("svg:mask");
+    repr->setAttribute("maskUnits", "userSpaceOnUse");
+    
+    defsrepr->appendChild(repr);
+    const gchar *mask_id = repr->attribute("id");
+    SPObject *mask_object = document->getObjectById(mask_id);
+    
+    for (GSList *it = reprs; it != NULL; it = it->next) {
+        Inkscape::XML::Node *node = (Inkscape::XML::Node *)(it->data);
+        mask_object->appendChildRepr(node);
+    }
+    
+    Inkscape::GC::release(repr);
+    return mask_id;
 }
 
 NRArenaItem *

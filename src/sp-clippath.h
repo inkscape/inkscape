@@ -59,4 +59,6 @@ void sp_clippath_hide(SPClipPath *cp, unsigned int key);
 void sp_clippath_set_bbox(SPClipPath *cp, unsigned int key, NRRect *bbox);
 void sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const flags);
 
+const gchar *sp_clippath_create (GSList *reprs, SPDocument *document);
+
 #endif

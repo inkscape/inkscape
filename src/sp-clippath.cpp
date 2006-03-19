@@ -21,6 +21,7 @@
 #include "enums.h"
 #include "attributes.h"
 #include "document.h"
+#include "document-private.h"
 #include "sp-item.h"
 
 #include "sp-clippath.h"
@@ -368,6 +369,27 @@ sp_clippath_view_list_remove(SPClipPathView *list, SPClipPathView *view)
     return list;
 }
 
+// Create a mask element (using passed elements), add it to <defs>
+const gchar *
+sp_clippath_create (GSList *reprs, SPDocument *document)
+{
+    Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
+
+    Inkscape::XML::Node *repr = sp_repr_new ("svg:clipPath");
+    repr->setAttribute("clipPathUnits", "userSpaceOnUse");
+    
+    defsrepr->appendChild(repr);
+    const gchar *id = repr->attribute("id");
+    SPObject *clip_path_object = document->getObjectById(id);
+    
+    for (GSList *it = reprs; it != NULL; it = it->next) {
+        Inkscape::XML::Node *node = (Inkscape::XML::Node *)(it->data);
+        clip_path_object->appendChildRepr(node);
+    }
+    
+    Inkscape::GC::release(repr);
+    return id;
+}
 
 /*
   Local Variables:

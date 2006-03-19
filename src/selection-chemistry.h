@@ -87,6 +87,9 @@ void sp_redo (SPDesktop *desktop, SPDocument *doc);
 
 void sp_selection_create_bitmap_copy ();
 
+void sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer);
+void sp_selection_unset_mask(bool apply_clip_path);
+
 /* selection cycling */
 
 typedef enum

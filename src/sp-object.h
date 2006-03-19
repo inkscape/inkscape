@@ -287,6 +287,10 @@ struct SPObject : public GObject {
         }
     }
 
+    /** @brief Check if object is referenced by any other object.
+     */
+    bool isReferenced() { return ( _total_hrefcount > 0 ); }
+
     /** @brief Deletes an object.
      *
      * Detaches the object's repr, and optionally sends notification that the object has been

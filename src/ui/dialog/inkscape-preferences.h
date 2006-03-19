@@ -125,6 +125,8 @@ protected:
     PrefSpinButton  _misc_export, _misc_recent, _misc_simpl;
     PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;
     PrefCombo       _misc_overs_bitmap;
+    PrefCheckButton _misc_mask_on_top;
+    PrefCheckButton _misc_mask_remove;
 
     int _max_dialog_width;
     int _max_dialog_height;
