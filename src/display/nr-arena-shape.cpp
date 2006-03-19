@@ -185,7 +185,7 @@ nr_arena_shape_set_child_position (NRArenaItem *item, NRArenaItem *child, NRAren
 }
 
 void nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc);
-void nr_arena_shape_update_fill(NRArenaShape *shape,NRGC *gc);
+void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape = false);
 void nr_arena_shape_add_bboxes(NRArenaShape* shape,NRRect &bbox);
 
 static guint
@@ -377,11 +377,12 @@ int matrix_is_isometry(NR::Matrix p) {
     return 0;
 }
 
+/** force_shape is used for clipping paths, when we need the shape for clipping even if it's not filled */
 void
-nr_arena_shape_update_fill(NRArenaShape *shape,NRGC *gc)
+nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
 {
     shape->delayed_shp = false;
-    if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE) &&
+    if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
         ((shape->curve->end > 2) || (shape->curve->bpath[1].code == NR_CURVETO)) ) {
 	    if (TRUE || !shape->fill_shp) {
 		NR::Matrix  cached_to_new;
@@ -424,6 +425,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape,NRGC *gc)
 
 		    if ( shape->fill_shp == NULL )
 			shape->fill_shp=new Shape;
+
 		    shape->fill_shp->Reset(shape->cached_fill->numberOfPoints(),
 					   shape->cached_fill->numberOfEdges());
 		    for (int i = 0; i < shape->cached_fill->numberOfPoints(); i++)
@@ -742,15 +744,14 @@ static guint
 nr_arena_shape_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 {
     NRArenaShape *shape = NR_ARENA_SHAPE (item);
-
     if (!shape->curve) return item->state;
 
     if ( shape->delayed_shp ) {
 	if ( nr_rect_l_test_intersect (area, &item->bbox) ) {
 	    NRGC   tempGC(NULL);
 	    tempGC.transform=shape->ctm;
-	    nr_arena_shape_update_stroke(shape,&tempGC);
-	    nr_arena_shape_update_fill(shape,&tempGC);
+	    //nr_arena_shape_update_stroke(shape,&tempGC); // we don't need stroke for clipping
+	    nr_arena_shape_update_fill(shape, &tempGC, true);
 	    /*      NRRect bbox;
 		    bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
 		    nr_arena_shape_add_bboxes(shape,bbox);
