@@ -1147,10 +1147,11 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
         sp_item_adjust_paint_recursive (item, NR::identity(), NR::identity(), false);
     }
 
-    // run the object's set_transform if transforms are stored optimized
+    // run the object's set_transform if transforms are stored optimized and there's no clippath or mask
     gint preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
     NR::Matrix transform_attr (transform);
-    if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform && !preserve) {
+    if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform 
+                && !preserve && !item->clip_ref->getObject() && !item->mask_ref->getObject()) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, transform);
     }
     sp_item_set_item_transform(item, transform_attr);
