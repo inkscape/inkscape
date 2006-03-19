@@ -148,15 +148,30 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             GSList *terms = collect_terms ((GSList *)items);
             int n_terms = g_slist_length(terms);
             if (n_terms == 0) {
-                objects_str = g_strdup_printf (_("<b>%i</b> objects selected"), object_count);
+                objects_str = g_strdup_printf (
+                    // this is only used with 2 or more objects
+                    ngettext("", "<b>%i</b> objects selected", object_count), 
+                    object_count);
             } else if (n_terms == 1) {
-                objects_str = g_strdup_printf (_("<b>%i</b> objects of type <b>%s</b>"), object_count, (gchar *) terms->data);
+                objects_str = g_strdup_printf (
+                    // this is only used with 2 or more objects
+                    ngettext("", "<b>%i</b> objects of type <b>%s</b>", object_count),
+                    object_count, (gchar *) terms->data);
             } else if (n_terms == 2) {
-                objects_str = g_strdup_printf (_("<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"), object_count, (gchar *) terms->data, (gchar *) terms->next->data);
+                objects_str = g_strdup_printf (
+                    // this is only used with 2 or more objects
+                    ngettext("", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>", object_count), 
+                    object_count, (gchar *) terms->data, (gchar *) terms->next->data);
             } else if (n_terms == 3) {
-                objects_str = g_strdup_printf (_("<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"), object_count, (gchar *) terms->data, (gchar *) terms->next->data, (gchar *) terms->next->next->data);
+                objects_str = g_strdup_printf (
+                    // this is only used with 2 or more objects
+                    ngettext("", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>", object_count), 
+                    object_count, (gchar *) terms->data, (gchar *) terms->next->data, (gchar *) terms->next->next->data);
             } else {
-                objects_str = g_strdup_printf (_("<b>%i</b> objects of <b>%i</b> types"), object_count, n_terms);
+                objects_str = g_strdup_printf (
+                    // this is only used with 2 or more objects
+                    ngettext("", "<b>%i</b> objects of <b>%i</b> types", object_count), 
+                    object_count, n_terms);
             }
             g_slist_free (terms);
 
