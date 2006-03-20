@@ -4,10 +4,10 @@
  *
  * Author:
  *   Bryce W. Harrington <bryce@bryceharrington.com>
- *   Andreas R. <knutux@users.sourceforge.net>
+ *   Andrius R. <knutux@gmail.com>
  *
  * Copyright (C) 2004 Bryce Harrington
- * Copyright (C) 2006 Andreas R.
+ * Copyright (C) 2006 Andrius R.
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
