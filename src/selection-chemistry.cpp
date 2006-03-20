@@ -842,10 +842,10 @@ void sp_copy_pattern (GSList **defs_clip, SPPattern *pattern)
     }
 }
 
-void sp_copy_marker (GSList **defs_clip, SPMarker *marker)
+void sp_copy_single (GSList **defs_clip, SPObject *thing)
 {
-    Inkscape::XML::Node *marker_repr = SP_OBJECT_REPR(marker)->duplicate();
-    *defs_clip = g_slist_prepend (*defs_clip, marker_repr);
+    Inkscape::XML::Node *duplicate_repr = SP_OBJECT_REPR(thing)->duplicate();
+    *defs_clip = g_slist_prepend (*defs_clip, duplicate_repr);
 }
 
 
@@ -884,13 +884,27 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
         SPShape *shape = SP_SHAPE (item);
         for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
             if (shape->marker[i]) {
-                sp_copy_marker (defs_clip, SP_MARKER (shape->marker[i]));
+                sp_copy_single (defs_clip, SP_OBJECT (shape->marker[i]));
             }
         }
     }
 
     if (SP_IS_TEXT_TEXTPATH (item)) {
         sp_copy_textpath_path (defs_clip, SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item))), items);
+    }
+
+    if (item->clip_ref->getObject()) {
+        sp_copy_single (defs_clip, item->clip_ref->getObject());
+    }
+
+    if (item->mask_ref->getObject()) {
+        SPObject *mask = item->mask_ref->getObject();
+        sp_copy_single (defs_clip, mask);
+        // recurse into the mask for its gradients etc.
+        for (SPObject *o = SP_OBJECT(mask)->children; o != NULL; o = o->next) {
+            if (SP_IS_ITEM(o))
+                sp_copy_stuff_used_by_item (defs_clip, SP_ITEM (o), items);
+        }
     }
 
     // recurse
