@@ -382,7 +382,7 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
     }
     else
     {
-        g_warning ("unable to open file: %s", filename);
+        g_warning ("Unable to open linked file: %s", filename);
     }
 
 /*
