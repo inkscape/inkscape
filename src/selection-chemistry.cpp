@@ -2385,8 +2385,9 @@ void sp_selection_unset_mask(bool apply_clip_path) {
             } else {
                 uri_ref = item->mask_ref;
             }
-    
-            if (NULL != uri_ref && referenced_objects.end() == referenced_objects.find(uri_ref->getObject())) {
+
+            // collect distinct mask object
+            if (NULL != uri_ref && NULL != uri_ref->getObject() && referenced_objects.end() == referenced_objects.find(uri_ref->getObject())) {
                 referenced_objects.insert(uri_ref->getObject());
             }
         }
@@ -2394,23 +2395,26 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         SP_OBJECT_REPR(i->data)->setAttribute(attributeName, "none");
     }
 
+    // restore mask objects into a document
     for ( std::set<SPObject*>::iterator it = referenced_objects.begin() ; it != referenced_objects.end() ; ++it) {
         SPObject *obj = (*it);
-        if (!obj->isReferenced()) {
-            GSList *items_to_move = NULL;
-            for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-                Inkscape::XML::Node *copy = SP_OBJECT_REPR(child)->duplicate();
-                items_to_move = g_slist_prepend (items_to_move, copy);
-            }
-            
-            obj->deleteObject(false);
-
-            for (GSList *i = items_to_move; NULL != i; i = i->next) {
-                desktop->currentLayer()->appendChildRepr((Inkscape::XML::Node *)i->data);
-            }
-
-            g_slist_free (items_to_move);
+        GSList *items_to_move = NULL;
+        for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            Inkscape::XML::Node *copy = SP_OBJECT_REPR(child)->duplicate();
+            items_to_move = g_slist_prepend (items_to_move, copy);
         }
+
+        if (!obj->isReferenced()) {
+            // delete from defs if no other object references this mask
+            obj->deleteObject(false);
+        }
+
+        for (GSList *i = items_to_move; NULL != i; i = i->next) {
+            desktop->currentLayer()->appendChildRepr((Inkscape::XML::Node *)i->data);
+            selection->add((Inkscape::XML::Node *)i->data);
+        }
+
+        g_slist_free (items_to_move);
     }
 
     sp_document_done (document);
