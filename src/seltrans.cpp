@@ -480,18 +480,7 @@ void Inkscape::SelTrans::_updateHandles()
     }
 
     if (!_center_is_set) {
-        // Extract the position of the center from the first selected object
-        GSList *items = (GSList *) _desktop->selection->itemList();
-        if (items) {
-            SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
-            if (first->isCenterSet()) { // only if set explicitly
-                _center =  first->getCenter();
-            } else {
-                _center = _box.midpoint();
-            }
-        } else {
-            _center = _box.midpoint();
-        }
+        _center = _desktop->selection->center();
         _center_is_set = true;
     }
 

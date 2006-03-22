@@ -339,6 +339,23 @@ NR::Rect Selection::boundsInDocument() const {
     return NR::Rect(*boundsInDocument(&r));
 }
 
+/** Extract the position of the center from the first selected object */
+NR::Point Selection::center() const {
+    GSList *items = (GSList *) const_cast<Selection *>(this)->itemList();
+    NR::Point center;
+    if (items) {
+        SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
+        if (first->isCenterSet()) { // only if set explicitly
+            center = first->getCenter();
+        } else {
+            center = bounds().midpoint();
+        }
+    } else {
+        center = bounds().midpoint();
+    }
+    return center;
+}
+
 /**
  * Compute the list of points in the selection that are to be considered for snapping.
  */

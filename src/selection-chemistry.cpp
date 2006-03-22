@@ -1450,7 +1450,7 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
     if (selection->isEmpty())
         return;
 
-    NR::Point const center(selection->bounds().midpoint());
+    NR::Point center = selection->center();
 
     sp_selection_rotate_relative(selection, center, angle_degrees);
 
@@ -1470,7 +1470,8 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
         return;
 
     NR::Rect const bbox(selection->bounds());
-    NR::Point const center(bbox.midpoint());
+
+    NR::Point center = selection->center();
 
     gdouble const zoom = selection->desktop()->current_zoom();
     gdouble const zmove = angle / zoom;

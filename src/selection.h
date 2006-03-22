@@ -242,6 +242,11 @@ public:
     ::NR::Rect boundsInDocument() const;
 
     /**
+     * @brief Returns the rotation/skew center of the selection
+     */
+    ::NR::Point center() const;
+
+    /**
      * @brief Gets the selection's snap points.
      * @return Selection's snap points
      */

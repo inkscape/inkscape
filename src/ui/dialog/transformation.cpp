@@ -613,7 +613,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         }
     } else {
         NR::Rect  bbox(selection->bounds());
-        NR::Point center(bbox.midpoint());
+        NR::Point center(bbox.midpoint()); // use rotation center?
         NR::scale scale (0,0);
         // the values are increments!
         if (_units_scale.isAbsolute()) {
@@ -646,13 +646,11 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
             sp_item_rotate_rel(item, NR::rotate (angle*M_PI/180.0));
         }
     } else {
-        NR::Rect  bbox   = selection->bounds();
-        NR::Point center = bbox.midpoint();
+        NR::Point center = selection->center();
         sp_selection_rotate_relative(selection, center, angle);
     }
 
     sp_document_done(SP_DT_DOCUMENT(selection->desktop()));
-
 }
 
 void
@@ -685,7 +683,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         NR::Rect bbox = selection->bounds();
         double width  = bbox.max()[NR::X] - bbox.min()[NR::X];
         double height = bbox.max()[NR::Y] - bbox.min()[NR::Y];
-        NR::Point center = bbox.midpoint();
+        NR::Point center = selection->center();
 
         if (!_units_skew.isAbsolute()) { // percentage
             double skewX = _scalar_skew_horizontal.getValue("%");

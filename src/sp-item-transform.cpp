@@ -28,20 +28,25 @@ static NR::translate inverse(NR::translate const m)
 void
 sp_item_rotate_rel(SPItem *item, NR::rotate const &rotation)
 {
-	NR::translate const s(sp_item_bbox_desktop(item).midpoint());
+    NR::Point center = item->getCenter();
+    NR::translate const s(item->getCenter());
+    NR::Matrix affine = NR::Matrix(inverse(s)) * NR::Matrix(rotation) * NR::Matrix(s);
 
-	// Rotate item.
-	sp_item_set_i2d_affine(item,
-			       sp_item_i2d_affine(item) * inverse(s) * rotation * s);
+    // Rotate item.
+    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
+    // Use each item's own transform writer, consistent with sp_selection_apply_affine()
+    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 
-	// Use each item's own transform writer, consistent with sp_selection_apply_affine()
-	sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
+    // Restore the center position (it's changed because the bbox center changed)
+    if (item->isCenterSet()) {
+        item->setCenter(center * affine);
+    }
 }
 
 void
 sp_item_scale_rel (SPItem *item, NR::scale const &scale)
 {
-	NR::translate const s(sp_item_bbox_desktop(item).midpoint());
+    NR::translate const s(sp_item_bbox_desktop(item).midpoint()); // use getCenter?
 
 	sp_item_set_i2d_affine(item,
 			       sp_item_i2d_affine(item) * inverse(s) * scale * s);
@@ -51,15 +56,19 @@ sp_item_scale_rel (SPItem *item, NR::scale const &scale)
 void
 sp_item_skew_rel (SPItem *item, double skewX, double skewY)
 {
-	NR::Rect bbox(sp_item_bbox_desktop(item));
+    NR::Point center = item->getCenter();
+    NR::translate const s(item->getCenter());
 
-	NR::translate const s(bbox.midpoint());
+    NR::Matrix const skew(1, skewY, skewX, 1, 0, 0);
+    NR::Matrix affine = NR::Matrix(inverse(s)) * skew * NR::Matrix(s);
 
-	NR::Matrix const skew(1, skewY, skewX, 1, 0, 0);
+    sp_item_set_i2d_affine(item, sp_item_i2d_affine(item) * affine);
+    sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
 
-	sp_item_set_i2d_affine(item,
-			       sp_item_i2d_affine(item) * inverse(s) * skew * s);
-	sp_item_write_transform(item, SP_OBJECT_REPR(item), item->transform);
+    // Restore the center position (it's changed because the bbox center changed)
+    if (item->isCenterSet()) {
+        item->setCenter(center * affine);
+    }
 }
 
 void sp_item_move_rel(SPItem *item, NR::translate const &tr)
