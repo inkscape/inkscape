@@ -219,6 +219,9 @@ public:
     /** @brief Returns the number of layers in which there are selected objects */
     guint numberOfLayers();
 
+    /** @brief Returns the number of parents to which the selected objects belong */
+    guint numberOfParents();
+
     /** @brief Returns the bounding rectangle of the selection */
     NRRect *bounds(NRRect *dest) const;
     /** @brief Returns the bounding rectangle of the selection */

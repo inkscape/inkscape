@@ -435,6 +435,20 @@ guint Selection::numberOfLayers() {
 	return ret;
 }
 
+guint Selection::numberOfParents() {
+      GSList const *items = const_cast<Selection *>(this)->itemList();
+	GSList *parents = NULL;
+	for (GSList const *iter = items; iter != NULL; iter = iter->next) {
+		SPObject *parent = SP_OBJECT_PARENT(iter->data);
+		if (g_slist_find (parents, parent) == NULL) {
+			parents = g_slist_prepend (parents, parent);
+		}
+	}
+	guint ret = g_slist_length (parents);
+	g_slist_free (parents);
+	return ret;
+}
+
 }
 
 /*

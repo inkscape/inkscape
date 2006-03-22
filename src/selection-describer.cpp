@@ -5,7 +5,7 @@
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *
- * Copyright (C) 2004 MenTaLguY
+ * Copyright (C) 2004-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -105,40 +105,71 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         SPItem *item = SP_ITEM(items->data);
         SPObject *layer = selection->desktop()->layerForObject (SP_OBJECT (item));
         SPObject *root = selection->desktop()->currentRoot();
-        gchar *layer_phrase;
+
+        // Layer name
+        gchar *layer_name;
         if (layer == root) {
-            layer_phrase = g_strdup("");  // for simplicity
+            layer_name = g_strdup(_("root"));
         } else {
-            char const *name, *fmt;
+            char const *layer_label;
+            bool is_label = false;
             if (layer && layer->label()) {
-                name = layer->label();
-                fmt = _(" in layer <b>%s</b>");
+                layer_label = layer->label();
+                is_label = true;
             } else {
-                name = layer->defaultLabel();
-                fmt = _(" in layer <b><i>%s</i></b>");
+                layer_label = layer->defaultLabel();
             }
-            char *quoted_name = xml_quote_strdup(name);
-            layer_phrase = g_strdup_printf(fmt, quoted_name);
-            g_free(quoted_name);
+            char *quoted_layer_label = xml_quote_strdup(layer_label);
+            if (is_label) {
+                layer_name = g_strdup_printf(_("layer <b>%s</b>"), quoted_layer_label);
+            } else {
+                layer_name = g_strdup_printf(_("layer <b><i>%s</i></b>"), quoted_layer_label);
+            }
+            g_free(quoted_layer_label);
         }
+
+        // Parent name
+        SPObject *parent = SP_OBJECT_PARENT (item);
+        gchar *parent_label = SP_OBJECT_ID(parent);
+        char *quoted_parent_label = xml_quote_strdup(parent_label);
+        gchar *parent_name = g_strdup_printf(_("<i>%s</i>"), quoted_parent_label);
+        g_free(quoted_parent_label);
+
+        gchar *in_phrase;
+        guint num_layers = selection->numberOfLayers();
+        guint num_parents = selection->numberOfParents();
+        if (num_layers == 1) {
+            if (num_parents == 1) {
+                if (layer == parent)
+                    in_phrase = g_strdup_printf(_(" in %s"), layer_name);
+                else 
+                    in_phrase = g_strdup_printf(_(" in group %s (%s)"), parent_name, layer_name);
+            } else {
+                    in_phrase = g_strdup_printf(_(" in <b>%i</b> parents (%s)"), num_parents, layer_name);
+            }
+        } else {
+            in_phrase = g_strdup_printf(_(" in <b>%i</b> layers"), num_layers);
+        }
+        g_free (layer_name);
+        g_free (parent_name);
 
         if (!items->next) { // one item
             char *item_desc = sp_item_description(item);
             if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
-                              item_desc, layer_phrase,
+                              item_desc, in_phrase,
                               _("Use <b>Shift+D</b> to look up original"), when_selected);
             } else if (SP_IS_TEXT_TEXTPATH(item)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
-                              item_desc, layer_phrase,
+                              item_desc, in_phrase,
                               _("Use <b>Shift+D</b> to look up path"), when_selected);
             } else if (SP_IS_FLOWTEXT(item) && !SP_FLOWTEXT(item)->has_internal_frame()) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
-                              item_desc, layer_phrase,
+                              item_desc, in_phrase,
                               _("Use <b>Shift+D</b> to look up frame"), when_selected);
             } else {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
-                              item_desc, layer_phrase, when_selected);
+                              item_desc, in_phrase, when_selected);
             }
             g_free(item_desc);
         } else { // multiple items
@@ -175,22 +206,13 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             }
             g_slist_free (terms);
 
-            if (selection->numberOfLayers() == 1) {
-                _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."),
-                              objects_str, layer_phrase, when_selected);
-            } else {
-                _context.setF(Inkscape::NORMAL_MESSAGE,
-                              ngettext("%s in <b>%i</b> layer. %s.",
-                                       "%s in <b>%i</b> layers. %s.",
-                                       selection->numberOfLayers()),
-                              objects_str, selection->numberOfLayers(), when_selected);
-            }
+            _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."), objects_str, in_phrase, when_selected);
 
             if (objects_str)
                 g_free ((gchar *) objects_str);
         }
 
-        g_free(layer_phrase);
+        g_free(in_phrase);
     }
 }
 
