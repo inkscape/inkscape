@@ -303,8 +303,10 @@ NR::Rect Selection::bounds() const
     GSList const *i = items;
     NR::Rect bbox = sp_item_bbox_desktop(SP_ITEM(i->data));
 
+    GSList const *i_start = i;
     while (i != NULL) {
-        bbox = NR::Rect::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
+        if (i != i_start)
+            bbox = NR::Rect::union_bounds(bbox, sp_item_bbox_desktop(SP_ITEM(i->data)));
         i = i->next;
     }
 
