@@ -24,6 +24,8 @@
 #include "document-private.h"
 #include "sp-item.h"
 
+#include "libnr/nr-matrix-ops.h"
+
 #include "sp-clippath.h"
 
 struct SPClipPathView {
@@ -327,12 +329,22 @@ sp_clippath_set_bbox(SPClipPath *cp, unsigned int key, NRRect *bbox)
 void
 sp_clippath_get_bbox(SPClipPath *cp, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
 {
-	for (SPObject *o = sp_object_first_child(SP_OBJECT(cp)); o != NULL; o = SP_OBJECT_NEXT(o)) {
-		if (SP_IS_ITEM(o)) {
-			SPItem *child = SP_ITEM(o);
-			sp_item_invoke_bbox_full(child, bbox, transform, flags, FALSE);
-		}
-	}
+    SPObject *i; 
+    for (i = sp_object_first_child(SP_OBJECT(cp)); i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i));
+    if (!i) return;
+
+    sp_item_invoke_bbox_full(SP_ITEM(i), bbox, NR::Matrix(SP_ITEM(i)->transform) * transform, flags, FALSE);
+    SPObject *i_start = i; 
+
+    while (i != NULL) {
+        if (i != i_start) {
+            NRRect i_box;
+            sp_item_invoke_bbox_full(SP_ITEM(i), &i_box, NR::Matrix(SP_ITEM(i)->transform) * transform, flags, FALSE);
+            nr_rect_d_union (bbox, bbox, &i_box);
+        }
+        i = SP_OBJECT_NEXT(i);
+        for (; i && !SP_IS_ITEM(i); i = SP_OBJECT_NEXT(i));
+    }
 }
 
 /* ClipPath views */
