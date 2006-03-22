@@ -64,7 +64,7 @@
 #include "file.h"
 #include "layer-fns.h"
 #include "context-fns.h"
-#include <set>
+#include <map>
 using NR::X;
 using NR::Y;
 
@@ -2295,7 +2295,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     
     if (apply_to_layer) {
         // all selected items are used for mask, which is applied to a layer
-        apply_to_items = g_slist_prepend (apply_to_items, SP_OBJECT_REPR(desktop->currentLayer()));
+        apply_to_items = g_slist_prepend (apply_to_items, desktop->currentLayer());
 
         for (GSList *i = items; i != NULL; i = i->next) {
             Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate();
@@ -2318,12 +2318,12 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
         }
         
         for (i = i->next; i != NULL; i = i->next) {
-            apply_to_items = g_slist_prepend (apply_to_items, SP_OBJECT_REPR (i->data));
+            apply_to_items = g_slist_prepend (apply_to_items, i->data);
         }
     } else {
         GSList *i = NULL;
         for (i = items; NULL != i->next; i = i->next) {
-            apply_to_items = g_slist_prepend (apply_to_items, SP_OBJECT_REPR (i->data));
+            apply_to_items = g_slist_prepend (apply_to_items, i->data);
         }
 
         Inkscape::XML::Node *dup = (SP_OBJECT_REPR (i->data))->duplicate();
@@ -2336,20 +2336,35 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     }
     
     g_slist_free (items);
+    items = NULL;
             
-    const gchar *mask_id = NULL;
-    if (apply_clip_path) {
-        mask_id = sp_clippath_create(mask_items, document);
-    } else {
-        mask_id = sp_mask_create(mask_items, document);
-    }
-    g_slist_free (mask_items);
-
     gchar const* attributeName = apply_clip_path ? "clip-path" : "mask";
     for (GSList *i = apply_to_items; NULL != i; i = i->next) {
-        ((Inkscape::XML::Node *)i->data)->setAttribute(attributeName, g_strdup_printf("url(#%s)", mask_id));
+        SPItem *item = reinterpret_cast<SPItem *>(i->data);
+        // inverted object transform should be applied to a mask object,
+        // as mask is calculated in user space (after applying transform)
+        NR::Matrix maskTransform (item->transform.inverse());
+
+        GSList *mask_items_dup = NULL;
+        for (GSList *mask_item = mask_items; NULL != mask_item; mask_item = mask_item->next) {
+            Inkscape::XML::Node *dup = reinterpret_cast<Inkscape::XML::Node *>(mask_item->data)->duplicate();
+            mask_items_dup = g_slist_prepend (mask_items_dup, dup);
+        }
+
+        const gchar *mask_id = NULL;
+        if (apply_clip_path) {
+            mask_id = sp_clippath_create(mask_items_dup, document, &maskTransform);
+        } else {
+            mask_id = sp_mask_create(mask_items_dup, document, &maskTransform);
+        }
+
+        g_slist_free (mask_items_dup);
+        mask_items_dup = NULL;
+
+        SP_OBJECT_REPR(i->data)->setAttribute(attributeName, g_strdup_printf("url(#%s)", mask_id));
     }
 
+    g_slist_free (mask_items);
     g_slist_free (apply_to_items);
 
     sp_document_done (document);
@@ -2373,7 +2388,7 @@ void sp_selection_unset_mask(bool apply_clip_path) {
     sp_document_ensure_up_to_date(document);
 
     gchar const* attributeName = apply_clip_path ? "clip-path" : "mask";
-    std::set<SPObject*> referenced_objects;
+    std::map<SPObject*,SPItem*> referenced_objects;
     for (GSList const*i = selection->itemList(); NULL != i; i = i->next) {
         if (remove_original) {
             // remember referenced mask/clippath, so orphaned masks can be moved back to document
@@ -2386,9 +2401,9 @@ void sp_selection_unset_mask(bool apply_clip_path) {
                 uri_ref = item->mask_ref;
             }
 
-            // collect distinct mask object
-            if (NULL != uri_ref && NULL != uri_ref->getObject() && referenced_objects.end() == referenced_objects.find(uri_ref->getObject())) {
-                referenced_objects.insert(uri_ref->getObject());
+            // collect distinct mask object (and associate with item to apply transform)
+            if (NULL != uri_ref && NULL != uri_ref->getObject()) {
+                referenced_objects[uri_ref->getObject()] = item;
             }
         }
 
@@ -2396,8 +2411,8 @@ void sp_selection_unset_mask(bool apply_clip_path) {
     }
 
     // restore mask objects into a document
-    for ( std::set<SPObject*>::iterator it = referenced_objects.begin() ; it != referenced_objects.end() ; ++it) {
-        SPObject *obj = (*it);
+    for ( std::map<SPObject*,SPItem*>::iterator it = referenced_objects.begin() ; it != referenced_objects.end() ; ++it) {
+        SPObject *obj = (*it).first;
         GSList *items_to_move = NULL;
         for (SPObject *child = sp_object_first_child(obj) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
             Inkscape::XML::Node *copy = SP_OBJECT_REPR(child)->duplicate();
@@ -2410,8 +2425,13 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         }
 
         for (GSList *i = items_to_move; NULL != i; i = i->next) {
-            desktop->currentLayer()->appendChildRepr((Inkscape::XML::Node *)i->data);
+            SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr((Inkscape::XML::Node *)i->data));
             selection->add((Inkscape::XML::Node *)i->data);
+
+            // transform mask, so it is moved the same spot there mask was applied
+            NR::Matrix transform (item->transform);
+            transform *= (*it).second->transform;
+            sp_item_write_transform(item, SP_OBJECT_REPR(item), transform);
         }
 
         g_slist_free (items_to_move);

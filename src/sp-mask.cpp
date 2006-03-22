@@ -269,7 +269,7 @@ sp_mask_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 
 // Create a mask element (using passed elements), add it to <defs>
 const gchar *
-sp_mask_create (GSList *reprs, SPDocument *document)
+sp_mask_create (GSList *reprs, SPDocument *document, NR::Matrix const* applyTransform)
 {
     Inkscape::XML::Node *defsrepr = SP_OBJECT_REPR (SP_DOCUMENT_DEFS (document));
 
@@ -282,7 +282,13 @@ sp_mask_create (GSList *reprs, SPDocument *document)
     
     for (GSList *it = reprs; it != NULL; it = it->next) {
         Inkscape::XML::Node *node = (Inkscape::XML::Node *)(it->data);
-        mask_object->appendChildRepr(node);
+        SPItem *item = SP_ITEM(mask_object->appendChildRepr(node));
+        
+        if (NULL != applyTransform) {
+            NR::Matrix transform (item->transform);
+            transform *= (*applyTransform);
+            sp_item_write_transform(item, SP_OBJECT_REPR(item), transform);
+        }
     }
     
     Inkscape::GC::release(repr);
