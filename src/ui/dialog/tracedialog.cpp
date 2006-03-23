@@ -419,7 +419,7 @@ TraceDialogImpl::TraceDialogImpl()
     potraceMultiScanHBox1.pack_start(potraceMultiScanBrightnessRadioButton, false, false, MARGIN);
     tips.set_tip(potraceMultiScanBrightnessRadioButton, _("Trace the given number of brightness levels"));
 
-    potraceMultiScanNrColorSpinner.set_digits(2);
+    potraceMultiScanNrColorSpinner.set_digits(0);
     potraceMultiScanNrColorSpinner.set_increments(1.0, 4.0);
     potraceMultiScanNrColorSpinner.set_range(2.0, 256.0);
     potraceMultiScanNrColorSpinner.set_value(8.0);
