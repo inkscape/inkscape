@@ -284,12 +284,12 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
         if (engine.getMultiScanSmooth())
             {
             RgbMap *gaussMap = rgbMapGaussian(gm);
-            newGm = rgbMapQuantize(gaussMap, 4, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gaussMap, 8, engine.getMultiScanNrColors());
             gaussMap->destroy(gaussMap);
             }
         else
             {
-            newGm = rgbMapQuantize(gm, 4, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gm, 8, engine.getMultiScanNrColors());
             }
         gm->destroy(gm);
         }
@@ -301,12 +301,12 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
         if (engine.getMultiScanSmooth())
             {
             RgbMap *gaussMap = rgbMapGaussian(gm);
-            newGm = rgbMapQuantize(gaussMap, 4, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gaussMap, 8, engine.getMultiScanNrColors());
             gaussMap->destroy(gaussMap);
             }
         else
             {
-            newGm = rgbMapQuantize(gm, 4, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gm, 8, engine.getMultiScanNrColors());
             }
         gm->destroy(gm);
 
