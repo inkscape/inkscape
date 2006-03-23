@@ -1,3 +1,10 @@
+2006-03-23  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* packaging/macosx/Resources/bin/inkscape: Fix a packaging
+	  problem on Mac OSX where Inkscape wouldn't open if one of the
+	  parent directories containing the app bundle contained a '#' in
+	  its name.  Fixes bug #1443072.
+
 2006-03-15  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* share/icons/Makefile.am: Update a makefile after the icon file
