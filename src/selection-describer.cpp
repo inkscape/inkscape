@@ -181,27 +181,27 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             if (n_terms == 0) {
                 objects_str = g_strdup_printf (
                     // this is only used with 2 or more objects
-                    ngettext("", "<b>%i</b> objects selected", object_count), 
+                    ngettext("<b>%i</b> object selected", "<b>%i</b> objects selected", object_count), 
                     object_count);
             } else if (n_terms == 1) {
                 objects_str = g_strdup_printf (
                     // this is only used with 2 or more objects
-                    ngettext("", "<b>%i</b> objects of type <b>%s</b>", object_count),
+                    ngettext("<b>%i</b> object of type <b>%s</b>", "<b>%i</b> objects of type <b>%s</b>", object_count),
                     object_count, (gchar *) terms->data);
             } else if (n_terms == 2) {
                 objects_str = g_strdup_printf (
                     // this is only used with 2 or more objects
-                    ngettext("", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>", object_count), 
+                    ngettext("<b>%i</b> object of types <b>%s</b>, <b>%s</b>", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>", object_count), 
                     object_count, (gchar *) terms->data, (gchar *) terms->next->data);
             } else if (n_terms == 3) {
                 objects_str = g_strdup_printf (
                     // this is only used with 2 or more objects
-                    ngettext("", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>", object_count), 
+                    ngettext("<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>", "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>", object_count), 
                     object_count, (gchar *) terms->data, (gchar *) terms->next->data, (gchar *) terms->next->next->data);
             } else {
                 objects_str = g_strdup_printf (
                     // this is only used with 2 or more objects
-                    ngettext("", "<b>%i</b> objects of <b>%i</b> types", object_count), 
+                    ngettext("<b>%i</b> object of <b>%i</b> types", "<b>%i</b> objects of <b>%i</b> types", object_count), 
                     object_count, n_terms);
             }
             g_slist_free (terms);
