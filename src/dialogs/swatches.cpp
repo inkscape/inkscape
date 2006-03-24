@@ -40,10 +40,7 @@ SwatchesPanel* SwatchesPanel::instance = 0;
 
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
-    _r(r),
-    _g(g),
-    _b(b),
-    _name(name)
+    def( r, g, b, name )
 {
 }
 
@@ -62,10 +59,7 @@ ColorItem::ColorItem(ColorItem const &other) :
 ColorItem &ColorItem::operator=(ColorItem const &other)
 {
     if ( this != &other ) {
-        _r = other._r;
-        _g = other._g;
-        _b = other._b;
-        _name = other._name;
+        def = other.def;
     }
     return *this;
 }
@@ -92,7 +86,7 @@ static void dragGetColorData( GtkWidget *widget,
 
     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
     if ( info == 1 ) {
-        gchar* tmp = g_strdup_printf("#%02x%02x%02x", item->_r, item->_g, item->_b);
+        gchar* tmp = g_strdup_printf("#%02x%02x%02x", item->def.r, item->def.g, item->def.b);
 
         gtk_selection_data_set( data,
                                 typeText,
@@ -103,9 +97,9 @@ static void dragGetColorData( GtkWidget *widget,
         tmp = 0;
     } else {
         guint16 tmp[4];
-        tmp[0] = (item->_r << 8) | item->_r;
-        tmp[1] = (item->_g << 8) | item->_g;
-        tmp[2] = (item->_b << 8) | item->_b;
+        tmp[0] = (item->def.r << 8) | item->def.r;
+        tmp[1] = (item->def.g << 8) | item->def.g;
+        tmp[2] = (item->def.b << 8) | item->def.b;
         tmp[3] = 0xffff;
         gtk_selection_data_set( data,
                                 typeXColor,
@@ -121,9 +115,9 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
     if ( item )
     {
         Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, 32, 24 );
-        guint32 fillWith = (0xff000000 & (item->_r << 24))
-                         | (0x00ff0000 & (item->_g << 16))
-                         | (0x0000ff00 & (item->_b <<  8));
+        guint32 fillWith = (0xff000000 & (item->def.r << 24))
+                         | (0x00ff0000 & (item->def.g << 16))
+                         | (0x0000ff00 & (item->def.b <<  8));
         thumb->fill( fillWith );
         gtk_drag_set_icon_pixbuf( dc, thumb->gobj(), 0, 0 );
     }
@@ -160,7 +154,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
 {
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB ) {
-        Gtk::Label *lbl = new Gtk::Label(_name);
+        Gtk::Label *lbl = new Gtk::Label(def.descr);
         lbl->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
         widget = lbl;
     } else {
@@ -173,7 +167,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
         EekPreview * preview = EEK_PREVIEW(eekWidget);
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
-        eek_preview_set_color( preview, (_r << 8)|_r, (_g << 8)|_g, (_b << 8)|_b);
+        eek_preview_set_color( preview, (def.r << 8) | def.r, (def.g << 8) | def.g, (def.b << 8) | def.b);
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::GtkIconSize)size );
 
@@ -194,7 +188,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
         Gtk::Widget* newBlot = btn;
 */
 
-        tips.set_tip((*newBlot), _name);
+        tips.set_tip((*newBlot), def.descr);
 
 /*
         newBlot->signal_clicked().connect( sigc::mem_fun(*this, &ColorItem::buttonClicked) );
@@ -243,7 +237,7 @@ void ColorItem::buttonClicked(bool secondary)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop) {
         char const * attrName = secondary ? "stroke" : "fill";
-        guint32 rgba = (_r << 24) | (_g << 16) | (_b << 8) | 0xff;
+        guint32 rgba = (def.r << 24) | (def.g << 16) | (def.b << 8) | 0xff;
         gchar c[64];
         sp_svg_write_color(c, 64, rgba);
 

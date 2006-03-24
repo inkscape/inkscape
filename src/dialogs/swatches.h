@@ -17,6 +17,9 @@
 
 #include "ui/widget/panel.h"
 #include "ui/previewholder.h"
+#include "dialogs/eek-color-def.h"
+
+using eek::ColorDef;
 
 namespace Inkscape {
 namespace UI {
@@ -39,11 +42,8 @@ public:
                                     ViewType view,
                                     Gtk::BuiltinIconSize size);
     void buttonClicked(bool secondary = false);
-    unsigned int _r;
-    unsigned int _g;
-    unsigned int _b;
-    Glib::ustring _name;
-    
+
+    ColorDef def;
 private:
     Gtk::Tooltips tips;
 };
