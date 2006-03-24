@@ -158,7 +158,6 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
 {
     GtkWidget *widget;
     GtkWidget *tbl;
-    GtkWidget *w;
 
     GtkWidget *hbox;
     GtkWidget *eventbox;
