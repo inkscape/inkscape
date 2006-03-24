@@ -12,8 +12,10 @@ trace_libtrace_a_SOURCES =	            \
 	trace/imagemap-gdk.h	            \
 	trace/imagemap.cpp	            \
 	trace/imagemap.h	            \
-	trace/filterset.cpp	            \
 	trace/filterset.h                   \
+	trace/filterset.cpp	            \
+	trace/siox-segmentator.h	    \
+	trace/siox-segmentator.cpp	    \
         trace/potrace/auxiliary.h           \
         trace/potrace/bitmap.h              \
         trace/potrace/curve.cpp             \
