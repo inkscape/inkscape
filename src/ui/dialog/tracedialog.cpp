@@ -84,6 +84,12 @@ class TraceDialogImpl : public TraceDialog
     Gtk::Notebook   notebook;
     Gtk::Tooltips   tips;
 
+    //########## General items
+    Gtk::Frame            sioxFrame;
+    Gtk::VBox             sioxVBox;
+    Gtk::HBox             sioxBox;
+    Gtk::RadioButton      sioxRadioButton;
+
     //########## Potrace items
     Gtk::VBox             potraceBox;
     Gtk::RadioButtonGroup potraceGroup;
@@ -177,8 +183,14 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
     bool invert = potraceInvertButton.get_active();
     pte.setInvert(invert);
 
-    //##### Get the single-scan settings
-    /* which one? */
+    //##### Get the preprocessor settings
+    /* siox -- performed by Tracer, and before any of the others */
+    if (sioxRadioButton.get_active())
+        tracer.enableSiox(true);
+    else
+        tracer.enableSiox(false);
+
+    /* one of the following */
     if (potraceBrightnessRadioButton.get_active())
         pte.setTraceType(Inkscape::Trace::Potrace::TRACE_BRIGHTNESS);
     else if (potraceMultiScanBrightnessRadioButton.get_active())
@@ -198,6 +210,7 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
         pte.setInvert(false);
         }
 
+    //##### Get the single-scan settings
     /* brightness */
     double brightnessThreshold = potraceBrightnessSpinner.get_value();
     pte.setBrightnessThreshold(brightnessThreshold);
@@ -327,6 +340,17 @@ TraceDialogImpl::TraceDialogImpl()
     Gtk::VBox *mainVBox = get_vbox();
 
 #define MARGIN 4
+
+    /*#### SIOX ####*/
+    //# for now, put at the top of the potrace box.  something better later
+    sioxRadioButton.set_label(_("SIOX subimage selection"));
+    sioxBox.pack_start(sioxRadioButton, false, false, MARGIN);
+    tips.set_tip(sioxRadioButton, _("Subimage selection with the SIOX algorithm"));
+    sioxVBox.pack_start(sioxBox, false, false, MARGIN);
+    sioxFrame.set_label(_("SIOX (W.I.P.)"));
+    sioxFrame.add(sioxVBox);
+    potraceBox.pack_start(sioxFrame, false, false, 0);
+
 
     //##Set up the Potrace panel
 
