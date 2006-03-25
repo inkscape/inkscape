@@ -88,7 +88,7 @@ class TraceDialogImpl : public TraceDialog
     Gtk::Frame            sioxFrame;
     Gtk::VBox             sioxVBox;
     Gtk::HBox             sioxBox;
-    Gtk::RadioButton      sioxRadioButton;
+    Gtk::CheckButton      sioxButton;
 
     //########## Potrace items
     Gtk::VBox             potraceBox;
@@ -185,7 +185,7 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
 
     //##### Get the preprocessor settings
     /* siox -- performed by Tracer, and before any of the others */
-    if (sioxRadioButton.get_active())
+    if (sioxButton.get_active())
         tracer.enableSiox(true);
     else
         tracer.enableSiox(false);
@@ -343,9 +343,9 @@ TraceDialogImpl::TraceDialogImpl()
 
     /*#### SIOX ####*/
     //# for now, put at the top of the potrace box.  something better later
-    sioxRadioButton.set_label(_("SIOX subimage selection"));
-    sioxBox.pack_start(sioxRadioButton, false, false, MARGIN);
-    tips.set_tip(sioxRadioButton, _("Subimage selection with the SIOX algorithm"));
+    sioxButton.set_label(_("SIOX subimage selection"));
+    sioxBox.pack_start(sioxButton, false, false, MARGIN);
+    tips.set_tip(sioxButton, _("Subimage selection with the SIOX algorithm"));
     sioxVBox.pack_start(sioxBox, false, false, MARGIN);
     sioxFrame.set_label(_("SIOX (W.I.P.)"));
     sioxFrame.add(sioxVBox);
