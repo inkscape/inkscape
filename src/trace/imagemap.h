@@ -94,6 +94,96 @@ GrayMap *GrayMapCreate(int width, int height);
 
 
 /*#########################################################################
+### P A C K E D    P I X E L     M A P
+#########################################################################*/
+
+
+typedef struct PackedPixelMap_def PackedPixelMap;
+
+/**
+ *
+ */
+struct PackedPixelMap_def
+{
+
+    /*#################
+    ### METHODS
+    #################*/
+
+    /**
+     *
+     */
+    void (*setPixel)(PackedPixelMap *me, int x, int y, int r, int g, int b);
+
+
+    /**
+     *
+     */
+    void (*setPixelLong)(PackedPixelMap *me, int x, int y, unsigned long rgb);
+
+
+    /**
+     *
+     */
+    unsigned long (*getPixel)(PackedPixelMap *me, int x, int y);
+
+
+    /**
+     *
+     */
+    int (*writePPM)(PackedPixelMap *me, char *fileName);
+
+
+
+    /**
+     *
+     */
+    void (*destroy)(PackedPixelMap *me);
+
+
+
+    /*#################
+    ### FIELDS
+    #################*/
+
+    /**
+     *
+     */
+    int width;
+
+    /**
+     *
+     */
+    int height;
+
+    /**
+     * The allocated array of pixels
+     */
+    unsigned long *pixels;
+
+    /**
+     * Pointers to the beginning of each row of pixels
+     */
+    unsigned long **rows;
+
+
+};
+
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+PackedPixelMap *PackedPixelMapCreate(int width, int height);
+
+#ifdef __cplusplus
+}
+#endif
+
+
+
+/*#########################################################################
 ### R G B   M A P
 #########################################################################*/
 
@@ -264,7 +354,7 @@ struct IndexedMap_def
      *
      */
     int nrColors;
-    
+
     /**
      * Color look up table
      */
@@ -283,6 +373,8 @@ IndexedMap *IndexedMapCreate(int width, int height);
 #ifdef __cplusplus
 }
 #endif
+
+
 
 
 #endif /* __IMAGEMAP_H__ */

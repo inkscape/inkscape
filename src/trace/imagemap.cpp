@@ -77,9 +77,9 @@ GrayMap *GrayMapCreate(int width, int height)
     /** fields **/
     me->width  = width;
     me->height = height;
-    me->pixels = (unsigned long *) 
+    me->pixels = (unsigned long *)
               malloc(sizeof(unsigned long) * width * height);
-    me->rows = (unsigned long **) 
+    me->rows = (unsigned long **)
               malloc(sizeof(unsigned long *) *  height);
     if (!me->pixels || !me->rows)
         {
@@ -98,6 +98,115 @@ GrayMap *GrayMapCreate(int width, int height)
 }
 
 
+
+
+
+/*#########################################################################
+### P A C K E D    P I X E L      M A P
+#########################################################################*/
+
+
+
+static void ppSetPixel(PackedPixelMap *me, int x, int y, int r, int g, int b)
+{
+    unsigned long *pix = me->rows[y] + x;
+    *pix = ((unsigned long)r)<<16 & 0xff0000L |
+           ((unsigned long)g)<< 8 & 0x00ff00L |
+           ((unsigned long)b)     & 0x0000ffL;
+}
+
+static void ppSetPixelLong(PackedPixelMap *me, int x, int y, unsigned long rgb)
+{
+    unsigned long *pix = me->rows[y] + x;
+    *pix = rgb;
+}
+
+static unsigned long ppGetPixel(PackedPixelMap *me, int x, int y)
+{
+    unsigned long *pix = me->rows[y] + x;
+    return *pix;
+}
+
+
+
+static int ppWritePPM(PackedPixelMap *me, char *fileName)
+{
+    if (!fileName)
+        return FALSE;
+
+    Inkscape::IO::dump_fopen_call(fileName, "D");
+    FILE *f = Inkscape::IO::fopen_utf8name(fileName, "wb");
+    if (!f)
+        return FALSE;
+
+    fprintf(f, "P6 %d %d 255\n", me->width, me->height);
+
+    for (int y=0 ; y<me->height; y++)
+        {
+        for (int x=0 ; x<me->width ; x++)
+            {
+            unsigned long rgb = me->getPixel(me, x, y);
+            unsigned char r = (unsigned char) ((rgb>>16) & 0xff);
+            unsigned char g = (unsigned char) ((rgb>> 8) & 0xff);
+            unsigned char b = (unsigned char) ((rgb    ) & 0xff);
+            fputc(r, f);
+            fputc(g, f);
+            fputc(b, f);
+            }
+        }
+    fclose(f);
+    return TRUE;
+}
+
+
+static void ppDestroy(PackedPixelMap *me)
+{
+    if (me->pixels)
+        free(me->pixels);
+    if (me->rows)
+        free(me->rows);
+    free(me);
+}
+
+
+
+PackedPixelMap *PackedPixelMapCreate(int width, int height)
+{
+
+    PackedPixelMap *me = (PackedPixelMap *)malloc(sizeof(PackedPixelMap));
+    if (!me)
+        return NULL;
+
+    /** methods **/
+    me->setPixel     = ppSetPixel;
+    me->setPixelLong = ppSetPixelLong;
+    me->getPixel     = ppGetPixel;
+    me->writePPM     = ppWritePPM;
+    me->destroy      = ppDestroy;
+
+
+    /** fields **/
+    me->width  = width;
+    me->height = height;
+    me->pixels = (unsigned long *)
+              malloc(sizeof(unsigned long) * width * height);
+    me->rows = (unsigned long **)
+              malloc(sizeof(unsigned long *) * height);
+    if (!me->pixels)
+        {
+        free(me);
+        return NULL;
+        }
+
+    unsigned long *row = me->pixels;
+    for (int i=0 ; i<height ; i++)
+        {
+        me->rows[i] = row;
+        row += width;
+        }
+
+    return me;
+}
 
 
 
@@ -185,9 +294,9 @@ RgbMap *RgbMapCreate(int width, int height)
     /** fields **/
     me->width  = width;
     me->height = height;
-    me->pixels = (RGB *) 
+    me->pixels = (RGB *)
               malloc(sizeof(RGB) * width * height);
-    me->rows = (RGB **) 
+    me->rows = (RGB **)
               malloc(sizeof(RGB *) * height);
     if (!me->pixels)
         {
@@ -292,9 +401,9 @@ IndexedMap *IndexedMapCreate(int width, int height)
     /** fields **/
     me->width  = width;
     me->height = height;
-    me->pixels = (unsigned int *) 
+    me->pixels = (unsigned int *)
               malloc(sizeof(unsigned int) * width * height);
-    me->rows = (unsigned int **) 
+    me->rows = (unsigned int **)
               malloc(sizeof(unsigned int *) * height);
     if (!me->pixels)
         {
@@ -308,9 +417,9 @@ IndexedMap *IndexedMapCreate(int width, int height)
         me->rows[i] = row;
         row += width;
         }
-        
+
     me->nrColors = 0;
-    
+
     RGB rgb;
     rgb.r = rgb.g = rgb.b = 0;
     for (int i=0; i<256 ; i++)

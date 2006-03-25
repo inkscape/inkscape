@@ -45,17 +45,17 @@ namespace siox
 
 
 /** Caches color conversion values to speed up RGB->CIELAB conversion.*/
-static std::map<long, CLAB> RGB_TO_LAB;
+static std::map<unsigned long, CLAB> RGB_TO_LAB;
 
 //forward decls
 static void premultiplyMatrix(float alpha, float *cm, int cmSize);
-//static float colordiffsq(long rgb0, long rgb1);
-//static int getAlpha(long argb);
-static int getRed(long rgb);
-static int getGreen(long rgb);
-static int getBlue(long rgb);
-//static long packPixel(int a, int r, int g, int b);
-static CLAB rgbToClab(long rgb);
+//static float colordiffsq(unsigned long rgb0, unsigned long rgb1);
+//static int getAlpha(unsigned long argb);
+static int getRed(unsigned long rgb);
+static int getGreen(unsigned long rgb);
+static int getBlue(unsigned long rgb);
+//static unsigned long packPixel(int a, int r, int g, int b);
+static CLAB rgbToClab(unsigned long rgb);
 
 /**
  * Applies the morphological dilate operator.
@@ -337,7 +337,7 @@ static long average(long argb0, long argb1)
  * @param rgb1 Second color value.
  * @return Squared Euclidian distance in CLAB space.
  */
-static float labcolordiffsq(long rgb1, long rgb2)
+static float labcolordiffsq(unsigned long rgb1, unsigned long rgb2)
 {
     CLAB c1 = rgbToClab(rgb1);
     CLAB c2 = rgbToClab(rgb2);
@@ -357,7 +357,7 @@ static float labcolordiffsq(long rgb1, long rgb2)
  * @param rgb1 Second color value.
  * @return Euclidian distance in CLAB space.
  */
-static float labcolordiff(long rgb0, long rgb1)
+static float labcolordiff(unsigned long rgb0, unsigned long rgb1)
 {
     return (float)sqrt(labcolordiffsq(rgb0, rgb1));
 }
@@ -374,9 +374,9 @@ static float labcolordiff(long rgb0, long rgb1)
  * @param rgb RGB color value,
  * @return CLAB color value tripel.
  */
-static CLAB rgbToClab(long rgb)
+static CLAB rgbToClab(unsigned long rgb)
 {
-    std::map<long, CLAB>::iterator iter = RGB_TO_LAB.find(rgb);
+    std::map<unsigned long, CLAB>::iterator iter = RGB_TO_LAB.find(rgb);
     if (iter != RGB_TO_LAB.end())
         {
         CLAB res = iter->second;
@@ -522,7 +522,7 @@ static long clabToRGB(const CLAB &clab)
  * @param rgb The 24bit rgb color to be combined with the alpga value.
  * @return An ARBG calor value.
  */
-static long setAlpha(int alpha, long rgb)
+static long setAlpha(int alpha, unsigned long rgb)
 {
     if (alpha>255)
         alpha=0;
@@ -539,7 +539,7 @@ static long setAlpha(int alpha, long rgb)
  * @param rgb The 24bit rgb color to be combined with the alpga value.
  * @return An ARBG calor value.
  */
-static long setAlpha(float alpha, long rgb)
+static long setAlpha(float alpha, unsigned long rgb)
 {
     return setAlpha((int)(255.0f*alpha), rgb);
 }
@@ -588,7 +588,7 @@ static long packPixel(int a, int r, int g, int b)
  * @return The alpha component, ranging from 0 to 255.
  */
 /*
-static int getAlpha(long argb)
+static int getAlpha(unsigned long argb)
 {
     return (argb>>24)&0xFF;
 }
@@ -600,7 +600,7 @@ static int getAlpha(long argb)
  * @param rgb An (A)RGB color value.
  * @return The red component, ranging from 0 to 255.
  */
-static int getRed(long rgb)
+static int getRed(unsigned long rgb)
 {
     return (rgb>>16)&0xFF;
 }
@@ -612,7 +612,7 @@ static int getRed(long rgb)
  * @param rgb An (A)RGB color value.
  * @return The green component, ranging from 0 to 255.
  */
-static int getGreen(long rgb)
+static int getGreen(unsigned long rgb)
 {
     return (rgb>>8)&0xFF;
 }
@@ -623,7 +623,7 @@ static int getGreen(long rgb)
  * @param rgb An (A)RGB color value.
  * @return The blue component, ranging from 0 to 255.
  */
-static int getBlue(long rgb)
+static int getBlue(unsigned long rgb)
 {
     return (rgb)&0xFF;
 }
@@ -994,7 +994,7 @@ void SioxSegmentator::trace(char *fmt, ...)
 
 
 
-bool SioxSegmentator::segmentate(long *image, int imageSize,
+bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
                                  float *cm, int cmSize,
                                  int smoothness, double sizeFactorToKeep)
 {
@@ -1032,7 +1032,7 @@ bool SioxSegmentator::segmentate(long *image, int imageSize,
         }
         if (cm[i]>BACKGROUND_CONFIDENCE) {
             bool isBackground=true;
-            std::map<long, Tupel>::iterator iter = hs.find(i);
+            std::map<unsigned long, Tupel>::iterator iter = hs.find(i);
             Tupel tupel(0.0f, 0, 0.0f, 0);
             if (iter == hs.end()) {
                 CLAB lab = rgbToClab(image[i]);
@@ -1230,11 +1230,11 @@ bool SioxSegmentator::subpixelRefine(int xa, int ya, int dx, int dy,
                 continue;
             }
             */
-            long val=origImage[ey*imgWidth+ex];
-            long orig=val;
+            unsigned long val=origImage[ey*imgWidth+ex];
+            unsigned long orig=val;
             float minDistBg = 0.0f;
             float minDistFg = 0.0f;
-            std::map<long, Tupel>::iterator iter = hs.find(val);
+            std::map<unsigned long, Tupel>::iterator iter = hs.find(val);
             if (iter != hs.end()) {
                 minDistBg=(float) sqrt((float)iter->second.minBgDist);
                 minDistFg=(float) sqrt((float)iter->second.minFgDist);
@@ -1286,7 +1286,7 @@ bool SioxSegmentator::subpixelRefine(int xa, int ya, int dx, int dy,
 
 
 
-void SioxSegmentator::fillColorRegions(float *cm, int cmSize, long *image)
+void SioxSegmentator::fillColorRegions(float *cm, int cmSize, unsigned long *image)
 {
     int idx = 0;
     for (int i=0 ; i<imgHeight ; i++)

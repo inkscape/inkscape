@@ -215,7 +215,7 @@ public:
      * @return <CODE>true</CODE> if the segmentation algorithm succeeded,
      *         <CODE>false</CODE> if segmentation is impossible
      */
-    bool segmentate(long *image, int imageSize,
+    bool segmentate(unsigned long *image, int imageSize,
                     float *cm, int cmSize,
                     int smoothness, double sizeFactorToKeep);
 
@@ -316,7 +316,7 @@ public:
      * @param cm confidence matrix to be searched
      * @param image image to be searched
      */
-    void fillColorRegions(float *cm, int cmSize, long *image);
+    void fillColorRegions(float *cm, int cmSize, unsigned long *image);
 
 private:
 
@@ -375,7 +375,7 @@ private:
     /**
      * Stores Tupels for fast access to nearest background/foreground pixels.
      */
-    std::map<long, Tupel> hs;
+    std::map<unsigned long, Tupel> hs;
 
     /** Size of the biggest blob.*/
     int regionCount;

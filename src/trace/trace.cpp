@@ -151,45 +151,24 @@ GdkPixbuf *
 Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
 {
 
-    RgbMap *rgbMap = gdkPixbufToRgbMap(origPixbuf);
+    PackedPixelMap *ppMap = gdkPixbufToPackedPixelMap(origPixbuf);
     //We need to create two things:
     //  1.  An array of long pixel values of ARGB
     //  2.  A matching array of per-pixel float 'confidence' values
-    long *imgBuf = new long[rgbMap->width * rgbMap->height];
-    float *confidenceMatrix = new float[rgbMap->width * rgbMap->height];
+    unsigned long *imgBuf = ppMap->pixels;
+    float *confidenceMatrix = new float[ppMap->width * ppMap->height];
 
-    long idx = 0;
-    for (int j=0 ; j<rgbMap->height ; j++)
-        for (int i=0 ; i<rgbMap->width ; i++)
-            {
-            RGB rgb = rgbMap->getPixel(rgbMap, i, j);
-            long pix = (((long)rgb.r) << 16 & 0xFF0000L) |
-                       (((long)rgb.g) <<  8 & 0x00FF00L) |
-                       (((long)rgb.b)       & 0x0000FFL);
-            imgBuf[idx++] = pix;
-            }
 
     //## ok we have our pixel buf
-    org::siox::SioxSegmentator ss(rgbMap->width, rgbMap->height, NULL, 0);
-    ss.segmentate(imgBuf, rgbMap->width * rgbMap->height,
-                  confidenceMatrix, rgbMap->width * rgbMap->height,
+    org::siox::SioxSegmentator ss(ppMap->width, ppMap->height, NULL, 0);
+    ss.segmentate(imgBuf, ppMap->width * ppMap->height,
+                  confidenceMatrix, ppMap->width * ppMap->height,
                   0, 0.0);
 
-    idx = 0;
-    for (int j=0 ; j<rgbMap->height ; j++)
-        for (int i=0 ; i<rgbMap->width ; i++)
-            {
-            long pix = imgBuf[idx++];
-            RGB rgb;
-            rgb.r = (pix>>16) & 0xff;
-            rgb.g = (pix>> 8) & 0xff;
-            rgb.b = (pix    ) & 0xff;
-            rgbMap->setPixelRGB(rgbMap, i, j, rgb);
-            }
 
-    GdkPixbuf *newPixbuf = rgbMapToGdkPixbuf(rgbMap);
-    rgbMap->destroy(rgbMap);
-    delete imgBuf;
+
+    GdkPixbuf *newPixbuf = packedPixelMapToGdkPixbuf(ppMap);
+    ppMap->destroy(ppMap);
     delete confidenceMatrix;
 
     return newPixbuf;
