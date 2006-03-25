@@ -100,6 +100,14 @@ Tracer::getSelectedImage()
 //#  T R A C E
 //#########################################################################
 
+/**
+ *  Whether we want to enable SIOX subimage selection
+ */
+void Tracer::enableSiox(bool enable)
+{
+    sioxEnabled = enable;
+}
+
 
 /**
  *  Threaded method that does single bitmap--->path conversion

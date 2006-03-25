@@ -172,6 +172,7 @@ public:
         {
         engine       = NULL;
         selectedItem = NULL;
+        sioxEnabled  = false;
         }
 
 
@@ -202,6 +203,11 @@ public:
      */
     void abort();
 
+    /**
+     *  Whether we want to enable SIOX subimage selection
+     */
+    void enableSiox(bool enable);
+
 
 private:
 
@@ -225,6 +231,8 @@ private:
     SPImage *getSelectedSPImage();
 
     SPItem *selectedItem;
+
+    bool sioxEnabled;
 
 
 };//class Tracer
