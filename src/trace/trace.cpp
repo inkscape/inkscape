@@ -3,9 +3,9 @@
  *  autotracers into Inkscape.
  *
  * Authors:
- *   Bob Jamison <rjamison@titan.com>
+ *   Bob Jamison <rjamison@earthlink.net>
  *
- * Copyright (C) 2004 Bob Jamison
+ * Copyright (C) 2004-2006 Bob Jamison
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -23,6 +23,9 @@
 #include <xml/repr.h>
 #include "sp-item.h"
 #include "sp-image.h"
+
+#include "siox.h"
+#include "imagemap-gdk.h"
 
 namespace Inkscape {
 
@@ -50,28 +53,77 @@ Tracer::getSelectedSPImage()
         return NULL;
         }
 
-    SPItem *item = sel->singleItem();
-    if (!item)
+    if (sioxEnabled)
         {
-        char *msg = _("Select an <b>image</b> to trace");  //same as above
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
-        //g_warning(msg);
-        return NULL;
+        SPImage *img = NULL;
+        GSList const *list = sel->itemList();
+        sioxItems.clear();
+        std::vector<SPItem *> items;
+        /*
+           First, things are selected top-to-bottom, so we need to invert
+           them as bottom-to-top so that we can discover the image and any
+           SPItems above it
+        */
+        for ( ; list ; list=list->next)
+            {
+            if (!SP_IS_ITEM(list->data))
+                {
+                continue;
+                }
+            SPItem *item = SP_ITEM(list->data);
+            items.insert(items.begin(), item);
+            }
+        std::vector<SPItem *>::iterator iter;
+        for (iter = items.begin() ; iter!= items.end() ; iter++)
+            {
+            SPItem *item = *iter;
+            if (SP_IS_IMAGE(item))
+                {
+                if (img) //we want only one
+                    {
+                    char *msg = _("Select only one <b>image</b> to trace");
+                    SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+                    return NULL;
+                    }
+                img = SP_IMAGE(item);
+                }
+            else if (img) //# items -after- the image in tree (above it in Z)
+                {
+                sioxItems.push_back(item);
+                }
+            }
+        if (!img || sioxItems.size() < 1)
+            {
+            char *msg = _("Select one image and one or more items above it");
+            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            return NULL;
+            }
+        return img;
         }
-
-    if (!SP_IS_IMAGE(item))
+    else
+        //### No SIOX.  We want exactly one image selected
         {
-        char *msg = _("Select an <b>image</b> to trace");
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
-        //g_warning(msg);
-        return NULL;
+        SPItem *item = sel->singleItem();
+        if (!item)
+            {
+            char *msg = _("Select an <b>image</b> to trace");  //same as above
+            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            //g_warning(msg);
+            return NULL;
+            }
+
+        if (!SP_IS_IMAGE(item))
+            {
+            char *msg = _("Select an <b>image</b> to trace");
+            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            //g_warning(msg);
+            return NULL;
+            }
+
+        SPImage *img = SP_IMAGE(item);
+
+        return img;
         }
-
-    selectedItem = item;
-
-    SPImage *img = SP_IMAGE(item);
-
-    return img;
 
 }
 
@@ -93,6 +145,56 @@ Tracer::getSelectedImage()
     return pixbuf;
 
 }
+
+
+GdkPixbuf *
+Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
+{
+
+    RgbMap *rgbMap = gdkPixbufToRgbMap(origPixbuf);
+    //We need to create two things:
+    //  1.  An array of long pixel values of ARGB
+    //  2.  A matching array of per-pixel float 'confidence' values
+    long *imgBuf = new long[rgbMap->width * rgbMap->height];
+    float *confidenceMatrix = new float[rgbMap->width * rgbMap->height];
+
+    long idx = 0;
+    for (int j=0 ; j<rgbMap->height ; j++)
+        for (int i=0 ; i<rgbMap->width ; i++)
+            {
+            RGB rgb = rgbMap->getPixel(rgbMap, i, j);
+            long pix = (((long)rgb.r) << 16 & 0xFF0000L) |
+                       (((long)rgb.g) <<  8 & 0x00FF00L) |
+                       (((long)rgb.b)       & 0x0000FFL);
+            imgBuf[idx++] = pix;
+            }
+
+    //## ok we have our pixel buf
+    org::siox::SioxSegmentator ss(rgbMap->width, rgbMap->height, NULL, 0);
+    ss.segmentate(imgBuf, rgbMap->width * rgbMap->height,
+                  confidenceMatrix, rgbMap->width * rgbMap->height,
+                  0, 0.0);
+
+    idx = 0;
+    for (int j=0 ; j<rgbMap->height ; j++)
+        for (int i=0 ; i<rgbMap->width ; i++)
+            {
+            long pix = imgBuf[idx++];
+            RGB rgb;
+            rgb.r = (pix>>16) & 0xff;
+            rgb.g = (pix>> 8) & 0xff;
+            rgb.b = (pix    ) & 0xff;
+            rgbMap->setPixelRGB(rgbMap, i, j, rgb);
+            }
+
+    GdkPixbuf *newPixbuf = rgbMapToGdkPixbuf(rgbMap);
+    rgbMap->destroy(rgbMap);
+    delete imgBuf;
+    delete confidenceMatrix;
+
+    return newPixbuf;
+}
+
 
 
 
@@ -143,7 +245,7 @@ void Tracer::traceThread()
 
 
     SPImage *img = getSelectedSPImage();
-    if (!img || !selectedItem)
+    if (!img)
         {
         engine = NULL;
         return;
@@ -158,6 +260,20 @@ void Tracer::traceThread()
         //g_warning(msg);
         engine = NULL;
         return;
+        }
+
+    //## SIOX pre-processing to get a smart subimage of the pixbuf.
+    //## This is done before any other filters
+    if (sioxEnabled)
+        {
+        /*
+           Ok, we have requested siox, and getSelectedSPImage() has found a single
+           bitmap and one or more SPItems above it.  Now what we need to do is create
+           a siox-segmented subimage pixbuf.  We not need alter 'img' at all, since this
+           pixbuf will be the same dimensions and at the same location.
+           Remember to free this new pixbuf later.
+        */
+        pixbuf = sioxProcessImage(img, pixbuf);
         }
 
     int nrPaths;
@@ -205,7 +321,7 @@ void Tracer::traceThread()
     //# Convolve scale, translation, and the original transform
     NR::Matrix tf(scal);
     tf *= trans;
-    tf *= selectedItem->transform;
+    tf *= img->transform;
 
 
     //#OK.  Now let's start making new nodes
@@ -224,7 +340,7 @@ void Tracer::traceThread()
     for (TracingEngineResult *result=results ;
                   result ; result=result->next)
         {
-	    totalNodeCount += result->getNodeCount();
+        totalNodeCount += result->getNodeCount();
 
         Inkscape::XML::Node *pathRepr = sp_repr_new("svg:path");
         pathRepr->setAttribute("style", result->getStyle());
@@ -250,6 +366,11 @@ void Tracer::traceThread()
         Inkscape::GC::release(pathRepr);
         }
 
+    //did we allocate a pixbuf copy?
+    if (sioxEnabled)
+        {
+        g_free(pixbuf);
+        }
 
     delete results;
 
@@ -271,6 +392,10 @@ void Tracer::traceThread()
     g_free(msg);
 
 }
+
+
+
+
 
 /**
  *  Main tracing method

@@ -26,6 +26,7 @@
 
 #include <gdk/gdkpixbuf.h>
 
+#include <vector>
 
 struct SPImage;
 struct SPItem;
@@ -171,7 +172,6 @@ public:
     Tracer()
         {
         engine       = NULL;
-        selectedItem = NULL;
         sioxEnabled  = false;
         }
 
@@ -230,10 +230,11 @@ private:
 
     SPImage *getSelectedSPImage();
 
-    SPItem *selectedItem;
+    std::vector<SPItem *> sioxItems;
 
     bool sioxEnabled;
 
+    GdkPixbuf *sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf);
 
 };//class Tracer
 
