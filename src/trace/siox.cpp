@@ -928,6 +928,21 @@ static std::vector<CLAB> createSignature(std::vector<CLAB> &input,
 
 //### NOTE: Doxygen comments are in siox-segmentator.h
 
+/** Confidence corresponding to a certain foreground region (equals one). */
+const float SioxSegmentator::CERTAIN_FOREGROUND_CONFIDENCE=1.0f;
+
+/** Confidence for a region likely being foreground.*/
+const float SioxSegmentator::FOREGROUND_CONFIDENCE=0.8f;
+
+/** Confidence for foreground or background type being equally likely.*/
+const float SioxSegmentator::UNKNOWN_REGION_CONFIDENCE=0.5f;
+
+/** Confidence for a region likely being background.*/
+const float SioxSegmentator::BACKGROUND_CONFIDENCE=0.1f;
+
+/** Confidence corresponding to a certain background reagion (equals zero). */
+const float SioxSegmentator::CERTAIN_BACKGROUND_CONFIDENCE=0.0f;
+
 
 SioxSegmentator::SioxSegmentator(int w, int h, float *limitsArg, int limitsSize)
 {

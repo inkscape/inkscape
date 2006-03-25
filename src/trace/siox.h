@@ -156,19 +156,19 @@ class SioxSegmentator
 public:
 
     /** Confidence corresponding to a certain foreground region (equals one). */
-    static const float CERTAIN_FOREGROUND_CONFIDENCE=1.0f;
+    static const float CERTAIN_FOREGROUND_CONFIDENCE;  //=1.0f;
 
     /** Confidence for a region likely being foreground.*/
-    static const float FOREGROUND_CONFIDENCE=0.8f;
+    static const float FOREGROUND_CONFIDENCE;  //=0.8f;
 
     /** Confidence for foreground or background type being equally likely.*/
-    static const float UNKNOWN_REGION_CONFIDENCE=0.5f;
+    static const float UNKNOWN_REGION_CONFIDENCE;  //=0.5f;
 
     /** Confidence for a region likely being background.*/
-    static const float BACKGROUND_CONFIDENCE=0.1f;
+    static const float BACKGROUND_CONFIDENCE;  //=0.1f;
 
     /** Confidence corresponding to a certain background reagion (equals zero). */
-    static const float CERTAIN_BACKGROUND_CONFIDENCE=0.0f;
+    static const float CERTAIN_BACKGROUND_CONFIDENCE;  //=0.0f;
 
 
     /**
