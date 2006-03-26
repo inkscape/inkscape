@@ -764,7 +764,7 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
     //                                       checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
                                            checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("Tool Controls"), _("Show or hide the Tool Controls panel"), "toppanel",
+    sp_ui_menu_append_check_item_from_verb(m, view, _("Tool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
                                            checkitem_toggled, checkitem_update, 0);
     sp_ui_menu_append_check_item_from_verb(m, view, _("_Toolbox"), _("Show or hide the main toolbox (on the left)"), "toolbox",
                                            checkitem_toggled, checkitem_update, 0);
@@ -774,7 +774,7 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
                                            checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_SCROLLBARS));
     sp_ui_menu_append_check_item_from_verb(m, view, _("_Statusbar"), _("Show or hide the statusbar (at the bottom of the window)"), "statusbar",
                                            checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("_Panels"), _("Show or hide the panels"), "panels",
+    sp_ui_menu_append_check_item_from_verb(m, view, _("_Palette"), _("Show or hide the color palette"), "panels",
                                            checkitem_toggled, checkitem_update, 0);
 }
 
