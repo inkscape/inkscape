@@ -15,14 +15,18 @@
 #include "trace/potrace/inkscape-potrace.h"
 
 #include <inkscape.h>
+#include <desktop.h>
 #include <desktop-handles.h>
 #include <document.h>
-#include "message-stack.h"
+#include <message-stack.h>
 #include <glibmm/i18n.h>
 #include <selection.h>
 #include <xml/repr.h>
-#include "sp-item.h"
-#include "sp-image.h"
+#include <xml/attribute-record.h>
+#include <sp-item.h>
+#include <sp-shape.h>
+#include <sp-image.h>
+#include <splivarot.h> //for intersection boolop
 
 #include "siox.h"
 #include "imagemap-gdk.h"
@@ -57,8 +61,9 @@ Tracer::getSelectedSPImage()
         {
         SPImage *img = NULL;
         GSList const *list = sel->itemList();
-        sioxItems.clear();
         std::vector<SPItem *> items;
+        sioxShapes.clear();
+
         /*
            First, things are selected top-to-bottom, so we need to invert
            them as bottom-to-top so that we can discover the image and any
@@ -89,19 +94,23 @@ Tracer::getSelectedSPImage()
                 }
             else if (img) //# items -after- the image in tree (above it in Z)
                 {
-                sioxItems.push_back(item);
+                if (SP_IS_SHAPE(item))
+                    {
+                    SPShape *shape = SP_SHAPE(item);
+                    sioxShapes.push_back(shape);
+                    }
                 }
             }
-        if (!img || sioxItems.size() < 1)
+        if (!img || sioxShapes.size() < 1)
             {
-            char *msg = _("Select one image and one or more items above it");
+            char *msg = _("Select one image and one or more shapes above it");
             SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
             return NULL;
             }
         return img;
         }
     else
-        //### No SIOX.  We want exactly one image selected
+        //### SIOX not enabled.  We want exactly one image selected
         {
         SPItem *item = sel->singleItem();
         if (!item)
@@ -158,6 +167,92 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     unsigned long *imgBuf = ppMap->pixels;
     float *confidenceMatrix = new float[ppMap->width * ppMap->height];
 
+    Inkscape::XML::Node *imgRepr = SP_OBJECT(img)->repr;
+    /*
+    //## Make a Rect overlaying the image
+    Inkscape::XML::Node *parent  = imgRepr->parent();
+
+    Inkscape::XML::Node *rect    = sp_repr_new("svg:rect");
+    Inkscape::Util::List<Inkscape::XML::AttributeRecord const> attr =
+                   imgRepr->attributeList();
+    for (  ; attr ; attr++)
+        {
+        rect->setAttribute(g_quark_to_string(attr->key), attr->value, false);
+        }
+
+
+    //Inkscape::XML::Node *rect    = imgRepr->duplicate();
+    parent->appendChild(rect);
+    Inkscape::GC::release(rect);
+    */
+
+    //### <image> element
+    double x      = 0.0;
+    double y      = 0.0;
+    double width  = 0.0;
+    double height = 0.0;
+    double dval   = 0.0;
+
+    if (sp_repr_get_double(imgRepr, "x", &dval))
+        x = dval;
+    if (sp_repr_get_double(imgRepr, "y", &dval))
+        y = dval;
+
+    if (sp_repr_get_double(imgRepr, "width", &dval))
+        width = dval;
+    if (sp_repr_get_double(imgRepr, "height", &dval))
+        height = dval;
+
+    double iwidth  = (double)ppMap->width;
+    double iheight = (double)ppMap->height;
+
+    double iwscale = width  / iwidth;
+    double ihscale = height / iheight;
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+    unsigned long cmIndex = 0;
+    for (int row=0 ; row<ppMap->height ; row++)
+        {
+        double ypos = y + ihscale * (double) row;
+        for (int col=0 ; col<ppMap->width ; col++)
+            {
+            //Get absolute X,Y position
+            double xpos = x + iwscale * (double)col;
+            NR::Point point(xpos, ypos);
+            point *= img->transform;
+            point = desktop->doc2dt(point);
+            std::vector<SPShape *>::iterator iter;
+            g_message("x:%f    y:%f\n", point[0], point[1]);
+            SPItem *itemOverPoint = desktop->item_at_point(point, false, NULL);
+            int weHaveAHit = false;
+            if (itemOverPoint)
+                {
+                printf("searching\n");
+                for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; iter++)
+                    {
+                    SPShape *shape = *iter;
+                    if (shape == itemOverPoint)
+                        {
+                        weHaveAHit = true;
+                        break;
+                        }
+                    }
+                }
+            if (weHaveAHit)
+                {
+                g_message("hit!\n");
+                confidenceMatrix[cmIndex] =
+                        org::siox::SioxSegmentator::CERTAIN_FOREGROUND_CONFIDENCE;
+                }
+            else
+                {
+                confidenceMatrix[cmIndex] =
+                        org::siox::SioxSegmentator::CERTAIN_BACKGROUND_CONFIDENCE;
+                }
+            cmIndex++;
+            }
+        }
 
     //## ok we have our pixel buf
     org::siox::SioxSegmentator ss(ppMap->width, ppMap->height, NULL, 0);

@@ -926,7 +926,7 @@ static std::vector<CLAB> createSignature(std::vector<CLAB> &input,
 //##  S I O X  S E G M E N T A T O R    (originally SioxSegmentator.java)
 //########################################################################
 
-//### NOTE: Doxygen comments are in siox-segmentator.h
+//### NOTE: Doxygen comments are in siox.h
 
 /** Confidence corresponding to a certain foreground region (equals one). */
 const float SioxSegmentator::CERTAIN_FOREGROUND_CONFIDENCE=1.0f;

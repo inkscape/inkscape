@@ -27,6 +27,7 @@
 #include <gdk/gdkpixbuf.h>
 
 #include <vector>
+#include <sp-shape.h>
 
 struct SPImage;
 struct SPItem;
@@ -230,7 +231,7 @@ private:
 
     SPImage *getSelectedSPImage();
 
-    std::vector<SPItem *> sioxItems;
+    std::vector<SPShape *> sioxShapes;
 
     bool sioxEnabled;
 
