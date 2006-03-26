@@ -778,19 +778,18 @@ sp_do_export_png(SPDocument *doc)
     if (sp_export_id || sp_export_area_drawing) {
 
         SPObject *o = NULL;
-        if (sp_export_id) {
-            o = doc->getObjectById(sp_export_id);
-        } else if (sp_export_area_drawing) {
-            o = SP_DOCUMENT_ROOT (doc);
-        } 
-
         SPObject *o_area = NULL;
-        if (sp_export_area_drawing) {
+        if (sp_export_id && sp_export_area_drawing) {
+            o = doc->getObjectById(sp_export_id);
             o_area = SP_DOCUMENT_ROOT (doc);
         } else if (sp_export_id) {
-            o_area = doc->getObjectById(sp_export_id);
+            o = doc->getObjectById(sp_export_id);
+            o_area = o;
+        } else if (sp_export_area_drawing) {
+            o = SP_DOCUMENT_ROOT (doc);
+            o_area = o;
         } 
-        
+
         if (o) {
             if (!SP_IS_ITEM (o)) {
                 g_warning("Object with id=\"%s\" is not a visible item. Nothing exported.", sp_export_id);
