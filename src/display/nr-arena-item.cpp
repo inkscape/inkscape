@@ -675,13 +675,14 @@ nr_arena_item_invoke_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 	nr_return_val_if_fail ((pb->area.y1 - pb->area.y0) >= (area->y1 - area->y0), NR_ARENA_ITEM_STATE_INVALID);
 
 #ifdef NR_ARENA_ITEM_VERBOSE
-	printf ("Invoke render %p: %d %d - %d %d, item bbox %d %d - %d %d\n", item, area->x0, area->y0, area->x1, area->y1, (&item->bbox)->x0, (&item->bbox)->y0, (&item->bbox)->x1, (&item->bbox)->y1);
+	printf ("Invoke clip by %p: %d %d - %d %d, item bbox %d %d - %d %d\n", item, area->x0, area->y0, area->x1, area->y1, (&item->bbox)->x0, (&item->bbox)->y0, (&item->bbox)->x1, (&item->bbox)->y1);
 #endif
 
 	if (item->visible && nr_rect_l_test_intersect (area, &item->bbox)) {
 		/* Need render that item */
-		if (((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->clip)
+		if (((NRArenaItemClass *) NR_OBJECT_GET_CLASS (item))->clip) {
 			return ((NRArenaItemClass *) NR_OBJECT_GET_CLASS(item))->clip (item, area, pb);
+		}
 	}
 
 	return item->state;
