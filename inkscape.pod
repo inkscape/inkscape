@@ -99,7 +99,8 @@ is the lower-left corner.
 
 =item B<-C>, B<--export-area-canvas>
 
-In PNG export, exported area is the entire canvas.
+In PNG export, exported area is the entire canvas (page). Usually this is the default, so you
+don't need to specify this unless you are using --export-id to export a specific object.
 
 =item B<-D>, B<--export-area-drawing>
 
@@ -150,8 +151,9 @@ This value overrides the --export-dpi setting (or the DPI hint if used with --ex
 
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
-The id attribute value of the object that you want to export from the document.
-By default the exported area is the bounding box of the object. 
+The id attribute value of the object that you want to export from the document.  By
+default the exported area is the bounding box of the object; you can override this using
+--export-area, --export-area-canvas, or --export-area-drawing.
 
 =item B<-j>, B<--export-id-only>
 
