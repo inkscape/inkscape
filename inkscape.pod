@@ -18,6 +18,7 @@ options:
 
     -e, --export-png=FILENAME         
     -a, --export-area=x0:y0:x1:y1     
+    -C, --export-area-canvas
     -D, --export-area-drawing
         --export-area-snap
     -i, --export-id=ID     
@@ -96,6 +97,10 @@ In PNG export, set the exported area in SVG user units (anonymous length units n
 in Inkscape SVG).  The default is to export the entire document canvas.  The point (0,0)
 is the lower-left corner.
 
+=item B<-C>, B<--export-area-canvas>
+
+In PNG export, exported area is the entire canvas.
+
 =item B<-D>, B<--export-area-drawing>
 
 In PNG export, exported area is the entire drawing (not canvas), i.e. the bounding box
@@ -146,7 +151,7 @@ This value overrides the --export-dpi setting (or the DPI hint if used with --ex
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
 The id attribute value of the object that you want to export from the document.
-Exported is the bounding box of the object, so with this option, --export-area is ignored. 
+By default the exported area is the bounding box of the object. 
 
 =item B<-j>, B<--export-id-only>
 

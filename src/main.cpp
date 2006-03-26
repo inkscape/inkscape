@@ -118,6 +118,7 @@ enum {
     SP_ARG_EXPORT_DPI,
     SP_ARG_EXPORT_AREA,
     SP_ARG_EXPORT_AREA_DRAWING,
+    SP_ARG_EXPORT_AREA_CANVAS,
     SP_ARG_EXPORT_AREA_SNAP,
     SP_ARG_EXPORT_WIDTH,
     SP_ARG_EXPORT_HEIGHT,
@@ -157,6 +158,7 @@ static gchar *sp_export_png = NULL;
 static gchar *sp_export_dpi = NULL;
 static gchar *sp_export_area = NULL;
 static gboolean sp_export_area_drawing = FALSE;
+static gboolean sp_export_area_canvas = FALSE;
 static gchar *sp_export_width = NULL;
 static gchar *sp_export_height = NULL;
 static gchar *sp_export_id = NULL;
@@ -232,6 +234,11 @@ struct poptOption options[] = {
      N_("Exported area is the entire drawing (not canvas)"),
      NULL},
 
+    {"export-area-canvas", 'C',
+     POPT_ARG_NONE, &sp_export_area_canvas, SP_ARG_EXPORT_AREA_CANVAS,
+     N_("Exported area is the entire canvas"),
+     NULL},
+
     {"export-area-snap", 0,
      POPT_ARG_NONE, &sp_export_area_snap, SP_ARG_EXPORT_AREA_SNAP,
      N_("Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"),
@@ -249,7 +256,7 @@ struct poptOption options[] = {
 
     {"export-id", 'i',
      POPT_ARG_STRING, &sp_export_id, SP_ARG_EXPORT_ID,
-     N_("The ID of the object to export (overrides export-area)"),
+     N_("The ID of the object to export"),
      N_("ID")},
 
     {"export-id-only", 'j',
@@ -424,6 +431,8 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-i")
             || !strncmp(argv[i], "--export-area-drawing", 21)
             || !strcmp(argv[i], "-D")
+            || !strncmp(argv[i], "--export-area-canvas", 20)
+            || !strcmp(argv[i], "-C")
             || !strncmp(argv[i], "--export-id", 12)
             || !strcmp(argv[i], "-P")
             || !strncmp(argv[i], "--export-ps", 11)
@@ -773,15 +782,19 @@ sp_do_export_png(SPDocument *doc)
             o = doc->getObjectById(sp_export_id);
         } else if (sp_export_area_drawing) {
             o = SP_DOCUMENT_ROOT (doc);
-        }
+        } 
 
+        SPObject *o_area = NULL;
+        if (sp_export_area_drawing) {
+            o_area = SP_DOCUMENT_ROOT (doc);
+        } else if (sp_export_id) {
+            o_area = doc->getObjectById(sp_export_id);
+        } 
+        
         if (o) {
             if (!SP_IS_ITEM (o)) {
                 g_warning("Object with id=\"%s\" is not a visible item. Nothing exported.", sp_export_id);
                 return;
-            }
-            if (sp_export_area) {
-                g_warning ("Object with id=\"%s\" is being exported; --export-area is ignored.", sp_export_id);
             }
 
             items = g_slist_prepend (items, SP_ITEM(o));
@@ -822,12 +835,14 @@ sp_do_export_png(SPDocument *doc)
 
             // write object bbox to area
             sp_document_ensure_up_to_date (doc);
-            sp_item_invoke_bbox((SPItem *) o, &area, sp_item_i2r_affine((SPItem *) o), TRUE);
+            sp_item_invoke_bbox((SPItem *) o_area, &area, sp_item_i2r_affine((SPItem *) o_area), TRUE);
         } else {
             g_warning("Object with id=\"%s\" was not found in the document. Nothing exported.", sp_export_id);
             return;
         }
-    } else if (sp_export_area) {
+    }
+    
+    if (sp_export_area) {
         /* Try to parse area (given in SVG pixels) */
         if (!sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &area.x0, &area.y0, &area.x1, &area.y1) == 4) {
             g_warning("Cannot parse export area '%s'; use 'x0:y0:x1:y1'. Nothing exported.", sp_export_area);
@@ -837,7 +852,7 @@ sp_do_export_png(SPDocument *doc)
             g_warning("Export area '%s' has negative width or height. Nothing exported.", sp_export_area);
             return;
         }
-    } else {
+    } else if (sp_export_area_canvas || !(sp_export_id || sp_export_area_drawing)) {
         /* Export the whole canvas */
         sp_document_ensure_up_to_date (doc);
         area.x0 = SP_ROOT(doc->root)->x.computed;
