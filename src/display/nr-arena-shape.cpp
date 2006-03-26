@@ -746,7 +746,7 @@ nr_arena_shape_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
     NRArenaShape *shape = NR_ARENA_SHAPE (item);
     if (!shape->curve) return item->state;
 
-    if ( shape->delayed_shp ) {
+    if ( shape->delayed_shp || shape->fill_shp == NULL) { // we need a fill shape no matter what
 	if ( nr_rect_l_test_intersect (area, &item->bbox) ) {
 	    NRGC   tempGC(NULL);
 	    tempGC.transform=shape->ctm;
