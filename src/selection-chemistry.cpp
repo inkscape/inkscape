@@ -74,6 +74,7 @@ using NR::Y;
 GSList *clipboard = NULL;
 GSList *defs_clipboard = NULL;
 SPCSSAttr *style_clipboard = NULL;
+NR::Rect size_clipboard(NR::Point(0,0), NR::Point(0,0));
 
 static void sp_copy_stuff_used_by_item(GSList **defs_clip, SPItem *item, const GSList *items);
 
@@ -1042,6 +1043,8 @@ void sp_selection_copy()
         g_free (query);
     }
 
+    size_clipboard = selection->bounds();
+
     g_slist_free ((GSList *) items);
 }
 
@@ -1117,6 +1120,74 @@ void sp_selection_paste_style()
     paste_defs (&defs_clipboard, SP_DT_DOCUMENT(desktop));
 
     sp_desktop_set_style (desktop, style_clipboard);
+
+    sp_document_done(SP_DT_DOCUMENT (desktop));
+}
+
+void sp_selection_paste_size (bool apply_x, bool apply_y)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL) return;
+
+    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+
+    // check if something is in the clipboard
+    if (size_clipboard.extent(NR::X) < 1e-6 || size_clipboard.extent(NR::Y) < 1e-6) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
+        return;
+    }
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste size to."));
+        return;
+    }
+
+    NR::Rect current = selection->bounds();
+    if (current.extent(NR::X) < 1e-6 || current.extent(NR::Y) < 1e-6) {
+        return;
+    }
+
+    double scale_x = size_clipboard.extent(NR::X) / current.extent(NR::X);
+    double scale_y = size_clipboard.extent(NR::Y) / current.extent(NR::Y);
+
+    sp_selection_scale_relative (selection, current.midpoint(), NR::scale(apply_x? scale_x : 1.0, apply_y? scale_y : 1.0));
+
+    sp_document_done(SP_DT_DOCUMENT (desktop));
+}
+
+void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
+{
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop == NULL) return;
+
+    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+
+    // check if something is in the clipboard
+    if (size_clipboard.extent(NR::X) < 1e-6 || size_clipboard.extent(NR::Y) < 1e-6) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Nothing on the clipboard."));
+        return;
+    }
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to paste size to."));
+        return;
+    }
+
+    for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
+        SPItem *item = SP_ITEM(l->data);
+
+        NR::Rect current = sp_item_bbox_desktop(item);
+        if (current.extent(NR::X) < 1e-6 || current.extent(NR::Y) < 1e-6) {
+            continue;
+        }
+
+        double scale_x = size_clipboard.extent(NR::X) / current.extent(NR::X);
+        double scale_y = size_clipboard.extent(NR::Y) / current.extent(NR::Y);
+
+        sp_item_scale_rel (item, NR::scale(apply_x? scale_x : 1.0, apply_y? scale_y : 1.0));
+    }
 
     sp_document_done(SP_DT_DOCUMENT (desktop));
 }

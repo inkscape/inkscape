@@ -820,6 +820,24 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_PASTE_STYLE:
             sp_selection_paste_style();
             break;
+        case SP_VERB_EDIT_PASTE_SIZE:
+            sp_selection_paste_size(true, true);
+            break;
+        case SP_VERB_EDIT_PASTE_SIZE_X:
+            sp_selection_paste_size(true, false);
+            break;
+        case SP_VERB_EDIT_PASTE_SIZE_Y:
+            sp_selection_paste_size(false, true);
+            break;
+        case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY:
+            sp_selection_paste_size_separately(true, true);
+            break;
+        case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_X:
+            sp_selection_paste_size_separately(true, false);
+            break;
+        case SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_Y:
+            sp_selection_paste_size_separately(false, true);
+            break;
         case SP_VERB_EDIT_PASTE_IN_PLACE:
             sp_selection_paste(true);
             break;
@@ -1877,6 +1895,18 @@ Verb *Verb::_base_verbs[] = {
                  N_("Paste objects from clipboard to mouse point"), GTK_STOCK_PASTE),
     new EditVerb(SP_VERB_EDIT_PASTE_STYLE, "EditPasteStyle", N_("Paste _Style"),
                  N_("Apply the style of the copied object to selection"), "selection_paste_style"),
+    new EditVerb(SP_VERB_EDIT_PASTE_SIZE, "EditPasteSize", N_("Paste Si_ze"),
+                 N_("Scale selection to match the size of the copied object"), NULL),
+    new EditVerb(SP_VERB_EDIT_PASTE_SIZE_X, "EditPasteWidth", N_("Paste _Width"),
+                 N_("Scale selection horizontally to match the width of the copied object"), NULL),
+    new EditVerb(SP_VERB_EDIT_PASTE_SIZE_Y, "EditPasteHeight", N_("Paste _Height"),
+                 N_("Scale selection vertically to match the height of the copied object"), NULL),
+    new EditVerb(SP_VERB_EDIT_PASTE_SIZE_SEPARATELY, "EditPasteSizeSeparately", N_("Paste Size Separately"),
+                 N_("Scale each selected object to match the size of the copied object"), NULL),
+    new EditVerb(SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_X, "EditPasteWidthSeparately", N_("Paste Width Separately"),
+                 N_("Scale each selected object horizontally to match the width of the copied object"), NULL),
+    new EditVerb(SP_VERB_EDIT_PASTE_SIZE_SEPARATELY_Y, "EditPasteHeightSeparately", N_("Paste Height Separately"),
+                 N_("Scale each selected object vertically to match the height of the copied object"), NULL),
     new EditVerb(SP_VERB_EDIT_PASTE_IN_PLACE, "EditPasteInPlace", N_("Paste _In Place"),
                  N_("Paste objects from clipboard to the original location"), "selection_paste_in_place"),
     new EditVerb(SP_VERB_EDIT_DELETE, "EditDelete", N_("_Delete"),
