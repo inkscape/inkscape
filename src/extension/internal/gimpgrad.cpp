@@ -215,7 +215,7 @@ GimpGrad::open (Inkscape::Extension::Input *module, gchar const *filename)
 
             ColorRGBA const leftcolor(dbls[3], dbls[4], dbls[5], dbls[6]);
             ColorRGBA const rightcolor(dbls[7], dbls[8], dbls[9], dbls[10]);
-            assert(11 == G_N_ELEMENTS(dbls));
+            g_assert(11 == G_N_ELEMENTS(dbls));
 
             /* Interpolation enums: curve shape and colour space. */
             {
