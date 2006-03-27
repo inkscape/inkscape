@@ -145,10 +145,10 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                 else 
                     in_phrase = g_strdup_printf(_(" in group %s (%s)"), parent_name, layer_name);
             } else {
-                    in_phrase = g_strdup_printf(_(" in <b>%i</b> parents (%s)"), num_parents, layer_name);
+                    in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> parents (%s)", " in <b>%i</b> parents (%s)", num_parents), num_parents, layer_name);
             }
         } else {
-            in_phrase = g_strdup_printf(_(" in <b>%i</b> layers"), num_layers);
+            in_phrase = g_strdup_printf(ngettext(" in <b>%i</b> layers", " in <b>%i</b> layers", num_layers), num_layers);
         }
         g_free (layer_name);
         g_free (parent_name);
