@@ -449,7 +449,11 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
 
         // status text; we do not track coords because this branch is run once, not all the time
         // during drag
-        rc._message_context->setF(Inkscape::NORMAL_MESSAGE, _("<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"), g_slist_length((GSList *) selection->itemList()));
+        int n_objects = g_slist_length((GSList *) selection->itemList());
+        rc._message_context->setF(Inkscape::NORMAL_MESSAGE,
+                                  ngettext("<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle",
+                                           "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),
+                                  n_objects);
     } else {
         SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
     }
