@@ -1151,7 +1151,10 @@ void sp_selection_paste_size (bool apply_x, bool apply_y)
     double scale_x = size_clipboard.extent(NR::X) / current.extent(NR::X);
     double scale_y = size_clipboard.extent(NR::Y) / current.extent(NR::Y);
 
-    sp_selection_scale_relative (selection, current.midpoint(), NR::scale(apply_x? scale_x : 1.0, apply_y? scale_y : 1.0));
+    sp_selection_scale_relative (selection, current.midpoint(), 
+                                 NR::scale(
+                                     apply_x? scale_x : (desktop->isToolboxButtonActive ("lock")? scale_y : 1.0),
+                                     apply_y? scale_y : (desktop->isToolboxButtonActive ("lock")? scale_x : 1.0)));
 
     sp_document_done(SP_DT_DOCUMENT (desktop));
 }
@@ -1186,7 +1189,11 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
         double scale_x = size_clipboard.extent(NR::X) / current.extent(NR::X);
         double scale_y = size_clipboard.extent(NR::Y) / current.extent(NR::Y);
 
-        sp_item_scale_rel (item, NR::scale(apply_x? scale_x : 1.0, apply_y? scale_y : 1.0));
+        sp_item_scale_rel (item,
+                                 NR::scale(
+                                     apply_x? scale_x : (desktop->isToolboxButtonActive ("lock")? scale_y : 1.0),
+                                     apply_y? scale_y : (desktop->isToolboxButtonActive ("lock")? scale_x : 1.0)));
+
     }
 
     sp_document_done(SP_DT_DOCUMENT (desktop));
