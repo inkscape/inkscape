@@ -20,6 +20,8 @@
 #include "widgets/spw-utilities.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
+#include "widgets/icon.h"
+#include "widgets/sp-widget.h"
 
 #include "prefs-utils.h"
 #include "selection-chemistry.h"
@@ -31,10 +33,8 @@
 #include "sp-namedview.h"
 #include "toolbox.h"
 #include <glibmm/i18n.h>
-#include "widgets/sp-widget.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"
-#include "widgets/sp-widget.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "prefs-utils.h"
@@ -370,6 +370,22 @@ static void toggle_pattern (GtkWidget *button, gpointer data) {
     }
 }
 
+static void toggle_lock (GtkWidget *button, gpointer data) {
+
+    GtkWidget *old_child = gtk_bin_get_child(GTK_BIN(button));
+    gtk_container_remove (GTK_CONTAINER(button), old_child);
+
+    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+        GtkWidget *child = sp_icon_new (GTK_ICON_SIZE_MENU, "width_height_lock");
+        gtk_widget_show (child);
+        gtk_container_add (GTK_CONTAINER (button), child);
+    } else {
+        GtkWidget *child = sp_icon_new (GTK_ICON_SIZE_MENU, "lock_unlocked");
+        gtk_widget_show (child);
+        gtk_container_add (GTK_CONTAINER (button), child);
+    }
+}
+
 GtkWidget *
 sp_select_toolbox_new(SPDesktop *desktop)
 {
@@ -432,12 +448,13 @@ sp_select_toolbox_new(SPDesktop *desktop)
     GtkWidget *lock = sp_button_new_from_data( GTK_ICON_SIZE_MENU,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
-                                              "width_height_lock",
-                                              _("Change both width and height by the same proportion"),
+                                              "lock_unlocked",
+                                              _("When locked, change both width and height by the same proportion"),
                                               tt);
     gtk_box_pack_start(GTK_BOX(lockbox), lock, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vb), lockbox, FALSE, FALSE, 0);
     gtk_object_set_data(GTK_OBJECT(spw), "lock", lock);
+    g_signal_connect_after (G_OBJECT (lock), "clicked", G_CALLBACK (toggle_lock), desktop);
 
     gtk_container_add(GTK_CONTAINER(vb),
                       //TRANSLATORS: only translate "string" in "context|string". 
