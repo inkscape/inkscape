@@ -48,7 +48,8 @@ extensions = \
 	dxf_outlines.py \
 	fig2svg.sh \
     cspsubdiv.py \
-    flatten.py
+    flatten.py \
+    gimp_xcf.py
 
 otherstuff =
 
@@ -91,7 +92,8 @@ modules = \
 	svg_and_media_zip_output.inx \
 	dxf_outlines.inx \
     fig_input.inx \
-    flatten.inx
+    flatten.inx \
+    gimp_xcf.inx
 
 extension_SCRIPTS = \
 	$(extensions)
