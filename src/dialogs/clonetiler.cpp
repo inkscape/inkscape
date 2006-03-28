@@ -30,6 +30,7 @@
 #include "../interface.h"
 #include "../selection.h"
 #include "../style.h"
+#include "../desktop.h"
 #include "../desktop-handles.h"
 #include "../sp-namedview.h"
 #include "../document.h"
@@ -1246,6 +1247,13 @@ clonetiler_apply (GtkWidget *widget, void *)
             clone->setAttribute("inkscape:tiled-clone-of", id_href);
             clone->setAttribute("xlink:href", id_href);
 
+            NR::Point new_center;
+            bool center_set = false;
+            if (obj_repr->attribute("inkscape:transform-center-x") || obj_repr->attribute("inkscape:transform-center-y")) {
+                new_center = desktop->dt2doc(SP_ITEM(obj)->getCenter()) * t;
+                center_set = true;
+            }
+
             gchar affinestr[80];
             if (sp_svg_transform_write(affinestr, 79, t)) {
                 clone->setAttribute("transform", affinestr);
@@ -1264,6 +1272,16 @@ clonetiler_apply (GtkWidget *widget, void *)
 
             // add the new clone to the top of the original's parent
             SP_OBJECT_REPR(parent)->appendChild(clone);
+
+            if (center_set) {
+                SPObject *clone_object = SP_DT_DOCUMENT(desktop)->getObjectByRepr(clone);
+                if (clone_object && SP_IS_ITEM(clone_object)) {
+                    clone_object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+                    SP_ITEM(clone_object)->setCenter(desktop->doc2dt(new_center));
+                    clone_object->updateRepr();
+                }
+            }
+
             Inkscape::GC::release(clone);
         }
         cur[NR::Y] = 0;
