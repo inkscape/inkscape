@@ -29,6 +29,7 @@
 #include "io/sys.h"
 #include "path-prefix.h"
 #include "swatches.h"
+#include "sp-item.h"
 
 #include "eek-preview.h"
 
@@ -72,6 +73,21 @@ ColorItem &ColorItem::operator=(ColorItem const &other)
     return *this;
 }
 
+
+class JustForNow
+{
+public:
+    JustForNow() : _prefWidth(0) {}
+
+    Glib::ustring _name;
+    int _prefWidth;
+    std::vector<ColorItem*> _colors;
+};
+
+static std::vector<JustForNow*> possible;
+
+
+
 typedef enum {
     APP_X_INKY_COLOR_ID = 0,
     APP_X_INKY_COLOR = 0,
@@ -107,6 +123,51 @@ static void dragGetColorData( GtkWidget *widget,
                                 strlen((const char*)tmp) + 1);
         g_free(tmp);
         tmp = 0;
+    } else if ( info == APP_X_INKY_COLOR ) {
+        Glib::ustring paletteName;
+
+        // Find where this thing came from
+        bool found = false;
+        int index = 0;
+        for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end() && !found; ++it ) {
+            JustForNow* curr = *it;
+            index = 0;
+            for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
+                if ( item == *zz ) {
+                    found = true;
+                    paletteName = curr->_name;
+                    break;
+                } else {
+                    index++;
+                }
+            }
+        }
+
+//         if ( found ) {
+//             g_message("Found the color at entry %d in palette '%s'", index, paletteName.c_str() );
+//         } else {
+//             g_message("Unable to find the color");
+//         }
+        int itemCount = 4 + 1 + 1 + paletteName.length();
+
+        guint16* tmp = new guint16[itemCount]
+;
+        tmp[0] = (item->def.getR() << 8) | item->def.getR();
+        tmp[1] = (item->def.getG() << 8) | item->def.getG();
+        tmp[2] = (item->def.getB() << 8) | item->def.getB();
+        tmp[3] = 0xffff;
+
+        tmp[4] = index;
+        tmp[5] = paletteName.length();
+        for ( unsigned int i = 0; i < paletteName.length(); i++ ) {
+            tmp[6 + i] = paletteName[i];
+        }
+        gtk_selection_data_set( data,
+                                typeXColor,
+                                16, // format
+                                reinterpret_cast<const guchar*>(tmp),
+                                itemCount * 2);
+        delete[] tmp;
     } else {
         guint16 tmp[4];
         tmp[0] = (item->def.getR() << 8) | item->def.getR();
@@ -188,8 +249,18 @@ void ColorItem::_dropDataIn( GtkWidget *widget,
      switch (info) {
          case APP_X_INKY_COLOR:
          {
-//              g_message("inky color");
-             // Fallthrough
+             if ( data->length >= 8 ) {
+                 // Careful about endian issues.
+                 guint16* dataVals = (guint16*)data->data;
+                 if ( user_data ) {
+                     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
+                     if ( item->def.isEditable() ) {
+                         // Shove on in the new value
+                         item->def.setRGB( 0x0ff & (dataVals[0] >> 8), 0x0ff & (dataVals[1] >> 8), 0x0ff & (dataVals[2] >> 8) );
+                     }
+                 }
+             }
+             break;
          }
          case APP_X_COLOR:
          {
@@ -223,6 +294,50 @@ void ColorItem::_dropDataIn( GtkWidget *widget,
 
 }
 
+static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::ustring const& match, int r, int g, int b )
+{
+    bool changed = false;
+
+    if ( node ) {
+        gchar const * val = node->attribute("HOTFill");
+        if ( val  && (match == val) ) {
+            SPObject *obj = document->getObjectByRepr( node );
+
+            gchar c[64] = {0};
+            sp_svg_write_color( c, 64, SP_RGBA32_U_COMPOSE( r, g, b, 0xff ) );
+            SPCSSAttr *css = sp_repr_css_attr_new();
+            sp_repr_css_set_property( css, "fill", c );
+
+            sp_desktop_apply_css_recursive( (SPItem*)obj, css, true );
+            ((SPItem*)obj)->updateRepr();
+
+            changed = true;
+        }
+
+        val = node->attribute("HOTStroke");
+        if ( val  && (match == val) ) {
+            SPObject *obj = document->getObjectByRepr( node );
+
+            gchar c[64] = {0};
+            sp_svg_write_color( c, 64, SP_RGBA32_U_COMPOSE( r, g, b, 0xff ) );
+            SPCSSAttr *css = sp_repr_css_attr_new();
+            sp_repr_css_set_property( css, "stroke", c );
+
+            sp_desktop_apply_css_recursive( (SPItem*)obj, css, true );
+            ((SPItem*)obj)->updateRepr();
+
+            changed = true;
+        }
+
+        Inkscape::XML::Node* first = node->firstChild();
+        changed |= bruteForce( document, first, match, r, g, b );
+
+        changed |= bruteForce( document, node->next(), match, r, g, b );
+    }
+
+    return changed;
+}
+
 void ColorItem::_colorDefChanged(void* data)
 {
     ColorItem* item = reinterpret_cast<ColorItem*>(data);
@@ -236,7 +351,7 @@ void ColorItem::_colorDefChanged(void* data)
                                        (item->def.getG() << 8) | item->def.getG(),
                                        (item->def.getB() << 8) | item->def.getB() );
 
-                eek_preview_set_linked( preview, (item->_linkSrc ? PREVIEW_LINK_IN:0) | (item->_listeners.empty() ? 0:PREVIEW_LINK_OUT) );
+                eek_preview_set_linked( preview, (LinkType)((item->_linkSrc ? PREVIEW_LINK_IN:0) | (item->_listeners.empty() ? 0:PREVIEW_LINK_OUT)) );
 
                 widget->queue_draw();
             }
@@ -258,6 +373,47 @@ void ColorItem::_colorDefChanged(void* data)
             }
 
             (*it)->def.setRGB( r, g, b );
+        }
+
+
+        // Look for objects using this color
+        {
+            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+            if ( desktop ) {
+                SPDocument* document = SP_DT_DOCUMENT( desktop );
+                Inkscape::XML::Node *rroot =  sp_document_repr_root( document );
+                if ( rroot ) {
+
+                    // Find where this thing came from
+                    Glib::ustring paletteName;
+                    bool found = false;
+                    int index = 0;
+                    for ( std::vector<JustForNow*>::iterator it2 = possible.begin(); it2 != possible.end() && !found; ++it2 ) {
+                        JustForNow* curr = *it2;
+                        index = 0;
+                        for ( std::vector<ColorItem*>::iterator zz = curr->_colors.begin(); zz != curr->_colors.end(); ++zz ) {
+                            if ( item == *zz ) {
+                                found = true;
+                                paletteName = curr->_name;
+                                break;
+                            } else {
+                                index++;
+                            }
+                        }
+                    }
+
+                    if ( !paletteName.empty() ) {
+                        gchar* str = g_strdup_printf("%d|", index);
+                        paletteName.insert( 0, str );
+                        g_free(str);
+                        str = 0;
+
+                        if ( bruteForce( document, rroot, paletteName, item->def.getR(), item->def.getG(), item->def.getB() ) ) {
+                            sp_document_done( document );
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -283,7 +439,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::GtkIconSize)size );
-        eek_preview_set_linked( preview, (_linkSrc ? PREVIEW_LINK_IN:0) | (_listeners.empty() ? 0:PREVIEW_LINK_OUT) );
+        eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0) | (_listeners.empty() ? 0:PREVIEW_LINK_OUT)) );
 
         def.addCallback( _colorDefChanged, this );
 
@@ -424,18 +580,6 @@ bool parseNum( char*& str, int& val ) {
     return retval;
 }
 
-
-class JustForNow
-{
-public:
-    JustForNow() : _prefWidth(0) {}
-
-    Glib::ustring _name;
-    int _prefWidth;
-    std::vector<ColorItem*> _colors;
-};
-
-static std::vector<JustForNow*> possible;
 
 static bool getBlock( std::string& dst, guchar ch, std::string const str )
 {

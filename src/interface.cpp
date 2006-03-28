@@ -75,6 +75,7 @@ typedef enum {
     PNG_DATA,
     JPEG_DATA,
     IMAGE_DATA,
+    APP_X_INKY_COLOR,
     APP_X_COLOR
 } ui_drop_target_info;
 
@@ -84,6 +85,7 @@ static GtkTargetEntry ui_drop_target_entries [] = {
     {"image/svg",     0, SVG_DATA},
     {"image/png",     0, PNG_DATA},
     {"image/jpeg",    0, JPEG_DATA},
+    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
     {"application/x-color", 0, APP_X_COLOR}
 };
 
@@ -974,6 +976,65 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          gpointer user_data)
 {
     switch (info) {
+        case APP_X_INKY_COLOR:
+        {
+            SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+            int destX = 0;
+            int destY = 0;
+            gtk_widget_translate_coordinates( widget, &(desktop->canvas->widget), x, y, &destX, &destY );
+            NR::Point where( sp_canvas_window_to_world( desktop->canvas, NR::Point( destX, destY ) ) );
+
+            SPItem *item = desktop->item_at_point( where, true );
+            if ( item )
+            {
+                if ( data->length >= 8 ) {
+                    gchar c[64] = {0};
+                    // Careful about endian issues.
+                    guint16* dataVals = (guint16*)data->data;
+                    sp_svg_write_color( c, 64,
+                                        SP_RGBA32_U_COMPOSE(
+                                            0x0ff & (dataVals[0] >> 8),
+                                            0x0ff & (dataVals[1] >> 8),
+                                            0x0ff & (dataVals[2] >> 8),
+                                            0xff // can't have transparency in the color itself
+                                            //0x0ff & (data->data[3] >> 8),
+                                            ));
+                    SPCSSAttr *css = sp_repr_css_attr_new();
+                    sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
+
+                    sp_desktop_apply_css_recursive( item, css, true );
+                    item->updateRepr();
+
+                    if ( data->length > 12 ) {
+                        // piggie-backed palette entry info
+                        int index = dataVals[4];
+                        Glib::ustring palName;
+                        for ( int i = 0; i < dataVals[5]; i++ ) {
+                            palName += (gunichar)dataVals[6+i];
+                        }
+
+                        // Now hook in a magic tag of some sort.
+                        if ( !palName.empty() ) {
+                            gchar* str = g_strdup_printf("%d|", index);
+                            palName.insert( 0, str );
+                            g_free(str);
+                            str = 0;
+
+                            sp_object_setAttribute( SP_OBJECT(item),
+                                                    (drag_context->action != GDK_ACTION_MOVE) ? "HOTFill":"HOTStroke",
+                                                    palName.c_str(),
+                                                    false );
+                            item->updateRepr();
+                        }
+                    }
+
+                    SPDocument *doc = SP_ACTIVE_DOCUMENT;
+                    sp_document_done( doc );
+                }
+            }
+        }
+        break;
+
         case APP_X_COLOR:
         {
             SPDesktop *desktop = SP_ACTIVE_DESKTOP;
