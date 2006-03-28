@@ -1074,7 +1074,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
         break;
 
     } // end of switch statement
-    return NULL;
+    return master;
 }
 
 AlignAndDistribute::AlignTarget AlignAndDistribute::getAlignTarget()const {

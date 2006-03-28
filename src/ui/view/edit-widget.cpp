@@ -1557,7 +1557,7 @@ EditWidget::initEdit (SPDocument *doc)
 
     /// \todo convert to sigc++ when SPObject hierarchy gets converted
     /* Listen on namedview modification */
-    g_signal_connect (G_OBJECT (_desktop->namedview), "modified", G_CALLBACK (_namedview_modified), this);
+    g_signal_connect (G_OBJECT (_desktop->namedview), "modified", G_CALLBACK (Inkscape::UI::View::_namedview_modified), this);
     _layer_selector.setDesktop (_desktop);
     _selected_style_status.setDesktop (_desktop);
  
