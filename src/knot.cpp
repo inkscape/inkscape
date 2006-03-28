@@ -545,8 +545,7 @@ void sp_knot_set_position(SPKnot *knot, NR::Point *p, guint state)
 }
 
 /**
- * Move knot to new position, without emitting a MOVED signal. We can't be sure this artificial
- * move has moved the knot from under cursor, but it seems likely, so we clear SP_KNOT_MOUSEOVER.
+ * Move knot to new position, without emitting a MOVED signal. 
  */
 void sp_knot_moveto(SPKnot *knot, NR::Point *p)
 {
@@ -558,8 +557,6 @@ void sp_knot_moveto(SPKnot *knot, NR::Point *p)
     if (knot->item) {
         SP_CTRL(knot->item)->moveto (*p);
     }
-
-    sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, FALSE);
 }
 
 /**
