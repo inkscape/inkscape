@@ -1896,6 +1896,9 @@ sp_selection_clone()
         sp_repr_set_attr(clone, "x", "0");
         sp_repr_set_attr(clone, "y", "0");
         sp_repr_set_attr(clone, "xlink:href", g_strdup_printf("#%s", sel_repr->attribute("id")));
+
+        sp_repr_set_attr(clone, "inkscape:transform-center-x", sel_repr->attribute("inkscape:transform-center-x"));
+        sp_repr_set_attr(clone, "inkscape:transform-center-y", sel_repr->attribute("inkscape:transform-center-y"));
         
         // add the new clone to the top of the original's parent
         parent->appendChild(clone);
