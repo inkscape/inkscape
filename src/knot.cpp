@@ -46,23 +46,6 @@ static bool within_tolerance = false;
 static bool transform_escaped = false; // true iff resize or rotate was cancelled by esc.
 
 enum {
-    PROP_0,
-
-    PROP_SIZE,
-    PROP_ANCHOR,
-    PROP_SHAPE,
-    PROP_MODE,
-    PROP_FILL, PROP_FILL_MOUSEOVER, PROP_FILL_DRAGGING,
-    PROP_STROKE, PROP_STROKE_MOUSEOVER, PROP_STROKE_DRAGGING,
-    PROP_IMAGE, PROP_IMAGE_MOUSEOVER, PROP_IMAGE_DRAGGING,
-    PROP_CURSOR, PROP_CURSOR_MOUSEOVER, PROP_CURSOR_DRAGGING,
-    PROP_PIXBUF,
-    PROP_TIP,
-
-    PROP_LAST
-};
-
-enum {
     EVENT,
     CLICKED,
     DOUBLECLICKED,
@@ -77,12 +60,9 @@ enum {
 static void sp_knot_class_init(SPKnotClass *klass);
 static void sp_knot_init(SPKnot *knot);
 static void sp_knot_dispose(GObject *object);
-static void sp_knot_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
-static void sp_knot_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 
 static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot);
 static void sp_knot_set_flag(SPKnot *knot, guint flag, bool set);
-static void sp_knot_update_ctrl(SPKnot *knot);
 static void sp_knot_set_ctrl_state(SPKnot *knot);
 
 static GObjectClass *parent_class;
@@ -122,130 +102,6 @@ static void sp_knot_class_init(SPKnotClass *klass)
     parent_class = (GObjectClass*) g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_knot_dispose;
-    object_class->set_property = sp_knot_set_property;
-    object_class->get_property = sp_knot_get_property;
-
-    /* Huh :) */
-
-    g_object_class_install_property(object_class,
-                                    PROP_SIZE,
-                                    g_param_spec_uint("size", "Size", "",
-                                                       0,
-                                                       0xffffffff,
-                                                       0xff000000,
-                                                       (GParamFlags) G_PARAM_READWRITE));
-    g_object_class_install_property(object_class,
-                                    PROP_ANCHOR,
-                                    g_param_spec_enum("anchor", "Anchor", "",
-                                                       GTK_TYPE_ANCHOR_TYPE,
-                                                       GTK_ANCHOR_CENTER,
-                                                       (GParamFlags) G_PARAM_READWRITE));
-    g_object_class_install_property(object_class,
-                                    PROP_SHAPE,
-                                    g_param_spec_int("shape", "Shape", "",
-                                                     SP_KNOT_SHAPE_SQUARE,
-                                                     SP_KNOT_SHAPE_IMAGE,
-                                                     SP_KNOT_SHAPE_SQUARE,
-                                                     (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_MODE,
-                                    g_param_spec_int("mode", "Mode", "",
-                                                     SP_KNOT_MODE_COLOR,
-                                                     SP_KNOT_MODE_XOR,
-                                                     SP_KNOT_MODE_XOR,
-                                                     (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_FILL,
-                                    g_param_spec_uint("fill", "Fill", "",
-                                                      0,
-                                                      0xffffffff,
-                                                      0xff000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_FILL_MOUSEOVER,
-                                    g_param_spec_uint("fill_mouseover", "Fill mouse over", "",
-                                                      0,
-                                                      0xffffffff,
-                                                      0xff000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_FILL_DRAGGING,
-                                    g_param_spec_uint("fill_dragging", "Fill dragging", "",
-                                                      0,
-                                                      0xffffffff,
-                                                      0xff000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_STROKE,
-                                    g_param_spec_uint("stroke", "Stroke", "",
-                                                      0,
-                                                      0xffffffff,
-                                                      0x01000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_STROKE_MOUSEOVER,
-                                    g_param_spec_uint("stroke_mouseover", "Stroke mouseover", "",
-                                                      0,
-                                                      0xffffffff,
-                                                      0x01000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_STROKE_DRAGGING,
-                                    g_param_spec_uint("stroke_dragging", "Stroke dragging", "",
-                                                      0,
-                                                      0xffffffff,
-                                                      0x01000000,
-                                                      (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_IMAGE,
-                                    g_param_spec_pointer("image", "Image", "",
-                                                         (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_IMAGE_MOUSEOVER,
-                                    g_param_spec_pointer("image_mouseover", "Image mouseover", "",
-                                                         (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_IMAGE_DRAGGING,
-                                    g_param_spec_pointer("image_dragging", "Image dragging", "",
-                                                         (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                     PROP_CURSOR,
-                                     g_param_spec_boxed("cursor", "Cursor", "",
-                                                         GDK_TYPE_CURSOR,
-							     (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_CURSOR_MOUSEOVER,
-                                    g_param_spec_boxed("cursor_mouseover", "Cursor mouseover", "",
-                                                       GDK_TYPE_CURSOR,
-                                                       (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_CURSOR_DRAGGING,
-                                    g_param_spec_boxed("cursor_dragging", "Cursor dragging", "",
-                                                       GDK_TYPE_CURSOR,
-                                                       (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_PIXBUF,
-                                    g_param_spec_pointer("pixbuf", "Pixbuf", "",
-                                                         (GParamFlags) G_PARAM_READWRITE));
-
-    g_object_class_install_property(object_class,
-                                    PROP_TIP,
-                                    g_param_spec_pointer("tip", "Tip", "",
-                                                         (GParamFlags) G_PARAM_READWRITE));
 
     knot_signals[EVENT] = g_signal_new("event",
                                        G_TYPE_FROM_CLASS(klass),
@@ -392,115 +248,6 @@ static void sp_knot_dispose(GObject *object)
     if (((GObjectClass *) (parent_class))->dispose) {
         (* ((GObjectClass *) (parent_class))->dispose) (object);
     }
-}
-
-/**
- * Callback to set property.
- */
-static void sp_knot_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
-{
-    GdkCursor *cursor;
-
-    SPKnot *knot = SP_KNOT(object);
-
-    switch (prop_id) {
-	case PROP_SIZE:
-            knot->size = g_value_get_uint(value);
-            break;
-	case PROP_ANCHOR:
-            knot->anchor = (GtkAnchorType) g_value_get_enum(value);
-            break;
-	case PROP_SHAPE:
-            knot->shape = (SPKnotShapeType) g_value_get_int(value);
-            break;
-	case PROP_MODE:
-            knot->mode = (SPKnotModeType) g_value_get_int(value);
-            break;
-	case PROP_FILL:
-            knot->fill[SP_KNOT_STATE_NORMAL] =
-		knot->fill[SP_KNOT_STATE_MOUSEOVER] =
-		knot->fill[SP_KNOT_STATE_DRAGGING] = g_value_get_uint(value);
-            break;
-	case PROP_FILL_MOUSEOVER:
-            knot->fill[SP_KNOT_STATE_MOUSEOVER] =
-		knot->fill[SP_KNOT_STATE_DRAGGING] = g_value_get_uint(value);
-            break;
-	case PROP_FILL_DRAGGING:
-            knot->fill[SP_KNOT_STATE_DRAGGING] = g_value_get_uint(value);
-            break;
-	case PROP_STROKE:
-            knot->stroke[SP_KNOT_STATE_NORMAL] =
-		knot->stroke[SP_KNOT_STATE_MOUSEOVER] =
-		knot->stroke[SP_KNOT_STATE_DRAGGING] = g_value_get_uint(value);
-            break;
-	case PROP_STROKE_MOUSEOVER:
-            knot->stroke[SP_KNOT_STATE_MOUSEOVER] =
-		knot->stroke[SP_KNOT_STATE_DRAGGING] = g_value_get_uint(value);
-            break;
-	case PROP_STROKE_DRAGGING:
-            knot->stroke[SP_KNOT_STATE_DRAGGING] = g_value_get_uint(value);
-            break;
-	case PROP_IMAGE:
-            knot->image[SP_KNOT_STATE_NORMAL] =
-		knot->image[SP_KNOT_STATE_MOUSEOVER] =
-		knot->image[SP_KNOT_STATE_DRAGGING] = (guchar*) g_value_get_pointer(value);
-            break;
-	case PROP_IMAGE_MOUSEOVER:
-            knot->image[SP_KNOT_STATE_MOUSEOVER] = (guchar*) g_value_get_pointer(value);
-            break;
-	case PROP_IMAGE_DRAGGING:
-            knot->image[SP_KNOT_STATE_DRAGGING] = (guchar*) g_value_get_pointer(value);
-            break;
-	case PROP_CURSOR:
-            cursor = (GdkCursor*) g_value_get_boxed(value);
-            for (gint i = 0; i < SP_KNOT_VISIBLE_STATES; i++) {
-                if (knot->cursor[i]) {
-                    gdk_cursor_unref(knot->cursor[i]);
-                }
-                knot->cursor[i] = cursor;
-                if (cursor) {
-                    gdk_cursor_ref(cursor);
-                }
-            }
-            break;
-	case PROP_CURSOR_MOUSEOVER:
-            cursor = (GdkCursor*) g_value_get_boxed(value);
-            if (knot->cursor[SP_KNOT_STATE_MOUSEOVER]) {
-                gdk_cursor_unref(knot->cursor[SP_KNOT_STATE_MOUSEOVER]);
-            }
-            knot->cursor[SP_KNOT_STATE_MOUSEOVER] = cursor;
-            if (cursor) {
-                gdk_cursor_ref(cursor);
-            }
-            break;
-	case PROP_CURSOR_DRAGGING:
-            cursor = (GdkCursor*) g_value_get_boxed(value);
-            if (knot->cursor[SP_KNOT_STATE_DRAGGING]) {
-                gdk_cursor_unref(knot->cursor[SP_KNOT_STATE_DRAGGING]);
-            }
-            knot->cursor[SP_KNOT_STATE_DRAGGING] = cursor;
-            if (cursor) {
-                gdk_cursor_ref(cursor);
-            }
-            break;
-	case PROP_PIXBUF:
-            knot->pixbuf = g_value_get_pointer(value);
-            break;
-	case PROP_TIP:
-            knot->tip = g_strdup((const gchar *) g_value_get_pointer(value));
-            break;
-	default:
-            g_assert_not_reached();
-            break;
-    }
-
-    sp_knot_update_ctrl(knot);
-}
-
-/// Not reached.
-static void sp_knot_get_property(GObject *, guint, GValue *, GParamSpec *)
-{
-    g_assert_not_reached();
 }
 
 /**
@@ -863,7 +610,7 @@ static void sp_knot_set_flag(SPKnot *knot, guint flag, bool set)
 /**
  * Update knot's pixbuf and set its control state.
  */
-static void sp_knot_update_ctrl(SPKnot *knot)
+void sp_knot_update_ctrl(SPKnot *knot)
 {
     if (!knot->item) {
         return;

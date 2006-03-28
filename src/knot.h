@@ -61,6 +61,54 @@ struct SPKnot {
     gpointer pixbuf;
 
     gchar *tip;
+
+    //TODO: all the members above should eventualle become private, accessible via setters/getters
+    void inline setSize (guint i) {size = i;}
+    void inline setShape (guint i) {shape = (SPKnotShapeType) i;}
+    void inline setAnchor (guint i) {anchor = (GtkAnchorType) i;}
+    void inline setMode (guint i) {mode = (SPKnotModeType) i;}
+    void inline setPixbuf (gpointer p) {pixbuf = p;}
+    void inline setFill (guint32 normal, guint32 mouseover, guint32 dragging) {
+        fill[SP_KNOT_STATE_NORMAL] = normal;
+        fill[SP_KNOT_STATE_MOUSEOVER] = mouseover;
+        fill[SP_KNOT_STATE_DRAGGING] = dragging;
+    }
+    void inline setStroke (guint32 normal, guint32 mouseover, guint32 dragging) {
+        stroke[SP_KNOT_STATE_NORMAL] = normal;
+        stroke[SP_KNOT_STATE_MOUSEOVER] = mouseover;
+        stroke[SP_KNOT_STATE_DRAGGING] = dragging;
+    }
+    void inline setImage (guchar* normal, guchar* mouseover, guchar* dragging) {
+        image[SP_KNOT_STATE_NORMAL] = normal;
+        image[SP_KNOT_STATE_MOUSEOVER] = mouseover;
+        image[SP_KNOT_STATE_DRAGGING] = dragging;
+    }
+    void inline setCursor (GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging) {
+        if (cursor[SP_KNOT_STATE_NORMAL]) {
+            gdk_cursor_unref(cursor[SP_KNOT_STATE_NORMAL]);
+        }
+        cursor[SP_KNOT_STATE_NORMAL] = normal;
+        if (normal) {
+            gdk_cursor_ref(normal);
+        }
+
+        if (cursor[SP_KNOT_STATE_MOUSEOVER]) {
+            gdk_cursor_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
+        }
+        cursor[SP_KNOT_STATE_MOUSEOVER] = mouseover;
+        if (mouseover) {
+            gdk_cursor_ref(mouseover);
+        }
+
+        if (cursor[SP_KNOT_STATE_DRAGGING]) {
+            gdk_cursor_unref(cursor[SP_KNOT_STATE_DRAGGING]);
+        }
+        cursor[SP_KNOT_STATE_DRAGGING] = dragging;
+        if (dragging) {
+            gdk_cursor_ref(dragging);
+        }
+    }
+
 };
 
 /// The SPKnot vtable.
@@ -98,6 +146,8 @@ SPKnot *sp_knot_new(SPDesktop *desktop, gchar const *tip = NULL);
 
 void sp_knot_show(SPKnot *knot);
 void sp_knot_hide(SPKnot *knot);
+
+void sp_knot_update_ctrl(SPKnot *knot);
 
 void sp_knot_request_position(SPKnot *knot, NR::Point *pos, guint state);
 gdouble sp_knot_distance(SPKnot *knot, NR::Point *p, guint state);
