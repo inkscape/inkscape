@@ -441,19 +441,17 @@ void Inkscape::SelTrans::_updateHandles()
 
     // center handle
     if ( _chandle == NULL ) {
-        _chandle = sp_knot_new(_desktop);
-        g_object_set(G_OBJECT(_chandle),
-                     "anchor", handle_center.anchor,
-                     "shape", SP_CTRL_SHAPE_BITMAP,
-                     "size", 13,
-                     "mode", SP_CTRL_MODE_XOR,
-                     "fill", 0x00000000,
-                     "fill_mouseover", 0x00000000,
-                     "stroke", 0x000000ff,
-                     "stroke_mouseover", 0xff0000b0,
-                     "pixbuf", handles[handle_center.control],
-                     "tip", _("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"),
-                     NULL);
+        _chandle = sp_knot_new(_desktop, _("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"));
+
+        _chandle->setShape (SP_CTRL_SHAPE_BITMAP);
+        _chandle->setSize (13);
+        _chandle->setAnchor (handle_center.anchor);
+        _chandle->setMode (SP_CTRL_MODE_XOR);
+        _chandle->setFill(0x00000000, 0x00000000, 0x00000000);
+        _chandle->setStroke(0x000000ff, 0xff0000b0, 0xff0000b0);
+        _chandle->setPixbuf(handles[handle_center.control]);
+        sp_knot_update_ctrl(_chandle);
+
         g_signal_connect(G_OBJECT(_chandle), "request",
                          G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &handle_center);
         g_signal_connect(G_OBJECT(_chandle), "moved",
@@ -528,19 +526,16 @@ void Inkscape::SelTrans::_showHandles(SPKnot *knot[], SPSelTransHandle const han
 
     for (int i = 0; i < num; i++) {
         if (knot[i] == NULL) {
-            knot[i] = sp_knot_new(_desktop);
-            g_object_set(G_OBJECT(knot[i]),
-                         "anchor", handle[i].anchor,
-                         "shape", SP_CTRL_SHAPE_BITMAP,
-                         "size", 13,
-                         "mode", SP_KNOT_MODE_XOR,
-                         "fill", 0x000000ff, // inversion
-                         "fill_mouseover", 0x00ff6600, // green
-                         "stroke", 0x000000ff, // inversion
-                         "stroke_mouseover", 0x000000ff, // inversion
-                         "pixbuf", handles[handle[i].control],
-                         "tip", i % 2 ? even_tip : odd_tip,
-                         NULL);
+            knot[i] = sp_knot_new(_desktop, i % 2 ? even_tip : odd_tip);
+
+            knot[i]->setShape (SP_CTRL_SHAPE_BITMAP);
+            knot[i]->setSize (13);
+            knot[i]->setAnchor (handle[i].anchor);
+            knot[i]->setMode (SP_CTRL_MODE_XOR);
+            knot[i]->setFill(0x000000ff, 0x00ff6600, 0x00ff6600); // inversion, green, green
+            knot[i]->setStroke(0x000000ff, 0x000000ff, 0x000000ff); // inversion
+            knot[i]->setPixbuf(handles[handle[i].control]);
+            sp_knot_update_ctrl(knot[i]);
 
             g_signal_connect(G_OBJECT(knot[i]), "request",
                              G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &handle[i]);
