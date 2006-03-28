@@ -835,9 +835,13 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
     node->type = type;
 
     if (node->type == Inkscape::NodePath::NODE_CUSP) {
-        g_object_set(G_OBJECT(node->knot), "shape", SP_KNOT_SHAPE_DIAMOND, "size", 9, NULL);
+        node->knot->setShape (SP_KNOT_SHAPE_DIAMOND);
+        node->knot->setSize (9);
+        sp_knot_update_ctrl(node->knot);
     } else {
-        g_object_set(G_OBJECT(node->knot), "shape", SP_KNOT_SHAPE_SQUARE, "size", 7, NULL);
+        node->knot->setShape (SP_KNOT_SHAPE_SQUARE);
+        node->knot->setSize (7);
+        sp_knot_update_ctrl(node->knot);
     }
 
     sp_node_adjust_knots(node);
@@ -996,17 +1000,15 @@ sp_node_selected_move_screen(gdouble dx, gdouble dy)
 static void sp_node_ensure_knot_exists (SPDesktop *desktop, Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeSide *side)
 {
     if (!side->knot) {
-        side->knot = sp_knot_new(desktop);
-        g_object_set(G_OBJECT(side->knot),
-                     "shape", SP_KNOT_SHAPE_CIRCLE,
-                     "size", 7,
-                     "anchor", GTK_ANCHOR_CENTER,
-                     "fill", KNOT_FILL,
-                     "fill_mouseover", KNOT_FILL_HI,
-                     "stroke", KNOT_STROKE,
-                     "stroke_mouseover", KNOT_STROKE_HI,
-                     "tip", _("<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"),
-                     NULL);
+        side->knot = sp_knot_new(desktop, _("<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"));
+
+        side->knot->setShape (SP_KNOT_SHAPE_CIRCLE);
+        side->knot->setSize (7);
+        side->knot->setAnchor (GTK_ANCHOR_CENTER);
+        side->knot->setFill(KNOT_FILL, KNOT_FILL_HI, KNOT_FILL_HI);
+        side->knot->setStroke(KNOT_STROKE, KNOT_STROKE_HI, KNOT_STROKE_HI);
+        sp_knot_update_ctrl(side->knot);
+
         g_signal_connect(G_OBJECT(side->knot), "clicked", G_CALLBACK(node_ctrl_clicked), node);
         g_signal_connect(G_OBJECT(side->knot), "grabbed", G_CALLBACK(node_ctrl_grabbed), node);
         g_signal_connect(G_OBJECT(side->knot), "ungrabbed", G_CALLBACK(node_ctrl_ungrabbed), node);
@@ -1034,12 +1036,21 @@ static void sp_node_ensure_knot(Inkscape::NodePath::Node *node, gint which, gboo
     show_knot = show_knot && (code == NR_CURVETO) && (NR::L2(side->pos - node->pos) > 1e-6);
 
     if (show_knot) {
-        sp_node_ensure_knot_exists(node->subpath->nodepath->desktop, node, side);
-
-        if (!SP_KNOT_IS_VISIBLE(side->knot)) {
+        if (!side->knot) {
+            sp_node_ensure_knot_exists(node->subpath->nodepath->desktop, node, side);
+            // Just created, so we shouldn't fire the node_moved callback - instead set the knot position directly
+            side->knot->pos = side->pos;
+            if (side->knot->item) SP_CTRL(side->knot->item)->moveto(side->pos);
+            sp_ctrlline_set_coords(SP_CTRLLINE(side->line), node->pos, side->pos);
             sp_knot_show(side->knot);
+        } else {
+            if (side->knot->pos != side->pos) { // only if it's really moved
+                sp_knot_set_position(side->knot, &side->pos, 0); // this will set coords of the line as well
+            }
+            if (!SP_KNOT_IS_VISIBLE(side->knot)) {
+                sp_knot_show(side->knot);
+            }
         }
-        sp_knot_set_position(side->knot, &side->pos, 0); // this will set coords of the line as well
         sp_canvas_item_show(side->line);
     } else {
         if (side->knot) {
@@ -1845,21 +1856,15 @@ static void sp_node_set_selected(Inkscape::NodePath::Node *node, gboolean select
     node->selected = selected;
 
     if (selected) {
-        g_object_set(G_OBJECT(node->knot),
-                     "fill", NODE_FILL_SEL,
-                     "fill_mouseover", NODE_FILL_SEL_HI,
-                     "stroke", NODE_STROKE_SEL,
-                     "stroke_mouseover", NODE_STROKE_SEL_HI,
-                     "size", (node->type == Inkscape::NodePath::NODE_CUSP) ? 11 : 9,
-                     NULL);
+        node->knot->setSize ((node->type == Inkscape::NodePath::NODE_CUSP) ? 11 : 9);
+        node->knot->setFill(NODE_FILL_SEL, NODE_FILL_SEL_HI, NODE_FILL_SEL_HI);
+        node->knot->setStroke(NODE_STROKE_SEL, NODE_STROKE_SEL_HI, NODE_STROKE_SEL_HI);
+        sp_knot_update_ctrl(node->knot);
     } else {
-        g_object_set(G_OBJECT(node->knot),
-                     "fill", NODE_FILL,
-                     "fill_mouseover", NODE_FILL_HI,
-                     "stroke", NODE_STROKE,
-                     "stroke_mouseover", NODE_STROKE_HI,
-                     "size", (node->type == Inkscape::NodePath::NODE_CUSP) ? 9 : 7,
-                     NULL);
+        node->knot->setSize ((node->type == Inkscape::NodePath::NODE_CUSP) ? 9 : 7);
+        node->knot->setFill(NODE_FILL, NODE_FILL_HI, NODE_FILL_HI);
+        node->knot->setStroke(NODE_STROKE, NODE_STROKE_HI, NODE_STROKE_HI);
+        sp_knot_update_ctrl(node->knot);
     }
 
     sp_node_ensure_ctrls(node);
@@ -1880,7 +1885,7 @@ static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, gboolean inc
     if (incremental) {
         if (override) {
             if (!g_list_find(nodepath->selected, node)) {
-                nodepath->selected = g_list_append(nodepath->selected, node);
+                nodepath->selected = g_list_prepend(nodepath->selected, node);
             }
             sp_node_set_selected(node, TRUE);
         } else { // toggle
@@ -1889,13 +1894,13 @@ static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, gboolean inc
                 nodepath->selected = g_list_remove(nodepath->selected, node);
             } else {
                 g_assert(!g_list_find(nodepath->selected, node));
-                nodepath->selected = g_list_append(nodepath->selected, node);
+                nodepath->selected = g_list_prepend(nodepath->selected, node);
             }
             sp_node_set_selected(node, !node->selected);
         }
     } else {
         sp_nodepath_deselect(nodepath);
-        nodepath->selected = g_list_append(nodepath->selected, node);
+        nodepath->selected = g_list_prepend(nodepath->selected, node);
         sp_node_set_selected(node, TRUE);
     }
 
@@ -3359,18 +3364,15 @@ sp_nodepath_node_new(Inkscape::NodePath::SubPath *sp, Inkscape::NodePath::Node *
     n->p.other = prev;
     n->n.other = next;
 
-    n->knot = sp_knot_new(sp->nodepath->desktop);
+    n->knot = sp_knot_new(sp->nodepath->desktop, _("<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"));
     sp_knot_set_position(n->knot, pos, 0);
-    g_object_set(G_OBJECT(n->knot),
-                 "anchor", GTK_ANCHOR_CENTER,
-                 "fill", NODE_FILL,
-                 "fill_mouseover", NODE_FILL_HI,
-                 "stroke", NODE_STROKE,
-                 "stroke_mouseover", NODE_STROKE_HI,
-                 "tip", _("<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"),
-                 "shape", (n->type == Inkscape::NodePath::NODE_CUSP)? SP_KNOT_SHAPE_DIAMOND : SP_KNOT_SHAPE_SQUARE,
-                 "size", (n->type == Inkscape::NodePath::NODE_CUSP)? 9 : 7,
-                 NULL);
+
+    n->knot->setShape ((n->type == Inkscape::NodePath::NODE_CUSP)? SP_KNOT_SHAPE_DIAMOND : SP_KNOT_SHAPE_SQUARE);
+    n->knot->setSize ((n->type == Inkscape::NodePath::NODE_CUSP)? 9 : 7);
+    n->knot->setAnchor (GTK_ANCHOR_CENTER);
+    n->knot->setFill(NODE_FILL, NODE_FILL_HI, NODE_FILL_HI);
+    n->knot->setStroke(NODE_STROKE, NODE_STROKE_HI, NODE_STROKE_HI);
+    sp_knot_update_ctrl(n->knot);
 
     g_signal_connect(G_OBJECT(n->knot), "event", G_CALLBACK(node_event), n);
     g_signal_connect(G_OBJECT(n->knot), "clicked", G_CALLBACK(node_clicked), n);
