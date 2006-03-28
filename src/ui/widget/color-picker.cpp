@@ -25,6 +25,7 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp);
 
 ColorPicker::ColorPicker (const Glib::ustring& title, const Glib::ustring& tip,
                           guint32 rgba, bool undo)

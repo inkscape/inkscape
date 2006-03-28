@@ -274,7 +274,7 @@ public:
      *
      * @see #segmentate
      */
-    void SioxSegmentator::subpixelRefine(int x, int y, int brushmode,
+    void subpixelRefine(int x, int y, int brushmode,
                              float threshold, float *cf, int brushsize);
 
     /**
@@ -302,7 +302,7 @@ public:
      *
      * @see #segmentate
      */
-    bool SioxSegmentator::subpixelRefine(int xa, int ya, int dx, int dy,
+    bool subpixelRefine(int xa, int ya, int dx, int dy,
                                      int brushmode,
                                      float threshold, float *cf);
     /**

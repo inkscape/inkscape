@@ -25,7 +25,7 @@ public:
 	double lm;
 	Constraint(Variable *left, Variable *right, double gap);
 	~Constraint(void){};
-	inline double Constraint::slack() const { return right->position() - gap - left->position(); }
+	inline double slack() const { return right->position() - gap - left->position(); }
 	//inline bool operator<(Constraint const &o) const { return slack() < o.slack(); }
 	long timeStamp;
 	bool active;
