@@ -321,6 +321,9 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy)
                                                  SP_OBJECT_STYLE(SP_OBJECT_PARENT(item)));
     repr->setAttribute("style", style_str);
     g_free(style_str);
+    /* Rotation center */
+    sp_repr_set_attr(repr, "inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"));
+    sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
 
     /* Definition */
     gchar *def_str = sp_svg_write_path(curve->bpath);
