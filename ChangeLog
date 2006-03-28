@@ -1,3 +1,11 @@
+2006-03-28  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/dialogs/eek-color-def.h, src/dialogs/eek-color-def.cpp,
+	  src/dialogs/eek-preview.h, src/dialogs/eek-preview.cpp,
+	  src/dialogs/swatches.h, src/dialogs/swatches.cpp:
+
+	  Experimenting with linked colors.
+	
 2006-03-26  Aaron C. Spike  <aaron@ekips.org>
 
 	* inkscape.pod, src/main.cpp:
@@ -6,7 +14,7 @@
 	  (--export-area, --export-area-canvas and --export-area-drawing)
 	  can now be used in combination with --export-id.
 
-2006-03-10  Jon A. Cruz  <jon@joncruz.org>
+2006-03-23  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/dialogs/eek-color-def.cpp, src/dialogs/eek-color-def.h,
 	  src/dialogs/Makefile_insert, src/dialogs/swatches.h,

@@ -40,9 +40,13 @@
  * ***** END LICENSE BLOCK ***** */
 
 #include <string>
+#include <vector>
 
 namespace eek
 {
+
+typedef void (*ColorCallback)( void* data );
+
 
 class ColorDef
 {
@@ -54,16 +58,30 @@ public:
     ColorDef( ColorDef const &other );
     virtual ColorDef& operator=( ColorDef const &other );
 
+    void setRGB( unsigned int r, unsigned int g, unsigned int b );
+    unsigned int getR() const { return r; }
+    unsigned int getG() const { return g; }
+    unsigned int getB() const { return b; }
 
+    void addCallback( ColorCallback cb, void* data );
+    void removeCallback( ColorCallback cb, void* data );
+
+    bool isEditable() const { return editable; }
+    void setEditable( bool edit ) { editable = edit; }
+
+    std::string descr;
+
+protected:
     unsigned int r;
     unsigned int g;
     unsigned int b;
-    std::string descr;
     bool none;
-
-protected:
+    bool editable;
 
 private:
+    class HookData;
+
+    std::vector<HookData*> _listeners;
 };
 
 

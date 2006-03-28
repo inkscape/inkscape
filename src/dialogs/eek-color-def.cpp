@@ -49,20 +49,22 @@ namespace eek
 {
 
 ColorDef::ColorDef() :
+    descr(_("none")),
     r(0),
     g(0),
     b(0),
-    descr(_("none")),
-    none(true)
+    none(true),
+    editable(false)
 {
 }
 
 ColorDef::ColorDef( unsigned int r, unsigned int g, unsigned int b, const std::string& description ) :
+    descr(description),
     r(r),
     g(g),
     b(b),
-    descr(description),
-    none(false)
+    none(false),
+    editable(false)
 {
 }
 
@@ -86,11 +88,45 @@ ColorDef& ColorDef::operator=( ColorDef const &other )
         b = other.b;
         descr = other.descr;
         none = other.none;
+        editable = other.editable;
     }
     return *this;
 }
 
+class ColorDef::HookData {
+public:
+    HookData( ColorCallback cb, void* data ) {_cb = cb; _data = data;}
+    ColorCallback _cb;
+    void* _data;
+};
 
+void ColorDef::setRGB( unsigned int r, unsigned int g, unsigned int b )
+{
+    if ( r != this->r || g != this->g || b != this->b ) {
+        this->r = r;
+        this->g = g;
+        this->b = b;
+
+        // beware of callbacks changing things
+        for ( std::vector<HookData*>::iterator it = _listeners.begin(); it != _listeners.end(); ++it )
+        {
+            if ( (*it)->_cb )
+            {
+                (*it)->_cb( (*it)->_data );
+            }
+        }
+    }
+}
+
+void ColorDef::addCallback( ColorCallback cb, void* data )
+{
+    _listeners.push_back( new HookData(cb, data) );
+}
+
+void ColorDef::removeCallback( ColorCallback cb, void* data )
+{
+
+}
 
 
 } // namespace eek

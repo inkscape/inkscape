@@ -53,9 +53,15 @@ static GtkWidgetClass* parent_class = 0;
 
 void eek_preview_set_color( EekPreview* preview, int r, int g, int b )
 {
-    preview->_r = r;
-    preview->_g = g;
-    preview->_b = b;
+    if ( (preview->_r = r)
+         || (preview->_g = g)
+         || (preview->_b = b) ) {
+        preview->_r = r;
+        preview->_g = g;
+        preview->_b = b;
+
+        gtk_widget_queue_draw(GTK_WIDGET(preview));
+    }
 }
 
 
@@ -170,6 +176,59 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                             TRUE,
                             insetX, insetY,
                             widget->allocation.width - (insetX * 2), widget->allocation.height - (insetY * 2) );
+
+        if ( preview->_linked ) {
+            /* Draw arrow */
+            GdkRectangle possible = {insetX, insetY, (widget->allocation.width - (insetX * 2)), (widget->allocation.height - (insetY * 2)) };
+            GdkRectangle area = {possible.x, possible.y, possible.width / 2, possible.height / 2 };
+
+            /* Make it square */
+            if ( area.width > area.height )
+                area.width = area.height;
+            if ( area.height > area.width )
+                area.height = area.width;
+
+            /* Center it horizontally */
+            if ( area.width < possible.width ) {
+                int diff = (possible.width - area.width) / 2;
+                area.x += diff;
+            }
+
+
+            if ( preview->_linked & PREVIEW_LINK_IN ) {
+                gtk_paint_arrow( style,
+                                 widget->window,
+                                 (GtkStateType)widget->state,
+                                 GTK_SHADOW_ETCHED_IN,
+                                 NULL, /* clip area.  &area, */
+                                 widget, /* may be NULL */
+                                 NULL, /* detail */
+                                 GTK_ARROW_DOWN,
+                                 FALSE,
+                                 area.x, area.y,
+                                 area.width, area.height
+                                 );
+            }
+
+            if ( area.height < possible.height ) {
+                area.y = possible.y + (possible.height - area.height);
+            }
+
+            if ( preview->_linked & PREVIEW_LINK_OUT ) {
+                gtk_paint_arrow( style,
+                                 widget->window,
+                                 (GtkStateType)widget->state,
+                                 GTK_SHADOW_ETCHED_OUT,
+                                 NULL, /* clip area.  &area, */
+                                 widget, /* may be NULL */
+                                 NULL, /* detail */
+                                 GTK_ARROW_UP,
+                                 FALSE,
+                                 area.x, area.y,
+                                 area.width, area.height
+                                 );
+            }
+        }
 
         if ( GTK_WIDGET_HAS_FOCUS(widget) ) {
             gtk_paint_focus( style,
@@ -422,6 +481,21 @@ static void eek_preview_class_init( EekPreviewClass *klass )
                                          (GParamFlags)(G_PARAM_READWRITE | G_PARAM_CONSTRUCT)
                                          )
         );
+}
+
+void eek_preview_set_linked( EekPreview* splat, LinkType link )
+{
+    link = (LinkType)(link & PREVIEW_LINK_BOTH);
+    if ( link != (LinkType)splat->_linked ) {
+        splat->_linked = link;
+
+        gtk_widget_queue_draw( GTK_WIDGET(splat) );
+    }
+}
+
+LinkType eek_preview_get_linked( EekPreview* splat )
+{
+    return (LinkType)splat->_linked;
 }
 
 gboolean eek_preview_get_focus_on_click( EekPreview* preview )

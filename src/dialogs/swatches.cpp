@@ -40,7 +40,11 @@ SwatchesPanel* SwatchesPanel::instance = 0;
 
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
-    def( r, g, b, name )
+    def( r, g, b, name ),
+    _linkIsTone(false),
+    _linkPercent(0),
+    _linkGray(0),
+    _linkSrc(0)
 {
 }
 
@@ -60,17 +64,25 @@ ColorItem &ColorItem::operator=(ColorItem const &other)
 {
     if ( this != &other ) {
         def = other.def;
+
+        // TODO - correct linkage
+        _linkSrc = other._linkSrc;
+        g_message("Erk!");
     }
     return *this;
 }
 
 typedef enum {
-    XCOLOR_DATA = 0,
+    APP_X_INKY_COLOR_ID = 0,
+    APP_X_INKY_COLOR = 0,
+    APP_X_COLOR,
     TEXT_DATA
 } colorFlavorType;
 
-static const GtkTargetEntry color_entries[] = {
-    {"application/x-color", 0, XCOLOR_DATA},
+static const GtkTargetEntry sourceColorEntries[] = {
+//    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
+    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+    {"application/x-color", 0, APP_X_COLOR},
     {"text/plain", 0, TEXT_DATA},
 };
 
@@ -85,8 +97,8 @@ static void dragGetColorData( GtkWidget *widget,
     static GdkAtom typeText = gdk_atom_intern("text/plain", FALSE);
 
     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
-    if ( info == 1 ) {
-        gchar* tmp = g_strdup_printf("#%02x%02x%02x", item->def.r, item->def.g, item->def.b);
+    if ( info == TEXT_DATA ) {
+        gchar* tmp = g_strdup_printf("#%02x%02x%02x", item->def.getR(), item->def.getG(), item->def.getB() );
 
         gtk_selection_data_set( data,
                                 typeText,
@@ -97,9 +109,9 @@ static void dragGetColorData( GtkWidget *widget,
         tmp = 0;
     } else {
         guint16 tmp[4];
-        tmp[0] = (item->def.r << 8) | item->def.r;
-        tmp[1] = (item->def.g << 8) | item->def.g;
-        tmp[2] = (item->def.b << 8) | item->def.b;
+        tmp[0] = (item->def.getR() << 8) | item->def.getR();
+        tmp[1] = (item->def.getG() << 8) | item->def.getG();
+        tmp[2] = (item->def.getB() << 8) | item->def.getB();
         tmp[3] = 0xffff;
         gtk_selection_data_set( data,
                                 typeXColor,
@@ -115,9 +127,9 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
     if ( item )
     {
         Glib::RefPtr<Gdk::Pixbuf> thumb = Gdk::Pixbuf::create( Gdk::COLORSPACE_RGB, false, 8, 32, 24 );
-        guint32 fillWith = (0xff000000 & (item->def.r << 24))
-                         | (0x00ff0000 & (item->def.g << 16))
-                         | (0x0000ff00 & (item->def.b <<  8));
+        guint32 fillWith = (0xff000000 & (item->def.getR() << 24))
+                         | (0x00ff0000 & (item->def.getG() << 16))
+                         | (0x0000ff00 & (item->def.getB() <<  8));
         thumb->fill( fillWith );
         gtk_drag_set_icon_pixbuf( dc, thumb->gobj(), 0, 0 );
     }
@@ -125,16 +137,17 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 }
 
 //"drag-drop"
-gboolean dragDropColorData( GtkWidget *widget,
-                            GdkDragContext *drag_context,
-                            gint x,
-                            gint y,
-                            guint time,
-                            gpointer user_data)
-{
-// TODO finish
-    return TRUE;
-}
+// gboolean dragDropColorData( GtkWidget *widget,
+//                             GdkDragContext *drag_context,
+//                             gint x,
+//                             gint y,
+//                             guint time,
+//                             gpointer user_data)
+// {
+// // TODO finish
+
+//     return TRUE;
+// }
 
 static void bouncy( GtkWidget* widget, gpointer callback_data ) {
     ColorItem* item = reinterpret_cast<ColorItem*>(callback_data);
@@ -149,6 +162,106 @@ static void bouncy2( GtkWidget* widget, gint arg1, gpointer callback_data ) {
         item->buttonClicked(true);
     }
 }
+
+static void dieDieDie( GtkObject *obj, gpointer user_data )
+{
+    g_message("die die die %p  %p", obj, user_data );
+}
+
+static const GtkTargetEntry destColorTargets[] = {
+//    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
+    {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+    {"application/x-color", 0, APP_X_COLOR},
+};
+
+#include "color.h" // for SP_RGBA32_U_COMPOSE
+
+void ColorItem::_dropDataIn( GtkWidget *widget,
+                             GdkDragContext *drag_context,
+                             gint x, gint y,
+                             GtkSelectionData *data,
+                             guint info,
+                             guint event_time,
+                             gpointer user_data)
+{
+//     g_message("    droppy droppy   %d", info);
+     switch (info) {
+         case APP_X_INKY_COLOR:
+         {
+//              g_message("inky color");
+             // Fallthrough
+         }
+         case APP_X_COLOR:
+         {
+             if ( data->length == 8 ) {
+                 // Careful about endian issues.
+                 guint16* dataVals = (guint16*)data->data;
+//                  {
+//                      gchar c[64] = {0};
+//                      sp_svg_write_color( c, 64,
+//                                          SP_RGBA32_U_COMPOSE(
+//                                              0x0ff & (dataVals[0] >> 8),
+//                                              0x0ff & (dataVals[1] >> 8),
+//                                              0x0ff & (dataVals[2] >> 8),
+//                                              0xff // can't have transparency in the color itself
+//                                              //0x0ff & (data->data[3] >> 8),
+//                                              ));
+//                  }
+                 if ( user_data ) {
+                     ColorItem* item = reinterpret_cast<ColorItem*>(user_data);
+                     if ( item->def.isEditable() ) {
+                         // Shove on in the new value
+                         item->def.setRGB( 0x0ff & (dataVals[0] >> 8), 0x0ff & (dataVals[1] >> 8), 0x0ff & (dataVals[2] >> 8) );
+                     }
+                 }
+             }
+             break;
+         }
+         default:
+             g_message("unknown drop type");
+     }
+
+}
+
+void ColorItem::_colorDefChanged(void* data)
+{
+    ColorItem* item = reinterpret_cast<ColorItem*>(data);
+    if ( item ) {
+        for ( std::vector<Gtk::Widget*>::iterator it =  item->_previews.begin(); it != item->_previews.end(); ++it ) {
+            Gtk::Widget* widget = *it;
+            if ( IS_EEK_PREVIEW(widget->gobj()) ) {
+                EekPreview * preview = EEK_PREVIEW(widget->gobj());
+                eek_preview_set_color( preview,
+                                       (item->def.getR() << 8) | item->def.getR(),
+                                       (item->def.getG() << 8) | item->def.getG(),
+                                       (item->def.getB() << 8) | item->def.getB() );
+
+                eek_preview_set_linked( preview, (item->_linkSrc ? PREVIEW_LINK_IN:0) | (item->_listeners.empty() ? 0:PREVIEW_LINK_OUT) );
+
+                widget->queue_draw();
+            }
+        }
+
+        for ( std::vector<ColorItem*>::iterator it = item->_listeners.begin(); it != item->_listeners.end(); ++it ) {
+            guint r = item->def.getR();
+            guint g = item->def.getG();
+            guint b = item->def.getB();
+
+            if ( (*it)->_linkIsTone ) {
+                r = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * r) ) / 100;
+                g = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * g) ) / 100;
+                b = ( ((*it)->_linkPercent * (*it)->_linkGray) + ((100 - (*it)->_linkPercent) * b) ) / 100;
+            } else {
+                r = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * r) ) / 100;
+                g = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * g) ) / 100;
+                b = ( ((*it)->_linkPercent * 255) + ((100 - (*it)->_linkPercent) * b) ) / 100;
+            }
+
+            (*it)->def.setRGB( r, g, b );
+        }
+    }
+}
+
 
 Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::BuiltinIconSize size)
 {
@@ -167,9 +280,12 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
         EekPreview * preview = EEK_PREVIEW(eekWidget);
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
 
-        eek_preview_set_color( preview, (def.r << 8) | def.r, (def.g << 8) | def.g, (def.b << 8) | def.b);
+        eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::GtkIconSize)size );
+        eek_preview_set_linked( preview, (_linkSrc ? PREVIEW_LINK_IN:0) | (_listeners.empty() ? 0:PREVIEW_LINK_OUT) );
+
+        def.addCallback( _colorDefChanged, this );
 
         GValue val = {0, {{0}, {0}}};
         g_value_init( &val, G_TYPE_BOOLEAN );
@@ -207,8 +323,8 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
 
         gtk_drag_source_set( GTK_WIDGET(newBlot->gobj()),
                              GDK_BUTTON1_MASK,
-                             color_entries,
-                             G_N_ELEMENTS(color_entries),
+                             sourceColorEntries,
+                             G_N_ELEMENTS(sourceColorEntries),
                              GdkDragAction(GDK_ACTION_MOVE | GDK_ACTION_COPY) );
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
@@ -221,13 +337,36 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
                           G_CALLBACK(dragBegin),
                           this );
 
+//         g_signal_connect( G_OBJECT(newBlot->gobj()),
+//                           "drag-drop",
+//                           G_CALLBACK(dragDropColorData),
+//                           this);
+
+        if ( def.isEditable() )
+        {
+            gtk_drag_dest_set( GTK_WIDGET(newBlot->gobj()),
+                               GTK_DEST_DEFAULT_ALL,
+                               destColorTargets,
+                               G_N_ELEMENTS(destColorTargets),
+                               GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE) );
+
+
+            g_signal_connect( G_OBJECT(newBlot->gobj()),
+                              "drag-data-received",
+                              G_CALLBACK(_dropDataIn),
+                              this );
+        }
+
         g_signal_connect( G_OBJECT(newBlot->gobj()),
-                          "drag-drop",
-                          G_CALLBACK(dragDropColorData),
+                          "destroy",
+                          G_CALLBACK(dieDieDie),
                           this);
+
 
         widget = newBlot;
     }
+
+    _previews.push_back( widget );
 
     return widget;
 }
@@ -237,7 +376,7 @@ void ColorItem::buttonClicked(bool secondary)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop) {
         char const * attrName = secondary ? "stroke" : "fill";
-        guint32 rgba = (def.r << 24) | (def.g << 16) | (def.b << 8) | 0xff;
+        guint32 rgba = (def.getR() << 24) | (def.getG() << 16) | (def.getB() << 8) | 0xff;
         gchar c[64];
         sp_svg_write_color(c, 64, rgba);
 
@@ -298,7 +437,146 @@ public:
 
 static std::vector<JustForNow*> possible;
 
-static void loadPaletteFile( gchar const *filename )
+static bool getBlock( std::string& dst, guchar ch, std::string const str )
+{
+    bool good = false;
+    size_t pos = str.find(ch);
+    if ( pos != std::string::npos )
+    {
+        size_t pos2 = str.find( '(', pos );
+        if ( pos2 != std::string::npos ) {
+            size_t endPos = str.find( ')', pos2 );
+            if ( endPos != std::string::npos ) {
+                dst = str.substr( pos2 + 1, (endPos - pos2 - 1) );
+                good = true;
+            }
+        }
+    }
+    return good;
+}
+
+static bool popVal( guint64& numVal, std::string& str )
+{
+    bool good = false;
+    size_t endPos = str.find(',');
+    if ( endPos == std::string::npos ) {
+        endPos = str.length();
+    }
+
+    if ( endPos != std::string::npos && endPos > 0 ) {
+        std::string xxx = str.substr( 0, endPos );
+        const gchar* ptr = xxx.c_str();
+        gchar* endPtr = 0;
+        numVal = g_ascii_strtoull( ptr, &endPtr, 10 );
+        if ( (numVal == G_MAXUINT64) && (ERANGE == errno) ) {
+            // overflow
+        } else if ( (numVal == 0) && (endPtr == ptr) ) {
+            // failed conversion
+        } else {
+            good = true;
+            str.erase( 0, endPos + 1 );
+        }
+    }
+
+    return good;
+}
+
+void ColorItem::_wireMagicColors( void* p )
+{
+    JustForNow* onceMore = reinterpret_cast<JustForNow*>(p);
+    if ( onceMore )
+    {
+        for ( std::vector<ColorItem*>::iterator it = onceMore->_colors.begin(); it != onceMore->_colors.end(); ++it )
+        {
+            size_t pos = (*it)->def.descr.find("*{");
+            if ( pos != std::string::npos )
+            {
+                std::string subby = (*it)->def.descr.substr( pos + 2 );
+                size_t endPos = subby.find("}*");
+                if ( endPos != std::string::npos )
+                {
+                    subby.erase( endPos );
+                    //g_message("FOUND MAGIC at '%s'", (*it)->def.descr.c_str());
+                    //g_message("               '%s'", subby.c_str());
+
+                    if ( subby.find('E') != std::string::npos )
+                    {
+                        //g_message("                   HOT!");
+                        (*it)->def.setEditable( true );
+                    }
+
+                    std::string part;
+                    // Tint. index + 1 more val.
+                    if ( getBlock( part, 'T', subby ) ) {
+                        guint64 colorIndex = 0;
+                        if ( popVal( colorIndex, part ) ) {
+                            guint64 percent = 0;
+                            if ( popVal( percent, part ) ) {
+                                (*it)->_linkTint( *(onceMore->_colors[colorIndex]), percent );
+                            }
+                        }
+                    }
+
+                    // Shade/tone. index + 1 or 2 more val.
+                    if ( getBlock( part, 'S', subby ) ) {
+                        guint64 colorIndex = 0;
+                        if ( popVal( colorIndex, part ) ) {
+                            guint64 percent = 0;
+                            if ( popVal( percent, part ) ) {
+                                guint64 grayLevel = 0;
+                                if ( !popVal( grayLevel, part ) ) {
+                                    grayLevel = 0;
+                                }
+                                (*it)->_linkTone( *(onceMore->_colors[colorIndex]), percent, grayLevel );
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+void ColorItem::_linkTint( ColorItem& other, int percent )
+{
+    if ( !_linkSrc )
+    {
+        other._listeners.push_back(this);
+        _linkIsTone = false;
+        _linkPercent = percent;
+        if ( _linkPercent > 100 )
+            _linkPercent = 100;
+        if ( _linkPercent < 0 )
+            _linkPercent = 0;
+        _linkGray = 0;
+        _linkSrc = &other;
+
+        ColorItem::_colorDefChanged(&other);
+    }
+}
+
+void ColorItem::_linkTone( ColorItem& other, int percent, int grayLevel )
+{
+    if ( !_linkSrc )
+    {
+        other._listeners.push_back(this);
+        _linkIsTone = true;
+        _linkPercent = percent;
+        if ( _linkPercent > 100 )
+            _linkPercent = 100;
+        if ( _linkPercent < 0 )
+            _linkPercent = 0;
+        _linkGray = grayLevel;
+        _linkSrc = &other;
+
+        ColorItem::_colorDefChanged(&other);
+    }
+}
+
+
+void _loadPaletteFile( gchar const *filename )
 {
     char block[1024];
     FILE *f = Inkscape::IO::fopen_utf8name( filename, "r" );
@@ -401,6 +679,7 @@ static void loadPaletteFile( gchar const *filename )
                 } while ( result && !hasErr );
                 if ( !hasErr ) {
                     possible.push_back(onceMore);
+                    ColorItem::_wireMagicColors( onceMore );
                 } else {
                     delete onceMore;
                 }
@@ -435,11 +714,15 @@ static void loadEmUp()
                 } else {
                     gchar *filename = 0;
                     while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
-                        gchar* full = g_build_filename(dirname, filename, NULL);
-                        if ( !Inkscape::IO::file_test( full, (GFileTest)(G_FILE_TEST_IS_DIR ) ) ) {
-                            loadPaletteFile(full);
+                        gchar* lower = g_ascii_strdown( filename, -1 );
+                        if ( g_str_has_suffix(lower, ".gpl") ) {
+                            gchar* full = g_build_filename(dirname, filename, NULL);
+                            if ( !Inkscape::IO::file_test( full, (GFileTest)(G_FILE_TEST_IS_DIR ) ) ) {
+                                _loadPaletteFile(full);
+                            }
+                            g_free(full);
                         }
-                        g_free(full);
+                        g_free(lower);
                     }
                     g_dir_close(directory);
                 }
