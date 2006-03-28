@@ -57,6 +57,13 @@ private:
                              guint event_time,
                              gpointer user_data);
 
+    static void _dragGetColorData( GtkWidget *widget,
+                                   GdkDragContext *drag_context,
+                                   GtkSelectionData *data,
+                                   guint info,
+                                   guint time,
+                                   gpointer user_data);
+
     static void _wireMagicColors( void* p );
     static void _colorDefChanged(void* data);
 
@@ -66,6 +73,7 @@ private:
     Gtk::Tooltips tips;
     std::vector<Gtk::Widget*> _previews;
 
+    bool _isLive;
     bool _linkIsTone;
     int _linkPercent;
     int _linkGray;

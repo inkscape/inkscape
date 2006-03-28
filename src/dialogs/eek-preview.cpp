@@ -210,11 +210,12 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  );
             }
 
-            if ( area.height < possible.height ) {
-                area.y = possible.y + (possible.height - area.height);
-            }
-
             if ( preview->_linked & PREVIEW_LINK_OUT ) {
+                GdkRectangle otherArea = {area.x, area.y, area.width, area.height};
+                if ( otherArea.height < possible.height ) {
+                    otherArea.y = possible.y + (possible.height - otherArea.height);
+                }
+
                 gtk_paint_arrow( style,
                                  widget->window,
                                  (GtkStateType)widget->state,
@@ -224,8 +225,28 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  NULL, /* detail */
                                  GTK_ARROW_UP,
                                  FALSE,
-                                 area.x, area.y,
-                                 area.width, area.height
+                                 otherArea.x, otherArea.y,
+                                 otherArea.width, otherArea.height
+                                 );
+            }
+
+            if ( preview->_linked & PREVIEW_LINK_OTHER ) {
+                GdkRectangle otherArea = {insetX, area.y, area.width, area.height};
+                if ( otherArea.height < possible.height ) {
+                    otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
+                }
+
+                gtk_paint_arrow( style,
+                                 widget->window,
+                                 (GtkStateType)widget->state,
+                                 GTK_SHADOW_ETCHED_OUT,
+                                 NULL, /* clip area.  &area, */
+                                 widget, /* may be NULL */
+                                 NULL, /* detail */
+                                 GTK_ARROW_LEFT,
+                                 FALSE,
+                                 otherArea.x, otherArea.y,
+                                 otherArea.width, otherArea.height
                                  );
             }
         }
@@ -485,7 +506,7 @@ static void eek_preview_class_init( EekPreviewClass *klass )
 
 void eek_preview_set_linked( EekPreview* splat, LinkType link )
 {
-    link = (LinkType)(link & PREVIEW_LINK_BOTH);
+    link = (LinkType)(link & PREVIEW_LINK_ALL);
     if ( link != (LinkType)splat->_linked ) {
         splat->_linked = link;
 

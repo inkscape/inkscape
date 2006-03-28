@@ -71,7 +71,8 @@ typedef enum {
   PREVIEW_LINK_NONE = 0,
   PREVIEW_LINK_IN = 1,
   PREVIEW_LINK_OUT = 2,
-  PREVIEW_LINK_BOTH = 3
+  PREVIEW_LINK_OTHER = 4,
+  PREVIEW_LINK_ALL = 7
 } LinkType;
 
 typedef struct _EekPreview       EekPreview;

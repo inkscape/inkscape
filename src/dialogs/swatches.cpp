@@ -42,6 +42,7 @@ SwatchesPanel* SwatchesPanel::instance = 0;
 
 ColorItem::ColorItem( unsigned int r, unsigned int g, unsigned int b, Glib::ustring& name ) :
     def( r, g, b, name ),
+    _isLive(false),
     _linkIsTone(false),
     _linkPercent(0),
     _linkGray(0),
@@ -102,12 +103,12 @@ static const GtkTargetEntry sourceColorEntries[] = {
     {"text/plain", 0, TEXT_DATA},
 };
 
-static void dragGetColorData( GtkWidget *widget,
-                              GdkDragContext *drag_context,
-                              GtkSelectionData *data,
-                              guint info,
-                              guint time,
-                              gpointer user_data)
+void ColorItem::_dragGetColorData( GtkWidget *widget,
+                                   GdkDragContext *drag_context,
+                                   GtkSelectionData *data,
+                                   guint info,
+                                   guint time,
+                                   gpointer user_data)
 {
     static GdkAtom typeXColor = gdk_atom_intern("application/x-color", FALSE);
     static GdkAtom typeText = gdk_atom_intern("text/plain", FALSE);
@@ -148,19 +149,19 @@ static void dragGetColorData( GtkWidget *widget,
 //         } else {
 //             g_message("Unable to find the color");
 //         }
-        int itemCount = 4 + 1 + 1 + paletteName.length();
+        int itemCount = 4 + 2 + 1 + paletteName.length();
 
-        guint16* tmp = new guint16[itemCount]
-;
+        guint16* tmp = new guint16[itemCount];
         tmp[0] = (item->def.getR() << 8) | item->def.getR();
         tmp[1] = (item->def.getG() << 8) | item->def.getG();
         tmp[2] = (item->def.getB() << 8) | item->def.getB();
         tmp[3] = 0xffff;
+        tmp[4] = (item->_isLive || !item->_listeners.empty() || (item->_linkSrc != 0) ) ? 1 : 0;
 
-        tmp[4] = index;
-        tmp[5] = paletteName.length();
+        tmp[5] = index;
+        tmp[6] = paletteName.length();
         for ( unsigned int i = 0; i < paletteName.length(); i++ ) {
-            tmp[6 + i] = paletteName[i];
+            tmp[7 + i] = paletteName[i];
         }
         gtk_selection_data_set( data,
                                 typeXColor,
@@ -351,7 +352,9 @@ void ColorItem::_colorDefChanged(void* data)
                                        (item->def.getG() << 8) | item->def.getG(),
                                        (item->def.getB() << 8) | item->def.getB() );
 
-                eek_preview_set_linked( preview, (LinkType)((item->_linkSrc ? PREVIEW_LINK_IN:0) | (item->_listeners.empty() ? 0:PREVIEW_LINK_OUT)) );
+                eek_preview_set_linked( preview, (LinkType)((item->_linkSrc ? PREVIEW_LINK_IN:0)
+                                                            | (item->_listeners.empty() ? 0:PREVIEW_LINK_OUT)
+                                                            | (item->_isLive ? PREVIEW_LINK_OTHER:0)) );
 
                 widget->queue_draw();
             }
@@ -439,7 +442,9 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
         eek_preview_set_color( preview, (def.getR() << 8) | def.getR(), (def.getG() << 8) | def.getG(), (def.getB() << 8) | def.getB());
 
         eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::GtkIconSize)size );
-        eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0) | (_listeners.empty() ? 0:PREVIEW_LINK_OUT)) );
+        eek_preview_set_linked( preview, (LinkType)((_linkSrc ? PREVIEW_LINK_IN:0)
+                                                    | (_listeners.empty() ? 0:PREVIEW_LINK_OUT)
+                                                    | (_isLive ? PREVIEW_LINK_OTHER:0)) );
 
         def.addCallback( _colorDefChanged, this );
 
@@ -485,7 +490,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "drag-data-get",
-                          G_CALLBACK(dragGetColorData),
+                          G_CALLBACK(ColorItem::_dragGetColorData),
                           this);
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
@@ -645,8 +650,12 @@ void ColorItem::_wireMagicColors( void* p )
 
                     if ( subby.find('E') != std::string::npos )
                     {
-                        //g_message("                   HOT!");
                         (*it)->def.setEditable( true );
+                    }
+
+                    if ( subby.find('L') != std::string::npos )
+                    {
+                        (*it)->_isLive = true;
                     }
 
                     std::string part;

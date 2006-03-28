@@ -1,5 +1,13 @@
 2006-03-28  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/interface.cpp, src/dialogs/eek-color-def.h,
+	  src/dialogs/eek-preview.h, src/dialogs/eek-preview.cpp,
+	  src/dialogs/swatches.h, src/dialogs/swatches.cpp:
+
+	  Changed objects to only get liked to "linkable" colors.
+	
+2006-03-28  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/interface.cpp, src/dialogs/swatches.cpp:
 
 	  Objects now change when linked colors change.

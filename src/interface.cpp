@@ -1005,16 +1005,18 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     sp_desktop_apply_css_recursive( item, css, true );
                     item->updateRepr();
 
-                    if ( data->length > 12 ) {
+                    if ( data->length > 14 ) {
+                        int flags = dataVals[4];
+
                         // piggie-backed palette entry info
-                        int index = dataVals[4];
+                        int index = dataVals[5];
                         Glib::ustring palName;
-                        for ( int i = 0; i < dataVals[5]; i++ ) {
-                            palName += (gunichar)dataVals[6+i];
+                        for ( int i = 0; i < dataVals[6]; i++ ) {
+                            palName += (gunichar)dataVals[7+i];
                         }
 
                         // Now hook in a magic tag of some sort.
-                        if ( !palName.empty() ) {
+                        if ( !palName.empty() && (flags & 1) ) {
                             gchar* str = g_strdup_printf("%d|", index);
                             palName.insert( 0, str );
                             g_free(str);
