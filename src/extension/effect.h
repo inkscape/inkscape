@@ -65,8 +65,10 @@ public:
     virtual bool check                (void);
     bool         prefs   (Inkscape::UI::View::View * doc);
     void         effect  (Inkscape::UI::View::View * doc);
+    /** \brief  Accessor function for a pointer to the verb */
     Inkscape::Verb * get_verb (void) { return &_verb; };
 
+    /** \brief  Static function to get the last effect used */
     static Effect *  get_last_effect (void) { return _last_effect; };
     static void      set_last_effect (Effect * in_effect);
 
