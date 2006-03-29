@@ -2,40 +2,32 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef INKSCAPE_EXTENSION_DIALOG_H__
-#define INKSCAPE_EXTENSION_DIALOG_H__
+#ifndef INKSCAPE_EXTENSION_HELP_DIALOG_H__
+#define INKSCAPE_EXTENSION_HELP_DIALOG_H__
 
 #include <glibmm/ustring.h>
 
 #include <gdkmm/types.h>
-
 #include <gtkmm/dialog.h>
-#include <gtkmm/socket.h>
 
 namespace Inkscape {
 namespace Extension {
 
-class PrefDialog : public Gtk::Dialog {
-    /** \brief  Help string if it exists */
-    gchar const * _help;
-    /** \brief  Name of the extension */
-    Glib::ustring _name;
+class HelpDialog : public Gtk::Dialog {
 
 public:
-    PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls);
-    Gtk::ResponseType run (void);
-
+    HelpDialog (Glib::ustring name, gchar const * help);
 };
 
 
 };}; /* namespace Inkscape, Extension */
 
-#endif /* INKSCAPE_EXTENSION_DIALOG_H__ */
+#endif /* INKSCAPE_EXTENSION_HELP_DIALOG_H__ */
 
 /*
   Local Variables:

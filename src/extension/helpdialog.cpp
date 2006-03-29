@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005-2006 Authors
+ * Copyright (C) 2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -17,15 +17,9 @@
 namespace Inkscape {
 namespace Extension {
 
-PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls) :
-    Gtk::Dialog::Dialog(name + _(" Preferences"), true, true), _help(help), _name(name)
+HelpDialog::HelpDialog (Glib::ustring name, gchar const * help) :
+    Gtk::Dialog::Dialog(_("Help with ") + name, true, true)
 {
-    this->get_vbox()->pack_start(*controls, true, true, 5);
-
-    if (_help != NULL)
-        add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
-    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-
     Gtk::Button * ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
     set_default_response(Gtk::RESPONSE_OK);
     ok->grab_focus();
@@ -34,20 +28,6 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     sp_transientize(dlg);
 
     return;
-}
-
-Gtk::ResponseType
-PrefDialog::run (void) {
-    Gtk::ResponseType resp = Gtk::RESPONSE_HELP;
-    while (resp == Gtk::RESPONSE_HELP) {
-        resp = Gtk::Dialog::run();
-        if (resp == Gtk::RESPONSE_HELP) {
-            HelpDialog help(_name, _help);
-            help->run();
-            help->hide();
-        }
-    }
-    return resp;
 }
 
 }; }; /* namespace Inkscape, Extension */
