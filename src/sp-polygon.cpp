@@ -165,12 +165,15 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
     switch (key) {
         case SP_ATTR_POINTS: {
             if (!value) {
+                /* fixme: The points attribute is required.  We should handle its absence as per
+                 * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing. */
                 break;
             }
             SPCurve *curve = sp_curve_new();
             gboolean hascpt = FALSE;
 
-            const gchar *cptr = value;
+            gchar const *cptr = value;
+            bool has_error = false;
 
             while (TRUE) {
                 gdouble x;
@@ -180,6 +183,15 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
 
                 gdouble y;
                 if (!polygon_get_value(&cptr, &y)) {
+                    /* fixme: It is an error for an odd number of points to be specified.  We
+                     * should display the points up to now (as we currently do, though perhaps
+                     * without the closepath: the spec isn't quite clear on whether to do a
+                     * closepath or not, though I'd guess it's best not to do a closepath), but
+                     * then flag the document as in error, as per
+                     * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing.
+                     *
+                     * (Ref: http://www.w3.org/TR/SVG11/shapes.html#PolygonElement.) */
+                    has_error = true;
                     break;
                 }
 
@@ -191,11 +203,19 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
                 }
             }
 
-            /* TODO: if *cptr != '\0' or if the break came after parsing an x without a y then
-             * there's an error, which should be handled according to
-             * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing. */
-
-            sp_curve_closepath(curve);
+            if (has_error || *cptr != '\0') {
+                /* TODO: Flag the document as in error, as per
+                 * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing. */
+            } else if (curve->posSet) {
+                /* We've done a moveto but no lineto.  I'm not sure how we're supposed to represent
+                 * a single-point polygon in SPCurve: sp_curve_closepath at the time of writing
+                 * doesn't seem to like simply moveto followed by closepath.  The following works,
+                 * but won't round-trip properly: I believe it will write as two points rather than
+                 * one. */
+                sp_curve_lineto(curve, curve->movePos);
+            } else if (hascpt) {
+                sp_curve_closepath(curve);
+            }
             sp_shape_set_curve(SP_SHAPE(polygon), curve, TRUE);
             sp_curve_unref(curve);
             break;
