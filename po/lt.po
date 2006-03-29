@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-27 10:53+0300\n"
-"PO-Revision-Date: 2006-03-27 16:06+0200\n"
+"PO-Revision-Date: 2006-03-29 16:19+0200\n"
 "Last-Translator: Andrius R. <knutux@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
@@ -1509,7 +1509,7 @@ msgstr "Kraštai:"
 #. of the line; the ends of the line are square
 #: ../src/dialogs/stroke-style.cpp:1077
 msgid "Butt cap"
-msgstr "Nukirtsi"
+msgstr "Nukirsti"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
@@ -2316,16 +2316,16 @@ msgstr ""
 
 #: ../src/gradient-drag.cpp:654
 msgid " (stroke)"
-msgstr ""
+msgstr " (linija)"
 
 #: ../src/gradient-drag.cpp:657
 msgid "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"
-msgstr ""
+msgstr "Spindulinio perėjimo <b>centras</b> ir <b>židinys</b>; tempkite su <b>Shift</b> kad atskirti židinį"
 
 #: ../src/gradient-drag.cpp:659
 #, c-format
 msgid "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"
-msgstr ""
+msgstr "Perėjimo punktas, naudojamas <b>%d</b> perėjimuose; tempkite su <b>Shift</b> kad atskirti"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -2470,15 +2470,15 @@ msgstr "Neįvardintas dokumentas"
 #. Show nice dialog box
 #: ../src/inkscape.cpp:476
 msgid "Inkscape encountered an internal error and will close now.\n"
-msgstr ""
+msgstr "Nenustatyta vidinė Inkscape klaida, programa uždaroma.\n"
 
 #: ../src/inkscape.cpp:477
 msgid "Automatic backups of unsaved documents were done to the following locations:\n"
-msgstr ""
+msgstr "Automatinės atsarginės neišsaugotų dokumentų kopijos padarytos šiose vietose:\n"
 
 #: ../src/inkscape.cpp:478
 msgid "Automatic backup of the following documents failed:\n"
-msgstr ""
+msgstr "Automatinių atsarginių kopjų padarymas nesuveikė šiems dokumentams:\n"
 
 #: ../src/inkscape.cpp:613
 #, c-format
@@ -2486,6 +2486,8 @@ msgid ""
 "Cannot create directory %s.\n"
 "%s"
 msgstr ""
+"Nepavyko sukurti aplanko %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:614
 #, c-format
@@ -2493,6 +2495,8 @@ msgid ""
 "%s is not a valid directory.\n"
 "%s"
 msgstr ""
+"%s nėra aplankas.\n"
+"%s"
 
 #: ../src/inkscape.cpp:615
 #, c-format
@@ -2500,6 +2504,8 @@ msgid ""
 "Cannot create file %s.\n"
 "%s"
 msgstr ""
+"Nepavyko sukurti failo %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:616
 #, c-format
@@ -2507,12 +2513,16 @@ msgid ""
 "Cannot write file %s.\n"
 "%s"
 msgstr ""
+"Nepavyko įrašyti į failą %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:617
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
 msgstr ""
+"Inkscape veiks, bet naudojant pradinius nustatymus,\n"
+"ir bet kokie nustatymų pakeitimai nebus išsaugoti."
 
 #: ../src/inkscape.cpp:687
 #: ../src/preferences.cpp:56
@@ -2521,6 +2531,8 @@ msgid ""
 "%s is not a regular file.\n"
 "%s"
 msgstr ""
+"%s nėra paprastas failas.\n"
+"%s"
 
 #: ../src/inkscape.cpp:688
 #: ../src/preferences.cpp:57
@@ -2530,6 +2542,9 @@ msgid ""
 "you don't have read permissions on it.\n"
 "%s"
 msgstr ""
+"%s nėra teisingas XML failas, arba\n"
+"neturite teisių rašyti į jį.\n"
+"%s"
 
 #: ../src/inkscape.cpp:690
 #, c-format
@@ -2537,12 +2552,16 @@ msgid ""
 "%s is not a valid menus file.\n"
 "%s"
 msgstr ""
+"%s nėra teisingas meniu failas.\n"
+"%s"
 
 #: ../src/inkscape.cpp:691
 msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr ""
+"Inkscape veiks rodant standartinius meniu.\n"
+"Naujos meniu komandos nebus išsaugotos."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
@@ -2552,7 +2571,7 @@ msgstr "_Komandų juosta"
 
 #: ../src/interface.cpp:765
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr ""
+msgstr "Parodyti ar slėpti Komandų juostą (žemiau meniu)"
 
 #: ../src/interface.cpp:767
 msgid "Tool Controls Bar"
@@ -2560,7 +2579,7 @@ msgstr "Įrankių _Juosta"
 
 #: ../src/interface.cpp:767
 msgid "Show or hide the Tool Controls bar"
-msgstr ""
+msgstr "Parodyti ar slėpti Įrankių Valdymo juostą"
 
 #: ../src/interface.cpp:769
 msgid "_Toolbox"
@@ -2568,7 +2587,7 @@ msgstr "Į_rankiai"
 
 #: ../src/interface.cpp:769
 msgid "Show or hide the main toolbox (on the left)"
-msgstr ""
+msgstr "Parodyti ar slėpti pagrindinę Įrankių juostą (kairėje)"
 
 #: ../src/interface.cpp:775
 msgid "_Statusbar"
@@ -2576,7 +2595,7 @@ msgstr "_Būsenos juosta"
 
 #: ../src/interface.cpp:775
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr ""
+msgstr "Parodyti ar slėpti būsenos juostą (lango apačioje)"
 
 #: ../src/interface.cpp:777
 msgid "_Palette"
@@ -2584,12 +2603,12 @@ msgstr "_Paletė"
 
 #: ../src/interface.cpp:777
 msgid "Show or hide the color palette"
-msgstr ""
+msgstr "Parodyti ar slėpti spalvų paletę"
 
 #: ../src/interface.cpp:834
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr ""
+msgstr "Komanda \"%s\" nerasta"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:944
@@ -2603,21 +2622,21 @@ msgstr "Pereiti į apglėbiantį elementą"
 
 #: ../src/interface.cpp:1022
 msgid "Could not parse SVG data"
-msgstr ""
+msgstr "Nepavyko perskaityti SVG duomenų"
 
 #: ../src/interface.cpp:1185
 #, c-format
 msgid "Overwrite %s"
-msgstr ""
+msgstr "Rašyti ant %s"
 
 #: ../src/interface.cpp:1203
 #, c-format
 msgid "The file %s already exists.  Do you want to overwrite that file with the current document?"
-msgstr ""
+msgstr "Failas %s egzistuoja.  Ar norite perrašyti failą įrašant dabartinio dokumento turinį?"
 
 #: ../src/jabber_whiteboard/callbacks.cpp:59
 msgid "Jabber connection lost."
-msgstr ""
+msgstr "Jabber ryšys nutrūko."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:72
 #, c-format
@@ -2891,19 +2910,19 @@ msgstr ""
 
 #: ../src/main.cpp:194
 msgid "Print the Inkscape version number"
-msgstr ""
+msgstr "Rodyti Inkscape versiją"
 
 #: ../src/main.cpp:199
 msgid "Do not use X server (only process files from console)"
-msgstr ""
+msgstr "Nenaudoti X serverio (veikti komandinėje eilutėje)"
 
 #: ../src/main.cpp:204
 msgid "Try to use X server (even if $DISPLAY is not set)"
-msgstr ""
+msgstr "Mėginti naudoti X serverį (net jei $DISPLAY nenurodyta)"
 
 #: ../src/main.cpp:209
 msgid "Open specified document(s) (option string may be excluded)"
-msgstr ""
+msgstr "Atidaryti nurodytą failą"
 
 #: ../src/main.cpp:210
 #: ../src/main.cpp:215
@@ -2920,7 +2939,7 @@ msgstr ""
 
 #: ../src/main.cpp:219
 msgid "Export document to a PNG file"
-msgstr ""
+msgstr "Eksportuoti dokumentą PNG formatu"
 
 #: ../src/main.cpp:224
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
@@ -3060,7 +3079,7 @@ msgstr ""
 
 #: ../src/main.cpp:356
 msgid "Remove unused definitions from the defs section(s) of the document"
-msgstr ""
+msgstr "Iš dokumento defs sekcijos išmesti nenaudojamus aprašymus"
 
 #: ../src/main.cpp:549
 msgid ""
@@ -3068,6 +3087,9 @@ msgid ""
 "\n"
 "Available options:"
 msgstr ""
+"[PARAMETRAI...] [FAILAS...]\n"
+"\n"
+"Galimi parametrai:"
 
 #: ../src/menus-skeleton.h:17
 msgid "_New"
@@ -3088,7 +3110,7 @@ msgstr "Įklijuoti D_ydį"
 
 #: ../src/menus-skeleton.h:73
 msgid "Clo_ne"
-msgstr "Klo_nuoti"
+msgstr "Klo_nuotos Kopijos"
 
 #: ../src/menus-skeleton.h:90
 msgid "_View"
@@ -3152,7 +3174,7 @@ msgstr "Pa_mokymai"
 
 #: ../src/node-context.cpp:367
 msgid "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl+Alt</b>: move along handles"
-msgstr "<b>Ctrl</b>: keisti siūlės tipą, žingsniu keisti kampą, judinti horizontaliai ar vertikaliai; <b>Ctrl+Alt</b>: judinti liestinių kryptimi"
+msgstr "<b>Ctrl</b>: keisti siūlės tipą, žingsniu keisti kampą, stumti horizontaliai ar vertikaliai; <b>Ctrl+Alt</b>: judinti liestinių kryptimi"
 
 #: ../src/node-context.cpp:368
 msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
@@ -3189,11 +3211,11 @@ msgstr "<b>Siūlė</b>: tempiant keičiama kreivė; su <b>Ctrl</b> tempiama hori
 
 #: ../src/nodepath.cpp:3359
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr "<b>Liestinės rankenėlė</b>: tempiant keičiama kreivės forma; su <b>Ctrl</b> sukama fiksuotu žingsniu; su <b>Alt</b> fiksuojamas ilgis; su <b>Shift</b> sukamos abi liestinės"
+msgstr "<b>Siūlės liestinė</b>: tempiant keičiama kreivės forma; su <b>Ctrl</b> sukama fiksuotu žingsniu; su <b>Alt</b> fiksuojamas ilgis; su <b>Shift</b> sukamos abi liestinės"
 
 #: ../src/nodepath.cpp:3383
 msgid "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate the opposite handle in sync"
-msgstr "<b>Liestinės rankenėlė</b>: tempiant keičiama kreivės forma; su <b>Ctrl</b> sukama fiksuotu žingsniu; su <b>Alt</b> fiksuojamas ilgis; su <b>Shift</b> sukamos abi liestinės"
+msgstr "<b>Siūlės liestinė</b>: tempiant keičiama kreivės forma; su <b>Ctrl</b> sukama fiksuotu žingsniu; su <b>Alt</b> fiksuojamas ilgis; su <b>Shift</b> sukamos abi liestinės"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:3575
@@ -3270,69 +3292,69 @@ msgstr[2] "Pažymėta <b>%i</b> iš <b>%i</b> siūlių; %s."
 
 #: ../src/object-edit.cpp:487
 msgid "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the vertical radius the same"
-msgstr ""
+msgstr "Derinti <b>horizontalų apvalinimo</b> spindulį; su <b>Ctrl</b> - vertikalų spindulį padaryti tokiu pat"
 
 #: ../src/object-edit.cpp:493
 msgid "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the horizontal radius the same"
-msgstr ""
+msgstr "Derinti <b>vertikalų apvalinimo</b> spindulį; su <b>Ctrl</b> - horizontalų spindulį padaryti tokiu pat"
 
 #: ../src/object-edit.cpp:500
 #: ../src/object-edit.cpp:507
 msgid "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to lock ratio or stretch in one dimension only"
-msgstr ""
+msgstr "Derinti stačiakampio <b>plotį ir aukštį</b>; su <b>Ctrl</b> fiksuoti santykį arba keisti dydį viena kryptimi"
 
 #: ../src/object-edit.cpp:680
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
+msgstr "Derinti elipsės <b>plotį</b>, su <b>Ctrl</b> - daryti apskritimu"
 
 #: ../src/object-edit.cpp:683
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
+msgstr "Derinti elipsės <b>aukštį</b>, su <b>Ctrl</b> - daryti apskritimu"
 
 #: ../src/object-edit.cpp:686
 msgid "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
+msgstr "Derinti arkos ar segmento <b>pradinį tašką</b>; su <b>Ctrl</b> kampas keičiamas žingsniu; tempiant į elipsės <b>vidų</b> gaunama arka, į <b>išorę</b> - segmentas"
 
 #: ../src/object-edit.cpp:689
 msgid "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for segment"
-msgstr ""
+msgstr "Derinti arkos ar segmento <b>galinį tašką</b>; su <b>Ctrl</b> kampas keičiamas žingsniu; tempiant į elipsės <b>vidų</b> gaunama arka, į <b>išorę</b> - segmentas"
 
 #: ../src/object-edit.cpp:794
 msgid "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Derinti žvaigždės ar daugiakampio <b>viršūnių spindulį</b>; su <b>Shift</b> apvalinama; su <b>Alt</b> pridėti atsitiktinumo"
 
 #: ../src/object-edit.cpp:797
 msgid "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to randomize"
-msgstr ""
+msgstr "Derinti žvaigždės ar daugiakampio <b>pagrindo spindulį</b>; su <b>Ctrl</b> - išlaikyti taisyklingumą; su <b>Alt</b> - pridėti atsitiktinumo"
 
 #: ../src/object-edit.cpp:961
 msgid "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; with <b>Alt</b> to converge/diverge"
-msgstr ""
+msgstr "Suvynioti/išvynioti spiralės formą <b>viduje</b>; su <b>Ctrl</b> kampas keičiamas žingsniu; su <b>Alt</b> reguliuojamas divergavimas"
 
 #: ../src/object-edit.cpp:963
 msgid "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to scale/rotate"
-msgstr ""
+msgstr "Suvynioti/išvynioti spiralės formą <b>išorėje</b>; su <b>Ctrl</b> kampas keičiamas žingsniu; su <b>Shift</b> keičiamas dydis bei sukama"
 
 #: ../src/object-edit.cpp:1000
 msgid "Adjust the <b>offset distance</b>"
-msgstr ""
+msgstr "Derinti <b>išpūtimo atstumą</b>"
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/object-edit.cpp:1030
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr ""
+msgstr "<b>Stumdyti</b> užpildo raštą"
 
 #: ../src/object-edit.cpp:1032
 msgid "<b>Scale</b> the pattern fill uniformly"
-msgstr ""
+msgstr "<b>Keisti</b> užpildo rašto mastelį"
 
 #: ../src/object-edit.cpp:1034
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Pasukti</b> užpildo raštą; su <b>Ctrl</b> keisti kampą žingsniu"
 
 #: ../src/object-edit.cpp:1059
 msgid "Drag to resize the <b>flowed text frame</b>"
-msgstr ""
+msgstr "Tempiant keičiamas <b>dėstyto teksto rėmo</b> dydis"
 
 #. Item dialog
 #: ../src/object-ui.cpp:96
@@ -3442,17 +3464,17 @@ msgstr "<b>Spustelkite</b> arba <b>spustelkite ir tempkite</b>, kad tęsti kreiv
 #: ../src/pen-context.cpp:965
 #, c-format
 msgid "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
-msgstr ""
+msgstr "<b>%s</b>: kampas %3.2f&#176;, atstumas %s; su <b>Ctrl</b> kampas keičiamas žingsniu, <b>Enter</b> užbaigia kreivę"
 
 #: ../src/pen-context.cpp:990
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Kreivės deriklis</b>: kampas %3.2f&#176;, ilgis %s; su <b>Ctrl</b> kampas keičiamas žingsniu"
 
 #: ../src/pen-context.cpp:1020
 #, c-format
 msgid "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
-msgstr ""
+msgstr "<b>%s</b>: kampas %3.2f&#176;, ilgis %s; su <b>Ctrl</b> kampas keičiamas žingsniu, su <b>Shift</b> stumdomas tik šis deriklis"
 
 #: ../src/pen-context.cpp:1054
 msgid "Finishing pen"
@@ -3494,12 +3516,12 @@ msgstr ""
 
 #: ../src/rect-context.cpp:374
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
-msgstr ""
+msgstr "<b>Ctrl</b>: daryti kvadratą ar tikslnių proporcijų stačiakampį, suvienodinti užapvalinimą"
 
 #: ../src/rect-context.cpp:469
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr ""
+msgstr "<b>Stačiakampis</b>: %s &#215; %s; su <b>Ctrl</b> daryti kvadratą ar tikslnių proporcijų stačiakamp; su <b>Shift</b> piešti pradedant centru"
 
 #: ../src/select-context.cpp:226
 msgid "Move canceled."
@@ -3511,15 +3533,15 @@ msgstr "Pažymėjimas nutrauktas."
 
 #: ../src/select-context.cpp:625
 msgid "<b>Ctrl</b>: select in groups, move hor/vert"
-msgstr ""
+msgstr "<b>Ctrl</b>: pažymėti grupėse esančius objektus, judinti horizontaliai ar vertikaliai"
 
 #: ../src/select-context.cpp:626
 msgid "<b>Shift</b>: toggle select, force rubberband, disable snapping"
-msgstr ""
+msgstr "<b>Shift</b>: keisti objekto pažymėjimą, įjungti pažymėjimo ribos brėžimą, neklijuoti"
 
 #: ../src/select-context.cpp:627
 msgid "<b>Alt</b>: select under, move selected"
-msgstr ""
+msgstr "<b>Alt</b>: pažymėti žemiau esantį, stumdyti pažymėjimą"
 
 #: ../src/select-context.cpp:781
 msgid "Selected object is not a group. Cannot enter."
@@ -3642,31 +3664,31 @@ msgstr "Pažymėkite <b>objektus</b>, kuriuos norite paversti raštu."
 
 #: ../src/selection-chemistry.cpp:2113
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
-msgstr ""
+msgstr "Pažymėkite <b>objektą su raštu</b>, iš kurio išskirti rašto objektus."
 
 #: ../src/selection-chemistry.cpp:2166
 msgid "<b>No pattern fills</b> in the selection."
-msgstr ""
+msgstr "Pažymėjime <b>nėra rašto</b>."
 
 #: ../src/selection-chemistry.cpp:2186
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr ""
+msgstr "Pažymėkite <b>objektus</b>, iš kurių daryti grafinį vaizdą."
 
 #: ../src/selection-chemistry.cpp:2349
 msgid "Select <b>object(s)</b> to create mask from."
-msgstr ""
+msgstr "Pažymėkite <b>objektus</b>, iš kurių daryti filtrą."
 
 #: ../src/selection-chemistry.cpp:2352
 msgid "Select mask object and <b>object(s)</b> to apply mask to."
-msgstr ""
+msgstr "Pažymėkite filtro objektą ir filtruojamus <b>objektus</b>."
 
 #: ../src/selection-chemistry.cpp:2455
 msgid "Select <b>object(s)</b> to remove mask from."
-msgstr ""
+msgstr "Pažymėkite <b>objektus</b>, kuriems nuimti filtrą."
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
-msgstr ""
+msgstr "Nuoroda"
 
 #: ../src/selection-describer.cpp:43
 msgid "Circle"
@@ -3740,16 +3762,16 @@ msgstr "Žvaigždė"
 
 #: ../src/selection-describer.cpp:101
 msgid "Click selection to toggle scale/rotation handles"
-msgstr ""
+msgstr "Spustelkite ant pažymėjimo, kad pereiti iš stumdumo režimą į sukimo ir atvirkščiai"
 
 #. no items
 #: ../src/selection-describer.cpp:103
 msgid "No objects selected. Click, Shift+click, or drag around objects to select."
-msgstr ""
+msgstr "Nėra pažymėtų objektų. Spustelkite ant objekto ar pažymėkite sritį apie žymimus objektus."
 
 #: ../src/selection-describer.cpp:112
 msgid "root"
-msgstr ""
+msgstr "šaknis"
 
 #: ../src/selection-describer.cpp:124
 #, c-format
@@ -3794,15 +3816,15 @@ msgstr[2] " <b>%i</b> sluoksnių"
 
 #: ../src/selection-describer.cpp:161
 msgid "Use <b>Shift+D</b> to look up original"
-msgstr ""
+msgstr "Spauskite <b>Shift+D</b>, kad rasti originalą"
 
 #: ../src/selection-describer.cpp:165
 msgid "Use <b>Shift+D</b> to look up path"
-msgstr ""
+msgstr "Spauskite <b>Shift+D</b>, kad rasti kreivę"
 
 #: ../src/selection-describer.cpp:169
 msgid "Use <b>Shift+D</b> to look up frame"
-msgstr ""
+msgstr "Spauskite <b>Shift+D</b>, kad rasti rėmą"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:184
@@ -3852,57 +3874,57 @@ msgstr[2] "<b>%i</b> įvairių (<b>%i</b>) tipų objektų"
 #: ../src/selection-describer.cpp:209
 #, c-format
 msgid "%s%s. %s."
-msgstr ""
+msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:455
 msgid "<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"
-msgstr ""
+msgstr "Sukimo ir kreivinimo <b>centras</b>: tempdami galite perkelti kitur; centras naudojamas ir keičiant dydį su <b>Shift</b>"
 
 #: ../src/seltrans.cpp:473
 msgid "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
+msgstr "<b>Spausti ar tempti</b> pažymėjimą; su <b>Ctrl</b> keičiama proporcingai; su <b>Shift</b> keičiama apie centrą"
 
 #: ../src/seltrans.cpp:474
 msgid "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"
-msgstr ""
+msgstr "Keisti pažymėjimo <b>dydį</b>; su <b>Ctrl</b> keičiama proporcingai; su <b>Shift</b> keičiama pagal sukimo centrą"
 
 #: ../src/seltrans.cpp:478
 msgid "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"
-msgstr ""
+msgstr "<b>Kreivinti</b> pažymėjimą; su <b>Ctrl</b> kampas keičiamas žingsniu; su <b>Shift</b> kreivinama priešingos kraštinės atžvilgiu"
 
 #: ../src/seltrans.cpp:479
 msgid "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"
-msgstr ""
+msgstr "<b>Sukti</b> pažymėjimą; su <b>Ctrl</b> kampas keičiamas žingsniu; su <b>Shift</b> sukama priešingos kraštinės atžvilgiu"
 
 #: ../src/seltrans.cpp:833
 #: ../src/seltrans.cpp:919
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr ""
+msgstr "<b>Keičiamas dydis</b>: %0.2f%% x %0.2f%%; su <b>Ctrl</b> išlaikomos proporcijos"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:990
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Kreivinama</b>: %0.2f&#176;; su <b>Ctrl</b> kampas keičiamas žingsniu"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1039
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Sukama</b>: %0.2f&#176;; su <b>Ctrl</b> kampas keičiamas žingsniu"
 
 #: ../src/seltrans.cpp:1083
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
-msgstr ""
+msgstr "Stumti <b>centrą</b> į %s, %s"
 
 #: ../src/seltrans.cpp:1336
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
-msgstr ""
+msgstr "<b>Stumiama</b> per %s, %s; <b>Ctrl</b> apriboja stūmimu horizontaliai ar vertikaliai; su <b>Shift</b> išjungiamas klijavimas"
 
 #: ../src/slideshow.cpp:89
 msgid "Inkscape slideshow"
@@ -3982,12 +4004,12 @@ msgstr ""
 #: ../src/sp-image.cpp:833
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
-msgstr ""
+msgstr "<b>Grafinis vaizdas su bloga nuoroda</b>: %s"
 
 #: ../src/sp-image.cpp:834
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
-msgstr ""
+msgstr "<b>Grafinis vaizdas</b> %d &#215; %d: %s"
 
 #: ../src/sp-item-group.cpp:388
 #, c-format
@@ -4124,202 +4146,202 @@ msgstr "Pažymėkite <b>lygiai dvi kreives</b>, kurioms taikyti skirtumo, XOR, a
 #: ../src/splivarot.cpp:122
 #: ../src/splivarot.cpp:137
 msgid "Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."
-msgstr ""
+msgstr "Nepavyko nustatyti operacijai pažymėtų objektų <b>eiliškumo</b>."
 
 #: ../src/splivarot.cpp:167
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
-msgstr ""
+msgstr "Vienas iš objektų <b>nėra kreivė</b>, loginė operacija negalima."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:547
 msgid "Select <b>path(s)</b> to outline."
-msgstr ""
+msgstr "Pažymėkite <b>kreivę</b>, kurios linijos kontūras verčiamas kreive."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:741
 msgid "<b>No stroked paths</b> to outline in the selection."
-msgstr ""
+msgstr "Pažymėjime <b>nėra kreivių su linijomis</b>, kurių linijos kontūrą galima versti kreive."
 
 #: ../src/splivarot.cpp:825
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr ""
+msgstr "Pažymėtas objektas <b>nėra kreivė</b>, įtraukimas/išpūtimas negalimas."
 
 #: ../src/splivarot.cpp:1033
 msgid "Select <b>path(s)</b> to inset/outset."
-msgstr ""
+msgstr "Pažymėkite <b>kreivę</b> įtraukimui ar išpūtimui."
 
 #: ../src/splivarot.cpp:1250
 msgid "<b>No paths</b> to inset/outset in the selection."
-msgstr ""
+msgstr "Pažymėjime <b>nėra kreivių</b>, kurias galima įtraukti ar išpūsti."
 
 #: ../src/splivarot.cpp:1383
 msgid "Select <b>path(s)</b> to simplify."
-msgstr ""
+msgstr "Pažymėkite paprastinamą <b>kreivę</b>."
 
 #: ../src/splivarot.cpp:1410
 msgid "<b>No paths</b> to simplify in the selection."
-msgstr ""
+msgstr "Pažymėjime <b>nėra kreivių</b>, kurias galima būtų supaprastinti."
 
 #: ../src/star-context.cpp:343
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
-msgstr ""
+msgstr "<b>Ctrl</b>: kampo keitimas žingsniu; taisyklingų spindulių išlaikymas"
 
 #: ../src/star-context.cpp:448
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Daugiakampis</b>: spindulys %s, kampas %5g&#176;; su <b>Ctrl</b> kampas keičiamas žingsniu"
 
 #: ../src/star-context.cpp:449
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr ""
+msgstr "<b>Žvaigždė</b>: spindulys %s, kampas %5g&#176;; su <b>Ctrl</b> kampas keičiamas žingsniu"
 
 #: ../src/text-chemistry.cpp:94
 msgid "Select <b>a text and a path</b> to put text on path."
-msgstr ""
+msgstr "Pažymėkite <b>tekstą</b> ir <b>kreivę</b>, ant kurios tekstas bus dėstomas."
 
 #: ../src/text-chemistry.cpp:99
 msgid "This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."
-msgstr ""
+msgstr "Tekstas <b>jau yra ant kreivės</b>. Pirma atriškite tekstą nuo kreivės. Spauskite <b>Shift+D</b>, kad rasti pririštą kreivę."
 
 #: ../src/text-chemistry.cpp:104
 msgid "You cannot put flowtext on a path. Convert flowtext to text first."
-msgstr ""
+msgstr "Dėstyto teksto negalima kelti ant kreivės. Pirma dėstytą tekstą paverskite paprastu."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:110
 msgid "You cannot put text on a rectangle in this version. Convert rectangle to path first."
-msgstr ""
+msgstr "Šioje versijoje negalima kelti teksto ant stačiakampio. Pirma paverskite stačiakampį kreive."
 
 #: ../src/text-chemistry.cpp:168
 msgid "Select <b>a text on path</b> to remove it from path."
-msgstr ""
+msgstr "Pažymėkite <b>ant kreivės dėstytą tekstą</b>, kurį norite atrišti nuo teksto"
 
 #: ../src/text-chemistry.cpp:190
 msgid "<b>No texts-on-paths</b> in the selection."
-msgstr ""
+msgstr "Pažymėjime nėra <b>teksto ant kreivės</b>"
 
 #: ../src/text-chemistry.cpp:218
 #: ../src/text-chemistry.cpp:238
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr ""
+msgstr "Pažymėkite <b>tekstą</b>, kurio rankinius tarpus tarp simbolių norite naikinti."
 
 #: ../src/text-chemistry.cpp:259
 msgid "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."
-msgstr ""
+msgstr "Pažymėkite <b>tekstą</b> bei vieną ar daugiau <b>kreivių ir figūrų</b>, kuriose dėstyti tekstą."
 
 #: ../src/text-chemistry.cpp:331
 msgid "Select <b>a flowed text</b> to unflow it."
-msgstr ""
+msgstr "Pažymėkite <b>dėstytą tekstą</b>, kurį norite atrišti."
 
 #: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
-msgstr ""
+msgstr "<b>Spustelkite</b> teksto redagavimui, <b>tempkite</b> teksto dalies pažymėjimui."
 
 #: ../src/text-context.cpp:450
 msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
-msgstr ""
+msgstr "<b>Spustelkite</b> teksto redagavimui, <b>tempkite</b> teksto dalies pažymėjimui."
 
 #: ../src/text-context.cpp:526
 msgid "Non-printable character"
-msgstr ""
+msgstr "Nematomi simboliai"
 
 #: ../src/text-context.cpp:575
 #, c-format
 msgid "Unicode: %s: %s"
-msgstr ""
+msgstr "Unicode: %s: %s"
 
 #: ../src/text-context.cpp:577
 #: ../src/text-context.cpp:833
 msgid "Unicode: "
-msgstr ""
+msgstr "Unicode: "
 
 #: ../src/text-context.cpp:654
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
-msgstr ""
+msgstr "<b>Dėstyto teksto rėmas</b>: %s &#215; %s"
 
 #: ../src/text-context.cpp:686
 #: ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
-msgstr ""
+msgstr "Įveskite tekstą; <b>Enter</b> perkelia į naują eilutę."
 
 #: ../src/text-context.cpp:697
 msgid "Flowed text is created."
-msgstr ""
+msgstr "Dėstytas tekstas sukurtas"
 
 #: ../src/text-context.cpp:700
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
-msgstr ""
+msgstr "Rėmas <b>per mažas</b> dabartiniam šrifto dydžiui. Dėstytas tekstas nesukurtas."
 
 #: ../src/text-context.cpp:819
 msgid "No-break space"
-msgstr ""
+msgstr "Neperkeliamas tarpas"
 
 #: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
-msgstr ""
+msgstr "Įveskite dėstomą tekstą; <b>Enter</b> pradeda naują pastraipą."
 
 #: ../src/text-context.cpp:1432
 #: ../src/tools-switch.cpp:181
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
-msgstr ""
+msgstr "<b>Spustelkite</b>, kad pažymėti ar pradėti naują tekstą, <b>tempkite</b>, kad sukurti dėstomo teksto rėmą; tada spausdinkite."
 
 #: ../src/tools-switch.cpp:133
 msgid "To edit a path, <b>click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select them, then <b>drag</b> nodes and handles. <b>Click</b> on an object to select."
-msgstr ""
+msgstr "Kad redaguoti kreivę, <b>spustelkite</b> (galima su <b>Shift</b>) arba <b>tempdami</b> pažymėkite siūles, tada <b>tempkite</b> keičiamas siūles ir leistines. <b>Spustelėkite</b> objektą, kad pažymėti."
 
 #: ../src/tools-switch.cpp:139
 msgid "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and resize. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Tempkite</b> kad sukurti stačiakampį. <b>Tempkite kampus</b>, jei norite keisti dydį ar apvalinti. <b>Spustelkite</b> kad pažymėti."
 
 #: ../src/tools-switch.cpp:145
 msgid "<b>Drag</b> to create an ellipse. <b>Drag controls</b> to make an arc or segment. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Tempkite</b> kad sukurti elipsę. <b>Tempkite siūles</b>, jei norite daryti arką ar segmentą. <b>Spustelkite</b> kad pažymėti."
 
 #: ../src/tools-switch.cpp:151
 msgid "<b>Drag</b> to create a star. <b>Drag controls</b> to edit the star shape. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Tempkite</b> kad sukurti žvaigždę. <b>Tempkite siūles</b>, jei norite keisti formą. <b>Spustelkite</b> kad pažymėti."
 
 #: ../src/tools-switch.cpp:157
 msgid "<b>Drag</b> to create a spiral. <b>Drag controls</b> to edit the spiral shape. <b>Click</b> to select."
-msgstr ""
+msgstr "<b>Tempkite</b> kad sukurti spiralę. <b>Tempkite siūles</b>, jei norite keisti formą. <b>Spustelkite</b> kad pažymėti."
 
 #: ../src/tools-switch.cpp:163
 msgid "<b>Drag</b> to create a freehand line. Start drawing with <b>Shift</b> to append to selected path."
-msgstr ""
+msgstr "<b>Tempkite</b> kad sukurti ranka pieštą kreivę. Naudokite <b>Shift</b>, jei norite pratęsti egzistuojančią kreivę."
 
 #: ../src/tools-switch.cpp:169
 msgid "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to append to selected path."
-msgstr ""
+msgstr "<b>Spustelkite</b> kad pradėti brėžti Bezier kreivę ar atkarpą. Naudokite <b>Shift</b>, jei norite pratęsti egzistuojančią kreivę."
 
 #: ../src/tools-switch.cpp:175
 msgid "<b>Drag</b> to paint a calligraphic stroke. <b>Left</b>/<b>right</b> arrow keys adjust width, <b>up</b>/<b>down</b> adjust angle."
-msgstr ""
+msgstr "<b>Tempkite</b> kad piešti dailiraščiu. Naudokite rodyklių klavišus plunksnos pločio ir kampo keitimui."
 
 #: ../src/tools-switch.cpp:187
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
-msgstr ""
+msgstr "<b>Tempkite</b> ar <b>du kart spustelkite</b> kad sukurti perėjimą pažymėtuose objektuose, naudokite <b>siūles</b> redagavimui."
 
 #: ../src/tools-switch.cpp:193
 msgid "<b>Click</b> or <b>drag around an area</b> to zoom in, <b>Shift+click</b> to zoom out."
-msgstr ""
+msgstr "<b>Spustelkite</b> ar <b>žymėkite zoną</b> kad padidinti mastelį. Spustelkite laikydami <b>Shift</b>, jei norite mažinti mastelį."
 
 #: ../src/tools-switch.cpp:205
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
+msgstr "<b>Tempkite</b> nuo vienos figūros iki kitos kad sukurti ryšį."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:545
 #: ../src/trace/potrace/inkscape-potrace.cpp:646
 #, c-format
 msgid "Trace: %d.  %ld nodes"
-msgstr ""
+msgstr "Tyrimas: %d.  %ld siūlių"
 
 #: ../src/trace/trace.cpp:54
 #: ../src/trace/trace.cpp:118
 #: ../src/trace/trace.cpp:126
 msgid "Select an <b>image</b> to trace"
-msgstr ""
+msgstr "Pažymėkite <bgrafinį vaizdą</b>, kurį norite tirti"
 
 #: ../src/trace/trace.cpp:89
 msgid "Select only one <b>image</b> to trace"
@@ -4348,7 +4370,7 @@ msgstr "Apie Inkscape"
 
 #: ../src/ui/dialog/aboutbox.cpp:71
 msgid "_Splash"
-msgstr ""
+msgstr "A_pie"
 
 #: ../src/ui/dialog/aboutbox.cpp:73
 msgid "_Authors"
@@ -4418,127 +4440,127 @@ msgstr "Siūlės"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:757
 msgid "Relative to: "
-msgstr ""
+msgstr "Atskaitos taškas:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:762
 msgid "Align right sides of objects to left side of anchor"
-msgstr ""
+msgstr "Lygiuoti dešinius objektų šonus pagal kairę atskaitos objekto pusę"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:765
 msgid "Align left sides"
-msgstr ""
+msgstr "Lygiuoti kairį šoną"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:768
 msgid "Center on vertical axis"
-msgstr ""
+msgstr "Centruoti vertikalios ašies atžvilgiu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:771
 msgid "Align right sides"
-msgstr ""
+msgstr "Lygiuoti dešinį šoną"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:774
 msgid "Align left sides of objects to right side of anchor"
-msgstr ""
+msgstr "Lygiuoti kairius objektų šonus pagal dešinę atskaitos objekto pusę"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:777
 msgid "Align bottoms of objects to top of anchor"
-msgstr ""
+msgstr "Lygiuoti objektų apačias pagal atskaitos objekto viršų"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:780
 msgid "Align tops"
-msgstr ""
+msgstr "Lygiuoti viršus"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:783
 msgid "Center on horizontal axis"
-msgstr ""
+msgstr "Centruoti horizontalios ašies atžvilgiu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:786
 msgid "Align bottoms"
-msgstr ""
+msgstr "Lygiuoti apačias"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:789
 msgid "Align tops of objects to bottom of anchor"
-msgstr ""
+msgstr "Lygiuoti objektų viršus pagal atskaitos objekto apačią"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:794
 msgid "Align baseline anchors of texts vertically"
-msgstr ""
+msgstr "Lygiuoti vertikaliai pagal teksto liniją"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:797
 msgid "Align baseline anchors of texts horizontally"
-msgstr ""
+msgstr "Lygiuoti horizontaliai pagal teksto liniją"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:802
 msgid "Make horizontal gaps between objects equal"
-msgstr ""
+msgstr "Daryti vienodus horizontalius tarpus tarp objektų"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:806
 msgid "Distribute left sides equidistantly"
-msgstr ""
+msgstr "Dėstyti kaires puses vienodu atstumu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:809
 msgid "Distribute centers equidistantly horizontally"
-msgstr ""
+msgstr "Dėstyti horizontalius centrus vienodu atstumu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:812
 msgid "Distribute right sides equidistantly"
-msgstr ""
+msgstr "Dėstyti dešines puses vienodu atstumu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
 msgid "Make vertical gaps between objects equal"
-msgstr ""
+msgstr "Daryti vienodus vertikalius tarpus tarp objektų"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:820
 msgid "Distribute tops equidistantly"
-msgstr ""
+msgstr "Dėstyti viršus vienodu atstumu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:823
 msgid "Distribute centers equidistantly vertically"
-msgstr ""
+msgstr "Dėstyti vertikalius centrus vienodu atstumu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:826
 msgid "Distribute bottoms equidistantly"
-msgstr ""
+msgstr "Dėstyti apačias vienodu atstumu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:831
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr ""
+msgstr "Vienodu atstumu lygiuoti pagal teksto liniją horizontaliai"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:834
 msgid "Distribute baseline anchors of texts vertically"
-msgstr ""
+msgstr "Vienodu atstumu lygiuoti pagal teksto liniją vertikaliai"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:839
 msgid "Randomize centers in both dimensions"
-msgstr ""
+msgstr "Dėstyti centrus atsitiktinai"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:842
 msgid "Unclump objects: try to equalize edge-to-edge distances"
-msgstr ""
+msgstr "Išstumdyti objektus, stengiantis suvienodinti atstumus tarp briaunų"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:847
 msgid "Move objects as little as possible so that their bounding boxes do not overlap"
-msgstr ""
+msgstr "Stumdyti objektus kiek įmanoma mažiau, kad jų ribojantys stačiakampiai nepersidengtų"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
 msgid "Nicely arrange selected connector network"
-msgstr ""
+msgstr "Išdėstyti saryšių tinklą"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:856
 msgid "Align selected nodes horizontally"
-msgstr ""
+msgstr "Lygiuoti pažymėtas siūles horizontaliai"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:859
 msgid "Align selected nodes vertically"
-msgstr ""
+msgstr "Lygiuoti pažymėtas siūles vertikaliai"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:862
 msgid "Distribute selected nodes horizontally"
-msgstr ""
+msgstr "Paskirstyti pažymėtas siūles horizontaliai"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:865
 msgid "Distribute selected nodes vertically"
-msgstr ""
+msgstr "Paskirstyti pažymėtas siūles vertikaliai"
 
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:870
@@ -4586,329 +4608,329 @@ msgstr "<b>Licencija</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:99
 msgid "Grid/Guides"
-msgstr ""
+msgstr "Lygiavimas"
 
 #: ../src/ui/dialog/document-properties.cpp:100
 msgid "Snap"
-msgstr ""
+msgstr "Klijavimas"
 
 #: ../src/ui/dialog/document-properties.cpp:184
 msgid "Back_ground:"
-msgstr ""
+msgstr "_Fonas"
 
 #: ../src/ui/dialog/document-properties.cpp:184
 msgid "Background color"
-msgstr ""
+msgstr "Fono spalva"
 
 #: ../src/ui/dialog/document-properties.cpp:184
 msgid "Color and transparency of the page background (also used for bitmap export)"
-msgstr ""
+msgstr "Puslapio fono spalva ir permatomumas (naudojamas ir grafinių vaizdų eksportavime)"
 
 #: ../src/ui/dialog/document-properties.cpp:186
 msgid "Show page _border"
-msgstr ""
+msgstr "Rodyti puslapio _rėmelį"
 
 #: ../src/ui/dialog/document-properties.cpp:186
 msgid "If set, rectangular page border is shown"
-msgstr ""
+msgstr "Jei įjungta, rodomas puslapio stačiakampis rėmelis"
 
 #: ../src/ui/dialog/document-properties.cpp:187
 msgid "Border on _top of drawing"
-msgstr ""
+msgstr "Rėmelis an_t piešinio viršaus"
 
 #: ../src/ui/dialog/document-properties.cpp:187
 msgid "If set, border is always on top of the drawing"
-msgstr ""
+msgstr "Jei įjungta, rėmelis visada rodomas virš paveikslėlio"
 
 #: ../src/ui/dialog/document-properties.cpp:188
 msgid "Border _color:"
-msgstr ""
+msgstr "Rėmelio _spalva"
 
 #: ../src/ui/dialog/document-properties.cpp:188
 msgid "Page border color"
-msgstr ""
+msgstr "Puslapio rėmelio spalva"
 
 #: ../src/ui/dialog/document-properties.cpp:189
 msgid "Color of the page border"
-msgstr ""
+msgstr "Puslapio rėmelio spalva"
 
 #: ../src/ui/dialog/document-properties.cpp:191
 msgid "_Show border shadow"
-msgstr ""
+msgstr "Rodyti rėmeli_o šešėlį"
 
 #: ../src/ui/dialog/document-properties.cpp:192
 msgid "Default _units:"
-msgstr ""
+msgstr "Standartiniai _vienetai:"
 
 #: ../src/ui/dialog/document-properties.cpp:194
 msgid "<b>General</b>"
-msgstr ""
+msgstr "<b>Bendra</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:196
 msgid "<b>Border</b>"
-msgstr ""
+msgstr "<b>Rėmelis</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:198
 msgid "<b>Format</b>"
-msgstr ""
+msgstr "<b>Formatas</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
 #: ../src/ui/dialog/document-properties.cpp:228
 msgid "_Show grid"
-msgstr ""
+msgstr "_Rodyti langelius"
 
 #: ../src/ui/dialog/document-properties.cpp:228
 msgid "Show or hide grid"
-msgstr ""
+msgstr "Paslėpti ar rodyti langelius"
 
 #: ../src/ui/dialog/document-properties.cpp:229
 msgid "Grid _units:"
-msgstr ""
+msgstr "Langelių _vienetai:"
 
 #: ../src/ui/dialog/document-properties.cpp:230
 msgid "_Origin X:"
-msgstr ""
+msgstr "_X pradžia:"
 
 #: ../src/ui/dialog/document-properties.cpp:230
 msgid "X coordinate of grid origin"
-msgstr ""
+msgstr "Langelių pradinis atskaitos taškas (X)"
 
 #: ../src/ui/dialog/document-properties.cpp:232
 msgid "O_rigin Y:"
-msgstr ""
+msgstr "_Y pradžia:"
 
 #: ../src/ui/dialog/document-properties.cpp:232
 msgid "Y coordinate of grid origin"
-msgstr ""
+msgstr "Langelių pradinis atskaitos taškas (Y)"
 
 #: ../src/ui/dialog/document-properties.cpp:234
 msgid "Spacing _X:"
-msgstr ""
+msgstr "Langelio _plotis:"
 
 #: ../src/ui/dialog/document-properties.cpp:234
 msgid "Distance of vertical grid lines"
-msgstr ""
+msgstr "Horizontalus atstumas tarp langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:236
 msgid "Spacing _Y:"
-msgstr ""
+msgstr "Langelio _aukštis:"
 
 #: ../src/ui/dialog/document-properties.cpp:236
 msgid "Distance of horizontal grid lines"
-msgstr ""
+msgstr "Vertikalus atstumas tarp langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:238
 msgid "Grid line _color:"
-msgstr ""
+msgstr "Langelio _linijos spalva:"
 
 #: ../src/ui/dialog/document-properties.cpp:238
 msgid "Grid line color"
-msgstr ""
+msgstr "Spalva, kuria piešiamas langelis"
 
 #: ../src/ui/dialog/document-properties.cpp:239
 msgid "Color of grid lines"
-msgstr ""
+msgstr "Spalva, kuria piešiamas langelis"
 
 #: ../src/ui/dialog/document-properties.cpp:240
 msgid "Ma_jor grid line color:"
-msgstr ""
+msgstr "_Stambesnių linijų spalva:"
 
 #: ../src/ui/dialog/document-properties.cpp:240
 msgid "Major grid line color"
-msgstr ""
+msgstr "Spalva, kuria piešiami stambesnieji langeliai"
 
 #: ../src/ui/dialog/document-properties.cpp:241
 msgid "Color of the major (highlighted) grid lines"
-msgstr ""
+msgstr "Spalva, kuria piešiami stambesnieji langeliai"
 
 #: ../src/ui/dialog/document-properties.cpp:243
 msgid "_Major grid line every:"
-msgstr ""
+msgstr "S_tambesnės linijos kas:"
 
 #: ../src/ui/dialog/document-properties.cpp:243
 msgid "lines"
-msgstr ""
+msgstr "langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:244
 msgid "Show _guides"
-msgstr ""
+msgstr "Rodyti lyg_juostes"
 
 #: ../src/ui/dialog/document-properties.cpp:244
 msgid "Show or hide guides"
-msgstr ""
+msgstr "Paslėpti ar rodyti lygiavimo juostas"
 
 #: ../src/ui/dialog/document-properties.cpp:245
 msgid "Guide co_lor:"
-msgstr ""
+msgstr "L_ygjuostės spalva:"
 
 #: ../src/ui/dialog/document-properties.cpp:245
 msgid "Guideline color"
-msgstr ""
+msgstr "Spalva, kuriame piešiama lygjuostė"
 
 #: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of guidelines"
-msgstr ""
+msgstr "Spalva, kuriame piešiama lygiavimo juosta"
 
 #: ../src/ui/dialog/document-properties.cpp:247
 msgid "_Highlight color:"
-msgstr ""
+msgstr "P_aryškinta spalva:"
 
 #: ../src/ui/dialog/document-properties.cpp:247
 msgid "Highlighted guideline color"
-msgstr ""
+msgstr "Spalva, kuriame piešiama pažymėta lygiavimo juosta"
 
 #: ../src/ui/dialog/document-properties.cpp:248
 msgid "Color of a guideline when it is under mouse"
-msgstr ""
+msgstr "Spalva, kuriame piešiama pažymėta lygiavimo juosta"
 
 #: ../src/ui/dialog/document-properties.cpp:251
 msgid "<b>Grid</b>"
-msgstr ""
+msgstr "<b>Langeliai</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:253
 msgid "<b>Guides</b>"
-msgstr ""
+msgstr "<b>Lygjuostės</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:283
 msgid "_Snap bounding boxes to objects"
-msgstr ""
+msgstr "_Klijuoti prie objektų"
 
 #: ../src/ui/dialog/document-properties.cpp:284
 msgid "Snap the edges of the object bounding boxes to other objects"
-msgstr ""
+msgstr "Taikyti ribojančių stačiakampių šonus prie kitų objektų"
 
 #: ../src/ui/dialog/document-properties.cpp:286
 msgid "Snap nodes _to objects"
-msgstr ""
+msgstr "K_lijuoti siūles prie objektų"
 
 #: ../src/ui/dialog/document-properties.cpp:287
 msgid "Snap the nodes of objects to other objects"
-msgstr ""
+msgstr "Taikyti objektų siūles prie kitų objektų"
 
 #: ../src/ui/dialog/document-properties.cpp:289
 msgid "Snap to object _paths"
-msgstr ""
+msgstr "Kl_ijuoti prie objektų kreivių"
 
 #: ../src/ui/dialog/document-properties.cpp:290
 msgid "Snap to other object paths"
-msgstr ""
+msgstr "Taikyti objektus prie kitų objektų kreivių"
 
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid "Snap to object _nodes"
-msgstr ""
+msgstr "Klij_uoti prie objektų siūlių"
 
 #: ../src/ui/dialog/document-properties.cpp:293
 msgid "Snap to other object nodes"
-msgstr ""
+msgstr "Taikyti objektus prie kitų objektų siūlių"
 
 #: ../src/ui/dialog/document-properties.cpp:295
 msgid "Snap s_ensitivity:"
-msgstr ""
+msgstr "Klijavimo _jautrumas:"
 
 #: ../src/ui/dialog/document-properties.cpp:295
 #: ../src/ui/dialog/document-properties.cpp:305
 #: ../src/ui/dialog/document-properties.cpp:315
 msgid "Always snap"
-msgstr ""
+msgstr "Klijuoti visada"
 
 #: ../src/ui/dialog/document-properties.cpp:296
 msgid "Controls max. snapping distance from object"
-msgstr ""
+msgstr "Reguliuojama didžiausias klijavimo prie objekto atstumas"
 
 #: ../src/ui/dialog/document-properties.cpp:297
 msgid "If set, objects snap to the nearest object when moved, regardless of distance"
-msgstr ""
+msgstr "Jei įjungta, objektas visada klijuojamas prie artimiausio objekto, nepriklausomai nuo atstumo"
 
 #: ../src/ui/dialog/document-properties.cpp:299
 msgid "Snap _bounding boxes to grid"
-msgstr ""
+msgstr "Klijuoti _ribodėžes prie langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:300
 #: ../src/ui/dialog/document-properties.cpp:310
 msgid "Snap the edges of the object bounding boxes"
-msgstr ""
+msgstr "Klijuoti objektų ribojančių stačiakampių kraštus prie langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:302
 msgid "Snap nodes to _grid"
-msgstr ""
+msgstr "Klijuoti _siūles prie langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:303
 #: ../src/ui/dialog/document-properties.cpp:313
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
-msgstr ""
+msgstr "Klijuoti objektų siūles, teksto linijas, elipsių centrus ir kita prie langelių"
 
 #: ../src/ui/dialog/document-properties.cpp:305
 msgid "Snap sens_itivity:"
-msgstr ""
+msgstr "Klijavimo jautru_mas:"
 
 #: ../src/ui/dialog/document-properties.cpp:306
 msgid "Controls max. snapping distance from grid"
-msgstr ""
+msgstr "Reguliuojama didžiausias klijavimo prie langelių atstumas"
 
 #: ../src/ui/dialog/document-properties.cpp:307
 msgid "If set, objects snap to the nearest grid line when moved, regardless of distance"
-msgstr ""
+msgstr "Jei įjungta, objektas visada klijuojamas prie artimiausio langelio, nepriklausomai nuo atstumo"
 
 #: ../src/ui/dialog/document-properties.cpp:309
 msgid "Snap bounding boxes to g_uides"
-msgstr ""
+msgstr "Klijuoti prie l_ygjuosčių"
 
 #: ../src/ui/dialog/document-properties.cpp:312
 msgid "Snap p_oints to guides"
-msgstr ""
+msgstr "Klijuoti siūles prie l_ygjuosčių"
 
 #: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap sensiti_vity:"
-msgstr ""
+msgstr "Klija_vimo jautru_mas:"
 
 #: ../src/ui/dialog/document-properties.cpp:316
 msgid "Controls max. snapping distance from guides"
-msgstr ""
+msgstr "Reguliuojama didžiausias klijavimo prie lygiavimo juostų atstumas"
 
 #: ../src/ui/dialog/document-properties.cpp:317
 msgid "If set, objects snap to the nearest guide when moved, regardless of distance"
-msgstr ""
+msgstr "Jei įjungta, objektas visada klijuojamas prie artimiausios lygiavimo juostos, nepriklausomai nuo atstumo"
 
 #: ../src/ui/dialog/document-properties.cpp:324
 msgid "<b>Object Snapping</b>"
-msgstr ""
+msgstr "<b>Klijavimas prie Objektų</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:326
 msgid "<b>Grid Snapping</b>"
-msgstr ""
+msgstr "<b>Klijavimas prie Langelių</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:328
 msgid "<b>Guide Snapping</b>"
-msgstr ""
+msgstr "<b>Klijavimas prie Lygjuosčių</b>"
 
 #: ../src/ui/dialog/export.cpp:34
 msgid "Export"
-msgstr ""
+msgstr "Eksportavimas"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
-msgstr ""
+msgstr "Užpildas"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:37
 msgid "Stroke Paint"
-msgstr ""
+msgstr "Linijos Spalva"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:38
 msgid "Stroke Style"
-msgstr ""
+msgstr "Linijos Išvaizda"
 
 #: ../src/ui/dialog/find.cpp:34
 msgid "Find"
-msgstr ""
+msgstr "Rasti"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:139
 msgid "Mouse"
-msgstr ""
+msgstr "Pelė"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:141
 msgid "Grab sensitivity:"
-msgstr ""
+msgstr "Čiupimo jautrumas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:141
 #: ../src/ui/dialog/inkscape-preferences.cpp:144
@@ -4916,259 +4938,259 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:156
 #: ../src/ui/dialog/inkscape-preferences.cpp:166
 msgid "pixels"
-msgstr ""
+msgstr "taškelių"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:142
 msgid "How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"
-msgstr ""
+msgstr "Kaip arti pelės (erano taškais) turi būti objektas, kad paspaudimu jis būtų pažymimas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:144
 msgid "Click/drag threshold:"
-msgstr ""
+msgstr "Spaudimo/tempimo skirtumas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:145
 msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
-msgstr ""
+msgstr "Didžiausias pelės judesys (ekrano taškais), kuris dar nėra vertinamas kaip tempimas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:150
 msgid "Scrolling"
-msgstr ""
+msgstr "Slinktis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:152
 msgid "Mouse wheel scrolls by:"
-msgstr ""
+msgstr "Pelės ratukas paslenka per:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:153
 msgid "One mouse wheel notch scrolls by this distance in screen pixels (horizontally with Shift)"
-msgstr ""
+msgstr "Vienas pelės ratuko judesys paslenka vaizdą tokiu atstumu (ekrano taškais; su Shift slenka horizontaliai)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:154
 msgid "Ctrl+arrows"
-msgstr ""
+msgstr "Ctrl+rodyklės"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:156
 msgid "Scroll by:"
-msgstr ""
+msgstr "Slinkti per:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
-msgstr ""
+msgstr "Spaudžiant Ctrl ir rodyklių klavišus, vaizdas paslenkamas tokiu atstumu (ekrano taškais)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:159
 msgid "Acceleration:"
-msgstr ""
+msgstr "Greitėjimas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no acceleration)"
-msgstr ""
+msgstr "Spaudžiant ir laikant Ctrl ir rodyklių klavišus vaizdo slinkimas greitėja (0 - jokio greitėjimo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:161
 msgid "Autoscrolling"
-msgstr ""
+msgstr "Automatinė slinktis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:163
 msgid "Speed:"
-msgstr ""
+msgstr "Greitis:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:164
 msgid "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn autoscroll off)"
-msgstr ""
+msgstr "Kaip greitai vaizdas paslenkamas kai tempiant išeinama iš vaizdo ribų (0 - automatinė slinktis išjungta)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:166
 #: ../src/ui/dialog/tracedialog.cpp:370
 #: ../src/ui/dialog/tracedialog.cpp:403
 msgid "Threshold:"
-msgstr ""
+msgstr "Riba:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid "How far (in screen pixels) you need to be from the canvas edge to trigger autoscroll; positive is outside the canvas, negative is within the canvas"
-msgstr ""
+msgstr "Kaip toli (ekrano taškais) reikia atsidurti nuo ribos, kad įsijungtu automatinė slinktis; teigiama - už ribos, neigiama - būnant vaizde"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:172
 msgid "Steps"
-msgstr ""
+msgstr "Žingsnis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:175
 msgid "Arrow keys move by:"
-msgstr ""
+msgstr "Rodyklės juda per:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Pressing an arrow key moves selected object(s) or node(s) by this distance (in px units)"
-msgstr ""
+msgstr "Spaudžiant rodyklių klavišus, objektai ar siūlės pastumiami tokiu atstumu (taškeliais)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:178
 msgid "> and < scale by:"
-msgstr ""
+msgstr "< ir > tempia per:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "Pressing > or < scales selection up or down by this increment (in px units)"
-msgstr ""
+msgstr "Spaudžiant > ir < klavišus, objektai ar siūlės tempiami tokiu dydžiu (taškeliais)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "Inset/Outset by:"
-msgstr ""
+msgstr "Įtraukti/Išpūsti:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "Inset and Outset commands displace the path by this distance (in px units)"
-msgstr ""
+msgstr "Įtraukimo bei Išpūtimo komandos keičia kreivę tokiu atstumu (taškeliais)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid "Compass-like display of angles"
-msgstr ""
+msgstr "Kampų vaizdavimas kaip kompase"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid "When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"
-msgstr ""
+msgstr "Jei įjungta, 0 kampas vaizduojamas šiaurėje, kampas didėja laikrodžio rodyklės kryptim (iki 360); jei išjungta - 0 rytuose, rėžis nuo -180 iki 180, didėja prieš laikrodžio rodyklę"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:191
 msgid "Rotation snaps every:"
-msgstr ""
+msgstr "Pasukama po"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:191
 msgid "degrees"
-msgstr ""
+msgstr "laipsnių"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:192
 msgid "Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"
-msgstr ""
+msgstr "Sukant objektą naudojant Ctrl klavišą ar [ bei ] klavišais, pasuka tokiu dydžiu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:194
 msgid "Zoom in/out by:"
-msgstr ""
+msgstr "Didinti/mažinti mastelį:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"
-msgstr ""
+msgstr "Didinimo stiklo spustelėjimas, +/- klavišai bei vidurinysis pelės klavišas keičia kastelį tokiu daugikliu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:201
 msgid "Show selection cue"
-msgstr ""
+msgstr "Rodyti pažymėjimo kontūrą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:202
 msgid "Whether selected objects display a selection cue (the same as in selector)"
-msgstr ""
+msgstr "Ar pažymėtiems objektams rodyti žymėjimo kontūrą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:208
 msgid "Enable gradient editing"
-msgstr ""
+msgstr "Leisti keisti perėjimą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:209
 msgid "Whether selected objects display gradient editing controls"
-msgstr ""
+msgstr "Ar pažymėtiems objektams rodyti perėjimo keitimo rankenėles"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:222
 msgid "<b>No objects selected</b> to take the style from."
-msgstr ""
+msgstr "<b>Nepažymėtas objektas</b> iš kurio imti išvaizdą."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:231
 msgid "<b>More than one object selected.</b>  Cannot take style from multiple objects."
-msgstr ""
+msgstr "<b>Pažymėta daugiau nei vienas objektas.</b>  Išvaizda gali būti imama tik iš vieno objekto."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:265
 msgid "Create new objects with:"
-msgstr ""
+msgstr "Kuriant objektą naudojama:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:267
 msgid "Last used style"
-msgstr ""
+msgstr "Paskutinė naudota išvaizda"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:269
 msgid "Apply the style you last set on an object"
-msgstr ""
+msgstr "Taikyti išvaizdą, kuri buvo nustatytą paskutinį kartą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:274
 msgid "This tool's own style:"
-msgstr ""
+msgstr "Šio įrankio specifinė išvaizda:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:278
 msgid "Each tool may store its own style to apply to the newly created objects. Use the button below to set it."
-msgstr ""
+msgstr "Kiekvienam įrankiui galima nustatyti specifinę išvaizdą, kuri bus taikoma kiekvienam sukurtam šio tipo objektui. Išvaizda keičiama žemiau esančių mygtuku."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:283
 msgid "Take from selection"
-msgstr ""
+msgstr "Imti iš pažymėjimo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:295
 msgid "Remember the style of the (first) selected object as this tool's style"
-msgstr ""
+msgstr "Įsiminti šiuo metu pažymėto objekto išvaizdą kaip įrankio standartinę išvaizdą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:300
 msgid "Tools"
-msgstr ""
+msgstr "Įrankiai"
 
 #. Selector
 #: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Selector"
-msgstr ""
+msgstr "Žymeklis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "When transforming, show:"
-msgstr ""
+msgstr "Kai keičiama, rodyti:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:308
 msgid "Objects"
-msgstr ""
+msgstr "Objektus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:310
 msgid "Show the actual objects when moving or transforming"
-msgstr ""
+msgstr "Rodyti objektų tikrą vaizdą stumdant ar transformuojant"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:311
 msgid "Box outline"
-msgstr ""
+msgstr "Ribojančio stačiakampio rėmą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:313
 msgid "Show only a box outline of the objects when moving or transforming"
-msgstr ""
+msgstr "Rodyti tik objektų rėmus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:314
 msgid "Per-object selection cue:"
-msgstr ""
+msgstr "Pažymėtas objektas išskiriamas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:317
 msgid "No per-object selection indication"
-msgstr ""
+msgstr "Pažymėti objektai neišskiriami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "Mark"
-msgstr ""
+msgstr "Žymė"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:320
 msgid "Each selected object has a diamond mark in the top left corner"
-msgstr ""
+msgstr "Kiekvienas pažymėtas objektas išskiriamas rombu viršutiniame kairiame kampe"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "Box"
-msgstr ""
+msgstr "Kontūras"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:323
 msgid "Each selected object displays its bounding box"
-msgstr ""
+msgstr "Kiekvienas pažymėtas objektas išskiriamas apglėbiančiu kontūru"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:324
 msgid "Default scale origin:"
-msgstr ""
+msgstr "Pradinis dydžio keitimo centras:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:325
 msgid "Opposite bounding box edge"
-msgstr ""
+msgstr "Priešingas ribodėžės kraštas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:327
 msgid "Default scale origin will be on the bounding box of the item"
-msgstr ""
+msgstr "Nutylint, dydžio keitimo atskaitos taškas - priešingas ribojančio stačiakampio kraštas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Farthest opposite node"
-msgstr ""
+msgstr "Tolimiausia priešinga siūlė"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:330
 msgid "Default scale origin will be on the bounding box of the item's points"
-msgstr ""
+msgstr "Nutylint, dydžio keitimo atskaitos taškas - tolimiausia objekto siūlė"
 
 #. Node
 #: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Node"
-msgstr ""
+msgstr "Siūlė"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:336
@@ -5176,156 +5198,156 @@ msgstr ""
 #: ../src/verbs.cpp:2102
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
-msgstr ""
+msgstr "Mastelis"
 
 #. Shapes
 #: ../src/ui/dialog/inkscape-preferences.cpp:340
 msgid "Shapes"
-msgstr ""
+msgstr "Formos"
 
 #. Pencil
 #: ../src/ui/dialog/inkscape-preferences.cpp:357
 #: ../src/verbs.cpp:2092
 msgid "Pencil"
-msgstr ""
+msgstr "Rašiklis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:360
 msgid "Tolerance:"
-msgstr ""
+msgstr "Pakantumas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:361
 msgid "This value affects the amount of smoothing applied to freehand lines; lower values produce more uneven paths with more nodes"
-msgstr ""
+msgstr "Nuo šios reikšmės priklauso tolygumo lygis, taikomas ranka pieštoms kreivėms; mažesnė reikšmė reiškia daugiau siūlių ir mažiau tolygumo"
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:365
 #: ../src/verbs.cpp:2094
 msgid "Pen"
-msgstr ""
+msgstr "Pieštukas"
 
 #. Calligraphy
 #: ../src/ui/dialog/inkscape-preferences.cpp:369
 #: ../src/verbs.cpp:2096
 msgid "Calligraphy"
-msgstr ""
+msgstr "Dailiraštis"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:377
 #: ../src/verbs.cpp:2100
 msgid "Gradient"
-msgstr ""
+msgstr "Perėjimas"
 
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:380
 #: ../src/verbs.cpp:2106
 msgid "Connector"
-msgstr ""
+msgstr "Saryšiai"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:383
 #: ../src/verbs.cpp:2104
 msgid "Dropper"
-msgstr ""
+msgstr "Pipetė"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:390
 msgid "Save window geometry"
-msgstr ""
+msgstr "Saugoti lango geometriją"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:391
 msgid "Dialogs are hidden in taskbar"
-msgstr ""
+msgstr "Dialogai nerodomi užduočių juostoje"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "Zoom when window is resized"
-msgstr ""
+msgstr "Keisti masteli keičiant lango dydį"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:394
 msgid "Normal"
-msgstr ""
+msgstr "Įprastas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "Aggressive"
-msgstr ""
+msgstr "Agresyvus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:398
 msgid "Save the window size and position with each document (only for Inkscape SVG format)"
-msgstr ""
+msgstr "Saugant dokumentą, išsaugoti lango poziciją ir dydį (tik Inkscape SVG formatu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
-msgstr ""
+msgstr "Ar dialogų langai bus vaizduojami langų valdymo sistemos užduočių juostoje"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"
-msgstr ""
+msgstr "Keisti mastelį, kai dokumento lango dydis pasikeičia, ar palikti mastelį nepakitusį (tai taip pat galima keisti ikonėle, esančia virš dešinios slankjuostės)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid "Dialogs on top:"
-msgstr ""
+msgstr "Dialogų pakėlimo režimas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Dialogs are treated as regular windows"
-msgstr ""
+msgstr "Dialogai veikia kaip paprasti langai"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Dialogs stay on top of document windows"
-msgstr ""
+msgstr "Dialogai išlieka virš dokumento lango"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:409
 msgid "Same as Normal but may work better with some window managers"
-msgstr ""
+msgstr "Tas pats kaip įprastame režime, tik kai kuriose operacinėse sistemose veikia geriau"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Windows"
-msgstr ""
+msgstr "Langai"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "Move in parallel"
-msgstr ""
+msgstr "Stumiami lygiagrečiai"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid "Stay unmoved"
-msgstr ""
+msgstr "Nejudinami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:420
 msgid "Move according to transform"
-msgstr ""
+msgstr "Stumiami pagal transformaciją"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:422
 msgid "Are unlinked"
-msgstr ""
+msgstr "Atrišami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "Are deleted"
-msgstr ""
+msgstr "Šalinami"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "When the original moves, its clones and linked offsets:"
-msgstr ""
+msgstr "Kai judamas originalas, jo klonai ir pririšti postūmiai:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:429
 msgid "Clones are translated by the same vector as their original."
-msgstr ""
+msgstr "Klonai seka originalus (stumiami ta pačia kryptimi tokį patį atstumą)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:431
 msgid "Clones preserve their positions when their original is moved."
-msgstr ""
+msgstr "Kai originalas stumdomas, klonai išlieka nepajudinti."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:433
 msgid "Each clone moves according to the value of its transform= attribute. For example, a rotated clone will move in a different direction than its original."
-msgstr ""
+msgstr "Klonai stumdomi atsižvelgiant į jų transformacijas. Taigi, 180 laipsnių kampu pasukti klonai stumiami priešinga kryptimi nei originalas."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "When the original is deleted, its clones:"
-msgstr ""
+msgstr "Kai originalas šalinamas, jo klonai:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "Orphaned clones are converted to regular objects."
-msgstr ""
+msgstr "Paklydę klonai verčiami įprastais objektais."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Orphaned clones are deleted along with their original."
-msgstr ""
+msgstr "Paklydę klonai šalinami kartu su originalu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Scale stroke width"
@@ -5345,11 +5367,11 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid "Optimized"
-msgstr ""
+msgstr "Optimizuojant"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "Preserved"
-msgstr ""
+msgstr "Išlaikant"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:453
 #: ../src/widgets/select-toolbar.cpp:479
@@ -5373,19 +5395,19 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Store transformation:"
-msgstr ""
+msgstr "Saugoti transformacijas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:462
 msgid "If possible, apply transformation to objects without adding a transform= attribute"
-msgstr ""
+msgstr "Jei įmanoma, tranformacija objektams taikoma nenaudojant \"tranform\" atributo."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:464
 msgid "Always store transformation as a transform= attribute on objects"
-msgstr ""
+msgstr "Visada saugoti transformaciją į \"transform\" atributą."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Transforms"
-msgstr ""
+msgstr "Transformacijos"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:471
 msgid "Select only within current layer"
@@ -5393,95 +5415,95 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:472
 msgid "Ignore hidden objects"
-msgstr ""
+msgstr "Ignoruoti paslėptus objektus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:473
 msgid "Ignore locked objects"
-msgstr ""
+msgstr "Ignoruoti užrakintus objektus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:475
 msgid "Ctrl+A, Tab, Shift+Tab:"
-msgstr ""
+msgstr "Ctrl+A, Tab, Shift+Tab:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:477
 msgid "Uncheck this to make keyboard selection commands work on objects in all layers"
-msgstr ""
+msgstr "Išjungus, pažymėjimo komandos veiks visuose sluoksniuose, ne tik dabartiniame"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:479
 msgid "Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden group or layer)"
-msgstr ""
+msgstr "Išjunkite, jei norite, kad pažymėjimas veiktų ir paslėptiems objektams ar objektams iš paslėptų grupių ir sluoksnių"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:481
 msgid "Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked group or layer)"
-msgstr ""
+msgstr "Išjunkite, jei norite, kad pažymėjimas veiktų ir užrakintiems objektams ar objektams iš užrakintų grupių ir sluoksnių"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:483
 msgid "Selecting"
-msgstr ""
+msgstr "Žymėjimas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "Default export resolution:"
-msgstr ""
+msgstr "Standartinė eksporto raiška:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
-msgstr ""
+msgstr "Eksporto raiška, nustatoma kaip pradinė Eksporto dialoge (taškais coliui):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Import bitmap as <image>"
-msgstr ""
+msgstr "Importuoti grafinį vaizdą kaip <image>"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:494
 msgid "When on, an imported bitmap creates an <image> element; otherwise it is a rectangle with bitmap fill"
-msgstr ""
+msgstr "Jei įjungta, importavimas sukuria import elementą; kitu atveju sukuriamas stačiakampis su grafiniu vaizdu kaip užpildu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Add label comments to printing output"
-msgstr ""
+msgstr "Pridėti komentarą spausdinant"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:497
 msgid "When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"
-msgstr ""
+msgstr "Jei įjungta, spausdinant bus pridedamas komentaras"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:498
 msgid "Enable script effects (requires restart) - EXPERIMENTAL"
-msgstr ""
+msgstr "Įjungti skriptų efektus (reikia perstartavimo)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid "When on, the effects menu is enabled, allowing external effect scripts to be called, requires restart before effective - EXPERIMENTAL"
-msgstr ""
+msgstr "Jei įjungta, rodomas efektų meniu, kuriame išvardinti pagalbiniai išoriniai skriptai. Veikia tik uždarius ir iš naujo atidarius programą. EKSPERIMENTINĖ versija"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Max recent documents:"
-msgstr ""
+msgstr "Anksčiau naudotų dokumentų kiekis:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:503
 msgid "The maximum length of the Open Recent list in the File menu"
-msgstr ""
+msgstr "Maksimalus kiekis failų, išvardintų anksčiau naudotų dokumentų sąraše (Failo meniu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:505
 msgid "Simplification threshold:"
-msgstr ""
+msgstr "Supaprastinimo koeficientas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "How strong is the Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."
-msgstr ""
+msgstr "Kaip smarkiai supaprastinama kreivė veikiant Paprastinimo komandai. Vykdant komandą kelis kart iš eilės, paprastinama vis agresyviai, o po pauzės atsistato nustatytas koeficientas."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "2x2"
-msgstr ""
+msgstr "2x2"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "4x4"
-msgstr ""
+msgstr "4x4"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "8x8"
-msgstr ""
+msgstr "8x8"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "16x16"
-msgstr ""
+msgstr "16x16"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:512
 msgid "Oversample bitmaps:"
@@ -5489,64 +5511,64 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "Clipping and masking:"
-msgstr ""
+msgstr "Karpymas ir filtravimas:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Use the topmost selected object as a clipping path or mask"
-msgstr ""
+msgstr "Naudoti viršutinį objektą kaip kirpimo rėmą ar filtro objektą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
-msgstr ""
+msgstr "Išjungus bus naudojamas žemiausiai esantis objektas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:518
 msgid "Remove clipping path or mask after applying"
-msgstr ""
+msgstr "Šalinti kirpimo kreivę ar filtro objektą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:520
 msgid "Affter applying, remove the object used as the clipping path or mask from the drawing"
-msgstr ""
+msgstr "Jei įjungta, įvykdžius kirpimo ar filtravimo komandą, kirpimo rėmas ar filtravimo objektas bus naikinamas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:522
 msgid "Misc"
-msgstr ""
+msgstr "Įvairūs"
 
 #: ../src/ui/dialog/memory.cpp:94
 msgid "Heap"
-msgstr ""
+msgstr "Krūva"
 
 #: ../src/ui/dialog/memory.cpp:95
 msgid "In Use"
-msgstr ""
+msgstr "Naudojama"
 
 #. TRANSLATORS: "Slack" refers to memory which is in the heap but currently unused.
 #. More typical usage is to call this memory "free" rather than "slack".
 #: ../src/ui/dialog/memory.cpp:98
 msgid "Slack"
-msgstr ""
+msgstr "Nenaudojama"
 
 #: ../src/ui/dialog/memory.cpp:99
 msgid "Total"
-msgstr ""
+msgstr "Viso"
 
 #: ../src/ui/dialog/memory.cpp:139
 #: ../src/ui/dialog/memory.cpp:145
 #: ../src/ui/dialog/memory.cpp:152
 #: ../src/ui/dialog/memory.cpp:184
 msgid "Unknown"
-msgstr ""
+msgstr "Nežinoma"
 
 #: ../src/ui/dialog/memory.cpp:165
 msgid "Combined"
-msgstr ""
+msgstr "Kombinuota"
 
 #: ../src/ui/dialog/memory.cpp:207
 msgid "Recalculate"
-msgstr ""
+msgstr "Perskaičiuoti"
 
 #: ../src/ui/dialog/messages.cpp:72
 msgid "Ready."
-msgstr ""
+msgstr "Paruošta."
 
 #: ../src/ui/dialog/messages.cpp:73
 msgid "Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"
@@ -5642,11 +5664,11 @@ msgstr "SIOX sub-vaizdo pažymėjimas"
 
 #: ../src/ui/dialog/tracedialog.cpp:348
 msgid "Subimage selection with the SIOX algorithm"
-msgstr ""
+msgstr "Vaizdo dalies pažymėjimas SIOX algoritmui"
 
 #: ../src/ui/dialog/tracedialog.cpp:350
 msgid "SIOX (W.I.P.)"
-msgstr ""
+msgstr "SIOX (W.I.P.)"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
@@ -5655,37 +5677,37 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:358
 #: ../src/ui/dialog/tracedialog.cpp:441
 msgid "Brightness"
-msgstr ""
+msgstr "Ryškumas"
 
 #: ../src/ui/dialog/tracedialog.cpp:361
 msgid "Trace by a given brightness level"
-msgstr ""
+msgstr "Tirti grafinį vaizdą pagal ryškumą"
 
 #: ../src/ui/dialog/tracedialog.cpp:368
 msgid "Brightness cutoff for black/white"
-msgstr ""
+msgstr "Ryškumo koeficientas"
 
 #: ../src/ui/dialog/tracedialog.cpp:375
 msgid "Image Brightness"
-msgstr ""
+msgstr "Vaizdo Ryškumas"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:382
 msgid "Optimal Edge Detection (Canny)"
-msgstr ""
+msgstr "Canny Optimalaus Vaizdo Atpažinimas"
 
 #: ../src/ui/dialog/tracedialog.cpp:385
 msgid "Trace with edge detection by J. Canny's algorithm"
-msgstr ""
+msgstr "Tirti grafinį vaizdą naudojant J. Canny algoritmą"
 
 #: ../src/ui/dialog/tracedialog.cpp:401
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
-msgstr ""
+msgstr "Koeficienats, lemiantis kraštinių storumą"
 
 #: ../src/ui/dialog/tracedialog.cpp:408
 msgid "Edge Detection"
-msgstr ""
+msgstr "Kraštų Atpažinimas"
 
 #. #### quantization ####
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
@@ -5693,274 +5715,274 @@ msgstr ""
 #. re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:417
 msgid "Color Quantization"
-msgstr ""
+msgstr "Spalvos Kvantizavimas"
 
 #: ../src/ui/dialog/tracedialog.cpp:420
 msgid "Trace along the boundaries of reduced colors"
-msgstr ""
+msgstr "Tirti sumažintų spalvų kraštines"
 
 #: ../src/ui/dialog/tracedialog.cpp:427
 msgid "The number of reduced colors"
-msgstr ""
+msgstr "Sumažintų spalvų kiekis"
 
 #: ../src/ui/dialog/tracedialog.cpp:429
 msgid "Colors:"
-msgstr ""
+msgstr "Spalvos:"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Quantization / Reduction"
-msgstr ""
+msgstr "Kvantizacija / Mažinimas"
 
 #: ../src/ui/dialog/tracedialog.cpp:444
 msgid "Trace the given number of brightness levels"
-msgstr ""
+msgstr "Tirti tiek ryškumo lygių"
 
 #: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Scans:"
-msgstr ""
+msgstr "Žingsnių:"
 
 #: ../src/ui/dialog/tracedialog.cpp:453
 msgid "The desired number of scans"
-msgstr ""
+msgstr "Norimas kiekis skanavimų"
 
 #: ../src/ui/dialog/tracedialog.cpp:461
 msgid "Trace the given number of reduced colors"
-msgstr ""
+msgstr "Tirti tiek sumažintų spalvų"
 
 #. ---Hbox3
 #: ../src/ui/dialog/tracedialog.cpp:467
 msgid "Monochrome"
-msgstr ""
+msgstr "Juodai-baltas vaizdas"
 
 #: ../src/ui/dialog/tracedialog.cpp:470
 msgid "Same as Color, but convert result to grayscale"
-msgstr ""
+msgstr "Tas pats kas spalvų skanavimas, bet naudoją pilkumo lygius"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:473
 msgid "Stack"
-msgstr ""
+msgstr "Stekas"
 
 #: ../src/ui/dialog/tracedialog.cpp:476
 msgid "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
-msgstr ""
+msgstr "Stekas skanuoja vertikaliai ar horizontaliai"
 
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:479
 msgid "Smooth"
-msgstr ""
+msgstr "Tolygus"
 
 #: ../src/ui/dialog/tracedialog.cpp:482
 msgid "Apply Gaussian blur to the bitmap before tracing"
-msgstr ""
+msgstr "Taikyti Gauso išplovimą prieš tiriant"
 
 #: ../src/ui/dialog/tracedialog.cpp:486
 msgid "Multiple Scanning"
-msgstr ""
+msgstr "Skanavimas Žingsniais"
 
 #. #### Preview ####
 #: ../src/ui/dialog/tracedialog.cpp:492
 #: ../src/ui/dialog/tracedialog.cpp:502
 msgid "Preview"
-msgstr ""
+msgstr "Peržiūra"
 
 #. do not expand
 #: ../src/ui/dialog/tracedialog.cpp:496
 msgid "Preview the result without actual tracing"
-msgstr ""
+msgstr "Pirminė peržiūra prieš vykdant tyrimą"
 
 #. #### swap black and white ####
 #: ../src/ui/dialog/tracedialog.cpp:508
 #: ../src/ui/widget/selected-style.cpp:191
 msgid "Invert"
-msgstr ""
+msgstr "Apversti"
 
 #: ../src/ui/dialog/tracedialog.cpp:512
 msgid "Invert black and white regions for single traces"
-msgstr ""
+msgstr "Apversti baltus ir juodus regionus kiekvienam tyrimui"
 
 #: ../src/ui/dialog/tracedialog.cpp:516
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
-msgstr ""
+msgstr "Padėka Peter Selinger, http://potrace.sourceforge.net"
 
 #: ../src/ui/dialog/tracedialog.cpp:519
 msgid "Credits"
-msgstr ""
+msgstr "Dėkui"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
 #: ../src/ui/dialog/tracedialog.cpp:527
 msgid "Potrace"
-msgstr ""
+msgstr "Potrace tyrimas"
 
 #: ../src/ui/dialog/tracedialog.cpp:540
 msgid "Abort a trace in progress"
-msgstr ""
+msgstr "Nutraukti vykstantį tyrimą"
 
 #: ../src/ui/dialog/tracedialog.cpp:544
 msgid "Execute the trace"
-msgstr ""
+msgstr "Vykdyti skanavimą"
 
 #: ../src/ui/dialog/transformation.cpp:80
 #: ../src/ui/dialog/transformation.cpp:90
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontaliai"
 
 #: ../src/ui/dialog/transformation.cpp:80
 msgid "Horizontal displacement (relative) or position (absolute)"
-msgstr ""
+msgstr "Horizontalus pastūmimas - reliatyviai ar į tam tikrą vietą"
 
 #: ../src/ui/dialog/transformation.cpp:82
 #: ../src/ui/dialog/transformation.cpp:92
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertikaliai"
 
 #: ../src/ui/dialog/transformation.cpp:82
 msgid "Vertical displacement (relative) or position (absolute)"
-msgstr ""
+msgstr "Vertikalus pastūmimas - reliatyviai ar į tam tikrą vietą"
 
 #: ../src/ui/dialog/transformation.cpp:84
 msgid "_Width"
-msgstr ""
+msgstr "_Plotis"
 
 #: ../src/ui/dialog/transformation.cpp:84
 msgid "Horizontal size increment (absolute or percentage)"
-msgstr ""
+msgstr "Horizontalaus dydžio keitimas nurodytu procentu"
 
 #: ../src/ui/dialog/transformation.cpp:86
 msgid "_Height"
-msgstr ""
+msgstr "_Aukštis"
 
 #: ../src/ui/dialog/transformation.cpp:86
 msgid "Vertical size increment (absolute or percentage)"
-msgstr ""
+msgstr "Vertikalaus dydžio keitimas nurodytu procentu"
 
 #: ../src/ui/dialog/transformation.cpp:88
 msgid "A_ngle"
-msgstr ""
+msgstr "_Kampas"
 
 #: ../src/ui/dialog/transformation.cpp:88
 msgid "Rotation angle (positive = counterclockwise)"
-msgstr ""
+msgstr "Pasukimo kampas (teigiamas - pagal laikrodžio rodyklę)"
 
 #: ../src/ui/dialog/transformation.cpp:90
 msgid "Horizontal skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr ""
+msgstr "Horizontalaus kreivinimo kampas (teigiamas - pagal laikrodžio rodyklę)"
 
 #: ../src/ui/dialog/transformation.cpp:92
 msgid "Vertical skew angle (positive = counterclockwise), or absolute displacement, or percentage displacement"
-msgstr ""
+msgstr "Vertikalaus kreivinimo kampas (teigiamas - pagal laikrodžio rodyklę)"
 
 #: ../src/ui/dialog/transformation.cpp:95
 msgid "Transformation matrix element A"
-msgstr ""
+msgstr "Transformavimo matricos elementas A"
 
 #: ../src/ui/dialog/transformation.cpp:96
 msgid "Transformation matrix element B"
-msgstr ""
+msgstr "Transformavimo matricos elementas B"
 
 #: ../src/ui/dialog/transformation.cpp:97
 msgid "Transformation matrix element C"
-msgstr ""
+msgstr "Transformavimo matricos elementas C"
 
 #: ../src/ui/dialog/transformation.cpp:98
 msgid "Transformation matrix element D"
-msgstr ""
+msgstr "Transformavimo matricos elementas D"
 
 #: ../src/ui/dialog/transformation.cpp:99
 msgid "Transformation matrix element E"
-msgstr ""
+msgstr "Transformavimo matricos elementas E"
 
 #: ../src/ui/dialog/transformation.cpp:100
 msgid "Transformation matrix element F"
-msgstr ""
+msgstr "Transformavimo matricos elementas F"
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid "Rela_tive move"
-msgstr ""
+msgstr "_Reliatyvus pokytis"
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
-msgstr ""
+msgstr "Jei įjungta, pastumti tokiu atstumu nuo dabartinės padėties; kitaip - perkelti į tam tikrą vietą"
 
 #: ../src/ui/dialog/transformation.cpp:103
 msgid "Scale proportionally"
-msgstr ""
+msgstr "Keisti _dydį proporcingai"
 
 #: ../src/ui/dialog/transformation.cpp:103
 msgid "Preserve the width/height ratio of the scaled objects"
-msgstr ""
+msgstr "Išlaikyti pločio ir aukščio santykį"
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Apply to each _object separately"
-msgstr ""
+msgstr "Taikyti kiekvienam _objektui atskirai"
 
 #: ../src/ui/dialog/transformation.cpp:104
 msgid "Apply the scale/rotate/skew to each selected object separately; otherwise, transform the selection as a whole"
-msgstr ""
+msgstr "Jei įjungta, taikyti tempima, sukimą ir kreivinimą kiekvienam objektui atskirai; kitaip taikyti visam pažymėjimui iš karto"
 
 #: ../src/ui/dialog/transformation.cpp:105
 msgid "Edit c_urrent matrix"
-msgstr ""
+msgstr "Keisti dabartinę _matricą"
 
 #: ../src/ui/dialog/transformation.cpp:105
 msgid "Edit the current transform= matrix; otherwise, post-multiply transform= by this matrix"
-msgstr ""
+msgstr "Jei įjungta, tiesiogiai taikyti pasirinktą transformavimo matricą, kitaip - dauginti nurodytą matricą iš dabartinės"
 
 #: ../src/ui/dialog/transformation.cpp:115
 msgid "_Move"
-msgstr ""
+msgstr "_Perkelti"
 
 #: ../src/ui/dialog/transformation.cpp:118
 msgid "_Scale"
-msgstr ""
+msgstr "_Tempti"
 
 #: ../src/ui/dialog/transformation.cpp:121
 msgid "_Rotate"
-msgstr ""
+msgstr "_Sukti"
 
 #: ../src/ui/dialog/transformation.cpp:124
 msgid "Ske_w"
-msgstr ""
+msgstr "_Kreivinti"
 
 #: ../src/ui/dialog/transformation.cpp:127
 msgid "Matri_x"
-msgstr ""
+msgstr "_Matrica"
 
 #: ../src/ui/dialog/transformation.cpp:141
 msgid "Reset the values on the current tab to defaults"
-msgstr ""
+msgstr "Atstatyti pradines dabartinio lapo reikšmes"
 
 #: ../src/ui/dialog/transformation.cpp:148
 msgid "Apply transformation to selection"
-msgstr ""
+msgstr "Taikyti transformaciją"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
-msgstr ""
+msgstr "_Naudoti SSL"
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:74
 msgid "_Server:"
-msgstr ""
+msgstr "_Serveris:"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:75
 msgid "_Username:"
-msgstr ""
+msgstr "_Vartotojas:"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
 msgid "_Password:"
-msgstr ""
+msgstr "Sla_ptažodis:"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:77
 msgid "P_ort:"
-msgstr ""
+msgstr "P_ortas:"
 
 #. Buttons
 #: ../src/ui/dialog/whiteboard-connect.cpp:105
 msgid "Connect"
-msgstr ""
+msgstr "Jungtis"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:132
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
@@ -6011,20 +6033,20 @@ msgstr ""
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:76
 msgid "_User's Jabber ID:"
-msgstr ""
+msgstr "_Naudotojo Jabber ID:"
 
 #. Buttons
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:80
 msgid "_Invite user"
-msgstr ""
+msgstr "_Kviesti naudotoją"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
 msgid "_Cancel"
-msgstr ""
+msgstr "A_tšaukti"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
 msgid "Buddy List"
-msgstr ""
+msgstr "Draugų Sąrašas"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:168
 msgid "Sending whiteboard invitation to <b>%1</b>"
@@ -6284,18 +6306,18 @@ msgstr ""
 #: ../src/ui/view/edit-widget.cpp:1122
 #: ../src/widgets/desktop-widget.cpp:241
 msgid "Zoom drawing if window size changes"
-msgstr ""
+msgstr "Keisti mastelį, jei lango dydis keičiamas"
 
 #: ../src/ui/view/edit-widget.cpp:1143
 #: ../src/widgets/desktop-widget.cpp:295
 msgid "Cursor coordinates"
-msgstr ""
+msgstr "Kursoriaus koordinatės"
 
 #. display the initial welcome message in the statusbar
 #: ../src/ui/view/edit-widget.cpp:1160
 #: ../src/widgets/desktop-widget.cpp:327
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
-msgstr ""
+msgstr "<b>Sveikiname atsidarius Inkscape!</b> Naudokite geometrinių formų ar piešimo įrankius objektų kūrimui; naudokite žymeklio įrankį objektų stumdymui ar keitimui."
 
 #: ../src/ui/view/edit-widget.cpp:1262
 #: ../src/widgets/desktop-widget.cpp:533
@@ -6305,13 +6327,16 @@ msgid ""
 "\n"
 "If you close without saving, your changes will be discarded."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Ar saugoti dokumento \"%s\" pakeitimus prieš uždarant?</span>\n"
+"\n"
+"Jei pasirinksite nesaugoti pakeitimų, bet kokie daryti keitimai bus prarasti."
 
 #: ../src/ui/view/edit-widget.cpp:1273
 #: ../src/ui/view/edit-widget.cpp:1320
 #: ../src/widgets/desktop-widget.cpp:549
 #: ../src/widgets/desktop-widget.cpp:613
 msgid "Close _without saving"
-msgstr ""
+msgstr "Uždaryti _nesaugant"
 
 #: ../src/ui/view/edit-widget.cpp:1308
 #: ../src/widgets/desktop-widget.cpp:596
@@ -6321,26 +6346,29 @@ msgid ""
 "\n"
 "Do you want to save this file in another format?"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Failas \"%s\" išsaugotas (%s) formatu, dėl to gali būti prarasti duomenys!</span>\n"
+"\n"
+"Ar norite išsaugoti failą kitu formatu?"
 
 #: ../src/ui/widget/panel.cpp:81
 msgid "small"
-msgstr ""
+msgstr "maži"
 
 #: ../src/ui/widget/panel.cpp:82
 msgid "medium"
-msgstr ""
+msgstr "vidutiniai"
 
 #: ../src/ui/widget/panel.cpp:83
 msgid "large"
-msgstr ""
+msgstr "dideli"
 
 #: ../src/ui/widget/panel.cpp:84
 msgid "huge"
-msgstr ""
+msgstr "milžiniški"
 
 #: ../src/ui/widget/panel.cpp:99
 msgid "List"
-msgstr ""
+msgstr "Sąrašas"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -6349,326 +6377,326 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:88
 #: ../src/ui/widget/style-swatch.cpp:48
 msgid "F:"
-msgstr ""
+msgstr "F:"
 
 #: ../src/ui/widget/selected-style.cpp:89
 #: ../src/ui/widget/style-swatch.cpp:49
 msgid "S:"
-msgstr ""
+msgstr "S:"
 
 #: ../src/ui/widget/selected-style.cpp:90
 msgid "O:"
-msgstr ""
+msgstr "O:"
 
 #: ../src/ui/widget/selected-style.cpp:129
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: ../src/ui/widget/selected-style.cpp:132
 #: ../src/ui/widget/selected-style.cpp:944
 msgid "Nothing selected"
-msgstr ""
+msgstr "Niekas nepažymėta"
 
 #: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:171
 msgid "No fill"
-msgstr ""
+msgstr "Nėra užpildo"
 
 #: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:171
 msgid "No stroke"
-msgstr ""
+msgstr "Nėra linijos"
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:163
 #: ../src/widgets/paint-selector.cpp:176
 msgid "Pattern"
-msgstr ""
+msgstr "Raštas"
 
 #: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:165
 #: ../src/widgets/paint-selector.cpp:871
 msgid "Pattern fill"
-msgstr ""
+msgstr "Užpildas raštu"
 
 #: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:165
 msgid "Pattern stroke"
-msgstr ""
+msgstr "Linija raštu"
 
 #: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:155
 msgid "L Gradient"
-msgstr ""
+msgstr "Perėjimas T"
 
 #: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:157
 msgid "Linear gradient fill"
-msgstr ""
+msgstr "Užpildui naudojamas tiesinis perėjimas"
 
 #: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:157
 msgid "Linear gradient stroke"
-msgstr ""
+msgstr "Linijai naudojamas tiesinis perėjimas"
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:159
 msgid "R Gradient"
-msgstr ""
+msgstr "Perėjimas S"
 
 #: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:161
 msgid "Radial gradient fill"
-msgstr ""
+msgstr "Užpildui naudojamas spindulinis perėjimas"
 
 #: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:161
 msgid "Radial gradient stroke"
-msgstr ""
+msgstr "Linijai naudojamas spindulinis perėjimas"
 
 #: ../src/ui/widget/selected-style.cpp:154
 msgid "Different"
-msgstr ""
+msgstr "Įvairu"
 
 #: ../src/ui/widget/selected-style.cpp:157
 msgid "Different fills"
-msgstr ""
+msgstr "Skirtingi užpildai"
 
 #: ../src/ui/widget/selected-style.cpp:157
 msgid "Different strokes"
-msgstr ""
+msgstr "Skirtingos linijos"
 
 #: ../src/ui/widget/selected-style.cpp:159
 #: ../src/ui/widget/style-swatch.cpp:174
 msgid "Unset"
-msgstr ""
+msgstr "Nenurodyta"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/style-swatch.cpp:176
 msgid "Unset fill"
-msgstr ""
+msgstr "Nenurodytas užpildas"
 
 #: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/style-swatch.cpp:176
 msgid "Unset stroke"
-msgstr ""
+msgstr "Nenurodyta linijos išvaizda ar spalva"
 
 #: ../src/ui/widget/selected-style.cpp:165
 msgid "Flat color fill"
-msgstr ""
+msgstr "Užpildas vientisa spalva"
 
 #: ../src/ui/widget/selected-style.cpp:165
 msgid "Flat color stroke"
-msgstr ""
+msgstr "Linija vientisa spalva"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:168
 msgid "<b>a</b>"
-msgstr ""
+msgstr "<b>v</b>"
 
 #: ../src/ui/widget/selected-style.cpp:171
 msgid "Fill is averaged over selected objects"
-msgstr ""
+msgstr "Vidutinė užpildo spalva pažymėtiems objektams"
 
 #: ../src/ui/widget/selected-style.cpp:171
 msgid "Stroke is averaged over selected objects"
-msgstr ""
+msgstr "Vidutinė linijos spalva pažymėtiems objektams"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:174
 msgid "<b>m</b>"
-msgstr ""
+msgstr "<b>d</b>"
 
 #: ../src/ui/widget/selected-style.cpp:177
 msgid "Multiple selected objects have the same fill"
-msgstr ""
+msgstr "Pažymėtųjų objektų užpildas vienodas"
 
 #: ../src/ui/widget/selected-style.cpp:177
 msgid "Multiple selected objects have the same stroke"
-msgstr ""
+msgstr "Pažymėtųjų objektų linijos vienodos"
 
 #: ../src/ui/widget/selected-style.cpp:179
 msgid "Edit fill..."
-msgstr ""
+msgstr "Keisti užpildą..."
 
 #: ../src/ui/widget/selected-style.cpp:179
 msgid "Edit stroke..."
-msgstr ""
+msgstr "Keisti liniją..."
 
 #: ../src/ui/widget/selected-style.cpp:183
 msgid "Last set color"
-msgstr ""
+msgstr "Paskutinė naudota spalva"
 
 #: ../src/ui/widget/selected-style.cpp:187
 msgid "Last selected color"
-msgstr ""
+msgstr "Paskutinė pažymėta spalva"
 
 #: ../src/ui/widget/selected-style.cpp:195
 msgid "White"
-msgstr ""
+msgstr "Balta"
 
 #: ../src/ui/widget/selected-style.cpp:199
 #: ../src/widgets/sp-color-scales.cpp:458
 #: ../src/widgets/sp-color-scales.cpp:459
 msgid "Black"
-msgstr ""
+msgstr "Juoda"
 
 #: ../src/ui/widget/selected-style.cpp:203
 msgid "Copy color"
-msgstr ""
+msgstr "Kopijuoti spalvą"
 
 #: ../src/ui/widget/selected-style.cpp:207
 msgid "Paste color"
-msgstr ""
+msgstr "Įklijuoti spalvą"
 
 #: ../src/ui/widget/selected-style.cpp:211
 msgid "Swap fill and stroke"
-msgstr ""
+msgstr "Sukeitsi užpildą ir liniją"
 
 #: ../src/ui/widget/selected-style.cpp:215
 msgid "Make fill opaque"
-msgstr ""
+msgstr "Nepermatomas užpildas"
 
 #: ../src/ui/widget/selected-style.cpp:215
 msgid "Make stroke opaque"
-msgstr ""
+msgstr "Nepermatoma linija"
 
 #: ../src/ui/widget/selected-style.cpp:224
 msgid "Remove fill"
-msgstr ""
+msgstr "Be užpildo"
 
 #: ../src/ui/widget/selected-style.cpp:224
 msgid "Remove stroke"
-msgstr ""
+msgstr "Be linijos"
 
 #: ../src/ui/widget/selected-style.cpp:277
 msgid "Remove"
-msgstr ""
+msgstr "Šalinti"
 
 #: ../src/ui/widget/selected-style.cpp:950
 msgid "Master opacity"
-msgstr ""
+msgstr "Nepermatomumas"
 
 #: ../src/ui/widget/selected-style.cpp:980
 #, c-format
 msgid "Stroke width: %.5g%s%s"
-msgstr ""
+msgstr "Linijos storis: %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:984
 msgid " (averaged)"
-msgstr ""
+msgstr " (vidutinis)"
 
 #: ../src/ui/widget/selected-style.cpp:1012
 msgid "0 (transparent)"
-msgstr ""
+msgstr "0 (permatoma)"
 
 #: ../src/ui/widget/selected-style.cpp:1036
 msgid "1.0 (opaque)"
-msgstr ""
+msgstr "1.0 (nepermatoma)"
 
 #: ../src/ui/widget/page-sizer.cpp:162
 msgid "Custom"
-msgstr ""
+msgstr "Kita"
 
 #: ../src/ui/widget/page-sizer.cpp:193
 msgid "P_age size:"
-msgstr ""
+msgstr "P_uslapio dydis:"
 
 #: ../src/ui/widget/page-sizer.cpp:223
 msgid "Page orientation:"
-msgstr ""
+msgstr "Puslapi_o kryptis:"
 
 #: ../src/ui/widget/page-sizer.cpp:225
 msgid "_Landscape"
-msgstr ""
+msgstr "_Gulsčias"
 
 #: ../src/ui/widget/page-sizer.cpp:228
 msgid "_Portrait"
-msgstr ""
+msgstr "_Stačias"
 
 #. Custom paper frame
 #: ../src/ui/widget/page-sizer.cpp:234
 msgid "Custom size"
-msgstr ""
+msgstr "Kitas dydis"
 
 #: ../src/ui/widget/page-sizer.cpp:244
 msgid "U_nits:"
-msgstr ""
+msgstr "_Vienetai:"
 
 #: ../src/ui/widget/page-sizer.cpp:245
 msgid "Width of paper"
-msgstr ""
+msgstr "Lapo plotis"
 
 #: ../src/ui/widget/page-sizer.cpp:246
 msgid "_Height:"
-msgstr ""
+msgstr "_Aukštis:"
 
 #: ../src/ui/widget/page-sizer.cpp:246
 msgid "Height of paper"
-msgstr ""
+msgstr "Lapo aukštis"
 
 #: ../src/ui/widget/style-swatch.cpp:196
 #, c-format
 msgid "Stroke width: %.5g%s"
-msgstr ""
+msgstr "Linijos storis: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:212
 #, c-format
 msgid "0:%.3g"
-msgstr ""
+msgstr "0:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:214
 #, c-format
 msgid "0:.%d"
-msgstr ""
+msgstr "0:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:219
 #, c-format
 msgid "Opacity: %.3g"
-msgstr ""
+msgstr "Nepermatomumas: %.3g"
 
 #: ../src/verbs.cpp:1049
 msgid "Moved to next layer."
-msgstr ""
+msgstr "Perkelta į sekantį sluoksnį."
 
 #: ../src/verbs.cpp:1051
 msgid "Cannot move past last layer."
-msgstr ""
+msgstr "Negalima perkelti virš viršutinio sluoksnio."
 
 #: ../src/verbs.cpp:1060
 msgid "Moved to previous layer."
-msgstr ""
+msgstr "Perkelta į žemesnį sluoksnį."
 
 #: ../src/verbs.cpp:1062
 msgid "Cannot move past first layer."
-msgstr ""
+msgstr "Negalima perkelti žemiau apatinio sluoksnio."
 
 #: ../src/verbs.cpp:1079
 #: ../src/verbs.cpp:1153
 msgid "No current layer."
-msgstr ""
+msgstr "Nėra dabartinio sluoksnio."
 
 #: ../src/verbs.cpp:1108
 #, c-format
 msgid "Raised layer <b>%s</b>."
-msgstr ""
+msgstr "Sluoksnis <b>%s</b> pakeltas."
 
 #: ../src/verbs.cpp:1112
 #, c-format
 msgid "Lowered layer <b>%s</b>."
-msgstr ""
+msgstr "Sluoksnis <b>%s</b> nuleistas."
 
 #: ../src/verbs.cpp:1121
 msgid "Cannot move layer any further."
-msgstr ""
+msgstr "Nebegalima perkelti sluoksnio toliau."
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1151
 msgid "Deleted layer."
-msgstr ""
+msgstr "Sluoksnis pašalintas."
 
 #: ../src/verbs.cpp:1553
 msgid "You need to connect to a Jabber server before sharing a document with another user."
@@ -6737,35 +6765,35 @@ msgstr ""
 
 #: ../src/verbs.cpp:1854
 msgid "Create new document from the default template"
-msgstr ""
+msgstr "Sukurti naują dokumentą, naudojant standartinį šabloną"
 
 #: ../src/verbs.cpp:1856
 msgid "_Open..."
-msgstr ""
+msgstr "_Atidaryti..."
 
 #: ../src/verbs.cpp:1857
 msgid "Open an existing document"
-msgstr ""
+msgstr "Atidaryti egzistuojantį dokumentą"
 
 #: ../src/verbs.cpp:1858
 msgid "Re_vert"
-msgstr ""
+msgstr "At_mesti"
 
 #: ../src/verbs.cpp:1859
 msgid "Revert to the last saved version of document (changes will be lost)"
-msgstr ""
+msgstr "Atstatyti paskutinę išsaugotą dokumento versiją (prarandant pakeitimus)"
 
 #: ../src/verbs.cpp:1860
 msgid "_Save"
-msgstr ""
+msgstr "Iš_saugoti"
 
 #: ../src/verbs.cpp:1860
 msgid "Save document"
-msgstr ""
+msgstr "Išsaugoti dokumentą"
 
 #: ../src/verbs.cpp:1862
 msgid "Save _As..."
-msgstr ""
+msgstr "Išsaugoti _Kaip..."
 
 #: ../src/verbs.cpp:1863
 msgid "Save document under a new name"
@@ -6773,20 +6801,20 @@ msgstr "Įrašyti dokumentą kitu vardu"
 
 #: ../src/verbs.cpp:1864
 msgid "_Print..."
-msgstr ""
+msgstr "S_pausdinti..."
 
 #: ../src/verbs.cpp:1864
 msgid "Print document"
-msgstr ""
+msgstr "Spausdinti dokumentą"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:1867
 msgid "Vac_uum Defs"
-msgstr ""
+msgstr "Val_yti Aprašus"
 
 #: ../src/verbs.cpp:1867
 msgid "Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"
-msgstr ""
+msgstr "Valyti nebenaudojamus įvairių objektų aprašymus (perėjimus, kirpimo kreives) iš &lt;defs&gt; elemento"
 
 #: ../src/verbs.cpp:1869
 msgid "Print _Direct"
@@ -6798,104 +6826,104 @@ msgstr ""
 
 #: ../src/verbs.cpp:1871
 msgid "Print Previe_w"
-msgstr ""
+msgstr "Spau_dinio Peržiūra"
 
 #: ../src/verbs.cpp:1872
 msgid "Preview document printout"
-msgstr ""
+msgstr "Peržiūrėti dokumento vaizdą prieš spausdinant"
 
 #: ../src/verbs.cpp:1873
 msgid "_Import..."
-msgstr ""
+msgstr "_Importuoti..."
 
 #: ../src/verbs.cpp:1874
 msgid "Import a bitmap or SVG image into this document"
-msgstr ""
+msgstr "Į dokumentą įdėti importuojamą grafinį vaizdą ar kitą SVG dokumentą"
 
 #: ../src/verbs.cpp:1875
 msgid "_Export Bitmap..."
-msgstr ""
+msgstr "Eksportuoti _Vaizdą.."
 
 #: ../src/verbs.cpp:1876
 msgid "Export this document or a selection as a bitmap image"
-msgstr ""
+msgstr "Eksportuoti dokumentą ar pažymėjimą kaip grafinį vaizdą"
 
 #: ../src/verbs.cpp:1877
 msgid "N_ext Window"
-msgstr ""
+msgstr "_Kitas Langas"
 
 #: ../src/verbs.cpp:1878
 msgid "Switch to the next document window"
-msgstr ""
+msgstr "Pereiti į kitą dokumento langą"
 
 #: ../src/verbs.cpp:1879
 msgid "P_revious Window"
-msgstr ""
+msgstr "Praeit_as Langas"
 
 #: ../src/verbs.cpp:1880
 msgid "Switch to the previous document window"
-msgstr ""
+msgstr "Pereiti į prieš tai esantį dokumento langą"
 
 #: ../src/verbs.cpp:1881
 msgid "_Close"
-msgstr ""
+msgstr "_Uždaryti"
 
 #: ../src/verbs.cpp:1882
 msgid "Close this document window"
-msgstr ""
+msgstr "Uždaryti šį dokumentą"
 
 #: ../src/verbs.cpp:1883
 msgid "_Quit"
-msgstr ""
+msgstr "Iš_eiti"
 
 #: ../src/verbs.cpp:1883
 msgid "Quit Inkscape"
-msgstr ""
+msgstr "Užbaigti programos darbą"
 
 #. Edit
 #: ../src/verbs.cpp:1886
 msgid "_Undo"
-msgstr ""
+msgstr "An_uliuoti"
 
 #: ../src/verbs.cpp:1886
 msgid "Undo last action"
-msgstr ""
+msgstr "Anuliuoti prieš tai atliktą veiksmą"
 
 #: ../src/verbs.cpp:1888
 msgid "_Redo"
-msgstr ""
+msgstr "_Kartoti"
 
 #: ../src/verbs.cpp:1889
 msgid "Do again the last undone action"
-msgstr ""
+msgstr "Pakartoti anuliuotą veiksmą"
 
 #: ../src/verbs.cpp:1890
 msgid "Cu_t"
-msgstr ""
+msgstr "_Iškirpti"
 
 #: ../src/verbs.cpp:1891
 msgid "Cut selection to clipboard"
-msgstr ""
+msgstr "Iškirpti pažymėjimą, perkeliant į mainų sritį"
 
 #: ../src/verbs.cpp:1892
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopijuoti"
 
 #: ../src/verbs.cpp:1893
 msgid "Copy selection to clipboard"
-msgstr ""
+msgstr "Kopijuoti pažymėjimą į mainų sritį"
 
 #: ../src/verbs.cpp:1894
 msgid "_Paste"
-msgstr ""
+msgstr "Įk_lijuoti"
 
 #: ../src/verbs.cpp:1895
 msgid "Paste objects from clipboard to mouse point"
-msgstr ""
+msgstr "Įklijuoti objektus iš mainų srities į dokumentą ties pelės kursoriumi"
 
 #: ../src/verbs.cpp:1896
 msgid "Paste _Style"
-msgstr ""
+msgstr "Įklijuoti _Stilių"
 
 #: ../src/verbs.cpp:1897
 msgid "Apply the style of the copied object to selection"
@@ -6903,7 +6931,7 @@ msgstr "Pažymėtiems objektams taikyti kopijuoto objekto išvaizdą"
 
 #: ../src/verbs.cpp:1899
 msgid "Scale selection to match the size of the copied object"
-msgstr ""
+msgstr "Taikyti pažymėjimo dydį pagal mainų srityje esančio objekto dydį"
 
 #: ../src/verbs.cpp:1900
 msgid "Paste _Width"
@@ -6911,7 +6939,7 @@ msgstr "Įklijuoti _Plotį"
 
 #: ../src/verbs.cpp:1901
 msgid "Scale selection horizontally to match the width of the copied object"
-msgstr ""
+msgstr "Taikyti pažymėjimo plotį pagal mainų srityje esančio objekto plotį"
 
 #: ../src/verbs.cpp:1902
 msgid "Paste _Height"
@@ -6919,55 +6947,55 @@ msgstr "Įklijuoti _Aukštį"
 
 #: ../src/verbs.cpp:1903
 msgid "Scale selection vertically to match the height of the copied object"
-msgstr ""
+msgstr "Taikyti pažymėjimo aukštį pagal mainų srityje esančio objekto aukštį"
 
 #: ../src/verbs.cpp:1904
 msgid "Paste Size Separately"
-msgstr ""
+msgstr "Įklijuoti Dydį Atskirai"
 
 #: ../src/verbs.cpp:1905
 msgid "Scale each selected object to match the size of the copied object"
-msgstr ""
+msgstr "Taikyti kiekvieno pažymėto objekto dydį pagal mainų srityje esančio objekto dydį"
 
 #: ../src/verbs.cpp:1906
 msgid "Paste Width Separately"
-msgstr ""
+msgstr "Įklijuoti Plotį Atskirai"
 
 #: ../src/verbs.cpp:1907
 msgid "Scale each selected object horizontally to match the width of the copied object"
-msgstr ""
+msgstr "Taikyti kiekvieno pažymėto objekto plotį pagal mainų srityje esančio objekto plotį"
 
 #: ../src/verbs.cpp:1908
 msgid "Paste Height Separately"
-msgstr ""
+msgstr "Įklijuoti Aukštį Atskirai"
 
 #: ../src/verbs.cpp:1909
 msgid "Scale each selected object vertically to match the height of the copied object"
-msgstr ""
+msgstr "Taikyti kiekvieno pažymėto objekto aukštį pagal mainų srityje esančio objekto aukštį"
 
 #: ../src/verbs.cpp:1910
 msgid "Paste _In Place"
-msgstr ""
+msgstr "Įklijuoti V_ietoje"
 
 #: ../src/verbs.cpp:1911
 msgid "Paste objects from clipboard to the original location"
-msgstr ""
+msgstr "Įklijuoti toje pat vietoje, kur buvo originalas"
 
 #: ../src/verbs.cpp:1912
 msgid "_Delete"
-msgstr ""
+msgstr "_Šalinti"
 
 #: ../src/verbs.cpp:1913
 msgid "Delete selection"
-msgstr ""
+msgstr "Šalinti pažymėjimą"
 
 #: ../src/verbs.cpp:1914
 msgid "Duplic_ate"
-msgstr ""
+msgstr "_Dubliuoti"
 
 #: ../src/verbs.cpp:1915
 msgid "Duplicate selected objects"
-msgstr ""
+msgstr "Dubliuoti pažymėtus objektus"
 
 #: ../src/verbs.cpp:1916
 msgid "Create Clo_ne"
@@ -6975,164 +7003,164 @@ msgstr "Kurti Klo_ną"
 
 #: ../src/verbs.cpp:1917
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr ""
+msgstr "Klonuoti paymėtus objektus (sukurti kopiją, susietą su originalu)"
 
 #: ../src/verbs.cpp:1918
 msgid "Unlin_k Clone"
-msgstr ""
+msgstr "At_rišti Kloną"
 
 #: ../src/verbs.cpp:1919
 msgid "Cut the selected clone's link to its original, turning it into a standalone object"
-msgstr ""
+msgstr "Atrišti kloną nuo originalaus objekto, paverčiant jį įprastu objektu"
 
 #: ../src/verbs.cpp:1920
 msgid "Select _Original"
-msgstr ""
+msgstr "Rasti _Originalą"
 
 #: ../src/verbs.cpp:1921
 msgid "Select the object to which the selected clone is linked"
-msgstr ""
+msgstr "Pažymėti objektą, prie kurio pririštas pažymėtas klonas"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:1923
 msgid "Objects to Patter_n"
-msgstr ""
+msgstr "Raštas iš Ob_jektų"
 
 #: ../src/verbs.cpp:1924
 msgid "Convert selection to a rectangle with tiled pattern fill"
-msgstr ""
+msgstr "Pažymėtus objektus paversti stačiakampiu, kurios užpildas (pažymėtieji objektai) sudaro raštą"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:1926
 msgid "Pattern to _Objects"
-msgstr ""
+msgstr "Objektai iš Rašto"
 
 #: ../src/verbs.cpp:1927
 msgid "Extract objects from a tiled pattern fill"
-msgstr ""
+msgstr "Gražinti rašte esančius objektus į dokumentą"
 
 #: ../src/verbs.cpp:1928
 msgid "Clea_r All"
-msgstr ""
+msgstr "Šalinti Visk_ą"
 
 #: ../src/verbs.cpp:1929
 msgid "Delete all objects from document"
-msgstr ""
+msgstr "Šalinti visus objektus iš dokumento"
 
 #: ../src/verbs.cpp:1930
 msgid "Select Al_l"
-msgstr ""
+msgstr "_Pažymėti Viską"
 
 #: ../src/verbs.cpp:1931
 msgid "Select all objects or all nodes"
-msgstr ""
+msgstr "Pažymėti visus objektus ar visas siūles"
 
 #: ../src/verbs.cpp:1932
 msgid "Select All in All La_yers"
-msgstr ""
+msgstr "Pažymėti Viską Dokumente"
 
 #: ../src/verbs.cpp:1933
 msgid "Select all objects in all visible and unlocked layers"
-msgstr ""
+msgstr "Pažymėti visuose neužrakituose matomuose sluoksniuose esančius objektus"
 
 #: ../src/verbs.cpp:1934
 msgid "In_vert Selection"
-msgstr ""
+msgstr "Apversti _Žymėjimą"
 
 #: ../src/verbs.cpp:1935
 msgid "Invert selection (unselect what is selected and select everything else)"
-msgstr ""
+msgstr "Apversti pažymėjimą - pažymėtus objektus išmesti iš pažymėjimo, likusius pažymėti"
 
 #: ../src/verbs.cpp:1936
 msgid "Invert in All Layers"
-msgstr ""
+msgstr "Apversti Žym_ėjimą Dokumente"
 
 #: ../src/verbs.cpp:1937
 msgid "Invert selection in all visible and unlocked layers"
-msgstr ""
+msgstr "Apversti pažymėjimą visuose neužrakituose matomuose sluoksniuose - pažymėtus objektus išmesti iš pažymėjimo, likusius pažymėti"
 
 #: ../src/verbs.cpp:1938
 msgid "D_eselect"
-msgstr ""
+msgstr "Atž_ymėti"
 
 #: ../src/verbs.cpp:1939
 msgid "Deselect any selected objects or nodes"
-msgstr ""
+msgstr "Išmesti visus pažymėtus objektus iš pažymėjimo"
 
 #. Selection
 #: ../src/verbs.cpp:1942
 msgid "Raise to _Top"
-msgstr ""
+msgstr "_Kelti iki Viršaus"
 
 #: ../src/verbs.cpp:1943
 msgid "Raise selection to top"
-msgstr ""
+msgstr "Perkelti pažymėtus objektus į sluoksnio viršų"
 
 #: ../src/verbs.cpp:1944
 msgid "Lower to _Bottom"
-msgstr ""
+msgstr "_Leisti į Apačią"
 
 #: ../src/verbs.cpp:1945
 msgid "Lower selection to bottom"
-msgstr ""
+msgstr "Perkelti pažymėtus objektus į sluoksnio apačią"
 
 #: ../src/verbs.cpp:1946
 msgid "_Raise"
-msgstr ""
+msgstr "_Pakelti"
 
 #: ../src/verbs.cpp:1947
 msgid "Raise selection one step"
-msgstr ""
+msgstr "Pakelti pažymėjimą vienu žingsniu"
 
 #: ../src/verbs.cpp:1948
 msgid "_Lower"
-msgstr ""
+msgstr "_Nuleisti"
 
 #: ../src/verbs.cpp:1949
 msgid "Lower selection one step"
-msgstr ""
+msgstr "Nuleisti pažymėjimą vienu žingsniu"
 
 #: ../src/verbs.cpp:1950
 msgid "_Group"
-msgstr ""
+msgstr "_Grupuoti"
 
 #: ../src/verbs.cpp:1951
 msgid "Group selected objects"
-msgstr ""
+msgstr "Sugrupuoti pažymėtus objektus"
 
 #: ../src/verbs.cpp:1953
 msgid "Ungroup selected groups"
-msgstr ""
+msgstr "Išgrupuoti pažymėtus objektus"
 
 #: ../src/verbs.cpp:1955
 msgid "_Put on Path"
-msgstr ""
+msgstr "_Dėti ant Kreivės"
 
 #: ../src/verbs.cpp:1956
 msgid "Put text on path"
-msgstr ""
+msgstr "Dėstyti tekstą pagal kreivės kontūrą"
 
 #: ../src/verbs.cpp:1957
 msgid "_Remove from Path"
-msgstr ""
+msgstr "_Nuimti nuo Kreivės"
 
 #: ../src/verbs.cpp:1958
 msgid "Remove text from path"
-msgstr ""
+msgstr "Atrišti tekstą nuo kreivės"
 
 #: ../src/verbs.cpp:1959
 msgid "Remove Manual _Kerns"
-msgstr ""
+msgstr "Naikinti Rankinius _Tarpus"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:1962
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr ""
+msgstr "Naikinti bet kokius rankomis sukurtus tarpus tarp simbolių"
 
 #: ../src/verbs.cpp:1964
 msgid "_Union"
-msgstr ""
+msgstr "_Sąjunga"
 
 #: ../src/verbs.cpp:1965
 msgid "Create union of selected paths"
@@ -7140,7 +7168,7 @@ msgstr "Sukurti pažymėtų kreivių sąjungą"
 
 #: ../src/verbs.cpp:1966
 msgid "_Intersection"
-msgstr ""
+msgstr "S_ankirta"
 
 #: ../src/verbs.cpp:1967
 msgid "Create intersection of selected paths"
@@ -7148,170 +7176,170 @@ msgstr "Sukurti pažymėtų kreivių sąnkirtą"
 
 #: ../src/verbs.cpp:1968
 msgid "_Difference"
-msgstr ""
+msgstr "_Atimtis"
 
 #: ../src/verbs.cpp:1969
 msgid "Create difference of selected paths (bottom minus top)"
-msgstr ""
+msgstr "Iš žemiau esančios kreivės atimti aukščiau esančią, gaunant skirtumo kreivę"
 
 #: ../src/verbs.cpp:1970
 msgid "E_xclusion"
-msgstr ""
+msgstr "_Išskyrimas"
 
 #: ../src/verbs.cpp:1971
 msgid "Create exclusive OR of selected paths (those parts that belong to only one path)"
-msgstr ""
+msgstr "Pažymėjimo išskirtinis ARBA (griežtoji disjunkcija) - lieka tik tos dalys, kurios yra tik vienoje kreivėje"
 
 #: ../src/verbs.cpp:1972
 msgid "Di_vision"
-msgstr ""
+msgstr "_Dalinimas"
 
 #: ../src/verbs.cpp:1973
 msgid "Cut the bottom path into pieces"
-msgstr ""
+msgstr "Padalinti žemiau esančią kreivę į dalis, nusakytas aukščiau esančia kreive"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:1976
 msgid "Cut _Path"
-msgstr ""
+msgstr "_Karpyti Kreivę"
 
 #: ../src/verbs.cpp:1977
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr ""
+msgstr "Sukarpyti žemiau pažymėjime esančią kreivę į dalis pagal aukščiau esančia krevę. Taip pat nuimamas užpildas"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:1981
 msgid "Outs_et"
-msgstr ""
+msgstr "Iš_pūsti"
 
 #: ../src/verbs.cpp:1982
 msgid "Outset selected paths"
-msgstr ""
+msgstr "Išpūsti pasirinktas kreives"
 
 #: ../src/verbs.cpp:1984
 msgid "O_utset Path by 1 px"
-msgstr ""
+msgstr "Išpūsti Vienu Taškeliu"
 
 #: ../src/verbs.cpp:1985
 msgid "Outset selected paths by 1 px"
-msgstr ""
+msgstr "Išpūsti pasirinktas kreives vienu tašku"
 
 #: ../src/verbs.cpp:1987
 msgid "O_utset Path by 10 px"
-msgstr ""
+msgstr "Išpūsti 10px"
 
 #: ../src/verbs.cpp:1988
 msgid "Outset selected paths by 10 px"
-msgstr ""
+msgstr "Išpūsti pasirinktas kreives 10 taškų"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:1992
 msgid "I_nset"
-msgstr ""
+msgstr "Įt_raukti"
 
 #: ../src/verbs.cpp:1993
 msgid "Inset selected paths"
-msgstr ""
+msgstr "Įtraukti (sumažinti) pasirinktas kreives"
 
 #: ../src/verbs.cpp:1995
 msgid "I_nset Path by 1 px"
-msgstr ""
+msgstr "Įtraukti Vienu Taškeliu"
 
 #: ../src/verbs.cpp:1996
 msgid "Inset selected paths by 1 px"
-msgstr ""
+msgstr "Įtraukti pasirinktas kreives vienu tašku"
 
 #: ../src/verbs.cpp:1998
 msgid "I_nset Path by 10 px"
-msgstr ""
+msgstr "Įtraukti 10px"
 
 #: ../src/verbs.cpp:1999
 msgid "Inset selected paths by 10 px"
-msgstr ""
+msgstr "Įtraukti pasirinktas kreives 10 taškų"
 
 #: ../src/verbs.cpp:2001
 msgid "D_ynamic Offset"
-msgstr ""
+msgstr "Di_naminis Išpūtimas"
 
 #: ../src/verbs.cpp:2001
 msgid "Create a dynamic offset object"
-msgstr ""
+msgstr "Sukurti dinaminį (keičiamą) išpūtimą"
 
 #: ../src/verbs.cpp:2003
 msgid "_Linked Offset"
-msgstr ""
+msgstr "_Susietas Išpūtimas"
 
 #: ../src/verbs.cpp:2004
 msgid "Create a dynamic offset object linked to the original path"
-msgstr ""
+msgstr "Sukurti dinaminį (keičiamą) išpūtimą, surištą su originalu"
 
 #: ../src/verbs.cpp:2006
 msgid "_Stroke to Path"
-msgstr ""
+msgstr "Kreivė iš _Linijos"
 
 #: ../src/verbs.cpp:2007
 msgid "Convert selected object's stroke to paths"
-msgstr ""
+msgstr "Paversti liniją kreive"
 
 #: ../src/verbs.cpp:2008
 msgid "Si_mplify"
-msgstr ""
+msgstr "S_upaprastinti"
 
 #: ../src/verbs.cpp:2009
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr ""
+msgstr "Supaprastinti pažymėtas kreives (šalinant bereikalingas siūles)"
 
 #: ../src/verbs.cpp:2010
 msgid "_Reverse"
-msgstr ""
+msgstr "_Apversti"
 
 #: ../src/verbs.cpp:2011
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr ""
+msgstr "Keisti pažymėtų kreivių kryptį"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2013
 msgid "_Trace Bitmap..."
-msgstr ""
+msgstr "_Tirti Vaizdą..."
 
 #: ../src/verbs.cpp:2014
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr ""
+msgstr "Iš grafinio vaizdo išgauti kreives"
 
 #: ../src/verbs.cpp:2015
 msgid "_Make a Bitmap Copy"
-msgstr ""
+msgstr "_Kurti Kopiją kaip Vaizdą"
 
 #: ../src/verbs.cpp:2016
 msgid "Export selection to a bitmap and insert it into document"
-msgstr ""
+msgstr "Eksportuoti pažymėjimą į grafinį vaizdą ir įtraukti į dokumentą"
 
 #: ../src/verbs.cpp:2017
 msgid "_Combine"
-msgstr ""
+msgstr "Ap_jungti"
 
 #: ../src/verbs.cpp:2018
 msgid "Combine several paths into one"
-msgstr ""
+msgstr "Apjungti keletą kreivių į vieną"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2021
 msgid "Break _Apart"
-msgstr ""
+msgstr "_Dalinti"
 
 #: ../src/verbs.cpp:2022
 msgid "Break selected paths into subpaths"
-msgstr ""
+msgstr "Dalinti kreivę į atskiras dalis"
 
 #: ../src/verbs.cpp:2023
 msgid "Gri_d Arrange..."
-msgstr ""
+msgstr "L_ygiavimas Langeliais..."
 
 #: ../src/verbs.cpp:2024
 msgid "Arrange selected objects in a grid pattern"
@@ -7320,51 +7348,51 @@ msgstr "Sudėlioti pažymėtus objektus pagal langelius"
 #. Layer
 #: ../src/verbs.cpp:2026
 msgid "_Add Layer..."
-msgstr ""
+msgstr "_Naujas Sluoksnis..."
 
 #: ../src/verbs.cpp:2027
 msgid "Create a new layer"
-msgstr ""
+msgstr "Sukurti naują sluoksnį"
 
 #: ../src/verbs.cpp:2028
 msgid "Re_name Layer..."
-msgstr ""
+msgstr "_Pervadinti Sluoksnį"
 
 #: ../src/verbs.cpp:2029
 msgid "Rename the current layer"
-msgstr ""
+msgstr "Pervadinti dabartinį sluoksnį"
 
 #: ../src/verbs.cpp:2030
 msgid "Switch to Layer Abov_e"
-msgstr ""
+msgstr "Į _Aukštesnį Sluoksnį"
 
 #: ../src/verbs.cpp:2031
 msgid "Switch to the layer above the current"
-msgstr ""
+msgstr "Pereiti į aukščiau dabartinio esantį sluoksnį"
 
 #: ../src/verbs.cpp:2032
 msgid "Switch to Layer Belo_w"
-msgstr ""
+msgstr "Į Ž_emesnį Sluoksnį"
 
 #: ../src/verbs.cpp:2033
 msgid "Switch to the layer below the current"
-msgstr ""
+msgstr "Pereiti į žemiau dabartinio esantį sluoksnį"
 
 #: ../src/verbs.cpp:2034
 msgid "Move Selection to Layer Abo_ve"
-msgstr ""
+msgstr "Pe_rkelti Sluoksniu Aukščiau"
 
 #: ../src/verbs.cpp:2035
 msgid "Move selection to the layer above the current"
-msgstr ""
+msgstr "Perkelti pažymėjimą sluoksniu aukščiau"
 
 #: ../src/verbs.cpp:2036
 msgid "Move Selection to Layer Bel_ow"
-msgstr ""
+msgstr "Per_kelti Sluoksniu Žemiau"
 
 #: ../src/verbs.cpp:2037
 msgid "Move selection to the layer below the current"
-msgstr ""
+msgstr "Perkelti pažymėjimą sluoksniu žemiau"
 
 #: ../src/verbs.cpp:2038
 msgid "Layer to _Top"
@@ -7409,31 +7437,31 @@ msgstr "Šalin_ti aktyvų sluoksnį"
 #. Object
 #: ../src/verbs.cpp:2050
 msgid "Rotate _90&#176; CW"
-msgstr ""
+msgstr "Pasukti _90&#176;"
 
 #: ../src/verbs.cpp:2051
 msgid "Rotate selection 90&#176; clockwise"
-msgstr ""
+msgstr "Pasukti pažymėjimą 90 laipsnių kampu laikrodžio rodyklės kryptimi"
 
 #: ../src/verbs.cpp:2052
 msgid "Rotate 9_0&#176; CCW"
-msgstr ""
+msgstr "Atsukti 9_0&#176;"
 
 #: ../src/verbs.cpp:2053
 msgid "Rotate selection 90&#176; counter-clockwise"
-msgstr ""
+msgstr "Pasukti pažymėjimą 90 laipsnių kampu prieš laikrodžio rodyklę"
 
 #: ../src/verbs.cpp:2054
 msgid "Remove _Transformations"
-msgstr ""
+msgstr "Nuimti _Transfomacijas"
 
 #: ../src/verbs.cpp:2055
 msgid "Remove transformations from object"
-msgstr ""
+msgstr "Naikinti bet kokias objekto transformacijas"
 
 #: ../src/verbs.cpp:2056
 msgid "_Object to Path"
-msgstr ""
+msgstr "Kreivė iš _Objekto"
 
 #: ../src/verbs.cpp:2057
 msgid "Convert selected object to path"
@@ -7441,39 +7469,39 @@ msgstr "Paversti pažymėtą objektą kreive"
 
 #: ../src/verbs.cpp:2058
 msgid "_Flow into Frame"
-msgstr ""
+msgstr "_Dėstyti Rėmuose"
 
 #: ../src/verbs.cpp:2059
 msgid "Put text into a frame (path or shape), creating a flowed text linked to the frame object"
-msgstr ""
+msgstr "Įdėti tekstą į kreive ar geometrine figūra apibrėžtą rėmą, sukuriant dėstytą tekstą"
 
 #: ../src/verbs.cpp:2060
 msgid "_Unflow"
-msgstr ""
+msgstr "Išimti iš _Rėmo"
 
 #: ../src/verbs.cpp:2061
 msgid "Remove text from frame (creates a single-line text object)"
-msgstr ""
+msgstr "Atrišti tekstą nuo jo rėmo"
 
 #: ../src/verbs.cpp:2062
 msgid "_Convert to Text"
-msgstr ""
+msgstr "Daryti T_ekstu"
 
 #: ../src/verbs.cpp:2063
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr ""
+msgstr "Iš dėstyto teksto padaryti paprastą tekstą (išlaikant išvaizdą)"
 
 #: ../src/verbs.cpp:2065
 msgid "Flip _Horizontal"
-msgstr ""
+msgstr "_Horizontalus atspindys"
 
 #: ../src/verbs.cpp:2065
 msgid "Flip selected objects horizontally"
-msgstr ""
+msgstr "Pažymėjimo horizontalus veidrodinis atspindys"
 
 #: ../src/verbs.cpp:2068
 msgid "Flip _Vertical"
-msgstr ""
+msgstr "_Vertikalus atspindys"
 
 #: ../src/verbs.cpp:2068
 msgid "Flip selected objects vertically"
@@ -7481,202 +7509,202 @@ msgstr "Apversti pažymėtus objektus vertikaliai"
 
 #: ../src/verbs.cpp:2071
 msgid "Apply mask to selection (using the topmost object as mask)"
-msgstr ""
+msgstr "Pažymėjimui taikyti filtrą (kraštinis objektas naudojamas kaip filtro objektas)"
 
 #: ../src/verbs.cpp:2072
 #: ../src/verbs.cpp:2076
 msgid "_Release"
-msgstr ""
+msgstr "At_rišti"
 
 #: ../src/verbs.cpp:2073
 msgid "Remove mask from selection"
-msgstr ""
+msgstr "Nuimti nuo pažymėjimo filtrą"
 
 #: ../src/verbs.cpp:2075
 msgid "Apply clipping path to selection (using the topmost object as clipping path)"
-msgstr ""
+msgstr "Apkirpti pažymėjimą, kraštinį objektą naudojant kaip kirpimo kreivę"
 
 #: ../src/verbs.cpp:2077
 msgid "Remove clipping path from selection"
-msgstr ""
+msgstr "Nuimti nuo pažymėjimo kirpimo kreivę"
 
 #. Tools
 #: ../src/verbs.cpp:2080
 msgid "Select"
-msgstr ""
+msgstr "Žymeklis"
 
 #: ../src/verbs.cpp:2081
 msgid "Select and transform objects"
-msgstr ""
+msgstr "Objektų pažymėjimo ir keitimo režimas"
 
 #: ../src/verbs.cpp:2082
 msgid "Node Edit"
-msgstr ""
+msgstr "Siūlės"
 
 #: ../src/verbs.cpp:2083
 msgid "Edit path nodes or control handles"
-msgstr ""
+msgstr "Siūlių redagavimo režimas"
 
 #: ../src/verbs.cpp:2085
 msgid "Create rectangles and squares"
-msgstr ""
+msgstr "Stačiakampiai ir Kvadratai"
 
 #: ../src/verbs.cpp:2087
 msgid "Create circles, ellipses, and arcs"
-msgstr ""
+msgstr "Apskritimų, elipsių ir arkų kūrimo režimas"
 
 #: ../src/verbs.cpp:2089
 msgid "Create stars and polygons"
-msgstr ""
+msgstr "Žvaigždžių ir daugiakampių kūrimo režimas"
 
 #: ../src/verbs.cpp:2091
 msgid "Create spirals"
-msgstr ""
+msgstr "Spiralių kūrimo režimas"
 
 #: ../src/verbs.cpp:2093
 msgid "Draw freehand lines"
-msgstr ""
+msgstr "Ranka pieštų kreivių režimas"
 
 #: ../src/verbs.cpp:2095
 msgid "Draw Bezier curves and straight lines"
-msgstr ""
+msgstr "Bezier kreivių ir tiesių atkarpų režimas"
 
 #: ../src/verbs.cpp:2097
 msgid "Draw calligraphic lines"
-msgstr ""
+msgstr "Dailiraščio kūrimo režimas"
 
 #: ../src/verbs.cpp:2099
 msgid "Create and edit text objects"
-msgstr ""
+msgstr "Teksto kūrimo ir redagavimo režimas"
 
 #: ../src/verbs.cpp:2101
 msgid "Create and edit gradients"
-msgstr ""
+msgstr "Perėjimų kūrimo ir redagavimo režimas"
 
 #: ../src/verbs.cpp:2103
 msgid "Zoom in or out"
-msgstr ""
+msgstr "Mastelio keitimo režimas"
 
 #: ../src/verbs.cpp:2105
 msgid "Pick averaged colors from image"
-msgstr ""
+msgstr "Vidutinės spalvos išrinkimo režimas"
 
 #: ../src/verbs.cpp:2107
 msgid "Create connectors"
-msgstr ""
+msgstr "Sąryšiai"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2110
 msgid "Selector Preferences"
-msgstr ""
+msgstr "Žymeklio Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2111
 msgid "Open Preferences for the Selector tool"
-msgstr ""
+msgstr "Atidaryti žymeklio įrankio nustatymus"
 
 #: ../src/verbs.cpp:2112
 msgid "Node Tool Preferences"
-msgstr ""
+msgstr "Siūlių Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2113
 msgid "Open Preferences for the Node tool"
-msgstr ""
+msgstr "Atidaryti siūlių redagavimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2114
 msgid "Rectangle Preferences"
-msgstr ""
+msgstr "Stačiakampių Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2115
 msgid "Open Preferences for the Rectangle tool"
-msgstr ""
+msgstr "Atidaryti stačiakampių kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2116
 msgid "Ellipse Preferences"
-msgstr ""
+msgstr "Elipsių Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2117
 msgid "Open Preferences for the Ellipse tool"
-msgstr ""
+msgstr "Atidaryti elipsių ir apskritimų kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2118
 msgid "Star Preferences"
-msgstr ""
+msgstr "Žvaigždžių Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2119
 msgid "Open Preferences for the Star tool"
-msgstr ""
+msgstr "Atidaryti Žvaigždžių ir daugiakampių kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2120
 msgid "Spiral Preferences"
-msgstr ""
+msgstr "Spiralių Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2121
 msgid "Open Preferences for the Spiral tool"
-msgstr ""
+msgstr "Atidaryti spiralės kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2122
 msgid "Pencil Preferences"
-msgstr ""
+msgstr "Rašiklio Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2123
 msgid "Open Preferences for the Pencil tool"
-msgstr ""
+msgstr "Atidaryti rašiklio įrankio nustatymus"
 
 #: ../src/verbs.cpp:2124
 msgid "Pen Preferences"
-msgstr ""
+msgstr "Pieštuko Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2125
 msgid "Open Preferences for the Pen tool"
-msgstr ""
+msgstr "Atidaryti pieštuko įrankio nustatymus"
 
 #: ../src/verbs.cpp:2126
 msgid "Calligraphic Preferences"
-msgstr ""
+msgstr "Dailiraščio Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2127
 msgid "Open Preferences for the Calligraphy tool"
-msgstr ""
+msgstr "Atidaryti dailiraščio įrankio nustatymus"
 
 #: ../src/verbs.cpp:2128
 msgid "Text Preferences"
-msgstr ""
+msgstr "Teksto Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2129
 msgid "Open Preferences for the Text tool"
-msgstr ""
+msgstr "Atidaryti teksto įrankio nustatymus"
 
 #: ../src/verbs.cpp:2130
 msgid "Gradient Preferences"
-msgstr ""
+msgstr "Perėjimo Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2131
 msgid "Open Preferences for the Gradient tool"
-msgstr ""
+msgstr "Atidaryti perėjimų kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2132
 msgid "Zoom Preferences"
-msgstr ""
+msgstr "Mastelio Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2133
 msgid "Open Preferences for the Zoom tool"
-msgstr ""
+msgstr "Atidaryti mastelio keitimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2134
 msgid "Dropper Preferences"
-msgstr ""
+msgstr "Pipetės Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2135
 msgid "Open Preferences for the Dropper tool"
-msgstr ""
+msgstr "Atidaryti pipetės kūrimo įrankio nustatymus"
 
 #: ../src/verbs.cpp:2136
 msgid "Connector Preferences"
-msgstr ""
+msgstr "Saryšių Įrankio Nustatymai"
 
 #: ../src/verbs.cpp:2137
 msgid "Open Preferences for the Connector tool"
-msgstr ""
+msgstr "Atidaryti saryšių kūrimo ir redagavimo įrankio nustatymus"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2140
@@ -7810,178 +7838,178 @@ msgstr "Rodyti eskizinį vaizdą"
 
 #: ../src/verbs.cpp:2170
 msgid "Ico_n Preview"
-msgstr ""
+msgstr "Iko_nos Peržiūra"
 
 #: ../src/verbs.cpp:2171
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr ""
+msgstr "Rodyti, kaip dokumentas atrodys skirtingo dydžio ikonos pavidale"
 
 #: ../src/verbs.cpp:2173
 msgid "Zoom to fit page in window"
-msgstr ""
+msgstr "Keisti mastelį talpinant puslapį lange"
 
 #: ../src/verbs.cpp:2174
 msgid "Page _Width"
-msgstr ""
+msgstr "Puslapi_o Plotis"
 
 #: ../src/verbs.cpp:2175
 msgid "Zoom to fit page width in window"
-msgstr ""
+msgstr "Keisti mastelį, kad puslapio plotis tilptų lange"
 
 #: ../src/verbs.cpp:2177
 msgid "Zoom to fit drawing in window"
-msgstr ""
+msgstr "Keisti mastelį, kad visas piešinys tilptų lange"
 
 #: ../src/verbs.cpp:2179
 msgid "Zoom to fit selection in window"
-msgstr ""
+msgstr "Keisti mastelį, kad pažymėjimas tilptų lange"
 
 #. Dialogs
 #: ../src/verbs.cpp:2182
 msgid "In_kscape Preferences..."
-msgstr ""
+msgstr "In_kscape Nustatymai..."
 
 #: ../src/verbs.cpp:2183
 msgid "Edit global Inkscape preferences"
-msgstr ""
+msgstr "Keisti bendrus Inkscape programos nustatymus"
 
 #: ../src/verbs.cpp:2184
 msgid "_Document Properties..."
-msgstr ""
+msgstr "_Dokumento Nustatymai..."
 
 #: ../src/verbs.cpp:2185
 msgid "Edit properties of this document (to be saved with the document)"
-msgstr ""
+msgstr "Keisti specifinius dokumento nustatymus, kurie saugomi su dokumentu"
 
 #: ../src/verbs.cpp:2186
 msgid "_Document Metadata..."
-msgstr ""
+msgstr "_Dokumento Metaduomenys..."
 
 #: ../src/verbs.cpp:2187
 msgid "Edit document metadata (to be saved with the document)"
-msgstr ""
+msgstr "Keisti dokumento metaduomenis, saugomus kartu su dokumentu"
 
 #: ../src/verbs.cpp:2188
 msgid "_Fill and Stroke..."
-msgstr ""
+msgstr "_Užpildas ir Linija..."
 
 #: ../src/verbs.cpp:2189
 msgid "Edit objects' style, such as color or stroke width"
-msgstr ""
+msgstr "Keisti pažymėjimo išvaizdą - užpildo tipą ir spalvą, linijos išvaizdą"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2191
 msgid "S_watches..."
-msgstr ""
+msgstr "Spal_vų Paletė..."
 
 #: ../src/verbs.cpp:2192
 msgid "Select colors from a swatches palette"
-msgstr ""
+msgstr "Rinktis spalvas iš spalvų paletės"
 
 #: ../src/verbs.cpp:2193
 msgid "Transfor_m..."
-msgstr ""
+msgstr "Transror_macija..."
 
 #: ../src/verbs.cpp:2194
 msgid "Precisely control objects' transformations"
-msgstr ""
+msgstr "Transformuoti pažymėtus objektus"
 
 #: ../src/verbs.cpp:2195
 msgid "_Align and Distribute..."
-msgstr ""
+msgstr "_Lygiuoti ir Rikiuoti..."
 
 #: ../src/verbs.cpp:2196
 msgid "Align and distribute objects"
-msgstr ""
+msgstr "Lygiuoti ar dėstyti pažymėtus objektus"
 
 #: ../src/verbs.cpp:2197
 msgid "_Text and Font..."
-msgstr ""
+msgstr "_Tekstas ir Šriftas..."
 
 #: ../src/verbs.cpp:2198
 msgid "View and select font family, font size and other text properties"
-msgstr ""
+msgstr "Žiūrėti ir keisti šrifto tipą, dydį bei kitus teksto nustatymus"
 
 #: ../src/verbs.cpp:2199
 msgid "_XML Editor..."
-msgstr ""
+msgstr "_XML Redaktorius..."
 
 #: ../src/verbs.cpp:2200
 msgid "View and edit the XML tree of the document"
-msgstr ""
+msgstr "Žiūrėti ir keisti dokumento XML medį"
 
 #: ../src/verbs.cpp:2201
 msgid "_Find..."
-msgstr ""
+msgstr "_Rasti..."
 
 #: ../src/verbs.cpp:2202
 msgid "Find objects in document"
-msgstr ""
+msgstr "Dokumente ieškoti objektų"
 
 #: ../src/verbs.cpp:2203
 msgid "_Messages..."
-msgstr ""
+msgstr "P_ranešimai..."
 
 #: ../src/verbs.cpp:2204
 msgid "View debug messages"
-msgstr ""
+msgstr "Stebėti techninius pranešimus"
 
 #: ../src/verbs.cpp:2205
 msgid "S_cripts..."
-msgstr ""
+msgstr "Skript_ai..."
 
 #: ../src/verbs.cpp:2206
 msgid "Run scripts"
-msgstr ""
+msgstr "Vykdyti skriptus"
 
 #: ../src/verbs.cpp:2207
 msgid "Show/Hide D_ialogs"
-msgstr ""
+msgstr "Rodyti/Slėpti D_ialogus"
 
 #: ../src/verbs.cpp:2208
 msgid "Show or hide all open dialogs"
-msgstr ""
+msgstr "Parodyti ar passlepti vieną ar kitą dialogą"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
 #: ../src/verbs.cpp:2210
 msgid "Create Tiled Clones..."
-msgstr ""
+msgstr "Dėstyti Klonus..."
 
 #: ../src/verbs.cpp:2211
 msgid "Create multiple clones of selected object, arranging them into a pattern or scattering"
-msgstr ""
+msgstr "Kurti ir pagal pasirinktus kūrimo nustatymus išdėstyti keletą klonų"
 
 #: ../src/verbs.cpp:2212
 msgid "_Object Properties..."
-msgstr ""
+msgstr "_Objekto Savybės..."
 
 #: ../src/verbs.cpp:2213
 msgid "Edit the ID, locked and visible status, and other object properties"
-msgstr ""
+msgstr "Keisti objekto identifikatorių, rakinimo ir matomumo būseną bei kitas savybes"
 
 #: ../src/verbs.cpp:2216
 msgid "_Connect to Jabber server..."
-msgstr ""
+msgstr "_Jungtis prie Jabber Serverio..."
 
 #: ../src/verbs.cpp:2216
 msgid "Connect to a Jabber server"
-msgstr ""
+msgstr "Jungtis prie Jabber serverio kolektyviniam redagavimui"
 
 #: ../src/verbs.cpp:2218
 msgid "Share with _user..."
-msgstr ""
+msgstr "Dalintis Piešini_u..."
 
 #: ../src/verbs.cpp:2218
 msgid "Establish a whiteboard session with another Jabber user"
-msgstr ""
+msgstr "Prisijungti prie \"lentos\" sesijos bendram darbui su kiti Jabber naudotoju"
 
 #: ../src/verbs.cpp:2220
 msgid "Share with _chatroom..."
-msgstr ""
+msgstr "Dalintis _Kambaryje..."
 
 #: ../src/verbs.cpp:2220
 msgid "Join a chatroom to start a new whiteboard session or join one in progress"
-msgstr ""
+msgstr "Prisijungti prie Jabber pokalbių kambario bendram darbui su kitais Jabber naudotojais"
 
 #: ../src/verbs.cpp:2222
 msgid "_Dump XML node tracker"
@@ -7993,64 +8021,64 @@ msgstr ""
 
 #: ../src/verbs.cpp:2224
 msgid "_Open session file..."
-msgstr ""
+msgstr "A_tidaryti Sesijos Failą"
 
 #: ../src/verbs.cpp:2224
 msgid "Open and browse through records of past whiteboard sessions"
-msgstr ""
+msgstr "Atidaryti ankstesnių bendrų darbų sesijų failą"
 
 #: ../src/verbs.cpp:2226
 msgid "Session file playback"
-msgstr ""
+msgstr "Kartoti Sesijos veiksmus"
 
 #: ../src/verbs.cpp:2228
 msgid "_Disconnect from session"
-msgstr ""
+msgstr "Atsi_jungti nuo Sesijos"
 
 #: ../src/verbs.cpp:2230
 msgid "Disconnect from _server"
-msgstr ""
+msgstr "Atsijungti nuo _Serverio"
 
 #: ../src/verbs.cpp:2232
 msgid "_Input Devices..."
-msgstr ""
+msgstr "Įvest_ies Įtaisai..."
 
 #: ../src/verbs.cpp:2233
 msgid "Configure extended input devices, such as a graphics tablet"
-msgstr ""
+msgstr "Kontroliuoti įvesties įtaisų (pvz., planšetės) nustatymus"
 
 #. Help
 #: ../src/verbs.cpp:2236
 msgid "_Keys and Mouse"
-msgstr ""
+msgstr "_Klaviatūra ir Pelė"
 
 #: ../src/verbs.cpp:2237
 msgid "Keys and mouse shortcuts reference"
-msgstr ""
+msgstr "Klaviatūros ir pelės šaukiniai"
 
 #: ../src/verbs.cpp:2238
 msgid "About E_xtensions"
-msgstr ""
+msgstr "Apie _Įskiepius"
 
 #: ../src/verbs.cpp:2239
 msgid "Information on Inkscape extensions"
-msgstr ""
+msgstr "Informacija apie Inkscape įskiepius"
 
 #: ../src/verbs.cpp:2240
 msgid "About _Memory"
-msgstr ""
+msgstr "Apie At_mintį"
 
 #: ../src/verbs.cpp:2241
 msgid "Memory usage information"
-msgstr ""
+msgstr "Atminties naudojimo techninė informacija"
 
 #: ../src/verbs.cpp:2242
 msgid "_About Inkscape"
-msgstr ""
+msgstr "_Apie Inkscape"
 
 #: ../src/verbs.cpp:2243
 msgid "Inkscape version, authors, license"
-msgstr ""
+msgstr "Inkscape versija, autoriai ir licencija"
 
 #. "help_about"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("Modifying or Redistributing Inkscape"),
@@ -8058,115 +8086,115 @@ msgstr ""
 #. Tutorials
 #: ../src/verbs.cpp:2248
 msgid "Inkscape: _Basic"
-msgstr ""
+msgstr "Inkscape: _Pradmenys"
 
 #: ../src/verbs.cpp:2249
 msgid "Getting started with Inkscape"
-msgstr ""
+msgstr "Pradedant darbą su Inkscape"
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2250
 msgid "Inkscape: _Shapes"
-msgstr ""
+msgstr "Inkscape: _Figūros"
 
 #: ../src/verbs.cpp:2251
 msgid "Using shape tools to create and edit shapes"
-msgstr ""
+msgstr "Geometrinių figūrų įrankių naudojimas figūrų kūrimui ir keitimui"
 
 #: ../src/verbs.cpp:2252
 msgid "Inkscape: _Advanced"
-msgstr ""
+msgstr "Inkscape: _Aukštesnis Lygis"
 
 #: ../src/verbs.cpp:2253
 msgid "Advanced Inkscape topics"
-msgstr ""
+msgstr "Aukštesnio lygio Inkscape patarimai"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2255
 msgid "Inkscape: T_racing"
-msgstr ""
+msgstr "Inkscape: Vaizdo Ty_rimas"
 
 #: ../src/verbs.cpp:2256
 msgid "Using bitmap tracing"
-msgstr ""
+msgstr "Patarimai apie grafinio vaizdo vertimą vektoriniu"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2257
 msgid "Inkscape: _Calligraphy"
-msgstr ""
+msgstr "Inkscape: _Dailiraštis"
 
 #: ../src/verbs.cpp:2258
 msgid "Using the Calligraphy pen tool"
-msgstr ""
+msgstr "Informacija apie dailiraščio kūrimo įrankį"
 
 #: ../src/verbs.cpp:2259
 msgid "_Elements of Design"
-msgstr ""
+msgstr "Paai_škinimai"
 
 #: ../src/verbs.cpp:2260
 msgid "Principles of design in the tutorial form"
-msgstr ""
+msgstr "Pagrindiniai terminai ir paaiškinimai"
 
 #. "tutorial_design"
 #: ../src/verbs.cpp:2261
 msgid "_Tips and Tricks"
-msgstr ""
+msgstr "_Gudrybės"
 
 #: ../src/verbs.cpp:2262
 msgid "Miscellaneous tips and tricks"
-msgstr ""
+msgstr "Įvairūs patarimai"
 
 #. "tutorial_tips"
 #. Effect
 #: ../src/verbs.cpp:2265
 msgid "Previous Effect"
-msgstr ""
+msgstr "Kartoti Efektą"
 
 #: ../src/verbs.cpp:2266
 msgid "Repeat the last effect with the same settings"
-msgstr ""
+msgstr "Kartoti prieš tai atliktą efektą tais pačiais nustatymais"
 
 #. "tutorial_tips"
 #: ../src/verbs.cpp:2267
 msgid "Previous Effect Settings..."
-msgstr ""
+msgstr "Vykdytas Efektas..."
 
 #: ../src/verbs.cpp:2268
 msgid "Repeat the last effect with new settings"
-msgstr ""
+msgstr "Kartoti prieš tai atliktą efektą keičiant nustatymus"
 
 #: ../src/widgets/dash-selector.cpp:102
 msgid "Dash pattern"
-msgstr ""
+msgstr "Punktyras"
 
 #: ../src/widgets/dash-selector.cpp:117
 msgid "Pattern offset"
-msgstr ""
+msgstr "Punktyro pradžia"
 
 #: ../src/widgets/desktop-widget.cpp:375
 #, c-format
 msgid "%s: %d - Inkscape"
-msgstr ""
+msgstr "%s: %d - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:377
 #, c-format
 msgid "%s - Inkscape"
-msgstr ""
+msgstr "%s - Inkscape"
 
 #. Family frame
 #: ../src/widgets/font-selector.cpp:137
 msgid "Font family"
-msgstr ""
+msgstr "Šrifto tipas"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:164
 msgid "Style"
-msgstr ""
+msgstr "Stilius"
 
 #: ../src/widgets/font-selector.cpp:199
 msgid "Font size:"
-msgstr ""
+msgstr "Šrifto dydis:"
 
 #. TRANSLATORS: Test string used in text and font dialog (when no
 #. * text has been entered) to get a preview of the font.  Choose
@@ -8174,62 +8202,62 @@ msgstr ""
 #. * interested in.
 #: ../src/widgets/font-selector.cpp:522
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr ""
+msgstr "AaBbCcIiPpĄąĖėŽž12369$€?.;/()"
 
 #: ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:486
 msgid "Duplicate"
-msgstr ""
+msgstr "Dubliuoti"
 
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:497
 msgid "Edit..."
-msgstr ""
+msgstr "Redaguotii..."
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:155
 msgid "Whether to fill with flat color beyond the ends of the gradient vector (spreadMethod=\"pad\"), or repeat the gradient in the same direction (spreadMethod=\"repeat\"), or repeat the gradient in alternating opposite directions (spreadMethod=\"reflect\")"
-msgstr ""
+msgstr "Ar užpildyti kraštus vientisa spalva (be kartojimo), kartoti perėjimą atspindint ar tiesiogiai"
 
 #: ../src/widgets/gradient-selector.cpp:161
 msgid "none"
-msgstr ""
+msgstr "nėra"
 
 #: ../src/widgets/gradient-selector.cpp:165
 msgid "reflected"
-msgstr ""
+msgstr "atspindint"
 
 #: ../src/widgets/gradient-selector.cpp:169
 msgid "direct"
-msgstr ""
+msgstr "paprastas"
 
 #: ../src/widgets/gradient-selector.cpp:177
 msgid "Repeat:"
-msgstr ""
+msgstr "Pasikartojimas:"
 
 #: ../src/widgets/gradient-toolbar.cpp:179
 msgid "<small>No gradients</small>"
-msgstr ""
+msgstr "<small>Nėra perėjimų</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:188
 msgid "<small>Nothing selected</small>"
-msgstr ""
+msgstr "<small>Niekas nepažymėta</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:199
 msgid "<small>No gradients in selection</small>"
-msgstr ""
+msgstr "<small>Pažymėjimas be perėjimų</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:209
 msgid "<small>Multiple gradients</small>"
-msgstr ""
+msgstr "<small>Įvairūs perėjimai</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:487
 msgid "If the gradient is used by more than one object, create a copy of it for the selected object(s)"
-msgstr ""
+msgstr "Jei perėjimą naudoja keli objektai, sukurti perėjimo kopiją pažymėtiems objektams"
 
 #: ../src/widgets/gradient-toolbar.cpp:498
 msgid "Edit the stops of the gradient"
-msgstr ""
+msgstr "Keisti perėjimo punktus"
 
 #: ../src/widgets/gradient-toolbar.cpp:555
 #: ../src/widgets/toolbox.cpp:1071
@@ -8241,27 +8269,27 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2299
 #: ../src/widgets/toolbox.cpp:2338
 msgid "<b>New:</b>"
-msgstr ""
+msgstr "<b>Kuriant:</b>"
 
 #: ../src/widgets/gradient-toolbar.cpp:568
 msgid "Create linear gradient"
-msgstr ""
+msgstr "Kurti tiesinį perėjimą"
 
 #: ../src/widgets/gradient-toolbar.cpp:582
 msgid "Create radial (elliptic or circular) gradient"
-msgstr ""
+msgstr "Kurti spindulinį (elipsinį ar apskritą) perėjimą"
 
 #: ../src/widgets/gradient-toolbar.cpp:597
 msgid "on"
-msgstr ""
+msgstr "taikyti"
 
 #: ../src/widgets/gradient-toolbar.cpp:610
 msgid "Create gradient in the fill"
-msgstr ""
+msgstr "Kurti perėjimą užpildui"
 
 #: ../src/widgets/gradient-toolbar.cpp:624
 msgid "Create gradient in the stroke"
-msgstr ""
+msgstr "Kurti perėjimą linijai"
 
 #. FIXME: implement averaging of all parameters for multiple selected stars
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
@@ -8277,152 +8305,152 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2302
 #: ../src/widgets/toolbox.cpp:2322
 msgid "<b>Change:</b>"
-msgstr ""
+msgstr "<b>Keičiant:</b>"
 
 #: ../src/widgets/gradient-vector.cpp:256
 msgid "No gradients in document"
-msgstr ""
+msgstr "Dokumente nėra perėjimų"
 
 #: ../src/widgets/gradient-vector.cpp:262
 msgid "No gradient selected"
-msgstr ""
+msgstr "Pažymėjime nėra perėjimų"
 
 #: ../src/widgets/gradient-vector.cpp:517
 msgid "No stops in gradient"
-msgstr ""
+msgstr "Perėjimas be punktų"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:779
 msgid "Add stop"
-msgstr ""
+msgstr "Pridėti punktą"
 
 #: ../src/widgets/gradient-vector.cpp:782
 msgid "Add another control stop to gradient"
-msgstr ""
+msgstr "Pridėti naują perėjimo tašką"
 
 #: ../src/widgets/gradient-vector.cpp:784
 msgid "Delete stop"
-msgstr ""
+msgstr "Trinti punktą"
 
 #: ../src/widgets/gradient-vector.cpp:787
 msgid "Delete current control stop from gradient"
-msgstr ""
+msgstr "Trinti dabartinį perėjimo tašką"
 
 #. Label
 #: ../src/widgets/gradient-vector.cpp:798
 msgid "Offset:"
-msgstr ""
+msgstr "Postūmis:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:843
 msgid "Stop Color"
-msgstr ""
+msgstr "Punkto spalva"
 
 #: ../src/widgets/gradient-vector.cpp:872
 msgid "Gradient editor"
-msgstr ""
+msgstr "Perėjimo Keitimas"
 
 #: ../src/widgets/layer-selector.cpp:111
 msgid "Toggle current layer visibility"
-msgstr ""
+msgstr "Daryti sluoksnį nematomu ar matomu"
 
 #: ../src/widgets/layer-selector.cpp:131
 msgid "Lock or unlock current layer"
-msgstr ""
+msgstr "Užrakiti ar atrakinti sluoksnį"
 
 #: ../src/widgets/layer-selector.cpp:134
 msgid "Current layer"
-msgstr ""
+msgstr "Dabartinis sluoksnis"
 
 #: ../src/widgets/layer-selector.cpp:545
 msgid "(root)"
-msgstr ""
+msgstr "(nėra)"
 
 #: ../src/widgets/paint-selector.cpp:168
 #: ../src/widgets/paint-selector.cpp:547
 msgid "No paint"
-msgstr ""
+msgstr "Be spalvos"
 
 #: ../src/widgets/paint-selector.cpp:170
 #: ../src/widgets/paint-selector.cpp:615
 msgid "Flat color"
-msgstr ""
+msgstr "Vientisa spalva"
 
 #: ../src/widgets/paint-selector.cpp:172
 #: ../src/widgets/paint-selector.cpp:682
 msgid "Linear gradient"
-msgstr ""
+msgstr "Tiesinis perėjimas"
 
 #: ../src/widgets/paint-selector.cpp:174
 #: ../src/widgets/paint-selector.cpp:685
 msgid "Radial gradient"
-msgstr ""
+msgstr "Spindulinis perėjimas"
 
 #: ../src/widgets/paint-selector.cpp:178
 msgid "Unset paint (make it undefined so it can be inherited)"
-msgstr ""
+msgstr "Neapibrėžta spalvą - objekto spalvą lems tėviniai objektai"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:190
 msgid "Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"
-msgstr ""
+msgstr "Bet kokie kreivės ar jos dalių susikirtimai sukuria užpildo skyles"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:201
 msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
-msgstr ""
+msgstr "Kreivės ar jos dalių susikirtimai užpildomi (išskyrus, jei kreivės dalies kryptis priešinga)"
 
 #: ../src/widgets/paint-selector.cpp:514
 msgid "No objects"
-msgstr ""
+msgstr "Nėra objektų"
 
 #: ../src/widgets/paint-selector.cpp:525
 msgid "Multiple styles"
-msgstr ""
+msgstr "Įvairūs stiliai"
 
 #: ../src/widgets/paint-selector.cpp:536
 msgid "Paint is undefined"
-msgstr ""
+msgstr "Spalva neapibrėžta"
 
 #: ../src/widgets/paint-selector.cpp:743
 msgid "No patterns in document"
-msgstr ""
+msgstr "Dokumente nėra apibrėžtų raštų"
 
 #: ../src/widgets/paint-selector.cpp:858
 msgid "Use <b>Edit &gt; Object(s) to Pattern</b> to create a new pattern from selection."
-msgstr ""
+msgstr "Naudokite <b>Edit &gt; Raštas iš Objektų</b> komandą rašto sukūrimui iš pažymėjimo"
 
 #: ../src/widgets/select-toolbar.cpp:337
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
-msgstr ""
+msgstr "Šiuo metu <b>linijos storis keičiamas</b> keičiant objekto dydį."
 
 #: ../src/widgets/select-toolbar.cpp:339
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
-msgstr ""
+msgstr "Šiuo metu <b>linijos storis nekinta</b> keičiant objekto dydį."
 
 #: ../src/widgets/select-toolbar.cpp:347
 msgid "Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."
-msgstr ""
+msgstr "Šiuo metu <b>stačiakampio apvalinti kampai keičiamas</b> keičiant stačiakampio dydį."
 
 #: ../src/widgets/select-toolbar.cpp:349
 msgid "Now <b>rounded rectangle corners</b> are <b>not scaled</b> when rectangles are scaled."
-msgstr ""
+msgstr "Šiuo metu <b>stačiakampio apvalinti kampai nekinta</b> keičiant stačiakampio dydį."
 
 #: ../src/widgets/select-toolbar.cpp:357
 msgid "Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Šiuo metu <b>perėjimai</b> yra <b>transformuojami</b>, kai objektas yra stumiamas, sukamas, kreivinamas ar keičiamas jo dydis."
 
 #: ../src/widgets/select-toolbar.cpp:359
 msgid "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Šiuo metu <b>perėjimai</b> lieka <b>nepakitę</b>, kai objektas yra stumiamas, sukamas, kreivinamas ar keičiamas jo dydis."
 
 #: ../src/widgets/select-toolbar.cpp:367
 msgid "Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Šiuo metu <b>raštai</b> yra <b>transformuojami</b>, kai objektas yra stumiamas, sukamas, kreivinamas ar keičiamas jo dydis."
 
 #: ../src/widgets/select-toolbar.cpp:369
 msgid "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Šiuo metu <b>raštai</b> lieka <b>nepakitę</b>, kai objektas yra stumiamas, sukamas, kreivinamas ar keičiamas jo dydis."
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -8432,7 +8460,7 @@ msgstr "select_toolbar|X"
 
 #: ../src/widgets/select-toolbar.cpp:417
 msgid "Horizontal coordinate of selection"
-msgstr ""
+msgstr "Pažymėjimo horizontali koordinatė"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -8442,7 +8470,7 @@ msgstr "select_toolbar|Y"
 
 #: ../src/widgets/select-toolbar.cpp:422
 msgid "Vertical coordinate of selection"
-msgstr ""
+msgstr "Pažymėjimo vertikali koordinatė"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -8470,7 +8498,7 @@ msgstr "Pažymėjimo aukštis"
 
 #: ../src/widgets/sp-color-gtkselector.cpp:50
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: ../src/widgets/sp-color-notebook.cpp:319
 msgid "RGBA_:"
@@ -8662,49 +8690,49 @@ msgstr "Paprastas daugiakampis vietoje žvaigždės"
 
 #: ../src/widgets/toolbox.cpp:1186
 msgid "Corners:"
-msgstr ""
+msgstr "Kampai:"
 
 #: ../src/widgets/toolbox.cpp:1186
 msgid "Number of corners of a polygon or star"
-msgstr ""
+msgstr "Žvaigždės ar daugiakampio kampų skaičius"
 
 #: ../src/widgets/toolbox.cpp:1196
 msgid "Spoke ratio:"
-msgstr ""
+msgstr "Stipinų santykis:"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
 #: ../src/widgets/toolbox.cpp:1199
 msgid "Base radius to tip radius ratio"
-msgstr ""
+msgstr "Atstumų nuo centro iki stipino įlinkio ir nuo įlinio iki viršūnės santykis"
 
 #: ../src/widgets/toolbox.cpp:1214
 msgid "Rounded:"
-msgstr ""
+msgstr "Apvalinimas:"
 
 #: ../src/widgets/toolbox.cpp:1214
 msgid "How much rounded are the corners (0 for sharp)"
-msgstr ""
+msgstr "Kiek užapvalinami kampai (0 - aštrūs)"
 
 #: ../src/widgets/toolbox.cpp:1224
 msgid "Randomized:"
-msgstr ""
+msgstr "Atsitiktinumas:"
 
 #: ../src/widgets/toolbox.cpp:1224
 msgid "Scatter randomly the corners and angles"
-msgstr ""
+msgstr "Išmėtyti kampus atsitiktinai"
 
 #: ../src/widgets/toolbox.cpp:1237
 #: ../src/widgets/toolbox.cpp:1806
 #: ../src/widgets/toolbox.cpp:2029
 msgid "Defaults"
-msgstr ""
+msgstr "Atstatyti"
 
 #: ../src/widgets/toolbox.cpp:1238
 #: ../src/widgets/toolbox.cpp:1807
 #: ../src/widgets/toolbox.cpp:2030
 msgid "Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"
-msgstr ""
+msgstr "Atstatyti pradines reikšmes (pradinės reikšmės nustatytos Inkscape Nustatymuose)"
 
 #: ../src/widgets/toolbox.cpp:1512
 msgid "W:"
@@ -8720,87 +8748,87 @@ msgstr "Stačiakampio aukštis"
 
 #: ../src/widgets/toolbox.cpp:1536
 msgid "Rx:"
-msgstr ""
+msgstr "Rx:"
 
 #: ../src/widgets/toolbox.cpp:1536
 msgid "Horizontal radius of rounded corners"
-msgstr ""
+msgstr "Horizontalus užapvalintų kampų spindulys"
 
 #: ../src/widgets/toolbox.cpp:1546
 msgid "Ry:"
-msgstr ""
+msgstr "Ry:"
 
 #: ../src/widgets/toolbox.cpp:1546
 msgid "Vertical radius of rounded corners"
-msgstr ""
+msgstr "Vertikalus užapvalintų kampų spindulys"
 
 #: ../src/widgets/toolbox.cpp:1562
 msgid "Not rounded"
-msgstr ""
+msgstr "Neapvalinama"
 
 #: ../src/widgets/toolbox.cpp:1564
 msgid "Make corners sharp"
-msgstr ""
+msgstr "Daryti aštrius kampus"
 
 #: ../src/widgets/toolbox.cpp:1773
 msgid "Turns:"
-msgstr ""
+msgstr "Posukių:"
 
 #: ../src/widgets/toolbox.cpp:1773
 msgid "Number of revolutions"
-msgstr ""
+msgstr "Spiralės žiedų kiekis"
 
 #: ../src/widgets/toolbox.cpp:1783
 msgid "Divergence:"
-msgstr ""
+msgstr "Nuokrypis:"
 
 #: ../src/widgets/toolbox.cpp:1783
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
-msgstr ""
+msgstr "Ar tolstant nuo centro žiedai tankėja ar retėja (1 - nekinta)"
 
 #: ../src/widgets/toolbox.cpp:1793
 msgid "Inner radius:"
-msgstr ""
+msgstr "Vidinis spindulys:"
 
 #: ../src/widgets/toolbox.cpp:1793
 msgid "Radius of the innermost revolution (relative to the spiral size)"
-msgstr ""
+msgstr "Vidinio žiedo spindulys (reliatyvus spiralės dydžiui)"
 
 #: ../src/widgets/toolbox.cpp:1925
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr ""
+msgstr "Dailiraščio plunksnos plotis (santykinai matomai vaizdo daliai)"
 
 #: ../src/widgets/toolbox.cpp:1935
 msgid "Thinning:"
-msgstr ""
+msgstr "Ploninimas:"
 
 #: ../src/widgets/toolbox.cpp:1935
 msgid "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"
-msgstr ""
+msgstr "Kaip greitinimas veikia storį (> 0 plonina, < 0 storina, 0 - nekinta)"
 
 #: ../src/widgets/toolbox.cpp:1948
 msgid "Angle:"
-msgstr ""
+msgstr "Kampas:"
 
 #: ../src/widgets/toolbox.cpp:1948
 msgid "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"
-msgstr ""
+msgstr "Plunksnos smaigalio kampas laipsniais (0 - horizontalus; jei fiksacija yra 0, kampas neveikia)"
 
 #: ../src/widgets/toolbox.cpp:1958
 msgid "Fixation:"
-msgstr ""
+msgstr "Fiksacija:"
 
 #: ../src/widgets/toolbox.cpp:1958
 msgid "How fixed is the pen angle (0 = always perpendicular to stroke direction, 1 = fixed)"
-msgstr ""
+msgstr "Kiek fiksuotas plunksnos smaigalio kampas (0 - statmenas linijos krypčiai, 1 - fiksuotas)"
 
 #: ../src/widgets/toolbox.cpp:1971
 msgid "Mass:"
-msgstr ""
+msgstr "Masė:"
 
 #: ../src/widgets/toolbox.cpp:1971
 msgid "How much inertia affects the movement of the pen"
-msgstr ""
+msgstr "Kaip smarkiai plunksna yra veikiama inercijos"
 
 #. TRANSLATORS: "drag" means "resistance" here
 #: ../src/widgets/toolbox.cpp:1982
@@ -8813,27 +8841,27 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2002
 msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr ""
+msgstr "Naudoti įvesties įrenginio spaudimą pločio nustatymui"
 
 #: ../src/widgets/toolbox.cpp:2015
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr ""
+msgstr "Naudoti įvesties įrenginio pakrypimą plunksnos kampo nustatymui"
 
 #: ../src/widgets/toolbox.cpp:2342
 msgid "Start:"
-msgstr ""
+msgstr "Pradžia:"
 
 #: ../src/widgets/toolbox.cpp:2342
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
-msgstr ""
+msgstr "Kampas (laipsniais) nuo horizontalės iki arkos pradžios"
 
 #: ../src/widgets/toolbox.cpp:2352
 msgid "End:"
-msgstr ""
+msgstr "Pabaiga:"
 
 #: ../src/widgets/toolbox.cpp:2352
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
-msgstr ""
+msgstr "Kampas (laipsniais) nuo horizontalės iki arkos pabaigos"
 
 #: ../src/widgets/toolbox.cpp:2363
 msgid "Open arc"
@@ -8853,7 +8881,7 @@ msgstr "Daryti iš arkos ar segmento uždarą elipsę"
 
 #: ../src/widgets/toolbox.cpp:2612
 msgid "When pressed, picks visible color without alpha and when not pressed, picks color including its alpha"
-msgstr ""
+msgstr "Jei paspausta, imama spalva be permatomumo, kai atleista - skaičiuojant ir permatomumą"
 
 #: ../src/widgets/toolbox.cpp:3084
 msgid "Make connectors avoid selected objects"

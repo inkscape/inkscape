@@ -1,3 +1,7 @@
+2006-03-29  Andrius R. <knutux@gmail.com>
+
+	* po/lt.po: Translated and added new language - Lithuanian.
+
 2006-03-28  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/interface.cpp, src/dialogs/swatches.cpp:
