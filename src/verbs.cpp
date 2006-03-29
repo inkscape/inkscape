@@ -1620,6 +1620,9 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_DIALOG_INPUT:
             sp_input_dialog();
             break;
+        case SP_VERB_DIALOG_EXTENSIONEDITOR:
+            dt->_dlg_mgr->showDialog("ExtensionEditor");
+            break;
         default:
             break;
     }
@@ -2231,6 +2234,8 @@ Verb *Verb::_base_verbs[] = {
 #endif
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
                    N_("Configure extended input devices, such as a graphics tablet"), NULL),
+    new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),
+                   N_("Query information about extensions"), NULL),
 
     /* Help */
     new HelpVerb(SP_VERB_HELP_KEYS, "HelpKeys", N_("_Keys and Mouse"),
