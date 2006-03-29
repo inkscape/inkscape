@@ -154,7 +154,9 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         if (info == NULL) {
             info = Inkscape::Extension::db.get(id.c_str())->get_info_widget();
             row[_page_list_columns._col_info] = info;
-            //info->ref();
+            info->reference();
+        } else {
+            info->unparent();
         }
 
         Gtk::Widget * help;
@@ -162,7 +164,9 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         if (help == NULL) {
             help = Inkscape::Extension::db.get(id.c_str())->get_help_widget();
             row[_page_list_columns._col_help] = help;
-            //help->ref();
+            help->reference();
+        } else {
+            help->unparent();
         }
 
         Gtk::Widget * params;
@@ -170,7 +174,9 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         if (params == NULL) {
             params = Inkscape::Extension::db.get(id.c_str())->get_params_widget();
             row[_page_list_columns._col_params] = params;
-            //params->ref();
+            params->reference();
+        } else {
+            params->unparent();
         }
 
         /* Place them in the pages */
