@@ -78,7 +78,9 @@ ExtensionEditor::ExtensionEditor()
 
     Inkscape::Extension::db.foreach(dbfunc, this);
 
-    _page_list_model->foreach_iter(sigc::mem_fun(*this, &ExtensionEditor::defaultExtension));
+    gchar const * defaultext = prefs_get_string_attribute("dialogs.extensioneditor", "selected-extension");
+    if (defaultext == NULL) defaultext = "org.inkscape.input.svg";
+    this->setExtension(defaultext);
 
     show_all_children();
 }
@@ -90,12 +92,18 @@ ExtensionEditor::~ExtensionEditor()
 {
 }
 
+void
+ExtensionEditor::setExtension(Glib::ustring extension_id) {
+    _selection_search = extension_id;
+    _page_list_model->foreach_iter(sigc::mem_fun(*this, &ExtensionEditor::setExtensionIter));
+    return;
+}
+
 bool
-ExtensionEditor::defaultExtension(const Gtk::TreeModel::iterator &iter)
+ExtensionEditor::setExtensionIter(const Gtk::TreeModel::iterator &iter)
 {
-    Glib::ustring desired = "org.inkscape.input.svg";
     Gtk::TreeModel::Row row = *iter;
-    if (row[_page_list_columns._col_id] == desired) {
+    if (row[_page_list_columns._col_id] == _selection_search) {
         _page_list.get_selection()->select(iter);
         return true;
     }
@@ -118,10 +126,11 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         _page_frame.remove();
         Gtk::TreeModel::Row row = *iter;
         // _current_page = row[_page_list_columns._col_page];
-        // prefs_set_string_attribute("dialogs.extensioneditor", "selected", row[_page_list_columns._col_id].c_str());
         _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
         // _page_frame.add(*_current_page);
         // _current_page->show();
+        Glib::ustring id = row[_page_list_columns._col_id];
+        prefs_set_string_attribute("dialogs.extensioneditor", "selected-extension", id.c_str());
     }
 
     return;
