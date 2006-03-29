@@ -2,7 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -17,11 +17,13 @@
 namespace Inkscape {
 namespace Extension {
 
-PrefDialog::PrefDialog (Glib::ustring name, Gtk::Widget * controls) :
-    Gtk::Dialog::Dialog(name + _(" Preferences"), true, true)
+PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls) :
+    Gtk::Dialog::Dialog(name + _(" Preferences"), true, true), _help(help), _name(name)
 {
     this->get_vbox()->pack_start(*controls, true, true, 5);
 
+    if (_help != NULL)
+        add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 
     Gtk::Button * ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);

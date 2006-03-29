@@ -53,7 +53,7 @@ Parameter * param_shared (const gchar * name, GSList * list);
     not related to the module directly.  If the Repr does not include
     a name and an ID the module will be left in an errored state.
 */
-Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp)
+Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementation * in_imp) : _help(NULL)
 {
     repr = in_repr;
     Inkscape::GC::anchor(in_repr);
@@ -83,6 +83,9 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
             } /* id */
             if (!strcmp(chname, "name")) {
                 name = g_strdup (sp_repr_children(child_repr)->content());
+            } /* name */
+            if (!strcmp(chname, "help")) {
+                _help = g_strdup (sp_repr_children(child_repr)->content());
             } /* name */
             if (!strcmp(chname, "param")) {
 				Parameter * param;

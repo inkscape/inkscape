@@ -86,6 +86,7 @@ public:
 private:
     gchar     *id;                        /**< The unique identifier for the Extension */
     gchar     *name;                      /**< A user friendly name for the Extension */
+    gchar     *_help;                     /**< A string that contains a help text for the user */
     state_t    _state;                    /**< Which state the Extension is currently in */
     std::vector<Dependency *>  _deps;     /**< Dependencies for this extension */
     static std::ofstream error_file;      /**< This is the place where errors get reported */
@@ -107,6 +108,8 @@ public:
     Inkscape::XML::Node *      get_repr     (void);
     gchar *       get_id       (void);
     gchar *       get_name     (void);
+    /** \brief  Gets the help string for this extension */
+    gchar const * get_help     (void) { return _help; }
     void          deactivate   (void);
     bool          deactivated  (void);
     void          printFailure (Glib::ustring reason);

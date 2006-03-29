@@ -21,10 +21,13 @@ namespace Inkscape {
 namespace Extension {
 
 class PrefDialog : public Gtk::Dialog {
-    Gtk::Socket * _socket;
+    /** \brief  Help string if it exists */
+    gchar const * _help;
+    /** \brief  Name of the extension */
+    Glib::ustring _name;
 
 public:
-    PrefDialog (Glib::ustring name, Gtk::Widget * controls);
+    PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls);
 };
 
 

@@ -189,7 +189,7 @@ Effect::prefs (Inkscape::UI::View::View * doc)
         return true;
     }
 
-    PrefDialog * dialog = new PrefDialog(this->get_name(), controls);
+    PrefDialog * dialog = new PrefDialog(this->get_name(), this->get_help(), controls);
     int response = dialog->run();
     dialog->hide();
 
