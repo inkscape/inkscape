@@ -42,6 +42,14 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                         // printf("Found local effects menu in %s\n", this->get_name());
                         local_effects_menu = sp_repr_children(child_repr);
                     }
+                    if (!strcmp(child_repr->name(), "menu-name")) {
+                        // printf("Found local effects menu in %s\n", this->get_name());
+                        _verb.set_name(sp_repr_children(child_repr)->content());
+                    }
+                    if (!strcmp(child_repr->name(), "menu-tip")) {
+                        // printf("Found local effects menu in %s\n", this->get_name());
+                        _verb.set_tip(sp_repr_children(child_repr)->content());
+                    }
                 } // children of "effect"
                 break; // there can only be one effect
             } // find "effect"
