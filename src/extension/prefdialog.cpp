@@ -13,6 +13,7 @@
 #include "../dialogs/dialog-events.h"
 
 #include "prefdialog.h"
+#include "helpdialog.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -36,15 +37,15 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     return;
 }
 
-Gtk::ResponseType
+int
 PrefDialog::run (void) {
-    Gtk::ResponseType resp = Gtk::RESPONSE_HELP;
+    int resp = Gtk::RESPONSE_HELP;
     while (resp == Gtk::RESPONSE_HELP) {
         resp = Gtk::Dialog::run();
         if (resp == Gtk::RESPONSE_HELP) {
             HelpDialog help(_name, _help);
-            help->run();
-            help->hide();
+            help.run();
+            help.hide();
         }
     }
     return resp;

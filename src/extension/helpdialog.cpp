@@ -8,11 +8,14 @@
  */
 
 #include <gtkmm/stock.h>
+#include <gtkmm/dialog.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/textview.h>
 #include <glibmm/i18n.h>
 
 #include "../dialogs/dialog-events.h"
 
-#include "prefdialog.h"
+#include "helpdialog.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -24,7 +27,7 @@ HelpDialog::HelpDialog (Glib::ustring name, gchar const * help) :
     textview->set_editable(false);
     textview->set_wrap_mode(Gtk::WRAP_WORD);
     textview->show();
-    textview->get_buffer()->set_text(help, help + g_strlen(help));
+    textview->get_buffer()->set_text(help, help + strlen(help));
 
     Gtk::ScrolledWindow * scrollwindow = new Gtk::ScrolledWindow();
     scrollwindow->add(*textview);
@@ -33,7 +36,7 @@ HelpDialog::HelpDialog (Glib::ustring name, gchar const * help) :
     scrollwindow->show();
 
     Gtk::VBox * vbox = this->get_vbox();
-    vbox->pack_start(*scrolledwindow, true, true, 5);
+    vbox->pack_start(*scrollwindow, true, true, 5);
 
     Gtk::Button * ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
     set_default_response(Gtk::RESPONSE_OK);
