@@ -22,6 +22,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
 
+#include "extension/extension.h"
 
 namespace Inkscape {
 namespace UI {
@@ -51,7 +52,7 @@ protected:
             Gtk::TreeModelColumnRecord::add(_col_id);
         }
         Gtk::TreeModelColumn<Glib::ustring> _col_name;
-        Gtk::TreeModelColumn<gchar const *> _col_id;
+        Gtk::TreeModelColumn<Glib::ustring> _col_id;
         Gtk::TreeModelColumn<Gtk::Widget *> _col_page;
     };
     PageListModelColumns _page_list_columns;
@@ -63,7 +64,9 @@ private:
     ExtensionEditor(ExtensionEditor const &d);
     ExtensionEditor& operator=(ExtensionEditor const &d);
 
-    void on_pagelist_selection_changed();
+    void on_pagelist_selection_changed(void);
+    static void dbfunc (Inkscape::Extension::Extension * in_plug, gpointer in_data);
+    Gtk::TreeModel::iterator add_extension (Inkscape::Extension::Extension * ext);
 };
 
 } // namespace Dialog
