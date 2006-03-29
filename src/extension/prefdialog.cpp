@@ -35,9 +35,11 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     hbox->show();
     this->get_vbox()->pack_start(*hbox, true, true, 6);
 
+    /*
     Gtk::Button * help_button = add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
     if (_help == NULL)
         help_button->set_sensitive(false);
+    */
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 
     Gtk::Button * ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);

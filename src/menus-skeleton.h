@@ -247,7 +247,7 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"TutorialsDesign\" />\n"
 "           <verb verb-id=\"TutorialsTips\" />\n"
 "       </submenu>\n"
-"       <verb verb-id=\"org.inkscape.dialogs.extensioneditor\" />\n"
+//"       <verb verb-id=\"org.inkscape.dialogs.extensioneditor\" />\n"
 "       <verb verb-id=\"HelpAboutMemory\" />\n"
 "       <verb verb-id=\"HelpAbout\" />\n"
 //"       <verb verb-id=\"ShowLicense\" />\n"
