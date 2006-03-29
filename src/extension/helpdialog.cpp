@@ -20,6 +20,21 @@ namespace Extension {
 HelpDialog::HelpDialog (Glib::ustring name, gchar const * help) :
     Gtk::Dialog::Dialog(_("Help with ") + name, true, true)
 {
+    Gtk::TextView * textview = new Gtk::TextView();
+    textview->set_editable(false);
+    textview->set_wrap_mode(Gtk::WRAP_WORD);
+    textview->show();
+    textview->get_buffer()->set_text(help, help + g_strlen(help));
+
+    Gtk::ScrolledWindow * scrollwindow = new Gtk::ScrolledWindow();
+    scrollwindow->add(*textview);
+    scrollwindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    scrollwindow->set_shadow_type(Gtk::SHADOW_IN);
+    scrollwindow->show();
+
+    Gtk::VBox * vbox = this->get_vbox();
+    vbox->pack_start(*scrolledwindow, true, true, 5);
+
     Gtk::Button * ok = add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
     set_default_response(Gtk::RESPONSE_OK);
     ok->grab_focus();
