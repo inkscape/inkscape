@@ -304,6 +304,11 @@ public:
     /** \brief Accessor to get the internal variable. */
     gchar const * get_name (void) { return _name; }
 
+    /** \brief Set the name after initialization. */
+    gchar const * set_name (gchar const * name) { _name = name; return _name; }
+    /** \brief Set the tooltip after initialization. */
+    gchar const * set_tip (gchar const * tip) { _tip = tip; return _tip; }
+
 protected:
     SPAction * make_action_helper (Inkscape::UI::View::View * view, SPActionEventVector * vector, void * in_pntr = NULL);
     virtual SPAction * make_action (Inkscape::UI::View::View * view);
