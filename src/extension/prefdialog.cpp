@@ -18,6 +18,15 @@
 namespace Inkscape {
 namespace Extension {
 
+/** \brief  Creates a new preference dialog for extension preferences
+    \param  name  Name of the Extension who's dialog this is
+    \param  help  The help string for the extension (NULL if none)
+    \param  controls  The extension specific widgets in the dialog
+    
+    This function initializes the dialog with the name of the extension
+    in the title.  It adds a few buttons and sets up handlers for
+    them.  It also places the passed in widgets into the dialog.
+*/
 PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls) :
     Gtk::Dialog::Dialog(name + _(" Preferences"), true, true), _help(help), _name(name)
 {
@@ -41,6 +50,15 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     return;
 }
 
+/** \brief  Runs the dialog
+    \return The response to the dialog
+
+    This function overrides the run function in the GTKmm dialog
+    class, but basically it only calls it.  This function only
+    handles the \c Gtk::RESPONSE_HELP return, and in that case it
+    brings up the help window.  All other return values are returned
+    to the calling function.
+*/
 int
 PrefDialog::run (void) {
     int resp = Gtk::RESPONSE_HELP;

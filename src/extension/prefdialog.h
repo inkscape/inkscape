@@ -20,6 +20,7 @@
 namespace Inkscape {
 namespace Extension {
 
+/** \brief  A class to represent the preferences for an extension */
 class PrefDialog : public Gtk::Dialog {
     /** \brief  Help string if it exists */
     gchar const * _help;
