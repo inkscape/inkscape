@@ -38,10 +38,16 @@ public:
     static void show_help (gchar const * extension_id);
 
 protected:
-    Gtk::Frame _page_frame;
-    Gtk::Label _page_title;
-    Gtk::TreeView _page_list;  
+    /** \brief  The view of the list of extensions on the left of the dialog */
+    Gtk::TreeView _page_list;
+    /** \brief  The model for the list of extensions */
     Glib::RefPtr<Gtk::TreeStore> _page_list_model;
+    /** \brief  The notebook page that contains information */
+    Gtk::VBox _notebook_info;
+    /** \brief  The notebook page that contains help info */
+    Gtk::VBox _notebook_help;
+    /** \brief  The notebook page that holds all the parameters */
+    Gtk::VBox _notebook_params;
 
     //Pagelist model columns:
     class PageListModelColumns : public Gtk::TreeModel::ColumnRecord {
@@ -57,10 +63,9 @@ protected:
     };
     PageListModelColumns _page_list_columns;
 
-    Gtk::TreeModel::Path _path_tools;
-    Gtk::TreeModel::Path _path_shapes;
-
 private:
+    /** \brief  A 'global' variable to help search through and select
+                an item in the extension list */
     Glib::ustring _selection_search;
 
     ExtensionEditor(ExtensionEditor const &d);

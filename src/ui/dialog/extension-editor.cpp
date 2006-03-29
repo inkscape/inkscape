@@ -14,9 +14,12 @@
 # include <config.h>
 #endif
 
+#include <glibmm/i18n.h>
+
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
+#include <gtkmm/notebook.h>
 
 #include "extension-editor.h"
 #include "verbs.h"
@@ -68,13 +71,12 @@ ExtensionEditor::ExtensionEditor()
 
     //Pages
     Gtk::VBox* vbox_page = Gtk::manage(new Gtk::VBox());
-    Gtk::Frame* title_frame = Gtk::manage(new Gtk::Frame());
     hbox_list_page->pack_start(*vbox_page, true, true, 0);
-    title_frame->add(_page_title);
-    vbox_page->pack_start(*title_frame, false, false, 0);
-    vbox_page->pack_start(_page_frame, true, true, 0);
-    _page_frame.set_shadow_type(Gtk::SHADOW_IN);
-    title_frame->set_shadow_type(Gtk::SHADOW_IN);
+    Gtk::Notebook * notebook = Gtk::manage(new Gtk::Notebook());
+    notebook->append_page(_notebook_info, *Gtk::manage(new Gtk::Label(_("Information"))));
+    notebook->append_page(_notebook_help, *Gtk::manage(new Gtk::Label(_("Help"))));
+    notebook->append_page(_notebook_params, *Gtk::manage(new Gtk::Label(_("Parameters"))));
+    vbox_page->pack_start(*notebook, true, true, 0);
 
     Inkscape::Extension::db.foreach(dbfunc, this);
 
@@ -123,10 +125,10 @@ ExtensionEditor::on_pagelist_selection_changed (void)
     Glib::RefPtr<Gtk::TreeSelection> selection = _page_list.get_selection();
     Gtk::TreeModel::iterator iter = selection->get_selected();
     if (iter) {
-        _page_frame.remove();
+        // _page_frame.remove();
         Gtk::TreeModel::Row row = *iter;
         // _current_page = row[_page_list_columns._col_page];
-        _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
+        // _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
         // _page_frame.add(*_current_page);
         // _current_page->show();
         Glib::ustring id = row[_page_list_columns._col_id];
