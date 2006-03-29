@@ -1239,7 +1239,7 @@ PrintPS::init(void)
         "<id>" SP_MODULE_KEY_PRINT_PS "</id>\n"
         "<param name=\"bitmap\" type=\"boolean\">FALSE</param>\n"
         "<param name=\"resolution\" type=\"string\">72</param>\n"
-        "<param name=\"destination\" type=\"string\"></param>\n"
+        "<param name=\"destination\" type=\"string\">| lp</param>\n"
         "<param name=\"pageBoundingBox\" type=\"boolean\">TRUE</param>\n"
         "<param name=\"textToPath\" type=\"boolean\">TRUE</param>\n"
         "<print/>\n"
