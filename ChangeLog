@@ -1,3 +1,9 @@
+2006-03-28  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/interface.cpp, src/dialogs/swatches.cpp:
+
+	  Fixing name of temporary non-standard tag attributes.
+	
 2006-03-28  MenTaLguY  <mental@rydia.net>
 
     * src/layer-manager.cpp, src/layer-manager.h: draft of layer manager

@@ -300,7 +300,7 @@ static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::u
     bool changed = false;
 
     if ( node ) {
-        gchar const * val = node->attribute("HOTFill");
+        gchar const * val = node->attribute("inkscape:x-fill-tag");
         if ( val  && (match == val) ) {
             SPObject *obj = document->getObjectByRepr( node );
 
@@ -315,7 +315,7 @@ static bool bruteForce( SPDocument* document, Inkscape::XML::Node* node, Glib::u
             changed = true;
         }
 
-        val = node->attribute("HOTStroke");
+        val = node->attribute("inkscape:x-stroke-tag");
         if ( val  && (match == val) ) {
             SPObject *obj = document->getObjectByRepr( node );
 

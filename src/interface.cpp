@@ -1023,7 +1023,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                             str = 0;
 
                             sp_object_setAttribute( SP_OBJECT(item),
-                                                    (drag_context->action != GDK_ACTION_MOVE) ? "HOTFill":"HOTStroke",
+                                                    (drag_context->action != GDK_ACTION_MOVE) ? "inkscape:x-fill-tag":"inkscape:x-stroke-tag",
                                                     palName.c_str(),
                                                     false );
                             item->updateRepr();
