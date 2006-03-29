@@ -67,6 +67,7 @@ private:
     void on_pagelist_selection_changed(void);
     static void dbfunc (Inkscape::Extension::Extension * in_plug, gpointer in_data);
     Gtk::TreeModel::iterator add_extension (Inkscape::Extension::Extension * ext);
+    bool defaultExtension(const Gtk::TreeModel::iterator &iter);
 };
 
 } // namespace Dialog

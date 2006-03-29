@@ -78,6 +78,8 @@ ExtensionEditor::ExtensionEditor()
 
     Inkscape::Extension::db.foreach(dbfunc, this);
 
+    _page_list_model->foreach_iter(sigc::mem_fun(*this, &ExtensionEditor::defaultExtension));
+
     show_all_children();
 }
 
@@ -86,6 +88,18 @@ ExtensionEditor::ExtensionEditor()
 */
 ExtensionEditor::~ExtensionEditor()
 {
+}
+
+bool
+ExtensionEditor::defaultExtension(const Gtk::TreeModel::iterator &iter)
+{
+    Glib::ustring desired = "org.inkscape.input.svg";
+    Gtk::TreeModel::Row row = *iter;
+    if (row[_page_list_columns._col_id] == desired) {
+        _page_list.get_selection()->select(iter);
+        return true;
+    }
+    return false;
 }
 
 /** \brief  Called every time a new extention is selected
