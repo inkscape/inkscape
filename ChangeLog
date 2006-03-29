@@ -1,3 +1,7 @@
+2006-03-28  MenTaLguY  <mental@rydia.net>
+
+    * src/layer-manager.cpp, src/layer-manager.h: draft of layer manager
+
 2006-03-28  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/interface.cpp, src/dialogs/eek-color-def.h,
