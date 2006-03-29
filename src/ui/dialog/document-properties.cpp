@@ -188,7 +188,7 @@ DocumentProperties::build_page()
     _rcp_bord.init (_("Border _color:"), _("Page border color"),
                     _("Color of the page border"),
                     "bordercolor", "borderopacity", _wr);
-    _rcb_shad.init (_("_Show border shadow"), "If set, page border shows a shadow on its right and lower side", "inkscape:showpageshadow", _wr, false);
+    _rcb_shad.init (_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false);
     _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
