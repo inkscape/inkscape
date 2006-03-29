@@ -148,13 +148,17 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         _notebook_help.remove();
         _notebook_params.remove();
 
+        Inkscape::Extension::Extension * ext = Inkscape::Extension::db.get(id.c_str());
+
         /* Make sure we have all the widges */
         Gtk::Widget * info;
         info = row[_page_list_columns._col_info];
         if (info == NULL) {
-            info = Inkscape::Extension::db.get(id.c_str())->get_info_widget();
-            row[_page_list_columns._col_info] = info;
-            info->reference();
+            if (ext != NULL) {
+                info = ext->get_info_widget();
+                row[_page_list_columns._col_info] = info;
+                info->reference();
+            }
         } else {
             info->unparent();
         }
@@ -162,9 +166,11 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         Gtk::Widget * help;
         help = row[_page_list_columns._col_help];
         if (help == NULL) {
-            help = Inkscape::Extension::db.get(id.c_str())->get_help_widget();
-            row[_page_list_columns._col_help] = help;
-            help->reference();
+            if (ext != NULL) {
+                help = ext->get_help_widget();
+                row[_page_list_columns._col_help] = help;
+                help->reference();
+            }
         } else {
             help->unparent();
         }
@@ -172,9 +178,11 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         Gtk::Widget * params;
         params = row[_page_list_columns._col_params];
         if (params == NULL) {
-            params = Inkscape::Extension::db.get(id.c_str())->get_params_widget();
-            row[_page_list_columns._col_params] = params;
-            params->reference();
+            if (ext != NULL) {
+                params = ext->get_params_widget();
+                row[_page_list_columns._col_params] = params;
+                params->reference();
+            }
         } else {
             params->unparent();
         }
