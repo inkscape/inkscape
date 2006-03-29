@@ -836,11 +836,11 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
 
     if (node->type == Inkscape::NodePath::NODE_CUSP) {
         node->knot->setShape (SP_KNOT_SHAPE_DIAMOND);
-        node->knot->setSize (9);
+        node->knot->setSize (node->selected? 11 : 9);
         sp_knot_update_ctrl(node->knot);
     } else {
         node->knot->setShape (SP_KNOT_SHAPE_SQUARE);
-        node->knot->setSize (7);
+        node->knot->setSize (node->selected? 9 : 7);
         sp_knot_update_ctrl(node->knot);
     }
 
