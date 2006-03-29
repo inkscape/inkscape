@@ -13,7 +13,6 @@
 #include "../dialogs/dialog-events.h"
 
 #include "prefdialog.h"
-#include "helpdialog.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -67,9 +66,7 @@ PrefDialog::run (void) {
     while (resp == Gtk::RESPONSE_HELP) {
         resp = Gtk::Dialog::run();
         if (resp == Gtk::RESPONSE_HELP) {
-            HelpDialog help(_name, _help);
-            help.run();
-            help.hide();
+
         }
     }
     return resp;
