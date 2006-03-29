@@ -656,8 +656,11 @@ GrDragger::updateTip ()
     } else if (g_slist_length (draggables) == 2 && isA (POINT_RG_CENTER) && isA (POINT_RG_FOCUS)) {
         this->knot->tip = g_strdup_printf (_("Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to separate focus"));
     } else {
-        this->knot->tip = g_strdup_printf (_("Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate"),
-                                           g_slist_length (this->draggables));
+        int length = g_slist_length (this->draggables);
+        this->knot->tip = g_strdup_printf (ngettext("Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to separate",
+                                                    "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to separate",
+                                                    length),
+                                           length);
     }
 }
 
