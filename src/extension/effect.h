@@ -30,17 +30,31 @@ typedef View View;
 
 namespace Extension {
 
+/** \brief  Effects are extensions that take a document and do something
+            to it in place.  This class adds the extra functions required
+            to make extensions effects.
+*/
 class Effect : public Extension {
+    /** \brief  This is the last effect that was used.  This is used in
+                a menu item to rapidly recall the same effect. */
     static Effect * _last_effect;
+    /** \brief  The location of the effects menu on the menu structure
+                XML file.  This is saved so it only has to be discovered
+                once. */
     static Inkscape::XML::Node * _effects_list;
     bool find_effects_list (Inkscape::XML::Node * menustruct);
     void merge_menu (Inkscape::XML::Node * base, Inkscape::XML::Node * start, Inkscape::XML::Node * patern, Inkscape::XML::Node * mergee);
 
+    /** \brief  This is the verb type that is used for all effect's verbs.
+                It provides convience functions and maintains a pointer
+                back to the effect that created it.  */
     class EffectVerb : public Inkscape::Verb {
         private:
             static void perform (SPAction * action, void * mydata, void * otherdata);
+            /** \brief  Function to call for specific actions */
             static SPActionEventVector vector;
 
+            /** \brief  The effect that this verb represents. */
             Effect * _effect;
         protected:
             virtual SPAction * make_action (Inkscape::UI::View::View * view);
@@ -56,7 +70,10 @@ class Effect : public Extension {
                 this->set_default_sensitive(true);
             }
     };
+
+    /** \brief  The verb representing this effect. */
     EffectVerb _verb;
+    /** \brief  Menu node created for this effect */
     Inkscape::XML::Node * _menu_node;
 public:
                  Effect  (Inkscape::XML::Node * in_repr,
