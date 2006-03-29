@@ -21,6 +21,7 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/scrolledwindow.h>
 
 #include "extension/extension.h"
 
@@ -43,23 +44,34 @@ protected:
     /** \brief  The model for the list of extensions */
     Glib::RefPtr<Gtk::TreeStore> _page_list_model;
     /** \brief  The notebook page that contains information */
-    Gtk::VBox _notebook_info;
+    Gtk::ScrolledWindow _notebook_info;
     /** \brief  The notebook page that contains help info */
-    Gtk::VBox _notebook_help;
+    Gtk::ScrolledWindow _notebook_help;
     /** \brief  The notebook page that holds all the parameters */
-    Gtk::VBox _notebook_params;
+    Gtk::ScrolledWindow _notebook_params;
 
     //Pagelist model columns:
     class PageListModelColumns : public Gtk::TreeModel::ColumnRecord {
     public:
+        /** \brief  Creates the Page List model by adding all of the
+                    members of the class as column records. */
         PageListModelColumns() {
             Gtk::TreeModelColumnRecord::add(_col_name);
-            Gtk::TreeModelColumnRecord::add(_col_page);
             Gtk::TreeModelColumnRecord::add(_col_id);
+            Gtk::TreeModelColumnRecord::add(_col_info);
+            Gtk::TreeModelColumnRecord::add(_col_help);
+            Gtk::TreeModelColumnRecord::add(_col_params);
         }
+        /** \brief  Name of the extension */
         Gtk::TreeModelColumn<Glib::ustring> _col_name;
+        /** \brief  ID of the extension */
         Gtk::TreeModelColumn<Glib::ustring> _col_id;
-        Gtk::TreeModelColumn<Gtk::Widget *> _col_page;
+        /** \brief  Info widget for the extension (NULL if unset) */
+        Gtk::TreeModelColumn<Gtk::Widget *> _col_info;
+        /** \brief  Help widget for the extension (NULL if unset) */
+        Gtk::TreeModelColumn<Gtk::Widget *> _col_help;
+        /** \brief  Parameters list of the extension (NULL if unset) */
+        Gtk::TreeModelColumn<Gtk::Widget *> _col_params;
     };
     PageListModelColumns _page_list_columns;
 

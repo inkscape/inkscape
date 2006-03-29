@@ -24,6 +24,7 @@
 #include "extension-editor.h"
 #include "verbs.h"
 #include "prefs-utils.h"
+#include "interface.h"
 
 #include "extension/extension.h"
 #include "extension/db.h"
@@ -44,6 +45,9 @@ namespace Dialog {
 ExtensionEditor::ExtensionEditor()
     : Dialog ("dialogs.extensioneditor", SP_VERB_DIALOG_EXTENSIONEDITOR)
 {
+    _notebook_info.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    _notebook_help.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    _notebook_params.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
  
     //Main HBox
     Gtk::HBox* hbox_list_page = Gtk::manage(new Gtk::HBox());
@@ -125,14 +129,61 @@ ExtensionEditor::on_pagelist_selection_changed (void)
     Glib::RefPtr<Gtk::TreeSelection> selection = _page_list.get_selection();
     Gtk::TreeModel::iterator iter = selection->get_selected();
     if (iter) {
-        // _page_frame.remove();
+        /* Get the row info */
         Gtk::TreeModel::Row row = *iter;
-        // _current_page = row[_page_list_columns._col_page];
-        // _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
-        // _page_frame.add(*_current_page);
-        // _current_page->show();
         Glib::ustring id = row[_page_list_columns._col_id];
+        Glib::ustring name = row[_page_list_columns._col_name];
+
+        /* Set the selection in the preferences */
         prefs_set_string_attribute("dialogs.extensioneditor", "selected-extension", id.c_str());
+
+        /* Adjust the dialog's title */
+        gchar title[500];
+        sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_EXTENSIONEDITOR), title);
+        Glib::ustring utitle(title);
+        set_title(utitle + ": " + name);
+
+        /* Clear the notbook pages */
+        _notebook_info.remove();
+        _notebook_help.remove();
+        _notebook_params.remove();
+
+        /* Make sure we have all the widges */
+        Gtk::Widget * info;
+        info = row[_page_list_columns._col_info];
+        if (info == NULL) {
+            info = Inkscape::Extension::db.get(id.c_str())->get_info_widget();
+            row[_page_list_columns._col_info] = info;
+            //info->ref();
+        }
+
+        Gtk::Widget * help;
+        help = row[_page_list_columns._col_help];
+        if (help == NULL) {
+            help = Inkscape::Extension::db.get(id.c_str())->get_help_widget();
+            row[_page_list_columns._col_help] = help;
+            //help->ref();
+        }
+
+        Gtk::Widget * params;
+        params = row[_page_list_columns._col_params];
+        if (params == NULL) {
+            params = Inkscape::Extension::db.get(id.c_str())->get_params_widget();
+            row[_page_list_columns._col_params] = params;
+            //params->ref();
+        }
+
+        /* Place them in the pages */
+        if (info != NULL) {
+            _notebook_info.add(*info);
+        }
+        if (help != NULL) {
+            _notebook_help.add(*help);
+        }
+        if (params != NULL) {
+            _notebook_params.add(*params);
+        }
+
     }
 
     return;
@@ -174,7 +225,9 @@ ExtensionEditor::add_extension (Inkscape::Extension::Extension * ext)
     Gtk::TreeModel::Row row = *iter;
     row[_page_list_columns._col_name] = ext->get_name();
     row[_page_list_columns._col_id] =   ext->get_id();
-    row[_page_list_columns._col_page] = NULL;
+    row[_page_list_columns._col_info] = NULL;
+    row[_page_list_columns._col_help] = NULL;
+    row[_page_list_columns._col_params] = NULL;
 
     return iter;
 }

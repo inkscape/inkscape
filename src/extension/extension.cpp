@@ -23,6 +23,7 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
+#include <gtkmm/label.h>
 
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
@@ -622,6 +623,32 @@ Extension::paramString (void)
 	}
 
 	return param_string;
+}
+
+/* Extension editor dialog stuff */
+
+Gtk::Widget *
+Extension::get_info_widget(void)
+{
+    Gtk::Widget * retval = Gtk::manage(new Gtk::Label("Info"));
+    retval->show();
+    return retval;
+}
+
+Gtk::Widget *
+Extension::get_help_widget(void)
+{
+    Gtk::Widget * retval = Gtk::manage(new Gtk::Label("Help"));
+    retval->show();
+    return retval;
+}
+
+Gtk::Widget *
+Extension::get_params_widget(void)
+{
+    Gtk::Widget * retval = Gtk::manage(new Gtk::Label("Params"));
+    retval->show();
+    return retval;
 }
 
 }  /* namespace Extension */

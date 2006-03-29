@@ -169,6 +169,13 @@ public:
 public:
     Gtk::Widget *    autogui (void);
     Glib::ustring *  paramString (void);
+
+    /* Extension editor dialog stuff */
+public:
+    Gtk::Widget *    get_info_widget(void);
+    Gtk::Widget *    get_help_widget(void);
+    Gtk::Widget *    get_params_widget(void);
+
 };
 
 
