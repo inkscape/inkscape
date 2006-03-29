@@ -24,6 +24,8 @@
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/table.h>
 
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
@@ -627,26 +629,72 @@ Extension::paramString (void)
 
 /* Extension editor dialog stuff */
 
-Gtk::Widget *
+Gtk::VBox *
 Extension::get_info_widget(void)
 {
-    Gtk::Widget * retval = Gtk::manage(new Gtk::Label("Info"));
-    retval->show();
+    Gtk::VBox * retval = Gtk::manage(new Gtk::VBox());
+
+    Gtk::Frame * info = Gtk::manage(new Gtk::Frame("General Extension Information"));
+    retval->pack_start(*info, true, true, 5);
+
+    Gtk::Table * table = Gtk::manage(new Gtk::Table());
+    info->add(*table);
+
+    int row = 0;
+    add_val(_("Name:"), _(name), table, &row);
+    add_val(_("ID:"), id, table, &row);
+    add_val(_("State:"), _state == STATE_LOADED ? _("Loaded") : _state == STATE_UNLOADED ? _("Unloaded") : _("Deactivated"), table, &row);
+
+
+    retval->show_all();
     return retval;
 }
 
-Gtk::Widget *
+void
+Extension::add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Table * table, int * row)
+{
+    Gtk::Label * label;
+    Gtk::Label * value;
+
+    (*row)++; 
+    label = Gtk::manage(new Gtk::Label(labelstr));
+    value = Gtk::manage(new Gtk::Label(valuestr));
+    table->attach(*label, 0, 1, (*row) - 1, *row);
+    table->attach(*value, 1, 2, (*row) - 1, *row);
+
+    label->show();
+    value->show();
+
+    return;
+}
+
+Gtk::VBox *
 Extension::get_help_widget(void)
 {
-    Gtk::Widget * retval = Gtk::manage(new Gtk::Label("Help"));
+    Gtk::VBox * retval = Gtk::manage(new Gtk::VBox());
+
+    if (_help == NULL) {
+        Gtk::Label * content = Gtk::manage(new Gtk::Label("Currently there is no help available for this Extension.  Please look on the Inkscape website or ask on the mailing lists if you have questions regarding this extension."));
+        retval->pack_start(*content, true, true, 5);
+        content->set_line_wrap(true);
+        content->show();
+    } else {
+
+
+
+    }
+
     retval->show();
     return retval;
 }
 
-Gtk::Widget *
+Gtk::VBox *
 Extension::get_params_widget(void)
 {
-    Gtk::Widget * retval = Gtk::manage(new Gtk::Label("Params"));
+    Gtk::VBox * retval = Gtk::manage(new Gtk::VBox());
+    Gtk::Widget * content = Gtk::manage(new Gtk::Label("Params"));
+    retval->pack_start(*content, true, true, 5);
+    content->show();
     retval->show();
     return retval;
 }

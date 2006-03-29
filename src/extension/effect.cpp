@@ -261,6 +261,12 @@ Effect::find_effects_list (Inkscape::XML::Node * menustruct)
     return false;
 }
 
+Gtk::VBox *
+Effect::get_info_widget(void)
+{
+    return Extension::get_info_widget();
+}
+
 /** \brief  Create an action for a \c EffectVerb
     \param  view  Which view the action should be created for
     \return The built action.

@@ -18,6 +18,8 @@
 #include <fstream>
 #include <vector>
 #include <gtkmm/widget.h>
+#include <gtkmm/box.h>
+#include <gtkmm/table.h>
 #include <glibmm/ustring.h>
 #include "xml/repr.h"
 #include "extension/extension-forward.h"
@@ -172,9 +174,11 @@ public:
 
     /* Extension editor dialog stuff */
 public:
-    Gtk::Widget *    get_info_widget(void);
-    Gtk::Widget *    get_help_widget(void);
-    Gtk::Widget *    get_params_widget(void);
+    Gtk::VBox *    get_info_widget(void);
+    Gtk::VBox *    get_help_widget(void);
+    Gtk::VBox *    get_params_widget(void);
+protected:
+    inline static void add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Table * table, int * row);
 
 };
 

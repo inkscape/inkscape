@@ -92,6 +92,8 @@ public:
     static void      place_menus (void);
     void             place_menu (Inkscape::XML::Node * menus);
 
+    Gtk::VBox *    get_info_widget(void);
+
 private:
     static gchar *   remove_ (gchar * instr);
 };
