@@ -26,7 +26,9 @@
 #include <sp-item.h>
 #include <sp-shape.h>
 #include <sp-image.h>
-#include <splivarot.h> //for intersection boolop
+
+#include <display/nr-arena.h>
+#include <display/nr-arena-shape.h>
 
 #include "siox.h"
 #include "imagemap-gdk.h"
@@ -34,6 +36,100 @@
 namespace Inkscape {
 
 namespace Trace {
+
+
+
+/*
+static PackedPixelMap *
+renderToPackedPixelMap(SPDocument *doc, std::vector<SPItem *> items)
+{
+
+    double minX =  1.0e6;
+    double minY =  1.0e6;
+    double maxX = -1.0e6;
+    double maxY = -1.0e6;
+    for (int i=0 ; i<items.size() ; i++)
+        {
+        SPItem *item = items[i];
+        if (item->bbox.x0 < minX)
+            minX = item->bbox.x0;
+        if (item->bbox.y0 < minY)
+            minY = item->bbox.y0;
+        if (item->bbox.x1 > maxX)
+            maxX = item->bbox.x1;
+        if (item->bbox.y1 > maxY)
+            maxY = item->bbox.x1;
+        }
+
+    double dwidth  = maxX - minX;
+    double dheight = maxY - minY;
+
+    NRRectL bbox;
+    bbox.x0 = 0;
+    bbox.y0 = 0;
+    bbox.x1 = 256;
+    bbox.y1 = (int) ( 256.0 * dwidth / dheight );
+
+
+    NRArena *arena = NRArena::create();
+    unsigned dkey = sp_item_display_key_new(1);
+
+    // Create ArenaItems and set transform
+    NRArenaItem *root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)),
+            arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    nr_arena_item_set_transform(root, NR::Matrix(&affine));
+
+    NRPixBlock pb;
+    nr_pixblock_setup(&pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                      minX, minY, maxX, maxY, true);
+
+    //fill in background
+    for (int row = 0; row < bbox.y1; row++)
+        {
+        guchar *p = NR_PIXBLOCK_PX(&pb) + row * bbox.x1;
+        for (int col = 0; col < bbox.x1; col++)
+            {
+            *p++ = ebp->r;
+            *p++ = ebp->g;
+            *p++ = ebp->b;
+            *p++ = ebp->a;
+            }
+        }
+
+    // Render
+    nr_arena_item_invoke_render(root, &bbox, &pb, 0);
+
+    for (int r = 0; r < num_rows; r++) {
+        rows[r] = NR_PIXBLOCK_PX(&pb) + r * pb.rs;
+    }
+
+    //## Make an packed pixel map
+    PackedPixelMap *ppMap = PackedPixelMapCreate(bbox.x1, bbox.y1);
+    for (int row = 0; row < bbox.y1; row++)
+        {
+        guchar *p = NR_PIXBLOCK_PX(&pb) + row * bbox.x1;
+        for (int col = 0; col < bbox.x1; col++)
+            {
+            int r = *p++;
+            int g = *p++;
+            int b = *p++;
+            int a = *p++;
+            ppMap->setPixelValue(ppMap, col, row, r, g, b);
+            }
+        }
+
+    //## Free allocated things
+    nr_pixblock_release(&pb);
+    nr_arena_item_unref(root);
+    nr_object_unref((NRObject *) arena);
+
+
+    return ppMap;
+}
+*/
+
+
+
 
 /**
  *
@@ -92,7 +188,7 @@ Tracer::getSelectedSPImage()
                     }
                 img = SP_IMAGE(item);
                 }
-            else if (img) //# items -after- the image in tree (above it in Z)
+            else // if (img) //# items -after- the image in tree (above it in Z)
                 {
                 if (SP_IS_SHAPE(item))
                     {
@@ -160,12 +256,30 @@ GdkPixbuf *
 Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
 {
 
+    //Convert from gdk, so a format we know.  By design, the pixel
+    //format in PackedPixelMap is identical to what is needed by SIOX
     PackedPixelMap *ppMap = gdkPixbufToPackedPixelMap(origPixbuf);
     //We need to create two things:
     //  1.  An array of long pixel values of ARGB
     //  2.  A matching array of per-pixel float 'confidence' values
     unsigned long *imgBuf = ppMap->pixels;
     float *confidenceMatrix = new float[ppMap->width * ppMap->height];
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop)
+        {
+        g_warning("Trace: No active desktop\n");
+        return NULL;
+        }
+
+    Inkscape::Selection *sel = SP_DT_SELECTION(desktop);
+    if (!sel)
+        {
+        char *msg = _("Select an <b>image</b> to trace");
+        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        //g_warning(msg);
+        return NULL;
+        }
 
     Inkscape::XML::Node *imgRepr = SP_OBJECT(img)->repr;
     /*
@@ -209,9 +323,26 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     double iwscale = width  / iwidth;
     double ihscale = height / iheight;
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
     unsigned long cmIndex = 0;
+
+    /* Create new arena */
+    NRArena *arena = NRArena::create();
+    unsigned dkey = sp_item_display_key_new(1);
+
+    std::vector<NRArenaItem *> arenaItems;
+    std::vector<SPShape *>::iterator iter;
+    for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; iter++)
+        {
+        /* Create ArenaItems and set transform */
+        NRArenaItem *aItem =
+            sp_item_invoke_show(*iter,
+                 arena, dkey, SP_ITEM_SHOW_DISPLAY);
+        nr_arena_item_set_transform(aItem, img->transform);
+        arenaItems.push_back(aItem);
+        }
+
+    PackedPixelMap *dumpMap = PackedPixelMapCreate(ppMap->width, ppMap->height);
+
     for (int row=0 ; row<ppMap->height ; row++)
         {
         double ypos = y + ihscale * (double) row;
@@ -223,30 +354,35 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
             point *= img->transform;
             point = desktop->doc2dt(point);
             std::vector<SPShape *>::iterator iter;
-            g_message("x:%f    y:%f\n", point[0], point[1]);
-            SPItem *itemOverPoint = desktop->item_at_point(point, false, NULL);
-            int weHaveAHit = false;
-            if (itemOverPoint)
+            //g_message("x:%f    y:%f\n", point[0], point[1]);
+            bool weHaveAHit = false;
+            std::vector<NRArenaItem *>::iterator aIter;
+            for (aIter = arenaItems.begin() ; aIter!=arenaItems.end() ; aIter++)
                 {
-                printf("searching\n");
-                for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; iter++)
+                NRArenaItem *arenaItem = *aIter;
+                NRArenaItemClass *arenaClass =
+                    (NRArenaItemClass *) NR_OBJECT_GET_CLASS (arenaItem);
+                if (arenaClass && arenaClass->pick)
                     {
-                    SPShape *shape = *iter;
-                    if (shape == itemOverPoint)
+                    if (arenaClass->pick(arenaItem, point, 0.0f, 0))
                         {
                         weHaveAHit = true;
                         break;
                         }
                     }
                 }
+
             if (weHaveAHit)
                 {
-                g_message("hit!\n");
+                //g_message("hit!\n");
+                dumpMap->setPixelLong(dumpMap, col, row, 0L);
                 confidenceMatrix[cmIndex] =
                         org::siox::SioxSegmentator::CERTAIN_FOREGROUND_CONFIDENCE;
                 }
             else
                 {
+                dumpMap->setPixelLong(dumpMap, col, row,
+                        ppMap->getPixel(ppMap, col, row));
                 confidenceMatrix[cmIndex] =
                         org::siox::SioxSegmentator::CERTAIN_BACKGROUND_CONFIDENCE;
                 }
@@ -256,10 +392,19 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
 
     //## ok we have our pixel buf
     org::siox::SioxSegmentator ss(ppMap->width, ppMap->height, NULL, 0);
-    ss.segmentate(imgBuf, ppMap->width * ppMap->height,
-                  confidenceMatrix, ppMap->width * ppMap->height,
-                  0, 0.0);
+    ss.segmentate(imgBuf, confidenceMatrix, 0, 0.0);
 
+    dumpMap->writePPM(dumpMap, "siox.ppm");
+    dumpMap->destroy(dumpMap);
+
+    /* Free Arena and ArenaItem */
+    std::vector<NRArenaItem *>::iterator aIter;
+    for (aIter = arenaItems.begin() ; aIter!=arenaItems.end() ; aIter++)
+       {
+       NRArenaItem *arenaItem = *aIter;
+       nr_arena_item_unref(arenaItem);
+       }
+    nr_object_unref((NRObject *) arena);
 
 
     GdkPixbuf *newPixbuf = packedPixelMapToGdkPixbuf(ppMap);

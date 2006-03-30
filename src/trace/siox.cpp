@@ -949,7 +949,9 @@ SioxSegmentator::SioxSegmentator(int w, int h, float *limitsArg, int limitsSize)
 
     imgWidth   = w;
     imgHeight  = h;
-    labelField = new int[imgWidth*imgHeight];
+    pixelCount = imgWidth * imgHeight;
+
+    labelField = new int[pixelCount];
 
     if (!limitsArg) {
         limits = new float[3];
@@ -1009,8 +1011,8 @@ void SioxSegmentator::trace(char *fmt, ...)
 
 
 
-bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
-                                 float *cm, int cmSize,
+bool SioxSegmentator::segmentate(unsigned long *image,
+                                 float *cm,
                                  int smoothness, double sizeFactorToKeep)
 {
     segmentated=false;
@@ -1018,12 +1020,12 @@ bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
     hs.clear();
 
     // save image for drb
-    origImage=new long[imageSize];
-    for (int i=0 ; i<imageSize ; i++)
+    origImage=new long[pixelCount];
+    for (int i=0 ; i<pixelCount ; i++)
         origImage[i] = image[i];
 
     // create color signatures
-    for (int i=0; i<cmSize; i++) {
+    for (int i=0; i<pixelCount; i++) {
         if (cm[i]<=BACKGROUND_CONFIDENCE)
             knownBg.push_back(rgbToClab(image[i]));
         else if (cm[i]>=FOREGROUND_CONFIDENCE)
@@ -1040,7 +1042,7 @@ bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
 
     // classify using color signatures,
     // classification cached in hashmap for drb and speedup purposes
-    for (int i=0; i<cmSize; i++) {
+    for (int i=0; i<pixelCount; i++) {
         if (cm[i]>=FOREGROUND_CONFIDENCE) {
             cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
             continue;
@@ -1097,17 +1099,17 @@ bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
 
     // postprocessing
     smoothcm(cm, imgWidth, imgHeight, 0.33f, 0.33f, 0.33f); // average
-    normalizeMatrix(cm, cmSize);
+    normalizeMatrix(cm, pixelCount);
     erode(cm, imgWidth, imgHeight);
-    keepOnlyLargeComponents(cm, cmSize, UNKNOWN_REGION_CONFIDENCE, sizeFactorToKeep);
+    keepOnlyLargeComponents(cm, UNKNOWN_REGION_CONFIDENCE, sizeFactorToKeep);
 
     for (int i=0; i<smoothness; i++) {
         smoothcm(cm, imgWidth, imgHeight, 0.33f, 0.33f, 0.33f); // average
     }
 
-    normalizeMatrix(cm, cmSize);
+    normalizeMatrix(cm, pixelCount);
 
-    for (int i=0; i<cmSize; i++) {
+    for (int i=0; i<pixelCount; i++) {
         if (cm[i]>=UNKNOWN_REGION_CONFIDENCE) {
             cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
         } else {
@@ -1115,8 +1117,8 @@ bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
         }
     }
 
-    keepOnlyLargeComponents(cm, cmSize, UNKNOWN_REGION_CONFIDENCE, sizeFactorToKeep);
-    fillColorRegions(cm, cmSize, image);
+    keepOnlyLargeComponents(cm, UNKNOWN_REGION_CONFIDENCE, sizeFactorToKeep);
+    fillColorRegions(cm, image);
     dilate(cm, imgWidth, imgHeight);
 
     segmentated=true;
@@ -1125,7 +1127,7 @@ bool SioxSegmentator::segmentate(unsigned long *image, int imageSize,
 
 
 
-void SioxSegmentator::keepOnlyLargeComponents(float *cm, int cmSize,
+void SioxSegmentator::keepOnlyLargeComponents(float *cm,
                                               float threshold,
                                               double sizeFactorToKeep)
 {
@@ -1140,7 +1142,7 @@ void SioxSegmentator::keepOnlyLargeComponents(float *cm, int cmSize,
 
     // slow but easy to understand:
     std::vector<int> labelSizes;
-    for (int i=0 ; i<cmSize ; i++) {
+    for (int i=0 ; i<pixelCount ; i++) {
         regionCount=0;
         if (labelField[i]==-1 && cm[i]>=threshold) {
             regionCount=depthFirstSearch(cm, i, threshold, curlabel++);
@@ -1153,7 +1155,7 @@ void SioxSegmentator::keepOnlyLargeComponents(float *cm, int cmSize,
         }
     }
 
-    for (int i=0 ; i<cmSize ; i++) {
+    for (int i=0 ; i<pixelCount ; i++) {
         if (labelField[i]!=-1) {
             // remove if the component is to small
             if (labelSizes[labelField[i]]*sizeFactorToKeep < maxregion)
@@ -1301,7 +1303,7 @@ bool SioxSegmentator::subpixelRefine(int xa, int ya, int dx, int dy,
 
 
 
-void SioxSegmentator::fillColorRegions(float *cm, int cmSize, unsigned long *image)
+void SioxSegmentator::fillColorRegions(float *cm, unsigned long *image)
 {
     int idx = 0;
     for (int i=0 ; i<imgHeight ; i++)
@@ -1310,7 +1312,7 @@ void SioxSegmentator::fillColorRegions(float *cm, int cmSize, unsigned long *ima
 
     //int maxRegion=0; // unused now
     std::vector<int> pixelsToVisit;
-    for (int i=0; i<cmSize; i++) { // for all pixels
+    for (int i=0; i<pixelCount; i++) { // for all pixels
         if (labelField[i]!=-1 || cm[i]<UNKNOWN_REGION_CONFIDENCE) {
             continue; // already visited or bg
         }

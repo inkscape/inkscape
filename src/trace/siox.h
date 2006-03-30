@@ -205,18 +205,17 @@ public:
      *
      * @param image Pixel data of the image to be segmentated.
      *        Every integer represents one ARGB-value.
-     * @param imageSize number of values in image
      * @param cm Confidence matrix specifying the probability of an image
      *        belonging to the foreground before and after the segmentation.
      * @param smoothness Number of smoothing steps in the post processing.
+     *        Both arrays should be width * height in size.
      * @param sizeFactorToKeep Segmentation retains the largest connected
      *        foreground component plus any component with size at least
      *        <CODE>sizeOfLargestComponent/sizeFactorToKeep</CODE>.
      * @return <CODE>true</CODE> if the segmentation algorithm succeeded,
      *         <CODE>false</CODE> if segmentation is impossible
      */
-    bool segmentate(unsigned long *image, int imageSize,
-                    float *cm, int cmSize,
+    bool segmentate(unsigned long *image, float *cm,
                     int smoothness, double sizeFactorToKeep);
 
     /**
@@ -232,7 +231,7 @@ public:
      *        component plus any component with size at least
      *        <CODE>sizeOfLargestComponent/sizeFactorToKeep</CODE>.
      */
-    void keepOnlyLargeComponents(float *cm, int cmSize,
+    void keepOnlyLargeComponents(float *cm,
                                  float threshold,
                                  double sizeFactorToKeep);
 
@@ -316,7 +315,7 @@ public:
      * @param cm confidence matrix to be searched
      * @param image image to be searched
      */
-    void fillColorRegions(float *cm, int cmSize, unsigned long *image);
+    void fillColorRegions(float *cm, unsigned long *image);
 
 private:
 
@@ -344,6 +343,11 @@ private:
 
     /** Vertical resolution of the image to be segmentated. */
     int imgHeight;
+
+    /** Number of pixels and/or confidence matrix values to process.
+        equal to imgWidth * imgHeight
+    */
+    long pixelCount;
 
     /** Stores component label (index) by pixel it belongs to. */
     int *labelField;
