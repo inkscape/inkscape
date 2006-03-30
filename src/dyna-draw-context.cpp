@@ -226,6 +226,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "angle");
     sp_event_context_read(ec, "width");
     sp_event_context_read(ec, "thinning");
+    sp_event_context_read(ec, "tremor");
     sp_event_context_read(ec, "flatness");
     sp_event_context_read(ec, "usepressure");
     sp_event_context_read(ec, "usetilt");
@@ -255,6 +256,9 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
     } else if (!strcmp(key, "thinning")) {
         double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.1 );
         ddc->vel_thin = CLAMP(dval, -1.0, 1.0);
+    } else if (!strcmp(key, "tremor")) {
+        double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
+        ddc->tremor = CLAMP(dval, 0.0, 1.0);
     } else if (!strcmp(key, "flatness")) {
         double const dval = ( val ? g_ascii_strtod (val, NULL) : 1.0 );
         ddc->flatness = CLAMP(dval, 0, 1.0);
@@ -422,16 +426,40 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         double pressure_thick = (dc->usepressure ? dc->pressure : 1.0);
 
         double width = ( pressure_thick - vel_thin * NR::L2(dc->vel) ) * dc->width;
+
+        double tremble_left = 0, tremble_right = 0;
+        if (dc->tremor > 0) {
+            // obtain two normally distributed random variables, using polar Box-Muller transform
+            double x1, x2, w, y1, y2;
+            do {
+                 x1 = 2.0 * g_random_double_range(0,1) - 1.0;
+                 x2 = 2.0 * g_random_double_range(0,1) - 1.0;
+                 w = x1 * x1 + x2 * x2;
+            } while ( w >= 1.0 );
+            w = sqrt( (-2.0 * log( w ) ) / w );
+            y1 = x1 * w;
+            y2 = x2 * w;
+
+            // deflect both left and right edges randomly and independently, so that:
+            // (1) dc->tremor=1 corresponds to sigma=1, decreasing dc->tremor narrows the bell curve;
+            // (2) deflection depends on width, but is upped for small widths for better visual uniformity across widths;
+            // (3) deflection somewhat depends on speed, to prevent fast strokes looking
+            // comparatively smooth and slow ones excessively jittery
+            tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
+            tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
+        }
+
         if ( width < 0.02 * dc->width ) {
             width = 0.02 * dc->width;
         }
 
-        NR::Point del = 0.05 * width * dc->ang;
+        NR::Point del_left = 0.05 * (width + tremble_left) * dc->ang;
+        NR::Point del_right = 0.05 * (width + tremble_right) * dc->ang;
 
-        dc->point1[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur + del);
-        dc->point2[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur - del);
+        dc->point1[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur + del_left);
+        dc->point2[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur - del_right);
 
-        dc->del = del;
+        dc->del = 0.5*(del_left + del_right);
     } else {
         dc->point1[dc->npoints] = sp_dyna_draw_get_curr_vpoint(dc);
     }

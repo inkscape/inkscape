@@ -756,7 +756,9 @@ sp_tb_spinbutton(
     gtk_tooltips_set_tip(tt, sb, tooltip, NULL);
     if (altx)
         gtk_object_set_data(GTK_OBJECT(sb), altx_mark, sb);
-    gtk_widget_set_size_request(sb, AUX_SPINBUTTON_WIDTH_SMALL, AUX_SPINBUTTON_HEIGHT);
+    gtk_widget_set_size_request(sb, 
+                                (upper <= 1.0 || digits == 0)? AUX_SPINBUTTON_WIDTH_SMALL - 10: AUX_SPINBUTTON_WIDTH_SMALL,
+                                AUX_SPINBUTTON_HEIGHT);
     gtk_widget_show(sb);
     gtk_signal_connect(GTK_OBJECT(sb), "focus-in-event", GTK_SIGNAL_FUNC(spinbutton_focus_in), tbl);
     gtk_signal_connect(GTK_OBJECT(sb), "key-press-event", GTK_SIGNAL_FUNC(spinbutton_keypress), tbl);
@@ -1870,6 +1872,13 @@ sp_ddc_flatness_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 }
 
 static void
+sp_ddc_tremor_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
+{
+    prefs_set_double_attribute("tools.calligraphic", "tremor", adj->value);
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void
 sp_ddc_pressure_state_changed(GtkWidget *button, gpointer data)
 {
     prefs_set_int_attribute ("tools.calligraphic", "usepressure", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
@@ -1895,6 +1904,7 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *tbl)
         {"angle", 30.0},
         {"width", 0.15},
         {"thinning", 0.1},
+        {"tremor", 0.0},
         {"flatness", 0.9}
     };
 
@@ -1966,6 +1976,15 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     //  interval
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
+    /* Tremor */
+    {
+        GtkWidget *hb = sp_tb_spinbutton(_("Tremor:"), _("How uneven or trembling is the pen stroke"),
+                                         "tools.calligraphic", "tremor", 0.0,
+                                         NULL, tbl, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_tremor_value_changed, 0.01, 2);
+        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+    }
     /* Mass */
     {
         GtkWidget *hb = sp_tb_spinbutton(_("Mass:"), _("How much inertia affects the movement of the pen"),

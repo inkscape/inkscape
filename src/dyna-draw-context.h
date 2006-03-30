@@ -32,7 +32,7 @@
 class SPDynaDrawContext;
 class SPDynaDrawContextClass;
 
-#define SAMPLING_SIZE 16        /* fixme: ?? */
+#define SAMPLING_SIZE 8        /* fixme: ?? */
 
 #define DDC_MIN_PRESSURE      0.0
 #define DDC_MAX_PRESSURE      1.0
@@ -89,6 +89,7 @@ struct SPDynaDrawContext
 
     double vel_thin;
     double flatness;
+    double tremor;
 
     Inkscape::MessageContext *_message_context;
 
