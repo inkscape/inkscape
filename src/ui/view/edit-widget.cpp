@@ -1,13 +1,13 @@
 /**
  * \brief This class implements the functionality of the window layout, menus,
  *        and signals.
- * 
+ *
  * This is a reimplementation into C++/Gtkmm of Sodipodi's SPDesktopWidget class.
  * Both SPDesktopWidget and EditWidget adhere to the EditWidgetInterface, so
  * they both can serve as widget for the same SPDesktop/Edit class.
  *
  * Ideally, this class should only contain the handling of the Window (i.e.,
- * content construction and window signals) and implement its 
+ * content construction and window signals) and implement its
  * EditWidgetInterface.
  *
  * Authors:
@@ -279,7 +279,7 @@ EditWidget::onDialogObjectProperties()
     _dlg_mgr.showDialog("ObjectProperties");
 }
 
-void 
+void
 EditWidget::onDialogTextProperties()
 {
     _dlg_mgr.showDialog("TextProperties");
@@ -290,7 +290,7 @@ EditWidget::onDialogTrace()
 {
 }
 
-void 
+void
 EditWidget::onDialogTransformation()
 {
     _dlg_mgr.showDialog("Transformation");
@@ -345,7 +345,7 @@ void
 EditWidget::onUriChanged()
 {
     g_message("onUriChanged called");
-    
+
 }
 
 // FIXME: strings are replaced by placeholders, NOT to be translated until the code is enabled
@@ -1084,7 +1084,7 @@ void
 EditWidget::initTopRuler()
 {
     _viewport_table.attach(_top_ruler,  1, 2, 0, 1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK);
-    
+
     _tooltips.set_tip (_top_ruler, _top_ruler.get_tip());
 }
 
@@ -1092,7 +1092,7 @@ void
 EditWidget::initLeftRuler()
 {
     _viewport_table.attach(_left_ruler, 0, 1, 1, 2, Gtk::SHRINK, Gtk::FILL|Gtk::EXPAND);
-    
+
     _tooltips.set_tip (_left_ruler, _left_ruler.get_tip());
 }
 
@@ -1113,14 +1113,14 @@ EditWidget::initRightScrollbar()
     _right_scrollbar.property_adjustment() = new Gtk::Adjustment (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
 }
 
-void 
+void
 EditWidget::initStickyZoom()
 {
     _viewport_table.attach(_sticky_zoom, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
 
     _sticky_zoom.set_active (prefs_get_int_attribute ("options.stickyzoom", "value", 0) != 0);
     _tooltips.set_tip (_sticky_zoom, _("Zoom drawing if window size changes"));
-    
+
     /// \todo icon not implemented
 }
 
@@ -1135,8 +1135,8 @@ EditWidget::initStatusbar()
     _layer_selector.reference();
     _statusbar.pack_start (_layer_selector, false, false, 1);
 
-    _coord_status.property_n_rows() = 2;    
-    _coord_status.property_n_columns() = 5;    
+    _coord_status.property_n_rows() = 2;
+    _coord_status.property_n_columns() = 5;
     _coord_status.property_row_spacing() = 0;
     _coord_status.property_column_spacing() = 2;
     _coord_eventbox.add (_coord_status);
@@ -1164,7 +1164,7 @@ EditWidget::initStatusbar()
 #endif
     _select_status.set_size_request (1, -1);
     _statusbar.pack_start (_select_status, true, true, 0);
-    
+
     _main_window_table.attach(_statusbar, 0, 1, 3, 4, Gtk::FILL, Gtk::SHRINK);
 }
 
@@ -1172,51 +1172,51 @@ EditWidget::initStatusbar()
 //----------implements EditWidgetInterface
 
 void *
-EditWidget::getWindow() 
-{ 
-    return this; 
-}
-
-void 
-EditWidget::setTitle (gchar const* new_title) 
+EditWidget::getWindow()
 {
-    set_title (new_title);    
+    return this;
 }
 
-void 
-EditWidget::layout() 
+void
+EditWidget::setTitle (gchar const* new_title)
+{
+    set_title (new_title);
+}
+
+void
+EditWidget::layout()
 {
    show_all_children();
 }
 
-void 
-EditWidget::present() 
+void
+EditWidget::present()
 {
     this->Gtk::Window::present();
 }
 
-void 
-EditWidget::getGeometry (gint &x, gint &y, gint &w, gint &h) 
+void
+EditWidget::getGeometry (gint &x, gint &y, gint &w, gint &h)
 {
     get_position (x, y);
     get_size (w, h);
 }
 
-void 
-EditWidget::setSize (gint w, gint h) 
+void
+EditWidget::setSize (gint w, gint h)
 {
     resize (w, h);
 }
 
-void 
-EditWidget::setPosition (NR::Point p) 
+void
+EditWidget::setPosition (NR::Point p)
 {
     move (int(p[NR::X]), int(p[NR::Y]));
 }
 
 /// \param p is already gobj()!
-void 
-EditWidget::setTransient (void* p, int i) 
+void
+EditWidget::setTransient (void* p, int i)
 {
 #ifndef WIN32
     gtk_window_set_transient_for (static_cast<GtkWindow*>(p), this->gobj());
@@ -1225,16 +1225,16 @@ EditWidget::setTransient (void* p, int i)
 #endif
 }
 
-NR::Point 
-EditWidget::getPointer() 
-{ 
+NR::Point
+EditWidget::getPointer()
+{
     int x, y;
     get_pointer (x, y);
-    return NR::Point (x, y); 
+    return NR::Point (x, y);
 }
 
-void 
-EditWidget::setFullscreen() 
+void
+EditWidget::setFullscreen()
 {
     fullscreen();
 }
@@ -1245,25 +1245,25 @@ EditWidget::setFullscreen()
  *  to save, discard, or cancel.  Returns TRUE if the shutdown operation
  *  is cancelled or if the save is cancelled or fails, FALSE otherwise.
  */
-bool 
-EditWidget::shutdown() 
+bool
+EditWidget::shutdown()
 {
     g_assert (_desktop != NULL);
     if (Inkscape::NSApplication::Editor::isDuplicatedView (_desktop))
         return false;
 
     SPDocument *doc = _desktop->doc();
-    if (sp_document_repr_root(doc)->attribute("sodipodi:modified") != NULL) 
+    if (sp_document_repr_root(doc)->attribute("sodipodi:modified") != NULL)
     {
         gchar *markup;
-        /// \todo FIXME !!! obviously this will have problems if the document 
+        /// \todo FIXME !!! obviously this will have problems if the document
         /// name contains markup characters
         markup = g_strdup_printf(
                 _("<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n\n"
                   "If you close without saving, your changes will be discarded."),
                 SP_DOCUMENT_NAME(doc));
-        
-        Gtk::MessageDialog dlg (*this, 
+
+        Gtk::MessageDialog dlg (*this,
                        markup,
                        true,
                        Gtk::MESSAGE_WARNING,
@@ -1278,7 +1278,7 @@ EditWidget::shutdown()
         dlg.set_default_response (Gtk::RESPONSE_YES);
 
         int response = dlg.run();
-        switch (response) 
+        switch (response)
         {
             case Gtk::RESPONSE_YES:
                 sp_document_ref(doc);
@@ -1299,18 +1299,18 @@ EditWidget::shutdown()
 
     /* Code to check data loss */
     bool allow_data_loss = FALSE;
-    while (sp_document_repr_root(doc)->attribute("inkscape:dataloss") != NULL && allow_data_loss == FALSE) 
+    while (sp_document_repr_root(doc)->attribute("inkscape:dataloss") != NULL && allow_data_loss == FALSE)
     {
         gchar *markup;
-        /// \todo FIXME !!! obviously this will have problems if the document 
+        /// \todo FIXME !!! obviously this will have problems if the document
         /// name contains markup characters
         markup = g_strdup_printf(
                 _("<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format (%s) that may cause data loss!</span>\n\n"
                   "Do you want to save this file in another format?"),
                 SP_DOCUMENT_NAME(doc),
                 Inkscape::Extension::db.get(sp_document_repr_root(doc)->attribute("inkscape:output_extension"))->get_name());
-        
-        Gtk::MessageDialog dlg (*this, 
+
+        Gtk::MessageDialog dlg (*this,
                        markup,
                        true,
                        Gtk::MESSAGE_WARNING,
@@ -1325,8 +1325,8 @@ EditWidget::shutdown()
         dlg.set_default_response (Gtk::RESPONSE_YES);
 
         int response = dlg.run();
-        
-        switch (response) 
+
+        switch (response)
         {
             case Gtk::RESPONSE_YES:
                 sp_document_ref(doc);
@@ -1345,37 +1345,37 @@ EditWidget::shutdown()
                 break;
         }
     }
-    
+
     return false;
 }
 
 
-void 
-EditWidget::destroy() 
-{ 
-    delete this; 
+void
+EditWidget::destroy()
+{
+    delete this;
 }
 
-void 
-EditWidget::requestCanvasUpdate() 
+void
+EditWidget::requestCanvasUpdate()
 {
     _svg_canvas.widget().queue_draw();
 }
 
-void 
-EditWidget::activateDesktop() 
-{
-    /// \todo active_desktop_indicator not implemented 
-}
-
-void 
-EditWidget::deactivateDesktop() 
+void
+EditWidget::activateDesktop()
 {
     /// \todo active_desktop_indicator not implemented
 }
 
-void 
-EditWidget::viewSetPosition (NR::Point p) 
+void
+EditWidget::deactivateDesktop()
+{
+    /// \todo active_desktop_indicator not implemented
+}
+
+void
+EditWidget::viewSetPosition (NR::Point p)
 {
     p -= _namedview->gridorigin;
     double lo, up, pos, max;
@@ -1385,9 +1385,9 @@ EditWidget::viewSetPosition (NR::Point p)
     _left_ruler.set_range (lo, up, p[NR::Y], max);
 }
 
-void 
-EditWidget::updateRulers() 
-{    
+void
+EditWidget::updateRulers()
+{
     NR::Point origin = _namedview->gridorigin;
 
     NR::Rect const viewbox = _svg_canvas.spobj()->getViewbox();
@@ -1403,8 +1403,8 @@ EditWidget::updateRulers()
     /// \todo is that correct?
 }
 
-void 
-EditWidget::updateScrollbars (double scale) 
+void
+EditWidget::updateScrollbars (double scale)
 {
     // do not call this function before canvas has its size allocated
     if (!is_realized() || _update_s_f) {
@@ -1452,7 +1452,7 @@ EditWidget::updateScrollbars (double scale)
 }
 
 void
-EditWidget::toggleRulers() 
+EditWidget::toggleRulers()
 {
     if (_top_ruler.is_visible())
     {
@@ -1466,8 +1466,8 @@ EditWidget::toggleRulers()
     }
 }
 
-void 
-EditWidget::toggleScrollbars() 
+void
+EditWidget::toggleScrollbars()
 {
     if (_bottom_scrollbar.is_visible())
     {
@@ -1481,39 +1481,39 @@ EditWidget::toggleScrollbars()
     }
 }
 
-void 
-EditWidget::updateZoom() 
+void
+EditWidget::updateZoom()
 {
     _zoom_status.update();
 }
 
-void 
-EditWidget::letZoomGrabFocus() 
+void
+EditWidget::letZoomGrabFocus()
 {
     _zoom_status.grab_focus();
 }
 
-void 
+void
 EditWidget::setToolboxFocusTo (const gchar *)
 {
     /// \todo not implemented
 }
 
-void 
+void
 EditWidget::setToolboxAdjustmentValue (const gchar *, double)
 {
     /// \todo not implemented
 }
 
-bool 
+bool
 EditWidget::isToolboxButtonActive (gchar const*)
 {
     /// \todo not implemented
     return true;
 }
 
-void 
-EditWidget::setCoordinateStatus (NR::Point p) 
+void
+EditWidget::setCoordinateStatus (NR::Point p)
 {
     gchar *cstr = g_strdup_printf ("%6.2f", _dt2r * p[NR::X]);
     _coord_status_x.property_label() = cstr;
@@ -1523,16 +1523,16 @@ EditWidget::setCoordinateStatus (NR::Point p)
     g_free (cstr);
 }
 
-void 
-EditWidget::setMessage (Inkscape::MessageType type, gchar const* msg) 
+void
+EditWidget::setMessage (Inkscape::MessageType type, gchar const* msg)
 {
     _select_status.set_markup (msg? msg : "");
 }
 
-bool 
+bool
 EditWidget::warnDialog (gchar* msg)
 {
-    Gtk::MessageDialog dlg (*this, 
+    Gtk::MessageDialog dlg (*this,
                        msg,
                        true,
                        Gtk::MESSAGE_WARNING,
@@ -1543,7 +1543,21 @@ EditWidget::warnDialog (gchar* msg)
 }
 
 
-void 
+/// \todo make this a member function when the signal is a sigc++ signal
+void _namedview_modified (SPNamedView* nv, guint flags, EditWidget* ew)
+{
+    if (flags & SP_OBJECT_MODIFIED_FLAG)
+    {
+        ew->_dt2r = 1.0 / nv->doc_units->unittobase;
+        ew->_top_ruler.update_metric();
+        ew->_left_ruler.update_metric();
+        ew->_tooltips.set_tip (ew->_top_ruler, ew->_top_ruler.get_tip());
+        ew->_tooltips.set_tip (ew->_left_ruler, ew->_left_ruler.get_tip());
+        ew->updateRulers();
+    }
+}
+
+void
 EditWidget::initEdit (SPDocument *doc)
 {
     _desktop = new SPDesktop();
@@ -1557,10 +1571,11 @@ EditWidget::initEdit (SPDocument *doc)
 
     /// \todo convert to sigc++ when SPObject hierarchy gets converted
     /* Listen on namedview modification */
-    g_signal_connect (G_OBJECT (_desktop->namedview), "modified", G_CALLBACK (Inkscape::UI::View::_namedview_modified), this);
+    g_signal_connect (G_OBJECT (_desktop->namedview), "modified",
+        G_CALLBACK (_namedview_modified), this);
     _layer_selector.setDesktop (_desktop);
     _selected_style_status.setDesktop (_desktop);
- 
+
     Inkscape::NSApplication::Editor::addDesktop (_desktop);
 
     _zoom_status.init (_desktop);
@@ -1569,7 +1584,7 @@ EditWidget::initEdit (SPDocument *doc)
     updateRulers();
 }
 
-void 
+void
 EditWidget::destroyEdit()
 {
     if (_desktop) {
@@ -1586,7 +1601,7 @@ EditWidget::destroyEdit()
 
 //----------start of other callbacks
 
-bool 
+bool
 EditWidget::on_key_press_event (GdkEventKey* event)
 {
     // this is the original code from helper/window.cpp
@@ -1599,17 +1614,17 @@ EditWidget::on_key_press_event (GdkEventKey* event)
 	             SP_SHORTCUT_CONTROL_MASK : 0 ) |
 	           ( event->state & GDK_MOD1_MASK ?
 	             SP_SHORTCUT_ALT_MASK : 0 );
-    return sp_shortcut_invoke (shortcut, 
+    return sp_shortcut_invoke (shortcut,
                              Inkscape::NSApplication::Editor::getActiveDesktop());
 }
 
-bool 
+bool
 EditWidget::on_delete_event (GdkEventAny*)
 {
     return shutdown();
 }
 
-bool 
+bool
 EditWidget::on_focus_in_event (GdkEventFocus*)
 {
     Inkscape::NSApplication::Editor::activateDesktop (_desktop);
@@ -1622,7 +1637,7 @@ void
 EditWidget::onWindowSizeAllocate (Gtk::Allocation &newall)
 {
     if (!is_realized()) return;
-    
+
     const Gtk::Allocation& all = get_allocation();
     if ((newall.get_x() == all.get_x()) &&
         (newall.get_y() == all.get_y()) &&
@@ -1666,29 +1681,16 @@ EditWidget::onAdjValueChanged()
 {
     if (_update_a_f) return;
     _update_a_f = true;
-    
-    sp_canvas_scroll_to (_svg_canvas.spobj(), 
-                         _bottom_scrollbar.get_value(), 
-                         _right_scrollbar.get_value(), 
+
+    sp_canvas_scroll_to (_svg_canvas.spobj(),
+                         _bottom_scrollbar.get_value(),
+                         _right_scrollbar.get_value(),
                          false);
     updateRulers();
-    
+
     _update_a_f = false;
 }
 
-/// \todo make this a member function when the signal is a sigc++ signal
-void _namedview_modified (SPNamedView* nv, guint flags, EditWidget* ew)
-{
-    if (flags & SP_OBJECT_MODIFIED_FLAG)
-    {
-        ew->_dt2r = 1.0 / nv->doc_units->unittobase;
-        ew->_top_ruler.update_metric();
-        ew->_left_ruler.update_metric();
-        ew->_tooltips.set_tip (ew->_top_ruler, ew->_top_ruler.get_tip());
-        ew->_tooltips.set_tip (ew->_left_ruler, ew->_left_ruler.get_tip());
-        ew->updateRulers();
-    }
-}
 
 } // namespace View
 } // namespace UI
