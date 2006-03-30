@@ -151,40 +151,14 @@ ExtensionEditor::on_pagelist_selection_changed (void)
         Inkscape::Extension::Extension * ext = Inkscape::Extension::db.get(id.c_str());
 
         /* Make sure we have all the widges */
-        Gtk::Widget * info;
-        info = row[_page_list_columns._col_info];
-        if (info == NULL) {
-            if (ext != NULL) {
-                info = ext->get_info_widget();
-                row[_page_list_columns._col_info] = info;
-                info->reference();
-            }
-        } else {
-            info->unparent();
-        }
+        Gtk::Widget * info = NULL;
+        Gtk::Widget * help = NULL;
+        Gtk::Widget * params = NULL;
 
-        Gtk::Widget * help;
-        help = row[_page_list_columns._col_help];
-        if (help == NULL) {
-            if (ext != NULL) {
-                help = ext->get_help_widget();
-                row[_page_list_columns._col_help] = help;
-                help->reference();
-            }
-        } else {
-            help->unparent();
-        }
-
-        Gtk::Widget * params;
-        params = row[_page_list_columns._col_params];
-        if (params == NULL) {
-            if (ext != NULL) {
-                params = ext->get_params_widget();
-                row[_page_list_columns._col_params] = params;
-                params->reference();
-            }
-        } else {
-            params->unparent();
+        if (ext != NULL) {
+            info = ext->get_info_widget();
+            help = ext->get_help_widget();
+            params = ext->get_params_widget();
         }
 
         /* Place them in the pages */
@@ -239,9 +213,6 @@ ExtensionEditor::add_extension (Inkscape::Extension::Extension * ext)
     Gtk::TreeModel::Row row = *iter;
     row[_page_list_columns._col_name] = ext->get_name();
     row[_page_list_columns._col_id] =   ext->get_id();
-    row[_page_list_columns._col_info] = NULL;
-    row[_page_list_columns._col_help] = NULL;
-    row[_page_list_columns._col_params] = NULL;
 
     return iter;
 }
