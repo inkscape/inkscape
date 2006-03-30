@@ -29,8 +29,7 @@ static int gWritePPM(GrayMap *me, char *fileName)
     if (!fileName)
         return FALSE;
 
-    Inkscape::IO::dump_fopen_call( fileName, "C" );
-    FILE *f = Inkscape::IO::fopen_utf8name(fileName, "wb");
+    FILE *f = fopen(fileName, "wb");
     if (!f)
         return FALSE;
 
@@ -42,9 +41,9 @@ static int gWritePPM(GrayMap *me, char *fileName)
             {
             unsigned long pix  = me->getPixel(me, x, y) / 3;
             unsigned char pixb = (unsigned char) (pix & 0xff);
-            fwrite(&pixb, 1, 1, f);
-            fwrite(&pixb, 1, 1, f);
-            fwrite(&pixb, 1, 1, f);
+            fputc(pixb, f);
+            fputc(pixb, f);
+            fputc(pixb, f);
             }
         }
     fclose(f);
@@ -134,8 +133,7 @@ static int ppWritePPM(PackedPixelMap *me, char *fileName)
     if (!fileName)
         return FALSE;
 
-    Inkscape::IO::dump_fopen_call(fileName, "D");
-    FILE *f = Inkscape::IO::fopen_utf8name(fileName, "wb");
+    FILE *f = fopen(fileName, "wb");
     if (!f)
         return FALSE;
 
@@ -243,8 +241,7 @@ static int rWritePPM(RgbMap *me, char *fileName)
     if (!fileName)
         return FALSE;
 
-    Inkscape::IO::dump_fopen_call(fileName, "D");
-    FILE *f = Inkscape::IO::fopen_utf8name(fileName, "wb");
+    FILE *f = fopen(fileName, "wb");
     if (!f)
         return FALSE;
 
@@ -255,9 +252,9 @@ static int rWritePPM(RgbMap *me, char *fileName)
         for (int x=0 ; x<me->width ; x++)
             {
             RGB rgb = me->getPixel(me, x, y);
-            fwrite(&(rgb.r), 1, 1, f);
-            fwrite(&(rgb.g), 1, 1, f);
-            fwrite(&(rgb.b), 1, 1, f);
+            fputc(rgb.r, f);
+            fputc(rgb.g, f);
+            fputc(rgb.b, f);
             }
         }
     fclose(f);
@@ -350,8 +347,7 @@ static int iWritePPM(IndexedMap *me, char *fileName)
     if (!fileName)
         return FALSE;
 
-    Inkscape::IO::dump_fopen_call(fileName, "D");
-    FILE *f = Inkscape::IO::fopen_utf8name(fileName, "wb");
+    FILE *f = fopen(fileName, "wb");
     if (!f)
         return FALSE;
 
@@ -362,9 +358,9 @@ static int iWritePPM(IndexedMap *me, char *fileName)
         for (int x=0 ; x<me->width ; x++)
             {
             RGB rgb = me->getPixelValue(me, x, y);
-            fwrite(&(rgb.r), 1, 1, f);
-            fwrite(&(rgb.g), 1, 1, f);
-            fwrite(&(rgb.b), 1, 1, f);
+            fputc(rgb.r, f);
+            fputc(rgb.g, f);
+            fputc(rgb.b, f);
             }
         }
     fclose(f);
