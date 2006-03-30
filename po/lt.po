@@ -4341,7 +4341,7 @@ msgstr "Tyrimas: %d.  %ld siūlių"
 #: ../src/trace/trace.cpp:118
 #: ../src/trace/trace.cpp:126
 msgid "Select an <b>image</b> to trace"
-msgstr "Pažymėkite <bgrafinį vaizdą</b>, kurį norite tirti"
+msgstr "Pažymėkite <b>grafinį vaizdą</b>, kurį norite tirti"
 
 #: ../src/trace/trace.cpp:89
 msgid "Select only one <b>image</b> to trace"
