@@ -1,7 +1,9 @@
 2006-03-29  Andrius R. <knutux@gmail.com>
 
-	* src/layer-fns.h, src/dialogs/layer-properties.cpp,
-	  src/dialogs/layer-properties.h, src/layer-fns.cpp:
+	* src/enums.h, src/selection-chemistry.cpp,
+	  src/selection.h, src/selection.cpp,
+	  src/ui/dialog/inkscape-preferences.cpp,
+	  src/ui/dialog/inkscape-preferences.h:
 
 	  patch #1450307 - option for select all to work in layer with it's sub-layers
 
