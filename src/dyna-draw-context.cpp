@@ -18,13 +18,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/*
- * TODO: Tue Oct  2 22:57:15 2001
- *  - Decide control point behavior when use_calligraphic==1.
- *  - Decide to use NORMALIZED_COORDINATE or not.
- *  - Bug fix.
- */
-
 #define noDYNA_DRAW_VERBOSE
 
 #include "config.h"
@@ -77,17 +70,14 @@ static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *even
 
 static void clear_current(SPDynaDrawContext *dc);
 static void set_to_accumulated(SPDynaDrawContext *dc);
-static void concat_current_line(SPDynaDrawContext *dc);
 static void accumulate_calligraphic(SPDynaDrawContext *dc);
 
 static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
-static void fit_and_split_line(SPDynaDrawContext *ddc, gboolean release);
 static void fit_and_split_calligraphics(SPDynaDrawContext *ddc, gboolean release);
 
 static void sp_dyna_draw_reset(SPDynaDrawContext *ddc, NR::Point p);
 static NR::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, NR::Point v);
 static NR::Point sp_dyna_draw_get_vpoint(SPDynaDrawContext const *ddc, NR::Point n);
-static NR::Point sp_dyna_draw_get_curr_vpoint(SPDynaDrawContext const *ddc);
 static void draw_temporary_box(SPDynaDrawContext *dc);
 
 
@@ -156,7 +146,6 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
 
     /* attributes */
     ddc->use_timeout = FALSE;
-    ddc->use_calligraphic = TRUE;
     ddc->timer_id = 0;
     ddc->dragging = FALSE;
     ddc->dynahand = FALSE;
@@ -214,7 +203,6 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     ddc->cal1 = sp_curve_new_sized(32);
     ddc->cal2 = sp_curve_new_sized(32);
 
-    /* style should be changed when dc->use_calligraphc is touched */
     ddc->currentshape = sp_canvas_item_new(SP_DT_SKETCH(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -293,14 +281,6 @@ sp_dyna_draw_get_vpoint(SPDynaDrawContext const *dc, NR::Point n)
     NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
     double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
     return NR::Point(n[NR::X] * max + drect.min()[NR::X], n[NR::Y] * max + drect.min()[NR::Y]);
-}
-
-/* Get current view point */
-static NR::Point sp_dyna_draw_get_curr_vpoint(SPDynaDrawContext const *dc)
-{
-    NR::Rect drect = SP_EVENT_CONTEXT(dc)->desktop->get_display_area();
-    double const max = MAX ( drect.dimensions()[NR::X], drect.dimensions()[NR::Y] );
-    return NR::Point(dc->cur[NR::X] * max + drect.min()[NR::X], dc->cur[NR::Y] * max + drect.min()[NR::Y]);
 }
 
 static void
@@ -416,53 +396,47 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
 {
     g_assert( dc->npoints >= 0 && dc->npoints < SAMPLING_SIZE );
 
-    if (dc->use_calligraphic) {
-        /* calligraphics */
+    // How much velocity thins strokestyle
+    double vel_thin = flerp (0, 160, dc->vel_thin);
 
-        // How much velocity thins strokestyle
-        double vel_thin = flerp (0, 160, dc->vel_thin);
+    // Influence of pressure on thickness
+    double pressure_thick = (dc->usepressure ? dc->pressure : 1.0);
 
-        // Influence of pressure on thickness
-        double pressure_thick = (dc->usepressure ? dc->pressure : 1.0);
+    double width = ( pressure_thick - vel_thin * NR::L2(dc->vel) ) * dc->width;
 
-        double width = ( pressure_thick - vel_thin * NR::L2(dc->vel) ) * dc->width;
+    double tremble_left = 0, tremble_right = 0;
+    if (dc->tremor > 0) {
+        // obtain two normally distributed random variables, using polar Box-Muller transform
+        double x1, x2, w, y1, y2;
+        do {
+            x1 = 2.0 * g_random_double_range(0,1) - 1.0;
+            x2 = 2.0 * g_random_double_range(0,1) - 1.0;
+            w = x1 * x1 + x2 * x2;
+        } while ( w >= 1.0 );
+        w = sqrt( (-2.0 * log( w ) ) / w );
+        y1 = x1 * w;
+        y2 = x2 * w;
 
-        double tremble_left = 0, tremble_right = 0;
-        if (dc->tremor > 0) {
-            // obtain two normally distributed random variables, using polar Box-Muller transform
-            double x1, x2, w, y1, y2;
-            do {
-                 x1 = 2.0 * g_random_double_range(0,1) - 1.0;
-                 x2 = 2.0 * g_random_double_range(0,1) - 1.0;
-                 w = x1 * x1 + x2 * x2;
-            } while ( w >= 1.0 );
-            w = sqrt( (-2.0 * log( w ) ) / w );
-            y1 = x1 * w;
-            y2 = x2 * w;
-
-            // deflect both left and right edges randomly and independently, so that:
-            // (1) dc->tremor=1 corresponds to sigma=1, decreasing dc->tremor narrows the bell curve;
-            // (2) deflection depends on width, but is upped for small widths for better visual uniformity across widths;
-            // (3) deflection somewhat depends on speed, to prevent fast strokes looking
-            // comparatively smooth and slow ones excessively jittery
-            tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
-            tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
-        }
-
-        if ( width < 0.02 * dc->width ) {
-            width = 0.02 * dc->width;
-        }
-
-        NR::Point del_left = 0.05 * (width + tremble_left) * dc->ang;
-        NR::Point del_right = 0.05 * (width + tremble_right) * dc->ang;
-
-        dc->point1[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur + del_left);
-        dc->point2[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur - del_right);
-
-        dc->del = 0.5*(del_left + del_right);
-    } else {
-        dc->point1[dc->npoints] = sp_dyna_draw_get_curr_vpoint(dc);
+        // deflect both left and right edges randomly and independently, so that:
+        // (1) dc->tremor=1 corresponds to sigma=1, decreasing dc->tremor narrows the bell curve;
+        // (2) deflection depends on width, but is upped for small widths for better visual uniformity across widths;
+        // (3) deflection somewhat depends on speed, to prevent fast strokes looking
+        // comparatively smooth and slow ones excessively jittery
+        tremble_left  = (y1)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
+        tremble_right = (y2)*dc->tremor * (0.15 + 0.8*width) * (0.35 + 14*NR::L2(dc->vel));
     }
+
+    if ( width < 0.02 * dc->width ) {
+        width = 0.02 * dc->width;
+    }
+
+    NR::Point del_left = 0.05 * (width + tremble_left) * dc->ang;
+    NR::Point del_right = 0.05 * (width + tremble_right) * dc->ang;
+
+    dc->point1[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur + del_left);
+    dc->point2[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur - del_right);
+
+    dc->del = 0.5*(del_left + del_right);
 
     dc->npoints++;
 }
@@ -600,19 +574,13 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 }
                 /* Create object */
                 fit_and_split(dc, TRUE);
-                if (dc->use_calligraphic) {
-                    accumulate_calligraphic(dc);
-                } else {
-                    concat_current_line(dc);
-                }
+                accumulate_calligraphic(dc);
                 set_to_accumulated(dc); /* temporal implementation */
-                if (dc->use_calligraphic /* || dc->cinside*/) {
-                    /* reset accumulated curve */
-                    sp_curve_reset(dc->accumulated);
-                    clear_current(dc);
-                    if (dc->repr) {
-                        dc->repr = NULL;
-                    }
+                /* reset accumulated curve */
+                sp_curve_reset(dc->accumulated);
+                clear_current(dc);
+                if (dc->repr) {
+                    dc->repr = NULL;
                 }
             }
             ret = TRUE;
@@ -742,30 +710,6 @@ set_to_accumulated(SPDynaDrawContext *dc)
 }
 
 static void
-concat_current_line(SPDynaDrawContext *dc)
-{
-    if (!sp_curve_empty(dc->currentcurve)) {
-        NArtBpath *bpath;
-        if (sp_curve_empty(dc->accumulated)) {
-            bpath = sp_curve_first_bpath(dc->currentcurve);
-            g_assert( bpath->code == NR_MOVETO_OPEN );
-            sp_curve_moveto(dc->accumulated, bpath->x3, bpath->y3);
-        }
-        bpath = sp_curve_last_bpath(dc->currentcurve);
-        if ( bpath->code == NR_CURVETO ) {
-            sp_curve_curveto(dc->accumulated,
-                             bpath->x1, bpath->y1,
-                             bpath->x2, bpath->y2,
-                             bpath->x3, bpath->y3);
-        } else if ( bpath->code == NR_LINETO ) {
-            sp_curve_lineto(dc->accumulated, bpath->x3, bpath->y3);
-        } else {
-            g_assert_not_reached();
-        }
-    }
-}
-
-static void
 accumulate_calligraphic(SPDynaDrawContext *dc)
 {
     if ( !sp_curve_empty(dc->cal1) && !sp_curve_empty(dc->cal2) ) {
@@ -786,61 +730,12 @@ static void
 fit_and_split(SPDynaDrawContext *dc,
               gboolean release)
 {
-    if (dc->use_calligraphic) {
-        fit_and_split_calligraphics(dc, release);
-    } else {
-        fit_and_split_line(dc, release);
-    }
+    fit_and_split_calligraphics(dc, release);
 }
 
 static double square(double const x)
 {
     return x * x;
-}
-
-static void
-fit_and_split_line(SPDynaDrawContext *dc,
-                   gboolean release)
-{
-    double const tolerance_sq = square( NR::expansion(SP_EVENT_CONTEXT(dc)->desktop->w2d()) * TOLERANCE_LINE );
-
-    NR::Point b[4];
-    double const n_segs = sp_bezier_fit_cubic(b, dc->point1, dc->npoints, tolerance_sq);
-    if ( n_segs > 0
-         && dc->npoints < SAMPLING_SIZE )
-    {
-        /* Fit and draw and reset state */
-#ifdef DYNA_DRAW_VERBOSE
-        g_print("%d", dc->npoints);
-#endif
-        sp_curve_reset(dc->currentcurve);
-        sp_curve_moveto(dc->currentcurve, b[0]);
-        sp_curve_curveto(dc->currentcurve, b[1], b[2], b[3]);
-        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
-    } else {
-        /* Fit and draw and copy last point */
-#ifdef DYNA_DRAW_VERBOSE
-        g_print("[%d]Yup\n", dc->npoints);
-#endif
-        g_assert(!sp_curve_empty(dc->currentcurve));
-        concat_current_line(dc);
-
-        SPCanvasItem *cbp = sp_canvas_item_new(SP_DT_SKETCH(SP_EVENT_CONTEXT(dc)->desktop),
-                                               SP_TYPE_CANVAS_BPATH,
-                                               NULL);
-        SPCurve *curve = sp_curve_copy(dc->currentcurve);
-        sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cbp), curve);
-        sp_curve_unref(curve);
-        /* fixme: We have to parse style color somehow */
-        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), DDC_GREEN_RGBA, SP_WIND_RULE_EVENODD);
-        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), 0x000000ff, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-        /* fixme: Cannot we cascade it to root more clearly? */
-        g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), SP_EVENT_CONTEXT(dc)->desktop);
-
-        dc->segments = g_slist_prepend(dc->segments, cbp);
-        dc->point1[0] = dc->point1[dc->npoints - 2];
-        dc->npoints = 1;
-    }
 }
 
 static void
