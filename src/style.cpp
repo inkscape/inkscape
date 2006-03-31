@@ -148,7 +148,7 @@ static gint sp_style_write_itextdecoration(gchar *p, gint const len, gchar const
 
 static void css2_unescape_unquote(SPIString *val);
 
-static void sp_style_paint_clear(SPStyle *style, SPIPaint *paint, unsigned hunref, unsigned unset);
+static void sp_style_paint_clear(SPStyle *style, SPIPaint *paint);
 
 #define SPS_READ_IENUM_IF_UNSET(v,s,d,i) if (!(v)->set) {sp_style_read_ienum((v), (s), (d), (i));}
 #define SPS_READ_PENUM_IF_UNSET(v,r,k,d,i) if (!(v)->set) {sp_style_read_penum((v), (r), (k), (d), (i));}
@@ -453,8 +453,8 @@ sp_style_unref(SPStyle *style)
             g_signal_handlers_disconnect_matched(G_OBJECT(style->object),
                                                  G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
         if (style->text) sp_text_style_unref(style->text);
-        sp_style_paint_clear(style, &style->fill, TRUE, FALSE);
-        sp_style_paint_clear(style, &style->stroke, TRUE, FALSE);
+        sp_style_paint_clear(style, &style->fill);
+        sp_style_paint_clear(style, &style->stroke);
         g_free(style->stroke_dash.dash);
         g_free(style);
     }
@@ -1934,13 +1934,13 @@ sp_style_paint_server_release(SPPaintServer *server, SPStyle *style)
     if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
         && (server == style->fill.value.paint.server))
     {
-        sp_style_paint_clear(style, &style->fill, TRUE, FALSE);
+        sp_style_paint_clear(style, &style->fill);
     }
 
     if ((style->stroke.type == SP_PAINT_TYPE_PAINTSERVER)
         && (server == style->stroke.value.paint.server))
     {
-        sp_style_paint_clear(style, &style->stroke, TRUE, FALSE);
+        sp_style_paint_clear(style, &style->stroke);
     }
 }
 
@@ -1988,7 +1988,7 @@ sp_style_paint_server_modified(SPPaintServer *server, guint flags, SPStyle *styl
 static void
 sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
 {
-    sp_style_paint_clear(style, paint, TRUE, FALSE);
+    sp_style_paint_clear(style, paint);
 
     if ((paint->set && paint->currentcolor) || parent->currentcolor) {
         paint->currentcolor = TRUE;
@@ -2302,8 +2302,8 @@ sp_style_clear(SPStyle *style)
 {
     g_return_if_fail(style != NULL);
 
-    sp_style_paint_clear(style, &style->fill, TRUE, FALSE);
-    sp_style_paint_clear(style, &style->stroke, TRUE, FALSE);
+    sp_style_paint_clear(style, &style->fill);
+    sp_style_paint_clear(style, &style->stroke);
     if (style->stroke_dash.dash) {
         g_free(style->stroke_dash.dash);
     }
@@ -3423,13 +3423,12 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
 
 
 /**
- * Clear paint object; conditionally disconnect style from paintserver.
+ * Clear paint object, and disconnect style from paintserver (if present).
  */
 static void
-sp_style_paint_clear(SPStyle *style, SPIPaint *paint,
-                     unsigned hunref, unsigned unset)
+sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
 {
-    if (hunref && (paint->type == SP_PAINT_TYPE_PAINTSERVER) && paint->value.paint.server) {
+    if ((paint->type == SP_PAINT_TYPE_PAINTSERVER) && paint->value.paint.server) {
         if (paint == &style->fill) {
             if (style->fill_hreffed) {
                 sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
@@ -3456,11 +3455,6 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint,
         paint->value.paint.server = NULL;
         paint->value.paint.uri = NULL;
         paint->type = SP_PAINT_TYPE_NONE;
-    }
-
-    if (unset) {
-        paint->set = FALSE;
-        paint->inherit = FALSE;
     }
 }
 
