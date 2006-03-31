@@ -321,12 +321,10 @@ struct SPStyle {
 
     /// style belongs to a cloned object, must not href anything
     bool cloned; 
-    /// style has hreffed its color/fill/stroke paintservers, needs to release
-    bool color_hreffed; 
+    /// style has hreffed its fill/stroke paintservers, needs to release.
     bool fill_hreffed; 
     bool stroke_hreffed; 
-    /// style is listening to changes in color/fill/stroke paintservers, needs to disconnect
-    bool color_listening; 
+    /// style is listening to changes in fill/stroke paintservers, needs to disconnect.
     bool fill_listening; 
     bool stroke_listening; 
 };

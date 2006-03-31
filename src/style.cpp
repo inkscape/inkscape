@@ -391,11 +391,9 @@ sp_style_new()
 
     style->cloned = false;
 
-    style->color_hreffed = false;
     style->fill_hreffed = false;
     style->stroke_hreffed = false;
 
-    style->color_listening = false;
     style->fill_listening = false;
     style->stroke_listening = false;
 
@@ -2012,10 +2010,9 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
                     sp_object_href(SP_OBJECT(paint->value.paint.server), style);
                     if (paint == &style->fill) {
                         style->fill_hreffed = true;
-                    } else if (paint == &style->stroke) {
+                    } else {
+                        assert(paint == &style->stroke);
                         style->stroke_hreffed = true;
-                    } else if (paint == &style->color) {
-                        style->color_hreffed = true;
                     }
                 }
                 if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
@@ -2025,10 +2022,9 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
                                      G_CALLBACK(sp_style_paint_server_modified), style);
                     if (paint == &style->fill) {
                         style->fill_listening = true;
-                    } else if (paint == &style->stroke) {
+                    } else {
+                        assert(paint == &style->stroke);
                         style->stroke_listening = true;
-                    } else if (paint == &style->color) {
-                        style->color_listening = true;
                     }
                 }
             }
@@ -2838,6 +2834,8 @@ sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
 
 /**
  * Set SPIPaint object from string.
+ *
+ * \pre paint == \&style.fill || paint == \&style.stroke.
  */
 static void
 sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document)
@@ -2850,16 +2848,16 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
         paint->set = TRUE;
         paint->inherit = TRUE;
         paint->currentcolor = FALSE;
-    } else if (streq(str, "currentColor")) {
+    } else if (streq(str, "currentColor") && paint != &style->color) {
         paint->set = TRUE;
         paint->inherit = FALSE;
         paint->currentcolor = TRUE;
-    } else if (streq(str, "none")) {
+    } else if (streq(str, "none") && paint != &style->color) {
         paint->type = SP_PAINT_TYPE_NONE;
         paint->set = TRUE;
         paint->inherit = FALSE;
         paint->currentcolor = FALSE;
-    } else if (strneq(str, "url", 3)) {
+    } else if (strneq(str, "url", 3) && paint != &style->color) {
         // this is alloc'd uri, but seems to be shared with a parent
         // potentially, so it's not any easy g_free case...
         paint->value.paint.uri = extract_uri(str);
@@ -2879,10 +2877,9 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                     sp_object_href(SP_OBJECT(paint->value.paint.server), style);
                     if (paint == &style->fill) {
                         style->fill_hreffed = true;
-                    } else if (paint == &style->stroke) {
+                    } else {
+                        assert(paint == &style->stroke);
                         style->stroke_hreffed = true;
-                    } else if (paint == &style->color) {
-                        style->color_hreffed = true;
                     }
                 }
                 if (style->object || style->cloned) {
@@ -2892,10 +2889,9 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                                      G_CALLBACK(sp_style_paint_server_modified), style);
                     if (paint == &style->fill) {
                         style->fill_listening = true;
-                    } else if (paint == &style->stroke) {
+                    } else {
+                        assert(paint == &style->stroke);
                         style->stroke_listening = true;
-                    } else if (paint == &style->color) {
-                        style->color_listening = true;
                     }
                 }
             } else {
@@ -3444,7 +3440,8 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint,
                                                  G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
                 style->fill_listening = false;
             }
-        } else if (paint == &style->stroke) {
+        } else {
+            assert(paint == &style->stroke);  // Only fill & stroke can have a paint server.
             if (style->stroke_hreffed) {
                 sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
                 style->stroke_hreffed = false;
@@ -3453,16 +3450,6 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint,
                 g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
                                                  G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
                 style->stroke_listening = false;
-            }
-        } else if (paint == &style->color) {
-            if (style->color_hreffed) {
-                sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
-                style->color_hreffed = false;
-            }
-            if (style->color_listening) {
-                g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
-                                                 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
-                style->color_listening = false;
             }
         }
 
