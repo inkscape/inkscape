@@ -330,7 +330,7 @@ void sp_edit_select_all_full (bool force_all_layers, bool invert)
 
     g_return_if_fail(SP_IS_GROUP(dt->currentLayer()));
 
-    bool inlayer = prefs_get_int_attribute ("options.kbselection", "inlayer", 1);
+    PrefsSelectionContext inlayer = (PrefsSelectionContext)prefs_get_int_attribute ("options.kbselection", "inlayer", PREFS_SELECTION_LAYER);
     bool onlyvisible = prefs_get_int_attribute ("options.kbselection", "onlyvisible", 1);
     bool onlysensitive = prefs_get_int_attribute ("options.kbselection", "onlysensitive", 1);
 
@@ -341,8 +341,11 @@ void sp_edit_select_all_full (bool force_all_layers, bool invert)
         exclude = selection->itemList();
     }
 
-    if (inlayer && !force_all_layers) {
+    if (force_all_layers)
+        inlayer = PREFS_SELECTION_ALL;
 
+    switch (inlayer) {
+        case PREFS_SELECTION_LAYER: {
         if ( (onlysensitive && SP_ITEM(dt->currentLayer())->isLocked()) ||
              (onlyvisible && dt->itemIsHidden(SP_ITEM(dt->currentLayer()))) )
         return;
@@ -364,9 +367,16 @@ void sp_edit_select_all_full (bool force_all_layers, bool invert)
         }
 
         g_slist_free (all_items);
-
-    } else {
+            break;
+        }
+        case PREFS_SELECTION_LAYER_RECURSIVE: {
+            items = get_all_items (NULL, dt->currentLayer(), dt, onlyvisible, onlysensitive, exclude);
+            break;
+        }
+        default: {
         items = get_all_items (NULL, dt->currentRoot(), dt, onlyvisible, onlysensitive, exclude);
+            break;
+    }
     }
 
     selection->setList (items);
@@ -1656,11 +1666,11 @@ namespace {
 
 template <typename D>
 SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
-                  bool only_in_viewport, bool inlayer, bool onlyvisible, bool onlysensitive);
+                  bool only_in_viewport, PrefsSelectionContext inlayer, bool onlyvisible, bool onlysensitive);
 
 template <typename D>
 SPItem *next_item_from_list(SPDesktop *desktop, GSList const *items, SPObject *root,
-                  bool only_in_viewport, bool inlayer, bool onlyvisible, bool onlysensitive);
+                  bool only_in_viewport, PrefsSelectionContext inlayer, bool onlyvisible, bool onlysensitive);
 
 struct Forward {
     typedef SPObject *Iterator;
@@ -1711,13 +1721,13 @@ sp_selection_item_next(void)
     g_return_if_fail(desktop != NULL);
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
 
-    bool inlayer = prefs_get_int_attribute ("options.kbselection", "inlayer", 1);
+    PrefsSelectionContext inlayer = (PrefsSelectionContext)prefs_get_int_attribute ("options.kbselection", "inlayer", PREFS_SELECTION_LAYER);
     bool onlyvisible = prefs_get_int_attribute ("options.kbselection", "onlyvisible", 1);
     bool onlysensitive = prefs_get_int_attribute ("options.kbselection", "onlysensitive", 1);
 
     SPObject *root;
-    if (inlayer) {
-        root = desktop->currentLayer();
+    if (PREFS_SELECTION_ALL != inlayer) {
+        root = selection->activeContext();
     } else {
         root = desktop->currentRoot();
     }
@@ -1725,7 +1735,7 @@ sp_selection_item_next(void)
     SPItem *item=next_item_from_list<Forward>(desktop, selection->itemList(), root, SP_CYCLING == SP_CYCLE_VISIBLE, inlayer, onlyvisible, onlysensitive);
 
     if (item) {
-        selection->set(item);
+        selection->set(item, PREFS_SELECTION_LAYER_RECURSIVE == inlayer);
         if ( SP_CYCLING == SP_CYCLE_FOCUS ) {
             scroll_to_show_item(desktop, item);
         }
@@ -1741,13 +1751,13 @@ sp_selection_item_prev(void)
     g_return_if_fail(desktop != NULL);
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
 
-    bool inlayer = prefs_get_int_attribute ("options.kbselection", "inlayer", 1);
+    PrefsSelectionContext inlayer = (PrefsSelectionContext)prefs_get_int_attribute ("options.kbselection", "inlayer", PREFS_SELECTION_LAYER);
     bool onlyvisible = prefs_get_int_attribute ("options.kbselection", "onlyvisible", 1);
     bool onlysensitive = prefs_get_int_attribute ("options.kbselection", "onlysensitive", 1);
 
     SPObject *root;
-    if (inlayer) {
-        root = desktop->currentLayer();
+    if (PREFS_SELECTION_ALL != inlayer) {
+        root = selection->activeContext();
     } else {
         root = desktop->currentRoot();
     }
@@ -1755,7 +1765,7 @@ sp_selection_item_prev(void)
     SPItem *item=next_item_from_list<Reverse>(desktop, selection->itemList(), root, SP_CYCLING == SP_CYCLE_VISIBLE, inlayer, onlyvisible, onlysensitive);
 
     if (item) {
-        selection->set(item);
+        selection->set(item, PREFS_SELECTION_LAYER_RECURSIVE == inlayer);
         if ( SP_CYCLING == SP_CYCLE_FOCUS ) {
             scroll_to_show_item(desktop, item);
         }
@@ -1766,7 +1776,7 @@ namespace {
 
 template <typename D>
 SPItem *next_item_from_list(SPDesktop *desktop, GSList const *items,
-                            SPObject *root, bool only_in_viewport, bool inlayer, bool onlyvisible, bool onlysensitive)
+                            SPObject *root, bool only_in_viewport, PrefsSelectionContext inlayer, bool onlyvisible, bool onlysensitive)
 {
     SPObject *current=root;
     while (items) {
@@ -1800,7 +1810,7 @@ SPItem *next_item_from_list(SPDesktop *desktop, GSList const *items,
 
 template <typename D>
 SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
-                  bool only_in_viewport, bool inlayer, bool onlyvisible, bool onlysensitive)
+                  bool only_in_viewport, PrefsSelectionContext inlayer, bool onlyvisible, bool onlysensitive)
 {
     typename D::Iterator children;
     typename D::Iterator iter;
@@ -1821,7 +1831,7 @@ SPItem *next_item(SPDesktop *desktop, GSList *path, SPObject *root,
     while ( iter && !found ) {
         SPObject *object=D::object(iter);
         if (desktop->isLayer(object)) {
-            if (!inlayer) { // recurse into sublayers
+            if (PREFS_SELECTION_LAYER != inlayer) { // recurse into sublayers
                 found = next_item<D>(desktop, NULL, object, only_in_viewport, inlayer, onlyvisible, onlysensitive);
             }
         } else if ( SP_IS_ITEM(object) &&

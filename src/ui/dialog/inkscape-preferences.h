@@ -120,7 +120,10 @@ protected:
     PrefCheckButton _trans_scale_stroke, _trans_scale_corner, _trans_gradient,_trans_pattern;
     PrefRadioButton _trans_optimized, _trans_preserved;
 
-    PrefCheckButton _sel_current, _sel_hidden, _sel_locked;
+    PrefRadioButton _sel_all;
+    PrefRadioButton _sel_current;
+    PrefRadioButton _sel_recursive;
+    PrefCheckButton _sel_hidden, _sel_locked;
 
     PrefSpinButton  _misc_export, _misc_recent, _misc_simpl;
     PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;

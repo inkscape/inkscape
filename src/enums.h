@@ -73,5 +73,13 @@ enum {
 	SP_CLONE_ORPHANS_ASKME
 };
 
+/* "inlayer" preference values */
+
+enum PrefsSelectionContext {
+    PREFS_SELECTION_ALL = 0,
+    PREFS_SELECTION_LAYER = 1,
+    PREFS_SELECTION_LAYER_RECURSIVE = 2,
+};
+
 #endif
 

@@ -5,7 +5,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Andrius R. <knutux@gmail.com>
  *
+ * Copyright (C)      2006 Andrius R.
  * Copyright (C) 2004-2005 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -36,6 +38,8 @@ Selection::Selection(SPDesktop *desktop) :
     _reprs(NULL),
     _items(NULL),
     _desktop(desktop),
+    _selection_context(NULL),
+    _context_release_handler_id(0),
     _flags(0),
     _idle(0)
 {
@@ -89,9 +93,38 @@ void Selection::_emitModified(guint flags) {
     _modified_signal.emit(this, flags);
 }
 
-void Selection::_emitChanged() {
+void Selection::_emitChanged(bool persist_selection_context/* = false */) {
+    if (persist_selection_context) {
+        if (NULL == _selection_context) {
+            _selection_context = desktop()->currentLayer();
+            sp_object_ref(_selection_context, NULL);
+            g_signal_connect(G_OBJECT(_selection_context), "release",
+                             G_CALLBACK(&Selection::_releaseSelectionContext), this);
+        }
+    } else {
+        _releaseContext(_selection_context);
+    }
+
     inkscape_selection_changed(this);
     _changed_signal.emit(this);
+}
+
+void
+Selection::_releaseSelectionContext(SPObject *obj, Selection *selection)
+{
+    selection->_releaseContext(obj);
+}
+
+void
+Selection::_releaseContext(SPObject *obj)
+{
+    if (NULL == _selection_context || _selection_context != obj)
+        return;
+
+    g_signal_handler_disconnect(G_OBJECT(_selection_context), _context_release_handler_id);
+    sp_object_unref(_selection_context, NULL);
+    _context_release_handler_id = 0;
+    _selection_context = NULL;
 }
 
 void Selection::_invalidateCachedLists() {
@@ -111,6 +144,12 @@ void Selection::_clear() {
     }
 }
 
+SPObject *Selection::activeContext() {
+    if (NULL != _selection_context)
+        return _selection_context;
+    return desktop()->currentLayer();
+    }
+
 bool Selection::includes(SPObject *obj) const {
     if (obj == NULL)
         return FALSE;
@@ -120,7 +159,7 @@ bool Selection::includes(SPObject *obj) const {
     return ( g_slist_find(_objs, obj) != NULL );
 }
 
-void Selection::add(SPObject *obj) {
+void Selection::add(SPObject *obj, bool persist_selection_context/* = false */) {
     g_return_if_fail(obj != NULL);
     g_return_if_fail(SP_IS_OBJECT(obj));
 
@@ -130,7 +169,7 @@ void Selection::add(SPObject *obj) {
 
     _invalidateCachedLists();
     _add(obj);
-    _emitChanged();
+    _emitChanged(persist_selection_context);
 }
 
 void Selection::_add(SPObject *obj) {
@@ -152,9 +191,9 @@ void Selection::_add(SPObject *obj) {
     */
 }
 
-void Selection::set(SPObject *object) {
+void Selection::set(SPObject *object, bool persist_selection_context) {
     _clear();
-    add(object);
+    add(object, persist_selection_context);
 }
 
 void Selection::toggle(SPObject *obj) {

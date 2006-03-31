@@ -468,13 +468,19 @@ void InkscapePreferences::initPageTransforms()
 
 void InkscapePreferences::initPageSelecting()
 {
-    _sel_current.init ( _("Select only within current layer"), "options.kbselection", "inlayer", true);
+    _sel_all.init ( _("Select in all layers"), "options.kbselection", "inlayer", PREFS_SELECTION_ALL, false, 0);
+    _sel_current.init ( _("Select only within current layer"), "options.kbselection", "inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);
+    _sel_recursive.init ( _("Select in current layer and sublayers"), "options.kbselection", "inlayer", PREFS_SELECTION_LAYER_RECURSIVE, false, &_sel_all);
     _sel_hidden.init ( _("Ignore hidden objects"), "options.kbselection", "onlyvisible", true);
     _sel_locked.init ( _("Ignore locked objects"), "options.kbselection", "onlysensitive", true);
 
     _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab:"));
+    _page_select.add_line( true, "", _sel_all, "", 
+                           _("Make keyboard selection commands work on objects in all layers"));
     _page_select.add_line( true, "", _sel_current, "", 
-                           _("Uncheck this to make keyboard selection commands work on objects in all layers"));
+                           _("Make keyboard selection commands work on objects in current layer only"));
+    _page_select.add_line( true, "", _sel_recursive, "", 
+                           _("Make keyboard selection commands work on objects in current layer and all its sublayers"));
     _page_select.add_line( true, "", _sel_hidden, "", 
                            _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden group or layer)"));
     _page_select.add_line( true, "", _sel_locked, "", 

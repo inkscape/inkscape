@@ -77,11 +77,18 @@ public:
     SPDesktop *desktop() { return _desktop; }
 
     /**
+     * @brief Returns active layer for selection (currentLayer or its parent)
+     *
+     * @return layer item the selection is bound to
+     */
+    SPObject *activeContext();
+
+    /**
      * @brief Add an SPObject to the set of selected objects
      *
      * @param obj the SPObject to add
      */
-    void add(SPObject *obj);
+    void add(SPObject *obj, bool persist_selection_context = false);
 
     /**
      * @brief Add an XML node's SPObject to the set of selected objects
@@ -95,7 +102,7 @@ public:
      *
      * @param obj the object to select
      */
-    void set(SPObject *obj);
+    void set(SPObject *obj, bool persist_selection_context = false);
 
     /**
      * @brief Set the selection to an XML node's SPObject
@@ -308,11 +315,13 @@ private:
     static void _schedule_modified(SPObject *obj, guint flags, Selection *selection);
     /** @brief Releases a selected object that is being removed */
     static void _release(SPObject *obj, Selection *selection);
+    /** @brief Releases an active layer object that is being removed */
+    static void _releaseSelectionContext(SPObject *obj, Selection *selection);
 
     /** @brief Issues modified selection signal */
     void _emitModified(guint flags);
     /** @brief Issues changed selection signal */
-    void _emitChanged();
+    void _emitChanged(bool persist_selection_context = false);
 
     void _invalidateCachedLists();
 
@@ -328,12 +337,16 @@ private:
     void _remove(SPObject *obj);
     /** @brief returns the SPObject corresponding to an xml node (if any) */
     SPObject *_objectForXMLNode(XML::Node *repr) const;
+    /** @brief Releases an active layer object that is being removed */
+    void _releaseContext(SPObject *obj);
 
     mutable GSList *_objs;
     mutable GSList *_reprs;
     mutable GSList *_items;
 
     GC::soft_ptr<SPDesktop> _desktop;
+    SPObject* _selection_context;
+    gulong _context_release_handler_id;
     guint _flags;
     guint _idle;
 

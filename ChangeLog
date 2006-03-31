@@ -1,5 +1,12 @@
 2006-03-29  Andrius R. <knutux@gmail.com>
 
+	* src/layer-fns.h, src/dialogs/layer-properties.cpp,
+	  src/dialogs/layer-properties.h, src/layer-fns.cpp:
+
+	  patch #1450307 - option for select all to work in layer with it's sub-layers
+
+2006-03-29  Andrius R. <knutux@gmail.com>
+
 	* po/lt.po: Translated and added new language - Lithuanian.
 
 2006-03-28  Jon A. Cruz  <jon@joncruz.org>
