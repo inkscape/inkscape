@@ -97,8 +97,10 @@ typedef enum {
 } colorFlavorType;
 
 static const GtkTargetEntry sourceColorEntries[] = {
+#if ENABLE_LCMS
 //    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+#endif // ENABLE_LCMS
     {"application/x-color", 0, APP_X_COLOR},
     {"text/plain", 0, TEXT_DATA},
 };
@@ -231,8 +233,10 @@ static void dieDieDie( GtkObject *obj, gpointer user_data )
 }
 
 static const GtkTargetEntry destColorTargets[] = {
+#if ENABLE_LCMS
 //    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+#endif // ENABLE_LCMS
     {"application/x-color", 0, APP_X_COLOR},
 };
 

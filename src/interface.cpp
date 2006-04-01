@@ -54,6 +54,9 @@
 #include "message-context.h"
 
 // Added for color drag-n-drop
+#if ENABLE_LCMS
+#include "lcms.h"
+#endif // ENABLE_LCMS
 #include "display/sp-canvas.h"
 #include "color.h"
 #include "svg/svg-color.h"
@@ -85,7 +88,9 @@ static GtkTargetEntry ui_drop_target_entries [] = {
     {"image/svg",     0, SVG_DATA},
     {"image/png",     0, PNG_DATA},
     {"image/jpeg",    0, JPEG_DATA},
+#if ENABLE_LCMS
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
+#endif // ENABLE_LCMS
     {"application/x-color", 0, APP_X_COLOR}
 };
 
@@ -976,6 +981,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          gpointer user_data)
 {
     switch (info) {
+#if ENABLE_LCMS
         case APP_X_INKY_COLOR:
         {
             SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -988,6 +994,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
             if ( item )
             {
                 if ( data->length >= 8 ) {
+                    cmsHPROFILE srgbProf = cmsCreate_sRGBProfile();
+
                     gchar c[64] = {0};
                     // Careful about endian issues.
                     guint16* dataVals = (guint16*)data->data;
@@ -1032,10 +1040,15 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
                     SPDocument *doc = SP_ACTIVE_DOCUMENT;
                     sp_document_done( doc );
+
+                    if ( srgbProf ) {
+                        cmsCloseProfile( srgbProf );
+                    }
                 }
             }
         }
         break;
+#endif // ENABLE_LCMS
 
         case APP_X_COLOR:
         {

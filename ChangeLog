@@ -1,3 +1,9 @@
+2006-03-28  Jon A. Cruz  <jon@joncruz.org>
+
+	* configure.ca, src/interface.cpp, src/dialogs/swatches.cpp:
+
+	  Introducing optional LittleCms use.
+	
 2006-03-31  MenTaLguY  <mental@rydia.net>
 
     * src/dyna-draw-context.cpp, src/dyna-draw-context.cpp:
