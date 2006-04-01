@@ -181,6 +181,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
     np->subpaths    = NULL;
     np->selected    = NULL;
     np->nodeContext = NULL; //Let the context that makes this set it
+    np->livarot_path = NULL;
 
     // we need to update item's transform from the repr here,
     // because they may be out of sync when we respond
@@ -202,6 +203,10 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
     g_free(typestr);
     sp_curve_unref(curve);
 
+    np->livarot_path = Path_for_item(item, true, true);
+    if (np->livarot_path)
+        np->livarot_path->ConvertWithBackData(0.01);
+
     return np;
 }
 
@@ -222,6 +227,11 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
         np->nodeContext->nodepath = NULL;
 
     g_assert(!np->selected);
+
+    if (np->livarot_path) {
+        delete np->livarot_path;
+        np->livarot_path = NULL;
+    }
 
     np->desktop = NULL;
 
@@ -425,7 +435,8 @@ static gchar *parse_nodetypes(gchar const *types, gint length)
 }
 
 /**
- * Make curve out of path and associate it with it.
+ * Make curve out of nodepath, write it into that nodepath's SPShape item so that display is
+ * updated but repr is not (for speed). Used during curve and node drag.
  */
 static void update_object(Inkscape::NodePath::Path *np)
 {
@@ -462,19 +473,41 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 /**
  * Update XML path node with data from path object, commit changes forever.
  */
-static void update_repr(Inkscape::NodePath::Path *np)
+void sp_nodepath_update_repr(Inkscape::NodePath::Path *np)
 {
     update_repr_internal(np);
     sp_document_done(SP_DT_DOCUMENT(np->desktop));
+
+    if (np->livarot_path) {
+        delete np->livarot_path;
+        np->livarot_path = NULL;
+    }
+
+    if (np->path && SP_IS_ITEM(np->path)) {
+        np->livarot_path = Path_for_item (np->path, true, true);
+        if (np->livarot_path)
+            np->livarot_path->ConvertWithBackData(0.01);
+    }
 }
 
 /**
  * Update XML path node with data from path object, commit changes with undo.
  */
-static void update_repr_keyed(Inkscape::NodePath::Path *np, gchar const *key)
+static void sp_nodepath_update_repr_keyed(Inkscape::NodePath::Path *np, gchar const *key)
 {
     update_repr_internal(np);
     sp_document_maybe_done(SP_DT_DOCUMENT(np->desktop), key);
+
+    if (np->livarot_path) {
+        delete np->livarot_path;
+        np->livarot_path = NULL;
+    }
+
+    if (np->path && SP_IS_ITEM(np->path)) {
+        np->livarot_path = Path_for_item (np->path, true, true);
+        if (np->livarot_path)
+            np->livarot_path->ConvertWithBackData(0.01);
+    }
 }
 
 /**
@@ -960,11 +993,11 @@ sp_node_selected_move(gdouble dx, gdouble dy)
     sp_nodepath_selected_nodes_move(nodepath, dx, dy, false);
 
     if (dx == 0) {
-        update_repr_keyed(nodepath, "node:move:vertical");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:vertical");
     } else if (dy == 0) {
-        update_repr_keyed(nodepath, "node:move:horizontal");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:horizontal");
     } else {
-        update_repr(nodepath);
+        sp_nodepath_update_repr(nodepath);
     }
 }
 
@@ -988,11 +1021,11 @@ sp_node_selected_move_screen(gdouble dx, gdouble dy)
     sp_nodepath_selected_nodes_move(nodepath, zdx, zdy, false);
 
     if (dx == 0) {
-        update_repr_keyed(nodepath, "node:move:vertical");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:vertical");
     } else if (dy == 0) {
-        update_repr_keyed(nodepath, "node:move:horizontal");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:horizontal");
     } else {
-        update_repr(nodepath);
+        sp_nodepath_update_repr(nodepath);
     }
 }
 
@@ -1144,9 +1177,9 @@ void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axi
         }
     }
     if (axis == NR::X) {
-        update_repr_keyed(nodepath, "node:move:vertical");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:vertical");
     } else {
-        update_repr_keyed(nodepath, "node:move:horizontal");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:horizontal");
     }
 }
 
@@ -1210,9 +1243,9 @@ void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim
     }
 
     if (axis == NR::X) {
-        update_repr_keyed(nodepath, "node:move:horizontal");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:horizontal");
     } else {
-        update_repr_keyed(nodepath, "node:move:vertical");
+        sp_nodepath_update_repr_keyed(nodepath, "node:move:vertical");
     }
 }
 
@@ -1248,7 +1281,7 @@ sp_node_selected_add_node(void)
     /** \todo fixme: adjust ? */
     sp_nodepath_ensure_ctrls(nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 
     sp_nodepath_update_statusbar(nodepath);
 }
@@ -1257,14 +1290,13 @@ sp_node_selected_add_node(void)
  * Select segment nearest to point
  */
 void
-sp_nodepath_select_segment_near_point(SPItem * item, NR::Point p, bool toggle)
+sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p, bool toggle)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) {
         return;
     }
 
-    Path::cut_position position = get_nearest_position_on_Path(item, p);
+    Path::cut_position position = get_nearest_position_on_Path(nodepath->livarot_path, p);
 
     //find segment to segment
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
@@ -1286,14 +1318,13 @@ sp_nodepath_select_segment_near_point(SPItem * item, NR::Point p, bool toggle)
  * Add a node nearest to point
  */
 void
-sp_nodepath_add_node_near_point(SPItem * item, NR::Point p)
+sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
 {
-    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
     if (!nodepath) {
         return;
     }
 
-    Path::cut_position position = get_nearest_position_on_Path(item, p);
+    Path::cut_position position = get_nearest_position_on_Path(nodepath->livarot_path, p);
 
     //find segment to split
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
@@ -1308,7 +1339,7 @@ sp_nodepath_add_node_near_point(SPItem * item, NR::Point p)
     /* fixme: adjust ? */
     sp_nodepath_ensure_ctrls(nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 
     sp_nodepath_update_statusbar(nodepath);
 }
@@ -1321,7 +1352,7 @@ sp_nodepath_add_node_near_point(SPItem * item, NR::Point p)
  * cf. app/vectors/gimpbezierstroke.c, gimp_bezier_stroke_point_move_relative()
  */
 void
-sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta, char * key)
+sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta)
 {
     /* feel good is an arbitrary parameter that distributes the delta between handles
      * if t of the drag point is less than 1/6 distance form the endpoint only
@@ -1353,7 +1384,7 @@ sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta, 
 
     sp_nodepath_ensure_ctrls(e->subpath->nodepath);
 
-    update_repr_keyed(e->subpath->nodepath, key);
+    update_object(e->subpath->nodepath);
 
     sp_nodepath_update_statusbar(e->subpath->nodepath);
 }
@@ -1384,7 +1415,7 @@ void sp_node_selected_break()
 
     sp_nodepath_ensure_ctrls(nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 /**
@@ -1414,7 +1445,7 @@ void sp_node_selected_duplicate()
 
     sp_nodepath_ensure_ctrls(nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 /**
@@ -1452,7 +1483,7 @@ void sp_node_selected_join()
 
         sp_nodepath_ensure_ctrls(sp->nodepath);
 
-        update_repr(nodepath);
+        sp_nodepath_update_repr(nodepath);
 
         return;
     }
@@ -1505,7 +1536,7 @@ void sp_node_selected_join()
 
     sp_nodepath_ensure_ctrls(sa->nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 
     sp_nodepath_update_statusbar(nodepath);
 }
@@ -1552,7 +1583,7 @@ void sp_node_selected_join_segment()
 
         sp_nodepath_ensure_ctrls(sp->nodepath);
 
-        update_repr(nodepath);
+        sp_nodepath_update_repr(nodepath);
 
         return;
     }
@@ -1606,7 +1637,7 @@ void sp_node_selected_join_segment()
 
     sp_nodepath_ensure_ctrls(sa->nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 /**
@@ -1640,7 +1671,7 @@ void sp_node_selected_delete()
         return;
     }
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 
     sp_nodepath_update_statusbar(nodepath);
 }
@@ -1799,7 +1830,7 @@ sp_node_selected_delete_segment(void)
 
     sp_nodepath_ensure_ctrls(nodepath);
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 
     // if the entire nodepath is removed, delete the selected object.
     if (nodepath->subpaths == NULL ||
@@ -1829,7 +1860,7 @@ sp_node_selected_set_line_type(NRPathcode code)
         }
     }
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 /**
@@ -1845,7 +1876,7 @@ sp_node_selected_set_type(Inkscape::NodePath::NodeType type)
         sp_nodepath_convert_node_type((Inkscape::NodePath::Node *) l->data, type);
     }
 
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 /**
@@ -2331,7 +2362,7 @@ gboolean node_key(GdkEvent *event)
             case GDK_BackSpace:
                 np = active_node->subpath->nodepath;
                 sp_nodepath_node_destroy(active_node);
-                update_repr(np);
+                sp_nodepath_update_repr(np);
                 active_node = NULL;
                 ret = TRUE;
                 break;
@@ -2375,7 +2406,7 @@ static void node_clicked(SPKnot *knot, guint state, gpointer data)
             } else {
                 sp_nodepath_convert_node_type (n,Inkscape::NodePath::NODE_CUSP);
             }
-            update_repr(nodepath);
+            sp_nodepath_update_repr(nodepath);
             sp_nodepath_update_statusbar(nodepath);
 
         } else { //ctrl+alt+click: delete node
@@ -2393,7 +2424,7 @@ static void node_clicked(SPKnot *knot, guint state, gpointer data)
 
             } else {
                 sp_nodepath_ensure_ctrls(nodepath);
-                update_repr(nodepath);
+                sp_nodepath_update_repr(nodepath);
                 sp_nodepath_update_statusbar(nodepath);
             }
         }
@@ -2426,7 +2457,7 @@ static void node_ungrabbed(SPKnot *knot, guint state, gpointer data)
 
    n->dragging_out = NULL;
 
-   update_repr(n->subpath->nodepath);
+   sp_nodepath_update_repr(n->subpath->nodepath);
 }
 
 /**
@@ -2655,7 +2686,7 @@ static void node_ctrl_clicked(SPKnot *knot, guint state, gpointer data)
         }
         sp_node_ensure_ctrls(n);
         Inkscape::NodePath::Path *nodepath = n->subpath->nodepath;
-        update_repr(nodepath);
+        sp_nodepath_update_repr(nodepath);
         sp_nodepath_update_statusbar(nodepath);
 
     } else { // just select or add to selection, depending in Shift
@@ -2703,7 +2734,7 @@ static void node_ctrl_ungrabbed(SPKnot *knot, guint state, gpointer data)
         g_assert_not_reached();
     }
 
-    update_repr(n->subpath->nodepath);
+    sp_nodepath_update_repr(n->subpath->nodepath);
 }
 
 /**
@@ -3021,7 +3052,7 @@ void sp_nodepath_selected_nodes_rotate(Inkscape::NodePath::Path *nodepath, gdoub
 
     update_object(nodepath);
     /// \todo fixme: use _keyed
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 /**
@@ -3146,7 +3177,7 @@ void sp_nodepath_selected_nodes_scale(Inkscape::NodePath::Path *nodepath, gdoubl
 
     update_object(nodepath);
     /// \todo fixme: use _keyed
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 void sp_nodepath_selected_nodes_scale_screen(Inkscape::NodePath::Path *nodepath, gdouble const grow, int const which)
@@ -3195,7 +3226,7 @@ void sp_nodepath_flip (Inkscape::NodePath::Path *nodepath, NR::Dim2 axis)
 
     update_object(nodepath);
     /// \todo fixme: use _keyed
-    update_repr(nodepath);
+    sp_nodepath_update_repr(nodepath);
 }
 
 //-----------------------------------------------
