@@ -427,10 +427,6 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                     SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
                                                                     NR::Point(event->button.x, event->button.y));
 
-                    // check if this is indeed our nodepathed item
-                    if (item_over != nc->nodepath->path)
-                        break;
-
                     bool over_stroke = false;
                     if (item_over && nc->nodepath) {
                         over_stroke = sp_node_context_is_over_stroke (nc, item_over, NR::Point(event->button.x, event->button.y), false);
