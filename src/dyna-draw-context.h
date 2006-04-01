@@ -87,9 +87,7 @@ struct SPDynaDrawContext
     gdouble xtilt;
     gdouble ytilt;
     /* attributes */
-    /* fixme: shuld be merge dragging and dynahand ?? */
     guint dragging : 1;           /* mouse state: mouse is dragging */
-    guint dynahand : 1;           /* mouse state: mouse is in draw */
     guint use_timeout : 1;
     double mass, drag;
     double angle;

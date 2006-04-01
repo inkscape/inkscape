@@ -47,7 +47,6 @@
 #include "sp-item.h"
 
 #define DDC_RED_RGBA 0xff0000ff
-#define DDC_GREEN_RGBA 0x000000ff
 
 #define SAMPLE_TIMEOUT 10
 #define TOLERANCE_LINE 1.0
@@ -148,7 +147,6 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->use_timeout = FALSE;
     ddc->timer_id = 0;
     ddc->dragging = FALSE;
-    ddc->dynahand = FALSE;
 
     ddc->mass = 0.3;
     ddc->drag = DRAG_DEFAULT;
@@ -449,7 +447,6 @@ sp_dyna_draw_timeout_handler(gpointer data)
     SPCanvas *canvas = SP_CANVAS(SP_DT_CANVAS(desktop));
 
     dc->dragging = TRUE;
-    dc->dynahand = TRUE;
 
     int x, y;
     gtk_widget_get_pointer(GTK_WIDGET(canvas), &x, &y);
@@ -530,7 +527,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     case GDK_MOTION_NOTIFY:
         if ( dc->is_drawing && !dc->use_timeout && ( event->motion.state & GDK_BUTTON1_MASK ) ) {
             dc->dragging = TRUE;
-            dc->dynahand = TRUE;
 
             NR::Point const motion_w(event->motion.x,
                                      event->motion.y);
@@ -564,24 +560,20 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
         if ( dc->dragging && event->button.button == 1 ) {
             dc->dragging = FALSE;
 
-            /* release */
-            if (dc->dynahand) {
-                dc->dynahand = FALSE;
-                /* Remove all temporary line segments */
-                while (dc->segments) {
-                    gtk_object_destroy(GTK_OBJECT(dc->segments->data));
-                    dc->segments = g_slist_remove(dc->segments, dc->segments->data);
-                }
-                /* Create object */
-                fit_and_split(dc, TRUE);
-                accumulate_calligraphic(dc);
-                set_to_accumulated(dc); /* temporal implementation */
-                /* reset accumulated curve */
-                sp_curve_reset(dc->accumulated);
-                clear_current(dc);
-                if (dc->repr) {
-                    dc->repr = NULL;
-                }
+            /* Remove all temporary line segments */
+            while (dc->segments) {
+                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
+                dc->segments = g_slist_remove(dc->segments, dc->segments->data);
+            }
+            /* Create object */
+            fit_and_split(dc, TRUE);
+            accumulate_calligraphic(dc);
+            set_to_accumulated(dc); /* temporal implementation */
+            /* reset accumulated curve */
+            sp_curve_reset(dc->accumulated);
+            clear_current(dc);
+            if (dc->repr) {
+                dc->repr = NULL;
             }
             ret = TRUE;
         }

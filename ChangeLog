@@ -1,5 +1,11 @@
 2006-03-31  MenTaLguY  <mental@rydia.net>
 
+    * src/dyna-draw-context.cpp, src/dyna-draw-context.cpp:
+
+	  merge ::dragging and ::dynahand
+
+2006-03-31  MenTaLguY  <mental@rydia.net>
+
     * src/dyna-draw-context.h: add documentation
 
 2006-03-29  Andrius R. <knutux@gmail.com>
