@@ -1,6 +1,6 @@
 2006-03-28  Jon A. Cruz  <jon@joncruz.org>
 
-	* configure.ca, src/interface.cpp, src/dialogs/swatches.cpp:
+	* configure.ac, src/interface.cpp, src/dialogs/swatches.cpp:
 
 	  Introducing optional LittleCms use.
 	

@@ -423,6 +423,43 @@ AC_SUBST(PYTHON_CFLAGS)
 AC_SUBST(PYTHON_LIBS)
 
 dnl ******************************
+dnl LittleCms checking
+dnl ******************************
+
+AC_ARG_ENABLE(lcms,
+	AC_HELP_STRING([--enable-lcms], [enable LittleCms for color management (disabled by default)]),
+	[enable_lcms=$enableval], [enable_lcms=no])
+
+if test "x$enable_lcms" = "xno"; then
+	dnl Asked to ignore LittleCms
+	lcms=no
+else
+        dnl Have to test LittleCms presence
+	PKG_CHECK_MODULES(LCMS, lcms >= 1.15, lcms=yes, lcms=no)
+	if test "x$lcms" != "xyes"; then
+	        dnl No lcms found
+		if test "x$enable_lcms" = "xyes"; then
+		        dnl LittleCms was explicitly asked for, so stop
+			AC_MSG_ERROR([--enable-lcms was specified, but appropriate LittleCms development packages could not be found])
+		else
+			# lcms is no, tell us for the log file
+			AC_MSG_RESULT($lcms)
+		fi
+	else
+		dnl Working lcms
+		LCMS_LIBS="-llcms "
+	fi
+fi
+
+if test "x$lcms" = "xyes"; then
+	LIBS="$LIBS $LCMS_LIBS"
+	AC_DEFINE(ENABLE_LCMS, 1, [Use LittleCms color management])
+fi
+AM_CONDITIONAL(USE_LCMS, test "x$lcms" = "xyes")
+AC_SUBST(LCMS_CFLAGS)
+AC_SUBST(LCMS_LIBS)
+
+dnl ******************************
 dnl Inkboard dependency checking
 dnl ******************************
 
@@ -821,5 +858,6 @@ Configuration:
         Use relocation support:   ${enable_binreloc}
         Use Python extensions:    ${with_python}
         Use Perl extensions:      ${with_perl}
+	Enable LittleCms:         ${enable_lcms}
 	Enable Inkboard:	  ${with_inkboard}
 "
