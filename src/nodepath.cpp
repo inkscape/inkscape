@@ -854,7 +854,7 @@ static void sp_nodepath_set_line_type(Inkscape::NodePath::Node *end, NRPathcode 
 /**
  * Change node type, and its handles accordingly.
  */
-static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::Node *node,Inkscape::NodePath::NodeType type)
+static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::Node *node, Inkscape::NodePath::NodeType type)
 {
     g_assert(node);
     g_assert(node->subpath);
@@ -880,7 +880,15 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
         sp_knot_update_ctrl(node->knot);
     }
 
-    sp_node_adjust_handles(node);
+    // if one of handles is mouseovered, preserve its position
+    if (SP_KNOT_IS_MOSEOVER(node->p.knot)) {
+        sp_node_adjust_handle(node, 1);
+    } else if (SP_KNOT_IS_MOSEOVER(node->n.knot)) {
+        sp_node_adjust_handle(node, -1);
+    } else {
+        sp_node_adjust_handles(node);
+    }
+
     sp_node_update_handles(node);
 
     sp_nodepath_update_statusbar(node->subpath->nodepath);
