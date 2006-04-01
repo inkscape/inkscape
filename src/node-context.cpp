@@ -57,10 +57,6 @@ static Inkscape::XML::NodeEventVector nodepath_repr_events = {
 
 static SPEventContextClass *parent_class;
 
-static gchar *undo_label_1 = "dragcurve:1";
-static gchar *undo_label_2 = "dragcurve:2";
-static gchar *undo_label = undo_label_1;
-
 GType
 sp_node_context_get_type()
 {
@@ -195,7 +191,6 @@ sp_node_context_setup(SPEventContext *ec)
             if (repr) {
                 Inkscape::GC::anchor(repr);
                 sp_repr_add_listener(repr, &nodepath_repr_events, ec);
-                sp_repr_synthesize_events(repr, &nodepath_repr_events, ec);
             }
         }
     }
@@ -227,7 +222,9 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     if (nc->nodepath) {
         old_repr = nc->nodepath->repr;
         sp_nodepath_destroy(nc->nodepath);
+        nc->nodepath = NULL;
     }
+
     if (ec->shape_knot_holder) {
         old_repr = ec->shape_knot_holder->repr;
         sp_knot_holder_destroy(ec->shape_knot_holder);
@@ -260,7 +257,6 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
             if (repr) {
                 Inkscape::GC::anchor(repr);
                 sp_repr_add_listener(repr, &nodepath_repr_events, ec);
-                sp_repr_synthesize_events(repr, &nodepath_repr_events, ec);
             }
         }
     }
@@ -284,17 +280,17 @@ sp_nodepath_update_from_item(SPNodeContext *nc, SPItem *item)
 
     if (nc->nodepath) {
         sp_nodepath_destroy(nc->nodepath);
+        nc->nodepath = NULL;
     }
 
     if (ec->shape_knot_holder) {
         sp_knot_holder_destroy(ec->shape_knot_holder);
+        ec->shape_knot_holder = NULL;
     }
 
     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
     item = selection->singleItem();
 
-    nc->nodepath = NULL;
-    ec->shape_knot_holder = NULL;
     if (item) {
         nc->nodepath = sp_nodepath_new(desktop, item);
         if (nc->nodepath) {
@@ -379,8 +375,8 @@ sp_node_context_is_over_stroke (SPNodeContext *nc, SPItem *item, NR::Point event
     nc->curvepoint_doc *= sp_item_dt2i_affine(item);
     nc->curvepoint_doc *= sp_item_i2doc_affine(item);
 
-    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(item, nc->curvepoint_doc);
-    NR::Point nearest = get_point_on_Path(item, position.assume().piece, position.assume().t);
+    NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(nc->nodepath->livarot_path, nc->curvepoint_doc);
+    NR::Point nearest = get_point_on_Path(nc->nodepath->livarot_path, position.assume().piece, position.assume().t);
     NR::Point delta = nearest - nc->curvepoint_doc;
 
     delta = desktop->d2w(delta);
@@ -430,6 +426,11 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                     // find out if we're over the selected item, disregarding groups
                     SPItem *item_over = sp_event_context_over_item (desktop, selection->singleItem(),
                                                                     NR::Point(event->button.x, event->button.y));
+
+                    // check if this is indeed our nodepathed item
+                    if (item_over != nc->nodepath->path)
+                        break;
+
                     bool over_stroke = false;
                     if (item_over && nc->nodepath) {
                         over_stroke = sp_node_context_is_over_stroke (nc, item_over, NR::Point(event->button.x, event->button.y), false);
@@ -440,7 +441,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                             case GDK_BUTTON_RELEASE:
                                 if (event->button.state & GDK_CONTROL_MASK && event->button.state & GDK_MOD1_MASK) {
                                     //add a node
-                                    sp_nodepath_add_node_near_point(item_over, nc->curvepoint_doc);
+                                    sp_nodepath_add_node_near_point(nc->nodepath, nc->curvepoint_doc);
                                 } else {
                                     if (nc->added_node) { // we just received double click, ignore release
                                         nc->added_node = false;
@@ -448,15 +449,15 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                                     }
                                     //select the segment
                                     if (event->button.state & GDK_SHIFT_MASK) {
-                                        sp_nodepath_select_segment_near_point(item_over, nc->curvepoint_doc, true);
+                                        sp_nodepath_select_segment_near_point(nc->nodepath, nc->curvepoint_doc, true);
                                     } else {
-                                        sp_nodepath_select_segment_near_point(item_over, nc->curvepoint_doc, false);
+                                        sp_nodepath_select_segment_near_point(nc->nodepath, nc->curvepoint_doc, false);
                                     }
                                 }
                                 break;
                             case GDK_2BUTTON_PRESS:
                                 //add a node
-                                sp_nodepath_add_node_near_point(item_over, nc->curvepoint_doc);
+                                sp_nodepath_add_node_near_point(nc->nodepath, nc->curvepoint_doc);
                                 nc->added_node = true;
                                 break;
                             default:
@@ -492,7 +493,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                             bool over_stroke = sp_node_context_is_over_stroke (nc, item_over, NR::Point(event->button.x, event->button.y), true);
                             //only dragging curves
                             if (over_stroke) {
-                                sp_nodepath_select_segment_near_point(item_over, nc->curvepoint_doc, false);
+                                sp_nodepath_select_segment_near_point(nc->nodepath, nc->curvepoint_doc, false);
                                 ret = TRUE;
                             } else {
                                 break;
@@ -565,7 +566,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     NR::Point const delta_w(event->motion.x - nc->curvepoint_event[NR::X],
                                          event->motion.y - nc->curvepoint_event[NR::Y]);
                     NR::Point const delta_dt(desktop->w2d(delta_w));
-                    sp_nodepath_curve_drag (nc->grab_node, nc->grab_t, delta_dt, undo_label);
+                    sp_nodepath_curve_drag (nc->grab_node, nc->grab_t, delta_dt);
                     nc->curvepoint_event[NR::X] = (gint) event->motion.x;
                     nc->curvepoint_event[NR::Y] = (gint) event->motion.y;
                     gobble_motion_events(GDK_BUTTON1_MASK);
@@ -611,10 +612,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Maybe<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
 
                 if (nc->hit && !event_context->within_tolerance) { //drag curve
-                    if (undo_label == undo_label_1)
-                        undo_label = undo_label_2;
-                    else
-                        undo_label = undo_label_1;
+                    sp_nodepath_update_repr (nc->nodepath);
                 } else if (b != NR::Nothing() && !event_context->within_tolerance) { // drag to select
                     if (nc->nodepath) {
                         sp_nodepath_select_rect(nc->nodepath, b.assume(), event->button.state & GDK_SHIFT_MASK);
