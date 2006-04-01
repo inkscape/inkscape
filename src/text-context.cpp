@@ -258,7 +258,6 @@ sp_text_context_setup(SPEventContext *ec)
             ec->shape_repr = shape_repr;
             Inkscape::GC::anchor(shape_repr);
             sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-            sp_repr_synthesize_events(shape_repr, &ec_shape_repr_events, ec);
         }
     }
 
@@ -1286,7 +1285,6 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
             ec->shape_repr = shape_repr;
             Inkscape::GC::anchor(shape_repr);
             sp_repr_add_listener(shape_repr, &ec_shape_repr_events, ec);
-            sp_repr_synthesize_events(shape_repr, &ec_shape_repr_events, ec);
         }
     }
 
