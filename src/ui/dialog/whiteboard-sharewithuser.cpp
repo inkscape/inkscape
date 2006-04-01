@@ -165,6 +165,19 @@ WhiteboardShareWithUserDialogImpl::_respCallback(int resp)
 		case SHARE:
 		{
 			Glib::ustring jid = this->_jid.get_text();
+
+			// Check that the JID is in the format user@host/resource
+			if (jid.find("@", 0) == Glib::ustring::npos) {
+				jid += "@";
+				jid += lm_connection_get_server(this->_sm->session_data->connection);
+			} 
+
+			if (jid.find("/", 0) == Glib::ustring::npos) {
+				jid += "/" + static_cast< Glib::ustring >(RESOURCE_NAME);
+			}
+
+			g_log(NULL, G_LOG_LEVEL_DEBUG, "Full JID is %s", jid.c_str());
+
 			Glib::ustring msg = String::ucompose(_("Sending whiteboard invitation to <b>%1</b>"), jid);
 			this->_sm->desktop()->messageStack()->flash(Inkscape::NORMAL_MESSAGE, msg.data());
 			if (this->_sfsbox.isSelected()) {
