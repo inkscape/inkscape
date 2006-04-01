@@ -42,7 +42,8 @@
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
 
-Path   *Path_for_item(SPItem *item, bool doTransformation, bool transformFull = true);
+#include "splivarot.h"
+
 bool   Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who);
 
 void sp_selected_path_boolop(bool_op bop);
@@ -1566,31 +1567,17 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     return dest;
 }
 
-NR::Maybe<Path::cut_position> get_nearest_position_on_Path(SPItem *item, NR::Point p)
+NR::Maybe<Path::cut_position> get_nearest_position_on_Path(Path *path, NR::Point p)
 {
-    //Create and initialize a livarot Path
-    Path *path = Path_for_item(item, true, true);
-    if (path == NULL) {
-        return NR::Nothing();
-    }
-    path->ConvertWithBackData(0.01);
-
     //get nearest position on path
     Path::cut_position pos = path->PointToCurvilignPosition(p);
-    delete path;
     return pos;
 }
 
-NR::Point get_point_on_Path(SPItem *item, int piece, double t)
+NR::Point get_point_on_Path(Path *path, int piece, double t)
 {
-    //Create and initialize a livarot Path
-    Path *path = Path_for_item(item, true, true);
-    path->ConvertWithBackData(0.01);
-
-    //get nearest position on path
     NR::Point p;
     path->PointAt(piece, t, p);
-    delete path;
     return p;
 }
 
