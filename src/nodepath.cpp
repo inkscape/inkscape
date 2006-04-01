@@ -881,9 +881,9 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
     }
 
     // if one of handles is mouseovered, preserve its position
-    if (SP_KNOT_IS_MOSEOVER(node->p.knot)) {
+    if (node->p.knot && SP_KNOT_IS_MOSEOVER(node->p.knot)) {
         sp_node_adjust_handle(node, 1);
-    } else if (SP_KNOT_IS_MOSEOVER(node->n.knot)) {
+    } else if (node->n.knot && SP_KNOT_IS_MOSEOVER(node->n.knot)) {
         sp_node_adjust_handle(node, -1);
     } else {
         sp_node_adjust_handles(node);
