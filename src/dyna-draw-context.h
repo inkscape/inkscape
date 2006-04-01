@@ -46,16 +46,27 @@ struct SPDynaDrawContext
 {
     SPEventContext event_context;
 
+    /** accumulated shape which ultimately goes in svg:path */
     SPCurve *accumulated;
+
+    /** canvas items for "comitted" segments */
     GSList *segments;
-    /* current shape and curves */
+
+    /** canvas item for red "leading" segment */
     SPCanvasItem *currentshape;
+    /** shape of red "leading" segment */
     SPCurve *currentcurve;
+
+    /** left edge of the stroke; combined to get accumulated */
     SPCurve *cal1;
+    /** right edge of the stroke; combined to get accumulated */
     SPCurve *cal2;
-    /* temporary work area */
+
+    /** left edge points for this segment */
     NR::Point point1[SAMPLING_SIZE];
+    /** right edge points for this segment */
     NR::Point point2[SAMPLING_SIZE];
+    /** number of edge points for this segment */
     gint npoints;
 
     /* repr */

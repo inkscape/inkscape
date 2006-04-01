@@ -1,3 +1,7 @@
+2006-03-31  MenTaLguY  <mental@rydia.net>
+
+    * src/dyna-draw-context.h: add documentation
+
 2006-03-29  Andrius R. <knutux@gmail.com>
 
 	* src/enums.h, src/selection-chemistry.cpp,
