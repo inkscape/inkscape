@@ -1,5 +1,11 @@
 2006-04-01  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/ui/widget/selected-style.cpp:
+
+	  Safety check for null pointer.
+	
+2006-04-01  Jon A. Cruz  <jon@joncruz.org>
+
 	* configure.ac, src/interface.cpp, src/dialogs/swatches.cpp:
 
 	  Introducing optional LittleCms use.

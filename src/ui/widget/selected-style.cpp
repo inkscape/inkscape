@@ -887,24 +887,27 @@ SelectedStyle::update()
 
             } else if (paint->set && paint->type == SP_PAINT_TYPE_PAINTSERVER) {
                 SPPaintServer *server = (i == SS_FILL)? SP_STYLE_FILL_SERVER (query) : SP_STYLE_STROKE_SERVER (query);
+                if ( server ) {
+                    Inkscape::XML::Node *srepr = SP_OBJECT_REPR(server);
+                    _paintserver_id[i] += "url(#";
+                    _paintserver_id[i] += srepr->attribute("id");
+                    _paintserver_id[i] += ")";
 
-                Inkscape::XML::Node *srepr = SP_OBJECT_REPR(server);
-                _paintserver_id[i] += "url(#";
-                _paintserver_id[i] += srepr->attribute("id");
-                _paintserver_id[i] += ")";
-
-                if (SP_IS_LINEARGRADIENT (server)) {
-                    place->add(_lgradient[i]);
-                    _tooltips.set_tip(*place, __lgradient[i]);
-                    _mode[i] = SS_LGRADIENT;
-                } else if (SP_IS_RADIALGRADIENT (server)) {
-                    place->add(_rgradient[i]);
-                    _tooltips.set_tip(*place, __rgradient[i]);
-                    _mode[i] = SS_RGRADIENT;
-                } else if (SP_IS_PATTERN (server)) {
-                    place->add(_pattern[i]);
-                    _tooltips.set_tip(*place, __pattern[i]);
-                    _mode[i] = SS_PATTERN;
+                    if (SP_IS_LINEARGRADIENT (server)) {
+                        place->add(_lgradient[i]);
+                        _tooltips.set_tip(*place, __lgradient[i]);
+                        _mode[i] = SS_LGRADIENT;
+                    } else if (SP_IS_RADIALGRADIENT (server)) {
+                        place->add(_rgradient[i]);
+                        _tooltips.set_tip(*place, __rgradient[i]);
+                        _mode[i] = SS_RGRADIENT;
+                    } else if (SP_IS_PATTERN (server)) {
+                        place->add(_pattern[i]);
+                        _tooltips.set_tip(*place, __pattern[i]);
+                        _mode[i] = SS_PATTERN;
+                    }
+                } else {
+                    g_warning ("file %s: line %d: Unknown paint server", __FILE__, __LINE__);
                 }
 
             } else if (paint->set && paint->type == SP_PAINT_TYPE_NONE) {
