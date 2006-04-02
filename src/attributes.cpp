@@ -103,6 +103,10 @@ static SPStyleProp const props[] = {
     {SP_ATTR_INKSCAPE_CURRENT_LAYER, "inkscape:current-layer"},
     {SP_ATTR_INKSCAPE_DOCUMENT_UNITS, "inkscape:document-units"},
     {SP_ATTR_INKSCAPE_CONNECTOR_SPACING, "inkscape:connector-spacing"},
+    /* SPColorProfile */
+    {SP_ATTR_LOCAL, "local"},
+    {SP_ATTR_NAME, "name"},
+    {SP_ATTR_RENDERING_INTENT, "rendering-intent"},
     /* SPGuide */
     {SP_ATTR_ORIENTATION, "orientation"},
     {SP_ATTR_POSITION, "position"},

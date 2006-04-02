@@ -40,6 +40,7 @@
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
 #include "sp-style-elem.h"
+#include "color-profile-fns.h"
 #include "xml/repr.h"
 
 enum NameType { REPR_NAME, SODIPODI_TYPE };
@@ -94,6 +95,7 @@ populate_dtables()
         { "svg:a", SP_TYPE_ANCHOR },
         //{ "svg:animate", SP_TYPE_ANIMATE },
         { "svg:circle", SP_TYPE_CIRCLE },
+        { "svg:color-profile", COLORPROFILE_TYPE },
         { "svg:clipPath", SP_TYPE_CLIPPATH },
         { "svg:defs", SP_TYPE_DEFS },
         { "svg:ellipse", SP_TYPE_ELLIPSE },

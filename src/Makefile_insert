@@ -43,6 +43,8 @@ libinkpre_a_SOURCES =	\
 	bad-uri-exception.h	\
 	brokenimage.xpm	\
 	color-rgba.h	\
+	color-profile.cpp color-profile.h	\
+	color-profile-fns.h	\
 	conn-avoid-ref.cpp conn-avoid-ref.h	\
 	connector-context.cpp connector-context.h	\
 	context-fns.cpp context-fns.h \
