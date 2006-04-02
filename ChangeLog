@@ -1,3 +1,7 @@
+2005-04-02  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/knot.h: Fixed warning messages.
+
 2006-04-01  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/ui/widget/selected-style.cpp:

@@ -63,27 +63,27 @@ struct SPKnot {
     gchar *tip;
 
     //TODO: all the members above should eventualle become private, accessible via setters/getters
-    void inline setSize (guint i) {size = i;}
-    void inline setShape (guint i) {shape = (SPKnotShapeType) i;}
-    void inline setAnchor (guint i) {anchor = (GtkAnchorType) i;}
-    void inline setMode (guint i) {mode = (SPKnotModeType) i;}
-    void inline setPixbuf (gpointer p) {pixbuf = p;}
-    void inline setFill (guint32 normal, guint32 mouseover, guint32 dragging) {
+    inline void setSize (guint i) {size = i;}
+    inline void setShape (guint i) {shape = (SPKnotShapeType) i;}
+    inline void setAnchor (guint i) {anchor = (GtkAnchorType) i;}
+    inline void setMode (guint i) {mode = (SPKnotModeType) i;}
+    inline void setPixbuf (gpointer p) {pixbuf = p;}
+    inline void setFill (guint32 normal, guint32 mouseover, guint32 dragging) {
         fill[SP_KNOT_STATE_NORMAL] = normal;
         fill[SP_KNOT_STATE_MOUSEOVER] = mouseover;
         fill[SP_KNOT_STATE_DRAGGING] = dragging;
     }
-    void inline setStroke (guint32 normal, guint32 mouseover, guint32 dragging) {
+    inline void setStroke (guint32 normal, guint32 mouseover, guint32 dragging) {
         stroke[SP_KNOT_STATE_NORMAL] = normal;
         stroke[SP_KNOT_STATE_MOUSEOVER] = mouseover;
         stroke[SP_KNOT_STATE_DRAGGING] = dragging;
     }
-    void inline setImage (guchar* normal, guchar* mouseover, guchar* dragging) {
+    inline void setImage (guchar* normal, guchar* mouseover, guchar* dragging) {
         image[SP_KNOT_STATE_NORMAL] = normal;
         image[SP_KNOT_STATE_MOUSEOVER] = mouseover;
         image[SP_KNOT_STATE_DRAGGING] = dragging;
     }
-    void inline setCursor (GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging) {
+    inline void setCursor (GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging) {
         if (cursor[SP_KNOT_STATE_NORMAL]) {
             gdk_cursor_unref(cursor[SP_KNOT_STATE_NORMAL]);
         }
