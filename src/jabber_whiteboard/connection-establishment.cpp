@@ -115,7 +115,7 @@ SessionManager::receiveConnectRequest(gchar const* requesterJID)
 	Gdk::ModifierType mt;
 	Gdk::Display::get_default()->get_pointer(x, y, mt);
 
-	if (mt) {
+	if (mt & GDK_BUTTON1_MASK) {
 		// Attach a polling timeout
 		this->_notify_incoming_request = Glib::signal_timeout().connect(sigc::bind< 0 >(sigc::mem_fun(*this, &SessionManager::_pollReceiveConnectRequest), requesterJID), 50);
 		return;
@@ -320,7 +320,7 @@ SessionManager::_pollReceiveConnectRequest(Glib::ustring const recipientJID)
 	Gdk::ModifierType mt;
 	Gdk::Display::get_default()->get_pointer(x, y, mt);
 
-	if (mt) {
+	if (mt & GDK_BUTTON1_MASK) {
 		return true;
 	} else {
 		this->receiveConnectRequest(recipientJID.c_str());
