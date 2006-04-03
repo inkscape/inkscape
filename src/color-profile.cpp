@@ -137,7 +137,19 @@ static void colorprofile_set( SPObject *object, unsigned key, gchar const *value
                     // TODO open filename and URIs properly
                     //FILE* fp = fopen_utf8name( filename, "r" );
                     //LCMSAPI cmsHPROFILE   LCMSEXPORT cmsOpenProfileFromMem(LPVOID MemPtr, DWORD dwSize);
-                    cprof->profHandle = cmsOpenProfileFromFile( value, "r" );
+
+                    if ( !g_path_is_absolute(cprof->href) ) {
+                        // Try to open relative
+                        gchar* docbase = SP_DOCUMENT_BASE( SP_OBJECT_DOCUMENT(object) );
+			gchar* fullname = g_build_filename( docbase ? docbase : ".", cprof->href, NULL );
+
+                        cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
+
+			g_free (fullname);
+                    } else {
+                        cprof->profHandle = cmsOpenProfileFromFile( cprof->href, "r" );
+                    }
+
 #endif // ENABLE_LCMS
                 }
             }
