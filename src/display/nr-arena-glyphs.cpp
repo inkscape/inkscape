@@ -147,7 +147,7 @@ nr_arena_glyphs_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state,
 	bbox.x0 = bbox.y0 = NR_HUGE;
 	bbox.x1 = bbox.y1 = -NR_HUGE;
 
-	const float scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
+	float const scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
 
 	if (glyphs->style->fill.type != SP_PAINT_TYPE_NONE) {
 		NRMatrix t;
@@ -249,8 +249,8 @@ nr_arena_glyphs_pick (NRArenaItem *item, NR::Point p, gdouble delta, unsigned in
 	if (!glyphs->font ) return NULL;
 	if (!glyphs->style) return NULL;
 	
-	const double x = p[NR::X];
-	const double y = p[NR::Y];
+	double const x = p[NR::X];
+	double const y = p[NR::Y];
 	/* With text we take a simple approach: pick if the point is in a characher bbox */
 	if ((x >= item->bbox.x0) && (y >= item->bbox.y0) && (x <= item->bbox.x1) && (y <= item->bbox.y1)) return item;
 
@@ -268,7 +268,7 @@ nr_arena_glyphs_pick (NRArenaItem *item, NR::Point p, gdouble delta, unsigned in
 }
 
 void
-nr_arena_glyphs_set_path (NRArenaGlyphs *glyphs, SPCurve *curve, unsigned int lieutenant, font_instance *font, gint glyph, const NRMatrix *transform)
+nr_arena_glyphs_set_path (NRArenaGlyphs *glyphs, SPCurve *curve, unsigned int lieutenant, font_instance *font, gint glyph, NRMatrix const *transform)
 {
 	nr_return_if_fail (glyphs != NULL);
 	nr_return_if_fail (NR_IS_ARENA_GLYPHS (glyphs));
@@ -612,7 +612,7 @@ nr_arena_glyphs_group_clear (NRArenaGlyphsGroup *sg)
 }
 
 void
-nr_arena_glyphs_group_add_component (NRArenaGlyphsGroup *sg, font_instance *font, int glyph, const NRMatrix *transform)
+nr_arena_glyphs_group_add_component (NRArenaGlyphsGroup *sg, font_instance *font, int glyph, NRMatrix const *transform)
 {
 	NRArenaGroup *group;
 	NRBPath bpath;
@@ -658,7 +658,7 @@ nr_arena_glyphs_group_set_style (NRArenaGlyphsGroup *sg, SPStyle *style)
 }
 
 void
-nr_arena_glyphs_group_set_paintbox (NRArenaGlyphsGroup *gg, const NRRect *pbox)
+nr_arena_glyphs_group_set_paintbox (NRArenaGlyphsGroup *gg, NRRect const *pbox)
 {
 	nr_return_if_fail (gg != NULL);
 	nr_return_if_fail (NR_IS_ARENA_GLYPHS_GROUP (gg));
