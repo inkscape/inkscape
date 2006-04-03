@@ -20,6 +20,7 @@
 #include "svg-color.h"
 #include <cassert>
 #include <math.h>
+#include <glib/gmem.h>
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 #include <glib/ghash.h>
@@ -189,10 +190,15 @@ static SPSVGColor const sp_svg_color_named[] = {
 static GHashTable *sp_svg_create_color_hash();
 
 guint32
-sp_svg_read_color(gchar const *str, guint32 def)
+sp_svg_read_color(gchar const *str, guint32 const dfl)
+{
+    return sp_svg_read_color(str, NULL, dfl);
+}
+
+static guint32
+internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
 {
     static GHashTable *colors = NULL;
-    gchar c[32];
     guint32 val = 0;
 
     if (str == NULL) return def;
@@ -222,6 +228,9 @@ sp_svg_read_color(gchar const *str, guint32 def)
         } else if (i != 1 + 6) {
             /* must be either 3 or 6 digits. */
             return def;
+        }
+        if (end_ptr) {
+            *end_ptr = str + i;
         }
     } else if (strneq(str, "rgb(", 4)) {
         gboolean hasp, hasd;
@@ -266,6 +275,11 @@ sp_svg_read_color(gchar const *str, guint32 def)
         } else {
             hasd = TRUE;
         }
+        while(*s && g_ascii_isspace(*s)) s += 1;
+        if (*s != ')') {
+            return def;
+        }
+        ++s;
         if (hasp && hasd) return def;
         if (hasp) {
             val = (guint) floor(CLAMP(r, 0.0, 100.0) * 2.559999) << 24;
@@ -276,14 +290,18 @@ sp_svg_read_color(gchar const *str, guint32 def)
             val |= ((guint) CLAMP(g, 0, 255) << 16);
             val |= ((guint) CLAMP(b, 0, 255) << 8);
         }
+        if (end_ptr) {
+            *end_ptr = s;
+        }
         return val;
     } else {
         gint i;
         if (!colors) {
             colors = sp_svg_create_color_hash();
         }
+        gchar c[32];
         for (i = 0; i < 31; i++) {
-            if (str[i] == ';') {
+            if (str[i] == ';' || g_ascii_isspace(str[i])) {
                 c[i] = '\0';
                 break;
             }
@@ -298,10 +316,37 @@ sp_svg_read_color(gchar const *str, guint32 def)
         } else {
             return def;
         }
+        if (end_ptr) {
+            *end_ptr = str + i;
+        }
     }
 
     return (val << 8);
 }
+
+guint32
+sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 dfl)
+{
+    /* I've been rather hurried in editing the above to add support for end_ptr, so I'm adding
+     * this check wrapper. */
+    gchar const *end = str;
+    guint32 const ret = internal_sp_svg_read_color(str, &end, dfl);
+    assert(ret == dfl && end == str
+           || (((ret & 0xff) == 0)
+               && str < end));
+    if (str < end) {
+        gchar *buf = (gchar *) g_malloc(end + 1 - str);
+        memcpy(buf, str, end - str);
+        buf[end - str] = '\0';
+        gchar const *buf_end = buf;
+        guint32 const check = internal_sp_svg_read_color(buf, &buf_end, 1);
+        assert(check == ret
+               && buf_end - buf == end - str);
+        g_free(buf);
+    }
+    return ret;
+}
+
 
 /**
  * Converts an RGB colour expressed in form 0x00rrggbb to a CSS/SVG representation of that colour.

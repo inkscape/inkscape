@@ -3,7 +3,8 @@
 
 #include <glib/gtypes.h>
 
-unsigned int sp_svg_read_color(gchar const *str, unsigned int dfl);
+guint32 sp_svg_read_color(gchar const *str, unsigned int dfl);
+guint32 sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def);
 void sp_svg_write_color(char *buf, unsigned int buflen, unsigned int rgba32);
 
 
