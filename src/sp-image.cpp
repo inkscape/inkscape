@@ -657,35 +657,39 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 				pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
 // BLIP
 #if ENABLE_LCMS
-                if ( image->color_profile )
-                {
-                    int imagewidth = gdk_pixbuf_get_width( pixbuf );
-                    int imageheight = gdk_pixbuf_get_height( pixbuf );
-                    int rowstride = gdk_pixbuf_get_rowstride( pixbuf );
-                    guchar* px = gdk_pixbuf_get_pixels( pixbuf );
+                                if ( image->color_profile )
+                                {
+                                    int imagewidth = gdk_pixbuf_get_width( pixbuf );
+                                    int imageheight = gdk_pixbuf_get_height( pixbuf );
+                                    int rowstride = gdk_pixbuf_get_rowstride( pixbuf );
+                                    guchar* px = gdk_pixbuf_get_pixels( pixbuf );
 
-                    if ( px ) {
-                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ), image->color_profile );
-                        if ( prof ) {
-                            cmsHPROFILE destProf = cmsCreate_sRGBProfile();
-                            cmsHTRANSFORM transf = cmsCreateTransform( prof, 
-                                                                       TYPE_RGBA_8,
-                                                                       destProf,
-                                                                       TYPE_RGBA_8,
-                                                                       INTENT_PERCEPTUAL, 0 );
-                            guchar* currLine = px;
-                            for ( int y = 0; y < imageheight; y++ ) {
-                                // Since the types are the same size, we can do the transformation in-place
-                                cmsDoTransform( transf, currLine, currLine, imagewidth );
-                                currLine += rowstride;
-                            }
+                                    if ( px ) {
+                                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ), image->color_profile );
+                                        if ( prof ) {
+                                            icProfileClassSignature profileClass = cmsGetDeviceClass( prof );
+                                            if ( profileClass != icSigNamedColorClass ) {
+                                                cmsHPROFILE destProf = cmsCreate_sRGBProfile();
+                                                cmsHTRANSFORM transf = cmsCreateTransform( prof, 
+                                                                                           TYPE_RGBA_8,
+                                                                                           destProf,
+                                                                                           TYPE_RGBA_8,
+                                                                                           INTENT_PERCEPTUAL, 0 );
+                                                if ( transf ) {
+                                                    guchar* currLine = px;
+                                                    for ( int y = 0; y < imageheight; y++ ) {
+                                                        // Since the types are the same size, we can do the transformation in-place
+                                                        cmsDoTransform( transf, currLine, currLine, imagewidth );
+                                                        currLine += rowstride;
+                                                    }
 
-                            if ( transf ) {
-                                cmsDeleteTransform( transf );
-                            }
-                        }
-                    }
-                }
+                                                    cmsDeleteTransform( transf );
+                                                }
+                                                cmsCloseProfile( destProf );
+                                            }
+                                        }
+                                    }
+                                }
 #endif // ENABLE_LCMS
 				image->pixbuf = pixbuf;
 			}
