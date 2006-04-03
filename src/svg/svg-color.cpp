@@ -343,6 +343,10 @@ sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 dfl)
         assert(check == ret
                && buf_end - buf == end - str);
         g_free(buf);
+
+        if ( end_ptr ) {
+            *end_ptr = end;
+        }
     }
     return ret;
 }
