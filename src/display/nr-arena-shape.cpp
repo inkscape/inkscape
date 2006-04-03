@@ -750,16 +750,7 @@ nr_arena_shape_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 	if ( nr_rect_l_test_intersect (area, &item->bbox) ) {
 	    NRGC   tempGC(NULL);
 	    tempGC.transform=shape->ctm;
-	    //nr_arena_shape_update_stroke(shape,&tempGC); // we don't need stroke for clipping
 	    nr_arena_shape_update_fill(shape, &tempGC, true);
-	    /*      NRRect bbox;
-		    bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-		    nr_arena_shape_add_bboxes(shape,bbox);
-		    item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-		    item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-		    item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
-		    item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
-		    shape->approx_bbox=item->bbox;*/
 	}
     }
 
@@ -1168,8 +1159,8 @@ void nr_pixblock_render_shape_mask_or (NRPixBlock &m,Shape* theS)
     if ( it < m.area.y0 ) it=m.area.y0;
     if ( ir > m.area.x1 ) ir=m.area.x1;
     if ( ib > m.area.y1 ) ib=m.area.y1;
-  
-    // version par FloatLigne
+
+    /* This is the FloatLigne version.  See svn (prior to Apr 2006) for versions using BitLigne or direct BitLigne. */
     int    curPt;
     float  curY;
     theS->BeginQuickRaster(curY, curPt);
@@ -1200,90 +1191,6 @@ void nr_pixblock_render_shape_mask_or (NRPixBlock &m,Shape* theS)
     theS->EndQuickRaster();
     delete theI;
     delete theIL;
-  
-    /*  // version par BitLigne
-	int    curPt;
-	float  curY;
-	theS->BeginRaster(curY,curPt,1.0);
-  
-	BitLigne*   theI[4];
-	for (int i=0;i<4;i++) theI[i]=new BitLigne(il,ir);
-	IntLigne*   theIL=new IntLigne();
-  
-	theS->Scan(curY,curPt,(float)(it),0.25);
-  
-	char* mdata=(char*)m.data.px;
-	if ( m.size == NR_PIXBLOCK_SIZE_TINY ) mdata=(char*)m.data.p;
-	uint32_t* ligStart=((uint32_t*)(mdata+((il-m.area.x0)+m.rs*(it-m.area.y0))));
-	for (int y=it;y<ib;y++) {
-	for (int i=0;i<4;i++) theI[i]->Reset();
-	if ( y&0x00000003 ) {
-	theS->Scan(curY,curPt,((float)(y+0.25)),fill_oddEven,theI[0],false,0.25);
-	theS->Scan(curY,curPt,((float)(y+0.5)),fill_oddEven,theI[1],false,0.25);
-	theS->Scan(curY,curPt,((float)(y+0.75)),fill_oddEven,theI[2],false,0.25);
-	theS->Scan(curY,curPt,((float)(y+1.0)),fill_oddEven,theI[3],false,0.25);
-	} else {
-	theS->Scan(curY,curPt,((float)(y+0.25)),fill_oddEven,theI[0],true,0.25);
-	theS->Scan(curY,curPt,((float)(y+0.5)),fill_oddEven,theI[1],true,0.25);
-	theS->Scan(curY,curPt,((float)(y+0.75)),fill_oddEven,theI[2],true,0.25);
-	theS->Scan(curY,curPt,((float)(y+1.0)),fill_oddEven,theI[3],true,0.25);
-	}
-	theIL->Copy(4,theI);
-    
-	raster_info  dest;
-	dest.startPix=il;
-	dest.endPix=ir;
-	dest.sth=il;
-	dest.stv=y;
-	dest.buffer=ligStart;
-	theIL->Raster(dest,NULL,shape_run_A8_OR);
-	ligStart=((uint32_t*)(((char*)ligStart)+m.rs));
-	}
-	theS->EndRaster();
-	for (int i=0;i<4;i++) delete theI[i];
-	delete theIL;*/
-  
-/*  // version par BitLigne directe
-    int    curPt;
-    float  curY;
-    theS->BeginQuickRaster(curY,curPt,1.0);
-  
-    BitLigne*   theI[4];
-    for (int i=0;i<4;i++) theI[i]=new BitLigne(il,ir);
-    IntLigne*   theIL=new IntLigne();
-  
-    theS->DirectQuickScan(curY,curPt,(float)(it),true,0.25);
-  
-    char* mdata=(char*)m.data.px;
-    if ( m.size == NR_PIXBLOCK_SIZE_TINY ) mdata=(char*)m.data.p;
-    uint32_t* ligStart=((uint32_t*)(mdata+((il-m.area.x0)+m.rs*(it-m.area.y0))));
-    for (int y=it;y<ib;y++) {
-    for (int i=0;i<4;i++) theI[i]->Reset();
-    if ( y&0x00000003 ) {
-    theS->QuickScan(curY,curPt,((float)(y+0.25)),fill_oddEven,theI[0],false,0.25);
-    theS->QuickScan(curY,curPt,((float)(y+0.5)),fill_oddEven,theI[1],false,0.25);
-    theS->QuickScan(curY,curPt,((float)(y+0.75)),fill_oddEven,theI[2],false,0.25);
-    theS->QuickScan(curY,curPt,((float)(y+1.0)),fill_oddEven,theI[3],false,0.25);
-    } else {
-    theS->QuickScan(curY,curPt,((float)(y+0.25)),fill_oddEven,theI[0],true,0.25);
-    theS->QuickScan(curY,curPt,((float)(y+0.5)),fill_oddEven,theI[1],true,0.25);
-    theS->QuickScan(curY,curPt,((float)(y+0.75)),fill_oddEven,theI[2],true,0.25);
-    theS->QuickScan(curY,curPt,((float)(y+1.0)),fill_oddEven,theI[3],true,0.25);
-    }
-    theIL->Copy(4,theI);
-    
-    raster_info  dest;
-    dest.startPix=il;
-    dest.endPix=ir;
-    dest.sth=il;
-    dest.stv=y;
-    dest.buffer=ligStart;
-    theIL->Raster(dest,NULL,shape_run_A8_OR);
-    ligStart=((uint32_t*)(((char*)ligStart)+m.rs));
-    }
-    theS->EndQuickRaster();
-    for (int i=0;i<4;i++) delete theI[i];
-    delete theIL;*/
 }
 
 
