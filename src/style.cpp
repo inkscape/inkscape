@@ -24,6 +24,7 @@
 
 #include "svg/svg.h"
 #include "svg/svg-color.h"
+#include "svg/svg-icc-color.h"
 
 #include "display/canvas-bpath.h"
 #include "attributes.h"
@@ -39,6 +40,8 @@
 #include "xml/repr.h"
 #include "unit-constants.h"
 #include "isnan.h"
+using Inkscape::CSSOStringStream;
+using std::vector;
 
 namespace Inkscape {
 
@@ -2899,13 +2902,20 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
             }
         }
     } else {
-        guint32 const rgb0 = sp_svg_read_color(str, 0xff);
+        guint32 const rgb0 = sp_svg_read_color(str, &str, 0xff);
         if (rgb0 != 0xff) {
             paint->type = SP_PAINT_TYPE_COLOR;
             sp_color_set_rgb_rgba32(&paint->value.color, rgb0);
             paint->set = TRUE;
             paint->inherit = FALSE;
             paint->currentcolor = FALSE;
+
+            while (g_ascii_isspace(*str)) {
+                ++str;
+            }
+            if (strneq(str, "icc-color(", 10)) {
+                /* fixme: Parse icc-color to paint->iccColor here. */
+            }
         }
     }
 }
@@ -3325,7 +3335,13 @@ sp_paint_differ(SPIPaint const *const a, SPIPaint const *const b)
     if (a->type != b->type)
         return true;
     if (a->type == SP_PAINT_TYPE_COLOR)
-        return !sp_color_is_equal(&a->value.color, &b->value.color);
+        return !(sp_color_is_equal(&a->value.color, &b->value.color)
+                 && ((a->iccColor == b->iccColor)
+                     || (a->iccColor && b->iccColor
+                         && (a->iccColor->colorProfile == b->iccColor->colorProfile)
+                         && (a->iccColor->colors == b->iccColor->colors))));
+    /* todo: Allow for epsilon differences in iccColor->colors, e.g. changes small enough not to show up
+     * in the string representation. */
     if (a->type == SP_PAINT_TYPE_PAINTSERVER)
         return (a->value.paint.server != b->value.paint.server);
     return false;
@@ -3354,7 +3370,19 @@ sp_style_write_ipaint(gchar *b, gint const len, gchar const *const key,
                 case SP_PAINT_TYPE_COLOR: {
                     char color_buf[8];
                     sp_svg_write_color(color_buf, sizeof(color_buf), sp_color_get_rgba32_ualpha(&paint->value.color, 0));
-                    return g_snprintf(b, len, "%s:%s;", key, color_buf);
+                    if (paint->iccColor) {
+                        CSSOStringStream css;
+                        css << color_buf << " icc-color(" << paint->iccColor->colorProfile;
+                        for (vector<double>::const_iterator i(paint->iccColor->colors.begin()),
+                                 iEnd(paint->iccColor->colors.end());
+                             i != iEnd; ++i) {
+                            css << ", " << *i;
+                        }
+                        css << ')';
+                        return g_snprintf(b, len, "%s:%s;", key, css.gcharp());
+                    } else {
+                        return g_snprintf(b, len, "%s:%s;", key, color_buf);
+                    }
                 }
                 case SP_PAINT_TYPE_PAINTSERVER:
                     return g_snprintf(b, len, "%s:url(%s);", key, paint->value.paint.uri);
@@ -3453,9 +3481,11 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
         }
 
         paint->value.paint.server = NULL;
-        paint->value.paint.uri = NULL;
-        paint->type = SP_PAINT_TYPE_NONE;
     }
+    paint->value.paint.uri = NULL;
+    paint->type = SP_PAINT_TYPE_NONE;
+    delete paint->iccColor;
+    paint->iccColor = NULL;
 }
 
 /**

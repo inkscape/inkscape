@@ -148,6 +148,8 @@ enum {
     SP_PAINT_TYPE_IMPOSSIBLE
 };
 
+class SVGICCColor;
+
 /// Paint type internal to SPStyle.
 struct SPIPaint {
     unsigned set : 1;
@@ -161,6 +163,7 @@ struct SPIPaint {
             gchar *uri;
         } paint;
     } value;
+    SVGICCColor *iccColor;
 };
 
 enum {
