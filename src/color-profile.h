@@ -7,7 +7,6 @@
 
 #include <glib/gtypes.h>
 #include <sp-object.h>
-#include "color-profile-fns.h"
 #if ENABLE_LCMS
 #include <lcms.h>
 #endif // ENABLE_LCMS

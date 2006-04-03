@@ -45,6 +45,9 @@ struct SPImage : public SPItem {
 	double viewx, viewy, viewwidth, viewheight;
 
 	gchar *href;
+#if ENABLE_LCMS
+        gchar *color_profile;
+#endif // ENABLE_LCMS
 
 	GdkPixbuf *pixbuf;
 };

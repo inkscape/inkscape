@@ -4,6 +4,7 @@
 #include "color-profile.h"
 #include "color-profile-fns.h"
 #include "attributes.h"
+#include "document.h"
 
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
@@ -206,6 +207,51 @@ static Inkscape::XML::Node* colorprofile_write( SPObject *object, Inkscape::XML:
     return repr;
 }
 
+
+#if ENABLE_LCMS
+
+
+static SPObject* bruteFind( SPObject* curr, gchar* const name )
+{
+    SPObject* result = 0;
+
+    if ( curr ) {
+        if ( IS_COLORPROFILE(curr) ) {
+            ColorProfile* prof = COLORPROFILE(curr);
+            if ( prof ) {
+                if ( prof->name && (strcmp(prof->name, name) == 0) ) {
+                    result = curr;
+                }
+            }
+        } else {
+            if ( curr->hasChildren() ) {
+                SPObject* child = curr->firstChild();
+                while ( child && !result ) {
+                    result = bruteFind( child, name );
+                    if ( !result ) {
+                        child = child->next;
+                    }
+                };
+            }
+        }
+    }
+
+    return result;
+}
+
+cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, gchar* const name )
+{
+    cmsHPROFILE prof = 0;
+
+    SPObject* root = SP_DOCUMENT_ROOT(document);
+    SPObject* thing = bruteFind( root, name );
+    if ( thing ) {
+        prof = COLORPROFILE(thing)->profHandle;
+    }
+
+    return prof;
+}
+#endif // ENABLE_LCMS
 
 /*
   Local Variables:

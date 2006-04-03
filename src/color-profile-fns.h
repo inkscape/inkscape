@@ -7,8 +7,14 @@
 
 #include <glib-object.h>
 #include <glib/gtypes.h>
+#if ENABLE_LCMS
+#include <lcms.h>
+#endif // ENABLE_LCMS
+
+class SPDocument;
 
 namespace Inkscape {
+
 namespace XML {
 class Node;
 } // namespace XML
@@ -16,6 +22,12 @@ class Node;
 class ColorProfile;
 
 GType colorprofile_get_type();
+
+#if ENABLE_LCMS
+
+cmsHPROFILE colorprofile_get_handle( SPDocument* document, gchar* const name );
+
+#endif
 
 } // namespace Inkscape
 

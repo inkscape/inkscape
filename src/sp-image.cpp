@@ -36,7 +36,9 @@
 
 #include "io/sys.h"
 #include <png.h>
-
+#if ENABLE_LCMS
+#include "color-profile-fns.h"
+#endif // ENABLE_LCMS
 /*
  * SPImage
  */
@@ -478,6 +480,7 @@ sp_image_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 	sp_object_read_attr (object, "width");
 	sp_object_read_attr (object, "height");
 	sp_object_read_attr (object, "preserveAspectRatio");
+	sp_object_read_attr (object, "color-profile");
 
 	/* Register */
 	sp_document_add_resource (document, "image", object);
@@ -504,6 +507,13 @@ sp_image_release (SPObject *object)
 		gdk_pixbuf_unref (image->pixbuf);
 		image->pixbuf = NULL;
 	}
+
+#if ENABLE_LCMS
+	if (image->color_profile) {
+		g_free (image->color_profile);
+		image->color_profile = NULL;
+	}
+#endif ENABLE_LCMS
 
 	if (((SPObjectClass *) parent_class)->release)
 		((SPObjectClass *) parent_class)->release (object);
@@ -608,6 +618,16 @@ sp_image_set (SPObject *object, unsigned int key, const gchar *value)
 			image->aspect_clip = clip;
 		}
 		break;
+#if ENABLE_LCMS
+        case SP_PROP_COLOR_PROFILE:
+                if ( image->color_profile ) {
+                    g_free (image->color_profile);
+                }
+                image->color_profile = (value) ? g_strdup (value) : NULL;
+                // TODO check on this HREF_MODIFIED flag
+                object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
+                break;
+#endif // ENABLE_LCMS
 	default:
 		if (((SPObjectClass *) (parent_class))->set)
 			((SPObjectClass *) (parent_class))->set (object, key, value);
@@ -635,6 +655,38 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 			pixbuf = sp_image_repr_read_image (object->repr);
 			if (pixbuf) {
 				pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
+// BLIP
+#if ENABLE_LCMS
+                if ( image->color_profile )
+                {
+                    int imagewidth = gdk_pixbuf_get_width( pixbuf );
+                    int imageheight = gdk_pixbuf_get_height( pixbuf );
+                    int rowstride = gdk_pixbuf_get_rowstride( pixbuf );
+                    guchar* px = gdk_pixbuf_get_pixels( pixbuf );
+
+                    if ( px ) {
+                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ), image->color_profile );
+                        if ( prof ) {
+                            cmsHPROFILE destProf = cmsCreate_sRGBProfile();
+                            cmsHTRANSFORM transf = cmsCreateTransform( prof, 
+                                                                       TYPE_RGBA_8,
+                                                                       destProf,
+                                                                       TYPE_RGBA_8,
+                                                                       INTENT_PERCEPTUAL, 0 );
+                            guchar* currLine = px;
+                            for ( int y = 0; y < imageheight; y++ ) {
+                                // Since the types are the same size, we can do the transformation in-place
+                                cmsDoTransform( transf, currLine, currLine, imagewidth );
+                                currLine += rowstride;
+                            }
+
+                            if ( transf ) {
+                                cmsDeleteTransform( transf );
+                            }
+                        }
+                    }
+                }
+#endif // ENABLE_LCMS
 				image->pixbuf = pixbuf;
 			}
 		}
@@ -751,6 +803,9 @@ sp_image_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	if (image->width._set) sp_repr_set_svg_double(repr, "width", image->width.computed);
 	if (image->height._set) sp_repr_set_svg_double(repr, "height", image->height.computed);
 	repr->setAttribute("preserveAspectRatio", object->repr->attribute("preserveAspectRatio"));
+#if ENABLE_LCMS
+        if (image->color_profile) repr->setAttribute("color-profile", image->color_profile);
+#endif // ENABLE_LCMS
 
 	if (((SPObjectClass *) (parent_class))->write)
 		((SPObjectClass *) (parent_class))->write (object, repr, flags);

@@ -1,10 +1,17 @@
 2005-04-02  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/color-profile.h, src/color-profile.cpp,
-	 src/color-profile-fns.h, src/Makefile_insert, src/attributes.cpp,
-	 src/attributes.h, src/sp-object-repr.cpp:
+	  src/color-profile-fns.h, src/sp-image.h, src/sp-image.cpp:
 
-	 Adding support for <color-profile> element.
+	  Initial support of color-profile on <image> elements.
+
+2005-04-02  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/color-profile.h, src/color-profile.cpp,
+	  src/color-profile-fns.h, src/Makefile_insert, src/attributes.cpp,
+	  src/attributes.h, src/sp-object-repr.cpp:
+
+	  Adding support for <color-profile> element.
 
 2005-04-02  Jon A. Cruz  <jon@joncruz.org>
 
