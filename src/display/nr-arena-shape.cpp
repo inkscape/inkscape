@@ -27,41 +27,41 @@
 #include <style.h>
 
 //int  showRuns=0;
-void nr_pixblock_render_shape_mask_or (NRPixBlock &m,Shape* theS);
+void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS);
 
-static void nr_arena_shape_class_init (NRArenaShapeClass *klass);
-static void nr_arena_shape_init (NRArenaShape *shape);
-static void nr_arena_shape_finalize (NRObject *object);
+static void nr_arena_shape_class_init(NRArenaShapeClass *klass);
+static void nr_arena_shape_init(NRArenaShape *shape);
+static void nr_arena_shape_finalize(NRObject *object);
 
-static NRArenaItem *nr_arena_shape_children (NRArenaItem *item);
-static void nr_arena_shape_add_child (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
-static void nr_arena_shape_remove_child (NRArenaItem *item, NRArenaItem *child);
-static void nr_arena_shape_set_child_position (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
+static NRArenaItem *nr_arena_shape_children(NRArenaItem *item);
+static void nr_arena_shape_add_child(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
+static void nr_arena_shape_remove_child(NRArenaItem *item, NRArenaItem *child);
+static void nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref);
 
-static guint nr_arena_shape_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
-static unsigned int nr_arena_shape_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
-static guint nr_arena_shape_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
-static NRArenaItem *nr_arena_shape_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
+static guint nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset);
+static unsigned int nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags);
+static guint nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb);
+static NRArenaItem *nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int sticky);
 
 static NRArenaItemClass *shape_parent_class;
 
 NRType
-nr_arena_shape_get_type (void)
+nr_arena_shape_get_type(void)
 {
     static NRType type = 0;
     if (!type) {
-	type = nr_object_register_type (NR_TYPE_ARENA_ITEM,
-					"NRArenaShape",
-					sizeof (NRArenaShapeClass),
-					sizeof (NRArenaShape),
-					(void (*) (NRObjectClass *)) nr_arena_shape_class_init,
-					(void (*) (NRObject *)) nr_arena_shape_init);
+        type = nr_object_register_type(NR_TYPE_ARENA_ITEM,
+                                       "NRArenaShape",
+                                       sizeof(NRArenaShapeClass),
+                                       sizeof(NRArenaShape),
+                                       (void (*)(NRObjectClass *)) nr_arena_shape_class_init,
+                                       (void (*)(NRObject *)) nr_arena_shape_init);
     }
     return type;
 }
 
 static void
-nr_arena_shape_class_init (NRArenaShapeClass *klass)
+nr_arena_shape_class_init(NRArenaShapeClass *klass)
 {
     NRObjectClass *object_class;
     NRArenaItemClass *item_class;
@@ -85,14 +85,14 @@ nr_arena_shape_class_init (NRArenaShapeClass *klass)
 }
 
 static void
-nr_arena_shape_init (NRArenaShape *shape)
+nr_arena_shape_init(NRArenaShape *shape)
 {
     shape->curve = NULL;
     shape->style = NULL;
     shape->paintbox.x0 = shape->paintbox.y0 = 0.0F;
     shape->paintbox.x1 = shape->paintbox.y1 = 256.0F;
 
-    nr_matrix_set_identity (&shape->ctm);
+    nr_matrix_set_identity(&shape->ctm);
     shape->fill_painter = NULL;
     shape->stroke_painter = NULL;
     shape->cached_fill = NULL;
@@ -111,25 +111,25 @@ nr_arena_shape_init (NRArenaShape *shape)
 }
 
 static void
-nr_arena_shape_finalize (NRObject *object)
+nr_arena_shape_finalize(NRObject *object)
 {
-    NRArenaShape *shape = (NRArenaShape *) (object);
+    NRArenaShape *shape = (NRArenaShape *) object;
 
     if (shape->fill_shp) delete shape->fill_shp;
     if (shape->stroke_shp) delete shape->stroke_shp;
     if (shape->cached_fill) delete shape->cached_fill;
     if (shape->cached_stroke) delete shape->cached_stroke;
-    if (shape->fill_painter) sp_painter_free (shape->fill_painter);
-    if (shape->stroke_painter) sp_painter_free (shape->stroke_painter);
+    if (shape->fill_painter) sp_painter_free(shape->fill_painter);
+    if (shape->stroke_painter) sp_painter_free(shape->stroke_painter);
 
-    if (shape->style) sp_style_unref (shape->style);
-    if (shape->curve) sp_curve_unref (shape->curve);
+    if (shape->style) sp_style_unref(shape->style);
+    if (shape->curve) sp_curve_unref(shape->curve);
 
-    ((NRObjectClass *) shape_parent_class)->finalize (object);
+    ((NRObjectClass *) shape_parent_class)->finalize(object);
 }
 
 static NRArenaItem *
-nr_arena_shape_children (NRArenaItem *item)
+nr_arena_shape_children(NRArenaItem *item)
 {
     NRArenaShape *shape = (NRArenaShape *) item;
 
@@ -137,51 +137,51 @@ nr_arena_shape_children (NRArenaItem *item)
 }
 
 static void
-nr_arena_shape_add_child (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
+nr_arena_shape_add_child(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
 {
     NRArenaShape *shape = (NRArenaShape *) item;
 
     if (!ref) {
-	shape->markers = nr_arena_item_attach_ref (item, child, NULL, shape->markers);
+        shape->markers = nr_arena_item_attach_ref(item, child, NULL, shape->markers);
     } else {
-	ref->next = nr_arena_item_attach_ref (item, child, ref, ref->next);
+        ref->next = nr_arena_item_attach_ref(item, child, ref, ref->next);
     }
 
-    nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
+    nr_arena_item_request_update(item, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 static void
-nr_arena_shape_remove_child (NRArenaItem *item, NRArenaItem *child)
+nr_arena_shape_remove_child(NRArenaItem *item, NRArenaItem *child)
 {
     NRArenaShape *shape = (NRArenaShape *) item;
 
     if (child->prev) {
-	nr_arena_item_detach_unref (item, child);
+        nr_arena_item_detach_unref(item, child);
     } else {
-	shape->markers = nr_arena_item_detach_unref (item, child);
+        shape->markers = nr_arena_item_detach_unref(item, child);
     }
 
-    nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
+    nr_arena_item_request_update(item, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 static void
-nr_arena_shape_set_child_position (NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
+nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArenaItem *ref)
 {
     NRArenaShape *shape = (NRArenaShape *) item;
 
     if (child->prev) {
-	nr_arena_item_detach_unref (item, child);
+        nr_arena_item_detach_unref(item, child);
     } else {
-	shape->markers = nr_arena_item_detach_unref (item, child);
+        shape->markers = nr_arena_item_detach_unref(item, child);
     }
 
     if (!ref) {
-	shape->markers = nr_arena_item_attach_ref (item, child, NULL, shape->markers);
+        shape->markers = nr_arena_item_attach_ref(item, child, NULL, shape->markers);
     } else {
-	ref->next = nr_arena_item_attach_ref (item, child, ref, ref->next);
+        ref->next = nr_arena_item_attach_ref(item, child, ref, ref->next);
     }
 
-    nr_arena_item_request_render (child);
+    nr_arena_item_request_render(child);
 }
 
 void nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc);
@@ -189,108 +189,108 @@ void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape 
 void nr_arena_shape_add_bboxes(NRArenaShape* shape,NRRect &bbox);
 
 static guint
-nr_arena_shape_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset)
+nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, guint reset)
 {
     NRRect bbox;
 
-    NRArenaShape *shape = NR_ARENA_SHAPE (item);
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
     unsigned int beststate = NR_ARENA_ITEM_STATE_ALL;
 
     unsigned int newstate;
     for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
-	newstate = nr_arena_item_invoke_update (child, area, gc, state, reset);
-	beststate = beststate & newstate;
+        newstate = nr_arena_item_invoke_update(child, area, gc, state, reset);
+        beststate = beststate & newstate;
     }
 
     if (!(state & NR_ARENA_ITEM_STATE_RENDER)) {
-	/* We do not have to create rendering structures */
-	shape->ctm = gc->transform;
-	if (state & NR_ARENA_ITEM_STATE_BBOX) {
-	    if (shape->curve) {
-		NRBPath bp;
-		/* fixme: */
-		bbox.x0 = bbox.y0 = NR_HUGE;
-		bbox.x1 = bbox.y1 = -NR_HUGE;
-		bp.path = shape->curve->bpath;
-		nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
-		item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-		item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-		item->bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
-		item->bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
-	    }
-	    if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
-		for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
-		    nr_rect_l_union (&item->bbox, &item->bbox, &child->bbox);
-		}
-	    }
-	}
-	return (state | item->state);
+        /* We do not have to create rendering structures */
+        shape->ctm = gc->transform;
+        if (state & NR_ARENA_ITEM_STATE_BBOX) {
+            if (shape->curve) {
+                NRBPath bp;
+                /* fixme: */
+                bbox.x0 = bbox.y0 = NR_HUGE;
+                bbox.x1 = bbox.y1 = -NR_HUGE;
+                bp.path = shape->curve->bpath;
+                nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
+                item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
+                item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
+                item->bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
+                item->bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
+            }
+            if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
+                for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
+                    nr_rect_l_union(&item->bbox, &item->bbox, &child->bbox);
+                }
+            }
+        }
+        return (state | item->state);
     }
 
     shape->delayed_shp=true;
     shape->ctm = gc->transform;
     bbox.x0 = bbox.y0 = NR_HUGE;
     bbox.x1 = bbox.y1 = -NR_HUGE;
-  
+
     if (shape->curve) {
-	NRBPath bp;
-	/* fixme: */
-	bbox.x0 = bbox.y0 = NR_HUGE;
-	bbox.x1 = bbox.y1 = -NR_HUGE;
-	bp.path = shape->curve->bpath;
-	nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
-	if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
-	    float width, scale;
-	    scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
-	    width = MAX (0.125, shape->_stroke.width * scale);
-	    if ( fabs(shape->_stroke.width * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
-		bbox.x0-=width;
-		bbox.x1+=width;
-		bbox.y0-=width;
-		bbox.y1+=width;
-	    }      
-	    // those pesky miters, now
-	    float miterMax=width*shape->_stroke.mitre_limit;
-	    if ( miterMax > 0.01 ) {
-		// grunt mode. we should compute the various miters instead (one for each point on the curve)
-		bbox.x0-=miterMax;
-		bbox.x1+=miterMax;
-		bbox.y0-=miterMax;
-		bbox.y1+=miterMax;        
-	    }
-	}
+        NRBPath bp;
+        /* fixme: */
+        bbox.x0 = bbox.y0 = NR_HUGE;
+        bbox.x1 = bbox.y1 = -NR_HUGE;
+        bp.path = shape->curve->bpath;
+        nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
+        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
+            float width, scale;
+            scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
+            width = MAX(0.125, shape->_stroke.width * scale);
+            if ( fabs(shape->_stroke.width * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
+                bbox.x0-=width;
+                bbox.x1+=width;
+                bbox.y0-=width;
+                bbox.y1+=width;
+            }
+            // those pesky miters, now
+            float miterMax=width*shape->_stroke.mitre_limit;
+            if ( miterMax > 0.01 ) {
+                // grunt mode. we should compute the various miters instead (one for each point on the curve)
+                bbox.x0-=miterMax;
+                bbox.x1+=miterMax;
+                bbox.y0-=miterMax;
+                bbox.y1+=miterMax;
+            }
+        }
     } else {
     }
     shape->approx_bbox.x0 = (gint32)(bbox.x0 - 1.0F);
     shape->approx_bbox.y0 = (gint32)(bbox.y0 - 1.0F);
     shape->approx_bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
     shape->approx_bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
-    if ( area && nr_rect_l_test_intersect (area, &shape->approx_bbox) ) shape->delayed_shp=false;
+    if ( area && nr_rect_l_test_intersect(area, &shape->approx_bbox) ) shape->delayed_shp=false;
 
     /* Release state data */
-    if (TRUE || !nr_matrix_test_transform_equal (&gc->transform, &shape->ctm, NR_EPSILON)) {
-	/* Concept test */
-	if (shape->fill_shp) {
-	    delete shape->fill_shp;
-	    shape->fill_shp = NULL;
-	}
+    if (TRUE || !nr_matrix_test_transform_equal(&gc->transform, &shape->ctm, NR_EPSILON)) {
+        /* Concept test */
+        if (shape->fill_shp) {
+            delete shape->fill_shp;
+            shape->fill_shp = NULL;
+        }
     }
     if (shape->stroke_shp) {
-	delete shape->stroke_shp;
-	shape->stroke_shp = NULL;
+        delete shape->stroke_shp;
+        shape->stroke_shp = NULL;
     }
     if (shape->fill_painter) {
-	sp_painter_free (shape->fill_painter);
-	shape->fill_painter = NULL;
+        sp_painter_free(shape->fill_painter);
+        shape->fill_painter = NULL;
     }
     if (shape->stroke_painter) {
-	sp_painter_free (shape->stroke_painter);
-	shape->stroke_painter = NULL;
+        sp_painter_free(shape->stroke_painter);
+        shape->stroke_painter = NULL;
     }
 
     if (!shape->curve || !shape->style) return NR_ARENA_ITEM_STATE_ALL;
-    if (sp_curve_is_empty (shape->curve)) return NR_ARENA_ITEM_STATE_ALL;
+    if (sp_curve_is_empty(shape->curve)) return NR_ARENA_ITEM_STATE_ALL;
     if ( ( shape->_fill.paint.type() == NRArenaShape::Paint::NONE ) &&
          ( shape->_stroke.paint.type() == NRArenaShape::Paint::NONE ) )
     {
@@ -299,57 +299,57 @@ nr_arena_shape_update (NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, 
 
     /* Build state data */
     if ( shape->delayed_shp ) {
-	item->bbox=shape->approx_bbox;
+        item->bbox=shape->approx_bbox;
     } else {
-	nr_arena_shape_update_stroke(shape,gc);
-	nr_arena_shape_update_fill(shape,gc);
+        nr_arena_shape_update_stroke(shape,gc);
+        nr_arena_shape_update_fill(shape,gc);
 
-	bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-	nr_arena_shape_add_bboxes(shape,bbox);
-    
-	shape->approx_bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-	shape->approx_bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-	shape->approx_bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
-	shape->approx_bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
-    } 
-	
-    if (nr_rect_d_test_empty (&bbox)) return NR_ARENA_ITEM_STATE_ALL;
+        bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
+        nr_arena_shape_add_bboxes(shape,bbox);
+
+        shape->approx_bbox.x0 = (gint32)(bbox.x0 - 1.0F);
+        shape->approx_bbox.y0 = (gint32)(bbox.y0 - 1.0F);
+        shape->approx_bbox.x1 = (gint32)(bbox.x1 + 1.9999F);
+        shape->approx_bbox.y1 = (gint32)(bbox.y1 + 1.9999F);
+    }
+
+    if (nr_rect_d_test_empty(&bbox)) return NR_ARENA_ITEM_STATE_ALL;
 
     item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
     item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
     item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
     item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
-    nr_arena_request_render_rect (item->arena, &item->bbox);
+    nr_arena_request_render_rect(item->arena, &item->bbox);
 
     item->render_opacity = TRUE;
     if ( shape->_fill.paint.type() == NRArenaShape::Paint::SERVER ) {
         if (gc && gc->parent) {
-            shape->fill_painter = sp_paint_server_painter_new (shape->_fill.paint.server(),
-							   NR::Matrix (&gc->transform), NR::Matrix (&gc->parent->transform), 
-							   &shape->paintbox);
+            shape->fill_painter = sp_paint_server_painter_new(shape->_fill.paint.server(),
+                                                              NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
+                                                              &shape->paintbox);
         }
         item->render_opacity = FALSE;
     }
     if ( shape->_stroke.paint.type() == NRArenaShape::Paint::SERVER ) {
         if (gc && gc->parent) {
-            shape->stroke_painter = sp_paint_server_painter_new (shape->_stroke.paint.server(),
-							     NR::Matrix (&gc->transform), NR::Matrix (&gc->parent->transform), 
-							     &shape->paintbox);
+            shape->stroke_painter = sp_paint_server_painter_new(shape->_stroke.paint.server(),
+                                                                NR::Matrix(&gc->transform), NR::Matrix(&gc->parent->transform),
+                                                                &shape->paintbox);
         }
         item->render_opacity = FALSE;
     }
-    if ( item->render_opacity == TRUE &&
-         shape->_fill.paint.type()   != NRArenaShape::Paint::NONE &&
-         shape->_stroke.paint.type() != NRArenaShape::Paint::NONE )
+    if ( item->render_opacity == TRUE
+         && shape->_fill.paint.type()   != NRArenaShape::Paint::NONE
+         && shape->_stroke.paint.type() != NRArenaShape::Paint::NONE )
     {
-	// don't merge item opacity with paint opacity if there is a stroke on the fill
-	item->render_opacity = FALSE;    
+        // don't merge item opacity with paint opacity if there is a stroke on the fill
+        item->render_opacity = FALSE;
     }
-	
+
     if (beststate & NR_ARENA_ITEM_STATE_BBOX) {
-	for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
-	    nr_rect_l_union (&item->bbox, &item->bbox, &child->bbox);
-	}
+        for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
+            nr_rect_l_union(&item->bbox, &item->bbox, &child->bbox);
+        }
     }
 
     return NR_ARENA_ITEM_STATE_ALL;
@@ -362,7 +362,7 @@ int matrix_is_isometry(NR::Matrix p) {
     tp[1]=p[2];
     tp[2]=p[1];
     tp[3]=p[3];
-    for(int i = 4; i < 6; i++) // shut valgrind up :)
+    for (int i = 4; i < 6; i++) // shut valgrind up :)
         tp[i] = p[i] = 0;
     NR::Matrix   isom = tp*p; // A^T * A = adjunct?
     // Is the adjunct nearly an identity function?
@@ -370,7 +370,7 @@ int matrix_is_isometry(NR::Matrix p) {
         // the transformation is an isometry -> no need to recompute
         // the uncrossed polygon
         if ( p.det() < 0 )
-            return -1; 
+            return -1;
         else
             return 1;
     }
@@ -384,83 +384,83 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
     shape->delayed_shp = false;
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
         ((shape->curve->end > 2) || (shape->curve->bpath[1].code == NR_CURVETO)) ) {
-	    if (TRUE || !shape->fill_shp) {
-		NR::Matrix  cached_to_new;
-		int isometry = 0;
-		if ( shape->cached_fill ) {
-		    cached_to_new = shape->cached_fctm.inverse()*gc->transform;
-		    isometry = matrix_is_isometry(cached_to_new);
-		}
-		if ( isometry == 0 ) {
-		    if ( shape->cached_fill == NULL ) shape->cached_fill=new Shape;
-		    shape->cached_fill->Reset();
-            
-		    Path*  thePath=new Path;
-		    Shape* theShape=new Shape;
-		    {
-			NR::Matrix   tempMat(gc->transform);
-			thePath->LoadArtBPath(shape->curve->bpath,tempMat,true);
-		    }
+        if (TRUE || !shape->fill_shp) {
+            NR::Matrix  cached_to_new;
+            int isometry = 0;
+            if ( shape->cached_fill ) {
+                cached_to_new = shape->cached_fctm.inverse()*gc->transform;
+                isometry = matrix_is_isometry(cached_to_new);
+            }
+            if ( isometry == 0 ) {
+                if ( shape->cached_fill == NULL ) shape->cached_fill=new Shape;
+                shape->cached_fill->Reset();
 
-		    thePath->Convert(1.0);
+                Path*  thePath=new Path;
+                Shape* theShape=new Shape;
+                {
+                    NR::Matrix   tempMat(gc->transform);
+                    thePath->LoadArtBPath(shape->curve->bpath,tempMat,true);
+                }
 
-		    thePath->Fill(theShape, 0);
+                thePath->Convert(1.0);
 
-		    if ( shape->_fill.rule == NRArenaShape::EVEN_ODD ) {
+                thePath->Fill(theShape, 0);
+
+                if ( shape->_fill.rule == NRArenaShape::EVEN_ODD ) {
                     shape->cached_fill->ConvertToShape(theShape, fill_oddEven);
-                    // alternatively, this speeds up rendering of oddeven shapes but disables AA :(        
+                    // alternatively, this speeds up rendering of oddeven shapes but disables AA :(
                     //shape->cached_fill->Copy(theShape);
-		    } else {
+                } else {
                     shape->cached_fill->ConvertToShape(theShape, fill_nonZero);
-		    }
-		    shape->cached_fctm=gc->transform;
-		    delete theShape;
-		    delete thePath;
-		    if ( shape->fill_shp == NULL )
-                   shape->fill_shp = new Shape;
+                }
+                shape->cached_fctm=gc->transform;
+                delete theShape;
+                delete thePath;
+                if ( shape->fill_shp == NULL )
+                    shape->fill_shp = new Shape;
 
-		    shape->fill_shp->Copy(shape->cached_fill);
+                shape->fill_shp->Copy(shape->cached_fill);
 
-		} else {
+            } else {
 
-		    if ( shape->fill_shp == NULL )
-			shape->fill_shp=new Shape;
+                if ( shape->fill_shp == NULL )
+                    shape->fill_shp = new Shape;
 
-		    shape->fill_shp->Reset(shape->cached_fill->numberOfPoints(),
-					   shape->cached_fill->numberOfEdges());
-		    for (int i = 0; i < shape->cached_fill->numberOfPoints(); i++)
-			shape->fill_shp->AddPoint(shape->cached_fill->getPoint(i).x * cached_to_new);
-		    if ( isometry == 1 ) {
-			for (int i = 0; i < shape->cached_fill->numberOfEdges(); i++) 
-			    shape->fill_shp->AddEdge(shape->cached_fill->getEdge(i).st,
-						     shape->cached_fill->getEdge(i).en);
-		    } else if ( isometry == -1 ) { // need to flip poly.
-			for (int i = 0; i < shape->cached_fill->numberOfEdges(); i++)
-			    shape->fill_shp->AddEdge(shape->cached_fill->getEdge(i).en,
-						     shape->cached_fill->getEdge(i).st);
-		    }
-		    shape->fill_shp->ForceToPolygon();
-		    shape->fill_shp->needPointsSorting();
-                    shape->fill_shp->needEdgesSorting();
-		}
-	    }
-	}
+                shape->fill_shp->Reset(shape->cached_fill->numberOfPoints(),
+                                       shape->cached_fill->numberOfEdges());
+                for (int i = 0; i < shape->cached_fill->numberOfPoints(); i++)
+                    shape->fill_shp->AddPoint(shape->cached_fill->getPoint(i).x * cached_to_new);
+                if ( isometry == 1 ) {
+                    for (int i = 0; i < shape->cached_fill->numberOfEdges(); i++)
+                        shape->fill_shp->AddEdge(shape->cached_fill->getEdge(i).st,
+                                                 shape->cached_fill->getEdge(i).en);
+                } else if ( isometry == -1 ) { // need to flip poly.
+                    for (int i = 0; i < shape->cached_fill->numberOfEdges(); i++)
+                        shape->fill_shp->AddEdge(shape->cached_fill->getEdge(i).en,
+                                                 shape->cached_fill->getEdge(i).st);
+                }
+                shape->fill_shp->ForceToPolygon();
+                shape->fill_shp->needPointsSorting();
+                shape->fill_shp->needEdgesSorting();
+            }
+        }
+    }
 }
 
 void
 nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
 {
     SPStyle* style = shape->style;
-  
+
     shape->delayed_shp = false;
 
-    float const scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
+    float const scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
 
-    if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE || 
+    if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE ||
         ((shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) &&
          ( fabs(shape->_stroke.width * scale) > 0.01 ))) { // sinon c'est 0=oon veut pas de bord
 
-        float width = MAX (0.125, shape->_stroke.width * scale);
+        float width = MAX(0.125, shape->_stroke.width * scale);
         if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE)
             width = 0.5; // 1 pixel wide, independent of zoom
 
@@ -476,7 +476,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
             if ( shape->cached_stroke == NULL ) shape->cached_stroke=new Shape;
             shape->cached_stroke->Reset();
             Path*  thePath = new Path;
-            Shape* theShape = new Shape;    
+            Shape* theShape = new Shape;
             {
                 NR::Matrix   tempMat(gc->transform);
                 thePath->LoadArtBPath(shape->curve->bpath, tempMat, true);
@@ -484,10 +484,10 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
 
             if (NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE)
                 thePath->Convert(1.0);
-            else 
+            else
                 thePath->Convert(4.0); // slightly rougher & faster
 
-            if (style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {      
+            if (style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {
                 double dlen = 0.0;
                 for (int i = 0; i < style->stroke_dash.n_dash; i++) {
                     dlen += style->stroke_dash.dash[i] * scale;
@@ -496,7 +496,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
                     NRVpathDash dash;
                     dash.offset = style->stroke_dash.offset * scale;
                     dash.n_dash = style->stroke_dash.n_dash;
-                    dash.dash = g_new (double, dash.n_dash);
+                    dash.dash = g_new(double, dash.n_dash);
                     for (int i = 0; i < dash.n_dash; i++) {
                         dash.dash[i] = style->stroke_dash.dash[i] * scale;
                     }
@@ -510,32 +510,32 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
                     // modulo dlen
                     thePath->DashPolyline(0.0,0.0,dlen,nbD,dashs,true,dash.offset);
                     free(dashs);
-                    g_free (dash.dash);
+                    g_free(dash.dash);
                 }
             }
             ButtType butt=butt_straight;
-            switch(shape->_stroke.cap) {
-            case NRArenaShape::BUTT_CAP:
-                butt = butt_straight;
-                break;
-            case NRArenaShape::ROUND_CAP:
-                butt = butt_round;
-                break;
-            case NRArenaShape::SQUARE_CAP:
-                butt = butt_square;
-                break;
+            switch (shape->_stroke.cap) {
+                case NRArenaShape::BUTT_CAP:
+                    butt = butt_straight;
+                    break;
+                case NRArenaShape::ROUND_CAP:
+                    butt = butt_round;
+                    break;
+                case NRArenaShape::SQUARE_CAP:
+                    butt = butt_square;
+                    break;
             }
             JoinType join=join_straight;
-            switch(shape->_stroke.join) {
-            case NRArenaShape::MITRE_JOIN:
-                join = join_pointy;
-                break;
-            case NRArenaShape::ROUND_JOIN:
-                join = join_round;
-                break;
-            case NRArenaShape::BEVEL_JOIN:
-                join = join_straight;
-                break;
+            switch (shape->_stroke.join) {
+                case NRArenaShape::MITRE_JOIN:
+                    join = join_pointy;
+                    break;
+                case NRArenaShape::ROUND_JOIN:
+                    join = join_round;
+                    break;
+                case NRArenaShape::BEVEL_JOIN:
+                    join = join_straight;
+                    break;
             }
 
             if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
@@ -543,13 +543,13 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
                 join = join_straight;
             }
 
-            thePath->Stroke(theShape, false, 0.5*width, join, butt, 
+            thePath->Stroke(theShape, false, 0.5*width, join, butt,
                             0.5*width*shape->_stroke.mitre_limit);
-		
+
 
             if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
                 // speeds it up, but uses evenodd for the stroke shape (which does not matter for 1-pixel wide outline)
-                shape->cached_stroke->Copy(theShape); 
+                shape->cached_stroke->Copy(theShape);
             } else {
                 shape->cached_stroke->ConvertToShape(theShape, fill_nonZero);
             }
@@ -589,268 +589,268 @@ void
 nr_arena_shape_add_bboxes(NRArenaShape* shape, NRRect &bbox)
 {
     if ( shape->stroke_shp ) {
-	shape->stroke_shp->CalcBBox();
-	shape->stroke_shp->leftX=floor(shape->stroke_shp->leftX);
-	shape->stroke_shp->rightX=ceil(shape->stroke_shp->rightX);
-	shape->stroke_shp->topY=floor(shape->stroke_shp->topY);
-	shape->stroke_shp->bottomY=ceil(shape->stroke_shp->bottomY);
-	if ( bbox.x0 >= bbox.x1 ) {
-	    if ( shape->stroke_shp->leftX < shape->stroke_shp->rightX ) {
-		bbox.x0=shape->stroke_shp->leftX;
-		bbox.x1=shape->stroke_shp->rightX;
-	    }
-	} else {
-	    if ( shape->stroke_shp->leftX < bbox.x0 )
-		bbox.x0=shape->stroke_shp->leftX;
-	    if ( shape->stroke_shp->rightX > bbox.x1 )
-		bbox.x1=shape->stroke_shp->rightX;
-	}
-	if ( bbox.y0 >= bbox.y1 ) {
-	    if ( shape->stroke_shp->topY < shape->stroke_shp->bottomY ) {
-		bbox.y0=shape->stroke_shp->topY;
-		bbox.y1=shape->stroke_shp->bottomY;
-	    }
-	} else {
-	    if ( shape->stroke_shp->topY < bbox.y0 )
-		bbox.y0=shape->stroke_shp->topY;
-	    if ( shape->stroke_shp->bottomY > bbox.y1 )
-		bbox.y1=shape->stroke_shp->bottomY;
-	}
+        shape->stroke_shp->CalcBBox();
+        shape->stroke_shp->leftX=floor(shape->stroke_shp->leftX);
+        shape->stroke_shp->rightX=ceil(shape->stroke_shp->rightX);
+        shape->stroke_shp->topY=floor(shape->stroke_shp->topY);
+        shape->stroke_shp->bottomY=ceil(shape->stroke_shp->bottomY);
+        if ( bbox.x0 >= bbox.x1 ) {
+            if ( shape->stroke_shp->leftX < shape->stroke_shp->rightX ) {
+                bbox.x0=shape->stroke_shp->leftX;
+                bbox.x1=shape->stroke_shp->rightX;
+            }
+        } else {
+            if ( shape->stroke_shp->leftX < bbox.x0 )
+                bbox.x0=shape->stroke_shp->leftX;
+            if ( shape->stroke_shp->rightX > bbox.x1 )
+                bbox.x1=shape->stroke_shp->rightX;
+        }
+        if ( bbox.y0 >= bbox.y1 ) {
+            if ( shape->stroke_shp->topY < shape->stroke_shp->bottomY ) {
+                bbox.y0=shape->stroke_shp->topY;
+                bbox.y1=shape->stroke_shp->bottomY;
+            }
+        } else {
+            if ( shape->stroke_shp->topY < bbox.y0 )
+                bbox.y0=shape->stroke_shp->topY;
+            if ( shape->stroke_shp->bottomY > bbox.y1 )
+                bbox.y1=shape->stroke_shp->bottomY;
+        }
     }
     if ( shape->fill_shp ) {
-	shape->fill_shp->CalcBBox();
-	shape->fill_shp->leftX=floor(shape->fill_shp->leftX);
-	shape->fill_shp->rightX=ceil(shape->fill_shp->rightX);
-	shape->fill_shp->topY=floor(shape->fill_shp->topY);
-	shape->fill_shp->bottomY=ceil(shape->fill_shp->bottomY);
-	if ( bbox.x0 >= bbox.x1 ) {
-	    if ( shape->fill_shp->leftX < shape->fill_shp->rightX ) {
-		bbox.x0=shape->fill_shp->leftX;
-		bbox.x1=shape->fill_shp->rightX;
-	    }
-	} else {
-	    if ( shape->fill_shp->leftX < bbox.x0 ) bbox.x0=shape->fill_shp->leftX;
-	    if ( shape->fill_shp->rightX > bbox.x1 ) bbox.x1=shape->fill_shp->rightX;
-	}
-	if ( bbox.y0 >= bbox.y1 ) {
-	    if ( shape->fill_shp->topY < shape->fill_shp->bottomY ) {
-		bbox.y0=shape->fill_shp->topY;
-		bbox.y1=shape->fill_shp->bottomY;
-	    }
-	} else {
-	    if ( shape->fill_shp->topY < bbox.y0 ) bbox.y0=shape->fill_shp->topY;
-	    if ( shape->fill_shp->bottomY > bbox.y1 ) bbox.y1=shape->fill_shp->bottomY;
-	}
+        shape->fill_shp->CalcBBox();
+        shape->fill_shp->leftX=floor(shape->fill_shp->leftX);
+        shape->fill_shp->rightX=ceil(shape->fill_shp->rightX);
+        shape->fill_shp->topY=floor(shape->fill_shp->topY);
+        shape->fill_shp->bottomY=ceil(shape->fill_shp->bottomY);
+        if ( bbox.x0 >= bbox.x1 ) {
+            if ( shape->fill_shp->leftX < shape->fill_shp->rightX ) {
+                bbox.x0=shape->fill_shp->leftX;
+                bbox.x1=shape->fill_shp->rightX;
+            }
+        } else {
+            if ( shape->fill_shp->leftX < bbox.x0 ) bbox.x0=shape->fill_shp->leftX;
+            if ( shape->fill_shp->rightX > bbox.x1 ) bbox.x1=shape->fill_shp->rightX;
+        }
+        if ( bbox.y0 >= bbox.y1 ) {
+            if ( shape->fill_shp->topY < shape->fill_shp->bottomY ) {
+                bbox.y0=shape->fill_shp->topY;
+                bbox.y1=shape->fill_shp->bottomY;
+            }
+        } else {
+            if ( shape->fill_shp->topY < bbox.y0 ) bbox.y0=shape->fill_shp->topY;
+            if ( shape->fill_shp->bottomY > bbox.y1 ) bbox.y1=shape->fill_shp->bottomY;
+        }
     }
 }
 static unsigned int
-nr_arena_shape_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
+nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned int flags)
 {
-    NRArenaShape *shape = NR_ARENA_SHAPE (item);
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
     if (!shape->curve) return item->state;
     if (!shape->style) return item->state;
-  
+
     if ( shape->delayed_shp ) {
-	if ( nr_rect_l_test_intersect (area, &item->bbox) ) {
-	    NRGC   tempGC(NULL);
-	    tempGC.transform=shape->ctm;
-	    nr_arena_shape_update_stroke(shape,&tempGC);
-	    nr_arena_shape_update_fill(shape,&tempGC);
+        if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
+            NRGC   tempGC(NULL);
+            tempGC.transform=shape->ctm;
+            nr_arena_shape_update_stroke(shape,&tempGC);
+            nr_arena_shape_update_fill(shape,&tempGC);
 /*      NRRect bbox;
-	bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-	nr_arena_shape_add_bboxes(shape,bbox);
-	item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-	item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-	item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
-	item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
-	shape->approx_bbox=item->bbox;*/
-	}
+        bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
+        nr_arena_shape_add_bboxes(shape,bbox);
+        item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
+        item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
+        item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
+        item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
+        shape->approx_bbox=item->bbox;*/
+        }
     }
 
     SPStyle const *style = shape->style;
     if ( shape->fill_shp && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {
-	NRPixBlock m;
-	guint32 rgba;
+        NRPixBlock m;
+        guint32 rgba;
 
-	nr_pixblock_setup_fast (&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
-	nr_pixblock_render_shape_mask_or (m,shape->fill_shp);
-	m.empty = FALSE;
+        nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+        nr_pixblock_render_shape_mask_or(m,shape->fill_shp);
+        m.empty = FALSE;
 
-	if (shape->_fill.paint.type() == NRArenaShape::Paint::NONE) {
-        // do not render fill in any way
-      } else if (shape->_fill.paint.type() == NRArenaShape::Paint::COLOR) {
-	    if ( item->render_opacity ) {
-		rgba = sp_color_get_rgba32_falpha (&shape->_fill.paint.color(),
-						   shape->_fill.opacity *
-						   SP_SCALE24_TO_FLOAT (style->opacity.value));
-	    } else {
-		rgba = sp_color_get_rgba32_falpha (&shape->_fill.paint.color(),
-						   shape->_fill.opacity);
-	    }
-	    nr_blit_pixblock_mask_rgba32 (pb, &m, rgba);
-	    pb->empty = FALSE;
-      } else if (shape->_fill.paint.type() == NRArenaShape::Paint::SERVER) {
-	    if (shape->fill_painter) {
-              nr_arena_render_paintserver_fill (pb, area, shape->fill_painter, shape->_fill.opacity, &m);
-	    }
-	}
+        if (shape->_fill.paint.type() == NRArenaShape::Paint::NONE) {
+            // do not render fill in any way
+        } else if (shape->_fill.paint.type() == NRArenaShape::Paint::COLOR) {
+            if ( item->render_opacity ) {
+                rgba = sp_color_get_rgba32_falpha(&shape->_fill.paint.color(),
+                                                  shape->_fill.opacity *
+                                                  SP_SCALE24_TO_FLOAT(style->opacity.value));
+            } else {
+                rgba = sp_color_get_rgba32_falpha(&shape->_fill.paint.color(),
+                                                  shape->_fill.opacity);
+            }
+            nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
+            pb->empty = FALSE;
+        } else if (shape->_fill.paint.type() == NRArenaShape::Paint::SERVER) {
+            if (shape->fill_painter) {
+                nr_arena_render_paintserver_fill(pb, area, shape->fill_painter, shape->_fill.opacity, &m);
+            }
+        }
 
-	nr_pixblock_release (&m);
+        nr_pixblock_release(&m);
     }
-  
+
     if ( shape->stroke_shp ) {
         NRPixBlock m;
         guint32 rgba;
 
-        nr_pixblock_setup_fast (&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
-        nr_pixblock_render_shape_mask_or (m, shape->stroke_shp);
+        nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+        nr_pixblock_render_shape_mask_or(m, shape->stroke_shp);
         m.empty = FALSE;
 
-        if (shape->_stroke.paint.type() == NRArenaShape::Paint::COLOR || 
+        if (shape->_stroke.paint.type() == NRArenaShape::Paint::COLOR ||
             NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
             if ( NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
                 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
             } else if ( item->render_opacity ) {
-                rgba = sp_color_get_rgba32_falpha (&shape->_stroke.paint.color(),
-                                                   shape->_stroke.opacity *
-                                                   SP_SCALE24_TO_FLOAT (style->opacity.value));
+                rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
+                                                  shape->_stroke.opacity *
+                                                  SP_SCALE24_TO_FLOAT(style->opacity.value));
             } else {
-                rgba = sp_color_get_rgba32_falpha (&shape->_stroke.paint.color(),
-                                                   shape->_stroke.opacity);
+                rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
+                                                  shape->_stroke.opacity);
             }
-            nr_blit_pixblock_mask_rgba32 (pb, &m, rgba);
+            nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
             pb->empty = FALSE;
         } else if (shape->_stroke.paint.type() == NRArenaShape::Paint::SERVER) {
             if (shape->stroke_painter) {
-                nr_arena_render_paintserver_fill (pb, area, shape->stroke_painter, shape->_stroke.opacity, &m);
+                nr_arena_render_paintserver_fill(pb, area, shape->stroke_painter, shape->_stroke.opacity, &m);
             }
         }
 
-        nr_pixblock_release (&m);
+        nr_pixblock_release(&m);
     }
-  
+
     /* Just compose children into parent buffer */
     for (NRArenaItem *child = shape->markers; child != NULL; child = child->next) {
-	unsigned int ret;
-	ret = nr_arena_item_invoke_render (child, area, pb, flags);
-	if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
+        unsigned int ret;
+        ret = nr_arena_item_invoke_render(child, area, pb, flags);
+        if (ret & NR_ARENA_ITEM_STATE_INVALID) return ret;
     }
 
     return item->state;
 }
 
 static guint
-nr_arena_shape_clip (NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
+nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 {
-    NRArenaShape *shape = NR_ARENA_SHAPE (item);
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
     if (!shape->curve) return item->state;
 
     if ( shape->delayed_shp || shape->fill_shp == NULL) { // we need a fill shape no matter what
-	if ( nr_rect_l_test_intersect (area, &item->bbox) ) {
-	    NRGC   tempGC(NULL);
-	    tempGC.transform=shape->ctm;
-	    nr_arena_shape_update_fill(shape, &tempGC, true);
-	}
+        if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
+            NRGC   tempGC(NULL);
+            tempGC.transform=shape->ctm;
+            nr_arena_shape_update_fill(shape, &tempGC, true);
+        }
     }
 
     if ( shape->fill_shp ) {
-	NRPixBlock m;
+        NRPixBlock m;
 
-	/* fixme: We can OR in one step (Lauris) */
-	nr_pixblock_setup_fast (&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
-	nr_pixblock_render_shape_mask_or (m,shape->fill_shp);
-    
-	for (int y = area->y0; y < area->y1; y++) {
-	    unsigned char *s, *d;
-	    s = NR_PIXBLOCK_PX (&m) + (y - area->y0) * m.rs;
-	    d = NR_PIXBLOCK_PX (pb) + (y - area->y0) * pb->rs;
-	    for (int x = area->x0; x < area->x1; x++) {
-          *d = NR_A7_NORMALIZED(*s,*d); 
-		d ++;
-		s ++;
-	    }
-	}
-	nr_pixblock_release (&m);
-	pb->empty = FALSE;
+        /* fixme: We can OR in one step (Lauris) */
+        nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+        nr_pixblock_render_shape_mask_or(m,shape->fill_shp);
+
+        for (int y = area->y0; y < area->y1; y++) {
+            unsigned char *s, *d;
+            s = NR_PIXBLOCK_PX(&m) + (y - area->y0) * m.rs;
+            d = NR_PIXBLOCK_PX(pb) + (y - area->y0) * pb->rs;
+            for (int x = area->x0; x < area->x1; x++) {
+                *d = NR_A7_NORMALIZED(*s,*d);
+                d ++;
+                s ++;
+            }
+        }
+        nr_pixblock_release(&m);
+        pb->empty = FALSE;
     }
-  
+
     return item->state;
 }
 
 static NRArenaItem *
-nr_arena_shape_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/)
+nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /*sticky*/)
 {
-    NRArenaShape *shape = NR_ARENA_SHAPE (item);
+    NRArenaShape *shape = NR_ARENA_SHAPE(item);
 
     if (!shape->curve) return NULL;
     if (!shape->style) return NULL;
     if ( shape->delayed_shp ) {
-	NRRectL  area;
-	area.x0=(int)floor(p[NR::X]);
-	area.x1=(int)ceil(p[NR::X]);
-	area.y0=(int)floor(p[NR::Y]);
-	area.y1=(int)ceil(p[NR::Y]);
-	int idelta = (int)ceil(delta) + 1;
-	// njh: inset rect
-	area.x0-=idelta;
-	area.x1+=idelta;
-	area.y0-=idelta;
-	area.y1+=idelta;
-	if ( nr_rect_l_test_intersect (&area, &item->bbox) ) {
-	    NRGC   tempGC(NULL);
-	    tempGC.transform=shape->ctm;
-	    nr_arena_shape_update_stroke(shape,&tempGC);
-	    nr_arena_shape_update_fill(shape,&tempGC);
-	    /*      NRRect bbox;
-		    bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
-		    nr_arena_shape_add_bboxes(shape,bbox);
-		    item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
-		    item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
-		    item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
-		    item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
-		    shape->approx_bbox=item->bbox;*/
-	}
+        NRRectL  area;
+        area.x0=(int)floor(p[NR::X]);
+        area.x1=(int)ceil(p[NR::X]);
+        area.y0=(int)floor(p[NR::Y]);
+        area.y1=(int)ceil(p[NR::Y]);
+        int idelta = (int)ceil(delta) + 1;
+        // njh: inset rect
+        area.x0-=idelta;
+        area.x1+=idelta;
+        area.y0-=idelta;
+        area.y1+=idelta;
+        if ( nr_rect_l_test_intersect(&area, &item->bbox) ) {
+            NRGC   tempGC(NULL);
+            tempGC.transform=shape->ctm;
+            nr_arena_shape_update_stroke(shape,&tempGC);
+            nr_arena_shape_update_fill(shape,&tempGC);
+            /*      NRRect bbox;
+                    bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
+                    nr_arena_shape_add_bboxes(shape,bbox);
+                    item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
+                    item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
+                    item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
+                    item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
+                    shape->approx_bbox=item->bbox;*/
+        }
     }
 
     if (item->state & NR_ARENA_ITEM_STATE_RENDER) {
-	if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
-	    if (shape->fill_shp->PtWinding(p) > 0 ) return item;
-	}
-	if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)) {
-	    if (shape->stroke_shp->PtWinding(p) > 0 ) return item;
-	}
-	if (delta > 1e-3) {
-	    if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
-		if (distanceLessThanOrEqual(shape->fill_shp, p, delta)) return item;
-	    }
-	    if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)) {
-		if (distanceLessThanOrEqual(shape->stroke_shp, p, delta)) return item;
-	    }
-	}
+        if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
+            if (shape->fill_shp->PtWinding(p) > 0 ) return item;
+        }
+        if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)) {
+            if (shape->stroke_shp->PtWinding(p) > 0 ) return item;
+        }
+        if (delta > 1e-3) {
+            if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
+                if (distanceLessThanOrEqual(shape->fill_shp, p, delta)) return item;
+            }
+            if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)) {
+                if (distanceLessThanOrEqual(shape->stroke_shp, p, delta)) return item;
+            }
+        }
     } else {
-	NRBPath bp;
-	bp.path = shape->curve->bpath;
-	double dist = NR_HUGE;
-	int wind = 0;
-	nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, &wind, &dist, NR_EPSILON);
-	if (shape->_fill.paint.type() != NRArenaShape::Paint::NONE) {
-	    if (!shape->style->fill_rule.computed) {
-		if (wind != 0) return item;
-	    } else {
-		if (wind & 0x1) return item;
-	    }
-	}
-	if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
-	    /* fixme: We do not take stroke width into account here (Lauris) */
-	    if (dist < delta) return item;
-	}
+        NRBPath bp;
+        bp.path = shape->curve->bpath;
+        double dist = NR_HUGE;
+        int wind = 0;
+        nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, &wind, &dist, NR_EPSILON);
+        if (shape->_fill.paint.type() != NRArenaShape::Paint::NONE) {
+            if (!shape->style->fill_rule.computed) {
+                if (wind != 0) return item;
+            } else {
+                if (wind & 0x1) return item;
+            }
+        }
+        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
+            /* fixme: We do not take stroke width into account here (Lauris) */
+            if (dist < delta) return item;
+        }
     }
 
     return NULL;
 }
 
-/** 
+/**
  *
  *  Requests a render of the shape, then if the shape is already a curve it
  *  unrefs the old curve; if the new curve is valid it creates a copy of the
@@ -859,34 +859,34 @@ nr_arena_shape_pick (NRArenaItem *item, NR::Point p, double delta, unsigned int 
  */
 void nr_arena_shape_set_path(NRArenaShape *shape, SPCurve *curve,bool justTrans)
 {
-    g_return_if_fail (shape != NULL);
-    g_return_if_fail (NR_IS_ARENA_SHAPE (shape));
+    g_return_if_fail(shape != NULL);
+    g_return_if_fail(NR_IS_ARENA_SHAPE(shape));
 
     if ( justTrans == false ) {
-	// dirty cached versions
-	if ( shape->cached_fill ) {
-	    delete shape->cached_fill;
-	    shape->cached_fill=NULL;
-	}
-	if ( shape->cached_stroke ) {
-	    delete shape->cached_stroke;
-	    shape->cached_stroke=NULL;
-	}
+        // dirty cached versions
+        if ( shape->cached_fill ) {
+            delete shape->cached_fill;
+            shape->cached_fill=NULL;
+        }
+        if ( shape->cached_stroke ) {
+            delete shape->cached_stroke;
+            shape->cached_stroke=NULL;
+        }
     }
 
-    nr_arena_item_request_render (NR_ARENA_ITEM (shape));
+    nr_arena_item_request_render(NR_ARENA_ITEM(shape));
 
     if (shape->curve) {
-	sp_curve_unref (shape->curve);
-	shape->curve = NULL;
+        sp_curve_unref(shape->curve);
+        shape->curve = NULL;
     }
 
     if (curve) {
-	shape->curve = curve;
-	sp_curve_ref (curve);
+        shape->curve = curve;
+        sp_curve_ref(curve);
     }
 
-    nr_arena_item_request_update (NR_ARENA_ITEM (shape), NR_ARENA_ITEM_STATE_ALL, FALSE);
+    nr_arena_item_request_update(NR_ARENA_ITEM(shape), NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
 void NRArenaShape::setFill(SPPaintServer *server) {
@@ -949,13 +949,13 @@ void NRArenaShape::setLineJoin(NRArenaShape::JoinType join) {
  * Unrefs any existing style and ref's to the given one, then requests an update of the arena
  */
 void
-nr_arena_shape_set_style (NRArenaShape *shape, SPStyle *style)
+nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
 {
-    g_return_if_fail (shape != NULL);
-    g_return_if_fail (NR_IS_ARENA_SHAPE (shape));
+    g_return_if_fail(shape != NULL);
+    g_return_if_fail(NR_IS_ARENA_SHAPE(shape));
 
-    if (style) sp_style_ref (style);
-    if (shape->style) sp_style_unref (shape->style);
+    if (style) sp_style_ref(style);
+    if (shape->style) sp_style_unref(shape->style);
     shape->style = style;
 
     switch (style->fill.type) {
@@ -1049,18 +1049,18 @@ nr_arena_shape_set_style (NRArenaShape *shape, SPStyle *style)
 }
 
 void
-nr_arena_shape_set_paintbox (NRArenaShape *shape, NRRect const *pbox)
+nr_arena_shape_set_paintbox(NRArenaShape *shape, NRRect const *pbox)
 {
-    g_return_if_fail (shape != NULL);
-    g_return_if_fail (NR_IS_ARENA_SHAPE (shape));
-    g_return_if_fail (pbox != NULL);
+    g_return_if_fail(shape != NULL);
+    g_return_if_fail(NR_IS_ARENA_SHAPE(shape));
+    g_return_if_fail(pbox != NULL);
 
     if ((pbox->x0 < pbox->x1) && (pbox->y0 < pbox->y1)) {
-	shape->paintbox = *pbox;
+        shape->paintbox = *pbox;
     } else {
-	/* fixme: We kill warning, although not sure what to do here (Lauris) */
-	shape->paintbox.x0 = shape->paintbox.y0 = 0.0F;
-	shape->paintbox.x1 = shape->paintbox.y1 = 256.0F;
+        /* fixme: We kill warning, although not sure what to do here (Lauris) */
+        shape->paintbox.x0 = shape->paintbox.y0 = 0.0F;
+        shape->paintbox.x1 = shape->paintbox.y1 = 256.0F;
     }
 
     nr_arena_item_request_update(shape, NR_ARENA_ITEM_STATE_ALL, FALSE);
@@ -1077,7 +1077,7 @@ void NRArenaShape::setPaintBox(NR::Rect const &pbox)
 }
 
 static void
-shape_run_A8_OR (raster_info &dest,void */*data*/,int st,float vst,int en,float ven)
+shape_run_A8_OR(raster_info &dest,void */*data*/,int st,float vst,int en,float ven)
 {
     if ( st >= en ) return;
     if ( vst < 0 ) vst=0;
@@ -1090,64 +1090,63 @@ shape_run_A8_OR (raster_info &dest,void */*data*/,int st,float vst,int en,float 
     unsigned char*   d=(unsigned char*)dest.buffer;
     d+=(st-dest.startPix);
     if ( fabs(dv) < 0.001 ) {
-	if ( vst > 0.999 ) {
-	    /* Simple copy */
-	    while (len > 0) {
-		d[0] = 255;
-		d += 1;
-		len -= 1;
-	    }
-	} else {
-	    sv*=256;
-	    unsigned int c0_24=(int)sv;
-	    c0_24&=0xFF;
-	    while (len > 0) {
-		unsigned int da;
-		/* Draw */
-		da = NR_A7(c0_24,d[0]);
-		d[0] = NR_PREMUL_SINGLE(da);
-		d += 1;
-		len -= 1;
-	    }
-	}
+        if ( vst > 0.999 ) {
+            /* Simple copy */
+            while (len > 0) {
+                d[0] = 255;
+                d += 1;
+                len -= 1;
+            }
+        } else {
+            sv*=256;
+            unsigned int c0_24=(int)sv;
+            c0_24&=0xFF;
+            while (len > 0) {
+                unsigned int da;
+                /* Draw */
+                da = NR_A7(c0_24,d[0]);
+                d[0] = NR_PREMUL_SINGLE(da);
+                d += 1;
+                len -= 1;
+            }
+        }
     } else {
-	if ( en <= st+1 ) {
-	    sv=0.5*(vst+ven);
-	    sv*=256;
-	    unsigned int c0_24=(int)sv;
-	    c0_24&=0xFF;
-	    unsigned int da;
-	    /* Draw */
-	    da = NR_A7(c0_24,d[0]);
-	    d[0] = NR_PREMUL_SINGLE(da);
-	} else {
-	    dv/=len;
-	    sv+=0.5*dv; // correction trapezoidale
-	    sv*=16777216;
-	    dv*=16777216;
-	    int c0_24 = static_cast<int>(CLAMP(sv, 0, 16777216));
-	    int s0_24 = static_cast<int>(dv);
-	    while (len > 0) {
-		unsigned int ca, da;
-		/* Draw */
-		ca = c0_24 >> 16;
-		if ( ca > 255 ) ca=255;
-		da = NR_A7(ca,d[0]);
-		d[0] = NR_PREMUL_SINGLE(da);
-		d += 1;
-		c0_24 += s0_24;
-		c0_24 = CLAMP (c0_24, 0, 16777216);
-		len -= 1;
-	    }
-	}
+        if ( en <= st+1 ) {
+            sv=0.5*(vst+ven);
+            sv*=256;
+            unsigned int c0_24=(int)sv;
+            c0_24&=0xFF;
+            unsigned int da;
+            /* Draw */
+            da = NR_A7(c0_24,d[0]);
+            d[0] = NR_PREMUL_SINGLE(da);
+        } else {
+            dv/=len;
+            sv+=0.5*dv; // correction trapezoidale
+            sv*=16777216;
+            dv*=16777216;
+            int c0_24 = static_cast<int>(CLAMP(sv, 0, 16777216));
+            int s0_24 = static_cast<int>(dv);
+            while (len > 0) {
+                unsigned int ca, da;
+                /* Draw */
+                ca = c0_24 >> 16;
+                if ( ca > 255 ) ca=255;
+                da = NR_A7(ca,d[0]);
+                d[0] = NR_PREMUL_SINGLE(da);
+                d += 1;
+                c0_24 += s0_24;
+                c0_24 = CLAMP(c0_24, 0, 16777216);
+                len -= 1;
+            }
+        }
     }
 }
 
-void nr_pixblock_render_shape_mask_or (NRPixBlock &m,Shape* theS)
+void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS)
 {
-
     theS->CalcBBox();
-    float  l=theS->leftX,r=theS->rightX,t=theS->topY,b=theS->bottomY;
+    float l = theS->leftX, r = theS->rightX, t = theS->topY, b = theS->bottomY;
     int    il,ir,it,ib;
     il=(int)floor(l);
     ir=(int)ceil(r);
@@ -1164,29 +1163,29 @@ void nr_pixblock_render_shape_mask_or (NRPixBlock &m,Shape* theS)
     int    curPt;
     float  curY;
     theS->BeginQuickRaster(curY, curPt);
-  
-    FloatLigne* theI=new FloatLigne();
-    IntLigne*   theIL=new IntLigne();
-  
-    theS->DirectQuickScan(curY,curPt,(float)(it),true,1.0);
-  
-    char* mdata=(char*)m.data.px;
+
+    FloatLigne *theI = new FloatLigne();
+    IntLigne *theIL = new IntLigne();
+
+    theS->DirectQuickScan(curY, curPt, (float) it, true, 1.0);
+
+    char *mdata = (char*)m.data.px;
     if ( m.size == NR_PIXBLOCK_SIZE_TINY ) mdata=(char*)m.data.p;
-    uint32_t* ligStart=((uint32_t*)(mdata+((il-m.area.x0)+m.rs*(it-m.area.y0))));
-    for (int y=it;y<ib;y++) {
-	theI->Reset();
-        theS->QuickScan(curY,curPt,((float)(y+1)),theI,1.0);
-	theI->Flatten();
-	theIL->Copy(theI);
-    
-	raster_info  dest;
-	dest.startPix=il;
-	dest.endPix=ir;
-	dest.sth=il;
-	dest.stv=y;
-	dest.buffer=ligStart;
-	theIL->Raster(dest,NULL,shape_run_A8_OR);
-	ligStart=((uint32_t*)(((char*)ligStart)+m.rs));
+    uint32_t *ligStart = ((uint32_t*)(mdata + ((il - m.area.x0) + m.rs * (it - m.area.y0))));
+    for (int y = it; y < ib; y++) {
+        theI->Reset();
+        theS->QuickScan(curY, curPt, ((float)(y+1)), theI, 1.0);
+        theI->Flatten();
+        theIL->Copy(theI);
+
+        raster_info  dest;
+        dest.startPix=il;
+        dest.endPix=ir;
+        dest.sth=il;
+        dest.stv=y;
+        dest.buffer=ligStart;
+        theIL->Raster(dest, NULL, shape_run_A8_OR);
+        ligStart=((uint32_t*)(((char*)ligStart)+m.rs));
     }
     theS->EndQuickRaster();
     delete theI;
