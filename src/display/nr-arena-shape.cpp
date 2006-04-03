@@ -454,7 +454,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
   
     shape->delayed_shp = false;
 
-    const float scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
+    float const scale = NR_MATRIX_DF_EXPANSION (&gc->transform);
 
     if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE || 
         ((shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) &&
@@ -1049,7 +1049,7 @@ nr_arena_shape_set_style (NRArenaShape *shape, SPStyle *style)
 }
 
 void
-nr_arena_shape_set_paintbox (NRArenaShape *shape, const NRRect *pbox)
+nr_arena_shape_set_paintbox (NRArenaShape *shape, NRRect const *pbox)
 {
     g_return_if_fail (shape != NULL);
     g_return_if_fail (NR_IS_ARENA_SHAPE (shape));
