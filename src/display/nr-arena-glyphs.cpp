@@ -87,13 +87,6 @@ nr_arena_glyphs_init (NRArenaGlyphs *glyphs)
 	glyphs->rfont = NULL;
 	glyphs->sfont = NULL;
 	glyphs->x = glyphs->y = 0.0;
-
-//	nr_matrix_set_identity(&glyphs->cached_tr);
-//	glyphs->cached_shp=NULL;
-//	glyphs->cached_shp_dirty=false;
-//	glyphs->cached_style_dirty=false;
-
-//	glyphs->stroke_shp=NULL;
 }
 
 static void
@@ -101,15 +94,6 @@ nr_arena_glyphs_finalize (NRObject *object)
 {
 	NRArenaGlyphs *glyphs=static_cast<NRArenaGlyphs *>(object);
 
-//	if (glyphs->cached_shp) {
-//		delete glyphs->cached_shp;
-//		glyphs->cached_shp = NULL;
-//	}
-//	if (glyphs->stroke_shp) {
-//		delete glyphs->stroke_shp;
-//		glyphs->stroke_shp = NULL;
-//	}
-  
 	if (glyphs->rfont) {
 		glyphs->rfont->Unref();
 		glyphs->rfont=NULL;
@@ -254,16 +238,6 @@ nr_arena_glyphs_pick (NRArenaItem *item, NR::Point p, gdouble delta, unsigned in
 	/* With text we take a simple approach: pick if the point is in a characher bbox */
 	if ((x >= item->bbox.x0) && (y >= item->bbox.y0) && (x <= item->bbox.x1) && (y <= item->bbox.y1)) return item;
 
-/*	NR::Point const thePt = p;
-		if (glyphs->stroke_shp && (glyphs->style->stroke.type != SP_PAINT_TYPE_NONE)) {
-			if (glyphs->stroke_shp->PtWinding(thePt) > 0 ) return item;
-		}
-		if (delta > 1e-3) {
-			if (glyphs->stroke_shp && (glyphs->style->stroke.type != SP_PAINT_TYPE_NONE)) {
-				if ( glyphs->stroke_shp->DistanceLE(thePt, delta)) return item;
-			}
-		}*/
-  
 	return NULL;
 }
 
@@ -275,15 +249,12 @@ nr_arena_glyphs_set_path (NRArenaGlyphs *glyphs, SPCurve *curve, unsigned int li
 
 	nr_arena_item_request_render (NR_ARENA_ITEM (glyphs));
   
- // glyphs->cached_shp_dirty=true;
-
 	if (transform) {
 		glyphs->g_transform = *transform;
 	} else {
 		nr_matrix_set_identity (&glyphs->g_transform);
 	}
 		
-	//printf("glyph_setpath ");
 	if ( font ) font->Ref();
 	if ( glyphs->font ) glyphs->font->Unref();
 	glyphs->font=font;
@@ -298,8 +269,6 @@ nr_arena_glyphs_set_style (NRArenaGlyphs *glyphs, SPStyle *style)
 	nr_return_if_fail (glyphs != NULL);
 	nr_return_if_fail (NR_IS_ARENA_GLYPHS (glyphs));
 
-//  glyphs->cached_style_dirty=true;
-  
 	if (style) sp_style_ref (style);
 	if (glyphs->style) sp_style_unref (glyphs->style);
 	glyphs->style = style;
@@ -334,27 +303,7 @@ nr_arena_glyphs_stroke_mask (NRArenaGlyphs *glyphs, NRRectL *area, NRPixBlock *m
 		raster_glyph* g=glyphs->sfont->GetGlyph(glyphs->glyph);
 		if ( g ) g->Blit(NR::Point(glyphs->x, glyphs->y),*m);
 	}
-/*	if (glyphs->stroke_shp && nr_rect_l_test_intersect (area, &item->bbox)) {
-		NRPixBlock gb;
-		gint x, y;
-		nr_pixblock_setup_fast (&gb, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
-    // art_gray_svp_aa is just fillung apparently
-    // dunno why it's used here instead of its libnr counterpart
-    nr_pixblock_render_shape_mask_or (gb,glyphs->stroke_shp);    
-		for (y = area->y0; y < area->y1; y++) {
-			guchar *d, *s;
-			d = NR_PIXBLOCK_PX (m) + (y - area->y0) * m->rs;
-			s = NR_PIXBLOCK_PX (&gb) + (y - area->y0) * gb.rs;
-			for (x = area->x0; x < area->x1; x++) {
-				*d = (*d) + ((255 - *d) * (*s) / 255);
-				d += 1;
-				s += 1;
-			}
-		}
-		nr_pixblock_release (&gb);
-		m->empty = FALSE;
-	}*/
-  
+
 	return item->state;
 }
 
