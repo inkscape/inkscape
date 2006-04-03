@@ -2914,7 +2914,38 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                 ++str;
             }
             if (strneq(str, "icc-color(", 10)) {
-                /* fixme: Parse icc-color to paint->iccColor here. */
+                str += 10;
+
+                SVGICCColor* tmp = new SVGICCColor();
+                while ( *str && *str != ' ' && *str!= ',' && *str != ')' ) {
+                    tmp->colorProfile += *str++;
+                }
+                while ( g_ascii_isspace(*str) || *str == ',' ) {
+                    ++str;
+                }
+
+                while ( *str && *str != ')' ) {
+                    if ( g_ascii_isdigit(*str) || *str == '.' ) {
+                        gchar* endPtr = 0;
+                        gdouble dbl = g_ascii_strtod( str, &endPtr );
+                        if ( !errno ) {
+                            tmp->colors.push_back( dbl );
+                            str = endPtr;
+                        } else {
+                            delete tmp;
+                            tmp = 0;
+                            break;
+                        }
+
+                        while ( tmp && g_ascii_isspace(*str) || *str == ',' ) {
+                            ++str;
+                        }
+                    } else {
+                        break;
+                    }
+
+                }
+                paint->iccColor = tmp;
             }
         }
     }
