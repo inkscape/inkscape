@@ -60,7 +60,7 @@ static void sp_paint_selector_class_init (SPPaintSelectorClass *klass);
 static void sp_paint_selector_init (SPPaintSelector *slider);
 static void sp_paint_selector_destroy (GtkObject *object);
 
-static GtkWidget *sp_paint_selector_style_button_add (SPPaintSelector *psel, const gchar *px, SPPaintSelectorMode mode, GtkTooltips *tt, const gchar *tip);
+static GtkWidget *sp_paint_selector_style_button_add (SPPaintSelector *psel, gchar const *px, SPPaintSelectorMode mode, GtkTooltips *tt, gchar const *tip);
 static void sp_paint_selector_style_button_toggled (GtkToggleButton *tb, SPPaintSelector *psel);
 static void sp_paint_selector_fillrule_toggled (GtkToggleButton *tb, SPPaintSelector *psel);
 
@@ -230,7 +230,7 @@ sp_paint_selector_destroy (GtkObject *object)
 }
 
 static GtkWidget *
-sp_paint_selector_style_button_add (SPPaintSelector *psel, const gchar *pixmap, SPPaintSelectorMode mode, GtkTooltips *tt, const gchar *tip)
+sp_paint_selector_style_button_add (SPPaintSelector *psel, gchar const *pixmap, SPPaintSelectorMode mode, GtkTooltips *tt, gchar const *tip)
 {
 	GtkWidget *b, *w;
 
@@ -355,7 +355,7 @@ sp_paint_selector_set_fillrule (SPPaintSelector *psel, SPPaintSelectorFillRule f
 }
 
 void
-sp_paint_selector_set_color_alpha (SPPaintSelector *psel, const SPColor *color, float alpha)
+sp_paint_selector_set_color_alpha (SPPaintSelector *psel, SPColor const *color, float alpha)
 {
 	g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
 	SPColorSelector *csel;
@@ -723,7 +723,7 @@ ink_pattern_menu (GtkWidget *mnu)
 	/* Pick up all patterns  */
 	SPDocument *doc = SP_ACTIVE_DOCUMENT;
 	GSList *pl = NULL;
-	const GSList *patterns = sp_document_get_resource_list (doc, "pattern");
+	GSList const *patterns = sp_document_get_resource_list (doc, "pattern");
 	for (GSList *l = (GSList *) patterns; l != NULL; l = l->next) {
 		if (SP_PATTERN (l->data) == pattern_getroot (SP_PATTERN (l->data))) {  // only if this is a root pattern
 			pl = g_slist_prepend (pl, l->data);
@@ -751,7 +751,6 @@ ink_pattern_menu (GtkWidget *mnu)
 				GtkWidget *i = gtk_menu_item_new ();
 				gtk_widget_show (i);
 				g_object_set_data (G_OBJECT (i), "pattern", pat);
-				//        g_signal_connect (G_OBJECT (i), "activate", G_CALLBACK (sp_gvs_gradient_activate), gvs);
 				GtkWidget *hb = gtk_hbox_new (FALSE, 4);
 				gtk_widget_show (hb);
 				Inkscape::XML::Node *repr = SP_OBJECT_REPR((SPItem *) pl->data);
@@ -894,7 +893,7 @@ sp_paint_selector_get_pattern (SPPaintSelector *psel)
 }
 
 void
-sp_paint_selector_set_flat_color (SPPaintSelector *psel, SPDesktop *desktop, const gchar *color_property, const gchar *opacity_property)
+sp_paint_selector_set_flat_color (SPPaintSelector *psel, SPDesktop *desktop, gchar const *color_property, gchar const *opacity_property)
 {
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
