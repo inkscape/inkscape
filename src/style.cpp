@@ -40,6 +40,7 @@
 #include "xml/repr.h"
 #include "unit-constants.h"
 #include "isnan.h"
+#include <errno.h>
 using Inkscape::CSSOStringStream;
 using std::vector;
 
