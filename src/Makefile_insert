@@ -317,9 +317,6 @@ inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
 inkview_SOURCES = inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
 
-attributes_test_SOURCES = attributes-test.cpp
-attributes_test_LDADD = attributes.$(OBJEXT) -lglib-2.0
-
 dir_util_test_SOURCES = dir-util-test.cpp utest/test-2ary-cases.h
 dir_util_test_LDADD = dir-util.$(OBJEXT) -lglib-2.0
 

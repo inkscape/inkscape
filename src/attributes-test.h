@@ -1,8 +1,28 @@
+
+#include <cxxtest/TestSuite.h>
+
 #include <vector>
 #include "utest/utest.h"
 #include "attributes.h"
 #include "streq.h"
 
+class AttributesTest : public CxxTest::TestSuite
+{
+public:
+
+    AttributesTest()
+    {
+    }
+    virtual ~AttributesTest() {}
+
+// createSuite and destroySuite get us per-suite setup and teardown
+// without us having to worry about static initialization order, etc.
+    static AttributesTest *createSuite() { return new AttributesTest(); }
+    static void destroySuite( AttributesTest *suite ) { delete suite; }
+
+
+    void testAttributes()
+    {
 /* Extracted mechanically from http://www.w3.org/TR/SVG11/attindex.html:
 
    tidy -wrap 999 -asxml < attindex.html 2>/dev/null |
@@ -15,7 +35,7 @@
    attindex.html lacks attributeName, begin, additive, font, marker;
    I've added these manually.
 */
-static struct {char const *attr; bool supported;} const all_attrs[] = {
+struct {char const *attr; bool supported;} const all_attrs[] = {
     {"attributeName", true},
     {"begin", true},
     {"additive", true},
@@ -396,29 +416,26 @@ static struct {char const *attr; bool supported;} const all_attrs[] = {
 
 };
 
-static bool
-test_attributes()
-{
-    utest_start("attributes");
 
-    std::vector<bool> ids;
-    ids.reserve(256);
-    UTEST_TEST("attribute lookup") {
+
+        std::vector<bool> ids;
+        ids.reserve(256);
+
         for (unsigned i = 0; i < G_N_ELEMENTS(all_attrs); ++i) {
             char const *const attr_str = all_attrs[i].attr;
             unsigned const id = sp_attribute_lookup(attr_str);
             bool const recognized(id);
-            UTEST_ASSERT(recognized == all_attrs[i].supported);
+            TSM_ASSERT_EQUALS( std::string(all_attrs[i].attr), recognized, all_attrs[i].supported );
             if (recognized) {
                 if (ids.size() <= id) {
                     ids.resize(id + 1);
                 }
-                UTEST_ASSERT(!ids[id]);
+                TS_ASSERT(!ids[id]);
                 ids[id] = true;
 
                 unsigned char const *reverse_ustr = sp_attribute_name(id);
                 char const *reverse_str = reinterpret_cast<char const *>(reverse_ustr);
-                UTEST_ASSERT(streq(reverse_str, attr_str));
+                TS_ASSERT(streq(reverse_str, attr_str));
             }
         }
 
@@ -450,23 +467,13 @@ test_attributes()
         unsigned const n_ids = ids.size();
         for (unsigned id = 1; id < n_ids; ++id) {
             if (!ids[id]) {
-                unsigned char const *str = sp_attribute_name(id);
-                printf("%s\n", (const char *)str); /* Apparently printf doesn't like unsigned strings -- Ted */
+	        TS_WARN( std::string((const char*)sp_attribute_name(id)) );
                 found = true;
             }
         }
-        UTEST_ASSERT(!found);
+        TS_ASSERT(!found);
     }
-
-    return utest_end();
-}
-
-int main()
-{
-    return ( test_attributes()
-             ? EXIT_SUCCESS
-             : EXIT_FAILURE );
-}
+};
 
 /*
   Local Variables:

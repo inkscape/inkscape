@@ -166,7 +166,6 @@ EXTRA_PROGRAMS =	\
 
 TESTS =	\
 	test-all$(EXEEXT)	\
-	attributes-test$(EXEEXT)	\
 	dir-util-test$(EXEEXT)	\
 	extract-uri-test$(EXEEXT)	\
 	mod360-test$(EXEEXT)	\
@@ -201,7 +200,6 @@ TESTS =	\
 
 check_PROGRAMS =	\
 	test-all	\
-	attributes-test	\
 	dir-util-test	\
 	extract-uri-test	\
 	mod360-test	\
@@ -236,16 +234,20 @@ test-all.cpp: \
 		$(xml_test_xml_a_SOURCES)	\
 		$(libnr_test_nr_includes)	\
 		$(svg_test_svg_includes)	\
-		$(xml_test_xml_includes)
+		$(xml_test_xml_includes)	\
+		attributes-test.h
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --error-printer -root -o test-all.cpp	\
 		$(libnr_test_nr_includes)	\
 		$(svg_test_svg_includes)	\
-		$(xml_test_xml_includes)
+		$(xml_test_xml_includes)	\
+		attributes-test.h
 
 test_all_SOURCES = \
 	test-all.cpp
 
+
 test_all_LDADD =	\
+	libinkpre.a	\
 	$(libnr_test_nr_LDADD)	\
 	$(svg_test_svg_LDADD)	\
 	$(xml_test_xml_LDADD)
