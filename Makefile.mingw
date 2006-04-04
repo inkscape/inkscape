@@ -54,6 +54,7 @@ dist-strip: dist
 	strip inkscape$(S)popt1.dll
 	strip inkscape$(S)perl58.dll
 	strip inkscape$(S)python24.dll
+	strip inkscape$(S)liblcms-1.dll
 	-$(RM) inkscape$(S)gdb.exe
 	
 dist:
@@ -104,6 +105,7 @@ dist:
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape$(S)intl.dll
 	$(CP) $(GTKDOS)$(S)bin$(S)popt1.dll inkscape
+	$(CP) $(GTKDOS)$(S)bin$(S)liblcms-1.dll inkscape
 #
 #       PERL
 #

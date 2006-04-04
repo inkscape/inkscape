@@ -144,12 +144,11 @@ VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
 CFLAGS = -O3 -g -Wall -mms-bitfields -DVERSION=$(VERSION) \
--DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
+-DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H -DENABLE_LCMS
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
 #CFLAGS += -DWITH_INKBOARD
-
 
 ####### IMPLICIT RULES
 .cpp.o:
@@ -209,6 +208,7 @@ LIBS = $(GTKLIB) $(PERLLIB) $(PYTHONLIB) \
 $(GTK)/bin/libxml2.dll \
 $(GTK)/lib/iconv.lib	\
 -lfreetype.dll -lfontconfig.dll  \
+-llcms.dll \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
 -lgc -mwindows -lws2_32 -lintl
 
