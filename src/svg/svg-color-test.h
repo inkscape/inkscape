@@ -1,9 +1,19 @@
+
 #include <cxxtest/TestSuite.h>
+#include <cassert>
+
 #include "svg/svg-color.h"
 #include "svg/svg-icc-color.h"
 
 class SVGColorTest : public CxxTest::TestSuite
 {
+    struct simpleIccCase {
+        int numEntries;
+        bool shouldPass;
+        char const* name;
+        char const* str;
+    };
+
 public:
     void check_rgb24(unsigned const rgb24)
     {
@@ -25,7 +35,7 @@ public:
                 rgb24 = (rgb24 << 8) | component;
                 tmp /= nc;
             }
-            TS_ASSERT_EQUALS( tmp, 0 );
+            assert( tmp == 0 );
             check_rgb24(rgb24);
         }
 
@@ -38,8 +48,8 @@ public:
 
     void testReadColor()
     {
-        gchar* val="#f0f";
-        gchar const * end = 0;
+        gchar const* val="#f0f";
+        gchar const* end = 0;
         guint32 result = sp_svg_read_color( val, &end, 0x3 );
         TS_ASSERT_EQUALS( result, 0xff00ff00 );
         TS_ASSERT_LESS_THAN( val, end );
@@ -47,24 +57,41 @@ public:
 
     void testIccColor()
     {
-        SVGICCColor tmp;
-        gchar* str = "icc-color(named, 3)";
-        gchar const * result = 0;
+        simpleIccCase cases[] = {
+            {1, true, "named", "icc-color(named, 3)"},
+            {0, false, "", "foodle"},
+            {1, true, "a", "icc-color(a, 3)"},
+            {4, true, "named", "icc-color(named, 3, 0, 0.1, 2.5)"},
+            {0, false, "", "icc-color(named, 3"},
+            {0, false, "", "icc-color(space named, 3)"},
+            {0, false, "", "icc-color(tab\tnamed, 3)"},
+            {0, false, "", "icc-color(0name, 3)"},
+            {0, false, "", "icc-color(-name, 3)"},
+            {1, true, "positive", "icc-color(positive, +3)"},
+            {1, true, "negative", "icc-color(negative, -3)"},
+            {1, true, "positive", "icc-color(positive, +0.1)"},
+            {1, true, "negative", "icc-color(negative, -0.1)"},
+            {0, false, "", "icc-color(named, value)"},
+        };
 
-        bool parseRet = sp_svg_read_icc_color( str, &result, &tmp );
-        TS_ASSERT( parseRet );
-        TS_ASSERT_DIFFERS( str, result );
-        TS_ASSERT_EQUALS( std::string("named"), tmp.colorProfile );
-        TS_ASSERT_EQUALS( 1, tmp.colors.size() );
+        for ( size_t i = 0; i < G_N_ELEMENTS(cases); i++ ) {
+            SVGICCColor tmp;
+            gchar const* str = cases[i].str;
+            gchar const* result = 0;
 
+            std::string testDescr( cases[i].str );
 
-        gchar* badThing = "foodle";
-        result = 0;
-        parseRet = sp_svg_read_icc_color( badThing, &result, &tmp );
-        TS_ASSERT( !parseRet );
-        TS_ASSERT_EQUALS( badThing, result );
-        TS_ASSERT_DIFFERS( std::string("named"), tmp.colorProfile );
-        TS_ASSERT_EQUALS( 0, tmp.colors.size() );
+            bool parseRet = sp_svg_read_icc_color( str, &result, &tmp );
+            TSM_ASSERT_EQUALS( testDescr, parseRet, cases[i].shouldPass );
+            TSM_ASSERT_EQUALS( testDescr, tmp.colors.size(), cases[i].numEntries );
+            if ( cases[i].shouldPass ) {
+                TSM_ASSERT_DIFFERS( testDescr, str, result );
+                TSM_ASSERT_EQUALS( testDescr, tmp.colorProfile, std::string(cases[i].name) );
+            } else {
+                TSM_ASSERT_EQUALS( testDescr, str, result );
+                TSM_ASSERT( testDescr, tmp.colorProfile.empty() );
+            }
+        }
     }
 
 };

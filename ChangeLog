@@ -1,3 +1,9 @@
+2005-04-05  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/svg/svg-color-test.h, src/svg/svg-color.cpp:
+
+	  Tuned icc-color() parsing.
+
 2005-04-02  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/color-profile.h, src/color-profile.cpp,

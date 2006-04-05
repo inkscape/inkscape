@@ -466,43 +466,69 @@ bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor
 
         if ( good ) {
             str += 10;
-
-            while ( *str && !g_ascii_isspace(*str) && *str!= ',' && *str != ')' ) {
-                if ( dest ) {
-                    dest->colorProfile += *str;
-                }
+            while ( g_ascii_isspace(*str) ) {
                 str++;
             }
-            while ( g_ascii_isspace(*str) || *str == ',' ) {
-                str++;
+
+            if ( !g_ascii_isalpha(*str)
+                 && ( !(0x080 & *str) ) ) {
+                // Name must start with a certain type of character
+                good = false;
+            } else {
+                while ( g_ascii_isdigit(*str) || g_ascii_islower(*str) || (*str == '-') ) {
+                    if ( dest ) {
+                        dest->colorProfile += *str;
+                    }
+                    str++;
+                }
+                while ( g_ascii_isspace(*str) || *str == ',' ) {
+                    str++;
+                }
             }
         }
 
-        while ( good && *str && *str != ')' ) {
-            if ( g_ascii_isdigit(*str) || *str == '.' ) {
-                gchar* endPtr = 0;
-                gdouble dbl = g_ascii_strtod( str, &endPtr );
-                if ( !errno ) {
-                    if ( dest ) {
-                        dest->colors.push_back( dbl );
+        if ( good ) {
+            while ( *str && *str != ')' ) {
+                if ( g_ascii_isdigit(*str) || *str == '.' || *str == '-' || *str == '+') {
+                    gchar* endPtr = 0;
+                    gdouble dbl = g_ascii_strtod( str, &endPtr );
+                    if ( !errno ) {
+                        if ( dest ) {
+                            dest->colors.push_back( dbl );
+                        }
+                        str = endPtr;
+                    } else {
+                        good = false;
+                        break;
                     }
-                    str = endPtr;
+
+                    while ( g_ascii_isspace(*str) || *str == ',' ) {
+                        str++;
+                    }
                 } else {
-                    good = false;
                     break;
                 }
-
-                while ( good && g_ascii_isspace(*str) || *str == ',' ) {
-                    str++;
-                }
-            } else {
-                break;
             }
+        }
+
+        // We need to have ended on a closing parenthesis
+        if ( good ) {
+            while ( g_ascii_isspace(*str) ) {
+                str++;
+            }
+            good &= *str == ')';
         }
     }
 
-    if ( end_ptr ) {
-        *end_ptr = str;
+    if ( good ) {
+        if ( end_ptr ) {
+            *end_ptr = str;
+        }
+    } else {
+        if ( dest ) {
+            dest->colorProfile.clear();
+            dest->colors.clear();
+        }
     }
 
     return good;
