@@ -513,7 +513,7 @@ sp_image_release (SPObject *object)
 		g_free (image->color_profile);
 		image->color_profile = NULL;
 	}
-#endif ENABLE_LCMS
+#endif // ENABLE_LCMS
 
 	if (((SPObjectClass *) parent_class)->release)
 		((SPObjectClass *) parent_class)->release (object);
