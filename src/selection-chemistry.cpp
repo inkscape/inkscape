@@ -2366,10 +2366,10 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     // check if something is selected
     bool is_empty = selection->isEmpty();
     if ( apply_to_layer && is_empty) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to create mask from."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to create clippath or mask from."));
         return;
     } else if (!apply_to_layer && ( is_empty || NULL == selection->itemList()->next )) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select mask object and <b>object(s)</b> to apply mask to."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select mask object and <b>object(s)</b> to apply clippath or mask to."));
         return;
     }
     
@@ -2472,7 +2472,7 @@ void sp_selection_unset_mask(bool apply_clip_path) {
 
     // check if something is selected
     if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to remove mask from."));
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to remove clippath or mask from."));
         return;
     }
     
@@ -2516,14 +2516,24 @@ void sp_selection_unset_mask(bool apply_clip_path) {
             obj->deleteObject(false);
         }
 
-        for (GSList *i = items_to_move; NULL != i; i = i->next) {
-            SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr((Inkscape::XML::Node *)i->data));
-            selection->add((Inkscape::XML::Node *)i->data);
+        // remember parent and position of the item to which the clippath/mask was applied
+        Inkscape::XML::Node *parent = SP_OBJECT_REPR((*it).second)->parent();
+        gint pos = SP_OBJECT_REPR((*it).second)->position();
 
-            // transform mask, so it is moved the same spot there mask was applied
-            NR::Matrix transform (item->transform);
+        for (GSList *i = items_to_move; NULL != i; i = i->next) {
+            Inkscape::XML::Node *repr = (Inkscape::XML::Node *)i->data;
+
+            // insert into parent, restore pos
+            parent->appendChild(repr);
+            repr->setPosition((pos + 1) > 0 ? (pos + 1) : 0);
+
+            SPItem *mask_item = (SPItem *) SP_DT_DOCUMENT (desktop)->getObjectByRepr(repr);
+            selection->add(repr);
+
+            // transform mask, so it is moved the same spot where mask was applied
+            NR::Matrix transform (mask_item->transform);
             transform *= (*it).second->transform;
-            sp_item_write_transform(item, SP_OBJECT_REPR(item), transform);
+            sp_item_write_transform(mask_item, SP_OBJECT_REPR(mask_item), transform);
         }
 
         g_slist_free (items_to_move);
