@@ -311,6 +311,21 @@ sp_flowtext_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, 
 {
     SPFlowtext *group = SP_FLOWTEXT(item);
     group->layout.getBoundingBox(bbox, transform);
+
+    // Add stroke width
+    SPStyle* style=SP_OBJECT_STYLE (item);
+    if (style->stroke.type != SP_PAINT_TYPE_NONE) {
+        double const scale = expansion(transform);
+        if ( fabs(style->stroke_width.computed * scale) > 0.01 ) { // sinon c'est 0=oon veut pas de bord
+            double const width = MAX(0.125, style->stroke_width.computed * scale);
+            if ( fabs(bbox->x1 - bbox->x0) > -0.00001 && fabs(bbox->y1 - bbox->y0) > -0.00001 ) {
+                bbox->x0-=0.5*width;
+                bbox->x1+=0.5*width;
+                bbox->y0-=0.5*width;
+                bbox->y1+=0.5*width;
+            }
+        }
+    }
 }
 
 static void
