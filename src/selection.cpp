@@ -98,8 +98,10 @@ void Selection::_emitChanged(bool persist_selection_context/* = false */) {
         if (NULL == _selection_context) {
             _selection_context = desktop()->currentLayer();
             sp_object_ref(_selection_context, NULL);
-            g_signal_connect(G_OBJECT(_selection_context), "release",
-                             G_CALLBACK(&Selection::_releaseSelectionContext), this);
+            _context_release_handler_id = g_signal_connect(
+                                            G_OBJECT(_selection_context), "release",
+                                            G_CALLBACK(&Selection::_releaseSelectionContext),
+                                            this);
         }
     } else {
         _releaseContext(_selection_context);
