@@ -18,6 +18,7 @@
 #endif
 
 #include "svg-color.h"
+#include "svg-icc-color.h"
 #include <cassert>
 #include <math.h>
 #include <glib/gmem.h>
@@ -26,6 +27,7 @@
 #include <glib/ghash.h>
 #include <glib/gutils.h>
 #include <cstdio> // sprintf
+#include <errno.h>
 #include "strneq.h"
 using std::sprintf;
 
@@ -437,6 +439,73 @@ sp_svg_create_color_hash()
     }
 
     return colors;
+}
+
+
+bool sp_svg_read_icc_color( gchar const *str, gchar const **end_ptr, SVGICCColor* dest )
+{
+    bool good = true;
+
+    if ( end_ptr ) {
+        *end_ptr = str;
+    }
+    if ( dest ) {
+        dest->colorProfile.clear();
+        dest->colors.clear();
+    }
+
+    if ( !str ) {
+        // invalid input
+        good = false;
+    } else {
+        while ( g_ascii_isspace(*str) ) {
+            str++;
+        }
+
+        good = strneq( str, "icc-color(", 10 );
+
+        if ( good ) {
+            str += 10;
+
+            while ( *str && !g_ascii_isspace(*str) && *str!= ',' && *str != ')' ) {
+                if ( dest ) {
+                    dest->colorProfile += *str;
+                }
+                str++;
+            }
+            while ( g_ascii_isspace(*str) || *str == ',' ) {
+                str++;
+            }
+        }
+
+        while ( good && *str && *str != ')' ) {
+            if ( g_ascii_isdigit(*str) || *str == '.' ) {
+                gchar* endPtr = 0;
+                gdouble dbl = g_ascii_strtod( str, &endPtr );
+                if ( !errno ) {
+                    if ( dest ) {
+                        dest->colors.push_back( dbl );
+                    }
+                    str = endPtr;
+                } else {
+                    good = false;
+                    break;
+                }
+
+                while ( good && g_ascii_isspace(*str) || *str == ',' ) {
+                    str++;
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
+    if ( end_ptr ) {
+        *end_ptr = str;
+    }
+
+    return good;
 }
 
 /*

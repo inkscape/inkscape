@@ -40,7 +40,7 @@
 #include "xml/repr.h"
 #include "unit-constants.h"
 #include "isnan.h"
-#include <errno.h>
+
 using Inkscape::CSSOStringStream;
 using std::vector;
 
@@ -2915,36 +2915,10 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                 ++str;
             }
             if (strneq(str, "icc-color(", 10)) {
-                str += 10;
-
                 SVGICCColor* tmp = new SVGICCColor();
-                while ( *str && *str != ' ' && *str!= ',' && *str != ')' ) {
-                    tmp->colorProfile += *str++;
-                }
-                while ( g_ascii_isspace(*str) || *str == ',' ) {
-                    ++str;
-                }
-
-                while ( *str && *str != ')' ) {
-                    if ( g_ascii_isdigit(*str) || *str == '.' ) {
-                        gchar* endPtr = 0;
-                        gdouble dbl = g_ascii_strtod( str, &endPtr );
-                        if ( !errno ) {
-                            tmp->colors.push_back( dbl );
-                            str = endPtr;
-                        } else {
-                            delete tmp;
-                            tmp = 0;
-                            break;
-                        }
-
-                        while ( tmp && g_ascii_isspace(*str) || *str == ',' ) {
-                            ++str;
-                        }
-                    } else {
-                        break;
-                    }
-
+                if ( ! sp_svg_read_icc_color( str, &str, tmp ) ) {
+                    delete tmp;
+                    tmp = 0;
                 }
                 paint->iccColor = tmp;
             }
