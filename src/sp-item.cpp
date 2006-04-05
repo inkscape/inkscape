@@ -665,6 +665,10 @@ sp_item_invoke_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transfor
     sp_item_invoke_bbox_full(item, bbox, transform, 0, clear);
 }
 
+/** Calls \a item's subclass' bounding box method; clips it by the bbox of clippath, if any; and
+ * unions the resulting bbox with \a bbox. If \a clear is true, empties \a bbox first. Passes the
+ * transform and the flags to the actual bbox methods. Note that many of subclasses (e.g. groups,
+ * clones), in turn, call this function in their bbox methods. */
 void
 sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags, unsigned const clear)
 {
@@ -677,15 +681,25 @@ sp_item_invoke_bbox_full(SPItem const *item, NRRect *bbox, NR::Matrix const &tra
         bbox->x1 = bbox->y1 = -1e18;
     }
 
+    NRRect this_bbox;
+    this_bbox.x0 = this_bbox.y0 = 1e18;
+    this_bbox.x1 = this_bbox.y1 = -1e18;
+
+    // call the subclass method
     if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox) {
-        ((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox(item, bbox, transform, flags);
+        ((SPItemClass *) G_OBJECT_GET_CLASS(item))->bbox(item, &this_bbox, transform, flags);
     }
 
     // crop the bbox by clip path, if any
     if (item->clip_ref->getObject()) {
         NRRect b;
         sp_clippath_get_bbox(SP_CLIPPATH(item->clip_ref->getObject()), &b, transform, flags);
-        nr_rect_d_intersect (bbox, bbox, &b);
+        nr_rect_d_intersect (&this_bbox, &this_bbox, &b);
+    }
+
+    // if non-empty (with some tolerance - ?) union this_bbox with the bbox we've got passed
+    if ( fabs(this_bbox.x1-this_bbox.x0) > -0.00001 && fabs(this_bbox.y1-this_bbox.y0) > -0.00001 ) {
+        nr_rect_d_union (bbox, bbox, &this_bbox);
     }
 }
 

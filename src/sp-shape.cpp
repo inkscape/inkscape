@@ -578,10 +578,8 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
             }
         }
 
-        if ( fabs(cbbox.x1-cbbox.x0) > -0.00001 && fabs(cbbox.y1-cbbox.y0) > -0.00001 ) {
-            NRRect tbbox=*bbox;
-            nr_rect_d_union (bbox, &cbbox, &tbbox);
-        }
+        // copy our bbox to the variable we're given
+        *bbox = cbbox;
     }
 }
 
