@@ -39,6 +39,11 @@
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
 #include "color-profile.h"
+//#define DEBUG_LCMS
+#ifdef DEBUG_LCMS
+#include "prefs-utils.h"
+#include <gtk/gtkmessagedialog.h>
+#endif // DEBUG_LCMS
 #endif // ENABLE_LCMS
 /*
  * SPImage
@@ -77,6 +82,36 @@ extern "C"
     void user_flush_data( png_structp png_ptr );
 
 }
+
+
+#ifdef DEBUG_LCMS
+extern guint update_in_progress;
+#define DEBUG_MESSAGE(key, ...) \
+{\
+    gint dump = prefs_get_int_attribute_limited("options.scislac", #key, 0, 0, 1);\
+    gint dumpD = prefs_get_int_attribute_limited("options.scislac", #key"D", 0, 0, 1);\
+    gint dumpD2 = prefs_get_int_attribute_limited("options.scislac", #key"D2", 0, 0, 1);\
+    dumpD &= ( (update_in_progress == 0) || dumpD2 );\
+    if ( dump )\
+    {\
+        g_message( __VA_ARGS__ );\
+\
+    }\
+    if ( dumpD )\
+    {\
+        GtkWidget *dialog = gtk_message_dialog_new(NULL,\
+                                                   GTK_DIALOG_DESTROY_WITH_PARENT, \
+                                                   GTK_MESSAGE_INFO,    \
+                                                   GTK_BUTTONS_OK,      \
+                                                   __VA_ARGS__          \
+                                                   );\
+        g_signal_connect_swapped(dialog, "response",\
+                                 G_CALLBACK(gtk_widget_destroy),        \
+                                 dialog);                               \
+        gtk_widget_show_all( dialog );\
+    }\
+}
+#endif // DEBUG_LCMS
 
 namespace Inkscape {
 namespace IO {
@@ -625,6 +660,13 @@ sp_image_set (SPObject *object, unsigned int key, const gchar *value)
                     g_free (image->color_profile);
                 }
                 image->color_profile = (value) ? g_strdup (value) : NULL;
+#ifdef DEBUG_LCMS
+                if ( value ) {
+                    DEBUG_MESSAGE( lcmsFour, "<image> color-profile set to '%s'", value );
+                } else {
+                    DEBUG_MESSAGE( lcmsFour, "<image> color-profile cleared" );
+                }
+#endif // DEBUG_LCMS
                 // TODO check on this HREF_MODIFIED flag
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
                 break;
@@ -666,6 +708,9 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
                                     guchar* px = gdk_pixbuf_get_pixels( pixbuf );
 
                                     if ( px ) {
+#ifdef DEBUG_LCMS
+                                        DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
+#endif // DEBUG_LCMS
                                         guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
                                         cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ),
                                                                                               &profIntent,
@@ -706,9 +751,27 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 
                                                     cmsDeleteTransform( transf );
                                                 }
+#ifdef DEBUG_LCMS
+                                                else
+                                                {
+                                                    DEBUG_MESSAGE( lcmsSix, "in <image>'s sp_image_update. Unable to create LCMS transform." );
+                                                }
+#endif // DEBUG_LCMS
                                                 cmsCloseProfile( destProf );
                                             }
+#ifdef DEBUG_LCMS
+                                            else
+                                            {
+                                                DEBUG_MESSAGE( lcmsSeven, "in <image>'s sp_image_update. Profile type is named color. Can't transform." );
+                                            }
+#endif // DEBUG_LCMS
                                         }
+#ifdef DEBUG_LCMS
+                                        else
+                                        {
+                                            DEBUG_MESSAGE( lcmsEight, "in <image>'s sp_image_update. No profile found." );
+                                        }
+#endif // DEBUG_LCMS
                                     }
                                 }
 #endif // ENABLE_LCMS

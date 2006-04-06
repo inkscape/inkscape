@@ -1,5 +1,11 @@
 2006-04-06  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/color-profile.cpp, src/sp-image.cpp:
+
+	  Simple debugging #ifdefs added.
+
+2006-04-06  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/interface.cpp, src/dialogs/clonetiler.cpp,
 	  src/dialogs/object-properties.cpp, src/dialogs/stroke-style.cpp,
 	  src/dialogs/text-edit.cpp, src/dialogs/tiledialog.cpp,

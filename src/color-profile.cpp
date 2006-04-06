@@ -6,6 +6,13 @@
 #include "attributes.h"
 #include "document.h"
 
+//#define DEBUG_LCMS
+
+#ifdef DEBUG_LCMS
+#include "prefs-utils.h"
+#include <gtk/gtkmessagedialog.h>
+#endif // DEBUG_LCMS
+
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
 
@@ -19,6 +26,35 @@ static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape
 static void colorprofile_set( SPObject *object, unsigned key, gchar const *value );
 static Inkscape::XML::Node *colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
 }
+
+#ifdef DEBUG_LCMS
+extern guint update_in_progress;
+#define DEBUG_MESSAGE(key, ...) \
+{\
+    gint dump = prefs_get_int_attribute_limited("options.scislac", #key, 0, 0, 1);\
+    gint dumpD = prefs_get_int_attribute_limited("options.scislac", #key"D", 0, 0, 1);\
+    gint dumpD2 = prefs_get_int_attribute_limited("options.scislac", #key"D2", 0, 0, 1);\
+    dumpD &= ( (update_in_progress == 0) || dumpD2 );\
+    if ( dump )\
+    {\
+        g_message( __VA_ARGS__ );\
+\
+    }\
+    if ( dumpD )\
+    {\
+        GtkWidget *dialog = gtk_message_dialog_new(NULL,\
+                                                   GTK_DIALOG_DESTROY_WITH_PARENT, \
+                                                   GTK_MESSAGE_INFO,    \
+                                                   GTK_BUTTONS_OK,      \
+                                                   __VA_ARGS__          \
+                                                   );\
+        g_signal_connect_swapped(dialog, "response",\
+                                 G_CALLBACK(gtk_widget_destroy),        \
+                                 dialog);                               \
+        gtk_widget_show_all( dialog );\
+    }\
+}
+#endif // DEBUG_LCMS
 
 static SPObject *cprof_parent_class;
 
@@ -154,13 +190,18 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
                     if ( !g_path_is_absolute(cprof->href) ) {
                         // Try to open relative
                         gchar* docbase = SP_DOCUMENT_BASE( SP_OBJECT_DOCUMENT(object) );
-			gchar* fullname = g_build_filename( docbase ? docbase : ".", cprof->href, NULL );
+                        gchar* fullname = g_build_filename( docbase ? docbase : ".", cprof->href, NULL );
 
                         cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
-
-			g_free (fullname);
+#ifdef DEBUG_LCMS
+                        DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->profHandle );
+#endif // DEBUG_LCMS
+                        g_free (fullname);
                     } else {
                         cprof->profHandle = cmsOpenProfileFromFile( cprof->href, "r" );
+#ifdef DEBUG_LCMS
+                        DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", cprof->href, (void*)cprof->profHandle );
+#endif // DEBUG_LCMS
                     }
 
 #endif // ENABLE_LCMS
@@ -184,6 +225,9 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
                 cprof->name = 0;
             }
             cprof->name = g_strdup( value );
+#ifdef DEBUG_LCMS
+            DEBUG_MESSAGE( lcmsTwo, "<color-profile> name set to '%s'", cprof->name );
+#endif // DEBUG_LCMS
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
@@ -303,6 +347,10 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* inte
     if ( intent ) {
         *intent = thing ? COLORPROFILE(thing)->rendering_intent : (guint)RENDERING_INTENT_UNKNOWN;
     }
+
+#ifdef DEBUG_LCMS
+    DEBUG_MESSAGE( lcmsThree, "<color-profile> queried for profile of '%s'. Returning %p with intent of %d", name, prof, (intent? *intent:0) );
+#endif // DEBUG_LCMS
 
     return prof;
 }
