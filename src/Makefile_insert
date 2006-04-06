@@ -120,7 +120,6 @@ libinkpre_a_SOURCES =	\
 	selection.cpp selection.h	\
 	seltrans-handles.cpp seltrans-handles.h	\
 	seltrans.cpp seltrans.h	\
-	shortcuts-default-xml.cpp	\
 	shortcuts.cpp shortcuts.h	\
 	slideshow.cpp slideshow.h	\
 	snap.cpp snap.h	\

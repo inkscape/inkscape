@@ -4,7 +4,7 @@ SUBDIRS = clipart \
           fonts \
           gradients \
           icons \
-          keyboards \
+          keys \
           markers \
           palettes \
           patterns \

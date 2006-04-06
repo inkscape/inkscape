@@ -22,10 +22,14 @@
 # include "config.h"
 #endif
 
+#include <vector>
+
 #include <gdk/gdkkeys.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "helper/action.h"
+#include "io/sys.h"
+#include "io/resource.h"
 #include "shortcuts.h"
 #include "verbs.h"
 #include "xml/node-iterators.h"
@@ -34,8 +38,8 @@
 using namespace Inkscape;
 
 static void sp_shortcut_set(unsigned int const shortcut, Inkscape::Verb *const verb, bool const is_primary);
-
-static void set_shortcuts_xml(XML::Document const *doc);
+static void try_shortcuts_file(char const *filename);
+static void read_shortcuts_file(char const *filename);
 
 /* Returns true if action was performed */
 
@@ -56,24 +60,37 @@ sp_shortcut_invoke(unsigned int shortcut, Inkscape::UI::View::View *view)
 static GHashTable *verbs = NULL;
 static GHashTable *primary_shortcuts = NULL;
 
-extern char const shortcuts_default_xml[];
-
 static void
 sp_shortcut_init()
 {
+    using Inkscape::IO::Resource::get_path;
+    using Inkscape::IO::Resource::SYSTEM;
+    using Inkscape::IO::Resource::USER;
+    using Inkscape::IO::Resource::KEYS;
+
     verbs = g_hash_table_new(NULL, NULL);
     primary_shortcuts = g_hash_table_new(NULL, NULL);
 
-    XML::Document *shortcuts=sp_repr_read_mem(shortcuts_default_xml, strlen(shortcuts_default_xml), NULL);
-    if (shortcuts) {
-        set_shortcuts_xml(shortcuts);
-        GC::release(shortcuts);
-    } else {
-        g_error("Unable to parse default shortcuts");
+    read_shortcuts_file(get_path(SYSTEM, KEYS, "default.xml"));
+    try_shortcuts_file(get_path(USER, KEYS, "default.xml"));
+}
+
+static void try_shortcuts_file(char const *filename) {
+    using Inkscape::IO::file_test;
+
+    /* ah, if only we had an exception to catch... (permission, forgiveness) */
+    if (file_test(filename, G_FILE_TEST_EXISTS)) {
+        read_shortcuts_file(filename);
     }
 }
 
-static void set_shortcuts_xml(XML::Document const *doc) {
+static void read_shortcuts_file(char const *filename) {
+    XML::Document *doc=sp_repr_read_file(filename, NULL);
+    if (!doc) {
+        g_warning("Unable to read keys file %s", filename);
+        return;
+    }
+
     XML::Node const *root=doc->root();
     g_return_if_fail(!strcmp(root->name(), "keybindings"));
     XML::NodeConstSiblingIterator iter=root->firstChild();
@@ -133,6 +150,8 @@ static void set_shortcuts_xml(XML::Document const *doc) {
                         Inkscape::Verb::getbyid(verb_name),
                         is_primary);
     }
+
+    GC::release(doc);
 }
 
 /**

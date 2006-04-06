@@ -818,7 +818,7 @@ share/extensions/Makefile
 share/fonts/Makefile
 share/gradients/Makefile
 share/icons/Makefile
-share/keyboards/Makefile
+share/keys/Makefile
 share/markers/Makefile
 share/palettes/Makefile
 share/patterns/Makefile

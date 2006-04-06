@@ -1,5 +1,18 @@
 2006-04-05  MenTaLguY  <mental@rydia.net>
 
+	* configure.ac, share/keyboards/.cvsignore, share/keyboards/Makefile.am,
+	  share/keyboards/README, share/keys/.cvsignore, share/keys/Makefile.am,
+	  share/keys/Makefile.in, share/Makefile.am:
+
+	  share/keyboards -> share/keys
+
+	* share/keys/Makefile.am, share/keys/default.xml, src/Makefile_insert,
+	  src/shortcuts.cpp, src/shortcuts-default-xml.cpp:
+
+      first shot at configurable keymaps
+
+2006-04-05  MenTaLguY  <mental@rydia.net>
+
 	* src/io/Makefile_insert, src/io/resource.cpp, src/io/resource.h:
 
 	  introduce uniform resource path API to replace copy-and-pasted hacks
