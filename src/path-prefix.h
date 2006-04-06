@@ -24,6 +24,7 @@ extern "C" {
 #  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
 #  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
 #  define INKSCAPE_GRADIENTSDIR   BR_DATADIR( "/inkscape/gradients" )
+#  define INKSCAPE_KEYSDIR        BR_DATADIR( "/inkscape/keys" )
 #  define INKSCAPE_PIXMAPDIR      BR_DATADIR( "/inkscape/icons" )
 #  define INKSCAPE_MARKERSDIR     BR_DATADIR( "/inkscape/markers" )
 #  define INKSCAPE_PALETTESDIR    BR_DATADIR( "/inkscape/palettes" )
@@ -38,6 +39,7 @@ extern "C" {
 #    define INKSCAPE_APPICONDIR   "pixmaps"
 #    define INKSCAPE_EXTENSIONDIR "share\\extensions"
 #    define INKSCAPE_GRADIENTSDIR "share\\gradients"
+#    define INKSCAPE_KEYSDIR      "share\\keys"
 #    define INKSCAPE_PIXMAPDIR    "share\\icons"
 #    define INKSCAPE_MARKERSDIR   "share\\markers"
 #    define INKSCAPE_PALETTESDIR  "share\\palettes"
@@ -51,6 +53,7 @@ extern "C" {
 #    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
 #    define INKSCAPE_GRADIENTSDIR "Contents/Resources/gradients"
+#    define INKSCAPE_KEYSDIR      "Contents/Resources/keys"
 #    define INKSCAPE_PIXMAPDIR    "Contents/Resources/icons"
 #    define INKSCAPE_MARKERSDIR   "Contents/Resources/markers"
 #    define INKSCAPE_PALETTESDIR  "Contents/Resources/palettes"
@@ -64,6 +67,7 @@ extern "C" {
 #    define INKSCAPE_APPICONDIR   INKSCAPE_DATADIR "/pixmaps"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
 #    define INKSCAPE_GRADIENTSDIR INKSCAPE_DATADIR "/inkscape/gradients"
+#    define INKSCAPE_KEYSDIR      INKSCAPE_DATADIR "/inkscape/keys"
 #    define INKSCAPE_PIXMAPDIR    INKSCAPE_DATADIR "/inkscape/icons"
 #    define INKSCAPE_MARKERSDIR   INKSCAPE_DATADIR "/inkscape/markers"
 #    define INKSCAPE_PALETTESDIR  INKSCAPE_DATADIR "/inkscape/palettes"

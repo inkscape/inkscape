@@ -1,17 +1,23 @@
-2005-04-05  Jon A. Cruz  <jon@joncruz.org>
+2006-04-05  MenTaLguY  <mental@rydia.net>
+
+	* src/io/Makefile_insert, src/io/resource.cpp, src/io/resource.h:
+
+	  introduce uniform resource path API to replace copy-and-pasted hacks
+
+2006-04-05  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/svg/svg-color-test.h, src/svg/svg-color.cpp:
 
 	  Tuned icc-color() parsing.
 
-2005-04-02  Jon A. Cruz  <jon@joncruz.org>
+2006-04-02  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/color-profile.h, src/color-profile.cpp,
 	  src/color-profile-fns.h, src/sp-image.h, src/sp-image.cpp:
 
 	  Initial support of color-profile on <image> elements.
 
-2005-04-02  Jon A. Cruz  <jon@joncruz.org>
+2006-04-02  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/color-profile.h, src/color-profile.cpp,
 	  src/color-profile-fns.h, src/Makefile_insert, src/attributes.cpp,
@@ -19,7 +25,7 @@
 
 	  Adding support for <color-profile> element.
 
-2005-04-02  Jon A. Cruz  <jon@joncruz.org>
+2006-04-02  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/knot.h: Fixed warning messages.
 

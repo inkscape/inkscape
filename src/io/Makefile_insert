@@ -14,6 +14,8 @@ io_libio_a_SOURCES = \
 	io/gzipstream.h \
 	io/inkscapestream.cpp \
 	io/inkscapestream.h \
+	io/resource.cpp \
+	io/resource.h \
 	io/simple-sax.cpp \
 	io/simple-sax.h \
 	io/stringstream.cpp \
