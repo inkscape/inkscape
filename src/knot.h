@@ -62,6 +62,8 @@ struct SPKnot {
 
     gchar *tip;
 
+    gulong _event_handler_id;
+
     //TODO: all the members above should eventualle become private, accessible via setters/getters
     inline void setSize (guint i) {size = i;}
     inline void setShape (guint i) {shape = (SPKnotShapeType) i;}

@@ -195,6 +195,7 @@ static void sp_knot_init(SPKnot *knot)
     knot->shape = SP_KNOT_SHAPE_SQUARE;
     knot->mode = SP_KNOT_MODE_XOR;
     knot->tip = NULL;
+    knot->_event_handler_id = 0;
 
     knot->fill[SP_KNOT_STATE_NORMAL] = 0xffffff00;
     knot->fill[SP_KNOT_STATE_MOUSEOVER] = 0xff0000ff;
@@ -227,6 +228,12 @@ static void sp_knot_dispose(GObject *object)
         // This happens e.g. when deleting a node in node tool while dragging it
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
     }
+
+    if (knot->_event_handler_id > 0)
+        {
+        g_signal_handler_disconnect(GTK_OBJECT (knot->item), knot->_event_handler_id);
+        knot->_event_handler_id = 0;
+        }
 
     if (knot->item) {
         gtk_object_destroy (GTK_OBJECT (knot->item));
@@ -280,6 +287,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
     g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));
 
+    g_object_ref(G_OBJECT(knot));
     tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
     gboolean consumed = FALSE;
@@ -424,6 +432,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
             break;
     }
 
+    g_object_unref(G_OBJECT(knot));
 
     return consumed;
 }
@@ -454,8 +463,8 @@ SPKnot *sp_knot_new(SPDesktop *desktop, const gchar *tip)
                                     "mode", SP_KNOT_MODE_XOR,
                                     NULL);
 
-    gtk_signal_connect(GTK_OBJECT(knot->item), "event",
-                       GTK_SIGNAL_FUNC(sp_knot_handler), knot);
+    knot->_event_handler_id = gtk_signal_connect(GTK_OBJECT(knot->item), "event",
+                                                 GTK_SIGNAL_FUNC(sp_knot_handler), knot);
 
     return knot;
 }

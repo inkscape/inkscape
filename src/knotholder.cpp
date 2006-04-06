@@ -27,6 +27,9 @@ class SPDesktop;
 static void knot_clicked_handler (SPKnot *knot, guint state, gpointer data);
 static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data);
 static void knot_ungrabbed_handler (SPKnot *knot, unsigned int state, SPKnotHolder *kh);
+static void sp_knot_holder_class_init(SPKnotHolderClass *klass);
+
+void sp_knot_holder_dispose(GObject *object);
 
 #ifdef KNOT_HOLDER_DEBUG
 
@@ -36,6 +39,41 @@ static void sp_knot_holder_debug(GtkObject *object, gpointer data)
 }
 #endif
 
+static GObjectClass *parent_class;
+
+/**
+ * Registers SPKnotHolder class and returns its type number.
+ */
+GType sp_knot_holder_get_type()
+{
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPKnotHolderClass),
+            NULL,	/* base_init */
+            NULL,	/* base_finalize */
+            (GClassInitFunc) sp_knot_holder_class_init,
+            NULL,	/* class_finalize */
+            NULL,	/* class_data */
+            sizeof (SPKnotHolder),
+            16,	/* n_preallocs */
+            NULL,
+            NULL
+        };
+        type = g_type_register_static (G_TYPE_OBJECT, "SPKnotHolder", &info, (GTypeFlags) 0);
+    }
+    return type;
+}
+
+/**
+ * SPKnotHolder vtable initialization.
+ */
+static void sp_knot_holder_class_init(SPKnotHolderClass *klass){
+    GObjectClass *object_class = (GObjectClass *) klass;
+    parent_class = (GObjectClass*) g_type_class_peek_parent(klass);
+    object_class->dispose = sp_knot_holder_dispose;
+}
+
 SPKnotHolder *sp_knot_holder_new(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler)
 {
     Inkscape::XML::Node *repr = SP_OBJECT(item)->repr;
@@ -44,7 +82,7 @@ SPKnotHolder *sp_knot_holder_new(SPDesktop *desktop, SPItem *item, SPKnotHolderR
     g_return_val_if_fail(item != NULL, NULL);
     g_return_val_if_fail(SP_IS_ITEM(item), NULL);
 
-    SPKnotHolder *knot_holder = g_new(SPKnotHolder, 1);
+    SPKnotHolder *knot_holder = (SPKnotHolder*)g_object_new (SP_TYPE_KNOT_HOLDER, 0);
     knot_holder->desktop = desktop;
     knot_holder->item = item;
     g_object_ref(G_OBJECT(item));
@@ -62,21 +100,24 @@ SPKnotHolder *sp_knot_holder_new(SPDesktop *desktop, SPItem *item, SPKnotHolderR
     return knot_holder;
 }
 
-void sp_knot_holder_destroy(SPKnotHolder *kh)
-{
-    if (kh) {
-        g_object_unref(G_OBJECT(kh->item));
-        while (kh->entity) {
-            SPKnotHolderEntity *e = (SPKnotHolderEntity *) kh->entity->data;
-            /* unref should call destroy */
-            g_object_unref(G_OBJECT(e->knot));
-            g_free(e);
-            kh->entity = g_slist_remove(kh->entity, e);
-        }
+void sp_knot_holder_dispose(GObject *object) {
+    SPKnotHolder *kh = G_TYPE_CHECK_INSTANCE_CAST((object), SP_TYPE_KNOT_HOLDER, SPKnotHolder);
 
-        g_free(kh);
+    g_object_unref(G_OBJECT(kh->item));
+    while (kh->entity) {
+        SPKnotHolderEntity *e = (SPKnotHolderEntity *) kh->entity->data;
+        g_signal_handler_disconnect(GTK_OBJECT (e->knot), e->_click_handler_id);
+        g_signal_handler_disconnect(GTK_OBJECT (e->knot), e->_ungrab_handler_id);
+        /* unref should call destroy */
+        g_object_unref(G_OBJECT(e->knot));
+        g_free(e);
+        kh->entity = g_slist_remove(kh->entity, e);
     }
 }
+
+void sp_knot_holder_destroy(SPKnotHolder *kh) {
+    g_object_unref(G_OBJECT(kh));
+    }
 
 void sp_knot_holder_add(
     SPKnotHolder *knot_holder,
@@ -130,8 +171,8 @@ void sp_knot_holder_add_full(
     sp_knot_set_position(e->knot, &dp, SP_KNOT_STATE_NORMAL);
 
     e->handler_id = g_signal_connect(G_OBJECT(e->knot), "moved", G_CALLBACK(knot_moved_handler), knot_holder);
-    g_signal_connect(G_OBJECT(e->knot), "clicked", G_CALLBACK(knot_clicked_handler), knot_holder);
-    g_signal_connect(G_OBJECT(e->knot), "ungrabbed", G_CALLBACK(knot_ungrabbed_handler), knot_holder);
+    e->_click_handler_id = g_signal_connect(G_OBJECT(e->knot), "clicked", G_CALLBACK(knot_clicked_handler), knot_holder);
+    e->_ungrab_handler_id = g_signal_connect(G_OBJECT(e->knot), "ungrabbed", G_CALLBACK(knot_ungrabbed_handler), knot_holder);
 
 #ifdef KNOT_HOLDER_DEBUG
     g_signal_connect(ob, "destroy", sp_knot_holder_debug, "SPKnotHolder::knot");
@@ -163,6 +204,7 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
     SPKnotHolder *knot_holder = (SPKnotHolder *) data;
     SPItem *item  = SP_ITEM (knot_holder->item);
 
+    g_object_ref(G_OBJECT(knot_holder));
     for (GSList *el = knot_holder->entity; el; el = el->next) {
         SPKnotHolderEntity *e = (SPKnotHolderEntity *) el->data;
         if (e->knot == knot) {
@@ -178,6 +220,7 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
     }
 
     knotholder_update_knots(knot_holder, item);
+    g_object_unref(G_OBJECT(knot_holder));
 
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
     sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item));

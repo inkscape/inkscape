@@ -29,6 +29,10 @@ struct SPKnotHolderEntity {
 
     /** Connection to \a knot's "moved" signal. */
     guint   handler_id;
+    /** Connection to \a knot's "clicked" signal. */
+    guint   _click_handler_id;
+    /** Connection to \a knot's "ungrabbed" signal. */
+    guint   _ungrab_handler_id;
 
     /**
      * Called solely from knot_moved_handler.

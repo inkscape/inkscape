@@ -32,7 +32,7 @@ typedef NR::Point (* SPKnotHolderGetFunc) (SPItem *item);
 /* fixme: Think how to make callbacks most sensitive (Lauris) */
 typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
 
-struct SPKnotHolder {
+struct SPKnotHolder : GObject {
     SPDesktop *desktop;
     SPItem *item;
     GSList *entity;
@@ -44,6 +44,8 @@ struct SPKnotHolder {
     gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
 };
 
+struct SPKnotHolderClass : GObjectClass {
+};
 
 /* fixme: As a temporary solution, if released is NULL knotholder flushes undo itself (Lauris) */
 SPKnotHolder *sp_knot_holder_new(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
@@ -64,6 +66,9 @@ void sp_knot_holder_add_full(SPKnotHolder *knot_holder,
                              SPKnotModeType mode,
                              gchar const *tip);
 
+GType sp_knot_holder_get_type();
+
+#define SP_TYPE_KNOT_HOLDER      (sp_knot_holder_get_type())
 
 #endif /* !__SP_KNOTHOLDER_H__ */
 
