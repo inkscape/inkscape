@@ -3,7 +3,7 @@
 include ./Makefile.mingw.common
 
 
-all:	config.h $(GTKDOS)$(S)bin$(S)intl.dll
+all:	config.h $(GTKDOS)$(S)bin$(S)intl.dll src$(S)make.files src$(S)make.ofiles src$(S)make.dep
 	$(MAKE) -C po  -f Makefile.mingw
 	$(MAKE) -C src -f Makefile.mingw
 
@@ -13,6 +13,15 @@ config.h: config.h.mingw
 $(GTKDOS)$(S)bin$(S)intl.dll:
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll $(GTKDOS)$(S)bin$(S)intl.dll
 
+src$(S)make.files:
+	cd src && $(GTKDOS)$(S)perl$(S)bin$(S)perl mkfiles.pl
+	
+src$(S)make.ofiles:
+	cd src && $(GTKDOS)$(S)perl$(S)bin$(S)perl mkdep.pl
+	
+src$(S)make.dep:
+	cd src && $(GTKDOS)$(S)perl$(S)bin$(S)perl mkdep.pl
+	
 dist-strip: dist
 	-$(RMDIRREC) .svn $(RMDIRREC1)
 	-$(RMREC) Makefile $(RMREC1)
