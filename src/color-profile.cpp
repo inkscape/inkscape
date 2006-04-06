@@ -9,6 +9,8 @@
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
 
+namespace Inkscape
+{
 static void colorprofile_class_init( ColorProfileClass *klass );
 static void colorprofile_init( ColorProfile *cprof );
 
@@ -16,6 +18,7 @@ static void colorprofile_release( SPObject *object );
 static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr );
 static void colorprofile_set( SPObject *object, unsigned key, gchar const *value );
 static Inkscape::XML::Node *colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags );
+}
 
 static SPObject *cprof_parent_class;
 
@@ -44,7 +47,7 @@ GType Inkscape::colorprofile_get_type()
 /**
  * ColorProfile vtable initialization.
  */
-static void colorprofile_class_init( ColorProfileClass *klass )
+static void Inkscape::colorprofile_class_init( ColorProfileClass *klass )
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
 
@@ -59,12 +62,13 @@ static void colorprofile_class_init( ColorProfileClass *klass )
 /**
  * Callback for ColorProfile object initialization.
  */
-static void colorprofile_init( ColorProfile *cprof )
+static void Inkscape::colorprofile_init( ColorProfile *cprof )
 {
     cprof->href = 0;
     cprof->local = 0;
     cprof->name = 0;
-    cprof->rendering_intent = 0;
+    cprof->intentStr = 0;
+    cprof->rendering_intent = Inkscape::RENDERING_INTENT_UNKNOWN;
 #if ENABLE_LCMS
     cprof->profHandle = 0;
 #endif // ENABLE_LCMS
@@ -73,7 +77,7 @@ static void colorprofile_init( ColorProfile *cprof )
 /**
  * Callback: free object
  */
-static void colorprofile_release( SPObject *object )
+static void Inkscape::colorprofile_release( SPObject *object )
 {
     ColorProfile *cprof = COLORPROFILE(object);
     if ( cprof->href ) {
@@ -91,6 +95,11 @@ static void colorprofile_release( SPObject *object )
         cprof->name = 0;
     }
 
+    if ( cprof->intentStr ) {
+        g_free( cprof->intentStr );
+        cprof->intentStr = 0;
+    }
+
 #if ENABLE_LCMS
     if ( cprof->profHandle ) {
         cmsCloseProfile( cprof->profHandle );
@@ -102,12 +111,13 @@ static void colorprofile_release( SPObject *object )
 /**
  * Callback: set attributes from associated repr.
  */
-static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
+static void Inkscape::colorprofile_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
 {
     ColorProfile *cprof = COLORPROFILE(object);
     g_assert(cprof->href == 0);
     g_assert(cprof->local == 0);
     g_assert(cprof->name == 0);
+    g_assert(cprof->intentStr == 0);
 
     if (((SPObjectClass *) cprof_parent_class)->build) {
         (* ((SPObjectClass *) cprof_parent_class)->build)(object, document, repr);
@@ -121,15 +131,18 @@ static void colorprofile_build( SPObject *object, SPDocument *document, Inkscape
 /**
  * Callback: set attribute.
  */
-static void colorprofile_set( SPObject *object, unsigned key, gchar const *value )
+static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar const *value )
 {
     ColorProfile *cprof = COLORPROFILE(object);
 
     switch (key) {
         case SP_ATTR_XLINK_HREF:
+            if ( cprof->href ) {
+                g_free( cprof->href );
+                cprof->href = 0;
+            }
             if ( value ) {
                 cprof->href = g_strdup( value );
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
                 if ( *cprof->href ) {
 #if ENABLE_LCMS
                     cmsErrorAction( LCMS_ERROR_SHOW );
@@ -153,28 +166,53 @@ static void colorprofile_set( SPObject *object, unsigned key, gchar const *value
 #endif // ENABLE_LCMS
                 }
             }
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_LOCAL:
-            if ( value ) {
-                cprof->local = g_strdup( value );
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if ( cprof->local ) {
+                g_free( cprof->local );
+                cprof->local = 0;
             }
+            cprof->local = g_strdup( value );
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_NAME:
-            if ( value ) {
-                cprof->name = g_strdup( value );
-                object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if ( cprof->name ) {
+                g_free( cprof->name );
+                cprof->name = 0;
             }
+            cprof->name = g_strdup( value );
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         case SP_ATTR_RENDERING_INTENT:
-            if ( value ) {
-// auto | perceptual | relative-colorimetric | saturation | absolute-colorimetric
-                //cprof->name = g_strdup( value );
-                //object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            if ( cprof->intentStr ) {
+                g_free( cprof->intentStr );
+                cprof->intentStr = 0;
             }
+            cprof->intentStr = g_strdup( value );
+
+            if ( value ) {
+                if ( strcmp( value, "auto" ) == 0 ) {
+                    cprof->rendering_intent = RENDERING_INTENT_AUTO;
+                } else if ( strcmp( value, "perceptual" ) == 0 ) {
+                    cprof->rendering_intent = RENDERING_INTENT_PERCEPTUAL;
+                } else if ( strcmp( value, "relative-colorimetric" ) == 0 ) {
+                    cprof->rendering_intent = RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+                } else if ( strcmp( value, "saturation" ) == 0 ) {
+                    cprof->rendering_intent = RENDERING_INTENT_SATURATION;
+                } else if ( strcmp( value, "absolute-colorimetric" ) == 0 ) {
+                    cprof->rendering_intent = RENDERING_INTENT_ABSOLUTE_COLORIMETRIC;
+                } else {
+                    cprof->rendering_intent = RENDERING_INTENT_UNKNOWN;
+                }
+            } else {
+                cprof->rendering_intent = RENDERING_INTENT_UNKNOWN;
+            }
+
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 
         default:
@@ -183,12 +221,13 @@ static void colorprofile_set( SPObject *object, unsigned key, gchar const *value
             }
             break;
     }
+
 }
 
 /**
  * Callback: write attributes to associated repr.
  */
-static Inkscape::XML::Node* colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags )
+static Inkscape::XML::Node* Inkscape::colorprofile_write( SPObject *object, Inkscape::XML::Node *repr, guint flags )
 {
     ColorProfile *cprof = COLORPROFILE(object);
 
@@ -197,19 +236,19 @@ static Inkscape::XML::Node* colorprofile_write( SPObject *object, Inkscape::XML:
     }
 
     if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->href ) {
-        repr->setAttribute( "xlink:href", cprof->name );
+        repr->setAttribute( "xlink:href", cprof->href );
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->href ) {
-        repr->setAttribute( "local", cprof->name );
+    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->local ) {
+        repr->setAttribute( "local", cprof->local );
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->href ) {
+    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->name ) {
         repr->setAttribute( "name", cprof->name );
     }
 
-    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->href ) {
-//        repr->setAttribute( "rendering-intent", cprof->name );
+    if ( (flags & SP_OBJECT_WRITE_ALL) || cprof->intentStr ) {
+        repr->setAttribute( "rendering-intent", cprof->intentStr );
     }
 
     if (((SPObjectClass *) cprof_parent_class)->write) {
@@ -251,7 +290,7 @@ static SPObject* bruteFind( SPObject* curr, gchar* const name )
     return result;
 }
 
-cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, gchar* const name )
+cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, guint* intent, gchar* const name )
 {
     cmsHPROFILE prof = 0;
 
@@ -259,6 +298,10 @@ cmsHPROFILE Inkscape::colorprofile_get_handle( SPDocument* document, gchar* cons
     SPObject* thing = bruteFind( root, name );
     if ( thing ) {
         prof = COLORPROFILE(thing)->profHandle;
+    }
+
+    if ( intent ) {
+        *intent = thing ? COLORPROFILE(thing)->rendering_intent : (guint)RENDERING_INTENT_UNKNOWN;
     }
 
     return prof;

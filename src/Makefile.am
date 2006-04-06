@@ -235,19 +235,20 @@ test-all.cpp: \
 		$(libnr_test_nr_includes)	\
 		$(svg_test_svg_includes)	\
 		$(xml_test_xml_includes)	\
-		attributes-test.h
+		$(test_all_includes)
 	$(top_srcdir)/cxxtest/cxxtestgen.pl --error-printer -root -o test-all.cpp	\
 		$(libnr_test_nr_includes)	\
 		$(svg_test_svg_includes)	\
 		$(xml_test_xml_includes)	\
-		attributes-test.h
+		$(test_all_includes)
 
 test_all_SOURCES = \
 	test-all.cpp
 
 
 test_all_LDADD =	\
-	libinkpre.a	\
+	$(all_libs)	\
+	io/libio.a	\
 	$(libnr_test_nr_LDADD)	\
 	$(svg_test_svg_LDADD)	\
 	$(xml_test_xml_LDADD)

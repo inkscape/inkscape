@@ -25,7 +25,7 @@ GType colorprofile_get_type();
 
 #if ENABLE_LCMS
 
-cmsHPROFILE colorprofile_get_handle( SPDocument* document, gchar* const name );
+cmsHPROFILE colorprofile_get_handle( SPDocument* document, guint* intent, gchar* const name );
 
 #endif
 

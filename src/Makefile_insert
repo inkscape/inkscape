@@ -339,3 +339,7 @@ style_test_LDADD = $(all_libs)
 
 inkscape_version.h: ../configure.ac
 	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h
+
+test_all_includes = \
+		attributes-test.h	\
+		color-profile-test.h

@@ -38,6 +38,7 @@
 #include <png.h>
 #if ENABLE_LCMS
 #include "color-profile-fns.h"
+#include "color-profile.h"
 #endif // ENABLE_LCMS
 /*
  * SPImage
@@ -665,16 +666,36 @@ sp_image_update (SPObject *object, SPCtx *ctx, unsigned int flags)
                                     guchar* px = gdk_pixbuf_get_pixels( pixbuf );
 
                                     if ( px ) {
-                                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ), image->color_profile );
+                                        guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
+                                        cmsHPROFILE prof = Inkscape::colorprofile_get_handle( SP_OBJECT_DOCUMENT( object ),
+                                                                                              &profIntent,
+                                                                                              image->color_profile );
                                         if ( prof ) {
                                             icProfileClassSignature profileClass = cmsGetDeviceClass( prof );
                                             if ( profileClass != icSigNamedColorClass ) {
+                                                int intent = INTENT_PERCEPTUAL;
+                                                switch ( profIntent ) {
+                                                    case Inkscape::RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+                                                        intent = INTENT_RELATIVE_COLORIMETRIC;
+                                                        break;
+                                                    case Inkscape::RENDERING_INTENT_SATURATION:
+                                                        intent = INTENT_SATURATION;
+                                                        break;
+                                                    case Inkscape::RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+                                                        intent = INTENT_ABSOLUTE_COLORIMETRIC;
+                                                        break;
+                                                    case Inkscape::RENDERING_INTENT_PERCEPTUAL:
+                                                    case Inkscape::RENDERING_INTENT_UNKNOWN:
+                                                    case Inkscape::RENDERING_INTENT_AUTO:
+                                                    default:
+                                                        intent = INTENT_PERCEPTUAL;
+                                                }
                                                 cmsHPROFILE destProf = cmsCreate_sRGBProfile();
                                                 cmsHTRANSFORM transf = cmsCreateTransform( prof, 
                                                                                            TYPE_RGBA_8,
                                                                                            destProf,
                                                                                            TYPE_RGBA_8,
-                                                                                           INTENT_PERCEPTUAL, 0 );
+                                                                                           intent, 0 );
                                                 if ( transf ) {
                                                     guchar* currLine = px;
                                                     for ( int y = 0; y < imageheight; y++ ) {
