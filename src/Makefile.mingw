@@ -121,5 +121,6 @@ clean:
 	-$(RM) *.dll
 	-$(RM) extension$(S)plugin$(S)*.o
 	-$(RM) extension$(S)plugin$(S)*.dll
+	-$(RM) inkscape.exe inkview.exe inkscape.dbg inkview.dbg
 
 

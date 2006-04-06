@@ -2,16 +2,27 @@
 
 include ./Makefile.mingw.common
 
-
-all:	config.h $(GTKDOS)$(S)bin$(S)intl.dll src$(S)make.files src$(S)make.ofiles src$(S)make.dep
+all:	generated required
 	$(MAKE) -C po  -f Makefile.mingw
 	$(MAKE) -C src -f Makefile.mingw
 
+###################################
+# G E N E R A T E D    F I L E S
+###################################
+
+generated: config.h $(GTKDOS)$(S)bin$(S)intl.dll
+	
 config.h: config.h.mingw
 	$(CP) config.h.mingw config.h
 	
 $(GTKDOS)$(S)bin$(S)intl.dll:
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll $(GTKDOS)$(S)bin$(S)intl.dll
+
+###################################
+# R E Q U I R E D    F I L E S
+###################################
+
+required: src$(S)make.files src$(S)make.ofiles src$(S)make.dep
 
 src$(S)make.files:
 	cd src && $(GTKDOS)$(S)perl$(S)bin$(S)perl mkfiles.pl
@@ -21,7 +32,7 @@ src$(S)make.ofiles:
 	
 src$(S)make.dep:
 	cd src && $(GTKDOS)$(S)perl$(S)bin$(S)perl mkdep.pl
-	
+
 dist-strip: dist
 	-$(RMDIRREC) .svn $(RMDIRREC1)
 	-$(RMREC) Makefile $(RMREC1)
@@ -66,7 +77,7 @@ dist-strip: dist
 	strip inkscape$(S)liblcms-1.dll
 	-$(RM) inkscape$(S)gdb.exe
 	
-dist:
+dist:	generated required
 	$(MAKE) -C src -f Makefile.mingw
 	-$(RMDIR) inkscape
 	$(MKDIR) inkscape
@@ -155,13 +166,16 @@ dist:
 	$(CP) $(GTKDOS)$(S)bin$(S)gdb.exe inkscape
 	@echo "##################### D O N E ####################"
 
-clean:
+clean:	required
 	-$(RMDIR) inkscape
 	-$(RM) inkscape*.zip
 	$(MAKE) -C src -f Makefile.mingw clean
 	$(MAKE) -C po  -f Makefile.mingw clean
+	-$(RM) src$(S)make.files
+	-$(RM) src$(S)make.ofiles
+	-$(RM) src$(S)make.dep
 
-minimal:
+minimal:	generated required
 	$(MAKE) -C src -f Makefile.mingw
 	-$(RM) inkscape$(S)inkscape.exe
 	$(CP) src$(S)inkscape.exe inkscape
