@@ -36,8 +36,7 @@ class SPKnotClass;
  * A knot is a draggable object, with callbacks to change something by
  * dragging it, visuably represented by a canvas item (mostly square).
  */
-struct SPKnot {
-    GObject object;
+struct SPKnot : GObject {
     SPDesktop *desktop;   /**< Desktop we are on. */
     SPCanvasItem *item;   /**< Our CanvasItem. */
     guint flags;
@@ -114,9 +113,7 @@ struct SPKnot {
 };
 
 /// The SPKnot vtable.
-struct SPKnotClass {
-    GObjectClass parent_class;
-
+struct SPKnotClass : GObjectClass {
     gint (* event) (SPKnot *knot, GdkEvent *event);
 
     /*

@@ -97,7 +97,7 @@ GType sp_knot_get_type()
  */
 static void sp_knot_class_init(SPKnotClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
+    GObjectClass *object_class = klass;
 
     parent_class = (GObjectClass*) g_type_class_peek_parent(klass);
 
@@ -252,8 +252,8 @@ static void sp_knot_dispose(GObject *object)
         knot->tip = NULL;
     }
 
-    if (((GObjectClass *) (parent_class))->dispose) {
-        (* ((GObjectClass *) (parent_class))->dispose) (object);
+    if (parent_class->dispose) {
+        (*parent_class->dispose) (object);
     }
 }
 
@@ -287,14 +287,14 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
     g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));
 
-    g_object_ref(G_OBJECT(knot));
+    g_object_ref(knot);
     tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
     gboolean consumed = FALSE;
 
     /* Run client universal event handler, if present */
 
-    g_signal_emit(G_OBJECT(knot), knot_signals[EVENT], 0, event, &consumed);
+    g_signal_emit(knot, knot_signals[EVENT], 0, event, &consumed);
 
     if (consumed) {
         return TRUE;
@@ -303,7 +303,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
     switch (event->type) {
 	case GDK_2BUTTON_PRESS:
             if (event->button.button == 1) {
-                g_signal_emit(G_OBJECT(knot), knot_signals[DOUBLECLICKED], 0, event->button.state);
+                g_signal_emit(knot, knot_signals[DOUBLECLICKED], 0, event->button.state);
 
                 grabbed = FALSE;
                 moved = FALSE;
@@ -331,11 +331,11 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
                         sp_knot_set_flag(knot,
                                          SP_KNOT_DRAGGING,
                                          FALSE);
-                        g_signal_emit(G_OBJECT (knot),
+                        g_signal_emit(knot,
                                       knot_signals[UNGRABBED], 0,
                                       event->button.state);
                     } else {
-                        g_signal_emit(G_OBJECT (knot),
+                        g_signal_emit(knot,
                                       knot_signals[CLICKED], 0,
                                       event->button.state);
                     }
@@ -361,7 +361,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
                 within_tolerance = false;
 
                 if (!moved) {
-                    g_signal_emit(G_OBJECT (knot),
+                    g_signal_emit(knot,
                                   knot_signals[GRABBED], 0,
                                   event->motion.state);
                     sp_knot_set_flag(knot,
@@ -412,7 +412,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
                         sp_knot_set_flag(knot,
                                          SP_KNOT_DRAGGING,
                                          FALSE);
-                        g_signal_emit(G_OBJECT(knot),
+                        g_signal_emit(knot,
                                       knot_signals[UNGRABBED], 0,
                                       event->button.state);
                         sp_document_undo(SP_DT_DOCUMENT(knot->desktop));
@@ -432,7 +432,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
             break;
     }
 
-    g_object_unref(G_OBJECT(knot));
+    g_object_unref(knot);
 
     return consumed;
 }
@@ -501,7 +501,7 @@ void sp_knot_request_position(SPKnot *knot, NR::Point *p, guint state)
 
     gboolean done = FALSE;
 
-    g_signal_emit(G_OBJECT (knot),
+    g_signal_emit(knot,
                   knot_signals[REQUEST], 0,
                   p,
                   state,
@@ -524,7 +524,7 @@ gdouble sp_knot_distance(SPKnot * knot, NR::Point *p, guint state)
 
     gdouble distance = NR::L2(*p - knot->pos);
 
-    g_signal_emit(G_OBJECT(knot),
+    g_signal_emit(knot,
                   knot_signals[DISTANCE], 0,
                   p,
                   state,
@@ -547,7 +547,7 @@ void sp_knot_set_position(SPKnot *knot, NR::Point *p, guint state)
         SP_CTRL(knot->item)->moveto (*p);
     }
 
-    g_signal_emit(G_OBJECT (knot),
+    g_signal_emit(knot,
                   knot_signals[MOVED], 0,
                   p,
                   state);
