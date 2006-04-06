@@ -34,23 +34,24 @@ Util::ptr_shared<char> get_path(Domain domain, Type type, char const *filename)
     gchar *path=NULL;
     switch (domain) {
         case SYSTEM: {
+            gchar const* temp = 0;
             switch (type) {
-                case APPICONS: path = INKSCAPE_APPICONDIR; break;
-                case EXTENSIONS: path = INKSCAPE_EXTENSIONDIR; break;
-                case GRADIENTS: path = INKSCAPE_GRADIENTSDIR; break;
-                case ICONS: path = INKSCAPE_PIXMAPDIR; break;
-                case KEYS: path = INKSCAPE_KEYSDIR; break;
-                case MARKERS: path = INKSCAPE_MARKERSDIR; break;
-                case PALETTES: path = INKSCAPE_PALETTESDIR; break;
-                case PATTERNS: path = INKSCAPE_PATTERNSDIR; break;
-                case PLUGINS: path = INKSCAPE_PLUGINDIR; break;
-                case SCREENS: path = INKSCAPE_SCREENSDIR; break;
-                case TEMPLATES: path = INKSCAPE_TEMPLATESDIR; break;
-                case TUTORIALS: path = INKSCAPE_TUTORIALSDIR; break;
-                case UI: path = INKSCAPE_UIDIR; break;
+                case APPICONS: temp = INKSCAPE_APPICONDIR; break;
+                case EXTENSIONS: temp = INKSCAPE_EXTENSIONDIR; break;
+                case GRADIENTS: temp = INKSCAPE_GRADIENTSDIR; break;
+                case ICONS: temp = INKSCAPE_PIXMAPDIR; break;
+                case KEYS: temp = INKSCAPE_KEYSDIR; break;
+                case MARKERS: temp = INKSCAPE_MARKERSDIR; break;
+                case PALETTES: temp = INKSCAPE_PALETTESDIR; break;
+                case PATTERNS: temp = INKSCAPE_PATTERNSDIR; break;
+                case PLUGINS: temp = INKSCAPE_PLUGINDIR; break;
+                case SCREENS: temp = INKSCAPE_SCREENSDIR; break;
+                case TEMPLATES: temp = INKSCAPE_TEMPLATESDIR; break;
+                case TUTORIALS: temp = INKSCAPE_TUTORIALSDIR; break;
+                case UI: temp = INKSCAPE_UIDIR; break;
                 default: g_assert_not_reached();
             }
-            path = g_strdup(path);
+            path = g_strdup(temp);
         } break;
         case USER: {
             char const *name=NULL;
