@@ -14,7 +14,7 @@
 
 #include <glib.h>
 
-
+#include "icon-size.h"
 
 #define SP_TYPE_ICON (sp_icon_get_type ())
 #define SP_ICON(o) (GTK_CHECK_CAST ((o), SP_TYPE_ICON, SPIcon))
@@ -25,7 +25,7 @@
 struct SPIcon {
     GtkWidget widget;
 
-    GtkIconSize lsize;
+    Inkscape::IconSize lsize;
     int psize;
     gchar *name;
 
@@ -39,13 +39,13 @@ struct SPIconClass {
 
 GType sp_icon_get_type (void);
 
-GtkWidget *sp_icon_new( GtkIconSize size, const gchar *name );
+GtkWidget *sp_icon_new( Inkscape::IconSize size, const gchar *name );
 
 #include <glibmm/ustring.h>
 #include <gtkmm/widget.h>
 
 // Might return a wrapped SPIcon, or Gtk::Image
-Gtk::Widget *sp_icon_get_icon( const Glib::ustring &oid, GtkIconSize size = GTK_ICON_SIZE_BUTTON );
+Gtk::Widget *sp_icon_get_icon( const Glib::ustring &oid, Inkscape::IconSize size = Inkscape::ICON_SIZE_BUTTON );
 
 
 #endif // SEEN_SP_ICON_H

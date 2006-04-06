@@ -70,7 +70,7 @@ public :
         _id(id),
         _parent(parent)
     {
-        Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( _id, GTK_ICON_SIZE_LARGE_TOOLBAR) );
+        Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( _id, Inkscape::ICON_SIZE_LARGE_TOOLBAR) );
         Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
         pButton->set_relief(Gtk::RELIEF_NONE);
         pIcon->show();

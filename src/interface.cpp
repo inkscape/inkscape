@@ -336,7 +336,7 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 {
     GtkWidget *icon;
 
-    icon = sp_icon_new( GTK_ICON_SIZE_MENU, icon_name );
+    icon = sp_icon_new( Inkscape::ICON_SIZE_MENU, icon_name );
     gtk_widget_show(icon);
     gtk_image_menu_item_set_image((GtkImageMenuItem *) item, icon);
 } // end of sp_ui_menu_add_icon
@@ -1008,10 +1008,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                             //0x0ff & (data->data[3] >> 8),
                                             ));
                     SPCSSAttr *css = sp_repr_css_attr_new();
-                    sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
-
-                    sp_desktop_apply_css_recursive( item, css, true );
-                    item->updateRepr();
+                    bool updatePerformed = false;
 
                     if ( data->length > 14 ) {
                         int flags = dataVals[4];
@@ -1035,8 +1032,18 @@ sp_ui_drag_data_received(GtkWidget *widget,
                                                     palName.c_str(),
                                                     false );
                             item->updateRepr();
+
+                            sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
+                            updatePerformed = true;
                         }
                     }
+
+                    if ( !updatePerformed ) {
+                        sp_repr_css_set_property( css, (drag_context->action != GDK_ACTION_MOVE) ? "fill":"stroke", c );
+                    }
+
+                    sp_desktop_apply_css_recursive( item, css, true );
+                    item->updateRepr();
 
                     SPDocument *doc = SP_ACTIVE_DOCUMENT;
                     sp_document_done( doc );
@@ -1273,7 +1280,10 @@ sp_ui_overwrite_file(gchar const *filename)
         gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
 
         hbox = gtk_hbox_new(FALSE, 5);
+
+        // TODO - replace with Inkscape-specific call
         boxdata = gtk_image_new_from_stock(GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG);
+
         gtk_widget_show(boxdata);
         gtk_box_pack_start(GTK_BOX(hbox), boxdata, TRUE, TRUE, 5);
         text = g_strdup_printf(_("The file %s already exists.  Do you want to overwrite that file with the current document?"), filename);

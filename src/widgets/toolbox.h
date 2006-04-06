@@ -18,6 +18,7 @@
 #include <gtk/gtktooltips.h>
 
 #include "forward.h"
+#include "icon-size.h"
 
 GtkWidget *sp_tool_toolbox_new(void);
 void sp_tool_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
@@ -31,7 +32,7 @@ void sp_commands_toolbox_set_desktop(GtkWidget *toolbox, SPDesktop *desktop);
 void show_aux_toolbox(GtkWidget *toolbox);
 
 GtkWidget *sp_toolbox_button_normal_new_from_verb(GtkWidget *t,
-                                                  GtkIconSize size,
+                                                  Inkscape::IconSize size,
                                                   Inkscape::Verb * verb,
                                                   Inkscape::UI::View::View *view,
                                                   GtkTooltips *tt);

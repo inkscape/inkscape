@@ -225,6 +225,7 @@ sp_text_edit_dialog (void)
 
                     // align left
                     {
+                        // TODO - replace with Inkscape-specific call
                         GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_LEFT, GTK_ICON_SIZE_LARGE_TOOLBAR );
                         GtkWidget *b = group = gtk_radio_button_new (NULL);
                         gtk_tooltips_set_tip (tt, b, _("Align lines left"), NULL);
@@ -238,6 +239,7 @@ sp_text_edit_dialog (void)
 
                     // align center
                     {
+                        // TODO - replace with Inkscape-specific call
                         GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_CENTER, GTK_ICON_SIZE_LARGE_TOOLBAR );
                         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
                         /* TRANSLATORS: `Center' here is a verb. */
@@ -252,6 +254,7 @@ sp_text_edit_dialog (void)
 
                     // align right
                     {
+                        // TODO - replace with Inkscape-specific call
                         GtkWidget *px = gtk_image_new_from_stock ( GTK_STOCK_JUSTIFY_RIGHT, GTK_ICON_SIZE_LARGE_TOOLBAR );
                         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
                         gtk_tooltips_set_tip (tt, b, _("Align lines right"), NULL);
@@ -273,7 +276,7 @@ sp_text_edit_dialog (void)
 
                     // horizontal
                     {
-                        GtkWidget *px = sp_icon_new( GTK_ICON_SIZE_LARGE_TOOLBAR,
+                        GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
                                                       INKSCAPE_STOCK_WRITING_MODE_LR );
                         GtkWidget *b = group = gtk_radio_button_new (NULL);
                         gtk_tooltips_set_tip (tt, b, _("Horizontal text"), NULL);
@@ -287,7 +290,7 @@ sp_text_edit_dialog (void)
 
                     // vertical
                     {
-                        GtkWidget *px = sp_icon_new( GTK_ICON_SIZE_LARGE_TOOLBAR,
+                        GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_LARGE_TOOLBAR,
                                                       INKSCAPE_STOCK_WRITING_MODE_TB );
                         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
                         gtk_tooltips_set_tip (tt, b, _("Vertical text"), NULL);

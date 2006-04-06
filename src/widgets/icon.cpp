@@ -112,7 +112,7 @@ static void
 sp_icon_init(SPIcon *icon)
 {
     GTK_WIDGET_FLAGS(icon) |= GTK_NO_WINDOW;
-    icon->lsize = GTK_ICON_SIZE_BUTTON;
+    icon->lsize = Inkscape::ICON_SIZE_BUTTON;
     icon->psize = 0;
     icon->name = 0;
     icon->pb = 0;
@@ -282,7 +282,7 @@ sp_icon_new_full( GtkIconSize lsize, gchar const *name )
 
     if ( !widget ) {
         SPIcon *icon = (SPIcon *)g_object_new(SP_TYPE_ICON, NULL);
-        icon->lsize = lsize;
+        icon->lsize = (Inkscape::IconSize)lsize;
         icon->name = g_strdup(name);
         icon->psize = sp_icon_get_phys_size(lsize);
 
@@ -293,15 +293,16 @@ sp_icon_new_full( GtkIconSize lsize, gchar const *name )
 }
 
 GtkWidget *
-sp_icon_new( GtkIconSize lsize, gchar const *name )
+sp_icon_new( Inkscape::IconSize lsize, gchar const *name )
 {
-    return sp_icon_new_full( lsize, name );
+// TODO FIX THIS
+    return sp_icon_new_full( (GtkIconSize)lsize, name );
 }
 
-Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, GtkIconSize size )
+Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, Inkscape::IconSize size )
 {
     Gtk::Widget *result = 0;
-    GtkWidget *widget = sp_icon_new_full( size, oid.c_str() );
+    GtkWidget *widget = sp_icon_new_full( (GtkIconSize)size, oid.c_str() );
 
     if ( widget ) {
         if ( GTK_IS_IMAGE(widget) ) {

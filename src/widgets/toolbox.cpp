@@ -147,7 +147,7 @@ static void delete_connection(GObject *obj, sigc::connection *connection) {
 }
 
 static GtkWidget *
-sp_toolbox_button_new(GtkWidget *t, GtkIconSize size, gchar const *pxname, GtkSignalFunc handler,
+sp_toolbox_button_new(GtkWidget *t, Inkscape::IconSize size, gchar const *pxname, GtkSignalFunc handler,
                       GtkTooltips *tt, gchar const *tip)
 {
     GtkWidget *b = sp_button_new_from_data(size, SP_BUTTON_TYPE_NORMAL, NULL, pxname, tip, tt);
@@ -160,7 +160,7 @@ sp_toolbox_button_new(GtkWidget *t, GtkIconSize size, gchar const *pxname, GtkSi
 
 
 GtkWidget *
-sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, GtkIconSize size, SPButtonType type,
+sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, Inkscape::IconSize size, SPButtonType type,
                                                  Inkscape::Verb *verb, Inkscape::Verb *doubleclick_verb,
                                                  Inkscape::UI::View::View *view, GtkTooltips *tt)
 {
@@ -182,13 +182,13 @@ sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, GtkIconSize size,
     return b;
 }
 
-GtkWidget *sp_toolbox_button_new_from_verb(GtkWidget *t, GtkIconSize size, SPButtonType type, Inkscape::Verb *verb,
+GtkWidget *sp_toolbox_button_new_from_verb(GtkWidget *t, Inkscape::IconSize size, SPButtonType type, Inkscape::Verb *verb,
                                            Inkscape::UI::View::View *view, GtkTooltips *tt)
 {
     return sp_toolbox_button_new_from_verb_with_doubleclick(t, size, type, verb, NULL, view, tt);
 }
 
-GtkWidget * sp_toolbox_button_normal_new_from_verb(GtkWidget *t, GtkIconSize size, Inkscape::Verb *verb,
+GtkWidget * sp_toolbox_button_normal_new_from_verb(GtkWidget *t, Inkscape::IconSize size, Inkscape::Verb *verb,
                                                    Inkscape::UI::View::View *view, GtkTooltips *tt)
 {
     return sp_toolbox_button_new_from_verb(t, size, SP_BUTTON_TYPE_NORMAL, verb, view, tt);
@@ -388,48 +388,48 @@ sp_node_toolbox_new(SPDesktop *desktop)
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_insert",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_insert",
         GTK_SIGNAL_FUNC(sp_node_path_edit_add), tt, _("Insert new nodes into selected segments"));
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_delete",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_delete",
         GTK_SIGNAL_FUNC(sp_node_path_edit_delete), tt, _("Delete selected nodes"));
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_join",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_join",
         GTK_SIGNAL_FUNC(sp_node_path_edit_join), tt, _("Join paths at selected nodes"));
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_join_segment",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_join_segment",
         GTK_SIGNAL_FUNC(sp_node_path_edit_join_segment), tt, _("Join paths at selected nodes with new segment"));
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_delete_segment",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_delete_segment",
         GTK_SIGNAL_FUNC(sp_node_path_edit_delete_segment), tt, _("Split path between two non-endpoint nodes"));
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_break",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_break",
         GTK_SIGNAL_FUNC(sp_node_path_edit_break), tt, _("Break path at selected nodes"));
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_cusp",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_cusp",
         GTK_SIGNAL_FUNC(sp_node_path_edit_cusp), tt, _("Make selected nodes corner"));
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_smooth",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_smooth",
         GTK_SIGNAL_FUNC(sp_node_path_edit_smooth), tt, _("Make selected nodes smooth"));
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_symmetric",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_symmetric",
         GTK_SIGNAL_FUNC(sp_node_path_edit_symmetrical), tt, _("Make selected nodes symmetric"));
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_line",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_line",
         GTK_SIGNAL_FUNC(sp_node_path_edit_toline), tt, _("Make selected segments lines"));
 
-    sp_toolbox_button_new(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, "node_curve",
+    sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_curve",
         GTK_SIGNAL_FUNC(sp_node_path_edit_tocurve), tt, _("Make selected segments curves"));
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_normal_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_TO_CURVE), view, tt);
+    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_TO_CURVE), view, tt);
 
-    sp_toolbox_button_normal_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_OUTLINE), view, tt);
+    sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_OUTLINE), view, tt);
 
     gtk_widget_show_all(tb);
 
@@ -453,33 +453,33 @@ sp_zoom_toolbox_new(SPDesktop *desktop)
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0),
                        FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_IN), view, tt);
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_IN), view, tt);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_OUT), view, tt);
-
-    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
-
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_SELECTION), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_DRAWING), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE), view, tt);
-
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE_WIDTH), view, tt);
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_OUT), view, tt);
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PREV), view, tt);
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_SELECTION), view, tt);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_NEXT), view, tt);
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_DRAWING), view, tt);
+
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE), view, tt);
+
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PAGE_WIDTH), view, tt);
 
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_1_1), view, tt);
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_PREV), view, tt);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_1_2), view, tt);
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_NEXT), view, tt);
 
-    sp_toolbox_button_new_from_verb(tb, GTK_ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_2_1), view, tt);
+    gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_1_1), view, tt);
+
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_1_2), view, tt);
+
+    sp_toolbox_button_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_ZOOM_2_1), view, tt);
 
     gtk_widget_show_all(tb);
 
@@ -543,7 +543,7 @@ setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 {
     GtkTooltips *tooltips=GTK_TOOLTIPS(g_object_get_data(G_OBJECT(toolbox), "tooltips"));
     gint shrinkLeft = prefs_get_int_attribute_limited( "toolbox.left", "small", 0, 0, 1 );
-    GtkIconSize toolboxSize = shrinkLeft ? GTK_ICON_SIZE_SMALL_TOOLBAR : GTK_ICON_SIZE_LARGE_TOOLBAR;
+    Inkscape::IconSize toolboxSize = shrinkLeft ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
 
     for (int i = 0 ; tools[i].type_name ; i++ ) {
         GtkWidget *button =
@@ -618,7 +618,7 @@ setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
     GtkWidget *tb = gtk_hbox_new(FALSE, 0);
 
     gint shrinkTop = prefs_get_int_attribute_limited( "toolbox", "small", 1, 0, 1 );
-    GtkIconSize toolboxSize = shrinkTop ? GTK_ICON_SIZE_SMALL_TOOLBAR : GTK_ICON_SIZE_LARGE_TOOLBAR;
+    Inkscape::IconSize toolboxSize = shrinkTop ? Inkscape::ICON_SIZE_SMALL_TOOLBAR : Inkscape::ICON_SIZE_LARGE_TOOLBAR;
 
     sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_NEW), view, tt);
     sp_toolbox_button_new_from_verb(tb, toolboxSize, SP_BUTTON_TYPE_NORMAL, Inkscape::Verb::get(SP_VERB_FILE_OPEN), view, tt);
@@ -2011,7 +2011,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     /* Use Pressure button */
     {
-    GtkWidget *button = sp_button_new_from_data( GTK_ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
                                                  "use_pressure",
@@ -2024,7 +2024,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     /* Use Tilt button */
     {
-    GtkWidget *button = sp_button_new_from_data( GTK_ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
                                                  "use_tilt",
@@ -2620,7 +2620,7 @@ sp_dropper_toolbox_new(SPDesktop *desktop)
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         
         GtkWidget *button = 
-            sp_button_new_from_data( GTK_ICON_SIZE_SMALL_TOOLBAR,
+            sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
                                      SP_BUTTON_TYPE_TOGGLE,
                                      NULL,
                                      "pick_color",
@@ -2740,7 +2740,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
         aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
         //Bold
         {
-        GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_BOLD, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_BOLD, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *button = gtk_toggle_button_new ();
         gtk_container_add (GTK_CONTAINER (button), px);
         gtk_widget_show(button);
@@ -2753,7 +2753,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 
         //Italic
         {
-        GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_ITALIC, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_ITALIC, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *button = gtk_toggle_button_new ();
         gtk_container_add (GTK_CONTAINER (button), px);
         gtk_widget_show(button);
@@ -2765,7 +2765,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 
         //Underline
         {
-        GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_UNDERLINE, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_UNDERLINE, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *button = gtk_toggle_button_new ();
         gtk_container_add (GTK_CONTAINER (button), px);
         gtk_widget_show(button);
@@ -2778,7 +2778,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
         aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
         // align left
         {
-        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *b = group = gtk_radio_button_new (NULL);
 		gtk_container_add (GTK_CONTAINER (b), px);
         gtk_tooltips_set_tip (tt, b, _("Align lines left"), NULL);
@@ -2789,7 +2789,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 
         // align center
         {
-        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
 		gtk_container_add (GTK_CONTAINER (b), px);
         // TRANSLATORS: `Center' here is a verb.
@@ -2801,7 +2801,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 
         // align right
         {
-        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
 		gtk_container_add (GTK_CONTAINER (b), px);
         gtk_tooltips_set_tip (tt, b, _("Align lines right"), NULL);
@@ -2812,7 +2812,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 
         // full justification
         {
-        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_FILL, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_FILL, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
 		gtk_container_add (GTK_CONTAINER (b), px);
         gtk_tooltips_set_tip (tt, b, _("Full justification"), NULL);
@@ -2826,7 +2826,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 		
         // horizontal
         {
-        GtkWidget *px= sp_icon_new(GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_LR);
+        GtkWidget *px= sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_LR);
         GtkWidget *b = group = gtk_radio_button_new (NULL);
 		gtk_container_add (GTK_CONTAINER (b), px);
         gtk_tooltips_set_tip (tt, b, _("Horizontal text"), NULL);
@@ -2837,7 +2837,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 
         // vertical
         {
-        GtkWidget *px = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_TB);
+        GtkWidget *px = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_TB);
         GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
 		gtk_container_add (GTK_CONTAINER (b), px);
         gtk_tooltips_set_tip (tt, b, _("Vertical text"), NULL);
@@ -2851,7 +2851,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
         // letter spacing
     {
         {
-        GtkWidget *image = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_LETTER_SPACING);
+        GtkWidget *image = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_LETTER_SPACING);
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         gtk_container_add (GTK_CONTAINER (hb), image);
         gtk_widget_show(image);
@@ -2872,7 +2872,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
         // line spacing
     {
         {
-        GtkWidget *image = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_LINE_SPACING);
+        GtkWidget *image = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_LINE_SPACING);
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         gtk_container_add (GTK_CONTAINER (hb), image);
         gtk_widget_show(image);
@@ -2901,7 +2901,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
     // horizontal kerning
     {
         {
-        GtkWidget *image = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_HORZ_KERN);
+        GtkWidget *image = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_HORZ_KERN);
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         gtk_container_add (GTK_CONTAINER (hb), image);
         gtk_widget_show(image);
@@ -2922,7 +2922,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
     // vertical kerning
     {
         {
-        GtkWidget *image = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_VERT_KERN);
+        GtkWidget *image = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_VERT_KERN);
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         gtk_container_add (GTK_CONTAINER (hb), image);
         gtk_widget_show(image);
@@ -2950,7 +2950,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
     aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
     {
         {
-        GtkWidget *image = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_ROTATION);
+        GtkWidget *image = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_ROTATION);
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         gtk_container_add (GTK_CONTAINER (hb), image);
         gtk_widget_show(image);
@@ -2974,7 +2974,7 @@ sp_text_toolbox_new(SPDesktop *desktop)
 	
         // Remove Manual Kerns
         {
-        GtkWidget *px = sp_icon_new (GTK_ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_REMOVE_KERNS);
+        GtkWidget *px = sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_TEXT_REMOVE_KERNS);
         GtkWidget *button = gtk_button_new ();
         gtk_container_add (GTK_CONTAINER (button), px);
         gtk_widget_show(button);
@@ -3094,11 +3094,11 @@ sp_connector_toolbox_new(SPDesktop *desktop)
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
             AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tbl, GTK_ICON_SIZE_SMALL_TOOLBAR,
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
             "connector_avoid", GTK_SIGNAL_FUNC(sp_connector_path_set_avoid),
             tt, _("Make connectors avoid selected objects"));
 
-    sp_toolbox_button_new(tbl, GTK_ICON_SIZE_SMALL_TOOLBAR,
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
             "connector_ignore", GTK_SIGNAL_FUNC(sp_connector_path_set_ignore),
             tt, _("Make connectors ignore selected objects"));
 

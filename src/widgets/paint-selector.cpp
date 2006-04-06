@@ -189,7 +189,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_tooltips_set_tip(tt, psel->evenodd, _("Any path self-intersections or subpaths create holes in the fill (fill-rule: evenodd)"), NULL);
         gtk_object_set_data(GTK_OBJECT(psel->evenodd), "mode", GUINT_TO_POINTER(SP_PAINT_SELECTOR_FILLRULE_EVENODD));
-        w = sp_icon_new(GTK_ICON_SIZE_MENU, "fillrule_evenodd");
+        w = sp_icon_new(Inkscape::ICON_SIZE_MENU, "fillrule_evenodd");
         gtk_container_add(GTK_CONTAINER(psel->evenodd), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->evenodd, FALSE, FALSE, 0);
         gtk_signal_connect(GTK_OBJECT(psel->evenodd), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_fillrule_toggled), psel);
@@ -200,7 +200,7 @@ sp_paint_selector_init(SPPaintSelector *psel)
         // TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
         gtk_tooltips_set_tip(tt, psel->nonzero, _("Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"), NULL);
         gtk_object_set_data(GTK_OBJECT(psel->nonzero), "mode", GUINT_TO_POINTER(SP_PAINT_SELECTOR_FILLRULE_NONZERO));
-        w = sp_icon_new(GTK_ICON_SIZE_MENU, "fillrule_nonzero");
+        w = sp_icon_new(Inkscape::ICON_SIZE_MENU, "fillrule_nonzero");
         gtk_container_add(GTK_CONTAINER(psel->nonzero), w);
         gtk_box_pack_start(GTK_BOX(psel->fillrulebox), psel->nonzero, FALSE, FALSE, 0);
         gtk_signal_connect(GTK_OBJECT(psel->nonzero), "toggled", GTK_SIGNAL_FUNC(sp_paint_selector_fillrule_toggled), psel);
@@ -247,7 +247,7 @@ sp_paint_selector_style_button_add(SPPaintSelector *psel,
     gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(b), FALSE);
     gtk_object_set_data(GTK_OBJECT(b), "mode", GUINT_TO_POINTER(mode));
 
-    w = sp_icon_new(GTK_ICON_SIZE_BUTTON, pixmap);
+    w = sp_icon_new(Inkscape::ICON_SIZE_BUTTON, pixmap);
     gtk_widget_show(w);
     gtk_container_add(GTK_CONTAINER(b), w);
 

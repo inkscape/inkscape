@@ -48,7 +48,7 @@ Labelled::Labelled(Glib::ustring const &label, Glib::ustring const &tooltip,
 {
     g_assert(g_utf8_validate(icon.c_str(), -1, NULL));
     if (icon != "") {
-        _icon = sp_icon_get_icon(icon.c_str(), GTK_ICON_SIZE_LARGE_TOOLBAR);
+        _icon = sp_icon_get_icon(icon.c_str(), Inkscape::ICON_SIZE_LARGE_TOOLBAR);
         pack_start(*Gtk::manage(_icon), Gtk::PACK_SHRINK);
     }
     pack_start(*Gtk::manage(_label), Gtk::PACK_EXPAND_WIDGET, 6);

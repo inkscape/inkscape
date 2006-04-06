@@ -1,5 +1,21 @@
 2006-04-06  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/interface.cpp, src/dialogs/clonetiler.cpp,
+	  src/dialogs/object-properties.cpp, src/dialogs/stroke-style.cpp,
+	  src/dialogs/text-edit.cpp, src/dialogs/tiledialog.cpp,
+	  src/dialogs/xml-tree.cpp, src/ui/dialog/align-and-distribute.cpp,
+	  src/ui/widget/labelled.cpp, src/widgets/button.cpp,
+	  src/widgets/button.h, src/widgets/desktop-widget.cpp,
+	  src/widgets/gradient-toolbar.cpp, src/widgets/icon.cpp,
+	  src/widgets/icon.h, src/widgets/layer-selector.cpp,
+	  src/widgets/paint-selector.cpp, src/widgets/select-toolbar.cpp,
+	  src/widgets/toolbox.cpp, src/widgets/toolbox.h:
+
+	  Decoupling from direct use of GtkIconSize to allow for smaller
+	  custom ones.
+
+2006-04-06  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/Makefile_insert, src/Makefile.am, src/color-profile.cpp
 	  src/color-profile.h, src/color-profile-fns.h,
 	  src/color-profile-test.h, src/sp-image.cpp:
@@ -17,7 +33,7 @@
 	* share/keys/Makefile.am, share/keys/default.xml, src/Makefile_insert,
 	  src/shortcuts.cpp, src/shortcuts-default-xml.cpp:
 
-      first shot at configurable keymaps
+	  first shot at configurable keymaps
 
 2006-04-05  MenTaLguY  <mental@rydia.net>
 

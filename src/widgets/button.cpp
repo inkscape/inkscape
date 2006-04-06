@@ -180,14 +180,14 @@ sp_button_perform_action (SPButton *button, gpointer data)
 
 
 GtkWidget *
-sp_button_new( GtkIconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action, GtkTooltips *tooltips )
+sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action, GtkTooltips *tooltips )
 {
 	SPButton *button;
 
 	button = (SPButton *)g_object_new (SP_TYPE_BUTTON, NULL);
 
 	button->type = type;
-	button->lsize = CLAMP( size, GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_DIALOG );
+	button->lsize = CLAMP( size, Inkscape::ICON_SIZE_MENU, Inkscape::ICON_SIZE_DECORATION );
 	button->tooltips = tooltips;
 
 	if (tooltips) g_object_ref ((GObject *) tooltips);
@@ -308,7 +308,7 @@ sp_button_set_composed_tooltip (GtkTooltips *tooltips, GtkWidget *widget, SPActi
 }
 
 GtkWidget *
-sp_button_new_from_data( GtkIconSize size,
+sp_button_new_from_data( Inkscape::IconSize size,
 			 SPButtonType type,
 			 Inkscape::UI::View::View *view,
 			 const gchar *name,

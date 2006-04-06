@@ -1472,7 +1472,7 @@ clonetiler_table_x_y_rand (int values)
     {
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
 
-        GtkWidget *i = sp_icon_new (GTK_ICON_SIZE_MENU, "clonetiler_per_row");
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "clonetiler_per_row");
         gtk_box_pack_start (GTK_BOX (hb), i, FALSE, FALSE, 2);
 
         GtkWidget *l = gtk_label_new ("");
@@ -1485,7 +1485,7 @@ clonetiler_table_x_y_rand (int values)
     {
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
 
-        GtkWidget *i = sp_icon_new (GTK_ICON_SIZE_MENU, "clonetiler_per_column");
+        GtkWidget *i = sp_icon_new (Inkscape::ICON_SIZE_MENU, "clonetiler_per_column");
         gtk_box_pack_start (GTK_BOX (hb), i, FALSE, FALSE, 2);
 
         GtkWidget *l = gtk_label_new ("");
