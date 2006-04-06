@@ -106,8 +106,8 @@ void sp_knot_holder_dispose(GObject *object) {
     g_object_unref(G_OBJECT(kh->item));
     while (kh->entity) {
         SPKnotHolderEntity *e = (SPKnotHolderEntity *) kh->entity->data;
-        g_signal_handler_disconnect(GTK_OBJECT (e->knot), e->_click_handler_id);
-        g_signal_handler_disconnect(GTK_OBJECT (e->knot), e->_ungrab_handler_id);
+        g_signal_handler_disconnect(G_OBJECT (e->knot), e->_click_handler_id);
+        g_signal_handler_disconnect(G_OBJECT (e->knot), e->_ungrab_handler_id);
         /* unref should call destroy */
         g_object_unref(G_OBJECT(e->knot));
         g_free(e);

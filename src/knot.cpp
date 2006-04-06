@@ -231,7 +231,7 @@ static void sp_knot_dispose(GObject *object)
 
     if (knot->_event_handler_id > 0)
         {
-        g_signal_handler_disconnect(GTK_OBJECT (knot->item), knot->_event_handler_id);
+        g_signal_handler_disconnect(G_OBJECT (knot->item), knot->_event_handler_id);
         knot->_event_handler_id = 0;
         }
 
