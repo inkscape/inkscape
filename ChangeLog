@@ -9,7 +9,7 @@
 	  src/widgets/gradient-toolbar.cpp, src/widgets/icon.cpp,
 	  src/widgets/icon.h, src/widgets/layer-selector.cpp,
 	  src/widgets/paint-selector.cpp, src/widgets/select-toolbar.cpp,
-	  src/widgets/toolbox.cpp, src/widgets/toolbox.h:
+	  src/widgets/toolbox.cpp, src/widgets/toolbox.h, src/icon-size.h:
 
 	  Decoupling from direct use of GtkIconSize to allow for smaller
 	  custom ones.
