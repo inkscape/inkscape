@@ -234,7 +234,7 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     gtk_table_attach (GTK_TABLE (tbl), dtw->hscrollbar, 1, 2, 2, 3, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_FILL), 0, 0);
     /* Vertical scrollbar and the sticky zoom button */
     dtw->vscrollbar_box = gtk_vbox_new (FALSE, 0);
-    dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_MENU,
+    dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
                                                  "sticky_zoom",

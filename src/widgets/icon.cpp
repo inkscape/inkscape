@@ -36,7 +36,7 @@
 
 static gboolean icon_prerender_task(gpointer data);
 
-static void addPreRender( GtkIconSize lsize, gchar const *name );
+static void addPreRender( Inkscape::IconSize lsize, gchar const *name );
 
 static void sp_icon_class_init(SPIconClass *klass);
 static void sp_icon_init(SPIcon *icon);
@@ -65,9 +65,23 @@ static int sp_icon_get_phys_size(int size);
 static void sp_icon_overlay_pixels( guchar *px, int width, int height, int stride,
                                     unsigned r, unsigned g, unsigned b );
 
+static void injectCustomSize();
+
 static GtkWidgetClass *parent_class;
 
 static bool sizeDirty = true;
+
+static bool sizeMapDone = false;
+static GtkIconSize iconSizeLookup[] = {
+    GTK_ICON_SIZE_INVALID,
+    GTK_ICON_SIZE_MENU,
+    GTK_ICON_SIZE_SMALL_TOOLBAR,
+    GTK_ICON_SIZE_LARGE_TOOLBAR,
+    GTK_ICON_SIZE_BUTTON,
+    GTK_ICON_SIZE_DND,
+    GTK_ICON_SIZE_DIALOG,
+    GTK_ICON_SIZE_MENU, // for Inkscape::ICON_SIZE_DECORATION
+};
 
 GtkType
 sp_icon_get_type()
@@ -242,7 +256,7 @@ static void sp_icon_theme_changed( SPIcon *icon )
 
 
 static GtkWidget *
-sp_icon_new_full( GtkIconSize lsize, gchar const *name )
+sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
 {
     static gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpGtk", 0, 0, 1 );
     static gint fallback = prefs_get_int_attribute_limited( "debug.icons", "checkNames", 0, 0, 1 );
@@ -260,7 +274,13 @@ sp_icon_new_full( GtkIconSize lsize, gchar const *name )
 
     GtkWidget *widget = 0;
     if ( tryLoad ) {
-        GtkWidget *img = gtk_image_new_from_stock( name, lsize );
+        gint trySize = CLAMP( static_cast<gint>(lsize), 0, static_cast<gint>(G_N_ELEMENTS(iconSizeLookup) - 1) );
+
+        if ( !sizeMapDone ) {
+            injectCustomSize();
+        }
+
+        GtkWidget *img = gtk_image_new_from_stock( name, iconSizeLookup[trySize] );
         if ( img ) {
             GtkImageType type = gtk_image_get_storage_type( GTK_IMAGE(img) );
             if ( type == GTK_IMAGE_STOCK ) {
@@ -282,7 +302,7 @@ sp_icon_new_full( GtkIconSize lsize, gchar const *name )
 
     if ( !widget ) {
         SPIcon *icon = (SPIcon *)g_object_new(SP_TYPE_ICON, NULL);
-        icon->lsize = (Inkscape::IconSize)lsize;
+        icon->lsize = lsize;
         icon->name = g_strdup(name);
         icon->psize = sp_icon_get_phys_size(lsize);
 
@@ -295,14 +315,13 @@ sp_icon_new_full( GtkIconSize lsize, gchar const *name )
 GtkWidget *
 sp_icon_new( Inkscape::IconSize lsize, gchar const *name )
 {
-// TODO FIX THIS
-    return sp_icon_new_full( (GtkIconSize)lsize, name );
+    return sp_icon_new_full( lsize, name );
 }
 
 Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, Inkscape::IconSize size )
 {
     Gtk::Widget *result = 0;
-    GtkWidget *widget = sp_icon_new_full( (GtkIconSize)size, oid.c_str() );
+    GtkWidget *widget = sp_icon_new_full( size, oid.c_str() );
 
     if ( widget ) {
         if ( GTK_IS_IMAGE(widget) ) {
@@ -342,13 +361,46 @@ sp_icon_get_gtk_size(int size)
     return map[size];
 }
 
+static void injectCustomSize()
+{
+    // TODO - still need to handle the case of theme changes and resize, especially as we can't re-register a string.
+    if ( !sizeMapDone )
+    {
+        gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpDefault", 0, 0, 1 );
+        gint width = 0;
+        gint height = 0;
+        if ( gtk_icon_size_lookup(GTK_ICON_SIZE_MENU, &width, &height ) ) {
+            gint newWidth = (width > 18) ? (width / 2) : ((width * 2) / 3);
+            gint newHeight = (height > 18) ? (height / 2) : ((height * 2) / 3);
+            GtkIconSize newSizeEnum = gtk_icon_size_register( "inkscape-decoration", newWidth, newHeight );
+            if ( newSizeEnum ) {
+                if ( dump ) {
+                    g_message("Registered (%d, %d) <= (%d, %d) as index %d", newWidth, newHeight, width, height, newSizeEnum);
+                }
+                guint index = static_cast<guint>(Inkscape::ICON_SIZE_DECORATION);
+                if ( index < G_N_ELEMENTS(iconSizeLookup) ) {
+                    iconSizeLookup[index] = newSizeEnum;
+                } else if ( dump ) {
+                    g_message("size lookup array too small to store entry");
+                }
+            }
+        }
+        sizeMapDone = true;
+    }
+
+}
+
 static int sp_icon_get_phys_size(int size)
 {
     static bool init = false;
-    static int lastSys[GTK_ICON_SIZE_DIALOG + 1];
-    static int vals[GTK_ICON_SIZE_DIALOG + 1];
+    static int lastSys[Inkscape::ICON_SIZE_DECORATION + 1];
+    static int vals[Inkscape::ICON_SIZE_DECORATION + 1];
 
-    size = CLAMP( size, GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_DIALOG );
+    size = CLAMP( size, GTK_ICON_SIZE_MENU, Inkscape::ICON_SIZE_DECORATION );
+
+    if ( !sizeMapDone ) {
+        injectCustomSize();
+    }
 
     if ( sizeDirty && init ) {
         GtkIconSize const gtkSizes[] = {
@@ -357,7 +409,10 @@ static int sp_icon_get_phys_size(int size)
             GTK_ICON_SIZE_LARGE_TOOLBAR,
             GTK_ICON_SIZE_BUTTON,
             GTK_ICON_SIZE_DND,
-            GTK_ICON_SIZE_DIALOG
+            GTK_ICON_SIZE_DIALOG,
+            static_cast<guint>(Inkscape::ICON_SIZE_DECORATION) < G_N_ELEMENTS(iconSizeLookup) ?
+                iconSizeLookup[static_cast<int>(Inkscape::ICON_SIZE_DECORATION)] :
+                GTK_ICON_SIZE_MENU
         };
         for (unsigned i = 0; i < G_N_ELEMENTS(gtkSizes) && init; ++i) {
             unsigned const val_ix(gtkSizes[i]);
@@ -374,6 +429,7 @@ static int sp_icon_get_phys_size(int size)
     if ( !init ) {
         sizeDirty = false;
         gint dump = prefs_get_int_attribute_limited( "debug.icons", "dumpDefault", 0, 0, 1 );
+
         if ( dump ) {
             g_message( "Default icon sizes:" );
         }
@@ -385,7 +441,10 @@ static int sp_icon_get_phys_size(int size)
             GTK_ICON_SIZE_LARGE_TOOLBAR,
             GTK_ICON_SIZE_BUTTON,
             GTK_ICON_SIZE_DND,
-            GTK_ICON_SIZE_DIALOG
+            GTK_ICON_SIZE_DIALOG,
+            static_cast<guint>(Inkscape::ICON_SIZE_DECORATION) < G_N_ELEMENTS(iconSizeLookup) ?
+                iconSizeLookup[static_cast<int>(Inkscape::ICON_SIZE_DECORATION)] :
+                GTK_ICON_SIZE_MENU
         };
         gchar const *const names[] = {
             "GTK_ICON_SIZE_MENU",
@@ -393,7 +452,8 @@ static int sp_icon_get_phys_size(int size)
             "GTK_ICON_SIZE_LARGE_TOOLBAR",
             "GTK_ICON_SIZE_BUTTON",
             "GTK_ICON_SIZE_DND",
-            "GTK_ICON_SIZE_DIALOG"
+            "GTK_ICON_SIZE_DIALOG",
+            "inkscape-decoration"
         };
 
         GtkWidget *icon = (GtkWidget *)g_object_new(SP_TYPE_ICON, NULL);
@@ -849,11 +909,11 @@ void sp_icon_overlay_pixels(guchar *px, int width, int height, int stride,
 class preRenderItem
 {
 public:
-    preRenderItem( GtkIconSize lsize, gchar const *name ) :
+    preRenderItem( Inkscape::IconSize lsize, gchar const *name ) :
         _lsize( lsize ),
         _name( name )
     {}
-    GtkIconSize _lsize;
+    Inkscape::IconSize _lsize;
     Glib::ustring _name;
 };
 
@@ -863,7 +923,7 @@ public:
 static std::queue<preRenderItem> pendingRenders;
 static bool callbackHooked = false;
 
-static void addPreRender( GtkIconSize lsize, gchar const *name )
+static void addPreRender( Inkscape::IconSize lsize, gchar const *name )
 {
 
     if ( !callbackHooked )
