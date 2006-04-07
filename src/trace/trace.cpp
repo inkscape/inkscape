@@ -193,8 +193,6 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         return NULL;
         }
 
-    Inkscape::XML::Node *imgRepr = SP_OBJECT(img)->repr;
-
     NRArenaItem *aImg = sp_item_get_arenaitem(img, desktop->dkey);
     //g_message("img: %d %d %d %d\n", aImg->bbox.x0, aImg->bbox.y0,
     //                                aImg->bbox.x1, aImg->bbox.y1);
