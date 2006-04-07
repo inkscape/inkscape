@@ -113,7 +113,8 @@ struct SPKnot : GObject {
 };
 
 /// The SPKnot vtable.
-struct SPKnotClass : GObjectClass {
+struct SPKnotClass {
+    GObjectClass parent_class;
     gint (* event) (SPKnot *knot, GdkEvent *event);
 
     /*

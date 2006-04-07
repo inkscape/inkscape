@@ -97,7 +97,7 @@ GType sp_knot_get_type()
  */
 static void sp_knot_class_init(SPKnotClass *klass)
 {
-    GObjectClass *object_class = klass;
+    GObjectClass *object_class = (GObjectClass*)klass;
 
     parent_class = (GObjectClass*) g_type_class_peek_parent(klass);
 
