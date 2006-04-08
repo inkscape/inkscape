@@ -415,7 +415,8 @@ static int sp_icon_get_phys_size(int size)
                 GTK_ICON_SIZE_MENU
         };
         for (unsigned i = 0; i < G_N_ELEMENTS(gtkSizes) && init; ++i) {
-            unsigned const val_ix(gtkSizes[i]);
+            guint const val_ix = (gtkSizes[i] <= GTK_ICON_SIZE_DIALOG) ? (guint)gtkSizes[i] : (guint)Inkscape::ICON_SIZE_DECORATION;
+
             g_assert( val_ix < G_N_ELEMENTS(vals) );
 
             gint width = 0;
@@ -459,7 +460,8 @@ static int sp_icon_get_phys_size(int size)
         GtkWidget *icon = (GtkWidget *)g_object_new(SP_TYPE_ICON, NULL);
 
         for (unsigned i = 0; i < G_N_ELEMENTS(gtkSizes); ++i) {
-            unsigned const val_ix(gtkSizes[i]);
+            guint const val_ix = (gtkSizes[i] <= GTK_ICON_SIZE_DIALOG) ? (guint)gtkSizes[i] : (guint)Inkscape::ICON_SIZE_DECORATION;
+
             g_assert( val_ix < G_N_ELEMENTS(vals) );
 
             gint width = 0;
