@@ -93,7 +93,7 @@ sp_object_properties_page( GtkWidget *nb,
     hb = gtk_hbox_new (FALSE, 0);
     gtk_widget_show (hb);
 
-    px = sp_icon_new( Inkscape::ICON_SIZE_MENU, label_image );
+    px = sp_icon_new( Inkscape::ICON_SIZE_DECORATION, label_image );
     gtk_widget_show (px);
     gtk_box_pack_start (GTK_BOX (hb), px, FALSE, FALSE, 2);
 

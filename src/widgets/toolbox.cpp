@@ -2011,7 +2011,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     /* Use Pressure button */
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
                                                  "use_pressure",
@@ -2024,7 +2024,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     /* Use Tilt button */
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,
                                                  "use_tilt",
@@ -2620,7 +2620,7 @@ sp_dropper_toolbox_new(SPDesktop *desktop)
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
         
         GtkWidget *button = 
-            sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+            sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                      SP_BUTTON_TYPE_TOGGLE,
                                      NULL,
                                      "pick_color",
@@ -3094,11 +3094,11 @@ sp_connector_toolbox_new(SPDesktop *desktop)
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
             AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_DECORATION,
             "connector_avoid", GTK_SIGNAL_FUNC(sp_connector_path_set_avoid),
             tt, _("Make connectors avoid selected objects"));
 
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_DECORATION,
             "connector_ignore", GTK_SIGNAL_FUNC(sp_connector_path_set_ignore),
             tt, _("Make connectors ignore selected objects"));
 

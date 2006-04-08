@@ -376,11 +376,11 @@ static void toggle_lock (GtkWidget *button, gpointer data) {
     gtk_container_remove (GTK_CONTAINER(button), old_child);
 
     if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
-        GtkWidget *child = sp_icon_new (Inkscape::ICON_SIZE_MENU, "width_height_lock");
+        GtkWidget *child = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, "width_height_lock");
         gtk_widget_show (child);
         gtk_container_add (GTK_CONTAINER (button), child);
     } else {
-        GtkWidget *child = sp_icon_new (Inkscape::ICON_SIZE_MENU, "lock_unlocked");
+        GtkWidget *child = sp_icon_new (Inkscape::ICON_SIZE_DECORATION, "lock_unlocked");
         gtk_widget_show (child);
         gtk_container_add (GTK_CONTAINER (button), child);
     }
@@ -445,7 +445,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
 
     // lock toggle
     GtkWidget *lockbox = gtk_vbox_new(TRUE, 0);
-    GtkWidget *lock = sp_button_new_from_data( Inkscape::ICON_SIZE_MENU,
+    GtkWidget *lock = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
                                               "lock_unlocked",
@@ -489,7 +489,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     GtkWidget *cbox = gtk_hbox_new (FALSE, 0);
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
                                               "transform_stroke",
@@ -501,7 +501,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     }
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
                                               "transform_corners",
@@ -513,7 +513,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     }
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
                                               "transform_gradient",
@@ -525,7 +525,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     }
 
     {
-    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
                                               SP_BUTTON_TYPE_TOGGLE,
                                               NULL,
                                               "transform_pattern",

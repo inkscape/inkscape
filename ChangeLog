@@ -1,5 +1,13 @@
 2006-04-07  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/widgets/paint-selector.cpp, src/widgets/gradient-toolbar.cpp,
+	  src/widgets/select-toolbar.cpp, src/widgets/toolbox.cpp,
+	  src/dialogs/clonetiler.cpp, src/dialogs/object-properties.cpp:
+
+	  Shrunk a few icon sizes.
+
+2006-04-07  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/widgets/desktop-widget.cpp, src/widgets/icon.cpp,
 	  src/widgets/layer-selector.cpp:
 
