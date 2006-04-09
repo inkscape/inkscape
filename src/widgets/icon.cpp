@@ -370,8 +370,8 @@ static void injectCustomSize()
         gint width = 0;
         gint height = 0;
         if ( gtk_icon_size_lookup(GTK_ICON_SIZE_MENU, &width, &height ) ) {
-            gint newWidth = (width > 18) ? (width / 2) : ((width * 2) / 3);
-            gint newHeight = (height > 18) ? (height / 2) : ((height * 2) / 3);
+            gint newWidth = ((width * 3) / 4);
+            gint newHeight = ((height * 3) / 4);
             GtkIconSize newSizeEnum = gtk_icon_size_register( "inkscape-decoration", newWidth, newHeight );
             if ( newSizeEnum ) {
                 if ( dump ) {
