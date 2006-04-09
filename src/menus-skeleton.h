@@ -65,6 +65,8 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"EditPasteWidth\" />\n"
 "           <verb verb-id=\"EditPasteHeight\" />\n"
 "           <verb verb-id=\"EditPasteSizeSeparately\" />\n"
+"           <verb verb-id=\"EditPasteWidthSeparately\" />\n"
+"           <verb verb-id=\"EditPasteHeightSeparately\" />\n"
 "       </submenu>\n"
 "       <separator/>\n"
 "       <verb verb-id=\"DialogFind\" />\n"
