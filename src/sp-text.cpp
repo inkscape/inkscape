@@ -263,6 +263,20 @@ sp_text_modified (SPObject *object, guint flags)
     guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
     if (flags & SP_OBJECT_MODIFIED_FLAG) cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
 
+    // FIXME: all that we need to do here is nr_arena_glyphs_[group_]set_style, to set the changed
+    // style, but there's no easy way to access the arena glyphs or glyph groups corresponding to a
+    // text object. Therefore we do here the same as in _update, that is, destroy all arena items
+    // and create new ones. This is probably quite wasteful.
+    if (flags & ( SP_OBJECT_STYLE_MODIFIED_FLAG )) {
+        SPText *text = SP_TEXT (object);
+        NRRect paintbox;
+        sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
+        for (SPItemView* v = text->display; v != NULL; v = v->next) {
+            text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
+            text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
+        }
+    }
+
     /* Create temporary list of children */
     GSList *l = NULL;
     SPObject *child;
