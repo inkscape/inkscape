@@ -14,7 +14,9 @@
 #ifndef SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 #define SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 
+#include <gtkmm/arrow.h>
 #include <gtkmm/box.h>
+#include <gtkmm/eventbox.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/table.h>
 #include <gtkmm/button.h>
@@ -56,15 +58,18 @@ private:
     void init();
     void bounceCall(int i, int j);
 
+    void _popper(GdkEventButton* btn);
+
     Glib::ustring   label;
 
     Gtk::HBox       topBar;
     Gtk::VBox       rightBar;
     Gtk::VBox       contents;
     Gtk::Label      tabTitle;
-    Gtk::OptionMenu tabButton;
-    Gtk::Menu       menu;
+    Gtk::Arrow      _tempArrow;
+    Gtk::EventBox   menuPopper;
     Gtk::Button     closeButton;
+    Gtk::Menu*       menu;
     PreviewFillable *_fillable;
 };
 

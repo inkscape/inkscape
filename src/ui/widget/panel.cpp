@@ -32,6 +32,8 @@ namespace Widget {
 
 Panel::Panel(const gchar *prefs_path) :
     _prefs_path(NULL),
+    _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
+    menu(0),
     _fillable(0)
 {
     _prefs_path = prefs_path;
@@ -40,6 +42,8 @@ Panel::Panel(const gchar *prefs_path) :
 
 Panel::Panel() :
     _prefs_path(NULL),
+    _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
+    menu(0),
     _fillable(0)
 {
     init();
@@ -47,6 +51,8 @@ Panel::Panel() :
 
 Panel::Panel(Glib::ustring const &label) :
     _prefs_path(NULL),
+    _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
+    menu(0),
     _fillable(0)
 {
     this->label = label;
@@ -55,6 +61,16 @@ Panel::Panel(Glib::ustring const &label) :
 
 Panel::~Panel()
 {
+    delete menu;
+}
+
+void Panel::_popper(GdkEventButton* event)
+{
+    if ( (event->type == GDK_BUTTON_PRESS) && (event->button == 3 || event->button == 1) ) {
+        if (menu) {
+            menu->popup( event->button, event->time );
+        }
+    }
 }
 
 void Panel::init()
@@ -72,10 +88,7 @@ void Panel::init()
         panel_mode = prefs_get_int_attribute_limited (_prefs_path, "panel_mode", 1, 0, 10);
     }
 
-    tabButton.set_menu(menu);
-    Gtk::MenuItem* dummy = manage(new Gtk::MenuItem(tmp));
-    menu.append( *dummy );
-    menu.append( *manage(new Gtk::SeparatorMenuItem()) );
+    menu = new Gtk::Menu();
     {
         const char *things[] = {
             N_("small"),
@@ -87,14 +100,14 @@ void Panel::init()
         for ( unsigned int i = 0; i < G_N_ELEMENTS(things); i++ ) {
             Glib::ustring foo(gettext(things[i]));
             Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, foo));
-            menu.append(*single);
+            menu->append(*single);
             if ( i == panel_size ) {
                 single->set_active(true);
             }
             single->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 0, i) );
        }
     }
-    menu.append( *manage(new Gtk::SeparatorMenuItem()) );
+    menu->append( *manage(new Gtk::SeparatorMenuItem()) );
     Gtk::RadioMenuItem::Group group;
     Glib::ustring oneLab(_("List"));
     Glib::ustring twoLab(_("Grid"));
@@ -107,18 +120,27 @@ void Panel::init()
         two->set_active(true);
     }
 
-    menu.append( *one );
-    menu.append( *two );
-    menu.append( *manage(new Gtk::SeparatorMenuItem()) );
+    menu->append( *one );
+    menu->append( *two );
+    menu->append( *manage(new Gtk::SeparatorMenuItem()) );
     one->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 1, 0) );
     two->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 1, 1) );
+
+    menu->show_all_children();
 
     //closeButton.set_label("X");
 
     topBar.pack_start(tabTitle);
 
     //topBar.pack_end(closeButton, false, false);
-    topBar.pack_end(tabButton, false, false);
+
+
+    topBar.pack_end(menuPopper, false, false);
+    Gtk::Frame* outliner = manage(new Gtk::Frame());
+    outliner->set_shadow_type( Gtk::SHADOW_ETCHED_IN );
+    outliner->add( _tempArrow );
+    menuPopper.add( *outliner );
+    menuPopper.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &Panel::_popper) );
 
     pack_start( topBar, false, false );
 
@@ -151,10 +173,10 @@ void Panel::setOrientation( Gtk::AnchorType how )
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                tabButton.reference();
-                topBar.remove(tabButton);
-                rightBar.pack_start(tabButton, false, false);
-                tabButton.unreference();
+                menuPopper.reference();
+                topBar.remove(menuPopper);
+                rightBar.pack_start(menuPopper, false, false);
+                menuPopper.unreference();
 
                 topBar.remove(tabTitle);
             }
@@ -168,8 +190,9 @@ void Panel::setOrientation( Gtk::AnchorType how )
 
 void Panel::_regItem( Gtk::MenuItem* item, int group, int id )
 {
-    menu.append( *item );
+    menu->append( *item );
     item->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), group + 2, id) );
+    item->show();
 }
 
 void Panel::restorePanelPrefs()
@@ -188,7 +211,7 @@ void Panel::restorePanelPrefs()
 
 void Panel::bounceCall(int i, int j)
 {
-    menu.set_active(0);
+    menu->set_active(0);
     switch ( i ) {
     case 0:
         if (_prefs_path) prefs_set_int_attribute (_prefs_path, "panel_size", j);
