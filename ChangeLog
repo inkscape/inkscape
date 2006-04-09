@@ -1,3 +1,7 @@
+2006-04-09  Jon A. Cruz  <jon@joncruz.org>
+
+	* share/icons/icons.svg: Fixed jumping eye (layer visibility).
+
 2006-04-07  Jon A. Cruz  <jon@joncruz.org>
 
 	* po/eu.po: Fix a "Unmatched closing </b>" warnings.
