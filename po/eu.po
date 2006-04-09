@@ -3764,7 +3764,7 @@ msgstr "Hautatu <b>gutxienez bi objektu</b> konbinatzeko."
 
 #: ../src/path-chemistry.cpp:62
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-msgstr "Objektuetariko bat <b>ez da bidea<b>, ezin da konbinatu"
+msgstr "Objektuetariko bat <b>ez da bidea</b>, ezin da konbinatu"
 
 #: ../src/path-chemistry.cpp:70
 msgid ""
@@ -4069,7 +4069,7 @@ msgstr "Ez dago <b>betetze-eredurik</b> hautapenean."
 
 #: ../src/selection-chemistry.cpp:2206
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr "Hautatu <b>objektua(k) bit-maparen kopia egiteko."
+msgstr "Hautatu <b>objektua(k)</b> bit-maparen kopia egiteko."
 
 #: ../src/selection-chemistry.cpp:2369
 #, fuzzy

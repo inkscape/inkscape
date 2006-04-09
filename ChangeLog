@@ -1,5 +1,9 @@
 2006-04-07  Jon A. Cruz  <jon@joncruz.org>
 
+	* po/eu.po: Fix a "Unmatched closing </b>" warnings.
+
+2006-04-07  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/widgets/paint-selector.cpp, src/widgets/gradient-toolbar.cpp,
 	  src/widgets/select-toolbar.cpp, src/widgets/toolbox.cpp,
 	  src/dialogs/clonetiler.cpp, src/dialogs/object-properties.cpp:
