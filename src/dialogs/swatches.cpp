@@ -426,7 +426,7 @@ void ColorItem::_colorDefChanged(void* data)
 }
 
 
-Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::BuiltinIconSize size)
+Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Inkscape::IconSize size)
 {
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB ) {
@@ -435,7 +435,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, Gtk::Built
         widget = lbl;
     } else {
         Glib::ustring blank("          ");
-        if ( size == Gtk::ICON_SIZE_MENU ) {
+        if ( size == Inkscape::ICON_SIZE_MENU || size == Inkscape::ICON_SIZE_DECORATION ) {
             blank = " ";
         }
 

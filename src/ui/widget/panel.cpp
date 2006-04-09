@@ -18,6 +18,7 @@
 #include <glibmm/i18n.h>
 
 #include "panel.h"
+#include "../../icon-size.h"
 #include "../../prefs-utils.h"
 
 namespace Inkscape {
@@ -91,6 +92,7 @@ void Panel::init()
     menu = new Gtk::Menu();
     {
         const char *things[] = {
+            N_("tiny"),
             N_("small"),
             N_("medium"),
             N_("large"),
@@ -220,22 +222,27 @@ void Panel::bounceCall(int i, int j)
             switch ( j ) {
             case 0:
             {
-                _fillable->setStyle(Gtk::ICON_SIZE_MENU, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_DECORATION, currType);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(Gtk::ICON_SIZE_SMALL_TOOLBAR, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_MENU, currType);
             }
             break;
             case 2:
             {
-                _fillable->setStyle(Gtk::ICON_SIZE_BUTTON, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_SMALL_TOOLBAR, currType);
             }
             break;
             case 3:
             {
-                _fillable->setStyle(Gtk::ICON_SIZE_DIALOG, currType);
+                _fillable->setStyle(Inkscape::ICON_SIZE_BUTTON, currType);
+            }
+            break;
+            case 4:
+            {
+                _fillable->setStyle(Inkscape::ICON_SIZE_DIALOG, currType);
             }
             break;
             default:
@@ -246,7 +253,7 @@ void Panel::bounceCall(int i, int j)
     case 1:
         if (_prefs_path) prefs_set_int_attribute (_prefs_path, "panel_mode", j);
         if ( _fillable ) {
-            Gtk::BuiltinIconSize currSize = _fillable->getPreviewSize();
+            Inkscape::IconSize currSize = _fillable->getPreviewSize();
             switch ( j ) {
             case 0:
             {

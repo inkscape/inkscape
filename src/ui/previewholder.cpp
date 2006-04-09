@@ -35,7 +35,7 @@ PreviewHolder::PreviewHolder() :
     _prefCols(0),
     _updatesFrozen(false),
     _anchor(Gtk::ANCHOR_CENTER),
-    _baseSize(Gtk::ICON_SIZE_MENU),
+    _baseSize(Inkscape::ICON_SIZE_MENU),
     _view(VIEW_TYPE_LIST)
 {
     _scroller = manage(new Gtk::ScrolledWindow());
@@ -123,7 +123,7 @@ void PreviewHolder::thawUpdates()
     rebuildUI();
 }
 
-void PreviewHolder::setStyle(Gtk::BuiltinIconSize size, ViewType view)
+void PreviewHolder::setStyle( Inkscape::IconSize size, ViewType view )
 {
     if ( size != _baseSize || view != _view ) {
         _baseSize = size;
@@ -215,7 +215,7 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
             width = w2;
         }
     } else {
-        width = _baseSize == Gtk::ICON_SIZE_MENU ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
+        width = (_baseSize == Inkscape::ICON_SIZE_MENU || _baseSize == Inkscape::ICON_SIZE_DECORATION) ? COLUMNS_FOR_SMALL : COLUMNS_FOR_LARGE;
         if ( _prefCols > 0 ) {
             width = _prefCols;
         }
