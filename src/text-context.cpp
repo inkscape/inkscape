@@ -1030,6 +1030,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 } else {
                                     SP_DT_SELECTION(ec->desktop)->clear();
                                 }
+                                tc->nascent_object = FALSE;
                                 return TRUE;
                             case GDK_bracketleft:
                                 if (tc->text) {
