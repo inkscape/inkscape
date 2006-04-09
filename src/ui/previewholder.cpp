@@ -208,8 +208,8 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
         Gtk::Requisition req2;
         const_cast<Gtk::Widget*>(thing)->size_request(req2);
 
-        int h2 = req.height / req2.height;
-        int w2 = req.width / req2.width;
+        int h2 = ((req2.height > 0) && (req.height > req2.height)) ? (req.height / req2.height) : 1;
+        int w2 = ((req2.width > 0) && (req.width > req2.width)) ? (req.width / req2.width) : 1;
         width = (itemCount + (h2 - 1)) / h2;
         if ( width < w2 ) {
             width = w2;
