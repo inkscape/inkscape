@@ -523,7 +523,7 @@ void InkscapePreferences::initPageMisc()
                         _("Uncheck this to use the bottom selected object as the clipping path or mask"));
     _misc_mask_remove.init ( _("Remove clipping path or mask after applying"), "options.maskobject", "remove", true);
     _page_misc.add_line(true, "", _misc_mask_remove, "", 
-                        _("Affter applying, remove the object used as the clipping path or mask from the drawing"));
+                        _("After applying, remove the object used as the clipping path or mask from the drawing"));
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
 }
