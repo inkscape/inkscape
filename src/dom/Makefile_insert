@@ -53,5 +53,7 @@ dom_libdom_a_SOURCES =	     \
 	dom/xpathimpl.cpp    \
 	dom/xpathimpl.h      \
 	dom/xpathparser.cpp  \
-	dom/xpathparser.h
+	dom/xpathparser.h    \
+        dom/ziptool.h        \
+        dom/ziptool.cpp
 
