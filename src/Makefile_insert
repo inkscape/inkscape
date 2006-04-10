@@ -247,7 +247,6 @@ inkscape_private_libs =	\
 	application/libinkapp.a	\
 	ui/dialog/libuidialog.a	\
 	dialogs/libspdialogs.a	\
-        dom/libdom.a            \
 	jabber_whiteboard/libjabber_whiteboard.a \
 	trace/libtrace.a	\
 	svg/libspsvg.a		\
@@ -268,6 +267,7 @@ inkscape_private_libs =	\
 	extension/implementation/libimplementation.a	\
 	extension/internal/libinternal.a	\
 	extension/script/libscript.a	\
+        dom/libdom.a            \
 	xml/libspxml.a		\
 	util/libinkutil.a	\
 	io/libio.a	        \
