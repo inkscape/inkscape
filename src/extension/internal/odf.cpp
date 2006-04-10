@@ -43,9 +43,9 @@
 #include "libnr/n-art-bpath.h"
 #include "extension/system.h"
 
-
-
 #include "io/sys.h"
+
+#include "dom/ziptool.h"
 
 namespace Inkscape
 {
@@ -103,8 +103,8 @@ findElementsByTagName(std::vector<Inkscape::XML::Node *> &results,
 void
 OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
 {
-    FILE *f = fopen(uri, "rb");
-    fclose(f);
+    ZipFile zipFile;
+    zipFile.writeFile(uri);
 }
 
 
