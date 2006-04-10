@@ -44,7 +44,7 @@ typical libraries you may need to install are:
    * glibmm  
    * gtkmm  
 
-Please see http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape for the
+Please see http://wiki.inkscape.org/wiki/index.php/CompilingInkscape for the
 most current dependencies, including links to the source tarballs.
 
 
