@@ -5416,7 +5416,7 @@ msgstr "> 與 < 伸縮增量:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
-msgstr "按下 > 或 < 將選擇區伸展或縮減時以此增量(依 px 單位)"
+msgstr "按下 &gt; 或 &lt; 將選擇區伸展或縮減時以此增量(依 px 單位)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "Inset/Outset by:"
@@ -5908,7 +5908,7 @@ msgstr "匯入點陣圖為 <image>"
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
-msgstr "開啟時，匯入的點陣圖建立一個<圖片>元件；否則它是個以該點陣圖填充的矩形"
+msgstr "開啟時，匯入的點陣圖建立一個&lt;圖片&gt;元件；否則它是個以該點陣圖填充的矩形"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "Add label comments to printing output"

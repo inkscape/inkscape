@@ -5633,7 +5633,7 @@ msgstr "'>' eta '<' eskalatzeko:"
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
-msgstr "'>' edo '<' teklak sakatzeak hautapena eskalatzen du (pixeletan)"
+msgstr "'&gt;' edo '&lt;' teklak sakatzeak hautapena eskalatzen du (pixeletan)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "Inset/Outset by:"
