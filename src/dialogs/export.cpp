@@ -73,6 +73,9 @@ static void sp_export_area_height_value_changed  ( GtkAdjustment *adj,
 static void sp_export_bitmap_width_value_changed ( GtkAdjustment *adj, 
                                                    GtkObject *base);
                                                    
+static void sp_export_bitmap_height_value_changed ( GtkAdjustment *adj, 
+                                                   GtkObject *base);
+                                                   
 static void sp_export_xdpi_value_changed         ( GtkAdjustment *adj, 
                                                    GtkObject *base);
                                            
@@ -423,9 +426,12 @@ sp_export_dialog (void)
                                        G_CALLBACK (sp_export_xdpi_value_changed), 
                                        dlg );
 
-            sp_export_spinbutton_new ( "bmheight", 16.0, 1.0, 1000000.0, 1, 10.0, 
-                                       NULL, t, 0, 1, _("Height:"), _("pixels at"), 
-                                       0, 0, NULL, dlg );
+            sp_export_spinbutton_new ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0, 
+                                       NULL, t, 0, 1, 
+                                       _("Height:"), _("pixels at"), 0, 1, 
+                                       G_CALLBACK
+                                       (sp_export_bitmap_height_value_changed), 
+                                       dlg );
 
             /** \todo
              * Needs fixing: there's no way to set ydpi currently, so we use  
@@ -1495,6 +1501,29 @@ sp_export_set_image_y (GtkObject *base)
     return;
 } // end of sp_export_set_image_y()
 
+/**
+    \brief  A function to set the xdpi
+    \param  base  The export dialog
+
+    This function grabs all of the x values and then figures out the
+    new bitmap size based on the changing dpi value.  The dpi value is
+    gotten from the xdpi setting as these can not currently be independent.
+*/
+static void
+sp_export_set_image_x (GtkObject *base)
+{
+    float x0, x1, xdpi;
+
+    x0 = sp_export_value_get_px (base, "x0");
+    x1 = sp_export_value_get_px (base, "x1");
+    xdpi = sp_export_value_get (base, "xdpi");
+
+    sp_export_value_set (base, "ydpi", xdpi);
+    sp_export_value_set (base, "bmwidth", (x1 - x0) * xdpi / DPI_BASE);
+
+    return;
+} // end of sp_export_set_image_x()
+
 /// Called when pixel width is changed
 static void
 sp_export_bitmap_width_value_changed (GtkAdjustment *adj, GtkObject *base)
@@ -1524,6 +1553,41 @@ sp_export_bitmap_width_value_changed (GtkAdjustment *adj, GtkObject *base)
     sp_export_value_set (base, "xdpi", xdpi);
 
     sp_export_set_image_y (base);
+
+    gtk_object_set_data (base, "update", GUINT_TO_POINTER (FALSE));
+
+    return;
+} // end of sp_export_bitmap_width_value_changed()
+
+/// Called when pixel height is changed
+static void
+sp_export_bitmap_height_value_changed (GtkAdjustment *adj, GtkObject *base)
+{
+    float y0, y1, bmheight, xdpi;
+
+    if (gtk_object_get_data (base, "update"))
+        return;
+
+    if (sp_unit_selector_update_test ((SPUnitSelector *)gtk_object_get_data
+           (base, "units"))) {
+       return;
+    }
+
+    gtk_object_set_data (base, "update", GUINT_TO_POINTER (TRUE));
+
+    y0 = sp_export_value_get_px (base, "y0");
+    y1 = sp_export_value_get_px (base, "y1");
+    bmheight = sp_export_value_get (base, "bmheight");
+
+    if (bmheight < SP_EXPORT_MIN_SIZE) {
+        bmheight = SP_EXPORT_MIN_SIZE;
+        sp_export_value_set (base, "bmheight", bmheight);
+    }
+
+    xdpi = bmheight * DPI_BASE / (y1 - y0);
+    sp_export_value_set (base, "xdpi", xdpi);
+
+    sp_export_set_image_x (base);
 
     gtk_object_set_data (base, "update", GUINT_TO_POINTER (FALSE));
 
