@@ -15,7 +15,7 @@
 #ifndef __SVGLSIMPL_H__
 #define __SVGLSIMPL_H__
 
-#include "lsimpl.h"
+#include "dom/lsimpl.h"
 #include "svgparser.h"
 
 

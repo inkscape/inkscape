@@ -30,7 +30,7 @@
 #include <vector>
 #include <string>
 
-#include "dom.h"
+#include "dom/dom.h"
 
 namespace odf
 {

@@ -29,8 +29,8 @@
 
 
 #include "svgparser.h"
-#include "cssparser.h"
-#include "charclass.h"
+#include "dom/cssparser.h"
+#include "dom/charclass.h"
 
 #include <stdarg.h>
 
