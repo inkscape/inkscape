@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -32,18 +32,12 @@
  * inherited from iostreams, and includes any extra
  * functionality that we might need.
  *
- * Authors:
- *   Bob Jamison <rjamison@titan.com>
- *
- * Copyright (C) 2004 Inkscape.org
- *
- * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #include <stdarg.h>
 
 #include "domstream.h"
-#include "charclass.h"
+#include "dom/charclass.h"
 
 namespace org
 {
