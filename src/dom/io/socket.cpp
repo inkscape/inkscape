@@ -28,7 +28,7 @@
  */
 
 #include "socket.h"
-#include "util/thread.h"
+#include "dom/util/thread.h"
 
 #ifdef __WIN32__
 #include <windows.h>

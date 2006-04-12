@@ -29,7 +29,7 @@
 
 #include "gzipstream.h"
 
-#include "util/ziptool.h"
+#include "dom/util/ziptool.h"
 
 
 namespace org
