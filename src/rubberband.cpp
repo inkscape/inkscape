@@ -14,13 +14,14 @@
 
 #include "display/sodipodi-ctrlrect.h"
 #include "desktop.h"
+#include "inkscape.h"
 #include "desktop-handles.h"
 #include "rubberband.h"
 
 Inkscape::Rubberband *Inkscape::Rubberband::_instance = NULL;
 
 Inkscape::Rubberband::Rubberband()
-    : _desktop(NULL), _canvas(NULL)
+    : _desktop(SP_ACTIVE_DESKTOP), _canvas(NULL)
 {
 
 }
