@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -32,19 +32,19 @@
 
 
 // For access to DOM2 core
-#include "dom.h"
+#include "dom/dom.h"
 
 // For access to DOM2 events
-#include "events.h"
+#include "dom/events.h"
 
 // For access to those parts from DOM2 CSS OM used by SVG DOM.
-#include "css.h"
+#include "dom/css.h"
 
 // For access to those parts from DOM2 Views OM used by SVG DOM.
-#include "views.h"
+#include "dom/views.h"
 
 // For access to the SMIL OM used by SVG DOM.
-#include "smil.h"
+#include "dom/smil.h"
 
 
 #include <math.h>
