@@ -182,21 +182,26 @@ void OdfOutput::po(char *str)
 
 
 
+
+
 /**
- * Make sure that we are in the database
+ * This function searches the Repr tree recursively from the given node,
+ * and adds refs to all nodes with the given name, to the result vector
  */
-bool
-OdfOutput::check (Inkscape::Extension::Extension *module)
+static void
+findElementsByTagName(std::vector<Inkscape::XML::Node *> &results,
+                      Inkscape::XML::Node *node,
+                      char const *name)
 {
-    /* We don't need a Key
-    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_POV))
-        return FALSE;
-    */
+    if ( !name || strcmp(node->name(), name) == 0 )
+        {
+        results.push_back(node);
+        }
 
-    return TRUE;
+    for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
+        findElementsByTagName( results, child, name );
+
 }
-
-
 
 /**
  * This function searches the Repr tree recursively from the given node,
@@ -320,26 +325,30 @@ OdfOutput::preprocess(SPDocument *doc)
 }
 
 
-
-
-/**
- * This function searches the Repr tree recursively from the given node,
- * and adds refs to all nodes with the given name, to the result vector
- */
-static void
-findElementsByTagName(std::vector<Inkscape::XML::Node *> &results,
-                      Inkscape::XML::Node *node,
-                      char const *name)
+bool OdfOutput::writeTree(Inkscape::XML::Node *node)
 {
-    if ( !name || strcmp(node->name(), name) == 0 )
+    //# Get the SPItem, if applicable
+    SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
+    if (!reprobj)
+        return true;
+    if (!SP_IS_ITEM(reprobj))
         {
-        results.push_back(node);
+        return true;
         }
+    SPItem *item = SP_ITEM(reprobj);
 
+    //# Do our stuff
+
+
+    //# Iterate through the children
     for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
-        findElementsByTagName( results, child, name );
-
+        {
+        if (!writeTree(child))
+            return false;
+        }
+    return true;
 }
+
 
 
 /**
@@ -371,11 +380,25 @@ OdfOutput::init()
             "<output>\n"
                 "<extension>.odg</extension>\n"
                 "<mimetype>text/x-povray-script</mimetype>\n"
-                "<filetypename>" N_("OpenDocument drawing (*.odg)(placeholder)") "</filetypename>\n"
+                "<filetypename>" N_("OpenDocument drawing (*.odg)") "</filetypename>\n"
                 "<filetypetooltip>" N_("OpenDocument drawing file") "</filetypetooltip>\n"
             "</output>\n"
         "</inkscape-extension>",
         new OdfOutput());
+}
+
+/**
+ * Make sure that we are in the database
+ */
+bool
+OdfOutput::check (Inkscape::Extension::Extension *module)
+{
+    /* We don't need a Key
+    if (NULL == Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_POV))
+        return FALSE;
+    */
+
+    return TRUE;
 }
 
 //########################################################################

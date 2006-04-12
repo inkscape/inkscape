@@ -73,6 +73,7 @@ private:
 
     void preprocess(SPDocument *doc);
     void preprocess(Inkscape::XML::Node *node);
+    bool writeTree(Inkscape::XML::Node *node);
 
     void po(char *str);
     org::w3c::dom::io::StringOutputStream outs;
