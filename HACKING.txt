@@ -1,4 +1,4 @@
-Compiling the CVS version
+Compiling the SVN version
 =========================
 grep Build-Depends debian/control to see a list of (Debian) packages needed for
 compilation.
@@ -9,7 +9,7 @@ inkscape.spec.in has a partial list of requirements:
 
 At the time of writing, it contains only one package; if you use an RPM-based
 distribution, then please consider updating the Requires/BuildRequires lines to
-help other users of your distribution.  If you don't have CVS write access,
+help other users of your distribution.  If you don't have SVN write access,
 then you can submit a patch to the patch tracker
 <http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
 
@@ -41,12 +41,12 @@ can help:
    * Author a HOWTO describing a trick or technique you've figured out
 
 
-CVS Access
+SVN Access
 ==========
-See http://sourceforge.net/cvs/?group_id=93438 for how to access CVS,
-including browsing CVS from a web client.
+See http://inkscape.org/svn.php for how to access SVN,
+including browsing SVN from a web client.
 
-We give CVS write access out to people with proven interest in helping develop
+We give SVN write access out to people with proven interest in helping develop
 the codebase.  Proving your interest is straightforward:  Make two
 contributions and request access.
 

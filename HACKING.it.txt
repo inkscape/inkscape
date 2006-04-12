@@ -1,4 +1,4 @@
-Compilare la versione CVS
+Compilare la versione SVN
 =========================
 Esegui `grep Build-Depends debian/control` per avere una lista dei pacchetti (Debian)
 necessari per la compilazione.
@@ -10,7 +10,7 @@ inkscape.spec.in contiene una lista parziale dei requisiti:
 Al momento, questa lista contiene un solo pacchetto; se usi usa distribuzione
 basata su RPM, sei pregato di aggiornare le linee Requires/BuildRequires in modo
 da aiutare gli altri utenti della tua stessa distribuzione. Se non hai accesso in
-scrittura al CVS, puoi inviare una patch al sistema di gestione delle patch
+scrittura al SVN, puoi inviare una patch al sistema di gestione delle patch
 <http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
 
 Consulta http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape per informazioni
@@ -40,12 +40,12 @@ In caso contrario, questi sono solo alcuni suggerimenti:
    * Scrivi un HOWTO su qualche trucco o tecnica che trovi utile
 
 
-Accesso CVS
+Accesso SVN
 ==========
-Consulta http://sourceforge.net/cvs/?group_id=93438 per i modi di accesso al CVS,
-tra la consultazione del CVS client web.
+Consulta http://inkscape.org/svn.php per i modi di accesso al svn,
+tra la consultazione del SVN client web.
 
-L'acceso in scrittura al CVS viene dato a tutti quelli che dimostrino interesse 
+L'acceso in scrittura al SVN viene dato a tutti quelli che dimostrino interesse 
 nello sviluppo del codice. La prova è semplice: fornisci un paio di contributi e richiedi
 l'accesso.
 
