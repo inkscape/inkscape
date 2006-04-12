@@ -32,6 +32,20 @@
 
 #ifdef __WIN32__
 #include <windows.h>
+#else /* unix */
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+
+#endif
+
+#ifdef HAVE_SSL
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#endif
 #endif
 
 
