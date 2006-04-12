@@ -1,0 +1,352 @@
+###########################################################################
+#
+# Makefile for testing DOM code
+#
+###########################################################################
+
+####### Sense whether we are on a DOS box or cross-compiling
+ifdef ComSpec
+BUILD=native
+DOSSHELL=CMD_EXE
+else
+ifdef COMSPEC
+BUILD=native
+DOSSHELL=COMMAND_COM
+else
+BUILD=cross
+endif
+endif
+
+
+
+
+##########################################################################
+# FILE SEPARATORS
+# $(S) will be set to one of these
+##########################################################################
+BSLASH := \\#
+FSLASH := /
+
+
+
+##########################################################################
+# CROSS / NATIVE    SWITCHES
+##########################################################################
+ifeq ($(BUILD),cross)
+
+
+
+##########################################################################
+# CROSS COMPILER SETTINGS
+##########################################################################
+
+CC      = i686-pc-mingw32-gcc
+CXX     = i686-pc-mingw32-g++
+AS      = i686-pc-mingw32-as
+AR      = i686-pc-mingw32-ar
+RANLIB  = i686-pc-mingw32-ranlib
+WINDRES = i686-pc-mingw32-windres
+LD      = i686-pc-mingw32-ld
+DLLWRAP = i686-pc-mingw32-dllwrap
+DLLTOOL = i686-pc-mingw32-dlltool
+
+####### file separator
+S = $(FSLASH)
+
+####### escape character for echo
+E = /
+
+####### file manipulation programs
+CP     = cp
+RMDIR  = rm -rf 
+MKDIR  = mkdir
+CPDIR  = cp -rf 
+MSGFMT = msgfmt
+RMREC  = find ./inkscape -type f -name 
+RMREC1 = |xargs $(RM)
+RMDIRREC = find ./inkscape -type d -name
+RMDIRREC1 = |xargs $(RMDIR)
+
+####### Where is your GTK directory?
+GTK=/target
+
+####### Same thing, file system style
+GTKDOS=$(GTK)
+
+DTG := $(shell date +%y%m%d.%H%M)
+
+else
+
+##########################################################################
+# NATIVE COMPILER SETTINGS
+##########################################################################
+
+CC      = mingw32-gcc
+CXX     = mingw32-g++
+AS      = as
+AR      = mingw32-ar
+RANLIB  = ranlib
+WINDRES = windres
+DLLWRAP = dllwrap
+DLLTOOL = dlltool
+
+####### file separator
+S = $(BSLASH)
+
+####### escape character for echo
+E = 
+
+####### file manipulation programs
+CP = copy
+
+####### are we on WinNt and beyond?
+ifeq ($(DOSSHELL),CMD_EXE)
+RMDIR = rmdir /s /q
+RM    = del
+else
+RMDIR = deltree /y
+RM    = del
+endif
+MKDIR = mkdir
+CPDIR = xcopy /e /i
+RMREC = cd  inkscape & $(RM) /s /q 
+RMREC1 = & cd ..
+RMDIRREC = cd inkscape & $(RMDIR) /s 
+RMDIRREC1 = & cd ..
+
+#######  Where is your GTK directory?
+GTK=c:/gtk28
+
+####### Same thing, DOS style
+GTKDOS=c:\gtk28
+
+####### Command to process .po files --> .mo
+MSGFMT = $(GTKDOS)$(S)bin$(S)msgfmt
+
+####### change me!!
+DTG := 20050626
+
+endif
+##########################################################################
+# END    CROSS / NATIVE    SWITCHES
+##########################################################################
+
+
+
+
+INC = -I.
+CFLAGS = -Wall -g -DXP_WIN 
+LIBS = -lws2_32
+
+DOMOBJ = \
+charclass.o       \
+cssparser.o       \
+domimpl.o         \
+domstring.o       \
+lsimpl.o          \
+smilimpl.o        \
+uri.o             \
+xmlreader.o       \
+xpathimpl.o       \
+xpathparser.o     \
+xpathtoken.o      \
+io/base64stream.o \
+io/domstream.o    \
+io/bufferstream.o \
+io/gzipstream.o   \
+io/httpclient.o   \
+io/stringstream.o \
+io/uristream.o    \
+io/socket.o       \
+odf/odfdocument.o \
+svg/svgimpl.o     \
+svg/svglsimpl.o   \
+svg/svgparser.o   \
+util/thread.o     \
+util/ziptool.o
+
+JSOBJ = \
+js/js.o \
+js/jsapi.o \
+js/jsarena.o \
+js/jsarray.o \
+js/jsatom.o \
+js/jsbool.o \
+js/jscntxt.o \
+js/jscpucfg.o \
+js/jsdate.o \
+js/jsdbgapi.o \
+js/jsdhash.o \
+js/jsdtoa.o \
+js/jsemit.o \
+js/jsexn.o \
+js/jsfile.o \
+js/jsfun.o \
+js/jsgc.o \
+js/jshash.o \
+js/jsinterp.o \
+js/jslock.o \
+js/jslog2.o \
+js/jslong.o \
+js/jsmath.o \
+js/jsnum.o \
+js/jsobj.o \
+js/jsopcode.o \
+js/jsparse.o \
+js/jsprf.o \
+js/jsregexp.o \
+js/jsscan.o \
+js/jsscope.o \
+js/jsscript.o \
+js/jsstr.o \
+js/jsutil.o \
+js/jsxdrapi.o \
+js/prmjtime.o \
+js/fdlibm/e_acos.o \
+js/fdlibm/e_acosh.o \
+js/fdlibm/e_asin.o \
+js/fdlibm/e_atan2.o \
+js/fdlibm/e_atanh.o \
+js/fdlibm/e_cosh.o \
+js/fdlibm/e_exp.o \
+js/fdlibm/e_fmod.o \
+js/fdlibm/e_gamma.o \
+js/fdlibm/e_gamma_r.o \
+js/fdlibm/e_hypot.o \
+js/fdlibm/e_j0.o \
+js/fdlibm/e_j1.o \
+js/fdlibm/e_jn.o \
+js/fdlibm/e_lgamma.o \
+js/fdlibm/e_lgamma_r.o \
+js/fdlibm/e_log.o \
+js/fdlibm/e_log10.o \
+js/fdlibm/e_pow.o \
+js/fdlibm/e_remainder.o \
+js/fdlibm/e_rem_pio2.o \
+js/fdlibm/e_scalb.o \
+js/fdlibm/e_sinh.o \
+js/fdlibm/e_sqrt.o \
+js/fdlibm/k_cos.o \
+js/fdlibm/k_rem_pio2.o \
+js/fdlibm/k_sin.o \
+js/fdlibm/k_standard.o \
+js/fdlibm/k_tan.o \
+js/fdlibm/s_asinh.o \
+js/fdlibm/s_atan.o \
+js/fdlibm/s_cbrt.o \
+js/fdlibm/s_ceil.o \
+js/fdlibm/s_copysign.o \
+js/fdlibm/s_cos.o \
+js/fdlibm/s_erf.o \
+js/fdlibm/s_expm1.o \
+js/fdlibm/s_fabs.o \
+js/fdlibm/s_finite.o \
+js/fdlibm/s_floor.o \
+js/fdlibm/s_frexp.o \
+js/fdlibm/s_ilogb.o \
+js/fdlibm/s_isnan.o \
+js/fdlibm/s_ldexp.o \
+js/fdlibm/s_lib_version.o \
+js/fdlibm/s_log1p.o \
+js/fdlibm/s_logb.o \
+js/fdlibm/s_matherr.o \
+js/fdlibm/s_modf.o \
+js/fdlibm/s_nextafter.o \
+js/fdlibm/s_rint.o \
+js/fdlibm/s_scalbn.o \
+js/fdlibm/s_signgam.o \
+js/fdlibm/s_significand.o \
+js/fdlibm/s_sin.o \
+js/fdlibm/s_tan.o \
+js/fdlibm/s_tanh.o \
+js/fdlibm/w_acos.o \
+js/fdlibm/w_acosh.o \
+js/fdlibm/w_asin.o \
+js/fdlibm/w_atan2.o \
+js/fdlibm/w_atanh.o \
+js/fdlibm/w_cosh.o \
+js/fdlibm/w_exp.o \
+js/fdlibm/w_fmod.o \
+js/fdlibm/w_gamma.o \
+js/fdlibm/w_gamma_r.o \
+js/fdlibm/w_hypot.o \
+js/fdlibm/w_j0.o \
+js/fdlibm/w_j1.o \
+js/fdlibm/w_jn.o \
+js/fdlibm/w_lgamma.o \
+js/fdlibm/w_lgamma_r.o \
+js/fdlibm/w_log.o \
+js/fdlibm/w_log10.o \
+js/fdlibm/w_pow.o \
+js/fdlibm/w_remainder.o \
+js/fdlibm/w_scalb.o \
+js/fdlibm/w_sinh.o \
+js/fdlibm/w_sqrt.o
+
+
+
+TESTOBJ = \
+work/testdom.o   \
+work/testodf.o   \
+work/testsvg.o   \
+work/testuri.o   \
+work/testxpath.o \
+work/testzip.o
+
+OBJ = $(DOMOBJ) $(JSOBJ)
+
+all: testdom.exe testhttp.exe testodf.exe \
+testsvg.exe testuri.exe testxpath.exe testzip.exe
+
+testdom.exe: libdom.a work/testdom.o
+	$(CXX) -o $@ work/testdom.o libdom.a $(LIBS)
+
+testhttp.exe: libdom.a work/testhttp.o
+	$(CXX) -o $@ work/testhttp.o libdom.a $(LIBS)
+
+testodf.exe: libdom.a work/testodf.o
+	$(CXX) -o $@ work/testodf.o libdom.a $(LIBS)
+
+testsvg.exe: libdom.a work/testsvg.o
+	$(CXX) -o $@ work/testsvg.o libdom.a $(LIBS)
+
+testuri.exe: libdom.a work/testuri.o
+	$(CXX) -o $@ work/testuri.o libdom.a $(LIBS)
+
+testxpath.exe: libdom.a work/testxpath.o
+	$(CXX) -o $@ work/testxpath.o libdom.a $(LIBS)
+
+testzip.exe: libdom.a work/testzip.o
+	$(CXX) -o $@ work/testzip.o libdom.a $(LIBS)
+
+
+libdom.a: $(OBJ)
+	ar crv $@ $(OBJ)
+
+
+.cpp.o:
+	$(CXX) $(CFLAGS) $(INC) -c -o $@ $<
+
+clean:
+	$(foreach a, $(OBJ), $(shell $(RM) $(subst /,$(S), $(a))))
+	$(foreach a, $(TESTOBJ), $(shell $(RM) $(subst /,$(S), $(a))))
+	-$(RM) *.a
+	-$(RM) *.gch
+	-$(RM) testdom
+	-$(RM) testdom.exe
+	-$(RM) testodf
+	-$(RM) testodf.exe
+	-$(RM) testsvg
+	-$(RM) testsvg.exe
+	-$(RM) testuri
+	-$(RM) testuri.exe
+	-$(RM) testxpath
+	-$(RM) testxpath.exe
+	-$(RM) testzip
+	-$(RM) testzip.exe
+	-$(RM) core.*
+
+###########################################################################
+# E N D    O F    F I L E
+###########################################################################
+
