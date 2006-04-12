@@ -31,7 +31,7 @@ class Node;
 }
 
 
-/** 
+/**
  * Radial objects are represented by an angle and a distance from
  * 0,0.  0,0 is represented by a == big_num.
  */
@@ -132,7 +132,7 @@ class Path {
 	::Path *livarot_path;
 
       /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
-	uint local_change; 
+	unsigned int local_change;
 };
 
 
