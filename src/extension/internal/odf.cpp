@@ -45,7 +45,7 @@
 
 #include "io/sys.h"
 
-#include "dom/ziptool.h"
+#include "dom/util/ziptool.h"
 
 namespace Inkscape
 {
