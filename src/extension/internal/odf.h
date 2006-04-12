@@ -32,8 +32,18 @@
 #ifndef EXTENSION_INTERNAL_ODG_OUT_H
 #define EXTENSION_INTERNAL_ODG_OUT_H
 
+#include <dom/dom.h>
+#include <dom/io/stringstream.h>
+
 #include <glib.h>
 #include "extension/implementation/implementation.h"
+
+
+#include <xml/repr.h>
+
+#include <string>
+#include <map>
+
 
 namespace Inkscape
 {
@@ -46,16 +56,26 @@ namespace Internal
 class OdfOutput : public Inkscape::Extension::Implementation::Implementation
 {
 
-    public:
+public:
 
-	bool check (Inkscape::Extension::Extension * module);
+    bool check (Inkscape::Extension::Extension * module);
 
-	void          save  (Inkscape::Extension::Output *mod,
-	                     SPDocument *doc,
-	                     const gchar *uri);
+    void save  (Inkscape::Extension::Output *mod,
+	        SPDocument *doc,
+	        const gchar *uri);
 
-	static void   init  (void);
+    static void   init  (void);
 
+private:
+
+    int styleIndex;
+    std::map<std::string, std::string> styleTable;
+
+    void preprocess(SPDocument *doc);
+    void preprocess(Inkscape::XML::Node *node);
+
+    void po(char *str);
+    org::w3c::dom::io::StringOutputStream outs;
 
 };
 
