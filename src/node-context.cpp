@@ -310,7 +310,6 @@ nodepath_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
                             bool is_interactive, gpointer data)
 {
     SPItem *item = NULL;
-    char const *newd = NULL, *newtypestr = NULL;
     gboolean changed = FALSE;
 
     g_assert(data);
@@ -322,21 +321,18 @@ nodepath_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
 
     if (np) {
         item = SP_ITEM(np->path);
-        if (!strcmp(name, "d")) {
-            newd = new_value;
-            changed = nodepath_repr_d_changed(np, new_value);
-        } else if (!strcmp(name, "sodipodi:nodetypes")) {
-            newtypestr = new_value;
-            changed = nodepath_repr_typestr_changed(np, new_value);
-        } else {
-            return;
-            // With paths, we only need to act if one of the path-affecting attributes has changed.
+        if (!strcmp(name, "d") || !strcmp(name, "sodipodi:nodetypes")) { // With paths, we only need to act if one of the path-affecting attributes has changed.
+            changed = (np->local_change == 0);
+            if (np->local_change > 0)
+                np->local_change--;
         }
+
     } else if (kh) {
         item = SP_ITEM(kh->item);
         changed = !(kh->local_change);
         kh->local_change = FALSE;
     }
+
     if (np && changed) {
         GList *saved = NULL;
         SPDesktop *desktop = np->desktop;

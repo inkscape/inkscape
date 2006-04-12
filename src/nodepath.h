@@ -130,6 +130,9 @@ class Path {
 
       /// livarot library is used for "point on path" and "nearest position on path", so we need to maintain its path representation as well
 	::Path *livarot_path;
+
+      /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
+	uint local_change; 
 };
 
 

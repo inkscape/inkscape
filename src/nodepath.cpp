@@ -182,6 +182,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
     np->selected    = NULL;
     np->nodeContext = NULL; //Let the context that makes this set it
     np->livarot_path = NULL;
+    np->local_change = 0;
 
     // we need to update item's transform from the repr here,
     // because they may be out of sync when we respond
@@ -292,62 +293,6 @@ static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
     }
 
     g_list_free(badSubPaths);
-}
-
-
-
-/**
- * \brief Returns true if the argument nodepath and the d attribute in
- * its repr do not match.
- *
- * This may happen if repr was changed in, e.g., XML editor or by undo.
- *
- * \todo
- * UGLY HACK, think how we can eliminate it. IDEA: try instead a local_change flag in node context?
- */
-gboolean nodepath_repr_d_changed(Inkscape::NodePath::Path *np, char const *newd)
-{
-    g_assert(np);
-
-    SPCurve *curve = create_curve(np);
-
-    gchar *svgpath = sp_svg_write_path(curve->bpath);
-
-    char const *attr_d = ( newd
-                           ? newd
-                           : SP_OBJECT(np->path)->repr->attribute("d") );
-
-    gboolean ret;
-    if (attr_d && svgpath)
-        ret = strcmp(attr_d, svgpath);
-    else
-        ret = TRUE;
-
-    g_free(svgpath);
-    sp_curve_unref(curve);
-
-    return ret;
-}
-
-/**
- * \brief Returns true if the argument nodepath and the sodipodi:nodetypes
- * attribute in its repr do not match.
- *
- * This may happen if repr was changed in, e.g., the XML editor or by undo.
- * IDEA: try instead a local_change flag in node context?
- */
-gboolean nodepath_repr_typestr_changed(Inkscape::NodePath::Path *np, char const *newtypestr)
-{
-    g_assert(np);
-    gchar *typestr = create_typestr(np);
-    char const *attr_typestr = ( newtypestr
-                                 ? newtypestr
-                                 : SP_OBJECT(np->path)->repr->attribute("sodipodi:nodetypes") );
-    gboolean const ret = (attr_typestr && strcmp(attr_typestr, typestr));
-
-    g_free(typestr);
-
-    return ret;
 }
 
 /**
@@ -465,8 +410,15 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
     gchar *typestr = create_typestr(np);
     gchar *svgpath = sp_svg_write_path(curve->bpath);
 
-    repr->setAttribute("d", svgpath);
-    repr->setAttribute("sodipodi:nodetypes", typestr);
+    if (repr->attribute("d") == NULL || strcmp(svgpath, repr->attribute("d"))) { // d changed
+        np->local_change++;
+        repr->setAttribute("d", svgpath);
+    }
+
+    if (repr->attribute("sodipodi:nodetypes") == NULL || strcmp(typestr, repr->attribute("sodipodi:nodetypes"))) { // nodetypes changed
+        np->local_change++;
+        repr->setAttribute("sodipodi:nodetypes", typestr);
+    }
 
     g_free(svgpath);
     g_free(typestr);
