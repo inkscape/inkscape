@@ -46,7 +46,6 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #endif
-#endif
 
 
 namespace org
