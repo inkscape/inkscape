@@ -17,10 +17,8 @@ bonobo
 dialogs/filedialog-win32.cpp
 display/testnr.cpp
 display/bezier-utils-test.cpp
-dom/testdom.cpp
-dom/testsvg.cpp
-dom/xpathtest.cpp
-dom/xpathtests.cpp
+dom/work
+dom/odf/SvgOdg.cpp
 extension/api.cpp
 extension/dxf2svg
 extension/internal/gnome.cpp
