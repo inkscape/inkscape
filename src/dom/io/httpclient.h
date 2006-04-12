@@ -31,9 +31,9 @@
 
 
 
-#include "dom.h"
-#include "uri.h"
-#include "socket.h"
+#include "dom/dom.h"
+#include "dom/uri.h"
+#include "dom/io/socket.h"
 
 namespace org
 {
