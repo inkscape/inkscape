@@ -408,7 +408,7 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             num ++;
         }
 
-       if (paint_res->set && paint->set && paint->type == SP_PAINT_TYPE_PAINTSERVER) { // copy the server
+       if (paint_res->set && paint_effectively_set && paint->type == SP_PAINT_TYPE_PAINTSERVER) { // copy the server
            if (isfill) {
                SP_STYLE_FILL_SERVER (style_res) = SP_STYLE_FILL_SERVER (style);
            } else {
