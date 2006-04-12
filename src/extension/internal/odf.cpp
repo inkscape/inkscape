@@ -45,6 +45,10 @@
 
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
+#include "sp-text.h"
+#include "sp-flowtext.h"
+#include "svg/svg.h"
+#include "text-editing.h"
 
 #include <vector>
 
@@ -338,6 +342,32 @@ bool OdfOutput::writeTree(Inkscape::XML::Node *node)
     SPItem *item = SP_ITEM(reprobj);
 
     //# Do our stuff
+    SPCurve *curve = NULL;
+    if (SP_IS_SHAPE(item))
+        {
+        curve = sp_shape_get_curve(SP_SHAPE(item));
+        }
+    else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
+        {
+        curve = te_get_layout(item)->convertToCurves();
+        }
+
+    if (!curve)
+        return false;
+
+    //Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+    /* Transformation */
+    //repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
+
+    /* Rotation center */
+    //sp_repr_set_attr(repr, "inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"));
+    //sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
+
+    /* Definition */
+    gchar *def_str = sp_svg_write_path(curve->bpath);
+
+    g_free(def_str);
+    sp_curve_unref(curve);
 
 
     //# Iterate through the children
