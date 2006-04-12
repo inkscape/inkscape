@@ -31,7 +31,7 @@
 
 
 
-#include "dom.h"
+#include <dom/dom.h>
 
 namespace org
 {
