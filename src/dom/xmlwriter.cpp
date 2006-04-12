@@ -88,8 +88,8 @@ void XmlWriter::write(const Node *nodeArg)
 
     indent+=2;
 
-    NamedNodeMap *attributes = node->getAttributes();
-    int nrAttrs = attributes->getLength();
+    NamedNodeMap attributes = node->getAttributes();
+    int nrAttrs = attributes.getLength();
 
     //### Start open tag
     spaces();
@@ -101,7 +101,7 @@ void XmlWriter::write(const Node *nodeArg)
     //### Attributes
     for (int i=0 ; i<nrAttrs ; i++)
         {
-        Node *attr = attributes->item(i);
+        Node *attr = attributes.item(i);
         spaces();
         pos(attr->getNodeName());
         po("=\"");
@@ -155,7 +155,7 @@ void XmlWriter::writeFile(FILE *f, const Node *node)
 
     write(node);
 
-    for (int i=0 ; i<buf.size() ; i++)
+    for (unsigned int i=0 ; i<buf.size() ; i++)
         {
         int ch = buf[i];
         fputc(ch, f);
