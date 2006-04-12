@@ -1,242 +1,242 @@
 <?xml version="1.0"?>
-<keybindings name="Inkscape default">
-  <primary keyval="n" modifiers="control" verb="FileNew" />
-  <secondary keyval="N" modifiers="control" verb="FileNew" />
-  <primary keyval="o" modifiers="control" verb="FileOpen" />
-  <secondary keyval="O" modifiers="control" verb="FileOpen" />
-  <primary keyval="s" modifiers="control" verb="FileSave" />
-  <secondary keyval="S" modifiers="control" verb="FileSave" />
-  <primary keyval="s" modifiers="control,shift" verb="FileSaveAs" />
-  <secondary keyval="S" modifiers="control,shift" verb="FileSaveAs" />
-  <primary keyval="p" modifiers="control" verb="FilePrint" />
-  <secondary keyval="P" modifiers="control" verb="FilePrint" />
-  <primary keyval="F11" verb="FullScreen" />
-  <primary keyval="e" modifiers="control,shift" verb="FileExport" />
-  <secondary keyval="E" modifiers="control,shift" verb="FileExport" />
-  <primary keyval="i" modifiers="control" verb="FileImport" />
-  <secondary keyval="I" modifiers="control" verb="FileImport" />
-  <primary keyval="Tab" modifiers="control" verb="FileNextDesktop" />
-  <primary keyval="Tab" modifiers="control,shift" verb="FilePrevDesktop" />
-  <secondary keyval="ISO_Left_Tab" modifiers="control" verb="FilePrevDesktop" />
-  <secondary keyval="ISO_Left_Tab" modifiers="control,shift" verb="FilePrevDesktop" />
-  <primary keyval="w" modifiers="control" verb="FileCloseView" />
-  <primary keyval="W" modifiers="control" verb="FileCloseView" />
-  <primary keyval="q" modifiers="control" verb="FileQuit" />
-  <primary keyval="Q" modifiers="control" verb="FileQuit" />
-  <primary keyval="F1" verb="DrawSelect" />
-  <secondary keyval="s" verb="DrawSelect" />
-  <secondary keyval="S" verb="DrawSelect" />
-  <primary keyval="F1" modifiers="control" verb="DrawGradient" />
-  <secondary keyval="g" verb="DrawGradient" />
-  <secondary keyval="G" verb="DrawGradient" />
-  <primary keyval="F2" verb="DrawNode" />
-  <secondary keyval="n" verb="DrawNode" />
-  <secondary keyval="N" verb="DrawNode" />
-  <primary keyval="F3" verb="DrawZoom" />
-  <secondary keyval="z" verb="DrawZoom" />
-  <secondary keyval="Z" verb="DrawZoom" />
-  <primary keyval="F4" verb="DrawRect" />
-  <secondary keyval="r" verb="DrawRect" />
-  <secondary keyval="R" verb="DrawRect" />
-  <primary keyval="F5" verb="DrawArc" />
-  <secondary keyval="e" verb="DrawArc" />
-  <secondary keyval="E" verb="DrawArc" />
-  <primary keyval="F6" verb="DrawPencil" />
-  <secondary keyval="p" verb="DrawPencil" />
-  <secondary keyval="P" verb="DrawPencil" />
-  <primary keyval="F6" modifiers="shift" verb="DrawPen" />
-  <secondary keyval="b" verb="DrawPen" />
-  <secondary keyval="B" verb="DrawPen" />
-  <primary keyval="F6" modifiers="control" verb="DrawCalligrphic" />
-  <secondary keyval="c" verb="DrawCalligrphic" />
-  <secondary keyval="C" verb="DrawCalligrphic" />
-  <primary keyval="F7" verb="DrawDropper" />
-  <secondary keyval="d" verb="DrawDropper" />
-  <secondary keyval="D" verb="DrawDropper" />
-  <primary keyval="F8" verb="DrawText" />
-  <secondary keyval="t" verb="DrawText" />
-  <secondary keyval="T" verb="DrawText" />
-  <primary keyval="F9" verb="DrawSpiral" />
-  <secondary keyval="i" verb="DrawSpiral" />
-  <secondary keyval="I" verb="DrawSpiral" />
-  <secondary keyval="F9" modifiers="shift" verb="DrawStar" />
-  <secondary keyval="asterisk" modifiers="shift" verb="DrawStar" />
-  <secondary keyval="asterisk" verb="DrawStar" />
-  <primary keyval="KP_Multiply" verb="DrawStar" />
-  <primary keyval="F2" modifiers="control" verb="DrawConnector" />
-  <secondary keyval="o" verb="DrawConnector" />
-  <secondary keyval="O" verb="DrawConnector" />
-  <primary keyval="plus" verb="ZoomIn" />
-  <secondary keyval="plus" modifiers="shift" verb="ZoomIn" />
-  <secondary keyval="equal" verb="ZoomIn" />
-  <secondary keyval="KP_Add" verb="ZoomIn" />
-  <primary keyval="minus" verb="ZoomOut" />
-  <secondary keyval="KP_Subtract" verb="ZoomOut" />
-  <primary keyval="1" verb="Zoom1:0" />
-  <primary keyval="grave" verb="ZoomPrev" />
-  <primary keyval="grave" modifiers="shift" verb="ZoomNext" />
-  <secondary keyval="asciitilde" modifiers="shift" verb="ZoomNext" />
-  <primary keyval="2" verb="Zoom1:2" />
-  <primary keyval="3" verb="ZoomSelection" />
-  <primary keyval="4" verb="ZoomDrawing" />
-  <primary keyval="5" verb="ZoomPage" />
-  <secondary keyval="KP_5" verb="ZoomPage" />
-  <primary keyval="6" verb="ZoomPageWidth" />
-  <secondary keyval="e" modifiers="control" verb="ZoomPageWidth" />
-  <secondary keyval="E" modifiers="control" verb="ZoomPageWidth" />
-  <primary keyval="r" modifiers="control" verb="ToggleRulers" />
-  <secondary keyval="R" modifiers="control" verb="ToggleRulers" />
-  <primary keyval="b" modifiers="control" verb="ToggleScrollbars" />
-  <secondary keyval="B" modifiers="control" verb="ToggleScrollbars" />
-  <secondary keyval="bar" modifiers="shift" verb="ToggleGuides" />
-  <primary keyval="bar" verb="ToggleGuides" />
-  <secondary keyval="numbersign" modifiers="shift" verb="ToggleGrid" />
-  <primary keyval="numbersign" verb="ToggleGrid" />
-  <primary keyval="z" modifiers="control" verb="EditUndo" />
-  <secondary keyval="Z" modifiers="control" verb="EditUndo" />
-  <secondary keyval="y" modifiers="control" verb="EditRedo" />
-  <secondary keyval="Y" modifiers="control" verb="EditRedo" />
-  <primary keyval="z" modifiers="control,shift" verb="EditRedo" />
-  <secondary keyval="Z" modifiers="control,shift" verb="EditRedo" />
-  <secondary keyval="y" modifiers="control,shift" verb="EditUndo" />
-  <secondary keyval="Y" modifiers="control,shift" verb="EditUndo" />
-  <primary keyval="x" modifiers="control" verb="EditCut" />
-  <secondary keyval="X" modifiers="control" verb="EditCut" />
-  <primary keyval="c" modifiers="control" verb="EditCopy" />
-  <secondary keyval="C" modifiers="control" verb="EditCopy" />
-  <primary keyval="v" modifiers="control" verb="EditPaste" />
-  <secondary keyval="V" modifiers="control" verb="EditPaste" />
-  <primary keyval="v" modifiers="control,shift" verb="EditPasteStyle" />
-  <secondary keyval="V" modifiers="control,shift" verb="EditPasteStyle" />
-  <primary keyval="v" modifiers="control,alt" verb="EditPasteInPlace" />
-  <secondary keyval="V" modifiers="control,alt" verb="EditPasteInPlace" />
-  <primary keyval="Delete" verb="EditDelete" />
-  <secondary keyval="KP_Delete" verb="EditDelete" />
-  <secondary keyval="BackSpace" verb="EditDelete" />
-  <primary keyval="d" modifiers="control" verb="EditDuplicate" />
-  <secondary keyval="D" modifiers="control" verb="EditDuplicate" />
-  <primary keyval="d" modifiers="alt" verb="EditClone" />
-  <secondary keyval="D" modifiers="alt" verb="EditClone" />
-  <primary keyval="d" modifiers="alt,shift" verb="EditUnlinkClone" />
-  <secondary keyval="D" modifiers="alt,shift" verb="EditUnlinkClone" />
-  <primary keyval="d" modifiers="shift" verb="EditCloneOriginal" />
-  <secondary keyval="D" modifiers="shift" verb="EditCloneOriginal" />
-  <primary keyval="i" modifiers="alt" verb="EditTile" />
-  <secondary keyval="I" modifiers="alt" verb="EditTile" />
-  <primary keyval="i" modifiers="alt,shift" verb="EditUnTile" />
-  <secondary keyval="I" modifiers="alt,shift" verb="EditUnTile" />
-  <primary keyval="c" modifiers="control,shift" verb="ObjectToCurve" />
-  <secondary keyval="C" modifiers="control,shift" verb="ObjectToCurve" />
-  <primary keyval="w" modifiers="alt" verb="ObjectFlowText" />
-  <secondary keyval="W" modifiers="alt" verb="ObjectFlowText" />
-  <primary keyval="w" modifiers="alt,shift" verb="ObjectUnFlowText" />
-  <secondary keyval="W" modifiers="alt,shift" verb="ObjectUnFlowText" />
-  <primary keyval="h" verb="ObjectFlipHorizontally" />
-  <secondary keyval="H" verb="ObjectFlipHorizontally" />
-  <primary keyval="v" verb="ObjectFlipVertically" />
-  <secondary keyval="V" verb="ObjectFlipVertically" />
-  <primary keyval="Page_Up" modifiers="control,shift" verb="LayerRaise" />
-  <secondary keyval="KP_Page_Up" modifiers="control,shift" verb="LayerRaise" />
-  <primary keyval="Page_Down" modifiers="control,shift" verb="LayerLower" />
-  <secondary keyval="KP_Page_Down" modifiers="control,shift" verb="LayerLower" />
-  <primary keyval="Home" modifiers="control,shift" verb="LayerToTop" />
-  <secondary keyval="KP_Home" modifiers="control,shift" verb="LayerToTop" />
-  <primary keyval="End" modifiers="control,shift" verb="LayerToBottom" />
-  <secondary keyval="KP_End" modifiers="control,shift" verb="LayerToBottom" />
-  <primary keyval="Page_Up" modifiers="shift" verb="LayerMoveToNext" />
-  <secondary keyval="KP_Page_Up" modifiers="shift" verb="LayerMoveToNext" />
-  <primary keyval="Page_Down" modifiers="shift" verb="LayerMoveToPrev" />
-  <secondary keyval="KP_Page_Down" modifiers="shift" verb="LayerMoveToPrev" />
-  <primary keyval="Home" verb="SelectionToFront" />
-  <secondary keyval="KP_Home" verb="SelectionToFront" />
-  <primary keyval="End" verb="SelectionToBack" />
-  <secondary keyval="KP_End" verb="SelectionToBack" />
-  <primary keyval="Page_Up" verb="SelectionRaise" />
-  <secondary keyval="KP_Page_Up" verb="SelectionRaise" />
-  <primary keyval="Page_Down" verb="SelectionLower" />
-  <secondary keyval="KP_Page_Down" verb="SelectionLower" />
-  <primary keyval="a" modifiers="control" verb="EditSelectAll" />
-  <secondary keyval="A" modifiers="control" verb="EditSelectAll" />
-  <primary keyval="a" modifiers="control,alt" verb="EditSelectAllInAllLayers" />
-  <secondary keyval="A" modifiers="control,alt" verb="EditSelectAllInAllLayers" />
-  <primary keyval="exclam" verb="EditInvert" />
-  <secondary keyval="exclam" modifiers="shift" verb="EditInvert" />
-  <primary keyval="exclam" modifiers="alt" verb="EditInvertInAllLayers" />
-  <secondary keyval="exclam" modifiers="alt,shift" verb="EditInvertInAllLayers" />
-  <primary keyval="g" modifiers="control" verb="SelectionGroup" />
-  <secondary keyval="G" modifiers="control" verb="SelectionGroup" />
-  <secondary keyval="u" modifiers="control" verb="SelectionUnGroup" />
-  <secondary keyval="U" modifiers="control" verb="SelectionUnGroup" />
-  <primary keyval="g" modifiers="control,shift" verb="SelectionUnGroup" />
-  <secondary keyval="G" modifiers="control,shift" verb="SelectionUnGroup" />
-  <secondary keyval="u" modifiers="control,shift" verb="SelectionGroup" />
-  <secondary keyval="U" modifiers="control,shift" verb="SelectionGroup" />
-  <primary keyval="plus" modifiers="control" verb="SelectionUnion" />
-  <secondary keyval="KP_Add" modifiers="control" verb="SelectionUnion" />
-  <secondary keyval="plus" modifiers="control,shift" verb="SelectionUnion" />
-  <primary keyval="asterisk" modifiers="control" verb="SelectionIntersect" />
-  <secondary keyval="KP_Multiply" modifiers="control" verb="SelectionIntersect" />
-  <secondary keyval="asterisk" modifiers="control,shift" verb="SelectionIntersect" />
-  <primary keyval="minus" modifiers="control" verb="SelectionDiff" />
-  <secondary keyval="underscore" modifiers="control" verb="SelectionDiff" />
-  <secondary keyval="underscore" modifiers="control,shift" verb="SelectionDiff" />
-  <secondary keyval="KP_Subtract" modifiers="control" verb="SelectionDiff" />
-  <secondary keyval="minus" modifiers="control,shift" verb="SelectionDiff" />
-  <primary keyval="asciicircum" modifiers="control" verb="SelectionSymDiff" />
-  <secondary keyval="asciicircum" modifiers="control,shift" verb="SelectionSymDiff" />
-  <primary keyval="slash" modifiers="control,alt" verb="SelectionCutPath" />
-  <secondary keyval="slash" modifiers="control,alt,shift" verb="SelectionCutPath" />
-  <primary keyval="slash" modifiers="control" verb="SelectionDivide" />
-  <secondary keyval="slash" modifiers="control,shift" verb="SelectionDivide" />
-  <primary keyval="parenright" modifiers="control" verb="SelectionOffset" />
-  <secondary keyval="parenright" modifiers="control,shift" verb="SelectionOffset" />
-  <secondary keyval="0" modifiers="control,shift" verb="SelectionOffset" />
-  <primary keyval="parenright" modifiers="alt" verb="SelectionOffsetScreen" />
-  <secondary keyval="0" modifiers="alt" verb="SelectionOffsetScreen" />
-  <primary keyval="parenright" modifiers="alt,shift" verb="SelectionOffsetScreen10" />
-  <secondary keyval="0" modifiers="alt,shift" verb="SelectionOffsetScreen10" />
-  <primary keyval="parenleft" modifiers="control" verb="SelectionInset" />
-  <secondary keyval="parenleft" modifiers="control,shift" verb="SelectionInset" />
-  <secondary keyval="9" modifiers="control,shift" verb="SelectionInset" />
-  <primary keyval="parenleft" modifiers="alt" verb="SelectionInsetScreen" />
-  <secondary keyval="9" modifiers="alt" verb="SelectionInsetScreen" />
-  <primary keyval="parenleft" modifiers="alt,shift" verb="SelectionInsetScreen" />
-  <secondary keyval="9" modifiers="alt,shift" verb="SelectionInsetScreen" />
-  <primary keyval="j" modifiers="control" verb="SelectionDynOffset" />
-  <secondary keyval="J" modifiers="control" verb="SelectionDynOffset" />
-  <primary keyval="j" modifiers="control,alt" verb="SelectionLinkedOffset" />
-  <secondary keyval="J" modifiers="control,alt" verb="SelectionLinkedOffset" />
-  <primary keyval="c" modifiers="control,alt" verb="SelectionOutline" />
-  <secondary keyval="C" modifiers="control,alt" verb="SelectionOutline" />
-  <primary keyval="l" modifiers="control" verb="SelectionSimplify" />
-  <secondary keyval="L" modifiers="control" verb="SelectionSimplify" />
-  <primary keyval="b" modifiers="alt" verb="SelectionCreateBitmap" />
-  <secondary keyval="B" modifiers="alt" verb="SelectionCreateBitmap" />
-  <primary keyval="b" modifiers="alt,shift" verb="SelectionTrace" />
-  <secondary keyval="B" modifiers="alt,shift" verb="SelectionTrace" />
-  <primary keyval="k" modifiers="control" verb="SelectionCombine" />
-  <secondary keyval="K" modifiers="control" verb="SelectionCombine" />
-  <primary keyval="k" modifiers="control,shift" verb="SelectionBreakApart" />
-  <secondary keyval="K" modifiers="control,shift" verb="SelectionBreakApart" />
-  <primary keyval="x" modifiers="control,shift" verb="DialogXMLEditor" />
-  <secondary keyval="X" modifiers="control,shift" verb="DialogXMLEditor" />
-  <primary keyval="d" modifiers="control,shift" verb="DialogNamedview" />
-  <secondary keyval="D" modifiers="control,shift" verb="DialogNamedview" />
-  <primary keyval="a" modifiers="control,shift" verb="DialogAlignDistribute" />
-  <secondary keyval="A" modifiers="control,shift" verb="DialogAlignDistribute" />
-  <primary keyval="t" modifiers="control,shift" verb="Dialogtext" />
-  <secondary keyval="T" modifiers="control,shift" verb="Dialogtext" />
-  <primary keyval="p" modifiers="control,shift" verb="DialogDisplay" />
-  <secondary keyval="P" modifiers="control,shift" verb="DialogDisplay" />
-  <primary keyval="f" modifiers="control,shift" verb="DialogFillStroke" />
-  <secondary keyval="F" modifiers="control,shift" verb="DialogFillStroke" />
-  <primary keyval="f" modifiers="control" verb="DialogFind" />
-  <secondary keyval="F" modifiers="control" verb="DialogFind" />
-  <primary keyval="m" modifiers="control,shift" verb="DialogTransform" />
-  <secondary keyval="M" modifiers="control,shift" verb="DialogTransform" />
-  <primary keyval="o" modifiers="control,shift" verb="DialogItem" />
-  <secondary keyval="O" modifiers="control,shift" verb="DialogItem" />
-  <primary keyval="w" modifiers="control,shift" verb="DialogSwatches" />
-  <secondary keyval="W" modifiers="control,shift" verb="DialogSwatches" />
-  <primary keyval="F12" verb="DialogsToggle" />
-</keybindings>
+<keys name="Inkscape default">
+  <bind key="n" modifiers="Ctrl" action="FileNew" display="true"/>
+  <bind key="N" modifiers="Ctrl" action="FileNew" />
+  <bind key="o" modifiers="Ctrl" action="FileOpen" display="true"/>
+  <bind key="O" modifiers="Ctrl" action="FileOpen" />
+  <bind key="s" modifiers="Ctrl" action="FileSave" display="true"/>
+  <bind key="S" modifiers="Ctrl" action="FileSave" />
+  <bind key="s" modifiers="Ctrl,Shift" action="FileSaveAs" display="true"/>
+  <bind key="S" modifiers="Ctrl,Shift" action="FileSaveAs" />
+  <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
+  <bind key="P" modifiers="Ctrl" action="FilePrint" />
+  <bind key="F11" action="FullScreen" display="true"/>
+  <bind key="e" modifiers="Ctrl,Shift" action="FileExport" display="true"/>
+  <bind key="E" modifiers="Ctrl,Shift" action="FileExport" />
+  <bind key="i" modifiers="Ctrl" action="FileImport" display="true"/>
+  <bind key="I" modifiers="Ctrl" action="FileImport" />
+  <bind key="Tab" modifiers="Ctrl" action="FileNextDesktop" display="true"/>
+  <bind key="Tab" modifiers="Ctrl,Shift" action="FilePrevDesktop" display="true"/>
+  <bind key="ISO_Left_Tab" modifiers="Ctrl" action="FilePrevDesktop" />
+  <bind key="ISO_Left_Tab" modifiers="Ctrl,Shift" action="FilePrevDesktop" />
+  <bind key="w" modifiers="Ctrl" action="FileCloseView" display="true"/>
+  <bind key="W" modifiers="Ctrl" action="FileCloseView" display="true"/>
+  <bind key="q" modifiers="Ctrl" action="FileQuit" display="true"/>
+  <bind key="Q" modifiers="Ctrl" action="FileQuit" display="true"/>
+  <bind key="F1" action="DrawSelect" display="true"/>
+  <bind key="s" action="DrawSelect" />
+  <bind key="S" action="DrawSelect" />
+  <bind key="F1" modifiers="Ctrl" action="DrawGradient" display="true"/>
+  <bind key="g" action="DrawGradient" />
+  <bind key="G" action="DrawGradient" />
+  <bind key="F2" action="DrawNode" display="true"/>
+  <bind key="n" action="DrawNode" />
+  <bind key="N" action="DrawNode" />
+  <bind key="F3" action="DrawZoom" display="true"/>
+  <bind key="z" action="DrawZoom" />
+  <bind key="Z" action="DrawZoom" />
+  <bind key="F4" action="DrawRect" display="true"/>
+  <bind key="r" action="DrawRect" />
+  <bind key="R" action="DrawRect" />
+  <bind key="F5" action="DrawArc" display="true"/>
+  <bind key="e" action="DrawArc" />
+  <bind key="E" action="DrawArc" />
+  <bind key="F6" action="DrawPencil" display="true"/>
+  <bind key="p" action="DrawPencil" />
+  <bind key="P" action="DrawPencil" />
+  <bind key="F6" modifiers="Shift" action="DrawPen" display="true"/>
+  <bind key="b" action="DrawPen" />
+  <bind key="B" action="DrawPen" />
+  <bind key="F6" modifiers="Ctrl" action="DrawCalligrphic" display="true"/>
+  <bind key="c" action="DrawCalligrphic" />
+  <bind key="C" action="DrawCalligrphic" />
+  <bind key="F7" action="DrawDropper" display="true"/>
+  <bind key="d" action="DrawDropper" />
+  <bind key="D" action="DrawDropper" />
+  <bind key="F8" action="DrawText" display="true"/>
+  <bind key="t" action="DrawText" />
+  <bind key="T" action="DrawText" />
+  <bind key="F9" action="DrawSpiral" display="true"/>
+  <bind key="i" action="DrawSpiral" />
+  <bind key="I" action="DrawSpiral" />
+  <bind key="F9" modifiers="Shift" action="DrawStar" />
+  <bind key="asterisk" modifiers="Shift" action="DrawStar" />
+  <bind key="asterisk" action="DrawStar" />
+  <bind key="KP_Multiply" action="DrawStar" display="true"/>
+  <bind key="F2" modifiers="Ctrl" action="DrawConnector" display="true"/>
+  <bind key="o" action="DrawConnector" />
+  <bind key="O" action="DrawConnector" />
+  <bind key="plus" action="ZoomIn" display="true"/>
+  <bind key="plus" modifiers="Shift" action="ZoomIn" />
+  <bind key="equal" action="ZoomIn" />
+  <bind key="KP_Add" action="ZoomIn" />
+  <bind key="minus" action="ZoomOut" display="true"/>
+  <bind key="KP_Subtract" action="ZoomOut" />
+  <bind key="1" action="Zoom1:0" display="true"/>
+  <bind key="grave" action="ZoomPrev" display="true"/>
+  <bind key="grave" modifiers="Shift" action="ZoomNext" display="true"/>
+  <bind key="asciitilde" modifiers="Shift" action="ZoomNext" />
+  <bind key="2" action="Zoom1:2" display="true"/>
+  <bind key="3" action="ZoomSelection" display="true"/>
+  <bind key="4" action="ZoomDrawing" display="true"/>
+  <bind key="5" action="ZoomPage" display="true"/>
+  <bind key="KP_5" action="ZoomPage" />
+  <bind key="6" action="ZoomPageWidth" display="true"/>
+  <bind key="e" modifiers="Ctrl" action="ZoomPageWidth" />
+  <bind key="E" modifiers="Ctrl" action="ZoomPageWidth" />
+  <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true"/>
+  <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
+  <bind key="b" modifiers="Ctrl" action="ToggleScrollbars" display="true"/>
+  <bind key="B" modifiers="Ctrl" action="ToggleScrollbars" />
+  <bind key="bar" modifiers="Shift" action="ToggleGuides" />
+  <bind key="bar" action="ToggleGuides" display="true"/>
+  <bind key="numbersign" modifiers="Shift" action="ToggleGrid" />
+  <bind key="numbersign" action="ToggleGrid" display="true"/>
+  <bind key="z" modifiers="Ctrl" action="EditUndo" display="true"/>
+  <bind key="Z" modifiers="Ctrl" action="EditUndo" />
+  <bind key="y" modifiers="Ctrl" action="EditRedo" />
+  <bind key="Y" modifiers="Ctrl" action="EditRedo" />
+  <bind key="z" modifiers="Ctrl,Shift" action="EditRedo" display="true"/>
+  <bind key="Z" modifiers="Ctrl,Shift" action="EditRedo" />
+  <bind key="y" modifiers="Ctrl,Shift" action="EditUndo" />
+  <bind key="Y" modifiers="Ctrl,Shift" action="EditUndo" />
+  <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
+  <bind key="X" modifiers="Ctrl" action="EditCut" />
+  <bind key="c" modifiers="Ctrl" action="EditCopy" display="true"/>
+  <bind key="C" modifiers="Ctrl" action="EditCopy" />
+  <bind key="v" modifiers="Ctrl" action="EditPaste" display="true"/>
+  <bind key="V" modifiers="Ctrl" action="EditPaste" />
+  <bind key="v" modifiers="Ctrl,Shift" action="EditPasteStyle" display="true"/>
+  <bind key="V" modifiers="Ctrl,Shift" action="EditPasteStyle" />
+  <bind key="v" modifiers="Ctrl,Alt" action="EditPasteInPlace" display="true"/>
+  <bind key="V" modifiers="Ctrl,Alt" action="EditPasteInPlace" />
+  <bind key="Delete" action="EditDelete" display="true"/>
+  <bind key="KP_Delete" action="EditDelete" />
+  <bind key="BackSpace" action="EditDelete" />
+  <bind key="d" modifiers="Ctrl" action="EditDuplicate" display="true"/>
+  <bind key="D" modifiers="Ctrl" action="EditDuplicate" />
+  <bind key="d" modifiers="Alt" action="EditClone" display="true"/>
+  <bind key="D" modifiers="Alt" action="EditClone" />
+  <bind key="d" modifiers="Alt,Shift" action="EditUnlinkClone" display="true"/>
+  <bind key="D" modifiers="Alt,Shift" action="EditUnlinkClone" />
+  <bind key="d" modifiers="Shift" action="EditCloneOriginal" display="true"/>
+  <bind key="D" modifiers="Shift" action="EditCloneOriginal" />
+  <bind key="i" modifiers="Alt" action="EditTile" display="true"/>
+  <bind key="I" modifiers="Alt" action="EditTile" />
+  <bind key="i" modifiers="Alt,Shift" action="EditUnTile" display="true"/>
+  <bind key="I" modifiers="Alt,Shift" action="EditUnTile" />
+  <bind key="c" modifiers="Ctrl,Shift" action="ObjectToCurve" display="true"/>
+  <bind key="C" modifiers="Ctrl,Shift" action="ObjectToCurve" />
+  <bind key="w" modifiers="Alt" action="ObjectFlowText" display="true"/>
+  <bind key="W" modifiers="Alt" action="ObjectFlowText" />
+  <bind key="w" modifiers="Alt,Shift" action="ObjectUnFlowText" display="true"/>
+  <bind key="W" modifiers="Alt,Shift" action="ObjectUnFlowText" />
+  <bind key="h" action="ObjectFlipHorizontally" display="true"/>
+  <bind key="H" action="ObjectFlipHorizontally" />
+  <bind key="v" action="ObjectFlipVertically" display="true"/>
+  <bind key="V" action="ObjectFlipVertically" />
+  <bind key="Page_Up" modifiers="Ctrl,Shift" action="LayerRaise" display="true"/>
+  <bind key="KP_Page_Up" modifiers="Ctrl,Shift" action="LayerRaise" />
+  <bind key="Page_Down" modifiers="Ctrl,Shift" action="LayerLower" display="true"/>
+  <bind key="KP_Page_Down" modifiers="Ctrl,Shift" action="LayerLower" />
+  <bind key="Home" modifiers="Ctrl,Shift" action="LayerToTop" display="true"/>
+  <bind key="KP_Home" modifiers="Ctrl,Shift" action="LayerToTop" />
+  <bind key="End" modifiers="Ctrl,Shift" action="LayerToBottom" display="true"/>
+  <bind key="KP_End" modifiers="Ctrl,Shift" action="LayerToBottom" />
+  <bind key="Page_Up" modifiers="Shift" action="LayerMoveToNext" display="true"/>
+  <bind key="KP_Page_Up" modifiers="Shift" action="LayerMoveToNext" />
+  <bind key="Page_Down" modifiers="Shift" action="LayerMoveToPrev" display="true"/>
+  <bind key="KP_Page_Down" modifiers="Shift" action="LayerMoveToPrev" />
+  <bind key="Home" action="SelectionToFront" display="true"/>
+  <bind key="KP_Home" action="SelectionToFront" />
+  <bind key="End" action="SelectionToBack" display="true"/>
+  <bind key="KP_End" action="SelectionToBack" />
+  <bind key="Page_Up" action="SelectionRaise" display="true"/>
+  <bind key="KP_Page_Up" action="SelectionRaise" />
+  <bind key="Page_Down" action="SelectionLower" display="true"/>
+  <bind key="KP_Page_Down" action="SelectionLower" />
+  <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true"/>
+  <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
+  <bind key="a" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" display="true"/>
+  <bind key="A" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" />
+  <bind key="exclam" action="EditInvert" display="true"/>
+  <bind key="exclam" modifiers="Shift" action="EditInvert" />
+  <bind key="exclam" modifiers="Alt" action="EditInvertInAllLayers" display="true"/>
+  <bind key="exclam" modifiers="Alt,Shift" action="EditInvertInAllLayers" />
+  <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl" action="SelectionGroup" />
+  <bind key="u" modifiers="Ctrl" action="SelectionUnGroup" />
+  <bind key="U" modifiers="Ctrl" action="SelectionUnGroup" />
+  <bind key="g" modifiers="Ctrl,Shift" action="SelectionUnGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl,Shift" action="SelectionUnGroup" />
+  <bind key="u" modifiers="Ctrl,Shift" action="SelectionGroup" />
+  <bind key="U" modifiers="Ctrl,Shift" action="SelectionGroup" />
+  <bind key="plus" modifiers="Ctrl" action="SelectionUnion" display="true"/>
+  <bind key="KP_Add" modifiers="Ctrl" action="SelectionUnion" />
+  <bind key="plus" modifiers="Ctrl,Shift" action="SelectionUnion" />
+  <bind key="asterisk" modifiers="Ctrl" action="SelectionIntersect" display="true"/>
+  <bind key="KP_Multiply" modifiers="Ctrl" action="SelectionIntersect" />
+  <bind key="asterisk" modifiers="Ctrl,Shift" action="SelectionIntersect" />
+  <bind key="minus" modifiers="Ctrl" action="SelectionDiff" display="true"/>
+  <bind key="underscore" modifiers="Ctrl" action="SelectionDiff" />
+  <bind key="underscore" modifiers="Ctrl,Shift" action="SelectionDiff" />
+  <bind key="KP_Subtract" modifiers="Ctrl" action="SelectionDiff" />
+  <bind key="minus" modifiers="Ctrl,Shift" action="SelectionDiff" />
+  <bind key="asciicircum" modifiers="Ctrl" action="SelectionSymDiff" display="true"/>
+  <bind key="asciicircum" modifiers="Ctrl,Shift" action="SelectionSymDiff" />
+  <bind key="slash" modifiers="Ctrl,Alt" action="SelectionCutPath" display="true"/>
+  <bind key="slash" modifiers="Ctrl,Alt,Shift" action="SelectionCutPath" />
+  <bind key="slash" modifiers="Ctrl" action="SelectionDivide" display="true"/>
+  <bind key="slash" modifiers="Ctrl,Shift" action="SelectionDivide" />
+  <bind key="parenright" modifiers="Ctrl" action="SelectionOffset" display="true"/>
+  <bind key="parenright" modifiers="Ctrl,Shift" action="SelectionOffset" />
+  <bind key="0" modifiers="Ctrl,Shift" action="SelectionOffset" />
+  <bind key="parenright" modifiers="Alt" action="SelectionOffsetScreen" display="true"/>
+  <bind key="0" modifiers="Alt" action="SelectionOffsetScreen" />
+  <bind key="parenright" modifiers="Alt,Shift" action="SelectionOffsetScreen10" display="true"/>
+  <bind key="0" modifiers="Alt,Shift" action="SelectionOffsetScreen10" />
+  <bind key="parenleft" modifiers="Ctrl" action="SelectionInset" display="true"/>
+  <bind key="parenleft" modifiers="Ctrl,Shift" action="SelectionInset" />
+  <bind key="9" modifiers="Ctrl,Shift" action="SelectionInset" />
+  <bind key="parenleft" modifiers="Alt" action="SelectionInsetScreen" display="true"/>
+  <bind key="9" modifiers="Alt" action="SelectionInsetScreen" />
+  <bind key="parenleft" modifiers="Alt,Shift" action="SelectionInsetScreen" display="true"/>
+  <bind key="9" modifiers="Alt,Shift" action="SelectionInsetScreen" />
+  <bind key="j" modifiers="Ctrl" action="SelectionDynOffset" display="true"/>
+  <bind key="J" modifiers="Ctrl" action="SelectionDynOffset" />
+  <bind key="j" modifiers="Ctrl,Alt" action="SelectionLinkedOffset" display="true"/>
+  <bind key="J" modifiers="Ctrl,Alt" action="SelectionLinkedOffset" />
+  <bind key="c" modifiers="Ctrl,Alt" action="SelectionOutline" display="true"/>
+  <bind key="C" modifiers="Ctrl,Alt" action="SelectionOutline" />
+  <bind key="l" modifiers="Ctrl" action="SelectionSimplify" display="true"/>
+  <bind key="L" modifiers="Ctrl" action="SelectionSimplify" />
+  <bind key="b" modifiers="Alt" action="SelectionCreateBitmap" display="true"/>
+  <bind key="B" modifiers="Alt" action="SelectionCreateBitmap" />
+  <bind key="b" modifiers="Alt,Shift" action="SelectionTrace" display="true"/>
+  <bind key="B" modifiers="Alt,Shift" action="SelectionTrace" />
+  <bind key="k" modifiers="Ctrl" action="SelectionCombine" display="true"/>
+  <bind key="K" modifiers="Ctrl" action="SelectionCombine" />
+  <bind key="k" modifiers="Ctrl,Shift" action="SelectionBreakApart" display="true"/>
+  <bind key="K" modifiers="Ctrl,Shift" action="SelectionBreakApart" />
+  <bind key="x" modifiers="Ctrl,Shift" action="DialogXMLEditor" display="true"/>
+  <bind key="X" modifiers="Ctrl,Shift" action="DialogXMLEditor" />
+  <bind key="d" modifiers="Ctrl,Shift" action="DialogNamedview" display="true"/>
+  <bind key="D" modifiers="Ctrl,Shift" action="DialogNamedview" />
+  <bind key="a" modifiers="Ctrl,Shift" action="DialogAlignDistribute" display="true"/>
+  <bind key="A" modifiers="Ctrl,Shift" action="DialogAlignDistribute" />
+  <bind key="t" modifiers="Ctrl,Shift" action="Dialogtext" display="true"/>
+  <bind key="T" modifiers="Ctrl,Shift" action="Dialogtext" />
+  <bind key="p" modifiers="Ctrl,Shift" action="DialogDisplay" display="true"/>
+  <bind key="P" modifiers="Ctrl,Shift" action="DialogDisplay" />
+  <bind key="f" modifiers="Ctrl,Shift" action="DialogFillStroke" display="true"/>
+  <bind key="F" modifiers="Ctrl,Shift" action="DialogFillStroke" />
+  <bind key="f" modifiers="Ctrl" action="DialogFind" display="true"/>
+  <bind key="F" modifiers="Ctrl" action="DialogFind" />
+  <bind key="m" modifiers="Ctrl,Shift" action="DialogTransform" display="true"/>
+  <bind key="M" modifiers="Ctrl,Shift" action="DialogTransform" />
+  <bind key="o" modifiers="Ctrl,Shift" action="DialogItem" display="true"/>
+  <bind key="O" modifiers="Ctrl,Shift" action="DialogItem" />
+  <bind key="w" modifiers="Ctrl,Shift" action="DialogSwatches" display="true"/>
+  <bind key="W" modifiers="Ctrl,Shift" action="DialogSwatches" />
+  <bind key="F12" action="DialogsToggle" display="true"/>
+</keys>

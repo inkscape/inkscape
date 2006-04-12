@@ -92,29 +92,36 @@ static void read_shortcuts_file(char const *filename) {
     }
 
     XML::Node const *root=doc->root();
-    g_return_if_fail(!strcmp(root->name(), "keybindings"));
+    g_return_if_fail(!strcmp(root->name(), "keys"));
     XML::NodeConstSiblingIterator iter=root->firstChild();
     for ( ; iter ; ++iter ) {
         bool is_primary;
 
-        if (!strcmp(iter->name(), "primary")) {
-            is_primary = true;
-        } else if (!strcmp(iter->name(), "secondary")) {
-            is_primary = false;
+        if (!strcmp(iter->name(), "bind")) {
+            if (iter->attribute("display") && strcmp(iter->attribute("display"), "false") && strcmp(iter->attribute("display"), "0")) {
+                is_primary = true;
+            } else {
+                is_primary = false;
+            }
         } else {
-            g_warning("Unknown key binding type %s", iter->name());
+            // some unknown element, do not complain
             continue;
         }
 
-        gchar const *verb_name=iter->attribute("verb");
+        gchar const *verb_name=iter->attribute("action");
         if (!verb_name) {
-            g_warning("Missing verb name for shortcut");
+            g_warning("Missing verb name (action= attribute) for shortcut");
             continue;
         }
 
-        gchar const *keyval_name=iter->attribute("keyval");
+        if (Inkscape::Verb::getbyid(verb_name) == NULL) {
+            g_warning("Unknown verb name: %s", verb_name);
+            continue;
+        }
+
+        gchar const *keyval_name=iter->attribute("key");
         if (!keyval_name) {
-            g_warning("Missing keyval for %s", verb_name);
+            // that's ok, it's just listed for reference without assignment, skip it
             continue;
         }
         guint keyval=gdk_keyval_from_name(keyval_name);
@@ -131,11 +138,11 @@ static void read_shortcuts_file(char const *filename) {
             while (*iter) {
                 size_t length=strcspn(iter, ",");
                 gchar *mod=g_strndup(iter, length);
-                if (!strcmp(mod, "control")) {
+                if (!strcmp(mod, "Control") || !strcmp(mod, "Ctrl")) {
                     modifiers |= SP_SHORTCUT_CONTROL_MASK;
-                } else if (!strcmp(mod, "shift")) {
+                } else if (!strcmp(mod, "Shift")) {
                     modifiers |= SP_SHORTCUT_SHIFT_MASK;
-                } else if (!strcmp(mod, "alt")) {
+                } else if (!strcmp(mod, "Alt")) {
                     modifiers |= SP_SHORTCUT_ALT_MASK;
                 } else {
                     g_warning("Unknown modifier %s for %s", mod, verb_name);
