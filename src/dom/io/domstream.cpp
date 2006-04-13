@@ -543,13 +543,10 @@ Writer &BasicWriter::printf(char *fmt, ...)
     va_list args;
     va_start(args, fmt);
     //replace this wish vsnprintf()
-    char buf[256];
-    vsnprintf(buf, 255, fmt, args);
+    vsnprintf(formatBuf, 2047, fmt, args);
     va_end(args);
-    if (buf) {
-        writeString(buf);
-        //free(buf);
-    }
+    writeString(formatBuf);
+
     return *this;
 }
 /**
