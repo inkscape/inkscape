@@ -34,12 +34,6 @@ src$(S)make.dep:
 	cd src && $(GTKDOS)$(S)perl$(S)bin$(S)perl mkdep.pl
 
 dist-strip: dist
-	-$(RMDIRREC) .svn $(RMDIRREC1)
-	-$(RMREC) Makefile $(RMREC1)
-	-$(RMREC) Makefile.am $(RMREC1)
-	-$(RMREC) Makefile.in $(RMREC1)
-	-$(RMDIR) inkscape$(S)lib$(S)glib-2.0$(S)include
-	-$(RMDIR) inkscape$(S)lib$(S)gtk-2.0$(S)include
 	strip inkscape$(S)inkscape.exe
 	strip inkscape$(S)inkview.exe
 	strip inkscape$(S)libatkmm-1.6-1.dll
@@ -164,6 +158,16 @@ dist:	generated required
 	$(MKDIR) inkscape$(S)plugins
 	-$(CP) src$(S)extension$(S)plugin$(S)*.dll inkscape$(S)plugins
 	$(CP) $(GTKDOS)$(S)bin$(S)gdb.exe inkscape
+#
+#       remove unneeded files
+#
+	-$(RMDIRREC) .svn $(RMDIRREC1)
+	-$(RMREC) .cvsignore $(RMDIRREC1)
+	-$(RMREC) Makefile $(RMREC1)
+	-$(RMREC) Makefile.am $(RMREC1)
+	-$(RMREC) Makefile.in $(RMREC1)
+	-$(RMDIR) inkscape$(S)lib$(S)glib-2.0$(S)include
+	-$(RMDIR) inkscape$(S)lib$(S)gtk-2.0$(S)include
 	@echo "##################### D O N E ####################"
 
 clean:	required
