@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-05 22:25+0200\n"
-"PO-Revision-Date: 2006-04-06 11:54+0200\n"
+"PO-Revision-Date: 2006-04-06 15:16+0200\n"
 "Last-Translator: Andrius R. <knutux@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
@@ -5417,19 +5417,19 @@ msgstr "Paklydę klonai šalinami kartu su originalu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Scale stroke width"
-msgstr ""
+msgstr "Keisti linijos storį"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:446
 msgid "Scale rounded corners in rectangles"
-msgstr ""
+msgstr "Keisti stačiakampių užapvalintus kampus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Transform gradients"
-msgstr ""
+msgstr "Transformuoti perėjimus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "Transform patterns"
-msgstr ""
+msgstr "Transformuoti raštus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid "Optimized"
@@ -5442,22 +5442,22 @@ msgstr "Išlaikant"
 #: ../src/ui/dialog/inkscape-preferences.cpp:453
 #: ../src/widgets/select-toolbar.cpp:496
 msgid "When scaling objects, scale the stroke width by the same proportion"
-msgstr ""
+msgstr "Kai keičiamas objekto dydis, atitinkamai keisti ir linijos storį"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:455
 #: ../src/widgets/select-toolbar.cpp:508
 msgid "When scaling rectangles, scale the radii of rounded corners"
-msgstr ""
+msgstr "Kai keičiamas objekto dydis, atitinkamai keisti ir stačiakampio kampų užapvalinimą"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:457
 #: ../src/widgets/select-toolbar.cpp:520
 msgid "Transform gradients (in fill or stroke) along with the objects"
-msgstr ""
+msgstr "Kai keičiamas objekto dydis, atitinkamai transformuoti ir užpildo bei linijos perėjimus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
 #: ../src/widgets/select-toolbar.cpp:532
 msgid "Transform patterns (in fill or stroke) along with the objects"
-msgstr ""
+msgstr "Kai keičiamas objekto dydis, atitinkamai transformuoti ir užpildo bei linijos raštus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Store transformation:"
@@ -5481,7 +5481,7 @@ msgstr "Žymėti visuose sluoksniuose"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:472
 msgid "Select only within current layer"
-msgstr ""
+msgstr "Žymėti tik dabartiniame sluoksnyje"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:473
 msgid "Select in current layer and sublayers"
