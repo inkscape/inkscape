@@ -116,8 +116,10 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
         NR::Point const p_it = p_doc * i2doc.inverse();
 
         Path *livarot_path = Path_for_item(*i, true, true);
-        if (livarot_path)
-            livarot_path->ConvertWithBackData(0.01);
+        if (!livarot_path)
+            continue;
+
+        livarot_path->ConvertWithBackData(0.01);
 
         /* Look for the nearest position on this SPItem to our snap point */
         NR::Maybe<Path::cut_position> const o = get_nearest_position_on_Path(livarot_path, p_it);
