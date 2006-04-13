@@ -1,7 +1,10 @@
 
 keysdir = $(datadir)/inkscape/keys
 
-keys_DATA = default.xml
+keys_DATA = \
+	default.xml \
+	inkscape.xml \
+	xara.xml
 
 EXTRA_DIST = $(keys_DATA)
 
