@@ -54,10 +54,16 @@
 
 #include "dom/dom.h"
 #include "dom/util/ziptool.h"
+#include "dom/io/domstream.h"
+#include "dom/io/bufferstream.h"
 
 
 //# Shorthand notation
 typedef org::w3c::dom::DOMString DOMString;
+typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
+typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
+
+
 
 
 namespace Inkscape
@@ -70,157 +76,60 @@ namespace Internal
 
 
 
-class ImageInfo
-{
-public:
-
-    ImageInfo(const DOMString &nameArg,
-              const DOMString &newNameArg,
-              const std::vector<unsigned char> &bufArg)
-        {
-        name    = nameArg;
-        newName = newNameArg;
-        buf     = bufArg;
-        }
-
-    virtual ~ImageInfo()
-        {}
-
-    DOMString getName()
-        {
-        return name;
-        }
-
-    DOMString getNewName()
-        {
-        return newName;
-        }
-
-
-    std::vector<unsigned char> getBuf()
-        {
-        return buf;
-        }
-
-    DOMString name;
-    DOMString newName;
-    std::vector<unsigned char>buf;
-
-};
-
-
-class StyleInfo
-{
-public:
-
-    StyleInfo(const DOMString &nameArg, const DOMString &styleArg)
-        {
-        name   = nameArg;
-        style  = styleArg;
-        fill   = "none";
-        stroke = "none";
-        }
-
-    virtual ~StyleInfo()
-        {}
-
-    DOMString getName()
-        {
-        return name;
-        }
-
-    DOMString getCssStyle()
-        {
-        return cssStyle;
-        }
-
-    DOMString getStroke()
-        {
-        return stroke;
-        }
-
-    DOMString getStrokeColor()
-        {
-        return strokeColor;
-        }
-
-    DOMString getStrokeWidth()
-        {
-        return strokeWidth;
-        }
-
-
-    DOMString getFill()
-        {
-        return fill;
-        }
-
-    DOMString getFillColor()
-        {
-        return fillColor;
-        }
-
-    DOMString name;
-    DOMString style;
-    DOMString cssStyle;
-    DOMString stroke;
-    DOMString strokeColor;
-    DOMString strokeWidth;
-    DOMString fill;
-    DOMString fillColor;
-
-};
-
 
 //########################################################################
 //# O U T P U T
 //########################################################################
 
-void OdfOutput::po(char *str)
-{
-    if (str)
-        while (*str)
-            outs.put(*str++);
-}
 
 
-
-
-
-
-/**
- * This function searches the Repr tree recursively from the given node,
- * and adds refs to all nodes with the given name, to the result vector
- */
-static void
-findElementsByTagName(std::vector<Inkscape::XML::Node *> &results,
-                      Inkscape::XML::Node *node,
-                      char const *name)
-{
-    if ( !name || strcmp(node->name(), name) == 0 )
-        {
-        results.push_back(node);
-        }
-
-    for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
-        findElementsByTagName( results, child, name );
-
-}
 
 /**
  * This function searches the Repr tree recursively from the given node,
  * and adds refs to all nodes with the given name, to the result vector
  */
 void
-OdfOutput::preprocess(Inkscape::XML::Node *node)
+OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 {
+
+    std::string nodeName = node->name();
+
+    if (nodeName == "image")
+        {
+        char *hrefs = (char *)node->attribute("xlink:href");
+        if (hrefs)
+            {
+            std::string oldName = hrefs;
+            if (imageTable.find(oldName) == imageTable.end())
+                {
+                char buf[16];
+                snprintf(buf, 15, "Pictures/image%d", imageTable.size());
+                std::string newName = buf;
+                imageTable[oldName] = newName;
+                std::string comment = "old name was: ";
+                comment.append(oldName);
+                ZipEntry *ze = zf.addFile(oldName, comment);
+                if (ze)
+                    {
+                    ze->setFileName(newName);
+                    }
+                else
+                    {
+                    g_warning("Could not load image file '%s'", oldName.c_str());
+                    }
+                }
+            }
+        }
+
+#if 0
+
     //Look for style values in the svg element
     Inkscape::Util::List<Inkscape::XML::AttributeRecord const> attr =
         node->attributeList();
     for ( ; attr ; ++attr)
         {
-        DOMString attrName  = (const char *)attr->key;
-        DOMString attrValue = (const char *)attr->value;
+        std::string attrName  = (const char *)attr->key;
+        std::string attrValue = (const char *)attr->value;
         StyleInfo si(attrName, attrValue);
         /*
         if (styleTable.find(styleValue) != styleTable.end())
@@ -240,11 +149,11 @@ OdfOutput::preprocess(Inkscape::XML::Node *node)
         */
         }
 
-
+#endif
 
     for (Inkscape::XML::Node *child = node->firstChild() ;
             child ; child = child->next())
-        preprocess(child);
+        preprocess(zf, child);
 }
 
 
@@ -253,83 +162,106 @@ OdfOutput::preprocess(Inkscape::XML::Node *node)
  * and adds refs to all nodes with the given name, to the result vector
  */
 void
-OdfOutput::preprocess(SPDocument *doc)
+OdfOutput::preprocess(ZipFile &zf, SPDocument *doc)
 {
     styleTable.clear();
-    styleIndex = 0;
-    preprocess(doc->rroot);
+    preprocess(zf, doc->rroot);
 
-    outs.clear();
 
-    po("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    po("<office:document-content\n");
-    po("    xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n");
-    po("    xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n");
-    po("    xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n");
-    po("    xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n");
-    po("    xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n");
-    po("    xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n");
-    po("    xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n");
-    po("    xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
-    po("    xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n");
-    po("    xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n");
-    po("    xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\"\n");
-    po("    xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n");
-    po("    xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n");
-    po("    xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n");
-    po("    xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n");
-    po("    xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n");
-    po("    xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n");
-    po("    xmlns:ooo=\"http://openoffice.org/2004/office\"\n");
-    po("    xmlns:ooow=\"http://openoffice.org/2004/writer\"\n");
-    po("    xmlns:oooc=\"http://openoffice.org/2004/calc\"\n");
-    po("    xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n");
-    po("    xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n");
-    po("    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n");
-    po("    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
-    po("    xmlns:smil=\"urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0\"\n");
-    po("    xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
-    po("    office:version=\"1.0\">\n");
-    po("\n");
-    po("\n");
-    po("<office:scripts/>\n");
-    po("<office:automatic-styles>\n");
-    po("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
-    po("<style:style style:name=\"grx1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
-    po("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"solid\" draw:textarea-horizontal-align=\"center\" draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\" draw:luminance=\"0%\" draw:contrast=\"0%\" draw:gamma=\"100%\" draw:red=\"0%\" draw:green=\"0%\" draw:blue=\"0%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\" draw:image-opacity=\"100%\" style:mirror=\"none\"/>\n");
-    po("</style:style>\n");
-    po("<style:style style:name=\"P1\" style:family=\"paragraph\">\n");
-    po("  <style:paragraph-properties fo:text-align=\"center\"/>\n");
-    po("</style:style>\n");
+}
+
+bool OdfOutput::writeManifest(ZipFile &zf)
+{
+    BufferOutputStream bouts;
+    OutputStreamWriter outs(bouts);
+
+    outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    outs.printf("<!DOCTYPE manifest:manifest PUBLIC \"-//OpenOffice.org//DTD Manifest 1.0//EN\" \"Manifest.dtd\">\n");
+    outs.printf("<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\">\n");
+    outs.printf("    <manifest:file-entry manifest:media-type=\"application/vnd.oasis.opendocument.graphics\" manifest:full-path=\"/\"/>\n");
+    outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"content.xml\"/>\n");
+    outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n");
+    outs.printf("    <!--List our images here-->\n");
+    std::map<std::string, std::string>::iterator iter;
+    for (iter = imageTable.begin() ; iter!=imageTable.end() ; iter++)
+        {
+        std::string oldName = iter->first;
+        std::string newName = iter->second;
+        if (oldName.size() < 5)
+            {
+            g_warning("image file name too short:%s", oldName.c_str());
+            return false;
+            }
+        std::string ext = oldName.substr(oldName.size() - 4);
+        outs.printf("    <manifest:file-entry manifest:media-type=\"");
+        if (ext == ".gif")
+            outs.printf("image/gif");
+        else if (ext == ".png")
+            outs.printf("image/png");
+        else if (ext == ".jpg" || ext == ".jpeg")
+            outs.printf("image/jpeg");
+        outs.printf("\" manifest:full-path=\"");
+        outs.printf((char *)newName.c_str());
+        outs.printf("\"/>\n");
+        }
+    outs.printf("</manifest:manifest>\n");
+
+    outs.close();
+
+    //Make our entry
+    ZipEntry *ze = zf.newEntry("META-INF/manifest.xml", "ODF file manifest");
+    ze->setUncompressedData(bouts.getBuffer());
+    ze->finish();
+
+    return true;
+}
+
+
+
+
+
+bool OdfOutput::writeStyle(Writer &outs)
+{
+    outs.printf("<office:automatic-styles>\n");
+    outs.printf("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
+    outs.printf("<style:style style:name=\"grx1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
+    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"solid\" draw:textarea-horizontal-align=\"center\" draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\" draw:luminance=\"0%\" draw:contrast=\"0%\" draw:gamma=\"100%\" draw:red=\"0%\" draw:green=\"0%\" draw:blue=\"0%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\" draw:image-opacity=\"100%\" style:mirror=\"none\"/>\n");
+    outs.printf("</style:style>\n");
+    outs.printf("<style:style style:name=\"P1\" style:family=\"paragraph\">\n");
+    outs.printf("  <style:paragraph-properties fo:text-align=\"center\"/>\n");
+    outs.printf("</style:style>\n");
 
     //##  Dump our style table
     /*
     std::map<std::string, std::string>::iterator iter;
     for (iter = styleTable.begin() ; iter != styleTable.end() ; iter++)
         {
-        po("<style:style style:name=\"%s\"", iter->second);
-        po(" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
-        po("  <style:graphic-properties");
-        po(" draw:fill=\"" + s.getFill() + "\"");
+        outs.printf("<style:style style:name=\"%s\"", iter->second);
+        outs.printf(" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
+        outs.printf("  <style:graphic-properties");
+        outs.printf(" draw:fill=\"" + s.getFill() + "\"");
         if (!s.getFill().equals("none"))
-            po(" draw:fill-color=\"" + s.getFillColor() + "\"");
-        po(" draw:stroke=\"" + s.getStroke() + "\"");
+            outs.printf(" draw:fill-color=\"" + s.getFillColor() + "\"");
+        outs.printf(" draw:stroke=\"" + s.getStroke() + "\"");
         if (!s.getStroke().equals("none"))
             {
-            po(" svg:stroke-width=\"" + s.getStrokeWidth() + "\"");
-            po(" svg:stroke-color=\"" + s.getStrokeColor() + "\"");
+            outs.printf(" svg:stroke-width=\"" + s.getStrokeWidth() + "\"");
+            outs.printf(" svg:stroke-color=\"" + s.getStrokeColor() + "\"");
             }
-        po("/>\n");
-        po("</style:style>\n");
+        outs.printf("/>\n");
+        outs.printf("</style:style>\n");
         }
     */
-    po("</office:automatic-styles>\n");
-    po("\n");
+    outs.printf("</office:automatic-styles>\n");
+    outs.printf("\n");
 
+    return true;
 }
 
 
-bool OdfOutput::writeTree(Inkscape::XML::Node *node)
+
+
+bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 {
     //# Get the SPItem, if applicable
     SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
@@ -373,11 +305,67 @@ bool OdfOutput::writeTree(Inkscape::XML::Node *node)
     //# Iterate through the children
     for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
         {
-        if (!writeTree(child))
+        if (!writeTree(outs, child))
             return false;
         }
     return true;
 }
+
+
+
+
+bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
+{
+    BufferOutputStream bouts;
+    OutputStreamWriter outs(bouts);
+
+    outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    outs.printf("<office:document-content\n");
+    outs.printf("    xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n");
+    outs.printf("    xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n");
+    outs.printf("    xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n");
+    outs.printf("    xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n");
+    outs.printf("    xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n");
+    outs.printf("    xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n");
+    outs.printf("    xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n");
+    outs.printf("    xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+    outs.printf("    xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n");
+    outs.printf("    xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n");
+    outs.printf("    xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\"\n");
+    outs.printf("    xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n");
+    outs.printf("    xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n");
+    outs.printf("    xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n");
+    outs.printf("    xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n");
+    outs.printf("    xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n");
+    outs.printf("    xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n");
+    outs.printf("    xmlns:ooo=\"http://openoffice.org/2004/office\"\n");
+    outs.printf("    xmlns:ooow=\"http://openoffice.org/2004/writer\"\n");
+    outs.printf("    xmlns:oooc=\"http://openoffice.org/2004/calc\"\n");
+    outs.printf("    xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n");
+    outs.printf("    xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n");
+    outs.printf("    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n");
+    outs.printf("    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+    outs.printf("    xmlns:smil=\"urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0\"\n");
+    outs.printf("    xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
+    outs.printf("    office:version=\"1.0\">\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<office:scripts/>\n");
+
+    //if (!writeStyle(outs))
+    //    return false;
+
+    //if (!writeTree(outs, node))
+    //    return false;
+
+    //Make our entry
+    ZipEntry *ze = zf.newEntry("content.xml", "ODF master content file");
+    ze->setUncompressedData(bouts.getBuffer());
+    ze->finish();
+
+    return true;
+}
+
 
 
 
@@ -387,11 +375,22 @@ bool OdfOutput::writeTree(Inkscape::XML::Node *node)
 void
 OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
 {
-    //# Preprocess the style entries.  ODF does not put styles
-    //# directly on elements.  Rather, it uses class IDs.
-    preprocess(doc);
-    ZipFile zipFile;
-    zipFile.writeFile(uri);
+    ZipFile zf;
+    preprocess(zf, doc);
+    if (!writeManifest(zf))
+        {
+        g_warning("Failed to write manifest");
+        return;
+        }
+    if (!writeContent(zf, doc->rroot))
+        {
+        g_warning("Failed to write content");
+        return;
+        }
+    if (!zf.writeFile(uri))
+        {
+        return;
+        }
 }
 
 

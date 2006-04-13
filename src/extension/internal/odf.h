@@ -44,6 +44,10 @@
 #include <string>
 #include <map>
 
+#include <dom/util/ziptool.h>
+#include <dom/io/domstream.h>
+
+typedef org::w3c::dom::io::Writer Writer;
 
 namespace Inkscape
 {
@@ -51,6 +55,71 @@ namespace Extension
 {
 namespace Internal
 {
+
+
+
+class StyleInfo
+{
+public:
+
+    StyleInfo(const std::string &nameArg, const std::string &styleArg)
+        {
+        name   = nameArg;
+        style  = styleArg;
+        fill   = "none";
+        stroke = "none";
+        }
+
+    virtual ~StyleInfo()
+        {}
+
+    std::string getName()
+        {
+        return name;
+        }
+
+    std::string getCssStyle()
+        {
+        return cssStyle;
+        }
+
+    std::string getStroke()
+        {
+        return stroke;
+        }
+
+    std::string getStrokeColor()
+        {
+        return strokeColor;
+        }
+
+    std::string getStrokeWidth()
+        {
+        return strokeWidth;
+        }
+
+
+    std::string getFill()
+        {
+        return fill;
+        }
+
+    std::string getFillColor()
+        {
+        return fillColor;
+        }
+
+    std::string name;
+    std::string style;
+    std::string cssStyle;
+    std::string stroke;
+    std::string strokeColor;
+    std::string strokeWidth;
+    std::string fill;
+    std::string fillColor;
+
+};
+
 
 
 class OdfOutput : public Inkscape::Extension::Implementation::Implementation
@@ -68,15 +137,21 @@ public:
 
 private:
 
-    int styleIndex;
-    std::map<std::string, std::string> styleTable;
+    std::map<std::string, StyleInfo> styleTable;
 
-    void preprocess(SPDocument *doc);
-    void preprocess(Inkscape::XML::Node *node);
-    bool writeTree(Inkscape::XML::Node *node);
+    //for renaming image file names
+    std::map<std::string, std::string> imageTable;
 
-    void po(char *str);
-    org::w3c::dom::io::StringOutputStream outs;
+    void preprocess(ZipFile &zf, SPDocument *doc);
+    void preprocess(ZipFile &zf, Inkscape::XML::Node *node);
+
+    bool writeManifest(ZipFile &zf);
+
+    bool writeStyle(Writer &outs);
+
+    bool writeTree(Writer &outs, Inkscape::XML::Node *node);
+
+    bool writeContent(ZipFile &zf, Inkscape::XML::Node *node);
 
 };
 
