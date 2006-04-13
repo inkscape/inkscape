@@ -34,10 +34,18 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
 #include "odf.h"
+
+//# System includes
+#include <stdio.h>
+#include <time.h>
+#include <vector>
+
+
+//# Inkscape includes
 #include "clear-n_.h"
 #include "inkscape.h"
-#include "sp-path.h"
 #include <style.h>
 #include "display/curve.h"
 #include "libnr/n-art-bpath.h"
@@ -45,13 +53,15 @@
 
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
+#include "sp-image.h"
+#include "sp-path.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "svg/svg.h"
 #include "text-editing.h"
 
-#include <vector>
 
+//# DOM-specific includes
 #include "dom/dom.h"
 #include "dom/util/ziptool.h"
 #include "dom/io/domstream.h"
@@ -81,12 +91,35 @@ namespace Internal
 //# O U T P U T
 //########################################################################
 
+static std::string getAttribute( Inkscape::XML::Node *node, char *attrName)
+{
+    std::string val;
+    char *valstr = (char *)node->attribute(attrName);
+    if (valstr)
+        val = (const char *)valstr;
+    return val;
+}
 
 
+static std::string getExtension(const std::string &fname)
+{
+    std::string ext;
+
+    unsigned int pos = fname.rfind('.');
+    if (pos == fname.npos)
+        {
+        ext = "";
+        }
+    else
+        {
+        ext = fname.substr(pos);
+        }
+    return ext;
+}
 
 /**
- * This function searches the Repr tree recursively from the given node,
- * and adds refs to all nodes with the given name, to the result vector
+ * Method descends into the repr tree, converting image and style info
+ * into forms compatible in ODF.
  */
 void
 OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
@@ -94,16 +127,21 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 
     std::string nodeName = node->name();
 
-    if (nodeName == "image")
+    if (nodeName == "image" || nodeName == "svg:image")
         {
-        char *hrefs = (char *)node->attribute("xlink:href");
-        if (hrefs)
+        //g_message("image");
+        std::string href = getAttribute(node, "xlink:href");
+        if (href.size() > 0)
             {
-            std::string oldName = hrefs;
+            std::string oldName = href;
+            std::string ext = getExtension(oldName);
+            if (ext == ".jpeg")
+                ext = ".jpg";
             if (imageTable.find(oldName) == imageTable.end())
                 {
-                char buf[16];
-                snprintf(buf, 15, "Pictures/image%d", imageTable.size());
+                char buf[64];
+                snprintf(buf, 63, "Pictures/image%d%s",
+                    imageTable.size(), ext.c_str());
                 std::string newName = buf;
                 imageTable[oldName] = newName;
                 std::string comment = "old name was: ";
@@ -121,35 +159,46 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             }
         }
 
-#if 0
+
 
     //Look for style values in the svg element
     Inkscape::Util::List<Inkscape::XML::AttributeRecord const> attr =
         node->attributeList();
     for ( ; attr ; ++attr)
         {
-        std::string attrName  = (const char *)attr->key;
+        if (!attr->key || !attr->value)
+            {
+            g_warning("null key or value in attribute");
+            continue;
+            }
+        //g_message("key:%s value:%s", g_quark_to_string(attr->key),
+        //                             g_quark_to_string(attr->value)  );
+
+        std::string attrName  = (const char *)g_quark_to_string(attr->key);
         std::string attrValue = (const char *)attr->value;
-        StyleInfo si(attrName, attrValue);
-        /*
-        if (styleTable.find(styleValue) != styleTable.end())
+        g_message("tag:'%s'    key:'%s'    value:'%s'",
+            nodeName.c_str(), attrName.c_str(), attrValue.c_str()  );
+        if (attrName == "style")
             {
-            g_message("duplicate style");
+            StyleInfo si(attrName, attrValue);
+            if (styleTable.find(attrValue) != styleTable.end())
+                {
+                g_message("duplicate style");
+                }
+            else
+                {
+                char buf[16];
+                snprintf(buf, 15, "style%d", styleTable.size());
+                std::string attrName  = buf;
+                //Map from value-->name .   Looks backwards, i know
+                styleTable[attrValue] = si;
+                g_message("mapping '%s' to '%s'",
+                    attrValue.c_str(), attrName.c_str());
+                }
             }
-        else
-            {
-            char buf[16];
-            snprintf(buf, 15, "style%d", styleIndex++);
-            std::string styleName  = buf;
-            //Map from value-->name .   Looks backwards, i know
-            styleTable[styleValue] = styleName;
-            g_message("mapping '%s' to '%s'",
-                styleValue.c_str(), styleName.c_str());
-            }
-        */
         }
 
-#endif
+
 
     for (Inkscape::XML::Node *child = node->firstChild() ;
             child ; child = child->next())
@@ -157,48 +206,48 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 }
 
 
-/**
- * This function searches the Repr tree recursively from the given node,
- * and adds refs to all nodes with the given name, to the result vector
- */
-void
-OdfOutput::preprocess(ZipFile &zf, SPDocument *doc)
-{
-    styleTable.clear();
-    preprocess(zf, doc->rroot);
-
-
-}
 
 bool OdfOutput::writeManifest(ZipFile &zf)
 {
     BufferOutputStream bouts;
     OutputStreamWriter outs(bouts);
 
+    time_t tim;
+    time(&tim);
+
     outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     outs.printf("<!DOCTYPE manifest:manifest PUBLIC \"-//OpenOffice.org//DTD Manifest 1.0//EN\" \"Manifest.dtd\">\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  file:  manifest.xml\n");
+    outs.printf("  Generated by Inkscape: %s", ctime(&tim)); //ctime has its own <cr>
+    outs.printf("  http://www.inkscape.org\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("\n");
     outs.printf("<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\">\n");
     outs.printf("    <manifest:file-entry manifest:media-type=\"application/vnd.oasis.opendocument.graphics\" manifest:full-path=\"/\"/>\n");
     outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"content.xml\"/>\n");
-    outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n");
+    //outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n");
     outs.printf("    <!--List our images here-->\n");
     std::map<std::string, std::string>::iterator iter;
     for (iter = imageTable.begin() ; iter!=imageTable.end() ; iter++)
         {
         std::string oldName = iter->first;
         std::string newName = iter->second;
-        if (oldName.size() < 5)
-            {
-            g_warning("image file name too short:%s", oldName.c_str());
-            return false;
-            }
-        std::string ext = oldName.substr(oldName.size() - 4);
+
+        std::string ext = getExtension(oldName);
+        if (ext == ".jpeg")
+            ext = ".jpg";
         outs.printf("    <manifest:file-entry manifest:media-type=\"");
         if (ext == ".gif")
             outs.printf("image/gif");
         else if (ext == ".png")
             outs.printf("image/png");
-        else if (ext == ".jpg" || ext == ".jpeg")
+        else if (ext == ".jpg")
             outs.printf("image/jpeg");
         outs.printf("\" manifest:full-path=\"");
         outs.printf((char *)newName.c_str());
@@ -275,7 +324,22 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
     //# Do our stuff
     SPCurve *curve = NULL;
-    if (SP_IS_SHAPE(item))
+    std::string tagName = "path";
+    if (SP_IS_IMAGE(item))
+        {
+        tagName = "image";
+        std::string href = getAttribute(node, "xlink:href");
+        std::map<std::string, std::string>::iterator iter = imageTable.find(href);
+        if (iter == imageTable.end())
+            {
+            g_warning("image '%s' not in table", href.c_str());
+            return false;
+            }
+        std::string newName = iter->second;
+        outs.printf("<image xlink:href=\"%s\"/>\n", newName.c_str());
+        return true;
+        }
+    else if (SP_IS_SHAPE(item))
         {
         curve = sp_shape_get_curve(SP_SHAPE(item));
         }
@@ -284,23 +348,23 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         curve = te_get_layout(item)->convertToCurves();
         }
 
-    if (!curve)
-        return false;
+    if (curve)
+        {
 
-    //Inkscape::XML::Node *repr = sp_repr_new("svg:path");
-    /* Transformation */
-    //repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
+        //Inkscape::XML::Node *repr = sp_repr_new("svg:path");
+        /* Transformation */
+        //repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
 
-    /* Rotation center */
-    //sp_repr_set_attr(repr, "inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"));
-    //sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
+        /* Rotation center */
+        //sp_repr_set_attr(repr, "inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"));
+        //sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
 
-    /* Definition */
-    gchar *def_str = sp_svg_write_path(curve->bpath);
+        /* Definition */
+        gchar *def_str = sp_svg_write_path(curve->bpath);
 
-    g_free(def_str);
-    sp_curve_unref(curve);
-
+        g_free(def_str);
+        sp_curve_unref(curve);
+        }
 
     //# Iterate through the children
     for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
@@ -319,7 +383,21 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     BufferOutputStream bouts;
     OutputStreamWriter outs(bouts);
 
+    time_t tim;
+    time(&tim);
+
     outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  file:  content.xml\n");
+    outs.printf("  Generated by Inkscape: %s", ctime(&tim)); //ctime has its own <cr>
+    outs.printf("  http://www.inkscape.org\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("\n");
     outs.printf("<office:document-content\n");
     outs.printf("    xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n");
     outs.printf("    xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n");
@@ -351,12 +429,82 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("\n");
     outs.printf("\n");
     outs.printf("<office:scripts/>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    //AffineTransform trans = new AffineTransform();
+    //trans.scale(12.0, 12.0);
+    outs.printf("<!-- ######### CONVERSION FROM SVG STARTS ######## -->\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  S T Y L E S\n");
+    outs.printf("  Style entries have been pulled from the svg style and\n");
+    outs.printf("  representation attributes in the SVG tree.  The tree elements\n");
+    outs.printf("  then refer to them by name, in the ODF manner\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("\n");
 
-    //if (!writeStyle(outs))
-    //    return false;
+    if (!writeStyle(outs))
+        {
+        g_warning("Failed to write styles");
+        return false;
+        }
 
-    //if (!writeTree(outs, node))
-    //    return false;
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  D R A W I N G\n");
+    outs.printf("  This section is the heart of SVG-ODF conversion.  We are\n");
+    outs.printf("  starting with simple conversions, and will slowly evolve\n");
+    outs.printf("  into a 'smarter' translation as time progresses.  Any help\n");
+    outs.printf("  in improving .odg export is welcome.\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<office:body>\n");
+    outs.printf("<office:drawing>\n");
+    outs.printf("<draw:page draw:name=\"page1\" draw:style-name=\"dp1\" draw:master-page-name=\"Default\">\n");
+    outs.printf("\n");
+    outs.printf("\n");
+
+    if (!writeTree(outs, node))
+        {
+        g_warning("Failed to convert SVG tree");
+        return false;
+        }
+
+    outs.printf("\n");
+    outs.printf("\n");
+
+    outs.printf("</draw:page>\n");
+    outs.printf("</office:drawing>\n");
+
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!-- ######### CONVERSION FROM SVG ENDS ######## -->\n");
+    outs.printf("\n");
+    outs.printf("\n");
+
+    outs.printf("</office:body>\n");
+    outs.printf("</office:document-content>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  E N D    O F    F I L E\n");
+    outs.printf("  Have a nice day -- ishmal\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("\n");
+
+
 
     //Make our entry
     ZipEntry *ze = zf.newEntry("content.xml", "ODF master content file");
@@ -376,7 +524,9 @@ void
 OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
 {
     ZipFile zf;
-    preprocess(zf, doc);
+    styleTable.clear();
+    imageTable.clear();
+    preprocess(zf, doc->rroot);
     if (!writeManifest(zf))
         {
         g_warning("Failed to write manifest");
@@ -430,9 +580,26 @@ OdfOutput::check (Inkscape::Extension::Extension *module)
     return TRUE;
 }
 
+
+
 //########################################################################
 //# I N P U T
 //########################################################################
+
+
+
+//#######################
+//# L A T E R  !!!  :-)
+//#######################
+
+
+
+
+
+
+
+
+
 
 
 
@@ -441,6 +608,10 @@ OdfOutput::check (Inkscape::Extension::Extension *module)
 }  //namespace Extension
 }  //namespace Inkscape
 
+
+//########################################################################
+//# E N D    O F    F I L E
+//########################################################################
 
 /*
   Local Variables:

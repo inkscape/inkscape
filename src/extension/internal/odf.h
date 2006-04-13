@@ -62,12 +62,51 @@ class StyleInfo
 {
 public:
 
+    StyleInfo()
+        {
+        init();
+        }
+
     StyleInfo(const std::string &nameArg, const std::string &styleArg)
         {
+        init();
         name   = nameArg;
         style  = styleArg;
-        fill   = "none";
-        stroke = "none";
+        }
+
+    StyleInfo(const StyleInfo &other)
+        {
+        assign(other);
+        }
+
+    StyleInfo &operator=(const StyleInfo &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    void assign(const StyleInfo &other)
+        {
+        name        = other.name;
+        style       = other.style;
+        cssStyle    = other.cssStyle;
+        stroke      = other.stroke;
+        strokeColor = other.strokeColor;
+        strokeWidth = other.strokeWidth;
+        fill        = other.fill;
+        fillColor   = other.fillColor;
+        }
+
+    void init()
+        {
+        name        = "none";
+        style       = "none";
+        cssStyle    = "none";
+        stroke      = "none";
+        strokeColor = "none";
+        strokeWidth = "none";
+        fill        = "none";
+        fillColor   = "none";
         }
 
     virtual ~StyleInfo()
@@ -142,7 +181,6 @@ private:
     //for renaming image file names
     std::map<std::string, std::string> imageTable;
 
-    void preprocess(ZipFile &zf, SPDocument *doc);
     void preprocess(ZipFile &zf, Inkscape::XML::Node *node);
 
     bool writeManifest(ZipFile &zf);
