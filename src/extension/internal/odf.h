@@ -185,6 +185,8 @@ private:
 
     bool writeManifest(ZipFile &zf);
 
+    bool writeMeta(ZipFile &zf);
+
     bool writeStyle(Writer &outs);
 
     bool writeTree(Writer &outs, Inkscape::XML::Node *node);
