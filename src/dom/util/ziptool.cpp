@@ -1997,7 +1997,6 @@ void ZipEntry::finish()
                     compressionMethod);
             }
         }
-    printf("### done\n");
 }
 
 
@@ -2140,16 +2139,28 @@ void ZipFile::trace(char *fmt, ...)
 /**
  *
  */
-bool ZipFile::addFile(const std::string &fileName,
+ZipEntry *ZipFile::addFile(const std::string &fileName,
                       const std::string &comment)
 {
     ZipEntry *ze = new ZipEntry();
     if (!ze->readFile(fileName, comment))
         {
-        return false;
+        return NULL;
         }
     entries.push_back(ze);
-    return true;
+    return ze;
+}
+
+
+/**
+ *
+ */
+ZipEntry *ZipFile::newEntry(const std::string &fileName,
+                            const std::string &comment)
+{
+    ZipEntry *ze = new ZipEntry(fileName, comment);
+    entries.push_back(ze);
+    return ze;
 }
 
 

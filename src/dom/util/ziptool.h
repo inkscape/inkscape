@@ -409,8 +409,14 @@ public:
     /**
      *
      */
-    virtual bool addFile(const std::string &fileNameArg,
-                         const std::string &commentArg);
+    virtual ZipEntry *addFile(const std::string &fileNameArg,
+                              const std::string &commentArg);
+
+    /**
+     *
+     */
+    virtual ZipEntry *newEntry(const std::string &fileNameArg,
+                               const std::string &commentArg);
 
     //######################
     //# W R I T E
