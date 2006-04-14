@@ -85,7 +85,7 @@ namespace Internal
 
 
 //#define pxToCm  0.0275
-#define pxToCm  0.0333
+#define pxToCm  0.04
 #define piToRad 0.0174532925
 #define docHeightCm 22.86
 
@@ -379,8 +379,8 @@ bool OdfOutput::writeStyle(Writer &outs)
 {
     outs.printf("<office:automatic-styles>\n");
     outs.printf("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
-    outs.printf("<style:style style:name=\"grx1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
-    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"solid\"\n");
+    outs.printf("<style:style style:name=\"gr1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
+    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"none\"\n");
     outs.printf("       draw:textarea-horizontal-align=\"center\"\n");
     outs.printf("       draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\"\n");
     outs.printf("       draw:luminance=\"0%\" draw:contrast=\"0%\" draw:gamma=\"100%\" draw:red=\"0%\"\n");
@@ -546,11 +546,17 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         outs.printf("<draw:frame ");
         if (id.size() > 0)
             outs.printf("id=\"%s\" ", id.c_str());
-        outs.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\"");
-        outs.printf(" svg:width=\"%.3f\" svg:height=\"%.3f\" svg:x=\"%.3f\" svg:y=\"%.3f\">\n",
-                                  x, y, width, height);
+        outs.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\" ");
+        outs.printf("svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
+                                  x, y, width);
+        outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\">\n",
+                                  width, height);
 
-        outs.printf("    <draw:image xlink:href=\"%s\"/>\n", newName.c_str());
+        outs.printf("    <draw:image xlink:href=\"%s\" xlink:type=\"simple\"\n",
+                              newName.c_str());
+        outs.printf("        xlink:show=\"embed\" xlink:actuate=\"onLoad\">\n");
+        outs.printf("        <text:p/>\n");
+        outs.printf("    </draw:image>\n");
         outs.printf("</draw:frame>\n");
         return true;
         }
