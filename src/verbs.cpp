@@ -1895,7 +1895,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_COPY, "EditCopy", N_("_Copy"),
                  N_("Copy selection to clipboard"), GTK_STOCK_COPY),
     new EditVerb(SP_VERB_EDIT_PASTE, "EditPaste", N_("_Paste"),
-                 N_("Paste objects from clipboard to mouse point"), GTK_STOCK_PASTE),
+                 N_("Paste objects from clipboard to mouse point, or paste text"), GTK_STOCK_PASTE),
     new EditVerb(SP_VERB_EDIT_PASTE_STYLE, "EditPasteStyle", N_("Paste _Style"),
                  N_("Apply the style of the copied object to selection"), "selection_paste_style"),
     new EditVerb(SP_VERB_EDIT_PASTE_SIZE, "EditPasteSize", N_("Paste Si_ze"),
