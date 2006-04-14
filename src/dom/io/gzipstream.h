@@ -101,7 +101,7 @@ public:
 
     virtual void flush();
 
-    virtual void put(int ch);
+    virtual void put(XMLCh ch);
 
 private:
 
