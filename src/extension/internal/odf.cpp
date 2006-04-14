@@ -84,7 +84,10 @@ namespace Internal
 {
 
 
-
+//#define pxToCm  0.0275
+#define pxToCm  0.0333
+#define piToRad 0.0174532925
+#define docHeightCm 22.86
 
 
 //########################################################################
@@ -126,6 +129,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 {
 
     std::string nodeName = node->name();
+    std::string id       = getAttribute(node, "id");
 
     if (nodeName == "image" || nodeName == "svg:image")
         {
@@ -161,6 +165,50 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 
 
 
+    SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
+    if (!reprobj)
+        return;
+    if (!SP_IS_ITEM(reprobj))
+        {
+        return;
+        }
+    SPItem *item = SP_ITEM(reprobj);
+    SPStyle *style = SP_OBJECT_STYLE(item);
+    if (style && id.size()>0)
+        {
+        StyleInfo si;
+        if (style->fill.type == SP_PAINT_TYPE_COLOR)
+            {
+            guint32 fillCol =
+                sp_color_get_rgba32_ualpha(&style->fill.value.color, 0);
+            char buf[16];
+            int r = (fillCol >> 24) & 0xff;
+            int g = (fillCol >> 16) & 0xff;
+            int b = (fillCol >>  8) & 0xff;
+            g_message("## %s %lx", id.c_str(), fillCol);
+            snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
+            si.fillColor = buf;
+            si.fill      = "solid";
+            }
+        if (style->stroke.type == SP_PAINT_TYPE_COLOR)
+            {
+            guint32 strokeCol =
+                sp_color_get_rgba32_ualpha(&style->stroke.value.color, 0);
+            char buf[16];
+            int r = (strokeCol >> 24) & 0xff;
+            int g = (strokeCol >> 16) & 0xff;
+            int b = (strokeCol >>  8) & 0xff;
+            snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
+            si.strokeColor = buf;
+            snprintf(buf, 15, "%.2fpt", style->stroke_width.value);
+            si.strokeWidth = buf;
+            si.stroke      = "solid";
+            }
+
+        styleTable[id] = si;
+        }
+
+    /*
     //Look for style values in the svg element
     Inkscape::Util::List<Inkscape::XML::AttributeRecord const> attr =
         node->attributeList();
@@ -197,7 +245,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 }
             }
         }
-
+    */
 
 
     for (Inkscape::XML::Node *child = node->firstChild() ;
@@ -339,26 +387,26 @@ bool OdfOutput::writeStyle(Writer &outs)
     outs.printf("</style:style>\n");
 
     //##  Dump our style table
-    /*
-    std::map<std::string, std::string>::iterator iter;
+    std::map<std::string, StyleInfo>::iterator iter;
     for (iter = styleTable.begin() ; iter != styleTable.end() ; iter++)
         {
-        outs.printf("<style:style style:name=\"%s\"", iter->second);
+        outs.printf("<style:style style:name=\"%s\"", iter->first.c_str());
+        StyleInfo s(iter->second);
         outs.printf(" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
         outs.printf("  <style:graphic-properties");
-        outs.printf(" draw:fill=\"" + s.getFill() + "\"");
-        if (!s.getFill().equals("none"))
-            outs.printf(" draw:fill-color=\"" + s.getFillColor() + "\"");
-        outs.printf(" draw:stroke=\"" + s.getStroke() + "\"");
-        if (!s.getStroke().equals("none"))
+        outs.printf(" draw:fill=\"%s\" ", s.getFill().c_str());
+        if (s.getFill() != "none")
+            outs.printf(" draw:fill-color=\"%s\" ", s.getFillColor().c_str());
+        outs.printf(" draw:stroke=\"%s\" ", s.getStroke().c_str());
+        if (s.getStroke() != "none")
             {
-            outs.printf(" svg:stroke-width=\"" + s.getStrokeWidth() + "\"");
-            outs.printf(" svg:stroke-color=\"" + s.getStrokeColor() + "\"");
+            outs.printf(" svg:stroke-width=\"%s\" ", s.getStrokeWidth().c_str());
+            outs.printf(" svg:stroke-color=\"%s\" ", s.getStrokeColor().c_str());
             }
         outs.printf("/>\n");
         outs.printf("</style:style>\n");
         }
-    */
+
     outs.printf("</office:automatic-styles>\n");
     outs.printf("\n");
 
@@ -367,30 +415,48 @@ bool OdfOutput::writeStyle(Writer &outs)
 
 
 static void
-writePath(Writer &outs, NArtBpath const *bpath)
+writePath(Writer &outs, NArtBpath const *bpath,
+          NR::Matrix &tf, double xoff, double yoff)
 {
     bool closed = false;
-    for (int i = 0; bpath[i].code != NR_END; i++)
+    NArtBpath *bp = (NArtBpath *)bpath;
+    for (  ; bp->code != NR_END; bp++)
         {
-        switch (bpath[i].code)
+        /*
+        double x1 = (bp->x1 * pxToCm - xoff) * 1000.0;
+        double y1 = (bp->y1 * pxToCm - yoff) * 1000.0;
+        double x2 = (bp->x2 * pxToCm - xoff) * 1000.0;
+        double y2 = (bp->y2 * pxToCm - yoff) * 1000.0;
+        double x3 = (bp->x3 * pxToCm - xoff) * 1000.0;
+        double y3 = (bp->y3 * pxToCm - yoff) * 1000.0;
+        */
+        NR::Point const p1(bp->c(1) * tf);
+	NR::Point const p2(bp->c(2) * tf);
+	NR::Point const p3(bp->c(3) * tf);
+	double x1 = (p1[NR::X] * pxToCm - xoff) * 1000.0;
+	double y1 = (p1[NR::Y] * pxToCm - yoff) * 1000.0;
+	double x2 = (p2[NR::X] * pxToCm - xoff) * 1000.0;
+	double y2 = (p2[NR::Y] * pxToCm - yoff) * 1000.0;
+	double x3 = (p3[NR::X] * pxToCm - xoff) * 1000.0;
+	double y3 = (p3[NR::Y] * pxToCm - yoff) * 1000.0;
+
+        switch (bp->code)
             {
             case NR_LINETO:
-                outs.printf("L %.3f,%.3f ",  bpath[i].x3 , bpath[i].y3);
+                outs.printf("L %.3f,%.3f ",  x3 , y3);
                 break;
 
             case NR_CURVETO:
-                outs.printf("C %.3f,%.3f %.3f,%.3f ",
-                              bpath[i].x1, bpath[i].y1,
-                              bpath[i].x2, bpath[i].y2,
-                              bpath[i].x3, bpath[i].y3);
+                outs.printf("C %.3f,%.3f %.3f,%.3f %.3f,%.3f ",
+                              x1, y1, x2, y2, x3, y3);
                 break;
 
             case NR_MOVETO_OPEN:
             case NR_MOVETO:
                 if (closed)
                     outs.printf("z ");
-                closed = ( bpath[i].code == NR_MOVETO );
-                outs.printf("M %.3f,%.3f ",  bpath[i].x3 , bpath[i].y3);
+                closed = ( bp->code == NR_MOVETO );
+                outs.printf("M %.3f,%.3f ",  x3 , y3);
                 break;
 
             default:
@@ -420,12 +486,16 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     SPItem *item = SP_ITEM(reprobj);
 
     std::string nodeName = node->name();
+    std::string id       = getAttribute(node, "id");
 
+    NR::Matrix tf = sp_item_i2d_affine(item);
+    NR::Rect bbox = sp_item_bbox_desktop(item);
 
-    std::string x      = getAttribute(node, "x");
-    std::string y      = getAttribute(node, "y");
-    std::string width  = getAttribute(node, "width");
-    std::string height = getAttribute(node, "height");
+    double x      = pxToCm * bbox.min()[NR::X];
+    double y      = pxToCm * bbox.min()[NR::Y];
+    double width  = pxToCm * ( bbox.max()[NR::X] - bbox.min()[NR::X] );
+    double height = pxToCm * ( bbox.max()[NR::Y] - bbox.min()[NR::Y] );
+
 
     //# Do our stuff
     SPCurve *curve = NULL;
@@ -444,7 +514,10 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         }
     else if (nodeName == "g" || nodeName == "svg:g")
         {
-        outs.printf("<draw:g>\n");
+        if (id.size() > 0)
+            outs.printf("<draw:g id=\"%s\">", id.c_str());
+        else
+            outs.printf("<draw:g>\n");
         //# Iterate through the children
         for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
             {
@@ -465,17 +538,20 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
             }
         std::string newName = iter->second;
 
-        outs.printf("<draw:frame draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\"");
-        outs.printf(" svg:width=\"%s\" svg:height=\"%s\" svg:x=\"%s\" svg:y=\"%s\">\n",
-                      x.c_str(), y.c_str(), width.c_str(), height.c_str());
+        outs.printf("<draw:frame ");
+        if (id.size() > 0)
+            outs.printf("id=\"%s\" ", id.c_str());
+        outs.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\"");
+        outs.printf(" svg:width=\"%.3f\" svg:height=\"%.3f\" svg:x=\"%.3f\" svg:y=\"%.3f\">\n",
+                                  x, y, width, height);
 
-        outs.printf("    <image xlink:href=\"%s\"/>\n", newName.c_str());
+        outs.printf("    <draw:image xlink:href=\"%s\"/>\n", newName.c_str());
         outs.printf("</draw:frame>\n");
         return true;
         }
     else if (SP_IS_SHAPE(item))
         {
-        g_message("### %s is a shape", nodeName.c_str());
+        //g_message("### %s is a shape", nodeName.c_str());
         curve = sp_shape_get_curve(SP_SHAPE(item));
         }
     else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
@@ -494,23 +570,28 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         //sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
 
         /* Definition */
-        NR::Rect bbox = sp_item_bbox_desktop(item);
-        double fx      = bbox.min()[NR::X];
-        double fy      = bbox.min()[NR::Y];
-        double fwidth  = bbox.max()[NR::X] - bbox.min()[NR::X];
-        double fheight = bbox.max()[NR::Y] - bbox.min()[NR::Y];
 
-        outs.printf("<draw:path draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
-                       fx, fy);
+        outs.printf("<draw:path ");
+        if (id.size()>0)
+            outs.printf("id=\"%s\" ", id.c_str());
+
+        std::map<std::string, StyleInfo>::iterator iter;
+        iter = styleTable.find(id);
+        if (iter != styleTable.end())
+            outs.printf("draw:style-name=\"%s\" ", id.c_str());
+
+        outs.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
+                       x, y);
 	outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
-	               fwidth, fheight);
+	               width, height);
 	outs.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
-	               fx * 1000.0, fy * 1000.0);
+	               width * 1000.0, height * 1000.0);
 
 	outs.printf("    svg:d=\"");
-	writePath(outs, curve->bpath);
-	outs.printf("\">\n");
+	writePath(outs, curve->bpath, tf, x, y);
+	outs.printf("\"");
 
+	outs.printf(">\n");
         outs.printf("</draw:path>\n");
 
 
