@@ -185,7 +185,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             int r = (fillCol >> 24) & 0xff;
             int g = (fillCol >> 16) & 0xff;
             int b = (fillCol >>  8) & 0xff;
-            g_message("## %s %lx", id.c_str(), fillCol);
+            //g_message("## %s %lx", id.c_str(), fillCol);
             snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
             si.fillColor = buf;
             si.fill      = "solid";
@@ -380,7 +380,12 @@ bool OdfOutput::writeStyle(Writer &outs)
     outs.printf("<office:automatic-styles>\n");
     outs.printf("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
     outs.printf("<style:style style:name=\"grx1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
-    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"solid\" draw:textarea-horizontal-align=\"center\" draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\" draw:luminance=\"0%\" draw:contrast=\"0%\" draw:gamma=\"100%\" draw:red=\"0%\" draw:green=\"0%\" draw:blue=\"0%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\" draw:image-opacity=\"100%\" style:mirror=\"none\"/>\n");
+    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"solid\"\n");
+    outs.printf("       draw:textarea-horizontal-align=\"center\"\n");
+    outs.printf("       draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\"\n");
+    outs.printf("       draw:luminance=\"0%\" draw:contrast=\"0%\" draw:gamma=\"100%\" draw:red=\"0%\"\n");
+    outs.printf("       draw:green=\"0%\" draw:blue=\"0%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\"\n");
+    outs.printf("       draw:image-opacity=\"100%\" style:mirror=\"none\"/>\n");
     outs.printf("</style:style>\n");
     outs.printf("<style:style style:name=\"P1\" style:family=\"paragraph\">\n");
     outs.printf("  <style:paragraph-properties fo:text-align=\"center\"/>\n");
@@ -422,14 +427,6 @@ writePath(Writer &outs, NArtBpath const *bpath,
     NArtBpath *bp = (NArtBpath *)bpath;
     for (  ; bp->code != NR_END; bp++)
         {
-        /*
-        double x1 = (bp->x1 * pxToCm - xoff) * 1000.0;
-        double y1 = (bp->y1 * pxToCm - yoff) * 1000.0;
-        double x2 = (bp->x2 * pxToCm - xoff) * 1000.0;
-        double y2 = (bp->y2 * pxToCm - yoff) * 1000.0;
-        double x3 = (bp->x3 * pxToCm - xoff) * 1000.0;
-        double y3 = (bp->y3 * pxToCm - yoff) * 1000.0;
-        */
         NR::Point const p1(bp->c(1) * tf);
 	NR::Point const p2(bp->c(2) * tf);
 	NR::Point const p3(bp->c(3) * tf);
@@ -491,6 +488,14 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     NR::Matrix tf = sp_item_i2d_affine(item);
     NR::Rect bbox = sp_item_bbox_desktop(item);
 
+    //Flip Y into document coordinates
+    double svgHeight = sp_document_height(SP_ACTIVE_DOCUMENT);
+    double doc_height = svgHeight; // * pxToCm;
+    NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1, -1));
+    doc2dt_tf = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+    tf        = tf   * doc2dt_tf;
+    bbox      = bbox * doc2dt_tf;
+
     double x      = pxToCm * bbox.min()[NR::X];
     double y      = pxToCm * bbox.min()[NR::Y];
     double width  = pxToCm * ( bbox.max()[NR::X] - bbox.min()[NR::X] );
@@ -500,7 +505,7 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     //# Do our stuff
     SPCurve *curve = NULL;
 
-    g_message("##### %s #####", nodeName.c_str());
+    //g_message("##### %s #####", nodeName.c_str());
 
     if (nodeName == "svg" || nodeName == "svg:svg")
         {
@@ -694,7 +699,8 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("\n");
     outs.printf("<office:body>\n");
     outs.printf("<office:drawing>\n");
-    outs.printf("<draw:page draw:name=\"page1\" draw:style-name=\"dp1\" draw:master-page-name=\"Default\">\n");
+    outs.printf("<draw:page draw:name=\"page1\" draw:style-name=\"dp1\"\n");
+    outs.printf("        draw:master-page-name=\"Default\">\n");
     outs.printf("\n");
     outs.printf("\n");
 
