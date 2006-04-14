@@ -216,6 +216,8 @@ private:
 
     bool putByte(unsigned char ch);
     bool putLong(unsigned long val);
+
+    int compressionMethod;
 };
 
 

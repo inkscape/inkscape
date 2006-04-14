@@ -1539,7 +1539,7 @@ bool GzipFile::write()
     putByte(0);
 
     //file name
-    for (int i=0 ; i<fileName.size() ; i++)
+    for (unsigned int i=0 ; i<fileName.size() ; i++)
         putByte(fileName[i]);
     putByte(0);
 
@@ -1662,12 +1662,12 @@ bool GzipFile::read()
     //## compression method
     if (!getByte(&ch))
         return false;
-    int cm = ch & 0xff;
+    compressionMethod = ch & 0xff;
 
     //## flags
     if (!getByte(&ch))
         return false;
-    bool ftext    = ch & 0x01;
+    //bool ftext    = ch & 0x01;
     bool fhcrc    = ch & 0x02;
     bool fextra   = ch & 0x04;
     bool fname    = ch & 0x08;
@@ -1680,17 +1680,17 @@ bool GzipFile::read()
     unsigned long ltime;
     if (!getLong(&ltime))
         return false;
-    time_t mtime = (time_t)ltime;
+    //time_t mtime = (time_t)ltime;
 
     //## XFL
     if (!getByte(&ch))
         return false;
-    int xfl = ch;
+    //int xfl = ch;
 
     //## OS
     if (!getByte(&ch))
         return false;
-    int os = ch;
+    //int os = ch;
 
     //std::string timestr = ctime(&mtime);
     //trace("xfl:%d os:%d mtime:%s", xfl, os, timestr.c_str());
