@@ -185,7 +185,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             int r = (fillCol >> 24) & 0xff;
             int g = (fillCol >> 16) & 0xff;
             int b = (fillCol >>  8) & 0xff;
-            //g_message("## %s %lx", id.c_str(), fillCol);
+            //g_message("## %s %lx", id.c_str(), (unsigned int)fillCol);
             snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
             si.fillColor = buf;
             si.fill      = "solid";
