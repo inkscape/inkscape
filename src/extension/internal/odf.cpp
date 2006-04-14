@@ -176,14 +176,14 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 
         std::string attrName  = (const char *)g_quark_to_string(attr->key);
         std::string attrValue = (const char *)attr->value;
-        g_message("tag:'%s'    key:'%s'    value:'%s'",
-            nodeName.c_str(), attrName.c_str(), attrValue.c_str()  );
+        //g_message("tag:'%s'    key:'%s'    value:'%s'",
+        //    nodeName.c_str(), attrName.c_str(), attrValue.c_str()  );
         if (attrName == "style")
             {
             StyleInfo si(attrName, attrValue);
             if (styleTable.find(attrValue) != styleTable.end())
                 {
-                g_message("duplicate style");
+                //g_message("duplicate style");
                 }
             else
                 {
@@ -192,8 +192,8 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 std::string attrName  = buf;
                 //Map from value-->name .   Looks backwards, i know
                 styleTable[attrValue] = si;
-                g_message("mapping '%s' to '%s'",
-                    attrValue.c_str(), attrName.c_str());
+                //g_message("mapping '%s' to '%s'",
+                //    attrValue.c_str(), attrName.c_str());
                 }
             }
         }
@@ -366,6 +366,45 @@ bool OdfOutput::writeStyle(Writer &outs)
 }
 
 
+static void
+writePath(Writer &outs, NArtBpath const *bpath)
+{
+    bool closed = false;
+    for (int i = 0; bpath[i].code != NR_END; i++)
+        {
+        switch (bpath[i].code)
+            {
+            case NR_LINETO:
+                outs.printf("L %.3f,%.3f ",  bpath[i].x3 , bpath[i].y3);
+                break;
+
+            case NR_CURVETO:
+                outs.printf("C %.3f,%.3f %.3f,%.3f ",
+                              bpath[i].x1, bpath[i].y1,
+                              bpath[i].x2, bpath[i].y2,
+                              bpath[i].x3, bpath[i].y3);
+                break;
+
+            case NR_MOVETO_OPEN:
+            case NR_MOVETO:
+                if (closed)
+                    outs.printf("z ");
+                closed = ( bpath[i].code == NR_MOVETO );
+                outs.printf("M %.3f,%.3f ",  bpath[i].x3 , bpath[i].y3);
+                break;
+
+            default:
+                break;
+
+            }
+
+        }
+
+    if (closed)
+        outs.printf("z");;
+
+}
+
 
 
 bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
@@ -380,12 +419,43 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         }
     SPItem *item = SP_ITEM(reprobj);
 
+    std::string nodeName = node->name();
+
+
+    std::string x      = getAttribute(node, "x");
+    std::string y      = getAttribute(node, "y");
+    std::string width  = getAttribute(node, "width");
+    std::string height = getAttribute(node, "height");
+
     //# Do our stuff
     SPCurve *curve = NULL;
-    std::string tagName = "path";
-    if (SP_IS_IMAGE(item))
+
+    g_message("##### %s #####", nodeName.c_str());
+
+    if (nodeName == "svg" || nodeName == "svg:svg")
         {
-        tagName = "image";
+        //# Iterate through the children
+        for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
+            {
+            if (!writeTree(outs, child))
+                return false;
+            }
+        return true;
+        }
+    else if (nodeName == "g" || nodeName == "svg:g")
+        {
+        outs.printf("<draw:g>\n");
+        //# Iterate through the children
+        for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
+            {
+            if (!writeTree(outs, child))
+                return false;
+            }
+        outs.printf("</draw:g>\n");
+        return true;
+        }
+    else if (nodeName == "image" || nodeName == "svg:image")
+        {
         std::string href = getAttribute(node, "xlink:href");
         std::map<std::string, std::string>::iterator iter = imageTable.find(href);
         if (iter == imageTable.end())
@@ -394,11 +464,18 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
             return false;
             }
         std::string newName = iter->second;
-        outs.printf("<image xlink:href=\"%s\"/>\n", newName.c_str());
+
+        outs.printf("<draw:frame draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\"");
+        outs.printf(" svg:width=\"%s\" svg:height=\"%s\" svg:x=\"%s\" svg:y=\"%s\">\n",
+                      x.c_str(), y.c_str(), width.c_str(), height.c_str());
+
+        outs.printf("    <image xlink:href=\"%s\"/>\n", newName.c_str());
+        outs.printf("</draw:frame>\n");
         return true;
         }
     else if (SP_IS_SHAPE(item))
         {
+        g_message("### %s is a shape", nodeName.c_str());
         curve = sp_shape_get_curve(SP_SHAPE(item));
         }
     else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
@@ -408,7 +485,6 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
     if (curve)
         {
-
         //Inkscape::XML::Node *repr = sp_repr_new("svg:path");
         /* Transformation */
         //repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
@@ -418,18 +494,29 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         //sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
 
         /* Definition */
-        gchar *def_str = sp_svg_write_path(curve->bpath);
+        NR::Rect bbox = sp_item_bbox_desktop(item);
+        double fx      = bbox.min()[NR::X];
+        double fy      = bbox.min()[NR::Y];
+        double fwidth  = bbox.max()[NR::X] - bbox.min()[NR::X];
+        double fheight = bbox.max()[NR::Y] - bbox.min()[NR::Y];
 
-        g_free(def_str);
+        outs.printf("<draw:path draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
+                       fx, fy);
+	outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
+	               fwidth, fheight);
+	outs.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
+	               fx * 1000.0, fy * 1000.0);
+
+	outs.printf("    svg:d=\"");
+	writePath(outs, curve->bpath);
+	outs.printf("\">\n");
+
+        outs.printf("</draw:path>\n");
+
+
         sp_curve_unref(curve);
         }
 
-    //# Iterate through the children
-    for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
-        {
-        if (!writeTree(outs, child))
-            return false;
-        }
     return true;
 }
 
