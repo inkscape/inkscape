@@ -867,6 +867,8 @@ private:
 
     //#### Huffman Encode
     void encodeLiteralStatic(unsigned int ch);
+
+    unsigned char windowBuf[32768];
 };
 
 
@@ -1264,6 +1266,11 @@ void Deflater::encodeDistStatic(unsigned int len, unsigned int dist)
 bool Deflater::compressWindow()
 {
     //### Compress as much of the window as possible
+    int i=0;
+    std::vector<unsigned char>::iterator iter;
+    for (iter=window.begin() ; iter!=window.end() ; iter++)
+        windowBuf[i++] = *iter;
+
     while (windowPos < window.size())
         {
         //### Find best match, if any
@@ -1283,7 +1290,7 @@ bool Deflater::compressWindow()
                     {
                     unsigned int pos1 = lookBack  + lookAhead;
                     unsigned int pos2 = windowPos + lookAhead;
-                    if (window[pos1] != window[pos2])
+                    if (windowBuf[pos1] != windowBuf[pos2])
                         break;
                     }
                 if (lookAhead > bestMatchLen)
@@ -1313,10 +1320,11 @@ bool Deflater::compressWindow()
             {
             //Literal encode
             //trace("### literal");
-            encodeLiteralStatic(window[windowPos]);
+            encodeLiteralStatic(windowBuf[windowPos]);
             windowPos++;
             }
         }
+
     encodeLiteralStatic(256);
     return true;
 }
@@ -1342,7 +1350,10 @@ bool Deflater::compress()
             iter++;
             }
         windowPos = 0;
-        putBits(0x01, 1); //1  -- last block
+        if (window.size() >= 32768)
+            putBits(0x00, 1); //0  -- more blocks
+        else
+            putBits(0x01, 1); //1  -- last block
         putBits(0x01, 2); //01 -- static trees
         if (!compressWindow())
             return false;
@@ -1951,6 +1962,22 @@ void ZipEntry::setUncompressedData(const std::vector<unsigned char> &val)
 /**
  *
  */
+unsigned long ZipEntry::getCrc()
+{
+    return crc;
+}
+
+/**
+ *
+ */
+void ZipEntry::setCrc(unsigned long val)
+{
+    crc = val;
+}
+
+/**
+ *
+ */
 void ZipEntry::write(unsigned char ch)
 {
     uncompressedData.push_back(ch);
@@ -2001,13 +2028,6 @@ void ZipEntry::finish()
 
 
 
-/**
- *
- */
-unsigned long ZipEntry::getCrc()
-{
-    return crc;
-}
 
 /**
  *
@@ -2606,10 +2626,27 @@ bool ZipFile::readFileData()
                 }
             }
 
+        if (uncompressedSize != uncompBuf.size())
+            {
+            error("Size mismatch.  Received %ld, received %ld",
+                uncompressedSize, uncompBuf.size());
+            return false;
+            }
+
+        Crc32 crcEngine;
+        crcEngine.update(uncompBuf);
+        unsigned long crc = crcEngine.getValue();
+        if (crc != crc32)
+            {
+            error("Crc mismatch.  Calculated %08ux, received %08ux", crc, crc32);
+            return false;
+            }
+
         ZipEntry *ze = new ZipEntry(fileName, comment);
         ze->setCompressionMethod(compressionMethod);
         ze->setCompressedData(compBuf);
         ze->setUncompressedData(uncompBuf);
+        ze->setCrc(crc);
         entries.push_back(ze);
 
 

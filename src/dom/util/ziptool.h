@@ -327,6 +327,11 @@ public:
     /**
      *
      */
+    virtual void setCrc(unsigned long crc);
+
+    /**
+     *
+     */
     virtual bool readFile(const std::string &fileNameArg,
                           const std::string &commentArg);
 
