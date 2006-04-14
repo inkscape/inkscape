@@ -37,9 +37,12 @@
 #include "prefs-utils.h"
 #include "sp-metrics.h"
 #include "sp-path.h"
-#include <libnr/nr-matrix-ops.h>
+#include "libnr/nr-matrix-ops.h"
 #include "splivarot.h"
 #include "svg/svg.h"
+#include "display/bezier-utils.h"
+#include <vector>
+#include <algorithm>
 
 class NR::Matrix;
 
@@ -1615,6 +1618,126 @@ void sp_node_selected_join_segment()
 }
 
 /**
+ * Delete one or more selected nodes and preserve the shape of the path as much as possible.
+ */
+void sp_node_delete_preserve(GList *nodes_to_delete)
+{
+    
+    while (nodes_to_delete) {
+        Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node*) g_list_first(nodes_to_delete)->data;
+        Inkscape::NodePath::SubPath *sp = node->subpath;
+        Inkscape::NodePath::Path *nodepath = sp->nodepath;
+        Inkscape::NodePath::Node *sample_cursor = NULL;
+        Inkscape::NodePath::Node *sample_end = NULL;
+        Inkscape::NodePath::Node *delete_cursor = node;
+        bool just_delete = false;
+        
+        //find the start of this contiguous selection
+        //move left to the first node that is not selected
+        //or the start of the non-closed path
+        for (Inkscape::NodePath::Node *curr=node->p.other; curr && curr!=node && g_list_find(nodes_to_delete, curr); curr=curr->p.other) {
+            delete_cursor = curr;
+        }
+
+        //just delete at the beginning of an open path
+        if (!delete_cursor->p.other) {
+            sample_cursor = delete_cursor;
+            just_delete = true;
+        } else {
+            sample_cursor = delete_cursor->p.other;
+        }
+        
+        //calculate points for each segment
+        int rate = 5;
+        float period = 1.0 / rate;
+        std::vector<NR::Point> data;
+        if (!just_delete) {
+            data.push_back(sample_cursor->pos);
+            for (Inkscape::NodePath::Node *curr=sample_cursor; curr; curr=curr->n.other) {
+                //just delete at the end of an open path
+                if (!sp->closed && curr->n.other == sp->last) {
+                    just_delete = true;
+                    break;
+                }
+                
+                //sample points on the contiguous selected segment
+                NR::Point *bez;
+                bez = new NR::Point [4];
+                bez[0] = curr->pos;
+                bez[1] = curr->n.pos;
+                bez[2] = curr->n.other->p.pos;
+                bez[3] = curr->n.other->pos;
+                for (int i=1; i<rate; i++) {
+                    gdouble t = i * period;
+                    NR::Point p = bezier_pt(3, bez, t);
+                    data.push_back(p);
+                }
+                data.push_back(curr->n.other->pos);
+
+                sample_end = curr->n.other;
+                //break if we've come full circle or hit the end of the selection
+                if (!g_list_find(nodes_to_delete, curr->n.other) || curr->n.other==sample_cursor) {
+                    break;
+                }
+            }
+        }
+
+        if (!just_delete) {
+            //calculate the best fitting single segment and adjust the endpoints
+            NR::Point *adata;
+            adata = new NR::Point [data.size()];
+            copy(data.begin(), data.end(), adata);
+            
+            NR::Point *bez;
+            bez = new NR::Point [4];
+            //would decreasing error create a better fitting approximation?
+            gdouble error = 1.0;
+            gint ret;
+            ret = sp_bezier_fit_cubic (bez, adata, data.size(), error);
+
+            //adjust endpoints
+            sample_cursor->n.pos = bez[1];
+            sample_end->p.pos = bez[2];
+        }
+       
+        //destroy this contiguous selection
+        while (delete_cursor && g_list_find(nodes_to_delete, delete_cursor)) {
+            Inkscape::NodePath::Node *temp = delete_cursor;
+            if (delete_cursor->n.other == delete_cursor) {
+                // delete_cursor->n points to itself, which means this is the last node on a closed subpath
+                delete_cursor = NULL; 
+            } else {
+                delete_cursor = delete_cursor->n.other;
+            }
+            nodes_to_delete = g_list_remove(nodes_to_delete, temp);
+            sp_nodepath_node_destroy(temp);
+        }
+
+        //clean up the nodepath (such as for trivial subpaths)
+        sp_nodepath_cleanup(nodepath);
+
+        sp_nodepath_update_handles(nodepath);
+
+        // if the entire nodepath is removed, delete the selected object.
+        if (nodepath->subpaths == NULL ||
+            sp_nodepath_get_node_count(nodepath) < 2) {
+            SPDocument *document = SP_DT_DOCUMENT (nodepath->desktop);
+            sp_nodepath_destroy(nodepath);
+            g_list_free(nodes_to_delete);
+            nodes_to_delete = NULL;
+            //is the next line necessary?
+            sp_selection_delete();
+            sp_document_done (document);
+            return;
+        }
+
+        sp_nodepath_update_repr(nodepath);
+
+        sp_nodepath_update_statusbar(nodepath);
+    }
+}
+
+/**
  * Delete one or more selected nodes.
  */
 void sp_node_selected_delete()
@@ -2372,23 +2495,9 @@ static void node_clicked(SPKnot *knot, guint state, gpointer data)
             sp_nodepath_update_statusbar(nodepath);
 
         } else { //ctrl+alt+click: delete node
-            sp_nodepath_node_destroy(n);
-            //clean up the nodepath (such as for trivial subpaths)
-            sp_nodepath_cleanup(nodepath);
-
-            // if the entire nodepath is removed, delete the selected object.
-            if (nodepath->subpaths == NULL ||
-                sp_nodepath_get_node_count(nodepath) < 2) {
-                SPDocument *document = SP_DT_DOCUMENT (nodepath->desktop);
-                sp_nodepath_destroy(nodepath);
-                sp_selection_delete();
-                sp_document_done (document);
-
-            } else {
-                sp_nodepath_update_handles(nodepath);
-                sp_nodepath_update_repr(nodepath);
-                sp_nodepath_update_statusbar(nodepath);
-            }
+            GList *node_to_delete = NULL;
+            node_to_delete = g_list_append(node_to_delete, n);
+            sp_node_delete_preserve(node_to_delete);
         }
 
     } else {

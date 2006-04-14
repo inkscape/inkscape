@@ -257,6 +257,7 @@ void sp_node_selected_break (void);
 void sp_node_selected_duplicate (void);
 void sp_node_selected_join (void);
 void sp_node_selected_join_segment (void);
+void sp_node_delete_preserve (GList *nodes_to_delete);
 void sp_node_selected_delete (void);
 void sp_node_selected_delete_segment (void);
 void sp_node_selected_set_type (Inkscape::NodePath::NodeType type);

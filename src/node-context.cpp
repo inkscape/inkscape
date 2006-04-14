@@ -636,8 +636,11 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_Delete:
                 case GDK_KP_Delete:
                 case GDK_BackSpace:
-                    // with any modifiers
-                    sp_node_selected_delete();
+                    if (MOD__CTRL_ONLY) {
+                        sp_node_selected_delete();
+                    } else {
+                        sp_node_delete_preserve(g_list_copy(nc->nodepath->selected));
+                    }
                     ret = TRUE;
                     break;
                 case GDK_C:

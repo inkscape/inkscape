@@ -20,6 +20,7 @@
 #include <glib/gtypes.h>
 
 /* Bezier approximation utils */
+NR::Point bezier_pt(unsigned degree, NR::Point const V[], gdouble t);
 
 gint sp_bezier_fit_cubic(NR::Point bezier[], NR::Point const data[], gint len, gdouble error);
 

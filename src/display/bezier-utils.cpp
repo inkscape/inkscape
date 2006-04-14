@@ -53,7 +53,6 @@ static void estimate_bi(NR::Point b[4], unsigned ei,
                         NR::Point const data[], double const u[], unsigned len);
 static void reparameterize(NR::Point const d[], unsigned len, double u[], BezierCurve const bezCurve);
 static gdouble NewtonRaphsonRootFind(BezierCurve const Q, NR::Point const &P, gdouble u);
-static NR::Point bezier_pt(unsigned degree, NR::Point const V[], gdouble t);
 static NR::Point sp_darray_center_tangent(NR::Point const d[], unsigned center, unsigned length);
 static NR::Point sp_darray_right_tangent(NR::Point const d[], unsigned const len);
 static unsigned copy_without_nans_or_adjacent_duplicates(NR::Point const src[], unsigned src_len, NR::Point dest[]);
@@ -652,7 +651,7 @@ NewtonRaphsonRootFind(BezierCurve const Q, NR::Point const &P, gdouble const u)
  * is i * BezierII(i-1, V'), where for all j, V'[j] =
  * V[j + 1] - V[j].
  */
-static NR::Point
+NR::Point
 bezier_pt(unsigned const degree, NR::Point const V[], gdouble const t)
 {
     /** Pascal's triangle. */
