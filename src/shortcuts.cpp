@@ -98,11 +98,7 @@ static void read_shortcuts_file(char const *filename) {
         bool is_primary;
 
         if (!strcmp(iter->name(), "bind")) {
-            if (iter->attribute("display") && strcmp(iter->attribute("display"), "false") && strcmp(iter->attribute("display"), "0")) {
-                is_primary = true;
-            } else {
-                is_primary = false;
-            }
+            is_primary = iter->attribute("display") && strcmp(iter->attribute("display"), "false") && strcmp(iter->attribute("display"), "0");
         } else {
             // some unknown element, do not complain
             continue;
@@ -114,7 +110,8 @@ static void read_shortcuts_file(char const *filename) {
             continue;
         }
 
-        if (Inkscape::Verb::getbyid(verb_name) == NULL) {
+        Inkscape::Verb *verb=Inkscape::Verb::getbyid(verb_name);
+        if (!verb) {
             g_warning("Unknown verb name: %s", verb_name);
             continue;
         }
@@ -124,6 +121,7 @@ static void read_shortcuts_file(char const *filename) {
             // that's ok, it's just listed for reference without assignment, skip it
             continue;
         }
+
         guint keyval=gdk_keyval_from_name(keyval_name);
         if (keyval == GDK_VoidSymbol) {
             g_warning("Unknown keyval %s for %s", keyval_name, verb_name);
@@ -153,9 +151,7 @@ static void read_shortcuts_file(char const *filename) {
             }
         }
 
-        sp_shortcut_set(keyval | modifiers,
-                        Inkscape::Verb::getbyid(verb_name),
-                        is_primary);
+        sp_shortcut_set(keyval | modifiers, verb, is_primary);
     }
 
     GC::release(doc);
