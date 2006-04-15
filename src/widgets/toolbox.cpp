@@ -396,9 +396,9 @@ sp_node_toolbox_new(SPDesktop *desktop)
     gtk_box_pack_start(GTK_BOX(tb), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
     sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_join",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_join), tt, _("Join paths at selected nodes"));
+        GTK_SIGNAL_FUNC(sp_node_path_edit_join), tt, _("Join selected endnodes"));
     sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_join_segment",
-        GTK_SIGNAL_FUNC(sp_node_path_edit_join_segment), tt, _("Join paths at selected nodes with new segment"));
+        GTK_SIGNAL_FUNC(sp_node_path_edit_join_segment), tt, _("Join selected endnodes with a new segment"));
 
     sp_toolbox_button_new(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, "node_delete_segment",
         GTK_SIGNAL_FUNC(sp_node_path_edit_delete_segment), tt, _("Split path between two non-endpoint nodes"));
