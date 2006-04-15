@@ -836,9 +836,9 @@ static Inkscape::NodePath::Node *sp_nodepath_set_node_type(Inkscape::NodePath::N
     }
 
     // if one of handles is mouseovered, preserve its position
-    if (node->p.knot && SP_KNOT_IS_MOSEOVER(node->p.knot)) {
+    if (node->p.knot && SP_KNOT_IS_MOUSEOVER(node->p.knot)) {
         sp_node_adjust_handle(node, 1);
-    } else if (node->n.knot && SP_KNOT_IS_MOSEOVER(node->n.knot)) {
+    } else if (node->n.knot && SP_KNOT_IS_MOUSEOVER(node->n.knot)) {
         sp_node_adjust_handle(node, -1);
     } else {
         sp_node_adjust_handles(node);
@@ -1452,16 +1452,22 @@ void sp_node_selected_join()
 
     /* a and b are endpoints */
 
-    NR::Point c = (a->pos + b->pos) / 2;
+    NR::Point c;
+    if (a->knot && SP_KNOT_IS_MOUSEOVER(a->knot)) {
+        c = a->pos;
+    } else if (b->knot && SP_KNOT_IS_MOUSEOVER(b->knot)) {
+        c = b->pos;
+    } else {
+        c = (a->pos + b->pos) / 2;
+    }
 
     if (a->subpath == b->subpath) {
        Inkscape::NodePath::SubPath *sp = a->subpath;
         sp_nodepath_subpath_close(sp);
+        sp_node_moveto (sp->first, c);
 
         sp_nodepath_update_handles(sp->nodepath);
-
         sp_nodepath_update_repr(nodepath);
-
         return;
     }
 
@@ -3354,7 +3360,7 @@ static void sp_nodepath_subpath_close(Inkscape::NodePath::SubPath *sp)
     //Link the head to the tail
     sp->first->p.other = sp->last;
     sp->last->n.other  = sp->first;
-    sp->last->n.pos    = sp->first->n.pos;
+    sp->last->n.pos    = sp->last->pos + (sp->first->n.pos - sp->first->pos);
     sp->first          = sp->last;
 
     //Remove the extra end node
