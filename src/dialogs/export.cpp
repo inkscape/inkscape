@@ -55,8 +55,6 @@
 static void sp_export_area_toggled   ( GtkToggleButton *tb, GtkObject *base );
 static void sp_export_export_clicked ( GtkButton *button, GtkObject *base );
 static void sp_export_browse_clicked ( GtkButton *button, gpointer userdata );
-static void sp_export_browse_store   ( GtkButton *button, gpointer userdata );
-
 
 static void sp_export_area_x_value_changed       ( GtkAdjustment *adj, 
                                                    GtkObject *base);
@@ -1136,7 +1134,13 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
     GtkWidget *fs, *fe;
     const gchar *filename;
 
-    fs = gtk_file_selection_new (_("Select a filename for exporting"));
+    fs = gtk_file_chooser_dialog_new (_("Select a filename for exporting"),
+                                      NULL,
+                                      GTK_FILE_CHOOSER_ACTION_SAVE,
+                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                      NULL );
+
     fe = (GtkWidget *)g_object_get_data (G_OBJECT (dlg), "filename");
 
     sp_transientize (fs);
@@ -1149,47 +1153,25 @@ sp_export_browse_clicked (GtkButton *button, gpointer userdata)
         filename = homedir_path(NULL);
     }
 
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs), filename);
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (fs), filename);
 
-    g_signal_connect ( GTK_OBJECT (GTK_FILE_SELECTION (fs)->ok_button),
-                       "clicked",
-                       G_CALLBACK (sp_export_browse_store),
-                       (gpointer) fs );
+    if (gtk_dialog_run (GTK_DIALOG (fs)) == GTK_RESPONSE_ACCEPT)
+    {
+        gchar *file;
 
-    g_signal_connect_swapped ( GTK_OBJECT (GTK_FILE_SELECTION (fs)->ok_button),
-                               "clicked",
-                               G_CALLBACK (gtk_widget_destroy),
-                               (gpointer) fs );
+        file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (fs));
+        gchar * utf8file = g_filename_to_utf8( file, -1, NULL, NULL, NULL );
+        gtk_entry_set_text (GTK_ENTRY (fe), utf8file);
+        g_free(utf8file);
 
-    g_signal_connect_swapped ( GTK_OBJECT
-                                   (GTK_FILE_SELECTION (fs)->cancel_button),
-                               "clicked",
-                               G_CALLBACK (gtk_widget_destroy),
-                               (gpointer) fs );
+        g_object_set_data (G_OBJECT (dlg), "filename", fe);
+        g_free(file);
+    }
 
-    gtk_widget_show (fs);
+    gtk_widget_destroy (fs);
 
     return;
 } // end of sp_export_browse_clicked()
-
-/// Called when OK clicked in file dialog
-static void
-sp_export_browse_store (GtkButton *button, gpointer userdata)
-{
-    GtkWidget *fs = (GtkWidget *)userdata, *fe;
-    const gchar *file;
-
-    fe = (GtkWidget *)g_object_get_data (G_OBJECT (dlg), "filename");
-
-    file = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
-    gchar * utf8file = g_filename_to_utf8( file, -1, NULL, NULL, NULL );
-    gtk_entry_set_text (GTK_ENTRY (fe), utf8file);
-    g_free(utf8file);
-
-    g_object_set_data (G_OBJECT (dlg), "filename", fe);
-
-    return;
-} // end of sp_export_browse_store()
 
 // TODO: Move this to nr-rect-fns.h.
 static bool
