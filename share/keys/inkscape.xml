@@ -493,7 +493,10 @@ override) the bindings in the main default.xml.
 
 <!-- Effects -->
 
-  <bind action="EffectLast" />
-  <bind action="EffectLastPref" />
+  <bind action="EffectLast" /> 
+  <bind action="EffectLastPref" /> 
+  <!-- You can also assign keys to individual effects. The action should be set to he
+  effect id from the .inx file, for example "org.ekips.filter.addnodes" for the Add
+  Nodes effect. -->
 
 </keys>

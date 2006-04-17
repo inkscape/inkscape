@@ -554,6 +554,9 @@ Hom/end keys-select minimum or maximum feather values
 
   <bind action="EffectLast" />
   <bind action="EffectLastPref" />
+  <!-- You can also assign keys to individual effects. The action should be set to he
+  effect id from the .inx file, for example "org.ekips.filter.addnodes" for the Add
+  Nodes effect. -->
 
 </keys>
 
