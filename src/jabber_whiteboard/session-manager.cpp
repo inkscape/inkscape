@@ -173,8 +173,8 @@ SessionManager::setDesktop(::SPDesktop* desktop)
 	if (this->_myDoc != NULL) {
 		Inkscape::GC::release(this->_myDoc);
 	}
-	if (SP_DT_DOCUMENT(desktop) != NULL) {
-		this->_myDoc = SP_DT_DOCUMENT(desktop);
+	if (sp_desktop_document(desktop) != NULL) {
+		this->_myDoc = sp_desktop_document(desktop);
 		Inkscape::GC::anchor(this->_myDoc);
 	}
 }

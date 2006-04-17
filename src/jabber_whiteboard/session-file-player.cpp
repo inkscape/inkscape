@@ -125,7 +125,7 @@ SessionFilePlayer::step(unsigned short dir)
 				this->_visited.push_front(std::make_pair< gint64, gint64 >(this->_current, this->_curmsg.bytes()));
 				this->_outputMessageToWidget();
 				this->_sm->receiveChange(this->_curmsg);
-				sp_document_done(SP_DT_DOCUMENT(this->_sm->desktop()));
+				sp_document_done(sp_desktop_document(this->_sm->desktop()));
 				this->_curdir = FORWARD;
 				return true;
 			}
@@ -141,7 +141,7 @@ SessionFilePlayer::step(unsigned short dir)
 				this->_next = last.first + last.second;
 				this->_sf->nextMessageFrom(this->_current, this->_curmsg);
 				this->_outputMessageToWidget();
-				sp_document_undo(SP_DT_DOCUMENT(this->_sm->desktop()));
+				sp_document_undo(sp_desktop_document(this->_sm->desktop()));
 				this->_curdir = BACKWARD;
 				return true;
 			}
