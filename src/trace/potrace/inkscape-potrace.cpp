@@ -543,7 +543,7 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
         if (desktop)
             {
             gchar *msg = g_strdup_printf(_("Trace: %d.  %ld nodes"), traceCount++, nodeCount);
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+            sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
             g_free(msg);
             }
         }
@@ -644,7 +644,7 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
         if (desktop)
             {
             gchar *msg = g_strdup_printf(_("Trace: %d.  %ld nodes"), colorIndex, nodeCount);
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+            sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
             g_free(msg);
             }
 

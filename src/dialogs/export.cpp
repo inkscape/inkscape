@@ -260,7 +260,7 @@ sp_export_dialog_area_frame (GtkWidget * dlg)
     us = sp_unit_selector_new (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop)
-        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), SP_DT_NAMEDVIEW(desktop)->doc_units);
+        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
     gtk_box_pack_end (GTK_BOX (unitbox), us, FALSE, FALSE, 0);
     l = gtk_label_new (_("Units:"));
     gtk_box_pack_end (GTK_BOX (unitbox), l, FALSE, FALSE, 3);
@@ -562,7 +562,7 @@ sp_export_find_default_selection(GtkWidget * dlg)
 {
     selection_type key = SELECTION_NUMBER_OF;
 
-    if ((SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
+    if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
         key = SELECTION_SELECTION;
     }
 
@@ -610,13 +610,13 @@ sp_export_selection_changed ( Inkscape::Application *inkscape,
     current_key = (selection_type)(GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(base), "selection-type")));
 
     if ((current_key == SELECTION_DRAWING || current_key == SELECTION_PAGE) &&
-            (SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty() == false &&
+            (sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false &&
             was_empty) {
         gtk_toggle_button_set_active
             ( GTK_TOGGLE_BUTTON ( gtk_object_get_data (base, selection_names[SELECTION_SELECTION])),
               TRUE );
     }
-    was_empty = (SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty();
+    was_empty = (sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty();
 
     current_key = (selection_type)(GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(base), "selection-type")));
 
@@ -646,7 +646,7 @@ sp_export_selection_modified ( Inkscape::Application *inkscape,
             if ( SP_ACTIVE_DESKTOP ) {
                 SPDocument *doc;
                 NRRect bbox;
-                doc = SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP);
+                doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
                 sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)), &bbox);
 
                 if (!(bbox.x0 > bbox.x1 && bbox.y0 > bbox.y1)) {
@@ -655,9 +655,9 @@ sp_export_selection_modified ( Inkscape::Application *inkscape,
             }
             break;
         case SELECTION_SELECTION:
-            if ((SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
+            if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
                 NRRect bbox;
-                (SP_DT_SELECTION (SP_ACTIVE_DESKTOP))->bounds(&bbox);
+                (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(&bbox);
                 sp_export_set_area (base, bbox.x0, bbox.y0, bbox.x1, bbox.y1);
             }
             break;
@@ -705,16 +705,16 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
     {
         SPDocument *doc;
         NRRect bbox;
-        doc = SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP);
+        doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
         /* Notice how the switch is used to 'fall through' here to get
            various backups.  If you modify this without noticing you'll
            probabaly screw something up. */
         switch (key) {
             case SELECTION_SELECTION:
-                if ((SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty() == false)
+                if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false)
                 {
-                    (SP_DT_SELECTION (SP_ACTIVE_DESKTOP))->bounds(&bbox);
+                    (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds(&bbox);
                     /* Only if there is a selection that we can set
                        do we break, otherwise we fall through to the
                        drawing */
@@ -798,13 +798,13 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 break;
             }
             case SELECTION_SELECTION:
-                if ((SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
+                if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
                     const GSList * reprlst;
                     bool filename_search = TRUE;
                     bool xdpi_search = TRUE;
                     bool ydpi_search = TRUE;
 
-                    reprlst = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->reprList();
+                    reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
                     for(; reprlst != NULL &&
                             filename_search &&
                             xdpi_search &&
@@ -842,7 +842,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                        one that's nice */
                     if (filename == NULL) {
                         const gchar * id = NULL;
-                        reprlst = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->reprList();
+                        reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
                         for(; reprlst != NULL; reprlst = reprlst->next) {
                             Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
                             if (repr->attribute("id")) {
@@ -991,7 +991,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     }
     g_free(dirname);
 
-    SPNamedView *nv = SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP);
+    SPNamedView *nv = sp_desktop_namedview(SP_ACTIVE_DESKTOP);
     GtkWidget *dlg, *prg, *btn; /* progressbar-stuff */
     char *fn;
     gchar *text;
@@ -1024,7 +1024,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     gtk_widget_show_all (dlg);
     
     /* Do export */
-    if (!sp_export_png_file (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP), filename, 
+    if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename, 
                              x0, y0, x1, y1, width, height, 
                              nv->pagecolor, 
                              sp_export_progress_callback, base)) {
@@ -1085,7 +1085,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
 
             bool saved = sp_document_get_undo_sensitive(doc);
             sp_document_set_undo_sensitive(doc, FALSE);
-            reprlst = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->reprList();
+            reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
 
             for(; reprlst != NULL; reprlst = reprlst->next) {
                 Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
@@ -1253,8 +1253,8 @@ sp_export_detect_size(GtkObject * base) {
         // std::cout << "Looking at: " << selection_names[this_test[i]] << std::endl;
         switch (this_test[i]) {
             case SELECTION_SELECTION:
-                if ((SP_DT_SELECTION(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    NR::Rect bbox = (SP_DT_SELECTION (SP_ACTIVE_DESKTOP))->bounds();
+                if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
+                    NR::Rect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->bounds();
 
                     //std::cout << "Selection " << bbox;
                     if (sp_export_bbox_equal(bbox,current_bbox)) {
@@ -1263,7 +1263,7 @@ sp_export_detect_size(GtkObject * base) {
                 }
                 break;
             case SELECTION_DRAWING: {
-                SPDocument *doc = SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP);
+                SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
                 NR::Rect bbox = sp_item_bbox_desktop (SP_ITEM (SP_DOCUMENT_ROOT (doc)));
 
@@ -1277,7 +1277,7 @@ sp_export_detect_size(GtkObject * base) {
             case SELECTION_PAGE: {
                 SPDocument *doc;
 
-                doc = SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP);
+                doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
 
                 NR::Point x(0.0, 0.0);
                 NR::Point y(sp_document_width(doc),

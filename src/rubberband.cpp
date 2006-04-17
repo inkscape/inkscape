@@ -44,7 +44,7 @@ void Inkscape::Rubberband::stop()
 void Inkscape::Rubberband::move(NR::Point const &p)
 {
     if (_canvas == NULL) {
-        _canvas = static_cast<CtrlRect *>(sp_canvas_item_new(SP_DT_CONTROLS(_desktop), SP_TYPE_CTRLRECT, NULL));
+        _canvas = static_cast<CtrlRect *>(sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRLRECT, NULL));
     }
 
     _desktop->scroll_to_point(&p);

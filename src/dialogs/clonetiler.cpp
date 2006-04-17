@@ -183,7 +183,7 @@ clonetiler_change_selection (Inkscape::Application * /*inkscape*/, Inkscape::Sel
 static void
 clonetiler_external_change (Inkscape::Application * /*inkscape*/, GtkWidget *dlg)
 {
-    clonetiler_change_selection (NULL, SP_DT_SELECTION(SP_ACTIVE_DESKTOP), dlg);
+    clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
 }
 
 static void clonetiler_disconnect_gsignal (GObject *widget, gpointer source) {
@@ -837,11 +837,11 @@ clonetiler_unclump (GtkWidget *widget, void *)
     if (desktop == NULL)
         return;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is selected
     if (selection->isEmpty() || g_slist_length((GSList *) selection->itemList()) > 1) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one object</b> whose tiled clones to unclump."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one object</b> whose tiled clones to unclump."));
         return;
     }
 
@@ -856,13 +856,13 @@ clonetiler_unclump (GtkWidget *widget, void *)
         }
     }
 
-    sp_document_ensure_up_to_date(SP_DT_DOCUMENT(desktop));
+    sp_document_ensure_up_to_date(sp_desktop_document(desktop));
 
     unclump (to_unclump);
 
     g_slist_free (to_unclump);
 
-    sp_document_done (SP_DT_DOCUMENT (desktop));
+    sp_document_done (sp_desktop_document (desktop));
 }
 
 static guint
@@ -888,11 +888,11 @@ clonetiler_remove (GtkWidget *widget, void *, bool do_undo = true)
     if (desktop == NULL)
         return;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is selected
     if (selection->isEmpty() || g_slist_length((GSList *) selection->itemList()) > 1) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one object</b> whose tiled clones to remove."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one object</b> whose tiled clones to remove."));
         return;
     }
 
@@ -914,7 +914,7 @@ clonetiler_remove (GtkWidget *widget, void *, bool do_undo = true)
     clonetiler_change_selection (NULL, selection, dlg);
 
     if (do_undo)
-        sp_document_done (SP_DT_DOCUMENT (desktop));
+        sp_document_done (sp_desktop_document (desktop));
 }
 
 static NR::Rect
@@ -956,17 +956,17 @@ clonetiler_apply (GtkWidget *widget, void *)
     if (desktop == NULL)
         return;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // check if something is selected
     if (selection->isEmpty()) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select an <b>object</b> to clone."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select an <b>object</b> to clone."));
         return;
     }
 
     // Check if more than one object is selected.
     if (g_slist_length((GSList *) selection->itemList()) > 1) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."));
         return;
     }
 
@@ -1044,7 +1044,7 @@ clonetiler_apply (GtkWidget *widget, void *)
     double gamma_picked = prefs_get_double_attribute_limited (prefs_path, "gamma_picked", 0, -10, 10);
 
     if (dotrace) {
-        clonetiler_trace_setup (SP_DT_DOCUMENT(desktop), 1.0, SP_ITEM (obj));
+        clonetiler_trace_setup (sp_desktop_document(desktop), 1.0, SP_ITEM (obj));
     }
 
     NR::Point c;
@@ -1274,7 +1274,7 @@ clonetiler_apply (GtkWidget *widget, void *)
             SP_OBJECT_REPR(parent)->appendChild(clone);
 
             if (center_set) {
-                SPObject *clone_object = SP_DT_DOCUMENT(desktop)->getObjectByRepr(clone);
+                SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
                 if (clone_object && SP_IS_ITEM(clone_object)) {
                     clone_object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
                     SP_ITEM(clone_object)->setCenter(desktop->doc2dt(new_center));
@@ -1293,7 +1293,7 @@ clonetiler_apply (GtkWidget *widget, void *)
 
     clonetiler_change_selection (NULL, selection, dlg);
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
 }
 
 static GtkWidget *
@@ -2427,7 +2427,7 @@ clonetiler_dialog (void)
 
                 // unitmenu
                 GtkWidget *u = sp_unit_selector_new (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-                sp_unit_selector_set_unit (SP_UNIT_SELECTOR(u), SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP)->doc_units);
+                sp_unit_selector_set_unit (SP_UNIT_SELECTOR(u), sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
     
                 {
                     // Width spinbutton 
@@ -2571,7 +2571,7 @@ clonetiler_dialog (void)
                 g_signal_connect(G_OBJECT(dlg), "destroy", G_CALLBACK(clonetiler_disconnect_gsignal), G_OBJECT (INKSCAPE));
 
                 // update now
-                clonetiler_change_selection (NULL, SP_DT_SELECTION(SP_ACTIVE_DESKTOP), dlg);
+                clonetiler_change_selection (NULL, sp_desktop_selection(SP_ACTIVE_DESKTOP), dlg);
             }
 
             {

@@ -149,9 +149,9 @@ void TileDialog::Grid_Arrange ()
     grid_top = 99999;
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    sp_document_ensure_up_to_date(SP_DT_DOCUMENT(desktop));
+    sp_document_ensure_up_to_date(sp_desktop_document(desktop));
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
     const GSList *items = selection->itemList();
     cnt=0;
     for (; items != NULL; items = items->next) {
@@ -323,7 +323,7 @@ g_print("\n row = %f     col = %f selection x= %f selection y = %f", total_row_h
     NRRect b;
             selection->bounds(&b);
 
-    sp_document_done (SP_DT_DOCUMENT (desktop));
+    sp_document_done (sp_desktop_document (desktop));
 
 }
 
@@ -353,7 +353,7 @@ void TileDialog::on_row_spinbutton_changed()
     updating = true;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
@@ -377,7 +377,7 @@ void TileDialog::on_col_spinbutton_changed()
     // in turn, prevent listener from responding
     updating = true;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
@@ -539,7 +539,7 @@ void TileDialog::updateSelection()
     // in turn, prevent listener from responding
     updating = true;
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
     const GSList *items = selection->itemList();
     int selcount = g_slist_length((GSList *)items);
 
@@ -609,7 +609,7 @@ TileDialog::TileDialog()
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
     int selcount = 1;
     if (!selection->isEmpty()) {
         GSList const *items = selection->itemList();

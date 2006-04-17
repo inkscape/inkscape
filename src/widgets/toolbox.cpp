@@ -779,7 +779,7 @@ sp_stb_magnitude_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         // do not remember prefs if this call is initiated by an undo change, because undoing object
         // creation sets bogus values to its attributes before it is deleted
         prefs_set_int_attribute("tools.shapes.star", "magnitude", (gint)adj->value);
@@ -795,7 +795,7 @@ sp_stb_magnitude_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
     bool modmade = false;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         if (SP_IS_STAR((SPItem *) items->data)) {
@@ -808,7 +808,7 @@ sp_stb_magnitude_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
             modmade = true;
         }
     }
-    if (modmade)  sp_document_done(SP_DT_DOCUMENT(desktop));
+    if (modmade)  sp_document_done(sp_desktop_document(desktop));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -820,7 +820,7 @@ sp_stb_proportion_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.star", "proportion", adj->value);
     }
 
@@ -833,7 +833,7 @@ sp_stb_proportion_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
     bool modmade = false;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         if (SP_IS_STAR((SPItem *) items->data)) {
@@ -852,7 +852,7 @@ sp_stb_proportion_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
         }
     }
 
-    if (modmade) sp_document_done(SP_DT_DOCUMENT(desktop));
+    if (modmade) sp_document_done(sp_desktop_document(desktop));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -864,7 +864,7 @@ sp_stb_sides_flat_state_changed(GtkWidget *widget, GtkObject *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
             prefs_set_string_attribute("tools.shapes.star", "isflatsided", "true");
         } else {
@@ -880,7 +880,7 @@ sp_stb_sides_flat_state_changed(GtkWidget *widget, GtkObject *tbl)
     // in turn, prevent listener from responding
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     GtkWidget *prop_widget = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "prop_widget");
     bool modmade = false;
@@ -905,7 +905,7 @@ sp_stb_sides_flat_state_changed(GtkWidget *widget, GtkObject *tbl)
             }
         }
     }
-    if (modmade) sp_document_done(SP_DT_DOCUMENT(desktop));
+    if (modmade) sp_document_done(sp_desktop_document(desktop));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -917,7 +917,7 @@ sp_stb_rounded_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.star", "rounded", (gdouble) adj->value);
     }
 
@@ -931,7 +931,7 @@ sp_stb_rounded_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
     bool modmade = false;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         if (SP_IS_STAR((SPItem *) items->data)) {
@@ -941,7 +941,7 @@ sp_stb_rounded_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
             modmade = true;
         }
     }
-    if (modmade)  sp_document_done(SP_DT_DOCUMENT(desktop));
+    if (modmade)  sp_document_done(sp_desktop_document(desktop));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -954,7 +954,7 @@ sp_stb_randomized_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.star", "randomized", (gdouble) adj->value);
     }
 
@@ -968,7 +968,7 @@ sp_stb_randomized_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
     bool modmade = false;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
     for (; items != NULL; items = items->next) {
         if (SP_IS_STAR((SPItem *) items->data)) {
@@ -978,7 +978,7 @@ sp_stb_randomized_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
             modmade = true;
         }
     }
-    if (modmade)  sp_document_done(SP_DT_DOCUMENT(desktop));
+    if (modmade)  sp_document_done(sp_desktop_document(desktop));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -1247,7 +1247,7 @@ sp_star_toolbox_new(SPDesktop *desktop)
     sp_set_font_size_smaller (tbl);
 
     sigc::connection *connection = new sigc::connection(
-        SP_DT_SELECTION(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), (GtkObject *)tbl))
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
 
@@ -1283,7 +1283,7 @@ sp_rtb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_name
     GtkWidget *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
     SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.rect", value_name, sp_units_get_pixels(adj->value, *unit));
     }
 
@@ -1296,7 +1296,7 @@ sp_rtb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_name
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
     bool modmade = false;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
             if (adj->value != 0) {
@@ -1311,7 +1311,7 @@ sp_rtb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_name
     sp_rtb_sensitivize (tbl);
 
     if (modmade) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -1575,7 +1575,7 @@ sp_rect_toolbox_new(SPDesktop *desktop)
     sp_set_font_size_smaller (tbl);
 
     sigc::connection *connection = new sigc::connection(
-        SP_DT_SELECTION(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GtkObject *)tbl))
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
 
@@ -1591,7 +1591,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_n
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.spiral", value_name, adj->value);
     }
 
@@ -1606,7 +1606,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_n
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
     bool modmade = false;
-    for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
+    for (GSList const *items = sp_desktop_selection(desktop)->itemList();
          items != NULL;
          items = items->next)
     {
@@ -1621,7 +1621,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_n
     g_free(namespaced_name);
 
     if (modmade) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -1814,7 +1814,7 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
     sp_set_font_size_smaller (tbl);
 
     sigc::connection *connection = new sigc::connection(
-        SP_DT_SELECTION(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GtkObject *)tbl))
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
 
@@ -2102,7 +2102,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const 
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         prefs_set_double_attribute("tools.shapes.arc", value_name, (adj->value * M_PI)/ 180);
     }
 
@@ -2117,7 +2117,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const 
     gchar* namespaced_name = g_strconcat("sodipodi:", value_name, NULL);
 
     bool modmade = false;
-    for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
+    for (GSList const *items = sp_desktop_selection(desktop)->itemList();
          items != NULL;
          items = items->next)
     {
@@ -2148,7 +2148,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const 
     sp_arctb_sensitivize (tbl, adj->value, other->value);
 
     if (modmade) {
-        sp_document_maybe_done(SP_DT_DOCUMENT(desktop), value_name);
+        sp_document_maybe_done(sp_desktop_document(desktop), value_name);
     }
 
     // defocus spinbuttons by moving focus to the canvas, unless "stay" is on
@@ -2175,7 +2175,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
 {
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl), "desktop");
 
-    if (sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop))) {
+    if (sp_document_get_undo_sensitive(sp_desktop_document(desktop))) {
         if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
             prefs_set_string_attribute("tools.shapes.arc", "open", "true");
         } else {
@@ -2194,7 +2194,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
     bool modmade = false;
 
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
-        for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
+        for (GSList const *items = sp_desktop_selection(desktop)->itemList();
              items != NULL;
              items = items->next)
         {
@@ -2206,7 +2206,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
             }
         }
     } else {
-        for (GSList const *items = SP_DT_SELECTION(desktop)->itemList();
+        for (GSList const *items = sp_desktop_selection(desktop)->itemList();
              items != NULL;
              items = items->next)
         {
@@ -2220,7 +2220,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
     }
 
     if (modmade) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -2413,7 +2413,7 @@ sp_arc_toolbox_new(SPDesktop *desktop)
     }
 
     sigc::connection *connection = new sigc::connection(
-        SP_DT_SELECTION(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GtkObject *)tbl))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GtkObject *)tbl))
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
 
@@ -3017,7 +3017,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
         
     SPDesktop *desktop = (SPDesktop *) gtk_object_get_data(GTK_OBJECT(tbl),
             "desktop");
-    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
 
     if (!sp_document_get_undo_sensitive(doc))
     {

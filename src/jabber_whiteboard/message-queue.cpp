@@ -83,7 +83,7 @@ ReceiveMessageQueue::insert(MessageNode* msg)
 	// Otherwise, it is safe to insert this message.
 //	Inkscape::GC::anchor(msg);
 	this->_queue.push_back(msg);
-	SP_DT_MSGSTACK(this->_sm->desktop())->flashF(Inkscape::NORMAL_MESSAGE,
+	sp_desktop_message_stack(this->_sm->desktop())->flashF(Inkscape::NORMAL_MESSAGE,
                                                      ngettext("%u change in receive queue.",
                                                               "%u changes in receive queue.",
                                                               this->_queue.size()),
@@ -113,7 +113,7 @@ SendMessageQueue::insert(MessageNode* msg)
 {
 //	Inkscape::GC::anchor(msg);
 	this->_queue.push_back(msg);
-	SP_DT_MSGSTACK(this->_sm->desktop())->flashF(Inkscape::NORMAL_MESSAGE,
+	sp_desktop_message_stack(this->_sm->desktop())->flashF(Inkscape::NORMAL_MESSAGE,
                                                      ngettext("%u change in send queue.",
                                                               "%u changes in send queue.",
                                                               this->_queue.size()),

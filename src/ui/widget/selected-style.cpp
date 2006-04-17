@@ -373,7 +373,7 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
     _desktop = desktop;
     gtk_object_set_data (GTK_OBJECT(_opacity_sb.gobj()), "dtw", _desktop->canvas);
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     selection_changed_connection = new sigc::connection (selection->connectChanged(
         sigc::bind (
@@ -391,7 +391,7 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
             this )
     ));
 
-    //_sw_unit = (SPUnit *) SP_DT_NAMEDVIEW(desktop)->doc_units;
+    //_sw_unit = (SPUnit *) sp_desktop_namedview(desktop)->doc_units;
 }
 
 void SelectedStyle::dragDataReceived( GtkWidget *widget,
@@ -424,7 +424,7 @@ void SelectedStyle::dragDataReceived( GtkWidget *widget,
                 sp_repr_css_set_property( css, (tracker->item == SS_FILL) ? "fill":"stroke", c );
                 sp_desktop_set_style( tracker->parent->_desktop, css );
                 sp_repr_css_attr_unref( css );
-                sp_document_done( SP_DT_DOCUMENT(tracker->parent->_desktop) );
+                sp_document_done( sp_desktop_document(tracker->parent->_desktop) );
             }
         }
         break;
@@ -436,7 +436,7 @@ void SelectedStyle::on_fill_remove() {
     sp_repr_css_set_property (css, "fill", "none");
     sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_remove() {
@@ -444,7 +444,7 @@ void SelectedStyle::on_stroke_remove() {
     sp_repr_css_set_property (css, "stroke", "none");
     sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_unset() {
@@ -452,7 +452,7 @@ void SelectedStyle::on_fill_unset() {
     sp_repr_css_unset_property (css, "fill");
     sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_unset() {
@@ -460,7 +460,7 @@ void SelectedStyle::on_stroke_unset() {
     sp_repr_css_unset_property (css, "stroke");
     sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_opaque() {
@@ -468,7 +468,7 @@ void SelectedStyle::on_fill_opaque() {
     sp_repr_css_set_property (css, "fill-opacity", "1");
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_opaque() {
@@ -476,7 +476,7 @@ void SelectedStyle::on_stroke_opaque() {
     sp_repr_css_set_property (css, "stroke-opacity", "1");
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_lastused() {
@@ -487,7 +487,7 @@ void SelectedStyle::on_fill_lastused() {
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_lastused() {
@@ -498,7 +498,7 @@ void SelectedStyle::on_stroke_lastused() {
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_lastselected() {
@@ -508,7 +508,7 @@ void SelectedStyle::on_fill_lastselected() {
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_lastselected() {
@@ -518,7 +518,7 @@ void SelectedStyle::on_stroke_lastselected() {
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_invert() {
@@ -537,7 +537,7 @@ void SelectedStyle::on_fill_invert() {
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_invert() {
@@ -556,7 +556,7 @@ void SelectedStyle::on_stroke_invert() {
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 } 
 
 void SelectedStyle::on_fill_white() {
@@ -567,7 +567,7 @@ void SelectedStyle::on_fill_white() {
     sp_repr_css_set_property (css, "fill-opacity", "1");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_white() {
@@ -578,7 +578,7 @@ void SelectedStyle::on_stroke_white() {
     sp_repr_css_set_property (css, "stroke-opacity", "1");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_black() {
@@ -589,7 +589,7 @@ void SelectedStyle::on_fill_black() {
     sp_repr_css_set_property (css, "fill-opacity", "1.0");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_stroke_black() {
@@ -600,7 +600,7 @@ void SelectedStyle::on_stroke_black() {
     sp_repr_css_set_property (css, "stroke-opacity", "1.0");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_copy() {
@@ -642,7 +642,7 @@ void SelectedStyle::on_fill_paste() {
         sp_repr_css_set_property (css, "fill", text.c_str());
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
-        sp_document_done (SP_DT_DOCUMENT(_desktop));
+        sp_document_done (sp_desktop_document(_desktop));
     }
 }
 
@@ -659,7 +659,7 @@ void SelectedStyle::on_stroke_paste() {
         sp_repr_css_set_property (css, "stroke", text.c_str());
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
-        sp_document_done (SP_DT_DOCUMENT(_desktop));
+        sp_document_done (sp_desktop_document(_desktop));
     }
 }
 
@@ -714,7 +714,7 @@ void SelectedStyle::on_fillstroke_swap() {
 
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void SelectedStyle::on_fill_edit() {
@@ -781,7 +781,7 @@ SelectedStyle::on_opacity_click(GdkEventButton *event)
         sp_repr_css_set_property (css, "opacity", opacity);
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
-        sp_document_done (SP_DT_DOCUMENT (_desktop));
+        sp_document_done (sp_desktop_document (_desktop));
         return true;
     }
 
@@ -814,7 +814,7 @@ void SelectedStyle::on_popup_preset(int i) {
     sp_repr_css_set_property (css, "stroke-width", os.str().c_str());
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (SP_DT_DOCUMENT(_desktop));
+    sp_document_done (sp_desktop_document(_desktop));
 }
 
 void
@@ -1054,7 +1054,7 @@ void SelectedStyle::on_opacity_changed () {
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_maybe_done (SP_DT_DOCUMENT (_desktop), "fillstroke:opacity");
+    sp_document_maybe_done (sp_desktop_document (_desktop), "fillstroke:opacity");
     spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }

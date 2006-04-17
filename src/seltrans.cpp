@@ -105,9 +105,9 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 
     _updateHandles();
 
-    _selection = SP_DT_SELECTION(desktop);
+    _selection = sp_desktop_selection(desktop);
 
-    _norm = sp_canvas_item_new(SP_DT_CONTROLS(desktop),
+    _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
                                "anchor", GTK_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_COLOR,
@@ -120,7 +120,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
                                "pixbuf", handles[12],
                                NULL);
 
-    _grip = sp_canvas_item_new(SP_DT_CONTROLS(desktop),
+    _grip = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
                                "anchor", GTK_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_XOR,
@@ -137,7 +137,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     sp_canvas_item_hide(_norm);
 
     for (int i = 0; i < 4; i++) {
-        _l[i] = sp_canvas_item_new(SP_DT_CONTROLS(desktop), SP_TYPE_CTRLLINE, NULL);
+        _l[i] = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL);
         sp_canvas_item_hide(_l[i]);
     }
 
@@ -222,14 +222,14 @@ void Inkscape::SelTrans::setCenter(NR::Point const &p)
         it->setCenter(p);
         SP_OBJECT(it)->updateRepr();
     }
-    sp_document_maybe_done (SP_DT_DOCUMENT(_desktop), "center::move");
+    sp_document_maybe_done (sp_desktop_document(_desktop), "center::move");
 
     _updateHandles();
 }
 
 void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool show_handles)
 {
-    Inkscape::Selection *selection = SP_DT_SELECTION(_desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
 
     g_return_if_fail(!_grabbed);
 
@@ -320,7 +320,7 @@ void Inkscape::SelTrans::ungrab()
 {
     g_return_if_fail(_grabbed);
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(_desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
     bool updh = true;
     if (!_empty && _changed) {
         sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
@@ -340,7 +340,7 @@ void Inkscape::SelTrans::ungrab()
             }
         }
 
-        sp_document_done(SP_DT_DOCUMENT(_desktop));
+        sp_document_done(sp_desktop_document(_desktop));
         updh = false;
     }
 
@@ -378,7 +378,7 @@ void Inkscape::SelTrans::ungrab()
 
 void Inkscape::SelTrans::stamp()
 {
-    Inkscape::Selection *selection = SP_DT_SELECTION(_desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
 
     /* stamping mode */
     if (!_empty) {
@@ -408,7 +408,7 @@ void Inkscape::SelTrans::stamp()
             // move to the saved position
             copy_repr->setPosition(pos > 0 ? pos : 0);
 
-            SPItem *copy_item = (SPItem *) SP_DT_DOCUMENT(_desktop)->getObjectByRepr(copy_repr);
+            SPItem *copy_item = (SPItem *) sp_desktop_document(_desktop)->getObjectByRepr(copy_repr);
 
             NR::Matrix const *new_affine;
             if (_show == SHOW_OUTLINE) {
@@ -425,7 +425,7 @@ void Inkscape::SelTrans::stamp()
             Inkscape::GC::release(copy_repr);
             l = l->next;
         }
-        sp_document_done(SP_DT_DOCUMENT(_desktop));
+        sp_document_done(sp_desktop_document(_desktop));
     }
 }
 
@@ -492,7 +492,7 @@ void Inkscape::SelTrans::_updateHandles()
 
 void Inkscape::SelTrans::_updateVolatileState()
 {
-    Inkscape::Selection *selection = SP_DT_SELECTION(_desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(_desktop);
     _empty = selection->isEmpty();
 
     if (_empty) {
@@ -602,7 +602,7 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
                     it->unsetCenter();
                     SP_OBJECT(it)->updateRepr();
                 }
-                sp_document_maybe_done (SP_DT_DOCUMENT(_desktop), "center::unset");
+                sp_document_maybe_done (sp_desktop_document(_desktop), "center::unset");
             }
             break;
         default:

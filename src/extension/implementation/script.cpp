@@ -609,7 +609,7 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
     SPDesktop *desktop = (SPDesktop *) doc;
     if (desktop != NULL) {
         using Inkscape::Util::GSListConstIterator;
-        GSListConstIterator<SPItem *> selected = SP_DT_SELECTION(desktop)->itemList();
+        GSListConstIterator<SPItem *> selected = sp_desktop_selection(desktop)->itemList();
         while ( selected != NULL ) {
             local_command += " --id=";
             local_command += SP_OBJECT_ID(*selected);

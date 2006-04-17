@@ -1,3 +1,49 @@
+2006-04-17  MenTaLguY  <mental@rydia.net>
+
+	* src/application/editor.cpp, src/arc-context.cpp, src/conn-avoid-ref.cpp,
+	  src/connector-context.cpp, src/desktop-events.cpp, src/desktop-handles.h,
+	  src/dialogs/clonetiler.cpp, src/dialogs/export.cpp,
+	  src/dialogs/fill-style.cpp, src/dialogs/find.cpp,
+	  src/dialogs/iconpreview.cpp, src/dialogs/item-properties.cpp,
+	  src/dialogs/layer-properties.cpp, src/dialogs/object-properties.cpp,
+	  src/dialogs/stroke-style.cpp, src/dialogs/swatches.cpp,
+	  src/dialogs/text-edit.cpp, src/dialogs/tiledialog.cpp,
+	  src/dialogs/xml-tree.cpp, src/draw-anchor.cpp, src/draw-context.cpp,
+	  src/dropper-context.cpp, src/dyna-draw-context.cpp,
+	  src/event-context.cpp, src/extension/implementation/script.cpp,
+	  src/file.cpp, src/gradient-context.cpp, src/gradient-drag.cpp,
+	  src/helper/stock-items.cpp, src/inkscape.cpp, src/interface.cpp,
+	  src/jabber_whiteboard/callbacks.cpp,
+	  src/jabber_whiteboard/chat-handler.cpp,
+	  src/jabber_whiteboard/message-processors.cpp,
+	  src/jabber_whiteboard/message-queue.cpp,
+	  src/jabber_whiteboard/session-manager.cpp, src/knot.cpp,
+	  src/node-context.cpp, src/nodepath.cpp, src/object-ui.cpp,
+	  src/path-chemistry.cpp, src/pencil-context.cpp, src/pen-context.cpp,
+	  src/rect-context.cpp, src/rubberband.cpp, src/satisfied-guide-cns.cpp,
+	  src/selcue.cpp, src/select-context.cpp, src/selection-chemistry.cpp,
+	  src/selection.cpp, src/seltrans.cpp, src/sp-flowtext.cpp,
+	  src/spiral-context.cpp, src/splivarot.cpp, src/sp-namedview.cpp,
+	  src/sp-text.cpp, src/star-context.cpp, src/text-chemistry.cpp,
+	  src/text-context.cpp, src/tools-switch.cpp,
+	  src/trace/potrace/inkscape-potrace.cpp, src/trace/trace.cpp,
+	  src/ui/dialog/align-and-distribute.cpp, src/ui/dialog/dialog.cpp,
+	  src/ui/dialog/document-metadata.cpp,
+	  src/ui/dialog/document-properties.cpp,
+	  src/ui/dialog/inkscape-preferences.cpp,
+	  src/ui/dialog/session-player.cpp, src/ui/dialog/transformation.cpp,
+	  src/ui/widget/color-picker.cpp, src/ui/widget/page-sizer.cpp,
+	  src/ui/widget/registered-widget.cpp, src/ui/widget/ruler.cpp,
+	  src/ui/widget/selected-style.cpp, src/ui/widget/tolerance-slider.cpp,
+	  src/verbs.cpp, src/widgets/gradient-toolbar.cpp,
+	  src/widgets/layer-selector.cpp, src/widgets/select-toolbar.cpp,
+	  src/widgets/sp-xmlview-content.cpp, src/widgets/toolbox.cpp:
+
+	  Get rid of the SP_DT_* macros which do nothing more than provide
+	  additional, confusing, names for other functions.  If shorter names
+	  are desired, the actual functions should be renamed -- or better, made
+	  into member functions.
+
 2006-04-09  Jon A. Cruz  <jon@joncruz.org>
 
 	* share/icons/icons.svg: Fixed jumping eye (layer visibility).

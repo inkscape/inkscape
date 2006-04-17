@@ -29,20 +29,6 @@ namespace Inkscape {
 #define SP_COORDINATES_UNDERLINE_X (1 << NR::X)
 #define SP_COORDINATES_UNDERLINE_Y (1 << NR::Y)
 
-#define SP_DT_EVENTCONTEXT(d) sp_desktop_event_context (d)
-#define SP_DT_SELECTION(d) sp_desktop_selection (d)
-#define SP_DT_DOCUMENT(d) sp_desktop_document (d)
-#define SP_DT_CANVAS(d) sp_desktop_canvas (d)
-#define SP_DT_ACETATE(d) sp_desktop_acetate (d)
-#define SP_DT_MAIN(d) sp_desktop_main (d)
-#define SP_DT_GRID(d) sp_desktop_grid (d)
-#define SP_DT_GUIDES(d) sp_desktop_guides (d)
-#define SP_DT_DRAWING(d) sp_desktop_drawing (d)
-#define SP_DT_SKETCH(d) sp_desktop_sketch (d)
-#define SP_DT_CONTROLS(d) sp_desktop_controls (d)
-#define SP_DT_MSGSTACK(d) sp_desktop_message_stack (d)
-#define SP_DT_NAMEDVIEW(d) sp_desktop_namedview (d)
-
 SPEventContext * sp_desktop_event_context (SPDesktop const * desktop);
 Inkscape::Selection * sp_desktop_selection (SPDesktop const * desktop);
 SPDocument * sp_desktop_document (SPDesktop const * desktop);

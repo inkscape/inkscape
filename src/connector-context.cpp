@@ -254,7 +254,7 @@ sp_connector_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
 
-    cc->selection = SP_DT_SELECTION(dt);
+    cc->selection = sp_desktop_selection(dt);
 
     cc->sel_changed_connection.disconnect();
     cc->sel_changed_connection = cc->selection->connectChanged(
@@ -262,7 +262,7 @@ sp_connector_context_setup(SPEventContext *ec)
             (gpointer) cc));
 
     /* Create red bpath */
-    cc->red_bpath = sp_canvas_bpath_new(SP_DT_SKETCH(ec->desktop), NULL);
+    cc->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cc->red_bpath), cc->red_color,
             1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cc->red_bpath), 0x00000000,
@@ -653,7 +653,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
     if ( revent.button == 1 ) {
 
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-        SPDocument *doc = SP_DT_DOCUMENT(desktop);
+        SPDocument *doc = sp_desktop_document(desktop);
 
         NR::Point const event_w(revent.x, revent.y);
 
@@ -788,7 +788,7 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
     Avoid::Point dst = { d[NR::X], d[NR::Y] };
 
     if (!cc->newConnRef) {
-        Avoid::Router *router = SP_DT_DOCUMENT(dt)->router;
+        Avoid::Router *router = sp_desktop_document(dt)->router;
         cc->newConnRef = new Avoid::ConnRef(router, 0, src, dst);
         cc->newConnRef->updateEndPoint(Avoid::VertID::src, src);
     }
@@ -863,7 +863,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
             sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(cc)));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(cc);
-    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
 
     if ( c && !sp_curve_empty(c) ) {
         /* We actually have something to write */
@@ -1085,7 +1085,7 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
 	knot->desktop = cc->desktop;
 	knot->flags = SP_KNOT_VISIBLE;
 
-	knot->item = sp_canvas_item_new (SP_DT_CONTROLS(cc->desktop),
+	knot->item = sp_canvas_item_new (sp_desktop_controls(cc->desktop),
 		SP_TYPE_CTRL,
 		"anchor", GTK_ANCHOR_CENTER,
 		"filled", TRUE,
@@ -1165,7 +1165,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
             knot->desktop = cc->desktop;
             knot->flags = SP_KNOT_VISIBLE;
 
-            knot->item = sp_canvas_item_new (SP_DT_CONTROLS (cc->desktop),
+            knot->item = sp_canvas_item_new (sp_desktop_controls (cc->desktop),
                     SP_TYPE_CTRL,
                     "anchor", GTK_ANCHOR_CENTER,
                     "filled", TRUE,
@@ -1249,9 +1249,9 @@ void cc_selection_set_avoid(bool const set_avoid)
         return;
     }
 
-    SPDocument *document = SP_DT_DOCUMENT(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     GSList *l = (GSList *) selection->itemList();
 

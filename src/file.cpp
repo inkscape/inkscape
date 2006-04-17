@@ -179,7 +179,7 @@ sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_
 
     if (doc) {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-        SPDocument *existing = desktop ? SP_DT_DOCUMENT(desktop) : NULL;
+        SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
 
         if (existing && existing->virgin && replace_empty) {
             // If the current desktop is empty, open the document there
@@ -232,7 +232,7 @@ sp_file_revert_dialog()
     SPDesktop  *desktop = SP_ACTIVE_DESKTOP;
     g_assert(desktop != NULL);
 
-    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     g_assert(doc != NULL);
 
     Inkscape::XML::Node     *repr = sp_document_repr_root(doc);
@@ -881,7 +881,7 @@ file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension
 
         // select and move the imported item
         if (new_obj && SP_IS_ITEM(new_obj)) {
-            Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+            Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(SP_ITEM(new_obj));
 
             // To move the imported object, we must temporarily set the "transform pattern with
@@ -889,7 +889,7 @@ file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension
             {
                 int const saved_pref = prefs_get_int_attribute("options.transform", "pattern", 1);
                 prefs_set_int_attribute("options.transform", "pattern", 1);
-                sp_document_ensure_up_to_date(SP_DT_DOCUMENT(desktop));
+                sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 NR::Point m( desktop->point() - selection->bounds().midpoint() );
                 sp_selection_move_relative(selection, m);
                 prefs_set_int_attribute("options.transform", "pattern", saved_pref);

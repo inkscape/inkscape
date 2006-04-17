@@ -121,7 +121,7 @@ static void sp_gradient_context_setup(SPEventContext *ec)
 
     ec->enableGrDrag();
 
-    rc->_message_context = new Inkscape::MessageContext(SP_DT_MSGSTACK(ec->desktop));
+    rc->_message_context = new Inkscape::MessageContext(sp_desktop_message_stack(ec->desktop));
 }
 
 static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
@@ -129,7 +129,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
     static bool dragging;
 
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     SPGradientContext *rc = SP_GRADIENT_CONTEXT(event_context);
 
@@ -148,13 +148,13 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
                 SPGradientType new_type = (SPGradientType) prefs_get_int_attribute ("tools.gradient", "newgradient", SP_GRADIENT_TYPE_LINEAR);
                 guint new_fill = prefs_get_int_attribute ("tools.gradient", "newfillorstroke", 1);
 
-                SPGradient *vector = sp_gradient_vector_for_object(SP_DT_DOCUMENT(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
+                SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop,                                                                                   SP_OBJECT (item), new_fill);
 
                 SPGradient *priv = sp_item_set_gradient(item, vector, new_type, new_fill);
                 sp_gradient_reset_to_userspace(priv, item);
             }
 
-            sp_document_done (SP_DT_DOCUMENT (desktop));
+            sp_document_done (sp_desktop_document (desktop));
 
             ret = TRUE;
         }
@@ -359,7 +359,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
                     }
                 }
                 // we did an undoable action
-                sp_document_done (SP_DT_DOCUMENT (desktop));
+                sp_document_done (sp_desktop_document (desktop));
                 ret = TRUE;
             }
             break;
@@ -399,8 +399,8 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
 static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint state, guint32 etime)
 {
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
-    SPDocument *document = SP_DT_DOCUMENT(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
     SPEventContext *ec = SP_EVENT_CONTEXT(&rc);
 
     if (!selection->isEmpty()) {
@@ -455,7 +455,7 @@ static void sp_gradient_drag(SPGradientContext &rc, NR::Point const pt, guint st
                                            "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle", n_objects),
                                   n_objects);
     } else {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>objects</b> on which to create gradient."));
     }
 }
 

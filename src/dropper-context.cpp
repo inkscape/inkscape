@@ -112,7 +112,7 @@ static void sp_dropper_context_setup(SPEventContext *ec)
     }
 
     SPCurve *c = sp_curve_new_from_static_bpath(spdc_circle);
-    dc->area = sp_canvas_bpath_new(SP_DT_CONTROLS(ec->desktop), c);
+    dc->area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
     sp_curve_unref(c);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(dc->area), 0x00000000,(SPWindRule)0);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
@@ -268,7 +268,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                         NRPixBlock pb;
                         nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x0, y0, x1, y1, TRUE);
                         /* fixme: (Lauris) */
-                        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(SP_DT_DRAWING(ec->desktop)), &pb);
+                        sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(ec->desktop)), &pb);
                         for (int y = y0; y < y1; y++) {
                             const unsigned char *s = NR_PIXBLOCK_PX(&pb) + (y - y0) * pb.rs;
                             for (int x = x0; x < x1; x++) {
@@ -302,7 +302,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     int x = (int) floor(event->button.x);
                     int y = (int) floor(event->button.y);
                     nr_pixblock_setup_fast(&pb, NR_PIXBLOCK_MODE_R8G8B8A8P, x, y, x+1, y+1, TRUE);
-                    sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(SP_DT_DRAWING(ec->desktop)), &pb);
+                    sp_canvas_arena_render_pixblock(SP_CANVAS_ARENA(sp_desktop_drawing(ec->desktop)), &pb);
                     const unsigned char *s = NR_PIXBLOCK_PX(&pb);
 
                     R = s[0] / 255.0;
@@ -313,7 +313,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
                 if (pick == SP_DROPPER_PICK_VISIBLE) {
                     // compose with page color
-                    guint32 bg = SP_DT_NAMEDVIEW(ec->desktop)->pagecolor;
+                    guint32 bg = sp_desktop_namedview(ec->desktop)->pagecolor;
                     R = R + (SP_RGBA32_R_F(bg)) * (1 - A);
                     G = G + (SP_RGBA32_G_F(bg)) * (1 - A);
                     B = B + (SP_RGBA32_B_F(bg)) * (1 - A);
@@ -378,8 +378,8 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 // REJON: set aux. toolbar input to hex color!
 
 
-                if (!(SP_DT_SELECTION(ec->desktop)->isEmpty())) {
-                    sp_document_done(SP_DT_DOCUMENT(ec->desktop));
+                if (!(sp_desktop_selection(ec->desktop)->isEmpty())) {
+                    sp_document_done(sp_desktop_document(ec->desktop));
                 }
 
                 ret = TRUE;
@@ -397,7 +397,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     }
                     break;
 		case GDK_Escape:
-                    SP_DT_SELECTION(ec->desktop)->clear();
+                    sp_desktop_selection(ec->desktop)->clear();
 		default:
                     break;
             }

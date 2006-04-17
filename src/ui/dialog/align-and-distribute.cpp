@@ -118,7 +118,7 @@ private :
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (!desktop) return;
 
-        Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -159,14 +159,14 @@ private :
         }
 
         case AlignAndDistribute::PAGE:
-            mp = NR::Point(a.mx1 * sp_document_width(SP_DT_DOCUMENT(desktop)),
-                           a.my1 * sp_document_height(SP_DT_DOCUMENT(desktop)));
+            mp = NR::Point(a.mx1 * sp_document_width(sp_desktop_document(desktop)),
+                           a.my1 * sp_document_height(sp_desktop_document(desktop)));
             break;
 
         case AlignAndDistribute::DRAWING:
         {
             NR::Rect b = sp_item_bbox_desktop
-                ( (SPItem *) sp_document_root (SP_DT_DOCUMENT (desktop)) );
+                ( (SPItem *) sp_document_root (sp_desktop_document (desktop)) );
             mp = NR::Point(a.mx0 * b.min()[NR::X] + a.mx1 * b.max()[NR::X],
                            a.my0 * b.min()[NR::Y] + a.my1 * b.max()[NR::Y]);
             break;
@@ -200,7 +200,7 @@ private :
              it != selected.end();
              it++)
         {
-            sp_document_ensure_up_to_date(SP_DT_DOCUMENT (desktop));
+            sp_document_ensure_up_to_date(sp_desktop_document (desktop));
             NR::Rect b = sp_item_bbox_desktop (*it);
             NR::Point const sp(a.sx0 * b.min()[NR::X] + a.sx1 * b.max()[NR::X],
                                a.sy0 * b.min()[NR::Y] + a.sy1 * b.max()[NR::Y]);
@@ -215,7 +215,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( SP_DT_DOCUMENT (desktop) );
+            sp_document_done ( sp_desktop_document (desktop) );
         }
 
 
@@ -287,7 +287,7 @@ private :
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (!desktop) return;
 
-        Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -374,7 +374,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( SP_DT_DOCUMENT (desktop) );
+            sp_document_done ( sp_desktop_document (desktop) );
         }
     }
     guint _index;
@@ -408,7 +408,7 @@ private :
     {
 
         if (!SP_ACTIVE_DESKTOP) return;
-	SPEventContext *event_context = SP_DT_EVENTCONTEXT(SP_ACTIVE_DESKTOP);
+	SPEventContext *event_context = sp_desktop_event_context(SP_ACTIVE_DESKTOP);
 	if (!SP_IS_NODE_CONTEXT (event_context)) return ;
 
         Inkscape::NodePath::Path *nodepath = SP_NODE_CONTEXT (event_context)->nodepath;
@@ -478,13 +478,13 @@ private :
         // xGap and yGap are the minimum space required between bounding rectangles.
         double const xGap = removeOverlapXGap.get_value();
         double const yGap = removeOverlapYGap.get_value();
-        removeoverlap(SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->itemList(),
+        removeoverlap(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList(),
                       xGap, yGap);
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP));
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
     }
 };
 
@@ -508,12 +508,12 @@ private :
         int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        graphlayout(SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->itemList());
+        graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP));
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
     }
 };
 
@@ -537,12 +537,12 @@ private :
         int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        unclump ((GSList *) SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->itemList());
+        unclump ((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP));
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     }
 };
 
@@ -563,7 +563,7 @@ private :
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (!desktop) return;
 
-        Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -590,7 +590,7 @@ private :
             it != selected.end();
             ++it)
         {
-            sp_document_ensure_up_to_date(SP_DT_DOCUMENT (desktop));
+            sp_document_ensure_up_to_date(sp_desktop_document (desktop));
             NR::Rect item_box = sp_item_bbox_desktop (*it);
             // find new center, staying within bbox 
             double x = _dialog.randomize_bbox.min()[NR::X] + item_box.extent(NR::X)/2 +
@@ -605,7 +605,7 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP));
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     }
 };
 
@@ -649,7 +649,7 @@ private :
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (!desktop) return;
 
-        Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
         if (!selection) return;
 
         using Inkscape::Util::GSListConstIterator;
@@ -717,7 +717,7 @@ private :
         }
 
         if (changed) {
-            sp_document_done (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP));
+            sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         }
     }
 };
@@ -727,7 +727,7 @@ private :
 void on_tool_changed(Inkscape::Application *inkscape, SPEventContext *context, AlignAndDistribute *daad)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (desktop && SP_DT_EVENTCONTEXT(desktop))
+    if (desktop && sp_desktop_event_context(desktop))
         daad->setMode(tools_active(desktop) == TOOLS_NODES);
 }
 

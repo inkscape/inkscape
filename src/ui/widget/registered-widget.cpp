@@ -88,9 +88,9 @@ RegisteredCheckButton::on_toggled()
         return;
     }
 
-    SPDocument *doc = SP_DT_DOCUMENT(dt);
+    SPDocument *doc = sp_desktop_document(dt);
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (SP_DT_NAMEDVIEW(dt));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     _wr->setUpdating (true);
 
     gboolean saved = sp_document_get_undo_sensitive (doc);
@@ -149,10 +149,10 @@ RegisteredUnitMenu::on_changed()
 
     _wr->setUpdating (true);
 
-    SPDocument *doc = SP_DT_DOCUMENT(dt);
+    SPDocument *doc = sp_desktop_document(dt);
     gboolean saved = sp_document_get_undo_sensitive (doc);
     sp_document_set_undo_sensitive (doc, FALSE);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (SP_DT_NAMEDVIEW(dt));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
@@ -216,10 +216,10 @@ RegisteredScalarUnit::on_value_changed()
 
     _wr->setUpdating (true);
 
-    SPDocument *doc = SP_DT_DOCUMENT(dt);
+    SPDocument *doc = sp_desktop_document(dt);
     gboolean saved = sp_document_get_undo_sensitive (doc);
     sp_document_set_undo_sensitive (doc, FALSE);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (SP_DT_NAMEDVIEW(dt));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
@@ -272,7 +272,7 @@ RegisteredColorPicker::on_changed (guint32 rgba)
         return;
 
     _wr->setUpdating (true);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     gchar c[32];
     sp_svg_write_color(c, 32, rgba);
     repr->setAttribute(_ckey.c_str(), c);
@@ -327,13 +327,13 @@ RegisteredSuffixedInteger::on_value_changed()
     _wr->setUpdating (true);
     
     SPDesktop* dt = SP_ACTIVE_DESKTOP;
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(dt));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
     Inkscape::SVGOStringStream os;
     int value = int(_adj.get_value());
     os << value;
 
     repr->setAttribute(_key.c_str(), os.str().c_str());
-    sp_document_done(SP_DT_DOCUMENT(dt));
+    sp_document_done(sp_desktop_document(dt));
     
     _wr->setUpdating (false);
 }
@@ -389,10 +389,10 @@ RegisteredRadioButtonPair::on_value_changed()
     _wr->setUpdating (true);
     
     bool second = _rb2->get_active();
-    SPDocument *doc = SP_DT_DOCUMENT(dt);
+    SPDocument *doc = sp_desktop_document(dt);
     gboolean saved = sp_document_get_undo_sensitive (doc);
     sp_document_set_undo_sensitive (doc, FALSE);
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR (SP_DT_NAMEDVIEW(dt));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), second ? "true" : "false");
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);

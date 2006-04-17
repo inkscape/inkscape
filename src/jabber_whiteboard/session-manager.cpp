@@ -776,7 +776,7 @@ SessionManager::loadSessionFile(Glib::ustring filename)
 void
 SessionManager::userConnectedToWhiteboard(gchar const* JID)
 {
-	SP_DT_MSGSTACK(this->_myDesktop)->flashF(Inkscape::INFORMATION_MESSAGE, _("Established whiteboard session with <b>%s</b>."), JID);
+	sp_desktop_message_stack(this->_myDesktop)->flashF(Inkscape::INFORMATION_MESSAGE, _("Established whiteboard session with <b>%s</b>."), JID);
 }
 
 
@@ -784,7 +784,7 @@ void
 SessionManager::userDisconnectedFromWhiteboard(std::string const& JID)
 {
 
-	SP_DT_MSGSTACK(this->_myDesktop)->flashF(Inkscape::INFORMATION_MESSAGE, _("<b>%s</b> has <b>left</b> the whiteboard session."), JID.c_str());
+	sp_desktop_message_stack(this->_myDesktop)->flashF(Inkscape::INFORMATION_MESSAGE, _("<b>%s</b> has <b>left</b> the whiteboard session."), JID.c_str());
 
 	// Inform the user
 	// TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.

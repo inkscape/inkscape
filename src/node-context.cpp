@@ -159,9 +159,9 @@ sp_node_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
 
     nc->sel_changed_connection.disconnect();
-    nc->sel_changed_connection = SP_DT_SELECTION(ec->desktop)->connectChanged(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_changed), (gpointer)nc));
+    nc->sel_changed_connection = sp_desktop_selection(ec->desktop)->connectChanged(sigc::bind(sigc::ptr_fun(&sp_node_context_selection_changed), (gpointer)nc));
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(ec->desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
     SPItem *item = selection->singleItem();
 
     nc->nodepath = NULL;
@@ -288,7 +288,7 @@ sp_nodepath_update_from_item(SPNodeContext *nc, SPItem *item)
         ec->shape_knot_holder = NULL;
     }
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     item = selection->singleItem();
 
     if (item) {
@@ -405,7 +405,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
     gint ret = FALSE;
 
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
 
@@ -515,7 +515,7 @@ static gint
 sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
     double const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
@@ -614,7 +614,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         if (nc->nodepath && nc->nodepath->selected)
                             sp_nodepath_deselect(nc->nodepath);
                         else
-                            SP_DT_SELECTION(desktop)->clear();
+                            sp_desktop_selection(desktop)->clear();
                     }
                 }
                 ret = TRUE;
@@ -789,7 +789,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         if (nc->nodepath && nc->nodepath->selected) {
                             sp_nodepath_deselect(nc->nodepath);
                         } else {
-                            SP_DT_SELECTION(desktop)->clear();
+                            sp_desktop_selection(desktop)->clear();
                         }
                     }
                     ret = TRUE;

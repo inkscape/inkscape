@@ -895,7 +895,7 @@ static void leave_group(GtkMenuItem *, SPDesktop *desktop) {
 
 static void enter_group(GtkMenuItem *mi, SPDesktop *desktop) {
     desktop->setCurrentLayer(reinterpret_cast<SPObject *>(g_object_get_data(G_OBJECT(mi), "group")));
-    SP_DT_SELECTION(desktop)->clear();
+    sp_desktop_selection(desktop)->clear();
 }
 
 GtkWidget *
@@ -1126,14 +1126,14 @@ sp_ui_drag_data_received(GtkWidget *widget,
             SPObject *new_obj = NULL;
             new_obj = desktop->currentLayer()->appendChildRepr(newgroup);
 
-            Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+            Inkscape::Selection *selection = sp_desktop_selection(desktop);
             selection->set(SP_ITEM(new_obj));
             // To move the imported object, we must temporarily set the "transform pattern with
             // object" option.
             {
                 int const saved_pref = prefs_get_int_attribute("options.transform", "pattern", 1);
                 prefs_set_int_attribute("options.transform", "pattern", 1);
-                sp_document_ensure_up_to_date(SP_DT_DOCUMENT(desktop));
+                sp_document_ensure_up_to_date(sp_desktop_document(desktop));
                 NR::Point m( desktop->point() - selection->bounds().midpoint() );
                 sp_selection_move_relative(selection, m);
                 prefs_set_int_attribute("options.transform", "pattern", saved_pref);

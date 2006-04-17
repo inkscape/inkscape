@@ -211,7 +211,7 @@ sp_select_context_abort(SPEventContext *event_context)
             if (sc->item) {
                 // only undo if the item is still valid
                 if (SP_OBJECT_DOCUMENT( SP_OBJECT(sc->item))) {
-                    sp_document_undo(SP_DT_DOCUMENT(desktop));
+                    sp_document_undo(sp_desktop_document(desktop));
                 }
 
                 sp_object_unref( SP_OBJECT(sc->item), NULL);
@@ -219,7 +219,7 @@ sp_select_context_abort(SPEventContext *event_context)
                 // NOTE:  This is a workaround to a bug.
                 // When the ctrl key is held, sc->item is not defined
                 // so in this case (only), we skip the object doc check
-                sp_document_undo(SP_DT_DOCUMENT(desktop));
+                sp_document_undo(sp_desktop_document(desktop));
             }
             sc->item = NULL;
 
@@ -275,7 +275,7 @@ sp_select_context_up_one_layer(SPDesktop *desktop)
         {
             desktop->setCurrentLayer(parent);
             if (SP_IS_GROUP(current_layer) && SPGroup::LAYER != SP_GROUP(current_layer)->layerMode())
-                SP_DT_SELECTION(desktop)->set(current_layer);
+                sp_desktop_selection(desktop)->set(current_layer);
         }
     }
 }
@@ -342,13 +342,13 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
         case GDK_ENTER_NOTIFY:
         {
             GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
-            gdk_window_set_cursor(GTK_WIDGET(SP_DT_CANVAS(desktop))->window, cursor);
+            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
             gdk_cursor_destroy(cursor);
             break;
         }
 
         case GDK_LEAVE_NOTIFY:
-            gdk_window_set_cursor(GTK_WIDGET(SP_DT_CANVAS(desktop))->window, event_context->cursor);
+            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
             break;
 
         case GDK_KEY_PRESS:
@@ -383,7 +383,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     SPDesktop *desktop = event_context->desktop;
     SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
     Inkscape::SelTrans *seltrans = sc->_seltrans;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     gdouble const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
     gdouble const offset = prefs_get_double_attribute_limited("options.defaultscale", "value", 2, 0, 1000);
     tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
@@ -401,7 +401,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     SPItem *clicked_item = (SPItem *) selection->itemList()->data;
                     if (SP_IS_GROUP (clicked_item)) { // enter group
                         desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
-                        SP_DT_SELECTION(desktop)->clear();
+                        sp_desktop_selection(desktop)->clear();
                         sc->dragging = false;
                     } else { // switch tool
                         tools_switch_by_item (desktop, clicked_item);
@@ -546,7 +546,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         Inkscape::Rubberband::get()->stop();
                         seltrans->resetState();
                         // find out affected items:
-                        GSList *items = sp_document_items_in_box(SP_DT_DOCUMENT(desktop), desktop->dkey, b.assume());
+                        GSList *items = sp_document_items_in_box(sp_desktop_document(desktop), desktop->dkey, b.assume());
                         if (event->button.state & GDK_SHIFT_MASK) {
                             // with shift, add to selection
                             selection->addList (items);
@@ -776,7 +776,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                             SPItem *clicked_item = selection->singleItem();
                             if (SP_IS_GROUP (clicked_item)) { // enter group
                                 desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
-                                SP_DT_SELECTION(desktop)->clear();
+                                sp_desktop_selection(desktop)->clear();
                             } else {
                                 SP_EVENT_CONTEXT(sc)->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Selected object is not a group. Cannot enter."));
                             }

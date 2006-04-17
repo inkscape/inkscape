@@ -200,7 +200,7 @@ pencil_handle_button_press(SPPencilContext *const pc, GdkEventButton const &beve
 
         SPDrawContext *dc = SP_DRAW_CONTEXT (pc);
         SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
-        Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+        Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
         if (Inkscape::have_viable_layer(desktop, dc->_message_context) == false) {
             return TRUE;
@@ -568,7 +568,7 @@ fit_and_split(SPPencilContext *pc)
         SPCurve *curve = sp_curve_copy(pc->red_curve);
 
         /// \todo fixme:
-        SPCanvasItem *cshape = sp_canvas_bpath_new(SP_DT_SKETCH(pc->desktop), curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), curve);
         sp_curve_unref(curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 

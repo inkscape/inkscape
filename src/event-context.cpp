@@ -170,7 +170,7 @@ sp_event_context_dispose(GObject *object)
 void
 sp_event_context_update_cursor(SPEventContext *ec)
 {
-    GtkWidget *w = GTK_WIDGET(SP_DT_CANVAS(ec->desktop));
+    GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(ec->desktop));
     if (w->window) {
         /* fixme: */
         if (ec->cursor_shape) {
@@ -875,7 +875,7 @@ sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event)
 
     /* fixme: This is not what I want but works for now (Lauris) */
     if (event->type == GDK_KEY_PRESS) {
-        item = SP_DT_SELECTION(desktop)->singleItem();
+        item = sp_desktop_selection(desktop)->singleItem();
     }
     menu = sp_ui_context_menu(desktop, item);
     gtk_widget_show(menu);
@@ -1013,7 +1013,7 @@ ec_shape_event_attr_changed(Inkscape::XML::Node *shape_repr, gchar const *name,
 
     SPDesktop *desktop = ec->desktop;
 
-    SPItem *item = SP_DT_SELECTION(desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(desktop)->singleItem();
 
     if (item) {
         ec->shape_knot_holder = sp_item_knot_holder(item, desktop);

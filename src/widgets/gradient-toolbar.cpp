@@ -137,12 +137,12 @@ gr_item_activate (GtkMenuItem *menuitem, gpointer data)
     gr = sp_gradient_ensure_vector_normalized(gr);
 
     SPDesktop *desktop = (SPDesktop *) data;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
-    SPEventContext *ev = SP_DT_EVENTCONTEXT (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    SPEventContext *ev = sp_desktop_event_context (desktop);
 
     gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr);
 
-    sp_document_done (SP_DT_DOCUMENT (desktop));
+    sp_document_done (sp_desktop_document (desktop));
 }
 
 gchar *
@@ -157,7 +157,7 @@ gr_prepare_label (SPObject *obj)
 GtkWidget *
 gr_vector_list (SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi)
 {
-    SPDocument *document = SP_DT_DOCUMENT (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
 
     GtkWidget *om = gtk_option_menu_new ();
     GtkWidget *m = gtk_menu_new ();
@@ -345,11 +345,11 @@ gr_tb_selection_changed (Inkscape::Selection *, gpointer data)
     if (!desktop)
         return;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop); // take from desktop, not from args
+    Inkscape::Selection *selection = sp_desktop_selection (desktop); // take from desktop, not from args
     if (!selection) 
         return;
     
-    SPEventContext *ev = SP_DT_EVENTCONTEXT (desktop);
+    SPEventContext *ev = sp_desktop_event_context (desktop);
 
     GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT (widget), "menu");
     if (om) gtk_widget_destroy (om);
@@ -401,9 +401,9 @@ static void
 gr_fork (GtkWidget *button, GtkWidget *widget)
 {
     SPDesktop *desktop = (SPDesktop *) g_object_get_data (G_OBJECT(widget), "desktop");
-    SPDocument *document = SP_DT_DOCUMENT (desktop);
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
-    SPEventContext *ev = SP_DT_EVENTCONTEXT (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    SPEventContext *ev = sp_desktop_event_context (desktop);
     GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "menu");
 
     if (om && document) {
@@ -454,9 +454,9 @@ gr_edit (GtkWidget *button, GtkWidget *widget)
 GtkWidget *
 gr_change_widget (SPDesktop *desktop)
 {
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
-    SPDocument *document = SP_DT_DOCUMENT (desktop);
-    SPEventContext *ev = SP_DT_EVENTCONTEXT (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
+    SPEventContext *ev = sp_desktop_event_context (desktop);
 
     SPGradient *gr_selected = NULL;
     bool gr_multi = false;

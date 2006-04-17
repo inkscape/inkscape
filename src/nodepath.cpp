@@ -434,7 +434,7 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 void sp_nodepath_update_repr(Inkscape::NodePath::Path *np)
 {
     update_repr_internal(np);
-    sp_document_done(SP_DT_DOCUMENT(np->desktop));
+    sp_document_done(sp_desktop_document(np->desktop));
 
     if (np->livarot_path) {
         delete np->livarot_path;
@@ -454,7 +454,7 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np)
 static void sp_nodepath_update_repr_keyed(Inkscape::NodePath::Path *np, gchar const *key)
 {
     update_repr_internal(np);
-    sp_document_maybe_done(SP_DT_DOCUMENT(np->desktop), key);
+    sp_document_maybe_done(sp_desktop_document(np->desktop), key);
 
     if (np->livarot_path) {
         delete np->livarot_path;
@@ -496,7 +496,7 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
     // move to the saved position
     new_repr->setPosition(pos > 0 ? pos : 0);
 
-    sp_document_done(SP_DT_DOCUMENT(np->desktop));
+    sp_document_done(sp_desktop_document(np->desktop));
 
     Inkscape::GC::release(new_repr);
     g_free(svgpath);
@@ -1021,7 +1021,7 @@ static void sp_node_ensure_knot_exists (SPDesktop *desktop, Inkscape::NodePath::
     }
 
     if (!side->line) {
-        side->line = sp_canvas_item_new(SP_DT_CONTROLS(desktop),
+        side->line = sp_canvas_item_new(sp_desktop_controls(desktop),
                                         SP_TYPE_CTRLLINE, NULL);
     }
 }
@@ -1727,7 +1727,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
         // if the entire nodepath is removed, delete the selected object.
         if (nodepath->subpaths == NULL ||
             sp_nodepath_get_node_count(nodepath) < 2) {
-            SPDocument *document = SP_DT_DOCUMENT (nodepath->desktop);
+            SPDocument *document = sp_desktop_document (nodepath->desktop);
             sp_nodepath_destroy(nodepath);
             g_list_free(nodes_to_delete);
             nodes_to_delete = NULL;
@@ -1767,7 +1767,7 @@ void sp_node_selected_delete()
     // if the entire nodepath is removed, delete the selected object.
     if (nodepath->subpaths == NULL ||
         sp_nodepath_get_node_count(nodepath) < 2) {
-        SPDocument *document = SP_DT_DOCUMENT (nodepath->desktop);
+        SPDocument *document = sp_desktop_document (nodepath->desktop);
         sp_nodepath_destroy(nodepath);
         sp_selection_delete();
         sp_document_done (document);

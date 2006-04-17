@@ -803,10 +803,10 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
-            sp_undo(dt, SP_DT_DOCUMENT(dt));
+            sp_undo(dt, sp_desktop_document(dt));
             break;
         case SP_VERB_EDIT_REDO:
-            sp_redo(dt, SP_DT_DOCUMENT(dt));
+            sp_redo(dt, sp_desktop_document(dt));
             break;
         case SP_VERB_EDIT_CUT:
             sp_selection_cut();
@@ -897,7 +897,7 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
             if (tools_isactive(dt, TOOLS_NODES)) {
                 sp_nodepath_deselect(SP_NODE_CONTEXT(ec)->nodepath);
             } else {
-                SP_DT_SELECTION(dt)->clear();
+                sp_desktop_selection(dt)->clear();
             }
             break;
         default:
@@ -1045,7 +1045,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
             if (next) {
                 dt->setCurrentLayer(next);
-                sp_document_done(SP_DT_DOCUMENT(dt));
+                sp_document_done(sp_desktop_document(dt));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to next layer."));
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past last layer."));
@@ -1056,7 +1056,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             SPObject *prev=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
             if (prev) {
                 dt->setCurrentLayer(prev);
-                sp_document_done(SP_DT_DOCUMENT(dt));
+                sp_document_done(sp_desktop_document(dt));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to previous layer."));
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past first layer."));
@@ -1112,7 +1112,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                         message = g_strdup_printf(_("Lowered layer <b>%s</b>."), layer->defaultLabel());
                         break;
                 };
-                sp_document_done(SP_DT_DOCUMENT(dt));
+                sp_document_done(sp_desktop_document(dt));
                 if (message) {
                     dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
                     g_free((void *) message);
@@ -1125,7 +1125,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
         }
         case SP_VERB_LAYER_DELETE: {
             if ( dt->currentLayer() != dt->currentRoot() ) {
-                SP_DT_SELECTION(dt)->clear();
+                sp_desktop_selection(dt)->clear();
                 SPObject *old_layer=dt->currentLayer();
 
                 sp_object_ref(old_layer, NULL);
@@ -1145,7 +1145,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                     dt->setCurrentLayer(survivor);
                 }
 
-                sp_document_done(SP_DT_DOCUMENT(dt));
+                sp_document_done(sp_desktop_document(dt));
 
                 // TRANSLATORS: this means "The layer has been deleted."
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Deleted layer."));
@@ -1169,7 +1169,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
 
     SPEventContext *ec = dt->event_context;
 
-    Inkscape::Selection *sel = SP_DT_SELECTION(dt);
+    Inkscape::Selection *sel = sp_desktop_selection(dt);
 
     if (sel->isEmpty())
         return;
@@ -1204,7 +1204,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
             }
-            sp_document_done(SP_DT_DOCUMENT(dt));
+            sp_document_done(sp_desktop_document(dt));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
             if (tools_isactive(dt, TOOLS_NODES)) {
@@ -1212,7 +1212,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
             }
-            sp_document_done(SP_DT_DOCUMENT(dt));
+            sp_document_done(sp_desktop_document(dt));
             break;
         case SP_VERB_OBJECT_SET_MASK:
             sp_selection_set_mask(false, false);
@@ -1373,7 +1373,7 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
     if (!dt)
         return;
 
-    SPDocument *doc = SP_DT_DOCUMENT(dt);
+    SPDocument *doc = sp_desktop_document(dt);
 
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
 

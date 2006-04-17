@@ -131,7 +131,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     sp_repr_set_svg_double(repr, "position", guide_pos_dt);
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
-                    sp_document_done(SP_DT_DOCUMENT(desktop));
+                    sp_document_done(sp_desktop_document(desktop));
                 }
                 desktop->set_coordinate_status(event_dt);
             }
@@ -211,7 +211,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         sp_guide_remove(guide);
                     }
                     moved = false;
-                    sp_document_done(SP_DT_DOCUMENT(desktop));
+                    sp_document_done(sp_desktop_document(desktop));
                     desktop->set_coordinate_status(event_dt);
                     desktop->setPosition (event_dt);
                 }

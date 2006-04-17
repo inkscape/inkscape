@@ -331,7 +331,7 @@ Dialog::onDesktopActivated (SPDesktop *desktop)
 Inkscape::Selection*
 Dialog::_getSelection()
 {
-    return SP_DT_SELECTION(SP_ACTIVE_DESKTOP);
+    return sp_desktop_selection(SP_ACTIVE_DESKTOP);
 }
 
 void

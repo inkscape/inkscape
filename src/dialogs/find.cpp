@@ -349,7 +349,7 @@ void sp_find_dialog_find(GObject *, GObject *dlg)
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (dlg), "inlayer")))) {
             l = all_items (desktop->currentLayer(), l, hidden, locked);
         } else {
-            l = all_items (SP_DOCUMENT_ROOT (SP_DT_DOCUMENT (desktop)), l, hidden, locked);
+            l = all_items (SP_DOCUMENT_ROOT (sp_desktop_document (desktop)), l, hidden, locked);
         }
     }
     guint all = g_slist_length (l);
@@ -371,7 +371,7 @@ void sp_find_dialog_find(GObject *, GObject *dlg)
                                                  count),
                                         count, all, exact? _("exact") : _("partial"));
 
-        Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+        Inkscape::Selection *selection = sp_desktop_selection (desktop);
         selection->clear();
         selection->setList(n);
         scroll_to_show_item (desktop, SP_ITEM(n->data));

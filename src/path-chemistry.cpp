@@ -48,18 +48,18 @@ sp_selected_path_combine(void)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList *items = (GSList *) selection->itemList();
 
     if (g_slist_length(items) < 2) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>at least two objects</b> to combine."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>at least two objects</b> to combine."));
         return;
     }
 
     for (GSList *i = items; i != NULL; i = i->next) {
         SPItem *item = (SPItem *) i->data;
         if (!SP_IS_SHAPE(item) && !SP_IS_TEXT(item)) {
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("At least one of the objects is <b>not a path</b>, cannot combine."));
+            sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("At least one of the objects is <b>not a path</b>, cannot combine."));
             return;
         }
     }
@@ -67,7 +67,7 @@ sp_selected_path_combine(void)
     Inkscape::XML::Node *parent = SP_OBJECT_REPR((SPItem *) items->data)->parent();
     for (GSList *i = items; i != NULL; i = i->next) {
         if ( SP_OBJECT_REPR((SPItem *) i->data)->parent() != parent ) {
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot combine objects from <b>different groups</b> or <b>layers</b>."));
+            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot combine objects from <b>different groups</b> or <b>layers</b>."));
             return;
         }
     }
@@ -134,7 +134,7 @@ sp_selected_path_combine(void)
     // move to the position of the topmost, reduced by the number of deleted items
     repr->setPosition(topmost > 0 ? topmost + 1 : 0);
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
 
     selection->set(repr);
 
@@ -146,10 +146,10 @@ sp_selected_path_break_apart(void)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to break apart."));
         return;
     }
 
@@ -223,9 +223,9 @@ sp_selected_path_break_apart(void)
     }
 
     if (did) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     } else {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
         return;
     }
 }
@@ -242,11 +242,11 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
         if (interactive)
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
+            sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
         return;
     }
 
@@ -289,9 +289,9 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
 
     if (interactive) {
         if (did) {
-            sp_document_done(SP_DT_DOCUMENT(desktop));
+            sp_document_done(sp_desktop_document(desktop));
         } else {
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
+            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
             return;
         }
     }
@@ -338,11 +338,11 @@ sp_selected_path_reverse()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList *items = (GSList *) selection->itemList();
 
     if (!items) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to reverse."));
         return;
     }
 
@@ -366,9 +366,9 @@ sp_selected_path_reverse()
     }
 
     if (did) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     } else {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
     }
 }
 

@@ -285,7 +285,7 @@ PageSizer::setDoc (double w, double h)
     if (!SP_ACTIVE_DESKTOP || _wr->isUpdating())
         return;
 
-    SPDocument *doc = SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP);
+    SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
     sp_document_set_width (doc, _rusw.getSU()->getValue("px"), &_px_unit);
     sp_document_set_height (doc, _rush.getSU()->getValue("px"), &_px_unit);
     sp_document_done (doc);

@@ -669,9 +669,9 @@ void set_tree_desktop(SPDesktop *desktop)
     }
     current_desktop = desktop;
     if (desktop) {
-        sel_changed_connection = SP_DT_SELECTION(desktop)->connectChanged(&on_desktop_selection_changed);
+        sel_changed_connection = sp_desktop_selection(desktop)->connectChanged(&on_desktop_selection_changed);
         document_replaced_connection = desktop->connectDocumentReplaced(&on_document_replaced);
-        set_tree_document(SP_DT_DOCUMENT(desktop));
+        set_tree_document(sp_desktop_document(desktop));
     } else {
         set_tree_document(NULL);
     }
@@ -783,7 +783,7 @@ Inkscape::XML::Node *get_dt_select()
         return NULL;
     }
 
-    return SP_DT_SELECTION(current_desktop)->singleRepr();
+    return sp_desktop_selection(current_desktop)->singleRepr();
 }
 
 
@@ -794,7 +794,7 @@ void set_dt_select(Inkscape::XML::Node *repr)
         return;
     }
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(current_desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(current_desktop);
 
     SPObject *object;
     if (repr) {
@@ -804,7 +804,7 @@ void set_dt_select(Inkscape::XML::Node *repr)
             repr = sp_repr_parent(repr);
         } // end of while loop
 
-        object = SP_DT_DOCUMENT(current_desktop)->getObjectByRepr(repr);
+        object = sp_desktop_document(current_desktop)->getObjectByRepr(repr);
     } else {
         object = NULL;
     }
@@ -1279,7 +1279,7 @@ static void on_document_replaced(SPDesktop *dt, SPDocument *doc)
     if (current_desktop)
         sel_changed_connection.disconnect();
 
-    sel_changed_connection = SP_DT_SELECTION(dt)->connectChanged(&on_desktop_selection_changed);
+    sel_changed_connection = sp_desktop_selection(dt)->connectChanged(&on_desktop_selection_changed);
     set_tree_document(doc);
 }
 

@@ -205,7 +205,7 @@ sp_star_context_setup (SPEventContext *ec)
     sp_event_context_read (ec, "rounded");
     sp_event_context_read (ec, "randomized");
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(ec->desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
 
     SPItem *item = selection->singleItem();
         if (item) {
@@ -259,7 +259,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
     static gboolean dragging;
 
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     SPStarContext *sc = SP_STAR_CONTEXT (event_context);
 
@@ -358,7 +358,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
             }
             break;
         case GDK_Escape:
-            SP_DT_SELECTION(desktop)->clear();
+            sp_desktop_selection(desktop)->clear();
             //TODO: make dragging escapable by Esc
         default:
             break;
@@ -463,8 +463,8 @@ sp_star_finish (SPStarContext * sc)
 
         object->updateRepr(NULL, SP_OBJECT_WRITE_EXT);
 
-        SP_DT_SELECTION(desktop)->set(sc->item);
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_desktop_selection(desktop)->set(sc->item);
+        sp_document_done(sp_desktop_document(desktop));
 
         sc->item = NULL;
     }

@@ -201,7 +201,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     ddc->cal1 = sp_curve_new_sized(32);
     ddc->cal2 = sp_curve_new_sized(32);
 
-    ddc->currentshape = sp_canvas_item_new(SP_DT_SKETCH(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
+    ddc->currentshape = sp_canvas_item_new(sp_desktop_sketch(ec->desktop), SP_TYPE_CANVAS_BPATH, NULL);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(ddc->currentshape), DDC_RED_RGBA, SP_WIND_RULE_EVENODD);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(ddc->currentshape), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* fixme: Cannot we cascade it to root more clearly? */
@@ -444,7 +444,7 @@ sp_dyna_draw_timeout_handler(gpointer data)
 {
     SPDynaDrawContext *dc = SP_DYNA_DRAW_CONTEXT(data);
     SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
-    SPCanvas *canvas = SP_CANVAS(SP_DT_CANVAS(desktop));
+    SPCanvas *canvas = SP_CANVAS(sp_desktop_canvas(desktop));
 
     dc->dragging = TRUE;
 
@@ -628,7 +628,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             }
             break;
         case GDK_Escape:
-            SP_DT_SELECTION(desktop)->clear();
+            sp_desktop_selection(desktop)->clear();
             break;
 
         default:
@@ -683,7 +683,7 @@ set_to_accumulated(SPDynaDrawContext *dc)
             Inkscape::GC::release(dc->repr);
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
-            SP_DT_SELECTION(desktop)->set(dc->repr);
+            sp_desktop_selection(desktop)->set(dc->repr);
         }
         abp = nr_artpath_affine(sp_curve_first_bpath(dc->accumulated), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
@@ -698,7 +698,7 @@ set_to_accumulated(SPDynaDrawContext *dc)
         dc->repr = NULL;
     }
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
 }
 
 static void
@@ -824,7 +824,7 @@ fit_and_split_calligraphics(SPDynaDrawContext *dc, gboolean release)
         if (!release) {
             g_assert(!sp_curve_empty(dc->currentcurve));
 
-            SPCanvasItem *cbp = sp_canvas_item_new(SP_DT_SKETCH(SP_EVENT_CONTEXT(dc)->desktop),
+            SPCanvasItem *cbp = sp_canvas_item_new(sp_desktop_sketch(SP_EVENT_CONTEXT(dc)->desktop),
                                                    SP_TYPE_CANVAS_BPATH,
                                                    NULL);
             SPCurve *curve = sp_curve_copy(dc->currentcurve);

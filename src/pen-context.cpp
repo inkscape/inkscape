@@ -182,13 +182,13 @@ sp_pen_context_setup(SPEventContext *ec)
     }
 
     /* Pen indicators */
-    pc->c0 = sp_canvas_item_new(SP_DT_CONTROLS(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRL, "shape", SP_CTRL_SHAPE_CIRCLE,
+    pc->c0 = sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRL, "shape", SP_CTRL_SHAPE_CIRCLE,
                                 "size", 4.0, "filled", 0, "fill_color", 0xff00007f, "stroked", 1, "stroke_color", 0x0000ff7f, NULL);
-    pc->c1 = sp_canvas_item_new(SP_DT_CONTROLS(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRL, "shape", SP_CTRL_SHAPE_CIRCLE,
+    pc->c1 = sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRL, "shape", SP_CTRL_SHAPE_CIRCLE,
                                 "size", 4.0, "filled", 0, "fill_color", 0xff00007f, "stroked", 1, "stroke_color", 0x0000ff7f, NULL);
-    pc->cl0 = sp_canvas_item_new(SP_DT_CONTROLS(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL);
+    pc->cl0 = sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL);
     sp_ctrlline_set_rgba32(SP_CTRLLINE(pc->cl0), 0x0000007f);
-    pc->cl1 = sp_canvas_item_new(SP_DT_CONTROLS(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL);
+    pc->cl1 = sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL);
     sp_ctrlline_set_rgba32(SP_CTRLLINE(pc->cl1), 0x0000007f);
 
     sp_canvas_item_hide(pc->c0);
@@ -367,7 +367,7 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 // This is the first click of a new curve; deselect item so that
                                 // this curve is not combined with it (unless it is drawn from its
                                 // anchor, which is handled by the sibling branch above)
-                                Inkscape::Selection * const selection = SP_DT_SELECTION(desktop);
+                                Inkscape::Selection * const selection = sp_desktop_selection(desktop);
                                 if (!(bevent.state & GDK_SHIFT_MASK)) {
 
                                     selection->clear();
@@ -704,7 +704,7 @@ pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
                 pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
             }
             // one canvas bpath for all of green_curve
-            SPCanvasItem *cshape = sp_canvas_bpath_new(SP_DT_SKETCH(pc->desktop), pc->green_curve);
+            SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), pc->green_curve);
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cshape), 0, SP_WIND_RULE_NONZERO);
 
@@ -1032,7 +1032,7 @@ spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const s
         sp_curve_append_continuous(pc->green_curve, pc->red_curve, 0.0625);
         SPCurve *curve = sp_curve_copy(pc->red_curve);
         /// \todo fixme:
-        SPCanvasItem *cshape = sp_canvas_bpath_new(SP_DT_SKETCH(pc->desktop), curve);
+        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), curve);
         sp_curve_unref(curve);
         sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
 

@@ -100,7 +100,7 @@ SPDocument*
 Editor::getActiveDocument()
 {
     if (getActiveDesktop()) {
-        return SP_DT_DOCUMENT (getActiveDesktop());
+        return sp_desktop_document (getActiveDesktop());
     }
 
     return NULL;
@@ -153,9 +153,9 @@ Editor::addDesktop (SPDesktop *dt)
 
     if (isDesktopActive (dt)) {
         _instance->_desktop_activated_signal.emit (dt);
-        _instance->_event_context_set_signal.emit (SP_DT_EVENTCONTEXT (dt));
-        _instance->_selection_set_signal.emit (SP_DT_SELECTION (dt));
-        _instance->_selection_changed_signal.emit (SP_DT_SELECTION (dt));
+        _instance->_event_context_set_signal.emit (sp_desktop_event_context (dt));
+        _instance->_selection_set_signal.emit (sp_desktop_selection (dt));
+        _instance->_selection_changed_signal.emit (sp_desktop_selection (dt));
     }
 }
 
@@ -173,13 +173,13 @@ Editor::removeDesktop (SPDesktop *dt)
             _instance->_desktops = g_slist_remove (_instance->_desktops, new_desktop);
             _instance->_desktops = g_slist_prepend (_instance->_desktops, new_desktop);
             _instance->_desktop_activated_signal.emit (new_desktop);
-            _instance->_event_context_set_signal.emit (SP_DT_EVENTCONTEXT (new_desktop));
-            _instance->_selection_set_signal.emit (SP_DT_SELECTION (new_desktop));
-            _instance->_selection_changed_signal.emit (SP_DT_SELECTION (new_desktop));
+            _instance->_event_context_set_signal.emit (sp_desktop_event_context (new_desktop));
+            _instance->_selection_set_signal.emit (sp_desktop_selection (new_desktop));
+            _instance->_selection_changed_signal.emit (sp_desktop_selection (new_desktop));
         } else {
             _instance->_event_context_set_signal.emit (0);
-            if (SP_DT_SELECTION(dt))
-                SP_DT_SELECTION(dt)->clear();
+            if (sp_desktop_selection(dt))
+                sp_desktop_selection(dt)->clear();
         }
     }
 
@@ -207,9 +207,9 @@ Editor::activateDesktop (SPDesktop* dt)
     _instance->_desktops = g_slist_prepend (_instance->_desktops, dt);
 
     _instance->_desktop_activated_signal.emit (dt);
-    _instance->_event_context_set_signal.emit (SP_DT_EVENTCONTEXT(dt));
-    _instance->_selection_set_signal.emit (SP_DT_SELECTION(dt));
-    _instance->_selection_changed_signal.emit (SP_DT_SELECTION(dt));
+    _instance->_event_context_set_signal.emit (sp_desktop_event_context(dt));
+    _instance->_selection_set_signal.emit (sp_desktop_selection(dt));
+    _instance->_selection_changed_signal.emit (sp_desktop_selection(dt));
 }
 
 void 
@@ -242,7 +242,7 @@ Editor::isDuplicatedView (SPDesktop* dt)
 //Editor::getEventContext()
 //{
 //    if (getActiveDesktop()) {
-//        return SP_DT_EVENTCONTEXT (getActiveDesktop());
+//        return sp_desktop_event_context (getActiveDesktop());
 //    }
 //
 //    return NULL;

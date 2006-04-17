@@ -324,7 +324,7 @@ sp_fill_style_widget_paint_dragged (SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "fill", "fill-opacity");
-            sp_document_maybe_done (SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP), undo_label);
+            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label);
             g_object_set_data (G_OBJECT (spw), "local", GINT_TO_POINTER (TRUE)); // local change, do not update from selection
             break;
         }
@@ -359,8 +359,8 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
     if (!desktop) {
         return;
     }
-    SPDocument *document = SP_DT_DOCUMENT (desktop);
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
 
@@ -393,7 +393,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, desktop, "fill", "fill-opacity");
-            sp_document_maybe_done (SP_DT_DOCUMENT(desktop), undo_label);
+            sp_document_maybe_done (sp_desktop_document(desktop), undo_label);
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)

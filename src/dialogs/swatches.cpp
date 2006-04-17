@@ -387,7 +387,7 @@ void ColorItem::_colorDefChanged(void* data)
         {
             SPDesktop *desktop = SP_ACTIVE_DESKTOP;
             if ( desktop ) {
-                SPDocument* document = SP_DT_DOCUMENT( desktop );
+                SPDocument* document = sp_desktop_document( desktop );
                 Inkscape::XML::Node *rroot =  sp_document_repr_root( document );
                 if ( rroot ) {
 
@@ -550,7 +550,7 @@ void ColorItem::buttonClicked(bool secondary)
         sp_desktop_set_style(desktop, css);
 
         sp_repr_css_attr_unref(css);
-        sp_document_done (SP_DT_DOCUMENT (desktop));
+        sp_document_done (sp_desktop_document (desktop));
     }
 }
 

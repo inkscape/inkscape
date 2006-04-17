@@ -260,7 +260,7 @@ sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "stroke", "stroke-opacity");
-            sp_document_maybe_done (SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP), undo_label);
+            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label);
             break;
         }
 
@@ -280,8 +280,8 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
     g_object_set_data (G_OBJECT (spw), "update", GINT_TO_POINTER (TRUE));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPDocument *document = SP_DT_DOCUMENT (desktop);
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
 
@@ -313,7 +313,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, desktop, "stroke", "stroke-opacity");
-            sp_document_maybe_done (SP_DT_DOCUMENT(desktop), undo_label);
+            sp_document_maybe_done (sp_desktop_document(desktop), undo_label);
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
@@ -745,7 +745,7 @@ static GtkWidget *
 ink_marker_menu( GtkWidget *tbl, gchar *menu_id, SPDocument *sandbox)
 {
     SPDesktop *desktop = inkscape_active_desktop();
-    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     GtkWidget *mnu = gtk_option_menu_new();
 
     /* Create new menu widget */
@@ -829,7 +829,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     }
 
     SPDesktop *desktop = inkscape_active_desktop();
-    SPDocument *document = SP_DT_DOCUMENT(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
     if (!document) {
         return;
     }
@@ -862,7 +862,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     gchar *menu_id = (gchar *) g_object_get_data(G_OBJECT(mnu), "menu_id");
     sp_repr_css_set_property(css, menu_id, marker);
 
-     Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+     Inkscape::Selection *selection = sp_desktop_selection(desktop);
      GSList const *items = selection->itemList();
      for (; items != NULL; items = items->next) {
          SPItem *item = (SPItem *) items->data;
@@ -892,7 +892,7 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
         return FALSE;
     }
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     if (selection->isEmpty())
         return FALSE;
@@ -989,7 +989,7 @@ sp_stroke_style_line_widget_new(void)
     us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop)
-        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), SP_DT_NAMEDVIEW(desktop)->doc_units);
+        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
     sp_unit_selector_add_unit(SP_UNIT_SELECTOR(us), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
     g_signal_connect ( G_OBJECT (us), "set_unit", G_CALLBACK (stroke_width_set_unit), spw );
     gtk_widget_show(us);
@@ -1158,7 +1158,7 @@ sp_stroke_style_line_widget_new(void)
                         GTK_SIGNAL_FUNC(sp_stroke_style_line_selection_changed),
                         NULL );
 
-    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? SP_DT_SELECTION(desktop) : NULL);
+    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
 
     return spw;
 }
@@ -1176,7 +1176,7 @@ sp_stroke_style_line_construct(SPWidget *spw, gpointer data)
     if (spw->inkscape) {
         sp_stroke_style_line_update(spw,
                                     ( SP_ACTIVE_DESKTOP
-                                      ? SP_DT_SELECTION(SP_ACTIVE_DESKTOP)
+                                      ? sp_desktop_selection(SP_ACTIVE_DESKTOP)
                                       : NULL ));
     } 
 }
@@ -1302,7 +1302,7 @@ sp_stroke_style_line_update(SPWidget *spw, Inkscape::Selection *sel)
         } else {
             // same width, or only one object; no sense to keep percent, switch to absolute
             if (unit->base != SP_UNIT_ABSOLUTE && unit->base != SP_UNIT_DEVICE) {
-                sp_unit_selector_set_unit(SP_UNIT_SELECTOR(us), SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP)->doc_units);
+                sp_unit_selector_set_unit(SP_UNIT_SELECTOR(us), sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
             }
         }
 
@@ -1388,8 +1388,8 @@ sp_stroke_style_scale_line(SPWidget *spw)
     GtkAdjustment *ml = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(spw), "miterlimit"));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPDocument *document = SP_DT_DOCUMENT (desktop);
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    SPDocument *document = sp_desktop_document (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     GSList const *items = selection->itemList();
 
@@ -1536,7 +1536,7 @@ sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw)
 
         sp_repr_css_attr_unref(css);
 
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     }
 }
 
@@ -1708,7 +1708,7 @@ ink_extract_marker_name(gchar const *n)
 
 
     SPDesktop *desktop = inkscape_active_desktop();
-    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
     SPObject *marker = doc->getObjectById(b);
     return marker;
 }

@@ -571,7 +571,7 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
                 sp_guide_show(g, static_cast<SPDesktop*>(l->data)->guides, (GCallback) sp_dt_guide_event);
                 if (static_cast<SPDesktop*>(l->data)->guides_active)
                     sp_guide_sensitize(g,
-                                       SP_DT_CANVAS(static_cast<SPDesktop*> (l->data)),
+                                       sp_desktop_canvas(static_cast<SPDesktop*> (l->data)),
                                        TRUE);
                 if (nv->showguides) {
                     for (GSList *v = SP_GUIDE(g)->views; v != NULL; v = v->next) {
@@ -627,7 +627,7 @@ void SPNamedView::show(SPDesktop *desktop)
     for (GSList *l = guides; l != NULL; l = l->next) {
         sp_guide_show(SP_GUIDE(l->data), desktop->guides, (GCallback) sp_dt_guide_event);
         if (desktop->guides_active) {
-            sp_guide_sensitize(SP_GUIDE(l->data), SP_DT_CANVAS(desktop), TRUE);
+            sp_guide_sensitize(SP_GUIDE(l->data), sp_desktop_canvas(desktop), TRUE);
         }
         if (showguides) {
             for (GSList *v = SP_GUIDE(l->data)->views; v != NULL; v = v->next) {
@@ -642,7 +642,7 @@ void SPNamedView::show(SPDesktop *desktop)
 
     views = g_slist_prepend(views, desktop);
 
-    SPCanvasItem *item = sp_canvas_item_new(SP_DT_GRID(desktop), SP_TYPE_CGRID, NULL);
+    SPCanvasItem *item = sp_canvas_item_new(sp_desktop_grid(desktop), SP_TYPE_CGRID, NULL);
     // since we're keeping a copy, we need to bump up the ref count
     gtk_object_ref(GTK_OBJECT(item));
     gridviews = g_slist_prepend(gridviews, item);
@@ -670,7 +670,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
         && nv->cx != HUGE_VAL && !isNaN(nv->cx)
         && nv->cy != HUGE_VAL && !isNaN(nv->cy)) {
         desktop->zoom_absolute(nv->cx, nv->cy, nv->zoom);
-    } else if (SP_DT_DOCUMENT(desktop)) { // document without saved zoom, zoom to its page
+    } else if (sp_desktop_document(desktop)) { // document without saved zoom, zoom to its page
         desktop->zoom_page();
     }
 
@@ -710,8 +710,8 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     NR::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
-    gboolean saved = sp_document_get_undo_sensitive(SP_DT_DOCUMENT(desktop));
-    sp_document_set_undo_sensitive(SP_DT_DOCUMENT(desktop), FALSE);
+    gboolean saved = sp_document_get_undo_sensitive(sp_desktop_document(desktop));
+    sp_document_set_undo_sensitive(sp_desktop_document(desktop), FALSE);
 
     sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
     sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[NR::X]);
@@ -729,7 +729,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     view->setAttribute("inkscape:current-layer", SP_OBJECT_ID(desktop->currentLayer()));
 
     // restore undoability
-    sp_document_set_undo_sensitive(SP_DT_DOCUMENT(desktop), saved);
+    sp_document_set_undo_sensitive(sp_desktop_document(desktop), saved);
 }
 
 void SPNamedView::hide(SPDesktop const *desktop)
@@ -738,14 +738,14 @@ void SPNamedView::hide(SPDesktop const *desktop)
     g_assert(g_slist_find(views, desktop));
 
     for (GSList *l = guides; l != NULL; l = l->next) {
-        sp_guide_hide(SP_GUIDE(l->data), SP_DT_CANVAS(desktop));
+        sp_guide_hide(SP_GUIDE(l->data), sp_desktop_canvas(desktop));
     }
 
     views = g_slist_remove(views, desktop);
 
     GSList *l;
     for (l = gridviews; l != NULL; l = l->next) {
-        if (SP_CANVAS_ITEM(l->data)->canvas == SP_DT_CANVAS(desktop)) {
+        if (SP_CANVAS_ITEM(l->data)->canvas == sp_desktop_canvas(desktop)) {
             break;
         }
     }
@@ -765,7 +765,7 @@ void SPNamedView::activateGuides(gpointer desktop, gboolean active)
     SPDesktop *dt = static_cast<SPDesktop*>(desktop);
 
     for (GSList *l = guides; l != NULL; l = l->next) {
-        sp_guide_sensitize(SP_GUIDE(l->data), SP_DT_CANVAS(dt), active);
+        sp_guide_sensitize(SP_GUIDE(l->data), sp_desktop_canvas(dt), active);
     }
 }
 

@@ -594,7 +594,7 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     unsigned items = 0;
-    const GSList *item_list = SP_DT_SELECTION(desktop)->itemList();
+    const GSList *item_list = sp_desktop_selection(desktop)->itemList();
 
     SPCSSAttr *css = sp_get_text_dialog_style ();
 
@@ -620,14 +620,14 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
         gtk_widget_set_sensitive (def, FALSE);
     } else if (items == 1) {
         /* exactly one text object; now set its text, too */
-        SPItem *item = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->singleItem();
+        SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
         if (SP_IS_TEXT (item) || SP_IS_FLOWTEXT(item)) {
             sp_text_edit_dialog_update_object_text (item);
         }
     }
 
     // complete the transaction
-    sp_document_done (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP));
+    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
 
     gtk_widget_set_sensitive (apply, FALSE);
 
@@ -880,7 +880,7 @@ sp_ted_get_selected_text_item (void)
     if (!SP_ACTIVE_DESKTOP)
         return NULL;
 
-    for (const GSList *item = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->itemList();
+    for (const GSList *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
          item != NULL;
          item = item->next)
     {
@@ -901,7 +901,7 @@ sp_ted_get_selected_text_count (void)
 
     unsigned int items = 0;
 
-    for (const GSList *item = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->itemList();
+    for (const GSList *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
          item != NULL;
          item = item->next)
     {

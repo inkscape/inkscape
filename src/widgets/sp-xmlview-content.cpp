@@ -160,6 +160,6 @@ sp_xmlview_content_changed (GtkTextBuffer *tb, SPXMLViewContent *text)
 		text->repr->setContent(data);
 		g_free (data);
 		text->blocked = FALSE;
-		sp_document_done (SP_DT_DOCUMENT (SP_ACTIVE_DESKTOP));
+		sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
 	}
 }

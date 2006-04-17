@@ -223,7 +223,7 @@ GrDrag::GrDrag(SPDesktop *desktop) {
 
     this->desktop = desktop;
 
-    this->selection = SP_DT_SELECTION(desktop);
+    this->selection = sp_desktop_selection(desktop);
 
     this->draggers = NULL;
     this->lines = NULL;
@@ -378,7 +378,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                 d_new->updateKnotShape ();
                 d_new->updateTip ();
                 d_new->updateDependencies(true);
-                sp_document_done (SP_DT_DOCUMENT (d_new->parent->desktop));
+                sp_document_done (sp_desktop_document (d_new->parent->desktop));
                 return;
             }
         }
@@ -509,7 +509,7 @@ gr_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
     dragger->updateDependencies(true);
 
     // we did an undoable action
-    sp_document_done (SP_DT_DOCUMENT (dragger->parent->desktop));
+    sp_document_done (sp_desktop_document (dragger->parent->desktop));
 }
 
 /**
@@ -853,7 +853,7 @@ Create a line from p1 to p2 and add it to the lines list
 void
 GrDrag::addLine (NR::Point p1, NR::Point p2, guint32 rgba)
 {
-    SPCanvasItem *line = sp_canvas_item_new(SP_DT_CONTROLS(this->desktop),
+    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(this->desktop),
                                                             SP_TYPE_CTRLLINE, NULL);
     sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
     if (rgba != GR_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw
@@ -1061,7 +1061,7 @@ GrDrag::selected_move (double x, double y)
     selected->updateDependencies(true);
 
     // we did an undoable action
-    sp_document_done (SP_DT_DOCUMENT (desktop));
+    sp_document_done (sp_desktop_document (desktop));
 }
 
 void

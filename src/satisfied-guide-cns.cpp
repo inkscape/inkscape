@@ -9,7 +9,7 @@ void satisfied_guide_cns(SPDesktop const &desktop,
                          std::vector<NR::Point> const &snappoints,
                          std::vector<SPGuideConstraint> &cns)
 {
-    SPNamedView const &nv = *SP_DT_NAMEDVIEW(&desktop);
+    SPNamedView const &nv = *sp_desktop_namedview(&desktop);
     for (GSList const *l = nv.guides; l != NULL; l = l->next) {
         SPGuide &g = *SP_GUIDE(l->data);
         for (unsigned int i = 0; i < snappoints.size(); ++i) {

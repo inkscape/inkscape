@@ -184,7 +184,7 @@ void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer 
 static void sp_arc_context_setup(SPEventContext *ec)
 {
     SPArcContext *ac = SP_ARC_CONTEXT(ec);
-    Inkscape::Selection *selection = SP_DT_SELECTION(ec->desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
 
     if (((SPEventContextClass *) parent_class)->setup) {
         ((SPEventContextClass *) parent_class)->setup(ec);
@@ -247,7 +247,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
     static bool dragging;
 
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPArcContext *ac = SP_ARC_CONTEXT(event_context);
 
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
@@ -345,7 +345,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                     }
                     break;
                 case GDK_Escape:
-                    SP_DT_SELECTION(desktop)->clear();
+                    sp_desktop_selection(desktop)->clear();
                     //TODO: make dragging escapable by Esc
                 default:
                     break;
@@ -425,8 +425,8 @@ static void sp_arc_finish(SPArcContext *ac)
 
         SP_OBJECT(ac->item)->updateRepr();
 
-        SP_DT_SELECTION(desktop)->set(ac->item);
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_desktop_selection(desktop)->set(ac->item);
+        sp_document_done(sp_desktop_document(desktop));
 
         ac->item = NULL;
     }

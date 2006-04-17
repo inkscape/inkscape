@@ -104,7 +104,7 @@ sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_menu_append(GTK_MENU(m), w);
     /* Select item */
     w = gtk_menu_item_new_with_mnemonic(_("_Select This"));
-    if (SP_DT_SELECTION(desktop)->includes(item)) {
+    if (sp_desktop_selection(desktop)->includes(item)) {
         gtk_widget_set_sensitive(w, FALSE);
     } else {
         gtk_object_set_data(GTK_OBJECT(w), "desktop", desktop);
@@ -131,7 +131,7 @@ sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
     desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
-    SP_DT_SELECTION(desktop)->set(item);
+    sp_desktop_selection(desktop)->set(item);
 
     sp_item_dialog();
 }
@@ -146,7 +146,7 @@ sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
     desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
-    SP_DT_SELECTION(desktop)->set(item);
+    sp_desktop_selection(desktop)->set(item);
 }
 
 static void
@@ -172,7 +172,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
 
     sp_object_attributes_dialog(object, "SPAnchor");
 
-    SP_DT_SELECTION(desktop)->set(SP_ITEM(object));
+    sp_desktop_selection(desktop)->set(SP_ITEM(object));
 }
 
 /* SPGroup */
@@ -207,7 +207,7 @@ sp_item_group_ungroup_activate(GtkMenuItem *menuitem, SPGroup *group)
     children = NULL;
     sp_item_group_ungroup(group, &children);
 
-    SP_DT_SELECTION(desktop)->setList(children);
+    sp_desktop_selection(desktop)->setList(children);
     g_slist_free(children);
 }
 
@@ -315,8 +315,8 @@ sp_shape_fill_settings(GtkMenuItem *menuitem, SPItem *item)
     desktop = (SPDesktop*)gtk_object_get_data(GTK_OBJECT(menuitem), "desktop");
     g_return_if_fail(desktop != NULL);
 
-    if (SP_DT_SELECTION(desktop)->isEmpty()) {
-        SP_DT_SELECTION(desktop)->set(item);
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        sp_desktop_selection(desktop)->set(item);
     }
 
     sp_object_properties_dialog();

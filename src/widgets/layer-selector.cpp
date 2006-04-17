@@ -292,7 +292,7 @@ void LayerSelector::_setDesktopLayer() {
         _layer_changed_connection.block();
         _desktop->setCurrentLayer(layer);
         _layer_changed_connection.unblock();
-        SP_DT_SELECTION(_desktop)->clear();
+        sp_desktop_selection(_desktop)->clear();
         _selectLayer(_desktop->currentLayer());
     }
 }
@@ -562,14 +562,14 @@ void LayerSelector::_prepareLabelRenderer(
 void LayerSelector::_lockLayer(bool lock) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setLocked(lock);
-        sp_document_maybe_done(SP_DT_DOCUMENT(_desktop), "LayerSelector:lock");
+        sp_document_maybe_done(sp_desktop_document(_desktop), "LayerSelector:lock");
     }
 }
 
 void LayerSelector::_hideLayer(bool hide) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setHidden(hide);
-        sp_document_maybe_done(SP_DT_DOCUMENT(_desktop), "LayerSelector:hide");
+        sp_document_maybe_done(sp_desktop_document(_desktop), "LayerSelector:hide");
     }
 }
 

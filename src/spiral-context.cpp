@@ -199,7 +199,7 @@ sp_spiral_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "revolution");
     sp_event_context_read(ec, "t0");
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(ec->desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
 
     SPItem *item = selection->singleItem();
     if (item) {
@@ -249,7 +249,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     static gboolean dragging;
 
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
     SPSpiralContext *sc = SP_SPIRAL_CONTEXT(event_context);
 
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
@@ -348,7 +348,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
                     break;
                 case GDK_Escape:
-                    SP_DT_SELECTION(desktop)->clear();
+                    sp_desktop_selection(desktop)->clear();
                     //TODO: make dragging escapable by Esc
                 default:
                     break;
@@ -451,8 +451,8 @@ sp_spiral_finish(SPSpiralContext *sc)
         sp_shape_set_shape(SP_SHAPE(spiral));
         SP_OBJECT(spiral)->updateRepr(NULL, SP_OBJECT_WRITE_EXT);
 
-        SP_DT_SELECTION(desktop)->set(sc->item);
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_desktop_selection(desktop)->set(sc->item);
+        sp_document_done(sp_desktop_document(desktop));
 
         sc->item = NULL;
     }

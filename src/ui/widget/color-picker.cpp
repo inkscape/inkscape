@@ -117,7 +117,7 @@ sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
     (ptr->_preview).setRgba32 (rgba);
 
     if (ptr->_undo && SP_ACTIVE_DESKTOP)
-        sp_document_done(SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP));
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
 
     ptr->on_changed (rgba);
     ptr->_changed_signal.emit (rgba);

@@ -100,7 +100,7 @@ static void
 sp_selection_layout_widget_modify_selection(SPWidget *spw, Inkscape::Selection *selection, guint flags, gpointer data)
 {
     SPDesktop *desktop = (SPDesktop *) data;
-    if ((SP_DT_SELECTION(desktop) == selection) // only respond to changes in our desktop
+    if ((sp_desktop_selection(desktop) == selection) // only respond to changes in our desktop
         && (flags & (SP_OBJECT_MODIFIED_FLAG        |
                      SP_OBJECT_PARENT_MODIFIED_FLAG |
                      SP_OBJECT_CHILD_MODIFIED_FLAG   )))
@@ -113,7 +113,7 @@ static void
 sp_selection_layout_widget_change_selection(SPWidget *spw, Inkscape::Selection *selection, gpointer data)
 {
     SPDesktop *desktop = (SPDesktop *) data;
-    if (SP_DT_SELECTION(desktop) == selection) // only respond to changes in our desktop
+    if (sp_desktop_selection(desktop) == selection) // only respond to changes in our desktop
         sp_selection_layout_widget_update(spw, selection);
 }
 
@@ -136,8 +136,8 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(TRUE));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
-    SPDocument *document = SP_DT_DOCUMENT(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPDocument *document = sp_desktop_document(desktop);
 
     sp_document_ensure_up_to_date (document);
     NR::Rect bbox = selection->bounds();
@@ -272,7 +272,7 @@ static gboolean aux_set_unit(SPUnitSelector *,
         return FALSE;
     }
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty())
         return FALSE;
@@ -410,7 +410,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     GtkWidget *spw = sp_widget_new_global(INKSCAPE);
 
     // Remember the desktop's canvas widget, to be used for defocusing.
-    gtk_object_set_data(GTK_OBJECT(spw), "dtw", SP_DT_CANVAS(desktop));
+    gtk_object_set_data(GTK_OBJECT(spw), "dtw", sp_desktop_canvas(desktop));
 
     // The vb frame holds all other widgets and is used to set sensitivity depending on selection state.
     GtkWidget *vb = gtk_hbox_new(FALSE, 0);
@@ -422,7 +422,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     GtkWidget *us = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
     sp_unit_selector_setsize(us, AUX_OPTION_MENU_WIDTH, AUX_OPTION_MENU_HEIGHT);
     sp_unit_selector_add_unit(SP_UNIT_SELECTOR(us), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
-    sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), SP_DT_NAMEDVIEW(desktop)->doc_units);
+    sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
     g_signal_connect(G_OBJECT(us), "set_unit", G_CALLBACK(aux_set_unit), spw);
 
     // four spinbuttons
@@ -476,7 +476,7 @@ sp_select_toolbox_new(SPDesktop *desktop)
     gtk_signal_connect(GTK_OBJECT(spw), "change_selection", GTK_SIGNAL_FUNC(sp_selection_layout_widget_change_selection), desktop);
 
     // Update now.
-    sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? SP_DT_SELECTION(SP_ACTIVE_DESKTOP) : NULL);
+    sp_selection_layout_widget_update(SP_WIDGET(spw), SP_ACTIVE_DESKTOP ? sp_desktop_selection(SP_ACTIVE_DESKTOP) : NULL);
 
     // Insert spw into the toolbar.
     gtk_box_pack_start(GTK_BOX(tb), spw, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);

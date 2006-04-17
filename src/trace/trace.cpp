@@ -55,11 +55,11 @@ Tracer::getSelectedSPImage()
         return NULL;
         }
 
-    Inkscape::Selection *sel = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *sel = sp_desktop_selection(desktop);
     if (!sel)
         {
         char *msg = _("Select an <b>image</b> to trace");
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         return NULL;
         }
@@ -94,7 +94,7 @@ Tracer::getSelectedSPImage()
                 if (img) //we want only one
                     {
                     char *msg = _("Select only one <b>image</b> to trace");
-                    SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+                    sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
                     return NULL;
                     }
                 img = SP_IMAGE(item);
@@ -112,7 +112,7 @@ Tracer::getSelectedSPImage()
         if (!img || sioxShapes.size() < 1)
             {
             char *msg = _("Select one image and one or more shapes above it");
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
             return NULL;
             }
         return img;
@@ -124,7 +124,7 @@ Tracer::getSelectedSPImage()
         if (!item)
             {
             char *msg = _("Select an <b>image</b> to trace");  //same as above
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
             //g_warning(msg);
             return NULL;
             }
@@ -132,7 +132,7 @@ Tracer::getSelectedSPImage()
         if (!SP_IS_IMAGE(item))
             {
             char *msg = _("Select an <b>image</b> to trace");
-            SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
             //g_warning(msg);
             return NULL;
             }
@@ -184,11 +184,11 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         return NULL;
         }
 
-    Inkscape::Selection *sel = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *sel = sp_desktop_selection(desktop);
     if (!sel)
         {
         char *msg = _("Select an <b>image</b> to trace");
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         return NULL;
         }
@@ -331,12 +331,12 @@ void Tracer::traceThread()
         return;
         }
 
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     if (!SP_ACTIVE_DOCUMENT)
         {
         char *msg = _("Trace: No active document");
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         engine = NULL;
         return;
@@ -357,7 +357,7 @@ void Tracer::traceThread()
     if (!pixbuf)
         {
         char *msg = _("Trace: Image has no bitmap data");
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         engine = NULL;
         return;
@@ -489,7 +489,7 @@ void Tracer::traceThread()
     engine = NULL;
 
     char *msg = g_strdup_printf(_("Trace: Done. %ld nodes created"), totalNodeCount);
-    SP_DT_MSGSTACK(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+    sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
     g_free(msg);
 
 }

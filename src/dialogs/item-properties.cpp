@@ -234,7 +234,7 @@ sp_item_widget_new (void)
 
     gtk_widget_show_all (spw);
 
-    sp_item_widget_setup (SP_WIDGET (spw), SP_DT_SELECTION (SP_ACTIVE_DESKTOP));
+    sp_item_widget_setup (SP_WIDGET (spw), sp_desktop_selection (SP_ACTIVE_DESKTOP));
 
     return (GtkWidget *) spw;
 
@@ -338,7 +338,7 @@ sp_item_widget_sensitivity_toggled (GtkWidget *widget, SPWidget *spw)
     if (gtk_object_get_data (GTK_OBJECT (spw), "blocked"))
         return;
 
-    SPItem *item = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
     g_return_if_fail (item != NULL);
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));
@@ -356,7 +356,7 @@ sp_item_widget_hidden_toggled(GtkWidget *widget, SPWidget *spw)
     if (gtk_object_get_data (GTK_OBJECT (spw), "blocked"))
         return;
 
-    SPItem *item = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
     g_return_if_fail (item != NULL);
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));
@@ -374,7 +374,7 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
     if (gtk_object_get_data (GTK_OBJECT (spw), "blocked"))
         return;
 
-    SPItem *item = SP_DT_SELECTION(SP_ACTIVE_DESKTOP)->singleItem();
+    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
     g_return_if_fail (item != NULL);
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));

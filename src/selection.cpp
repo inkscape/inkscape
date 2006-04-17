@@ -476,7 +476,7 @@ SPObject *Selection::_objectForXMLNode(Inkscape::XML::Node *repr) const {
     g_return_val_if_fail(repr != NULL, NULL);
     gchar const *id = repr->attribute("id");
     g_return_val_if_fail(id != NULL, NULL);
-    SPObject *object=SP_DT_DOCUMENT(_desktop)->getObjectById(id);
+    SPObject *object=sp_desktop_document(_desktop)->getObjectById(id);
     g_return_val_if_fail(object != NULL, NULL);
     return object;
 }

@@ -92,7 +92,7 @@ sp_selected_path_boolop(bool_op bop)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     GSList *il = (GSList *) selection->itemList();
 
@@ -395,7 +395,7 @@ sp_selected_path_boolop(bool_op bop)
         {
             SP_OBJECT(l->data)->deleteObject();
         }
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
         selection->clear();
 
         delete res;
@@ -440,7 +440,7 @@ sp_selected_path_boolop(bool_op bop)
     g_slist_free(il);
 
     // premultiply by the inverse of parent's repr
-    SPItem *parent_item = SP_ITEM(SP_DT_DOCUMENT(desktop)->getObjectByRepr(parent));
+    SPItem *parent_item = SP_ITEM(sp_desktop_document(desktop)->getObjectByRepr(parent));
     NR::Matrix local = sp_item_i2doc_affine(parent_item);
     gchar affinestr[80];
     gchar *transform = NULL;
@@ -530,7 +530,7 @@ sp_selected_path_boolop(bool_op bop)
         Inkscape::GC::release(repr);
     }
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
 
     delete res;
 }
@@ -541,7 +541,7 @@ sp_selected_path_outline()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
         // TRANSLATORS: "to outline" means "to convert stroke to path"
@@ -721,7 +721,7 @@ sp_selected_path_outline()
 
             repr->setAttribute("id", id);
 
-            SPItem *newitem = (SPItem *) SP_DT_DOCUMENT(desktop)->getObjectByRepr(repr);
+            SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
             sp_item_write_transform(newitem, repr, transform);
 
             selection->add(repr);
@@ -736,7 +736,7 @@ sp_selected_path_outline()
     }
 
     if (did) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     } else {
         // TRANSLATORS: "to outline" means "to convert stroke to path"
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No stroked paths</b> to outline in the selection."));
@@ -818,7 +818,7 @@ sp_selected_path_create_offset_object(int expand, bool updating)
 
     desktop = SP_ACTIVE_DESKTOP;
 
-    selection = SP_DT_SELECTION(desktop);
+    selection = sp_desktop_selection(desktop);
 
     item = selection->singleItem();
 
@@ -940,7 +940,7 @@ sp_selected_path_create_offset_object(int expand, bool updating)
     {
         // pas vraiment de points sur le resultat
         // donc il ne reste rien
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
         selection->clear();
 
         delete res;
@@ -983,7 +983,7 @@ sp_selected_path_create_offset_object(int expand, bool updating)
         // move to the saved position
         repr->setPosition(pos > 0 ? pos : 0);
 
-        SPItem *nitem = (SPItem *) SP_DT_DOCUMENT(desktop)->getObjectByRepr(repr);
+        SPItem *nitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
 
         if ( updating ) {
             // on conserve l'original
@@ -1004,7 +1004,7 @@ sp_selected_path_create_offset_object(int expand, bool updating)
         selection->set(nitem);
     }
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
 
     delete res;
     delete orig;
@@ -1028,7 +1028,7 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>path(s)</b> to inset/outset."));
@@ -1229,7 +1229,7 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
             // move to the saved position
             repr->setPosition(pos > 0 ? pos : 0);
 
-            SPItem *newitem = (SPItem *) SP_DT_DOCUMENT(desktop)->getObjectByRepr(repr);
+            SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
 
             // reapply the transform
             sp_item_write_transform(newitem, repr, transform);
@@ -1246,7 +1246,7 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
     }
 
     if (did) {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     } else {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to inset/outset in the selection."));
         return;
@@ -1353,7 +1353,7 @@ sp_selected_path_simplify_item(SPDesktop *desktop, Inkscape::Selection *selectio
     // move to the saved position
     repr->setPosition(pos > 0 ? pos : 0);
 
-    SPItem *newitem = (SPItem *) SP_DT_DOCUMENT(desktop)->getObjectByRepr(repr);
+    SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
 
     // reapply the transform
     sp_item_write_transform(newitem, repr, transform);
@@ -1377,7 +1377,7 @@ sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE,
@@ -1406,7 +1406,7 @@ sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
 
 
     if (didSomething)
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     else
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to simplify in the selection."));
 

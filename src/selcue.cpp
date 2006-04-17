@@ -27,7 +27,7 @@
 Inkscape::SelCue::SelCue(SPDesktop *desktop)
     : _desktop(desktop)
 {
-    _selection = SP_DT_SELECTION(_desktop);
+    _selection = sp_desktop_selection(_desktop);
 
     _sel_changed_connection = _selection->connectChanged(
         sigc::hide(sigc::mem_fun(*this, &Inkscape::SelCue::_updateItemBboxes))
@@ -83,7 +83,7 @@ void Inkscape::SelCue::_updateItemBboxes()
         SPCanvasItem* box = NULL;
 
         if (mode == MARK) {
-            box = sp_canvas_item_new(SP_DT_CONTROLS(_desktop),
+            box = sp_canvas_item_new(sp_desktop_controls(_desktop),
                                       SP_TYPE_CTRL,
                                       "mode", SP_CTRL_MODE_XOR,
                                       "shape", SP_CTRL_SHAPE_DIAMOND,
@@ -100,7 +100,7 @@ void Inkscape::SelCue::_updateItemBboxes()
 
         } else if (mode == BBOX) {
             box = sp_canvas_item_new(
-                SP_DT_CONTROLS(_desktop),
+                sp_desktop_controls(_desktop),
                 SP_TYPE_CTRLRECT,
                 NULL
                 );
@@ -121,7 +121,7 @@ void Inkscape::SelCue::_updateItemBboxes()
             Inkscape::Text::Layout const *layout = te_get_layout(item);
             if (layout != NULL) {
                 NR::Point a = layout->characterAnchorPoint(layout->begin()) * sp_item_i2d_affine(item);
-                baseline_point = sp_canvas_item_new(SP_DT_CONTROLS(_desktop), SP_TYPE_CTRL,
+                baseline_point = sp_canvas_item_new(sp_desktop_controls(_desktop), SP_TYPE_CTRL,
                                                     "mode", SP_CTRL_MODE_XOR,
                                                     "size", 4.0,
                                                     "filled", 0,

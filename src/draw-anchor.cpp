@@ -34,7 +34,7 @@ sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start, NR::Point 
     a->start = start;
     a->active = FALSE;
     a->dp = delta;
-    a->ctrl = sp_canvas_item_new(SP_DT_CONTROLS(dt), SP_TYPE_CTRL,
+    a->ctrl = sp_canvas_item_new(sp_desktop_controls(dt), SP_TYPE_CTRL,
                                  "size", 6.0,
                                  "filled", 0,
                                  "fill_color", 0xff00007f,

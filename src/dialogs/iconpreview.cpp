@@ -218,7 +218,7 @@ void IconPreviewPanel::refreshPreview()
 
         if ( selectionButton && selectionButton->get_active() )
         {
-            Inkscape::Selection * sel = SP_DT_SELECTION(desktop);
+            Inkscape::Selection * sel = sp_desktop_selection(desktop);
             if ( sel ) {
                 //g_message("found a selection to play with");
 

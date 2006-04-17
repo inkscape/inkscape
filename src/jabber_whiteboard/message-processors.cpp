@@ -142,7 +142,7 @@ public:
 					this->_sm->userConnectedToWhiteboard(m.sender.c_str());
 					this->_sm->setRecipient(m.sender.c_str());
 				} else {
-					SP_DT_MSGSTACK(this->_sm->desktop())->flashF(Inkscape::INFORMATION_MESSAGE, _("<b>%s</b> has joined the chatroom."), m.sender.c_str());
+					sp_desktop_message_stack(this->_sm->desktop())->flashF(Inkscape::INFORMATION_MESSAGE, _("<b>%s</b> has joined the chatroom."), m.sender.c_str());
 				}
 				break;
 			default:

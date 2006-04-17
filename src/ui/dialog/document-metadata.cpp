@@ -103,7 +103,7 @@ DocumentMetadata::init()
 {
     update();
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     repr->addListener (&_repr_events, this);
 
     _doc_replaced_connection = SP_ACTIVE_DESKTOP->connectDocumentReplaced (sigc::ptr_fun (on_doc_replaced));
@@ -120,7 +120,7 @@ DocumentMetadata::init()
 
 DocumentMetadata::~DocumentMetadata() 
 {
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     repr->removeListenerByData (this);
     _doc_replaced_connection.disconnect();
 
@@ -261,7 +261,7 @@ on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
     if (!_instance)
         return;
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     repr->addListener (&_repr_events, _instance);
     _instance->_doc_replaced_connection = SP_ACTIVE_DESKTOP->connectDocumentReplaced (sigc::ptr_fun (on_doc_replaced));
     _instance->update();
@@ -273,7 +273,7 @@ on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*)
     if (!_instance)
         return;
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(SP_ACTIVE_DESKTOP));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(SP_ACTIVE_DESKTOP));
     repr->removeListenerByData (_instance);
     _instance->_doc_replaced_connection.disconnect();
 }
@@ -284,7 +284,7 @@ on_doc_replaced (SPDesktop* dt, SPDocument* doc)
     if (!_instance)
         return;
 
-    Inkscape::XML::Node *repr = SP_OBJECT_REPR(SP_DT_NAMEDVIEW(dt));
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
     repr->addListener (&_repr_events, _instance);
     _instance->update();
 }

@@ -85,29 +85,29 @@ text_put_on_path()
     if (!desktop)
         return;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     SPItem *text = text_or_flowtext_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) != 2) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text and a path</b> to put text on path."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text and a path</b> to put text on path."));
         return;
     }
 
     if (SP_IS_TEXT_TEXTPATH(text)) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("This text object is <b>already put on a path</b>. Remove it from the path first. Use <b>Shift+D</b> to look up its path."));
         return;
     }
 
     if (SP_IS_FLOWTEXT(text)) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put flowtext on a path. Convert flowtext to text first."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put flowtext on a path. Convert flowtext to text first."));
         return;
     }
 
     if (SP_IS_RECT(shape)) {
         // rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put text on a rectangle in this version. Convert rectangle to path first."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("You cannot put text on a rectangle in this version. Convert rectangle to path first."));
         return;
     }
 
@@ -153,7 +153,7 @@ text_put_on_path()
     SP_OBJECT_REPR(text)->setAttribute("x", NULL);
     SP_OBJECT_REPR(text)->setAttribute("y", NULL);
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
     g_slist_free(text_reprs);
 }
 
@@ -162,10 +162,10 @@ text_remove_from_path()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text on path</b> to remove it from path."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text on path</b> to remove it from path."));
         return;
     }
 
@@ -187,10 +187,10 @@ text_remove_from_path()
     }
 
     if (!did) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No texts-on-paths</b> in the selection."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No texts-on-paths</b> in the selection."));
     } else {
         selection->setList(g_slist_copy((GSList *) selection->itemList())); // reselect to update statusbar description
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     }
 }
 
@@ -212,10 +212,10 @@ text_remove_all_kerns()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     if (selection->isEmpty()) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
         return;
     }
 
@@ -235,9 +235,9 @@ text_remove_all_kerns()
     }
 
     if (!did) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
     } else {
-        sp_document_done(SP_DT_DOCUMENT(desktop));
+        sp_document_done(sp_desktop_document(desktop));
     }
 }
 
@@ -248,15 +248,15 @@ text_flow_into_shape()
     if (!desktop)
         return;
 
-    SPDocument *doc = SP_DT_DOCUMENT (desktop);
+    SPDocument *doc = sp_desktop_document (desktop);
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     SPItem *text = text_in_selection(selection);
     SPItem *shape = shape_in_selection(selection);
 
     if (!text || !shape || g_slist_length((GSList *) selection->itemList()) < 2) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text into frame."));
         return;
     }
 
@@ -307,7 +307,7 @@ text_flow_into_shape()
 
     sp_document_done(doc);
 
-    SP_DT_SELECTION(desktop)->set(SP_ITEM(root_object));
+    sp_desktop_selection(desktop)->set(SP_ITEM(root_object));
 
     Inkscape::GC::release(root_repr);
     Inkscape::GC::release(region_repr);
@@ -322,13 +322,13 @@ text_unflow ()
     if (!desktop)
         return;
 
-    SPDocument *doc = SP_DT_DOCUMENT (desktop);
+    SPDocument *doc = sp_desktop_document (desktop);
 
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
 
     if (!flowtext_in_selection(selection) || g_slist_length((GSList *) selection->itemList()) < 1) {
-        SP_DT_MSGSTACK(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a flowed text</b> to unflow it."));
+        sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>a flowed text</b> to unflow it."));
         return;
     }
 

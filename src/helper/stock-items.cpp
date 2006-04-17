@@ -179,7 +179,7 @@ SPObject *get_stock_item(gchar const *urn)
         gchar * base = g_strndup(e, a);
 
         SPDesktop *desktop = inkscape_active_desktop();
-        SPDocument *doc = SP_DT_DOCUMENT(desktop);
+        SPDocument *doc = sp_desktop_document(desktop);
         SPDefs *defs= (SPDefs *) SP_DOCUMENT_DEFS(doc);
 
         SPObject *object = NULL;
@@ -248,7 +248,7 @@ SPObject *get_stock_item(gchar const *urn)
     else {
         
         SPDesktop *desktop = inkscape_active_desktop();
-        SPDocument *doc = SP_DT_DOCUMENT(desktop);
+        SPDocument *doc = sp_desktop_document(desktop);
         SPObject *object = doc->getObjectById(urn);
 
         return object;

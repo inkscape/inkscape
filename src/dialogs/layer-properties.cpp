@@ -113,7 +113,7 @@ LayerPropertiesDialog::_apply()
     g_assert(_strategy != NULL);
 
     _strategy->perform(*this);
-    sp_document_done(SP_DT_DOCUMENT(SP_ACTIVE_DESKTOP));
+    sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
 
     _close();
 }
@@ -191,7 +191,7 @@ void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
     desktop->currentLayer()->setLabel(
         ( name.empty() ? NULL : (gchar *)name.c_str() )
     );
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
     // TRANSLATORS: This means "The layer has been renamed"
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Renamed layer"));
 }
@@ -215,7 +215,7 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     if (!name.empty()) {
         new_layer->setLabel((gchar *)name.c_str());
     }
-    SP_DT_SELECTION(desktop)->clear();
+    sp_desktop_selection(desktop)->clear();
     desktop->setCurrentLayer(new_layer);
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("New layer created."));
 }

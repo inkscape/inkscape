@@ -437,7 +437,7 @@ void
 Transformation::onSwitchPage(GtkNotebookPage *page,
                                    guint pagenum)
 {
-    updateSelection((PageType)pagenum, SP_DT_SELECTION(SP_ACTIVE_DESKTOP));
+    updateSelection((PageType)pagenum, sp_desktop_selection(SP_ACTIVE_DESKTOP));
 }
 
 void
@@ -581,7 +581,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
             x - bbox.min()[NR::X], y - bbox.min()[NR::Y]);
     }
 
-    sp_document_done ( SP_DT_DOCUMENT (selection->desktop()) );
+    sp_document_done ( sp_desktop_document (selection->desktop()) );
 }
 
 void
@@ -632,7 +632,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         sp_selection_scale_relative(selection, center, scale);
     }
 
-    sp_document_done(SP_DT_DOCUMENT(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()));
 }
 
 void
@@ -650,7 +650,7 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
         sp_selection_rotate_relative(selection, center, angle);
     }
 
-    sp_document_done(SP_DT_DOCUMENT(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()));
 }
 
 void
@@ -702,7 +702,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(SP_DT_DOCUMENT(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()));
 }
 
 
@@ -727,7 +727,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
-    sp_document_done(SP_DT_DOCUMENT(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()));
 }
 
 

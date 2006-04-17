@@ -150,7 +150,7 @@ sp_draw_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) draw_parent_class)->setup(ec);
     }
 
-    dc->selection = SP_DT_SELECTION(dt);
+    dc->selection = sp_desktop_selection(dt);
 
     /* Connect signals to track selection changes */
     dc->sel_changed_connection = dc->selection->connectChanged(
@@ -161,13 +161,13 @@ sp_draw_context_setup(SPEventContext *ec)
     );
 
     /* Create red bpath */
-    dc->red_bpath = sp_canvas_bpath_new(SP_DT_SKETCH(ec->desktop), NULL);
+    dc->red_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->red_bpath), dc->red_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* Create red curve */
     dc->red_curve = sp_curve_new_sized(4);
 
     /* Create blue bpath */
-    dc->blue_bpath = sp_canvas_bpath_new(SP_DT_SKETCH(ec->desktop), NULL);
+    dc->blue_bpath = sp_canvas_bpath_new(sp_desktop_sketch(ec->desktop), NULL);
     sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->blue_bpath), dc->blue_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
     /* Create blue curve */
     dc->blue_curve = sp_curve_new_sized(8);
@@ -218,7 +218,7 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
                 case GDK_Escape:
-                    SP_DT_SELECTION(desktop)->clear();
+                    sp_desktop_selection(desktop)->clear();
                     ret = TRUE;
                     break;
                 case GDK_Tab: // Tab - cycle selection forward
@@ -529,7 +529,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
                             : sp_desktop_dt2root_affine(SP_EVENT_CONTEXT_DESKTOP(dc)) ));
 
     SPDesktop *desktop = SP_EVENT_CONTEXT_DESKTOP(dc);
-    SPDocument *doc = SP_DT_DOCUMENT(desktop);
+    SPDocument *doc = sp_desktop_document(desktop);
 
     if ( c && !sp_curve_empty(c) ) {
         /* We actually have something to write */

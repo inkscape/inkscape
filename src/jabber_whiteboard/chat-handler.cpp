@@ -154,7 +154,7 @@ ChatMessageHandler::parse(LmMessage* message)
 					// Delete the message queue used by this sender
 					this->_sm->session_data->receive_queues.erase(sender.raw());
 
-					SP_DT_MSGSTACK(this->_sm->desktop())->flashF(Inkscape::INFORMATION_MESSAGE, _("<b>%s</b> has left the chatroom."), sender.c_str());
+					sp_desktop_message_stack(this->_sm->desktop())->flashF(Inkscape::INFORMATION_MESSAGE, _("<b>%s</b> has left the chatroom."), sender.c_str());
 				}
 
 				default:

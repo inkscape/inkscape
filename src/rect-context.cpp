@@ -193,7 +193,7 @@ static void sp_rect_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
 
-    SPItem *item = SP_DT_SELECTION(ec->desktop)->singleItem();
+    SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
     if (item) {
         ec->shape_knot_holder = sp_item_knot_holder(item, ec->desktop);
         Inkscape::XML::Node *shape_repr = SP_OBJECT_REPR(item);
@@ -205,7 +205,7 @@ static void sp_rect_context_setup(SPEventContext *ec)
     }
 
     rc->sel_changed_connection.disconnect();
-    rc->sel_changed_connection = SP_DT_SELECTION(ec->desktop)->connectChanged(
+    rc->sel_changed_connection = sp_desktop_selection(ec->desktop)->connectChanged(
         sigc::bind(sigc::ptr_fun(&sp_rect_context_selection_changed), (gpointer)rc)
     );
 
@@ -270,7 +270,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     static bool dragging;
 
     SPDesktop *desktop = event_context->desktop;
-    Inkscape::Selection *selection = SP_DT_SELECTION (desktop);
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     SPRectContext *rc = SP_RECT_CONTEXT(event_context);
 
@@ -391,7 +391,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             break;
 
         case GDK_Escape:
-            SP_DT_SELECTION(desktop)->clear();
+            sp_desktop_selection(desktop)->clear();
             //TODO: make dragging escapable by Esc
         default:
             break;
@@ -480,8 +480,8 @@ static void sp_rect_finish(SPRectContext *rc)
 
         SP_OBJECT(rc->item)->updateRepr();
 
-        SP_DT_SELECTION(dt)->set(rc->item);
-        sp_document_done(SP_DT_DOCUMENT(dt));
+        sp_desktop_selection(dt)->set(rc->item);
+        sp_document_done(sp_desktop_document(dt));
 
         rc->item = NULL;
     }

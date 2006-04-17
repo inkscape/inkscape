@@ -502,7 +502,7 @@ void SPFlowtext::_clearFlow(NRArenaGroup *in_arena)
 void SPFlowtext::convert_to_text()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    Inkscape::Selection *selection = SP_DT_SELECTION(desktop);
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPItem *item = selection->singleItem();
     if (!SP_IS_FLOWTEXT(item)) return;
 
@@ -601,7 +601,7 @@ void SPFlowtext::convert_to_text()
 
     Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
     parent->appendChild(repr);
-    SPItem *new_item = (SPItem *) SP_DT_DOCUMENT(desktop)->getObjectByRepr(repr);
+    SPItem *new_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
     sp_item_write_transform(new_item, repr, item->transform);
     SP_OBJECT(new_item)->updateRepr();
 
@@ -609,7 +609,7 @@ void SPFlowtext::convert_to_text()
     selection->set(new_item);
     item->deleteObject();
 
-    sp_document_done(SP_DT_DOCUMENT(desktop));
+    sp_document_done(sp_desktop_document(desktop));
 }
 
 SPItem *SPFlowtext::get_frame(SPItem *after)
@@ -660,7 +660,7 @@ bool SPFlowtext::has_internal_frame()
 
 SPItem *create_flowtext_with_internal_frame (SPDesktop *desktop, NR::Point p0, NR::Point p1)
 {
-    SPDocument *doc = SP_DT_DOCUMENT (desktop);
+    SPDocument *doc = sp_desktop_document (desktop);
 
     Inkscape::XML::Node *root_repr = sp_repr_new("svg:flowRoot");
     root_repr->setAttribute("xml:space", "preserve"); // we preserve spaces in the text objects we create

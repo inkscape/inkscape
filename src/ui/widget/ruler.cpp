@@ -150,7 +150,7 @@ Ruler::on_button_release_event(GdkEventButton *evb)
             sp_repr_set_svg_double(repr, "position", guide_pos_dt);
             SP_OBJECT_REPR(_dt->namedview)->appendChild(repr);
             Inkscape::GC::release(repr);
-            sp_document_done(SP_DT_DOCUMENT(_dt));
+            sp_document_done(sp_desktop_document(_dt));
         }
         _dt->set_coordinate_status(event_dt);
     }
