@@ -12,7 +12,7 @@ decide to use this keymap (generally, Inkscape has considerably more keyboard sh
 than Xara). Conversely, some of the Xara keys are not included because Inkscape does not
 yet have the corresponding actions or they are not yet configurable through verbs.
 
-To enable this keumap, copy this file over to default.xml.
+To enable this keymap, copy this file over to default.xml.
 -->
 
 <!-- 
@@ -82,7 +82,6 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="s" modifiers="Ctrl" action="FileSave" display="true"/>
   <bind key="S" modifiers="Ctrl" action="FileSave" />
 
-  <bind action="FileSaveAs" display="true"/>
   <bind action="FileSaveAs" />
 
   <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
@@ -224,7 +223,6 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="6" action="ZoomPageWidth" display="true"/>
 
   <bind action="ZoomPageWidth" />
-  <bind action="ZoomPageWidth" />
 
   <bind key="grave" modifiers="Shift" action="ZoomNext" display="true"/> <!-- ` -->
   <bind key="asciitilde" modifiers="Shift" action="ZoomNext" /> <!-- ~ -->
@@ -246,7 +244,6 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="L" modifiers="Ctrl" action="ToggleRulers" display="true"/>
   <bind key="l" modifiers="Ctrl" action="ToggleRulers" />
 
-  <bind action="ToggleScrollbars" display="true"/>
   <bind action="ToggleScrollbars" />
 
   <bind key="bar" modifiers="Shift" action="ToggleGuides" /> <!-- | -->
@@ -401,7 +398,7 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="c" modifiers="Ctrl,Alt" action="StrokeToPath" display="true"/>
   <bind key="C" modifiers="Ctrl,Alt" action="StrokeToPath" />
 
-  <bind action="SelectionCombine" display="true"/>
+  <bind action="SelectionCombine" />
 
   <bind key="k" modifiers="Ctrl,Shift" action="SelectionBreakApart" display="true"/>
   <bind key="K" modifiers="Ctrl,Shift" action="SelectionBreakApart" />
@@ -457,7 +454,7 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="j" modifiers="Ctrl,Alt" action="SelectionLinkedOffset" display="true"/>
   <bind key="J" modifiers="Ctrl,Alt" action="SelectionLinkedOffset" />
 
-  <bind action="SelectionSimplify" display="true"/>
+  <bind action="SelectionSimplify" />
 
   <bind action="SelectionReverse" />
 
@@ -525,13 +522,12 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="E" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
   <bind key="e" modifiers="Ctrl" action="DialogFillStroke"/>
 
-  <bind action="DialogFind" display="true"/>
   <bind action="DialogFind" />
 
   <bind key="m" modifiers="Ctrl,Shift" action="DialogTransform" display="true"/>
   <bind key="M" modifiers="Ctrl,Shift" action="DialogTransform" />
 
-  <bind action="DialogObjectProperties" display="true"/>
+  <bind action="DialogObjectProperties" />
 
   <bind key="F9" action="DialogSwatches" display="true"/>
   <bind key="w" modifiers="Ctrl,Shift" action="DialogSwatches"/>
