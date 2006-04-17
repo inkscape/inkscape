@@ -221,7 +221,7 @@ sp_selected_path_boolop(bool_op bop)
     if ( bop == bool_op_inters || bop == bool_op_union || bop == bool_op_diff || bop == bool_op_symdiff ) {
         // true boolean op
         // get the polygons of each path, with the winding rule specified, and apply the operation iteratively
-        originaux[0]->ConvertWithBackData(0.03);
+        originaux[0]->ConvertWithBackData(0.1);
 
         originaux[0]->Fill(theShape, 0);
 
@@ -229,7 +229,7 @@ sp_selected_path_boolop(bool_op bop)
 
         curOrig = 1;
         for (GSList *l = il->next; l != NULL; l = l->next) {
-            originaux[curOrig]->ConvertWithBackData(0.03);
+            originaux[curOrig]->ConvertWithBackData(0.1);
 
             originaux[curOrig]->Fill(theShape, curOrig);
 
