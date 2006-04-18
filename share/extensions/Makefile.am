@@ -49,6 +49,7 @@ extensions = \
 	fig2svg.sh \
     cspsubdiv.py \
     flatten.py \
+    measure.py \
     gimp_xcf.py
 
 otherstuff =
@@ -93,6 +94,7 @@ modules = \
 	dxf_outlines.inx \
     fig_input.inx \
     flatten.inx \
+    measure.inx \
     gimp_xcf.inx
 
 extension_SCRIPTS = \
