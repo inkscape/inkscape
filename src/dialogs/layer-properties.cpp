@@ -34,7 +34,7 @@ namespace UI {
 namespace Dialogs {
 
 LayerPropertiesDialog::LayerPropertiesDialog()
-: _strategy(NULL), _desktop(NULL), _layer(NULL)
+: _strategy(NULL), _desktop(NULL), _layer(NULL), _position_visible(false)
 {
     GtkWidget *dlg = GTK_WIDGET(gobj());
     g_assert(dlg);
@@ -137,8 +137,9 @@ LayerPropertiesDialog::_setup_position_controls() {
     if ( NULL == _layer || _desktop->currentRoot() == _layer ) {
         // no layers yet, so option above/below/sublayer is useless
         return;
-        }
-        
+    }
+
+    _position_visible = true;
     _dropdown_list = Gtk::ListStore::create(_dropdown_columns);
     _layer_position_combo.set_model(_dropdown_list);
     _layer_position_combo.pack_start(_label_renderer);
@@ -206,8 +207,12 @@ void LayerPropertiesDialog::Create::setup(LayerPropertiesDialog &dialog) {
 void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
 
-    Gtk::ListStore::iterator activeRow(dialog._layer_position_combo.get_active());
-    LayerRelativePosition position = activeRow->get_value(dialog._dropdown_columns.position);
+    LayerRelativePosition position = LPOS_ABOVE;
+    
+    if (dialog._position_visible) {
+        Gtk::ListStore::iterator activeRow(dialog._layer_position_combo.get_active());
+        position = activeRow->get_value(dialog._dropdown_columns.position);
+    }
 
     SPObject *new_layer=Inkscape::create_layer(desktop->currentRoot(), dialog._layer, position);
     

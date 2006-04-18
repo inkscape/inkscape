@@ -83,6 +83,7 @@ protected:
     Gtk::Label        _layer_position_label;
     Gtk::ComboBox     _layer_position_combo;
     Gtk::Table        _layout_table;
+    bool              _position_visible;
 
     PositionDropdownColumns _dropdown_columns;
     Gtk::CellRendererText _label_renderer;
