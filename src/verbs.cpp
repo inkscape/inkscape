@@ -586,6 +586,7 @@ Verb::get_action(Inkscape::UI::View::View *view)
         action = this->make_action(view);
 
         // if (action == NULL) printf("Hmm, NULL in %s\n", _name);
+        if (action == NULL) printf("Hmm, NULL in %s\n", _name);
         if (!_default_sensitive) {
             sp_action_set_sensitive(action, 0);
         } else {
@@ -1771,14 +1772,14 @@ SPActionEventVector DialogVerb::vector =
 SPActionEventVector HelpVerb::vector =
             {{NULL},HelpVerb::perform, NULL, NULL, NULL};
 
-
-/* *********** Effect Last ********** */
 /**
  * Action vector to define functions called if a staticly defined tutorial verb
  * is called
  */
 SPActionEventVector TutorialVerb::vector =
             {{NULL},TutorialVerb::perform, NULL, NULL, NULL};
+
+/* *********** Effect Last ********** */
 
 /** \brief A class to represent the last effect issued */
 class EffectLastVerb : public Verb {
@@ -1846,6 +1847,79 @@ EffectLastVerb::perform(SPAction *action, void *data, void *pdata)
     return;
 }
 /* *********** End Effect Last ********** */
+
+/* *********** Fit Canvas ********** */
+
+/** \brief A class to represent the canvas fitting verbs */
+class FitCanvasVerb : public Verb {
+private:
+    static void perform(SPAction *action, void *mydata, void *otherdata);
+    static SPActionEventVector vector;
+protected:
+    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+public:
+    /** \brief Use the Verb initializer with the same parameters. */
+    FitCanvasVerb(unsigned int const code,
+                   gchar const *id,
+                   gchar const *name,
+                   gchar const *tip,
+                   gchar const *image) :
+        Verb(code, id, name, tip, image)
+    {
+        set_default_sensitive(false);
+    }
+}; /* FitCanvasVerb class */
+
+/**
+ * The vector to attach in the fit canvas verb.
+ */
+SPActionEventVector FitCanvasVerb::vector =
+            {{NULL},FitCanvasVerb::perform, NULL, NULL, NULL};
+
+/** \brief  Create an action for a \c FitCanvasVerb
+    \param  view  Which view the action should be created for
+    \return The built action.
+
+    Calls \c make_action_helper with the \c vector.
+*/
+SPAction *
+FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
+{
+    SPAction *action = make_action_helper(view, &vector);
+    return action;
+}
+
+/** \brief  Decode the verb code and take appropriate action */
+void
+FitCanvasVerb::perform(SPAction *action, void *data, void *pdata)
+{
+    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    if (!dt) return;
+    SPDocument *doc = sp_desktop_document(dt);
+    if (!doc) return;
+    
+    switch ((long) data) {
+        case SP_VERB_FIT_CANVAS_TO_SELECTION:
+            fit_canvas_to_selection(dt);
+            break;
+        case SP_VERB_FIT_CANVAS_TO_DRAWING:
+            fit_canvas_to_drawing(doc);
+            break;
+        case SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING:
+            fit_canvas_to_selection_or_drawing(dt);
+            break;
+        default:
+            return;
+    }
+
+    return;
+}
+/* *********** End Fit Canvas ********** */
+
+
+
+
+
 
 /* these must be in the same order as the SP_VERB_* enum in "verbs.h" */
 Verb *Verb::_base_verbs[] = {
@@ -2246,6 +2320,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Memory usage information"), NULL),
     new HelpVerb(SP_VERB_HELP_ABOUT, "HelpAbout", N_("_About Inkscape"),
                  N_("Inkscape version, authors, license"), /*"help_about"*/"inkscape_options"),
+    //new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
+    //           N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 
     /* Tutorials */
     new TutorialVerb(SP_VERB_TUTORIAL_BASIC, "TutorialsBasic", N_("Inkscape: _Basic"),
@@ -2270,6 +2346,14 @@ Verb *Verb::_base_verbs[] = {
     new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("Previous Effect Settings..."),
                        N_("Repeat the last effect with new settings"), NULL/*"tutorial_tips"*/),
 
+    /* Fit Canvas */
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION, "FitCanvasToSelection", N_("Fit Canvas to Selection"),
+                       N_("Fit the canvas to the current selection"), NULL),
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_DRAWING, "FitCanvasToDrawing", N_("Fit Canvas to Drawing"),
+                       N_("Fit the canvas to the drawing"), NULL),
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Canvas to Selection or Drawing"),
+                       N_("Fit the canvas to the current selection or the drawing if there is no selection"), NULL),
+    
     /* Footer */
     new Verb(SP_VERB_LAST, NULL, NULL, NULL, NULL)
 };

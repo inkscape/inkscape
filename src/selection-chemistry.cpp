@@ -65,6 +65,8 @@
 #include "layer-fns.h"
 #include "context-fns.h"
 #include <map>
+#include "helper/units.h"
+#include "sp-item.h"
 using NR::X;
 using NR::Y;
 
@@ -2541,6 +2543,49 @@ void sp_selection_unset_mask(bool apply_clip_path) {
 
     sp_document_done (document);
 }
+
+void fit_canvas_to_selection(SPDesktop *desktop) {
+    g_return_if_fail(desktop != NULL);
+    SPDocument *doc = sp_desktop_document(desktop);
+
+    g_return_if_fail(doc != NULL);
+    g_return_if_fail(desktop->selection != NULL);
+    g_return_if_fail(!desktop->selection->isEmpty());
+    NRRect bbox = {0,0,0,0};
+
+    desktop->selection->bounds(&bbox);
+    g_return_if_fail(!empty(bbox));
+
+    doc->fitToRect(bbox);
+};
+
+void fit_canvas_to_drawing(SPDocument *doc) {
+    g_return_if_fail(doc != NULL);
+    NRRect bbox = {0,0,0,0};
+
+    sp_document_ensure_up_to_date (doc);
+    sp_item_invoke_bbox(SP_ITEM(doc->root), &bbox, sp_item_i2r_affine(SP_ITEM(doc->root)), TRUE);
+
+    g_return_if_fail(!empty(bbox));
+
+    doc->fitToRect(bbox);
+};
+
+void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
+    g_return_if_fail(desktop != NULL);
+    SPDocument *doc = sp_desktop_document(desktop);
+
+    g_return_if_fail(doc != NULL);
+    g_return_if_fail(desktop->selection != NULL);
+
+    if (desktop->selection->isEmpty()) {
+        fit_canvas_to_drawing(doc);
+    } else {
+        fit_canvas_to_selection(desktop);
+    }
+
+    sp_document_done(doc);
+};
 
 /*
   Local Variables:

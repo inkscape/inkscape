@@ -51,6 +51,8 @@
 #include "unit-constants.h"
 #include "prefs-utils.h"
 #include "libavoid/router.h"
+#include "libnr/nr-rect.h"
+#include "sp-item-transform.h"
 
 #include "display/nr-arena-item.h"
 
@@ -478,6 +480,26 @@ gdouble sp_document_height(SPDocument *document)
     g_return_val_if_fail(document->root != NULL, 0.0);
 
     return SP_ROOT(document->root)->height.computed;
+}
+
+/**
+ * Given an NRRect that may, for example, correspond to the bbox of an object
+ * this function fits the canvas to that rect by resizing the canvas
+ * and translating the document root into position.
+ */
+void SPDocument::fitToRect(NRRect const & rect)
+{
+    g_return_if_fail(!empty(rect));
+    
+    gdouble w = rect.x1 - rect.x0;
+    gdouble h = rect.y1 - rect.y0;
+    gdouble old_height = sp_document_height(this);
+    SPUnit unit = sp_unit_get_by_id(SP_UNIT_PX);
+    sp_document_set_width(this, w, &unit);
+    sp_document_set_height(this, h, &unit);
+
+    NR::translate tr = NR::translate::translate(-rect.x0,-(rect.y0 + (h - old_height)));
+    sp_item_move_rel((SPItem *) root, tr);
 }
 
 void sp_document_set_uri(SPDocument *document, gchar const *uri)
