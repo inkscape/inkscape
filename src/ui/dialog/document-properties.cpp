@@ -195,7 +195,7 @@ DocumentProperties::build_page()
     _rcb_shad.init (_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false);
     _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
     Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("Fit canvas to selection"),
-                    _("Fit the canvas to the current selection or fit to the drawing when there is no selection.")));
+                    _("Resize the canvas to fit the current selection, or the entire drawing if there is no selection")));
     fit_canv->signal_clicked().connect(sigc::ptr_fun(fire_fit_canvas_to_selection_or_drawing));
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
