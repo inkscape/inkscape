@@ -20,6 +20,7 @@
 
 
 
+#include <gtkmm.h>
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/widget/button.h"
@@ -194,9 +195,15 @@ DocumentProperties::build_page()
                     "bordercolor", "borderopacity", _wr);
     _rcb_shad.init (_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false);
     _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
+
     Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("Fit canvas to selection"),
                     _("Resize the canvas to fit the current selection, or the entire drawing if there is no selection")));
     fit_canv->signal_clicked().connect(sigc::ptr_fun(fire_fit_canvas_to_selection_or_drawing));
+
+    // prevent fit_canv from expanding
+    Gtk::Alignment *fit_canv_cont = manage(new Gtk::Alignment(1.0,0.5,0.0,0.0));
+    fit_canv_cont->add(*fit_canv);
+
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
     Gtk::Label* label_bor = manage (new Gtk::Label);
@@ -213,7 +220,7 @@ DocumentProperties::build_page()
         0,                 0,
         label_for,         0,
         0,                 &_page_sizer,
-        0,                 fit_canv,
+        0,                 fit_canv_cont,
         0,                 0,
         label_bor,         0,
         0,                 _rcb_canb._button,
