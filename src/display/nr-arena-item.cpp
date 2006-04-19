@@ -340,6 +340,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 		nr_pixblock_setup_extern (&cpb, NR_PIXBLOCK_MODE_R8G8B8A8P,
                               carea.x0, carea.y0, carea.x1, carea.y1,
                               item->px, 4 * (carea.x1 - carea.x0), TRUE, TRUE);
+        cpb.visible_area = pb->visible_area; 
 		dpb = &cpb;
 		// Set nocache flag for downstream rendering
 		flags |= NR_ARENA_ITEM_RENDER_NO_CACHE;
@@ -401,6 +402,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 
     /* Setup and render item buffer */
     nr_pixblock_setup_fast (&ipb, NR_PIXBLOCK_MODE_R8G8B8A8P, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+    ipb.visible_area = pb->visible_area; 
     state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, &ipb, flags);
     if (state & NR_ARENA_ITEM_STATE_INVALID) {
       /* Clean up and return error */
@@ -414,6 +416,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
     if (item->clip || item->mask) {
       /* Setup mask pixblock */
       nr_pixblock_setup_fast (&mpb, NR_PIXBLOCK_MODE_A8, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+      mpb.visible_area = pb->visible_area; 
       /* Do clip if needed */
       if (item->clip) {
         state = nr_arena_item_invoke_clip (item->clip, &carea, &mpb);
@@ -432,6 +435,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
         NRPixBlock tpb;
         /* Set up yet another temporary pixblock */
         nr_pixblock_setup_fast (&tpb, NR_PIXBLOCK_MODE_R8G8B8A8N, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+        tpb.visible_area = pb->visible_area; 
         state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (item->mask, &carea, &tpb, flags);
         if (state & NR_ARENA_ITEM_STATE_INVALID) {
           /* Clean up and return error */
@@ -542,6 +546,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 
       /* Setup and render item buffer */
       nr_pixblock_setup_fast (&ipb, NR_PIXBLOCK_MODE_R8G8B8A8P, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+      ipb.visible_area = pb->visible_area; 
       state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, &ipb, flags);
       if (state & NR_ARENA_ITEM_STATE_INVALID) {
         /* Clean up and return error */
@@ -555,6 +560,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
       if (item->clip || item->mask) {
         /* Setup mask pixblock */
         nr_pixblock_setup_fast (&mpb, NR_PIXBLOCK_MODE_A8, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+        mpb.visible_area = pb->visible_area; 
         /* Do clip if needed */
         if (item->clip) {
           state = nr_arena_item_invoke_clip (item->clip, &carea, &mpb);
@@ -573,6 +579,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
           NRPixBlock tpb;
           /* Set up yet another temporary pixblock */
           nr_pixblock_setup_fast (&tpb, NR_PIXBLOCK_MODE_R8G8B8A8N, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+          tpb.visible_area = pb->visible_area; 
           state = NR_ARENA_ITEM_VIRTUAL (item->mask, render) (item->mask, &carea, &tpb, flags);
           if (state & NR_ARENA_ITEM_STATE_INVALID) {
             /* Clean up and return error */

@@ -138,6 +138,10 @@ struct NRArenaShape : public NRArenaItem {
 	// skewing
 	NR::Matrix cached_fctm;
 	NR::Matrix cached_sctm;
+    NRRectL    cached_farea;
+    NRRectL    cached_sarea;
+    bool       cached_fpartialy;
+    bool       cached_spartialy;
 	
 	Shape    *cached_fill;
 	Shape    *cached_stroke;

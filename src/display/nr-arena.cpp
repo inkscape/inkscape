@@ -109,6 +109,8 @@ nr_arena_render_paintserver_fill (NRPixBlock *pb, NRRectL *area, SPPainter *pain
 	NRPixBlock cb, cb_opa;
 	nr_pixblock_setup_fast (&cb, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
 	nr_pixblock_setup_fast (&cb_opa, NR_PIXBLOCK_MODE_R8G8B8A8N, area->x0, area->y0, area->x1, area->y1, TRUE);
+    cb.visible_area = pb->visible_area; 
+    cb_opa.visible_area = pb->visible_area; 
 
 	/* Need separate gradient buffer (lauris)*/
 	// do the filling

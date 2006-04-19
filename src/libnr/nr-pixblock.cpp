@@ -64,10 +64,10 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
 
 	pb->mode = mode;
 	pb->empty = 1;
-	pb->area.x0 = x0;
-	pb->area.y0 = y0;
-	pb->area.x1 = x1;
-	pb->area.y1 = y1;
+    pb->visible_area.x0 = pb->area.x0 = x0;
+    pb->visible_area.y0 = pb->area.y0 = y0;
+    pb->visible_area.x1 = pb->area.x1 = x1;
+    pb->visible_area.y1 = pb->area.y1 = y1;
 	pb->rs = bpp * w;
 }
 
@@ -103,10 +103,10 @@ nr_pixblock_setup (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, int x1
 
 	pb->mode = mode;
 	pb->empty = 1;
-	pb->area.x0 = x0;
-	pb->area.y0 = y0;
-	pb->area.x1 = x1;
-	pb->area.y1 = y1;
+    pb->visible_area.x0 = pb->area.x0 = x0;
+    pb->visible_area.y0 = pb->area.y0 = y0;
+    pb->visible_area.x1 = pb->area.x1 = x1;
+    pb->visible_area.y1 = pb->area.y1 = y1;
 	pb->rs = bpp * w;
 }
 
@@ -130,10 +130,10 @@ nr_pixblock_setup_extern (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0,
 	pb->size = NR_PIXBLOCK_SIZE_STATIC; 
 	pb->mode = mode;
 	pb->empty = empty;
-	pb->area.x0 = x0;
-	pb->area.y0 = y0;
-	pb->area.x1 = x1;
-	pb->area.y1 = y1;
+	pb->visible_area.x0 = pb->area.x0 = x0;
+	pb->visible_area.y0 = pb->area.y0 = y0;
+	pb->visible_area.x1 = pb->area.x1 = x1;
+	pb->visible_area.y1 = pb->area.y1 = y1;
 	pb->data.px = px;
 	pb->rs = rs;
 

@@ -75,8 +75,11 @@ Shape::Reoriente (Shape * a)
   if (numberOfPoints() > maxPt)
     {
       maxPt = numberOfPoints();
-      if (_has_points_data)
-	pData.resize(maxPt);
+      if (_has_points_data) {
+        pData.resize(maxPt);
+        _point_data_initialised = false;
+        _bbox_up_to_date = false;
+        }
     }
 
   _aretes = a->_aretes;

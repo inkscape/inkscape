@@ -142,7 +142,12 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
     thePath->MoveTo(NR::Point(cl->s.x, cl->s.y) * affine);
     thePath->LineTo(NR::Point(cl->e.x, cl->e.y) * affine);
 
-    thePath->Convert(1.0);
+    NRRectL  area;
+    area.x0=item->x1;
+    area.x1=item->x2;
+    area.y0=item->y1;
+    area.y1=item->y2;
+    thePath->Convert(&area, 1.0);
     if ( cl->shp == NULL ) cl->shp=new Shape;
     thePath->Stroke(cl->shp,false,0.5,join_straight,butt_straight,20.0,false);
     cl->shp->CalcBBox();

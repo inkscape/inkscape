@@ -315,7 +315,7 @@ public:
     int nbQRas;
     int firstQRas;
     int lastQRas;
-    std::vector<quick_raster_data> qrsData;
+    quick_raster_data *qrsData;
 
     std::vector<sTreeChange> chgts;
     int nbInc;
@@ -523,6 +523,7 @@ private:
     bool _need_edges_sorting;   ///< edges have been added: maybe they are not ordered clockwise
     ///< nota: if you remove an edge, the clockwise order still holds
     bool _has_points_data;      ///< the pData array is allocated
+    bool _point_data_initialised;///< the pData array is up to date
     bool _has_edges_data;       ///< the eData array is allocated
     bool _has_sweep_src_data;   ///< the swsData array is allocated
     bool _has_sweep_dest_data;  ///< the swdData array is allocated
@@ -530,6 +531,7 @@ private:
     bool _has_quick_raster_data;///< the swrData array is allocated
     bool _has_back_data;        //< the ebData array is allocated
     bool _has_voronoi_data;
+    bool _bbox_up_to_date;      ///< the leftX/rightX/topY/bottomY are up to date
 
     std::vector<dg_point> _pts;
     std::vector<dg_arete> _aretes;

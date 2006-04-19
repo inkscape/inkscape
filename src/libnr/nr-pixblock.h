@@ -41,6 +41,7 @@ struct NRPixBlock {
 	bool empty : 1;            ///< Empty flag
 	unsigned int rs;           ///< Size of line in bytes
 	NRRectL area;
+    NRRectL visible_area;
 	union {
 		unsigned char *px; ///< Pointer to buffer
 		unsigned char p[sizeof (unsigned char *)]; ///< Tiny buffer

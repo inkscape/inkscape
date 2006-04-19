@@ -428,6 +428,18 @@ int Path::AddPoint(NR::Point const &iPt, bool mvto)
 }
 
 
+int Path::ReplacePoint(NR::Point const &iPt)
+{
+    if (pts.empty()) {
+        return -1;
+    }
+  
+    int const n = pts.size() - 1;
+    pts[n] = path_lineto(polyline_lineto, iPt);
+    return n;
+}
+
+
 int Path::AddPoint(NR::Point const &iPt, int ip, double it, bool mvto)
 {
     if (back == false) {

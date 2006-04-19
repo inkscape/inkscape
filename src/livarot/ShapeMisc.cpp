@@ -541,8 +541,11 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter)
     if (numberOfPoints() > maxPt)
     {
       maxPt = numberOfPoints();
-      if (_has_points_data)
+      if (_has_points_data) {
         pData.resize(maxPt);
+        _point_data_initialised = false;
+        _bbox_up_to_date = false;
+        }
     }
     
     _aretes = a->_aretes;

@@ -97,6 +97,8 @@ nr_arena_shape_init(NRArenaShape *shape)
     shape->stroke_painter = NULL;
     shape->cached_fill = NULL;
     shape->cached_stroke = NULL;
+    shape->cached_fpartialy = false;
+    shape->cached_spartialy = false;
     shape->fill_shp = NULL;
     shape->stroke_shp = NULL;
 
@@ -184,8 +186,8 @@ nr_arena_shape_set_child_position(NRArenaItem *item, NRArenaItem *child, NRArena
     nr_arena_item_request_render(child);
 }
 
-void nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc);
-void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape = false);
+void nr_arena_shape_update_stroke(NRArenaShape *shape, NRGC* gc, NRRectL *area);
+void nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape = false);
 void nr_arena_shape_add_bboxes(NRArenaShape* shape,NRRect &bbox);
 
 static guint
@@ -301,8 +303,8 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     if ( shape->delayed_shp ) {
         item->bbox=shape->approx_bbox;
     } else {
-        nr_arena_shape_update_stroke(shape,gc);
-        nr_arena_shape_update_fill(shape,gc);
+        nr_arena_shape_update_stroke(shape, gc, area);
+        nr_arena_shape_update_fill(shape, gc, area);
 
         bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
         nr_arena_shape_add_bboxes(shape,bbox);
@@ -377,19 +379,28 @@ int matrix_is_isometry(NR::Matrix p) {
     return 0;
 }
 
+static bool is_inner_area(NRRectL const &outer, NRRectL const &inner) {
+    return (outer.x0 <= inner.x0 && outer.y0 <= inner.y0 && outer.x1 >= inner.x1 && outer.y1 >= inner.y1);
+}
+
 /** force_shape is used for clipping paths, when we need the shape for clipping even if it's not filled */
 void
-nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
+nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape)
 {
-    shape->delayed_shp = false;
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
         ((shape->curve->end > 2) || (shape->curve->bpath[1].code == NR_CURVETO)) ) {
         if (TRUE || !shape->fill_shp) {
             NR::Matrix  cached_to_new;
             int isometry = 0;
             if ( shape->cached_fill ) {
-                cached_to_new = shape->cached_fctm.inverse()*gc->transform;
-                isometry = matrix_is_isometry(cached_to_new);
+                if (shape->cached_fctm == gc->transform) {
+                    isometry = 2; // identity
+                } else {
+                    cached_to_new = shape->cached_fctm.inverse() * gc->transform;
+                    isometry = matrix_is_isometry(cached_to_new);
+                }
+                if (0 != isometry && !is_inner_area(shape->cached_farea, *area))
+                    isometry = 0;
             }
             if ( isometry == 0 ) {
                 if ( shape->cached_fill == NULL ) shape->cached_fill=new Shape;
@@ -402,7 +413,13 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
                     thePath->LoadArtBPath(shape->curve->bpath,tempMat,true);
                 }
 
-                thePath->Convert(1.0);
+                if (is_inner_area(*area, NR_ARENA_ITEM(shape)->bbox)) {
+                    thePath->Convert(1.0);
+                    shape->cached_fpartialy = false;
+                } else {
+                    thePath->Convert(area, 1.0);
+                    shape->cached_fpartialy = true;
+                }
 
                 thePath->Fill(theShape, 0);
 
@@ -414,6 +431,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
                     shape->cached_fill->ConvertToShape(theShape, fill_nonZero);
                 }
                 shape->cached_fctm=gc->transform;
+                shape->cached_farea = *area;
                 delete theShape;
                 delete thePath;
                 if ( shape->fill_shp == NULL )
@@ -421,6 +439,11 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
 
                 shape->fill_shp->Copy(shape->cached_fill);
 
+            } else if ( 2 == isometry ) {
+                if ( shape->fill_shp == NULL ) {
+                    shape->fill_shp = new Shape;
+                    shape->fill_shp->Copy(shape->cached_fill);
+                }
             } else {
 
                 if ( shape->fill_shp == NULL )
@@ -443,16 +466,15 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, bool force_shape)
                 shape->fill_shp->needPointsSorting();
                 shape->fill_shp->needEdgesSorting();
             }
+            shape->delayed_shp |= shape->cached_fpartialy;
         }
     }
 }
 
 void
-nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
+nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 {
     SPStyle* style = shape->style;
-
-    shape->delayed_shp = false;
 
     float const scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
 
@@ -468,8 +490,14 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
 
         int isometry = 0;
         if ( shape->cached_stroke ) {
-            cached_to_new = shape->cached_sctm.inverse() * gc->transform;
-            isometry = matrix_is_isometry(cached_to_new);
+            if (shape->cached_sctm == gc->transform) {
+                isometry = 2; // identity
+            } else {
+                cached_to_new = shape->cached_sctm.inverse() * gc->transform;
+                isometry = matrix_is_isometry(cached_to_new);
+            }
+            if (0 != isometry && !is_inner_area(shape->cached_sarea, *area))
+                isometry = 0;
         }
 
         if ( isometry == 0 ) {
@@ -482,10 +510,20 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
                 thePath->LoadArtBPath(shape->curve->bpath, tempMat, true);
             }
 
-            if (NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE)
-                thePath->Convert(1.0);
-            else
-                thePath->Convert(4.0); // slightly rougher & faster
+            // add some padding to the rendering area, so clipped path does not go into a render area
+            NRRectL padded_area = *area;
+            padded_area.x0 -= (NR::ICoord)width;
+            padded_area.x1 += (NR::ICoord)width;
+            padded_area.y0 -= (NR::ICoord)width;
+            padded_area.y1 += (NR::ICoord)width;
+            if (is_inner_area(padded_area, NR_ARENA_ITEM(shape)->bbox)) {
+                thePath->Convert((NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) ? 1.0 : 4.0);
+                shape->cached_spartialy = false;
+            }
+            else {
+                thePath->Convert(&padded_area, (NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) ? 1.0 : 4.0);
+                shape->cached_spartialy = true;
+            }
 
             if (style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {
                 double dlen = 0.0;
@@ -555,14 +593,19 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
             }
 
             shape->cached_sctm=gc->transform;
+            shape->cached_sarea = *area;
             delete thePath;
             delete theShape;
             if ( shape->stroke_shp == NULL ) shape->stroke_shp=new Shape;
 
             shape->stroke_shp->Copy(shape->cached_stroke);
 
+        } else if ( 2 == isometry ) {
+            if ( shape->stroke_shp == NULL ) {
+                shape->stroke_shp=new Shape;
+                shape->stroke_shp->Copy(shape->cached_stroke);
+            }
         } else {
-
             if ( shape->stroke_shp == NULL )
                 shape->stroke_shp=new Shape;
             shape->stroke_shp->Reset(shape->cached_stroke->numberOfPoints(), shape->cached_stroke->numberOfEdges());
@@ -581,6 +624,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc)
             shape->stroke_shp->needPointsSorting();
             shape->stroke_shp->needEdgesSorting();
         }
+        shape->delayed_shp |= shape->cached_spartialy;
     }
 }
 
@@ -655,8 +699,9 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
             NRGC   tempGC(NULL);
             tempGC.transform=shape->ctm;
-            nr_arena_shape_update_stroke(shape,&tempGC);
-            nr_arena_shape_update_fill(shape,&tempGC);
+            shape->delayed_shp = false;
+            nr_arena_shape_update_stroke(shape,&tempGC,&pb->visible_area);
+            nr_arena_shape_update_fill(shape,&tempGC,&pb->visible_area);
 /*      NRRect bbox;
         bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
         nr_arena_shape_add_bboxes(shape,bbox);
@@ -665,6 +710,8 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         item->bbox.x1 = (gint32)(bbox.x1 + 1.0F);
         item->bbox.y1 = (gint32)(bbox.y1 + 1.0F);
         shape->approx_bbox=item->bbox;*/
+        } else {
+            return item->state;
         }
     }
 
@@ -674,6 +721,7 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         guint32 rgba;
 
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+        m.visible_area = pb->visible_area; 
         nr_pixblock_render_shape_mask_or(m,shape->fill_shp);
         m.empty = FALSE;
 
@@ -704,6 +752,7 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         guint32 rgba;
 
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+        m.visible_area = pb->visible_area; 
         nr_pixblock_render_shape_mask_or(m, shape->stroke_shp);
         m.empty = FALSE;
 
@@ -750,7 +799,10 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
         if ( nr_rect_l_test_intersect(area, &item->bbox) ) {
             NRGC   tempGC(NULL);
             tempGC.transform=shape->ctm;
-            nr_arena_shape_update_fill(shape, &tempGC, true);
+            shape->delayed_shp = false;
+            nr_arena_shape_update_fill(shape, &tempGC, &pb->visible_area, true);
+        } else {
+            return item->state;
         }
     }
 
@@ -759,6 +811,7 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
 
         /* fixme: We can OR in one step (Lauris) */
         nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+        m.visible_area = pb->visible_area; 
         nr_pixblock_render_shape_mask_or(m,shape->fill_shp);
 
         for (int y = area->y0; y < area->y1; y++) {
@@ -786,7 +839,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
     if (!shape->curve) return NULL;
     if (!shape->style) return NULL;
     if ( shape->delayed_shp ) {
-        NRRectL  area;
+        NRRectL  area, updateArea;
         area.x0=(int)floor(p[NR::X]);
         area.x1=(int)ceil(p[NR::X]);
         area.y0=(int)floor(p[NR::Y]);
@@ -800,8 +853,13 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         if ( nr_rect_l_test_intersect(&area, &item->bbox) ) {
             NRGC   tempGC(NULL);
             tempGC.transform=shape->ctm;
-            nr_arena_shape_update_stroke(shape,&tempGC);
-            nr_arena_shape_update_fill(shape,&tempGC);
+            updateArea = item->bbox;
+            if (shape->cached_stroke)
+                nr_rect_l_intersect (&updateArea, &updateArea, &shape->cached_sarea);
+
+            shape->delayed_shp = false;
+            nr_arena_shape_update_stroke(shape, &tempGC, &updateArea);
+            nr_arena_shape_update_fill(shape, &tempGC, &updateArea);
             /*      NRRect bbox;
                     bbox.x0 = bbox.y0 = bbox.x1 = bbox.y1 = 0.0;
                     nr_arena_shape_add_bboxes(shape,bbox);

@@ -13,6 +13,7 @@
 #include "LivarotDefs.h"
 #include "livarot/livarot-forward.h"
 #include "libnr/nr-point.h"
+#include <libnr/nr-rect-l.h>
 
 /*
  * the Path class: a structure to hold path description and their polyline approximation (not kept in sync)
@@ -108,6 +109,7 @@ public:
   // transforms a description in a polyline (for stroking and filling)
   // treshhold is the max length^2 (sort of)
   void Convert (double treshhold);
+  void Convert(NRRectL *area, double treshhold);
   void ConvertEvenLines (double treshhold);	// decomposes line segments too, for later recomposition
   // same function for use when you want to later recompose the curves from the polyline
   void ConvertWithBackData (double treshhold);
@@ -119,6 +121,7 @@ public:
   int AddPoint ( NR::Point const &iPt, int ip, double it, bool mvto = false);
   int AddForcedPoint ( NR::Point const &iPt);	// add point
   int AddForcedPoint ( NR::Point const &iPt, int ip, double it);
+  int ReplacePoint(NR::Point const &iPt);  // replace point
 
   // transform in a polygon (in a graph, in fact; a subsequent call to ConvertToShape is needed)
   //  - fills the polyline; justAdd=true doesn't reset the Shape dest, but simply adds the polyline into it

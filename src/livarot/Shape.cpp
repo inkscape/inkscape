@@ -22,16 +22,19 @@ Shape::Shape()
   : iData(NULL),
     sTree(NULL),
     sEvts(NULL),
+    qrsData(NULL),
     _need_points_sorting(false),
     _need_edges_sorting(false),
     _has_points_data(false),
+    _point_data_initialised(false),
     _has_edges_data(false),
     _has_sweep_src_data(false),
     _has_sweep_dest_data(false),
     _has_raster_data(false),
     _has_quick_raster_data(false),
     _has_back_data(false),
-    _has_voronoi_data(false)
+    _has_voronoi_data(false),
+    _bbox_up_to_date(false)
 {
   leftX = topY = rightX = bottomY = 0;
   maxPt = 0;
@@ -43,6 +46,7 @@ Shape::~Shape (void)
 {
   maxPt = 0;
   maxAr = 0;
+  free(qrsData);
 }
 
 void Shape::Affiche(void)
@@ -58,64 +62,65 @@ void Shape::Affiche(void)
   */
 }
 
+/**
+ * Allocates space for point cache or clears the cache
+ \param  nVal   Allocate a cache (true) or clear it (false)
+ */
 void
 Shape::MakePointData (bool nVal)
 {
   if (nVal)
     {
       if (_has_points_data == false)
-	{
-	  _has_points_data = true;
-	  pData.resize(maxPt);
-	}
+        {
+          _has_points_data = true;
+          _point_data_initialised = false;
+          _bbox_up_to_date = false;
+          pData.resize(maxPt);
+        }
     }
-  else
-    {
-      if (_has_points_data)
-	{
-	  _has_points_data = false;
-	  pData.clear();
-	}
-    }
+    /* no need to clean point data - keep it cached*/
 }
+
 void
 Shape::MakeEdgeData (bool nVal)
 {
   if (nVal)
     {
       if (_has_edges_data == false)
-	{
-	  _has_edges_data = true;
-	  eData.resize(maxAr);
-	}
+        {
+          _has_edges_data = true;
+          eData.resize(maxAr);
+        }
     }
   else
     {
       if (_has_edges_data)
-	{
-	  _has_edges_data = false;
-	  eData.clear();
-	}
+        {
+          _has_edges_data = false;
+          eData.clear();
+        }
     }
 }
+
 void
 Shape::MakeRasterData (bool nVal)
 {
   if (nVal)
     {
       if (_has_raster_data == false)
-	{
-	  _has_raster_data = true;
-	  swrData.resize(maxAr);
-	}
+        {
+          _has_raster_data = true;
+          swrData.resize(maxAr);
+        }
     }
   else
     {
       if (_has_raster_data)
-	{
-	  _has_raster_data = false;
-	  swrData.clear();
-	}
+        {
+          _has_raster_data = false;
+          swrData.clear();
+        }
     }
 }
 void
@@ -124,18 +129,17 @@ Shape::MakeQuickRasterData (bool nVal)
   if (nVal)
     {
       if (_has_quick_raster_data == false)
-	{
-	  _has_quick_raster_data = true;
-	  qrsData.resize(maxAr);
-	}
+        {
+          _has_quick_raster_data = true;
+          qrsData = (quick_raster_data*)realloc(qrsData, maxAr * sizeof(quick_raster_data));
+        }
     }
   else
     {
       if (_has_quick_raster_data)
-	{
-	  _has_quick_raster_data = false;
-	  qrsData.clear();
-	}
+        {
+          _has_quick_raster_data = false;
+        }
     }
 }
 void
@@ -144,18 +148,18 @@ Shape::MakeSweepSrcData (bool nVal)
   if (nVal)
     {
       if (_has_sweep_src_data == false)
-	{
-	  _has_sweep_src_data = true;
-	  swsData.resize(maxAr);
-	}
+        {
+          _has_sweep_src_data = true;
+          swsData.resize(maxAr);
+        }
     }
   else
     {
       if (_has_sweep_src_data)
-	{
-	  _has_sweep_src_data = false;
-	  swsData.clear();
-	}
+        {
+          _has_sweep_src_data = false;
+          swsData.clear();
+        }
     }
 }
 void
@@ -164,18 +168,18 @@ Shape::MakeSweepDestData (bool nVal)
   if (nVal)
     {
       if (_has_sweep_dest_data == false)
-	{
-	  _has_sweep_dest_data = true;
-	  swdData.resize(maxAr);
-	}
+        {
+          _has_sweep_dest_data = true;
+          swdData.resize(maxAr);
+        }
     }
   else
     {
       if (_has_sweep_dest_data)
-	{
-	  _has_sweep_dest_data = false;
-	  swdData.clear();
-	}
+        {
+          _has_sweep_dest_data = false;
+          swdData.clear();
+        }
     }
 }
 void
@@ -184,18 +188,18 @@ Shape::MakeBackData (bool nVal)
   if (nVal)
     {
       if (_has_back_data == false)
-	{
-	  _has_back_data = true;
-	  ebData.resize(maxAr);
-	}
+        {
+          _has_back_data = true;
+          ebData.resize(maxAr);
+        }
     }
   else
     {
       if (_has_back_data)
-	{
-	  _has_back_data = false;
-	  ebData.clear();
-	}
+        {
+          _has_back_data = false;
+          ebData.clear();
+        }
     }
 }
 void
@@ -204,20 +208,20 @@ Shape::MakeVoronoiData (bool nVal)
   if (nVal)
     {
       if (_has_voronoi_data == false)
-	{
-	  _has_voronoi_data = true;
-	  vorpData.resize(maxPt);
-	  voreData.resize(maxAr);
-	}
+        {
+          _has_voronoi_data = true;
+          vorpData.resize(maxPt);
+          voreData.resize(maxAr);
+        }
     }
   else
     {
       if (_has_voronoi_data)
-	{
-	  _has_voronoi_data = false;
-	  vorpData.clear();
-	  voreData.clear();
-	}
+        {
+          _has_voronoi_data = false;
+          vorpData.clear();
+          voreData.clear();
+        }
     }
 }
 
@@ -252,6 +256,7 @@ Shape::Copy (Shape * who)
   _need_points_sorting = who->_need_points_sorting;
   _need_edges_sorting = who->_need_edges_sorting;
   _has_points_data = false;
+  _point_data_initialised = false;
   _has_edges_data = false;
   _has_sweep_src_data = false;
   _has_sweep_dest_data = false;
@@ -259,42 +264,48 @@ Shape::Copy (Shape * who)
   _has_quick_raster_data = false;
   _has_back_data = false;
   _has_voronoi_data = false;
+  _bbox_up_to_date = false;
 
   _pts = who->_pts;
   _aretes = who->_aretes;
 }
 
+/**
+ *  Clear points and edges and prepare internal data using new size.
+ */
 void
-Shape::Reset (int n, int m)
+Shape::Reset (int pointCount, int edgeCount)
 {
   _pts.clear();
   _aretes.clear();
   
   type = shape_polygon;
-  if (n > maxPt)
+  if (pointCount > maxPt)
     {
-      maxPt = n;
+      maxPt = pointCount;
       if (_has_points_data)
-	pData.resize(maxPt);
+        pData.resize(maxPt);
       if (_has_voronoi_data)
-	vorpData.resize(maxPt);
+        vorpData.resize(maxPt);
     }
-  if (m > maxAr)
+  if (edgeCount > maxAr)
     {
-      maxAr = m;
+      maxAr = edgeCount;
       if (_has_edges_data)
-	eData.resize(maxAr);
+        eData.resize(maxAr);
       if (_has_sweep_dest_data)
-	swdData.resize(maxAr);
+        swdData.resize(maxAr);
       if (_has_sweep_src_data)
-	swsData.resize(maxAr);
+        swsData.resize(maxAr);
       if (_has_back_data)
-	ebData.resize(maxAr);
+        ebData.resize(maxAr);
       if (_has_voronoi_data)
-	voreData.resize(maxAr);
+        voreData.resize(maxAr);
     }
   _need_points_sorting = false;
   _need_edges_sorting = false;
+  _point_data_initialised = false;
+  _bbox_up_to_date = false;
 }
 
 int
@@ -304,9 +315,9 @@ Shape::AddPoint (const NR::Point x)
     {
       maxPt = 2 * numberOfPoints() + 1;
       if (_has_points_data)
-	pData.resize(maxPt);
+        pData.resize(maxPt);
       if (_has_voronoi_data)
-	vorpData.resize(maxPt);
+        vorpData.resize(maxPt);
     }
 
   dg_point p;
@@ -324,6 +335,8 @@ Shape::AddPoint (const NR::Point x)
       pData[n].nextLinkedPoint = -1;
       pData[n].askForWindingS = NULL;
       pData[n].askForWindingB = -1;
+      pData[n].rx[0] = Round(p.x[0]);
+      pData[n].rx[1] = Round(p.x[1]);
     }
   if (_has_voronoi_data)
     {
@@ -346,23 +359,23 @@ Shape::SubPoint (int p)
   while (cb >= 0 && cb < numberOfEdges())
     {
       if (getEdge(cb).st == p)
-	{
-	  int ncb = getEdge(cb).nextS;
-	  _aretes[cb].nextS = _aretes[cb].prevS = -1;
-	  _aretes[cb].st = -1;
-	  cb = ncb;
-	}
+        {
+          int ncb = getEdge(cb).nextS;
+          _aretes[cb].nextS = _aretes[cb].prevS = -1;
+          _aretes[cb].st = -1;
+          cb = ncb;
+        }
       else if (getEdge(cb).en == p)
-	{
-	  int ncb = getEdge(cb).nextE;
-	  _aretes[cb].nextE = _aretes[cb].prevE = -1;
-	  _aretes[cb].en = -1;
-	  cb = ncb;
-	}
+        {
+          int ncb = getEdge(cb).nextE;
+          _aretes[cb].nextE = _aretes[cb].prevE = -1;
+          _aretes[cb].en = -1;
+          cb = ncb;
+        }
       else
-	{
-	  break;
-	}
+        {
+          break;
+        }
     }
   _pts[p].incidentEdge[FIRST] = _pts[p].incidentEdge[LAST] = -1;
   if (p < numberOfPoints() - 1)
@@ -379,60 +392,60 @@ Shape::SwapPoints (int a, int b)
     {
       int cb = getPoint(a).incidentEdge[FIRST];
       if (getEdge(cb).st == a)
-	{
-	  _aretes[cb].st = numberOfPoints();
-	}
+        {
+          _aretes[cb].st = numberOfPoints();
+        }
       else if (getEdge(cb).en == a)
-	{
-	  _aretes[cb].en = numberOfPoints();
-	}
+        {
+          _aretes[cb].en = numberOfPoints();
+        }
       cb = getPoint(a).incidentEdge[LAST];
       if (getEdge(cb).st == a)
-	{
-	  _aretes[cb].st = numberOfPoints();
-	}
+        {
+          _aretes[cb].st = numberOfPoints();
+        }
       else if (getEdge(cb).en == a)
-	{
-	  _aretes[cb].en = numberOfPoints();
-	}
+        {
+          _aretes[cb].en = numberOfPoints();
+        }
 
       cb = getPoint(b).incidentEdge[FIRST];
       if (getEdge(cb).st == b)
-	{
-	  _aretes[cb].st = a;
-	}
+        {
+          _aretes[cb].st = a;
+        }
       else if (getEdge(cb).en == b)
-	{
-	  _aretes[cb].en = a;
-	}
+        {
+          _aretes[cb].en = a;
+        }
       cb = getPoint(b).incidentEdge[LAST];
       if (getEdge(cb).st == b)
-	{
-	  _aretes[cb].st = a;
-	}
+        {
+          _aretes[cb].st = a;
+        }
       else if (getEdge(cb).en == b)
-	{
-	  _aretes[cb].en = a;
-	}
+        {
+          _aretes[cb].en = a;
+        }
 
       cb = getPoint(a).incidentEdge[FIRST];
       if (getEdge(cb).st == numberOfPoints())
-	{
-	  _aretes[cb].st = b;
-	}
+        {
+          _aretes[cb].st = b;
+        }
       else if (getEdge(cb).en == numberOfPoints())
-	{
-	  _aretes[cb].en = b;
-	}
+        {
+          _aretes[cb].en = b;
+        }
       cb = getPoint(a).incidentEdge[LAST];
       if (getEdge(cb).st == numberOfPoints())
-	{
-	  _aretes[cb].st = b;
-	}
+        {
+          _aretes[cb].st = b;
+        }
       else if (getEdge(cb).en == numberOfPoints())
-	{
-	  _aretes[cb].en = b;
-	}
+        {
+          _aretes[cb].en = b;
+        }
 
     }
   else
@@ -440,46 +453,46 @@ Shape::SwapPoints (int a, int b)
       int cb;
       cb = getPoint(a).incidentEdge[FIRST];
       while (cb >= 0)
-	{
-	  int ncb = NextAt (a, cb);
-	  if (getEdge(cb).st == a)
-	    {
-	      _aretes[cb].st = numberOfPoints();
-	    }
-	  else if (getEdge(cb).en == a)
-	    {
-	      _aretes[cb].en = numberOfPoints();
-	    }
-	  cb = ncb;
-	}
+        {
+          int ncb = NextAt (a, cb);
+          if (getEdge(cb).st == a)
+            {
+              _aretes[cb].st = numberOfPoints();
+            }
+          else if (getEdge(cb).en == a)
+            {
+              _aretes[cb].en = numberOfPoints();
+            }
+          cb = ncb;
+        }
       cb = getPoint(b).incidentEdge[FIRST];
       while (cb >= 0)
-	{
-	  int ncb = NextAt (b, cb);
-	  if (getEdge(cb).st == b)
-	    {
-	      _aretes[cb].st = a;
-	    }
-	  else if (getEdge(cb).en == b)
-	    {
-	      _aretes[cb].en = a;
-	    }
-	  cb = ncb;
-	}
+        {
+          int ncb = NextAt (b, cb);
+          if (getEdge(cb).st == b)
+            {
+              _aretes[cb].st = a;
+            }
+          else if (getEdge(cb).en == b)
+            {
+              _aretes[cb].en = a;
+            }
+          cb = ncb;
+        }
       cb = getPoint(a).incidentEdge[FIRST];
       while (cb >= 0)
-	{
-	  int ncb = NextAt (numberOfPoints(), cb);
-	  if (getEdge(cb).st == numberOfPoints())
-	    {
-	      _aretes[cb].st = b;
-	    }
-	  else if (getEdge(cb).en == numberOfPoints())
-	    {
-	      _aretes[cb].en = b;
-	    }
-	  cb = ncb;
-	}
+        {
+          int ncb = NextAt (numberOfPoints(), cb);
+          if (getEdge(cb).st == numberOfPoints())
+            {
+              _aretes[cb].st = b;
+            }
+          else if (getEdge(cb).en == numberOfPoints())
+            {
+              _aretes[cb].en = b;
+            }
+          cb = ncb;
+        }
     }
   {
     dg_point swap = getPoint(a);
@@ -533,8 +546,8 @@ Shape::SortPoints (int s, int e)
   if (e == s + 1)
     {
       if (getPoint(s).x[1] > getPoint(e).x[1]
-	  || (getPoint(s).x[1] == getPoint(e).x[1] && getPoint(s).x[0] > getPoint(e).x[0]))
-	SwapPoints (s, e);
+          || (getPoint(s).x[1] == getPoint(e).x[1] && getPoint(s).x[0] > getPoint(e).x[0]))
+        SwapPoints (s, e);
       return;
     }
 
@@ -547,160 +560,160 @@ Shape::SortPoints (int s, int e)
   while (le < ppos || ri > plast)
     {
       if (le < ppos)
-	{
-	  do
-	    {
-	      int test = 0;
-	      if (getPoint(le).x[1] > pvaly)
-		{
-		  test = 1;
-		}
-	      else if (getPoint(le).x[1] == pvaly)
-		{
-		  if (getPoint(le).x[0] > pvalx)
-		    {
-		      test = 1;
-		    }
-		  else if (getPoint(le).x[0] == pvalx)
-		    {
-		      test = 0;
-		    }
-		  else
-		    {
-		      test = -1;
-		    }
-		}
-	      else
-		{
-		  test = -1;
-		}
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (le < ppos - 1)
-		    {
-		      SwapPoints (le, ppos - 1, ppos);
-		      ppos--;
-		      continue;	// sans changer le
-		    }
-		  else if (le == ppos - 1)
-		    {
-		      ppos--;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test > 0)
-		{
-		  break;
-		}
-	      le++;
-	    }
-	  while (le < ppos);
-	}
+        {
+          do
+            {
+              int test = 0;
+              if (getPoint(le).x[1] > pvaly)
+                {
+                  test = 1;
+                }
+              else if (getPoint(le).x[1] == pvaly)
+                {
+                  if (getPoint(le).x[0] > pvalx)
+                    {
+                      test = 1;
+                    }
+                  else if (getPoint(le).x[0] == pvalx)
+                    {
+                      test = 0;
+                    }
+                  else
+                    {
+                      test = -1;
+                    }
+                }
+              else
+                {
+                  test = -1;
+                }
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (le < ppos - 1)
+                    {
+                      SwapPoints (le, ppos - 1, ppos);
+                      ppos--;
+                      continue;	// sans changer le
+                    }
+                  else if (le == ppos - 1)
+                    {
+                      ppos--;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test > 0)
+                {
+                  break;
+                }
+              le++;
+            }
+          while (le < ppos);
+        }
       if (ri > plast)
-	{
-	  do
-	    {
-	      int test = 0;
-	      if (getPoint(ri).x[1] > pvaly)
-		{
-		  test = 1;
-		}
-	      else if (getPoint(ri).x[1] == pvaly)
-		{
-		  if (getPoint(ri).x[0] > pvalx)
-		    {
-		      test = 1;
-		    }
-		  else if (getPoint(ri).x[0] == pvalx)
-		    {
-		      test = 0;
-		    }
-		  else
-		    {
-		      test = -1;
-		    }
-		}
-	      else
-		{
-		  test = -1;
-		}
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (ri > plast + 1)
-		    {
-		      SwapPoints (ri, plast + 1, plast);
-		      plast++;
-		      continue;	// sans changer ri
-		    }
-		  else if (ri == plast + 1)
-		    {
-		      plast++;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test < 0)
-		{
-		  break;
-		}
-	      ri--;
-	    }
-	  while (ri > plast);
-	}
+        {
+          do
+            {
+              int test = 0;
+              if (getPoint(ri).x[1] > pvaly)
+                {
+                  test = 1;
+                }
+              else if (getPoint(ri).x[1] == pvaly)
+                {
+                  if (getPoint(ri).x[0] > pvalx)
+                    {
+                      test = 1;
+                    }
+                  else if (getPoint(ri).x[0] == pvalx)
+                    {
+                      test = 0;
+                    }
+                  else
+                    {
+                      test = -1;
+                    }
+                }
+              else
+                {
+                  test = -1;
+                }
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (ri > plast + 1)
+                    {
+                      SwapPoints (ri, plast + 1, plast);
+                      plast++;
+                      continue;	// sans changer ri
+                    }
+                  else if (ri == plast + 1)
+                    {
+                      plast++;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test < 0)
+                {
+                  break;
+                }
+              ri--;
+            }
+          while (ri > plast);
+        }
       if (le < ppos)
-	{
-	  if (ri > plast)
-	    {
-	      SwapPoints (le, ri);
-	      le++;
-	      ri--;
-	    }
-	  else
-	    {
-	      if (le < ppos - 1)
-		{
-		  SwapPoints (ppos - 1, plast, le);
-		  ppos--;
-		  plast--;
-		}
-	      else if (le == ppos - 1)
-		{
-		  SwapPoints (plast, le);
-		  ppos--;
-		  plast--;
-		}
-	    }
-	}
+        {
+          if (ri > plast)
+            {
+              SwapPoints (le, ri);
+              le++;
+              ri--;
+            }
+          else
+            {
+              if (le < ppos - 1)
+                {
+                  SwapPoints (ppos - 1, plast, le);
+                  ppos--;
+                  plast--;
+                }
+              else if (le == ppos - 1)
+                {
+                  SwapPoints (plast, le);
+                  ppos--;
+                  plast--;
+                }
+            }
+        }
       else
-	{
-	  if (ri > plast + 1)
-	    {
-	      SwapPoints (plast + 1, ppos, ri);
-	      ppos++;
-	      plast++;
-	    }
-	  else if (ri == plast + 1)
-	    {
-	      SwapPoints (ppos, ri);
-	      ppos++;
-	      plast++;
-	    }
-	  else
-	    {
-	      break;
-	    }
-	}
+        {
+          if (ri > plast + 1)
+            {
+              SwapPoints (plast + 1, ppos, ri);
+              ppos++;
+              plast++;
+            }
+          else if (ri == plast + 1)
+            {
+              SwapPoints (ppos, ri);
+              ppos++;
+              plast++;
+            }
+          else
+            {
+              break;
+            }
+        }
     }
   SortPoints (s, ppos - 1);
   SortPoints (plast + 1, e);
@@ -714,9 +727,9 @@ Shape::SortPointsByOldInd (int s, int e)
   if (e == s + 1)
     {
       if (getPoint(s).x[1] > getPoint(e).x[1] || (getPoint(s).x[1] == getPoint(e).x[1] && getPoint(s).x[0] > getPoint(e).x[0])
-	  || (getPoint(s).x[1] == getPoint(e).x[1] && getPoint(s).x[0] == getPoint(e).x[0]
-	      && pData[s].oldInd > pData[e].oldInd))
-	SwapPoints (s, e);
+          || (getPoint(s).x[1] == getPoint(e).x[1] && getPoint(s).x[0] == getPoint(e).x[0]
+              && pData[s].oldInd > pData[e].oldInd))
+        SwapPoints (s, e);
       return;
     }
 
@@ -730,182 +743,182 @@ Shape::SortPointsByOldInd (int s, int e)
   while (le < ppos || ri > plast)
     {
       if (le < ppos)
-	{
-	  do
-	    {
-	      int test = 0;
-	      if (getPoint(le).x[1] > pvaly)
-		{
-		  test = 1;
-		}
-	      else if (getPoint(le).x[1] == pvaly)
-		{
-		  if (getPoint(le).x[0] > pvalx)
-		    {
-		      test = 1;
-		    }
-		  else if (getPoint(le).x[0] == pvalx)
-		    {
-		      if (pData[le].oldInd > pvali)
-			{
-			  test = 1;
-			}
-		      else if (pData[le].oldInd == pvali)
-			{
-			  test = 0;
-			}
-		      else
-			{
-			  test = -1;
-			}
-		    }
-		  else
-		    {
-		      test = -1;
-		    }
-		}
-	      else
-		{
-		  test = -1;
-		}
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (le < ppos - 1)
-		    {
-		      SwapPoints (le, ppos - 1, ppos);
-		      ppos--;
-		      continue;	// sans changer le
-		    }
-		  else if (le == ppos - 1)
-		    {
-		      ppos--;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test > 0)
-		{
-		  break;
-		}
-	      le++;
-	    }
-	  while (le < ppos);
-	}
+        {
+          do
+            {
+              int test = 0;
+              if (getPoint(le).x[1] > pvaly)
+                {
+                  test = 1;
+                }
+              else if (getPoint(le).x[1] == pvaly)
+                {
+                  if (getPoint(le).x[0] > pvalx)
+                    {
+                      test = 1;
+                    }
+                  else if (getPoint(le).x[0] == pvalx)
+                    {
+                      if (pData[le].oldInd > pvali)
+                        {
+                          test = 1;
+                        }
+                      else if (pData[le].oldInd == pvali)
+                        {
+                          test = 0;
+                        }
+                      else
+                        {
+                          test = -1;
+                        }
+                    }
+                  else
+                    {
+                      test = -1;
+                    }
+                }
+              else
+                {
+                  test = -1;
+                }
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (le < ppos - 1)
+                    {
+                      SwapPoints (le, ppos - 1, ppos);
+                      ppos--;
+                      continue;	// sans changer le
+                    }
+                  else if (le == ppos - 1)
+                    {
+                      ppos--;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test > 0)
+                {
+                  break;
+                }
+              le++;
+            }
+          while (le < ppos);
+        }
       if (ri > plast)
-	{
-	  do
-	    {
-	      int test = 0;
-	      if (getPoint(ri).x[1] > pvaly)
-		{
-		  test = 1;
-		}
-	      else if (getPoint(ri).x[1] == pvaly)
-		{
-		  if (getPoint(ri).x[0] > pvalx)
-		    {
-		      test = 1;
-		    }
-		  else if (getPoint(ri).x[0] == pvalx)
-		    {
-		      if (pData[ri].oldInd > pvali)
-			{
-			  test = 1;
-			}
-		      else if (pData[ri].oldInd == pvali)
-			{
-			  test = 0;
-			}
-		      else
-			{
-			  test = -1;
-			}
-		    }
-		  else
-		    {
-		      test = -1;
-		    }
-		}
-	      else
-		{
-		  test = -1;
-		}
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (ri > plast + 1)
-		    {
-		      SwapPoints (ri, plast + 1, plast);
-		      plast++;
-		      continue;	// sans changer ri
-		    }
-		  else if (ri == plast + 1)
-		    {
-		      plast++;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test < 0)
-		{
-		  break;
-		}
-	      ri--;
-	    }
-	  while (ri > plast);
-	}
+        {
+          do
+            {
+              int test = 0;
+              if (getPoint(ri).x[1] > pvaly)
+                {
+                  test = 1;
+                }
+              else if (getPoint(ri).x[1] == pvaly)
+                {
+                  if (getPoint(ri).x[0] > pvalx)
+                    {
+                      test = 1;
+                    }
+                  else if (getPoint(ri).x[0] == pvalx)
+                    {
+                      if (pData[ri].oldInd > pvali)
+                        {
+                          test = 1;
+                        }
+                      else if (pData[ri].oldInd == pvali)
+                        {
+                          test = 0;
+                        }
+                      else
+                        {
+                          test = -1;
+                        }
+                    }
+                  else
+                    {
+                      test = -1;
+                    }
+                }
+              else
+                {
+                  test = -1;
+                }
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (ri > plast + 1)
+                    {
+                      SwapPoints (ri, plast + 1, plast);
+                      plast++;
+                      continue;	// sans changer ri
+                    }
+                  else if (ri == plast + 1)
+                    {
+                      plast++;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test < 0)
+                {
+                  break;
+                }
+              ri--;
+            }
+          while (ri > plast);
+        }
       if (le < ppos)
-	{
-	  if (ri > plast)
-	    {
-	      SwapPoints (le, ri);
-	      le++;
-	      ri--;
-	    }
-	  else
-	    {
-	      if (le < ppos - 1)
-		{
-		  SwapPoints (ppos - 1, plast, le);
-		  ppos--;
-		  plast--;
-		}
-	      else if (le == ppos - 1)
-		{
-		  SwapPoints (plast, le);
-		  ppos--;
-		  plast--;
-		}
-	    }
-	}
+        {
+          if (ri > plast)
+            {
+              SwapPoints (le, ri);
+              le++;
+              ri--;
+            }
+          else
+            {
+              if (le < ppos - 1)
+                {
+                  SwapPoints (ppos - 1, plast, le);
+                  ppos--;
+                  plast--;
+                }
+              else if (le == ppos - 1)
+                {
+                  SwapPoints (plast, le);
+                  ppos--;
+                  plast--;
+                }
+            }
+        }
       else
-	{
-	  if (ri > plast + 1)
-	    {
-	      SwapPoints (plast + 1, ppos, ri);
-	      ppos++;
-	      plast++;
-	    }
-	  else if (ri == plast + 1)
-	    {
-	      SwapPoints (ppos, ri);
-	      ppos++;
-	      plast++;
-	    }
-	  else
-	    {
-	      break;
-	    }
-	}
+        {
+          if (ri > plast + 1)
+            {
+              SwapPoints (plast + 1, ppos, ri);
+              ppos++;
+              plast++;
+            }
+          else if (ri == plast + 1)
+            {
+              SwapPoints (ppos, ri);
+              ppos++;
+              plast++;
+            }
+          else
+            {
+              break;
+            }
+        }
     }
   SortPointsByOldInd (s, ppos - 1);
   SortPointsByOldInd (plast + 1, e);
@@ -919,8 +932,8 @@ Shape::SortPointsRounded (int s, int e)
   if (e == s + 1)
     {
       if (pData[s].rx[1] > pData[e].rx[1]
-	  || (pData[s].rx[1] == pData[e].rx[1] && pData[s].rx[0] > pData[e].rx[0]))
-	SwapPoints (s, e);
+          || (pData[s].rx[1] == pData[e].rx[1] && pData[s].rx[0] > pData[e].rx[0]))
+        SwapPoints (s, e);
       return;
     }
 
@@ -933,160 +946,160 @@ Shape::SortPointsRounded (int s, int e)
   while (le < ppos || ri > plast)
     {
       if (le < ppos)
-	{
-	  do
-	    {
-	      int test = 0;
-	      if (pData[le].rx[1] > pvaly)
-		{
-		  test = 1;
-		}
-	      else if (pData[le].rx[1] == pvaly)
-		{
-		  if (pData[le].rx[0] > pvalx)
-		    {
-		      test = 1;
-		    }
-		  else if (pData[le].rx[0] == pvalx)
-		    {
-		      test = 0;
-		    }
-		  else
-		    {
-		      test = -1;
-		    }
-		}
-	      else
-		{
-		  test = -1;
-		}
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (le < ppos - 1)
-		    {
-		      SwapPoints (le, ppos - 1, ppos);
-		      ppos--;
-		      continue;	// sans changer le
-		    }
-		  else if (le == ppos - 1)
-		    {
-		      ppos--;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test > 0)
-		{
-		  break;
-		}
-	      le++;
-	    }
-	  while (le < ppos);
-	}
+        {
+          do
+            {
+              int test = 0;
+              if (pData[le].rx[1] > pvaly)
+                {
+                  test = 1;
+                }
+              else if (pData[le].rx[1] == pvaly)
+                {
+                  if (pData[le].rx[0] > pvalx)
+                    {
+                      test = 1;
+                    }
+                  else if (pData[le].rx[0] == pvalx)
+                    {
+                      test = 0;
+                    }
+                  else
+                    {
+                      test = -1;
+                    }
+                }
+              else
+                {
+                  test = -1;
+                }
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (le < ppos - 1)
+                    {
+                      SwapPoints (le, ppos - 1, ppos);
+                      ppos--;
+                      continue;	// sans changer le
+                    }
+                  else if (le == ppos - 1)
+                    {
+                      ppos--;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test > 0)
+                {
+                  break;
+                }
+              le++;
+            }
+          while (le < ppos);
+        }
       if (ri > plast)
-	{
-	  do
-	    {
-	      int test = 0;
-	      if (pData[ri].rx[1] > pvaly)
-		{
-		  test = 1;
-		}
-	      else if (pData[ri].rx[1] == pvaly)
-		{
-		  if (pData[ri].rx[0] > pvalx)
-		    {
-		      test = 1;
-		    }
-		  else if (pData[ri].rx[0] == pvalx)
-		    {
-		      test = 0;
-		    }
-		  else
-		    {
-		      test = -1;
-		    }
-		}
-	      else
-		{
-		  test = -1;
-		}
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (ri > plast + 1)
-		    {
-		      SwapPoints (ri, plast + 1, plast);
-		      plast++;
-		      continue;	// sans changer ri
-		    }
-		  else if (ri == plast + 1)
-		    {
-		      plast++;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test < 0)
-		{
-		  break;
-		}
-	      ri--;
-	    }
-	  while (ri > plast);
-	}
+        {
+          do
+            {
+              int test = 0;
+              if (pData[ri].rx[1] > pvaly)
+                {
+                  test = 1;
+                }
+              else if (pData[ri].rx[1] == pvaly)
+                {
+                  if (pData[ri].rx[0] > pvalx)
+                    {
+                      test = 1;
+                    }
+                  else if (pData[ri].rx[0] == pvalx)
+                    {
+                      test = 0;
+                    }
+                  else
+                    {
+                      test = -1;
+                    }
+                }
+              else
+                {
+                  test = -1;
+                }
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (ri > plast + 1)
+                    {
+                      SwapPoints (ri, plast + 1, plast);
+                      plast++;
+                      continue;	// sans changer ri
+                    }
+                  else if (ri == plast + 1)
+                    {
+                      plast++;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test < 0)
+                {
+                  break;
+                }
+              ri--;
+            }
+          while (ri > plast);
+        }
       if (le < ppos)
-	{
-	  if (ri > plast)
-	    {
-	      SwapPoints (le, ri);
-	      le++;
-	      ri--;
-	    }
-	  else
-	    {
-	      if (le < ppos - 1)
-		{
-		  SwapPoints (ppos - 1, plast, le);
-		  ppos--;
-		  plast--;
-		}
-	      else if (le == ppos - 1)
-		{
-		  SwapPoints (plast, le);
-		  ppos--;
-		  plast--;
-		}
-	    }
-	}
+        {
+          if (ri > plast)
+            {
+              SwapPoints (le, ri);
+              le++;
+              ri--;
+            }
+          else
+            {
+              if (le < ppos - 1)
+                {
+                  SwapPoints (ppos - 1, plast, le);
+                  ppos--;
+                  plast--;
+                }
+              else if (le == ppos - 1)
+                {
+                  SwapPoints (plast, le);
+                  ppos--;
+                  plast--;
+                }
+            }
+        }
       else
-	{
-	  if (ri > plast + 1)
-	    {
-	      SwapPoints (plast + 1, ppos, ri);
-	      ppos++;
-	      plast++;
-	    }
-	  else if (ri == plast + 1)
-	    {
-	      SwapPoints (ppos, ri);
-	      ppos++;
-	      plast++;
-	    }
-	  else
-	    {
-	      break;
-	    }
-	}
+        {
+          if (ri > plast + 1)
+            {
+              SwapPoints (plast + 1, ppos, ri);
+              ppos++;
+              plast++;
+            }
+          else if (ri == plast + 1)
+            {
+              SwapPoints (ppos, ri);
+              ppos++;
+              plast++;
+            }
+          else
+            {
+              break;
+            }
+        }
     }
   SortPointsRounded (s, ppos - 1);
   SortPointsRounded (plast + 1, e);
@@ -1107,17 +1120,17 @@ Shape::AddEdge (int st, int en)
     {
       maxAr = 2 * numberOfEdges() + 1;
       if (_has_edges_data)
-	eData.resize(maxAr);
+        eData.resize(maxAr);
       if (_has_sweep_src_data)
-	swsData.resize(maxAr);
+        swsData.resize(maxAr);
       if (_has_sweep_dest_data)
-	swdData.resize(maxAr);
+        swdData.resize(maxAr);
       if (_has_raster_data)
-	swrData.resize(maxAr);
+        swrData.resize(maxAr);
       if (_has_back_data)
-	ebData.resize(maxAr);
+        ebData.resize(maxAr);
       if (_has_voronoi_data)
-	voreData.resize(maxAr);
+        voreData.resize(maxAr);
     }
 
   dg_arete a;
@@ -1170,11 +1183,11 @@ Shape::AddEdge (int st, int en, int leF, int riF)
     int cb = getPoint(st).incidentEdge[FIRST];
     while (cb >= 0)
       {
-	if (getEdge(cb).st == st && getEdge(cb).en == en)
-	  return -1;		// doublon
-	if (getEdge(cb).st == en && getEdge(cb).en == st)
-	  return -1;		// doublon
-	cb = NextAt (st, cb);
+        if (getEdge(cb).st == st && getEdge(cb).en == en)
+          return -1;		// doublon
+        if (getEdge(cb).st == en && getEdge(cb).en == st)
+          return -1;		// doublon
+        cb = NextAt (st, cb);
       }
   }
   type = shape_graph;
@@ -1182,17 +1195,17 @@ Shape::AddEdge (int st, int en, int leF, int riF)
     {
       maxAr = 2 * numberOfEdges() + 1;
       if (_has_edges_data)
-	eData.resize(maxAr);
+        eData.resize(maxAr);
       if (_has_sweep_src_data)
-	swsData.resize(maxAr);
+        swsData.resize(maxAr);
       if (_has_sweep_dest_data)
-	swdData.resize(maxAr);
+        swdData.resize(maxAr);
       if (_has_raster_data)
-	swrData.resize(maxAr);
+        swrData.resize(maxAr);
       if (_has_back_data)
-	ebData.resize(maxAr);
+        ebData.resize(maxAr);
       if (_has_voronoi_data)
-	voreData.resize(maxAr);
+        voreData.resize(maxAr);
     }
 
   dg_arete a;
@@ -1256,106 +1269,106 @@ Shape::SwapEdges (int a, int b)
   if (getEdge(a).prevS >= 0 && getEdge(a).prevS != b)
     {
       if (getEdge(getEdge(a).prevS).st == getEdge(a).st)
-	{
-	  _aretes[getEdge(a).prevS].nextS = b;
-	}
+        {
+          _aretes[getEdge(a).prevS].nextS = b;
+        }
       else if (getEdge(getEdge(a).prevS).en == getEdge(a).st)
-	{
-	  _aretes[getEdge(a).prevS].nextE = b;
-	}
+        {
+          _aretes[getEdge(a).prevS].nextE = b;
+        }
     }
   if (getEdge(a).nextS >= 0 && getEdge(a).nextS != b)
     {
       if (getEdge(getEdge(a).nextS).st == getEdge(a).st)
-	{
-	  _aretes[getEdge(a).nextS].prevS = b;
-	}
+        {
+          _aretes[getEdge(a).nextS].prevS = b;
+        }
       else if (getEdge(getEdge(a).nextS).en == getEdge(a).st)
-	{
-	  _aretes[getEdge(a).nextS].prevE = b;
-	}
+        {
+          _aretes[getEdge(a).nextS].prevE = b;
+        }
     }
   if (getEdge(a).prevE >= 0 && getEdge(a).prevE != b)
     {
       if (getEdge(getEdge(a).prevE).st == getEdge(a).en)
-	{
-	  _aretes[getEdge(a).prevE].nextS = b;
-	}
+        {
+          _aretes[getEdge(a).prevE].nextS = b;
+        }
       else if (getEdge(getEdge(a).prevE).en == getEdge(a).en)
-	{
-	  _aretes[getEdge(a).prevE].nextE = b;
-	}
+        {
+          _aretes[getEdge(a).prevE].nextE = b;
+        }
     }
   if (getEdge(a).nextE >= 0 && getEdge(a).nextE != b)
     {
       if (getEdge(getEdge(a).nextE).st == getEdge(a).en)
-	{
-	  _aretes[getEdge(a).nextE].prevS = b;
-	}
+        {
+          _aretes[getEdge(a).nextE].prevS = b;
+        }
       else if (getEdge(getEdge(a).nextE).en == getEdge(a).en)
-	{
-	  _aretes[getEdge(a).nextE].prevE = b;
-	}
+        {
+          _aretes[getEdge(a).nextE].prevE = b;
+        }
     }
   if (getEdge(a).st >= 0)
     {
       if (getPoint(getEdge(a).st).incidentEdge[FIRST] == a)
-	_pts[getEdge(a).st].incidentEdge[FIRST] = numberOfEdges();
+        _pts[getEdge(a).st].incidentEdge[FIRST] = numberOfEdges();
       if (getPoint(getEdge(a).st).incidentEdge[LAST] == a)
-	_pts[getEdge(a).st].incidentEdge[LAST] = numberOfEdges();
+        _pts[getEdge(a).st].incidentEdge[LAST] = numberOfEdges();
     }
   if (getEdge(a).en >= 0)
     {
       if (getPoint(getEdge(a).en).incidentEdge[FIRST] == a)
-	_pts[getEdge(a).en].incidentEdge[FIRST] = numberOfEdges();
+        _pts[getEdge(a).en].incidentEdge[FIRST] = numberOfEdges();
       if (getPoint(getEdge(a).en).incidentEdge[LAST] == a)
-	_pts[getEdge(a).en].incidentEdge[LAST] = numberOfEdges();
+        _pts[getEdge(a).en].incidentEdge[LAST] = numberOfEdges();
     }
 
 
   if (getEdge(b).prevS >= 0 && getEdge(b).prevS != a)
     {
       if (getEdge(getEdge(b).prevS).st == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).prevS].nextS = a;
-	}
+        {
+          _aretes[getEdge(b).prevS].nextS = a;
+        }
       else if (getEdge(getEdge(b).prevS).en == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).prevS].nextE = a;
-	}
+        {
+          _aretes[getEdge(b).prevS].nextE = a;
+        }
     }
   if (getEdge(b).nextS >= 0 && getEdge(b).nextS != a)
     {
       if (getEdge(getEdge(b).nextS).st == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).nextS].prevS = a;
-	}
+        {
+          _aretes[getEdge(b).nextS].prevS = a;
+        }
       else if (getEdge(getEdge(b).nextS).en == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).nextS].prevE = a;
-	}
+        {
+          _aretes[getEdge(b).nextS].prevE = a;
+        }
     }
   if (getEdge(b).prevE >= 0 && getEdge(b).prevE != a)
     {
       if (getEdge(getEdge(b).prevE).st == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).prevE].nextS = a;
-	}
+        {
+          _aretes[getEdge(b).prevE].nextS = a;
+        }
       else if (getEdge(getEdge(b).prevE).en == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).prevE].nextE = a;
-	}
+        {
+          _aretes[getEdge(b).prevE].nextE = a;
+        }
     }
   if (getEdge(b).nextE >= 0 && getEdge(b).nextE != a)
     {
       if (getEdge(getEdge(b).nextE).st == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).nextE].prevS = a;
-	}
+        {
+          _aretes[getEdge(b).nextE].prevS = a;
+        }
       else if (getEdge(getEdge(b).nextE).en == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).nextE].prevE = a;
-	}
+        {
+          _aretes[getEdge(b).nextE].prevE = a;
+        }
     }
 
   
@@ -1363,28 +1376,28 @@ Shape::SwapEdges (int a, int b)
     int p = getEdge(b).st;
     if (p >= 0) {
       if (getPoint(p).incidentEdge[i] == b) {
-	_pts[p].incidentEdge[i] = a;
+        _pts[p].incidentEdge[i] = a;
       }
     }
 
     p = getEdge(b).en;
     if (p >= 0) {
       if (getPoint(p).incidentEdge[i] == b) {
-	_pts[p].incidentEdge[i] = a;
+        _pts[p].incidentEdge[i] = a;
       }
     }
 
     p = getEdge(a).st;
     if (p >= 0) {
       if (getPoint(p).incidentEdge[i] == numberOfEdges()) {
-	_pts[p].incidentEdge[i] = b;
+        _pts[p].incidentEdge[i] = b;
       }
     }
 
     p = getEdge(a).en;
     if (p >= 0) {
       if (getPoint(p).incidentEdge[i] == numberOfEdges()) {
-	_pts[p].incidentEdge[i] = b;
+        _pts[p].incidentEdge[i] = b;
       }
     }
 
@@ -1469,71 +1482,71 @@ Shape::SortEdges (void)
     {
       int const d = getPoint(p).totalDegree();
       if (d > 1)
-	{
-	  int cb;
-	  cb = getPoint(p).incidentEdge[FIRST];
-	  int nb = 0;
-	  while (cb >= 0)
-	    {
-	      int n = nb++;
-	      list[n].no = cb;
-	      if (getEdge(cb).st == p)
-		{
-		  list[n].x = getEdge(cb).dx;
-		  list[n].starting = true;
-		}
-	      else
-		{
-		  list[n].x = -getEdge(cb).dx;
-		  list[n].starting = false;
-		}
-	      cb = NextAt (p, cb);
-	    }
-	  SortEdgesList (list, 0, nb - 1);
-	  _pts[p].incidentEdge[FIRST] = list[0].no;
-	  _pts[p].incidentEdge[LAST] = list[nb - 1].no;
-	  for (int i = 0; i < nb; i++)
-	    {
-	      if (list[i].starting)
-		{
-		  if (i > 0)
-		    {
-		      _aretes[list[i].no].prevS = list[i - 1].no;
-		    }
-		  else
-		    {
-		      _aretes[list[i].no].prevS = -1;
-		    }
-		  if (i < nb - 1)
-		    {
-		      _aretes[list[i].no].nextS = list[i + 1].no;
-		    }
-		  else
-		    {
-		      _aretes[list[i].no].nextS = -1;
-		    }
-		}
-	      else
-		{
-		  if (i > 0)
-		    {
-		      _aretes[list[i].no].prevE = list[i - 1].no;
-		    }
-		  else
-		    {
-		      _aretes[list[i].no].prevE = -1;
-		    }
-		  if (i < nb - 1)
-		    {
-		      _aretes[list[i].no].nextE = list[i + 1].no;
-		    }
-		  else
-		    {
-		      _aretes[list[i].no].nextE = -1;
-		    }
-		}
-	    }
-	}
+        {
+          int cb;
+          cb = getPoint(p).incidentEdge[FIRST];
+          int nb = 0;
+          while (cb >= 0)
+            {
+              int n = nb++;
+              list[n].no = cb;
+              if (getEdge(cb).st == p)
+                {
+                  list[n].x = getEdge(cb).dx;
+                  list[n].starting = true;
+                }
+              else
+                {
+                  list[n].x = -getEdge(cb).dx;
+                  list[n].starting = false;
+                }
+              cb = NextAt (p, cb);
+            }
+          SortEdgesList (list, 0, nb - 1);
+          _pts[p].incidentEdge[FIRST] = list[0].no;
+          _pts[p].incidentEdge[LAST] = list[nb - 1].no;
+          for (int i = 0; i < nb; i++)
+            {
+              if (list[i].starting)
+                {
+                  if (i > 0)
+                    {
+                      _aretes[list[i].no].prevS = list[i - 1].no;
+                    }
+                  else
+                    {
+                      _aretes[list[i].no].prevS = -1;
+                    }
+                  if (i < nb - 1)
+                    {
+                      _aretes[list[i].no].nextS = list[i + 1].no;
+                    }
+                  else
+                    {
+                      _aretes[list[i].no].nextS = -1;
+                    }
+                }
+              else
+                {
+                  if (i > 0)
+                    {
+                      _aretes[list[i].no].prevE = list[i - 1].no;
+                    }
+                  else
+                    {
+                      _aretes[list[i].no].prevE = -1;
+                    }
+                  if (i < nb - 1)
+                    {
+                      _aretes[list[i].no].nextE = list[i + 1].no;
+                    }
+                  else
+                    {
+                      _aretes[list[i].no].nextE = -1;
+                    }
+                }
+            }
+        }
     }
   g_free(list);
 }
@@ -1566,92 +1579,92 @@ Shape::CmpToVert (NR::Point ax, NR::Point bx,bool as,bool bs)
   if (tstAX < 0)
     {
       if (tstAY < 0)
-	{
-	  quadA = 7;
-	}
+        {
+          quadA = 7;
+        }
       else if (tstAY == 0)
-	{
-	  quadA = 6;
-	}
+        {
+          quadA = 6;
+        }
       else if (tstAY > 0)
-	{
-	  quadA = 5;
-	}
+        {
+          quadA = 5;
+        }
     }
   else if (tstAX == 0)
     {
       if (tstAY < 0)
-	{
-	  quadA = 0;
-	}
+        {
+          quadA = 0;
+        }
       else if (tstAY == 0)
-	{
-	  quadA = -1;
-	}
+        {
+          quadA = -1;
+        }
       else if (tstAY > 0)
-	{
-	  quadA = 4;
-	}
+        {
+          quadA = 4;
+        }
     }
   else if (tstAX > 0)
     {
       if (tstAY < 0)
-	{
-	  quadA = 1;
-	}
+        {
+          quadA = 1;
+        }
       else if (tstAY == 0)
-	{
-	  quadA = 2;
-	}
+        {
+          quadA = 2;
+        }
       else if (tstAY > 0)
-	{
-	  quadA = 3;
-	}
+        {
+          quadA = 3;
+        }
     }
   if (tstBX < 0)
     {
       if (tstBY < 0)
-	{
-	  quadB = 7;
-	}
+        {
+          quadB = 7;
+        }
       else if (tstBY == 0)
-	{
-	  quadB = 6;
-	}
+        {
+          quadB = 6;
+        }
       else if (tstBY > 0)
-	{
-	  quadB = 5;
-	}
+        {
+          quadB = 5;
+        }
     }
   else if (tstBX == 0)
     {
       if (tstBY < 0)
-	{
-	  quadB = 0;
-	}
+        {
+          quadB = 0;
+        }
       else if (tstBY == 0)
-	{
-	  quadB = -1;
-	}
+        {
+          quadB = -1;
+        }
       else if (tstBY > 0)
-	{
-	  quadB = 4;
-	}
+        {
+          quadB = 4;
+        }
     }
   else if (tstBX > 0)
     {
       if (tstBY < 0)
-	{
-	  quadB = 1;
-	}
+        {
+          quadB = 1;
+        }
       else if (tstBY == 0)
-	{
-	  quadB = 2;
-	}
+        {
+          quadB = 2;
+        }
       else if (tstBY > 0)
-	{
-	  quadB = 3;
-	}
+        {
+          quadB = 3;
+        }
     }
   if (quadA < quadB)
     return 1;
@@ -1696,134 +1709,134 @@ Shape::SortEdgesList (edge_list * list, int s, int e)
   while (le < ppos || ri > plast)
     {
       if (le < ppos)
-	{
-	  do
-	    {
+        {
+          do
+            {
         int test = CmpToVert (pvalx, list[le].x,pvals,list[le].starting);
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (le < ppos - 1)
-		    {
-		      edge_list swap = list[le];
-		      list[le] = list[ppos - 1];
-		      list[ppos - 1] = list[ppos];
-		      list[ppos] = swap;
-		      ppos--;
-		      continue;	// sans changer le
-		    }
-		  else if (le == ppos - 1)
-		    {
-		      ppos--;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test > 0)
-		{
-		  break;
-		}
-	      le++;
-	    }
-	  while (le < ppos);
-	}
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (le < ppos - 1)
+                    {
+                      edge_list swap = list[le];
+                      list[le] = list[ppos - 1];
+                      list[ppos - 1] = list[ppos];
+                      list[ppos] = swap;
+                      ppos--;
+                      continue;	// sans changer le
+                    }
+                  else if (le == ppos - 1)
+                    {
+                      ppos--;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test > 0)
+                {
+                  break;
+                }
+              le++;
+            }
+          while (le < ppos);
+        }
       if (ri > plast)
-	{
-	  do
-	    {
+        {
+          do
+            {
         int test = CmpToVert (pvalx, list[ri].x,pvals,list[ri].starting);
-	      if (test == 0)
-		{
-		  // on colle les valeurs egales au pivot ensemble
-		  if (ri > plast + 1)
-		    {
-		      edge_list swap = list[ri];
-		      list[ri] = list[plast + 1];
-		      list[plast + 1] = list[plast];
-		      list[plast] = swap;
-		      plast++;
-		      continue;	// sans changer ri
-		    }
-		  else if (ri == plast + 1)
-		    {
-		      plast++;
-		      break;
-		    }
-		  else
-		    {
-		      // oupsie
-		      break;
-		    }
-		}
-	      if (test < 0)
-		{
-		  break;
-		}
-	      ri--;
-	    }
-	  while (ri > plast);
-	}
+              if (test == 0)
+                {
+                  // on colle les valeurs egales au pivot ensemble
+                  if (ri > plast + 1)
+                    {
+                      edge_list swap = list[ri];
+                      list[ri] = list[plast + 1];
+                      list[plast + 1] = list[plast];
+                      list[plast] = swap;
+                      plast++;
+                      continue;	// sans changer ri
+                    }
+                  else if (ri == plast + 1)
+                    {
+                      plast++;
+                      break;
+                    }
+                  else
+                    {
+                      // oupsie
+                      break;
+                    }
+                }
+              if (test < 0)
+                {
+                  break;
+                }
+              ri--;
+            }
+          while (ri > plast);
+        }
 
       if (le < ppos)
-	{
-	  if (ri > plast)
-	    {
-	      edge_list swap = list[le];
-	      list[le] = list[ri];
-	      list[ri] = swap;
-	      le++;
-	      ri--;
-	    }
-	  else if (le < ppos - 1)
-	    {
-	      edge_list swap = list[ppos - 1];
-	      list[ppos - 1] = list[plast];
-	      list[plast] = list[le];
-	      list[le] = swap;
-	      ppos--;
-	      plast--;
-	    }
-	  else if (le == ppos - 1)
-	    {
-	      edge_list swap = list[plast];
-	      list[plast] = list[le];
-	      list[le] = swap;
-	      ppos--;
-	      plast--;
-	    }
-	  else
-	    {
-	      break;
-	    }
-	}
+        {
+          if (ri > plast)
+            {
+              edge_list swap = list[le];
+              list[le] = list[ri];
+              list[ri] = swap;
+              le++;
+              ri--;
+            }
+          else if (le < ppos - 1)
+            {
+              edge_list swap = list[ppos - 1];
+              list[ppos - 1] = list[plast];
+              list[plast] = list[le];
+              list[le] = swap;
+              ppos--;
+              plast--;
+            }
+          else if (le == ppos - 1)
+            {
+              edge_list swap = list[plast];
+              list[plast] = list[le];
+              list[le] = swap;
+              ppos--;
+              plast--;
+            }
+          else
+            {
+              break;
+            }
+        }
       else
-	{
-	  if (ri > plast + 1)
-	    {
-	      edge_list swap = list[plast + 1];
-	      list[plast + 1] = list[ppos];
-	      list[ppos] = list[ri];
-	      list[ri] = swap;
-	      ppos++;
-	      plast++;
-	    }
-	  else if (ri == plast + 1)
-	    {
-	      edge_list swap = list[ppos];
-	      list[ppos] = list[ri];
-	      list[ri] = swap;
-	      ppos++;
-	      plast++;
-	    }
-	  else
-	    {
-	      break;
-	    }
-	}
+        {
+          if (ri > plast + 1)
+            {
+              edge_list swap = list[plast + 1];
+              list[plast + 1] = list[ppos];
+              list[ppos] = list[ri];
+              list[ri] = swap;
+              ppos++;
+              plast++;
+            }
+          else if (ri == plast + 1)
+            {
+              edge_list swap = list[ppos];
+              list[ppos] = list[ri];
+              list[ri] = swap;
+              ppos++;
+              plast++;
+            }
+          else
+            {
+              break;
+            }
+        }
     }
   SortEdgesList (list, s, ppos - 1);
   SortEdgesList (list, plast + 1, e);
@@ -1848,13 +1861,13 @@ Shape::ConnectStart (int p, int b)
   if (getPoint(p).incidentEdge[LAST] >= 0)
     {
       if (getEdge(getPoint(p).incidentEdge[LAST]).st == p)
-	{
-	  _aretes[getPoint(p).incidentEdge[LAST]].nextS = b;
-	}
+        {
+          _aretes[getPoint(p).incidentEdge[LAST]].nextS = b;
+        }
       else if (getEdge(getPoint(p).incidentEdge[LAST]).en == p)
-	{
-	  _aretes[getPoint(p).incidentEdge[LAST]].nextE = b;
-	}
+        {
+          _aretes[getPoint(p).incidentEdge[LAST]].nextE = b;
+        }
     }
   _pts[p].incidentEdge[LAST] = b;
   if (getPoint(p).incidentEdge[FIRST] < 0)
@@ -1873,13 +1886,13 @@ Shape::ConnectEnd (int p, int b)
   if (getPoint(p).incidentEdge[LAST] >= 0)
     {
       if (getEdge(getPoint(p).incidentEdge[LAST]).st == p)
-	{
-	  _aretes[getPoint(p).incidentEdge[LAST]].nextS = b;
-	}
+        {
+          _aretes[getPoint(p).incidentEdge[LAST]].nextS = b;
+        }
       else if (getEdge(getPoint(p).incidentEdge[LAST]).en == p)
-	{
-	  _aretes[getPoint(p).incidentEdge[LAST]].nextE = b;
-	}
+        {
+          _aretes[getPoint(p).incidentEdge[LAST]].nextE = b;
+        }
     }
   _pts[p].incidentEdge[LAST] = b;
   if (getPoint(p).incidentEdge[FIRST] < 0)
@@ -1895,24 +1908,24 @@ Shape::DisconnectStart (int b)
   if (getEdge(b).prevS >= 0)
     {
       if (getEdge(getEdge(b).prevS).st == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).prevS].nextS = getEdge(b).nextS;
-	}
+        {
+          _aretes[getEdge(b).prevS].nextS = getEdge(b).nextS;
+        }
       else if (getEdge(getEdge(b).prevS).en == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).prevS].nextE = getEdge(b).nextS;
-	}
+        {
+          _aretes[getEdge(b).prevS].nextE = getEdge(b).nextS;
+        }
     }
   if (getEdge(b).nextS >= 0)
     {
       if (getEdge(getEdge(b).nextS).st == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).nextS].prevS = getEdge(b).prevS;
-	}
+        {
+          _aretes[getEdge(b).nextS].prevS = getEdge(b).prevS;
+        }
       else if (getEdge(getEdge(b).nextS).en == getEdge(b).st)
-	{
-	  _aretes[getEdge(b).nextS].prevE = getEdge(b).prevS;
-	}
+        {
+          _aretes[getEdge(b).nextS].prevE = getEdge(b).prevS;
+        }
     }
   if (getPoint(getEdge(b).st).incidentEdge[FIRST] == b)
     _pts[getEdge(b).st].incidentEdge[FIRST] = getEdge(b).nextS;
@@ -1930,24 +1943,24 @@ Shape::DisconnectEnd (int b)
   if (getEdge(b).prevE >= 0)
     {
       if (getEdge(getEdge(b).prevE).st == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).prevE].nextS = getEdge(b).nextE;
-	}
+        {
+          _aretes[getEdge(b).prevE].nextS = getEdge(b).nextE;
+        }
       else if (getEdge(getEdge(b).prevE).en == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).prevE].nextE = getEdge(b).nextE;
-	}
+        {
+          _aretes[getEdge(b).prevE].nextE = getEdge(b).nextE;
+        }
     }
   if (getEdge(b).nextE >= 0)
     {
       if (getEdge(getEdge(b).nextE).st == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).nextE].prevS = getEdge(b).prevE;
-	}
+        {
+          _aretes[getEdge(b).nextE].prevS = getEdge(b).prevE;
+        }
       else if (getEdge(getEdge(b).nextE).en == getEdge(b).en)
-	{
-	  _aretes[getEdge(b).nextE].prevE = getEdge(b).prevE;
-	}
+        {
+          _aretes[getEdge(b).nextE].prevE = getEdge(b).prevE;
+        }
     }
   if (getPoint(getEdge(b).en).incidentEdge[FIRST] == b)
     _pts[getEdge(b).en].incidentEdge[FIRST] = getEdge(b).nextE;
@@ -2005,9 +2018,12 @@ Shape::Inverse (int b)
 void
 Shape::CalcBBox (bool strict_degree)
 {
+  if (_bbox_up_to_date)
+    return;
   if (hasPoints() == false)
   {
     leftX = rightX = topY = bottomY = 0;
+    _bbox_up_to_date = true;
     return;
   }
   leftX = rightX = getPoint(0).x[0];
@@ -2028,6 +2044,8 @@ Shape::CalcBBox (bool strict_degree)
       }
     }
   }
+
+  _bbox_up_to_date = true;
 }
 
 // winding of a point with respect to the Shape
@@ -2091,15 +2109,19 @@ Shape::PtWinding (const NR::Point px) const
 
 void Shape::initialisePointData()
 {
+    if (_point_data_initialised)
+        return;
     int const N = numberOfPoints();
   
     for (int i = 0; i < N; i++) {
-	pData[i].pending = 0;
-	pData[i].edgeOnLeft = -1;
-	pData[i].nextLinkedPoint = -1;
-	pData[i].rx[0] = Round(getPoint(i).x[0]);
-	pData[i].rx[1] = Round(getPoint(i).x[1]);
+        pData[i].pending = 0;
+        pData[i].edgeOnLeft = -1;
+        pData[i].nextLinkedPoint = -1;
+        pData[i].rx[0] = Round(getPoint(i).x[0]);
+        pData[i].rx[1] = Round(getPoint(i).x[1]);
     }
+
+    _point_data_initialised = true;
 }
 
 void Shape::initialiseEdgeData()
@@ -2107,27 +2129,27 @@ void Shape::initialiseEdgeData()
     int const N = numberOfEdges();
 
     for (int i = 0; i < N; i++) {
-	eData[i].rdx = pData[getEdge(i).en].rx - pData[getEdge(i).st].rx;
-	eData[i].length = dot(eData[i].rdx, eData[i].rdx);
-	eData[i].ilength = 1 / eData[i].length;
-	eData[i].sqlength = sqrt(eData[i].length);
-	eData[i].isqlength = 1 / eData[i].sqlength;
-	eData[i].siEd = eData[i].rdx[1] * eData[i].isqlength;
-	eData[i].coEd = eData[i].rdx[0] * eData[i].isqlength;
-	
-	if (eData[i].siEd < 0) {
-	    eData[i].siEd = -eData[i].siEd;
-	    eData[i].coEd = -eData[i].coEd;
-	}
+        eData[i].rdx = pData[getEdge(i).en].rx - pData[getEdge(i).st].rx;
+        eData[i].length = dot(eData[i].rdx, eData[i].rdx);
+        eData[i].ilength = 1 / eData[i].length;
+        eData[i].sqlength = sqrt(eData[i].length);
+        eData[i].isqlength = 1 / eData[i].sqlength;
+        eData[i].siEd = eData[i].rdx[1] * eData[i].isqlength;
+        eData[i].coEd = eData[i].rdx[0] * eData[i].isqlength;
+        
+        if (eData[i].siEd < 0) {
+            eData[i].siEd = -eData[i].siEd;
+            eData[i].coEd = -eData[i].coEd;
+        }
 
-	swsData[i].misc = NULL;
-	swsData[i].firstLinkedPoint = -1;
-	swsData[i].stPt = swsData[i].enPt = -1;
-	swsData[i].leftRnd = swsData[i].rightRnd = -1;
-	swsData[i].nextSh = NULL;
-	swsData[i].nextBo = -1;
-	swsData[i].curPoint = -1;
-	swsData[i].doneTo = -1;
+        swsData[i].misc = NULL;
+        swsData[i].firstLinkedPoint = -1;
+        swsData[i].stPt = swsData[i].enPt = -1;
+        swsData[i].leftRnd = swsData[i].rightRnd = -1;
+        swsData[i].nextSh = NULL;
+        swsData[i].nextBo = -1;
+        swsData[i].curPoint = -1;
+        swsData[i].doneTo = -1;
   }
 }
 
@@ -2152,9 +2174,9 @@ void Shape::clearIncidenceData()
 bool directedEulerian(Shape const *s)
 {
     for (int i = 0; i < s->numberOfPoints(); i++) {
-	if (s->getPoint(i).dI != s->getPoint(i).dO) {
-	    return false;
-	}
+        if (s->getPoint(i).dI != s->getPoint(i).dO) {
+            return false;
+        }
     }
 
     return true;
@@ -2171,7 +2193,7 @@ bool directedEulerian(Shape const *s)
 double distance(Shape const *s, NR::Point const &p)
 {
     if ( s->hasPoints() == false) {
-	return 0.0;
+        return 0.0;
     }
 
     /* Find the minimum distance from p to one of the points on s.
@@ -2182,35 +2204,35 @@ double distance(Shape const *s, NR::Point const &p)
     double bdot = NR::dot(p - s->getPoint(0).x, p - s->getPoint(0).x);
 
     for (int i = 0; i < s->numberOfPoints(); i++) {
-	NR::Point const offset( p - s->getPoint(i).x );
-	double ndot = NR::dot(offset, offset);
-	if ( ndot < bdot ) {
-	    bdot = ndot;
-	}
+        NR::Point const offset( p - s->getPoint(i).x );
+        double ndot = NR::dot(offset, offset);
+        if ( ndot < bdot ) {
+            bdot = ndot;
+        }
     }
 
     for (int i = 0; i < s->numberOfEdges(); i++) {
-	if ( s->getEdge(i).st >= 0 && s->getEdge(i).en >= 0 ) {
-	    /* The edge has start and end points */
-	    NR::Point const st(s->getPoint(s->getEdge(i).st).x); // edge start
-	    NR::Point const en(s->getPoint(s->getEdge(i).en).x); // edge end
+        if ( s->getEdge(i).st >= 0 && s->getEdge(i).en >= 0 ) {
+            /* The edge has start and end points */
+            NR::Point const st(s->getPoint(s->getEdge(i).st).x); // edge start
+            NR::Point const en(s->getPoint(s->getEdge(i).en).x); // edge end
 
-	    NR::Point const d(p - st);       // vector between p and edge start
-	    NR::Point const e(en - st);      // vector of the edge
-	    double const el = NR::dot(e, e); // edge length
+            NR::Point const d(p - st);       // vector between p and edge start
+            NR::Point const e(en - st);      // vector of the edge
+            double const el = NR::dot(e, e); // edge length
 
-	    /* Update bdot if appropriate */
-	    if ( el > 0.001 ) {
-		double const npr = NR::dot(d, e);
-		if ( npr > 0 && npr < el ) {
-		    double const nl = fabs( NR::cross(d, e) );
-		    double ndot = nl * nl / el;
-		    if ( ndot < bdot ) {
-			bdot = ndot;
-		    }
-		}
-	    }
-	}
+            /* Update bdot if appropriate */
+            if ( el > 0.001 ) {
+                double const npr = NR::dot(d, e);
+                if ( npr > 0 && npr < el ) {
+                    double const nl = fabs( NR::cross(d, e) );
+                    double ndot = nl * nl / el;
+                    if ( ndot < bdot ) {
+                        bdot = ndot;
+                    }
+                }
+            }
+        }
     }
     
     return sqrt(bdot);
@@ -2233,7 +2255,7 @@ double distance(Shape const *s, NR::Point const &p)
 bool distanceLessThanOrEqual(Shape const *s, NR::Point const &p, double const max_l2)
 {
     if ( s->hasPoints() == false ) {
-	return false;
+        return false;
     }
     
     /* TODO: Consider using bbox to return early, perhaps conditional on nbPt or nbAr. */
@@ -2248,31 +2270,31 @@ bool distanceLessThanOrEqual(Shape const *s, NR::Point const &p, double const ma
   
     double const max_l1 = max_l2 * M_SQRT2;
     for (int i = 0; i < s->numberOfPoints(); i++) {
-	NR::Point const offset( p - s->getPoint(i).x );
-	double const l1 = NR::L1(offset);
-	if ( (l1 <= max_l2) || ((l1 <= max_l1) && (NR::L2(offset) <= max_l2)) ) {
-	    return true;
-	}
+        NR::Point const offset( p - s->getPoint(i).x );
+        double const l1 = NR::L1(offset);
+        if ( (l1 <= max_l2) || ((l1 <= max_l1) && (NR::L2(offset) <= max_l2)) ) {
+            return true;
+        }
     }
     
     for (int i = 0; i < s->numberOfEdges(); i++) {
-	if ( s->getEdge(i).st >= 0 && s->getEdge(i).en >= 0 ) {
-	    NR::Point const st(s->getPoint(s->getEdge(i).st).x);
-	    NR::Point const en(s->getPoint(s->getEdge(i).en).x);
-	    NR::Point const d(p - st);
-	    NR::Point const e(en - st);
-	    double const el = NR::L2(e);
-	    if ( el > 0.001 ) {
-		NR::Point const e_unit(e / el);
-		double const npr = NR::dot(d, e_unit);
-		if ( npr > 0 && npr < el ) {
-		    double const nl = fabs(NR::cross(d, e_unit));
-		    if ( nl <= max_l2 ) {
-			return true;
-		    }
-		}
-	    }
-	}
+        if ( s->getEdge(i).st >= 0 && s->getEdge(i).en >= 0 ) {
+            NR::Point const st(s->getPoint(s->getEdge(i).st).x);
+            NR::Point const en(s->getPoint(s->getEdge(i).en).x);
+            NR::Point const d(p - st);
+            NR::Point const e(en - st);
+            double const el = NR::L2(e);
+            if ( el > 0.001 ) {
+                NR::Point const e_unit(e / el);
+                double const npr = NR::dot(d, e_unit);
+                if ( npr > 0 && npr < el ) {
+                    double const nl = fabs(NR::cross(d, e_unit));
+                    if ( nl <= max_l2 ) {
+                        return true;
+                    }
+                }
+            }
+        }
     }
     
     return false;

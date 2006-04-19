@@ -278,10 +278,12 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 						  FALSE, FALSE);
 
 #ifdef STRICT_RGBA
+            pb.visible_area = buf->visible_rect; 
 			nr_arena_item_invoke_render (arena->root, &area, &pb, 0);
 			nr_blit_pixblock_pixblock (&cb, &pb);
 			nr_pixblock_release (&pb);
 #else
+            cb.visible_area = buf->visible_rect; 
 			nr_arena_item_invoke_render (arena->root, &area, &cb, 0);
 #endif
 

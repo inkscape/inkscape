@@ -1565,6 +1565,10 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
             buf.rect.y0 = y0;
             buf.rect.x1 = x1;
             buf.rect.y1 = y1;
+            buf.visible_rect.x0 = draw_x1;
+            buf.visible_rect.y0 = draw_y1;
+            buf.visible_rect.x1 = draw_x2;
+            buf.visible_rect.y1 = draw_y2;
             GdkColor *color = &widget->style->bg[GTK_STATE_NORMAL];
             buf.bg_color = (((color->red & 0xff00) << 8)
                             | (color->green & 0xff00)

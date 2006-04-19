@@ -52,6 +52,7 @@ struct SPCanvasBuf{
     guchar *buf;
     int buf_rowstride;
     NRRectL rect;
+    NRRectL visible_rect;
     /// Background color, given as 0xrrggbb
     guint32 bg_color;
     // If empty, ignore contents of buffer and use a solid area of bg_color
