@@ -1,3 +1,20 @@
+2006-04-19 Andrius R. <knutux@gmail.com>
+	* src\display\nr-arena-item.cpp, src\display\canvas-arena.cpp,
+	  src\display\nr-arena-shape.cpp, src\display\sp-canvas.h,
+	  src\display\nr-arena.cpp, src\display\nr-arena-shape.h,
+	  src\display\nr-arena-glyphs.cpp, src\display\nr-gradient-gpl.cpp,
+	  src\display\sp-canvas.cpp, src\display\sp-ctrlline.cpp,
+	  src\livarot\ShapeSweep.cpp, src\livarot\Shape.h, src\livarot\Shape.cpp,
+	  src\livarot\Path.h, src\livarot\PathConversion.cpp,
+	  src\livarot\ShapeMisc.cpp, src\livarot\Path.cpp, src\libnr\nr-pixblock.h,
+	  src\libnr\nr-pixblock.cpp
+
+	  Rendering optimisation, which gives best results for zoomed in drawings
+	  with complex (multi-node) paths. Optimisation focus - eliminating cubicTo
+	  and LineTo nodes outside of visible area, so no unneeded calculations is
+	  needed and less memory is consumed (this avoids crashes which were
+	  occurring previously if zooming into a complex drawing)
+
 2006-04-18 njh <njh@njhurst.com>
 	* share/extensions/measure.inx, share/extensions/measure.py, share/extensions/Makefile.am
 
