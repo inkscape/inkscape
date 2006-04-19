@@ -2554,9 +2554,9 @@ void fit_canvas_to_selection(SPDesktop *desktop) {
     NRRect bbox = {0,0,0,0};
 
     desktop->selection->bounds(&bbox);
-    g_return_if_fail(!empty(bbox));
-
-    doc->fitToRect(bbox);
+    if (!empty(bbox)) {
+        doc->fitToRect(bbox);
+    }
 };
 
 void fit_canvas_to_drawing(SPDocument *doc) {
@@ -2566,9 +2566,9 @@ void fit_canvas_to_drawing(SPDocument *doc) {
     sp_document_ensure_up_to_date (doc);
     sp_item_invoke_bbox(SP_ITEM(doc->root), &bbox, sp_item_i2r_affine(SP_ITEM(doc->root)), TRUE);
 
-    g_return_if_fail(!empty(bbox));
-
-    doc->fitToRect(bbox);
+    if (!empty(bbox)) {
+        doc->fitToRect(bbox);
+    }
 };
 
 void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
