@@ -6,6 +6,7 @@
        <param name="radius" type="float" min="0.0" max="1000.0" _gui-text="Radius">100.0</param>
        <param name="end" type="boolean" _gui-text="Randomize nodes">true</param>
        <param name="ctrl" type="boolean" _gui-text="Randomize node handles">false</param>
+       <param name="norm" type="boolean" _gui-text="Use normal distribution">true</param>
    <effect>
                <object-type>path</object-type>
                 <effects-menu>

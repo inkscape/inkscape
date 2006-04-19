@@ -18,8 +18,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import random, math, inkex, cubicsuperpath
 
-def randomize((x, y), r):
-	r = random.uniform(0.0,r)
+def randomize((x, y), r, norm):
+	if norm:
+	    r = abs(random.normalvariate(0.0,0.5*r))
+	else:
+	    r = random.uniform(0.0,r)
 	a = random.uniform(0.0,2*math.pi)
 	x += math.cos(a)*r
 	y += math.sin(a)*r
@@ -40,6 +43,10 @@ class RadiusRandomize(inkex.Effect):
 						action="store", type="inkbool", 
 						dest="end", default=True,
 						help="Randomize nodes")
+		self.OptionParser.add_option("-n", "--norm",
+						action="store", type="inkbool", 
+						dest="norm", default=True,
+						help="Use normal distribution")
 	def effect(self):
 		for id, node in self.selected.iteritems():
 			if node.tagName == 'path':
@@ -48,7 +55,7 @@ class RadiusRandomize(inkex.Effect):
 				for subpath in p:
 					for csp in subpath:
 						if self.options.end:
-							delta=randomize([0,0], self.options.radius)
+							delta=randomize([0,0], self.options.radius, self.options.norm)
 							csp[0][0]+=delta[0] 
 							csp[0][1]+=delta[1] 
 							csp[1][0]+=delta[0] 
@@ -56,8 +63,8 @@ class RadiusRandomize(inkex.Effect):
 							csp[2][0]+=delta[0] 
 							csp[2][1]+=delta[1] 
 						if self.options.ctrl:
-							csp[0]=randomize(csp[0], self.options.radius)
-							csp[2]=randomize(csp[2], self.options.radius)
+							csp[0]=randomize(csp[0], self.options.radius, self.options.norm)
+							csp[2]=randomize(csp[2], self.options.radius, self.options.norm)
 				d.value = cubicsuperpath.formatPath(p)
 
 e = RadiusRandomize()
