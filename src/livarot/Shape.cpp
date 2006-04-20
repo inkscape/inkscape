@@ -19,10 +19,10 @@
  */
 
 Shape::Shape()
-  : iData(NULL),
+  : qrsData(NULL),
+    iData(NULL),
     sTree(NULL),
     sEvts(NULL),
-    qrsData(NULL),
     _need_points_sorting(false),
     _need_edges_sorting(false),
     _has_points_data(false),
