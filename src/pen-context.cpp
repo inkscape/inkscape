@@ -743,6 +743,19 @@ pen_lastpoint_move_screen (SPPenContext *const pc, gdouble x, gdouble y)
     pen_lastpoint_move (pc, x / pc->desktop->current_zoom(), y / pc->desktop->current_zoom());
 }
 
+static void
+pen_cancel (SPPenContext *const pc) 
+{
+    pc->state = SP_PEN_CONTEXT_STOP;
+    spdc_reset_colors(pc);
+    sp_canvas_item_hide(pc->c0);
+    sp_canvas_item_hide(pc->c1);
+    sp_canvas_item_hide(pc->cl0);
+    sp_canvas_item_hide(pc->cl1);
+    pc->_message_context->clear();
+    pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+}
+
 static gint
 pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
 {
@@ -822,12 +835,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_Escape:
             if (pc->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for deselecting
-                pc->state = SP_PEN_CONTEXT_STOP;
-                spdc_reset_colors(pc);
-                sp_canvas_item_hide(pc->c0);
-                sp_canvas_item_hide(pc->c1);
-                sp_canvas_item_hide(pc->cl0);
-                sp_canvas_item_hide(pc->cl1);
+                pen_cancel (pc);
                 ret = TRUE;
             }
             break;
@@ -835,12 +843,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_Z:
             if (MOD__CTRL_ONLY && pc->npoints != 0) {
                 // if drawing, cancel, otherwise pass it up for undo
-                pc->state = SP_PEN_CONTEXT_STOP;
-                spdc_reset_colors(pc);
-                sp_canvas_item_hide(pc->c0);
-                sp_canvas_item_hide(pc->c1);
-                sp_canvas_item_hide(pc->cl0);
-                sp_canvas_item_hide(pc->cl1);
+                pen_cancel (pc);
                 ret = TRUE;
             }
             break;
@@ -1051,7 +1054,7 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
 {
     SPDesktop *const desktop = pc->desktop;
     pc->_message_context->clear();
-    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Finishing pen"));
+    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Drawing finished"));
 
     sp_curve_reset(pc->red_curve);
     spdc_concat_colors_and_flush(pc, closed);
