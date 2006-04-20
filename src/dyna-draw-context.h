@@ -72,9 +72,6 @@ struct SPDynaDrawContext
     /* repr */
     Inkscape::XML::Node *repr;
 
-    /* time_id if use timeout */
-    gint timer_id;
-
     /* DynaDraw */
     NR::Point cur;
     NR::Point vel;
@@ -88,12 +85,11 @@ struct SPDynaDrawContext
     gdouble ytilt;
     /* attributes */
     guint dragging : 1;           /* mouse state: mouse is dragging */
-    guint use_timeout : 1;
+    guint usepressure : 1;
+    guint usetilt : 1;
     double mass, drag;
     double angle;
     double width;
-    guint usepressure : 1;
-    guint usetilt : 1;
 
     double vel_thin;
     double flatness;

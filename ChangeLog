@@ -1,3 +1,8 @@
+2006-04-20  MenTaLguY  <mental@rydia.net>
+
+    * src/dyna-draw-context.cpp, src/dyna-draw-context.h:
+	  remove unused timer code
+
 2006-04-19 Andrius R. <knutux@gmail.com>
 	* src\display\nr-arena-item.cpp, src\display\canvas-arena.cpp,
 	  src\display\nr-arena-shape.cpp, src\display\sp-canvas.h,

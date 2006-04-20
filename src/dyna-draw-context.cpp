@@ -144,8 +144,6 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->del = NR::Point(0,0);
 
     /* attributes */
-    ddc->use_timeout = FALSE;
-    ddc->timer_id = 0;
     ddc->dragging = FALSE;
 
     ddc->mass = 0.3;
@@ -451,32 +449,6 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     dc->npoints++;
 }
 
-static gint
-sp_dyna_draw_timeout_handler(gpointer data)
-{
-    SPDynaDrawContext *dc = SP_DYNA_DRAW_CONTEXT(data);
-    SPDesktop *desktop = SP_EVENT_CONTEXT(dc)->desktop;
-    SPCanvas *canvas = SP_CANVAS(sp_desktop_canvas(desktop));
-
-    dc->dragging = TRUE;
-
-    int x, y;
-    gtk_widget_get_pointer(GTK_WIDGET(canvas), &x, &y);
-    NR::Point p = sp_canvas_window_to_world(canvas, NR::Point(x, y));
-    p = desktop->w2d(p);
-    if (! sp_dyna_draw_apply(dc, p)) {
-        return TRUE;
-    }
-
-    if ( dc->cur != dc->last ) {
-        sp_dyna_draw_brush(dc);
-        g_assert( dc->npoints > 0 );
-        fit_and_split(dc, FALSE);
-    }
-
-    return TRUE;
-}
-
 void
 sp_ddc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
 {
@@ -517,27 +489,20 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
             dc->npoints = 0;
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                ( dc->use_timeout
-                                  ? ( GDK_KEY_PRESS_MASK |
-                                      GDK_BUTTON_RELEASE_MASK |
-                                      GDK_BUTTON_PRESS_MASK    )
-                                  : ( GDK_KEY_PRESS_MASK |
-                                      GDK_BUTTON_RELEASE_MASK |
-                                      GDK_POINTER_MOTION_MASK |
-                                      GDK_BUTTON_PRESS_MASK    ) ),
+                                ( GDK_KEY_PRESS_MASK |
+                                  GDK_BUTTON_RELEASE_MASK |
+                                  GDK_POINTER_MOTION_MASK |
+                                  GDK_BUTTON_PRESS_MASK ),
                                 NULL,
                                 event->button.time);
 
-            if ( dc->use_timeout && !dc->timer_id ) {
-                dc->timer_id = gtk_timeout_add(SAMPLE_TIMEOUT, sp_dyna_draw_timeout_handler, dc);
-            }
             ret = TRUE;
 
             dc->is_drawing = true;
         }
         break;
     case GDK_MOTION_NOTIFY:
-        if ( dc->is_drawing && !dc->use_timeout && ( event->motion.state & GDK_BUTTON1_MASK ) ) {
+        if ( dc->is_drawing && ( event->motion.state & GDK_BUTTON1_MASK ) ) {
             dc->dragging = TRUE;
 
             NR::Point const motion_w(event->motion.x,
@@ -562,13 +527,6 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     case GDK_BUTTON_RELEASE:
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         dc->is_drawing = false;
-        if ( event->button.button == 1
-             && dc->use_timeout
-             && dc->timer_id != 0 )
-        {
-            gtk_timeout_remove(dc->timer_id);
-            dc->timer_id = 0;
-        }
         if ( dc->dragging && event->button.button == 1 ) {
             dc->dragging = FALSE;
 
