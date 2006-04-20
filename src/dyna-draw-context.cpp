@@ -155,6 +155,8 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
 
     ddc->vel_thin = 0.1;
     ddc->flatness = 0.9;
+
+    ddc->abs_width = false;
 }
 
 static void
@@ -216,6 +218,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "flatness");
     sp_event_context_read(ec, "usepressure");
     sp_event_context_read(ec, "usetilt");
+    sp_event_context_read(ec, "abs_width");
 
     ddc->is_drawing = false;
 
@@ -252,6 +255,8 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
         ddc->usepressure = (val && strcmp(val, "0"));
     } else if (!strcmp(key, "usetilt")) {
         ddc->usetilt = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "abs_width")) {
+        ddc->abs_width = (val && strcmp(val, "0"));
     }
 
     //g_print("DDC: %g %g %g %g\n", ddc->mass, ddc->drag, ddc->angle, ddc->width);
@@ -428,11 +433,18 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
         width = 0.02 * dc->width;
     }
 
-    NR::Point del_left = 0.05 * (width + tremble_left) * dc->ang;
-    NR::Point del_right = 0.05 * (width + tremble_right) * dc->ang;
+    double dezoomify_factor = 0.05 * 1000;
+    if (!dc->abs_width) {
+        dezoomify_factor /= SP_EVENT_CONTEXT(dc)->desktop->current_zoom();
+    }
 
-    dc->point1[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur + del_left);
-    dc->point2[dc->npoints] = sp_dyna_draw_get_vpoint(dc, dc->cur - del_right);
+    NR::Point del_left = dezoomify_factor * (width + tremble_left) * dc->ang;
+    NR::Point del_right = dezoomify_factor * (width + tremble_right) * dc->ang;
+
+    NR::Point abs_middle = sp_dyna_draw_get_vpoint(dc, dc->cur);
+
+    dc->point1[dc->npoints] = abs_middle + del_left;
+    dc->point2[dc->npoints] = abs_middle - del_right;
 
     dc->del = 0.5*(del_left + del_right);
 
@@ -606,7 +618,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 dc->width += 0.01;
                 if (dc->width > 1.0)
                     dc->width = 1.0;
-                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width); // the same spinbutton is for alt+x
+                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100); // the same spinbutton is for alt+x
                 ret = TRUE;
             }
             break;
@@ -616,7 +628,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 dc->width -= 0.01;
                 if (dc->width < 0.01)
                     dc->width = 0.01;
-                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width);
+                sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
                 ret = TRUE;
             }
             break;

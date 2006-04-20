@@ -300,6 +300,8 @@ void InkscapePreferences::initPageTools()
     Gtk::TreeModel::iterator iter_tools = this->AddPage(_page_tools, _("Tools"), PREFS_PAGE_TOOLS);    
     _path_tools = _page_list.get_model()->get_path(iter_tools);
 
+    _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "tools.calligraphic", "abs_width", false);
+
     //Selector
     this->AddPage(_page_selector, _("Selector"), iter_tools, PREFS_PAGE_TOOLS_SELECTOR);
 
@@ -368,6 +370,8 @@ void InkscapePreferences::initPageTools()
     //Calligraphy
     this->AddPage(_page_calligraphy, _("Calligraphy"), iter_tools, PREFS_PAGE_TOOLS_CALLIGRAPHY);
     this->AddNewObjectsStyle(_page_calligraphy, "tools.calligraphic");
+    _page_calligraphy.add_line( false, "", _calligrapy_use_abs_size, "", 
+                            _("If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"));
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "tools.text", true);

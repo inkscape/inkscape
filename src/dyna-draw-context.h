@@ -102,6 +102,9 @@ struct SPDynaDrawContext
     Inkscape::MessageContext *_message_context;
 
     bool is_drawing;
+
+    /** uses absolute width independent of zoom */
+    bool abs_width;
 };
 
 struct SPDynaDrawContextClass

@@ -735,7 +735,7 @@ sp_tb_spinbutton(
     gboolean altx, gchar const *altx_mark,
     gdouble lower, gdouble upper, gdouble step, gdouble page,
     void (*callback)(GtkAdjustment *, GtkWidget *),
-    gdouble climb = 0.1, guint digits = 3)
+    gdouble climb = 0.1, guint digits = 3, double factor = 1.0)
 {
     GtkTooltips *tt = gtk_tooltips_new();
 
@@ -746,7 +746,7 @@ sp_tb_spinbutton(
     gtk_misc_set_alignment(GTK_MISC(l), 1.0, 0.5);
     gtk_container_add(GTK_CONTAINER(hb), l);
 
-    GtkObject *a = gtk_adjustment_new(prefs_get_double_attribute(path, data, def),
+    GtkObject *a = gtk_adjustment_new(prefs_get_double_attribute(path, data, def) * factor,
                                       lower, upper, step, page, page);
     gtk_object_set_data(GTK_OBJECT(tbl), data, a);
     if (us)
@@ -1850,7 +1850,7 @@ sp_ddc_angle_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 static void
 sp_ddc_width_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
-    prefs_set_double_attribute("tools.calligraphic", "width", adj->value);
+    prefs_set_double_attribute("tools.calligraphic", "width", adj->value * 0.01);
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
@@ -1899,7 +1899,7 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *tbl)
         {"mass", 0.02},
         {"drag", 1.0},
         {"angle", 30.0},
-        {"width", 0.15},
+        {"width", 15},
         {"thinning", 0.1},
         {"tremor", 0.0},
         {"flatness", 0.9}
@@ -1930,10 +1930,10 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     /* Width */
     {
         GtkWidget *hb = sp_tb_spinbutton(_("Width:"), _("The width of the calligraphic pen (relative to the visible canvas area)"),
-                                         "tools.calligraphic", "width", 0.15,
+                                         "tools.calligraphic", "width", 15,
                                          NULL, tbl, TRUE, "altx-calligraphy",
-                                         0.01, 1.0, 0.01, 0.1,
-                                         sp_ddc_width_value_changed,  0.01, 2);
+                                         1, 100, 1.0, 10.0,
+                                         sp_ddc_width_value_changed,  0.01, 0, 100);
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
 

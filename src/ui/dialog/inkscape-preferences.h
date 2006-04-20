@@ -114,6 +114,8 @@ protected:
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
     PrefCheckButton _win_save_geom, _win_hide_task, _win_zoom_resize;
 
+    PrefCheckButton _calligrapy_use_abs_size;
+
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
 
