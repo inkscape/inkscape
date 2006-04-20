@@ -516,7 +516,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             padded_area.x1 += (NR::ICoord)width;
             padded_area.y0 -= (NR::ICoord)width;
             padded_area.y1 += (NR::ICoord)width;
-            if (is_inner_area(padded_area, NR_ARENA_ITEM(shape)->bbox)) {
+            if ((style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) || is_inner_area(padded_area, NR_ARENA_ITEM(shape)->bbox)) {
                 thePath->Convert((NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) ? 1.0 : 4.0);
                 shape->cached_spartialy = false;
             }
