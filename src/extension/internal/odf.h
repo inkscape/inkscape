@@ -67,13 +67,6 @@ public:
         init();
         }
 
-    StyleInfo(const std::string &nameArg, const std::string &styleArg)
-        {
-        init();
-        name   = nameArg;
-        style  = styleArg;
-        }
-
     StyleInfo(const StyleInfo &other)
         {
         assign(other);
@@ -87,75 +80,52 @@ public:
 
     void assign(const StyleInfo &other)
         {
-        name        = other.name;
-        style       = other.style;
-        cssStyle    = other.cssStyle;
-        stroke      = other.stroke;
-        strokeColor = other.strokeColor;
-        strokeWidth = other.strokeWidth;
-        fill        = other.fill;
-        fillColor   = other.fillColor;
+        stroke        = other.stroke;
+        strokeColor   = other.strokeColor;
+        strokeWidth   = other.strokeWidth;
+        strokeOpacity = other.strokeOpacity;
+        fill          = other.fill;
+        fillColor     = other.fillColor;
+        fillOpacity   = other.fillOpacity;
         }
 
     void init()
         {
-        name        = "none";
-        style       = "none";
-        cssStyle    = "none";
-        stroke      = "none";
-        strokeColor = "none";
-        strokeWidth = "none";
-        fill        = "none";
-        fillColor   = "none";
+        stroke        = "none";
+        strokeColor   = "none";
+        strokeWidth   = "none";
+        strokeOpacity = "none";
+        fill          = "none";
+        fillColor     = "none";
+        fillOpacity   = "none";
         }
 
     virtual ~StyleInfo()
         {}
 
-    std::string getName()
+    //used for eliminating duplicates in the styleTable
+    bool equals(const StyleInfo &other)
         {
-        return name;
+        if (
+            stroke        != other.stroke        ||
+            strokeColor   != other.strokeColor   ||
+            strokeWidth   != other.strokeWidth   ||
+            strokeOpacity != other.strokeOpacity ||
+            fill          != other.fill          ||
+            fillColor     != other.fillColor     ||
+            fillOpacity   != other.fillOpacity
+           )
+            return false;
+        return true;
         }
 
-    std::string getCssStyle()
-        {
-        return cssStyle;
-        }
-
-    std::string getStroke()
-        {
-        return stroke;
-        }
-
-    std::string getStrokeColor()
-        {
-        return strokeColor;
-        }
-
-    std::string getStrokeWidth()
-        {
-        return strokeWidth;
-        }
-
-
-    std::string getFill()
-        {
-        return fill;
-        }
-
-    std::string getFillColor()
-        {
-        return fillColor;
-        }
-
-    std::string name;
-    std::string style;
-    std::string cssStyle;
     std::string stroke;
     std::string strokeColor;
     std::string strokeWidth;
+    std::string strokeOpacity;
     std::string fill;
     std::string fillColor;
+    std::string fillOpacity;
 
 };
 
@@ -176,6 +146,15 @@ public:
 
 private:
 
+    /* Style table
+       Uses a two-stage lookup to avoid style duplication.
+       Use like:
+       StyleInfo si = styleTable[styleLookupTable[id]];
+       but check for errors, of course
+    */
+    //element id -> style entry name
+    std::map<std::string, std::string> styleLookupTable;
+    //style entry name -> style info
     std::map<std::string, StyleInfo> styleTable;
 
     //for renaming image file names
