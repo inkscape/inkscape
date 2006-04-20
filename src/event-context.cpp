@@ -515,13 +515,6 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
-                    // FIXME: make import a verb
-                case GDK_i: // Ctrl i - import file
-                    if (MOD__CTRL_ONLY) {
-                        sp_file_import(NULL);
-                        ret = TRUE;
-                    }
-                    break;
                 case GDK_Left: // Ctrl Left
                 case GDK_KP_Left:
                 case GDK_KP_4:
