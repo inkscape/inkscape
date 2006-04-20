@@ -204,6 +204,9 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
             si.fillColor = buf;
             si.fill      = "solid";
+            double opacityPercent = 100.0;
+            snprintf(buf, 15, "%.2f%%", opacityPercent);
+            si.fillOpacity = buf;
             }
         if (style->stroke.type == SP_PAINT_TYPE_COLOR)
             {
@@ -218,6 +221,9 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             snprintf(buf, 15, "%.2fpt", style->stroke_width.value);
             si.strokeWidth = buf;
             si.stroke      = "solid";
+            double opacityPercent = 100.0;
+            snprintf(buf, 15, "%.2f%%", opacityPercent);
+            si.strokeOpacity = buf;
             }
 
         //Look for existing identical style;
@@ -229,7 +235,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 {
                 //map to existing styleTable entry
                 std::string styleName = iter->first;
-                g_message("found duplicate style:%s", styleName.c_str());
+                //g_message("found duplicate style:%s", styleName.c_str());
                 styleLookupTable[id] = styleName;
                 styleMatch = true;
                 break;
@@ -439,12 +445,16 @@ bool OdfOutput::writeStyle(Writer &outs)
         outs.printf("  <style:graphic-properties");
         outs.printf(" draw:fill=\"%s\" ", s.fill.c_str());
         if (s.fill != "none")
+            {
             outs.printf(" draw:fill-color=\"%s\" ", s.fillColor.c_str());
+            outs.printf(" draw:fill-opacity=\"%s\" ", s.fillOpacity.c_str());
+            }
         outs.printf(" draw:stroke=\"%s\" ", s.stroke.c_str());
         if (s.stroke != "none")
             {
             outs.printf(" svg:stroke-width=\"%s\" ", s.strokeWidth.c_str());
             outs.printf(" svg:stroke-color=\"%s\" ", s.strokeColor.c_str());
+            outs.printf(" svg:stroke-opacity=\"%s\" ", s.strokeOpacity.c_str());
             }
         outs.printf("/>\n");
         outs.printf("</style:style>\n");
