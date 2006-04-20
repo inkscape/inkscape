@@ -460,9 +460,9 @@ void Path::Convert(NRRectL *area, double treshhold)
                 nextX = nData->p;
                 lastMoveTo = AddPoint(nextX, true);
                 descr_cmd[curP]->associated = lastMoveTo;
-                last_point_relation = 0;
+                last_point_relation = POINT_RELATION_TO_AREA(nextX, area);
+                start_elimination = false;
 
-                // et on avance
                 curP++;
                 break;
             }
@@ -497,7 +497,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                 } else {
                     start_elimination = false;
                 }
-                
+
                 if (!replace) {
                     descr_cmd[curP]->associated = AddPoint(nextX, false);
                 }
@@ -510,7 +510,6 @@ void Path::Convert(NRRectL *area, double treshhold)
                     }
                 }
                 last_point_relation = curent_point_relation;
-                // et on avance
                 curP++;
                 break;
             }
@@ -548,7 +547,6 @@ void Path::Convert(NRRectL *area, double treshhold)
                     }
                 }
                 last_point_relation = curent_point_relation;
-                // et on avance
                 curP++;
                 break;
             }
@@ -566,7 +564,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                     }
                 }
                 last_point_relation = 0;
-                // et on avance
+
                 curP++;
                 break;
             }
@@ -656,7 +654,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                 }
 
                 last_point_relation = 0;
-                // et on avance
+
                 curP += nbInterm;
                 break;
             }
