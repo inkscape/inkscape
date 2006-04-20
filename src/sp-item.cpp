@@ -44,9 +44,11 @@
 #include "sp-text.h"
 #include "sp-item-rm-unsatisfied-cns.h"
 #include "sp-pattern.h"
+#include "sp-switch.h"
 #include "gradient-chemistry.h"
 #include "prefs-utils.h"
 #include "conn-avoid-ref.h"
+#include "conditions.h"
 
 #include "libnr/nr-matrix-div.h"
 #include "libnr/nr-matrix-fns.h"
@@ -130,34 +132,39 @@ sp_item_class_init(SPItemClass *klass)
 static void
 sp_item_init(SPItem *item)
 {
-    SPObject *object = SP_OBJECT(item);
+    item->init();
+}
 
-    item->sensitive = TRUE;
+void SPItem::init() {
+    this->sensitive = TRUE;
 
-    item->transform_center_x = 0;
-    item->transform_center_y = 0;
+    this->transform_center_x = 0;
+    this->transform_center_y = 0;
 
-    item->transform = NR::identity();
+    this->_is_evaluated = true;
+    this->_evaluated_status = StatusCalculated;
 
-    item->display = NULL;
+    this->transform = NR::identity();
 
-    item->clip_ref = new SPClipPathReference(SP_OBJECT(item));
+    this->display = NULL;
+
+    this->clip_ref = new SPClipPathReference(this);
 		{
-			sigc::signal<void, SPObject *, SPObject *> cs1=item->clip_ref->changedSignal();
-			sigc::slot2<void,SPObject*, SPObject *> sl1=sigc::bind(sigc::ptr_fun(clip_ref_changed), item);
+			sigc::signal<void, SPObject *, SPObject *> cs1=this->clip_ref->changedSignal();
+			sigc::slot2<void,SPObject*, SPObject *> sl1=sigc::bind(sigc::ptr_fun(clip_ref_changed), this);
 			cs1.connect(sl1);
 		}
 
-    item->mask_ref = new SPMaskReference(SP_OBJECT(item));
-		sigc::signal<void, SPObject *, SPObject *> cs2=item->mask_ref->changedSignal();
-		sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), item);
+    this->mask_ref = new SPMaskReference(this);
+		sigc::signal<void, SPObject *, SPObject *> cs2=this->mask_ref->changedSignal();
+		sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), this);
     cs2.connect(sl2);
 
-    if (!object->style) object->style = sp_style_new_from_object(SP_OBJECT(item));
+    if (!this->style) this->style = sp_style_new_from_object(this);
 
-    item->avoidRef = new SPAvoidRef(item);
+    this->avoidRef = new SPAvoidRef(this);
 
-    new (&item->_transformed_signal) sigc::signal<void, NR::Matrix const *, SPItem *>();
+    new (&this->_transformed_signal) sigc::signal<void, NR::Matrix const *, SPItem *>();
 }
 
 bool SPItem::isVisibleAndUnlocked() const {
@@ -183,6 +190,8 @@ void SPItem::setLocked(bool locked) {
 }
 
 bool SPItem::isHidden() const {
+    if (!isEvaluated())
+        return true;
     return style->display.computed == SP_CSS_DISPLAY_NONE;
 }
 
@@ -195,6 +204,8 @@ void SPItem::setHidden(bool hide) {
 }
 
 bool SPItem::isHidden(unsigned display_key) const {
+    if (!isEvaluated())
+        return true;
     for ( SPItemView *view(display) ; view ; view = view->next ) {
         if ( view->key == display_key ) {
             g_assert(view->arenaitem != NULL);
@@ -209,6 +220,34 @@ bool SPItem::isHidden(unsigned display_key) const {
         }
     }
     return true;
+}
+
+void SPItem::setEvaluated(bool evaluated) {
+    _is_evaluated = evaluated;
+    _evaluated_status = StatusSet;
+}
+
+void SPItem::resetEvaluated() {
+    if ( StatusCalculated == _evaluated_status ) {
+        _evaluated_status = StatusUnknown;
+        bool oldValue = _is_evaluated;
+        if ( oldValue != isEvaluated() ) {
+            requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+        }
+    } if ( StatusSet == _evaluated_status ) {
+        SPObject const *const parent = SP_OBJECT_PARENT(this);
+        if (SP_IS_SWITCH(parent)) {
+            SP_SWITCH(parent)->resetChildEvaluated();
+        }
+    }
+}
+
+bool SPItem::isEvaluated() const {
+    if ( StatusUnknown == _evaluated_status ) {
+        _is_evaluated = sp_item_evaluate(this);
+        _evaluated_status = StatusCalculated;
+    }
+    return _is_evaluated;
 }
 
 /**
@@ -466,6 +505,13 @@ sp_item_set(SPObject *object, unsigned key, gchar const *value)
                 item->transform_center_y = 0;
             }
             break;
+        case SP_PROP_SYSTEM_LANGUAGE:
+        case SP_PROP_REQUIRED_FEATURES:
+        case SP_PROP_REQUIRED_EXTENSIONS:
+            {
+                item->resetEvaluated();
+                // pass to default handler
+            }
         default:
             if (SP_ATTRIBUTE_IS_CSS(key)) {
                 sp_style_read_from_object(object->style, object);
@@ -741,7 +787,7 @@ sp_item_bbox_desktop(SPItem *item, NRRect *bbox)
 NR::Rect sp_item_bbox_desktop(SPItem *item)
 {
     NRRect ret;
-    sp_item_bbox_desktop(item, &ret);
+    sp_item_invoke_bbox(item, &ret, sp_item_i2d_affine(item), TRUE);
     return NR::Rect(ret);
 }
 

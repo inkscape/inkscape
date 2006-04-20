@@ -45,6 +45,7 @@ libinkpre_a_SOURCES =	\
 	color-rgba.h	\
 	color-profile.cpp color-profile.h	\
 	color-profile-fns.h	\
+	conditions.cpp conditions.h\
 	conn-avoid-ref.cpp conn-avoid-ref.h	\
 	connector-context.cpp connector-context.h	\
 	context-fns.cpp context-fns.h \
@@ -186,6 +187,7 @@ libinkpre_a_SOURCES =	\
 	sp-stop.h	\
 	sp-string.cpp sp-string.h	\
 	sp-symbol.cpp sp-symbol.h	\
+	sp-switch.cpp sp-switch.h\
 	sp-text.cpp sp-text.h	\
 	sp-textpath.h	\
 	sp-tspan.cpp sp-tspan.h	\

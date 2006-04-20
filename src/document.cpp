@@ -673,6 +673,35 @@ SPObject *SPDocument::getObjectByRepr(Inkscape::XML::Node *repr) {
     return (SPObject*)g_hash_table_lookup(priv->reprdef, repr);
 }
 
+Glib::ustring SPDocument::getLanguage() {
+    gchar const *document_language = rdf_get_work_entity(this, rdf_find_entity("language"));
+    if (document_language) {
+        while (isspace(*document_language))
+            document_language++;
+    }
+    if ( !document_language || 0 == *document_language) {
+        // retrieve system language
+        document_language = getenv("LC_ALL");
+        if ( NULL == document_language || *document_language == 0 ) {
+            document_language = getenv ("LC_MESSAGES");
+        }
+        if ( NULL == document_language || *document_language == 0 ) {
+            document_language = getenv ("LANG");
+        }
+        
+        if ( NULL != document_language ) {
+            gchar *pos = strchr(document_language, '_');
+            if ( NULL != pos ) {
+                return Glib::ustring(document_language, pos - document_language);
+            }
+        }
+    }
+
+    if ( NULL == document_language )
+        return Glib::ustring();
+    return document_language;
+}
+
 /* Object modification root handler */
 
 void

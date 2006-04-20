@@ -26,6 +26,7 @@
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"
+#include <glibmm/ustring.h>
 
 namespace Avoid {
 class Router;
@@ -97,6 +98,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
 	void bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object);
 	SPObject *getObjectByRepr(Inkscape::XML::Node *repr);
+
+    Glib::ustring getLanguage();
 
 	void queueForOrphanCollection(SPObject *object);
 	void collectOrphans();

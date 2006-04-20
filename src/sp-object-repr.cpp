@@ -40,6 +40,7 @@
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
 #include "sp-style-elem.h"
+#include "sp-switch.h"
 #include "color-profile-fns.h"
 #include "xml/repr.h"
 
@@ -125,7 +126,7 @@ populate_dtables()
         { "svg:stop", SP_TYPE_STOP },
         { "svg:svg", SP_TYPE_ROOT },
         { "svg:style", SP_TYPE_STYLE_ELEM },
-        { "svg:switch", SP_TYPE_GROUP },
+        { "svg:switch", SP_TYPE_SWITCH },
         { "svg:symbol", SP_TYPE_SYMBOL },
         { "svg:text", SP_TYPE_TEXT },
         { "svg:textPath", SP_TYPE_TEXTPATH },

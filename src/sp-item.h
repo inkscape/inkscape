@@ -107,12 +107,17 @@ struct SPItem : public SPObject {
     std::vector<SPGuideConstraint> constraints;
     
     sigc::signal<void, NR::Matrix const *, SPItem *> _transformed_signal;
-    
+
+    void init();    
     bool isLocked() const;
     void setLocked(bool lock);
     
     bool isHidden() const;
     void setHidden(bool hidden);
+
+    bool isEvaluated() const;
+    void setEvaluated(bool visible);
+    void resetEvaluated();
     
     bool isHidden(unsigned display_key) const;
     
@@ -141,6 +146,15 @@ struct SPItem : public SPObject {
     sigc::connection connectTransformed(sigc::slot<void, NR::Matrix const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
     }
+
+private:
+    enum EvaluatedStatus
+    {
+        StatusUnknown, StatusCalculated, StatusSet
+    };
+
+    mutable bool _is_evaluated;
+    mutable EvaluatedStatus _evaluated_status;
 };
 
 typedef std::back_insert_iterator<std::vector<NR::Point> > SnapPointsIter;

@@ -308,6 +308,10 @@ static SPStyleProp const props[] = {
     {SP_PROP_STROKE_OPACITY, "stroke-opacity"},
     {SP_PROP_STROKE_WIDTH, "stroke-width"},
     {SP_PROP_TEXT_RENDERING, "text-rendering"},
+    /* Conditional */
+    {SP_PROP_SYSTEM_LANGUAGE, "systemLanguage"},
+    {SP_PROP_REQUIRED_FEATURES, "requiredFeatures"},
+    {SP_PROP_REQUIRED_EXTENSIONS, "requiredExtensions"},
 };
 
 #define n_attrs (sizeof(props) / sizeof(props[0]))

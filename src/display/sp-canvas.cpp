@@ -1254,7 +1254,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
 static int
 pick_current_item (SPCanvas *canvas, GdkEvent *event)
 {
-    int button_down;
+    int button_down = 0;
     double x, y;
 
     int retval = FALSE;

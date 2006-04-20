@@ -38,7 +38,7 @@ static void sp_group_class_init (SPGroupClass *klass);
 static void sp_group_init (SPGroup *group);
 static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_group_release(SPObject *object);
-static void sp_group_dispose (GObject *object);
+static void sp_group_dispose(GObject *object);
 
 static void sp_group_child_added (SPObject * object, Inkscape::XML::Node * child, Inkscape::XML::Node * ref);
 static void sp_group_remove_child (SPObject * object, Inkscape::XML::Node * child);
@@ -116,6 +116,7 @@ static void
 sp_group_init (SPGroup *group)
 {
 	group->_layer_mode = SPGroup::GROUP;
+    group->group = new CGroup(group);
 	new (&group->_display_modes) std::map<unsigned int, SPGroup::LayerMode>();
 }
 
@@ -141,6 +142,7 @@ static void
 sp_group_dispose(GObject *object)
 {
 	SP_GROUP(object)->_display_modes.~map();
+    delete SP_GROUP(object)->group;
 }
 
 static void
@@ -153,46 +155,7 @@ sp_group_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XM
 	if (((SPObjectClass *) (parent_class))->child_added)
 		(* ((SPObjectClass *) (parent_class))->child_added) (object, child, ref);
 
-    SPObject *last_child = object->lastChild();
-    if (last_child && SP_OBJECT_REPR(last_child) == child) {
-        // optimization for the common special case where the child is being added at the end
-	    SPObject *ochild = last_child;
-	    if ( SP_IS_ITEM(ochild) ) {
-		    /* TODO: this should be moved into SPItem somehow */
-		    SPItemView *v;
-		    NRArenaItem *ac;
-
-		    for (v = item->display; v != NULL; v = v->next) {
-			    ac = sp_item_invoke_show (SP_ITEM (ochild), NR_ARENA_ITEM_ARENA (v->arenaitem), v->key, v->flags);
-
-			    if (ac) {
-				    nr_arena_item_append_child (v->arenaitem, ac);
-				    nr_arena_item_unref (ac);
-			    }
-		    }
-	    }
-    } else {    // general case
-	    SPObject *ochild = sp_object_get_child_by_repr(object, child);
-	    if ( ochild && SP_IS_ITEM(ochild) ) {
-		    /* TODO: this should be moved into SPItem somehow */
-		    SPItemView *v;
-		    NRArenaItem *ac;
-
-		    unsigned position = sp_item_pos_in_parent(SP_ITEM(ochild));
-
-		    for (v = item->display; v != NULL; v = v->next) {
-			    ac = sp_item_invoke_show (SP_ITEM (ochild), NR_ARENA_ITEM_ARENA (v->arenaitem), v->key, v->flags);
-
-			    if (ac) {
-				    nr_arena_item_add_child (v->arenaitem, ac, NULL);
-				    nr_arena_item_set_order (ac, position);
-				    nr_arena_item_unref (ac);
-			    }
-		    }
-	    }
-    }
-
-	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    SP_GROUP(object)->group->onChildAdded(child);
 }
 
 /* fixme: hide (Lauris) */
@@ -203,7 +166,7 @@ sp_group_remove_child (SPObject * object, Inkscape::XML::Node * child)
 	if (((SPObjectClass *) (parent_class))->remove_child)
 		(* ((SPObjectClass *) (parent_class))->remove_child) (object, child);
 
-	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    SP_GROUP(object)->group->onChildRemoved(child);
 }
 
 static void
@@ -212,86 +175,22 @@ sp_group_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::
 	if (((SPObjectClass *) (parent_class))->order_changed)
 		(* ((SPObjectClass *) (parent_class))->order_changed) (object, child, old_ref, new_ref);
 
-	SPObject *ochild = sp_object_get_child_by_repr(object, child);
-	if ( ochild && SP_IS_ITEM(ochild) ) {
-		/* TODO: this should be moved into SPItem somehow */
-		SPItemView *v;
-		unsigned position = sp_item_pos_in_parent(SP_ITEM(ochild));
-		for ( v = SP_ITEM (ochild)->display ; v != NULL ; v = v->next ) {
-			nr_arena_item_set_order (v->arenaitem, position);
-		}
-	}
-
-	object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    SP_GROUP(object)->group->onOrderChanged(child, old_ref, new_ref);
 }
 
 static void
 sp_group_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-	SPGroup *group;
-	SPObject *child;
-	SPItemCtx *ictx, cctx;
-	GSList *l;
+    if (((SPObjectClass *) (parent_class))->update)
+        ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
 
-	group = SP_GROUP (object);
-	ictx = (SPItemCtx *) ctx;
-	cctx = *ictx;
-
-	if (((SPObjectClass *) (parent_class))->update)
-		((SPObjectClass *) (parent_class))->update (object, ctx, flags);
-
-	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-	flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-	l = NULL;
-	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		g_object_ref (G_OBJECT (child));
-		l = g_slist_prepend (l, child);
-	}
-	l = g_slist_reverse (l);
-	while (l) {
-		child = SP_OBJECT (l->data);
-		l = g_slist_remove (l, child);
-		if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-			if (SP_IS_ITEM (child)) {
-				SPItem const &chi = *SP_ITEM(child);
-				cctx.i2doc = chi.transform * ictx->i2doc;
-				cctx.i2vp = chi.transform * ictx->i2vp;
-				child->updateDisplay((SPCtx *)&cctx, flags);
-			} else {
-				child->updateDisplay(ctx, flags);
-			}
-		}
-		g_object_unref (G_OBJECT (child));
-	}
+    SP_GROUP(object)->group->onUpdate(ctx, flags);
 }
 
 static void
 sp_group_modified (SPObject *object, guint flags)
 {
-	SPGroup *group;
-	SPObject *child;
-	GSList *l;
-
-	group = SP_GROUP (object);
-
-	if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
-	flags &= SP_OBJECT_MODIFIED_CASCADE;
-
-	l = NULL;
-	for (child = sp_object_first_child(object) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-		g_object_ref (G_OBJECT (child));
-		l = g_slist_prepend (l, child);
-	}
-	l = g_slist_reverse (l);
-	while (l) {
-		child = SP_OBJECT (l->data);
-		l = g_slist_remove (l, child);
-		if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
-			child->emitModified(flags);
-		}
-		g_object_unref (G_OBJECT (child));
-	}
+    SP_GROUP(object)->group->onModified(flags);
 }
 
 static Inkscape::XML::Node *
@@ -343,51 +242,18 @@ sp_group_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 static void
 sp_group_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
 {
-	for (SPObject *o = sp_object_first_child(SP_OBJECT(item)); o != NULL; o = SP_OBJECT_NEXT(o)) {
-		if (SP_IS_ITEM(o)) {
-			SPItem *child = SP_ITEM(o);
-			NR::Matrix const ct(child->transform * transform);
-			sp_item_invoke_bbox_full(child, bbox, ct, flags, FALSE);
-		}
-	}
+    SP_GROUP(item)->group->calculateBBox(bbox, transform, flags);
 }
 
 static void
 sp_group_print (SPItem * item, SPPrintContext *ctx)
 {
-	SPGroup * group;
-	SPItem * child;
-	SPObject * o;
-
-	group = SP_GROUP (item);
-
-	for (o = sp_object_first_child(SP_OBJECT(item)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
-		if (SP_IS_ITEM (o)) {
-			child = SP_ITEM (o);
-			sp_item_invoke_print (SP_ITEM (o), ctx);
-		}
-	}
+    SP_GROUP(item)->group->onPrint(ctx);
 }
 
 static gchar * sp_group_description (SPItem * item)
 {
-	SPGroup * group;
-	SPObject * o;
-	gint len;
-
-	group = SP_GROUP (item);
-
-	len = 0;
-	for ( o = sp_object_first_child(SP_OBJECT(item)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
-		if (SP_IS_ITEM(o)) {
-			len += 1;
-		}
-	}
-
-	return g_strdup_printf(
-			ngettext("<b>Group</b> of <b>%d</b> object",
-				 "<b>Group</b> of <b>%d</b> objects",
-				 len), len);
+    return SP_GROUP(item)->group->getDescription();
 }
 
 static void sp_group_set(SPObject *object, unsigned key, char const *value) {
@@ -412,53 +278,13 @@ static void sp_group_set(SPObject *object, unsigned key, char const *value) {
 static NRArenaItem *
 sp_group_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
 {
-	SPGroup *group;
-	NRArenaItem *ai, *ac, *ar;
-	SPItem * child;
-	SPObject * o;
-
-	group = (SPGroup *) item;
-
-	ai = NRArenaGroup::create(arena);
-	nr_arena_group_set_transparent(NR_ARENA_GROUP (ai),
-	                               group->effectiveLayerMode(key) ==
-				         SPGroup::LAYER);
-
-	ar = NULL;
-
-	for (o = sp_object_first_child(SP_OBJECT(item)) ; o != NULL; o = SP_OBJECT_NEXT(o) ) {
-		if (SP_IS_ITEM (o)) {
-			child = SP_ITEM (o);
-			ac = sp_item_invoke_show (child, arena, key, flags);
-			if (ac) {
-				nr_arena_item_add_child (ai, ac, ar);
-				ar = ac;
-				nr_arena_item_unref (ac);
-			}
-		}
-	}
-
-	return ai;
+    return SP_GROUP(item)->group->show(arena, key, flags);
 }
 
 static void
 sp_group_hide (SPItem *item, unsigned int key)
 {
-	SPGroup * group;
-	SPItem * child;
-	SPObject * o;
-
-	group = (SPGroup *) item;
-
-	for (o = sp_object_first_child(SP_OBJECT(item)) ; o != NULL; o = SP_OBJECT_NEXT(o) ) {
-		if (SP_IS_ITEM (o)) {
-			child = SP_ITEM (o);
-			sp_item_invoke_hide (child, key);
-		}
-	}
-
-	if (((SPItemClass *) parent_class)->hide)
-		((SPItemClass *) parent_class)->hide (item, key);
+    SP_GROUP(item)->group->hide(key);
 }
 
 static void sp_group_snappoints (SPItem const *item, SnapPointsIter p)
@@ -696,4 +522,221 @@ void SPGroup::_updateLayerMode(unsigned int display_key) {
 			}
 		}
 	}
+}
+
+CGroup::CGroup(SPGroup *group) {
+    _group = group;
+}
+
+CGroup::~CGroup() {
+}
+
+void CGroup::onChildAdded(Inkscape::XML::Node *child) {
+    SPObject *last_child = _group->lastChild();
+    if (last_child && SP_OBJECT_REPR(last_child) == child) {
+        // optimization for the common special case where the child is being added at the end
+        SPObject *ochild = last_child;
+        if ( SP_IS_ITEM(ochild) ) {
+            /* TODO: this should be moved into SPItem somehow */
+            SPItemView *v;
+            NRArenaItem *ac;
+
+            for (v = _group->display; v != NULL; v = v->next) {
+                ac = sp_item_invoke_show (SP_ITEM (ochild), NR_ARENA_ITEM_ARENA (v->arenaitem), v->key, v->flags);
+
+                if (ac) {
+                    nr_arena_item_append_child (v->arenaitem, ac);
+                    nr_arena_item_unref (ac);
+                }
+            }
+        }
+    } else {    // general case
+        SPObject *ochild = sp_object_get_child_by_repr(_group, child);
+        if ( ochild && SP_IS_ITEM(ochild) ) {
+            /* TODO: this should be moved into SPItem somehow */
+            SPItemView *v;
+            NRArenaItem *ac;
+
+            unsigned position = sp_item_pos_in_parent(SP_ITEM(ochild));
+
+            for (v = _group->display; v != NULL; v = v->next) {
+                ac = sp_item_invoke_show (SP_ITEM (ochild), NR_ARENA_ITEM_ARENA (v->arenaitem), v->key, v->flags);
+
+                if (ac) {
+                    nr_arena_item_add_child (v->arenaitem, ac, NULL);
+                    nr_arena_item_set_order (ac, position);
+                    nr_arena_item_unref (ac);
+                }
+            }
+        }
+    }
+
+    _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+
+void CGroup::onChildRemoved(Inkscape::XML::Node */*child*/) {
+    _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+
+void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {    
+    SPObject *child;
+    SPItemCtx *ictx, cctx;
+
+    ictx = (SPItemCtx *) ctx;
+    cctx = *ictx;
+
+    if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    GSList *l = g_slist_reverse(_childList(true, ActionUpdate));
+    while (l) {
+        child = SP_OBJECT (l->data);
+        l = g_slist_remove (l, child);
+        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            if (SP_IS_ITEM (child)) {
+                SPItem const &chi = *SP_ITEM(child);
+                cctx.i2doc = chi.transform * ictx->i2doc;
+                cctx.i2vp = chi.transform * ictx->i2vp;
+                child->updateDisplay((SPCtx *)&cctx, flags);
+            } else {
+                child->updateDisplay(ctx, flags);
+            }
+        }
+        g_object_unref (G_OBJECT (child));
+    }
+}
+
+GSList *CGroup::_childList(bool add_ref, Action) {
+    GSList *l = NULL;
+    for (SPObject *child = sp_object_first_child(_group) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
+        if (add_ref)
+            g_object_ref (G_OBJECT (child));
+
+        l = g_slist_prepend (l, child);
+    }
+    return l;
+}
+
+void CGroup::onModified(guint flags) {
+    SPObject *child;
+
+    if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    flags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    GSList *l = g_slist_reverse(_childList(true));
+    while (l) {
+        child = SP_OBJECT (l->data);
+        l = g_slist_remove (l, child);
+        if (flags || (child->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
+            child->emitModified(flags);
+        }
+        g_object_unref (G_OBJECT (child));
+    }
+}
+
+void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags) {
+    GSList *l = _childList(false, ActionBBox);
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
+        if (SP_IS_ITEM(o)) {
+            SPItem *child = SP_ITEM(o);
+            NR::Matrix const ct(child->transform * transform);
+            sp_item_invoke_bbox_full(child, bbox, ct, flags, FALSE);
+        }        
+        l = g_slist_remove (l, o);
+    }
+}
+
+void CGroup::onPrint(SPPrintContext *ctx) {
+    GSList *l = _childList(false);
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
+        if (SP_IS_ITEM(o)) {
+            sp_item_invoke_print (SP_ITEM (o), ctx);
+        }        
+        l = g_slist_remove (l, o);
+    }
+}
+
+gint CGroup::getItemCount() {
+    gint len = 0;
+    for (SPObject *o = sp_object_first_child(SP_OBJECT(_group)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
+        if (SP_IS_ITEM(o)) {
+            len++;
+        }
+    }
+    
+    return len;
+}
+
+gchar *CGroup::getDescription() {
+    gint len = getItemCount();
+    return g_strdup_printf(
+            ngettext("<b>Group</b> of <b>%d</b> object",
+                 "<b>Group</b> of <b>%d</b> objects",
+                 len), len);
+}
+
+NRArenaItem *CGroup::show (NRArena *arena, unsigned int key, unsigned int flags) {
+    NRArenaItem *ai;
+
+    ai = NRArenaGroup::create(arena);
+    nr_arena_group_set_transparent(NR_ARENA_GROUP (ai),
+                                   _group->effectiveLayerMode(key) ==
+                         SPGroup::LAYER);
+
+    _showChildren(arena, ai, key, flags);
+    return ai;
+}
+
+void CGroup::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, unsigned int flags) {
+    NRArenaItem *ac = NULL;
+    NRArenaItem *ar = NULL;
+    SPItem * child = NULL;
+    GSList *l = _childList(false, ActionShow);
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
+        if (SP_IS_ITEM (o)) {
+            child = SP_ITEM (o);
+            ac = sp_item_invoke_show (child, arena, key, flags);
+            if (ac) {
+                nr_arena_item_add_child (ai, ac, ar);
+                ar = ac;
+                nr_arena_item_unref (ac);
+            }
+        }
+        l = g_slist_remove (l, o);
+    }
+}
+
+void CGroup::hide (unsigned int key) {
+    SPItem * child;
+
+    GSList *l = _childList(false, ActionShow);
+    while (l) {
+        SPObject *o = SP_OBJECT (l->data);
+        if (SP_IS_ITEM (o)) {
+            child = SP_ITEM (o);
+            sp_item_invoke_hide (child, key);
+        }
+        l = g_slist_remove (l, o);
+    }
+
+    if (((SPItemClass *) parent_class)->hide)
+        ((SPItemClass *) parent_class)->hide (_group, key);
+}
+
+void CGroup::onOrderChanged (Inkscape::XML::Node *child, Inkscape::XML::Node *, Inkscape::XML::Node *)
+{
+    SPObject *ochild = sp_object_get_child_by_repr(_group, child);
+    if ( ochild && SP_IS_ITEM(ochild) ) {
+        /* TODO: this should be moved into SPItem somehow */
+        SPItemView *v;
+        unsigned position = sp_item_pos_in_parent(SP_ITEM(ochild));
+        for ( v = SP_ITEM (ochild)->display ; v != NULL ; v = v->next ) {
+            nr_arena_item_set_order (v->arenaitem, position);
+        }
+    }
+
+    _group->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
