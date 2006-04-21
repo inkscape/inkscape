@@ -143,10 +143,10 @@ sp_ctrlline_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int f
     thePath->LineTo(NR::Point(cl->e.x, cl->e.y) * affine);
 
     NRRectL  area;
-    area.x0=(double)item->x1;
-    area.x1=(double)item->x2;
-    area.y0=(double)item->y1;
-    area.y1=(double)item->y2;
+    area.x0=(NR::ICoord)(double)item->x1;
+    area.x1=(NR::ICoord)(double)item->x2;
+    area.y0=(NR::ICoord)(double)item->y1;
+    area.y1=(NR::ICoord)(double)item->y2;
     thePath->Convert(&area, 1.0);
     if ( cl->shp == NULL ) cl->shp=new Shape;
     thePath->Stroke(cl->shp,false,0.5,join_straight,butt_straight,20.0,false);
