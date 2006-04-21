@@ -1261,17 +1261,21 @@ void Deflater::encodeDistStatic(unsigned int len, unsigned int dist)
 
 
 /**
- *
+ * This method does the dirty work of dictionary
+ * compression.  Basically it looks for redundant
+ * strings and has the current duplicate refer back
+ * to the previous one.
  */
 bool Deflater::compressWindow()
 {
+    unsigned int windowSize = window.size();
     //### Compress as much of the window as possible
     int i=0;
     std::vector<unsigned char>::iterator iter;
     for (iter=window.begin() ; iter!=window.end() ; iter++)
         windowBuf[i++] = *iter;
 
-    while (windowPos < window.size())
+    while (windowPos < windowSize)
         {
         //### Find best match, if any
         unsigned int bestMatchLen  = 0;
@@ -1280,18 +1284,22 @@ bool Deflater::compressWindow()
             {
             for (unsigned int lookBack=0 ; lookBack<windowPos-4 ; lookBack++)
                 {
-                unsigned int lookAhead;
-                unsigned int lookAheadMax = window.size() - windowPos;
-                if (lookBack + lookAheadMax >= windowPos)
-                    lookAheadMax = windowPos - lookBack;
-                if (lookAheadMax > 258)
-                    lookAheadMax = 258;
-                for (lookAhead = 0 ; lookAhead<lookAheadMax ; lookAhead++)
+                unsigned int lookAhead=0;
+                unsigned char *wp = &(windowBuf[windowPos]);
+                unsigned char *lb = &(windowBuf[lookBack]);
+                //Check first char, before continuing with string
+                if (*lb++ == *wp++)
                     {
-                    unsigned int pos1 = lookBack  + lookAhead;
-                    unsigned int pos2 = windowPos + lookAhead;
-                    if (windowBuf[pos1] != windowBuf[pos2])
-                        break;
+                    unsigned int lookAheadMax = windowSize - windowPos;
+                    if (lookBack + lookAheadMax >= windowPos)
+                        lookAheadMax = windowPos - lookBack;
+                    if (lookAheadMax > 258)
+                        lookAheadMax = 258;
+                    for (lookAhead = 1 ; lookAhead<lookAheadMax ; lookAhead++)
+                        {
+                        if (*lb++ != *wp++)
+                            break;
+                        }
                     }
                 if (lookAhead > bestMatchLen)
                     {
