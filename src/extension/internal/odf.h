@@ -80,6 +80,7 @@ public:
 
     void assign(const StyleInfo &other)
         {
+        name          = other.name;
         stroke        = other.stroke;
         strokeColor   = other.strokeColor;
         strokeWidth   = other.strokeWidth;
@@ -91,6 +92,7 @@ public:
 
     void init()
         {
+        name          = "none";
         stroke        = "none";
         strokeColor   = "none";
         strokeWidth   = "none";
@@ -119,6 +121,7 @@ public:
         return true;
         }
 
+    std::string name;
     std::string stroke;
     std::string strokeColor;
     std::string strokeWidth;
@@ -155,7 +158,7 @@ private:
     //element id -> style entry name
     std::map<std::string, std::string> styleLookupTable;
     //style entry name -> style info
-    std::map<std::string, StyleInfo> styleTable;
+    std::vector<StyleInfo> styleTable;
 
     //for renaming image file names
     std::map<std::string, std::string> imageTable;

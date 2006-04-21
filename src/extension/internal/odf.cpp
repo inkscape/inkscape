@@ -204,7 +204,8 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
             si.fillColor = buf;
             si.fill      = "solid";
-            double opacityPercent = 100.0;
+            double opacityPercent = 100.0 *
+                 (SP_SCALE24_TO_FLOAT(style->fill_opacity.value));
             snprintf(buf, 15, "%.2f%%", opacityPercent);
             si.fillOpacity = buf;
             }
@@ -221,20 +222,21 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             snprintf(buf, 15, "%.2fpt", style->stroke_width.value);
             si.strokeWidth = buf;
             si.stroke      = "solid";
-            double opacityPercent = 100.0;
+            double opacityPercent = 100.0 *
+                 (SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));
             snprintf(buf, 15, "%.2f%%", opacityPercent);
             si.strokeOpacity = buf;
             }
 
         //Look for existing identical style;
         bool styleMatch = false;
-        std::map<std::string, StyleInfo>::iterator iter;
+        std::vector<StyleInfo>::iterator iter;
         for (iter=styleTable.begin() ; iter!=styleTable.end() ; iter++)
             {
-            if (si.equals(iter->second))
+            if (si.equals(*iter))
                 {
                 //map to existing styleTable entry
-                std::string styleName = iter->first;
+                std::string styleName = iter->name;
                 //g_message("found duplicate style:%s", styleName.c_str());
                 styleLookupTable[id] = styleName;
                 styleMatch = true;
@@ -247,49 +249,11 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             char buf[16];
             snprintf(buf, 15, "style%d", styleTable.size());
             std::string styleName = buf;
-            styleTable[styleName] = si;
+            si.name = styleName;
+            styleTable.push_back(si);
             styleLookupTable[id] = styleName;
             }
         }
-
-    /*
-    //Look for style values in the svg element
-    Inkscape::Util::List<Inkscape::XML::AttributeRecord const> attr =
-        node->attributeList();
-    for ( ; attr ; ++attr)
-        {
-        if (!attr->key || !attr->value)
-            {
-            g_warning("null key or value in attribute");
-            continue;
-            }
-        //g_message("key:%s value:%s", g_quark_to_string(attr->key),
-        //                             g_quark_to_string(attr->value)  );
-
-        std::string attrName  = (const char *)g_quark_to_string(attr->key);
-        std::string attrValue = (const char *)attr->value;
-        //g_message("tag:'%s'    key:'%s'    value:'%s'",
-        //    nodeName.c_str(), attrName.c_str(), attrValue.c_str()  );
-        if (attrName == "style")
-            {
-            StyleInfo si(attrName, attrValue);
-            if (styleTable.find(attrValue) != styleTable.end())
-                {
-                //g_message("duplicate style");
-                }
-            else
-                {
-                char buf[16];
-                snprintf(buf, 15, "style%d", styleTable.size());
-                std::string attrName  = buf;
-                //Map from value-->name .   Looks backwards, i know
-                styleTable[attrValue] = si;
-                //g_message("mapping '%s' to '%s'",
-                //    attrValue.c_str(), attrName.c_str());
-                }
-            }
-        }
-    */
 
 
     for (Inkscape::XML::Node *child = node->firstChild() ;
@@ -422,6 +386,7 @@ bool OdfOutput::writeMeta(ZipFile &zf)
 bool OdfOutput::writeStyle(Writer &outs)
 {
     outs.printf("<office:automatic-styles>\n");
+    outs.printf("<!-- ####### 'Standard' styles ####### -->\n");
     outs.printf("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
     outs.printf("<style:style style:name=\"gr1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
     outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"none\"\n");
@@ -436,11 +401,12 @@ bool OdfOutput::writeStyle(Writer &outs)
     outs.printf("</style:style>\n");
 
     //##  Dump our style table
-    std::map<std::string, StyleInfo>::iterator iter;
+    outs.printf("<!-- ####### Styles from Inkscape document ####### -->\n");
+    std::vector<StyleInfo>::iterator iter;
     for (iter = styleTable.begin() ; iter != styleTable.end() ; iter++)
         {
-        outs.printf("<style:style style:name=\"%s\"", iter->first.c_str());
-        StyleInfo s(iter->second);
+        outs.printf("<style:style style:name=\"%s\"", iter->name.c_str());
+        StyleInfo s(*iter);
         outs.printf(" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
         outs.printf("  <style:graphic-properties");
         outs.printf(" draw:fill=\"%s\" ", s.fill.c_str());
@@ -534,15 +500,15 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     std::string nodeName = node->name();
     std::string id       = getAttribute(node, "id");
 
-    NR::Matrix tf  = sp_item_i2d_affine(item);
-    NR::Rect bbox = sp_item_bbox_desktop(item);
+    NR::Matrix tf        = sp_item_i2d_affine(item);
+    NR::Rect bbox        = sp_item_bbox_desktop(item);
 
     //Flip Y into document coordinates
-    double doc_height = sp_document_height(SP_ACTIVE_DOCUMENT);
+    double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
     NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1, -1));
-    doc2dt_tf = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
-    //tf            = tf   * doc2dt_tf;
-    //bbox          = bbox * doc2dt_tf;
+    doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+    tf                   = tf   * doc2dt_tf;
+    bbox                 = bbox * doc2dt_tf;
 
     double x      = pxToCm * bbox.min()[NR::X];
     double y      = pxToCm * bbox.min()[NR::Y];
@@ -612,7 +578,6 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
             }
         std::string newName = iter->second;
 
-
         outs.printf("<draw:frame ");
         if (id.size() > 0)
             outs.printf("id=\"%s\" ", id.c_str());
@@ -645,15 +610,7 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
     if (curve)
         {
-        //Inkscape::XML::Node *repr = sp_repr_new("svg:path");
-        /* Transformation */
-        //repr->setAttribute("transform", SP_OBJECT_REPR(item)->attribute("transform"));
-
-        /* Rotation center */
-        //sp_repr_set_attr(repr, "inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"));
-        //sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
-
-        /* Definition */
+        //### Default <path> output
 
         outs.printf("<draw:path ");
         if (id.size()>0)
@@ -784,7 +741,6 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("<draw:page draw:name=\"page1\" draw:style-name=\"dp1\"\n");
     outs.printf("        draw:master-page-name=\"Default\">\n");
     outs.printf("\n");
-    outs.printf("<draw:g draw:transform=\"scale(1,-1)\">\n");
     outs.printf("\n");
 
     if (!writeTree(outs, node))
@@ -794,7 +750,6 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
         }
 
     outs.printf("\n");
-    outs.printf("</draw:g>\n");
     outs.printf("\n");
 
     outs.printf("</draw:page>\n");
