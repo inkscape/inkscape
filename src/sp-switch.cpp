@@ -71,7 +71,7 @@ CSwitch::~CSwitch() {
 
 SPObject *CSwitch::_evaluateFirst() {
     for (SPObject *child = sp_object_first_child(_group) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-        if (sp_item_evaluate(SP_ITEM(child)))
+        if (SP_IS_ITEM(child) && sp_item_evaluate(SP_ITEM(child)))
             return child;
     }
     return NULL;
