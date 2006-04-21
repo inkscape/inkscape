@@ -648,7 +648,7 @@ void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned c
 }
 
 void CGroup::onPrint(SPPrintContext *ctx) {
-    GSList *l = _childList(false);
+    GSList *l = g_slist_reverse(_childList(false));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o)) {
@@ -693,7 +693,7 @@ void CGroup::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, u
     NRArenaItem *ac = NULL;
     NRArenaItem *ar = NULL;
     SPItem * child = NULL;
-    GSList *l = _childList(false, ActionShow);
+    GSList *l = g_slist_reverse(_childList(false, ActionShow));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM (o)) {
@@ -712,7 +712,7 @@ void CGroup::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, u
 void CGroup::hide (unsigned int key) {
     SPItem * child;
 
-    GSList *l = _childList(false, ActionShow);
+    GSList *l = g_slist_reverse(_childList(false, ActionShow));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM (o)) {
