@@ -68,10 +68,6 @@
 #include "dom/io/bufferstream.h"
 
 
-//# Shorthand notation
-typedef org::w3c::dom::DOMString DOMString;
-typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
-typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
 
 
 
@@ -82,6 +78,641 @@ namespace Extension
 {
 namespace Internal
 {
+
+//# Shorthand notation
+typedef org::w3c::dom::DOMString DOMString;
+typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
+typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
+
+
+//########################################################################
+//# C L A S S    SingularValueDecomposition
+//########################################################################
+#include <math.h>
+
+/**
+ *
+ * ====================================================
+ *
+ * NOTE:
+ * This class is ported almost verbatim from the public domain
+ * JAMA Matrix package.  It is modified to handle only 3x3 matrices
+ * and our NR::Matrix affine transform class.  We give full
+ * attribution to them, along with many thanks.  JAMA can be found at:
+ *     http://math.nist.gov/javanumerics/jama
+ *
+ * ====================================================
+ *
+ * Singular Value Decomposition.
+ * <P>
+ * For an m-by-n matrix A with m >= n, the singular value decomposition is
+ * an m-by-n orthogonal matrix U, an n-by-n diagonal matrix S, and
+ * an n-by-n orthogonal matrix V so that A = U*S*V'.
+ * <P>
+ * The singular values, sigma[k] = S[k][k], are ordered so that
+ * sigma[0] >= sigma[1] >= ... >= sigma[n-1].
+ * <P>
+ * The singular value decompostion always exists, so the constructor will
+ * never fail.  The matrix condition number and the effective numerical
+ * rank can be computed from this decomposition.
+ */
+class SingularValueDecomposition
+{
+public:
+
+   /** Construct the singular value decomposition
+   @param A    Rectangular matrix
+   @return     Structure to access U, S and V.
+   */
+
+    SingularValueDecomposition (const NR::Matrix &matrixArg)
+        {
+        matrix = matrixArg;
+        calculate();
+        }
+
+    virtual ~SingularValueDecomposition()
+        {}
+
+    /**
+     * Return the left singular vectors
+     * @return     U
+     */
+    NR::Matrix getU();
+
+    /**
+     * Return the right singular vectors
+     * @return     V
+     */
+    NR::Matrix getV();
+
+    /**
+     *  Return the three singular values along the diagonal
+     */
+    void getSingularValues(double &s0, double &s1, double &s2);
+
+    /**
+     * Two norm
+     * @return max(S)
+     */
+    double norm2();
+
+    /**
+     * Two norm condition number
+     *  @return max(S)/min(S)
+     */
+    double cond();
+
+    /**
+     *  Effective numerical matrix rank
+     *  @return     Number of nonnegligible singular values.
+     */
+    int rank();
+
+private:
+
+      void calculate();
+
+      NR::Matrix matrix;
+      double A[3][3];
+      double U[3][3];
+      double s[3];
+      double V[3][3];
+
+};
+
+
+static double hypot(double a, double b)
+{
+    double r;
+
+    if (fabs(a) > fabs(b))
+        {
+        r = b/a;
+        r = fabs(a) * sqrt(1+r*r);
+        }
+    else if (b != 0)
+        {
+        r = a/b;
+        r = fabs(b) * sqrt(1+r*r);
+        }
+    else
+        {
+        r = 0.0;
+        }
+    return r;
+}
+
+
+
+void SingularValueDecomposition::calculate()
+{
+      // Initialize.
+      A[0][0] = matrix[0];
+      A[0][1] = matrix[2];
+      A[0][2] = matrix[4];
+      A[1][0] = matrix[1];
+      A[1][1] = matrix[3];
+      A[1][2] = matrix[5];
+      A[2][0] = 0.0;
+      A[2][1] = 0.0;
+      A[2][2] = 1.0;
+
+      double e[3];
+      double work[3];
+      bool wantu = true;
+      bool wantv = true;
+      int m  = 3;
+      int n  = 3;
+      int nu = 3;
+
+      // Reduce A to bidiagonal form, storing the diagonal elements
+      // in s and the super-diagonal elements in e.
+
+      int nct = 2;
+      int nrt = 1;
+      for (int k = 0; k < 2; k++) {
+         if (k < nct) {
+
+            // Compute the transformation for the k-th column and
+            // place the k-th diagonal in s[k].
+            // Compute 2-norm of k-th column without under/overflow.
+            s[k] = 0;
+            for (int i = k; i < m; i++) {
+               s[k] = hypot(s[k],A[i][k]);
+            }
+            if (s[k] != 0.0) {
+               if (A[k][k] < 0.0) {
+                  s[k] = -s[k];
+               }
+               for (int i = k; i < m; i++) {
+                  A[i][k] /= s[k];
+               }
+               A[k][k] += 1.0;
+            }
+            s[k] = -s[k];
+         }
+         for (int j = k+1; j < n; j++) {
+            if ((k < nct) & (s[k] != 0.0))  {
+
+            // Apply the transformation.
+
+               double t = 0;
+               for (int i = k; i < m; i++) {
+                  t += A[i][k]*A[i][j];
+               }
+               t = -t/A[k][k];
+               for (int i = k; i < m; i++) {
+                  A[i][j] += t*A[i][k];
+               }
+            }
+
+            // Place the k-th row of A into e for the
+            // subsequent calculation of the row transformation.
+
+            e[j] = A[k][j];
+         }
+         if (wantu & (k < nct)) {
+
+            // Place the transformation in U for subsequent back
+            // multiplication.
+
+            for (int i = k; i < m; i++) {
+               U[i][k] = A[i][k];
+            }
+         }
+         if (k < nrt) {
+
+            // Compute the k-th row transformation and place the
+            // k-th super-diagonal in e[k].
+            // Compute 2-norm without under/overflow.
+            e[k] = 0;
+            for (int i = k+1; i < n; i++) {
+               e[k] = hypot(e[k],e[i]);
+            }
+            if (e[k] != 0.0) {
+               if (e[k+1] < 0.0) {
+                  e[k] = -e[k];
+               }
+               for (int i = k+1; i < n; i++) {
+                  e[i] /= e[k];
+               }
+               e[k+1] += 1.0;
+            }
+            e[k] = -e[k];
+            if ((k+1 < m) & (e[k] != 0.0)) {
+
+            // Apply the transformation.
+
+               for (int i = k+1; i < m; i++) {
+                  work[i] = 0.0;
+               }
+               for (int j = k+1; j < n; j++) {
+                  for (int i = k+1; i < m; i++) {
+                     work[i] += e[j]*A[i][j];
+                  }
+               }
+               for (int j = k+1; j < n; j++) {
+                  double t = -e[j]/e[k+1];
+                  for (int i = k+1; i < m; i++) {
+                     A[i][j] += t*work[i];
+                  }
+               }
+            }
+            if (wantv) {
+
+            // Place the transformation in V for subsequent
+            // back multiplication.
+
+               for (int i = k+1; i < n; i++) {
+                  V[i][k] = e[i];
+               }
+            }
+         }
+      }
+
+      // Set up the final bidiagonal matrix or order p.
+
+      int p = 3;
+      if (nct < n) {
+         s[nct] = A[nct][nct];
+      }
+      if (m < p) {
+         s[p-1] = 0.0;
+      }
+      if (nrt+1 < p) {
+         e[nrt] = A[nrt][p-1];
+      }
+      e[p-1] = 0.0;
+
+      // If required, generate U.
+
+      if (wantu) {
+         for (int j = nct; j < nu; j++) {
+            for (int i = 0; i < m; i++) {
+               U[i][j] = 0.0;
+            }
+            U[j][j] = 1.0;
+         }
+         for (int k = nct-1; k >= 0; k--) {
+            if (s[k] != 0.0) {
+               for (int j = k+1; j < nu; j++) {
+                  double t = 0;
+                  for (int i = k; i < m; i++) {
+                     t += U[i][k]*U[i][j];
+                  }
+                  t = -t/U[k][k];
+                  for (int i = k; i < m; i++) {
+                     U[i][j] += t*U[i][k];
+                  }
+               }
+               for (int i = k; i < m; i++ ) {
+                  U[i][k] = -U[i][k];
+               }
+               U[k][k] = 1.0 + U[k][k];
+               for (int i = 0; i < k-1; i++) {
+                  U[i][k] = 0.0;
+               }
+            } else {
+               for (int i = 0; i < m; i++) {
+                  U[i][k] = 0.0;
+               }
+               U[k][k] = 1.0;
+            }
+         }
+      }
+
+      // If required, generate V.
+
+      if (wantv) {
+         for (int k = n-1; k >= 0; k--) {
+            if ((k < nrt) & (e[k] != 0.0)) {
+               for (int j = k+1; j < nu; j++) {
+                  double t = 0;
+                  for (int i = k+1; i < n; i++) {
+                     t += V[i][k]*V[i][j];
+                  }
+                  t = -t/V[k+1][k];
+                  for (int i = k+1; i < n; i++) {
+                     V[i][j] += t*V[i][k];
+                  }
+               }
+            }
+            for (int i = 0; i < n; i++) {
+               V[i][k] = 0.0;
+            }
+            V[k][k] = 1.0;
+         }
+      }
+
+      // Main iteration loop for the singular values.
+
+      int pp = p-1;
+      int iter = 0;
+      double eps = pow(2.0,-52.0);
+      double tiny = pow(2.0,-966.0);
+      while (p > 0) {
+         int k,kase;
+
+         // Here is where a test for too many iterations would go.
+
+         // This section of the program inspects for
+         // negligible elements in the s and e arrays.  On
+         // completion the variables kase and k are set as follows.
+
+         // kase = 1     if s(p) and e[k-1] are negligible and k<p
+         // kase = 2     if s(k) is negligible and k<p
+         // kase = 3     if e[k-1] is negligible, k<p, and
+         //              s(k), ..., s(p) are not negligible (qr step).
+         // kase = 4     if e(p-1) is negligible (convergence).
+
+         for (k = p-2; k >= -1; k--) {
+            if (k == -1) {
+               break;
+            }
+            if (fabs(e[k]) <=
+                  tiny + eps*(fabs(s[k]) + fabs(s[k+1]))) {
+               e[k] = 0.0;
+               break;
+            }
+         }
+         if (k == p-2) {
+            kase = 4;
+         } else {
+            int ks;
+            for (ks = p-1; ks >= k; ks--) {
+               if (ks == k) {
+                  break;
+               }
+               double t = (ks != p ? fabs(e[ks]) : 0.) +
+                          (ks != k+1 ? fabs(e[ks-1]) : 0.);
+               if (fabs(s[ks]) <= tiny + eps*t)  {
+                  s[ks] = 0.0;
+                  break;
+               }
+            }
+            if (ks == k) {
+               kase = 3;
+            } else if (ks == p-1) {
+               kase = 1;
+            } else {
+               kase = 2;
+               k = ks;
+            }
+         }
+         k++;
+
+         // Perform the task indicated by kase.
+
+         switch (kase) {
+
+            // Deflate negligible s(p).
+
+            case 1: {
+               double f = e[p-2];
+               e[p-2] = 0.0;
+               for (int j = p-2; j >= k; j--) {
+                  double t = hypot(s[j],f);
+                  double cs = s[j]/t;
+                  double sn = f/t;
+                  s[j] = t;
+                  if (j != k) {
+                     f = -sn*e[j-1];
+                     e[j-1] = cs*e[j-1];
+                  }
+                  if (wantv) {
+                     for (int i = 0; i < n; i++) {
+                        t = cs*V[i][j] + sn*V[i][p-1];
+                        V[i][p-1] = -sn*V[i][j] + cs*V[i][p-1];
+                        V[i][j] = t;
+                     }
+                  }
+               }
+            }
+            break;
+
+            // Split at negligible s(k).
+
+            case 2: {
+               double f = e[k-1];
+               e[k-1] = 0.0;
+               for (int j = k; j < p; j++) {
+                  double t = hypot(s[j],f);
+                  double cs = s[j]/t;
+                  double sn = f/t;
+                  s[j] = t;
+                  f = -sn*e[j];
+                  e[j] = cs*e[j];
+                  if (wantu) {
+                     for (int i = 0; i < m; i++) {
+                        t = cs*U[i][j] + sn*U[i][k-1];
+                        U[i][k-1] = -sn*U[i][j] + cs*U[i][k-1];
+                        U[i][j] = t;
+                     }
+                  }
+               }
+            }
+            break;
+
+            // Perform one qr step.
+
+            case 3: {
+
+               // Calculate the shift.
+
+               double scale = 0.0;
+               double d = fabs(s[p-1]);
+               if (d>scale) scale=d;
+               d = fabs(s[p-2]);
+               if (d>scale) scale=d;
+               d = fabs(e[p-2]);
+               if (d>scale) scale=d;
+               d = fabs(s[k]);
+               if (d>scale) scale=d;
+               d = fabs(e[k]);
+               if (d>scale) scale=d;
+               double sp = s[p-1]/scale;
+               double spm1 = s[p-2]/scale;
+               double epm1 = e[p-2]/scale;
+               double sk = s[k]/scale;
+               double ek = e[k]/scale;
+               double b = ((spm1 + sp)*(spm1 - sp) + epm1*epm1)/2.0;
+               double c = (sp*epm1)*(sp*epm1);
+               double shift = 0.0;
+               if ((b != 0.0) | (c != 0.0)) {
+                  shift = sqrt(b*b + c);
+                  if (b < 0.0) {
+                     shift = -shift;
+                  }
+                  shift = c/(b + shift);
+               }
+               double f = (sk + sp)*(sk - sp) + shift;
+               double g = sk*ek;
+
+               // Chase zeros.
+
+               for (int j = k; j < p-1; j++) {
+                  double t = hypot(f,g);
+                  double cs = f/t;
+                  double sn = g/t;
+                  if (j != k) {
+                     e[j-1] = t;
+                  }
+                  f = cs*s[j] + sn*e[j];
+                  e[j] = cs*e[j] - sn*s[j];
+                  g = sn*s[j+1];
+                  s[j+1] = cs*s[j+1];
+                  if (wantv) {
+                     for (int i = 0; i < n; i++) {
+                        t = cs*V[i][j] + sn*V[i][j+1];
+                        V[i][j+1] = -sn*V[i][j] + cs*V[i][j+1];
+                        V[i][j] = t;
+                     }
+                  }
+                  t = hypot(f,g);
+                  cs = f/t;
+                  sn = g/t;
+                  s[j] = t;
+                  f = cs*e[j] + sn*s[j+1];
+                  s[j+1] = -sn*e[j] + cs*s[j+1];
+                  g = sn*e[j+1];
+                  e[j+1] = cs*e[j+1];
+                  if (wantu && (j < m-1)) {
+                     for (int i = 0; i < m; i++) {
+                        t = cs*U[i][j] + sn*U[i][j+1];
+                        U[i][j+1] = -sn*U[i][j] + cs*U[i][j+1];
+                        U[i][j] = t;
+                     }
+                  }
+               }
+               e[p-2] = f;
+               iter = iter + 1;
+            }
+            break;
+
+            // Convergence.
+
+            case 4: {
+
+               // Make the singular values positive.
+
+               if (s[k] <= 0.0) {
+                  s[k] = (s[k] < 0.0 ? -s[k] : 0.0);
+                  if (wantv) {
+                     for (int i = 0; i <= pp; i++) {
+                        V[i][k] = -V[i][k];
+                     }
+                  }
+               }
+
+               // Order the singular values.
+
+               while (k < pp) {
+                  if (s[k] >= s[k+1]) {
+                     break;
+                  }
+                  double t = s[k];
+                  s[k] = s[k+1];
+                  s[k+1] = t;
+                  if (wantv && (k < n-1)) {
+                     for (int i = 0; i < n; i++) {
+                        t = V[i][k+1]; V[i][k+1] = V[i][k]; V[i][k] = t;
+                     }
+                  }
+                  if (wantu && (k < m-1)) {
+                     for (int i = 0; i < m; i++) {
+                        t = U[i][k+1]; U[i][k+1] = U[i][k]; U[i][k] = t;
+                     }
+                  }
+                  k++;
+               }
+               iter = 0;
+               p--;
+            }
+            break;
+         }
+      }
+
+
+}
+
+
+
+/**
+ * Return the left singular vectors
+ * @return     U
+ */
+NR::Matrix SingularValueDecomposition::getU()
+{
+    NR::Matrix mat(U[0][0], U[1][0], U[0][1],
+                   U[1][1], U[2][0], U[2][1]);
+    return mat;
+}
+
+/**
+ * Return the right singular vectors
+ * @return     V
+ */
+
+NR::Matrix SingularValueDecomposition::getV()
+{
+    NR::Matrix mat(V[0][0], V[1][0], V[0][1],
+                   V[1][1], V[2][0], V[2][1]);
+    return mat;
+}
+
+/**
+ *  Return the three singular values along the diagonal
+ */
+void SingularValueDecomposition::getSingularValues(
+                   double &s0, double &s1, double &s2)
+{
+    s0 = s[0];
+    s1 = s[1];
+    s2 = s[2];
+}
+
+/**
+ * Two norm
+ * @return     max(S)
+ */
+double SingularValueDecomposition::norm2()
+{
+    return s[0];
+}
+
+/**
+ * Two norm condition number
+ *  @return     max(S)/min(S)
+ */
+
+double SingularValueDecomposition::cond()
+{
+    return s[0]/s[2];
+}
+
+/**
+ *  Effective numerical matrix rank
+ *  @return     Number of nonnegligible singular values.
+ */
+int SingularValueDecomposition::rank()
+{
+    double eps = pow(2.0,-52.0);
+    double tol = 3.0*s[0]*eps;
+    int r = 0;
+    for (int i = 0; i < 3; i++)
+        {
+        if (s[i] > tol)
+            r++;
+        }
+    return r;
+}
+
+//########################################################################
+//# E N D    C L A S S    SingularValueDecomposition
+//########################################################################
+
+
 
 
 //#define pxToCm  0.0275
@@ -135,6 +766,7 @@ static std::string formatTransform(NR::Matrix &tf)
 }
 
 
+
 /**
  * Method descends into the repr tree, converting image and style info
  * into forms compatible in ODF.
@@ -165,14 +797,20 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 imageTable[oldName] = newName;
                 std::string comment = "old name was: ";
                 comment.append(oldName);
-                ZipEntry *ze = zf.addFile(oldName, comment);
+                URI oldUri(oldName);
+                //g_message("oldpath:%s", oldUri.getNativePath().c_str());
+                //# if relative to the documentURI, get proper path
+                URI resUri = documentUri.resolve(oldUri);
+                DOMString pathName = resUri.getNativePath();
+                //g_message("native path:%s", pathName.c_str());
+                ZipEntry *ze = zf.addFile(pathName, comment);
                 if (ze)
                     {
                     ze->setFileName(newName);
                     }
                 else
                     {
-                    g_warning("Could not load image file '%s'", oldName.c_str());
+                    g_warning("Could not load image file '%s'", pathName.c_str());
                     }
                 }
             }
@@ -534,7 +1172,7 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     else if (nodeName == "g" || nodeName == "svg:g")
         {
         if (id.size() > 0)
-            outs.printf("<draw:g id=\"%s\">", id.c_str());
+            outs.printf("<draw:g id=\"%s\">\n", id.c_str());
         else
             outs.printf("<draw:g>\n");
         //# Iterate through the children
@@ -543,7 +1181,10 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
             if (!writeTree(outs, child))
                 return false;
             }
-        outs.printf("</draw:g>\n");
+        if (id.size() > 0)
+            outs.printf("</draw:g> <!-- id=\"%s\" -->\n", id.c_str());
+        else
+            outs.printf("</draw:g>\n");
         return true;
         }
     else if (nodeName == "image" || nodeName == "svg:image")
@@ -566,8 +1207,13 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         iwidth  = pxToCm * ( ibbox.max()[NR::X] - ibbox.min()[NR::X] );
         iheight = pxToCm * ( ibbox.max()[NR::Y] - ibbox.min()[NR::Y] );
 
+        NR::Matrix itemTransform = item->transform;
+        std::string itemTransformString = formatTransform(itemTransform);
 
-        std::string itemTransformString = formatTransform(item->transform);
+        SingularValueDecomposition svd(itemTransform);
+        double scale1, rotate, scale2;
+        svd.getSingularValues(scale1, rotate, scale2);
+        g_message("s1:%f  rot:%f  s2:%f", scale1, rotate, scale2);
 
         std::string href = getAttribute(node, "xlink:href");
         std::map<std::string, std::string>::iterator iter = imageTable.find(href);
@@ -799,6 +1445,8 @@ OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
     styleLookupTable.clear();
     imageTable.clear();
     preprocess(zf, doc->rroot);
+    g_message("native file:%s\n", uri);
+    documentUri = URI(uri);
 
     if (!writeManifest(zf))
         {

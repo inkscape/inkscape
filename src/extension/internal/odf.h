@@ -34,6 +34,7 @@
 
 #include <dom/dom.h>
 #include <dom/io/stringstream.h>
+#include <dom/uri.h>
 
 #include <glib.h>
 #include "extension/implementation/implementation.h"
@@ -47,7 +48,6 @@
 #include <dom/util/ziptool.h>
 #include <dom/io/domstream.h>
 
-typedef org::w3c::dom::io::Writer Writer;
 
 namespace Inkscape
 {
@@ -56,6 +56,8 @@ namespace Extension
 namespace Internal
 {
 
+typedef org::w3c::dom::URI URI;
+typedef org::w3c::dom::io::Writer Writer;
 
 
 class StyleInfo
@@ -148,6 +150,8 @@ public:
     static void   init  (void);
 
 private:
+
+    URI documentUri;
 
     /* Style table
        Uses a two-stage lookup to avoid style duplication.
