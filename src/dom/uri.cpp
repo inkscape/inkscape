@@ -309,7 +309,7 @@ URI URI::resolve(const URI &other) const
             unsigned int pos = path.rfind('/');
             if (pos != path.npos)
                 {
-                DOMString tpath = path.substr(pos);
+                DOMString tpath = path.substr(0, pos+1);
                 tpath.append(other.path);
                 newUri.path = tpath;
                 newUri.normalize();
@@ -321,15 +321,77 @@ URI URI::resolve(const URI &other) const
 
 
 /**
- *
+ *  This follows the Java URI algorithm:
+ *   1. All "." segments are removed.
+ *   2. If a ".." segment is preceded by a non-".." segment
+ *          then both of these segments are removed. This step
+ *          is repeated until it is no longer applicable.
+ *   3. If the path is relative, and if its first segment
+ *          contains a colon character (':'), then a "." segment
+ *          is prepended. This prevents a relative URI with a path
+ *          such as "a:b/c/d" from later being re-parsed as an
+ *          opaque URI with a scheme of "a" and a scheme-specific
+ *          part of "b/c/d". (Deviation from RFC 2396)
  */
-void URI::normalize() const
+void URI::normalize()
 {
+    std::vector<DOMString> segments;
 
+    //## Collect segments
+    if (path.size()<2)
+        return;
+    unsigned int pos=0;
+    while (pos < path.size())
+        {
+        unsigned int pos2 = path.find(pos);
+        if (pos2==path.npos)
+            break;
+        if (pos2>pos)
+            {
+            DOMString seg = path.substr(pos, pos2);
+            segments.push_back(seg);
+            }
+        pos = pos2;
+        pos++;
+        }
 
+    //## Clean up (normalize) segments
+    bool edited = false;
+    std::vector<DOMString>::iterator iter;
+    for (iter=segments.begin() ; iter!=segments.end() ; )
+        {
+        DOMString s = *iter;
+        if (s == ".")
+            {
+            iter = segments.erase(iter);
+            edited = true;
+            }
+        else if (s == ".." &&
+                 iter != segments.begin() &&
+                 *(iter-1) != "..")
+            {
+            iter--; //back up, then erase two entries
+            iter = segments.erase(iter);
+            iter = segments.erase(iter);
+            edited = true;
+            }
+        else
+            iter++;
+        }
 
-
-
+    //## Rebuild path, if necessary
+    if (edited)
+        {
+        path.clear();
+        if (absolute)
+            path.append("/");
+        std::vector<DOMString>::iterator iter;
+        for (iter=segments.begin() ; iter!=segments.end() ; iter++)
+            {
+            path.append(*iter);
+            path.append("/");
+            }
+        }
 
 }
 

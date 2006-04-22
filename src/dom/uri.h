@@ -163,7 +163,7 @@ public:
     /**
      *
      */
-    virtual void normalize() const;
+    virtual void normalize();
 
 private:
 
