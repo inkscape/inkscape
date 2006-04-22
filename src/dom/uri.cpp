@@ -341,6 +341,7 @@ URI URI::resolve(const URI &other) const
                 }
             }
         }
+
     newUri.normalize();
     return newUri;
 }
