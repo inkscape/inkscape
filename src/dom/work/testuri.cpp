@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -30,7 +30,7 @@
 #include "io/uristream.h"
 
 
-
+typedef org::w3c::dom::URI URI;
 
 static bool doURI(char *uristr)
 {
@@ -42,27 +42,32 @@ static bool doURI(char *uristr)
     printf("path    : '%s'\n", uri.getPath().c_str());
     printf("query   : '%s'\n", uri.getQuery().c_str());
     printf("fragment: '%s'\n", uri.getFragment().c_str());
-    printf("absolute: '%d'\n", uri.getIsAbsolute());
-
-
-
-
+    printf("absolute: '%d'\n", uri.isAbsolute());
+    printf("opaque  : '%d'\n", uri.isOpaque());
 
     return true;
 }
 
-static bool doTest()
+
+
+static bool test1()
 {
     char *uristr = "http://www.mit.edu:80/index.html?test=good#hello";
     doURI(uristr);
     uristr = "http://www.mit.edu:80";
     doURI(uristr);
+    return true;
+}
 
-
-
-
-
-
+static bool test2()
+{
+    printf("############ uri.resolve() #######\n");
+    URI absUri("file:/this/is/an/./absolute/path.sfx");
+    printf("absUri:%s\n", absUri.getPath().c_str());
+    URI relUri("../this/is/a/./relative/path.sfx");
+    printf("relUri:%s\n", relUri.getPath().c_str());
+    URI resUri = absUri.resolve(relUri);
+    printf("resUri:%s\n", resUri.getPath().c_str());
     return true;
 }
 
@@ -70,7 +75,9 @@ static bool doTest()
 
 int main(int argc, char **argv)
 {
-    if (!doTest())
+    if (!test1())
+        return 1;
+    if (!test2())
         return 1;
     return 0;
 }
