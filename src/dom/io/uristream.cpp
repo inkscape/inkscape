@@ -77,20 +77,17 @@ void UriInputStream::init() throw (StreamException)
     //get information from uri
     scheme = uri.getScheme();
 
-    //printf("in scheme:'%d'\n", scheme);
-    DOMString path = uri.getPath();
-    //printf("in path:'%s'\n", path.c_str());
-
     switch (scheme)
         {
 
         case URI::SCHEME_FILE:
             {
-            inf = fopen(path.c_str(), "rb");
+            DOMString npath = uri.getNativePath();
+            inf = fopen(npath.c_str(), "rb");
             if (!inf)
                 {
                 DOMString err = "UriInputStream cannot open file ";
-                err.append(path);
+                err.append(npath);
                 throw StreamException(err);
                 }
             break;
@@ -98,6 +95,7 @@ void UriInputStream::init() throw (StreamException)
 
         case URI::SCHEME_DATA:
             {
+            DOMString path = uri.getPath();
             data        = (unsigned char *) uri.getPath().c_str();
             //printf("in data:'%s'\n", data);
             dataPos     = 0;
@@ -317,7 +315,7 @@ void UriOutputStream::init() throw(StreamException)
 
         case URI::SCHEME_FILE:
             {
-            cpath     = (char *) uri.getPath().c_str();
+            cpath     = (char *) uri.getNativePath().c_str();
             //printf("out path:'%s'\n", cpath);
             outf = fopen(cpath, "wb");
             if (!outf)
