@@ -71,13 +71,28 @@ static bool test2()
     return true;
 }
 
-
+static bool test3()
+{
+    printf("############ windows-style uri.resolve() #######\n");
+    URI absUri("file:C:\\this\\is\\an\\.\\absolute/path.sfx");
+    printf("absUri:%s\n", absUri.getPath().c_str());
+    printf("absUri:%s\n", absUri.getNativePath().c_str());
+    URI relUri("..\\this\\is\\a\\.\\relative\\path.sfx");
+    printf("relUri:%s\n", relUri.getPath().c_str());
+    printf("relUri:%s\n", relUri.getNativePath().c_str());
+    URI resUri = absUri.resolve(relUri);
+    printf("resUri:%s\n", resUri.getPath().c_str());
+    printf("resUri:%s\n", resUri.getNativePath().c_str());
+    return true;
+}
 
 int main(int argc, char **argv)
 {
     if (!test1())
         return 1;
     if (!test2())
+        return 1;
+    if (!test3())
         return 1;
     return 0;
 }
