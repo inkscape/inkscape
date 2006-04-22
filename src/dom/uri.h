@@ -138,6 +138,11 @@ public:
     /**
      *
      */
+    virtual DOMString getNativePath() const;
+
+    /**
+     *
+     */
     virtual bool isAbsolute() const;
 
     /**
