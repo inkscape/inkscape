@@ -31,7 +31,8 @@
 
 #include <vector>
 
-#define DOM_STRING_GLIBMM
+//# include this before the #ifdefs below
+#include "domconfig.h"
 
 #ifdef DOM_STRING_OWN
 #include "domstring.h"

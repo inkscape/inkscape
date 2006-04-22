@@ -134,7 +134,7 @@ endif
 
 
 
-INC = -I.
+INC = -I. -I..
 CFLAGS = -Wall -g -DXP_WIN 
 LIBS = -lws2_32
 
