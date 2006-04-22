@@ -236,6 +236,32 @@ DOMString URI::getPath() const
     return path;
 }
 
+DOMString URI::getNativePath() const
+{
+    DOMString npath;
+#ifdef __WIN32__
+    unsigned int firstChar = 0;
+    if (path.size() >= 3)
+        {
+        if (path[0] == '/' &&
+            isLetter(path[1]) &&
+            path[2] == ':')
+            firstChar++;
+         }
+    for (unsigned int i=firstChar ; i<path.size() ; i++)
+        {
+        XMLCh ch = (XMLCh) path[i];
+        if (ch == '/')
+            npath.push_back((XMLCh)'\\');
+        else
+            npath.push_back(ch);
+        }
+#else
+    npath = path;
+#endif
+    return npath;
+}
+
 
 bool URI::isAbsolute() const
 {
@@ -529,7 +555,12 @@ int URI::parseHierarchicalPart(int p0)
 
     //# Are we absolute?
     ch = peek(p);
-    if (ch == '/')
+    if (isLetter(ch) && peek(p+1)==':')
+        {
+        absolute = true;
+        path.push_back((XMLCh)'/');
+        }
+    else if (ch == '/')
         {
         absolute = true;
         if (p>p0) //in other words, if '/' is not the first char
@@ -643,7 +674,16 @@ bool URI::parse(const DOMString &str)
 {
 
     parselen = str.size();
-    DOMString tmp = str;
+
+    DOMString tmp;
+    for (unsigned int i=0 ; i<str.size() ; i++)
+        {
+        XMLCh ch = (XMLCh) str[i];
+        if (ch == '\\')
+            tmp.push_back((XMLCh)'/');
+        else
+            tmp.push_back(ch);
+        }
     parsebuf = (char *) tmp.c_str();
 
 
