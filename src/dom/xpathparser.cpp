@@ -195,7 +195,7 @@ int XPathParser::getword(int p0, DOMString &str)
         if (!isLetterOrDigit(ch))
             break;
         ch = get(p++);
-        str.push_back(ch);
+        str.push_back((XMLCh)ch);
         }
     return p;
 }
@@ -264,7 +264,7 @@ int XPathParser::getNumber(int p0, double &dresult)
             }
         else if (!isDigit(ch))
             break;
-        num.push_back(ch);
+        num.push_back((XMLCh)ch);
         i++;
         }
 
@@ -318,7 +318,7 @@ int XPathParser::getLiteral(int p0, DOMString &result)
         ch = peek(p);
         if (ch == quotechar)
             break;
-        result.push_back(ch);
+        result.push_back((XMLCh)ch);
         p++;
         }
     p++; //skip over closing "
@@ -333,7 +333,7 @@ int XPathParser::getNCName(int p0, DOMString &result)
     if (ch != '_' && !isLetter(ch))
         return p0;
 
-    result.push_back(ch);
+    result.push_back((XMLCh)ch);
     p++;
     while (p < parselen)
         {
@@ -343,7 +343,7 @@ int XPathParser::getNCName(int p0, DOMString &result)
                isExtender(ch)      ||
                ch == '.' || ch == '-' || ch == '_' )
            {
-           result.push_back(ch);
+           result.push_back((XMLCh)ch);
            p++;
            }
        else
@@ -358,7 +358,7 @@ int XPathParser::getNameTest(int p0, DOMString &result)
     int ch = peek(p);
     if (ch == '*')
         {
-        result.push_back(ch);
+        result.push_back((XMLCh)ch);
         p++;
         return p;
         }
@@ -386,7 +386,7 @@ int XPathParser::getNameTest(int p0, DOMString &result)
     ch = peek(p);
     if (ch == '*')
         {
-        result.push_back(ch);
+        result.push_back((XMLCh)ch);
         p++;
         return p;
         }

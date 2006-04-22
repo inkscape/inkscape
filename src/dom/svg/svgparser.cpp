@@ -93,7 +93,7 @@ bool SvgParser::match(int pos, char *str)
 {
     while (*str)
        {
-       if (get(pos++) != *str++)
+       if (get(pos++) != (XMLCh) *str++)
            return false;
        }
    return true;

@@ -76,7 +76,7 @@ Document *LSParserImpl::parse(const LSInput &input)
             int ch = lsreader->get();
             if (ch < 0)
                 break;
-            buf.push_back(ch);
+            buf.push_back((XMLCh)ch);
             }
         XmlReader reader;
         Document *doc = reader.parse(buf);
@@ -92,7 +92,7 @@ Document *LSParserImpl::parse(const LSInput &input)
             int ch = inputStream->get();
             if (ch < 0)
                 break;
-            buf.push_back(ch);
+            buf.push_back((XMLCh)ch);
             }
         XmlReader reader;
         Document *doc = reader.parse(buf);
@@ -176,7 +176,7 @@ bool LSSerializerImpl::write(
 {
     outbuf = "";
     indent = 0;
-    
+
     writeNode(nodeArg);
 
     //## Check in order specified in the L&S specs

@@ -211,7 +211,7 @@ int XmlReader::getWord(int p, DOMString &result)
         int b = get(p);
         if (b<=' ' || b=='/' || b=='>' || b=='=')
             break;
-        result.push_back(b);
+        result.push_back((XMLCh)b);
         p++;
         }
     return p;
@@ -234,7 +234,7 @@ int XmlReader::getPrefixedWord(int p, DOMString &prefix,
             shortWord = "";
             }
         else
-            shortWord.push_back(b);
+            shortWord.push_back((XMLCh)b);
         p++;
         }
     if (prefix.size() > 0)
@@ -274,7 +274,7 @@ int XmlReader::getQuoted(int p0, DOMString &result)
             }
         else
             {
-            buf.push_back(b);
+            buf.push_back((XMLCh)b);
             }
         }
 
@@ -448,7 +448,7 @@ int XmlReader::parseComment(int p0, Comment *comment)
             break;
             }
         int ch = get(p++);
-        buf.push_back(ch);
+        buf.push_back((XMLCh)ch);
         }
 
     comment->setNodeValue(buf);
@@ -483,7 +483,7 @@ int XmlReader::parseCDATA(int p0, CDATASection *cdata)
             break;
             }
         int ch = get(p++);
-        buf.push_back(ch);
+        buf.push_back((XMLCh)ch);
         }
 
     /*printf("Got CDATA:%s\n",buf.c_str());*/
@@ -519,7 +519,7 @@ int XmlReader::parseText(int p0, Text *text)
         else
             {
             int ch = get(p++);
-            buf.push_back(ch);
+            buf.push_back((XMLCh)ch);
             }
         }
 
@@ -929,7 +929,7 @@ XmlReader::loadFile(char *fileName)
         int ch = fgetc(f);
         if (ch<0)
             break;
-        buf.push_back(ch);
+        buf.push_back((XMLCh)ch);
         }
     fclose(f);
 

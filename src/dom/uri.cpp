@@ -108,14 +108,18 @@ URI::URI(const char *str)
 URI::URI(const URI &other)
 {
     init();
-    scheme    = other.scheme;
-    schemeStr = other.schemeStr;
-    authority = other.authority;
-    port      = other.port;
-    path      = other.path;
-    absolute  = other.absolute;
-    query     = other.query;
-    fragment  = other.fragment;
+    assign(other);
+}
+
+
+/**
+ *
+ */
+URI &URI::operator=(const URI &other)
+{
+    init();
+    assign(other);
+    return *this;
 }
 
 
@@ -143,10 +147,27 @@ void URI::init()
     authority = "";
     path      = "";
     absolute  = false;
+    opaque    = false;
     query     = "";
     fragment  = "";
 }
 
+
+/**
+ *
+ */
+void URI::assign(const URI &other)
+{
+    scheme    = other.scheme;
+    schemeStr = other.schemeStr;
+    authority = other.authority;
+    port      = other.port;
+    path      = other.path;
+    absolute  = other.absolute;
+    opaque    = other.opaque;
+    query     = other.query;
+    fragment  = other.fragment;
+}
 
 
 //#########################################################################
@@ -216,9 +237,14 @@ DOMString URI::getPath() const
 }
 
 
-bool URI::getIsAbsolute() const
+bool URI::isAbsolute() const
 {
     return absolute;
+}
+
+bool URI::isOpaque() const
+{
+    return opaque;
 }
 
 
@@ -231,6 +257,80 @@ DOMString URI::getQuery() const
 DOMString URI::getFragment() const
 {
     return fragment;
+}
+
+
+URI URI::resolve(const URI &other) const
+{
+    //### According to w3c, this is handled in 3 cases
+
+    //## 1
+    if (opaque || other.isAbsolute())
+        return other;
+
+    //## 2
+    if (other.fragment.size()  >  0 &&
+        other.path.size()      == 0 &&
+        other.scheme           == SCHEME_NONE &&
+        other.authority.size() == 0 &&
+        other.query.size()     == 0 )
+        {
+        URI fragUri = *this;
+        fragUri.fragment = other.fragment;
+        return fragUri;
+        }
+
+    //## 3 http://www.ietf.org/rfc/rfc2396.txt, section 5.2
+    URI newUri;
+    //# 3.1
+    newUri.scheme    = scheme;
+    newUri.schemeStr = schemeStr;
+    newUri.query     = other.query;
+    newUri.fragment  = other.fragment;
+    if (other.authority.size() > 0)
+        {
+        //# 3.2
+        if (absolute || other.absolute)
+            newUri.absolute = true;
+        newUri.authority = other.authority;
+        newUri.port      = other.port;//part of authority
+        newUri.path      = other.path;
+        }
+    else
+        {
+        //# 3.3
+        if (other.absolute)
+            {
+            newUri.absolute = true;
+            newUri.path     = other.path;
+            }
+        else
+            {
+            unsigned int pos = path.rfind('/');
+            if (pos != path.npos)
+                {
+                DOMString tpath = path.substr(pos);
+                tpath.append(other.path);
+                newUri.path = tpath;
+                newUri.normalize();
+                }
+            }
+        }
+    return newUri;
+}
+
+
+/**
+ *
+ */
+void URI::normalize() const
+{
+
+
+
+
+
+
 }
 
 
@@ -335,9 +435,9 @@ int URI::parseHierarchicalPart(int p0)
             else if (ch == ':')
                 portSpecified = true;
             else if (portSpecified)
-                portStr.push_back(ch);
+                portStr.push_back((XMLCh)ch);
             else
-                authority.push_back(ch);
+                authority.push_back((XMLCh)ch);
             p++;
             }
         if (portStr.size() > 0)
@@ -355,7 +455,9 @@ int URI::parseHierarchicalPart(int p0)
     if (ch == '/')
         {
         absolute = true;
-        path.push_back(ch);
+        if (p>p0) //in other words, if '/' is not the first char
+            opaque = true;
+        path.push_back((XMLCh)ch);
         p++;
         }
 
@@ -364,7 +466,7 @@ int URI::parseHierarchicalPart(int p0)
         ch = peek(p);
         if (ch == '?' || ch == '#')
             break;
-        path.push_back(ch);
+        path.push_back((XMLCh)ch);
         p++;
         }
 
@@ -384,7 +486,7 @@ int URI::parseQuery(int p0)
         ch = peek(p);
         if (ch == '#')
             break;
-        query.push_back(ch);
+        query.push_back((XMLCh)ch);
         p++;
         }
 
@@ -406,7 +508,7 @@ int URI::parseFragment(int p0)
         ch = peek(p);
         if (ch == '?')
             break;
-        fragment.push_back(ch);
+        fragment.push_back((XMLCh)ch);
         p++;
         }
 

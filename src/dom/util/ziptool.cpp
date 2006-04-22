@@ -869,6 +869,8 @@ private:
     void encodeLiteralStatic(unsigned int ch);
 
     unsigned char windowBuf[32768];
+    //assume 32-bit ints
+    unsigned int windowHashBuf[32768];
 };
 
 
@@ -1268,14 +1270,22 @@ void Deflater::encodeDistStatic(unsigned int len, unsigned int dist)
  */
 bool Deflater::compressWindow()
 {
+    windowPos = 0;
     unsigned int windowSize = window.size();
     //### Compress as much of the window as possible
-    int i=0;
-    std::vector<unsigned char>::iterator iter;
-    for (iter=window.begin() ; iter!=window.end() ; iter++)
-        windowBuf[i++] = *iter;
 
-    while (windowPos < windowSize)
+    unsigned int hash = 0;
+    //Have each value be a long with the byte at this position,
+    //plus the 3 bytes after it in the window
+    for (int i=windowSize-1 ; i>=0 ; i--)
+        {
+        unsigned char ch = window[i];
+        windowBuf[i] = ch;
+        hash = ((hash<<8) & 0xffffff00) | ch;
+        windowHashBuf[i] = hash;
+        }
+
+    while (windowPos < windowSize - 3)
         {
         //### Find best match, if any
         unsigned int bestMatchLen  = 0;
@@ -1284,27 +1294,28 @@ bool Deflater::compressWindow()
             {
             for (unsigned int lookBack=0 ; lookBack<windowPos-4 ; lookBack++)
                 {
-                unsigned int lookAhead=0;
-                unsigned char *wp = &(windowBuf[windowPos]);
-                unsigned char *lb = &(windowBuf[lookBack]);
-                //Check first char, before continuing with string
-                if (*lb++ == *wp++)
+                //Check 4-char hashes first, before continuing with string
+                if (windowHashBuf[lookBack] == windowHashBuf[windowPos])
                     {
-                    unsigned int lookAheadMax = windowSize - windowPos;
-                    if (lookBack + lookAheadMax >= windowPos)
-                        lookAheadMax = windowPos - lookBack;
+                    unsigned int lookAhead=4;
+                    unsigned int lookAheadMax = windowSize - 4 - windowPos;
+                    if (lookBack + lookAheadMax >= windowPos -4 )
+                        lookAheadMax = windowPos - 4 - lookBack;
                     if (lookAheadMax > 258)
                         lookAheadMax = 258;
-                    for (lookAhead = 1 ; lookAhead<lookAheadMax ; lookAhead++)
+                    unsigned char *wp = &(windowBuf[windowPos+4]);
+                    unsigned char *lb = &(windowBuf[lookBack+4]);
+                    while (lookAhead<lookAheadMax)
                         {
                         if (*lb++ != *wp++)
                             break;
+                        lookAhead++;
                         }
-                    }
-                if (lookAhead > bestMatchLen)
-                    {
-                    bestMatchLen  = lookAhead;
-                    bestMatchDist = windowPos - lookBack;
+                    if (lookAhead > bestMatchLen)
+                        {
+                        bestMatchLen  = lookAhead;
+                        bestMatchDist = windowPos - lookBack;
+                        }
                     }
                 }
             }
@@ -1333,6 +1344,9 @@ bool Deflater::compressWindow()
             }
         }
 
+    while (windowPos < windowSize)
+        encodeLiteralStatic(windowBuf[windowPos++]);
+
     encodeLiteralStatic(256);
     return true;
 }
@@ -1350,14 +1364,15 @@ bool Deflater::compress()
     for (iter = uncompressed.begin(); iter != uncompressed.end() ; )
         {
         total += windowPos;
-        //trace("total:%ld", total);
+        trace("total:%ld", total);
+        if (windowPos > window.size())
+            windowPos = window.size();
         window.erase(window.begin() , window.begin()+windowPos);
         while (window.size() < 32768 && iter != uncompressed.end())
             {
             window.push_back(*iter);
             iter++;
             }
-        windowPos = 0;
         if (window.size() >= 32768)
             putBits(0x00, 1); //0  -- more blocks
         else
@@ -2636,7 +2651,7 @@ bool ZipFile::readFileData()
 
         if (uncompressedSize != uncompBuf.size())
             {
-            error("Size mismatch.  Received %ld, received %ld",
+            error("Size mismatch.  Expected %ld, received %ld",
                 uncompressedSize, uncompBuf.size());
             return false;
             }

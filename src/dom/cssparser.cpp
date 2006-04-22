@@ -135,7 +135,7 @@ bool CssParser::match(int pos, char *str)
 {
     while (*str)
        {
-       if (get(pos++) != *str++)
+       if (get(pos++) != (XMLCh) *str++)
            return false;
        }
    return true;
@@ -1622,7 +1622,7 @@ bool CssParser::parseFile(const DOMString &fileName)
         int ch = fgetc(f);
         if (ch<0)
             break;
-        str.push_back(ch);
+        str.push_back((XMLCh)ch);
         }
     fclose(f);
 

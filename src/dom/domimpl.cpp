@@ -862,7 +862,7 @@ void NodeImpl::setNodeName(const DOMString &qualifiedName)
             }
         else
             {
-            localName.push_back(ch);
+            localName.push_back((XMLCh)ch);
             }
         }
 }

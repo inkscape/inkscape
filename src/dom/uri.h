@@ -85,6 +85,11 @@ public:
     URI(const URI &other);
 
     /**
+     *  Assignment
+     */
+    URI &URI::operator=(const URI &other);
+
+    /**
      *
      */
     virtual ~URI();
@@ -133,7 +138,12 @@ public:
     /**
      *
      */
-    virtual bool getIsAbsolute() const;
+    virtual bool isAbsolute() const;
+
+    /**
+     *
+     */
+    virtual bool isOpaque() const;
 
     /**
      *
@@ -145,9 +155,22 @@ public:
      */
     virtual DOMString getFragment() const;
 
+    /**
+     *
+     */
+    virtual URI resolve(const URI &other) const;
+
+    /**
+     *
+     */
+    virtual void normalize() const;
+
 private:
 
     void init();
+
+    //assign values of other to this. used by copy constructor
+    void assign(const URI &other);
 
     int scheme;
 
@@ -162,6 +185,8 @@ private:
     DOMString path;
 
     bool absolute;
+
+    bool opaque;
 
     DOMString query;
 

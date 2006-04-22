@@ -29,16 +29,18 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <string>
 #include <vector>
 
-#define OWN_STRING
+#define DOM_STRING_GLIBMM
 
-#ifdef OWN_STRING
+#ifdef DOM_STRING_OWN
 #include "domstring.h"
 #else
+#ifdef DOM_STRING_GLIBMM
 #include <glibmm.h>
-typedef Glib::ustring DOMString
+#else
+#include <string>
+#endif
 #endif
 
 #define XMLNSNAME "http://www.w3.org/2000/xmlns/"
@@ -52,10 +54,17 @@ namespace dom
 
 
 
-#ifndef OWN_STRING
-typedef unsigned short XMLCh;
+#ifdef DOM_STRING_OWN
+#else
+#ifdef DOM_STRING_GLIBMM
+typedef Glib::ustring DOMString;
+typedef gunichar XMLCh;
+#else
 typedef std::string DOMString;
+typedef unsigned short XMLCh;
 #endif
+#endif
+
 
 /**
  *
