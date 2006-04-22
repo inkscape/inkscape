@@ -312,10 +312,10 @@ URI URI::resolve(const URI &other) const
                 DOMString tpath = path.substr(0, pos+1);
                 tpath.append(other.path);
                 newUri.path = tpath;
-                newUri.normalize();
                 }
             }
         }
+    newUri.normalize();
     return newUri;
 }
 
@@ -340,15 +340,27 @@ void URI::normalize()
     //## Collect segments
     if (path.size()<2)
         return;
+    bool abs = false;
     unsigned int pos=0;
+    if (path[0]=='/')
+        {
+        abs = true;
+        pos++;
+        }
     while (pos < path.size())
         {
-        unsigned int pos2 = path.find(pos);
+        unsigned int pos2 = path.find('/', pos);
         if (pos2==path.npos)
+            {
+            DOMString seg = path.substr(pos);
+            //printf("last segment:%s\n", seg.c_str());
+            segments.push_back(seg);
             break;
+            }
         if (pos2>pos)
             {
-            DOMString seg = path.substr(pos, pos2);
+            DOMString seg = path.substr(pos, pos2-pos);
+            //printf("segment:%s\n", seg.c_str());
             segments.push_back(seg);
             }
         pos = pos2;
@@ -383,13 +395,16 @@ void URI::normalize()
     if (edited)
         {
         path.clear();
-        if (absolute)
+        if (abs)
+            {
             path.append("/");
+            }
         std::vector<DOMString>::iterator iter;
         for (iter=segments.begin() ; iter!=segments.end() ; iter++)
             {
+            if (iter != segments.begin())
+                path.append("/");
             path.append(*iter);
-            path.append("/");
             }
         }
 
@@ -633,6 +648,7 @@ bool URI::parse(const DOMString &str)
 
 
     int p = parse(0);
+    normalize();
 
     if (p < 0)
         {
