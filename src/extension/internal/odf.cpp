@@ -147,9 +147,25 @@ public:
     NR::Matrix getV();
 
     /**
-     *  Return the three singular values along the diagonal
+     * Return the right singular vectors
+     * @return  U x Vtransposed
      */
-    void getSingularValues(double &s0, double &s1, double &s2);
+    NR::Matrix getUVt();
+
+    /**
+     *  Return the s[0] value
+     */
+    double getS0();
+
+    /**
+     *  Return the s[1] value
+     */
+    double getS1();
+
+    /**
+     *  Return the s[2] value
+     */
+    double getS2();
 
     /**
      * Two norm
@@ -182,7 +198,7 @@ private:
 };
 
 
-static double hypot(double a, double b)
+static double svd_hypot(double a, double b)
 {
     double r;
 
@@ -239,7 +255,7 @@ void SingularValueDecomposition::calculate()
             // Compute 2-norm of k-th column without under/overflow.
             s[k] = 0;
             for (int i = k; i < m; i++) {
-               s[k] = hypot(s[k],A[i][k]);
+               s[k] = svd_hypot(s[k],A[i][k]);
             }
             if (s[k] != 0.0) {
                if (A[k][k] < 0.0) {
@@ -288,7 +304,7 @@ void SingularValueDecomposition::calculate()
             // Compute 2-norm without under/overflow.
             e[k] = 0;
             for (int i = k+1; i < n; i++) {
-               e[k] = hypot(e[k],e[i]);
+               e[k] = svd_hypot(e[k],e[i]);
             }
             if (e[k] != 0.0) {
                if (e[k+1] < 0.0) {
@@ -409,8 +425,12 @@ void SingularValueDecomposition::calculate()
 
       int pp = p-1;
       int iter = 0;
-      double eps = pow(2.0,-52.0);
-      double tiny = pow(2.0,-966.0);
+      //double eps = pow(2.0,-52.0);
+      //double tiny = pow(2.0,-966.0);
+      //let's just calculate these now
+      //a double can be e ± 308.25, so this is safe
+      double eps = 2.22e-16;
+      double tiny = 1.6e-291;
       while (p > 0) {
          int k,kase;
 
@@ -472,7 +492,7 @@ void SingularValueDecomposition::calculate()
                double f = e[p-2];
                e[p-2] = 0.0;
                for (int j = p-2; j >= k; j--) {
-                  double t = hypot(s[j],f);
+                  double t = svd_hypot(s[j],f);
                   double cs = s[j]/t;
                   double sn = f/t;
                   s[j] = t;
@@ -497,7 +517,7 @@ void SingularValueDecomposition::calculate()
                double f = e[k-1];
                e[k-1] = 0.0;
                for (int j = k; j < p; j++) {
-                  double t = hypot(s[j],f);
+                  double t = svd_hypot(s[j],f);
                   double cs = s[j]/t;
                   double sn = f/t;
                   s[j] = t;
@@ -520,10 +540,8 @@ void SingularValueDecomposition::calculate()
 
                // Calculate the shift.
 
-               double scale = 0.0;
-               double d = fabs(s[p-1]);
-               if (d>scale) scale=d;
-               d = fabs(s[p-2]);
+               double scale = fabs(s[p-1]);
+               double d = fabs(s[p-2]);
                if (d>scale) scale=d;
                d = fabs(e[p-2]);
                if (d>scale) scale=d;
@@ -552,7 +570,7 @@ void SingularValueDecomposition::calculate()
                // Chase zeros.
 
                for (int j = k; j < p-1; j++) {
-                  double t = hypot(f,g);
+                  double t = svd_hypot(f,g);
                   double cs = f/t;
                   double sn = g/t;
                   if (j != k) {
@@ -569,7 +587,7 @@ void SingularValueDecomposition::calculate()
                         V[i][j] = t;
                      }
                   }
-                  t = hypot(f,g);
+                  t = svd_hypot(f,g);
                   cs = f/t;
                   sn = g/t;
                   s[j] = t;
@@ -645,7 +663,7 @@ void SingularValueDecomposition::calculate()
 NR::Matrix SingularValueDecomposition::getU()
 {
     NR::Matrix mat(U[0][0], U[1][0], U[0][1],
-                   U[1][1], U[2][0], U[2][1]);
+                   U[1][1], U[0][2], U[1][2]);
     return mat;
 }
 
@@ -657,19 +675,51 @@ NR::Matrix SingularValueDecomposition::getU()
 NR::Matrix SingularValueDecomposition::getV()
 {
     NR::Matrix mat(V[0][0], V[1][0], V[0][1],
-                   V[1][1], V[2][0], V[2][1]);
+                   V[1][1], V[0][2], V[1][2]);
     return mat;
 }
 
 /**
- *  Return the three singular values along the diagonal
+ * Return the right singular vectors
+ * @return  U x Vtransposed
  */
-void SingularValueDecomposition::getSingularValues(
-                   double &s0, double &s1, double &s2)
+
+NR::Matrix SingularValueDecomposition::getUVt()
 {
-    s0 = s[0];
-    s1 = s[1];
-    s2 = s[2];
+    //instead of sum(row*column),  sum(column, column)
+    double a = U[0][0] * V[0][0] + U[1][0] * V[1][0];
+    double b = U[0][0] * V[0][1] + U[1][0] * V[1][1];
+    double c = U[0][1] * V[0][0] + U[1][1] * V[1][0];
+    double d = U[0][1] * V[0][1] + U[1][1] * V[1][1];
+    double e = U[0][2] * V[0][0] + U[1][2] * V[1][0];
+    double f = U[0][2] * V[0][1] + U[1][2] * V[1][1];
+
+    NR::Matrix mat(a, b, c, d, e, f);
+    return mat;
+}
+
+/**
+ *  Return the s[0] value
+ */
+double SingularValueDecomposition::getS0()
+{
+    return s[0];
+}
+
+/**
+ *  Return the s[1] value
+ */
+double SingularValueDecomposition::getS1()
+{
+    return s[1];
+}
+
+/**
+ *  Return the s[2] value
+ */
+double SingularValueDecomposition::getS2()
+{
+    return s[2];
 }
 
 /**
@@ -764,6 +814,45 @@ static std::string formatTransform(NR::Matrix &tf)
         }
     return str;
 }
+
+
+/**
+ * An affine transformation Q may be decomposed via
+ * singular value decomposition into
+ *
+ * T = UDVt
+ *   = (UDUt)UVt
+ * ('t' means transposed)
+ * where U and V are orthonormal matrices and D is a diagonal
+ * matrix. The decomposition may be interpreted as such:
+ * the image is firstly rotated by UVt. The image is then
+ * rotated by Ut, stretched in the coordinate directions
+ * by D then rotated back by U. The net effect is a slant operation in
+ * some tilt direction followed by an isotropic scale. If rot(x)
+ * is a matrix that rotates by x we can rewrite this as
+ * T = rot(-tau)( k 0, 0 1) rot(tau) rot(theta) S
+ * where S is a scaling matrix, k is a multiplying (contraction)
+ * factor related to slant, tau is the tilt direction and theta
+ * is the initial rotation angle.
+ */
+static void analyzeTransform(NR::Matrix &tf)
+{
+    SingularValueDecomposition svd(tf);
+    double scale1 = svd.getS0();
+    double rotate = svd.getS1();
+    double scale2 = svd.getS2();
+    NR::Matrix u   = svd.getU();
+    NR::Matrix v   = svd.getV();
+    NR::Matrix uvt = svd.getUVt();
+    g_message("s1:%f  rot:%f  s2:%f", scale1, rotate, scale2);
+    std::string us = formatTransform(u);
+    g_message("u:%s", us.c_str());
+    std::string vs = formatTransform(v);
+    g_message("v:%s", vs.c_str());
+    std::string uvts = formatTransform(uvt);
+    g_message("uvt:%s", uvts.c_str());
+}
+
 
 
 
@@ -1209,11 +1298,8 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
         NR::Matrix itemTransform = item->transform;
         std::string itemTransformString = formatTransform(itemTransform);
-
-        SingularValueDecomposition svd(itemTransform);
-        double scale1, rotate, scale2;
-        svd.getSingularValues(scale1, rotate, scale2);
-        g_message("s1:%f  rot:%f  s2:%f", scale1, rotate, scale2);
+        g_message("trans:%s", itemTransformString.c_str());
+        analyzeTransform(itemTransform);
 
         std::string href = getAttribute(node, "xlink:href");
         std::map<std::string, std::string>::iterator iter = imageTable.find(href);
@@ -1440,13 +1526,14 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
 void
 OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
 {
+    //g_message("native file:%s\n", uri);
+    documentUri = URI(uri);
+
     ZipFile zf;
     styleTable.clear();
     styleLookupTable.clear();
     imageTable.clear();
     preprocess(zf, doc->rroot);
-    g_message("native file:%s\n", uri);
-    documentUri = URI(uri);
 
     if (!writeManifest(zf))
         {
