@@ -13,7 +13,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -114,6 +114,16 @@ public:
     virtual ~Stack();
 
     /**
+     *  Assign our values to those of the other
+     */
+    virtual void assign(const Stack &other);
+
+    /**
+     * Reset the stack to its original settings
+     */
+    virtual void reset();
+
+    /**
      * Push a stack item onto the stack
      */
     virtual void push(StackItem &item);
@@ -123,8 +133,21 @@ public:
      */
     virtual StackItem pop();
 
+    /**
+     * Set the root node
+     */
+    virtual void setRootNode(const Node *node);
+
+    /**
+     * Get the current node list;
+     */
+    virtual NodeList &getNodeList();
+
 
 private:
+
+    Node *root;
+    NodeList nodeList;
 
     StackItem items[STACK_SIZE];
     int size;
@@ -221,7 +244,7 @@ public:
      *  Let this token execute itself on the given stack,
      *  possibly adding Nodes to the node list.
      */
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         { return true; }
 
     /**
@@ -286,7 +309,7 @@ public:
         stype = "str";
         sval = val;
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.sval = sval;
@@ -304,7 +327,7 @@ public:
         stype = "float";
         dval = val;
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.dval = dval;
@@ -322,7 +345,7 @@ public:
         stype = "int";
         ival = val;
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.ival = ival;
@@ -339,7 +362,7 @@ public:
         type = TOK_AND;
         stype = "and";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -357,7 +380,7 @@ public:
         type = TOK_OR;
         stype = "or";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -375,7 +398,7 @@ public:
         type = TOK_MOD;
         stype = "mod";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -393,7 +416,7 @@ public:
         type = TOK_DIV;
         stype = "div";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -411,7 +434,7 @@ public:
         type = TOK_MULTIPLY;
         stype = "mul";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -429,7 +452,7 @@ public:
         type = TOK_PLUS;
         stype = "plus";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -447,7 +470,7 @@ public:
         type = TOK_MINUS;
         stype = "minus";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -465,7 +488,7 @@ public:
         type = TOK_NEG;
         stype = "neg";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.dval = -dval;
@@ -483,7 +506,7 @@ public:
         type = TOK_EQUALS;
         stype = "equals";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -501,7 +524,7 @@ public:
         type = TOK_NOT_EQUALS;
         stype = "neq";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -519,7 +542,7 @@ public:
         type = TOK_LESS_THAN_EQUALS;
         stype = "lt_eq";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -537,7 +560,7 @@ public:
         type = TOK_LESS_THAN;
         stype = "lt";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -555,7 +578,7 @@ public:
         type = TOK_GREATER_THAN_EQUALS;
         stype = "gt";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -573,7 +596,7 @@ public:
         type = TOK_GREATER_THAN;
         stype = "gt_eq";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = stack.pop();
         StackItem item2 = stack.pop();
@@ -596,7 +619,7 @@ public:
         type = TOK_ABSOLUTE;
         stype = "absolute";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -610,7 +633,7 @@ public:
         type = TOK_RELATIVE;
         stype = "relative";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -624,7 +647,7 @@ public:
         type = TOK_STEP;
         stype = "step";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -638,7 +661,7 @@ public:
         type = TOK_EXPR;
         stype = "token";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -652,7 +675,7 @@ public:
         type = TOK_UNION;
         stype = "union";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -672,7 +695,7 @@ public:
         type = TOK_POSITION;
         stype = "position";
         }
-    virtual bool execute(Stack &stack, NodeList &list)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }

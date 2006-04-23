@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -31,6 +31,7 @@
 #include "charclass.h"
 #include "xpathparser.h"
 
+
 namespace org
 {
 namespace w3c
@@ -44,6 +45,8 @@ namespace xpath
 //#########################################################################
 //# M E S S A G E S
 //#########################################################################
+
+
 
 void XPathParser::trace(const char *fmt, ...)
 {
@@ -59,6 +62,8 @@ void XPathParser::trace(const char *fmt, ...)
     fprintf(f, "\n");
     va_end(args);
 }
+
+
 
 void XPathParser::error(const char *fmt, ...)
 {
@@ -77,6 +82,8 @@ void XPathParser::error(const char *fmt, ...)
     fprintf(f, "^\n");
 }
 
+
+
 void XPathParser::traceStack(const char *name, int pos, int depth)
 {
     if (!debug)
@@ -94,6 +101,7 @@ void XPathParser::traceStack(const char *name, int pos, int depth)
 //#########################################################################
 //# L E X I C A L    S C A N N I N G
 //#########################################################################
+
 void XPathParser::lexTokAdd(int type, int loc)
 {
     LexTok tok(type, loc);
@@ -296,6 +304,8 @@ int XPathParser::getNumber(int p0, double &dresult)
     return p;
 }
 
+
+
 int XPathParser::getLiteral(int p0, DOMString &result)
 {
     int p = p0;
@@ -326,6 +336,10 @@ int XPathParser::getLiteral(int p0, DOMString &result)
 }
 
 
+
+/**
+ * NCName is a 'non-colonized' name
+ */
 int XPathParser::getNCName(int p0, DOMString &result)
 {
     int p = p0;
@@ -352,6 +366,11 @@ int XPathParser::getNCName(int p0, DOMString &result)
     return p;
 }
 
+
+
+/**
+ * Name parsing with post-parsing
+ */
 int XPathParser::getNameTest(int p0, DOMString &result)
 {
     int p = p0;

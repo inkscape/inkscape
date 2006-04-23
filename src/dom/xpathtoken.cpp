@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -94,9 +94,7 @@ Stack::Stack()
  */
 Stack::Stack(const Stack &other)
 {
-    size = other.size;
-    for (int i=0 ; i<size ; i++)
-        items[i] = other.items[i];
+    assign(other);
 }
 
 
@@ -106,6 +104,34 @@ Stack::Stack(const Stack &other)
 Stack::~Stack()
 {
 }
+
+
+/**
+ *
+ */
+void Stack::assign(const Stack &other)
+{
+    root = other.root;
+    nodeList = other.nodeList;
+    size = other.size;
+    for (int i=0 ; i<size ; i++)
+        items[i] = other.items[i];
+}
+
+
+/**
+ *
+ */
+void Stack::reset()
+{
+    root = NULL;
+    NodeList n; /*no "clear" in api*/
+    nodeList = n;
+    size = 0;
+}
+
+
+
 
 /**
  *
@@ -132,6 +158,22 @@ StackItem Stack::pop()
     return items[--size];
 }
 
+/**
+ * Set the root node
+ */
+void Stack::setRootNode(const Node *node)
+{
+    root = (Node *)node;
+}
+
+
+/**
+ * Get the current node list;
+ */
+NodeList &Stack::getNodeList()
+{
+    return nodeList;
+}
 
 
 //########################################################################
@@ -187,13 +229,17 @@ NodeList TokenList::execute(const Node *root)
         return list;
 
     Stack stack;
+    stack.setRootNode(root);
+
     //### Execute the token list
     std::vector<Token *>::iterator iter;
     for (iter = tokens.begin() ; iter != tokens.end() ; iter++)
         {
         Token *tok = *iter;
-        tok->execute(stack, list);
+        tok->execute(stack);
         }
+
+    list = stack.getNodeList();
 
     return list;
 }
