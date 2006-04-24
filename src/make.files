@@ -835,8 +835,6 @@ object-hierarchy.cpp
 object-hierarchy.h
 object-snapper.cpp
 object-snapper.h
-object-ui.cpp
-object-ui.h
 path-chemistry.cpp
 path-chemistry.h
 path-prefix.h
@@ -1174,6 +1172,8 @@ ui/dialog/whiteboard-sharewithchat.h
 ui/dialog/whiteboard-sharewithuser.h
 ui/dialog/xml-editor.cpp
 ui/dialog/xml-editor.h
+ui/context-menu.cpp
+ui/context-menu.h
 ui/icons.cpp
 ui/icons.h
 ui/previewable.h

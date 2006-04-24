@@ -33,7 +33,7 @@
 #include "file.h"
 #include "interface.h"
 #include "desktop.h"
-#include "object-ui.h"
+#include "ui/context-menu.h"
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "svg-view-widget.h"

@@ -1,3 +1,9 @@
+2006-04-23  verbalshadow  <verbalshadow@gmail.com>
+
+    * src/object-ui.cpp, src/object-ui.h:
+	  moved to src/ui/context-menu.cpp, src/ui/context-menu.h
+	  to make it easier to find
+
 2006-04-20  MenTaLguY  <mental@rydia.net>
 
     * src/dyna-draw-context.cpp, src/dyna-draw-context.h:

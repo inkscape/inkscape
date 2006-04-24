@@ -1,5 +1,5 @@
-#ifndef __SP_OBJECT_UI_H__
-#define __SP_OBJECT_UI_H__
+#ifndef __CONTEXT_MENU_H__
+#define __CONTEXT_MENU_H__
 
 /*
  * Unser-interface related object extension

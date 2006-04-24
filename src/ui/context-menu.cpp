@@ -1,4 +1,4 @@
-#define __SP_OBJECT_UI_C__
+#define __CONTEXT_MENU_C__
 
 /*
  * Unser-interface related object extension
@@ -13,8 +13,8 @@
 # include "config.h"
 #endif
 
-#include "object-ui.h"
-#include "xml/repr.h"
+#include "context-menu.h"
+#include "../xml/repr.h"
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 

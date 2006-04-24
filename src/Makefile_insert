@@ -95,7 +95,8 @@ libinkpre_a_SOURCES =	\
 	nodepath.cpp nodepath.h	\
 	object-edit.cpp object-edit.h	\
 	object-hierarchy.cpp object-hierarchy.h \
-	object-ui.cpp object-ui.h	\
+	ui/context-menu.cpp \
+	ui/context-menu.h	\
 	path-chemistry.cpp path-chemistry.h	\
 	path-prefix.h	\
 	pen-context.cpp	\
