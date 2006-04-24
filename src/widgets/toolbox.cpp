@@ -1086,6 +1086,7 @@ sp_star_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
             g_object_set_data(G_OBJECT(tbl), "repr", repr);
             Inkscape::GC::anchor(repr);
             sp_repr_add_listener(repr, &star_tb_repr_events, tbl);
+            sp_repr_synthesize_events(repr, &star_tb_repr_events, tbl);
         }
     } else {
         // FIXME: implement averaging of all parameters for multiple selected stars
@@ -1479,6 +1480,7 @@ sp_rect_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl
             g_object_set_data(G_OBJECT(tbl), "item", item);
             Inkscape::GC::anchor(repr);
             sp_repr_add_listener(repr, &rect_tb_repr_events, tbl);
+            sp_repr_synthesize_events(repr, &rect_tb_repr_events, tbl);
         }
     } else {
         // FIXME: implement averaging of all parameters for multiple selected
@@ -1747,6 +1749,7 @@ sp_spiral_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *t
             g_object_set_data(G_OBJECT(tbl), "repr", repr);
             Inkscape::GC::anchor(repr);
             sp_repr_add_listener(repr, &spiral_tb_repr_events, tbl);
+            sp_repr_synthesize_events(repr, &spiral_tb_repr_events, tbl);
         }
     } else {
         // FIXME: implement averaging of all parameters for multiple selected
@@ -2330,6 +2333,7 @@ sp_arc_toolbox_selection_changed(Inkscape::Selection *selection, GtkObject *tbl)
             g_object_set_data(G_OBJECT(tbl), "repr", repr);
             Inkscape::GC::anchor(repr);
             sp_repr_add_listener(repr, &arc_tb_repr_events, tbl);
+            sp_repr_synthesize_events(repr, &arc_tb_repr_events, tbl);
         }
     } else {
         // FIXME: implement averaging of all parameters for multiple selected
@@ -3140,6 +3144,7 @@ sp_connector_toolbox_new(SPDesktop *desktop)
         g_object_set_data(G_OBJECT(tbl), "repr", repr);
         Inkscape::GC::anchor(repr);
         sp_repr_add_listener(repr, &connector_tb_repr_events, tbl);
+        sp_repr_synthesize_events(repr, &connector_tb_repr_events, tbl);
     }
     
     return tbl;
