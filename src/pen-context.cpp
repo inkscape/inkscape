@@ -205,13 +205,30 @@ sp_pen_context_setup(SPEventContext *ec)
     }
 }
 
+static void
+pen_cancel (SPPenContext *const pc) 
+{
+    pc->state = SP_PEN_CONTEXT_STOP;
+    spdc_reset_colors(pc);
+    sp_canvas_item_hide(pc->c0);
+    sp_canvas_item_hide(pc->c1);
+    sp_canvas_item_hide(pc->cl0);
+    sp_canvas_item_hide(pc->cl1);
+    pc->_message_context->clear();
+    pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+}
+
 /**
  * Finalization callback.
  */
 static void
 sp_pen_context_finish(SPEventContext *ec)
 {
-    spdc_pen_finish(SP_PEN_CONTEXT(ec), FALSE);
+    SPPenContext *pc = SP_PEN_CONTEXT(ec);
+
+    if (pc->npoints != 0) {
+        pen_cancel (pc);
+    }
 
     if (((SPEventContextClass *) pen_parent_class)->finish) {
         ((SPEventContextClass *) pen_parent_class)->finish(ec);
@@ -683,6 +700,57 @@ pen_handle_2button_press(SPPenContext *const pc)
 }
 
 void
+pen_redraw_all (SPPenContext *const pc)
+{
+    // green
+    if (pc->green_bpaths) {
+        // remove old piecewise green canvasitems
+        while (pc->green_bpaths) {
+            gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
+            pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
+        }
+        // one canvas bpath for all of green_curve
+        SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), pc->green_curve);
+        sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+        sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cshape), 0, SP_WIND_RULE_NONZERO);
+
+        pc->green_bpaths = g_slist_prepend(pc->green_bpaths, cshape);
+    }
+
+    if (pc->green_anchor)
+        SP_CTRL(pc->green_anchor->ctrl)->moveto(pc->green_anchor->dp);
+
+    sp_curve_reset(pc->red_curve);
+    sp_curve_moveto(pc->red_curve, pc->p[0]);
+    sp_curve_curveto(pc->red_curve, pc->p[1], pc->p[2], pc->p[3]);
+    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
+
+    // handles
+    if (pc->p[0] != pc->p[1]) {
+        SP_CTRL(pc->c1)->moveto(pc->p[1]);
+        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[0], pc->p[1]);
+        sp_canvas_item_show (pc->c1);
+        sp_canvas_item_show (pc->cl1);
+    } else {
+        sp_canvas_item_hide (pc->c1);
+        sp_canvas_item_hide (pc->cl1);
+    }
+
+    NArtBpath *const bpath = sp_curve_last_bpath(pc->green_curve);
+    if (bpath) {
+        if (bpath->code == NR_CURVETO && NR::Point(bpath->x2, bpath->y2) != pc->p[0]) {
+            SP_CTRL(pc->c0)->moveto(NR::Point(bpath->x2, bpath->y2));
+            sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), NR::Point(bpath->x2, bpath->y2), pc->p[0]);
+            sp_canvas_item_show (pc->c0);
+            sp_canvas_item_show (pc->cl0);
+        } else {
+            sp_canvas_item_hide (pc->c0);
+            sp_canvas_item_hide (pc->cl0);
+        }
+    }
+}
+
+void
 pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
 {
     if (pc->npoints != 5)
@@ -697,44 +765,17 @@ pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
         }
         bpath->x3 += x;
         bpath->y3 += y;
-        if (pc->green_bpaths && pc->green_bpaths->data) {
-            // remove old piecewise green canvasitems
-            while (pc->green_bpaths) {
-                gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
-                pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
-            }
-            // one canvas bpath for all of green_curve
-            SPCanvasItem *cshape = sp_canvas_bpath_new(sp_desktop_sketch(pc->desktop), pc->green_curve);
-            sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cshape), pc->green_color, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-            sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cshape), 0, SP_WIND_RULE_NONZERO);
-
-            pc->green_bpaths = g_slist_prepend(pc->green_bpaths, cshape);
-        }
     } else {
         // start anchor too
         if (pc->green_anchor) {
             pc->green_anchor->dp += NR::Point(x, y);
-            SP_CTRL(pc->green_anchor->ctrl)->moveto(pc->green_anchor->dp);
         }
     }
 
     // red
     pc->p[0] += NR::Point(x, y);
     pc->p[1] += NR::Point(x, y);
-    sp_curve_reset(pc->red_curve);
-    sp_curve_moveto(pc->red_curve, pc->p[0]);
-    sp_curve_curveto(pc->red_curve, pc->p[1], pc->p[2], pc->p[3]);
-    sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
-
-    // handles
-    if (pc->p[0] != pc->p[1]) {
-        SP_CTRL(pc->c1)->moveto(pc->p[1]);
-        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[0], pc->p[1]);
-    }
-    if (bpath && bpath->code == NR_CURVETO && NR::Point(bpath->x2, bpath->y2) != pc->p[0]) {
-        SP_CTRL(pc->c0)->moveto(NR::Point(bpath->x2, bpath->y2));
-        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), NR::Point(bpath->x2, bpath->y2), pc->p[0]);
-    }
+    pen_redraw_all(pc);
 }
 
 void
@@ -743,18 +784,34 @@ pen_lastpoint_move_screen (SPPenContext *const pc, gdouble x, gdouble y)
     pen_lastpoint_move (pc, x / pc->desktop->current_zoom(), y / pc->desktop->current_zoom());
 }
 
-static void
-pen_cancel (SPPenContext *const pc) 
+void
+pen_lastpoint_tocurve (SPPenContext *const pc)
 {
-    pc->state = SP_PEN_CONTEXT_STOP;
-    spdc_reset_colors(pc);
-    sp_canvas_item_hide(pc->c0);
-    sp_canvas_item_hide(pc->c1);
-    sp_canvas_item_hide(pc->cl0);
-    sp_canvas_item_hide(pc->cl1);
-    pc->_message_context->clear();
-    pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+    if (pc->npoints != 5)
+        return;
+
+    // red
+    NArtBpath *const bpath = sp_curve_last_bpath(pc->green_curve);
+    if (bpath && bpath->code == NR_CURVETO) {
+        pc->p[1] = pc->p[0] + (NR::Point(bpath->x3, bpath->y3) - NR::Point(bpath->x2, bpath->y2));
+    } else {
+        pc->p[1] = pc->p[0] + (pc->p[3] - pc->p[0])*(1/3);
+    }
+
+    pen_redraw_all(pc);
 }
+
+void
+pen_lastpoint_toline (SPPenContext *const pc)
+{
+    if (pc->npoints != 5)
+        return;
+
+    pc->p[1] = pc->p[0];
+
+    pen_redraw_all(pc);
+}
+
 
 static gint
 pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
@@ -821,6 +878,21 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                     if (MOD__SHIFT) pen_lastpoint_move(pc, 0, -10*nudge); // shift
                     else pen_lastpoint_move(pc, 0, -nudge); // no shift
                 }
+                ret = TRUE;
+            }
+            break;
+
+        case GDK_U:
+        case GDK_u:
+            if (MOD__SHIFT_ONLY) {
+                pen_lastpoint_tocurve(pc);
+                ret = TRUE;
+            }
+            break;
+        case GDK_L:
+        case GDK_l:
+            if (MOD__SHIFT_ONLY) {
+                pen_lastpoint_toline(pc);
                 ret = TRUE;
             }
             break;
