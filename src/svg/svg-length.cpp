@@ -127,17 +127,21 @@ static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec
     return end_i;
 }
 
-unsigned int sp_svg_number_write_de(gchar *buf, double val, unsigned int tprec, unsigned int padf)
+unsigned int sp_svg_number_write_de(gchar *buf, double val, unsigned int tprec, int min_exp, unsigned int padf)
 {
     if (val == 0.0 || (fabs(val) >= 0.1 && fabs(val) < 10000000)) {
         return sp_svg_number_write_d(buf, val, tprec, 0, padf);
     } else {
         double eval = floor(log10(fabs(val)));
-        val = val / pow(10.0, eval);
-        int p = sp_svg_number_write_d(buf, val, tprec, 0, padf);
-        buf[p++] = 'e';
-        p += sp_svg_number_write_i(buf + p, (int) eval);
-        return p;
+        if ((int) eval < min_exp) {
+            return sp_svg_number_write_d(buf, 0, tprec, 0, padf);
+        } else {
+            val = val / pow(10.0, eval);
+            int p = sp_svg_number_write_d(buf, val, tprec, 0, padf);
+            buf[p++] = 'e';
+            p += sp_svg_number_write_i(buf + p, (int) eval);
+            return p;
+        }
     }
 }
 
