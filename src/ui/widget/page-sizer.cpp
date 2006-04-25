@@ -18,17 +18,22 @@
 #endif
 
 #include <cmath>
+#include <gtkmm.h>
 #include <gtkmm/optionmenu.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/table.h>
+#include "ui/widget/button.h"
 
 #include "ui/widget/scalar-unit.h"
 
 #include "helper/units.h"
 #include "inkscape.h"
+#include "verbs.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "desktop.h"
 #include "page-sizer.h"
+#include "helper/action.h"
 
 using std::pair;
 
@@ -233,10 +238,17 @@ PageSizer::init (Registry& reg)
     /* Custom paper frame */
     Gtk::Frame *frame = manage (new Gtk::Frame(_("Custom size")));
     pack_start (*frame, false, false, 0);
-    Gtk::Table *table = manage (new Gtk::Table (4, 2, false));
+    Gtk::Table *table = manage (new Gtk::Table (5, 2, false));
     table->set_border_width (4);
     table->set_row_spacings (4);
     table->set_col_spacings (4);
+    
+    Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("Fit page to selection"),
+                    _("Resize the page to fit the current selection, or the entire drawing if there is no selection")));
+    // prevent fit_canv from expanding
+    Gtk::Alignment *fit_canv_cont = manage(new Gtk::Alignment(1.0,0.5,0.0,0.0));
+    fit_canv_cont->add(*fit_canv);
+
     frame->add (*table);
     
     _wr = &reg;
@@ -249,11 +261,13 @@ PageSizer::init (Registry& reg)
     table->attach (*_rum._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
     table->attach (*_rusw.getSU(), 0,2,1,2, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
     table->attach (*_rush.getSU(), 0,2,2,3, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+    table->attach (*fit_canv_cont, 0,2,3,4, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
 
     _landscape_connection = _rb_land->signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_landscape));
     _portrait_connection = _rb_port->signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_portrait));
     _changedw_connection = _rusw.getSU()->signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
     _changedh_connection = _rush.getSU()->signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
+    fit_canv->signal_clicked().connect(sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
     
     show_all_children();
 }
@@ -317,6 +331,19 @@ PageSizer::find_paper_size (double w, double h) const
         }
     }
     return -1;
+}
+
+void
+PageSizer::fire_fit_canvas_to_selection_or_drawing() {
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    if (!dt) return;
+    Verb *verb = Verb::get( SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING );
+    if (verb) {
+        SPAction *action = verb->get_action(dt);
+        if (action) {
+            sp_action_perform(action, NULL);        
+        }
+    }
 }
 
 void

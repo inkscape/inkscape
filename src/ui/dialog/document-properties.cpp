@@ -23,7 +23,6 @@
 #include <gtkmm.h>
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
-#include "ui/widget/button.h"
 
 #include "xml/node-event-vector.h"
 #include "helper/units.h"
@@ -34,7 +33,6 @@
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "sp-namedview.h"
-#include "helper/action.h"
 
 #include "document-properties.h"
 
@@ -57,8 +55,6 @@ static void on_repr_attr_changed (Inkscape::XML::Node *, gchar const *, gchar co
 static void on_doc_replaced (SPDesktop* dt, SPDocument* doc);
 static void on_activate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
 static void on_deactivate_desktop (Inkscape::Application *, SPDesktop* dt, void*);
-
-static void fire_fit_canvas_to_selection_or_drawing();
 
 static Inkscape::XML::NodeEventVector const _repr_events = {
     NULL, /* child_added */
@@ -196,14 +192,6 @@ DocumentProperties::build_page()
     _rcb_shad.init (_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false);
     _rum_deflt.init (_("Default _units:"), "inkscape:document-units", _wr);
 
-    Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("Fit canvas to selection"),
-                    _("Resize the canvas to fit the current selection, or the entire drawing if there is no selection")));
-    fit_canv->signal_clicked().connect(sigc::ptr_fun(fire_fit_canvas_to_selection_or_drawing));
-
-    // prevent fit_canv from expanding
-    Gtk::Alignment *fit_canv_cont = manage(new Gtk::Alignment(1.0,0.5,0.0,0.0));
-    fit_canv_cont->add(*fit_canv);
-
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
     Gtk::Label* label_bor = manage (new Gtk::Label);
@@ -220,7 +208,6 @@ DocumentProperties::build_page()
         0,                 0,
         label_for,         0,
         0,                 &_page_sizer,
-        0,                 fit_canv_cont,
         0,                 0,
         label_bor,         0,
         0,                 _rcb_canb._button,
@@ -503,19 +490,6 @@ on_doc_replaced (SPDesktop* dt, SPDocument* doc)
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(sp_desktop_namedview(dt));
     repr->addListener (&_repr_events, _instance);
     _instance->update();
-}
-
-static void
-fire_fit_canvas_to_selection_or_drawing() {
-    SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (!dt) return;
-    Verb *verb = Verb::get( SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING );
-    if (verb) {
-        SPAction *action = verb->get_action(dt);
-        if (action) {
-            sp_action_perform(action, NULL);        
-        }
-    }
 }
 
 

@@ -38,6 +38,7 @@ public:
 protected:
     void setDoc (double w, double h);
     int find_paper_size (double w, double h) const;
+    void fire_fit_canvas_to_selection_or_drawing();
     void on_portrait();
     void on_landscape();
     void on_value_changed();
