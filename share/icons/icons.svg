@@ -5371,6 +5371,14 @@ http://www.inkscape.org/</dc:description>
        id="use8586"
        width="1250"
        height="1250" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path10449"
+       id="use4704"
+       transform="matrix(1,0,0,-1,-10,364.9817)"
+       width="1250"
+       height="1250" />
   </g>
   <g
      id="selection_top"
@@ -5431,14 +5439,6 @@ http://www.inkscape.org/</dc:description>
        y="0"
        xlink:href="#rect10479"
        id="use8534"
-       width="1250"
-       height="1250" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#path10449"
-       id="use4704"
-       transform="matrix(1,0,0,-1,-10,384.9817)"
        width="1250"
        height="1250" />
   </g>
