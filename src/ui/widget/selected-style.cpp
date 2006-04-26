@@ -434,7 +434,7 @@ void SelectedStyle::dragDataReceived( GtkWidget *widget,
 void SelectedStyle::on_fill_remove() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     sp_repr_css_set_property (css, "fill", "none");
-    sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
+    sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop));
 }
@@ -442,7 +442,7 @@ void SelectedStyle::on_fill_remove() {
 void SelectedStyle::on_stroke_remove() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     sp_repr_css_set_property (css, "stroke", "none");
-    sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
+    sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop));
 }
@@ -450,7 +450,7 @@ void SelectedStyle::on_stroke_remove() {
 void SelectedStyle::on_fill_unset() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     sp_repr_css_unset_property (css, "fill");
-    sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
+    sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop));
 }
@@ -458,7 +458,7 @@ void SelectedStyle::on_fill_unset() {
 void SelectedStyle::on_stroke_unset() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     sp_repr_css_unset_property (css, "stroke");
-    sp_desktop_set_style (_desktop, css, true, false); // do not write to current, to preserve current color
+    sp_desktop_set_style (_desktop, css, true, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop));
 }
