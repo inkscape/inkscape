@@ -764,7 +764,7 @@ int SingularValueDecomposition::rank()
 
 
 
-
+#define pi 3.14159
 //#define pxToCm  0.0275
 #define pxToCm  0.04
 #define piToRad 0.0174532925
@@ -835,7 +835,8 @@ static std::string formatTransform(NR::Matrix &tf)
  * factor related to slant, tau is the tilt direction and theta
  * is the initial rotation angle.
  */
-static void analyzeTransform(NR::Matrix &tf)
+/*
+static void analyzeTransform1(NR::Matrix &tf)
 {
     SingularValueDecomposition svd(tf);
     double scale1 = svd.getS0();
@@ -844,13 +845,72 @@ static void analyzeTransform(NR::Matrix &tf)
     NR::Matrix u   = svd.getU();
     NR::Matrix v   = svd.getV();
     NR::Matrix uvt = svd.getUVt();
-    g_message("s1:%f  rot:%f  s2:%f", scale1, rotate, scale2);
+    //g_message("s1:%f  rot:%f  s2:%f", scale1, rotate, scale2);
     std::string us = formatTransform(u);
-    g_message("u:%s", us.c_str());
+    //g_message("u:%s", us.c_str());
     std::string vs = formatTransform(v);
-    g_message("v:%s", vs.c_str());
+    //g_message("v:%s", vs.c_str());
     std::string uvts = formatTransform(uvt);
-    g_message("uvt:%s", uvts.c_str());
+    //g_message("uvt:%s", uvts.c_str());
+}
+*/
+
+
+static void analyzeTransform2(NR::Matrix &tf,
+           double &xskew, double &yskew, double &xscale, double &yscale)
+{
+    //Let's calculate some of the qualities of the transform directly
+    //Make a unit rect and transform it
+    NR::Point top_left(0.0, 0.0);
+    NR::Point top_right(1.0, 0.0);
+    NR::Point bottom_left(0.0, 1.0);
+    NR::Point bottom_right(1.0, 1.0);
+    top_left     *= tf;
+    top_right    *= tf;
+    bottom_left  *= tf;
+    bottom_right *= tf;
+    double dx_tr = top_right[NR::X]   - top_left[NR::X];
+    double dy_tr = top_right[NR::Y]   - top_left[NR::Y];
+    double dx_bl = bottom_left[NR::X] - top_left[NR::X];
+    double dy_bl = bottom_left[NR::Y] - top_left[NR::Y];
+
+    double xskew_angle = 0.0;
+    double yskew_angle = 0.0;
+    if (fabs(dx_tr) < 1.0e-10 && fabs(dy_tr) > 1.0e-10)  //90 degrees?
+        {
+        if (dy_tr>0)
+            yskew_angle = pi / 2.0;
+        else
+            yskew_angle = -pi / 2.0;
+        }
+    else
+        {
+        yskew_angle = atan(dy_tr / dx_tr);
+        }
+
+    if (fabs(dy_bl) < 1.0e-10 && fabs(dx_bl) > 1.0e-10)  //90 degrees?
+        {
+        if (dx_bl>0)
+            xskew_angle = pi / 2.0;
+        else
+            xskew_angle = -pi / 2.0;
+        }
+    else
+        {
+        xskew_angle = atan(dx_bl / dy_bl);
+        }
+
+    double expected_xsize = 1.0 + dx_bl;
+    xscale =
+        ( bottom_right[NR::X] - top_left[NR::X] )/ expected_xsize;
+    double expected_ysize = 1.0 + dy_tr;
+    yscale =
+        ( bottom_right[NR::Y] - top_left[NR::Y] )/ expected_ysize;
+
+    //g_message("xskew:%f yskew:%f xscale:%f yscale:%f",
+    //      xskew_angle, yskew_angle, xscale, yscale);
+    xskew = xskew_angle;
+    yskew = xskew_angle;
 }
 
 
@@ -1243,6 +1303,19 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     double height = pxToCm * ( bbox.max()[NR::Y] - bbox.min()[NR::Y] );
 
 
+    double xskew;
+    double yskew;
+    double xscale;
+    double yscale;
+    analyzeTransform2(tf, xskew, yskew, xscale, yscale);
+
+    double item_xskew;
+    double item_yskew;
+    double item_xscale;
+    double item_yscale;
+    analyzeTransform2(item->transform,
+        item_xskew, item_yskew, item_xscale, item_yscale);
+
     //# Do our stuff
     SPCurve *curve = NULL;
 
@@ -1285,21 +1358,25 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
             }
 
         SPImage *img   = SP_IMAGE(item);
-        double ix      = img->x.computed;
-        double iy      = img->y.computed;
-        double iwidth  = img->width.computed;
-        double iheight = img->height.computed;
+        double ix      = img->x.value;
+        double iy      = img->y.value;
+        double iwidth  = img->width.value;
+        double iheight = img->height.value;
 
-        NR::Rect ibbox(NR::Point(ix, iy), NR::Point(iwidth, iheight));
+        NR::Rect ibbox(NR::Point(ix, iy), NR::Point(ix+iwidth, iy+iheight));
+        ibbox = ibbox * tf;
         ix      = pxToCm * ibbox.min()[NR::X];
         iy      = pxToCm * ibbox.min()[NR::Y];
-        iwidth  = pxToCm * ( ibbox.max()[NR::X] - ibbox.min()[NR::X] );
-        iheight = pxToCm * ( ibbox.max()[NR::Y] - ibbox.min()[NR::Y] );
+        //iwidth  = pxToCm * ( ibbox.max()[NR::X] - ibbox.min()[NR::X] );
+        //iheight = pxToCm * ( ibbox.max()[NR::Y] - ibbox.min()[NR::Y] );
+        iwidth  = pxToCm * xscale * iwidth;
+        iheight = pxToCm * yscale * iheight;
 
-        NR::Matrix itemTransform = item->transform;
+        NR::Matrix itemTransform = NR::Matrix(NR::scale(1, -1));
+        itemTransform = itemTransform * item->transform;
+        itemTransform = itemTransform * NR::Matrix(NR::scale(1, -1));
+
         std::string itemTransformString = formatTransform(itemTransform);
-        g_message("trans:%s", itemTransformString.c_str());
-        analyzeTransform(itemTransform);
 
         std::string href = getAttribute(node, "xlink:href");
         std::map<std::string, std::string>::iterator iter = imageTable.find(href);
@@ -1314,12 +1391,12 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         if (id.size() > 0)
             outs.printf("id=\"%s\" ", id.c_str());
         outs.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\" ");
-        outs.printf("svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
-                                  ix, iy);
+        //no x or y.  make them the translate transform, last one
         outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
                                   iwidth, iheight);
         if (itemTransformString.size() > 0)
-            outs.printf("draw:transform=\"%s\" ", itemTransformString.c_str());
+            outs.printf("draw:transform=\"%s translate(%.3fcm, %.3fcm)\" ",
+                itemTransformString.c_str(), ix, iy);
 
         outs.printf(">\n");
         outs.printf("    <draw:image xlink:href=\"%s\" xlink:type=\"simple\"\n",
