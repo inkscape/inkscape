@@ -639,7 +639,9 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     if (MOD__CTRL_ONLY) {
                         sp_node_selected_delete();
                     } else {
-                        sp_node_delete_preserve(g_list_copy(nc->nodepath->selected));
+                        if (nc->nodepath && nc->nodepath->selected) {
+                            sp_node_delete_preserve(g_list_copy(nc->nodepath->selected));
+                        }
                     }
                     ret = TRUE;
                     break;
