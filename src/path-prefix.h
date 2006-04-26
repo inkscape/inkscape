@@ -34,6 +34,10 @@ extern "C" {
 #  define INKSCAPE_PLUGINDIR      BR_LIBDIR(  "/inkscape/plugins" )
 #  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( "/inkscape/templates" )
 #  define INKSCAPE_UIDIR          BR_DATADIR( "/inkscape/ui" )
+//CREATE V0.1 support
+#    define CREATE_GRADIENTSDIR   BR_DATADIR( "/create/gradients/gimp" )  
+#    define CREATE_PALETTESDIR    BR_DATADIR( "/create/swatches" )
+#    define CREATE_PATTERNSDIR    BR_DATADIR( "/create/patterns/vector" )
 #else
 #  ifdef WIN32
 #    define INKSCAPE_APPICONDIR   "pixmaps"
@@ -49,6 +53,10 @@ extern "C" {
 #    define INKSCAPE_PLUGINDIR    "plugins"
 #    define INKSCAPE_TEMPLATESDIR "share\\templates"
 #    define INKSCAPE_UIDIR        INKSCAPE_DATADIR "\\share\\ui"
+//CREATE V0.1  WIN32 support
+#    define CREATE_GRADIENTSDIR INKSCAPE_DATADIR "create\\gradients\\gimp"
+#    define CREATE_PALETTESDIR  INKSCAPE_DATADIR "create\\swatches"
+#    define CREATE_PATTERNSDIR  INKSCAPE_DATADIR "create\\patterns\\vector"
 #  elif defined ENABLE_OSX_APP_LOCATIONS
 #    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
@@ -63,6 +71,13 @@ extern "C" {
 #    define INKSCAPE_PLUGINDIR    "Contents/Resources/plugins"
 #    define INKSCAPE_TEMPLATESDIR "Contents/Resources/templates"
 #    define INKSCAPE_UIDIR        "Contents/Resources/ui"
+//CREATE V0.1 support
+// fixme: is this the correct path
+/*
+#    define CREATE_GRADIENTSDIR  "/create/gradients/gimp"
+#    define CREATE_PALETTESDIR   "/create/swatches"
+#    define CREATE_PATTERNSDIR   "/create/patterns/vector"
+*/
 #  else
 #    define INKSCAPE_APPICONDIR   INKSCAPE_DATADIR "/pixmaps"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
@@ -77,7 +92,11 @@ extern "C" {
 #    define INKSCAPE_PLUGINDIR    INKSCAPE_LIBDIR  "/inkscape/plugins"
 #    define INKSCAPE_TEMPLATESDIR INKSCAPE_DATADIR "/inkscape/templates"
 #    define INKSCAPE_UIDIR        INKSCAPE_DATADIR "/inkscape/ui"
-#  endif
+//CREATE V0.1 support
+#    define CREATE_GRADIENTSDIR INKSCAPE_DATADIR "/create/gradients/gimp"
+#    define CREATE_PALETTESDIR  INKSCAPE_DATADIR "/create/swatches"
+#    define CREATE_PATTERNSDIR  INKSCAPE_DATADIR "/create/patterns/vector"
+#	 endif
 #endif
 
 #ifdef __cplusplus

@@ -1,5 +1,10 @@
 2006-04-23  verbalshadow  <verbalshadow@gmail.com>
 
+    * path-prefix.h:
+	  Added beginnings of CREATE support in path-prefix.h
+
+2006-04-23  verbalshadow  <verbalshadow@gmail.com>
+
     * src/object-ui.cpp, src/object-ui.h:
 	  moved to src/ui/context-menu.cpp, src/ui/context-menu.h
 	  to make it easier to find
