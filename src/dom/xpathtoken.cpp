@@ -62,9 +62,7 @@ StackItem::StackItem()
  */
 StackItem::StackItem(const StackItem &other)
 {
-    sval = other.sval;
-    ival = other.ival;
-    dval = other.dval;
+    assign(other);
 }
 
 
@@ -73,6 +71,26 @@ StackItem::StackItem(const StackItem &other)
  */
 StackItem::~StackItem()
 {
+}
+
+
+/**
+ *
+ */
+StackItem &StackItem::operator=(const StackItem &other)
+{
+    assign(other);
+    return *this;
+}
+
+/**
+ *
+ */
+void StackItem::assign(const StackItem &other)
+{
+    sval = other.sval;
+    ival = other.ival;
+    dval = other.dval;
 }
 
 
@@ -187,6 +205,31 @@ TokenList::TokenList()
 {
 }
 
+
+/**
+ *
+ */
+TokenList::TokenList(const TokenList &other)
+{
+    assign(other);
+}
+
+/**
+ *
+ */
+TokenList &TokenList::operator=(const TokenList &other)
+{
+    assign(other);
+    return *this;
+}
+
+/**
+ *
+ */
+void TokenList::assign(const TokenList &other)
+{
+    tokens = other.tokens;
+}
 
 /**
  *

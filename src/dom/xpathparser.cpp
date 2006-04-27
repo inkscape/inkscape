@@ -618,6 +618,12 @@ int XPathParser::lexicalScan()
 //# X P A T H    G R A M M A R    P A R S I N G
 //#########################################################################
 
+
+void XPathParser::tokAdd(Token *tok)
+{
+    tokens.add(tok);
+}
+
 /**
  * [1]  LocationPath ::=
  *        RelativeLocationPath
@@ -873,7 +879,7 @@ int XPathParser::getNodeTest(int p0, int depth)
     if (t.getType() == NAME_TEST)
         {
         p++;
-        printf("xxx\n");
+        tokAdd(new TokNameTest(t.getStringValue()));
         return p;
         }
     if (t.getType() == NODE_TYPE)

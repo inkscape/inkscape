@@ -70,6 +70,17 @@ public:
      */
     virtual ~StackItem();
 
+    /**
+     *
+     */
+    StackItem &operator=(const StackItem &other);
+
+    /**
+     *
+     */
+    void assign(const StackItem &other);
+
+
     //treat the stack item like an union of string, integer, and double
 
     /**
@@ -200,6 +211,7 @@ public:
         TOK_ABSOLUTE,
         TOK_RELATIVE,
         TOK_STEP,
+        TOK_NAME_TEST,
         TOK_EXPR,
         TOK_UNION,
         //function types
@@ -653,6 +665,21 @@ public:
         }
 };
 
+class TokNameTest : public Token
+{
+public:
+    TokNameTest(const DOMString &name)
+        {
+        type  = TOK_NAME_TEST;
+        stype = "step";
+        sval  = name;
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
 class TokExpr : public Token
 {
 public:
@@ -718,6 +745,21 @@ public:
      *
      */
     TokenList();
+
+    /**
+     *
+     */
+    TokenList(const TokenList &other);
+
+    /**
+     *
+     */
+    TokenList &operator=(const TokenList &other);
+
+    /**
+     *
+     */
+    void assign(const TokenList &other);
 
     /**
      *

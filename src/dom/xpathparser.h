@@ -513,6 +513,11 @@ private:
     //#################################
 
     /**
+     * Add a newly derived token to the token list;
+     */
+    void tokAdd(Token *token);
+
+    /**
      * The grammar definitions marked [1]-[39] are directly
      * from the W3C XPath grammar spacification.
      */

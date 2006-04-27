@@ -933,6 +933,24 @@ NodeImpl::NodeImpl()
 }
 
 
+/**
+ *
+ */
+NodeImpl::NodeImpl(const NodeImpl &other)
+{
+    init();
+    assign(other);
+}
+
+/**
+ *
+ */
+NodeImpl &NodeImpl::operator=(const NodeImpl &other)
+{
+    init();
+    assign(other);
+    return *this;
+}
 
 
 /**

@@ -443,6 +443,16 @@ public:
     /**
      *
      */
+    NodeImpl(const NodeImpl &other);
+
+    /**
+     *
+     */
+    NodeImpl &operator=(const NodeImpl &other);
+
+    /**
+     *
+     */
     NodeImpl(DocumentImpl *owner);
 
     /**

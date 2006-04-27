@@ -262,6 +262,15 @@ public:
     /**
      *
      */
+    DOMStringList &operator=(const DOMStringList &other)
+        {
+        strings = other.strings;
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~DOMStringList() {}
 
 
@@ -296,6 +305,12 @@ public:
         {
         namespaceURI = other.namespaceURI;
         name         = other.name;
+        }
+    NamePair &operator=(const NamePair &other)
+        {
+        namespaceURI = other.namespaceURI;
+        name         = other.name;
+        return *this;
         }
     virtual ~NamePair() {}
 
@@ -385,6 +400,15 @@ public:
     /**
      *
      */
+    NameList &operator=(const NameList &other)
+        {
+        namePairs = other.namePairs;
+        return *this;
+        }
+
+    /**
+     *
+     */
     virtual ~NameList() {}
 protected:
 
@@ -437,6 +461,15 @@ public:
     DOMImplementationList(const DOMImplementationList &other)
         {
         implementations = other.implementations;
+        }
+
+    /**
+     *
+     */
+    DOMImplementationList &operator=(const DOMImplementationList &other)
+        {
+        implementations = other.implementations;
+        return *this;
         }
 
     /**
@@ -888,12 +921,21 @@ public:
         }
     NamedNodeMapEntry(const NamedNodeMapEntry &other)
         {
-        namespaceURI = other.namespaceURI;
-        name         = other.name;
-        node         = other.node;
+        assign(other);
+        }
+    NamedNodeMapEntry &operator=(const NamedNodeMapEntry &other)
+        {
+        assign(other);
+        return *this;
         }
     virtual ~NamedNodeMapEntry()
         {
+        }
+    void assign(const NamedNodeMapEntry &other)
+        {
+        namespaceURI = other.namespaceURI;
+        name         = other.name;
+        node         = other.node;
         }
     DOMString namespaceURI;
     DOMString name;
@@ -1063,6 +1105,15 @@ public:
     NamedNodeMap(const NamedNodeMap &other)
         {
         entries = other.entries;
+        }
+
+    /**
+     *
+     */
+    NamedNodeMap &operator=(const NamedNodeMap &other)
+        {
+        entries = other.entries;
+        return *this;
         }
 
 
