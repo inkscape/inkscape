@@ -1,3 +1,10 @@
+2006-04-26  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/Makefile.am, src/MultiPrinter.h, src/PylogFormatter.h,
+	  src/TRPIFormatter.h, src/selfname.tpl, src/libnr/Makefile_insert,
+	  src/svg/Makefile_insert, src/xml/Makefile_insert:
+	  Adding multiple test output formats.
+
 2006-04-23  verbalshadow  <verbalshadow@gmail.com>
 
     * path-prefix.h:

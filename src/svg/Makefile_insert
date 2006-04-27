@@ -36,7 +36,7 @@ svg_libspsvg_a_SOURCES =	\
 # This CxxTest stuff is adapted blindly from libnr/Makefile_insert.
 # It would be nice to reduce the amount of boilerplate / copy&paste here.
 svg/test-svg-main.cpp: svg/test-svg.cpp
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --error-printer -root -o svg/test-svg-main.cpp $(svg_test_svg_includes)
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=selfname.tpl -root -o svg/test-svg-main.cpp $(svg_test_svg_includes)
 
 svg/test-svg.cpp: $(svg_test_svg_includes) svg/Makefile_insert
 	$(top_srcdir)/cxxtest/cxxtestgen.pl -part -o svg/test-svg.cpp $(svg_test_svg_includes)
