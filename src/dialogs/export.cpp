@@ -419,7 +419,7 @@ sp_export_dialog (void)
                                        prefs_get_double_attribute 
                                        ( "dialogs.export.defaultxdpi", 
                                          "value", DPI_BASE), 
-                                       1.0, 9600.0, 0.1, 1.0, NULL, t, 3, 0,
+                                       0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 0,
                                        NULL, _("dp_i"), 2, 1,
                                        G_CALLBACK (sp_export_xdpi_value_changed), 
                                        dlg );
@@ -438,7 +438,7 @@ sp_export_dialog (void)
             sp_export_spinbutton_new ( "ydpi", prefs_get_double_attribute 
                                        ( "dialogs.export.defaultxdpi", 
                                          "value", DPI_BASE), 
-                                       1.0, 9600.0, 0.1, 1.0, NULL, t, 3, 1,
+                                       0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 1,
                                        NULL, _("dpi"), 2, 0, NULL, dlg );
         }
 
@@ -1740,7 +1740,7 @@ sp_export_value_get ( GtkObject *base, const gchar *key )
     adj = (GtkAdjustment *)gtk_object_get_data (base, key);
 
     return adj->value;
-} // end of sp_export_value_get()
+}
 
 /**
     \brief  Grabs a value in the export dialog and converts the unit
