@@ -142,7 +142,7 @@ void SPItem::init() {
     this->transform_center_y = 0;
 
     this->_is_evaluated = true;
-    this->_evaluated_status = StatusCalculated;
+    this->_evaluated_status = StatusUnknown;
 
     this->transform = NR::identity();
 
