@@ -135,6 +135,94 @@ public:
 };
 
 
+class GradientInfo
+{
+public:
+
+    GradientInfo()
+        {
+        init();
+        }
+
+    GradientInfo(const GradientInfo &other)
+        {
+        assign(other);
+        }
+
+    GradientInfo &operator=(const GradientInfo &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+    void assign(const GradientInfo &other)
+        {
+        name          = other.name;
+        style         = other.style;
+        cx            = other.cx;
+        cy            = other.cy;
+        fx            = other.fx;
+        fy            = other.fy;
+        r             = other.r;
+        x1            = other.x1;
+        y1            = other.y1;
+        x2            = other.x2;
+        y2            = other.y2;
+        }
+
+    void init()
+        {
+        name          = "none";
+        style         = "none";
+        cx            = 0.0;
+        cy            = 0.0;
+        fx            = 0.0;
+        fy            = 0.0;
+        r             = 0.0;
+        x1            = 0.0;
+        y1            = 0.0;
+        x2            = 0.0;
+        y2            = 0.0;
+        }
+
+    virtual ~GradientInfo()
+        {}
+
+    //used for eliminating duplicates in the styleTable
+    bool equals(const GradientInfo &other)
+        {
+        if (
+            name        != other.name   ||
+            style       != other.style  ||
+            cx          != other.cx     ||
+            cy          != other.cy     ||
+            fx          != other.fx     ||
+            fy          != other.fy     ||
+            r           != other.r      ||
+            x1          != other.x1     ||
+            y1          != other.y1     ||
+            x2          != other.x2     ||
+            y2          != other.y2
+           )
+            return false;
+        return true;
+        }
+
+    std::string name;
+    std::string style;
+    double cx;
+    double cy;
+    double fx;
+    double fy;
+    double r;
+    double x1;
+    double y1;
+    double x2;
+    double y2;
+
+};
+
+
 
 class OdfOutput : public Inkscape::Extension::Implementation::Implementation
 {
@@ -153,6 +241,8 @@ private:
 
     URI documentUri;
 
+    void reset();
+
     /* Style table
        Uses a two-stage lookup to avoid style duplication.
        Use like:
@@ -163,6 +253,11 @@ private:
     std::map<std::string, std::string> styleLookupTable;
     //style entry name -> style info
     std::vector<StyleInfo> styleTable;
+
+    //element id -> gradient entry name
+    std::map<std::string, std::string> gradientLookupTable;
+    //gradient entry name -> gradient info
+    std::vector<GradientInfo> gradientTable;
 
     //for renaming image file names
     std::map<std::string, std::string> imageTable;

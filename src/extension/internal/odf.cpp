@@ -54,6 +54,9 @@
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
 #include "sp-image.h"
+#include "sp-gradient.h"
+#include "sp-linear-gradient.h"
+#include "sp-radial-gradient.h"
 #include "sp-path.h"
 #include "sp-text.h"
 #include "sp-flowtext.h"
@@ -79,16 +82,144 @@ namespace Extension
 namespace Internal
 {
 
+
+
 //# Shorthand notation
 typedef org::w3c::dom::DOMString DOMString;
 typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
 typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
 
-
 //########################################################################
 //# C L A S S    SingularValueDecomposition
 //########################################################################
 #include <math.h>
+
+class SVDMatrix
+{
+public:
+
+    SVDMatrix()
+        {
+        d = (double *)0;
+        rows = cols = size = 0;
+        }
+
+    SVDMatrix(unsigned int rowSize, unsigned int colSize)
+        {
+        rows = rowSize;
+        cols = colSize;
+        size = rows * cols;
+        d = new double[size];
+        for (unsigned int i=0 ; i<size ; i++)
+            d[i] = 0.0;
+        }
+
+    SVDMatrix(double *vals, unsigned int rowSize, unsigned int colSize)
+        {
+        rows = rowSize;
+        cols = colSize;
+        size = rows * cols;
+        d = new double[size];
+        for (unsigned int i=0 ; i<size ; i++)
+            d[i] = vals[i];
+        }
+
+    virtual ~SVDMatrix()
+        {
+        delete d;
+        }
+
+    SVDMatrix(const SVDMatrix &other)
+        {
+        assign(other);
+        }
+
+    SVDMatrix &operator=(const SVDMatrix &other)
+        {
+        assign(other);
+        return *this;
+        }
+
+     double& operator() (unsigned int row, unsigned int col)
+         {
+         if (row >= rows || col >= cols)
+             return badval;
+         return d[cols*row + col];
+         }
+
+     double operator() (unsigned int row, unsigned int col) const
+         {
+         if (row >= rows || col >= cols)
+             return badval;
+         return d[cols*row + col];
+         }
+
+     unsigned int getRows()
+         {
+         return rows;
+         }
+
+     unsigned int getCols()
+         {
+         return cols;
+         }
+
+     SVDMatrix multiply(const SVDMatrix &other)
+         {
+         if (cols != other.rows)
+             {
+             SVDMatrix dummy;
+             return dummy;
+             }
+         SVDMatrix result(rows, other.cols);
+         for (unsigned int i=0 ; i<rows ; i++)
+             {
+             for (unsigned int j=0 ; j<other.cols ; j++)
+	         {
+	         double sum = 0.0;
+                 for (unsigned int k=0 ; k<cols ; k++)
+                     {
+                     //sum += a[i][k] * b[k][j];
+                     sum += d[i*cols +k] * other(k, j);
+                     }
+                 result(i, j) = sum;
+                 }
+
+             }
+         return result;
+         }
+
+     SVDMatrix transpose()
+         {
+         SVDMatrix result(cols, rows);
+         for (unsigned int i=0 ; i<rows ; i++)
+             for (unsigned int j=0 ; j<cols ; j++)
+	         result(j, i) = d[i*cols + j];
+         return result;
+         }
+
+private:
+
+
+     void assign(const SVDMatrix &other)
+        {
+        if (d)
+            delete d;
+        rows = other.rows;
+        cols = other.cols;
+        size = other.size;
+        d = new double[size];
+        for (unsigned int i=0 ; i<size ; i++)
+            d[i] = other.d[i];
+        }
+
+    double badval;
+
+    double *d;
+    unsigned int rows;
+    unsigned int cols;
+    unsigned int size;
+};
 
 /**
  *
@@ -125,47 +256,33 @@ public:
    @return     Structure to access U, S and V.
    */
 
-    SingularValueDecomposition (const NR::Matrix &matrixArg)
+    SingularValueDecomposition (const SVDMatrix &mat)
         {
-        matrix = matrixArg;
+        A = mat;
         calculate();
         }
 
     virtual ~SingularValueDecomposition()
-        {}
+        {
+        delete s;
+        }
 
     /**
      * Return the left singular vectors
      * @return     U
      */
-    NR::Matrix getU();
+    SVDMatrix &getU();
 
     /**
      * Return the right singular vectors
      * @return     V
      */
-    NR::Matrix getV();
+    SVDMatrix &getV();
 
     /**
-     * Return the right singular vectors
-     * @return  U x Vtransposed
+     *  Return the s[index] value
      */
-    NR::Matrix getUVt();
-
-    /**
-     *  Return the s[0] value
-     */
-    double getS0();
-
-    /**
-     *  Return the s[1] value
-     */
-    double getS1();
-
-    /**
-     *  Return the s[2] value
-     */
-    double getS2();
+    double getS(unsigned int index);
 
     /**
      * Two norm
@@ -189,11 +306,11 @@ private:
 
       void calculate();
 
-      NR::Matrix matrix;
-      double A[3][3];
-      double U[3][3];
-      double s[3];
-      double V[3][3];
+      SVDMatrix A;
+      SVDMatrix U;
+      double *s;
+      unsigned int s_size;
+      SVDMatrix V;
 
 };
 
@@ -224,29 +341,25 @@ static double svd_hypot(double a, double b)
 void SingularValueDecomposition::calculate()
 {
       // Initialize.
-      A[0][0] = matrix[0];
-      A[0][1] = matrix[2];
-      A[0][2] = matrix[4];
-      A[1][0] = matrix[1];
-      A[1][1] = matrix[3];
-      A[1][2] = matrix[5];
-      A[2][0] = 0.0;
-      A[2][1] = 0.0;
-      A[2][2] = 1.0;
+      int m = A.getRows();
+      int n = A.getCols();
 
-      double e[3];
-      double work[3];
+      int nu = (m > n) ? m : n;
+      s_size = (m+1 < n) ? m+1 : n;
+      s = new double[s_size];
+      U = SVDMatrix(m, nu);
+      V = SVDMatrix(n, n);
+      double *e = new double[n];
+      double *work = new double[m];
       bool wantu = true;
       bool wantv = true;
-      int m  = 3;
-      int n  = 3;
-      int nu = 3;
 
       // Reduce A to bidiagonal form, storing the diagonal elements
       // in s and the super-diagonal elements in e.
 
-      int nct = 2;
-      int nrt = 1;
+      int nct = (m-1<n) ? m-1 : n;
+      int nrtx = (n-2<m) ? n-2 : m;
+      int nrt = (nrtx>0) ? nrtx : 0;
       for (int k = 0; k < 2; k++) {
          if (k < nct) {
 
@@ -255,16 +368,16 @@ void SingularValueDecomposition::calculate()
             // Compute 2-norm of k-th column without under/overflow.
             s[k] = 0;
             for (int i = k; i < m; i++) {
-               s[k] = svd_hypot(s[k],A[i][k]);
+               s[k] = svd_hypot(s[k],A(i, k));
             }
             if (s[k] != 0.0) {
-               if (A[k][k] < 0.0) {
+               if (A(k, k) < 0.0) {
                   s[k] = -s[k];
                }
                for (int i = k; i < m; i++) {
-                  A[i][k] /= s[k];
+                  A(i, k) /= s[k];
                }
-               A[k][k] += 1.0;
+               A(k, k) += 1.0;
             }
             s[k] = -s[k];
          }
@@ -275,18 +388,18 @@ void SingularValueDecomposition::calculate()
 
                double t = 0;
                for (int i = k; i < m; i++) {
-                  t += A[i][k]*A[i][j];
+                  t += A(i, k) * A(i, j);
                }
-               t = -t/A[k][k];
+               t = -t/A(k, k);
                for (int i = k; i < m; i++) {
-                  A[i][j] += t*A[i][k];
+                  A(i, j) += t*A(i, k);
                }
             }
 
             // Place the k-th row of A into e for the
             // subsequent calculation of the row transformation.
 
-            e[j] = A[k][j];
+            e[j] = A(k, j);
          }
          if (wantu & (k < nct)) {
 
@@ -294,7 +407,7 @@ void SingularValueDecomposition::calculate()
             // multiplication.
 
             for (int i = k; i < m; i++) {
-               U[i][k] = A[i][k];
+               U(i, k) = A(i, k);
             }
          }
          if (k < nrt) {
@@ -325,13 +438,13 @@ void SingularValueDecomposition::calculate()
                }
                for (int j = k+1; j < n; j++) {
                   for (int i = k+1; i < m; i++) {
-                     work[i] += e[j]*A[i][j];
+                     work[i] += e[j]*A(i, j);
                   }
                }
                for (int j = k+1; j < n; j++) {
                   double t = -e[j]/e[k+1];
                   for (int i = k+1; i < m; i++) {
-                     A[i][j] += t*work[i];
+                     A(i, j) += t*work[i];
                   }
                }
             }
@@ -341,7 +454,7 @@ void SingularValueDecomposition::calculate()
             // back multiplication.
 
                for (int i = k+1; i < n; i++) {
-                  V[i][k] = e[i];
+                  V(i, k) = e[i];
                }
             }
          }
@@ -349,15 +462,15 @@ void SingularValueDecomposition::calculate()
 
       // Set up the final bidiagonal matrix or order p.
 
-      int p = 3;
+      int p = (n < m+1) ? n : m+1;
       if (nct < n) {
-         s[nct] = A[nct][nct];
+         s[nct] = A(nct, nct);
       }
       if (m < p) {
          s[p-1] = 0.0;
       }
       if (nrt+1 < p) {
-         e[nrt] = A[nrt][p-1];
+         e[nrt] = A(nrt, p-1);
       }
       e[p-1] = 0.0;
 
@@ -366,34 +479,34 @@ void SingularValueDecomposition::calculate()
       if (wantu) {
          for (int j = nct; j < nu; j++) {
             for (int i = 0; i < m; i++) {
-               U[i][j] = 0.0;
+               U(i, j) = 0.0;
             }
-            U[j][j] = 1.0;
+            U(j, j) = 1.0;
          }
          for (int k = nct-1; k >= 0; k--) {
             if (s[k] != 0.0) {
                for (int j = k+1; j < nu; j++) {
                   double t = 0;
                   for (int i = k; i < m; i++) {
-                     t += U[i][k]*U[i][j];
+                     t += U(i, k)*U(i, j);
                   }
-                  t = -t/U[k][k];
+                  t = -t/U(k, k);
                   for (int i = k; i < m; i++) {
-                     U[i][j] += t*U[i][k];
+                     U(i, j) += t*U(i, k);
                   }
                }
                for (int i = k; i < m; i++ ) {
-                  U[i][k] = -U[i][k];
+                  U(i, k) = -U(i, k);
                }
-               U[k][k] = 1.0 + U[k][k];
+               U(k, k) = 1.0 + U(k, k);
                for (int i = 0; i < k-1; i++) {
-                  U[i][k] = 0.0;
+                  U(i, k) = 0.0;
                }
             } else {
                for (int i = 0; i < m; i++) {
-                  U[i][k] = 0.0;
+                  U(i, k) = 0.0;
                }
-               U[k][k] = 1.0;
+               U(k, k) = 1.0;
             }
          }
       }
@@ -406,18 +519,18 @@ void SingularValueDecomposition::calculate()
                for (int j = k+1; j < nu; j++) {
                   double t = 0;
                   for (int i = k+1; i < n; i++) {
-                     t += V[i][k]*V[i][j];
+                     t += V(i, k)*V(i, j);
                   }
-                  t = -t/V[k+1][k];
+                  t = -t/V(k+1, k);
                   for (int i = k+1; i < n; i++) {
-                     V[i][j] += t*V[i][k];
+                     V(i, j) += t*V(i, k);
                   }
                }
             }
             for (int i = 0; i < n; i++) {
-               V[i][k] = 0.0;
+               V(i, k) = 0.0;
             }
-            V[k][k] = 1.0;
+            V(k, k) = 1.0;
          }
       }
 
@@ -502,9 +615,9 @@ void SingularValueDecomposition::calculate()
                   }
                   if (wantv) {
                      for (int i = 0; i < n; i++) {
-                        t = cs*V[i][j] + sn*V[i][p-1];
-                        V[i][p-1] = -sn*V[i][j] + cs*V[i][p-1];
-                        V[i][j] = t;
+                        t = cs*V(i, j) + sn*V(i, p-1);
+                        V(i, p-1) = -sn*V(i, j) + cs*V(i, p-1);
+                        V(i, j) = t;
                      }
                   }
                }
@@ -525,9 +638,9 @@ void SingularValueDecomposition::calculate()
                   e[j] = cs*e[j];
                   if (wantu) {
                      for (int i = 0; i < m; i++) {
-                        t = cs*U[i][j] + sn*U[i][k-1];
-                        U[i][k-1] = -sn*U[i][j] + cs*U[i][k-1];
-                        U[i][j] = t;
+                        t = cs*U(i, j) + sn*U(i, k-1);
+                        U(i, k-1) = -sn*U(i, j) + cs*U(i, k-1);
+                        U(i, j) = t;
                      }
                   }
                }
@@ -582,9 +695,9 @@ void SingularValueDecomposition::calculate()
                   s[j+1] = cs*s[j+1];
                   if (wantv) {
                      for (int i = 0; i < n; i++) {
-                        t = cs*V[i][j] + sn*V[i][j+1];
-                        V[i][j+1] = -sn*V[i][j] + cs*V[i][j+1];
-                        V[i][j] = t;
+                        t = cs*V(i, j) + sn*V(i, j+1);
+                        V(i, j+1) = -sn*V(i, j) + cs*V(i, j+1);
+                        V(i, j) = t;
                      }
                   }
                   t = svd_hypot(f,g);
@@ -597,9 +710,9 @@ void SingularValueDecomposition::calculate()
                   e[j+1] = cs*e[j+1];
                   if (wantu && (j < m-1)) {
                      for (int i = 0; i < m; i++) {
-                        t = cs*U[i][j] + sn*U[i][j+1];
-                        U[i][j+1] = -sn*U[i][j] + cs*U[i][j+1];
-                        U[i][j] = t;
+                        t = cs*U(i, j) + sn*U(i, j+1);
+                        U(i, j+1) = -sn*U(i, j) + cs*U(i, j+1);
+                        U(i, j) = t;
                      }
                   }
                }
@@ -618,7 +731,7 @@ void SingularValueDecomposition::calculate()
                   s[k] = (s[k] < 0.0 ? -s[k] : 0.0);
                   if (wantv) {
                      for (int i = 0; i <= pp; i++) {
-                        V[i][k] = -V[i][k];
+                        V(i, k) = -V(i, k);
                      }
                   }
                }
@@ -634,12 +747,12 @@ void SingularValueDecomposition::calculate()
                   s[k+1] = t;
                   if (wantv && (k < n-1)) {
                      for (int i = 0; i < n; i++) {
-                        t = V[i][k+1]; V[i][k+1] = V[i][k]; V[i][k] = t;
+                        t = V(i, k+1); V(i, k+1) = V(i, k); V(i, k) = t;
                      }
                   }
                   if (wantu && (k < m-1)) {
                      for (int i = 0; i < m; i++) {
-                        t = U[i][k+1]; U[i][k+1] = U[i][k]; U[i][k] = t;
+                        t = U(i, k+1); U(i, k+1) = U(i, k); U(i, k) = t;
                      }
                   }
                   k++;
@@ -651,6 +764,8 @@ void SingularValueDecomposition::calculate()
          }
       }
 
+    delete e;
+    delete work;
 
 }
 
@@ -660,11 +775,9 @@ void SingularValueDecomposition::calculate()
  * Return the left singular vectors
  * @return     U
  */
-NR::Matrix SingularValueDecomposition::getU()
+SVDMatrix &SingularValueDecomposition::getU()
 {
-    NR::Matrix mat(U[0][0], U[1][0], U[0][1],
-                   U[1][1], U[0][2], U[1][2]);
-    return mat;
+    return U;
 }
 
 /**
@@ -672,54 +785,19 @@ NR::Matrix SingularValueDecomposition::getU()
  * @return     V
  */
 
-NR::Matrix SingularValueDecomposition::getV()
+SVDMatrix &SingularValueDecomposition::getV()
 {
-    NR::Matrix mat(V[0][0], V[1][0], V[0][1],
-                   V[1][1], V[0][2], V[1][2]);
-    return mat;
-}
-
-/**
- * Return the right singular vectors
- * @return  U x Vtransposed
- */
-
-NR::Matrix SingularValueDecomposition::getUVt()
-{
-    //instead of sum(row*column),  sum(column, column)
-    double a = U[0][0] * V[0][0] + U[1][0] * V[1][0];
-    double b = U[0][0] * V[0][1] + U[1][0] * V[1][1];
-    double c = U[0][1] * V[0][0] + U[1][1] * V[1][0];
-    double d = U[0][1] * V[0][1] + U[1][1] * V[1][1];
-    double e = U[0][2] * V[0][0] + U[1][2] * V[1][0];
-    double f = U[0][2] * V[0][1] + U[1][2] * V[1][1];
-
-    NR::Matrix mat(a, b, c, d, e, f);
-    return mat;
+    return V;
 }
 
 /**
  *  Return the s[0] value
  */
-double SingularValueDecomposition::getS0()
+double SingularValueDecomposition::getS(unsigned int index)
 {
-    return s[0];
-}
-
-/**
- *  Return the s[1] value
- */
-double SingularValueDecomposition::getS1()
-{
-    return s[1];
-}
-
-/**
- *  Return the s[2] value
- */
-double SingularValueDecomposition::getS2()
-{
-    return s[2];
+    if (index >= s_size)
+        return 0.0;
+    return s[index];
 }
 
 /**
@@ -761,6 +839,8 @@ int SingularValueDecomposition::rank()
 //########################################################################
 //# E N D    C L A S S    SingularValueDecomposition
 //########################################################################
+
+
 
 
 
@@ -816,101 +896,87 @@ static std::string formatTransform(NR::Matrix &tf)
 }
 
 
+
+
 /**
- * An affine transformation Q may be decomposed via
- * singular value decomposition into
- *
- * T = UDVt
- *   = (UDUt)UVt
- * ('t' means transposed)
- * where U and V are orthonormal matrices and D is a diagonal
- * matrix. The decomposition may be interpreted as such:
- * the image is firstly rotated by UVt. The image is then
- * rotated by Ut, stretched in the coordinate directions
- * by D then rotated back by U. The net effect is a slant operation in
- * some tilt direction followed by an isotropic scale. If rot(x)
- * is a matrix that rotates by x we can rewrite this as
- * T = rot(-tau)( k 0, 0 1) rot(tau) rot(theta) S
- * where S is a scaling matrix, k is a multiplying (contraction)
- * factor related to slant, tau is the tilt direction and theta
- * is the initial rotation angle.
+ * Get the general transform from SVG pixels to
+ * ODF cm
  */
-/*
-static void analyzeTransform1(NR::Matrix &tf)
+static NR::Matrix getODFTransform(const SPItem *item)
 {
-    SingularValueDecomposition svd(tf);
-    double scale1 = svd.getS0();
-    double rotate = svd.getS1();
-    double scale2 = svd.getS2();
-    NR::Matrix u   = svd.getU();
-    NR::Matrix v   = svd.getV();
-    NR::Matrix uvt = svd.getUVt();
-    //g_message("s1:%f  rot:%f  s2:%f", scale1, rotate, scale2);
-    std::string us = formatTransform(u);
-    //g_message("u:%s", us.c_str());
-    std::string vs = formatTransform(v);
-    //g_message("v:%s", vs.c_str());
-    std::string uvts = formatTransform(uvt);
-    //g_message("uvt:%s", uvts.c_str());
+    //### Get SVG-to-ODF transform
+    NR::Matrix tf;
+    tf                   = sp_item_i2d_affine(item);
+    //Flip Y into document coordinates
+    double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
+    NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
+    doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+    tf                   = tf * doc2dt_tf;
+    tf                   = tf * NR::Matrix(NR::scale(pxToCm));
+    return tf;
 }
-*/
 
 
-static void analyzeTransform2(NR::Matrix &tf,
-           double &xskew, double &yskew, double &xscale, double &yscale)
+/**
+ * Get the bounding box of an item, as mapped onto
+ * an ODF document, in cm.
+ */
+static NR::Rect getODFBoundingBox(const SPItem *item)
 {
-    //Let's calculate some of the qualities of the transform directly
-    //Make a unit rect and transform it
-    NR::Point top_left(0.0, 0.0);
-    NR::Point top_right(1.0, 0.0);
-    NR::Point bottom_left(0.0, 1.0);
-    NR::Point bottom_right(1.0, 1.0);
-    top_left     *= tf;
-    top_right    *= tf;
-    bottom_left  *= tf;
-    bottom_right *= tf;
-    double dx_tr = top_right[NR::X]   - top_left[NR::X];
-    double dy_tr = top_right[NR::Y]   - top_left[NR::Y];
-    double dx_bl = bottom_left[NR::X] - top_left[NR::X];
-    double dy_bl = bottom_left[NR::Y] - top_left[NR::Y];
+    NR::Rect bbox        = sp_item_bbox_desktop((SPItem *)item);
+    double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
+    NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1.0, -1.0));
+    doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
+    bbox                 = bbox * doc2dt_tf;
+    bbox                 = bbox * NR::Matrix(NR::scale(pxToCm));
+    return bbox;
+}
 
-    double xskew_angle = 0.0;
-    double yskew_angle = 0.0;
-    if (fabs(dx_tr) < 1.0e-10 && fabs(dy_tr) > 1.0e-10)  //90 degrees?
-        {
-        if (dy_tr>0)
-            yskew_angle = pi / 2.0;
-        else
-            yskew_angle = -pi / 2.0;
-        }
-    else
-        {
-        yskew_angle = atan(dy_tr / dx_tr);
-        }
 
-    if (fabs(dy_bl) < 1.0e-10 && fabs(dx_bl) > 1.0e-10)  //90 degrees?
-        {
-        if (dx_bl>0)
-            xskew_angle = pi / 2.0;
-        else
-            xskew_angle = -pi / 2.0;
-        }
-    else
-        {
-        xskew_angle = atan(dx_bl / dy_bl);
-        }
 
-    double expected_xsize = 1.0 + dx_bl;
-    xscale =
-        ( bottom_right[NR::X] - top_left[NR::X] )/ expected_xsize;
-    double expected_ysize = 1.0 + dy_tr;
-    yscale =
-        ( bottom_right[NR::Y] - top_left[NR::Y] )/ expected_ysize;
+/**
+ * Get the transform for an item, correcting for
+ * handedness reversal
+ */
+static NR::Matrix getODFItemTransform(const SPItem *item)
+{
+    NR::Matrix itemTransform = NR::Matrix(NR::scale(1, -1));
+    itemTransform = itemTransform * item->transform;
+    itemTransform = itemTransform * NR::Matrix(NR::scale(1, -1));
+    return itemTransform;
+}
 
-    //g_message("xskew:%f yskew:%f xscale:%f yscale:%f",
-    //      xskew_angle, yskew_angle, xscale, yscale);
-    xskew = xskew_angle;
-    yskew = xskew_angle;
+
+
+/**
+ * Get some fun facts from the transform
+ */
+static void analyzeTransform(NR::Matrix &tf,
+           double &rotate, double &xskew, double &yskew,
+           double &xscale, double &yscale)
+{
+    SVDMatrix mat(2, 2);
+    mat(0, 0) = tf[0];
+    mat(0, 1) = tf[1];
+    mat(1, 0) = tf[2];
+    mat(1, 1) = tf[3];
+
+    SingularValueDecomposition svd(mat);
+
+    SVDMatrix U = svd.getU();
+    SVDMatrix V = svd.getV();
+    SVDMatrix Vt = V.transpose();
+    SVDMatrix UVt = U.multiply(Vt);
+    double s0 = svd.getS(0);
+    double s1 = svd.getS(1);
+    xscale = s0;
+    yscale = s1;
+    //g_message("## s0:%.3f s1:%.3f", s0, s1);
+    //g_message("## u:%.3f %.3f %.3f %.3f", U(0,0), U(0,1), U(1,0), U(1,1));
+    //g_message("## v:%.3f %.3f %.3f %.3f", V(0,0), V(0,1), V(1,0), V(1,1));
+    //g_message("## vt:%.3f %.3f %.3f %.3f", Vt(0,0), Vt(0,1), Vt(1,0), Vt(1,1));
+    //g_message("## uvt:%.3f %.3f %.3f %.3f", UVt(0,0), UVt(0,1), UVt(1,0), UVt(1,1));
+    rotate = UVt(0,0);
 }
 
 
@@ -926,6 +992,18 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 
     std::string nodeName = node->name();
     std::string id       = getAttribute(node, "id");
+
+    SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
+    if (!reprobj)
+        return;
+    if (!SP_IS_ITEM(reprobj))
+        {
+        return;
+        }
+    SPItem *item  = SP_ITEM(reprobj);
+    //### Get SVG-to-ODF transform
+    NR::Matrix tf = getODFTransform(item);
+
 
     if (nodeName == "image" || nodeName == "svg:image")
         {
@@ -967,18 +1045,14 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 
 
 
-    SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
-    if (!reprobj)
-        return;
-    if (!SP_IS_ITEM(reprobj))
-        {
-        return;
-        }
-    SPItem *item = SP_ITEM(reprobj);
+    //###### Get style
     SPStyle *style = SP_OBJECT_STYLE(item);
     if (style && id.size()>0)
         {
+        bool isGradient = false;
+
         StyleInfo si;
+        //## FILL
         if (style->fill.type == SP_PAINT_TYPE_COLOR)
             {
             guint32 fillCol =
@@ -993,9 +1067,59 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             si.fill      = "solid";
             double opacityPercent = 100.0 *
                  (SP_SCALE24_TO_FLOAT(style->fill_opacity.value));
-            snprintf(buf, 15, "%.2f%%", opacityPercent);
+            snprintf(buf, 15, "%.3f%%", opacityPercent);
             si.fillOpacity = buf;
             }
+        else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
+            {
+            if (!SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)))
+                return;
+            isGradient = true;
+            GradientInfo gi;
+            SPGradient *gradient = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
+            if (SP_IS_LINEARGRADIENT(gradient))
+                {
+                gi.style = "linear";
+                SPLinearGradient *linGrad = SP_LINEARGRADIENT(gradient);
+                }
+            else if (SP_IS_RADIALGRADIENT(gradient))
+                {
+                gi.style = "radial";
+                SPRadialGradient *radGrad = SP_RADIALGRADIENT(gradient);
+                }
+            else
+                {
+                g_warning("not a supported gradient type");
+                }
+
+            //Look for existing identical style;
+            bool gradientMatch = false;
+            std::vector<GradientInfo>::iterator iter;
+            for (iter=gradientTable.begin() ; iter!=gradientTable.end() ; iter++)
+                {
+                if (gi.equals(*iter))
+                    {
+                    //map to existing gradientTable entry
+                    std::string gradientName = iter->name;
+                    //g_message("found duplicate style:%s", gradientName.c_str());
+                    gradientLookupTable[id] = gradientName;
+                    gradientMatch = true;
+                    break;
+                    }
+                }
+            //None found, make a new pair or entries
+            if (!gradientMatch)
+                {
+                char buf[16];
+                snprintf(buf, 15, "gradient%d", gradientTable.size());
+                std::string gradientName = buf;
+                gi.name = gradientName;
+                gradientTable.push_back(gi);
+                gradientLookupTable[id] = gradientName;
+                }
+            }
+
+        //## STROKE
         if (style->stroke.type == SP_PAINT_TYPE_COLOR)
             {
             guint32 strokeCol =
@@ -1006,42 +1130,44 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             int b = (strokeCol >>  8) & 0xff;
             snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
             si.strokeColor = buf;
-            snprintf(buf, 15, "%.2fpt", style->stroke_width.value);
+            snprintf(buf, 15, "%.3fpt", style->stroke_width.value);
             si.strokeWidth = buf;
             si.stroke      = "solid";
             double opacityPercent = 100.0 *
                  (SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));
-            snprintf(buf, 15, "%.2f%%", opacityPercent);
+            snprintf(buf, 15, "%.3f%%", opacityPercent);
             si.strokeOpacity = buf;
             }
 
-        //Look for existing identical style;
-        bool styleMatch = false;
-        std::vector<StyleInfo>::iterator iter;
-        for (iter=styleTable.begin() ; iter!=styleTable.end() ; iter++)
+        if (!isGradient)
             {
-            if (si.equals(*iter))
+            //Look for existing identical style;
+            bool styleMatch = false;
+            std::vector<StyleInfo>::iterator iter;
+            for (iter=styleTable.begin() ; iter!=styleTable.end() ; iter++)
                 {
-                //map to existing styleTable entry
-                std::string styleName = iter->name;
-                //g_message("found duplicate style:%s", styleName.c_str());
+                if (si.equals(*iter))
+                    {
+                    //map to existing styleTable entry
+                    std::string styleName = iter->name;
+                    //g_message("found duplicate style:%s", styleName.c_str());
+                    styleLookupTable[id] = styleName;
+                    styleMatch = true;
+                    break;
+                    }
+                }
+            //None found, make a new pair or entries
+            if (!styleMatch)
+                {
+                char buf[16];
+                snprintf(buf, 15, "style%d", styleTable.size());
+                std::string styleName = buf;
+                si.name = styleName;
+                styleTable.push_back(si);
                 styleLookupTable[id] = styleName;
-                styleMatch = true;
-                break;
                 }
             }
-        //None found, make a new pair or entries
-        if (!styleMatch)
-            {
-            char buf[16];
-            snprintf(buf, 15, "style%d", styleTable.size());
-            std::string styleName = buf;
-            si.name = styleName;
-            styleTable.push_back(si);
-            styleLookupTable[id] = styleName;
-            }
         }
-
 
     for (Inkscape::XML::Node *child = node->firstChild() ;
             child ; child = child->next())
@@ -1213,6 +1339,19 @@ bool OdfOutput::writeStyle(Writer &outs)
         outs.printf("</style:style>\n");
         }
 
+    //##  Dump our gradient table
+    outs.printf("\n");
+    outs.printf("<!-- ####### Gradients from Inkscape document ####### -->\n");
+    std::vector<GradientInfo>::iterator giter;
+    for (giter = gradientTable.begin() ; giter != gradientTable.end() ; giter++)
+        {
+        GradientInfo gi(*giter);
+        outs.printf("<draw:gradient draw:name=\"%s\" ", gi.name.c_str());
+        outs.printf("draw:display-name=\"%s\"", gi.name.c_str());
+        outs.printf("/>\n");
+        }
+
+    outs.printf("\n");
     outs.printf("</office:automatic-styles>\n");
     outs.printf("\n");
 
@@ -1220,6 +1359,10 @@ bool OdfOutput::writeStyle(Writer &outs)
 }
 
 
+
+/**
+ * Writes an SVG path as an ODF <draw:path>
+ */
 static void
 writePath(Writer &outs, NArtBpath const *bpath,
           NR::Matrix &tf, double xoff, double yoff)
@@ -1231,12 +1374,12 @@ writePath(Writer &outs, NArtBpath const *bpath,
         NR::Point const p1(bp->c(1) * tf);
 	NR::Point const p2(bp->c(2) * tf);
 	NR::Point const p3(bp->c(3) * tf);
-	double x1 = (p1[NR::X] * pxToCm - xoff) * 1000.0;
-	double y1 = (p1[NR::Y] * pxToCm - yoff) * 1000.0;
-	double x2 = (p2[NR::X] * pxToCm - xoff) * 1000.0;
-	double y2 = (p2[NR::Y] * pxToCm - yoff) * 1000.0;
-	double x3 = (p3[NR::X] * pxToCm - xoff) * 1000.0;
-	double y3 = (p3[NR::Y] * pxToCm - yoff) * 1000.0;
+	double x1 = (p1[NR::X] - xoff) * 1000.0;
+	double y1 = (p1[NR::Y] - yoff) * 1000.0;
+	double x2 = (p2[NR::X] - xoff) * 1000.0;
+	double y2 = (p2[NR::Y] - yoff) * 1000.0;
+	double x3 = (p3[NR::X] - xoff) * 1000.0;
+	double y3 = (p3[NR::Y] - yoff) * 1000.0;
 
         switch (bp->code)
             {
@@ -1271,6 +1414,10 @@ writePath(Writer &outs, NArtBpath const *bpath,
 
 
 
+/**
+ * This is the main SPObject tree output to ODF.  preprocess()
+ * must be called prior to this
+ */
 bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 {
     //# Get the SPItem, if applicable
@@ -1287,34 +1434,22 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     std::string nodeName = node->name();
     std::string id       = getAttribute(node, "id");
 
-    NR::Matrix tf        = sp_item_i2d_affine(item);
-    NR::Rect bbox        = sp_item_bbox_desktop(item);
+    //### Get SVG-to-ODF transform
+    NR::Matrix tf        = getODFTransform(item);
 
-    //Flip Y into document coordinates
-    double doc_height    = sp_document_height(SP_ACTIVE_DOCUMENT);
-    NR::Matrix doc2dt_tf = NR::Matrix(NR::scale(1, -1));
-    doc2dt_tf            = doc2dt_tf * NR::Matrix(NR::translate(0, doc_height));
-    tf                   = tf   * doc2dt_tf;
-    bbox                 = bbox * doc2dt_tf;
+    //### Get ODF bounding box params for item
+    NR::Rect bbox        = getODFBoundingBox(item);
+    double bbox_x        = bbox.min()[NR::X];
+    double bbox_y        = bbox.min()[NR::Y];
+    double bbox_width    = bbox.max()[NR::X] - bbox.min()[NR::X];
+    double bbox_height   = bbox.max()[NR::Y] - bbox.min()[NR::Y];
 
-    double x      = pxToCm * bbox.min()[NR::X];
-    double y      = pxToCm * bbox.min()[NR::Y];
-    double width  = pxToCm * ( bbox.max()[NR::X] - bbox.min()[NR::X] );
-    double height = pxToCm * ( bbox.max()[NR::Y] - bbox.min()[NR::Y] );
-
-
+    double rotate;
     double xskew;
     double yskew;
     double xscale;
     double yscale;
-    analyzeTransform2(tf, xskew, yskew, xscale, yscale);
-
-    double item_xskew;
-    double item_yskew;
-    double item_xscale;
-    double item_yscale;
-    analyzeTransform2(item->transform,
-        item_xskew, item_yskew, item_xscale, item_yscale);
+    analyzeTransform(tf, rotate, xskew, yskew, xscale, yscale);
 
     //# Do our stuff
     SPCurve *curve = NULL;
@@ -1365,16 +1500,14 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
         NR::Rect ibbox(NR::Point(ix, iy), NR::Point(ix+iwidth, iy+iheight));
         ibbox = ibbox * tf;
-        ix      = pxToCm * ibbox.min()[NR::X];
-        iy      = pxToCm * ibbox.min()[NR::Y];
-        //iwidth  = pxToCm * ( ibbox.max()[NR::X] - ibbox.min()[NR::X] );
-        //iheight = pxToCm * ( ibbox.max()[NR::Y] - ibbox.min()[NR::Y] );
-        iwidth  = pxToCm * xscale * iwidth;
-        iheight = pxToCm * yscale * iheight;
+        ix      = ibbox.min()[NR::X];
+        iy      = ibbox.min()[NR::Y];
+        //iwidth  = ibbox.max()[NR::X] - ibbox.min()[NR::X];
+        //iheight = ibbox.max()[NR::Y] - ibbox.min()[NR::Y];
+        iwidth  = xscale * iwidth;
+        iheight = yscale * iheight;
 
-        NR::Matrix itemTransform = NR::Matrix(NR::scale(1, -1));
-        itemTransform = itemTransform * item->transform;
-        itemTransform = itemTransform * NR::Matrix(NR::scale(1, -1));
+        NR::Matrix itemTransform = getODFItemTransform(item);
 
         std::string itemTransformString = formatTransform(itemTransform);
 
@@ -1425,23 +1558,32 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         if (id.size()>0)
             outs.printf("id=\"%s\" ", id.c_str());
 
-        std::map<std::string, std::string>::iterator iter;
-        iter = styleLookupTable.find(id);
-        if (iter != styleLookupTable.end())
+        std::map<std::string, std::string>::iterator siter;
+        siter = styleLookupTable.find(id);
+        if (siter != styleLookupTable.end())
             {
-            std::string styleName = iter->second;
+            std::string styleName = siter->second;
             outs.printf("draw:style-name=\"%s\" ", styleName.c_str());
             }
 
+        std::map<std::string, std::string>::iterator giter;
+        giter = gradientLookupTable.find(id);
+        if (giter != gradientLookupTable.end())
+            {
+            std::string gradientName = giter->second;
+            outs.printf("draw:fill-gradient-name=\"%s\" ",
+                 gradientName.c_str());
+            }
+
         outs.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
-                       x, y);
+                       bbox_x, bbox_y);
 	outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
-	               width, height);
+	               bbox_width, bbox_height);
 	outs.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
-	               width * 1000.0, height * 1000.0);
+	               bbox_width * 1000.0, bbox_height * 1000.0);
 
 	outs.printf("    svg:d=\"");
-	writePath(outs, curve->bpath, tf, x, y);
+	writePath(outs, curve->bpath, tf, bbox_x, bbox_y);
 	outs.printf("\"");
 
 	outs.printf(">\n");
@@ -1595,6 +1737,20 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
 }
 
 
+/**
+ * Resets class to its pristine condition, ready to use again
+ */
+void
+OdfOutput::reset()
+{
+    styleTable.clear();
+    styleLookupTable.clear();
+    gradientTable.clear();
+    gradientLookupTable.clear();
+    imageTable.clear();
+
+
+}
 
 
 /**
@@ -1603,13 +1759,12 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
 void
 OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *uri)
 {
+    reset();
+
     //g_message("native file:%s\n", uri);
     documentUri = URI(uri);
 
     ZipFile zf;
-    styleTable.clear();
-    styleLookupTable.clear();
-    imageTable.clear();
     preprocess(zf, doc->rroot);
 
     if (!writeManifest(zf))
