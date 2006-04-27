@@ -817,6 +817,8 @@ int XPathParser::getAxisSpecifier(int p0, int depth)
     int p = p0;
     if (lexTokType(p) == AXIS_NAME)
         {
+        LexTok t = lexTok(p);
+        int axisType = t.getIntValue();
         p++;
         if (lexTokType(p) != DOUBLE_COLON)
             {
@@ -824,6 +826,40 @@ int XPathParser::getAxisSpecifier(int p0, int depth)
             return -1;
             }
         p++;
+        switch (axisType)
+            {
+            case ANCESTOR_OR_SELF:
+                tokAdd(new TokAxisAncestorOrSelf());
+            case ANCESTOR:
+                tokAdd(new TokAxisAncestor());
+            case ATTRIBUTE:
+                tokAdd(new TokAxisAttribute());
+            case CHILD:
+                tokAdd(new TokAxisChild());
+            case DESCENDANT_OR_SELF:
+                tokAdd(new TokAxisDescendantOrSelf());
+            case DESCENDANT:
+                tokAdd(new TokAxisDescendant());
+            case FOLLOWING_SIBLING:
+                tokAdd(new TokAxisFollowingSibling());
+            case FOLLOWING:
+                tokAdd(new TokAxisFollowing());
+            case NAMESPACE:
+                tokAdd(new TokAxisNamespace());
+            case PARENT:
+                tokAdd(new TokAxisParent());
+            case PRECEDING_SIBLING:
+                tokAdd(new TokAxisPrecedingSibling());
+            case PRECEDING:
+                tokAdd(new TokAxisPreceding());
+            case SELF:
+                tokAdd(new TokAxisSelf());
+            default:
+                {
+                error("unknown axis type %d", axisType);
+                return -1;
+                }
+            }
         return p;
         }
 
@@ -1155,8 +1191,61 @@ int XPathParser::getFunctionCall(int p0, int depth)
         }
     p++;
 
-    if (name == "position")
-        tokens.add(new TokPosition());
+    // Function names from http://www.w3.org/TR/xpath#NT-FunctionName
+    if (name == "last")
+        tokens.add(new TokFuncLast());
+    else if (name == "position")
+        tokens.add(new TokFuncPosition());
+    else if (name == "count")
+        tokens.add(new TokFuncCount());
+    else if (name == "id")
+        tokens.add(new TokFuncId());
+    else if (name == "local-name")
+        tokens.add(new TokFuncLocalName());
+    else if (name == "namespace-uri")
+        tokens.add(new TokFuncNamespaceUri());
+    else if (name == "name")
+        tokens.add(new TokFuncName());
+    else if (name == "string")
+        tokens.add(new TokFuncString());
+    else if (name == "concat")
+        tokens.add(new TokFuncConcat());
+    else if (name == "starts-with")
+        tokens.add(new TokFuncStartsWith());
+    else if (name == "contains")
+        tokens.add(new TokFuncContains());
+    else if (name == "substring-before")
+        tokens.add(new TokFuncSubstringBefore());
+    else if (name == "substring-after")
+        tokens.add(new TokFuncSubstringAfter());
+    else if (name == "substring")
+        tokens.add(new TokFuncSubstring());
+    else if (name == "string-length")
+        tokens.add(new TokFuncStringLength());
+    else if (name == "normalize-space")
+        tokens.add(new TokFuncNormalizeSpace());
+    else if (name == "translate")
+        tokens.add(new TokFuncTranslate());
+    else if (name == "boolean")
+        tokens.add(new TokFuncBoolean());
+    else if (name == "not")
+        tokens.add(new TokFuncNot());
+    else if (name == "true")
+        tokens.add(new TokFuncTrue());
+    else if (name == "false")
+        tokens.add(new TokFuncFalse());
+    else if (name == "lang")
+        tokens.add(new TokFuncLang());
+    else if (name == "number")
+        tokens.add(new TokFuncNumber());
+    else if (name == "sum")
+        tokens.add(new TokFuncSum());
+    else if (name == "floor")
+        tokens.add(new TokFuncFloor());
+    else if (name == "ceiling")
+        tokens.add(new TokFuncCeiling());
+    else if (name == "round")
+        tokens.add(new TokFuncRound());
     else
         {
         error("unknown function name:'%s'", name.c_str());

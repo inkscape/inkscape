@@ -214,9 +214,53 @@ public:
         TOK_NAME_TEST,
         TOK_EXPR,
         TOK_UNION,
+        //axis types
+        TOK_AXIS_ANCESTOR_OR_SELF,
+        TOK_AXIS_ANCESTOR,
+        TOK_AXIS_ATTRIBUTE,
+        TOK_AXIS_CHILD,
+        TOK_AXIS_DESCENDANT_OR_SELF,
+        TOK_AXIS_DESCENDANT,
+        TOK_AXIS_FOLLOWING_SIBLING,
+        TOK_AXIS_FOLLOWING,
+        TOK_AXIS_NAMESPACE,
+        TOK_AXIS_PARENT,
+        TOK_AXIS_PRECEDING_SIBLING,
+        TOK_AXIS_PRECEDING,
+        TOK_AXIS_SELF,
         //function types
-        TOK_POSITION
+        TOK_FUNC_LAST,
+        TOK_FUNC_POSITION,
+        TOK_FUNC_COUNT,
+        TOK_FUNC_ID,
+        TOK_FUNC_LOCAL_NAME,
+        TOK_FUNC_NAMESPACE_URI,
+        TOK_FUNC_NAME,
+        TOK_FUNC_STRING,
+        TOK_FUNC_CONCAT,
+        TOK_FUNC_STARTS_WITH,
+        TOK_FUNC_CONTAINS,
+        TOK_FUNC_SUBSTRING_BEFORE,
+        TOK_FUNC_SUBSTRING_AFTER,
+        TOK_FUNC_SUBSTRING,
+        TOK_FUNC_STRING_LENGTH,
+        TOK_FUNC_NORMALIZE_SPACE,
+        TOK_FUNC_TRANSLATE,
+        TOK_FUNC_BOOLEAN,
+        TOK_FUNC_NOT,
+        TOK_FUNC_TRUE,
+        TOK_FUNC_FALSE,
+        TOK_FUNC_LANG,
+        TOK_FUNC_NUMBER,
+        TOK_FUNC_SUM,
+        TOK_FUNC_FLOOR,
+        TOK_FUNC_CEILING,
+        TOK_FUNC_ROUND,
         } TokenType;
+
+
+
+
     /**
      *  Constructor with a NOP default type
      */
@@ -710,23 +754,580 @@ public:
 
 
 
+
 //###########################
-//# F U N C T I O N S
+//# A X I S
 //###########################
 
-class TokPosition : public Token
+
+class TokAxisAncestorOrSelf : public Token
 {
 public:
-    TokPosition()
+    TokAxisAncestorOrSelf()
         {
-        type = TOK_POSITION;
-        stype = "position";
+        type = TOK_AXIS_ANCESTOR_OR_SELF;
+        stype = "axis-ancestor-or-self";
         }
     virtual bool execute(Stack &stack)
         {
         return true;
         }
 };
+
+class TokAxisAncestor : public Token
+{
+public:
+    TokAxisAncestor()
+        {
+        type = TOK_AXIS_ANCESTOR;
+        stype = "axis-ancestor";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisAttribute : public Token
+{
+public:
+    TokAxisAttribute()
+        {
+        type = TOK_AXIS_ATTRIBUTE;
+        stype = "axis-attribute";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisChild : public Token
+{
+public:
+    TokAxisChild()
+        {
+        type = TOK_AXIS_CHILD;
+        stype = "axis-child";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisDescendantOrSelf : public Token
+{
+public:
+    TokAxisDescendantOrSelf()
+        {
+        type = TOK_AXIS_DESCENDANT_OR_SELF;
+        stype = "axis-descendant-or-self";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisDescendant : public Token
+{
+public:
+    TokAxisDescendant()
+        {
+        type = TOK_AXIS_DESCENDANT;
+        stype = "axis-descendant";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisFollowingSibling : public Token
+{
+public:
+    TokAxisFollowingSibling()
+        {
+        type = TOK_AXIS_FOLLOWING_SIBLING;
+        stype = "axis-following-sibling";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisFollowing : public Token
+{
+public:
+    TokAxisFollowing()
+        {
+        type = TOK_AXIS_FOLLOWING;
+        stype = "axis-following";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisNamespace : public Token
+{
+public:
+    TokAxisNamespace()
+        {
+        type = TOK_AXIS_NAMESPACE;
+        stype = "axis-namespace";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisParent : public Token
+{
+public:
+    TokAxisParent()
+        {
+        type = TOK_AXIS_PARENT;
+        stype = "axis-parent";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisPrecedingSibling : public Token
+{
+public:
+    TokAxisPrecedingSibling()
+        {
+        type = TOK_AXIS_PRECEDING_SIBLING;
+        stype = "axis-preceding-sibling";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisPreceding : public Token
+{
+public:
+    TokAxisPreceding()
+        {
+        type = TOK_AXIS_PRECEDING;
+        stype = "axis-preceding";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokAxisSelf : public Token
+{
+public:
+    TokAxisSelf()
+        {
+        type = TOK_AXIS_SELF;
+        stype = "axis-self";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+
+
+//###########################
+//# F U N C T I O N S
+//###########################
+
+class TokFuncLast : public Token
+{
+public:
+    TokFuncLast()
+        {
+        type = TOK_FUNC_LAST;
+        stype = "func-last";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncPosition : public Token
+{
+public:
+    TokFuncPosition()
+        {
+        type = TOK_FUNC_POSITION;
+        stype = "func-position";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncCount : public Token
+{
+public:
+    TokFuncCount()
+        {
+        type = TOK_FUNC_COUNT;
+        stype = "func-count";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncId : public Token
+{
+public:
+    TokFuncId()
+        {
+        type = TOK_FUNC_ID;
+        stype = "func-id";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncLocalName : public Token
+{
+public:
+    TokFuncLocalName()
+        {
+        type = TOK_FUNC_LOCAL_NAME;
+        stype = "func-local-name";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncNamespaceUri : public Token
+{
+public:
+    TokFuncNamespaceUri()
+        {
+        type = TOK_FUNC_NAMESPACE_URI;
+        stype = "func-namespace-uri";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncName : public Token
+{
+public:
+    TokFuncName()
+        {
+        type = TOK_FUNC_NAME;
+        stype = "func-name";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncString : public Token
+{
+public:
+    TokFuncString()
+        {
+        type = TOK_FUNC_STRING;
+        stype = "func-string";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncConcat : public Token
+{
+public:
+    TokFuncConcat()
+        {
+        type = TOK_FUNC_CONCAT;
+        stype = "func-concat";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncStartsWith : public Token
+{
+public:
+    TokFuncStartsWith()
+        {
+        type = TOK_FUNC_STARTS_WITH;
+        stype = "func-starts-with";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncContains : public Token
+{
+public:
+    TokFuncContains()
+        {
+        type = TOK_FUNC_CONTAINS;
+        stype = "func-contains";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncSubstringBefore : public Token
+{
+public:
+    TokFuncSubstringBefore()
+        {
+        type = TOK_FUNC_SUBSTRING_BEFORE;
+        stype = "func-substring-before";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncSubstringAfter : public Token
+{
+public:
+    TokFuncSubstringAfter()
+        {
+        type = TOK_FUNC_SUBSTRING_AFTER;
+        stype = "func-substring-after";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncSubstring : public Token
+{
+public:
+    TokFuncSubstring()
+        {
+        type = TOK_FUNC_SUBSTRING;
+        stype = "func-substring";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncStringLength : public Token
+{
+public:
+    TokFuncStringLength()
+        {
+        type = TOK_FUNC_STRING_LENGTH;
+        stype = "func-string-length";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncNormalizeSpace : public Token
+{
+public:
+    TokFuncNormalizeSpace()
+        {
+        type = TOK_FUNC_NORMALIZE_SPACE;
+        stype = "func-normalize-space";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncTranslate : public Token
+{
+public:
+    TokFuncTranslate()
+        {
+        type = TOK_FUNC_TRANSLATE;
+        stype = "func-translate";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncBoolean : public Token
+{
+public:
+    TokFuncBoolean()
+        {
+        type = TOK_FUNC_BOOLEAN;
+        stype = "func-boolean";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncNot : public Token
+{
+public:
+    TokFuncNot()
+        {
+        type = TOK_FUNC_NOT;
+        stype = "func-string-length";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncTrue : public Token
+{
+public:
+    TokFuncTrue()
+        {
+        type = TOK_FUNC_TRUE;
+        stype = "func-true";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncFalse : public Token
+{
+public:
+    TokFuncFalse()
+        {
+        type = TOK_FUNC_FALSE;
+        stype = "func-false";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncLang : public Token
+{
+public:
+    TokFuncLang()
+        {
+        type = TOK_FUNC_LANG;
+        stype = "func-lang";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncNumber : public Token
+{
+public:
+    TokFuncNumber()
+        {
+        type = TOK_FUNC_NUMBER;
+        stype = "func-number";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncSum : public Token
+{
+public:
+    TokFuncSum()
+        {
+        type = TOK_FUNC_SUM;
+        stype = "func-sum";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncFloor : public Token
+{
+public:
+    TokFuncFloor()
+        {
+        type = TOK_FUNC_FLOOR;
+        stype = "func-floor";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncCeiling : public Token
+{
+public:
+    TokFuncCeiling()
+        {
+        type = TOK_FUNC_CEILING;
+        stype = "func-ceiling";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+class TokFuncRound : public Token
+{
+public:
+    TokFuncRound()
+        {
+        type = TOK_FUNC_ROUND;
+        stype = "func-round";
+        }
+    virtual bool execute(Stack &stack)
+        {
+        return true;
+        }
+};
+
+
+
 
 
 
