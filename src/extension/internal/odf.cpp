@@ -1081,11 +1081,17 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 {
                 gi.style = "linear";
                 SPLinearGradient *linGrad = SP_LINEARGRADIENT(gradient);
+                gi.x1 = linGrad->x1.value;
+                gi.y1 = linGrad->y1.value;
+                gi.x2 = linGrad->x2.value;
+                gi.y2 = linGrad->y2.value;
                 }
             else if (SP_IS_RADIALGRADIENT(gradient))
                 {
                 gi.style = "radial";
                 SPRadialGradient *radGrad = SP_RADIALGRADIENT(gradient);
+                gi.cx = radGrad->cx.computed * 100.0;//ODG cx is percentages
+                gi.cy = radGrad->cy.computed * 100.0;
                 }
             else
                 {
@@ -1347,7 +1353,19 @@ bool OdfOutput::writeStyle(Writer &outs)
         {
         GradientInfo gi(*giter);
         outs.printf("<draw:gradient draw:name=\"%s\" ", gi.name.c_str());
-        outs.printf("draw:display-name=\"%s\"", gi.name.c_str());
+        outs.printf("draw:display-name=\"%s\" ", gi.name.c_str());
+        outs.printf("draw:style=\"%s\" ", gi.style.c_str());
+        if (gi.style == "linear")
+            {
+            }
+        else if (gi.style == "gradient")
+            {
+            outs.printf("draw:cx=\".2f%%\" draw:cy=\".2f%%\" ", gi.cx, gi.cy);
+            }
+        else
+            {
+            g_warning("unsupported gradient style '%s'", gi.style.c_str());
+            }
         outs.printf("/>\n");
         }
 
