@@ -856,6 +856,7 @@ static void loadEmUp()
         std::list<gchar *> sources;
         sources.push_back( profile_path("palettes") );
         sources.push_back( g_strdup(INKSCAPE_PALETTESDIR) );
+        sources.push_back( g_strdup(CREATE_PALETTESDIR) );
 
         // Use this loop to iterate through a list of possible document locations.
         while (!sources.empty()) {
@@ -872,13 +873,13 @@ static void loadEmUp()
                     gchar *filename = 0;
                     while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
                         gchar* lower = g_ascii_strdown( filename, -1 );
-                        if ( g_str_has_suffix(lower, ".gpl") ) {
+//                        if ( g_str_has_suffix(lower, ".gpl") ) {
                             gchar* full = g_build_filename(dirname, filename, NULL);
                             if ( !Inkscape::IO::file_test( full, (GFileTest)(G_FILE_TEST_IS_DIR ) ) ) {
                                 _loadPaletteFile(full);
                             }
                             g_free(full);
-                        }
+//                      }
                         g_free(lower);
                     }
                     g_dir_close(directory);
