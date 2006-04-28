@@ -1,3 +1,9 @@
+2006-04-28  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/Makefile_insert, src/MultiPrinter.h, src/verbs.h,
+	  src/verbs-test.h:
+	  Adding unit test for verbs.
+
 2006-04-27  verbalshadow <verbalshadow@gmail.com>
 	
 	* src/io/resource.h, src/io/resource.cpp, 
@@ -5,8 +11,7 @@
 	  Added CREATE v0.1 support for gradients/swatches/patterns
 	  Support for Linux & Win32. Mac support waiting final support
 	  Directory info.
-	  
-	
+
 2006-04-26  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/Makefile.am, src/MultiPrinter.h, src/PylogFormatter.h,

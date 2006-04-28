@@ -378,6 +378,18 @@ public:
     void delete_view (Inkscape::UI::View::View * view);
 
     void sensitive (SPDocument * in_doc = NULL, bool in_sensitive = true);
+
+// Yes, multiple public, protected and private sections are bad. We'll clean that up later
+protected:
+    /** \brief Returns the size of the internal base verb array.
+        \return The size in elements of the internal base array.
+
+        This is an inline function intended for testing. This should normally not be used.
+        For testing, a subclass that returns this value can be created to verify that the
+        length matches the enum values, etc.
+    */
+    static int _getBaseListSize() {return G_N_ELEMENTS(_base_verbs);}
+
 }; /* Verb class */
 
 

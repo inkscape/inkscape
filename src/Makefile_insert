@@ -345,4 +345,5 @@ inkscape_version.h: ../configure.ac
 
 test_all_includes = \
 		attributes-test.h	\
-		color-profile-test.h
+		color-profile-test.h	\
+		verbs-test.h

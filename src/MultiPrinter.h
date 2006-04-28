@@ -50,7 +50,6 @@ public:
 
     virtual ~MultiPrinter()
     {
-        std::cout << "CLOSING OUT TEST" << std::endl;
         _xmlFile.close();
         _logFile.close();
     }
