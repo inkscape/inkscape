@@ -29,6 +29,7 @@
 #include "document.h"
 #include "style.h"
 #include "attributes.h"
+#include "sp-item-transform.h"
 
 #include "sp-root.h"
 #include "sp-use.h"
@@ -519,6 +520,19 @@ void SPGroup::_updateLayerMode(unsigned int display_key) {
 			NRArenaGroup *arena_group=NR_ARENA_GROUP(view->arenaitem);
 			if (arena_group) {
 				nr_arena_group_set_transparent(arena_group, effectiveLayerMode(view->key) == SPGroup::LAYER);
+			}
+		}
+	}
+}
+
+void SPGroup::translateChildItems(NR::translate const &tr)
+{
+	if (this->hasChildren())
+	{
+		SPObject *o = NULL;
+		for (o = sp_object_first_child(SP_OBJECT(this)) ; o != NULL ; o = SP_OBJECT_NEXT(o) ) {
+			if (SP_IS_ITEM (o)) {
+				sp_item_move_rel(static_cast<SPItem *>(o), tr);
 			}
 		}
 	}

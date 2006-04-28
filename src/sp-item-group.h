@@ -24,6 +24,8 @@
 
 class CGroup;
 
+namespace NR{ struct translate; }
+
 struct SPGroup : public SPItem {
 	enum LayerMode { GROUP, LAYER };
 
@@ -43,6 +45,7 @@ struct SPGroup : public SPItem {
 
 	LayerMode layerDisplayMode(unsigned int display_key) const;
 	void setLayerDisplayMode(unsigned int display_key, LayerMode mode);
+	void translateChildItems(NR::translate const &tr);
 
     CGroup *group;
 

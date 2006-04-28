@@ -52,7 +52,7 @@
 #include "prefs-utils.h"
 #include "libavoid/router.h"
 #include "libnr/nr-rect.h"
-#include "sp-item-transform.h"
+#include "sp-item-group.h"
 
 #include "display/nr-arena-item.h"
 
@@ -499,7 +499,7 @@ void SPDocument::fitToRect(NRRect const & rect)
     sp_document_set_height(this, h, &unit);
 
     NR::translate tr = NR::translate::translate(-rect.x0,-(rect.y0 + (h - old_height)));
-    sp_item_move_rel((SPItem *) root, tr);
+    static_cast<SPGroup *>(root)->translateChildItems(tr);
 }
 
 void sp_document_set_uri(SPDocument *document, gchar const *uri)
