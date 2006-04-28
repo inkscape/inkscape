@@ -185,6 +185,7 @@ public:
      */
     typedef enum
         {
+        //primitives
         TOK_NOP = 0,
         TOK_STR,
         TOK_INT,
@@ -267,7 +268,6 @@ public:
     Token()
         {
         type     = TOK_NOP;
-        stype    = "nop";
         ival     = 0L;
         dval     = 0.0;
         }
@@ -278,7 +278,6 @@ public:
     Token(const Token &other)
         {
         type     = other.type;
-        stype    = other.stype;
         sval     = other.sval;
         ival     = other.ival;
         dval     = other.dval;
@@ -295,6 +294,11 @@ public:
      */
     virtual int getType()
         { return type; }
+    /**
+     *  Return the enumerated TokenType of this token
+     *  (in the .cpp file)
+     */
+    virtual DOMString getTypeString();
 
     /**
      *  Let this token execute itself on the given stack,
@@ -308,7 +312,8 @@ public:
      */
     virtual void dump()
         {
-        printf("%s %s %f %ld\n", stype, sval.c_str(), dval, ival);
+        printf("%s %s %f %ld\n",
+            getTypeString().c_str(), sval.c_str(), dval, ival);
         }
 
     //treat the token like an union of string, integer, and double
@@ -321,12 +326,12 @@ public:
     /**
      * Integer value
      */
-    long      ival;
+    long ival;
 
     /**
      * Double value;
      */
-    double    dval;
+    double dval;
 
 protected:
 
@@ -335,10 +340,6 @@ protected:
      */
     int type;
 
-    /**
-     * String type
-     */
-    char *stype;
 
 private:
 
@@ -362,7 +363,6 @@ public:
     TokStr(const DOMString &val)
         {
         type = TOK_STR;
-        stype = "str";
         sval = val;
         }
     virtual bool execute(Stack &stack)
@@ -380,7 +380,6 @@ public:
     TokFloat(double val)
         {
         type = TOK_FLOAT;
-        stype = "float";
         dval = val;
         }
     virtual bool execute(Stack &stack)
@@ -398,7 +397,6 @@ public:
     TokInt(long val)
         {
         type = TOK_INT;
-        stype = "int";
         ival = val;
         }
     virtual bool execute(Stack &stack)
@@ -416,7 +414,6 @@ public:
     TokAnd()
         {
         type = TOK_AND;
-        stype = "and";
         }
     virtual bool execute(Stack &stack)
         {
@@ -434,7 +431,6 @@ public:
     TokOr()
         {
         type = TOK_OR;
-        stype = "or";
         }
     virtual bool execute(Stack &stack)
         {
@@ -452,7 +448,6 @@ public:
     TokMod()
         {
         type = TOK_MOD;
-        stype = "mod";
         }
     virtual bool execute(Stack &stack)
         {
@@ -470,7 +465,6 @@ public:
     TokDiv()
         {
         type = TOK_DIV;
-        stype = "div";
         }
     virtual bool execute(Stack &stack)
         {
@@ -488,7 +482,6 @@ public:
     TokMul()
         {
         type = TOK_MULTIPLY;
-        stype = "mul";
         }
     virtual bool execute(Stack &stack)
         {
@@ -506,7 +499,6 @@ public:
     TokPlus()
         {
         type = TOK_PLUS;
-        stype = "plus";
         }
     virtual bool execute(Stack &stack)
         {
@@ -524,7 +516,6 @@ public:
     TokMinus()
         {
         type = TOK_MINUS;
-        stype = "minus";
         }
     virtual bool execute(Stack &stack)
         {
@@ -542,7 +533,6 @@ public:
     TokNeg()
         {
         type = TOK_NEG;
-        stype = "neg";
         }
     virtual bool execute(Stack &stack)
         {
@@ -560,7 +550,6 @@ public:
     TokEquals()
         {
         type = TOK_EQUALS;
-        stype = "equals";
         }
     virtual bool execute(Stack &stack)
         {
@@ -578,7 +567,6 @@ public:
     TokNotEquals()
         {
         type = TOK_NOT_EQUALS;
-        stype = "neq";
         }
     virtual bool execute(Stack &stack)
         {
@@ -596,7 +584,6 @@ public:
     TokLessThanEquals()
         {
         type = TOK_LESS_THAN_EQUALS;
-        stype = "lt_eq";
         }
     virtual bool execute(Stack &stack)
         {
@@ -614,7 +601,6 @@ public:
     TokLessThan()
         {
         type = TOK_LESS_THAN;
-        stype = "lt";
         }
     virtual bool execute(Stack &stack)
         {
@@ -632,7 +618,6 @@ public:
     TokGreaterThanEquals()
         {
         type = TOK_GREATER_THAN_EQUALS;
-        stype = "gt";
         }
     virtual bool execute(Stack &stack)
         {
@@ -650,7 +635,6 @@ public:
     TokGreaterThan()
         {
         type = TOK_GREATER_THAN;
-        stype = "gt_eq";
         }
     virtual bool execute(Stack &stack)
         {
@@ -673,7 +657,6 @@ public:
     TokAbsolute()
         {
         type = TOK_ABSOLUTE;
-        stype = "absolute";
         }
     virtual bool execute(Stack &stack)
         {
@@ -687,7 +670,6 @@ public:
     TokRelative()
         {
         type = TOK_RELATIVE;
-        stype = "relative";
         }
     virtual bool execute(Stack &stack)
         {
@@ -701,7 +683,6 @@ public:
     TokStep()
         {
         type = TOK_STEP;
-        stype = "step";
         }
     virtual bool execute(Stack &stack)
         {
@@ -715,7 +696,6 @@ public:
     TokNameTest(const DOMString &name)
         {
         type  = TOK_NAME_TEST;
-        stype = "step";
         sval  = name;
         }
     virtual bool execute(Stack &stack)
@@ -730,7 +710,6 @@ public:
     TokExpr()
         {
         type = TOK_EXPR;
-        stype = "token";
         }
     virtual bool execute(Stack &stack)
         {
@@ -744,7 +723,6 @@ public:
     TokUnion()
         {
         type = TOK_UNION;
-        stype = "union";
         }
     virtual bool execute(Stack &stack)
         {
@@ -766,7 +744,6 @@ public:
     TokAxisAncestorOrSelf()
         {
         type = TOK_AXIS_ANCESTOR_OR_SELF;
-        stype = "axis-ancestor-or-self";
         }
     virtual bool execute(Stack &stack)
         {
@@ -780,7 +757,6 @@ public:
     TokAxisAncestor()
         {
         type = TOK_AXIS_ANCESTOR;
-        stype = "axis-ancestor";
         }
     virtual bool execute(Stack &stack)
         {
@@ -794,7 +770,6 @@ public:
     TokAxisAttribute()
         {
         type = TOK_AXIS_ATTRIBUTE;
-        stype = "axis-attribute";
         }
     virtual bool execute(Stack &stack)
         {
@@ -808,7 +783,6 @@ public:
     TokAxisChild()
         {
         type = TOK_AXIS_CHILD;
-        stype = "axis-child";
         }
     virtual bool execute(Stack &stack)
         {
@@ -822,7 +796,6 @@ public:
     TokAxisDescendantOrSelf()
         {
         type = TOK_AXIS_DESCENDANT_OR_SELF;
-        stype = "axis-descendant-or-self";
         }
     virtual bool execute(Stack &stack)
         {
@@ -836,7 +809,6 @@ public:
     TokAxisDescendant()
         {
         type = TOK_AXIS_DESCENDANT;
-        stype = "axis-descendant";
         }
     virtual bool execute(Stack &stack)
         {
@@ -850,7 +822,6 @@ public:
     TokAxisFollowingSibling()
         {
         type = TOK_AXIS_FOLLOWING_SIBLING;
-        stype = "axis-following-sibling";
         }
     virtual bool execute(Stack &stack)
         {
@@ -864,7 +835,6 @@ public:
     TokAxisFollowing()
         {
         type = TOK_AXIS_FOLLOWING;
-        stype = "axis-following";
         }
     virtual bool execute(Stack &stack)
         {
@@ -878,7 +848,6 @@ public:
     TokAxisNamespace()
         {
         type = TOK_AXIS_NAMESPACE;
-        stype = "axis-namespace";
         }
     virtual bool execute(Stack &stack)
         {
@@ -892,7 +861,6 @@ public:
     TokAxisParent()
         {
         type = TOK_AXIS_PARENT;
-        stype = "axis-parent";
         }
     virtual bool execute(Stack &stack)
         {
@@ -906,7 +874,6 @@ public:
     TokAxisPrecedingSibling()
         {
         type = TOK_AXIS_PRECEDING_SIBLING;
-        stype = "axis-preceding-sibling";
         }
     virtual bool execute(Stack &stack)
         {
@@ -920,7 +887,6 @@ public:
     TokAxisPreceding()
         {
         type = TOK_AXIS_PRECEDING;
-        stype = "axis-preceding";
         }
     virtual bool execute(Stack &stack)
         {
@@ -934,7 +900,6 @@ public:
     TokAxisSelf()
         {
         type = TOK_AXIS_SELF;
-        stype = "axis-self";
         }
     virtual bool execute(Stack &stack)
         {
@@ -954,7 +919,6 @@ public:
     TokFuncLast()
         {
         type = TOK_FUNC_LAST;
-        stype = "func-last";
         }
     virtual bool execute(Stack &stack)
         {
@@ -968,7 +932,6 @@ public:
     TokFuncPosition()
         {
         type = TOK_FUNC_POSITION;
-        stype = "func-position";
         }
     virtual bool execute(Stack &stack)
         {
@@ -982,7 +945,6 @@ public:
     TokFuncCount()
         {
         type = TOK_FUNC_COUNT;
-        stype = "func-count";
         }
     virtual bool execute(Stack &stack)
         {
@@ -996,7 +958,6 @@ public:
     TokFuncId()
         {
         type = TOK_FUNC_ID;
-        stype = "func-id";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1010,7 +971,6 @@ public:
     TokFuncLocalName()
         {
         type = TOK_FUNC_LOCAL_NAME;
-        stype = "func-local-name";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1024,7 +984,6 @@ public:
     TokFuncNamespaceUri()
         {
         type = TOK_FUNC_NAMESPACE_URI;
-        stype = "func-namespace-uri";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1038,7 +997,6 @@ public:
     TokFuncName()
         {
         type = TOK_FUNC_NAME;
-        stype = "func-name";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1052,7 +1010,6 @@ public:
     TokFuncString()
         {
         type = TOK_FUNC_STRING;
-        stype = "func-string";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1066,7 +1023,6 @@ public:
     TokFuncConcat()
         {
         type = TOK_FUNC_CONCAT;
-        stype = "func-concat";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1080,7 +1036,6 @@ public:
     TokFuncStartsWith()
         {
         type = TOK_FUNC_STARTS_WITH;
-        stype = "func-starts-with";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1094,7 +1049,6 @@ public:
     TokFuncContains()
         {
         type = TOK_FUNC_CONTAINS;
-        stype = "func-contains";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1108,7 +1062,6 @@ public:
     TokFuncSubstringBefore()
         {
         type = TOK_FUNC_SUBSTRING_BEFORE;
-        stype = "func-substring-before";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1122,7 +1075,6 @@ public:
     TokFuncSubstringAfter()
         {
         type = TOK_FUNC_SUBSTRING_AFTER;
-        stype = "func-substring-after";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1136,7 +1088,6 @@ public:
     TokFuncSubstring()
         {
         type = TOK_FUNC_SUBSTRING;
-        stype = "func-substring";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1150,7 +1101,6 @@ public:
     TokFuncStringLength()
         {
         type = TOK_FUNC_STRING_LENGTH;
-        stype = "func-string-length";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1164,7 +1114,6 @@ public:
     TokFuncNormalizeSpace()
         {
         type = TOK_FUNC_NORMALIZE_SPACE;
-        stype = "func-normalize-space";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1178,7 +1127,6 @@ public:
     TokFuncTranslate()
         {
         type = TOK_FUNC_TRANSLATE;
-        stype = "func-translate";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1192,7 +1140,6 @@ public:
     TokFuncBoolean()
         {
         type = TOK_FUNC_BOOLEAN;
-        stype = "func-boolean";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1206,7 +1153,6 @@ public:
     TokFuncNot()
         {
         type = TOK_FUNC_NOT;
-        stype = "func-string-length";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1220,7 +1166,6 @@ public:
     TokFuncTrue()
         {
         type = TOK_FUNC_TRUE;
-        stype = "func-true";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1234,7 +1179,6 @@ public:
     TokFuncFalse()
         {
         type = TOK_FUNC_FALSE;
-        stype = "func-false";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1248,7 +1192,6 @@ public:
     TokFuncLang()
         {
         type = TOK_FUNC_LANG;
-        stype = "func-lang";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1262,7 +1205,6 @@ public:
     TokFuncNumber()
         {
         type = TOK_FUNC_NUMBER;
-        stype = "func-number";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1276,7 +1218,6 @@ public:
     TokFuncSum()
         {
         type = TOK_FUNC_SUM;
-        stype = "func-sum";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1290,7 +1231,6 @@ public:
     TokFuncFloor()
         {
         type = TOK_FUNC_FLOOR;
-        stype = "func-floor";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1304,7 +1244,6 @@ public:
     TokFuncCeiling()
         {
         type = TOK_FUNC_CEILING;
-        stype = "func-ceiling";
         }
     virtual bool execute(Stack &stack)
         {
@@ -1318,7 +1257,6 @@ public:
     TokFuncRound()
         {
         type = TOK_FUNC_ROUND;
-        stype = "func-round";
         }
     virtual bool execute(Stack &stack)
         {
