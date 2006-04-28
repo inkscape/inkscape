@@ -166,8 +166,6 @@ EXTRA_PROGRAMS =	\
 
 TESTS =	\
 	test-all$(EXEEXT)	\
-	dir-util-test$(EXEEXT)	\
-	extract-uri-test$(EXEEXT)	\
 	mod360-test$(EXEEXT)	\
 	round-test$(EXEEXT)	\
 	sp-gradient-test$(EXEEXT)	\
@@ -200,8 +198,6 @@ TESTS =	\
 
 check_PROGRAMS =	\
 	test-all	\
-	dir-util-test	\
-	extract-uri-test	\
 	mod360-test	\
 	round-test	\
 	sp-gradient-test	\

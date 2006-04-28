@@ -1,5 +1,12 @@
 2006-04-28  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/Makefile_insert, src/Makefile.am, src/dir-util-test.h,
+	  src/dir-util-test.cpp, src/extract-uri-test.h,
+	  src/extract-uri-test.cpp:
+	  Replaced two tests with CxxTest versions.
+
+2006-04-28  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/Makefile_insert, src/MultiPrinter.h, src/verbs.h,
 	  src/verbs-test.h:
 	  Adding unit test for verbs.
