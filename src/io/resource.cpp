@@ -53,6 +53,16 @@ Util::ptr_shared<char> get_path(Domain domain, Type type, char const *filename)
             }
             path = g_strdup(temp);
         } break;
+        case CREATE: {
+            gchar const* temp = 0;
+            switch (type) {
+                case GRADIENTS: temp = CREATE_GRADIENTSDIR; break;
+                case PALETTES: temp = CREATE_PALETTESDIR; break;
+                case PATTERNS: temp = CREATE_PATTERNSDIR; break;
+                default: g_assert_not_reached();
+            }
+            path = g_strdup(temp);
+        } break;
         case USER: {
             char const *name=NULL;
             switch (type) {

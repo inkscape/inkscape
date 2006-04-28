@@ -1,3 +1,12 @@
+2006-04-27  verbalshadow <verbalshadow@gmail.com>
+	
+	* src/io/resource.h, src/io/resource.cpp, 
+	  src/dialogs/swatches.cpp, src/helper/stock-items.cpp:
+	  Added CREATE v0.1 support for gradients/swatches/patterns
+	  Support for Linux & Win32. Mac support waiting final support
+	  Directory info.
+	  
+	
 2006-04-26  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/Makefile.am, src/MultiPrinter.h, src/PylogFormatter.h,

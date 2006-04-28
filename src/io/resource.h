@@ -41,6 +41,7 @@ enum Type {
 
 enum Domain {
     SYSTEM,
+    CREATE,
     USER
 };
 

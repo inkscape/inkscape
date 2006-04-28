@@ -95,11 +95,17 @@ sp_pattern_load_from_svg(gchar const *name, SPDocument *current_doc)
         if (Inkscape::IO::file_test(patterns, G_FILE_TEST_IS_REGULAR)) {
             doc = sp_document_new(patterns, FALSE);
         }
+        if (!doc) {
+        gchar *patterns = g_build_filename(CREATE_PATTERNSDIR, "/patterns.svg", NULL);
+        if (Inkscape::IO::file_test(patterns, G_FILE_TEST_IS_REGULAR)) {
+            doc = sp_document_new(patterns, FALSE);
+        }
         g_free(patterns);
         if (doc) {
             sp_document_ensure_up_to_date(doc);
         } else {
             edoc = TRUE;
+        }
         }
     }
     if (!edoc && doc) {
@@ -131,11 +137,17 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
         if (Inkscape::IO::file_test(gradients, G_FILE_TEST_IS_REGULAR)) {
             doc = sp_document_new(gradients, FALSE);
         }
+        if (!doc) {
+        gchar *gradients = g_build_filename(CREATE_GRADIENTSDIR, "/gradients.svg", NULL);
+        if (Inkscape::IO::file_test(gradients, G_FILE_TEST_IS_REGULAR)) {
+            doc = sp_document_new(gradients, FALSE);
+        }
         g_free(gradients);
         if (doc) {
             sp_document_ensure_up_to_date(doc);
         } else {
             edoc = TRUE;
+        }
         }
     }
     if (!edoc && doc) {
