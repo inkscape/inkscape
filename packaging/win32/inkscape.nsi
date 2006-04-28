@@ -70,10 +70,10 @@ ShowUninstDetails hide
 ; Language files
 !include "english.nsh" 
 ;!include "catalan.nsh" 
-;!include "czech.nsh" 
+!include "czech.nsh" 
 ;!include "french.nsh" 
 !include "german.nsh" 
-;!include "italian.nsh" 
+!include "italian.nsh" 
 ;!include "polish.nsh" 
 
 ReserveFile "inkscape.nsi.uninstall"
@@ -398,7 +398,15 @@ FunctionEnd
   SetOutPath $INSTDIR\locale
   File /nonfatal /a /r "..\..\inkscape\locale\${polng}"
   SetOutPath $INSTDIR\lib\locale
-  File /nonfatal /a /r "..\..\inkscape\lib\locale\${polng}" 
+  File /nonfatal /a /r "..\..\inkscape\lib\locale\${polng}"
+  ; the keyboard tables
+  SetOutPath $INSTDIR\share\screens
+  File /nonfatal /a /r "..\..\inkscape\share\screens\keys.${polng}.svg"  
+  SetOutPath $INSTDIR\share\templates
+  File /nonfatal /a /r "..\..\inkscape\share\templates\default.${polng}.svg"  
+  SetOutPath $INSTDIR\doc
+  File /nonfatal /a /r "..\..\inkscape\doc\keys.${polng}.xml"  
+  File /nonfatal /a /r "..\..\inkscape\doc\keys.${polng}.html"  
   SectionGetFlags ${SecTutorials} $R1 
   IntOp $R1 $R1 & ${SF_SELECTED} 
   IntCmp $R1 ${SF_SELECTED} 0 skip_tutorials 
@@ -483,8 +491,13 @@ Section $(lng_Core) SecCore
   File /nonfatal /a /r "..\..\inkscape\doc"
   File /nonfatal /a /r "..\..\inkscape\plugins"
   File /nonfatal /a /r /x *.??*.???* /x "examples" /x "tutorials" "..\..\inkscape\share"
+  ; this file is added because it slips through the filter
+  SetOutPath $INSTDIR\share\clipart
+  File /a "..\..\inkscape\share\clipart\inkscape.logo.svg"
   SetOutPath $INSTDIR\modules
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
+  SetOutPath $INSTDIR\python
+  File /nonfatal /a /r "..\..\inkscape\python\*.*"
 
   
 SectionEnd
