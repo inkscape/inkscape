@@ -52,14 +52,14 @@ private:
     Gtk::VBox   _b2;
     Gtk::HBox   _b3;
     Gtk::HBox   _b4;
-    Gtk::Label  _l1;
-    Gtk::Label  _l2;
+    Gtk::Label  _label;
+    Gtk::Label  _label_id;
     Gtk::Button _but;
     Gtk::Label  _m;
-    Gtk::Adjustment _a;
-    Gtk::SpinButton _e;
+    Gtk::Adjustment _adjustment;
+    Gtk::SpinButton _spin_button;
 
-    GtkWidget *_u;
+    GtkWidget *_unit_selector;
     bool _mode;
     gdouble _oldpos;
 };

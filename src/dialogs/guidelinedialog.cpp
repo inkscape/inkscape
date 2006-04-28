@@ -39,14 +39,14 @@ namespace Dialogs {
 
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
-  _a(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),
-  _u(NULL), _mode(true), _oldpos(0.0)
+  _adjustment(0.0, -SP_DESKTOP_SCROLL_LIMIT, SP_DESKTOP_SCROLL_LIMIT, 1.0, 10.0, 10.0),
+  _unit_selector(NULL), _mode(true), _oldpos(0.0)
 {
 }
 
 GuidelinePropertiesDialog::~GuidelinePropertiesDialog() {
-    if ( NULL != _u) {
-        //g_free(_u);
+    if ( NULL != _unit_selector) {
+        //g_free(_unit_selector);
     }
 }
 
@@ -74,8 +74,8 @@ void GuidelinePropertiesDialog::_modeChanged()
 
 void GuidelinePropertiesDialog::_onApply()
 {
-    gdouble const raw_dist = _e.get_value();
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_u));
+    gdouble const raw_dist = _spin_button.get_value();
+    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector));
     gdouble const points = sp_units_get_pixels(raw_dist, unit);
     gdouble const newpos = ( _mode
                              ? points
@@ -140,13 +140,13 @@ void GuidelinePropertiesDialog::_setup() {
     _b3.set_spacing(4);
     _b2.pack_start(_b3, true, true, 0);
 
-    _l1.set_label("foo1");
-    _b3.pack_start(_l1, true, true, 0);
-    _l1.set_alignment(1.0, 0.5);
+    _label.set_label("foo1");
+    _b3.pack_start(_label, true, true, 0);
+    _label.set_alignment(1.0, 0.5);
 
-    _l2.set_label("foo2");
-    _b3.pack_start(_l2, true, true, 0);
-    _l2.set_alignment(0.0, 0.5);
+    _label_id.set_label("foo2");
+    _b3.pack_start(_label_id, true, true, 0);
+    _label_id.set_alignment(0.0, 0.5);
 
     _b4.set_homogeneous(false);
     _b4.set_spacing(4);
@@ -161,19 +161,19 @@ void GuidelinePropertiesDialog::_setup() {
 
     // unitmenu
     /* fixme: We should allow percents here too, as percents of the canvas size */
-    _u = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    sp_unit_selector_set_unit(SP_UNIT_SELECTOR(_u), _desktop->namedview->doc_units);
+    _unit_selector = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    sp_unit_selector_set_unit(SP_UNIT_SELECTOR(_unit_selector), _desktop->namedview->doc_units);
 
     // spinbutton
-    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(_u), GTK_ADJUSTMENT(_a.gobj()));
-    _e.configure(_a, 1.0 , 2);
-    _e.set_numeric(TRUE);
-    _b4.pack_start(_e, true, true, 0);
-    gtk_signal_connect_object(GTK_OBJECT(_e.gobj()), "activate",
+    sp_unit_selector_add_adjustment(SP_UNIT_SELECTOR(_unit_selector), GTK_ADJUSTMENT(_adjustment.gobj()));
+    _spin_button.configure(_adjustment, 1.0 , 2);
+    _spin_button.set_numeric(TRUE);
+    _b4.pack_start(_spin_button, true, true, 0);
+    gtk_signal_connect_object(GTK_OBJECT(_spin_button.gobj()), "activate",
                               GTK_SIGNAL_FUNC(gtk_window_activate_default),
                               gobj());
 
-    gtk_box_pack_start(GTK_BOX(_b4.gobj()), _u, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(_b4.gobj()), _unit_selector, FALSE, FALSE, 0);
 
 
     // dialog
@@ -186,15 +186,19 @@ void GuidelinePropertiesDialog::_setup() {
         gchar *guide_description = sp_guide_description(_guide);
         gchar *label = g_strdup_printf(_("Move %s"), guide_description);
         g_free(guide_description);
-        _l1.set_label(label);
+        _label.set_label(label);
         g_free(label);
+
+        Inkscape::XML::Node *repr = SP_OBJECT_REPR (_guide);
+        const gchar *guide_id = repr->attribute("id");
+        _label_id.set_label(guide_id);
     }
 
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_u));
+    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(_unit_selector));
     gdouble const val = sp_pixels_get_units(_oldpos, unit);
-    _e.set_value(val);
-    _e.grab_focus();
-    _e.select_region(0, 20);
+    _spin_button.set_value(val);
+    _spin_button.grab_focus();
+    _spin_button.select_region(0, 20);
     set_position(Gtk::WIN_POS_MOUSE);
 
     show_all_children();
