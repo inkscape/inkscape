@@ -6,6 +6,7 @@ src/application/editor.cpp
 src/arc-context.cpp
 src/attributes.cpp
 src/color.cpp
+src/conditions.cpp
 src/connector-context.cpp
 src/context-fns.cpp
 src/desktop-affine.cpp
@@ -21,6 +22,7 @@ src/dialogs/filedialog-win32.cpp
 src/dialogs/filedialog.cpp
 src/dialogs/fill-style.cpp
 src/dialogs/find.cpp
+src/dialogs/guidelinedialog.cpp
 src/dialogs/iconpreview.cpp
 src/dialogs/in-dt-coordsys.cpp
 src/dialogs/item-properties.cpp
@@ -228,6 +230,7 @@ src/sp-shape.cpp
 src/sp-spiral.cpp
 src/sp-star.cpp
 src/sp-symbol.cpp
+src/sp-switch.cpp
 src/sp-text.cpp
 src/sp-use-reference.cpp
 src/sp-use.cpp

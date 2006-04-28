@@ -36,9 +36,6 @@ namespace Dialogs {
 LayerPropertiesDialog::LayerPropertiesDialog()
 : _strategy(NULL), _desktop(NULL), _layer(NULL), _position_visible(false)
 {
-    GtkWidget *dlg = GTK_WIDGET(gobj());
-    g_assert(dlg);
-
     Gtk::VBox *mainVBox = get_vbox();
 
     _layout_table.set_spacings(4);
