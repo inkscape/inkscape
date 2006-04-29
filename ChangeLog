@@ -1,5 +1,9 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/ui/view/view.cpp: add missing unref
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/gc-anchored.cpp, src/gc-anchored.h:
 
 	  added refcount logging to GC::Anchored

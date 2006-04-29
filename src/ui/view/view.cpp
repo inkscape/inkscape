@@ -97,6 +97,7 @@ void View::_close() {
     if (_doc) {
         _document_uri_set_connection.disconnect();
         _document_resized_connection.disconnect();
+        sp_document_unref(_doc);
         _doc = 0;
     }
     
