@@ -60,7 +60,7 @@ for reffing it if they need to hold onto it.  Similarly, you shouldn't try to
 make the decision to unref it for them.
 
 When you've unreffed the last ref you know about, you should generally
-assume that the object is now gone.
+assume that the object is now gone forever.
 
 CIRCULAR REFERENCES
 
