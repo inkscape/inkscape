@@ -422,6 +422,10 @@ void Inkscape::SelTrans::stamp()
 
             sp_item_write_transform(copy_item, copy_repr, *new_affine);
 
+            if (copy_item->isCenterSet()) {
+                copy_item->setCenter(_center * _current);
+            }
+
             Inkscape::GC::release(copy_repr);
             l = l->next;
         }
