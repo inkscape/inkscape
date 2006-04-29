@@ -21,6 +21,9 @@
 #include "xml/node-fns.h"
 #include "xml/repr.h"
 #include "debug/event-tracker.h"
+#include "debug/simple-event.h"
+#include "util/share.h"
+#include "util/format.h"
 
 namespace Inkscape {
 
@@ -56,203 +59,103 @@ Util::ptr_shared<char> stringify_node(Node const &node) {
     return result;
 }
 
-Util::ptr_shared<char> stringify_unsigned(unsigned n) {
-    gchar *string = g_strdup_printf("%u", n);
-    Util::ptr_shared<char> result=Util::share_string(string);
-    g_free(string);
-    return result;
-}
+typedef Debug::SimpleEvent<Debug::Event::XML> DebugXML;
 
-}
+class DebugXMLNode : public DebugXML {
+public:
+    DebugXMLNode(Node const &node, Util::ptr_shared<char> name)
+    : DebugXML(name)
+    {
+        _addProperty("node", stringify_node(node));
+    }
+};
 
-class DebugAddChild : public Debug::Event {
+class DebugAddChild : public DebugXMLNode {
 public:
     DebugAddChild(Node const &node, Node const &child, Node const *prev)
-    : _parent(stringify_node(node)),
-      _child(stringify_node(child)),
-      _position(prev ? prev->position() + 1 : 0)
-    {}
-
-    static Category category() { return XML; }
-
-    Util::ptr_shared<char> name() const {
-        return Util::share_static_string("add-child");
-    }
-    unsigned propertyCount() const { return 3; }
-    PropertyPair property(unsigned i) const {
-        switch (i) {
-        case 0:
-            return PropertyPair("parent", _parent);
-        case 1:
-            return PropertyPair("child", _child);
-        case 2:
-            return PropertyPair("position", stringify_unsigned(_position));
-        default:
-            return PropertyPair();
-        }
-    }
-private:
-    Util::ptr_shared<char> _parent;
-    Util::ptr_shared<char> _child;
-    unsigned _position;
-};
-
-class DebugRemoveChild : public Debug::Event {
-public:
-    DebugRemoveChild(Node const &node, Node const &child, Node const *prev)
-    : _parent(stringify_node(node)),
-      _child(stringify_node(child))
-    {}
-
-    static Category category() { return XML; }
-
-    Util::ptr_shared<char> name() const {
-        return Util::share_static_string("remove-child");
-    }
-    unsigned propertyCount() const { return 2; }
-    PropertyPair property(unsigned i) const {
-        switch (i) {
-        case 0:
-            return PropertyPair("parent", _parent);
-        case 1:
-            return PropertyPair("child", _child);
-        default:
-            return PropertyPair();
-        }
-    }
-private:
-    Util::ptr_shared<char> _parent;
-    Util::ptr_shared<char> _child;
-};
-
-class DebugSetChildPosition : public Debug::Event {
-public:
-    DebugSetChildPosition(Node const &node, Node const &child, Node const *old_prev, Node const *new_prev)
-    : _parent(stringify_node(node)),
-      _child(stringify_node(child))
+    : DebugXMLNode(node, Util::share_static_string("add-child"))
     {
-        unsigned old_position = ( old_prev ? old_prev->position() : 0 );
-        _position = ( new_prev ? new_prev->position() : 0 );
-        if ( _position > old_position ) {
-            --_position;
-        }
+        _addProperty("child", stringify_node(child));
+        _addProperty("position", Util::format("%d", ( prev ? prev->position() + 1 : 0 )));
     }
-
-    static Category category() { return XML; }
-
-    Util::ptr_shared<char> name() const {
-        return Util::share_static_string("set-child-position");
-    }
-    unsigned propertyCount() const { return 3; }
-    PropertyPair property(unsigned i) const {
-        switch (i) {
-        case 0:
-            return PropertyPair("parent", _parent);
-        case 1:
-            return PropertyPair("child", _child);
-        case 2:
-            return PropertyPair("position", stringify_unsigned(_position));
-        default:
-            return PropertyPair();
-        }
-    }
-private:
-    Util::ptr_shared<char> _parent;
-    Util::ptr_shared<char> _child;
-    unsigned _position;
 };
 
-class DebugSetContent : public Debug::Event {
+class DebugRemoveChild : public DebugXMLNode {
+public:
+    DebugRemoveChild(Node const &node, Node const &child)
+    : DebugXMLNode(node, Util::share_static_string("remove-child"))
+    {
+        _addProperty("child", stringify_node(child));
+    }
+};
+
+class DebugSetChildPosition : public DebugXMLNode {
+public:
+    DebugSetChildPosition(Node const &node, Node const &child,
+                          Node const *old_prev, Node const *new_prev)
+    : DebugXMLNode(node, Util::share_static_string("set-child-position"))
+    {
+        _addProperty("child", stringify_node(child));
+
+        unsigned old_position = ( old_prev ? old_prev->position() : 0 );
+        unsigned position = ( new_prev ? new_prev->position() : 0 );
+        if ( position > old_position ) {
+            --position;
+        }
+
+        _addProperty("position", Util::format("%d", position));
+    }
+};
+
+class DebugSetContent : public DebugXMLNode {
 public:
     DebugSetContent(Node const &node,
-                    Util::ptr_shared<char> old_content,
-                    Util::ptr_shared<char> new_content)
-    : _node(stringify_node(node)), _content(new_content) {}
-
-    static Category category() { return XML; }
-
-    Util::ptr_shared<char> name() const {
-        if (_content) {
-            return Util::share_static_string("set-content");
-        } else {
-            return Util::share_static_string("clear-content");
-        }
+                    Util::ptr_shared<char> content)
+    : DebugXMLNode(node, Util::share_static_string("set-content"))
+    {
+        _addProperty("content", content);
     }
-    unsigned propertyCount() const {
-        if (_content) {
-            return 2;
-        } else {
-            return 1;
-        }
-    }
-    PropertyPair property(unsigned i) const {
-        switch (i) {
-        case 0:
-            return PropertyPair("node", _node);
-        case 1:
-            return PropertyPair("content", _content);
-        default:
-            return PropertyPair();
-        }
-    }
-private:
-    Util::ptr_shared<char> _node;
-    Util::ptr_shared<char> _content;
 };
 
-class DebugSetAttribute : public Debug::Event {
+class DebugClearContent : public DebugXMLNode {
 public:
-    DebugSetAttribute(Node const &node, GQuark name,
-                      Util::ptr_shared<char> old_value,
-                      Util::ptr_shared<char> new_value)
-    : _node(stringify_node(node)),
-      _name(Util::share_unsafe(g_quark_to_string(name))),
-      _value(new_value) {}
-
-    static Category category() { return XML; }
-
-    Util::ptr_shared<char> name() const {
-        if (_value) {
-            return Util::share_static_string("set-attribute");
-        } else {
-            return Util::share_static_string("clear-attribute");
-        }
-    }
-    unsigned propertyCount() const {
-        if (_value) {
-            return 3;
-        } else {
-            return 2;
-        }
-    }
-    PropertyPair property(unsigned i) const {
-        switch (i) {
-        case 0:
-            return PropertyPair("node", _node);
-        case 1:
-            return PropertyPair("name", _name);
-        case 2:
-            return PropertyPair("value", _value);
-        default:
-            return PropertyPair();
-        }
-    }
-
-private:
-    Util::ptr_shared<char> _node;
-    Util::ptr_shared<char> _name;
-    Util::ptr_shared<char> _value;
+    DebugClearContent(Node const &node)
+    : DebugXMLNode(node, Util::share_static_string("clear-content"))
+    {}
 };
 
-using Inkscape::Util::ptr_shared;
-using Inkscape::Util::share_string;
-using Inkscape::Util::share_unsafe;
-using Inkscape::Util::share_static_string;
-using Inkscape::Util::List;
-using Inkscape::Util::MutableList;
-using Inkscape::Util::cons;
-using Inkscape::Util::rest;
-using Inkscape::Util::set_rest;
+class DebugSetAttribute : public DebugXMLNode {
+public:
+    DebugSetAttribute(Node const &node,
+                      GQuark name,
+                      Util::ptr_shared<char> value)
+    : DebugXMLNode(node, Util::share_static_string("set-attribute"))
+    {
+        _addProperty("name", Util::share_static_string(g_quark_to_string(name)));
+        _addProperty("value", value);
+    }
+};
+
+class DebugClearAttribute : public DebugXMLNode {
+public:
+    DebugClearAttribute(Node const &node, GQuark name)
+    : DebugXMLNode(node, Util::share_static_string("clear-attribute"))
+    {
+        _addProperty("name", Util::share_static_string(g_quark_to_string(name)));
+    }
+};
+
+}
+
+using Util::ptr_shared;
+using Util::share_string;
+using Util::share_unsafe;
+using Util::share_static_string;
+using Util::List;
+using Util::MutableList;
+using Util::cons;
+using Util::rest;
+using Util::set_rest;
 
 SimpleNode::SimpleNode(int code)
 : Node(), _name(code), _attributes(), _child_count(0),
@@ -369,9 +272,12 @@ void SimpleNode::setContent(gchar const *content) {
     ptr_shared<char> old_content=_content;
     ptr_shared<char> new_content = ( content ? share_string(content) : ptr_shared<char>() );
 
-    Debug::EventTracker<DebugSetContent> tracker(
-        *this, old_content, new_content
-    );
+    Debug::EventTracker<> tracker;
+    if (new_content) {
+        tracker.set<DebugSetContent>(*this, new_content);
+    } else {
+        tracker.set<DebugClearContent>(*this);
+    }
 
     _content = new_content;
 
@@ -407,7 +313,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_in
     ptr_shared<char> new_value=ptr_shared<char>();
     if (value) {
         new_value = share_string(value);
-        tracker.set<DebugSetAttribute>(*this, key, old_value, new_value);
+        tracker.set<DebugSetAttribute>(*this, key, new_value);
         if (!existing) {
             if (ref) {
                 set_rest(ref, MutableList<AttributeRecord>(AttributeRecord(key, new_value)));
@@ -418,7 +324,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const is_in
             existing->value = new_value;
         }
     } else {
-        tracker.set<DebugSetAttribute>(*this, key, old_value, new_value);
+        tracker.set<DebugClearAttribute>(*this, key);
         if (existing) {
             if (ref) {
                 set_rest(ref, rest(existing));
@@ -513,7 +419,7 @@ void SimpleNode::removeChild(Node *child) {
 
     Node *ref = ( child != _first_child ? previous_node(child) : NULL );
 
-    Debug::EventTracker<DebugRemoveChild> tracker(*this, *child, ref);
+    Debug::EventTracker<DebugRemoveChild> tracker(*this, *child);
 
     Node *next = child->next();
     if (ref) {

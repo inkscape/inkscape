@@ -44,6 +44,9 @@
 #include "xml/repr.h"
 #include "xml/node-fns.h"
 #include "debug/event-tracker.h"
+#include "debug/simple-event.h"
+#include "util/share.h"
+#include "util/format.h"
 
 #include "algorithms/longest-common-suffix.h"
 using std::memcpy;
@@ -227,59 +230,34 @@ sp_object_finalize(GObject *object)
 
 namespace {
 
-Inkscape::Util::ptr_shared<char> stringify(SPObject *obj) {
-    char *temp=g_strdup_printf("%p", obj);
-    Inkscape::Util::ptr_shared<char> result=Inkscape::Util::share_string(temp);
-    g_free(temp);
-    return result;
-}
+namespace Debug = Inkscape::Debug;
+namespace Util = Inkscape::Util;
 
-Inkscape::Util::ptr_shared<char> stringify(unsigned n) {
-    char *temp=g_strdup_printf("%u", n);
-    Inkscape::Util::ptr_shared<char> result=Inkscape::Util::share_string(temp);
-    g_free(temp);
-    return result;
-}
+typedef Debug::SimpleEvent<Debug::Event::REFCOUNT> BaseRefCountEvent;
 
-class RefEvent : public Inkscape::Debug::Event {
+class RefCountEvent : public BaseRefCountEvent {
 public:
-    enum Type { REF, UNREF };
+    RefCountEvent(SPObject *object, int bias, Util::ptr_shared<char> name)
+    : BaseRefCountEvent(name)
+    {
+        _addProperty("object", Util::format("%p", object));
+        _addProperty("class", Util::share_static_string(g_type_name(G_TYPE_FROM_INSTANCE(object))));
+        _addProperty("new-refcount", Util::format("%d", G_OBJECT(object)->ref_count + bias));
+    }
+};
 
-    RefEvent(SPObject *object, Type type)
-        : _object(stringify(object)),
-          _class_name(Inkscape::Util::share_static_string(g_type_name(G_TYPE_FROM_INSTANCE(object)))),
-          _refcount(G_OBJECT(object)->ref_count),
-          _type(type)
+class RefEvent : public RefCountEvent {
+public:
+    RefEvent(SPObject *object)
+    : RefCountEvent(object, 1, Util::share_static_string("sp-object-ref"))
     {}
+};
 
-    static Category category() { return REFCOUNT; }
-
-    Inkscape::Util::ptr_shared<char> name() const {
-        if ( _type == REF) {
-            return Inkscape::Util::share_static_string("sp-object-ref");
-        } else {
-            return Inkscape::Util::share_static_string("sp-object-unref");
-        }
-    }
-    unsigned propertyCount() const { return 3; }
-    PropertyPair property(unsigned index) const {
-        switch (index) {
-            case 0:
-                return PropertyPair("object", _object);
-            case 1:
-                return PropertyPair("class", _class_name);
-            case 2:
-                return PropertyPair("new-refcount", stringify( _type == REF ? _refcount + 1 : _refcount - 1 ));
-            default:
-                return PropertyPair();
-        }
-    }
-
-private:
-    Inkscape::Util::ptr_shared<char> _object;
-    Inkscape::Util::ptr_shared<char> _class_name;
-    unsigned _refcount;
-    Type _type;
+class UnrefEvent : public RefCountEvent {
+public:
+    UnrefEvent(SPObject *object)
+    : RefCountEvent(object, -1, Util::share_static_string("sp-object-unref"))
+    {}
 };
 
 }
@@ -298,7 +276,7 @@ sp_object_ref(SPObject *object, SPObject *owner)
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
     g_return_val_if_fail(!owner || SP_IS_OBJECT(owner), NULL);
 
-    Inkscape::Debug::EventTracker<RefEvent> tracker(object, RefEvent::REF);
+    Inkscape::Debug::EventTracker<RefEvent> tracker(object);
     g_object_ref(G_OBJECT(object));
     return object;
 }
@@ -318,7 +296,7 @@ sp_object_unref(SPObject *object, SPObject *owner)
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
     g_return_val_if_fail(!owner || SP_IS_OBJECT(owner), NULL);
 
-    Inkscape::Debug::EventTracker<RefEvent> tracker(object, RefEvent::UNREF);
+    Inkscape::Debug::EventTracker<UnrefEvent> tracker(object);
     g_object_unref(G_OBJECT(object));
     return NULL;
 }

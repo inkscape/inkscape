@@ -1,5 +1,11 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/gc-anchored.cpp, src/xml/simple-node.cpp, src/sp-object.cpp:
+
+	  switch everyone to simpler debug event API
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/Makefile_insert, src/gc-finalized.cpp, src/gc-finalized.h:
 
 	  add finalizer logging
