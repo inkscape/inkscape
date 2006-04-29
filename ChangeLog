@@ -1,3 +1,13 @@
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/gc-anchored.cpp, src/gc-anchored.h:
+
+	  added refcount logging to GC::Anchored
+
+	* src/util/Makefile_insert, src/util/format.h:
+
+	  shared string printf
+
 2006-04-28  MenTaLguY  <mental@rydia.net>
 
     * src/sp-object.cpp: make refcount logging a little more useful

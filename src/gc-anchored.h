@@ -3,8 +3,7 @@
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
- *
- * Copyright (C) 2004 MenTaLguY
+ * * Copyright (C) 2004 MenTaLguY
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -50,22 +49,17 @@ namespace GC {
 
 class Anchored {
 public:
-    void anchor() const {
-        if (!_anchor) {
-            _anchor = _new_anchor();
-        }
-        _anchor->refcount++;
-    }
+    void anchor() const;
+    void release() const;
 
-    void release() const {
-        if (!--_anchor->refcount) {
-            _free_anchor(_anchor);
-            _anchor = NULL;
-        }
+    // for debugging
+    unsigned _anchored_refcount() const {
+        return ( _anchor ? _anchor->refcount : 0 );
     }
 
 protected:
     Anchored() : _anchor(NULL) { anchor(); } // initial refcount of one
+    virtual ~Anchored() {}
 
 private:
     struct Anchor : public Managed<SCANNED, MANUAL> {
