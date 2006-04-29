@@ -23,21 +23,77 @@
 #include "sp-radial-gradient-fns.h"
 #include "sp-pattern.h"
 #include "xml/repr.h"
+#include "xml/node-event-vector.h"
 #include "widgets/widget-sizes.h"
 #include "helper/units.h"
+#include "inkscape.h"
 
 enum {
     SS_FILL,
     SS_STROKE
 };
 
+static void style_swatch_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
+                                       gchar const *old_value, gchar const *new_value,
+                                       bool is_interactive, gpointer data)
+{
+    Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
+
+    if (!strcmp (name, "style")) { // FIXME: watching only for the style attr, no CSS attrs
+        SPCSSAttr *css = sp_repr_css_attr_inherited(repr, "style");
+        ss->setStyle (css);
+    }
+}
+
+
+static Inkscape::XML::NodeEventVector style_swatch_repr_events =
+{
+    NULL, /* child_added */
+    NULL, /* child_removed */
+    style_swatch_attr_changed,
+    NULL, /* content_changed */
+    NULL  /* order_changed */
+};
+
+
+static void style_swatch_tool_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
+                                       gchar const *old_value, gchar const *new_value,
+                                       bool is_interactive, gpointer data)
+{
+    Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
+
+    if (!strcmp (name, "usecurrent")) { // FIXME: watching only for the style attr, no CSS attrs
+        if (!strcmp (new_value, "1")) {
+            ss->setWatched (inkscape_get_repr(INKSCAPE, "desktop"));
+        } else {
+            ss->setWatched (inkscape_get_repr(INKSCAPE, ss->_tool_path));
+        }
+        // UGLY HACK: we have to reconnect to the watched tool repr again, retrieving it from the stored
+        // tool_path, because the actual repr keeps shifting with each change, no idea why
+        ss->setWatchedTool(ss->_tool_path, false); 
+    }
+}
+
+static Inkscape::XML::NodeEventVector style_swatch_tool_repr_events =
+{
+    NULL, /* child_added */
+    NULL, /* child_removed */
+    style_swatch_tool_attr_changed,
+    NULL, /* content_changed */
+    NULL  /* order_changed */
+};
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
 StyleSwatch::StyleSwatch(SPCSSAttr *css)
-    : _css (NULL),
+    : 
+      _tool_path(NULL),
+      _css (NULL),
+
+      _watched(NULL),
+      _watched_tool(NULL),
 
       _table(2, 6),
 
@@ -97,13 +153,74 @@ StyleSwatch::~StyleSwatch()
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
         delete _color_preview[i];
     }
+
+    if (_watched) {
+        sp_repr_remove_listener_by_data(_watched, this);
+        Inkscape::GC::release(_watched);
+        _watched = NULL;
+    }
+
+    if (_watched_tool) {
+        std::cout << " =============remove\n";
+        sp_repr_remove_listener_by_data(_watched_tool, this);
+        Inkscape::GC::release(_watched_tool);
+        _watched_tool = NULL;
+        _tool_path = NULL;
+    }
 }
+
+void
+StyleSwatch::setWatched(Inkscape::XML::Node *watched)
+{
+    if (_watched) {
+        sp_repr_remove_listener_by_data(_watched, this);
+        Inkscape::GC::release(_watched);
+        _watched = NULL;
+    }
+
+    if (watched) {
+        _watched = watched;
+        Inkscape::GC::anchor(_watched);
+        sp_repr_add_listener(_watched, &style_swatch_repr_events, this);
+        sp_repr_synthesize_events(_watched, &style_swatch_repr_events, this);
+    }
+}
+
+void
+StyleSwatch::setWatchedTool(const char *path, bool synthesize)
+{
+    if (_watched_tool) {
+        sp_repr_remove_listener_by_data(_watched_tool, this);
+        Inkscape::GC::release(_watched_tool);
+        _watched_tool = NULL;
+        _tool_path = NULL;
+    }
+
+    if (path) {
+        _tool_path = (char *) path;
+        Inkscape::XML::Node *watched_tool = inkscape_get_repr(INKSCAPE, path);
+        if (watched_tool) {
+            _watched_tool = watched_tool;
+            Inkscape::GC::anchor(_watched_tool);
+            sp_repr_add_listener(_watched_tool, &style_swatch_tool_repr_events, this);
+            if (synthesize) {
+                sp_repr_synthesize_events(_watched_tool, &style_swatch_tool_repr_events, this);
+            }
+        }
+    }
+
+}
+
 
 void
 StyleSwatch::setStyle(SPCSSAttr *css)
 {
     if (_css) 
         sp_repr_css_attr_unref (_css);
+
+    if (!css)
+        return;
+
     _css = sp_repr_css_attr_new();
     sp_repr_css_merge(_css, css);
 

@@ -29,13 +29,18 @@ class SPStyle;
 class SPCSSAttr;
 
 namespace Inkscape {
+namespace XML {
+class Node;
+}
+}
+
+namespace Inkscape {
 namespace UI {
 namespace Widget {
 
 class StyleSwatch : public Gtk::HBox
 {
 public:
-    StyleSwatch (SPStyle *style);
     StyleSwatch (SPCSSAttr *attr);
 
     ~StyleSwatch();
@@ -44,8 +49,16 @@ public:
     void setStyle(SPCSSAttr *attr);
     SPCSSAttr *getStyle();
 
+    void setWatched (Inkscape::XML::Node *watched);
+    void setWatchedTool (const char *path, bool synthesize);
+
+    char *_tool_path;
+
 protected:
     SPCSSAttr *_css;
+
+    Inkscape::XML::Node *_watched;
+    Inkscape::XML::Node *_watched_tool;
 
     Gtk::Table _table;
 
