@@ -124,7 +124,7 @@ SPDocument::~SPDocument() {
 
         if (root) {
             sp_object_invoke_release(root);
-            g_object_unref(G_OBJECT(root));
+            sp_object_unref(root);
             root = NULL;
         }
 

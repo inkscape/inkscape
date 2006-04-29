@@ -1,5 +1,11 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/document.cpp:
+	
+	  use proper unref function on SPRoot to avoid appearance of leak
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/gc-anchored.cpp, src/xml/simple-node.cpp, src/sp-object.cpp:
 
 	  switch everyone to simpler debug event API
