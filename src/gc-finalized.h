@@ -114,9 +114,7 @@ public:
 
 private:
     /// invoke the destructor for an object given a base and offset pair
-    static void _invoke_dtor(void *base, void *offset) {
-        _unoffset(base, offset)->~Finalized();
-    }
+    static void _invoke_dtor(void *base, void *offset);
 
     /// turn 'this' pointer into an offset-from-base-address (stored as void *)
     static void *_offset(void *base, Finalized *self) {
