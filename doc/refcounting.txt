@@ -32,7 +32,8 @@ from GC::Anchored -- more on that later).
 
 [ note: for code underneath the Inkscape namespace, you need only write
   GC::anchor(), but in other code you will need to write
-  Inkscape::GC::anchor(), or import the GC namespace with:
+  Inkscape::GC::anchor(), or import the GC namespace to your .cpp file
+  with:
 
     namespace GC = Inkscape::GC;
 
@@ -48,9 +49,8 @@ you're done with it.
 
 This means that during the lifetime of an object, there should be N refs
 and N+1 unrefs on it.  If these become unbalanced, then you are likely to
-experience either transient crashing bugs (since the object could get freed
-while someone is still using it) or memory leaks (the object is forgotten
-while it still has a nonzero refcount, so it is never freed).
+experience either transient crashing bugs (the object gets freed while
+someone is still using it) or memory leaks (the object never gets freed).
 
 As a rule, an object should be unreffed by the same class or compilation
 unit that reffed it.  Reffing or unreffing an object on someone else's behalf
