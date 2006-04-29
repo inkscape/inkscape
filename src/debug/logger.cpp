@@ -94,27 +94,27 @@ static void set_category_mask(bool * const mask, char const *filter) {
         while ( *end && *end != ',' ) { end++; }
         if ( start != end ) {
             struct CategoryName {
-                char const *name,
-                Event::Category category
+                char const *name;
+                Event::Category category;
             };
-            static const category_names[] = {
+            static const CategoryName category_names[] = {
                 { "CORE", Event::CORE },
                 { "XML", Event::XML },
                 { "SPOBJECT", Event::SPOBJECT },
                 { "DOCUMENT", Event::DOCUMENT },
-                { "REFCOUNT", Eevent::REFCOUNT },
+                { "REFCOUNT", Event::REFCOUNT },
                 { "EXTENSION", Event::EXTENSION },
                 { "OTHER", Event::OTHER },
                 { NULL, Event::OTHER }
             };
             CategoryName const *iter;
-            for ( iter = category_names ; iter.name ; iter++ ) {
-                if (equal_range(iter.name, start, end)) {
-                    mask[iter.category] = true;
+            for ( iter = category_names ; iter->name ; iter++ ) {
+                if (equal_range(iter->name, start, end)) {
+                    mask[iter->category] = true;
                     break;
                 }
             }
-            if (!iter.name) {
+            if (!iter->name) {
                 g_warning("Unknown debugging category %*s", end - start, start);
             }
         }

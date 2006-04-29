@@ -1,5 +1,11 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/debug/logger.cpp:
+	
+	finish interrupted refactoring of log filter configuration
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/doc/Makefile.am, src/doc/refcounting.txt:
 	
 	  some developer documentation about refcounting
