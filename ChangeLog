@@ -1,5 +1,12 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/ui/view/view.cpp:
+
+	  Wait a minute -- UI::View::View and SPDocument are both managed
+	  by the collector -- the view doesn't need to ref the document!
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/ui/view/view.cpp: add missing unref
 
 2006-04-29  MenTaLguY  <mental@rydia.net>
