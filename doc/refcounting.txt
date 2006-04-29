@@ -85,7 +85,7 @@ as it added and removed them.
 
 ANCHORED OBJECTS
 
-The garbage collector can see pointers in:
+As a rule of thumb, the garbage collector can see pointers in:
 
  * global/static variables in the program
 
@@ -108,8 +108,8 @@ It cannot see pointers in:
 Since a lot of important objects (e.g. gtkmm widgets or Glib collections)
 fall into the latter category, I've provided the GC::Anchored class from
 which garbage-collector managed classes can be derived if they may be
-remembered exclusively by such places.  As noted earlier, the associated
-ref and unref functions are GC::anchor() and GC::release(), respectively.
+remembered in such places.  As noted earlier, the associated ref and unref
+functions are GC::anchor() and GC::release(), respectively.
 
 For most refcounted objects, a nonzero refcount means "this object is in
 use", and a zero refcount means "this object is no longer in use, you can
