@@ -24,7 +24,7 @@ class AnchorEvent : public Debug::Event {
 public:
     enum Type { ANCHOR, RELEASE };
 
-    AnchorEvent(GC::Anchored const *object, Type type)
+    AnchorEvent(Anchored const *object, Type type)
     : _base(Util::format("%p", Core::base(const_cast<Anchored *>(object)))),
       _object(Util::format("%p", object)),
       _class_name(Util::share_static_string(typeid(*object).name())),
