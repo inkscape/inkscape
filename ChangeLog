@@ -1,3 +1,8 @@
+2006-04-28  MenTaLguY  <mental@rydia.net>
+
+    * src/sp-object.cpp: make refcount logging a little more useful
+	  by including the relevent class name
+
 2006-04-28  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/Makefile_insert, src/Makefile.am, src/dir-util-test.h,
