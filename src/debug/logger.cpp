@@ -93,19 +93,28 @@ static void set_category_mask(bool * const mask, char const *filter) {
     while (*end) {
         while ( *end && *end != ',' ) { end++; }
         if ( start != end ) {
-            if (equal_range("CORE", start, end)) {
-                mask[Event::CORE] = true;
-            } else if (equal_range("XML", start, end)) {
-                mask[Event::XML] = true;
-            } else if (equal_range("SPOBJECT", start, end)) {
-                mask[Event::SPOBJECT] = true;
-            } else if (equal_range("DOCUMENT", start, end)) {
-                mask[Event::DOCUMENT] = true;
-            } else if (equal_range("REFCOUNT", start, end)) {
-                mask[Event::REFCOUNT] = true;
-            } else if (equal_range("EXTENSION", start, end)) {
-                mask[Event::EXTENSION] = true;
-            } else {
+            struct CategoryName {
+                char const *name,
+                Event::Category category
+            };
+            static const category_names[] = {
+                { "CORE", Event::CORE },
+                { "XML", Event::XML },
+                { "SPOBJECT", Event::SPOBJECT },
+                { "DOCUMENT", Event::DOCUMENT },
+                { "REFCOUNT", Eevent::REFCOUNT },
+                { "EXTENSION", Event::EXTENSION },
+                { "OTHER", Event::OTHER },
+                { NULL, Event::OTHER }
+            };
+            CategoryName const *iter;
+            for ( iter = category_names ; iter.name ; iter++ ) {
+                if (equal_range(iter.name, start, end)) {
+                    mask[iter.category] = true;
+                    break;
+                }
+            }
+            if (!iter.name) {
                 g_warning("Unknown debugging category %*s", end - start, start);
             }
         }

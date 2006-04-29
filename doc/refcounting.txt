@@ -85,22 +85,31 @@ as it added and removed them.
 
 ANCHORED OBJECTS
 
-The garbage collector cannot know about references from some types of objects:
+The garbage collector can see pointers in:
 
- * Gtk/gtkmm widgets
+ * global/static variables in the program
 
- * SPObjects
+ * local variables/parameters
 
- * other GObject-derived types
+ * objects derived from GC::Managed<>
 
- * Glib data structures
+ * STL containers using GC::Alloc<>
 
- * STL data structures that don't use GC::Alloc
+ * objects manually allocated with GC::SCANNED
 
-To accomodate this, I've provided the GC::Anchored class from which
-garbage-collector managed classes can be derived if they need to be
-referenced from such places.  As noted earlier, ref and unref functions are
-GC::anchor() and GC::release(), respectively.
+It cannot see pointers in:
+
+ * global/static variables in shared libraries
+
+ * objects not derived from GC::Managed<>
+
+ * STL containers not using GC::Alloc<>
+
+Since a lot of important objects (e.g. gtkmm widgets or Glib collections)
+fall into the latter category, I've provided the GC::Anchored class from
+which garbage-collector managed classes can be derived if they may be
+remembered exclusively by such places.  As noted earlier, the associated
+ref and unref functions are GC::anchor() and GC::release(), respectively.
 
 For most refcounted objects, a nonzero refcount means "this object is in
 use", and a zero refcount means "this object is no longer in use, you can
