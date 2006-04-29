@@ -69,7 +69,7 @@ breaks down in the presence of objects that reference each other.  Common
 examples are elements in a doubly-linked list with "prev" and "next"
 pointers, and nodes in a tree, where a parent keeps a list of children, and
 children keep a pointer to their parent.  If both cases, if there is a "ref"
-in both directions, neither parent nor children can ever get freed.
+in both directions, neither object can ever get freed.
 
 Because of this, circular data structures should be avoided when possible.
 When they are necessary, try only "reffing" in one direction
