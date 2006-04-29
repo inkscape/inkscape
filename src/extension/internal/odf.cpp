@@ -1019,7 +1019,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 {
                 char buf[64];
                 snprintf(buf, 63, "Pictures/image%d%s",
-                    imageTable.size(), ext.c_str());
+                    (int)imageTable.size(), ext.c_str());
                 std::string newName = buf;
                 imageTable[oldName] = newName;
                 std::string comment = "old name was: ";
@@ -1117,7 +1117,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             if (!gradientMatch)
                 {
                 char buf[16];
-                snprintf(buf, 15, "gradient%d", gradientTable.size());
+                snprintf(buf, 15, "gradient%d", (int)gradientTable.size());
                 std::string gradientName = buf;
                 gi.name = gradientName;
                 gradientTable.push_back(gi);
@@ -1166,7 +1166,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             if (!styleMatch)
                 {
                 char buf[16];
-                snprintf(buf, 15, "style%d", styleTable.size());
+                snprintf(buf, 15, "style%d", (int)styleTable.size());
                 std::string styleName = buf;
                 si.name = styleName;
                 styleTable.push_back(si);
