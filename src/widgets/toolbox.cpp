@@ -35,6 +35,8 @@
 #include "widgets/spw-utilities.h"
 #include "widgets/spinbutton-events.h"
 
+#include "ui/widget/style-swatch.h"
+
 #include "prefs-utils.h"
 #include "verbs.h"
 #include "sp-namedview.h"
@@ -75,6 +77,8 @@ static GtkWidget *sp_star_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_arc_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_rect_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_spiral_toolbox_new(SPDesktop *desktop);
+static GtkWidget *sp_pencil_toolbox_new(SPDesktop *desktop);
+static GtkWidget *sp_pen_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_calligraphy_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_dropper_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
@@ -117,8 +121,8 @@ static struct {
     { "SPRectContext",   "rect_toolbox",   sp_rect_toolbox_new },
     { "SPArcContext",    "arc_toolbox",    sp_arc_toolbox_new },
     { "SPSpiralContext", "spiral_toolbox", sp_spiral_toolbox_new },
-    { "SPPencilContext", "pencil_toolbox", NULL },
-    { "SPPenContext", "pen_toolbox", NULL },
+    { "SPPencilContext", "pencil_toolbox", sp_pencil_toolbox_new },
+    { "SPPenContext", "pen_toolbox", sp_pen_toolbox_new },
     { "SPDynaDrawContext", "calligraphy_toolbox", sp_calligraphy_toolbox_new },
     { "SPTextContext",   "text_toolbox",   sp_text_toolbox_new },
     { "SPDropperContext", "dropper_toolbox", sp_dropper_toolbox_new },
@@ -1244,6 +1248,11 @@ sp_star_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_SPACING);
     }
 
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.shapes.star", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
 
@@ -1570,6 +1579,11 @@ sp_rect_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     }
 
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.shapes.rect", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+
     g_object_set_data(G_OBJECT(tbl), "single", GINT_TO_POINTER(TRUE));
     sp_rtb_sensitivize (tbl);
 
@@ -1813,6 +1827,11 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     }
 
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.shapes.spiral", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
 
@@ -1820,6 +1839,47 @@ sp_spiral_toolbox_new(SPDesktop *desktop)
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_spiral_toolbox_selection_changed), (GtkObject *)tbl))
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
+
+    return tbl;
+}
+
+//########################
+//##     Pen/Pencil    ##
+//########################
+
+
+static GtkWidget *
+sp_pen_toolbox_new(SPDesktop *desktop)
+{
+    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.freehand.pen", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+
+    gtk_widget_show_all(tbl);
+    sp_set_font_size_smaller (tbl);
+
+    return tbl;
+}
+
+static GtkWidget *
+sp_pencil_toolbox_new(SPDesktop *desktop)
+{
+    GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
+    gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
+    gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
+
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.freehand.pencil", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+
+    gtk_widget_show_all(tbl);
+    sp_set_font_size_smaller (tbl);
 
     return tbl;
 }
@@ -2053,24 +2113,11 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
     }
 
-/*
-     // Tablet features
-    {
-        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        GtkWidget *fscb = gtk_check_button_new_with_label(_("Tablet"));
-        gtk_widget_set_sensitive(GTK_WIDGET(fscb), TRUE);
 
-
-
-
-        gtk_tooltips_set_tip(tt, fscb, _("Enable/Disable drawing tablet features"), NULL);
-        gtk_widget_show(fscb);
-        gtk_object_set_data(GTK_OBJECT(tbl), "flat_checkbox", fscb);
-        gtk_container_add(GTK_CONTAINER(hb), fscb);
-
-        gtk_box_pack_start(GTK_BOX(tbl),hb, FALSE, FALSE, AUX_SPACING);
-    }
-*/
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.calligraphic", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
 
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
@@ -2420,6 +2467,11 @@ sp_arc_toolbox_new(SPDesktop *desktop)
         sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GtkObject *)tbl))
         );
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
+
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.shapes.arc", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
 
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
@@ -2988,10 +3040,17 @@ sp_text_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
         }
 
+*/
+
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.text", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+
     gtk_widget_show_all(tbl);
     sp_set_font_size_smaller (tbl);
 
-*/    return tbl;
+    return tbl;
 
 } // end of sp_text_toolbox_new()
 
