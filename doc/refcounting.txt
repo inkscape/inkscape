@@ -9,10 +9,11 @@ which is supposed to reflect the number of outstanding references to it.
 When that counter falls to zero, the object can be freed.
 
 This releases the programmer from worrying about having freed an object
-while somebody else is still using it.  Simply "ref" the object (increment
-the counter) when you first hold onto it, and "unref" it (decrement the
-counter) when you don't need it anymore.  The ultimate decision to free
-the object is made for you behind the scenes.
+while somebody else is still using it (or someone else freeing while
+you're using it!).  Simply "ref" the object (increment the counter) to
+stake your claim, and then "unref" it (decrement the counter) when you don't
+need it anymore.  The ultimate decision to free the object is made safely
+behind the scenes.
 
 You should "ref" an object whenever you plan to hold onto it while
 transferring control to another part of the code (which might otherwise
