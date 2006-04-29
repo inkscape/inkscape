@@ -30,6 +30,7 @@ public:
         DOCUMENT,
         REFCOUNT,
         EXTENSION,
+        FINALIZERS,
         OTHER
     };
     enum { N_CATEGORIES=OTHER+1 };

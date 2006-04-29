@@ -1,5 +1,9 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/debug/simple-event.h: make Debug::SimpleEvent more convenient
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/debug/logger.cpp:
 	
 	finish interrupted refactoring of log filter configuration
