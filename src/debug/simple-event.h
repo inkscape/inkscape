@@ -23,7 +23,11 @@ namespace Debug {
 template <Event::Category C=Event::OTHER>
 class SimpleEvent : public Event {
 public:
-    SimpleEvent(char const *name) : _name(Util::share_string(name)) {}
+    explicit SimpleEvent(Util::ptr_shared<char> name) : _name(name) {}
+    explicit SimpleEvent(char const *name) : _name(Util::share_string(name)) {}
+
+    // default copy
+    // default assign
 
     static Category category() { return C; }
 
@@ -34,80 +38,19 @@ public:
     }
 
 protected:
-    SimpleEvent(char const *name,
-                char const *attr0, char const *value0)
-    : _name(Util::share_string(name))
+    void _addProperty(Util::ptr_shared<char> name,
+                      Util::ptr_shared<char> value)
     {
-        _addProperty(attr0, value0);
-    }
-
-    SimpleEvent(char const *name,
-                char const *attr0, char const *value0,
-                char const *attr1, char const *value1)
-    : _name(Util::share_string(name))
-    {
-        _addProperty(attr0, value0);
-        _addProperty(attr1, value1);
-    }
-
-    SimpleEvent(char const *name,
-                char const *attr0, char const *value0,
-                char const *attr1, char const *value1,
-                char const *attr2, char const *value2)
-    : _name(Util::share_string(name))
-    {
-        _addProperty(attr0, value0);
-        _addProperty(attr1, value1);
-        _addProperty(attr2, value2);
-    }
-
-    SimpleEvent(char const *name,
-                char const *attr0, char const *value0,
-                char const *attr1, char const *value1,
-                char const *attr2, char const *value2,
-                char const *attr3, char const *value3)
-    : _name(Util::share_string(name))
-    {
-        _addProperty(attr0, value0);
-        _addProperty(attr1, value1);
-        _addProperty(attr2, value2);
-        _addProperty(attr3, value3);
-    }
-
-    SimpleEvent(char const *name,
-                char const *attr0, char const *value0,
-                char const *attr1, char const *value1,
-                char const *attr2, char const *value2,
-                char const *attr3, char const *value3,
-                char const *attr4, char const *value4)
-    : _name(Util::share_string(name))
-    {
-        _addProperty(attr0, value0);
-        _addProperty(attr1, value1);
-        _addProperty(attr2, value2);
-        _addProperty(attr3, value3);
-        _addProperty(attr4, value4);
-    }
-
-    SimpleEvent(char const *name,
-                char const *attr0, char const *value0,
-                char const *attr1, char const *value1,
-                char const *attr2, char const *value2,
-                char const *attr3, char const *value3,
-                char const *attr4, char const *value4,
-                char const *attr5, char const *value5)
-    : _name(Util::share_string(name))
-    {
-        _addProperty(attr0, value0);
-        _addProperty(attr1, value1);
-        _addProperty(attr2, value2);
-        _addProperty(attr3, value3);
-        _addProperty(attr4, value4);
-        _addProperty(attr5, value5);
-    }
-
-    void _addProperty(char const *name, char const *value) {
         _properties.push_back(PropertyPair(name, value));
+    }
+    void _addProperty(Util::ptr_shared<char> name, char const *value) {
+        _addProperty(name, Util::share_string(value));
+    }
+    void _addProperty(char const *name, Util::ptr_shared<char> value) {
+        _addProperty(Util::share_string(name), value);
+    }
+    void _addProperty(char const *name, char const *value) {
+        _addProperty(Util::share_string(name), Util::share_string(value));
     }
 
 private:
