@@ -2,6 +2,8 @@
 
 	* src/debug/simple-event.h: make Debug::SimpleEvent more convenient
 
+	* src/debug/event.h, src/debug/logger.cpp: add FINALIZERS category
+
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
 	* src/debug/logger.cpp:
