@@ -21,9 +21,9 @@ end up freeing the object out from under you).
 
 REFCOUNTING FUNCTIONS
 
-Ref and unref functions are provided to manipulate object counter (and make
-the final decision to free the object for you), but their names will vary
-depending on the type of object.
+Ref and unref functions are provided to manipulate an object's refcount
+(and perhaps make the final decision to free the object), but their names
+will vary depending on the type of object.
 
 Examples include g_object_ref()/g_object_unref() (for most GObject-based
 types), sp_object_ref()/sp_object_unref() (for SPObject-derived classes),
