@@ -1,5 +1,12 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/display/nr-arena-group.cpp, src/display/nr-arena-item.cpp,
+	  src/display/nr-arena-item.h, src/display/nr-arena-shape.cpp:
+
+	  rationalize function names and remove spurious soft_ptr
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/document.cpp:
 	
 	  use proper unref function on SPRoot to avoid appearance of leak

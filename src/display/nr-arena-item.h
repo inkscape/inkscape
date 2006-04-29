@@ -71,7 +71,7 @@ struct NRGC {
 };
 
 struct NRArenaItem : public NRObject {
-	Inkscape::GC::soft_ptr<NRArena> arena;
+	NRArena *arena;
 	Inkscape::GC::soft_ptr<NRArenaItem> parent;
 	NRArenaItem *next;
 	Inkscape::GC::soft_ptr<NRArenaItem> prev;
@@ -175,8 +175,8 @@ void nr_arena_item_set_order (NRArenaItem *item, int order);
 
 /* Helpers */
 
-NRArenaItem *nr_arena_item_attach_ref (NRArenaItem *parent, NRArenaItem *child, NRArenaItem *prev, NRArenaItem *next);
-NRArenaItem *nr_arena_item_detach_unref (NRArenaItem *parent, NRArenaItem *child);
+NRArenaItem *nr_arena_item_attach (NRArenaItem *parent, NRArenaItem *child, NRArenaItem *prev, NRArenaItem *next);
+NRArenaItem *nr_arena_item_detach (NRArenaItem *parent, NRArenaItem *child);
 
 #define NR_ARENA_ITEM_SET_DATA(i,v) (((NRArenaItem *) (i))->data = (v))
 #define NR_ARENA_ITEM_GET_DATA(i) (((NRArenaItem *) (i))->data)

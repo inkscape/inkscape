@@ -105,9 +105,9 @@ nr_arena_group_add_child (NRArenaItem *item, NRArenaItem *child, NRArenaItem *re
 	NRArenaGroup *group = NR_ARENA_GROUP (item);
 
 	if (!ref) {
-		group->children = nr_arena_item_attach_ref (item, child, NULL, group->children);
+		group->children = nr_arena_item_attach (item, child, NULL, group->children);
 	} else {
-		ref->next = nr_arena_item_attach_ref (item, child, ref, ref->next);
+		ref->next = nr_arena_item_attach (item, child, ref, ref->next);
 	}
 
 	if (ref == group->last) group->last = child;
@@ -123,9 +123,9 @@ nr_arena_group_remove_child (NRArenaItem *item, NRArenaItem *child)
 	if (child == group->last) group->last = child->prev;
 
 	if (child->prev) {
-		nr_arena_item_detach_unref (item, child);
+		nr_arena_item_detach (item, child);
 	} else {
-		group->children = nr_arena_item_detach_unref (item, child);
+		group->children = nr_arena_item_detach (item, child);
 	}
 
 	nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, FALSE);
@@ -139,15 +139,15 @@ nr_arena_group_set_child_position (NRArenaItem *item, NRArenaItem *child, NRAren
 	if (child == group->last) group->last = child->prev;
 
 	if (child->prev) {
-		nr_arena_item_detach_unref (item, child);
+		nr_arena_item_detach (item, child);
 	} else {
-		group->children = nr_arena_item_detach_unref (item, child);
+		group->children = nr_arena_item_detach (item, child);
 	}
 
 	if (!ref) {
-		group->children = nr_arena_item_attach_ref (item, child, NULL, group->children);
+		group->children = nr_arena_item_attach (item, child, NULL, group->children);
 	} else {
-		ref->next = nr_arena_item_attach_ref (item, child, ref, ref->next);
+		ref->next = nr_arena_item_attach (item, child, ref, ref->next);
 	}
 
 	if (ref == group->last) group->last = child;

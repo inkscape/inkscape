@@ -858,8 +858,8 @@ nr_arena_item_set_clip (NRArenaItem *item, NRArenaItem *clip)
 
 	if (clip != item->clip) {
 		nr_arena_item_request_render (item);
-		if (item->clip) item->clip = nr_arena_item_detach_unref (item, item->clip);
-		if (clip) item->clip = nr_arena_item_attach_ref (item, clip, NULL, NULL);
+		if (item->clip) item->clip = nr_arena_item_detach (item, item->clip);
+		if (clip) item->clip = nr_arena_item_attach (item, clip, NULL, NULL);
 		nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);
 	}
 }
@@ -873,8 +873,8 @@ nr_arena_item_set_mask (NRArenaItem *item, NRArenaItem *mask)
 
 	if (mask != item->mask) {
 		nr_arena_item_request_render (item);
-		if (item->mask) item->mask = nr_arena_item_detach_unref (item, item->mask);
-		if (mask) item->mask = nr_arena_item_attach_ref (item, mask, NULL, NULL);
+		if (item->mask) item->mask = nr_arena_item_detach (item, item->mask);
+		if (mask) item->mask = nr_arena_item_attach (item, mask, NULL, NULL);
 		nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);
 	}
 }
@@ -908,7 +908,7 @@ nr_arena_item_set_order (NRArenaItem *item, int order)
 /* Helpers */
 
 NRArenaItem *
-nr_arena_item_attach_ref (NRArenaItem *parent, NRArenaItem *child, NRArenaItem *prev, NRArenaItem *next)
+nr_arena_item_attach (NRArenaItem *parent, NRArenaItem *child, NRArenaItem *prev, NRArenaItem *next)
 {
 	nr_return_val_if_fail (parent != NULL, NULL);
 	nr_return_val_if_fail (NR_IS_ARENA_ITEM (parent), NULL);
@@ -935,7 +935,7 @@ nr_arena_item_attach_ref (NRArenaItem *parent, NRArenaItem *child, NRArenaItem *
 }
 
 NRArenaItem *
-nr_arena_item_detach_unref (NRArenaItem *parent, NRArenaItem *child)
+nr_arena_item_detach (NRArenaItem *parent, NRArenaItem *child)
 {
 	NRArenaItem *prev, *next;
 
