@@ -1,5 +1,11 @@
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
+	* src/doc/Makefile.am, src/doc/refcounting.txt:
+	
+	  some developer documentation about refcounting
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
 	* src/ui/view/view.cpp:
 
 	  Wait a minute -- UI::View::View and SPDocument are both managed

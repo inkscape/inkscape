@@ -13,4 +13,5 @@ EXTRA_DIST = API \
 	keys-svg.xsl \
 	keys-html.xsl \
 	keys.html \
-	keys.fr.html
+	keys.fr.html \
+	refcounting.txt
