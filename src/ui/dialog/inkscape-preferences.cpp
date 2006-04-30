@@ -14,6 +14,7 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/main.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
@@ -59,7 +60,6 @@ InkscapePreferences::InkscapePreferences()
     hbox_list_page->set_border_width(12);
     hbox_list_page->set_spacing(12);
     this->get_vbox()->add(*hbox_list_page);
-
 
     //Pagelist
     Gtk::Frame* list_frame = Gtk::manage(new Gtk::Frame());
@@ -181,7 +181,7 @@ void InkscapePreferences::initPageSteps()
     _page_steps.add_line( false, _("Inset/Outset by:"), _steps_inset, _("px"), 
                           _("Inset and Outset commands displace the path by this distance (in px units)"), false);
     _steps_compass.init ( _("Compass-like display of angles"), "options.compassangledisplay", "value", true);
-    _page_windows.add_line( false, "", _steps_compass, "", 
+    _page_steps.add_line( false, "", _steps_compass, "", 
                             _("When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"));
     int const num_items = 12;
     Glib::ustring labels[num_items] = {"90", "60", "45", "30", "15", "10", "7.5", "6", "3", "2", "1", _("None")};
@@ -577,6 +577,11 @@ void InkscapePreferences::on_pagelist_selection_changed()
         _page_title.set_markup("<span size='large'><b>" + row[_page_list_columns._col_name] + "</b></span>");
         _page_frame.add(*_current_page);
         _current_page->show();
+        while (Gtk::Main::events_pending()) 
+        {
+            Gtk::Main::iteration();
+        }
+        this->show_all_children();
     }
 }
 

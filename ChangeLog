@@ -1,3 +1,8 @@
+2006-05-01  Marco Scholten  <mscholtn@xs4all.nl>
+
+	* src/dialogs/inkscape-preferences.cpp: Moved 'compass like
+    display of angles' from 'windows' to 'steps'.
+
 2006-04-29  Jon Phillips  <jon@rejon.org>
 
 	* src/dialogs/rdf.cpp: Updated cc licenses to 2.5 by default.
