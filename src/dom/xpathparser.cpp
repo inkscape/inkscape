@@ -730,6 +730,8 @@ int XPathParser::getRelativeLocationPath(int p0, int depth)
         if (t.getType() == OPERATOR && t.getIntValue()==DOUBLE_SLASH)
             {
             p++;
+            // a '//' is an abbreviation for /descendant-or-self:node()/
+            tokAdd(new TokAxisDescendantOrSelf());
             p2 = getRelativeLocationPath(p, depth+1);
             if (p2 < 0)
                 {
@@ -2024,7 +2026,8 @@ NodeList XPathParser::evaluate(const Node *root,
         tokens.dump();
 
     //### Execute the token list
-    list = tokens.execute(root);
+    TokenExecutor executor;
+    list = executor.execute(tokens, root);
 
     return list;
 }

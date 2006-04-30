@@ -882,6 +882,14 @@ public:
      */
     virtual ~NodeList() {}
 
+    /**
+     *
+     */
+    virtual void clear()
+        {
+        nodes.clear();
+        }
+
 protected:
 
 friend class NodeImpl;
