@@ -87,7 +87,7 @@ DocumentMetadata::DocumentMetadata()
       _prefs_path("dialogs.documentmetadata")
 {
     hide();
-    set_resizable (false);
+    set_resizable (true);
     _tt.enable();
     get_vbox()->set_spacing (4);
     get_vbox()->pack_start (_notebook, true, true);

@@ -5,8 +5,10 @@
  *
  * Authors:
  *   Kees Cook <kees@outflux.net>
+ *   Jon Phillips <jon@rejon.org>
  *
  * Copyright (C) 2004 Kees Cook <kees@outflux.net>
+ * Copyright (C) 2006 Jon Phillips <jon@rejon.org>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -174,32 +176,32 @@ struct rdf_double_t rdf_license_freeart [] = {
 
 struct rdf_license_t rdf_licenses [] = {
     { _("CC Attribution"), 
-      "http://creativecommons.org/licenses/by/2.0/",
+      "http://creativecommons.org/licenses/by/2.5/",
       rdf_license_cc_a,
     },
 
     { _("CC Attribution-ShareAlike"), 
-      "http://creativecommons.org/licenses/by-sa/2.0/",
+      "http://creativecommons.org/licenses/by-sa/2.5/",
       rdf_license_cc_a_sa,
     },
 
     { _("CC Attribution-NoDerivs"), 
-      "http://creativecommons.org/licenses/by-nd/2.0/",
+      "http://creativecommons.org/licenses/by-nd/2.5/",
       rdf_license_cc_a_nd,
     },
 
     { _("CC Attribution-NonCommercial"), 
-      "http://creativecommons.org/licenses/by-nc/2.0/",
+      "http://creativecommons.org/licenses/by-nc/2.5/",
       rdf_license_cc_a_nc,
     },
 
     { _("CC Attribution-NonCommercial-ShareAlike"), 
-      "http://creativecommons.org/licenses/by-nc-sa/2.0/",
+      "http://creativecommons.org/licenses/by-nc-sa/2.5/",
       rdf_license_cc_a_nc_sa,
     },
 
     { _("CC Attribution-NonCommercial-NoDerivs"), 
-      "http://creativecommons.org/licenses/by-nc-nd/2.0/",
+      "http://creativecommons.org/licenses/by-nc-nd/2.5/",
       rdf_license_cc_a_nc_nd,
     },
 

@@ -1,3 +1,10 @@
+2006-04-29  Jon Phillips  <jon@rejon.org>
+
+	* src/dialogs/rdf.cpp: Updated cc licenses to 2.5 by default.
+
+	* src/ui/dialog/document-metadata.cpp: Made metadata window
+	resizable so that one can see the licenses and enter long entries.
+
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
 	* src/display/nr-arena-group.cpp, src/display/nr-arena-item.cpp,
