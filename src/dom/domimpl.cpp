@@ -927,7 +927,7 @@ DOMString NodeImpl::lookupNamespacePrefix(const DOMString &theNamespaceURI,
 /**
  *
  */
-NodeImpl::NodeImpl()
+NodeImpl::NodeImpl() : Node()
 {
     init();
 }
@@ -936,7 +936,7 @@ NodeImpl::NodeImpl()
 /**
  *
  */
-NodeImpl::NodeImpl(const NodeImpl &other)
+NodeImpl::NodeImpl(const NodeImpl &other) : Node()
 {
     init();
     assign(other);
