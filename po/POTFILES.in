@@ -174,7 +174,6 @@ src/mod360.cpp
 src/node-context.cpp
 src/nodepath.cpp
 src/object-edit.cpp
-src/object-ui.cpp
 src/path-chemistry.cpp
 src/pen-context.cpp
 src/pencil-context.cpp
@@ -255,6 +254,7 @@ src/text-context.cpp
 src/tools-switch.cpp
 src/trace/potrace/inkscape-potrace.cpp
 src/trace/trace.cpp
+src/ui/context-menu.cpp
 src/ui/dialog/aboutbox.cpp
 src/ui/dialog/align-and-distribute.cpp
 src/ui/dialog/document-metadata.cpp
