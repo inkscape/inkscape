@@ -13,9 +13,15 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <typeinfo>
+
 #include <libnr/nr-macros.h>
 
 #include "nr-object.h"
+#include "debug/event-tracker.h"
+#include "debug/simple-event.h"
+#include "util/share.h"
+#include "util/format.h"
 
 unsigned int nr_emit_fail_warning(const gchar *file, unsigned int line, const gchar *method, const gchar *expr)
 {
@@ -150,9 +156,25 @@ static void nr_class_tree_object_invoke_init(NRObjectClass *c, NRObject *object)
 
 namespace {
 
+namespace Debug = Inkscape::Debug;
+namespace Util = Inkscape::Util;
+
+typedef Debug::SimpleEvent<Debug::Event::FINALIZERS> BaseFinalizerEvent;
+
+class FinalizerEvent : public BaseFinalizerEvent {
+public:
+    FinalizerEvent(NRObject *object)
+    : BaseFinalizerEvent(Util::share_static_string("nr-object-finalizer"))
+    {
+        _addProperty("object", Util::format("%p", object));
+        _addProperty("class", Util::share_static_string(typeid(*object).name()));
+    }
+};
+
 void finalize_object(void *base, void *)
 {
     NRObject *object = reinterpret_cast<NRObject *>(base);
+    Debug::EventTracker<FinalizerEvent> tracker(object);
     object->klass->finalize(object);
     object->~NRObject();
 }

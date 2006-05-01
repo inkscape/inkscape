@@ -3,6 +3,12 @@
 	* src/dialogs/inkscape-preferences.cpp: Moved 'compass like
     display of angles' from 'windows' to 'steps'.
 
+2006-04-30  MenTaLguY  <mental@rydia.net>
+
+	* src/libnr/nr-object.cpp:
+
+	  log finalization of NRObjects
+
 2006-04-29  Jon Phillips  <jon@rejon.org>
 
 	* src/dialogs/rdf.cpp: Updated cc licenses to 2.5 by default.
