@@ -49,7 +49,7 @@ public:
     void setStyle(SPCSSAttr *attr);
     SPCSSAttr *getStyle();
 
-    void setWatched (Inkscape::XML::Node *watched);
+    void setWatched (Inkscape::XML::Node *watched, Inkscape::XML::Node *secondary);
     void setWatchedTool (const char *path, bool synthesize);
 
     char *_tool_path;
