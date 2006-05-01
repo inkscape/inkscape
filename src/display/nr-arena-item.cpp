@@ -804,7 +804,8 @@ nr_arena_item_set_transform(NRArenaItem *item, NRMatrix const *transform)
 			/* Set to identity affine */
 			item->transform = NULL;
 		} else {
-			if (!item->transform) item->transform = new (GC::ATOMIC) NRMatrix(*transform);
+			if (!item->transform) item->transform = new (GC::ATOMIC) NRMatrix();
+			*item->transform = *transform;
 		}
 		nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);
 	}
