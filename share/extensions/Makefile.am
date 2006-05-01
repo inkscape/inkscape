@@ -47,10 +47,11 @@ extensions = \
 	svg_and_media_zip_output.py \
 	dxf_outlines.py \
 	fig2svg.sh \
-    cspsubdiv.py \
-    flatten.py \
-    measure.py \
-    gimp_xcf.py
+	cspsubdiv.py \
+	flatten.py \
+	measure.py \
+	gimp_xcf.py \
+	eqtexsvg.py
 
 otherstuff =
 
@@ -92,10 +93,11 @@ modules = \
 	extractimage.inx \
 	svg_and_media_zip_output.inx \
 	dxf_outlines.inx \
-    fig_input.inx \
-    flatten.inx \
-    measure.inx \
-    gimp_xcf.inx
+	fig_input.inx \
+	flatten.inx \
+	measure.inx \
+	gimp_xcf.inx \
+	eqtexsvg.inx
 
 extension_SCRIPTS = \
 	$(extensions)
