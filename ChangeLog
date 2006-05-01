@@ -1,3 +1,9 @@
+2006-05-01  MenTaLguY  <mental@rydia.net>
+
+	* src/display/nr-arena-item.cpp:
+
+	  use GC allocator for bitmap cache and transform
+
 2006-05-01  Marco Scholten  <mscholtn@xs4all.nl>
 
 	* src/dialogs/inkscape-preferences.cpp: Moved 'compass like

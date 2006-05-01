@@ -21,7 +21,9 @@
 #include "nr-arena.h"
 #include "nr-arena-item.h"
 //#include "nr-arena-group.h"
+#include "gc-core.h"
 
+namespace GC = Inkscape::GC;
 
 static void nr_arena_item_class_init (NRArenaItemClass *klass);
 static void nr_arena_item_init (NRArenaItem *item);
@@ -102,13 +104,8 @@ nr_arena_item_private_finalize (NRObject *object)
   remove_caches(item);
 #endif
 
-	if (item->px) {
-		nr_free (item->px);
-	}
-
-	if (item->transform) {
-		nr_free (item->transform);
-	}
+	item->px = NULL;
+	item->transform = NULL;
 
 	((NRObjectClass *) (parent_class))->finalize (object);
 }
@@ -235,7 +232,6 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigne
 
 	/* Reset image cache, if not to be kept */
 	if (!(item->state & NR_ARENA_ITEM_STATE_IMAGE) && (item->px)) {
-		nr_free (item->px);
 		item->px = NULL;
 	}
 #ifdef arena_item_tile_cache
@@ -336,7 +332,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 		carea.y0 = item->bbox.y0;
 		carea.x1 = item->bbox.x1;
 		carea.y1 = item->bbox.y1;
-		item->px = nr_new (unsigned char, 4 * (carea.x1 - carea.x0) * (carea.y1 - carea.y0));
+		item->px = new (GC::ATOMIC) unsigned char[4 * (carea.x1 - carea.x0) * (carea.y1 - carea.y0)];
 		nr_pixblock_setup_extern (&cpb, NR_PIXBLOCK_MODE_R8G8B8A8P,
                               carea.x0, carea.y0, carea.x1, carea.y1,
                               item->px, 4 * (carea.x1 - carea.x0), TRUE, TRUE);
@@ -806,11 +802,9 @@ nr_arena_item_set_transform(NRArenaItem *item, NRMatrix const *transform)
 		nr_arena_item_request_render (item);
 		if (!transform || nr_matrix_test_identity (transform, NR_EPSILON)) {
 			/* Set to identity affine */
-			if (item->transform) nr_free (item->transform);
 			item->transform = NULL;
 		} else {
-			if (!item->transform) item->transform = nr_new (NRMatrix, 1);
-			*item->transform = *transform;
+			if (!item->transform) item->transform = new (GC::ATOMIC) NRMatrix(*transform);
 		}
 		nr_arena_item_request_update (item, NR_ARENA_ITEM_STATE_ALL, TRUE);
 	}
