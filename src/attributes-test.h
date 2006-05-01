@@ -1,4 +1,7 @@
 
+#ifndef SEEN_ATTRIBUTES_TEST_H
+#define SEEN_ATTRIBUTES_TEST_H
+
 #include <cxxtest/TestSuite.h>
 
 #include <vector>
@@ -477,6 +480,8 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
         TS_ASSERT(!found);
     }
 };
+
+#endif // SEEN_ATTRIBUTES_TEST_H
 
 /*
   Local Variables:

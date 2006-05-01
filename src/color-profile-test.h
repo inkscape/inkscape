@@ -1,61 +1,53 @@
 
+#ifndef SEEN_COLOR_PROFILE_TEST_H
+#define SEEN_COLOR_PROFILE_TEST_H
 
 #include <cxxtest/TestSuite.h>
 #include <cassert>
 
-#include "inkscape-private.h"
-#include "sp-object.h"
-#include "document.h"
+#include "test-helpers.h"
+
 
 #include "color-profile.h"
 #include "color-profile-fns.h"
 
 using Inkscape::ColorProfile;
 
-/// Dummy functions to keep linker happy
-#if !defined(DUMMY_MAIN_TEST_CALLS_SEEN)
-#define DUMMY_MAIN_TEST_CALLS_SEEN
-int sp_main_gui (int, char const**) { return 0; }
-int sp_main_console (int, char const**) { return 0; }
-#endif // DUMMY_MAIN_TEST_CALLS_SEEN
-
 class ColorProfileTest : public CxxTest::TestSuite
 {
 public:
+    SPDocument* _doc;
 
     ColorProfileTest() :
-        TestSuite(),
         _doc(0)
     {
     }
-    virtual ~ColorProfileTest() {}
+
+    virtual ~ColorProfileTest()
+    {
+        if ( _doc )
+        {
+            sp_document_unref( _doc );
+        }
+    }
+
+    static void createSuiteSubclass( ColorProfileTest*& dst )
+    {
+        ColorProfile *prof = static_cast<ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        if ( prof ) {
+            if ( prof->rendering_intent == (guint)Inkscape::RENDERING_INTENT_UNKNOWN ) {
+                TS_ASSERT_EQUALS( prof->rendering_intent, (guint)Inkscape::RENDERING_INTENT_UNKNOWN );
+                dst = new ColorProfileTest();
+            }
+            g_object_unref(prof);
+        }
+    }
 
 // createSuite and destroySuite get us per-suite setup and teardown
 // without us having to worry about static initialization order, etc.
     static ColorProfileTest *createSuite()
     {
-        ColorProfileTest* suite = 0;
-        bool canRun = false;
-
-        g_type_init();
-        Inkscape::GC::init();
-
-        ColorProfile *prof = static_cast<ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
-        canRun = prof;
-        canRun &= prof->rendering_intent == (guint)Inkscape::RENDERING_INTENT_UNKNOWN;
-        TS_ASSERT_EQUALS( prof->rendering_intent, (guint)Inkscape::RENDERING_INTENT_UNKNOWN );
-        g_object_unref(prof);
-
-        if ( canRun ) {
-            // Create the global inkscape object.
-            static_cast<void>(g_object_new(inkscape_get_type(), NULL));
-            SPDocument* tmp = sp_document_new_dummy();
-            if ( tmp ) {
-                suite = new ColorProfileTest();
-                suite->_doc = tmp;
-            }
-        }
-
+        ColorProfileTest* suite = Inkscape::createSuiteAndDocument<ColorProfileTest>( createSuiteSubclass );
         return suite;
     }
 
@@ -64,9 +56,8 @@ public:
         delete suite; 
     }
 
-
-    SPDocument* _doc;
-
+    // ---------------------------------------------------------------
+    // ---------------------------------------------------------------
     // ---------------------------------------------------------------
 
     void testSetRenderingIntent()
@@ -146,6 +137,8 @@ public:
         g_object_unref(prof);
     }
 };
+
+#endif // SEEN_COLOR_PROFILE_TEST_H
 
 /*
   Local Variables:

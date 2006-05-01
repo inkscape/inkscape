@@ -1,3 +1,12 @@
+2006-05-01  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/Makefile.am, src/Makefile_insert, src/attributes-test.h,
+	  src/color-profile-test.h, src/mod360-test.cpp, src/mod360-test.h,
+	  src/round-test.cpp, src/round-test.h, src/sp-gradient-test.cpp,
+	  src/sp-gradient-test.h, src/sp-style-elem-test.cpp,
+	  src/sp-style-elem-test.h, src/style-test.h, src/test-helpers.h:
+	  Replaced four more tests with CxxTest versions.
+
 2006-05-01  MenTaLguY  <mental@rydia.net>
 
 	* src/display/nr-arena-item.cpp:
