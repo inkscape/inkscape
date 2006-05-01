@@ -23,6 +23,7 @@
 #include "inkscape-preferences.h"
 #include "verbs.h"
 #include "selcue.h"
+#include "unit-constants.h"
 #include <iostream>
 #include "enums.h"
 #include "inkscape.h"
@@ -496,7 +497,7 @@ void InkscapePreferences::initPageSelecting()
 
 void InkscapePreferences::initPageMisc()
 {
-    _misc_export.init("dialogs.export.defaultxdpi", "value", 0.0, 6000.0, 1.0, 1.0, 1.0, true, false);
+    _misc_export.init("dialogs.export.defaultxdpi", "value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_misc.add_line( false, _("Default export resolution:"), _misc_export, _("dpi"), 
                            _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
     _misc_imp_bitmap.init( _("Import bitmap as <image>"), "options.importbitmapsasimages", "value", true);
