@@ -24,6 +24,8 @@
 
 #include "extension.h"
 #include "prefs-utils.h"
+#include "document-private.h"
+#include "sp-object.h"
 
 #include "parameter.h"
 
@@ -508,6 +510,37 @@ gchar *
 Parameter::pref_name (void)
 {
     return g_strdup_printf("%s.%s", extension->get_id(), _name);
+}
+
+/** \brief  Build the name to write the parameter in a node object.  This
+            requires the inkscape namespace and the other info. */
+gchar *
+Parameter::node_name (void)
+{
+    return g_strdup_printf("inkscape:extension-param-%s-%s", extension->get_id(), _name);
+}
+
+Inkscape::XML::Node *
+Parameter::document_param_node (SPDocument * doc)
+{
+    Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
+    Inkscape::XML::Node * params = NULL;
+
+    for (Inkscape::XML::Node * child = defs->firstChild();
+            child != NULL;
+            child = child->next()) {
+        if (!strcmp(child->name(), "inkscape:extension-param")) {
+            params = child;
+            break;
+        }
+    }
+
+    if (params == NULL) {
+        params = sp_repr_new("inkscape:extension-param");
+        defs->appendChild(params);
+    }
+
+    return params;
 }
 
 /** \brief  Basically, if there is no widget pass a NULL. */

@@ -48,7 +48,12 @@ protected:
     _scope_t _scope;
     /** \brief  Text for the GUI selection of this. */
     gchar *       _text;
-    gchar *       pref_name (void);
+
+
+    /* **** funcs **** */
+    gchar *               pref_name (void);
+    gchar *               node_name (void);
+    Inkscape::XML::Node * document_param_node (SPDocument * doc);
 
 public:
                   Parameter  (const gchar * name,
