@@ -91,10 +91,10 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
                 _help = g_strdup (sp_repr_children(child_repr)->content());
             } /* name */
             if (!strcmp(chname, "param")) {
-				Parameter * param;
-				param = Parameter::make(child_repr, this);
-				if (param != NULL)
-					parameters = g_slist_append(parameters, param);
+                Parameter * param;
+                param = Parameter::make(child_repr, this);
+                if (param != NULL)
+                    parameters = g_slist_append(parameters, param);
             } /* param */
             if (!strcmp(chname, "dependency")) {
                 _deps.push_back(new Dependency(child_repr));
@@ -105,7 +105,7 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
         db.register_ext (this);
     }
     // printf("%s\n", name);
-	timer = NULL;
+    timer = NULL;
 
     return;
 }
@@ -121,20 +121,20 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
 */
 Extension::~Extension (void)
 {
-//	printf("Extension Destructor: %s\n", name);
-	set_state(STATE_UNLOADED);
-	db.unregister_ext(this);
+//    printf("Extension Destructor: %s\n", name);
+    set_state(STATE_UNLOADED);
+    db.unregister_ext(this);
     Inkscape::GC::release(repr);
     g_free(id);
     g_free(name);
-	delete timer;
-	timer = NULL;
+    delete timer;
+    timer = NULL;
     /** \todo Need to do parameters here */
 
-	for (unsigned int i = 0 ; i < _deps.size(); i++) {
-		delete _deps[i];
-	}
-	_deps.clear();
+    for (unsigned int i = 0 ; i < _deps.size(); i++) {
+        delete _deps[i];
+    }
+    _deps.clear();
 
     return;
 }
@@ -153,41 +153,41 @@ Extension::~Extension (void)
 void
 Extension::set_state (state_t in_state)
 {
-	if (_state == STATE_DEACTIVATED) return;
+    if (_state == STATE_DEACTIVATED) return;
     if (in_state != _state) {
         /** \todo Need some more error checking here! */
-		switch (in_state) {
-			case STATE_LOADED:
-				if (imp->load(this))
-					_state = STATE_LOADED;
+        switch (in_state) {
+            case STATE_LOADED:
+                if (imp->load(this))
+                    _state = STATE_LOADED;
 
-				if (timer != NULL) {
-					delete timer;
-				}
-				timer = new ExpirationTimer(this);
+                if (timer != NULL) {
+                    delete timer;
+                }
+                timer = new ExpirationTimer(this);
 
-				break;
-			case STATE_UNLOADED:
-				// std::cout << "Unloading: " << name << std::endl;
-				imp->unload(this);
-				_state = STATE_UNLOADED;
+                break;
+            case STATE_UNLOADED:
+                // std::cout << "Unloading: " << name << std::endl;
+                imp->unload(this);
+                _state = STATE_UNLOADED;
 
-				if (timer != NULL) {
-					delete timer;
-					timer = NULL;
-				}
-				break;
-			case STATE_DEACTIVATED:
-				_state = STATE_DEACTIVATED;
+                if (timer != NULL) {
+                    delete timer;
+                    timer = NULL;
+                }
+                break;
+            case STATE_DEACTIVATED:
+                _state = STATE_DEACTIVATED;
 
-				if (timer != NULL) {
-					delete timer;
-					timer = NULL;
-				}
-				break;
-			default:
-				break;
-		}
+                if (timer != NULL) {
+                    delete timer;
+                    timer = NULL;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     return;
@@ -215,66 +215,66 @@ Extension::loaded (void)
 
 /**
     \return  A boolean saying whether the extension passed the checks
-	\brief   A function to check the validity of the extension
+    \brief   A function to check the validity of the extension
 
-	This function chekcs to make sure that there is an id, a name, a
-	repr and an implemenation for this extension.  Then it checks all
-	of the dependencies to see if they pass.  Finally, it asks the
-	implmentation to do a check of itself.
+    This function chekcs to make sure that there is an id, a name, a
+    repr and an implemenation for this extension.  Then it checks all
+    of the dependencies to see if they pass.  Finally, it asks the
+    implmentation to do a check of itself.
 
-	On each check, if there is a failure, it will print a message to the
-	error log for that failure.  It is important to note that the function
-	keeps executing if it finds an error, to try and get as many of them
-	into the error log as possible.  This should help people debug
-	installations, and figure out what they need to get for the full
-	functionality of Inkscape to be available.
+    On each check, if there is a failure, it will print a message to the
+    error log for that failure.  It is important to note that the function
+    keeps executing if it finds an error, to try and get as many of them
+    into the error log as possible.  This should help people debug
+    installations, and figure out what they need to get for the full
+    functionality of Inkscape to be available.
 */
 bool
 Extension::check (void)
 {
-	bool retval = true;
+    bool retval = true;
 
-	// static int i = 0;
-	// std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
+    // static int i = 0;
+    // std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
 
-	const char * inx_failure = _("  This is caused by an improper .inx file for this extension."
-		                         "  An improper .inx file could have been caused by a faulty installation of Inkscape.");
-	if (id == NULL) {
-		printFailure(Glib::ustring(_("an ID was not defined for it.")) + inx_failure);
-		retval = false;
-	}
-	if (name == NULL) {
-		printFailure(Glib::ustring(_("there was no name defined for it.")) + inx_failure);
-		retval = false;
-	}
-	if (repr == NULL) {
-		printFailure(Glib::ustring(_("the XML description of it got lost.")) + inx_failure);
-		retval = false;
-	}
-	if (imp == NULL) {
-		printFailure(Glib::ustring(_("no implementation was defined for the extension.")) + inx_failure);
-		retval = false;
-	}
+    const char * inx_failure = _("  This is caused by an improper .inx file for this extension."
+                                 "  An improper .inx file could have been caused by a faulty installation of Inkscape.");
+    if (id == NULL) {
+        printFailure(Glib::ustring(_("an ID was not defined for it.")) + inx_failure);
+        retval = false;
+    }
+    if (name == NULL) {
+        printFailure(Glib::ustring(_("there was no name defined for it.")) + inx_failure);
+        retval = false;
+    }
+    if (repr == NULL) {
+        printFailure(Glib::ustring(_("the XML description of it got lost.")) + inx_failure);
+        retval = false;
+    }
+    if (imp == NULL) {
+        printFailure(Glib::ustring(_("no implementation was defined for the extension.")) + inx_failure);
+        retval = false;
+    }
 
-	for (unsigned int i = 0 ; i < _deps.size(); i++) {
-		if (_deps[i]->check() == FALSE) {
-			// std::cout << "Failed: " << *(_deps[i]) << std::endl;
-			printFailure(Glib::ustring(_("a dependency was not met.")));
-			error_file << *_deps[i] << std::endl;
-			retval = false;
-		}
-	}
+    for (unsigned int i = 0 ; i < _deps.size(); i++) {
+        if (_deps[i]->check() == FALSE) {
+            // std::cout << "Failed: " << *(_deps[i]) << std::endl;
+            printFailure(Glib::ustring(_("a dependency was not met.")));
+            error_file << *_deps[i] << std::endl;
+            retval = false;
+        }
+    }
 
-	if (retval)
-		return imp->check(this);
-	return retval;
+    if (retval)
+        return imp->check(this);
+    return retval;
 }
 
 /** \brief A quick function to print out a standard start of extension
            errors in the log.
-	\param reason  A string explaining why this failed
+    \param reason  A string explaining why this failed
 
-	Real simple, just put everything into \c error_file.
+    Real simple, just put everything into \c error_file.
 */
 void
 Extension::printFailure (Glib::ustring reason)
@@ -317,40 +317,40 @@ Extension::get_name (void)
 
 /**
     \return  None
-	\brief   This function diactivates the extension (which makes it
-	         unusable, but not deleted)
+    \brief   This function diactivates the extension (which makes it
+             unusable, but not deleted)
 
     This function is used to removed an extension from functioning, but
-	not delete it completely.  It sets the state to \c STATE_DEACTIVATED to
-	mark to the world that it has been deactivated.  It also removes
-	the current implementation and replaces it with a standard one.  This
-	makes it so that we don't have to continually check if there is an
-	implementation, but we are gauranteed to have a benign one.
+    not delete it completely.  It sets the state to \c STATE_DEACTIVATED to
+    mark to the world that it has been deactivated.  It also removes
+    the current implementation and replaces it with a standard one.  This
+    makes it so that we don't have to continually check if there is an
+    implementation, but we are gauranteed to have a benign one.
 
-	\warning It is important to note that there is no 'activate' function.
-	Running this function is irreversable.
+    \warning It is important to note that there is no 'activate' function.
+    Running this function is irreversable.
 */
 void
 Extension::deactivate (void)
 {
-	set_state(STATE_DEACTIVATED);
+    set_state(STATE_DEACTIVATED);
 
-	/* Removing the old implementation, and making this use the default. */
-	/* This should save some memory */
-	delete imp;
-	imp = new Implementation::Implementation();
+    /* Removing the old implementation, and making this use the default. */
+    /* This should save some memory */
+    delete imp;
+    imp = new Implementation::Implementation();
 
-	return;
+    return;
 }
 
 /**
     \return  Whether the extension has been deactivated
-	\brief   Find out the status of the extension
+    \brief   Find out the status of the extension
 */
 bool
 Extension::deactivated (void)
 {
-	return get_state() == STATE_DEACTIVATED;
+    return get_state() == STATE_DEACTIVATED;
 }
 
 /**
@@ -404,10 +404,10 @@ param_shared (const gchar * name, GSList * list)
     \brief    Gets a parameter identified by name with the string placed
               in value.  It isn't duplicated into the value string.
     \param    name    The name of the parameter to get
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 const gchar *
 Extension::get_param_string (const gchar * name, const Inkscape::XML::Document * doc)
@@ -415,7 +415,7 @@ Extension::get_param_string (const gchar * name, const Inkscape::XML::Document *
     Parameter * param;
 
     param = param_shared(name, parameters);
-	return param->get_string(doc);
+    return param->get_string(doc);
 }
 
 /**
@@ -423,10 +423,10 @@ Extension::get_param_string (const gchar * name, const Inkscape::XML::Document *
     \brief    Gets a parameter identified by name with the bool placed
               in value.
     \param    name    The name of the parameter to get
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 bool
 Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * doc)
@@ -442,10 +442,10 @@ Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * d
     \brief    Gets a parameter identified by name with the integer placed
               in value.
     \param    name    The name of the parameter to get
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 int
 Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * doc)
@@ -461,10 +461,10 @@ Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * do
     \brief    Gets a parameter identified by name with the float placed
               in value.
     \param    name    The name of the parameter to get
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 float
 Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * doc)
@@ -480,17 +480,17 @@ Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * 
               in the parameter value.
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 bool
 Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Document * doc)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-	return param->set_bool(value, doc);
+    return param->set_bool(value, doc);
 }
 
 /**
@@ -499,17 +499,17 @@ Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Docume
               in the parameter value.
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 int
 Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document * doc)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-	return param->set_int(value, doc);
+    return param->set_int(value, doc);
 }
 
 /**
@@ -518,17 +518,17 @@ Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document
               in the parameter value.
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 float
 Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Document * doc)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-	return param->set_float(value, doc);
+    return param->set_float(value, doc);
 }
 
 /**
@@ -537,94 +537,94 @@ Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Docu
               in the parameter value.
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
-	\param    doc    The document to look in for document specific parameters
+    \param    doc    The document to look in for document specific parameters
 
-	Look up in the parameters list, then execute the function on that
-	found parameter.
+    Look up in the parameters list, then execute the function on that
+    found parameter.
 */
 const gchar *
 Extension::set_param_string (const gchar * name, const gchar * value, Inkscape::XML::Document * doc)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-	return param->set_string(value, doc);
+    return param->set_string(value, doc);
 }
 
 /** \brief A function to open the error log file. */
 void
 Extension::error_file_open (void)
 {
-	gchar * ext_error_file = profile_path(EXTENSION_ERROR_LOG_FILENAME);
-	gchar * filename = g_filename_from_utf8( ext_error_file, -1, NULL, NULL, NULL );
-	error_file.open(filename);
-	if (!error_file.is_open()) {
-		g_warning(_("Could not create extension error log file '%s'"),
-		          filename);
-	}
-	g_free(filename);
-	g_free(ext_error_file);
+    gchar * ext_error_file = profile_path(EXTENSION_ERROR_LOG_FILENAME);
+    gchar * filename = g_filename_from_utf8( ext_error_file, -1, NULL, NULL, NULL );
+    error_file.open(filename);
+    if (!error_file.is_open()) {
+        g_warning(_("Could not create extension error log file '%s'"),
+                  filename);
+    }
+    g_free(filename);
+    g_free(ext_error_file);
 };
 
 /** \brief A function to close the error log file. */
 void
 Extension::error_file_close (void)
 {
-	error_file.close();
+    error_file.close();
 };
 
 /** \brief  A function to automatically generate a GUI using the parameters
-	\return Generated widget
+    \return Generated widget
 
-	This function just goes through each parameter, and calls it's 'get_widget'
-	function to get each widget.  Then, each of those is placed into
-	a Gtk::VBox, which is then returned to the calling function.
+    This function just goes through each parameter, and calls it's 'get_widget'
+    function to get each widget.  Then, each of those is placed into
+    a Gtk::VBox, which is then returned to the calling function.
 
-	If there are no parameters, this function just returns NULL.
+    If there are no parameters, this function just returns NULL.
 */
 Gtk::Widget *
 Extension::autogui (void)
 {
-	if (g_slist_length(parameters) == 0) return NULL;
+    if (g_slist_length(parameters) == 0) return NULL;
 
-	Gtk::VBox * vbox = new Gtk::VBox();
+    Gtk::VBox * vbox = new Gtk::VBox();
     vbox = new Gtk::VBox();
 
-	for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
-		Parameter * param = reinterpret_cast<Parameter *>(list->data);
-		Gtk::Widget * widg = param->get_widget();
-		if (widg != NULL)
-			vbox->pack_start(*widg, true, true);
-	}
+    for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
+        Parameter * param = reinterpret_cast<Parameter *>(list->data);
+        Gtk::Widget * widg = param->get_widget();
+        if (widg != NULL)
+            vbox->pack_start(*widg, true, true);
+    }
 
-	vbox->show();
-	return vbox;
+    vbox->show();
+    return vbox;
 };
 
 /**
-	\brief  A function to get the parameters in a string form
-	\return A string with all the parameters as command line arguements
+    \brief  A function to get the parameters in a string form
+    \return A string with all the parameters as command line arguements
 
-	I don't really like this function, but it works for now.
+    I don't really like this function, but it works for now.
 
-	\todo  Do this better.
+    \todo  Do this better.
 */
 Glib::ustring *
 Extension::paramString (void)
 {
-	Glib::ustring * param_string = new Glib::ustring("");
+    Glib::ustring * param_string = new Glib::ustring("");
 
-	for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
-		Parameter * param = reinterpret_cast<Parameter *>(list->data);
+    for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
+        Parameter * param = reinterpret_cast<Parameter *>(list->data);
 
-		*param_string += " --";
-		*param_string += param->name();
-		*param_string += "=";
-		Glib::ustring * paramstr = param->string();
-		*param_string += *paramstr;
-		delete paramstr;
-	}
+        *param_string += " --";
+        *param_string += param->name();
+        *param_string += "=";
+        Glib::ustring * paramstr = param->string();
+        *param_string += *paramstr;
+        delete paramstr;
+    }
 
-	return param_string;
+    return param_string;
 }
 
 /* Extension editor dialog stuff */
