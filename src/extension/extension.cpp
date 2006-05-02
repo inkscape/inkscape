@@ -26,6 +26,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/table.h>
+#include <gtkmm/tooltips.h>
 
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
@@ -580,6 +581,31 @@ Extension::error_file_close (void)
     error_file.close();
 };
 
+/** \brief  A widget to represent the inside of an AutoGUI widget */
+class AutoGUI : public Gtk::VBox {
+    Gtk::Tooltips _tooltips;
+public:
+    /** \brief  Create an AutoGUI object */
+    AutoGUI (void) : Gtk::VBox() {};
+    /** \brief  Adds a widget with a tool tip into the autogui
+        \param  widg  Widget to add
+        \param  tooltip   Tooltip for the widget
+        
+        If there is no widget, nothing happens.  Otherwise it is just
+        added into the VBox.  If there is a tooltip (non-NULL) then it
+        is placed on the widget.
+    */
+    void addWidget (Gtk::Widget * widg, gchar const * tooltip) {
+        if (widg == NULL) return;
+        this->pack_start(*widg, true, true);
+        if (tooltip != NULL) {
+            _tooltips.set_tip(*widg, Glib::ustring(tooltip));
+            // printf("Setting tooltip: %s\n", tooltip);
+        }
+        return;
+    };
+};
+
 /** \brief  A function to automatically generate a GUI using the parameters
     \return Generated widget
 
@@ -594,17 +620,17 @@ Extension::autogui (void)
 {
     if (g_slist_length(parameters) == 0) return NULL;
 
-    Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox());
+    AutoGUI * agui = Gtk::manage(new AutoGUI());
 
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
         Gtk::Widget * widg = param->get_widget();
-        if (widg != NULL)
-            vbox->pack_start(*widg, true, true);
+        gchar const * tip = param->get_tooltip();
+        agui->addWidget(widg, tip);
     }
 
-    vbox->show();
-    return vbox;
+    agui->show();
+    return agui;
 };
 
 /**
