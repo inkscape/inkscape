@@ -36,15 +36,19 @@ protected:
 public:
     Parameter (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext);
     virtual ~Parameter(void);
-    bool          get_bool   (const Inkscape::XML::Document * doc);
-    int           get_int    (const Inkscape::XML::Document * doc);
-    float         get_float  (const Inkscape::XML::Document * doc);
-    const gchar * get_string (const Inkscape::XML::Document * doc);
+    bool          get_bool   (const Inkscape::XML::Document * doc,
+                              const Inkscape::XML::Node * node);
+    int           get_int    (const Inkscape::XML::Document * doc,
+                              const Inkscape::XML::Node * node);
+    float         get_float  (const Inkscape::XML::Document * doc,
+                              const Inkscape::XML::Node * node);
+    const gchar * get_string (const Inkscape::XML::Document * doc,
+                              const Inkscape::XML::Node * node);
 
-    bool          set_bool   (bool in,          Inkscape::XML::Document * doc);
-    int           set_int    (int  in,          Inkscape::XML::Document * doc);
-    float         set_float  (float in,         Inkscape::XML::Document * doc);
-    const gchar * set_string (const gchar * in, Inkscape::XML::Document * doc);
+    bool          set_bool   (bool in,          Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    int           set_int    (int  in,          Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    float         set_float  (float in,         Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    const gchar * set_string (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
 
     const gchar * name       (void) {return _name;}
 

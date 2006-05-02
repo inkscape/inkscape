@@ -405,17 +405,18 @@ param_shared (const gchar * name, GSList * list)
               in value.  It isn't duplicated into the value string.
     \param    name    The name of the parameter to get
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 const gchar *
-Extension::get_param_string (const gchar * name, const Inkscape::XML::Document * doc)
+Extension::get_param_string (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
     param = param_shared(name, parameters);
-    return param->get_string(doc);
+    return param->get_string(doc, node);
 }
 
 /**
@@ -424,17 +425,18 @@ Extension::get_param_string (const gchar * name, const Inkscape::XML::Document *
               in value.
     \param    name    The name of the parameter to get
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 bool
-Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * doc)
+Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
     param = param_shared(name, parameters);
-    return param->get_bool(doc);
+    return param->get_bool(doc, node);
 }
 
 /**
@@ -443,17 +445,18 @@ Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * d
               in value.
     \param    name    The name of the parameter to get
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 int
-Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * doc)
+Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
     param = param_shared(name, parameters);
-    return param->get_int(doc);
+    return param->get_int(doc, node);
 }
 
 /**
@@ -462,16 +465,17 @@ Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * do
               in value.
     \param    name    The name of the parameter to get
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 float
-Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * doc)
+Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-    return param->get_float(doc);
+    return param->get_float(doc, node);
 }
 
 /**
@@ -481,16 +485,17 @@ Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * 
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 bool
-Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Document * doc)
+Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-    return param->set_bool(value, doc);
+    return param->set_bool(value, doc, node);
 }
 
 /**
@@ -500,16 +505,17 @@ Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Docume
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 int
-Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document * doc)
+Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-    return param->set_int(value, doc);
+    return param->set_int(value, doc, node);
 }
 
 /**
@@ -519,16 +525,17 @@ Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 float
-Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Document * doc)
+Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-    return param->set_float(value, doc);
+    return param->set_float(value, doc, node);
 }
 
 /**
@@ -538,16 +545,17 @@ Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Docu
     \param    name    The name of the parameter to set
     \param    value   The value to set the parameter to
     \param    doc    The document to look in for document specific parameters
+    \param    node   The node to look in for a specific parameter
 
     Look up in the parameters list, then execute the function on that
     found parameter.
 */
 const gchar *
-Extension::set_param_string (const gchar * name, const gchar * value, Inkscape::XML::Document * doc)
+Extension::set_param_string (const gchar * name, const gchar * value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
-    return param->set_string(value, doc);
+    return param->set_string(value, doc, node);
 }
 
 /** \brief A function to open the error log file. */

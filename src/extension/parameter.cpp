@@ -42,8 +42,8 @@ private:
 public:
     ParamBool(const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    bool get (const Inkscape::XML::Document * doc) { return _value; }
-    bool set (bool in, Inkscape::XML::Document * doc);
+    bool get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
+    bool set (bool in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(void);
     Glib::ustring * string (void);
 };
@@ -78,8 +78,8 @@ private:
 public:
     ParamInt (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    int get (const Inkscape::XML::Document * doc) { return _value; }
-    int set (int in, Inkscape::XML::Document * doc);
+    int get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
+    int set (int in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
     int max (void) { return _max; }
     int min (void) { return _min; }
     Gtk::Widget * get_widget(void);
@@ -132,8 +132,8 @@ private:
 public:
     ParamFloat (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    float get (const Inkscape::XML::Document * doc) { return _value; }
-    float set (float in, Inkscape::XML::Document * doc);
+    float get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
+    float set (float in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
     Gtk::Widget * get_widget(void);
@@ -186,8 +186,8 @@ public:
     ParamString(const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamString(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
-    const gchar * get (const Inkscape::XML::Document * doc) { return _value; }
-    const gchar * set (const gchar * in, Inkscape::XML::Document * doc);
+    const gchar * get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
+    const gchar * set (const gchar * in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(void);
     Glib::ustring * string (void);
 };
@@ -251,13 +251,14 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
 /** \brief  A function to set the \c _value
     \param  in   The value to set to
     \param  doc  A document that should be used to set the value.
+    \param  node The node where the value may be placed
 
     This function sets the internal value, but it also sets the value
     in the preferences structure.  To put it in the right place, \c PREF_DIR
     and \c pref_name() are used.
 */
 bool
-ParamBool::set (bool in, Inkscape::XML::Document * doc)
+ParamBool::set (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     _value = in;
 
@@ -271,13 +272,14 @@ ParamBool::set (bool in, Inkscape::XML::Document * doc)
 /** \brief  A function to set the \c _value
     \param  in   The value to set to
     \param  doc  A document that should be used to set the value.
+    \param  node The node where the value may be placed
 
     This function sets the internal value, but it also sets the value
     in the preferences structure.  To put it in the right place, \c PREF_DIR
     and \c pref_name() are used.
 */
 int
-ParamInt::set (int in, Inkscape::XML::Document * doc)
+ParamInt::set (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     _value = in;
     if (_value > _max) _value = _max;
@@ -293,13 +295,14 @@ ParamInt::set (int in, Inkscape::XML::Document * doc)
 /** \brief  A function to set the \c _value
     \param  in   The value to set to
     \param  doc  A document that should be used to set the value.
+    \param  node The node where the value may be placed
 
     This function sets the internal value, but it also sets the value
     in the preferences structure.  To put it in the right place, \c PREF_DIR
     and \c pref_name() are used.
 */
 float
-ParamFloat::set (float in, Inkscape::XML::Document * doc)
+ParamFloat::set (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     _value = in;
     if (_value > _max) _value = _max;
@@ -315,6 +318,7 @@ ParamFloat::set (float in, Inkscape::XML::Document * doc)
 /** \brief  A function to set the \c _value
     \param  in   The value to set to
     \param  doc  A document that should be used to set the value.
+    \param  node The node where the value may be placed
 
     This function sets the internal value, but it also sets the value
     in the preferences structure.  To put it in the right place, \c PREF_DIR
@@ -325,7 +329,7 @@ ParamFloat::set (float in, Inkscape::XML::Document * doc)
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamString::set (const gchar * in, Inkscape::XML::Document * doc)
+ParamString::set (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -342,18 +346,18 @@ ParamString::set (const gchar * in, Inkscape::XML::Document * doc)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
-Parameter::get_bool (const Inkscape::XML::Document * doc)
+Parameter::get_bool (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     ParamBool * boolpntr;
     boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
         throw Extension::param_wrong_type();
-    return boolpntr->get(doc);
+    return boolpntr->get(doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 int
-Parameter::get_int (const Inkscape::XML::Document * doc)
+Parameter::get_int (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     ParamInt * intpntr;
     intpntr = dynamic_cast<ParamInt *>(this);
@@ -364,7 +368,7 @@ Parameter::get_int (const Inkscape::XML::Document * doc)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 float
-Parameter::get_float (const Inkscape::XML::Document * doc)
+Parameter::get_float (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     ParamFloat * floatpntr;
     floatpntr = dynamic_cast<ParamFloat *>(this);
@@ -375,7 +379,7 @@ Parameter::get_float (const Inkscape::XML::Document * doc)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::get_string (const Inkscape::XML::Document * doc)
+Parameter::get_string (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
 {
     ParamString * stringpntr;
     stringpntr = dynamic_cast<ParamString *>(this);
@@ -386,46 +390,46 @@ Parameter::get_string (const Inkscape::XML::Document * doc)
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
-Parameter::set_bool (bool in, Inkscape::XML::Document * doc)
+Parameter::set_bool (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     ParamBool * boolpntr;
     boolpntr = dynamic_cast<ParamBool *>(this);
     if (boolpntr == NULL)
         throw Extension::param_wrong_type();
-    return boolpntr->set(in, doc);
+    return boolpntr->set(in, doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 int
-Parameter::set_int (int in, Inkscape::XML::Document * doc)
+Parameter::set_int (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     ParamInt * intpntr;
     intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
         throw Extension::param_wrong_type();
-    return intpntr->set(in, doc);
+    return intpntr->set(in, doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 float
-Parameter::set_float (float in, Inkscape::XML::Document * doc)
+Parameter::set_float (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     ParamFloat * floatpntr;
     floatpntr = dynamic_cast<ParamFloat *>(this);
     if (floatpntr == NULL)
         throw Extension::param_wrong_type();
-    return floatpntr->set(in, doc);
+    return floatpntr->set(in, doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::set_string (const gchar * in, Inkscape::XML::Document * doc)
+Parameter::set_string (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
 {
     ParamString * stringpntr;
     stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
         throw Extension::param_wrong_type();
-    return stringpntr->set(in, doc);
+    return stringpntr->set(in, doc, node);
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */

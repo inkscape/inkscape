@@ -143,25 +143,33 @@ private:
 #endif
 public:
     bool             get_param_bool   (const gchar * name,
-                                       const Inkscape::XML::Document *   doc = NULL);
+                                       const Inkscape::XML::Document *   doc = NULL,
+                                       const Inkscape::XML::Node * node = NULL);
     int              get_param_int    (const gchar * name,
-                                       const Inkscape::XML::Document *   doc = NULL);
+                                       const Inkscape::XML::Document *   doc = NULL,
+                                       const Inkscape::XML::Node * node = NULL);
     float            get_param_float  (const gchar * name,
-                                       const Inkscape::XML::Document *   doc = NULL);
+                                       const Inkscape::XML::Document *   doc = NULL,
+                                       const Inkscape::XML::Node * node = NULL);
     const gchar *    get_param_string (const gchar * name,
-                                       const Inkscape::XML::Document *   doc = NULL);
+                                       const Inkscape::XML::Document *   doc = NULL,
+                                       const Inkscape::XML::Node * node = NULL);
     bool             set_param_bool   (const gchar * name,
                                        bool          value,
-                                       Inkscape::XML::Document *   doc = NULL);
+                                       Inkscape::XML::Document *   doc = NULL,
+                                       Inkscape::XML::Node *       node = NULL);
     int              set_param_int    (const gchar * name,
                                        int           value,
-                                       Inkscape::XML::Document *   doc = NULL);
+                                       Inkscape::XML::Document *   doc = NULL,
+                                       Inkscape::XML::Node *       node = NULL);
     float            set_param_float  (const gchar * name,
                                        float         value,
-                                       Inkscape::XML::Document *   doc = NULL);
+                                       Inkscape::XML::Document *   doc = NULL,
+                                       Inkscape::XML::Node *       node = NULL);
     const gchar *    set_param_string (const gchar * name,
                                        const gchar * value,
-                                       Inkscape::XML::Document *   doc = NULL);
+                                       Inkscape::XML::Document *   doc = NULL,
+                                       Inkscape::XML::Node *       node = NULL);
 
     /* Error file handling */
 public:
