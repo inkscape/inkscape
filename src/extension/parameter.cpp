@@ -481,8 +481,10 @@ Parameter::Parameter (const gchar * name, const gchar * guitext, const gchar * d
 {
     if (name != NULL)
         _name = g_strdup(name);
-    if (desc != NULL)
+    if (desc != NULL) {
         _desc = g_strdup(desc);
+        // printf("Adding description: '%s' on '%s'\n", _desc, _name);
+    }
 
 
     if (guitext != NULL)
