@@ -594,8 +594,7 @@ Extension::autogui (void)
 {
     if (g_slist_length(parameters) == 0) return NULL;
 
-    Gtk::VBox * vbox = new Gtk::VBox();
-    vbox = new Gtk::VBox();
+    Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox());
 
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);

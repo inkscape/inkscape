@@ -593,14 +593,14 @@ ParamIntAdjustment::val_changed (void)
 Gtk::Widget *
 ParamFloat::get_widget (void)
 {
-    Gtk::HBox * hbox = new Gtk::HBox();
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
-    Gtk::Label * label = new Gtk::Label(_(_text), Gtk::ALIGN_LEFT);
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
     hbox->pack_start(*label, true, true);
 
     ParamFloatAdjustment * fadjust = new ParamFloatAdjustment(this);
-    Gtk::SpinButton * spin = new Gtk::SpinButton(*fadjust, 0.1, 1);
+    Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, 1));
     spin->show();
     hbox->pack_start(*spin, false, false);
 
@@ -617,14 +617,14 @@ ParamFloat::get_widget (void)
 Gtk::Widget *
 ParamInt::get_widget (void)
 {
-    Gtk::HBox * hbox = new Gtk::HBox();
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
-    Gtk::Label * label = new Gtk::Label(_(_text), Gtk::ALIGN_LEFT);
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
     hbox->pack_start(*label, true, true);
 
     ParamIntAdjustment * fadjust = new ParamIntAdjustment(this);
-    Gtk::SpinButton * spin = new Gtk::SpinButton(*fadjust, 1.0, 0);
+    Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 1.0, 0));
     spin->show();
     hbox->pack_start(*spin, false, false);
 
@@ -676,9 +676,9 @@ ParamBoolCheckButton::on_toggle (void)
 Gtk::Widget *
 ParamBool::get_widget (void)
 {
-    Gtk::HBox * hbox = new Gtk::HBox();
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
-    Gtk::Label * label = new Gtk::Label(_(_text), Gtk::ALIGN_LEFT);
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
     hbox->pack_start(*label, true, true);
 
@@ -730,9 +730,9 @@ ParamStringEntry::changed_text (void)
 Gtk::Widget *
 ParamString::get_widget (void)
 {
-    Gtk::HBox * hbox = new Gtk::HBox();
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
-    Gtk::Label * label = new Gtk::Label(_(_text), Gtk::ALIGN_LEFT);
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
     hbox->pack_start(*label, true, true);
 

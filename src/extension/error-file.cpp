@@ -56,7 +56,7 @@ ErrorFileNotice::ErrorFileNotice (void) :
     Gtk::VBox * vbox = get_vbox();
 
     /* This is some filler text, needs to change before relase */
-    checkbutton = new Gtk::CheckButton(_("Show dialog on startup"));
+    checkbutton = Gtk::manage(new Gtk::CheckButton(_("Show dialog on startup")));
     vbox->pack_start(*checkbutton, true, false, 5);
     checkbutton->show();
     checkbutton->set_active(prefs_get_int_attribute(PREFERENCE_ID, 1) == 0 ? false : true);
@@ -65,7 +65,6 @@ ErrorFileNotice::ErrorFileNotice (void) :
 
     set_resizable(true);
 
-    //Gtk::HPaned *splitter = new Gtk::HPaned();
     Inkscape::UI::Dialogs::ExtensionsPanel* extens = new Inkscape::UI::Dialogs::ExtensionsPanel();
     extens->set_full(false);
     vbox->pack_start( *extens, true, true );
