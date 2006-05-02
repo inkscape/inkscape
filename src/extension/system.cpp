@@ -22,6 +22,7 @@
 #include "input.h"
 #include "output.h"
 #include "effect.h"
+#include "patheffect.h"
 #include "print.h"
 #include "implementation/script.h"
 /* #include "implementation/plugin.h" */
@@ -333,6 +334,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
         MODULE_OUTPUT,
         MODULE_FILTER,
         MODULE_PRINT,
+        MODULE_PATH_EFFECT,
         MODULE_UNKNOWN_FUNC
     } module_functional_type = MODULE_UNKNOWN_FUNC;
 
@@ -359,6 +361,8 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
             module_functional_type = MODULE_FILTER;
         } else if (!strcmp(element_name, "print")) {
             module_functional_type = MODULE_PRINT;
+        } else if (!strcmp(element_name, "path-effect")) {
+            module_functional_type = MODULE_PATH_EFFECT;
         } else if (!strcmp(element_name, "script")) {
             module_implementation_type = MODULE_EXTENSION;
 #if 0
@@ -412,6 +416,10 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
         }
         case MODULE_PRINT: {
             module = new Print(repr, imp);
+            break;
+        }
+        case MODULE_PATH_EFFECT: {
+            module = new PathEffect(repr, imp);
             break;
         }
         default: {
