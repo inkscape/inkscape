@@ -27,6 +27,8 @@ private:
     Inkscape::Extension::Extension * extension;
     /** \brief  The name of this parameter. */
     gchar *       _name;
+
+protected:
     /** \brief  Description of the parameter. */
     gchar *       _desc;
     /** \brief  List of possible scopes. */
@@ -37,8 +39,6 @@ private:
     } _scope_t;
     /** \brief  Scope of the parameter. */
     _scope_t _scope;
-
-protected:
     /** \brief  Text for the GUI selection of this. */
     gchar *       _text;
     gchar *       pref_name (void);

@@ -40,7 +40,7 @@ private:
     /** \brief  Internal value. */
     bool _value;
 public:
-    ParamBool(const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ParamBool(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
     bool get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
     bool set (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
@@ -49,8 +49,8 @@ public:
 };
 
 /** \brief  Use the superclass' allocator and set the \c _value */
-ParamBool::ParamBool (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-        Parameter(name, guitext, ext), _value(false)
+ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+        Parameter(name, guitext, desc, scope, ext), _value(false)
 {
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -76,7 +76,7 @@ private:
     int _min;
     int _max;
 public:
-    ParamInt (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ParamInt (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
     int get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
     int set (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
@@ -87,8 +87,8 @@ public:
 };
 
 /** \brief  Use the superclass' allocator and set the \c _value */
-ParamInt::ParamInt (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-        Parameter(name, guitext, ext), _value(0), _min(0), _max(10)
+ParamInt::ParamInt (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+        Parameter(name, guitext, desc, scope, ext), _value(0), _min(0), _max(10)
 {
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -130,7 +130,7 @@ private:
     float _min;
     float _max;
 public:
-    ParamFloat (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
     float get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
     float set (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
@@ -141,8 +141,8 @@ public:
 };
 
 /** \brief  Use the superclass' allocator and set the \c _value */
-ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-        Parameter(name, guitext, ext), _value(0.0), _min(0.0), _max(10.0)
+ParamFloat::ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+        Parameter(name, guitext, desc, scope, ext), _value(0.0), _min(0.0), _max(10.0)
 {
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -183,7 +183,7 @@ private:
                 been allocated in memory.  And should be free'd. */
     gchar * _value;
 public:
-    ParamString(const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ParamString(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamString(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
     const gchar * get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
@@ -221,27 +221,44 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     const char * name;
     const char * type;
     const char * guitext;
+    const char * desc;
+    const char * scope_str;
+    Parameter::_scope_t scope = Parameter::SCOPE_USER;
 
     name = in_repr->attribute("name");
     type = in_repr->attribute("type");
     guitext = in_repr->attribute("gui-text");
     if (guitext == NULL)
         guitext = in_repr->attribute("_gui-text");
+    desc = in_repr->attribute("gui-description");
+    if (desc == NULL)
+        desc = in_repr->attribute("_gui-description");
+    scope_str = in_repr->attribute("scope");
 
     /* In this case we just don't have enough information */
     if (name == NULL || type == NULL) {
         return NULL;
     }
 
+    if (scope_str != NULL) {
+        if (!strcmp(scope_str, "user")) {
+            scope = Parameter::SCOPE_USER;
+        } else if (!strcmp(scope_str, "document")) {
+            scope = Parameter::SCOPE_DOCUMENT;
+        } else if (!strcmp(scope_str, "node")) {
+            scope = Parameter::SCOPE_NODE;
+        }
+    }
+
     Parameter * param = NULL;
     if (!strcmp(type, "boolean")) {
-        param = new ParamBool(name, guitext, in_ext, in_repr);
+        param = new ParamBool(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "int")) {
-        param = new ParamInt(name, guitext, in_ext, in_repr);
+        param = new ParamInt(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "float")) {
-        param = new ParamFloat(name, guitext, in_ext, in_repr);
+        param = new ParamFloat(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "string")) {
-        param = new ParamString(name, guitext, in_ext, in_repr);
+        param = new ParamString(name, guitext, desc, scope, in_ext, in_repr);
     }
 
     /* Note: param could equal NULL */
@@ -433,8 +450,8 @@ Parameter::set_string (const gchar * in, Inkscape::XML::Document * doc, Inkscape
 }
 
 /** \brief  Initialize the object, to do that, copy the data. */
-ParamString::ParamString (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, ext), _value(NULL)
+ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, ext), _value(NULL)
 {
     const char * defaultval = NULL;
     if (sp_repr_children(xml) != NULL)
