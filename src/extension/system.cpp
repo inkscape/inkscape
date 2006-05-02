@@ -25,6 +25,7 @@
 #include "patheffect.h"
 #include "print.h"
 #include "implementation/script.h"
+#include "implementation/xslt.h"
 /* #include "implementation/plugin.h" */
 
 namespace Inkscape {
@@ -326,6 +327,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
 {
     enum {
         MODULE_EXTENSION,
+        MODULE_XSLT,
         /* MODULE_PLUGIN, */
         MODULE_UNKNOWN_IMP
     } module_implementation_type = MODULE_UNKNOWN_IMP;
@@ -365,6 +367,8 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
             module_functional_type = MODULE_PATH_EFFECT;
         } else if (!strcmp(element_name, "script")) {
             module_implementation_type = MODULE_EXTENSION;
+        } else if (!strcmp(element_name, "xslt")) {
+            module_implementation_type = MODULE_XSLT;
 #if 0
         } else if (!strcmp(element_name, "plugin")) {
             module_implementation_type = MODULE_PLUGIN;
@@ -382,6 +386,11 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
             case MODULE_EXTENSION: {
                 Implementation::Script *script = new Implementation::Script();
                 imp = static_cast<Implementation::Implementation *>(script);
+                break;
+            }
+            case MODULE_XSLT: {
+                Implementation::XSLT *xslt = new Implementation::XSLT();
+                imp = static_cast<Implementation::Implementation *>(xslt);
                 break;
             }
 #if 0
