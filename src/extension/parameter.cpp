@@ -512,12 +512,32 @@ Parameter::pref_name (void)
     return g_strdup_printf("%s.%s", extension->get_id(), _name);
 }
 
-/** \brief  Build the name to write the parameter in a node object.  This
-            requires the inkscape namespace and the other info. */
-gchar *
-Parameter::node_name (void)
+Inkscape::XML::Node *
+Parameter::find_child (Inkscape::XML::Node * adult)
 {
-    return g_strdup_printf("inkscape:extension-param-%s-%s", extension->get_id(), _name);
+    Inkscape::XML::Node * retval = NULL;
+    for (retval = adult->firstChild();
+            retval != NULL;
+            retval = retval->next()) {
+        gchar const * name = retval->attribute("name");
+        if (name == NULL) continue;
+        if (!strcmp(name, _name))
+            break;
+    }
+
+    return retval;
+}
+
+Inkscape::XML::Node *
+Parameter::new_child (Inkscape::XML::Node * parent)
+{
+    Inkscape::XML::Node * retval;
+    retval = sp_repr_new("inkscape:extension-param");
+    retval->setAttribute("extension", extension->get_id());
+    retval->setAttribute("name", _name);
+
+    parent->appendChild(retval);
+    return retval;
 }
 
 Inkscape::XML::Node *

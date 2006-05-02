@@ -52,8 +52,9 @@ protected:
 
     /* **** funcs **** */
     gchar *               pref_name (void);
-    gchar *               node_name (void);
+    Inkscape::XML::Node * find_child (Inkscape::XML::Node * adult);
     Inkscape::XML::Node * document_param_node (SPDocument * doc);
+    Inkscape::XML::Node * new_child (Inkscape::XML::Node * parent);
 
 public:
                   Parameter  (const gchar * name,
