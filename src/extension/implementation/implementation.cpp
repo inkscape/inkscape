@@ -153,7 +153,7 @@ Implementation::text(Inkscape::Extension::Print *module, char const *text,
 void
 Implementation::processPath(Inkscape::XML::Node * node)
 {
-    return g_strdup(path);
+    return;
 }
 
 /**
