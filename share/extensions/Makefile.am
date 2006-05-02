@@ -53,13 +53,15 @@ extensions = \
 	gimp_xcf.py \
 	eqtexsvg.py
 
-otherstuff =
+otherstuff = \
+    aisvg.xslt
 
 modules = \
 	svgz_input.inx \
 	svgz_output.inx \
 	ai_input.inx \
 	ai_output.inx \
+	aisvg.inx \
 	ps_input.inx \
 	eps_input.inx \
 	sk_input.inx \
