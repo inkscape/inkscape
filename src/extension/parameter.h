@@ -21,6 +21,13 @@
 namespace Inkscape {
 namespace Extension {
 
+/** \brief  A class to represent the parameter of an extension
+
+    This is really a super class that allows them to abstract all
+    the different types of parameters into some that can be passed
+    around.  There is also a few functions that are used by all the
+    different parameters.
+*/
 class Parameter {
 private:
     /** \brief  Which extension is this parameter attached to? */
