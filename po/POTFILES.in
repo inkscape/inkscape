@@ -336,6 +336,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/embedimage.inx
 [type: gettext/xml] share/extensions/eps_input.inx
 [type: gettext/xml] share/extensions/epsi_output.inx
+[type: gettext/xml] share/extensions/eqtexsvg.inx
 [type: gettext/xml] share/extensions/extractimage.inx
 [type: gettext/xml] share/extensions/ffmet.inx
 [type: gettext/xml] share/extensions/ffms.inx
@@ -349,6 +350,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/kochify.inx
 [type: gettext/xml] share/extensions/kochify_load.inx
 [type: gettext/xml] share/extensions/lindenmayer.inx
+[type: gettext/xml] share/extensions/measure.inx
 [type: gettext/xml] share/extensions/motion.inx
 [type: gettext/xml] share/extensions/pdf_output.inx
 [type: gettext/xml] share/extensions/pdf_output_via_gs_on_win32.inx
