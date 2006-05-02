@@ -20,6 +20,7 @@
 #include "extension/extension-forward.h"
 #include "libnr/nr-forward.h"
 #include "libnr/nr-point.h"
+#include "xml/node.h"
 
 namespace Inkscape {
 namespace Extension {
