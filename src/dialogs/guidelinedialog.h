@@ -14,12 +14,10 @@
 #define INKSCAPE_DIALOG_GUIDELINE_H
 
 #include <gtkmm/dialog.h>
-#include <gtkmm/table.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/label.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/adjustment.h>
-#include "ui/widget/button.h"
 
 namespace Inkscape {
 namespace UI {
@@ -50,14 +48,18 @@ private:
 
     SPDesktop *_desktop;
     SPGuide *_guide;
-    Gtk::Table  _layout_table;
-    Gtk::Label  _label_descr;
-    Gtk::Label  _label_move;
-    Inkscape::UI::Widget::CheckButton _relative_toggle;
+    Gtk::HBox   _b1;
+    Gtk::VBox   _b2;
+    Gtk::HBox   _b3;
+    Gtk::HBox   _b4;
+    Gtk::Label  _label;
+    Gtk::Label  _label_id;
+    Gtk::Button _but;
+    Gtk::Label  _m;
     Gtk::Adjustment _adjustment;
     Gtk::SpinButton _spin_button;
 
-    Gtk::Widget *_unit_selector;
+    GtkWidget *_unit_selector;
     bool _mode;
     gdouble _oldpos;
 };

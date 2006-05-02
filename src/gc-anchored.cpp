@@ -12,7 +12,7 @@
 #include <typeinfo>
 #include "gc-anchored.h"
 #include "debug/event-tracker.h"
-#include "debug/simple-event.h"
+#include "debug/event.h"
 #include "util/share.h"
 #include "util/format.h"
 
@@ -20,38 +20,50 @@ namespace Inkscape {
 
 namespace GC {
 
-namespace {
-
-typedef Debug::SimpleEvent<Debug::Event::REFCOUNT> RefCountEvent;
-
-class BaseAnchorEvent : public RefCountEvent {
+class AnchorEvent : public Debug::Event {
 public:
-    BaseAnchorEvent(Anchored const *object, int bias,
-                    Util::ptr_shared<char> name)
-    : RefCountEvent(name)
-    {
-        _addProperty("base", Util::format("%p", Core::base(const_cast<Anchored *>(object))));
-        _addProperty("pointer", Util::format("%p", object));
-        _addProperty("class", Util::share_static_string(typeid(*object).name()));
-        _addProperty("new-refcount", Util::format("%d", object->_anchored_refcount() + bias));
+    enum Type { ANCHOR, RELEASE };
+
+    AnchorEvent(GC::Anchored const *object, Type type)
+    : _base(Util::format("%p", Core::base(const_cast<Anchored *>(object)))),
+      _object(Util::format("%p", object)),
+      _class_name(Util::share_static_string(typeid(*object).name())),
+      _refcount(Util::format("%d", ( type == ANCHOR ? object->_anchored_refcount() + 1 : object->_anchored_refcount() - 1 ))),
+      _type(type)
+    {}
+
+    static Category category() { return REFCOUNT; }
+
+    Util::ptr_shared<char> name() const {
+        if ( _type == ANCHOR ) {
+            return Util::share_static_string("gc-anchor");
+        } else {
+            return Util::share_static_string("gc-release");
+        }
     }
-};
+    unsigned propertyCount() const { return 4; }
+    PropertyPair property(unsigned index) const {
+        switch (index) {
+            case 0:
+                return PropertyPair("base", _base);
+            case 1:
+                return PropertyPair("pointer", _object);
+            case 2:
+                return PropertyPair("class", _class_name);
+            case 3:
+                return PropertyPair("new-refcount", _refcount);
+            default:
+                return PropertyPair();
+        }
+    }
 
-class AnchorEvent : public BaseAnchorEvent {
-public:
-    AnchorEvent(Anchored const *object)
-    : BaseAnchorEvent(object, 1, Util::share_static_string("gc-anchor"))
-    {}
+private:
+    Util::ptr_shared<char> _base;
+    Util::ptr_shared<char> _object;
+    Util::ptr_shared<char> _class_name;
+    Util::ptr_shared<char> _refcount;
+    Type _type;
 };
-
-class ReleaseEvent : public BaseAnchorEvent {
-public:
-    ReleaseEvent(Anchored const *object)
-    : BaseAnchorEvent(object, -1, Util::share_static_string("gc-release"))
-    {}
-};
-
-}
 
 Anchored::Anchor *Anchored::_new_anchor() const {
     return new Anchor(this);
@@ -62,7 +74,7 @@ void Anchored::_free_anchor(Anchored::Anchor *anchor) const {
 }
 
 void Anchored::anchor() const {
-    Debug::EventTracker<AnchorEvent> tracker(this);
+    Debug::EventTracker<AnchorEvent> tracker(this, AnchorEvent::ANCHOR);
     if (!_anchor) {
         _anchor = _new_anchor();
     }
@@ -70,7 +82,7 @@ void Anchored::anchor() const {
 }
 
 void Anchored::release() const {
-    Debug::EventTracker<ReleaseEvent> tracker(this);
+    Debug::EventTracker<AnchorEvent> tracker(this, AnchorEvent::RELEASE);
     if (!--_anchor->refcount) {
         _free_anchor(_anchor);
         _anchor = NULL;

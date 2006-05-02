@@ -319,6 +319,18 @@ inkscape_LDFLAGS = --export-dynamic $(kdeldflags)
 inkview_SOURCES = inkview.cpp $(win32_sources)
 inkview_LDADD = $(all_libs)
 
+mod360_test_SOURCES = mod360-test.cpp
+mod360_test_LDADD = libinkpre.a -lglib-2.0
+
+round_test_SOURCES = round-test.cpp
+round_test_LDADD = libinkpost.a
+
+sp_gradient_test_SOURCES = sp-gradient-test.cpp
+sp_gradient_test_LDADD = $(all_libs) 
+
+sp_style_elem_test_SOURCES = sp-style-elem-test.cpp
+sp_style_elem_test_LDADD = $(all_libs)
+
 style_test_SOURCES = style-test.cpp
 style_test_LDADD = $(all_libs)
 
@@ -330,9 +342,4 @@ test_all_includes = \
 		color-profile-test.h	\
 		dir-util-test.h	\
 		extract-uri-test.h	\
-		mod360-test.h	\
-		round-test.h	\
-		sp-gradient-test.h	\
-		sp-style-elem-test.h	\
-		style-test.h	\
 		verbs-test.h

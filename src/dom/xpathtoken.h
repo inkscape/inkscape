@@ -199,7 +199,7 @@ public:
     /**
      *  Assign our values to those of the other
      */
-    virtual void assign(const TokenExecutor &other);
+    virtual void assign(const Stack &other);
 
     /**
      * Reset the stack to its original settings
@@ -217,38 +217,23 @@ public:
     virtual StackItem pop();
 
     /**
-     * Execute a token list on the stack
+     * Set the root node
      */
-    NodeList execute(const TokenList &list, const Node *node);
+    virtual void setRootNode(const Node *node);
 
     /**
-     *
+     * Get the current node list;
      */
-    Axis axis;
+    virtual NodeList &getNodeList();
 
-    /**
-     *
-     */
-    std::vector<Axis> axisStack;
 
 private:
 
-    /**
-     * Contains the StackItem stack;
-     */
-    StackItem stack[STACK_SIZE];
-
-    /**
-     * Marks the head of the stack, for push() and pop()
-     */
-    int stackSize;
-
-    /**
-     *  Current list of nodes found by the expression
-     */
+    Node *root;
     NodeList nodeList;
 
-
+    StackItem items[STACK_SIZE];
+    int size;
 };
 
 
@@ -387,7 +372,8 @@ public:
     virtual int getType()
         { return type; }
     /**
-     *  Return the string TokenType of this token
+     *  Return the enumerated TokenType of this token
+     *  (in the .cpp file)
      */
     virtual DOMString getTypeString();
 
@@ -395,7 +381,7 @@ public:
      *  Let this token execute itself on the given stack,
      *  possibly adding Nodes to the node list.
      */
-    virtual bool execute(TokenExecutor &stack)
+    virtual bool execute(Stack &stack)
         { return true; }
 
     /**
@@ -456,7 +442,7 @@ public:
         type = TOK_STR;
         sval = val;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.sval = sval;
@@ -473,7 +459,7 @@ public:
         type = TOK_FLOAT;
         dval = val;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.dval = dval;
@@ -490,7 +476,7 @@ public:
         type = TOK_INT;
         ival = val;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item;
         item.ival = ival;
@@ -506,7 +492,7 @@ public:
         {
         type = TOK_AND;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -523,7 +509,7 @@ public:
         {
         type = TOK_OR;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -540,7 +526,7 @@ public:
         {
         type = TOK_MOD;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -557,7 +543,7 @@ public:
         {
         type = TOK_DIV;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -574,7 +560,7 @@ public:
         {
         type = TOK_MULTIPLY;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -591,7 +577,7 @@ public:
         {
         type = TOK_PLUS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -608,7 +594,7 @@ public:
         {
         type = TOK_MINUS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -625,7 +611,7 @@ public:
         {
         type = TOK_NEG;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item = exec.pop();
         item.dval = -item.dval;
@@ -642,7 +628,7 @@ public:
         {
         type = TOK_EQUALS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -659,7 +645,7 @@ public:
         {
         type = TOK_NOT_EQUALS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -676,7 +662,7 @@ public:
         {
         type = TOK_LESS_THAN_EQUALS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -693,7 +679,7 @@ public:
         {
         type = TOK_LESS_THAN;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -710,7 +696,7 @@ public:
         {
         type = TOK_GREATER_THAN_EQUALS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -727,7 +713,7 @@ public:
         {
         type = TOK_GREATER_THAN;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         StackItem item1 = exec.pop();
         StackItem item2 = exec.pop();
@@ -749,7 +735,7 @@ public:
         {
         type = TOK_ABSOLUTE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         Node *n = exec.axis.getNode();
         while (n->getParentNode())
@@ -766,7 +752,7 @@ public:
         {
         type = TOK_RELATIVE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         ///exec.axis.currentNode = stack.rootNode;
         return true;
@@ -780,7 +766,7 @@ public:
         {
         type = TOK_STEP;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -794,7 +780,7 @@ public:
         type  = TOK_NAME_TEST;
         sval  = name;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -807,7 +793,7 @@ public:
         {
         type = TOK_EXPR;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -820,7 +806,7 @@ public:
         {
         type = TOK_UNION;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -841,7 +827,7 @@ public:
         {
         type = TOK_AXIS_ANCESTOR_OR_SELF;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -854,7 +840,7 @@ public:
         {
         type = TOK_AXIS_ANCESTOR;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -867,7 +853,7 @@ public:
         {
         type = TOK_AXIS_ATTRIBUTE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -880,7 +866,7 @@ public:
         {
         type = TOK_AXIS_CHILD;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -893,7 +879,7 @@ public:
         {
         type = TOK_AXIS_DESCENDANT_OR_SELF;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -906,7 +892,7 @@ public:
         {
         type = TOK_AXIS_DESCENDANT;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -919,7 +905,7 @@ public:
         {
         type = TOK_AXIS_FOLLOWING_SIBLING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -932,7 +918,7 @@ public:
         {
         type = TOK_AXIS_FOLLOWING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -945,7 +931,7 @@ public:
         {
         type = TOK_AXIS_NAMESPACE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -958,7 +944,7 @@ public:
         {
         type = TOK_AXIS_PARENT;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -971,7 +957,7 @@ public:
         {
         type = TOK_AXIS_PRECEDING_SIBLING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -984,7 +970,7 @@ public:
         {
         type = TOK_AXIS_PRECEDING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -997,7 +983,7 @@ public:
         {
         type = TOK_AXIS_SELF;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1016,7 +1002,7 @@ public:
         {
         type = TOK_FUNC_LAST;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1029,7 +1015,7 @@ public:
         {
         type = TOK_FUNC_POSITION;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1042,7 +1028,7 @@ public:
         {
         type = TOK_FUNC_COUNT;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1055,7 +1041,7 @@ public:
         {
         type = TOK_FUNC_ID;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1068,7 +1054,7 @@ public:
         {
         type = TOK_FUNC_LOCAL_NAME;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1081,7 +1067,7 @@ public:
         {
         type = TOK_FUNC_NAMESPACE_URI;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1094,7 +1080,7 @@ public:
         {
         type = TOK_FUNC_NAME;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1107,7 +1093,7 @@ public:
         {
         type = TOK_FUNC_STRING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1120,7 +1106,7 @@ public:
         {
         type = TOK_FUNC_CONCAT;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1133,7 +1119,7 @@ public:
         {
         type = TOK_FUNC_STARTS_WITH;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1146,7 +1132,7 @@ public:
         {
         type = TOK_FUNC_CONTAINS;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1159,7 +1145,7 @@ public:
         {
         type = TOK_FUNC_SUBSTRING_BEFORE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1172,7 +1158,7 @@ public:
         {
         type = TOK_FUNC_SUBSTRING_AFTER;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1185,7 +1171,7 @@ public:
         {
         type = TOK_FUNC_SUBSTRING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1198,7 +1184,7 @@ public:
         {
         type = TOK_FUNC_STRING_LENGTH;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1211,7 +1197,7 @@ public:
         {
         type = TOK_FUNC_NORMALIZE_SPACE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1224,7 +1210,7 @@ public:
         {
         type = TOK_FUNC_TRANSLATE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1237,7 +1223,7 @@ public:
         {
         type = TOK_FUNC_BOOLEAN;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1250,7 +1236,7 @@ public:
         {
         type = TOK_FUNC_NOT;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1263,7 +1249,7 @@ public:
         {
         type = TOK_FUNC_TRUE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1276,7 +1262,7 @@ public:
         {
         type = TOK_FUNC_FALSE;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1289,7 +1275,7 @@ public:
         {
         type = TOK_FUNC_LANG;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1302,7 +1288,7 @@ public:
         {
         type = TOK_FUNC_NUMBER;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1315,7 +1301,7 @@ public:
         {
         type = TOK_FUNC_SUM;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1328,7 +1314,7 @@ public:
         {
         type = TOK_FUNC_FLOOR;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1341,7 +1327,7 @@ public:
         {
         type = TOK_FUNC_CEILING;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }
@@ -1354,7 +1340,7 @@ public:
         {
         type = TOK_FUNC_ROUND;
         }
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         return true;
         }

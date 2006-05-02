@@ -4,7 +4,7 @@
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *
- * Copyright (C) 2006 MenTaLguY
+ * Copyright (C) 2004 MenTaLguY
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

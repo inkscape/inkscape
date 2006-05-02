@@ -61,12 +61,12 @@ static void style_swatch_tool_attr_changed(Inkscape::XML::Node *repr, gchar cons
                                        bool is_interactive, gpointer data)
 {
     Inkscape::UI::Widget::StyleSwatch *ss = (Inkscape::UI::Widget::StyleSwatch *) data;
- 
+
     if (!strcmp (name, "usecurrent")) { // FIXME: watching only for the style attr, no CSS attrs
         if (!strcmp (new_value, "1")) {
-            ss->setWatched (inkscape_get_repr(INKSCAPE, "desktop"), inkscape_get_repr(INKSCAPE, ss->_tool_path));
+            ss->setWatched (inkscape_get_repr(INKSCAPE, "desktop"));
         } else {
-            ss->setWatched (inkscape_get_repr(INKSCAPE, ss->_tool_path), NULL);
+            ss->setWatched (inkscape_get_repr(INKSCAPE, ss->_tool_path));
         }
         // UGLY HACK: we have to reconnect to the watched tool repr again, retrieving it from the stored
         // tool_path, because the actual repr keeps shifting with each change, no idea why
@@ -161,6 +161,7 @@ StyleSwatch::~StyleSwatch()
     }
 
     if (_watched_tool) {
+        std::cout << " =============remove\n";
         sp_repr_remove_listener_by_data(_watched_tool, this);
         Inkscape::GC::release(_watched_tool);
         _watched_tool = NULL;
@@ -169,7 +170,7 @@ StyleSwatch::~StyleSwatch()
 }
 
 void
-StyleSwatch::setWatched(Inkscape::XML::Node *watched, Inkscape::XML::Node *secondary)
+StyleSwatch::setWatched(Inkscape::XML::Node *watched)
 {
     if (_watched) {
         sp_repr_remove_listener_by_data(_watched, this);
@@ -182,18 +183,6 @@ StyleSwatch::setWatched(Inkscape::XML::Node *watched, Inkscape::XML::Node *secon
         Inkscape::GC::anchor(_watched);
         sp_repr_add_listener(_watched, &style_swatch_repr_events, this);
         sp_repr_synthesize_events(_watched, &style_swatch_repr_events, this);
-
-        // If desktop's last-set style is empty, a tool uses its own fixed style even if set to use
-        // last-set (so long as it's empty). To correctly show this, we're passed the second repr,
-        // that of the tool prefs node, from which we now setStyle if the watched repr's style is
-        // empty.
-        if (secondary) {
-            SPCSSAttr *css = sp_repr_css_attr_inherited(watched, "style");
-            if (sp_repr_children((Inkscape::XML::Node *) css) == NULL) { // is css empty?
-                SPCSSAttr *css_secondary = sp_repr_css_attr_inherited(secondary, "style");
-                this->setStyle (css_secondary);
-            }
-        }
     }
 }
 
