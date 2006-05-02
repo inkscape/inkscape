@@ -27,6 +27,16 @@ private:
     Inkscape::Extension::Extension * extension;
     /** \brief  The name of this parameter. */
     gchar *       _name;
+    /** \brief  Description of the parameter. */
+    gchar *       _desc;
+    /** \brief  List of possible scopes. */
+    typedef enum {
+        SCOPE_USER,     /**<  Parameter value is saved in the user's configuration file. (default) */
+        SCOPE_DOCUMENT, /**<  Parameter value is saved in the document. */
+        SCOPE_NODE      /**<  Parameter value is attached to the node. */
+    } _scope_t;
+    /** \brief  Scope of the parameter. */
+    _scope_t _scope;
 
 protected:
     /** \brief  Text for the GUI selection of this. */
@@ -34,8 +44,17 @@ protected:
     gchar *       pref_name (void);
 
 public:
-    Parameter (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext);
-    virtual ~Parameter(void);
+                  Parameter  (const gchar * name,
+                              const gchar * guitext,
+                              const gchar * desc,
+                              const Parameter::_scope_t scope,
+                              Inkscape::Extension::Extension * ext);
+                  Parameter  (const gchar * name,
+                              const gchar * guitext,
+                              Inkscape::Extension::Extension * ext) {
+                      Parameter(name, guitext, NULL, Parameter::SCOPE_USER, ext);
+                  };
+    virtual      ~Parameter  (void);
     bool          get_bool   (const Inkscape::XML::Document * doc,
                               const Inkscape::XML::Node * node);
     int           get_int    (const Inkscape::XML::Document * doc,

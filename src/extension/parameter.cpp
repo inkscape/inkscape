@@ -34,31 +34,6 @@
 namespace Inkscape {
 namespace Extension {
 
-/*
-template <typename T> class ParamSpecific : public Parameter {
-private:
-    T _value;
-public:
-    ParamSpecific (const gchar * name, const gchar * guitext, Inkscape::Extension * ext, Inkscape::XML::Node * xml);
-    T get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
-    T set (T in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(void);
-    Glib::ustring * string (void);
-};
-
-bool
-ParamSpecific<bool>::get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
-{
-    return _value;
-}
-
-int
-ParamSpecific<int>::get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
-{
-    return _value;
-}
-*/
-
 /** \brief  A boolean parameter */
 class ParamBool : public Parameter {
 private:
@@ -484,14 +459,21 @@ ParamString::~ParamString(void)
 }
 
 /** \brief  Oop, now that we need a parameter, we need it's name.  */
-Parameter::Parameter (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext) :
-    extension(ext), _name(NULL), _text(NULL)
+Parameter::Parameter (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext) :
+    extension(ext), _name(NULL), _desc(NULL), _scope(scope), _text(NULL)
 {
-    _name = g_strdup(name);
+    if (name != NULL)
+        _name = g_strdup(name);
+    if (desc != NULL)
+        _desc = g_strdup(desc);
+
+
     if (guitext != NULL)
         _text = g_strdup(guitext);
     else
         _text = g_strdup(name);
+
+    return;
 }
 
 /** \brief  Just free the allocated name. */
