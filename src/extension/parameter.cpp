@@ -6,7 +6,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005 Authors
+ * Copyright (C) 2005-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
