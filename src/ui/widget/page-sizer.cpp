@@ -243,7 +243,7 @@ PageSizer::init (Registry& reg)
     table->set_row_spacings (4);
     table->set_col_spacings (4);
     
-    Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("Fit page to selection"),
+    Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("_Fit page to selection"),
                     _("Resize the page to fit the current selection, or the entire drawing if there is no selection")));
     // prevent fit_canv from expanding
     Gtk::Alignment *fit_canv_cont = manage(new Gtk::Alignment(1.0,0.5,0.0,0.0));

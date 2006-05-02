@@ -131,12 +131,12 @@ static TokenStringPair tokenStrings[] =
 
 
 /**
- *  Return the enumerated TokenType of this token
+ *  Return the string TokenType of this token
  *  (in the .cpp file)
  */
 DOMString Token::getTypeString()
 {
-    DOMString ret;
+    DOMString ret = "unknown";
     for (TokenStringPair *pair = tokenStrings ; pair->sval ; pair++)
         {
         if (pair->ival == type)
@@ -147,6 +147,8 @@ DOMString Token::getTypeString()
         }
     return ret;
 }
+
+
 
 //########################################################################
 //# X P A T H    A X I S
@@ -166,7 +168,8 @@ Axis::Axis()
  */
 Axis::Axis(int tokPos)
 {
-    assign(other);
+    init();
+    tokenPosition = tokPos;
 }
 
 
@@ -183,7 +186,15 @@ Axis::Axis(const Axis &other)
 /**
  *
  */
-StackItem &StackItem::operator=(const StackItem &other)
+Axis::~Axis()
+{
+}
+
+
+/**
+ *
+ */
+Axis &Axis::operator=(const Axis &other)
 {
     assign(other);
     return *this;
@@ -192,13 +203,50 @@ StackItem &StackItem::operator=(const StackItem &other)
 /**
  *
  */
-void StackItem::assign(const StackItem &other)
+void Axis::init()
 {
-    sval = other.sval;
-    ival = other.ival;
-    dval = other.dval;
+    tokenPosition = 0;
 }
 
+/**
+ *
+ */
+void Axis::assign(const Axis &other)
+{
+    tokenPosition = other.tokenPosition;
+}
+
+/**
+ *
+ */
+void Axis::setPosition(unsigned int val)
+{
+    tokenPosition = val;
+}
+
+/**
+ *
+ */
+unsigned int Axis::getPosition()
+{
+    return tokenPosition;
+}
+
+/**
+ *
+ */
+void Axis::setNode(const Node *val)
+{
+    node = (Node *)val;
+}
+
+/**
+ *
+ */
+Node *Axis::getNode()
+{
+    return node;
+}
 
 //########################################################################
 //# X P A T H    S T A C K    I T E M
@@ -226,36 +274,9 @@ StackItem::StackItem(const StackItem &other)
 /**
  *
  */
-Stack::~Stack()
+StackItem::~StackItem()
 {
 }
-
-
-/**
- *
- */
-void Stack::assign(const Stack &other)
-{
-    root = other.root;
-    nodeList = other.nodeList;
-    size = other.size;
-    for (int i=0 ; i<size ; i++)
-        items[i] = other.items[i];
-}
-
-
-/**
- *
- */
-void Stack::reset()
-{
-    root = NULL;
-    NodeList n; /*no "clear" in api*/
-    nodeList = n;
-    size = 0;
-}
-
-
 
 
 /**
@@ -275,22 +296,6 @@ void StackItem::assign(const StackItem &other)
     sval = other.sval;
     ival = other.ival;
     dval = other.dval;
-}
-
-/**
- * Set the root node
- */
-void Stack::setRootNode(const Node *node)
-{
-    root = (Node *)node;
-}
-
-/**
- * Get the current node list;
- */
-NodeList &Stack::getNodeList()
-{
-    return nodeList;
 }
 
 
@@ -370,22 +375,31 @@ unsigned int TokenList::size() const
 }
 
 
-    Stack stack;
-    stack.setRootNode(root);
-
-    //### Execute the token list
+/**
+ *
+ */
+void TokenList::dump()
+{
     std::vector<Token *>::iterator iter;
     printf("############# TOKENS\n");
     for (iter = tokens.begin() ; iter != tokens.end() ; iter++)
         {
         Token *tok = *iter;
-        tok->execute(stack);
+        tok->dump();
         }
 }
 
-    list = stack.getNodeList();
 
-    return list;
+//########################################################################
+//# X P A T H    E X E C U T O R
+//########################################################################
+
+/**
+ *
+ */
+TokenExecutor::TokenExecutor()
+{
+    reset();
 }
 
 

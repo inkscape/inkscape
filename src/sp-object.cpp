@@ -246,42 +246,18 @@ public:
     }
 };
 
-    RefEvent(SPObject *object, Type type)
-        : _object(stringify(object)),
-          _class_name(Inkscape::Util::share_static_string(g_type_name(G_TYPE_FROM_INSTANCE(object)))),
-          _refcount(G_OBJECT(object)->ref_count),
-          _type(type)
+class RefEvent : public RefCountEvent {
+public:
+    RefEvent(SPObject *object)
+    : RefCountEvent(object, 1, Util::share_static_string("sp-object-ref"))
     {}
 };
 
-    static Category category() { return REFCOUNT; }
-
-    Inkscape::Util::ptr_shared<char> name() const {
-        if ( _type == REF) {
-            return Inkscape::Util::share_static_string("sp-object-ref");
-        } else {
-            return Inkscape::Util::share_static_string("sp-object-unref");
-        }
-    }
-    unsigned propertyCount() const { return 3; }
-    PropertyPair property(unsigned index) const {
-        switch (index) {
-            case 0:
-                return PropertyPair("object", _object);
-            case 1:
-                return PropertyPair("class", _class_name);
-            case 2:
-                return PropertyPair("new-refcount", stringify( _type == REF ? _refcount + 1 : _refcount - 1 ));
-            default:
-                return PropertyPair();
-        }
-    }
-
-private:
-    Inkscape::Util::ptr_shared<char> _object;
-    Inkscape::Util::ptr_shared<char> _class_name;
-    unsigned _refcount;
-    Type _type;
+class UnrefEvent : public RefCountEvent {
+public:
+    UnrefEvent(SPObject *object)
+    : RefCountEvent(object, -1, Util::share_static_string("sp-object-unref"))
+    {}
 };
 
 }
@@ -300,7 +276,7 @@ sp_object_ref(SPObject *object, SPObject *owner)
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
     g_return_val_if_fail(!owner || SP_IS_OBJECT(owner), NULL);
 
-    Inkscape::Debug::EventTracker<RefEvent> tracker(object, RefEvent::REF);
+    Inkscape::Debug::EventTracker<RefEvent> tracker(object);
     g_object_ref(G_OBJECT(object));
     return object;
 }
@@ -320,7 +296,7 @@ sp_object_unref(SPObject *object, SPObject *owner)
     g_return_val_if_fail(SP_IS_OBJECT(object), NULL);
     g_return_val_if_fail(!owner || SP_IS_OBJECT(owner), NULL);
 
-    Inkscape::Debug::EventTracker<RefEvent> tracker(object, RefEvent::UNREF);
+    Inkscape::Debug::EventTracker<UnrefEvent> tracker(object);
     g_object_unref(G_OBJECT(object));
     return NULL;
 }

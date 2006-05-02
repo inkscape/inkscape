@@ -1,3 +1,83 @@
+2006-05-01  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/Makefile.am, src/Makefile_insert, src/attributes-test.h,
+	  src/color-profile-test.h, src/mod360-test.cpp, src/mod360-test.h,
+	  src/round-test.cpp, src/round-test.h, src/sp-gradient-test.cpp,
+	  src/sp-gradient-test.h, src/sp-style-elem-test.cpp,
+	  src/sp-style-elem-test.h, src/style-test.h, src/test-helpers.h:
+	  Replaced four more tests with CxxTest versions.
+
+2006-05-01  MenTaLguY  <mental@rydia.net>
+
+	* src/display/nr-arena-item.cpp:
+
+	  use GC allocator for bitmap cache and transform
+
+2006-05-01  Marco Scholten  <mscholtn@xs4all.nl>
+
+	* src/dialogs/inkscape-preferences.cpp: Moved 'compass like
+    display of angles' from 'windows' to 'steps'.
+
+2006-04-30  MenTaLguY  <mental@rydia.net>
+
+	* src/libnr/nr-object.cpp:
+
+	  log finalization of NRObjects
+
+2006-04-29  Jon Phillips  <jon@rejon.org>
+
+	* src/dialogs/rdf.cpp: Updated cc licenses to 2.5 by default.
+
+	* src/ui/dialog/document-metadata.cpp: Made metadata window
+	resizable so that one can see the licenses and enter long entries.
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/display/nr-arena-group.cpp, src/display/nr-arena-item.cpp,
+	  src/display/nr-arena-item.h, src/display/nr-arena-shape.cpp:
+
+	  rationalize function names and remove spurious soft_ptr
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/document.cpp:
+	
+	  use proper unref function on SPRoot to avoid appearance of leak
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/gc-anchored.cpp, src/xml/simple-node.cpp, src/sp-object.cpp:
+
+	  switch everyone to simpler debug event API
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/Makefile_insert, src/gc-finalized.cpp, src/gc-finalized.h:
+
+	  add finalizer logging
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/debug/simple-event.h: simplify the SimpleEvent API more
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/debug/simple-event.h: make Debug::SimpleEvent more convenient
+
+	* src/debug/event.h, src/debug/logger.cpp: add FINALIZERS category
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/debug/logger.cpp:
+	
+	finish interrupted refactoring of log filter configuration
+
+2006-04-29  MenTaLguY  <mental@rydia.net>
+
+	* src/doc/Makefile.am, src/doc/refcounting.txt:
+	
+	  some developer documentation about refcounting
+
 2006-04-29  MenTaLguY  <mental@rydia.net>
 
 	* src/ui/view/view.cpp:

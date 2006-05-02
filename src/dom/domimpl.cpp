@@ -936,7 +936,7 @@ NodeImpl::NodeImpl() : Node()
 /**
  *
  */
-NodeImpl::NodeImpl(const NodeImpl &other)
+NodeImpl::NodeImpl(const NodeImpl &other) : Node()
 {
     init();
     assign(other);

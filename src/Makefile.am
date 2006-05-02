@@ -166,10 +166,6 @@ EXTRA_PROGRAMS =	\
 
 TESTS =	\
 	test-all$(EXEEXT)	\
-	mod360-test$(EXEEXT)	\
-	round-test$(EXEEXT)	\
-	sp-gradient-test$(EXEEXT)	\
-	sp-style-elem-test$(EXEEXT)	\
 	style-test$(EXEEXT)	\
 	display/bezier-utils-test$(EXEEXT)	\
 	helper/units-test$(EXEEXT)	\
@@ -198,10 +194,6 @@ TESTS =	\
 
 check_PROGRAMS =	\
 	test-all	\
-	mod360-test	\
-	round-test	\
-	sp-gradient-test	\
-	sp-style-elem-test	\
 	style-test	\
 	display/bezier-utils-test	\
 	helper/units-test	\
