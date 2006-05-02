@@ -515,17 +515,7 @@ Parameter::pref_name (void)
 Inkscape::XML::Node *
 Parameter::find_child (Inkscape::XML::Node * adult)
 {
-    Inkscape::XML::Node * retval = NULL;
-    for (retval = adult->firstChild();
-            retval != NULL;
-            retval = retval->next()) {
-        gchar const * name = retval->attribute("name");
-        if (name == NULL) continue;
-        if (!strcmp(name, _name))
-            break;
-    }
-
-    return retval;
+    return sp_repr_lookup_child(adult, "name", _name);
 }
 
 Inkscape::XML::Node *
@@ -533,7 +523,6 @@ Parameter::new_child (Inkscape::XML::Node * parent)
 {
     Inkscape::XML::Node * retval;
     retval = sp_repr_new("inkscape:extension-param");
-    retval->setAttribute("extension", extension->get_id());
     retval->setAttribute("name", _name);
 
     parent->appendChild(retval);
@@ -546,10 +535,13 @@ Parameter::document_param_node (SPDocument * doc)
     Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
     Inkscape::XML::Node * params = NULL;
 
+    GQuark const name_quark = g_quark_from_string("inkscape:extension-params");
+
     for (Inkscape::XML::Node * child = defs->firstChild();
             child != NULL;
             child = child->next()) {
-        if (!strcmp(child->name(), "inkscape:extension-param")) {
+        if ((GQuark)child->code() == name_quark &&
+                !strcmp(child->attribute("extension"), extension->get_id())) {
             params = child;
             break;
         }
@@ -557,6 +549,7 @@ Parameter::document_param_node (SPDocument * doc)
 
     if (params == NULL) {
         params = sp_repr_new("inkscape:extension-param");
+        params->setAttribute("extension", extension->get_id());
         defs->appendChild(params);
     }
 
