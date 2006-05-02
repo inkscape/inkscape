@@ -10,6 +10,7 @@
 #ifndef INKSCAPE_EXTENSION_PATHEFFECT_H__
 #define INKSCAPE_EXTENSION_PATHEFFECT_H__
 
+#include "document.h"
 #include "extension.h"
 
 namespace Inkscape {
@@ -21,8 +22,11 @@ public:
                  PathEffect  (Inkscape::XML::Node * in_repr,
                               Implementation::Implementation * in_imp);
     virtual     ~PathEffect  (void);
-    void         processPath (Inkscape::XML::Node * node);
-
+    void         processPath (SPDocument * doc,
+                              Inkscape::XML::Node * path,
+                              Inkscape::XML::Node * def);
+    static void  processPathEffects (SPDocument * doc,
+                                     Inkscape::XML::Node * path);
 }; /* PathEffect */
 
 
