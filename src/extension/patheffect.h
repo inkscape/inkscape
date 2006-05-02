@@ -18,9 +18,7 @@ public:
                  PathEffect  (Inkscape::XML::Node * in_repr,
                               Implementation::Implementation * in_imp);
     virtual     ~PathEffect  (void);
-    gchar *      processPath (gchar * path_data,
-                              gchar * pressure,
-                              gchar * tilt);
+    void         processPath (Inkscape::XML::Node * node);
 
 }; /* PathEffect */
 

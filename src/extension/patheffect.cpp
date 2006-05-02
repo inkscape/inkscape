@@ -23,8 +23,8 @@ PathEffect::~PathEffect (void)
 
 }
 
-gchar *
-PathEffect::processPath (gchar * path_data, gchar * pressure, gchar * tilt)
+void
+PathEffect::processPath (Inkscape::XML::Node * node)
 {
 
 

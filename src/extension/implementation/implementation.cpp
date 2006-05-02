@@ -150,6 +150,12 @@ Implementation::text(Inkscape::Extension::Print *module, char const *text,
     return 0;
 }
 
+void
+Implementation::processPath(Inkscape::XML::Node * node)
+{
+    return g_strdup(path);
+}
+
 /**
    \brief  Tell the printing engine whether text should be text or path
    \retval true  Render the text as a path

@@ -107,6 +107,7 @@ public:
                           char const *text,
                           NR::Point p,
                           SPStyle const *style);
+    virtual void     processPath(Inkscape::XML::Node * node);
 };
 
 }  /* namespace Implementation */
