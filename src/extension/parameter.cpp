@@ -34,6 +34,31 @@
 namespace Inkscape {
 namespace Extension {
 
+/*
+template <typename T> class ParamSpecific : public Parameter {
+private:
+    T _value;
+public:
+    ParamSpecific (const gchar * name, const gchar * guitext, Inkscape::Extension * ext, Inkscape::XML::Node * xml);
+    T get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
+    T set (T in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(void);
+    Glib::ustring * string (void);
+};
+
+bool
+ParamSpecific<bool>::get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+{
+    return _value;
+}
+
+int
+ParamSpecific<int>::get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+{
+    return _value;
+}
+*/
+
 /** \brief  A boolean parameter */
 class ParamBool : public Parameter {
 private:
@@ -43,7 +68,7 @@ public:
     ParamBool(const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
     bool get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    bool set (bool in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
+    bool set (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(void);
     Glib::ustring * string (void);
 };
@@ -79,7 +104,7 @@ public:
     ParamInt (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
     int get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    int set (int in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
+    int set (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
     int max (void) { return _max; }
     int min (void) { return _min; }
     Gtk::Widget * get_widget(void);
@@ -133,7 +158,7 @@ public:
     ParamFloat (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
     float get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    float set (float in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
+    float set (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
     Gtk::Widget * get_widget(void);
@@ -187,7 +212,7 @@ public:
     ~ParamString(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
     const gchar * get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    const gchar * set (const gchar * in, Inkscape::XML::Document * doc, const Inkscape::XML::Node * node);
+    const gchar * set (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
     Gtk::Widget * get_widget(void);
     Glib::ustring * string (void);
 };
@@ -363,7 +388,7 @@ Parameter::get_int (const Inkscape::XML::Document * doc, const Inkscape::XML::No
     intpntr = dynamic_cast<ParamInt *>(this);
     if (intpntr == NULL)
         throw Extension::param_wrong_type();
-    return intpntr->get(doc);
+    return intpntr->get(doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -374,7 +399,7 @@ Parameter::get_float (const Inkscape::XML::Document * doc, const Inkscape::XML::
     floatpntr = dynamic_cast<ParamFloat *>(this);
     if (floatpntr == NULL)
         throw Extension::param_wrong_type();
-    return floatpntr->get(doc);
+    return floatpntr->get(doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -385,7 +410,7 @@ Parameter::get_string (const Inkscape::XML::Document * doc, const Inkscape::XML:
     stringpntr = dynamic_cast<ParamString *>(this);
     if (stringpntr == NULL)
         throw Extension::param_wrong_type();
-    return stringpntr->get(doc);
+    return stringpntr->get(doc, node);
 }
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
@@ -508,7 +533,7 @@ public:
                 describing the parameter. */
     ParamFloatAdjustment (ParamFloat * param) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 0.1), _pref(param) {
-        this->set_value(_pref->get(NULL) /* \todo fix */);
+        this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamFloatAdjustment::val_changed));
         return;
     };
@@ -526,7 +551,7 @@ void
 ParamFloatAdjustment::val_changed (void)
 {
     // std::cout << "Value Changed to: " << this->get_value() << std::endl;
-    _pref->set(this->get_value(), NULL /* \todo fix */);
+    _pref->set(this->get_value(), NULL /* \todo fix */, NULL);
     return;
 }
 
@@ -539,7 +564,7 @@ public:
                 describing the parameter. */
     ParamIntAdjustment (ParamInt * param) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param) {
-        this->set_value(_pref->get(NULL) /* \todo fix */);
+        this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
         return;
     };
@@ -557,7 +582,7 @@ void
 ParamIntAdjustment::val_changed (void)
 {
     // std::cout << "Value Changed to: " << this->get_value() << std::endl;
-    _pref->set((int)this->get_value(), NULL /* \todo fix */);
+    _pref->set((int)this->get_value(), NULL /* \todo fix */, NULL);
     return;
 }
 
@@ -625,7 +650,7 @@ public:
     */
     ParamBoolCheckButton (ParamBool * param) :
             Gtk::CheckButton(), _pref(param) {
-        this->set_active(_pref->get(NULL) /**\todo fix */);
+        this->set_active(_pref->get(NULL, NULL) /**\todo fix */);
         this->signal_toggled().connect(sigc::mem_fun(this, &ParamBoolCheckButton::on_toggle));
         return;
     }
@@ -640,7 +665,7 @@ public:
 void
 ParamBoolCheckButton::on_toggle (void)
 {
-    _pref->set(this->get_active(), NULL /**\todo fix this */);
+    _pref->set(this->get_active(), NULL /**\todo fix this */, NULL);
     return;
 }
 
@@ -678,8 +703,8 @@ public:
     */
     ParamStringEntry (ParamString * pref) :
         Gtk::Entry(), _pref(pref) {
-        if (_pref->get(NULL) != NULL)
-            this->set_text(Glib::ustring(_pref->get(NULL)));
+        if (_pref->get(NULL, NULL) != NULL)
+            this->set_text(Glib::ustring(_pref->get(NULL, NULL)));
         this->signal_changed().connect(sigc::mem_fun(this, &ParamStringEntry::changed_text));
     };
     void changed_text (void);
@@ -694,7 +719,7 @@ void
 ParamStringEntry::changed_text (void)
 {
     Glib::ustring data = this->get_text();
-    _pref->set(data.c_str(), NULL);
+    _pref->set(data.c_str(), NULL, NULL);
     return;
 }
 
