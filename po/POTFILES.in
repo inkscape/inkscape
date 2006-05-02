@@ -329,7 +329,7 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/ai_output.inx
 [type: gettext/xml] share/extensions/dia.inx
 [type: gettext/xml] share/extensions/dots.inx
-[type: gettext/xml] share/extensions/dropshadow.inx
+[type: gettext/xml] share/extensions/svg_dropshadow.inx
 [type: gettext/xml] share/extensions/dxf_input.inx
 [type: gettext/xml] share/extensions/dxf_output.inx
 [type: gettext/xml] share/extensions/dxf_outlines.inx
