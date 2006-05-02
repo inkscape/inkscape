@@ -22,6 +22,8 @@
 
 #include <glibmm/i18n.h>
 
+#include <xml/node.h>
+
 #include "extension.h"
 #include "prefs-utils.h"
 #include "document-private.h"
@@ -44,9 +46,9 @@ private:
 public:
     ParamBool(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    bool get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    bool set (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(void);
+    bool get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    bool set (bool in, SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
     Glib::ustring * string (void);
 };
 
@@ -80,11 +82,11 @@ private:
 public:
     ParamInt (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    int get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    int set (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    int get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    int set (int in, SPDocument * doc, Inkscape::XML::Node * node);
     int max (void) { return _max; }
     int min (void) { return _min; }
-    Gtk::Widget * get_widget(void);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
     Glib::ustring * string (void);
 };
 
@@ -134,11 +136,11 @@ private:
 public:
     ParamFloat (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     /** \brief  Returns \c _value */
-    float get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    float set (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    float get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    float set (float in, SPDocument * doc, Inkscape::XML::Node * node);
     float max (void) { return _max; }
     float min (void) { return _min; }
-    Gtk::Widget * get_widget(void);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
     Glib::ustring * string (void);
 };
 
@@ -188,9 +190,9 @@ public:
     ParamString(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     ~ParamString(void);
     /** \brief  Returns \c _value, with a \i const to protect it. */
-    const gchar * get (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node) { return _value; }
-    const gchar * set (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
-    Gtk::Widget * get_widget(void);
+    const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _value; }
+    const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
     Glib::ustring * string (void);
 };
 
@@ -277,7 +279,7 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     and \c pref_name() are used.
 */
 bool
-ParamBool::set (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+ParamBool::set (bool in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     _value = in;
 
@@ -298,7 +300,7 @@ ParamBool::set (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * no
     and \c pref_name() are used.
 */
 int
-ParamInt::set (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+ParamInt::set (int in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     _value = in;
     if (_value > _max) _value = _max;
@@ -321,7 +323,7 @@ ParamInt::set (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node
     and \c pref_name() are used.
 */
 float
-ParamFloat::set (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+ParamFloat::set (float in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     _value = in;
     if (_value > _max) _value = _max;
@@ -348,7 +350,7 @@ ParamFloat::set (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * 
     the passed in value is duplicated using \c g_strdup().
 */
 const gchar *
-ParamString::set (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+ParamString::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     if (in == NULL) return NULL; /* Can't have NULL string */
 
@@ -365,7 +367,7 @@ ParamString::set (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
-Parameter::get_bool (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Parameter::get_bool (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     ParamBool * boolpntr;
     boolpntr = dynamic_cast<ParamBool *>(this);
@@ -376,7 +378,7 @@ Parameter::get_bool (const Inkscape::XML::Document * doc, const Inkscape::XML::N
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 int
-Parameter::get_int (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Parameter::get_int (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     ParamInt * intpntr;
     intpntr = dynamic_cast<ParamInt *>(this);
@@ -387,7 +389,7 @@ Parameter::get_int (const Inkscape::XML::Document * doc, const Inkscape::XML::No
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 float
-Parameter::get_float (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Parameter::get_float (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     ParamFloat * floatpntr;
     floatpntr = dynamic_cast<ParamFloat *>(this);
@@ -398,7 +400,7 @@ Parameter::get_float (const Inkscape::XML::Document * doc, const Inkscape::XML::
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::get_string (const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Parameter::get_string (const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     ParamString * stringpntr;
     stringpntr = dynamic_cast<ParamString *>(this);
@@ -409,7 +411,7 @@ Parameter::get_string (const Inkscape::XML::Document * doc, const Inkscape::XML:
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 bool
-Parameter::set_bool (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Parameter::set_bool (bool in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     ParamBool * boolpntr;
     boolpntr = dynamic_cast<ParamBool *>(this);
@@ -420,7 +422,7 @@ Parameter::set_bool (bool in, Inkscape::XML::Document * doc, Inkscape::XML::Node
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 int
-Parameter::set_int (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Parameter::set_int (int in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     ParamInt * intpntr;
     intpntr = dynamic_cast<ParamInt *>(this);
@@ -431,7 +433,7 @@ Parameter::set_int (int in, Inkscape::XML::Document * doc, Inkscape::XML::Node *
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 float
-Parameter::set_float (float in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Parameter::set_float (float in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     ParamFloat * floatpntr;
     floatpntr = dynamic_cast<ParamFloat *>(this);
@@ -442,7 +444,7 @@ Parameter::set_float (float in, Inkscape::XML::Document * doc, Inkscape::XML::No
 
 /** \brief  Wrapper to cast to the object and use it's function.  */
 const gchar *
-Parameter::set_string (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Parameter::set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
 {
     ParamString * stringpntr;
     stringpntr = dynamic_cast<ParamString *>(this);
@@ -558,7 +560,7 @@ Parameter::document_param_node (SPDocument * doc)
 
 /** \brief  Basically, if there is no widget pass a NULL. */
 Gtk::Widget *
-Parameter::get_widget (void)
+Parameter::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
     return NULL;
 }
@@ -575,11 +577,13 @@ Parameter::string (void)
 class ParamFloatAdjustment : public Gtk::Adjustment {
     /** The parameter to adjust */
     ParamFloat * _pref;
+    SPDocument * _doc;
+    Inkscape::XML::Node * _node;
 public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
-    ParamFloatAdjustment (ParamFloat * param) :
-            Gtk::Adjustment(0.0, param->min(), param->max(), 0.1), _pref(param) {
+    ParamFloatAdjustment (ParamFloat * param, SPDocument * doc, Inkscape::XML::Node * node) :
+            Gtk::Adjustment(0.0, param->min(), param->max(), 0.1), _pref(param), _doc(doc), _node(node) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamFloatAdjustment::val_changed));
         return;
@@ -598,7 +602,7 @@ void
 ParamFloatAdjustment::val_changed (void)
 {
     // std::cout << "Value Changed to: " << this->get_value() << std::endl;
-    _pref->set(this->get_value(), NULL /* \todo fix */, NULL);
+    _pref->set(this->get_value(), _doc, _node);
     return;
 }
 
@@ -606,11 +610,13 @@ ParamFloatAdjustment::val_changed (void)
 class ParamIntAdjustment : public Gtk::Adjustment {
     /** The parameter to adjust */
     ParamInt * _pref;
+    SPDocument * _doc;
+    Inkscape::XML::Node * _node;
 public:
     /** \brief  Make the adjustment using an extension and the string
                 describing the parameter. */
-    ParamIntAdjustment (ParamInt * param) :
-            Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param) {
+    ParamIntAdjustment (ParamInt * param, SPDocument * doc, Inkscape::XML::Node * node) :
+            Gtk::Adjustment(0.0, param->min(), param->max(), 1.0), _pref(param), _doc(doc), _node(node) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
         return;
@@ -629,7 +635,7 @@ void
 ParamIntAdjustment::val_changed (void)
 {
     // std::cout << "Value Changed to: " << this->get_value() << std::endl;
-    _pref->set((int)this->get_value(), NULL /* \todo fix */, NULL);
+    _pref->set((int)this->get_value(), _doc, _node);
     return;
 }
 
@@ -639,7 +645,7 @@ ParamIntAdjustment::val_changed (void)
     Builds a hbox with a label and a float adjustment in it.
 */
 Gtk::Widget *
-ParamFloat::get_widget (void)
+ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
@@ -647,7 +653,7 @@ ParamFloat::get_widget (void)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this));
+    ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this, doc, node));
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, 1));
     spin->show();
     hbox->pack_start(*spin, false, false);
@@ -663,7 +669,7 @@ ParamFloat::get_widget (void)
     Builds a hbox with a label and a int adjustment in it.
 */
 Gtk::Widget *
-ParamInt::get_widget (void)
+ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
@@ -671,7 +677,7 @@ ParamInt::get_widget (void)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this));
+    ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this, doc, node));
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 1.0, 0));
     spin->show();
     hbox->pack_start(*spin, false, false);
@@ -688,6 +694,8 @@ class ParamBoolCheckButton : public Gtk::CheckButton {
 private:
     /** \brief  Param to change */
     ParamBool * _pref;
+    SPDocument * _doc;
+    Inkscape::XML::Node * _node;
 public:
     /** \brief  Initialize the check button
         \param  param  Which parameter to adjust on changing the check button
@@ -695,8 +703,8 @@ public:
         This function sets the value of the checkbox to be that of the
         parameter, and then sets up a callback to \c on_toggle.
     */
-    ParamBoolCheckButton (ParamBool * param) :
-            Gtk::CheckButton(), _pref(param) {
+    ParamBoolCheckButton (ParamBool * param, SPDocument * doc, Inkscape::XML::Node * node) :
+            Gtk::CheckButton(), _pref(param), _doc(doc), _node(node) {
         this->set_active(_pref->get(NULL, NULL) /**\todo fix */);
         this->signal_toggled().connect(sigc::mem_fun(this, &ParamBoolCheckButton::on_toggle));
         return;
@@ -722,7 +730,7 @@ ParamBoolCheckButton::on_toggle (void)
     Builds a hbox with a label and a check button in it.
 */
 Gtk::Widget *
-ParamBool::get_widget (void)
+ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
@@ -730,7 +738,7 @@ ParamBool::get_widget (void)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamBoolCheckButton * checkbox = new ParamBoolCheckButton(this);
+    ParamBoolCheckButton * checkbox = new ParamBoolCheckButton(this, doc, node);
     checkbox->show();
     hbox->pack_start(*checkbox, false, false);
 
@@ -743,13 +751,15 @@ ParamBool::get_widget (void)
 class ParamStringEntry : public Gtk::Entry {
 private:
     ParamString * _pref;
+    SPDocument * _doc;
+    Inkscape::XML::Node * _node;
 public:
     /** \brief  Build a string preference for the given parameter
         \param  pref  Where to get the string from, and where to put it
                       when it changes.
     */
-    ParamStringEntry (ParamString * pref) :
-        Gtk::Entry(), _pref(pref) {
+    ParamStringEntry (ParamString * pref, SPDocument * doc, Inkscape::XML::Node * node) :
+        Gtk::Entry(), _pref(pref), _doc(doc), _node(node) {
         if (_pref->get(NULL, NULL) != NULL)
             this->set_text(Glib::ustring(_pref->get(NULL, NULL)));
         this->signal_changed().connect(sigc::mem_fun(this, &ParamStringEntry::changed_text));
@@ -766,7 +776,7 @@ void
 ParamStringEntry::changed_text (void)
 {
     Glib::ustring data = this->get_text();
-    _pref->set(data.c_str(), NULL, NULL);
+    _pref->set(data.c_str(), _doc, _node);
     return;
 }
 
@@ -776,7 +786,7 @@ ParamStringEntry::changed_text (void)
     Builds a hbox with a label and a text box in it.
 */
 Gtk::Widget *
-ParamString::get_widget (void)
+ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
 
@@ -784,7 +794,7 @@ ParamString::get_widget (void)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamStringEntry * textbox = new ParamStringEntry(this);
+    ParamStringEntry * textbox = new ParamStringEntry(this, doc, node);
     textbox->show();
     hbox->pack_start(*textbox, false, false);
 

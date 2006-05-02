@@ -46,7 +46,7 @@ Implementation::check(Inkscape::Extension::Extension *module) {
 
 Gtk::Widget *
 Implementation::prefs_input(Inkscape::Extension::Input *module, gchar const *filename) {
-    return module->autogui();
+    return module->autogui(NULL, NULL);
 } /* Implementation::prefs_input */
 
 SPDocument *
@@ -57,7 +57,7 @@ Implementation::open(Inkscape::Extension::Input *module, gchar const *filename) 
 
 Gtk::Widget *
 Implementation::prefs_output(Inkscape::Extension::Output *module) {
-    return module->autogui();
+    return module->autogui(NULL, NULL);
 } /* Implementation::prefs_output */
 
 void
@@ -68,7 +68,7 @@ Implementation::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar
 
 Gtk::Widget *
 Implementation::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view) {
-    return module->autogui();
+    return module->autogui(NULL, NULL);
 } /* Implementation::prefs_effect */
 
 void

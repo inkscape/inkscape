@@ -380,7 +380,7 @@ Script::prefs_output(Inkscape::Extension::Output *module)
 Gtk::Widget *
 Script::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view)
 {
-    return module->autogui();
+    return module->autogui(NULL, NULL);
 }
 
 /**

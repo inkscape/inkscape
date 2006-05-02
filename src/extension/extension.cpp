@@ -412,7 +412,7 @@ param_shared (const gchar * name, GSList * list)
     found parameter.
 */
 const gchar *
-Extension::get_param_string (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Extension::get_param_string (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
@@ -432,7 +432,7 @@ Extension::get_param_string (const gchar * name, const Inkscape::XML::Document *
     found parameter.
 */
 bool
-Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Extension::get_param_bool (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
@@ -452,7 +452,7 @@ Extension::get_param_bool (const gchar * name, const Inkscape::XML::Document * d
     found parameter.
 */
 int
-Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Extension::get_param_int (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
 
@@ -472,7 +472,7 @@ Extension::get_param_int (const gchar * name, const Inkscape::XML::Document * do
     found parameter.
 */
 float
-Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * doc, const Inkscape::XML::Node * node)
+Extension::get_param_float (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -492,7 +492,7 @@ Extension::get_param_float (const gchar * name, const Inkscape::XML::Document * 
     found parameter.
 */
 bool
-Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Extension::set_param_bool (const gchar * name, bool value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -512,7 +512,7 @@ Extension::set_param_bool (const gchar * name, bool value, Inkscape::XML::Docume
     found parameter.
 */
 int
-Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Extension::set_param_int (const gchar * name, int value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -532,7 +532,7 @@ Extension::set_param_int (const gchar * name, int value, Inkscape::XML::Document
     found parameter.
 */
 float
-Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Extension::set_param_float (const gchar * name, float value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -552,7 +552,7 @@ Extension::set_param_float (const gchar * name, float value, Inkscape::XML::Docu
     found parameter.
 */
 const gchar *
-Extension::set_param_string (const gchar * name, const gchar * value, Inkscape::XML::Document * doc, Inkscape::XML::Node * node)
+Extension::set_param_string (const gchar * name, const gchar * value, SPDocument * doc, Inkscape::XML::Node * node)
 {
     Parameter * param;
     param = param_shared(name, parameters);
@@ -616,7 +616,7 @@ public:
     If there are no parameters, this function just returns NULL.
 */
 Gtk::Widget *
-Extension::autogui (void)
+Extension::autogui (SPDocument * doc, Inkscape::XML::Node * node)
 {
     if (g_slist_length(parameters) == 0) return NULL;
 
@@ -624,7 +624,7 @@ Extension::autogui (void)
 
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
-        Gtk::Widget * widg = param->get_widget();
+        Gtk::Widget * widg = param->get_widget(doc, node);
         gchar const * tip = param->get_tooltip();
         agui->addWidget(widg, tip);
     }

@@ -68,24 +68,24 @@ public:
                       Parameter(name, guitext, NULL, Parameter::SCOPE_USER, ext);
                   };
     virtual      ~Parameter  (void);
-    bool          get_bool   (const Inkscape::XML::Document * doc,
+    bool          get_bool   (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
-    int           get_int    (const Inkscape::XML::Document * doc,
+    int           get_int    (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
-    float         get_float  (const Inkscape::XML::Document * doc,
+    float         get_float  (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
-    const gchar * get_string (const Inkscape::XML::Document * doc,
+    const gchar * get_string (const SPDocument * doc,
                               const Inkscape::XML::Node * node);
 
-    bool          set_bool   (bool in,          Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
-    int           set_int    (int  in,          Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
-    float         set_float  (float in,         Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
-    const gchar * set_string (const gchar * in, Inkscape::XML::Document * doc, Inkscape::XML::Node * node);
+    bool          set_bool   (bool in,          SPDocument * doc, Inkscape::XML::Node * node);
+    int           set_int    (int  in,          SPDocument * doc, Inkscape::XML::Node * node);
+    float         set_float  (float in,         SPDocument * doc, Inkscape::XML::Node * node);
+    const gchar * set_string (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
 
     const gchar * name       (void) {return _name;}
 
     static Parameter * make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
-    virtual Gtk::Widget * get_widget (void);
+    virtual Gtk::Widget * get_widget (SPDocument * doc, Inkscape::XML::Node * node);
     virtual Glib::ustring * string (void);
     gchar const * get_tooltip (void) { return _desc; }
 };
