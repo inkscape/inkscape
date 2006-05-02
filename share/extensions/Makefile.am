@@ -66,7 +66,7 @@ modules = \
 	eps_input.inx \
 	sk_input.inx \
 	wmf_input.inx \
-	dropshadow.inx \
+	svg_dropshadow.inx \
 	dia.inx \
 	epsi_output.inx \
 	pdf_output.inx \
