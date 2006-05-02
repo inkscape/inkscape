@@ -32,6 +32,8 @@ extension_libextension_a_SOURCES =	\
 	extension/output.cpp \
 	extension/effect.h \
 	extension/effect.cpp \
+	extension/patheffect.h \
+	extension/patheffect.cpp \
 	extension/print.h \
 	extension/print.cpp
 
