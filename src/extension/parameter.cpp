@@ -601,7 +601,7 @@ ParamFloat::get_widget (void)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamFloatAdjustment * fadjust = new ParamFloatAdjustment(this);
+    ParamFloatAdjustment * fadjust = Gtk::manage(new ParamFloatAdjustment(this));
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 0.1, 1));
     spin->show();
     hbox->pack_start(*spin, false, false);
@@ -625,7 +625,7 @@ ParamInt::get_widget (void)
     label->show();
     hbox->pack_start(*label, true, true);
 
-    ParamIntAdjustment * fadjust = new ParamIntAdjustment(this);
+    ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this));
     Gtk::SpinButton * spin = Gtk::manage(new Gtk::SpinButton(*fadjust, 1.0, 0));
     spin->show();
     hbox->pack_start(*spin, false, false);
