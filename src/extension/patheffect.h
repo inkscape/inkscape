@@ -7,6 +7,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifndef INKSCAPE_EXTENSION_PATHEFFECT_H__
+#define INKSCAPE_EXTENSION_PATHEFFECT_H__
+
 #include "extension.h"
 
 namespace Inkscape {
@@ -24,7 +27,7 @@ public:
 
 
 } }  /* namespace Inkscape, Extension */
-#endif /* INKSCAPE_EXTENSION_EFFECT_H__ */
+#endif /* INKSCAPE_EXTENSION_PATHEFFECT_H__ */
 
 /*
   Local Variables:
