@@ -27,12 +27,18 @@ namespace Extension {
     them.  It also places the passed in widgets into the dialog.
 */
 PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls) :
-    Gtk::Dialog::Dialog(name + _(" Preferences"), true, true), _help(help), _name(name)
+    Gtk::Dialog::Dialog("Temp Title", true, true), _help(help), _name(name)
 {
+    /* A hack to internationalize the title properly */
+    gchar * title = g_strdup_printf(_("%s Preferences"), name.c_str());
+    this->set_title(title);
+    g_free(title);
+
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
     hbox->pack_start(*controls, true, true, 6);
     hbox->show();
     this->get_vbox()->pack_start(*hbox, true, true, 6);
+
 
     /*
     Gtk::Button * help_button = add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
