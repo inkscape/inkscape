@@ -380,7 +380,15 @@ Script::prefs_output(Inkscape::Extension::Output *module)
 Gtk::Widget *
 Script::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view)
 {
-    return module->autogui(NULL, NULL);
+    SPDocument * current_document = view->doc();
+
+    using Inkscape::Util::GSListConstIterator;
+    GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
+    Inkscape::XML::Node * first_select = NULL;
+    if (selected != NULL) 
+        first_select = SP_OBJECT_REPR(*selected);
+
+    return module->autogui(current_document, first_select);
 }
 
 /**
