@@ -87,12 +87,6 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv,
                                                    std::list<SPItem const *> const &it
                                                    );
 
-std::pair<NR::Coord, bool> namedview_dim_snap_list(SPNamedView const *nv,
-                                                   Inkscape::Snapper::PointType t, const std::vector<NR::Point> &p,
-                                                   double const dx, NR::Dim2 const dim,
-                                                   std::list<SPItem const *> const &it
-                                                   );
-
 std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv,
                                                       Inkscape::Snapper::PointType t, const std::vector<NR::Point> &p,
                                                       NR::Point const &norm, double const sx,

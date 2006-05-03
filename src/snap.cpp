@@ -251,37 +251,6 @@ NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointT
  */
 
 /**
- * Snap list of points in one dimension.
- * \return Coordinate difference.
- */
-std::pair<NR::Coord, bool> namedview_dim_snap_list(SPNamedView const *nv, Inkscape::Snapper::PointType t,
-                                                   const std::vector<NR::Point> &p,
-                                                   NR::Coord const dx, NR::Dim2 const dim,
-                                                   std::list<SPItem const *> const &it
-                                                   )
-{
-    NR::Coord dist = NR_HUGE;
-    NR::Coord xdist = dx;
-
-    SnapManager const &m = nv->snap_manager;
-
-    if (m.willSnapSomething()) {
-        for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
-            NR::Point q = *i;
-            NR::Coord const pre = q[dim];
-            q[dim] += dx;
-            NR::Coord const d = namedview_dim_snap(nv, t, q, dim, it);
-            if (d < dist) {
-                xdist = q[dim] - pre;
-                dist = d;
-            }
-        }
-    }
-
-    return std::make_pair(xdist, dist < NR_HUGE);
-}
-
-/**
  * Snap list of points in two dimensions.
  */
 std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inkscape::Snapper::PointType t,
