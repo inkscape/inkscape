@@ -60,10 +60,6 @@ namespace Inkscape {
 
 namespace Whiteboard {
 
-#ifdef WIN32
-static bool lm_initialize_called = false;
-#endif
-
 SessionData::SessionData(SessionManager *sm)
 {
 	this->_sm = sm;
@@ -109,10 +105,12 @@ SessionManager::SessionManager(::SPDesktop *desktop)
 
 #ifdef WIN32
     //# lm_initialize() must be called before any network code
+/*
     if (!lm_initialize_called) {
         lm_initialize();
         lm_initialize_called = true;
 	}
+*/
 #endif
 
 	this->_setVerbSensitivity(INITIAL);
@@ -212,6 +210,9 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 
 	lm_connection_set_port(this->session_data->connection, atoi(port.c_str()));
 
+        g_log(NULL, G_LOG_LEVEL_DEBUG, "Opened connection to %s at port %s.  Connecting...",
+                    server.c_str(), port.c_str());
+
 	if (usessl) {
 		if (lm_ssl_is_supported()) {
 			this->session_data->ssl = lm_ssl_new(NULL, ssl_error_handler, reinterpret_cast< gpointer >(this), NULL);
@@ -236,10 +237,12 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	// 	to convert this from synchronous to asynchronous Loudmouth calls.
 	if (!lm_connection_open_and_block(this->session_data->connection, &error)) {
 		if (error != NULL) {
-			g_warning("Failed to open: %s", error->message);
+			std::cout << "Failed to open: " <<  error->message << std::endl;
 		}
 		return FAILED_TO_CONNECT;
 	}
+
+        g_log(NULL, G_LOG_LEVEL_DEBUG, "Opened Loudmouth connection in blocking mode.");
 
 	// Authenticate
 	if (!lm_connection_authenticate_and_block(this->session_data->connection, username.c_str(), pw.c_str(), RESOURCE_NAME, &error)) {
@@ -251,6 +254,8 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 		this->session_data->connection = NULL;
 		return INVALID_AUTH;
 	}
+
+        g_log(NULL, G_LOG_LEVEL_DEBUG, "Successfully authenticated.");
 
 	// Register message handler for presence messages
 	mh = lm_message_handler_new((LmHandleMessageFunction)presence_handler, reinterpret_cast< gpointer >(this->_myMessageHandler), NULL);
