@@ -14,7 +14,7 @@ then you can submit a patch to the patch tracker
 <http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
 
 
-See http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape for more general
+See http://wiki.inkscape.org/wiki/index.php/CompilingInkscape for more general
 remarks about compiling, including how to find some of the needed packages for
 your distribution, and suggestions for developers.
 

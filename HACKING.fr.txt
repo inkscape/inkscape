@@ -15,7 +15,7 @@ soumettre un patch auprès de
 <http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
 
 
-Consulter http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape pour des
+Consulter http://wiki.inkscape.org/wiki/index.php/CompilingInkscape pour des
 remarques plus complètes sur la compilation, comprenant des explications sur
 comment trouver les paquets nécessaires pour votre distribution et des 
 suggestions pour les développeurs.

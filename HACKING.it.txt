@@ -13,7 +13,7 @@ da aiutare gli altri utenti della tua stessa distribuzione. Se non hai accesso i
 scrittura al SVN, puoi inviare una patch al sistema di gestione delle patch
 <http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
 
-Consulta http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape per informazioni
+Consulta http://wiki.inkscape.org/wiki/index.php/CompilingInkscape per informazioni
 più generali sulla compilazione, incluso come trovare i pacchetti necessari per la 
 propria distribuzione e alcuni suggerimenti per gli sviluppatori.
 

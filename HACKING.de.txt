@@ -21,7 +21,7 @@ Wenn Sie keinen SVN Zugang haben, benutzen Sie bitte den Patch Tracker
 Wiki
 ====
 
-Lesen Sie bitte http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape
+Lesen Sie bitte http://wiki.inkscape.org/wiki/index.php/CompilingInkscape
 um mehr über Compilation zu erfahren, z.B. wo man benötigte Software
 finden kann und andere Tips für Entwickler.
 
