@@ -13,12 +13,14 @@ options:
         --usage
     -V, --version
 
-    -f, --file=NOM_DE_FICHIER
+    -f, --file=NOMDEFICHIER
     -s, --slideshow
 
-    -e, --export-png=NOM_DE_FICHIER
+    -e, --export-png=NOMDEFICHIER
     -a, --export-area=x0:y0:x1:y1
+    -C, --export-area-canvas
     -D, --export-area-drawing
+        --export-area-snap
     -i, --export-id=ID
     -j, --export-id-only
     -t, --export-use-hints
@@ -28,12 +30,12 @@ options:
     -w, --export-width=LARGEUR
     -h, --export-height=HAUTEUR
 
-    -P, --export-ps=NOM_DE_FICHIER
-    -E, --export-eps=NOM_DE_FICHIER
+    -P, --export-ps=NOMDEFICHIER
+    -E, --export-eps=NOMDEFICHIER
     -T, --export-text-to-path
     -B, --export-bbox-page
 
-    -l, --export-plain-svg=NOM_DE_FICHIER
+    -l, --export-plain-svg=NOMDEFICHIER
 
     -I, --query-id=ID
     -X, --query-x
@@ -54,7 +56,7 @@ options:
 
 =head1 DESCRIPTION
 
-B<Inkscape> est un éditeur de dessin au format B<Scalable Vector Graphics (SVG)> doté d'une interface graphique, offrant des possibilités similaires à B<Adobe Illustrator>, B<CorelDraw>, B<Visio>, etc. Les fonctionnalités d'Inkscape comprennent une gestion versatile des formes, le dessin à main levée et les courbes de Bézier, le texte multiligne, le texte suivant un chemin, la transparence, les transformations affines, les remplissages par motif ou dégradé l'édition de nœuds, l'export SVG vers PNG, le groupement, les calques, les clones interactifs et bien plus. L'interface est conçue pour être confortable et efficace pour les utilisateurs expérimentés tout en restant conforme aux spécifications de B<GNOME> permettant ainsi aux utilisateurs d'applications GNOME de s'y habituer rapidement.
+B<Inkscape> est un éditeur de dessin au format B<Scalable Vector Graphics (SVG)> doté d'une interface graphique, offrant des possibilités similaires à B<Adobe Illustrator>, B<CorelDraw>, B<Visio>, etc. Les fonctionnalités d'Inkscape comprennent une gestion versatile des formes, le dessin à main levée et les courbes de Bézier, le texte multiligne, le texte suivant un chemin, la transparence, les transformations affines, les remplissages par motif ou dégradé, l'édition de nœuds, l'export SVG vers PNG, le groupement, les calques, les clones interactifs et bien plus encore. L'interface est conçue pour être confortable et efficace pour les utilisateurs expérimentés tout en restant conforme aux spécifications de B<GNOME> permettant ainsi aux utilisateurs d'applications GNOME de s'y habituer rapidement.
 
 Le format B<SVG> est un format XML standard pour le dessin vectoriel 2D. Il permet de définir des objets sur un dessin par l'utilisation de points, chemins et formes primitives. Les couleurs, fontes, largeur de contour et autres sont spécifiés en tant qu'attributs de 'style' de ces objets. Le but est de rendre possible l'utilisation de fichiers SVG pour un grand nombre de programmes et d'utilisation, SVG étant un standard et ses fichiers du type texte/xml.
 
@@ -77,35 +79,44 @@ Affiche la version d'Inkscape et la date de compilation.
 
 Pour l'export en PNG, définit la zone à exporter en pixels SVG (unité anonyme de longueur utilisée normalement par le format SVG Inkscape). Le comportement par défaut est d'exporter le canevas entier du document. Le point (0,0) est le coin inférieur gauche.
 
+=item B<-C>, B<--export-area-canvas>
+
+Pour l'export en PNG, la zone exportée est le canevas entier (la page). C'est habituellement le comportement par défaut, aussi spécifier cette option n'est pas nécessaire sauf en cas d'utilisation de --export-id pour exporter un objet spécifique.
+
 =item B<-D>, B<--export-area-drawing>
 
 Pour l'export en PNG, la zone à exporter est le dessin entier (pas le canevas). Avec cette option, l'image exportée n'affichera que les objets visibles du document sans marge ni massicotage. Peut être combiné avec  --export-use-hints.
+
+=item B<--export-area-snap>
+
+Arrondi les dimensions de la zone à exporter aux valeurs entières supérieures en unités SVG utilisateur (px).
+Si vous utilisez une résolution d'export de 90ppp et que vos objets sont alignés aux pixels afin de minimiser l'anti-crénelage, cette option permet de préserver cet alignement même si l'export se fait selon des boîtes de contour (avec --export-id ou --export-area-drawing) qui ne sont pas correctement alignées sur les pixels.
 
 =item B<-b> I<COULEUR>, B<--export-background>=I<COULEUR>
 
 Couleur de fond du PNG exporté.
 Cette valeur peut être n'importe quelle chaîne de couleur supportée par le format SVG, par exmeple "#ff007f" ou "rgb(255, 0, 128)".
-Si cette couleur n'est pas définie, la couleur de page définie dans Inkscape via la boîte de dialogue Préférences du document sera utilisée (enregistrée dans l'attribut pagecolor= de l'espace de nom  sodipodi:namedview).
+Si cette couleur n'est pas définie, la couleur de page définie dans Inkscape via la boîte de dialogue Préférences du document sera utilisée (enregistrée dans l'attribut pagecolor= de sodipodi:namedview).
 
 =item B<-d> I<PPP>, B<--export-dpi>=I<PPP>
 
 La résolution utilisée pour l'export en bitmap.
-Elle est de 90 par défaut, correspondant à 1 SVG pixel (px, aussi appelé "unité utilisateur") s'exportant vers 1 pixel bitmap.
+Elle est de 90 par défaut, correspondant à 1 pixel SVG (px, aussi appelé "unité utilisateur") s'exportant vers 1 pixel bitmap.
 Cette valeur préempte la PPP enregistrée avec le document si la commande est utilisée avec --export-use-hints.
 
-=item B<-e> I<NOM_DE_FICHIER>, B<--export-png>=I<NOM_DE_FICHIER>
+=item B<-e> I<NOMDEFICHIER>, B<--export-png>=I<NOMDEFICHIER>
 
 Spécifie le nom de fichier pour l'export en PNG.
 S'il existe déjà, il sera écrasé sans demande de confirmation.
 
-=item B<-f> I<NOM_DE_FICHIER>, B<--file>=I<NOM_DE_FICHIER>
+=item B<-f> I<NOMDEFICHIER>, B<--file>=I<NOMDEFICHIER>
 
 Ouvre le(s) document(s) spécifié(s).
-La chaîne optionnelle peut être omise, c'est à dire que vous pouvez lister les noms de fichier sans -f.
+La chaîne d'option peut être omise, c'est à dire que vous pouvez lister les noms de fichier sans -f.
 
 =item B<-g>, B<--with-gui>
 
-Tente d'utiliser l'interface graphique (sous Unix, utiliser le serveur X, même si $DISPLAY n'est pas défini).
+Tente d'utiliser l'interface graphique (sous Unix, utilise le serveur X, même si $DISPLAY n'est pas défini).
 
 =item B<-h> I<HAUTEUR>, B<--export-height>=I<HAUTEUR>
 
@@ -115,26 +126,27 @@ Cette valeur préempte l'option --export-dpi (ou la PPP enregistrée avec le doc
 =item B<-i> I<ID>, B<--export-id>=I<ID>
 
 La valeur de l'attribut id de l'objet que vous voulez exporter depuis le document.
-La boîte de contour de l'objet est exportée; donc avec cette option, --export-area est ignoré.
+Par défaut la zone exportée est la boîte de contour de l'objet; vous pouvez préempter ce comportement en utilisant --export-area, --export-area-canvas, ou --export-area-drawing.
 
 =item B<-j>, B<--export-id-only>
 
 N'exporte que l'objet dont l'id est spécifiée avec avec l'option --export-id. Tout les autres objets seront cachés et n'apparaîtront pas dans le fichier exporté même s'ils chevauchent l'objet effectivement exporté. Cette option est ignorée si --export-id n'est pas aussi utilisé.
 
-=item B<-l>, B<--export-plain-svg>=I<NOM_DE_FICHIER>
+=item B<-l>, B<--export-plain-svg>=I<NOMDEFICHIER>
 
 Exporte le(s) document(s) en SVG brut, sans espace de nom  sodipodi: ou inkscape: et sans métadonnées RDF.
 
 =item B<-l>, B<--extension-directory>
 
-Liste le contenu du répertoire d'extensions configuré en tant que tel par Inkscape, puis sort. Cette option est utilisée afin que les extensions externes utilisent la configuration originale générée à l'installation d'Inkscape.
+Liste le contenu du répertoire d'extensions configuré en tant que tel par Inkscape, puis sort. 
+Cette option est utilisée afin que les extensions externes utilisent la configuration originale générée à l'installation d'Inkscape.
 
 =item B<-p> I<IMPRIMANTE>, B<--print>=I<IMPRIMANTE>
 
-Imprime le(s) document(s) vers l'imprimante spécifiée en utilisant `lpr -P PRINTER'. 
-Vous pouvez aussi utiliser `| COMMAND' pour spécifier un tube de commande différent, ou utiliser `> FILENAME' pour écrire le résultat  PostScript dans un fichier au lieu de l'imprimer.
-N'oubliez pas d'utiliser les guillemets appropriés pour votre shell, ex.
-inkscape --print='| ps2pdf - mydoc.pdf' mydoc.svg
+Imprime le(s) document(s) vers l'imprimante spécifiée en utilisant `lpr -P IMPRIMANTE'.
+Vous pouvez aussi utiliser `| COMMANDE' pour spécifier un tube de commande différent, ou utiliser `> NOMDEFICHIER' pour écrire le résultat  PostScript dans un fichier au lieu de l'imprimer.
+N'oubliez pas d'utiliser les guillemets appropriés pour votre shell, par exemple
+inkscape --print='| ps2pdf - mondoc.pdf' mondoc.svg
 
 =item B<-s>, B<--slideshow>
 
@@ -158,15 +170,15 @@ Cette valeur préempte l'option --export-dpi setting (ou la PPP enregistrée ave
 =item B<-y> I<VALEUR>, B<--export-background-opacity>=I<VALEUR>
 
 Opacité du fond du PNG exporté.
-Cela peut être une valeur entre 0.0 and 1.0 (0.0 : complètement transparent, 1.0 complètement opaque) ou supérieure à 1 et inférieure à255 (255 : complètement opaque).
-Si cette valeur n'est pas spécifiée et si l'option -b n'est pas utilisée, l'opacité de la page enregistrée avec le document (dans l'attribut inkscape:pageopacity= de l'espace de nom sodipodi:namedview) sera utilisée.
-Si cette valeur n'est pas spécifiée et l'option -b utilisé, la valeur 255 (opacité complète) sera utilisée.
+Cela peut être une valeur entre 0.0 and 1.0 (0.0 : complètement transparent, 1.0 complètement opaque) ou supérieure à 1 et inférieure à 255 (255 : complètement opaque).
+Si cette valeur n'est pas spécifiée et si l'option -b n'est pas utilisée, l'opacité de la page enregistrée avec le document (dans l'attribut inkscape:pageopacity= de sodipodi:namedview) sera utilisée.
+Si cette valeur n'est pas spécifiée mais que l'option -b est utilisée, la valeur 255 (opacité complète) sera utilisée.
 
-=item B<-P> I<NOM_DE_FICHIER>, B<--export-ps>=I<NOM_DE_FICHIER>
+=item B<-P> I<NOMDEFICHIER>, B<--export-ps>=I<NOMDEFICHIER>
 
 Exporte le(s) document(s) au format PostScript.
 
-=item B<-E> I<NOM_DE_FICHIER>, B<--export-eps>=I<NOM_DE_FICHIER>
+=item B<-E> I<NOMDEFICHIER>, B<--export-eps>=I<NOMDEFICHIER>
 
 Exporte le(s) document(s) au format Encapsulated PostScript.
 
@@ -180,33 +192,34 @@ Exporte les fichiers avec pour boîte de contour la page complète, si applicabl
 
 =item B<-I>, B<--query-id>
 
-ID de l'objet dont les dimensions sont demandées. Si cette option n'est pas utilisée, les demandes retourneront les dimensions du dessin, pas de la page ou de la zone affichée.
+ID de l'objet dont les dimensions sont demandées. Si cette option n'est pas utilisée, la commande retournera les dimensions du dessin, pas de la page ou de la zone affichée.
 
 =item B<-X>, B<--query-x>
 
-Demande l'abscisse (coordonnée X) du dessin ou (si spécifié avec --query-id) de l'objet. La valeur retournée est en px (unité utilisateur SVG).
+Demande l'abscisse (coordonnée X) du dessin ou, si spécifié avec --query-id, de l'objet. La valeur retournée est en px (unité utilisateur SVG).
 
 =item B<-Y>, B<--query-y>
 
-Demande l'ordonnée (coordonnée Y) du dessin ou (si spécifié avec --query-id) de l'objet. La valeur retournée est en px (unité utilisateur SVG).
+Demande l'ordonnée (coordonnée Y) du dessin ou, si spécifié avec --query-id de l'objet. La valeur retournée est en px (unité utilisateur SVG).
 
 =item B<-W>, B<--query-width>
 
-Demande la largeur du dessin ou (si spécifié avec --query-id) de l'objet. La valeur retournée est en px (unité utilisateur SVG).
+Demande la largeur du dessin ou, si spécifié avec --query-id, de l'objet. La valeur retournée est en px (unité utilisateur SVG).
 
 =item B<-H>, B<--query-height>
 
-Demande la hauteur du dessin ou (si spécifié avec --query-id) de l'objet. La valeur retournée est en px (unité utilisateur SVG).
+Demande la hauteur du dessin ou, si spécifié avec --query-id, de l'objet. La valeur retournée est en px (unité utilisateur SVG).
 
 =item B<--vacuum-defs>
 
-Supprime tous les items inutilisés de la section <lt>defs<gt> du fichier SVG.
-Cette option n'a pas d'effet propre, mais est très utile quand elle est utilisée conjointement avec l'option -l.
+Supprime tous les éléments inutilisés de la section <lt>defs<gt> du fichier SVG.
+Si cette option est utilisée avec --export-plain-svg, seul le fichier exporté sera affecté.
+Si cette option est utilisée seule, le fichier spécifé sera modifié.
 
 =item B<-z>, B<--without-gui>
 
 Ne lance pas l'interface graphique (sous Unix, n'utilise pas le server X); ne traite les fichiers que depuis la console.
-Ceci est présupposé pour les options -p, -e, et -l.
+Ceci est présupposé pour les options -p, -e, -l et --vacuum-defs.
 
 =item B<--g-fatal-warnings>
 
@@ -218,10 +231,6 @@ Affiche un bref message sur l'utilisation d'Inkscape.
 
 =back
 
-=head1 RACCOURCIS CLAVIER
-
-Pour obtenir une liste complète des raccourcis clavier et souris, consultez le fichier doc/keys.html, ou utilisez la commande Clavier et souris dans le menu d'aide de l'interface graphique pour en afficher un tableau SVG.
-
 =head1 CONFIGURATION
 
 Le fichier de configuration preferences.xml situé dans ~/.inkscape/ est utilisé pour personnaliser les préférences de l'utilisateur.
@@ -230,11 +239,11 @@ Le fichier de configuration preferences.xml situé dans ~/.inkscape/ est utilis�
 
 =item B<interface>
 
-Les éléments B<interface> du fichier de configuration sont utilisés pour définir les paramètres liés à l'interface graphique, comme l'état ouvert/fermé de certains éléments de l'interface, etc.
+Les éléments B<interface> du fichier de configuration sont utilisés pour définir les paramètres liés à l'interface graphique, comme l'état ouvert/fermé de certains éléments de l'interface graphique, etc.
 
 =item B<group id="documents">
 
-Le groupe documents permet de contenir la liste des fichiers récemment ouverts. Chaque document listé indique son uri (chemin) et nom.
+Le groupe documents permet de lister les fichiers récemment ouverts. Chaque document est listé avec son uri (chemin) et son nom.
 
 =item B<group id="template">
 
@@ -242,15 +251,15 @@ Le groupe template est utilisé pour enregistrer les paramètres liés aux docum
 
 =item B<group id="tools">
 
-Le groupe tools enregistre les les préférences de l'utilisateur quant au style des différents outils (formes, plume calligraphique, etc.).
+Le groupe tools enregistre les préférences de l'utilisateur quant au style des différents outils (formes, plume calligraphique, etc.).
 
 =item B<group id="palette">
 
-Le groupe palette permet de définir les styles de pointillés. 
+Le groupe palette permet de définir les styles de pointillés. Ceci vous permet de définir des longueurs caractéristiques pour différents types de pointillés.
 
 =item B<group id="dialogs">
 
-Le groupe dialogs permet de retenir la position et la taille de toute boîte de dialogue de l'application, de sorte qu'ils se lancent à l'endroit où l'utilisateur les a placés lors de la dernière utilisation.
+Le groupe dialogs permet de retenir la position et la taille de toute boîte de dialogue de l'application, de sorte qu'ils s'ouvrent de nouveau à l'endroit où l'utilisateur les a placés lors de la dernière utilisation.
 
 =item B<group id="printing">
 
@@ -258,7 +267,7 @@ Le groupe printing enregistre les différentes configurations d'impression. Chaq
 
 =item B<group id="options">
 
-Le groupe options permet de retenir un certain nombre d'options choisies par l'utilisateur incluant  I<nudgeddistance> (incrément), I<rotationstep> (incrément de rotation), I<cursortolerance> (tolérance du curseur), et I<dragtolerance> (tolérance du cliquer-déplacer). 
+Le groupe options permet de retenir un certain nombre d'options choisies par l'utilisateur incluant  I<nudgeddistance> (distance d'accroche), I<rotationstep> (incrément de rotation), I<cursortolerance> (tolérance du curseur), et I<dragtolerance> (tolérance du cliquer-déplacer). 
 
 =back
 
@@ -266,7 +275,7 @@ Le groupe options permet de retenir un certain nombre d'options choisies par l'u
 
 Le programme retourne la valeur zéro après une utilisation réussie ou différente de zéro après un problème.
 
-Des messages d'erreur et des avertissements divers peuvent être écrits vers STDERR ou STDOUT. Si le programme se comporte de façon erratique avec un fichier SVG particulier, ou se plante, il est parfois utile de chercher des indices dans ces messages. Il peuvent, par exemple, indiquer qu'un fichier SVG donné contient des éléments ou des attributs non encore supportés par le logiciel.
+Des messages d'erreur et des avertissements divers peuvent être écrits vers STDERR ou STDOUT. Si le programme se comporte de façon erratique avec un fichier SVG particulier, ou se plante, il est parfois utile de chercher des indices dans ces messages. 
 
 =head1 EXEMPLES
 
@@ -274,36 +283,52 @@ Bien qu'B<Inkscape> soit principalement conçu comme une application graphique, 
 
 Imprimer un fichier SVG :
 
-    inkscape nom_de_fichier.svg -p '| lpr'
+    inkscape nomdefichier.svg -p '| lpr'
 
-Exporter un fichier SVG en PNG :
+Exporter un fichier SVG en PNG avec la résolution par défaut de 90PPP (un pixel bitmap correspondant à une unité utilisateur SVG (px)) :
 
-    inkscape nom_de_fichier.svg --export-png=nom_de_fichier.png -w600 -h400
+    inkscape nomdefichier.svg --export-png=nomdefichier.png
+
+Idem, mais en forçant les dimensions du fichier à 600x400 pixels :
+
+    inkscape nomdefichier.svg --export-png=nomdefichier.png -w600 -h400
+
+Idem, mais en exportant le dessin (la boîte de contour de tous les objets), pas la page :
+
+    inkscape nomdefichier.svg --export-png=nomdefichier.png --export-area-drawing
+
+Exporter en PNG l'objet id="text1555", en utilisant le nom de fichier et la résolution utilisés la dernière fois qu'il a été exporté depuis l'interface graphique :
+
+    inkscape nomdefichier.svg --export-id=text1555 --export-use-hints
+
+Idem, mais en utilisant une résolution de 90ppp, en spécifiant un nom de fichier et en arrondissant la zone à exporter aux valeurs entières juste supérieures en unités utilisateur SVG (afin de préserver l'alignement des objets sur des pixels et minimiser l'anti-crénelage) :
+
+    inkscape nomdefichier.svg --export-id=text1555 --export-png=texte.png --export-snap-area
 
 Convertir un document du format SVG Inkscape au format SVG brut :
 
-    inkscape nom_de_fichier1.svg --export-plain-svg=nom_de_fichier2.svg
+    inkscape nomdefichier1.svg --export-plain-svg=nomdefichier2.svg
 
 Convertir un document SVG en EPS, en convertissant les textes en chemins :
 
-    inkscape nom_de_fichier.svg --export-eps=nom_de_fichier.eps --export-text-to-path
+    inkscape nomdefichier.svg --export-eps=nomdefichier.eps --export-text-to-path
 
 Demander la largeur de l'objet avec un id="text1555":
 
-    inkscape nom_de_fichier.svg --query-width --query-id text1555
+    inkscape nomdefichier.svg --query-width --query-id text1555
 
 
 =head1 ENVIRONEMENT
 
 B<DISPLAY> pour obtenir l'hôte par défaut et le numéro d'affichage.
 
-B<TMPDIR> pour définir le chemin par défaut du répertoire à utiliser pour stocker les fichier temporaires. Ce répertoire est nécessaire.
+B<TMPDIR> pour définir le chemin par défaut du répertoire à utiliser pour stocker les fichier temporaires. Le répertoire doit exister.
 
 =head1 THEMES
 
-Vous pouvez remplacer le fichier d'icônes par défaut B<$PREFIX>/share/inkscape/icons/icons.svg en utilisant le répertoire B<$HOME>/.inkscape/icons/ .  Les icônes sont chargées par nom (ex. : I<fill_none.svg>) ou, quand elles sont introuvables, depuis le fichier I<icons.svg>. Si une icône n'est pas trouvée dans l'un de ces emplacements, elle est chargée depuis l'emplacement par défaut du système.
+Vous pouvez remplacer le fichier d'icônes par défaut B<$PREFIX>/share/inkscape/icons/icons.svg en utilisant le répertoire B<$HOME>/.inkscape/icons/ .  Les icônes sont chargées par nom (ex. : I<fill_none.svg>) ou, si elles sont introuvables, depuis le fichier I<icons.svg>. Si une icône n'est pas trouvée dans l'un de ces emplacements, elle est chargée depuis l'emplacement par défaut du système.
 
-Les icônes nécessaires sont chargées depuis les fichiers SVG par recherche de l'id SVG correspondant (Par exemple, pour charger l'icône "fill_none" depuis un fichier, le contenu identifié par l'id SVG "fill_none" est rendu en tant que cette icône, qu'il vienne du fichier I<fill_none.svg> ou I<icons.svg>).
+Les icônes nécessaires sont chargées depuis les fichiers SVG par recherche de l'id SVG correspondant (Par exemple, pour charger l'icône "fill_none" depuis un fichier, le contenu identifié par l'id SVG "fill_none" est rendu en tant que cette icône, qu'il vienne du fichier I<fill_none.svg> ou du fichier I<icons.svg>).
 
 =head1 FICHIERS
 
@@ -342,29 +367,27 @@ I<Arnaud Le Hors et al editors, W3C>
 L<http://www.w3.org/TR/DOM-Level-2-Core/>
 
 
-=head1 NOTES
+=head1 NOTES SUR L'INTERFACE GRAPHIQUE
 
-Ctrl, Maj et Alt modifient le comportement des actions de cliquer et de cliquer-déplacer pour la plupart des outils. La barre d'état affiche des conseils utiles à ce sujet.
+Pour vous familiariser avec l'utilisation de l'interface graphique d'Inkscape, consultez les didacticiels dans Aide > Didacticiels
 
-Pour faire tourner un objet, cliquer dessus avec l'outil sélecteur afin de le sélectionner,puis cliquer dessus à nouveau afin d'activer les poignées de rotation.
+Inkscape permet d'importer (Fichier > Importer) la plupart des formats bitmaps (PNG, BMP, JPG, XPM, GIF, etc.), du texte brut (nécessite Perl) et le format AI (documents Adobe Illustrator, uniquement jusqu'à la version 7; nécessite Perl).
 
-La commande importer fonctionne avec la plupart des formats bitmap (PNG, BMP, JPG, XPM, GIF etc.) et avec le format vectoriel SVG.
-La commande ouvrir ne gère que les fichiers SVG.
+Inkscape permet d'exporter (Fichier > Exporter) des images PNG 32-bits, mais aussi aux formats AI, PS, EPS, PDF (nécessite Ghostscript), DXF et plusieurs autres formats (via Fichier > Enregistrer sous). 
 
-Une tablette graphique (Wacom) peut fonctionner avec Inkscape si elle est configurée pour se comporter en tant que périphérique de pointage normal. Nous ne supportons pas encore les fonctionnalités pression/angle ou autres spécifités.
+Inkscape supporte la pression et l'inclinaison du stylet d'une tablette graphique pour la largeur et l'angle de l'outil calligraphique.
 
-Inkscape fonctionne dès l'installation avec le serveur X d'Apple, mais pour une utilisation sous XFree86, vous devrez activer l'option "SendCoreEvents". Tout ne semble pas encore marcher aussi bien sous Windows.
+Inkscape comporte une interface graphique pour le moteur de vectorisation de bitmaps Potrace (http://potrace.sf.net) qui est inclus dans Inkscape.
 
+Inkscape peut utiliser des scripts externes (filtres depuis stdin vers stdout) représentés par des commandes dans le menu Effets. Un script peut avoir une interface graphique, sous forme de boîte de dialogue, permettant de définir différents paramètres et peut obtenir les IDs des objets sélectionnés sur lesquels agir depuis la ligne de commande. Inkscape est livré avec un assortiment d'effets écrits en Python dédiés principalement à la manipulation de chemin.
+
+=head1 RACCOURCIS CLAVIER
+
+Pour obtenir une liste complète des raccourcis clavier et souris, consultez le fichier doc/keys.html, ou utilisez la commande Clavier et souris dans le menu d'aide de l'interface graphique pour en afficher un tableau SVG.
 
 =head1 BUGS
 
-Beaucoup de bugs sont connus; veuillez, svp, consulter le site web pour consulter ceux qui ont déjà été rapportés et pour soumettre de nouveaux problèmes. Voici quelques contournements :
-
-Lors de l'import de SVG généré par ill2svg, tous les chemins sont habituellement groupés. Dégroupez-les manuellement.
-
-Si vous utilisez des dégradés et étirez l'icône du fichier sauvé dans Nautilus, vous remarquerez que les dégradés ne sont pas bien rendus. Il s'agit d'un problème connu de Nautilus/RSVG et qui peut être contourné en spécifiant le dégradé dans 'l'espace utilisateur' dans l'éditeur de dégradé.
-
-Consultez aussi la section "Known Issues" des notes de votre version (dans le fichier `NEWS').
+Beaucoup de bugs sont connus; veuillez, svp, consulter le site web pour consulter ceux qui ont déjà été rapportés et pour soumettre de nouveaux problèmes. Consultez aussi la section "Known Issues" des notes de votre version (dans le fichier `NEWS').
 
 =head1 AUTEURS
 
@@ -377,19 +400,19 @@ E<lt>brycehar@bryceharrington.comE<gt>.
 
 =head1 HISTORIQUE
 
-Le code qui allait devenir Inkscape est né en 1999, avec le programme Gill, GNOME Illustrator, créé par Raph Levien. L'objectif clair de Gill était de supporter complètement le format SVG. Raph a codé le modèle Postcript de courbes de Bézier, incluant le remplissage et le contour, les coiffes et raccords de lignes, le texte, etc. La page de Raph consacrée à Gill se trouve sur http://www.levien.com/svg/. Le travail sur Gill semble avoir diminué ou s'être arrété en 2000.
+Le code qui allait devenir Inkscape est né en 1999, avec le programme Gill, GNOME Illustrator, créé par Raph Levien. L'objectif défini pour Gill était de supporter complètement le format SVG. Raph a codé le modèle Postcript de courbes de Bézier, incluant le remplissage et le contour, les coiffes et raccords de lignes, le texte, etc. La page de Raph consacrée à Gill se trouve sur http://www.levien.com/svg/. Le travail sur Gill semble avoir diminué ou s'être arrêté en 2000.
 
 L'incarnation suivante du code allait devenir le très populaire Sodipodi, mené par Lauris Kaplinski. Le code est devenu un outil d'illustration puissant après plusieurs années de travail, ajoutant plusieurs nouvelles fonctionnalités, le support multilingue, le portage sous Windows et d'autres systèmes d'exploitation et éliminant certaines dépendances.
 
-Inkscape a été lancé en 2003 par quatre développeurs actifs de Sodipodi, Bryce Harrington, MenTaLguY, Nathan Hurst, et Ted Gould, qui voulaient faire prendre une orientation différente au code en termes de focalisation sur la conformité SVG, aspect et fonctionnement de l'interface, et d'opportunités de développement ouvertes à plus de participants.
+Inkscape a été lancé en 2003 par quatre développeurs actifs de Sodipodi (Bryce Harrington, MenTaLguY, Nathan Hurst et Ted Gould), qui voulaient faire prendre une orientation différente au code en termes de focalisation sur la conformité SVG, aspect et fonctionnement de l'interface, et d'opportunités de développement ouvertes à plus de participants.
 
 
 =head1 COPYRIGHT ET LICENSE
 
-B<Copyright (C)> 1999-2005 des auteurs.
+B<Copyright (C)> 1999-2006 des auteurs.
 
 B<Inkscape> est un logiciel libre; vous pouvez le redistribuer et/ou le modifier selon les termes de la license GPL.  
 
 
 =for comment
-$Date: 2005/04/21 19:39:52 $
+$Date$
