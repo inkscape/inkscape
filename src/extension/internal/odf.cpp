@@ -5,7 +5,10 @@
  * the inputting and outputting of OpenDocument Format (ODF) files from
  * within Inkscape.  Although the initial implementations will be very lossy
  * do to the differences in the models of SVG and ODF, they will hopefully
- * improve greatly with time.
+ * improve greatly with time.  People should consider this to be a framework
+ * that can be continously upgraded for ever improving fidelity.  Potential
+ * developers should especially look in preprocess() and writeTree() to see how
+ * the SVG tree is scanned, read, translated, and then written to ODF.
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
  *
@@ -855,6 +858,9 @@ int SingularValueDecomposition::rank()
 //# O U T P U T
 //########################################################################
 
+/**
+ * Get the value of a node/attribute pair
+ */
 static std::string getAttribute( Inkscape::XML::Node *node, char *attrName)
 {
     std::string val;
@@ -865,6 +871,10 @@ static std::string getAttribute( Inkscape::XML::Node *node, char *attrName)
 }
 
 
+
+/**
+ * Get the extension suffix from the end of a file name
+ */
 static std::string getExtension(const std::string &fname)
 {
     std::string ext;
@@ -898,6 +908,7 @@ static std::string formatTransform(NR::Matrix &tf)
 
 
 
+
 /**
  * Get the general transform from SVG pixels to
  * ODF cm
@@ -915,6 +926,8 @@ static NR::Matrix getODFTransform(const SPItem *item)
     tf                   = tf * NR::Matrix(NR::scale(pxToCm));
     return tf;
 }
+
+
 
 
 /**
@@ -983,7 +996,8 @@ static void analyzeTransform(NR::Matrix &tf,
 
 
 /**
- * Method descends into the repr tree, converting image and style info
+ * FIRST PASS.
+ * Method descends into the repr tree, converting image, style, and gradient info
  * into forms compatible in ODF.
  */
 void
@@ -1052,6 +1066,10 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
         bool isGradient = false;
 
         StyleInfo si;
+        //## Style.  Look in writeStyle() below to see what info
+        //   we need to read into StyleInfo.  Note that we need to
+        //   determine whether information goes into a style element
+        //   or a gradient element.
         //## FILL
         if (style->fill.type == SP_PAINT_TYPE_COLOR)
             {
@@ -1184,6 +1202,10 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 
 
 
+/**
+ * Writes the manifest.  Currently it only changes according to the
+ * file names of images packed into the zip file.
+ */
 bool OdfOutput::writeManifest(ZipFile &zf)
 {
     BufferOutputStream bouts;
@@ -1243,6 +1265,9 @@ bool OdfOutput::writeManifest(ZipFile &zf)
 }
 
 
+/**
+ * This writes the document meta information to meta.xml
+ */
 bool OdfOutput::writeMeta(ZipFile &zf)
 {
     BufferOutputStream bouts;
@@ -1304,6 +1329,12 @@ bool OdfOutput::writeMeta(ZipFile &zf)
 }
 
 
+
+
+/**
+ * This is called just before writeTree(), since it will write style and
+ * gradient information above the <draw> tag in the content.xml file
+ */
 bool OdfOutput::writeStyle(Writer &outs)
 {
     outs.printf("<office:automatic-styles>\n");
@@ -1321,7 +1352,21 @@ bool OdfOutput::writeStyle(Writer &outs)
     outs.printf("  <style:paragraph-properties fo:text-align=\"center\"/>\n");
     outs.printf("</style:style>\n");
 
-    //##  Dump our style table
+    /*
+    ==========================================================
+    Dump our style table.  Styles should have a general layout
+    something like the following.  Look in:
+    http://books.evc-cit.info/odbook/ch06.html#draw-style-file-section
+    for style and gradient information.
+    <style:style style:name="gr13"
+      style:family="graphic" style:parent-style-name="standard">
+        <style:graphic-properties draw:stroke="solid"
+            svg:stroke-width="0.1cm"
+            svg:stroke-color="#ff0000"
+            draw:fill="solid" draw:fill-color="#e6e6ff"/>
+    </style:style>
+    ==========================================================
+    */
     outs.printf("<!-- ####### Styles from Inkscape document ####### -->\n");
     std::vector<StyleInfo>::iterator iter;
     for (iter = styleTable.begin() ; iter != styleTable.end() ; iter++)
@@ -1459,8 +1504,10 @@ writePath(Writer &outs, NArtBpath const *bpath,
 
 
 /**
+ * SECOND PASS.
  * This is the main SPObject tree output to ODF.  preprocess()
- * must be called prior to this
+ * must be called prior to this, as elements will often reference
+ * data parsed and tabled in preprocess().
  */
 bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 {
@@ -1642,7 +1689,10 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
 
 
-
+/**
+ * Write the content.xml file.  Writes the namesspace headers, then
+ * calls writeStyle() and writeTree().
+ */
 bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
 {
     BufferOutputStream bouts;
@@ -1696,8 +1746,6 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("<office:scripts/>\n");
     outs.printf("\n");
     outs.printf("\n");
-    //AffineTransform trans = new AffineTransform();
-    //trans.scale(12.0, 12.0);
     outs.printf("<!-- ######### CONVERSION FROM SVG STARTS ######## -->\n");
     outs.printf("<!--\n");
     outs.printf("*************************************************************************\n");
