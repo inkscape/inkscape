@@ -33,11 +33,6 @@
 
 size_t  font_style_hash::operator()(const font_style &x) const {
 	int      h=0,n;
-	for (int i=0;i<6;i++) {
-		n=(int)floor(100*x.transform[i]);
-		h*=12186;
-		h+=n;			
-	}
 	n=(int)floor(100*x.stroke_width);
 	h*=12186;
 	h+=n;
@@ -66,16 +61,9 @@ size_t  font_style_hash::operator()(const font_style &x) const {
 }
 
 bool  font_style_equal::operator()(const font_style &a,const font_style &b) {
-	NR::Matrix  diff=a.transform.inverse();
-	diff*=b.transform;
-	if ( diff.is_translation(0.01) ) {
-		if ( fabs(diff[4]) < 0.01 && fabs(diff[5]) < 0.01 ) {
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+    for (int i=0;i<6;i++) {
+        if ( (int)(100*a.transform[i]) != (int)(100*b.transform[i]) ) return false;
+    }
 	if ( a.vertical && b.vertical == false ) return false;
 	if ( a.vertical == false && b.vertical ) return false;
 	if ( a.stroke_width > 0.01 && b.stroke_width <= 0.01 ) return false;
@@ -84,15 +72,12 @@ bool  font_style_equal::operator()(const font_style &a,const font_style &b) {
 	
 	if ( a.stroke_cap != b.stroke_cap ) return false;
 	if ( a.stroke_join != b.stroke_join ) return false;
-    if ( fabs(a.stroke_miter_limit-b.stroke_miter_limit) > 0.01) return false;
+    if ( (int)(a.stroke_miter_limit*100) != (int)(b.stroke_miter_limit*100) ) return false;
 	if ( a.nbDash != b.nbDash ) return false;
 	if ( a.nbDash <= 0 ) return true;
-	if ( fabs(a.dash_offset-b.dash_offset) < 0.01 ) {
-		for (int i=0;i<a.nbDash;i++) {
-			if ( fabs(a.dashes[i]-b.dashes[i]) >= 0.01 ) return false;
-		}
-	} else {
-		return false;
+	if ( (int)floor(100*a.dash_offset) != (int)floor(100*b.dash_offset) ) return false;
+	for (int i=0;i<a.nbDash;i++) {
+		if ( (int)floor(100*a.dashes[i]) != (int)floor(100*b.dashes[i]) ) return false;
 	}
 	return true;
 }
