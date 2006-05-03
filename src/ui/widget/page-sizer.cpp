@@ -296,13 +296,16 @@ void
 PageSizer::setDoc (double w, double h)
 {
     setDim (w, h);
-    if (!SP_ACTIVE_DESKTOP || _wr->isUpdating())
-        return;
 
-    SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
-    sp_document_set_width (doc, _rusw.getSU()->getValue("px"), &_px_unit);
-    sp_document_set_height (doc, _rush.getSU()->getValue("px"), &_px_unit);
-    sp_document_done (doc);
+    if (SP_ACTIVE_DESKTOP && !_wr->isUpdating()) {
+        SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
+        Unit const& unit = _rum._sel->getUnit();
+        sp_document_set_width (doc, w / unit.factor, &_px_unit);
+        sp_document_set_height (doc, h / unit.factor, &_px_unit);
+        sp_document_done (doc);
+    }
+
+    setDim (w, h);
 }
 
 /** 
@@ -349,6 +352,8 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing() {
 void
 PageSizer::on_portrait()
 {
+    if (!_rb_port->get_active())
+        return;
     double w = _rusw.getSU()->getValue ("px");
     double h = _rush.getSU()->getValue ("px");
     if (h<w) setDoc (h, w);
@@ -357,6 +362,8 @@ PageSizer::on_portrait()
 void
 PageSizer::on_landscape()
 {
+    if (!_rb_land->get_active())
+        return;
     double w = _rusw.getSU()->getValue ("px");
     double h = _rush.getSU()->getValue ("px");
     if (w<h) setDoc (h, w);
