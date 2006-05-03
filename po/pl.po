@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.42\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-30 16:47+0200\n"
+"POT-Creation-Date: 2006-05-03 20:41+0200\n"
 "PO-Revision-Date: 2005-10-29 16:47+0100\n"
 "Last-Translator: Przemysław Loesch <p_loesch@poczta.onet.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -51,36 +51,36 @@ msgstr ""
 "<b>Elipsa</b>: %s &#215; %s; z <b>Ctrl</b> koło lub elipsa o całkowitych "
 "proporcjach; z <b>Shift</b> rysowanie od środka"
 
-#: ../src/connector-context.cpp:514
+#: ../src/connector-context.cpp:513
 msgid "Creating new connector"
 msgstr "Tworzenie nowego łącznika"
 
-#: ../src/connector-context.cpp:938
+#: ../src/connector-context.cpp:937
 msgid "Finishing connector"
 msgstr "Zakończono tworzenie łącznika"
 
-#: ../src/connector-context.cpp:1107
+#: ../src/connector-context.cpp:1106
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Punkt połączenia</b>: klinknij lub przeciągnij aby utworzyć nowy łącznik"
 
-#: ../src/connector-context.cpp:1184
+#: ../src/connector-context.cpp:1183
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Punkt końcowy łącznika</b>: przeciągnij aby przestawić lub połącz z nowym "
 "kształtem"
 
-#: ../src/connector-context.cpp:1277
+#: ../src/connector-context.cpp:1276
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Zaznacz <b>co najmniej jeden obiekt nie będący łącznikiem</b>."
 
-#: ../src/context-fns.cpp:28 ../src/context-fns.cpp:57
+#: ../src/context-fns.cpp:29 ../src/context-fns.cpp:58
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
 msgstr ""
 "<b>Aktywna warstwa jest ukryta</b>. Aby móc na niej rysować włącz jej "
 "widoczność."
 
-#: ../src/context-fns.cpp:34 ../src/context-fns.cpp:63
+#: ../src/context-fns.cpp:35 ../src/context-fns.cpp:64
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 "<b>Aktywna warstwa jest zablokowana</b>. Aby móc na niej rysować odblokuj ją."
@@ -517,7 +517,7 @@ msgid "Pick the visible color and opacity"
 msgstr "Pobranie widocznego koloru i przezroczystości"
 
 #: ../src/dialogs/clonetiler.cpp:2214 ../src/dialogs/clonetiler.cpp:2363
-#: ../share/extensions/dropshadow.inx.h:3
+#: ../share/extensions/svg_dropshadow.inx.h:3
 msgid "Opacity"
 msgstr "Przezroczystość"
 
@@ -830,7 +830,7 @@ msgstr "pikseli przy"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "dpi"
 msgstr "dpi"
 
@@ -1015,7 +1015,7 @@ msgstr "Grupy"
 msgid "Search clones"
 msgstr "Szukaj sklonowanych obiektów"
 
-#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:444
+#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Clones"
 msgstr "Klonowanie"
 
@@ -1024,6 +1024,7 @@ msgid "Search images"
 msgstr "Szukaj obrazów"
 
 #: ../src/dialogs/find.cpp:620 ../share/extensions/embedimage.inx.h:2
+#: ../share/extensions/extractimage.inx.h:2
 msgid "Images"
 msgstr "Obrazy"
 
@@ -1115,26 +1116,33 @@ msgstr "_Szukaj"
 msgid "Select objects matching all of the fields you filled in"
 msgstr "Zaznacza obiekty spełniające wszystkie wybrane kryteria"
 
-#. TRANSLATORS: This string appears when double-clicking on a guide.
-#. This is the distance by which the guide is to be moved.
-#: ../src/dialogs/guidelinedialog.cpp:65
-msgid " relative by "
-msgstr " przesunięcie "
+#: ../src/dialogs/guidelinedialog.cpp:42
+#: ../src/ui/dialog/transformation.cpp:102
+#, fuzzy
+msgid "Rela_tive move"
+msgstr "Przesunięcie względne"
 
-#. TRANSLATORS: This string appears when double-clicking on a guide.
-#. This is the target location where the guide is to be moved.
-#: ../src/dialogs/guidelinedialog.cpp:70
-#: ../src/dialogs/guidelinedialog.cpp:159
-msgid " absolute to "
-msgstr " pozycja "
+#: ../src/dialogs/guidelinedialog.cpp:42
+msgid "Move guide relative to current position"
+msgstr ""
 
-#: ../src/dialogs/guidelinedialog.cpp:122
+#: ../src/dialogs/guidelinedialog.cpp:61
+#, fuzzy
+msgid "Move by:"
+msgstr "Przesunięcie %s"
+
+#: ../src/dialogs/guidelinedialog.cpp:63
+#, fuzzy
+msgid "Move to:"
+msgstr "Przesunięcie %s"
+
+#: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Guideline"
 msgstr "Kolor prowadnic"
 
-#: ../src/dialogs/guidelinedialog.cpp:187
-#, c-format
-msgid "Move %s"
+#: ../src/dialogs/guidelinedialog.cpp:175
+#, fuzzy, c-format
+msgid "Moving %s %s"
 msgstr "Przesunięcie %s"
 
 #: ../src/dialogs/iconpreview.cpp:142
@@ -1540,12 +1548,12 @@ msgid "No document selected"
 msgstr "Nie wybrano dokumentu"
 
 #: ../src/dialogs/stroke-style.cpp:775 ../src/interface.cpp:760
-#: ../src/ui/dialog/inkscape-preferences.cpp:187
-#: ../src/ui/dialog/inkscape-preferences.cpp:317
-#: ../src/ui/dialog/inkscape-preferences.cpp:397
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:188
+#: ../src/ui/dialog/inkscape-preferences.cpp:318
+#: ../src/ui/dialog/inkscape-preferences.cpp:398
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 #: ../src/ui/widget/selected-style.cpp:134
-#: ../src/ui/widget/style-swatch.cpp:286 ../src/verbs.cpp:1928
+#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1928
 msgid "None"
 msgstr "Brak"
 
@@ -1680,7 +1688,7 @@ msgstr "Odstęp międzywierszowy:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:357 ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:376
+#: ../src/ui/dialog/inkscape-preferences.cpp:377
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2175
 msgid "Text"
 msgstr "Tekst"
@@ -1933,7 +1941,7 @@ msgstr "  opis: "
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
-#: ../src/extension/extension.cpp:240
+#: ../src/extension/extension.cpp:241
 msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
@@ -1941,65 +1949,65 @@ msgstr ""
 " Spowodowane jest to niewłaściwym plikiem .inx dla tego rozszerzenia. "
 "Przyczyną błędnego pliku .inx może być niewłaściwa instalacja Inkscape."
 
-#: ../src/extension/extension.cpp:243
+#: ../src/extension/extension.cpp:244
 msgid "an ID was not defined for it."
 msgstr "nie zdefiniowano dla niego identyfikatora ID."
 
-#: ../src/extension/extension.cpp:247
+#: ../src/extension/extension.cpp:248
 msgid "there was no name defined for it."
 msgstr "nie zdefioniowano dla niego nazwy."
 
-#: ../src/extension/extension.cpp:251
+#: ../src/extension/extension.cpp:252
 msgid "the XML description of it got lost."
 msgstr "jego opis w formacie XML został utracony."
 
-#: ../src/extension/extension.cpp:255
+#: ../src/extension/extension.cpp:256
 msgid "no implementation was defined for the extension."
 msgstr "nie zdefiniowano obsługi dla tego rozszerzenia."
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
-#: ../src/extension/extension.cpp:262
+#: ../src/extension/extension.cpp:263
 msgid "a dependency was not met."
 msgstr "nie zostały spełnione zależności."
 
-#: ../src/extension/extension.cpp:282
+#: ../src/extension/extension.cpp:283
 msgid "Extension \""
 msgstr "Rozszerzenie \""
 
-#: ../src/extension/extension.cpp:282
+#: ../src/extension/extension.cpp:283
 msgid "\" failed to load because "
 msgstr "\" nie zostało załadowane, ponieważ "
 
-#: ../src/extension/extension.cpp:561
+#: ../src/extension/extension.cpp:570
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr "Nie udało się utworzyć pliku dziennika '%s' dla wtyczki"
 
-#: ../src/extension/extension.cpp:644
+#: ../src/extension/extension.cpp:677
 msgid "Name:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:645
+#: ../src/extension/extension.cpp:678
 #, fuzzy
 msgid "ID:"
 msgstr "ID"
 
-#: ../src/extension/extension.cpp:646
+#: ../src/extension/extension.cpp:679
 #, fuzzy
 msgid "State:"
 msgstr "Początek:"
 
-#: ../src/extension/extension.cpp:646
+#: ../src/extension/extension.cpp:679
 #, fuzzy
 msgid "Loaded"
 msgstr "Edycja węzłów"
 
-#: ../src/extension/extension.cpp:646
+#: ../src/extension/extension.cpp:679
 #, fuzzy
 msgid "Unloaded"
 msgstr "Nienazwany"
 
-#: ../src/extension/extension.cpp:646
+#: ../src/extension/extension.cpp:679
 msgid "Deactivated"
 msgstr ""
 
@@ -2026,7 +2034,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Pokazuj to okno przy starcie programu"
 
-#: ../src/extension/implementation/script.cpp:831
+#: ../src/extension/implementation/script.cpp:839
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2036,7 +2044,7 @@ msgstr ""
 "uruchomiony. Treść komunikatu o błędzie znajduje się poniżej. Program będzie "
 "kontynuował pracę, jednak żądana operacja została anulowana."
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:852
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2070,10 +2078,18 @@ msgstr "Niebieski"
 msgid "Blur Width"
 msgstr "Szerokość"
 
+#: ../src/extension/internal/bluredge.cpp:137
+msgid "Width in pixels of the blurred area"
+msgstr ""
+
 #: ../src/extension/internal/bluredge.cpp:138
 #, fuzzy
 msgid "Number of Steps"
 msgstr "Liczba rzędów"
+
+#: ../src/extension/internal/bluredge.cpp:138
+msgid "Number of copies of the object to make to simulate the blur"
+msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:142
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
@@ -2158,7 +2174,7 @@ msgstr "Przesunięcie pionowe"
 msgid "Grid"
 msgstr "Siatka"
 
-#: ../src/extension/internal/grid.cpp:257
+#: ../src/extension/internal/grid.cpp:257 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 #, fuzzy
@@ -2376,15 +2392,17 @@ msgstr ""
 msgid "Windows 32-bit Print"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:30
-msgid " Preferences"
+#. A hack to internationalize the title properly
+#: ../src/extension/prefdialog.cpp:33
+#, fuzzy, c-format
+msgid "%s Preferences"
 msgstr " Ustawienia"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
-#: ../src/extension/system.cpp:98
+#: ../src/extension/system.cpp:100
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 "Nie udało się automatycznie rozpoznać formatu. Plik otwierany jako SVG."
@@ -2587,9 +2605,9 @@ msgstr "Pkt"
 msgid "Pixel"
 msgstr "Piksel"
 
-#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:175
-#: ../src/ui/dialog/inkscape-preferences.cpp:178
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
+#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:176
+#: ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
 #: ../src/ui/widget/selected-style.cpp:252
 msgid "px"
 msgstr "pks"
@@ -2607,7 +2625,7 @@ msgstr "Piks"
 msgid "Percent"
 msgstr "Procent"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "%"
 msgstr "%"
 
@@ -3661,7 +3679,7 @@ msgstr[0] "Wybrano <b>%i</b> z <b>%i</b> węzła; %s."
 msgstr[1] "Wybrano <b>%i</b> z <b>%i</b> węzłów; %s."
 msgstr[2] "Wybrano <b>%i</b> z <b>%i</b> węzłów; %s."
 
-#: ../src/object-edit.cpp:487
+#: ../src/object-edit.cpp:488
 msgid ""
 "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the "
 "vertical radius the same"
@@ -3669,7 +3687,7 @@ msgstr ""
 "Ustaw <b>poziomy promień zaokrąglenia</b>; z <b>Ctrl</b> ta sama wartość dla "
 "pionowego promienia"
 
-#: ../src/object-edit.cpp:493
+#: ../src/object-edit.cpp:494
 msgid ""
 "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the "
 "horizontal radius the same"
@@ -3677,7 +3695,7 @@ msgstr ""
 "Ustaw <b>pionowy promień zaokrąglenia</b>; z <b>Ctrl</b> ta sama wartość dla "
 "poziomego promienia"
 
-#: ../src/object-edit.cpp:500 ../src/object-edit.cpp:507
+#: ../src/object-edit.cpp:501 ../src/object-edit.cpp:508
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
@@ -3685,15 +3703,15 @@ msgstr ""
 "Ustaw <b>szerokość i wysokość</b> prostokąta; z <b>Ctrl</b> blokada "
 "proporcji lub zmiana tylko w jednym kierunku"
 
-#: ../src/object-edit.cpp:680
+#: ../src/object-edit.cpp:681
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ustaw <b>szerokość</b> elipsy, z <b>Ctrl</b> aby uzyskać koło"
 
-#: ../src/object-edit.cpp:683
+#: ../src/object-edit.cpp:684
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
 msgstr "Ustaw <b>wysokość</b> elipsy, z <b>Ctrl</b> aby uzyskać koło"
 
-#: ../src/object-edit.cpp:686
+#: ../src/object-edit.cpp:687
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
@@ -3702,7 +3720,7 @@ msgstr ""
 "Ustaw <b>początek</b> łuku lub wycinka; z <b>Ctrl</b> przyciąganie do kąta; "
 "kursor <b>wewnątrz</b> daje łuk, <b>na zewnątrz</b> wycinek elipsy"
 
-#: ../src/object-edit.cpp:689
+#: ../src/object-edit.cpp:690
 msgid ""
 "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
@@ -3711,7 +3729,7 @@ msgstr ""
 "Ustaw <b>koniec</b> łuku lub wycinka; z <b>Ctrl</b> przyciąganie do kąta; "
 "kursor <b>wewnątrz</b> daje łuk, <b>na zewnątrz</b> wycinek elipsy"
 
-#: ../src/object-edit.cpp:794
+#: ../src/object-edit.cpp:795
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
@@ -3719,7 +3737,7 @@ msgstr ""
 "Ustaw <b>promień wierzchołków</b> gwiazdy lub wielokąta; z <b>Shift</b> "
 "zaokrąglenie; z <b>Alt</b> zniekształcenie losowe"
 
-#: ../src/object-edit.cpp:797
+#: ../src/object-edit.cpp:798
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
@@ -3729,7 +3747,7 @@ msgstr ""
 "(bez skręcenia); z <b>Shift</b> zaokrąglenie; z <b>Alt</b> zniekształcenie "
 "losowe"
 
-#: ../src/object-edit.cpp:961
+#: ../src/object-edit.cpp:962
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
@@ -3737,7 +3755,7 @@ msgstr ""
 "Rozwiń/zwiń spiralę od <b>środka</b>; z <b>Ctrl</b> przyciąganie do kąta; z "
 "<b>Alt</b> zwiększenie/zmniejszenie przyrostu"
 
-#: ../src/object-edit.cpp:963
+#: ../src/object-edit.cpp:964
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
@@ -3745,24 +3763,24 @@ msgstr ""
 "Rozwiń/zwiń spiralę od <b>zewnątrz</b>; z <b>Ctrl</b> przyciąganie do kąta; "
 "z <b>Shift</b> skalowanie/obrót; z <b>Alt</b> bez zmiany promienia"
 
-#: ../src/object-edit.cpp:1000
+#: ../src/object-edit.cpp:1001
 msgid "Adjust the <b>offset distance</b>"
 msgstr "Ustawienie <b>odległości odsunięcia</b>"
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
-#: ../src/object-edit.cpp:1030
+#: ../src/object-edit.cpp:1031
 msgid "<b>Move</b> the pattern fill inside the object"
 msgstr "<b>Przesuń</b> deseń wypełnienia wewnątrz obiektu"
 
-#: ../src/object-edit.cpp:1032
+#: ../src/object-edit.cpp:1033
 msgid "<b>Scale</b> the pattern fill uniformly"
 msgstr "<b>Skalowanie</b> proporcjonalnie wzoru wypełenienia"
 
-#: ../src/object-edit.cpp:1034
+#: ../src/object-edit.cpp:1035
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Obracanie</b> wzoru wypełnienia; z <b>Ctrl</b> przyciąganie do kąta"
 
-#: ../src/object-edit.cpp:1059
+#: ../src/object-edit.cpp:1060
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Przeciągnij aby zmienić rozmiar <b>ramki z tekstem</b>"
 
@@ -3812,15 +3830,15 @@ msgstr ""
 msgid "Drawing cancelled"
 msgstr "Rysuje krzywe odręczne"
 
-#: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:226
+#: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
 msgid "Continuing selected path"
 msgstr "Kontynuowanie zaznaczonej ścieżki"
 
-#: ../src/pen-context.cpp:391 ../src/pencil-context.cpp:235
+#: ../src/pen-context.cpp:391 ../src/pencil-context.cpp:236
 msgid "Creating new path"
 msgstr "Tworzenie nowej ścieżki"
 
-#: ../src/pen-context.cpp:395 ../src/pencil-context.cpp:239
+#: ../src/pen-context.cpp:395 ../src/pencil-context.cpp:240
 msgid "Appending to selected path"
 msgstr "Dodawanie segmentów do zaznaczonej ścieżki"
 
@@ -3869,20 +3887,20 @@ msgstr ""
 msgid "Drawing finished"
 msgstr "Rysunek"
 
-#: ../src/pencil-context.cpp:314
+#: ../src/pencil-context.cpp:315
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Zwolnij przycisk</b> w tym miejscu aby zamknąć i zakończyć ścieżkę."
 
-#: ../src/pencil-context.cpp:320
+#: ../src/pencil-context.cpp:321
 msgid "Drawing a freehand path"
 msgstr "Rysowanie krzywej odręcznej"
 
-#: ../src/pencil-context.cpp:325
+#: ../src/pencil-context.cpp:326
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Przeciągnij</b> aby kontynuować ścieżkę od tego punktu."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:383
+#: ../src/pencil-context.cpp:384
 msgid "Finishing freehand"
 msgstr "Zakończono rysowanie krzywej"
 
@@ -4116,7 +4134,7 @@ msgstr "<b>Koło</b>"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2163
+#: ../src/ui/dialog/inkscape-preferences.cpp:351 ../src/verbs.cpp:2163
 msgid "Ellipse"
 msgstr "Elipsa"
 
@@ -4156,7 +4174,7 @@ msgstr "<b>Polilinia</b>"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:347 ../src/verbs.cpp:2161
+#: ../src/ui/dialog/inkscape-preferences.cpp:348 ../src/verbs.cpp:2161
 msgid "Rectangle"
 msgstr "Prostokąt"
 
@@ -4172,13 +4190,13 @@ msgstr "Przesunięcie:"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2167
+#: ../src/ui/dialog/inkscape-preferences.cpp:357 ../src/verbs.cpp:2167
 msgid "Spiral"
 msgstr "Spirala"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2165
+#: ../src/ui/dialog/inkscape-preferences.cpp:354 ../src/verbs.cpp:2165
 msgid "Star"
 msgstr "Gwiazda"
 
@@ -5588,23 +5606,23 @@ msgstr "Styl konturu"
 msgid "Find"
 msgstr "Znajdź"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:139
+#: ../src/ui/dialog/inkscape-preferences.cpp:140
 msgid "Mouse"
 msgstr "Mysz"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:141
+#: ../src/ui/dialog/inkscape-preferences.cpp:142
 msgid "Grab sensitivity:"
 msgstr "Czułość chwytania:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:141
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
-#: ../src/ui/dialog/inkscape-preferences.cpp:152
-#: ../src/ui/dialog/inkscape-preferences.cpp:156
-#: ../src/ui/dialog/inkscape-preferences.cpp:166
+#: ../src/ui/dialog/inkscape-preferences.cpp:142
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:153
+#: ../src/ui/dialog/inkscape-preferences.cpp:157
+#: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid "pixels"
 msgstr "piksele"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:142
+#: ../src/ui/dialog/inkscape-preferences.cpp:143
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
@@ -5612,26 +5630,26 @@ msgstr ""
 "Przy jakiej odległości kursora myszy od obiektu (w pikselach ekranowych) "
 "możliwe staje się manipulowanie nim"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:144
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
 msgid "Click/drag threshold:"
 msgstr "Próg kliknięcia/przeciągania:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:146
 msgid ""
 "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Największa wartość przesunięcia myszy (w pikselach ekranu) traktowana "
 "jeszcze jako kliknięcie, a nie przeciąganie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:150
+#: ../src/ui/dialog/inkscape-preferences.cpp:151
 msgid "Scrolling"
 msgstr "Przewijanie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:152
+#: ../src/ui/dialog/inkscape-preferences.cpp:153
 msgid "Mouse wheel scrolls by:"
 msgstr "Kółko myszy przewija o:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:153
+#: ../src/ui/dialog/inkscape-preferences.cpp:154
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -5639,25 +5657,25 @@ msgstr ""
 "Jedna pozycja obrotu kółka przewija o wybraną ilość pikseli (przewijanie w "
 "poziomie z klawiszem Shift)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:154
+#: ../src/ui/dialog/inkscape-preferences.cpp:155
 msgid "Ctrl+arrows"
 msgstr "Ctrl+strzałki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:156
+#: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid "Scroll by:"
 msgstr "Przewijanie o:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:157
+#: ../src/ui/dialog/inkscape-preferences.cpp:158
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr ""
 "Naciśnięcie Ctrl+strzałka przewija o wybraną odległość (w pikselach "
 "ekranowych)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:159
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Acceleration:"
 msgstr "Przyspieszenie:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:161
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -5665,15 +5683,15 @@ msgstr ""
 "Przytrzymanie Ctrl+strzałka spowoduje stopniowe przyspieszenie przewijania "
 "(0 - brak przyspieszania)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:161
+#: ../src/ui/dialog/inkscape-preferences.cpp:162
 msgid "Autoscrolling"
 msgstr "Autoprzewijanie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:163
+#: ../src/ui/dialog/inkscape-preferences.cpp:164
 msgid "Speed:"
 msgstr "Prędkość:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:164
+#: ../src/ui/dialog/inkscape-preferences.cpp:165
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -5681,12 +5699,12 @@ msgstr ""
 "Jak szybkie jest autoprzewijanie gdy obiekt zostaje przeciągnięty poza "
 "obrzeże okna dokumentu (0 – autoprzewijanie wyłączone)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:166
+#: ../src/ui/dialog/inkscape-preferences.cpp:167
 #: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
 msgid "Threshold:"
 msgstr "Próg:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:167
+#: ../src/ui/dialog/inkscape-preferences.cpp:168
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -5695,15 +5713,15 @@ msgstr ""
 "autoprzewijanie; wartość dodatnia oznacza położenie poza oknem, ujemna "
 "wewnątrz okna dokumentu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:172
+#: ../src/ui/dialog/inkscape-preferences.cpp:173
 msgid "Steps"
 msgstr "Kroki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:175
+#: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Arrow keys move by:"
 msgstr "Klawisze strzałek przesuwają o:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:176
+#: ../src/ui/dialog/inkscape-preferences.cpp:177
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -5711,33 +5729,33 @@ msgstr ""
 "Naciśnięcie klawisza strzałki przesuwa wybrany obiekt(y) lub węzeł(y) o "
 "wybraną wartość (w jednostkach px)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:178
+#: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid "> and < scale by:"
 msgstr "Klawisze > i < zmieniają rozmiar o:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:180
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "Naciśnięcie klawiszy > lub < odpowiednio powiększa lub pomniejsza rozmiar "
 "selekcji o wybraną wartość (w jednostkach px)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:181
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "Inset/Outset by:"
 msgstr "Odsunięcie na zewnątrz/do środka:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "Polecenia odsunięcia na zewnątrz i do środka przesuwają ścieżkę o wybraną "
 "odległość (w jednostkach px)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:183
+#: ../src/ui/dialog/inkscape-preferences.cpp:184
 msgid "Compass-like display of angles"
 msgstr "Wyświetlanie wartości kątów jak na kompasie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:185
+#: ../src/ui/dialog/inkscape-preferences.cpp:186
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -5748,15 +5766,15 @@ msgstr ""
 "od kierunku \"wschodniego\", w zakresie -180 do 180; rosnąco w kierunku "
 "przeciwnym do ruchu wskazówek zegara"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:191
+#: ../src/ui/dialog/inkscape-preferences.cpp:192
 msgid "Rotation snaps every:"
 msgstr "Zatrzymywanie obrotu co:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:191
+#: ../src/ui/dialog/inkscape-preferences.cpp:192
 msgid "degrees"
 msgstr "stopnie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:192
+#: ../src/ui/dialog/inkscape-preferences.cpp:193
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -5764,11 +5782,11 @@ msgstr ""
 "Przy obrocie z klawiszem Ctrl przyciąganie do kąta będącego wielokrotnością "
 "podanej wartości; również naciśnięcie [ lub ] obraca o tę wartość"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:194
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "Zoom in/out by:"
 msgstr "Powiększenie/pomniejszenie o:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:195
+#: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -5776,31 +5794,31 @@ msgstr ""
 "Współczynnik wykorzystywany przez narzędzie powiększania, klawisze +/-, "
 "środkowy przycisk myszy, przy powiększaniu/pomniejszaniu widoku"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:201
+#: ../src/ui/dialog/inkscape-preferences.cpp:202
 msgid "Show selection cue"
 msgstr "Wyróżnianie selekcji"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:202
+#: ../src/ui/dialog/inkscape-preferences.cpp:203
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "Decyduje o wyświetlaniu wyróżnienia wybranego obiektu (według ustawienia w "
 "zakładce narzędzia Wskaźnik)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:208
+#: ../src/ui/dialog/inkscape-preferences.cpp:209
 msgid "Enable gradient editing"
 msgstr "Edycja gradientu na obiekcie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:209
+#: ../src/ui/dialog/inkscape-preferences.cpp:210
 msgid "Whether selected objects display gradient editing controls"
 msgstr ""
 "Czy na wybranych obiektach wyświetlone zostaną uchwyty do edycji gradientu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:222
+#: ../src/ui/dialog/inkscape-preferences.cpp:223
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "<b>Brak wybranych obiektów</b> do pobrania stylu."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:231
+#: ../src/ui/dialog/inkscape-preferences.cpp:232
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
@@ -5808,24 +5826,24 @@ msgstr ""
 "<b>Wybrano więcej niż jeden obiekt.</b> Nie można pobrać stylu  z wielu "
 "obiektów."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:265
+#: ../src/ui/dialog/inkscape-preferences.cpp:266
 msgid "Create new objects with:"
 msgstr "Tworzenie nowych obiektów z zastosowaniem stylu:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:267
+#: ../src/ui/dialog/inkscape-preferences.cpp:268
 #, fuzzy
 msgid "Last used style"
 msgstr "Wklej _styl"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:269
+#: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "Apply the style you last set on an object"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:274
+#: ../src/ui/dialog/inkscape-preferences.cpp:275
 msgid "This tool's own style:"
 msgstr "Styl właściwy dla tego narzędzia:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:278
+#: ../src/ui/dialog/inkscape-preferences.cpp:279
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -5833,180 +5851,180 @@ msgstr ""
 "Każde narzędzie może zachowywać własny styl dla nowo tworzonych obiektów. "
 "Przycisk poniżej pozwala ustawić własny styl narzędzia."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:283
+#: ../src/ui/dialog/inkscape-preferences.cpp:284
 msgid "Take from selection"
 msgstr "Pobierz z wybranego obiektu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:295
+#: ../src/ui/dialog/inkscape-preferences.cpp:296
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr "Zapisz styl wybranego obiektu jako domyślny dla tego narzędzia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:300
+#: ../src/ui/dialog/inkscape-preferences.cpp:301
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:303
+#: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Width is in absolute units"
 msgstr ""
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Selector"
 msgstr "Wskaźnik"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:309
+#: ../src/ui/dialog/inkscape-preferences.cpp:310
 msgid "When transforming, show:"
 msgstr "Przy przekształcaniu wyświetlaj:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:310
+#: ../src/ui/dialog/inkscape-preferences.cpp:311
 msgid "Objects"
 msgstr "Obiekty"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:312
+#: ../src/ui/dialog/inkscape-preferences.cpp:313
 msgid "Show the actual objects when moving or transforming"
 msgstr "Wyświetlanie obiektów podczas ich przemieszczania i przekształcania"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:313
+#: ../src/ui/dialog/inkscape-preferences.cpp:314
 msgid "Box outline"
 msgstr "Tylko ramki obiektów"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:316
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr ""
 "Wyświetlanie jedynie ramek obiektów podczas ich przemieszczania i "
 "przekształcania"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:316
+#: ../src/ui/dialog/inkscape-preferences.cpp:317
 msgid "Per-object selection cue:"
 msgstr "Wyróżnianie obiektów wewnątrz selekcji:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:319
+#: ../src/ui/dialog/inkscape-preferences.cpp:320
 msgid "No per-object selection indication"
 msgstr "Obiekty wewnątrz selekcji nie są wyróżniane"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:320
+#: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "Mark"
 msgstr "Uchwyt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:322
+#: ../src/ui/dialog/inkscape-preferences.cpp:323
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr ""
 "Każdy z wybranych obiektów posiada uchwyt w kształcie rombu w lewym górnym "
 "rogu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:323
+#: ../src/ui/dialog/inkscape-preferences.cpp:324
 msgid "Box"
 msgstr "Ramka"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:325
+#: ../src/ui/dialog/inkscape-preferences.cpp:326
 msgid "Each selected object displays its bounding box"
 msgstr "Każdy z wybranych obiektów zostaje otoczony ramką"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:326
+#: ../src/ui/dialog/inkscape-preferences.cpp:327
 msgid "Default scale origin:"
 msgstr "Domyślny środek skalowania:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:327
+#: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Opposite bounding box edge"
 msgstr "Przeciwległa krawędź ramki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:329
+#: ../src/ui/dialog/inkscape-preferences.cpp:330
 msgid "Default scale origin will be on the bounding box of the item"
 msgstr "Domyślny środek skalowania położony na ramce obiektu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:330
+#: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Farthest opposite node"
 msgstr "Najdalszy przeciwległy węzeł"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:332
+#: ../src/ui/dialog/inkscape-preferences.cpp:333
 msgid "Default scale origin will be on the bounding box of the item's points"
 msgstr ""
 "Domyślny środek skalowania położony na linii najbardziej oddalonego węzła"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:334
+#: ../src/ui/dialog/inkscape-preferences.cpp:335
 msgid "Node"
 msgstr "Edycja węzłów"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:338
+#: ../src/ui/dialog/inkscape-preferences.cpp:339
 #: ../src/ui/view/edit-widget.cpp:1133 ../src/verbs.cpp:2179
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
 msgstr "Powiększenie"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:342
+#: ../src/ui/dialog/inkscape-preferences.cpp:343
 msgid "Shapes"
 msgstr "Figury"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2169
+#: ../src/ui/dialog/inkscape-preferences.cpp:360 ../src/verbs.cpp:2169
 msgid "Pencil"
 msgstr "Ołówek"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:362
+#: ../src/ui/dialog/inkscape-preferences.cpp:363
 msgid "Tolerance:"
 msgstr "Zaokrąglenie:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:363
+#: ../src/ui/dialog/inkscape-preferences.cpp:364
 msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
 msgstr "Wartość wpływa na wygładzenie i uproszczenie krzywej; "
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:367 ../src/verbs.cpp:2171
+#: ../src/ui/dialog/inkscape-preferences.cpp:368 ../src/verbs.cpp:2171
 msgid "Pen"
 msgstr "Pióro"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:371 ../src/verbs.cpp:2173
+#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2173
 msgid "Calligraphy"
 msgstr "Kaligrafia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:374
+#: ../src/ui/dialog/inkscape-preferences.cpp:375
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
 msgstr ""
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:381 ../src/verbs.cpp:2177
+#: ../src/ui/dialog/inkscape-preferences.cpp:382 ../src/verbs.cpp:2177
 msgid "Gradient"
 msgstr "Gradient"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:384 ../src/verbs.cpp:2183
+#: ../src/ui/dialog/inkscape-preferences.cpp:385 ../src/verbs.cpp:2183
 msgid "Connector"
 msgstr "Łącznik"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:387 ../src/verbs.cpp:2181
+#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2181
 msgid "Dropper"
 msgstr "Pipeta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:394
+#: ../src/ui/dialog/inkscape-preferences.cpp:395
 msgid "Save window geometry"
 msgstr "Zapisanie położenia okien"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:395
+#: ../src/ui/dialog/inkscape-preferences.cpp:396
 msgid "Dialogs are hidden in taskbar"
 msgstr "Ukrycie okien dialogowych na pasku zadań"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:397
 msgid "Zoom when window is resized"
 msgstr "Zmiana powiększenia przy zmianie rozmiaru okna"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:398
+#: ../src/ui/dialog/inkscape-preferences.cpp:399
 msgid "Normal"
 msgstr "Normalne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:399
+#: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid "Aggressive"
 msgstr "Agresywne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:402
+#: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -6014,13 +6032,13 @@ msgstr ""
 "Zapisanie wielkości i położenia okien z każdym dokumentem (tylko dla formatu "
 "Inkscape SVG)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr ""
 "Wyłącza wyświetlanie przycisków okien dialogowych na pasku zadań menadżera "
 "okien"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:406
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -6031,62 +6049,62 @@ msgstr ""
 "może być zmienione dla każdego okna przyciskiem nad paskiem przewijania po "
 "prawej stronie)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Dialogs on top:"
 msgstr "Utrzymywanie okien dialogowych na wierzchu:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:409
+#: ../src/ui/dialog/inkscape-preferences.cpp:410
 msgid "Dialogs are treated as regular windows"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/ui/dialog/inkscape-preferences.cpp:412
 #, fuzzy
 msgid "Dialogs stay on top of document windows"
 msgstr "Przełącza do okna następnego dokumentu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:413
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:415
+#: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "Windows"
 msgstr "Okna"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:420
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Move in parallel"
 msgstr "Przesuwają się równolegle"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:422
+#: ../src/ui/dialog/inkscape-preferences.cpp:423
 msgid "Stay unmoved"
 msgstr "Pozostają nieprzemieszczone"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:424
+#: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Move according to transform"
 msgstr "Przemieszczają się zgodnie z przypisanym przekształceniem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:426
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Are unlinked"
 msgstr "Zostają odłączone"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:428
+#: ../src/ui/dialog/inkscape-preferences.cpp:429
 msgid "Are deleted"
 msgstr "Zostają skasowane"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:431
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Gdy oryginał jest przesuwany, jego klony i połączone odsunięcia:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:433
+#: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Clones are translated by the same vector as their original."
 msgstr "Klony są przesuwane o ten sam wektor co oryginalny obiekt."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:435
+#: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "Clones preserve their positions when their original is moved."
 msgstr ""
 "Klony zachowują swoją pozycję, podczas gdy oryginalny obiekt zostaje "
 "przesunięty"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:437
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6096,69 +6114,69 @@ msgstr ""
 "przypisanego do niej przekształcenia. Na przykład obrócony klon przesuwa się "
 "w inny sposób niż oryginalny obiekt."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:439
 msgid "When the original is deleted, its clones:"
 msgstr "Gdy oryginał zostaje skasowany, jego klony:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "Orphaned clones are converted to regular objects."
 msgstr "Osierocone klony zostają zamienione na zwykłe obiekty."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:442
+#: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "Orphaned clones are deleted along with their original."
 msgstr "Osierocone obiekty zostają skasowane razem z oryginalnym obiektem."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "Scale stroke width"
 msgstr "Skalowanie grubości konturu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:450
+#: ../src/ui/dialog/inkscape-preferences.cpp:451
 msgid "Scale rounded corners in rectangles"
 msgstr "Skalowanie zaokrąglonych narożników prostokątów"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:451
+#: ../src/ui/dialog/inkscape-preferences.cpp:452
 msgid "Transform gradients"
 msgstr "Przekształcanie gradientów"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:452
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid "Transform patterns"
 msgstr "Przekształcanie deseni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:453
+#: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Optimized"
 msgstr "Zoptymalizowany"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:455
 msgid "Preserved"
 msgstr "Zawsze zapisywane"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:457
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 #: ../src/widgets/select-toolbar.cpp:496
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "Przy skalowaniu obiektów grubość konturu zmienia się proporcjonalnie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:459
+#: ../src/ui/dialog/inkscape-preferences.cpp:460
 #: ../src/widgets/select-toolbar.cpp:508
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "Przy skalowaniu prostokątów promień zaokrąglenia ich narożników jest "
 "odpowiednio zmieniany"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:462
 #: ../src/widgets/select-toolbar.cpp:520
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr "Przekształcenie gradientu (w wypełnieniu i konturze) wraz z obiektami"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:463
+#: ../src/ui/dialog/inkscape-preferences.cpp:464
 #: ../src/widgets/select-toolbar.cpp:532
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr "Przekształcenie deseni (w wypełnieniu i konturze) wraz z obiektami"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:465
 msgid "Store transformation:"
 msgstr "Sposób zapisu przekształcenia:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:466
+#: ../src/ui/dialog/inkscape-preferences.cpp:467
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -6166,60 +6184,60 @@ msgstr ""
 "Gdy tylko możliwe przekształcenie zostanie wykonane na obiekcie bez "
 "dodawania do jego definicji atrybutu 'transform='"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:468
+#: ../src/ui/dialog/inkscape-preferences.cpp:469
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr ""
 "Przekształcenie jest zawsze zapisywane z obiektem w postaci atrybutu "
 "'transform='"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:470
+#: ../src/ui/dialog/inkscape-preferences.cpp:471
 msgid "Transforms"
 msgstr "Przekształcenia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:475
+#: ../src/ui/dialog/inkscape-preferences.cpp:476
 #, fuzzy
 msgid "Select in all layers"
 msgstr "Zaznacz na wszystkich warstwac_h"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:476
+#: ../src/ui/dialog/inkscape-preferences.cpp:477
 msgid "Select only within current layer"
 msgstr "Zaznaczanie jedynie w obrębie aktywnej warstwy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:477
+#: ../src/ui/dialog/inkscape-preferences.cpp:478
 #, fuzzy
 msgid "Select in current layer and sublayers"
 msgstr "Zaznaczanie jedynie w obrębie aktywnej warstwy"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:478
+#: ../src/ui/dialog/inkscape-preferences.cpp:479
 msgid "Ignore hidden objects"
 msgstr "Pominięcie ukrytych obiektów"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:479
+#: ../src/ui/dialog/inkscape-preferences.cpp:480
 msgid "Ignore locked objects"
 msgstr "Pominięcie zablokowanych obiektów"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:481
+#: ../src/ui/dialog/inkscape-preferences.cpp:482
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Działanie klawiszy Ctrl+A, Tab, Shift+Tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:483
+#: ../src/ui/dialog/inkscape-preferences.cpp:484
 #, fuzzy
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "Wyłączenie tej opcji pozwala zaznaczyć obiekty na wszystkich "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:485
+#: ../src/ui/dialog/inkscape-preferences.cpp:486
 #, fuzzy
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr "Wyłączenie tej opcji pozwala zaznaczyć obiekty na wszystkich "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:487
+#: ../src/ui/dialog/inkscape-preferences.cpp:488
 #, fuzzy
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
 msgstr "Wyłączenie tej opcji pozwala zaznaczyć obiekty na wszystkich "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:489
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6227,7 +6245,7 @@ msgstr ""
 "Wyłącznie tej opcji pozwala zaznaczyć ukryte obiekty (zarówno te ustawione "
 "jako ukryte, jak i znajdujące się w ukrytej grupie lub warstwie)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:491
+#: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6236,25 +6254,25 @@ msgstr ""
 "ustawione jako zablokowane, jak i znajdujące się w zablokowanej grupie lub "
 "warstwie)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:493
+#: ../src/ui/dialog/inkscape-preferences.cpp:494
 msgid "Selecting"
 msgstr "Zaznaczanie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "Default export resolution:"
 msgstr "Domyślna rozdzielczość przy eksporcie:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Domyślna rozdzielczość przy eksporcie do bitmapy (w punktach na cal) "
 "wyświetlana w oknie dialogowym eksportu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:502
+#: ../src/ui/dialog/inkscape-preferences.cpp:503
 msgid "Import bitmap as <image>"
 msgstr "Importowanie bitmap jako obiektów <image>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:504
+#: ../src/ui/dialog/inkscape-preferences.cpp:505
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6262,11 +6280,11 @@ msgstr ""
 "Włączenie tej opcji powoduje utworzenie przy imporcie obiektu svg <image>; w "
 "przeciwnym razie obraz jest wstawiany jako prostokąt z wypełnieniem bitmapą"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:505
+#: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "Add label comments to printing output"
 msgstr "Dodanie komentarzy do pliku wyjściowego drukarki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:507
+#: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -6274,11 +6292,11 @@ msgstr ""
 "Włączenie tej opcji powoduje wstawienie do pliku wyjściowego drukarki "
 "(Postscript) komentarzy opisujących każdy obiekt jego etykietą"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:508
+#: ../src/ui/dialog/inkscape-preferences.cpp:509
 msgid "Enable script effects (requires restart) - EXPERIMENTAL"
 msgstr "Włączenie skryptów z efektami (wymaga restartu) - EKSPERYMENTALNE"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:510
+#: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid ""
 "When on, the effects menu is enabled, allowing external effect scripts to be "
 "called, requires restart before effective - EXPERIMENTAL"
@@ -6286,21 +6304,21 @@ msgstr ""
 "Włączenie tej opcji udostępnia menu skryptów, pozwalając na wykonywanie "
 "zewnętrznych skryptów z efektami, wymaga restartu programu - EKSPERYMENTALNE"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:512
+#: ../src/ui/dialog/inkscape-preferences.cpp:513
 msgid "Max recent documents:"
 msgstr "Liczba pozycji ostatnio otwieranych dokumentów:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:513
+#: ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr ""
 "Maksymalna liczba pozycji przechowywanych na liście ostatnio otwieranych "
 "dokumentów w menu Plik"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:515
+#: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Simplification threshold:"
 msgstr "Próg dla polecenia uproszczenia:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -6310,50 +6328,50 @@ msgstr ""
 "kilkakrotnie w krótkich odstępach czasu powoduje nasilenie jego działania. "
 "Ponowne wykonanie po krótkiej przerwie przywraca wartość domyślną."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 msgid "Oversample bitmaps:"
 msgstr "Nadpróbkowanie bitmap:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:524
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 msgid "Clipping and masking:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Remove clipping path or mask after applying"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:530
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Misc"
 msgstr "Pozostałe"
 
@@ -6743,11 +6761,6 @@ msgstr "Macierz przekształcenia"
 #, fuzzy
 msgid "Transformation matrix element F"
 msgstr "Macierz przekształcenia"
-
-#: ../src/ui/dialog/transformation.cpp:102
-#, fuzzy
-msgid "Rela_tive move"
-msgstr "Przesunięcie względne"
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid ""
@@ -7158,64 +7171,64 @@ msgid "Nothing selected"
 msgstr "Zaznaczono klon obiektu"
 
 #: ../src/ui/widget/selected-style.cpp:137
-#: ../src/ui/widget/style-swatch.cpp:288
+#: ../src/ui/widget/style-swatch.cpp:300
 msgid "No fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:137
-#: ../src/ui/widget/style-swatch.cpp:288
+#: ../src/ui/widget/style-swatch.cpp:300
 #, fuzzy
 msgid "No stroke"
 msgstr "(kontur)"
 
 #: ../src/ui/widget/selected-style.cpp:139
-#: ../src/ui/widget/style-swatch.cpp:280 ../src/widgets/paint-selector.cpp:176
+#: ../src/ui/widget/style-swatch.cpp:292 ../src/widgets/paint-selector.cpp:176
 msgid "Pattern"
 msgstr "Deseń"
 
 #: ../src/ui/widget/selected-style.cpp:142
-#: ../src/ui/widget/style-swatch.cpp:282 ../src/widgets/paint-selector.cpp:872
+#: ../src/ui/widget/style-swatch.cpp:294 ../src/widgets/paint-selector.cpp:872
 msgid "Pattern fill"
 msgstr "Deseń"
 
 #: ../src/ui/widget/selected-style.cpp:142
-#: ../src/ui/widget/style-swatch.cpp:282
+#: ../src/ui/widget/style-swatch.cpp:294
 #, fuzzy
 msgid "Pattern stroke"
 msgstr "Przesunięcie wzoru"
 
 #: ../src/ui/widget/selected-style.cpp:144
-#: ../src/ui/widget/style-swatch.cpp:272
+#: ../src/ui/widget/style-swatch.cpp:284
 #, fuzzy
 msgid "L Gradient"
 msgstr "Gradient"
 
 #: ../src/ui/widget/selected-style.cpp:147
-#: ../src/ui/widget/style-swatch.cpp:274
+#: ../src/ui/widget/style-swatch.cpp:286
 #, fuzzy
 msgid "Linear gradient fill"
 msgstr "Gradient liniowy"
 
 #: ../src/ui/widget/selected-style.cpp:147
-#: ../src/ui/widget/style-swatch.cpp:274
+#: ../src/ui/widget/style-swatch.cpp:286
 #, fuzzy
 msgid "Linear gradient stroke"
 msgstr "Gradient liniowy"
 
 #: ../src/ui/widget/selected-style.cpp:149
-#: ../src/ui/widget/style-swatch.cpp:276
+#: ../src/ui/widget/style-swatch.cpp:288
 #, fuzzy
 msgid "R Gradient"
 msgstr "Gradient"
 
 #: ../src/ui/widget/selected-style.cpp:152
-#: ../src/ui/widget/style-swatch.cpp:278
+#: ../src/ui/widget/style-swatch.cpp:290
 #, fuzzy
 msgid "Radial gradient fill"
 msgstr "Gradient koncentryczny"
 
 #: ../src/ui/widget/selected-style.cpp:152
-#: ../src/ui/widget/style-swatch.cpp:278
+#: ../src/ui/widget/style-swatch.cpp:290
 #, fuzzy
 msgid "Radial gradient stroke"
 msgstr "Gradient koncentryczny"
@@ -7236,7 +7249,7 @@ msgid "Different strokes"
 msgstr "_Różnica"
 
 #: ../src/ui/widget/selected-style.cpp:159
-#: ../src/ui/widget/style-swatch.cpp:291
+#: ../src/ui/widget/style-swatch.cpp:303
 #, fuzzy
 msgid "Unset"
 msgstr "do wewnątrz"
@@ -7244,14 +7257,14 @@ msgstr "do wewnątrz"
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/selected-style.cpp:220
-#: ../src/ui/widget/style-swatch.cpp:293
+#: ../src/ui/widget/style-swatch.cpp:305
 #, fuzzy
 msgid "Unset fill"
 msgstr "Jednostka"
 
 #: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/selected-style.cpp:220
-#: ../src/ui/widget/style-swatch.cpp:293
+#: ../src/ui/widget/style-swatch.cpp:305
 #, fuzzy
 msgid "Unset stroke"
 msgstr "(kontur)"
@@ -7424,7 +7437,7 @@ msgstr "Rozmiar użytkownika"
 
 #: ../src/ui/widget/page-sizer.cpp:246
 #, fuzzy
-msgid "Fit page to selection"
+msgid "_Fit page to selection"
 msgstr "Dopasowanie do ramki zaznaczenia"
 
 #: ../src/ui/widget/page-sizer.cpp:247
@@ -7453,22 +7466,22 @@ msgstr "Wysokość:"
 msgid "Height of paper"
 msgstr "Wysokość prostokąta"
 
-#: ../src/ui/widget/style-swatch.cpp:313
+#: ../src/ui/widget/style-swatch.cpp:325
 #, fuzzy, c-format
 msgid "Stroke width: %.5g%s"
 msgstr "Grubość konturu"
 
-#: ../src/ui/widget/style-swatch.cpp:329
+#: ../src/ui/widget/style-swatch.cpp:341
 #, c-format
 msgid "0:%.3g"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:331
+#: ../src/ui/widget/style-swatch.cpp:343
 #, c-format
 msgid "0:.%d"
 msgstr ""
 
-#: ../src/ui/widget/style-swatch.cpp:336
+#: ../src/ui/widget/style-swatch.cpp:348
 #, fuzzy, c-format
 msgid "Opacity: %.3g"
 msgstr "Przezroczystość"
@@ -9950,7 +9963,8 @@ msgstr "Węzły"
 msgid "Maximum segment length"
 msgstr ""
 
-#: ../share/extensions/addnodes.inx.h:3 ../share/extensions/kochify.inx.h:2
+#: ../share/extensions/addnodes.inx.h:3 ../share/extensions/flatten.inx.h:3
+#: ../share/extensions/kochify.inx.h:2
 #: ../share/extensions/kochify_load.inx.h:2
 #: ../share/extensions/radiusrand.inx.h:1
 #: ../share/extensions/straightseg.inx.h:2
@@ -9979,6 +9993,20 @@ msgstr "Wyjście"
 #, fuzzy
 msgid "Write Adobe Illustrator"
 msgstr "Program do tworzenia ilustracji wektorowych"
+
+#: ../share/extensions/aisvg.inx.h:1
+#, fuzzy
+msgid "AI SVG Input"
+msgstr "Wyjście"
+
+#: ../share/extensions/aisvg.inx.h:2
+#, fuzzy
+msgid "Adobe Illustrator SVG (*.ai.svg)"
+msgstr "Program do tworzenia ilustracji wektorowych"
+
+#: ../share/extensions/aisvg.inx.h:3
+msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
+msgstr ""
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -10010,7 +10038,7 @@ msgstr ""
 msgid "Dot size"
 msgstr "Rozmiar"
 
-#: ../share/extensions/dots.inx.h:2
+#: ../share/extensions/dots.inx.h:2 ../share/extensions/measure.inx.h:1
 #, fuzzy
 msgid "Font size"
 msgstr "Rozmiar czcionki:"
@@ -10021,17 +10049,9 @@ msgid "Number Nodes"
 msgstr "Liczba rzędów"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
+#: ../share/extensions/measure.inx.h:3
 msgid "Visualize Path"
 msgstr ""
-
-#: ../share/extensions/dropshadow.inx.h:1
-msgid "Color of shadow"
-msgstr ""
-
-#: ../share/extensions/dropshadow.inx.h:2
-#, fuzzy
-msgid "Dropshadow"
-msgstr "Wyświetlanie cienia strony"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -10052,6 +10072,14 @@ msgid ""
 "sourceforge.net/"
 msgstr ""
 
+#: ../share/extensions/dxf_outlines.inx.h:1
+msgid "Desktop Cutting Plotter"
+msgstr ""
+
+#: ../share/extensions/dxf_outlines.inx.h:2
+msgid "Desktop Cutting Plotter (*.DXF)"
+msgstr ""
+
 #: ../share/extensions/dxf_output.inx.h:2
 #, fuzzy
 msgid "DXF Output"
@@ -10063,14 +10091,6 @@ msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:4
 msgid "pstoedit must be installed to run see http://www.pstoedit.net/pstoedit"
-msgstr ""
-
-#: ../share/extensions/dxf_outlines.inx.h:1
-msgid "Desktop Cutting Plotter"
-msgstr ""
-
-#: ../share/extensions/dxf_outlines.inx.h:2
-msgid "Desktop Cutting Plotter (*.DXF)"
 msgstr ""
 
 #: ../share/extensions/embedimage.inx.h:1
@@ -10097,6 +10117,22 @@ msgstr ""
 
 #: ../share/extensions/epsi_output.inx.h:3
 msgid "Encapsulated Postscript with a thumbnail"
+msgstr ""
+
+#: ../share/extensions/eqtexsvg.inx.h:1
+msgid "LaTeX formula"
+msgstr ""
+
+#: ../share/extensions/eqtexsvg.inx.h:2
+msgid "LaTeX formula: "
+msgstr ""
+
+#: ../share/extensions/extractimage.inx.h:1
+msgid "Extract One Image"
+msgstr ""
+
+#: ../share/extensions/extractimage.inx.h:3
+msgid "Path to save image"
 msgstr ""
 
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
@@ -10190,6 +10226,36 @@ msgstr ""
 msgid "Tuning (Scale step for each string seperated by semicolons)"
 msgstr ""
 
+#: ../share/extensions/fig_input.inx.h:1
+msgid "Open files saved with XFIG"
+msgstr ""
+
+#: ../share/extensions/fig_input.inx.h:2
+msgid "XFIG Graphic File (*.fig)"
+msgstr ""
+
+#: ../share/extensions/fig_input.inx.h:3
+#, fuzzy
+msgid "XFIG Input"
+msgstr "Wyjście"
+
+#: ../share/extensions/flatten.inx.h:1
+#, fuzzy
+msgid "Flatness"
+msgstr "Płaskie boki:"
+
+#: ../share/extensions/flatten.inx.h:2
+msgid "Flatten Bezier"
+msgstr ""
+
+#: ../share/extensions/gimp_xcf.inx.h:1
+msgid "GIMP XCF"
+msgstr ""
+
+#: ../share/extensions/gimp_xcf.inx.h:2
+msgid "GIMP XCF maintaining layers (*.XCF)"
+msgstr ""
+
 #: ../share/extensions/handles.inx.h:1
 #, fuzzy
 msgid "Draw Handles"
@@ -10257,6 +10323,10 @@ msgstr "_Linijki"
 msgid "Step"
 msgstr "Kroki"
 
+#: ../share/extensions/measure.inx.h:2
+msgid "Measure Path"
+msgstr ""
+
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
 msgstr ""
@@ -10267,14 +10337,17 @@ msgid "Magnitude"
 msgstr "Purpurowy"
 
 #: ../share/extensions/pdf_output.inx.h:1
+#: ../share/extensions/pdf_output_via_gs_on_win32.inx.h:1
 msgid "Adobe PDF (*.pdf)"
 msgstr ""
 
 #: ../share/extensions/pdf_output.inx.h:2
+#: ../share/extensions/pdf_output_via_gs_on_win32.inx.h:2
 msgid "Adobe Portable Document Format"
 msgstr ""
 
 #: ../share/extensions/pdf_output.inx.h:3
+#: ../share/extensions/pdf_output_via_gs_on_win32.inx.h:3
 #, fuzzy
 msgid "PDF Output"
 msgstr "Wyjście"
@@ -10311,6 +10384,16 @@ msgstr "Deformacja losowa:"
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Use normal distribution"
 msgstr ""
+
+#: ../share/extensions/randompnt.inx.h:1
+#, fuzzy
+msgid "Random Point"
+msgstr "Zaokrąglenie"
+
+#: ../share/extensions/randompos.inx.h:1
+#, fuzzy
+msgid "Random Position"
+msgstr "_Obrót"
 
 #: ../share/extensions/rtree.inx.h:1
 #, fuzzy
@@ -10350,6 +10433,30 @@ msgstr ""
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
 msgstr ""
+
+#: ../share/extensions/svg_and_media_zip_output.inx.h:1
+msgid "Compressed Inkscape SVG with media (*.zip)"
+msgstr ""
+
+#: ../share/extensions/svg_and_media_zip_output.inx.h:2
+msgid ""
+"Inkscape's native file format compressed with Zip and including all media "
+"files"
+msgstr ""
+
+#: ../share/extensions/svg_and_media_zip_output.inx.h:3
+#, fuzzy
+msgid "ZIP Output"
+msgstr "Wyjście"
+
+#: ../share/extensions/svg_dropshadow.inx.h:1
+msgid "Color of shadow"
+msgstr ""
+
+#: ../share/extensions/svg_dropshadow.inx.h:2
+#, fuzzy
+msgid "Dropshadow"
+msgstr "Wyświetlanie cienia strony"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
@@ -10423,6 +10530,12 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#~ msgid " relative by "
+#~ msgstr " przesunięcie "
+
+#~ msgid " absolute to "
+#~ msgstr " pozycja "
 
 #~ msgid "Finishing pen"
 #~ msgstr "Zakończono rysowanie krzywej Beziera"
@@ -10727,9 +10840,6 @@ msgstr ""
 
 #~ msgid "ARG2:"
 #~ msgstr "ARG2:"
-
-#~ msgid "Flatsides:"
-#~ msgstr "Płaskie boki:"
 
 #~ msgid "Radius X:"
 #~ msgstr "Promień X:"
