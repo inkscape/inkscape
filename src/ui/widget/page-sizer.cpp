@@ -295,17 +295,15 @@ PageSizer::setDim (double w, double h, bool update)
 void
 PageSizer::setDoc (double w, double h)
 {
-    setDim (w, h);
-
     if (SP_ACTIVE_DESKTOP && !_wr->isUpdating()) {
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         Unit const& unit = _rum._sel->getUnit();
         sp_document_set_width (doc, w / unit.factor, &_px_unit);
         sp_document_set_height (doc, h / unit.factor, &_px_unit);
         sp_document_done (doc);
+    } else {
+        setDim (w, h);
     }
-
-    setDim (w, h);
 }
 
 /** 
