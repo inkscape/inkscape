@@ -32,7 +32,7 @@ Si no trobeu el fitxer "./configure", podeu crear-lo executant l'ordre
 "./autogen.sh", que crida a d'altres programes diferents com l'automake
 i l'autoconf. Veieu INSTALL per a més detalls.
 
-Podeu consultar a http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape les
+Podeu consultar a http://wiki.inkscape.org/wiki/index.php/CompilingInkscape les
 dependències més habituals.
 
 Feu-nos saber si heu modificat l'Inkscape d'alguna manera usable.

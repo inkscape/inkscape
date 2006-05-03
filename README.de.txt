@@ -31,7 +31,7 @@ Inkscape nutzt die Standardprozedur für Compilation und Installation:
 
 Detalliertere Information hierzu siehe in der Datei INSTALL.
 Wg. Voraussetzungen und Abhängigkeiten von anderer Software 
-siehe http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape
+siehe http://wiki.inkscape.org/wiki/index.php/CompilingInkscape
 
 Wenn Sie inkscape in einer neuen, brauchbaren Weise verändern, 
 lassen Sie uns an den Änderungen teilhaben.

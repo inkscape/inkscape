@@ -43,7 +43,7 @@ necesitará instalar son:
  * glibmm
  * gtkmm  
 
-Acceda a http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape para obtener
+Acceda a http://wiki.inkscape.org/wiki/index.php/CompilingInkscape para obtener
 una lista de las dependencias más actuales, además de los enlaces a los paquetes
 de código fuente.
 

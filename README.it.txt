@@ -30,7 +30,7 @@ Se il file "./configure" non esiste, lo puoi creare con il comando "./autogen.sh
 che si basa su altri programmi quali automake e autoconf. Consulta il file INSTALL
 per ulteriori dettagli.
 
-Visita http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape per la più
+Visita http://wiki.inkscape.org/wiki/index.php/CompilingInkscape per la più
 recente lista delle dipendenze.
 
 Se apporti delle modifiche utili ad Inkscape, condividile con la comunità.
