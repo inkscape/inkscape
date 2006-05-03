@@ -10,6 +10,8 @@
 	SnapManager instance and use it for all management of snapping
 	settings.
 
+	* src/snap.cpp, src/snap.h: remove the unused namedview_dim_snap_list()
+
 2006-05-01  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/Makefile.am, src/Makefile_insert, src/attributes-test.h,
