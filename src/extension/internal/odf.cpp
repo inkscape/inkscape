@@ -1072,6 +1072,8 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             }
         else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
             {
+            //## Gradient.  Look in writeStyle() below to see what info
+            //   we need to read into GradientInfo.
             if (!SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)))
                 return;
             isGradient = true;
@@ -1353,13 +1355,37 @@ bool OdfOutput::writeStyle(Writer &outs)
         {
         GradientInfo gi(*giter);
         outs.printf("<draw:gradient draw:name=\"%s\" ", gi.name.c_str());
-        outs.printf("draw:display-name=\"%s\" ", gi.name.c_str());
         outs.printf("draw:style=\"%s\" ", gi.style.c_str());
         if (gi.style == "linear")
             {
+            /*
+            ===================================================================
+            LINEAR gradient.  We need something that looks like this:
+            <draw:gradient draw:name="Gradient_20_7"
+                draw:display-name="Gradient 7"
+                draw:style="linear"
+                draw:start-color="#008080" draw:end-color="#993366"
+                draw:start-intensity="100%" draw:end-intensity="100%"
+                draw:angle="150" draw:border="0%"/>
+            ===================================================================
+            */
+            outs.printf("draw:display-name=\"linear borderless\" ");
             }
-        else if (gi.style == "gradient")
+        else if (gi.style == "radial")
             {
+            /*
+            ===================================================================
+            RADIAL gradient.  We need something that looks like this:
+            <!-- radial gradient, light gray to white, centered, 0% border -->
+            <draw:gradient draw:name="radial_20_borderless"
+                draw:display-name="radial borderless"
+                draw:style="radial"
+                draw:cx="50%" draw:cy="50%"
+                draw:start-color="#999999" draw:end-color="#ffffff"
+                draw:border="0%"/>
+            ===================================================================
+            */
+            outs.printf("draw:display-name=\"radial borderless\" ");
             outs.printf("draw:cx=\".2f%%\" draw:cy=\".2f%%\" ", gi.cx, gi.cy);
             }
         else
