@@ -43,7 +43,7 @@ vous devriez avoir à installer :
   * glibmm
   * gtkmm
 
-Veuillez consulter http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape
+Veuillez consulter http://wiki.inkscape.org/wiki/index.php/CompilingInkscape
 pour les dépendances les plus courantes, cette page comportant aussi des liens
 les fichiers sources (au format .tar.gz)
 
@@ -70,7 +70,3 @@ vous installez XML::Parser dans votre répertoire personnel), il vous faudra
 peut-être effectuer quelques étapes supplémentaires afin d'indiquer où ces
 dépendances peuvent être trouvées. Par exemple, pour les modules Perl, il vous
 faut définir les variables PERLLIB ou PERL5LIB (voyez 'man perlrun').
-
-
-
-Traduction par Matiphas (matiphas _chez_ free point fr), 2005.

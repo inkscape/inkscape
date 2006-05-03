@@ -1,7 +1,7 @@
 ﻿Compiler la version svn
 =======================
-grep Build-Depends debian/control permet d'afficher une liste de paquets(Debian)
-nécessaires à la compilation.
+grep Build-Depends debian/control permet d'afficher une liste de paquets
+(Debian) nécessaires à la compilation.
 
 inkscape.spec.in contient une liste partielle de spécifications : 
 
@@ -15,7 +15,7 @@ soumettre un patch auprès de
 <http://sourceforge.net/tracker/?group_id=93438&atid=604308>.
 
 
-Consultez http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape pour des
+Consulter http://www.inkscape.org/cgi-bin/wiki.pl?CompilingInkscape pour des
 remarques plus complètes sur la compilation, comprenant des explications sur
 comment trouver les paquets nécessaires pour votre distribution et des 
 suggestions pour les développeurs.
@@ -47,8 +47,8 @@ travailler. Sinon, voivi quelques façons d'apporter votre aide :
 
 Accès SVN
 =========
-Consultez http://inkscape.org/svn.php pour voir comment accéder
-au SVN, y compris depuis un client web.
+Consultez http://inkscape.org/svn.php pour voir comment accéder au SVN, y
+compris depuis un navigateur web.
 Nous donnons un accès en écriture au SVN à toute personne ayant démontré une
 motivation pour aider à développer le code. Prouver votre motivation est très
 simple : fournir deux contributions et demander un accès.
@@ -70,7 +70,7 @@ Style de codage
 Veuillez consulter les recommandations de style de codage 
 (http://www.inkscape.org/doc/coding_style.php) si vous avez des questions
 spécifiques quant au style à utiliser dans le code. Si lire ces recommandations
-ne vous intéresse pas, inspirez vous du style du code environnant, de façon à
+ne vous intéresse pas, inspirez-vous du style du code environnant, de façon à
 rester au moins cohérent.
 
 
@@ -84,7 +84,7 @@ Notez que cela ne reste logiquement qu'un fichier, donc les définitions de
 variables (comme les INCLUDES etc.) sont partagées, et les variables définies
 dans un Makefile_insert peuvent être utilisées dans un autre.
 
-An conséquence, envisagez soit d'ajouter un préfixe `blah_' au nom de toutes
+En conséquence, envisagez soit d'ajouter un préfixe `blah_' au nom de toutes
 les variables que vous définiriez dans blah/Makefile_insert (si cela doit 
 rester local pour ce Makefile_insert), ou en mettre la définition dans 
 src/Makefile.am.  En particulier, les fichiers check_PROGRAMS, DISTCLEANFILES,
