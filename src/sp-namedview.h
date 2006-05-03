@@ -22,10 +22,7 @@
 #include "sp-object-group.h"
 #include "libnr/nr-point.h"
 #include "sp-metric.h"
-#include "grid-snapper.h"
-#include "guide-snapper.h"
-#include "object-snapper.h"
-
+#include "snap.h"
 
 enum {
     SP_BORDER_LAYER_BOTTOM,
@@ -40,15 +37,6 @@ struct SPNamedView : public SPObjectGroup {
     unsigned int showpageshadow : 1;
     unsigned int borderlayer : 2;
 
-    int snap_grid_bbox;
-    int snap_grid_point;
-    int snap_guide_bbox;
-    int snap_guide_point;
-    int snap_object_bbox;
-    int snap_object_point;
-    int snap_object_paths;
-    int snap_object_nodes;
-
     double zoom;
     double cx;
     double cy;
@@ -57,9 +45,7 @@ struct SPNamedView : public SPObjectGroup {
     gint window_x;
     gint window_y;
 
-    Inkscape::GridSnapper grid_snapper;
-    Inkscape::GuideSnapper guide_snapper;
-    Inkscape::ObjectSnapper object_snapper;
+    SnapManager snap_manager;
 
     SPUnit const *gridunit;
     /* Grid data is in points regardless of unit */
@@ -104,9 +90,6 @@ struct SPNamedView : public SPObjectGroup {
     guint getViewCount();
     GSList const *getViewList() const;
     SPMetric getDefaultMetric() const;
-
-    typedef std::list<const Inkscape::Snapper *> SnapperList;
-    SnapperList getSnappers() const;
 };
 
 struct SPNamedViewClass {

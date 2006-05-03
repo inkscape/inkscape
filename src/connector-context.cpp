@@ -67,8 +67,7 @@
 #include "conn-avoid-ref.h"
 #include "libavoid/vertices.h"
 #include "context-fns.h"
-
-
+#include "sp-namedview.h"
 
 static void sp_connector_context_class_init(SPConnectorContextClass *klass);
 static void sp_connector_context_init(SPConnectorContext *conn_context);
@@ -522,7 +521,7 @@ connector_handle_button_press(SPConnectorContext *const cc, GdkEventButton const
                     if (!cc->sid) {
                         // This is the first point, so just snap it to the grid
                         // as there's no other points to go off.
-                        SnapManager const m(cc->desktop->namedview);
+                        SnapManager const &m = cc->desktop->namedview->snap_manager;
                         p = m.freeSnap(Inkscape::Snapper::SNAP_POINT | Inkscape::Snapper::BBOX_POINT,
                                        p, NULL).getPoint();
                     }

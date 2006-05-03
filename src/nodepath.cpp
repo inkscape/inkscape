@@ -2839,7 +2839,7 @@ static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpo
 
     NRPathcode const othercode = sp_node_path_code_from_side(n, opposite);
 
-    SnapManager const m(n->subpath->nodepath->desktop->namedview);
+    SnapManager const &m = n->subpath->nodepath->desktop->namedview->snap_manager;
 
     if (opposite->other && (n->type != Inkscape::NodePath::NODE_CUSP) && (othercode == NR_LINETO)) {
         /* We are smooth node adjacent with line */

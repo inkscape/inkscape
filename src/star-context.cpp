@@ -275,7 +275,7 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
 
             sc->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
-            SnapManager const m(desktop->namedview);
+            SnapManager const &m = desktop->namedview->snap_manager;
             sc->center = m.freeSnap(Inkscape::Snapper::SNAP_POINT, sc->center, sc->item).getPoint();
 
             sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
@@ -421,7 +421,7 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
     NR::Point p1 = sp_desktop_dt2root_xy_point(desktop, p);
 
     /* Snap corner point with no constraints */
-    SnapManager const m(desktop->namedview);;
+    SnapManager const &m = desktop->namedview->snap_manager;
     p1 = m.freeSnap(Inkscape::Snapper::SNAP_POINT, p1, sc->item).getPoint();
 
     SPStar *star = SP_STAR(sc->item);

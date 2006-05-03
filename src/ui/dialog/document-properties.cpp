@@ -413,18 +413,18 @@ DocumentProperties::update()
     _rcp_hgui.setRgba32 (nv->guidehicolor);
 
     //-----------------------------------------------------------snap
-    _rcbsnbo.setActive (nv->snap_object_bbox);
-    _rcbsnnob.setActive (nv->snap_object_point);
-    _rcbsnop.setActive (nv->snap_object_paths);
-    _rcbsnop.setActive (nv->snap_object_nodes);
+    _rcbsnbo.setActive (nv->snap_manager.object.getSnapTo(Inkscape::Snapper::BBOX_POINT));
+    _rcbsnnob.setActive (nv->snap_manager.object.getSnapTo(Inkscape::Snapper::SNAP_POINT));
+    _rcbsnop.setActive (nv->snap_manager.object.getSnapToPaths());
+    _rcbsnop.setActive (nv->snap_manager.object.getSnapToNodes());
     _rsu_sno.setValue (nv->objecttolerance, nv->has_abs_tolerance);
      
-    _rcbsnbb.setActive (nv->snap_grid_bbox);
-    _rcbsnnod.setActive (nv->snap_grid_point);
+    _rcbsnbb.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::BBOX_POINT));
+    _rcbsnnod.setActive (nv->snap_manager.grid.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rsu_sn.setValue (nv->gridtolerance, nv->has_abs_tolerance);
     
-     _rcb_snpgui.setActive (nv->snap_guide_bbox);
-    _rcb_snbgui.setActive (nv->snap_guide_point);
+    _rcb_snpgui.setActive (nv->snap_manager.guide.getSnapTo(Inkscape::Snapper::BBOX_POINT));
+    _rcb_snbgui.setActive (nv->snap_manager.guide.getSnapTo(Inkscape::Snapper::SNAP_POINT));
     _rsu_gusn.setValue (nv->guidetolerance, nv->has_abs_tolerance);
 //    _rrb_pix.setValue (true);
 

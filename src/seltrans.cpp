@@ -1045,7 +1045,7 @@ gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
     using NR::X;
     using NR::Y;
 
-    SnapManager const m(_desktop->namedview);
+    SnapManager const &m = _desktop->namedview->snap_manager;
     pt = m.freeSnap(Snapper::SNAP_POINT, pt, NULL).getPoint();
 
     if (state & GDK_CONTROL_MASK) {
@@ -1245,7 +1245,7 @@ void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &,
 
 void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
 {
-    SnapManager const m(_desktop->namedview);
+    SnapManager const &m = _desktop->namedview->snap_manager;
 
     /* The amount that we've moved by during this drag */
     NR::Point dxy = xy - _point;

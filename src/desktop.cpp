@@ -1247,6 +1247,9 @@ _namedview_modified (SPNamedView *nv, guint flags, SPDesktop *desktop)
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
 
         /* Recalculate snap distances */
+        /* FIXME: why is the desktop getting involved in setting up something
+        ** that is entirely to do with the namedview?
+        */
         _update_snap_distances (desktop);
 
         /* Show/hide page background */
@@ -1312,15 +1315,15 @@ _update_snap_distances (SPDesktop *desktop)
 
     SPNamedView &nv = *desktop->namedview;
 
-    nv.grid_snapper.setDistance(sp_convert_distance_full(nv.gridtolerance,
-                                                         *nv.gridtoleranceunit,
-                                                         px));
-    nv.guide_snapper.setDistance(sp_convert_distance_full(nv.guidetolerance,
-                                                          *nv.guidetoleranceunit,
-                                                          px));
-    nv.object_snapper.setDistance(sp_convert_distance_full(nv.objecttolerance,
-                                                           *nv.objecttoleranceunit,
-                                                           px));
+    nv.snap_manager.grid.setDistance(sp_convert_distance_full(nv.gridtolerance,
+                                                                      *nv.gridtoleranceunit,
+                                                                      px));
+    nv.snap_manager.guide.setDistance(sp_convert_distance_full(nv.guidetolerance,
+                                                                       *nv.guidetoleranceunit,
+                                                                       px));
+    nv.snap_manager.object.setDistance(sp_convert_distance_full(nv.objecttolerance,
+                                                                        *nv.objecttoleranceunit,
+                                                                        px));
 }
 
 

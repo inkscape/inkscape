@@ -297,7 +297,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
             NR::Point const button_dt(desktop->w2d(button_w));
 
             /* Snap center */
-            SnapManager const m(desktop->namedview);
+            SnapManager const &m = desktop->namedview->snap_manager;
             rc->center = m.freeSnap(Inkscape::Snapper::SNAP_POINT | Inkscape::Snapper::BBOX_POINT,
                                     button_dt, rc->item).getPoint();
 

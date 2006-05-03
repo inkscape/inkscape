@@ -20,15 +20,15 @@
 #include <libnr/nr-coord.h>
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-forward.h>
-#include "snapper.h"
+#include "grid-snapper.h"
+#include "guide-snapper.h"
+#include "object-snapper.h"
 
 class SPNamedView;
 
 class SnapManager
 {
 public:
-    SnapManager(SPNamedView const *v) : namedview(v) {}
-
     bool willSnapSomething() const;
 
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,
@@ -60,8 +60,12 @@ public:
                                                           std::list<SPItem const *> const &it,
                                                           NR::Point const &tr) const;
 
-private:
-    SPNamedView const *namedview;
+    Inkscape::GridSnapper grid;
+    Inkscape::GuideSnapper guide;
+    Inkscape::ObjectSnapper object;
+
+    typedef std::list<const Inkscape::Snapper*> SnapperList;
+    SnapperList getSnappers() const;
 };
 
 

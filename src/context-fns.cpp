@@ -7,6 +7,7 @@
 #include "snap.h"
 #include "desktop-affine.h"
 #include "event-context.h"
+#include "sp-namedview.h"
 
 /* FIXME: could probably use a template here */
 
@@ -76,7 +77,7 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
     bool const shift = state & GDK_SHIFT_MASK;
     bool const control = state & GDK_CONTROL_MASK;
 
-    SnapManager const m(desktop->namedview);
+    SnapManager const &m = desktop->namedview->snap_manager;
 
     if (control) {
 

@@ -261,7 +261,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 dragging = true;
                 ac->center = Inkscape::setup_for_drag_start(desktop, event_context, event);
 
-                SnapManager const m(desktop->namedview);
+                SnapManager const &m = desktop->namedview->snap_manager;
                 ac->center = m.freeSnap(Inkscape::Snapper::SNAP_POINT, ac->center, ac->item).getPoint();
                 sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
                                     GDK_KEY_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |

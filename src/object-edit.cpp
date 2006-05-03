@@ -29,6 +29,7 @@
 #include "desktop-affine.h"
 #include <style.h>
 #include "desktop.h"
+#include "sp-namedview.h"
 
 #include "sp-pattern.h"
 #include "sp-path.h"
@@ -334,7 +335,7 @@ static NR::Point rect_snap_knot_position(NR::Point const &p)
 {
     SPDesktop const *desktop = inkscape_active_desktop();
     NR::Point s = sp_desktop_dt2root_xy_point(desktop, p);
-    SnapManager const m(desktop->namedview);
+    SnapManager const &m = desktop->namedview->snap_manager;
     s = m.freeSnap(Inkscape::Snapper::BBOX_POINT | Inkscape::Snapper::SNAP_POINT, s, NULL).getPoint();
     return sp_desktop_root2dt_xy_point(desktop, s);
 }
