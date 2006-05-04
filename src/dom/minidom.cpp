@@ -24,7 +24,7 @@ void Element::findElementsRecursive(std::vector<Element *>&res, const DOMString 
 {
     if (getName() == name)
         res.push_back(this);
-    for (int i=0; i<children.size() ; i++)
+    for (unsigned int i=0; i<children.size() ; i++)
         children[i]->findElementsRecursive(res, name);
 }
 
@@ -37,7 +37,7 @@ std::vector<Element *> Element::findElements(const DOMString &name)
 
 DOMString Element::getAttribute(const DOMString &name)
 {
-    for (int i=0 ; i<attributes.size() ; i++)
+    for (unsigned int i=0 ; i<attributes.size() ; i++)
         if (attributes[i].getName() ==name)
             return attributes[i].getValue();
     return "";
@@ -70,13 +70,13 @@ void Element::writeIndentedRecursive(FILE *f, int indent)
     for (i=0;i<indent;i++)
         fputc(' ',f);
     fprintf(f,"<%s",name.c_str());
-    for (int i=0 ; i<attributes.size() ; i++)
+    for (unsigned int i=0 ; i<attributes.size() ; i++)
         {
         fprintf(f," %s=\"%s\"",
               attributes[i].getName().c_str(),
               attributes[i].getValue().c_str());
         }
-    for (int i=0 ; i<namespaces.size() ; i++)
+    for (unsigned int i=0 ; i<namespaces.size() ; i++)
         {
         fprintf(f," xmlns:%s=\"%s\"",
               namespaces[i].getPrefix().c_str(),
@@ -92,7 +92,7 @@ void Element::writeIndentedRecursive(FILE *f, int indent)
         fprintf(f," %s\n", value.c_str());
         }
 
-    for (int i=0 ; i<children.size() ; i++)
+    for (unsigned int i=0 ; i<children.size() ; i++)
         children[i]->writeIndentedRecursive(f, indent+2);
 
     //Closing tag
