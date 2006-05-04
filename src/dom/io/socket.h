@@ -31,6 +31,9 @@
 
 #include "dom/dom.h"
 
+#ifdef HAVE_SSL
+#include <openssl/ssl.h>
+#endif
 
 namespace org
 {
