@@ -32,6 +32,8 @@
 #define HAVE_STDLIB_H                 1
 #define HAVE_SYS_STAT_H               1
 
+#define ENABLE_LCMS                   1
+
 #define ENABLE_NLS                    1
 #define HAVE_BIND_TEXTDOMAIN_CODESET  1
 

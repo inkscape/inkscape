@@ -144,7 +144,7 @@ VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
 CFLAGS = -O3 -g -Wall -mms-bitfields -DVERSION=$(VERSION) \
--DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H -DENABLE_LCMS
+-DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
