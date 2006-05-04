@@ -357,11 +357,6 @@ public:
     XmppEventListener(const XmppEventListener &other)
         {}
 
-    /**
-     *
-     */
-    virtual void operator=(const XmppEventListener &other)
-        {}
 
     /**
      *
@@ -524,6 +519,11 @@ public:
      */
     virtual bool pause(unsigned long millis);
 
+    /**
+     *
+     */
+    DOMString toXml(const DOMString &str);
+
     //###########################
     //# CONNECTION
     //###########################
@@ -685,7 +685,11 @@ public:
      */
     std::vector<XmppUser> getRoster();
 
-
+    /**
+     *
+     */
+    virtual void rosterShow(const DOMString &jid, const DOMString &show);
+    
     //#######################
     //# CHAT (individual)
     //#######################
@@ -734,7 +738,14 @@ public:
      *
      */
     virtual void groupChatUserAdd(const DOMString &groupJid,
-                                  const DOMString &nick);
+                                  const DOMString &nick,
+                                  const DOMString &jid);
+    /**
+     *
+     */
+    virtual void groupChatUserShow(const DOMString &groupJid,
+                                   const DOMString &nick,
+                                   const DOMString &show);
 
     /**
      *
@@ -746,7 +757,7 @@ public:
      *
      */
     virtual std::vector<XmppUser>
-          groupChatGetUserList(const DOMString &groupJid);
+          XmppClient::groupChatGetUserList(const DOMString &groupJid);
 
     /**
      *
@@ -983,12 +994,18 @@ public:
     /**
      *
      */
-    virtual void userAdd(const DOMString &jid, const DOMString &nick);
+    virtual void userAdd(const DOMString &nick, 
+                         const DOMString &jid);
+    /**
+     *
+     */
+    virtual void userShow(const DOMString &nick,
+                          const DOMString &show);
 
     /**
      *
      */
-    virtual void userDelete(const DOMString &jid, const DOMString &nick);
+    virtual void userDelete(const DOMString &nick);
 
     /**
      *

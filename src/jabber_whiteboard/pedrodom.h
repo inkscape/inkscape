@@ -6,7 +6,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,6 +29,7 @@
 
 namespace Pedro
 {
+
 typedef std::string DOMString;
 typedef unsigned int XMLCh;
 
@@ -47,8 +48,13 @@ public:
 
     Namespace(const Namespace &other)
         {
-        prefix       = other.prefix;
-        namespaceURI = other.namespaceURI;
+        assign(other);
+        }
+
+    Namespace &operator=(const Namespace &other)
+        {
+        assign(other);
+        return *this;
         }
 
     virtual ~Namespace()
@@ -61,6 +67,12 @@ public:
         { return namespaceURI; }
 
 protected:
+
+    void assign(const Namespace &other)
+        {
+        prefix       = other.prefix;
+        namespaceURI = other.namespaceURI;
+        }
 
     DOMString prefix;
     DOMString namespaceURI;
@@ -81,8 +93,13 @@ public:
 
     Attribute(const Attribute &other)
         {
-        name  = other.name;
-        value = other.value;
+        assign(other);
+        }
+
+    Attribute &operator=(const Attribute &other)
+        {
+        assign(other);
+        return *this;
         }
 
     virtual ~Attribute()
@@ -95,6 +112,12 @@ public:
         { return value; }
 
 protected:
+
+    void assign(const Attribute &other)
+        {
+        name  = other.name;
+        value = other.value;
+        }
 
     DOMString name;
     DOMString value;
@@ -121,18 +144,19 @@ public:
     Element(const DOMString &nameArg, const DOMString &valueArg)
         {
         parent = NULL;
-        name  = nameArg;
-        value = valueArg;
+        name   = nameArg;
+        value  = valueArg;
         }
 
     Element(const Element &other)
         {
-        parent     = other.parent;
-        children   = other.children;
-        attributes = other.attributes;
-        namespaces = other.namespaces;
-        name       = other.name;
-        value      = other.value;
+        assign(other);
+        }
+
+    Element &operator=(const Element &other)
+        {
+        assign(other);
+        return *this;
         }
 
     virtual Element *clone();
@@ -187,6 +211,15 @@ public:
 
 protected:
 
+    void assign(const Element &other)
+        {
+        parent     = other.parent;
+        children   = other.children;
+        attributes = other.attributes;
+        namespaces = other.namespaces;
+        name       = other.name;
+        value      = other.value;
+        }
 
     void findElementsRecursive(std::vector<Element *>&res, const DOMString &name);
 
@@ -211,6 +244,9 @@ protected:
 class Parser
 {
 public:
+    /**
+     * Constructor
+     */
     Parser()
         { init(); }
 
@@ -284,14 +320,13 @@ private:
 
     Element *parse(XMLCh *buf,int pos,int len);
 
-    bool         keepGoing;
-    Element      *currentNode;
-    long         parselen;
-    XMLCh        *parsebuf;
-    DOMString    cdatabuf;
-    long         currentPosition;
-    int          colNr;
-
+    bool       keepGoing;
+    Element    *currentNode;
+    long       parselen;
+    XMLCh      *parsebuf;
+    DOMString  cdatabuf;
+    long       currentPosition;
+    int        colNr;
 
 };
 

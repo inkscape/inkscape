@@ -47,7 +47,7 @@
 
 #endif
 
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #endif
@@ -614,7 +614,7 @@ public:
     static void hash(unsigned char *dataIn,
                      unsigned long len, unsigned char *digest);
 
-    static DOMString hashHex(unsigned char *dataIn, unsigned long len);
+    static DOMString Md5::hashHex(unsigned char *dataIn, unsigned long len);
 
     /**
      *  Initialize the context (also zeroizes contents)
@@ -681,7 +681,7 @@ static void byteReverse(unsigned char *buf, unsigned long longs)
 {
     do
         {
-        unsigned long t = (unsigned long) 
+        unsigned long t = (unsigned long)
             ((unsigned) buf[3] << 8 | buf[2]) << 16 |
             ((unsigned) buf[1] << 8 | buf[0]);
         *(unsigned long *) buf = t;
@@ -969,7 +969,7 @@ public:
         {}
     virtual ~Runnable()
         {}
-        
+
     /**
      * The method of a delegate class which can
      * be run by a Thread.  Thread is completed when this
@@ -1059,6 +1059,7 @@ static DWORD WINAPI WinThreadFunction(LPVOID context)
 {
     Thread *thread = (Thread *)context;
     thread->execute();
+    return 0;
 }
 
 
@@ -1179,7 +1180,7 @@ private:
 
     unsigned long receiveTimeout;
 
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
     SSL_CTX *sslContext;
     SSL *sslStream;
 #endif
@@ -1240,7 +1241,7 @@ TcpSocket::TcpSocket(const std::string &hostnameArg, int port)
 }
 
 
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
 
 static void cryptoLockCallback(int mode, int type, const char *file, int line)
 {
@@ -1336,9 +1337,9 @@ void TcpSocket::init()
 #ifdef __WIN32__
         WORD wVersionRequested = MAKEWORD( 2, 2 );
         WSADATA wsaData;
-        int err = WSAStartup( wVersionRequested, &wsaData );
+        WSAStartup( wVersionRequested, &wsaData );
 #endif
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
         sslStream  = NULL;
         sslContext = NULL;
 	    CRYPTO_set_locking_callback(cryptoLockCallback);
@@ -1390,7 +1391,7 @@ bool TcpSocket::connect(const std::string &hostnameArg, int portnoArg)
 
 
 
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
 /*
 static int password_cb(char *buf, int bufLen, int rwflag, void *userdata)
 {
@@ -1425,7 +1426,7 @@ static void infoCallback(const SSL *ssl, int where, int ret)
 
 bool TcpSocket::startTls()
 {
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
     sslStream  = NULL;
     sslContext = NULL;
 
@@ -1476,7 +1477,7 @@ bool TcpSocket::startTls()
         }
 
     sslEnabled = true;
-#endif /*WITH_SSL*/
+#endif /*HAVE_SSL*/
     return true;
 }
 
@@ -1537,7 +1538,7 @@ bool TcpSocket::disconnect()
 {
     bool ret  = true;
     connected = false;
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
     if (sslEnabled)
         {
         if (sslStream)
@@ -1560,7 +1561,7 @@ bool TcpSocket::disconnect()
         }
     sslStream  = NULL;
     sslContext = NULL;
-#endif /*WITH_SSL*/
+#endif /*HAVE_SSL*/
 
 #ifdef __WIN32__
     closesocket(sock);
@@ -1600,7 +1601,7 @@ long TcpSocket::available()
 #endif
     if (count<=0 && sslEnabled)
         {
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
         return SSL_pending(sslStream);
 #endif
         }
@@ -1620,7 +1621,7 @@ bool TcpSocket::write(int ch)
 
     if (sslEnabled)
         {
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
         int r = SSL_write(sslStream, &c, 1);
         if (r<=0)
             {
@@ -1652,13 +1653,12 @@ bool TcpSocket::write(char *str)
         printf("write(str): socket closed\n");
         return false;
         }
-    unsigned char *s = (unsigned char *)str;
     int len = strlen(str);
 
     if (sslEnabled)
         {
-#ifdef WITH_SSL
-        int r = SSL_write(sslStream, s, len);
+#ifdef HAVE_SSL
+        int r = SSL_write(sslStream, (unsigned char *)str, len);
         if (r<=0)
             {
             switch(SSL_get_error(sslStream, r))
@@ -1672,7 +1672,7 @@ bool TcpSocket::write(char *str)
         }
     else
         {
-        if (send(sock, s, len, 0) < 0)
+        if (send(sock, str, len, 0) < 0)
         //if (send(sock, &c, 1, 0) < 0)
             {
             printf("write: could not send data\n");
@@ -1716,7 +1716,7 @@ int TcpSocket::read()
     unsigned char ch;
     if (sslEnabled)
         {
-#ifdef WITH_SSL
+#ifdef HAVE_SSL
         if (!sslStream)
             return -1;
         int r = SSL_read(sslStream, &ch, 1);
@@ -2459,7 +2459,7 @@ static int strIndex(const DOMString &str, char *key)
 }
 
 
-static DOMString toXml(const DOMString &str)
+DOMString XmppClient::toXml(const DOMString &str)
 {
     return Parser::encode(str);
 }
@@ -2640,18 +2640,18 @@ static bool isGroupChat(Element *root)
 
 
 
-static bool getGroupIds(const DOMString &jid,
-             DOMString &groupJid, DOMString &userNick)
+static bool parseJid(const DOMString &fullJid,
+             DOMString &jid, DOMString &resource)
 {
-    int p = strIndex(jid, "/");
+    int p = strIndex(fullJid, "/");
     if (p < 0)
         {
-        groupJid = jid;
-        userNick = "";
+        jid = fullJid;
+        resource = "";
         return true;
         }
-    groupJid = jid.substr(0, p);
-    userNick = jid.substr(p+1, jid.size()-p-1);
+    jid = fullJid.substr(0, p);
+    resource = fullJid.substr(p+1, fullJid.size()-p-1);
     return true;
 }
 
@@ -2710,12 +2710,12 @@ bool XmppClient::processMessage(Element *root)
         {
         DOMString fromGid;
         DOMString fromNick;
-        getGroupIds(from, fromGid, fromNick);
+        parseJid(from, fromGid, fromNick);
         //printf("fromGid:%s  fromNick:%s\n",
         //        fromGid.c_str(), fromNick.c_str());
         DOMString toGid;
         DOMString toNick;
-        getGroupIds(to, toGid, toNick);
+        parseJid(to, toGid, toNick);
         //printf("toGid:%s  toNick:%s\n",
         //        toGid.c_str(), toNick.c_str());
 
@@ -2762,7 +2762,7 @@ bool XmppClient::processMessage(Element *root)
 bool XmppClient::processPresence(Element *root)
 {
 
-    DOMString from        = root->getTagAttribute("presence", "from");
+    DOMString fullJid     = root->getTagAttribute("presence", "from");
     DOMString to          = root->getTagAttribute("presence", "to");
     DOMString presenceStr = root->getTagAttribute("presence", "type");
     bool presence = true;
@@ -2775,7 +2775,7 @@ bool XmppClient::processPresence(Element *root)
         {
         DOMString fromGid;
         DOMString fromNick;
-        getGroupIds(from, fromGid, fromNick);
+        parseJid(fullJid, fromGid, fromNick);
         //printf("fromGid:%s  fromNick:%s\n",
         //        fromGid.c_str(), fromNick.c_str());
         DOMString item_jid = root->getTagAttribute("item", "jid");
@@ -2784,7 +2784,8 @@ bool XmppClient::processPresence(Element *root)
             if (presence)
                 {
                 groupChatCreate(fromGid);
-                groupChatUserAdd(fromGid, fromNick);
+                groupChatUserAdd(fromGid, fromNick, "");
+                groupChatUserShow(fromGid, fromNick, "available");
 
                 XmppEvent event(XmppEvent::EVENT_MUC_JOIN);
                 event.setGroup(fromGid);
@@ -2808,12 +2809,15 @@ bool XmppClient::processPresence(Element *root)
                 dispatchXmppEvent(event);
                 }
             }
-        else
+        else // someone else
             {
             if (presence)
-                groupChatUserAdd(fromGid, fromNick);
+                {
+                groupChatUserAdd(fromGid, fromNick, "");
+                }
             else
-                groupChatUserDelete(fromGid, fromNick);
+                groupChatUserDelete(fromGid, fromNick);               
+            groupChatUserShow(fromGid, fromNick, show);
             XmppEvent event(XmppEvent::EVENT_MUC_PRESENCE);
             event.setGroup(fromGid);
             event.setFrom(fromNick);
@@ -2825,8 +2829,13 @@ bool XmppClient::processPresence(Element *root)
         }
     else
         {
+        DOMString shortJid;
+        DOMString dummy;
+        parseJid(fullJid, shortJid, dummy);
+        rosterShow(shortJid, show); //users in roster do not have resource
+        
         XmppEvent event(XmppEvent::EVENT_PRESENCE);
-        event.setFrom(from);
+        event.setFrom(fullJid);
         event.setPresence(presence);
         event.setShow(show);
         event.setStatus(status);
@@ -3620,11 +3629,6 @@ bool XmppClient::createSession()
     //async mode
 
     fmt =
-     "<presence/>\n";
-    if (!write(fmt))
-        return false;
-
-    fmt =
      "<iq type='get' id='roster%d'><query xmlns='jabber:iq:roster'/></iq>\n";
     if (!write(fmt, msgId++))
         return false;
@@ -3639,6 +3643,11 @@ bool XmppClient::createSession()
     "<iq type='get' id='discoInfo%d' to='conference.%s'>"
     "<query xmlns='http://jabber.org/protocol/disco#info'/></iq>\n";
     if (!write(fmt, msgId++, realm.c_str()))
+        return false;
+
+    fmt =
+     "<presence/>\n";
+    if (!write(fmt))
         return false;
 
     /*
@@ -3780,6 +3789,20 @@ std::vector<XmppUser> XmppClient::getRoster()
     return ros;
 }
 
+void XmppClient::rosterShow(const DOMString &jid, const DOMString &show)
+{
+    DOMString theShow = show;
+    if (theShow == "")
+        theShow = "available";
+    
+    std::vector<XmppUser>::iterator iter;
+    for (iter=roster.begin() ; iter != roster.end() ; iter++)
+        {
+        if (iter->jid == jid)
+            iter->show = theShow;
+        }
+}
+
 //#######################
 //# CHAT (individual)
 //#######################
@@ -3903,14 +3926,32 @@ void XmppClient::groupChatsClear()
  *
  */
 void XmppClient::groupChatUserAdd(const DOMString &groupJid,
-                                  const DOMString &nick)
+                                  const DOMString &nick,
+                                  const DOMString &jid)
 {
     std::vector<XmppGroupChat *>::iterator iter;
     for (iter=groupChats.begin() ; iter!=groupChats.end() ; iter++)
         {
         if ((*iter)->getGroupJid() == groupJid)
             {
-            (*iter)->userAdd("", nick);
+            (*iter)->userAdd(nick, jid);
+            }
+        }
+}
+
+/**
+ *
+ */
+void XmppClient::groupChatUserShow(const DOMString &groupJid,
+                                   const DOMString &nick,
+                                   const DOMString &show)
+{
+    std::vector<XmppGroupChat *>::iterator iter;
+    for (iter=groupChats.begin() ; iter!=groupChats.end() ; iter++)
+        {
+        if ((*iter)->getGroupJid() == groupJid)
+            {
+            (*iter)->userShow(nick, show);
             }
         }
 }
@@ -3926,7 +3967,7 @@ void XmppClient::groupChatUserDelete(const DOMString &groupJid,
         {
         if ((*iter)->getGroupJid() == groupJid)
             {
-            (*iter)->userDelete("", nick);
+            (*iter)->userDelete(nick);
             }
         }
 }
@@ -4731,7 +4772,8 @@ DOMString XmppGroupChat::getGroupJid()
 }
 
 
-void XmppGroupChat::userAdd(const DOMString &jid, const DOMString &nick)
+void XmppGroupChat::userAdd(const DOMString &nick, 
+                            const DOMString &jid)
 {
     std::vector<XmppUser>::iterator iter;
     for (iter= userList.begin() ; iter!=userList.end() ; iter++)
@@ -4743,7 +4785,21 @@ void XmppGroupChat::userAdd(const DOMString &jid, const DOMString &nick)
     userList.push_back(user);
 }
 
-void XmppGroupChat::userDelete(const DOMString &jid, const DOMString &nick)
+void XmppGroupChat::userShow(const DOMString &nick, 
+                             const DOMString &show)
+{
+    DOMString theShow = show;
+    if (theShow == "")
+        theShow = "available"; // a join message will now have a show
+    std::vector<XmppUser>::iterator iter;
+    for (iter= userList.begin() ; iter!=userList.end() ; iter++)
+        {
+        if (iter->nick == nick)
+            iter->show = theShow;
+        }
+}
+
+void XmppGroupChat::userDelete(const DOMString &nick)
 {
     std::vector<XmppUser>::iterator iter;
     for (iter= userList.begin() ; iter!=userList.end() ; )
