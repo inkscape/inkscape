@@ -1,3 +1,9 @@
+2006-05-04  Carl Hetherington  <inkscape@carlh.net>
+
+	* src/guide-snapper.h, src/line-snapper.h, src/snap.cpp,
+	src/snap.h, src/object-snapper.h, src/sp-namedview.cpp,
+	src/grid-snapper.h: clean up knutux's fix for the snapper crash.
+
 2006-05-03  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* po/pt_BR.po: Fix some "Unmatched closing </b>" warnings.
