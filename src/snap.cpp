@@ -21,6 +21,11 @@
 #include <libnr/nr-scale-ops.h>
 #include <libnr/nr-values.h>
 
+SnapManager::SnapManager(SPNamedView* v) : grid(v, 0), guide(v, 0), object(v, 0)
+{
+
+}
+
 SnapManager::SnapperList SnapManager::getSnappers() const
 {
     SnapManager::SnapperList s;

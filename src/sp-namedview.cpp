@@ -104,9 +104,6 @@ static void sp_namedview_class_init(SPNamedViewClass * klass)
 
 static void sp_namedview_init(SPNamedView *nv)
 {
-    // explicitly call a contructor
-    new(nv) SPNamedView();
-
     nv->editable = TRUE;
     nv->showgrid = FALSE;
     nv->showguides = TRUE;
@@ -119,6 +116,8 @@ static void sp_namedview_init(SPNamedView *nv)
     nv->default_layer_id = 0;
 
     nv->connector_spacing = defaultConnSpacing;
+
+    new (&nv->snap_manager) SnapManager(nv);
 }
 
 static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
@@ -206,7 +205,7 @@ static void sp_namedview_release(SPObject *object)
         ((SPObjectClass *) parent_class)->release(object);
     }
 
-    namedview->~SPNamedView();
+    namedview->snap_manager.~SnapManager();
 }
 
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value)

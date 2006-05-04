@@ -29,6 +29,8 @@ class SPNamedView;
 class SnapManager
 {
 public:
+    SnapManager(SPNamedView* v);
+    
     bool willSnapSomething() const;
 
     Inkscape::SnappedPoint freeSnap(Inkscape::Snapper::PointType t,

@@ -24,7 +24,6 @@ namespace Inkscape
 class GridSnapper : public LineSnapper
 {
 public:
-    GridSnapper() {}
     GridSnapper(SPNamedView const *nv, NR::Coord const d);
 
 private:    
