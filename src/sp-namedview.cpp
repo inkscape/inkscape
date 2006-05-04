@@ -104,6 +104,9 @@ static void sp_namedview_class_init(SPNamedViewClass * klass)
 
 static void sp_namedview_init(SPNamedView *nv)
 {
+    // explicitly call a contructor
+    new(nv) SPNamedView();
+
     nv->editable = TRUE;
     nv->showgrid = FALSE;
     nv->showguides = TRUE;
@@ -202,6 +205,8 @@ static void sp_namedview_release(SPObject *object)
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
     }
+
+    namedview->~SPNamedView();
 }
 
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value)

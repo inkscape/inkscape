@@ -28,6 +28,7 @@ namespace Inkscape
 class GuideSnapper : public LineSnapper
 {
 public:
+    GuideSnapper() {}
     GuideSnapper(SPNamedView const *nv, NR::Coord const d);
 
 private:

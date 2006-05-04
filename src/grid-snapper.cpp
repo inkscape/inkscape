@@ -39,6 +39,10 @@ Inkscape::LineSnapper::LineList Inkscape::GridSnapper::_getSnapLines(NR::Point c
 {
     LineList s;
 
+    if ( NULL == _named_view ) {
+        return s;
+    }
+
     SPCGrid *griditem = NULL;
     for (GSList *l = _named_view->gridviews; l != NULL; l = l->next) {
         // FIXME : this is a hack since there is only one view for now

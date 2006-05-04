@@ -144,6 +144,10 @@ void Inkscape::ObjectSnapper::_snapPaths(Inkscape::SnappedPoint &s,
 Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(NR::Point const &p,
                                                             std::list<SPItem const *> const &it) const
 {
+    if ( NULL == _named_view ) {
+        return SnappedPoint(p, NR_HUGE);
+    }
+
     /* Get a list of all the SPItems that we will try to snap to */
     std::list<SPItem*> cand;
     _findCandidates(cand, sp_document_root(_named_view->document), it, p);

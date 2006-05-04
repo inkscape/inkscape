@@ -27,6 +27,7 @@ namespace Inkscape
 class Snapper
 {
 public:
+    Snapper() {}
     Snapper(SPNamedView const *nv, ::NR::Coord const d);
     virtual ~Snapper() {}
 

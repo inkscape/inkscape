@@ -19,13 +19,14 @@ namespace Inkscape
 class LineSnapper : public Snapper
 {
 public:
+  LineSnapper() {}
   LineSnapper(SPNamedView const *nv, NR::Coord const d);
 
 protected:
   typedef std::list<std::pair<NR::Dim2, NR::Coord> > LineList;
 
 private:
-  SnappedPoint _doFreeSnap(NR::Point const &p,
+  virtual SnappedPoint _doFreeSnap(NR::Point const &p,
 			   std::list<SPItem const *> const &it) const;
   
   SnappedPoint _doConstrainedSnap(NR::Point const &p,

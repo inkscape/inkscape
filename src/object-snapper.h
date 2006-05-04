@@ -25,6 +25,7 @@ namespace Inkscape
 class ObjectSnapper : public Snapper
 {
 public:
+  ObjectSnapper() {}
   ObjectSnapper(SPNamedView const *nv, NR::Coord const d);
 
   void setSnapToNodes(bool s) {
@@ -44,7 +45,7 @@ public:
   }
   
 private:
-  SnappedPoint _doFreeSnap(NR::Point const &p,
+  virtual SnappedPoint _doFreeSnap(NR::Point const &p,
 			   std::list<SPItem const *> const &it) const;
 
   SnappedPoint _doConstrainedSnap(NR::Point const &p,

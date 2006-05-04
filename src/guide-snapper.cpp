@@ -26,6 +26,10 @@ Inkscape::GuideSnapper::LineList Inkscape::GuideSnapper::_getSnapLines(NR::Point
 {
     LineList s;
 
+    if ( NULL == _named_view ) {
+        return s;
+    }
+
     for (GSList const *l = _named_view->guides; l != NULL; l = l->next) {
         SPGuide const *g = SP_GUIDE(l->data);
 
