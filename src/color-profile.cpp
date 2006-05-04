@@ -4,7 +4,10 @@
 #include "color-profile.h"
 #include "color-profile-fns.h"
 #include "attributes.h"
+#include "inkscape.h"
 #include "document.h"
+
+#include "dom/uri.h"
 
 //#define DEBUG_LCMS
 
@@ -187,22 +190,31 @@ static void Inkscape::colorprofile_set( SPObject *object, unsigned key, gchar co
                     //FILE* fp = fopen_utf8name( filename, "r" );
                     //LCMSAPI cmsHPROFILE   LCMSEXPORT cmsOpenProfileFromMem(LPVOID MemPtr, DWORD dwSize);
 
-                    if ( !g_path_is_absolute(cprof->href) ) {
-                        // Try to open relative
-                        gchar* docbase = SP_DOCUMENT_BASE( SP_OBJECT_DOCUMENT(object) );
-                        gchar* fullname = g_build_filename( docbase ? docbase : ".", cprof->href, NULL );
-
-                        cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
-#ifdef DEBUG_LCMS
-                        DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->profHandle );
-#endif // DEBUG_LCMS
-                        g_free (fullname);
-                    } else {
-                        cprof->profHandle = cmsOpenProfileFromFile( cprof->href, "r" );
-#ifdef DEBUG_LCMS
-                        DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", cprof->href, (void*)cprof->profHandle );
-#endif // DEBUG_LCMS
+                    // Try to open relative
+                    SPDocument *doc = SP_OBJECT_DOCUMENT(object);
+                    if (!doc) {
+                        doc = SP_ACTIVE_DOCUMENT;
+                        g_warning("object has no document.  using active");
                     }
+                    //# 1.  Get complete URI of document
+                    gchar* docbase = SP_DOCUMENT_URI( doc );
+                    if (!docbase)
+                        {
+                        g_warning("null docbase");
+                        docbase = "";
+                        }
+                    //g_message("docbase:%s\n", docbase);
+                    org::w3c::dom::URI docUri(docbase);
+                    //# 2. Get href of icc file.  we don't care if it's rel or abs
+                    org::w3c::dom::URI hrefUri(cprof->href);
+                    //# 3.  Resolve the href according the docBase.  This follows
+                    //      the w3c specs.  All absolute and relative issues are considered
+                    org::w3c::dom::URI cprofUri = docUri.resolve(hrefUri);
+                    gchar* fullname = (gchar *)cprofUri.getNativePath().c_str();
+                    cprof->profHandle = cmsOpenProfileFromFile( fullname, "r" );
+#ifdef DEBUG_LCMS
+                    DEBUG_MESSAGE( lcmsOne, "cmsOpenProfileFromFile( '%s'...) = %p", fullname, (void*)cprof->profHandle );
+#endif // DEBUG_LCMS
 
 #endif // ENABLE_LCMS
                 }
