@@ -1,6 +1,8 @@
 2006-05-03  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* po/pt_BR.po: Fix some "Unmatched closing </b>" warnings.
+
+	* src/jabber_whiteboard/pedrodom.cpp: Compile fix for Mac OS.
 	
 2006-05-03  Carl Hetherington  <inkscape@carlh.net>
 

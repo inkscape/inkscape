@@ -22,11 +22,13 @@
  */
 
 
+#ifdef HAVE_MALLOC_H
+#include <malloc.h>
+#endif
 
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include <malloc.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
