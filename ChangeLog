@@ -1,3 +1,7 @@
+2006-05-03  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* po/pt_BR.po: Fix some "Unmatched closing </b>" warnings.
+	
 2006-05-03  Carl Hetherington  <inkscape@carlh.net>
 
 	* src/arc-context.cpp, src/connector-context.cpp,

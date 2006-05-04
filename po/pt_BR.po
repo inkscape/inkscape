@@ -110,7 +110,7 @@ msgstr "Selecione <b>um objeto</b> para separar clones."
 
 #: ../src/dialogs/clonetiler.cpp:895
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Selecione </b>um objeto</b> clonado para remover clones."
+msgstr "Selecione <b>um objeto</b> clonado para remover clones."
 
 #: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1890
 msgid "Select an <b>object</b> to clone."
@@ -2512,7 +2512,7 @@ msgstr "Selecione <b>objetos</b> para criar gradiente."
 
 #: ../src/gradient-drag.cpp:57
 msgid "Linear gradient <b>start</b>"
-msgstr "Gradiente linear <b>início</a>"
+msgstr "Gradiente linear <b>início</b>"
 
 #. POINT_LG_P1
 #: ../src/gradient-drag.cpp:58
@@ -4078,12 +4078,12 @@ msgstr "Selecione <b>um ou mais objetos</b> para converter em padrão."
 #: ../src/selection-chemistry.cpp:2135
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
-"Selecione um </b>objeto com padrão de preenchimento</b> para extrair objetos "
+"Selecione um <b>objeto com padrão de preenchimento</b> para extrair objetos "
 "dele."
 
 #: ../src/selection-chemistry.cpp:2188
 msgid "<b>No pattern fills</b> in the selection."
-msgstr "</b>Nenhum preenchimento com padrões de preenchimento</b> na seleção."
+msgstr "<b>Nenhum preenchimento com padrões de preenchimento</b> na seleção."
 
 #: ../src/selection-chemistry.cpp:2208
 msgid "Select <b>object(s)</b> to make a bitmap copy."
@@ -4102,7 +4102,7 @@ msgstr "Selecione <b>os objetos</b> para onde será colado o estilo."
 #: ../src/selection-chemistry.cpp:2477
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Selecione </b>texto(s)</b> para remover kerns."
+msgstr "Selecione <b>texto(s)</b> para remover kerns."
 
 #: ../src/selection-describer.cpp:41
 #, fuzzy
@@ -4700,7 +4700,7 @@ msgstr "<b>Nenhum texto-no-caminho</b> na seleção."
 
 #: ../src/text-chemistry.cpp:218 ../src/text-chemistry.cpp:238
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr "Selecione </b>texto(s)</b> para remover kerns."
+msgstr "Selecione <b>texto(s)</b> para remover kerns."
 
 #: ../src/text-chemistry.cpp:259
 msgid ""
