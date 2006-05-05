@@ -29,7 +29,7 @@ private:
 			   std::list<SPItem const *> const &it) const;
   
   SnappedPoint _doConstrainedSnap(NR::Point const &p,
-				  NR::Point const &c,
+				  ConstraintLine const &c,
 				  std::list<SPItem const *> const &it) const;
   
   /**

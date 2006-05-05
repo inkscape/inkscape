@@ -108,12 +108,12 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
             Inkscape::SnappedPoint s[2];
 
             /* Try to snap p[0] (the opposite corner) along the constraint vector */
-            s[0] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT,
-                                     p[0], p[0] - p[1], item);
+            s[0] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT, p[0],
+                                     Inkscape::Snapper::ConstraintLine(p[0] - p[1]), item);
 
             /* Try to snap p[1] (the dragged corner) along the constraint vector */
-            s[1] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT,
-                                     p[1], p[1] - p[0], item);
+            s[1] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT, p[1],
+                                     Inkscape::Snapper::ConstraintLine(p[1] - p[0]), item);
 
             /* Choose the best snap and update points accordingly */
             if (s[0].getDistance() < s[1].getDistance()) {
@@ -128,7 +128,8 @@ NR::Rect Inkscape::snap_rectangular_box(SPDesktop const *desktop, SPItem *item,
 
             /* Our origin is the opposite corner.  Snap the drag point along the constraint vector */
             p[0] = center;
-            p[1] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT, p[1], p[1] - p[0], item).getPoint();
+            p[1] = m.constrainedSnap(Inkscape::Snapper::SNAP_POINT, p[1],
+                                     Inkscape::Snapper::ConstraintLine(p[1] - p[0]), item).getPoint();
         }
 
     } else if (shift) {

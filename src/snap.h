@@ -29,7 +29,7 @@ class SPNamedView;
 class SnapManager
 {
 public:
-    SnapManager(SPNamedView* v);
+    SnapManager(SPNamedView const *v);
     
     bool willSnapSomething() const;
 
@@ -43,12 +43,12 @@ public:
     
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
                                            NR::Point const &p,
-                                           NR::Point const &c,
+                                           Inkscape::Snapper::ConstraintLine const &c,
                                            SPItem const *it) const;
     
     Inkscape::SnappedPoint constrainedSnap(Inkscape::Snapper::PointType t,
                                            NR::Point const &p,
-                                           NR::Point const &c,
+                                           Inkscape::Snapper::ConstraintLine const &c,
                                            std::list<SPItem const *> const &it) const;
 
     std::pair<NR::Point, bool> freeSnapTranslation(Inkscape::Snapper::PointType t,
@@ -58,9 +58,22 @@ public:
 
     std::pair<NR::Point, bool> constrainedSnapTranslation(Inkscape::Snapper::PointType t,
                                                           std::vector<NR::Point> const &p,
-                                                          NR::Point const &c,
                                                           std::list<SPItem const *> const &it,
+                                                          Inkscape::Snapper::ConstraintLine const &c,
                                                           NR::Point const &tr) const;
+
+    std::pair<NR::scale, bool> freeSnapScale(Inkscape::Snapper::PointType t,
+                                             std::vector<NR::Point> const &p,
+                                             std::list<SPItem const *> const &it,
+                                             NR::scale const &s,
+                                             NR::Point const &o) const;
+
+    std::pair<NR::scale, bool> constrainedSnapScale(Inkscape::Snapper::PointType t,
+                                                    std::vector<NR::Point> const &p,
+                                                    std::list<SPItem const *> const &it,
+                                                    Inkscape::Snapper::ConstraintLine const &c,
+                                                    NR::scale const &s,
+                                                    NR::Point const &o) const;
 
     Inkscape::GridSnapper grid;
     Inkscape::GuideSnapper guide;
@@ -68,6 +81,23 @@ public:
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
     SnapperList getSnappers() const;
+
+private:
+
+    enum Transformation
+    {
+        TRANSLATION,
+        SCALE
+    };
+
+    std::pair<NR::Point, bool> _snapTransformed(Inkscape::Snapper::PointType type,
+                                                std::vector<NR::Point> const &points,
+                                                std::list<SPItem const *> const &ignore,
+                                                bool constrained,
+                                                Inkscape::Snapper::ConstraintLine const &constraint,
+                                                Transformation transformation_type,
+                                                NR::Point const &transformation,
+                                                NR::Point const &origin) const;
 };
 
 
@@ -88,6 +118,7 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv,
                                                    NR::Point const &norm, NR::scale const &s,
                                                    std::list<SPItem const *> const &it
                                                    );
+
 
 std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv,
                                                       Inkscape::Snapper::PointType t, const std::vector<NR::Point> &p,

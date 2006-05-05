@@ -35,12 +35,10 @@ Inkscape::SnappedPoint Inkscape::LineSnapper::_doFreeSnap(NR::Point const &p,
 }
 
 Inkscape::SnappedPoint Inkscape::LineSnapper::_doConstrainedSnap(NR::Point const &p,
-                                                                 NR::Point const &c,
+                                                                 ConstraintLine const &c,
                                                                  std::list<SPItem const *> const &it) const
 {
     Inkscape::SnappedPoint s = SnappedPoint(p, NR_HUGE);
-
-    NR::Point const v = NR::unit_vector(c);
 
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(p);
@@ -48,10 +46,10 @@ Inkscape::SnappedPoint Inkscape::LineSnapper::_doConstrainedSnap(NR::Point const
     for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
 
         /* Normal to the line we're trying to snap along */
-        NR::Point const n(NR::rot90(v));
+        NR::Point const n(NR::rot90(NR::unit_vector(c.getDirection())));
 
-        /* Hence constant term of the line we're trying to snap along */
-        NR::Coord const q = dot(n, p);
+        /* Constant term of the line we're trying to snap along */
+        NR::Coord const q = dot(n, c.hasPoint() ? c.getPoint() : p);
 
         /* Try to intersect this line with the target line */
         NR::Point t = p;

@@ -769,6 +769,8 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
         }
     }
 
+    SnapManager const &m = _desktop->namedview->snap_manager;
+
     /* Get a STL list of the selected items.
     ** FIXME: this should probably be done by Inkscape::Selection.
     */
@@ -778,50 +780,60 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     }
 
     if ((state & GDK_CONTROL_MASK) || _desktop->isToolboxButtonActive ("lock")) {
-        /* Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y] */
+        /* Scale is locked to a 1:1 aspect ratio, so that s[X] must be made to equal s[Y].
+        ** To do this, we snap along a suitable constraint vector from the origin.
+        */
 
-        NR::Dim2 locked_dim;
+        NR::Point const cv = NR::Point(
+            pt[NR::X] > _origin[NR::X] ? 1 : -1,
+            pt[NR::Y] > _origin[NR::Y] ? 1 : -1
+            );
 
-        /* Lock aspect ratio, using the smaller of the x and y factors */
-        if (fabs(s[NR::X]) > fabs(s[NR::Y])) {
-            s[NR::X] = fabs(s[NR::Y]) * sign(s[NR::X]);
-            locked_dim = NR::X;
-        } else {
-            s[NR::Y] = fabs(s[NR::X]) * sign(s[NR::Y]);
-            locked_dim = NR::Y;
-        }
+        std::pair<NR::scale, bool> bb = m.constrainedSnapScale(Snapper::BBOX_POINT,
+                                                               _bbox_points,
+                                                               it,
+                                                               Snapper::ConstraintLine(_origin, cv),
+                                                               s,
+                                                               _origin);
 
-        /* Snap the scale factor */
-        std::pair<double, bool> bb = namedview_vector_snap_list(_desktop->namedview,
-                                                                Snapper::BBOX_POINT, _bbox_points,
-                                                                _origin, s, it);
-        std::pair<double, bool> sn = namedview_vector_snap_list(_desktop->namedview,
-                                                                Snapper::SNAP_POINT, _snap_points,
-                                                                _origin, s, it);
+        std::pair<NR::scale, bool> sn = m.constrainedSnapScale(Snapper::SNAP_POINT,
+                                                               _snap_points,
+                                                               it,
+                                                               Snapper::ConstraintLine(_origin, cv),
+                                                               s,
+                                                               _origin);
 
-        double bd = bb.second ? fabs(bb.first - s[locked_dim]) : NR_HUGE;
-        double sd = sn.second ? fabs(sn.first - s[locked_dim]) : NR_HUGE;
-        double r = (bd < sd) ? bb.first : sn.first;
-
-        for ( unsigned int i = 0 ; i < 2 ; i++ ) {
-            s[i] = r * sign(s[i]);
-        }
-
+        /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
+        ** just compare difference in s[X].
+        */
+        double const bd = bb.second ? fabs(bb.first[NR::X] - s[NR::X]) : NR_HUGE;
+        double const sd = sn.second ? fabs(sn.first[NR::X] - s[NR::X]) : NR_HUGE;
+        s = (bd < sd) ? bb.first : sn.first;
+        
     } else {
         /* Scale aspect ratio is unlocked */
-        for ( unsigned int i = 0 ; i < 2 ; i++ ) {
-            std::pair<double, bool> bb = namedview_dim_snap_list_scale(_desktop->namedview,
-                                                                       Snapper::BBOX_POINT, _bbox_points,
-                                                                       _origin, s[i], NR::Dim2(i), it);
-            std::pair<double, bool> sn = namedview_dim_snap_list_scale(_desktop->namedview,
-                                                                       Snapper::SNAP_POINT, _snap_points,
-                                                                       _origin, s[i], NR::Dim2(i), it);
+        
+        std::pair<NR::scale, bool> bb = m.freeSnapScale(Snapper::BBOX_POINT,
+                                                        _bbox_points,
+                                                        it,
+                                                        s,
+                                                        _origin);
+        std::pair<NR::scale, bool> sn = m.freeSnapScale(Snapper::SNAP_POINT,
+                                                        _snap_points,
+                                                        it,
+                                                        s,
+                                                        _origin);
 
-            /* Pick the snap that puts us closest to the original scale */
-            NR::Coord bd = bb.second ? fabs(bb.first - s[i]) : NR_HUGE;
-            NR::Coord sd = sn.second ? fabs(sn.first - s[i]) : NR_HUGE;
-            s[i] = (bd < sd) ? bb.first : sn.first;
-        }
+        /* Pick the snap that puts us closest to the original scale */
+        NR::Coord bd = bb.second ?
+            fabs(NR::L2(NR::Point(bb.first[NR::X], bb.first[NR::Y])) -
+                 NR::L2(NR::Point(s[NR::X], s[NR::Y])))
+            : NR_HUGE;
+        NR::Coord sd = sn.second ?
+            fabs(NR::L2(NR::Point(sn.first[NR::X], sn.first[NR::Y])) -
+                 NR::L2(NR::Point(s[NR::X], s[NR::Y])))
+            : NR_HUGE;
+        s = (bd < sd) ? bb.first : sn.first;
     }
 
     /* Update the knot position */
@@ -1287,10 +1299,15 @@ void Inkscape::SelTrans::moveTo(NR::Point const &xy, guint state)
             for (unsigned int dim = 0; dim < 2; dim++) {
                 s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::BBOX_POINT,
                                                          _bbox_points,
-                                                         component_vectors[dim], it, dxy));
+                                                         it,
+                                                         Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
+                                                         dxy));
+                            
                 s.push_back(m.constrainedSnapTranslation(Inkscape::Snapper::SNAP_POINT,
                                                          _snap_points,
-                                                         component_vectors[dim], it, dxy));
+                                                         it,
+                                                         Inkscape::Snapper::ConstraintLine(component_vectors[dim]),
+                                                         dxy));
             }
 
         } else {

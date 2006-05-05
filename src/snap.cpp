@@ -21,7 +21,7 @@
 #include <libnr/nr-scale-ops.h>
 #include <libnr/nr-values.h>
 
-SnapManager::SnapManager(SPNamedView* v) : grid(v, 0), guide(v, 0), object(v, 0)
+SnapManager::SnapManager(SPNamedView const *v) : grid(v, 0), guide(v, 0), object(v, 0)
 {
 
 }
@@ -85,7 +85,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
 
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
-                                                    NR::Point const &c,
+                                                    Inkscape::Snapper::ConstraintLine const &c,
                                                     SPItem const *it) const
 {
     std::list<SPItem const *> lit;
@@ -96,7 +96,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
-                                                    NR::Point const &c,
+                                                    Inkscape::Snapper::ConstraintLine const &c,
                                                     std::list<SPItem const *> const &it) const
 {
     Inkscape::SnappedPoint r(p, NR_HUGE);
@@ -113,74 +113,120 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
 }
 
 
+std::pair<NR::Point, bool> SnapManager::_snapTransformed(Inkscape::Snapper::PointType type,
+                                                         std::vector<NR::Point> const &points,
+                                                         std::list<SPItem const *> const &ignore,
+                                                         bool constrained,
+                                                         Inkscape::Snapper::ConstraintLine const &constraint,
+                                                         Transformation transformation_type,
+                                                         NR::Point const &transformation,
+                                                         NR::Point const &origin) const
+{
+    /* We have a list of points, which we are proposing to transform in some way.  We need to see
+    ** if any of these points, when transformed, snap to anything.  If they do, we return the
+    ** appropriate transformation with `true'; otherwise we return the original scale with `false'.
+    */
+
+    /* Quick check to see if we have any snappers that are enabled */
+    if (willSnapSomething() == false) {
+        return std::make_pair(transformation, false);
+    }
+
+    /* The current best transformation */
+    NR::Point best_transformation = transformation;
+    /* The current best metric for the best transformation; lower is better, NR_HUGE
+    ** means that we haven't snapped anything.
+    */
+    NR::Coord best_metric = NR_HUGE;
+
+    for (std::vector<NR::Point>::const_iterator i = points.begin(); i != points.end(); i++) {
+
+        /* Work out the transformed version of this point */
+        NR::Point transformed;
+        switch (transformation_type) {
+            case TRANSLATION:
+                transformed = *i + transformation;
+                break;
+            case SCALE:
+                transformed = ((*i - origin) * NR::scale(transformation[NR::X], transformation[NR::Y])) + origin;
+                break;
+            default:
+                g_assert_not_reached();
+        }
+        
+        /* Snap it */
+        Inkscape::SnappedPoint const snapped = constrained ?
+            constrainedSnap(type, transformed, constraint, ignore) : freeSnap(type, transformed, ignore);
+
+        if (snapped.getDistance() < NR_HUGE) {
+            /* We snapped.  Find the transformation that describes where the snapped point has
+            ** ended up, and also the metric for this transformation.
+            */
+            NR::Point result;
+            NR::Coord metric;
+            switch (transformation_type) {
+                case TRANSLATION:
+                    result = snapped.getPoint() - *i;
+                    metric = NR::L2(result);
+                    break;
+                case SCALE:
+                    NR::Point const a = (snapped.getPoint() - origin);
+                    NR::Point const b = (*i - origin);
+                    result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]);
+                    metric = std::abs(NR::L2(result) - NR::L2(transformation));
+                    break;
+            }
+
+            /* Note it if it's the best so far */
+            if (metric < best_metric && metric != 0) {
+                best_transformation = result;
+                best_metric = metric;
+            }
+        }
+    }
+        
+    return std::make_pair(best_transformation, best_metric < NR_HUGE);
+}
+
+
 std::pair<NR::Point, bool> SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType t,
                                                             std::vector<NR::Point> const &p,
                                                             std::list<SPItem const *> const &it,
                                                             NR::Point const &tr) const
 {
-    if (willSnapSomething() == false) {
-        return std::make_pair(tr, false);
-    }
-
-    NR::Point best_translation = tr;
-    NR::Coord best_distance = NR_HUGE;
-
-    for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
-        /* Translated version of this point */
-        NR::Point const q = *i + tr;
-        /* Snap it */
-        Inkscape::SnappedPoint s = freeSnap(t, q, it);
-        if (s.getDistance() < NR_HUGE) {
-            /* Resulting translation */
-            NR::Point const r = s.getPoint() - *i;
-            NR::Coord const d = NR::L2(r);
-            if (d < best_distance) {
-                best_distance = d;
-                best_translation = r;
-            }
-        }
-    }
-
-    return std::make_pair(best_translation, best_distance < NR_HUGE);
+    return _snapTransformed(t, p, it, false, NR::Point(), TRANSLATION, tr, NR::Point(0, 0));
 }
 
 
 
 std::pair<NR::Point, bool> SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType t,
                                                                    std::vector<NR::Point> const &p,
-                                                                   NR::Point const &c,
                                                                    std::list<SPItem const *> const &it,
+                                                                   Inkscape::Snapper::ConstraintLine const &c,
                                                                    NR::Point const &tr) const
 {
-    if (willSnapSomething() == false) {
-        return std::make_pair(tr, false);
-    }
+    return _snapTransformed(t, p, it, true, c, TRANSLATION, tr, NR::Point(0, 0));
+}
 
-    NR::Point best_translation = tr;
-    NR::Coord best_distance = NR_HUGE;
-
-    for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
-        /* Translated version of this point */
-        NR::Point const q = *i + tr;
-        /* Snap it */
-        Inkscape::SnappedPoint s = constrainedSnap(t, q, c, it);
-        if (s.getDistance() < NR_HUGE) {
-            /* Resulting translation */
-            NR::Point const r = s.getPoint() - *i;
-            NR::Coord const d = NR::L2(r);
-            if (d < best_distance) {
-                best_distance = d;
-                best_translation = r;
-            }
-        }
-    }
-
-    return std::make_pair(best_translation, best_distance < NR_HUGE);
+std::pair<NR::scale, bool> SnapManager::freeSnapScale(Inkscape::Snapper::PointType t,
+                                                      std::vector<NR::Point> const &p,
+                                                      std::list<SPItem const *> const &it,
+                                                      NR::scale const &s,
+                                                      NR::Point const &o) const
+{
+    return _snapTransformed(t, p, it, false, NR::Point(0, 0), SCALE, NR::Point(s[NR::X], s[NR::Y]), o);
 }
 
 
-
-
+std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType t,
+                                                             std::vector<NR::Point> const &p,
+                                                             std::list<SPItem const *> const &it,
+                                                             Inkscape::Snapper::ConstraintLine const &c,
+                                                             NR::scale const &s,
+                                                             NR::Point const &o) const
+{
+    return _snapTransformed(t, p, it, true, c, SCALE, NR::Point(s[NR::X], s[NR::Y]), o);
+}    
 
 
 /// Minimal distance to norm before point is considered for snap.
@@ -292,7 +338,7 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inksca
 
     return std::make_pair(ratio, dist < NR_HUGE);
 }
-
+   
 
 /**
  * Try to snap points in \a p after they have been scaled by \a sx with respect to

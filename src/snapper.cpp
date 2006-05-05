@@ -136,7 +136,7 @@ Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType t,
 
 Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
                                                           NR::Point const &p,
-                                                          NR::Point const &c,
+                                                          ConstraintLine const &c,
                                                           SPItem const *it) const
 {
     std::list<SPItem const *> lit;
@@ -158,7 +158,7 @@ Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
 
 Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
                                                           NR::Point const &p,
-                                                          NR::Point const &c,
+                                                          ConstraintLine const &c,
                                                           std::list<SPItem const *> const &it) const
 {
     if (getSnapTo(t) == false) {

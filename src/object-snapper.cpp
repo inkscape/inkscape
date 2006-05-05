@@ -167,7 +167,7 @@ Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doFreeSnap(NR::Point const &p,
 
 
 Inkscape::SnappedPoint Inkscape::ObjectSnapper::_doConstrainedSnap(NR::Point const &p,
-                                                                   NR::Point const &c,
+                                                                   ConstraintLine const &c,
                                                                    std::list<SPItem const *> const &it) const
 {
     /* FIXME: this needs implementing properly; I think we have to do the

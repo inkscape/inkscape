@@ -54,14 +54,39 @@ public:
                           NR::Point const &p,
                           std::list<SPItem const *> const &it) const;
 
+    class ConstraintLine
+    {
+    public:
+        ConstraintLine(NR::Point const &d) : _has_point(false), _direction(d) {}
+        ConstraintLine(NR::Point const &p, NR::Point const &d) : _has_point(true), _point(p), _direction(d) {}
+
+        bool hasPoint() const {
+            return _has_point;
+        }
+
+        NR::Point getPoint() const {
+            return _point;
+        }
+
+        NR::Point getDirection() const {
+            return _direction;
+        }
+        
+    private:
+
+        bool _has_point;
+        NR::Point _point;
+        NR::Point _direction;
+    };
+
     SnappedPoint constrainedSnap(PointType t,
                                  NR::Point const &p,
-                                 NR::Point const &c,
+                                 ConstraintLine const &c,
                                  SPItem const *it) const;
 
     SnappedPoint constrainedSnap(PointType t,
                                  NR::Point const &p,
-                                 NR::Point const &c,
+                                 ConstraintLine const &c,
                                  std::list<SPItem const *> const &it) const;
 protected:
     SPNamedView const *_named_view;
@@ -91,7 +116,7 @@ private:
      *  \return Snapped point.
      */    
     virtual SnappedPoint _doConstrainedSnap(NR::Point const &p,
-                                            NR::Point const &c,
+                                            ConstraintLine const &c,
                                             std::list<SPItem const *> const &it) const = 0;
     
     ::NR::Coord _distance; ///< snap distance (desktop coordinates)
