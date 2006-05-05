@@ -605,6 +605,8 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
                     SPItem *it = (SPItem*)sp_object_ref(SP_OBJECT(l->data), NULL);
                     it->unsetCenter();
                     SP_OBJECT(it)->updateRepr();
+                    _center_is_set = false;  // center has changed
+                    _updateHandles();
                 }
                 sp_document_maybe_done (sp_desktop_document(_desktop), "center::unset");
             }
