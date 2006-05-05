@@ -88,7 +88,7 @@ ChatMessageHandler::parse(LmMessage* message)
 					LmMessageNode* body = lm_message_node_get_child(root, "body");
 					if (body != NULL) {
 						gchar const* val = lm_message_node_get_value(body);
-						if (strcmp(val, String::ucompose("%1 INKBOARD-JOINED", this->_sm->session_data->chat_handle).c_str()) == 0) {
+						if (strcmp(val, String::ucompose("%1 has become available", this->_sm->session_data->chat_handle).c_str()) == 0) {
 							return this->_finishConnection(); break;
 						} else {
 							return LM_HANDLER_RESULT_ALLOW_MORE_HANDLERS;
