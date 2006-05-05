@@ -722,6 +722,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
             sp_item_set_item_transform(item, displayed);
+            SP_OBJECT(item)->updateRepr();
         }
     } else {
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
