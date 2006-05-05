@@ -127,24 +127,24 @@ RFE</a>).</p>
 </group>
 
 <group>
-<title>Scrolling (panning)</title>
-<mouse><key><ctrl/><arrows/></key>  <action>scroll canvas</action></mouse>
-<note>Scrolling by keys is accelerated, i.e. it speeds up when you press Ctrl+arrows in quick succession, or press and hold.</note>
-<mouse><key><mid-drag/></key>  <action>pan canvas</action></mouse>
-<mouse><key><shift/><right-drag/></key> <key><ctrl/><right-drag/></key> <action>pan canvas</action></mouse>
-<mouse><key><wheel/></key> <action>scroll canvas vertically</action></mouse>
-<mouse><key><shift/><wheel/></key> <action>scroll canvas horizontally</action></mouse>
+<title>Rollen (Verschieben)</title>
+<mouse><key><ctrl/><arrows/></key>  <action>rollt die Arbeitsfläche</action></mouse>
+<note>Rollen mittels tasten ist beschleunigt, d.h. es verschnellert sich, wenn Sie Strg+Pfeil in schneller Folge drücken bzw. gedrückt lassen.</note>
+<mouse><key><mid-drag/></key>  <action>rollt die Arbeitsfläche</action></mouse>
+<mouse><key><shift/><right-drag/></key> <key><ctrl/><right-drag/></key> <action>rollt die Arbeitsfläche</action></mouse>
+<mouse><key><wheel/></key> <action>rollt die Arbeitsfläche vertikal</action></mouse>
+<mouse><key><shift/><wheel/></key> <action>rollt die Arbeitsfläche horizontal</action></mouse>
 </group>
 
 <group>
-<title>Guides and grid</title>
+<title>Hilfslinien und Gitter</title>
 <mouse><key><left-drag/></key> <action>drag off a ruler to create guide</action></mouse>
 <note>Drag off the horizontal or vertical ruler to create a new guideline. Drag a guideline onto the ruler to delete it.</note>
-<keys><key>|</key> <key><shift/>\</key> <action>toggle guides and snapping to guides</action></keys>
-<note>If you want to have different values for guides visibility and snapping, set them via the Document Options dialog.</note>
+<keys><key>|</key> <key><shift/>\</key> <action>Hilfslinien und Einrasten an Hilfslinien umschalten</action></keys>
+<note>Wenn Sie unterschiedliche Werte für Sichtbarkeit und Einrasten an Hilfslinien maben möchten, dann setzen Sie diese im Dokumenteneinstellungen Dialog.</note>
 <note>When you create a new guide by dragging off the ruler, guide visibility and snapping are turned on.</note>
-<keys><key>#</key> <key><shift/>3</key> <action>toggle grid and snapping to grid</action></keys>
-<note>If you want to have different values for grid visibility and snapping, set them via the Document Options dialog.</note>
+<keys><key>#</key> <key><shift/>3</key> <action>Gitter und Einrasten an Gitter umschalten</action></keys>
+<note>Wenn Sie unterschiedliche Werte für Sichtbarkeit und Einrasten an Gitter maben möchten, dann setzen Sie diese im Dokumenteneinstellungen Dialog.</note>
 <note>Note that only the 3 key on the main keyboard works, not on the keypad.</note>
 </group>
 </section>
@@ -161,79 +161,79 @@ RFE</a>).</p>
 *<section title="Datei" color="f3f2e2">
 
 <group>
-<keys><key><ctrl/>N</key>	 <action>create new document</action></keys>
-<keys><key><ctrl/>O</key>	 <action>open an SVG document</action></keys>
-<keys><key><shift/><ctrl/>E</key>	 <action>export to PNG</action></keys>
-<keys><key><ctrl/>I</key>	 <action>import bitmap or SVG</action></keys>
-<keys><key><ctrl/>P</key>	 <action>print document</action></keys>
-<keys><key><ctrl/>S</key>	 <action>save document</action></keys>
-<keys><key><shift/><ctrl/>S</key>	 <action>save under a new name</action></keys>
-<keys><key><ctrl/>Q</key>	 <action>exit Inkscape</action></keys>
+<keys><key><ctrl/>N</key>	 <action>neues Dokument anlegen</action></keys>
+<keys><key><ctrl/>O</key>	 <action>ein bestehendes Dokument öffnen</action></keys>
+<keys><key><shift/><ctrl/>E</key>	 <action>als Bitmap exportieren</action></keys>
+<keys><key><ctrl/>I</key>	 <action>Bitmap oder SVG-Bild importieren</action></keys>
+<keys><key><ctrl/>P</key>	 <action>Dokument drucken</action></keys>
+<keys><key><ctrl/>S</key>	 <action>Dokument speichern</action></keys>
+<keys><key><shift/><ctrl/>S</key>	 <action>Dokument unter anderen Namen speichern</action></keys>
+<keys><key><ctrl/>Q</key>	 <action>Inkscape verlassen</action></keys>
 </group>
 
 </section>
 
-*<section title="Window" color="e8fae1">
+*<section title="Fenster" color="e8fae1">
 
 <group>
-<keys><key><ctrl/>R</key> <action>toggle rulers</action></keys>
-<keys><key><ctrl/>B</key> <action>toggle scrollbars</action></keys>
-<keys><key><keyf f="F11"/></key> <action>toggle fullscreen</action></keys>
+<keys><key><ctrl/>R</key> <action>Lineale umschalten</action></keys>
+<keys><key><ctrl/>B</key> <action>Rollbalken umschalten</action></keys>
+<keys><key><keyf f="F11"/></key> <action>Vollbildmodus umschalten</action></keys>
 </group>
 
 <group>
-<keys><key><keyf f="F10"/></key> <action>main menu</action></keys>
-<note>Menus can also be activated by Alt with the letter underscored in the menu name.</note>
+<keys><key><keyf f="F10"/></key> <action>Hauptmenü</action></keys>
+<note>Menüeinträge können auch durch das Drücken von Alt und dem im Menünamen unterstrichenen Buchstaben aktiviert werden.</note>
 <keys><key><shift/><keyf f="F10"/></key> <key><right-click/></key> <action>drop-down (context) menu</action></keys>
 </group>
 
 <group>
-<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key>	 <action>close document window</action></keys>
-<note>This shuts down Inkscape if it was the only document window open.</note>
-<keys><key><ctrl/><misc f="Tab"/></key> <action>next document window</action></keys>
-<keys><key><shift/><ctrl/><misc f="Tab"/></key> <action>previous document window</action></keys>
-<note>These cycle through the active document windows forward and backward.</note>
+<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key>	 <action>Dokument schliessen</action></keys>
+<note>Beendet Inkscape, wenn nur ein Dokument geöffnet ist.</note>
+<keys><key><ctrl/><misc f="Tab"/></key> <action>zum nächsten Dokumentenfenster</action></keys>
+<keys><key><shift/><ctrl/><misc f="Tab"/></key> <action>zum vorhergehenden Dokumentenfenster</action></keys>
+<note>Es werden die aktiven Dokumentenfenster vor- und rückwarts durchlaufen.</note>
 </group>
 
 </section>
 
 
-*<section title="Layers" color="f6f9d9">
+*<section title="Ebenen" color="f6f9d9">
 <group>
-<keys><key><shift/><misc f="PgUp"/></key> <action>move to layer above</action></keys>
-<keys><key><shift/><misc f="PgDn"/></key> <action>move to layer below</action></keys>
-<note>These commands move the selected objects from one layer to another.</note>
+<keys><key><shift/><misc f="PgUp"/></key> <action>zur darüberliegenden Ebene verschieben</action></keys>
+<keys><key><shift/><misc f="PgDn"/></key> <action>zur darunterliegenden Ebene verschieben</action></keys>
+<note>Es werden die ausgewählten Objekte von einer in eine andere Ebene verschoben.</note>
 
-<keys><key><shift/><ctrl/><misc f="PgUp"/></key> <action>raise layer</action></keys>
-<keys><key><shift/><ctrl/><misc f="PgDn"/></key> <action>lower layer</action></keys>
-<keys><key><shift/><ctrl/><misc f="Home"/></key> <action>raise layer to top</action></keys>
-<keys><key><shift/><ctrl/><misc f="End"/></key> <action>lower layer to bottom</action></keys>
+<keys><key><shift/><ctrl/><misc f="PgUp"/></key> <action>Ebene anheben</action></keys>
+<keys><key><shift/><ctrl/><misc f="PgDn"/></key> <action>Ebene absenken</action></keys>
+<keys><key><shift/><ctrl/><misc f="Home"/></key> <action>Ebene ganz nach oben</action></keys>
+<keys><key><shift/><ctrl/><misc f="End"/></key> <action>Ebene ganz nach unten</action></keys>
 <note>These commands move the current layer among its siblings (normally other layers).</note>
 </group>
 </section>
 
 
-*<section title="Object" color="f4ecf5">
+*<section title="Objekt" color="f4ecf5">
 
 <group>
-<title>Undo/redo</title>
-<keys><key><shift/><ctrl/>Y</key> <key><ctrl/>Z</key> 	 <action>undo</action></keys>
-<keys><key><shift/><ctrl/>Z</key> <key><ctrl/>Y</key>	 <action>redo</action></keys>
+<title>Rückgängig/Wiederholen</title>
+<keys><key><shift/><ctrl/>Y</key> <key><ctrl/>Z</key> 	 <action>Rückgängig</action></keys>
+<keys><key><shift/><ctrl/>Z</key> <key><ctrl/>Y</key>	 <action>Wiederholen</action></keys>
 </group>
 
 <group>
-<title>Clipboard</title>
-<keys><key><ctrl/>C</key>	 <action>copy selection</action></keys>
-<note>This places a copy of the selection to the Inkscape clipboard. Text from text objects is also placed onto the system clipboard.</note>
-<keys><key><ctrl/>X</key>	 <action>cut selection</action></keys>
-<note>This works the same as "copy selection" followed by deleting the selection.</note>
-<keys><key><ctrl/>V</key>	 <action>paste clipboard</action></keys>
-<note>This places the clipboard objects at the mouse cursor, or at the center of the window if mouse is outside the canvas.</note>
-<note>When editing text with the text tool, this pastes the text from the system clipboard into the current text object.</note>
-<keys><key><ctrl/><alt/>V</key>	 <action>paste in place</action></keys>
-<note>This places the clipboard objects to the original location from which they were copied.</note>
-<keys><key><shift/><ctrl/>V</key>  <action>paste style</action></keys> 
-<note>This applies the style of the (first of the) coped object(s) to the current selection.</note>
+<title>Zwischenablage</title>
+<keys><key><ctrl/>C</key>	 <action>Auswahl kopieren</action></keys>
+<note>Einfügen einer Kopie der Auswahl in die Inkscape Zwischenablage. Text eines Textobjektes wird auch in die Zwischenablage übernommen.</note>
+<keys><key><ctrl/>X</key>	 <action>Auswahl verschieben</action></keys>
+<note>Funktioniert wie "Auswahl kopieren", jodoch wird die Auswahl im Dokument gelöscht.</note>
+<keys><key><ctrl/>V</key>	 <action>Zwischenablage einfügen</action></keys>
+<note>Einfügen der Objekte aus der Zwischenablage an der Mausposition oder in der Mitte des Dokumentes, wenn sich die Mausposition ausserhalb der Zeichenfläche befindet.</note>
+<note>Beim Bearbeiten von Text mit dem Textwerkzeug wird der Text aus der System-Zwischenablage in das aktuelle Textobjekt eingefügt.</note>
+<keys><key><ctrl/><alt/>V</key>	 <action>Einfügen an Ursprungsposition</action></keys>
+<note>Fügt die Objekte der Zwischenablage an der Position ein, von der sie kopiert wurden.</note>
+<keys><key><shift/><ctrl/>V</key>  <action>Stil anwenden</action></keys> 
+<note>Anwenden des Stils des (zuerst) kopierten Objektes auf die aktuelle Auswahl.</note>
 <note>If a gradient handle (in Gradient tool) or a text span (in Text tool) are selected, they get the style instead of the entire object.</note>
 </group>
 
