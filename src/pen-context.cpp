@@ -923,13 +923,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_Delete:
         case GDK_KP_Delete:
             if (sp_curve_is_empty(pc->green_curve)) {
-                /* Same as cancel */
-                pc->state = SP_PEN_CONTEXT_STOP;
-                spdc_reset_colors(pc);
-                sp_canvas_item_hide(pc->c0);
-                sp_canvas_item_hide(pc->c1);
-                sp_canvas_item_hide(pc->cl0);
-                sp_canvas_item_hide(pc->cl1);
+                pen_cancel (pc);
                 ret = TRUE;
             } else {
                 /* Reset red curve */
@@ -948,7 +942,11 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                     break;
                 }
                 pc->p[0] = p[e - 2].c(3);
-                pc->p[1] = p[e - 1].c(1);
+                if (p[e - 1].code == NR_CURVETO) {
+                    pc->p[1] = p[e - 1].c(1);
+                } else {
+                    pc->p[1] = pc->p[0];
+                }
                 NR::Point const pt(( pc->npoints < 4
                                      ? p[e - 1].c(3)
                                      : pc->p[3] ));
