@@ -148,7 +148,7 @@ CFLAGS = -O3 -g -Wall -mms-bitfields -DVERSION=$(VERSION) \
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-#CFLAGS += -DWITH_INKBOARD
+CFLAGS += -DWITH_INKBOARD
 
 ####### IMPLICIT RULES
 .cpp.o:
@@ -209,6 +209,7 @@ $(GTK)/bin/libxml2.dll \
 $(GTK)/lib/iconv.lib	\
 -lfreetype.dll -lfontconfig.dll  \
 -llcms.dll \
+$(GTK)/bin/libloudmouth-1-0.dll \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
 -lgc -mwindows -lws2_32 -lintl
 
