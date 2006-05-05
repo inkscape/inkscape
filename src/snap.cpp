@@ -49,11 +49,6 @@ bool SnapManager::willSnapSomething() const
     return (i != s.end());
 }
 
-
-/* FIXME: lots of cut-and-paste here.  This needs some
-** functor voodoo to cut it all down a bit.
-*/
-
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
                                              SPItem const *it) const
