@@ -1,4 +1,12 @@
-2006-05-04  Carl Hetherington  <inkscape@carlh.net>
+2006-05-05  Carl Hetherington  <inkscape@carlh.net>
+
+	* src/draw-context.cpp, src/line-snapper.h, src/snap.cpp,
+	src/snapper.cpp, src/line-snapper.cpp, src/snap.h,
+	src/context-fns.cpp, src/object-snapper.h, src/seltrans.cpp,
+	src/nodepath.cpp, src/snapper.h, src/object-snapper.cpp: various
+	snapping fixes and cleanups.
+
+06-05-04  Carl Hetherington  <inkscape@carlh.net>
 
 	* src/guide-snapper.h, src/line-snapper.h, src/snap.cpp,
 	src/snap.h, src/object-snapper.h, src/sp-namedview.cpp,
