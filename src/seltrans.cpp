@@ -889,6 +889,8 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         it.push_back(reinterpret_cast<SPItem*>(i->data));
     }
 
+    SnapManager const &m = _desktop->namedview->snap_manager;
+
     if ( state & GDK_CONTROL_MASK ) {
         s[perp] = fabs(s[axis]);
 
@@ -906,17 +908,27 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
         s[axis] = fabs(ratio) * sign(s[axis]);
         s[perp] = fabs(s[axis]);
     } else {
-        std::pair<NR::Coord, bool> bb = namedview_dim_snap_list_scale(_desktop->namedview, Snapper::BBOX_POINT,
-                                                                      _bbox_points, _origin,
-                                                                      s[axis], axis, it);
-        std::pair<NR::Coord, bool> sn = namedview_dim_snap_list_scale(_desktop->namedview, Snapper::SNAP_POINT,
-                                                                      _snap_points, _origin,
-                                                                      s[axis], axis, it);
 
-        /* Pick the snap that puts us closest to the original scale */
-        NR::Coord bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
-        NR::Coord sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
-        s[axis] = (bd < sd) ? bb.first : sn.first;
+        std::pair<NR::scale, bool> const bb = m.constrainedSnapScale(
+            Snapper::BBOX_POINT,
+            _bbox_points,
+            it,
+            Inkscape::Snapper::ConstraintLine(component_vectors[axis]),
+            s,
+            _origin);
+
+        std::pair<NR::scale, bool> const sn = m.constrainedSnapScale(
+            Snapper::SNAP_POINT,
+            _snap_points,
+            it,
+            Inkscape::Snapper::ConstraintLine(component_vectors[axis]),
+            s,
+            _origin);
+
+        /* Choose the smaller difference in scale */
+        NR::Coord const bd = bb.second ? fabs(bb.first[axis] - s[axis]) : NR_HUGE;
+        NR::Coord const sd = sn.second ? fabs(sn.first[axis] - s[axis]) : NR_HUGE;
+        s = (bd < sd) ? bb.first : sn.first;
     }
 
     pt = ( _point - _origin ) * NR::scale(s) + _origin;

@@ -165,11 +165,15 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(Inkscape::Snapper::Poin
                     metric = NR::L2(result);
                     break;
                 case SCALE:
+                {
                     NR::Point const a = (snapped.getPoint() - origin);
                     NR::Point const b = (*i - origin);
                     result = NR::Point(a[NR::X] / b[NR::X], a[NR::Y] / b[NR::Y]);
                     metric = std::abs(NR::L2(result) - NR::L2(transformation));
                     break;
+                }
+                default:
+                    g_assert_not_reached();
             }
 
             /* Note it if it's the best so far */
@@ -334,53 +338,6 @@ std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv, Inksca
     return std::make_pair(ratio, dist < NR_HUGE);
 }
    
-
-/**
- * Try to snap points in \a p after they have been scaled by \a sx with respect to
- * the origin \a norm.  The best snap is the one that changes the scale least.
- *
- * \return Pair containing snapped scale and a flag which is true if a snap was made.
- */
-std::pair<double, bool> namedview_dim_snap_list_scale(SPNamedView const *nv, Inkscape::Snapper::PointType t,
-                                                      const std::vector<NR::Point> &p, NR::Point const &norm,
-                                                      double const sx, NR::Dim2 dim,
-                                                      std::list<const SPItem *> const &it)
-{
-    SnapManager const &m = nv->snap_manager;
-    if (m.willSnapSomething() == false) {
-        return std::make_pair(sx, false);
-    }
-
-    g_assert(dim < 2);
-
-    NR::Coord dist = NR_HUGE;
-    double scale = sx;
-
-    for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
-        NR::Point q = *i;
-        NR::Point check = q;
-
-        /* Scaled version of the point we are looking at */
-        check[dim] = (sx * (q - norm) + norm)[dim];
-
-        if (fabs (q[dim] - norm[dim]) > MIN_DIST_NORM) {
-            /* Snap this point */
-            const NR::Coord d = namedview_dim_snap (nv, t, check, dim, it);
-            /* Work out the resulting scale factor */
-            double snapped_scale = (check[dim] - norm[dim]) / (q[dim] - norm[dim]);
-
-            if (dist == NR_HUGE || fabs(snapped_scale - sx) < fabs(scale - sx)) {
-                /* This is either the first point, or the snapped scale
-                ** is the closest yet to the original.
-                */
-                scale = snapped_scale;
-                dist = d;
-            }
-        }
-    }
-
-    return std::make_pair(scale, dist < NR_HUGE);
-}
 
 /**
  * Try to snap points after they have been skewed.
