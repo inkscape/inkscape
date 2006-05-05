@@ -87,7 +87,7 @@ public:
     /**
      *  Assignment
      */
-    URI &URI::operator=(const URI &other);
+    URI &operator=(const URI &other);
 
     /**
      *
