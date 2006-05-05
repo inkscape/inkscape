@@ -189,7 +189,7 @@ StyleSwatch::setWatched(Inkscape::XML::Node *watched, Inkscape::XML::Node *secon
         // empty.
         if (secondary) {
             SPCSSAttr *css = sp_repr_css_attr_inherited(watched, "style");
-            if (sp_repr_children((Inkscape::XML::Node *) css) == NULL) { // is css empty?
+            if (!css->attributeList()) { // is css empty?
                 SPCSSAttr *css_secondary = sp_repr_css_attr_inherited(secondary, "style");
                 this->setStyle (css_secondary);
             }
