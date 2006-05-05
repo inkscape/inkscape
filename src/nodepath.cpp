@@ -921,22 +921,19 @@ void sp_node_moveto(Inkscape::NodePath::Node *node, NR::Point p)
 static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, NR::Coord dx, NR::Coord dy,
                                             bool const snap = true)
 {
-    NR::Coord best[2] = { NR_HUGE, NR_HUGE };
+    NR::Coord best = NR_HUGE;
     NR::Point delta(dx, dy);
     NR::Point best_pt = delta;
 
     if (snap) {
+        SnapManager const &m = nodepath->desktop->namedview->snap_manager;
+        
         for (GList *l = nodepath->selected; l != NULL; l = l->next) {
-           Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
-            NR::Point p = n->pos + delta;
-            for (int dim = 0; dim < 2; dim++) {
-                NR::Coord dist = namedview_dim_snap(nodepath->desktop->namedview,
-                                                    Inkscape::Snapper::SNAP_POINT, p,
-                                                    NR::Dim2(dim), nodepath->path);
-                if (dist < best[dim]) {
-                    best[dim] = dist;
-                    best_pt[dim] = p[dim] - n->pos[dim];
-                }
+            Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
+            Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAP_POINT, n->pos + delta, NULL);
+            if (s.getDistance() < best) {
+                best = s.getDistance();
+                best_pt = s.getPoint();
             }
         }
     }

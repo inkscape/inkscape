@@ -894,41 +894,55 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::
     if ( state & GDK_CONTROL_MASK ) {
         s[perp] = fabs(s[axis]);
 
-        std::pair<double, bool> sn = namedview_vector_snap_list(_desktop->namedview,
-                                                                Snapper::BBOX_POINT,
-                                                                _bbox_points, _origin, s, it);
-        std::pair<double, bool> bb = namedview_vector_snap_list(_desktop->namedview,
-                                                                Snapper::SNAP_POINT,
-                                                                _snap_points, _origin, s, it);
+        std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
+            Snapper::BBOX_POINT,
+            _bbox_points,
+            it,
+            s[axis],
+            _origin,
+            axis,
+            true);
 
-        double bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
-        double sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
-        double ratio = (bd < sd) ? bb.first : sn.first;
+        std::pair<NR::Coord, bool> const sn = m.freeSnapStretch(
+            Snapper::SNAP_POINT,
+            _snap_points,
+            it,
+            s[axis],
+            _origin,
+            axis,
+            true);
+
+        NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
+        NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
+        NR::Coord const ratio = (bd < sd) ? bb.first : sn.first;
 
         s[axis] = fabs(ratio) * sign(s[axis]);
         s[perp] = fabs(s[axis]);
     } else {
 
-        std::pair<NR::scale, bool> const bb = m.constrainedSnapScale(
+        std::pair<NR::Coord, bool> const bb = m.freeSnapStretch(
             Snapper::BBOX_POINT,
             _bbox_points,
             it,
-            Inkscape::Snapper::ConstraintLine(component_vectors[axis]),
-            s,
-            _origin);
+            s[axis],
+            _origin,
+            axis,
+            false);
 
-        std::pair<NR::scale, bool> const sn = m.constrainedSnapScale(
+        std::pair<NR::Coord, bool> const sn = m.freeSnapStretch(
             Snapper::SNAP_POINT,
             _snap_points,
             it,
-            Inkscape::Snapper::ConstraintLine(component_vectors[axis]),
-            s,
-            _origin);
+            s[axis],
+            _origin,
+            axis,
+            false);
 
         /* Choose the smaller difference in scale */
-        NR::Coord const bd = bb.second ? fabs(bb.first[axis] - s[axis]) : NR_HUGE;
-        NR::Coord const sd = sn.second ? fabs(sn.first[axis] - s[axis]) : NR_HUGE;
-        s = (bd < sd) ? bb.first : sn.first;
+        NR::Coord const bd = bb.second ? fabs(bb.first - s[axis]) : NR_HUGE;
+        NR::Coord const sd = sn.second ? fabs(sn.first - s[axis]) : NR_HUGE;
+        s[axis] = (bd < sd) ? bb.first : sn.first;
+        s[perp] = 1;
     }
 
     pt = ( _point - _origin ) * NR::scale(s) + _origin;

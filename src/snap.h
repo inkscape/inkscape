@@ -20,6 +20,7 @@
 #include <libnr/nr-coord.h>
 #include <libnr/nr-dim2.h>
 #include <libnr/nr-forward.h>
+#include <libnr/nr-scale.h>
 #include "grid-snapper.h"
 #include "guide-snapper.h"
 #include "object-snapper.h"
@@ -75,6 +76,14 @@ public:
                                                     NR::scale const &s,
                                                     NR::Point const &o) const;
 
+    std::pair<NR::Coord, bool> freeSnapStretch(Inkscape::Snapper::PointType t,
+                                               std::vector<NR::Point> const &p,
+                                               std::list<SPItem const *> const &it,
+                                               NR::Coord const &s,
+                                               NR::Point const &o,
+                                               NR::Dim2 d,
+                                               bool uniform) const;
+
     Inkscape::GridSnapper grid;
     Inkscape::GuideSnapper guide;
     Inkscape::ObjectSnapper object;
@@ -84,12 +93,12 @@ public:
 
 private:
 
-    enum Transformation
-    {
+    enum Transformation {
         TRANSLATION,
-        SCALE
+        SCALE,
+        STRETCH
     };
-
+    
     std::pair<NR::Point, bool> _snapTransformed(Inkscape::Snapper::PointType type,
                                                 std::vector<NR::Point> const &points,
                                                 std::list<SPItem const *> const &ignore,
@@ -97,7 +106,9 @@ private:
                                                 Inkscape::Snapper::ConstraintLine const &constraint,
                                                 Transformation transformation_type,
                                                 NR::Point const &transformation,
-                                                NR::Point const &origin) const;
+                                                NR::Point const &origin,
+                                                NR::Dim2 dim,
+                                                bool uniform) const;
 };
 
 
@@ -112,13 +123,6 @@ NR::Coord namedview_dim_snap(SPNamedView const *nv, Inkscape::Snapper::PointType
                              NR::Dim2 const dim, std::list<SPItem const *> const &it);
 
 /* List of points methods */
-
-std::pair<double, bool> namedview_vector_snap_list(SPNamedView const *nv,
-                                                   Inkscape::Snapper::PointType t, const std::vector<NR::Point> &p,
-                                                   NR::Point const &norm, NR::scale const &s,
-                                                   std::list<SPItem const *> const &it
-                                                   );
-
 
 NR::Coord namedview_dim_snap_list_skew(SPNamedView const *nv, Inkscape::Snapper::PointType t,
                                        const std::vector<NR::Point> &p,
