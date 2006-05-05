@@ -411,7 +411,7 @@ FunctionEnd
   IntOp $R1 $R1 & ${SF_SELECTED} 
   IntCmp $R1 ${SF_SELECTED} 0 skip_tutorials 
     SetOutPath $INSTDIR\share\tutorials
-    File /nonfatal /a "..\..\inkscape\share\tutorials\*.${lng}.*"
+    File /nonfatal /a "..\..\inkscape\share\tutorials\*.${polng}.*"
   skip_tutorials:
 !macroend
 
@@ -486,6 +486,7 @@ Section $(lng_Core) SecCore
   File /a "..\..\inkscape\NEWS"
   File /a "..\..\inkscape\HACKING.txt"
   File /a "..\..\inkscape\README"
+  File /a "..\..\inkscape\README.txt"
   File /a "..\..\inkscape\TRANSLATORS"
   File /nonfatal /a /r "..\..\inkscape\data"
   File /nonfatal /a /r "..\..\inkscape\doc"
@@ -675,6 +676,14 @@ Section $(lng_ja) SecJapanese
   !insertmacro Language 'ja' 'jp'
 SectionEnd
 
+Section $(lng_ko) SecKorean
+  !insertmacro Language 'ko' 'ko'
+SectionEnd
+
+Section $(lng_lt) SecLithuanian
+  !insertmacro Language 'lt' 'lt'
+SectionEnd
+
 Section $(lng_mk) SecMacedonian
   !insertmacro Language mk mk
 SectionEnd
@@ -741,6 +750,10 @@ SectionEnd
 
 Section $(lng_zh_CN) SecChineseSimplified
   !insertmacro Language zh_CN zh_CN
+SectionEnd
+
+Section $(lng_zh_TW) SecChineseTaiwan
+  !insertmacro Language zh_TW zh_TW
 SectionEnd
 
 Section -FinalizeInstallation
@@ -830,7 +843,7 @@ Function .onInit
   ; hide if quick launch if not available
   StrCmp $QUICKLAUNCH $TEMP 0 +2
     SectionSetText ${SecQuicklaunch} ""
-
+	
   ; proccess command line parameter
   !insertmacro Parameter "GTK" ${SecGTK}
   !insertmacro Parameter "SHORTCUTS" ${secShortcuts}
