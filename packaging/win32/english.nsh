@@ -123,6 +123,8 @@ LangString lng_gl $(LANG_ENGLISH) "gl  Gallegan"
 LangString lng_hu $(LANG_ENGLISH) "hu  Hungarian"
 LangString lng_it $(LANG_ENGLISH) "it  Italian"
 LangString lng_ja $(LANG_ENGLISH) "ja  Japanese"
+LangString lng_ko $(LANG_ENGLISH) "ko  Korean"
+LangString lng_lt $(LANG_ENGLISH) "lt  Lithuanian"
 LangString lng_mk $(LANG_ENGLISH) "mk  Macedonian"
 LangString lng_nb $(LANG_ENGLISH) "nb  Norwegian Bokmål"
 LangString lng_nl $(LANG_ENGLISH) "nl  Dutch"
@@ -140,6 +142,7 @@ LangString lng_sv $(LANG_ENGLISH) "sv  Swedish"
 LangString lng_tr $(LANG_ENGLISH) "tr  Turkish"
 LangString lng_uk $(LANG_ENGLISH) "uk  Ukrainian"
 LangString lng_zh_CN $(LANG_ENGLISH) "zh_CH  Simplifed Chinese"
+LangString lng_zh_TW $(LANG_ENGLISH) "zh_TW  Chinese (Taiwan)"
 
 
 

@@ -123,6 +123,8 @@ LangString lng_gl $(LANG_ITALIAN) "gl  Gallese"
 LangString lng_hu $(LANG_ITALIAN) "hu  Ungherese"
 LangString lng_it $(LANG_ITALIAN) "it  Italiano"
 LangString lng_ja $(LANG_ITALIAN) "ja  Giopponese"
+LangString lng_ko $(LANG_ITALIAN) "ko  Korean"
+LangString lng_lt $(LANG_ITALIAN) "lt  Lithuanian"
 LangString lng_mk $(LANG_ITALIAN) "mk  Macedone"
 LangString lng_nb $(LANG_ITALIAN) "nb  Norvegese Bokmål"
 LangString lng_nl $(LANG_ITALIAN) "nl  Olandese"
@@ -140,6 +142,7 @@ LangString lng_sv $(LANG_ITALIAN) "sv  Svedese"
 LangString lng_tr $(LANG_ITALIAN) "tr  Turco"
 LangString lng_uk $(LANG_ITALIAN) "uk  Ucraino"
 LangString lng_zh_CN $(LANG_ITALIAN) "zh_CH  Cinese Semplificato"
+LangString lng_zh_TW $(LANG_ITALIAN) "zh_TW  Cinese (Taiwan)"
 
 
 

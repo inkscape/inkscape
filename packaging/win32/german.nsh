@@ -126,6 +126,8 @@ LangString lng_gl $(LANG_GERMAN) "gl  Galizisch"
 LangString lng_hu $(LANG_GERMAN) "hu  Ungarisch"
 LangString lng_it $(LANG_GERMAN) "it  Italienisch"
 LangString lng_ja $(LANG_GERMAN) "ja  Japanisch"
+LangString lng_ko $(LANG_GERMAN) "ko  Koreanisch"
+LangString lng_lt $(LANG_GERMAN) "lt  Litauisch"
 LangString lng_mk $(LANG_GERMAN) "mk  Mazedonisch"
 LangString lng_nb $(LANG_GERMAN) "nb  Norwegisch-Bokmal"
 LangString lng_nl $(LANG_GERMAN) "nl  Holländisch"
@@ -143,6 +145,7 @@ LangString lng_sv $(LANG_GERMAN) "sv  Schwedisch"
 LangString lng_tr $(LANG_GERMAN) "tr  Türkisch"
 LangString lng_uk $(LANG_GERMAN) "uk  Ukrainisch"
 LangString lng_zh_CN $(LANG_GERMAN) "zh_CH  Chinesisch (vereinfacht)"
+LangString lng_zh_TW $(LANG_GERMAN) "zh_TW  Chinesisch (Taiwan)"
 
 
 ; uninstallation options

@@ -123,6 +123,8 @@ LangString lng_gl $(LANG_CZECH) "gl  Gallegan"
 LangString lng_hu $(LANG_CZECH) "hu  Hungarian"
 LangString lng_it $(LANG_CZECH) "it  Italian"
 LangString lng_ja $(LANG_CZECH) "ja  Japanese"
+LangString lng_ko $(LANG_CZECH) "ko  Korean"
+LangString lng_lt $(LANG_CZECH) "lt  Lithuanian"
 LangString lng_mk $(LANG_CZECH) "mk  Macedonian"
 LangString lng_nb $(LANG_CZECH) "nb  Norwegian Bokmal"
 LangString lng_nl $(LANG_CZECH) "nl  Dutch"
@@ -140,6 +142,7 @@ LangString lng_sv $(LANG_CZECH) "sv  Swedish"
 LangString lng_tr $(LANG_CZECH) "tr  Turkish"
 LangString lng_uk $(LANG_CZECH) "uk  Ukrainian"
 LangString lng_zh_CN $(LANG_CZECH) "zh_CH  Simplifed Chinese"
+LangString lng_zh_TW $(LANG_CZECH) "zh_TW  Chinese (Taiwan)"
 
 
 
