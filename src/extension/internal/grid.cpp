@@ -17,8 +17,10 @@
 #include <gtkmm/spinbutton.h>
 
 #include "desktop.h"
+#include "desktop-handles.h"
 #include "selection.h"
 #include "sp-object.h"
+#include "util/glib-list-iterators.h"
 
 #include "extension/effect.h"
 #include "extension/system.h"
@@ -186,55 +188,20 @@ PrefAdjustment::val_changed (void)
     \param  moudule  Module which holds the params
     \param  view     Unused today - may get style information in the future.
 
-    This function builds a VBox, and puts it into a Gtk::Plug.  This way
-    the native window pointer can be pulled out and returned up to be
-    stuck in a Gtk::Socket further up the call stack.  In the Vbox there
-    are several Hboxes, each one being a spin button to adjust a particular
-    parameter.  The names of the parameters and the labels are all
-    stored in the arrays in the middle of the function.  This makes
-    the code very generic.  This will probably have to change if someone
-    wants to make this dialog look nicer.
+    Uses AutoGUI for creating the GUI.
 */
 Gtk::Widget *
 Grid::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View * view)
 {
-    Gtk::VBox * vbox;
-    vbox = new Gtk::VBox();
+    SPDocument * current_document = view->doc();
 
-#define NUM_PREFERENCES  5
-    char * labels[NUM_PREFERENCES] = {N_("Line Width"),
-                       N_("Horizontal Spacing"),
-                       N_("Vertical Spacing"),
-                       N_("Horizontal Offset"),
-                       N_("Vertical Offset")};
-    char * prefs[NUM_PREFERENCES] =  {"lineWidth",
-                       "xspacing",
-                       "yspacing",
-                       "xoffset",
-                       "yoffset"};
+    using Inkscape::Util::GSListConstIterator;
+    GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
+    Inkscape::XML::Node * first_select = NULL;
+    if (selected != NULL) 
+        first_select = SP_OBJECT_REPR(*selected);
 
-    for (int i = 0; i < NUM_PREFERENCES; i++) {
-        Gtk::HBox * hbox = new Gtk::HBox();
-
-        Gtk::Label * label = new Gtk::Label(_(labels[i]), Gtk::ALIGN_LEFT);
-        label->show();
-        hbox->pack_start(*label, true, true);
-
-        PrefAdjustment * pref = new PrefAdjustment(module, prefs[i]);
-
-        Gtk::SpinButton * spin = new Gtk::SpinButton(*pref, 0.1, 1);
-        spin->show();
-        hbox->pack_start(*spin, false, false);
-
-        hbox->show();
-
-        vbox->pack_start(*hbox, true, true);
-    }
-#undef NUM_PREFERENCES
-
-    vbox->show();
-
-    return vbox;
+    return module->autogui(current_document, first_select);
 }
 
 #include "clear-n_.h"
@@ -246,16 +213,17 @@ Grid::init (void)
         "<inkscape-extension>\n"
             "<name>" N_("Grid") "</name>\n"
             "<id>org.inkscape.effect.grid</id>\n"
-            "<param name=\"lineWidth\" type=\"float\">1.0</param>\n"
-            "<param name=\"xspacing\" type=\"float\">10.0</param>\n"
-            "<param name=\"yspacing\" type=\"float\">10.0</param>\n"
-            "<param name=\"xoffset\" type=\"float\">5.0</param>\n"
-            "<param name=\"yoffset\" type=\"float\">5.0</param>\n"
+            "<param name=\"lineWidth\" gui-text=\"" N_("Line Width") "\" type=\"float\">1.0</param>\n"
+            "<param name=\"xspacing\" gui-text=\"" N_("Horizontal Spacing") "\" type=\"float\">10.0</param>\n"
+            "<param name=\"yspacing\" gui-text=\"" N_("Vertical Spacing") "\" type=\"float\">10.0</param>\n"
+            "<param name=\"xoffset\" gui-text=\"" N_("Horizontal Offset") "\" type=\"float\">5.0</param>\n"
+            "<param name=\"yoffset\" gui-text=\"" N_("Vertical Offset") "\" type=\"float\">5.0</param>\n"
             "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
                     "<submenu name=\"" N_("Render") "\" />\n"
                 "</effects-menu>\n"
+                "<menu-tip>" N_("Draw a path which is a grid") "</menu-tip>\n"
             "</effect>\n"
         "</inkscape-extension>\n", new Grid());
     return;
