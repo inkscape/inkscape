@@ -7,6 +7,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "document-private.h"
+#include "sp-object.h"
+
 #include "patheffect.h"
 #include "db.h"
 
@@ -39,7 +42,7 @@ PathEffect::processPathEffects (SPDocument * doc, Inkscape::XML::Node * path)
         return;
 
     gchar ** patheffects = g_strsplit(patheffectlist, ";", 128);
-    Inkscape::XML::Node * defs;
+    Inkscape::XML::Node * defs = SP_OBJECT_REPR(SP_DOCUMENT_DEFS(doc));
 
     for (int i = 0; patheffects[i] != NULL && i < 128; i++) {
         gchar * patheffect = patheffects[i];
