@@ -238,70 +238,70 @@ RFE</a>).</p>
 </group>
 
 <group>
-<title>Duplicate</title>
-<keys><key><ctrl/>D</key>	 <action>duplicate selection</action></keys> 
-<note>New object(s) are placed exactly over the original(s) and selected.</note>
+<title>Duplizieren</title>
+<keys><key><ctrl/>D</key>	 <action>Auswahl duplizieren</action></keys> 
+<note>Neue Objekte werden ganau über den Originalen eingefügt und ausgewählt.</note>
 </group>
 
 <group>
-<title>Clone</title>
-<keys><key><alt/>D</key>	 <action>clone object</action></keys> 
-<note>A clone can be moved/scaled/rotated/skewed independently, but it updates the path, fill, and stroke from its original.</note>
-<note>The clone is placed exactly over the original object and is selected.</note>
+<title>Klonen</title>
+<keys><key><alt/>D</key>	 <action>Auswahl klonen</action></keys> 
+<note>Ein Klon kann unabhängig verschoben, skaliert, rotiert und geschert werden aktualisiert Form, Füllung und Kontour von seinem Original.</note>
+<note>Der Klon wird genau über dem Original eingefügt und ausgewählt.</note>
 <note>You can only clone one object at a time; if you want to clone several objects together, group them and clone the group.</note>
-<keys><key><shift/><alt/>D</key>	 <action>unlink clone</action></keys> 
-<note>Unlinking a clone cuts the link to the original, turning the clone into a plain copy.</note>
-<keys><key><shift/>D</key>	 <action>select original</action></keys> 
-<note>To find out which object this is a clone of, select the clone and give this command. The original will be selected.</note>
+<keys><key><shift/><alt/>D</key>	 <action>Klonverbindung auflösen</action></keys> 
+<note>Durch das Auflösen der Klonverbindung verliert der Klon jeden Bezug zu seinem Original und wird zur exakten Kopie.</note>
+<keys><key><shift/>D</key>	 <action>Original auswählen</action></keys> 
+<note>Klon auswählen, um das Original zu finden. Das Original wird selektiert.</note>
 </group>
 
 <group>
-<title>Bitmaps</title>
-<keys><key><alt/>B</key> <action>create a bitmap copy</action></keys>
+<title>Bitmap</title>
+<keys><key><alt/>B</key> <action>Kopie als Bitmap</action></keys>
 <note>This exports the selected object(s) (all other objects hidden) as PNG in the document's directory and imports it back.</note>
 <note>The imported bitmap is placed over the original selection and is selected.</note>
-<keys><key><shift/><alt/>B</key> <action>trace bitmap</action></keys>
-<note>This opens the Trace Bitmap dialog allowing you to convert a bitmap object to path(s).</note> 
+<keys><key><shift/><alt/>B</key> <action>Bitmap vektorisieren</action></keys>
+<note>Öffnet den Bitmap vektorisieren Dialog mit dem Sie ein Bitmap in ein oder mehrere Pfade umwandeln können.</note> 
 </group>
 
 <group>
-<title>Patterns</title>
-<keys><key><alt/>I</key>	 <action>object(s) to pattern</action></keys> 
+<title>Füllmuster</title>
+<keys><key><alt/>I</key>	 <action>Objekte in Füllmuster umwandeln</action></keys> 
 <note>This converts the selection to a rectangle with tiled pattern fill.</note>
-<keys><key><shift/><alt/>I</key>	 <action>pattern to object(s)</action></keys> 
+<keys><key><shift/><alt/>I</key>	 <action>Füllmuster in Objekte umwandeln</action></keys> 
 <note>Each selected object with pattern fill is broken into the same object without fill and a single pattern object.</note>
 </group>
 
 <group>
-<title>Group</title>
-<keys> <key><shift/><ctrl/>U</key>  <key><ctrl/>G</key> <action>group selected objects</action></keys>
-<note>Use Ctrl+click to select objects within group.</note>
-<keys><key><shift/><ctrl/>G</key> <key><ctrl/>U</key>  <action>ungroup selected group(s)</action></keys>
+<title>Gruppieren</title>
+<keys> <key><shift/><ctrl/>U</key>  <key><ctrl/>G</key> <action>asgewählte Objekte gruppieren</action></keys>
+<note>Strg+Klick um Objekte innerhalb einer Gruppe auszuwählen.</note>
+<keys><key><shift/><ctrl/>G</key> <key><ctrl/>U</key>  <action>Asgewählte Gruppe(n) auflösen</action></keys>
 <note>This removes only one level of grouping; press Ctrl+U repeatedly to ungroup nested groups.</note>
 </group>
 
 <group>
-<title>Z-order</title>
-<keys><key><misc f="Home"/></key>	 <action>raise selection to top</action></keys>
-<keys><key><misc f="End"/></key>	 <action>lower selection to bottom</action></keys>
-<keys><key><misc f="PgUp"/></key>	 <action>raise selection one step</action></keys>
-<keys><key><misc f="PgDn"/></key>      <action>lower selection one step</action></keys>
+<title>Z-Tiefe</title>
+<keys><key><misc f="Home"/></key>	 <action>Auswahl ganz nach oben anheben</action></keys>
+<keys><key><misc f="End"/></key>	 <action>Auswahl ganz nach unten anheben</action></keys>
+<keys><key><misc f="PgUp"/></key>	 <action>Auswahl eine Stufe anheben</action></keys>
+<keys><key><misc f="PgDn"/></key>      <action>Auswahl eine Stufe absenken</action></keys>
  </group>
 
 </section>
 
-*<section title="Path" color="f9f1d9">
+*<section title="Pfad" color="f9f1d9">
 
 <group>
-<title>Convert to path</title>
-<keys><key><shift/><ctrl/>C</key> <action>convert selected object(s) to path</action></keys>
+<title>In Pfad umwandeln</title>
+<keys><key><shift/><ctrl/>C</key> <action>umwandeln ausgewählter Objekte in Pfade</action></keys>
 <keys><key><ctrl/><alt/>C</key> <action>convert stroke to path</action></keys>
 </group>
 
 <group>
-<title>Booleans</title>
-<keys><key><ctrl/>+</key>  <action>union</action></keys>
-<note>Union combines any number of objects into a single path, removing overlaps.</note>
+<title>Boole'sche Operation</title>
+<keys><key><ctrl/>+</key>  <action>Vereinigung</action></keys>
+<note>Vereinigung verknüpft mehrere Pfade so, dass ein einziger Pfad ohne Überschneidungen entsteht.</note>
 <keys><key><ctrl/>-</key>  <action>difference</action></keys>
 <note>Difference works on 2 objects, extracting the top from the bottom.</note>
 <keys><key><ctrl/>*</key>  <action>intersection</action></keys>
