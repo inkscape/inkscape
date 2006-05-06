@@ -91,15 +91,15 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
             if (!strcmp(chname, "help")) {
                 _help = g_strdup (sp_repr_children(child_repr)->content());
             } /* name */
-            if (!strcmp(chname, "param")) {
+            if (!strcmp(chname, "param") || !strcmp(chname, "_param")) {
                 Parameter * param;
                 param = Parameter::make(child_repr, this);
                 if (param != NULL)
                     parameters = g_slist_append(parameters, param);
-            } /* param */
+            } /* param || _param */
             if (!strcmp(chname, "dependency")) {
                 _deps.push_back(new Dependency(child_repr));
-            } /* param */
+            } /* dependency */
             child_repr = sp_repr_next(child_repr);
         }
 
@@ -597,7 +597,7 @@ public:
     */
     void addWidget (Gtk::Widget * widg, gchar const * tooltip) {
         if (widg == NULL) return;
-        this->pack_start(*widg, true, true);
+        this->pack_start(*widg, true, true, 2);
         if (tooltip != NULL) {
             _tooltips.set_tip(*widg, Glib::ustring(tooltip));
             // printf("Setting tooltip: %s\n", tooltip);
