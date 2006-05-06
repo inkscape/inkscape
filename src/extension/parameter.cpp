@@ -38,6 +38,17 @@
 namespace Inkscape {
 namespace Extension {
 
+/** \brief  A description parameter */
+class ParamDescription : public Parameter {
+private:
+    /** \brief  Internal value. */
+    gchar * _value;
+public:
+    ParamDescription(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Glib::ustring * string (void);
+};
+
 /** \brief  A boolean parameter */
 class ParamBool : public Parameter {
 private:
@@ -263,6 +274,8 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         param = new ParamFloat(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "string")) {
         param = new ParamString(name, guitext, desc, scope, in_ext, in_repr);
+    } else if (!strcmp(type, "description")) {
+        param = new ParamDescription(name, guitext, desc, scope, in_ext, in_repr);
     }
 
     /* Note: param could equal NULL */
@@ -846,6 +859,47 @@ ParamString::string (void)
     *mystring += _value;
     *mystring += "\"";
     return mystring;
+}
+
+/** \brief  Return the value as a string */
+Glib::ustring *
+ParamDescription::string (void)
+{
+    Glib::ustring * mystring = new Glib::ustring("");
+    *mystring += "\"";
+    *mystring += _value;
+    *mystring += "\"";
+    return mystring;
+}
+
+/** \brief  Create a label for the description */
+Gtk::Widget *
+ParamDescription::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+{
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_value));
+    label->set_line_wrap();
+    label->show();
+
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    hbox->pack_start(*label, true, true, 5);
+    hbox->show();
+
+    return hbox;
+}
+
+/** \brief  Initialize the object, to do that, copy the data. */
+ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, ext), _value(NULL)
+{
+    // printf("Building Description\n");
+    const char * defaultval = NULL;
+    if (sp_repr_children(xml) != NULL)
+        defaultval = sp_repr_children(xml)->content();
+
+    if (defaultval != NULL)
+        _value = g_strdup(defaultval);
+
+    return;
 }
 
 
