@@ -37,7 +37,7 @@ InkscapePython::InkscapePython()
 {
 }
 
-    
+
 
 /*
  *
@@ -47,15 +47,15 @@ InkscapePython::~InkscapePython()
 
 }
 
-    
-    
+
+
 static bool initialized = false;
 /*
  *  Interpret an in-memory string
  */
-bool InkscapePython::interpretScript(Glib::ustring &script,
-                                 Glib::ustring &output,
-                                 Glib::ustring &error)
+bool InkscapePython::interpretScript(const Glib::ustring &script,
+                                     Glib::ustring &output,
+                                     Glib::ustring &error)
 {
     if (!initialized)
         {
@@ -67,7 +67,7 @@ bool InkscapePython::interpretScript(Glib::ustring &script,
     PyRun_SimpleString(inkscape_module_script);
     PyRun_SimpleString("inkscape = _inkscape_py.getInkscape()\n");
     PyRun_SimpleString(codeStr);
-    
+
     //## Check for errors
     if (PyErr_Occurred())
         {
@@ -77,7 +77,7 @@ bool InkscapePython::interpretScript(Glib::ustring &script,
 
         PyErr_Fetch(&errobj, &errdata, &errtraceback);
         //PyErr_Clear();
-        
+
         if (errobj && PyString_Check(errobj))
             {
             PyObject *pystring = PyObject_Str(errobj);
@@ -98,8 +98,8 @@ bool InkscapePython::interpretScript(Glib::ustring &script,
     return true;
 }
 
-    
-    
+
+
 
 
 

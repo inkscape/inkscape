@@ -29,25 +29,25 @@ public:
      *
      */
     InkscapePython();
-    
+
 
     /*
      *
      */
     virtual ~InkscapePython();
-    
-    
+
+
 
     /*
      *
      */
-    virtual bool interpretScript(Glib::ustring &script,
+    virtual bool interpretScript(const Glib::ustring &script,
                                  Glib::ustring &output,
                                  Glib::ustring &error);
-    
-    
 
-    
+
+
+
 private:
 
 

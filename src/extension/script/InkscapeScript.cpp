@@ -32,9 +32,6 @@ namespace Script {
  */
 InkscapeScript::InkscapeScript()
 {
-
-
-
 }
 
 
@@ -45,24 +42,22 @@ InkscapeScript::InkscapeScript()
  */
 InkscapeScript::~InkscapeScript()
 {
-
-
 }
 
 
 
 
 /**
- *
+ * Interprets the script in the 'script' buffer,
+ * storing the stdout output in 'output', and any
+ * error messages in 'error.'  Language is one of the
+ * enumerated types in ScriptLanguage above.
  */
-bool InkscapeScript::interpretScript(Glib::ustring &script,
+bool InkscapeScript::interpretScript(const Glib::ustring &script,
                                  Glib::ustring &output,
                                  Glib::ustring &error,
                                  ScriptLanguage language)
 {
-#ifndef __GNUC__
-    static char const __FUNCTION__[] = "interpretScript";
-#endif
     char * langname=NULL;
     InkscapeInterpreter *interp = NULL;
     //if() instead of switch() lets us scope vars
@@ -82,35 +77,37 @@ bool InkscapeScript::interpretScript(Glib::ustring &script,
         }
     else
         {
-        //replace with g_error
-        fprintf(stderr, "%s: Unknown Script Language type: %d\n",
-                        __FUNCTION__, language);
+        g_error("interpretScript: Unknown Script Language type: %d\n",
+                        language);
         return false;
         }
-        
+
     if (!interp)
         {
-        fprintf(stderr, "%s: error starting Language '%s'\n",
-                        __FUNCTION__, langname);
+        g_error("interpretScript: error starting Language '%s'\n",
+                        langname);
         return false;
         }
 
     if (!interp->interpretScript(script, output, error))
         {
-        fprintf(stderr, "%s: error in executing %s script\n",
-                        __FUNCTION__, langname);
+        g_error("interpretScript: error in executing %s script\n",
+                        langname);
         return false;
         }
-        
+
     delete interp;
-    
+
     return true;
 }
 
 /**
- *
+ * Interprets the script in the 'script' buffer,
+ * storing the stdout output in 'output', and any
+ * error messages in 'error.'  Language is one of the
+ * enumerated types in ScriptLanguage above.
  */
-bool InkscapeScript::interpretUri(Glib::ustring &uri,
+bool InkscapeScript::interpretUri(const Glib::ustring &uri,
                                  Glib::ustring &output,
                                  Glib::ustring &error,
                                  ScriptLanguage language)
@@ -132,20 +129,23 @@ bool InkscapeScript::interpretUri(Glib::ustring &uri,
         }
     else
         {
-        //replace with g_error
-        fprintf(stderr, "Unknown Script Language type:%d\n", language);
+        g_error("interpretUri: Unknown Script Language type:%d\n",
+                           language);
         return false;
         }
-        
+
     if (!interp)
         return false;
 
     if (!interp->interpretUri(uri, output, error))
         {
-        fprintf(stderr, "error in executing script '%s'\n", uri.raw().c_str());
+        g_error("interpretUri: error in executing script '%s'\n",
+                           uri.raw().c_str());
         return false;
         }
-        
+
+    delete interp;
+
     return true;
 }
 

@@ -36,14 +36,14 @@ public:
     /**
      *
      */
-    virtual bool interpretScript(Glib::ustring &script,
+    virtual bool interpretScript(const Glib::ustring &script,
                                  Glib::ustring &output,
                                  Glib::ustring &error);
 
     /**
      *
      */
-    virtual bool interpretUri(Glib::ustring &uri,
+    virtual bool interpretUri(const Glib::ustring &uri,
                               Glib::ustring &output,
                               Glib::ustring &error);
 

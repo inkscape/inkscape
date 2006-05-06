@@ -7,7 +7,7 @@
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
- * Copyright (C) 2004 Authors
+ * Copyright (C) 2004-2006 Bob Jamison
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -35,27 +35,33 @@ public:
         } ScriptLanguage;
 
     /**
-     *
+     * Creates a generic script interpreter.
      */
     InkscapeScript();
 
     /**
-     *
+     *  Destructor
      */
     ~InkscapeScript();
 
     /**
-     *
+     * Interprets the script in the 'script' buffer,
+     * storing the stdout output in 'output', and any
+     * error messages in 'error.'  Language is one of the
+     * enumerated types in ScriptLanguage above.
      */
-    bool interpretScript(Glib::ustring &script,
+    bool interpretScript(const Glib::ustring &script,
                          Glib::ustring &output,
                          Glib::ustring &error,
                          ScriptLanguage language);
 
     /**
-     *
+     * Interprets the script at the uri (file) named by 'uri',
+     * storing the stdout output in 'output', and any
+     * error messages in 'error.'  Language is one of the
+     * enumerated types in ScriptLanguage above.
      */
-    bool interpretUri(Glib::ustring &uri,
+    bool interpretUri(const Glib::ustring &uri,
                       Glib::ustring &output,
                       Glib::ustring &error,
                       ScriptLanguage language);

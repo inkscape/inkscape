@@ -11,7 +11,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
- 
+
 #include "InkscapeInterpreter.h"
 #include <glibmm.h>
 
@@ -28,23 +28,23 @@ public:
      *
      */
     InkscapePerl();
-    
+
 
     /*
      *
      */
     virtual ~InkscapePerl();
-    
-    
+
+
 
     /*
      *
      */
-    bool interpretScript(Glib::ustring &script,
+    bool interpretScript(const Glib::ustring &script,
                          Glib::ustring &output,
                          Glib::ustring &error);
-    
-    
+
+
 
 
 

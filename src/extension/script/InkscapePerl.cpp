@@ -8,7 +8,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
- 
+
 
 
 #include "InkscapePerl.h"
@@ -40,7 +40,7 @@ InkscapePerl::InkscapePerl()
 {
 }
 
-    
+
 
 /*
  *
@@ -50,13 +50,13 @@ InkscapePerl::~InkscapePerl()
 
 }
 
-    
-    
 
 
-bool InkscapePerl::interpretScript(Glib::ustring &script,
-                                 Glib::ustring &output,
-                                 Glib::ustring &error)
+
+
+bool InkscapePerl::interpretScript(const Glib::ustring &script,
+                                   Glib::ustring &output,
+                                   Glib::ustring &error)
 {
     char *codeBuf = (char *)script.raw().c_str();
     int ret = InkscapePerlParseBuf(inkscape_module_script, codeBuf);
@@ -66,7 +66,7 @@ bool InkscapePerl::interpretScript(Glib::ustring &script,
         }
     return true;
 }
-    
+
 
 
 
