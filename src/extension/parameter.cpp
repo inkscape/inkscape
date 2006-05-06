@@ -46,7 +46,6 @@ private:
 public:
     ParamDescription(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
-    Glib::ustring * string (void);
 };
 
 /** \brief  A boolean parameter */
@@ -861,22 +860,11 @@ ParamString::string (void)
     return mystring;
 }
 
-/** \brief  Return the value as a string */
-Glib::ustring *
-ParamDescription::string (void)
-{
-    Glib::ustring * mystring = new Glib::ustring("");
-    *mystring += "\"";
-    *mystring += _value;
-    *mystring += "\"";
-    return mystring;
-}
-
 /** \brief  Create a label for the description */
 Gtk::Widget *
 ParamDescription::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_value));
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_value)));
     label->set_line_wrap();
     label->show();
 
