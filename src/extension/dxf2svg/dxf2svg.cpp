@@ -79,7 +79,7 @@ int main(int argc,char *argv[]){
    			std::cout << "\txmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"" << std::endl;
    			std::cout << "\txmlns:svg=\"http://www.w3.org/2000/svg\"" << std::endl;
    			std::cout << "\txmlns=\"http://www.w3.org/2000/svg\"" << std::endl;
-   			std::cout << "\txmlns:sodipodi=\"http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd\"" << std::endl;
+   			std::cout << "\txmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"" << std::endl;
    			std::cout << "\txmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"" << std::endl;
    			std::cout << "\t>" << std::endl;
 

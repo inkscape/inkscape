@@ -10,7 +10,7 @@
 
 static char const menus_skeleton[] =
 "<inkscape version=\"" INKSCAPE_VERSION "\"\n"
-"  xmlns:sodipodi=\"http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
+"  xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
 "  xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\">\n"
 "\n"
 "   <submenu name=\"" N_("_File") "\">\n"
