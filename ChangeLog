@@ -1,3 +1,9 @@
+2006-05-06  MenTaLguY  <mental@rydia.net>
+
+	* src/xml/repr-util.cpp:
+
+	  fix for #1483198 ("infectious namespaces")
+
 2006-05-01  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/verbs.h, src/verbs.cpp, src/verbs-test.h:

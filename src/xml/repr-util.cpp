@@ -212,7 +212,6 @@ sp_xml_ns_auto_prefix(char const *uri)
 gchar const *
 sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested)
 {
-    SPXMLNs *iter;
     char const *prefix;
 
     if (!uri) return NULL;
@@ -223,32 +222,46 @@ sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested)
 
     GQuark const key = g_quark_from_string(uri);
     prefix = NULL;
-    for ( iter = namespaces ; iter ; iter = iter->next ) {
+    for ( SPXMLNs *iter=namespaces ; iter ; iter = iter->next ) {
         if ( iter->uri == key ) {
             prefix = g_quark_to_string(iter->prefix);
             break;
         }
     }
+
     if (!prefix) {
-        char const *new_prefix;
+        char *new_prefix;
         SPXMLNs *ns;
         if (suggested) {
-            new_prefix = suggested;
+            GQuark const prefix_key=g_quark_from_string(suggested);
+
+            SPXMLNs *found=namespaces;
+            while ( found && found->prefix != prefix_key ) {
+                found = found->next;
+            }
+
+            if (found) { // prefix already used?
+                new_prefix = sp_xml_ns_auto_prefix(uri);
+            } else { // safe to use suggested
+                new_prefix = g_strdup(suggested);
+            }
         } else {
             new_prefix = sp_xml_ns_auto_prefix(uri);
         }
+
         ns = g_new(SPXMLNs, 1);
-        if (ns) {
-            ns->uri = g_quark_from_string(uri);
-            ns->prefix = g_quark_from_string(new_prefix);
-            ns->next = namespaces;
-            namespaces = ns;
-            prefix = g_quark_to_string(ns->prefix);
-        }
-        if (!suggested) {
-            g_free((char *)new_prefix);
-        }
+        g_assert( ns != NULL );
+        ns->uri = g_quark_from_string(uri);
+        ns->prefix = g_quark_from_string(new_prefix);
+
+        g_free(new_prefix);
+
+        ns->next = namespaces;
+        namespaces = ns;
+
+        prefix = g_quark_to_string(ns->prefix);
     }
+
     return prefix;
 }
 
