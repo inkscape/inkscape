@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-03 20:41+0200\n"
+"POT-Creation-Date: 2006-05-07 22:41+0200\n"
 "PO-Revision-Date: 2006-05-02 12:41+0200\n"
 "Last-Translator: Andrius R. <knutux@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -750,15 +750,15 @@ msgid "none"
 msgstr "nėra"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2249
+#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
 msgid "_Page"
 msgstr "_Puslapis"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2257
 msgid "_Drawing"
 msgstr "_Brėžinys"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2255
+#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2259
 msgid "_Selection"
 msgstr "P_ažymėjimas"
 
@@ -1162,8 +1162,8 @@ msgstr ""
 "Objekto identifikatorius (galimos tik raidės, skaitmenys ir .-_: simboliai)"
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2147
-#: ../src/verbs.cpp:2151
+#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2151
+#: ../src/verbs.cpp:2155
 msgid "_Set"
 msgstr "_Taikyti"
 
@@ -1535,7 +1535,7 @@ msgstr "Dokumentas nepasirinktas"
 #: ../src/ui/dialog/inkscape-preferences.cpp:398
 #: ../src/ui/dialog/inkscape-preferences.cpp:519
 #: ../src/ui/widget/selected-style.cpp:134
-#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1928
+#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1932
 msgid "None"
 msgstr "Nėra"
 
@@ -1671,7 +1671,7 @@ msgstr "Tarpai tarp eilučių:"
 #. Text
 #: ../src/dialogs/text-edit.cpp:357 ../src/selection-describer.cpp:63
 #: ../src/ui/dialog/inkscape-preferences.cpp:377
-#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2175
+#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2179
 msgid "Text"
 msgstr "Tekstas"
 
@@ -2103,34 +2103,38 @@ msgstr ""
 msgid "GNOME Print"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:205
-msgid "Line Width"
-msgstr ""
-
-#: ../src/extension/internal/grid.cpp:206
-msgid "Horizontal Spacing"
-msgstr ""
-
-#: ../src/extension/internal/grid.cpp:207
-msgid "Vertical Spacing"
-msgstr ""
-
-#: ../src/extension/internal/grid.cpp:208
-msgid "Horizontal Offset"
-msgstr ""
-
-#: ../src/extension/internal/grid.cpp:209
-msgid "Vertical Offset"
-msgstr ""
-
-#: ../src/extension/internal/grid.cpp:247 ../src/ui/widget/panel.cpp:115
+#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:115
 msgid "Grid"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:257 ../share/extensions/eqtexsvg.inx.h:3
+#: ../src/extension/internal/grid.cpp:216
+msgid "Line Width"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:217
+msgid "Horizontal Spacing"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:218
+msgid "Vertical Spacing"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:219
+msgid "Horizontal Offset"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:220
+msgid "Vertical Offset"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 msgid "Render"
+msgstr ""
+
+#: ../src/extension/internal/grid.cpp:226
+msgid "Draw a path which is a grid"
 msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
@@ -2149,15 +2153,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1823
+#: ../src/extension/internal/odf.cpp:1897
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1828
+#: ../src/extension/internal/odf.cpp:1902
 msgid "OpenDocument drawing (*.odg)"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1829
+#: ../src/extension/internal/odf.cpp:1903
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -3006,75 +3010,75 @@ msgid ""
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:997
+#: ../src/jabber_whiteboard/session-manager.cpp:1002
 msgid "Select a location and filename"
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:999
+#: ../src/jabber_whiteboard/session-manager.cpp:1004
 msgid "Set filename"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:303
+#: ../src/jabber_whiteboard/session-manager.cpp:308
 msgid "No SSL certificate was found."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:306
+#: ../src/jabber_whiteboard/session-manager.cpp:311
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:309
+#: ../src/jabber_whiteboard/session-manager.cpp:314
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:312
+#: ../src/jabber_whiteboard/session-manager.cpp:317
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:315
+#: ../src/jabber_whiteboard/session-manager.cpp:320
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:318
+#: ../src/jabber_whiteboard/session-manager.cpp:323
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:321
+#: ../src/jabber_whiteboard/session-manager.cpp:326
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr ""
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:327
+#: ../src/jabber_whiteboard/session-manager.cpp:332
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
 "Do you wish to continue connecting to the Jabber server?"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:330
+#: ../src/jabber_whiteboard/session-manager.cpp:335
 msgid "Continue connecting and ignore further errors"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:331
+#: ../src/jabber_whiteboard/session-manager.cpp:336
 msgid "Continue connecting, but warn me of further errors"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:332
+#: ../src/jabber_whiteboard/session-manager.cpp:337
 msgid "Cancel connection"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:779
+#: ../src/jabber_whiteboard/session-manager.cpp:784
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:787
+#: ../src/jabber_whiteboard/session-manager.cpp:792
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr ""
@@ -3082,7 +3086,7 @@ msgstr ""
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:792
+#: ../src/jabber_whiteboard/session-manager.cpp:797
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3090,13 +3094,13 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:794
+#: ../src/jabber_whiteboard/session-manager.cpp:799
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:990
+#: ../src/jabber_whiteboard/session-manager.cpp:995
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3105,11 +3109,11 @@ msgid ""
 "not record this session."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:992
+#: ../src/jabber_whiteboard/session-manager.cpp:997
 msgid "Choose a different location"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:993
+#: ../src/jabber_whiteboard/session-manager.cpp:998
 msgid "Skip session recording"
 msgstr ""
 
@@ -3327,7 +3331,7 @@ msgstr "Atidaryti iš _Istorijos"
 msgid "_Edit"
 msgstr "_Keisti"
 
-#: ../src/menus-skeleton.h:63 ../src/verbs.cpp:1975
+#: ../src/menus-skeleton.h:63 ../src/verbs.cpp:1979
 msgid "Paste Si_ze"
 msgstr "Įklijuoti D_ydį"
 
@@ -3416,7 +3420,7 @@ msgstr ""
 "<b>Alt</b>: fiksuoti liestinės ilgį; <b>Ctrl+Alt</b>: judinti liestinių "
 "kryptimi"
 
-#: ../src/nodepath.cpp:1006
+#: ../src/nodepath.cpp:1003
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3425,12 +3429,12 @@ msgstr ""
 "sukama fiksuotu žingsniu; su <b>Alt</b> fiksuojamas ilgis; su <b>Shift</b> "
 "sukamos abi liestinės"
 
-#: ../src/nodepath.cpp:1437 ../src/nodepath.cpp:1449 ../src/nodepath.cpp:1536
-#: ../src/nodepath.cpp:1548
+#: ../src/nodepath.cpp:1434 ../src/nodepath.cpp:1446 ../src/nodepath.cpp:1533
+#: ../src/nodepath.cpp:1545
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Kad sujungti, reikia pažymėti du kraštinius taškus"
 
-#: ../src/nodepath.cpp:1797 ../src/nodepath.cpp:1811
+#: ../src/nodepath.cpp:1794 ../src/nodepath.cpp:1808
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3438,11 +3442,11 @@ msgstr ""
 "Pažymėkite <b>dvi ne kraštines kreivės siūles</b> tarp kurių norite šalinti "
 "segmentus"
 
-#: ../src/nodepath.cpp:1907
+#: ../src/nodepath.cpp:1904
 msgid "Cannot find path between nodes."
 msgstr "Nerastas kelias tarp siūlių"
 
-#: ../src/nodepath.cpp:2954
+#: ../src/nodepath.cpp:2951
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3452,7 +3456,7 @@ msgstr ""
 "<b>Siūlės liestinė</b>: kampas %0.2f&#176;, ilgis %s; <b>Ctrl</b> keičia "
 "kampą žingsniu; <b>Alt</b> fiksuoja ilgį; <b>Shift</b> pasuka abi liestines"
 
-#: ../src/nodepath.cpp:3469
+#: ../src/nodepath.cpp:3466
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3461,59 +3465,59 @@ msgstr ""
 "horizontaliai ar vertikaliai; su <b>Ctrl+Alt</b> judama liestinių kryptimi"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3672
+#: ../src/nodepath.cpp:3669
 msgid "end node"
 msgstr "galinė siūlė"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:3677
+#: ../src/nodepath.cpp:3674
 msgid "cusp"
 msgstr "smaila"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:3680
+#: ../src/nodepath.cpp:3677
 msgid "smooth"
 msgstr "tolygi"
 
-#: ../src/nodepath.cpp:3682
+#: ../src/nodepath.cpp:3679
 msgid "symmetric"
 msgstr "simetriška"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3688
+#: ../src/nodepath.cpp:3685
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "kraštinė siūlė be liestinės (norėdami kurti liestinę, tempkite spausdami "
 "<b>Shift</b>)"
 
-#: ../src/nodepath.cpp:3690
+#: ../src/nodepath.cpp:3687
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "viena liestinė pašalinta (norėdami kurti liestinę, tempkite spausdami "
 "<b>Shift</b>)"
 
-#: ../src/nodepath.cpp:3693
+#: ../src/nodepath.cpp:3690
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "abi liestinės pašalintos (norėdami kurti liestinę, tempkite spausdami "
 "<b>Shift</b>)"
 
-#: ../src/nodepath.cpp:3705
+#: ../src/nodepath.cpp:3702
 msgid "<b>Drag</b> nodes or node handles; <b>arrow</b> keys to move nodes"
 msgstr ""
 "<b>Tempkite</b> siūles ar liestinių taškus; <b>rodyklėmis</b> stumdomos "
 "siūlės"
 
-#: ../src/nodepath.cpp:3706
+#: ../src/nodepath.cpp:3703
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Tempkite</b> siūlę ar liestinių taškus; <b>rodyklėmis</b> stumdomos siūlės"
 
-#: ../src/nodepath.cpp:3732 ../src/nodepath.cpp:3744
+#: ../src/nodepath.cpp:3729 ../src/nodepath.cpp:3741
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Pasirinkite vieną objektą, kurio siūles ar liestines norite keisti"
 
-#: ../src/nodepath.cpp:3736
+#: ../src/nodepath.cpp:3733
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3531,11 +3535,11 @@ msgstr[2] ""
 "Pažymėta <b>0</b> iš <b>%i</b> siūlių. <b>Spauskite</b> arba spauskite su "
 "<b>Shift</b>, ar <b>tempkite</b> žymėdami sritį, kad pažymėti siūles."
 
-#: ../src/nodepath.cpp:3742
+#: ../src/nodepath.cpp:3739
 msgid "Drag the handles of the object to modify it."
 msgstr "Tempkite objekto rankenėles, norėdami keisti objektą."
 
-#: ../src/nodepath.cpp:3750
+#: ../src/nodepath.cpp:3747
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -3543,7 +3547,7 @@ msgstr[0] "Pažymėta <b>%i</b> iš <b>%i</b> siūlės; %s. %s."
 msgstr[1] "Pažymėta <b>%i</b> iš <b>%i</b> siūlių; %s. %s."
 msgstr[2] "Pažymėta <b>%i</b> iš <b>%i</b> siūlių; %s. %s."
 
-#: ../src/nodepath.cpp:3756
+#: ../src/nodepath.cpp:3753
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3725,7 +3729,7 @@ msgstr ""
 "<b>Spustelkite</b> arba <b>spustelkite ir tempkite</b>, kad tęsti kreivę nuo "
 "šio taško."
 
-#: ../src/pen-context.cpp:1040
+#: ../src/pen-context.cpp:1038
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
@@ -3734,7 +3738,7 @@ msgstr ""
 "<b>%s</b>: kampas %3.2f&#176;, atstumas %s; su <b>Ctrl</b> kampas keičiamas "
 "žingsniu, <b>Enter</b> užbaigia kreivę"
 
-#: ../src/pen-context.cpp:1065
+#: ../src/pen-context.cpp:1063
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3743,7 +3747,7 @@ msgstr ""
 "<b>Kreivės deriklis</b>: kampas %3.2f&#176;, ilgis %s; su <b>Ctrl</b> kampas "
 "keičiamas žingsniu"
 
-#: ../src/pen-context.cpp:1095
+#: ../src/pen-context.cpp:1093
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
@@ -3752,7 +3756,7 @@ msgstr ""
 "<b>%s</b>: kampas %3.2f&#176;, ilgis %s; su <b>Ctrl</b> kampas keičiamas "
 "žingsniu, su <b>Shift</b> stumdomas tik šis deriklis"
 
-#: ../src/pen-context.cpp:1129
+#: ../src/pen-context.cpp:1127
 msgid "Drawing finished"
 msgstr "Piešimas baigtas"
 
@@ -4004,7 +4008,7 @@ msgstr "Apskritimas"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:351 ../src/verbs.cpp:2163
+#: ../src/ui/dialog/inkscape-preferences.cpp:351 ../src/verbs.cpp:2167
 msgid "Ellipse"
 msgstr "Elipsė"
 
@@ -4038,7 +4042,7 @@ msgstr "Lankstyta kreivė"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:348 ../src/verbs.cpp:2161
+#: ../src/ui/dialog/inkscape-preferences.cpp:348 ../src/verbs.cpp:2165
 msgid "Rectangle"
 msgstr "Stačiakampis"
 
@@ -4052,13 +4056,13 @@ msgstr "Paslinkta kreivė"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:357 ../src/verbs.cpp:2167
+#: ../src/ui/dialog/inkscape-preferences.cpp:357 ../src/verbs.cpp:2171
 msgid "Spiral"
 msgstr "Spiralė"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:354 ../src/verbs.cpp:2165
+#: ../src/ui/dialog/inkscape-preferences.cpp:354 ../src/verbs.cpp:2169
 msgid "Star"
 msgstr "Žvaigždė"
 
@@ -4223,7 +4227,7 @@ msgstr ""
 "<b>Sukti</b> pažymėjimą; su <b>Ctrl</b> kampas keičiamas žingsniu; su "
 "<b>Shift</b> sukama priešingos kraštinės atžvilgiu"
 
-#: ../src/seltrans.cpp:832 ../src/seltrans.cpp:918
+#: ../src/seltrans.cpp:846 ../src/seltrans.cpp:958
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4232,7 +4236,7 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:989
+#: ../src/seltrans.cpp:1029
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
@@ -4240,17 +4244,17 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1038
+#: ../src/seltrans.cpp:1078
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Sukama</b>: %0.2f&#176;; su <b>Ctrl</b> kampas keičiamas žingsniu"
 
-#: ../src/seltrans.cpp:1082
+#: ../src/seltrans.cpp:1122
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Stumti <b>centrą</b> į %s, %s"
 
-#: ../src/seltrans.cpp:1335
+#: ../src/seltrans.cpp:1380
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4804,7 +4808,7 @@ msgid "_Create Link"
 msgstr "Kurti _Nuorodą"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:189 ../src/verbs.cpp:2029
+#: ../src/ui/context-menu.cpp:189 ../src/verbs.cpp:2033
 msgid "_Ungroup"
 msgstr "_Išformuoti grupę"
 
@@ -5765,7 +5769,7 @@ msgstr "Siūlė"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:339
-#: ../src/ui/view/edit-widget.cpp:1133 ../src/verbs.cpp:2179
+#: ../src/ui/view/edit-widget.cpp:1133 ../src/verbs.cpp:2183
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
 msgstr "Mastelis"
@@ -5776,7 +5780,7 @@ msgid "Shapes"
 msgstr "Formos"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:360 ../src/verbs.cpp:2169
+#: ../src/ui/dialog/inkscape-preferences.cpp:360 ../src/verbs.cpp:2173
 msgid "Pencil"
 msgstr "Rašiklis"
 
@@ -5793,12 +5797,12 @@ msgstr ""
 "kreivėms; mažesnė reikšmė reiškia daugiau siūlių ir mažiau tolygumo"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:368 ../src/verbs.cpp:2171
+#: ../src/ui/dialog/inkscape-preferences.cpp:368 ../src/verbs.cpp:2175
 msgid "Pen"
 msgstr "Pieštukas"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2173
+#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2177
 msgid "Calligraphy"
 msgstr "Dailiraštis"
 
@@ -5809,17 +5813,17 @@ msgid ""
 msgstr ""
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:382 ../src/verbs.cpp:2177
+#: ../src/ui/dialog/inkscape-preferences.cpp:382 ../src/verbs.cpp:2181
 msgid "Gradient"
 msgstr "Perėjimas"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:385 ../src/verbs.cpp:2183
+#: ../src/ui/dialog/inkscape-preferences.cpp:385 ../src/verbs.cpp:2187
 msgid "Connector"
 msgstr "Saryšiai"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2181
+#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2185
 msgid "Dropper"
 msgstr "Pipetė"
 
@@ -6304,7 +6308,7 @@ msgstr ""
 msgid "Play"
 msgstr ""
 
-#: ../src/ui/dialog/session-player.cpp:177 ../src/verbs.cpp:1583
+#: ../src/ui/dialog/session-player.cpp:177 ../src/verbs.cpp:1584
 msgid "Open session file"
 msgstr ""
 
@@ -7222,165 +7226,165 @@ msgstr "0:.%d"
 msgid "Opacity: %.3g"
 msgstr "Nepermatomumas: %.3g"
 
-#: ../src/verbs.cpp:1050
+#: ../src/verbs.cpp:1051
 msgid "Moved to next layer."
 msgstr "Perkelta į sekantį sluoksnį."
 
-#: ../src/verbs.cpp:1052
+#: ../src/verbs.cpp:1053
 msgid "Cannot move past last layer."
 msgstr "Negalima perkelti virš viršutinio sluoksnio."
 
-#: ../src/verbs.cpp:1061
+#: ../src/verbs.cpp:1062
 msgid "Moved to previous layer."
 msgstr "Perkelta į žemesnį sluoksnį."
 
-#: ../src/verbs.cpp:1063
+#: ../src/verbs.cpp:1064
 msgid "Cannot move past first layer."
 msgstr "Negalima perkelti žemiau apatinio sluoksnio."
 
-#: ../src/verbs.cpp:1080 ../src/verbs.cpp:1154
+#: ../src/verbs.cpp:1081 ../src/verbs.cpp:1155
 msgid "No current layer."
 msgstr "Nėra dabartinio sluoksnio."
 
-#: ../src/verbs.cpp:1109
+#: ../src/verbs.cpp:1110
 #, c-format
 msgid "Raised layer <b>%s</b>."
 msgstr "Sluoksnis <b>%s</b> pakeltas."
 
-#: ../src/verbs.cpp:1113
+#: ../src/verbs.cpp:1114
 #, c-format
 msgid "Lowered layer <b>%s</b>."
 msgstr "Sluoksnis <b>%s</b> nuleistas."
 
-#: ../src/verbs.cpp:1122
+#: ../src/verbs.cpp:1123
 msgid "Cannot move layer any further."
 msgstr "Nebegalima perkelti sluoksnio toliau."
 
 #. TRANSLATORS: this means "The layer has been deleted."
-#: ../src/verbs.cpp:1152
+#: ../src/verbs.cpp:1153
 msgid "Deleted layer."
 msgstr "Sluoksnis pašalintas."
 
-#: ../src/verbs.cpp:1554
+#: ../src/verbs.cpp:1555
 msgid ""
 "You need to connect to a Jabber server before sharing a document with "
 "another user."
 msgstr ""
 
-#: ../src/verbs.cpp:1569
+#: ../src/verbs.cpp:1570
 msgid ""
 "You need to connect to a Jabber server before sharing a document with a "
 "chatroom."
 msgstr ""
 
-#: ../src/verbs.cpp:1579
+#: ../src/verbs.cpp:1580
 msgid "XML node tracker has not been initialized; nothing to dump"
 msgstr ""
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
 #. otherwise leave as "keys.svg".
-#: ../src/verbs.cpp:1644
+#: ../src/verbs.cpp:1648
 msgid "keys.svg"
 msgstr ""
 
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:1680
+#: ../src/verbs.cpp:1684
 msgid "tutorial-basic.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1684
+#: ../src/verbs.cpp:1688
 msgid "tutorial-shapes.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1688
+#: ../src/verbs.cpp:1692
 msgid "tutorial-advanced.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1692
+#: ../src/verbs.cpp:1696
 msgid "tutorial-tracing.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1696
+#: ../src/verbs.cpp:1700
 msgid "tutorial-calligraphy.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1700
+#: ../src/verbs.cpp:1704
 msgid "tutorial-elements.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1704
+#: ../src/verbs.cpp:1708
 msgid "tutorial-tips.svg"
 msgstr ""
 
-#: ../src/verbs.cpp:1928
+#: ../src/verbs.cpp:1932
 msgid "Does nothing"
 msgstr ""
 
 #. File
-#: ../src/verbs.cpp:1931
+#: ../src/verbs.cpp:1935
 msgid "Default"
 msgstr ""
 
-#: ../src/verbs.cpp:1931
+#: ../src/verbs.cpp:1935
 msgid "Create new document from the default template"
 msgstr "Sukurti naują dokumentą, naudojant standartinį šabloną"
 
-#: ../src/verbs.cpp:1933
+#: ../src/verbs.cpp:1937
 msgid "_Open..."
 msgstr "_Atidaryti..."
 
-#: ../src/verbs.cpp:1934
+#: ../src/verbs.cpp:1938
 msgid "Open an existing document"
 msgstr "Atidaryti egzistuojantį dokumentą"
 
-#: ../src/verbs.cpp:1935
+#: ../src/verbs.cpp:1939
 msgid "Re_vert"
 msgstr "At_mesti"
 
-#: ../src/verbs.cpp:1936
+#: ../src/verbs.cpp:1940
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr ""
 "Atstatyti paskutinę išsaugotą dokumento versiją (prarandant pakeitimus)"
 
-#: ../src/verbs.cpp:1937
+#: ../src/verbs.cpp:1941
 msgid "_Save"
 msgstr "Iš_saugoti"
 
-#: ../src/verbs.cpp:1937
+#: ../src/verbs.cpp:1941
 msgid "Save document"
 msgstr "Išsaugoti dokumentą"
 
-#: ../src/verbs.cpp:1939
+#: ../src/verbs.cpp:1943
 msgid "Save _As..."
 msgstr "Išsaugoti _Kaip..."
 
-#: ../src/verbs.cpp:1940
+#: ../src/verbs.cpp:1944
 msgid "Save document under a new name"
 msgstr "Įrašyti dokumentą kitu vardu"
 
-#: ../src/verbs.cpp:1941
+#: ../src/verbs.cpp:1945
 msgid "_Print..."
 msgstr "S_pausdinti..."
 
-#: ../src/verbs.cpp:1941
+#: ../src/verbs.cpp:1945
 msgid "Print document"
 msgstr "Spausdinti dokumentą"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:1944
+#: ../src/verbs.cpp:1948
 msgid "Vac_uum Defs"
 msgstr "Val_yti Aprašus"
 
-#: ../src/verbs.cpp:1944
+#: ../src/verbs.cpp:1948
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
@@ -7388,156 +7392,156 @@ msgstr ""
 "Valyti nebenaudojamus įvairių objektų aprašymus (perėjimus, kirpimo kreives) "
 "iš &lt;defs&gt; elemento"
 
-#: ../src/verbs.cpp:1946
+#: ../src/verbs.cpp:1950
 msgid "Print _Direct"
 msgstr "Spaus_dinti Iškart"
 
-#: ../src/verbs.cpp:1947
+#: ../src/verbs.cpp:1951
 msgid "Print directly without prompting to a file or pipe"
 msgstr "Spausdinti be papildomų įrenginio užklausimo"
 
-#: ../src/verbs.cpp:1948
+#: ../src/verbs.cpp:1952
 msgid "Print Previe_w"
 msgstr "Spau_dinio Peržiūra"
 
-#: ../src/verbs.cpp:1949
+#: ../src/verbs.cpp:1953
 msgid "Preview document printout"
 msgstr "Peržiūrėti dokumento vaizdą prieš spausdinant"
 
-#: ../src/verbs.cpp:1950
+#: ../src/verbs.cpp:1954
 msgid "_Import..."
 msgstr "_Importuoti..."
 
-#: ../src/verbs.cpp:1951
+#: ../src/verbs.cpp:1955
 msgid "Import a bitmap or SVG image into this document"
 msgstr "Į dokumentą įdėti importuojamą grafinį vaizdą ar kitą SVG dokumentą"
 
-#: ../src/verbs.cpp:1952
+#: ../src/verbs.cpp:1956
 msgid "_Export Bitmap..."
 msgstr "Eksportuoti _Vaizdą.."
 
-#: ../src/verbs.cpp:1953
+#: ../src/verbs.cpp:1957
 msgid "Export this document or a selection as a bitmap image"
 msgstr "Eksportuoti dokumentą ar pažymėjimą kaip grafinį vaizdą"
 
-#: ../src/verbs.cpp:1954
+#: ../src/verbs.cpp:1958
 msgid "N_ext Window"
 msgstr "_Kitas Langas"
 
-#: ../src/verbs.cpp:1955
+#: ../src/verbs.cpp:1959
 msgid "Switch to the next document window"
 msgstr "Pereiti į kitą dokumento langą"
 
-#: ../src/verbs.cpp:1956
+#: ../src/verbs.cpp:1960
 msgid "P_revious Window"
 msgstr "Praeit_as Langas"
 
-#: ../src/verbs.cpp:1957
+#: ../src/verbs.cpp:1961
 msgid "Switch to the previous document window"
 msgstr "Pereiti į prieš tai esantį dokumento langą"
 
-#: ../src/verbs.cpp:1958
+#: ../src/verbs.cpp:1962
 msgid "_Close"
 msgstr "_Uždaryti"
 
-#: ../src/verbs.cpp:1959
+#: ../src/verbs.cpp:1963
 msgid "Close this document window"
 msgstr "Uždaryti šį dokumentą"
 
-#: ../src/verbs.cpp:1960
+#: ../src/verbs.cpp:1964
 msgid "_Quit"
 msgstr "Iš_eiti"
 
-#: ../src/verbs.cpp:1960
+#: ../src/verbs.cpp:1964
 msgid "Quit Inkscape"
 msgstr "Užbaigti programos darbą"
 
 #. Edit
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:1967
 msgid "_Undo"
 msgstr "An_uliuoti"
 
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:1967
 msgid "Undo last action"
 msgstr "Anuliuoti prieš tai atliktą veiksmą"
 
-#: ../src/verbs.cpp:1965
+#: ../src/verbs.cpp:1969
 msgid "_Redo"
 msgstr "_Kartoti"
 
-#: ../src/verbs.cpp:1966
+#: ../src/verbs.cpp:1970
 msgid "Do again the last undone action"
 msgstr "Pakartoti anuliuotą veiksmą"
 
-#: ../src/verbs.cpp:1967
+#: ../src/verbs.cpp:1971
 msgid "Cu_t"
 msgstr "_Iškirpti"
 
-#: ../src/verbs.cpp:1968
+#: ../src/verbs.cpp:1972
 msgid "Cut selection to clipboard"
 msgstr "Iškirpti pažymėjimą, perkeliant į mainų sritį"
 
-#: ../src/verbs.cpp:1969
+#: ../src/verbs.cpp:1973
 msgid "_Copy"
 msgstr "_Kopijuoti"
 
-#: ../src/verbs.cpp:1970
+#: ../src/verbs.cpp:1974
 msgid "Copy selection to clipboard"
 msgstr "Kopijuoti pažymėjimą į mainų sritį"
 
-#: ../src/verbs.cpp:1971
+#: ../src/verbs.cpp:1975
 msgid "_Paste"
 msgstr "Įk_lijuoti"
 
-#: ../src/verbs.cpp:1972
+#: ../src/verbs.cpp:1976
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr ""
 "Įklijuoti objektus iš mainų srities į dokumentą ties pelės ar teksto "
 "kursoriumi"
 
-#: ../src/verbs.cpp:1973
+#: ../src/verbs.cpp:1977
 msgid "Paste _Style"
 msgstr "Įklijuoti _Stilių"
 
-#: ../src/verbs.cpp:1974
+#: ../src/verbs.cpp:1978
 msgid "Apply the style of the copied object to selection"
 msgstr "Pažymėtiems objektams taikyti kopijuoto objekto išvaizdą"
 
-#: ../src/verbs.cpp:1976
+#: ../src/verbs.cpp:1980
 msgid "Scale selection to match the size of the copied object"
 msgstr "Taikyti pažymėjimo dydį pagal mainų srityje esančio objekto dydį"
 
-#: ../src/verbs.cpp:1977
+#: ../src/verbs.cpp:1981
 msgid "Paste _Width"
 msgstr "Įklijuoti _Plotį"
 
-#: ../src/verbs.cpp:1978
+#: ../src/verbs.cpp:1982
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr "Taikyti pažymėjimo plotį pagal mainų srityje esančio objekto plotį"
 
-#: ../src/verbs.cpp:1979
+#: ../src/verbs.cpp:1983
 msgid "Paste _Height"
 msgstr "Įklijuoti _Aukštį"
 
-#: ../src/verbs.cpp:1980
+#: ../src/verbs.cpp:1984
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr "Taikyti pažymėjimo aukštį pagal mainų srityje esančio objekto aukštį"
 
-#: ../src/verbs.cpp:1981
+#: ../src/verbs.cpp:1985
 msgid "Paste Size Separately"
 msgstr "Įklijuoti Dydį Atskirai"
 
-#: ../src/verbs.cpp:1982
+#: ../src/verbs.cpp:1986
 msgid "Scale each selected object to match the size of the copied object"
 msgstr ""
 "Taikyti kiekvieno pažymėto objekto dydį pagal mainų srityje esančio objekto "
 "dydį"
 
-#: ../src/verbs.cpp:1983
+#: ../src/verbs.cpp:1987
 msgid "Paste Width Separately"
 msgstr "Įklijuoti Plotį Atskirai"
 
-#: ../src/verbs.cpp:1984
+#: ../src/verbs.cpp:1988
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
@@ -7545,11 +7549,11 @@ msgstr ""
 "Taikyti kiekvieno pažymėto objekto plotį pagal mainų srityje esančio objekto "
 "plotį"
 
-#: ../src/verbs.cpp:1985
+#: ../src/verbs.cpp:1989
 msgid "Paste Height Separately"
 msgstr "Įklijuoti Aukštį Atskirai"
 
-#: ../src/verbs.cpp:1986
+#: ../src/verbs.cpp:1990
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
@@ -7557,230 +7561,230 @@ msgstr ""
 "Taikyti kiekvieno pažymėto objekto aukštį pagal mainų srityje esančio "
 "objekto aukštį"
 
-#: ../src/verbs.cpp:1987
+#: ../src/verbs.cpp:1991
 msgid "Paste _In Place"
 msgstr "Įklijuoti V_ietoje"
 
-#: ../src/verbs.cpp:1988
+#: ../src/verbs.cpp:1992
 msgid "Paste objects from clipboard to the original location"
 msgstr "Įklijuoti toje pat vietoje, kur buvo originalas"
 
-#: ../src/verbs.cpp:1989
+#: ../src/verbs.cpp:1993
 msgid "_Delete"
 msgstr "_Šalinti"
 
-#: ../src/verbs.cpp:1990
+#: ../src/verbs.cpp:1994
 msgid "Delete selection"
 msgstr "Šalinti pažymėjimą"
 
-#: ../src/verbs.cpp:1991
+#: ../src/verbs.cpp:1995
 msgid "Duplic_ate"
 msgstr "_Dubliuoti"
 
-#: ../src/verbs.cpp:1992
+#: ../src/verbs.cpp:1996
 msgid "Duplicate selected objects"
 msgstr "Dubliuoti pažymėtus objektus"
 
-#: ../src/verbs.cpp:1993
+#: ../src/verbs.cpp:1997
 msgid "Create Clo_ne"
 msgstr "Kurti Klo_ną"
 
-#: ../src/verbs.cpp:1994
+#: ../src/verbs.cpp:1998
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr "Klonuoti pažymėtus objektus (sukurti kopiją, susietą su originalu)"
 
-#: ../src/verbs.cpp:1995
+#: ../src/verbs.cpp:1999
 msgid "Unlin_k Clone"
 msgstr "At_rišti Kloną"
 
-#: ../src/verbs.cpp:1996
+#: ../src/verbs.cpp:2000
 msgid ""
 "Cut the selected clone's link to its original, turning it into a standalone "
 "object"
 msgstr "Atrišti kloną nuo originalaus objekto, paverčiant jį įprastu objektu"
 
-#: ../src/verbs.cpp:1997
+#: ../src/verbs.cpp:2001
 msgid "Select _Original"
 msgstr "Rasti _Originalą"
 
-#: ../src/verbs.cpp:1998
+#: ../src/verbs.cpp:2002
 msgid "Select the object to which the selected clone is linked"
 msgstr "Pažymėti objektą, prie kurio pririštas pažymėtas klonas"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
-#: ../src/verbs.cpp:2000
+#: ../src/verbs.cpp:2004
 msgid "Objects to Patter_n"
 msgstr "Raštas iš Ob_jektų"
 
-#: ../src/verbs.cpp:2001
+#: ../src/verbs.cpp:2005
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr ""
 "Pažymėtus objektus paversti stačiakampiu, kurios užpildas (pažymėtieji "
 "objektai) sudaro raštą"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
-#: ../src/verbs.cpp:2003
+#: ../src/verbs.cpp:2007
 msgid "Pattern to _Objects"
 msgstr "Objektai iš Rašto"
 
-#: ../src/verbs.cpp:2004
+#: ../src/verbs.cpp:2008
 msgid "Extract objects from a tiled pattern fill"
 msgstr "Gražinti rašte esančius objektus į dokumentą"
 
-#: ../src/verbs.cpp:2005
+#: ../src/verbs.cpp:2009
 msgid "Clea_r All"
 msgstr "Šalinti Visk_ą"
 
-#: ../src/verbs.cpp:2006
+#: ../src/verbs.cpp:2010
 msgid "Delete all objects from document"
 msgstr "Šalinti visus objektus iš dokumento"
 
-#: ../src/verbs.cpp:2007
+#: ../src/verbs.cpp:2011
 msgid "Select Al_l"
 msgstr "_Pažymėti Viską"
 
-#: ../src/verbs.cpp:2008
+#: ../src/verbs.cpp:2012
 msgid "Select all objects or all nodes"
 msgstr "Pažymėti visus objektus ar visas siūles"
 
-#: ../src/verbs.cpp:2009
+#: ../src/verbs.cpp:2013
 msgid "Select All in All La_yers"
 msgstr "Pažymėti Viską Dokumente"
 
-#: ../src/verbs.cpp:2010
+#: ../src/verbs.cpp:2014
 msgid "Select all objects in all visible and unlocked layers"
 msgstr ""
 "Pažymėti visuose neužrakituose matomuose sluoksniuose esančius objektus"
 
-#: ../src/verbs.cpp:2011
+#: ../src/verbs.cpp:2015
 msgid "In_vert Selection"
 msgstr "Apversti _Žymėjimą"
 
-#: ../src/verbs.cpp:2012
+#: ../src/verbs.cpp:2016
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr ""
 "Apversti pažymėjimą - pažymėtus objektus išmesti iš pažymėjimo, likusius "
 "pažymėti"
 
-#: ../src/verbs.cpp:2013
+#: ../src/verbs.cpp:2017
 msgid "Invert in All Layers"
 msgstr "Apversti Žym_ėjimą Dokumente"
 
-#: ../src/verbs.cpp:2014
+#: ../src/verbs.cpp:2018
 msgid "Invert selection in all visible and unlocked layers"
 msgstr ""
 "Apversti pažymėjimą visuose neužrakituose matomuose sluoksniuose - pažymėtus "
 "objektus išmesti iš pažymėjimo, likusius pažymėti"
 
-#: ../src/verbs.cpp:2015
+#: ../src/verbs.cpp:2019
 msgid "D_eselect"
 msgstr "Atž_ymėti"
 
-#: ../src/verbs.cpp:2016
+#: ../src/verbs.cpp:2020
 msgid "Deselect any selected objects or nodes"
 msgstr "Išmesti visus pažymėtus objektus iš pažymėjimo"
 
 #. Selection
-#: ../src/verbs.cpp:2019
+#: ../src/verbs.cpp:2023
 msgid "Raise to _Top"
 msgstr "_Kelti iki Viršaus"
 
-#: ../src/verbs.cpp:2020
+#: ../src/verbs.cpp:2024
 msgid "Raise selection to top"
 msgstr "Perkelti pažymėtus objektus į sluoksnio viršų"
 
-#: ../src/verbs.cpp:2021
+#: ../src/verbs.cpp:2025
 msgid "Lower to _Bottom"
 msgstr "_Leisti į Apačią"
 
-#: ../src/verbs.cpp:2022
+#: ../src/verbs.cpp:2026
 msgid "Lower selection to bottom"
 msgstr "Perkelti pažymėtus objektus į sluoksnio apačią"
 
-#: ../src/verbs.cpp:2023
+#: ../src/verbs.cpp:2027
 msgid "_Raise"
 msgstr "_Pakelti"
 
-#: ../src/verbs.cpp:2024
+#: ../src/verbs.cpp:2028
 msgid "Raise selection one step"
 msgstr "Pakelti pažymėjimą vienu žingsniu"
 
-#: ../src/verbs.cpp:2025
+#: ../src/verbs.cpp:2029
 msgid "_Lower"
 msgstr "_Nuleisti"
 
-#: ../src/verbs.cpp:2026
+#: ../src/verbs.cpp:2030
 msgid "Lower selection one step"
 msgstr "Nuleisti pažymėjimą vienu žingsniu"
 
-#: ../src/verbs.cpp:2027
+#: ../src/verbs.cpp:2031
 msgid "_Group"
 msgstr "_Grupuoti"
 
-#: ../src/verbs.cpp:2028
+#: ../src/verbs.cpp:2032
 msgid "Group selected objects"
 msgstr "Sugrupuoti pažymėtus objektus"
 
-#: ../src/verbs.cpp:2030
+#: ../src/verbs.cpp:2034
 msgid "Ungroup selected groups"
 msgstr "Išgrupuoti pažymėtus objektus"
 
-#: ../src/verbs.cpp:2032
+#: ../src/verbs.cpp:2036
 msgid "_Put on Path"
 msgstr "_Dėti ant Kreivės"
 
-#: ../src/verbs.cpp:2033
+#: ../src/verbs.cpp:2037
 msgid "Put text on path"
 msgstr "Dėstyti tekstą pagal kreivės kontūrą"
 
-#: ../src/verbs.cpp:2034
+#: ../src/verbs.cpp:2038
 msgid "_Remove from Path"
 msgstr "_Nuimti nuo Kreivės"
 
-#: ../src/verbs.cpp:2035
+#: ../src/verbs.cpp:2039
 msgid "Remove text from path"
 msgstr "Atrišti tekstą nuo kreivės"
 
-#: ../src/verbs.cpp:2036
+#: ../src/verbs.cpp:2040
 msgid "Remove Manual _Kerns"
 msgstr "Naikinti Rankinius _Tarpus"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2039
+#: ../src/verbs.cpp:2043
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr "Naikinti bet kokius rankomis sukurtus tarpus tarp simbolių"
 
-#: ../src/verbs.cpp:2041
+#: ../src/verbs.cpp:2045
 msgid "_Union"
 msgstr "_Sąjunga"
 
-#: ../src/verbs.cpp:2042
+#: ../src/verbs.cpp:2046
 msgid "Create union of selected paths"
 msgstr "Sukurti pažymėtų kreivių sąjungą"
 
-#: ../src/verbs.cpp:2043
+#: ../src/verbs.cpp:2047
 msgid "_Intersection"
 msgstr "S_ankirta"
 
-#: ../src/verbs.cpp:2044
+#: ../src/verbs.cpp:2048
 msgid "Create intersection of selected paths"
 msgstr "Sukurti pažymėtų kreivių sąnkirtą"
 
-#: ../src/verbs.cpp:2045
+#: ../src/verbs.cpp:2049
 msgid "_Difference"
 msgstr "_Atimtis"
 
-#: ../src/verbs.cpp:2046
+#: ../src/verbs.cpp:2050
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr ""
 "Iš žemiau esančios kreivės atimti aukščiau esančią, gaunant skirtumo kreivę"
 
-#: ../src/verbs.cpp:2047
+#: ../src/verbs.cpp:2051
 msgid "E_xclusion"
 msgstr "_Išskyrimas"
 
-#: ../src/verbs.cpp:2048
+#: ../src/verbs.cpp:2052
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
@@ -7788,22 +7792,22 @@ msgstr ""
 "Pažymėjimo išskirtinis ARBA (griežtoji disjunkcija) - lieka tik tos dalys, "
 "kurios yra tik vienoje kreivėje"
 
-#: ../src/verbs.cpp:2049
+#: ../src/verbs.cpp:2053
 msgid "Di_vision"
 msgstr "_Dalinimas"
 
-#: ../src/verbs.cpp:2050
+#: ../src/verbs.cpp:2054
 msgid "Cut the bottom path into pieces"
 msgstr ""
 "Padalinti žemiau esančią kreivę į dalis, nusakytas aukščiau esančia kreive"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2053
+#: ../src/verbs.cpp:2057
 msgid "Cut _Path"
 msgstr "_Karpyti Kreivę"
 
-#: ../src/verbs.cpp:2054
+#: ../src/verbs.cpp:2058
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr ""
 "Sukarpyti žemiau pažymėjime esančią kreivę į dalis pagal aukščiau esančia "
@@ -7812,267 +7816,267 @@ msgstr ""
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2058
+#: ../src/verbs.cpp:2062
 msgid "Outs_et"
 msgstr "Iš_pūsti"
 
-#: ../src/verbs.cpp:2059
+#: ../src/verbs.cpp:2063
 msgid "Outset selected paths"
 msgstr "Išpūsti pasirinktas kreives"
 
-#: ../src/verbs.cpp:2061
+#: ../src/verbs.cpp:2065
 msgid "O_utset Path by 1 px"
 msgstr "Išpūsti Vienu Taškeliu"
 
-#: ../src/verbs.cpp:2062
+#: ../src/verbs.cpp:2066
 msgid "Outset selected paths by 1 px"
 msgstr "Išpūsti pasirinktas kreives vienu tašku"
 
-#: ../src/verbs.cpp:2064
+#: ../src/verbs.cpp:2068
 msgid "O_utset Path by 10 px"
 msgstr "Išpūsti 10px"
 
-#: ../src/verbs.cpp:2065
+#: ../src/verbs.cpp:2069
 msgid "Outset selected paths by 10 px"
 msgstr "Išpūsti pasirinktas kreives 10 taškų"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2069
+#: ../src/verbs.cpp:2073
 msgid "I_nset"
 msgstr "Įt_raukti"
 
-#: ../src/verbs.cpp:2070
+#: ../src/verbs.cpp:2074
 msgid "Inset selected paths"
 msgstr "Įtraukti (sumažinti) pasirinktas kreives"
 
-#: ../src/verbs.cpp:2072
+#: ../src/verbs.cpp:2076
 msgid "I_nset Path by 1 px"
 msgstr "Įtraukti Vienu Taškeliu"
 
-#: ../src/verbs.cpp:2073
+#: ../src/verbs.cpp:2077
 msgid "Inset selected paths by 1 px"
 msgstr "Įtraukti pasirinktas kreives vienu tašku"
 
-#: ../src/verbs.cpp:2075
+#: ../src/verbs.cpp:2079
 msgid "I_nset Path by 10 px"
 msgstr "Įtraukti 10px"
 
-#: ../src/verbs.cpp:2076
+#: ../src/verbs.cpp:2080
 msgid "Inset selected paths by 10 px"
 msgstr "Įtraukti pasirinktas kreives 10 taškų"
 
-#: ../src/verbs.cpp:2078
+#: ../src/verbs.cpp:2082
 msgid "D_ynamic Offset"
 msgstr "Di_naminis Išpūtimas"
 
-#: ../src/verbs.cpp:2078
+#: ../src/verbs.cpp:2082
 msgid "Create a dynamic offset object"
 msgstr "Sukurti dinaminį (keičiamą) išpūtimą"
 
-#: ../src/verbs.cpp:2080
+#: ../src/verbs.cpp:2084
 msgid "_Linked Offset"
 msgstr "_Susietas Išpūtimas"
 
-#: ../src/verbs.cpp:2081
+#: ../src/verbs.cpp:2085
 msgid "Create a dynamic offset object linked to the original path"
 msgstr "Sukurti dinaminį (keičiamą) išpūtimą, surištą su originalu"
 
-#: ../src/verbs.cpp:2083
+#: ../src/verbs.cpp:2087
 msgid "_Stroke to Path"
 msgstr "Kreivė iš _Linijos"
 
-#: ../src/verbs.cpp:2084
+#: ../src/verbs.cpp:2088
 msgid "Convert selected object's stroke to paths"
 msgstr "Paversti liniją kreive"
 
-#: ../src/verbs.cpp:2085
+#: ../src/verbs.cpp:2089
 msgid "Si_mplify"
 msgstr "S_upaprastinti"
 
-#: ../src/verbs.cpp:2086
+#: ../src/verbs.cpp:2090
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr "Supaprastinti pažymėtas kreives (šalinant bereikalingas siūles)"
 
-#: ../src/verbs.cpp:2087
+#: ../src/verbs.cpp:2091
 msgid "_Reverse"
 msgstr "_Apversti"
 
-#: ../src/verbs.cpp:2088
+#: ../src/verbs.cpp:2092
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr "Keisti pažymėtų kreivių kryptį"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2090
+#: ../src/verbs.cpp:2094
 msgid "_Trace Bitmap..."
 msgstr "_Tirti Vaizdą..."
 
-#: ../src/verbs.cpp:2091
+#: ../src/verbs.cpp:2095
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr "Iš grafinio vaizdo išgauti kreives"
 
-#: ../src/verbs.cpp:2092
+#: ../src/verbs.cpp:2096
 msgid "_Make a Bitmap Copy"
 msgstr "_Kurti Kopiją kaip Vaizdą"
 
-#: ../src/verbs.cpp:2093
+#: ../src/verbs.cpp:2097
 msgid "Export selection to a bitmap and insert it into document"
 msgstr "Eksportuoti pažymėjimą į grafinį vaizdą ir įtraukti į dokumentą"
 
-#: ../src/verbs.cpp:2094
+#: ../src/verbs.cpp:2098
 msgid "_Combine"
 msgstr "Ap_jungti"
 
-#: ../src/verbs.cpp:2095
+#: ../src/verbs.cpp:2099
 msgid "Combine several paths into one"
 msgstr "Apjungti keletą kreivių į vieną"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2098
+#: ../src/verbs.cpp:2102
 msgid "Break _Apart"
 msgstr "_Dalinti"
 
-#: ../src/verbs.cpp:2099
+#: ../src/verbs.cpp:2103
 msgid "Break selected paths into subpaths"
 msgstr "Dalinti kreivę į atskiras dalis"
 
-#: ../src/verbs.cpp:2100
+#: ../src/verbs.cpp:2104
 msgid "Gri_d Arrange..."
 msgstr "L_ygiavimas Langeliais..."
 
-#: ../src/verbs.cpp:2101
+#: ../src/verbs.cpp:2105
 msgid "Arrange selected objects in a grid pattern"
 msgstr "Sudėlioti pažymėtus objektus pagal langelius"
 
 #. Layer
-#: ../src/verbs.cpp:2103
+#: ../src/verbs.cpp:2107
 msgid "_Add Layer..."
 msgstr "_Naujas Sluoksnis..."
 
-#: ../src/verbs.cpp:2104
+#: ../src/verbs.cpp:2108
 msgid "Create a new layer"
 msgstr "Sukurti naują sluoksnį"
 
-#: ../src/verbs.cpp:2105
+#: ../src/verbs.cpp:2109
 msgid "Re_name Layer..."
 msgstr "_Pervadinti Sluoksnį"
 
-#: ../src/verbs.cpp:2106
+#: ../src/verbs.cpp:2110
 msgid "Rename the current layer"
 msgstr "Pervadinti dabartinį sluoksnį"
 
-#: ../src/verbs.cpp:2107
+#: ../src/verbs.cpp:2111
 msgid "Switch to Layer Abov_e"
 msgstr "Į _Aukštesnį Sluoksnį"
 
-#: ../src/verbs.cpp:2108
+#: ../src/verbs.cpp:2112
 msgid "Switch to the layer above the current"
 msgstr "Pereiti į aukščiau dabartinio esantį sluoksnį"
 
-#: ../src/verbs.cpp:2109
+#: ../src/verbs.cpp:2113
 msgid "Switch to Layer Belo_w"
 msgstr "Į Ž_emesnį Sluoksnį"
 
-#: ../src/verbs.cpp:2110
+#: ../src/verbs.cpp:2114
 msgid "Switch to the layer below the current"
 msgstr "Pereiti į žemiau dabartinio esantį sluoksnį"
 
-#: ../src/verbs.cpp:2111
+#: ../src/verbs.cpp:2115
 msgid "Move Selection to Layer Abo_ve"
 msgstr "Pe_rkelti Sluoksniu Aukščiau"
 
-#: ../src/verbs.cpp:2112
+#: ../src/verbs.cpp:2116
 msgid "Move selection to the layer above the current"
 msgstr "Perkelti pažymėjimą sluoksniu aukščiau"
 
-#: ../src/verbs.cpp:2113
+#: ../src/verbs.cpp:2117
 msgid "Move Selection to Layer Bel_ow"
 msgstr "Per_kelti Sluoksniu Žemiau"
 
-#: ../src/verbs.cpp:2114
+#: ../src/verbs.cpp:2118
 msgid "Move selection to the layer below the current"
 msgstr "Perkelti pažymėjimą sluoksniu žemiau"
 
-#: ../src/verbs.cpp:2115
+#: ../src/verbs.cpp:2119
 msgid "Layer to _Top"
 msgstr "Sluoksnis į _Viršų"
 
-#: ../src/verbs.cpp:2116
+#: ../src/verbs.cpp:2120
 msgid "Raise the current layer to the top"
 msgstr "Pakelti aktyvų sluoksnį į patį viršų"
 
-#: ../src/verbs.cpp:2117
+#: ../src/verbs.cpp:2121
 msgid "Layer to _Bottom"
 msgstr "Sluoksnis Že_myn"
 
-#: ../src/verbs.cpp:2118
+#: ../src/verbs.cpp:2122
 msgid "Lower the current layer to the bottom"
 msgstr "Nuleisti aktyvų sluoksnį į pačią apačią"
 
-#: ../src/verbs.cpp:2119
+#: ../src/verbs.cpp:2123
 msgid "_Raise Layer"
 msgstr "Pa_kelti Sluoksnį"
 
-#: ../src/verbs.cpp:2120
+#: ../src/verbs.cpp:2124
 msgid "Raise the current layer"
 msgstr "Pakelti aktyvų sluoksnį"
 
-#: ../src/verbs.cpp:2121
+#: ../src/verbs.cpp:2125
 msgid "_Lower Layer"
 msgstr "Nu_leisti Sluoksnį"
 
-#: ../src/verbs.cpp:2122
+#: ../src/verbs.cpp:2126
 msgid "Lower the current layer"
 msgstr "Nuleisti aktyvų sluoksnį"
 
-#: ../src/verbs.cpp:2123
+#: ../src/verbs.cpp:2127
 msgid "_Delete Current Layer"
 msgstr "Šalin_ti Sluoksnį"
 
-#: ../src/verbs.cpp:2124
+#: ../src/verbs.cpp:2128
 msgid "Delete the current layer"
 msgstr "Šalin_ti aktyvų sluoksnį"
 
 #. Object
-#: ../src/verbs.cpp:2127
+#: ../src/verbs.cpp:2131
 msgid "Rotate _90&#176; CW"
 msgstr "Pasukti _90&#176;"
 
-#: ../src/verbs.cpp:2128
+#: ../src/verbs.cpp:2132
 msgid "Rotate selection 90&#176; clockwise"
 msgstr "Pasukti pažymėjimą 90 laipsnių kampu laikrodžio rodyklės kryptimi"
 
-#: ../src/verbs.cpp:2129
+#: ../src/verbs.cpp:2133
 msgid "Rotate 9_0&#176; CCW"
 msgstr "Atsukti 9_0&#176;"
 
-#: ../src/verbs.cpp:2130
+#: ../src/verbs.cpp:2134
 msgid "Rotate selection 90&#176; counter-clockwise"
 msgstr "Pasukti pažymėjimą 90 laipsnių kampu prieš laikrodžio rodyklę"
 
-#: ../src/verbs.cpp:2131
+#: ../src/verbs.cpp:2135
 msgid "Remove _Transformations"
 msgstr "Nuimti _Transfomacijas"
 
-#: ../src/verbs.cpp:2132
+#: ../src/verbs.cpp:2136
 msgid "Remove transformations from object"
 msgstr "Naikinti bet kokias objekto transformacijas"
 
-#: ../src/verbs.cpp:2133
+#: ../src/verbs.cpp:2137
 msgid "_Object to Path"
 msgstr "Kreivė iš _Objekto"
 
-#: ../src/verbs.cpp:2134
+#: ../src/verbs.cpp:2138
 msgid "Convert selected object to path"
 msgstr "Paversti pažymėtą objektą kreive"
 
-#: ../src/verbs.cpp:2135
+#: ../src/verbs.cpp:2139
 msgid "_Flow into Frame"
 msgstr "_Dėstyti Rėmuose"
 
-#: ../src/verbs.cpp:2136
+#: ../src/verbs.cpp:2140
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
@@ -8080,627 +8084,629 @@ msgstr ""
 "Įdėti tekstą į kreive ar geometrine figūra apibrėžtą rėmą, sukuriant dėstytą "
 "tekstą"
 
-#: ../src/verbs.cpp:2137
+#: ../src/verbs.cpp:2141
 msgid "_Unflow"
 msgstr "Išimti iš _Rėmo"
 
-#: ../src/verbs.cpp:2138
+#: ../src/verbs.cpp:2142
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr "Atrišti tekstą nuo jo rėmo"
 
-#: ../src/verbs.cpp:2139
+#: ../src/verbs.cpp:2143
 msgid "_Convert to Text"
 msgstr "Daryti T_ekstu"
 
-#: ../src/verbs.cpp:2140
+#: ../src/verbs.cpp:2144
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr "Iš dėstyto teksto padaryti paprastą tekstą (išlaikant išvaizdą)"
 
-#: ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2146
 msgid "Flip _Horizontal"
 msgstr "_Horizontalus atspindys"
 
-#: ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2146
 msgid "Flip selected objects horizontally"
 msgstr "Pažymėjimo horizontalus veidrodinis atspindys"
 
-#: ../src/verbs.cpp:2145
+#: ../src/verbs.cpp:2149
 msgid "Flip _Vertical"
 msgstr "_Vertikalus atspindys"
 
-#: ../src/verbs.cpp:2145
+#: ../src/verbs.cpp:2149
 msgid "Flip selected objects vertically"
 msgstr "Apversti pažymėtus objektus vertikaliai"
 
-#: ../src/verbs.cpp:2148
+#: ../src/verbs.cpp:2152
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 "Pažymėjimui taikyti filtrą (kraštinis objektas naudojamas kaip filtro "
 "objektas)"
 
-#: ../src/verbs.cpp:2149 ../src/verbs.cpp:2153
+#: ../src/verbs.cpp:2153 ../src/verbs.cpp:2157
 msgid "_Release"
 msgstr "At_rišti"
 
-#: ../src/verbs.cpp:2150
+#: ../src/verbs.cpp:2154
 msgid "Remove mask from selection"
 msgstr "Nuimti nuo pažymėjimo filtrą"
 
-#: ../src/verbs.cpp:2152
+#: ../src/verbs.cpp:2156
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr "Apkirpti pažymėjimą, kraštinį objektą naudojant kaip kirpimo kreivę"
 
-#: ../src/verbs.cpp:2154
+#: ../src/verbs.cpp:2158
 msgid "Remove clipping path from selection"
 msgstr "Nuimti nuo pažymėjimo kirpimo kreivę"
 
 #. Tools
-#: ../src/verbs.cpp:2157
+#: ../src/verbs.cpp:2161
 msgid "Select"
 msgstr "Žymeklis"
 
-#: ../src/verbs.cpp:2158
+#: ../src/verbs.cpp:2162
 msgid "Select and transform objects"
 msgstr "Objektų pažymėjimo ir keitimo režimas"
 
-#: ../src/verbs.cpp:2159
+#: ../src/verbs.cpp:2163
 msgid "Node Edit"
 msgstr "Siūlės"
 
-#: ../src/verbs.cpp:2160
+#: ../src/verbs.cpp:2164
 msgid "Edit path nodes or control handles"
 msgstr "Siūlių redagavimo režimas"
 
-#: ../src/verbs.cpp:2162
+#: ../src/verbs.cpp:2166
 msgid "Create rectangles and squares"
 msgstr "Stačiakampiai ir Kvadratai"
 
-#: ../src/verbs.cpp:2164
+#: ../src/verbs.cpp:2168
 msgid "Create circles, ellipses, and arcs"
 msgstr "Apskritimų, elipsių ir arkų kūrimo režimas"
 
-#: ../src/verbs.cpp:2166
+#: ../src/verbs.cpp:2170
 msgid "Create stars and polygons"
 msgstr "Žvaigždžių ir daugiakampių kūrimo režimas"
 
-#: ../src/verbs.cpp:2168
+#: ../src/verbs.cpp:2172
 msgid "Create spirals"
 msgstr "Spiralių kūrimo režimas"
 
-#: ../src/verbs.cpp:2170
+#: ../src/verbs.cpp:2174
 msgid "Draw freehand lines"
 msgstr "Ranka pieštų kreivių režimas"
 
-#: ../src/verbs.cpp:2172
+#: ../src/verbs.cpp:2176
 msgid "Draw Bezier curves and straight lines"
 msgstr "Bezier kreivių ir tiesių atkarpų režimas"
 
-#: ../src/verbs.cpp:2174
+#: ../src/verbs.cpp:2178
 msgid "Draw calligraphic lines"
 msgstr "Dailiraščio kūrimo režimas"
 
-#: ../src/verbs.cpp:2176
+#: ../src/verbs.cpp:2180
 msgid "Create and edit text objects"
 msgstr "Teksto kūrimo ir redagavimo režimas"
 
-#: ../src/verbs.cpp:2178
+#: ../src/verbs.cpp:2182
 msgid "Create and edit gradients"
 msgstr "Perėjimų kūrimo ir redagavimo režimas"
 
-#: ../src/verbs.cpp:2180
+#: ../src/verbs.cpp:2184
 msgid "Zoom in or out"
 msgstr "Mastelio keitimo režimas"
 
-#: ../src/verbs.cpp:2182
+#: ../src/verbs.cpp:2186
 msgid "Pick averaged colors from image"
 msgstr "Vidutinės spalvos išrinkimo režimas"
 
-#: ../src/verbs.cpp:2184
+#: ../src/verbs.cpp:2188
 msgid "Create connectors"
 msgstr "Sąryšiai"
 
 #. Tool prefs
-#: ../src/verbs.cpp:2187
+#: ../src/verbs.cpp:2191
 msgid "Selector Preferences"
 msgstr "Žymeklio Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2188
+#: ../src/verbs.cpp:2192
 msgid "Open Preferences for the Selector tool"
 msgstr "Atidaryti žymeklio įrankio nustatymus"
 
-#: ../src/verbs.cpp:2189
+#: ../src/verbs.cpp:2193
 msgid "Node Tool Preferences"
 msgstr "Siūlių Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2190
+#: ../src/verbs.cpp:2194
 msgid "Open Preferences for the Node tool"
 msgstr "Atidaryti siūlių redagavimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2191
+#: ../src/verbs.cpp:2195
 msgid "Rectangle Preferences"
 msgstr "Stačiakampių Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2192
+#: ../src/verbs.cpp:2196
 msgid "Open Preferences for the Rectangle tool"
 msgstr "Atidaryti stačiakampių kūrimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2193
+#: ../src/verbs.cpp:2197
 msgid "Ellipse Preferences"
 msgstr "Elipsių Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2194
+#: ../src/verbs.cpp:2198
 msgid "Open Preferences for the Ellipse tool"
 msgstr "Atidaryti elipsių ir apskritimų kūrimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2195
+#: ../src/verbs.cpp:2199
 msgid "Star Preferences"
 msgstr "Žvaigždžių Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2196
+#: ../src/verbs.cpp:2200
 msgid "Open Preferences for the Star tool"
 msgstr "Atidaryti Žvaigždžių ir daugiakampių kūrimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2197
+#: ../src/verbs.cpp:2201
 msgid "Spiral Preferences"
 msgstr "Spiralių Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2198
+#: ../src/verbs.cpp:2202
 msgid "Open Preferences for the Spiral tool"
 msgstr "Atidaryti spiralės kūrimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2199
+#: ../src/verbs.cpp:2203
 msgid "Pencil Preferences"
 msgstr "Rašiklio Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2200
+#: ../src/verbs.cpp:2204
 msgid "Open Preferences for the Pencil tool"
 msgstr "Atidaryti rašiklio įrankio nustatymus"
 
-#: ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2205
 msgid "Pen Preferences"
 msgstr "Pieštuko Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2202
+#: ../src/verbs.cpp:2206
 msgid "Open Preferences for the Pen tool"
 msgstr "Atidaryti pieštuko įrankio nustatymus"
 
-#: ../src/verbs.cpp:2203
+#: ../src/verbs.cpp:2207
 msgid "Calligraphic Preferences"
 msgstr "Dailiraščio Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2204
+#: ../src/verbs.cpp:2208
 msgid "Open Preferences for the Calligraphy tool"
 msgstr "Atidaryti dailiraščio įrankio nustatymus"
 
-#: ../src/verbs.cpp:2205
+#: ../src/verbs.cpp:2209
 msgid "Text Preferences"
 msgstr "Teksto Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2206
+#: ../src/verbs.cpp:2210
 msgid "Open Preferences for the Text tool"
 msgstr "Atidaryti teksto įrankio nustatymus"
 
-#: ../src/verbs.cpp:2207
+#: ../src/verbs.cpp:2211
 msgid "Gradient Preferences"
 msgstr "Perėjimo Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2208
+#: ../src/verbs.cpp:2212
 msgid "Open Preferences for the Gradient tool"
 msgstr "Atidaryti perėjimų kūrimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2209
+#: ../src/verbs.cpp:2213
 msgid "Zoom Preferences"
 msgstr "Mastelio Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2210
+#: ../src/verbs.cpp:2214
 msgid "Open Preferences for the Zoom tool"
 msgstr "Atidaryti mastelio keitimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2211
+#: ../src/verbs.cpp:2215
 msgid "Dropper Preferences"
 msgstr "Pipetės Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2212
+#: ../src/verbs.cpp:2216
 msgid "Open Preferences for the Dropper tool"
 msgstr "Atidaryti pipetės kūrimo įrankio nustatymus"
 
-#: ../src/verbs.cpp:2213
+#: ../src/verbs.cpp:2217
 msgid "Connector Preferences"
 msgstr "Saryšių Įrankio Nustatymai"
 
-#: ../src/verbs.cpp:2214
+#: ../src/verbs.cpp:2218
 msgid "Open Preferences for the Connector tool"
 msgstr "Atidaryti saryšių kūrimo ir redagavimo įrankio nustatymus"
 
 #. Zoom/View
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2221
 msgid "Zoom In"
 msgstr "Didinti Mastelį"
 
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2221
 msgid "Zoom in"
 msgstr "Didinti mastelį"
 
-#: ../src/verbs.cpp:2218
+#: ../src/verbs.cpp:2222
 msgid "Zoom Out"
 msgstr "Mažinti Mastelį"
 
-#: ../src/verbs.cpp:2218
+#: ../src/verbs.cpp:2222
 msgid "Zoom out"
 msgstr "Mažinti mastelį"
 
-#: ../src/verbs.cpp:2219
+#: ../src/verbs.cpp:2223
 msgid "_Rulers"
 msgstr "_Liniuotė"
 
-#: ../src/verbs.cpp:2219
+#: ../src/verbs.cpp:2223
 msgid "Show or hide the canvas rulers"
 msgstr "Paslėpti ar parodyti liniuotes"
 
-#: ../src/verbs.cpp:2220
+#: ../src/verbs.cpp:2224
 msgid "Scroll_bars"
 msgstr "_Slankjuostė"
 
-#: ../src/verbs.cpp:2220
+#: ../src/verbs.cpp:2224
 msgid "Show or hide the canvas scrollbars"
 msgstr "Paslėpti ar parodyti vertikalią ir horizontalią slankjuostes"
 
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2225
 msgid "_Grid"
 msgstr "_Langelius"
 
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2225
 msgid "Show or hide the grid"
 msgstr "Paslėpti ar parodyti langelius"
 
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2226
 msgid "G_uides"
 msgstr "Lygiavimo _Juostas"
 
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2226
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
 "Paslėpti ar parodyti lygiavimo juostas (juostos kuriamos tempiant jas nuo "
 "liniuotės)"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2227
 msgid "Nex_t Zoom"
 msgstr "_Sekantis Mastelis"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2227
 msgid "Next zoom (from the history of zooms)"
 msgstr "Keisti mastelį į sekantį istorijoje"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2229
 msgid "Pre_vious Zoom"
 msgstr "_Praeitas Mastelis"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2229
 msgid "Previous zoom (from the history of zooms)"
 msgstr "Keisti mastelį į prieš tai buvusį (istorijoje)"
 
-#: ../src/verbs.cpp:2227
+#: ../src/verbs.cpp:2231
 msgid "Zoom 1:_1"
 msgstr "Mastelis 1:_1"
 
-#: ../src/verbs.cpp:2227
+#: ../src/verbs.cpp:2231
 msgid "Zoom to 1:1"
 msgstr "Keisti mastelį į originalų (1:1)"
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2233
 msgid "Zoom 1:_2"
 msgstr "Mastelis 1:_2"
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2233
 msgid "Zoom to 1:2"
 msgstr "Keisti mastelį į 1:2"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2235
 msgid "_Zoom 2:1"
 msgstr "_Mastelis 2:1"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2235
 msgid "Zoom to 2:1"
 msgstr "Keisti mastelį į 2:1"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2238
 msgid "_Fullscreen"
 msgstr "_Visas Ekranas"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2238
 msgid "Stretch this document window to full screen"
 msgstr "Naudoti visą ekraną šio dokumento langui"
 
-#: ../src/verbs.cpp:2237
+#: ../src/verbs.cpp:2241
 msgid "Duplic_ate Window"
 msgstr "_Dublikuoti Langą"
 
-#: ../src/verbs.cpp:2237
+#: ../src/verbs.cpp:2241
 msgid "Open a new window with the same document"
 msgstr "Atidaryti naują langą su šiuo dokumentu"
 
-#: ../src/verbs.cpp:2239
+#: ../src/verbs.cpp:2243
 msgid "_New View Preview"
 msgstr ""
 
-#: ../src/verbs.cpp:2240
+#: ../src/verbs.cpp:2244
 msgid "New View Preview"
 msgstr ""
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2242
+#: ../src/verbs.cpp:2246
 msgid "_Normal"
 msgstr "Į_prastas"
 
-#: ../src/verbs.cpp:2243
+#: ../src/verbs.cpp:2247
 msgid "Switch to normal display mode"
 msgstr "Vaizduoti dokumentą įprastai"
 
-#: ../src/verbs.cpp:2244
+#: ../src/verbs.cpp:2248
 msgid "_Outline"
 msgstr "_Eskizas"
 
-#: ../src/verbs.cpp:2245
+#: ../src/verbs.cpp:2249
 msgid "Switch to outline (wireframe) display mode"
 msgstr "Rodyti eskizinį vaizdą"
 
-#: ../src/verbs.cpp:2247
+#: ../src/verbs.cpp:2251
 msgid "Ico_n Preview"
 msgstr "Iko_nos Peržiūra"
 
-#: ../src/verbs.cpp:2248
+#: ../src/verbs.cpp:2252
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr "Rodyti, kaip dokumentas atrodys skirtingo dydžio ikonos pavidale"
 
-#: ../src/verbs.cpp:2250
+#: ../src/verbs.cpp:2254
 msgid "Zoom to fit page in window"
 msgstr "Keisti mastelį talpinant puslapį lange"
 
-#: ../src/verbs.cpp:2251
+#: ../src/verbs.cpp:2255
 msgid "Page _Width"
 msgstr "Puslapi_o Plotis"
 
-#: ../src/verbs.cpp:2252
+#: ../src/verbs.cpp:2256
 msgid "Zoom to fit page width in window"
 msgstr "Keisti mastelį, kad puslapio plotis tilptų lange"
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2258
 msgid "Zoom to fit drawing in window"
 msgstr "Keisti mastelį, kad visas piešinys tilptų lange"
 
-#: ../src/verbs.cpp:2256
+#: ../src/verbs.cpp:2260
 msgid "Zoom to fit selection in window"
 msgstr "Keisti mastelį, kad pažymėjimas tilptų lange"
 
 #. Dialogs
-#: ../src/verbs.cpp:2259
+#: ../src/verbs.cpp:2263
 msgid "In_kscape Preferences..."
 msgstr "In_kscape Nustatymai..."
 
-#: ../src/verbs.cpp:2260
+#: ../src/verbs.cpp:2264
 msgid "Edit global Inkscape preferences"
 msgstr "Keisti bendrus Inkscape programos nustatymus"
 
-#: ../src/verbs.cpp:2261
+#: ../src/verbs.cpp:2265
 msgid "_Document Properties..."
 msgstr "_Dokumento Nustatymai..."
 
-#: ../src/verbs.cpp:2262
+#: ../src/verbs.cpp:2266
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Keisti specifinius dokumento nustatymus, kurie saugomi su dokumentu"
 
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2267
 msgid "_Document Metadata..."
 msgstr "_Dokumento Metaduomenys..."
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2268
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "Keisti dokumento metaduomenis, saugomus kartu su dokumentu"
 
-#: ../src/verbs.cpp:2265
+#: ../src/verbs.cpp:2269
 msgid "_Fill and Stroke..."
 msgstr "_Užpildas ir Linija..."
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2270
 msgid "Edit objects' style, such as color or stroke width"
 msgstr "Keisti pažymėjimo išvaizdą - užpildo tipą ir spalvą, linijos išvaizdą"
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2268
+#: ../src/verbs.cpp:2272
 msgid "S_watches..."
 msgstr "Spal_vų Paletė..."
 
-#: ../src/verbs.cpp:2269
+#: ../src/verbs.cpp:2273
 msgid "Select colors from a swatches palette"
 msgstr "Rinktis spalvas iš spalvų paletės"
 
-#: ../src/verbs.cpp:2270
+#: ../src/verbs.cpp:2274
 msgid "Transfor_m..."
 msgstr "Transfor_macija..."
 
-#: ../src/verbs.cpp:2271
+#: ../src/verbs.cpp:2275
 msgid "Precisely control objects' transformations"
 msgstr "Transformuoti pažymėtus objektus"
 
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2276
 msgid "_Align and Distribute..."
 msgstr "_Lygiuoti ir Rikiuoti..."
 
-#: ../src/verbs.cpp:2273
+#: ../src/verbs.cpp:2277
 msgid "Align and distribute objects"
 msgstr "Lygiuoti ar dėstyti pažymėtus objektus"
 
-#: ../src/verbs.cpp:2274
+#: ../src/verbs.cpp:2278
 msgid "_Text and Font..."
 msgstr "_Tekstas ir Šriftas..."
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2279
 msgid "View and select font family, font size and other text properties"
 msgstr "Žiūrėti ir keisti šrifto tipą, dydį bei kitus teksto nustatymus"
 
-#: ../src/verbs.cpp:2276
+#: ../src/verbs.cpp:2280
 msgid "_XML Editor..."
 msgstr "_XML Redaktorius..."
 
-#: ../src/verbs.cpp:2277
+#: ../src/verbs.cpp:2281
 msgid "View and edit the XML tree of the document"
 msgstr "Žiūrėti ir keisti dokumento XML medį"
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2282
 msgid "_Find..."
 msgstr "_Rasti..."
 
-#: ../src/verbs.cpp:2279
+#: ../src/verbs.cpp:2283
 msgid "Find objects in document"
 msgstr "Dokumente ieškoti objektų"
 
-#: ../src/verbs.cpp:2280
+#: ../src/verbs.cpp:2284
 msgid "_Messages..."
 msgstr "P_ranešimai..."
 
-#: ../src/verbs.cpp:2281
+#: ../src/verbs.cpp:2285
 msgid "View debug messages"
 msgstr "Stebėti techninius pranešimus"
 
-#: ../src/verbs.cpp:2282
+#: ../src/verbs.cpp:2286
 msgid "S_cripts..."
 msgstr "Skript_ai..."
 
-#: ../src/verbs.cpp:2283
+#: ../src/verbs.cpp:2287
 msgid "Run scripts"
 msgstr "Vykdyti skriptus"
 
-#: ../src/verbs.cpp:2284
+#: ../src/verbs.cpp:2288
 msgid "Show/Hide D_ialogs"
 msgstr "Rodyti/Slėpti D_ialogus"
 
-#: ../src/verbs.cpp:2285
+#: ../src/verbs.cpp:2289
 msgid "Show or hide all open dialogs"
 msgstr "Parodyti ar passlepti vieną ar kitą dialogą"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
-#: ../src/verbs.cpp:2287
+#: ../src/verbs.cpp:2291
 msgid "Create Tiled Clones..."
 msgstr "Dėstyti Klonus..."
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2292
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr "Kurti ir pagal pasirinktus kūrimo nustatymus išdėstyti keletą klonų"
 
-#: ../src/verbs.cpp:2289
+#: ../src/verbs.cpp:2293
 msgid "_Object Properties..."
 msgstr "_Objekto Savybės..."
 
-#: ../src/verbs.cpp:2290
+#: ../src/verbs.cpp:2294
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 "Keisti objekto identifikatorių, rakinimo ir matomumo būseną bei kitas savybes"
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2297
 msgid "_Connect to Jabber server..."
 msgstr "_Jungtis prie Jabber Serverio..."
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2297
 msgid "Connect to a Jabber server"
 msgstr "Jungtis prie Jabber serverio kolektyviniam redagavimui"
 
-#: ../src/verbs.cpp:2295
+#: ../src/verbs.cpp:2299
 msgid "Share with _user..."
 msgstr "Dalintis Piešini_u..."
 
-#: ../src/verbs.cpp:2295
+#: ../src/verbs.cpp:2299
 msgid "Establish a whiteboard session with another Jabber user"
 msgstr ""
 "Prisijungti prie \"lentos\" sesijos bendram darbui su kiti Jabber naudotoju"
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2301
 msgid "Share with _chatroom..."
 msgstr "Dalintis _Kambaryje..."
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2301
 msgid ""
 "Join a chatroom to start a new whiteboard session or join one in progress"
 msgstr ""
 "Prisijungti prie Jabber pokalbių kambario bendram darbui su kitais Jabber "
 "naudotojais"
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2303
 msgid "_Dump XML node tracker"
 msgstr ""
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2303
 msgid "Dump the contents of the XML tracker to the console"
 msgstr ""
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2305
 msgid "_Open session file..."
 msgstr "A_tidaryti Sesijos Failą"
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2305
 msgid "Open and browse through records of past whiteboard sessions"
 msgstr "Atidaryti ankstesnių bendrų darbų sesijų failą"
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2307
 msgid "Session file playback"
 msgstr "Kartoti Sesijos veiksmus"
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2309
 msgid "_Disconnect from session"
 msgstr "Atsi_jungti nuo Sesijos"
 
-#: ../src/verbs.cpp:2307
+#: ../src/verbs.cpp:2311
 msgid "Disconnect from _server"
 msgstr "Atsijungti nuo _Serverio"
 
-#: ../src/verbs.cpp:2309
+#: ../src/verbs.cpp:2313
 msgid "_Input Devices..."
 msgstr "Įvest_ies Įtaisai..."
 
-#: ../src/verbs.cpp:2310
+#: ../src/verbs.cpp:2314
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr "Kontroliuoti įvesties įtaisų (pvz., planšetės) nustatymus"
 
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2315
 msgid "_Extensions..."
 msgstr "_Įskiepiai"
 
-#: ../src/verbs.cpp:2312
+#: ../src/verbs.cpp:2316
 msgid "Query information about extensions"
 msgstr "Informacija apie Inkscape įskiepius"
 
+#. new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("_Layers..."),
+#. N_("View Layers"), NULL),
 #. Help
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2321
 msgid "_Keys and Mouse"
 msgstr "_Klaviatūra ir Pelė"
 
-#: ../src/verbs.cpp:2316
+#: ../src/verbs.cpp:2322
 msgid "Keys and mouse shortcuts reference"
 msgstr "Klaviatūros ir pelės šaukiniai"
 
-#: ../src/verbs.cpp:2317
+#: ../src/verbs.cpp:2323
 msgid "About E_xtensions"
 msgstr "Apie _Įskiepius"
 
-#: ../src/verbs.cpp:2318
+#: ../src/verbs.cpp:2324
 msgid "Information on Inkscape extensions"
 msgstr "Informacija apie Inkscape įskiepius"
 
-#: ../src/verbs.cpp:2319
+#: ../src/verbs.cpp:2325
 msgid "About _Memory"
 msgstr "Apie At_mintį"
 
-#: ../src/verbs.cpp:2320
+#: ../src/verbs.cpp:2326
 msgid "Memory usage information"
 msgstr "Atminties naudojimo techninė informacija"
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2327
 msgid "_About Inkscape"
 msgstr "_Apie Inkscape"
 
-#: ../src/verbs.cpp:2322
+#: ../src/verbs.cpp:2328
 msgid "Inkscape version, authors, license"
 msgstr "Inkscape versija, autoriai ir licencija"
 
@@ -8708,109 +8714,109 @@ msgstr "Inkscape versija, autoriai ir licencija"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2327
+#: ../src/verbs.cpp:2333
 msgid "Inkscape: _Basic"
 msgstr "Inkscape: _Pradmenys"
 
-#: ../src/verbs.cpp:2328
+#: ../src/verbs.cpp:2334
 msgid "Getting started with Inkscape"
 msgstr "Pradedant darbą su Inkscape"
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2329
+#: ../src/verbs.cpp:2335
 msgid "Inkscape: _Shapes"
 msgstr "Inkscape: _Figūros"
 
-#: ../src/verbs.cpp:2330
+#: ../src/verbs.cpp:2336
 msgid "Using shape tools to create and edit shapes"
 msgstr "Geometrinių figūrų įrankių naudojimas figūrų kūrimui ir keitimui"
 
-#: ../src/verbs.cpp:2331
+#: ../src/verbs.cpp:2337
 msgid "Inkscape: _Advanced"
 msgstr "Inkscape: _Aukštesnis Lygis"
 
-#: ../src/verbs.cpp:2332
+#: ../src/verbs.cpp:2338
 msgid "Advanced Inkscape topics"
 msgstr "Aukštesnio lygio Inkscape patarimai"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2334
+#: ../src/verbs.cpp:2340
 msgid "Inkscape: T_racing"
 msgstr "Inkscape: Vaizdo Ty_rimas"
 
-#: ../src/verbs.cpp:2335
+#: ../src/verbs.cpp:2341
 msgid "Using bitmap tracing"
 msgstr "Patarimai apie grafinio vaizdo vertimą vektoriniu"
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2336
+#: ../src/verbs.cpp:2342
 msgid "Inkscape: _Calligraphy"
 msgstr "Inkscape: _Dailiraštis"
 
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2343
 msgid "Using the Calligraphy pen tool"
 msgstr "Informacija apie dailiraščio kūrimo įrankį"
 
-#: ../src/verbs.cpp:2338
+#: ../src/verbs.cpp:2344
 msgid "_Elements of Design"
 msgstr "Paai_škinimai"
 
-#: ../src/verbs.cpp:2339
+#: ../src/verbs.cpp:2345
 msgid "Principles of design in the tutorial form"
 msgstr "Pagrindiniai terminai ir paaiškinimai"
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2340
+#: ../src/verbs.cpp:2346
 msgid "_Tips and Tricks"
 msgstr "_Gudrybės"
 
-#: ../src/verbs.cpp:2341
+#: ../src/verbs.cpp:2347
 msgid "Miscellaneous tips and tricks"
 msgstr "Įvairūs patarimai"
 
 #. "tutorial_tips"
 #. Effect
-#: ../src/verbs.cpp:2344
+#: ../src/verbs.cpp:2350
 msgid "Previous Effect"
 msgstr "Kartoti Efektą"
 
-#: ../src/verbs.cpp:2345
+#: ../src/verbs.cpp:2351
 msgid "Repeat the last effect with the same settings"
 msgstr "Kartoti prieš tai atliktą efektą tais pačiais nustatymais"
 
 #. "tutorial_tips"
-#: ../src/verbs.cpp:2346
+#: ../src/verbs.cpp:2352
 msgid "Previous Effect Settings..."
 msgstr "Vykdytas Efektas..."
 
-#: ../src/verbs.cpp:2347
+#: ../src/verbs.cpp:2353
 msgid "Repeat the last effect with new settings"
 msgstr "Kartoti prieš tai atliktą efektą keičiant nustatymus"
 
 #. "tutorial_tips"
 #. Fit Canvas
-#: ../src/verbs.cpp:2350
+#: ../src/verbs.cpp:2356
 msgid "Fit Canvas to Selection"
 msgstr "Derinti pažymėjimo ribose"
 
-#: ../src/verbs.cpp:2351
+#: ../src/verbs.cpp:2357
 msgid "Fit the canvas to the current selection"
 msgstr "Priderinti rėmą pagal dabar pažymėtus objektus"
 
-#: ../src/verbs.cpp:2352
+#: ../src/verbs.cpp:2358
 msgid "Fit Canvas to Drawing"
 msgstr ""
 
-#: ../src/verbs.cpp:2353
+#: ../src/verbs.cpp:2359
 msgid "Fit the canvas to the drawing"
 msgstr "Priderinti rėmą pagal piešinį"
 
-#: ../src/verbs.cpp:2354
+#: ../src/verbs.cpp:2360
 msgid "Fit Canvas to Selection or Drawing"
 msgstr "Derinti Rėmą pagal Pažymėjimą ar Piešinį"
 
-#: ../src/verbs.cpp:2355
+#: ../src/verbs.cpp:2361
 msgid ""
 "Fit the canvas to the current selection or the drawing if there is no "
 "selection"
