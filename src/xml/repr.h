@@ -22,6 +22,7 @@
 #include "xml/sp-css-attr.h"
 
 #define SP_SODIPODI_NS_URI "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+#define SP_BROKEN_SODIPODI_NS_URI "http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
 #define SP_INKSCAPE_NS_URI "http://www.inkscape.org/namespaces/inkscape"
 #define SP_XLINK_NS_URI "http://www.w3.org/1999/xlink"
 #define SP_SVG_NS_URI "http://www.w3.org/2000/svg"

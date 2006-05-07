@@ -149,7 +149,7 @@ static SPXMLNs *namespaces=NULL;
 static void
 sp_xml_ns_register_defaults()
 {
-    static SPXMLNs defaults[7];
+    static SPXMLNs defaults[8];
 
     defaults[0].uri = g_quark_from_static_string(SP_SODIPODI_NS_URI);
     defaults[0].prefix = g_quark_from_static_string("sodipodi");
@@ -177,7 +177,11 @@ sp_xml_ns_register_defaults()
 
     defaults[6].uri = g_quark_from_static_string(SP_DC_NS_URI);
     defaults[6].prefix = g_quark_from_static_string("dc");
-    defaults[6].next = NULL;
+    defaults[6].next = &defaults[7];
+
+    defaults[7].uri = g_quark_from_static_string(SP_BROKEN_SODIPODI_NS_URI);
+    defaults[7].prefix = g_quark_from_static_string("sodipodi");
+    defaults[7].next = NULL;
 
     namespaces = &defaults[0];
 }

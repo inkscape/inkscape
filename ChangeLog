@@ -1,5 +1,11 @@
 2006-05-06  MenTaLguY  <mental@rydia.net>
 
+	* src/xml/repr-util.cpp, src/xml/repr.h:
+
+	  add fixup for incorrect sodipodi namespace
+
+2006-05-06  MenTaLguY  <mental@rydia.net>
+
 	* doc/NewAppArchitecture/01-title.svg,
 	  doc/NewAppArchitecture/04-current-main.svg,
 	  doc/NewAppArchitecture/05-current-objects.svg,
