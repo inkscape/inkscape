@@ -60,7 +60,7 @@ public:
                     }
                     else
                     {
-                        TS_WARN( std::string("Unable to getbyid() for ") + descr + std::string(" ID: '") + std::string(verb->get_id()) + std::string("'") );
+                        TS_FAIL( std::string("Unable to getbyid() for ") + descr + std::string(" ID: '") + std::string(verb->get_id()) + std::string("'") );
                     }
                 }
                 else

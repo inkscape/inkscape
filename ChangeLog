@@ -1,3 +1,8 @@
+2006-05-01  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/verbs.h, src/verbs.cpp, src/verbs-test.h:
+	  Fixed problem with std::map use making last verb inaccessible.
+
 2006-05-05  Carl Hetherington  <inkscape@carlh.net>
 
 	* src/draw-context.cpp, src/line-snapper.h, src/snap.cpp,

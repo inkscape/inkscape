@@ -196,17 +196,18 @@ enum {
     SP_VERB_DIALOG_CLONETILER,
     SP_VERB_DIALOG_ITEM,
 #ifdef WITH_INKBOARD
-	SP_VERB_DIALOG_WHITEBOARD_CONNECT,
-	SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER,
-	SP_VERB_DIALOG_WHITEBOARD_SHAREWITHCHAT,
-	SP_VERB_DIALOG_WHITEBOARD_DUMPXMLTRACKER,
-	SP_VERB_DIALOG_WHITEBOARD_OPENSESSIONFILE,
-	SP_VERB_DIALOG_WHITEBOARD_SESSIONPLAYBACK,
-	SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SESSION,
-	SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SERVER,
+    SP_VERB_DIALOG_WHITEBOARD_CONNECT,
+    SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER,
+    SP_VERB_DIALOG_WHITEBOARD_SHAREWITHCHAT,
+    SP_VERB_DIALOG_WHITEBOARD_DUMPXMLTRACKER,
+    SP_VERB_DIALOG_WHITEBOARD_OPENSESSIONFILE,
+    SP_VERB_DIALOG_WHITEBOARD_SESSIONPLAYBACK,
+    SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SESSION,
+    SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SERVER,
 #endif
     SP_VERB_DIALOG_INPUT,
     SP_VERB_DIALOG_EXTENSIONEDITOR,
+    //SP_VERB_DIALOG_LAYERS,
     /* Help */
     SP_VERB_HELP_KEYS,
     SP_VERB_HELP_ABOUT_EXTENSIONS,
@@ -256,8 +257,13 @@ private:
         to find the different verbs in the hash map. */
     struct ltstr {
         bool operator()(const char* s1, const char* s2) const {
-            if (s1 == NULL || s2 == NULL) return true;
-            return strcmp(s1, s2) < 0;
+            if ( (s1 == NULL) && (s2 != NULL) ) {
+                return true;
+            } else if (s1 == NULL || s2 == NULL) {
+                return false;
+            } else {
+                return strcmp(s1, s2) < 0;
+            }
         }
     };
     /** \brief An easy to use definition of the table of verbs by ID. */
