@@ -147,6 +147,7 @@ SPKnot *sp_knot_new(SPDesktop *desktop, gchar const *tip = NULL);
 void sp_knot_show(SPKnot *knot);
 void sp_knot_hide(SPKnot *knot);
 
+void sp_knot_set_flag(SPKnot *knot, guint flag, bool set);
 void sp_knot_update_ctrl(SPKnot *knot);
 
 void sp_knot_request_position(SPKnot *knot, NR::Point *pos, guint state);

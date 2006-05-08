@@ -1,4 +1,9 @@
-2006-05-01  Jon A. Cruz  <jon@joncruz.org>
+2006-05-07  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* knot.h, knot.cpp, connector-context.cpp:
+	  Fix glib-gobject-warnings for knots in the connector tool.
+
+2006-05-07  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/document-subset.cpp:
 	  Corrected two bugs, with the minor one hiding the more severe.

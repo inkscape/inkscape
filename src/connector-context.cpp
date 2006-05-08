@@ -954,6 +954,8 @@ static gboolean
 cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 {
     g_assert (knot != NULL);
+    
+    g_object_ref(knot);
 
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(
             knot->desktop->event_context);
@@ -962,11 +964,8 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
-            gtk_object_set (GTK_OBJECT (knot->item), "fill_color",
-                    knot->fill [SP_KNOT_STATE_MOUSEOVER], NULL);
-            gtk_object_set (GTK_OBJECT (knot->item), "stroke_color",
-                    knot->stroke [SP_KNOT_STATE_MOUSEOVER], NULL);
-
+            sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, TRUE);
+            
             cc->active_handle = knot;
 
             if (knot->tip)
@@ -974,26 +973,25 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
                 knot->desktop->event_context->defaultMessageContext()->set(
                         Inkscape::NORMAL_MESSAGE, knot->tip);
             }
-
+            
             consumed = TRUE;
             break;
         case GDK_LEAVE_NOTIFY:
-            gtk_object_set (GTK_OBJECT (knot->item), "fill_color",
-                    knot->fill [SP_KNOT_STATE_NORMAL], NULL);
-            gtk_object_set (GTK_OBJECT (knot->item), "stroke_color",
-                    knot->stroke [SP_KNOT_STATE_NORMAL], NULL);
+            sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, FALSE);
 
             cc->active_handle = NULL;
-
+            
             if (knot->tip) {
                 knot->desktop->event_context->defaultMessageContext()->clear();
             }
-
+            
             consumed = TRUE;
             break;
         default:
             break;
     }
+    
+    g_object_unref(knot);
 
     return consumed;
 }
@@ -1079,32 +1077,23 @@ static void cc_set_active_shape(SPConnectorContext *cc, SPItem *item)
 
     // Set center connection point.
     if ( cc->connpthandle == NULL ) {
-	SPKnot * knot = (SPKnot*)g_object_new (SP_TYPE_KNOT, 0);
+        SPKnot *knot = sp_knot_new(cc->desktop, 
+                _("<b>Connection point</b>: click or drag to create a new connector"));
 
-	knot->desktop = cc->desktop;
-	knot->flags = SP_KNOT_VISIBLE;
+        knot->setShape(SP_KNOT_SHAPE_SQUARE);
+        knot->setSize(8);
+        knot->setAnchor(GTK_ANCHOR_CENTER);
+        knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
+        sp_knot_update_ctrl(knot);
 
-	knot->item = sp_canvas_item_new (sp_desktop_controls(cc->desktop),
-		SP_TYPE_CTRL,
-		"anchor", GTK_ANCHOR_CENTER,
-		"filled", TRUE,
-		"stroked", TRUE,
-		"mode", SP_KNOT_MODE_XOR,
-		NULL);
+        // We don't want to use the standard knot handler,
+        //since we don't want this knot to be draggable.
+        g_signal_handler_disconnect(G_OBJECT(knot->item),
+                knot->_event_handler_id);
+        knot->_event_handler_id = 0;
 
-	gtk_signal_connect (GTK_OBJECT (knot->item), "event",
-		GTK_SIGNAL_FUNC (cc_generic_knot_handler), knot);
-
-        knot->fill [SP_KNOT_STATE_NORMAL] = 0xffffff00;
-        knot->fill [SP_KNOT_STATE_MOUSEOVER] = 0xff0000ff;
-        knot->stroke [SP_KNOT_STATE_NORMAL] = 0x01000000;
-
-        g_object_set(G_OBJECT(knot),
-                     "shape", SP_KNOT_SHAPE_SQUARE,
-                     "size", 8,
-                     "anchor", GTK_ANCHOR_CENTER,
-                     "tip", _("<b>Connection point</b>: click or drag to create a new connector"),
-                     NULL);
+        gtk_signal_connect(GTK_OBJECT(knot->item), "event",
+                GTK_SIGNAL_FUNC(cc_generic_knot_handler), knot);
 
         cc->connpthandle = knot;
     }
@@ -1159,32 +1148,24 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
 
         // Create the handle if it doesn't exist
         if ( cc->endpt_handle[i] == NULL ) {
-            SPKnot * knot = (SPKnot*) g_object_new (SP_TYPE_KNOT, 0);
+            SPKnot *knot = sp_knot_new(cc->desktop, 
+                    _("<b>Connector endpoint</b>: drag to reroute or connect to new shapes"));
 
-            knot->desktop = cc->desktop;
-            knot->flags = SP_KNOT_VISIBLE;
+            knot->setShape(SP_KNOT_SHAPE_SQUARE);
+            knot->setSize(7);
+            knot->setAnchor(GTK_ANCHOR_CENTER);
+            knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
+            knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
+            sp_knot_update_ctrl(knot);
 
-            knot->item = sp_canvas_item_new (sp_desktop_controls (cc->desktop),
-                    SP_TYPE_CTRL,
-                    "anchor", GTK_ANCHOR_CENTER,
-                    "filled", TRUE,
-                    "stroked", TRUE,
-                    "mode", SP_KNOT_MODE_XOR,
-                    NULL);
+            // We don't want to use the standard knot handler,
+            //since we don't want this knot to be draggable.
+            g_signal_handler_disconnect(G_OBJECT(knot->item),
+                    knot->_event_handler_id);
+            knot->_event_handler_id = 0;
 
-            knot->fill [SP_KNOT_STATE_NORMAL] = 0xffffff00;
-            knot->stroke [SP_KNOT_STATE_NORMAL] = 0x000000ff;
-            knot->stroke [SP_KNOT_STATE_DRAGGING] = 0x000000ff;
-            knot->stroke [SP_KNOT_STATE_MOUSEOVER] = 0x000000ff;
-
-            g_object_set(G_OBJECT(knot),
-                    "shape", SP_KNOT_SHAPE_DIAMOND,
-                    "size", 10,
-                    "tip", _("<b>Connector endpoint</b>: drag to reroute or connect to new shapes"),
-                    NULL);
-
-            gtk_signal_connect (GTK_OBJECT (knot->item), "event",
-                    GTK_SIGNAL_FUNC (cc_generic_knot_handler), knot);
+            gtk_signal_connect(GTK_OBJECT(knot->item), "event",
+                    GTK_SIGNAL_FUNC(cc_generic_knot_handler), knot);
 
             cc->endpt_handle[i] = knot;
         }

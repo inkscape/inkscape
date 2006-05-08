@@ -62,7 +62,6 @@ static void sp_knot_init(SPKnot *knot);
 static void sp_knot_dispose(GObject *object);
 
 static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot);
-static void sp_knot_set_flag(SPKnot *knot, guint flag, bool set);
 static void sp_knot_set_ctrl_state(SPKnot *knot);
 
 static GObjectClass *parent_class;
@@ -582,7 +581,7 @@ NR::Point sp_knot_position(SPKnot const *knot)
 /**
  * Set flag in knot, with side effects.
  */
-static void sp_knot_set_flag(SPKnot *knot, guint flag, bool set)
+void sp_knot_set_flag(SPKnot *knot, guint flag, bool set)
 {
     g_assert(knot != NULL);
     g_assert(SP_IS_KNOT(knot));
