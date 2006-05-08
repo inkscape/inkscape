@@ -179,6 +179,12 @@ sp_xml_ns_register_defaults()
     defaults[6].prefix = g_quark_from_static_string("dc");
     defaults[6].next = &defaults[7];
 
+    // Inkscape versions prior to 0.44 would write this namespace
+    // URI instead of the correct sodipodi namespace; by adding this
+    // entry to the table last (where it gets used for URI -> prefix
+    // lookups, but not prefix -> URI lookups), we effectively transfer
+    // elements in this namespace to the correct sodipodi namespace:
+
     defaults[7].uri = g_quark_from_static_string(SP_BROKEN_SODIPODI_NS_URI);
     defaults[7].prefix = g_quark_from_static_string("sodipodi");
     defaults[7].next = NULL;

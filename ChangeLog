@@ -1,3 +1,9 @@
+2006-05-08  MenTaLguY  <mental@rydia.net>
+
+	* src/xml/repr-util.cpp:
+	
+	  comments explaining namespace mapping for the broken sodipodi namespace
+
 2006-05-08  Carl Hetherington  <inkscape@carlh.net>
 
 	* src/seltrans.cpp, src/snap.cpp, src/snap.h: fix ctrl-scaling
