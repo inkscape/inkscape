@@ -27,6 +27,14 @@
 
 class SPNamedView;
 
+/// Class to coordinate snapping operations
+
+/**
+ *  Each SPNamedView has one of these.  It offers methods to snap points to whatever
+ *  snappers are defined (e.g. grid, guides etc.).  It also allows callers to snap
+ *  points which have undergone some transformation (e.g. translation, scaling etc.)
+ */
+
 class SnapManager
 {
 public:
@@ -91,9 +99,9 @@ public:
                                             NR::Point const &o,
                                             NR::Dim2 d) const;
 
-    Inkscape::GridSnapper grid;
-    Inkscape::GuideSnapper guide;
-    Inkscape::ObjectSnapper object;
+    Inkscape::GridSnapper grid;     ///< grid snapper
+    Inkscape::GuideSnapper guide;   ///< guide snapper
+    Inkscape::ObjectSnapper object; ///< snapper to other objects
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
     SnapperList getSnappers() const;

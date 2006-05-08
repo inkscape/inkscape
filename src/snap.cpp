@@ -21,10 +21,21 @@
 #include <libnr/nr-scale-ops.h>
 #include <libnr/nr-values.h>
 
+/**
+ *  Construct a SnapManager for a SPNamedView.
+ *
+ *  \param v `Owning' SPNamedView.
+ */
+
 SnapManager::SnapManager(SPNamedView const *v) : grid(v, 0), guide(v, 0), object(v, 0)
 {
 
 }
+
+
+/**
+ *  \return List of snappers that we use.
+ */
 
 SnapManager::SnapperList SnapManager::getSnappers() const
 {
@@ -38,6 +49,7 @@ SnapManager::SnapperList SnapManager::getSnappers() const
 /**
  * \return true if one of the snappers will try to snap something.
  */
+
 bool SnapManager::willSnapSomething() const
 {
     SnapperList const s = getSnappers();
@@ -49,6 +61,16 @@ bool SnapManager::willSnapSomething() const
     return (i != s.end());
 }
 
+
+/**
+ *  Try to snap a point to any interested snappers.
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param it Item to ignore when snapping.
+ *  \return Snapped point.
+ */
+
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
                                              SPItem const *it) const
@@ -59,6 +81,15 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
     return freeSnap(t, p, lit);
 }
 
+
+/**
+ *  Try to snap a point to any interested snappers.
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param it List of items to ignore when snapping.
+ *  \return Snapped point.
+ */
 
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
                                              NR::Point const &p,
@@ -78,6 +109,17 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::Snapper::PointType t,
 }
 
 
+/**
+ *  Try to snap a point to any interested snappers.  A snap will only occur along
+ *  a line described by a Inkscape::Snapper::ConstraintLine.
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param c Constraint line.
+ *  \param it Item to ignore when snapping.
+ *  \return Snapped point.
+ */
+
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
                                                     Inkscape::Snapper::ConstraintLine const &c,
@@ -88,6 +130,18 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
     return constrainedSnap(t, p, c, lit);
 }
 
+
+
+/**
+ *  Try to snap a point to any interested snappers.  A snap will only occur along
+ *  a line described by a Inkscape::Snapper::ConstraintLine.
+ *
+ *  \param t Type of point.
+ *  \param p Point.
+ *  \param c Constraint line.
+ *  \param it List of items to ignore when snapping.
+ *  \return Snapped point.
+ */
 
 Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType t,
                                                     NR::Point const &p,
@@ -107,6 +161,24 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::Snapper::PointType
     return r;
 }
 
+
+
+/**
+ *  Main internal snapping method, which is called by the other, friendlier, public
+ *  methods.  It's a bit hairy as it has lots of parameters, but it saves on a lot
+ *  of duplicated code.
+ *
+ *  \param type Type of points being snapped.
+ *  \param points List of points to snap.
+ *  \param ignore List of items to ignore while snapping.
+ *  \param constrained true if the snap is constrained.
+ *  \param constraint Constraint line to use, if `constrained' is true, otherwise undefined.
+ *  \param transformation_type Type of transformation to apply to points before trying to snap them.
+ *  \param transformation Description of the transformation; details depend on the type.
+ *  \param origin Origin of the transformation, if applicable.
+ *  \param dim Dimension of the transformation, if applicable.
+ *  \param uniform true if the transformation should be uniform, if applicable.
+ */
 
 std::pair<NR::Point, bool> SnapManager::_snapTransformed(
     Inkscape::Snapper::PointType type,
@@ -224,6 +296,17 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
 }
 
 
+/**
+ *  Try to snap a list of points to any interested snappers after they have undergone
+ *  a translation.
+ *
+ *  \param t Type of points.
+ *  \param p Points.
+ *  \param it List of items to ignore when snapping.
+ *  \param tr Proposed translation.
+ *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
+ */
+
 std::pair<NR::Point, bool> SnapManager::freeSnapTranslation(Inkscape::Snapper::PointType t,
                                                             std::vector<NR::Point> const &p,
                                                             std::list<SPItem const *> const &it,
@@ -235,6 +318,18 @@ std::pair<NR::Point, bool> SnapManager::freeSnapTranslation(Inkscape::Snapper::P
 }
 
 
+/**
+ *  Try to snap a list of points to any interested snappers after they have undergone a
+ *  translation.  A snap will only occur along a line described by a
+ *  Inkscape::Snapper::ConstraintLine.
+ *
+ *  \param t Type of points.
+ *  \param p Points.
+ *  \param it List of items to ignore when snapping.
+ *  \param c Constraint line.
+ *  \param tr Proposed translation.
+ *  \return Snapped translation, if a snap occurred, and a flag indicating whether a snap occurred.
+ */
 
 std::pair<NR::Point, bool> SnapManager::constrainedSnapTranslation(Inkscape::Snapper::PointType t,
                                                                    std::vector<NR::Point> const &p,
@@ -246,6 +341,19 @@ std::pair<NR::Point, bool> SnapManager::constrainedSnapTranslation(Inkscape::Sna
         t, p, it, true, c, TRANSLATION, tr, NR::Point(), NR::X, false
         );
 }
+
+
+/**
+ *  Try to snap a list of points to any interested snappers after they have undergone
+ *  a scale.
+ *
+ *  \param t Type of points.
+ *  \param p Points.
+ *  \param it List of items to ignore when snapping.
+ *  \param s Proposed scale.
+ *  \param o Origin of proposed scale.
+ *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
+ */
 
 std::pair<NR::scale, bool> SnapManager::freeSnapScale(Inkscape::Snapper::PointType t,
                                                       std::vector<NR::Point> const &p,
@@ -259,6 +367,19 @@ std::pair<NR::scale, bool> SnapManager::freeSnapScale(Inkscape::Snapper::PointTy
 }
 
 
+/**
+ *  Try to snap a list of points to any interested snappers after they have undergone
+ *  a scale.  A snap will only occur along a line described by a
+ *  Inkscape::Snapper::ConstraintLine.
+ *
+ *  \param t Type of points.
+ *  \param p Points.
+ *  \param it List of items to ignore when snapping.
+ *  \param s Proposed scale.
+ *  \param o Origin of proposed scale.
+ *  \return Snapped scale, if a snap occurred, and a flag indicating whether a snap occurred.
+ */
+
 std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::PointType t,
                                                              std::vector<NR::Point> const &p,
                                                              std::list<SPItem const *> const &it,
@@ -271,6 +392,20 @@ std::pair<NR::scale, bool> SnapManager::constrainedSnapScale(Inkscape::Snapper::
         );
 }
 
+
+/**
+ *  Try to snap a list of points to any interested snappers after they have undergone
+ *  a stretch.
+ *
+ *  \param t Type of points.
+ *  \param p Points.
+ *  \param it List of items to ignore when snapping.
+ *  \param s Proposed stretch.
+ *  \param o Origin of proposed stretch.
+ *  \param d Dimension in which to apply proposed stretch.
+ *  \param u true if the stretch should be uniform (ie to be applied equally in both dimensions)
+ *  \return Snapped stretch, if a snap occurred, and a flag indicating whether a snap occurred.
+ */
 
 std::pair<NR::Coord, bool> SnapManager::freeSnapStretch(Inkscape::Snapper::PointType t,
                                                         std::vector<NR::Point> const &p,
@@ -287,6 +422,19 @@ std::pair<NR::Coord, bool> SnapManager::freeSnapStretch(Inkscape::Snapper::Point
    return std::make_pair(r.first[d], r.second);
 }
 
+
+/**
+ *  Try to snap a list of points to any interested snappers after they have undergone
+ *  a skew.
+ *
+ *  \param t Type of points.
+ *  \param p Points.
+ *  \param it List of items to ignore when snapping.
+ *  \param s Proposed skew.
+ *  \param o Origin of proposed skew.
+ *  \param d Dimension in which to apply proposed skew.
+ *  \return Snapped skew, if a snap occurred, and a flag indicating whether a snap occurred.
+ */
 
 std::pair<NR::Coord, bool> SnapManager::freeSnapSkew(Inkscape::Snapper::PointType t,
                                                      std::vector<NR::Point> const &p,
