@@ -1,6 +1,7 @@
 2006-05-08  Carl Hetherington  <inkscape@carlh.net>
 
-	* src/seltrans.cpp: fix ctrl-scaling when there is no snap.
+	* src/seltrans.cpp, src/snap.cpp, src/snap.h: fix ctrl-scaling
+	when there is no snap.  More snapping cleanups.
 
 2006-05-07  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
