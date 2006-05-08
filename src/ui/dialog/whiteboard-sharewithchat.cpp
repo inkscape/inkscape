@@ -20,6 +20,8 @@
 #include "inkscape.h"
 #include "desktop.h"
 
+#include "prefs-utils.h"
+
 #include "jabber_whiteboard/typedefs.h"
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/buddy-list-manager.h"
@@ -79,6 +81,11 @@ WhiteboardShareWithChatroomDialogImpl::_construct()
 	this->_labels[1].set_mnemonic_widget(this->_confserver);
 	this->_labels[2].set_mnemonic_widget(this->_roompass);
 	this->_labels[3].set_mnemonic_widget(this->_handle);
+
+
+	this->_roomname.set_text(prefs_get_string_attribute("whiteboard.room", "name"));
+	this->_confserver.set_text(prefs_get_string_attribute("whiteboard.room", "server"));
+	this->_handle.set_text(prefs_get_string_attribute("whiteboard.server", "username"));
 
 	// Pack table
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);

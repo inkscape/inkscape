@@ -19,6 +19,8 @@
 #include "file.h"
 #include "document.h"
 
+#include "prefs-utils.h"
+
 #include "xml/repr.h"
 
 #include "jabber_whiteboard/defines.h"
@@ -89,6 +91,13 @@ SessionManager::sendRequestToChatroom(Glib::ustring const& server, Glib::ustring
 	this->session_data->chat_handle = handle;
 	this->session_data->chat_server = server;
 	this->session_data->chat_name = chatroom;
+
+	prefs_set_string_attribute("whiteboard.room", "name", chatroom.c_str());
+	prefs_set_string_attribute("whiteboard.room", "server", server.c_str());
+	//Commented out because you can use whiteboard.server.username
+	//prefs_set_string_attribute("whiteboard.room", "handle", handle.c_str());
+	//store password here?
+
 
 	this->setRecipient(String::ucompose("%1@%2", chatroom, server).data());
 

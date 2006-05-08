@@ -23,6 +23,8 @@
 
 #include "gc-anchored.h"
 
+#include "prefs-utils.h"
+
 #include "xml/repr.h"
 #include "xml/node-observer.h"
 
@@ -288,6 +290,14 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	lm_message_unref(m);
 
 	this->_setVerbSensitivity(ESTABLISHED_CONNECTION);
+
+	//On successful connect, remember info
+	prefs_set_string_attribute("whiteboard.server", "name", server.c_str());
+	prefs_set_string_attribute("whiteboard.server", "port", port.c_str());
+	prefs_set_string_attribute("whiteboard.server", "username", username.c_str());
+	prefs_set_int_attribute("whiteboard.server", "ssl", (usessl) ? 1 : 0);
+	//Option to store password here?
+
 
 	return CONNECT_SUCCESS;
 }

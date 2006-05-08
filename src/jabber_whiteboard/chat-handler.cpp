@@ -137,6 +137,7 @@ ChatMessageHandler::parse(LmMessage* message)
 						this->_sm->session_data->receive_queues[sender.raw()] = new ReceiveMessageQueue(this->_sm);
 						
 					} else {
+						//g_warning("hmm, who is chatting %s",chatter);
 						// If the presence message is from ourselves, then we know that we 
 						// have successfully entered the chatroom _and_ have received the entire room roster,
 						// and can therefore decide whether we need to synchronize with the rest of the room.

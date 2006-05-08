@@ -81,7 +81,10 @@ WhiteboardConnectDialogImpl::_construct()
 	this->_labels[2].set_mnemonic_widget(this->_password);
 	this->_labels[3].set_mnemonic_widget(this->_port);
 
-	this->_port.set_text("5222");
+	this->_server.set_text(prefs_get_string_attribute("whiteboard.server", "name"));
+	this->_port.set_text(prefs_get_string_attribute("whiteboard.server", "port"));
+	this->_username.set_text(prefs_get_string_attribute("whiteboard.server", "username"));
+	this->_usessl.set_active((prefs_get_int_attribute("whiteboard.server", "ssl", 0) == 1) ? true : false);
 
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);
 	this->_layout.attach(this->_labels[3], 2, 3, 0, 1);
