@@ -84,6 +84,13 @@ public:
                                                NR::Dim2 d,
                                                bool uniform) const;
 
+    std::pair<NR::Coord, bool> freeSnapSkew(Inkscape::Snapper::PointType t,
+                                            std::vector<NR::Point> const &p,
+                                            std::list<SPItem const *> const &it,
+                                            NR::Coord const &s,
+                                            NR::Point const &o,
+                                            NR::Dim2 d) const;
+
     Inkscape::GridSnapper grid;
     Inkscape::GuideSnapper guide;
     Inkscape::ObjectSnapper object;
@@ -96,7 +103,8 @@ private:
     enum Transformation {
         TRANSLATION,
         SCALE,
-        STRETCH
+        STRETCH,
+        SKEW
     };
     
     std::pair<NR::Point, bool> _snapTransformed(Inkscape::Snapper::PointType type,
@@ -110,24 +118,6 @@ private:
                                                 NR::Dim2 dim,
                                                 bool uniform) const;
 };
-
-
-/* Single point methods */
-NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, NR::Point &req,
-                                NR::Point const &d, std::list<SPItem const *> const &it);
-NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, NR::Point &req,
-                                NR::Point const &d, SPItem const *it);
-NR::Coord namedview_dim_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, NR::Point& req,
-                             NR::Dim2 const dim, SPItem const *it);
-NR::Coord namedview_dim_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, NR::Point& req,
-                             NR::Dim2 const dim, std::list<SPItem const *> const &it);
-
-/* List of points methods */
-
-NR::Coord namedview_dim_snap_list_skew(SPNamedView const *nv, Inkscape::Snapper::PointType t,
-                                       const std::vector<NR::Point> &p,
-                                       NR::Point const &norm, double const sx, NR::Dim2 const dim);
-
 
 #endif /* !SEEN_SNAP_H */
 

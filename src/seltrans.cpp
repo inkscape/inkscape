@@ -1022,9 +1022,28 @@ gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Poi
         }
         skew[dim_a] = tan(radians) * s[dim_a];
     } else {
-        skew[dim_a] = namedview_dim_snap_list_skew(_desktop->namedview,
-                Snapper::SNAP_POINT, _snap_points,
-                _origin, skew[dim_a], dim_b);
+        SnapManager const &m = _desktop->namedview->snap_manager;
+
+        std::pair<NR::Coord, bool> bb = m.freeSnapSkew(Inkscape::Snapper::BBOX_POINT,
+                                                       _bbox_points,
+                                                       std::list<SPItem const *>(),
+                                                       skew[dim_a],
+                                                       _origin,
+                                                       dim_a);
+
+        std::pair<NR::Coord, bool> sn = m.freeSnapSkew(Inkscape::Snapper::SNAP_POINT,
+                                                       _snap_points,
+                                                       std::list<SPItem const *>(),
+                                                       skew[dim_a],
+                                                       _origin,
+                                                       dim_a);
+        
+        if (bb.second || sn.second) {
+            /* We snapped something, so change the skew to reflect it */
+            NR::Coord const bd = bb.second ? bb.first : NR_HUGE;
+            NR::Coord const sd = sn.second ? sn.first : NR_HUGE;
+            skew[dim_a] = std::min(bd, sd);
+        }
     }
 
     pt[dim_b] = ( _point[dim_a] - _origin[dim_a] ) * skew[dim_a] + _point[dim_b];

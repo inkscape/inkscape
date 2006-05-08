@@ -161,6 +161,10 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                 transformed = ((*i - origin) * s) + origin;
                 break;
             }
+            case SKEW:
+                transformed = *i;
+                transformed[dim] += transformation[dim] * ((*i)[1 - dim] - origin[1 - dim]);
+                break;
             default:
                 g_assert_not_reached();
         }
@@ -200,6 +204,10 @@ std::pair<NR::Point, bool> SnapManager::_snapTransformed(
                     metric = std::abs(result[dim] - transformation[dim]);
                     break;
                 }
+                case SKEW:
+                    result[dim] = (snapped.getPoint()[dim] - (*i)[dim]) / ((*i)[1 - dim] - origin[1 - dim]);
+                    metric = std::abs(result[dim] - transformation[dim]);
+                    break;
                 default:
                     g_assert_not_reached();
             }
@@ -280,114 +288,19 @@ std::pair<NR::Coord, bool> SnapManager::freeSnapStretch(Inkscape::Snapper::Point
 }
 
 
-
-/// Minimal distance to norm before point is considered for snap.
-static const double MIN_DIST_NORM = 1.0;
-
-/**
- * Try to snap \a req in one dimension.
- *
- * \param nv NamedView to use.
- * \param req Point to snap; updated to the snapped point if a snap occurred.
- * \param dim Dimension to snap in.
- * \return Distance to the snap point along the \a dim axis, or \c NR_HUGE
- *    if no snap occurred.
- */
-NR::Coord namedview_dim_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, NR::Point &req,
-                             NR::Dim2 const dim, SPItem const *it)
+std::pair<NR::Coord, bool> SnapManager::freeSnapSkew(Inkscape::Snapper::PointType t,
+                                                     std::vector<NR::Point> const &p,
+                                                     std::list<SPItem const *> const &it,
+                                                     NR::Coord const &s,
+                                                     NR::Point const &o,
+                                                     NR::Dim2 d) const
 {
-    return namedview_vector_snap(nv, t, req, component_vectors[dim], it);
+   std::pair<NR::Point, bool> const r = _snapTransformed(
+        t, p, it, false, NR::Point(), SKEW, NR::Point(s, s), o, d, false
+        );
+
+   return std::make_pair(r.first[d], r.second);
 }
-
-NR::Coord namedview_dim_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t, NR::Point &req,
-                             NR::Dim2 const dim, std::list<SPItem const *> const &it)
-{
-    return namedview_vector_snap(nv, t, req, component_vectors[dim], it);
-}
-
-
-NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t,
-                                NR::Point &req, NR::Point const &d,
-                                SPItem const *it)
-{
-    std::list<SPItem const *> lit;
-    lit.push_back(it);
-    return namedview_vector_snap(nv, t, req, d, lit);
-}
-
-/**
- * Look for snap point along the line described by the point \a req
- * and the direction vector \a d.
- * Modifies req to the snap point, if one is found.
- * \return The distance from \a req to the snap point along the vector \a d,
- * or \c NR_HUGE if no snap point was found.
- *
- * \pre d Å‚âÅ† (0, 0).
- */
-NR::Coord namedview_vector_snap(SPNamedView const *nv, Inkscape::Snapper::PointType t,
-                                NR::Point &req, NR::Point const &d,
-                                std::list<SPItem const *> const &it)
-{
-    g_assert(nv != NULL);
-    g_assert(SP_IS_NAMEDVIEW(nv));
-
-    SnapManager::SnapperList const snappers = nv->snap_manager.getSnappers();
-
-    NR::Coord best = NR_HUGE;
-    for (SnapManager::SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
-        Inkscape::SnappedPoint const s = (*i)->constrainedSnap(t, req, d, it);
-        if (s.getDistance() < best) {
-            req = s.getPoint();
-            best = s.getDistance();
-        }
-    }
-
-    return best;
-}
-
-
-/*
- * functions for lists of points
- *
- * All functions take a list of NR::Point and parameter indicating the proposed transformation.
- * They return the updated transformation parameter.
- */
-
-/**
- * Try to snap points after they have been skewed.
- */
-double namedview_dim_snap_list_skew(SPNamedView const *nv, Inkscape::Snapper::PointType t,
-                                    const std::vector<NR::Point> &p, NR::Point const &norm,
-                                    double const sx, NR::Dim2 const dim)
-{
-    SnapManager const &m = nv->snap_manager;
-
-    if (m.willSnapSomething() == false) {
-        return sx;
-    }
-
-    g_assert(dim < 2);
-
-    gdouble dist = NR_HUGE;
-    gdouble skew = sx;
-
-    for (std::vector<NR::Point>::const_iterator i = p.begin(); i != p.end(); i++) {
-        NR::Point q = *i;
-        NR::Point check = q;
-        // apply shear
-        check[dim] += sx * (q[!dim] - norm[!dim]);
-        if (fabs (q[!dim] - norm[!dim]) > MIN_DIST_NORM) {
-            const gdouble d = namedview_dim_snap (nv, t, check, dim, NULL);
-            if (d < fabs (dist)) {
-                dist = d;
-                skew = (check[dim] - q[dim]) / (q[!dim] - norm[!dim]);
-            }
-        }
-    }
-
-    return skew;
-}
-
 
 /*
   Local Variables:
