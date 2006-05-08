@@ -1,5 +1,9 @@
 <root xmlns="http://www.inkscape.org/namespaces/keys">
 
+<p>This document describes the default keyboard shortcuts of Inkscape, corresponding to the
+share/keys/default.xml file in Inkscape distribution. Most (but not all) of these keys
+are configurable by the user; see the default.xml file for details on how to do that.</p>
+
 <p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
 supposed to work the same as corresponding regular keys. If you have a new shortcut
 idea, please contact the developers (by writing to the <a
@@ -150,6 +154,18 @@ RFE</a>).</p>
 </group>
 </section>
 
+*<section title="Palette" color="efcfdf">
+<group>
+<note>These keys work both in the floating palette dialog and in the palette frame at the bottom of the window.</note>
+<mouse><key><left-click/></key> <action>set fill color on selection</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>set stroke color on selection</action></mouse>
+<mouse><key><left-drag/></key> <action>drag fill color to objects</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>drag stroke color to objects</action></mouse>
+<note>To change fill/stroke of an object by dragging color on it, that object need not be selected.</note>
+<note>You can also drag colors to the Fill (F) and Stroke (S) indicators in the statusbar to change the selection.</note>
+</group>
+</section>
+
 
 </column>
 
@@ -197,7 +213,6 @@ RFE</a>).</p>
 </group>
 
 </section>
-
 
 *<section title="Layers" color="f6f9d9">
 <group>
@@ -411,6 +426,7 @@ RFE</a>).</p>
 <keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>rotate selection by 90 degrees</action></keys>
 <keys><key><alt/>[</key> <key><alt/>]</key> <action>rotate selection by 1 pixel</action></keys>
 <note>The actual angle for pixel rotation depends on zoom level. Zoom in for finer movement.</note>
+<note>These commands use the rotation center, draggable in Selector (by default it's in geometric center).</note>
 </group>
 
 <group>
@@ -444,7 +460,7 @@ RFE</a>).</p>
 <mouse><key><ctrl/><alt/><left-click/></key> <action>select under, in groups</action></mouse>
 <mouse><key><shift/><ctrl/><alt/><left-click/></key> <action>toggle under, in groups</action></mouse>
 <keys><key><ctrl/><misc-wide f="Enter"/></key> <action>enter group</action></keys>
-<keys><key><ctrl/><misc-wide f="Backspace"/></key>	 <action>go to parent group</action></keys>
+<keys><key><ctrl/><misc-wide f="Backspace"/></key>	 <action>go to parent group/layer</action></keys>
 </group>
 
 <group>
@@ -480,6 +496,7 @@ RFE</a>).</p>
 
 <group>
 <title>Scale handles</title>
+<mouse><key><left-drag/></key> <action>scale</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>scale preserving aspect ratio</action></mouse>
 <!--<mouse><key><ctrl/><left-drag/></key> only smaller, keep aspect ratio--> <!-- TO BE REMOVED -->
 <mouse><key><shift/><left-drag/></key> <action>symmetric transformation</action></mouse>
@@ -490,11 +507,20 @@ RFE</a>).</p>
 </group>
 
 <group>
-<title>Rotation handles</title>
+<title>Rotation/skew handles</title>
+<mouse><key><left-drag/></key> <action>rotate or skew</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>snap skew angle</action></mouse>
 <note>Holding Ctrl when dragging a skew (non-corner) handle snaps the skew angle to angle steps (default 15 degrees).</note>
 <mouse><key><ctrl/><left-drag/></key> <action>snap rotation angle</action></mouse>
 <note>Holding Ctrl when dragging a rotation (corner) handle snaps the rotation angle to angle steps (default 15 degrees).</note>
+</group>
+
+<group>
+<title>Rotation center</title>
+<mouse><key><left-drag/></key> <action>move rotation center</action></mouse>
+<note>Moved rotation center remembers its position for (all) selected object(s) until you reset it.</note>
+<mouse><key><shift/><left-click/></key> <action>reset rotation center</action></mouse>
+<note>Resetting rotation center moves it back to the geometric center of the object's or selection's bounding box.</note>
 </group>
 
 <group>
@@ -616,6 +642,7 @@ RFE</a>).</p>
 <keys><key><shift/>C</key>  <action>make cusp</action></keys>
 <keys><key><shift/>S</key>  <action>make smooth</action></keys>
 <keys><key><shift/>Y</key>  <action>make symmetric</action></keys>
+<note>When making smooth or symmetric, you can lock the position of one of the handles by hovering mouse over it.</note>
 <mouse><key><ctrl/><left-click/></key> <action>toggle smooth/cusp/symmetric</action></mouse>
 </group>
 
@@ -623,6 +650,7 @@ RFE</a>).</p>
 <title>Join/break</title>
 <keys><key><shift/>J</key>  <action>join selected nodes</action></keys>
 <note>This requires that exactly two end nodes within the path be selected.</note>
+<note>You can lock the position of one of the two joined nodes by hovering mouse over it.</note>
 <keys><key><shift/>B</key>  <action>break selected node(s)</action></keys>
 <note>After break, only one of each two new nodes is selected. May apply to more than one node.</note>
 </group>
@@ -630,8 +658,12 @@ RFE</a>).</p>
 <group>
 <title>Delete, create, duplicate</title>
 <keys><key><misc-wide f="Backspace"/></key><key><misc f="Del"/></key> <action>delete selected node(s)</action></keys>
+<keys><key><ctrl/><misc-wide f="Backspace"/></key><key><ctrl/><misc f="Del"/></key> <action>delete without preserving shape</action></keys>
+<note>Deleting without Ctrl adjusts handles on the remaining nodes to preserve the shape of the curve as much as possible.</note>
+<note>Deleting with Ctrl does not touch the remaining nodes.</note>
 <mouse><key><ctrl/><alt/><left-click/></key> <action>create/delete node</action></mouse>
 <note>Ctrl+Alt+click on a node deletes it; Ctrl+Alt+click on the path between nodes creates a new node in the click point.</note>
+<note>Deleting nodes this way always tries to preserve the shape of the curve (same as Del/Backspace).</note>
 <mouse><key><left-click/><left-click/></key> <action>create node</action></mouse>
 <note>Double clicking on the path between nodes creates a node in the click point.</note>
 <keys><key><misc f="Ins"/></key> <action>insert new node(s)</action></keys>
@@ -858,7 +890,7 @@ RFE</a>).</p>
 </group>
 </section>
 
-*<section title="Freehand tool" color="e9efc5">
+*<section title="Pencil tool" color="e9efc5">
 <group>
 <mouse><key><left-drag/></key> <action>draw a freehand line</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>add to selected path</action></mouse>
@@ -868,7 +900,7 @@ RFE</a>).</p>
 </group>
 </section>
 
-*<section title="Bezier (Pen) tool" color="e7f5d7">
+*<section title="Pen (Bezier) tool" color="e7f5d7">
 
 <group>
 <title>Create nodes</title>
@@ -879,15 +911,29 @@ RFE</a>).</p>
 <mouse><key><left-drag/></key> <action>create a bezier node with two handles</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>move only one handle</action></mouse>
 <!-- FIXME: also disables snapping! another conflict -->
-<note>This moves only one handle (instead of both) to create a cusp node.</note> 
+<note>This moves only one handle (instead of both) while creating a node, making it cusp.</note> 
 <mouse><key><ctrl/><left-drag/></key> <action>snap the handle to angle steps</action></mouse>
 <note>The default angle step is 15 degrees.</note>
 </group>
 
 <group>
-<title>Create segments</title>
-<keys><key><ctrl/></key> <action>snap the segment to angle steps</action></keys>
+<title>Move last node</title>
+<note>These commands move the last created node (at the start of the red segment) while creating a path.</note>
+<mouse><key><arrows/></key>  <action>move last node by the nudge distance</action></mouse>
+<mouse><key><shift/><arrows/></key>  <action>move last node by 10x nudge distance</action></mouse>
+<note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
+<mouse><key><alt/><arrows/></key>  <action>move last node by 1 pixel</action></mouse>
+<mouse><key><alt/><shift/><arrows/></key>  <action>move last node by 10 pixels</action></mouse>
+<note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
+</group>
+
+<group>
+<title>Create/modify segments</title>
+<keys><key><ctrl/></key> <action>snap last segment to angle steps</action></keys>
 <note>This snaps the new node's angle, relative to the previous node, to angle steps (default 15 degrees).</note>
+<keys><key><shift/>L</key>  <action>make last segment line</action></keys>
+<keys><key><shift/>U</key>  <action>make last segment curve</action></keys>
+<note>These commands change the last (red) segment of the path to straight line or curve.</note>
 </group>
 
 <group>
@@ -899,8 +945,8 @@ RFE</a>).</p>
 </group>
 
 <group>
-<title>Keyboard</title>
-<keys><key><misc f="Esc"/></key>  <action>cancel current line</action></keys>
+<title>Cancel</title>
+<keys><key><misc f="Esc"/></key><key><ctrl/>z</key>  <action>cancel current line</action></keys>
 <keys><key><misc-wide f="Backspace"/></key><key><misc f="Del"/></key> <action>erase last segment of current line</action></keys>
 </group>
 </section>

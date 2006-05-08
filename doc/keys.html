@@ -8,7 +8,9 @@ It is generated automatically from doc/keys.xml by doc/keys-html.xsl.
 .note {padding-left: 50px; font-size: 70%}
 h1 {margin-top: 0.5em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em; letter-spacing: -0.02em}
 h4 {font-weight: bold; font-style: italic; margin-top: 1em; padding-left: 50px; padding-bottom: 0em; margin-bottom: 0em}
-</style></head><body bgcolor="#ffffff"><p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
+</style></head><body bgcolor="#ffffff"><p>This document describes the default keyboard shortcuts of Inkscape, corresponding to the
+share/keys/default.xml file in Inkscape distribution. Most (but not all) of these keys
+are configurable by the user; see the default.xml file for details on how to do that.</p><p>Unless noted otherwise, keypad keys (such as arrows, Home, End, +, -, digits) are
 supposed to work the same as corresponding regular keys. If you have a new shortcut
 idea, please contact the developers (by writing to the <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">devel mailing list</a>
 or by <a href="http://sourceforge.net/tracker/?group_id=93438&amp;atid=604309">submitting an
@@ -169,6 +171,16 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <span class="key">Shift+3</span></td><td><span class="action">toggle grid and snapping to grid</span></td></tr>
 <tr bgcolor="e5f1e7"><td colspan="3"><span class="note">If you want to have different values for grid visibility and snapping, set them via the Document Options dialog.</span></td></tr>
 <tr bgcolor="e5f1e7"><td colspan="3"><span class="note">Note that only the 3 key on the main keyboard works, not on the keypad.</span></td></tr>
+
+<tr><td colspan="3"><h1>Palette</h1></td></tr>
+
+<tr bgcolor="efcfdf"><td colspan="3"><span class="note">These keys work both in the floating palette dialog and in the palette frame at the bottom of the window.</span></td></tr>
+<tr bgcolor="efcfdf"><td align="right"><span class="key">click</span></td><td><span class="action">set fill color on selection</span></td></tr>
+<tr bgcolor="efcfdf"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">set stroke color on selection</span></td></tr>
+<tr bgcolor="efcfdf"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">drag fill color to objects</span></td></tr>
+<tr bgcolor="efcfdf"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">drag stroke color to objects</span></td></tr>
+<tr bgcolor="efcfdf"><td colspan="3"><span class="note">To change fill/stroke of an object by dragging color on it, that object need not be selected.</span></td></tr>
+<tr bgcolor="efcfdf"><td colspan="3"><span class="note">You can also drag colors to the Fill (F) and Stroke (S) indicators in the statusbar to change the selection.</span></td></tr>
 
 <tr><td colspan="3"><h1>File</h1></td></tr>
 
@@ -422,6 +434,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Alt+[</span>,
 <span class="key">Alt+]</span></td><td><span class="action">rotate selection by 1 pixel</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">The actual angle for pixel rotation depends on zoom level. Zoom in for finer movement.</span></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><span class="note">These commands use the rotation center, draggable in Selector (by default it's in geometric center).</span></td></tr>
 
 
 
@@ -439,6 +452,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="eee4dc"><td align="right"><span class="key">clickclick</span></td><td><span class="action">edit the object</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">For paths, double clicking switches to Node tool; for shapes, to corresponding shape tool; for text, to Text tool.</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">For groups, double clicking performs the "Enter group" command (the group becomes temporary layer).</span></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><span class="note">Double clicking in empty space swithes to the parent layer in the hierarchy, if any.</span></td></tr>
 
 
 
@@ -453,6 +467,8 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Shift+Alt+click</span></td><td><span class="action">toggle under</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Ctrl+Alt+click</span></td><td><span class="action">select under, in groups</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Shift+Ctrl+Alt+click</span></td><td><span class="action">toggle under, in groups</span></td></tr>
+<tr bgcolor="eee4dc"><td align="right"><span class="key">Ctrl+Enter</span></td><td><span class="action">enter group</span></td></tr>
+<tr bgcolor="eee4dc"><td align="right"><span class="key">Ctrl+Backspace</span></td><td><span class="action">go to parent group/layer</span></td></tr>
 
 
 
@@ -488,6 +504,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 
 
 <tr bgcolor="eee4dc"><td colspan="3"><h4>Scale handles</h4></td></tr>
+<tr bgcolor="eee4dc"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">scale</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">scale preserving aspect ratio</span></td></tr>
  
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">symmetric transformation</span></td></tr>
@@ -498,11 +515,20 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 
 
 
-<tr bgcolor="eee4dc"><td colspan="3"><h4>Rotation handles</h4></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><h4>Rotation/skew handles</h4></td></tr>
+<tr bgcolor="eee4dc"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">rotate or skew</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap skew angle</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Holding Ctrl when dragging a skew (non-corner) handle snaps the skew angle to angle steps (default 15 degrees).</span></td></tr>
 <tr bgcolor="eee4dc"><td align="right"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap rotation angle</span></td></tr>
 <tr bgcolor="eee4dc"><td colspan="3"><span class="note">Holding Ctrl when dragging a rotation (corner) handle snaps the rotation angle to angle steps (default 15 degrees).</span></td></tr>
+
+
+
+<tr bgcolor="eee4dc"><td colspan="3"><h4>Rotation center</h4></td></tr>
+<tr bgcolor="eee4dc"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">move rotation center</span></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><span class="note">Moved rotation center remembers its position for (all) selected object(s) until you reset it.</span></td></tr>
+<tr bgcolor="eee4dc"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">reset rotation center</span></td></tr>
+<tr bgcolor="eee4dc"><td colspan="3"><span class="note">Resetting rotation center moves it back to the geometric center of the object's or selection's bounding box.</span></td></tr>
 
 
 
@@ -619,6 +645,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Shift+C</span></td><td><span class="action">make cusp</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Shift+S</span></td><td><span class="action">make smooth</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Shift+Y</span></td><td><span class="action">make symmetric</span></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><span class="note">When making smooth or symmetric, you can lock the position of one of the handles by hovering mouse over it.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Ctrl+click</span></td><td><span class="action">toggle smooth/cusp/symmetric</span></td></tr>
 
 
@@ -626,6 +653,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f9f1d9"><td colspan="3"><h4>Join/break</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Shift+J</span></td><td><span class="action">join selected nodes</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">This requires that exactly two end nodes within the path be selected.</span></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><span class="note">You can lock the position of one of the two joined nodes by hovering mouse over it.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Shift+B</span></td><td><span class="action">break selected node(s)</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">After break, only one of each two new nodes is selected. May apply to more than one node.</span></td></tr>
 
@@ -634,8 +662,13 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="f9f1d9"><td colspan="3"><h4>Delete, create, duplicate</h4></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Backspace</span>,
 <span class="key">Del</span></td><td><span class="action">delete selected node(s)</span></td></tr>
+<tr bgcolor="f9f1d9"><td align="right"><span class="key">Ctrl+Backspace</span>,
+<span class="key">Ctrl+Del</span></td><td><span class="action">delete without preserving shape</span></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Deleting without Ctrl adjusts handles on the remaining nodes to preserve the shape of the curve as much as possible.</span></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Deleting with Ctrl does not touch the remaining nodes.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Ctrl+Alt+click</span></td><td><span class="action">create/delete node</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Ctrl+Alt+click on a node deletes it; Ctrl+Alt+click on the path between nodes creates a new node in the click point.</span></td></tr>
+<tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Deleting nodes this way always tries to preserve the shape of the curve (same as Del/Backspace).</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">clickclick</span></td><td><span class="action">create node</span></td></tr>
 <tr bgcolor="f9f1d9"><td colspan="3"><span class="note">Double clicking on the path between nodes creates a node in the click point.</span></td></tr>
 <tr bgcolor="f9f1d9"><td align="right"><span class="key">Ins</span></td><td><span class="action">insert new node(s)</span></td></tr>
@@ -823,7 +856,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="e7e9f3"><td align="right"><span class="key">Shift+click</span></td><td><span class="action">zoom out</span></td></tr>  
 <tr bgcolor="e7e9f3"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">zoom into the area</span></td></tr>
 
-<tr><td colspan="3"><h1>Freehand tool</h1></td></tr>
+<tr><td colspan="3"><h1>Pencil tool</h1></td></tr>
 
 <tr bgcolor="e9efc5"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">draw a freehand line</span></td></tr>
 <tr bgcolor="e9efc5"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">add to selected path</span></td></tr>
@@ -831,7 +864,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="e9efc5"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">temporarily disable snapping</span></td></tr>
 <tr bgcolor="e9efc5"><td colspan="3"><span class="note">Shift also temporaily disables snapping to grid or guides when you are drawing with grid or guides on.</span></td></tr>
 
-<tr><td colspan="3"><h1>Bezier (Pen) tool</h1></td></tr>
+<tr><td colspan="3"><h1>Pen (Bezier) tool</h1></td></tr>
 
 
 <tr bgcolor="e7f5d7"><td colspan="3"><h4>Create nodes</h4></td></tr>
@@ -842,15 +875,29 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="e7f5d7"><td align="right"><span class="key">mouse drag</span></td><td><span class="action">create a bezier node with two handles</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right"><span class="key">Shift+mouse drag</span></td><td><span class="action">move only one handle</span></td></tr>
 
-<tr bgcolor="e7f5d7"><td colspan="3"><span class="note">This moves only one handle (instead of both) to create a cusp node.</span></td></tr> 
+<tr bgcolor="e7f5d7"><td colspan="3"><span class="note">This moves only one handle (instead of both) while creating a node, making it cusp.</span></td></tr> 
 <tr bgcolor="e7f5d7"><td align="right"><span class="key">Ctrl+mouse drag</span></td><td><span class="action">snap the handle to angle steps</span></td></tr>
 <tr bgcolor="e7f5d7"><td colspan="3"><span class="note">The default angle step is 15 degrees.</span></td></tr>
 
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4>Create segments</h4></td></tr>
-<tr bgcolor="e7f5d7"><td align="right"><span class="key">Ctrl+</span></td><td><span class="action">snap the segment to angle steps</span></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4>Move last node</h4></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><span class="note">These commands move the last created node (at the start of the red segment) while creating a path.</span></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">arrows</span></td><td><span class="action">move last node by the nudge distance</span></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Shift+arrows</span></td><td><span class="action">move last node by 10x nudge distance</span></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><span class="note">The default nudge distance is 2 px (SVG pixel units, not screen pixels).</span></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Alt+arrows</span></td><td><span class="action">move last node by 1 pixel</span></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Alt+Shift+arrows</span></td><td><span class="action">move last node by 10 pixels</span></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><span class="note">The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</span></td></tr>
+
+
+
+<tr bgcolor="e7f5d7"><td colspan="3"><h4>Create/modify segments</h4></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Ctrl+</span></td><td><span class="action">snap last segment to angle steps</span></td></tr>
 <tr bgcolor="e7f5d7"><td colspan="3"><span class="note">This snaps the new node's angle, relative to the previous node, to angle steps (default 15 degrees).</span></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Shift+L</span></td><td><span class="action">make last segment line</span></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Shift+U</span></td><td><span class="action">make last segment curve</span></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><span class="note">These commands change the last (red) segment of the path to straight line or curve.</span></td></tr>
 
 
 
@@ -862,8 +909,9 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 
 
 
-<tr bgcolor="e7f5d7"><td colspan="3"><h4>Keyboard</h4></td></tr>
-<tr bgcolor="e7f5d7"><td align="right"><span class="key">Esc</span></td><td><span class="action">cancel current line</span></td></tr>
+<tr bgcolor="e7f5d7"><td colspan="3"><h4>Cancel</h4></td></tr>
+<tr bgcolor="e7f5d7"><td align="right"><span class="key">Esc</span>,
+<span class="key">Ctrl+z</span></td><td><span class="action">cancel current line</span></td></tr>
 <tr bgcolor="e7f5d7"><td align="right"><span class="key">Backspace</span>,
 <span class="key">Del</span></td><td><span class="action">erase last segment of current line</span></td></tr>
 
@@ -875,6 +923,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 <tr bgcolor="e9dfef"><td align="right"><span class="key">Up arrow</span>,
 <span class="key">Down arrow</span></td><td><span class="action">adjust pen angle</span></td></tr>
 <tr bgcolor="e9dfef"><td colspan="3"><span class="note">Width and angle can be adjusted while drawing. </span></td></tr>
+<tr bgcolor="e9dfef"><td align="right"><span class="key">Esc</span></td><td><span class="action">deselect</span></td></tr>
 
 <tr><td colspan="3"><h1>Gradient tool</h1></td></tr>
 
@@ -975,7 +1024,7 @@ RFE</a>).</p><table border="0" cellspacing="0" cellpadding="4"><tr><td colspan="
 
 
 <tr bgcolor="eefdf3"><td colspan="3"><h4>Text on path</h4></td></tr>
-<tr bgcolor="eefdf3"><td align="right"><span class="key">Shift+D</span></td><td><span class="action">select path</span></td></tr> 
+<tr bgcolor="eefdf3"><td align="right"><span class="key">Shift+D</span></td><td><span class="action">select path from text</span></td></tr> 
 <tr bgcolor="eefdf3"><td colspan="3"><span class="note">To find out which path this text is put on, select it and press Shift+D. The path will be selected.</span></td></tr>
 
 
