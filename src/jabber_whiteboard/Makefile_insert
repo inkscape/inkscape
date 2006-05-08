@@ -48,10 +48,6 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/node-tracker-observer.h \
 	jabber_whiteboard/node-utilities.cpp \
 	jabber_whiteboard/node-utilities.h \
-	jabber_whiteboard/pedrodom.cpp \
-	jabber_whiteboard/pedrodom.h \
-	jabber_whiteboard/pedroxmpp.cpp \
-	jabber_whiteboard/pedroxmpp.h \
 	jabber_whiteboard/serializer.cpp \
 	jabber_whiteboard/serializer.h \
 	jabber_whiteboard/session-file.cpp \
