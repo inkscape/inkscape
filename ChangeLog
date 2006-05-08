@@ -1,3 +1,8 @@
+2006-05-01  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/document-subset.cpp:
+	  Corrected two bugs, with the minor one hiding the more severe.
+
 2006-05-06  MenTaLguY  <mental@rydia.net>
 
 	* src/xml/repr-util.cpp, src/xml/repr.h:

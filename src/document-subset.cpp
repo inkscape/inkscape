@@ -170,6 +170,17 @@ private:
         }
         record.position_changed_connection.disconnect();
         records.erase(obj);
+
+        if ( record.parent == NULL ) {
+            Record &root = records[NULL];
+            for ( Siblings::iterator it = root.children.begin(); it != root.children.end(); ++it ) {
+                if ( *it == obj ) {
+                    root.children.erase( it );
+                    break;
+                }
+            }
+        }
+
         removed_signal.emit(obj);
         sp_object_unref(obj);
     }
@@ -202,7 +213,7 @@ DocumentSubset::DocumentSubset()
 
 void DocumentSubset::Relations::addOne(SPObject *obj) {
     g_return_if_fail( obj != NULL );
-    g_return_if_fail( get(obj) != NULL );
+    g_return_if_fail( get(obj) == NULL );
 
     Record &record=_doAdd(obj);
 
