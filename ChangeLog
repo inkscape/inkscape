@@ -1,3 +1,7 @@
+2006-05-08  Carl Hetherington  <inkscape@carlh.net>
+
+	* src/seltrans.cpp: fix ctrl-scaling when there is no snap.
+
 2006-05-07  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* knot.h, knot.cpp, connector-context.cpp:
