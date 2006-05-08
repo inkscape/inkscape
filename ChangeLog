@@ -1,7 +1,7 @@
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
 	* src/debug/demangle.cpp, src/debug/demangle.h, src/sp-object.cpp,
-	  src/gc-anchored.cpp:
+	  src/gc-anchored.cpp, src/debug/Makefile_insert:
 
 	  use c++filt for symbol demangling if available
 
