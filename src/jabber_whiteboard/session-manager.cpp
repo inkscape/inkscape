@@ -186,7 +186,7 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	Glib::ustring jid;
 
 	// JID format is username@server/resource
-	jid += username + "@" + server + "/" + RESOURCE_NAME;
+	jid += username + "@" + server;
 
 	LmMessage* m;
 	LmMessageHandler* mh;
