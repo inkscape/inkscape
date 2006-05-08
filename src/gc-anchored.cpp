@@ -13,6 +13,7 @@
 #include "gc-anchored.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
+#include "debug/demangle.h"
 #include "util/share.h"
 #include "util/format.h"
 
@@ -32,7 +33,7 @@ public:
     {
         _addProperty("base", Util::format("%p", Core::base(const_cast<Anchored *>(object))));
         _addProperty("pointer", Util::format("%p", object));
-        _addProperty("class", Util::share_static_string(typeid(*object).name()));
+        _addProperty("class", Debug::demangle(typeid(*object).name()));
         _addProperty("new-refcount", Util::format("%d", object->_anchored_refcount() + bias));
     }
 };

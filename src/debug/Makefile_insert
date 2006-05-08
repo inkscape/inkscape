@@ -5,6 +5,7 @@ debug/clean:
 	rm -f debug/libinkdebug.a $(debug_libinkdebug_a_OBJECTS)
 
 debug_libinkdebug_a_SOURCES = \
+	debug/demangle.cpp debug/demangle.h \
 	debug/event.h \
 	debug/event-tracker.h \
 	debug/heap.cpp debug/heap.h \

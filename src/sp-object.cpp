@@ -45,6 +45,7 @@
 #include "xml/node-fns.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
+#include "debug/demangle.h"
 #include "util/share.h"
 #include "util/format.h"
 
@@ -241,7 +242,7 @@ public:
     : BaseRefCountEvent(name)
     {
         _addProperty("object", Util::format("%p", object));
-        _addProperty("class", Util::share_static_string(g_type_name(G_TYPE_FROM_INSTANCE(object))));
+        _addProperty("class", Debug::demangle(g_type_name(G_TYPE_FROM_INSTANCE(object))));
         _addProperty("new-refcount", Util::format("%d", G_OBJECT(object)->ref_count + bias));
     }
 };

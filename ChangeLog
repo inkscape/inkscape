@@ -1,5 +1,12 @@
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
+	* src/debug/demangle.cpp, src/debug/demangle.h, src/sp-object.cpp,
+	  src/gc-anchored.cpp:
+
+	  use c++filt for symbol demangling if available
+
+2006-05-08  MenTaLguY  <mental@rydia.net>
+
 	* src/xml/repr-util.cpp:
 	
 	  comments explaining namespace mapping for the broken sodipodi namespace
