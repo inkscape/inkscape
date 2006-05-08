@@ -20,34 +20,34 @@ import inkex
 import sys, os, tempfile
 
 class MyEffect(inkex.Effect):
-        def __init__(self):
-                inkex.Effect.__init__(self)
-	def output(self):
-		pass
-	def effect(self):
-		svg_file = self.args[-1]
-		node = inkex.xml.xpath.Evaluate('/svg',self.document)[0]
-		docname = node.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'docname').value[:-4]
+    def __init__(self):
+        inkex.Effect.__init__(self)
+    def output(self):
+        pass
+    def effect(self):
+        svg_file = self.args[-1]
+        node = inkex.xml.xpath.Evaluate('/svg',self.document)[0]
+        docname = node.attributes.getNamedItemNS(inkex.NSS[u'sodipodi'],'docname').value[:-4]
 
-		#create os temp dir
-		tmp_dir = tempfile.mkdtemp()
+        #create os temp dir
+        tmp_dir = tempfile.mkdtemp()
 
-		area = '--export-area-canvas'
-		pngs = []
-		path = "/svg/*[name()='g' or @style][@id]"
-		for node in inkex.xml.xpath.Evaluate(path,self.document):
-			id = node.attributes.getNamedItem('id').value
-			name = "%s.png" % id
-			filename = os.path.join(tmp_dir, name)
-			command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
-			f = os.popen(command,'r')
-			f.read()
-			f.close()
-			pngs.append(filename)
+        area = '--export-area-canvas'
+        pngs = []
+        path = "/svg/*[name()='g' or @style][@id]"
+        for node in inkex.xml.xpath.Evaluate(path,self.document):
+            id = node.attributes.getNamedItem('id').value
+            name = "%s.png" % id
+            filename = os.path.join(tmp_dir, name)
+            command = "inkscape -i %s -j %s -e %s %s " % (id, area, filename, svg_file)
+            f = os.popen(command,'r')
+            f.read()
+            f.close()
+            pngs.append(filename)
 
-		filelist = '"%s"' % '" "'.join(pngs)
-		xcf = os.path.join(tmp_dir, "%s.xcf" % docname)
-		script_fu = """
+        filelist = '"%s"' % '" "'.join(pngs)
+        xcf = os.path.join(tmp_dir, "%s.xcf" % docname)
+        script_fu = """
 (define
   (png-to-layer img png_filename)
   (let*
@@ -77,16 +77,16 @@ class MyEffect(inkex.Effect):
   (gimp-image-undo-enable img)
   (gimp-file-save RUN-NONINTERACTIVE img (car (gimp-image-get-active-layer img)) "%s" "%s"))
 (gimp-quit 0)
-		""" % (filelist, xcf, xcf)
+        """ % (filelist, xcf, xcf)
 
-		junk = os.path.join(tmp_dir, 'junk_from_gimp.txt')
-		f = os.popen('gimp -i -b - > %s' % junk,'w')
-		f.write(script_fu)
-		f.close()
-		
-		x = open(xcf, 'r')
-		sys.stdout.write(x.read())
-		x.close()
+        junk = os.path.join(tmp_dir, 'junk_from_gimp.txt')
+        f = os.popen('gimp -i -b - > %s' % junk,'w')
+        f.write(script_fu)
+        f.close()
+        
+        x = open(xcf, 'r')
+        sys.stdout.write(x.read())
+        x.close()
 
 e = MyEffect()
 e.affect()

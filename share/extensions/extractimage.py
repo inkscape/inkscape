@@ -20,31 +20,31 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex, base64
 
 class MyEffect(inkex.Effect):
-	def __init__(self):
-		inkex.Effect.__init__(self)
-		self.OptionParser.add_option("--filepath",
-						action="store", type="string", 
-						dest="filepath", default=None,
-						help="")
-	def effect(self):
-		ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
-		
-		# exbed the first embedded image
-		path = self.options.filepath
-		if (path != ''):
-			if (self.options.ids):
-				for id, node in self.selected.iteritems():
-					if node.tagName == 'image':
-						xlink = node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
-						if (xlink.value[:4]=='data'):
-							comma = xlink.value.find(',')
-							if comma>0:
-								data = base64.decodestring(xlink.value[comma:])
-								open(path,'wb').write(data)
-								xlink.value = path
-							else:
-								inkex.debug('Difficulty finding the image data.')
-							break
+    def __init__(self):
+        inkex.Effect.__init__(self)
+        self.OptionParser.add_option("--filepath",
+                        action="store", type="string", 
+                        dest="filepath", default=None,
+                        help="")
+    def effect(self):
+        ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
+        
+        # exbed the first embedded image
+        path = self.options.filepath
+        if (path != ''):
+            if (self.options.ids):
+                for id, node in self.selected.iteritems():
+                    if node.tagName == 'image':
+                        xlink = node.attributes.getNamedItemNS(inkex.NSS[u'xlink'],'href')
+                        if (xlink.value[:4]=='data'):
+                            comma = xlink.value.find(',')
+                            if comma>0:
+                                data = base64.decodestring(xlink.value[comma:])
+                                open(path,'wb').write(data)
+                                xlink.value = path
+                            else:
+                                inkex.debug('Difficulty finding the image data.')
+                            break
 
 e = MyEffect()
 e.affect()

@@ -19,57 +19,57 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex, simplestyle, simplepath
 
 class Dots(inkex.Effect):
-	def __init__(self):
-		inkex.Effect.__init__(self)
-		self.OptionParser.add_option("-d", "--dotsize",
-						action="store", type="string", 
-						dest="dotsize", default="10px",
-						help="Size of the dots placed at path nodes")
-		self.OptionParser.add_option("-f", "--fontsize",
-						action="store", type="string", 
-						dest="fontsize", default="20",
-						help="Size of node label numbers")	
-	def effect(self):
-		for id, node in self.selected.iteritems():
-			if node.tagName == 'path':
-				self.group = self.document.createElement('svg:g')
-				node.parentNode.appendChild(self.group)
-				new = self.document.createElement('svg:path')
-				
-				try:
-					t = node.attributes.getNamedItem('transform').value
-					self.group.setAttribute('transform', t)
-				except AttributeError:
-					pass
+    def __init__(self):
+        inkex.Effect.__init__(self)
+        self.OptionParser.add_option("-d", "--dotsize",
+                        action="store", type="string", 
+                        dest="dotsize", default="10px",
+                        help="Size of the dots placed at path nodes")
+        self.OptionParser.add_option("-f", "--fontsize",
+                        action="store", type="string", 
+                        dest="fontsize", default="20",
+                        help="Size of node label numbers")    
+    def effect(self):
+        for id, node in self.selected.iteritems():
+            if node.tagName == 'path':
+                self.group = self.document.createElement('svg:g')
+                node.parentNode.appendChild(self.group)
+                new = self.document.createElement('svg:path')
+                
+                try:
+                    t = node.attributes.getNamedItem('transform').value
+                    self.group.setAttribute('transform', t)
+                except AttributeError:
+                    pass
 
-				s = simplestyle.parseStyle(node.attributes.getNamedItem('style').value)
-				s['stroke-linecap']='round'
-				s['stroke-width']=self.options.dotsize
-				new.setAttribute('style', simplestyle.formatStyle(s))
+                s = simplestyle.parseStyle(node.attributes.getNamedItem('style').value)
+                s['stroke-linecap']='round'
+                s['stroke-width']=self.options.dotsize
+                new.setAttribute('style', simplestyle.formatStyle(s))
 
-				a =[]
-				p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
-				num = 1
-				for cmd,params in p:
-					if cmd != 'Z':
-						a.append(['M',params[-2:]])
-						a.append(['L',params[-2:]])
-						self.addText(self.group,params[-2],params[-1],num)
-						num += 1
-				new.setAttribute('d', simplepath.formatPath(a))
-				self.group.appendChild(new)
-				node.parentNode.removeChild(node)
+                a =[]
+                p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+                num = 1
+                for cmd,params in p:
+                    if cmd != 'Z':
+                        a.append(['M',params[-2:]])
+                        a.append(['L',params[-2:]])
+                        self.addText(self.group,params[-2],params[-1],num)
+                        num += 1
+                new.setAttribute('d', simplepath.formatPath(a))
+                self.group.appendChild(new)
+                node.parentNode.removeChild(node)
 
-				
-	def addText(self,node,x,y,text):
-				new = self.document.createElement('svg:text')
-				s = {'font-size': self.options.fontsize, 'fill-opacity': '1.0', 'stroke': 'none',
-					'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
-				new.setAttribute('style', simplestyle.formatStyle(s))
-				new.setAttribute('x', str(x))
-				new.setAttribute('y', str(y))
-				new.appendChild(self.document.createTextNode(str(text)))
-				node.appendChild(new)
+                
+    def addText(self,node,x,y,text):
+                new = self.document.createElement('svg:text')
+                s = {'font-size': self.options.fontsize, 'fill-opacity': '1.0', 'stroke': 'none',
+                    'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
+                new.setAttribute('style', simplestyle.formatStyle(s))
+                new.setAttribute('x', str(x))
+                new.setAttribute('y', str(y))
+                new.appendChild(self.document.createTextNode(str(text)))
+                node.appendChild(new)
 
 e = Dots()
 e.affect()

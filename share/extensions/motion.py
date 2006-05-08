@@ -19,101 +19,98 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import math, inkex, simplestyle, simplepath, bezmisc
 
 class Motion(inkex.Effect):
-	def __init__(self):
-		inkex.Effect.__init__(self)
-		self.OptionParser.add_option("-a", "--angle",
-						action="store", type="float", 
-						dest="angle", default=45.0,
-						help="direction of the motion vector")
-		self.OptionParser.add_option("-m", "--magnitude",
-						action="store", type="float", 
-						dest="magnitude", default=100.0,
-						help="magnitude of the motion vector")	
+    def __init__(self):
+        inkex.Effect.__init__(self)
+        self.OptionParser.add_option("-a", "--angle",
+                        action="store", type="float", 
+                        dest="angle", default=45.0,
+                        help="direction of the motion vector")
+        self.OptionParser.add_option("-m", "--magnitude",
+                        action="store", type="float", 
+                        dest="magnitude", default=100.0,
+                        help="magnitude of the motion vector")    
 
-	def makeface(self,last,(cmd, params)):
-		a = []
-		a.append(['M',last[:]])
-		a.append([cmd, params[:]])
+    def makeface(self,last,(cmd, params)):
+        a = []
+        a.append(['M',last[:]])
+        a.append([cmd, params[:]])
 
-		#translate path segment along vector
-		np = params[:]
-		defs = simplepath.pathdefs[cmd]
-		for i in range(defs[1]):
-			if defs[3][i] == 'x':
-				np[i] += self.vx
-			elif defs[3][i] == 'y':
-				np[i] += self.vy
+        #translate path segment along vector
+        np = params[:]
+        defs = simplepath.pathdefs[cmd]
+        for i in range(defs[1]):
+            if defs[3][i] == 'x':
+                np[i] += self.vx
+            elif defs[3][i] == 'y':
+                np[i] += self.vy
 
-		a.append(['L',[np[-2],np[-1]]])
-		
-		#reverse direction of path segment
-		np[-2:] = last[0]+self.vx,last[1]+self.vy
-		if cmd == 'C':
-			c1 = np[:2], np[2:4] = np[2:4], np[:2]
-		a.append([cmd,np[:]])
-			
-		a.append(['Z',[]])
-		face = self.document.createElement('svg:path')
-		self.facegroup.appendChild(face)
-		face.setAttribute('d', simplepath.formatPath(a))
-		
-		
-	def effect(self):
-		self.vx = math.cos(math.radians(self.options.angle))*self.options.magnitude
-		self.vy = math.sin(math.radians(self.options.angle))*self.options.magnitude
-		for id, node in self.selected.iteritems():
-			if node.tagName == 'path':
-				group = self.document.createElement('svg:g')
-				self.facegroup = self.document.createElement('svg:g')
-				node.parentNode.appendChild(group)
-				group.appendChild(self.facegroup)
-				group.appendChild(node)
-				
-				try:
-					t = node.attributes.getNamedItem('transform').value
-					group.setAttribute('transform', t)
-					node.attributes.getNamedItem('transform').value=""
-				except AttributeError:
-					pass
+        a.append(['L',[np[-2],np[-1]]])
+        
+        #reverse direction of path segment
+        np[-2:] = last[0]+self.vx,last[1]+self.vy
+        if cmd == 'C':
+            c1 = np[:2], np[2:4] = np[2:4], np[:2]
+        a.append([cmd,np[:]])
+            
+        a.append(['Z',[]])
+        face = self.document.createElement('svg:path')
+        self.facegroup.appendChild(face)
+        face.setAttribute('d', simplepath.formatPath(a))
+        
+        
+    def effect(self):
+        self.vx = math.cos(math.radians(self.options.angle))*self.options.magnitude
+        self.vy = math.sin(math.radians(self.options.angle))*self.options.magnitude
+        for id, node in self.selected.iteritems():
+            if node.tagName == 'path':
+                group = self.document.createElement('svg:g')
+                self.facegroup = self.document.createElement('svg:g')
+                node.parentNode.appendChild(group)
+                group.appendChild(self.facegroup)
+                group.appendChild(node)
+                
+                try:
+                    t = node.attributes.getNamedItem('transform').value
+                    group.setAttribute('transform', t)
+                    node.attributes.getNamedItem('transform').value=""
+                except AttributeError:
+                    pass
 
-				s = node.attributes.getNamedItem('style').value
-				self.facegroup.setAttribute('style', s)
+                s = node.attributes.getNamedItem('style').value
+                self.facegroup.setAttribute('style', s)
 
-				p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
-				for cmd,params in p:
-					tees = []
-					if cmd == 'C':
-						bez = (last,params[:2],params[2:4],params[-2:])
-						tees = [t for t in bezmisc.beziertatslope(bez,(self.vy,self.vx)) if 0<t<1]
-						tees.sort()
+                p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+                for cmd,params in p:
+                    tees = []
+                    if cmd == 'C':
+                        bez = (last,params[:2],params[2:4],params[-2:])
+                        tees = [t for t in bezmisc.beziertatslope(bez,(self.vy,self.vx)) if 0<t<1]
+                        tees.sort()
 
-					segments = []
-					if len(tees) == 0 and cmd in ['L','C']:
-							segments.append([cmd,params[:]])
-					elif len(tees) == 1:
-							one,two = bezmisc.beziersplitatt(bez,tees[0])
-							segments.append([cmd,list(one[1]+one[2]+one[3])])
-							segments.append([cmd,list(two[1]+two[2]+two[3])])
-					elif len(tees) == 2:
-							one,two = bezmisc.beziersplitatt(bez,tees[0])
-							two,three = bezmisc.beziersplitatt(two,tees[1])
-							segments.append([cmd,list(one[1]+one[2]+one[3])])
-							segments.append([cmd,list(two[1]+two[2]+two[3])])
-							segments.append([cmd,list(three[1]+three[2]+three[3])])
+                    segments = []
+                    if len(tees) == 0 and cmd in ['L','C']:
+                            segments.append([cmd,params[:]])
+                    elif len(tees) == 1:
+                            one,two = bezmisc.beziersplitatt(bez,tees[0])
+                            segments.append([cmd,list(one[1]+one[2]+one[3])])
+                            segments.append([cmd,list(two[1]+two[2]+two[3])])
+                    elif len(tees) == 2:
+                            one,two = bezmisc.beziersplitatt(bez,tees[0])
+                            two,three = bezmisc.beziersplitatt(two,tees[1])
+                            segments.append([cmd,list(one[1]+one[2]+one[3])])
+                            segments.append([cmd,list(two[1]+two[2]+two[3])])
+                            segments.append([cmd,list(three[1]+three[2]+three[3])])
 
-					for seg in segments:
-						self.makeface(last,seg)
-						last = seg[1][-2:]
-					
-					if cmd == 'M':
-						subPathStart = params[-2:]
-					if cmd == 'Z':
-						last = subPathStart
-					else:
-						last = params[-2:]
-
-
-				
+                    for seg in segments:
+                        self.makeface(last,seg)
+                        last = seg[1][-2:]
+                    
+                    if cmd == 'M':
+                        subPathStart = params[-2:]
+                    if cmd == 'Z':
+                        last = subPathStart
+                    else:
+                        last = params[-2:]
 
 e = Motion()
 e.affect()

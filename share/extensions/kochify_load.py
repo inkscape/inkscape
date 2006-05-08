@@ -19,42 +19,42 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import math, tempfile, cPickle, inkex, simplepath
 
 def findend(d):
-	end = []
-	subPathStart = []
-	for cmd,params in d:
-		if cmd == 'M':
-			subPathStart = params[-2:]
-		if cmd == 'Z':
-			end = subPathStart[:]
-		else:
-			end = params[-2:]
-	return end
+    end = []
+    subPathStart = []
+    for cmd,params in d:
+        if cmd == 'M':
+            subPathStart = params[-2:]
+        if cmd == 'Z':
+            end = subPathStart[:]
+        else:
+            end = params[-2:]
+    return end
 
 class LoadKochify(inkex.Effect):
-	def effect(self):
-		for id, node in self.selected.iteritems():
-			if node.tagName == 'path':
-				d = simplepath.parsePath(node.attributes.getNamedItem('d').value)
-				start = d[0][1][-2:]
-				end = findend(d)
-				while start == end and len(d):
-					d = d[:-1]
-					end = findend(d)
-				if not end: 
-					break
-				dx = end[0]-start[0]
-				dy = end[1]-start[1]
-				length = math.sqrt((dx**2) + (dy**2))
-				angle = math.atan2(dy,dx)
-				endsinz = False
-				if d[-1][0]=='Z':
-					endsinz = True
-				path = {'start': start, 'end': end, 'endsinz': endsinz,
-					'length': length, 'angle': angle, 'path': d}
-				f = open(tempfile.gettempdir() + '/kochify.bin', 'w')
-				cPickle.dump(path, f)
-				f.close()				
-				break
+    def effect(self):
+        for id, node in self.selected.iteritems():
+            if node.tagName == 'path':
+                d = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+                start = d[0][1][-2:]
+                end = findend(d)
+                while start == end and len(d):
+                    d = d[:-1]
+                    end = findend(d)
+                if not end: 
+                    break
+                dx = end[0]-start[0]
+                dy = end[1]-start[1]
+                length = math.sqrt((dx**2) + (dy**2))
+                angle = math.atan2(dy,dx)
+                endsinz = False
+                if d[-1][0]=='Z':
+                    endsinz = True
+                path = {'start': start, 'end': end, 'endsinz': endsinz,
+                    'length': length, 'angle': angle, 'path': d}
+                f = open(tempfile.gettempdir() + '/kochify.bin', 'w')
+                cPickle.dump(path, f)
+                f.close()                
+                break
 
 e = LoadKochify()
 e.affect()

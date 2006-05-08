@@ -19,38 +19,38 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex, simplepath, simplestyle
 
 class Handles(inkex.Effect):
-	def effect(self):
-		for id, node in self.selected.iteritems():
-			if node.tagName == 'path':
-				p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
-				a =[]
-				pen = None
-				subPathStart = None
-				for cmd,params in p:
-					if cmd == 'C':
-						a.extend([['M', params[:2]], ['L', pen],
-							['M', params[2:4]], ['L', params[-2:]]])
-					if cmd == 'Q':
-						a.extend([['M', params[:2]], ['L', pen],
-							['M', params[:2]], ['L', params[-2:]]])
-					
-					if cmd == 'M':
-						subPathStart = params
+    def effect(self):
+        for id, node in self.selected.iteritems():
+            if node.tagName == 'path':
+                p = simplepath.parsePath(node.attributes.getNamedItem('d').value)
+                a =[]
+                pen = None
+                subPathStart = None
+                for cmd,params in p:
+                    if cmd == 'C':
+                        a.extend([['M', params[:2]], ['L', pen],
+                            ['M', params[2:4]], ['L', params[-2:]]])
+                    if cmd == 'Q':
+                        a.extend([['M', params[:2]], ['L', pen],
+                            ['M', params[:2]], ['L', params[-2:]]])
+                    
+                    if cmd == 'M':
+                        subPathStart = params
 
-					if cmd == 'Z':
-						pen = subPathStart
-					else:
-						pen = params[-2:]
-					
-				if len(a) > 0:
-					new = self.document.createElement('svg:path')
-					s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
-						'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
-						'stroke': '#000000', 'stroke-linecap': 'butt', 
-						'fill': 'none'}
-					new.setAttribute('style', simplestyle.formatStyle(s))
-					new.setAttribute('d', simplepath.formatPath(a))
-					node.parentNode.appendChild(new)
+                    if cmd == 'Z':
+                        pen = subPathStart
+                    else:
+                        pen = params[-2:]
+                    
+                if len(a) > 0:
+                    new = self.document.createElement('svg:path')
+                    s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
+                        'stroke-opacity': '1.0', 'fill-opacity': '1.0', 
+                        'stroke': '#000000', 'stroke-linecap': 'butt', 
+                        'fill': 'none'}
+                    new.setAttribute('style', simplestyle.formatStyle(s))
+                    new.setAttribute('d', simplepath.formatPath(a))
+                    node.parentNode.appendChild(new)
 
 e = Handles()
 e.affect()

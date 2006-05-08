@@ -19,28 +19,28 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import inkex, cubicsuperpath, simplepath, cspsubdiv
 
 class MyEffect(inkex.Effect):
-        def __init__(self):
-                inkex.Effect.__init__(self)
-		self.OptionParser.add_option("-f", "--flatness",
-						action="store", type="float", 
-						dest="flat", default=10.0,
-						help="Minimum flatness of the subdivided curves")
-	def effect(self):
-                for id, node in self.selected.iteritems():
-                        if node.tagName == 'path':
-                                d = node.attributes.getNamedItem('d')
-                                p = cubicsuperpath.parsePath(d.value)
-				cspsubdiv.cspsubdiv(p, self.options.flat)
-				np = []
-                                for sp in p:
-					first = True
-                                        for csp in sp:
-						cmd = 'L'
-						if first:
-							cmd = 'M'
-						first = False
-						np.append([cmd,[csp[1][0],csp[1][1]]])
-                                d.value = simplepath.formatPath(np)
+    def __init__(self):
+        inkex.Effect.__init__(self)
+        self.OptionParser.add_option("-f", "--flatness",
+                        action="store", type="float", 
+                        dest="flat", default=10.0,
+                        help="Minimum flatness of the subdivided curves")
+    def effect(self):
+        for id, node in self.selected.iteritems():
+            if node.tagName == 'path':
+                d = node.attributes.getNamedItem('d')
+                p = cubicsuperpath.parsePath(d.value)
+                cspsubdiv.cspsubdiv(p, self.options.flat)
+                np = []
+                for sp in p:
+                    first = True
+                    for csp in sp:
+                        cmd = 'L'
+                        if first:
+                            cmd = 'M'
+                        first = False
+                        np.append([cmd,[csp[1][0],csp[1][1]]])
+                        d.value = simplepath.formatPath(np)
 
 e = MyEffect()
 e.affect()

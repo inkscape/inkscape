@@ -20,21 +20,21 @@ import inkex, simplepath, cubicsuperpath, re
 
 uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
 def unittouu(string):
-	unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
-	param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
+    unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
+    param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
 
-	p = param.match(string)
-	u = unit.search(string)	
-	if p:
-		retval = float(p.string[p.start():p.end()])
-	else:
-		retval = 0.0
-	if u:
-		try:
-			return retval * uuconv[u.string[u.start():u.end()]]
-		except KeyError:
-			pass
-	return retval
+    p = param.match(string)
+    u = unit.search(string)    
+    if p:
+        retval = float(p.string[p.start():p.end()])
+    else:
+        retval = 0.0
+    if u:
+        try:
+            return retval * uuconv[u.string[u.start():u.end()]]
+        except KeyError:
+            pass
+    return retval
 
 class MyEffect(inkex.Effect):
     def __init__(self):

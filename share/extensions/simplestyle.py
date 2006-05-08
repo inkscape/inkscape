@@ -20,8 +20,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
 def parseStyle(s):
-	"""Create a dictionary from the value of an inline style attribute"""
-	return dict([i.split(":") for i in s.split(";")])
+    """Create a dictionary from the value of an inline style attribute"""
+    return dict([i.split(":") for i in s.split(";")])
 def formatStyle(a):
-	"""Format an inline style attribute from a dictionary"""
-	return ";".join([":".join(i) for i in a.iteritems()])
+    """Format an inline style attribute from a dictionary"""
+    return ";".join([":".join(i) for i in a.iteritems()])
