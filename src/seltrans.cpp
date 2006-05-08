@@ -805,13 +805,25 @@ gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
                                                                s,
                                                                _origin);
 
-        /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
-        ** just compare difference in s[X].
-        */
-        double const bd = bb.second ? fabs(bb.first[NR::X] - s[NR::X]) : NR_HUGE;
-        double const sd = sn.second ? fabs(sn.first[NR::X] - s[NR::X]) : NR_HUGE;
-        s = (bd < sd) ? bb.first : sn.first;
-        
+        if (bb.second == false && sn.second == false) {
+
+            /* We didn't snap, so just lock aspect ratio */
+            if (fabs(s[NR::X]) > fabs(s[NR::Y])) {
+                s[NR::X] = fabs(s[NR::Y]) * sign(s[NR::X]);
+            } else {
+                s[NR::Y] = fabs(s[NR::X]) * sign(s[NR::Y]);
+            }
+
+        } else {
+
+            /* Choose the smaller difference in scale.  Since s[X] == s[Y] we can
+            ** just compare difference in s[X].
+            */
+            double const bd = bb.second ? fabs(bb.first[NR::X] - s[NR::X]) : NR_HUGE;
+            double const sd = sn.second ? fabs(sn.first[NR::X] - s[NR::X]) : NR_HUGE;
+            s = (bd < sd) ? bb.first : sn.first;
+        }
+
     } else {
         /* Scale aspect ratio is unlocked */
         
