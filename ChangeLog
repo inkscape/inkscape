@@ -1,6 +1,8 @@
 2006-05-09  Carl Hetherington  <inkscape@carlh.net>
 
-	* src/nodepath.cpp: fix silly bug with snapping node edits.
+	* src/nodepath.cpp: fix silly bug with snapping node edits.  *
+	src/snapper.cpp, src/snapper.h, src/sp-namedview.cpp: re-enable
+	link between grid visibility and grid snap.
 
 2006-05-08  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
