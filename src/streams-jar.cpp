@@ -16,26 +16,15 @@ void JarBuffer::consume_header() throw(JarHeaderException)
     	check_signature(data);
 	_urihandle->read(data+4, 26);
 	compressed_size = compressed_left = unpack_4bytes(data, LOC_CSIZE);
-	guint16 filename_length = unpack_2bytes(data, LOC_FNLEN);
 	eflen = unpack_2bytes(data, LOC_EFLEN);
 	flags = unpack_2bytes(data, LOC_EXTRA);
 	method = unpack_2bytes(data, LOC_COMP);
 	
 #ifdef DEBUG_STREAMS
 	std::printf("Compressed size is %u\n", compressed_size);
-	std::printf("Filename length is %hu\n", filename_length);
 	std::printf("Extra field length is %hu\n", eflen);
 	std::printf("Flags are %#hx\n", flags);
 	std::printf("Compression method is %#hx\n", method);
-#endif
-
-	//guint32 crc = check_crc(data, flags);
-	gchar filename[filename_length+1];
-	_urihandle->read(filename, filename_length);
-	filename[filename_length] = '\0';
-
-#ifdef DEBUG_STREAMS
-	std::printf("Filename is %s\n", filename);
 #endif
     }
     catch (std::exception& e) {
@@ -89,11 +78,12 @@ int JarBuffer::consume_and_inflate()
 
 int JarBuffer::consume_compressed(int nbytes)
 {
-    int ret;
+    int ret=do_consume_and_inflate(nbytes);
 
-    if ((ret = do_consume_and_inflate(nbytes)) == EOF && eflen > 0) {
-	guint8 efbuf[eflen];
+    if ( ret == EOF && eflen > 0 ) {
+	guint8 *efbuf=new guint8[eflen];
 	_urihandle->read(efbuf, eflen);
+        delete [] efbuf;
 	return 1;
     }
 
@@ -102,14 +92,14 @@ int JarBuffer::consume_compressed(int nbytes)
 
 int JarBuffer::consume_uncompressed(int nbytes)
 {
-    guint8 data[nbytes];
-    if (consume(data, nbytes) == EOF)
-	return EOF;
-
-    copy_to_get(data, nbytes);
-    compressed_left -= nbytes;
-
-    return nbytes;
+    guint8 *data=new guint8[nbytes];
+    int consumed=consume(data, nbytes);
+    if ( consumed != EOF ) {
+        copy_to_get(data, consumed);
+        compressed_left -= consumed;
+    }
+    delete [] data;
+    return consumed;
 }
 
 GByteArray *JarBuffer::inflate(guint8 *data, const int nbytes)

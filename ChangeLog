@@ -1,5 +1,12 @@
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
+	* src/streams-zlib.cpp, src/streams-jar.cpp:
+
+	  use array new rather than dynamically-sized automatic arrays,
+	  plus cleanups and minor fixes
+
+2006-05-08  MenTaLguY  <mental@rydia.net>
+
 	* src/debug/demangle.cpp, src/debug/demangle.h, src/sp-object.cpp,
 	  src/gc-anchored.cpp, src/debug/Makefile_insert:
 

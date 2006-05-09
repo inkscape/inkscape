@@ -104,15 +104,19 @@ int ZlibBuffer::do_consume(guint8 *buf, int nbytes)
 
 int ZlibBuffer::do_consume_and_inflate(int nbytes)
 {
-    guint8 buf[nbytes];
-    if (consume(buf, nbytes) == EOF)
-	return EOF;
+    guint8 *buf=new guint8[nbytes];
 
-    GByteArray *gba = inflate(buf, nbytes);
-    copy_to_get(gba->data, gba->len);
+    int ret=consume(buf, nbytes);
+    
+    if ( ret != EOF ) {
+        ret = 1;
+        GByteArray *gba = inflate(buf, nbytes);
+        copy_to_get(gba->data, gba->len);
+        g_byte_array_free(gba, TRUE);
+    }
 
-    g_byte_array_free(gba, TRUE);
-    return 1;
+    delete [] buf;
+    return ret;
 }
 
 int ZlibBuffer::consume_and_inflate()
