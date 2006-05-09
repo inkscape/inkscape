@@ -933,7 +933,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
             Inkscape::SnappedPoint const s = m.freeSnap(Inkscape::Snapper::SNAP_POINT, n->pos + delta, NULL);
             if (s.getDistance() < best) {
                 best = s.getDistance();
-                best_pt = s.getPoint();
+                best_pt = s.getPoint() - n->pos;
             }
         }
     }
