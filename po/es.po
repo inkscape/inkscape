@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-09 21:07+0200\n"
-"PO-Revision-Date: 2006-04-23 21:14+0200\n"
+"POT-Creation-Date: 2006-05-09 21:16+0200\n"
+"PO-Revision-Date: 2006-05-09 21:08+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1161,17 +1161,15 @@ msgstr "Movimiento rela_tivo"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
-msgstr ""
+msgstr "Mover la guía con relación a la posición actual"
 
 #: ../src/dialogs/guidelinedialog.cpp:61
-#, fuzzy
 msgid "Move by:"
-msgstr "Mover %s"
+msgstr "Mover:"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
-#, fuzzy
 msgid "Move to:"
-msgstr "Mover %s"
+msgstr "Mover a:"
 
 #  create dialog
 #: ../src/dialogs/guidelinedialog.cpp:114
@@ -1179,9 +1177,9 @@ msgid "Guideline"
 msgstr "Línea guía"
 
 #: ../src/dialogs/guidelinedialog.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr "Mover %s"
+msgstr "Moviendo %s %s"
 
 #: ../src/dialogs/iconpreview.cpp:142
 #, c-format
@@ -1392,49 +1390,48 @@ msgid "Master _opacity"
 msgstr "_Opacidad maestra"
 
 #: ../src/dialogs/rdf.cpp:178
-#, fuzzy
 msgid "CC Attribution"
-msgstr "Atributo"
+msgstr "Atribución CC"
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
-msgstr ""
+msgstr "Atribución CC-ShareAlike"
 
 #: ../src/dialogs/rdf.cpp:188
 msgid "CC Attribution-NoDerivs"
-msgstr ""
+msgstr "Atribución CC-NoDerivs"
 
 #: ../src/dialogs/rdf.cpp:193
 msgid "CC Attribution-NonCommercial"
-msgstr ""
+msgstr "Atribución CC-NoComercial"
 
 #: ../src/dialogs/rdf.cpp:198
 msgid "CC Attribution-NonCommercial-ShareAlike"
-msgstr ""
+msgstr "Atribución CC NoCommercial-ShareAlike"
 
 #: ../src/dialogs/rdf.cpp:203
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "Atribución CC NoCommercial-NoDerivs"
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
-msgstr ""
+msgstr "Licencia pública general GNU"
 
 #: ../src/dialogs/rdf.cpp:213
 msgid "GNU Lesser General Public License"
-msgstr ""
+msgstr "Licencia Pública General Menor GNU"
 
 #: ../src/dialogs/rdf.cpp:218
 msgid "Public Domain"
-msgstr ""
+msgstr "Dominio público"
 
 #: ../src/dialogs/rdf.cpp:223
 msgid "FreeArt"
-msgstr ""
+msgstr "Arte Libre (FreeArt)"
 
 #: ../src/dialogs/rdf.cpp:241
 msgid "Name by which this document is formally known."
-msgstr "Nombre por el que se conoce este documento formalmente"
+msgstr "Nombre por el que se conoce este documento formalmente."
 
 #: ../src/dialogs/rdf.cpp:243
 msgid "Date"
@@ -1442,7 +1439,7 @@ msgstr "Fecha"
 
 #: ../src/dialogs/rdf.cpp:244
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
-msgstr "Fecha asociada a la creación de este documento (AAAA-MM-DD)"
+msgstr "Fecha asociada a la creación de este documento (AAAA-MM-DD)."
 
 #: ../src/dialogs/rdf.cpp:246
 msgid "Format"
@@ -1450,7 +1447,7 @@ msgstr "Formato"
 
 #: ../src/dialogs/rdf.cpp:247
 msgid "The physical or digital manifestation of this document (MIME type)."
-msgstr "La manifestación física o digital de este documento (tipo MIME)"
+msgstr "La manifestación física o digital de este documento (tipo MIME)."
 
 #: ../src/dialogs/rdf.cpp:249
 msgid "Type"
@@ -1458,7 +1455,7 @@ msgstr "Tipo"
 
 #: ../src/dialogs/rdf.cpp:250
 msgid "Type of document (DCMI Type)."
-msgstr "Tipo de documento (tipo DCMI)"
+msgstr "Tipo de documento (tipo DCMI)."
 
 #: ../src/dialogs/rdf.cpp:253
 msgid "Creator"
@@ -1480,7 +1477,7 @@ msgid ""
 "Name of entity with rights to the Intellectual Property of this document."
 msgstr ""
 "Nombre de la entidad con derechos a la propiedad intelectual de este "
-"documento"
+"documento."
 
 #: ../src/dialogs/rdf.cpp:259
 msgid "Publisher"
@@ -1488,7 +1485,7 @@ msgstr "Editor"
 
 #: ../src/dialogs/rdf.cpp:260
 msgid "Name of entity responsible for making this document available."
-msgstr "Nombre de la entidad responsable de hacer este documento público"
+msgstr "Nombre de la entidad responsable de hacer este documento público."
 
 #: ../src/dialogs/rdf.cpp:263
 msgid "Identifier"
@@ -1496,7 +1493,7 @@ msgstr "Identificador"
 
 #: ../src/dialogs/rdf.cpp:264
 msgid "Unique URI to reference this document."
-msgstr "URI único para referenciar este documento"
+msgstr "URI único para referenciar este documento."
 
 #: ../src/dialogs/rdf.cpp:266
 msgid "Source"
@@ -1504,7 +1501,7 @@ msgstr "Fuente"
 
 #: ../src/dialogs/rdf.cpp:267
 msgid "Unique URI to reference the source of this document."
-msgstr "URI única para referenciar la fuente de este documento"
+msgstr "URI única para referenciar la fuente de este documento."
 
 #: ../src/dialogs/rdf.cpp:269
 msgid "Relation"
@@ -1546,7 +1543,7 @@ msgstr "Cobertura"
 
 #: ../src/dialogs/rdf.cpp:281
 msgid "Extent or scope of this document."
-msgstr "Extensión o ámbito de este documento"
+msgstr "Extensión o ámbito de este documento."
 
 #: ../src/dialogs/rdf.cpp:285
 msgid "A short account of the content of this document."
@@ -1563,7 +1560,7 @@ msgid ""
 "this document."
 msgstr ""
 "Nombres de las entidades responsables de las colaboraciones al contenido de "
-"este documento"
+"este documento."
 
 #. TRANSLATORS: URL to a page that defines the license for the document
 #: ../src/dialogs/rdf.cpp:294
@@ -1574,7 +1571,7 @@ msgstr "URI"
 #: ../src/dialogs/rdf.cpp:296
 msgid "URI to this document's license's namespace definition."
 msgstr ""
-"URI a la definición del espacio de nombre de la licencia de este documento"
+"URI a la definición del espacio de nombre de la licencia de este documento."
 
 #. TRANSLATORS: fragment of XML representing the license of the document
 #: ../src/dialogs/rdf.cpp:300
@@ -1922,7 +1919,7 @@ msgstr "Documento sin nombre %d"
 #. We hit green anchor, closing Green-Blue-Red
 #: ../src/draw-context.cpp:438
 msgid "Path is closed."
-msgstr "Trazo cerrado"
+msgstr "El trazo está cerrado."
 
 #. We hit bot start and end of single curve, closing paths
 #: ../src/draw-context.cpp:453
@@ -1960,7 +1957,7 @@ msgstr ""
 "<b>Haga clic</b> para seleccionar el color de relleno, <b>Mayús+clic</b> "
 "para el color del trazo, <b>arrastre</b> para seleccionar la media de color "
 "de un área., con <b>Alt</b> para el color inverso, <b>Ctrl+C</b> para copiar "
-"el color de debajo del ratón al portapapeles."
+"el color de debajo del ratón al portapapeles"
 
 #: ../src/extension/dependency.cpp:238
 msgid "Dependency::"
@@ -2026,7 +2023,8 @@ msgstr "» no se ha cargado porque "
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr ""
-"No se pudo crear el archivo de registro de errores de las extensiones «%s»."
+"No se ha podido crear el archivo de registro de errores de las extensiones «%"
+"s»"
 
 #: ../src/extension/extension.cpp:677
 msgid "Name:"
@@ -2118,7 +2116,7 @@ msgstr "Anchura de desenfoque"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
-msgstr ""
+msgstr "Ancho en píxeles del área desenfocada"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of Steps"
@@ -2126,7 +2124,7 @@ msgstr "Número de pasos"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
-msgstr ""
+msgstr "Cantidad de copias del objeto creadas para simular el desenfoque"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
@@ -2215,7 +2213,7 @@ msgstr "Generar"
 
 #: ../src/extension/internal/grid.cpp:226
 msgid "Draw a path which is a grid"
-msgstr ""
+msgstr "Dibujar un trazo que es una rejilla"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
 msgid "LaTeX Output"
@@ -2238,7 +2236,6 @@ msgid "OpenDocument Drawing Output"
 msgstr "Salida Dibujo OpenDocument"
 
 #: ../src/extension/internal/odf.cpp:1902
-#, fuzzy
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Dibujo OpenDocument (*.odg)"
 
@@ -2310,7 +2307,7 @@ msgid ""
 msgstr ""
 "Imprimir todo como mapa de bits. La imagen resultante normalmente será mayor "
 "y la calidad dependerá del factor de ampliación, pero todos los gráficos "
-"serán renderizados idénticos a la pantalla"
+"serán renderizados idénticos a la pantalla."
 
 #: ../src/extension/internal/ps.cpp:148
 msgid "Preferred resolution (dots per inch) of bitmap"
@@ -2421,9 +2418,9 @@ msgstr "Impresión Windows 32-bit"
 
 #. A hack to internationalize the title properly
 #: ../src/extension/prefdialog.cpp:33
-#, fuzzy, c-format
+#, c-format
 msgid "%s Preferences"
-msgstr " Preferencias"
+msgstr "Preferencias de %s"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3856,9 +3853,8 @@ msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>No hay trazos</b> reversibles en la selección."
 
 #: ../src/pen-context.cpp:218
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "Dibujar tiradores"
+msgstr "Trazo cancelado"
 
 #: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
 msgid "Continuing selected path"
@@ -3910,9 +3906,8 @@ msgstr ""
 "ángulo, con <b>Mayús</b> para mover solamente este tirador"
 
 #: ../src/pen-context.cpp:1127
-#, fuzzy
 msgid "Drawing finished"
-msgstr "Dibujo"
+msgstr "Dibujo terminado"
 
 #: ../src/pencil-context.cpp:315
 msgid "<b>Release</b> here to close and finish the path."
@@ -4133,20 +4128,22 @@ msgstr ""
 "bits."
 
 #: ../src/selection-chemistry.cpp:2383
-#, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Seleccione los <b>objetos</b> de los que crear la máscara."
+msgstr ""
+"Seleccione los <b>objetos</b> de los que crear el trazo o la máscara de "
+"recorte."
 
 #: ../src/selection-chemistry.cpp:2386
-#, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
-"Seleccione el objeto de máscara y los <b>objetos</b> a los que aplicarla."
+"Seleccione el objeto de máscara y los <b>objetos</b> a los que aplicarla el "
+"trazo o máscara de recorte."
 
 #: ../src/selection-chemistry.cpp:2489
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Seleccione los <b>objetos</b> de los que desea eliminar la máscara."
+msgstr ""
+"Seleccione los <b>objetos</b> de los que desea eliminar el trazo o la "
+"máscara de recorte."
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4574,11 +4571,11 @@ msgstr[0] "<b>Polígono</b> de %d vértice"
 msgstr[1] "<b>Polígono</b> de %d vértices"
 
 #: ../src/sp-switch.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>Grupo</b> de <b>%d</b> objeto"
-msgstr[1] "<b>Grupo</b> de <b>%d</b> objetos"
+msgstr[0] "<b>Grupo condicional</b> de <b>%d</b> objeto"
+msgstr[1] "<b>Grupo condicional</b> de <b>%d</b> objetos"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:409
@@ -5843,7 +5840,7 @@ msgstr "Herramientas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Width is in absolute units"
-msgstr ""
+msgstr "El ancho está en unidades absolutas"
 
 #. Selector
 #: ../src/ui/dialog/inkscape-preferences.cpp:307
@@ -5970,6 +5967,9 @@ msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
 msgstr ""
+"Si se marca, la anchura de la pluma es en unidades absolutas (px) "
+"independientemente del zoom, si no la anchura de la pluma depende del zoom, "
+"de modo que se muestra igual a cualquier zoom."
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:382 ../src/verbs.cpp:2181
@@ -6347,7 +6347,6 @@ msgid "Remove clipping path or mask after applying"
 msgstr "Eliminar el trazo de recorte o máscara después de aplicar"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:531
-#, fuzzy
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -7087,9 +7086,8 @@ msgstr ""
 "¿Desea guardar el archivo en otro formato?"
 
 #: ../src/ui/widget/panel.cpp:95
-#, fuzzy
 msgid "tiny"
-msgstr "pulgadas"
+msgstr "mínimo"
 
 #: ../src/ui/widget/panel.cpp:96
 msgid "small"
@@ -7362,15 +7360,16 @@ msgid "Custom size"
 msgstr "Tamaño personalizado"
 
 #: ../src/ui/widget/page-sizer.cpp:246
-#, fuzzy
 msgid "_Fit page to selection"
-msgstr "Encajar en la caja de selección"
+msgstr "A_justar la página a la selección"
 
 #: ../src/ui/widget/page-sizer.cpp:247
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
+"Redimensionar la página para que se ajuste a la selección actual o al dibujo "
+"completo si no hay selección"
 
 #: ../src/ui/widget/page-sizer.cpp:256
 msgid "U_nits:"
@@ -7682,9 +7681,9 @@ msgid "_Paste"
 msgstr "_Pegar"
 
 #: ../src/verbs.cpp:1976
-#, fuzzy
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Pegar los objetos desde el portapapeles al puntero del ratón."
+msgstr ""
+"Pegar los objetos o el texto desde el portapapeles al puntero del ratón."
 
 #: ../src/verbs.cpp:1977
 msgid "Paste _Style"
@@ -8994,34 +8993,31 @@ msgstr "Repetir el último efecto con ajustes nuevos"
 #. "tutorial_tips"
 #. Fit Canvas
 #: ../src/verbs.cpp:2356
-#, fuzzy
 msgid "Fit Canvas to Selection"
-msgstr "Encajar en la caja de selección"
+msgstr "Ajustar el lienzo a la selección"
 
 #: ../src/verbs.cpp:2357
-#, fuzzy
 msgid "Fit the canvas to the current selection"
-msgstr "Limitar la búsqueda a la selección actual"
+msgstr "Ajusta el lienzo al tamaño de la selección actual"
 
 #: ../src/verbs.cpp:2358
 msgid "Fit Canvas to Drawing"
-msgstr ""
+msgstr "Ajustar el lienzo al dibujo"
 
 #: ../src/verbs.cpp:2359
-#, fuzzy
 msgid "Fit the canvas to the drawing"
-msgstr "Editar las paradas del gradiente"
+msgstr "Ajusta el lienzo al tamaño del dibujo"
 
 #: ../src/verbs.cpp:2360
-#, fuzzy
 msgid "Fit Canvas to Selection or Drawing"
-msgstr "Encajar en la caja de selección"
+msgstr "Ajustar el lienzo a la selección o el dibujo"
 
 #: ../src/verbs.cpp:2361
 msgid ""
 "Fit the canvas to the current selection or the drawing if there is no "
 "selection"
 msgstr ""
+"Ajusta el lienzo al tamaño de la selección o del dibujo si no hay selección"
 
 #: ../src/widgets/dash-selector.cpp:102
 msgid "Dash pattern"
@@ -9547,14 +9543,12 @@ msgid "Delete selected nodes"
 msgstr "Suprimir los nodos seleccionados"
 
 #: ../src/widgets/toolbox.cpp:403
-#, fuzzy
 msgid "Join selected endnodes"
-msgstr "Unir los trazos en los nodos seleccionados."
+msgstr "Unir los nodos finales seleccionados"
 
 #: ../src/widgets/toolbox.cpp:405
-#, fuzzy
 msgid "Join selected endnodes with a new segment"
-msgstr "Unir los trazos en los nodos seleccionados con un segmento nuevo"
+msgstr "Unir los nodos finales seleccionados con un segmento nuevo"
 
 #: ../src/widgets/toolbox.cpp:408
 msgid "Split path between two non-endpoint nodes"
@@ -9880,18 +9874,16 @@ msgid "Write Adobe Illustrator"
 msgstr "Guardar como Adobe Illustrator"
 
 #: ../share/extensions/aisvg.inx.h:1
-#, fuzzy
 msgid "AI SVG Input"
-msgstr "Entrada SVG"
+msgstr "Entrada SVG AI"
 
 #: ../share/extensions/aisvg.inx.h:2
-#, fuzzy
 msgid "Adobe Illustrator SVG (*.ai.svg)"
-msgstr "Adobe Illustrator (*.ai)"
+msgstr "SVG de Adobe Illustrator (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
-msgstr ""
+msgstr "Limpia los archivos SVG de Adobe Illustrator antes de abrirlos"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -10006,19 +9998,19 @@ msgstr "Postscript encapsulado con una miniatura"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
-msgstr ""
+msgstr "Fórmula LaTeX"
 
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
-msgstr ""
+msgstr "Fórmula LaTeX: "
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
-msgstr ""
+msgstr "Extraer una imagen"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Path to save image"
-msgstr ""
+msgstr "Ruta para guardar la imagen"
 
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
@@ -10110,35 +10102,32 @@ msgstr ""
 "Afinación (paso de escala para cada cuerda separado por punto y coma «;»)"
 
 #: ../share/extensions/fig_input.inx.h:1
-#, fuzzy
 msgid "Open files saved with XFIG"
-msgstr "Abrir archivos guardados con Adobe Illustrator"
+msgstr "Abrir archivos guardados con XFIG"
 
 #: ../share/extensions/fig_input.inx.h:2
 msgid "XFIG Graphic File (*.fig)"
-msgstr ""
+msgstr "Archivo gráficoXFIG (*.fig)"
 
 #: ../share/extensions/fig_input.inx.h:3
-#, fuzzy
 msgid "XFIG Input"
-msgstr "Entrada DXF"
+msgstr "Entrada XFIG"
 
 #: ../share/extensions/flatten.inx.h:1
-#, fuzzy
 msgid "Flatness"
-msgstr "líneas"
+msgstr "Llaneza"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
-msgstr ""
+msgstr "Aplanar Bezier"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
-msgstr ""
+msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
 msgid "GIMP XCF maintaining layers (*.XCF)"
-msgstr ""
+msgstr "GIMP XCF con capas (*.XCF)"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
@@ -10201,9 +10190,8 @@ msgid "Step"
 msgstr "Paso"
 
 #: ../share/extensions/measure.inx.h:2
-#, fuzzy
 msgid "Measure Path"
-msgstr "Mostrar trazo"
+msgstr "Medir trazo"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10254,17 +10242,15 @@ msgstr "Aleatorizar nodos"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Use normal distribution"
-msgstr ""
+msgstr "Utilizar distribución normal"
 
 #: ../share/extensions/randompnt.inx.h:1
-#, fuzzy
 msgid "Random Point"
-msgstr "Unión redonda"
+msgstr "Punto aleatorio"
 
 #: ../share/extensions/randompos.inx.h:1
-#, fuzzy
 msgid "Random Position"
-msgstr "Posición:"
+msgstr "Posición aleatoria"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -10300,24 +10286,23 @@ msgstr "Enderezar segmentos"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
-msgstr ""
+msgstr "Perspectiva"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
-#, fuzzy
 msgid "Compressed Inkscape SVG with media (*.zip)"
-msgstr "SVG de Inkscape comprimido (*.svgz)"
+msgstr "SVG de Inkscape comprimido con imágenes (*.zip)"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
-#, fuzzy
 msgid ""
 "Inkscape's native file format compressed with Zip and including all media "
 "files"
-msgstr "El formato nativo de Inkscape comprimido con Gzip"
+msgstr ""
+"El formato nativo de Inkscape comprimido con Zip incluyendo todos los "
+"archivos externos"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "Salida AI"
+msgstr "Salida ZIP"
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
 msgid "Color of shadow"
@@ -10410,73 +10395,3 @@ msgstr "Entrada de metaarchivo de windows"
 #  gtk_label_set_markup (GTK_LABEL(l), _("<b>Average:</b>"));
 #~ msgid " <b>_Export</b> "
 #~ msgstr " <b>_Exportar</b> "
-
-#  TRANSLATORS: This string appears when double-clicking on a guide.
-#  This is the distance by which the guide is to be moved.
-#~ msgid " relative by "
-#~ msgstr " relativo "
-
-#  TRANSLATORS: This string appears when double-clicking on a guide.
-#  This is the target location where the guide is to be moved.
-#~ msgid " absolute to "
-#~ msgstr " absoluto "
-
-#~ msgid "Finishing pen"
-#~ msgstr "Terminando trazo"
-
-#~ msgid "_Panels"
-#~ msgstr "_Paneles"
-
-#~ msgid "Show or hide the panels"
-#~ msgstr "Mostrar/ocultar los paneles"
-
-#~ msgid ""
-#~ "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap "
-#~ "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate the "
-#~ "opposite handle in sync"
-#~ msgstr ""
-#~ "<b>Tirador de nodo</b>: arrastre para dar forma a la curva; con <b>Ctrl</"
-#~ "b> para ajustar al ángulo; con <b>Alt</b> para mantener la longitud, con "
-#~ "<b>Mayús</b> para rotar el tirador opuesto al unísono"
-
-#~ msgid "Close window"
-#~ msgstr "Cerrar ventana"
-
-#~ msgid "Union of selected objects"
-#~ msgstr "Unión de los objetos seleccionados"
-
-#~ msgid "Exclusive OR of selected objects"
-#~ msgstr "OR exclusivo de los objetos seleccionados"
-
-#~ msgid "Convert selected strokes to paths"
-#~ msgstr "Convierte los trazos seleccionados en rutas"
-
-#~ msgid "Convert bitmap object to paths"
-#~ msgstr "Convierte un objeto de mapa de bits en trazos"
-
-#~ msgid "Put text into frames"
-#~ msgstr "Poner texto en marcos"
-
-#~ msgid "Fill and Stroke dialog"
-#~ msgstr "Diálogo de relleno y borde"
-
-#~ msgid "View color swatches"
-#~ msgstr "Ver muestras de color"
-
-#~ msgid "Transform dialog"
-#~ msgstr "Diálogo de transformaciones"
-
-#~ msgid "Text and Font dialog"
-#~ msgstr "Diálogo de texto y tipografía"
-
-#~ msgid "XML Editor"
-#~ msgstr "Editor XML"
-
-#~ msgid "Create and arrange multiple clones of selection"
-#~ msgstr "Crear y colocar varios clones de la selección"
-
-#~ msgid "Object Properties dialog"
-#~ msgstr "Diálogo de propiedades del objeto"
-
-#~ msgid "About Memory..."
-#~ msgstr "Acerca de memoria..."
