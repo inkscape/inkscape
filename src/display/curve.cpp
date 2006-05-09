@@ -61,7 +61,6 @@ sp_curve_new_sized(gint length)
     curve->end = 0;
     curve->length = length;
     curve->substart = 0;
-    curve->sbpath = false;
     curve->hascpt = false;
     curve->posSet = false;
     curve->moving = false;
@@ -101,49 +100,6 @@ sp_curve_new_from_bpath(NArtBpath *bpath)
             (curve->_bpath[i].code == NR_MOVETO_OPEN))
             break;
     curve->substart = i;
-    curve->sbpath = false;
-    curve->hascpt = false;
-    curve->posSet = false;
-    curve->moving = false;
-    curve->closed = sp_bpath_closed(bpath);
-
-    return curve;
-}
-
-/** 
- * Construct an SPCurve from read-only, static storage.
- *
- *  We could treat read-onliness and staticness (i.e. can't call free on bpath) as orthogonal
- *  attributes, but at the time of writing we have only one caller.
- */
-SPCurve *
-sp_curve_new_from_static_bpath(NArtBpath const *bpath)
-{
-    g_return_val_if_fail(bpath != NULL, NULL);
-
-    bool sbpath;
-    if (!sp_bpath_good(bpath)) {
-        NArtBpath *new_bpath = sp_bpath_clean(bpath);
-        g_return_val_if_fail(new_bpath != NULL, NULL);
-        sbpath = false;
-        bpath = new_bpath;
-    } else {
-        sbpath = true;
-    }
-
-    SPCurve *curve = g_new(SPCurve, 1);
-
-    curve->refcount = 1;
-    curve->_bpath = const_cast<NArtBpath *>(bpath);
-    curve->length = sp_bpath_length(bpath);
-    curve->end = curve->length - 1;
-    gint i = curve->end;
-    for (; i > 0; i--)
-        if ((curve->_bpath[i].code == NR_MOVETO) ||
-            (curve->_bpath[i].code == NR_MOVETO_OPEN))
-            break;
-    curve->substart = i;
-    curve->sbpath = sbpath;
     curve->hascpt = false;
     curve->posSet = false;
     curve->moving = false;
@@ -207,7 +163,7 @@ sp_curve_unref(SPCurve *curve)
     curve->refcount -= 1;
 
     if (curve->refcount < 1) {
-        if ((!curve->sbpath) && (curve->_bpath)) {
+        if (curve->_bpath) {
             nr_free(curve->_bpath);
         }
         g_free(curve);
@@ -330,7 +286,6 @@ static void
 tmpl_curve_transform(SPCurve *const curve, M const &m)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
 
     for (gint i = 0; i < curve->end; i++) {
         NArtBpath *p = curve->_bpath + i;
@@ -381,7 +336,6 @@ void
 sp_curve_reset(SPCurve *curve)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
 
     curve->_bpath->code = NR_END;
     curve->end = 0;
@@ -410,7 +364,6 @@ void
 sp_curve_moveto(SPCurve *curve, NR::Point const &p)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
     g_return_if_fail(!curve->moving);
 
     curve->substart = curve->end;
@@ -435,7 +388,6 @@ void
 sp_curve_lineto(SPCurve *curve, gdouble x, gdouble y)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
     g_return_if_fail(curve->hascpt);
 
     if (curve->moving) {
@@ -486,7 +438,6 @@ void
 sp_curve_lineto_moving(SPCurve *curve, gdouble x, gdouble y)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
     g_return_if_fail(curve->hascpt);
 
     if (curve->moving) {
@@ -554,7 +505,6 @@ void
 sp_curve_curveto(SPCurve *curve, gdouble x0, gdouble y0, gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
     g_return_if_fail(curve->hascpt);
     g_return_if_fail(!curve->moving);
 
@@ -604,7 +554,6 @@ void
 sp_curve_closepath(SPCurve *curve)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
     g_return_if_fail(curve->hascpt);
     g_return_if_fail(!curve->posSet);
     g_return_if_fail(!curve->moving);
@@ -648,7 +597,6 @@ void
 sp_curve_closepath_current(SPCurve *curve)
 {
     g_return_if_fail(curve != NULL);
-    g_return_if_fail(!curve->sbpath);
     g_return_if_fail(curve->hascpt);
     g_return_if_fail(!curve->posSet);
     g_return_if_fail(!curve->closed);

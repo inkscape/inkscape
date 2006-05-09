@@ -111,7 +111,7 @@ static void sp_dropper_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) parent_class)->setup(ec);
     }
 
-    SPCurve *c = sp_curve_new_from_static_bpath(spdc_circle);
+    SPCurve *c = sp_curve_new_from_foreign_bpath(spdc_circle);
     dc->area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
     sp_curve_unref(c);
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(dc->area), 0x00000000,(SPWindRule)0);

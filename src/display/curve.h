@@ -45,11 +45,6 @@ struct SPCurve {
     /// (first subitem of the item about zero-length path segments)
     NR::Point movePos;
 
-    /// True iff bpath points to read-only, static storage (see callers of
-    /// sp_curve_new_from_static_bpath), in which case we shouldn't free 
-    /// bpath and shouldn't write through it.
-    bool sbpath : 1;
-    
     /// True iff current point is defined.  Initially false for a new curve; 
     /// becomes true after moveto; becomes false on closepath.  Curveto, 
     /// lineto etc. require hascpt; hascpt remains true after lineto/curveto.
@@ -74,7 +69,6 @@ struct SPCurve {
 SPCurve *sp_curve_new();
 SPCurve *sp_curve_new_sized(gint length);
 SPCurve *sp_curve_new_from_bpath(NArtBpath *bpath);
-SPCurve *sp_curve_new_from_static_bpath(NArtBpath const *bpath);
 SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[]);
 
 SPCurve *sp_curve_ref(SPCurve *curve);

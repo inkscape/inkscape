@@ -1,5 +1,12 @@
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
+	* src/display/curve.h, src/display/curve.cpp, src/dropper-context.cpp:
+
+	  get rid of sp_curve_new_from_static_bpath() in a bid to simplify curve
+	  memory management
+
+2006-05-08  MenTaLguY  <mental@rydia.net>
+
 	* src/display/canvas-bpath.cpp, src/display/curve.cpp, src/display/curve.h,
 	  src/display/nr-arena-shape.cpp, src/draw-context.cpp,
 	  src/extension/internal/odf.cpp, src/extension/internal/pov-out.cpp,
