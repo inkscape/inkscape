@@ -6,6 +6,13 @@
 
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
+	* src/display/curve.cpp:
+
+	  always make local copy of path data so that we have control over memory
+	  policy
+
+2006-05-08  MenTaLguY  <mental@rydia.net>
+
 	* src/display/curve.h, src/display/curve.cpp, src/dropper-context.cpp:
 
 	  get rid of sp_curve_new_from_static_bpath() in a bid to simplify curve

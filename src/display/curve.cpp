@@ -79,32 +79,8 @@ sp_curve_new_from_bpath(NArtBpath *bpath)
 {
     g_return_val_if_fail(bpath != NULL, NULL);
 
-    if (!sp_bpath_good(bpath)) {
-        NArtBpath *new_bpath = sp_bpath_clean(bpath);
-        if (new_bpath == NULL) {
-            return NULL;
-        }
-        nr_free(bpath);
-        bpath = new_bpath;
-    }
-
-    SPCurve *curve = g_new(SPCurve, 1);
-
-    curve->refcount = 1;
-    curve->_bpath = bpath;
-    curve->length = sp_bpath_length(bpath);
-    curve->end = curve->length - 1;
-    gint i = curve->end;
-    for (; i > 0; i--)
-        if ((curve->_bpath[i].code == NR_MOVETO) ||
-            (curve->_bpath[i].code == NR_MOVETO_OPEN))
-            break;
-    curve->substart = i;
-    curve->hascpt = false;
-    curve->posSet = false;
-    curve->moving = false;
-    curve->closed = sp_bpath_closed(bpath);
-
+    SPCurve *curve = sp_curve_new_from_foreign_bpath(bpath);
+    nr_free(bpath);
     return curve;
 }
 
@@ -127,10 +103,22 @@ SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[])
         memcpy(new_bpath, bpath, len * sizeof(NArtBpath));
     }
 
-    SPCurve *curve = sp_curve_new_from_bpath(new_bpath);
+    SPCurve *curve = g_new(SPCurve, 1);
 
-    if (!curve)
-        nr_free(new_bpath);
+    curve->refcount = 1;
+    curve->_bpath = new_bpath;
+    curve->length = sp_bpath_length(new_bpath);
+    curve->end = curve->length - 1;
+    gint i = curve->end;
+    for (; i > 0; i--)
+        if ((curve->_bpath[i].code == NR_MOVETO) ||
+            (curve->_bpath[i].code == NR_MOVETO_OPEN))
+            break;
+    curve->substart = i;
+    curve->hascpt = false;
+    curve->posSet = false;
+    curve->moving = false;
+    curve->closed = sp_bpath_closed(new_bpath);
 
     return curve;
 }
