@@ -3,17 +3,14 @@ tutorialdir = $(datadir)/inkscape/tutorials
 
 tutorial_DATA = \
     README \
-    gpl-2.svg	\
-    tutorial-elements.svg \
-    tutorial-elements.fr.svg \
-    tutorial-elements.es.svg \
-    tutorial-elements.sl.svg \
-    tutorial-tips.svg \
-    tutorial-tips.es.svg \
-    tutorial-tips.fr.svg \
-    tutorial-tips.sl.svg \
+    gpl-2.svg \
     making_markers.svg \
+    oldguitar.jpg \
+    potrace.png \
+    potrace-de.png \
+    potrace-fr.png \
     tutorial-advanced.svg \
+    tutorial-advanced.ca.svg \
     tutorial-advanced.es.svg \
     tutorial-advanced.fr.svg \
     tutorial-advanced.ja.svg \
@@ -28,21 +25,31 @@ tutorial_DATA = \
     tutorial-basic.ru.svg \
     tutorial-basic.sl.svg \
     tutorial-calligraphy.svg \
+    tutorial-calligraphy.ca.svg \
     tutorial-calligraphy.es.svg \
     tutorial-calligraphy.fr.svg \
     tutorial-calligraphy.sl.svg \
+    tutorial-elements.svg \
+    tutorial-elements.es.svg \
+    tutorial-elements.fr.svg \
+    tutorial-elements.sl.svg \
     tutorial-shapes.svg \
     tutorial-shapes.ca.svg \
     tutorial-shapes.es.svg \
     tutorial-shapes.fr.svg \
     tutorial-shapes.ja.svg \
     tutorial-shapes.sl.svg \
-    tutorial-tracing.svg potrace.png oldguitar.jpg tux.png \
-    tutorial-tracing.de.svg potrace-de.png \
+    tutorial-tips.svg \
+    tutorial-tips.es.svg \
+    tutorial-tips.fr.svg \
+    tutorial-tips.sl.svg \
+    tutorial-tracing.svg \
+    tutorial-tracing.ca.svg \
+    tutorial-tracing.de.svg \
     tutorial-tracing.es.svg \
-    tutorial-tracing.fr.svg potrace-fr.png \
-    tutorial-tracing.sl.svg
-
+    tutorial-tracing.fr.svg \
+    tutorial-tracing.sl.svg \
+    tux.png
 
 
 EXTRA_DIST = $(tutorial_DATA)
