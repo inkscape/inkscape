@@ -1,9 +1,10 @@
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
-	* src/streams-zlib.cpp, src/streams-jar.cpp, src/splivarot.cpp:
+	* src/streams-zlib.cpp, src/streams-jar.cpp, src/splivarot.cpp,
+	  src/extension/internal/bluredge.cpp:
 
 	  use std::vector rather than dynamically-sized automatic arrays,
-	  plus cleanups and minor fixes
+	  plus cleanups and minor fixes, and dead code removal
 
 2006-05-08  MenTaLguY  <mental@rydia.net>
 

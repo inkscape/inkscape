@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <vector>
 #include "desktop.h"
 #include "selection.h"
 #include "helper/action.h"
@@ -65,16 +66,13 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
     items.insert<GSListConstIterator<SPItem *> >(items.end(), selection->itemList(), NULL);
     selection->clear();
 
-    std::list<SPItem *> new_items;
     for(std::list<SPItem *>::iterator item = items.begin();
             item != items.end(); item++) {
         SPItem * spitem = *item;
 
-        Inkscape::XML::Node * new_items[steps];
+        std::vector<Inkscape::XML::Node *> new_items(steps);
         Inkscape::XML::Node * new_group = sp_repr_new("svg:g");
         (SP_OBJECT_REPR(spitem)->parent())->appendChild(new_group);
-        /** \todo  Need to figure out how to get from XML::Node to SPItem */
-        /* new_items.push_back(); */
 
         double orig_opacity = sp_repr_css_double_property(sp_repr_css_attr(SP_OBJECT_REPR(spitem), "style"), "opacity", 1.0);
         char opacity_string[64];
@@ -99,8 +97,7 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
                 offset *= -1.0;
                 prefs_set_double_attribute("options.defaultoffsetwidth", "value", offset);
                 sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_INSET)->get_action(document), NULL);
-            } else if (offset == 0.0) {
-            } else {
+            } else if (offset > 0.0) {
                 prefs_set_double_attribute("options.defaultoffsetwidth", "value", offset);
                 sp_action_perform(Inkscape::Verb::get(SP_VERB_SELECTION_OFFSET)->get_action(document), NULL);
             }
@@ -114,7 +111,6 @@ BlurEdge::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View 
 
     selection->clear();
     selection->add(items.begin(), items.end());
-    selection->add(new_items.begin(), new_items.end());
 
     return;
 }
