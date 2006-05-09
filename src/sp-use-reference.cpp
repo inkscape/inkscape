@@ -231,7 +231,7 @@ void SPUsePath::refresh_source()
         }
     }
     originalPath = new Path;
-    originalPath->LoadArtBPath(curve->bpath, NR::Matrix(item->transform), true);
+    originalPath->LoadArtBPath(SP_CURVE_BPATH(curve), NR::Matrix(item->transform), true);
     sp_curve_unref(curve);
 }
 

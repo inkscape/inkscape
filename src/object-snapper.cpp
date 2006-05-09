@@ -78,10 +78,10 @@ void Inkscape::ObjectSnapper::_snapNodes(Inkscape::SnappedPoint &s,
                 int j = 0;
                 NR::Matrix const i2doc = sp_item_i2doc_affine(*i);
 
-                while (sh->curve->bpath[j].code != NR_END) {
+                while (SP_CURVE_BPATH(sh->curve)[j].code != NR_END) {
 
                     /* Get this node in desktop coordinates */
-                    NArtBpath const &bp = sh->curve->bpath[j];
+                    NArtBpath const &bp = SP_CURVE_BPATH(sh->curve)[j];
                     NR::Point const n = desktop->doc2dt(bp.c(3) * i2doc);
 
                     /* Try to snap to this node of the path */

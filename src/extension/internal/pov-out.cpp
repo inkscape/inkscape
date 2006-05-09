@@ -217,12 +217,12 @@ PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
 
         //Count the NR_CURVETOs/LINETOs
         int segmentCount=0;
-        NArtBpath *bp = curve->bpath;
+        NArtBpath *bp = SP_CURVE_BPATH(curve);
         for (curveNr=0 ; curveNr<curve->length ; curveNr++, bp++)
             if (bp->code == NR_CURVETO || bp->code == NR_LINETO)
                 segmentCount++;
 
-        bp = curve->bpath;
+        bp = SP_CURVE_BPATH(curve);
         double cminx  =  bignum;
         double cmaxx  = -bignum;
         double cminy  =  bignum;
@@ -240,7 +240,7 @@ PovOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
         fprintf(f, "    0.0, //bottom\n");
         fprintf(f, "    %d, //nr points\n", segmentCount * 4);
         int segmentNr = 0;
-        for (bp = curve->bpath, curveNr=0 ; curveNr<curve->length ; curveNr++, bp++) {
+        for (bp = SP_CURVE_BPATH(curve), curveNr=0 ; curveNr<curve->length ; curveNr++, bp++) {
             using NR::X;
             using NR::Y;
             NR::Point const p1(bp->c(1) * tf);

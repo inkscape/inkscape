@@ -521,7 +521,7 @@ static void         GetDest(SPObject* child,Shape **computed,NR::Matrix itr_mat)
 		Path*   temp=new Path;
 		NR::Matrix tr_mat=sp_item_i2root_affine (SP_ITEM(u_child));
 		tr_mat=itr_mat*tr_mat;
-		temp->LoadArtBPath(curve->bpath,tr_mat,true);
+		temp->LoadArtBPath(SP_CURVE_BPATH(curve),tr_mat,true);
 		Shape*  n_shp=new Shape;
 		temp->Convert(0.25);
 		temp->Fill(n_shp,0);

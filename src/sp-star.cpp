@@ -146,7 +146,7 @@ sp_star_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	}
 
 	sp_star_set_shape ((SPShape *) star);
-	char *d = sp_svg_write_path (((SPShape *) star)->curve->bpath);
+	char *d = sp_svg_write_path (SP_CURVE_BPATH(((SPShape *) star)->curve));
 	repr->setAttribute("d", d);
 	g_free (d);
 

@@ -95,7 +95,7 @@ sp_selected_path_combine(void)
         SPPath *path = (SPPath *) i->data;
         SPCurve *c = sp_shape_get_curve(SP_SHAPE(path));
 
-        NArtBpath *abp = nr_artpath_affine(c->bpath, SP_ITEM(path)->transform);
+        NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(c), SP_ITEM(path)->transform);
         sp_curve_unref(c);
         gchar *str = sp_svg_write_path(abp);
         nr_free(abp);
@@ -178,7 +178,7 @@ sp_selected_path_break_apart(void)
 
         gchar *style = g_strdup(SP_OBJECT(item)->repr->attribute("style"));
 
-        NArtBpath *abp = nr_artpath_affine(curve->bpath, (SP_ITEM(path))->transform);
+        NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(curve), (SP_ITEM(path))->transform);
 
         sp_curve_unref(curve);
 
@@ -198,7 +198,7 @@ sp_selected_path_break_apart(void)
             Inkscape::XML::Node *repr = sp_repr_new("svg:path");
             repr->setAttribute("style", style);
 
-            gchar *str = sp_svg_write_path(curve->bpath);
+            gchar *str = sp_svg_write_path(SP_CURVE_BPATH(curve));
             repr->setAttribute("d", str);
             g_free(str);
 
@@ -326,7 +326,7 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy)
     sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
 
     /* Definition */
-    gchar *def_str = sp_svg_write_path(curve->bpath);
+    gchar *def_str = sp_svg_write_path(SP_CURVE_BPATH(curve));
     repr->setAttribute("d", def_str);
     g_free(def_str);
     sp_curve_unref(curve);
@@ -358,7 +358,7 @@ sp_selected_path_reverse()
 
         SPCurve *rcurve = sp_curve_reverse(shape->curve);
 
-        gchar *str = sp_svg_write_path(rcurve->bpath);
+        gchar *str = sp_svg_write_path(SP_CURVE_BPATH(rcurve));
         SP_OBJECT_REPR(shape)->setAttribute("d", str);
         g_free(str);
 

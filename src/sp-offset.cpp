@@ -277,7 +277,7 @@ sp_offset_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     }
 
     // write that curve to "d"
-    char *d = sp_svg_write_path (((SPShape *) offset)->curve->bpath);
+    char *d = sp_svg_write_path (SP_CURVE_BPATH(((SPShape *) offset)->curve));
     repr->setAttribute("d", d);
     g_free (d);
 
@@ -346,7 +346,7 @@ sp_offset_set(SPObject *object, unsigned key, gchar const *value)
                 bpath = sp_svg_read_path (offset->original);
                 curve = sp_curve_new_from_bpath (bpath);	// curve se chargera de detruire bpath
                 g_assert (curve != NULL);
-                offset->originalPath = bpath_to_liv_path (curve->bpath);
+                offset->originalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
                 sp_curve_unref (curve);
 
                 offset->knotSet = false;
@@ -1023,7 +1023,7 @@ sp_offset_top_point (SPOffset * offset, NR::Point *px)
             return;
     }
 
-    Path *finalPath = bpath_to_liv_path (curve->bpath);
+    Path *finalPath = bpath_to_liv_path (SP_CURVE_BPATH(curve));
     if (finalPath == NULL)
     {
         sp_curve_unref (curve);
@@ -1167,7 +1167,7 @@ refresh_offset_source(SPOffset* offset)
         if (curve == NULL)
 	    return;
     }
-    orig = bpath_to_liv_path (curve->bpath);
+    orig = bpath_to_liv_path (SP_CURVE_BPATH(curve));
     sp_curve_unref (curve);
 
 

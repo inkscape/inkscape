@@ -140,7 +140,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 
     if ((cbp->fill_rgba & 0xff) || (cbp->stroke_rgba & 0xff)) {
 	Path*  thePath=new Path;
-	thePath->LoadArtBPath(cbp->curve->bpath, affine, true);
+	thePath->LoadArtBPath(SP_CANVAS_BPATH(cbp->curve), affine, true);
 	thePath->Convert(0.25);
 	if ((cbp->fill_rgba & 0xff) && (cbp->curve->end > 2)) {
 	    Shape* theShape=new Shape;

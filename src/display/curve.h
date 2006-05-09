@@ -23,7 +23,7 @@
 /// Wrapper around NArtBpath.
 struct SPCurve {
     gint refcount;
-    NArtBpath *bpath;
+    NArtBpath *_bpath;
     
     /// Index in bpath[] of NR_END element.
     gint end;
@@ -66,8 +66,8 @@ struct SPCurve {
 };
 
 #define SP_CURVE_LENGTH(c) (((SPCurve const *)(c))->end)
-#define SP_CURVE_BPATH(c) (((SPCurve const *)(c))->bpath)
-#define SP_CURVE_SEGMENT(c,i) (((SPCurve const *)(c))->bpath + (i))
+#define SP_CURVE_BPATH(c) (((SPCurve const *)(c))->_bpath)
+#define SP_CURVE_SEGMENT(c,i) (((SPCurve const *)(c))->_bpath + (i))
 
 /* Constructors */
 

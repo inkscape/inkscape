@@ -214,7 +214,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
                 /* fixme: */
                 bbox.x0 = bbox.y0 = NR_HUGE;
                 bbox.x1 = bbox.y1 = -NR_HUGE;
-                bp.path = shape->curve->bpath;
+                bp.path = SP_CURVE_BPATH(shape->curve);
                 nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
                 item->bbox.x0 = (gint32)(bbox.x0 - 1.0F);
                 item->bbox.y0 = (gint32)(bbox.y0 - 1.0F);
@@ -240,7 +240,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         /* fixme: */
         bbox.x0 = bbox.y0 = NR_HUGE;
         bbox.x1 = bbox.y1 = -NR_HUGE;
-        bp.path = shape->curve->bpath;
+        bp.path = SP_CURVE_BPATH(shape->curve);
         nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
         if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
             float width, scale;
@@ -388,7 +388,7 @@ void
 nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool force_shape)
 {
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
-        ((shape->curve->end > 2) || (shape->curve->bpath[1].code == NR_CURVETO)) ) {
+        ((shape->curve->end > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {
         if (TRUE || !shape->fill_shp) {
             NR::Matrix  cached_to_new;
             int isometry = 0;
@@ -410,7 +410,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
                 Shape* theShape=new Shape;
                 {
                     NR::Matrix   tempMat(gc->transform);
-                    thePath->LoadArtBPath(shape->curve->bpath,tempMat,true);
+                    thePath->LoadArtBPath(SP_CURVE_BPATH(shape->curve),tempMat,true);
                 }
 
                 if (is_inner_area(*area, NR_ARENA_ITEM(shape)->bbox)) {
@@ -507,7 +507,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             Shape* theShape = new Shape;
             {
                 NR::Matrix   tempMat(gc->transform);
-                thePath->LoadArtBPath(shape->curve->bpath, tempMat, true);
+                thePath->LoadArtBPath(SP_CURVE_BPATH(shape->curve), tempMat, true);
             }
 
             // add some padding to the rendering area, so clipped path does not go into a render area
@@ -888,7 +888,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         }
     } else {
         NRBPath bp;
-        bp.path = shape->curve->bpath;
+        bp.path = SP_CURVE_BPATH(shape->curve);
         double dist = NR_HUGE;
         int wind = 0;
         nr_path_matrix_point_bbox_wind_distance(&bp, shape->ctm, p, NULL, &wind, &dist, NR_EPSILON);

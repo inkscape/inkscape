@@ -111,7 +111,7 @@ sp_nodes_in_path(SPPath *path)
     gint i = curve->length - 1;
     if (i > r) i = r; // sometimes after switching from node editor length is wrong, e.g. f6 - draw - f2 - tab - f1, this fixes it
     for (; i >= 0; i --)
-        if ((curve->bpath + i) -> code == NR_MOVETO)
+        if (SP_CURVE_BPATH(curve)[i].code == NR_MOVETO)
             r --;
     return r;
 }
@@ -289,7 +289,7 @@ sp_path_set_transform(SPItem *item, NR::Matrix const &xform)
 
     /* Transform the path */
     NRBPath dpath, spath;
-    spath.path = shape->curve->bpath;
+    spath.path = SP_CURVE_BPATH(shape->curve);
     nr_path_duplicate_transform(&dpath, &spath, xform);
     SPCurve *curve = sp_curve_new_from_bpath(dpath.path);
     if (curve) {

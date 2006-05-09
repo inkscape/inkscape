@@ -240,7 +240,7 @@ sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath *bp)
         return false;
     }
 
-    if (bp == shape->curve->bpath)
+    if (bp == SP_CURVE_BPATH(shape->curve))
         return m == SP_MARKER_LOC_START;
     else if (bp[1].code == NR_END)
         return m == SP_MARKER_LOC_END;
@@ -438,9 +438,9 @@ found:
 static NR::Matrix
 sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
 {
-    g_return_val_if_fail(( is_moveto(shape->curve->bpath[0].code)
+    g_return_val_if_fail(( is_moveto(SP_CURVE_BPATH(shape->curve)[0].code)
                            && ( 0 < shape->curve->end )
-                           && ( shape->curve->bpath[shape->curve->end].code == NR_END ) ),
+                           && ( SP_CURVE_BPATH(shape->curve)[shape->curve->end].code == NR_END ) ),
                          NR::Matrix(NR::translate(bp->c(3))));
     double const angle1 = incoming_tangent(bp);
     double const angle2 = outgoing_tangent(bp);
@@ -492,7 +492,7 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 
             int n = 0;
 
-            for (NArtBpath *bp = shape->curve->bpath; bp->code != NR_END; bp++) {
+            for (NArtBpath *bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
                 if (sp_shape_marker_required (shape, i, bp)) {
                     NR::Matrix const m(sp_shape_marker_get_transform(shape, bp));
                     sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
@@ -552,7 +552,7 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
 
         // Union with bboxes of the markers, if any
         if (sp_shape_has_markers (shape)) {
-            for (NArtBpath* bp = shape->curve->bpath; bp->code != NR_END; bp++) {
+            for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
                 for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
                     if (sp_shape_marker_required (shape, m, bp)) {
 
@@ -613,17 +613,17 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
 	if (style->fill.type != SP_PAINT_TYPE_NONE) {
 		NRBPath bp;
-		bp.path = shape->curve->bpath;
+		bp.path = SP_CURVE_BPATH(shape->curve);
 		sp_print_fill (ctx, &bp, i2d, style, &pbox, &dbox, &bbox);
 	}
 
 	if (style->stroke.type != SP_PAINT_TYPE_NONE) {
 		NRBPath bp;
-		bp.path = shape->curve->bpath;
+		bp.path = SP_CURVE_BPATH(shape->curve);
 		sp_print_stroke (ctx, &bp, i2d, style, &pbox, &dbox, &bbox);
 	}
 
-        for (NArtBpath* bp = shape->curve->bpath; bp->code != NR_END; bp++) {
+        for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
             for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
                 if (sp_shape_marker_required (shape, m, bp)) {
 
@@ -746,7 +746,7 @@ static int
 sp_shape_number_of_markers (SPShape *shape, int type)
 {
     int n = 0;
-    for (NArtBpath* bp = shape->curve->bpath; bp->code != NR_END; bp++) {
+    for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
         if (sp_shape_marker_required (shape, type, bp)) {
             n++;
         }
@@ -897,7 +897,7 @@ static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
     NR::Matrix const i2d (sp_item_i2d_affine (item));
 
     /* Use the end points of each segment of the path */
-    NArtBpath const *bp = shape->curve->bpath;
+    NArtBpath const *bp = SP_CURVE_BPATH(shape->curve);
     while (bp->code != NR_END) {
         *p = bp->c(3) * i2d;
         bp++;

@@ -1491,19 +1491,19 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
 
     if (!curve)
         return NULL;
-    NArtBpath *bpath = curve->bpath;
+    NArtBpath *bpath = SP_CURVE_BPATH(curve);
     if (bpath == NULL)
         return NULL;
 
     if ( doTransformation ) {
         if (transformFull)
-            bpath = nr_artpath_affine(curve->bpath, sp_item_i2doc_affine(item));
+            bpath = nr_artpath_affine(SP_CURVE_BPATH(curve), sp_item_i2doc_affine(item));
         else
-            bpath = nr_artpath_affine(curve->bpath, item->transform);
+            bpath = nr_artpath_affine(SP_CURVE_BPATH(curve), item->transform);
         sp_curve_unref(curve);
         curve=NULL;
     } else {
-        bpath=curve->bpath;
+        bpath=SP_CURVE_BPATH(curve);
     }
 
     Path *dest = new Path;

@@ -1674,7 +1674,7 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 	               bbox_width * 1000.0, bbox_height * 1000.0);
 
 	outs.printf("    svg:d=\"");
-	writePath(outs, curve->bpath, tf, bbox_x, bbox_y);
+	writePath(outs, SP_CURVE_BPATH(curve), tf, bbox_x, bbox_y);
 	outs.printf("\"");
 
 	outs.printf(">\n");

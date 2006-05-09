@@ -411,7 +411,7 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 
     SPCurve *curve = create_curve(np);
     gchar *typestr = create_typestr(np);
-    gchar *svgpath = sp_svg_write_path(curve->bpath);
+    gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(curve));
 
     if (repr->attribute("d") == NULL || strcmp(svgpath, repr->attribute("d"))) { // d changed
         np->local_change++;
@@ -486,7 +486,7 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
     SPCurve *curve = create_curve(np);
     gchar *typestr = create_typestr(np);
 
-    gchar *svgpath = sp_svg_write_path(curve->bpath);
+    gchar *svgpath = sp_svg_write_path(SP_CURVE_BPATH(curve));
 
     new_repr->setAttribute("d", svgpath);
     new_repr->setAttribute("sodipodi:nodetypes", typestr);

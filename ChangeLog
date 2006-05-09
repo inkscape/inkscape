@@ -1,5 +1,17 @@
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
+	* src/display/canvas-bpath.cpp, src/display/curve.cpp, src/display/curve.h,
+	  src/display/nr-arena-shape.cpp, src/draw-context.cpp,
+	  src/extension/internal/odf.cpp, src/extension/internal/pov-out.cpp,
+	  src/nodepath.cpp, src/object-snapper.cpp, src/path-chemistry.cpp,
+	  src/sp-flowregion.cpp, src/splivarot.cpp, src/sp-offset.cpp,
+	  src/sp-path.cpp, src/sp-shape.cpp, src/sp-spiral.cpp, src/sp-star.cpp,
+	  src/sp-use-reference.cpp:
+
+	  eliminate direct accesses to SPCurve::bpath
+
+2006-05-08  MenTaLguY  <mental@rydia.net>
+
 	* src/streams-zlib.cpp, src/streams-jar.cpp, src/splivarot.cpp,
 	  src/extension/internal/bluredge.cpp:
 
