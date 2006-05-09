@@ -2,8 +2,7 @@
 
 /**
  * \file snap.cpp
- *
- * \brief Various snapping methods
+ * \brief SnapManager class.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
