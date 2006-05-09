@@ -1230,7 +1230,13 @@ void sp_selection_to_next_layer ()
         GSList *temp_clip = NULL;
         sp_selection_copy_impl (items, &temp_clip, NULL, NULL); // we're in the same doc, so no need to copy defs
         sp_selection_delete_impl (items);
-        GSList *copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
+        next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer()); // Fixes bug 1482973: crash while moving layers
+        GSList *copied;
+        if(next) {
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
+        } else {
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip, NULL);
+        }
         selection->setReprList((GSList const *) copied);
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
@@ -1262,7 +1268,13 @@ void sp_selection_to_prev_layer ()
         GSList *temp_clip = NULL;
         sp_selection_copy_impl (items, &temp_clip, NULL, NULL); // we're in the same doc, so no need to copy defs
         sp_selection_delete_impl (items);
-        GSList *copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
+        next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer()); // Fixes bug 1482973: crash while moving layers
+        GSList *copied;
+        if(next) {
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
+        } else {
+            copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip, NULL);
+        }
         selection->setReprList((GSList const *) copied);
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
