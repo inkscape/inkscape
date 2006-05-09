@@ -17,6 +17,7 @@
 # include <config.h>
 #endif
 
+#include <vector>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "sp-path.h"
@@ -174,8 +175,8 @@ sp_selected_path_boolop(bool_op bop)
     // extract the livarot Paths from the source objects
     // also get the winding rule specified in the style
     int nbOriginaux = g_slist_length(il);
-    Path *originaux[nbOriginaux];
-    FillRule  origWind[nbOriginaux];
+    std::vector<Path *> originaux(nbOriginaux);
+    std::vector<FillRule> origWind(nbOriginaux);
     int curOrig;
     {
         curOrig = 0;
@@ -378,9 +379,9 @@ sp_selected_path_boolop(bool_op bop)
         // function needs it.
         // this function uses the point_data to get the winding number of each path (ie: is a hole or not)
         // for later reconstruction in objects, you also need to extract which path is parent of holes (nesting info)
-        theShape->ConvertToFormeNested(res, nbOriginaux, originaux, 1, nbNest, nesting, conts);
+        theShape->ConvertToFormeNested(res, nbOriginaux, &originaux[0], 1, nbNest, nesting, conts);
     } else {
-        theShape->ConvertToForme(res, nbOriginaux, originaux);
+        theShape->ConvertToForme(res, nbOriginaux, &originaux[0]);
     }
 
     delete theShape;
