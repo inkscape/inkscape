@@ -1,3 +1,7 @@
+2006-05-09  Carl Hetherington  <inkscape@carlh.net>
+
+	* src/nodepath.cpp: fix silly bug with snapping node edits.
+
 2006-05-08  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* conn-avoid-ref.cpp: Fix a crashbug that could occur in files
