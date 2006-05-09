@@ -19,7 +19,7 @@ Inkscape::Snapper::PointType const Inkscape::Snapper::SNAP_POINT = 0x2;
  *  \param nv Named view.
  *  \param d Snap distance.
  */
-Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_view(nv), _distance(d)
+Inkscape::Snapper::Snapper(SPNamedView const *nv, NR::Coord const d) : _named_view(nv), _distance(d), _enabled(true)
 {
     g_assert(_named_view != NULL);
     g_assert(SP_IS_NAMEDVIEW(_named_view));
@@ -72,9 +72,18 @@ bool Inkscape::Snapper::getSnapTo(PointType t) const
  */
 bool Inkscape::Snapper::willSnapSomething() const
 {
-    return (_snap_to != 0);
+    return (_enabled && _snap_to != 0);
 }
 
+
+/**
+ *  \param s true to enable this snapper, otherwise false.
+ */
+
+void Inkscape::Snapper::setEnabled(bool s)
+{
+    _enabled = s;
+}
 
 
 /**
@@ -113,7 +122,7 @@ Inkscape::SnappedPoint Inkscape::Snapper::freeSnap(PointType t,
                                                    NR::Point const &p,
                                                    std::list<SPItem const *> const &it) const
 {
-    if (getSnapTo(t) == false) {
+    if (_enabled == false || getSnapTo(t) == false) {
         return SnappedPoint(p, NR_HUGE);
     }
 
@@ -161,7 +170,7 @@ Inkscape::SnappedPoint Inkscape::Snapper::constrainedSnap(PointType t,
                                                           ConstraintLine const &c,
                                                           std::list<SPItem const *> const &it) const
 {
-    if (getSnapTo(t) == false) {
+    if (_enabled == false || getSnapTo(t) == false) {
         return SnappedPoint(p, NR_HUGE);
     }
 

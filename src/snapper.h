@@ -46,6 +46,8 @@ public:
 
     bool willSnapSomething() const;
 
+    void setEnabled(bool s);
+
     SnappedPoint freeSnap(PointType t,
                           NR::Point const &p,
                           SPItem const *it) const;
@@ -120,7 +122,8 @@ private:
                                             std::list<SPItem const *> const &it) const = 0;
     
     ::NR::Coord _distance; ///< snap distance (desktop coordinates)
-    int _snap_to; ///< bitmap of point types that we will snap to 
+    int _snap_to; ///< bitmap of point types that we will snap to
+    bool _enabled; ///< true if this snapper is enabled, otherwise false
 };
 
 }

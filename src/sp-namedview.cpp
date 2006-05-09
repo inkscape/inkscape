@@ -221,6 +221,8 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
 	case SP_ATTR_SHOWGRID:
             nv->showgrid = sp_str_to_bool(value);
             sp_namedview_setup_grid(nv);
+            /* Disable grid snaps if the grid is turned off */
+            nv->snap_manager.grid.setEnabled(nv->showgrid);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_SHOWGUIDES:
