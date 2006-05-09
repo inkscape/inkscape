@@ -1,3 +1,9 @@
+2006-05-08  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* conn-avoid-ref.cpp: Fix a crashbug that could occur in files
+	  containing connectors if they were loaded from the file chooser
+	  or from the recent file list.  Fixes bug #1458820.
+
 2006-05-08  MenTaLguY  <mental@rydia.net>
 
 	* src/display/curve.h, src/display/curve.cpp, src/dropper-context.cpp:
