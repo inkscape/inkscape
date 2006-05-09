@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-07 22:41+0200\n"
+"POT-Creation-Date: 2006-05-09 21:07+0200\n"
 "PO-Revision-Date: 2006-05-06 13:29+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Lugos <sl@lugos.si>\n"
@@ -56,18 +56,18 @@ msgstr "Ustari nov konektor"
 msgid "Finishing connector"
 msgstr "Zaključni konektor"
 
-#: ../src/connector-context.cpp:1106
+#: ../src/connector-context.cpp:1081
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Povezovalna točka</b>: kliknite ali povlecite za tvorbo novega konektorja"
 
-#: ../src/connector-context.cpp:1183
+#: ../src/connector-context.cpp:1152
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Končna točka konektorja</b>: povlecite za preusmeritev ali navezavo na "
 "nove oblike"
 
-#: ../src/connector-context.cpp:1276
+#: ../src/connector-context.cpp:1257
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Izberite <b>vsaj en predmet, ki ni konektor</b>."
 
@@ -118,7 +118,7 @@ msgstr "Izberite <b>predmet</b>, katerega klone želite razložiti."
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Izberite <b>predmet</b>, ki mu želite odstraniti tlakovane klone."
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1890
+#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1902
 msgid "Select an <b>object</b> to clone."
 msgstr "Izberite <b>predmet</b> za kloniranje."
 
@@ -754,121 +754,123 @@ msgid "none"
 msgstr "brez"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2253
 msgid "_Page"
 msgstr "_Stran"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2257
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2257
 msgid "_Drawing"
 msgstr "_Risba"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2259
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2259
 msgid "_Selection"
 msgstr "_Izbira"
 
-#: ../src/dialogs/export.cpp:124
+#: ../src/dialogs/export.cpp:133
 msgid "_Custom"
 msgstr "_Poljubno"
 
-#: ../src/dialogs/export.cpp:248
-msgid "Export area"
-msgstr "Območje izvoza"
+#: ../src/dialogs/export.cpp:257
+msgid "<big><b>Export area</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:263
+#: ../src/dialogs/export.cpp:271
 msgid "Units:"
 msgstr "Enote:"
 
-#: ../src/dialogs/export.cpp:294
+#: ../src/dialogs/export.cpp:299
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:304
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:304 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:1995
 msgid "Width:"
 msgstr "Širina:"
 
-#: ../src/dialogs/export.cpp:310
+#: ../src/dialogs/export.cpp:315
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:320
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:320 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Višina:"
 
-#: ../src/dialogs/export.cpp:403
-msgid "Bitmap size"
-msgstr "Velikost slike"
+#: ../src/dialogs/export.cpp:414
+msgid "<big><b>Bitmap size</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:413 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "_Širina:"
 
-#: ../src/dialogs/export.cpp:413 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
 msgid "pixels at"
 msgstr "točke na"
 
-#: ../src/dialogs/export.cpp:423
+#: ../src/dialogs/export.cpp:437
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "dpi"
 msgstr "pik na palec"
 
-#: ../src/dialogs/export.cpp:448
-msgid "_Filename"
-msgstr "_Ime datoteke"
+#. true = has mnemonic
+#: ../src/dialogs/export.cpp:467
+msgid "<big><b>_Filename</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:512
+#: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
 msgstr "Pre_brskaj ..."
 
-#: ../src/dialogs/export.cpp:539
-msgid " <b>_Export</b> "
-msgstr " <b>_Izvoz</b> "
+#: ../src/dialogs/export.cpp:577
+#, fuzzy
+msgid "_Export"
+msgstr "Izvozi"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
 msgstr "Izvozi bitno sliko s temi nastavitvami"
 
-#: ../src/dialogs/export.cpp:968
+#: ../src/dialogs/export.cpp:1008
 msgid "You have to enter a filename"
 msgstr "Vnesti morate ime datoteke"
 
-#: ../src/dialogs/export.cpp:973
+#: ../src/dialogs/export.cpp:1013
 msgid "The chosen area to be exported is invalid"
 msgstr "Območje izbrano za izvoz ni veljavno"
 
-#: ../src/dialogs/export.cpp:982
+#: ../src/dialogs/export.cpp:1022
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Mapa %s ne obstaja ali pa ni mapa.\n"
 
-#: ../src/dialogs/export.cpp:998
+#: ../src/dialogs/export.cpp:1038
 msgid "Export in progress"
 msgstr "Izvoz je v teku"
 
-#: ../src/dialogs/export.cpp:1004
+#: ../src/dialogs/export.cpp:1044
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Izvoz %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1031
+#: ../src/dialogs/export.cpp:1071
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Ni mogoče izvoziti v datoteko %s.\n"
 
-#: ../src/dialogs/export.cpp:1137
+#: ../src/dialogs/export.cpp:1177
 msgid "Select a filename for exporting"
 msgstr "Izberite ime datoteke za izvoz"
 
@@ -1828,8 +1830,8 @@ msgid "New element node..."
 msgstr "Novo vozlišče ..."
 
 #: ../src/dialogs/xml-tree.cpp:1335
-#: ../src/ui/dialog/whiteboard-connect.cpp:106
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:96
+#: ../src/ui/dialog/whiteboard-connect.cpp:109
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -2047,27 +2049,27 @@ msgstr ""
 "Mapa z dodatki (%s) ni dostopna. Zunanji dodatki iz te mape se ne bodo "
 "naložili."
 
-#: ../src/extension/internal/bluredge.cpp:135
+#: ../src/extension/internal/bluredge.cpp:131
 msgid "Blur Edge"
 msgstr "Rob mehčanja ostrine"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Blur Width"
 msgstr "Širina mehčanja ostrine"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of Steps"
 msgstr "Število korakov"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:142
+#: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 msgid "Generate from Path"
 msgstr "Ustvari iz poti"
@@ -2886,16 +2888,16 @@ msgstr[1] "Sprejem spremembe; %u preostala sprememba za obdelavo."
 msgstr[2] "Sprejem spremembe; %u preostali spremembi za obdelavo."
 msgstr[3] "Sprejem spremembe; %u preostale spremembe za obdelavo."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:157
+#: ../src/jabber_whiteboard/chat-handler.cpp:158
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
 msgstr "Uporabnik <b>%s</b> je zapustil klepetalnico."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:221
+#: ../src/jabber_whiteboard/chat-handler.cpp:222
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
 msgstr "Vzdevek %1 je že zaseden.  Prosimo, izberite drug vzdevek."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:225
+#: ../src/jabber_whiteboard/chat-handler.cpp:226
 msgid "An error was encountered while attempting to connect to the server."
 msgstr "Pri povezovanju s strežnikom je prišlo do napake."
 
@@ -2913,12 +2915,12 @@ msgstr "Pri povezovanju s strežnikom je prišlo do napake."
 #.
 #. This is a fix for bug #1352522.  Probably not the friendliest, but it's about
 #. the best we can do without changing the protocol.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:149
+#: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
 msgstr "<b>Prišlo je do navzkrižja povabil.</b>"
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:153
+#: ../src/jabber_whiteboard/connection-establishment.cpp:162
 msgid ""
 "The Jabber user <b>%1</b> attempted to invite you to a whiteboard session "
 "while you were waiting on an invitation response.\n"
@@ -2933,19 +2935,19 @@ msgstr ""
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:168
+#: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
 msgstr "<b>%1</b> vas je povabil na sejo na tabli."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:169
+#: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
 msgstr "Dohodno povabilo k tabli od %1"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:172
+#: ../src/jabber_whiteboard/connection-establishment.cpp:181
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr "Želite sprejeti povabilo <b>%1</b> k tabli?"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:174
+#: ../src/jabber_whiteboard/connection-establishment.cpp:183
 msgid ""
 "Would you like to accept %1's invitation in a new document window?\n"
 "Accepting the invitation in your current window will discard unsaved changes."
@@ -2954,24 +2956,24 @@ msgstr ""
 "S sprejemom povabila v trenutnem oknu boste zavrgli vse neshranjene "
 "spremembe."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:180
-#: ../src/jabber_whiteboard/connection-establishment.cpp:235
+#: ../src/jabber_whiteboard/connection-establishment.cpp:189
+#: ../src/jabber_whiteboard/connection-establishment.cpp:244
 msgid "Accept invitation"
 msgstr "Sprejmi povabilo"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:181
-#: ../src/jabber_whiteboard/connection-establishment.cpp:236
+#: ../src/jabber_whiteboard/connection-establishment.cpp:190
+#: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
 msgstr "Zavrni povabilo"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:182
+#: ../src/jabber_whiteboard/connection-establishment.cpp:191
 msgid "Accept invitation in new document window"
 msgstr "Sprejmi povabilo v oknu novega dokumenta"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
 #. TRANSLATORS: %1 is a userid here
-#: ../src/jabber_whiteboard/connection-establishment.cpp:233
+#: ../src/jabber_whiteboard/connection-establishment.cpp:242
 msgid ""
 "A new document window could not be opened for a whiteboard session with <b>%"
 "1</b>"
@@ -2979,7 +2981,7 @@ msgstr ""
 "Za sejo na tabli z <b>%1</b> ni mogoče odpreti okna z novim dokumentom."
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:275
+#: ../src/jabber_whiteboard/connection-establishment.cpp:284
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
 "whiteboard invitation.</span>\n"
@@ -2990,7 +2992,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:278
+#: ../src/jabber_whiteboard/connection-establishment.cpp:287
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may send an "
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
@@ -3000,7 +3002,7 @@ msgstr ""
 "pošljete povabilo <b>%1</b> ali kateremu drugemu uporabniku."
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:289
+#: ../src/jabber_whiteboard/connection-establishment.cpp:298
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is already in a "
 "whiteboard session.</span>\n"
@@ -3011,7 +3013,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:292
+#: ../src/jabber_whiteboard/connection-establishment.cpp:301
 msgid ""
 "You are still connected to a Jabber server as <b>%1</b>, and may send an "
 "invitation to a different user."
@@ -3066,33 +3068,33 @@ msgid ""
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1002
+#: ../src/jabber_whiteboard/session-manager.cpp:1012
 msgid "Select a location and filename"
 msgstr "Izberite mesto in ime datoteke"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1004
+#: ../src/jabber_whiteboard/session-manager.cpp:1014
 msgid "Set filename"
 msgstr "Določi ime datoteke"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:308
+#: ../src/jabber_whiteboard/session-manager.cpp:318
 msgid "No SSL certificate was found."
 msgstr "Potrdila SSL ni mogoče najti."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:311
+#: ../src/jabber_whiteboard/session-manager.cpp:321
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "Potrdilo SSL, ki ga ponuja strežnik Jabber, ni zaupanja vredno."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:314
+#: ../src/jabber_whiteboard/session-manager.cpp:324
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "Veljavnost potrdila SSL, ki ga ponuja strežnik Jabber, je potekla."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:317
+#: ../src/jabber_whiteboard/session-manager.cpp:327
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "Potrdilo SSL, ki ga ponuja strežnik Jabber, še ni aktivirano."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:320
+#: ../src/jabber_whiteboard/session-manager.cpp:330
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3100,20 +3102,20 @@ msgstr ""
 "Potrdilo SSL, ki ga ponuja strežnik Jabber, vsebuje ime strežnika, ki se ne "
 "ujema z imenom strežnika Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:323
+#: ../src/jabber_whiteboard/session-manager.cpp:333
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 "Potrdilo SSL, ki ga ponuja strežnik Jabber, vsebuje neveljaven prstni odtis."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:326
+#: ../src/jabber_whiteboard/session-manager.cpp:336
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Med vzpostavljanjem povezave SSL je prišlo do neznane napake."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:332
+#: ../src/jabber_whiteboard/session-manager.cpp:342
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3123,24 +3125,24 @@ msgstr ""
 "\n"
 "Se želite še naprej povezovati s strežnikom za Jabber?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:335
+#: ../src/jabber_whiteboard/session-manager.cpp:345
 msgid "Continue connecting and ignore further errors"
 msgstr "Nadaljuj s povezovanjem in prizri nadaljnje napake"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:336
+#: ../src/jabber_whiteboard/session-manager.cpp:346
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Nadaljuj s povezovanjem, vendar opozarjaj na napake"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:337
+#: ../src/jabber_whiteboard/session-manager.cpp:347
 msgid "Cancel connection"
 msgstr "Prekliči povezavo"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:784
+#: ../src/jabber_whiteboard/session-manager.cpp:794
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Vzpostavljena seja ob tabli z uporabnikom <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:792
+#: ../src/jabber_whiteboard/session-manager.cpp:802
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> je <b>zapustil(-a)</b> tablo."
@@ -3148,7 +3150,7 @@ msgstr "<b>%s</b> je <b>zapustil(-a)</b> tablo."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:797
+#: ../src/jabber_whiteboard/session-manager.cpp:807
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3159,7 +3161,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:799
+#: ../src/jabber_whiteboard/session-manager.cpp:809
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3167,7 +3169,7 @@ msgstr ""
 "Še vedno ste povezani na strežnik Jabber kot <b>%2</b> in lahko vzpostavite "
 "novo sejo z <b>%1</b> ali katerim drugim uporabnikom."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:995
+#: ../src/jabber_whiteboard/session-manager.cpp:1005
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3176,15 +3178,15 @@ msgid ""
 "not record this session."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:997
+#: ../src/jabber_whiteboard/session-manager.cpp:1007
 msgid "Choose a different location"
 msgstr "Izberite drugo mesto"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:998
+#: ../src/jabber_whiteboard/session-manager.cpp:1008
 msgid "Skip session recording"
 msgstr "Izpusti zapisovanje seje"
 
-#: ../src/knot.cpp:419
+#: ../src/knot.cpp:418
 msgid "Node or handle drag canceled."
 msgstr "Preklican premik vozlišča ali ročice."
 
@@ -3999,27 +4001,27 @@ msgstr "Izberite <b>predmet</b> za prenos sloga."
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Izberite nekaj <b>predmetov</b> za premik v sloj zgoraj."
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1246
 msgid "No more layers above."
 msgstr "Zgoraj ni več slojev."
 
-#: ../src/selection-chemistry.cpp:1254
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Izberite nekaj <b>predmetov</b> za pomik na spodnji sloj."
 
-#: ../src/selection-chemistry.cpp:1272
+#: ../src/selection-chemistry.cpp:1284
 msgid "No more layers below."
 msgstr "Spodaj ni več slojev."
 
-#: ../src/selection-chemistry.cpp:1940
+#: ../src/selection-chemistry.cpp:1952
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Izberite <b>klona</b> za razvez."
 
-#: ../src/selection-chemistry.cpp:1971
+#: ../src/selection-chemistry.cpp:1983
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "Med izbranimi predmeti <b>ni klonov</b>, ki bi jih lahko odvezali."
 
-#: ../src/selection-chemistry.cpp:1988
+#: ../src/selection-chemistry.cpp:2000
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4030,7 +4032,7 @@ msgstr ""
 "naj gre po poti. Izberite <b>tekoče besedilo</b>, ki naj gre k svojemu "
 "okviru."
 
-#: ../src/selection-chemistry.cpp:2011
+#: ../src/selection-chemistry.cpp:2023
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4038,41 +4040,41 @@ msgstr ""
 "<b>Ne najdem</b> predmeta, ki ga izbirate (zapuščen klon, zamik ali besedilo "
 "na poti, tekoče besedilo?)"
 
-#: ../src/selection-chemistry.cpp:2017
+#: ../src/selection-chemistry.cpp:2029
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "Predmet ki ga izbirate <b>ni viden</b> (je med &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2044
+#: ../src/selection-chemistry.cpp:2056
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Izberite <b>predmet(e)</b> za pretvorbo v vzorec."
 
-#: ../src/selection-chemistry.cpp:2135
+#: ../src/selection-chemistry.cpp:2147
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Izberite <b>predmet s tlakovanim polnilom</b> iz katerega želite izvleči "
 "predmete."
 
-#: ../src/selection-chemistry.cpp:2188
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Med izbiro ni <b>polnjenj z vzorci</b>."
 
-#: ../src/selection-chemistry.cpp:2208
+#: ../src/selection-chemistry.cpp:2220
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Izberite <b>predmet(e)</b> za rastersko kopiranje."
 
-#: ../src/selection-chemistry.cpp:2371
+#: ../src/selection-chemistry.cpp:2383
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Za dvig na vrh izberite kak <b>predmet</b>."
 
-#: ../src/selection-chemistry.cpp:2374
+#: ../src/selection-chemistry.cpp:2386
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Izberite <b>predmet</b> za prenos sloga."
 
-#: ../src/selection-chemistry.cpp:2477
+#: ../src/selection-chemistry.cpp:2489
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Izberite <b>besedila</b> za odstranitev zgoščevanj."
@@ -4323,31 +4325,31 @@ msgstr ""
 "<b>Zavrti</b> izbrano; s <b>Ctrl</b> preskakuj po kotih; s <b>Shift</b> vrti "
 "okrog nasprotnega kota"
 
-#: ../src/seltrans.cpp:846 ../src/seltrans.cpp:958
+#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Razteguj</b>: %0.2f%% x %0.2f%%; s <b>Ctrl</b> zakleni razmerje"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1029
+#: ../src/seltrans.cpp:1060
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Nagni</b>: %0.2f&#176;; s <b>Ctrl</b> preskakuj po kotih "
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1109
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Zavrti</b>: %0.2f stopinj;s <b>Ctrl</b> preskakuj po kotih "
 
-#: ../src/seltrans.cpp:1122
+#: ../src/seltrans.cpp:1153
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Premakni <b>središče</b> na %s, %s"
 
-#: ../src/seltrans.cpp:1380
+#: ../src/seltrans.cpp:1411
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4579,11 +4581,11 @@ msgid ""
 msgstr ""
 "<b>Spirala</b>: polmer %s, kot %5g&#176;; s <b>Ctrl</b> preskakujete po kotih"
 
-#: ../src/splivarot.cpp:100
+#: ../src/splivarot.cpp:101
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Za logične operacije izberite <b>vsaj dve poti</b>."
 
-#: ../src/splivarot.cpp:106
+#: ../src/splivarot.cpp:107
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4591,7 +4593,7 @@ msgstr ""
 "Za dejanje razlike, ALI, radelitve ali razreza izberite <b>natanko dve poti</"
 "b>."
 
-#: ../src/splivarot.cpp:123 ../src/splivarot.cpp:138
+#: ../src/splivarot.cpp:124 ../src/splivarot.cpp:139
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4599,38 +4601,38 @@ msgstr ""
 "Ne morem prepoznati <b>prekrivanja</b> predmetov izbranih za razliko, ALI, "
 "delitev ali razrez poti."
 
-#: ../src/splivarot.cpp:168
+#: ../src/splivarot.cpp:169
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Ne morem napraviti logične operacije, ker en predmet <b>ni pot</b>."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:548
+#: ../src/splivarot.cpp:549
 msgid "Select <b>path(s)</b> to outline."
 msgstr "Izberite <b>pot(i)</b> za obris."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:742
+#: ../src/splivarot.cpp:743
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr "Med izbiro <b>ni poteznih poti</b>, ki bi jih lahko obrisal."
 
-#: ../src/splivarot.cpp:826
+#: ../src/splivarot.cpp:827
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Ne morem razširiti ali zožati, ker izbran predmet <b>ni pot</b>."
 
-#: ../src/splivarot.cpp:1034
+#: ../src/splivarot.cpp:1035
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Izberite <b>pot(i)</b> za razširjanje/zožanje."
 
-#: ../src/splivarot.cpp:1251
+#: ../src/splivarot.cpp:1252
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "Med izbiro <b>ni poti</b>, ki bi jih lahko razširil ali zožal."
 
-#: ../src/splivarot.cpp:1384
+#: ../src/splivarot.cpp:1385
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Izberite <b>pot(i)</b> za poenostavljanje."
 
-#: ../src/splivarot.cpp:1411
+#: ../src/splivarot.cpp:1412
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Med izbiro <b>ni poti</b>, ki bi jih lahko poenostavil."
 
@@ -5151,7 +5153,7 @@ msgid "Smallest item"
 msgstr "Najmanjši predmet"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#: ../src/ui/dialog/document-properties.cpp:99
+#: ../src/ui/dialog/document-properties.cpp:98
 #: ../src/widgets/desktop-widget.cpp:1092
 msgid "Page"
 msgstr "Stran"
@@ -5177,328 +5179,328 @@ msgstr ""
 msgid "<b>License</b>"
 msgstr "<b>Licenca</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/document-properties.cpp:99
 msgid "Grid/Guides"
 msgstr "Mreža/vodila"
 
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:100
 #, fuzzy
 msgid "Snap"
 msgstr "Oblike"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Back_ground:"
 msgstr "Oza_dje:"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Background color"
 msgstr "Barva ozadja"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Barva in prosojnost ozadnja strani (to se uporablja tudi pri izvozu slik)"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "Show page _border"
 msgstr "Pokaži _rob strani"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 msgid "Border on _top of drawing"
 msgstr "Rob na z_gornjem robu risbe"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 msgid "If set, border is always on top of the drawing"
 msgstr "Če je aktivirano, je rob vedno na zgornjem robu risbe"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 msgid "Border _color:"
 msgstr "Barva _robu:"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 msgid "Page border color"
 msgstr "Barva roba strani"
 
-#: ../src/ui/dialog/document-properties.cpp:194
+#: ../src/ui/dialog/document-properties.cpp:193
 msgid "Color of the page border"
 msgstr "Barva roba strani"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "_Show border shadow"
 msgstr "_Pokaži senco strani"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:197
+#: ../src/ui/dialog/document-properties.cpp:196
 msgid "Default _units:"
 msgstr "Privzete _enote:"
 
-#: ../src/ui/dialog/document-properties.cpp:200
+#: ../src/ui/dialog/document-properties.cpp:199
 msgid "<b>General</b>"
 msgstr "<b>Splošno</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:202
+#: ../src/ui/dialog/document-properties.cpp:201
 msgid "<b>Border</b>"
 msgstr "<b>Rob</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:204
+#: ../src/ui/dialog/document-properties.cpp:203
 msgid "<b>Format</b>"
 msgstr "<b>Oblika</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "_Show grid"
 msgstr "_Pokaži mrežo"
 
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
 msgstr "Kaži ali skrij mrežo"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:234
 msgid "Grid _units:"
 msgstr "_Enote mreže:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 msgid "_Origin X:"
 msgstr "_Izhodišče X:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 msgid "X coordinate of grid origin"
 msgstr "Koordinata X izvora mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 msgid "O_rigin Y:"
 msgstr "I_zhodišče Y:"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 msgid "Y coordinate of grid origin"
 msgstr "Koordinata Y izvora mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 msgid "Spacing _X:"
 msgstr "Razmik _X:"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 msgid "Distance of vertical grid lines"
 msgstr "Razmik navpičnih črt mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 msgid "Spacing _Y:"
 msgstr "Razmik _Y:"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 msgid "Distance of horizontal grid lines"
 msgstr "Razmik vodoravnih črt mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line _color:"
 msgstr "_Barva črte mreže:"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line color"
 msgstr "Barva črt mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:244
 msgid "Color of grid lines"
 msgstr "Barva črt mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Ma_jor grid line color:"
 msgstr "Barva _glavnih mrežnih črt:"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Major grid line color"
 msgstr "Barva glavnih mrežnih črt"
 
-#: ../src/ui/dialog/document-properties.cpp:247
+#: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr "Barva glavnih (poudarjenih) črt mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "_Major grid line every:"
 msgstr "Raz_mik glavnih mrežnih črt:"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "lines"
 msgstr "črte"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show _guides"
 msgstr "Pokaži _vodila"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show or hide guides"
 msgstr "Kaži ali skrij vodila"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guide co_lor:"
 msgstr "_Barva vodil:"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guideline color"
 msgstr "Barva vodniških črt"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:251
 msgid "Color of guidelines"
 msgstr "Barva vodil"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "_Highlight color:"
 msgstr "_Osvetljena barva:"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
 msgstr "Barva osvetljenih vodil"
 
-#: ../src/ui/dialog/document-properties.cpp:254
+#: ../src/ui/dialog/document-properties.cpp:253
 msgid "Color of a guideline when it is under mouse"
 msgstr "Barva vodila, ko leži pod miškinim kazalcem"
 
-#: ../src/ui/dialog/document-properties.cpp:257
+#: ../src/ui/dialog/document-properties.cpp:256
 msgid "<b>Grid</b>"
 msgstr "<b>Mreža</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:259
+#: ../src/ui/dialog/document-properties.cpp:258
 msgid "<b>Guides</b>"
 msgstr "<b>Vodila</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:288
 #, fuzzy
 msgid "_Snap bounding boxes to objects"
 msgstr "Preskakuj z obrobo do vodniških črt"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:289
 #, fuzzy
 msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr "Preskakuj z robovi okvirja predmeta"
 
-#: ../src/ui/dialog/document-properties.cpp:292
+#: ../src/ui/dialog/document-properties.cpp:291
 #, fuzzy
 msgid "Snap nodes _to objects"
 msgstr "Preskakuj s točkami do mreže"
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:292
 #, fuzzy
 msgid "Snap the nodes of objects to other objects"
 msgstr "Preskakuj z robovi okvirja predmeta"
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:294
 #, fuzzy
 msgid "Snap to object _paths"
 msgstr "Pretvori rasterski predmet v poti"
 
-#: ../src/ui/dialog/document-properties.cpp:296
+#: ../src/ui/dialog/document-properties.cpp:295
 #, fuzzy
 msgid "Snap to other object paths"
 msgstr "Pretvori izbrane predmete v pot(i)"
 
-#: ../src/ui/dialog/document-properties.cpp:298
+#: ../src/ui/dialog/document-properties.cpp:297
 #, fuzzy
 msgid "Snap to object _nodes"
 msgstr "Povlecite in preuredite vozlišča"
 
-#: ../src/ui/dialog/document-properties.cpp:299
+#: ../src/ui/dialog/document-properties.cpp:298
 #, fuzzy
 msgid "Snap to other object nodes"
 msgstr "Preskakuj z robovi okvirja predmeta"
 
-#: ../src/ui/dialog/document-properties.cpp:301
+#: ../src/ui/dialog/document-properties.cpp:300
 #, fuzzy
 msgid "Snap s_ensitivity:"
 msgstr "Občutljivost oprijema:"
 
-#: ../src/ui/dialog/document-properties.cpp:301
-#: ../src/ui/dialog/document-properties.cpp:311
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:300
+#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Always snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:302
+#: ../src/ui/dialog/document-properties.cpp:301
 msgid "Controls max. snapping distance from object"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:303
+#: ../src/ui/dialog/document-properties.cpp:302
 msgid ""
 "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:304
 #, fuzzy
 msgid "Snap _bounding boxes to grid"
 msgstr "Preskakuj o_brobe na mrežo"
 
-#: ../src/ui/dialog/document-properties.cpp:306
-#: ../src/ui/dialog/document-properties.cpp:316
+#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap the edges of the object bounding boxes"
 msgstr "Preskakuj robove okvirja predmeta"
 
-#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:307
 #, fuzzy
 msgid "Snap nodes to _grid"
 msgstr "Preskakuj točke na _mrežo"
 
-#: ../src/ui/dialog/document-properties.cpp:309
-#: ../src/ui/dialog/document-properties.cpp:319
+#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
 msgstr "Preskakuj vozlišča, osnove črte besedila, središča elips, itd."
 
-#: ../src/ui/dialog/document-properties.cpp:311
+#: ../src/ui/dialog/document-properties.cpp:310
 #, fuzzy
 msgid "Snap sens_itivity:"
 msgstr "Občutljivost oprijema:"
 
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:311
 msgid "Controls max. snapping distance from grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:313
+#: ../src/ui/dialog/document-properties.cpp:312
 msgid ""
 "If set, objects snap to the nearest grid line when moved, regardless of "
 "distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:314
 #, fuzzy
 msgid "Snap bounding boxes to g_uides"
 msgstr "Preskakuj obrobo na vodila"
 
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:317
 #, fuzzy
 msgid "Snap p_oints to guides"
 msgstr "Preskakuj točke na vodila"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:320
 #, fuzzy
 msgid "Snap sensiti_vity:"
 msgstr "Občutljivost oprijema:"
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "Controls max. snapping distance from guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:323
+#: ../src/ui/dialog/document-properties.cpp:322
 msgid ""
 "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:330
+#: ../src/ui/dialog/document-properties.cpp:329
 #, fuzzy
 msgid "<b>Object Snapping</b>"
 msgstr "<b>Pravokotnik</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:332
+#: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:334
+#: ../src/ui/dialog/document-properties.cpp:333
 msgid "<b>Guide Snapping</b>"
 msgstr ""
 
@@ -6738,55 +6740,55 @@ msgid "P_ort:"
 msgstr "Vra_ta:"
 
 #. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:105
+#: ../src/ui/dialog/whiteboard-connect.cpp:108
 msgid "Connect"
 msgstr "Poveži"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:132
+#: ../src/ui/dialog/whiteboard-connect.cpp:135
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr ""
 "Vzpostavljanje povezave s strežnikom Jabber <b>%1</b> kot uporabnik <b>%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:137
+#: ../src/ui/dialog/whiteboard-connect.cpp:140
 msgid "Failed to establish connection to Jabber server <b>%1</b>"
 msgstr "Vzpostavitev povezave s strežnikom Jabber <b>%1</b> ni uspela"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:142
+#: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr ""
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:147
+#: ../src/ui/dialog/whiteboard-connect.cpp:150
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
 msgstr ""
 "Inicializacija SSL pri povezovanju na strežnik Jabber <b>%1</b> ni uspela"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:153
+#: ../src/ui/dialog/whiteboard-connect.cpp:156
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "Prijavljeni v strežnik Jabber <b>%1</b> as <b>%2</b>"
 
 #. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:73
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
 msgid "Chatroom _name:"
 msgstr "Ime _klepetalnice:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:74
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
 msgid "Chatroom _server:"
 msgstr "_Strežnik klepetalnice:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
 msgid "Chatroom _password:"
 msgstr "_Geslo klepetalnice:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
 msgid "Chatroom _handle:"
 msgstr "_Ročica klepetalnice:"
 
 #. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:95
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
 msgid "Connect to chatroom"
 msgstr "Poveži s klepetalnico"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:130
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
 msgstr "Sinhronizacija s klepetalnico <b>%1@%2</b> z uporabo ročice <b>%3</b>"
 
@@ -10284,6 +10286,18 @@ msgstr "Metadatoteka Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Uvoz Metadatoteke Windows"
+
+#~ msgid "Export area"
+#~ msgstr "Območje izvoza"
+
+#~ msgid "Bitmap size"
+#~ msgstr "Velikost slike"
+
+#~ msgid "_Filename"
+#~ msgstr "_Ime datoteke"
+
+#~ msgid " <b>_Export</b> "
+#~ msgstr " <b>_Izvoz</b> "
 
 #~ msgid " relative by "
 #~ msgstr "relativno za"

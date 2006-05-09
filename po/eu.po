@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-07 22:41+0200\n"
+"POT-Creation-Date: 2006-05-09 21:07+0200\n"
 "PO-Revision-Date: 2006-03-16 23:09+0100\n"
 "Last-Translator: Iñaki Larrañaga <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -57,18 +57,18 @@ msgstr "Lotura-marra berria sortzen"
 msgid "Finishing connector"
 msgstr "Lotura-marraren amaiera"
 
-#: ../src/connector-context.cpp:1106
+#: ../src/connector-context.cpp:1081
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Konexio-puntua</b>: egin klik edo arrastatu lotura-marra berria sortzeko"
 
-#: ../src/connector-context.cpp:1183
+#: ../src/connector-context.cpp:1152
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Lotura-marraren amaiera-puntua</b>: arrastatu forma berrietara "
 "birbideratzeko edo konektatzeko"
 
-#: ../src/connector-context.cpp:1276
+#: ../src/connector-context.cpp:1257
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Hautatu <b>gutxienez lotura-marra ez den objektu bat</b>."
 
@@ -119,7 +119,7 @@ msgstr "Hautatu <b>objektu bat</b> bere klonak sakabanatzeko."
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Hautatu<b>objektua</b> bere klonatutako mosaikoak kentzeko."
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1890
+#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1902
 msgid "Select an <b>object</b> to clone."
 msgstr "Hautatu <b>objektua</b> klonatzeko."
 
@@ -761,121 +761,123 @@ msgid "none"
 msgstr "bat ere ez"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2253
 msgid "_Page"
 msgstr "_Orrialdea"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2257
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2257
 msgid "_Drawing"
 msgstr "_Marrazkia"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2259
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2259
 msgid "_Selection"
 msgstr "_Hautapena"
 
-#: ../src/dialogs/export.cpp:124
+#: ../src/dialogs/export.cpp:133
 msgid "_Custom"
 msgstr "_Pertsonalizatua"
 
-#: ../src/dialogs/export.cpp:248
-msgid "Export area"
-msgstr "Esportatu area"
+#: ../src/dialogs/export.cpp:257
+msgid "<big><b>Export area</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:263
+#: ../src/dialogs/export.cpp:271
 msgid "Units:"
 msgstr "Unitateak:"
 
-#: ../src/dialogs/export.cpp:294
+#: ../src/dialogs/export.cpp:299
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:304
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:304 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:1995
 msgid "Width:"
 msgstr "Zabalera:"
 
-#: ../src/dialogs/export.cpp:310
+#: ../src/dialogs/export.cpp:315
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:320
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:320 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Altuera:"
 
-#: ../src/dialogs/export.cpp:403
-msgid "Bitmap size"
-msgstr "Bit-maparen tamaina"
+#: ../src/dialogs/export.cpp:414
+msgid "<big><b>Bitmap size</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:413 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "_Zabalera:"
 
-#: ../src/dialogs/export.cpp:413 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
 msgid "pixels at"
 msgstr "pixel"
 
-#: ../src/dialogs/export.cpp:423
+#: ../src/dialogs/export.cpp:437
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "dpi"
 msgstr "dpi"
 
-#: ../src/dialogs/export.cpp:448
-msgid "_Filename"
-msgstr "_Fitxategi-izena"
+#. true = has mnemonic
+#: ../src/dialogs/export.cpp:467
+msgid "<big><b>_Filename</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:512
+#: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
 msgstr "_Arakatu..."
 
-#: ../src/dialogs/export.cpp:539
-msgid " <b>_Export</b> "
-msgstr " <b>_Esportatu</b> "
+#: ../src/dialogs/export.cpp:577
+#, fuzzy
+msgid "_Export"
+msgstr "Esportatu"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
 msgstr "Esportatu bitmapa fitxategia ezarpen hauekin"
 
-#: ../src/dialogs/export.cpp:968
+#: ../src/dialogs/export.cpp:1008
 msgid "You have to enter a filename"
 msgstr "Fitxategi-izena idatzi behar duzu"
 
-#: ../src/dialogs/export.cpp:973
+#: ../src/dialogs/export.cpp:1013
 msgid "The chosen area to be exported is invalid"
 msgstr "Esportatzeko aukeratutako area baliogabea da"
 
-#: ../src/dialogs/export.cpp:982
+#: ../src/dialogs/export.cpp:1022
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "%s direktorioa ez da existitzen edo ez da direktorio bat.\n"
 
-#: ../src/dialogs/export.cpp:998
+#: ../src/dialogs/export.cpp:1038
 msgid "Export in progress"
 msgstr "Esportatzen"
 
-#: ../src/dialogs/export.cpp:1004
+#: ../src/dialogs/export.cpp:1044
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "%s esportatzen (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1031
+#: ../src/dialogs/export.cpp:1071
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Ezin da %s fitxategira esportatu.\n"
 
-#: ../src/dialogs/export.cpp:1137
+#: ../src/dialogs/export.cpp:1177
 msgid "Select a filename for exporting"
 msgstr "Hautatu fitxategi-izen bat esportatzeko"
 
@@ -1845,8 +1847,8 @@ msgid "New element node..."
 msgstr "Elementu-nodo berria..."
 
 #: ../src/dialogs/xml-tree.cpp:1335
-#: ../src/ui/dialog/whiteboard-connect.cpp:106
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:96
+#: ../src/ui/dialog/whiteboard-connect.cpp:109
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
 msgstr "Utzi"
 
@@ -2066,30 +2068,30 @@ msgstr ""
 "Moduloen direktorioa (%s) ez dago eskuragarri. Direktorio horretako kanpoko "
 "moduloak ez dira kargatuko."
 
-#: ../src/extension/internal/bluredge.cpp:135
+#: ../src/extension/internal/bluredge.cpp:131
 #, fuzzy
 msgid "Blur Edge"
 msgstr "Urdina"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
 msgid "Blur Width"
 msgstr "Zabalera"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 #, fuzzy
 msgid "Number of Steps"
 msgstr "Errenkada-kopurua"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:142
+#: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 #, fuzzy
 msgid "Generate from Path"
@@ -2911,16 +2913,16 @@ msgid_plural "Receiving change; %u changes left to process."
 msgstr[0] "Aldaketa jasotzen; aldaketa %u falta da prozesatzeko."
 msgstr[1] "Aldaketa jasotzen; %u aldaketa falta dira prozesatzeko."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:157
+#: ../src/jabber_whiteboard/chat-handler.cpp:158
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
 msgstr "<b>%s</b>(e)k berriketako gela utzi du."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:221
+#: ../src/jabber_whiteboard/chat-handler.cpp:222
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
 msgstr "%1 goitizena norbaitek darabil jadanik. Aukeratu beste goitizen bat."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:225
+#: ../src/jabber_whiteboard/chat-handler.cpp:226
 msgid "An error was encountered while attempting to connect to the server."
 msgstr "Errorea gertatu da zerbitzariarekin konektatzen saiatzean."
 
@@ -2938,12 +2940,12 @@ msgstr "Errorea gertatu da zerbitzariarekin konektatzen saiatzean."
 #.
 #. This is a fix for bug #1352522.  Probably not the friendliest, but it's about
 #. the best we can do without changing the protocol.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:149
+#: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
 msgstr ""
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:153
+#: ../src/jabber_whiteboard/connection-establishment.cpp:162
 msgid ""
 "The Jabber user <b>%1</b> attempted to invite you to a whiteboard session "
 "while you were waiting on an invitation response.\n"
@@ -2954,19 +2956,19 @@ msgstr ""
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:168
+#: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
 msgstr "<b>%1</b>(e)k gonbidatu egin zaitu arbel zuriko saiora."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:169
+#: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
 msgstr "%1(e)n gonbitea jaso da arbel zurirako"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:172
+#: ../src/jabber_whiteboard/connection-establishment.cpp:181
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr "<b>%1</b>(e)n arbel zurirako gonbitea onartu nahi duzu?"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:174
+#: ../src/jabber_whiteboard/connection-establishment.cpp:183
 msgid ""
 "Would you like to accept %1's invitation in a new document window?\n"
 "Accepting the invitation in your current window will discard unsaved changes."
@@ -2974,24 +2976,24 @@ msgstr ""
 "Nahi duzu %1(e)n gonbitea onartzea dokumentuaren leiho berrian?\n"
 "Gonbitea onartzean uneko leihoko gorde gabeko aldaketak galdu egingo dira."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:180
-#: ../src/jabber_whiteboard/connection-establishment.cpp:235
+#: ../src/jabber_whiteboard/connection-establishment.cpp:189
+#: ../src/jabber_whiteboard/connection-establishment.cpp:244
 msgid "Accept invitation"
 msgstr "Onartu gonbitea"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:181
-#: ../src/jabber_whiteboard/connection-establishment.cpp:236
+#: ../src/jabber_whiteboard/connection-establishment.cpp:190
+#: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
 msgstr "Baztertu gonbitea"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:182
+#: ../src/jabber_whiteboard/connection-establishment.cpp:191
 msgid "Accept invitation in new document window"
 msgstr "Onartu gonbitea dokumentuaren leiho berrian"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
 #. TRANSLATORS: %1 is a userid here
-#: ../src/jabber_whiteboard/connection-establishment.cpp:233
+#: ../src/jabber_whiteboard/connection-establishment.cpp:242
 msgid ""
 "A new document window could not be opened for a whiteboard session with <b>%"
 "1</b>"
@@ -3000,7 +3002,7 @@ msgstr ""
 "ireki"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:275
+#: ../src/jabber_whiteboard/connection-establishment.cpp:284
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
 "whiteboard invitation.</span>\n"
@@ -3011,7 +3013,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:278
+#: ../src/jabber_whiteboard/connection-establishment.cpp:287
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may send an "
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
@@ -3022,7 +3024,7 @@ msgstr ""
 "bati. "
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:289
+#: ../src/jabber_whiteboard/connection-establishment.cpp:298
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is already in a "
 "whiteboard session.</span>\n"
@@ -3033,7 +3035,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:292
+#: ../src/jabber_whiteboard/connection-establishment.cpp:301
 msgid ""
 "You are still connected to a Jabber server as <b>%1</b>, and may send an "
 "invitation to a different user."
@@ -3086,33 +3088,33 @@ msgstr ""
 "Objektu berriak EZ da bidaliko, ezta bere objektu umeak ere."
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1002
+#: ../src/jabber_whiteboard/session-manager.cpp:1012
 msgid "Select a location and filename"
 msgstr "Hautatu kokalekua eta fitxategi-izena"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1004
+#: ../src/jabber_whiteboard/session-manager.cpp:1014
 msgid "Set filename"
 msgstr "Ezarri fitxategi-izena"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:308
+#: ../src/jabber_whiteboard/session-manager.cpp:318
 msgid "No SSL certificate was found."
 msgstr "Ez da SSL ziurtagiririk aurkitu."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:311
+#: ../src/jabber_whiteboard/session-manager.cpp:321
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "Jabber zerbitzariak emandako SSL ziurtagiria ez da fidagarria."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:314
+#: ../src/jabber_whiteboard/session-manager.cpp:324
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "Jabber zerbitzariak emandako SSL ziurtagiria iraungituta dago."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:317
+#: ../src/jabber_whiteboard/session-manager.cpp:327
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "Jabber zerbitzariak emandako SSL ziurtagiria ez dago aktibatuta."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:320
+#: ../src/jabber_whiteboard/session-manager.cpp:330
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3120,20 +3122,20 @@ msgstr ""
 "Jabber zerbitzariak emandako SSL ziurtagiriak duen ostalari-izena ez dator "
 "bat Jabber zerbitzariaren ostalari-izenarekin."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:323
+#: ../src/jabber_whiteboard/session-manager.cpp:333
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 "Jabber zerbitzariak emandako SSL ziurtagiriak hatz-marka baliogabea du."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:326
+#: ../src/jabber_whiteboard/session-manager.cpp:336
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Errore ezezaguna gertatu da SSL konexioa ezartzean."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:332
+#: ../src/jabber_whiteboard/session-manager.cpp:342
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3143,24 +3145,24 @@ msgstr ""
 "\n"
 "Nahi duzu Jabber zerbitzariarekin konexioa jarraitzea?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:335
+#: ../src/jabber_whiteboard/session-manager.cpp:345
 msgid "Continue connecting and ignore further errors"
 msgstr "Jarraitu konexioa eta ez ikusi beste erroreei"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:336
+#: ../src/jabber_whiteboard/session-manager.cpp:346
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Jarraitu konexioa, eta abisatu beste erroreei buruz"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:337
+#: ../src/jabber_whiteboard/session-manager.cpp:347
 msgid "Cancel connection"
 msgstr "bertan behera utzi konexioa"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:784
+#: ../src/jabber_whiteboard/session-manager.cpp:794
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "<b>%s</b>(r)ekin arbel zuriko saioa konektatuta"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:792
+#: ../src/jabber_whiteboard/session-manager.cpp:802
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b>(e)k arbel zuriko saioa <b>utzi egin du</b>."
@@ -3168,7 +3170,7 @@ msgstr "<b>%s</b>(e)k arbel zuriko saioa <b>utzi egin du</b>."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:797
+#: ../src/jabber_whiteboard/session-manager.cpp:807
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3179,7 +3181,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:799
+#: ../src/jabber_whiteboard/session-manager.cpp:809
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3187,7 +3189,7 @@ msgstr ""
 "Jabber zerbitzari batekin <b>%2</b> gisa konektatuta jarraitzen duzu, eta <b>"
 "%1</b>(e)kin, edo beste erabiltzaile batekin, saio berri bat ezar dezakezu."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:995
+#: ../src/jabber_whiteboard/session-manager.cpp:1005
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3201,15 +3203,15 @@ msgstr ""
 "Hautatu beste kokaleku bat saioa erregistratzeko, edo aukeratu saio hau ez "
 "erregistratzea."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:997
+#: ../src/jabber_whiteboard/session-manager.cpp:1007
 msgid "Choose a different location"
 msgstr "Aukeratu beste kokalekua"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:998
+#: ../src/jabber_whiteboard/session-manager.cpp:1008
 msgid "Skip session recording"
 msgstr "Saioa ez erregistratu"
 
-#: ../src/knot.cpp:419
+#: ../src/knot.cpp:418
 msgid "Node or handle drag canceled."
 msgstr "Nodoa edo heldulekua arrastatzea bertan behera utzi da."
 
@@ -4032,27 +4034,27 @@ msgstr "Hautatu estiloa itsasteko <b>objektua(k)</b>."
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Hautatu <b>objektuak</b> gaineko geruzara igotzeko."
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1246
 msgid "No more layers above."
 msgstr "Ez dago gaineko geruzarik."
 
-#: ../src/selection-chemistry.cpp:1254
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Hautatu <b>objektuak</b> beheko geruzara jeisteko."
 
-#: ../src/selection-chemistry.cpp:1272
+#: ../src/selection-chemistry.cpp:1284
 msgid "No more layers below."
 msgstr "Ez dago beheko geruzarik."
 
-#: ../src/selection-chemistry.cpp:1940
+#: ../src/selection-chemistry.cpp:1952
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Hautatu <b>klon</b> bat independiente bihurtzeko."
 
-#: ../src/selection-chemistry.cpp:1971
+#: ../src/selection-chemistry.cpp:1983
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "Ez dago <b>klonik independiente bihurtzeko</b> hautapenean."
 
-#: ../src/selection-chemistry.cpp:1988
+#: ../src/selection-chemistry.cpp:2000
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4062,7 +4064,7 @@ msgstr ""
 "esteka</b> bere iturburura joateko. Hautatu <b>testua bidean</b> bidera "
 "joateko. Hautatu <b>testu mugikorra</b> bere markora joateko."
 
-#: ../src/selection-chemistry.cpp:2011
+#: ../src/selection-chemistry.cpp:2023
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4070,7 +4072,7 @@ msgstr ""
 "<b>Ezin da aurkitu</b> objektua hautatzeko (klon, desplazamendu edo testu-"
 "bide zurtza?)"
 
-#: ../src/selection-chemistry.cpp:2017
+#: ../src/selection-chemistry.cpp:2029
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4078,34 +4080,34 @@ msgstr ""
 "Hautatzen saiatzen ari zaren objektua <b>ez dago ikusgai</b> (&lt;defs&gt;en "
 "dago)"
 
-#: ../src/selection-chemistry.cpp:2044
+#: ../src/selection-chemistry.cpp:2056
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Hautatu <b>objektua(k)</b> eredu bihurtzeko."
 
-#: ../src/selection-chemistry.cpp:2135
+#: ../src/selection-chemistry.cpp:2147
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Hautatu <b>objektua betetze-ereduarekin</b> bertatik objektuak ateratzeko."
 
-#: ../src/selection-chemistry.cpp:2188
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Ez dago <b>betetze-eredurik</b> hautapenean."
 
-#: ../src/selection-chemistry.cpp:2208
+#: ../src/selection-chemistry.cpp:2220
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Hautatu <b>objektua(k)</b> bit-maparen kopia egiteko."
 
-#: ../src/selection-chemistry.cpp:2371
+#: ../src/selection-chemistry.cpp:2383
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Hautatu estiloa itsasteko <b>objektua(k)</b>."
 
-#: ../src/selection-chemistry.cpp:2374
+#: ../src/selection-chemistry.cpp:2386
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Hautatu estiloa itsasteko <b>objektua(k)</b>."
 
-#: ../src/selection-chemistry.cpp:2477
+#: ../src/selection-chemistry.cpp:2489
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Hautatu <b>testua(k)</b> karaktere-tartea kentzeko."
@@ -4341,31 +4343,31 @@ msgstr ""
 "<b>Biratu</b> hautapena; <b>Ktrl</b> angelua atxikitzeko; <b>Maius</b> "
 "aurkako izkinaren inguruan biratzeko"
 
-#: ../src/seltrans.cpp:846 ../src/seltrans.cpp:958
+#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Eskalatu</b>: %0.2f%% x %0.2f%%x, <b>Ktrl</b> tasa blokeatzeko"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1029
+#: ../src/seltrans.cpp:1060
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Okertu</b>: %0.2f&#176;; <b>Ktrl</b> angelua atxikitzeko"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1109
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Biratu</b>: %0.2f&#176;; <b>Ktrl</b> angelua atxikitzeko"
 
-#: ../src/seltrans.cpp:1122
+#: ../src/seltrans.cpp:1153
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Eraman <b>erdigunea</b> hona: %s, %s"
 
-#: ../src/seltrans.cpp:1380
+#: ../src/seltrans.cpp:1411
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4584,11 +4586,11 @@ msgstr ""
 "<b>Espirala</b>: erradioa %s, angelua %5g&#176;; <b>Ktrl</b> angelua "
 "atxikitzeko"
 
-#: ../src/splivarot.cpp:100
+#: ../src/splivarot.cpp:101
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Hautatu <b>gutxienez bi bide</b> eragiketa boolearra egiteko."
 
-#: ../src/splivarot.cpp:106
+#: ../src/splivarot.cpp:107
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4596,7 +4598,7 @@ msgstr ""
 "Hautatu <b>bi bide</b> diferentzia, XOR edo zatiketa egiteko, edo bidea "
 "mozteko."
 
-#: ../src/splivarot.cpp:123 ../src/splivarot.cpp:138
+#: ../src/splivarot.cpp:124 ../src/splivarot.cpp:139
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4604,38 +4606,38 @@ msgstr ""
 "Ezin da diferentziarako, XOR egiteko, zatitzeko edo bidea mozteko "
 "hautatutako objektuen <b>z ordena</b> zehaztu."
 
-#: ../src/splivarot.cpp:168
+#: ../src/splivarot.cpp:169
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Objektuetako bat <b>ez da bidea</b>, ezin da eragiketa boolearra egin."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:548
+#: ../src/splivarot.cpp:549
 msgid "Select <b>path(s)</b> to outline."
 msgstr "Hautatu<b>bidea(k)</b> eskema egiteko"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:742
+#: ../src/splivarot.cpp:743
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr "<b>Ez dago trazutako biderik</b> hautepenean eskema egiteko."
 
-#: ../src/splivarot.cpp:826
+#: ../src/splivarot.cpp:827
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Hautatutako objektua <b>ez da bidea</b>, ezin da laburtu/luzatu."
 
-#: ../src/splivarot.cpp:1034
+#: ../src/splivarot.cpp:1035
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Hautatu <b>bidea(k)</b> laburtzeko/luzatzeko."
 
-#: ../src/splivarot.cpp:1251
+#: ../src/splivarot.cpp:1252
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Ez dago</b> laburtu/luzatu beharreko <b>biderik</b> hautapenean."
 
-#: ../src/splivarot.cpp:1384
+#: ../src/splivarot.cpp:1385
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Hautatu soildu beharreko <b>bideak</b>."
 
-#: ../src/splivarot.cpp:1411
+#: ../src/splivarot.cpp:1412
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Ez dago</b> soildu beharreko <b>biderik</b> hautapenean."
 
@@ -5163,7 +5165,7 @@ msgid "Smallest item"
 msgstr "Elementu txikiena"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#: ../src/ui/dialog/document-properties.cpp:99
+#: ../src/ui/dialog/document-properties.cpp:98
 #: ../src/widgets/desktop-widget.cpp:1092
 msgid "Page"
 msgstr "Orria"
@@ -5190,360 +5192,360 @@ msgstr ""
 msgid "<b>License</b>"
 msgstr "<b>Marra</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/document-properties.cpp:99
 #, fuzzy
 msgid "Grid/Guides"
 msgstr "Gidak"
 
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:100
 #, fuzzy
 msgid "Snap"
 msgstr "Formak"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 #, fuzzy
 msgid "Back_ground:"
 msgstr "Atzeko planoa:"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Background color"
 msgstr "Atzeko planoaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Orriaren atzeko planoaren kolorea eta gardentasuna (bitmapa esportatzeko ere "
 "erabilia)"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 #, fuzzy
 msgid "Show page _border"
 msgstr "Erakutsi oihalaren ertza"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 #, fuzzy
 msgid "Border on _top of drawing"
 msgstr "Ertza marrazkiaren gainean"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 #, fuzzy
 msgid "If set, border is always on top of the drawing"
 msgstr "Ertza marrazkiaren gainean"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Border _color:"
 msgstr "Ertzaren kolorea:"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Page border color"
 msgstr "Oihalaren ertzaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:194
+#: ../src/ui/dialog/document-properties.cpp:193
 #, fuzzy
 msgid "Color of the page border"
 msgstr "Oihalaren ertzaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 #, fuzzy
 msgid "_Show border shadow"
 msgstr "Erakutsi orriaren itzala"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:197
+#: ../src/ui/dialog/document-properties.cpp:196
 #, fuzzy
 msgid "Default _units:"
 msgstr "Unitate lehenetsiak:"
 
-#: ../src/ui/dialog/document-properties.cpp:200
+#: ../src/ui/dialog/document-properties.cpp:199
 #, fuzzy
 msgid "<b>General</b>"
 msgstr "<b>Marra</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:202
+#: ../src/ui/dialog/document-properties.cpp:201
 #, fuzzy
 msgid "<b>Border</b>"
 msgstr "<b>Arkua</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:204
+#: ../src/ui/dialog/document-properties.cpp:203
 #, fuzzy
 msgid "<b>Format</b>"
 msgstr "<b>Arkua</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 #, fuzzy
 msgid "_Show grid"
 msgstr "Erakutsi sareta"
 
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
 msgstr "Erakutsi edo ezkutatu sareta"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:234
 #, fuzzy
 msgid "Grid _units:"
 msgstr "Saretaren unitateak:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 #, fuzzy
 msgid "_Origin X:"
 msgstr "X iturburua:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 #, fuzzy
 msgid "X coordinate of grid origin"
 msgstr "Hautapeneko koordenatu bertikala"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 #, fuzzy
 msgid "O_rigin Y:"
 msgstr "Y iturburua:"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 #, fuzzy
 msgid "Y coordinate of grid origin"
 msgstr "Hautapeneko koordenatu bertikala"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
 msgid "Spacing _X:"
 msgstr "X tartea:"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
 msgid "Distance of vertical grid lines"
 msgstr "gida-lerro bertikala"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "Spacing _Y:"
 msgstr "Y tartea:"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "Distance of horizontal grid lines"
 msgstr "gida-lerro horizontala"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 #, fuzzy
 msgid "Grid line _color:"
 msgstr "Saretaren kolorea:"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line color"
 msgstr "Saretaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:244
 msgid "Color of grid lines"
 msgstr "Saretaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 #, fuzzy
 msgid "Ma_jor grid line color:"
 msgstr "Sareta nagusiaren kolorea:"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Major grid line color"
 msgstr "Sareta nagusiaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:247
+#: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr "Sareta nagusiaren kolorea (nabarmendua)"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 #, fuzzy
 msgid "_Major grid line every:"
 msgstr "Sareta nagusiko lerro-tartea:"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "lines"
 msgstr "lerro"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 #, fuzzy
 msgid "Show _guides"
 msgstr "Erakutsi gidak"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show or hide guides"
 msgstr "Erakutsi edo ezkutatu gidak"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 #, fuzzy
 msgid "Guide co_lor:"
 msgstr "Giden kolorea:"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guideline color"
 msgstr "Gida-lerroaren kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:251
 msgid "Color of guidelines"
 msgstr "Gida-lerroen kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 #, fuzzy
 msgid "_Highlight color:"
 msgstr "Nabarmentzearen kolorea:"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
 msgstr "Nabarmendutako gida-lerroen kolorea"
 
-#: ../src/ui/dialog/document-properties.cpp:254
+#: ../src/ui/dialog/document-properties.cpp:253
 msgid "Color of a guideline when it is under mouse"
 msgstr "Gida-lerroaren kolorea saguaren azpian dagoenean"
 
-#: ../src/ui/dialog/document-properties.cpp:257
+#: ../src/ui/dialog/document-properties.cpp:256
 #, fuzzy
 msgid "<b>Grid</b>"
 msgstr "<b>Arkua</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:259
+#: ../src/ui/dialog/document-properties.cpp:258
 #, fuzzy
 msgid "<b>Guides</b>"
 msgstr "<b>Marra</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:288
 #, fuzzy
 msgid "_Snap bounding boxes to objects"
 msgstr "Atxiki muga-koadroa gidei"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:289
 #, fuzzy
 msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr "Atxikitu objektuaren muga-koadroaren ertzak"
 
-#: ../src/ui/dialog/document-properties.cpp:292
+#: ../src/ui/dialog/document-properties.cpp:291
 #, fuzzy
 msgid "Snap nodes _to objects"
 msgstr "Atxiki nodoak saretari"
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:292
 #, fuzzy
 msgid "Snap the nodes of objects to other objects"
 msgstr "Atxikitu objektuaren muga-koadroaren ertzak"
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:294
 #, fuzzy
 msgid "Snap to object _paths"
 msgstr "Bihurtu bit-map objektua bidean"
 
-#: ../src/ui/dialog/document-properties.cpp:296
+#: ../src/ui/dialog/document-properties.cpp:295
 #, fuzzy
 msgid "Snap to other object paths"
 msgstr "Bihurtu hautatutako objektuak bide"
 
-#: ../src/ui/dialog/document-properties.cpp:298
+#: ../src/ui/dialog/document-properties.cpp:297
 #, fuzzy
 msgid "Snap to object _nodes"
 msgstr "Arrastatu nodoak berrantolatzeko"
 
-#: ../src/ui/dialog/document-properties.cpp:299
+#: ../src/ui/dialog/document-properties.cpp:298
 #, fuzzy
 msgid "Snap to other object nodes"
 msgstr "Atxikitu objektuaren muga-koadroaren ertzak"
 
-#: ../src/ui/dialog/document-properties.cpp:301
+#: ../src/ui/dialog/document-properties.cpp:300
 #, fuzzy
 msgid "Snap s_ensitivity:"
 msgstr "Heltze-sentikortasuna:"
 
-#: ../src/ui/dialog/document-properties.cpp:301
-#: ../src/ui/dialog/document-properties.cpp:311
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:300
+#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Always snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:302
+#: ../src/ui/dialog/document-properties.cpp:301
 msgid "Controls max. snapping distance from object"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:303
+#: ../src/ui/dialog/document-properties.cpp:302
 msgid ""
 "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:304
 #, fuzzy
 msgid "Snap _bounding boxes to grid"
 msgstr "Atxiki muga-koadroa saretari"
 
-#: ../src/ui/dialog/document-properties.cpp:306
-#: ../src/ui/dialog/document-properties.cpp:316
+#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap the edges of the object bounding boxes"
 msgstr "Atxikitu objektuaren muga-koadroaren ertzak"
 
-#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:307
 #, fuzzy
 msgid "Snap nodes to _grid"
 msgstr "Atxiki nodoak saretari"
 
-#: ../src/ui/dialog/document-properties.cpp:309
-#: ../src/ui/dialog/document-properties.cpp:319
+#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
 msgstr "Egokitu bideen nodoa, testuaren oinarri-lerroa, elipseen zentrua, e.a."
 
-#: ../src/ui/dialog/document-properties.cpp:311
+#: ../src/ui/dialog/document-properties.cpp:310
 #, fuzzy
 msgid "Snap sens_itivity:"
 msgstr "Heltze-sentikortasuna:"
 
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:311
 msgid "Controls max. snapping distance from grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:313
+#: ../src/ui/dialog/document-properties.cpp:312
 msgid ""
 "If set, objects snap to the nearest grid line when moved, regardless of "
 "distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:314
 #, fuzzy
 msgid "Snap bounding boxes to g_uides"
 msgstr "Atxiki muga-koadroa gidei"
 
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:317
 #, fuzzy
 msgid "Snap p_oints to guides"
 msgstr "Atxiki puntuak gidei"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:320
 #, fuzzy
 msgid "Snap sensiti_vity:"
 msgstr "Heltze-sentikortasuna:"
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "Controls max. snapping distance from guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:323
+#: ../src/ui/dialog/document-properties.cpp:322
 msgid ""
 "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:330
+#: ../src/ui/dialog/document-properties.cpp:329
 #, fuzzy
 msgid "<b>Object Snapping</b>"
 msgstr "<b>Laukizuzena</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:332
+#: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:334
+#: ../src/ui/dialog/document-properties.cpp:333
 msgid "<b>Guide Snapping</b>"
 msgstr ""
 
@@ -6814,57 +6816,57 @@ msgid "P_ort:"
 msgstr "A_taka:"
 
 #. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:105
+#: ../src/ui/dialog/whiteboard-connect.cpp:108
 msgid "Connect"
 msgstr "Konektatu"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:132
+#: ../src/ui/dialog/whiteboard-connect.cpp:135
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr ""
 "<b>%1</b> Jabber zerbitzariarekin konexioa <b>%2</b> erabiltzaile gisa "
 "ezartzen"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:137
+#: ../src/ui/dialog/whiteboard-connect.cpp:140
 msgid "Failed to establish connection to Jabber server <b>%1</b>"
 msgstr "Huts egin du <b>%1</b> Jabber zerbitzariarekin konektatzean"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:142
+#: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr ""
 "<b>%1</b> Jabber zerbitzarian <b>%2</b> gisa autentifikatzean huts egin du"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:147
+#: ../src/ui/dialog/whiteboard-connect.cpp:150
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
 msgstr ""
 "SSL hasieratzeak huts egin du <b>%1</b> Jabber zerbitzariarekin konektatzeaan"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:153
+#: ../src/ui/dialog/whiteboard-connect.cpp:156
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "<b>%1</b> Jabber zerbitzariarekin <b>%2</b> gisa konektatuta"
 
 #. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:73
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
 msgid "Chatroom _name:"
 msgstr "Berriketa-gelaren _izena:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:74
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
 msgid "Chatroom _server:"
 msgstr "Berriketa-gelaren _zerbitzaria:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
 msgid "Chatroom _password:"
 msgstr "Berriketa-gelaren _pasahitza:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
 msgid "Chatroom _handle:"
 msgstr "Berriketa-gelaren _heldulekua:"
 
 #. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:95
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
 msgid "Connect to chatroom"
 msgstr "Konekatu berriketa-gelarekin"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:130
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
 msgstr ""
 "<b>%1@%2</b> berriketa-gelarekin sinkronizatzen <b>%3</b> heldulekua erabiliz"
@@ -10463,6 +10465,18 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#~ msgid "Export area"
+#~ msgstr "Esportatu area"
+
+#~ msgid "Bitmap size"
+#~ msgstr "Bit-maparen tamaina"
+
+#~ msgid "_Filename"
+#~ msgstr "_Fitxategi-izena"
+
+#~ msgid " <b>_Export</b> "
+#~ msgstr " <b>_Esportatu</b> "
 
 #~ msgid " relative by "
 #~ msgstr "erlatiboa:"

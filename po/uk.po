@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-07 22:41+0200\n"
+"POT-Creation-Date: 2006-05-09 21:07+0200\n"
 "PO-Revision-Date: 2005-10-21 13:33+0300\n"
 "Last-Translator: Maxim V. Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -54,21 +54,21 @@ msgstr "Створення нової з'єднувальної лінії"
 msgid "Finishing connector"
 msgstr "Завершення лінії з'єднання"
 
-#: ../src/connector-context.cpp:1106
+#: ../src/connector-context.cpp:1081
 #, fuzzy
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Точка з'єднання</b>: клацніть мишею або перетягніть для створення нової "
 "лінії"
 
-#: ../src/connector-context.cpp:1183
+#: ../src/connector-context.cpp:1152
 #, fuzzy
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Кінцева з'єднувальна точка</b>: перетягніть для повторного з'єднання або "
 "з'єднання з новими фігурами"
 
-#: ../src/connector-context.cpp:1276
+#: ../src/connector-context.cpp:1257
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Виділіть <b>принаймні два об'єкти</b> для з'єднання."
 
@@ -122,7 +122,7 @@ msgstr "Виділіть <b>один об'єкт</b>, клони якого сл
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Виділіть <b>один об'єкт</b>, клони якого слід видалити."
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1890
+#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1902
 msgid "Select an <b>object</b> to clone."
 msgstr "Виділіть <b>об'єкт</b> для клонування."
 
@@ -763,121 +763,123 @@ msgid "none"
 msgstr "немає"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2253
 msgid "_Page"
 msgstr "_Сторінка"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2257
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2257
 msgid "_Drawing"
 msgstr "_Малюнок"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2259
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2259
 msgid "_Selection"
 msgstr "Виді_лене"
 
-#: ../src/dialogs/export.cpp:124
+#: ../src/dialogs/export.cpp:133
 msgid "_Custom"
 msgstr "В_ласна"
 
-#: ../src/dialogs/export.cpp:248
-msgid "Export area"
-msgstr "Область експорту"
+#: ../src/dialogs/export.cpp:257
+msgid "<big><b>Export area</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:263
+#: ../src/dialogs/export.cpp:271
 msgid "Units:"
 msgstr "Одиниці:"
 
-#: ../src/dialogs/export.cpp:294
+#: ../src/dialogs/export.cpp:299
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:304
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:304 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:1995
 msgid "Width:"
 msgstr "Ширина:"
 
-#: ../src/dialogs/export.cpp:310
+#: ../src/dialogs/export.cpp:315
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:320
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:320 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Висота:"
 
-#: ../src/dialogs/export.cpp:403
-msgid "Bitmap size"
-msgstr "Розмір зображення"
+#: ../src/dialogs/export.cpp:414
+msgid "<big><b>Bitmap size</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:413 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "_Ширина:"
 
-#: ../src/dialogs/export.cpp:413 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
 msgid "pixels at"
 msgstr "точок"
 
-#: ../src/dialogs/export.cpp:423
+#: ../src/dialogs/export.cpp:437
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "dpi"
 msgstr "dpi"
 
-#: ../src/dialogs/export.cpp:448
-msgid "_Filename"
-msgstr "Назва _файлу"
+#. true = has mnemonic
+#: ../src/dialogs/export.cpp:467
+msgid "<big><b>_Filename</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:512
+#: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
 msgstr "О_гляд..."
 
-#: ../src/dialogs/export.cpp:539
-msgid " <b>_Export</b> "
-msgstr "<b>_Експорт</b> "
+#: ../src/dialogs/export.cpp:577
+#, fuzzy
+msgid "_Export"
+msgstr "Експорт"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
 msgstr "Експортувати файл з цими параметрами"
 
-#: ../src/dialogs/export.cpp:968
+#: ../src/dialogs/export.cpp:1008
 msgid "You have to enter a filename"
 msgstr "Необхідно ввести назву файлу"
 
-#: ../src/dialogs/export.cpp:973
+#: ../src/dialogs/export.cpp:1013
 msgid "The chosen area to be exported is invalid"
 msgstr "Недопустима область для експорту"
 
-#: ../src/dialogs/export.cpp:982
+#: ../src/dialogs/export.cpp:1022
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Каталог %s не існує, або ж це не каталог.\n"
 
-#: ../src/dialogs/export.cpp:998
+#: ../src/dialogs/export.cpp:1038
 msgid "Export in progress"
 msgstr "Триває експорт"
 
-#: ../src/dialogs/export.cpp:1004
+#: ../src/dialogs/export.cpp:1044
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Експорт %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1031
+#: ../src/dialogs/export.cpp:1071
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Не вдається експортувати у файл %s.\n"
 
-#: ../src/dialogs/export.cpp:1137
+#: ../src/dialogs/export.cpp:1177
 msgid "Select a filename for exporting"
 msgstr "Виберіть ім'я файлу для експорту"
 
@@ -1844,8 +1846,8 @@ msgid "New element node..."
 msgstr "Створити новий вузол..."
 
 #: ../src/dialogs/xml-tree.cpp:1335
-#: ../src/ui/dialog/whiteboard-connect.cpp:106
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:96
+#: ../src/ui/dialog/whiteboard-connect.cpp:109
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -2068,30 +2070,30 @@ msgstr ""
 "Каталог модулів (%s) недоступний.  Зовнішнього модулі з цього каталогу не "
 "будуть завантажені."
 
-#: ../src/extension/internal/bluredge.cpp:135
+#: ../src/extension/internal/bluredge.cpp:131
 #, fuzzy
 msgid "Blur Edge"
 msgstr "Синій"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
 msgid "Blur Width"
 msgstr "Ширина"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 #, fuzzy
 msgid "Number of Steps"
 msgstr "Кількість рядків"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:142
+#: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 #, fuzzy
 msgid "Generate from Path"
@@ -2917,16 +2919,16 @@ msgstr[0] "Отримуються зміни; залишилось оброби�
 msgstr[1] "Отримуються зміни; залишилось обробити %u зміни."
 msgstr[2] "Отримуються зміни; залишилось обробити %u змін."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:157
+#: ../src/jabber_whiteboard/chat-handler.cpp:158
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
 msgstr "<b>%s</b> вже залишив кімнату розмов."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:221
+#: ../src/jabber_whiteboard/chat-handler.cpp:222
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
 msgstr "Псевдонім %1 вже зайнятий іншою людиною. Виберіть собі інший."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:225
+#: ../src/jabber_whiteboard/chat-handler.cpp:226
 msgid "An error was encountered while attempting to connect to the server."
 msgstr "Помилка при спробі з'єднатись з сервером."
 
@@ -2944,12 +2946,12 @@ msgstr "Помилка при спробі з'єднатись з серверо
 #.
 #. This is a fix for bug #1352522.  Probably not the friendliest, but it's about
 #. the best we can do without changing the protocol.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:149
+#: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
 msgstr ""
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:153
+#: ../src/jabber_whiteboard/connection-establishment.cpp:162
 msgid ""
 "The Jabber user <b>%1</b> attempted to invite you to a whiteboard session "
 "while you were waiting on an invitation response.\n"
@@ -2960,19 +2962,19 @@ msgstr ""
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:168
+#: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
 msgstr "<b>%1</b> запропонував вас помалювати разом."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:169
+#: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
 msgstr "Надійшло повідомлення помалювати разом від %1"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:172
+#: ../src/jabber_whiteboard/connection-establishment.cpp:181
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr "Бажаєте прийняти запрошення <b>%1</b> помалювати разом?"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:174
+#: ../src/jabber_whiteboard/connection-establishment.cpp:183
 msgid ""
 "Would you like to accept %1's invitation in a new document window?\n"
 "Accepting the invitation in your current window will discard unsaved changes."
@@ -2980,24 +2982,24 @@ msgstr ""
 "Бажаєте помалювати разом з %1 у новому вікні?\n"
 "Малювання у поточному документі призведе до очищення історії історії змін."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:180
-#: ../src/jabber_whiteboard/connection-establishment.cpp:235
+#: ../src/jabber_whiteboard/connection-establishment.cpp:189
+#: ../src/jabber_whiteboard/connection-establishment.cpp:244
 msgid "Accept invitation"
 msgstr "Прийняти запрошення"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:181
-#: ../src/jabber_whiteboard/connection-establishment.cpp:236
+#: ../src/jabber_whiteboard/connection-establishment.cpp:190
+#: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
 msgstr "Відхилити запрошення"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:182
+#: ../src/jabber_whiteboard/connection-establishment.cpp:191
 msgid "Accept invitation in new document window"
 msgstr "Прийняти запрошення у новому вікні документа"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
 #. TRANSLATORS: %1 is a userid here
-#: ../src/jabber_whiteboard/connection-establishment.cpp:233
+#: ../src/jabber_whiteboard/connection-establishment.cpp:242
 msgid ""
 "A new document window could not be opened for a whiteboard session with <b>%"
 "1</b>"
@@ -3005,7 +3007,7 @@ msgstr ""
 "Не вдається відкрити нове вікно документа для спільного з <b>%1</b> сеансу"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:275
+#: ../src/jabber_whiteboard/connection-establishment.cpp:284
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
 "whiteboard invitation.</span>\n"
@@ -3016,7 +3018,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:278
+#: ../src/jabber_whiteboard/connection-establishment.cpp:287
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may send an "
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
@@ -3027,7 +3029,7 @@ msgstr ""
 "користувачу."
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:289
+#: ../src/jabber_whiteboard/connection-establishment.cpp:298
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is already in a "
 "whiteboard session.</span>\n"
@@ -3038,7 +3040,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:292
+#: ../src/jabber_whiteboard/connection-establishment.cpp:301
 msgid ""
 "You are still connected to a Jabber server as <b>%1</b>, and may send an "
 "invitation to a different user."
@@ -3093,33 +3095,33 @@ msgstr ""
 "буде надіслано ані новий об'єкт, ані будь-які його дочірні об'єкти!"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1002
+#: ../src/jabber_whiteboard/session-manager.cpp:1012
 msgid "Select a location and filename"
 msgstr "Виберіть розташування та назву файла"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1004
+#: ../src/jabber_whiteboard/session-manager.cpp:1014
 msgid "Set filename"
 msgstr "Вкажіть назву файлу"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:308
+#: ../src/jabber_whiteboard/session-manager.cpp:318
 msgid "No SSL certificate was found."
 msgstr "Сертифікат SSL не знайдено."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:311
+#: ../src/jabber_whiteboard/session-manager.cpp:321
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "Неможна довіряти сертифікату SSL, що наданий службою Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:314
+#: ../src/jabber_whiteboard/session-manager.cpp:324
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "Вийшов термін дії сертифікату SSL, що наданий сервером Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:317
+#: ../src/jabber_whiteboard/session-manager.cpp:327
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "Сертифікат SSL, що наданий сервером Jabber, не активований."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:320
+#: ../src/jabber_whiteboard/session-manager.cpp:330
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3127,20 +3129,20 @@ msgstr ""
 "Назва вузла у сертифікаті SSL, що наданий сервером Jabber, не співпадає з "
 "назвою вузла сервера."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:323
+#: ../src/jabber_whiteboard/session-manager.cpp:333
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 "Сертифікат SSL, що наданий сервером Jabber, містить некоректні відбитки."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:326
+#: ../src/jabber_whiteboard/session-manager.cpp:336
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Невідома помилка при встановленні з'єднання SSL."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:332
+#: ../src/jabber_whiteboard/session-manager.cpp:342
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3150,24 +3152,24 @@ msgstr ""
 "\n"
 "Бажаєте продовжити з'єднання з сервером Jabber?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:335
+#: ../src/jabber_whiteboard/session-manager.cpp:345
 msgid "Continue connecting and ignore further errors"
 msgstr "Продовжити з'єднання та ігнорувати подальші помилки"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:336
+#: ../src/jabber_whiteboard/session-manager.cpp:346
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Продовжити з'єднання та сповіщати про подальші помилки"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:337
+#: ../src/jabber_whiteboard/session-manager.cpp:347
 msgid "Cancel connection"
 msgstr "Завершити з'єднання"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:784
+#: ../src/jabber_whiteboard/session-manager.cpp:794
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Встановлено сеанс сумісного малювання з <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:792
+#: ../src/jabber_whiteboard/session-manager.cpp:802
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> <b>припинив</b> сеанс сумісного малювання."
@@ -3175,7 +3177,7 @@ msgstr "<b>%s</b> <b>припинив</b> сеанс сумісного малю
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:797
+#: ../src/jabber_whiteboard/session-manager.cpp:807
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3186,7 +3188,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:799
+#: ../src/jabber_whiteboard/session-manager.cpp:809
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3194,7 +3196,7 @@ msgstr ""
 "Ви досі з'єднані з сервером Jabber як <b>%2</b>, та можете встановити новий "
 "сеанс малювання з <b>%1</b> або іншим користувачем."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:995
+#: ../src/jabber_whiteboard/session-manager.cpp:1005
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3208,15 +3210,15 @@ msgstr ""
 "Можете вибрати іншу адресу для запису сеансу, або не записувати сеанс "
 "взагалі."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:997
+#: ../src/jabber_whiteboard/session-manager.cpp:1007
 msgid "Choose a different location"
 msgstr "Виберіть інший каталог"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:998
+#: ../src/jabber_whiteboard/session-manager.cpp:1008
 msgid "Skip session recording"
 msgstr "Пропустити запис сеансу"
 
-#: ../src/knot.cpp:419
+#: ../src/knot.cpp:418
 msgid "Node or handle drag canceled."
 msgstr "Переміщення вузла скасовано."
 
@@ -4031,27 +4033,27 @@ msgstr "Виділіть <b>об'єкти(и)</b> для застосуванн�
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Виділіть <b>об'єкти</b> для переміщення на шар вище."
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1246
 msgid "No more layers above."
 msgstr "Більше немає вищих шарів."
 
-#: ../src/selection-chemistry.cpp:1254
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Виділіть <b>об'єкти</b> для переміщення на шар нижче."
 
-#: ../src/selection-chemistry.cpp:1272
+#: ../src/selection-chemistry.cpp:1284
 msgid "No more layers below."
 msgstr "Немає нижчого шару."
 
-#: ../src/selection-chemistry.cpp:1940
+#: ../src/selection-chemistry.cpp:1952
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Виділіть <b>клон</b> для від'єднання."
 
-#: ../src/selection-chemistry.cpp:1971
+#: ../src/selection-chemistry.cpp:1983
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "У виділеному <b>немає клонів</b>."
 
-#: ../src/selection-chemistry.cpp:1988
+#: ../src/selection-chemistry.cpp:2000
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4061,7 +4063,7 @@ msgstr ""
 "перейти до її контуру; <b>текст по контуру</b>, щоб перейти до його контуру. "
 "Виділіть <b>текст у рамці</b>, щоб перейти до рамки."
 
-#: ../src/selection-chemistry.cpp:2011
+#: ../src/selection-chemistry.cpp:2023
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4069,7 +4071,7 @@ msgstr ""
 "<b>Не вдається знайти</b> об'єкт, що виділяється (осиротілий клон, втяжка, "
 "текст по контуру чи текст у рамці?)"
 
-#: ../src/selection-chemistry.cpp:2017
+#: ../src/selection-chemistry.cpp:2029
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4077,35 +4079,35 @@ msgstr ""
 "Об'єкт, який ви намагаєтесь виділити, є <b>невидимим</b> (знаходиться у &lt;"
 "defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2044
+#: ../src/selection-chemistry.cpp:2056
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Виділіть <b>об'єкт(и)</b> для перетворення у візерунок."
 
-#: ../src/selection-chemistry.cpp:2135
+#: ../src/selection-chemistry.cpp:2147
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Виділіть <b>об'єкт із заповненням візерунком</b> для витягування об'єктів з "
 "нього."
 
-#: ../src/selection-chemistry.cpp:2188
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "У виділеному <b>немає заповнення візерунком</b>."
 
-#: ../src/selection-chemistry.cpp:2208
+#: ../src/selection-chemistry.cpp:2220
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Виділіть <b>об'єкти</b> для створення їх растрової копії."
 
-#: ../src/selection-chemistry.cpp:2371
+#: ../src/selection-chemistry.cpp:2383
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Виділіть <b>об'єкти(и)</b> для застосування стилю."
 
-#: ../src/selection-chemistry.cpp:2374
+#: ../src/selection-chemistry.cpp:2386
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Виділіть <b>об'єкти(и)</b> для застосування стилю."
 
-#: ../src/selection-chemistry.cpp:2477
+#: ../src/selection-chemistry.cpp:2489
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Виділіть <b>текст</b> для видалення ручного кернінгу."
@@ -4348,7 +4350,7 @@ msgstr ""
 "<b>Обертати</b> виділене; з <b>Ctrl</b> - обмежувати кут; з <b>Shift</b> - "
 "навколо протилежного кута"
 
-#: ../src/seltrans.cpp:846 ../src/seltrans.cpp:958
+#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4356,24 +4358,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1029
+#: ../src/seltrans.cpp:1060
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Нахил</b>: %0.2f&#176;; з <b>Ctrl</b> - обмежити кут"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1109
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Обертання</b>: %0.2f&#176;; з <b>Ctrl</b> - обмежити кут"
 
-#: ../src/seltrans.cpp:1122
+#: ../src/seltrans.cpp:1153
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Перемістити <b>центр</b> до %s, %s"
 
-#: ../src/seltrans.cpp:1380
+#: ../src/seltrans.cpp:1411
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4597,11 +4599,11 @@ msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Спіраль</b>: радіус %s, кут %5g&#176;; з <b>Ctrl</b> - обмежує кут"
 
-#: ../src/splivarot.cpp:100
+#: ../src/splivarot.cpp:101
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Для логічної операції треба виділити <b>не менше двох</b> контурів."
 
-#: ../src/splivarot.cpp:106
+#: ../src/splivarot.cpp:107
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4609,7 +4611,7 @@ msgstr ""
 "Для операції виключного АБО, ділення та розрізання контуру виберіть <b>точно "
 "2 контури</b>."
 
-#: ../src/splivarot.cpp:123 ../src/splivarot.cpp:138
+#: ../src/splivarot.cpp:124 ../src/splivarot.cpp:139
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4618,39 +4620,39 @@ msgstr ""
 "об'єктів, виділених для операції різниці, виключного АБО, ділення розрізання "
 "контуру."
 
-#: ../src/splivarot.cpp:168
+#: ../src/splivarot.cpp:169
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Один з об'єктів <b>не є контуром</b>, логічна операція неможлива."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:548
+#: ../src/splivarot.cpp:549
 msgid "Select <b>path(s)</b> to outline."
 msgstr "Виділіть <b>контур(и)</b> для створення контуру штриха."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:742
+#: ../src/splivarot.cpp:743
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr "У виділеному <b>немає контурів зі штрихом</b> для створення контуру."
 
-#: ../src/splivarot.cpp:826
+#: ../src/splivarot.cpp:827
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 "Виділений об'єкт <b>не є контуром</b>, втягування/розтягування неможливі."
 
-#: ../src/splivarot.cpp:1034
+#: ../src/splivarot.cpp:1035
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Виділіть <b>контур(и)</b> для втягування/розтягування."
 
-#: ../src/splivarot.cpp:1251
+#: ../src/splivarot.cpp:1252
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "У виділеному <b>немає контурів</b> для втягування/розтягування."
 
-#: ../src/splivarot.cpp:1384
+#: ../src/splivarot.cpp:1385
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Виділіть <b>контур(и)</b> для спрощення."
 
-#: ../src/splivarot.cpp:1411
+#: ../src/splivarot.cpp:1412
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "У виділеному <b>немає контурів</b> для спрощення."
 
@@ -5174,7 +5176,7 @@ msgid "Smallest item"
 msgstr "Найменший об'єкт"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#: ../src/ui/dialog/document-properties.cpp:99
+#: ../src/ui/dialog/document-properties.cpp:98
 #: ../src/widgets/desktop-widget.cpp:1092
 msgid "Page"
 msgstr "Сторінка"
@@ -5201,359 +5203,359 @@ msgstr ""
 msgid "<b>License</b>"
 msgstr "<b>Рядок</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/document-properties.cpp:99
 #, fuzzy
 msgid "Grid/Guides"
 msgstr "Напрямні"
 
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:100
 #, fuzzy
 msgid "Snap"
 msgstr "Фігури"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 #, fuzzy
 msgid "Back_ground:"
 msgstr "Колір тла:"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Background color"
 msgstr "Колір тла"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Колір та прозорість тла сторінки (враховується при експортуванні у растр)"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 #, fuzzy
 msgid "Show page _border"
 msgstr "Показувати рамку полотна"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 #, fuzzy
 msgid "Border on _top of drawing"
 msgstr "Рамка полотна завжди над малюнком"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 #, fuzzy
 msgid "If set, border is always on top of the drawing"
 msgstr "Рамка полотна завжди над малюнком"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Border _color:"
 msgstr "Колір рамки:"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Page border color"
 msgstr "Колір рамки полотна"
 
-#: ../src/ui/dialog/document-properties.cpp:194
+#: ../src/ui/dialog/document-properties.cpp:193
 #, fuzzy
 msgid "Color of the page border"
 msgstr "Колір рамки полотна"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 #, fuzzy
 msgid "_Show border shadow"
 msgstr "Показувати тінь від сторінки"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:197
+#: ../src/ui/dialog/document-properties.cpp:196
 #, fuzzy
 msgid "Default _units:"
 msgstr "Типові одиниці:"
 
-#: ../src/ui/dialog/document-properties.cpp:200
+#: ../src/ui/dialog/document-properties.cpp:199
 #, fuzzy
 msgid "<b>General</b>"
 msgstr "<b>Рядок</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:202
+#: ../src/ui/dialog/document-properties.cpp:201
 #, fuzzy
 msgid "<b>Border</b>"
 msgstr "<b>Дуга</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:204
+#: ../src/ui/dialog/document-properties.cpp:203
 #, fuzzy
 msgid "<b>Format</b>"
 msgstr "<b>Дуга</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 #, fuzzy
 msgid "_Show grid"
 msgstr "Показувати сітку"
 
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
 msgstr "Показати або сховати сітку"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:234
 #, fuzzy
 msgid "Grid _units:"
 msgstr "Одиниці сітки:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 #, fuzzy
 msgid "_Origin X:"
 msgstr "Початок по X:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 #, fuzzy
 msgid "X coordinate of grid origin"
 msgstr "Вертикальна координата виділення"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 #, fuzzy
 msgid "O_rigin Y:"
 msgstr "Початок по Y:"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 #, fuzzy
 msgid "Y coordinate of grid origin"
 msgstr "Вертикальна координата виділення"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
 msgid "Spacing _X:"
 msgstr "Інтервал по X:"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
 msgid "Distance of vertical grid lines"
 msgstr "вертикальна напрямна"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "Spacing _Y:"
 msgstr "Інтервал по Y:"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "Distance of horizontal grid lines"
 msgstr "горизонтальна напрямна"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 #, fuzzy
 msgid "Grid line _color:"
 msgstr "Колір ліній сітки:"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line color"
 msgstr "Колір ліній сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:244
 msgid "Color of grid lines"
 msgstr "Колір ліній сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 #, fuzzy
 msgid "Ma_jor grid line color:"
 msgstr "Колір основної лінії:"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Major grid line color"
 msgstr "Колір основної лінії сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:247
+#: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr "Колір основних (підсвічених) ліній сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 #, fuzzy
 msgid "_Major grid line every:"
 msgstr "Основна лінія через кожні:"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "lines"
 msgstr "ліній"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 #, fuzzy
 msgid "Show _guides"
 msgstr "Показувати напрямні"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show or hide guides"
 msgstr "Показати/сховати напрямні"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 #, fuzzy
 msgid "Guide co_lor:"
 msgstr "Колір напрямних:"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guideline color"
 msgstr "Колір напрямних"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:251
 msgid "Color of guidelines"
 msgstr "Колір напрямних"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 #, fuzzy
 msgid "_Highlight color:"
 msgstr "Колір підсвічення:"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
 msgstr "Колір підсвіченої напрямної"
 
-#: ../src/ui/dialog/document-properties.cpp:254
+#: ../src/ui/dialog/document-properties.cpp:253
 msgid "Color of a guideline when it is under mouse"
 msgstr "Колір напрямної при наведенні на неї миші"
 
-#: ../src/ui/dialog/document-properties.cpp:257
+#: ../src/ui/dialog/document-properties.cpp:256
 #, fuzzy
 msgid "<b>Grid</b>"
 msgstr "<b>Дуга</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:259
+#: ../src/ui/dialog/document-properties.cpp:258
 #, fuzzy
 msgid "<b>Guides</b>"
 msgstr "<b>Рядок</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:288
 #, fuzzy
 msgid "_Snap bounding boxes to objects"
 msgstr "Рамки об'єктів прилипають до напрямних"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:289
 #, fuzzy
 msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr "Прив'язувати межі прямокутника, що обмежує об'єкт"
 
-#: ../src/ui/dialog/document-properties.cpp:292
+#: ../src/ui/dialog/document-properties.cpp:291
 #, fuzzy
 msgid "Snap nodes _to objects"
 msgstr "Точки контурів прилипають до сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:292
 #, fuzzy
 msgid "Snap the nodes of objects to other objects"
 msgstr "Прив'язувати межі прямокутника, що обмежує об'єкт"
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:294
 #, fuzzy
 msgid "Snap to object _paths"
 msgstr "Перетворити растровий об'єкт у контури"
 
-#: ../src/ui/dialog/document-properties.cpp:296
+#: ../src/ui/dialog/document-properties.cpp:295
 #, fuzzy
 msgid "Snap to other object paths"
 msgstr "Перетворити виділені об'єкти на контури"
 
-#: ../src/ui/dialog/document-properties.cpp:298
+#: ../src/ui/dialog/document-properties.cpp:297
 #, fuzzy
 msgid "Snap to object _nodes"
 msgstr "Використовуйте мишу для перетягування вузлів"
 
-#: ../src/ui/dialog/document-properties.cpp:299
+#: ../src/ui/dialog/document-properties.cpp:298
 #, fuzzy
 msgid "Snap to other object nodes"
 msgstr "Прив'язувати межі прямокутника, що обмежує об'єкт"
 
-#: ../src/ui/dialog/document-properties.cpp:301
+#: ../src/ui/dialog/document-properties.cpp:300
 #, fuzzy
 msgid "Snap s_ensitivity:"
 msgstr "Радіус захоплення:"
 
-#: ../src/ui/dialog/document-properties.cpp:301
-#: ../src/ui/dialog/document-properties.cpp:311
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:300
+#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Always snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:302
+#: ../src/ui/dialog/document-properties.cpp:301
 msgid "Controls max. snapping distance from object"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:303
+#: ../src/ui/dialog/document-properties.cpp:302
 msgid ""
 "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:304
 #, fuzzy
 msgid "Snap _bounding boxes to grid"
 msgstr "Рамки об'єктів прилипають до сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:306
-#: ../src/ui/dialog/document-properties.cpp:316
+#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap the edges of the object bounding boxes"
 msgstr "Прив'язувати межі прямокутника, що обмежує об'єкт"
 
-#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:307
 #, fuzzy
 msgid "Snap nodes to _grid"
 msgstr "Точки контурів прилипають до сітки"
 
-#: ../src/ui/dialog/document-properties.cpp:309
-#: ../src/ui/dialog/document-properties.cpp:319
+#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
 msgstr "Прив'язувати вузли контуру, базові лінії тексту, центри еліпсів, тощо."
 
-#: ../src/ui/dialog/document-properties.cpp:311
+#: ../src/ui/dialog/document-properties.cpp:310
 #, fuzzy
 msgid "Snap sens_itivity:"
 msgstr "Радіус захоплення:"
 
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:311
 msgid "Controls max. snapping distance from grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:313
+#: ../src/ui/dialog/document-properties.cpp:312
 msgid ""
 "If set, objects snap to the nearest grid line when moved, regardless of "
 "distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:314
 #, fuzzy
 msgid "Snap bounding boxes to g_uides"
 msgstr "Рамки об'єктів прилипають до напрямних"
 
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:317
 #, fuzzy
 msgid "Snap p_oints to guides"
 msgstr "Точки контуру прилипають до напрямних"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:320
 #, fuzzy
 msgid "Snap sensiti_vity:"
 msgstr "Радіус захоплення:"
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "Controls max. snapping distance from guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:323
+#: ../src/ui/dialog/document-properties.cpp:322
 msgid ""
 "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:330
+#: ../src/ui/dialog/document-properties.cpp:329
 #, fuzzy
 msgid "<b>Object Snapping</b>"
 msgstr "<b>Прямокутник</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:332
+#: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:334
+#: ../src/ui/dialog/document-properties.cpp:333
 msgid "<b>Guide Snapping</b>"
 msgstr ""
 
@@ -6825,55 +6827,55 @@ msgid "P_ort:"
 msgstr "П_орт:"
 
 #. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:105
+#: ../src/ui/dialog/whiteboard-connect.cpp:108
 msgid "Connect"
 msgstr "З'єднатись"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:132
+#: ../src/ui/dialog/whiteboard-connect.cpp:135
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr ""
 "Встановлюється з'єднання з сервером Jabber <b>%1</b> з іменем <b>%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:137
+#: ../src/ui/dialog/whiteboard-connect.cpp:140
 msgid "Failed to establish connection to Jabber server <b>%1</b>"
 msgstr "Не вдається встановити з'єднання з сервером Jabber <b>%1</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:142
+#: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr ""
 "Помилка автентифікації на сервері Jabber <b>%1</b> під іменем <b>%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:147
+#: ../src/ui/dialog/whiteboard-connect.cpp:150
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
 msgstr "Помилка ініціалізації SSL при з'єднанні з сервером Jabber <b>%1</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:153
+#: ../src/ui/dialog/whiteboard-connect.cpp:156
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "Встановлено з'єднання з сервером Jabber <b>%1</b> як <b>%2</b>"
 
 #. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:73
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
 msgid "Chatroom _name:"
 msgstr "Назва _кімнати:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:74
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
 msgid "Chatroom _server:"
 msgstr "_Сервер кімнати:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
 msgid "Chatroom _password:"
 msgstr "_Пароль кімнати:"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
 msgid "Chatroom _handle:"
 msgstr "_Дескриптор кімнати:"
 
 #. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:95
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
 msgid "Connect to chatroom"
 msgstr "Зайти у кімнату"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:130
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
 msgstr ""
 "Синхронізація з кімнатою <b>%1@%2</b> з використанням дескриптора <b>%3</b>"
@@ -10490,6 +10492,18 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#~ msgid "Export area"
+#~ msgstr "Область експорту"
+
+#~ msgid "Bitmap size"
+#~ msgstr "Розмір зображення"
+
+#~ msgid "_Filename"
+#~ msgstr "Назва _файлу"
+
+#~ msgid " <b>_Export</b> "
+#~ msgstr "<b>_Експорт</b> "
 
 #~ msgid " relative by "
 #~ msgstr " відносно до "

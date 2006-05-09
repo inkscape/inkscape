@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.43\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-07 22:41+0200\n"
+"POT-Creation-Date: 2006-05-09 21:07+0200\n"
 "PO-Revision-Date: 2006-03-24 16:34+0800\n"
 "Last-Translator: Wei-Lun Chao <william.chao@ossii.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -51,15 +51,15 @@ msgstr "建立新連接器"
 msgid "Finishing connector"
 msgstr "完成連接器"
 
-#: ../src/connector-context.cpp:1106
+#: ../src/connector-context.cpp:1081
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>連接點</b>: 點擊或拖曳它以建立新的連接器"
 
-#: ../src/connector-context.cpp:1183
+#: ../src/connector-context.cpp:1152
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr "<b>連接器終點</b>: 拖曳它以連接或重定路線至新的形狀"
 
-#: ../src/connector-context.cpp:1276
+#: ../src/connector-context.cpp:1257
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "選擇<b>至少一個非連接器物件</b>。"
 
@@ -109,7 +109,7 @@ msgstr "選擇<b>一個物件</b>以拆解其並排的複本。"
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "選擇<b>一個物件</b>以移除其並排的複本。"
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1890
+#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1902
 msgid "Select an <b>object</b> to clone."
 msgstr "選擇某個<b>物件</b>以產生複本。"
 
@@ -731,121 +731,123 @@ msgid "none"
 msgstr "無"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2253
 msgid "_Page"
 msgstr "檢視整頁(_P)"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2257
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2257
 msgid "_Drawing"
 msgstr "檢視繪圖部份(_D)"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2259
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2259
 msgid "_Selection"
 msgstr "檢視選取區(_S)"
 
-#: ../src/dialogs/export.cpp:124
+#: ../src/dialogs/export.cpp:133
 msgid "_Custom"
 msgstr "自訂(_C)"
 
-#: ../src/dialogs/export.cpp:248
-msgid "Export area"
-msgstr "匯出區"
+#: ../src/dialogs/export.cpp:257
+msgid "<big><b>Export area</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:263
+#: ../src/dialogs/export.cpp:271
 msgid "Units:"
 msgstr "單位:"
 
-#: ../src/dialogs/export.cpp:294
+#: ../src/dialogs/export.cpp:299
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:304
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:304 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:1995
 msgid "Width:"
 msgstr "寬度:"
 
-#: ../src/dialogs/export.cpp:310
+#: ../src/dialogs/export.cpp:315
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:320
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:320 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "高度:"
 
-#: ../src/dialogs/export.cpp:403
-msgid "Bitmap size"
-msgstr "點陣圖大小"
+#: ../src/dialogs/export.cpp:414
+msgid "<big><b>Bitmap size</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:413 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "寬度(_W):"
 
-#: ../src/dialogs/export.cpp:413 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
 msgid "pixels at"
 msgstr "像素"
 
-#: ../src/dialogs/export.cpp:423
+#: ../src/dialogs/export.cpp:437
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "dpi"
 msgstr "dpi"
 
-#: ../src/dialogs/export.cpp:448
-msgid "_Filename"
-msgstr "檔名(_F)"
+#. true = has mnemonic
+#: ../src/dialogs/export.cpp:467
+msgid "<big><b>_Filename</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:512
+#: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: ../src/dialogs/export.cpp:539
-msgid " <b>_Export</b> "
-msgstr "<b>輸出(_E)</b>"
+#: ../src/dialogs/export.cpp:577
+#, fuzzy
+msgid "_Export"
+msgstr "匯出"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
 msgstr "以這樣的設定匯出點陣圖檔"
 
-#: ../src/dialogs/export.cpp:968
+#: ../src/dialogs/export.cpp:1008
 msgid "You have to enter a filename"
 msgstr "您必須輸入檔名"
 
-#: ../src/dialogs/export.cpp:973
+#: ../src/dialogs/export.cpp:1013
 msgid "The chosen area to be exported is invalid"
 msgstr "選取做為匯出的區域無效"
 
-#: ../src/dialogs/export.cpp:982
+#: ../src/dialogs/export.cpp:1022
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目錄 %s 不存在或者它並不是一個目錄。\n"
 
-#: ../src/dialogs/export.cpp:998
+#: ../src/dialogs/export.cpp:1038
 msgid "Export in progress"
 msgstr "進行匯出中"
 
-#: ../src/dialogs/export.cpp:1004
+#: ../src/dialogs/export.cpp:1044
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "正在匯出 %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1031
+#: ../src/dialogs/export.cpp:1071
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "無法匯出至檔案名稱 %s。\n"
 
-#: ../src/dialogs/export.cpp:1137
+#: ../src/dialogs/export.cpp:1177
 msgid "Select a filename for exporting"
 msgstr "選擇一個檔名以匯出"
 
@@ -1797,8 +1799,8 @@ msgid "New element node..."
 msgstr "新元件節點..."
 
 #: ../src/dialogs/xml-tree.cpp:1335
-#: ../src/ui/dialog/whiteboard-connect.cpp:106
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:96
+#: ../src/ui/dialog/whiteboard-connect.cpp:109
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
 msgstr "取消"
 
@@ -2010,30 +2012,30 @@ msgid ""
 "will not be loaded."
 msgstr "模組目錄 (%s) 無法使用。將不會載入該目錄中的外部模組。"
 
-#: ../src/extension/internal/bluredge.cpp:135
+#: ../src/extension/internal/bluredge.cpp:131
 #, fuzzy
 msgid "Blur Edge"
 msgstr "藍"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
 msgid "Blur Width"
 msgstr "寬度"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 #, fuzzy
 msgid "Number of Steps"
 msgstr "列的數目:"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
 msgstr ""
 
-#: ../src/extension/internal/bluredge.cpp:142
+#: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 #, fuzzy
 msgid "Generate from Path"
@@ -2831,16 +2833,16 @@ msgid "Receiving change; %u change left to process."
 msgid_plural "Receiving change; %u changes left to process."
 msgstr[0] "正在接收變更；%u 項變更有待處理。"
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:157
+#: ../src/jabber_whiteboard/chat-handler.cpp:158
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
 msgstr "<b>%s</b> 已離開聊天室。"
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:221
+#: ../src/jabber_whiteboard/chat-handler.cpp:222
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
 msgstr "暱稱 %1 已被使用。請選擇一個不同的暱稱。"
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:225
+#: ../src/jabber_whiteboard/chat-handler.cpp:226
 msgid "An error was encountered while attempting to connect to the server."
 msgstr "嘗試連線到伺服器時遇到一個錯誤。"
 
@@ -2858,12 +2860,12 @@ msgstr "嘗試連線到伺服器時遇到一個錯誤。"
 #.
 #. This is a fix for bug #1352522.  Probably not the friendliest, but it's about
 #. the best we can do without changing the protocol.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:149
+#: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
 msgstr ""
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:153
+#: ../src/jabber_whiteboard/connection-establishment.cpp:162
 msgid ""
 "The Jabber user <b>%1</b> attempted to invite you to a whiteboard session "
 "while you were waiting on an invitation response.\n"
@@ -2874,19 +2876,19 @@ msgstr ""
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:168
+#: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
 msgstr "<b>%1</b> 已邀請您參加白板會議。"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:169
+#: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
 msgstr "正收到從 %1 而來的白板會議邀請"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:172
+#: ../src/jabber_whiteboard/connection-establishment.cpp:181
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr "您希望接受 <b>%1</b> 的白板會議邀請嗎？"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:174
+#: ../src/jabber_whiteboard/connection-establishment.cpp:183
 msgid ""
 "Would you like to accept %1's invitation in a new document window?\n"
 "Accepting the invitation in your current window will discard unsaved changes."
@@ -2894,31 +2896,31 @@ msgstr ""
 "您要接受 %1 的邀請進入新的文件視窗嗎？\n"
 "在您目前的視窗中接受邀請，將會丟棄未儲存的變更。"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:180
-#: ../src/jabber_whiteboard/connection-establishment.cpp:235
+#: ../src/jabber_whiteboard/connection-establishment.cpp:189
+#: ../src/jabber_whiteboard/connection-establishment.cpp:244
 msgid "Accept invitation"
 msgstr "接受邀請"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:181
-#: ../src/jabber_whiteboard/connection-establishment.cpp:236
+#: ../src/jabber_whiteboard/connection-establishment.cpp:190
+#: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
 msgstr "謝絕邀請"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:182
+#: ../src/jabber_whiteboard/connection-establishment.cpp:191
 msgid "Accept invitation in new document window"
 msgstr "在新的文件視窗中接受邀請"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
 #. TRANSLATORS: %1 is a userid here
-#: ../src/jabber_whiteboard/connection-establishment.cpp:233
+#: ../src/jabber_whiteboard/connection-establishment.cpp:242
 msgid ""
 "A new document window could not be opened for a whiteboard session with <b>%"
 "1</b>"
 msgstr "無法開啟一個新的文件視窗，用於與 <b>%1</b> 的白板會議"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:275
+#: ../src/jabber_whiteboard/connection-establishment.cpp:284
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
 "whiteboard invitation.</span>\n"
@@ -2929,7 +2931,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:278
+#: ../src/jabber_whiteboard/connection-establishment.cpp:287
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may send an "
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
@@ -2939,7 +2941,7 @@ msgstr ""
 "b>，或是您也可以寄送邀請給不同的使用者。"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:289
+#: ../src/jabber_whiteboard/connection-establishment.cpp:298
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is already in a "
 "whiteboard session.</span>\n"
@@ -2950,7 +2952,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:292
+#: ../src/jabber_whiteboard/connection-establishment.cpp:301
 msgid ""
 "You are still connected to a Jabber server as <b>%1</b>, and may send an "
 "invitation to a different user."
@@ -3001,51 +3003,51 @@ msgstr ""
 "何子物件亦同！"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1002
+#: ../src/jabber_whiteboard/session-manager.cpp:1012
 msgid "Select a location and filename"
 msgstr "選擇位置與檔名"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1004
+#: ../src/jabber_whiteboard/session-manager.cpp:1014
 msgid "Set filename"
 msgstr "設定檔名"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:308
+#: ../src/jabber_whiteboard/session-manager.cpp:318
 msgid "No SSL certificate was found."
 msgstr "找不到 SSL 認證。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:311
+#: ../src/jabber_whiteboard/session-manager.cpp:321
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "由 Jabber 伺服器提供的 SSL 認證未被信任。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:314
+#: ../src/jabber_whiteboard/session-manager.cpp:324
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "由 Jabber 伺服器提供的 SSL 認證已過期。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:317
+#: ../src/jabber_whiteboard/session-manager.cpp:327
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "由 Jabber 伺服器提供的 SSL 認證並未啟用。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:320
+#: ../src/jabber_whiteboard/session-manager.cpp:330
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
 msgstr "由 Jabber 伺服器提供的 SSL 認證包含了不符合 Jabber 伺服器的主機名稱。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:323
+#: ../src/jabber_whiteboard/session-manager.cpp:333
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr "由 Jabber 伺服器提供的 SSL 認證包含了無效的指紋特徵。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:326
+#: ../src/jabber_whiteboard/session-manager.cpp:336
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "設定 SSL 連線時發生了一個不明的錯誤。"
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:332
+#: ../src/jabber_whiteboard/session-manager.cpp:342
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3055,24 +3057,24 @@ msgstr ""
 "\n"
 "您希望繼連線到 Jabber 伺服器嗎？"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:335
+#: ../src/jabber_whiteboard/session-manager.cpp:345
 msgid "Continue connecting and ignore further errors"
 msgstr "正在繼續連線並且忽略之後的錯誤"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:336
+#: ../src/jabber_whiteboard/session-manager.cpp:346
 msgid "Continue connecting, but warn me of further errors"
 msgstr "正在繼續連線，但是之後的錯誤仍要給我警示"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:337
+#: ../src/jabber_whiteboard/session-manager.cpp:347
 msgid "Cancel connection"
 msgstr "取消連接"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:784
+#: ../src/jabber_whiteboard/session-manager.cpp:794
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "與 <b>%s</b> 的白板會議已經建立。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:792
+#: ../src/jabber_whiteboard/session-manager.cpp:802
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> 已經<b>離開</b>了白板會議。"
@@ -3080,7 +3082,7 @@ msgstr "<b>%s</b> 已經<b>離開</b>了白板會議。"
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:797
+#: ../src/jabber_whiteboard/session-manager.cpp:807
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3091,7 +3093,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:799
+#: ../src/jabber_whiteboard/session-manager.cpp:809
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3099,7 +3101,7 @@ msgstr ""
 "您仍然以 <b>%2</b> 的身分與某個 Jabber 伺服器連線，並且可以建立一個與 <b>%1</"
 "b> 或不同使用者的新會議。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:995
+#: ../src/jabber_whiteboard/session-manager.cpp:1005
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3112,15 +3114,15 @@ msgstr ""
 "\n"
 "您可以選擇不同的位置來記錄此會議，或是您可以選擇不要記錄這次會議。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:997
+#: ../src/jabber_whiteboard/session-manager.cpp:1007
 msgid "Choose a different location"
 msgstr "選擇一個不同的位置"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:998
+#: ../src/jabber_whiteboard/session-manager.cpp:1008
 msgid "Skip session recording"
 msgstr "略過會議記錄"
 
-#: ../src/knot.cpp:419
+#: ../src/knot.cpp:418
 msgid "Node or handle drag canceled."
 msgstr "已拖曳取消節點或控柄。"
 
@@ -3878,27 +3880,27 @@ msgstr "選擇<b>物件</b>以貼上樣式。"
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "選擇<b>物件</b>以移動至上層圖層。"
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1246
 msgid "No more layers above."
 msgstr "無上層圖層。"
 
-#: ../src/selection-chemistry.cpp:1254
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "選擇<b>物件</b>以移動至下層圖層。"
 
-#: ../src/selection-chemistry.cpp:1272
+#: ../src/selection-chemistry.cpp:1284
 msgid "No more layers below."
 msgstr "無下層圖層。"
 
-#: ../src/selection-chemistry.cpp:1940
+#: ../src/selection-chemistry.cpp:1952
 msgid "Select a <b>clone</b> to unlink."
 msgstr "選擇<b>複本</b>以解除連結。"
 
-#: ../src/selection-chemistry.cpp:1971
+#: ../src/selection-chemistry.cpp:1983
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "選取區中<b>無複本以解除連結</b>。"
 
-#: ../src/selection-chemistry.cpp:1988
+#: ../src/selection-chemistry.cpp:2000
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -3908,46 +3910,46 @@ msgstr ""
 "擇一段<b>路徑上的文字</b>以前往該路徑。選擇一段<b>流動的文字</b>以前往它的訊"
 "框。"
 
-#: ../src/selection-chemistry.cpp:2011
+#: ../src/selection-chemistry.cpp:2023
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 "<b>無法找到</b>該物件以選擇 (無人照管的複本﹑偏移﹑文字路徑﹑流動文字？)"
 
-#: ../src/selection-chemistry.cpp:2017
+#: ../src/selection-chemistry.cpp:2029
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "您正嘗試選擇的物件是<b>不可見的</b> (它位於 &lt;defs&gt; 之中)"
 
-#: ../src/selection-chemistry.cpp:2044
+#: ../src/selection-chemistry.cpp:2056
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "選擇<b>物件</b>以轉換成圖樣。"
 
-#: ../src/selection-chemistry.cpp:2135
+#: ../src/selection-chemistry.cpp:2147
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "選擇一個<b>有圖樣填充的物件</b>以從中抽離物件。"
 
-#: ../src/selection-chemistry.cpp:2188
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "選取區中<b>無圖樣填充</b>。"
 
-#: ../src/selection-chemistry.cpp:2208
+#: ../src/selection-chemistry.cpp:2220
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "選擇<b>物件</b>以製作像素圖複本。"
 
-#: ../src/selection-chemistry.cpp:2371
+#: ../src/selection-chemistry.cpp:2383
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "選擇<b>物件</b>以貼上樣式。"
 
-#: ../src/selection-chemistry.cpp:2374
+#: ../src/selection-chemistry.cpp:2386
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "選擇<b>物件</b>以貼上樣式。"
 
-#: ../src/selection-chemistry.cpp:2477
+#: ../src/selection-chemistry.cpp:2489
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "選取<b>文字</b>以從其中移除突出部份。"
@@ -4173,31 +4175,31 @@ msgid ""
 msgstr ""
 "<b>旋轉</b>選擇區；以 <b>Ctrl</b> 來抓取角度；以 <b>Shift</b> 繞著相對面旋轉"
 
-#: ../src/seltrans.cpp:846 ../src/seltrans.cpp:958
+#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>伸縮</b>: %0.2f%% x %0.2f%%；以 <b>Ctrl</b> 來鎖定長寬比"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1029
+#: ../src/seltrans.cpp:1060
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>偏斜</b>: %0.2f&#176;；以 <b>Ctrl</b> 來抓取角度"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1109
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋轉</b>: %0.2f&#176;；以 <b>Ctrl</b> 來抓取角度"
 
-#: ../src/seltrans.cpp:1122
+#: ../src/seltrans.cpp:1153
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "移動<b>中心點</b>到 %s, %s"
 
-#: ../src/seltrans.cpp:1380
+#: ../src/seltrans.cpp:1411
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4407,55 +4409,55 @@ msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋轉</b>: 半徑 %s，角度 %5g&#176;；以 <b>Ctrl</b> 來抓取角度"
 
-#: ../src/splivarot.cpp:100
+#: ../src/splivarot.cpp:101
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "選擇<b>至少兩條路徑</b>以進行布林運算。"
 
-#: ../src/splivarot.cpp:106
+#: ../src/splivarot.cpp:107
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
 msgstr "選擇<b>剛好兩條路徑</b>來進行差異比較﹑XOR﹑分割或是路徑切割。"
 
-#: ../src/splivarot.cpp:123 ../src/splivarot.cpp:138
+#: ../src/splivarot.cpp:124 ../src/splivarot.cpp:139
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
 msgstr ""
 "無法決定所選物件的<b>z-order</b>來進行差異比較﹑XOR﹑分割或是路徑切割。"
 
-#: ../src/splivarot.cpp:168
+#: ../src/splivarot.cpp:169
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "其中一個物件<b>不是路徑</b>，無法進行布林運算。"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:548
+#: ../src/splivarot.cpp:549
 msgid "Select <b>path(s)</b> to outline."
 msgstr "選擇<b>路徑</b>以轉成輪廓。"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:742
+#: ../src/splivarot.cpp:743
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr "選取區中<b>沒有虛線路徑</b>可以轉成輪廓。"
 
-#: ../src/splivarot.cpp:826
+#: ../src/splivarot.cpp:827
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "所選取的物件<b>不是路徑</b>，無法內插/外貼。"
 
-#: ../src/splivarot.cpp:1034
+#: ../src/splivarot.cpp:1035
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "選擇<b>路徑</b>以進行內插/外貼。"
 
-#: ../src/splivarot.cpp:1251
+#: ../src/splivarot.cpp:1252
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以進行內插/外貼。"
 
-#: ../src/splivarot.cpp:1384
+#: ../src/splivarot.cpp:1385
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "選擇<b>路徑</b>以化簡。"
 
-#: ../src/splivarot.cpp:1411
+#: ../src/splivarot.cpp:1412
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "選取區中<b>沒有路徑</b>可以化簡。"
 
@@ -4959,7 +4961,7 @@ msgid "Smallest item"
 msgstr "以最小者為準"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#: ../src/ui/dialog/document-properties.cpp:99
+#: ../src/ui/dialog/document-properties.cpp:98
 #: ../src/widgets/desktop-widget.cpp:1092
 msgid "Page"
 msgstr "頁"
@@ -4986,358 +4988,358 @@ msgstr ""
 msgid "<b>License</b>"
 msgstr "<b>線條</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/document-properties.cpp:99
 #, fuzzy
 msgid "Grid/Guides"
 msgstr "導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:100
 #, fuzzy
 msgid "Snap"
 msgstr "形狀"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 #, fuzzy
 msgid "Back_ground:"
 msgstr "背景:"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Background color"
 msgstr "背景顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr "頁面背景的顏色與透明度(同時用於點陣圖匯出)"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 #, fuzzy
 msgid "Show page _border"
 msgstr "顯示畫布邊框"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 #, fuzzy
 msgid "Border on _top of drawing"
 msgstr "繪圖上方的邊框"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 #, fuzzy
 msgid "If set, border is always on top of the drawing"
 msgstr "繪圖上方的邊框"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Border _color:"
 msgstr "邊框顏色:"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Page border color"
 msgstr "畫布邊框顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:194
+#: ../src/ui/dialog/document-properties.cpp:193
 #, fuzzy
 msgid "Color of the page border"
 msgstr "畫布邊框的顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 #, fuzzy
 msgid "_Show border shadow"
 msgstr "顯示頁面陰影"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:197
+#: ../src/ui/dialog/document-properties.cpp:196
 #, fuzzy
 msgid "Default _units:"
 msgstr "預設單位:"
 
-#: ../src/ui/dialog/document-properties.cpp:200
+#: ../src/ui/dialog/document-properties.cpp:199
 #, fuzzy
 msgid "<b>General</b>"
 msgstr "<b>線條</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:202
+#: ../src/ui/dialog/document-properties.cpp:201
 #, fuzzy
 msgid "<b>Border</b>"
 msgstr "<b>弧</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:204
+#: ../src/ui/dialog/document-properties.cpp:203
 #, fuzzy
 msgid "<b>Format</b>"
 msgstr "<b>弧</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 #, fuzzy
 msgid "_Show grid"
 msgstr "顯示格線"
 
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
 msgstr "顯示或隱藏格線"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:234
 #, fuzzy
 msgid "Grid _units:"
 msgstr "格線單位:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 #, fuzzy
 msgid "_Origin X:"
 msgstr "X 原點:"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 #, fuzzy
 msgid "X coordinate of grid origin"
 msgstr "選取區的垂直座標"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 #, fuzzy
 msgid "O_rigin Y:"
 msgstr "Y 原點:"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 #, fuzzy
 msgid "Y coordinate of grid origin"
 msgstr "選取區的垂直座標"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
 msgid "Spacing _X:"
 msgstr "X 間距:"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
 msgid "Distance of vertical grid lines"
 msgstr "垂直導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "Spacing _Y:"
 msgstr "Y 間距:"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "Distance of horizontal grid lines"
 msgstr "水平導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 #, fuzzy
 msgid "Grid line _color:"
 msgstr "格線顏色:"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line color"
 msgstr "格線顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:244
 msgid "Color of grid lines"
 msgstr "格線的顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 #, fuzzy
 msgid "Ma_jor grid line color:"
 msgstr "主要格線顏色:"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Major grid line color"
 msgstr "主要格線顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:247
+#: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr "主要格線(高亮度顯示)的顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 #, fuzzy
 msgid "_Major grid line every:"
 msgstr "每條主要格線:"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "lines"
 msgstr "線條"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 #, fuzzy
 msgid "Show _guides"
 msgstr "顯示導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show or hide guides"
 msgstr "顯示或隱藏導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 #, fuzzy
 msgid "Guide co_lor:"
 msgstr "導引線顏色:"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guideline color"
 msgstr "導引線顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:251
 msgid "Color of guidelines"
 msgstr "導引線的顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 #, fuzzy
 msgid "_Highlight color:"
 msgstr "高亮度顏色:"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
 msgstr "高亮度的導引線顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:254
+#: ../src/ui/dialog/document-properties.cpp:253
 msgid "Color of a guideline when it is under mouse"
 msgstr "導引線位於滑鼠下方時的顏色"
 
-#: ../src/ui/dialog/document-properties.cpp:257
+#: ../src/ui/dialog/document-properties.cpp:256
 #, fuzzy
 msgid "<b>Grid</b>"
 msgstr "<b>弧</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:259
+#: ../src/ui/dialog/document-properties.cpp:258
 #, fuzzy
 msgid "<b>Guides</b>"
 msgstr "<b>線條</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:288
 #, fuzzy
 msgid "_Snap bounding boxes to objects"
 msgstr "抓附範圍方框於導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:289
 #, fuzzy
 msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr "抓附物件範圍方框的邊緣"
 
-#: ../src/ui/dialog/document-properties.cpp:292
+#: ../src/ui/dialog/document-properties.cpp:291
 #, fuzzy
 msgid "Snap nodes _to objects"
 msgstr "抓附節點於格線"
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:292
 #, fuzzy
 msgid "Snap the nodes of objects to other objects"
 msgstr "抓附物件範圍方框的邊緣"
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:294
 #, fuzzy
 msgid "Snap to object _paths"
 msgstr "轉換點陣圖物件成為路徑"
 
-#: ../src/ui/dialog/document-properties.cpp:296
+#: ../src/ui/dialog/document-properties.cpp:295
 #, fuzzy
 msgid "Snap to other object paths"
 msgstr "轉換選擇的物件為路徑"
 
-#: ../src/ui/dialog/document-properties.cpp:298
+#: ../src/ui/dialog/document-properties.cpp:297
 #, fuzzy
 msgid "Snap to object _nodes"
 msgstr "拖曳以重新排列節點"
 
-#: ../src/ui/dialog/document-properties.cpp:299
+#: ../src/ui/dialog/document-properties.cpp:298
 #, fuzzy
 msgid "Snap to other object nodes"
 msgstr "抓附物件範圍方框的邊緣"
 
-#: ../src/ui/dialog/document-properties.cpp:301
+#: ../src/ui/dialog/document-properties.cpp:300
 #, fuzzy
 msgid "Snap s_ensitivity:"
 msgstr "抓取靈敏度:"
 
-#: ../src/ui/dialog/document-properties.cpp:301
-#: ../src/ui/dialog/document-properties.cpp:311
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:300
+#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Always snap"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:302
+#: ../src/ui/dialog/document-properties.cpp:301
 msgid "Controls max. snapping distance from object"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:303
+#: ../src/ui/dialog/document-properties.cpp:302
 msgid ""
 "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:304
 #, fuzzy
 msgid "Snap _bounding boxes to grid"
 msgstr "抓附方框於格線"
 
-#: ../src/ui/dialog/document-properties.cpp:306
-#: ../src/ui/dialog/document-properties.cpp:316
+#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap the edges of the object bounding boxes"
 msgstr "抓附物件範圍方框的邊緣"
 
-#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:307
 #, fuzzy
 msgid "Snap nodes to _grid"
 msgstr "抓附節點於格線"
 
-#: ../src/ui/dialog/document-properties.cpp:309
-#: ../src/ui/dialog/document-properties.cpp:319
+#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
 msgstr "抓取路徑節點﹑文字基線﹑橢圓中心…等等。"
 
-#: ../src/ui/dialog/document-properties.cpp:311
+#: ../src/ui/dialog/document-properties.cpp:310
 #, fuzzy
 msgid "Snap sens_itivity:"
 msgstr "抓取靈敏度:"
 
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:311
 msgid "Controls max. snapping distance from grid"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:313
+#: ../src/ui/dialog/document-properties.cpp:312
 msgid ""
 "If set, objects snap to the nearest grid line when moved, regardless of "
 "distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:314
 #, fuzzy
 msgid "Snap bounding boxes to g_uides"
 msgstr "抓附範圍方框於導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:317
 #, fuzzy
 msgid "Snap p_oints to guides"
 msgstr "抓附端點於導引線"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:320
 #, fuzzy
 msgid "Snap sensiti_vity:"
 msgstr "抓取靈敏度:"
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "Controls max. snapping distance from guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:323
+#: ../src/ui/dialog/document-properties.cpp:322
 msgid ""
 "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:330
+#: ../src/ui/dialog/document-properties.cpp:329
 #, fuzzy
 msgid "<b>Object Snapping</b>"
 msgstr "<b>矩形</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:332
+#: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:334
+#: ../src/ui/dialog/document-properties.cpp:333
 msgid "<b>Guide Snapping</b>"
 msgstr ""
 
@@ -6557,53 +6559,53 @@ msgid "P_ort:"
 msgstr "埠(_O)"
 
 #. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:105
+#: ../src/ui/dialog/whiteboard-connect.cpp:108
 msgid "Connect"
 msgstr "連線"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:132
+#: ../src/ui/dialog/whiteboard-connect.cpp:135
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr "建立到 Jabber 伺服器 <b>%1</b> 的連線，登入為使用者 <b>%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:137
+#: ../src/ui/dialog/whiteboard-connect.cpp:140
 msgid "Failed to establish connection to Jabber server <b>%1</b>"
 msgstr "建立到 Jabber 伺服器 <b>%1</b> 的連線失敗"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:142
+#: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "於 Jabber 伺服器 <b>%1</b> 做為 <b>%2</b> 的認證失敗"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:147
+#: ../src/ui/dialog/whiteboard-connect.cpp:150
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
 msgstr "連線到 Jabber 伺服器 <b>%1</b> 時 SSL 啟始失敗"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:153
+#: ../src/ui/dialog/whiteboard-connect.cpp:156
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "連線到 Jabber 伺服器 <b>%1</b> 並登入為 <b>%2</b>"
 
 #. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:73
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
 msgid "Chatroom _name:"
 msgstr "聊天室名稱(_N):"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:74
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
 msgid "Chatroom _server:"
 msgstr "聊天室伺服器(_S):"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
 msgid "Chatroom _password:"
 msgstr "聊天室密碼(_P):"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
 msgid "Chatroom _handle:"
 msgstr "聊天室控柄(_H):"
 
 #. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:95
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
 msgid "Connect to chatroom"
 msgstr "連線到聊天室"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:130
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
 msgstr "與聊天室 <b>%1@%2</b> 同步並使用控柄 <b>%3</b>"
 
@@ -10158,6 +10160,18 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#~ msgid "Export area"
+#~ msgstr "匯出區"
+
+#~ msgid "Bitmap size"
+#~ msgstr "點陣圖大小"
+
+#~ msgid "_Filename"
+#~ msgstr "檔名(_F)"
+
+#~ msgid " <b>_Export</b> "
+#~ msgstr "<b>輸出(_E)</b>"
 
 #~ msgid " relative by "
 #~ msgstr "相對於"

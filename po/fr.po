@@ -1,6 +1,6 @@
-# translation of fr.po to
+# translation of fr.po to Français
 # French translation of Inkscape.
-# Copyright (C) 2000-2003, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2000-2003, 2005 Free Software Foundation, Inc.
 # Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2002.
 # Raymond Ostertag <raymond@linuxgraphic.org>, 2002-2003.
 # Didier Conchaudron <conchaudron@free.fr>, 2003.
@@ -12,15 +12,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-07 22:41+0200\n"
-"PO-Revision-Date: 2006-05-05 01:03+0200\n"
-"Last-Translator: \n"
-"Language-Team:  <fr@li.org>\n"
+"POT-Creation-Date: 2006-05-09 21:07+0200\n"
+"PO-Revision-Date: 2006-05-05 11:22+0100\n"
+"Last-Translator: matiphas <matiphas@free.fr>\n"
+"Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2;plural=(n>1);\n"
-"X-Generator: KBabel 1.11.2\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -58,19 +57,19 @@ msgstr "Création d'un nouveau connecteur"
 msgid "Finishing connector"
 msgstr "Tracé du connecteur terminé"
 
-#: ../src/connector-context.cpp:1106
+#: ../src/connector-context.cpp:1081
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Point de connnection</b> : cliquer ou déplacer pour créer un nouveau "
 "connecteur"
 
-#: ../src/connector-context.cpp:1183
+#: ../src/connector-context.cpp:1152
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Fin de connecteur</b> : déplacer pour rerouter ou connecter à de "
 "nouvelles formes"
 
-#: ../src/connector-context.cpp:1276
+#: ../src/connector-context.cpp:1257
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Sélectionner <b>au moins un objet non connecteur</b>."
 
@@ -124,7 +123,7 @@ msgstr "Sélectionner <b>un objet</b> pour en éparpiller les clones."
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Sélectionner <b>un objet</b> duquel retirer les clones de pavage."
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1890
+#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1902
 msgid "Select an <b>object</b> to clone."
 msgstr "Sélectionner un <b>objet</b> à cloner."
 
@@ -782,121 +781,123 @@ msgid "none"
 msgstr "aucune"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2253
 msgid "_Page"
 msgstr "_Page"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2257
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2257
 msgid "_Drawing"
 msgstr "_Dessin"
 
-#: ../src/dialogs/export.cpp:124 ../src/verbs.cpp:2259
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2259
 msgid "_Selection"
 msgstr "_Sélection"
 
-#: ../src/dialogs/export.cpp:124
+#: ../src/dialogs/export.cpp:133
 msgid "_Custom"
 msgstr "Personnalisé (_c)"
 
-#: ../src/dialogs/export.cpp:248
-msgid "Export area"
-msgstr "Exporter la zone"
+#: ../src/dialogs/export.cpp:257
+msgid "<big><b>Export area</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:263
+#: ../src/dialogs/export.cpp:271
 msgid "Units:"
 msgstr "Unités :"
 
-#: ../src/dialogs/export.cpp:294
+#: ../src/dialogs/export.cpp:299
 msgid "_x0:"
 msgstr "_x0 :"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:304
 msgid "x_1:"
 msgstr "x_1 :"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:304 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:1995
 msgid "Width:"
 msgstr "Largeur :"
 
-#: ../src/dialogs/export.cpp:310
+#: ../src/dialogs/export.cpp:315
 msgid "_y0:"
 msgstr "_y0 :"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:320
 msgid "y_1:"
 msgstr "y_1 :"
 
-#: ../src/dialogs/export.cpp:320 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Hauteur :"
 
-#: ../src/dialogs/export.cpp:403
-msgid "Bitmap size"
-msgstr "Taille du bitmap"
+#: ../src/dialogs/export.cpp:414
+msgid "<big><b>Bitmap size</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:413 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "Largeur (_w):"
 
-#: ../src/dialogs/export.cpp:413 ../src/dialogs/export.cpp:429
+#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
 msgid "pixels at"
 msgstr "pixels à"
 
-#: ../src/dialogs/export.cpp:423
+#: ../src/dialogs/export.cpp:437
 msgid "dp_i"
 msgstr "ppp (_i)"
 
-#: ../src/dialogs/export.cpp:442 ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid "dpi"
 msgstr "ppp"
 
-#: ../src/dialogs/export.cpp:448
-msgid "_Filename"
-msgstr "Nom du _fichier"
+#. true = has mnemonic
+#: ../src/dialogs/export.cpp:467
+msgid "<big><b>_Filename</b></big>"
+msgstr ""
 
-#: ../src/dialogs/export.cpp:512
+#: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
 msgstr "Parcourir (_b)..."
 
-#: ../src/dialogs/export.cpp:539
-msgid " <b>_Export</b> "
-msgstr " <b>_Exporter</b> "
+#: ../src/dialogs/export.cpp:577
+#, fuzzy
+msgid "_Export"
+msgstr "Exporter"
 
-#: ../src/dialogs/export.cpp:541
+#: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
 msgstr "Exporter le fichier bitmap avec ces réglages"
 
-#: ../src/dialogs/export.cpp:968
+#: ../src/dialogs/export.cpp:1008
 msgid "You have to enter a filename"
 msgstr "Vous devez entrer un nom de fichier"
 
-#: ../src/dialogs/export.cpp:973
+#: ../src/dialogs/export.cpp:1013
 msgid "The chosen area to be exported is invalid"
 msgstr "La zone d'exportation choisie est invalide"
 
-#: ../src/dialogs/export.cpp:982
+#: ../src/dialogs/export.cpp:1022
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Le répertoire %s n'existe pas ou ce n'est pas un répertoire.\n"
 
-#: ../src/dialogs/export.cpp:998
+#: ../src/dialogs/export.cpp:1038
 msgid "Export in progress"
 msgstr "Exportation en cours"
 
-#: ../src/dialogs/export.cpp:1004
+#: ../src/dialogs/export.cpp:1044
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Export %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1031
+#: ../src/dialogs/export.cpp:1071
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Impossible d'exporter dans le fichier %s.\n"
 
-#: ../src/dialogs/export.cpp:1137
+#: ../src/dialogs/export.cpp:1177
 msgid "Select a filename for exporting"
 msgstr "Sélectionner un nom de fichier pour exporter"
 
@@ -1143,26 +1144,24 @@ msgstr "Déplacement rela_tif"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
-msgstr ""
+msgstr "Déplacer le guide relativement à sa position courante"
 
 #: ../src/dialogs/guidelinedialog.cpp:61
-#, fuzzy
 msgid "Move by:"
-msgstr "Déplacer %s"
+msgstr "Déplacer de :"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
-#, fuzzy
 msgid "Move to:"
-msgstr "Déplacer %s"
+msgstr "Déplacer vers :"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Guideline"
 msgstr "Ligne de guide"
 
 #: ../src/dialogs/guidelinedialog.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr "Déplacer %s"
+msgstr "Déplacement %s %s"
 
 #: ../src/dialogs/iconpreview.cpp:142
 #, c-format
@@ -1370,45 +1369,46 @@ msgid "Master _opacity"
 msgstr "_Opacité globale"
 
 #: ../src/dialogs/rdf.cpp:178
-#, fuzzy
 msgid "CC Attribution"
-msgstr "Attribut"
+msgstr "CC Paternité"
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
-msgstr ""
+msgstr "CC Paternité - Partage des conditions initiales à l'identique"
 
 #: ../src/dialogs/rdf.cpp:188
 msgid "CC Attribution-NoDerivs"
-msgstr ""
+msgstr "CC Paternité - Pas de modification"
 
 #: ../src/dialogs/rdf.cpp:193
 msgid "CC Attribution-NonCommercial"
-msgstr ""
+msgstr "CC Paternité - Pas d'utilisation commerciale"
 
 #: ../src/dialogs/rdf.cpp:198
 msgid "CC Attribution-NonCommercial-ShareAlike"
 msgstr ""
+"CC Paternité - Pas d'utilisation commerciale -  Partage des conditions "
+"initiales à l'identique"
 
 #: ../src/dialogs/rdf.cpp:203
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "CC Paternité - Pas d'utilisation commerciale - Pas de modification"
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
-msgstr ""
+msgstr "Licence Générale Publique (GPL) GNU"
 
 #: ../src/dialogs/rdf.cpp:213
 msgid "GNU Lesser General Public License"
-msgstr ""
+msgstr "Licence Générale Publique Amoindrie (LGPL) GNU"
 
 #: ../src/dialogs/rdf.cpp:218
 msgid "Public Domain"
-msgstr ""
+msgstr "Domaine public"
 
 #: ../src/dialogs/rdf.cpp:223
 msgid "FreeArt"
-msgstr ""
+msgstr "ArtLibre"
 
 #: ../src/dialogs/rdf.cpp:241
 msgid "Name by which this document is formally known."
@@ -1863,8 +1863,8 @@ msgid "New element node..."
 msgstr "Nouveau nœud élément..."
 
 #: ../src/dialogs/xml-tree.cpp:1335
-#: ../src/ui/dialog/whiteboard-connect.cpp:106
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:96
+#: ../src/ui/dialog/whiteboard-connect.cpp:109
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -2085,27 +2085,27 @@ msgstr ""
 "Le répertoire des modules (%s) est indisponible.Les modules externes de ce "
 "répertoire ne seront pas chargés."
 
-#: ../src/extension/internal/bluredge.cpp:135
+#: ../src/extension/internal/bluredge.cpp:131
 msgid "Blur Edge"
 msgstr "Contours flous"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Blur Width"
 msgstr "Largeur du flou"
 
-#: ../src/extension/internal/bluredge.cpp:137
+#: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
-msgstr ""
+msgstr "Largeur en pixels de la zone floue"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of Steps"
 msgstr "Nombre de passes"
 
-#: ../src/extension/internal/bluredge.cpp:138
+#: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
-msgstr ""
+msgstr "Nombre de copies de l'objet créées pour simuler le flou"
 
-#: ../src/extension/internal/bluredge.cpp:142
+#: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 msgid "Generate from Path"
 msgstr "Généré à partir du chemin"
@@ -2215,9 +2215,8 @@ msgid "OpenDocument Drawing Output"
 msgstr "Sortie Dessin OpenDocument"
 
 #: ../src/extension/internal/odf.cpp:1902
-#, fuzzy
 msgid "OpenDocument drawing (*.odg)"
-msgstr "Dessin OpenDocument (*.odg)(placeholder)"
+msgstr "Dessin OpenDocument (*.odg)"
 
 #: ../src/extension/internal/odf.cpp:1903
 msgid "OpenDocument drawing file"
@@ -2398,9 +2397,9 @@ msgstr "Impression Windows 32-bits"
 
 #. A hack to internationalize the title properly
 #: ../src/extension/prefdialog.cpp:33
-#, fuzzy, c-format
+#, c-format
 msgid "%s Preferences"
-msgstr " Préférences"
+msgstr "%s  Préférences"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2919,16 +2918,16 @@ msgid_plural "Receiving change; %u changes left to process."
 msgstr[0] "Réception d'un changement : il reste %u changement à traiter."
 msgstr[1] "Réception d'un changement : il reste %u changements à traiter."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:157
+#: ../src/jabber_whiteboard/chat-handler.cpp:158
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
 msgstr "<b>%s</b> a quitté la pièce de discussion."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:221
+#: ../src/jabber_whiteboard/chat-handler.cpp:222
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
 msgstr "Le surnom %1 est déjà utilisé. Veuillez choisir un surnom différent."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:225
+#: ../src/jabber_whiteboard/chat-handler.cpp:226
 msgid "An error was encountered while attempting to connect to the server."
 msgstr "Erreur lors de la tentative de connection au serveur."
 
@@ -2946,12 +2945,12 @@ msgstr "Erreur lors de la tentative de connection au serveur."
 #.
 #. This is a fix for bug #1352522.  Probably not the friendliest, but it's about
 #. the best we can do without changing the protocol.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:149
+#: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
 msgstr "<b>Un conflit d'invitation s'est produit.</b>"
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:153
+#: ../src/jabber_whiteboard/connection-establishment.cpp:162
 msgid ""
 "The Jabber user <b>%1</b> attempted to invite you to a whiteboard session "
 "while you were waiting on an invitation response.\n"
@@ -2966,21 +2965,21 @@ msgstr ""
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:168
+#: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
 msgstr "<b>%1</b> vous a invité à une session de tableau blanc."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:169
+#: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
 msgstr "Réception d'une invitation à une session de tableau blanc de %1"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:172
+#: ../src/jabber_whiteboard/connection-establishment.cpp:181
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr ""
 "Voulez-vous accepter l'invitation de <b>%1</b> à une session de tableau "
 "blanc ?"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:174
+#: ../src/jabber_whiteboard/connection-establishment.cpp:183
 msgid ""
 "Would you like to accept %1's invitation in a new document window?\n"
 "Accepting the invitation in your current window will discard unsaved changes."
@@ -2990,24 +2989,24 @@ msgstr ""
 " Accepter l'invitation dans la fenêtre courante annulera vos changements non "
 "enregistrés."
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:180
-#: ../src/jabber_whiteboard/connection-establishment.cpp:235
+#: ../src/jabber_whiteboard/connection-establishment.cpp:189
+#: ../src/jabber_whiteboard/connection-establishment.cpp:244
 msgid "Accept invitation"
 msgstr "Accepter l'invitation"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:181
-#: ../src/jabber_whiteboard/connection-establishment.cpp:236
+#: ../src/jabber_whiteboard/connection-establishment.cpp:190
+#: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
 msgstr "Décliner l'invitation"
 
-#: ../src/jabber_whiteboard/connection-establishment.cpp:182
+#: ../src/jabber_whiteboard/connection-establishment.cpp:191
 msgid "Accept invitation in new document window"
 msgstr "Accepter l'invitation dans une nouvelle fenêtre document"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
 #. TRANSLATORS: %1 is a userid here
-#: ../src/jabber_whiteboard/connection-establishment.cpp:233
+#: ../src/jabber_whiteboard/connection-establishment.cpp:242
 msgid ""
 "A new document window could not be opened for a whiteboard session with <b>%"
 "1</b>"
@@ -3016,7 +3015,7 @@ msgstr ""
 "tableau blanc avec <b>%1</b>"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:275
+#: ../src/jabber_whiteboard/connection-establishment.cpp:284
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
 "whiteboard invitation.</span>\n"
@@ -3027,7 +3026,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:278
+#: ../src/jabber_whiteboard/connection-establishment.cpp:287
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may send an "
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
@@ -3038,7 +3037,7 @@ msgstr ""
 "utilisateur."
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:289
+#: ../src/jabber_whiteboard/connection-establishment.cpp:298
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is already in a "
 "whiteboard session.</span>\n"
@@ -3049,7 +3048,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
-#: ../src/jabber_whiteboard/connection-establishment.cpp:292
+#: ../src/jabber_whiteboard/connection-establishment.cpp:301
 msgid ""
 "You are still connected to a Jabber server as <b>%1</b>, and may send an "
 "invitation to a different user."
@@ -3102,34 +3101,34 @@ msgstr ""
 "recherche : le nouvel objet ne sera PAS envoyé, ni aucun de des descendants !"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1002
+#: ../src/jabber_whiteboard/session-manager.cpp:1012
 msgid "Select a location and filename"
 msgstr "Sélectionner un emplacement et un nom de fichier"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1004
+#: ../src/jabber_whiteboard/session-manager.cpp:1014
 msgid "Set filename"
 msgstr "Définir un nom de fichier"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:308
+#: ../src/jabber_whiteboard/session-manager.cpp:318
 msgid "No SSL certificate was found."
 msgstr "Aucun certificat SSL trouvé."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:311
+#: ../src/jabber_whiteboard/session-manager.cpp:321
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr ""
 "Le certificat SSL fourni par le serveur Jabber n'est pas digne de confiance."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:314
+#: ../src/jabber_whiteboard/session-manager.cpp:324
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "Le certificat SSL fourni par le serveur Jabber a expiré."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:317
+#: ../src/jabber_whiteboard/session-manager.cpp:327
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "Le certificat SSL fourni par le serveur Jabber n'a pas été activé."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:320
+#: ../src/jabber_whiteboard/session-manager.cpp:330
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3137,7 +3136,7 @@ msgstr ""
 "Le certificat SSL fourni par le serveur Jabber contient un nom d'hôte qui ne "
 "correspond pas à celui du serveur Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:323
+#: ../src/jabber_whiteboard/session-manager.cpp:333
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
@@ -3145,13 +3144,13 @@ msgstr ""
 "Le certificat SSL fourni par le serveur Jabber contient une empreinte "
 "invalide."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:326
+#: ../src/jabber_whiteboard/session-manager.cpp:336
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Erreur inconnue lors de l'établissement de la connection SSL."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:332
+#: ../src/jabber_whiteboard/session-manager.cpp:342
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3161,24 +3160,24 @@ msgstr ""
 "\n"
 "Voulez-vous poursuivre la connection au serveur Jabber ?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:335
+#: ../src/jabber_whiteboard/session-manager.cpp:345
 msgid "Continue connecting and ignore further errors"
 msgstr "Poursuivre la connection et ignorer les prochaines erreurs"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:336
+#: ../src/jabber_whiteboard/session-manager.cpp:346
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Poursuivre la connection, mais me prévenir des erreurs suivantes"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:337
+#: ../src/jabber_whiteboard/session-manager.cpp:347
 msgid "Cancel connection"
 msgstr "Annuler la connection"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:784
+#: ../src/jabber_whiteboard/session-manager.cpp:794
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Session de tableau blanc établie avec <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:792
+#: ../src/jabber_whiteboard/session-manager.cpp:802
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> a <b>quitté</b> la session de tableau blanc."
@@ -3186,7 +3185,7 @@ msgstr "<b>%s</b> a <b>quitté</b> la session de tableau blanc."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:797
+#: ../src/jabber_whiteboard/session-manager.cpp:807
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3197,7 +3196,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:799
+#: ../src/jabber_whiteboard/session-manager.cpp:809
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3205,7 +3204,7 @@ msgstr ""
 "Vous êtes toujours connecté(e) à un serveur Jabber en tant que <b>%2</b>, et "
 "pouvez établir une nouvelle session avec <b>%1</b> ou un autre utilisateur."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:995
+#: ../src/jabber_whiteboard/session-manager.cpp:1005
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3219,15 +3218,15 @@ msgstr ""
 "Vous pouvez choisir un autre emplacement pour enregistrer la session, ou "
 "décider de ne pas l'enregistrer."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:997
+#: ../src/jabber_whiteboard/session-manager.cpp:1007
 msgid "Choose a different location"
 msgstr "Choisir un emplacement différent"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:998
+#: ../src/jabber_whiteboard/session-manager.cpp:1008
 msgid "Skip session recording"
 msgstr "Passer l'enregistrement de la session"
 
-#: ../src/knot.cpp:419
+#: ../src/knot.cpp:418
 msgid "Node or handle drag canceled."
 msgstr "Déplacement de nœud ou de poignée annulé."
 
@@ -3464,7 +3463,7 @@ msgstr "_Edition"
 
 #: ../src/menus-skeleton.h:63 ../src/verbs.cpp:1979
 msgid "Paste Si_ze"
-msgstr "Coller la taille (_z)"
+msgstr "Coller les dimensions (_z)"
 
 #: ../src/menus-skeleton.h:75
 msgid "Clo_ne"
@@ -3839,9 +3838,8 @@ msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>Aucun chemin</b> à inverser dans la sélection."
 
 #: ../src/pen-context.cpp:218
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "Dessiner les poignées"
+msgstr "Tracé annulé"
 
 #: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
 msgid "Continuing selected path"
@@ -3895,9 +3893,8 @@ msgstr ""
 "incréments; <b>Maj</b> pour ne déplacer que cette poignée"
 
 #: ../src/pen-context.cpp:1127
-#, fuzzy
 msgid "Drawing finished"
-msgstr "Dessin"
+msgstr "Tracé fini"
 
 #: ../src/pencil-context.cpp:315
 msgid "<b>Release</b> here to close and finish the path."
@@ -4054,27 +4051,27 @@ msgstr "Sélectionner des <b>objet(s)</b> sur lesquels coller une taille."
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Sélectionner des <b>objet(s)</b> à déplacer au calque du dessus."
 
-#: ../src/selection-chemistry.cpp:1240
+#: ../src/selection-chemistry.cpp:1246
 msgid "No more layers above."
 msgstr "Plus de calque au-dessus."
 
-#: ../src/selection-chemistry.cpp:1254
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Sélectionner des <b>objet(s)</b> à déplacer au calque du dessous."
 
-#: ../src/selection-chemistry.cpp:1272
+#: ../src/selection-chemistry.cpp:1284
 msgid "No more layers below."
 msgstr "Plus de calque en-dessous."
 
-#: ../src/selection-chemistry.cpp:1940
+#: ../src/selection-chemistry.cpp:1952
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Sélectionner un <b>clone</b> à délier."
 
-#: ../src/selection-chemistry.cpp:1971
+#: ../src/selection-chemistry.cpp:1983
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Aucun clone à délier</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:1988
+#: ../src/selection-chemistry.cpp:2000
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4085,7 +4082,7 @@ msgstr ""
 "suivant un chemin</b> pour sélectionner son chemin. Sélectionner un <b>texte "
 "encadré</b> pour sélectionner son cadre."
 
-#: ../src/selection-chemistry.cpp:2011
+#: ../src/selection-chemistry.cpp:2023
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4093,7 +4090,7 @@ msgstr ""
 "<b>Impossible de trouver</b> l'objet à sélectionner (clone orphelin, offset, "
 "chemin de texte, texte encadré ?)"
 
-#: ../src/selection-chemistry.cpp:2017
+#: ../src/selection-chemistry.cpp:2029
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4101,41 +4098,41 @@ msgstr ""
 "L'objet que vous essayez de sélectionner n'est <b>pas visible</b> (il est "
 "dans &lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2044
+#: ../src/selection-chemistry.cpp:2056
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Sélectionner des <b>objet(s)</b> à convertir en motif de remplissage."
 
-#: ../src/selection-chemistry.cpp:2135
+#: ../src/selection-chemistry.cpp:2147
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Sélectionner un <b>objet rempli avec un motif</b> pour en extraire des objet"
 "(s)."
 
-#: ../src/selection-chemistry.cpp:2188
+#: ../src/selection-chemistry.cpp:2200
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Aucun motif de remplissage</b> dans la sélection."
 
-#: ../src/selection-chemistry.cpp:2208
+#: ../src/selection-chemistry.cpp:2220
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Sélectionner des <b>objet(s)</b> pour en faire une copie bitmap."
 
-#: ../src/selection-chemistry.cpp:2371
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2383
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
-"Sélectionner des <b>objet(s)</b> à partir desquels un masque sera créé."
+"Sélectionner des <b>objet(s)</b> à partir desquels  un chemin de découpe ou "
+"un masque sera créé."
 
-#: ../src/selection-chemistry.cpp:2374
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2386
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
-"Sélectionner un objet masque et des <b>objet(s)</b>auxquels appliquer ce "
-"masque."
+"Sélectionner un objet masque et des <b>objet(s)</b> auxquels appliquer ce "
+"chemin de découpe ou masque."
 
-#: ../src/selection-chemistry.cpp:2477
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2489
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Sélectionner des <b>objet(s)</b> pour en retirer le masque."
+msgstr ""
+"Sélectionner des <b>objet(s)</b> pour en retirer le chemin de découpe ou le "
+"masque."
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4358,7 +4355,7 @@ msgstr ""
 "<b>Tourner</b> la sélection; <b>Ctrl</b> pour tourner par incréments; "
 "<b>Maj</b> pour tourner autour du coin opposé"
 
-#: ../src/seltrans.cpp:846 ../src/seltrans.cpp:958
+#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4367,7 +4364,7 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1029
+#: ../src/seltrans.cpp:1060
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
@@ -4375,17 +4372,17 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1109
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotation</b> : %0.2f&#176;; <b>Ctrl</b> pour tourner par incréments"
 
-#: ../src/seltrans.cpp:1122
+#: ../src/seltrans.cpp:1153
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Déplacer le <b>centre</b> en %s, %s"
 
-#: ../src/seltrans.cpp:1380
+#: ../src/seltrans.cpp:1411
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4552,11 +4549,11 @@ msgstr[0] "<b>Polygone</b> à %d sommet"
 msgstr[1] "<b>Polygone</b> à %d sommets"
 
 #: ../src/sp-switch.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>Groupe</b> de <b>%d</b> objet"
-msgstr[1] "<b>Groupe</b> de <b>%d</b> objets"
+msgstr[0] "<b>Groupe conditionnel</b> de <b>%d</b> objet"
+msgstr[1] "<b>Groupe conditionnel</b> de <b>%d</b> objets"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:409
@@ -4604,11 +4601,11 @@ msgstr ""
 "<b>Spirale</b> : rayon %s, angle %5g&#176;; avec <b>Ctrl</b> pour tourner "
 "par incréments"
 
-#: ../src/splivarot.cpp:100
+#: ../src/splivarot.cpp:101
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Sélectionner <b>au moins 2 chemins</b> pour une opération booléenne."
 
-#: ../src/splivarot.cpp:106
+#: ../src/splivarot.cpp:107
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4616,7 +4613,7 @@ msgstr ""
 "Sélectionner <b>exactement 2 chemins</b> pour en faire une différence, une "
 "exclusion ou les découper."
 
-#: ../src/splivarot.cpp:123 ../src/splivarot.cpp:138
+#: ../src/splivarot.cpp:124 ../src/splivarot.cpp:139
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4624,7 +4621,7 @@ msgstr ""
 "Impossible de déterminer <b>l'ordre en z</b> des objets sélectionnés pour en "
 "faire une différence, une exclusion ou les découper."
 
-#: ../src/splivarot.cpp:168
+#: ../src/splivarot.cpp:169
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
@@ -4632,36 +4629,36 @@ msgstr ""
 "opération booléenne."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:548
+#: ../src/splivarot.cpp:549
 msgid "Select <b>path(s)</b> to outline."
 msgstr ""
 "Sélectionner des <b>chemin(s)</b> pour en convertir le contour en chemin"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:742
+#: ../src/splivarot.cpp:743
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr ""
 "<b>Aucun contour (de chemin)</b> à transformer en chemin dans la sélection."
 
-#: ../src/splivarot.cpp:826
+#: ../src/splivarot.cpp:827
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 "L'objet sélectionné <b>n'est pas un chemin</b>, impossible de l'éroder/"
 "dilater."
 
-#: ../src/splivarot.cpp:1034
+#: ../src/splivarot.cpp:1035
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Sélectionner des <b>chemin(s)</b> pour les éroder/dilater."
 
-#: ../src/splivarot.cpp:1251
+#: ../src/splivarot.cpp:1252
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Aucun chemin</b> à éroder/dilater dans la sélection."
 
-#: ../src/splivarot.cpp:1384
+#: ../src/splivarot.cpp:1385
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Sélectionner des <b>chemin(s)</b> à simplifier."
 
-#: ../src/splivarot.cpp:1411
+#: ../src/splivarot.cpp:1412
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Aucun chemin</b> à simplifier dans la sélection."
 
@@ -5196,7 +5193,7 @@ msgid "Smallest item"
 msgstr "Élément le plus petit"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
-#: ../src/ui/dialog/document-properties.cpp:99
+#: ../src/ui/dialog/document-properties.cpp:98
 #: ../src/widgets/desktop-widget.cpp:1092
 msgid "Page"
 msgstr "Page"
@@ -5222,282 +5219,282 @@ msgstr "<b>Entités Dublin Core</b>"
 msgid "<b>License</b>"
 msgstr "<b>License</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/document-properties.cpp:99
 msgid "Grid/Guides"
 msgstr "Grille/Guides"
 
-#: ../src/ui/dialog/document-properties.cpp:101
+#: ../src/ui/dialog/document-properties.cpp:100
 msgid "Snap"
 msgstr "Adhérence"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Back_ground:"
 msgstr "Couleur de fond (_g) :"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: ../src/ui/dialog/document-properties.cpp:189
+#: ../src/ui/dialog/document-properties.cpp:188
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Couleur et transparence du fond de page (également utilisé lors de "
 "l'exportation en bitmap)"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "Show page _border"
 msgstr "Afficher la _bordure de page"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
 msgstr "Si coché, la bordure rectangulaire de la page est affichée"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 msgid "Border on _top of drawing"
 msgstr "Bordure au-dessus du dessin (_t)"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:191
 msgid "If set, border is always on top of the drawing"
 msgstr "Si coché, la bordure est toujours au-dessus du dessin"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 msgid "Border _color:"
 msgstr "_Couleur de la bordure :"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:192
 msgid "Page border color"
 msgstr "Couleur de bordure de page"
 
-#: ../src/ui/dialog/document-properties.cpp:194
+#: ../src/ui/dialog/document-properties.cpp:193
 msgid "Color of the page border"
 msgstr "Couleur de bordure de page"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "_Show border shadow"
 msgstr "Afficher une ombre de bordure (_s)"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:195
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr "Si coché, la bordure de page est ombrée en bas et à droite"
 
-#: ../src/ui/dialog/document-properties.cpp:197
+#: ../src/ui/dialog/document-properties.cpp:196
 msgid "Default _units:"
 msgstr "_Unités par défaut :"
 
-#: ../src/ui/dialog/document-properties.cpp:200
+#: ../src/ui/dialog/document-properties.cpp:199
 msgid "<b>General</b>"
 msgstr "<b>Général</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:202
+#: ../src/ui/dialog/document-properties.cpp:201
 msgid "<b>Border</b>"
 msgstr "<b>Bordure</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:204
+#: ../src/ui/dialog/document-properties.cpp:203
 msgid "<b>Format</b>"
 msgstr "<b>Format</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "_Show grid"
 msgstr "Afficher la grille (_s)"
 
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
 msgstr "Afficher ou non la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:234
 msgid "Grid _units:"
 msgstr "_Unités de la grille :"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 msgid "_Origin X:"
 msgstr "_Origine X :"
 
-#: ../src/ui/dialog/document-properties.cpp:236
+#: ../src/ui/dialog/document-properties.cpp:235
 msgid "X coordinate of grid origin"
 msgstr "Coordonnée X de l'origine de la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 msgid "O_rigin Y:"
 msgstr "O_rigine Y :"
 
-#: ../src/ui/dialog/document-properties.cpp:238
+#: ../src/ui/dialog/document-properties.cpp:237
 msgid "Y coordinate of grid origin"
 msgstr "Coordonnée Y de l'origine de la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 msgid "Spacing _X:"
 msgstr "Espacement _X :"
 
-#: ../src/ui/dialog/document-properties.cpp:240
+#: ../src/ui/dialog/document-properties.cpp:239
 msgid "Distance of vertical grid lines"
 msgstr "Distance entre les lignes verticales de la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 msgid "Spacing _Y:"
 msgstr "Espacement_ Y :"
 
-#: ../src/ui/dialog/document-properties.cpp:242
+#: ../src/ui/dialog/document-properties.cpp:241
 msgid "Distance of horizontal grid lines"
 msgstr "Distance entre les lignes horizontales de la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line _color:"
 msgstr "_Couleur de la grille :"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:243
 msgid "Grid line color"
 msgstr "Couleur de la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:244
 msgid "Color of grid lines"
 msgstr "Couleur de la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Ma_jor grid line color:"
 msgstr "Couleur de la grille ma_jeure :"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:245
 msgid "Major grid line color"
 msgstr "Couleur de la grille majeure"
 
-#: ../src/ui/dialog/document-properties.cpp:247
+#: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr "Couleur de la grille majeure (mise en valeur)"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "_Major grid line every:"
 msgstr "_Majorer la grille toutes les :"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "lines"
 msgstr "lignes"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show _guides"
 msgstr "Afficher les _guides"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show or hide guides"
 msgstr "Afficher ou non les guides"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guide co_lor:"
 msgstr "Cou_leur des guides :"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guideline color"
 msgstr "Couleur des lignes de guide"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:251
 msgid "Color of guidelines"
 msgstr "Couleur des lignes de guide"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "_Highlight color:"
 msgstr "Couleur d'emp_hase :"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
 msgstr "Couleur d'emphase des lignes de guide"
 
-#: ../src/ui/dialog/document-properties.cpp:254
+#: ../src/ui/dialog/document-properties.cpp:253
 msgid "Color of a guideline when it is under mouse"
 msgstr ""
 "Couleur d'une ligne de guide quand elle est sous le curseur de la souris"
 
-#: ../src/ui/dialog/document-properties.cpp:257
+#: ../src/ui/dialog/document-properties.cpp:256
 msgid "<b>Grid</b>"
 msgstr "<b>Grille</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:259
+#: ../src/ui/dialog/document-properties.cpp:258
 msgid "<b>Guides</b>"
 msgstr "<b>Guides</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:288
 msgid "_Snap bounding boxes to objects"
 msgstr "Faire adhérer le_s boîtes de contour aux objets"
 
-#: ../src/ui/dialog/document-properties.cpp:290
+#: ../src/ui/dialog/document-properties.cpp:289
 msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr "Faire adhérer les côtés des boîtes de contour aux autres objets"
 
-#: ../src/ui/dialog/document-properties.cpp:292
+#: ../src/ui/dialog/document-properties.cpp:291
 msgid "Snap nodes _to objects"
 msgstr "Faire adhérer les nœuds aux obje_ts"
 
-#: ../src/ui/dialog/document-properties.cpp:293
+#: ../src/ui/dialog/document-properties.cpp:292
 msgid "Snap the nodes of objects to other objects"
 msgstr "Faire adhérer les nœuds des objets aux autres objets"
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:294
 msgid "Snap to object _paths"
 msgstr "Faire adhérer aux chemins d'objets (_p)"
 
-#: ../src/ui/dialog/document-properties.cpp:296
+#: ../src/ui/dialog/document-properties.cpp:295
 msgid "Snap to other object paths"
 msgstr "Faire adhérer aux chemins d'autres objets"
 
-#: ../src/ui/dialog/document-properties.cpp:298
+#: ../src/ui/dialog/document-properties.cpp:297
 msgid "Snap to object _nodes"
 msgstr "Faire adhérer aux _nœuds d'objets"
 
-#: ../src/ui/dialog/document-properties.cpp:299
+#: ../src/ui/dialog/document-properties.cpp:298
 msgid "Snap to other object nodes"
 msgstr "Faire adhérer aux nœuds d'autres objets"
 
-#: ../src/ui/dialog/document-properties.cpp:301
+#: ../src/ui/dialog/document-properties.cpp:300
 msgid "Snap s_ensitivity:"
 msgstr "S_ensibilité d'adhérence :"
 
-#: ../src/ui/dialog/document-properties.cpp:301
-#: ../src/ui/dialog/document-properties.cpp:311
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:300
+#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Always snap"
 msgstr "Faire toujours adhérer"
 
-#: ../src/ui/dialog/document-properties.cpp:302
+#: ../src/ui/dialog/document-properties.cpp:301
 msgid "Controls max. snapping distance from object"
 msgstr "Contrôle la distance max. d'adhérence aux objets"
 
-#: ../src/ui/dialog/document-properties.cpp:303
+#: ../src/ui/dialog/document-properties.cpp:302
 msgid ""
 "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 "Si coché, l'objet adhère à l'objet le plus proche quand il est déplacé, "
 "quelle que soit la distance"
 
-#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:304
 msgid "Snap _bounding boxes to grid"
 msgstr "Faire adhérer les _boîtes de contour à la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:306
-#: ../src/ui/dialog/document-properties.cpp:316
+#: ../src/ui/dialog/document-properties.cpp:305
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap the edges of the object bounding boxes"
 msgstr "Faire adhérer les côtés des boîtes de contour des objets"
 
-#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:307
 msgid "Snap nodes to _grid"
 msgstr "Faire adhérer les nœuds à la _grille"
 
-#: ../src/ui/dialog/document-properties.cpp:309
-#: ../src/ui/dialog/document-properties.cpp:319
+#: ../src/ui/dialog/document-properties.cpp:308
+#: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
 msgstr ""
 "Faire adhérer les nœuds de chemins, les ancres de texte, les centres "
 "d'ellipse, etc."
 
-#: ../src/ui/dialog/document-properties.cpp:311
+#: ../src/ui/dialog/document-properties.cpp:310
 msgid "Snap sens_itivity:"
 msgstr "Sens_ibilité d'adhérence :"
 
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:311
 msgid "Controls max. snapping distance from grid"
 msgstr "Contrôle la distance max. d'adhérence à la grille"
 
-#: ../src/ui/dialog/document-properties.cpp:313
+#: ../src/ui/dialog/document-properties.cpp:312
 msgid ""
 "If set, objects snap to the nearest grid line when moved, regardless of "
 "distance"
@@ -5505,38 +5502,38 @@ msgstr ""
 "Si coché, l'objet adhère à la ligne de grille la plus proche quand il est "
 "déplacé, quelle que soit la distance"
 
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:314
 msgid "Snap bounding boxes to g_uides"
 msgstr "Faire adhérer les boîtes de contour aux g_uides"
 
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:317
 msgid "Snap p_oints to guides"
 msgstr "Faire adhérer les p_oints aux guides"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Snap sensiti_vity:"
 msgstr "Sensibilité d'adhérence (_v) :"
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "Controls max. snapping distance from guides"
 msgstr "Contrôle la distance max. d'adhérence aux guides"
 
-#: ../src/ui/dialog/document-properties.cpp:323
+#: ../src/ui/dialog/document-properties.cpp:322
 msgid ""
 "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 "Si coché, l'objet adhère au guide le plus proche quand il est déplacé, "
 "quelle que soit la distance"
 
-#: ../src/ui/dialog/document-properties.cpp:330
+#: ../src/ui/dialog/document-properties.cpp:329
 msgid "<b>Object Snapping</b>"
 msgstr "<b>Adhérence aux objets</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:332
+#: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
 msgstr "<b>Adhérence à la grille</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:334
+#: ../src/ui/dialog/document-properties.cpp:333
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>Adhérence aux guides</b>"
 
@@ -5828,7 +5825,7 @@ msgstr "Outils"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:304
 msgid "Width is in absolute units"
-msgstr ""
+msgstr "Largeur en unités absolues"
 
 #. Selector
 #: ../src/ui/dialog/inkscape-preferences.cpp:307
@@ -5956,6 +5953,9 @@ msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
 msgstr ""
+"Si coché, la largeur de la plume est en unités absolues (px) indépendemment "
+"du zoom; sinon, la largeur de plume dépend du zoom afin de paraître la même "
+"quel que soit le zoom"
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:382 ../src/verbs.cpp:2181
@@ -6338,13 +6338,12 @@ msgid "Remove clipping path or mask after applying"
 msgstr "Retirer le chemin de découpe ou le masque après leur application"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:531
-#, fuzzy
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
-"Après application, retirer de la sélection l'objet utilisé comme chemin de "
-"découpe ou masque"
+"Après application, retirer du dessin l'objet utilisé comme chemin de découpe "
+"ou masque"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Misc"
@@ -6818,59 +6817,59 @@ msgid "P_ort:"
 msgstr "P_ort :"
 
 #. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:105
+#: ../src/ui/dialog/whiteboard-connect.cpp:108
 msgid "Connect"
 msgstr "Se connecter"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:132
+#: ../src/ui/dialog/whiteboard-connect.cpp:135
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr ""
 "Etablissement de la connection au serveur Jabber <b>%1</b> en tant "
 "qu'uyilisateur <b>%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:137
+#: ../src/ui/dialog/whiteboard-connect.cpp:140
 msgid "Failed to establish connection to Jabber server <b>%1</b>"
 msgstr "Echec de la tentative de connection au serveur Jabber <b>%1</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:142
+#: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr ""
 "Ecchec de l'authentification sur le serveur Jabber <b>%1</b> en tant que <b>%"
 "2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:147
+#: ../src/ui/dialog/whiteboard-connect.cpp:150
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
 msgstr ""
 "Echec de l'initialisation SSL lors de la connection au serveur Jabber <b>%1</"
 "b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:153
+#: ../src/ui/dialog/whiteboard-connect.cpp:156
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "Connecté(e) au serveur Jabber <b>%1</b> en tant que <b>%2</b>"
 
 #. Construct labels
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:73
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
 msgid "Chatroom _name:"
 msgstr "_Nom de la pièce de discussion"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:74
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
 msgid "Chatroom _server:"
 msgstr "_Serveur de la pièce de discussion"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:77
 msgid "Chatroom _password:"
 msgstr "Mot de _passe de la pièce de discussion :"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:76
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:78
 msgid "Chatroom _handle:"
 msgstr "Indicatif de "
 
 #. Button setup and callback registration
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:95
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:102
 msgid "Connect to chatroom"
 msgstr "Se connecter à la pièce de discussion"
 
-#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:130
+#: ../src/ui/dialog/whiteboard-sharewithchat.cpp:137
 msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
 msgstr ""
 "Synchronisation avec la pièce de discussion <b>%1@%2</b> en utilisant "
@@ -7085,9 +7084,8 @@ msgstr ""
 "Voulez-vous enregistrer ce fichier dans un autre format ?"
 
 #: ../src/ui/widget/panel.cpp:95
-#, fuzzy
 msgid "tiny"
-msgstr "in"
+msgstr "minuscule"
 
 #: ../src/ui/widget/panel.cpp:96
 msgid "small"
@@ -7363,15 +7361,16 @@ msgid "Custom size"
 msgstr "Taille personnalisée"
 
 #: ../src/ui/widget/page-sizer.cpp:246
-#, fuzzy
 msgid "_Fit page to selection"
-msgstr "Ajuster à la boîte de sélection"
+msgstr "Ajuster la page à la sélection"
 
 #: ../src/ui/widget/page-sizer.cpp:247
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
+"Redimensionner la page pour qu'elle s'ajuste à la sélection, ou au dessin "
+"entier s'il n'y a pas de sélection"
 
 #: ../src/ui/widget/page-sizer.cpp:256
 msgid "U_nits:"
@@ -7691,9 +7690,10 @@ msgid "_Paste"
 msgstr "Coller (_p)"
 
 #: ../src/verbs.cpp:1976
-#, fuzzy
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Coller les objets du presse-papiers sous le pointeur de souris"
+msgstr ""
+"Coller les objets du presse-papiers sous le pointeur de souris, ou coller du "
+"texte"
 
 #: ../src/verbs.cpp:1977
 msgid "Paste _Style"
@@ -8250,7 +8250,7 @@ msgstr "Tourner la sélection de 90&#176; dans le sens horaire"
 
 #: ../src/verbs.cpp:2133
 msgid "Rotate 9_0&#176; CCW"
-msgstr "Tourner de 9_0 &#176; à gauche"
+msgstr "Tourner de 9_0&#176; à gauche"
 
 #: ../src/verbs.cpp:2134
 msgid "Rotate selection 90&#176; counter-clockwise"
@@ -8621,7 +8621,7 @@ msgstr "Afficher cette fenêtre (document) en plein écran"
 
 #: ../src/verbs.cpp:2241
 msgid "Duplic_ate Window"
-msgstr "Dupliquer la fenêtre (_a)"
+msgstr "Dupliquer l_a fenêtre"
 
 #: ../src/verbs.cpp:2241
 msgid "Open a new window with the same document"
@@ -9007,34 +9007,32 @@ msgstr "Répéter le dernier effet avec les nouveaux paramètres"
 #. "tutorial_tips"
 #. Fit Canvas
 #: ../src/verbs.cpp:2356
-#, fuzzy
 msgid "Fit Canvas to Selection"
-msgstr "Ajuster à la boîte de sélection"
+msgstr "Ajuster la canevas à la sélection"
 
 #: ../src/verbs.cpp:2357
-#, fuzzy
 msgid "Fit the canvas to the current selection"
-msgstr "Limiter la recherche à la sélection courante"
+msgstr "Ajuster le canevas à la sélection courante"
 
 #: ../src/verbs.cpp:2358
 msgid "Fit Canvas to Drawing"
-msgstr ""
+msgstr "Fit Canvas to Drawing"
 
 #: ../src/verbs.cpp:2359
-#, fuzzy
 msgid "Fit the canvas to the drawing"
-msgstr "Editer les stops du dégradé"
+msgstr "Ajuster le canevas au dessin"
 
 #: ../src/verbs.cpp:2360
-#, fuzzy
 msgid "Fit Canvas to Selection or Drawing"
-msgstr "Ajuster à la boîte de sélection"
+msgstr "Ajuster le canevas à la sélection ou au dessin"
 
 #: ../src/verbs.cpp:2361
 msgid ""
 "Fit the canvas to the current selection or the drawing if there is no "
 "selection"
 msgstr ""
+"Ajuster le canevas à la sélection courante ou au dessin s'il n'y a pas de "
+"sélection"
 
 #: ../src/widgets/dash-selector.cpp:102
 msgid "Dash pattern"
@@ -9573,14 +9571,12 @@ msgid "Delete selected nodes"
 msgstr "Supprimer les nœuds sélectionnés"
 
 #: ../src/widgets/toolbox.cpp:403
-#, fuzzy
 msgid "Join selected endnodes"
-msgstr "Joindre les chemins aux nœuds sélectionnés"
+msgstr "Joindre les nœuds terminaux sélectionnés"
 
 #: ../src/widgets/toolbox.cpp:405
-#, fuzzy
 msgid "Join selected endnodes with a new segment"
-msgstr "Joindre les chemins aux nœuds sélectionnés par un nouveau segment"
+msgstr "Joindre les nœuds terminaux sélectionnés par un nouveau segment"
 
 #: ../src/widgets/toolbox.cpp:408
 msgid "Split path between two non-endpoint nodes"
@@ -9909,18 +9905,16 @@ msgid "Write Adobe Illustrator"
 msgstr "Sauver au format Adobe Illustrator"
 
 #: ../share/extensions/aisvg.inx.h:1
-#, fuzzy
 msgid "AI SVG Input"
-msgstr "Entrée SVG"
+msgstr "Entrée SVG AI"
 
 #: ../share/extensions/aisvg.inx.h:2
-#, fuzzy
 msgid "Adobe Illustrator SVG (*.ai.svg)"
-msgstr "Adobe Illustrator (*.ai)"
+msgstr "SVG Adobe Illustrator (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
-msgstr ""
+msgstr "Nettoyage avant ouverture des SVGs Adobe Illustrator"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -10038,19 +10032,19 @@ msgstr "Postscript encapsulé avec une vignette"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
-msgstr ""
+msgstr "Formule LaTeX"
 
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
-msgstr ""
+msgstr "Formule LaTeX :"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
-msgstr ""
+msgstr "Extraire une image"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Path to save image"
-msgstr ""
+msgstr "Répertoire où sauver l'image"
 
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
@@ -10142,31 +10136,28 @@ msgstr ""
 "Diaposonner (incréments pour chaque corde séparés par des points-virgules)"
 
 #: ../share/extensions/fig_input.inx.h:1
-#, fuzzy
 msgid "Open files saved with XFIG"
-msgstr "Ouvrir des fichiers créés avec Adobe Illustrator"
+msgstr "Ouvrir des fichiers créés avec XFIG"
 
 #: ../share/extensions/fig_input.inx.h:2
 msgid "XFIG Graphic File (*.fig)"
-msgstr ""
+msgstr "Fichier graphique XFIG (*.fig)"
 
 #: ../share/extensions/fig_input.inx.h:3
-#, fuzzy
 msgid "XFIG Input"
-msgstr "Entrée DXF"
+msgstr "Entrée XFIG"
 
 #: ../share/extensions/flatten.inx.h:1
-#, fuzzy
 msgid "Flatness"
-msgstr "lignes"
+msgstr "Aplatissement"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
-msgstr "Aplatir Chemin"
+msgstr "Aplatir courbe de Bézier"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
-msgstr ""
+msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
 msgid "GIMP XCF maintaining layers (*.XCF)"
@@ -10234,7 +10225,7 @@ msgstr "Incrément"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
-msgstr "Mesurer"
+msgstr "Mesurer un chemin"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10285,17 +10276,15 @@ msgstr "Rendre les nœuds aléatoires"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Use normal distribution"
-msgstr ""
+msgstr "Utiliser une distribution normale"
 
 #: ../share/extensions/randompnt.inx.h:1
-#, fuzzy
 msgid "Random Point"
-msgstr "Rendre les poinst de contrôle aléatoires"
+msgstr "Point aléatoire"
 
 #: ../share/extensions/randompos.inx.h:1
-#, fuzzy
 msgid "Random Position"
-msgstr "Position :"
+msgstr "Position aléatoire"
 
 #: ../share/extensions/rtree.inx.h:1
 msgid "Initial size"
@@ -10334,21 +10323,20 @@ msgid "Envelope"
 msgstr "Enveloppe"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
-#, fuzzy
 msgid "Compressed Inkscape SVG with media (*.zip)"
-msgstr "SVG Inkscape compressé (*.svgz)"
+msgstr "SVG Inkscape compressé avec média (*.zip)"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
-#, fuzzy
 msgid ""
 "Inkscape's native file format compressed with Zip and including all media "
 "files"
-msgstr "Format de fichier natif d'Inkscape compressé avec Gzip"
+msgstr ""
+"Format de fichier natif d'Inkscape compressé avec Zip et incluant d'autres "
+"fichiers de média"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "Sortie AI"
+msgstr "Sortie ZIP"
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
 msgid "Color of shadow"
@@ -10425,3 +10413,265 @@ msgstr "Métafichier Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrée métafichier Windows (*.wmf)"
+
+#~ msgid "Export area"
+#~ msgstr "Exporter la zone"
+
+#~ msgid "Bitmap size"
+#~ msgstr "Taille du bitmap"
+
+#~ msgid "_Filename"
+#~ msgstr "Nom du _fichier"
+
+#~ msgid " <b>_Export</b> "
+#~ msgstr " <b>_Exporter</b> "
+
+#~ msgid " relative by "
+#~ msgstr " de "
+
+#~ msgid " absolute to "
+#~ msgstr " en "
+
+#~ msgid "Finishing pen"
+#~ msgstr "Tracé au stylo terminé"
+
+#~ msgid "_Panels"
+#~ msgstr "_Panneaux"
+
+#~ msgid "Show or hide the panels"
+#~ msgstr "Afficher ou non les panneaux"
+
+#~ msgid ""
+#~ "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap "
+#~ "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate the "
+#~ "opposite handle in sync"
+#~ msgstr ""
+#~ "<b>Poignée de contrôle de nœud</b> : la déplacer pour modifier la courbe; "
+#~ "<b>Ctrl</b> pour la tourner par incréments; <b>Alt</b> pour préserver sa "
+#~ "longueur; <b>Maj</b> pour tourner les deux poignées"
+
+#~ msgid "Close window"
+#~ msgstr "Fermer la fenêtre"
+
+#~ msgid "Union of selected objects"
+#~ msgstr "Faire l'union des objets sélectionnés"
+
+#~ msgid "Exclusive OR of selected objects"
+#~ msgstr "Ou exclusif (XOR) des objets sélectionnes"
+
+#~ msgid "Convert selected strokes to paths"
+#~ msgstr "Convertir les contours sélectionnés en chemins"
+
+#~ msgid "Convert bitmap object to paths"
+#~ msgstr "Convertir un objet bitmap en chemin"
+
+#~ msgid "Put text into frames"
+#~ msgstr "Insérer du texte dans des cadres"
+
+#~ msgid "Fill and Stroke dialog"
+#~ msgstr "Boîte de dialogue «remplissage et contour»"
+
+#~ msgid "View color swatches"
+#~ msgstr "Voir les palettes de couleurs"
+
+#~ msgid "Transform dialog"
+#~ msgstr "Boîte de dialogue «transformer»"
+
+#~ msgid "Text and Font dialog"
+#~ msgstr "Boîte de dialogue «texte et police»"
+
+#~ msgid "XML Editor"
+#~ msgstr "Editeur XML"
+
+#~ msgid "Create and arrange multiple clones of selection"
+#~ msgstr "Créer et organiser des clones multiples de la sélection"
+
+#~ msgid "Object Properties dialog"
+#~ msgstr "Boîte de dialogue «propriétés de l'objet»"
+
+#~ msgid "About Memory..."
+#~ msgstr "Gestion de la mémoire"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "Snap units:"
+#~ msgstr "Unités de collage :"
+
+#~ msgid "Snap distance:"
+#~ msgstr "Distance de collage :"
+
+#~ msgid "Units for the tool controls, ruler, and the statusbar"
+#~ msgstr "Unités pour les contrôles des outils, les règles et la barre d'état"
+
+#~ msgid ""
+#~ "None: dialogs are treated as regular windows; Normal: dialogs stay on top "
+#~ "of document windows; Aggressive: same as Normal but may work better with "
+#~ "some window managers."
+#~ msgstr ""
+#~ "Aucun : les boîtes de dialogue sont traités comme des fenêtres standard. "
+#~ "Normal : les les boîtes de dialogue restent au-dessus de la fenêtre du "
+#~ "document. Agressif : comme Normal, mais fonctionne mieux avec certains "
+#~ "gestionnaires de fenêtre."
+
+#~ msgid " X "
+#~ msgstr " X "
+
+#~ msgid "Row spacing:   "
+#~ msgstr "Espacement des lignes :"
+
+#~ msgid "Column spacing:"
+#~ msgstr "Espacement des colonnes :"
+
+#~ msgid "<b>Current layer is hidden</b>. Unhide it to be able to paste to it."
+#~ msgstr ""
+#~ "<b>Le calque courant est caché</b>. Le rendre visible pour pouvoir y "
+#~ "coller."
+
+#~ msgid "<b>Current layer is locked</b>. Unlock it to be able to paste to it."
+#~ msgstr ""
+#~ "<b>Le calque courant est verrouillé</b>. Le déverrouiller pour pouvoir y "
+#~ "coller."
+
+#~ msgid "<b>Current layer is hidden</b>. Unhide it to be able to add text."
+#~ msgstr ""
+#~ "<b>Le calque courant est caché</b>. Le rendre visible pour pouvoir y "
+#~ "ajouter du texte."
+
+#~ msgid "<b>Current layer is locked</b>. Unlock it to be able to add text."
+#~ msgstr ""
+#~ "<b>Le calque courant est verrouillé</b>. Le déverrouiller pour pouvoir y "
+#~ "ajouter du texte."
+
+#~ msgid "Metadata 1"
+#~ msgstr "Métadonnées 1"
+
+#~ msgid "Metadata 2"
+#~ msgstr "Métadonnées 2"
+
+# Alpha (opacity)
+#~ msgid "A"
+#~ msgstr "A"
+
+# Magenta (in CYMK)
+#~ msgid "M"
+#~ msgstr "M"
+
+#~ msgid "Connect the Dots"
+#~ msgstr "Connecter les Points"
+
+#~ msgid "Font Size"
+#~ msgstr "Taille de la police :"
+
+#~ msgid "Direction"
+#~ msgstr "Direction"
+
+#~ msgid "Summer's Night"
+#~ msgstr "Enveloppe"
+
+#~ msgid "Direction of Rotation"
+#~ msgstr "Sens de rotation"
+
+#~ msgid "Custom canvas"
+#~ msgstr "Canevas personnalisé"
+
+#~ msgid "Current style"
+#~ msgstr "Style courant"
+
+#~ msgid ""
+#~ "Current style is updated every time you change the style of any object "
+#~ "(its fill, stroke, transparency, etc.)"
+#~ msgstr ""
+#~ "Le style courant est mis à jour chaque fois que le style d'un objet est "
+#~ "changé (remplissage, contour, transparence, etc.)"
+
+#~ msgid "Arrange Objects"
+#~ msgstr "Organiser des objets"
+
+#~ msgid "deg"
+#~ msgstr "deg"
+
+#~ msgid "_Credits"
+#~ msgstr "_Crédits"
+
+#~ msgid "Grab sensitivity"
+#~ msgstr "Sensibilité"
+
+#~ msgid "Click/drag threshold"
+#~ msgstr "Seuil de cliquer-déplacer"
+
+#~ msgid "Mouse wheel scrolls by"
+#~ msgstr "La molette de la souris défile de"
+
+#~ msgid "Scroll by"
+#~ msgstr "Défiler de"
+
+#~ msgid "Acceleration"
+#~ msgstr "Accélération"
+
+#~ msgid "Speed"
+#~ msgstr "Vitesse"
+
+#~ msgid "Threshold"
+#~ msgstr "Seuil"
+
+#~ msgid "Arrow keys move by"
+#~ msgstr "Les flèches déplacent de"
+
+#~ msgid "> and < scale by"
+#~ msgstr "> et < redimensionnent de"
+
+#~ msgid "Inset/Outset by"
+#~ msgstr "Éroder/dilater de"
+
+#~ msgid "Rotation snaps every"
+#~ msgstr "Incrément de rotation"
+
+#~ msgid "Zoom in/out by"
+#~ msgstr "(Dé)Zoommer de"
+
+#~ msgid "Transform"
+#~ msgstr "Transformer"
+
+#~ msgid "Flip selection horizontally"
+#~ msgstr "Retourner les objets sélectionnés horizontalement"
+
+#~ msgid "Flip selection vertically"
+#~ msgstr "Retourner les objets sélectionnés verticalement"
+
+#~ msgid ""
+#~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
+#~ "b>, or <b>drag around</b> nodes to select.<b>0</b> out of <b>%i</b> nodes "
+#~ "selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes "
+#~ "to select."
+#~ msgstr ""
+#~ "<b>0</b> nœud sélectionné sur <b>%i</b>. <b>Cliquer</b>, <b>Maj+cliquer</"
+#~ "b>, ou <b>cliquer-déplacer</b> sur/autour des nœuds pour en "
+#~ "sélectionner<b>0</b> nœud sélectionné sur <b>%i</b>. <b>Cliquer</b>, "
+#~ "<b>Maj+cliquer</b>, ou <b>cliquer-déplacer</b> sur/autour des nœuds pour "
+#~ "en sélectionner"
+
+#, fuzzy
+#~ msgid "Could not read next message due to I/O error (error: %s)!"
+#~ msgstr "Impossible de créer le fichier d'erreur de l'extension : '%s'"
+
+#~ msgid "Open one of the recently visited documents"
+#~ msgstr "Ouvrir un des documents récemment ouverts"
+
+#~ msgid ""
+#~ "Show or hide parts of the document window (differently for normal and "
+#~ "fullscreen modes)"
+#~ msgstr ""
+#~ "Afficher ou non des parties de la fenêtre du document (différent pour les "
+#~ "modes normal et plein écran)"
+
+#~ msgid "Interactive Inkscape tutorials"
+#~ msgstr "Didacticiels interactifs d'Inkscape"
+
+#~ msgid "Modifying or Redistributing Inkscape"
+#~ msgstr "Modification ou redistribution du logiciel"
+
+#~ msgid "Show license to modify and/or redistribute Inkscape: GNU GPL"
+#~ msgstr ""
+#~ "Afficher la license de modification et/ou redistribution d'Inkscape: GNU "
+#~ "GPL"
