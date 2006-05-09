@@ -2,9 +2,10 @@
 #define SP_EXPORT_H
 
 /**
- * \brief text-edit
+ * \brief export to bitmap dialog
  *
- * Text editing and font changes
+ * Creates a dialog window for exporting an image to a bitmap if one doesn't already exist and
+ * shows it to the user.  If the dialog has already been created, it simply shows the window.
  *
  */
 

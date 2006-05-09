@@ -20,6 +20,15 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <gtkmm/box.h>
+#include <gtkmm/buttonbox.h>
+#include <gtkmm/label.h>
+#include <gtkmm/widget.h>
+#include <gtkmm/togglebutton.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/image.h>
+#include <gtkmm/stockid.h>
+#include <gtkmm/stock.h>
 
 #include <glibmm/i18n.h>
 #include "helper/unit-menu.h"
@@ -240,40 +249,38 @@ sp_export_spinbutton_new ( gchar *key, float val, float min, float max,
 } // end of sp_export_spinbutton_new()
 
 
-static GtkWidget *
-sp_export_dialog_area_frame (GtkWidget * dlg)
+static Gtk::VBox *
+sp_export_dialog_area_box (GtkWidget * dlg)
 {
-    GtkWidget * f, * t, * hb, * b, * us, * l, * vb, * unitbox;
+    Gtk::VBox* vb = new Gtk::VBox(false, 3);
 
-    f = gtk_frame_new (_("Export area"));
-    vb = gtk_vbox_new (FALSE, 2);
-    gtk_container_add (GTK_CONTAINER (f), vb);
+    Gtk::Label* lbl = new Gtk::Label(_("<big><b>Export area</b></big>"), Gtk::ALIGN_LEFT);
+    lbl->set_use_markup(true);
+    vb->pack_start(*lbl);
 
     /* Units box */
-    unitbox = gtk_hbox_new (FALSE, 0);
-    gtk_container_set_border_width (GTK_CONTAINER (unitbox), 4);
+    Gtk::HBox* unitbox = new Gtk::HBox(false, 0);
     /* gets added to the vbox later, but the unit selector is needed
        earlier than that */
 
-    us = sp_unit_selector_new (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    Gtk::Widget* us = Glib::wrap(sp_unit_selector_new (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE));
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop)
-        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us), sp_desktop_namedview(desktop)->doc_units);
-    gtk_box_pack_end (GTK_BOX (unitbox), us, FALSE, FALSE, 0);
-    l = gtk_label_new (_("Units:"));
-    gtk_box_pack_end (GTK_BOX (unitbox), l, FALSE, FALSE, 3);
-    gtk_object_set_data (GTK_OBJECT (dlg), "units", us);
+        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us->gobj()), sp_desktop_namedview(desktop)->doc_units);
+    unitbox->pack_end(*us, false, false, 0);
+    Gtk::Label* l = new Gtk::Label(_("Units:"));
+    unitbox->pack_end(*l, false, false, 3);
+    gtk_object_set_data (GTK_OBJECT (dlg), "units", us->gobj());
 
-    hb = gtk_hbox_new (TRUE, 0);
-    gtk_container_set_border_width (GTK_CONTAINER (hb), 4);
-    gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 3);
+    Gtk::HBox* togglebox = new Gtk::HBox(true, 0);
 
+    Gtk::ToggleButton* b;
     for (int i = 0; i < SELECTION_NUMBER_OF; i++) {
-        b = gtk_toggle_button_new_with_mnemonic (_(selection_labels[i]));
-        gtk_object_set_data (GTK_OBJECT (b), "key", GINT_TO_POINTER(i));
-        gtk_object_set_data (GTK_OBJECT (dlg), selection_names[i], b);
-        gtk_box_pack_start (GTK_BOX (hb), b, FALSE, TRUE, 0);
-        gtk_signal_connect ( GTK_OBJECT (b), "clicked", 
+        b = new Gtk::ToggleButton(_(selection_labels[i]), true);
+        b->set_data("key", GINT_TO_POINTER(i));
+        gtk_object_set_data (GTK_OBJECT (dlg), selection_names[i], b->gobj());
+        togglebox->pack_start(*b, false, true, 0);
+        gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked", 
                              GTK_SIGNAL_FUNC (sp_export_area_toggled), dlg );
     }
 
@@ -284,55 +291,55 @@ sp_export_dialog_area_frame (GtkWidget * dlg)
     g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", 
                        G_CALLBACK (sp_export_selection_changed), dlg );
     
-    t = gtk_table_new (2, 6, FALSE);
-    gtk_box_pack_start(GTK_BOX(vb), t, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings (GTK_TABLE (t), 4);
-    gtk_table_set_col_spacings (GTK_TABLE (t), 4);
-    gtk_container_set_border_width (GTK_CONTAINER (t), 4);
+    Gtk::Table* t = new Gtk::Table(2, 6, FALSE);
+    t->set_row_spacings (4);
+    t->set_col_spacings (4);
 
-    sp_export_spinbutton_new ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us, 
-                               t, 0, 0, _("_x0:"), NULL, EXPORT_COORD_PRECISION, 1,
+    sp_export_spinbutton_new ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+                               GTK_WIDGET(t->gobj()), 0, 0, _("_x0:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK ( sp_export_area_x_value_changed), 
                                dlg );
 
-    sp_export_spinbutton_new ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us, 
-                               t, 2, 0, _("x_1:"), NULL, EXPORT_COORD_PRECISION, 1,
+    sp_export_spinbutton_new ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+                               GTK_WIDGET(t->gobj()), 2, 0, _("x_1:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK (sp_export_area_x_value_changed), 
                                dlg );
 
     sp_export_spinbutton_new ( "width", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, 
-                               us, t, 4, 0, _("Width:"), NULL, EXPORT_COORD_PRECISION, 1,
+                               us->gobj(), GTK_WIDGET(t->gobj()), 4, 0, _("Width:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK 
                                    (sp_export_area_width_value_changed), 
                                dlg );
 
-    sp_export_spinbutton_new ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us, 
-                               t, 0, 1, _("_y0:"), NULL, EXPORT_COORD_PRECISION, 1,
+    sp_export_spinbutton_new ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+                               GTK_WIDGET(t->gobj()), 0, 1, _("_y0:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK (sp_export_area_y_value_changed), 
                                dlg );
 
-    sp_export_spinbutton_new ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us, 
-                               t, 2, 1, _("y_1:"), NULL, EXPORT_COORD_PRECISION, 1,
+    sp_export_spinbutton_new ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, us->gobj(), 
+                               GTK_WIDGET(t->gobj()), 2, 1, _("y_1:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK (sp_export_area_y_value_changed), 
                                dlg );
 
     sp_export_spinbutton_new ( "height", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, 
-                               us, t, 4, 1, _("Height:"), NULL, EXPORT_COORD_PRECISION, 1,
+                               us->gobj(), GTK_WIDGET(t->gobj()), 4, 1, _("Height:"), NULL, EXPORT_COORD_PRECISION, 1,
                                G_CALLBACK (sp_export_area_height_value_changed), 
                                dlg );
 
-    /* Adding in the unit box */
-    gtk_box_pack_start(GTK_BOX(vb), unitbox, FALSE, FALSE, 0);
+    vb->pack_start(*togglebox, false, false, 3);
+    vb->pack_start(*t, false, false, 0);
+    vb->pack_start(*unitbox, false, false, 0);
 
-    return f;
-} // end of sp_export_dialog_area_frame
+    return vb;
+} // end of sp_export_dialog_area_box
 
 
 void
 sp_export_dialog (void)
 {
     if (!dlg) {
-        GtkWidget *vb, *hb;
+        Gtk::VBox* vb;
+        Gtk::HBox* hb;
 
         gchar title[500];
         sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_FILE_EXPORT), title);
@@ -388,28 +395,35 @@ sp_export_dialog (void)
 
         GtkTooltips *tt = gtk_tooltips_new();
 
-        vb = gtk_vbox_new (FALSE, 4);
-        gtk_container_set_border_width (GTK_CONTAINER (vb), 0);
-        gtk_container_add (GTK_CONTAINER (dlg), vb);
+        vb = new Gtk::VBox(false, 3);
+        vb->set_border_width(3);
+        gtk_container_add (GTK_CONTAINER (dlg), GTK_WIDGET(vb->gobj()));
 
         /* Export area frame */
         {
-            GtkWidget *f = sp_export_dialog_area_frame(dlg);
-            gtk_box_pack_start (GTK_BOX (vb), f, FALSE, FALSE, 0);
+            Gtk::VBox *area_box = sp_export_dialog_area_box(dlg);
+            area_box->set_border_width(3);
+            vb->pack_start(*area_box, false, false, 0);
         }
 
         /* Bitmap size frame */
         {
-            GtkWidget *f = gtk_frame_new (_("Bitmap size"));
-            gtk_box_pack_start (GTK_BOX (vb), f, FALSE, FALSE, 0);
-            GtkWidget *t = gtk_table_new (2, 5, FALSE);
-            gtk_table_set_row_spacings (GTK_TABLE (t), 4);
-            gtk_table_set_col_spacings (GTK_TABLE (t), 4);
-            gtk_container_set_border_width (GTK_CONTAINER (t), 4);
-            gtk_container_add (GTK_CONTAINER (f), t);
+            Gtk::VBox *size_box = new Gtk::VBox(false, 3);
+            size_box->set_border_width(3);
+
+            Gtk::Label* lbl = new Gtk::Label(_("<big><b>Bitmap size</b></big>"), Gtk::ALIGN_LEFT);
+            lbl->set_use_markup(true);
+            size_box->pack_start(*lbl, false, false, 0);
+            const int rows = 2;
+            const int cols = 5;
+            const bool homogeneous = false;
+            Gtk::Table *t = new Gtk::Table(rows, cols, homogeneous);
+            t->set_row_spacings (4);
+            t->set_col_spacings (4);
+            size_box->pack_start(*t);
 
             sp_export_spinbutton_new ( "bmwidth", 16.0, 1.0, 1000000.0, 1.0, 10.0, 
-                                       NULL, t, 0, 0,
+                                       NULL, GTK_WIDGET(t->gobj()), 0, 0,
                                        _("_Width:"), _("pixels at"), 0, 1,
                                        G_CALLBACK 
                                        (sp_export_bitmap_width_value_changed), 
@@ -419,13 +433,13 @@ sp_export_dialog (void)
                                        prefs_get_double_attribute 
                                        ( "dialogs.export.defaultxdpi", 
                                          "value", DPI_BASE), 
-                                       0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 0,
+                                       0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 0,
                                        NULL, _("dp_i"), 2, 1,
                                        G_CALLBACK (sp_export_xdpi_value_changed), 
                                        dlg );
 
             sp_export_spinbutton_new ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0, 
-                                       NULL, t, 0, 1, 
+                                       NULL, GTK_WIDGET(t->gobj()), 0, 1, 
                                        _("Height:"), _("pixels at"), 0, 1, 
                                        G_CALLBACK
                                        (sp_export_bitmap_height_value_changed), 
@@ -438,18 +452,23 @@ sp_export_dialog (void)
             sp_export_spinbutton_new ( "ydpi", prefs_get_double_attribute 
                                        ( "dialogs.export.defaultxdpi", 
                                          "value", DPI_BASE), 
-                                       0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 1,
+                                       0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 1,
                                        NULL, _("dpi"), 2, 0, NULL, dlg );
+
+            vb->pack_start(*size_box);
         }
 
         /* File entry */
         {
-            GtkWidget *frame = gtk_frame_new ("");
-            GtkWidget *flabel = gtk_label_new_with_mnemonic (_("_Filename"));
-            gtk_frame_set_label_widget (GTK_FRAME(frame), flabel);
-            gtk_box_pack_start (GTK_BOX (vb), frame, FALSE, FALSE, 0);
+            Gtk::VBox* file_box = new Gtk::VBox(false, 3);
+            file_box->set_border_width(3);
 
-            GtkWidget *fe = gtk_entry_new ();
+            // true = has mnemonic
+            Gtk::Label *flabel = new Gtk::Label(_("<big><b>_Filename</b></big>"), Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER, true);
+            flabel->set_use_markup(true);
+            file_box->pack_start(*flabel, false, false, 0);
+
+            Gtk::Entry *fe = new Gtk::Entry();
 
             /*
              * set the default filename to be that of the current path + document
@@ -488,63 +507,85 @@ sp_export_dialog (void)
                         extension_point[0] = '\0';
 
                         final_name = g_strconcat(uri_copy, ".png", NULL);
-                        gtk_entry_set_text (GTK_ENTRY (fe), final_name);
+                        fe->set_text(final_name);
 
                         g_free(final_name);
                         g_free(uri_copy);
                     }
                 } else {
                     name = g_strconcat(uri, ".png", NULL);
-                    gtk_entry_set_text (GTK_ENTRY (fe), name);
+                    fe->set_text(name);
                     g_free(name);
                 }
 
-                doc_export_name = g_strdup(gtk_entry_get_text(GTK_ENTRY(fe)));
+                doc_export_name = g_strdup(fe->get_text().c_str());
             }
-            g_signal_connect ( G_OBJECT (fe), "changed",
+            g_signal_connect ( G_OBJECT (fe->gobj()), "changed",
                                G_CALLBACK (sp_export_filename_modified), dlg);
 
-            hb = gtk_hbox_new (FALSE, 5);
-            gtk_container_add (GTK_CONTAINER (frame), hb);
-            gtk_container_set_border_width (GTK_CONTAINER (hb), 4);
+            hb = new Gtk::HBox(FALSE, 5);
 
             {
-                GtkWidget *b = gtk_button_new_with_mnemonic (_("_Browse..."));
-                gtk_box_pack_end (GTK_BOX (hb), b, FALSE, FALSE, 4);
-                g_signal_connect ( G_OBJECT (b), "clicked",
+                // true = has mnemonic
+                Gtk::Button *b = new Gtk::Button();
+
+                Gtk::HBox* pixlabel = new Gtk::HBox(false, 3);
+                Gtk::Image *im = new Gtk::Image(Gtk::StockID(Gtk::Stock::DIRECTORY),
+                        Gtk::ICON_SIZE_BUTTON);
+                pixlabel->pack_start(*im);
+
+                Gtk::Label *l = new Gtk::Label();
+                l->set_markup_with_mnemonic(_("_Browse..."));
+                pixlabel->pack_start(*l);
+
+                b->add(*pixlabel);
+
+                hb->pack_end (*b, false, false, 4);
+                g_signal_connect ( G_OBJECT (b->gobj()), "clicked",
                                    G_CALLBACK (sp_export_browse_clicked), NULL );
             }
 
-            gtk_box_pack_start (GTK_BOX (hb), fe, TRUE, TRUE, 0);
-            gtk_object_set_data (GTK_OBJECT (dlg), "filename", fe);
+            hb->pack_start (*fe, true, true, 0);
+            file_box->add(*hb);
+            gtk_object_set_data (GTK_OBJECT (dlg), "filename", fe->gobj());
             gtk_object_set_data (GTK_OBJECT (dlg), "filename-modified", (gpointer)FALSE);
-            original_name = g_strdup(gtk_entry_get_text (GTK_ENTRY (fe)));
+            original_name = g_strdup(fe->get_text().c_str());
             // pressing enter in the filename field is the same as clicking export:
-            g_signal_connect ( G_OBJECT (fe), "activate",
+            g_signal_connect ( G_OBJECT (fe->gobj()), "activate",
                                G_CALLBACK (sp_export_export_clicked), dlg );
             // focus is in the filename initially:
-            gtk_widget_grab_focus (GTK_WIDGET (fe));
+            fe->grab_focus();
 
             // mnemonic in frame label moves focus to filename:
-            gtk_label_set_mnemonic_widget (GTK_LABEL(flabel), fe);
+            flabel->set_mnemonic_widget(*fe);
+
+            vb->pack_start(*file_box);
         }
 
         /* Buttons */
-        hb = gtk_hbox_new (FALSE, 0);
-        gtk_box_pack_end (GTK_BOX (vb), hb, FALSE, FALSE, 0);
+        Gtk::HButtonBox* bb = new Gtk::HButtonBox(Gtk::BUTTONBOX_END);
+        bb->set_border_width(3);
 
         {
-            GtkWidget *b = gtk_button_new ();
-            GtkWidget *l = gtk_label_new ("");
-            gtk_label_set_markup_with_mnemonic (GTK_LABEL(l), _(" <b>_Export</b> "));
-            gtk_container_add (GTK_CONTAINER(b), l);
-            gtk_tooltips_set_tip (tt, b, _("Export the bitmap file with these settings"), NULL);
-            gtk_signal_connect ( GTK_OBJECT (b), "clicked",
+            Gtk::Button *b = new Gtk::Button();
+            Gtk::HBox* image_label = new Gtk::HBox(false, 3);
+            Gtk::Image *im = new Gtk::Image(Gtk::StockID(Gtk::Stock::APPLY),
+                    Gtk::ICON_SIZE_BUTTON);
+            image_label->pack_start(*im);
+
+            Gtk::Label *l = new Gtk::Label();
+            l->set_markup_with_mnemonic(_("_Export"));
+            image_label->pack_start(*l);
+
+            b->add(*image_label);
+            gtk_tooltips_set_tip (tt, GTK_WIDGET(b->gobj()), _("Export the bitmap file with these settings"), NULL);
+            gtk_signal_connect ( GTK_OBJECT (b->gobj()), "clicked",
                                  GTK_SIGNAL_FUNC (sp_export_export_clicked), dlg );
-            gtk_box_pack_end (GTK_BOX (hb), b, FALSE, FALSE, 0);
+            bb->pack_end(*b, false, false, 0);
         }
 
-        gtk_widget_show_all (vb);
+        vb->pack_end(*bb, false, false, 0);
+        vb->show_all();
 
     } // end of if (!dlg)
 
@@ -792,7 +833,6 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                         filename = g_strdup("");
                     }
                 }
-
                 break;
             }
             case SELECTION_SELECTION:
