@@ -1,3 +1,4 @@
+#include <vector>
 #include "streams-jar.h"
 
 namespace Inkscape {
@@ -81,9 +82,8 @@ int JarBuffer::consume_compressed(int nbytes)
     int ret=do_consume_and_inflate(nbytes);
 
     if ( ret == EOF && eflen > 0 ) {
-	guint8 *efbuf=new guint8[eflen];
-	_urihandle->read(efbuf, eflen);
-        delete [] efbuf;
+        std::vector<guint8> efbuf(eflen);
+	_urihandle->read(&efbuf[0], eflen);
 	return 1;
     }
 
@@ -92,13 +92,12 @@ int JarBuffer::consume_compressed(int nbytes)
 
 int JarBuffer::consume_uncompressed(int nbytes)
 {
-    guint8 *data=new guint8[nbytes];
-    int consumed=consume(data, nbytes);
+    std::vector<guint8> data(nbytes);
+    int consumed=consume(&data[0], nbytes);
     if ( consumed != EOF ) {
-        copy_to_get(data, consumed);
+        copy_to_get(&data[0], consumed);
         compressed_left -= consumed;
     }
-    delete [] data;
     return consumed;
 }
 

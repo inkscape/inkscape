@@ -9,6 +9,7 @@
  * Released under GNU LGPL, read the file 'COPYING.LIB' for more information
  */
 
+#include <vector>
 #include "streams-zlib.h"
 
 namespace Inkscape {
@@ -104,18 +105,17 @@ int ZlibBuffer::do_consume(guint8 *buf, int nbytes)
 
 int ZlibBuffer::do_consume_and_inflate(int nbytes)
 {
-    guint8 *buf=new guint8[nbytes];
+    std::vector<guint8> buf(nbytes);
 
-    int ret=consume(buf, nbytes);
+    int ret=consume(&buf[0], nbytes);
     
     if ( ret != EOF ) {
         ret = 1;
-        GByteArray *gba = inflate(buf, nbytes);
+        GByteArray *gba = inflate(&buf[0], nbytes);
         copy_to_get(gba->data, gba->len);
         g_byte_array_free(gba, TRUE);
     }
 
-    delete [] buf;
     return ret;
 }
 

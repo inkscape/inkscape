@@ -2,7 +2,7 @@
 
 	* src/streams-zlib.cpp, src/streams-jar.cpp:
 
-	  use array new rather than dynamically-sized automatic arrays,
+	  use std::vector rather than dynamically-sized automatic arrays,
 	  plus cleanups and minor fixes
 
 2006-05-08  MenTaLguY  <mental@rydia.net>
