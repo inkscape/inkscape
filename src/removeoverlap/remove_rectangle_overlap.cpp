@@ -1,3 +1,14 @@
+/**
+ * \brief remove overlaps between a set of rectangles.
+ *
+ * Authors:
+ *   Tim Dwyer <tgdwyer@gmail.com>
+ *
+ * Copyright (C) 2005 Authors
+ *
+ * Released under GNU LGPL.  Read the file 'COPYING' for more information.
+ */
+
 #include <iostream>
 #include <cassert>
 #include "generate-constraints.h"
@@ -28,24 +39,23 @@ double Rectangle::yBorder=0;
  *    x-positions - this corrects the case where rectangles were moved 
  *    too much in the first pass.
  */
-void removeRectangleOverlap(Rectangle *rs[], int n, double xBorder, double yBorder) {
+void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double yBorder) {
 	assert(0 <= n);
 	try {
 	// The extra gap avoids numerical imprecision problems
 	Rectangle::setXBorder(xBorder+EXTRA_GAP);
 	Rectangle::setYBorder(yBorder+EXTRA_GAP);
-	double *ws=new double[n];
+	Variable **vs=new Variable*[n];
 	for(int i=0;i<n;i++) {
-		ws[i]=1;
+		vs[i]=new Variable(i,0,1);
 	}
-	Variable **vs;
 	Constraint **cs;
 	double *oldX = new double[n];
-	int m=generateXConstraints(rs,ws,n,vs,cs,true);
+	int m=generateXConstraints(n,rs,vs,cs,true);
 	for(int i=0;i<n;i++) {
 		oldX[i]=vs[i]->desiredPosition;
 	}
-	VPSC vpsc_x(vs,n,cs,m);
+	VPSC vpsc_x(n,vs,m,cs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	f<<"Calling VPSC: Horizontal pass 1"<<endl;
@@ -54,9 +64,7 @@ void removeRectangleOverlap(Rectangle *rs[], int n, double xBorder, double yBord
 	vpsc_x.solve();
 	for(int i=0;i<n;i++) {
 		rs[i]->moveCentreX(vs[i]->position());
-		delete vs[i];
 	}
-	delete [] vs;
 	for(int i = 0; i < m; ++i) {
 		delete cs[i];
 	}
@@ -64,8 +72,8 @@ void removeRectangleOverlap(Rectangle *rs[], int n, double xBorder, double yBord
 	// Removing the extra gap here ensures things that were moved to be adjacent to
 	// one another above are not considered overlapping
 	Rectangle::setXBorder(Rectangle::xBorder-EXTRA_GAP);
-	m=generateYConstraints(rs,ws,n,vs,cs);
-	VPSC vpsc_y(vs,n,cs,m);
+	m=generateYConstraints(n,rs,vs,cs);
+	VPSC vpsc_y(n,vs,m,cs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	f.open(LOGFILE,ios::app);
 	f<<"Calling VPSC: Vertical pass"<<endl;
@@ -75,34 +83,31 @@ void removeRectangleOverlap(Rectangle *rs[], int n, double xBorder, double yBord
 	for(int i=0;i<n;i++) {
 		rs[i]->moveCentreY(vs[i]->position());
 		rs[i]->moveCentreX(oldX[i]);
-		delete vs[i];
 	}
-	delete [] vs;
 	delete [] oldX;
 	for(int i = 0; i < m; ++i) {
 		delete cs[i];
 	}
 	delete [] cs;
 	Rectangle::setYBorder(Rectangle::yBorder-EXTRA_GAP);
-	m=generateXConstraints(rs,ws,n,vs,cs,false);
-	VPSC vpsc_x2(vs,n,cs,m);
+	m=generateXConstraints(n,rs,vs,cs,false);
+	VPSC vpsc_x2(n,vs,m,cs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	f.open(LOGFILE,ios::app);
 	f<<"Calling VPSC: Horizontal pass 2"<<endl;
 	f.close();
 #endif
 	vpsc_x2.solve();
+	for(int i = 0; i < m; ++i) {
+		delete cs[i];
+	}
+	delete [] cs;
 	for(int i=0;i<n;i++) {
 		rs[i]->moveCentreX(vs[i]->position());
 		delete vs[i];
 	}
 	delete [] vs;
-	for(int i = 0; i < m; ++i) {
-		delete cs[i];
-	}
-	delete [] cs;
-	delete [] ws;
-	} catch (char *str) {
+	} catch (char const *str) {
 		std::cerr<<str<<std::endl;
 		for(int i=0;i<n;i++) {
 			std::cerr << *rs[i]<<std::endl;

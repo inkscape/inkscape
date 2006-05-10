@@ -1,14 +1,14 @@
 /**
- * \brief Remove overlaps function
+ * \brief Functions to automatically generate constraints for the
+ * rectangular node overlap removal problem.
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *
  * Copyright (C) 2005 Authors
  *
- * Released under GNU GPL.  Read the file 'COPYING' for more information.
+ * Released under GNU LGPL.  Read the file 'COPYING' for more information.
  */
-
 #ifndef SEEN_REMOVEOVERLAP_GENERATE_CONSTRAINTS_H
 #define SEEN_REMOVEOVERLAP_GENERATE_CONSTRAINTS_H
 #include <iostream>
@@ -71,8 +71,8 @@ class Variable;
 class Constraint;
 
 // returns number of constraints generated
-int generateXConstraints(Rectangle *rs[], double weights[], const int n, Variable **&vs, Constraint **&cs,bool useNeighbourLists);
+int generateXConstraints(const int n, Rectangle** rs, Variable** vars, Constraint** &cs, const bool useNeighbourLists);
+int generateYConstraints(const int n, Rectangle** rs, Variable** vars, Constraint** &cs);
 
-int generateYConstraints(Rectangle *rs[], double weights[], const int n, Variable **&vs, Constraint **&cs);
 
 #endif // SEEN_REMOVEOVERLAP_GENERATE_CONSTRAINTS_H

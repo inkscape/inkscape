@@ -1,12 +1,16 @@
 /**
- * \brief Remove overlaps function
+ * \brief A block structure defined over the variables
+ *
+ * A block structure defined over the variables such that each block contains
+ * 1 or more variables, with the invariant that all constraints inside a block
+ * are satisfied by keeping the variables fixed relative to one another
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *
  * Copyright (C) 2005 Authors
  *
- * Released under GNU GPL.  Read the file 'COPYING' for more information.
+ * Released under GNU LGPL.  Read the file 'COPYING' for more information.
  */
 
 #ifndef SEEN_REMOVEOVERLAP_BLOCKS_H
@@ -30,7 +34,7 @@ class Constraint;
 class Blocks : public std::set<Block*>
 {
 public:
-	Blocks(Variable *vs[], const int n);
+	Blocks(const int n, Variable *vs[]);
 	~Blocks(void);
 	void mergeLeft(Block *r);
 	void mergeRight(Block *l);

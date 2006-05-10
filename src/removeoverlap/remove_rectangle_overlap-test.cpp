@@ -60,7 +60,7 @@ test_case(unsigned const n_rects, double const rect2coords[][4])
                               rect2coords[i][2],
                               rect2coords[i][3]);
     }
-    removeRectangleOverlap(rs, n_rects, 0.0, 0.0);
+    removeRectangleOverlap(n_rects,rs,0.0, 0.0);
     for (unsigned i = 0; i < n_rects; ++i) {
         UTEST_ASSERT(possibly_eq(rs[i]->width(), (rect2coords[i][1] -
                                                   rect2coords[i][0]  )));

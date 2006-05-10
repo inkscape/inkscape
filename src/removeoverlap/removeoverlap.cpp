@@ -7,7 +7,7 @@
 *
 * Copyright (C) 2005 Authors
 *
-* Released under GNU GPL.  Read the file 'COPYING' for more information.
+* Released under GNU LGPL.  Read the file 'COPYING' for more information.
 */
 #include "util/glib-list-iterators.h"
 #include "sp-item.h"
@@ -29,7 +29,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 	std::list<SPItem *> selected;
 	selected.insert<GSListConstIterator<SPItem *> >(selected.end(), items, NULL);
 	if (selected.empty()) return;
-	int n=selected.size();
+	unsigned n=selected.size();
 
 	//Check 2 or more selected objects
 	if (n < 2) return;
@@ -62,7 +62,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 		rs[i++] = new Rectangle(min[X], max[X],
 					min[Y], max[Y]);
 	}
-	removeRectangleOverlap(rs, n, 0.0, 0.0);
+	removeRectangleOverlap(n, rs, 0.0, 0.0);
 	i=0;
 	for (std::list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();
