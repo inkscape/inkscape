@@ -62,7 +62,7 @@ SessionManager::sendRequestToChatroom(Glib::ustring const& server, Glib::ustring
 	// Add 'from' attribute
 	LmMessageNode* preq_root = lm_message_get_node(presence_req);
 
-	lm_message_node_set_attribute(preq_root, "from", lm_connection_get_jid(this->session_data->connection));
+	lm_message_node_set_attribute(preq_root, "from", this->session_data->jid.c_str());
 	
 	// Add <x xmlns='http://jabber.org/protocol/muc/' />
 	// (Not anymore: we don't speak it! -- yipdw)
@@ -284,7 +284,7 @@ SessionManager::receiveConnectRequestResponse(InvitationResponses response, std:
 			Glib::ustring primary = String::ucompose(_("<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your whiteboard invitation.</span>\n\n"), sender);
 			
 			// TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-			Glib::ustring secondary = String::ucompose(_("You are still connected to a Jabber server as <b>%2</b>, and may send an invitation to <b>%1</b> again, or you may send an invitation to a different user."), sender, lm_connection_get_jid(this->session_data->connection));
+			Glib::ustring secondary = String::ucompose(_("You are still connected to a Jabber server as <b>%2</b>, and may send an invitation to <b>%1</b> again, or you may send an invitation to a different user."), sender, this->session_data->jid);
 
 			Gtk::MessageDialog dialog(primary + secondary, true, Gtk::MESSAGE_INFO, Gtk::BUTTONS_CLOSE, false);
 			dialog.run();

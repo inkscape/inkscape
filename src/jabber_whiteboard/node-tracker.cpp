@@ -252,7 +252,7 @@ XMLNodeTracker::generateKey()
 		// of a user.
 		return String::compose("%1;%2@%3/%4", this->_counter++, sd->chat_name, sd->chat_server, sd->chat_handle);
 	} else {
-		return String::compose("%1;%2", this->_counter++, lm_connection_get_jid(sd->connection));
+		return String::compose("%1;%2", this->_counter++, sd->jid);
 	}
 }
 
@@ -270,7 +270,7 @@ XMLNodeTracker::createSpecialNodeTables()
 void 
 XMLNodeTracker::dump()
 {
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker dump for %s", lm_connection_get_jid(this->_sm->session_data->connection));
+	g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker dump for %s", this->_sm->session_data->jid.c_str());
 	KeyToTrackerNodeMap::iterator i = this->_keyToNode.begin();
 	TrackerNodeToKeyMap::iterator j = this->_nodeToKey.begin();
 	std::map< char const*, char const* >::iterator k = this->_specialnodes.begin();

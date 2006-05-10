@@ -42,7 +42,7 @@ void
 MessageQueue::popFront()
 {
 	this->_queue.pop_front();
-//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Removed element, queue size (for %s): %u", lm_connection_get_jid(this->_sm->session_data->connection), this->_queue.size());
+//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Removed element, queue size (for %s): %u", this->_sm->session_data->jid, this->_queue.size());
 }
 
 unsigned int
@@ -88,7 +88,7 @@ ReceiveMessageQueue::insert(MessageNode* msg)
                                                               "%u changes in receive queue.",
                                                               this->_queue.size()),
                                                      this->_queue.size());
-//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Receive queue size (for %s): %u", lm_connection_get_jid(this->_sm->session_data->connection), this->_queue.size());
+//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Receive queue size (for %s): %u", this->_sm->session_data->jid, this->_queue.size());
 }
 
 void
@@ -118,7 +118,7 @@ SendMessageQueue::insert(MessageNode* msg)
                                                               "%u changes in send queue.",
                                                               this->_queue.size()),
                                                      this->_queue.size());
-//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Send queue size (for %s): %u",  lm_connection_get_jid(this->_sm->session_data->connection), this->_queue.size());
+//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Send queue size (for %s): %u",  this->_sm->session_data->jid, this->_queue.size());
 }
 
 }

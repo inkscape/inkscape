@@ -117,6 +117,11 @@ public:
 	Glib::ustring chat_handle;
 
 	/**
+	 * The Users Jid.
+	 */
+	Glib::ustring jid;
+
+	/**
 	 * Name of the chatroom that a user in a chatroom is connected to.
 	 */
 	Glib::ustring chat_name;

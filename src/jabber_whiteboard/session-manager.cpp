@@ -186,7 +186,7 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	Glib::ustring jid;
 
 	// JID format is username@server/resource
-	jid += username + "@" + server;
+	jid += username + "@" + server + "/" + RESOURCE_NAME;
 
 	LmMessage* m;
 	LmMessageHandler* mh;
@@ -208,6 +208,7 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 		lm_connection_unref(this->session_data->connection);
 	}
 
+	this->session_data->jid = jid;
 	this->session_data->connection = lm_connection_new(server.c_str());
 
 	lm_connection_set_port(this->session_data->connection, atoi(port.c_str()));
@@ -227,7 +228,7 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	}
 
 	// Send authorization
-	lm_connection_set_jid(this->session_data->connection, jid.c_str());
+	//lm_connection_set_jid(this->session_data->connection, jid.c_str());
 
 	// 	TODO:
 	// 	Asynchronous connection and authentication would be nice,
@@ -461,7 +462,7 @@ SessionManager::sendChange(Glib::ustring const& msg, MessageType type, std::stri
 		case CHANGE_REPEATABLE:
 		case CHANGE_COMMIT:
 		{
-			MessageNode *newNode = new MessageNode(this->session_data->sequence_number++, lm_connection_get_jid(this->session_data->connection), recipient, msg, type, false, chatroom);
+			MessageNode *newNode = new MessageNode(this->session_data->sequence_number++, this->session_data->jid, recipient, msg, type, false, chatroom);
 			this->session_data->send_queue->insert(newNode);
 			Inkscape::GC::release(newNode);
 			break;
@@ -492,7 +493,7 @@ SessionManager::sendMessage(MessageType msgtype, unsigned int sequence, Glib::us
 	m = lm_message_new(recipientJID, LM_MESSAGE_TYPE_MESSAGE);
 
 	// add sender
-	lm_message_node_set_attribute(m->node, "from", lm_connection_get_jid(this->session_data->connection));
+	lm_message_node_set_attribute(m->node, "from", this->session_data->jid.c_str());
 
 	// set message subtype according to whether or not this is
 	// destined for a chatroom
@@ -806,7 +807,7 @@ SessionManager::userDisconnectedFromWhiteboard(std::string const& JID)
 	// This message is not used in a chatroom context.
 	Glib::ustring primary = String::ucompose(_("<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the whiteboard session.</span>\n\n"), JID);
 	// TRANSLATORS: %1 and %2 are userids
-	Glib::ustring secondary = String::ucompose(_("You are still connected to a Jabber server as <b>%2</b>, and may establish a new session to <b>%1</b> or a different user."), JID, lm_connection_get_jid(this->session_data->connection));
+	Glib::ustring secondary = String::ucompose(_("You are still connected to a Jabber server as <b>%2</b>, and may establish a new session to <b>%1</b> or a different user."), JID, this->session_data->jid);
 
 	// TODO: parent this dialog to the active desktop
 	Gtk::MessageDialog dialog(primary + secondary, true, Gtk::MESSAGE_INFO, Gtk::BUTTONS_CLOSE, false);

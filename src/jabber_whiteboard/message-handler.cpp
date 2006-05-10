@@ -343,7 +343,7 @@ MessageHandler::_presence(LmMessage* message)
 			case LM_MESSAGE_SUB_TYPE_AVAILABLE:
 				// we don't want to insert an entry into a buddy list
 				// if it's our own presence
-				if (sender != lm_connection_get_jid(this->_sm->session_data->connection)) {
+				if (sender != this->_sm->session_data->jid.c_str()) {
 					sd->buddyList.insert(sender);
 				}
 				return LM_HANDLER_RESULT_REMOVE_MESSAGE;

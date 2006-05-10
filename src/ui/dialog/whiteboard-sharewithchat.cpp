@@ -112,7 +112,7 @@ WhiteboardShareWithChatroomDialogImpl::_construct()
 	this->_buttonsbox.pack_start(this->_share);
 
 	// Set default values
-	Glib::ustring jid = lm_connection_get_jid(this->_sm->session_data->connection);
+	Glib::ustring jid = this->_sm->session_data->jid;
 	Glib::ustring nick = jid.substr(0, jid.find_first_of('@'));
 	this->_handle.set_text(nick);
 	this->_roomname.set_text("inkboard");
