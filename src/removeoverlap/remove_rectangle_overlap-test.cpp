@@ -117,8 +117,8 @@ int main()
 {
     srand(time(NULL));
 
-    /* Ensure that the program doesn't run for more than 30 seconds. */
-    alarm(30);
+    /* Ensure that the program doesn't run for more than 60 seconds. */
+    alarm(60);
 
     utest_start("removeRectangleOverlap(zero gaps)");
 
