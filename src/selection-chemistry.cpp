@@ -1225,6 +1225,7 @@ void sp_selection_to_next_layer ()
 
     const GSList *items = g_slist_copy ((GSList *) selection->itemList());
 
+    bool no_more = false; // Set to true, if no more layers above
     SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
         GSList *temp_clip = NULL;
@@ -1236,13 +1237,18 @@ void sp_selection_to_next_layer ()
             copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
         } else {
             copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip, NULL);
+            no_more = true;
         }
         selection->setReprList((GSList const *) copied);
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
-        dt->setCurrentLayer(next);
+        if (next) dt->setCurrentLayer(next);
         sp_document_done(sp_desktop_document (dt));
     } else {
+        no_more = true;
+    }
+
+    if (no_more) {
         dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No more layers above."));
     }
 
@@ -1263,6 +1269,7 @@ void sp_selection_to_prev_layer ()
 
     const GSList *items = g_slist_copy ((GSList *) selection->itemList());
 
+    bool no_more = false; // Set to true, if no more layers below
     SPObject *next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
     if (next) {
         GSList *temp_clip = NULL;
@@ -1274,13 +1281,18 @@ void sp_selection_to_prev_layer ()
             copied = sp_selection_paste_impl (sp_desktop_document (dt), next, &temp_clip, NULL);
         } else {
             copied = sp_selection_paste_impl (sp_desktop_document (dt), dt->currentLayer(), &temp_clip, NULL);
+            no_more = true;
         }
         selection->setReprList((GSList const *) copied);
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
-        dt->setCurrentLayer(next);
+        if (next) dt->setCurrentLayer(next);
         sp_document_done(sp_desktop_document (dt));
     } else {
+        no_more = true;
+    }
+
+    if (no_more) {
         dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No more layers below."));
     }
 
