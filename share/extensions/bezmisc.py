@@ -69,14 +69,14 @@ def linebezierintersect(((lx1,ly1),(lx2,ly2)),((bx0,by0),(bx1,by1),(bx2,by2),(bx
     c=coef1*cy-coef2*cx
     d=coef1*(y0-bb)-coef2*(x0-dd)
 
-        roots = rootWrapper(a,b,c,d)
-        retval = []
-        for i in roots:
-            if type(i) is complex and i.imag==0:
-                i = i.real
-            if type(i) is not complex and 0<=i<=1:
-                retval.append(i)
-        return retval
+    roots = rootWrapper(a,b,c,d)
+    retval = []
+    for i in roots:
+        if type(i) is complex and i.imag==0:
+            i = i.real
+        if type(i) is not complex and 0<=i<=1:
+            retval.append(i)
+    return retval
 
 def bezierpointatt(((bx0,by0),(bx1,by1),(bx2,by2),(bx3,by3)),t):
     ax,ay,bx,by,cx,cy,x0,y0=bezierparameterize(((bx0,by0),(bx1,by1),(bx2,by2),(bx3,by3)))
