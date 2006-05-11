@@ -295,25 +295,25 @@ RFE</a>).</p>
 <group>
 <title>In Pfad umwandeln</title>
 <keys><key><shift/><ctrl/>C</key> <action>umwandeln ausgewählter Objekte in Pfade</action></keys>
-<keys><key><ctrl/><alt/>C</key> <action>convert stroke to path</action></keys>
+<keys><key><ctrl/><alt/>C</key> <action>Kontur in Pfad umwandeln</action></keys>
 </group>
 
 <group>
 <title>Boole'sche Operation</title>
 <keys><key><ctrl/>+</key>  <action>Vereinigung</action></keys>
 <note>Vereinigung verknüpft mehrere Pfade so, dass ein einziger Pfad ohne Überschneidungen entsteht.</note>
-<keys><key><ctrl/>-</key>  <action>difference</action></keys>
-<note>Difference works on 2 objects, extracting the top from the bottom.</note>
-<keys><key><ctrl/>*</key>  <action>intersection</action></keys>
-<note>Intersection creates a path representing the common (overlapping) area of all selected objects.</note>
-<keys><key><ctrl/>^</key>  <action>exclusive OR (XOR)</action></keys>
-<note>XOR is similar to Union, except that it works on 2 objects and removes areas where the objects overlap.</note>
-<keys><key><ctrl/>/</key>  <action>division (cut)</action></keys>
-<note>Division cuts the bottom object into pieces by the top object, preserving the fill and stroke of the bottom.</note>
-<keys><key><ctrl/><alt/>/</key>  <action>cut path</action></keys>
-<note>Cut Path cuts the bottom object's stroke only where it is intersected by the top path, removing any fill from the result.</note>
-<note>The result of Union, Difference, Intersection, and XOR inherits the id= attribute and therefore the clones of the bottom object.</note>
-<note>Division and Cut path normally produce several objects; of them, a random one inherits the id= of the bottom source object.</note>
+<keys><key><ctrl/>-</key>  <action>Differenz</action></keys>
+<note>Differenz verknüpft genau 2 Objekte so, dass das Obere vom Unteren abgezogen wird.</note>
+<keys><key><ctrl/>*</key>  <action>Intersektion</action></keys>
+<note>Intersektion erzeugt einen Pfad, der den gemeinsamen (überlappenden) Bereich aller Objekte darstellt.</note>
+<keys><key><ctrl/>^</key>  <action>Exklusiv-Oder (Ausschluss)</action></keys>
+<note>Ausschluss ist ähnlich zur Vereinigung is similar to Union, arbeitet jedoch nur mit genau 2 Objekten und entfernt überlappende Bereiche.</note>
+<keys><key><ctrl/>/</key>  <action>Division</action></keys>
+<note>Division erzeugt mehrere Objekte; Den überlappenden Bereich aller Objekte und den ausgeschlossenen Bereich des unteren Objektes.</note>
+<keys><key><ctrl/><alt/>/</key>  <action>Pfad zerschneiden</action></keys>
+<note>Zerschneidet die Konturlinie des unteren Objektes an den Überschneidungen mit dem oberen Objekt. Die Füllung wird entfernt.</note>
+<note>Das Ergebnis von Vereinigung, Differenz, Intersektion und Ausschluss erbt das "id"-Attribut und so auch die Klone des unteren Objektes.</note>
+<note>Division und Zerschneiden erzeugen normalerweise mehrere Pfade, von denen ein zufälliger das "id"-Attribut des unteren Objektes erbt.</note>
 </group>
 
 <group>
@@ -335,21 +335,21 @@ RFE</a>).</p>
 </group>
 
 <group>
-<title>Combine</title>
-<keys><key><ctrl/>K</key>  <action>combine paths</action></keys>
-<note>This is different from grouping in that combined paths create one object.</note>
-<note>This is different from Union in that overlapping areas are not affected.</note>
-<note>Whether overlapping areas are filled is controlled by the Fill: winding/alternating switch on the Fill &amp; Stroke dialog.</note>
-<keys><key><shift/><ctrl/>K</key>  <action>break paths apart</action></keys>
-<note>This attempts to break an object into constituent paths; it will fail if the object is one solid path.</note>
+<title>Kombinieren</title>
+<keys><key><ctrl/>K</key>  <action>Pfade kombinieren</action></keys>
+<note>Im Unterschied zum Gruppieren wird genau ein Objekt erzeugt.</note>
+<note>Im Unterschied zur Vereinigung werden Überlappungen nicht verändert.</note>
+<note>Ob überlappende Bereiche gefüllt werden, hängt von den Einstellungen im Dialog "Füllung und Kontur" ab.</note>
+<keys><key><shift/><ctrl/>K</key>  <action>Pfade zerlegen</action></keys>
+<note>Versucht einen Pfad in Unterpfade zu zerlegen. Funktioniert nicht an einem einzelnen geschlossenem Pfad.</note>
 </group>
 
 <group>
-<title>Simplify</title>
-<keys><key><ctrl/>L</key>  <action>simplify</action></keys>
-<note>This command attempts to simplify selected path(s) by removing extra nodes. It converts all objects to paths first.</note>
-<note>If you invoke this command several times in quick succession, it will act more and more aggressively.</note>
-<note>Invoking Simplify again after a pause restores the default threshold (settable in the Inkscape Preferences dialog).</note>
+<title>Vereinfachen</title>
+<keys><key><ctrl/>L</key>  <action>Vereinfachen</action></keys>
+<note>Dieses Kommando versucht die selektierten Pfade durch Entfernen überflüssiger Knoten zu vereinfachen. Objekte werden zuerst in Pfade umgewandelt.</note>
+<note>Wird diese Operation mehrmals schnell hintereinander ausgeführt, erhöht sich die Stärke</note>
+<note>kurze Pause dazwischen setzt die Stärke wieder zurück. (einstellbar im "Inkscape-Einstellungen" Dialog).</note>
 </group>
 
 </section>
@@ -358,89 +358,92 @@ RFE</a>).</p>
 
 <column>
 
-*<section title="Selector" color="eee4dc">
+*<section title="Auswahlwerkzeug" color="eee4dc">
 
 <group>
-<title>Keyboard select</title>
-<keys><key><misc f="Tab"/></key>  <action>select next object </action></keys>
-<keys><key><shift/><misc f="Tab"/></key> <action>select previous object </action></keys>
-<note>These keys pick objects in their z-order (Tab cycles from bottom to top, Shift+Tab cycles from top to bottom).</note> 
-<note>Unless you did manual rearrangements, the last object you created is always on top.</note> 
-<note>As a result, if nothing is selected, pressing Shift+Tab once conveniently selects the object you created last.</note>
-<note>This works on objects within the current layer (unless you change that in preferences).</note>
-<keys><key><ctrl/>A</key>	 <action>select all (current layer)</action></keys>
-<note>This works on objects within the current layer (unless you change that in preferences).</note>
-<keys><key><ctrl/><alt/>A</key>	 <action>select all (all layers)</action></keys>
-<note>This works on objects in all visible and unlocked layers.</note>
-<keys><key>!</key> <action>invert selection (current layer)</action></keys>
-<note>This inverts selection (deselects what was selected and vice versa) in the current layer.</note>
-<keys><key><alt/>!</key> <action>invert selection (all layers)</action></keys>
-<note>This inverts selection (deselects what was selected and vice versa) in visible and unlocked layers.</note>
-<keys><key><misc f="Esc"/></key> <action>deselect</action></keys>
-<keys><key><misc-wide f="Backspace"/></key><key><misc f="Del"/></key>	 <action>delete selection</action></keys>
+<title>Tastaturkommandos zur Auswahl</title>
+<keys><key><misc f="Tab"/></key>  <action>nächstes Object selektieren </action></keys>
+<keys><key><shift/><misc f="Tab"/></key> <action>vorheriges Objekt selektieren </action></keys>
+<note>Diese Tasten wählen die Objekte nach deren Z-Tiefe (Tab von unten nach oben, Umsch+Tab von oben nach unten).</note> 
+<note>Sofern Sie nicht manuelle Umordnungen gemacht haben, ist das zulezt erstellte Objekt ganz oben.</note> 
+<note>Als Ergebnis, falls nichts selektiert ist, selektiert das einmalige Drücken von Umsch+Tab das zuletzt erzeugte Objekt.</note>
+<note>Das funktioniert an Objekten in der aktuellen Ebene (falls Sie das nicht in den Einstellungen geändert haben).</note>
+<keys><key><ctrl/>A</key>	 <action>Alles selektieren (aktuelle Ebene)</action></keys>
+<note>Das funktioniert an Objekten der aktuellen Ebene (falls Sie das nicht in den Einstellungen geändert haben).</note>
+<keys><key><ctrl/><alt/>A</key>	 <action>Alles selektieren (alle Ebenen)</action></keys>
+<note>Das funktioniert an allen Objekten in allen sichtbaren und entsperrten Ebenen.</note>
+<keys><key>!</key> <action>Auswahl invertieren (aktuelle Ebene)</action></keys>
+<note>Auswahl invertieren (alle ausgewählten Objekte deselektieren und alle anderen auswählen) in aktueller Ebene.</note>
+<keys><key><alt/>!</key> <action>Auswahl invertieren (alle Ebenen)</action></keys>
+<note>Auswahl invertieren (alle ausgewählten Objekte deselektieren und alle anderen auswählen) in sichbaren und entsperrten Ebenen.</note>
+<keys><key><misc f="Esc"/></key> <action>Auswahl aufheben</action></keys>
+<keys><key><misc-wide f="Backspace"/></key><key><misc f="Del"/></key>	 <action>Auswahl löschen</action></keys>
 </group>
 
 <group>
-<title>Keyboard move</title>
-<mouse><key><arrows/></key>  <action>move selection by the nudge distance</action></mouse>
-<mouse><key><shift/><arrows/></key>  <action>move selection by 10x nudge distance</action></mouse>
-<note>The default nudge distance is 2 px (SVG pixel units, not screen pixels).</note>
-<mouse><key><alt/><arrows/></key>  <action>move selection by 1 pixel</action></mouse>
-<mouse><key><alt/><shift/><arrows/></key>  <action>move selection by 10 pixels</action></mouse>
-<note>The actual distance for pixel movements depends on zoom level. Zoom in for finer movement.</note>
+<title>Verschieben mittels Tastatur</title>
+<mouse><key><arrows/></key>  <action>Auswahl verschieben um Mindestschrittweite</action></mouse>
+<mouse><key><shift/><arrows/></key>  <action>Auswahl verschieben um 10-fache Mindestschrittweite.</action></mouse>
+<note>Die Mindestschrittweite beträgt 2px (SVG Pixel-Einheiten, nicht Bildschirm Pixel).</note>
+<mouse><key><alt/><arrows/></key>  <action>Auswahl verschieben um 1 pixel</action></mouse>
+<mouse><key><alt/><shift/><arrows/></key>  <action>Auswahl verschieben um 10 Pixel</action></mouse>
+<note>Die Schrittweite in Pixel hängt vom aktuellen Grössenfaktor ab. Vergrössern Sie für kleinere Schrittweiten.</note>
 </group>
 
 <group>
-<title>Keyboard scale</title>
-<keys><key>.</key> <key>&gt;</key> <action>scale selection up by the scale step</action></keys> 
-<keys><key>,</key> <key>&lt;</key> <action>scale selection down by the scale step</action></keys> 
-<note>The default scale step is 2 px (SVG pixel units, not screen pixels).</note>
-<keys><key><ctrl/>.</key> <key><ctrl/>&gt;</key> <action>scale selection to 200%</action></keys>
-<keys><key><ctrl/>,</key> <key><ctrl/>&lt;</key> <action>scale selection to 50%</action></keys>
-<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>scale selection up by 1 pixel</action></keys>
-<keys><key><alt/>,</key> <key><alt/>&lt;</key> <action>scale selection down by 1 pixel</action></keys>
-<note>The actual size increment for pixel scaling depends on zoom level. Zoom in for finer scaling.</note>
-<note>Scaling is uniform around the center, so that the size increment applies to the larger of the two dimensions.</note>
+<title>Vergrössern mittels Tastatur</title
+<keys><key>.</key> <key>&gt;</key> <action>Auswahl vergrössern um eine Stufe</action></keys> 
+<keys><key>,</key> <key>&lt;</key> <action>Auswahl verkleinern um eine Stufe</action></keys> 
+<note>Die Standard-Vergrösserungsstufe beträgt 2 px(SVG Pixel Einheiten, nicht Bildschirm pixel).</note>
+<keys><key><ctrl/>.</key> <key><ctrl/>&gt;</key> <action>Auswahl vergrössern auf 200%</action></keys>
+<keys><key><ctrl/>,</key> <key><ctrl/>&lt;</key> <action>Auswahl verkleinern auf 50%</action></keys>
+<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>Auswahl vergrössern um 1 Pixel</action></keys>
+<keys><key><alt/>,</key> <key><alt/>&lt;</key> <action>Auswahl verkleinern um 1 Pixel</action></keys>
+<note>Der Vergrößerungsschritt hängt von der Vergrößerung ab. Vergrössern sie für kleinere Schrittweite.</note>
+<note>Die Vergrösserung ist gleichmässig um das Zentrum, so dass der Vergrößerungsschritt auf die grössere der zwei Dimensionen angewendet wird.</note>
 </group>
 
 <group>
-<title>Keyboard rotate</title>
-<keys><key>[</key> <key>]</key> <action>rotate selection by the angle step</action></keys> 
-<note>The default angle step is 15 degrees. ] rotates clockwise, [ rotates counterclockwise.</note>
-<keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>rotate selection by 90 degrees</action></keys>
-<keys><key><alt/>[</key> <key><alt/>]</key> <action>rotate selection by 1 pixel</action></keys>
-<note>The actual angle for pixel rotation depends on zoom level. Zoom in for finer movement.</note>
+<title>Drehen mittels Tastatur</title>
+<keys><key>[</key> <key>]</key> <action>Auswahl drehen um Winkel Schrittweite</action></keys> 
+<note>Die Standard Winkel-Schrittweite beträgt 15 Grad. ] dreht im Uhrzeigersinn, [ dreht entgegen.</note>
+<keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>Auswahl drehen um 90 Grad</action></keys>
+<keys><key><alt/>[</key> <key><alt/>]</key> <action>Auswahl drehen um 1 Pixel</action></keys>
+<note>Der Winkel für die Drehung um ein Pixel hängt vom aktuellen Größenfaktor ab. Vergrößern sie für feinere Winkel.</note>
 </group>
 
 <group>
-<title>Keyboard flip</title>
-<keys><key>h</key> <action>flip selection horizontally</action></keys>
-<keys><key>v</key> <action>flip selection vertically</action></keys>
+<title>Spiegeln mittels Tastatur</title>
+<keys><key>h</key> <action>Auswahl horizontal spiegeln</action></keys>
+<keys><key>v</key> <action>Auswahl vertikal spiegeln</action></keys>
 </group>
 
 <group>
-<title>Mouse select</title>
-<mouse><key><left-click/></key> <action>select an object</action></mouse>
-<note>When you left-click on an object, previous selection is deselected.</note>
-<mouse><key><shift/><left-click/></key> <action>toggle selection </action></mouse>
-<note>Shift+click adds an object to the current selection if it was not selected, or deselects it otherwise.</note>
-<mouse><key><left-click/><left-click/></key> <action>edit the object</action></mouse>
-<note>For paths, double clicking switches to Node tool; for shapes, to corresponding shape tool; for text, to Text tool.</note>
-<note>For groups, double clicking performs the "Enter group" command (the group becomes temporary layer).</note>
-<note>Double clicking in empty space swithes to the parent layer in the hierarchy, if any.</note>
+<title>Auswahl mittels Maus</title>
+<mouse><key><left-click/></key> <action>Objekt auswählen</action></mouse>
+<note>Beim Links-Klicken auf ein Objekt, wird die vorherige Auswahl aufgehoben.</note>
+<mouse><key><shift/><left-click/></key> <action>Auswahl umschalten</action></mouse>
+<note>Umsch+Klick fügt ein Objekt der aktuellen Auswahl hinzu oder, falls es schon ausgewählt war, entfernt es von dieser.</note>
+<mouse><key><left-click/><left-click/></key> <action>Objekt bearbeiten</action></mouse>
+<note>Bei Pfaden schaltet Doppel-Klicken in das Knotenwerkzeug, bei Formen in das entsprechende Formenwerkzeug, bei Text in das Textwerkzeug.</note>
+<note>Bei Gruppen bewirkt Doppel-Klicken das "Gruppe bearbeiten"-Kommano (die Gruppe wird eine vorübergehende Ebene).</note>
+<note>Doppel-Klicken in einem leeren Bereich schaltet wieder in die übergeordnete Ebene zurück.</note>
 </group>
 
 <group>
-<title>Select within group, select under</title>
-<mouse><key><ctrl/><left-click/></key> <action>select within group</action></mouse>
-<note>Ctrl+click selects the object at click point disregarding any levels of grouping that this object might belong to.</note>
-<mouse><key><ctrl/><shift/><left-click/></key> <action>toggle selection within group</action></mouse>
-<mouse><key><alt/><left-click/></key> <action>select under</action></mouse>
-<note>Alt+click selects the object at click point which is beneath (in z-order) the lowest selected object at click point.</note>
-<note>If the bottom object is reached, Alt+click again selects the top object. So, several Alt+clicks cycle through z-order stack at point.</note>
-<note>On Linux, Alt+click and Alt+drag may be reserved by the window manager. Reconfigure it so you can use them in Inkscape.</note>
-<mouse><key><shift/><alt/><left-click/></key> <action>toggle under</action></mouse>
-<mouse><key><ctrl/><alt/><left-click/></key> <action>select under, in groups</action></mouse>
+<title>Auswahl innerhalb einer Gruppe und verdeckter Objekte</title>
+<mouse><key><ctrl/><left-click/></key> <action>Auswahl innerhalb einer Gruppe</action></mouse>
+<note>Strg+Klick selektiert das Objekt an diesem Punkt ungeachtet jeglicher Gruppierungen zu dem das Objekt gehören könnte.</note>
+<mouse><key><ctrl/><shift/><left-click/></key> <action>Auswahl innerhalb der Gruppe umschalten</action></mouse>
+<mouse><key><alt/><left-click/></key> <action>Auswahl verdeckter Objekte</action></mouse>
+<note>Alt+Klick selektiert das Objekt an diesem Punkt, das sich unterhalb (in der Z-Tiefe) des untersten selektierten an diesem Punkt befindlichen Objekt befindet.</note>
+<note>Wenn das unterste Objekt erreicht ist, selektiert Alt+klick wieder das oberste Objekt. Durch das mehrfache betätigen von Alt+klick, werden die Objekte an diesem Punkt in Z-Tiefe immer wieder durchlaufen.</note>
+<note>Bei Linux kann Alt+Klick und Klicken+Ziehen durch den Fenster Manager reserviert sein. Stellen Sie ihn so ein, dass sie diese unter inkscape benutzen können.</note>
+<mouse><key><shift/><alt/><left-click/></key> <action>Umschalten verdeckter Objekte</action></mouse>
+<mouse><key><ctrl/><alt/><left-click/></key> <action>
+
+
+select under, in groups</action></mouse>
 <mouse><key><shift/><ctrl/><alt/><left-click/></key> <action>toggle under, in groups</action></mouse>
 <keys><key><ctrl/><misc-wide f="Enter"/></key> <action>enter group</action></keys>
 <keys><key><ctrl/><misc-wide f="Backspace"/></key>	 <action>go to parent group</action></keys>
