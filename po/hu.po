@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-09 21:07+0200\n"
+"POT-Creation-Date: 2006-05-13 00:27+0200\n"
 "PO-Revision-Date: 2005-11-06 19:56+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
@@ -45,26 +45,26 @@ msgstr ""
 "<b>Ellipszis</b>: %s &#215; %s. Kör vagy egész-arányú ellipszis: <b>Ctrl</"
 "b>; rajzolás a kezdőpont köré: <b>Shift</b>."
 
-#: ../src/connector-context.cpp:513
+#: ../src/connector-context.cpp:517
 msgid "Creating new connector"
 msgstr "Új kapocs létrehozása"
 
-#: ../src/connector-context.cpp:937
+#: ../src/connector-context.cpp:941
 msgid "Finishing connector"
 msgstr "Kapocs befejezése"
 
-#: ../src/connector-context.cpp:1081
+#: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Kapcsolódási pont</b>. Új kapocs létrehozása: kattintással vagy húzással."
 
-#: ../src/connector-context.cpp:1152
+#: ../src/connector-context.cpp:1156
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Kapocs-végpont</b>. Új útvonal készítése vagy más alakzatokhoz való "
 "kapcsolás: húzással."
 
-#: ../src/connector-context.cpp:1257
+#: ../src/connector-context.cpp:1267
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Jelöljön ki <b>legalább 1 nem-kapocs objektumot</b>."
 
@@ -121,7 +121,7 @@ msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr ""
 "Jelöljön ki <b>egy objektumot</b>, amelynek a csempézett klónjai törlendők."
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1902
+#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1931
 msgid "Select an <b>object</b> to clone."
 msgstr "Jelölje ki a klónozandó <b>objektumot</b>."
 
@@ -835,7 +835,7 @@ msgstr "képpont; felbontás:"
 msgid "dp_i"
 msgstr "_DPI"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "dpi"
 msgstr "DPI"
 
@@ -1021,7 +1021,7 @@ msgstr "Csoportok"
 msgid "Search clones"
 msgstr "Keresés klónokra"
 
-#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:445
+#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "Clones"
 msgstr "Klónok"
 
@@ -1571,9 +1571,9 @@ msgstr "Nincs kijelölve dokumentum"
 
 #: ../src/dialogs/stroke-style.cpp:775 ../src/interface.cpp:760
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
-#: ../src/ui/dialog/inkscape-preferences.cpp:318
-#: ../src/ui/dialog/inkscape-preferences.cpp:398
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:319
+#: ../src/ui/dialog/inkscape-preferences.cpp:401
+#: ../src/ui/dialog/inkscape-preferences.cpp:522
 #: ../src/ui/widget/selected-style.cpp:134
 #: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1932
 msgid "None"
@@ -1710,7 +1710,7 @@ msgstr "Sortávolság:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:357 ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:377
+#: ../src/ui/dialog/inkscape-preferences.cpp:378
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2179
 msgid "Text"
 msgstr "Szöveg"
@@ -3123,33 +3123,33 @@ msgstr ""
 "NULL. Az új objektum és annak leszármazottjai nem lesznek elküldve."
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1012
+#: ../src/jabber_whiteboard/session-manager.cpp:1013
 msgid "Select a location and filename"
 msgstr "Válasszon egy helyet és egy fájlnevet"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1014
+#: ../src/jabber_whiteboard/session-manager.cpp:1015
 msgid "Set filename"
 msgstr "Fájlnév beállítása"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:318
+#: ../src/jabber_whiteboard/session-manager.cpp:319
 msgid "No SSL certificate was found."
 msgstr "SSL-tanúsítvány nem található."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:321
+#: ../src/jabber_whiteboard/session-manager.cpp:322
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "A Jabber-kiszolgáló által adott SSL-tanúsítvány nem megbízható."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:324
+#: ../src/jabber_whiteboard/session-manager.cpp:325
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "A Jabber-kiszolgáló által adott SSL-tanúsítvány már lejárt."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:327
+#: ../src/jabber_whiteboard/session-manager.cpp:328
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "A Jabber-kiszolgáló által adott SSL-tanúsítvány nem lett aktiválva."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:330
+#: ../src/jabber_whiteboard/session-manager.cpp:331
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3157,7 +3157,7 @@ msgstr ""
 "A Jabber-kiszolgáló által adott SSL-tanúsítvány olyan gépnevet tartalmaz, "
 "amely eltér a Jabber-kiszolgáló gépnevétől."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:333
+#: ../src/jabber_whiteboard/session-manager.cpp:334
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
@@ -3165,13 +3165,13 @@ msgstr ""
 "A Jabber-kiszolgáló által adott SSL-tanúsítvány érvénytelen ujjlenyomatot "
 "tartalmaz."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:336
+#: ../src/jabber_whiteboard/session-manager.cpp:337
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Ismeretlen hiba történt az SSL-kapcsolat létrehozásakor."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:342
+#: ../src/jabber_whiteboard/session-manager.cpp:343
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3181,24 +3181,24 @@ msgstr ""
 "\n"
 "Szeretné folytatni a Jabber-kiszolgálóhoz való kapcsolódást?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:345
+#: ../src/jabber_whiteboard/session-manager.cpp:346
 msgid "Continue connecting and ignore further errors"
 msgstr "Kapcsolódás folytatása a további hibák figyelmen kívül hagyásával"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:346
+#: ../src/jabber_whiteboard/session-manager.cpp:347
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Kapcsolódás folytatása, figyelmeztetés a további hibákra"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:347
+#: ../src/jabber_whiteboard/session-manager.cpp:348
 msgid "Cancel connection"
 msgstr "Kapcsolódás leállítása"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:794
+#: ../src/jabber_whiteboard/session-manager.cpp:795
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Rajztábla-munkamenet létrehozva ezzel: <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:802
+#: ../src/jabber_whiteboard/session-manager.cpp:803
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> <b>elhagyta</b> a rajztábla-munkamenetet."
@@ -3206,7 +3206,7 @@ msgstr "<b>%s</b> <b>elhagyta</b> a rajztábla-munkamenetet."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:807
+#: ../src/jabber_whiteboard/session-manager.cpp:808
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3217,7 +3217,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:809
+#: ../src/jabber_whiteboard/session-manager.cpp:810
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3225,7 +3225,7 @@ msgstr ""
 "Még kapcsolódva van \"<b>%2</b>\" néven egy Jabber-kiszolgálóhoz. "
 "Létrehozhat egy új munkamenetet \"<b>%1</b>\" vagy más felhasználóval."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1005
+#: ../src/jabber_whiteboard/session-manager.cpp:1006
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3239,15 +3239,15 @@ msgstr ""
 "Kiválaszthat egy másik helyet a munkamenet eltárolásához, vagy választhatja "
 "azt is, hogy nem veszi fel a munkamenetet."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1007
+#: ../src/jabber_whiteboard/session-manager.cpp:1008
 msgid "Choose a different location"
 msgstr "Másik hely kiválasztása"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1008
+#: ../src/jabber_whiteboard/session-manager.cpp:1009
 msgid "Skip session recording"
 msgstr "Ne legyen felvéve a munkamenet"
 
-#: ../src/knot.cpp:418
+#: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
 msgstr "Csomópont vagy vezérlőelem húzása megszakítva."
 
@@ -3591,7 +3591,7 @@ msgstr ""
 "<b>Alt</b>: vezérlőelem hosszának megőrzése; <b>Ctrl+Alt</b>: áthelyezés "
 "vezérlőelemek mentén"
 
-#: ../src/nodepath.cpp:1003
+#: ../src/nodepath.cpp:1154
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3600,12 +3600,12 @@ msgstr ""
 "illesztés: <b>Ctrl</b>; hossz megőrzése: <b>Alt</b>; mindkét vezérlőelem "
 "forgatása: <b>Shift</b>."
 
-#: ../src/nodepath.cpp:1434 ../src/nodepath.cpp:1446 ../src/nodepath.cpp:1533
-#: ../src/nodepath.cpp:1545
+#: ../src/nodepath.cpp:1585 ../src/nodepath.cpp:1597 ../src/nodepath.cpp:1684
+#: ../src/nodepath.cpp:1696
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Összekapcsoláshoz <b>két végpontot</b> kell kijelölni."
 
-#: ../src/nodepath.cpp:1794 ../src/nodepath.cpp:1808
+#: ../src/nodepath.cpp:1952 ../src/nodepath.cpp:1966
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3613,11 +3613,11 @@ msgstr ""
 "Ki kell jelölni egy láncon <b>két, nem végponti csomópontot</b>, amelyek a "
 "törlendő szakaszokat közrefogják."
 
-#: ../src/nodepath.cpp:1904
+#: ../src/nodepath.cpp:2062
 msgid "Cannot find path between nodes."
 msgstr "A csomópontok közt nem található lánc."
 
-#: ../src/nodepath.cpp:2951
+#: ../src/nodepath.cpp:3121
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3628,7 +3628,7 @@ msgstr ""
 "illesztés: <b>Ctrl</b>; hossz megőrzése: <b>Alt</b>; mindkét vezérlőelem "
 "forgatása: <b>Shift</b>."
 
-#: ../src/nodepath.cpp:3466
+#: ../src/nodepath.cpp:3636
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3637,57 +3637,57 @@ msgstr ""
 "illesztés: <b>Ctrl</b>; illesztés a vezérlőelemek irányában: <b>Ctrl+Alt</b>."
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3669
+#: ../src/nodepath.cpp:3839
 msgid "end node"
 msgstr "szélső csomópont"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:3674
+#: ../src/nodepath.cpp:3844
 msgid "cusp"
 msgstr "csúcs"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:3677
+#: ../src/nodepath.cpp:3847
 msgid "smooth"
 msgstr "íves"
 
-#: ../src/nodepath.cpp:3679
+#: ../src/nodepath.cpp:3849
 msgid "symmetric"
 msgstr "szimmetrikus"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3685
+#: ../src/nodepath.cpp:3855
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "szélső csomópont, vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
-#: ../src/nodepath.cpp:3687
+#: ../src/nodepath.cpp:3857
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "egy vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
-#: ../src/nodepath.cpp:3690
+#: ../src/nodepath.cpp:3860
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "mindkét vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
-#: ../src/nodepath.cpp:3702
+#: ../src/nodepath.cpp:3872
 msgid "<b>Drag</b> nodes or node handles; <b>arrow</b> keys to move nodes"
 msgstr ""
 "Csomópontok illetve csomópont-vezérlőelemek áthelyezése: <b>húzással</b>. "
 "Csomópontok áthelyezése a <b>nyílbillentyűkkel</b> is lehetséges."
 
-#: ../src/nodepath.cpp:3703
+#: ../src/nodepath.cpp:3873
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "A csomópont illetve a csomópont-vezérlőelemek áthelyezése: <b>húzással</b>. "
 "A csomópont áthelyezése a <b>nyílbillentyűkkel</b> is lehetséges."
 
-#: ../src/nodepath.cpp:3729 ../src/nodepath.cpp:3741
+#: ../src/nodepath.cpp:3899 ../src/nodepath.cpp:3911
 msgid "Select a single object to edit its nodes or handles."
 msgstr ""
 "Jelölje ki az objektumot, amelynek csomópontjait illetve vezérlőelemeit "
 "módosítani kívánja."
 
-#: ../src/nodepath.cpp:3733
+#: ../src/nodepath.cpp:3903
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3704,18 +3704,18 @@ msgstr[1] ""
 "b>, <b>Shift+kattintással</b>, vagy egy terület <b>húzással való "
 "kijelölésével</b>."
 
-#: ../src/nodepath.cpp:3739
+#: ../src/nodepath.cpp:3909
 msgid "Drag the handles of the object to modify it."
 msgstr "Az objektum módosítása a vezérlőelemeinek a húzásával végezhető."
 
-#: ../src/nodepath.cpp:3747
+#: ../src/nodepath.cpp:3917
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
-#: ../src/nodepath.cpp:3753
+#: ../src/nodepath.cpp:3923
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4017,106 +4017,106 @@ msgstr ""
 "A kijelölt objektum <b>nem lánc</b>; zsugorítás illetve nyújtás nem "
 "végezhető."
 
-#: ../src/selection-chemistry.cpp:221
+#: ../src/selection-chemistry.cpp:224
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Nem történt</b> törlés."
 
-#: ../src/selection-chemistry.cpp:252
+#: ../src/selection-chemistry.cpp:255
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Jelölje ki a kettőzendő <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:423
+#: ../src/selection-chemistry.cpp:426
 msgid "Select <b>two or more objects</b> to group."
 msgstr "Jelöljön ki <b>2 vagy több objektumot</b> a csoportosításhoz."
 
-#: ../src/selection-chemistry.cpp:431
+#: ../src/selection-chemistry.cpp:434
 msgid "Select <b>at least two objects</b> to group."
 msgstr "Jelöljön ki <b>legalább 2 objektumot</b> a csoportosításhoz."
 
-#: ../src/selection-chemistry.cpp:516
+#: ../src/selection-chemistry.cpp:519
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Jelölje ki a szétbontandó <b>csoportot</b>."
 
-#: ../src/selection-chemistry.cpp:557
+#: ../src/selection-chemistry.cpp:560
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "A kijelölésben <b>nincs szétbontható csoport</b>."
 
-#: ../src/selection-chemistry.cpp:626
+#: ../src/selection-chemistry.cpp:629
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Jelölje ki az előrébb helyezendő <b>objektumokat</b>."
 
-#: ../src/selection-chemistry.cpp:632 ../src/selection-chemistry.cpp:684
-#: ../src/selection-chemistry.cpp:718 ../src/selection-chemistry.cpp:776
+#: ../src/selection-chemistry.cpp:635 ../src/selection-chemistry.cpp:687
+#: ../src/selection-chemistry.cpp:721 ../src/selection-chemistry.cpp:779
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "<b>Eltérő csoportban</b> illetve <b>rétegben</b> levő objektumok nem "
 "helyezhetők előrébb illetve hátrébb."
 
-#: ../src/selection-chemistry.cpp:676
+#: ../src/selection-chemistry.cpp:679
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Jelölje ki az elölre helyezendő <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:712
+#: ../src/selection-chemistry.cpp:715
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Jelölje ki a hátrébb helyezendő <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:768
+#: ../src/selection-chemistry.cpp:771
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Jelölje ki a hátulra helyezendő <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:809
+#: ../src/selection-chemistry.cpp:812
 msgid "Nothing to undo."
 msgstr "Nincs visszavonható művelet."
 
-#: ../src/selection-chemistry.cpp:816
+#: ../src/selection-chemistry.cpp:819
 msgid "Nothing to redo."
 msgstr "Nincs újra végrehajtható művelet."
 
-#: ../src/selection-chemistry.cpp:986
+#: ../src/selection-chemistry.cpp:989
 msgid "Nothing was copied."
 msgstr "Nem történt másolás."
 
-#: ../src/selection-chemistry.cpp:1086 ../src/selection-chemistry.cpp:1122
-#: ../src/selection-chemistry.cpp:1148 ../src/selection-chemistry.cpp:1183
+#: ../src/selection-chemistry.cpp:1089 ../src/selection-chemistry.cpp:1125
+#: ../src/selection-chemistry.cpp:1151 ../src/selection-chemistry.cpp:1186
 msgid "Nothing on the clipboard."
 msgstr "A vágólap üres."
 
-#: ../src/selection-chemistry.cpp:1128
+#: ../src/selection-chemistry.cpp:1131
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
 
-#: ../src/selection-chemistry.cpp:1154 ../src/selection-chemistry.cpp:1189
+#: ../src/selection-chemistry.cpp:1157 ../src/selection-chemistry.cpp:1192
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
 
-#: ../src/selection-chemistry.cpp:1222
+#: ../src/selection-chemistry.cpp:1225
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Jelölje ki az előrébb levő rétegbe áthelyezendő <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:1246
+#: ../src/selection-chemistry.cpp:1255
 msgid "No more layers above."
 msgstr "Nincs előrébb levő réteg."
 
-#: ../src/selection-chemistry.cpp:1260
+#: ../src/selection-chemistry.cpp:1269
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Jelölje ki a hátrébb levő rétegbe áthelyezendő <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:1284
+#: ../src/selection-chemistry.cpp:1299
 msgid "No more layers below."
 msgstr "Nincs hátrébb levő réteg."
 
-#: ../src/selection-chemistry.cpp:1952
+#: ../src/selection-chemistry.cpp:1981
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Jelölje ki a lekapcsolandó <b>klónt</b>."
 
-#: ../src/selection-chemistry.cpp:1983
+#: ../src/selection-chemistry.cpp:2012
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "A kijelölésben <b>nincs lekapcsolható klón</b>."
 
-#: ../src/selection-chemistry.cpp:2000
+#: ../src/selection-chemistry.cpp:2029
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4126,7 +4126,7 @@ msgstr ""
 "peremet</b> kijelölve annak forrásához; <b>láncon levő szöveget</b> "
 "kijelölve a lánchoz; <b>tördelt szöveget</b> kijelölve pedig annak keretéhez."
 
-#: ../src/selection-chemistry.cpp:2023
+#: ../src/selection-chemistry.cpp:2052
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4134,41 +4134,41 @@ msgstr ""
 "A kijelölendő objektum <b>nem található</b> (elárvult klón, perem, szöveg-"
 "lánc, vagy tördelt szöveg?)"
 
-#: ../src/selection-chemistry.cpp:2029
+#: ../src/selection-chemistry.cpp:2058
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "A kijelölendő objektum <b>nem látható</b> (&lt;defs&gt;-ben szerepel)"
 
-#: ../src/selection-chemistry.cpp:2056
+#: ../src/selection-chemistry.cpp:2085
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Jelölje ki a mintává alakítandó <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:2147
+#: ../src/selection-chemistry.cpp:2176
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Jelölje ki azt a <b>mintával kitöltött objektumot</b>, amelyből ki szeretné "
 "nyerni az objektumokat."
 
-#: ../src/selection-chemistry.cpp:2200
+#: ../src/selection-chemistry.cpp:2229
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "A kijelölésben <b>nincs kitöltőminta</b>."
 
-#: ../src/selection-chemistry.cpp:2220
+#: ../src/selection-chemistry.cpp:2249
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Jelölje ki a bitképbe másolandó <b>objektumo(ka)t</b>."
 
-#: ../src/selection-chemistry.cpp:2383
+#: ../src/selection-chemistry.cpp:2412
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
 
-#: ../src/selection-chemistry.cpp:2386
+#: ../src/selection-chemistry.cpp:2415
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
 
-#: ../src/selection-chemistry.cpp:2489
+#: ../src/selection-chemistry.cpp:2518
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Jelöljön ki egy vagy több <b>szöveget</b> az alávágás eltávolításához."
@@ -4185,7 +4185,7 @@ msgstr "<b>Kör</b>"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:351 ../src/verbs.cpp:2167
+#: ../src/ui/dialog/inkscape-preferences.cpp:352 ../src/verbs.cpp:2167
 msgid "Ellipse"
 msgstr "Ellipszis"
 
@@ -4225,7 +4225,7 @@ msgstr "<b>Kapcsolódó vonalak</b>"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:348 ../src/verbs.cpp:2165
+#: ../src/ui/dialog/inkscape-preferences.cpp:349 ../src/verbs.cpp:2165
 msgid "Rectangle"
 msgstr "Téglalap"
 
@@ -4241,13 +4241,13 @@ msgstr "Pozíció:"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:357 ../src/verbs.cpp:2171
+#: ../src/ui/dialog/inkscape-preferences.cpp:358 ../src/verbs.cpp:2171
 msgid "Spiral"
 msgstr "Spirál"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:354 ../src/verbs.cpp:2169
+#: ../src/ui/dialog/inkscape-preferences.cpp:355 ../src/verbs.cpp:2169
 msgid "Star"
 msgstr "Csillag"
 
@@ -5923,111 +5923,116 @@ msgstr "Eszközök"
 msgid "Width is in absolute units"
 msgstr ""
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:305
+#, fuzzy
+msgid "Don't attach connectors to text objects"
+msgstr "A kapcsok kerüljék ki a kijelölt objektumokat"
+
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:307
+#: ../src/ui/dialog/inkscape-preferences.cpp:308
 msgid "Selector"
 msgstr "Kijelölés"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:310
+#: ../src/ui/dialog/inkscape-preferences.cpp:311
 msgid "When transforming, show:"
 msgstr "Transzformáció közben megjelenítendő:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:311
+#: ../src/ui/dialog/inkscape-preferences.cpp:312
 msgid "Objects"
 msgstr "Objektumok"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:313
+#: ../src/ui/dialog/inkscape-preferences.cpp:314
 msgid "Show the actual objects when moving or transforming"
 msgstr ""
 "A tényleges objektumok megjelenítése áthelyezéskor illetve transzformáció "
 "közben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:314
+#: ../src/ui/dialog/inkscape-preferences.cpp:315
 msgid "Box outline"
 msgstr "Téglalap-körvonal"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:316
+#: ../src/ui/dialog/inkscape-preferences.cpp:317
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr ""
 "Csak az objektumok téglalap-körvonalának megjelenítése áthelyezéskor illetve "
 "transzformáció közben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:317
+#: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "Per-object selection cue:"
 msgstr "Kijelölés objektumonkénti jelzése:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:320
+#: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "No per-object selection indication"
 msgstr "Nincs objektumonkénti kijelölés-jelzés"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:321
+#: ../src/ui/dialog/inkscape-preferences.cpp:322
 msgid "Mark"
 msgstr "Jel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:323
+#: ../src/ui/dialog/inkscape-preferences.cpp:324
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr ""
 "Az összes kijelölt objektum bal felső sarkában megjelenik egy gyémánt alakú "
 "jel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:324
+#: ../src/ui/dialog/inkscape-preferences.cpp:325
 msgid "Box"
 msgstr "Téglalap"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:326
+#: ../src/ui/dialog/inkscape-preferences.cpp:327
 msgid "Each selected object displays its bounding box"
 msgstr "Az összes kijelölt objektum határoló téglalapjának megjelenítése"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:327
+#: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Default scale origin:"
 msgstr "Az átméretezés alapértelmezett origója:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:328
+#: ../src/ui/dialog/inkscape-preferences.cpp:329
 msgid "Opposite bounding box edge"
 msgstr "A határoló téglalap túlsó széle"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:330
+#: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Default scale origin will be on the bounding box of the item"
 msgstr ""
 "Az átméretezés alapértelmezett origója az elem határoló téglalapján lesz"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:331
+#: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Farthest opposite node"
 msgstr "A legtávolabbi túlsó csomópont"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:333
+#: ../src/ui/dialog/inkscape-preferences.cpp:334
 msgid "Default scale origin will be on the bounding box of the item's points"
 msgstr ""
 "Az átméretezés alapértelmezett origója az elem pontjainak határoló "
 "téglalapján lesz"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:335
+#: ../src/ui/dialog/inkscape-preferences.cpp:336
 msgid "Node"
 msgstr "Csomópont"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:339
+#: ../src/ui/dialog/inkscape-preferences.cpp:340
 #: ../src/ui/view/edit-widget.cpp:1133 ../src/verbs.cpp:2183
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
 msgstr "Nagyítás"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:343
+#: ../src/ui/dialog/inkscape-preferences.cpp:344
 msgid "Shapes"
 msgstr "Alakzatok"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:360 ../src/verbs.cpp:2173
+#: ../src/ui/dialog/inkscape-preferences.cpp:361 ../src/verbs.cpp:2173
 msgid "Pencil"
 msgstr "Ceruza"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:363
+#: ../src/ui/dialog/inkscape-preferences.cpp:364
 msgid "Tolerance:"
 msgstr "Tűrés:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:364
+#: ../src/ui/dialog/inkscape-preferences.cpp:365
 msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
@@ -6037,57 +6042,61 @@ msgstr ""
 "egyenletesek és több csomópontot fognak tartalmazni"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:368 ../src/verbs.cpp:2175
+#: ../src/ui/dialog/inkscape-preferences.cpp:369 ../src/verbs.cpp:2175
 msgid "Pen"
 msgstr "Toll"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2177
+#: ../src/ui/dialog/inkscape-preferences.cpp:373 ../src/verbs.cpp:2177
 msgid "Calligraphy"
 msgstr "Művészi rajz"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:375
+#: ../src/ui/dialog/inkscape-preferences.cpp:376
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
 msgstr ""
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:382 ../src/verbs.cpp:2181
+#: ../src/ui/dialog/inkscape-preferences.cpp:383 ../src/verbs.cpp:2181
 msgid "Gradient"
 msgstr "Színátmenet"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:385 ../src/verbs.cpp:2187
+#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2187
 msgid "Connector"
 msgstr "Kapocs"
 
+#: ../src/ui/dialog/inkscape-preferences.cpp:389
+msgid "If on, conector attachment points will not be shown for text objects"
+msgstr ""
+
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2185
+#: ../src/ui/dialog/inkscape-preferences.cpp:391 ../src/verbs.cpp:2185
 msgid "Dropper"
 msgstr "Színpipetta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:395
+#: ../src/ui/dialog/inkscape-preferences.cpp:398
 msgid "Save window geometry"
 msgstr "Ablakgeometria elmentése"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:396
+#: ../src/ui/dialog/inkscape-preferences.cpp:399
 msgid "Dialogs are hidden in taskbar"
 msgstr "Párbeszédablakok ne jelenjenek meg a feladatlistában"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:397
+#: ../src/ui/dialog/inkscape-preferences.cpp:400
 msgid "Zoom when window is resized"
 msgstr "Nagyítás módosítása az ablakméret változásakor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:399
+#: ../src/ui/dialog/inkscape-preferences.cpp:402
 msgid "Normal"
 msgstr "Normál"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:400
+#: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid "Aggressive"
 msgstr "Agresszív"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -6095,13 +6104,13 @@ msgstr ""
 "Ablakméret és -pozíció elmentése minden dokumentumba (csak Inkscape SVG "
 "fájlformátum esetén)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:405
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr ""
 "A párbeszédablakok ki legyenek-e hagyva az ablakkezelő által megjelenített "
 "feladatlistából"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:410
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -6112,61 +6121,61 @@ msgstr ""
 "megadott érték az alapértelmezés. Minden egyes ablakban külön-külön is "
 "beállítható a kívánt viselkedés a jobb oldali gördítősáv feletti gombbal."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:408
+#: ../src/ui/dialog/inkscape-preferences.cpp:411
 msgid "Dialogs on top:"
 msgstr "Párbeszédablakok felülre helyezése:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:410
+#: ../src/ui/dialog/inkscape-preferences.cpp:413
 msgid "Dialogs are treated as regular windows"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:412
+#: ../src/ui/dialog/inkscape-preferences.cpp:415
 #, fuzzy
 msgid "Dialogs stay on top of document windows"
 msgstr "Váltás a következő dokumentum ablakára"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:419
 msgid "Windows"
 msgstr "Ablakok"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:424
 msgid "Move in parallel"
 msgstr "Párhuzamosan elmozdulnak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:426
 msgid "Stay unmoved"
 msgstr "Nem mozdulnak el"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:425
+#: ../src/ui/dialog/inkscape-preferences.cpp:428
 msgid "Move according to transform"
 msgstr "A \"transform\" tulajdonság szerint mozdulnak el"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:427
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Are unlinked"
 msgstr "Lekapcsolódnak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:429
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "Are deleted"
 msgstr "Törlődnek"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:435
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Az eredeti objektum áthelyezésekor a klónjai és a kapcsolt peremei:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:437
 msgid "Clones are translated by the same vector as their original."
 msgstr ""
 "A klónok ugyanazzal a vektorral lesznek elmozdítva, mint az eredeti objektum"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:439
 msgid "Clones preserve their positions when their original is moved."
 msgstr "A klónok helye nem változik az eredeti objektum elmozdításakor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6176,74 +6185,74 @@ msgstr ""
 "Példa: egy elforgatott klón más irányba mozdulhat el, mint az eredeti "
 "objektum."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:439
+#: ../src/ui/dialog/inkscape-preferences.cpp:442
 msgid "When the original is deleted, its clones:"
 msgstr "Az eredeti objektum törlésekor a klónjai:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:441
+#: ../src/ui/dialog/inkscape-preferences.cpp:444
 msgid "Orphaned clones are converted to regular objects."
 msgstr "Az elárvult klónok normál objektumokká lesznek alakítva"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:443
+#: ../src/ui/dialog/inkscape-preferences.cpp:446
 msgid "Orphaned clones are deleted along with their original."
 msgstr "Az elárvult klónok az eredeti objektummal együtt törlődnek"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:450
+#: ../src/ui/dialog/inkscape-preferences.cpp:453
 msgid "Scale stroke width"
 msgstr "Körvonalszélesség átméretezése"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:451
+#: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Scale rounded corners in rectangles"
 msgstr "Lekerekített csúcsok átméretezése a téglalapokban"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:452
+#: ../src/ui/dialog/inkscape-preferences.cpp:455
 msgid "Transform gradients"
 msgstr "Színátmenetek transzformációja"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:453
+#: ../src/ui/dialog/inkscape-preferences.cpp:456
 msgid "Transform patterns"
 msgstr "Minták transzformációja"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/ui/dialog/inkscape-preferences.cpp:457
 msgid "Optimized"
 msgstr "Optimalizálva"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:455
+#: ../src/ui/dialog/inkscape-preferences.cpp:458
 msgid "Preserved"
 msgstr "Megőrizve"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:458
+#: ../src/ui/dialog/inkscape-preferences.cpp:461
 #: ../src/widgets/select-toolbar.cpp:496
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr ""
 "Objektumok átméretezésekor a körvonalszélesség is legyen - azonos arányban - "
 "átméretezve"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:460
+#: ../src/ui/dialog/inkscape-preferences.cpp:463
 #: ../src/widgets/select-toolbar.cpp:508
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "Téglalapok átméretezésekor a lekerekített csúcsok sugarai is legyenek "
 "átméretezve"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:462
+#: ../src/ui/dialog/inkscape-preferences.cpp:465
 #: ../src/widgets/select-toolbar.cpp:520
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr ""
 "Színátmenetek transzformációja (kitöltésben és körvonalban) az objektumokkal "
 "együtt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:467
 #: ../src/widgets/select-toolbar.cpp:532
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr ""
 "Minták transzformációja (kitöltésben és körvonalban) az objektumokkal együtt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:465
+#: ../src/ui/dialog/inkscape-preferences.cpp:468
 msgid "Store transformation:"
 msgstr "Transzformáció tárolása:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:467
+#: ../src/ui/dialog/inkscape-preferences.cpp:470
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -6251,57 +6260,57 @@ msgstr ""
 "\"transform=\" tulajdonság hozzáadása nélkül legyenek alkalmazva a "
 "transzformációk az objektumokra, amikor csak lehetséges"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:469
+#: ../src/ui/dialog/inkscape-preferences.cpp:472
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr ""
 "A transzformációk mindig \"transform=\" objektumtulajdonságban legyenek "
 "eltárolva"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:471
+#: ../src/ui/dialog/inkscape-preferences.cpp:474
 msgid "Transforms"
 msgstr "Transzformációk"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:476
+#: ../src/ui/dialog/inkscape-preferences.cpp:479
 #, fuzzy
 msgid "Select in all layers"
 msgstr "Minden kijelölése az összes réte_gben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:477
+#: ../src/ui/dialog/inkscape-preferences.cpp:480
 msgid "Select only within current layer"
 msgstr "Kijelölés csak az aktuális rétegben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:478
+#: ../src/ui/dialog/inkscape-preferences.cpp:481
 #, fuzzy
 msgid "Select in current layer and sublayers"
 msgstr "Kijelölés csak az aktuális rétegben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:479
+#: ../src/ui/dialog/inkscape-preferences.cpp:482
 msgid "Ignore hidden objects"
 msgstr "Rejtett objektumok figyelmen kívül való hagyása"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:480
+#: ../src/ui/dialog/inkscape-preferences.cpp:483
 msgid "Ignore locked objects"
 msgstr "Zárolt objektumok figyelmen kívül való hagyása"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:482
+#: ../src/ui/dialog/inkscape-preferences.cpp:485
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Tab, Shift+Tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:484
+#: ../src/ui/dialog/inkscape-preferences.cpp:487
 #, fuzzy
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 "Ha nincs bejelölve, akkor a kijelölési billentyűkombinációk az összes réteg "
 "objektumaira vonatkoznak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:486
+#: ../src/ui/dialog/inkscape-preferences.cpp:489
 #, fuzzy
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "Ha nincs bejelölve, akkor a kijelölési billentyűkombinációk az összes réteg "
 "objektumaira vonatkoznak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:488
+#: ../src/ui/dialog/inkscape-preferences.cpp:491
 #, fuzzy
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
@@ -6310,7 +6319,7 @@ msgstr ""
 "Ha nincs bejelölve, akkor a kijelölési billentyűkombinációk az összes réteg "
 "objektumaira vonatkoznak"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:490
+#: ../src/ui/dialog/inkscape-preferences.cpp:493
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6319,7 +6328,7 @@ msgstr ""
 "amelyek vagy egyénileg rejtettek, vagy egy rejtett csoportban illetve "
 "rétegben vannak) is ki lehet jelölni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:492
+#: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6328,25 +6337,25 @@ msgstr ""
 "amelyek vagy egyénileg zároltak, vagy egy zárolt csoportban illetve rétegben "
 "vannak) is ki lehet jelölni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:494
+#: ../src/ui/dialog/inkscape-preferences.cpp:497
 msgid "Selecting"
 msgstr "Kijelölés"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "Default export resolution:"
 msgstr "Alapértelmezett exportálási felbontás:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:502
+#: ../src/ui/dialog/inkscape-preferences.cpp:505
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Az alapértelmezett bitkép-felbontás (pont/hüvelykben) az exportálási "
 "párbeszédablakban"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:503
+#: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "Import bitmap as <image>"
 msgstr "Bitkép importálása <image>-ként"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:505
+#: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6355,11 +6364,11 @@ msgstr ""
 "elem jön létre; ha pedig ki van kapcsolva, akkor téglalap jön létre bitkép-"
 "kitöltéssel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:506
+#: ../src/ui/dialog/inkscape-preferences.cpp:509
 msgid "Add label comments to printing output"
 msgstr "Címke-megjegyzések a nyomtatási kimenetbe"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:508
+#: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -6367,13 +6376,13 @@ msgstr ""
 "Ha be van kapcsolva, akkor a nyers nyomtatási kimenetbe megjegyzések lesznek "
 "helyezve - megjelölve az illető objektumokat azok címkéjével"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:509
+#: ../src/ui/dialog/inkscape-preferences.cpp:512
 msgid "Enable script effects (requires restart) - EXPERIMENTAL"
 msgstr ""
 "Szkript-effektusok engedélyezése (program-újraindítást igényel) - KÍSÉRLETI "
 "FUNKCIÓ"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:511
+#: ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid ""
 "When on, the effects menu is enabled, allowing external effect scripts to be "
 "called, requires restart before effective - EXPERIMENTAL"
@@ -6382,20 +6391,20 @@ msgstr ""
 "lehetővé téve külső effektus-programok végrehajtását. Az érvénybelépéshez "
 "program-újraindítás szükséges. Egyelőre kísérleti funkció."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:513
+#: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Max recent documents:"
 msgstr "Legutóbbi dokumentumok maximális száma:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr ""
 "A Fájl menüben megjelenő \"Legutóbbi megnyitása\" lista maximális hossza"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "Simplification threshold:"
 msgstr "Egyszerűsítési küszöb:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:517
+#: ../src/ui/dialog/inkscape-preferences.cpp:520
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -6406,50 +6415,50 @@ msgstr ""
 "fog kifejteni; ha viszont egy szünetet követően kerül újra végrehajtásra, "
 "akkor visszaáll az alapértelmezett küszöb."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:522
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:522
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:522
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:522
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:523
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Oversample bitmaps:"
 msgstr "Bitképek túlmintavételezése:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:528
 msgid "Clipping and masking:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Remove clipping path or mask after applying"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Misc"
 msgstr "Egyéb"
 
