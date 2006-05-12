@@ -1,3 +1,12 @@
+2006-05-11  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/ui/dialog/inkscape-preferences.cpp,
+	  src/ui/dialog/inkscape-preferences.h, src/connector-context.cpp:
+
+	  Add a preferences setting to the connector tool for setting
+	  whether or not connectors attach to text objects.  This 
+	  addresses feature request #1434292.
+	  
 2006-05-09  Carl Hetherington  <inkscape@carlh.net>
 
 	* src/nodepath.cpp: fix silly bug with snapping node edits.  *

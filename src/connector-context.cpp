@@ -17,13 +17,14 @@
  *     an object involves going inside C but without entering S.)
  *  o  Draw connectors to shape edges rather than bounding box.
  *  o  Show a visual indicator for objects with the 'avoid' property set.
+ *  o  Allow user to change a object between a path and connector through
+ *     the interface.
  *  o  Create an interface for setting markers (arrow heads).
  *  o  Better distinguish between paths and connectors to prevent problems
  *     in the node tool and paths accidently being turned into connectors
  *     in the connector tool.  Perhaps have a way to convert between.
  *  o  Only call libavoid's updateEndPoint as required.  Currently we do it
  *     for both endpoints, even if only one is moving.
- *  o  Cleanup to remove unecessary borrowed DrawContext code.
  *  o  Allow user-placeable connection points.
  *  o  Deal sanely with connectors with both endpoints attached to the
  *     same connection point, and drawing of connectors attaching
@@ -68,6 +69,9 @@
 #include "libavoid/vertices.h"
 #include "context-fns.h"
 #include "sp-namedview.h"
+#include "sp-text.h"
+#include "sp-flowtext.h"
+
 
 static void sp_connector_context_class_init(SPConnectorContextClass *klass);
 static void sp_connector_context_init(SPConnectorContext *conn_context);
@@ -1203,6 +1207,12 @@ static bool cc_item_is_shape(SPItem *item)
         SPCurve *curve = (SP_SHAPE(item))->curve;
         if ( curve && !(curve->closed) ) {
             // Open paths are connectors.
+            return false;
+        }
+    }
+    else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+        if (prefs_get_int_attribute("tools.connector", "ignoretext", 1) == 1) {
+            // Don't count text as a shape we can connect connector to.
             return false;
         }
     }

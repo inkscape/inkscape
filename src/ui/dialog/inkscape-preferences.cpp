@@ -302,6 +302,7 @@ void InkscapePreferences::initPageTools()
     _path_tools = _page_list.get_model()->get_path(iter_tools);
 
     _calligrapy_use_abs_size.init ( _("Width is in absolute units"), "tools.calligraphic", "abs_width", false);
+    _connector_ignore_text.init( _("Don't attach connectors to text objects"), "tools.connector", "ignoretext", true);
 
     //Selector
     this->AddPage(_page_selector, _("Selector"), iter_tools, PREFS_PAGE_TOOLS_SELECTOR);
@@ -384,6 +385,8 @@ void InkscapePreferences::initPageTools()
     //Connector
     this->AddPage(_page_connector, _("Connector"), iter_tools, PREFS_PAGE_TOOLS_CONNECTOR);
     this->AddSelcueCheckbox(_page_connector, "tools.connector", true);
+    _page_connector.add_line(false, "", _connector_ignore_text, "", 
+            _("If on, conector attachment points will not be shown for text objects"));
     //Dropper
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "tools.dropper", true);

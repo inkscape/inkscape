@@ -116,6 +116,8 @@ protected:
 
     PrefCheckButton _calligrapy_use_abs_size;
 
+    PrefCheckButton _connector_ignore_text;
+    
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
 
