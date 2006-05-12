@@ -39,6 +39,9 @@
 #include "sp-flowregion.h"
 #include "text-editing.h"
 #include "text-context.h"
+#include "connector-context.h"
+#include "sp-path.h"
+#include "sp-conn-end.h"
 #include "dropper-context.h"
 #include <glibmm/i18n.h>
 #include "libnr/nr-matrix-rotate-ops.h"
@@ -1327,7 +1330,21 @@ void sp_selection_apply_affine(Inkscape::Selection *selection, NR::Matrix const 
         bool transform_textpath_with_path = (SP_IS_TEXT_TEXTPATH(item) && selection->includes( sp_textpath_get_path_item (SP_TEXTPATH(sp_object_first_child(SP_OBJECT(item)))) ));
         bool transform_flowtext_with_frame = (SP_IS_FLOWTEXT(item) && selection->includes( SP_FLOWTEXT(item)->get_frame (NULL))); // only the first frame so far
         bool transform_offset_with_source = (SP_IS_OFFSET(item) && SP_OFFSET (item)->sourceHref) && selection->includes( sp_offset_get_source (SP_OFFSET(item)) );
-
+       
+        // If we're moving a connector, we want to detach it
+        // from shapes that aren't part of the selection, but
+        // leave it attached if they are
+        if (cc_item_is_connector(item)) {
+            SPItem *attItem[2];
+            SP_PATH(item)->connEndPair.getAttachedItems(attItem);
+            
+            for (int n = 0; n < 2; ++n) {
+                if (!selection->includes(attItem[n])) {
+                    sp_conn_end_detach(item, n);
+                }
+            }
+        }
+        
         // "clones are unmoved when original is moved" preference
         int compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         bool prefs_unmoved = (compensation == SP_CLONE_COMPENSATION_UNMOVED);

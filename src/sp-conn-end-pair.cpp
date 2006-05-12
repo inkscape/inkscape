@@ -78,9 +78,6 @@ sp_conn_end_pair_build(SPObject *object)
 static void
 avoid_conn_move(NR::Matrix const *mp, SPItem *moved_item)
 {
-    // Detach from objects if attached.
-    sp_conn_end_detach(moved_item, 0);
-    sp_conn_end_detach(moved_item, 1);
     // Reroute connector
     SPPath *path = SP_PATH(moved_item);
     path->connEndPair.makePathInvalid();
