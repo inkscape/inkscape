@@ -185,14 +185,16 @@ class NodeSide{
 	Node * other;
 /**  Position */
 	NR::Point pos;
+/**  Origin (while dragging) in radial notation */
+	Radial origin_radial;
+/**  Origin (while dragging) in x/y notation */
+	NR::Point origin;
 /**  Knots are Inkscape's way of providing draggable points.  This
  *  Knot is the point on the curve representing the control point in a
  *  bezier curve.*/
 	SPKnot * knot;
 /**  What kind of rendering? */
 	SPCanvasItem * line;
-/**  */
-	Radial origin;
 };
 
 /**

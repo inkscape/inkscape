@@ -7,7 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
- * This code is in public domain
+ * Portions of this code are in public domain; node sculpting functions written by bulia byak are under GNU GPL
  */
 
 #ifdef HAVE_CONFIG_H
@@ -281,10 +281,10 @@ static void sp_nodepath_cleanup(Inkscape::NodePath::Path *nodepath)
 {
     GList *badSubPaths = NULL;
 
-    //Check all subpaths to be >=2 nodes
+    //Check all closed subpaths to be >=1 nodes, all open subpaths to be >= 2 nodes
     for (GList *l = nodepath->subpaths; l ; l=l->next) {
        Inkscape::NodePath::SubPath *sp = (Inkscape::NodePath::SubPath *)l->data;
-        if (sp_nodepath_subpath_get_node_count(sp)<2)
+       if ((sp_nodepath_subpath_get_node_count(sp)<2 && !sp->closed) || (sp_nodepath_subpath_get_node_count(sp)<1 && sp->closed))
             badSubPaths = g_list_append(badSubPaths, sp);
     }
 
@@ -946,6 +946,157 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
     // do not update repr here so that node dragging is acceptably fast
     update_object(nodepath);
 }
+
+/**
+Function mapping x (in the range 0..1) to y (in the range 1..0) using a smooth half-bell-like
+curve; the parameter alpha determines how blunt (alpha > 1) or sharp (alpha < 1) will be the curve
+near x = 0.
+ */
+double
+sculpt_profile (double x, double alpha)
+{
+    if (x >= 1)
+        return 0;
+    return (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+}
+
+double
+bezier_length (NR::Point a, NR::Point ah, NR::Point bh, NR::Point b)
+{
+    // extremely primitive for now, don't have time to look for the real one
+    double lower = NR::L2(b - a);
+    double upper = NR::L2(ah - a) + NR::L2(bh - ah) + NR::L2(bh - b);
+    return (lower + upper)/2;
+}
+
+void
+sp_nodepath_move_node_and_handles (Inkscape::NodePath::Node *n, NR::Point delta, NR::Point delta_n, NR::Point delta_p)
+{
+    n->pos = n->origin + delta;
+    n->n.pos = n->n.origin + delta_n;
+    n->p.pos = n->p.origin + delta_p;
+    sp_node_adjust_handles(n);
+    sp_node_update_handles(n, false);
+}
+
+/**
+ * Displace selected nodes and their handles by fractions of delta (from their origins), depending
+ * on how far they are from the dragged node n.
+ */
+static void 
+sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *n, NR::Point delta)
+{
+    g_assert (n);
+    g_assert (nodepath);
+    g_assert (n->subpath->nodepath == nodepath);
+
+    double pressure = n->knot->pressure;
+    if (pressure == 0)
+        pressure = 0.5; // default
+    pressure = CLAMP (pressure, 0.2, 0.8);
+
+    // map pressure to alpha = 1/5 ... 5
+    double alpha = 1 - 2 * fabs(pressure - 0.5);
+    if (pressure > 0.5)
+        alpha = 1/alpha;
+
+    double n_sel_range = 0, p_sel_range = 0;
+    guint n_nodes = 0, p_nodes = 0;
+    guint n_sel_nodes = 0, p_sel_nodes = 0;
+
+    // First pass: calculate ranges (TODO: we could cache them, as they don't change while dragging)
+    {
+        double n_range = 0, p_range = 0;
+        bool n_going = true, p_going = true;
+        Inkscape::NodePath::Node *n_node = n;
+        Inkscape::NodePath::Node *p_node = n;
+        do {
+            // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
+            if (n_node && n_going)
+                n_node = n_node->n.other;
+            if (n_node == NULL) {
+                n_going = false;
+            } else {
+                n_nodes ++;
+                n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
+                if (n_node->selected) {
+                    n_sel_nodes ++;
+                    n_sel_range = n_range;
+                }
+                if (n_node == p_node) {
+                    n_going = false;
+                    p_going = false;
+                }
+            }
+            if (p_node && p_going)
+                p_node = p_node->p.other;
+            if (p_node == NULL) {
+                p_going = false;
+            } else {
+                p_nodes ++;
+                p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
+                if (p_node->selected) {
+                    p_sel_nodes ++;
+                    p_sel_range = p_range;
+                }
+                if (p_node == n_node) {
+                    n_going = false;
+                    p_going = false;
+                }
+            }
+        } while (n_going || p_going);
+    }
+
+    // Second pass: actually move nodes
+    sp_nodepath_move_node_and_handles (n, delta, delta, delta);
+    {
+        double n_range = 0, p_range = 0;
+        bool n_going = true, p_going = true;
+        Inkscape::NodePath::Node *n_node = n;
+        Inkscape::NodePath::Node *p_node = n;
+        do {
+            // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
+            if (n_node && n_going)
+                n_node = n_node->n.other;
+            if (n_node == NULL) {
+                n_going = false;
+            } else {
+                n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
+                if (n_node->selected) {
+                    sp_nodepath_move_node_and_handles (n_node, 
+                                      sculpt_profile (n_range / n_sel_range, alpha) * delta,
+                                      sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha) * delta,
+                                      sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha) * delta);
+                }
+                if (n_node == p_node) {
+                    n_going = false;
+                    p_going = false;
+                }
+            }
+            if (p_node && p_going)
+                p_node = p_node->p.other;
+            if (p_node == NULL) {
+                p_going = false;
+            } else {
+                p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
+                if (p_node->selected) {
+                    sp_nodepath_move_node_and_handles (p_node, 
+                                      sculpt_profile (p_range / p_sel_range, alpha) * delta,
+                                      sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha) * delta,
+                                      sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha) * delta);
+                }
+                if (p_node == n_node) {
+                    n_going = false;
+                    p_going = false;
+                }
+            }
+        } while (n_going || p_going);
+    }
+
+    // do not update repr here so that node dragging is acceptably fast
+    update_object(nodepath);
+}
+
 
 /**
  * Move node selection to point, adjust its and neighbouring handles,
@@ -1625,6 +1776,7 @@ void sp_node_selected_join_segment()
  */
 void sp_node_delete_preserve(GList *nodes_to_delete)
 {
+    GSList *nodepaths = NULL;
     
     while (nodes_to_delete) {
         Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node*) g_list_first(nodes_to_delete)->data;
@@ -1716,9 +1868,6 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             sp_nodepath_node_destroy(temp);
         }
 
-        //clean up the nodepath (such as for trivial subpaths)
-        sp_nodepath_cleanup(nodepath);
-
         sp_nodepath_update_handles(nodepath);
 
         // if the entire nodepath is removed, delete the selected object.
@@ -1734,8 +1883,13 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             return;
         }
 
-        sp_nodepath_update_repr(nodepath);
+        if (!g_slist_find(nodepaths, nodepath))
+            nodepaths = g_slist_prepend (nodepaths, nodepath);
+    }
 
+    for (GSList *i = nodepaths; i; i = i->next) {
+        Inkscape::NodePath::Path *nodepath = (Inkscape::NodePath::Path *) i->data;
+        sp_nodepath_update_repr(nodepath);
         sp_nodepath_update_statusbar(nodepath);
     }
 }
@@ -2244,6 +2398,24 @@ void sp_nodepath_select_rect(Inkscape::NodePath::Path *nodepath, NR::Rect const 
     }
 }
 
+
+/**
+\brief  Saves all nodes' and handles' current positions in their origin members
+*/
+void
+sp_nodepath_remember_origins(Inkscape::NodePath::Path *nodepath)
+{
+    for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+       Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+           Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) nl->data;
+           n->origin = n->pos;
+           n->p.origin = n->p.pos;
+           n->n.origin = n->n.pos;
+        }
+    }
+} 
+
 /**
 \brief  Saves selected nodes in a nodepath into a list containing integer positions of all selected nodes
 */
@@ -2515,11 +2687,11 @@ static void node_grabbed(SPKnot *knot, guint state, gpointer data)
 {
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
-    n->origin = knot->pos;
-
     if (!n->selected) {
         sp_nodepath_node_select(n, (state & GDK_SHIFT_MASK), FALSE);
     }
+
+    sp_nodepath_remember_origins (n->subpath->nodepath);
 }
 
 /**
@@ -2698,8 +2870,6 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
             if (an == 0) na = HUGE_VAL; else na = -1/an;
             if (ap == 0) pa = HUGE_VAL; else pa = -1/ap;
 
-            //g_print("an %g    ap %g\n", an, ap);
-
             // mouse point relative to the node's original pos
             pr = (*p) - n->origin;
 
@@ -2734,10 +2904,14 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
             }
         }
     } else { // move freely
-        sp_nodepath_selected_nodes_move(n->subpath->nodepath,
+        if (state & GDK_MOD1_MASK) { // sculpt
+            sp_nodepath_selected_nodes_sculpt(n->subpath->nodepath, n, (*p) - n->origin);
+        } else {
+            sp_nodepath_selected_nodes_move(n->subpath->nodepath,
                                         (*p)[NR::X] - n->pos[NR::X],
                                         (*p)[NR::Y] - n->pos[NR::Y],
                                         (state & GDK_SHIFT_MASK) == 0);
+	}
     }
 
     n->subpath->nodepath->desktop->scroll_to_point(p);
@@ -2781,9 +2955,9 @@ static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data)
 
     // remember the origin point of the handle
     if (n->p.knot == knot) {
-        n->p.origin = n->p.pos - n->pos;
+        n->p.origin_radial = n->p.pos - n->pos;
     } else if (n->n.knot == knot) {
-        n->n.origin = n->n.pos - n->pos;
+        n->n.origin_radial = n->n.pos - n->pos;
     } else {
         g_assert_not_reached();
     }
@@ -2799,10 +2973,10 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 
     // forget origin and set knot position once more (because it can be wrong now due to restrictions)
     if (n->p.knot == knot) {
-        n->p.origin.a = 0;
+        n->p.origin_radial.a = 0;
         sp_knot_set_position(knot, &n->p.pos, state);
     } else if (n->n.knot == knot) {
-        n->n.origin.a = 0;
+        n->n.origin_radial.a = 0;
         sp_knot_set_position(knot, &n->n.pos, state);
     } else {
         g_assert_not_reached();
@@ -2891,13 +3065,13 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
 
         // The closest PI/snaps angle, starting from zero.
         double const a_snapped = floor(rnew.a/(M_PI/snaps) + 0.5) * (M_PI/snaps);
-        if (me->origin.a == HUGE_VAL) {
+        if (me->origin_radial.a == HUGE_VAL) {
             // ortho doesn't exist: original handle was zero length.
             rnew.a = a_snapped;
         } else {
             /* The closest PI/2 angle, starting from original angle (i.e. snapping to original,
              * its opposite and perpendiculars). */
-            double const a_ortho = me->origin.a + floor((rnew.a - me->origin.a)/(M_PI/2) + 0.5) * (M_PI/2);
+            double const a_ortho = me->origin_radial.a + floor((rnew.a - me->origin_radial.a)/(M_PI/2) + 0.5) * (M_PI/2);
 
             // Snap to the closest.
             rnew.a = ( fabs(a_snapped - rnew.a) < fabs(a_ortho - rnew.a)
@@ -2908,7 +3082,7 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
 
     if (state & GDK_MOD1_MASK) {
         // lock handle length
-        rnew.r = me->origin.r;
+        rnew.r = me->origin_radial.r;
     }
 
     if (( n->type !=Inkscape::NodePath::NODE_CUSP || (state & GDK_SHIFT_MASK))

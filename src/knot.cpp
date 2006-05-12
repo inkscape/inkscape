@@ -195,6 +195,7 @@ static void sp_knot_init(SPKnot *knot)
     knot->mode = SP_KNOT_MODE_XOR;
     knot->tip = NULL;
     knot->_event_handler_id = 0;
+    knot->pressure = 0;
 
     knot->fill[SP_KNOT_STATE_NORMAL] = 0xffffff00;
     knot->fill[SP_KNOT_STATE_MOUSEOVER] = 0xff0000ff;
@@ -318,6 +319,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
             break;
 	case GDK_BUTTON_RELEASE:
             if (event->button.button == 1) {
+                knot->pressure = 0;
                 if (transform_escaped) {
                     transform_escaped = false;
                     consumed = TRUE;
@@ -358,6 +360,11 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
                 // (indicating they intend to move the object, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
+
+                if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &knot->pressure))
+                    knot->pressure = CLAMP (knot->pressure, 0, 1);
+                else
+                    knot->pressure = 0.5;
 
                 if (!moved) {
                     g_signal_emit(knot,
