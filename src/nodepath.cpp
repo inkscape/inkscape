@@ -1878,15 +1878,13 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
         // FIXME: when/if we teach node tool to have more than one nodepath, deleting nodes from
         // different nodepaths will give us one undo event per nodepath
         Inkscape::NodePath::Path *nodepath = (Inkscape::NodePath::Path *) i->data;
+
         // if the entire nodepath is removed, delete the selected object.
         if (nodepath->subpaths == NULL ||
             //FIXME: a closed path CAN legally have one node, it's only an open one which must be
             //at least 2
             sp_nodepath_get_node_count(nodepath) < 2) {
             SPDocument *document = sp_desktop_document (nodepath->desktop);
-            sp_nodepath_destroy(nodepath);
-            g_list_free(nodes_to_delete);
-            nodes_to_delete = NULL;
             //FIXME: The following line will be wrong when we have mltiple nodepaths: we only want to
             //delete this nodepath's object, not the entire selection! (though at this time, this
             //does not matter)
@@ -1926,7 +1924,6 @@ void sp_node_selected_delete()
     if (nodepath->subpaths == NULL ||
         sp_nodepath_get_node_count(nodepath) < 2) {
         SPDocument *document = sp_desktop_document (nodepath->desktop);
-        sp_nodepath_destroy(nodepath);
         sp_selection_delete();
         sp_document_done (document);
         return;
@@ -2092,14 +2089,6 @@ sp_node_selected_delete_segment(void)
     sp_nodepath_update_handles(nodepath);
 
     sp_nodepath_update_repr(nodepath);
-
-    // if the entire nodepath is removed, delete the selected object.
-    if (nodepath->subpaths == NULL ||
-        sp_nodepath_get_node_count(nodepath) < 2) {
-        sp_nodepath_destroy(nodepath);
-        sp_selection_delete();
-        return;
-    }
 
     sp_nodepath_update_statusbar(nodepath);
 }
