@@ -225,11 +225,10 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
     guint32 r = 0; // if there's no color, return black
     if (prefs_get_int_attribute(tool, "usecurrent", 0) != 0) {
         css = sp_desktop_get_style(desktop, is_fill);
-    }
-    else {
+    } else {
         Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
         css = sp_repr_css_attr_inherited(tool_repr, "style");
-        }
+    }
    
     gchar const *property = sp_repr_css_property(css, is_fill ? "fill" : "stroke", "#000");
            
@@ -237,8 +236,8 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
         if (strncmp(property, "url", 3)) { // and if it's not url,
             // read it
             r = sp_svg_read_color(property, r);
-            }
         }
+    }
     return r | 0xff;
 }
 /**
