@@ -1,3 +1,11 @@
+2006-05-13  verbalshadow  <verbalshadow@gmail.com>
+
+	* src/dyna-draw-context.cpp, src/desktop-style.cpp,
+	  src/desktop-style.h:
+
+	  Calligraphy tool now draws in the last used color or the
+	  tool style depending on the Preference setting.
+	  
 2006-05-11  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/selection-chemistry.cpp, src/sp-conn-end-pair.cpp:

@@ -45,6 +45,7 @@
 #include "xml/repr.h"
 #include "context-fns.h"
 #include "sp-item.h"
+#include "inkscape.h"
 
 #define DDC_RED_RGBA 0xff0000ff
 
@@ -800,7 +801,9 @@ fit_and_split_calligraphics(SPDynaDrawContext *dc, gboolean release)
             SPCurve *curve = sp_curve_copy(dc->currentcurve);
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH (cbp), curve);
             sp_curve_unref(curve);
-            sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), 0x000000ff, SP_WIND_RULE_EVENODD);
+            guint32 fillColor = sp_desktop_get_color_tool(SP_ACTIVE_DESKTOP, "tools.calligraphic", true);
+            sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(cbp), fillColor , SP_WIND_RULE_EVENODD);
+
             sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(cbp), 0x00000000, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
             /* fixme: Cannot we cascade it to root more clearly? */
             g_signal_connect(G_OBJECT(cbp), "event", G_CALLBACK(sp_desktop_root_handler), SP_EVENT_CONTEXT(dc)->desktop);

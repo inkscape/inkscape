@@ -218,6 +218,29 @@ sp_desktop_get_color(SPDesktop *desktop, bool is_fill)
     return r;
 }
 
+guint32
+sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
+{
+    SPCSSAttr *css = NULL;
+    guint32 r = 0; // if there's no color, return black
+    if (prefs_get_int_attribute(tool, "usecurrent", 0) != 0) {
+        css = sp_desktop_get_style(desktop, is_fill);
+    }
+    else {
+        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
+        css = sp_repr_css_attr_inherited(tool_repr, "style");
+        }
+   
+    gchar const *property = sp_repr_css_property(css, is_fill ? "fill" : "stroke", "#000");
+           
+    if (desktop->current && property) { // if there is style and the property in it,
+        if (strncmp(property, "url", 3)) { // and if it's not url,
+            // read it
+            r = sp_svg_read_color(property, r);
+            }
+        }
+    return r | 0xff;
+}
 /**
  * Apply the desktop's current style or the tool style to repr.
  */
@@ -235,8 +258,7 @@ sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char 
             sp_repr_css_attr_unref(css);
         }
     }
-    if (css_current) {
-        sp_repr_css_attr_unref(css_current);
+    if (css_current) {sp_repr_css_attr_unref(css_current);
     }
 }
 

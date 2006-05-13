@@ -53,6 +53,7 @@ void sp_desktop_set_color(SPDesktop *desktop, ColorRGBA const &color, bool is_re
 void sp_desktop_set_style(SPDesktop *desktop, SPCSSAttr *css, bool change = true, bool write_current = true);
 SPCSSAttr *sp_desktop_get_style(SPDesktop *desktop, bool with_text);
 guint32 sp_desktop_get_color (SPDesktop *desktop, bool is_fill);
+guint32 sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill);
 double sp_desktop_get_font_size_tool (SPDesktop *desktop);
 void sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char const *tool, bool with_text);
 
