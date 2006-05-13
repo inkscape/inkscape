@@ -811,9 +811,6 @@ sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI:
          menu_pntr != NULL;
          menu_pntr = menu_pntr->next()) {
         if (!strcmp(menu_pntr->name(), "submenu")) {
-            if (!strcmp(menu_pntr->attribute("name"), "Effects") && !prefs_get_int_attribute("extensions", "show-effects-menu", 0)) {
-                continue;
-            }
             GtkWidget *mitem = gtk_menu_item_new_with_mnemonic(_(menu_pntr->attribute("name")));
             GtkWidget *submenu = gtk_menu_new();
             sp_ui_build_dyn_menus(menu_pntr->firstChild(), submenu, view);
