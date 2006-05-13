@@ -931,6 +931,11 @@ ParamEnum::ParamEnum (const gchar * name, const gchar * guitext, const gchar * d
     return;
 }
 
+ParamEnum::~ParamEnum (void)
+{
+
+}
+
 /** \brief  Return the value as a string */
 Glib::ustring *
 ParamEnum::string (void)
