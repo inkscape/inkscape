@@ -184,7 +184,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"maskobject\" topmost=\"1\" remove=\"1\"/>\n"
 "  </group>\n"
 "\n"
-"  <group id=\"extensions\" show-effects-menu=\"0\">"
+"  <group id=\"extensions\">"
 "  </group>\n"
 "\n"
 "  <group id=\"desktop\""
