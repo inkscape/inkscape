@@ -206,6 +206,39 @@ public:
     Glib::ustring * string (void);
 };
 
+class ParamEnum : public Parameter {
+private:
+    class Choice {
+    public:
+        gchar * _gui_name;
+        gchar * _value;
+        Choice(gchar * gui_name, gchar * value) : _gui_name(NULL), _value(NULL) {
+            if (gui_name != NULL)
+                _gui_name = g_strdup(_(gui_name));
+            if (value != NULL)
+                _value = g_strdup(value);
+            return;
+        };
+        ~Choice (void) {
+            g_free(_gui_name);
+            g_free(_value);
+        };
+    }; /* class Choice */
+    /** \brief  Internal value.  This should point to a string that has
+                been allocated in memory.  And should be free'd. */
+    Choice * _current_choice;
+    typedef std::list<Choice *> choice_list_t;
+    choice_list_t _choice_list;
+public:
+    ParamEnum(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
+    ~ParamEnum(void);
+    /** \brief  Returns \c _value, with a \i const to protect it. */
+    const gchar * get (const SPDocument * doc, const Inkscape::XML::Node * node) { return _current_choice != NULL ? _current_choice->_value : NULL; }
+    const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
+    Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node);
+    Glib::ustring * string (void);
+}; /* class ParamEnum */
+
 /**
     \return None
     \brief  This function creates a parameter that can be used later.  This
@@ -275,6 +308,8 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         param = new ParamString(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "description")) {
         param = new ParamDescription(name, guitext, desc, scope, in_ext, in_repr);
+    } else if (!strcmp(type, "enum")) {
+        param = new ParamEnum(name, guitext, desc, scope, in_ext, in_repr);
     }
 
     /* Note: param could equal NULL */
@@ -888,6 +923,35 @@ ParamDescription::ParamDescription (const gchar * name, const gchar * guitext, c
         _value = g_strdup(defaultval);
 
     return;
+}
+
+ParamEnum::ParamEnum (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+    Parameter(name, guitext, desc, scope, ext), _current_choice(NULL)
+{
+    return;
+}
+
+/** \brief  Return the value as a string */
+Glib::ustring *
+ParamEnum::string (void)
+{
+    Glib::ustring * mystring = new Glib::ustring("");
+    *mystring += "\"";
+    *mystring += this->get(NULL, NULL);
+    *mystring += "\"";
+    return mystring;
+}
+
+Gtk::Widget *
+ParamEnum::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
+{
+    return NULL;
+}
+
+const gchar *
+ParamEnum::set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node)
+{
+    return NULL;
 }
 
 
