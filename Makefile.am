@@ -130,7 +130,9 @@ EXTRA_DIST = \
 	packaging/macosx/ScriptExec/ScriptExec.xcode/voisine.pbxuser	\
 	packaging/win32/inkscape.nsi	\
 	packaging/win32/inkscape.nsi.uninstall	\
+	packaging/win32/czech.nsh	\
 	packaging/win32/english.nsh	\
+	packaging/win32/italian.nsh	\
 	packaging/win32/german.nsh	\
 	packaging/win32/header.bmp	\
 	po/Makefile.mingw \
