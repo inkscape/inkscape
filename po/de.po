@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: Colin Marquardt <colin@marquardt-home.de>\n"
 "POT-Creation-Date: 2006-05-13 00:27+0200\n"
-"PO-Revision-Date: 2006-05-15 00:10+0200\n"
+"PO-Revision-Date: 2006-05-15 01:42+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,9 +34,7 @@ msgstr "Inkscape SVG-Vektorillustrator"
 #: ../src/arc-context.cpp:328
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
-msgstr ""
-"<b>Strg</b>: Erzeuge Kreis oder Ellipse mit ganzzahligem Höhen-/"
-"Breitenverhältnis, Winkel vom Bogen/Kreissegment einrasten"
+msgstr "<b>Strg</b>: Kreis oder Ellipse mit ganzzahligem Höhen-/Breitenverhältnis erzeugen, Winkel vom Bogen/Kreissegment einrasten"
 
 #: ../src/arc-context.cpp:329 ../src/rect-context.cpp:373
 msgid "<b>Shift</b>: draw around the starting point"
@@ -419,7 +417,7 @@ msgstr "Vorzeichen des Deckkraftfaktors bei jeder Spalte umkehren"
 
 #: ../src/dialogs/clonetiler.cpp:2039
 msgid "Co_lor"
-msgstr "Farbe"
+msgstr "_Farbe"
 
 #: ../src/dialogs/clonetiler.cpp:2044
 msgid "Initial color: "
@@ -3421,7 +3419,7 @@ msgstr ""
 
 #: ../src/main.cpp:335
 msgid "The ID of the object whose dimensions are queried"
-msgstr "Objekt-ID-Kennung, dessen Abmaße abgefragt werden"
+msgstr "Objekt-ID-Kennung, dessen Abmessungen abgefragt werden"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
 #: ../src/main.cpp:341
@@ -4140,7 +4138,7 @@ msgstr "<b>Objekt(e)</b> auswählen, um Ausschneidepfad oder Maskierung daraus z
 
 #: ../src/selection-chemistry.cpp:2415
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
-msgstr "Maskierungsobjekt und <b>Objekt(e)</> auswählen, um Ausschneidepfad oder Maskierung darauf anzuwenden."
+msgstr "Maskierungsobjekt und <b>Objekt(e)</b> auswählen, um Ausschneidepfad oder Maskierung darauf anzuwenden."
 
 #: ../src/selection-chemistry.cpp:2518
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
@@ -8901,7 +8899,7 @@ msgstr "Erste Schritte mit Inkscape"
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2335
 msgid "Inkscape: _Shapes"
-msgstr "Inkscape: _Grundformen"
+msgstr "Inkscape: Grund_formen"
 
 #: ../src/verbs.cpp:2336
 msgid "Using shape tools to create and edit shapes"
@@ -8909,7 +8907,7 @@ msgstr "Benutzung der Formen-Werkzeuge zum Erzeugen und Verändern von Formen"
 
 #: ../src/verbs.cpp:2337
 msgid "Inkscape: _Advanced"
-msgstr "Inkscape: _Fortgeschrittene Benutzung"
+msgstr "Inkscape: Fortgeschrittene _Benutzung"
 
 #: ../src/verbs.cpp:2338
 msgid "Advanced Inkscape topics"
@@ -9077,11 +9075,11 @@ msgstr "Wiederholung:"
 
 #: ../src/widgets/gradient-toolbar.cpp:179
 msgid "<small>No gradients</small>"
-msgstr "<small> Keine Farbverläufe</small>"
+msgstr "<small>Keine Farbverläufe</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:188
 msgid "<small>Nothing selected</small>"
-msgstr "<small> Nichts ausgewählt</small>"
+msgstr "<small>Nichts ausgewählt</small>"
 
 #: ../src/widgets/gradient-toolbar.cpp:199
 msgid "<small>No gradients in selection</small>"
