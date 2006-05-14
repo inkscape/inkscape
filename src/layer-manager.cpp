@@ -16,6 +16,7 @@
 #include "layer-manager.h"
 #include "ui/view/view.h"
 #include "sp-object.h"
+#include "xml/node.h"
 
 namespace Inkscape {
 
@@ -54,20 +55,21 @@ void LayerManager::_rebuild() {
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
         _addOne(root);
-    }
-    for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
-        SPObject *layer=static_cast<SPObject *>(iter->data);
 
-        for ( SPObject* curr = layer; curr && (curr != root) ; curr = SP_OBJECT_PARENT(curr) ) {
-            if ( (curr != root) && root->isAncestorOf(curr) && !includes(curr) ) {
-                // Filter out objects in the middle of being deleted
-                SPObject const *higher = curr;
-                while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
-                    higher = SP_OBJECT_PARENT(higher);
-                }
-                Inkscape::XML::Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
-                if ( node && node->parent() ) {
-                    _addOne(curr);
+        for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
+            SPObject *layer=static_cast<SPObject *>(iter->data);
+
+            for ( SPObject* curr = layer; curr && (curr != root) ; curr = SP_OBJECT_PARENT(curr) ) {
+                if ( (curr != root) && root->isAncestorOf(curr) && !includes(curr) ) {
+                    // Filter out objects in the middle of being deleted
+                    SPObject const *higher = curr;
+                    while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
+                        higher = SP_OBJECT_PARENT(higher);
+                    }
+                    Inkscape::XML::Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
+                    if ( node && node->parent() ) {
+                        _addOne(curr);
+                    }
                 }
             }
         }
