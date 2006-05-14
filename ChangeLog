@@ -1,3 +1,9 @@
+2006-05-14  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/widgets/toolbox.cpp: Slightly increase size of the
+	 connector toolbar buttons to match button sizes on other
+	 toolbars.
+
 2006-05-13  verbalshadow  <verbalshadow@gmail.com>
 
 	* src/dyna-draw-context.cpp, src/desktop-style.cpp,

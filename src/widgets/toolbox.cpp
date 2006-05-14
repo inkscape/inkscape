@@ -3157,11 +3157,11 @@ sp_connector_toolbox_new(SPDesktop *desktop)
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE,
             AUX_BETWEEN_BUTTON_GROUPS);
 
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_DECORATION,
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
             "connector_avoid", GTK_SIGNAL_FUNC(sp_connector_path_set_avoid),
             tt, _("Make connectors avoid selected objects"));
 
-    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_DECORATION,
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
             "connector_ignore", GTK_SIGNAL_FUNC(sp_connector_path_set_ignore),
             tt, _("Make connectors ignore selected objects"));
 
