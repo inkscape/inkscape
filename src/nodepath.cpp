@@ -3869,7 +3869,7 @@ static gchar const *sp_node_type_description(Inkscape::NodePath::Node *node)
 void
 sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)
 {
-    gchar const *when_selected = _("<b>Drag</b> nodes or node handles; <b>arrow</b> keys to move nodes");
+    gchar const *when_selected = _("<b>Drag</b> nodes or node handles; <b>Alt+drag nodes</b> to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate");
     gchar const *when_selected_one = _("<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node");
 
     gint total = 0;
