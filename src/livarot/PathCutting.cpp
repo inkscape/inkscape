@@ -5,6 +5,12 @@
  *  Created by fred on someday in 2004.
  *  public domain
  *
+ *  Additional Code by Authors:
+ *   Richard Hughes <cyreve@users.sf.net>
+ *
+ *  Copyright (C) 2005 Richard Hughes
+ *
+ *  Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #include "Path.h"
