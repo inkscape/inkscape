@@ -1,3 +1,8 @@
+2006-05-14  Colin Marquardt  <colin@marquardt-home.de>
+
+	* src/ui/dialog/inkscape-preferences.cpp (initPageTools): 
+	  Typofix ("conector").
+
 2006-05-14  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/document-subset.cpp, src/layer-manager.h, src/layer-manager.cpp:

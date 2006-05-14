@@ -389,7 +389,7 @@ void InkscapePreferences::initPageTools()
     this->AddPage(_page_connector, _("Connector"), iter_tools, PREFS_PAGE_TOOLS_CONNECTOR);
     this->AddSelcueCheckbox(_page_connector, "tools.connector", true);
     _page_connector.add_line(false, "", _connector_ignore_text, "", 
-            _("If on, conector attachment points will not be shown for text objects"));
+            _("If on, connector attachment points will not be shown for text objects"));
     //Dropper
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "tools.dropper", true);
