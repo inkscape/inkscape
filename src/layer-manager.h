@@ -14,7 +14,7 @@
 #include "gc-finalized.h"
 #include "gc-soft-ptr.h"
 
-class SPDocument;
+class SPDesktop;
 class SPDocument;
 
 namespace Inkscape {
@@ -26,6 +26,7 @@ public:
     LayerManager(SPDesktop *desktop);
 
 private:
+
     void _setDocument(SPDocument *document);
     void _rebuild();
 

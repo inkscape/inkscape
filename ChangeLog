@@ -1,3 +1,8 @@
+2006-05-14  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/document-subset.cpp, src/layer-manager.h, src/layer-manager.cpp:
+	  Corrected base structure and avoiding infinite loop.
+
 2006-05-14  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/widgets/toolbox.cpp: Slightly increase size of the

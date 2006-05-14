@@ -22,8 +22,18 @@ namespace Inkscape {
 LayerManager::LayerManager(SPDesktop *desktop)
 : _desktop(desktop), _document(NULL)
 {
-    _layer_connection = desktop->connectCurrentLayerChanged(sigc::hide<0>(sigc::mem_fun(*this, &LayerManager::_rebuild)));
-    _document_connection = desktop->connectDocumentReplaced(sigc::hide<0>(sigc::mem_fun(*this, &LayerManager::_setDocument)));
+    sigc::slot<void> base = sigc::mem_fun(*this, &LayerManager::_rebuild);
+    sigc::slot<void, SPObject *> slot = sigc::hide<0>(base);
+    _layer_connection = desktop->connectCurrentLayerChanged(slot);
+
+    sigc::bound_mem_functor1<void, Inkscape::LayerManager, SPDocument*> first = sigc::mem_fun(*this, &LayerManager::_setDocument);
+
+    // This next line has problems on gcc 4.0.2
+    sigc::slot<void, SPDocument*> base2 = first;
+
+    sigc::slot<void,SPDesktop*,SPDocument*> slot2 = sigc::hide<0>( base2 );
+    _document_connection = desktop->connectDocumentReplaced( slot2 );
+
     _setDocument(desktop->doc());
 }
 
@@ -40,19 +50,26 @@ void LayerManager::_setDocument(SPDocument *document) {
 
 void LayerManager::_rebuild() {
     _clear();
-    GSList const *layers=sp_document_get_resource_list(_document, "layers");
+    GSList const *layers=sp_document_get_resource_list(_document, "layer");
+    SPObject *root=_desktop->currentRoot();
+    if ( root ) {
+        _addOne(root);
+    }
     for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
         SPObject *layer=static_cast<SPObject *>(iter->data);
-        _addOne(layer);
-    }
-    SPObject *root=_desktop->currentRoot();
-    SPObject *layer=_desktop->currentLayer();
-    for ( ; layer ; layer = SP_OBJECT_PARENT(layer) ) {
-        if (!includes(layer)) {
-            _addOne(layer);
-        }
-        if ( layer == root ) {
-            break;
+
+        for ( SPObject* curr = layer; curr && (curr != root) ; curr = SP_OBJECT_PARENT(curr) ) {
+            if ( (curr != root) && root->isAncestorOf(curr) && !includes(curr) ) {
+                // Filter out objects in the middle of being deleted
+                SPObject const *higher = curr;
+                while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
+                    higher = SP_OBJECT_PARENT(higher);
+                }
+                Inkscape::XML::Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
+                if ( node && node->parent() ) {
+                    _addOne(curr);
+                }
+            }
         }
     }
 }

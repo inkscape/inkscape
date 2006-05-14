@@ -57,17 +57,32 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
             } else {
                 Siblings::const_iterator first=children.begin();
                 Siblings::const_iterator last=children.end() - 1;
-                while ( first != last ) {
-                    Siblings::const_iterator mid=first + ( last - first + 1 ) / 2;
-                    int pos=sp_object_compare_position(*mid, obj);
+                if ( children.size() == 1 ) {
+                    int pos = sp_object_compare_position(*first, obj);
                     if ( pos < 0 ) {
-                        first = mid;
+                        // All good.
                     } else if ( pos > 0 ) {
-                        last = mid;
+                        last++;
                     } else {
                         g_assert_not_reached();
                     }
+                } else {
+                    while ( first != last ) {
+                        Siblings::const_iterator mid=first + ( last - first + 1 ) / 2;
+                        int pos=sp_object_compare_position(*mid, obj);
+                        if ( pos < 0 ) {
+                            first = mid;
+                        } else if ( pos > 0 ) {
+                            if ( last == mid ) {
+                                break;
+                            }
+                            last = mid;
+                        } else {
+                            g_assert_not_reached();
+                        }
+                    }
                 }
+
                 return last - children.begin();
             }
         }
