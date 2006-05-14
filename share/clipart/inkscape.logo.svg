@@ -1,54 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/s odipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
    width="390"
    height="390"
-   id="svg1931"
-   sodipodi:version="0.32"
-   inkscape:version="0.43+devel"
-   sodipodi:docbase="/home/mental/trees/inkscape/share/clipart"
-   sodipodi:docname="inkscape.logo.svg">
-  <metadata
-     id="metadata1943">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <sodipodi:namedview
-     inkscape:window-height="524"
-     inkscape:window-width="935"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
-     pagecolor="#ffffff"
-     id="base"
-     inkscape:zoom="0.97179487"
-     inkscape:cx="195"
-     inkscape:cy="195"
-     inkscape:window-x="10"
-     inkscape:window-y="58"
-     inkscape:current-layer="svg1931" />
+   id="svg1931">
   <defs
      id="defs1933">
     <linearGradient
-       id="linearGradientGloss"
        x1="79"
        y1="135"
        x2="142"
        y2="180"
+       id="linearGradientGloss"
        gradientUnits="userSpaceOnUse">
       <stop
          style="stop-color:white;stop-opacity:1"
@@ -63,17 +29,16 @@
   <g
      id="inkscape-logo">
     <path
-       id="shape"
-       style="fill:black;"
-       d="M 163.15,27.83 L 28.81,165.3 C -16.58,221.51 59.7,214.97 92.4,231.16 C 104.13,243.15 47.44,252 59.17,264 C 70.9,275.99 130.1,287.1 141.85,299.09 C 153.58,311.08 117.84,323.8 129.57,335.79 C 141.3,347.78 168.43,336.42 173.51,364.1 C 177.13,383.88 222.4,372.6 244.54,356.4 C 256.27,344.4 222.1,345.53 233.83,333.54 C 263,303.71 290.16,322.7 300.14,292.81 C 305.07,278.04 257.2,270.04 268.95,258.05 C 302.7,238.34 419.35,225.51 364,170.16 L 224.75,27.83 C 207.72,11.48 179.3,11.3 163.15,27.83 z M 130.99,238.57 C 134,238.57 231.54,251.61 193.9,261.92 C 179.72,265.8 113.53,238.57 130.99,238.57 z M 317.46,292.81 C 317.46,299.63 367.71,304.1 367.71,291.2 C 360.55,270.48 323.4,271.88 317.46,292.81 z M 91.1,329.05 C 103,339.34 121.38,326.49 126.89,312.13 C 115.36,296.81 72.2,312.68 91.1,329.05 z M 311.16,306.82 C 295.82,320.58 312.88,334.54 328,325.65 C 331.37,322.23 327.91,310.24 311.16,306.82 z " />
+       d="M 163.15,27.83 L 28.81,165.3 C -16.58,221.51 59.7,214.97 92.4,231.16 C 104.13,243.15 47.44,252 59.17,264 C 70.9,275.99 130.1,287.1 141.85,299.09 C 153.58,311.08 117.84,323.8 129.57,335.79 C 141.3,347.78 168.43,336.42 173.51,364.1 C 177.13,383.88 222.4,372.6 244.54,356.4 C 256.27,344.4 222.1,345.53 233.83,333.54 C 263,303.71 290.16,322.7 300.14,292.81 C 305.07,278.04 257.2,270.04 268.95,258.05 C 302.7,238.34 419.35,225.51 364,170.16 L 224.75,27.83 C 207.72,11.48 179.3,11.3 163.15,27.83 z M 130.99,238.57 C 134,238.57 231.54,251.61 193.9,261.92 C 179.72,265.8 113.53,238.57 130.99,238.57 z M 317.46,292.81 C 317.46,299.63 367.71,304.1 367.71,291.2 C 360.55,270.48 323.4,271.88 317.46,292.81 z M 91.1,329.05 C 103,339.34 121.38,326.49 126.89,312.13 C 115.36,296.81 72.2,312.68 91.1,329.05 z M 311.16,306.82 C 295.82,320.58 312.88,334.54 328,325.65 C 331.37,322.23 327.91,310.24 311.16,306.82 z "
+       style="fill:black"
+       id="shape" />
     <path
-       id="gloss"
-       style="opacity:0.5;fill:url(#linearGradientGloss);"
-       d="M 38.39,172.2 C 2.87,213.14 91.96,216.235 114.65,217.5 L 219.35,39.97 C 203.58,24 184.153,25.45 170.16,40.15 L 38.39,172.2 z " />
+       d="M 38.39,172.2 C 2.87,213.14 91.96,216.235 114.65,217.5 L 219.35,39.97 C 203.58,24 184.153,25.45 170.16,40.15 L 38.39,172.2 z "
+       style="opacity:0.5;fill:url(#linearGradientGloss)"
+       id="gloss" />
     <path
-       id="icecap"
-       style="fill:white"
        d="M 216.63,37.47 L 269.78,91.45 C 274.82,96.6 274.75,106.58 271.93,109.45 L 245.54,88.34 L 240.35,119.6 L 218.3,107.96 L 182.99,130.27 L 171.3,83.24 L 152.33,123.96 C 152.33,123.96 130.87136,116.06985 120.57535,111.49171 C 112.52142,107.91052 113.73438,98.165619 122.86438,88.31562 C 141.62438,68.06562 161.15,49.43 172.85,37.47 C 184.61,25.45 205.1,25.79 216.63,37.47 z "
-       sodipodi:nodetypes="cccccccccsccc" />
+       style="fill:white"
+       id="icecap" />
   </g>
 </svg>
