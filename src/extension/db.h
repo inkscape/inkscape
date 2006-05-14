@@ -29,7 +29,13 @@ private:
         to find the different extensions in the hash map. */
     struct ltstr {
         bool operator()(const char* s1, const char* s2) const {
-            return strcmp(s1, s2) < 0;
+            if ( (s1 == NULL) && (s2 != NULL) ) {
+                return true;
+            } else if (s1 == NULL || s2 == NULL) {
+                return false;
+            } else {
+                return strcmp(s1, s2) < 0;
+            }
         }
     };
     /** This is the actual database.  It has all of the modules in it,
