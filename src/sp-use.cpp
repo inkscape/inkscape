@@ -26,6 +26,7 @@
 #include "sp-object-repr.h"
 #include "sp-flowregion.h"
 #include "uri.h"
+#include "print.h"
 #include "xml/repr.h"
 #include "prefs-utils.h"
 #include "style.h"
@@ -279,10 +280,22 @@ sp_use_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsig
 static void
 sp_use_print(SPItem *item, SPPrintContext *ctx)
 {
+    bool translated = false;
+    NRMatrix tp;
     SPUse *use = SP_USE(item);
+
+    if ((use->x._set && use->x.computed != 0) || (use->y._set && use->y.computed != 0)) {
+        nr_matrix_set_translate(&tp, use->x.computed, use->y.computed);
+        sp_print_bind(ctx, &tp, 1.0);
+        translated = true;
+    }
 
     if (use->child && SP_IS_ITEM(use->child)) {
         sp_item_invoke_print(SP_ITEM(use->child), ctx);
+    }
+
+    if (translated) {
+        sp_print_release(ctx);
     }
 }
 
