@@ -101,6 +101,9 @@ struct SPDynaDrawContext
 
     /** uses absolute width independent of zoom */
     bool abs_width;
+
+    /** newly created object remain selected */
+    bool keep_selected;
 };
 
 struct SPDynaDrawContextClass

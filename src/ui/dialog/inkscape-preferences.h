@@ -115,6 +115,7 @@ protected:
     PrefCheckButton _win_save_geom, _win_hide_task, _win_zoom_resize;
 
     PrefCheckButton _calligrapy_use_abs_size;
+    PrefCheckButton _calligrapy_keep_selected;
 
     PrefCheckButton _connector_ignore_text;
     

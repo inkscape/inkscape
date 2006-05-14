@@ -156,6 +156,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     ddc->flatness = 0.9;
 
     ddc->abs_width = false;
+    ddc->keep_selected = true;
 }
 
 static void
@@ -218,6 +219,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "usepressure");
     sp_event_context_read(ec, "usetilt");
     sp_event_context_read(ec, "abs_width");
+    sp_event_context_read(ec, "keep_selected");
 
     ddc->is_drawing = false;
 
@@ -256,6 +258,8 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
         ddc->usetilt = (val && strcmp(val, "0"));
     } else if (!strcmp(key, "abs_width")) {
         ddc->abs_width = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "keep_selected")) {
+        ddc->keep_selected = (val && strcmp(val, "0"));
     }
 
     //g_print("DDC: %g %g %g %g\n", ddc->mass, ddc->drag, ddc->angle, ddc->width);
@@ -654,7 +658,8 @@ set_to_accumulated(SPDynaDrawContext *dc)
             Inkscape::GC::release(dc->repr);
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
-            sp_desktop_selection(desktop)->set(dc->repr);
+            if (dc->keep_selected)
+                sp_desktop_selection(desktop)->set(dc->repr);
         }
         abp = nr_artpath_affine(sp_curve_first_bpath(dc->accumulated), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
