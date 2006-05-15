@@ -271,7 +271,51 @@ static gint sp_nodepath_get_node_count(Inkscape::NodePath::Path *np)
     return nodeCount;
 }
 
+/**
+ *  Return the subpath count of a given NodePath.
+ */
+static gint sp_nodepath_get_subpath_count(Inkscape::NodePath::Path *np)
+{
+    if (!np)
+        return 0;
+    return g_list_length (np->subpaths);
+}
 
+/**
+ *  Return the selected node count of a given NodePath.
+ */
+static gint sp_nodepath_selection_get_node_count(Inkscape::NodePath::Path *np)
+{
+    if (!np)
+        return 0;
+    return g_list_length (np->selected);
+}
+
+/**
+ *  Return the number of subpaths where nodes are selected in a given NodePath.
+ */
+static gint sp_nodepath_selection_get_subpath_count(Inkscape::NodePath::Path *np)
+{
+    if (!np)
+        return 0;
+    if (!np->selected)
+        return 0;
+    if (!np->selected->next)
+        return 1;
+    gint count = 0;
+    for (GList *spl = np->subpaths; spl != NULL; spl = spl->next) {
+        Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+            Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+            if (node->selected) {
+                count ++;
+                break;
+            }
+        }
+    }
+    return count;
+}
+ 
 /**
  * Clean up a nodepath after editing.
  *
@@ -3869,19 +3913,16 @@ static gchar const *sp_node_type_description(Inkscape::NodePath::Node *node)
 void
 sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)
 {
-    gchar const *when_selected = _("<b>Drag</b> nodes or node handles; <b>Alt+drag nodes</b> to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate");
+    gchar const *when_selected = _("<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; <b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to rotate");
     gchar const *when_selected_one = _("<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node");
 
-    gint total = 0;
-    gint selected = 0;
-    SPDesktop *desktop = NULL;
+    gint total_nodes = sp_nodepath_get_node_count(nodepath);
+    gint selected_nodes = sp_nodepath_selection_get_node_count(nodepath);
+    gint total_subpaths = sp_nodepath_get_subpath_count(nodepath);
+    gint selected_subpaths = sp_nodepath_selection_get_subpath_count(nodepath);
 
+    SPDesktop *desktop = NULL;
     if (nodepath) {
-        for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
-            Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-            total += g_list_length(subpath->nodes);
-        }
-        selected = g_list_length(nodepath->selected);
         desktop = nodepath->desktop;
     } else {
         desktop = SP_ACTIVE_DESKTOP;
@@ -3892,7 +3933,7 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)
     Inkscape::MessageContext *mc = SP_NODE_CONTEXT (ec)->_node_message_context;
     if (!mc) return;
 
-    if (selected == 0) {
+    if (selected_nodes == 0) {
         Inkscape::Selection *sel = desktop->selection;
         if (!sel || sel->isEmpty()) {
             mc->setF(Inkscape::NORMAL_MESSAGE,
@@ -3902,8 +3943,8 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)
             mc->setF(Inkscape::NORMAL_MESSAGE,
                      ngettext("<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select.",
                               "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes to select.",
-                              total),
-                     total);
+                              total_nodes),
+                     total_nodes);
             } else {
                 if (g_slist_length((GSList *)sel->itemList()) == 1) {
                     mc->setF(Inkscape::NORMAL_MESSAGE, _("Drag the handles of the object to modify it."));
@@ -3912,18 +3953,26 @@ sp_nodepath_update_statusbar(Inkscape::NodePath::Path *nodepath)
                 }
             }
         }
-    } else if (nodepath && selected == 1) {
+    } else if (nodepath && selected_nodes == 1) {
         mc->setF(Inkscape::NORMAL_MESSAGE,
                  ngettext("<b>%i</b> of <b>%i</b> node selected; %s. %s.",
                           "<b>%i</b> of <b>%i</b> nodes selected; %s. %s.",
-                          total),
-                 selected, total, sp_node_type_description((Inkscape::NodePath::Node *) nodepath->selected->data), when_selected_one);
+                          total_nodes),
+                 selected_nodes, total_nodes, sp_node_type_description((Inkscape::NodePath::Node *) nodepath->selected->data), when_selected_one);
     } else {
-        mc->setF(Inkscape::NORMAL_MESSAGE,
-                 ngettext("<b>%i</b> of <b>%i</b> node selected. %s.",
-                          "<b>%i</b> of <b>%i</b> nodes selected. %s.",
-                          total),
-                 selected, total, when_selected);
+        if (selected_subpaths > 1) {
+            mc->setF(Inkscape::NORMAL_MESSAGE,
+                     ngettext("<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s.",
+                              "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s.",
+                              total_nodes),
+                     selected_nodes, total_nodes, selected_subpaths, total_subpaths, when_selected);
+        } else {
+            mc->setF(Inkscape::NORMAL_MESSAGE,
+                     ngettext("<b>%i</b> of <b>%i</b> node selected. %s.",
+                              "<b>%i</b> of <b>%i</b> nodes selected. %s.",
+                              total_nodes),
+                     selected_nodes, total_nodes, when_selected);
+        }
     }
 }
 
