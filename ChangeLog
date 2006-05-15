@@ -1,3 +1,10 @@
+2006-05-15  Jon A. Cruz  <jon@joncruz.org>
+	* src/Makefile_insert, src/desktop.cpp, src/desktop.h,
+	  src/layer-manager.cpp, src/menus-skeleton.h, src/verbs.cpp,
+	  src/verbs.h, src/dialogs/layers-panel.cpp,
+	  src/dialogs/layers-panel.h, src/dialogs/Makefile_insert:
+	  Base implementation of a layers dialog.
+
 2006-05-14  Colin Marquardt  <colin@marquardt-home.de>
 
 	* src/ui/dialog/inkscape-preferences.cpp (initPageTools): 

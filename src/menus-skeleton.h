@@ -129,6 +129,7 @@ static char const menus_skeleton[] =
 "       <verb verb-id=\"NextWindow\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"ViewNew\" />\n"
+"       <verb verb-id=\"DialogLayers\" />\n"
 "       <verb verb-id=\"ViewIconPreview\" />\n"
 "   </submenu>\n"
 "   <submenu name=\"" N_("_Layer") "\">\n"

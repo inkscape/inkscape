@@ -75,6 +75,7 @@
 #include "ui/dialog/dialog-manager.h"
 #include "xml/repr.h"
 #include "message-context.h"
+#include "layer-manager.h"
 
 #ifdef WITH_INKBOARD
 #include "jabber_whiteboard/session-manager.h"
@@ -112,6 +113,7 @@ SPDesktop::SPDesktop()
     sketch = NULL;
     controls = NULL;
     event_context = 0;
+    layer_manager = 0;
 
     _d2w.set_identity();
     _w2d.set_identity();
@@ -289,6 +291,10 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
         )
     );
 
+
+    /* setup LayerManager */
+    //   (Setting up after the connections are all in place, as it may use some of them)
+    layer_manager = new Inkscape::LayerManager( this );
 }
 
 

@@ -45,7 +45,7 @@
 #include "dialogs/iconpreview.h"
 #include "dialogs/extensions.h"
 #include "dialogs/swatches.h"
-//#include "dialogs/layers-panel.h"
+#include "dialogs/layers-panel.h"
 #include "dialogs/input.h"
 
 #ifdef WITH_INKBOARD
@@ -1625,9 +1625,9 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_DIALOG_EXTENSIONEDITOR:
             dt->_dlg_mgr->showDialog("ExtensionEditor");
             break;
-//         case SP_VERB_DIALOG_LAYERS:
-//             show_panel( Inkscape::UI::Dialogs::LayersPanel::getInstance(), "dialogs.layers", SP_VERB_DIALOG_LAYERS );
-//             break;
+        case SP_VERB_DIALOG_LAYERS:
+            show_panel( Inkscape::UI::Dialogs::LayersPanel::getInstance(), "dialogs.layers", SP_VERB_DIALOG_LAYERS );
+            break;
         default:
             break;
     }
@@ -2314,8 +2314,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Configure extended input devices, such as a graphics tablet"), NULL),
     new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),
                    N_("Query information about extensions"), NULL),
-//     new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("_Layers..."),
-//                    N_("View Layers"), NULL),
+    new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("_Layers..."),
+                   N_("View Layers"), NULL),
 
     /* Help */
     new HelpVerb(SP_VERB_HELP_KEYS, "HelpKeys", N_("_Keys and Mouse"),

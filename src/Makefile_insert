@@ -83,6 +83,7 @@ libinkpre_a_SOURCES =	\
 	knot.cpp knot.h	\
 	knotholder.cpp knotholder.h	\
 	layer-fns.cpp layer-fns.h	\
+	layer-manager.cpp layer-manager.h	\
 	macros.h	\
 	marker-status.cpp marker-status.h	\
 	media.cpp media.h	\

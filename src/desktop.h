@@ -49,6 +49,7 @@ namespace Inkscape {
   class MessageContext;
   class Selection; 
   class ObjectHierarchy;
+  class LayerManager;
   namespace UI { 
       namespace Dialog { 
           class DialogManager; 
@@ -72,6 +73,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     /// current selection; will never generally be NULL
     Inkscape::Selection       *selection;
     SPEventContext            *event_context;
+    Inkscape::LayerManager    *layer_manager;
 
     SPCanvasItem  *acetate;
     SPCanvasGroup *main;

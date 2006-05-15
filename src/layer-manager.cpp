@@ -62,6 +62,9 @@ void LayerManager::_rebuild() {
             for ( SPObject* curr = layer; curr && (curr != root) ; curr = SP_OBJECT_PARENT(curr) ) {
                 if ( (curr != root) && root->isAncestorOf(curr) && !includes(curr) ) {
                     // Filter out objects in the middle of being deleted
+
+                    // Such may have been the cause of bug 1339397.
+                    // See http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
                     SPObject const *higher = curr;
                     while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
                         higher = SP_OBJECT_PARENT(higher);

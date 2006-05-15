@@ -40,6 +40,8 @@ dialogs_libspdialogs_a_SOURCES = \
 	dialogs/item-properties.h	\
 	dialogs/layer-properties.cpp	\
 	dialogs/layer-properties.h	\
+	dialogs/layers-panel.cpp	\
+	dialogs/layers-panel.h	\
 	dialogs/object-attributes.cpp	\
 	dialogs/object-attributes.h	\
 	dialogs/object-properties.cpp	\
