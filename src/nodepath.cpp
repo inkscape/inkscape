@@ -1091,7 +1091,36 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
         } while (n_going || p_going);
     }
 
-    // Second pass: actually move nodes
+    // Now let's see if we also need to move nodes on other subpaths, and calculate their range too
+    gdouble direct_range = 0;
+    if (sp_nodepath_selection_get_subpath_count(nodepath) > 1) {
+        // For nodes in other subpaths, we calculate the distance from n simply by NR::L2 without
+        // any bezier lengths; the range is the maximum such distance
+
+        // First pass: calculate range
+        for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+            Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+            if (subpath == n->subpath)
+                continue; // this is our source subpath, already processed above
+            for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+                Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+                if (node->selected) {
+                    direct_range = MAX(direct_range, NR::L2(node->origin - n->origin));
+                }
+            }
+        }
+    }
+
+    // is ALL of the current nodepath selected?
+    if (n_nodes + p_nodes == n_sel_nodes + p_sel_nodes) {
+        // then we should really use direct-range instead of n_ and p_ ranges if it is bigger
+        if (direct_range > n_sel_range)
+            n_sel_range = direct_range;
+        if (direct_range > p_sel_range)
+            p_sel_range = direct_range;
+    }
+
+    // Second pass: actually move nodes in this subpath
     sp_nodepath_move_node_and_handles (n, delta, delta, delta);
     {
         double n_range = 0, p_range = 0;
@@ -1135,6 +1164,28 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                 }
             }
         } while (n_going || p_going);
+    }
+
+    // Now let's see if we also need to move nodes on other subpaths
+    if (sp_nodepath_selection_get_subpath_count(nodepath) > 1) {
+        // For nodes in other subpaths, we calculate the distance from n simply by NR::L2 without
+        // any bezier lengths; the range is the maximum such distance
+
+        // Second pass: actually move nodes
+        for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+            Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+            if (subpath == n->subpath)
+                continue; // this is our source subpath, already processed above
+            for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+                Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+                if (node->selected) {
+                    sp_nodepath_move_node_and_handles (node, 
+                                      sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha) * delta,
+                                      sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha) * delta,
+                                      sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha) * delta);
+                }
+            }
+        }
     }
 
     // do not update repr here so that node dragging is acceptably fast
