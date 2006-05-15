@@ -31,7 +31,6 @@ Push Tool  SHIFT+F8 or ALT+X
 Clipart Gallery  SHIFT+F10
 Fill Gallery  SHIFT+F11
 Frame Gallery  SHIFT+F12
-Layer Gallery  F10
 Bitmap Gallery  F11
 Line Gallery  F12  // stroke style?
 Name Gallery  CTRL+SHIFT+F9
@@ -501,6 +500,8 @@ Hom/end keys-select minimum or maximum feather values
   <bind key="d" modifiers="Ctrl,Shift" action="LayerMoveToPrev" />
   <bind key="Page_Down" modifiers="Shift" action="LayerMoveToPrev" />
   <bind key="KP_Page_Down" modifiers="Shift" action="LayerMoveToPrev" />
+
+  <bind key="F10" action="DialogLayers" display="true" />
 
 <!-- Dialogs -->
 

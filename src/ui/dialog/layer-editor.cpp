@@ -21,7 +21,7 @@ namespace UI {
 namespace Dialog {
 
 LayerEditor::LayerEditor() 
-    : Dialog ("dialogs.layereditor", SP_VERB_NONE /*FIXME*/)
+    : Dialog ("dialogs.layers", SP_VERB_NONE /*FIXME*/)
 {
     // TODO:  Insert widgets
 

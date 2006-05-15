@@ -442,6 +442,8 @@ override) the bindings in the main default.xml.
   <bind key="Page_Down" modifiers="Shift" action="LayerMoveToPrev" display="true"/>
   <bind key="KP_Page_Down" modifiers="Shift" action="LayerMoveToPrev" />
 
+  <bind key="L" modifiers="Ctrl,Shift" action="DialogLayers" display="true" />
+
 <!-- Dialogs -->
 
   <bind key="x" modifiers="Ctrl,Shift" action="DialogXMLEditor" display="true"/>
