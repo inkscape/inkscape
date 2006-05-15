@@ -43,6 +43,7 @@ RFE</a>).</p>
 <keys><key><shift/><ctrl/>W</key> <action>Swatches</action></keys>
 <keys><key><shift/><ctrl/>T</key> <action>Text and Font</action></keys>
 <keys><key><shift/><ctrl/>M</key> <action>Transform</action></keys>
+<keys><key><shift/><ctrl/>L</key> <action>Layers</action></keys>
 <keys><key><shift/><ctrl/>A</key> <action>Align and Distribute</action></keys>
 <keys><key><shift/><ctrl/>O</key> <action>Object Properties</action></keys>
 <keys><key><shift/><ctrl/>X</key> <action>XML Editor</action></keys>
