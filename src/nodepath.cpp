@@ -1044,64 +1044,113 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
     if (pressure > 0.5)
         alpha = 1/alpha;
 
-    double n_sel_range = 0, p_sel_range = 0;
-    guint n_nodes = 0, p_nodes = 0;
-    guint n_sel_nodes = 0, p_sel_nodes = 0;
+    if (sp_nodepath_selection_get_subpath_count(nodepath) <= 1) {
+        // Only one subpath has selected nodes:
+        // use linear mode, where the distance from n to node being dragged is calculated along the path
 
-    // First pass: calculate ranges (TODO: we could cache them, as they don't change while dragging)
-    {
-        double n_range = 0, p_range = 0;
-        bool n_going = true, p_going = true;
-        Inkscape::NodePath::Node *n_node = n;
-        Inkscape::NodePath::Node *p_node = n;
-        do {
-            // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
-            if (n_node && n_going)
-                n_node = n_node->n.other;
-            if (n_node == NULL) {
-                n_going = false;
-            } else {
-                n_nodes ++;
-                n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
-                if (n_node->selected) {
-                    n_sel_nodes ++;
-                    n_sel_range = n_range;
-                }
-                if (n_node == p_node) {
-                    n_going = false;
-                    p_going = false;
-                }
-            }
-            if (p_node && p_going)
-                p_node = p_node->p.other;
-            if (p_node == NULL) {
-                p_going = false;
-            } else {
-                p_nodes ++;
-                p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
-                if (p_node->selected) {
-                    p_sel_nodes ++;
-                    p_sel_range = p_range;
-                }
-                if (p_node == n_node) {
-                    n_going = false;
-                    p_going = false;
-                }
-            }
-        } while (n_going || p_going);
-    }
+        double n_sel_range = 0, p_sel_range = 0;
+        guint n_nodes = 0, p_nodes = 0;
+        guint n_sel_nodes = 0, p_sel_nodes = 0;
 
-    // Now let's see if we also need to move nodes on other subpaths, and calculate their range too
-    gdouble direct_range = 0;
-    if (sp_nodepath_selection_get_subpath_count(nodepath) > 1) {
-        // For nodes in other subpaths, we calculate the distance from n simply by NR::L2 without
-        // any bezier lengths; the range is the maximum such distance
+        // First pass: calculate ranges (TODO: we could cache them, as they don't change while dragging)
+        {
+            double n_range = 0, p_range = 0;
+            bool n_going = true, p_going = true;
+            Inkscape::NodePath::Node *n_node = n;
+            Inkscape::NodePath::Node *p_node = n;
+            do {
+                // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
+                if (n_node && n_going)
+                    n_node = n_node->n.other;
+                if (n_node == NULL) {
+                    n_going = false;
+                } else {
+                    n_nodes ++;
+                    n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
+                    if (n_node->selected) {
+                        n_sel_nodes ++;
+                        n_sel_range = n_range;
+                    }
+                    if (n_node == p_node) {
+                        n_going = false;
+                        p_going = false;
+                    }
+                }
+                if (p_node && p_going)
+                    p_node = p_node->p.other;
+                if (p_node == NULL) {
+                    p_going = false;
+                } else {
+                    p_nodes ++;
+                    p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
+                    if (p_node->selected) {
+                        p_sel_nodes ++;
+                        p_sel_range = p_range;
+                    }
+                    if (p_node == n_node) {
+                        n_going = false;
+                        p_going = false;
+                    }
+                }
+            } while (n_going || p_going);
+        }
+
+        // Second pass: actually move nodes in this subpath
+        sp_nodepath_move_node_and_handles (n, delta, delta, delta);
+        {
+            double n_range = 0, p_range = 0;
+            bool n_going = true, p_going = true;
+            Inkscape::NodePath::Node *n_node = n;
+            Inkscape::NodePath::Node *p_node = n;
+            do {
+                // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
+                if (n_node && n_going)
+                    n_node = n_node->n.other;
+                if (n_node == NULL) {
+                    n_going = false;
+                } else {
+                    n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
+                    if (n_node->selected) {
+                        sp_nodepath_move_node_and_handles (n_node, 
+                                                           sculpt_profile (n_range / n_sel_range, alpha) * delta,
+                                                           sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha) * delta,
+                                                           sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha) * delta);
+                    }
+                    if (n_node == p_node) {
+                        n_going = false;
+                        p_going = false;
+                    }
+                }
+                if (p_node && p_going)
+                    p_node = p_node->p.other;
+                if (p_node == NULL) {
+                    p_going = false;
+                } else {
+                    p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
+                    if (p_node->selected) {
+                        sp_nodepath_move_node_and_handles (p_node, 
+                                                           sculpt_profile (p_range / p_sel_range, alpha) * delta,
+                                                           sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha) * delta,
+                                                           sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha) * delta);
+                    }
+                    if (p_node == n_node) {
+                        n_going = false;
+                        p_going = false;
+                    }
+                }
+            } while (n_going || p_going);
+        }
+
+    } else {
+        // Multiple subpaths have selected nodes:
+        // use spatial mode, where the distance from n to node being dragged is measured directly as NR::L2.
+        // TODO: correct these distances taking into account their angle relative to the bisector, so as to 
+        // fix the pear-like shape when sculpting e.g. a ring
 
         // First pass: calculate range
+        gdouble direct_range = 0;
         for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
             Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-            if (subpath == n->subpath)
-                continue; // this is our source subpath, already processed above
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (node->selected) {
@@ -1109,80 +1158,17 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                 }
             }
         }
-    }
-
-    // is ALL of the current nodepath selected?
-    if (n_nodes + p_nodes == n_sel_nodes + p_sel_nodes) {
-        // then we should really use direct-range instead of n_ and p_ ranges if it is bigger
-        if (direct_range > n_sel_range)
-            n_sel_range = direct_range;
-        if (direct_range > p_sel_range)
-            p_sel_range = direct_range;
-    }
-
-    // Second pass: actually move nodes in this subpath
-    sp_nodepath_move_node_and_handles (n, delta, delta, delta);
-    {
-        double n_range = 0, p_range = 0;
-        bool n_going = true, p_going = true;
-        Inkscape::NodePath::Node *n_node = n;
-        Inkscape::NodePath::Node *p_node = n;
-        do {
-            // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
-            if (n_node && n_going)
-                n_node = n_node->n.other;
-            if (n_node == NULL) {
-                n_going = false;
-            } else {
-                n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
-                if (n_node->selected) {
-                    sp_nodepath_move_node_and_handles (n_node, 
-                                      sculpt_profile (n_range / n_sel_range, alpha) * delta,
-                                      sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha) * delta,
-                                      sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha) * delta);
-                }
-                if (n_node == p_node) {
-                    n_going = false;
-                    p_going = false;
-                }
-            }
-            if (p_node && p_going)
-                p_node = p_node->p.other;
-            if (p_node == NULL) {
-                p_going = false;
-            } else {
-                p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
-                if (p_node->selected) {
-                    sp_nodepath_move_node_and_handles (p_node, 
-                                      sculpt_profile (p_range / p_sel_range, alpha) * delta,
-                                      sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha) * delta,
-                                      sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha) * delta);
-                }
-                if (p_node == n_node) {
-                    n_going = false;
-                    p_going = false;
-                }
-            }
-        } while (n_going || p_going);
-    }
-
-    // Now let's see if we also need to move nodes on other subpaths
-    if (sp_nodepath_selection_get_subpath_count(nodepath) > 1) {
-        // For nodes in other subpaths, we calculate the distance from n simply by NR::L2 without
-        // any bezier lengths; the range is the maximum such distance
 
         // Second pass: actually move nodes
         for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
             Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
-            if (subpath == n->subpath)
-                continue; // this is our source subpath, already processed above
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (node->selected) {
                     sp_nodepath_move_node_and_handles (node, 
-                                      sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha) * delta,
-                                      sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha) * delta,
-                                      sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha) * delta);
+                                                       sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha) * delta,
+                                                       sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha) * delta,
+                                                       sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha) * delta);
                 }
             }
         }
