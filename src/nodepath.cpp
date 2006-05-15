@@ -1165,10 +1165,15 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
             for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
                 Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
                 if (node->selected) {
-                    sp_nodepath_move_node_and_handles (node, 
+                    if (direct_range > 1e-6) {
+                        sp_nodepath_move_node_and_handles (node,
                                                        sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha) * delta,
                                                        sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha) * delta,
                                                        sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha) * delta);
+                    } else {
+                        sp_nodepath_move_node_and_handles (node, delta, delta, delta);
+                    }
+
                 }
             }
         }
