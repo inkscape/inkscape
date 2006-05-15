@@ -39,6 +39,7 @@ libnr/nr-types-test.cpp
 livarot/Path-test.cpp
 main.cpp
 mod360-test.cpp
+pedro
 trace/potrace/potest.cpp
 round-test.cpp
 sp-gradient-test.cpp
