@@ -376,7 +376,11 @@ sp_node_path_edit_symmetrical(void)
     sp_node_selected_set_type(Inkscape::NodePath::NODE_SYMM);
 }
 
-
+static void toggle_show_handles (GtkWidget *button, gpointer data) {
+    bool show = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+    prefs_set_int_attribute ("tools.nodes", "show_handles",  show ? 1 : 0);
+    sp_nodepath_show_handles(show);
+}
 
 //################################
 //##    Node Editing Toolbox    ##
@@ -434,6 +438,26 @@ sp_node_toolbox_new(SPDesktop *desktop)
     sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_OBJECT_TO_CURVE), view, tt);
 
     sp_toolbox_button_normal_new_from_verb(tb, Inkscape::ICON_SIZE_SMALL_TOOLBAR, Inkscape::Verb::get(SP_VERB_SELECTION_OUTLINE), view, tt);
+
+    aux_toolbox_space(tb, AUX_BETWEEN_BUTTON_GROUPS);
+
+    GtkWidget *cvbox = gtk_vbox_new (FALSE, 0);
+    GtkWidget *cbox = gtk_hbox_new (FALSE, 0);
+
+    {
+    GtkWidget *button = sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
+                                              SP_BUTTON_TYPE_TOGGLE,
+                                              NULL,
+                                              "nodes_show_handles",
+                                              _("Show the Bezier handles of selected nodes"),
+                                              tt);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), prefs_get_int_attribute ("tools.nodes", "show_handles", 1));
+    g_signal_connect_after (G_OBJECT (button), "clicked", G_CALLBACK (toggle_show_handles), desktop);
+    gtk_box_pack_start(GTK_BOX(cbox), button, FALSE, FALSE, 0);
+    }
+
+    gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(tb), cvbox, FALSE, FALSE, 0);
 
     gtk_widget_show_all(tb);
 

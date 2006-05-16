@@ -137,7 +137,7 @@ static Inkscape::NodePath::Node *active_node = NULL;
 /**
  * \brief Creates new nodepath from item
  */
-Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
+Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item, bool show_handles)
 {
     Inkscape::XML::Node *repr = SP_OBJECT(item)->repr;
 
@@ -186,6 +186,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item)
     np->nodeContext = NULL; //Let the context that makes this set it
     np->livarot_path = NULL;
     np->local_change = 0;
+    np->show_handles = show_handles;
 
     // we need to update item's transform from the repr here,
     // because they may be out of sync when we respond
@@ -1336,6 +1337,9 @@ static void sp_node_update_handles(Inkscape::NodePath::Node *node, bool fire_mov
         if (node->n.other->selected) show_handles = TRUE;
     }
 
+    if (node->subpath->nodepath->show_handles == false)
+        show_handles = FALSE;
+
     sp_node_update_handle(node, -1, show_handles, fire_move_signals);
     sp_node_update_handle(node, 1, show_handles, fire_move_signals);
 }
@@ -1362,6 +1366,16 @@ static void sp_nodepath_update_handles(Inkscape::NodePath::Path *nodepath)
     for (GList *l = nodepath->subpaths; l != NULL; l = l->next) {
         sp_nodepath_subpath_update_handles((Inkscape::NodePath::SubPath *) l->data);
     }
+}
+
+void
+sp_nodepath_show_handles(bool show)
+{
+    Inkscape::NodePath::Path *nodepath = sp_nodepath_current();
+    if (nodepath == NULL) return;
+
+    nodepath->show_handles = show;
+    sp_nodepath_update_handles(nodepath);
 }
 
 /**

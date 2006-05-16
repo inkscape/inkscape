@@ -3483,9 +3483,9 @@
      inkscape:window-x="0"
      inkscape:window-height="998"
      inkscape:window-width="1235"
-     inkscape:cy="766.53747"
-     inkscape:cx="477.92614"
-     inkscape:zoom="6.39741"
+     inkscape:cy="1191.7808"
+     inkscape:cx="779.0784"
+     inkscape:zoom="8.2983948"
      gridtolerance="1.0000000px"
      snaptogrid="false"
      showgrid="true"
@@ -12723,4 +12723,30 @@ http://www.inkscape.org/</dc:description>
      xlink:href="#g3813"
      y="0"
      x="0" />
+  <g
+     transform="translate(64.4787,-188)"
+     id="nodes_show_handles">
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#646464;stroke-width:1.00000024;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       d="M 679.0213,257.89258 L 679.0213,247"
+       id="path3726"
+       sodipodi:nodetypes="cc" />
+    <rect
+       y="-260.44827"
+       x="-681.52057"
+       height="4.9501772"
+       width="4.9663944"
+       id="rect3728"
+       style="opacity:1;color:black;fill:#6464ff;fill-opacity:0.39215686;fill-rule:evenodd;stroke:blue;stroke-width:1.00000155;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline"
+       transform="matrix(-1,-2.790265e-6,-2.867107e-6,-1,0,0)" />
+    <rect
+       style="opacity:1;color:black;fill:#6464ff;fill-opacity:0.39215686;fill-rule:evenodd;stroke:blue;stroke-width:1.00000072;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline"
+       id="rect3730"
+       width="2.022052"
+       height="2.0266623"
+       x="-248.02205"
+       y="678.01025"
+       transform="matrix(0,-1,1,0,0,0)"
+       ry="1.011026" />
+  </g>
 </svg>

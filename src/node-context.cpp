@@ -174,7 +174,7 @@ sp_node_context_setup(SPEventContext *ec)
     nc->added_node = false;
 
     if (item) {
-        nc->nodepath = sp_nodepath_new(ec->desktop, item);
+        nc->nodepath = sp_nodepath_new(ec->desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
         if ( nc->nodepath) {
             //point pack to parent in case nodepath is deleted
             nc->nodepath->nodeContext = nc;
@@ -241,7 +241,7 @@ sp_node_context_selection_changed(Inkscape::Selection *selection, gpointer data)
     nc->nodepath = NULL;
     ec->shape_knot_holder = NULL;
     if (item) {
-        nc->nodepath = sp_nodepath_new(desktop, item);
+        nc->nodepath = sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
         if (nc->nodepath) {
             nc->nodepath->nodeContext = nc;
         }
@@ -292,7 +292,7 @@ sp_nodepath_update_from_item(SPNodeContext *nc, SPItem *item)
     item = selection->singleItem();
 
     if (item) {
-        nc->nodepath = sp_nodepath_new(desktop, item);
+        nc->nodepath = sp_nodepath_new(desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
         if (nc->nodepath) {
             nc->nodepath->nodeContext = nc;
         }

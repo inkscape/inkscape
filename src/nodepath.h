@@ -133,6 +133,9 @@ class Path {
 
       /// true if we changed repr, to tell this change from an external one such as from undo, simplify, or another desktop
 	unsigned int local_change;
+
+	/// true if we're showing selected nodes' handles
+	bool show_handles;
 };
 
 
@@ -231,7 +234,7 @@ class Node {
 }  // namespace Inkscape
 
 // Do function documentation in nodepath.cpp
-Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPItem * item);
+Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPItem * item, bool show_handles);
 void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);
 void sp_nodepath_deselect (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_select_all (Inkscape::NodePath::Path *nodepath, bool invert);
@@ -266,6 +269,8 @@ void sp_node_selected_set_type (Inkscape::NodePath::NodeType type);
 void sp_node_selected_set_line_type (NRPathcode code);
 void sp_node_selected_move (gdouble dx, gdouble dy);
 void sp_node_selected_move_screen (gdouble dx, gdouble dy);
+
+void sp_nodepath_show_handles(bool show);
 
 void sp_nodepath_selected_nodes_rotate (Inkscape::NodePath::Path * nodepath, gdouble angle, int which, bool screen);
 
