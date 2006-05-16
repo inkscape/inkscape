@@ -1002,7 +1002,11 @@ sculpt_profile (double x, double alpha)
 {
     if (x >= 1)
         return 0;
-    return (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+    if (prefs_get_int_attribute("tools.nodes", "sculpt_profile_linear", 0) == 1) {
+        return 1 - x;
+    } else {
+        return (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+    }
 }
 
 double
