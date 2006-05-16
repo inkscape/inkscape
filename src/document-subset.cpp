@@ -57,29 +57,28 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
             } else {
                 Siblings::const_iterator first=children.begin();
                 Siblings::const_iterator last=children.end() - 1;
-                if ( children.size() == 1 ) {
-                    int pos = sp_object_compare_position(*first, obj);
+
+                while ( first != last ) {
+                    Siblings::const_iterator mid = first + ( last - first + 1 ) / 2;
+                    int pos = sp_object_compare_position(*mid, obj);
                     if ( pos < 0 ) {
-                        // All good.
+                        first = mid;
                     } else if ( pos > 0 ) {
-                        last++;
+                        if ( last == mid ) {
+                            last = mid - 1; // already at the top limit
+                        } else {
+                            last = mid;
+                        }
                     } else {
                         g_assert_not_reached();
                     }
-                } else {
-                    while ( first != last ) {
-                        Siblings::const_iterator mid=first + ( last - first + 1 ) / 2;
-                        int pos=sp_object_compare_position(*mid, obj);
-                        if ( pos < 0 ) {
-                            first = mid;
-                        } else if ( pos > 0 ) {
-                            if ( last == mid ) {
-                                break;
-                            }
-                            last = mid;
-                        } else {
-                            g_assert_not_reached();
-                        }
+                }
+
+                if ( first == last ) {
+                    // compare to the single possiblity left
+                    int pos = sp_object_compare_position(*last, obj);
+                    if ( pos < 0 ) {
+                        last++;
                     }
                 }
 

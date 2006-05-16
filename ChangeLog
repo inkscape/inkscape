@@ -1,3 +1,8 @@
+2006-05-16  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/document-subset.cpp:
+	  Corrected ordering of children in subset.
+
 2006-05-15  Jon A. Cruz  <jon@joncruz.org>
 	* src/Makefile_insert, src/desktop.cpp, src/desktop.h,
 	  src/layer-manager.cpp, src/menus-skeleton.h, src/verbs.cpp,
