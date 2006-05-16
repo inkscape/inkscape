@@ -1,2 +1,2 @@
 set path=c:\inkscape;%path%
-pedro.exe
+start pedro.exe
