@@ -423,10 +423,11 @@ void Path::Convert(NRRectL *area, double treshhold)
     int lastMoveTo = 0;
     short last_point_relation = 0;
     short curent_point_relation = 0;
+    bool last_start_elimination = false;
     bool start_elimination = false;
     bool replace = false;
 
-    // le moveto
+    // first point
     {
         int const firstTyp = descr_cmd[0]->getType();
         if ( firstTyp == descr_moveto ) {
@@ -441,7 +442,7 @@ void Path::Convert(NRRectL *area, double treshhold)
     }
     descr_cmd[0]->associated = lastMoveTo;
 
-    // et le reste, 1 par 1
+    // process nodes one by one
     while ( curP < int(descr_cmd.size()) ) {
 
         int const nType = descr_cmd[curP]->getType();
@@ -487,6 +488,7 @@ void Path::Convert(NRRectL *area, double treshhold)
                 nextX = nData->p;
                 curent_point_relation = POINT_RELATION_TO_AREA(nextX, area);
                 replace = false;
+                last_start_elimination = start_elimination;
                 if (curent_point_relation > 0 && curent_point_relation == last_point_relation) {
                     if (!start_elimination) {
                         start_elimination = true;
@@ -503,6 +505,8 @@ void Path::Convert(NRRectL *area, double treshhold)
                 }
 
                 if ( descr_cmd[curP]->associated < 0 ) {
+                    // point is not added as position is equal to the last added
+                    start_elimination = last_start_elimination;
                     if ( curP == 0 ) {
                         descr_cmd[curP]->associated = 0;
                     } else {
@@ -520,6 +524,7 @@ void Path::Convert(NRRectL *area, double treshhold)
 
                 curent_point_relation = POINT_RELATION_TO_AREA(nextX, area);
                 replace = false;
+                last_start_elimination = start_elimination;
                 if (curent_point_relation > 0 && curent_point_relation == last_point_relation &&
                     curent_point_relation == POINT_RELATION_TO_AREA(curX + (nData->start), area) &&
                     curent_point_relation == POINT_RELATION_TO_AREA(nextX + (nData->end), area))
@@ -540,6 +545,8 @@ void Path::Convert(NRRectL *area, double treshhold)
                 }
 
                 if ( descr_cmd[curP]->associated < 0 ) {
+                    // point is not added as position is equal to the last added
+                    start_elimination = last_start_elimination;
                     if ( curP == 0 ) {
                         descr_cmd[curP]->associated = 0;
                     } else {
