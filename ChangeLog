@@ -1,3 +1,7 @@
+2006-05-17  Jon A. Cruz  <jon@joncruz.org>
+	* src/dialogs/layers-panel.cpp:
+	  Flipped top/bottom in layers UI to reflect visible stacking.
+
 2006-05-16  verbalshadow  <verbalshadow@gmail.com>
 
 	* src/desktop-style.h, src/desktop-style.cpp:

@@ -229,7 +229,7 @@ void LayersPanel::_layersChanged()
                     g_message("    layer:%p  {%s}   [%s]", child, child->id, child->label() );
 #endif // DUMP_LAYERS
 
-                    Gtk::TreeModel::Row row = *(_store->append());
+                    Gtk::TreeModel::Row row = *(_store->prepend());
                     row[_model->_colObject] = child;
                     row[_model->_colLabel] = child->label() ? child->label() : SP_OBJECT_ID(child);
                     row[_model->_colVisible] = SP_IS_ITEM(child) ? !SP_ITEM(child)->isHidden() : false;
@@ -244,7 +244,7 @@ void LayersPanel::_layersChanged()
 #if DUMP_LAYERS
                             g_message("        layer:%p  {%s}   [%s]", child, child->id, child->label() );
 #endif // DUMP_LAYERS
-                            Gtk::TreeModel::Row row2 = *(_store->append(row.children()));
+                            Gtk::TreeModel::Row row2 = *(_store->prepend(row.children()));
                             row2[_model->_colObject] = child2;
                             row2[_model->_colLabel] = child2->label() ? child2->label() : SP_OBJECT_ID(child2);
                             row2[_model->_colVisible] = SP_IS_ITEM(child2) ? !SP_ITEM(child2)->isHidden() : false;
