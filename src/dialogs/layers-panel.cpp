@@ -24,7 +24,7 @@
 #include "desktop.h"
 #include "sp-object.h"
 #include "sp-item.h"
-#include "src/widgets/icon.h"
+#include "widgets/icon.h"
 #include <gtkmm/widget.h>
 
 //#define DUMP_LAYERS 1

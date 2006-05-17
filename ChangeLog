@@ -1,3 +1,7 @@
+2006-05-17  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/dialogs/layers-panel.cpp: Compile fix from Mathieu Dimanche.
+
 2006-05-16  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/document-subset.cpp:
