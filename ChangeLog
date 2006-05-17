@@ -1,3 +1,8 @@
+2006-05-16  verbalshadow  <verbalshadow@gmail.com>
+
+	* src/desktop-style.h, src/desktop-style.cpp:
+	  Fixes calligraphy tool so drawing now uses the the correct opacity.
+
 2006-05-17  Jon A. Cruz  <jon@joncruz.org>
 	* src/dialogs/layers-panel.cpp, src/dialogs/layers-panel.h:
 	  Switched icons to stock generic.

@@ -5,8 +5,9 @@
  *
  * Authors:
  *   bulia byak
+ *   verbalshadow
  *
- * Copyright (C) 2004 authors
+ * Copyright (C) 2004, 2006 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -14,6 +15,7 @@
 #include "desktop.h"
 #include "color-rgba.h"
 #include "svg/css-ostringstream.h"
+#include "svg/svg.h"
 #include "svg/svg-color.h"
 #include "selection.h"
 #include "sp-tspan.h"
@@ -30,6 +32,7 @@
 #include "sp-pattern.h"
 #include "xml/repr.h"
 #include "libnrtype/font-style-to-pos.h"
+
 
 #include "desktop-style.h"
 
@@ -218,11 +221,34 @@ sp_desktop_get_color(SPDesktop *desktop, bool is_fill)
     return r;
 }
 
+double
+sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool op)
+{
+    SPCSSAttr *css = NULL;
+    gfloat value = 1.0; // default if nothing else found
+    if (prefs_get_double_attribute(tool, "usecurrent", 0) != 0) {
+        css = sp_desktop_get_style(desktop, op);
+    } else { 
+        Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
+        css = sp_repr_css_attr_inherited(tool_repr, "style");
+    }
+   
+    gchar const *property = css ? sp_repr_css_property(css, "opacity", "1.000") : 0;
+           
+    if (desktop->current && property) { // if there is style and the property in it,
+        if ( !sp_svg_number_read_f(property, &value) ) {
+            value = 1.0; // things failed. set back to the default
+        }
+    }
+    return value;
+}
 guint32
 sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
 {
     SPCSSAttr *css = NULL;
     guint32 r = 0; // if there's no color, return black
+    bool op = true;
+    double opacity = sp_desktop_get_opacity_tool(SP_ACTIVE_DESKTOP, "tools.calligraphic", op);
     if (prefs_get_int_attribute(tool, "usecurrent", 0) != 0) {
         css = sp_desktop_get_style(desktop, is_fill);
     } else {
@@ -238,7 +264,7 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
             r = sp_svg_read_color(property, r);
         }
     }
-    return r | 0xff;
+    return r | SP_COLOR_F_TO_U( opacity ); // return RGBA color
 }
 /**
  * Apply the desktop's current style or the tool style to repr.
