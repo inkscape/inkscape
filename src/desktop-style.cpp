@@ -222,12 +222,12 @@ sp_desktop_get_color(SPDesktop *desktop, bool is_fill)
 }
 
 double
-sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool op)
+sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool)
 {
     SPCSSAttr *css = NULL;
     gfloat value = 1.0; // default if nothing else found
     if (prefs_get_double_attribute(tool, "usecurrent", 0) != 0) {
-        css = sp_desktop_get_style(desktop, op);
+        css = sp_desktop_get_style(desktop, true);
     } else { 
         Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
         css = sp_repr_css_attr_inherited(tool_repr, "style");
@@ -240,6 +240,11 @@ sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool op)
             value = 1.0; // things failed. set back to the default
         }
     }
+
+    if (css) {
+        sp_repr_css_attr_unref(css);
+    }
+
     return value;
 }
 guint32
@@ -247,10 +252,8 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
 {
     SPCSSAttr *css = NULL;
     guint32 r = 0; // if there's no color, return black
-    bool op = true;
-    double opacity = sp_desktop_get_opacity_tool(SP_ACTIVE_DESKTOP, "tools.calligraphic", op);
     if (prefs_get_int_attribute(tool, "usecurrent", 0) != 0) {
-        css = sp_desktop_get_style(desktop, is_fill);
+        css = sp_desktop_get_style(desktop, true);
     } else {
         Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
         css = sp_repr_css_attr_inherited(tool_repr, "style");
@@ -264,7 +267,12 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
             r = sp_svg_read_color(property, r);
         }
     }
-    return r | SP_COLOR_F_TO_U( opacity ); // return RGBA color
+
+    if (css) {
+        sp_repr_css_attr_unref(css);
+    }
+
+    return r | 0xff;
 }
 /**
  * Apply the desktop's current style or the tool style to repr.
@@ -283,7 +291,8 @@ sp_desktop_apply_style_tool(SPDesktop *desktop, Inkscape::XML::Node *repr, char 
             sp_repr_css_attr_unref(css);
         }
     }
-    if (css_current) {sp_repr_css_attr_unref(css_current);
+    if (css_current) {
+        sp_repr_css_attr_unref(css_current);
     }
 }
 
