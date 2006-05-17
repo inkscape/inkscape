@@ -16,6 +16,8 @@
 
 #include <glibmm.h>
 #include <gtkmm.h>
+#include "nrtype-forward.h"
+#include "nr-type-primitives.h"
 
 namespace Inkscape
 {
