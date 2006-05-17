@@ -20,6 +20,8 @@ libnrtype_libnrtype_a_SOURCES =	\
 	libnrtype/FontFactory.cpp \
 	libnrtype/FontFactory.h \
 	libnrtype/FontInstance.cpp \
+	libnrtype/font-lister.h \
+	libnrtype/font-lister.cpp \
 	libnrtype/one-box.h	\
 	libnrtype/one-glyph.h	\
 	libnrtype/one-para.h	\

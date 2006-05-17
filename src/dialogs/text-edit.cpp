@@ -51,7 +51,6 @@ extern "C" {
 #include "widgets/icon.h"
 #include <xml/repr.h>
 
-
 #define VB_MARGIN 4
 
 static void sp_text_edit_dialog_selection_modified (Inkscape::Application *inkscape, Inkscape::Selection *sel, guint flags, GtkWidget *dlg);
@@ -209,6 +208,12 @@ sp_text_edit_dialog (void)
             // font and style selector
             GtkWidget *fontsel = sp_font_selector_new ();
             g_signal_connect ( G_OBJECT (fontsel), "font_set", G_CALLBACK (sp_text_edit_dialog_font_changed), dlg );
+
+            g_signal_connect_swapped ( G_OBJECT (g_object_get_data (G_OBJECT(fontsel), "family-treeview")),
+                                      "row-activated",
+                                      G_CALLBACK (gtk_window_activate_default),
+                                      dlg);
+
             gtk_box_pack_start (GTK_BOX (hb), fontsel, TRUE, TRUE, 0);
             g_object_set_data (G_OBJECT (dlg), "fontsel", fontsel);
 
@@ -418,6 +423,7 @@ sp_text_edit_dialog (void)
 
         {
             GtkWidget *b = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+            GTK_WIDGET_SET_FLAGS (b, GTK_CAN_DEFAULT | GTK_HAS_DEFAULT);
             g_signal_connect ( G_OBJECT (b), "clicked", 
                                G_CALLBACK (sp_text_edit_dialog_apply), dlg );
             gtk_box_pack_end ( GTK_BOX (hb), b, FALSE, FALSE, 0 );
@@ -813,7 +819,10 @@ sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
     GtkWidget *preview, *apply, *def;
 
     if (g_object_get_data (G_OBJECT (dlg), "blocked"))
+    {
+        g_message ("Blocked");
         return;
+    }
 
     SPItem *text = sp_ted_get_selected_text_item ();
 
@@ -823,7 +832,8 @@ sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
 
     sp_font_preview_set_font (SP_FONT_PREVIEW (preview), font, SP_FONT_SELECTOR(fsel));
 
-    if (text) {
+    if (text)
+    {
         gtk_widget_set_sensitive (apply, TRUE);
     }
     gtk_widget_set_sensitive (def, TRUE);

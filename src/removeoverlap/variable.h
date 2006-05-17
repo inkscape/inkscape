@@ -39,7 +39,7 @@ public:
 		, visited(false)
 	{
 	}
-	inline double Variable::position() const {
+	inline double position() const {
 		return block->posn+offset;
 	}
 	//double position() const;
