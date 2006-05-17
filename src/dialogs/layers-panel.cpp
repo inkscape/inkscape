@@ -12,6 +12,8 @@
 # include <config.h>
 #endif
 
+#include <gtk/gtkstock.h>
+
 #include "inkscape.h"
 
 #include "layers-panel.h"
@@ -59,14 +61,22 @@ enum {
     BUTTON_DELETE
 };
 
-void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* fallback )
+void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback )
 {
     bool set = false;
+
+    if ( iconName ) {
+        GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName );
+        gtk_widget_show( child );
+        btn.add( *manage(Glib::wrap(child)) );
+        set = true;
+    }
+
     if ( desktop ) {
         Verb *verb = Verb::get( code );
         if ( verb ) {
             SPAction *action = verb->get_action(desktop);
-            if ( action && action->image ) {
+            if ( !set && action && action->image ) {
                 GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, action->image );
                 gtk_widget_show( child );
                 btn.add( *manage(Glib::wrap(child)) );
@@ -78,6 +88,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
             }
         }
     }
+
     if ( !set && fallback ) {
         btn.set_label( fallback );
     }
@@ -367,30 +378,30 @@ LayersPanel::LayersPanel() :
     SPDesktop* targetDesktop = SP_ACTIVE_DESKTOP;
 
     Gtk::Button* btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, "Ne" );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, GTK_STOCK_ADD, "Ne" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, "Top" );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, GTK_STOCK_GOTO_TOP, "Top" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_TOP) );
     _watching.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, "Up" );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_UP) );
     _watching.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, "Dn" );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Dn" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DOWN) );
     _watching.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, "Btm" );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, GTK_STOCK_GOTO_BOTTOM, "Btm" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_BOTTOM) );
     _watching.push_back( btn );
     _buttonsRow.pack_start( *btn );
@@ -400,7 +411,7 @@ LayersPanel::LayersPanel() :
 //     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
-    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_DELETE, "X" );
+    _styleButton( *btn, targetDesktop, SP_VERB_LAYER_DELETE, GTK_STOCK_REMOVE, "X" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DELETE) );
     _watching.push_back( btn );
     _buttonsRow.pack_start( *btn );

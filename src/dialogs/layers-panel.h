@@ -54,7 +54,7 @@ private:
 
     static LayersPanel* instance;
 
-    void _styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* fallback );
+    void _styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback );
     void _fireAction( unsigned int code );
 
     void _toggled( Glib::ustring const& str, int targetCol );
