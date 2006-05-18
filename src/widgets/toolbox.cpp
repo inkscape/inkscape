@@ -2838,11 +2838,9 @@ sp_text_toolbox_family_changed (GtkComboBox *cbox,
                                 GtkWidget   *tbl) 
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    unsigned items = 0;
 
     if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
 
-    const GSList *item_list = sp_desktop_selection(desktop)->itemList();
     SPCSSAttr *css = sp_repr_css_attr_new (); 
     sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
     sp_desktop_set_style(desktop, css, true);
@@ -2868,6 +2866,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
 {
     GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
 
+#if 0
 #if 0
     GtkWidget   *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
     GtkTooltips *tt = gtk_tooltips_new();
@@ -3173,15 +3172,14 @@ sp_text_toolbox_new (SPDesktop *desktop)
         gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
         }
 #endif
+#endif
 
-#if 0
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
     swatch->setWatchedTool ("tools.text", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
 
     sp_set_font_size_smaller (tbl);
-#endif
 
     gtk_widget_show_all (tbl);
     return tbl;
