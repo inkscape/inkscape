@@ -233,6 +233,12 @@ class Node {
 }  // namespace NodePath
 }  // namespace Inkscape
 
+enum {
+  SCULPT_PROFILE_LINEAR,
+  SCULPT_PROFILE_BELL,
+  SCULPT_PROFILE_ELLIPTIC
+};
+
 // Do function documentation in nodepath.cpp
 Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPItem * item, bool show_handles);
 void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);

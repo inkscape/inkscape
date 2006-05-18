@@ -998,14 +998,20 @@ curve; the parameter alpha determines how blunt (alpha > 1) or sharp (alpha < 1)
 near x = 0.
  */
 double
-sculpt_profile (double x, double alpha)
+sculpt_profile (double x, double alpha, guint profile)
 {
     if (x >= 1)
         return 0;
-    if (prefs_get_int_attribute("tools.nodes", "sculpt_profile_linear", 0) == 1) {
+    if (x <= 0)
+        return 1;
+
+    switch (profile) {
+        case SCULPT_PROFILE_LINEAR:
         return 1 - x;
-    } else {
+        case SCULPT_PROFILE_BELL:
         return (0.5 * cos (M_PI * (pow(x, alpha))) + 0.5);
+        case SCULPT_PROFILE_ELLIPTIC:
+        return sqrt(1 - x*x);
     }
 }
 
@@ -1048,6 +1054,8 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
     double alpha = 1 - 2 * fabs(pressure - 0.5);
     if (pressure > 0.5)
         alpha = 1/alpha;
+
+    guint profile = prefs_get_int_attribute("tools.nodes", "sculpting_profile", SCULPT_PROFILE_BELL);
 
     if (sp_nodepath_selection_get_subpath_count(nodepath) <= 1) {
         // Only one subpath has selected nodes:
@@ -1117,9 +1125,9 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                     n_range += bezier_length (n_node->p.other->origin, n_node->p.other->n.origin, n_node->p.origin, n_node->origin);
                     if (n_node->selected) {
                         sp_nodepath_move_node_and_handles (n_node, 
-                                                           sculpt_profile (n_range / n_sel_range, alpha) * delta,
-                                                           sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha) * delta,
-                                                           sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha) * delta);
+                                                           sculpt_profile (n_range / n_sel_range, alpha, profile) * delta,
+                                                           sculpt_profile ((n_range + NR::L2(n_node->n.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta,
+                                                           sculpt_profile ((n_range - NR::L2(n_node->p.origin - n_node->origin)) / n_sel_range, alpha, profile) * delta);
                     }
                     if (n_node == p_node) {
                         n_going = false;
@@ -1134,9 +1142,9 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                     p_range += bezier_length (p_node->n.other->origin, p_node->n.other->p.origin, p_node->n.origin, p_node->origin);
                     if (p_node->selected) {
                         sp_nodepath_move_node_and_handles (p_node, 
-                                                           sculpt_profile (p_range / p_sel_range, alpha) * delta,
-                                                           sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha) * delta,
-                                                           sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha) * delta);
+                                                           sculpt_profile (p_range / p_sel_range, alpha, profile) * delta,
+                                                           sculpt_profile ((p_range - NR::L2(p_node->n.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta,
+                                                           sculpt_profile ((p_range + NR::L2(p_node->p.origin - p_node->origin)) / p_sel_range, alpha, profile) * delta);
                     }
                     if (p_node == n_node) {
                         n_going = false;
@@ -1172,9 +1180,9 @@ sp_nodepath_selected_nodes_sculpt(Inkscape::NodePath::Path *nodepath, Inkscape::
                 if (node->selected) {
                     if (direct_range > 1e-6) {
                         sp_nodepath_move_node_and_handles (node,
-                                                       sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha) * delta,
-                                                       sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha) * delta,
-                                                       sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha) * delta);
+                                                       sculpt_profile (NR::L2(node->origin - n->origin) / direct_range, alpha, profile) * delta,
+                                                       sculpt_profile (NR::L2(node->n.origin - n->origin) / direct_range, alpha, profile) * delta,
+                                                       sculpt_profile (NR::L2(node->p.origin - n->origin) / direct_range, alpha, profile) * delta);
                     } else {
                         sp_nodepath_move_node_and_handles (node, delta, delta, delta);
                     }
