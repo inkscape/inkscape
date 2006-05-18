@@ -15,6 +15,7 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/tooltips.h>
+#include <gtkmm/scrolledwindow.h>
 
 #include "ui/widget/panel.h"
 //#include "ui/previewholder.h"
@@ -56,8 +57,12 @@ private:
 
     void _styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback );
     void _fireAction( unsigned int code );
+    Gtk::MenuItem& _addPopupItem( SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback, int id );
 
     void _toggled( Glib::ustring const& str, int targetCol );
+
+    void _handleButtonEvent(GdkEventButton* evt);
+    void _handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeModel::iterator const& iter );
 
     void _checkTreeSelection();
 
@@ -82,11 +87,15 @@ private:
     SPDesktop* _desktop;
     ModelColumns* _model;
     Glib::RefPtr<Gtk::TreeStore> _store;
-    std::vector<Gtk::Button*> _watching;
+    std::vector<Gtk::Widget*> _watching;
+    std::vector<Gtk::Widget*> _watchingNonTop;
+    std::vector<Gtk::Widget*> _watchingNonBottom;
 
     Gtk::Tooltips _tips;
     Gtk::TreeView _tree;
     Gtk::HBox _buttonsRow;
+    Gtk::ScrolledWindow _scroller;
+    Gtk::Menu _popupMenu;
 };
 
 

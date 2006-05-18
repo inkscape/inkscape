@@ -19,6 +19,8 @@
 #include "layers-panel.h"
 
 #include "layer-manager.h"
+#include "layer-fns.h"
+
 #include "verbs.h"
 #include "helper/action.h"
 
@@ -53,6 +55,7 @@ enum {
 
 enum {
     BUTTON_NEW = 0,
+    BUTTON_RENAME,
     BUTTON_TOP,
     BUTTON_BOTTOM,
     BUTTON_UP,
@@ -94,6 +97,51 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
     }
 }
 
+Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback, int id )
+{
+    GtkWidget* iconWidget = 0;
+    const char* label = 0;
+
+    if ( iconName ) {
+        iconWidget = sp_icon_new( Inkscape::ICON_SIZE_MENU, iconName );
+    }
+
+    if ( desktop ) {
+        Verb *verb = Verb::get( code );
+        if ( verb ) {
+            SPAction *action = verb->get_action(desktop);
+            if ( !iconWidget && action && action->image ) {
+                iconWidget = sp_icon_new( Inkscape::ICON_SIZE_MENU, action->image );
+            }
+
+            if ( action ) {
+                label = action->name;
+            }
+        }
+    }
+
+    if ( !label && fallback ) {
+        label = fallback;
+    }
+
+    Gtk::Widget* wrapped = 0;
+    if ( iconWidget ) {
+        wrapped = manage(Glib::wrap(iconWidget));
+        wrapped->show();
+    }
+
+
+
+    Gtk::Menu::MenuList& menulist = _popupMenu.items();
+
+    if ( wrapped ) {
+        menulist.push_back( Gtk::Menu_Helpers::ImageMenuElem( label, *wrapped, sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), id)) );
+    } else {
+        menulist.push_back( Gtk::Menu_Helpers::MenuElem( label, sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), id)) );
+    }
+    return menulist.back();
+}
+
 void LayersPanel::_fireAction( unsigned int code )
 {
     if ( _desktop ) {
@@ -121,6 +169,11 @@ void LayersPanel::_takeAction( int val )
         case BUTTON_NEW:
         {
             _fireAction( SP_VERB_LAYER_NEW );
+        }
+        break;
+        case BUTTON_RENAME:
+        {
+            _fireAction( SP_VERB_LAYER_RENAME );
         }
         break;
         case BUTTON_TOP:
@@ -275,11 +328,17 @@ SPObject* LayersPanel::_selectedLayer()
 void LayersPanel::_checkTreeSelection()
 {
     bool sensitive = false;
+    bool sensitiveNonTop = false;
+    bool sensitiveNonBottom = false;
     if ( _tree.get_selection()->count_selected_rows() > 0 ) {
         sensitive = true;
 
         SPObject* inTree = _selectedLayer();
         if ( inTree ) {
+
+            sensitiveNonTop = (Inkscape::next_layer(inTree->parent, inTree) != 0);
+            sensitiveNonBottom = (Inkscape::previous_layer(inTree->parent, inTree) != 0);
+
             SPObject* curr = _desktop->currentLayer();
             if ( curr != inTree ) {
                 _layerChangedConnection.block();
@@ -294,8 +353,14 @@ void LayersPanel::_checkTreeSelection()
         sensitive = false;
     }
 
-    for ( std::vector<Gtk::Button*>::iterator it = _watching.begin(); it != _watching.end(); ++it ) {
+    for ( std::vector<Gtk::Widget*>::iterator it = _watching.begin(); it != _watching.end(); ++it ) {
         (*it)->set_sensitive( sensitive );
+    }
+    for ( std::vector<Gtk::Widget*>::iterator it = _watchingNonTop.begin(); it != _watchingNonTop.end(); ++it ) {
+        (*it)->set_sensitive( sensitiveNonTop );
+    }
+    for ( std::vector<Gtk::Widget*>::iterator it = _watchingNonBottom.begin(); it != _watchingNonBottom.end(); ++it ) {
+        (*it)->set_sensitive( sensitiveNonBottom );
     }
 }
 
@@ -333,6 +398,43 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
     }
 }
 
+void LayersPanel::_handleButtonEvent(GdkEventButton* evt)
+{
+    if ( (evt->type == GDK_BUTTON_PRESS) && (evt->button == 3) ) {
+
+
+        {
+            Gtk::TreeModel::Path path;
+            Gtk::TreeViewColumn* col = 0;
+            int x = static_cast<int>(evt->x);
+            int y = static_cast<int>(evt->y);
+            int x2 = 0;
+            int y2 = 0;
+            if ( _tree.get_path_at_pos( x, y,
+                                        path, col,
+                                        x2, y2 ) ) {
+                _checkTreeSelection();
+                _popupMenu.popup(evt->button, evt->time);
+            }
+        }
+
+    }
+}
+
+void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeModel::iterator const& iter )
+{
+    Gtk::TreeModel::Row row = *iter;
+    if ( row ) {
+        SPObject* obj = row[_model->_colObject];
+        if ( obj ) {
+            gchar const* oldLabel = obj->label();
+            Glib::ustring tmp = row[_model->_colLabel];
+            if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
+                obj->setLabel(tmp.c_str());
+            }
+        }
+    }
+}
 
 /**
  * Constructor
@@ -352,7 +454,7 @@ LayersPanel::LayersPanel() :
     _tree.set_model( _store );
     int visibleColNum = _tree.append_column("vis", _model->_colVisible) - 1;
     int lockedColNum = _tree.append_column("lock", _model->_colLocked) - 1;
-    int nameColNum = _tree.append_column("Name", _model->_colLabel) - 1;
+    int nameColNum = _tree.append_column_editable("Name", _model->_colLabel) - 1;
 
     _tree.set_expander_column( *_tree.get_column(nameColNum) );
 
@@ -370,9 +472,12 @@ LayersPanel::LayersPanel() :
 
     _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_checkTreeSelection) );
 
-    _getContents()->pack_start(_tree, Gtk::PACK_EXPAND_WIDGET);
+    _tree.get_model()->signal_row_changed().connect( sigc::mem_fun(*this, &LayersPanel::_handleRowChange) );
+    _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
 
-
+    _scroller.add( _tree );
+    _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+    _getContents()->pack_start( _scroller, Gtk::PACK_EXPAND_WIDGET );
     _getContents()->pack_end(_buttonsRow, Gtk::PACK_SHRINK);
 
     SPDesktop* targetDesktop = SP_ACTIVE_DESKTOP;
@@ -385,25 +490,25 @@ LayersPanel::LayersPanel() :
     btn = manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, GTK_STOCK_GOTO_TOP, "Top" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_TOP) );
-    _watching.push_back( btn );
+    _watchingNonTop.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_UP) );
-    _watching.push_back( btn );
+    _watchingNonTop.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Dn" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DOWN) );
-    _watching.push_back( btn );
+    _watchingNonBottom.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
     btn = manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_BOTTOM, GTK_STOCK_GOTO_BOTTOM, "Btm" );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_BOTTOM) );
-    _watching.push_back( btn );
+    _watchingNonBottom.push_back( btn );
     _buttonsRow.pack_start( *btn );
 
 //     btn = manage( new Gtk::Button("Dup") );
@@ -417,7 +522,31 @@ LayersPanel::LayersPanel() :
     _buttonsRow.pack_start( *btn );
 
 
-    for ( std::vector<Gtk::Button*>::iterator it = _watching.begin(); it != _watching.end(); ++it ) {
+
+
+    // -------------------------------------------------------
+    {
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RENAME, 0, "Rename", (int)BUTTON_RENAME ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
+
+         _popupMenu.items().push_back( Gtk::Menu_Helpers::SeparatorElem() );
+
+        _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up", (int)BUTTON_UP ) );
+        _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Down", (int)BUTTON_DOWN ) );
+
+        _popupMenu.show_all_children();
+    }
+    // -------------------------------------------------------
+
+
+
+    for ( std::vector<Gtk::Widget*>::iterator it = _watching.begin(); it != _watching.end(); ++it ) {
+        (*it)->set_sensitive( false );
+    }
+    for ( std::vector<Gtk::Widget*>::iterator it = _watchingNonTop.begin(); it != _watchingNonTop.end(); ++it ) {
+        (*it)->set_sensitive( false );
+    }
+    for ( std::vector<Gtk::Widget*>::iterator it = _watchingNonBottom.begin(); it != _watchingNonBottom.end(); ++it ) {
         (*it)->set_sensitive( false );
     }
 

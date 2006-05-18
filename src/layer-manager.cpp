@@ -23,9 +23,7 @@ namespace Inkscape {
 LayerManager::LayerManager(SPDesktop *desktop)
 : _desktop(desktop), _document(NULL)
 {
-    sigc::slot<void> base = sigc::mem_fun(*this, &LayerManager::_rebuild);
-    sigc::slot<void, SPObject *> slot = sigc::hide<0>(base);
-    _layer_connection = desktop->connectCurrentLayerChanged(slot);
+//    _layer_connection = desktop->connectCurrentLayerChanged( sigc::hide<0>( sigc::mem_fun(*this, &LayerManager::_rebuild) ) );
 
     sigc::bound_mem_functor1<void, Inkscape::LayerManager, SPDocument*> first = sigc::mem_fun(*this, &LayerManager::_setDocument);
 

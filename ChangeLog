@@ -1,3 +1,8 @@
+2006-05-18  Jon A. Cruz  <jon@joncruz.org>
+	* src/layer-manager.cpp, src/dialogs/layers-panel.h,
+	  src/dialogs/layers-panel.cpp:
+	  Next round of layer dialog updates.
+
 2006-05-17  Kees Cook  <kees@outflux.net>
 	* src/dialogs/rdf.cpp: corrected localization on array, added comments.
 	* src/ui/widget/licensor.cpp: Localized the license name.
