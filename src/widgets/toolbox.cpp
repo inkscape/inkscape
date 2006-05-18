@@ -2787,9 +2787,6 @@ static void
 sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
 {
     GtkWidget *cbox = GTK_WIDGET(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
-    Inkscape::XML::Node *repr = 0;
-    SPStyle *style = 0; 
-    bool multiple = false;
 
     // create temporary style
     SPStyle *query = sp_style_new ();
