@@ -333,6 +333,24 @@ public:
     { }
 }; /* TutorialVerb class */
 
+/** \brief A class to encompass all of the verbs which deal with
+           text operations. */
+class TextVerb : public Verb {
+private:
+    static void perform(SPAction *action, void *mydata, void *otherdata);
+    static SPActionEventVector vector;
+protected:
+    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+public:
+    /** \brief Use the Verb initializer with the same parameters. */
+    TextVerb(unsigned int const code,
+              gchar const *id,
+              gchar const *name,
+              gchar const *tip,
+              gchar const *image) :
+        Verb(code, id, name, tip, image)
+    { }
+}; //TextVerb : public Verb 
 
 Verb::VerbTable Verb::_verbs;
 Verb::VerbIDTable Verb::_verb_ids;
@@ -505,6 +523,18 @@ HelpVerb::make_action(Inkscape::UI::View::View *view)
 */
 SPAction *
 TutorialVerb::make_action(Inkscape::UI::View::View *view)
+{
+    return make_action_helper(view, &vector);
+}
+
+/** \brief  Create an action for a \c TextVerb
+    \param  view  Which view the action should be created for
+    \return The built action.
+
+    Calls \c make_action_helper with the \c vector.
+*/
+SPAction *
+TextVerb::make_action(Inkscape::UI::View::View *view)
 {
     return make_action_helper(view, &vector);
 }
@@ -1369,6 +1399,18 @@ ContextVerb::perform(SPAction *action, void *data, void *pdata)
 
 /** \brief  Decode the verb code and take appropriate action */
 void
+TextVerb::perform(SPAction *action, void *data, void *pdata)
+{
+    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    if (!dt)
+        return;
+
+    SPDocument *doc = sp_desktop_document(dt);
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
+}
+ 
+/** \brief  Decode the verb code and take appropriate action */
+void
 ZoomVerb::perform(SPAction *action, void *data, void *pdata)
 {
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
@@ -1782,6 +1824,14 @@ SPActionEventVector HelpVerb::vector =
  */
 SPActionEventVector TutorialVerb::vector =
             {{NULL},TutorialVerb::perform, NULL, NULL, NULL};
+
+/**
+ * Action vector to define functions called if a staticly defined tutorial verb
+ * is called
+ */
+SPActionEventVector TextVerb::vector =
+            {{NULL},TextVerb::perform, NULL, NULL, NULL};
+
 
 /* *********** Effect Last ********** */
 
@@ -2359,7 +2409,13 @@ Verb *Verb::_base_verbs[] = {
                        N_("Fit the canvas to the drawing"), NULL),
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Canvas to Selection or Drawing"),
                        N_("Fit the canvas to the current selection or the drawing if there is no selection"), NULL),
-    
+
+#if 0
+    //Text
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Canvas to Selection or Drawing"),
+                       N_("Fit the canvas to the current selection or the drawing if there is no selection"), NULL),
+#endif
+
     /* Footer */
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };

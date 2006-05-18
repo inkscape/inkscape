@@ -2788,7 +2788,6 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
 {
     GtkWidget *cbox = GTK_WIDGET(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
     Inkscape::XML::Node *repr = 0;
-//  Inkscape::XML::Node *oldrepr = 0;
     SPStyle *style = 0; 
     bool multiple = false;
     const GSList *items = selection->itemList();
@@ -2824,25 +2823,10 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
     g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
 
     gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
-
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPCSSAttr *css = sp_repr_css_attr_new (); 
-    items = sp_desktop_selection(desktop)->itemList();
-
     sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (GTK_COMBO_BOX(cbox)));
     sp_desktop_set_style (desktop, css, true);
-
-    for (; items != NULL; items = items->next)
-    {
-        // apply style to the reprs of all text objects in the selection
-        if (SP_IS_TEXT (items->data))
-        {
-            // backwards compatibility:
-            SP_OBJECT_REPR(items->data)->setAttribute("sodipodi:linespacing", sp_repr_css_property (css, "line-height", NULL));
-        }
-    }
-
-    // complete the transaction
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     sp_repr_css_attr_unref (css);
 
@@ -2855,35 +2839,29 @@ sp_text_toolbox_family_changed (GtkComboBox *cbox,
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     unsigned items = 0;
-    const GSList *item_list = sp_desktop_selection(desktop)->itemList();
-    SPCSSAttr *css = sp_repr_css_attr_new (); 
 
     if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
 
+    const GSList *item_list = sp_desktop_selection(desktop)->itemList();
+    SPCSSAttr *css = sp_repr_css_attr_new (); 
     sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
     sp_desktop_set_style(desktop, css, true);
-
-    for (; item_list != NULL; item_list = item_list->next) {
-        // apply style to the reprs of all text objects in the selection
-        if (SP_IS_TEXT (item_list->data)) {
-
-            // backwards compatibility:
-            SP_OBJECT_REPR(item_list->data)->setAttribute("sodipodi:linespacing",
-sp_repr_css_property (css, "line-height", NULL));
-
-            ++items;
-        }
-        else if (SP_IS_FLOWTEXT (item_list->data))
-            // no need to set sodipodi:linespacing, because Inkscape never supported it on flowtext
-            ++items;
-    }
-
-    sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
-
-    // complete the transaction
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     sp_repr_css_attr_unref (css);
 }
+
+#if 0
+static void  cell_data_func  (GtkCellLayout     *cell_layout,
+                              GtkCellRenderer   *cell,
+                              GtkTreeModel      *tree_model,
+                              GtkTreeIter       *iter,
+                              gpointer           data)
+{
+    char *text; 
+    gtk_tree_model_get (tree_model, iter, 0, &text, -1); 
+    g_object_set (G_OBJECT (cell), "family", text, NULL);
+}
+#endif
 
 static GtkWidget*
 sp_text_toolbox_new (SPDesktop *desktop)
@@ -2900,7 +2878,22 @@ sp_text_toolbox_new (SPDesktop *desktop)
     {
             GtkWidget *cbox = gtk_combo_box_entry_new_text ();
             Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+            gtk_cell_layout_clear (GTK_CELL_LAYOUT (cbox));
+            GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
+            gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (cbox), cell, FALSE);
+            gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (cbox), cell, "text", 0, NULL);
+
+#if 0
+            gtk_cell_layout_set_cell_data_func
+                                            (GTK_CELL_LAYOUT (cbox),
+                                             cell, 
+                                             GtkCellLayoutDataFunc (cell_data_func),
+                                             tbl, 
+                                             NULL); 
+#endif
+
             gtk_combo_box_set_model (GTK_COMBO_BOX (cbox), GTK_TREE_MODEL (Glib::unwrap(store)));
+
             gtk_widget_set_size_request (cbox, 250, -1);
             aux_toolbox_space (tbl, 1);
             gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
@@ -2933,9 +2926,9 @@ sp_text_toolbox_new (SPDesktop *desktop)
             gtk_box_pack_start (GTK_BOX (tbl), c, FALSE, FALSE, 0);
     }
 
-        aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
-        //Bold
-        {
+    aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
+    //Bold
+    {
             GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_BOLD, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
             GtkWidget *button = gtk_toggle_button_new ();
             gtk_container_add (GTK_CONTAINER (button), px);
@@ -2944,7 +2937,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
             gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
             gtk_widget_set_sensitive(button, TRUE);
             gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, 0);
-        }
+    }
 
 
         //Italic
