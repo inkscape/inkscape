@@ -2790,27 +2790,42 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
     Inkscape::XML::Node *repr = 0;
     SPStyle *style = 0; 
     bool multiple = false;
-    const GSList *items = selection->itemList();
 
-    for ( ; items ; items = items->next)
+    // create temporary style
+    SPStyle *query = sp_style_new ();
+    // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
+    int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY); 
+    int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
+    int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+
+    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING)
     {
-        if (SP_IS_TEXT((SPItem *) items->data))
+        repr = inkscape_get_repr (INKSCAPE, "tools.text");
+        if (repr)
         {
-            if (!style)
-            {
-                repr = SP_OBJECT_REPR((SPItem *) items->data);
-                style = sp_style_new ();
-                sp_style_read_from_repr (style, repr); 
-            }
-            else
-            {
-                multiple = true;
-            }
+            sp_style_read_from_repr (query, repr);
+        }
+        else
+        {
+            return;
         }
     }
-    
-    if (!style) return;
-    if (multiple)
+
+#if 0
+    // FIXME: process result_family/style == QUERY_STYLE_MULTIPLE_DIFFERENT by showing "Many" in the lists
+    font_instance *font = (font_factory::Default())->Face ( query->text->font_family.value, font_style_to_pos(*query) );
+    if (font)
+    {
+        // the font is oversized, so we need to pass the true size separately
+        sp_font_selector_set_font (SP_FONT_SELECTOR (fontsel), font, query->font_size.computed);
+        sp_font_preview_set_font (SP_FONT_PREVIEW (preview), font, SP_FONT_SELECTOR(fontsel));
+						font->Unref();
+						font=NULL;
+    }
+#endif
+
+    if (result_numbers > 1)
     {
         g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
         gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), -1); 
@@ -2818,19 +2833,8 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
         return;
     }
 
-    Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (style->text->font_family.value);
-
-    g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
-
+    Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (query->text->font_family.value);
     gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPCSSAttr *css = sp_repr_css_attr_new (); 
-    sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (GTK_COMBO_BOX(cbox)));
-    sp_desktop_set_style (desktop, css, true);
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
-    sp_repr_css_attr_unref (css);
-
-    g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
 }
 
 static void
@@ -2843,7 +2847,7 @@ sp_text_toolbox_family_changed (GtkComboBox *cbox,
 
     SPCSSAttr *css = sp_repr_css_attr_new (); 
     sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
-    sp_desktop_set_style(desktop, css, true);
+    sp_desktop_set_style(desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     sp_repr_css_attr_unref (css);
 }
@@ -3174,7 +3178,6 @@ sp_text_toolbox_new (SPDesktop *desktop)
     swatch->setWatchedTool ("tools.text", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
     gtk_box_pack_end (GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
-    sp_set_font_size_smaller (tbl);
     gtk_widget_show_all (tbl);
 
     return tbl;
