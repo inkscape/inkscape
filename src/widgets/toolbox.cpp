@@ -2878,6 +2878,8 @@ sp_repr_css_property (css, "line-height", NULL));
             ++items;
     }
 
+    sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+
     // complete the transaction
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     sp_repr_css_attr_unref (css);
