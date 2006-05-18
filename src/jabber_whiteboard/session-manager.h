@@ -16,6 +16,11 @@
 #include <set>
 #include <bitset>
 
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+
+#include <vector>
+
 extern "C" {
 #include <loudmouth/loudmouth.h>
 }
@@ -248,7 +253,38 @@ public:
 	 * if authentication invalid
 	 */
 	int connectToServer(Glib::ustring const& server, Glib::ustring const& port, Glib::ustring const& username, Glib::ustring const& pw, bool usessl);
+	
+	/**
+	 * Register with a Jabber server.
+	 *
+	 * @param username Jabber username
+	 * @param pw password for Jabber account
+	 * @param key A list of string elements required for registration
+	 * @param val The respective list of value of elements required for registration
+	 * @param usessl use SSL for connection
+	 *
+	 * @return CONNECT_SUCCESS if connection successful; FAILED_TO_CONNECT if connection failed or INVALID_AUTH
+	 * if authentication invalid
+	 */
+	int registerWithServer(Glib::ustring const& username,Glib::ustring const& pw, std::vector<Glib::ustring> key, std::vector<Glib::ustring> val);
 
+	/**
+	 * Query the Registration information required for a jabber server
+	 *
+	 * @param server Jabber server URL
+	 * @param username Jabber username
+	 * @param pw password for Jabber account
+	 * @param key A list of string elements required for registration
+	 * @param val The respective list of value of elements required for registration
+	 * @param usessl use SSL for connection
+	 *
+	 * @return CONNECT_SUCCESS if connection successful; FAILED_TO_CONNECT if connection failed or INVALID_AUTH
+	 * if authentication invalid
+	 */
+	std::vector<Glib::ustring> getRegistrationInfo();
+	
+	int finaliseConnection();
+	int initializeConnection(Glib::ustring const& server, Glib::ustring const& port, bool usessl);
 	/**
 	 * Handle an SSL error by prompting the user for feedback, and continuing or aborting the connection
 	 * process based on that feedback.

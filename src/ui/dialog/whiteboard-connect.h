@@ -16,6 +16,8 @@
 #include "verbs.h"
 #include "dialog.h"
 
+#include <vector>
+
 struct SPDesktop;
 
 namespace Inkscape {
@@ -53,8 +55,12 @@ public:
 	void setSessionManager();
 
 private:
+
 	// GTK+ widgets
-	Gtk::Table _layout;
+	std::vector<Gtk::Label*> registerlabels;
+	std::vector<Gtk::Entry*> registerentries;
+
+	Gtk::Table _layout,_checkboxes;
 	Gtk::HBox _buttons;
 
 	Gtk::Entry _server;
@@ -62,15 +68,17 @@ private:
 	Gtk::Entry _password;
 	Gtk::Entry _port;
 
-	Gtk::Label _labels[4];	
+	Gtk::Label _labels[4],_blank;	
 
-	Gtk::CheckButton _usessl;
+	Gtk::CheckButton _usessl,_register;
 
 	Gtk::Button _ok, _cancel;
 
 	// Construction and callbacks
 	void _construct();
 	void _respCallback(int resp);
+
+	void _registerCallback();
 	void _useSSLClickedCallback();
 
 	// SessionManager and SPDesktop pointers

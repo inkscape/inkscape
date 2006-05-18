@@ -180,16 +180,9 @@ SessionManager::setDesktop(::SPDesktop* desktop)
 }
 
 int
-SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const& port, Glib::ustring const& username, Glib::ustring const& pw, bool usessl)
+SessionManager::initializeConnection(Glib::ustring const& server, Glib::ustring const& port, bool usessl)
 {
 	GError* error = NULL;
-	Glib::ustring jid;
-
-	// JID format is username@server/resource
-	jid += username + "@" + server + "/" + RESOURCE_NAME;
-
-	LmMessage* m;
-	LmMessageHandler* mh;
 
 	if (!this->session_data) {
 		this->session_data = new SessionData(this);
@@ -208,8 +201,8 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 		lm_connection_unref(this->session_data->connection);
 	}
 
-	this->session_data->jid = jid;
 	this->session_data->connection = lm_connection_new(server.c_str());
+	this->session_data->chat_server = server;
 
 	lm_connection_set_port(this->session_data->connection, atoi(port.c_str()));
 
@@ -245,9 +238,107 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 		return FAILED_TO_CONNECT;
 	}
 
-        g_log(NULL, G_LOG_LEVEL_DEBUG, "Opened Loudmouth connection in blocking mode.");
+	//On successful connect, remember info
+	prefs_set_string_attribute("whiteboard.server", "name", server.c_str());
+	prefs_set_string_attribute("whiteboard.server", "port", port.c_str());
+	prefs_set_int_attribute("whiteboard.server", "ssl", (usessl) ? 1 : 0);
 
-	// Authenticate
+	return CONNECT_SUCCESS;
+}
+
+std::vector<Glib::ustring>
+SessionManager::getRegistrationInfo()
+{
+	GError* error = NULL;
+	xmlDoc *doc = NULL;
+    	xmlNode *root_element = NULL;
+	xmlNode *cur_node = NULL;
+
+	LmMessage *reply,*request;
+	LmMessageNode  *n;
+
+	std::vector<Glib::ustring> registerelements; 
+
+	request = lm_message_new_with_sub_type(NULL,LM_MESSAGE_TYPE_IQ,LM_MESSAGE_SUB_TYPE_GET);
+	n = lm_message_node_add_child (request->node, "query", NULL);
+	lm_message_node_set_attributes (n, "xmlns", "jabber:iq:register", NULL);
+
+	reply = lm_connection_send_with_reply_and_block(this->session_data->connection, request, &error);
+	if (error != NULL) {
+		return registerelements;
+	}
+
+	n = lm_message_get_node(reply);
+
+	Glib::ustring content = static_cast< Glib::ustring >(lm_message_node_to_string(lm_message_node_get_child(n,"query")));
+	doc = xmlReadMemory(content.c_str(),content.size(), "noname.xml", NULL, 0);
+
+	if (doc == NULL) {
+        	g_warning("Failed to parse document\n");
+		return registerelements;
+    	}
+
+	root_element = xmlDocGetRootElement(doc);
+
+    	for (cur_node = root_element->children; cur_node; cur_node = cur_node->next) {
+		Glib::ustring name = static_cast< Glib::ustring >((char const *)cur_node->name);
+        	if (cur_node->type == XML_ELEMENT_NODE && name != "instructions" 
+			&& name != "username" && name != "password" ) {
+			registerelements.push_back(name);
+        	}
+	}
+
+	xmlFreeDoc(doc);
+	xmlCleanupParser();
+
+	return registerelements;
+}
+
+int
+SessionManager::registerWithServer(Glib::ustring const& username, Glib::ustring const& pw, 
+				std::vector<Glib::ustring> key, std::vector<Glib::ustring> val)
+{
+
+	GError* error = NULL;
+	
+	LmMessage *request,*reply;
+	LmMessageNode  *n;
+
+	request = lm_message_new_with_sub_type(NULL,LM_MESSAGE_TYPE_IQ,LM_MESSAGE_SUB_TYPE_SET);
+	n = lm_message_node_add_child (request->node, "query", NULL);
+	lm_message_node_set_attributes (n, "xmlns", "jabber:iq:register", NULL);
+
+	lm_message_node_add_child(n,"username",username.c_str());
+	lm_message_node_add_child(n,"password",pw.c_str());
+
+	for(unsigned i=0;i<key.size();i++)
+	{	
+		lm_message_node_add_child(n, (key[i]).c_str(),(val[i]).c_str());
+	}
+	
+	
+	reply = lm_connection_send_with_reply_and_block(this->session_data->connection, request, &error);
+	if (error != NULL || lm_message_get_type(reply) != LM_MESSAGE_SUB_TYPE_RESULT) {
+		return INVALID_AUTH;
+	}
+
+	this->session_data->jid = username + "@" + (this->session_data->chat_server.c_str()) + "/" + RESOURCE_NAME;
+
+	prefs_set_string_attribute("whiteboard.server", "username", username.c_str());
+
+	return this->finaliseConnection();
+}
+
+int
+SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const& port, 
+				Glib::ustring const& username, Glib::ustring const& pw, bool usessl)
+{
+	GError* error = NULL;
+
+	initializeConnection(server,port,usessl);
+
+	this->session_data->jid = username + "@" + server + "/" + RESOURCE_NAME;
+
 	if (!lm_connection_authenticate_and_block(this->session_data->connection, username.c_str(), pw.c_str(), RESOURCE_NAME, &error)) {
 		if (error != NULL) {
 			g_warning("Failed to authenticate: %s", error->message);
@@ -259,6 +350,17 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	}
 
         g_log(NULL, G_LOG_LEVEL_DEBUG, "Successfully authenticated.");
+
+	return this->finaliseConnection();
+}
+
+int 
+SessionManager::finaliseConnection()
+{
+
+	GError* error = NULL;
+	LmMessage* m;
+	LmMessageHandler* mh;
 
 	// Register message handler for presence messages
 	mh = lm_message_handler_new((LmHandleMessageFunction)presence_handler, reinterpret_cast< gpointer >(this->_myMessageHandler), NULL);
@@ -291,14 +393,6 @@ SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const
 	lm_message_unref(m);
 
 	this->_setVerbSensitivity(ESTABLISHED_CONNECTION);
-
-	//On successful connect, remember info
-	prefs_set_string_attribute("whiteboard.server", "name", server.c_str());
-	prefs_set_string_attribute("whiteboard.server", "port", port.c_str());
-	prefs_set_string_attribute("whiteboard.server", "username", username.c_str());
-	prefs_set_int_attribute("whiteboard.server", "ssl", (usessl) ? 1 : 0);
-	//Option to store password here?
-
 
 	return CONNECT_SUCCESS;
 }
@@ -362,7 +456,8 @@ SessionManager::handleSSLError(LmSSL* ssl, LmSSLStatus status)
 void
 SessionManager::disconnectFromServer()
 {
-	if (this->session_data->connection) {
+	if (this->session_data->connection) 
+	{
 		GError* error = NULL;
 
 		LmMessage *m;

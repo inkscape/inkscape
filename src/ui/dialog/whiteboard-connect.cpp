@@ -41,10 +41,12 @@ WhiteboardConnectDialog::create()
 }
 
 WhiteboardConnectDialogImpl::WhiteboardConnectDialogImpl() :
-	_layout(4, 4, false), _usessl(_("_Use SSL"), true)
+	_layout(4, 4, false), _usessl(_("_Use SSL"), true), _register(_("_Register"), true)
 {
 	this->setSessionManager();
 	this->_construct();
+	//this->set_resize_mode(Gtk::RESIZE_IMMEDIATE);
+	this->set_resizable(false);
 	this->get_vbox()->show_all_children();
 }
 
@@ -87,16 +89,20 @@ WhiteboardConnectDialogImpl::_construct()
 	this->_usessl.set_active((prefs_get_int_attribute("whiteboard.server", "ssl", 0) == 1) ? true : false);
 
 	this->_layout.attach(this->_labels[0], 0, 1, 0, 1);
-	this->_layout.attach(this->_labels[3], 2, 3, 0, 1);
 	this->_layout.attach(this->_labels[1], 0, 1, 1, 2);
 	this->_layout.attach(this->_labels[2], 0, 1, 2, 3);
+	this->_layout.attach(this->_labels[3], 2, 3, 0, 1);
 
 	this->_layout.attach(this->_server, 1, 2, 0, 1);
 	this->_layout.attach(this->_port, 3, 4, 0, 1);
 	this->_layout.attach(this->_username, 1, 4, 1, 2);
 	this->_layout.attach(this->_password, 1, 4, 2, 3);
 
-	this->_layout.attach(this->_usessl, 1, 4, 3, 4);
+	this->_checkboxes.attach(this->_blank,0,1,0,1);
+	this->_checkboxes.attach(this->_blank,0,1,1,2);
+
+	this->_checkboxes.attach(this->_usessl, 1, 4, 0, 1);
+	this->_checkboxes.attach(this->_register, 1, 5, 1, 2);
 
 	this->_layout.set_col_spacings(1);
 	this->_layout.set_row_spacings(1);
@@ -107,22 +113,91 @@ WhiteboardConnectDialogImpl::_construct()
 	// Buttons
 	this->_ok.set_label(_("Connect"));
 	this->_cancel.set_label(_("Cancel"));
+
 	this->_ok.signal_clicked().connect(sigc::bind< 0 >(sigc::mem_fun(*this, &WhiteboardConnectDialogImpl::_respCallback), GTK_RESPONSE_OK));
 	this->_cancel.signal_clicked().connect(sigc::bind< 0 >(sigc::mem_fun(*this, &WhiteboardConnectDialogImpl::_respCallback), GTK_RESPONSE_CANCEL));
+	
+	this->_register.signal_clicked().connect(sigc::mem_fun(*this, &WhiteboardConnectDialogImpl::_registerCallback));
 	this->_usessl.signal_clicked().connect(sigc::mem_fun(*this, &WhiteboardConnectDialogImpl::_useSSLClickedCallback));
 
 	this->_buttons.pack_start(this->_cancel, true, true, 0);
 	this->_buttons.pack_end(this->_ok, true, true, 0);
-
+	
 	// Pack widgets into main vbox
-	main->pack_start(this->_layout);
-	main->pack_end(this->_buttons);
+	main->pack_start(this->_layout,Gtk::PACK_SHRINK);
+	main->pack_start(this->_checkboxes,Gtk::PACK_SHRINK);
+	main->pack_end(this->_buttons,Gtk::PACK_SHRINK);
+}
+
+
+void
+WhiteboardConnectDialogImpl::_registerCallback()
+{
+	if (this->_register.get_active()) 
+	{
+		Glib::ustring server, port;
+		bool usessl;
+
+		server = this->_server.get_text();
+		port = this->_port.get_text();
+		usessl = this->_usessl.get_active();
+
+		Glib::ustring msg = String::ucompose(_("Establishing connection to Jabber server <b>%1</b>"), server);
+		this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
+
+		if(this->_sm->initializeConnection(server,port,usessl) == CONNECT_SUCCESS)
+		{
+
+			std::vector<Glib::ustring> entries = this->_sm->getRegistrationInfo();
+
+			for(unsigned i = 0; i<entries.size();i++)
+			{
+
+				Gtk::Entry *entry = manage (new Gtk::Entry);
+				Gtk::Label *label = manage (new Gtk::Label);
+
+				Glib::ustring::size_type zero=0,one=1;
+				Glib::ustring LabelText = entries[i].replace(zero,one,one,Glib::Unicode::toupper(entries[i].at(0)));
+
+				(*label).set_markup_with_mnemonic(LabelText.c_str());
+				(*label).set_mnemonic_widget(*entry);
+
+				this->_layout.attach (*label, 0, 1, i+3, i+4, Gtk::FILL|Gtk::EXPAND|Gtk::SHRINK, (Gtk::AttachOptions)0,0,0);		
+				this->_layout.attach (*entry, 1, 4, i+3, i+4, Gtk::FILL|Gtk::EXPAND|Gtk::SHRINK, (Gtk::AttachOptions)0,0,0);
+
+				this->registerlabels.push_back(label);
+				this->registerentries.push_back(entry);
+			}
+		}else{
+			Glib::ustring msg = String::ucompose(_("Failed to establish connection to Jabber server <b>%1</b>"), server);
+			this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+			this->_sm->connectionError(msg);
+		}
+
+	}else{
+
+		for(unsigned i = 0; i<registerlabels.size();i++)
+		{
+			this->_layout.remove(*registerlabels[i]);
+			this->_layout.remove(*registerentries[i]);
+
+			delete registerlabels[i];
+			delete registerentries[i];
+		}
+
+		registerentries.erase(registerentries.begin(), registerentries.end());
+		registerlabels.erase(registerlabels.begin(), registerlabels.end());
+	}
+
+	this->get_vbox()->show_all_children();
+	//this->reshow_with_initial_size();
 }
 
 void
 WhiteboardConnectDialogImpl::_respCallback(int resp)
 {
-	if (resp == GTK_RESPONSE_OK) {
+	if (resp == GTK_RESPONSE_OK) 
+	{
 		Glib::ustring server, port, username, password;
 		bool usessl;
 
@@ -135,32 +210,73 @@ WhiteboardConnectDialogImpl::_respCallback(int resp)
 		Glib::ustring msg = String::ucompose(_("Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"), server, username);
 		this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
 
-		switch (this->_sm->connectToServer(server, port, username, password, usessl)) {
-			case FAILED_TO_CONNECT:
-				msg = String::ucompose(_("Failed to establish connection to Jabber server <b>%1</b>"), server);
-				this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
-				this->_sm->connectionError(msg);
-				break;
-			case INVALID_AUTH:
-				msg = String::ucompose(_("Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"), server, username);
-				this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
-				this->_sm->connectionError(msg);
-				break;
-			case SSL_INITIALIZATION_ERROR:
-				msg = String::ucompose(_("SSL initialization failed when connecting to Jabber server <b>%1</b>"), server);
-				this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
-				this->_sm->connectionError(msg);
-				break;
-				
-			case CONNECT_SUCCESS:
-				msg = String::ucompose(_("Connected to Jabber server <b>%1</b> as <b>%2</b>"), server, username);
-				this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
+		if (!this->_register.get_active()) 
+		{
+			switch (this->_sm->connectToServer(server, port, username, password, usessl)) {
+				case FAILED_TO_CONNECT:
+					msg = String::ucompose(_("Failed to establish connection to Jabber server <b>%1</b>"), server);
+					this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+					this->_sm->connectionError(msg);
+					break;
+				case INVALID_AUTH:
+					msg = String::ucompose(_("Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"), server, username);
+					this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+					this->_sm->connectionError(msg);
+					break;
+				case SSL_INITIALIZATION_ERROR:
+					msg = String::ucompose(_("SSL initialization failed when connecting to Jabber server <b>%1</b>"), server);
+					this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+					this->_sm->connectionError(msg);
+					break;
+					
+				case CONNECT_SUCCESS:
+					msg = String::ucompose(_("Connected to Jabber server <b>%1</b> as <b>%2</b>"), server, username);
+					this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
+	
+					// Save preferences
+					prefs_set_string_attribute(this->_prefs_path, "server", this->_server.get_text().c_str());
+					break;
+				default:
+					break;
+			}
+		}else{
 
-				// Save preferences
-				prefs_set_string_attribute(this->_prefs_path, "server", this->_server.get_text().c_str());
-				break;
-			default:
-				break;
+			std::vector<Glib::ustring> key,val;	
+
+			for(unsigned i = 0; i<registerlabels.size();i++)
+			{
+				key.push_back((*registerlabels[i]).get_text());
+				val.push_back((*registerentries[i]).get_text());
+			}
+
+			switch (this->_sm->registerWithServer(username, password, key, val)) 
+			{
+				case FAILED_TO_CONNECT:
+					msg = String::ucompose(_("Failed to establish connection to Jabber server <b>%1</b>"), server);
+					this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+					this->_sm->connectionError(msg);
+					break;
+				case INVALID_AUTH:
+					msg = String::ucompose(_("Registration failed on Jabber server <b>%1</b> as <b>%2</b>"), server, username);
+					this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+					this->_sm->connectionError(msg);
+					break;
+				case SSL_INITIALIZATION_ERROR:
+					msg = String::ucompose(_("SSL initialization failed when connecting to Jabber server <b>%1</b>"), server);
+					this->_desktop->messageStack()->flash(WARNING_MESSAGE, msg.data());
+					this->_sm->connectionError(msg);
+					break;
+					
+				case CONNECT_SUCCESS:
+					msg = String::ucompose(_("Connected to Jabber server <b>%1</b> as <b>%2</b>"), server, username);
+					this->_desktop->messageStack()->flash(INFORMATION_MESSAGE, msg.data());
+	
+					// Save preferences
+					prefs_set_string_attribute(this->_prefs_path, "server", this->_server.get_text().c_str());
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
