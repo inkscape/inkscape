@@ -28,6 +28,13 @@ namespace Inkscape
                 class FontLister
                 {
                     public:
+
+                        enum Exceptions
+                        {
+                            FAMILY_NOT_FOUND
+                        };
+
+
                         ~FontLister ();
 
                         /** GtkTreeModelColumnRecord for the font list Gtk::ListStore
@@ -75,6 +82,7 @@ namespace Inkscape
                         get_row_for_font (std::string family)
                         {
                             IterMapType::iterator iter = font_list_store_iter_map.find (family);
+                            if (iter == font_list_store_iter_map.end ()) throw FAMILY_NOT_FOUND; 
                             return (*iter).second;
                         }
 

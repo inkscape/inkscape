@@ -2801,31 +2801,10 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
     // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
     if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING)
     {
-        repr = inkscape_get_repr (INKSCAPE, "tools.text");
-        if (repr)
-        {
-            sp_style_read_from_repr (query, repr);
-        }
-        else
-        {
-            return;
-        }
+        return;
     }
 
-#if 0
-    // FIXME: process result_family/style == QUERY_STYLE_MULTIPLE_DIFFERENT by showing "Many" in the lists
-    font_instance *font = (font_factory::Default())->Face ( query->text->font_family.value, font_style_to_pos(*query) );
-    if (font)
-    {
-        // the font is oversized, so we need to pass the true size separately
-        sp_font_selector_set_font (SP_FONT_SELECTOR (fontsel), font, query->font_size.computed);
-        sp_font_preview_set_font (SP_FONT_PREVIEW (preview), font, SP_FONT_SELECTOR(fontsel));
-						font->Unref();
-						font=NULL;
-    }
-#endif
-
-    if (result_numbers > 1)
+    if (result_numbers == QUERY_STYLE_MULTIPLE_DIFFERENT)
     {
         g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
         gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), -1); 
@@ -2833,8 +2812,18 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
         return;
     }
 
-    Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (query->text->font_family.value);
-    gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
+    if (query->text && query->text->font_family.value)
+    {
+        Gtk::TreePath path;
+        try {
+            path = Inkscape::FontLister::get_instance()->get_row_for_font (query->text->font_family.value);
+        } catch (...) {
+            return;
+        }
+        g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
+        gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
+        g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+    }
 }
 
 static void
@@ -2847,7 +2836,7 @@ sp_text_toolbox_family_changed (GtkComboBox *cbox,
 
     SPCSSAttr *css = sp_repr_css_attr_new (); 
     sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
-    sp_desktop_set_style(desktop, css, true, true);
+    sp_desktop_set_style (desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
     sp_repr_css_attr_unref (css);
 }
@@ -2911,7 +2900,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
 #endif
 
     sigc::connection *connection =
-    new sigc::connection(sp_desktop_selection(desktop)->connectChanged (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)tbl)));
+    new sigc::connection( sp_desktop_selection (desktop)->connectChanged (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)tbl)));
     g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
 
 #if 0

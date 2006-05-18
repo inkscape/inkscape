@@ -383,13 +383,18 @@ GtkWidget *sp_font_selector_new()
 
 void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, double size)
 {
-	
     if (font && (fsel->font != font || size != fsel->fontsize))
     {
             gchar family[256];
             font->Family (family, 256);
+            
+            Gtk::TreePath path;
 
-            Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
+            try {
+                path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
+            } catch (...) {
+                return;
+            }
 
             fsel->block_emit = TRUE;
             gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->family_treeview)), path.gobj());
