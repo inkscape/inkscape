@@ -389,8 +389,7 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
             gchar family[256];
             font->Family (family, 256);
 
-            Inkscape::FontLister *fontlister = Inkscape::FontLister::get_instance();
-            Gtk::TreePath path = fontlister->get_row_for_font (family);
+            Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
 
             fsel->block_emit = TRUE;
             gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->family_treeview)), path.gobj());

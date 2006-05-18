@@ -601,9 +601,7 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
 
     unsigned items = 0;
     const GSList *item_list = sp_desktop_selection(desktop)->itemList();
-
     SPCSSAttr *css = sp_get_text_dialog_style ();
-
     sp_desktop_set_style(desktop, css, true);
 
     for (; item_list != NULL; item_list = item_list->next) {
@@ -634,15 +632,10 @@ sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg)
 
     // complete the transaction
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
-
     gtk_widget_set_sensitive (apply, FALSE);
-
     sp_repr_css_attr_unref (css);
-
     g_object_set_data (G_OBJECT (dlg), "blocked", GINT_TO_POINTER (FALSE));
 }
-
-
 
 static void
 sp_text_edit_dialog_close (GtkButton *button, GtkWidget *dlg)
@@ -819,10 +812,7 @@ sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,
     GtkWidget *preview, *apply, *def;
 
     if (g_object_get_data (G_OBJECT (dlg), "blocked"))
-    {
-        g_message ("Blocked");
         return;
-    }
 
     SPItem *text = sp_ted_get_selected_text_item ();
 
