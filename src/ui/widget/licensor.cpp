@@ -45,7 +45,7 @@ protected:
 };
 
 LicenseItem::LicenseItem (struct rdf_license_t const* license, EntityEntry* entity, Registry &wr)
-: Gtk::RadioButton(license->name), _lic(license), _eep(entity), _wr(wr)
+: Gtk::RadioButton(gettext(license->name)), _lic(license), _eep(entity), _wr(wr)
 {
     static Gtk::RadioButtonGroup group = get_group();
     static bool first = true;

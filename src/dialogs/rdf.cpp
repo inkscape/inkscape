@@ -175,52 +175,52 @@ struct rdf_double_t rdf_license_freeart [] = {
 };
 
 struct rdf_license_t rdf_licenses [] = {
-    { _("CC Attribution"), 
+    { N_("CC Attribution"), 
       "http://creativecommons.org/licenses/by/2.5/",
       rdf_license_cc_a,
     },
 
-    { _("CC Attribution-ShareAlike"), 
+    { N_("CC Attribution-ShareAlike"), 
       "http://creativecommons.org/licenses/by-sa/2.5/",
       rdf_license_cc_a_sa,
     },
 
-    { _("CC Attribution-NoDerivs"), 
+    { N_("CC Attribution-NoDerivs"), 
       "http://creativecommons.org/licenses/by-nd/2.5/",
       rdf_license_cc_a_nd,
     },
 
-    { _("CC Attribution-NonCommercial"), 
+    { N_("CC Attribution-NonCommercial"), 
       "http://creativecommons.org/licenses/by-nc/2.5/",
       rdf_license_cc_a_nc,
     },
 
-    { _("CC Attribution-NonCommercial-ShareAlike"), 
+    { N_("CC Attribution-NonCommercial-ShareAlike"), 
       "http://creativecommons.org/licenses/by-nc-sa/2.5/",
       rdf_license_cc_a_nc_sa,
     },
 
-    { _("CC Attribution-NonCommercial-NoDerivs"), 
+    { N_("CC Attribution-NonCommercial-NoDerivs"), 
       "http://creativecommons.org/licenses/by-nc-nd/2.5/",
       rdf_license_cc_a_nc_nd,
     },
 
-    { _("GNU General Public License"), 
+    { N_("GNU General Public License"), 
       "http://creativecommons.org/licenses/GPL/2.0/",
       rdf_license_gpl,
     },
 
-    { _("GNU Lesser General Public License"), 
+    { N_("GNU Lesser General Public License"), 
       "http://creativecommons.org/licenses/LGPL/2.1/",
       rdf_license_gpl,
     },
 
-    { _("Public Domain"),
+    { N_("Public Domain"),
       "http://web.resource.org/cc/PublicDomain",
       rdf_license_pd,
     },
 
-    { _("FreeArt"),
+    { N_("FreeArt"),
       "http://artlibre.org/licence.php/lalgb.html",
       rdf_license_freeart,
     },
