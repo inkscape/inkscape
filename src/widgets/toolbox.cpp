@@ -2867,47 +2867,44 @@ sp_text_toolbox_new (SPDesktop *desktop)
     GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
 
 #if 0
-#if 0
-    GtkWidget   *us = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(tbl), "units");
+    GtkWidget   *us = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "units"));
     GtkTooltips *tt = gtk_tooltips_new();
     GtkWidget   *group;
 #endif
 
     //Font Family
-    {
-            GtkWidget *cbox = gtk_combo_box_entry_new_text ();
-            Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
-            gtk_cell_layout_clear (GTK_CELL_LAYOUT (cbox));
-            GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
-            gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (cbox), cell, FALSE);
-            gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (cbox), cell, "text", 0, NULL);
+    GtkWidget *cbox = gtk_combo_box_entry_new_text ();
+    Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+    gtk_cell_layout_clear (GTK_CELL_LAYOUT (cbox));
+    GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (cbox), cell, FALSE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (cbox), cell, "text", 0, NULL);
 
 #if 0
-            gtk_cell_layout_set_cell_data_func
-                                            (GTK_CELL_LAYOUT (cbox),
-                                             cell, 
-                                             GtkCellLayoutDataFunc (cell_data_func),
-                                             tbl, 
-                                             NULL); 
+    gtk_cell_layout_set_cell_data_func
+            (GTK_CELL_LAYOUT (cbox),
+             cell, 
+             GtkCellLayoutDataFunc (cell_data_func),
+             tbl, 
+             NULL); 
 #endif
 
-            gtk_combo_box_set_model (GTK_COMBO_BOX (cbox), GTK_TREE_MODEL (Glib::unwrap(store)));
+    gtk_combo_box_set_model (GTK_COMBO_BOX (cbox), GTK_TREE_MODEL (Glib::unwrap(store)));
 
-            gtk_widget_set_size_request (cbox, 250, -1);
-            aux_toolbox_space (tbl, 1);
-            gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
-            g_object_set_data (G_OBJECT (tbl), "combo-box-family", cbox);
-            g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
-    }
+    gtk_widget_set_size_request (cbox, 250, -1);
+    aux_toolbox_space (tbl, 1);
+    gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
+    g_object_set_data (G_OBJECT (tbl), "combo-box-family", cbox);
+    g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
 
+#if 0
     //Font Style
-    {
-            GtkWidget *cbox = gtk_combo_box_new_text ();
-            gtk_widget_set_size_request (cbox, 144, -1);
-            aux_toolbox_space (tbl, 1);
-            gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
-            g_object_set_data (G_OBJECT (tbl), "combo-box-style", cbox);
-    }
+    GtkWidget *cbox = gtk_combo_box_new_text ();
+    gtk_widget_set_size_request (cbox, 144, -1);
+    aux_toolbox_space (tbl, 1);
+    gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
+    g_object_set_data (G_OBJECT (tbl), "combo-box-style", cbox);
+#endif
 
     sigc::connection *connection =
     new sigc::connection(sp_desktop_selection(desktop)->connectChanged (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)tbl)));
@@ -3172,16 +3169,14 @@ sp_text_toolbox_new (SPDesktop *desktop)
         gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
         }
 #endif
-#endif
 
     Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
     swatch->setWatchedTool ("tools.text", true);
     GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end(GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
-
+    gtk_box_pack_end (GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
     sp_set_font_size_smaller (tbl);
-
     gtk_widget_show_all (tbl);
+
     return tbl;
 
 } // end of sp_text_toolbox_new()
