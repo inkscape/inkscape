@@ -2409,13 +2409,6 @@ Verb *Verb::_base_verbs[] = {
                        N_("Fit the canvas to the drawing"), NULL),
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Canvas to Selection or Drawing"),
                        N_("Fit the canvas to the current selection or the drawing if there is no selection"), NULL),
-
-#if 0
-    //Text
-    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Canvas to Selection or Drawing"),
-                       N_("Fit the canvas to the current selection or the drawing if there is no selection"), NULL),
-#endif
-
     /* Footer */
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };
