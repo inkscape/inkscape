@@ -48,6 +48,7 @@ libinkpre_a_SOURCES =	\
 	conditions.cpp conditions.h\
 	conn-avoid-ref.cpp conn-avoid-ref.h	\
 	connector-context.cpp connector-context.h	\
+	connection-pool.h \
 	context-fns.cpp context-fns.h \
 	desktop-affine.cpp desktop-affine.h	\
 	desktop-events.cpp desktop-events.h	\

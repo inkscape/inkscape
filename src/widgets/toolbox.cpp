@@ -69,6 +69,7 @@
 #include "document-private.h"
 #include "desktop-style.h"
 #include "../libnrtype/font-lister.h"
+#include "../connection-pool.h"
 
 #include "mod360.h"
 
@@ -89,7 +90,8 @@ static GtkWidget *sp_calligraphy_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_dropper_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_empty_toolbox_new(SPDesktop *desktop);
 static GtkWidget *sp_connector_toolbox_new(SPDesktop *desktop);
-static GtkWidget *sp_text_toolbox_new (SPDesktop *desktop);
+
+namespace { GtkWidget *sp_text_toolbox_new (SPDesktop *desktop); }
 
 
 static struct {
@@ -2783,60 +2785,115 @@ sp_text_letter_rotation_changed(GtkAdjustment *adj, GtkWidget *tbl)
     //Call back for letter rotation spinbutton
 }*/
 
-static void
-sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
-{
-    GtkWidget *cbox = GTK_WIDGET(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
+namespace {
 
-    // create temporary style
-    SPStyle *query = sp_style_new ();
-    // query style from desktop into it. This returns a result flag and fills query with the style of subselection, if any, or selection
-    int result_family = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY); 
-    int result_style = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
-    int result_numbers = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
-
-    // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
-    if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING)
+    void
+    sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
     {
-        return;
-    }
+        GtkComboBox *cbox = 0;
+    
+        SPStyle *query =
+            sp_style_new ();
 
-    if (result_numbers == QUERY_STYLE_MULTIPLE_DIFFERENT)
-    {
-        g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
-        gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), -1); 
-        g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
-        return;
-    }
+        int result_family =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY); 
 
-    if (query->text && query->text->font_family.value)
-    {
-        Gtk::TreePath path;
-        try {
-            path = Inkscape::FontLister::get_instance()->get_row_for_font (query->text->font_family.value);
-        } catch (...) {
+        int result_style =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE); 
+
+        int result_numbers =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+
+        // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+        if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING)
+        {
             return;
         }
-        g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
-        gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
-        g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+
+        if (result_numbers == QUERY_STYLE_MULTIPLE_DIFFERENT)
+        {
+            static char* cboxes[] = { "combo-box-family", "combo-box-style" };
+        
+            for (unsigned n = 0 ; n < G_N_ELEMENTS(cboxes); ++n)
+            {
+                cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), cboxes[n]));
+                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
+                gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), -1); 
+                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+            }
+            return;
+        }
+
+        if (query->text)
+        {
+            if (query->text->font_family.value) 
+            {
+                Gtk::TreePath path;
+                try {
+                    path = Inkscape::FontLister::get_instance()->get_row_for_font (query->text->font_family.value);
+                } catch (...) {
+                    return;
+                }
+
+                cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
+                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
+                gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
+                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+            }
+
+            //Style
+            cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-style"));
+            g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
+            gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gint(query->font_style.value));
+            g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+        }
     }
-}
 
-static void
-sp_text_toolbox_family_changed (GtkComboBox *cbox,
+    void
+    sp_text_toolbox_selection_modified (Inkscape::Selection *selection, guint flags, GObject *tbl) 
+    {
+        sp_text_toolbox_selection_changed (selection, tbl); 
+    }
+
+    void
+    sp_text_toolbox_subselection_changed (gpointer dragger, GObject *tbl)
+    {
+        sp_text_toolbox_selection_changed (NULL, tbl); 
+    }
+
+    void
+    sp_text_toolbox_family_changed (GtkComboBox *cbox,
                                 GtkWidget   *tbl) 
-{
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
+        if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
 
-    SPCSSAttr *css = sp_repr_css_attr_new (); 
-    sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
-    sp_desktop_set_style (desktop, css, true, true);
-    sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
-    sp_repr_css_attr_unref (css);
-}
+        SPCSSAttr *css = sp_repr_css_attr_new (); 
+        sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
+        sp_desktop_set_style (desktop, css, true, true);
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_repr_css_attr_unref (css);
+    }
+
+    void
+    sp_text_toolbox_style_changed (GtkComboBox *cbox,
+                                   GtkWidget   *tbl) 
+    {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+        if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
+    
+        static char* styles[] = { "normal", "italic" , "oblique" };
+
+        SPCSSAttr *css = sp_repr_css_attr_new (); 
+        sp_repr_css_set_property (css, "font-style", styles[gtk_combo_box_get_active (cbox)]);
+        sp_desktop_set_style (desktop, css, true, true);
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_repr_css_attr_unref (css);
+    }
+
+}//<unnamed> namespace
 
 #if 0
 static void  cell_data_func  (GtkCellLayout     *cell_layout,
@@ -2851,10 +2908,12 @@ static void  cell_data_func  (GtkCellLayout     *cell_layout,
 }
 #endif
 
-static GtkWidget*
-sp_text_toolbox_new (SPDesktop *desktop)
+namespace
 {
-    GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
+    GtkWidget*
+    sp_text_toolbox_new (SPDesktop *desktop)
+    {
+        GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
 
 #if 0
     GtkWidget   *us = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "units"));
@@ -2862,16 +2921,16 @@ sp_text_toolbox_new (SPDesktop *desktop)
     GtkWidget   *group;
 #endif
 
-    //Font Family
-    GtkWidget *cbox = gtk_combo_box_entry_new_text ();
-    Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
-    gtk_cell_layout_clear (GTK_CELL_LAYOUT (cbox));
-    GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
-    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (cbox), cell, FALSE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (cbox), cell, "text", 0, NULL);
+        //Font Family
+        GtkWidget *cbox = gtk_combo_box_entry_new_text ();
+        Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+        gtk_cell_layout_clear (GTK_CELL_LAYOUT (cbox));
+        GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
+        gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (cbox), cell, FALSE);
+        gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (cbox), cell, "text", 0, NULL);
 
 #if 0
-    gtk_cell_layout_set_cell_data_func
+        gtk_cell_layout_set_cell_data_func
             (GTK_CELL_LAYOUT (cbox),
              cell, 
              GtkCellLayoutDataFunc (cell_data_func),
@@ -2879,26 +2938,42 @@ sp_text_toolbox_new (SPDesktop *desktop)
              NULL); 
 #endif
 
-    gtk_combo_box_set_model (GTK_COMBO_BOX (cbox), GTK_TREE_MODEL (Glib::unwrap(store)));
+        gtk_combo_box_set_model (GTK_COMBO_BOX (cbox), GTK_TREE_MODEL (Glib::unwrap(store)));
+        gtk_widget_set_size_request (cbox, 250, -1);
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
+        g_object_set_data (G_OBJECT (tbl), "combo-box-family", cbox);
+        g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
 
-    gtk_widget_set_size_request (cbox, 250, -1);
-    aux_toolbox_space (tbl, 1);
-    gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
-    g_object_set_data (G_OBJECT (tbl), "combo-box-family", cbox);
-    g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
+        //Font Style
+        cbox = gtk_combo_box_new_text ();
+        gtk_combo_box_append_text (GTK_COMBO_BOX (cbox), _("Normal"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (cbox), _("Italic"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (cbox), _("Oblique"));
+        gtk_widget_set_size_request (cbox, 144, -1);
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
+        g_object_set_data (G_OBJECT (tbl), "combo-box-style", cbox);
+        g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_style_changed), tbl);
 
-#if 0
-    //Font Style
-    GtkWidget *cbox = gtk_combo_box_new_text ();
-    gtk_widget_set_size_request (cbox, 144, -1);
-    aux_toolbox_space (tbl, 1);
-    gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
-    g_object_set_data (G_OBJECT (tbl), "combo-box-style", cbox);
-#endif
+        Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISTextToolbox");
 
-    sigc::connection *connection =
-    new sigc::connection( sp_desktop_selection (desktop)->connectChanged (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)tbl)));
-    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_connection), connection);
+        sigc::connection *c_selection_changed =
+            new sigc::connection (sp_desktop_selection (desktop)->connectChanged 
+                                (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)tbl)));
+        pool->add_connection ("selection-changed", c_selection_changed);
+
+        sigc::connection *c_selection_modified =
+            new sigc::connection (sp_desktop_selection (desktop)->connectModified 
+                                (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_modified), (GObject*)tbl)));
+        pool->add_connection ("selection-modified", c_selection_modified);
+
+        sigc::connection *c_subselection_changed =
+            new sigc::connection (desktop->connectToolSubselectionChanged
+                                (sigc::bind (sigc::ptr_fun (sp_text_toolbox_subselection_changed), (GObject*)tbl)));
+        pool->add_connection ("tool-subselection-changed", c_subselection_changed);
+
+        Inkscape::ConnectionPool::connect_destroy (G_OBJECT (tbl), pool);
 
 #if 0
     //Font Size
@@ -3160,15 +3235,17 @@ sp_text_toolbox_new (SPDesktop *desktop)
         }
 #endif
 
-    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
-    swatch->setWatchedTool ("tools.text", true);
-    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-    gtk_box_pack_end (GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
-    gtk_widget_show_all (tbl);
+        Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+        swatch->setWatchedTool ("tools.text", true);
+        GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+        gtk_box_pack_end (GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
+        gtk_widget_show_all (tbl);
 
-    return tbl;
+        return tbl;
 
-} // end of sp_text_toolbox_new()
+    } // end of sp_text_toolbox_new()
+
+}//<unnamed> namespace
 
 
 //#########################
