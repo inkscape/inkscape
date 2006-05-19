@@ -2821,6 +2821,7 @@ namespace {
                 gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), -1); 
                 g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
             }
+            gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
             return;
         }
 
@@ -2846,6 +2847,8 @@ namespace {
             g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
             gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gint(query->font_style.value));
             g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+
+            gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
         }
     }
 
@@ -2863,17 +2866,38 @@ namespace {
 
     void
     sp_text_toolbox_family_changed (GtkComboBox *cbox,
-                                GtkWidget   *tbl) 
+                                    GtkWidget   *tbl) 
     {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
         if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
+
+        if (gtk_combo_box_get_active (cbox) < 0) return;
 
         SPCSSAttr *css = sp_repr_css_attr_new (); 
         sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
+
+        gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+    }
+
+    void
+    sp_text_toolbox_family_entry_activate (GtkEntry     *entry,
+                                           GtkWidget    *tbl) 
+    {
+        const char* family = gtk_entry_get_text (entry);
+
+        try {    
+            Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
+            GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
+            gtk_combo_box_set_active (cbox, gtk_tree_path_get_indices (path.gobj())[0]);
+            gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+        } catch (...) {
+            //XXX: Accept it anyway and show the warning
+            if (family && strlen (family)) gtk_widget_show_all (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+        }
     }
 
     void
@@ -2928,6 +2952,11 @@ namespace
         GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
         gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (cbox), cell, FALSE);
         gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (cbox), cell, "text", 0, NULL);
+        GtkEntryCompletion *completion = gtk_entry_completion_new ();
+        gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (Glib::unwrap(store)));
+        gtk_entry_completion_set_text_column (completion, 0);
+        gtk_entry_completion_set_minimum_key_length (completion, 3); //3 characters minimum sounds reasonable
+        g_object_set (G_OBJECT(completion), "inline-completion", TRUE, "popup-completion", TRUE, NULL);
 
 #if 0
         gtk_cell_layout_set_cell_data_func
@@ -2944,6 +2973,18 @@ namespace
         gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
         g_object_set_data (G_OBJECT (tbl), "combo-box-family", cbox);
         g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
+        g_signal_connect (G_OBJECT (GTK_BIN(cbox)->child), "activate", G_CALLBACK (sp_text_toolbox_family_entry_activate), tbl);
+        gtk_entry_set_completion (GTK_ENTRY(GTK_BIN(cbox)->child), completion);
+
+        GtkWidget *image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        gtk_widget_hide (GTK_WIDGET (image));
+        aux_toolbox_space (tbl, 1);
+        GtkWidget *box = gtk_event_box_new ();
+        gtk_container_add (GTK_CONTAINER (box), image);
+        gtk_box_pack_start (GTK_BOX (tbl), box, FALSE, FALSE, 4);
+        g_object_set_data (G_OBJECT (tbl), "warning-image", box);
+        GtkTooltips *tooltips = gtk_tooltips_new ();
+        gtk_tooltips_set_tip (tooltips, box, _("This font is currently not installed on your system. Inkscape will use the default font instead."), "");
 
         //Font Style
         cbox = gtk_combo_box_new_text ();
