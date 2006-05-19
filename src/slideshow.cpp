@@ -64,7 +64,7 @@ sp_slideshow_event (SPViewWidget *vw, GdkEvent *event, GtkWidget *window)
 
 	if (nname && (nname != fname)) {
 		SPDocument *doc;
-		g_print ("Trying to load\n");
+		g_print ("Trying to load %s\n", nname);
 		doc = sp_document_new (nname, TRUE);
 		if (doc) {
 			reinterpret_cast<SPSVGView*>(SP_VIEW_WIDGET_VIEW (vw))->setDocument (doc);
