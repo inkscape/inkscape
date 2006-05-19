@@ -530,7 +530,7 @@ sp_export_dialog (void)
                 Gtk::Button *b = new Gtk::Button();
 
                 Gtk::HBox* pixlabel = new Gtk::HBox(false, 3);
-                Gtk::Image *im = new Gtk::Image(Gtk::StockID(Gtk::Stock::DIRECTORY),
+                Gtk::Image *im = new Gtk::Image(Gtk::StockID(Gtk::Stock::INDEX),
                         Gtk::ICON_SIZE_BUTTON);
                 pixlabel->pack_start(*im);
 
