@@ -25,6 +25,7 @@
 #include "db.h"
 #include "internal/svgz.h"
 #include "internal/ps.h"
+#include "internal/pdf.h"
 #ifdef WITH_GNOME_PRINT
 # include "internal/gnome.h"
 #endif
@@ -32,6 +33,7 @@
 # include "internal/win32.h"
 #endif
 #include "internal/ps-out.h"
+#include "internal/pdf-out.h"
 #include "internal/pov-out.h"
 #include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
@@ -103,6 +105,8 @@ init()
     Internal::PsOutput::init();
     Internal::EpsOutput::init();
     Internal::PrintPS::init();
+    Internal::PdfOutput::init();
+    Internal::PrintPDF::init();
 #ifdef WITH_GNOME_PRINT
     Internal::PrintGNOME::init();
 #endif

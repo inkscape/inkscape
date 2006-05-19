@@ -28,7 +28,7 @@ operator<<(Inkscape::SVGOStringStream &os, float d)
 
     std::ostringstream s;
     s.imbue(std::locale::classic());
-    s.setf(std::ios::showpoint);
+    s.flags(os.setf(std::ios::showpoint));
     s.precision(os.precision());
     s << d;
     os << strip_trailing_zeros(s.str());
@@ -49,7 +49,7 @@ operator<<(Inkscape::SVGOStringStream &os, double d)
 
     std::ostringstream s;
     s.imbue(std::locale::classic());
-    s.setf(std::ios::showpoint);
+    s.flags(os.setf(std::ios::showpoint));
     s.precision(os.precision());
     s << d;
     os << strip_trailing_zeros(s.str());

@@ -53,6 +53,18 @@ public:
     std::streamsize precision(std::streamsize p) {
         return ostr.precision(p);
     }
+
+    std::ios::fmtflags setf(std::ios::fmtflags fmtfl) {
+        return ostr.setf(fmtfl);
+    }
+
+    std::ios::fmtflags setf(std::ios::fmtflags fmtfl, std::ios::fmtflags mask) {
+        return ostr.setf(fmtfl, mask);
+    }
+
+    void unsetf(std::ios::fmtflags mask) {
+        ostr.unsetf(mask);
+    }
 };
 
 }
