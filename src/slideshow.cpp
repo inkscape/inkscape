@@ -60,7 +60,7 @@ sp_slideshow_event (SPViewWidget *vw, GdkEvent *event, GtkWidget *window)
 	}
 
 	nname = (const gchar*)g_slist_nth_data (slides, idx);
-	g_print ("Old %s new %s\n", fname, nname);
+//	g_print ("Old %s new %s\n", fname, nname);
 
 	if (nname && (nname != fname)) {
 		SPDocument *doc;
