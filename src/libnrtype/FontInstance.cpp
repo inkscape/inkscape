@@ -15,8 +15,6 @@
 #include <libnrtype/font-glyph.h>
 #include <libnrtype/font-instance.h>
 
-/* #include <layout/LEGlyphStorage.h> */
-
 #include <livarot/Path.h>
 
 #include "RasterFont.h"
@@ -24,8 +22,6 @@
 /* Freetype 2 */
 # include <freetype/ftoutln.h>
 # include <freetype/ftbbox.h>
-# include <freetype/internal/tttypes.h>
-# include <freetype/internal/ftstream.h>
 # include <freetype/tttags.h>
 # include <pango/pangoft2.h>
 
