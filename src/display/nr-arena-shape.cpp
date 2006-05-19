@@ -20,6 +20,7 @@
 #include <libnr/nr-path.h>
 #include <libnr/nr-pixops.h>
 #include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-blit.h>
 #include <livarot/Path.h>
 #include <livarot/float-line.h>
@@ -390,7 +391,7 @@ nr_arena_shape_update_fill(NRArenaShape *shape, NRGC *gc, NRRectL *area, bool fo
     if ((shape->_fill.paint.type() != NRArenaShape::Paint::NONE || force_shape) &&
         ((shape->curve->end > 2) || (SP_CURVE_BPATH(shape->curve)[1].code == NR_CURVETO)) ) {
         if (TRUE || !shape->fill_shp) {
-            NR::Matrix  cached_to_new;
+            NR::Matrix  cached_to_new = NR::identity();
             int isometry = 0;
             if ( shape->cached_fill ) {
                 if (shape->cached_fctm == gc->transform) {
@@ -486,7 +487,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
         if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE)
             width = 0.5; // 1 pixel wide, independent of zoom
 
-        NR::Matrix cached_to_new;
+        NR::Matrix  cached_to_new = NR::identity();
 
         int isometry = 0;
         if ( shape->cached_stroke ) {
