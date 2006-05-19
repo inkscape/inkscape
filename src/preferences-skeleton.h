@@ -140,7 +140,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"iconpreview\" />\n"
 "    <group id=\"aboutextensions\" />\n"
 "    <group id=\"treeeditor\" />\n"
-"    <group id=\"layers\" />\n"
+"    <group id=\"layers\" maxDepth=\"20\"/>\n"
 "    <group id=\"extensioneditor\" />\n"
 "    <group id=\"trace\" />\n"
 "    <group id=\"script\" />\n"

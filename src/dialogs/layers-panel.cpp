@@ -30,6 +30,7 @@
 #include "sp-item.h"
 #include "widgets/icon.h"
 #include <gtkmm/widget.h>
+#include "prefs-utils.h"
 
 //#define DUMP_LAYERS 1
 
@@ -64,6 +65,25 @@ enum {
     BUTTON_DELETE
 };
 
+class LayersPanel::InternalUIBounce
+{
+public:
+    int _actionCode;
+    SPObject* _target;
+};
+
+static gboolean layers_panel_activated( GtkObject *object, GdkEvent * /*event*/, gpointer data )
+{
+    if ( data )
+    {
+        LayersPanel* panel = reinterpret_cast<LayersPanel*>(data);
+        panel->setDesktop( SP_ACTIVE_DESKTOP );
+    }
+
+    return FALSE;
+}
+
+
 void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback )
 {
     bool set = false;
@@ -96,6 +116,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
         btn.set_label( fallback );
     }
 }
+
 
 Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback, int id )
 {
@@ -165,47 +186,67 @@ void LayersPanel::_fireAction( unsigned int code )
 //     SP_VERB_LAYER_PREV,
 void LayersPanel::_takeAction( int val )
 {
-    switch ( val ) {
-        case BUTTON_NEW:
-        {
-            _fireAction( SP_VERB_LAYER_NEW );
+    if ( !_pending ) {
+        _pending = new InternalUIBounce();
+        _pending->_actionCode = val;
+        _pending->_target = _selectedLayer();
+        Glib::signal_timeout().connect( sigc::mem_fun(*this, &LayersPanel::_executeAction), 0 );
+    }
+}
+
+bool LayersPanel::_executeAction()
+{
+    // Make sure selected layer hasn't changed since the action was triggered
+    if ( _pending
+         && !( (_desktop && _desktop->currentLayer())
+               && (_desktop->currentLayer() != _pending->_target)
+             ) ) {
+        int val = _pending->_actionCode;
+//        SPObject* target = _pending->_target;
+
+        switch ( val ) {
+            case BUTTON_NEW:
+            {
+                _fireAction( SP_VERB_LAYER_NEW );
+            }
+            break;
+            case BUTTON_RENAME:
+            {
+                _fireAction( SP_VERB_LAYER_RENAME );
+            }
+            break;
+            case BUTTON_TOP:
+            {
+                _fireAction( SP_VERB_LAYER_TO_TOP );
+            }
+            break;
+            case BUTTON_BOTTOM:
+            {
+                _fireAction( SP_VERB_LAYER_TO_BOTTOM );
+            }
+            break;
+            case BUTTON_UP:
+            {
+                _fireAction( SP_VERB_LAYER_RAISE );
+            }
+            break;
+            case BUTTON_DOWN:
+            {
+                _fireAction( SP_VERB_LAYER_LOWER );
+            }
+            break;
+            case BUTTON_DELETE:
+            {
+                _fireAction( SP_VERB_LAYER_DELETE );
+            }
+            break;
         }
-        break;
-        case BUTTON_RENAME:
-        {
-            _fireAction( SP_VERB_LAYER_RENAME );
-        }
-        break;
-        case BUTTON_TOP:
-        {
-            _fireAction( SP_VERB_LAYER_TO_TOP );
-        }
-        break;
-        case BUTTON_BOTTOM:
-        {
-            _fireAction( SP_VERB_LAYER_TO_BOTTOM );
-        }
-        break;
-        case BUTTON_UP:
-        {
-            _fireAction( SP_VERB_LAYER_RAISE );
-        }
-        break;
-        case BUTTON_DOWN:
-        {
-            _fireAction( SP_VERB_LAYER_LOWER );
-        }
-        break;
-        case BUTTON_DELETE:
-        {
-            _fireAction( SP_VERB_LAYER_DELETE );
-        }
-        break;
+
+        delete _pending;
+        _pending = 0;
     }
 
-    if ( _desktop && _desktop->currentLayer() ) {
-        _selectLayer( _desktop->currentLayer() );
-    }
+    return false;
 }
 
 class LayersPanel::ModelColumns : public Gtk::TreeModel::ColumnRecord
@@ -227,20 +268,16 @@ public:
     Gtk::TreeModelColumn<bool> _colLocked;
 };
 
-
-static gboolean layers_panel_activated( GtkObject *object, GdkEvent * /*event*/, gpointer data )
-{
-    if ( data )
-    {
-        LayersPanel* panel = reinterpret_cast<LayersPanel*>(data);
-        panel->setDesktop( SP_ACTIVE_DESKTOP );
+void LayersPanel::_selectLayer( SPObject *layer ) {
+    if ( !layer || (_desktop && _desktop->doc() && (layer == _desktop->doc()->root)) ) {
+        if ( _tree.get_selection()->count_selected_rows() != 0 ) {
+            _tree.get_selection()->unselect_all();
+        }
+    } else {
+        _store->foreach( sigc::bind<SPObject*>(sigc::mem_fun(*this, &LayersPanel::_checkForSelected), layer) );
     }
 
-    return FALSE;
-}
-
-void LayersPanel::_selectLayer( SPObject *layer ) {
-    _store->foreach( sigc::bind<SPObject*>(sigc::mem_fun(*this, &LayersPanel::_checkForSelected), layer) );
+    _checkTreeSelection();
 }
 
 bool LayersPanel::_checkForSelected(const Gtk::TreePath &path, const Gtk::TreeIter& iter, SPObject* layer)
@@ -269,47 +306,47 @@ void LayersPanel::_layersChanged()
     SPObject* root = document->root;
     if ( root ) {
         if ( _mgr && _mgr->includes( root ) ) {
+            SPObject* target = _desktop->currentLayer();
             _store->clear();
 
 #if DUMP_LAYERS
             g_message("root:%p  {%s}   [%s]", root, root->id, root->label() );
 #endif // DUMP_LAYERS
-            unsigned int counter = _mgr->childCount(root);
-            for ( unsigned int i = 0; i < counter; i++ ) {
-                SPObject *child = _mgr->nthChildOf(root, i);
-                if ( child ) {
+            _addLayer( document, root, 0, target, 0 );
+        }
+    }
+}
+
+void LayersPanel::_addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level )
+{
+    if ( layer && (level < _maxNestDepth) ) {
+        unsigned int counter = _mgr->childCount(layer);
+        for ( unsigned int i = 0; i < counter; i++ ) {
+            SPObject *child = _mgr->nthChildOf(layer, i);
+            if ( child ) {
 #if DUMP_LAYERS
-                    g_message("    layer:%p  {%s}   [%s]", child, child->id, child->label() );
+                g_message(" %3d    layer:%p  {%s}   [%s]", level, child, child->id, child->label() );
 #endif // DUMP_LAYERS
 
-                    Gtk::TreeModel::Row row = *(_store->prepend());
-                    row[_model->_colObject] = child;
-                    row[_model->_colLabel] = child->label() ? child->label() : SP_OBJECT_ID(child);
-                    row[_model->_colVisible] = SP_IS_ITEM(child) ? !SP_ITEM(child)->isHidden() : false;
-                    row[_model->_colLocked] = SP_IS_ITEM(child) ? SP_ITEM(child)->isLocked() : false;
+                Gtk::TreeModel::iterator iter = parentRow ? _store->prepend(parentRow->children()) : _store->prepend();
+                Gtk::TreeModel::Row row = *iter;
+                row[_model->_colObject] = child;
+                row[_model->_colLabel] = child->label() ? child->label() : SP_OBJECT_ID(child);
+                row[_model->_colVisible] = SP_IS_ITEM(child) ? !SP_ITEM(child)->isHidden() : false;
+                row[_model->_colLocked] = SP_IS_ITEM(child) ? SP_ITEM(child)->isLocked() : false;
 
-                    // TODO - implement walking deeper, not hardcoded
+                if ( target && child == target ) {
+                    _tree.expand_to_path( _store->get_path(iter) );
 
-                    unsigned int counter2 = _mgr->childCount(child);
-                    for ( unsigned int i2 = 0; i2 < counter2; i2++ ) {
-                        SPObject *child2 = _mgr->nthChildOf(child, i2);
-                        if ( child2 ) {
-#if DUMP_LAYERS
-                            g_message("        layer:%p  {%s}   [%s]", child, child->id, child->label() );
-#endif // DUMP_LAYERS
-                            Gtk::TreeModel::Row row2 = *(_store->prepend(row.children()));
-                            row2[_model->_colObject] = child2;
-                            row2[_model->_colLabel] = child2->label() ? child2->label() : SP_OBJECT_ID(child2);
-                            row2[_model->_colVisible] = SP_IS_ITEM(child2) ? !SP_ITEM(child2)->isHidden() : false;
-                            row2[_model->_colLocked] = SP_IS_ITEM(child2) ? SP_ITEM(child2)->isLocked() : false;
-                        }
-                    }
-
+                    Glib::RefPtr<Gtk::TreeSelection> select = _tree.get_selection();
+                    select->select(iter);
+                    _checkTreeSelection();
                 }
+
+                _addLayer( doc, child, &row, target, level + 1 );
             }
         }
     }
-
 }
 
 SPObject* LayersPanel::_selectedLayer()
@@ -325,6 +362,19 @@ SPObject* LayersPanel::_selectedLayer()
     return obj;
 }
 
+void LayersPanel::_pushTreeSelectionToCurrent()
+{
+    SPObject* inTree = _selectedLayer();
+    if ( inTree ) {
+        SPObject* curr = _desktop->currentLayer();
+        if ( curr != inTree ) {
+            _desktop->setCurrentLayer( inTree );
+        }
+    } else {
+        _desktop->setCurrentLayer( _desktop->doc()->root );
+    }
+}
+
 void LayersPanel::_checkTreeSelection()
 {
     bool sensitive = false;
@@ -338,19 +388,7 @@ void LayersPanel::_checkTreeSelection()
 
             sensitiveNonTop = (Inkscape::next_layer(inTree->parent, inTree) != 0);
             sensitiveNonBottom = (Inkscape::previous_layer(inTree->parent, inTree) != 0);
-
-            SPObject* curr = _desktop->currentLayer();
-            if ( curr != inTree ) {
-                _layerChangedConnection.block();
-                _desktop->setCurrentLayer(inTree);
-                _layerChangedConnection.unblock();
-                if ( _tree.get_selection()->count_selected_rows() < 1 ) {
-                    _selectLayer( inTree );
-                }
-            }
         }
-    } else {
-        sensitive = false;
     }
 
     for ( std::vector<Gtk::Widget*>::iterator it = _watching.begin(); it != _watching.end(); ++it ) {
@@ -441,10 +479,14 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeM
  */
 LayersPanel::LayersPanel() :
     Inkscape::UI::Widget::Panel( "dialogs.layers" ),
+    _maxNestDepth(20),
     _mgr(0),
     _desktop(0),
-    _model(0)
+    _model(0),
+    _pending(0)
 {
+    _maxNestDepth = prefs_get_int_attribute_limited("dialogs.layers", "maxDepth", 20, 1, 1000);
+
     ModelColumns *zoop = new ModelColumns();
     _model = zoop;
 
@@ -470,7 +512,7 @@ LayersPanel::LayersPanel() :
         cell->property_activatable() = true;
     }
 
-    _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_checkTreeSelection) );
+    _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
 
     _tree.get_model()->signal_row_changed().connect( sigc::mem_fun(*this, &LayersPanel::_handleRowChange) );
     _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
@@ -595,7 +637,6 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
             }
 
             _layersChanged();
-            _selectLayer( _desktop->currentLayer() );
         }
     }
 /*

@@ -49,6 +49,7 @@ protected:
 
 private:
     class ModelColumns;
+    class InternalUIBounce;
 
     LayersPanel(LayersPanel const &); // no copy
     LayersPanel &operator=(LayersPanel const &); // no assign
@@ -64,14 +65,17 @@ private:
     void _handleButtonEvent(GdkEventButton* evt);
     void _handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeModel::iterator const& iter );
 
+    void _pushTreeSelectionToCurrent();
     void _checkTreeSelection();
 
     void _takeAction( int val );
+    bool _executeAction();
 
     void _selectLayer(SPObject *layer);
     bool _checkForSelected(const Gtk::TreePath& path, const Gtk::TreeIter& iter, SPObject* layer);
 
     void _layersChanged();
+    void _addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level );
 
     SPObject* _selectedLayer();
 
@@ -83,9 +87,11 @@ private:
     sigc::connection _addedConnection;
     sigc::connection _removedConnection;
 
+    int _maxNestDepth;
     Inkscape::LayerManager* _mgr;
     SPDesktop* _desktop;
     ModelColumns* _model;
+    InternalUIBounce* _pending;
     Glib::RefPtr<Gtk::TreeStore> _store;
     std::vector<Gtk::Widget*> _watching;
     std::vector<Gtk::Widget*> _watchingNonTop;
