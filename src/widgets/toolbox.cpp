@@ -2807,7 +2807,16 @@ namespace {
         // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
         if (result_family == QUERY_STYLE_NOTHING || result_style == QUERY_STYLE_NOTHING || result_numbers == QUERY_STYLE_NOTHING)
         {
-            return;
+            Inkscape::XML::Node *repr = inkscape_get_repr (INKSCAPE, "tools.text");
+
+            if (repr)
+            {
+                sp_style_read_from_repr (query, repr);
+            }
+            else
+            {
+                return;
+            }
         }
 
         if (result_numbers == QUERY_STYLE_MULTIPLE_DIFFERENT)
@@ -2977,7 +2986,6 @@ namespace
         gtk_entry_set_completion (GTK_ENTRY(GTK_BIN(cbox)->child), completion);
 
         GtkWidget *image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_SMALL_TOOLBAR);
-        gtk_widget_hide (GTK_WIDGET (image));
         aux_toolbox_space (tbl, 1);
         GtkWidget *box = gtk_event_box_new ();
         gtk_container_add (GTK_CONTAINER (box), image);
@@ -2985,6 +2993,7 @@ namespace
         g_object_set_data (G_OBJECT (tbl), "warning-image", box);
         GtkTooltips *tooltips = gtk_tooltips_new ();
         gtk_tooltips_set_tip (tooltips, box, _("This font is currently not installed on your system. Inkscape will use the default font instead."), "");
+        gtk_widget_hide (GTK_WIDGET (box));
 
         //Font Style
         cbox = gtk_combo_box_new_text ();
