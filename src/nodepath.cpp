@@ -1013,6 +1013,8 @@ sculpt_profile (double x, double alpha, guint profile)
         case SCULPT_PROFILE_ELLIPTIC:
         return sqrt(1 - x*x);
     }
+
+    return 1;
 }
 
 double
