@@ -561,16 +561,18 @@ inkscape_application_init (const gchar *argv0, gboolean use_gui)
     Inkscape::Preferences::load();
     inkscape_load_menus(inkscape);
 
-    /* DebugDialog redirection.  On Linux, default to OFF, on Win32, default to ON */
+    /* DebugDialog redirection.  On Linux, default to OFF, on Win32, default to ON.
+	 * Use only if use_gui is enabled 
+	 */
 #ifdef WIN32
 #define DEFAULT_LOG_REDIRECT true
 #else
 #define DEFAULT_LOG_REDIRECT false
 #endif
 
-    if (prefs_get_int_attribute("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
+    if (use_gui == TRUE && prefs_get_int_attribute("dialogs.debug", "redirect", DEFAULT_LOG_REDIRECT))
     {
-        Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
+		Inkscape::UI::Dialogs::DebugDialog::getInstance()->captureLogMessages();
     }
 
     /* Initialize the extensions */
