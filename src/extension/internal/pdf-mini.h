@@ -151,11 +151,13 @@ long PdfFile::puts(PdfXref *table) {
     os << "xref\n";
     os << "0" << " " << size << "\n";
 
-    sprintf(buffer, "%010d %05d %c \n", 0, 65535, 'f');
+    snprintf(buffer, sizeof(buffer), "%010d %05d %c \n", 0, 65535, 'f');
+    buffer[sizeof(buffer)-1] = 0;
     os << buffer;
 
     for (i = 1; i < size; i++) {
-        sprintf(buffer, "%010d %05d %c \n", table->get_entry(i), 0, 'n');
+        snprintf(buffer, sizeof(buffer), "%010d %05d %c \n", (int)table->get_entry(i), 0, 'n');
+	buffer[sizeof(buffer)-1] = 0;
         os << buffer;
     }
 
