@@ -20,9 +20,11 @@
 #include "RasterFont.h"
 
 /* Freetype 2 */
-# include <freetype/ftoutln.h>
-# include <freetype/ftbbox.h>
-# include <freetype/tttags.h>
+# include <ft2build.h>
+# include FT_OUTLINE_H
+# include FT_BBOX_H
+# include FT_TRUETYPE_TAGS_H
+# include FT_TRUETYPE_TABLES_H
 # include <pango/pangoft2.h>
 
 
@@ -402,7 +404,7 @@ void font_instance::LoadGlyph(int glyph_id)
 	if ( pFont == NULL ) return;
     InitTheFace();
 #ifndef USE_PANGO_WIN32
-	if ( theFace->units_per_EM == 0 ) return; // bitmap font
+	if ( !FT_IS_SCALABLE(theFace) ) return; // bitmap font
 #endif
 
 	if ( id_to_no.find(glyph_id) == id_to_no.end() ) {
@@ -514,10 +516,10 @@ void font_instance::LoadGlyph(int glyph_id)
 			}
 			if ( theFace->glyph->format == ft_glyph_format_outline ) {
 				FT_Outline_Funcs ft2_outline_funcs = {
-					ft2_move_to,
-					ft2_line_to,
-					ft2_conic_to,
-					ft2_cubic_to,
+					(FT_Outline_MoveToFunc)  ft2_move_to,
+					(FT_Outline_LineToFunc)  ft2_line_to,
+					(FT_Outline_ConicToFunc) ft2_conic_to,
+					(FT_Outline_CubicToFunc) ft2_cubic_to,
 					0, 0
 				};
 				n_g.outline=new Path;
@@ -557,7 +559,7 @@ bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
     descent=fabs(otm.otmDescent*scale);
     leading=fabs(otm.otmLineGap*scale);
 #else
-	if ( theFace->units_per_EM == 0 ) return false; // bitmap font
+	if ( !FT_IS_SCALABLE(theFace) ) return false; // bitmap font
 	ascent=fabs(((double)theFace->ascender)/((double)theFace->units_per_EM));
 	descent=fabs(((double)theFace->descender)/((double)theFace->units_per_EM));
 	leading=fabs(((double)theFace->height)/((double)theFace->units_per_EM));
@@ -581,7 +583,7 @@ bool font_instance::FontSlope(double &run, double &rise)
     run=otm.otmsCharSlopeRun;
     rise=otm.otmsCharSlopeRise;
 #else
-	if ( theFace->units_per_EM == 0 ) return false; // bitmap font
+	if ( !FT_IS_SCALABLE(theFace) ) return false; // bitmap font
 	
     TT_HoriHeader *hhea = (TT_HoriHeader*)FT_Get_Sfnt_Table(theFace, ft_sfnt_hhea);
     if (hhea == NULL) return false;
