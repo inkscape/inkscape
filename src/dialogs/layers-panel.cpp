@@ -65,6 +65,88 @@ enum {
     BUTTON_DELETE
 };
 
+class ImageToggler : public Gtk::CellRendererPixbuf {
+public:
+    ImageToggler( char const* on, char const* off) :
+        Glib::ObjectBase(typeid(ImageToggler)),
+        Gtk::CellRendererPixbuf(),
+        _pixOnName(on),
+        _pixOffName(off),
+        _property_active(*this, "active", false),
+        _property_activatable(*this, "activatable", true),
+        _property_pixbuf_on(*this, "pixbuf_on", Glib::RefPtr<Gdk::Pixbuf>(0)),
+        _property_pixbuf_off(*this, "pixbuf_off", Glib::RefPtr<Gdk::Pixbuf>(0))
+    {
+        property_mode() = Gtk::CELL_RENDERER_MODE_ACTIVATABLE;
+
+        Gtk::Widget* thingie = sp_icon_get_icon(_pixOnName.c_str(), Inkscape::ICON_SIZE_DECORATION);
+        if ( thingie ) {
+            if ( SP_IS_ICON(thingie->gobj()) ) {
+                SPIcon* icon = SP_ICON(thingie->gobj());
+                sp_icon_fetch_pixbuf( icon );
+                _property_pixbuf_on = Glib::wrap( icon->pb, true );
+            }
+            delete thingie;
+        }
+        thingie = sp_icon_get_icon(_pixOffName.c_str(), Inkscape::ICON_SIZE_DECORATION);
+        if ( thingie ) {
+            if ( SP_IS_ICON(thingie->gobj()) ) {
+                SPIcon* icon = SP_ICON(thingie->gobj());
+                sp_icon_fetch_pixbuf( icon );
+                _property_pixbuf_off = Glib::wrap( icon->pb, true );
+            }
+            delete thingie;
+        }
+        property_pixbuf() = _property_pixbuf_off.get_value();
+    }
+
+    sigc::signal<void, const Glib::ustring&> signal_toggled()
+    {
+        return _signal_toggled;
+    }
+
+    Glib::PropertyProxy<bool> property_active() { return _property_active.get_proxy(); }
+    Glib::PropertyProxy<bool> property_activatable() { return _property_activatable.get_proxy(); }
+    Glib::PropertyProxy< Glib::RefPtr<Gdk::Pixbuf> > property_pixbuf_on();
+    Glib::PropertyProxy< Glib::RefPtr<Gdk::Pixbuf> > property_pixbuf_off();
+//  virtual Glib::PropertyProxy_Base _property_renderable(); //override
+
+protected:
+    virtual void render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
+                               Gtk::Widget& widget,
+                               const Gdk::Rectangle& background_area,
+                               const Gdk::Rectangle& cell_area,
+                               const Gdk::Rectangle& expose_area,
+                               Gtk::CellRendererState flags )
+    {
+        property_pixbuf() = _property_active.get_value() ? _property_pixbuf_on : _property_pixbuf_off;
+        Gtk::CellRendererPixbuf::render_vfunc( window, widget, background_area, cell_area, expose_area, flags );
+    }
+
+    virtual bool activate_vfunc(GdkEvent* event,
+                                Gtk::Widget& widget,
+                                const Glib::ustring& path,
+                                const Gdk::Rectangle& background_area,
+                                const Gdk::Rectangle& cell_area,
+                                Gtk::CellRendererState flags) {
+        bool val = false;
+        _signal_toggled.emit(path);
+        return val;
+    }
+
+
+private:
+    Glib::ustring _pixOnName;
+    Glib::ustring _pixOffName;
+
+    Glib::Property<bool> _property_active;
+    Glib::Property<bool> _property_activatable;
+    Glib::Property< Glib::RefPtr<Gdk::Pixbuf> > _property_pixbuf_on;
+    Glib::Property< Glib::RefPtr<Gdk::Pixbuf> > _property_pixbuf_off;
+
+    sigc::signal<void, const Glib::ustring&> _signal_toggled;
+};
+
 class LayersPanel::InternalUIBounce
 {
 public:
@@ -492,25 +574,31 @@ LayersPanel::LayersPanel() :
 
     _store = Gtk::TreeStore::create( *zoop );
 
-    Gtk::CellRendererToggle* cell = 0;
     _tree.set_model( _store );
-    int visibleColNum = _tree.append_column("vis", _model->_colVisible) - 1;
-    int lockedColNum = _tree.append_column("lock", _model->_colLocked) - 1;
+    _tree.set_headers_visible(false);
+
+    ImageToggler* eyeRenderer = manage( new ImageToggler("visible", "hidden") );
+    int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
+    eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
+    eyeRenderer->property_activatable() = true;
+    Gtk::TreeViewColumn* col = _tree.get_column(visibleColNum);
+    if ( col ) {
+        col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
+    }
+
+    ImageToggler * renderer = manage( new ImageToggler("width_height_lock", "lock_unlocked") );
+    int lockedColNum = _tree.append_column("lock", *renderer) - 1;
+    renderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_LOCKED) );
+    renderer->property_activatable() = true;
+    col = _tree.get_column(lockedColNum);
+    if ( col ) {
+        col->add_attribute( renderer->property_active(), _model->_colLocked );
+    }
+
     int nameColNum = _tree.append_column_editable("Name", _model->_colLabel) - 1;
 
     _tree.set_expander_column( *_tree.get_column(nameColNum) );
 
-    cell = dynamic_cast<Gtk::CellRendererToggle*>(_tree.get_column_cell_renderer(visibleColNum));
-    if ( cell ) {
-        cell->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
-        cell->property_activatable() = true;
-    }
-
-    cell = dynamic_cast<Gtk::CellRendererToggle*>(_tree.get_column_cell_renderer(lockedColNum));
-    if ( cell ) {
-        cell->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_LOCKED) );
-        cell->property_activatable() = true;
-    }
 
     _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
 

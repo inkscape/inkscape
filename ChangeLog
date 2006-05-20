@@ -1,8 +1,18 @@
+2006-05-20  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/widgets/icon.h, src/widgets/icon.cpp, src/dialogs/layers-panel.cpp:
+	  Changled dialog from checkboxes to icons for visible and locked.
+
 2006-05-20  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/libnrtype/FontInstance.cpp: patch from David Turner of the
 	  FreeType Project.  Fixes a compilation problem and a possible
 	  segmentation fault.
+
+2006-05-19  Jon A. Cruz  <jon@joncruz.org>
+	* src/preferences-skeleton.h, src/dialogs/layers-panel.h,
+	  src/dialogs/layers-panel.cpp:
+	  Selection and event handling cleanup. Added deeper display.
 
 2006-05-18  Jon A. Cruz  <jon@joncruz.org>
 	* src/layer-manager.cpp, src/dialogs/layers-panel.h,

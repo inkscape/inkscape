@@ -189,6 +189,19 @@ static int sp_icon_expose(GtkWidget *widget, GdkEventExpose *event)
     if ( GTK_WIDGET_DRAWABLE(widget) ) {
         SPIcon *icon = SP_ICON(widget);
         if ( !icon->pb ) {
+            sp_icon_fetch_pixbuf( icon );
+        }
+
+        sp_icon_paint(SP_ICON(widget), &event->area);
+    }
+
+    return TRUE;
+}
+
+void sp_icon_fetch_pixbuf( SPIcon *icon )
+{
+    if ( icon ) {
+        if ( !icon->pb ) {
             guchar *pixels = 0;
 
             icon->psize = sp_icon_get_phys_size(icon->lsize);
@@ -220,13 +233,8 @@ static int sp_icon_expose(GtkWidget *widget, GdkEventExpose *event)
                 g_warning ("failed to load icon '%s'", icon->name);
             }
         }
-
-        sp_icon_paint(SP_ICON(widget), &event->area);
     }
-
-    return TRUE;
 }
-
 
 static void sp_icon_screen_changed( GtkWidget *widget, GdkScreen *previous_screen )
 {
