@@ -1,5 +1,5 @@
 <inkscape-extension>
-     <_name>Kochify (Load Pattern)</_name>
+     <_name>Fractal (Koch) - Load Pattern</_name>
     <id>org.ekips.filter.kochify.load</id>
 	<dependency type="executable" location="extensions">kochify_load.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>

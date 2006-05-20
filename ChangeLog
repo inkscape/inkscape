@@ -1,3 +1,10 @@
+2006-05-20  Colin Marquardt  <colin@marquardt-home.de>
+
+	* share/extensions/lindenmayer.inx,
+	  share/extensions/kochify_load.inx, 
+	  share/extensions/kochify.inx:
+	  Rename slightly, also makes for easier translation.
+
 2006-05-20  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/widgets/icon.h, src/widgets/icon.cpp, src/dialogs/layers-panel.cpp:

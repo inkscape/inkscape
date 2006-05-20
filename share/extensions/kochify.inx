@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>Kochify</_name>
+    <_name>Fractal (Koch)</_name>
     <id>org.ekips.filter.kochify</id>
 	<dependency type="executable" location="extensions">kochify.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
