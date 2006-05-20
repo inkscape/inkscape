@@ -2853,6 +2853,14 @@ namespace {
                 g_object_set_data (G_OBJECT (selection), "block", gpointer(0)); 
             }
 
+            //Size
+            GtkWidget *cbox = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
+            char *str = g_strdup_printf ("%.5g", query->font_size.computed);
+            g_object_set_data (G_OBJECT (cbox), "block", gpointer(1)); 
+            gtk_entry_set_text (GTK_ENTRY(GTK_BIN (cbox)->child), str);
+            g_object_set_data (G_OBJECT (cbox), "block", gpointer(0)); 
+            free (str);
+
 #if 0
             //Style
             cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-style"));
@@ -2951,6 +2959,24 @@ namespace {
             //XXX: Accept it anyway and show the warning
             if (family && strlen (family)) gtk_widget_show_all (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
        }
+    }
+
+    void
+    sp_text_toolbox_size_changed  (GtkComboBox *cbox,
+                                   GtkWidget   *tbl) 
+    {
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+
+        if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
+        if (gtk_combo_box_get_active (cbox) < 0 ) return;
+    
+        SPCSSAttr *css = sp_repr_css_attr_new (); 
+        char *text = gtk_combo_box_get_active_text (cbox);
+        sp_repr_css_set_property (css, "font-size", text); 
+        free (text);
+        sp_desktop_set_style (desktop, css, true, true);
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_repr_css_attr_unref (css);
     }
 
 #if 0
@@ -3054,9 +3080,15 @@ namespace {
         GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
         Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
 
+        ////////////Family
         //Window
         GtkWidget   *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
+
+        //Label
+        GtkWidget *label = gtk_label_new (_("Family:"));
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), label, FALSE, FALSE, 0);
 
         //Entry
         GtkWidget           *entry = gtk_entry_new ();
@@ -3123,6 +3155,28 @@ namespace {
         GtkTooltips *tooltips = gtk_tooltips_new ();
         gtk_tooltips_set_tip (tooltips, box, _("This font is currently not installed on your system. Inkscape will use the default font instead."), "");
         gtk_widget_hide (GTK_WIDGET (box));
+
+        ////////////Size
+
+        //Label
+        label = gtk_label_new (_("Size:"));
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), label, FALSE, FALSE, 0);
+
+        //Cbox
+        const char *sizes[] = {
+            "4", "6", "8", "9", "10", "11", "12", "13", "14",
+            "16", "18", "20", "22", "24", "28",
+            "32", "36", "40", "48", "56", "64", "72", "144"
+        };
+
+        GtkWidget *cbox = gtk_combo_box_entry_new_text ();
+        for (unsigned int n = 0; n < G_N_ELEMENTS (sizes); gtk_combo_box_append_text (GTK_COMBO_BOX(cbox), sizes[n++]));
+        gtk_widget_set_size_request (cbox, 80, -1);
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
+        g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
+        g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_size_changed), tbl);
 
 #if 0
         //Font Style
@@ -3411,12 +3465,7 @@ namespace {
         }
 #endif
 
-        Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
-        swatch->setWatchedTool ("tools.text", true);
-        GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
-        gtk_box_pack_end (GTK_BOX(tbl), swatch_, FALSE, FALSE, 0);
         gtk_widget_show_all (tbl);
-
         return tbl;
 
     } // end of sp_text_toolbox_new()
