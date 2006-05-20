@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-16 23:43+0200\n"
-"PO-Revision-Date: 2006-05-15 01:42+0200\n"
+"PO-Revision-Date: 2006-05-20 17:16+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3644,13 +3644,11 @@ msgstr ""
 "sie heraus)"
 
 #: ../src/nodepath.cpp:3976
-#, fuzzy
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
-msgstr ""
-"Knoten oder Anfasser <b>ziehen</b>; <b>Pfeiltasten</b> verschieben die Knoten"
+msgstr "Knoten oder Anfasser <b>ziehen</b>; <b>Alt+Ziehen</b> zum weichen Verformen; <b>Pfeiltasten</b> verschieben die Knoten; <b>&lt; &gt;</b> skalieren, <b>[ ]</b> rotieren"
 
 #: ../src/nodepath.cpp:3977
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
@@ -3689,13 +3687,13 @@ msgstr[0] "<b>%i</b> von <b>%i</b> Knoten ausgewählt; %s. %s."
 msgstr[1] "<b>%i</b> von <b>%i</b> Knoten ausgewählt; %s. %s."
 
 #: ../src/nodepath.cpp:4025
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural ""
 "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b> von <b>%i</b> Knoten ausgewählt; %s. %s."
-msgstr[1] "<b>%i</b> von <b>%i</b> Knoten ausgewählt; %s. %s."
+msgstr[0] "<b>%i</b> von <b>%i</b> Knoten in <b>%i</b> von <b>%i</b> Unterpfaden ausgewählt. %s."
+msgstr[1] "<b>%i</b> von <b>%i</b> Knoten in <b>%i</b> von <b>%i</b> Unterpfaden ausgewählt. %s."
 
 #: ../src/nodepath.cpp:4031
 #, c-format
@@ -5862,9 +5860,8 @@ msgid "Width is in absolute units"
 msgstr "Breitenangabe in absoluten Einheiten"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:305
-#, fuzzy
 msgid "Keep selected"
-msgstr "Zuletzt gewählt"
+msgstr "Ausgewählt lassen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "Don't attach connectors to text objects"
@@ -6003,7 +6000,7 @@ msgstr ""
 msgid ""
 "If on, each object created with this tool will remain selected after you "
 "finish drawing it"
-msgstr ""
+msgstr "Wenn eingeschaltet, dann bleibt jedes mit diesem Werkzeug erzeugte Objekt auch nach dem Zeichnen ausgewählt."
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2181
@@ -6016,11 +6013,8 @@ msgid "Connector"
 msgstr "Objektverbinder"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
-#, fuzzy
 msgid "If on, connector attachment points will not be shown for text objects"
-msgstr ""
-"Wenn eingeschaltet, dann werden die Einrastpunkte für Objektverbinder nicht "
-"für Textobjekte angezeigt"
+msgstr "Wenn eingeschaltet, dann werden die Einrastpunkte nicht für Textobjekte angezeigt"
 
 #. Dropper
 #: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2185
@@ -8410,7 +8404,7 @@ msgstr "Freihandlinien zeichnen"
 
 #: ../src/verbs.cpp:2176
 msgid "Draw Bezier curves and straight lines"
-msgstr "Kurven und gerade Linien zeichnen"
+msgstr "Beziér-Kurven und gerade Linien zeichnen"
 
 #: ../src/verbs.cpp:2178
 msgid "Draw calligraphic lines"
@@ -8915,14 +8909,12 @@ msgid "Query information about extensions"
 msgstr "Informationen über Erweiterungen abfragen"
 
 #: ../src/verbs.cpp:2317
-#, fuzzy
 msgid "_Layers..."
-msgstr "Ebene hinzufügen..."
+msgstr "_Ebenen..."
 
 #: ../src/verbs.cpp:2318
-#, fuzzy
 msgid "View Layers"
-msgstr "Ebene an_heben"
+msgstr "Ebenen anzeigen"
 
 #. Help
 #: ../src/verbs.cpp:2321
@@ -9634,7 +9626,7 @@ msgstr "Die gewählten Abschnitte in Kurven umwandeln"
 
 #: ../src/widgets/toolbox.cpp:452
 msgid "Show the Bezier handles of selected nodes"
-msgstr ""
+msgstr "Die Beziér-Anfasser von ausgewählten Knoten anzeigen"
 
 #: ../src/widgets/toolbox.cpp:1204
 msgid "Regular polygon (with one handle) instead of a star"
@@ -9935,11 +9927,11 @@ msgstr "Adobe Illustrator schreiben"
 
 #: ../share/extensions/aisvg.inx.h:1
 msgid "AI SVG Input"
-msgstr "AI SVG einlesen"
+msgstr "AI-SVG einlesen"
 
 #: ../share/extensions/aisvg.inx.h:2
 msgid "Adobe Illustrator SVG (*.ai.svg)"
-msgstr "Adobe Illustrator SVG (*.ai.svg)"
+msgstr "Adobe-Illustrator-SVG (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
@@ -10045,7 +10037,7 @@ msgstr "EPS einlesen"
 
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated Postscript"
-msgstr "Encapsulated Postscript (EPS)"
+msgstr "Encapsulated Postscript"
 
 #: ../share/extensions/epsi_output.inx.h:1
 msgid "EPSI Output"
@@ -10181,7 +10173,7 @@ msgstr "Flachheit"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
-msgstr "Bezier flach"
+msgstr "Beziér flach machen"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -10221,11 +10213,11 @@ msgstr "Interpolationsschritte"
 
 #: ../share/extensions/kochify.inx.h:1
 msgid "Kochify"
-msgstr "Kochifizieren"
+msgstr "Fraktal (Koch)"
 
 #: ../share/extensions/kochify_load.inx.h:1
 msgid "Kochify (Load Pattern)"
-msgstr "Kochifizieren (Muster laden)"
+msgstr "Fraktal (Koch) - Muster laden"
 
 #: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -10237,7 +10229,7 @@ msgstr "Axiom"
 
 #: ../share/extensions/lindenmayer.inx.h:3
 msgid "Lindenmayer"
-msgstr "Lindenmayer"
+msgstr "Fraktal (Lindenmayer)"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
