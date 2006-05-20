@@ -136,7 +136,6 @@ text_view_focus_out (GtkWidget *w, GdkEventKey *event, gpointer data)
 void
 sp_text_edit_dialog (void)
 {
-
     if (!dlg) {
 
         gchar title[500];
@@ -802,7 +801,12 @@ sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
 
 } // end of sp_text_edit_dialog_text_changed()
 
-
+void
+sp_text_edit_dialog_default_set_insensitive ()
+{
+    GtkWidget *def = GTK_WIDGET (g_object_get_data (G_OBJECT (dlg), "default"));
+    gtk_widget_set_sensitive (def, FALSE);
+}
 
 static void
 sp_text_edit_dialog_font_changed ( SPFontSelector *fsel,

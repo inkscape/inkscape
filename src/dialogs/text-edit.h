@@ -9,7 +9,8 @@
  */
 
 void sp_text_edit_dialog (void);
-
+void sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace trough a verb
+ 
 #endif
 
 /*
