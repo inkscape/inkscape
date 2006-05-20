@@ -30,6 +30,8 @@
 
 #include <gtkmm.h>
 #include <gtk/gtk.h>
+#include <iostream>
+#include <sstream>
 
 #include "widgets/button.h"
 #include "widgets/widget-sizes.h"
@@ -70,6 +72,7 @@
 #include "desktop-style.h"
 #include "../libnrtype/font-lister.h"
 #include "../connection-pool.h"
+#include "../prefs-utils.h"
 
 #include "mod360.h"
 
@@ -2787,11 +2790,11 @@ sp_text_letter_rotation_changed(GtkAdjustment *adj, GtkWidget *tbl)
 
 namespace {
 
+    bool visible = false;
+
     void
     sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
     {
-        GtkComboBox *cbox = 0;
-    
         SPStyle *query =
             sp_style_new ();
 
@@ -2821,16 +2824,9 @@ namespace {
 
         if (result_numbers == QUERY_STYLE_MULTIPLE_DIFFERENT)
         {
-            static char* cboxes[] = { "combo-box-family", "combo-box-style" };
-        
-            for (unsigned n = 0 ; n < G_N_ELEMENTS(cboxes); ++n)
-            {
-                cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), cboxes[n]));
-                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
-                gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), -1); 
-                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
-            }
-            gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+            GtkWidget *entry = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "family-entry"));
+            gtk_entry_set_text (GTK_ENTRY (entry), "");
+            //gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
             return;
         }
 
@@ -2845,19 +2841,26 @@ namespace {
                     return;
                 }
 
-                cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
-                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
-                gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gtk_tree_path_get_indices (path.gobj())[0]);
-                g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+                GtkTreeSelection *selection = GTK_TREE_SELECTION (g_object_get_data (G_OBJECT(tbl), "family-tree-selection"));
+                GtkTreeView *treeview = GTK_TREE_VIEW (g_object_get_data (G_OBJECT(tbl), "family-tree-view"));
+
+                g_object_set_data (G_OBJECT (selection), "block", gpointer(1)); 
+
+                gtk_tree_selection_select_path (selection, path.gobj());
+                gtk_tree_view_scroll_to_cell (treeview, path.gobj(), NULL, TRUE, 0.5, 0.0);
+
+                g_object_set_data (G_OBJECT (selection), "block", gpointer(0)); 
             }
 
+#if 0
             //Style
             cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-style"));
             g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(1));
             gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), gint(query->font_style.value));
             g_object_set_data (G_OBJECT (cbox), "block", GINT_TO_POINTER(0));
+#endif
 
-            gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+            //gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
         }
     }
 
@@ -2874,41 +2877,69 @@ namespace {
     }
 
     void
-    sp_text_toolbox_family_changed (GtkComboBox *cbox,
-                                    GtkWidget   *tbl) 
+    sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
+                                    GObject             *tbl) 
     {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPDesktop    *desktop = SP_ACTIVE_DESKTOP;
+        GtkTreeModel *model;
+        GtkWidget    *popdown = GTK_WIDGET (g_object_get_data (tbl, "family-popdown-window"));
+        GtkWidget    *entry = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
+        GtkTreeIter   iter;
+        char         *family;
 
-        if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
+        gtk_tree_selection_get_selected (selection, &model, &iter);
+        gtk_tree_model_get (model, &iter, 0, &family, -1);
 
-        if (gtk_combo_box_get_active (cbox) < 0) return;
+        if (g_object_get_data (G_OBJECT (selection), "block"))
+        {
+            gtk_entry_set_text (GTK_ENTRY (entry), family);
+            return;
+        }
+        
+        gtk_widget_hide (popdown);
+        visible = false;
+
+        gtk_entry_set_text (GTK_ENTRY (entry), family);
 
         SPCSSAttr *css = sp_repr_css_attr_new (); 
-        sp_repr_css_set_property (css, "font-family", gtk_combo_box_get_active_text (cbox));
+        sp_repr_css_set_property (css, "font-family", family); 
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
 
-        gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+        free (family);
+
+        //gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
     }
 
     void
     sp_text_toolbox_family_entry_activate (GtkEntry     *entry,
-                                           GtkWidget    *tbl) 
+                                           GObject      *tbl) 
     {
-        const char* family = gtk_entry_get_text (entry);
+        const char   *family;
+
+        family = gtk_entry_get_text (entry);
 
         try {    
             Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
-            GtkComboBox *cbox = GTK_COMBO_BOX(g_object_get_data (G_OBJECT(tbl), "combo-box-family"));
-            gtk_combo_box_set_active (cbox, gtk_tree_path_get_indices (path.gobj())[0]);
-            gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+
+            GtkTreeSelection *selection = GTK_TREE_SELECTION (g_object_get_data (G_OBJECT(tbl), "family-tree-selection"));
+            GtkTreeView *treeview = GTK_TREE_VIEW (g_object_get_data (G_OBJECT(tbl), "family-tree-view"));
+
+            g_object_set_data (G_OBJECT (selection), "block", gpointer(1)); 
+
+            gtk_tree_selection_select_path (selection, path.gobj());
+            gtk_tree_view_scroll_to_cell (treeview, path.gobj(), NULL, TRUE, 0.5, 0.0);
+
+            g_object_set_data (G_OBJECT (selection), "block", gpointer(0)); 
+            //gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
         } catch (...) {
             //XXX: Accept it anyway and show the warning
-            if (family && strlen (family)) gtk_widget_show_all (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+            /* if (family && strlen (family)) gtk_widget_show_all (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image"))); */
         }
     }
 
+#if 0
     void
     sp_text_toolbox_style_changed (GtkComboBox *cbox,
                                    GtkWidget   *tbl) 
@@ -2925,35 +2956,81 @@ namespace {
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
     }
-
-}//<unnamed> namespace
-
-#if 0
-static void  cell_data_func  (GtkCellLayout     *cell_layout,
-                              GtkCellRenderer   *cell,
-                              GtkTreeModel      *tree_model,
-                              GtkTreeIter       *iter,
-                              gpointer           data)
-{
-    char *text; 
-    gtk_tree_model_get (tree_model, iter, 0, &text, -1); 
-    g_object_set (G_OBJECT (cell), "family", text, NULL);
-}
 #endif
 
-namespace
-{
+    void
+    sp_text_toolbox_text_popdown_clicked    (GtkButton          *button,
+                                             GObject            *tbl)
+    {
+        GtkWidget *popdown = GTK_WIDGET (g_object_get_data (tbl, "family-popdown-window"));
+        GtkWidget *widget = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
+        int x, y;
+
+        if (!visible)
+        {
+            gdk_window_get_origin (widget->window, &x, &y);
+            gtk_window_move (GTK_WINDOW (popdown), x, y + widget->allocation.height + 2); //2px of grace space 
+            gtk_widget_show_all (popdown);
+            visible = true;
+        }
+        else
+        {
+            gtk_widget_hide (popdown);
+            visible = false;
+        }
+    }
+
+    gboolean
+    sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
+                                       GdkEventFocus    *event,
+                                       GObject          *tbl)
+    {
+        gtk_widget_hide (popdown);
+        visible = false;
+        return FALSE;
+    }
+
+    void
+    cell_data_func  (GtkTreeViewColumn *column,
+                 GtkCellRenderer   *cell,
+                 GtkTreeModel      *tree_model,
+                 GtkTreeIter       *iter,
+                 gpointer           data)
+    {
+        char        *family,
+                    *family_escaped,
+                    *sample_escaped;
+
+        const char  *sample; 
+   
+        gtk_tree_model_get (tree_model, iter, 0, &family, -1); 
+
+        sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
+
+        family_escaped = g_markup_escape_text (family, -1);
+        sample_escaped = g_markup_escape_text (sample, -1);
+    
+        std::stringstream markup; 
+        markup << family_escaped << " (<span font_family='" << family_escaped << "'>" << sample_escaped << "</span>)";
+        g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
+
+        free (family);
+        free (family_escaped);
+        free (sample_escaped);
+    }
+
     GtkWidget*
     sp_text_toolbox_new (SPDesktop *desktop)
     {
         GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
 
 #if 0
-    GtkWidget   *us = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "units"));
-    GtkTooltips *tt = gtk_tooltips_new();
-    GtkWidget   *group;
+        GtkWidget   *us = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "units"));
+        GtkTooltips *tt = gtk_tooltips_new();
+        GtkWidget   *group;
 #endif
 
+#if 0
         //Font Family
         GtkWidget *cbox = gtk_combo_box_entry_new_text ();
         Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
@@ -2965,7 +3042,67 @@ namespace
         gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (Glib::unwrap(store)));
         gtk_entry_completion_set_text_column (completion, 0);
         gtk_entry_completion_set_minimum_key_length (completion, 3); //3 characters minimum sounds reasonable
+        g_object_set (G_OBJECT(completion), "inline-completion", TRUE, "popdown-completion", TRUE, NULL);
+#endif
+
+        Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+
+        //Window
+        GtkWidget   *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
+
+        //Entry
+        GtkWidget           *entry = gtk_entry_new ();
+        GtkEntryCompletion  *completion = gtk_entry_completion_new ();
+        gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (Glib::unwrap(store)));
+        gtk_entry_completion_set_text_column (completion, 0);
+        gtk_entry_completion_set_minimum_key_length (completion, 3); //3 characters minimum sounds reasonable
         g_object_set (G_OBJECT(completion), "inline-completion", TRUE, "popup-completion", TRUE, NULL);
+        gtk_entry_set_completion (GTK_ENTRY(entry), completion);
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), entry, FALSE, FALSE, 0);
+        
+        //Button
+        GtkWidget   *button = gtk_button_new ();
+        gtk_container_add (GTK_CONTAINER (button), gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_NONE));
+
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, 0);
+
+        //Popdown
+        GtkWidget           *sw = gtk_scrolled_window_new (NULL, NULL);
+        GtkWidget           *treeview = gtk_tree_view_new ();
+        GtkCellRenderer     *cell = gtk_cell_renderer_text_new ();
+        GtkTreeViewColumn   *column = gtk_tree_view_column_new ();
+
+        gtk_tree_view_column_pack_start (column, cell, FALSE);
+        gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+        gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), tbl, NULL);
+        g_object_set (G_OBJECT (column), "min-width", int (300), "max-width", int (300), NULL);
+
+        gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+        gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL (Glib::unwrap(store)));
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
+        gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (treeview), TRUE);
+
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS); 
+        gtk_container_add (GTK_CONTAINER (sw), treeview);
+
+        gtk_container_add (GTK_CONTAINER (window), sw);
+        gtk_widget_set_size_request (window, 300, 450);
+
+        g_signal_connect (G_OBJECT (entry),  "activate", G_CALLBACK (sp_text_toolbox_family_entry_activate), tbl);
+        g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (sp_text_toolbox_text_popdown_clicked), tbl);
+        g_signal_connect (G_OBJECT (window), "focus-out-event", G_CALLBACK (sp_text_toolbox_popdown_focus_out), tbl);
+
+        GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+        g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (sp_text_toolbox_family_changed), tbl);
+
+        g_object_set_data (G_OBJECT (tbl), "family-entry", entry);
+        g_object_set_data (G_OBJECT (tbl), "family-popdown-button", button);
+        g_object_set_data (G_OBJECT (tbl), "family-popdown-window", window);
+        g_object_set_data (G_OBJECT (tbl), "family-tree-selection", selection);
+        g_object_set_data (G_OBJECT (tbl), "family-tree-view", treeview);
 
 #if 0
         gtk_cell_layout_set_cell_data_func
@@ -2976,6 +3113,7 @@ namespace
              NULL); 
 #endif
 
+#if 0
         gtk_combo_box_set_model (GTK_COMBO_BOX (cbox), GTK_TREE_MODEL (Glib::unwrap(store)));
         gtk_widget_set_size_request (cbox, 250, -1);
         aux_toolbox_space (tbl, 1);
@@ -3005,6 +3143,7 @@ namespace
         gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
         g_object_set_data (G_OBJECT (tbl), "combo-box-style", cbox);
         g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_style_changed), tbl);
+#endif
 
         Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISTextToolbox");
 
@@ -3024,6 +3163,7 @@ namespace
         pool->add_connection ("tool-subselection-changed", c_subselection_changed);
 
         Inkscape::ConnectionPool::connect_destroy (G_OBJECT (tbl), pool);
+
 
 #if 0
     //Font Size
