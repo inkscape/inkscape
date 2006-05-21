@@ -304,7 +304,7 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     pdf_file = new PdfFile(_stream);
     doc_info = pdf_file->begin_document(1.4);
     *doc_info << "  /Title(" << doc->name << ")\n";
-//    *doc_info << "  /Author(" << "?" << ")\n";
+    *doc_info << "  /Author(" << g_get_real_name()  << ")\n";
 //    *doc_info << "  /Subject(" << "?" << ")\n";
 //    *doc_info << "  /Keywords(" << "?" << ")\n";
     *doc_info << "  /Creator(" << "www.inkscape.org" << ")\n";
