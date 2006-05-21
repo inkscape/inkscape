@@ -303,13 +303,26 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 
     pdf_file = new PdfFile(_stream);
     doc_info = pdf_file->begin_document(1.4);
-//    *doc_info << "  /Title(" << "?" << ")\n";
+    *doc_info << "  /Title(" << doc->name << ")\n";
 //    *doc_info << "  /Author(" << "?" << ")\n";
 //    *doc_info << "  /Subject(" << "?" << ")\n";
 //    *doc_info << "  /Keywords(" << "?" << ")\n";
-//    *doc_info << "  /Creator(" << "?" << ")\n";
-    *doc_info << "  /Producer(" << PACKAGE_STRING << ")\n";
-//    *doc_info << "  /CreationDate(D:YYYYMMDDHHmmSSOHH'mm')\n";
+    *doc_info << "  /Creator(" << "www.inkscape.org" << ")\n";
+    *doc_info << "  /Producer(" << "Inkscape " << PACKAGE_STRING << ")\n";
+	//the date should be in ISO/IEC 8824
+	GDate date;
+	GTimeVal ltime;
+	glong time_hh, time_mm, time_ss;
+	g_date_set_time_t (&date, time (NULL));
+	gchar date_str[100], time_str[100];
+	g_date_strftime(date_str, 99, "%Y%m%d", &date);
+	g_get_current_time(&ltime);
+	time_hh=(ltime.tv_sec/3600)%24;
+	time_mm=(ltime.tv_sec/60)%60;
+	time_ss=(ltime.tv_sec)%60;
+	g_snprintf(time_str, 99, "%02ld%02ld%02ld", time_hh, time_mm, time_ss); 
+	*doc_info << "  /CreationDate(D:" << date_str << time_str << "Z)\n";
+//	*doc_info << "  /CreationDate(D:" << date_str << time_str << "OHH'mm')\n";
 
     /* flush this to test output stream as early as possible */
     if (fflush(_stream)) {
