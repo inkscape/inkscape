@@ -428,7 +428,7 @@ bool Roster::buttonPressCallback(GdkEventButton* event)
 bool Roster::doSetup()
 {
     set_size_request(200,200);
-    
+
     pixbuf_available = Gdk::Pixbuf::create_from_inline(
                       sizeof(icon_available), icon_available, false);
     pixbuf_away     = Gdk::Pixbuf::create_from_inline(
@@ -1145,7 +1145,7 @@ bool ConnectDialog::doSetup()
     Gtk::Widget* pMenuBar = uiManager->get_widget("/MenuBar");
     get_vbox()->pack_start(*pMenuBar, Gtk::PACK_SHRINK);
 
-    table.resize(5, 2);
+    table.resize(6, 2);
     get_vbox()->pack_start(table);
 
     parent.client.setHost("gristle.org");
@@ -1183,6 +1183,11 @@ bool ConnectDialog::doSetup()
     table.attach(resourceLabel, 0, 1, 4, 5);
     resourceField.set_text(parent.client.getResource());
     table.attach(resourceField, 1, 2, 4, 5);
+
+    registerLabel.set_text("Register");
+    table.attach(registerLabel, 0, 1, 5, 6);
+    registerButton.set_active(false);
+    table.attach(registerButton, 1, 2, 5, 6);
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
@@ -1943,6 +1948,7 @@ void PedroGui::connectCallback()
         client.setUsername(dialog.getUser());
         client.setPassword(dialog.getPass());
         client.setResource(dialog.getResource());
+        client.setDoRegister(dialog.getRegister());
         client.connect();
         }
 }

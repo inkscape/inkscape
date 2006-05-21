@@ -2393,6 +2393,7 @@ void XmppClient::assign(const XmppClient &other)
     password      = other.password;
     resource      = other.resource;
     connected     = other.connected;
+    doRegister    = other.doRegister;
     groupChats    = other.groupChats;
 }
 
@@ -2402,6 +2403,7 @@ void XmppClient::init()
     sock          = new TcpSocket();
     msgId         = 0;
     connected     = false;
+    doRegister    = false;
 
     for (int i=0 ; i<outputStreamCount ; i++)
         {
@@ -2816,7 +2818,7 @@ bool XmppClient::processPresence(Element *root)
                 groupChatUserAdd(fromGid, fromNick, "");
                 }
             else
-                groupChatUserDelete(fromGid, fromNick);               
+                groupChatUserDelete(fromGid, fromNick);
             groupChatUserShow(fromGid, fromNick, show);
             XmppEvent event(XmppEvent::EVENT_MUC_PRESENCE);
             event.setGroup(fromGid);
@@ -2833,7 +2835,7 @@ bool XmppClient::processPresence(Element *root)
         DOMString dummy;
         parseJid(fullJid, shortJid, dummy);
         rosterShow(shortJid, show); //users in roster do not have resource
-        
+
         XmppEvent event(XmppEvent::EVENT_PRESENCE);
         event.setFrom(fullJid);
         event.setPresence(presence);
@@ -3496,7 +3498,76 @@ bool XmppClient::saslAuthenticate()
 }
 
 
+/**
+ * Perform JEP-077 In-Band Registration
+ */
+bool XmppClient::inBandRegistration()
+{
+    Parser parser;
 
+    char *fmt =
+     "<iq type='get' id='reg1'>"
+         "<query xmlns='jabber:iq:register'/>"
+         "</iq>\n";
+    if (!write(fmt))
+        return false;
+
+    DOMString recbuf = readStanza();
+    Element *elem = parser.parse(recbuf);
+    elem->print();
+
+    //# does the entity send the "instructions" tag?
+    bool hasInstructions =
+         (elem->findElements("instructions").size() > 0);
+    delete elem;
+
+    if (!hasInstructions)
+        {
+        error("server did not offer registration");
+        return false;
+        }
+
+    fmt =
+     "<iq type='set' id='reg2'>"
+         "<query xmlns='jabber:iq:register'>"
+         "<username>%s</username>"
+         "<password>&s</password>"
+         "</query>"
+         "</iq>\n";
+    if (!write(fmt, toXml(username).c_str(), toXml(password).c_str() ))
+        return false;
+
+
+    recbuf = readStanza();
+    elem = parser.parse(recbuf);
+    elem->print();
+
+    std::vector<Element *> list = elem->findElements("error");
+    if (list.size()>0)
+        {
+        Element *errElem = list[0];
+        DOMString code = errElem->getAttribute("code");
+        DOMString errMsg = "Registration error. ";
+        if (code == "409")
+            {
+            errMsg.append("conflict with existing user name");
+            }
+        if (code == "406")
+            {
+            errMsg.append("some registration information was not provided");
+            }
+        error((char *)errMsg.c_str());
+        delete elem;
+        return false;
+        }
+
+    delete elem;
+
+    XmppEvent evt(XmppEvent::EVENT_REGISTRATION_NEW);
+    dispatchXmppEvent(evt);
+
+    return true;
+}
 
 
 bool XmppClient::createSession()
@@ -3508,6 +3579,13 @@ bool XmppClient::createSession()
     if (!sock->connect(host, port))
         {
         return false;
+        }
+
+    //register, if user requests
+    if (doRegister)
+        {
+        if (!inBandRegistration())
+            return false;
         }
 
     char *fmt =
@@ -3794,7 +3872,7 @@ void XmppClient::rosterShow(const DOMString &jid, const DOMString &show)
     DOMString theShow = show;
     if (theShow == "")
         theShow = "available";
-    
+
     std::vector<XmppUser>::iterator iter;
     for (iter=roster.begin() ; iter != roster.end() ; iter++)
         {
@@ -4334,6 +4412,8 @@ int XmppClient::inputStreamOpen(const DOMString &fromJid, const DOMString &strea
     return streamNr;
 }
 
+
+
 /**
  *
  */
@@ -4772,7 +4852,7 @@ DOMString XmppGroupChat::getGroupJid()
 }
 
 
-void XmppGroupChat::userAdd(const DOMString &nick, 
+void XmppGroupChat::userAdd(const DOMString &nick,
                             const DOMString &jid)
 {
     std::vector<XmppUser>::iterator iter;
@@ -4785,7 +4865,7 @@ void XmppGroupChat::userAdd(const DOMString &nick,
     userList.push_back(user);
 }
 
-void XmppGroupChat::userShow(const DOMString &nick, 
+void XmppGroupChat::userShow(const DOMString &nick,
                              const DOMString &show)
 {
     DOMString theShow = show;

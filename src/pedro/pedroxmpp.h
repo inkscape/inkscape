@@ -97,6 +97,7 @@ typedef enum
     EVENT_CONNECTED,
     EVENT_DISCONNECTED,
     EVENT_PRESENCE,
+    EVENT_REGISTRATION_NEW,
     EVENT_ROSTER,
     EVENT_MESSAGE,
     EVENT_MUC_JOIN,
@@ -552,6 +553,10 @@ public:
      */
     virtual bool write(char *fmt, ...);
 
+    //#######################
+    //# V A R I A B L E S
+    //#######################
+
     /**
      *
      */
@@ -633,11 +638,32 @@ public:
      */
     virtual DOMString getJid()
         { return jid; }
+
     /**
      *
      */
     virtual int getMsgId()
         { return msgId++; }
+
+    /**
+     *
+     */
+    virtual void setDoRegister(bool val)
+        { doRegister = val; }
+
+
+    /**
+     *
+     */
+    virtual bool getDoRegister()
+        { return doRegister; }
+
+
+
+    //#######################
+    //# P R O C E S S I N G
+    //#######################
+
 
     /**
      *
@@ -689,7 +715,7 @@ public:
      *
      */
     virtual void rosterShow(const DOMString &jid, const DOMString &show);
-    
+
     //#######################
     //# CHAT (individual)
     //#######################
@@ -934,7 +960,11 @@ private:
 
     bool iqAuthenticate(const DOMString &streamId);
 
+    bool inBandRegistration();
+
     bool keepGoing;
+
+    bool doRegister;
 
     static const int writeBufLen = 2048;
 
@@ -994,7 +1024,7 @@ public:
     /**
      *
      */
-    virtual void userAdd(const DOMString &nick, 
+    virtual void userAdd(const DOMString &nick,
                          const DOMString &jid);
     /**
      *

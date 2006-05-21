@@ -104,7 +104,7 @@ private:
     Glib::RefPtr<Gdk::Pixbuf> pixbuf_error;
     Glib::RefPtr<Gdk::Pixbuf> pixbuf_offline;
     Glib::RefPtr<Gdk::Pixbuf> pixbuf_xa;
-    
+
     class RosterColumns : public Gtk::TreeModel::ColumnRecord
     {
     public:
@@ -379,6 +379,8 @@ public:
        { return passField.get_text(); }
    DOMString getResource()
        { return resourceField.get_text(); }
+   bool getRegister()
+       { return registerButton.get_active(); }
 
 private:
 
@@ -387,18 +389,20 @@ private:
 
     bool doSetup();
 
-    Gtk::Table table;
+    Gtk::Table       table;
 
-    Gtk::Label hostLabel;
-    Gtk::Entry hostField;
-    Gtk::Label portLabel;
-    Gtk::SpinButton portSpinner;
-    Gtk::Label userLabel;
-    Gtk::Entry userField;
-    Gtk::Label passLabel;
-    Gtk::Entry passField;
-    Gtk::Label resourceLabel;
-    Gtk::Entry resourceField;
+    Gtk::Label       hostLabel;
+    Gtk::Entry       hostField;
+    Gtk::Label       portLabel;
+    Gtk::SpinButton  portSpinner;
+    Gtk::Label       userLabel;
+    Gtk::Entry       userField;
+    Gtk::Label       passLabel;
+    Gtk::Entry       passField;
+    Gtk::Label       resourceLabel;
+    Gtk::Entry       resourceField;
+    Gtk::Label       registerLabel;
+    Gtk::CheckButton registerButton;
 
     PedroGui &parent;
 };
