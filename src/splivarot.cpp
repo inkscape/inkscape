@@ -574,7 +574,7 @@ sp_selected_path_outline()
         }
 
         {   // pas de stroke pas de chocolat
-            SPCSSAttr *css = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
+            SPCSSAttr *css = sp_repr_css_attr_inherited(SP_OBJECT_REPR(item), "style");
             gchar const *val = sp_repr_css_property(css, "stroke", NULL);
 
             if (val == NULL || strcmp(val, "none") == 0) {
@@ -586,7 +586,7 @@ sp_selected_path_outline()
         // remember old stroke style, to be set on fill
         SPCSSAttr *ncss;
         {
-            SPCSSAttr *ocss = sp_repr_css_attr(SP_OBJECT_REPR(item), "style");
+            SPCSSAttr *ocss = sp_repr_css_attr_inherited(SP_OBJECT_REPR(item), "style");
             gchar const *val = sp_repr_css_property(ocss, "stroke", NULL);
             gchar const *opac = sp_repr_css_property(ocss, "stroke-opacity", NULL);
 
