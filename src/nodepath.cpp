@@ -2933,8 +2933,8 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
         if ((n->n.other && n->n.other->code == NR_LINETO) || fabs(yn) + fabs(xn) < 1e-6) {
             if (n->n.other) { // if there is the next point
                 if (L2(n->n.other->p.pos - n->n.other->pos) < 1e-6) // and the next point has no handle either
-                    yn = n->n.other->pos[NR::Y] - n->origin[NR::Y]; // use origin because otherwise the direction will change as you drag
-                    xn = n->n.other->pos[NR::X] - n->origin[NR::X];
+                    yn = n->n.other->origin[NR::Y] - n->origin[NR::Y]; // use origin because otherwise the direction will change as you drag
+                    xn = n->n.other->origin[NR::X] - n->origin[NR::X];
             }
         }
         if (xn < 0) { xn = -xn; yn = -yn; } // limit the angle to between 0 and pi
@@ -2947,8 +2947,8 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
         if (n->code == NR_LINETO || fabs(yp) + fabs(xp) < 1e-6) {
             if (n->p.other) {
                 if (L2(n->p.other->n.pos - n->p.other->pos) < 1e-6)
-                    yp = n->p.other->pos[NR::Y] - n->origin[NR::Y];
-                    xp = n->p.other->pos[NR::X] - n->origin[NR::X];
+                    yp = n->p.other->origin[NR::Y] - n->origin[NR::Y];
+                    xp = n->p.other->origin[NR::X] - n->origin[NR::X];
             }
         }
         if (xp < 0) { xp = -xp; yp = -yp; } // limit the angle to between 0 and pi
