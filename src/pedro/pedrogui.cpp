@@ -1148,7 +1148,7 @@ bool ConnectDialog::doSetup()
     table.resize(6, 2);
     get_vbox()->pack_start(table);
 
-    parent.client.setHost("gristle.org");
+    parent.client.setHost("broadway.dynalias.com");
     parent.client.setPort(5223);
     parent.client.setUsername("");
     parent.client.setPassword("");

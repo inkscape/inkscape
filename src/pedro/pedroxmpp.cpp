@@ -30,6 +30,8 @@
 #include "pedroxmpp.h"
 #include "pedrodom.h"
 
+#include <map>
+
 #ifdef __WIN32__
 
 #include <windows.h>
@@ -1469,9 +1471,17 @@ bool TcpSocket::startTls()
     sslStream  = SSL_new(sslContext);
     SSL_set_fd(sslStream, sock);
 
-    if (SSL_connect(sslStream)<=0)
+    int ret = SSL_connect(sslStream);
+    if (ret == 0)
         {
-        fprintf(stderr, "SSL connect error\n");
+        fprintf(stderr, "SSL connection not successful\n");
+        disconnect();
+        return false;
+        }
+    else if (ret < 0)
+        {
+        int err = SSL_get_error(sslStream, ret);
+        fprintf(stderr, "SSL connect error %d\n", err);
         disconnect();
         return false;
         }
@@ -1486,20 +1496,20 @@ bool TcpSocket::connect()
 {
     if (hostname.size()<1)
         {
-        printf("open: null hostname\n");
+        fprintf(stderr, "open: null hostname\n");
         return false;
         }
 
     if (portno<1)
         {
-        printf("open: bad port number\n");
+        fprintf(stderr, "open: bad port number\n");
         return false;
         }
 
     sock = socket(PF_INET, SOCK_STREAM, 0);
     if (sock < 0)
         {
-        printf("open: error creating socket\n");
+        fprintf(stderr, "open: error creating socket\n");
         return false;
         }
 
@@ -1507,7 +1517,7 @@ bool TcpSocket::connect()
     struct hostent *server = gethostbyname(c_hostname);
     if (!server)
         {
-        printf("open: could not locate host '%s'\n", c_hostname);
+        fprintf(stderr, "open: could not locate host '%s'\n", c_hostname);
         return false;
         }
 
@@ -1521,7 +1531,7 @@ bool TcpSocket::connect()
     int ret = ::connect(sock, (const sockaddr *)&serv_addr, sizeof(serv_addr));
     if (ret < 0)
         {
-        printf("open: could not connect to host '%s'\n", c_hostname);
+        fprintf(stderr, "open: could not connect to host '%s'\n", c_hostname);
         return false;
         }
 
@@ -1614,7 +1624,7 @@ bool TcpSocket::write(int ch)
 {
     if (!isConnected())
         {
-        printf("write: socket closed\n");
+        fprintf(stderr, "write: socket closed\n");
         return false;
         }
     unsigned char c = (unsigned char)ch;
@@ -1628,7 +1638,7 @@ bool TcpSocket::write(int ch)
             switch(SSL_get_error(sslStream, r))
                 {
                 default:
-                    printf("SSL write problem");
+                    fprintf(stderr, "SSL write problem");
                     return -1;
                 }
             }
@@ -1639,7 +1649,7 @@ bool TcpSocket::write(int ch)
         if (send(sock, (const char *)&c, 1, 0) < 0)
         //if (send(sock, &c, 1, 0) < 0)
             {
-            printf("write: could not send data\n");
+            fprintf(stderr, "write: could not send data\n");
             return false;
             }
         }
@@ -1650,7 +1660,7 @@ bool TcpSocket::write(char *str)
 {
    if (!isConnected())
         {
-        printf("write(str): socket closed\n");
+        fprintf(stderr, "write(str): socket closed\n");
         return false;
         }
     int len = strlen(str);
@@ -1664,7 +1674,7 @@ bool TcpSocket::write(char *str)
             switch(SSL_get_error(sslStream, r))
                 {
                 default:
-                    printf("SSL write problem");
+                    fprintf(stderr, "SSL write problem");
                     return -1;
                 }
             }
@@ -1675,7 +1685,7 @@ bool TcpSocket::write(char *str)
         if (send(sock, str, len, 0) < 0)
         //if (send(sock, &c, 1, 0) < 0)
             {
-            printf("write: could not send data\n");
+            fprintf(stderr, "write: could not send data\n");
             return false;
             }
         }
@@ -1728,11 +1738,11 @@ int TcpSocket::read()
             case SSL_ERROR_ZERO_RETURN:
                 return -1;
             case SSL_ERROR_SYSCALL:
-                printf("SSL read problem(syscall) %s\n",
+                fprintf(stderr, "SSL read problem(syscall) %s\n",
                      ERR_error_string(ERR_get_error(), NULL));
                 return -1;
             default:
-                printf("SSL read problem %s\n",
+                fprintf(stderr, "SSL read problem %s\n",
                      ERR_error_string(ERR_get_error(), NULL));
                 return -1;
             }
@@ -1742,7 +1752,7 @@ int TcpSocket::read()
         {
         if (recv(sock, (char *)&ch, 1, 0) <= 0)
             {
-            printf("read: could not receive data\n");
+            fprintf(stderr, "read: could not receive data\n");
             disconnect();
             return -1;
             }
@@ -3203,6 +3213,59 @@ bool XmppClient::iqAuthenticate(const DOMString &streamId)
 }
 
 
+static bool
+saslParse(const DOMString &s, std::map<DOMString, DOMString> &vals)
+{
+
+    vals.clear();
+
+    int p  = 0;
+    int siz = s.size();
+
+    while (p < siz)
+        {
+        DOMString key;
+        DOMString value;
+        char ch = '\0';
+
+        //# Parse key
+        while (p<siz)
+            {
+            ch = s[p++];
+            if (ch == '=')
+                break;
+            key.push_back(ch);
+            }
+
+        //No value?
+        if (ch != '=')
+            break;
+
+        //# Parse value
+        bool quoted = false;
+        while (p<siz)
+            {
+            ch = s[p++];
+            if (ch == '"')
+                quoted = !quoted;
+            else if (ch == ',' && !quoted)
+                break;
+            else
+                value.push_back(ch);
+            }
+
+        //printf("# Key: '%s'  Value: '%s'\n", key.c_str(), value.c_str());
+        vals[key] = value;
+        if (ch != ',')
+            break;
+        }
+
+    return true;
+}
+
+
+
+
 
 bool XmppClient::saslMd5Authenticate()
 {
@@ -3228,21 +3291,29 @@ bool XmppClient::saslMd5Authenticate()
     DOMString challenge = Base64Decoder::decodeToString(b64challenge);
     status("challenge:'%s'", challenge.c_str());
 
-    unsigned int p1 = challenge.find("nonce=\"");
-    if (p1 == DOMString::npos)
+    std::map<DOMString, DOMString> attrs;
+    if (!saslParse(challenge, attrs))
+        {
+        error("login: error parsing SASL challenge");
+        return false;
+        }
+
+    DOMString nonce = attrs["nonce"];
+    if (nonce.size()==0)
         {
         error("login: no SASL nonce sent by server");
         return false;
         }
-    p1 += 7;
-    unsigned int p2 = challenge.find("\"", p1);
-    if (p2 == DOMString::npos)
+
+    DOMString realm = attrs["realm"];
+    if (nonce.size()==0)
         {
-        error("login: unterminated SASL nonce sent by server");
+        error("login: no SASL realm sent by server");
         return false;
         }
-    DOMString nonce = challenge.substr(p1, p2-p1);
-    //printf("nonce: '%s'\n", nonce.c_str());
+
+    status("SASL recv nonce: '%s' realm:'%s'\n", nonce.c_str(), realm.c_str());
+
     char idBuf[7];
     snprintf(idBuf, 6, "%dsasl", msgId++);
     DOMString cnonce = Sha1::hashHex((unsigned char *)idBuf, 7);
@@ -3324,8 +3395,15 @@ bool XmppClient::saslMd5Authenticate()
 
     challenge = Base64Decoder::decodeToString(b64challenge);
     status("challenge: '%s'", challenge.c_str());
-    p1 = challenge.find("rspauth=");
-    if (p1 == DOMString::npos)
+
+    if (!saslParse(challenge, attrs))
+        {
+        error("login: error parsing SASL challenge");
+        return false;
+        }
+
+    DOMString rspauth = attrs["rspauth"];
+    if (rspauth.size()==0)
         {
         error("login: no SASL respauth sent by server\n");
         return false;
@@ -3337,7 +3415,7 @@ bool XmppClient::saslMd5Authenticate()
         return false;
 
     recbuf = readStanza();
-    status("server says: '%s", recbuf.c_str());
+    status("SASL recv: '%s", recbuf.c_str());
     elem = parser.parse(recbuf);
     //elem->print();
     b64challenge = elem->getTagValue("challenge");
@@ -3448,6 +3526,13 @@ bool XmppClient::saslAuthenticate()
         elem = parser.parse(recbuf);
         }
 
+    //register, if user requests
+    if (doRegister)
+        {
+        if (!inBandRegistration())
+            return false;
+        }
+
     //check for sasl authentication mechanisms
     std::vector<Element *> elems =
                elem->findElements("mechanism");
@@ -3508,11 +3593,12 @@ bool XmppClient::inBandRegistration()
     char *fmt =
      "<iq type='get' id='reg1'>"
          "<query xmlns='jabber:iq:register'/>"
-         "</iq>\n";
+         "</iq>\n\n";
     if (!write(fmt))
         return false;
 
     DOMString recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
     Element *elem = parser.parse(recbuf);
     elem->print();
 
@@ -3531,14 +3617,15 @@ bool XmppClient::inBandRegistration()
      "<iq type='set' id='reg2'>"
          "<query xmlns='jabber:iq:register'>"
          "<username>%s</username>"
-         "<password>&s</password>"
+         "<password>%s</password>"
          "</query>"
-         "</iq>\n";
+         "</iq>\n\n";
     if (!write(fmt, toXml(username).c_str(), toXml(password).c_str() ))
         return false;
 
 
     recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
     elem = parser.parse(recbuf);
     elem->print();
 
@@ -3579,13 +3666,6 @@ bool XmppClient::createSession()
     if (!sock->connect(host, port))
         {
         return false;
-        }
-
-    //register, if user requests
-    if (doRegister)
-        {
-        if (!inBandRegistration())
-            return false;
         }
 
     char *fmt =
