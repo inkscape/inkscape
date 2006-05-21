@@ -112,7 +112,7 @@ protected:
     PrefSpinButton  _t_pencil_tolerance;
 
     PrefRadioButton _win_ontop_none, _win_ontop_normal, _win_ontop_agressive;
-    PrefCheckButton _win_save_geom, _win_hide_task, _win_zoom_resize;
+    PrefCheckButton _win_save_geom, _win_hide_task, _win_zoom_resize , _win_show_close;
 
     PrefCheckButton _calligrapy_use_abs_size;
     PrefCheckButton _calligrapy_keep_selected;

@@ -1,3 +1,9 @@
+2006-05-21  Marco Scholten  <mscholtn@xs4all.nl>
+
+	* src/ui/dialog/inkscape-preferences.cpp, 
+      src/ui/dialog/inkscape-preferences.h: 
+	  Added 'Show close button on dialogs' option.
+
 2006-05-21  MenTaLguY  <mental@rydia.net>
 
 	* src/ui/view/view-widget.cpp:

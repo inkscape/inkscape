@@ -401,6 +401,7 @@ void InkscapePreferences::initPageWindows()
     _win_save_geom.init ( _("Save window geometry"), "options.savewindowgeometry", "value", true);
     _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "options.dialogsskiptaskbar", "value", true);
     _win_zoom_resize.init ( _("Zoom when window is resized"), "options.stickyzoom", "value", false);
+    _win_show_close.init ( _("Show close button on dialogs"), "dialogs", "showclose", false);
     _win_ontop_none.init ( _("None"), "options.transientpolicy", "value", 0, false, 0);
     _win_ontop_normal.init ( _("Normal"), "options.transientpolicy", "value", 1, true, &_win_ontop_none);
     _win_ontop_agressive.init ( _("Aggressive"), "options.transientpolicy", "value", 2, false, &_win_ontop_none);
@@ -411,6 +412,8 @@ void InkscapePreferences::initPageWindows()
                             _("Whether dialog windows are to be hidden in the window manager taskbar"));
     _page_windows.add_line( false, "", _win_zoom_resize, "", 
                             _("Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"));
+    _page_windows.add_line( false, "", _win_show_close, "", 
+                            _("Whether dialog windows have a close button (requires restart)"));
     _page_windows.add_group_header( _("Dialogs on top:"));
     _page_windows.add_line( true, "", _win_ontop_none, "", 
                             _("Dialogs are treated as regular windows"));
