@@ -516,10 +516,10 @@ void font_instance::LoadGlyph(int glyph_id)
 			}
 			if ( theFace->glyph->format == ft_glyph_format_outline ) {
 				FT_Outline_Funcs ft2_outline_funcs = {
-					(FT_Outline_MoveToFunc)  ft2_move_to,
-					(FT_Outline_LineToFunc)  ft2_line_to,
-					(FT_Outline_ConicToFunc) ft2_conic_to,
-					(FT_Outline_CubicToFunc) ft2_cubic_to,
+					ft2_move_to,
+					ft2_line_to,
+					ft2_conic_to,
+					ft2_cubic_to,
 					0, 0
 				};
 				n_g.outline=new Path;
@@ -559,7 +559,7 @@ bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
     descent=fabs(otm.otmDescent*scale);
     leading=fabs(otm.otmLineGap*scale);
 #else
-	if ( !FT_IS_SCALABLE(theFace) ) return false; // bitmap font
+	if ( theFace->units_per_EM == 0 ) return false; // bitmap font
 	ascent=fabs(((double)theFace->ascender)/((double)theFace->units_per_EM));
 	descent=fabs(((double)theFace->descender)/((double)theFace->units_per_EM));
 	leading=fabs(((double)theFace->height)/((double)theFace->units_per_EM));
