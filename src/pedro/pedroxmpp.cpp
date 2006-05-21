@@ -1146,6 +1146,8 @@ public:
 
     void enableSSL(bool val);
 
+    bool getEnableSSL();
+
     bool connect(const std::string &hostname, int portno);
 
     bool connect(const char *hostname, int portno);
@@ -1374,6 +1376,11 @@ bool TcpSocket::isConnected()
 void TcpSocket::enableSSL(bool val)
 {
     sslEnabled = val;
+}
+
+bool TcpSocket::getEnableSSL()
+{
+    return sslEnabled;
 }
 
 
@@ -3477,7 +3484,7 @@ bool XmppClient::saslAuthenticate()
             status("login: STARTTLS available");
         }
 
-    if (wantStartTls)
+    if (wantStartTls && !sock->getEnableSSL())
         {
         delete elem;
         char *fmt =
