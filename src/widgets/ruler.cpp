@@ -104,10 +104,7 @@ sp_hruler_motion_notify (GtkWidget      *widget,
 
   ruler = GTK_RULER (widget);
 
-  if (event->is_hint)
-    gdk_window_get_pointer (widget->window, &x, NULL, NULL);
-  else
-    x = (int)event->x;
+  x = (int)event->x;
 
   ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * x) / widget->allocation.width;
 
@@ -408,10 +405,7 @@ sp_vruler_motion_notify (GtkWidget      *widget,
 
   ruler = GTK_RULER (widget);
 
-  if (event->is_hint)
-    gdk_window_get_pointer (widget->window, NULL, &y, NULL);
-  else
-    y = (int)event->y;
+  y = (int)event->y;
 
   ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * y) / widget->allocation.height;
 

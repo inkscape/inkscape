@@ -369,7 +369,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     } else {
                         panning = 2;
                         sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                            GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
+                            GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK,
                             NULL, event->button.time-1);
                     }
                     ret = TRUE;
@@ -381,7 +381,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                                              event->button.y);
                         panning = 3;
                         sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
-                                GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK,
+                                GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK,
                                 NULL, event->button.time);
                         ret = TRUE;
                     } else {

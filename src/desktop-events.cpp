@@ -85,7 +85,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 guide = sp_guideline_new(desktop->guides, guide_pos_dt, !horiz);
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
                 gdk_pointer_grab(widget->window, FALSE,
-                                 (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK),
+                                 (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
                                  NULL, NULL,
                                  event->button.time);
             }
@@ -170,8 +170,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 sp_canvas_item_grab(item,
                                     ( GDK_BUTTON_RELEASE_MASK  |
                                       GDK_BUTTON_PRESS_MASK    |
-                                      GDK_POINTER_MOTION_MASK  |
-                                      GDK_POINTER_MOTION_HINT_MASK ),
+                                      GDK_POINTER_MOTION_MASK ),
                                     NULL,
                                     event->button.time);
                 ret = TRUE;

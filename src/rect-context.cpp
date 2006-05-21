@@ -305,7 +305,6 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
                                 ( GDK_KEY_PRESS_MASK |
                                   GDK_BUTTON_RELEASE_MASK       |
                                   GDK_POINTER_MOTION_MASK       |
-                                  GDK_POINTER_MOTION_HINT_MASK  |
                                   GDK_BUTTON_PRESS_MASK ),
                                 NULL, event->button.time);
             ret = TRUE;
