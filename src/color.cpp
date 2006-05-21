@@ -290,6 +290,8 @@ sp_color_rgb_to_hsv_floatv (float *hsv, float r, float g, float b)
 
         if (hsv[0] < 0) hsv[0] += 1.0;
     }
+    else 
+        hsv[0] = 0.0;
 }
 
 /**
