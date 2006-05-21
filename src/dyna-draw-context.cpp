@@ -659,8 +659,11 @@ set_to_accumulated(SPDynaDrawContext *dc)
             Inkscape::GC::release(dc->repr);
             item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
             item->updateRepr();
-            if (dc->keep_selected)
+            if (dc->keep_selected) {
                 sp_desktop_selection(desktop)->set(dc->repr);
+            } else {
+                sp_desktop_selection(desktop)->clear();
+            }
         }
         abp = nr_artpath_affine(sp_curve_first_bpath(dc->accumulated), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
