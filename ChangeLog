@@ -1,3 +1,9 @@
+2006-05-20  MenTaLguY  <mental@rydia.net>
+
+	* src/extensin/internal/ps.cpp:
+
+	  add %%EOF trailer for DSC-compliance
+
 2006-05-20  Colin Marquardt  <colin@marquardt-home.de>
 
 	* share/extensions/lindenmayer.inx,
