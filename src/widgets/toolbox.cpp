@@ -2856,10 +2856,29 @@ namespace {
             //Size
             GtkWidget *cbox = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "combo-box-size"));
             char *str = g_strdup_printf ("%.5g", query->font_size.computed);
-            g_object_set_data (G_OBJECT (cbox), "block", gpointer(1)); 
+            g_object_set_data (tbl, "size-block", gpointer(1)); 
             gtk_entry_set_text (GTK_ENTRY(GTK_BIN (cbox)->child), str);
-            g_object_set_data (G_OBJECT (cbox), "block", gpointer(0)); 
+            g_object_set_data (tbl, "size-block", gpointer(0)); 
             free (str);
+
+            //Anchor
+            g_object_set_data (tbl, "anchor-block", gpointer(1)); 
+            GtkWidget *button = 0;
+            if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_START)
+            {
+                button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-anchor-start"));
+            }
+            else if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_MIDDLE)
+            {
+                button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-anchor-middle"));
+            }
+            else if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_END)
+            {
+                button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "text-anchor-end"));
+            }
+            if (button) gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+            g_object_set_data (tbl, "anchor-block", gpointer(0)); 
+            
 
 #if 0
             //Style
@@ -2962,13 +2981,51 @@ namespace {
     }
 
     void
+    sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
+                                       gpointer          data)
+    {
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) return;
+        int prop = GPOINTER_TO_INT(data); 
+
+        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+        SPCSSAttr *css = sp_repr_css_attr_new (); 
+
+        switch (prop)
+        {
+            case 0:
+            {
+                sp_repr_css_set_property (css, "text-anchor", "start"); 
+                sp_repr_css_set_property (css, "text-align", "start"); 
+                break;
+            }
+            case 1:
+            {
+                sp_repr_css_set_property (css, "text-anchor", "middle"); 
+                sp_repr_css_set_property (css, "text-align", "center"); 
+                break;
+            }
+
+            case 2:
+            {
+                sp_repr_css_set_property (css, "text-anchor", "end"); 
+                sp_repr_css_set_property (css, "text-align", "end"); 
+                break;
+            }
+        }
+
+        sp_desktop_set_style (desktop, css, true, true);
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_repr_css_attr_unref (css);
+    }
+
+    void
     sp_text_toolbox_size_changed  (GtkComboBox *cbox,
-                                   GtkWidget   *tbl) 
+                                   GObject     *tbl) 
     {
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-        if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
-        if (gtk_combo_box_get_active (cbox) < 0 ) return;
+        if (g_object_get_data (tbl, "size-block")) return;
+        if (gtk_combo_box_get_active (cbox) < 0 )  return;
     
         SPCSSAttr *css = sp_repr_css_attr_new (); 
         char *text = gtk_combo_box_get_active_text (cbox);
@@ -3177,6 +3234,51 @@ namespace {
         gtk_box_pack_start (GTK_BOX (tbl), cbox, FALSE, FALSE, 0);
         g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
         g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_size_changed), tbl);
+
+        ////////////Text anchor
+        //Label
+        label = gtk_label_new (_("Alignment:"));
+        aux_toolbox_space (tbl, 2);
+        gtk_box_pack_start (GTK_BOX (tbl), label, FALSE, FALSE, 0);
+        aux_toolbox_space (tbl, 1);
+
+        GtkWidget *group   = gtk_radio_button_new (NULL);
+        GtkWidget *row     = gtk_hbox_new (FALSE, 4);
+        g_object_set_data (G_OBJECT (tbl), "anchor-group", group);
+
+        // align left
+        GtkWidget *rbutton = group;
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, GTK_ICON_SIZE_SMALL_TOOLBAR));
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "text-anchor-start", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(0));
+
+
+        // align center
+        rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, GTK_ICON_SIZE_SMALL_TOOLBAR));
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "text-anchor-middle", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer (1)); 
+
+        // align right
+        rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, GTK_ICON_SIZE_SMALL_TOOLBAR));
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "text-anchor-end", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(2));
+
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
 
 #if 0
         //Font Style
