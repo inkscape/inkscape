@@ -21,6 +21,8 @@
 
 #include "color-picker.h"
 
+static bool _in_use = false;
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -58,6 +60,8 @@ ColorPicker::setupDialog(const Glib::ustring &title)
 
     g_signal_connect(G_OBJECT(_colorSelector), "dragged",
                          G_CALLBACK(sp_color_picker_color_mod), (void *)this);
+    g_signal_connect(G_OBJECT(_colorSelector), "released",
+                         G_CALLBACK(sp_color_picker_color_mod), (void *)this);
     g_signal_connect(G_OBJECT(_colorSelector), "changed",
                          G_CALLBACK(sp_color_picker_color_mod), (void *)this);
 
@@ -71,6 +75,8 @@ ColorPicker::setupDialog(const Glib::ustring &title)
 void
 ColorPicker::setRgba32 (guint32 rgba)
 {
+    if (_in_use) return;
+
     _preview.setRgba32 (rgba);
     _rgba = rgba;
     if (_colorSelector)
@@ -107,6 +113,9 @@ ColorPicker::on_changed (guint32)
 void
 sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
 {
+    if (_in_use) return;
+    else _in_use = true;
+    
     SPColor color;
     float alpha;
     csel->base->getColorAlpha(color, &alpha);
@@ -120,7 +129,9 @@ sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
         sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
 
     ptr->on_changed (rgba);
+    _in_use = false;
     ptr->_changed_signal.emit (rgba);
+    ptr->_rgba = rgba;
 }
 
 
