@@ -45,6 +45,7 @@
 #include "inkscape.h"
 #include "svg-view-widget.h"
 #include "filedialog.h"
+#include "gc-core.h"
 
 #undef INK_DUMP_FILENAME_CONV
 
@@ -174,6 +175,8 @@ bool SVGPreview::setFromMem(char const *xmlBuffer)
     setDocument(doc);
 
     sp_document_unref(doc);
+
+    Inkscape::GC::request_early_collection();
 
     return true;
 }
@@ -675,10 +678,8 @@ private:
 void FileOpenDialogImpl::updatePreviewCallback()
 {
     Glib::ustring fileName = get_preview_filename();
-
     if (fileName.length() < 1)
         return;
-
     svgPreview.set(fileName, dialogType);
 }
 
@@ -897,6 +898,7 @@ FileOpenDialogImpl::show()
     set_modal (TRUE);                      //Window
     sp_transientize((GtkWidget *)gobj());  //Make transient
     gint b = run();                        //Dialog
+    svgPreview.showNoPreview();
     hide();
 
     if (b == Gtk::RESPONSE_OK)
@@ -1344,6 +1346,7 @@ FileSaveDialogImpl::show()
     set_modal (TRUE);                      //Window
     sp_transientize((GtkWidget *)gobj());  //Make transient
     gint b = run();                        //Dialog
+    svgPreview.showNoPreview();
     hide();
 
     if (b == Gtk::RESPONSE_OK)

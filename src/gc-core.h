@@ -128,6 +128,8 @@ inline void init() {
     Core::init();
 }
 
+void request_early_collection();
+
 }
 }
 

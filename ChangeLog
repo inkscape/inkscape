@@ -1,3 +1,14 @@
+2006-05-21  MenTaLguY  <mental@rydia.net>
+
+	* src/gc-core.h, src/gc.cpp:
+	
+	  add GC::request_early_collection() to force a collection from the idle
+	  loop at opportune times
+
+	* src/dialogs/filedialog.cpp:
+
+	  call GC::request_early_collection() after switching preview images
+
 2006-05-21  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/layer-manager.cpp, src/layer-manager.h,

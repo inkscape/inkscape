@@ -12,6 +12,8 @@
 #include "gc-core.h"
 #include <stdexcept>
 #include <glib/gmessages.h>
+#include <sigc++/functors/ptr_fun.h>
+#include <glibmm/main.h>
 
 namespace Inkscape {
 namespace GC {
@@ -262,6 +264,26 @@ void Core::init() {
     }
 
     _ops.do_init();
+}
+
+
+namespace {
+
+bool collection_requested=false;
+bool collection_task() {
+    Core::gcollect();
+    Core::gcollect();
+    collection_requested=false;
+    return false;
+}
+
+}
+
+void request_early_collection() {
+    if (!collection_requested) {
+        collection_requested=true;
+        Glib::signal_idle().connect(sigc::ptr_fun(&collection_task));
+    }
 }
 
 }
