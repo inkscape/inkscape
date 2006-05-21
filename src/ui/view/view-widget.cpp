@@ -84,6 +84,8 @@ static void sp_view_widget_destroy(GtkObject *object)
     if (((GtkObjectClass *) (widget_parent_class))->destroy) {
         (* ((GtkObjectClass *) (widget_parent_class))->destroy)(object);
     }
+
+    Inkscape::GC::request_early_collection();
 }
 
 /**

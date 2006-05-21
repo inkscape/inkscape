@@ -1,5 +1,11 @@
 2006-05-21  MenTaLguY  <mental@rydia.net>
 
+	* src/ui/view/view-widget.cpp:
+	
+	  request collection pass after destruction of a view widget
+
+2006-05-21  MenTaLguY  <mental@rydia.net>
+
 	* src/gc-core.h, src/gc.cpp:
 	
 	  add GC::request_early_collection() to force a collection from the idle
