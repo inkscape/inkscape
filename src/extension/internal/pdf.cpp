@@ -313,7 +313,11 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 	GDate date;
 	GTimeVal ltime;
 	glong time_hh, time_mm, time_ss;
+#if GLIB_CHECK_VERSION(2,9,0)
 	g_date_set_time_t (&date, time (NULL));
+#else
+	g_date_set_time(&date, time (NULL));
+#endif
 	gchar date_str[100], time_str[100];
 	g_date_strftime(date_str, 99, "%Y%m%d", &date);
 	g_get_current_time(&ltime);

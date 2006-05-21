@@ -1,3 +1,9 @@
+2006-05-21  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/extension/internal/pdf.cpp: Compilation fix.  For versions
+	  of glib older that 2.9.0, use g_date_set_time() instead of
+	  g_date_set_time_t().
+
 2006-05-20  MenTaLguY  <mental@rydia.net>
 
 	* src/extensin/internal/ps.cpp:
