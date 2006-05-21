@@ -71,6 +71,9 @@ private:
     void _takeAction( int val );
     bool _executeAction();
 
+    void _updateLayer(SPObject *layer);
+    bool _checkForUpdated(const Gtk::TreePath &path, const Gtk::TreeIter& iter, SPObject* layer);
+
     void _selectLayer(SPObject *layer);
     bool _checkForSelected(const Gtk::TreePath& path, const Gtk::TreeIter& iter, SPObject* layer);
 
@@ -79,10 +82,9 @@ private:
 
     SPObject* _selectedLayer();
 
-    // Hooked to the desktop:
-    sigc::connection _layerChangedConnection;
-
     // Hooked to the layer manager:
+    sigc::connection _layerChangedConnection;
+    sigc::connection _layerUpdatedConnection;
     sigc::connection _changedConnection;
     sigc::connection _addedConnection;
     sigc::connection _removedConnection;

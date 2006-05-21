@@ -25,10 +25,21 @@ class LayerManager : public DocumentSubset,
 public:
     LayerManager(SPDesktop *desktop);
 
-private:
+    sigc::connection connectCurrentLayerChanged(const sigc::slot<void, SPObject *> & slot) {
+	return _layer_changed_signal.connect(slot);
+    }
 
+    sigc::connection connectLayerDetailsChanged(const sigc::slot<void, SPObject *> & slot) {
+	return _details_changed_signal.connect(slot);
+    }
+
+private:
+    static void _objectModifiedCB( SPObject* obj, guint flags, LayerManager* mgr );
+
+    void _objectModified( SPObject* obj, guint flags );
     void _setDocument(SPDocument *document);
     void _rebuild();
+    void _selectedLayerChanged(SPObject *layer);
 
     sigc::connection _layer_connection;
     sigc::connection _document_connection;
@@ -36,6 +47,9 @@ private:
 
     GC::soft_ptr<SPDesktop> _desktop;
     SPDocument *_document;
+
+    sigc::signal<void, SPObject *>     _layer_changed_signal;
+    sigc::signal<void, SPObject *>     _details_changed_signal;
 };
 
 }

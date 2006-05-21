@@ -23,7 +23,7 @@ namespace Inkscape {
 LayerManager::LayerManager(SPDesktop *desktop)
 : _desktop(desktop), _document(NULL)
 {
-//    _layer_connection = desktop->connectCurrentLayerChanged( sigc::hide<0>( sigc::mem_fun(*this, &LayerManager::_rebuild) ) );
+    _layer_connection = desktop->connectCurrentLayerChanged( sigc::mem_fun(*this, &LayerManager::_selectedLayerChanged) );
 
     sigc::bound_mem_functor1<void, Inkscape::LayerManager, SPDocument*> first = sigc::mem_fun(*this, &LayerManager::_setDocument);
 
@@ -45,6 +45,17 @@ void LayerManager::_setDocument(SPDocument *document) {
         _resource_connection = sp_document_resources_changed_connect(document, "layer", sigc::mem_fun(*this, &LayerManager::_rebuild));
     }
     _rebuild();
+}
+
+
+void LayerManager::_objectModifiedCB( SPObject* obj, guint flags, LayerManager* mgr )
+{
+    mgr->_objectModified( obj, flags );
+}
+
+void LayerManager::_objectModified( SPObject* obj, guint flags )
+{
+    _details_changed_signal.emit( obj );
 }
 
 void LayerManager::_rebuild() {
@@ -69,12 +80,21 @@ void LayerManager::_rebuild() {
                     }
                     Inkscape::XML::Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
                     if ( node && node->parent() ) {
+                        g_signal_connect( G_OBJECT(curr), "modified", G_CALLBACK( _objectModifiedCB ), this );
+
                         _addOne(curr);
                     }
                 }
             }
         }
     }
+}
+
+// Connected to the desktop's CurrentLayerChanged signal
+void LayerManager::_selectedLayerChanged(SPObject *layer)
+{
+    // notify anyone who's listening to this instead of directly to the desktop
+    _layer_changed_signal.emit(layer);
 }
 
 }

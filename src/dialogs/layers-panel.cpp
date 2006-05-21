@@ -350,6 +350,27 @@ public:
     Gtk::TreeModelColumn<bool> _colLocked;
 };
 
+void LayersPanel::_updateLayer( SPObject *layer ) {
+    _store->foreach( sigc::bind<SPObject*>(sigc::mem_fun(*this, &LayersPanel::_checkForUpdated), layer) );
+}
+
+bool LayersPanel::_checkForUpdated(const Gtk::TreePath &path, const Gtk::TreeIter& iter, SPObject* layer)
+{
+    bool stopGoing = false;
+    Gtk::TreeModel::Row row = *iter;
+    Glib::ustring tmp = row[_model->_colLabel];
+    if ( layer == row[_model->_colObject] )
+    {
+        row[_model->_colLabel] = layer->label() ? layer->label() : SP_OBJECT_ID(layer);
+        row[_model->_colVisible] = SP_IS_ITEM(layer) ? !SP_ITEM(layer)->isHidden() : false;
+        row[_model->_colLocked] = SP_IS_ITEM(layer) ? SP_ITEM(layer)->isLocked() : false;
+
+        stopGoing = true;
+    }
+
+    return stopGoing;
+}
+
 void LayersPanel::_selectLayer( SPObject *layer ) {
     if ( !layer || (_desktop && _desktop->doc() && (layer == _desktop->doc()->root)) ) {
         if ( _tree.get_selection()->count_selected_rows() != 0 ) {
@@ -705,6 +726,7 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
 {
     if ( desktop != _desktop ) {
         _layerChangedConnection.disconnect();
+        _layerUpdatedConnection.disconnect();
         _changedConnection.disconnect();
         if ( _mgr ) {
             _mgr = 0;
@@ -715,13 +737,13 @@ void LayersPanel::setDesktop( SPDesktop* desktop )
 
         _desktop = SP_ACTIVE_DESKTOP;
         if ( _desktop ) {
-            _layerChangedConnection = _desktop->connectCurrentLayerChanged( sigc::mem_fun(*this, &LayersPanel::_selectLayer) );
-
             setLabel( _desktop->doc()->name );
 
             _mgr = _desktop->layer_manager;
             if ( _mgr ) {
-                _mgr->connectChanged( sigc::mem_fun(*this, &LayersPanel::_layersChanged) );
+                _layerChangedConnection = _mgr->connectCurrentLayerChanged( sigc::mem_fun(*this, &LayersPanel::_selectLayer) );
+                _layerUpdatedConnection = _mgr->connectLayerDetailsChanged( sigc::mem_fun(*this, &LayersPanel::_updateLayer) );
+                _changedConnection = _mgr->connectChanged( sigc::mem_fun(*this, &LayersPanel::_layersChanged) );
             }
 
             _layersChanged();
