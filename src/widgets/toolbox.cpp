@@ -2895,6 +2895,35 @@ namespace {
                 }
             }
 
+            //Style
+            {
+                    GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-bold"));
+
+                    gboolean active = gtk_toggle_button_get_active (button);
+                    gboolean check  = (query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700); 
+
+                    if (active != check) 
+                    {
+                        g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), check); 
+                        g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+                    }
+            }
+
+            {
+                    GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-italic"));
+
+                    gboolean active = gtk_toggle_button_get_active (button);
+                    gboolean check  = (query->font_style.computed != SP_CSS_FONT_STYLE_NORMAL); 
+
+                    if (active != check)
+                    {
+                        g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), check); 
+                        g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+                    }
+            }
+
         }
     }
 
@@ -2957,10 +2986,7 @@ namespace {
 
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
-
-
         free (family);
-
         gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
     }
 
@@ -2968,9 +2994,7 @@ namespace {
     sp_text_toolbox_family_entry_activate (GtkEntry     *entry,
                                            GObject      *tbl) 
     {
-        const char   *family;
-
-        family = gtk_entry_get_text (entry);
+        const char *family = gtk_entry_get_text (entry);
 
         try {    
             Gtk::TreePath path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
@@ -2980,7 +3004,6 @@ namespace {
             gtk_tree_view_scroll_to_cell (treeview, path.gobj(), NULL, TRUE, 0.5, 0.0);
             gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
         } catch (...) {
-            //XXX: Accept it anyway and show the warning
             if (family && strlen (family))
             {
                 gtk_widget_show_all (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));
@@ -3035,6 +3058,52 @@ namespace {
     }
 
     void
+    sp_text_toolbox_style_toggled (GtkToggleButton  *button,
+                                   gpointer          data)
+    {
+        if (g_object_get_data (G_OBJECT (button), "block")) return;
+
+        SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+        SPCSSAttr   *css        = sp_repr_css_attr_new (); 
+        int          prop       = GPOINTER_TO_INT(data); 
+        bool         active     = gtk_toggle_button_get_active (button);
+
+
+        switch (prop)
+        {
+            case 0:
+            {
+                sp_repr_css_set_property (css, "font-weight", active ? "bold" : "normal" ); 
+                break;
+            }
+
+            case 1:
+            {
+                sp_repr_css_set_property (css, "font-style", active ? "italic" : "normal"); 
+                break;
+            }
+        }
+
+        SPStyle *query =
+            sp_style_new ();
+        int result_numbers =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+
+        // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+        if (result_numbers == QUERY_STYLE_NOTHING)
+        {
+            sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+        }
+        else
+        {
+            sp_desktop_set_style (desktop, css, true, true);
+        }
+
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_repr_css_attr_unref (css);
+    }
+
+    void
     sp_text_toolbox_size_changed  (GtkComboBox *cbox,
                                    GObject     *tbl) 
     {
@@ -3047,29 +3116,22 @@ namespace {
         char *text = gtk_combo_box_get_active_text (cbox);
         sp_repr_css_set_property (css, "font-size", text); 
         free (text);
+
+        SPStyle *query =
+            sp_style_new ();
+        int result_numbers =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+
+        // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+        if (result_numbers == QUERY_STYLE_NOTHING)
+        {
+            sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+        }
+
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
     }
-
-#if 0
-    void
-    sp_text_toolbox_style_changed (GtkComboBox *cbox,
-                                   GtkWidget   *tbl) 
-    {
-        SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-
-        if (GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cbox), "block")) != 0) return;
-    
-        static char* styles[] = { "normal", "italic" , "oblique" };
-
-        SPCSSAttr *css = sp_repr_css_attr_new (); 
-        sp_repr_css_set_property (css, "font-style", styles[gtk_combo_box_get_active (cbox)]);
-        sp_desktop_set_style (desktop, css, true, true);
-        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
-        sp_repr_css_attr_unref (css);
-    }
-#endif
 
     void
     sp_text_toolbox_text_popdown_clicked    (GtkButton          *button,
@@ -3144,12 +3206,6 @@ namespace {
     GtkWidget*
     sp_text_toolbox_new (SPDesktop *desktop)
     {
-#if 0
-        GtkWidget   *us = GTK_WIDGET(gtk_object_get_data(GTK_OBJECT(tbl), "units"));
-        GtkTooltips *tt = gtk_tooltips_new();
-        GtkWidget   *group;
-#endif
-
         GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
         Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
 
@@ -3288,13 +3344,38 @@ namespace {
         g_object_set_data   (G_OBJECT (tbl), "text-fill", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(3));
 
+        aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
 
+        ////////////Text anchor
+        aux_toolbox_space (tbl, 1);
+        row = gtk_hbox_new (FALSE, 4);
+
+        // bold 
+        rbutton = gtk_toggle_button_new (); 
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_BOLD, GTK_ICON_SIZE_SMALL_TOOLBAR));
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "style-bold", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_style_toggled), gpointer(0));
+
+        // italic
+        rbutton = gtk_toggle_button_new (); 
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_ITALIC, GTK_ICON_SIZE_SMALL_TOOLBAR));
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "style-italic", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_style_toggled), gpointer (1)); 
 
         aux_toolbox_space (tbl, 1);
         gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
 
 
-
+        //watch selection
         Inkscape::ConnectionPool* pool = Inkscape::ConnectionPool::new_connection_pool ("ISTextToolbox");
 
         sigc::connection *c_selection_changed =
@@ -3316,98 +3397,6 @@ namespace {
 
 
 #if 0
-    //Font Size
-    GtkWidget *cbox = gtk_combo_box_entry_new ();
-    aux_toolbox_space(tbl, 1);
-    gtk_box_pack_start (GTK_BOX (tbl), c, FALSE, FALSE, 0);
-
-    aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
-    //Bold
-    {
-            GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_BOLD, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *button = gtk_toggle_button_new ();
-            gtk_container_add (GTK_CONTAINER (button), px);
-            gtk_widget_show(button);
-            gtk_tooltips_set_tip (tt, button, _("Bold"), NULL);
-            gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-            gtk_widget_set_sensitive(button, TRUE);
-            gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, 0);
-    }
-
-
-        //Italic
-        {
-            GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_ITALIC, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *button = gtk_toggle_button_new ();
-            gtk_container_add (GTK_CONTAINER (button), px);
-            gtk_widget_show(button);
-            gtk_tooltips_set_tip (tt, button, _("Italics"), NULL);
-            gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-            gtk_widget_set_sensitive(button, TRUE);
-            gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, 0);
-        }
-
-        //Underline
-        {
-            GtkWidget *px = gtk_image_new_from_stock(GTK_STOCK_UNDERLINE, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *button = gtk_toggle_button_new ();
-            gtk_container_add (GTK_CONTAINER (button), px);
-            gtk_widget_show(button);
-            gtk_tooltips_set_tip (tt, button, _("Underline"), NULL);
-            gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-            gtk_widget_set_sensitive(button, FALSE);
-            gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, 0);
-        }
-
-        aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
-        // align left
-        {
-            GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_LEFT, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *b = group = gtk_radio_button_new (NULL);
-		gtk_container_add (GTK_CONTAINER (b), px);
-            gtk_tooltips_set_tip (tt, b, _("Align lines left"), NULL);
-            gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
-            gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE );
-            gtk_box_pack_start (GTK_BOX (tbl), b, FALSE, FALSE, 0);
-        }
-
-        // align center
-        {
-            GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_CENTER, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-		gtk_container_add (GTK_CONTAINER (b), px);
-            // TRANSLATORS: `Center' here is a verb.
-            gtk_tooltips_set_tip (tt, b, _("Center lines"), NULL);
-		gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
-            gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE );
-            gtk_box_pack_start (GTK_BOX (tbl), b, FALSE, FALSE, 0);
-        }
-
-        // align right
-        {
-            GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_RIGHT, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-		gtk_container_add (GTK_CONTAINER (b), px);
-            gtk_tooltips_set_tip (tt, b, _("Align lines right"), NULL);
-            gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
-            gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE );
-            gtk_box_pack_start (GTK_BOX (tbl), b, FALSE, FALSE, 0);
-        }
-
-        // full justification
-        {
-            GtkWidget *px = gtk_image_new_from_stock (GTK_STOCK_JUSTIFY_FILL, Inkscape::ICON_SIZE_SMALL_TOOLBAR);
-            GtkWidget *b = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
-		gtk_container_add (GTK_CONTAINER (b), px);
-            gtk_tooltips_set_tip (tt, b, _("Full justification"), NULL);
-            gtk_button_set_relief (GTK_BUTTON (b), GTK_RELIEF_NONE);
-            gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (b), FALSE );
-            gtk_box_pack_start (GTK_BOX (tbl), b, FALSE, FALSE, 0);
-        }
-        
-		
-        aux_toolbox_space(tbl, AUX_BETWEEN_BUTTON_GROUPS);
-		
         // horizontal
         {
         GtkWidget *px= sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_LR);
