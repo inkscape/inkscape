@@ -3072,6 +3072,17 @@ namespace {
             }
         }
 
+        SPStyle *query =
+            sp_style_new ();
+        int result_numbers =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+
+        // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+        if (result_numbers == QUERY_STYLE_NOTHING)
+        {
+            sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+        }
+
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
