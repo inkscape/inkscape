@@ -4,11 +4,14 @@
 # Francesc Dorca <f.dorca@filnet.es>, 2003. Traducció sodipodi.
 # Xavier Conde Rueda <xavi.conde@gmail.com>, 2004-2006
 #
+#: ../src/widgets/toolbox.cpp:3544 ../src/widgets/toolbox.cpp:3565
+#: ../src/widgets/toolbox.cpp:3594 ../src/widgets/toolbox.cpp:3615
+#: ../src/widgets/toolbox.cpp:3642
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 23:43+0200\n"
+"POT-Creation-Date: 2006-05-22 21:27+0200\n"
 "PO-Revision-Date: 2006-05-08 13:32+0200\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -32,7 +35,7 @@ msgstr ""
 "<b>Control</b>: fes un cercle o una el·lipse amb radi d'enter, ajusta "
 "l'angle de l'arc o el segment"
 
-#: ../src/arc-context.cpp:329 ../src/rect-context.cpp:373
+#: ../src/arc-context.cpp:329 ../src/rect-context.cpp:372
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Majúscules</b>: dibuixa al voltant del punt d'inici"
 
@@ -77,7 +80,7 @@ msgstr "<b>La capa actual està amagada</b>. Mostreu-la per poder dibuixar-hi."
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>La capa actual està blocada</b>. Mostreu-la per poder dibuixar-hi."
 
-#: ../src/desktop-events.cpp:222
+#: ../src/desktop-events.cpp:221
 #, c-format
 msgid "%s at %s"
 msgstr "%s a %s"
@@ -758,15 +761,15 @@ msgid "none"
 msgstr "cap"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2253
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2303
 msgid "_Page"
 msgstr "_Pàgina"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2257
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2307
 msgid "_Drawing"
 msgstr "_Dibuix"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2259
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2309
 msgid "_Selection"
 msgstr "_Selecció"
 
@@ -792,7 +795,7 @@ msgstr "x_1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:2019
+#: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:2033
 msgid "Width:"
 msgstr "Amplada:"
 
@@ -825,7 +828,7 @@ msgstr "píxels a"
 msgid "dp_i"
 msgstr "_ppp"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:507
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:510
 msgid "dpi"
 msgstr "ppp"
 
@@ -878,34 +881,34 @@ msgstr "No s'ha pogut exportar al fitxer %s.\n"
 msgid "Select a filename for exporting"
 msgstr "Seleccioneu el nom de fitxer per exportar"
 
-#: ../src/dialogs/filedialog.cpp:355
+#: ../src/dialogs/filedialog.cpp:358
 msgid "No preview"
 msgstr "No previsualitzis"
 
-#: ../src/dialogs/filedialog.cpp:456
+#: ../src/dialogs/filedialog.cpp:459
 msgid "too large for preview"
 msgstr "massa gran per previsualitzar"
 
-#: ../src/dialogs/filedialog.cpp:750 ../src/dialogs/filedialog.cpp:751
+#: ../src/dialogs/filedialog.cpp:751 ../src/dialogs/filedialog.cpp:752
 msgid "All Images"
 msgstr "Totes les imatges"
 
-#: ../src/dialogs/filedialog.cpp:755 ../src/dialogs/filedialog.cpp:756
+#: ../src/dialogs/filedialog.cpp:756 ../src/dialogs/filedialog.cpp:757
 msgid "All Files"
 msgstr "Tots els fitxers"
 
-#: ../src/dialogs/filedialog.cpp:762 ../src/dialogs/filedialog.cpp:763
+#: ../src/dialogs/filedialog.cpp:763 ../src/dialogs/filedialog.cpp:764
 msgid "All Inkscape Files"
 msgstr "Tots els fitxers d'Inkscape"
 
-#: ../src/dialogs/filedialog.cpp:1164
+#: ../src/dialogs/filedialog.cpp:1166
 msgid "Guess from extension"
 msgstr "Segons l'extensió"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/dialogs/filedialog.cpp:1249
+#: ../src/dialogs/filedialog.cpp:1251
 msgid "Append filename extension automatically"
 msgstr "Afegeix l'extensió al fitxer automàticament"
 
@@ -1013,7 +1016,7 @@ msgstr "Grups"
 msgid "Search clones"
 msgstr "Cerca clons"
 
-#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:451
+#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Clones"
 msgstr "Clons"
 
@@ -1174,8 +1177,8 @@ msgid ""
 msgstr "L'atribut id= (només lletres, nombres i els caràcters .-_: )"
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2151
-#: ../src/verbs.cpp:2155
+#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2205
 msgid "_Set"
 msgstr "A_ssigna"
 
@@ -1547,10 +1550,10 @@ msgstr "No s'ha seleccionat cap document"
 #: ../src/dialogs/stroke-style.cpp:775 ../src/interface.cpp:760
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 #: ../src/ui/dialog/inkscape-preferences.cpp:320
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 #: ../src/ui/widget/selected-style.cpp:134
-#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1932
+#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1982
 msgid "None"
 msgstr "Cap"
 
@@ -1650,47 +1653,47 @@ msgid "Palettes directory (%s) is unavailable."
 msgstr "El directori de les paletes (%s) no es troba disponible."
 
 #. TODO:  Insert widgets
-#: ../src/dialogs/text-edit.cpp:200 ../src/ui/dialog/text-properties.cpp:36
+#: ../src/dialogs/text-edit.cpp:198 ../src/ui/dialog/text-properties.cpp:36
 msgid "Font"
 msgstr "Tipus de lletra"
 
-#: ../src/dialogs/text-edit.cpp:217
+#: ../src/dialogs/text-edit.cpp:221
 msgid "Layout"
 msgstr "Disposició"
 
-#: ../src/dialogs/text-edit.cpp:231
+#: ../src/dialogs/text-edit.cpp:235
 msgid "Align lines left"
 msgstr "Alinea les línies a l'esquerra"
 
 #. TRANSLATORS: `Center' here is a verb.
-#: ../src/dialogs/text-edit.cpp:246
+#: ../src/dialogs/text-edit.cpp:250
 msgid "Center lines"
 msgstr "Centra les línies"
 
-#: ../src/dialogs/text-edit.cpp:260
+#: ../src/dialogs/text-edit.cpp:264
 msgid "Align lines right"
 msgstr "Alinea les línies a la dreta"
 
-#: ../src/dialogs/text-edit.cpp:282
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3514
 msgid "Horizontal text"
 msgstr "Text horitzontal"
 
-#: ../src/dialogs/text-edit.cpp:296
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3525
 msgid "Vertical text"
 msgstr "Text vertical"
 
-#: ../src/dialogs/text-edit.cpp:311
+#: ../src/dialogs/text-edit.cpp:315
 msgid "Line spacing:"
 msgstr "Espaiat entre línies:"
 
 #. Text
-#: ../src/dialogs/text-edit.cpp:357 ../src/selection-describer.cpp:63
+#: ../src/dialogs/text-edit.cpp:361 ../src/selection-describer.cpp:63
 #: ../src/ui/dialog/inkscape-preferences.cpp:381
-#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2179
+#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2229
 msgid "Text"
 msgstr "Text"
 
-#: ../src/dialogs/text-edit.cpp:404
+#: ../src/dialogs/text-edit.cpp:408
 msgid "Set as default"
 msgstr "Fes-lo predeterminat"
 
@@ -1838,7 +1841,7 @@ msgid "New element node..."
 msgstr "Nou node d'element..."
 
 #: ../src/dialogs/xml-tree.cpp:1335
-#: ../src/ui/dialog/whiteboard-connect.cpp:109
+#: ../src/ui/dialog/whiteboard-connect.cpp:115
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
 msgstr "Cancel·la"
@@ -2040,12 +2043,12 @@ msgstr ""
 "seqüència no ha retornat un error, però pot indicar que els resultats no són "
 "els esperats."
 
-#: ../src/extension/init.cpp:165
+#: ../src/extension/init.cpp:169
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "El nom del directori de mòduls externs és nul. No es carregaran els mòduls."
 
-#: ../src/extension/init.cpp:179
+#: ../src/extension/init.cpp:183
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -2129,7 +2132,7 @@ msgstr "Inkscape: previsualització de la impressió"
 msgid "GNOME Print"
 msgstr "Impressió del GNOME"
 
-#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:115
+#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
 msgstr "Graella"
 
@@ -2220,12 +2223,12 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Fitxer Postscript"
 
-#: ../src/extension/internal/ps.cpp:103
+#: ../src/extension/internal/ps.cpp:103 ../src/extension/internal/pdf.cpp:107
 msgid "Print Destination"
 msgstr "Destí d'impressió"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:118
+#: ../src/extension/internal/ps.cpp:118 ../src/extension/internal/pdf.cpp:122
 msgid "Print properties"
 msgstr "Propietats d'impressió"
 
@@ -2243,11 +2246,11 @@ msgstr ""
 "mida més petita, i es pot escalar arbitràriament, però la transparència, els "
 "degradats, els marcadors i els patrons es perdran."
 
-#: ../src/extension/internal/ps.cpp:132
+#: ../src/extension/internal/ps.cpp:132 ../src/extension/internal/pdf.cpp:136
 msgid "Print as bitmap"
 msgstr "Imprimeix com a mapa de bits"
 
-#: ../src/extension/internal/ps.cpp:134
+#: ../src/extension/internal/ps.cpp:134 ../src/extension/internal/pdf.cpp:138
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2257,20 +2260,20 @@ msgstr ""
 "mida més gran, i no es podrà escalar sense pèrdua de qualitat, però tots els "
 "objectes es dibuixaran exactament com es visualitzen."
 
-#: ../src/extension/internal/ps.cpp:148
+#: ../src/extension/internal/ps.cpp:148 ../src/extension/internal/pdf.cpp:152
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Resolució preferida (punts per polzada) del mapa de bits"
 
-#: ../src/extension/internal/ps.cpp:162
+#: ../src/extension/internal/ps.cpp:162 ../src/extension/internal/pdf.cpp:166
 msgid "Resolution:"
 msgstr "Resolució:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:166
+#: ../src/extension/internal/ps.cpp:166 ../src/extension/internal/pdf.cpp:170
 msgid "Print destination"
 msgstr "Destí d'impressió"
 
-#: ../src/extension/internal/ps.cpp:172
+#: ../src/extension/internal/ps.cpp:172 ../src/extension/internal/pdf.cpp:176
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2282,47 +2285,48 @@ msgstr ""
 "Useu '> nomFitxer' per imprimir a un fitxer.\n"
 "Useu '| prog arg...' per enviar la sortida al conducte d'un programa."
 
-#: ../src/extension/internal/ps.cpp:1211
+#: ../src/extension/internal/ps.cpp:1213
+#: ../src/extension/internal/pdf.cpp:1513
 msgid "write error occurred"
 msgstr "hi ha hagut un error d'escriptura"
 
-#: ../src/extension/internal/ps.cpp:1238
+#: ../src/extension/internal/ps.cpp:1240
 msgid "Postscript Print"
 msgstr "Impressió Postscript"
 
-#: ../src/extension/internal/svg.cpp:54
+#: ../src/extension/internal/svg.cpp:55
 msgid "SVG Input"
 msgstr "Entrada SVG"
 
-#: ../src/extension/internal/svg.cpp:59
+#: ../src/extension/internal/svg.cpp:60
 msgid "Scalable Vector Graphic (*.svg)"
 msgstr "Imatge de vectors escalables (*.svg)"
 
-#: ../src/extension/internal/svg.cpp:60
+#: ../src/extension/internal/svg.cpp:61
 msgid "Inkscape native file format and W3C standard"
 msgstr "Format natiu de l'Inkscape i estàndard el W3C"
 
-#: ../src/extension/internal/svg.cpp:68
+#: ../src/extension/internal/svg.cpp:69
 msgid "SVG Output Inkscape"
 msgstr "Sortida SVG de l'Inkscape"
 
-#: ../src/extension/internal/svg.cpp:73
+#: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
 msgstr "SVG de l'Inkscape (*.svg)"
 
-#: ../src/extension/internal/svg.cpp:74
+#: ../src/extension/internal/svg.cpp:75
 msgid "SVG format with Inkscape extensions"
 msgstr "Format SVG amb extensions de l'Inkscape"
 
-#: ../src/extension/internal/svg.cpp:82
+#: ../src/extension/internal/svg.cpp:83
 msgid "SVG Output"
 msgstr "Sortida SVG"
 
-#: ../src/extension/internal/svg.cpp:87
+#: ../src/extension/internal/svg.cpp:88
 msgid "Plain SVG (*.svg)"
 msgstr "SVG simple (*.svg)"
 
-#: ../src/extension/internal/svg.cpp:88
+#: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
 msgstr "Format d'imatge de vector escalable, com l'ha definit el W3C"
 
@@ -2363,6 +2367,26 @@ msgstr "Format de gràfics de vectors escalables comprimit amb GZip"
 #: ../src/extension/internal/win32.cpp:490
 msgid "Windows 32-bit Print"
 msgstr "Impressió de Windows de 32 bits"
+
+#: ../src/extension/internal/pdf.cpp:129
+#, fuzzy
+msgid "Print using PDF operators"
+msgstr "Imprimeix usant els operadors PostScript"
+
+#: ../src/extension/internal/pdf.cpp:131
+#, fuzzy
+msgid ""
+"Use PDF vector operators. The resulting image is usually smaller in file "
+"size and can be arbitrarily scaled, but patterns will be lost."
+msgstr ""
+"Usa operadors de vector PostScript. La imatge resultant és normalment de "
+"mida més petita, i es pot escalar arbitràriament, però la transparència, els "
+"degradats, els marcadors i els patrons es perdran."
+
+#: ../src/extension/internal/pdf.cpp:1540
+#, fuzzy
+msgid "PDF Print"
+msgstr "Impressió LaTeX"
 
 #. A hack to internationalize the title properly
 #: ../src/extension/prefdialog.cpp:33
@@ -2702,7 +2726,7 @@ msgstr ""
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "No s'ha pogut fer còpia de seguretat dels següents documents:\n"
 
-#: ../src/inkscape.cpp:613
+#: ../src/inkscape.cpp:615
 #, c-format
 msgid ""
 "Cannot create directory %s.\n"
@@ -2711,7 +2735,7 @@ msgstr ""
 "No s'ha pogut crear el directori %s.\n"
 "%s"
 
-#: ../src/inkscape.cpp:614
+#: ../src/inkscape.cpp:616
 #, c-format
 msgid ""
 "%s is not a valid directory.\n"
@@ -2720,7 +2744,7 @@ msgstr ""
 "%s no és un directori vàlid.\n"
 "%s"
 
-#: ../src/inkscape.cpp:615
+#: ../src/inkscape.cpp:617
 #, c-format
 msgid ""
 "Cannot create file %s.\n"
@@ -2729,7 +2753,7 @@ msgstr ""
 "No es pot crear el fitxer %s.\n"
 "%s"
 
-#: ../src/inkscape.cpp:616
+#: ../src/inkscape.cpp:618
 #, c-format
 msgid ""
 "Cannot write file %s.\n"
@@ -2738,7 +2762,7 @@ msgstr ""
 "No es pot escriure el fitxer %s.\n"
 "%s"
 
-#: ../src/inkscape.cpp:617
+#: ../src/inkscape.cpp:619
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
@@ -2746,7 +2770,7 @@ msgstr ""
 "Tot i que l'Inkscape s'executarà, s'usarà la configuració predeterminada,\n"
 "i no es desaran els canvis fets en les preferències."
 
-#: ../src/inkscape.cpp:687 ../src/preferences.cpp:56
+#: ../src/inkscape.cpp:689 ../src/preferences.cpp:56
 #, c-format
 msgid ""
 "%s is not a regular file.\n"
@@ -2755,7 +2779,7 @@ msgstr ""
 "%s no és un fitxer de dades.\n"
 "%s"
 
-#: ../src/inkscape.cpp:688 ../src/preferences.cpp:57
+#: ../src/inkscape.cpp:690 ../src/preferences.cpp:57
 #, c-format
 msgid ""
 "%s not a valid XML file, or\n"
@@ -2766,7 +2790,7 @@ msgstr ""
 "o no teniu permís de lectura.\n"
 "%s"
 
-#: ../src/inkscape.cpp:690
+#: ../src/inkscape.cpp:692
 #, c-format
 msgid ""
 "%s is not a valid menus file.\n"
@@ -2775,7 +2799,7 @@ msgstr ""
 "%s no és un fitxer de menús vàlid.\n"
 "%s"
 
-#: ../src/inkscape.cpp:691
+#: ../src/inkscape.cpp:693
 msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
@@ -3061,33 +3085,33 @@ msgstr ""
 "cerca: el nou objecte no s'enviarà, ni tampoc cap dels seus fills"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1013
+#: ../src/jabber_whiteboard/session-manager.cpp:1108
 msgid "Select a location and filename"
 msgstr "Seleccioneu una ubicació i un nom de fitxer"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1015
+#: ../src/jabber_whiteboard/session-manager.cpp:1110
 msgid "Set filename"
 msgstr "Estableix el nom de fitxer"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:319
+#: ../src/jabber_whiteboard/session-manager.cpp:413
 msgid "No SSL certificate was found."
 msgstr "No s'ha trobat cap certificat SSL."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:322
+#: ../src/jabber_whiteboard/session-manager.cpp:416
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "El certificat SSL proveït pel servidor de Jabber no és verificat."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:325
+#: ../src/jabber_whiteboard/session-manager.cpp:419
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "El certificat SSL proveït pel servidor de Jabber ha vençut."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:328
+#: ../src/jabber_whiteboard/session-manager.cpp:422
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "El certificat SSL proveït pel servidor de Jabber no s'ha activat."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:331
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3095,20 +3119,20 @@ msgstr ""
 "El certificat SSL proveït pel servidor de Jabber conté un nom de màquina que "
 "no concorda amb el nom de màquina del servidor de Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:334
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 "El certificat SSL proveït pel servidor de Jabber conté una emprenta invàlida."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:337
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "S'ha produït un error desconegut en configurar la connexió SSL."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:343
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3118,25 +3142,25 @@ msgstr ""
 "\n"
 "Voleu seguir amb la connexió al servidor de Jabber?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:346
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid "Continue connecting and ignore further errors"
 msgstr "Continua amb la connexió i ignora els següents errors"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:347
+#: ../src/jabber_whiteboard/session-manager.cpp:441
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Continua amb la connexió, però avisa'm dels següents errors"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:348
+#: ../src/jabber_whiteboard/session-manager.cpp:442
 msgid "Cancel connection"
 msgstr "Cancel·la la connexió"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:795
+#: ../src/jabber_whiteboard/session-manager.cpp:890
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr ""
 "S'ha establert una sessió de pisarra col·laborativa amb en/na <b>%s</b>"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:803
+#: ../src/jabber_whiteboard/session-manager.cpp:898
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr ""
@@ -3145,7 +3169,7 @@ msgstr ""
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:808
+#: ../src/jabber_whiteboard/session-manager.cpp:903
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3156,7 +3180,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:810
+#: ../src/jabber_whiteboard/session-manager.cpp:905
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3164,7 +3188,7 @@ msgstr ""
 "Encara esteu connectats a un servidor de Jabber com a <b>%2</b>, i podeu "
 "establir una nova sessió a <b>%1</b> com a un usuari diferent."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1006
+#: ../src/jabber_whiteboard/session-manager.cpp:1101
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3178,11 +3202,11 @@ msgstr ""
 "Podeu seleccionar una ubicació diferent per a desar la sessió, o podeu optar "
 "per no desar la sessió."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1008
+#: ../src/jabber_whiteboard/session-manager.cpp:1103
 msgid "Choose a different location"
 msgstr "Escolliu una ubicació diferent"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1009
+#: ../src/jabber_whiteboard/session-manager.cpp:1104
 msgid "Skip session recording"
 msgstr "No es desarà la sessió"
 
@@ -3424,7 +3448,7 @@ msgstr "Obre'n un _recent"
 msgid "_Edit"
 msgstr "_Edita"
 
-#: ../src/menus-skeleton.h:63 ../src/verbs.cpp:1979
+#: ../src/menus-skeleton.h:63 ../src/verbs.cpp:2029
 msgid "Paste Si_ze"
 msgstr "Enganxa la m_ida"
 
@@ -3513,7 +3537,7 @@ msgstr ""
 "<b>Alt</b>: bloca la longitud del manejador; <b>ctrl+alt</b>: mou els "
 "manejadors"
 
-#: ../src/nodepath.cpp:1245
+#: ../src/nodepath.cpp:1255
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3522,12 +3546,12 @@ msgstr ""
 "b> s'ajusta l'angle; amb <b>alt</b> es bloca la longitud; amb <b>majúscules</"
 "b> es giren ambdós manejadors"
 
-#: ../src/nodepath.cpp:1689 ../src/nodepath.cpp:1701 ../src/nodepath.cpp:1788
-#: ../src/nodepath.cpp:1800
+#: ../src/nodepath.cpp:1699 ../src/nodepath.cpp:1711 ../src/nodepath.cpp:1798
+#: ../src/nodepath.cpp:1810
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Per unir, heu de seleccionar <b>dos nodes finals</b>."
 
-#: ../src/nodepath.cpp:2056 ../src/nodepath.cpp:2070
+#: ../src/nodepath.cpp:2066 ../src/nodepath.cpp:2080
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3535,11 +3559,11 @@ msgstr ""
 "Heu de seleccionar <b>dos nodes que no siguin finals d'un camí</b> entre els "
 "quals se suprimiran els segments."
 
-#: ../src/nodepath.cpp:2166
+#: ../src/nodepath.cpp:2176
 msgid "Cannot find path between nodes."
 msgstr "No es pot trobar el camí entre els nodes."
 
-#: ../src/nodepath.cpp:3225
+#: ../src/nodepath.cpp:3235
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3550,7 +3574,7 @@ msgstr ""
 "s'ajusta l'angle; amb <b>alt</b> es bloca la longitud; amb <b>majúscules</b> "
 "es gira el manejador oposat a la vegada"
 
-#: ../src/nodepath.cpp:3740
+#: ../src/nodepath.cpp:3750
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3559,38 +3583,38 @@ msgstr ""
 "hor./vert.; amb <b>ctrl+alt</b> per ajustar les direccions dels manejadors"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3943
+#: ../src/nodepath.cpp:3953
 msgid "end node"
 msgstr "node final"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:3948
+#: ../src/nodepath.cpp:3958
 msgid "cusp"
 msgstr "afilat"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:3951
+#: ../src/nodepath.cpp:3961
 msgid "smooth"
 msgstr "suau"
 
-#: ../src/nodepath.cpp:3953
+#: ../src/nodepath.cpp:3963
 msgid "symmetric"
 msgstr "simètric"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3959
+#: ../src/nodepath.cpp:3969
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:3961
+#: ../src/nodepath.cpp:3971
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:3964
+#: ../src/nodepath.cpp:3974
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:3976
+#: ../src/nodepath.cpp:3986
 #, fuzzy
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
@@ -3600,17 +3624,17 @@ msgstr ""
 "<b>Arrossegueu</b> nodes o manejadors; les <b>fletxes de teclat</b> mouen "
 "els modes"
 
-#: ../src/nodepath.cpp:3977
+#: ../src/nodepath.cpp:3987
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Arrossegueu</b> el node o els seus manejadors; les <b>fletxes de teclat</"
 "b> mouen el node"
 
-#: ../src/nodepath.cpp:4000 ../src/nodepath.cpp:4012
+#: ../src/nodepath.cpp:4010 ../src/nodepath.cpp:4022
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Seleccioneu un objecte per editar-ne els nodes o els manejadors."
 
-#: ../src/nodepath.cpp:4004
+#: ../src/nodepath.cpp:4014
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3625,18 +3649,18 @@ msgstr[1] ""
 "No s'ha seleccionat <b>cap</b> node de <b>%i</b>. <b>Cliqueu</b>, <b>maj"
 "+clic</b>, o <b>arrossegueu al voltant dels nodes </b> per seleccionar."
 
-#: ../src/nodepath.cpp:4010
+#: ../src/nodepath.cpp:4020
 msgid "Drag the handles of the object to modify it."
 msgstr "Arrossegueu els manejadors de l'objecte per modificar-lo."
 
-#: ../src/nodepath.cpp:4018
+#: ../src/nodepath.cpp:4028
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "S'ha seleccionat <b>%i</b> node de <b>%i</b>; %s. %s."
 msgstr[1] "S'han seleccionat <b>%i</b> nodes de <b>%i</b>; %s. %s."
 
-#: ../src/nodepath.cpp:4025
+#: ../src/nodepath.cpp:4035
 #, fuzzy, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3645,7 +3669,7 @@ msgid_plural ""
 msgstr[0] "S'ha seleccionat <b>%i</b> node de <b>%i</b>; %s. %s."
 msgstr[1] "S'han seleccionat <b>%i</b> nodes de <b>%i</b>; %s. %s."
 
-#: ../src/nodepath.cpp:4031
+#: ../src/nodepath.cpp:4041
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3891,7 +3915,7 @@ msgstr ""
 "L'Inkscape s'executarà amb la configuració predeterminada.\n"
 "No es desarà la nova configuració."
 
-#: ../src/rect-context.cpp:372
+#: ../src/rect-context.cpp:371
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
@@ -3899,7 +3923,7 @@ msgstr ""
 "<b>Ctrl</b>: feu un quadrat o un rectangle de radi enter, bloqueu "
 "circularment una cantonada rodona"
 
-#: ../src/rect-context.cpp:467
+#: ../src/rect-context.cpp:466
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -4095,7 +4119,7 @@ msgstr "Cercle"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2167
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2217
 msgid "Ellipse"
 msgstr "El·lipse"
 
@@ -4119,7 +4143,7 @@ msgstr "Línia"
 msgid "Path"
 msgstr "Camí"
 
-#: ../src/selection-describer.cpp:57 ../src/widgets/toolbox.cpp:1197
+#: ../src/selection-describer.cpp:57 ../src/widgets/toolbox.cpp:1211
 msgid "Polygon"
 msgstr "Polígon"
 
@@ -4129,7 +4153,7 @@ msgstr "Polilínia"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2165
+#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2215
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -4143,13 +4167,13 @@ msgstr "Desplaça el camí"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2171
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2221
 msgid "Spiral"
 msgstr "Espiral"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2169
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2219
 msgid "Star"
 msgstr "Estel"
 
@@ -4877,7 +4901,7 @@ msgid "_Create Link"
 msgstr "_Crea un enllaç"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:189 ../src/verbs.cpp:2033
+#: ../src/ui/context-menu.cpp:189 ../src/verbs.cpp:2083
 msgid "_Ungroup"
 msgstr "Desagr_upa"
 
@@ -4947,7 +4971,7 @@ msgstr "Espai horitzontal mínim (en unitats px) entre les caixes del voltant"
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:450
-#: ../src/widgets/toolbox.cpp:1559
+#: ../src/widgets/toolbox.cpp:1573
 msgid "H:"
 msgstr "H:"
 
@@ -5855,7 +5879,7 @@ msgstr "Node"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
-#: ../src/ui/view/edit-widget.cpp:1133 ../src/verbs.cpp:2183
+#: ../src/ui/view/edit-widget.cpp:1133 ../src/verbs.cpp:2233
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
 msgstr "Ampliació"
@@ -5866,7 +5890,7 @@ msgid "Shapes"
 msgstr "Formes"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2173
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2223
 msgid "Pencil"
 msgstr "Llapis"
 
@@ -5883,12 +5907,12 @@ msgstr ""
 "alçada; els valors més petits produeixen camins desiguals amb més nodes"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2175
+#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2225
 msgid "Pen"
 msgstr "Retolador"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2177
+#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2227
 msgid "Calligraphy"
 msgstr "Cal·ligrafia"
 
@@ -5905,12 +5929,12 @@ msgid ""
 msgstr ""
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2181
+#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2231
 msgid "Gradient"
 msgstr "Degradat"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2187
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2237
 msgid "Connector"
 msgstr "Connector"
 
@@ -5919,7 +5943,7 @@ msgid "If on, connector attachment points will not be shown for text objects"
 msgstr ""
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2185
+#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2235
 msgid "Dropper"
 msgstr "Comptagotes"
 
@@ -5935,15 +5959,20 @@ msgstr "Oculta els diàlegs a la barra de tasques"
 msgid "Zoom when window is resized"
 msgstr "Apropa/allunya si canvia la mida de la finestra"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:405
+#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#, fuzzy
+msgid "Show close button on dialogs"
+msgstr "Mostra o amaga tots els diàlegs actius"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Normal"
 msgstr "Normal"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:406
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
 msgid "Aggressive"
 msgstr "Agressiu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:409
+#: ../src/ui/dialog/inkscape-preferences.cpp:410
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -5951,12 +5980,12 @@ msgstr ""
 "Desa la mida de la finestra i la posició amb cada document (només per al "
 "format SVG d'Inkscape)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:411
+#: ../src/ui/dialog/inkscape-preferences.cpp:412
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr ""
 "Si s'ha d'ocultar les finestres a la barra de tasques del gestor de finestres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:413
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -5966,59 +5995,63 @@ msgstr ""
 "mantenir la mateix àrea visible (es pot canviar aquest valor predeterminat "
 "fent servir el botó a sobre de la barra de desplaçament de la dreta)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:416
+msgid "Whether dialog windows have a close button (requires restart)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Dialogs on top:"
 msgstr "Diàlegs a sobre:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:419
 msgid "Dialogs are treated as regular windows"
 msgstr "Els diàlegs es tracten com a finestres normals"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:418
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Dialogs stay on top of document windows"
 msgstr "Els diàlegs es posen a sobre de les finestres de document"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:420
+#: ../src/ui/dialog/inkscape-preferences.cpp:423
 msgid "Same as Normal but may work better with some window managers"
 msgstr "Com en Normal, però pot anar millor amb alguns gestors de finestres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:422
+#: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Windows"
 msgstr "Finestres"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:427
+#: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Move in parallel"
 msgstr "Es mouen en paral·lel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:429
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "Stay unmoved"
 msgstr "No es mouen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:431
+#: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Move according to transform"
 msgstr "Mou com la transformació"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:433
+#: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "Are unlinked"
 msgstr "Es desenllacen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:435
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Are deleted"
 msgstr "Estan esborrats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Quan l'original es mou, els seus clons i desplaçaments enllaçats:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:440
+#: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "Clones are translated by the same vector as their original."
 msgstr "Els clons es traslladen seguint el mateix vector que l'original."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:442
+#: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Clones preserve their positions when their original is moved."
 msgstr "Els clons mantenen la seva posició quan es mou l'original."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:444
+#: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6027,71 +6060,71 @@ msgstr ""
 "Cada clon es mou segons el valor de l'atribut transform=. Per exemple, un "
 "clon rotat es mourà en una direcció diferent que el seu original."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:445
+#: ../src/ui/dialog/inkscape-preferences.cpp:448
 msgid "When the original is deleted, its clones:"
 msgstr "Quan l'original s'esborra, els seus clons:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:447
+#: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "Orphaned clones are converted to regular objects."
 msgstr "Els clons orfes es converteixen en objectes normals."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:449
+#: ../src/ui/dialog/inkscape-preferences.cpp:452
 msgid "Orphaned clones are deleted along with their original."
 msgstr "Els clons orfes se suprimeixen juntament amb l'original."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:456
+#: ../src/ui/dialog/inkscape-preferences.cpp:459
 msgid "Scale stroke width"
 msgstr "Escala l'amplada del contorn"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:457
+#: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Scale rounded corners in rectangles"
 msgstr "Escala les cantonades arrodonides als rectangles"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:458
+#: ../src/ui/dialog/inkscape-preferences.cpp:461
 msgid "Transform gradients"
 msgstr "Transforma els degradats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:459
+#: ../src/ui/dialog/inkscape-preferences.cpp:462
 msgid "Transform patterns"
 msgstr "Transforma els patrons"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:460
+#: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Optimized"
 msgstr "Optimitzat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:464
 msgid "Preserved"
 msgstr "Preservat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:467
 #: ../src/widgets/select-toolbar.cpp:496
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr ""
 "En escalar objectes, escala l'amplada del contorn per la mateixa proporció"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:466
+#: ../src/ui/dialog/inkscape-preferences.cpp:469
 #: ../src/widgets/select-toolbar.cpp:508
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "En escalar els rectangles, escala el radi de les cantonades arrodonides"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:468
+#: ../src/ui/dialog/inkscape-preferences.cpp:471
 #: ../src/widgets/select-toolbar.cpp:520
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr ""
 "Transforma els degradats (en emplenar o contorn) juntament amb els objectes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:470
+#: ../src/ui/dialog/inkscape-preferences.cpp:473
 #: ../src/widgets/select-toolbar.cpp:532
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr ""
 "Transforma els patrons (en emplenar o contorn) juntament amb els objectes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:471
+#: ../src/ui/dialog/inkscape-preferences.cpp:474
 msgid "Store transformation:"
 msgstr "Emmagatzema la transformació:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:473
+#: ../src/ui/dialog/inkscape-preferences.cpp:476
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -6099,51 +6132,51 @@ msgstr ""
 "Quan sigui possible, aplica les transformacions als objectes sense afegir "
 "l'atribut transform="
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:475
+#: ../src/ui/dialog/inkscape-preferences.cpp:478
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr ""
 "Emmagatzema sempre les transformacions com a atribut transform= en els "
 "objectes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:477
+#: ../src/ui/dialog/inkscape-preferences.cpp:480
 msgid "Transforms"
 msgstr "Transformacions"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:482
+#: ../src/ui/dialog/inkscape-preferences.cpp:485
 msgid "Select in all layers"
 msgstr "Selecciona en totes les capes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:483
+#: ../src/ui/dialog/inkscape-preferences.cpp:486
 msgid "Select only within current layer"
 msgstr "Selecciona només la capa actual"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:484
+#: ../src/ui/dialog/inkscape-preferences.cpp:487
 msgid "Select in current layer and sublayers"
 msgstr "Selecciona en la capa actual i subcapes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:485
+#: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Ignore hidden objects"
 msgstr "Ignora els objectes amagats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:486
+#: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Ignore locked objects"
 msgstr "Ignora els objectes blocats"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:488
+#: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+a, tab., maj.+tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:490
+#: ../src/ui/dialog/inkscape-preferences.cpp:493
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 "Les ordres de selecció de teclat funcionen en els objectes de totes les capes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:492
+#: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "Les ordres de selecció de teclat funcionen en objectes de totes les capes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:494
+#: ../src/ui/dialog/inkscape-preferences.cpp:497
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -6151,7 +6184,7 @@ msgstr ""
 "Les ordres de selecció de teclat funcionen en objectes en la capa actual i "
 "totes les subcapes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:496
+#: ../src/ui/dialog/inkscape-preferences.cpp:499
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6159,7 +6192,7 @@ msgstr ""
 "Inhabiliteu-lo per seleccionar objectes amagats (per estar amagats o per "
 "estar en un grup o capa amagats)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:498
+#: ../src/ui/dialog/inkscape-preferences.cpp:501
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6167,25 +6200,25 @@ msgstr ""
 "Inhabiliteu-lo per seleccionar objectes blocats (per estar amagats o per "
 "estar en un grup o capa blocats)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/ui/dialog/inkscape-preferences.cpp:503
 msgid "Selecting"
 msgstr "Seleccionar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:507
+#: ../src/ui/dialog/inkscape-preferences.cpp:510
 msgid "Default export resolution:"
 msgstr "Resolució per exportar predeterminada:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:508
+#: ../src/ui/dialog/inkscape-preferences.cpp:511
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Resolució preferida (punts per polzada) del mapa de bits per al diàleg "
 "d'exportar"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:509
+#: ../src/ui/dialog/inkscape-preferences.cpp:512
 msgid "Import bitmap as <image>"
 msgstr "Importa un mapa de bits com a <image>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:511
+#: ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6193,11 +6226,11 @@ msgstr ""
 "Si està habilitat, en importar un mapa de bits es crea un element <image>; "
 "en cas contrari és un rectangle amb un fons de mapa de bits"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:512
+#: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Add label comments to printing output"
 msgstr "Afegeix comentaris d'etiqueta a la sortida d'impressió"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
@@ -6205,20 +6238,20 @@ msgstr ""
 "Si està habilitat, s'afegirà un comentari a la sortida d'impressió, que "
 "marqui la sortida generada per a un objecte amb la seva etiqueta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "Max recent documents:"
 msgstr "Nombre màxim de documents:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:517
+#: ../src/ui/dialog/inkscape-preferences.cpp:520
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr ""
 "La longitud màxima de la llista per obrir un fitxer recent en el menú Fitxer"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:522
 msgid "Simplification threshold:"
 msgstr "Llindar de simplificació:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:520
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -6229,50 +6262,50 @@ msgstr ""
 "agressivament. En invocar-la després d'una pausa es retorna al valor "
 "predeterminat del llindar."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "Oversample bitmaps:"
 msgstr "Sobremostreja els mapes de bits:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:528
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid "Clipping and masking:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:532
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:534
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Remove clipping path or mask after applying"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:537
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Misc"
 msgstr "Miscel·lània"
 
@@ -6396,7 +6429,7 @@ msgstr "Vés un canvi endavant"
 msgid "Play"
 msgstr "Reprodueix"
 
-#: ../src/ui/dialog/session-player.cpp:177 ../src/verbs.cpp:1584
+#: ../src/ui/dialog/session-player.cpp:177 ../src/verbs.cpp:1626
 msgid "Open session file"
 msgstr "Obre el fitxer de sessió"
 
@@ -6726,51 +6759,71 @@ msgstr "Aplica la transformació a la selecció"
 msgid "_Use SSL"
 msgstr "_Usa SSL"
 
+#: ../src/ui/dialog/whiteboard-connect.cpp:44
+#, fuzzy
+msgid "_Register"
+msgstr "Pu_ja"
+
 #. Construct dialog interface
-#: ../src/ui/dialog/whiteboard-connect.cpp:74
+#: ../src/ui/dialog/whiteboard-connect.cpp:76
 msgid "_Server:"
 msgstr "_Servidor:"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:75
+#: ../src/ui/dialog/whiteboard-connect.cpp:77
 msgid "_Username:"
 msgstr "Nom d'_usuari:"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:76
+#: ../src/ui/dialog/whiteboard-connect.cpp:78
 msgid "_Password:"
 msgstr "_Contrasenya:"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:77
+#: ../src/ui/dialog/whiteboard-connect.cpp:79
 msgid "P_ort:"
 msgstr "P_ort:"
 
 #. Buttons
-#: ../src/ui/dialog/whiteboard-connect.cpp:108
+#: ../src/ui/dialog/whiteboard-connect.cpp:114
 msgid "Connect"
 msgstr "Connecta"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:135
+#: ../src/ui/dialog/whiteboard-connect.cpp:145
+#, fuzzy
+msgid "Establishing connection to Jabber server <b>%1</b>"
+msgstr "No s'ha pogut establir la connexió al servidor de Jabber <b>%1</b>"
+
+#: ../src/ui/dialog/whiteboard-connect.cpp:172
+#: ../src/ui/dialog/whiteboard-connect.cpp:217
+#: ../src/ui/dialog/whiteboard-connect.cpp:255
+msgid "Failed to establish connection to Jabber server <b>%1</b>"
+msgstr "No s'ha pogut establir la connexió al servidor de Jabber <b>%1</b>"
+
+#: ../src/ui/dialog/whiteboard-connect.cpp:210
 msgid "Establishing connection to Jabber server <b>%1</b> as user <b>%2</b>"
 msgstr ""
 "S'està establint la connexió al servidor de Jabber <b>%1</b> com a usuari <b>"
 "%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:140
-msgid "Failed to establish connection to Jabber server <b>%1</b>"
-msgstr "No s'ha pogut establir la connexió al servidor de Jabber <b>%1</b>"
-
-#: ../src/ui/dialog/whiteboard-connect.cpp:145
+#: ../src/ui/dialog/whiteboard-connect.cpp:222
 msgid "Authentication failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr ""
 "Ha fallat l'autenticació al servidor de Jabber <b>%1</b> com a <b>%2</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:150
+#: ../src/ui/dialog/whiteboard-connect.cpp:227
+#: ../src/ui/dialog/whiteboard-connect.cpp:265
 msgid "SSL initialization failed when connecting to Jabber server <b>%1</b>"
 msgstr ""
 "Ha fallat la inicialització en connectar amb el servidor de Jabber <b>%1</b>"
 
-#: ../src/ui/dialog/whiteboard-connect.cpp:156
+#: ../src/ui/dialog/whiteboard-connect.cpp:233
+#: ../src/ui/dialog/whiteboard-connect.cpp:271
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "S'ha connectat al servidor de Jabber <b>%1</b> com a <b>%2</b>"
+
+#: ../src/ui/dialog/whiteboard-connect.cpp:260
+#, fuzzy
+msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
+msgstr ""
+"Ha fallat l'autenticació al servidor de Jabber <b>%1</b> com a <b>%2</b>"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
@@ -7007,27 +7060,27 @@ msgstr ""
 "\n"
 "Voleu desar aquest fitxer en un altre format?"
 
-#: ../src/ui/widget/panel.cpp:95
+#: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:96
+#: ../src/ui/widget/panel.cpp:99
 msgid "small"
 msgstr "petit"
 
-#: ../src/ui/widget/panel.cpp:97
+#: ../src/ui/widget/panel.cpp:100
 msgid "medium"
 msgstr "mitjà"
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:101
 msgid "large"
 msgstr "gran"
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:102
 msgid "huge"
 msgstr "enorme"
 
-#: ../src/ui/widget/panel.cpp:114
+#: ../src/ui/widget/panel.cpp:117
 msgid "List"
 msgstr "Llista"
 
@@ -7329,46 +7382,46 @@ msgstr "0:.%d"
 msgid "Opacity: %.3g"
 msgstr "Opacitat: %.3g"
 
-#: ../src/verbs.cpp:1051
+#: ../src/verbs.cpp:1081
 msgid "Moved to next layer."
 msgstr "S'ha mogut a la capa següent."
 
-#: ../src/verbs.cpp:1053
+#: ../src/verbs.cpp:1083
 msgid "Cannot move past last layer."
 msgstr "No es pot moure més enllà de la darrera capa."
 
-#: ../src/verbs.cpp:1062
+#: ../src/verbs.cpp:1092
 msgid "Moved to previous layer."
 msgstr "S'ha mogut a la capa anterior."
 
-#: ../src/verbs.cpp:1064
+#: ../src/verbs.cpp:1094
 msgid "Cannot move past first layer."
 msgstr "No es pot moure més enllà de la primera capa."
 
-#: ../src/verbs.cpp:1081 ../src/verbs.cpp:1155
+#: ../src/verbs.cpp:1111 ../src/verbs.cpp:1185
 msgid "No current layer."
 msgstr "Cap capa."
 
-#: ../src/verbs.cpp:1110
+#: ../src/verbs.cpp:1140
 #, c-format
 msgid "Raised layer <b>%s</b>."
 msgstr "S'ha pujat la capa <b>%s</b>."
 
-#: ../src/verbs.cpp:1114
+#: ../src/verbs.cpp:1144
 #, c-format
 msgid "Lowered layer <b>%s</b>."
 msgstr "S'ha baixat la capa <b>%s</b>."
 
-#: ../src/verbs.cpp:1123
+#: ../src/verbs.cpp:1153
 msgid "Cannot move layer any further."
 msgstr "No es pot moure més la capa en aquesta direcció."
 
 #. TRANSLATORS: this means "The layer has been deleted."
-#: ../src/verbs.cpp:1153
+#: ../src/verbs.cpp:1183
 msgid "Deleted layer."
 msgstr "S'ha suprimit la capa."
 
-#: ../src/verbs.cpp:1555
+#: ../src/verbs.cpp:1597
 msgid ""
 "You need to connect to a Jabber server before sharing a document with "
 "another user."
@@ -7376,7 +7429,7 @@ msgstr ""
 "Heu de connectar-vos a un servidor de Jabber abans de compartir un document "
 "amb un altre usuari."
 
-#: ../src/verbs.cpp:1570
+#: ../src/verbs.cpp:1612
 msgid ""
 "You need to connect to a Jabber server before sharing a document with a "
 "chatroom."
@@ -7384,7 +7437,7 @@ msgstr ""
 "Heu de connectar-vos a un servidor de Jabber abans de compartir un document "
 "amb una sala."
 
-#: ../src/verbs.cpp:1580
+#: ../src/verbs.cpp:1622
 msgid "XML node tracker has not been initialized; nothing to dump"
 msgstr ""
 "Encara no s'ha inicialitzat el seguidor de nanse. No es pot bolcar res."
@@ -7392,274 +7445,274 @@ msgstr ""
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
 #. otherwise leave as "keys.svg".
-#: ../src/verbs.cpp:1648
+#: ../src/verbs.cpp:1690
 msgid "keys.svg"
 msgstr "keys.svg"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:1684
+#: ../src/verbs.cpp:1726
 msgid "tutorial-basic.svg"
 msgstr "tutorial-basic.ca.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1688
+#: ../src/verbs.cpp:1730
 msgid "tutorial-shapes.svg"
 msgstr "tutorial-shapes.ca.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1692
+#: ../src/verbs.cpp:1734
 msgid "tutorial-advanced.svg"
 msgstr "tutorial-advanced.ca.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1696
+#: ../src/verbs.cpp:1738
 msgid "tutorial-tracing.svg"
 msgstr "tutorial-tracing.ca.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1700
+#: ../src/verbs.cpp:1742
 msgid "tutorial-calligraphy.svg"
 msgstr "tutorial-calligraphy.ca.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1704
+#: ../src/verbs.cpp:1746
 msgid "tutorial-elements.svg"
 msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1708
+#: ../src/verbs.cpp:1750
 msgid "tutorial-tips.svg"
 msgstr "tutorial-tips.svg"
 
-#: ../src/verbs.cpp:1932
+#: ../src/verbs.cpp:1982
 msgid "Does nothing"
 msgstr "No fa res"
 
 #. File
-#: ../src/verbs.cpp:1935
+#: ../src/verbs.cpp:1985
 msgid "Default"
 msgstr "Predeterminat"
 
-#: ../src/verbs.cpp:1935
+#: ../src/verbs.cpp:1985
 msgid "Create new document from the default template"
 msgstr "Crea un nou document a partir de la plantilla predeterminada"
 
-#: ../src/verbs.cpp:1937
+#: ../src/verbs.cpp:1987
 msgid "_Open..."
 msgstr "_Obre..."
 
-#: ../src/verbs.cpp:1938
+#: ../src/verbs.cpp:1988
 msgid "Open an existing document"
 msgstr "Obre un document existent"
 
-#: ../src/verbs.cpp:1939
+#: ../src/verbs.cpp:1989
 msgid "Re_vert"
 msgstr "Recu_pera"
 
-#: ../src/verbs.cpp:1940
+#: ../src/verbs.cpp:1990
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr "Recupera la darrera versió desada del document (es perdran els canvis)"
 
-#: ../src/verbs.cpp:1941
+#: ../src/verbs.cpp:1991
 msgid "_Save"
 msgstr "De_sa"
 
-#: ../src/verbs.cpp:1941
+#: ../src/verbs.cpp:1991
 msgid "Save document"
 msgstr "Desa el document"
 
-#: ../src/verbs.cpp:1943
+#: ../src/verbs.cpp:1993
 msgid "Save _As..."
 msgstr "_Anomena i desa..."
 
-#: ../src/verbs.cpp:1944
+#: ../src/verbs.cpp:1994
 msgid "Save document under a new name"
 msgstr "Desa el document amb un nom nou"
 
-#: ../src/verbs.cpp:1945
+#: ../src/verbs.cpp:1995
 msgid "_Print..."
 msgstr "Im_primeix..."
 
-#: ../src/verbs.cpp:1945
+#: ../src/verbs.cpp:1995
 msgid "Print document"
 msgstr "Imprimeix document"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:1948
+#: ../src/verbs.cpp:1998
 msgid "Vac_uum Defs"
 msgstr "Nete_ja definicions"
 
-#: ../src/verbs.cpp:1948
+#: ../src/verbs.cpp:1998
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:1950
+#: ../src/verbs.cpp:2000
 msgid "Print _Direct"
 msgstr "Impressió _directa"
 
-#: ../src/verbs.cpp:1951
+#: ../src/verbs.cpp:2001
 msgid "Print directly without prompting to a file or pipe"
 msgstr "Imprimeix sense preguntar a un fitxer o un conducte"
 
-#: ../src/verbs.cpp:1952
+#: ../src/verbs.cpp:2002
 msgid "Print Previe_w"
 msgstr "Pre_visualització d'impressió"
 
-#: ../src/verbs.cpp:1953
+#: ../src/verbs.cpp:2003
 msgid "Preview document printout"
 msgstr "Previsualitza la sortida de la impressió"
 
-#: ../src/verbs.cpp:1954
+#: ../src/verbs.cpp:2004
 msgid "_Import..."
 msgstr "_Importa..."
 
-#: ../src/verbs.cpp:1955
+#: ../src/verbs.cpp:2005
 msgid "Import a bitmap or SVG image into this document"
 msgstr "Importa una imatge de mapa de bits o SVG en el document"
 
-#: ../src/verbs.cpp:1956
+#: ../src/verbs.cpp:2006
 msgid "_Export Bitmap..."
 msgstr "_Exporta a mapa de bits..."
 
-#: ../src/verbs.cpp:1957
+#: ../src/verbs.cpp:2007
 msgid "Export this document or a selection as a bitmap image"
 msgstr "Exporta el document o la selecció com a mapa de bits"
 
-#: ../src/verbs.cpp:1958
+#: ../src/verbs.cpp:2008
 msgid "N_ext Window"
 msgstr "S_egüent finestra"
 
-#: ../src/verbs.cpp:1959
+#: ../src/verbs.cpp:2009
 msgid "Switch to the next document window"
 msgstr "Commuta a la finestra del document següent"
 
-#: ../src/verbs.cpp:1960
+#: ../src/verbs.cpp:2010
 msgid "P_revious Window"
 msgstr "Anterior finest_ra"
 
-#: ../src/verbs.cpp:1961
+#: ../src/verbs.cpp:2011
 msgid "Switch to the previous document window"
 msgstr "Commuta a la finestra del document anterior"
 
-#: ../src/verbs.cpp:1962
+#: ../src/verbs.cpp:2012
 msgid "_Close"
 msgstr "Tan_ca"
 
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:2013
 msgid "Close this document window"
 msgstr "Tanca aquesta finestra de document"
 
-#: ../src/verbs.cpp:1964
+#: ../src/verbs.cpp:2014
 msgid "_Quit"
 msgstr "_Surt"
 
-#: ../src/verbs.cpp:1964
+#: ../src/verbs.cpp:2014
 msgid "Quit Inkscape"
 msgstr "Surt de l'Inkscape"
 
 #. Edit
-#: ../src/verbs.cpp:1967
+#: ../src/verbs.cpp:2017
 msgid "_Undo"
 msgstr "_Desfés"
 
-#: ../src/verbs.cpp:1967
+#: ../src/verbs.cpp:2017
 msgid "Undo last action"
 msgstr "Desfés l'ultima acció"
 
-#: ../src/verbs.cpp:1969
+#: ../src/verbs.cpp:2019
 msgid "_Redo"
 msgstr "To_rna a fer"
 
-#: ../src/verbs.cpp:1970
+#: ../src/verbs.cpp:2020
 msgid "Do again the last undone action"
 msgstr "Torna a fer la darrera acció desfeta"
 
-#: ../src/verbs.cpp:1971
+#: ../src/verbs.cpp:2021
 msgid "Cu_t"
 msgstr "Re_talla"
 
-#: ../src/verbs.cpp:1972
+#: ../src/verbs.cpp:2022
 msgid "Cut selection to clipboard"
 msgstr "Retalla la selecció al porta-retalls"
 
-#: ../src/verbs.cpp:1973
+#: ../src/verbs.cpp:2023
 msgid "_Copy"
 msgstr "_Copia"
 
-#: ../src/verbs.cpp:1974
+#: ../src/verbs.cpp:2024
 msgid "Copy selection to clipboard"
 msgstr "Copia la selecció al porta-retalls"
 
-#: ../src/verbs.cpp:1975
+#: ../src/verbs.cpp:2025
 msgid "_Paste"
 msgstr "_Enganxa"
 
-#: ../src/verbs.cpp:1976
+#: ../src/verbs.cpp:2026
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr ""
 "Enganxa els objectes del porta-retalls a on sigui el ratolí, o enganxa el "
 "text"
 
-#: ../src/verbs.cpp:1977
+#: ../src/verbs.cpp:2027
 msgid "Paste _Style"
 msgstr "Enganxa l'e_stil"
 
-#: ../src/verbs.cpp:1978
+#: ../src/verbs.cpp:2028
 msgid "Apply the style of the copied object to selection"
 msgstr "Aplica l'estil de l'objecte copiat a la selecció"
 
-#: ../src/verbs.cpp:1980
+#: ../src/verbs.cpp:2030
 msgid "Scale selection to match the size of the copied object"
 msgstr "Escala la selecció per ajustar-se a la mida de l'objecte"
 
-#: ../src/verbs.cpp:1981
+#: ../src/verbs.cpp:2031
 msgid "Paste _Width"
 msgstr "Amplada de pà_gina"
 
-#: ../src/verbs.cpp:1982
+#: ../src/verbs.cpp:2032
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 "Escala la selecció horitzontalment per ajustar-se a l'amplada de l'objecte "
 "copiat"
 
-#: ../src/verbs.cpp:1983
+#: ../src/verbs.cpp:2033
 msgid "Paste _Height"
 msgstr "Enganxa l'a_lçada"
 
-#: ../src/verbs.cpp:1984
+#: ../src/verbs.cpp:2034
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr ""
 "Escala la selecció verticalment per ajustar-se a l'alçada de l'objecte copiat"
 
-#: ../src/verbs.cpp:1985
+#: ../src/verbs.cpp:2035
 msgid "Paste Size Separately"
 msgstr "Enganxa la mida per separat"
 
-#: ../src/verbs.cpp:1986
+#: ../src/verbs.cpp:2036
 msgid "Scale each selected object to match the size of the copied object"
 msgstr ""
 "Escala cada objecte seleccionat per ajustar la mida de l'objecte copiat"
 
-#: ../src/verbs.cpp:1987
+#: ../src/verbs.cpp:2037
 msgid "Paste Width Separately"
 msgstr "Enganxa l'amplada per separat"
 
-#: ../src/verbs.cpp:1988
+#: ../src/verbs.cpp:2038
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr ""
 "Escala cada objecte horitzontalment per ajustar la mida de l'objecte copiat"
 
-#: ../src/verbs.cpp:1989
+#: ../src/verbs.cpp:2039
 msgid "Paste Height Separately"
 msgstr "Enganxa l'alçada per separat"
 
-#: ../src/verbs.cpp:1990
+#: ../src/verbs.cpp:2040
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
@@ -7667,225 +7720,225 @@ msgstr ""
 "Escala cada objecte seleccionat verticalment per ajustar l'alçada de "
 "l'objecte copiat"
 
-#: ../src/verbs.cpp:1991
+#: ../src/verbs.cpp:2041
 msgid "Paste _In Place"
 msgstr "En_ganxa en el lloc"
 
-#: ../src/verbs.cpp:1992
+#: ../src/verbs.cpp:2042
 msgid "Paste objects from clipboard to the original location"
 msgstr "Enganxa els objectes del porta-retalls a la ubicació original"
 
-#: ../src/verbs.cpp:1993
+#: ../src/verbs.cpp:2043
 msgid "_Delete"
 msgstr "_Suprimeix"
 
-#: ../src/verbs.cpp:1994
+#: ../src/verbs.cpp:2044
 msgid "Delete selection"
 msgstr "Suprimeix la selecció"
 
-#: ../src/verbs.cpp:1995
+#: ../src/verbs.cpp:2045
 msgid "Duplic_ate"
 msgstr "Duplic_a"
 
-#: ../src/verbs.cpp:1996
+#: ../src/verbs.cpp:2046
 msgid "Duplicate selected objects"
 msgstr "Duplica els objectes seleccionats"
 
-#: ../src/verbs.cpp:1997
+#: ../src/verbs.cpp:2047
 msgid "Create Clo_ne"
 msgstr "Crea un clo_n"
 
-#: ../src/verbs.cpp:1998
+#: ../src/verbs.cpp:2048
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr ""
 "Crea un clon (una còpia enllaçada amb l'original) de l'objecte seleccionat"
 
-#: ../src/verbs.cpp:1999
+#: ../src/verbs.cpp:2049
 msgid "Unlin_k Clone"
 msgstr "Desen_llaça el clon"
 
-#: ../src/verbs.cpp:2000
+#: ../src/verbs.cpp:2050
 msgid ""
 "Cut the selected clone's link to its original, turning it into a standalone "
 "object"
 msgstr ""
 "Retalla l'enllaç del clon amb l'original. Esdevindrà un objecte independent"
 
-#: ../src/verbs.cpp:2001
+#: ../src/verbs.cpp:2051
 msgid "Select _Original"
 msgstr "Selecci_ona l'original"
 
-#: ../src/verbs.cpp:2002
+#: ../src/verbs.cpp:2052
 msgid "Select the object to which the selected clone is linked"
 msgstr "Seleccioneu l'objecte amb què està enllaçat aquest clon"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
-#: ../src/verbs.cpp:2004
+#: ../src/verbs.cpp:2054
 msgid "Objects to Patter_n"
 msgstr "O_bjectes a patró"
 
-#: ../src/verbs.cpp:2005
+#: ../src/verbs.cpp:2055
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr ""
 "Converteix la selecció en un rectangle amb un emplenat de patró de mosàic"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
-#: ../src/verbs.cpp:2007
+#: ../src/verbs.cpp:2057
 msgid "Pattern to _Objects"
 msgstr "Patró a ob_jectes"
 
-#: ../src/verbs.cpp:2008
+#: ../src/verbs.cpp:2058
 msgid "Extract objects from a tiled pattern fill"
 msgstr "Extreu objectes d'un emplenat de patró de mosàic"
 
-#: ../src/verbs.cpp:2009
+#: ../src/verbs.cpp:2059
 msgid "Clea_r All"
 msgstr "Ne_teja-ho tot"
 
-#: ../src/verbs.cpp:2010
+#: ../src/verbs.cpp:2060
 msgid "Delete all objects from document"
 msgstr "Suprimeix tots els objectes del document"
 
-#: ../src/verbs.cpp:2011
+#: ../src/verbs.cpp:2061
 msgid "Select Al_l"
 msgstr "Se_lecciona-ho tot"
 
-#: ../src/verbs.cpp:2012
+#: ../src/verbs.cpp:2062
 msgid "Select all objects or all nodes"
 msgstr "Selecciona tots els objectes o els nodes"
 
-#: ../src/verbs.cpp:2013
+#: ../src/verbs.cpp:2063
 msgid "Select All in All La_yers"
 msgstr "Selecciona-_ho tot en totes les capes"
 
-#: ../src/verbs.cpp:2014
+#: ../src/verbs.cpp:2064
 msgid "Select all objects in all visible and unlocked layers"
 msgstr "Selecciona tots els objectes en totes les capes visibles i no blocades"
 
-#: ../src/verbs.cpp:2015
+#: ../src/verbs.cpp:2065
 msgid "In_vert Selection"
 msgstr "In_verteix selecció"
 
-#: ../src/verbs.cpp:2016
+#: ../src/verbs.cpp:2066
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr "Selecciona tot allò que ara no està seleccionat"
 
-#: ../src/verbs.cpp:2017
+#: ../src/verbs.cpp:2067
 msgid "Invert in All Layers"
 msgstr "Inverteix totes les capes"
 
-#: ../src/verbs.cpp:2018
+#: ../src/verbs.cpp:2068
 msgid "Invert selection in all visible and unlocked layers"
 msgstr "Inverteix la selecció en totes les capes visibles i no blocades"
 
-#: ../src/verbs.cpp:2019
+#: ../src/verbs.cpp:2069
 msgid "D_eselect"
 msgstr "D_esfés la selecció"
 
-#: ../src/verbs.cpp:2020
+#: ../src/verbs.cpp:2070
 msgid "Deselect any selected objects or nodes"
 msgstr "Desfés la selecció dels objectes o els nodes"
 
 #. Selection
-#: ../src/verbs.cpp:2023
+#: ../src/verbs.cpp:2073
 msgid "Raise to _Top"
 msgstr "Puja a dal_t"
 
-#: ../src/verbs.cpp:2024
+#: ../src/verbs.cpp:2074
 msgid "Raise selection to top"
 msgstr "Puja la selecció a dalt"
 
-#: ../src/verbs.cpp:2025
+#: ../src/verbs.cpp:2075
 msgid "Lower to _Bottom"
 msgstr "_Baixa a baix"
 
-#: ../src/verbs.cpp:2026
+#: ../src/verbs.cpp:2076
 msgid "Lower selection to bottom"
 msgstr "Baixa la selecció a baix de tot"
 
-#: ../src/verbs.cpp:2027
+#: ../src/verbs.cpp:2077
 msgid "_Raise"
 msgstr "Pu_ja"
 
-#: ../src/verbs.cpp:2028
+#: ../src/verbs.cpp:2078
 msgid "Raise selection one step"
 msgstr "Puja la selecció una posició"
 
-#: ../src/verbs.cpp:2029
+#: ../src/verbs.cpp:2079
 msgid "_Lower"
 msgstr "Bai_xa"
 
-#: ../src/verbs.cpp:2030
+#: ../src/verbs.cpp:2080
 msgid "Lower selection one step"
 msgstr "Baixa la selecció una posició"
 
-#: ../src/verbs.cpp:2031
+#: ../src/verbs.cpp:2081
 msgid "_Group"
 msgstr "A_grupa"
 
-#: ../src/verbs.cpp:2032
+#: ../src/verbs.cpp:2082
 msgid "Group selected objects"
 msgstr "Agrupa els objectes seleccionats"
 
-#: ../src/verbs.cpp:2034
+#: ../src/verbs.cpp:2084
 msgid "Ungroup selected groups"
 msgstr "Desagrupa els grups seleccionats"
 
-#: ../src/verbs.cpp:2036
+#: ../src/verbs.cpp:2086
 msgid "_Put on Path"
 msgstr "_Posa en el camí"
 
-#: ../src/verbs.cpp:2037
+#: ../src/verbs.cpp:2087
 msgid "Put text on path"
 msgstr "Posa el text en el camí"
 
-#: ../src/verbs.cpp:2038
+#: ../src/verbs.cpp:2088
 msgid "_Remove from Path"
 msgstr "Sup_rimeix del camí"
 
-#: ../src/verbs.cpp:2039
+#: ../src/verbs.cpp:2089
 msgid "Remove text from path"
 msgstr "Suprimeix el text del camí"
 
-#: ../src/verbs.cpp:2040
+#: ../src/verbs.cpp:2090
 msgid "Remove Manual _Kerns"
 msgstr ""
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2043
+#: ../src/verbs.cpp:2093
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr ""
 
-#: ../src/verbs.cpp:2045
+#: ../src/verbs.cpp:2095
 msgid "_Union"
 msgstr "_Unió"
 
-#: ../src/verbs.cpp:2046
+#: ../src/verbs.cpp:2096
 msgid "Create union of selected paths"
 msgstr "Crea una unió de camins seleccionats"
 
-#: ../src/verbs.cpp:2047
+#: ../src/verbs.cpp:2097
 msgid "_Intersection"
 msgstr "_Intersecció"
 
-#: ../src/verbs.cpp:2048
+#: ../src/verbs.cpp:2098
 msgid "Create intersection of selected paths"
 msgstr "Crea una intersecció dels camins seleccionats"
 
-#: ../src/verbs.cpp:2049
+#: ../src/verbs.cpp:2099
 msgid "_Difference"
 msgstr "_Resta"
 
-#: ../src/verbs.cpp:2050
+#: ../src/verbs.cpp:2100
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr "Crea la resta dels camins seleccionats (inferior menys superior)"
 
-#: ../src/verbs.cpp:2051
+#: ../src/verbs.cpp:2101
 msgid "E_xclusion"
 msgstr "E_xclusió"
 
-#: ../src/verbs.cpp:2052
+#: ../src/verbs.cpp:2102
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
@@ -7893,290 +7946,290 @@ msgstr ""
 "Crea una OR exclusiva dels camins seleccionats (les parts que pertanyen "
 "només a un camí)"
 
-#: ../src/verbs.cpp:2053
+#: ../src/verbs.cpp:2103
 msgid "Di_vision"
 msgstr "Di_visió"
 
-#: ../src/verbs.cpp:2054
+#: ../src/verbs.cpp:2104
 msgid "Cut the bottom path into pieces"
 msgstr "Retalla el camí inferior en trossos"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2057
+#: ../src/verbs.cpp:2107
 msgid "Cut _Path"
 msgstr "Re_talla el camí"
 
-#: ../src/verbs.cpp:2058
+#: ../src/verbs.cpp:2108
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr ""
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2062
+#: ../src/verbs.cpp:2112
 msgid "Outs_et"
 msgstr "_Expandeix"
 
-#: ../src/verbs.cpp:2063
+#: ../src/verbs.cpp:2113
 msgid "Outset selected paths"
 msgstr "Expandeix els camins seleccionat"
 
-#: ../src/verbs.cpp:2065
+#: ../src/verbs.cpp:2115
 msgid "O_utset Path by 1 px"
 msgstr "Ex_pandeix el camí 1px"
 
-#: ../src/verbs.cpp:2066
+#: ../src/verbs.cpp:2116
 msgid "Outset selected paths by 1 px"
 msgstr "Expandeix els camins seleccionats 1 px"
 
-#: ../src/verbs.cpp:2068
+#: ../src/verbs.cpp:2118
 msgid "O_utset Path by 10 px"
 msgstr "Expa_ndeix el camí 10 px"
 
-#: ../src/verbs.cpp:2069
+#: ../src/verbs.cpp:2119
 msgid "Outset selected paths by 10 px"
 msgstr "Expandeix els camins seleccionats 10 px"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2073
+#: ../src/verbs.cpp:2123
 msgid "I_nset"
 msgstr "Co_ntreu"
 
-#: ../src/verbs.cpp:2074
+#: ../src/verbs.cpp:2124
 msgid "Inset selected paths"
 msgstr "Contreu els camins seleccionats"
 
-#: ../src/verbs.cpp:2076
+#: ../src/verbs.cpp:2126
 msgid "I_nset Path by 1 px"
 msgstr "Co_ntreu el camí 1 px"
 
-#: ../src/verbs.cpp:2077
+#: ../src/verbs.cpp:2127
 msgid "Inset selected paths by 1 px"
 msgstr "Contreu els camins seleccionats 1px"
 
-#: ../src/verbs.cpp:2079
+#: ../src/verbs.cpp:2129
 msgid "I_nset Path by 10 px"
 msgstr "Co_ntreu el camí 10 px"
 
-#: ../src/verbs.cpp:2080
+#: ../src/verbs.cpp:2130
 msgid "Inset selected paths by 10 px"
 msgstr "Contreu els camins seleccionats 10 px"
 
-#: ../src/verbs.cpp:2082
+#: ../src/verbs.cpp:2132
 msgid "D_ynamic Offset"
 msgstr "Desplaçament d_inàmic"
 
-#: ../src/verbs.cpp:2082
+#: ../src/verbs.cpp:2132
 msgid "Create a dynamic offset object"
 msgstr "Crea un objecte de desplaçament dinàmic"
 
-#: ../src/verbs.cpp:2084
+#: ../src/verbs.cpp:2134
 msgid "_Linked Offset"
 msgstr "Desp_laçament enllaçat"
 
-#: ../src/verbs.cpp:2085
+#: ../src/verbs.cpp:2135
 msgid "Create a dynamic offset object linked to the original path"
 msgstr "Crea un objecte de desplaçament dinàmic enllaçat al camí original"
 
-#: ../src/verbs.cpp:2087
+#: ../src/verbs.cpp:2137
 msgid "_Stroke to Path"
 msgstr "_Contorn a camí"
 
-#: ../src/verbs.cpp:2088
+#: ../src/verbs.cpp:2138
 msgid "Convert selected object's stroke to paths"
 msgstr "Converteix el contorn dels objectes seleccionats en camins"
 
-#: ../src/verbs.cpp:2089
+#: ../src/verbs.cpp:2139
 msgid "Si_mplify"
 msgstr "Si_mplifica"
 
-#: ../src/verbs.cpp:2090
+#: ../src/verbs.cpp:2140
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr "Simplifica els camins seleccionats (suprimint nodes addicionals)"
 
-#: ../src/verbs.cpp:2091
+#: ../src/verbs.cpp:2141
 msgid "_Reverse"
 msgstr "A l'in_revés"
 
-#: ../src/verbs.cpp:2092
+#: ../src/verbs.cpp:2142
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr ""
 "Inverteix la direcció dels camins seleccionats (útil per invertir els "
 "marcadors)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2094
+#: ../src/verbs.cpp:2144
 msgid "_Trace Bitmap..."
 msgstr "_Vectoritza un mapa de bits..."
 
-#: ../src/verbs.cpp:2095
+#: ../src/verbs.cpp:2145
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr "Crea un o més camins des d'un mapa de bits mitjançant el traçejat"
 
-#: ../src/verbs.cpp:2096
+#: ../src/verbs.cpp:2146
 msgid "_Make a Bitmap Copy"
 msgstr "Fes una còpia de _mapa de bits"
 
-#: ../src/verbs.cpp:2097
+#: ../src/verbs.cpp:2147
 msgid "Export selection to a bitmap and insert it into document"
 msgstr "Exporta la selecció a un mapa de bits i insereix-lo en el document"
 
-#: ../src/verbs.cpp:2098
+#: ../src/verbs.cpp:2148
 msgid "_Combine"
 msgstr "_Combina"
 
-#: ../src/verbs.cpp:2099
+#: ../src/verbs.cpp:2149
 msgid "Combine several paths into one"
 msgstr "Combina múltiples camins en un de sol"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2102
+#: ../src/verbs.cpp:2152
 msgid "Break _Apart"
 msgstr "Sep_ara"
 
-#: ../src/verbs.cpp:2103
+#: ../src/verbs.cpp:2153
 msgid "Break selected paths into subpaths"
 msgstr "Separa els camins seleccionats en subcamins"
 
-#: ../src/verbs.cpp:2104
+#: ../src/verbs.cpp:2154
 msgid "Gri_d Arrange..."
 msgstr "Or_denació en graella..."
 
-#: ../src/verbs.cpp:2105
+#: ../src/verbs.cpp:2155
 msgid "Arrange selected objects in a grid pattern"
 msgstr "Ordena els objectes seleccionats en patró de graella"
 
 #. Layer
-#: ../src/verbs.cpp:2107
+#: ../src/verbs.cpp:2157
 msgid "_Add Layer..."
 msgstr "_Nova capa..."
 
-#: ../src/verbs.cpp:2108
+#: ../src/verbs.cpp:2158
 msgid "Create a new layer"
 msgstr "Crea una nova capa"
 
-#: ../src/verbs.cpp:2109
+#: ../src/verbs.cpp:2159
 msgid "Re_name Layer..."
 msgstr "Re_anomena la capa..."
 
-#: ../src/verbs.cpp:2110
+#: ../src/verbs.cpp:2160
 msgid "Rename the current layer"
 msgstr "Reanomena la capa actual"
 
-#: ../src/verbs.cpp:2111
+#: ../src/verbs.cpp:2161
 msgid "Switch to Layer Abov_e"
 msgstr "Commuta a la capa per so_bre"
 
-#: ../src/verbs.cpp:2112
+#: ../src/verbs.cpp:2162
 msgid "Switch to the layer above the current"
 msgstr "Commuta a la capa per sobre de l'actual"
 
-#: ../src/verbs.cpp:2113
+#: ../src/verbs.cpp:2163
 msgid "Switch to Layer Belo_w"
 msgstr "Commuta a la capa per so_ta"
 
-#: ../src/verbs.cpp:2114
+#: ../src/verbs.cpp:2164
 msgid "Switch to the layer below the current"
 msgstr "Commuta a la capa per sota de l'actual"
 
-#: ../src/verbs.cpp:2115
+#: ../src/verbs.cpp:2165
 msgid "Move Selection to Layer Abo_ve"
 msgstr "Mou la selecció a la capa de so_bre"
 
-#: ../src/verbs.cpp:2116
+#: ../src/verbs.cpp:2166
 msgid "Move selection to the layer above the current"
 msgstr "Mou la selecció a la capa de sobre de l'actual"
 
-#: ../src/verbs.cpp:2117
+#: ../src/verbs.cpp:2167
 msgid "Move Selection to Layer Bel_ow"
 msgstr "Mou la selecció a la capa de s_ota"
 
-#: ../src/verbs.cpp:2118
+#: ../src/verbs.cpp:2168
 msgid "Move selection to the layer below the current"
 msgstr "Mou la selecció a la capa de sota de l'actual"
 
-#: ../src/verbs.cpp:2119
+#: ../src/verbs.cpp:2169
 msgid "Layer to _Top"
 msgstr "Pu_ja la capa a dalt"
 
-#: ../src/verbs.cpp:2120
+#: ../src/verbs.cpp:2170
 msgid "Raise the current layer to the top"
 msgstr "Puja la capa a dalt de tot"
 
-#: ../src/verbs.cpp:2121
+#: ../src/verbs.cpp:2171
 msgid "Layer to _Bottom"
 msgstr "_Baixa la capa a sota"
 
-#: ../src/verbs.cpp:2122
+#: ../src/verbs.cpp:2172
 msgid "Lower the current layer to the bottom"
 msgstr "Baixa la capa actual a sota de tot"
 
-#: ../src/verbs.cpp:2123
+#: ../src/verbs.cpp:2173
 msgid "_Raise Layer"
 msgstr "Puja la _capa"
 
-#: ../src/verbs.cpp:2124
+#: ../src/verbs.cpp:2174
 msgid "Raise the current layer"
 msgstr "Puja un nivell la capa actual"
 
-#: ../src/verbs.cpp:2125
+#: ../src/verbs.cpp:2175
 msgid "_Lower Layer"
 msgstr "Baixa _la capa"
 
-#: ../src/verbs.cpp:2126
+#: ../src/verbs.cpp:2176
 msgid "Lower the current layer"
 msgstr "Baixa un nivell la capa actual"
 
-#: ../src/verbs.cpp:2127
+#: ../src/verbs.cpp:2177
 msgid "_Delete Current Layer"
 msgstr "_Suprimeix la capa"
 
-#: ../src/verbs.cpp:2128
+#: ../src/verbs.cpp:2178
 msgid "Delete the current layer"
 msgstr "Suprimeix la capa actual"
 
 #. Object
-#: ../src/verbs.cpp:2131
+#: ../src/verbs.cpp:2181
 msgid "Rotate _90&#176; CW"
 msgstr "Gira _90&#176; horaris"
 
-#: ../src/verbs.cpp:2132
+#: ../src/verbs.cpp:2182
 msgid "Rotate selection 90&#176; clockwise"
 msgstr "Gira la selecció 90&#176; graus en sentit horari"
 
-#: ../src/verbs.cpp:2133
+#: ../src/verbs.cpp:2183
 msgid "Rotate 9_0&#176; CCW"
 msgstr "Gira 9_0&#176; antihoraris"
 
-#: ../src/verbs.cpp:2134
+#: ../src/verbs.cpp:2184
 msgid "Rotate selection 90&#176; counter-clockwise"
 msgstr "Gira la selecció 90&#176; en sentit antihorari"
 
-#: ../src/verbs.cpp:2135
+#: ../src/verbs.cpp:2185
 msgid "Remove _Transformations"
 msgstr "Suprimeix les _transformacions"
 
-#: ../src/verbs.cpp:2136
+#: ../src/verbs.cpp:2186
 msgid "Remove transformations from object"
 msgstr "Suprimeix les transformacions de l'objecte"
 
-#: ../src/verbs.cpp:2137
+#: ../src/verbs.cpp:2187
 msgid "_Object to Path"
 msgstr "_Objecte a camí"
 
-#: ../src/verbs.cpp:2138
+#: ../src/verbs.cpp:2188
 msgid "Convert selected object to path"
 msgstr "Converteix l'objecte seleccionat en camí"
 
-#: ../src/verbs.cpp:2139
+#: ../src/verbs.cpp:2189
 msgid "_Flow into Frame"
 msgstr "_Flota en el marc"
 
-#: ../src/verbs.cpp:2140
+#: ../src/verbs.cpp:2190
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
@@ -8184,642 +8237,642 @@ msgstr ""
 "Posa text en un marc (camí o forma), creant un text flotant enllaçat amb "
 "l'objecte de marc"
 
-#: ../src/verbs.cpp:2141
+#: ../src/verbs.cpp:2191
 msgid "_Unflow"
 msgstr "N_o ho flotis"
 
-#: ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2192
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr "Suprimeix el text del marc (crea un objecte de text d'una línia)"
 
-#: ../src/verbs.cpp:2143
+#: ../src/verbs.cpp:2193
 msgid "_Convert to Text"
 msgstr "_Converteix a text"
 
-#: ../src/verbs.cpp:2144
+#: ../src/verbs.cpp:2194
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr ""
 "Converteix el text flotant en objectes de text normal (conserva'n l'aparença)"
 
-#: ../src/verbs.cpp:2146
+#: ../src/verbs.cpp:2196
 msgid "Flip _Horizontal"
 msgstr "Volteja _horitzontalment"
 
-#: ../src/verbs.cpp:2146
+#: ../src/verbs.cpp:2196
 msgid "Flip selected objects horizontally"
 msgstr "Volteja horitzontalment els objectes seleccionats"
 
-#: ../src/verbs.cpp:2149
+#: ../src/verbs.cpp:2199
 msgid "Flip _Vertical"
 msgstr "_Volteja verticalment"
 
-#: ../src/verbs.cpp:2149
+#: ../src/verbs.cpp:2199
 msgid "Flip selected objects vertically"
 msgstr "Volteja verticalment els objectes seleccionats"
 
-#: ../src/verbs.cpp:2152
+#: ../src/verbs.cpp:2202
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr "Aplica la màscara a la selecció (usa l'objecte superior com a màscara)"
 
-#: ../src/verbs.cpp:2153 ../src/verbs.cpp:2157
+#: ../src/verbs.cpp:2203 ../src/verbs.cpp:2207
 msgid "_Release"
 msgstr "Allibe_ra"
 
-#: ../src/verbs.cpp:2154
+#: ../src/verbs.cpp:2204
 msgid "Remove mask from selection"
 msgstr "Suprimeix la màscara de la selecció"
 
-#: ../src/verbs.cpp:2156
+#: ../src/verbs.cpp:2206
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2158
+#: ../src/verbs.cpp:2208
 msgid "Remove clipping path from selection"
 msgstr ""
 
 #. Tools
-#: ../src/verbs.cpp:2161
+#: ../src/verbs.cpp:2211
 msgid "Select"
 msgstr "Selecciona"
 
-#: ../src/verbs.cpp:2162
+#: ../src/verbs.cpp:2212
 msgid "Select and transform objects"
 msgstr "Selecciona i transforma els objectes"
 
-#: ../src/verbs.cpp:2163
+#: ../src/verbs.cpp:2213
 msgid "Node Edit"
 msgstr "Edició de node"
 
-#: ../src/verbs.cpp:2164
+#: ../src/verbs.cpp:2214
 msgid "Edit path nodes or control handles"
 msgstr "Edita nodes del camí o manejadors de control"
 
-#: ../src/verbs.cpp:2166
+#: ../src/verbs.cpp:2216
 msgid "Create rectangles and squares"
 msgstr "Crea rectangles i quadrats"
 
-#: ../src/verbs.cpp:2168
+#: ../src/verbs.cpp:2218
 msgid "Create circles, ellipses, and arcs"
 msgstr "Crea cercles, el·lipses i arcs"
 
-#: ../src/verbs.cpp:2170
+#: ../src/verbs.cpp:2220
 msgid "Create stars and polygons"
 msgstr "Crea estels i polígons"
 
-#: ../src/verbs.cpp:2172
+#: ../src/verbs.cpp:2222
 msgid "Create spirals"
 msgstr "Crea espirals"
 
-#: ../src/verbs.cpp:2174
+#: ../src/verbs.cpp:2224
 msgid "Draw freehand lines"
 msgstr "Dibuixa línies a mà alçada"
 
-#: ../src/verbs.cpp:2176
+#: ../src/verbs.cpp:2226
 msgid "Draw Bezier curves and straight lines"
 msgstr "Dibuixa corbes Bezier i línies rectes"
 
-#: ../src/verbs.cpp:2178
+#: ../src/verbs.cpp:2228
 msgid "Draw calligraphic lines"
 msgstr "Dibuixa línies de cal·ligrafia"
 
-#: ../src/verbs.cpp:2180
+#: ../src/verbs.cpp:2230
 msgid "Create and edit text objects"
 msgstr "Crea i edita objectes de text"
 
-#: ../src/verbs.cpp:2182
+#: ../src/verbs.cpp:2232
 msgid "Create and edit gradients"
 msgstr "Crea i edita els degradats"
 
-#: ../src/verbs.cpp:2184
+#: ../src/verbs.cpp:2234
 msgid "Zoom in or out"
 msgstr "Apropa o allunya"
 
-#: ../src/verbs.cpp:2186
+#: ../src/verbs.cpp:2236
 msgid "Pick averaged colors from image"
 msgstr "Agafa els colors mesclats de la imatge"
 
-#: ../src/verbs.cpp:2188
+#: ../src/verbs.cpp:2238
 msgid "Create connectors"
 msgstr "Crea connectors"
 
 #. Tool prefs
-#: ../src/verbs.cpp:2191
+#: ../src/verbs.cpp:2241
 msgid "Selector Preferences"
 msgstr "Preferències de la selecció"
 
-#: ../src/verbs.cpp:2192
+#: ../src/verbs.cpp:2242
 msgid "Open Preferences for the Selector tool"
 msgstr "Obre les preferències per a l'eina de selecció"
 
-#: ../src/verbs.cpp:2193
+#: ../src/verbs.cpp:2243
 msgid "Node Tool Preferences"
 msgstr "Preferències de l'eina de nodes"
 
-#: ../src/verbs.cpp:2194
+#: ../src/verbs.cpp:2244
 msgid "Open Preferences for the Node tool"
 msgstr "Obre les preferències per a l'eina de nodes"
 
-#: ../src/verbs.cpp:2195
+#: ../src/verbs.cpp:2245
 msgid "Rectangle Preferences"
 msgstr "Preferències del rectangle"
 
-#: ../src/verbs.cpp:2196
+#: ../src/verbs.cpp:2246
 msgid "Open Preferences for the Rectangle tool"
 msgstr "Obre les preferències per a l'eina de rectangle"
 
-#: ../src/verbs.cpp:2197
+#: ../src/verbs.cpp:2247
 msgid "Ellipse Preferences"
 msgstr "Preferències de l'el·lipse"
 
-#: ../src/verbs.cpp:2198
+#: ../src/verbs.cpp:2248
 msgid "Open Preferences for the Ellipse tool"
 msgstr "Obre les preferències per a l'eina d'el·lipse"
 
-#: ../src/verbs.cpp:2199
+#: ../src/verbs.cpp:2249
 msgid "Star Preferences"
 msgstr "Preferències de l'estel"
 
-#: ../src/verbs.cpp:2200
+#: ../src/verbs.cpp:2250
 msgid "Open Preferences for the Star tool"
 msgstr "Obre les preferències per a l'eina d'estel"
 
-#: ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2251
 msgid "Spiral Preferences"
 msgstr "Preferències de l'espiral"
 
-#: ../src/verbs.cpp:2202
+#: ../src/verbs.cpp:2252
 msgid "Open Preferences for the Spiral tool"
 msgstr "Obre les preferències per a l'eina d'espiral"
 
-#: ../src/verbs.cpp:2203
+#: ../src/verbs.cpp:2253
 msgid "Pencil Preferences"
 msgstr "Preferències del llapis"
 
-#: ../src/verbs.cpp:2204
+#: ../src/verbs.cpp:2254
 msgid "Open Preferences for the Pencil tool"
 msgstr "Obre les preferències per a l'eina del llapis"
 
-#: ../src/verbs.cpp:2205
+#: ../src/verbs.cpp:2255
 msgid "Pen Preferences"
 msgstr "Preferències del rotulador"
 
-#: ../src/verbs.cpp:2206
+#: ../src/verbs.cpp:2256
 msgid "Open Preferences for the Pen tool"
 msgstr "Obre les preferències per a l'eina del retolador"
 
-#: ../src/verbs.cpp:2207
+#: ../src/verbs.cpp:2257
 msgid "Calligraphic Preferences"
 msgstr "Preferències cal·ligràfiques"
 
-#: ../src/verbs.cpp:2208
+#: ../src/verbs.cpp:2258
 msgid "Open Preferences for the Calligraphy tool"
 msgstr "Obre les preferències per a l'eina de cal·ligrafia"
 
-#: ../src/verbs.cpp:2209
+#: ../src/verbs.cpp:2259
 msgid "Text Preferences"
 msgstr "Preferències de text"
 
-#: ../src/verbs.cpp:2210
+#: ../src/verbs.cpp:2260
 msgid "Open Preferences for the Text tool"
 msgstr "Obre les preferències per a l'eina de text"
 
-#: ../src/verbs.cpp:2211
+#: ../src/verbs.cpp:2261
 msgid "Gradient Preferences"
 msgstr "Preferències del degradat"
 
-#: ../src/verbs.cpp:2212
+#: ../src/verbs.cpp:2262
 msgid "Open Preferences for the Gradient tool"
 msgstr "Obre les preferències per a l'eina del degradat"
 
-#: ../src/verbs.cpp:2213
+#: ../src/verbs.cpp:2263
 msgid "Zoom Preferences"
 msgstr "Preferències de l'ampliació"
 
-#: ../src/verbs.cpp:2214
+#: ../src/verbs.cpp:2264
 msgid "Open Preferences for the Zoom tool"
 msgstr "Obre les preferències per a l'eina d'ampliació"
 
-#: ../src/verbs.cpp:2215
+#: ../src/verbs.cpp:2265
 msgid "Dropper Preferences"
 msgstr "Preferències del comptagotes"
 
-#: ../src/verbs.cpp:2216
+#: ../src/verbs.cpp:2266
 msgid "Open Preferences for the Dropper tool"
 msgstr "Obre les preferències per a l'eina comptagotes"
 
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2267
 msgid "Connector Preferences"
 msgstr "Preferències del connector"
 
-#: ../src/verbs.cpp:2218
+#: ../src/verbs.cpp:2268
 msgid "Open Preferences for the Connector tool"
 msgstr "Obre les preferències per a l'eina de connectors"
 
 #. Zoom/View
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2271
 msgid "Zoom In"
 msgstr "Apropa"
 
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2271
 msgid "Zoom in"
 msgstr "Apropa"
 
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2272
 msgid "Zoom Out"
 msgstr "Allunya"
 
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2272
 msgid "Zoom out"
 msgstr "Allunya"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2273
 msgid "_Rulers"
 msgstr "_Regles"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2273
 msgid "Show or hide the canvas rulers"
 msgstr "Mostra o oculta els regles del llenç"
 
-#: ../src/verbs.cpp:2224
+#: ../src/verbs.cpp:2274
 msgid "Scroll_bars"
 msgstr "_Barres de desplaçament"
 
-#: ../src/verbs.cpp:2224
+#: ../src/verbs.cpp:2274
 msgid "Show or hide the canvas scrollbars"
 msgstr "Mostra o oculta les barres de desplaçament del llenç"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2275
 msgid "_Grid"
 msgstr "_Graella"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2275
 msgid "Show or hide the grid"
 msgstr "Mostra o amaga la graella"
 
-#: ../src/verbs.cpp:2226
+#: ../src/verbs.cpp:2276
 msgid "G_uides"
 msgstr "G_uies"
 
-#: ../src/verbs.cpp:2226
+#: ../src/verbs.cpp:2276
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
 "Mostra o amaga les guies (arrossegueu des d'un regle per crear una guia)"
 
-#: ../src/verbs.cpp:2227
+#: ../src/verbs.cpp:2277
 msgid "Nex_t Zoom"
 msgstr "Ampliació següen_t"
 
-#: ../src/verbs.cpp:2227
+#: ../src/verbs.cpp:2277
 msgid "Next zoom (from the history of zooms)"
 msgstr "Ampliació següent (de l'historial d'ampliacions)"
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2279
 msgid "Pre_vious Zoom"
 msgstr "Am_pliació anterior"
 
-#: ../src/verbs.cpp:2229
+#: ../src/verbs.cpp:2279
 msgid "Previous zoom (from the history of zooms)"
 msgstr "Ampliació anterior (de l'historial d'ampliacions)"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2281
 msgid "Zoom 1:_1"
 msgstr "Ampliació _1:1"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2281
 msgid "Zoom to 1:1"
 msgstr "Ampliació a 1:1"
 
-#: ../src/verbs.cpp:2233
+#: ../src/verbs.cpp:2283
 msgid "Zoom 1:_2"
 msgstr "Ampliació 1:_2"
 
-#: ../src/verbs.cpp:2233
+#: ../src/verbs.cpp:2283
 msgid "Zoom to 1:2"
 msgstr "Ampliació a 1:2"
 
-#: ../src/verbs.cpp:2235
+#: ../src/verbs.cpp:2285
 msgid "_Zoom 2:1"
 msgstr "Amplia_ció 2:1"
 
-#: ../src/verbs.cpp:2235
+#: ../src/verbs.cpp:2285
 msgid "Zoom to 2:1"
 msgstr "Ampliació a 2:1"
 
-#: ../src/verbs.cpp:2238
+#: ../src/verbs.cpp:2288
 msgid "_Fullscreen"
 msgstr "_Pantalla completa"
 
-#: ../src/verbs.cpp:2238
+#: ../src/verbs.cpp:2288
 msgid "Stretch this document window to full screen"
 msgstr "Ajusta a la finestra del document a pantalla completa"
 
-#: ../src/verbs.cpp:2241
+#: ../src/verbs.cpp:2291
 msgid "Duplic_ate Window"
 msgstr "Duplic_a la finestra"
 
-#: ../src/verbs.cpp:2241
+#: ../src/verbs.cpp:2291
 msgid "Open a new window with the same document"
 msgstr "Obre una nova finestra amb el mateix document"
 
-#: ../src/verbs.cpp:2243
+#: ../src/verbs.cpp:2293
 msgid "_New View Preview"
 msgstr "Previsualitza la _nova vista"
 
-#: ../src/verbs.cpp:2244
+#: ../src/verbs.cpp:2294
 msgid "New View Preview"
 msgstr "Previsualitza la nova vista"
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2246
+#: ../src/verbs.cpp:2296
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../src/verbs.cpp:2247
+#: ../src/verbs.cpp:2297
 msgid "Switch to normal display mode"
 msgstr "Commuta al mode de visualització normal"
 
-#: ../src/verbs.cpp:2248
+#: ../src/verbs.cpp:2298
 msgid "_Outline"
 msgstr "_Vora"
 
-#: ../src/verbs.cpp:2249
+#: ../src/verbs.cpp:2299
 msgid "Switch to outline (wireframe) display mode"
 msgstr "Commuta al mode de visualització de vora (marc)"
 
-#: ../src/verbs.cpp:2251
+#: ../src/verbs.cpp:2301
 msgid "Ico_n Preview"
 msgstr "Previsualització d'ico_nes"
 
-#: ../src/verbs.cpp:2252
+#: ../src/verbs.cpp:2302
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr ""
 "Obre una nova finestra per previsualitzar objectes a diferents resolucions "
 "d'icona"
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2304
 msgid "Zoom to fit page in window"
 msgstr "Amplia per ajustar la pàgina a la finestra"
 
-#: ../src/verbs.cpp:2255
+#: ../src/verbs.cpp:2305
 msgid "Page _Width"
 msgstr "Amplada de pà_gina"
 
-#: ../src/verbs.cpp:2256
+#: ../src/verbs.cpp:2306
 msgid "Zoom to fit page width in window"
 msgstr "Amplia per ajustar l'amplada de pàgina a la finestra"
 
-#: ../src/verbs.cpp:2258
+#: ../src/verbs.cpp:2308
 msgid "Zoom to fit drawing in window"
 msgstr "Amplia per ajustar el dibuix a la finestra"
 
-#: ../src/verbs.cpp:2260
+#: ../src/verbs.cpp:2310
 msgid "Zoom to fit selection in window"
 msgstr "Amplia per ajustar la selecció a la finestra"
 
 #. Dialogs
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2313
 msgid "In_kscape Preferences..."
 msgstr "Preferències de l'In_kscape..."
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2314
 msgid "Edit global Inkscape preferences"
 msgstr "Edita les preferències globals de l'Inkscape"
 
-#: ../src/verbs.cpp:2265
+#: ../src/verbs.cpp:2315
 msgid "_Document Properties..."
 msgstr "Propietats _del document..."
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2316
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Edita les propietats d'aquest document (es desaran amb el document)"
 
-#: ../src/verbs.cpp:2267
+#: ../src/verbs.cpp:2317
 msgid "_Document Metadata..."
 msgstr "Metadades del _document..."
 
-#: ../src/verbs.cpp:2268
+#: ../src/verbs.cpp:2318
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "Edita les metadades del document (es desaran amb el document)"
 
-#: ../src/verbs.cpp:2269
+#: ../src/verbs.cpp:2319
 msgid "_Fill and Stroke..."
 msgstr "_Emplenat i contorn..."
 
-#: ../src/verbs.cpp:2270
+#: ../src/verbs.cpp:2320
 msgid "Edit objects' style, such as color or stroke width"
 msgstr "Edita l'estil dels objectes, com ara el color o l'amplada del traç"
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2322
 msgid "S_watches..."
 msgstr "Mostres de _color..."
 
-#: ../src/verbs.cpp:2273
+#: ../src/verbs.cpp:2323
 msgid "Select colors from a swatches palette"
 msgstr "Seleccioneu colors d'una llista de mostres"
 
-#: ../src/verbs.cpp:2274
+#: ../src/verbs.cpp:2324
 msgid "Transfor_m..."
 msgstr "Transfor_ma..."
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2325
 msgid "Precisely control objects' transformations"
 msgstr "Controleu les transformacions dels objectes amb precissió"
 
-#: ../src/verbs.cpp:2276
+#: ../src/verbs.cpp:2326
 msgid "_Align and Distribute..."
 msgstr "_Alinea i distribueix..."
 
-#: ../src/verbs.cpp:2277
+#: ../src/verbs.cpp:2327
 msgid "Align and distribute objects"
 msgstr "Alinea i distribueix els objectes"
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2328
 msgid "_Text and Font..."
 msgstr "_Text i tipus de lletra..."
 
-#: ../src/verbs.cpp:2279
+#: ../src/verbs.cpp:2329
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 "Visualitza i selecciona la família de tipus de lletra, la mida i d'altres "
 "propietats de text"
 
-#: ../src/verbs.cpp:2280
+#: ../src/verbs.cpp:2330
 msgid "_XML Editor..."
 msgstr "Editor _XML..."
 
-#: ../src/verbs.cpp:2281
+#: ../src/verbs.cpp:2331
 msgid "View and edit the XML tree of the document"
 msgstr "Visualitza i edita l'arbre XML del document"
 
-#: ../src/verbs.cpp:2282
+#: ../src/verbs.cpp:2332
 msgid "_Find..."
 msgstr "_Cerca..."
 
-#: ../src/verbs.cpp:2283
+#: ../src/verbs.cpp:2333
 msgid "Find objects in document"
 msgstr "Cerca objectes al document"
 
-#: ../src/verbs.cpp:2284
+#: ../src/verbs.cpp:2334
 msgid "_Messages..."
 msgstr "_Missatges..."
 
-#: ../src/verbs.cpp:2285
+#: ../src/verbs.cpp:2335
 msgid "View debug messages"
 msgstr "Mostra els missatges de depuració"
 
-#: ../src/verbs.cpp:2286
+#: ../src/verbs.cpp:2336
 msgid "S_cripts..."
 msgstr "_Seqüències..."
 
-#: ../src/verbs.cpp:2287
+#: ../src/verbs.cpp:2337
 msgid "Run scripts"
 msgstr "Executa les seqüències"
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2338
 msgid "Show/Hide D_ialogs"
 msgstr "Mostra/amaga els d_iàlegs"
 
-#: ../src/verbs.cpp:2289
+#: ../src/verbs.cpp:2339
 msgid "Show or hide all open dialogs"
 msgstr "Mostra o amaga tots els diàlegs actius"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
-#: ../src/verbs.cpp:2291
+#: ../src/verbs.cpp:2341
 msgid "Create Tiled Clones..."
 msgstr "Mosaic amb clons..."
 
-#: ../src/verbs.cpp:2292
+#: ../src/verbs.cpp:2342
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2343
 msgid "_Object Properties..."
 msgstr "Pr_opietats de l'objecte..."
 
-#: ../src/verbs.cpp:2294
+#: ../src/verbs.cpp:2344
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 "Editeu l'ID, l'estat visible i blocat i d'altres propietats de l'objecte"
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2347
 msgid "_Connect to Jabber server..."
 msgstr "_Connecta al servidor de Jabber..."
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2347
 msgid "Connect to a Jabber server"
 msgstr "Connecta al servidor de Jabber"
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2349
 msgid "Share with _user..."
 msgstr "Comparteix amb un _usuari..."
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2349
 msgid "Establish a whiteboard session with another Jabber user"
 msgstr ""
 "Estableix una sessió de pisarra col·laborativa amb un altre usuari del Jabber"
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2351
 msgid "Share with _chatroom..."
 msgstr "_Comparteix amb una sala..."
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2351
 msgid ""
 "Join a chatroom to start a new whiteboard session or join one in progress"
 msgstr ""
 "Uniu-vos a una sala per començar una sessió de pisarra col·laborativa o uniu-"
 "vos a una en progrés"
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2353
 msgid "_Dump XML node tracker"
 msgstr "_Bolca el seguidor de nodes XML"
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2353
 msgid "Dump the contents of the XML tracker to the console"
 msgstr "Bolca el contingut del seguidor XML a la consola"
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2355
 msgid "_Open session file..."
 msgstr "_Obre el fitxer de sessió..."
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2355
 msgid "Open and browse through records of past whiteboard sessions"
 msgstr ""
 "Obre i navega pels registres de les sessions de pisarra col·laborativa "
 "anteriors"
 
-#: ../src/verbs.cpp:2307
+#: ../src/verbs.cpp:2357
 msgid "Session file playback"
 msgstr "Reproducció del fitxer de sessions"
 
-#: ../src/verbs.cpp:2309
+#: ../src/verbs.cpp:2359
 msgid "_Disconnect from session"
 msgstr "_Desconnecteu de la sessió"
 
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2361
 msgid "Disconnect from _server"
 msgstr "Desconnecteu del _servidor"
 
-#: ../src/verbs.cpp:2313
+#: ../src/verbs.cpp:2363
 msgid "_Input Devices..."
 msgstr "D_ispositius d'entrada..."
 
-#: ../src/verbs.cpp:2314
+#: ../src/verbs.cpp:2364
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr ""
 "Configura els dispositius d'entrada extesos, com ara les tauletes de dibuix"
 
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2365
 msgid "_Extensions..."
 msgstr "_Extensions..."
 
-#: ../src/verbs.cpp:2316
+#: ../src/verbs.cpp:2366
 msgid "Query information about extensions"
 msgstr "Demana informació sobre les extensions"
 
-#: ../src/verbs.cpp:2317
+#: ../src/verbs.cpp:2367
 #, fuzzy
 msgid "_Layers..."
 msgstr "_Nova capa..."
 
-#: ../src/verbs.cpp:2318
+#: ../src/verbs.cpp:2368
 #, fuzzy
 msgid "View Layers"
 msgstr "Puja la _capa"
 
 #. Help
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2371
 msgid "_Keys and Mouse"
 msgstr "Te_cles i ratolí"
 
-#: ../src/verbs.cpp:2322
+#: ../src/verbs.cpp:2372
 msgid "Keys and mouse shortcuts reference"
 msgstr "Referència a combinacions de teclat i ratolí"
 
-#: ../src/verbs.cpp:2323
+#: ../src/verbs.cpp:2373
 msgid "About E_xtensions"
 msgstr "Quant a les e_xtensions"
 
-#: ../src/verbs.cpp:2324
+#: ../src/verbs.cpp:2374
 msgid "Information on Inkscape extensions"
 msgstr "Informació d'extensions de l'Inkscape"
 
-#: ../src/verbs.cpp:2325
+#: ../src/verbs.cpp:2375
 msgid "About _Memory"
 msgstr "Quant a la _memòria"
 
-#: ../src/verbs.cpp:2326
+#: ../src/verbs.cpp:2376
 msgid "Memory usage information"
 msgstr "Informació d'ús de la memòria"
 
-#: ../src/verbs.cpp:2327
+#: ../src/verbs.cpp:2377
 msgid "_About Inkscape"
 msgstr "Qu_ant a l'Inkscape"
 
-#: ../src/verbs.cpp:2328
+#: ../src/verbs.cpp:2378
 msgid "Inkscape version, authors, license"
 msgstr "Versió de l'Inkscape, autors, llicència"
 
@@ -8827,109 +8880,109 @@ msgstr "Versió de l'Inkscape, autors, llicència"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2333
+#: ../src/verbs.cpp:2383
 msgid "Inkscape: _Basic"
 msgstr "Inkscape: _bàsic"
 
-#: ../src/verbs.cpp:2334
+#: ../src/verbs.cpp:2384
 msgid "Getting started with Inkscape"
 msgstr "Començar amb Inkscape"
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2335
+#: ../src/verbs.cpp:2385
 msgid "Inkscape: _Shapes"
 msgstr "Inkscape: forme_s"
 
-#: ../src/verbs.cpp:2336
+#: ../src/verbs.cpp:2386
 msgid "Using shape tools to create and edit shapes"
 msgstr "Fer servir les eines de formes per crear i editar formes"
 
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2387
 msgid "Inkscape: _Advanced"
 msgstr "Inksc_ape: avançat"
 
-#: ../src/verbs.cpp:2338
+#: ../src/verbs.cpp:2388
 msgid "Advanced Inkscape topics"
 msgstr "Temes avançats de l'Inkscape"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2340
+#: ../src/verbs.cpp:2390
 msgid "Inkscape: T_racing"
 msgstr "Inkscape: _vectoritzar"
 
-#: ../src/verbs.cpp:2341
+#: ../src/verbs.cpp:2391
 msgid "Using bitmap tracing"
 msgstr "Usar la vectorització de mapes de bits"
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2342
+#: ../src/verbs.cpp:2392
 msgid "Inkscape: _Calligraphy"
 msgstr "Inkscape: _cal·ligrafia"
 
-#: ../src/verbs.cpp:2343
+#: ../src/verbs.cpp:2393
 msgid "Using the Calligraphy pen tool"
 msgstr "Usar l'eina del retolador de cal·ligrafia"
 
-#: ../src/verbs.cpp:2344
+#: ../src/verbs.cpp:2394
 msgid "_Elements of Design"
 msgstr "_Elements de disseny"
 
-#: ../src/verbs.cpp:2345
+#: ../src/verbs.cpp:2395
 msgid "Principles of design in the tutorial form"
 msgstr "Tutorial sobre principis del disseny"
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2346
+#: ../src/verbs.cpp:2396
 msgid "_Tips and Tricks"
 msgstr "Con_sells"
 
-#: ../src/verbs.cpp:2347
+#: ../src/verbs.cpp:2397
 msgid "Miscellaneous tips and tricks"
 msgstr "Alguns consells"
 
 #. "tutorial_tips"
 #. Effect
-#: ../src/verbs.cpp:2350
+#: ../src/verbs.cpp:2400
 msgid "Previous Effect"
 msgstr "Efecte anterior"
 
-#: ../src/verbs.cpp:2351
+#: ../src/verbs.cpp:2401
 msgid "Repeat the last effect with the same settings"
 msgstr "Repeteix el darrer efecte amb els mateixos valors"
 
 #. "tutorial_tips"
-#: ../src/verbs.cpp:2352
+#: ../src/verbs.cpp:2402
 msgid "Previous Effect Settings..."
 msgstr "Configuració de l'efecte anterior..."
 
-#: ../src/verbs.cpp:2353
+#: ../src/verbs.cpp:2403
 msgid "Repeat the last effect with new settings"
 msgstr "Repeteix el darrer efecte amb nous valors"
 
 #. "tutorial_tips"
 #. Fit Canvas
-#: ../src/verbs.cpp:2356
+#: ../src/verbs.cpp:2406
 msgid "Fit Canvas to Selection"
 msgstr "Ajusta el llenç a la selecció"
 
-#: ../src/verbs.cpp:2357
+#: ../src/verbs.cpp:2407
 msgid "Fit the canvas to the current selection"
 msgstr "Ajusta el llenç a la selecció actual"
 
-#: ../src/verbs.cpp:2358
+#: ../src/verbs.cpp:2408
 msgid "Fit Canvas to Drawing"
 msgstr "Ajusta el llenç al dibuix"
 
-#: ../src/verbs.cpp:2359
+#: ../src/verbs.cpp:2409
 msgid "Fit the canvas to the drawing"
 msgstr "Ajusta el llenç al dibuix"
 
-#: ../src/verbs.cpp:2360
+#: ../src/verbs.cpp:2410
 msgid "Fit Canvas to Selection or Drawing"
 msgstr "Ajusta el llenç a la selecció o el dibuix"
 
-#: ../src/verbs.cpp:2361
+#: ../src/verbs.cpp:2411
 msgid ""
 "Fit the canvas to the current selection or the drawing if there is no "
 "selection"
@@ -8955,16 +9008,16 @@ msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
 
 #. Family frame
-#: ../src/widgets/font-selector.cpp:137
+#: ../src/widgets/font-selector.cpp:148
 msgid "Font family"
 msgstr "Tipus de lletra"
 
 #. Style frame
-#: ../src/widgets/font-selector.cpp:164
+#: ../src/widgets/font-selector.cpp:179
 msgid "Style"
 msgstr "Estil"
 
-#: ../src/widgets/font-selector.cpp:199
+#: ../src/widgets/font-selector.cpp:217
 msgid "Font size:"
 msgstr "Mida de la lletra:"
 
@@ -8972,7 +9025,7 @@ msgstr "Mida de la lletra:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:522
+#: ../src/widgets/font-selector.cpp:580
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqcÇ12369$€¢?.;/()"
 
@@ -9039,11 +9092,11 @@ msgstr ""
 msgid "Edit the stops of the gradient"
 msgstr "Edita les fases del degradat"
 
-#: ../src/widgets/gradient-toolbar.cpp:555 ../src/widgets/toolbox.cpp:1101
-#: ../src/widgets/toolbox.cpp:1190 ../src/widgets/toolbox.cpp:1488
-#: ../src/widgets/toolbox.cpp:1537 ../src/widgets/toolbox.cpp:1774
-#: ../src/widgets/toolbox.cpp:1809 ../src/widgets/toolbox.cpp:2389
-#: ../src/widgets/toolbox.cpp:2428
+#: ../src/widgets/gradient-toolbar.cpp:555 ../src/widgets/toolbox.cpp:1115
+#: ../src/widgets/toolbox.cpp:1204 ../src/widgets/toolbox.cpp:1502
+#: ../src/widgets/toolbox.cpp:1551 ../src/widgets/toolbox.cpp:1788
+#: ../src/widgets/toolbox.cpp:1823 ../src/widgets/toolbox.cpp:2403
+#: ../src/widgets/toolbox.cpp:2442
 msgid "<b>New:</b>"
 msgstr "<b>Nou:</b>"
 
@@ -9071,11 +9124,11 @@ msgstr "Crea el degradat en el contorn"
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:638 ../src/widgets/toolbox.cpp:1103
-#: ../src/widgets/toolbox.cpp:1122 ../src/widgets/toolbox.cpp:1496
-#: ../src/widgets/toolbox.cpp:1521 ../src/widgets/toolbox.cpp:1776
-#: ../src/widgets/toolbox.cpp:1795 ../src/widgets/toolbox.cpp:2392
-#: ../src/widgets/toolbox.cpp:2412
+#: ../src/widgets/gradient-toolbar.cpp:638 ../src/widgets/toolbox.cpp:1117
+#: ../src/widgets/toolbox.cpp:1136 ../src/widgets/toolbox.cpp:1510
+#: ../src/widgets/toolbox.cpp:1535 ../src/widgets/toolbox.cpp:1790
+#: ../src/widgets/toolbox.cpp:1809 ../src/widgets/toolbox.cpp:2406
+#: ../src/widgets/toolbox.cpp:2426
 msgid "<b>Change:</b>"
 msgstr "<b>Canvi:</b>"
 
@@ -9443,99 +9496,99 @@ msgstr "Atribut"
 msgid "Value"
 msgstr "Valor"
 
-#: ../src/widgets/toolbox.cpp:400
+#: ../src/widgets/toolbox.cpp:415
 msgid "Insert new nodes into selected segments"
 msgstr "Insereix nous nodes en els segments seleccionats"
 
-#: ../src/widgets/toolbox.cpp:402
+#: ../src/widgets/toolbox.cpp:417
 msgid "Delete selected nodes"
 msgstr "Suprimeix els nodes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:407
+#: ../src/widgets/toolbox.cpp:422
 msgid "Join selected endnodes"
 msgstr "Uneix els nodes finals seleccionats"
 
-#: ../src/widgets/toolbox.cpp:409
+#: ../src/widgets/toolbox.cpp:424
 msgid "Join selected endnodes with a new segment"
 msgstr "Uneix els nodes finals seleccionats amb un nou segment"
 
-#: ../src/widgets/toolbox.cpp:412
+#: ../src/widgets/toolbox.cpp:427
 msgid "Split path between two non-endpoint nodes"
 msgstr "Separa el camí entre dos nodes no finals"
 
-#: ../src/widgets/toolbox.cpp:415
+#: ../src/widgets/toolbox.cpp:430
 msgid "Break path at selected nodes"
 msgstr "Trenca el camí en els nodes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:420
+#: ../src/widgets/toolbox.cpp:435
 msgid "Make selected nodes corner"
 msgstr "Fes una cantonada amb els nodes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:423
+#: ../src/widgets/toolbox.cpp:438
 msgid "Make selected nodes smooth"
 msgstr "Suavitza els nodes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:426
+#: ../src/widgets/toolbox.cpp:441
 msgid "Make selected nodes symmetric"
 msgstr "Fes els nodes seleccionats simètrics"
 
-#: ../src/widgets/toolbox.cpp:431
+#: ../src/widgets/toolbox.cpp:446
 msgid "Make selected segments lines"
 msgstr "Converteix els segments seleccionats en línies"
 
-#: ../src/widgets/toolbox.cpp:434
+#: ../src/widgets/toolbox.cpp:449
 msgid "Make selected segments curves"
 msgstr "Converteix els segments seleccionats en corbes"
 
-#: ../src/widgets/toolbox.cpp:452
+#: ../src/widgets/toolbox.cpp:467
 msgid "Show the Bezier handles of selected nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1204
+#: ../src/widgets/toolbox.cpp:1218
 msgid "Regular polygon (with one handle) instead of a star"
 msgstr "Polígon regular (amb un manejador) en comptes d'un estel"
 
-#: ../src/widgets/toolbox.cpp:1216
+#: ../src/widgets/toolbox.cpp:1230
 msgid "Corners:"
 msgstr "Cantonades:"
 
-#: ../src/widgets/toolbox.cpp:1216
+#: ../src/widgets/toolbox.cpp:1230
 msgid "Number of corners of a polygon or star"
 msgstr "Nombre de cantonades d'un polígon o un estel"
 
-#: ../src/widgets/toolbox.cpp:1226
+#: ../src/widgets/toolbox.cpp:1240
 msgid "Spoke ratio:"
 msgstr "Radi de la punxa:"
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:1229
+#: ../src/widgets/toolbox.cpp:1243
 msgid "Base radius to tip radius ratio"
 msgstr "Distància al centre del manejador més llunyà"
 
-#: ../src/widgets/toolbox.cpp:1244
+#: ../src/widgets/toolbox.cpp:1258
 msgid "Rounded:"
 msgstr "Arrodoniment:"
 
-#: ../src/widgets/toolbox.cpp:1244
+#: ../src/widgets/toolbox.cpp:1258
 msgid "How much rounded are the corners (0 for sharp)"
 msgstr "Arrodoniment de les cantonades"
 
-#: ../src/widgets/toolbox.cpp:1254
+#: ../src/widgets/toolbox.cpp:1268
 msgid "Randomized:"
 msgstr "Aleatorització:"
 
-#: ../src/widgets/toolbox.cpp:1254
+#: ../src/widgets/toolbox.cpp:1268
 msgid "Scatter randomly the corners and angles"
 msgstr "Distribueix a l'atzar les cantonades i els angles"
 
-#: ../src/widgets/toolbox.cpp:1267 ../src/widgets/toolbox.cpp:1846
-#: ../src/widgets/toolbox.cpp:2132
+#: ../src/widgets/toolbox.cpp:1281 ../src/widgets/toolbox.cpp:1860
+#: ../src/widgets/toolbox.cpp:2146
 msgid "Defaults"
 msgstr "Per defecte"
 
-#: ../src/widgets/toolbox.cpp:1268 ../src/widgets/toolbox.cpp:1847
-#: ../src/widgets/toolbox.cpp:2133
+#: ../src/widgets/toolbox.cpp:1282 ../src/widgets/toolbox.cpp:1861
+#: ../src/widgets/toolbox.cpp:2147
 msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
@@ -9543,77 +9596,77 @@ msgstr ""
 "Reinicialitza les opcions predeterminades de la forma (useu Preferències > "
 "Eines per canviar els valors predeterminats)"
 
-#: ../src/widgets/toolbox.cpp:1547
+#: ../src/widgets/toolbox.cpp:1561
 msgid "W:"
 msgstr "A:"
 
-#: ../src/widgets/toolbox.cpp:1547
+#: ../src/widgets/toolbox.cpp:1561
 msgid "Width of rectangle"
 msgstr "Amplada del rectangle"
 
-#: ../src/widgets/toolbox.cpp:1559
+#: ../src/widgets/toolbox.cpp:1573
 msgid "Height of rectangle"
 msgstr "Alçada del rectangle"
 
-#: ../src/widgets/toolbox.cpp:1571
+#: ../src/widgets/toolbox.cpp:1585
 msgid "Rx:"
 msgstr "Rx:"
 
-#: ../src/widgets/toolbox.cpp:1571
+#: ../src/widgets/toolbox.cpp:1585
 msgid "Horizontal radius of rounded corners"
 msgstr "Radi horitzontal de les cantonades arrodonides"
 
-#: ../src/widgets/toolbox.cpp:1581
+#: ../src/widgets/toolbox.cpp:1595
 msgid "Ry:"
 msgstr "Ry:"
 
-#: ../src/widgets/toolbox.cpp:1581
+#: ../src/widgets/toolbox.cpp:1595
 msgid "Vertical radius of rounded corners"
 msgstr "Radi vertical de les cantonades arrodonides"
 
-#: ../src/widgets/toolbox.cpp:1597
+#: ../src/widgets/toolbox.cpp:1611
 msgid "Not rounded"
 msgstr "Sense arrodonir"
 
-#: ../src/widgets/toolbox.cpp:1599
+#: ../src/widgets/toolbox.cpp:1613
 msgid "Make corners sharp"
 msgstr "Fes cantonades afilades"
 
-#: ../src/widgets/toolbox.cpp:1813
+#: ../src/widgets/toolbox.cpp:1827
 msgid "Turns:"
 msgstr "Girs:"
 
-#: ../src/widgets/toolbox.cpp:1813
+#: ../src/widgets/toolbox.cpp:1827
 msgid "Number of revolutions"
 msgstr "Nombre de revolucions"
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1837
 msgid "Divergence:"
 msgstr "Divergència:"
 
-#: ../src/widgets/toolbox.cpp:1823
+#: ../src/widgets/toolbox.cpp:1837
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
 msgstr ""
 "Quanta densitat han de tenir les revolucions externes. 1 vol dir uniformement"
 
-#: ../src/widgets/toolbox.cpp:1833
+#: ../src/widgets/toolbox.cpp:1847
 msgid "Inner radius:"
 msgstr "Radi intern:"
 
-#: ../src/widgets/toolbox.cpp:1833
+#: ../src/widgets/toolbox.cpp:1847
 msgid "Radius of the innermost revolution (relative to the spiral size)"
 msgstr "Radi de la revolució més interna (relatiu a la mida de l'espiral)"
 
-#: ../src/widgets/toolbox.cpp:2019
+#: ../src/widgets/toolbox.cpp:2033
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
 msgstr ""
 "L'amplada del retolador cal·ligràfic (relativa a l'àrea visible del llenç)"
 
-#: ../src/widgets/toolbox.cpp:2029
+#: ../src/widgets/toolbox.cpp:2043
 msgid "Thinning:"
 msgstr "Aprima:"
 
-#: ../src/widgets/toolbox.cpp:2029
+#: ../src/widgets/toolbox.cpp:2043
 msgid ""
 "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
 "makes them broader, 0 makes width independent of velocity)"
@@ -9621,11 +9674,11 @@ msgstr ""
 "Com s'aprima el contorn segons la velocitat (>0 fa que el contorn sigui més "
 "prim, <0 el fa més gruixut i amb 0 la velocitat no l'afecta)"
 
-#: ../src/widgets/toolbox.cpp:2042
+#: ../src/widgets/toolbox.cpp:2056
 msgid "Angle:"
 msgstr "Angle:"
 
-#: ../src/widgets/toolbox.cpp:2042
+#: ../src/widgets/toolbox.cpp:2056
 msgid ""
 "The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
 "fixation = 0)"
@@ -9633,11 +9686,11 @@ msgstr ""
 "L'angle de la punta del retolador (en graus; 0 = horitzontal; no té efecte "
 "si la fixació és 0)"
 
-#: ../src/widgets/toolbox.cpp:2052
+#: ../src/widgets/toolbox.cpp:2066
 msgid "Fixation:"
 msgstr "Fixació:"
 
-#: ../src/widgets/toolbox.cpp:2052
+#: ../src/widgets/toolbox.cpp:2066
 msgid ""
 "How fixed is the pen angle (0 = always perpendicular to stroke direction, 1 "
 "= fixed)"
@@ -9645,77 +9698,77 @@ msgstr ""
 "Fixació de l'angle del retolador (0 = sempre perpendicular a la direcció del "
 "contorn, 1 = fix)"
 
-#: ../src/widgets/toolbox.cpp:2065
+#: ../src/widgets/toolbox.cpp:2079
 msgid "Tremor:"
 msgstr "Tremolor:"
 
-#: ../src/widgets/toolbox.cpp:2065
+#: ../src/widgets/toolbox.cpp:2079
 msgid "How uneven or trembling is the pen stroke"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2074
+#: ../src/widgets/toolbox.cpp:2088
 msgid "Mass:"
 msgstr "Cota:"
 
-#: ../src/widgets/toolbox.cpp:2074
+#: ../src/widgets/toolbox.cpp:2088
 msgid "How much inertia affects the movement of the pen"
 msgstr "Quanta inèrcia afecta el moviment del retolador"
 
 #. TRANSLATORS: "drag" means "resistance" here
-#: ../src/widgets/toolbox.cpp:2085
+#: ../src/widgets/toolbox.cpp:2099
 msgid "Drag:"
 msgstr "Ressistència:"
 
-#: ../src/widgets/toolbox.cpp:2085
+#: ../src/widgets/toolbox.cpp:2099
 msgid "How much resistance affects the movement of the pen"
 msgstr "Quanta resistència afecta el moviment del retolador"
 
-#: ../src/widgets/toolbox.cpp:2105
+#: ../src/widgets/toolbox.cpp:2119
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr ""
 "Usa la pressió del dispositiu d'entrada per modificar l'amplada de la ploma"
 
-#: ../src/widgets/toolbox.cpp:2118
+#: ../src/widgets/toolbox.cpp:2132
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr ""
 "Usa la inclinació del dispositiu d'entrada per modificar l'angle de la ploma"
 
-#: ../src/widgets/toolbox.cpp:2432
+#: ../src/widgets/toolbox.cpp:2446
 msgid "Start:"
 msgstr "Inici:"
 
-#: ../src/widgets/toolbox.cpp:2432
+#: ../src/widgets/toolbox.cpp:2446
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
 msgstr "L'angle (en graus) de l'horitzontal al punt d'inici de l'arc"
 
-#: ../src/widgets/toolbox.cpp:2442
+#: ../src/widgets/toolbox.cpp:2456
 msgid "End:"
 msgstr "Fi:"
 
-#: ../src/widgets/toolbox.cpp:2442
+#: ../src/widgets/toolbox.cpp:2456
 msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr "L'angle (en graus) de l'horitzontal al punt final de l'arc"
 
-#: ../src/widgets/toolbox.cpp:2453
+#: ../src/widgets/toolbox.cpp:2467
 msgid "Open arc"
 msgstr "Obre un arc"
 
-#: ../src/widgets/toolbox.cpp:2454
+#: ../src/widgets/toolbox.cpp:2468
 msgid ""
 "Switch between arc (unclosed shape) and segment (closed shape with two radii)"
 msgstr ""
 "Commuta entre un arc (forma sense tancar) i segment (forma tancada amb dos "
 "radis)"
 
-#: ../src/widgets/toolbox.cpp:2473
+#: ../src/widgets/toolbox.cpp:2487
 msgid "Make whole"
 msgstr "Fes sencer"
 
-#: ../src/widgets/toolbox.cpp:2475
+#: ../src/widgets/toolbox.cpp:2489
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr "Fes una forma sencera, ni un arc ni un segment"
 
-#: ../src/widgets/toolbox.cpp:2707
+#: ../src/widgets/toolbox.cpp:2721
 msgid ""
 "When pressed, picks visible color without alpha and when not pressed, picks "
 "color including its alpha"
@@ -9723,19 +9776,51 @@ msgstr ""
 "Quan estigui premut, selecciona el color visible sense opacitat i quan no ho "
 "estigui, selecciona amb opacitat"
 
-#: ../src/widgets/toolbox.cpp:3186
+#: ../src/widgets/toolbox.cpp:3357
+msgid ""
+"This font is currently not installed on your system. Inkscape will use the "
+"default font instead."
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3544
+msgid "Spacing between letters"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3565
+msgid "Spacing between lines"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3594
+#, fuzzy
+msgid "Horizontal kerning"
+msgstr "Espaiat horitzontal"
+
+#: ../src/widgets/toolbox.cpp:3615
+#, fuzzy
+msgid "Vertical kerning"
+msgstr "Espaiat vertical"
+
+#: ../src/widgets/toolbox.cpp:3642
+msgid "Letter rotation"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3663
+msgid "Remove manual kerns"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3782
 msgid "Make connectors avoid selected objects"
 msgstr "Els connectors tenen en compte els objectes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:3190
+#: ../src/widgets/toolbox.cpp:3786
 msgid "Make connectors ignore selected objects"
 msgstr "Els connectors ignoren els objectes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:3198
+#: ../src/widgets/toolbox.cpp:3794
 msgid "Spacing:"
 msgstr "Espaiat:"
 
-#: ../src/widgets/toolbox.cpp:3199
+#: ../src/widgets/toolbox.cpp:3795
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "La quantitat d'espai que queda al voltant dels objectes en girar "
@@ -10074,11 +10159,12 @@ msgid "Interpolation steps"
 msgstr "Passos d'interpol·lació"
 
 #: ../share/extensions/kochify.inx.h:1
-msgid "Kochify"
-msgstr "Kochify"
+msgid "Fractal (Koch)"
+msgstr ""
 
 #: ../share/extensions/kochify_load.inx.h:1
-msgid "Kochify (Load Pattern)"
+#, fuzzy
+msgid "Fractal (Koch) - Load Pattern"
 msgstr "Kochify (carrega un patró)"
 
 #: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
@@ -10090,7 +10176,8 @@ msgid "Axiom"
 msgstr "Axioma"
 
 #: ../share/extensions/lindenmayer.inx.h:3
-msgid "Lindenmayer"
+#, fuzzy
+msgid "Fractal (Lindenmayer)"
 msgstr "Lindenmayer"
 
 #: ../share/extensions/lindenmayer.inx.h:4
@@ -10295,6 +10382,9 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrada de Windows Metafile"
+
+#~ msgid "Kochify"
+#~ msgstr "Kochify"
 
 #~ msgid "Enable script effects (requires restart) - EXPERIMENTAL"
 #~ msgstr ""
