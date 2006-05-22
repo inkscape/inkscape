@@ -12,8 +12,8 @@
 class Mod360Test : public CxxTest::TestSuite
 {
 public:
-    static double const inf = 1e400;
-    static double const nan = inf - inf;
+    static double const inf() { return INFINITY; }
+    static double nan() { return ((double)INFINITY) - ((double)INFINITY); }
 
     void testMod360()
     {
@@ -26,9 +26,9 @@ public:
             {-359, 1},
             {-360, -0},
             {-361, 359},
-            {inf, 0},
-            {-inf, 0},
-            {nan, 0},
+            {inf(), 0},
+            {-inf(), 0},
+            {nan(), 0},
             {720, 0},
             {-721, 359},
             {-1000, 80}
