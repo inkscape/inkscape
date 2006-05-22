@@ -770,6 +770,9 @@ Section $(lng_zh_TW) SecChineseTaiwan
   !insertmacro Language zh_TW zh_TW
 SectionEnd
 
+SectionGroupEnd
+
+
 Section -FinalizeInstallation
   StrCmp $MultiUser "1" "" SingleUser
     DetailPrint "admin mode, registry root will be HKLM"
@@ -814,8 +817,6 @@ Section -FinalizeInstallation
   IfErrors 0 +2
     DetailPrint "fatal: failed to write to registry un-installation info"
 SectionEnd
-
-SectionGroupEnd
  
 ; Last the Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
@@ -1127,11 +1128,23 @@ Section Uninstall
     DeleteRegKey HKCR ".svgz"
   
     
+  SetShellVarContext all
   DetailPrint "removing product regkey"
   DeleteRegKey SHCTX "${PRODUCT_DIR_REGKEY}"
   DetailPrint "removing uninstall info"
   DeleteRegKey SHCTX "${PRODUCT_UNINST_KEY}"
+  DetailPrint "removing shortcuts"
+  Delete "$DESKTOP\Inkscape.lnk"
+  Delete "$QUICKLAUNCH\Inkscape.lnk"
+  Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
+  Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
+  RMDir  "$SMPROGRAMS\Inkscape"
 
+  SetShellVarContext current
+  DetailPrint "removing product regkey"
+  DeleteRegKey SHCTX "${PRODUCT_DIR_REGKEY}"
+  DetailPrint "removing uninstall info"
+  DeleteRegKey SHCTX "${PRODUCT_UNINST_KEY}"
   DetailPrint "removing shortcuts"
   Delete "$DESKTOP\Inkscape.lnk"
   Delete "$QUICKLAUNCH\Inkscape.lnk"
