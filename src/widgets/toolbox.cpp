@@ -3114,11 +3114,8 @@ namespace {
         {
             sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
         }
-        else
-        {
-            sp_desktop_set_style (desktop, css, true, true);
-        }
 
+        sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
     }
@@ -3158,11 +3155,8 @@ namespace {
         {
             sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
         }
-        else
-        {
-            sp_desktop_set_style (desktop, css, true, true);
-        }
 
+        sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
     }
