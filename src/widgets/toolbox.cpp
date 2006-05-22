@@ -3254,22 +3254,11 @@ namespace {
                  GtkTreeIter       *iter,
                  gpointer           data)
     {
-#if 0
         char        *family,
                     *family_escaped,
                     *sample_escaped;
         const char  *sample; 
-#endif
 
-        char *family;
-        gtk_tree_model_get (tree_model, iter, 0, &family, -1); 
-        const char *sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
-        char *escaped = g_markup_escape_text (sample, -1);       
-        g_object_set (G_OBJECT (cell), "text", escaped, "family", family, NULL);
-        free (escaped);
-        free (family);
-
-#if 0
         sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
 
         family_escaped = g_markup_escape_text (family, -1);
@@ -3282,7 +3271,6 @@ namespace {
         free (family);
         free (family_escaped);
         free (sample_escaped);
-#endif
     }
 
     GtkWidget*
@@ -3318,14 +3306,6 @@ namespace {
 
         GtkCellRenderer     *cell = gtk_cell_renderer_text_new ();
         GtkTreeViewColumn   *column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_pack_start (column, cell, FALSE);
-        gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-//      gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), gpointer(0), NULL);
-        gtk_tree_view_column_set_attributes (column, cell, "text", 0, NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-
-        cell = gtk_cell_renderer_text_new ();
-        column = gtk_tree_view_column_new ();
         gtk_tree_view_column_pack_start (column, cell, FALSE);
         gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
         gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), NULL, NULL);
