@@ -139,10 +139,10 @@ public:
     static const int EVENT_REGISTRATION_NEW     = 20;
 
     /**
-     *  Client has successfully modified an existing account on a server.
+     *  Client has successfully changed the password of an existing account on a server.
      *  The server is in getFrom(), the user in getTo()
      */
-    static const int EVENT_REGISTRATION_MODIFY  = 21;
+    static const int EVENT_REGISTRATION_CHANGE_PASS  = 21;
 
     /**
      *  Client has successfully cancelled an existing account on a server.
@@ -1132,9 +1132,9 @@ private:
     bool inBandRegistrationNew();
 
     /**
-     * Modify an existing account with a server
+     * Change the password of an existing account with a server
      */
-    bool inBandRegistrationModify();
+    bool inBandRegistrationChangePassword(const DOMString &newPassword);
 
     /**
      * Cancel an existing account with a server
