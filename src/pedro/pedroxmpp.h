@@ -84,33 +84,165 @@ public:
     DOMString show;
 };
 
+
+
+
+
+/**
+ * Class that emits information from a client
+ */
 class XmppEvent
 {
 
 public:
 
-typedef enum
-    {
-    EVENT_NONE,
-    EVENT_STATUS,
-    EVENT_ERROR,
-    EVENT_CONNECTED,
-    EVENT_DISCONNECTED,
-    EVENT_PRESENCE,
-    EVENT_REGISTRATION_NEW,
-    EVENT_ROSTER,
-    EVENT_MESSAGE,
-    EVENT_MUC_JOIN,
-    EVENT_MUC_LEAVE,
-    EVENT_MUC_PRESENCE,
-    EVENT_MUC_MESSAGE,
-    EVENT_STREAM_RECEIVE_INIT,
-    EVENT_STREAM_RECEIVE,
-    EVENT_STREAM_RECEIVE_CLOSE,
-    EVENT_FILE_ACCEPTED,
-    EVENT_FILE_RECEIVE
-    } XmppEventType;
+    /**
+     * People might want to refer to these docs to understand
+     * the XMPP terminology used here.
+     * http://www.ietf.org/rfc/rfc3920.txt      -- Xmpp Core
+     * http://www.ietf.org/rfc/rfc3921.txt      -- Messaging and presence
+     * http://www.jabber.org/jeps/jep-0077.html -- In-Band registration
+     * http://www.jabber.org/jeps/jep-0045.html -- Multiuser Chat
+     * http://www.jabber.org/jeps/jep-0047.html -- In-Band byte streams
+     * http://www.jabber.org/jeps/jep-0096.html -- File transfer
+     */
 
+    /**
+     *  No event type.  Default
+     */
+    static const int EVENT_NONE                 =  0;
+
+    /**
+     *  Client emits a status message.  Message is in getData().
+     */
+    static const int EVENT_STATUS               =  1;
+
+    /**
+     *  Client emits an error message.  Message is in getData().
+     */
+    static const int EVENT_ERROR                =  2;
+
+    /**
+     *  Client has connected to a host.  Host name is in getData().
+     */
+    static const int EVENT_CONNECTED            = 10;
+
+    /**
+     *  Client has disconnected from a host.  Host name is in getData().
+     */
+    static const int EVENT_DISCONNECTED         = 11;
+
+    /**
+     *  Client has successfully registered a new account on a server.
+     *  The server is in getFrom(), the user in getTo()
+     */
+    static const int EVENT_REGISTRATION_NEW     = 20;
+
+    /**
+     *  Client has successfully modified an existing account on a server.
+     *  The server is in getFrom(), the user in getTo()
+     */
+    static const int EVENT_REGISTRATION_MODIFY  = 21;
+
+    /**
+     *  Client has successfully cancelled an existing account on a server.
+     *  The server is in getFrom(), the user in getTo()
+     */
+    static const int EVENT_REGISTRATION_CANCEL  = 22;
+
+    /**
+     *  A <presence> packet has been received.
+     *  getFrom()     returns the full jabber id
+     *  getPresence() returns the available/unavailable boolean
+     *  getShow()     returns the jabber 'show' string: 'show', 'away', 'xa', etc
+     *  getStatus()   returns a status message, sent from a client
+     *  Note: if a presence packet is determined to be MUC, it is
+     *    rather sent as an EVENT_MUC_JOIN, LEAVE, or PRESENCE
+     */
+    static const int EVENT_PRESENCE             = 30;
+
+    /**
+     *  Client has just received a complete roster.  The collected information
+     *  can be found at client.getRoster(), and is a std::vector of XmppUser
+     *  records.
+     */
+    static const int EVENT_ROSTER               = 31;
+
+    /**
+     *  Client has just received a message packet.
+     *  getFrom() returns the full jabber id of the sender
+     *  getData() returns the text of the message
+     *  getDom()  returns the DOM treelet for this stanza.  This is provided
+     *                to make message extension easier.
+     *  Note: if a message packet is determined to be MUC, it is
+     *    rather sent as an EVENT_MUC_MESSAGE
+     */
+    static const int EVENT_MESSAGE              = 32;
+
+    /**
+     *  THIS user has just joined a multi-user chat group.
+     *  getGroup()    returns the group name
+     *  getFrom()     returns the nick of the user in the group
+     *  getPresence() returns the available/unavailable boolean
+     *  getShow()     returns the jabber 'show' string: 'show', 'away', 'xa', etc
+     *  getStatus()   returns a status message, sent from a client
+     */
+    static const int EVENT_MUC_JOIN             = 40;
+
+    /**
+     *  THIS user has just left a multi-user chat group.
+     *  getGroup()    returns the group name
+     *  getFrom()     returns the nick of the user in the group
+     *  getPresence() returns the available/unavailable boolean
+     *  getShow()     returns the jabber 'show' string: 'show', 'away', 'xa', etc
+     *  getStatus()   returns a status message, sent from a client
+     */
+    static const int EVENT_MUC_LEAVE            = 41;
+
+    /**
+     *  Presence for another user in a multi-user chat room.
+     *  getGroup()    returns the group name
+     *  getFrom()     returns the nick of the user in the group
+     *  getPresence() returns the available/unavailable boolean
+     *  getShow()     returns the jabber 'show' string: 'show', 'away', 'xa', etc
+     *  getStatus()   returns a status message, sent from a client
+     */
+    static const int EVENT_MUC_PRESENCE         = 42;
+
+    /**
+     *  Client has just received a message packet from a multi-user chat room
+     *  getGroup() returns the group name
+     *  getFrom()  returns the full jabber id of the sender
+     *  getData()  returns the text of the message
+     *  getDom()   returns the DOM treelet for this stanza.  This is provided
+     *             to make message extension easier.
+     */
+    static const int EVENT_MUC_MESSAGE          = 43;
+
+    /**
+     *  Client has begun receiving a stream
+     */
+    static const int EVENT_STREAM_RECEIVE_INIT  = 50;
+
+    /**
+     *  Client receives another stream packet.
+     */
+    static const int EVENT_STREAM_RECEIVE       = 51;
+
+    /**
+     * Client has received the end of a stream
+     */
+    static const int EVENT_STREAM_RECEIVE_CLOSE = 52;
+
+    /**
+     * Other client has accepted a file.
+     */
+    static const int EVENT_FILE_ACCEPTED        = 60;
+
+    /**
+     * This client has just received a file.
+     */
+    static const int EVENT_FILE_RECEIVE         = 61;
 
     /**
      *

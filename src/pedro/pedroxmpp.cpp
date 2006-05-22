@@ -3843,6 +3843,7 @@ bool XmppClient::createSession()
     status("Connected");
     connected = true;
     XmppEvent evt(XmppEvent::EVENT_CONNECTED);
+    evt.setData(host);
     dispatchXmppEvent(evt);
     //Thread::sleep(1000000);
 
@@ -3897,6 +3898,7 @@ bool XmppClient::disconnect()
     roster.clear();
     groupChatsClear();
     XmppEvent event(XmppEvent::EVENT_DISCONNECTED);
+    event.setData(host);
     dispatchXmppEvent(event);
     return true;
 }
