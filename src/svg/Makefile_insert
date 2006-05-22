@@ -27,6 +27,7 @@ svg_libspsvg_a_SOURCES =	\
 	svg/svg-affine.cpp	\
 	svg/svg-color.cpp	\
 	svg/svg-color.h 	\
+        svg/svg-icc-color.h \
 	svg/svg-length.cpp	\
 	svg/svg-length.h	\
 	svg/svg-path.cpp	\
