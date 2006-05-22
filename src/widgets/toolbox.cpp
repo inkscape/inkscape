@@ -74,6 +74,8 @@
 #include "../libnrtype/font-lister.h"
 #include "../connection-pool.h"
 #include "../prefs-utils.h"
+#include "../inkscape-stock.h"
+#include "icon.h"
 
 #include "mod360.h"
 
@@ -2924,6 +2926,21 @@ namespace {
                     }
             }
 
+            //Orientation
+            if (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB)
+            {
+                    GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-horizontal"));
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+            }
+            else
+            {
+                    GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-vertical"));
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+                    g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+            }
         }
     }
 
@@ -3104,6 +3121,51 @@ namespace {
     }
 
     void
+    sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
+                                         gpointer         data)
+    {
+        if (g_object_get_data (G_OBJECT (button), "block")) return;
+
+        SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+        SPCSSAttr   *css        = sp_repr_css_attr_new (); 
+        int          prop       = GPOINTER_TO_INT(data); 
+
+        switch (prop)
+        {
+            case 0:
+            {
+                sp_repr_css_set_property (css, "writing-mode", "lr");
+                break;
+            }
+
+            case 1:
+            {
+                sp_repr_css_set_property (css, "writing-mode", "tb"); 
+                break;
+            }
+        }
+
+        SPStyle *query =
+            sp_style_new ();
+        int result_numbers =
+            sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS); 
+
+        // If querying returned nothing, read the style from the text tool prefs (default style for new texts)
+        if (result_numbers == QUERY_STYLE_NOTHING)
+        {
+            sp_repr_css_change (inkscape_get_repr (INKSCAPE, "tools.text"), css, "style");
+        }
+        else
+        {
+            sp_desktop_set_style (desktop, css, true, true);
+        }
+
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_repr_css_attr_unref (css);
+    }
+
+
+    void
     sp_text_toolbox_size_changed  (GtkComboBox *cbox,
                                    GObject     *tbl) 
     {
@@ -3146,10 +3208,21 @@ namespace {
             gdk_window_get_origin (widget->window, &x, &y);
             gtk_window_move (GTK_WINDOW (popdown), x, y + widget->allocation.height + 2); //2px of grace space 
             gtk_widget_show_all (popdown);
+
+            gdk_pointer_grab (widget->window, TRUE,
+                         GdkEventMask (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+                         GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
+                         GDK_POINTER_MOTION_MASK),
+                         NULL, NULL, GDK_CURRENT_TIME);
+
+            gdk_keyboard_grab (widget->window, TRUE, GDK_CURRENT_TIME);
+
             visible = true;
         }
         else
         {
+            gdk_pointer_ungrab (GDK_CURRENT_TIME);
+            gdk_keyboard_ungrab (GDK_CURRENT_TIME);
             gtk_widget_hide (popdown);
             visible = false;
         }
@@ -3181,14 +3254,22 @@ namespace {
                  GtkTreeIter       *iter,
                  gpointer           data)
     {
+#if 0
         char        *family,
                     *family_escaped,
                     *sample_escaped;
-
         const char  *sample; 
-   
-        gtk_tree_model_get (tree_model, iter, 0, &family, -1); 
+#endif
 
+        char *family;
+        gtk_tree_model_get (tree_model, iter, 0, &family, -1); 
+        const char *sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
+        char *escaped = g_markup_escape_text (sample, -1);       
+        g_object_set (G_OBJECT (cell), "text", escaped, "family", family, NULL);
+        free (escaped);
+        free (family);
+
+#if 0
         sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
 
         family_escaped = g_markup_escape_text (family, -1);
@@ -3201,6 +3282,7 @@ namespace {
         free (family);
         free (family_escaped);
         free (sample_escaped);
+#endif
     }
 
     GtkWidget*
@@ -3227,23 +3309,28 @@ namespace {
         
         //Button
         GtkWidget   *button = gtk_button_new ();
-        gtk_container_add (GTK_CONTAINER (button), gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_NONE));
-
-        aux_toolbox_space (tbl, 1);
-        gtk_box_pack_start (GTK_BOX (tbl), button, FALSE, FALSE, 0);
+        gtk_container_add       (GTK_CONTAINER (button), gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_NONE));
+        gtk_box_pack_start      (GTK_BOX (tbl), button, FALSE, FALSE, 0);
 
         //Popdown
         GtkWidget           *sw = gtk_scrolled_window_new (NULL, NULL);
         GtkWidget           *treeview = gtk_tree_view_new ();
+
         GtkCellRenderer     *cell = gtk_cell_renderer_text_new ();
         GtkTreeViewColumn   *column = gtk_tree_view_column_new ();
-
         gtk_tree_view_column_pack_start (column, cell, FALSE);
         gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-        gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), tbl, NULL);
-        g_object_set (G_OBJECT (column), "min-width", int (300), "max-width", int (300), NULL);
-
+//      gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), gpointer(0), NULL);
+        gtk_tree_view_column_set_attributes (column, cell, "text", 0, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+        cell = gtk_cell_renderer_text_new ();
+        column = gtk_tree_view_column_new ();
+        gtk_tree_view_column_pack_start (column, cell, FALSE);
+        gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+        gtk_tree_view_column_set_cell_data_func (column, cell, GtkTreeCellDataFunc (cell_data_func), NULL, NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
         gtk_tree_view_set_model (GTK_TREE_VIEW (treeview), GTK_TREE_MODEL (Glib::unwrap(store)));
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
         gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW (treeview), TRUE);
@@ -3282,8 +3369,6 @@ namespace {
         g_signal_connect_swapped (G_OBJECT (tbl), "show", G_CALLBACK (gtk_widget_hide), box);
 
         ////////////Size
-        aux_toolbox_space (tbl, 1);
-        //Cbox
         const char *sizes[] = {
             "4", "6", "8", "9", "10", "11", "12", "13", "14",
             "16", "18", "20", "22", "24", "28",
@@ -3298,8 +3383,11 @@ namespace {
         g_object_set_data (G_OBJECT (tbl), "combo-box-size", cbox);
         g_signal_connect (G_OBJECT (cbox), "changed", G_CALLBACK (sp_text_toolbox_size_changed), tbl);
 
+        //spacer
+        aux_toolbox_space (tbl, 4);
+        gtk_box_pack_start (GTK_BOX (tbl), gtk_vseparator_new (), FALSE, FALSE, 4);
+
         ////////////Text anchor
-        aux_toolbox_space (tbl, 1);
         GtkWidget *group   = gtk_radio_button_new (NULL);
         GtkWidget *row     = gtk_hbox_new (FALSE, 4);
         g_object_set_data (G_OBJECT (tbl), "anchor-group", group);
@@ -3347,8 +3435,10 @@ namespace {
         aux_toolbox_space (tbl, 1);
         gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
 
-        ////////////Text anchor
-        aux_toolbox_space (tbl, 1);
+        //spacer
+        gtk_box_pack_start (GTK_BOX (tbl), gtk_vseparator_new (), FALSE, FALSE, 4);
+
+        ////////////Text style
         row = gtk_hbox_new (FALSE, 4);
 
         // bold 
@@ -3372,6 +3462,35 @@ namespace {
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_style_toggled), gpointer (1)); 
 
         aux_toolbox_space (tbl, 1);
+        gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
+
+        //spacer
+        gtk_box_pack_start (GTK_BOX (tbl), gtk_vseparator_new (), FALSE, FALSE, 4);
+
+        ////////////Text orientation
+        group   = gtk_radio_button_new (NULL);
+        row     = gtk_hbox_new (FALSE, 4);
+        g_object_set_data (G_OBJECT (tbl), "orientation-group", group);
+
+        // horizontal
+        rbutton = group;
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_LR)); 
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "orientation-horizontal", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_orientation_toggled), gpointer(0));
+
+        // vertical
+        rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
+        gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (rbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_TB)); 
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+
+        gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
+        g_object_set_data   (G_OBJECT (tbl), "orientation-vertical", rbutton);
+        g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_orientation_toggled), gpointer (1)); 
         gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
 
 
