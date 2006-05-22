@@ -3259,6 +3259,8 @@ namespace {
                     *sample_escaped;
         const char  *sample; 
 
+        gtk_tree_model_get (tree_model, iter, 0, &family, -1);
+
         sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
 
         family_escaped = g_markup_escape_text (family, -1);
