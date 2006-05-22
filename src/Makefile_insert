@@ -334,8 +334,10 @@ test_all_includes = \
 		dir-util-test.h	\
 		extract-uri-test.h	\
 		mod360-test.h	\
+                MultiPrinter.h  \
 		round-test.h	\
 		sp-gradient-test.h	\
 		sp-style-elem-test.h	\
 		style-test.h	\
+                test-helpers.h  \
 		verbs-test.h
