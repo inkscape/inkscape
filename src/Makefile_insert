@@ -331,10 +331,12 @@ inkscape_version.h: ../configure.ac
 test_all_includes = \
 		attributes-test.h	\
 		color-profile-test.h	\
+                MultiPrinter.h  \
+                TRPIFormatter.h \
+                PylogFormatter.h \
 		dir-util-test.h	\
 		extract-uri-test.h	\
 		mod360-test.h	\
-                MultiPrinter.h  \
 		round-test.h	\
 		sp-gradient-test.h	\
 		sp-style-elem-test.h	\
