@@ -1148,7 +1148,7 @@ bool ConnectDialog::doSetup()
     table.resize(6, 2);
     get_vbox()->pack_start(table);
 
-    parent.client.setHost("broadway.dynalias.com");
+    parent.client.setHost("gristle.org");
     parent.client.setPort(5223);
     parent.client.setUsername("");
     parent.client.setPassword("");
@@ -1843,6 +1843,12 @@ void PedroGui::doEvent(const XmppEvent &event)
             doReceiveFile(event.getFrom(), event.getIqId(), event.getStreamId(),
                        event.getFileName(), event.getFileDesc(),
                        event.getFileSize(), event.getFileHash());
+            break;
+            }
+        case XmppEvent::EVENT_REGISTRATION_NEW:
+            {
+            status("##### REGISTERED: %s at %s\n",
+                       event.getTo().c_str(), event.getFrom().c_str());
             break;
             }
         default:

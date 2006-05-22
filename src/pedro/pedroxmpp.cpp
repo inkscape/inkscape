@@ -3313,7 +3313,7 @@ bool XmppClient::saslMd5Authenticate()
         }
 
     DOMString realm = attrs["realm"];
-    if (nonce.size()==0)
+    if (realm.size()==0)
         {
         error("login: no SASL realm sent by server");
         return false;
@@ -3321,8 +3321,8 @@ bool XmppClient::saslMd5Authenticate()
 
     status("SASL recv nonce: '%s' realm:'%s'\n", nonce.c_str(), realm.c_str());
 
-    char idBuf[7];
-    snprintf(idBuf, 6, "%dsasl", msgId++);
+    char idBuf[10];
+    snprintf(idBuf, 9, "%dsasl", msgId++);
     DOMString cnonce = Sha1::hashHex((unsigned char *)idBuf, 7);
     DOMString authzid = username; authzid.append("@"); authzid.append(host);
     DOMString digest_uri = "xmpp/"; digest_uri.append(host);
@@ -3342,8 +3342,10 @@ bool XmppClient::saslMd5Authenticate()
     md5.append(nonce);
     md5.append(":");
     md5.append(cnonce);
-    md5.append(":");
-    md5.append(authzid);
+    //RFC2831 says authzid is optional. Wildfire has trouble with authzid's
+    //md5.append(":");
+    //md5.append(authzid);
+    md5.append("");
     DOMString a1 = md5.finishHex();
     status("##a1:'%s'", a1.c_str());
 
@@ -3376,8 +3378,8 @@ bool XmppClient::saslMd5Authenticate()
     resp.append("cnonce=\"");   resp.append(cnonce);   resp.append("\",");
     resp.append("nc=00000001,qop=auth,");
     resp.append("digest-uri=\""); resp.append(digest_uri); resp.append("\"," );
-    resp.append("authzid=\"");  resp.append(authzid);  resp.append("\",");
-    resp.append("response=\""); resp.append(response); resp.append("\",");
+    //resp.append("authzid=\"");  resp.append(authzid);  resp.append("\",");
+    resp.append("response=");   resp.append(response); resp.append(",");
     resp.append("charset=utf-8");
     status("sending response:'%s'", resp.c_str());
     resp = Base64Encoder::encode(resp);
@@ -3607,34 +3609,46 @@ bool XmppClient::inBandRegistration()
     DOMString recbuf = readStanza();
     status("RECV reg: %s", recbuf.c_str());
     Element *elem = parser.parse(recbuf);
-    elem->print();
+    //elem->print();
 
     //# does the entity send the "instructions" tag?
-    bool hasInstructions =
-         (elem->findElements("instructions").size() > 0);
+    std::vector<Element *> fields = elem->findElements("field");
+    std::vector<DOMString> fnames;
+    for (unsigned int i=0; i<fields.size() ; i++)
+        {
+        DOMString fname = fields[i]->getAttribute("var");
+        if (fname == "FORM_TYPE")
+            continue;
+        fnames.push_back(fname);
+        status("field name:%s", fname.c_str());
+        }
+
     delete elem;
 
-    if (!hasInstructions)
+    if (fnames.size() == 0)
         {
         error("server did not offer registration");
         return false;
         }
+
 
     fmt =
      "<iq type='set' id='reg2'>"
          "<query xmlns='jabber:iq:register'>"
          "<username>%s</username>"
          "<password>%s</password>"
+         "<email/><name/>"
          "</query>"
          "</iq>\n\n";
-    if (!write(fmt, toXml(username).c_str(), toXml(password).c_str() ))
+    if (!write(fmt, toXml(username).c_str(),
+                    toXml(password).c_str() ))
         return false;
 
 
     recbuf = readStanza();
     status("RECV reg: %s", recbuf.c_str());
     elem = parser.parse(recbuf);
-    elem->print();
+    //elem->print();
 
     std::vector<Element *> list = elem->findElements("error");
     if (list.size()>0)
@@ -3658,6 +3672,8 @@ bool XmppClient::inBandRegistration()
     delete elem;
 
     XmppEvent evt(XmppEvent::EVENT_REGISTRATION_NEW);
+    evt.setTo(username);
+    evt.setFrom(host);
     dispatchXmppEvent(evt);
 
     return true;
