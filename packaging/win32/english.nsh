@@ -16,6 +16,15 @@ LangString lng_LICENSE_BUTTON   ${LANG_ENGLISH} "Next >"
 ; Bottom text for the license page
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_ENGLISH} "$(^Name) is released under the GNU General Public License (GPL). The license is provided here for information purposes only. $_CLICK"
 
+;has been installed by different user
+LangString lng_DIFFERENT_USER ${LANG_ENGLISH} "Inkscape has been installed by user $0.$\r$\nIf you continue you might not complete successfully!$\r$\nPlease log in as $0 and try again."
+
+;you have no admin rigths
+LangString lng_NO_ADMIN ${LANG_ENGLISH} "You do not have administrator privileges.$\r$\nInstalling Inkscape for all users might not complete successfully.$\r$\nUncheck the 'for all users' option."
+
+;win9x is not supported
+LangString lng_NOT_SUPPORTED ${LANG_ENGLISH} "Inkscape is known not to run under Windows 95/98/ME!$\r$\nPlease check the official website for detailed information."
+
 ; Full install type
 LangString lng_Full $(LANG_ENGLISH) "Full"
 
@@ -142,7 +151,7 @@ LangString lng_sv $(LANG_ENGLISH) "sv  Swedish"
 LangString lng_tr $(LANG_ENGLISH) "tr  Turkish"
 LangString lng_uk $(LANG_ENGLISH) "uk  Ukrainian"
 LangString lng_zh_CN $(LANG_ENGLISH) "zh_CH  Simplifed Chinese"
-LangString lng_zh_TW $(LANG_ENGLISH) "zh_TW  Chinese (Taiwan)"
+LangString lng_zh_TW $(LANG_ENGLISH) "zh_TW  Traditional Chinese"
 
 
 

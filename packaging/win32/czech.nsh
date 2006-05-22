@@ -16,6 +16,15 @@ LangString lng_LICENSE_BUTTON   ${LANG_CZECH} "Další >"
 ; Bottom text for the license page
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_CZECH} "$(^Name) je vydáván pod General Public License (GPL). Licenèní ujednání je zde pouze z informaèních dùvodù. $_CLICK"
 
+;has been installed by different user
+LangString lng_DIFFERENT_USER ${LANG_CZECH} "Inkscape has been installed by user $0.  If you continue you might not complete successfully!  Please log in as $0 and try again."
+
+;you have no admin rigths
+LangString lng_NO_ADMIN ${LANG_CZECH} "You do not have administrator privileges.  Installing Inkscape for all users might not complete successfully.  Uncheck option 'For All Users'."
+
+;win9x is not supported
+LangString lng_NOT_SUPPORTED ${LANG_CZECH} "Inkscape is known not to run under Windows 95/98/ME!\n\nPlease check the official website for detailed information."
+
 ; Full install type
 LangString lng_Full $(LANG_CZECH) "Plná"
 
@@ -142,7 +151,7 @@ LangString lng_sv $(LANG_CZECH) "sv  Swedish"
 LangString lng_tr $(LANG_CZECH) "tr  Turkish"
 LangString lng_uk $(LANG_CZECH) "uk  Ukrainian"
 LangString lng_zh_CN $(LANG_CZECH) "zh_CH  Simplifed Chinese"
-LangString lng_zh_TW $(LANG_CZECH) "zh_TW  Chinese (Taiwan)"
+LangString lng_zh_TW $(LANG_CZECH) "zh_TW  Traditional Chinese"
 
 
 

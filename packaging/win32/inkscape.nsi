@@ -93,6 +93,7 @@ ShowUnInstDetails hide
 
 var askMultiUser
 Var MultiUser
+var User
 
 ; #######################################
 ;  I N S T A L L E R    S E C T I O N S
@@ -495,6 +496,7 @@ Section $(lng_Core) SecCore
   ; this file is added because it slips through the filter
   SetOutPath $INSTDIR\share\clipart
   File /a "..\..\inkscape\share\clipart\inkscape.logo.svg"
+  File /a "..\..\inkscape\share\clipart\inkscape.logo.classic.svg"  
   SetOutPath $INSTDIR\modules
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
   SetOutPath $INSTDIR\python
@@ -525,19 +527,26 @@ SectionGroup $(lng_Shortcuts) SecShortcuts
 
 Section $(lng_Desktop) SecDesktop
   SectionIn 1 2 3
+  ClearErrors
   CreateShortCut "$DESKTOP\Inkscape.lnk" "$INSTDIR\inkscape.exe"
+  IfErrors 0 +2
+    DetailPrint "Uups! Problems creating desktop shortcuts"
 SectionEnd
 
 Section $(lng_Quicklaunch) SecQuicklaunch
   SectionIn 1 2 3
+  ClearErrors
   StrCmp $QUICKLAUNCH $TEMP +2
     CreateShortCut "$QUICKLAUNCH\Inkscape.lnk" "$INSTDIR\inkscape.exe"
+  IfErrors 0 +2
+    DetailPrint "Uups! Problems creating quicklaunch shortcuts"
 SectionEnd
 
 Section $(lng_SVGWriter) SecSVGWriter 
   SectionIn 1 2 3
   ; create file associations, test before if needed
   DetailPrint "creating file associations"
+  ClearErrors
   ReadRegStr $0 HKCR ".svg" ""
   StrCmp $0 "" 0 +3
     WriteRegStr HKCR ".svg" "" "svgfile"
@@ -546,6 +555,8 @@ Section $(lng_SVGWriter) SecSVGWriter
   StrCmp $0 "" 0 +3
     WriteRegStr HKCR ".svgz" "" "svgfile"
     WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
+  IfErrors 0 +2
+    DetailPrint "Uups! Problems creating file assoziations for svg writer"
   
   DetailPrint "creating default editor"
   ClearErrors
@@ -561,6 +572,7 @@ Section $(lng_ContextMenu) SecContextMenu
   SectionIn 1 2 3
   ; create file associations, test before if needed
   DetailPrint "creating file associations"
+  ClearErrors
   ReadRegStr $0 HKCR ".svg" ""
   StrCmp $0 "" 0 +3
     WriteRegStr HKCR ".svg" "" "svgfile"
@@ -569,6 +581,8 @@ Section $(lng_ContextMenu) SecContextMenu
   StrCmp $0 "" 0 +3
     WriteRegStr HKCR ".svgz" "" "svgfile"
     WriteRegStr HKCR "svgfile" "" "Scalable Vector Graphics file"
+  IfErrors 0 +2
+    DetailPrint "Uups! Problems creating file assoziations for context menu"
   
   DetailPrint "creating context menue"
   ClearErrors
@@ -774,14 +788,21 @@ Section -FinalizeInstallation
   ;  DetailPrint "aborting installation"
   ;	Abort
   WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "MultiUser" "$MultiUser"  
-  WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "askMultiUser" "$askMultiUser"  
+  WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "askMultiUser" "$askMultiUser"
+  WriteRegStr SHCTX "${PRODUCT_DIR_REGKEY}" "User" "$User"
+  IfErrors 0 +2
+    DetailPrint "fatal: failed to write to registry installation info"
 
   ; start menu entries
+  ClearErrors
   CreateDirectory "$SMPROGRAMS\Inkscape"
   CreateShortCut "$SMPROGRAMS\Inkscape\Inkscape.lnk" "$INSTDIR\inkscape.exe"
   CreateShortCut "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk" "$INSTDIR\uninst.exe"
+  IfErrors 0 +2
+    DetailPrint "fatal: failed to write to start menu info"
 
   ; uninstall settings
+  ClearErrors
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "UninstallString" '"$INSTDIR\uninst.exe"'
   WriteRegExpandStr SHCTX "${PRODUCT_UNINST_KEY}" "InstallLocation" "$INSTDIR"
@@ -790,6 +811,8 @@ Section -FinalizeInstallation
   WriteRegStr SHCTX "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoModify" "1"
   WriteRegDWORD SHCTX "${PRODUCT_UNINST_KEY}" "NoRepair" "1"
+  IfErrors 0 +2
+    DetailPrint "fatal: failed to write to registry un-installation info"
 SectionEnd
 
 SectionGroupEnd
@@ -843,6 +866,36 @@ Function .onInit
   ; hide if quick launch if not available
   StrCmp $QUICKLAUNCH $TEMP 0 +2
     SectionSetText ${SecQuicklaunch} ""
+
+  ;check if user is admin
+  ClearErrors
+	UserInfo::GetName
+	IfErrors info_Win9x
+	Pop $0
+	StrCpy $User $0
+	UserInfo::GetAccountType
+	Pop $1
+	StrCmp $1 "Admin" info_done
+
+	MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_NO_ADMIN)"
+
+	Goto info_done
+
+	info_Win9x:
+		# This one means you don't need to care about admin or
+		# not admin because Windows 9x doesn't either
+		MessageBox MB_OK|MB_ICONEXCLAMATION $(lng_NOT_SUPPORTED)
+
+	info_done:
+
+  ;check for previous installation
+  ReadRegStr $0 HKLM "${PRODUCT_DIR_REGKEY}" "User"
+  StrCmp $0 "" +1 +2
+  ReadRegStr $0 HKCU "${PRODUCT_DIR_REGKEY}" "User"
+  ;check user if applicable
+  StrCmp $0 "" +3
+    StrCmp $0 $User +2
+	  MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)"
 	
   ; proccess command line parameter
   !insertmacro Parameter "GTK" ${SecGTK}
@@ -873,6 +926,7 @@ Function .onInit
   !insertmacro Parameter "hu" ${SecHungarian}
   !insertmacro Parameter "it" ${SecItalian}
   !insertmacro Parameter "ja" ${SecJapanese}
+  !insertmacro Parameter "ko" ${SecKorean}
   !insertmacro Parameter "mk" ${SecMacedonian}
   !insertmacro Parameter "nb" ${SecNorwegianBokmal}
   !insertmacro Parameter "nl" ${SecDutch}
@@ -890,6 +944,7 @@ Function .onInit
   !insertmacro Parameter "tr" ${SecTurkish}
   !insertmacro Parameter "uk" ${SecUkrainian}
   !insertmacro Parameter "zh_CN" ${SecChineseSimplified}
+  !insertmacro Parameter "zh_TW" ${SecChineseTaiwan}
   
   Push "?"
   Push "TEST"
@@ -935,19 +990,31 @@ FunctionEnd
 
 Function un.onInit
 
+  ClearErrors
+  StrCpy $User ""
+	UserInfo::GetName
+	IfErrors +3
+	Pop $0
+	StrCpy $User $0
+
   StrCpy $askMultiUser "1"
   StrCpy $MultiUser "1"
  
   ; Test if this was a multiuser installation
   ReadRegStr $0 HKLM "${PRODUCT_DIR_REGKEY}" ""
-  StrCmp $0  "$INSTDIR\inkscape.exe" 0 +4  
+  StrCmp $0  "$INSTDIR\inkscape.exe" 0 +5  
     ReadRegStr $MultiUser HKLM "${PRODUCT_DIR_REGKEY}" "MultiUser"
     ReadRegStr $askMultiUser HKLM "${PRODUCT_DIR_REGKEY}" "askMultiUser"
-	Goto +3
+	ReadRegStr $0 HKLM "${PRODUCT_DIR_REGKEY}" "User"
+	Goto +4
   ReadRegStr $MultiUser HKCU "${PRODUCT_DIR_REGKEY}" "MultiUser"
   ReadRegStr $askMultiUser HKCU "${PRODUCT_DIR_REGKEY}" "askMultiUser"
-	  
-  
+  ReadRegStr $0 HKCU "${PRODUCT_DIR_REGKEY}" "User"
+  ;check user if applicable
+  StrCmp $0 "" +3
+    StrCmp $0 $User +2
+	  MessageBox MB_OK|MB_ICONEXCLAMATION "$(lng_DIFFERENT_USER)"
+    
  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "inkscape.nsi.uninstall"
 
  ;check whether Multi user installation ?
