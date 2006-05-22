@@ -3229,7 +3229,7 @@ bool XmppClient::write(char *fmt, ...)
 /**
  * Perform JEP-077 In-Band Registration
  */
-bool XmppClient::inBandRegistration()
+bool XmppClient::inBandRegistrationNew()
 {
     Parser parser;
 
@@ -3306,6 +3306,182 @@ bool XmppClient::inBandRegistration()
     delete elem;
 
     XmppEvent evt(XmppEvent::EVENT_REGISTRATION_NEW);
+    evt.setTo(username);
+    evt.setFrom(host);
+    dispatchXmppEvent(evt);
+
+    return true;
+}
+
+
+/**
+ * Perform JEP-077 In-Band Registration
+ */
+bool XmppClient::inBandRegistrationModify()
+{
+    Parser parser;
+
+    char *fmt =
+     "<iq type='get' id='reg1'>"
+         "<query xmlns='jabber:iq:register'/>"
+         "</iq>\n\n";
+    if (!write(fmt))
+        return false;
+
+    DOMString recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
+    Element *elem = parser.parse(recbuf);
+    //elem->print();
+
+    //# does the entity send the "instructions" tag?
+    std::vector<Element *> fields = elem->findElements("field");
+    std::vector<DOMString> fnames;
+    for (unsigned int i=0; i<fields.size() ; i++)
+        {
+        DOMString fname = fields[i]->getAttribute("var");
+        if (fname == "FORM_TYPE")
+            continue;
+        fnames.push_back(fname);
+        status("field name:%s", fname.c_str());
+        }
+
+    delete elem;
+
+    if (fnames.size() == 0)
+        {
+        error("server did not offer registration");
+        return false;
+        }
+
+
+    fmt =
+     "<iq type='set' id='reg2'>"
+         "<query xmlns='jabber:iq:register'>"
+         "<username>%s</username>"
+         "<password>%s</password>"
+         "<email/><name/>"
+         "</query>"
+         "</iq>\n\n";
+    if (!write(fmt, toXml(username).c_str(),
+                    toXml(password).c_str() ))
+        return false;
+
+
+    recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
+    elem = parser.parse(recbuf);
+    //elem->print();
+
+    std::vector<Element *> list = elem->findElements("error");
+    if (list.size()>0)
+        {
+        Element *errElem = list[0];
+        DOMString code = errElem->getAttribute("code");
+        DOMString errMsg = "Registration error. ";
+        if (code == "409")
+            {
+            errMsg.append("conflict with existing user name");
+            }
+        if (code == "406")
+            {
+            errMsg.append("some registration information was not provided");
+            }
+        error((char *)errMsg.c_str());
+        delete elem;
+        return false;
+        }
+
+    delete elem;
+
+    XmppEvent evt(XmppEvent::EVENT_REGISTRATION_MODIFY);
+    evt.setTo(username);
+    evt.setFrom(host);
+    dispatchXmppEvent(evt);
+
+    return true;
+}
+
+
+/**
+ * Perform JEP-077 In-Band Registration
+ */
+bool XmppClient::inBandRegistrationCancel()
+{
+    Parser parser;
+
+    char *fmt =
+     "<iq type='get' id='reg1'>"
+         "<query xmlns='jabber:iq:register'/>"
+         "</iq>\n\n";
+    if (!write(fmt))
+        return false;
+
+    DOMString recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
+    Element *elem = parser.parse(recbuf);
+    //elem->print();
+
+    //# does the entity send the "instructions" tag?
+    std::vector<Element *> fields = elem->findElements("field");
+    std::vector<DOMString> fnames;
+    for (unsigned int i=0; i<fields.size() ; i++)
+        {
+        DOMString fname = fields[i]->getAttribute("var");
+        if (fname == "FORM_TYPE")
+            continue;
+        fnames.push_back(fname);
+        status("field name:%s", fname.c_str());
+        }
+
+    delete elem;
+
+    if (fnames.size() == 0)
+        {
+        error("server did not offer registration");
+        return false;
+        }
+
+
+    fmt =
+     "<iq type='set' id='reg2'>"
+         "<query xmlns='jabber:iq:register'>"
+         "<username>%s</username>"
+         "<password>%s</password>"
+         "<email/><name/>"
+         "</query>"
+         "</iq>\n\n";
+    if (!write(fmt, toXml(username).c_str(),
+                    toXml(password).c_str() ))
+        return false;
+
+
+    recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
+    elem = parser.parse(recbuf);
+    //elem->print();
+
+    std::vector<Element *> list = elem->findElements("error");
+    if (list.size()>0)
+        {
+        Element *errElem = list[0];
+        DOMString code = errElem->getAttribute("code");
+        DOMString errMsg = "Registration error. ";
+        if (code == "409")
+            {
+            errMsg.append("conflict with existing user name");
+            }
+        if (code == "406")
+            {
+            errMsg.append("some registration information was not provided");
+            }
+        error((char *)errMsg.c_str());
+        delete elem;
+        return false;
+        }
+
+    delete elem;
+
+    XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CANCEL);
     evt.setTo(username);
     evt.setFrom(host);
     dispatchXmppEvent(evt);
@@ -3733,7 +3909,7 @@ bool XmppClient::saslAuthenticate()
     //register, if user requests
     if (doRegister)
         {
-        if (!inBandRegistration())
+        if (!inBandRegistrationNew())
             return false;
         }
 

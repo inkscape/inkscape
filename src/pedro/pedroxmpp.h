@@ -1126,7 +1126,20 @@ private:
 
     bool iqAuthenticate(const DOMString &streamId);
 
-    bool inBandRegistration();
+    /**
+     * Register a new account with a server
+     */
+    bool inBandRegistrationNew();
+
+    /**
+     * Modify an existing account with a server
+     */
+    bool inBandRegistrationModify();
+
+    /**
+     * Cancel an existing account with a server
+     */
+    bool inBandRegistrationCancel();
 
     bool keepGoing;
 
