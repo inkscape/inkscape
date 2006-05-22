@@ -228,7 +228,7 @@ test-all.cpp: \
 		$(test_all_includes)
 
 test_all_SOURCES = \
-	test-all.cpp
+	test-all.cpp $(test_all_includes)
 
 
 test_all_LDADD =	\
