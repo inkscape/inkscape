@@ -804,6 +804,7 @@ sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
 void
 sp_text_edit_dialog_default_set_insensitive ()
 {
+    if (!dlg) return;
     gpointer data = g_object_get_data (G_OBJECT (dlg), "default");
     if (!data) return;
     gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
