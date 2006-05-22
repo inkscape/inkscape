@@ -48,6 +48,7 @@ dom_libdom_a_SOURCES =	         \
 	dom/io/bufferstream.h    \
         dom/io/domstream.cpp     \
         dom/io/domstream.h       \
+        dom/io/httpclient.h      \
         dom/io/gzipstream.cpp    \
         dom/io/gzipstream.h      \
         dom/io/socket.cpp        \
