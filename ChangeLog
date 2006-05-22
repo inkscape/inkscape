@@ -1,3 +1,10 @@
+2006-05-22  MenTaLguY  <mental@rydia.net>
+
+	* src/extension/internal/svg.cpp:
+
+	  replace EXTREMELY inefficient (O(n^2), I think?) stacked C string
+	  concatenations with appends to a std::vector, which is amortized O(1)
+
 2006-05-21  Marco Scholten  <mscholtn@xs4all.nl>
 
 	* src/ui/dialog/inkscape-preferences.cpp, 

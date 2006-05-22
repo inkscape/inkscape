@@ -20,6 +20,7 @@
 #include "file.h"
 #include "extension/system.h"
 #include "extension/output.h"
+#include <vector>
 
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs.h>
@@ -106,9 +107,6 @@ _load_uri (const gchar *uri)
 {
     GnomeVFSHandle   *handle = NULL;
     GnomeVFSFileSize  bytes_read;
-    gchar             buffer[BUF_SIZE] = "";
-    gchar            *doc = NULL;
-    gchar            *new_doc = NULL;
 
         gsize bytesRead = 0;
         gsize bytesWritten = 0;
@@ -125,20 +123,14 @@ _load_uri (const gchar *uri)
         g_warning(gnome_vfs_result_to_string(result));
     }
 
+    std::vector<gchar> doc;
     while (result == GNOME_VFS_OK) {
+        gchar buffer[BUF_SIZE];
         result = gnome_vfs_read (handle, buffer, BUF_SIZE, &bytes_read);
-        buffer[bytes_read] = '\0';
-
-        if (doc == NULL) {
-            doc = g_strndup(buffer, bytes_read);
-        } else {
-            new_doc = g_strconcat(doc, buffer, NULL);
-            g_free(doc);
-            doc = new_doc;
-        }
+        doc.insert(doc.end(), buffer, buffer+bytes_read);
     }
 
-    return doc;
+    return g_strndup(&doc[0], doc.size());
 }
 #endif
 
