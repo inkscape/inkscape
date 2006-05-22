@@ -12,6 +12,7 @@ dom_libdom_a_SOURCES =	         \
 	dom/cssparser.cpp        \
 	dom/cssparser.h          \
 	dom/dom.h                \
+        dom/domconfig.h          \
 	dom/domimpl.cpp          \
 	dom/domimpl.h            \
         dom/domstring.cpp        \
