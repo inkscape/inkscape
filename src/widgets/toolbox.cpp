@@ -3212,7 +3212,6 @@ namespace {
             gtk_window_move (GTK_WINDOW (popdown), x, y + widget->allocation.height + 2); //2px of grace space 
             gtk_widget_show_all (popdown);
 
-#if 0
             gdk_pointer_grab (widget->window, TRUE,
                          GdkEventMask (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
@@ -3220,7 +3219,6 @@ namespace {
                          NULL, NULL, GDK_CURRENT_TIME);
 
             gdk_keyboard_grab (widget->window, TRUE, GDK_CURRENT_TIME);
-#endif
 
             visible = true;
         }
