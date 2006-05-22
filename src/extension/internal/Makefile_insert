@@ -14,6 +14,7 @@ endif
 extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/bluredge.h	\
 	extension/internal/bluredge.cpp	\
+        extension/internal/clear-n_.h   \
 	extension/internal/grid.h	\
 	extension/internal/grid.cpp	\
 \
