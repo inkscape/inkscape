@@ -34,8 +34,8 @@ class Panel : public Gtk::VBox
 public:
     Panel();
     virtual ~Panel();
-    Panel(Glib::ustring const &label);
-    Panel(const gchar *prefs_path);
+    Panel(Glib::ustring const &label, bool menuDesired = false );
+    Panel(const gchar *prefs_path, bool menuDesired = false );
 
     void setLabel(Glib::ustring const &label);
     Glib::ustring const &getLabel() const;
@@ -51,6 +51,7 @@ protected:
     void _regItem( Gtk::MenuItem* item, int group, int id );
 
     virtual void _handleAction( int setId, int itemId );
+    bool _menuDesired;
 
     Gtk::AnchorType _anchor;
 

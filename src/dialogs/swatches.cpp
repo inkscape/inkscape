@@ -916,7 +916,7 @@ SwatchesPanel& SwatchesPanel::getInstance()
  * Constructor
  */
 SwatchesPanel::SwatchesPanel() :
-    Inkscape::UI::Widget::Panel ("dialogs.swatches"),
+    Inkscape::UI::Widget::Panel( "dialogs.swatches", true ),
     _holder(0)
 {
     _holder = new PreviewHolder();

@@ -31,8 +31,9 @@ namespace Widget {
  *    \param label Label.
  */
 
-Panel::Panel(const gchar *prefs_path) :
+Panel::Panel( const gchar *prefs_path, bool menuDesired ) :
     _prefs_path(NULL),
+    _menuDesired(menuDesired),
     _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
     menu(0),
     _fillable(0)
@@ -43,6 +44,7 @@ Panel::Panel(const gchar *prefs_path) :
 
 Panel::Panel() :
     _prefs_path(NULL),
+    _menuDesired(false),
     _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
     menu(0),
     _fillable(0)
@@ -50,8 +52,9 @@ Panel::Panel() :
     init();
 }
 
-Panel::Panel(Glib::ustring const &label) :
+Panel::Panel( Glib::ustring const &label, bool menuDesired ) :
     _prefs_path(NULL),
+    _menuDesired(menuDesired),
     _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
     menu(0),
     _fillable(0)
@@ -137,12 +140,14 @@ void Panel::init()
     //topBar.pack_end(closeButton, false, false);
 
 
-    topBar.pack_end(menuPopper, false, false);
-    Gtk::Frame* outliner = manage(new Gtk::Frame());
-    outliner->set_shadow_type( Gtk::SHADOW_ETCHED_IN );
-    outliner->add( _tempArrow );
-    menuPopper.add( *outliner );
-    menuPopper.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &Panel::_popper) );
+    if ( _menuDesired ) {
+        topBar.pack_end(menuPopper, false, false);
+        Gtk::Frame* outliner = manage(new Gtk::Frame());
+        outliner->set_shadow_type( Gtk::SHADOW_ETCHED_IN );
+        outliner->add( _tempArrow );
+        menuPopper.add( *outliner );
+        menuPopper.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &Panel::_popper) );
+    }
 
     pack_start( topBar, false, false );
 
@@ -175,10 +180,12 @@ void Panel::setOrientation( Gtk::AnchorType how )
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                menuPopper.reference();
-                topBar.remove(menuPopper);
-                rightBar.pack_start(menuPopper, false, false);
-                menuPopper.unreference();
+                if ( _menuDesired ) {
+                    menuPopper.reference();
+                    topBar.remove(menuPopper);
+                    rightBar.pack_start(menuPopper, false, false);
+                    menuPopper.unreference();
+                }
 
                 topBar.remove(tabTitle);
             }

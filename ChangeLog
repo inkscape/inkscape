@@ -1,3 +1,9 @@
+2006-05-22  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/dialogs/swatches.cpp, src/ui/widget/panel.cpp,
+	  src/ui/widget/panel.h:
+	  Removed panel menu unless requested. Fixes bug #1492597.
+
 2006-05-22  MenTaLguY  <mental@rydia.net>
 
 	* src/extension/internal/svg.cpp:
