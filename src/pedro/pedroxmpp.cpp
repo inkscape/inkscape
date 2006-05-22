@@ -3893,7 +3893,7 @@ bool XmppClient::disconnect()
         }
     keepGoing = false;
     connected = false;
-    Thread::sleep(3000); //allow receiving thread to quit
+    Thread::sleep(2000); //allow receiving thread to quit
     sock->disconnect();
     roster.clear();
     groupChatsClear();
@@ -3902,6 +3902,8 @@ bool XmppClient::disconnect()
     dispatchXmppEvent(event);
     return true;
 }
+
+
 
 //#######################
 //# ROSTER

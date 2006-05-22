@@ -245,32 +245,32 @@ public:
     static const int EVENT_FILE_RECEIVE         = 61;
 
     /**
-     *
+     *  Constructs an event with one of the types above.
      */
     XmppEvent(int type);
 
     /**
-     *
+     *  Copy constructor
      */
     XmppEvent(const XmppEvent &other);
 
     /**
-     *
+     *  Assignment
      */
     virtual XmppEvent &operator=(const XmppEvent &other);
 
     /**
-     *
+     *  Destructor
      */
     virtual ~XmppEvent();
 
     /**
-     *
+     *  Assignment
      */
     virtual void assign(const XmppEvent &other);
 
     /**
-     *
+     *  Return the event type.
      */
     virtual int getType() const;
 
@@ -470,35 +470,46 @@ private:
 };
 
 
+
+
+
+
 //########################################################################
 //# X M P P    E V E N T    L I S T E N E R
 //########################################################################
 
+/**
+ * Class that receives and processes an XmppEvent.  Users should inherit
+ * from this class, and overload processXmppEvent() to perform their event
+ * handling
+ */
 class XmppEventListener
 {
 public:
 
     /**
-     *
+     *  Constructor  
      */
     XmppEventListener()
         {}
 
     /**
-     *
+     *  Assignment
      */
     XmppEventListener(const XmppEventListener &other)
         {}
 
 
     /**
-     *
+     * Destructor
      */
     virtual ~XmppEventListener()
         {}
 
     /**
-     *
+     *  Overload this method to provide your application-specific
+     *  event handling.  Use event.getType() to decide what to do
+     *  with the event.
      */
     virtual void processXmppEvent(const XmppEvent &event)
         {}
@@ -511,22 +522,30 @@ public:
 //# X M P P    E V E N T    T A R G E T
 //########################################################################
 
+/**
+ * A base class for classes that emit XmppEvents.
+ *
+ * Note: terminology: 'target' is the common term for this, although it
+ * seems odd that a 'target' is the source of the events.  It is clearer
+ * if you consider that the greater system targets this class with events,
+ * and this class delegates the handling to its listeners.
+ */
 class XmppEventTarget
 {
 public:
 
     /**
-     *
+     * Constructor
      */
     XmppEventTarget();
 
     /**
-     *
+     *  Copy constructor
      */
     XmppEventTarget(const XmppEventTarget &other);
 
     /**
-     *
+     * Destructor
      */
     virtual ~XmppEventTarget();
 
@@ -552,37 +571,46 @@ public:
     //###########################
 
     /**
-     *
-     */
-    virtual void dispatchXmppEvent(const XmppEvent &event);
-
-    /**
-     *
+     *  Subscribe a subclass of XmppEventListener to this target's events.
      */
     virtual void addXmppEventListener(const XmppEventListener &listener);
 
     /**
-     *
+     *  Unsubscribe a subclass of XmppEventListener from this target's events.
      */
     virtual void removeXmppEventListener(const XmppEventListener &listener);
 
     /**
-     *
+     *  Remove all event subscribers
      */
     virtual void clearXmppEventListeners();
 
     /**
-     *
+     *  This sends an event to all registered listeners.
+     */
+    virtual void dispatchXmppEvent(const XmppEvent &event);
+
+    /**
+     *  By enabling this, you provide an alternate way to get XmppEvents.
+     *  Any event sent to dispatchXmppEvent() is also sent to this queue,
+     *  so that it can be later be picked up by eventQueuePop();
+     *  This can sometimes be good for GUI's which can't always respond
+     *  repidly or asynchronously.
      */
     void eventQueueEnable(bool val);
 
     /**
-     *
+     *  Return true if there is one or more XmppEvents waiting in the event
+     *  queue.  This is used to avoid calling eventQueuePop() when there is
+     *  nothing in the queue.
      */
     int eventQueueAvailable();
 
     /**
-     *
+     *  Return the next XmppEvent in the queue.  Users should check that
+     *  eventQueueAvailable() is greater than 0 before calling this.  If
+     *  people forget to do this, an event of type XmppEvent::EVENT_NONE
+     *  is generated and returned.
      */
     XmppEvent eventQueuePop();
 
@@ -607,12 +635,16 @@ private:
 //# X M P P    C L I E N T
 //########################################################################
 
-
+//forward declarations
 class TcpSocket;
 class XmppChat;
 class XmppGroupChat;
 class XmppStream;
 
+
+/**
+ *  This is the actual XMPP (Jabber) client.
+ */
 class XmppClient : public XmppEventTarget
 {
 
@@ -623,22 +655,22 @@ public:
     //###########################
 
     /**
-     *
+     * Constructor
      */
     XmppClient();
 
     /**
-     *
+     *  Copy constructor
      */
     XmppClient(const XmppClient &other);
 
     /**
-     *
+     *  Assignment
      */
     void assign(const XmppClient &other);
 
     /**
-     *
+     * Destructor
      */
     virtual ~XmppClient();
 
@@ -648,12 +680,14 @@ public:
     //###########################
 
     /**
-     *
+     *  Pause execution of the app for a given number of
+     *  milliseconds.  Use this rarely, only when really needed.
      */
     virtual bool pause(unsigned long millis);
 
     /**
-     *
+     *  Process a string so that it can safely be
+     *  placed in XML as PCDATA
      */
     DOMString toXml(const DOMString &str);
 
