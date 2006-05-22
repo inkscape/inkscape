@@ -4,7 +4,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -47,7 +47,8 @@
 
 #include <pthread.h>
 
-#endif
+#endif /* UNIX */
+
 
 #ifdef HAVE_SSL
 #include <openssl/ssl.h>
@@ -58,16 +59,16 @@
 namespace Pedro
 {
 
-//########################################################################
-//########################################################################
-//### U T I L I T Y
-//########################################################################
-//########################################################################
 
 
+
+
+//########################################################################
 //########################################################################
 //# B A S E    6 4
 //########################################################################
+//########################################################################
+
 
 //#################
 //# ENCODER
@@ -378,10 +379,19 @@ DOMString Base64Decoder::decodeToString(const DOMString &str)
 
 
 
+
+
+
+
 //########################################################################
-//# S H A   1
+//########################################################################
+//### S H A    1      H A S H I N G
+//########################################################################
 //########################################################################
 
+/**
+ *
+ */
 class Sha1
 {
 public:
@@ -589,10 +599,16 @@ void Sha1::hashblock()
 
 
 
+
 //########################################################################
-//# M D  5
+//########################################################################
+//### M D 5      H A S H I N G
+//########################################################################
 //########################################################################
 
+/**
+ *
+ */
 class Md5
 {
 public:
@@ -946,6 +962,9 @@ void Md5::transform(unsigned long *buf, unsigned long *in)
 
 
 
+
+
+
 //########################################################################
 //########################################################################
 //### T H R E A D
@@ -953,9 +972,6 @@ void Md5::transform(unsigned long *buf, unsigned long *in)
 //########################################################################
 
 
-//########################################################################
-//### T H R E A D
-//########################################################################
 
 /**
  * This is the interface for a delegate class which can
@@ -1118,6 +1134,22 @@ void Thread::sleep(unsigned long millis)
 #endif
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //########################################################################
 //########################################################################
 //### S O C K E T
@@ -1126,8 +1158,9 @@ void Thread::sleep(unsigned long millis)
 
 
 
-
-
+/**
+ *  A socket wrapper that provides cross-platform capability, plus SSL
+ */
 class TcpSocket
 {
 public:
@@ -1785,17 +1818,24 @@ std::string TcpSocket::readLine()
 }
 
 
-//########################################################################
-//########################################################################
-//### X M P P
-//########################################################################
-//########################################################################
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+//########################################################################
 //########################################################################
 //# X M P P    E V E N T
+//########################################################################
 //########################################################################
 
 
@@ -1999,9 +2039,20 @@ void XmppEvent::setUserList(const std::vector<XmppUser> &val)
     userList = val;
 }
 
+
+
+
+
+
+
+
+
+//########################################################################
 //########################################################################
 //# X M P P    E V E N T    T A R G E T
 //########################################################################
+//########################################################################
+
 
 //###########################
 //# CONSTRUCTORS
@@ -2028,18 +2079,26 @@ XmppEventTarget::~XmppEventTarget()
 //# M E S S A G E S
 //###########################
 
+/**
+ *  Print a printf()-like formatted error message
+ */
 void XmppEventTarget::error(char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
     vsnprintf(targetWriteBuf, targetWriteBufLen, fmt, args);
     va_end(args) ;
-    printf("Error:%s\n", targetWriteBuf);
+    fprintf(stderr, "Error:%s\n", targetWriteBuf);
     XmppEvent evt(XmppEvent::EVENT_ERROR);
     evt.setData(targetWriteBuf);
     dispatchXmppEvent(evt);
 }
 
+
+
+/**
+ *  Print a printf()-like formatted trace message
+ */
 void XmppEventTarget::status(char *fmt, ...)
 {
     va_list args;
@@ -2121,9 +2180,15 @@ XmppEvent XmppEventTarget::eventQueuePop()
 }
 
 
+
+
+
+//########################################################################
 //########################################################################
 //# X M P P    S T R E A M
 //########################################################################
+//########################################################################
+
 
 /**
  *
@@ -2365,8 +2430,11 @@ std::vector<unsigned char> XmppStream::read()
 
 
 //########################################################################
+//########################################################################
 //# X M P P    C L I E N T
 //########################################################################
+//########################################################################
+
 class ReceiverThread : public Runnable
 {
 public:
@@ -2384,9 +2452,12 @@ private:
 };
 
 
-//###########################
+
+
+
+//########################################################################
 //# CONSTRUCTORS
-//###########################
+//########################################################################
 
 XmppClient::XmppClient()
 {
@@ -2455,9 +2526,14 @@ XmppClient::~XmppClient()
     groupChatsClear();
 }
 
-//##############################################
+
+
+
+
+
+//########################################################################
 //# UTILILY
-//##############################################
+//########################################################################
 
 /**
  *
@@ -2478,10 +2554,13 @@ static int strIndex(const DOMString &str, char *key)
 }
 
 
+
 DOMString XmppClient::toXml(const DOMString &str)
 {
     return Parser::encode(str);
 }
+
+
 
 static DOMString trim(const DOMString &str)
 {
@@ -2499,9 +2578,14 @@ static DOMString trim(const DOMString &str)
     return str.substr(start, end);
 }
 
-//##############################################
+
+
+
+
+//########################################################################
 //# VARIABLES  (ones that need special handling)
-//##############################################
+//########################################################################
+
 /**
  *
  */
@@ -2528,13 +2612,18 @@ void XmppClient::setUsername(const DOMString &val)
        }
 }
 
-//##############################################
-//# CONNECTION
-//##############################################
 
-//#######################
+
+
+
+
+
+
+//########################################################################
 //# RECEIVING
-//#######################
+//########################################################################
+
+
 DOMString XmppClient::readStanza()
 {
     int  openCount    = 0;
@@ -3105,9 +3194,13 @@ bool XmppClient::receiveAndProcessLoop()
     return true;
 }
 
-//#######################
+
+
+
+//########################################################################
 //# SENDING
-//#######################
+//########################################################################
+
 
 bool XmppClient::write(char *fmt, ...)
 {
@@ -3124,21 +3217,109 @@ bool XmppClient::write(char *fmt, ...)
     return true;
 }
 
-//#######################
-//# CONNECT
-//#######################
 
-bool XmppClient::checkConnect()
+
+
+
+
+//########################################################################
+//# R E G I S T R A T I O N
+//########################################################################
+
+/**
+ * Perform JEP-077 In-Band Registration
+ */
+bool XmppClient::inBandRegistration()
 {
-    if (!connected)
+    Parser parser;
+
+    char *fmt =
+     "<iq type='get' id='reg1'>"
+         "<query xmlns='jabber:iq:register'/>"
+         "</iq>\n\n";
+    if (!write(fmt))
+        return false;
+
+    DOMString recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
+    Element *elem = parser.parse(recbuf);
+    //elem->print();
+
+    //# does the entity send the "instructions" tag?
+    std::vector<Element *> fields = elem->findElements("field");
+    std::vector<DOMString> fnames;
+    for (unsigned int i=0; i<fields.size() ; i++)
         {
-        XmppEvent evt(XmppEvent::EVENT_ERROR);
-        evt.setData("Attempted operation while disconnected");
-        dispatchXmppEvent(evt);
+        DOMString fname = fields[i]->getAttribute("var");
+        if (fname == "FORM_TYPE")
+            continue;
+        fnames.push_back(fname);
+        status("field name:%s", fname.c_str());
+        }
+
+    delete elem;
+
+    if (fnames.size() == 0)
+        {
+        error("server did not offer registration");
         return false;
         }
+
+
+    fmt =
+     "<iq type='set' id='reg2'>"
+         "<query xmlns='jabber:iq:register'>"
+         "<username>%s</username>"
+         "<password>%s</password>"
+         "<email/><name/>"
+         "</query>"
+         "</iq>\n\n";
+    if (!write(fmt, toXml(username).c_str(),
+                    toXml(password).c_str() ))
+        return false;
+
+
+    recbuf = readStanza();
+    status("RECV reg: %s", recbuf.c_str());
+    elem = parser.parse(recbuf);
+    //elem->print();
+
+    std::vector<Element *> list = elem->findElements("error");
+    if (list.size()>0)
+        {
+        Element *errElem = list[0];
+        DOMString code = errElem->getAttribute("code");
+        DOMString errMsg = "Registration error. ";
+        if (code == "409")
+            {
+            errMsg.append("conflict with existing user name");
+            }
+        if (code == "406")
+            {
+            errMsg.append("some registration information was not provided");
+            }
+        error((char *)errMsg.c_str());
+        delete elem;
+        return false;
+        }
+
+    delete elem;
+
+    XmppEvent evt(XmppEvent::EVENT_REGISTRATION_NEW);
+    evt.setTo(username);
+    evt.setFrom(host);
+    dispatchXmppEvent(evt);
+
     return true;
 }
+
+
+
+
+
+//########################################################################
+//# A U T H E N T I C A T E
+//########################################################################
 
 bool XmppClient::iqAuthenticate(const DOMString &streamId)
 {
@@ -3220,8 +3401,11 @@ bool XmppClient::iqAuthenticate(const DOMString &streamId)
 }
 
 
-static bool
-saslParse(const DOMString &s, std::map<DOMString, DOMString> &vals)
+/**
+ * Parse a sasl challenge to retrieve all of its key=value pairs
+ */
+static bool saslParse(const DOMString &s, 
+                      std::map<DOMString, DOMString> &vals)
 {
 
     vals.clear();
@@ -3272,14 +3456,15 @@ saslParse(const DOMString &s, std::map<DOMString, DOMString> &vals)
 
 
 
-
-
+/**
+ * Attempt suthentication using the MD5 SASL mechanism
+ */
 bool XmppClient::saslMd5Authenticate()
 {
     Parser parser;
     char *fmt =
     "<auth xmlns='urn:ietf:params:xml:ns:xmpp-sasl' "
-    "mechanism='DIGEST-MD5'/>\n";
+        "mechanism='DIGEST-MD5'/>\n";
     if (!write(fmt))
         return false;
 
@@ -3296,7 +3481,7 @@ bool XmppClient::saslMd5Authenticate()
         return false;
         }
     DOMString challenge = Base64Decoder::decodeToString(b64challenge);
-    status("challenge:'%s'", challenge.c_str());
+    status("md5 challenge:'%s'", challenge.c_str());
 
     std::map<DOMString, DOMString> attrs;
     if (!saslParse(challenge, attrs))
@@ -3403,7 +3588,7 @@ bool XmppClient::saslMd5Authenticate()
         }
 
     challenge = Base64Decoder::decodeToString(b64challenge);
-    status("challenge: '%s'", challenge.c_str());
+    status("md5 challenge: '%s'", challenge.c_str());
 
     if (!saslParse(challenge, attrs))
         {
@@ -3434,6 +3619,12 @@ bool XmppClient::saslMd5Authenticate()
     return success;
 }
 
+
+
+/**
+ *  Attempt to authentication using the SASL PLAIN mechanism.  This
+ *  is used most commonly my Google Talk.
+ */
 bool XmppClient::saslPlainAuthenticate()
 {
     Parser parser;
@@ -3466,6 +3657,10 @@ bool XmppClient::saslPlainAuthenticate()
 
 
 
+/**
+ * Handshake with SASL, and use one of its offered mechanisms to
+ * authenticate.
+ */
 bool XmppClient::saslAuthenticate()
 {
     Parser parser;
@@ -3592,94 +3787,36 @@ bool XmppClient::saslAuthenticate()
 }
 
 
+
+
+
+
+//########################################################################
+//# CONNECT
+//########################################################################
+
+
 /**
- * Perform JEP-077 In-Band Registration
+ * Check if we are connected, and fail with an error if we are not
  */
-bool XmppClient::inBandRegistration()
+bool XmppClient::checkConnect()
 {
-    Parser parser;
-
-    char *fmt =
-     "<iq type='get' id='reg1'>"
-         "<query xmlns='jabber:iq:register'/>"
-         "</iq>\n\n";
-    if (!write(fmt))
-        return false;
-
-    DOMString recbuf = readStanza();
-    status("RECV reg: %s", recbuf.c_str());
-    Element *elem = parser.parse(recbuf);
-    //elem->print();
-
-    //# does the entity send the "instructions" tag?
-    std::vector<Element *> fields = elem->findElements("field");
-    std::vector<DOMString> fnames;
-    for (unsigned int i=0; i<fields.size() ; i++)
+    if (!connected)
         {
-        DOMString fname = fields[i]->getAttribute("var");
-        if (fname == "FORM_TYPE")
-            continue;
-        fnames.push_back(fname);
-        status("field name:%s", fname.c_str());
-        }
-
-    delete elem;
-
-    if (fnames.size() == 0)
-        {
-        error("server did not offer registration");
+        XmppEvent evt(XmppEvent::EVENT_ERROR);
+        evt.setData("Attempted operation while disconnected");
+        dispatchXmppEvent(evt);
         return false;
         }
-
-
-    fmt =
-     "<iq type='set' id='reg2'>"
-         "<query xmlns='jabber:iq:register'>"
-         "<username>%s</username>"
-         "<password>%s</password>"
-         "<email/><name/>"
-         "</query>"
-         "</iq>\n\n";
-    if (!write(fmt, toXml(username).c_str(),
-                    toXml(password).c_str() ))
-        return false;
-
-
-    recbuf = readStanza();
-    status("RECV reg: %s", recbuf.c_str());
-    elem = parser.parse(recbuf);
-    //elem->print();
-
-    std::vector<Element *> list = elem->findElements("error");
-    if (list.size()>0)
-        {
-        Element *errElem = list[0];
-        DOMString code = errElem->getAttribute("code");
-        DOMString errMsg = "Registration error. ";
-        if (code == "409")
-            {
-            errMsg.append("conflict with existing user name");
-            }
-        if (code == "406")
-            {
-            errMsg.append("some registration information was not provided");
-            }
-        error((char *)errMsg.c_str());
-        delete elem;
-        return false;
-        }
-
-    delete elem;
-
-    XmppEvent evt(XmppEvent::EVENT_REGISTRATION_NEW);
-    evt.setTo(username);
-    evt.setFrom(host);
-    dispatchXmppEvent(evt);
-
     return true;
 }
 
 
+
+/**
+ * Create an XMPP session with a server.  This
+ * is basically the transport layer of XMPP.
+ */
 bool XmppClient::createSession()
 {
 
@@ -3855,6 +3992,11 @@ bool XmppClient::createSession()
     return true;
 }
 
+
+
+/**
+ * Public call to connect
+ */
 bool XmppClient::connect()
 {
     if (!createSession())
@@ -3866,6 +4008,9 @@ bool XmppClient::connect()
 }
 
 
+/**
+ * Public call to connect
+ */
 bool XmppClient::connect(DOMString hostArg, int portArg,
                          DOMString usernameArg,
                          DOMString passwordArg,
@@ -3883,6 +4028,11 @@ bool XmppClient::connect(DOMString hostArg, int portArg,
     return ret;
 }
 
+
+
+/**
+ * Public call to disconnect
+ */
 bool XmppClient::disconnect()
 {
     if (connected)
@@ -3905,10 +4055,15 @@ bool XmppClient::disconnect()
 
 
 
-//#######################
-//# ROSTER
-//#######################
 
+
+//########################################################################
+//# ROSTER
+//########################################################################
+
+/**
+ *  Add an XMPP id to your roster
+ */
 bool XmppClient::rosterAdd(const DOMString &rosterGroup,
                            const DOMString &otherJid,
                            const DOMString &name)
@@ -3928,6 +4083,11 @@ bool XmppClient::rosterAdd(const DOMString &rosterGroup,
     return true;
 }
 
+
+
+/**
+ *  Delete an XMPP id from your roster.
+ */
 bool XmppClient::rosterDelete(const DOMString &otherJid)
 {
     if (!checkConnect())
@@ -3945,6 +4105,9 @@ bool XmppClient::rosterDelete(const DOMString &otherJid)
 }
 
 
+/**
+ *  Comparison method for sort() call below
+ */
 static bool xmppRosterCompare(const XmppUser& p1, const XmppUser& p2)
 {
     DOMString s1 = p1.group;
@@ -3967,6 +4130,12 @@ static bool xmppRosterCompare(const XmppUser& p1, const XmppUser& p2)
     return false;
 }
 
+
+
+/**
+ *  Sort and return the roster that has just been reported by
+ *  an XmppEvent::EVENT_ROSTER event.
+ */
 std::vector<XmppUser> XmppClient::getRoster()
 {
     std::vector<XmppUser> ros = roster;
@@ -3974,6 +4143,10 @@ std::vector<XmppUser> XmppClient::getRoster()
     return ros;
 }
 
+
+/**
+ *
+ */
 void XmppClient::rosterShow(const DOMString &jid, const DOMString &show)
 {
     DOMString theShow = show;
@@ -3988,10 +4161,18 @@ void XmppClient::rosterShow(const DOMString &jid, const DOMString &show)
         }
 }
 
-//#######################
-//# CHAT (individual)
-//#######################
 
+
+
+
+
+//########################################################################
+//# CHAT (individual)
+//########################################################################
+
+/**
+ * Send a message to an xmpp jid
+ */
 bool XmppClient::message(const DOMString &user, const DOMString &subj,
                          const DOMString &msg)
 {
@@ -4023,6 +4204,9 @@ bool XmppClient::message(const DOMString &user, const DOMString &subj,
 
 
 
+/**
+ *
+ */
 bool XmppClient::message(const DOMString &user, const DOMString &msg)
 {
     return message(user, "", msg);
@@ -4030,6 +4214,9 @@ bool XmppClient::message(const DOMString &user, const DOMString &msg)
 
 
 
+/**
+ *
+ */
 bool XmppClient::presence(const DOMString &presence)
 {
     if (!checkConnect())
@@ -4044,10 +4231,18 @@ bool XmppClient::presence(const DOMString &presence)
     return true;
 }
 
-//#######################
-//# GROUP  CHAT
-//#######################
 
+
+
+
+
+//########################################################################
+//# GROUP  CHAT
+//########################################################################
+
+/**
+ *
+ */
 bool XmppClient::groupChatCreate(const DOMString &groupJid)
 {
     std::vector<XmppGroupChat *>::iterator iter;
@@ -4063,6 +4258,8 @@ bool XmppClient::groupChatCreate(const DOMString &groupJid)
     groupChats.push_back(chat);
     return true;
 }
+
+
 
 /**
  *
@@ -4083,6 +4280,8 @@ void XmppClient::groupChatDelete(const DOMString &groupJid)
         }
 }
 
+
+
 /**
  *
  */
@@ -4095,6 +4294,8 @@ bool XmppClient::groupChatExists(const DOMString &groupJid)
     return false;
 }
 
+
+
 /**
  *
  */
@@ -4105,6 +4306,8 @@ void XmppClient::groupChatsClear()
         delete (*iter);
     groupChats.clear();
 }
+
+
 
 
 /**
@@ -4124,6 +4327,8 @@ void XmppClient::groupChatUserAdd(const DOMString &groupJid,
         }
 }
 
+
+
 /**
  *
  */
@@ -4141,6 +4346,9 @@ void XmppClient::groupChatUserShow(const DOMString &groupJid,
         }
 }
 
+
+
+
 /**
  *
  */
@@ -4157,6 +4365,11 @@ void XmppClient::groupChatUserDelete(const DOMString &groupJid,
         }
 }
 
+
+
+/**
+ *  Comparison method for the sort() below
+ */
 static bool xmppUserCompare(const XmppUser& p1, const XmppUser& p2)
 {
     DOMString s1 = p1.nick;
@@ -4172,6 +4385,10 @@ static bool xmppUserCompare(const XmppUser& p1, const XmppUser& p2)
 }
 
 
+
+/**
+ *  Return the user list for the named group
+ */
 std::vector<XmppUser> XmppClient::groupChatGetUserList(
                               const DOMString &groupJid)
 {
@@ -4195,6 +4412,12 @@ std::vector<XmppUser> XmppClient::groupChatGetUserList(
     return dummy;
 }
 
+
+
+
+/**
+ *  Try to join a group
+ */
 bool XmppClient::groupChatJoin(const DOMString &groupJid,
                                const DOMString &nick,
                                const DOMString &pass)
@@ -4215,6 +4438,11 @@ bool XmppClient::groupChatJoin(const DOMString &groupJid,
 }
 
 
+
+
+/**
+ * Leave a group
+ */
 bool XmppClient::groupChatLeave(const DOMString &groupJid,
                                 const DOMString &nick)
 {
@@ -4234,6 +4462,11 @@ bool XmppClient::groupChatLeave(const DOMString &groupJid,
 }
 
 
+
+
+/**
+ *  Send a message to a group
+ */
 bool XmppClient::groupChatMessage(const DOMString &groupJid,
                                   const DOMString &msg)
 {
@@ -4252,6 +4485,12 @@ bool XmppClient::groupChatMessage(const DOMString &groupJid,
     return true;
 }
 
+
+
+
+/**
+ *  Send a message to an individual in a group
+ */
 bool XmppClient::groupChatPrivateMessage(const DOMString &groupJid,
                                          const DOMString &toNick,
                                          const DOMString &msg)
@@ -4270,6 +4509,12 @@ bool XmppClient::groupChatPrivateMessage(const DOMString &groupJid,
     return true;
 }
 
+
+
+
+/**
+ *  Change your presence within a group
+ */
 bool XmppClient::groupChatPresence(const DOMString &groupJid,
                                    const DOMString &myNick,
                                    const DOMString &presence)
@@ -4293,9 +4538,11 @@ bool XmppClient::groupChatPresence(const DOMString &groupJid,
 
 
 
-//#######################
+
+
+//########################################################################
 //# S T R E A M S
-//#######################
+//########################################################################
 
 
 /**
@@ -4575,9 +4822,11 @@ int XmppClient::inputStreamClose(int streamNr)
 
 
 
-//#######################
+
+
+//########################################################################
 //# FILE   TRANSFERS
-//#######################
+//########################################################################
 
 
 /**
@@ -5002,6 +5251,9 @@ std::vector<XmppUser> XmppGroupChat::getUserList() const
 {
     return userList;
 }
+
+
+
 
 
 
