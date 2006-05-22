@@ -1,4 +1,3 @@
-# translation of de.po to
 # German translation for Inkscape.
 # Copyright (C) 2000-2003, 2006 Free Software Foundation, Inc.
 # Kai Lahmann <kailahmann@01019freenet.de>, 2000.
@@ -18,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-22 21:27+0200\n"
-"PO-Revision-Date: 2006-05-20 17:16+0200\n"
+"PO-Revision-Date: 2006-05-23 01:56+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1747,7 +1746,7 @@ msgstr ""
 #. #### Radio buttons to control horizontal alignment ####
 #: ../src/dialogs/tiledialog.cpp:657 ../src/dialogs/tiledialog.cpp:727
 msgid "Align:"
-msgstr "Ausrichten"
+msgstr "Ausrichten:"
 
 #. #### Number of columns ####
 #: ../src/dialogs/tiledialog.cpp:699
@@ -2272,10 +2271,7 @@ msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
 "will be lost."
-msgstr ""
-"PostScript-Vektoroperatoren verwenden. Das resultierende Bild ist "
-"(normalerweise) kleiner und kann beliebig skaliert werden, Alpha-"
-"Transparenz, Farbverläufe und Muster gehen jedoch verloren."
+msgstr "PostScript-Vektoroperatoren verwenden. Das resultierende Bild hat normalerweise eine kleinere Dateigröße und kann beliebig skaliert werden, Alpha-Transparenz und Muster gehen jedoch verloren."
 
 #: ../src/extension/internal/ps.cpp:132 ../src/extension/internal/pdf.cpp:136
 msgid "Print as bitmap"
@@ -2400,24 +2396,18 @@ msgid "Windows 32-bit Print"
 msgstr "Windows 32-bit-Druck"
 
 #: ../src/extension/internal/pdf.cpp:129
-#, fuzzy
 msgid "Print using PDF operators"
-msgstr "Unter Verwendung von PostScript-Operatoren drucken"
+msgstr "Unter Verwendung von PDF-Operatoren drucken"
 
 #: ../src/extension/internal/pdf.cpp:131
-#, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"PostScript-Vektoroperatoren verwenden. Das resultierende Bild ist "
-"(normalerweise) kleiner und kann beliebig skaliert werden, Alpha-"
-"Transparenz, Farbverläufe und Muster gehen jedoch verloren."
+msgstr "PDF-Vektoroperatoren verwenden. Das resultierende Bild hat normalerweise eine kleinere Dateigröße und kann beliebig skaliert werden, Muster gehen jedoch verloren."
 
 #: ../src/extension/internal/pdf.cpp:1540
-#, fuzzy
 msgid "PDF Print"
-msgstr "LaTeX-Druck"
+msgstr "PDF-Druck"
 
 # !!!
 #. A hack to internationalize the title properly
@@ -6069,9 +6059,8 @@ msgid "Zoom when window is resized"
 msgstr "Zeichnungsgröße ändern, wenn die Fenstergröße verändert wird"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
-#, fuzzy
 msgid "Show close button on dialogs"
-msgstr "Alle offenen Dialoge zeigen oder ausblenden"
+msgstr "Schließknöpfe in Dialogen zeigen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Normal"
@@ -6105,7 +6094,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "Whether dialog windows have a close button (requires restart)"
-msgstr ""
+msgstr "Dialogfenster haben Knöpfe zum Schließen (erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Dialogs on top:"
@@ -6878,9 +6867,8 @@ msgid "_Use SSL"
 msgstr "SSL _verwenden"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
-#, fuzzy
 msgid "_Register"
-msgstr "An_heben"
+msgstr "_Anmelden"
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
@@ -6905,9 +6893,8 @@ msgid "Connect"
 msgstr "Verbinden"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:145
-#, fuzzy
 msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "Verbindung zu Jabber-Server <b>%1</b> fehlgeschlagen"
+msgstr "Verbinde mit Jabber-Server <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:172
 #: ../src/ui/dialog/whiteboard-connect.cpp:217
@@ -6940,11 +6927,8 @@ msgstr "Mit Jabber-Server <b>%1</b> als <b>%2</b> verbunden"
 
 # http://de.wikipedia.org/wiki/Authentisierung
 #: ../src/ui/dialog/whiteboard-connect.cpp:260
-#, fuzzy
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-"Authentifizierung gegenüber Jabber-Server <b>%1</b> als <b>%2</b> "
-"fehlgeschlagen"
+msgstr "Anmeldung an Jabber-Server <b>%1</b> als <b>%2</b> fehlgeschlagen"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
@@ -8824,11 +8808,11 @@ msgstr "Umformungen eines Objektes präzise einstellen"
 
 #: ../src/verbs.cpp:2326
 msgid "_Align and Distribute..."
-msgstr "_Anordnen und Abstände ausgleichen..."
+msgstr "_Ausrichten und Abstände ausgleichen..."
 
 #: ../src/verbs.cpp:2327
 msgid "Align and distribute objects"
-msgstr "Objekte anordnen und ihre Abstände ausgleichen"
+msgstr "Objekte ausrichten und ihre Abstände ausgleichen"
 
 #: ../src/verbs.cpp:2328
 msgid "_Text and Font..."
@@ -9932,34 +9916,31 @@ msgstr ""
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
-msgstr ""
+msgstr "Diese Schriftart ist im Moment nicht auf Ihrem System installiert. Inkscape wird die Standardschriftart verwenden"
 
 #: ../src/widgets/toolbox.cpp:3544
 msgid "Spacing between letters"
-msgstr ""
+msgstr "Abstand zwischen Buchstaben"
 
 #: ../src/widgets/toolbox.cpp:3565
 msgid "Spacing between lines"
-msgstr ""
+msgstr "Abstand zwischen Zeilen"
 
 #: ../src/widgets/toolbox.cpp:3594
-#, fuzzy
 msgid "Horizontal kerning"
-msgstr "Horizontale Abstände"
+msgstr "Horizontale Unterschneidung"
 
 #: ../src/widgets/toolbox.cpp:3615
-#, fuzzy
 msgid "Vertical kerning"
-msgstr "Vertikale Abstände"
+msgstr "Vertikale Unterschneidung"
 
 #: ../src/widgets/toolbox.cpp:3642
 msgid "Letter rotation"
-msgstr ""
+msgstr "Buchstabendrehung"
 
 #: ../src/widgets/toolbox.cpp:3663
-#, fuzzy
 msgid "Remove manual kerns"
-msgstr "Manuelle _Unterschneidungen entfernen"
+msgstr "Manuelle Unterschneidungen entfernen"
 
 #: ../src/widgets/toolbox.cpp:3782
 msgid "Make connectors avoid selected objects"
@@ -10312,10 +10293,9 @@ msgstr "Interpolationsschritte"
 
 #: ../share/extensions/kochify.inx.h:1
 msgid "Fractal (Koch)"
-msgstr ""
+msgstr "Fraktal (Koch)"
 
 #: ../share/extensions/kochify_load.inx.h:1
-#, fuzzy
 msgid "Fractal (Koch) - Load Pattern"
 msgstr "Fraktal (Koch) - Muster laden"
 
@@ -10328,7 +10308,6 @@ msgid "Axiom"
 msgstr "Axiom"
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Fractal (Lindenmayer)"
 msgstr "Fraktal (Lindenmayer)"
 
