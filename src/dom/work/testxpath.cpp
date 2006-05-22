@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -35,8 +35,19 @@
 
 #include <stdio.h>
 
-using namespace org::w3c::dom;
-using namespace org::w3c::dom::xpath;
+
+typedef org::w3c::dom::Node      Node;
+typedef org::w3c::dom::NodeList  NodeList;
+typedef org::w3c::dom::DOMString DOMString;
+typedef org::w3c::dom::Document  Document;
+typedef org::w3c::dom::io::StdWriter StdWriter;
+typedef org::w3c::dom::ls::DOMImplementationLSImpl DOMImplementationLSImpl;
+typedef org::w3c::dom::ls::LSSerializer LSSerializer;
+typedef org::w3c::dom::ls::LSOutput LSOutput;
+typedef org::w3c::dom::ls::LSInput LSInput;
+typedef org::w3c::dom::ls::LSParser LSParser;
+typedef org::w3c::dom::xpath::XPathParser XPathParser;
+
 
 
 typedef struct
@@ -1346,10 +1357,10 @@ bool doStringTests()
 
 void dumpDoc(Document *doc)
 {
-    ls::DOMImplementationLSImpl domImpl;
-    ls::LSSerializer &serializer = domImpl.createLSSerializer();
-    ls::LSOutput output = domImpl.createLSOutput();
-    io::StdWriter writer;
+    DOMImplementationLSImpl domImpl;
+    LSSerializer &serializer = domImpl.createLSSerializer();
+    LSOutput output = domImpl.createLSOutput();
+    StdWriter writer;
     output.setCharacterStream(&writer);
     serializer.write(doc, output);
 }
@@ -1357,10 +1368,12 @@ void dumpDoc(Document *doc)
 
 bool doXmlTest(XpathTest *xpt)
 {
+    printf("################################################################\n");
+
     //### READ
-    ls::DOMImplementationLSImpl domImpl;
-    ls::LSInput input = domImpl.createLSInput();
-    ls::LSParser &parser = domImpl.createLSParser(0, "");
+    DOMImplementationLSImpl domImpl;
+    LSInput input = domImpl.createLSInput();
+    LSParser &parser = domImpl.createLSParser(0, "");
     input.setStringData(xpt->xml);
     Document *doc = parser.parse(input);
 
@@ -1368,10 +1381,12 @@ bool doXmlTest(XpathTest *xpt)
     XPathParser xp;
     xp.setDebug(true);
 
-    org::w3c::dom::NodeList list = xp.evaluate(doc, xpt->xpathStr);
+    DOMString xpathStr = xpt->xpathStr;
+    NodeList list = xp.evaluate(doc, xpathStr);
     for (unsigned int i=0 ; i<list.getLength() ; i++)
         {
-        org::w3c::dom::Node *n = list.item(i);
+        Node *n = list.item(i);
+        printf("@@ node: %s\n", n->getNodeName().c_str());
         }
 
     //dumpDoc(doc);
