@@ -417,8 +417,6 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         }
     }
 
-    os << "%%EOF\n";
-
     /* FIXME: This function is declared to return unsigned, whereas fprintf returns a signed int *
      * that can be zero if the first fprintf failed (os is empty) or "negative" (i.e. very positive
      * in unsigned int interpretation) if the first fprintf failed but this one succeeds, or
@@ -490,7 +488,8 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
         nr_free(px);
     }
 
-    int const res = fprintf(_stream, "showpage\n");
+    fprintf(_stream, "showpage\n");
+    int const res = fprintf(_stream, "%%EOF\n");
 
     /* Flush stream to be sure. */
     (void) fflush(_stream);
