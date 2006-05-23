@@ -3,6 +3,7 @@ palettesdir = $(datadir)/inkscape/palettes
 
 palettes_DATA = \
     README \
+    inkscape.gpl \
     Tango-Palette.gpl \
     svg.gpl \
     webhex.gpl \
