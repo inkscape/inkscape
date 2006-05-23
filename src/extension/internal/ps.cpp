@@ -489,7 +489,7 @@ PrintPS::finish(Inkscape::Extension::Print *mod)
     }
 
     fprintf(_stream, "showpage\n");
-    int const res = fprintf(_stream, "%%EOF\n");
+    int const res = fprintf(_stream, "%%%%EOF\n");
 
     /* Flush stream to be sure. */
     (void) fflush(_stream);
