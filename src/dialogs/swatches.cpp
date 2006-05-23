@@ -30,6 +30,7 @@
 #include "path-prefix.h"
 #include "swatches.h"
 #include "sp-item.h"
+#include "prefs-utils.h"
 
 #include "eek-preview.h"
 
@@ -915,15 +916,33 @@ SwatchesPanel& SwatchesPanel::getInstance()
 /**
  * Constructor
  */
-SwatchesPanel::SwatchesPanel() :
-    Inkscape::UI::Widget::Panel( "dialogs.swatches", true ),
+SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
+    Inkscape::UI::Widget::Panel( Glib::ustring(), prefsPath, true ),
     _holder(0)
 {
+    Gtk::RadioMenuItem* hotItem = 0;
     _holder = new PreviewHolder();
     loadEmUp();
 
     if ( !possible.empty() ) {
-        JustForNow* first = possible.front();
+        JustForNow* first = 0;
+        gchar const* targetName = 0;
+        if ( _prefs_path ) {
+            targetName = prefs_get_string_attribute( _prefs_path, "palette" );
+            if ( targetName ) {
+                for ( std::vector<JustForNow*>::iterator iter = possible.begin(); iter != possible.end(); ++iter ) {
+                    if ( (*iter)->_name == targetName ) {
+                        first = *iter;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ( !first ) {
+            first = possible.front();
+        }
+
         if ( first->_prefWidth > 0 ) {
             _holder->setColumnPref( first->_prefWidth );
         }
@@ -938,6 +957,9 @@ SwatchesPanel::SwatchesPanel() :
         for ( std::vector<JustForNow*>::iterator it = possible.begin(); it != possible.end(); it++ ) {
             JustForNow* curr = *it;
             Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, curr->_name));
+            if ( curr == first ) {
+                hotItem = single;
+            }
             _regItem( single, 3, i );
             i++;
         }
@@ -951,6 +973,9 @@ SwatchesPanel::SwatchesPanel() :
     show_all_children();
 
     restorePanelPrefs();
+    if ( hotItem ) {
+        hotItem->set_active();
+    }
 }
 
 SwatchesPanel::~SwatchesPanel()
@@ -976,6 +1001,11 @@ void SwatchesPanel::_handleAction( int setId, int itemId )
             if ( itemId >= 0 && itemId < static_cast<int>(possible.size()) ) {
                 _holder->clear();
                 JustForNow* curr = possible[itemId];
+
+                if ( _prefs_path ) {
+                    prefs_set_string_attribute( _prefs_path, "palette", curr->_name.c_str() );
+                }
+
                 if ( curr->_prefWidth > 0 ) {
                     _holder->setColumnPref( curr->_prefWidth );
                 }

@@ -25,22 +25,16 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+static const int PANEL_SETTING_SIZE = 0;
+static const int PANEL_SETTING_MODE = 1;
+static const int PANEL_SETTING_WRAP = 2;
+static const int PANEL_SETTING_NEXTFREE = 3;
+
 /**
  *    Construct a Panel
  *
  *    \param label Label.
  */
-
-Panel::Panel( const gchar *prefs_path, bool menuDesired ) :
-    _prefs_path(NULL),
-    _menuDesired(menuDesired),
-    _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
-    menu(0),
-    _fillable(0)
-{
-    _prefs_path = prefs_path;
-    init();
-}
 
 Panel::Panel() :
     _prefs_path(NULL),
@@ -52,14 +46,14 @@ Panel::Panel() :
     init();
 }
 
-Panel::Panel( Glib::ustring const &label, bool menuDesired ) :
-    _prefs_path(NULL),
+Panel::Panel( Glib::ustring const &label, gchar const* prefs_path, bool menuDesired ) :
+    _prefs_path(prefs_path),
     _menuDesired(menuDesired),
+    label(label),
     _tempArrow( Gtk::ARROW_LEFT, Gtk::SHADOW_ETCHED_OUT ),
     menu(0),
     _fillable(0)
 {
-    this->label = label;
     init();
 }
 
@@ -84,12 +78,17 @@ void Panel::init()
 
     guint panel_size = 0;
     if (_prefs_path) {
-        panel_size = prefs_get_int_attribute_limited (_prefs_path, "panel_size", 1, 0, 10);
+        panel_size = prefs_get_int_attribute_limited( _prefs_path, "panel_size", 1, 0, 10 );
     }
 
     guint panel_mode = 0;
     if (_prefs_path) {
-        panel_mode = prefs_get_int_attribute_limited (_prefs_path, "panel_mode", 1, 0, 10);
+        panel_mode = prefs_get_int_attribute_limited( _prefs_path, "panel_mode", 1, 0, 10 );
+    }
+
+    guint panel_wrap = 0;
+    if (_prefs_path) {
+        panel_wrap = prefs_get_int_attribute_limited( _prefs_path, "panel_wrap", 0, 0, 1 );
     }
 
     menu = new Gtk::Menu();
@@ -109,7 +108,7 @@ void Panel::init()
             if ( i == panel_size ) {
                 single->set_active(true);
             }
-            single->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 0, i) );
+            single->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), PANEL_SETTING_SIZE, i) );
        }
     }
     menu->append( *manage(new Gtk::SeparatorMenuItem()) );
@@ -126,12 +125,33 @@ void Panel::init()
     }
 
     menu->append( *one );
+    nonHorizontal.push_back( one );
     menu->append( *two );
-    menu->append( *manage(new Gtk::SeparatorMenuItem()) );
-    one->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 1, 0) );
-    two->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), 1, 1) );
+    nonHorizontal.push_back( two );
+    Gtk::MenuItem* sep = manage( new Gtk::SeparatorMenuItem());
+    menu->append( *sep );
+    nonHorizontal.push_back( sep );
+    one->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), PANEL_SETTING_MODE, 0) );
+    two->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), PANEL_SETTING_MODE, 1) );
+
+    {
+        Glib::ustring wrapLab(_("Wrap"));
+        Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrapLab));
+        check->set_active( panel_wrap );
+        menu->append( *check );
+        nonVertical.push_back(check);
+
+        check->signal_toggled().connect( sigc::bind<Gtk::CheckMenuItem*>(sigc::mem_fun(*this, &Panel::_wrapToggled), check) );
+
+        sep = manage( new Gtk::SeparatorMenuItem());
+        menu->append( *sep );
+        nonVertical.push_back( sep );
+    }
 
     menu->show_all_children();
+    for ( std::vector<Gtk::Widget*>::iterator iter = nonVertical.begin(); iter != nonVertical.end(); ++iter ) {
+        (*iter)->hide();
+    }
 
     //closeButton.set_label("X");
 
@@ -160,8 +180,9 @@ void Panel::init()
 
     show_all_children();
 
-    bounceCall (0, panel_size);
-    bounceCall (1, panel_mode);
+    bounceCall( PANEL_SETTING_SIZE, panel_size );
+    bounceCall( PANEL_SETTING_MODE, panel_mode );
+    bounceCall( PANEL_SETTING_WRAP, panel_wrap );
 }
 
 void Panel::setLabel(Glib::ustring const &label)
@@ -185,14 +206,31 @@ void Panel::setOrientation( Gtk::AnchorType how )
                     topBar.remove(menuPopper);
                     rightBar.pack_start(menuPopper, false, false);
                     menuPopper.unreference();
-                }
 
+                    for ( std::vector<Gtk::Widget*>::iterator iter = nonHorizontal.begin(); iter != nonHorizontal.end(); ++iter ) {
+                        (*iter)->hide();
+                    }
+                    for ( std::vector<Gtk::Widget*>::iterator iter = nonVertical.begin(); iter != nonVertical.end(); ++iter ) {
+                        (*iter)->show();
+                    }
+                }
+                // Ensure we are not in "list" mode
+                bounceCall( PANEL_SETTING_MODE, 1 );
                 topBar.remove(tabTitle);
             }
             break;
 
             default:
-                ; // nothing for now
+            {
+                if ( _menuDesired ) {
+                    for ( std::vector<Gtk::Widget*>::iterator iter = nonHorizontal.begin(); iter != nonHorizontal.end(); ++iter ) {
+                        (*iter)->show();
+                    }
+                    for ( std::vector<Gtk::Widget*>::iterator iter = nonVertical.begin(); iter != nonVertical.end(); ++iter ) {
+                        (*iter)->hide();
+                    }
+                }
+            }
         }
     }
 }
@@ -200,7 +238,7 @@ void Panel::setOrientation( Gtk::AnchorType how )
 void Panel::_regItem( Gtk::MenuItem* item, int group, int id )
 {
     menu->append( *item );
-    item->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), group + 2, id) );
+    item->signal_activate().connect( sigc::bind<int, int>( sigc::mem_fun(*this, &Panel::bounceCall), group + PANEL_SETTING_NEXTFREE, id) );
     item->show();
 }
 
@@ -214,16 +252,23 @@ void Panel::restorePanelPrefs()
     if (_prefs_path) {
         panel_mode = prefs_get_int_attribute_limited (_prefs_path, "panel_mode", 1, 0, 10);
     }
-    bounceCall (0, panel_size);
-    bounceCall (1, panel_mode);
+    guint panel_wrap = 0;
+    if (_prefs_path) {
+        panel_wrap = prefs_get_int_attribute_limited( _prefs_path, "panel_wrap", 0, 0, 1 );
+    }
+    bounceCall( PANEL_SETTING_SIZE, panel_size );
+    bounceCall( PANEL_SETTING_MODE, panel_mode );
+    bounceCall( PANEL_SETTING_WRAP, panel_wrap );
 }
 
 void Panel::bounceCall(int i, int j)
 {
     menu->set_active(0);
     switch ( i ) {
-    case 0:
-        if (_prefs_path) prefs_set_int_attribute (_prefs_path, "panel_size", j);
+    case PANEL_SETTING_SIZE:
+        if (_prefs_path) {
+            prefs_set_int_attribute( _prefs_path, "panel_size", j );
+        }
         if ( _fillable ) {
             ViewType currType = _fillable->getPreviewType();
             switch ( j ) {
@@ -257,8 +302,10 @@ void Panel::bounceCall(int i, int j)
             }
         }
         break;
-    case 1:
-        if (_prefs_path) prefs_set_int_attribute (_prefs_path, "panel_mode", j);
+    case PANEL_SETTING_MODE:
+        if (_prefs_path) {
+            prefs_set_int_attribute (_prefs_path, "panel_mode", j);
+        }
         if ( _fillable ) {
             Inkscape::IconSize currSize = _fillable->getPreviewSize();
             switch ( j ) {
@@ -277,8 +324,24 @@ void Panel::bounceCall(int i, int j)
             }
         }
         break;
+    case PANEL_SETTING_WRAP:
+        if (_prefs_path) {
+            prefs_set_int_attribute (_prefs_path, "panel_wrap", j ? 1 : 0);
+        }
+        if ( _fillable ) {
+            _fillable->setWrap( j );
+        }
+        break;
     default:
-        _handleAction( i - 2, j );
+        _handleAction( i - PANEL_SETTING_NEXTFREE, j );
+    }
+}
+
+
+void Panel::_wrapToggled(Gtk::CheckMenuItem* toggler)
+{
+    if ( toggler ) {
+        bounceCall( PANEL_SETTING_WRAP, toggler->get_active() ? 1 : 0 );
     }
 }
 

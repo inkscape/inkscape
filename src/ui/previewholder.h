@@ -38,6 +38,8 @@ public:
     virtual void setColumnPref( int cols );
     virtual Inkscape::IconSize getPreviewSize() const { return _baseSize; }
     virtual ViewType getPreviewType() const { return _view; }
+    virtual void setWrap( bool b );
+    virtual bool getWrap() const { return _wrap; }
 
 protected:
     virtual void on_size_allocate( Gtk::Allocation& allocation );
@@ -56,6 +58,7 @@ private:
     Gtk::AnchorType _anchor;
     Inkscape::IconSize _baseSize;
     ViewType _view;
+    bool _wrap;
 };
 
 } //namespace UI

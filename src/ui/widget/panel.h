@@ -14,6 +14,7 @@
 #ifndef SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 #define SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 
+#include <vector>
 #include <gtkmm/arrow.h>
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
@@ -34,8 +35,7 @@ class Panel : public Gtk::VBox
 public:
     Panel();
     virtual ~Panel();
-    Panel(Glib::ustring const &label, bool menuDesired = false );
-    Panel(const gchar *prefs_path, bool menuDesired = false );
+    Panel(Glib::ustring const &label, gchar const *prefs_path = 0, bool menuDesired = false );
 
     void setLabel(Glib::ustring const &label);
     Glib::ustring const &getLabel() const;
@@ -60,6 +60,7 @@ private:
     void bounceCall(int i, int j);
 
     void _popper(GdkEventButton* btn);
+    void _wrapToggled(Gtk::CheckMenuItem* toggler);
 
     Glib::ustring   label;
 
@@ -71,6 +72,8 @@ private:
     Gtk::EventBox   menuPopper;
     Gtk::Button     closeButton;
     Gtk::Menu*       menu;
+    std::vector<Gtk::Widget*> nonHorizontal;
+    std::vector<Gtk::Widget*> nonVertical;
     PreviewFillable *_fillable;
 };
 

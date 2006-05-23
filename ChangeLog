@@ -1,3 +1,15 @@
+2006-05-22  Jon A. Cruz  <jon@joncruz.org>
+1234567890123456789012345678901234567890123456789012345678901234567890123456
+	* src/dialogs/layers-panel.cpp, src/dialogs/swatches.cpp,
+	  src/dialogs/swatches.h, src/preferences-skeleton.h,
+	  src/ui/previewfillable.h, src/ui/previewholder.cpp,
+	  src/ui/previewholder.h, src/ui/widget/panel.cpp,
+	  src/ui/widget/panel.h, src/verbs.cpp,
+	  src/widgets/desktop-widget.cpp:
+	  Refactored panels.
+	  Fixes RFE #1453153. Fixes RFE #1453152.
+	
+
 2006-05-23  MenTaLguY  <mental@rydia.net>
 
 	* src/extension/internal/ps.cpp:

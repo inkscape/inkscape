@@ -31,6 +31,8 @@ public:
     virtual void setOrientation( Gtk::AnchorType how ) = 0;
     virtual Inkscape::IconSize getPreviewSize() const = 0;
     virtual ViewType getPreviewType() const = 0;
+    virtual void setWrap( bool b ) = 0;
+    virtual bool getWrap() const = 0;
 };
 
 

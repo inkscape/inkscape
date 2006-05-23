@@ -1406,7 +1406,9 @@ TextVerb::perform(SPAction *action, void *data, void *pdata)
         return;
 
     SPDocument *doc = sp_desktop_document(dt);
+    (void)doc;
     Inkscape::XML::Node *repr = SP_OBJECT_REPR(dt->namedview);
+    (void)repr;
 }
  
 /** \brief  Decode the verb code and take appropriate action */

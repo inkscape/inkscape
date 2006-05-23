@@ -36,7 +36,8 @@ PreviewHolder::PreviewHolder() :
     _updatesFrozen(false),
     _anchor(Gtk::ANCHOR_CENTER),
     _baseSize(Inkscape::ICON_SIZE_MENU),
-    _view(VIEW_TYPE_LIST)
+    _view(VIEW_TYPE_LIST),
+    _wrap(false)
 {
     _scroller = manage(new Gtk::ScrolledWindow());
     _insides = manage(new Gtk::Table( 1, 2 ));
@@ -142,7 +143,7 @@ void PreviewHolder::setOrientation( Gtk::AnchorType how )
             case Gtk::ANCHOR_NORTH:
             case Gtk::ANCHOR_SOUTH:
             {
-                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_ALWAYS, Gtk::POLICY_AUTOMATIC );
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_ALWAYS, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
             }
             break;
 
@@ -156,6 +157,28 @@ void PreviewHolder::setOrientation( Gtk::AnchorType how )
             default:
             {
                 dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+            }
+        }
+        rebuildUI();
+    }
+}
+
+void PreviewHolder::setWrap( bool b )
+{
+    if ( b != _wrap ) {
+        _wrap = b;
+        switch ( _anchor )
+        {
+            case Gtk::ANCHOR_NORTH:
+            case Gtk::ANCHOR_SOUTH:
+            {
+                dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_ALWAYS, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
+            }
+            break;
+            default:
+            {
+                (void)0;
+                // do nothing;
             }
         }
         rebuildUI();

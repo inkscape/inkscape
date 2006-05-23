@@ -581,7 +581,7 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeM
  * Constructor
  */
 LayersPanel::LayersPanel() :
-    Inkscape::UI::Widget::Panel( "dialogs.layers" ),
+    Inkscape::UI::Widget::Panel( Glib::ustring(), "dialogs.layers" ),
     _maxNestDepth(20),
     _mgr(0),
     _desktop(0),
