@@ -88,9 +88,9 @@ static GtkTargetEntry ui_drop_target_entries [] = {
     {"image/svg",     0, SVG_DATA},
     {"image/png",     0, PNG_DATA},
     {"image/jpeg",    0, JPEG_DATA},
-#if ENABLE_LCMS
+#if ENABLE_MAGIC_COLORS
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
-#endif // ENABLE_LCMS
+#endif // ENABLE_MAGIC_COLORS
     {"application/x-color", 0, APP_X_COLOR}
 };
 
@@ -978,7 +978,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                          gpointer user_data)
 {
     switch (info) {
-#if ENABLE_LCMS
+#if ENABLE_MAGIC_COLORS
         case APP_X_INKY_COLOR:
         {
             SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1052,7 +1052,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
             }
         }
         break;
-#endif // ENABLE_LCMS
+#endif // ENABLE_MAGIC_COLORS
 
         case APP_X_COLOR:
         {

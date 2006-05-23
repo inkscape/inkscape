@@ -427,8 +427,8 @@ dnl LittleCms checking
 dnl ******************************
 
 AC_ARG_ENABLE(lcms,
-	AC_HELP_STRING([--enable-lcms], [enable LittleCms for color management (disabled by default)]),
-	[enable_lcms=$enableval], [enable_lcms=no])
+	AC_HELP_STRING([--enable-lcms], [enable LittleCms for color management]),
+	[enable_lcms=$enableval], [enable_lcms=yes])
 
 if test "x$enable_lcms" = "xno"; then
 	dnl Asked to ignore LittleCms

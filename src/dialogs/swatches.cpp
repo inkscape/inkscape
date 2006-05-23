@@ -98,10 +98,10 @@ typedef enum {
 } colorFlavorType;
 
 static const GtkTargetEntry sourceColorEntries[] = {
-#if ENABLE_LCMS
+#if ENABLE_MAGIC_COLORS
 //    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
-#endif // ENABLE_LCMS
+#endif // ENABLE_MAGIC_COLORS
     {"application/x-color", 0, APP_X_COLOR},
     {"text/plain", 0, TEXT_DATA},
 };
@@ -234,10 +234,10 @@ static void dieDieDie( GtkObject *obj, gpointer user_data )
 }
 
 static const GtkTargetEntry destColorTargets[] = {
-#if ENABLE_LCMS
+#if ENABLE_MAGIC_COLORS
 //    {"application/x-inkscape-color-id", GTK_TARGET_SAME_APP, APP_X_INKY_COLOR_ID},
     {"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
-#endif // ENABLE_LCMS
+#endif // ENABLE_MAGIC_COLORS
     {"application/x-color", 0, APP_X_COLOR},
 };
 
@@ -837,7 +837,9 @@ void _loadPaletteFile( gchar const *filename )
                 } while ( result && !hasErr );
                 if ( !hasErr ) {
                     possible.push_back(onceMore);
+#if ENABLE_MAGIC_COLORS
                     ColorItem::_wireMagicColors( onceMore );
+#endif ENABLE_MAGIC_COLORS
                 } else {
                     delete onceMore;
                 }
