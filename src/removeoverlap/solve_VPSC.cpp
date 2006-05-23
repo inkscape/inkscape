@@ -96,7 +96,7 @@ void VPSC::refine() {
 	// Solve shouldn't loop indefinately
 	// ... but just to make sure we limit the number of iterations
 	unsigned maxtries=100;
-	while(!solved&&maxtries>=0) {
+	while(!solved&&maxtries>0) {
 		solved=true;
 		maxtries--;
 		for(set<Block*>::const_iterator i=bs->begin();i!=bs->end();++i) {
