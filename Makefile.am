@@ -137,6 +137,7 @@ EXTRA_DIST = \
 	packaging/win32/header.bmp	\
 	po/Makefile.mingw \
         po/inkscape.pot \
+        po/update_po_files.sh \
 	src/Makefile.mingw src/inkscape_version.h.mingw src/inkscape.rc	src/makedef.pl \
 	src/helper/sp-marshal.h.mingw src/helper/sp-marshal.cpp.mingw
 
