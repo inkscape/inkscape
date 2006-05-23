@@ -1,4 +1,4 @@
-2006-05-22  Jon A. Cruz  <jon@joncruz.org>
+2006-05-23  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/dialogs/layers-panel.cpp, src/dialogs/swatches.cpp,
 	  src/dialogs/swatches.h, src/preferences-skeleton.h,
