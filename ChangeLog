@@ -1,5 +1,5 @@
 2006-05-22  Jon A. Cruz  <jon@joncruz.org>
-1234567890123456789012345678901234567890123456789012345678901234567890123456
+
 	* src/dialogs/layers-panel.cpp, src/dialogs/swatches.cpp,
 	  src/dialogs/swatches.h, src/preferences-skeleton.h,
 	  src/ui/previewfillable.h, src/ui/previewholder.cpp,
