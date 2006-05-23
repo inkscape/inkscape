@@ -230,18 +230,20 @@ sp_desktop_get_master_opacity_tool(SPDesktop *desktop, char const *tool)
         css = sp_desktop_get_style(desktop, true);
     } else { 
         Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        css = sp_repr_css_attr_inherited(tool_repr, "style");
-    }
-   
-    gchar const *property = css ? sp_repr_css_property(css, "opacity", "1.000") : 0;
-           
-    if (desktop->current && property) { // if there is style and the property in it,
-        if ( !sp_svg_number_read_f(property, &value) ) {
-            value = 1.0; // things failed. set back to the default
+        if (tool_repr) {
+            css = sp_repr_css_attr_inherited(tool_repr, "style");
         }
     }
-
+   
     if (css) {
+        gchar const *property = css ? sp_repr_css_property(css, "opacity", "1.000") : 0;
+           
+        if (desktop->current && property) { // if there is style and the property in it,
+            if ( !sp_svg_number_read_f(property, &value) ) {
+                value = 1.0; // things failed. set back to the default
+            }
+        }
+
         sp_repr_css_attr_unref(css);
     }
 
@@ -256,18 +258,20 @@ sp_desktop_get_opacity_tool(SPDesktop *desktop, char const *tool, bool is_fill)
         css = sp_desktop_get_style(desktop, true);
     } else { 
         Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        css = sp_repr_css_attr_inherited(tool_repr, "style");
-    }
-   
-    gchar const *property = css ? sp_repr_css_property(css, is_fill ? "fill-opacity": "stroke-opacity", "1.000") : 0;
-           
-    if (desktop->current && property) { // if there is style and the property in it,
-        if ( !sp_svg_number_read_f(property, &value) ) {
-            value = 1.0; // things failed. set back to the default
+        if (tool_repr) {
+            css = sp_repr_css_attr_inherited(tool_repr, "style");
         }
     }
-
+   
     if (css) {
+        gchar const *property = css ? sp_repr_css_property(css, is_fill ? "fill-opacity": "stroke-opacity", "1.000") : 0;
+           
+        if (desktop->current && property) { // if there is style and the property in it,
+            if ( !sp_svg_number_read_f(property, &value) ) {
+                value = 1.0; // things failed. set back to the default
+            }
+        }
+
         sp_repr_css_attr_unref(css);
     }
 
@@ -282,19 +286,21 @@ sp_desktop_get_color_tool(SPDesktop *desktop, char const *tool, bool is_fill)
         css = sp_desktop_get_style(desktop, true);
     } else {
         Inkscape::XML::Node *tool_repr = inkscape_get_repr(INKSCAPE, tool);
-        css = sp_repr_css_attr_inherited(tool_repr, "style");
-    }
-   
-    gchar const *property = sp_repr_css_property(css, is_fill ? "fill" : "stroke", "#000");
-           
-    if (desktop->current && property) { // if there is style and the property in it,
-        if (strncmp(property, "url", 3)) { // and if it's not url,
-            // read it
-            r = sp_svg_read_color(property, r);
+        if (tool_repr) {
+            css = sp_repr_css_attr_inherited(tool_repr, "style");
         }
     }
-
+   
     if (css) {
+        gchar const *property = sp_repr_css_property(css, is_fill ? "fill" : "stroke", "#000");
+           
+        if (desktop->current && property) { // if there is style and the property in it,
+            if (strncmp(property, "url", 3)) { // and if it's not url,
+                // read it
+                r = sp_svg_read_color(property, r);
+            }
+        }
+
         sp_repr_css_attr_unref(css);
     }
 
