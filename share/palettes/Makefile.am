@@ -6,6 +6,15 @@ palettes_DATA = \
     Tango-Palette.gpl \
     svg.gpl \
     webhex.gpl \
-    websafe22.gpl
+    websafe22.gpl \
+    Blues.gpl \
+    Gold.gpl \
+    Greens.gpl \
+    Hilite.gpl \
+    Khaki.gpl \
+    Reds.gpl \
+    Royal.gpl \
+    Topographic.gpl
+    
 
 EXTRA_DIST = $(palettes_DATA)
