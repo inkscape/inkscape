@@ -3265,11 +3265,10 @@ namespace {
         char        *family,
                     *family_escaped,
                     *sample_escaped;
-        const char  *sample; 
+
+        static const char *sample = _("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()");
 
         gtk_tree_model_get (tree_model, iter, 0, &family, -1);
-
-        sample = prefs_get_string_attribute ("tools.text", "font_sample"); 
 
         family_escaped = g_markup_escape_text (family, -1);
         sample_escaped = g_markup_escape_text (sample, -1);
