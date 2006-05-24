@@ -233,10 +233,10 @@ test_all_SOURCES = \
 
 test_all_LDADD =	\
 	$(all_libs)	\
-	io/libio.a	\
-	$(libnr_test_nr_LDADD)	\
 	$(svg_test_svg_LDADD)	\
-	$(xml_test_xml_LDADD)
+	$(libnr_test_nr_LDADD)	\
+	$(xml_test_xml_LDADD) \
+	io/libio.a	
 
 
 # ################################################
