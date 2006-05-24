@@ -168,7 +168,7 @@ inkscape.1 inkscape.fr.1: fix-roff-punct Makefile.am AUTHORS utf8-to-roff
 	  | perl $(srcdir)/fix-roff-punct \
 	  | perl -CI $(srcdir)/utf8-to-roff	\
 	  > tmp.$$$$ \
-	 && mv tmp.$$$$ $@
+	 && mv -f tmp.$$$$ $@
 # man 7 groff_char for further remarks on charset encoding for man pages.
 
 install-data-local: inkscape.fr.1
