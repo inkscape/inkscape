@@ -85,19 +85,21 @@ ChatMessageHandler::parse(LmMessage* message)
 					// Therefore we need to use some sort of hacked-up method to make this work.  We listen for 
 					// the sentinel value in a groupchat message -- currently it is '[username] INKBOARD-JOINED' --
 					// and begin processing that way.
-					LmMessageNode* body = lm_message_node_get_child(root, "body");
-					if (body != NULL) {
-						gchar const* val = lm_message_node_get_value(body);
-						if (strcmp(val, String::ucompose("%1 has become available", this->_sm->session_data->chat_handle).c_str()) == 0) {
-							return this->_finishConnection(); break;
-						} else {
+
+					//LmMessageNode* body = lm_message_node_get_child(root, "body");
+					//if (body != NULL) {
+						//gchar const* val = lm_message_node_get_value(body);
+                        //g_warning("hey - %s",val);					
+                        //if (strcmp(val, String::ucompose("%1 entered the room.", this->_sm->session_data->chat_handle).c_str()) == 0) {
+						//	return this->_finishConnection(); break;
+						//} else {
 							return LM_HANDLER_RESULT_ALLOW_MORE_HANDLERS;
 							break;
-						}
-					} else {
+						//}
+					//} else {
 						return LM_HANDLER_RESULT_ALLOW_MORE_HANDLERS;
 						break;
-					}
+					//}
 				}
 												
 				default:
@@ -137,6 +139,7 @@ ChatMessageHandler::parse(LmMessage* message)
 						this->_sm->session_data->receive_queues[sender.raw()] = new ReceiveMessageQueue(this->_sm);
 						
 					} else {
+                        return this->_finishConnection(); break;
 						//g_warning("hmm, who is chatting %s",chatter);
 						// If the presence message is from ourselves, then we know that we 
 						// have successfully entered the chatroom _and_ have received the entire room roster,
