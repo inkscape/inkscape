@@ -1,6 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
-# [encoding: UTF-8] +
+[encoding: UTF-8]
 inkscape.desktop.in
 src/application/editor.cpp
 src/arc-context.cpp

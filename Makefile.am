@@ -171,6 +171,9 @@ inkscape.1 inkscape.fr.1: fix-roff-punct Makefile.am AUTHORS utf8-to-roff
 	 && mv -f tmp.$$$$ $@
 # man 7 groff_char for further remarks on charset encoding for man pages.
 
+po/inkscape.pot:
+	(cd po ; intltool-update --pot)
+
 install-data-local: inkscape.fr.1
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/fr/man1
 	$(INSTALL_DATA) `if [ -f inkscape.fr.1 ]; then :; else echo $(srcdir)/;fi`inkscape.fr.1 $(DESTDIR)$(mandir)/fr/man1/inkscape.1

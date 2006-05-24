@@ -249,3 +249,5 @@ dist-hook:
 	mkdir $(distdir)/pixmaps
 	cp $(srcdir)/pixmaps/*xpm $(distdir)/pixmaps
 
+distclean-local:
+	rm -f libnr/test-nr.xml libnr/test-nr.log svg/test-svg.xml svg/test-svg.log xml/test-xml.xml xml/test-xml.log test-all.xml test-all.log
