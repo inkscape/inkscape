@@ -1,3 +1,10 @@
+inkscape (0.43+0.44pre1-1) unstable; urgency=medium
+
+  * Upstream release
+  * added build-dep for liblcms1-dev
+
+ -- Nathan Hurst <njh@mail.csse.monash.edu.au>  Wed, 24 May 2006 16:19:00 +1000
+
 inkscape (0.42+0.43pre2-1) unstable; urgency=medium
 
   * Upstream release

@@ -435,7 +435,7 @@ if test "x$enable_lcms" = "xno"; then
 	lcms=no
 else
         dnl Have to test LittleCms presence
-	PKG_CHECK_MODULES(LCMS, lcms >= 1.14, lcms=yes, lcms=no)
+	PKG_CHECK_MODULES(LCMS, lcms >= 1.13, lcms=yes, lcms=no)
 	if test "x$lcms" != "xyes"; then
 	        dnl No lcms found
 		if test "x$enable_lcms" = "xyes"; then
