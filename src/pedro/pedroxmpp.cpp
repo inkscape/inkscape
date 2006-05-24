@@ -3405,7 +3405,7 @@ bool XmppClient::inBandRegistrationChangePassword(const DOMString &newpassword)
 
     //# Let's try it form-style to allow the common old/new password thing
     char *fmt =
-      "<iq type='set' from='%s' to='%s' id='regpass%d'>"
+      "<iq type='set' id='regpass%d' from='%s' to='%s'>"
       "  <query xmlns='jabber:iq:register'>"
       "    <x xmlns='jabber:x:data' type='form'>"
       "      <field type='hidden' var='FORM_TYPE'>"
@@ -3442,7 +3442,7 @@ bool XmppClient::inBandRegistrationCancel()
     Parser parser;
 
     char *fmt =
-     "<iq type='set' from='%s' id='regcancel%d'>"
+     "<iq type='set' id='regcancel%d' from='%s'>"
           "<query xmlns='jabber:iq:register'><remove/></query>"
           "</iq>\n\n";  
     if (!write(fmt, msgId++, jid.c_str()))

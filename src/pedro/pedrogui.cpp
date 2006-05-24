@@ -1210,11 +1210,11 @@ void PasswordDialog::okCallback()
     Glib::ustring pass     = passField.get_text();
     Glib::ustring newpass  = newField.get_text();
     Glib::ustring confpass = confField.get_text();
-    if ((pass.size()     < 6 || pass.size()    > 12 ) ||
-        (newpass.size()  < 6 || newpass.size() > 12 ) ||
-        (confpass.size() < 6 || confpass.size()> 12 ))
+    if ((pass.size()     < 5 || pass.size()    > 12 ) ||
+        (newpass.size()  < 5 || newpass.size() > 12 ) ||
+        (confpass.size() < 5 || confpass.size()> 12 ))
         {
-        Gtk::MessageDialog dlg(*this, "Password must be 6 to 12 characters",
+        Gtk::MessageDialog dlg(*this, "Password must be 5 to 12 characters",
             false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
         dlg.run();
         }
@@ -1226,17 +1226,24 @@ void PasswordDialog::okCallback()
         }
     else
         {
-        response(Gtk::RESPONSE_OK);
+        //response(Gtk::RESPONSE_OK);
         hide();
         }
 }
 
 void PasswordDialog::cancelCallback()
 {
-    response(Gtk::RESPONSE_CANCEL);
+    //response(Gtk::RESPONSE_CANCEL);
     hide();
 }
 
+void PasswordDialog::on_response(int response_id)
+{
+    if (response_id == Gtk::RESPONSE_OK)
+        okCallback();
+    else
+        cancelCallback();
+}
 
 bool PasswordDialog::doSetup()
 {
@@ -1293,7 +1300,7 @@ bool PasswordDialog::doSetup()
     table.attach(confField, 1, 2, 2, 3);
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
+    add_button(Gtk::Stock::OK,     Gtk::RESPONSE_OK);
 
     show_all_children();
 
@@ -1848,6 +1855,44 @@ bool PedroGui::groupChatPresence(const DOMString &groupJid,
 //################################
 //# EVENTS
 //################################
+
+/**
+ *
+ */
+void PedroGui::handleConnectEvent()
+{
+     status("##### CONNECTED");
+     actionEnable("Connect",    false);
+     actionEnable("Chat",       true);
+     actionEnable("GroupChat",  true);
+     actionEnable("Disconnect", true);
+     actionEnable("RegPass",    true);
+     actionEnable("RegCancel",  true);
+     DOMString title = "Pedro - ";
+     title.append(client.getJid());
+     set_title(title);
+}
+
+
+/**
+ *
+ */
+void PedroGui::handleDisconnectEvent()
+{
+     status("##### DISCONNECTED");
+     actionEnable("Connect",    true);
+     actionEnable("Chat",       false);
+     actionEnable("GroupChat",  false);
+     actionEnable("Disconnect", false);
+     actionEnable("RegPass",    false);
+     actionEnable("RegCancel",  false);
+     DOMString title = "Pedro";
+     set_title(title);
+     chatDeleteAll();
+     groupChatDeleteAll();
+}
+
+
 /**
  *
  */
@@ -1871,31 +1916,12 @@ void PedroGui::doEvent(const XmppEvent &event)
             }
         case XmppEvent::EVENT_CONNECTED:
             {
-            status("##### CONNECTED");
-            actionEnable("Connect",    false);
-            actionEnable("Chat",       true);
-            actionEnable("GroupChat",  true);
-            actionEnable("Disconnect", true);
-            actionEnable("RegPass",    true);
-            actionEnable("RegCancel",  true);
-            DOMString title = "Pedro - ";
-            title.append(client.getJid());
-            set_title(title);
+            handleConnectEvent();
             break;
             }
         case XmppEvent::EVENT_DISCONNECTED:
             {
-            status("##### DISCONNECTED");
-            actionEnable("Connect",    true);
-            actionEnable("Chat",       false);
-            actionEnable("GroupChat",  false);
-            actionEnable("Disconnect", false);
-            actionEnable("RegPass",    false);
-            actionEnable("RegCancel",  false);
-            DOMString title = "Pedro";
-            set_title(title);
-            chatDeleteAll();
-            groupChatDeleteAll();
+            handleDisconnectEvent();
             break;
             }
         case XmppEvent::EVENT_MESSAGE:
@@ -1955,6 +1981,19 @@ void PedroGui::doEvent(const XmppEvent &event)
         case XmppEvent::EVENT_REGISTRATION_NEW:
             {
             status("##### REGISTERED: %s at %s\n",
+                       event.getTo().c_str(), event.getFrom().c_str());
+            break;
+            }
+        case XmppEvent::EVENT_REGISTRATION_CHANGE_PASS:
+            {
+            status("##### PASSWORD CHANGED: %s at %s\n",
+                       event.getTo().c_str(), event.getFrom().c_str());
+            break;
+            }
+        case XmppEvent::EVENT_REGISTRATION_CANCEL:
+            {
+            //client.disconnect();
+            status("##### REGISTERATION CANCELLED: %s at %s\n",
                        event.getTo().c_str(), event.getFrom().c_str());
             break;
             }
@@ -2146,7 +2185,7 @@ void PedroGui::regCancelCallback()
     Gtk::MessageDialog dlg(*this, "Do you want to cancel your registration on the server?",
         false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
     int ret = dlg.run();
-    if (ret == Gtk::RESPONSE_OK)
+    if (ret == Gtk::RESPONSE_YES)
         {
         client.inBandRegistrationCancel();
         }

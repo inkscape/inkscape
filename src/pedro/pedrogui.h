@@ -428,6 +428,11 @@ public:
    DOMString getConfirm()
        { return confField.get_text(); }
 
+protected:
+
+    //Overloaded from Gtk::Dialog
+    virtual void on_response(int response_id);
+
 private:
 
     void okCallback();
@@ -673,13 +678,19 @@ public:
 
     virtual ~PedroGui();
 
+    //Let everyone share this
+    XmppClient client;
+
+
     virtual void error(const char *fmt, ...);
 
     virtual void status(const char *fmt, ...);
 
-    //Let everyone share this
-    XmppClient client;
 
+
+    void handleConnectEvent();
+
+    void handleDisconnectEvent();
 
     /**
      *
@@ -689,7 +700,7 @@ public:
     /**
      *
      */
-    bool PedroGui::checkEventQueue();
+    bool checkEventQueue();
 
 
     bool chatCreate(const DOMString &userJid);
@@ -720,8 +731,6 @@ public:
                        long  size,
                        const DOMString &hash);
 
-private:
-
 
     //# File menu
     void connectCallback();
@@ -743,6 +752,8 @@ private:
 
     //# Help menu
     void aboutCallback();
+
+private:
 
     bool doSetup();
 
