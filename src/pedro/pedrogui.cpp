@@ -1197,6 +1197,109 @@ bool ConnectDialog::doSetup()
     return true;
 }
 
+
+
+
+//#########################################################################
+//# P A S S W O R D      D I A L O G
+//#########################################################################
+
+
+void PasswordDialog::okCallback()
+{
+    Glib::ustring pass     = passField.get_text();
+    Glib::ustring newpass  = newField.get_text();
+    Glib::ustring confpass = confField.get_text();
+    if ((pass.size()     < 6 || pass.size()    > 12 ) ||
+        (newpass.size()  < 6 || newpass.size() > 12 ) ||
+        (confpass.size() < 6 || confpass.size()> 12 ))
+        {
+        Gtk::MessageDialog dlg(*this, "Password must be 6 to 12 characters",
+            false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
+        dlg.run();
+        }
+    else if (newpass != confpass)
+        {
+        Gtk::MessageDialog dlg(*this, "New password and confirmation do not match",
+            false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
+        dlg.run();
+        }
+    else
+        {
+        response(Gtk::RESPONSE_OK);
+        hide();
+        }
+}
+
+void PasswordDialog::cancelCallback()
+{
+    response(Gtk::RESPONSE_CANCEL);
+    hide();
+}
+
+
+bool PasswordDialog::doSetup()
+{
+    set_title("Change Password");
+    set_size_request(300,200);
+
+    Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
+    actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
+    actionGroup->add( Gtk::Action::create("Change", Gtk::Stock::OK, "Change Password"),
+    sigc::mem_fun(*this, &PasswordDialog::okCallback) );
+    actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
+    sigc::mem_fun(*this, &PasswordDialog::cancelCallback) );
+
+
+    Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
+
+    uiManager->insert_action_group(actionGroup, 0);
+    add_accel_group(uiManager->get_accel_group());
+
+    Glib::ustring ui_info =
+        "<ui>"
+        "  <menubar name='MenuBar'>"
+        "    <menu action='MenuFile'>"
+        "      <menuitem action='Change'/>"
+        "      <separator/>"
+        "      <menuitem action='Cancel'/>"
+        "    </menu>"
+        "  </menubar>"
+        "</ui>";
+
+    uiManager->add_ui_from_string(ui_info);
+    Gtk::Widget* pMenuBar = uiManager->get_widget("/MenuBar");
+    get_vbox()->pack_start(*pMenuBar, Gtk::PACK_SHRINK);
+
+    table.resize(3, 2);
+    get_vbox()->pack_start(table);
+
+    passLabel.set_text("Current Password");
+    table.attach(passLabel, 0, 1, 0, 1);
+    passField.set_visibility(false);
+    passField.set_text(parent.client.getPassword());
+    table.attach(passField, 1, 2, 0, 1);
+
+    newLabel.set_text("New Password");
+    table.attach(newLabel, 0, 1, 1, 2);
+    newField.set_visibility(false);
+    table.attach(newField, 1, 2, 1, 2);
+
+    confLabel.set_text("Confirm New Password");
+    table.attach(confLabel, 0, 1, 2, 3);
+    confField.set_visibility(false);
+    confField.signal_activate().connect(
+           sigc::mem_fun(*this, &PasswordDialog::okCallback) );
+    table.attach(confField, 1, 2, 2, 3);
+
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
+
+    show_all_children();
+
+    return true;
+}
+
 //#########################################################################
 //# C H A T    D I A L O G
 //#########################################################################
@@ -1773,6 +1876,8 @@ void PedroGui::doEvent(const XmppEvent &event)
             actionEnable("Chat",       true);
             actionEnable("GroupChat",  true);
             actionEnable("Disconnect", true);
+            actionEnable("RegPass",    true);
+            actionEnable("RegCancel",  true);
             DOMString title = "Pedro - ";
             title.append(client.getJid());
             set_title(title);
@@ -1785,6 +1890,8 @@ void PedroGui::doEvent(const XmppEvent &event)
             actionEnable("Chat",       false);
             actionEnable("GroupChat",  false);
             actionEnable("Disconnect", false);
+            actionEnable("RegPass",    false);
+            actionEnable("RegCancel",  false);
             DOMString title = "Pedro";
             set_title(title);
             chatDeleteAll();
@@ -2022,6 +2129,29 @@ void PedroGui::colorCallback()
         }
 }
 
+void PedroGui::regPassCallback()
+{
+    PasswordDialog dlg(*this);
+    int ret = dlg.run();
+    if (ret == Gtk::RESPONSE_OK)
+        {
+        DOMString newpass = dlg.getNewPass();
+        client.inBandRegistrationChangePassword(newpass);
+        }
+}
+
+
+void PedroGui::regCancelCallback()
+{
+    Gtk::MessageDialog dlg(*this, "Do you want to cancel your registration on the server?",
+        false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
+    int ret = dlg.run();
+    if (ret == Gtk::RESPONSE_OK)
+        {
+        client.inBandRegistrationCancel();
+        }
+}
+
 void PedroGui::sendFileCallback()
 {
     doSendFile("");
@@ -2048,6 +2178,12 @@ void PedroGui::actionEnable(const DOMString &name, bool val)
     if (!action)
         {
         path = "/ui/MenuBar/MenuEdit/";
+        path.append(name);
+        action = uiManager->get_action(path);
+        }
+    if (!action)
+        {
+        path = "/ui/MenuBar/MenuRegister/";
         path.append(name);
         action = uiManager->get_action(path);
         }
@@ -2108,6 +2244,15 @@ bool PedroGui::doSetup()
                                   Gtk::Stock::SELECT_COLOR, "Select Color"),
     sigc::mem_fun(*this, &PedroGui::colorCallback) );
 
+    //### REGISTER MENU
+    actionGroup->add( Gtk::Action::create("MenuRegister", "_Registration") );
+    actionGroup->add( Gtk::Action::create("RegPass",
+                                  Gtk::Stock::DIALOG_AUTHENTICATION, "Change Password"),
+    sigc::mem_fun(*this, &PedroGui::regPassCallback) );
+    actionGroup->add( Gtk::Action::create("RegCancel",
+                                  Gtk::Stock::CANCEL, "Cancel Registration"),
+    sigc::mem_fun(*this, &PedroGui::regCancelCallback) );
+
     //### TRANSFER MENU
     actionGroup->add( Gtk::Action::create("MenuTransfer", "_Transfer") );
     actionGroup->add( Gtk::Action::create("SendFile",
@@ -2141,6 +2286,10 @@ bool PedroGui::doSetup()
         "      <menuitem action='SelectFont'/>"
         "      <menuitem action='SelectColor'/>"
         "    </menu>"
+        "    <menu action='MenuRegister'>"
+        "      <menuitem action='RegPass'/>"
+        "      <menuitem action='RegCancel'/>"
+        "    </menu>"
         "    <menu action='MenuTransfer'>"
         "      <menuitem action='SendFile'/>"
         "    </menu>"
@@ -2158,6 +2307,8 @@ bool PedroGui::doSetup()
     actionEnable("Chat",       false);
     actionEnable("GroupChat",  false);
     actionEnable("Disconnect", false);
+    actionEnable("RegPass",    false);
+    actionEnable("RegCancel",  false);
 
     mainBox.pack_start(vPaned);
     vPaned.add1(roster);

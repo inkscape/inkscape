@@ -2993,7 +2993,7 @@ bool XmppClient::processIq(Element *root)
             }
         else  //result
             {
-            printf("Got result\n");
+            //printf("Got result\n");
             for (int i=0 ; i<fileSendCount ; i++)
                 {
                 XmppStream *outf = fileSends[i];
@@ -3119,6 +3119,86 @@ bool XmppClient::processIq(Element *root)
         dispatchXmppEvent(event);
         }
 
+    else if (id.find("regnew") != id.npos)
+        {
+
+        }
+
+    else if (id.find("regpass") != id.npos)
+        {
+        std::vector<Element *> list = root->findElements("error");
+        if (list.size()==0)
+            {
+            XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CHANGE_PASS);
+            evt.setTo(username);
+            evt.setFrom(host);
+            dispatchXmppEvent(evt);
+            return true;
+            }
+
+        Element *errElem = list[0];
+        DOMString errMsg = "Password change error: ";
+        if (errElem->findElements("bad-request").size()>0)
+            {
+            errMsg.append("password change does not contain complete information");
+            }
+        else if (errElem->findElements("not-authorized").size()>0)
+            {
+            errMsg.append("server does not consider the channel safe "
+                          "enough to enable a password change");
+            }
+        else if (errElem->findElements("not-allowed").size()>0)
+            {
+            errMsg.append("server does not allow password changes");
+            }
+        else if (errElem->findElements("unexpected-request").size()>0)
+            {
+            errMsg.append(
+             "IQ set does not contain a 'from' address because "
+             "the entity is not registered with the server");
+            }
+        error((char *)errMsg.c_str());
+        }
+
+    else if (id.find("regcancel") != id.npos)
+        {
+        std::vector<Element *> list = root->findElements("error");
+        if (list.size()==0)
+            {
+            XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CANCEL);
+            evt.setTo(username);
+            evt.setFrom(host);
+            dispatchXmppEvent(evt);
+            return true;
+            }
+
+        Element *errElem = list[0];
+        DOMString errMsg = "Registration cancel error: ";
+        if (errElem->findElements("bad-request").size()>0)
+            {
+            errMsg.append("The <remove/> element was not the only child element of the <query/> element.");
+            }
+        else if (errElem->findElements("forbidden").size()>0)
+            {
+            errMsg.append("sender does not have sufficient permissions to cancel the registration");
+            }
+        else if (errElem->findElements("not-allowed").size()>0)
+            {
+            errMsg.append("not allowed to cancel registrations in-band");
+            }
+        else if (errElem->findElements("registration-required").size()>0)
+            {
+            errMsg.append("not previously registered");
+            }
+        else if (errElem->findElements("unexpected-request").size()>0)
+            {
+            errMsg.append(
+                 "IQ set does not contain a 'from' address because "
+                 "the entity is not registered with the server");
+            }
+        error((char *)errMsg.c_str());
+        }
+
     return true;
 }
 
@@ -3227,17 +3307,18 @@ bool XmppClient::write(char *fmt, ...)
 //########################################################################
 
 /**
- * Perform JEP-077 In-Band Registration
+ * Perform JEP-077 In-Band Registration.  Performed synchronously after SSL,
+ * before authentication
  */
 bool XmppClient::inBandRegistrationNew()
 {
     Parser parser;
 
     char *fmt =
-     "<iq type='get' id='reg1'>"
+     "<iq type='get' id='regnew%d'>"
          "<query xmlns='jabber:iq:register'/>"
          "</iq>\n\n";
-    if (!write(fmt))
+    if (!write(fmt, msgId++))
         return false;
 
     DOMString recbuf = readStanza();
@@ -3267,14 +3348,14 @@ bool XmppClient::inBandRegistrationNew()
 
 
     fmt =
-     "<iq type='set' id='reg2'>"
+     "<iq type='set' id='regnew%d'>"
          "<query xmlns='jabber:iq:register'>"
          "<username>%s</username>"
          "<password>%s</password>"
          "<email/><name/>"
          "</query>"
          "</iq>\n\n";
-    if (!write(fmt, toXml(username).c_str(),
+    if (!write(fmt, msgId++, toXml(username).c_str(),
                     toXml(password).c_str() ))
         return false;
 
@@ -3315,7 +3396,8 @@ bool XmppClient::inBandRegistrationNew()
 
 
 /**
- * Perform JEP-077 In-Band Registration
+ * Perform JEP-077 In-Band Registration.  Performed asynchronously, after login.
+ * See processIq() for response handling.
  */
 bool XmppClient::inBandRegistrationChangePassword(const DOMString &newpassword)
 {
@@ -3323,7 +3405,7 @@ bool XmppClient::inBandRegistrationChangePassword(const DOMString &newpassword)
 
     //# Let's try it form-style to allow the common old/new password thing
     char *fmt =
-      "<iq type='set' from='%s' to='%s' id='change1'>"
+      "<iq type='set' from='%s' to='%s' id='regpass%d'>"
       "  <query xmlns='jabber:iq:register'>"
       "    <x xmlns='jabber:x:data' type='form'>"
       "      <field type='hidden' var='FORM_TYPE'>"
@@ -3342,118 +3424,31 @@ bool XmppClient::inBandRegistrationChangePassword(const DOMString &newpassword)
       "  </query>"
       "</iq>\n\n";
 
-    if (!write(fmt, jid.c_str(), host.c_str(),
+    if (!write(fmt, msgId++, jid.c_str(), host.c_str(),
              username.c_str(), password.c_str(), newpassword.c_str()))
         return false;
 
-    DOMString recbuf = readStanza();
-    status("RECV chpass: %s", recbuf.c_str());
-    Element *elem = parser.parse(recbuf);
-    //elem->print();
+    return true;
 
-    std::vector<Element *> list = elem->findElements("error");
-    if (list.size()==0)
-        {
-        XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CHANGE_PASS);
-        evt.setTo(username);
-        evt.setFrom(host);
-        dispatchXmppEvent(evt);
-        delete elem;
-        return true;
-        }
-
-
-    Element *errElem = list[0];
-    DOMString errMsg = "Password change error: ";
-    if (errElem->findElements("bad-request").size()>0)
-        {
-        errMsg.append("password change does not contain complete information");
-        }
-    else if (errElem->findElements("not-authorized").size()>0)
-        {
-        errMsg.append("server does not consider the channel safe "
-                      "enough to enable a password change");
-        }
-    else if (errElem->findElements("not-allowed").size()>0)
-        {
-        errMsg.append("server does not allow password changes");
-        }
-    else if (errElem->findElements("unexpected-request").size()>0)
-        {
-        errMsg.append(
-             "IQ set does not contain a 'from' address because "
-             "the entity is not registered with the server");
-        }
-
-    delete elem;
-
-    error((char *)errMsg.c_str());
-
-    return false;
 }
 
 
 /**
- * Perform JEP-077 In-Band Registration
+ * Perform JEP-077 In-Band Registration.  Performed asynchronously, after login.
+ * See processIq() for response handling.
  */
 bool XmppClient::inBandRegistrationCancel()
 {
     Parser parser;
 
     char *fmt =
-     "<iq type='set' from='%s' id='unreg1'>"
+     "<iq type='set' from='%s' id='regcancel%d'>"
           "<query xmlns='jabber:iq:register'><remove/></query>"
           "</iq>\n\n";  
-    if (!write(fmt, jid.c_str()))
+    if (!write(fmt, msgId++, jid.c_str()))
         return false;
 
-    DOMString recbuf = readStanza();
-    status("RECV unreg: %s", recbuf.c_str());
-    Element *elem = parser.parse(recbuf);
-    //elem->print();
-
-    std::vector<Element *> list = elem->findElements("error");
-    if (list.size()==0)
-        {
-        XmppEvent evt(XmppEvent::EVENT_REGISTRATION_CANCEL);
-        evt.setTo(username);
-        evt.setFrom(host);
-        dispatchXmppEvent(evt);
-        delete elem;
-        return true;
-        }
-
-
-    Element *errElem = list[0];
-    DOMString errMsg = "Registration cancel error: ";
-    if (errElem->findElements("bad-request").size()>0)
-        {
-        errMsg.append("The <remove/> element was not the only child element of the <query/> element.");
-        }
-    else if (errElem->findElements("forbidden").size()>0)
-        {
-        errMsg.append("sender does not have sufficient permissions to cancel the registration");
-        }
-    else if (errElem->findElements("not-allowed").size()>0)
-        {
-        errMsg.append("not allowed to cancel registrations in-band");
-        }
-    else if (errElem->findElements("registration-required").size()>0)
-        {
-        errMsg.append("not previously registered");
-        }
-    else if (errElem->findElements("unexpected-request").size()>0)
-        {
-        errMsg.append(
-             "IQ set does not contain a 'from' address because "
-             "the entity is not registered with the server");
-        }
-
-    delete elem;
-
-    error((char *)errMsg.c_str());
-
-    return false;
+    return true;
 }
 
 

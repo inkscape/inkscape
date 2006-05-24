@@ -811,19 +811,6 @@ public:
     virtual int getMsgId()
         { return msgId++; }
 
-    /**
-     *
-     */
-    virtual void setDoRegister(bool val)
-        { doRegister = val; }
-
-
-    /**
-     *
-     */
-    virtual bool getDoRegister()
-        { return doRegister; }
-
 
 
     //#######################
@@ -881,6 +868,29 @@ public:
      *
      */
     virtual void rosterShow(const DOMString &jid, const DOMString &show);
+
+    //#######################
+    //# REGISTRATION
+    //#######################
+
+    /**
+     *  Set whether the client should to in-band registration
+     *  before authentication.  Causes inBandRegistrationNew() to be called
+     *  synchronously, before async is started.
+     */
+    virtual void setDoRegister(bool val)
+        { doRegister = val; }
+
+    /**
+     * Change the password of an existing account with a server
+     */
+    bool inBandRegistrationChangePassword(const DOMString &newPassword);
+
+    /**
+     * Cancel an existing account with a server
+     */
+    bool inBandRegistrationCancel();
+
 
     //#######################
     //# CHAT (individual)
@@ -1127,19 +1137,9 @@ private:
     bool iqAuthenticate(const DOMString &streamId);
 
     /**
-     * Register a new account with a server
+     * Register a new account with a server.  Not done by user
      */
     bool inBandRegistrationNew();
-
-    /**
-     * Change the password of an existing account with a server
-     */
-    bool inBandRegistrationChangePassword(const DOMString &newPassword);
-
-    /**
-     * Cancel an existing account with a server
-     */
-    bool inBandRegistrationCancel();
 
     bool keepGoing;
 

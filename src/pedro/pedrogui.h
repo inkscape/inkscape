@@ -408,6 +408,46 @@ private:
 };
 
 
+//#########################################################################
+//# P A S S W O R D    D I A L O G
+//#########################################################################
+class PasswordDialog : public Gtk::Dialog
+{
+public:
+
+    PasswordDialog (PedroGui &par) : parent(par)
+        { doSetup(); }
+
+    virtual ~PasswordDialog ()
+        {}
+
+   DOMString getPass()
+       { return passField.get_text(); }
+   DOMString getNewPass()
+       { return newField.get_text(); }
+   DOMString getConfirm()
+       { return confField.get_text(); }
+
+private:
+
+    void okCallback();
+    void cancelCallback();
+
+    bool doSetup();
+
+    Gtk::Table       table;
+
+    Gtk::Label       passLabel;
+    Gtk::Entry       passField;
+    Gtk::Label       newLabel;
+    Gtk::Entry       newField;
+    Gtk::Label       confLabel;
+    Gtk::Entry       confField;
+
+    PedroGui &parent;
+};
+
+
 
 //#########################################################################
 //# C H A T   D I A L O G
@@ -696,6 +736,10 @@ private:
 
     //# Transfer menu
     void sendFileCallback();
+
+    //# Registration menu
+    void regPassCallback();
+    void regCancelCallback();
 
     //# Help menu
     void aboutCallback();
