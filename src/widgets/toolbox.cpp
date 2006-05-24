@@ -3274,7 +3274,7 @@ namespace {
         sample_escaped = g_markup_escape_text (sample, -1);
     
         std::stringstream markup; 
-        markup << family_escaped << " <span foreground='darkgray' font_family='" << family_escaped << "'>" << sample_escaped << "</span>";
+        markup << family_escaped << "  <span foreground='darkgray' font_family='" << family_escaped << "'>" << sample_escaped << "</span>";
         g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
 
         free (family);
@@ -3298,7 +3298,7 @@ namespace {
         GtkEntryCompletion  *completion = gtk_entry_completion_new ();
         gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (Glib::unwrap(store)));
         gtk_entry_completion_set_text_column (completion, 0);
-        gtk_entry_completion_set_minimum_key_length (completion, 3); //3 characters minimum sounds reasonable
+        gtk_entry_completion_set_minimum_key_length (completion, 1); 
         g_object_set (G_OBJECT(completion), "inline-completion", TRUE, "popup-completion", TRUE, NULL);
         gtk_entry_set_completion (GTK_ENTRY(entry), completion);
         aux_toolbox_space (tbl, 1);
