@@ -1,3 +1,6 @@
+2006-05-25  Bryce Harrington <bryce@bryceharrington.org>
+	* src/inkscape.cpp:  i18n on error messages (fix for bug 1490928) 
+
 2006-05-23  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/dialogs/layers-panel.cpp, src/dialogs/swatches.cpp,
