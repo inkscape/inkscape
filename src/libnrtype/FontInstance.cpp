@@ -92,7 +92,7 @@ typedef struct ft2_to_liv {
 
 // outline as returned by freetype -> livarot Path
 // see nr-type-ft2.cpp for the freetype -> artBPath on which this code is based
-static int ft2_move_to (FT_Vector * to, void * i_user) {
+static int ft2_move_to(FT_Vector const *to, void * i_user) {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
 	NR::Point   p(user->scale*to->x,user->scale*to->y);
 	//	printf("m  t=%f %f\n",p[0],p[1]);
@@ -101,7 +101,7 @@ static int ft2_move_to (FT_Vector * to, void * i_user) {
 	return 0;
 }
 
-static int ft2_line_to (FT_Vector * to, void * i_user)
+static int ft2_line_to(FT_Vector const *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
 	NR::Point   p(user->scale*to->x,user->scale*to->y);
@@ -111,7 +111,7 @@ static int ft2_line_to (FT_Vector * to, void * i_user)
 	return 0;
 }
 
-static int ft2_conic_to (FT_Vector * control, FT_Vector * to, void * i_user)
+static int ft2_conic_to(FT_Vector const *control, FT_Vector const *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
 	NR::Point   p(user->scale*to->x,user->scale*to->y),c(user->scale*control->x,user->scale*control->y);  
@@ -123,7 +123,7 @@ static int ft2_conic_to (FT_Vector * control, FT_Vector * to, void * i_user)
 	return 0;
 }
 
-static int ft2_cubic_to (FT_Vector * control1, FT_Vector * control2, FT_Vector * to, void * i_user)
+static int ft2_cubic_to(FT_Vector const *control1, FT_Vector const *control2, FT_Vector const *to, void *i_user)
 {
 	ft2_to_liv* user=(ft2_to_liv*)i_user;
 	NR::Point   p(user->scale*to->x,user->scale*to->y),
