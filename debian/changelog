@@ -1,4 +1,10 @@
-inkscape (0.43+0.44pre1-1) unstable; urgency=medium
+inkscape (0.43+0.44pre0-1) unstable; urgency=low
+
+  * Upstream pre-release
+
+ -- Aaron Spike <aaron@ekips.org>  Thu, 25 May 2006 15:14:18 -0500
+
+inkscape (0.43+0.44pre0-0) unstable; urgency=medium
 
   * Upstream release
   * added build-dep for liblcms1-dev
