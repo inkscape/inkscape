@@ -96,9 +96,9 @@ typedef struct ft2_to_liv {
 
 /* *** BEGIN #if HACK *** */
 #if FREETYPE_MAJOR == 2 && FREETYPE_MINOR >= 2
-#define FREETYPE_VECTOR	FT_Vector const
+typedef FT_Vector const FREETYPE_VECTOR;
 #else
-#define FREETYPE_VECTOR FT_Vector
+typedef FT_Vector FREETYPE_VECTOR;
 #endif
 
 // outline as returned by freetype -> livarot Path
