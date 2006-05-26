@@ -17,8 +17,40 @@
 #include "ui/view/view.h"
 #include "sp-object.h"
 #include "xml/node.h"
+#include "xml/node-observer.h"
 
 namespace Inkscape {
+
+
+using Inkscape::XML::Node;
+
+class LayerManager::LayerWatcher : public Inkscape::XML::NodeObserver {
+public:
+    LayerWatcher(LayerManager* mgr, SPObject* obj) :
+        _mgr(mgr),
+        _obj(obj),
+        _lockedAttr(g_quark_from_string("sodipodi:insensitive")),
+        _labelAttr(g_quark_from_string("inkscape:label"))
+    {}
+
+    virtual void notifyChildAdded( Node &node, Node &child, Node *prev ) {}
+    virtual void notifyChildRemoved( Node &node, Node &child, Node *prev ) {}
+    virtual void notifyChildOrderChanged( Node &node, Node &child, Node *old_prev, Node *new_prev ) {}
+    virtual void notifyContentChanged( Node &node, Util::ptr_shared<char> old_content, Util::ptr_shared<char> new_content ) {}
+    virtual void notifyAttributeChanged( Node &node, GQuark name, Util::ptr_shared<char> old_value, Util::ptr_shared<char> new_value ) {
+        if ( name == _lockedAttr || name == _labelAttr ) {
+            if ( _mgr && _obj ) {
+                _mgr->_objectModified( _obj, 0 );
+            }
+        }
+    }
+
+    LayerManager* _mgr;
+    SPObject* _obj;
+    GQuark _lockedAttr;
+    GQuark _labelAttr;
+};
+
 
 LayerManager::LayerManager(SPDesktop *desktop)
 : _desktop(desktop), _document(NULL)
@@ -59,7 +91,19 @@ void LayerManager::_objectModified( SPObject* obj, guint flags )
 }
 
 void LayerManager::_rebuild() {
+    while ( !_watchers.empty() ) {
+        LayerWatcher* one = _watchers.back();
+        _watchers.pop_back();
+        if ( one->_obj ) {
+            Node* node = SP_OBJECT_REPR(one->_obj);
+            if ( node ) {
+                node->removeObserver(*one);
+            }
+        }
+    }
+
     _clear();
+
     GSList const *layers=sp_document_get_resource_list(_document, "layer");
     SPObject *root=_desktop->currentRoot();
     if ( root ) {
@@ -78,9 +122,13 @@ void LayerManager::_rebuild() {
                     while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
                         higher = SP_OBJECT_PARENT(higher);
                     }
-                    Inkscape::XML::Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
+                    Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
                     if ( node && node->parent() ) {
                         g_signal_connect( G_OBJECT(curr), "modified", G_CALLBACK( _objectModifiedCB ), this );
+
+                        LayerWatcher* eye = new LayerWatcher(this, curr);
+                        _watchers.push_back( eye );
+                        SP_OBJECT_REPR(curr)->addObserver(*eye);
 
                         _addOne(curr);
                     }

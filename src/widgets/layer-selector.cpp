@@ -418,6 +418,18 @@ void LayerSelector::_protectUpdate(sigc::slot<void> slot) {
     _visibility_toggled_connection.block(true);
     _lock_toggled_connection.block(true);
     slot();
+
+    SPObject *layer = _desktop ? _desktop->currentLayer() : 0;
+    if ( layer ) {
+        bool wantedValue = ( SP_IS_ITEM(layer) ? SP_ITEM(layer)->isLocked() : false );
+        if ( _lock_toggle.get_active() != wantedValue ) {
+            _lock_toggle.set_active( wantedValue );
+        }
+        wantedValue = ( SP_IS_ITEM(layer) ? SP_ITEM(layer)->isHidden() : false );
+        if ( _visibility_toggle.get_active() != wantedValue ) {
+            _visibility_toggle.set_active( wantedValue );
+        }
+    }
     _visibility_toggled_connection.block(visibility_blocked);
     _lock_toggled_connection.block(lock_blocked);
 }

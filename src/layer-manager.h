@@ -13,6 +13,7 @@
 #include "document-subset.h"
 #include "gc-finalized.h"
 #include "gc-soft-ptr.h"
+#include <vector>
 
 class SPDesktop;
 class SPDocument;
@@ -34,6 +35,9 @@ public:
     }
 
 private:
+    friend class LayerWatcher;
+    class LayerWatcher;
+
     static void _objectModifiedCB( SPObject* obj, guint flags, LayerManager* mgr );
 
     void _objectModified( SPObject* obj, guint flags );
@@ -47,6 +51,8 @@ private:
 
     GC::soft_ptr<SPDesktop> _desktop;
     SPDocument *_document;
+
+    std::vector<LayerWatcher*> _watchers;
 
     sigc::signal<void, SPObject *>     _layer_changed_signal;
     sigc::signal<void, SPObject *>     _details_changed_signal;
