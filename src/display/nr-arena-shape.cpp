@@ -527,31 +527,9 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             }
 
             if (style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {
-                double dlen = 0.0;
-                for (int i = 0; i < style->stroke_dash.n_dash; i++) {
-                    dlen += style->stroke_dash.dash[i] * scale;
-                }
-                if (dlen >= 1.0) {
-                    NRVpathDash dash;
-                    dash.offset = style->stroke_dash.offset * scale;
-                    dash.n_dash = style->stroke_dash.n_dash;
-                    dash.dash = g_new(double, dash.n_dash);
-                    for (int i = 0; i < dash.n_dash; i++) {
-                        dash.dash[i] = style->stroke_dash.dash[i] * scale;
-                    }
-                    int    nbD=dash.n_dash;
-                    float  *dashs=(float*)malloc((nbD+1)*sizeof(float));
-                    while ( dash.offset >= dlen ) dash.offset-=dlen;
-                    dashs[0]=dash.dash[0];
-                    for (int i=1; i<nbD; i++) {
-                        dashs[i]=dashs[i-1]+dash.dash[i];
-                    }
-                    // modulo dlen
-                    thePath->DashPolyline(0.0,0.0,dlen,nbD,dashs,true,dash.offset);
-                    free(dashs);
-                    g_free(dash.dash);
-                }
+                thePath->DashPolylineFromStyle(style, scale, 1.0);
             }
+
             ButtType butt=butt_straight;
             switch (shape->_stroke.cap) {
                 case NRArenaShape::BUTT_CAP:
