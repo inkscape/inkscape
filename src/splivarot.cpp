@@ -21,6 +21,9 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "sp-path.h"
+#include "sp-shape.h"
+#include "sp-marker.h"
+#include "enums.h"
 #include "sp-text.h"
 #include "sp-item-group.h"
 #include "style.h"
@@ -39,6 +42,11 @@
 #include "libnr/nr-path.h"
 #include "xml/repr.h"
 #include "xml/repr-sorting.h"
+
+#include <libnr/nr-matrix-fns.h>
+#include <libnr/nr-matrix-ops.h>
+#include <libnr/nr-matrix-translate-ops.h>
+#include <libnr/nr-scale-matrix-ops.h>
 
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
@@ -600,17 +608,21 @@ sp_selected_path_outline()
             } else {
                 sp_repr_css_set_property(ncss, "fill-opacity", "1.0");
             }
+            sp_repr_css_unset_property(ncss, "marker-start");
+            sp_repr_css_unset_property(ncss, "marker-mid");
+            sp_repr_css_unset_property(ncss, "marker-end");
         }
 
         NR::Matrix const transform(item->transform);
+        float const scale = transform.expansion();
         gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
+        SPStyle *i_style = SP_OBJECT(item)->style;
 
         float o_width, o_miter;
         JoinType o_join;
         ButtType o_butt;
 
         {
-            SPStyle *i_style = SP_OBJECT(item)->style;
             int jointype, captype;
 
             jointype = i_style->stroke_linejoin.computed;
@@ -656,8 +668,34 @@ sp_selected_path_outline()
         Path *res = new Path;
         res->SetBackData(false);
 
+        if (i_style->stroke_dash.n_dash) {
+            // For dashed strokes, use Stroke method, because Outline can't do dashes
+            // However Stroke adds lots of extra nodes _or_ makes the path crooked, so consider this a temporary workaround
 
-        {
+            orig->ConvertWithBackData(0.1);
+
+            orig->DashPolylineFromStyle(i_style, scale, 0);
+
+            Shape* theShape = new Shape;
+            orig->Stroke(theShape, false, 0.5*o_width, o_join, o_butt,
+                         0.5 * o_miter);
+            orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
+
+            Shape *theRes = new Shape;
+
+            theRes->ConvertToShape(theShape, fill_positive);
+
+            Path *originaux[1];
+            originaux[0] = res;
+            theRes->ConvertToForme(orig, 1, originaux);
+
+            res->Coalesce(5.0);
+
+            delete theShape;
+            delete theRes;
+
+        } else {
+
             orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
 
             orig->Coalesce(0.5 * o_width);
@@ -687,16 +725,12 @@ sp_selected_path_outline()
 
         did = true;
 
-        sp_curve_unref(curve);
         // remember the position of the item
         gint pos = SP_OBJECT_REPR(item)->position();
         // remember parent
         Inkscape::XML::Node *parent = SP_OBJECT_REPR(item)->parent();
         // remember id
         char const *id = SP_OBJECT_REPR(item)->attribute("id");
-
-        selection->remove(item);
-        SP_OBJECT(item)->deleteObject(false);
 
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
 
@@ -714,20 +748,78 @@ sp_selected_path_outline()
             repr->setAttribute("d", str);
             g_free(str);
 
-            // add the new repr to the parent
-            parent->appendChild(repr);
 
-            // move to the saved position
-            repr->setPosition(pos > 0 ? pos : 0);
+            if (SP_IS_SHAPE(item) && sp_shape_has_markers (SP_SHAPE(item))) {
 
-            repr->setAttribute("id", id);
+                Inkscape::XML::Node *g_repr = sp_repr_new("svg:g");
 
-            SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
-            sp_item_write_transform(newitem, repr, transform);
+                // add the group to the parent
+                parent->appendChild(g_repr);
+                // move to the saved position
+                g_repr->setPosition(pos > 0 ? pos : 0);
 
-            selection->add(repr);
+                g_repr->appendChild(repr);
+                repr->setAttribute("id", id);
+                SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+                sp_item_write_transform(newitem, repr, transform);
+
+                SPShape *shape = SP_SHAPE(item);
+
+                for (NArtBpath* bp = SP_CURVE_BPATH(shape->curve); bp->code != NR_END; bp++) {
+                    for (int m = SP_MARKER_LOC_START; m < SP_MARKER_LOC_QTY; m++) {
+                        if (sp_shape_marker_required (shape, m, bp)) {
+
+                            SPMarker* marker = SP_MARKER (shape->marker[m]);
+                            SPItem* marker_item = sp_item_first_item_child (SP_OBJECT (shape->marker[m]));
+
+                            NR::Matrix tr(sp_shape_marker_get_transform(shape, bp));
+
+                            if (marker->markerUnits == SP_MARKER_UNITS_STROKEWIDTH) {
+                                tr = NR::scale(i_style->stroke_width.computed) * tr;
+                            }
+
+                            // total marker transform
+                            tr = marker_item->transform * marker->c2p * tr * transform;
+
+                            if (SP_OBJECT_REPR(marker_item)) {
+                                Inkscape::XML::Node *m_repr = SP_OBJECT_REPR(marker_item)->duplicate();
+                                g_repr->appendChild(m_repr);
+                                SPItem *marker_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(m_repr);
+                                sp_item_write_transform(marker_item, m_repr, tr);
+                            }
+                        }
+                    }
+                }
+
+
+                selection->add(g_repr);
+
+                Inkscape::GC::release(g_repr);
+
+
+            } else {
+
+                // add the new repr to the parent
+                parent->appendChild(repr);
+
+                // move to the saved position
+                repr->setPosition(pos > 0 ? pos : 0);
+
+                repr->setAttribute("id", id);
+
+                SPItem *newitem = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+                sp_item_write_transform(newitem, repr, transform);
+
+                selection->add(repr);
+
+            }
 
             Inkscape::GC::release(repr);
+
+            sp_curve_unref(curve);
+            selection->remove(item);
+            SP_OBJECT(item)->deleteObject(false);
+
         }
 
         delete res;
