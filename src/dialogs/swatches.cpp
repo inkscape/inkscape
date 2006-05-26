@@ -839,7 +839,7 @@ void _loadPaletteFile( gchar const *filename )
                     possible.push_back(onceMore);
 #if ENABLE_MAGIC_COLORS
                     ColorItem::_wireMagicColors( onceMore );
-#endif ENABLE_MAGIC_COLORS
+#endif // ENABLE_MAGIC_COLORS
                 } else {
                     delete onceMore;
                 }
