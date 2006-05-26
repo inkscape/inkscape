@@ -473,11 +473,11 @@ inkscape_segv_handler (int signum)
 
     /* Show nice dialog box */
 
-    char const *istr = N_("Inkscape encountered an internal error and will close now.\n");
-    char const *sstr = N_("Automatic backups of unsaved documents were done to the following locations:\n");
-    char const *fstr = N_("Automatic backup of the following documents failed:\n");
+    char const *istr = _("Inkscape encountered an internal error and will close now.\n");
+    char const *sstr = _("Automatic backups of unsaved documents were done to the following locations:\n");
+    char const *fstr = _("Automatic backup of the following documents failed:\n");
     gint nllen = strlen ("\n");
-    gint len = strlen (_(istr)) + strlen (_(sstr)) + strlen (_(fstr));
+    gint len = strlen (istr) + strlen (sstr) + strlen (fstr);
     for (GSList *l = savednames; l != NULL; l = l->next) {
         len = len + SP_INDENT + strlen ((gchar *) l->data) + nllen;
     }
@@ -487,12 +487,12 @@ inkscape_segv_handler (int signum)
     len += 1;
     gchar *b = g_new (gchar, len);
     gint pos = 0;
-    len = strlen (_(istr));
-    memcpy (b + pos, _(istr), len);
+    len = strlen (istr);
+    memcpy (b + pos, istr, len);
     pos += len;
     if (savednames) {
-        len = strlen (_(sstr));
-        memcpy (b + pos, _(sstr), len);
+        len = strlen (sstr);
+        memcpy (b + pos, sstr, len);
         pos += len;
         for (GSList *l = savednames; l != NULL; l = l->next) {
             memset (b + pos, ' ', SP_INDENT);
@@ -505,8 +505,8 @@ inkscape_segv_handler (int signum)
         }
     }
     if (failednames) {
-        len = strlen (_(fstr));
-        memcpy (b + pos, _(fstr), len);
+        len = strlen (fstr);
+        memcpy (b + pos, fstr, len);
         pos += len;
         for (GSList *l = failednames; l != NULL; l = l->next) {
             memset (b + pos, ' ', SP_INDENT);
