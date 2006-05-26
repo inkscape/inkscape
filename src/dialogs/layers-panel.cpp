@@ -26,6 +26,8 @@
 
 #include "document.h"
 #include "desktop.h"
+#include "desktop-handles.h"
+#include "selection.h"
 #include "sp-object.h"
 #include "sp-item.h"
 #include "widgets/icon.h"
@@ -388,7 +390,6 @@ bool LayersPanel::_checkForSelected(const Gtk::TreePath &path, const Gtk::TreeIt
     bool stopGoing = false;
 
     Gtk::TreeModel::Row row = *iter;
-    Glib::ustring tmp = row[_model->_colLabel];
     if ( layer == row[_model->_colObject] )
     {
         _tree.expand_to_path( path );
@@ -471,10 +472,14 @@ void LayersPanel::_pushTreeSelectionToCurrent()
     if ( inTree ) {
         SPObject* curr = _desktop->currentLayer();
         if ( curr != inTree ) {
+            // TODO - move these to a function in layer-manager.cpp
             _desktop->setCurrentLayer( inTree );
+            sp_desktop_selection(_desktop)->clear();
         }
     } else {
+        // TODO - move these to a function in layer-manager.cpp
         _desktop->setCurrentLayer( _desktop->doc()->root );
+        sp_desktop_selection(_desktop)->clear();
     }
 }
 
@@ -571,6 +576,7 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeM
             gchar const* oldLabel = obj->label();
             Glib::ustring tmp = row[_model->_colLabel];
             if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
+                // TODO fix name collision bug
                 obj->setLabel(tmp.c_str());
             }
         }
