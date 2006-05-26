@@ -15,6 +15,8 @@
 #include "libnr/nr-point.h"
 #include <libnr/nr-rect-l.h>
 
+struct SPStyle;
+
 /*
  * the Path class: a structure to hold path description and their polyline approximation (not kept in sync)
  * the path description is built with regular commands like MoveTo() LineTo(), etc
@@ -170,6 +172,8 @@ public:
   // dash the polyline
   // the result is stored in the polyline, so you lose the original. make a copy before if needed
   void  DashPolyline(float head,float tail,float body,int nbD,float *dashs,bool stPlain,float stOffset);
+
+  void  DashPolylineFromStyle(SPStyle *style, float scale, float min_len);
   
   //utilitaire pour inkscape
   void  LoadArtBPath(void *iP,NR::Matrix const &tr,bool doTransformation);
