@@ -822,30 +822,8 @@ sp_desktop_widget_layout (SPDesktopWidget *dtw)
 
     if (prefs_get_int_attribute (fullscreen ? "fullscreen.panels" : "window.panels", "state", 1) == 0) {
         gtk_widget_hide_all( dtw->panels );
-        GList* kids = gtk_container_get_children( GTK_CONTAINER( dtw->statusbar ) );
-        if ( kids )
-        {
-            GList* last = g_list_last( kids );
-            if ( last )
-            {
-                GtkStatusbar* tail = GTK_STATUSBAR( last->data );
-                gtk_statusbar_set_has_resize_grip( tail, TRUE );
-            }
-            g_list_free( kids );
-        }
     } else {
         gtk_widget_show_all( dtw->panels );
-        GList* kids = gtk_container_get_children( GTK_CONTAINER( dtw->statusbar ) );
-        if ( kids )
-        {
-            GList* last = g_list_last( kids );
-            if ( last )
-            {
-                GtkStatusbar* tail = GTK_STATUSBAR( last->data );
-                gtk_statusbar_set_has_resize_grip( tail, FALSE );
-            }
-            g_list_free( kids );
-        }
     }
 
     if (prefs_get_int_attribute (fullscreen ? "fullscreen.scrollbars" : "window.scrollbars", "state", 1) == 0) {

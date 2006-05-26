@@ -1,5 +1,12 @@
 2006-05-26  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/widgets/desktop-widget.cpp:
+
+	  Fixed resize handle in corner of main UI.
+	  Fixes bug #1493995.
+
+2006-05-26  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/layer-manager.cpp, src/layer-manager.h,
 	  src/widgets/layer-selector.cpp:
 
