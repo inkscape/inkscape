@@ -72,12 +72,9 @@ extern "C" {
 #    define INKSCAPE_TEMPLATESDIR "Contents/Resources/templates"
 #    define INKSCAPE_UIDIR        "Contents/Resources/ui"
 //CREATE V0.1 support
-// fixme: is this the correct path
-/*
-#    define CREATE_GRADIENTSDIR  "/create/gradients/gimp"
-#    define CREATE_PALETTESDIR   "/create/swatches"
-#    define CREATE_PATTERNSDIR   "/create/patterns/vector"
-*/
+#    define CREATE_GRADIENTSDIR  "/Library/Application Support/create/gradients/gimp"
+#    define CREATE_PALETTESDIR   "/Library/Application Support/create/swatches"
+#    define CREATE_PATTERNSDIR   "/Library/Application Support/create/patterns/vector"
 #  else
 #    define INKSCAPE_APPICONDIR   INKSCAPE_DATADIR "/pixmaps"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"
