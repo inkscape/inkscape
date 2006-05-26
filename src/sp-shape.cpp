@@ -53,8 +53,6 @@ static void sp_shape_hide (SPItem *item, unsigned int key);
 static void sp_shape_snappoints (SPItem const *item, SnapPointsIter p);
 
 static void sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai);
-static int sp_shape_has_markers (SPShape const *shape);
-static int sp_shape_number_of_markers (SPShape* Shape, int type);
 
 static SPItemClass *parent_class;
 
@@ -233,7 +231,7 @@ sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 * \param bp Path segment.
 * \return 1 if a marker is required here, otherwise 0.
 */
-static bool
+bool
 sp_shape_marker_required(SPShape const *shape, int const m, NArtBpath *bp)
 {
     if (shape->marker[m] == NULL) {
@@ -435,7 +433,7 @@ found:
 * \return Transform matrix.
 */
 
-static NR::Matrix
+NR::Matrix
 sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
 {
     g_return_val_if_fail(( is_moveto(SP_CURVE_BPATH(shape->curve)[0].code)
@@ -721,7 +719,7 @@ sp_shape_hide (SPItem *item, unsigned int key)
 * \param shape Shape.
 * \return TRUE if the shape has any markers, or FALSE if not.
 */
-static int
+int
 sp_shape_has_markers (SPShape const *shape)
 {
     /* Note, we're ignoring 'marker' settings, which technically should apply for
@@ -742,7 +740,7 @@ sp_shape_has_markers (SPShape const *shape)
 * \param type Marker type (e.g. SP_MARKER_LOC_START)
 * \return Number of markers that the shape has of this type.
 */
-static int
+int
 sp_shape_number_of_markers (SPShape *shape, int type)
 {
     int n = 0;
