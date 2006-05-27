@@ -123,6 +123,9 @@ void TileDialog::Grid_Arrange ()
     total_col_width=0;
     total_row_height=0;
 
+    // check for correct numbers in the row- and col-spinners
+    on_col_spinbutton_changed();
+    on_row_spinbutton_changed();
 
     // set padding to manual values
     paddingx = XPadSpinner.get_value();
