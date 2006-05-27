@@ -694,7 +694,7 @@ ParamIntAdjustment::val_changed (void)
 Gtk::Widget *
 ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
@@ -718,7 +718,7 @@ ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 Gtk::Widget *
 ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
@@ -779,7 +779,7 @@ ParamBoolCheckButton::on_toggle (void)
 Gtk::Widget *
 ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
@@ -835,15 +835,15 @@ ParamStringEntry::changed_text (void)
 Gtk::Widget *
 ParamString::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
 {
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
     label->show();
-    hbox->pack_start(*label, true, true);
+    hbox->pack_start(*label, false, false);
 
     ParamStringEntry * textbox = new ParamStringEntry(this, doc, node);
     textbox->show();
-    hbox->pack_start(*textbox, false, false);
+    hbox->pack_start(*textbox, true, true);
 
     hbox->show();
 
@@ -903,7 +903,7 @@ ParamDescription::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
     label->set_line_wrap();
     label->show();
 
-    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
     hbox->pack_start(*label, true, true, 5);
     hbox->show();
 
