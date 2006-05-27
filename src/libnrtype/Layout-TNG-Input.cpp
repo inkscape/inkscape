@@ -253,12 +253,47 @@ static const Layout::EnumConversionItem enum_convert_spstyle_variant_to_pango_va
 
 font_instance *Layout::InputStreamTextSource::styleGetFontInstance() const
 {
+    PangoFontDescription *descr = styleGetFontDescription();
+    if (descr == NULL) return NULL;
+    font_instance *res = (font_factory::Default())->Face(descr);
+    pango_font_description_free(descr);
+    return res;
+}
+
+PangoFontDescription *Layout::InputStreamTextSource::styleGetFontDescription() const
+{
     if (style->text == NULL) return NULL;
-    return (font_factory::Default())->Face(style->text->font_family.value,
-                                           _enum_converter(style->font_variant.computed, enum_convert_spstyle_variant_to_pango_variant, sizeof(enum_convert_spstyle_variant_to_pango_variant)/sizeof(enum_convert_spstyle_variant_to_pango_variant[0])),
-                                           _enum_converter(style->font_style.computed,   enum_convert_spstyle_style_to_pango_style,     sizeof(enum_convert_spstyle_style_to_pango_style)/sizeof(enum_convert_spstyle_style_to_pango_style[0])),
-                                           _enum_converter(style->font_weight.computed,  enum_convert_spstyle_weight_to_pango_weight,   sizeof(enum_convert_spstyle_weight_to_pango_weight)/sizeof(enum_convert_spstyle_weight_to_pango_weight[0])),
-                                           _enum_converter(style->font_stretch.computed, enum_convert_spstyle_stretch_to_pango_stretch, sizeof(enum_convert_spstyle_stretch_to_pango_stretch)/sizeof(enum_convert_spstyle_stretch_to_pango_stretch[0])));
+    PangoFontDescription *descr = pango_font_description_new();
+    // Pango can't cope with spaces before or after the commas - let's remove them.
+    // this code is not exactly unicode-safe, but it's similar to what's done in
+    // pango, so it's not the limiting factor
+    Glib::ustring family;
+    if (style->text->font_family.value == NULL) {
+        family = "Sans";
+    } else {
+        gchar **families = g_strsplit(style->text->font_family.value, ",", -1);
+        if (families) {
+            for (gchar **f = families ; *f ; ++f) {
+                g_strstrip(*f);
+                if (!family.empty()) family += ',';
+                family += *f;
+            }
+        }
+        g_strfreev(families);
+    }
+
+    pango_font_description_set_family(descr,family.c_str());
+    pango_font_description_set_weight(descr,(PangoWeight)_enum_converter(style->font_weight.computed,  enum_convert_spstyle_weight_to_pango_weight,   sizeof(enum_convert_spstyle_weight_to_pango_weight)/sizeof(enum_convert_spstyle_weight_to_pango_weight[0])));
+    pango_font_description_set_stretch(descr,(PangoStretch)_enum_converter(style->font_stretch.computed, enum_convert_spstyle_stretch_to_pango_stretch, sizeof(enum_convert_spstyle_stretch_to_pango_stretch)/sizeof(enum_convert_spstyle_stretch_to_pango_stretch[0])));
+    pango_font_description_set_style(descr,(PangoStyle)_enum_converter(style->font_style.computed,   enum_convert_spstyle_style_to_pango_style,     sizeof(enum_convert_spstyle_style_to_pango_style)/sizeof(enum_convert_spstyle_style_to_pango_style[0])));
+    pango_font_description_set_variant(descr,(PangoVariant)_enum_converter(style->font_variant.computed, enum_convert_spstyle_variant_to_pango_variant, sizeof(enum_convert_spstyle_variant_to_pango_variant)/sizeof(enum_convert_spstyle_variant_to_pango_variant[0])));
+#ifdef USE_PANGO_WIN32
+    // damn Pango fudges the size, so we need to unfudge. See source of pango_win32_font_map_init()
+    pango_font_description_set_size(descr, (int) ((font_factory::Default())->fontSize*PANGO_SCALE*72/GetDeviceCaps(pango_win32_get_dc(),LOGPIXELSY))); // mandatory huge size (hinting workaround)
+#else
+    pango_font_description_set_size(descr, (int) ((font_factory::Default())->fontSize*PANGO_SCALE)); // mandatory huge size (hinting workaround)
+#endif
+    return descr;
 }
 
 Layout::InputStreamTextSource::~InputStreamTextSource()

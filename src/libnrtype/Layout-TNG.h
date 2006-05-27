@@ -27,6 +27,7 @@ class SVGLength;
 class Path;
 class SPCurve;
 class font_instance;
+typedef struct _PangoFontDescription PangoFontDescription;
 
 namespace Inkscape {
 namespace Text {
@@ -579,6 +580,8 @@ private:
         
         // a few functions for some of the more complicated style accesses
         float styleComputeFontSize() const;
+        /// The return value must be freed with pango_font_description_free()
+        PangoFontDescription *styleGetFontDescription() const;
         font_instance *styleGetFontInstance() const;
         Direction styleGetBlockProgression() const;
         Alignment styleGetAlignment(Direction para_direction, bool try_text_align) const;
