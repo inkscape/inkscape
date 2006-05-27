@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-23 21:28+0200\n"
-"PO-Revision-Date: 2006-05-23 18:37+0100\n"
+"POT-Creation-Date: 2006-05-27 14:55+0200\n"
+"PO-Revision-Date: 2006-05-27 14:55+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -361,7 +361,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1897
 msgid "Randomize the vertical scale by this percentage"
-msgstr "Rendre le Redimensionnement vertical aléatoire de ce pourcentage"
+msgstr "Rendre le redimensionnement vertical aléatoire de ce pourcentage"
 
 #: ../src/dialogs/clonetiler.cpp:1911
 msgid "Alternate the sign of scales for each row"
@@ -738,7 +738,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2561
 msgid " Re_move "
-msgstr "Suppri_mer"
+msgstr "_Supprimer"
 
 #: ../src/dialogs/clonetiler.cpp:2562
 msgid "Remove existing tiled clones of the selected object (siblings only)"
@@ -803,7 +803,7 @@ msgstr "_Sélection"
 
 #: ../src/dialogs/export.cpp:133
 msgid "_Custom"
-msgstr "_Personnalisée"
+msgstr "P_ersonnalisée"
 
 #: ../src/dialogs/export.cpp:257
 msgid "<big><b>Export area</b></big>"
@@ -838,7 +838,7 @@ msgstr "y_1 :"
 #: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
-msgstr "Hauteur :"
+msgstr "_Hauteur :"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
@@ -1177,7 +1177,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:190
 #: ../src/ui/dialog/align-and-distribute.cpp:876
-#: ../src/widgets/desktop-widget.cpp:1100
+#: ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "Sélection"
 
@@ -1261,48 +1261,75 @@ msgstr "ID invalide !"
 msgid "Id exists! "
 msgstr "Cet Id existe déjà !"
 
-#: ../src/dialogs/layer-properties.cpp:46
+#: ../src/dialogs/layers-panel.cpp:647
+#, fuzzy
+msgid "New"
+msgstr "_Nouveau"
+
+#: ../src/dialogs/layers-panel.cpp:652
+msgid "Top"
+msgstr ""
+
+#: ../src/dialogs/layers-panel.cpp:658
+msgid "Up"
+msgstr ""
+
+#: ../src/dialogs/layers-panel.cpp:664
+msgid "Dn"
+msgstr ""
+
+#: ../src/dialogs/layers-panel.cpp:670
+#, fuzzy
+msgid "Bot"
+msgstr "Boîte"
+
+#: ../src/dialogs/layers-panel.cpp:680
+#, fuzzy
+msgid "X"
+msgstr "X :"
+
+#: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
 msgstr "Nom du calque :"
 
-#: ../src/dialogs/layer-properties.cpp:151
+#: ../src/dialogs/layer-properties.cpp:152
 msgid "Above current"
 msgstr "Au-dessus du calque courant"
 
-#: ../src/dialogs/layer-properties.cpp:155
+#: ../src/dialogs/layer-properties.cpp:156
 msgid "Below current"
 msgstr "En-dessous du calque courant"
 
-#: ../src/dialogs/layer-properties.cpp:158
+#: ../src/dialogs/layer-properties.cpp:159
 msgid "As sublayer of current"
 msgstr "Comme sous-calque du calque courant"
 
-#: ../src/dialogs/layer-properties.cpp:162
+#: ../src/dialogs/layer-properties.cpp:163
 msgid "Position:"
 msgstr "Position :"
 
-#: ../src/dialogs/layer-properties.cpp:180
+#: ../src/dialogs/layer-properties.cpp:181
 msgid "Rename Layer"
 msgstr "Renommer le calque"
 
-#: ../src/dialogs/layer-properties.cpp:183
+#: ../src/dialogs/layer-properties.cpp:184
 msgid "_Rename"
 msgstr "_Renommer"
 
 #. TRANSLATORS: This means "The layer has been renamed"
-#: ../src/dialogs/layer-properties.cpp:194
+#: ../src/dialogs/layer-properties.cpp:195
 msgid "Renamed layer"
 msgstr "Calque renommé"
 
-#: ../src/dialogs/layer-properties.cpp:198
+#: ../src/dialogs/layer-properties.cpp:199
 msgid "Add Layer"
 msgstr "Ajouter un calque"
 
-#: ../src/dialogs/layer-properties.cpp:200
+#: ../src/dialogs/layer-properties.cpp:201
 msgid "_Add"
 msgstr "_Ajouter"
 
-#: ../src/dialogs/layer-properties.cpp:222
+#: ../src/dialogs/layer-properties.cpp:223
 msgid "New layer created."
 msgstr "Nouveau calque créé."
 
@@ -1724,19 +1751,19 @@ msgstr "Texte"
 msgid "Set as default"
 msgstr "Enregistrer comme valeur par défaut"
 
-#: ../src/dialogs/tiledialog.cpp:629
+#: ../src/dialogs/tiledialog.cpp:632
 msgid "Rows:"
 msgstr "Lignes :"
 
-#: ../src/dialogs/tiledialog.cpp:637
+#: ../src/dialogs/tiledialog.cpp:640
 msgid "Number of rows"
 msgstr "Nombre de lignes"
 
-#: ../src/dialogs/tiledialog.cpp:641
+#: ../src/dialogs/tiledialog.cpp:644
 msgid "Equal height"
 msgstr "Egaliser la hauteur"
 
-#: ../src/dialogs/tiledialog.cpp:651
+#: ../src/dialogs/tiledialog.cpp:654
 msgid "If not set, each row has the height of the tallest object in it"
 msgstr ""
 "Si décoché, chaque ligne a même la hauteur que l'objet le plus haut qu'elle "
@@ -1744,47 +1771,47 @@ msgstr ""
 
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
-#: ../src/dialogs/tiledialog.cpp:657 ../src/dialogs/tiledialog.cpp:727
+#: ../src/dialogs/tiledialog.cpp:660 ../src/dialogs/tiledialog.cpp:730
 msgid "Align:"
 msgstr "Aligner :"
 
 #. #### Number of columns ####
-#: ../src/dialogs/tiledialog.cpp:699
+#: ../src/dialogs/tiledialog.cpp:702
 msgid "Columns:"
 msgstr "Colonnes :"
 
-#: ../src/dialogs/tiledialog.cpp:707
+#: ../src/dialogs/tiledialog.cpp:710
 msgid "Number of columns"
 msgstr "Nombre de colonnes"
 
-#: ../src/dialogs/tiledialog.cpp:711
+#: ../src/dialogs/tiledialog.cpp:714
 msgid "Equal width"
 msgstr "Egaliser la largeur"
 
-#: ../src/dialogs/tiledialog.cpp:720
+#: ../src/dialogs/tiledialog.cpp:723
 msgid "If not set, each column has the width of the widest object in it"
 msgstr ""
 "Si décoché, chaque ligne a la même largeur que l'objet le plus large qu'elle "
 "contient"
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
-#: ../src/dialogs/tiledialog.cpp:766
+#: ../src/dialogs/tiledialog.cpp:769
 msgid "Fit into selection box"
 msgstr "Ajuster à la boîte de sélection"
 
-#: ../src/dialogs/tiledialog.cpp:772
+#: ../src/dialogs/tiledialog.cpp:775
 msgid "Set spacing:"
 msgstr "Définir l'espacement :"
 
-#: ../src/dialogs/tiledialog.cpp:792
+#: ../src/dialogs/tiledialog.cpp:795
 msgid "Vertical spacing between rows (px units)"
 msgstr "Espace vertical entre les lignes (unités px)"
 
-#: ../src/dialogs/tiledialog.cpp:817
+#: ../src/dialogs/tiledialog.cpp:820
 msgid "Horizontal spacing between columns (px units)"
 msgstr "Espace horizontal entre les colonnes (unités px)"
 
-#: ../src/dialogs/tiledialog.cpp:841
+#: ../src/dialogs/tiledialog.cpp:844
 msgid "Arrange selected objects"
 msgstr "Organiser les objets sélectionnés"
 
@@ -2945,16 +2972,16 @@ msgid_plural "Receiving change; %u changes left to process."
 msgstr[0] "Réception d'un changement : il reste %u changement à traiter."
 msgstr[1] "Réception d'un changement : il reste %u changements à traiter."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:158
+#: ../src/jabber_whiteboard/chat-handler.cpp:161
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
 msgstr "<b>%s</b> a quitté la pièce de discussion."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:222
+#: ../src/jabber_whiteboard/chat-handler.cpp:225
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
 msgstr "Le surnom %1 est déjà utilisé. Veuillez choisir un surnom différent."
 
-#: ../src/jabber_whiteboard/chat-handler.cpp:226
+#: ../src/jabber_whiteboard/chat-handler.cpp:229
 msgid "An error was encountered while attempting to connect to the server."
 msgstr "Erreur lors de la tentative de connection au serveur."
 
@@ -3482,7 +3509,7 @@ msgstr "_Nouveau"
 
 #: ../src/menus-skeleton.h:22
 msgid "Open _Recent"
-msgstr "_Récemment ouvert"
+msgstr "Derniers doc_uments utilisés"
 
 #: ../src/menus-skeleton.h:54
 msgid "_Edit"
@@ -4645,11 +4672,11 @@ msgstr ""
 "<b>Spirale</b> : rayon %s, angle %5g&#176;; avec <b>Ctrl</b> pour tourner "
 "par incréments"
 
-#: ../src/splivarot.cpp:101
+#: ../src/splivarot.cpp:109
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Sélectionner <b>au moins 2 chemins</b> pour une opération booléenne."
 
-#: ../src/splivarot.cpp:107
+#: ../src/splivarot.cpp:115
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4657,7 +4684,7 @@ msgstr ""
 "Sélectionner <b>exactement 2 chemins</b> pour en faire une différence, une "
 "exclusion ou les découper."
 
-#: ../src/splivarot.cpp:124 ../src/splivarot.cpp:139
+#: ../src/splivarot.cpp:132 ../src/splivarot.cpp:147
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4665,7 +4692,7 @@ msgstr ""
 "Impossible de déterminer <b>l'ordre en z</b> des objets sélectionnés pour en "
 "faire une différence, une exclusion ou les découper."
 
-#: ../src/splivarot.cpp:169
+#: ../src/splivarot.cpp:177
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr ""
@@ -4673,36 +4700,36 @@ msgstr ""
 "opération booléenne."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:549
+#: ../src/splivarot.cpp:557
 msgid "Select <b>path(s)</b> to outline."
 msgstr ""
 "Sélectionner des <b>chemin(s)</b> pour en convertir le contour en chemin"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:743
+#: ../src/splivarot.cpp:835
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr ""
 "<b>Aucun contour (de chemin)</b> à transformer en chemin dans la sélection."
 
-#: ../src/splivarot.cpp:827
+#: ../src/splivarot.cpp:919
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr ""
 "L'objet sélectionné <b>n'est pas un chemin</b>, impossible de l'éroder/"
 "dilater."
 
-#: ../src/splivarot.cpp:1035
+#: ../src/splivarot.cpp:1127
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Sélectionner des <b>chemin(s)</b> pour les éroder/dilater."
 
-#: ../src/splivarot.cpp:1252
+#: ../src/splivarot.cpp:1344
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Aucun chemin</b> à éroder/dilater dans la sélection."
 
-#: ../src/splivarot.cpp:1385
+#: ../src/splivarot.cpp:1477
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Sélectionner des <b>chemin(s)</b> à simplifier."
 
-#: ../src/splivarot.cpp:1412
+#: ../src/splivarot.cpp:1504
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Aucun chemin</b> à simplifier dans la sélection."
 
@@ -5239,12 +5266,12 @@ msgstr "Élément le plus petit"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:874
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/widgets/desktop-widget.cpp:1092
+#: ../src/widgets/desktop-widget.cpp:1070
 msgid "Page"
 msgstr "Page"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:875
-#: ../src/widgets/desktop-widget.cpp:1096
+#: ../src/widgets/desktop-widget.cpp:1074
 msgid "Drawing"
 msgstr "Dessin"
 
@@ -7189,7 +7216,7 @@ msgstr "Liste"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "Wrap"
-msgstr ""
+msgstr "Envelopper"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -7433,11 +7460,11 @@ msgstr "Orientation de la page :"
 
 #: ../src/ui/widget/page-sizer.cpp:230
 msgid "_Landscape"
-msgstr "_Paysage"
+msgstr "Pa_ysage"
 
 #: ../src/ui/widget/page-sizer.cpp:233
 msgid "_Portrait"
-msgstr "P_ortrait"
+msgstr "_Portrait"
 
 #. Custom paper frame
 #: ../src/ui/widget/page-sizer.cpp:239
@@ -7446,7 +7473,7 @@ msgstr "Taille personnalisée"
 
 #: ../src/ui/widget/page-sizer.cpp:246
 msgid "_Fit page to selection"
-msgstr "Ajuster la page à la sélection"
+msgstr "A_juster la page à la sélection"
 
 #: ../src/ui/widget/page-sizer.cpp:247
 msgid ""
@@ -7627,7 +7654,7 @@ msgstr "Ouvrir un document existant"
 
 #: ../src/verbs.cpp:1991
 msgid "Re_vert"
-msgstr "Re_charger"
+msgstr "_Recharger"
 
 #: ../src/verbs.cpp:1992
 msgid "Revert to the last saved version of document (changes will be lost)"
@@ -7637,7 +7664,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:1993
 msgid "_Save"
-msgstr "Enregi_strer"
+msgstr "_Enregistrer"
 
 #: ../src/verbs.cpp:1993
 msgid "Save document"
@@ -7682,7 +7709,7 @@ msgstr "Imprimer directement sans passer par un fichier ou un tube"
 
 #: ../src/verbs.cpp:2004
 msgid "Print Previe_w"
-msgstr "Aperçu avant impression"
+msgstr "A_perçu avant impression"
 
 #: ../src/verbs.cpp:2005
 msgid "Preview document printout"
@@ -7747,7 +7774,7 @@ msgstr "Annuler la dernière action"
 
 #: ../src/verbs.cpp:2021
 msgid "_Redo"
-msgstr "_Refaire"
+msgstr "_Restaurer"
 
 #: ../src/verbs.cpp:2022
 msgid "Do again the last undone action"
@@ -7755,7 +7782,7 @@ msgstr "Refaire la dernière action annulée"
 
 #: ../src/verbs.cpp:2023
 msgid "Cu_t"
-msgstr "Co_uper"
+msgstr "_Couper"
 
 #: ../src/verbs.cpp:2024
 msgid "Cut selection to clipboard"
@@ -7763,7 +7790,7 @@ msgstr "Couper la sélection vers le presse-papiers"
 
 #: ../src/verbs.cpp:2025
 msgid "_Copy"
-msgstr "_Copier"
+msgstr "Co_pier"
 
 #: ../src/verbs.cpp:2026
 msgid "Copy selection to clipboard"
@@ -7911,7 +7938,7 @@ msgstr "Convertir la sélection en rectangle rempli par ce motif"
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2059
 msgid "Pattern to _Objects"
-msgstr "Motif en _ob_jet"
+msgstr "Motif en _objets"
 
 #: ../src/verbs.cpp:2060
 msgid "Extract objects from a tiled pattern fill"
@@ -8980,7 +9007,7 @@ msgstr "Afficher les calques"
 #. Help
 #: ../src/verbs.cpp:2373
 msgid "_Keys and Mouse"
-msgstr "_Clavier et souris"
+msgstr "Clavier et _souris"
 
 #: ../src/verbs.cpp:2374
 msgid "Keys and mouse shortcuts reference"
@@ -9004,7 +9031,7 @@ msgstr "Information sur l'utilisation de la mémoire"
 
 #: ../src/verbs.cpp:2379
 msgid "_About Inkscape"
-msgstr "_À propos d'Inkscape"
+msgstr "À _propos d'Inkscape"
 
 #: ../src/verbs.cpp:2380
 msgid "Inkscape version, authors, license"
@@ -9324,7 +9351,7 @@ msgstr "(Dé)verrouiller le calque courant"
 msgid "Current layer"
 msgstr "Calque courant"
 
-#: ../src/widgets/layer-selector.cpp:545
+#: ../src/widgets/layer-selector.cpp:557
 msgid "(root)"
 msgstr "(racine)"
 
@@ -9958,7 +9985,7 @@ msgstr "Crénage vertical"
 
 #: ../src/widgets/toolbox.cpp:3641
 msgid "Letter rotation"
-msgstr ""
+msgstr "Rotation de caractère"
 
 #: ../src/widgets/toolbox.cpp:3662
 msgid "Remove manual kerns"

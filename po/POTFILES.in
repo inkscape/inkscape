@@ -26,6 +26,7 @@ src/dialogs/guidelinedialog.cpp
 src/dialogs/iconpreview.cpp
 src/dialogs/in-dt-coordsys.cpp
 src/dialogs/item-properties.cpp
+src/dialogs/layers-panel.cpp
 src/dialogs/layer-properties.cpp
 src/dialogs/object-attributes.cpp
 src/dialogs/object-properties.cpp
