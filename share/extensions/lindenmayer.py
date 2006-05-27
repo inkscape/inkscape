@@ -18,6 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 import inkex, simplestyle, pturtle
 
+def stripme(s):
+    return s.strip()	
+
 class LSystem(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
@@ -44,36 +47,44 @@ class LSystem(inkex.Effect):
         self.stack = []
         self.turtle = pturtle.pTurtle()
     def iterate(self):
-        self.rules = dict([i.split("=") for i in self.options.rules.upper().split(";") if i.count("=")==1])
-        self.__recurse(self.options.axiom.upper(),0)
+        self.rules = dict([map(stripme, i.split("=")) for i in self.options.rules.upper().split(";") if i.count("=")==1])
+        string = self.__recurse(self.options.axiom.upper(),0)
+	self.__compose_path(string)
         return self.turtle.getPath()
+    def __compose_path(self, string):
+	for c in string:
+	    if c in 'ABCDEF':
+		self.turtle.pd()
+		self.turtle.fd(self.options.step)
+	    elif c in 'GHIJKL':
+		self.turtle.pu()
+		self.turtle.fd(self.options.step)
+	    elif c == '+':
+		self.turtle.lt(self.options.angle)
+	    elif c == '-':
+		self.turtle.rt(self.options.angle)
+	    elif c == '|':
+		self.turtle.lt(180)
+	    elif c == '[':
+		self.stack.append([self.turtle.getpos(), self.turtle.getheading()])
+	    elif c == ']':
+		self.turtle.pu()
+		pos,heading = self.stack.pop()
+		self.turtle.setpos(pos)
+		self.turtle.setheading(heading)
+
     def __recurse(self,rule,level):
+	level_string = ''
         for c in rule:
             if level < self.options.order:
                 try:
-                    self.__recurse(self.rules[c],level+1)
+                    level_string = level_string + self.__recurse(self.rules[c],level+1)
                 except KeyError:
-                    pass
+		    level_string = level_string + c
+	    else:
+	        level_string = level_string + c 
+	return level_string
             
-            if c == 'F':
-                self.turtle.pd()
-                self.turtle.fd(self.options.step)
-            elif c == 'G':
-                self.turtle.pu()
-                self.turtle.fd(self.options.step)
-            elif c == '+':
-                self.turtle.lt(self.options.angle)
-            elif c == '-':
-                self.turtle.rt(self.options.angle)
-            elif c == '|':
-                self.turtle.lt(180)
-            elif c == '[':
-                self.stack.append([self.turtle.getpos(), self.turtle.getheading()])
-            elif c == ']':
-                self.turtle.pu()
-                pos,heading = self.stack.pop()
-                self.turtle.setpos(pos)
-                self.turtle.setheading(heading)
     def effect(self):
         new = self.document.createElement('svg:path')
         s = {'stroke-linejoin': 'miter', 'stroke-width': '1.0px', 
@@ -86,3 +97,4 @@ class LSystem(inkex.Effect):
 
 e = LSystem()
 e.affect()
+
