@@ -67,6 +67,8 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     FILE *osf, *osp;
     const gchar * fn;
 
+    os.setf(std::ios::fixed);
+
     fn = mod->get_param_string("destination");
 
     osf = NULL;
@@ -214,6 +216,8 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
         Inkscape::SVGOStringStream os;
         float rgb[3];
 
+        os.setf(std::ios::fixed);
+
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
         os << "{\n\\newrgbcolor{curcolor}{" << rgb[0] << " " << rgb[1] << " " << rgb[2] << "}\n";
 
@@ -238,6 +242,8 @@ PrintLatex::stroke (Inkscape::Extension::Print *mod, const NRBPath *bpath, const
     if (style->stroke.type == SP_PAINT_TYPE_COLOR) {
         Inkscape::SVGOStringStream os;
         float rgb[3];
+
+        os.setf(std::ios::fixed);
 
         sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
         os << "{\n\\newrgbcolor{curcolor}{" << rgb[0] << " " << rgb[1] << " " << rgb[2] << "}\n";
