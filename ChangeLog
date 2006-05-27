@@ -1,3 +1,10 @@
+2006-05-26  MenTaLguY  <mental@rydia.net>
+
+	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
+
+	  make button labels translatable, and use HButtonBox instead of HBox for
+	  better appearance
+
 2006-05-26  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/layer-manager.cpp, src/layer-manager.h,

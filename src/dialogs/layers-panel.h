@@ -16,6 +16,7 @@
 #include <gtkmm/treestore.h>
 #include <gtkmm/tooltips.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/buttonbox.h>
 
 #include "ui/widget/panel.h"
 //#include "ui/previewholder.h"
@@ -101,7 +102,7 @@ private:
 
     Gtk::Tooltips _tips;
     Gtk::TreeView _tree;
-    Gtk::HBox _buttonsRow;
+    Gtk::HButtonBox _buttonsRow;
     Gtk::ScrolledWindow _scroller;
     Gtk::Menu _popupMenu;
 };
