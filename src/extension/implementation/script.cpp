@@ -31,6 +31,7 @@
 #include "prefs-utils.h"
 #include "../system.h"
 #include "extension/effect.h"
+#include "extension/output.h"
 #include "extension/db.h"
 #include "script.h"
 
@@ -366,8 +367,7 @@ Script::prefs_input(Inkscape::Extension::Input *module, gchar const *filename)
 Gtk::Widget *
 Script::prefs_output(Inkscape::Extension::Output *module)
 {
-    /*return module->autogui();*/
-    return NULL;
+    return module->autogui(NULL, NULL); 
 }
 
 /**
@@ -524,7 +524,12 @@ Script::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *
     gchar *local_filename = g_filename_from_utf8( filename,
                                                   -1,  &bytesRead,  &bytesWritten, &error);
 
-    execute(command, tempfilename_in, local_filename);
+    Glib::ustring local_command(command);
+    Glib::ustring * paramString = module->paramString();
+    local_command += *paramString;
+    delete paramString;
+
+    execute(local_command.c_str(), tempfilename_in, local_filename);
 
     g_free(local_filename);
 
