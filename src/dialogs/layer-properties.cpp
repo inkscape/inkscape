@@ -22,6 +22,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "document.h"
+#include "layer-manager.h"
 #include "message-stack.h"
 #include "desktop-handles.h"
 #include "sp-object.h"
@@ -186,8 +187,8 @@ void LayerPropertiesDialog::Rename::setup(LayerPropertiesDialog &dialog) {
 void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
     SPDesktop *desktop=dialog._desktop;
     Glib::ustring name(dialog._layer_name_entry.get_text());
-    desktop->currentLayer()->setLabel(
-        ( name.empty() ? NULL : (gchar *)name.c_str() )
+    desktop->layer_manager->renameLayer( desktop->currentLayer(),
+                                         ( name.empty() ? NULL : (gchar *)name.c_str() )
     );
     sp_document_done(sp_desktop_document(desktop));
     // TRANSLATORS: This means "The layer has been renamed"
@@ -215,7 +216,7 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     
     Glib::ustring name(dialog._layer_name_entry.get_text());
     if (!name.empty()) {
-        new_layer->setLabel((gchar *)name.c_str());
+        desktop->layer_manager->renameLayer( new_layer, (gchar *)name.c_str() );
     }
     sp_desktop_selection(desktop)->clear();
     desktop->setCurrentLayer(new_layer);

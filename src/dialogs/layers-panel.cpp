@@ -576,8 +576,8 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeM
             gchar const* oldLabel = obj->label();
             Glib::ustring tmp = row[_model->_colLabel];
             if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
-                // TODO fix name collision bug
-                obj->setLabel(tmp.c_str());
+                _mgr->renameLayer( obj, tmp.c_str() );
+                row[_model->_colLabel] = obj->label();
             }
         }
     }

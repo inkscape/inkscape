@@ -1,5 +1,13 @@
 2006-05-26  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/layer-manager.cpp, src/layer-manager.h,
+	  src/dialogs/layer-properties.cpp, src/dialogs/layers-panel.cpp:
+
+	  Prevent layer name duplication.
+	  Fixes bug #1115407.
+
+2006-05-26  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/widgets/desktop-widget.cpp:
 
 	  Fixed resize handle in corner of main UI.

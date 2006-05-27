@@ -7,6 +7,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <set>
 #include <sigc++/functors/mem_fun.h>
 #include <sigc++/adaptors/hide.h>
 #include "gc-managed.h"
@@ -67,6 +68,57 @@ LayerManager::LayerManager(SPDesktop *desktop)
 
     _setDocument(desktop->doc());
 }
+
+
+void LayerManager::renameLayer( SPObject* obj, gchar const *label )
+{
+    Glib::ustring incoming( label ? label : "" );
+    Glib::ustring result(incoming);
+    Glib::ustring base(incoming);
+    guint startNum = 1;
+
+    size_t pos = base.rfind('#');
+    if ( pos != Glib::ustring::npos ) {
+        gchar* numpart = g_strdup(base.substr(pos+1).c_str());
+        if ( numpart ) {
+            gchar* endPtr = 0;
+            guint64 val = g_ascii_strtoull( numpart, &endPtr, 10);
+            if ( ((val > 0) || (endPtr != numpart)) && (val < 65536) ) {
+                base.erase( pos );
+                result = base;
+                startNum = static_cast<int>(val);
+            }
+            g_free(numpart);
+        }
+    }
+
+    std::set<Glib::ustring> currentNames;
+    GSList const *layers=sp_document_get_resource_list(_document, "layer");
+    SPObject *root=_desktop->currentRoot();
+    if ( root ) {
+        for ( GSList const *iter=layers ; iter ; iter = iter->next ) {
+            SPObject *layer=static_cast<SPObject *>(iter->data);
+            if ( layer != obj ) {
+                currentNames.insert( layer->label() ? Glib::ustring(layer->label()) : Glib::ustring() );
+            }
+        }
+    }
+
+    // Not sure if we need to cap it, but we'll just be paranoid for the moment
+    // Intentionally unsigned
+    guint endNum = startNum + 3000;
+    for ( guint i = startNum; (i < endNum) && (currentNames.find(result) != currentNames.end()); i++ ) {
+        gchar* suffix = g_strdup_printf("#%d", i);
+        result = base;
+        result += suffix;
+
+        g_free(suffix);
+    }
+
+    obj->setLabel( result.c_str() );
+}
+
+
 
 void LayerManager::_setDocument(SPDocument *document) {
     if (_document) {
