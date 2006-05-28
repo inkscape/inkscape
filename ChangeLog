@@ -1,5 +1,13 @@
 2006-05-28  MenTaLguY  <mental@rydia.net>
 
+	* share/icons/icons.svg:
+
+	  correct vertical text flow icon to  correctly reflect lines stacking
+	  right-to-left, as well as improving pixel alignment on both text flow
+	  icons
+
+2006-05-28  MenTaLguY  <mental@rydia.net>
+
 	* src/widgets/toolbox.cpp:
 
 	  add tooltips to text toolbar widgets
