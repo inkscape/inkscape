@@ -338,9 +338,9 @@ StyleSwatch::setStyle(SPStyle *query)
         {
             gchar *str;
             if (op == 0)
-                str = g_strdup_printf(_("0:%.3g"), op);
+                str = g_strdup_printf(_("O:%.3g"), op);
             else 
-                str = g_strdup_printf(_("0:.%d"), (int) (op*10));
+                str = g_strdup_printf(_("O:.%d"), (int) (op*10));
             _opacity_value.set_markup (str);
             g_free (str);
         }
