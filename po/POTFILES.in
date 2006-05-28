@@ -354,8 +354,6 @@ src/zoom-context.cpp
 [type: gettext/xml] share/extensions/lindenmayer.inx
 [type: gettext/xml] share/extensions/measure.inx
 [type: gettext/xml] share/extensions/motion.inx
-[type: gettext/xml] share/extensions/pdf_output.inx
-[type: gettext/xml] share/extensions/pdf_output_via_gs_on_win32.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
 [type: gettext/xml] share/extensions/randompnt.inx

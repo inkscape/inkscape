@@ -4,14 +4,14 @@
 # Josef Vybiral <josef.vybiral@gmail.com>, 2005, 2006.
 #
 #
-#: ../src/widgets/toolbox.cpp:3543 ../src/widgets/toolbox.cpp:3564
-#: ../src/widgets/toolbox.cpp:3593 ../src/widgets/toolbox.cpp:3614
-#: ../src/widgets/toolbox.cpp:3641
+#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3650
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-27 14:55+0200\n"
+"POT-Creation-Date: 2006-05-28 22:12+0200\n"
 "PO-Revision-Date: 2006-05-22 23:32+0100\n"
 "Last-Translator: Josef Vybíral <josef.vybiral@gmail.com>\n"
 "Language-Team: Czech <none>\n"
@@ -96,36 +96,36 @@ msgstr "Žádné předchozí hodnoty přiblížení."
 msgid "No next zoom."
 msgstr "Žádné další hodnoty přiblížení."
 
-#: ../src/dialogs/clonetiler.cpp:161
+#: ../src/dialogs/clonetiler.cpp:162
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Není nic vybráno.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:167
+#: ../src/dialogs/clonetiler.cpp:168
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Vybrán více než jeden objekt.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:174
+#: ../src/dialogs/clonetiler.cpp:175
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>Objekt má <b>%d</b> dlážděných klonů.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:179
+#: ../src/dialogs/clonetiler.cpp:180
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>Objekt nemá dlážděné klony.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:844
+#: ../src/dialogs/clonetiler.cpp:845
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Vyberte <b>jeden objekt</b> jehož dlážděné klony se mají rozházet."
 
-#: ../src/dialogs/clonetiler.cpp:895
+#: ../src/dialogs/clonetiler.cpp:896
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Vyberte <b>jeden objekt</b> jehož dlaždicové klony se mají odstranit."
 
-#: ../src/dialogs/clonetiler.cpp:963 ../src/selection-chemistry.cpp:1931
+#: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1931
 msgid "Select an <b>object</b> to clone."
 msgstr "Vyberte <b>objekt</b> ke klonování."
 
-#: ../src/dialogs/clonetiler.cpp:969
+#: ../src/dialogs/clonetiler.cpp:970
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
@@ -133,19 +133,19 @@ msgstr ""
 "Pokud chcete klonovat několik objektů, <b>seskupte</b> je a <b>klonujte "
 "skupinu</b>."
 
-#: ../src/dialogs/clonetiler.cpp:1479
+#: ../src/dialogs/clonetiler.cpp:1480
 msgid "<small>Per row:</small>"
 msgstr "<small>Na řádek:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1492
+#: ../src/dialogs/clonetiler.cpp:1493
 msgid "<small>Per column:</small>"
 msgstr "<small>Na sloupec:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1500
+#: ../src/dialogs/clonetiler.cpp:1501
 msgid "<small>Randomize:</small>"
 msgstr "<small>Náhodně:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1654
+#: ../src/dialogs/clonetiler.cpp:1655
 msgid "_Symmetry"
 msgstr "_Symetrie"
 
@@ -154,274 +154,274 @@ msgstr "_Symetrie"
 #. * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
 #. * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
 #.
-#: ../src/dialogs/clonetiler.cpp:1662
+#: ../src/dialogs/clonetiler.cpp:1663
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Vyberte jednu ze 17 skupin symetrie pro dláždění"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1673
+#: ../src/dialogs/clonetiler.cpp:1674
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: jednoduchý posuv"
 
-#: ../src/dialogs/clonetiler.cpp:1674
+#: ../src/dialogs/clonetiler.cpp:1675
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: rotace o 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1675
+#: ../src/dialogs/clonetiler.cpp:1676
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: zrcadlení"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1678
+#: ../src/dialogs/clonetiler.cpp:1679
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: posun zrcadlení"
 
-#: ../src/dialogs/clonetiler.cpp:1679
+#: ../src/dialogs/clonetiler.cpp:1680
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: zrcadlení + posun zrcadlení"
 
-#: ../src/dialogs/clonetiler.cpp:1680
+#: ../src/dialogs/clonetiler.cpp:1681
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: zrcadlení + zrcadlení"
 
-#: ../src/dialogs/clonetiler.cpp:1681
+#: ../src/dialogs/clonetiler.cpp:1682
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: zrcadlení + rotace o 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1682
+#: ../src/dialogs/clonetiler.cpp:1683
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: posun zrcadlení + rotace o 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1683
+#: ../src/dialogs/clonetiler.cpp:1684
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: zrcadlení + zrcadlení + rotace o 180&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1684
+#: ../src/dialogs/clonetiler.cpp:1685
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: rotace o 90&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1685
+#: ../src/dialogs/clonetiler.cpp:1686
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: rotace o 90&#176; + 45&#176; zrcadlení"
 
-#: ../src/dialogs/clonetiler.cpp:1686
+#: ../src/dialogs/clonetiler.cpp:1687
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: rotace o 90&#176; + 90&#176; zrcadlení"
 
-#: ../src/dialogs/clonetiler.cpp:1687
+#: ../src/dialogs/clonetiler.cpp:1688
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: rotace o 120&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1688
+#: ../src/dialogs/clonetiler.cpp:1689
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: zrcadlení + rotace o 120&#176;, hustě"
 
-#: ../src/dialogs/clonetiler.cpp:1689
+#: ../src/dialogs/clonetiler.cpp:1690
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P31M</b>: zrcadlení + rotace o 120&#176;, rozptýleně"
 
-#: ../src/dialogs/clonetiler.cpp:1690
+#: ../src/dialogs/clonetiler.cpp:1691
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: rotace o 60&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1691
+#: ../src/dialogs/clonetiler.cpp:1692
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: zrcadlení + rotace o 60&#176;"
 
-#: ../src/dialogs/clonetiler.cpp:1719
+#: ../src/dialogs/clonetiler.cpp:1720
 msgid "S_hift"
 msgstr "Posun"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1729
+#: ../src/dialogs/clonetiler.cpp:1730
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>Posun X:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1737
+#: ../src/dialogs/clonetiler.cpp:1738
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Vodorovný posun na řádek (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1745
+#: ../src/dialogs/clonetiler.cpp:1746
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Vodorovný posun na sloupec (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1752
+#: ../src/dialogs/clonetiler.cpp:1753
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "Provést náhodnou změnu vodorovného posunu o tato procenta"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1762
+#: ../src/dialogs/clonetiler.cpp:1763
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Posun Y:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1770
+#: ../src/dialogs/clonetiler.cpp:1771
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Svislý posun na řádek (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1778
+#: ../src/dialogs/clonetiler.cpp:1779
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Svislý posun na sloupec (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1785
+#: ../src/dialogs/clonetiler.cpp:1786
 msgid "Randomize the vertical shift by this percentage"
 msgstr "Provést náhodnou změnu svislého posunu o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:1793
+#: ../src/dialogs/clonetiler.cpp:1794
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1800
+#: ../src/dialogs/clonetiler.cpp:1801
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Zda budou mezery mezi řádky rovnoměrné (1), sbíhavé (<1) nebo rozbíhavé (>1)"
 
-#: ../src/dialogs/clonetiler.cpp:1807
+#: ../src/dialogs/clonetiler.cpp:1808
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Zda budou mezery mezi sloupci rovnoměrné (1), sbíhavé (<1) nebo rozbíhavé "
 "(>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:1815 ../src/dialogs/clonetiler.cpp:1905
-#: ../src/dialogs/clonetiler.cpp:1964 ../src/dialogs/clonetiler.cpp:2020
-#: ../src/dialogs/clonetiler.cpp:2151
+#: ../src/dialogs/clonetiler.cpp:1816 ../src/dialogs/clonetiler.cpp:1906
+#: ../src/dialogs/clonetiler.cpp:1965 ../src/dialogs/clonetiler.cpp:2021
+#: ../src/dialogs/clonetiler.cpp:2152
 msgid "<small>Alternate:</small>"
 msgstr "<small>Střídat:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1821
+#: ../src/dialogs/clonetiler.cpp:1822
 msgid "Alternate the sign of shifts for each row"
 msgstr "Měnit znaménko posunu v každém řádku"
 
-#: ../src/dialogs/clonetiler.cpp:1826
+#: ../src/dialogs/clonetiler.cpp:1827
 msgid "Alternate the sign of shifts for each column"
 msgstr "Měnit znaménko posunu v každém sloupci"
 
-#: ../src/dialogs/clonetiler.cpp:1835
+#: ../src/dialogs/clonetiler.cpp:1836
 msgid "Sc_ale"
 msgstr "Měřítko"
 
-#: ../src/dialogs/clonetiler.cpp:1843
+#: ../src/dialogs/clonetiler.cpp:1844
 msgid "<b>Scale X:</b>"
 msgstr "<b>Měřítko X:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1851
+#: ../src/dialogs/clonetiler.cpp:1852
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Vodorovná změna měřítka na řádek (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1859
+#: ../src/dialogs/clonetiler.cpp:1860
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Vodorovná změna měřítka na sloupec (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1866
+#: ../src/dialogs/clonetiler.cpp:1867
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "Provést náhodnou změnu vodorovného měřítka o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:1874
+#: ../src/dialogs/clonetiler.cpp:1875
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Měřítko Y:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1882
+#: ../src/dialogs/clonetiler.cpp:1883
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Svislá změna měřítka na řádek (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1890
+#: ../src/dialogs/clonetiler.cpp:1891
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Svislá změna měřítka na sloupec (v % šířky dlaždice)"
 
-#: ../src/dialogs/clonetiler.cpp:1897
+#: ../src/dialogs/clonetiler.cpp:1898
 msgid "Randomize the vertical scale by this percentage"
 msgstr "Provést náhodnou změnu svislého měřítka o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:1911
+#: ../src/dialogs/clonetiler.cpp:1912
 msgid "Alternate the sign of scales for each row"
 msgstr "Měnit znaménko změny měřítka v každém řádku"
 
-#: ../src/dialogs/clonetiler.cpp:1916
+#: ../src/dialogs/clonetiler.cpp:1917
 msgid "Alternate the sign of scales for each column"
 msgstr "Měnit znaménko změny měřítka v každém sloupci"
 
-#: ../src/dialogs/clonetiler.cpp:1925
+#: ../src/dialogs/clonetiler.cpp:1926
 msgid "_Rotation"
 msgstr "_Rotace"
 
-#: ../src/dialogs/clonetiler.cpp:1933
+#: ../src/dialogs/clonetiler.cpp:1934
 msgid "<b>Angle:</b>"
 msgstr "<b>Úhel:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1941
+#: ../src/dialogs/clonetiler.cpp:1942
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Otáčet dlaždice o tento úhel v každé řadě"
 
-#: ../src/dialogs/clonetiler.cpp:1949
+#: ../src/dialogs/clonetiler.cpp:1950
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Otáčet dlaždice o tento úhel v každém sloupci"
 
-#: ../src/dialogs/clonetiler.cpp:1956
+#: ../src/dialogs/clonetiler.cpp:1957
 msgid "Randomize the rotation angle by this percentage"
 msgstr "Provést náhodnou změnu úhlu natočení o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:1970
+#: ../src/dialogs/clonetiler.cpp:1971
 msgid "Alternate the rotation direction for each row"
 msgstr "Zaměnit směr otáčení pro každý řádek"
 
-#: ../src/dialogs/clonetiler.cpp:1975
+#: ../src/dialogs/clonetiler.cpp:1976
 msgid "Alternate the rotation direction for each column"
 msgstr "Zaměnit směr otáčení pro každý sloupec"
 
-#: ../src/dialogs/clonetiler.cpp:1983
+#: ../src/dialogs/clonetiler.cpp:1984
 msgid "_Opacity"
 msgstr "Krytí"
 
-#: ../src/dialogs/clonetiler.cpp:1991
+#: ../src/dialogs/clonetiler.cpp:1992
 msgid "<b>Fade out:</b>"
 msgstr "<b>Blednutí:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1998
+#: ../src/dialogs/clonetiler.cpp:1999
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "Snížit krytí dlaždice o tato procenta na každý řádek"
 
-#: ../src/dialogs/clonetiler.cpp:2005
+#: ../src/dialogs/clonetiler.cpp:2006
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "Snížit krytí dlaždice o tato procenta na každý sloupec"
 
-#: ../src/dialogs/clonetiler.cpp:2012
+#: ../src/dialogs/clonetiler.cpp:2013
 msgid "Randomize the tile opacity by this percentage"
 msgstr "Provést náhodnou změnu krytí dlaždice o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:2026
+#: ../src/dialogs/clonetiler.cpp:2027
 msgid "Alternate the sign of opacity change for each row"
 msgstr "Měnit znaménko změny průhlednosti v každém řádku"
 
-#: ../src/dialogs/clonetiler.cpp:2031
+#: ../src/dialogs/clonetiler.cpp:2032
 msgid "Alternate the sign of opacity change for each column"
 msgstr "Měnit znaménko změny průhlednosti v každém sloupci"
 
-#: ../src/dialogs/clonetiler.cpp:2039
+#: ../src/dialogs/clonetiler.cpp:2040
 msgid "Co_lor"
 msgstr "Barva"
 
-#: ../src/dialogs/clonetiler.cpp:2044
+#: ../src/dialogs/clonetiler.cpp:2045
 msgid "Initial color: "
 msgstr "Počáteční barva:"
 
-#: ../src/dialogs/clonetiler.cpp:2048
+#: ../src/dialogs/clonetiler.cpp:2049
 msgid "Initial color of tiled clones"
 msgstr "Počáteční barva dlaždicových klonů"
 
-#: ../src/dialogs/clonetiler.cpp:2048
+#: ../src/dialogs/clonetiler.cpp:2049
 msgid ""
 "Initial color for clones (works only if the original has unset fill or "
 "stroke)"
@@ -429,71 +429,71 @@ msgstr ""
 "Počáteční barva pro klony (funguje pouze tehdy, nemá-li originál nastavenu "
 "výplň nebo okraje)"
 
-#: ../src/dialogs/clonetiler.cpp:2063
+#: ../src/dialogs/clonetiler.cpp:2064
 msgid "<b>H:</b>"
 msgstr "<b>H:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2070
+#: ../src/dialogs/clonetiler.cpp:2071
 msgid "Change the tile hue by this percentage for each row"
 msgstr "Změnit odstín barvy o tato procenta na každý řádek"
 
-#: ../src/dialogs/clonetiler.cpp:2077
+#: ../src/dialogs/clonetiler.cpp:2078
 msgid "Change the tile hue by this percentage for each column"
 msgstr "Změnit odstín barvy o tato procenta na každý sloupec"
 
-#: ../src/dialogs/clonetiler.cpp:2084
+#: ../src/dialogs/clonetiler.cpp:2085
 msgid "Randomize the tile hue by this percentage"
 msgstr "Provést náhodnou změnu odstínu dlaždice o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:2093
+#: ../src/dialogs/clonetiler.cpp:2094
 msgid "<b>S:</b>"
 msgstr "<b>S:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2100
+#: ../src/dialogs/clonetiler.cpp:2101
 msgid "Change the color saturation by this percentage for each row"
 msgstr "Změnit nasycení barvy o tato procenta na každý řádek"
 
-#: ../src/dialogs/clonetiler.cpp:2107
+#: ../src/dialogs/clonetiler.cpp:2108
 msgid "Change the color saturation by this percentage for each column"
 msgstr "Změnit nasycení barvy o tato procenta na každý sloupec"
 
-#: ../src/dialogs/clonetiler.cpp:2114
+#: ../src/dialogs/clonetiler.cpp:2115
 msgid "Randomize the color saturation by this percentage"
 msgstr "Provést náhodnou změnu nasycení barvy o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:2122
+#: ../src/dialogs/clonetiler.cpp:2123
 msgid "<b>L:</b>"
 msgstr "<b>L:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2129
+#: ../src/dialogs/clonetiler.cpp:2130
 msgid "Change the color lightness by this percentage for each row"
 msgstr "Změnit jas barvy o tato procenta na každý řádek"
 
-#: ../src/dialogs/clonetiler.cpp:2136
+#: ../src/dialogs/clonetiler.cpp:2137
 msgid "Change the color lightness by this percentage for each column"
 msgstr "Změnit jas barvy o tato procenta na každý sloupec"
 
-#: ../src/dialogs/clonetiler.cpp:2143
+#: ../src/dialogs/clonetiler.cpp:2144
 msgid "Randomize the color lightness by this percentage"
 msgstr "Provést náhodnou změnu jasu barvy o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:2157
+#: ../src/dialogs/clonetiler.cpp:2158
 msgid "Alternate the sign of color changes for each row"
 msgstr "Měnit znaménko změny barvy v každém řádku"
 
-#: ../src/dialogs/clonetiler.cpp:2162
+#: ../src/dialogs/clonetiler.cpp:2163
 msgid "Alternate the sign of color changes for each column"
 msgstr "Měnit znaménko změny barvy v každém sloupci"
 
-#: ../src/dialogs/clonetiler.cpp:2170
+#: ../src/dialogs/clonetiler.cpp:2171
 msgid "_Trace"
 msgstr "_Trasování"
 
-#: ../src/dialogs/clonetiler.cpp:2177
+#: ../src/dialogs/clonetiler.cpp:2178
 msgid "Trace the drawing under the tiles"
 msgstr "Trasovat kresbu pod dlaždicemi"
 
-#: ../src/dialogs/clonetiler.cpp:2181
+#: ../src/dialogs/clonetiler.cpp:2182
 msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
@@ -501,120 +501,120 @@ msgstr ""
 "Vybrat hodnotu z kresby pro každý klon v místě jeho umístění aplikovat na "
 "klon"
 
-#: ../src/dialogs/clonetiler.cpp:2195
+#: ../src/dialogs/clonetiler.cpp:2196
 msgid "1. Pick from the drawing:"
 msgstr "1. Nabrat z kresby:"
 
 #. ----Hbox2
-#: ../src/dialogs/clonetiler.cpp:2206 ../src/dialogs/clonetiler.cpp:2353
+#: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
 #: ../src/ui/dialog/tracedialog.cpp:458
 msgid "Color"
 msgstr "Barva"
 
-#: ../src/dialogs/clonetiler.cpp:2207
+#: ../src/dialogs/clonetiler.cpp:2208
 msgid "Pick the visible color and opacity"
 msgstr "Získat viditelnou barvu a krytí"
 
-#: ../src/dialogs/clonetiler.cpp:2214 ../src/dialogs/clonetiler.cpp:2363
+#: ../src/dialogs/clonetiler.cpp:2215 ../src/dialogs/clonetiler.cpp:2364
 #: ../share/extensions/svg_dropshadow.inx.h:3
 msgid "Opacity"
 msgstr "Krytí"
 
-#: ../src/dialogs/clonetiler.cpp:2215
+#: ../src/dialogs/clonetiler.cpp:2216
 msgid "Pick the total accumulated opacity"
 msgstr "Nabrat celkové nastřádané krytí"
 
-#: ../src/dialogs/clonetiler.cpp:2222
+#: ../src/dialogs/clonetiler.cpp:2223
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2223
+#: ../src/dialogs/clonetiler.cpp:2224
 msgid "Pick the Red component of the color"
 msgstr "Nabrat červenou složku barvy"
 
-#: ../src/dialogs/clonetiler.cpp:2230
+#: ../src/dialogs/clonetiler.cpp:2231
 msgid "G"
 msgstr "G"
 
-#: ../src/dialogs/clonetiler.cpp:2231
+#: ../src/dialogs/clonetiler.cpp:2232
 msgid "Pick the Green component of the color"
 msgstr "Nabrat zelenou složku barvy"
 
-#: ../src/dialogs/clonetiler.cpp:2238
+#: ../src/dialogs/clonetiler.cpp:2239
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2239
+#: ../src/dialogs/clonetiler.cpp:2240
 msgid "Pick the Blue component of the color"
 msgstr "Nabrat modrou složku barvy"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2248
+#: ../src/dialogs/clonetiler.cpp:2249
 msgid "clonetiler|H"
 msgstr "clonetiler|H"
 
-#: ../src/dialogs/clonetiler.cpp:2249
+#: ../src/dialogs/clonetiler.cpp:2250
 msgid "Pick the hue of the color"
 msgstr "Nabrat odstín barvy"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2258
+#: ../src/dialogs/clonetiler.cpp:2259
 msgid "clonetiler|S"
 msgstr "clonetiler|S"
 
-#: ../src/dialogs/clonetiler.cpp:2259
+#: ../src/dialogs/clonetiler.cpp:2260
 msgid "Pick the saturation of the color"
 msgstr "Nabrat sytost barvy"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2268
+#: ../src/dialogs/clonetiler.cpp:2269
 msgid "clonetiler|L"
 msgstr "clonetiler|L"
 
-#: ../src/dialogs/clonetiler.cpp:2269
+#: ../src/dialogs/clonetiler.cpp:2270
 msgid "Pick the lightness of the color"
 msgstr "Nabrat jas barvy"
 
-#: ../src/dialogs/clonetiler.cpp:2279
+#: ../src/dialogs/clonetiler.cpp:2280
 msgid "2. Tweak the picked value:"
 msgstr "2. Upravit nabranou hodnotu:"
 
-#: ../src/dialogs/clonetiler.cpp:2289
+#: ../src/dialogs/clonetiler.cpp:2290
 msgid "Gamma-correct:"
 msgstr "Gamma-korekce:"
 
-#: ../src/dialogs/clonetiler.cpp:2294
+#: ../src/dialogs/clonetiler.cpp:2295
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Posunout střední rozsah nabrané hodnoty nahoru (>0) nebo dolů (<0)"
 
-#: ../src/dialogs/clonetiler.cpp:2301
+#: ../src/dialogs/clonetiler.cpp:2302
 msgid "Randomize:"
 msgstr "Nepravidelnost:"
 
-#: ../src/dialogs/clonetiler.cpp:2306
+#: ../src/dialogs/clonetiler.cpp:2307
 msgid "Randomize the picked value by this percentage"
 msgstr "Provést náhodnou nabrané hodnoty o tato procenta"
 
-#: ../src/dialogs/clonetiler.cpp:2313
+#: ../src/dialogs/clonetiler.cpp:2314
 msgid "Invert:"
 msgstr "Invertovat:"
 
-#: ../src/dialogs/clonetiler.cpp:2317
+#: ../src/dialogs/clonetiler.cpp:2318
 msgid "Invert the picked value"
 msgstr "Invertovat získanou hodnotu"
 
-#: ../src/dialogs/clonetiler.cpp:2323
+#: ../src/dialogs/clonetiler.cpp:2324
 msgid "3. Apply the value to the clones':"
 msgstr "3. Aplikovat hodnotu na klony:"
 
-#: ../src/dialogs/clonetiler.cpp:2333
+#: ../src/dialogs/clonetiler.cpp:2334
 msgid "Presence"
 msgstr "Umístění"
 
-#: ../src/dialogs/clonetiler.cpp:2336
+#: ../src/dialogs/clonetiler.cpp:2337
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
@@ -622,15 +622,15 @@ msgstr ""
 "Každý klon je vytvořen s pravděpodobností zjištěnou podle hodnoty nabrané v "
 "daném bodě"
 
-#: ../src/dialogs/clonetiler.cpp:2343
+#: ../src/dialogs/clonetiler.cpp:2344
 msgid "Size"
 msgstr "Velikost"
 
-#: ../src/dialogs/clonetiler.cpp:2346
+#: ../src/dialogs/clonetiler.cpp:2347
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "Pozice každého klonu je určena hodnotou nabranou v daném bodě"
 
-#: ../src/dialogs/clonetiler.cpp:2356
+#: ../src/dialogs/clonetiler.cpp:2357
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
@@ -638,47 +638,47 @@ msgstr ""
 "Každý klon je vybarven nabranou barvou (originál nesmí mít nastavenu výplň "
 "nebo okraj)"
 
-#: ../src/dialogs/clonetiler.cpp:2366
+#: ../src/dialogs/clonetiler.cpp:2367
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "Stupeň krytí každého klonu je určen získanou hodnotou v daném bodě"
 
-#: ../src/dialogs/clonetiler.cpp:2393
+#: ../src/dialogs/clonetiler.cpp:2394
 msgid "How many rows in the tiling"
 msgstr "Kolik řádků dlaždic"
 
-#: ../src/dialogs/clonetiler.cpp:2413
+#: ../src/dialogs/clonetiler.cpp:2414
 msgid "How many columns in the tiling"
 msgstr "Kolik sloupců dlaždic"
 
-#: ../src/dialogs/clonetiler.cpp:2443
+#: ../src/dialogs/clonetiler.cpp:2444
 msgid "Width of the rectangle to be filled"
 msgstr "Šířka čtyřúhelníku k vyplnění"
 
-#: ../src/dialogs/clonetiler.cpp:2468
+#: ../src/dialogs/clonetiler.cpp:2469
 msgid "Height of the rectangle to be filled"
 msgstr "Výška čtyřúhelníku k vyplnění"
 
-#: ../src/dialogs/clonetiler.cpp:2483
+#: ../src/dialogs/clonetiler.cpp:2484
 msgid "Rows, columns: "
 msgstr "Řádky, sloupce:"
 
-#: ../src/dialogs/clonetiler.cpp:2484
+#: ../src/dialogs/clonetiler.cpp:2485
 msgid "Create the specified number of rows and columns"
 msgstr "Vytvořit určený počet řádků a sloupců"
 
-#: ../src/dialogs/clonetiler.cpp:2493
+#: ../src/dialogs/clonetiler.cpp:2494
 msgid "Width, height: "
 msgstr "Šířka, výška:"
 
-#: ../src/dialogs/clonetiler.cpp:2494
+#: ../src/dialogs/clonetiler.cpp:2495
 msgid "Fill the specified width and height with the tiling"
 msgstr "Vyplnit určenou šířku a výšku dlaždicemi"
 
-#: ../src/dialogs/clonetiler.cpp:2510
+#: ../src/dialogs/clonetiler.cpp:2511
 msgid "Use saved size and position of the tile"
 msgstr "Použít uloženou velikost a pozici dlaždice"
 
-#: ../src/dialogs/clonetiler.cpp:2513
+#: ../src/dialogs/clonetiler.cpp:2514
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
@@ -686,11 +686,11 @@ msgstr ""
 "Předstírat, že velikost a pozice dlaždice jsou stejné jako při posledním "
 "použití (pokud bylo), místo použití současných hodnot"
 
-#: ../src/dialogs/clonetiler.cpp:2537
+#: ../src/dialogs/clonetiler.cpp:2538
 msgid " <b>_Create</b> "
 msgstr " <b>Vytvořit</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2539
+#: ../src/dialogs/clonetiler.cpp:2540
 msgid "Create and tile the clones of the selection"
 msgstr "Vytvořit a dláždit klony výběru"
 
@@ -699,29 +699,29 @@ msgstr "Vytvořit a dláždit klony výběru"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2554
+#: ../src/dialogs/clonetiler.cpp:2555
 msgid " _Unclump "
 msgstr "Rozházet"
 
-#: ../src/dialogs/clonetiler.cpp:2555
+#: ../src/dialogs/clonetiler.cpp:2556
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "Rozptýlit klony a zmenšit tím jejich nakupení; Lze aplikovat opakovaně"
 
-#: ../src/dialogs/clonetiler.cpp:2561
+#: ../src/dialogs/clonetiler.cpp:2562
 msgid " Re_move "
 msgstr " Odstranit "
 
-#: ../src/dialogs/clonetiler.cpp:2562
+#: ../src/dialogs/clonetiler.cpp:2563
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr ""
 "Odstranit existující dlážděné klony vybraných objektů (pouze sourozence)"
 
-#: ../src/dialogs/clonetiler.cpp:2578
+#: ../src/dialogs/clonetiler.cpp:2579
 msgid " R_eset "
 msgstr " Obnovit "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2580
+#: ../src/dialogs/clonetiler.cpp:2581
 msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
@@ -791,7 +791,7 @@ msgstr "x_1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
-#: ../src/dialogs/stroke-style.cpp:969 ../src/widgets/toolbox.cpp:2033
+#: ../src/dialogs/stroke-style.cpp:970 ../src/widgets/toolbox.cpp:2033
 msgid "Width:"
 msgstr "Šířka:"
 
@@ -824,7 +824,7 @@ msgstr "pixelů při"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:510
+#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
 msgstr "dpi"
 
@@ -1136,22 +1136,22 @@ msgstr "Vodítko"
 msgid "Moving %s %s"
 msgstr "Přesun %s %s"
 
-#: ../src/dialogs/iconpreview.cpp:142
+#: ../src/dialogs/iconpreview.cpp:143
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/dialogs/iconpreview.cpp:190
+#: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:876
 #: ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "Výběr"
 
-#: ../src/dialogs/iconpreview.cpp:192
+#: ../src/dialogs/iconpreview.cpp:193
 msgid "Selection only or whole document"
 msgstr "Pouze výbrané objekty nebo celý dokument"
 
-#: ../src/dialogs/iconpreview.cpp:200
+#: ../src/dialogs/iconpreview.cpp:201
 msgid "Refresh the icons"
 msgstr "Obnovit ikony"
 
@@ -1225,29 +1225,29 @@ msgstr "Id je neplatné!"
 msgid "Id exists! "
 msgstr "Id existuje!"
 
-#: ../src/dialogs/layers-panel.cpp:647
+#: ../src/dialogs/layers-panel.cpp:717
 #, fuzzy
 msgid "New"
 msgstr "_Nový"
 
-#: ../src/dialogs/layers-panel.cpp:652
+#: ../src/dialogs/layers-panel.cpp:722
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:658
+#: ../src/dialogs/layers-panel.cpp:728
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:664
+#: ../src/dialogs/layers-panel.cpp:734
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:670
+#: ../src/dialogs/layers-panel.cpp:740
 #, fuzzy
 msgid "Bot"
 msgstr "Box"
 
-#: ../src/dialogs/layers-panel.cpp:680
+#: ../src/dialogs/layers-panel.cpp:750
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -1553,50 +1553,50 @@ msgstr "Fragment"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "XML fragment pro část RDF 'License'."
 
-#: ../src/dialogs/stroke-style.cpp:758 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:759 ../src/widgets/gradient-vector.cpp:250
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Není vybrán žádný dokument"
 
-#: ../src/dialogs/stroke-style.cpp:775 ../src/interface.cpp:760
+#: ../src/dialogs/stroke-style.cpp:776 ../src/interface.cpp:760
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 #: ../src/ui/dialog/inkscape-preferences.cpp:320
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 #: ../src/ui/widget/selected-style.cpp:134
 #: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1984
 msgid "None"
 msgstr "Žádné"
 
-#: ../src/dialogs/stroke-style.cpp:983
+#: ../src/dialogs/stroke-style.cpp:984
 msgid "Stroke width"
 msgstr "Šířka čáry"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/dialogs/stroke-style.cpp:1006
+#: ../src/dialogs/stroke-style.cpp:1007
 msgid "Join:"
 msgstr "Rohy a spoje:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1018
+#: ../src/dialogs/stroke-style.cpp:1019
 msgid "Miter join"
 msgstr "Ostrý roh"
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1026
+#: ../src/dialogs/stroke-style.cpp:1027
 msgid "Round join"
 msgstr "Kulatý spoj"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/dialogs/stroke-style.cpp:1034
+#: ../src/dialogs/stroke-style.cpp:1035
 msgid "Bevel join"
 msgstr "Sražená hrana spoje"
 
@@ -1607,54 +1607,54 @@ msgstr "Sražená hrana spoje"
 #. spike that extends well beyond the connection point. The purpose of the
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
-#: ../src/dialogs/stroke-style.cpp:1045
+#: ../src/dialogs/stroke-style.cpp:1046
 msgid "Miter limit:"
 msgstr "Limit rohu"
 
-#: ../src/dialogs/stroke-style.cpp:1053
+#: ../src/dialogs/stroke-style.cpp:1054
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr "Maximální délka rohu (v jednotkách šířky čáry)"
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
-#: ../src/dialogs/stroke-style.cpp:1066
+#: ../src/dialogs/stroke-style.cpp:1067
 msgid "Cap:"
 msgstr "Konec čáry:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1077
+#: ../src/dialogs/stroke-style.cpp:1078
 msgid "Butt cap"
 msgstr "Rovný konec"
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/dialogs/stroke-style.cpp:1084
+#: ../src/dialogs/stroke-style.cpp:1085
 msgid "Round cap"
 msgstr "Kulatý konec"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/dialogs/stroke-style.cpp:1091
+#: ../src/dialogs/stroke-style.cpp:1092
 msgid "Square cap"
 msgstr "Čtvercový konec"
 
 #. Dash
-#: ../src/dialogs/stroke-style.cpp:1097
+#: ../src/dialogs/stroke-style.cpp:1098
 msgid "Dashes:"
 msgstr "Typ čáry:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-#: ../src/dialogs/stroke-style.cpp:1118
+#: ../src/dialogs/stroke-style.cpp:1119
 msgid "Start Markers:"
 msgstr "Značka začátku čáry:"
 
-#: ../src/dialogs/stroke-style.cpp:1128
+#: ../src/dialogs/stroke-style.cpp:1129
 msgid "Mid Markers:"
 msgstr "Značka středu čáry:"
 
-#: ../src/dialogs/stroke-style.cpp:1139
+#: ../src/dialogs/stroke-style.cpp:1140
 msgid "End Markers:"
 msgstr "Značka konce čáry:"
 
@@ -1685,11 +1685,13 @@ msgstr "Zarovnání na střed"
 msgid "Align lines right"
 msgstr "Zarovnání vpravo"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3513
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Horizontal text"
 msgstr "Vodorovný text"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3524
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Vertical text"
 msgstr "Svislý text"
 
@@ -2031,7 +2033,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Ukázat dialog při startu"
 
-#: ../src/extension/implementation/script.cpp:839
+#: ../src/extension/implementation/script.cpp:844
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2040,7 +2042,7 @@ msgstr ""
 "Inkscape obdržel od volaného skriptu chybové hlášení. Text chyby je přiložen "
 "níže. Inkscape bude pracovat nadále, pouze Vámi požadovaná akce byla zrušena."
 
-#: ../src/extension/implementation/script.cpp:852
+#: ../src/extension/implementation/script.cpp:857
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2184,7 +2186,7 @@ msgstr "LaTeX s PSTricks makry (*.tex)"
 msgid "LaTeX PSTricks File"
 msgstr "Soubor LaTeX PSTricks"
 
-#: ../src/extension/internal/latex-pstricks.cpp:340
+#: ../src/extension/internal/latex-pstricks.cpp:346
 msgid "LaTeX Print"
 msgstr "Tisk LaTeX"
 
@@ -2229,20 +2231,20 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Soubor Postscriptu"
 
-#: ../src/extension/internal/ps.cpp:103 ../src/extension/internal/pdf.cpp:107
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
 msgid "Print Destination"
 msgstr "Cíl tisku"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:118 ../src/extension/internal/pdf.cpp:122
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
 msgid "Print properties"
 msgstr "Vlastnosti tisku"
 
-#: ../src/extension/internal/ps.cpp:125
+#: ../src/extension/internal/ps.cpp:126
 msgid "Print using PostScript operators"
 msgstr "Tisknout pomocí operátorů PostScript"
 
-#: ../src/extension/internal/ps.cpp:127
+#: ../src/extension/internal/ps.cpp:128
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
@@ -2252,11 +2254,11 @@ msgstr ""
 "obrázkem je obvykle menší a obrázek lze libovolně zmenšovat či zvětšovat, "
 "ztratí se však alfa průhlednost, značky a vzory."
 
-#: ../src/extension/internal/ps.cpp:132 ../src/extension/internal/pdf.cpp:136
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
 msgid "Print as bitmap"
 msgstr "Tisknout jako bitovou mapu"
 
-#: ../src/extension/internal/ps.cpp:134 ../src/extension/internal/pdf.cpp:138
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2266,20 +2268,20 @@ msgstr ""
 "jeho kvalita bude záviset na úrovni zvětšení, budou však vykresleny všechny "
 "grafické prvky tak, jak jsou zobrazeny"
 
-#: ../src/extension/internal/ps.cpp:148 ../src/extension/internal/pdf.cpp:152
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Upřednostněné rozlišení (v bodech na palec) bitové mapy"
 
-#: ../src/extension/internal/ps.cpp:162 ../src/extension/internal/pdf.cpp:166
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:166 ../src/extension/internal/pdf.cpp:170
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
 msgid "Print destination"
 msgstr "Cíl tisku"
 
-#: ../src/extension/internal/ps.cpp:172 ../src/extension/internal/pdf.cpp:176
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2291,12 +2293,12 @@ msgstr ""
 "Použijte '> soubor' pro tisk do souboru.\n"
 "Použijte '| prog arg...' pro přesměrování tisku do programu"
 
-#: ../src/extension/internal/ps.cpp:1212
-#: ../src/extension/internal/pdf.cpp:1513
+#: ../src/extension/internal/ps.cpp:1213
+#: ../src/extension/internal/pdf.cpp:1514
 msgid "write error occurred"
 msgstr "vyskytla se chyba při zápisu"
 
-#: ../src/extension/internal/ps.cpp:1239
+#: ../src/extension/internal/ps.cpp:1240
 msgid "Postscript Print"
 msgstr "Tisk do Postscriptu"
 
@@ -2370,16 +2372,16 @@ msgstr "Komprimované plain SVG (*.svgz)"
 msgid "Scalable Vector Graphics format compressed with GZip"
 msgstr "Formát Škálovatelné Vektorové Grafiky komprimovaný pomocí GZip"
 
-#: ../src/extension/internal/win32.cpp:490
+#: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
 msgstr "Windows 32-bit Tisk"
 
-#: ../src/extension/internal/pdf.cpp:129
+#: ../src/extension/internal/pdf.cpp:130
 #, fuzzy
 msgid "Print using PDF operators"
 msgstr "Tisknout pomocí operátorů PostScript"
 
-#: ../src/extension/internal/pdf.cpp:131
+#: ../src/extension/internal/pdf.cpp:132
 #, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
@@ -2389,7 +2391,7 @@ msgstr ""
 "obrázkem je obvykle menší a obrázek lze libovolně zmenšovat či zvětšovat, "
 "ztratí se však alfa průhlednost, značky a vzory."
 
-#: ../src/extension/internal/pdf.cpp:1540
+#: ../src/extension/internal/pdf.cpp:1541
 #, fuzzy
 msgid "PDF Print"
 msgstr "Tisk LaTeX"
@@ -2412,37 +2414,37 @@ msgstr "Autodetekce formátu selhala. Soubor bude otevřen jako SVG."
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:130
+#: ../src/file.cpp:131
 msgid "default.svg"
 msgstr "default.cs.svg"
 
-#: ../src/file.cpp:218 ../src/file.cpp:903
+#: ../src/file.cpp:219 ../src/file.cpp:904
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Selhalo načtení požadovaného souboru %s"
 
-#: ../src/file.cpp:243
+#: ../src/file.cpp:244
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokument ještě nebyl uložen.  Nelze se vrátit."
 
-#: ../src/file.cpp:249
+#: ../src/file.cpp:250
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Změny budou ztraceny! Jste si jisti že chcete obnovit dokument %s?"
 
-#: ../src/file.cpp:269
+#: ../src/file.cpp:270
 msgid "Document reverted."
 msgstr "Stav dokumentu byl navrácen do uloženého stavu."
 
-#: ../src/file.cpp:271
+#: ../src/file.cpp:272
 msgid "Document not reverted."
 msgstr "Stav dokumentu nebyl navrácen do uloženého stavu."
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:386
 msgid "Select file to open"
 msgstr "Vyberte soubor pro otevření"
 
-#: ../src/file.cpp:521
+#: ../src/file.cpp:522
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -2450,11 +2452,11 @@ msgstr[0] "Z &lt;defs&gt; byla odstraněna <b>%i</b> nepoužitá definice."
 msgstr[1] "Z &lt;defs&gt; bylo odstraněno <b>%i</b> nepoužité definice."
 msgstr[2] "Z &lt;defs&gt; bylo odstraněno <b>%i</b> nepoužitých definic."
 
-#: ../src/file.cpp:526
+#: ../src/file.cpp:527
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Žádné nepoužité položky v &lt;defs&gt;."
 
-#: ../src/file.cpp:551
+#: ../src/file.cpp:552
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2463,38 +2465,38 @@ msgstr ""
 "Nenalezeno žádné rozšíření Inkscape pro uložení dokumentu (%s).  Mohlo to "
 "být způsobeno neznámou příponou souboru."
 
-#: ../src/file.cpp:552 ../src/file.cpp:560
+#: ../src/file.cpp:553 ../src/file.cpp:561
 msgid "Document not saved."
 msgstr "Dokument nebyl uložen."
 
-#: ../src/file.cpp:559
+#: ../src/file.cpp:560
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Soubor %s nemohl být uložen."
 
-#: ../src/file.cpp:569
+#: ../src/file.cpp:570
 msgid "Document saved."
 msgstr "Dokument uložen."
 
-#: ../src/file.cpp:617
+#: ../src/file.cpp:618
 #, c-format
 msgid "drawing%s"
 msgstr "kresba%s"
 
-#: ../src/file.cpp:623
+#: ../src/file.cpp:624
 #, c-format
 msgid "drawing-%d%s"
 msgstr "kresba-%d%s"
 
-#: ../src/file.cpp:658
+#: ../src/file.cpp:659
 msgid "Select file to save to"
 msgstr "Vyberte soubor, do kterého se má ukládat"
 
-#: ../src/file.cpp:742
+#: ../src/file.cpp:743
 msgid "No changes need to be saved."
 msgstr "Nebylo nutné uložit žádné změny."
 
-#: ../src/file.cpp:929
+#: ../src/file.cpp:930
 msgid "Select file to import"
 msgstr "Vyberte soubor pro import"
 
@@ -3215,7 +3217,7 @@ msgstr "Přeskočit nahrávání sezení"
 msgid "Node or handle drag canceled."
 msgstr "Přesun uzlu nebo ovládacího bodu zrušen."
 
-#: ../src/libnrtype/FontFactory.cpp:357
+#: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignoruji font bez rodiny, který by způsobil pád Panga"
 
@@ -3784,40 +3786,40 @@ msgstr "<b>Rotovat</b> výplň vzorkem; <b>Ctrl</b> přichytává k úhlům"
 msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr "Tažením změníte velikost <b>rámu pro vlitý text</b>"
 
-#: ../src/path-chemistry.cpp:55
+#: ../src/path-chemistry.cpp:56
 msgid "Select <b>at least two objects</b> to combine."
 msgstr "Vyberte <b>nejméně dva objekty</b> pro kombinaci."
 
-#: ../src/path-chemistry.cpp:62
+#: ../src/path-chemistry.cpp:63
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
 msgstr "Nejméně jeden z objektů <b>není křivkou</b>, nelze kombinovat."
 
-#: ../src/path-chemistry.cpp:70
+#: ../src/path-chemistry.cpp:71
 msgid ""
 "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
 msgstr "Nelze kombinovat objekty z <b>různých skupin</b> nebo <b>vrstev</b>."
 
-#: ../src/path-chemistry.cpp:152
+#: ../src/path-chemistry.cpp:153
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "Vyberte <b>křivku(y)</b> k rozdělení."
 
-#: ../src/path-chemistry.cpp:228
+#: ../src/path-chemistry.cpp:233
 msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr "<b>Žádné křivky</b> na rozbití nebyly vybrány."
 
-#: ../src/path-chemistry.cpp:249
+#: ../src/path-chemistry.cpp:254
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Vyberte <b>objekt(y)</b> k převodu na křivku."
 
-#: ../src/path-chemistry.cpp:294
+#: ../src/path-chemistry.cpp:299
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "Ve výběru nejsou <b>žádné objekty</b> k převodu na křivku."
 
-#: ../src/path-chemistry.cpp:345
+#: ../src/path-chemistry.cpp:350
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "Vyberte <b>křivky</b> k převrácení."
 
-#: ../src/path-chemistry.cpp:371
+#: ../src/path-chemistry.cpp:376
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>Žádné křivky</b> k převrácení nebyly vybrány."
 
@@ -4589,11 +4591,11 @@ msgid ""
 msgstr ""
 "<b>Spirála</b>: poloměr %s, úhel %5g&#176;; s <b>Ctrl</b> přichytává úhel"
 
-#: ../src/splivarot.cpp:109
+#: ../src/splivarot.cpp:110
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
 msgstr "Vyberte <b>nejméně 2 křivky</b> pro provedení logické operace"
 
-#: ../src/splivarot.cpp:115
+#: ../src/splivarot.cpp:116
 msgid ""
 "Select <b>exactly 2 paths</b> to perform difference, XOR, division, or path "
 "cut."
@@ -4601,7 +4603,7 @@ msgstr ""
 "Vyberte <b>přesně 2 křivky</b> k provedení rozdílu, XOR, dělení nebo ořezu "
 "křivek"
 
-#: ../src/splivarot.cpp:132 ../src/splivarot.cpp:147
+#: ../src/splivarot.cpp:133 ../src/splivarot.cpp:148
 msgid ""
 "Unable to determine the <b>z-order</b> of the objects selected for "
 "difference, XOR, division, or path cut."
@@ -4609,38 +4611,38 @@ msgstr ""
 "Nelze určit <b>pořadí</b> vybraných objektů pro rozdíl, XOR, dělení, nebo "
 "ořez cestou."
 
-#: ../src/splivarot.cpp:177
+#: ../src/splivarot.cpp:178
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Jeden z objektů <b>není křivkou</b>, nemohu provést logickou operaci."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:557
+#: ../src/splivarot.cpp:558
 msgid "Select <b>path(s)</b> to outline."
 msgstr "Vyberte <b>křivky</b> k převodu na obrys"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:835
+#: ../src/splivarot.cpp:836
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr "<b>Žádné křivky s obrysy</b> na převod na obrys ve výběru."
 
-#: ../src/splivarot.cpp:919
+#: ../src/splivarot.cpp:920
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Vybraný objekt <b>není křivka</b>, nelze jej smrštit/rozšířit."
 
-#: ../src/splivarot.cpp:1127
+#: ../src/splivarot.cpp:1128
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Vyberte <b>křivky</b> k smrštění/rozšíření."
 
-#: ../src/splivarot.cpp:1344
+#: ../src/splivarot.cpp:1345
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>Žádné křivky</b> k smrštění/rozšíření nebyly vybrány."
 
-#: ../src/splivarot.cpp:1477
+#: ../src/splivarot.cpp:1478
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Vyberte <b>křivku(y)</b> k zjednodušení"
 
-#: ../src/splivarot.cpp:1504
+#: ../src/splivarot.cpp:1505
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "<b>Žádné křivky</b> k zjednodušení nebyly vybrány."
 
@@ -6150,22 +6152,26 @@ msgstr "Ignorovat skryté objekty"
 msgid "Ignore locked objects"
 msgstr "Ignorovat zamčené objekty"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:491
+#: ../src/ui/dialog/inkscape-preferences.cpp:490
+msgid "Deselect upon layer change"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Tab, Shift+Tab:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:493
+#: ../src/ui/dialog/inkscape-preferences.cpp:494
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr ""
 "Přiměje příkazy zadávané z klávesnice pracovat s objekty ve všech vrstvách"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:495
+#: ../src/ui/dialog/inkscape-preferences.cpp:496
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr ""
 "Přiměje příkazy zadávané z klávesnice pracovat s objekty pouze v aktuální "
 "vrstvě"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:497
+#: ../src/ui/dialog/inkscape-preferences.cpp:498
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -6173,7 +6179,7 @@ msgstr ""
 "Přiměje příkazy zadávané z klávesnice pracovat s objekty pouze v aktuální "
 "vrstvě a jejích podvrstvách"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:499
+#: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6181,7 +6187,7 @@ msgstr ""
 "Odznačte tuto volbu a budete moci vybírat i objekty které jsou skryté "
 "(jejich výběrem nebo výběrem skupiny, nebo vrstvy ve které jsou)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:501
+#: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6189,23 +6195,32 @@ msgstr ""
 "Odznačte tuto volbu a budete moci vybírat i objekty které jsou uzamčeny "
 "(jejich výběrem nebo výběrem skupiny, nebo vrstvy ve které jsou)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:503
+#: ../src/ui/dialog/inkscape-preferences.cpp:505
+#, fuzzy
+msgid ""
+"Uncheck this to be able to keep the current objects selected when the "
+"current layer changes"
+msgstr ""
+"Odznačte tuto volbu a budete moci vybírat i objekty které jsou uzamčeny "
+"(jejich výběrem nebo výběrem skupiny, nebo vrstvy ve které jsou)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Selecting"
 msgstr "Výběry"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:510
+#: ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "Default export resolution:"
 msgstr "Výchozí rozlišení pro export:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:511
+#: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "Výchozí rozlišení bitové mapy (v bodech na palec) pro Exportní dialog"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:512
+#: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Import bitmap as <image>"
 msgstr "Importovat obrázek jako <image>"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/ui/dialog/inkscape-preferences.cpp:518
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6213,29 +6228,29 @@ msgstr ""
 "Pokud je zapnuto, bude vytvořen <image> element pro importované bitmapy; "
 "jinak bude obrázek vložen jako obdélník s bitmapovou výplní"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:515
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "Add label comments to printing output"
 msgstr "Přidat komentáře k tištěnému výstupu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:517
+#: ../src/ui/dialog/inkscape-preferences.cpp:521
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr "Pokud je zapnuto, pak se k výtisku přidá komentář s jménem objektu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 msgid "Max recent documents:"
 msgstr "Max. počet posledních otevřených dokumentů:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:520
+#: ../src/ui/dialog/inkscape-preferences.cpp:524
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "Maximální délka seznamu posledně otevřených dokumentů v menu Soubor"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:522
+#: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Simplification threshold:"
 msgstr "Práh zjednodušení:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:523
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -6245,54 +6260,54 @@ msgstr ""
 "několikrát po sobě, bude působit čím dál více agresivněji; Opětovnou "
 "aplikací po pauze obnoví výchozí nastavení prahu."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "2x2"
 msgstr "2×2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "4x4"
 msgstr "4×4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "8x8"
 msgstr "8×8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:525
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Oversample bitmaps:"
 msgstr "Převzorkovat bitmapy:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:531
+#: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Clipping and masking:"
 msgstr "Ořez a maskování"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:532
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr ""
 "Použij nejvýše umístěný objekt z výběru jako křivku pro ořez nebo masku"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:534
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Vypněte tuto volbu pokud chcete jako masku nebo křivku pro ořez použít "
 "nejspodnější objekt."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Remove clipping path or mask after applying"
 msgstr "Odstranit křivku pro ořez nebo masku po aplikaci"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:537
+#: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 "Po použití odebere objekt použitý jako křivka pro ořez nebo maska z kresby"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:539
+#: ../src/ui/dialog/inkscape-preferences.cpp:543
 msgid "Misc"
 msgstr "Různé"
 
@@ -9140,19 +9155,19 @@ msgstr "Barva zařážky"
 msgid "Gradient editor"
 msgstr "Editor barevných přechodů"
 
-#: ../src/widgets/layer-selector.cpp:111
+#: ../src/widgets/layer-selector.cpp:112
 msgid "Toggle current layer visibility"
 msgstr "Přepne viditelnost aktuální vrstvy"
 
-#: ../src/widgets/layer-selector.cpp:131
+#: ../src/widgets/layer-selector.cpp:132
 msgid "Lock or unlock current layer"
 msgstr "Zamkne nebo odemkne aktuální vrstvu"
 
-#: ../src/widgets/layer-selector.cpp:134
+#: ../src/widgets/layer-selector.cpp:135
 msgid "Current layer"
 msgstr "Aktuální vrstva"
 
-#: ../src/widgets/layer-selector.cpp:557
+#: ../src/widgets/layer-selector.cpp:560
 msgid "(root)"
 msgstr "(kořen)"
 
@@ -9733,52 +9748,78 @@ msgstr ""
 "Při stisknutí nabere viditelnou barvu bez alfa průhlednosti. Pokud není "
 "stisknuto, nabere barvu včetně alfy"
 
-#: ../src/widgets/toolbox.cpp:3356
+#: ../src/widgets/toolbox.cpp:3357
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/widgets/toolbox.cpp:3394
+#, fuzzy
+msgid "Rag right"
+msgstr "Práva"
+
+#: ../src/widgets/toolbox.cpp:3405
+#, fuzzy
+msgid "Centered"
+msgstr "Střed X"
+
+#: ../src/widgets/toolbox.cpp:3416
+msgid "Rag left"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3427
+msgid "Justified"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3443
+msgid "Bold"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3454
+msgid "Italic"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3552
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3564
+#: ../src/widgets/toolbox.cpp:3573
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3593
+#: ../src/widgets/toolbox.cpp:3602
 #, fuzzy
 msgid "Horizontal kerning"
 msgstr "Vodorovné mezery"
 
-#: ../src/widgets/toolbox.cpp:3614
+#: ../src/widgets/toolbox.cpp:3623
 #, fuzzy
 msgid "Vertical kerning"
 msgstr "Svislé mezery"
 
-#: ../src/widgets/toolbox.cpp:3641
+#: ../src/widgets/toolbox.cpp:3650
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3662
+#: ../src/widgets/toolbox.cpp:3671
 #, fuzzy
 msgid "Remove manual kerns"
 msgstr "Odstranit manuální _kerning"
 
-#: ../src/widgets/toolbox.cpp:3781
+#: ../src/widgets/toolbox.cpp:3790
 msgid "Make connectors avoid selected objects"
 msgstr "Přinutit konektory vyhýbat se vybraným objektům"
 
-#: ../src/widgets/toolbox.cpp:3785
+#: ../src/widgets/toolbox.cpp:3794
 msgid "Make connectors ignore selected objects"
 msgstr "Přinutit konektory ignorovat vybrané objekty"
 
-#: ../src/widgets/toolbox.cpp:3793
+#: ../src/widgets/toolbox.cpp:3802
 msgid "Spacing:"
 msgstr "Mezery:"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3803
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Množství místa, které má být ponecháno kolem objektů při automatickém "
@@ -10159,21 +10200,6 @@ msgstr "Vytlačit"
 msgid "Magnitude"
 msgstr "Důležitost"
 
-#: ../share/extensions/pdf_output.inx.h:1
-#: ../share/extensions/pdf_output_via_gs_on_win32.inx.h:1
-msgid "Adobe PDF (*.pdf)"
-msgstr "Adobe PDF (*.pdf)"
-
-#: ../share/extensions/pdf_output.inx.h:2
-#: ../share/extensions/pdf_output_via_gs_on_win32.inx.h:2
-msgid "Adobe Portable Document Format"
-msgstr "Adobe Portable Document Format"
-
-#: ../share/extensions/pdf_output.inx.h:3
-#: ../share/extensions/pdf_output_via_gs_on_win32.inx.h:3
-msgid "PDF Output"
-msgstr "Výstup PDF"
-
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
 msgstr "Postscript"
@@ -10335,6 +10361,15 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Vstup Windows Metafile"
+
+#~ msgid "Adobe PDF (*.pdf)"
+#~ msgstr "Adobe PDF (*.pdf)"
+
+#~ msgid "Adobe Portable Document Format"
+#~ msgstr "Adobe Portable Document Format"
+
+#~ msgid "PDF Output"
+#~ msgstr "Výstup PDF"
 
 #~ msgid "Kochify"
 #~ msgstr "Kochifikace"
