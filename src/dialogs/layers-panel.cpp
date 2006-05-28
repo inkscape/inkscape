@@ -15,6 +15,7 @@
 #include <glibmm/i18n.h>
 
 #include <gtk/gtkstock.h>
+#include <gtk/gtkmain.h>
 
 #include "inkscape.h"
 
@@ -109,6 +110,11 @@ public:
         return _signal_toggled;
     }
 
+    sigc::signal<void, GdkEvent const *> signal_pre_toggle()
+    {
+        return _signal_pre_toggle;
+    }
+
     Glib::PropertyProxy<bool> property_active() { return _property_active.get_proxy(); }
     Glib::PropertyProxy<bool> property_activatable() { return _property_activatable.get_proxy(); }
     Glib::PropertyProxy< Glib::RefPtr<Gdk::Pixbuf> > property_pixbuf_on();
@@ -116,6 +122,25 @@ public:
 //  virtual Glib::PropertyProxy_Base _property_renderable(); //override
 
 protected:
+
+    virtual void get_size_vfunc( Gtk::Widget& widget,
+                                 const Gdk::Rectangle* cell_area,
+                                 int* x_offset,
+                                 int* y_offset,
+                                 int* width,
+                                 int* height ) const
+    {
+        Gtk::CellRendererPixbuf::get_size_vfunc( widget, cell_area, x_offset, y_offset, width, height );
+
+        if ( width ) {
+            *width += (*width) >> 1;
+        }
+        if ( height ) {
+            *height += (*height) >> 1;
+        }
+    }
+
+
     virtual void render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
                                Gtk::Widget& widget,
                                const Gdk::Rectangle& background_area,
@@ -134,7 +159,9 @@ protected:
                                 const Gdk::Rectangle& cell_area,
                                 Gtk::CellRendererState flags)
     {
+        _signal_pre_toggle.emit(event);
         _signal_toggled.emit(path);
+
         return false;
     }
 
@@ -149,6 +176,7 @@ private:
     Glib::Property< Glib::RefPtr<Gdk::Pixbuf> > _property_pixbuf_off;
 
     sigc::signal<void, const Glib::ustring&> _signal_toggled;
+    sigc::signal<void, GdkEvent const *> _signal_pre_toggle;
 };
 
 class LayersPanel::InternalUIBounce
@@ -397,6 +425,7 @@ bool LayersPanel::_checkForSelected(const Gtk::TreePath &path, const Gtk::TreeIt
         _tree.expand_to_path( path );
 
         Glib::RefPtr<Gtk::TreeSelection> select = _tree.get_selection();
+
         select->select(iter);
 
         stopGoing = true;
@@ -446,6 +475,7 @@ void LayersPanel::_addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::R
 
                     Glib::RefPtr<Gtk::TreeSelection> select = _tree.get_selection();
                     select->select(iter);
+
                     _checkTreeSelection();
                 }
 
@@ -512,6 +542,19 @@ void LayersPanel::_checkTreeSelection()
     }
 }
 
+void LayersPanel::_preToggle( GdkEvent const *event )
+{
+    if ( _toggleEvent ) {
+        gdk_event_free(_toggleEvent);
+        _toggleEvent = 0;
+    }
+
+    if ( event && (event->type == GDK_BUTTON_PRESS) ) {
+        // Make a copy so we can keep it around.
+        _toggleEvent = gdk_event_copy(const_cast<GdkEvent*>(event));
+    }
+}
+
 void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
 {
     Gtk::TreeModel::Children::iterator iter = _tree.get_model()->get_iter(str);
@@ -548,6 +591,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
 
 void LayersPanel::_handleButtonEvent(GdkEventButton* evt)
 {
+    // TODO - fix to a better is-popup function
     if ( (evt->type == GDK_BUTTON_PRESS) && (evt->button == 3) ) {
 
 
@@ -585,6 +629,34 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& path, Gtk::TreeM
     }
 }
 
+bool LayersPanel::_rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & model, Gtk::TreeModel::Path const & path, bool currentlySelected )
+{
+    bool val = true;
+    if ( !currentlySelected && _toggleEvent )
+    {
+        GdkEvent* event = gtk_get_current_event();
+        if ( event ) {
+            // (keep these checks separate, so we know when to call gdk_event_free()
+            if ( event->type == GDK_BUTTON_PRESS ) {
+                GdkEventButton const* target = reinterpret_cast<GdkEventButton const*>(_toggleEvent);
+                GdkEventButton const* evtb = reinterpret_cast<GdkEventButton const*>(event);
+
+                if ( (evtb->window == target->window)
+                     && (evtb->send_event == target->send_event)
+                     && (evtb->time == target->time)
+                     && (evtb->state == target->state)
+                    )
+                {
+                    // Ooooh! It's a magic one
+                    val = false;
+                }
+            }
+            gdk_event_free(event);
+        }
+    }
+    return val;
+}
+
 /**
  * Constructor
  */
@@ -594,7 +666,8 @@ LayersPanel::LayersPanel() :
     _mgr(0),
     _desktop(0),
     _model(0),
-    _pending(0)
+    _pending(0),
+    _toggleEvent(0)
 {
     _maxNestDepth = prefs_get_int_attribute_limited("dialogs.layers", "maxDepth", 20, 1, 1000);
 
@@ -608,6 +681,7 @@ LayersPanel::LayersPanel() :
 
     ImageToggler* eyeRenderer = manage( new ImageToggler("visible", "hidden") );
     int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
+    eyeRenderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     eyeRenderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_VISIBLE) );
     eyeRenderer->property_activatable() = true;
     Gtk::TreeViewColumn* col = _tree.get_column(visibleColNum);
@@ -617,6 +691,7 @@ LayersPanel::LayersPanel() :
 
     ImageToggler * renderer = manage( new ImageToggler("width_height_lock", "lock_unlocked") );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
+    renderer->signal_pre_toggle().connect( sigc::mem_fun(*this, &LayersPanel::_preToggle) );
     renderer->signal_toggled().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_toggled), (int)COL_LOCKED) );
     renderer->property_activatable() = true;
     col = _tree.get_column(lockedColNum);
@@ -630,6 +705,7 @@ LayersPanel::LayersPanel() :
 
 
     _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
+    _tree.get_selection()->set_select_function( sigc::mem_fun(*this, &LayersPanel::_rowSelectFunction) );
 
     _tree.get_model()->signal_row_changed().connect( sigc::mem_fun(*this, &LayersPanel::_handleRowChange) );
     _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
@@ -728,6 +804,12 @@ LayersPanel::~LayersPanel()
     if ( _model )
     {
         delete _model;
+    }
+
+    if ( _toggleEvent )
+    {
+        gdk_event_free( _toggleEvent );
+        _toggleEvent = 0;
     }
 }
 

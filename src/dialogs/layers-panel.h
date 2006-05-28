@@ -61,6 +61,7 @@ private:
     void _fireAction( unsigned int code );
     Gtk::MenuItem& _addPopupItem( SPDesktop *desktop, unsigned int code, char const* iconName, char const* fallback, int id );
 
+    void _preToggle( GdkEvent const *event );
     void _toggled( Glib::ustring const& str, int targetCol );
 
     void _handleButtonEvent(GdkEventButton* evt);
@@ -71,6 +72,8 @@ private:
 
     void _takeAction( int val );
     bool _executeAction();
+
+    bool _rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & model, Gtk::TreeModel::Path const & path, bool b );
 
     void _updateLayer(SPObject *layer);
     bool _checkForUpdated(const Gtk::TreePath &path, const Gtk::TreeIter& iter, SPObject* layer);
@@ -95,6 +98,7 @@ private:
     SPDesktop* _desktop;
     ModelColumns* _model;
     InternalUIBounce* _pending;
+    GdkEvent* _toggleEvent;
     Glib::RefPtr<Gtk::TreeStore> _store;
     std::vector<Gtk::Widget*> _watching;
     std::vector<Gtk::Widget*> _watchingNonTop;
