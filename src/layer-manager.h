@@ -26,6 +26,7 @@ class LayerManager : public DocumentSubset,
 public:
     LayerManager(SPDesktop *desktop);
 
+    void setCurrentLayer( SPObject* obj );
     void renameLayer( SPObject* obj, gchar const *label );
 
     sigc::connection connectCurrentLayerChanged(const sigc::slot<void, SPObject *> & slot) {

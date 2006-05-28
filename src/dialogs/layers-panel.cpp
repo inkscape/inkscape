@@ -29,8 +29,6 @@
 
 #include "document.h"
 #include "desktop.h"
-#include "desktop-handles.h"
-#include "selection.h"
 #include "sp-object.h"
 #include "sp-item.h"
 #include "widgets/icon.h"
@@ -504,14 +502,10 @@ void LayersPanel::_pushTreeSelectionToCurrent()
     if ( inTree ) {
         SPObject* curr = _desktop->currentLayer();
         if ( curr != inTree ) {
-            // TODO - move these to a function in layer-manager.cpp
-            _desktop->setCurrentLayer( inTree );
-            sp_desktop_selection(_desktop)->clear();
+            _mgr->setCurrentLayer( inTree );
         }
     } else {
-        // TODO - move these to a function in layer-manager.cpp
-        _desktop->setCurrentLayer( _desktop->doc()->root );
-        sp_desktop_selection(_desktop)->clear();
+        _mgr->setCurrentLayer( _desktop->doc()->root );
     }
 }
 

@@ -1,5 +1,15 @@
 2006-05-28  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/layer-manager.cpp, src/layer-manager.cpp,
+	  src/preferences-skeleton.h, src/ui/dialog/inkscape-preferences.cpp,
+	  src/ui/dialog/inkscape-preferences.h,
+	  src/widgets/layer-selector.cpp, src/dialogs/layers-panel.cpp:
+
+	  Finished option to turn on or off deslecting when switching layers.
+	  Fixes RFE #1495701.
+
+2006-05-28  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
 
 	  Changed clicking on visibility and locked toggles to not switch

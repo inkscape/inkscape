@@ -186,6 +186,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"importbitmapsasimages\" value=\"1\"/>\n"
 "    <group id=\"transform\" stroke=\"1\" rectcorners=\"1\" pattern=\"1\" gradient=\"1\" />\n"
 "    <group id=\"kbselection\" inlayer=\"1\" onlyvisible=\"1\" onlysensitive=\"1\" />\n"
+"    <group id=\"selection\" layerdeselect=\"1\" />\n"
 "    <group id=\"createbitmap\" minsize=\"250\"/>\n"
 "    <group id=\"compassangledisplay\" value=\"0\"/>\n"
 "    <group id=\"maskobject\" topmost=\"1\" remove=\"1\"/>\n"

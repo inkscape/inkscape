@@ -487,6 +487,7 @@ void InkscapePreferences::initPageSelecting()
     _sel_recursive.init ( _("Select in current layer and sublayers"), "options.kbselection", "inlayer", PREFS_SELECTION_LAYER_RECURSIVE, false, &_sel_all);
     _sel_hidden.init ( _("Ignore hidden objects"), "options.kbselection", "onlyvisible", true);
     _sel_locked.init ( _("Ignore locked objects"), "options.kbselection", "onlysensitive", true);
+    _sel_layer_deselects.init ( _("Deselect upon layer change"), "options.selection", "layerdeselect", true);
 
     _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab:"));
     _page_select.add_line( true, "", _sel_all, "", 
@@ -499,6 +500,9 @@ void InkscapePreferences::initPageSelecting()
                            _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden group or layer)"));
     _page_select.add_line( true, "", _sel_locked, "", 
                            _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked group or layer)"));
+
+    _page_select.add_line( false, "", _sel_layer_deselects, "", 
+                           _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
 
     this->AddPage(_page_select, _("Selecting"), PREFS_PAGE_SELECTING);
 }

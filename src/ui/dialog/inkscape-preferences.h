@@ -129,6 +129,7 @@ protected:
     PrefRadioButton _sel_current;
     PrefRadioButton _sel_recursive;
     PrefCheckButton _sel_hidden, _sel_locked;
+    PrefCheckButton _sel_layer_deselects;
 
     PrefSpinButton  _misc_export, _misc_recent, _misc_simpl;
     PrefCheckButton _misc_imp_bitmap, _misc_comment, _misc_scripts;

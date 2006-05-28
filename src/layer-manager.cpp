@@ -14,8 +14,11 @@
 #include "gc-finalized.h"
 #include "document.h"
 #include "desktop.h"
+#include "desktop-handles.h"
 #include "layer-manager.h"
+#include "prefs-utils.h"
 #include "ui/view/view.h"
+#include "selection.h"
 #include "sp-object.h"
 #include "xml/node.h"
 #include "xml/node-observer.h"
@@ -69,6 +72,15 @@ LayerManager::LayerManager(SPDesktop *desktop)
     _setDocument(desktop->doc());
 }
 
+
+void LayerManager::setCurrentLayer( SPObject* obj )
+{
+    _desktop->setCurrentLayer( obj );
+
+    if ( prefs_get_int_attribute_limited("options.selection", "layerdeselect", 1, 0, 1) ) {
+        sp_desktop_selection( _desktop )->clear();
+    }
+}
 
 void LayerManager::renameLayer( SPObject* obj, gchar const *label )
 {

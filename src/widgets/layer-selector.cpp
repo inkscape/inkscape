@@ -28,6 +28,7 @@
 #include "desktop.h"
 #include "document.h"
 #include "dialogs/layer-properties.h"
+#include "layer-manager.h"
 #include "xml/node-event-vector.h"
 
 namespace Inkscape {
@@ -290,9 +291,11 @@ void LayerSelector::_setDesktopLayer() {
     SPObject *layer=_selector.get_active()->get_value(_model_columns.object);
     if ( _desktop && layer ) {
         _layer_changed_connection.block();
-        _desktop->setCurrentLayer(layer);
+
+        _desktop->layer_manager->setCurrentLayer(layer);
+
         _layer_changed_connection.unblock();
-        sp_desktop_selection(_desktop)->clear();
+
         _selectLayer(_desktop->currentLayer());
     }
 }
