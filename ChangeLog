@@ -1,3 +1,9 @@
+2006-05-28  MenTaLguY  <mental@rydia.net>
+
+	* src/widgets/toolbox.cpp:
+
+	  add tooltips to text toolbar widgets
+
 2006-05-28  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/layer-manager.cpp, src/layer-manager.cpp,

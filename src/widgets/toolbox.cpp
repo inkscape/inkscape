@@ -3286,6 +3286,7 @@ namespace {
     sp_text_toolbox_new (SPDesktop *desktop)
     {
         GtkWidget   *tbl = gtk_hbox_new (FALSE, 0);
+        GtkTooltips *tt = gtk_tooltips_new();
         Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
 
         ////////////Family
@@ -3390,6 +3391,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-start", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(0));
+        gtk_tooltips_set_tip(tt, rbutton, _("Rag right"), NULL);
 
         // center
         rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3400,6 +3402,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-middle", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer (1)); 
+        gtk_tooltips_set_tip(tt, rbutton, _("Centered"), NULL);
 
         // right
         rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3410,6 +3413,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-end", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(2));
+        gtk_tooltips_set_tip(tt, rbutton, _("Rag left"), NULL);
 
         // fill
         rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3420,6 +3424,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-fill", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(3));
+        gtk_tooltips_set_tip(tt, rbutton, _("Justified"), NULL);
 
         aux_toolbox_space (tbl, 1);
         gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
@@ -3435,6 +3440,7 @@ namespace {
         gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
         gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_BOLD, GTK_ICON_SIZE_SMALL_TOOLBAR));
         gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        gtk_tooltips_set_tip(tt, rbutton, _("Bold"), NULL);
 
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "style-bold", rbutton);
@@ -3445,6 +3451,7 @@ namespace {
         gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
         gtk_container_add           (GTK_CONTAINER (rbutton), gtk_image_new_from_stock (GTK_STOCK_ITALIC, GTK_ICON_SIZE_SMALL_TOOLBAR));
         gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        gtk_tooltips_set_tip(tt, rbutton, _("Italic"), NULL);
 
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "style-italic", rbutton);
@@ -3466,6 +3473,7 @@ namespace {
         gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
         gtk_container_add           (GTK_CONTAINER (rbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_LR)); 
         gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        gtk_tooltips_set_tip(tt, rbutton, _("Horizontal text"), NULL);
 
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "orientation-horizontal", rbutton);
@@ -3476,6 +3484,7 @@ namespace {
         gtk_button_set_relief       (GTK_BUTTON (rbutton), GTK_RELIEF_NONE);
         gtk_container_add           (GTK_CONTAINER (rbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_STOCK_WRITING_MODE_TB)); 
         gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (rbutton), FALSE);
+        gtk_tooltips_set_tip(tt, rbutton, _("Vertical text"), NULL);
 
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "orientation-vertical", rbutton);
