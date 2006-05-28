@@ -301,7 +301,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection *sel)
         SPCurve *norm = sp_shape_get_curve(SP_SHAPE(item));
         sp_curve_transform(norm, sp_item_i2d_affine(dc->white_item));
         g_return_if_fail( norm != NULL );
-        dc->white_curves = sp_curve_split(norm);
+        dc->white_curves = g_slist_reverse(sp_curve_split(norm));
         sp_curve_unref(norm);
         /* Anchor list */
         for (GSList *l = dc->white_curves; l != NULL; l = l->next) {

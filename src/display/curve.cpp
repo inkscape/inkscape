@@ -254,12 +254,7 @@ sp_curve_split(SPCurve const *curve)
         new_curve->substart = 0;
         new_curve->closed = (new_curve->_bpath->code == NR_MOVETO);
         new_curve->hascpt = (new_curve->_bpath->code == NR_MOVETO_OPEN);
-        l = g_slist_append(l, new_curve);
-        /** \todo
-         * effic: Use g_slist_prepend instead.  Either work backwards from 
-         * the end of curve, or work forwards as at present but do
-         * g_slist_reverse before returning.
-         */
+        l = g_slist_prepend(l, new_curve);
         p += i;
     }
 

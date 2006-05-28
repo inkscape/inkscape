@@ -192,7 +192,8 @@ sp_selected_path_break_apart(void)
 
         sp_curve_unref(curve);
 
-        for (GSList *l = g_slist_reverse(list); l != NULL; l = l->next) {
+        GSList *reprs = NULL;
+        for (GSList *l = list; l != NULL; l = l->next) {
             curve = (SPCurve *) l->data;
 
             Inkscape::XML::Node *repr = sp_repr_new("svg:path");
@@ -212,11 +213,14 @@ sp_selected_path_break_apart(void)
             if (l == list)
                 repr->setAttribute("id", id);
 
-            selection->add(repr);
+            reprs = g_slist_prepend (reprs, repr);
 
             Inkscape::GC::release(repr);
         }
 
+        selection->setReprList(reprs);
+
+        g_slist_free(reprs);
         g_slist_free(list);
         g_free(style);
 
