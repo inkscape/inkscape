@@ -51,9 +51,12 @@ class RTreeTurtle(inkex.Effect):
             'fill': 'none'}
         new.setAttribute('style', simplestyle.formatStyle(s))
         t = pturtle.pTurtle()
+        t.pu()
+        t.setpos(self.view_center)
+        t.pd()
         rtree(t, self.options.size, self.options.minimum)
         new.setAttribute('d', t.getPath())
-        self.document.documentElement.appendChild(new)
+        self.current_layer.appendChild(new)
 
 e = RTreeTurtle()
 e.affect()
