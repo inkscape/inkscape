@@ -3482,7 +3482,7 @@
   </defs>
   <sodipodi:namedview
      inkscape:guide-bbox="true"
-     inkscape:current-layer="svg1"
+     inkscape:current-layer="use5602"
      inkscape:grid-bbox="true"
      inkscape:pageopacity="1.0000000"
      pagecolor="#e8e8e4"
@@ -8663,7 +8663,7 @@ http://www.inkscape.org/</dc:description>
          sodipodi:nodetypes="cccc" />
       <path
          style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#383838;stroke-width:1.00000012px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="M 843.5,32.5 L 848.64286,32.5"
+         d="M 843.5,32 L 848.64286,32"
          id="path3747" />
     </g>
     <path
@@ -8740,7 +8740,7 @@ http://www.inkscape.org/</dc:description>
        sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#383838;stroke-width:1.00000012px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 859.66746,32.4991 L 854.5246,32.4991"
+       d="M 859.66746,31.9991 L 854.5246,31.9991"
        id="path6556" />
     <path
        style="fill:#5a5a5a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
