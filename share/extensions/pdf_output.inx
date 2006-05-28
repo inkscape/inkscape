@@ -1,7 +1,7 @@
 <inkscape-extension>
     <_name>PDF Output</_name>
     <id>org.inkscape.output.pdf</id>
-    <dependency type="extension">org.inkscape.output.ps</dependency>
+    <dependency type="extension">org.inkscape.output.ps.via_gs</dependency>
     <dependency type="executable" location="extensions">ps2pdf.sh</dependency>
     <dependency type="executable">ps2pdf</dependency>
     <output>
