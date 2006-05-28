@@ -13,6 +13,7 @@ extensions = \
 	sk2svg.sh \
 	ps2epsi.sh \
 	ps2pdf.sh \
+	ps2pdf.cmd \
 	txt2svg.pl \
 	inkscape-shadow.sh \
 	inkscape-shadow-white.sh \
@@ -69,7 +70,8 @@ modules = \
 	svg_dropshadow.inx \
 	dia.inx \
 	epsi_output.inx \
-	pdf_output.inx \
+	pdf_output.inx.txt \
+	pdf_output_via_gs_on_win32.inx.txt \
 	txt2svg.inx \
 	dots.inx \
 	ffmet.inx \
