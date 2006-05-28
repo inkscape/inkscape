@@ -152,7 +152,7 @@ class FretFind(inkex.Effect):
     
         group = self.document.createElement('svg:g')
         group.setAttribute('transform',"scale(%s,%s)" % (self.options.pxperunit,self.options.pxperunit))
-        self.document.documentElement.appendChild(group)
+        self.current_layer.appendChild(group)
         
         edge = self.document.createElement('svg:path')
         s = {'stroke-linejoin': 'miter', 'stroke-width': '0.01px', 
