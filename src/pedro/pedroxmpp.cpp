@@ -632,7 +632,7 @@ public:
     static void hash(unsigned char *dataIn,
                      unsigned long len, unsigned char *digest);
 
-    static DOMString Md5::hashHex(unsigned char *dataIn, unsigned long len);
+    static DOMString hashHex(unsigned char *dataIn, unsigned long len);
 
     /**
      *  Initialize the context (also zeroizes contents)
@@ -3866,6 +3866,9 @@ bool XmppClient::saslAuthenticate()
         recbuf = readStanza();
         status("RECV: '%s'\n", recbuf.c_str());
         elem = parser.parse(recbuf);
+
+        XmppEvent event(XmppEvent::EVENT_SSL_STARTED);
+        dispatchXmppEvent(event);
         }
 
     //register, if user requests
@@ -3964,6 +3967,12 @@ bool XmppClient::createSession()
     if (!sock->connect(host, port))
         {
         return false;
+        }
+
+    if (sock->getEnableSSL())
+        {
+        XmppEvent event(XmppEvent::EVENT_SSL_STARTED);
+        dispatchXmppEvent(event);
         }
 
     char *fmt =
@@ -4669,7 +4678,8 @@ bool XmppClient::groupChatPresence(const DOMString &groupJid,
     char *fmt =
     "<presence from='%s' to='%s/%s' type='unavailable'>"
     "<x xmlns='http://jabber.org/protocol/muc'/></presence>\n";
-    if (!write(fmt, jid.c_str(), groupJid.c_str(), user.c_str(), xmlPresence.c_str()))
+    if (!write(fmt, jid.c_str(), groupJid.c_str(),
+               user.c_str(), xmlPresence.c_str()))
         return true;
     return true;
 }

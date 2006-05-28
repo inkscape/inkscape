@@ -759,6 +759,13 @@ private:
 
     Gtk::VBox mainBox;
 
+    Gtk::HBox menuBarBox;
+
+    Gtk::Image padlockIcon;
+    void padlockEnable();
+    void padlockDisable();
+
+
     Pango::FontDescription fontDesc;
     Gdk::Color foregroundColor;
     Gdk::Color backgroundColor;

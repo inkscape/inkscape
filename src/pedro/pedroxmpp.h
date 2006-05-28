@@ -133,6 +133,13 @@ public:
     static const int EVENT_DISCONNECTED         = 11;
 
     /**
+     *  Client has begun speaking to the server in SSL.  This is usually
+     *  emitted just before EVENT_CONNECTED,  since authorization has not
+     *  yet taken place.
+     */
+    static const int EVENT_SSL_STARTED          = 12;
+
+    /**
      *  Client has successfully registered a new account on a server.
      *  The server is in getFrom(), the user in getTo()
      */
@@ -959,7 +966,7 @@ public:
      *
      */
     virtual std::vector<XmppUser>
-          XmppClient::groupChatGetUserList(const DOMString &groupJid);
+             groupChatGetUserList(const DOMString &groupJid);
 
     /**
      *

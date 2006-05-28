@@ -1148,8 +1148,8 @@ bool ConnectDialog::doSetup()
     table.resize(6, 2);
     get_vbox()->pack_start(table);
 
-    parent.client.setHost("gristle.org");
-    parent.client.setPort(5223);
+    parent.client.setHost("broadway.dynalias.com");
+    parent.client.setPort(5222);
     parent.client.setUsername("");
     parent.client.setPassword("");
     parent.client.setResource("pedroXmpp");
@@ -1859,6 +1859,24 @@ bool PedroGui::groupChatPresence(const DOMString &groupJid,
 /**
  *
  */
+void PedroGui::padlockEnable()
+{
+    padlockIcon.set(Gtk::Stock::DIALOG_AUTHENTICATION,
+               Gtk::ICON_SIZE_MENU);
+}
+
+/**
+ *
+ */
+void PedroGui::padlockDisable()
+{
+    padlockIcon.clear();
+}
+
+
+/**
+ *
+ */
 void PedroGui::handleConnectEvent()
 {
      status("##### CONNECTED");
@@ -1886,6 +1904,7 @@ void PedroGui::handleDisconnectEvent()
      actionEnable("Disconnect", false);
      actionEnable("RegPass",    false);
      actionEnable("RegCancel",  false);
+     padlockDisable();
      DOMString title = "Pedro";
      set_title(title);
      chatDeleteAll();
@@ -1912,6 +1931,12 @@ void PedroGui::doEvent(const XmppEvent &event)
             {
             //printf("##### ERROR: %s\n", event.getData().c_str());
             error(event.getData().c_str());
+            padlockDisable();
+            break;
+            }
+        case XmppEvent::EVENT_SSL_STARTED:
+            {
+            padlockEnable();
             break;
             }
         case XmppEvent::EVENT_CONNECTED:
@@ -2105,6 +2130,8 @@ void PedroGui::connectCallback()
         }
 }
 
+
+
 void PedroGui::chatCallback()
 {
     ChatDialog dialog(*this);
@@ -2115,6 +2142,8 @@ void PedroGui::chatCallback()
         client.message(dialog.getUser(), dialog.getText());
         }
 }
+
+
 
 void PedroGui::groupChatCallback()
 {
@@ -2135,15 +2164,18 @@ void PedroGui::groupChatCallback()
     client.groupChatJoin(groupJid, dialog.getNick(), dialog.getPass() );
 }
 
+
 void PedroGui::disconnectCallback()
 {
     client.disconnect();
 }
 
+
 void PedroGui::quitCallback()
 {
     Gtk::Main::quit();
 }
+
 
 void PedroGui::fontCallback()
 {
@@ -2191,10 +2223,14 @@ void PedroGui::regCancelCallback()
         }
 }
 
+
+
 void PedroGui::sendFileCallback()
 {
     doSendFile("");
 }
+
+
 
 void PedroGui::aboutCallback()
 {
@@ -2209,11 +2245,19 @@ void PedroGui::aboutCallback()
     dlg.run();
 }
 
+
+
 void PedroGui::actionEnable(const DOMString &name, bool val)
 {
-    DOMString path = "/ui/MenuBar/MenuFile/";
+    DOMString path = "/ui/MenuBar/";
     path.append(name);
     Glib::RefPtr<Gtk::Action> action = uiManager->get_action(path);
+    if (!action)
+        {
+        path = "/ui/MenuBar/MenuFile/";
+        path.append(name);
+        action = uiManager->get_action(path);
+        }
     if (!action)
         {
         path = "/ui/MenuBar/MenuEdit/";
@@ -2244,9 +2288,11 @@ void PedroGui::actionEnable(const DOMString &name, bool val)
 }
 
 
+
+
 bool PedroGui::doSetup()
 {
-    set_title("Inkscape XMPP (Inkboard)");
+    set_title("Pedro XMPP Client");
     set_size_request(500, 300);
     add(mainBox);
 
@@ -2340,7 +2386,12 @@ bool PedroGui::doSetup()
 
     uiManager->add_ui_from_string(ui_info);
     Gtk::Widget* pMenuBar = uiManager->get_widget("/MenuBar");
-    mainBox.pack_start(*pMenuBar, Gtk::PACK_SHRINK);
+    menuBarBox.pack_start(*pMenuBar, Gtk::PACK_SHRINK);
+
+    padlockDisable();
+    menuBarBox.pack_end(padlockIcon, Gtk::PACK_SHRINK);
+
+    mainBox.pack_start(menuBarBox, Gtk::PACK_SHRINK);
 
     actionEnable("Connect",    true);
     actionEnable("Chat",       false);
