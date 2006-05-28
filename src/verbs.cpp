@@ -2316,7 +2316,7 @@ Verb *Verb::_base_verbs[] = {
                    N_("Edit global Inkscape preferences"), GTK_STOCK_PREFERENCES ),
     new DialogVerb(SP_VERB_DIALOG_NAMEDVIEW, "DialogDocumentProperties", N_("_Document Properties..."),
                    N_("Edit properties of this document (to be saved with the document)"), GTK_STOCK_PROPERTIES ),
-    new DialogVerb(SP_VERB_DIALOG_METADATA, "DialogMetadata", N_("_Document Metadata..."),
+    new DialogVerb(SP_VERB_DIALOG_METADATA, "DialogMetadata", N_("Document _Metadata..."),
                    N_("Edit document metadata (to be saved with the document)"), NULL ),
     new DialogVerb(SP_VERB_DIALOG_FILL_STROKE, "DialogFillStroke", N_("_Fill and Stroke..."),
                    N_("Edit objects' style, such as color or stroke width"), "fill_and_stroke"),
@@ -2366,7 +2366,7 @@ Verb *Verb::_base_verbs[] = {
                    N_("Configure extended input devices, such as a graphics tablet"), NULL),
     new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),
                    N_("Query information about extensions"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("_Layers..."),
+    new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("Layer_s..."),
                    N_("View Layers"), NULL),
 
     /* Help */
