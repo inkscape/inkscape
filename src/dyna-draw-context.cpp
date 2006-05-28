@@ -29,6 +29,7 @@
 #include "display/canvas-bpath.h"
 #include "display/bezier-utils.h"
 
+#include <glib/gmem.h>
 #include "macros.h"
 #include "document.h"
 #include "selection.h"
@@ -668,7 +669,7 @@ set_to_accumulated(SPDynaDrawContext *dc)
         abp = nr_artpath_affine(sp_curve_first_bpath(dc->accumulated), sp_desktop_dt2root_affine(desktop));
         str = sp_svg_write_path(abp);
         g_assert( str != NULL );
-        nr_free(abp);
+        g_free(abp);
         dc->repr->setAttribute("d", str);
         g_free(str);
     } else {

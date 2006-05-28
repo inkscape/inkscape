@@ -18,6 +18,7 @@
 #endif
 
 #include <vector>
+#include <glib/gmem.h>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "sp-path.h"
@@ -1653,7 +1654,7 @@ Path_for_item(SPItem *item, bool doTransformation, bool transformFull)
     }
 
     if ( doTransformation ) {
-        if ( bpath ) nr_free(bpath);
+        if ( bpath ) g_free(bpath);
     } else {
         sp_curve_unref(curve);
     }

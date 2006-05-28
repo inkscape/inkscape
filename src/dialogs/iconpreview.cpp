@@ -19,6 +19,7 @@
 
 #include <gtk/gtk.h>
 
+#include <glib/gmem.h>
 #include <gtk/gtkdialog.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/buttonbox.h>
@@ -160,7 +161,7 @@ IconPreviewPanel::IconPreviewPanel() :
         pixMem[i] = new guchar[4 * sizes[i] * sizes[i]];
         memset( pixMem[i], 0x00, 4 *  sizes[i] * sizes[i] );
 
-        GdkPixbuf *pb = gdk_pixbuf_new_from_data( pixMem[i], GDK_COLORSPACE_RGB, TRUE, 8, sizes[i], sizes[i], sizes[i] * 4, /*(GdkPixbufDestroyNotify)nr_free*/NULL, NULL );
+        GdkPixbuf *pb = gdk_pixbuf_new_from_data( pixMem[i], GDK_COLORSPACE_RGB, TRUE, 8, sizes[i], sizes[i], sizes[i] * 4, /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL );
         GtkImage* img = GTK_IMAGE( gtk_image_new_from_pixbuf( pb ) );
         images[i] = Glib::wrap(img);
         Glib::ustring label(*labels[i]);

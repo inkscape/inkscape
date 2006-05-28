@@ -14,6 +14,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <glib/gmem.h>
 #include <libnr/nr-macros.h>
 #include "nr-type-primitives.h"
 
@@ -65,10 +66,10 @@ nr_type_dict_new (void)
 	NRTypeDict *td;
 	int i;
 
-	td = nr_new (NRTypeDict, 1);
+	td = g_new (NRTypeDict, 1);
 
 	td->size = NR_DICTSIZE;
-	td->entries = nr_new (NRTDEntry *, td->size);
+	td->entries = g_new (NRTDEntry *, td->size);
 	for (i = 0; i < NR_DICTSIZE; i++) {
 		td->entries[i] = NULL;
 	}
@@ -152,7 +153,7 @@ nr_td_entry_new (void)
 
 	if (!nr_tde_free_list) {
 		int i;
-		nr_tde_free_list = nr_new (NRTDEntry, NR_TDE_BLOCK_SIZE);
+		nr_tde_free_list = g_new (NRTDEntry, NR_TDE_BLOCK_SIZE);
 		for (i = 0; i < (NR_TDE_BLOCK_SIZE - 1); i++) {
 			nr_tde_free_list[i].next = nr_tde_free_list + i + 1;
 		}

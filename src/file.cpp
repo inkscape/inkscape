@@ -25,6 +25,7 @@
 # include "config.h"
 #endif
 
+#include <glib/gmem.h>
 #include <libnr/nr-pixops.h>
 
 #include "document-private.h"
@@ -1170,10 +1171,10 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         write_status = sp_png_write_rgba_striped(filename, width, height, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
-        ebp.px = nr_new(guchar, 4 * 64 * width);
+        ebp.px = g_new(guchar, 4 * 64 * width);
         ebp.sheight = 64;
         write_status = sp_png_write_rgba_striped(filename, width, height, sp_export_get_rows, &ebp);
-        nr_free(ebp.px);
+        g_free(ebp.px);
     }
 
     // Hide items

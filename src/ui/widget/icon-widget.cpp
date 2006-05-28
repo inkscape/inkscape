@@ -14,6 +14,7 @@
 # include <config.h>
 #endif
 
+#include <glib/gmem.h>
 #include "icon-widget.h"
 
 namespace Inkscape {
@@ -49,7 +50,7 @@ IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name)
         /* TODO
         _pb = gdk_pixbuf_new_from_data(pixels, GDK_COLORSPACE_RGB, 
                                        TRUE, 8, _size, _size, _size * 4, 
-                                       (GdkPixbufDestroyNotify)nr_free, NULL);
+                                       (GdkPixbufDestroyNotify)g_free, NULL);
         */
     }
 }

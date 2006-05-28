@@ -423,7 +423,7 @@ nr_artpath_to_art_bpath(NArtBpath const *s)
 	i = 0;
 	while (s[i].code != NR_END) i += 1;
 
-	ArtBpath* d = nr_new (ArtBpath, i + 1);
+	ArtBpath* d = g_new (ArtBpath, i + 1);
 
 	i = 0;
 	while (s[i].code != NR_END) {

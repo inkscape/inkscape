@@ -10,6 +10,7 @@
  */
 
 
+#include <glib/gmem.h>
 #include "nr-pixops.h"
 #include "nr-pixblock-pattern.h"
 
@@ -34,7 +35,7 @@ nr_pixblock_render_gray_noise (NRPixBlock *pb, NRPixBlock *mask)
 
 	if (!noise) {
 		int i;
-		noise = nr_new (unsigned char, NR_NOISE_SIZE);
+		noise = g_new (unsigned char, NR_NOISE_SIZE);
 		for (i = 0; i < NR_NOISE_SIZE; i++) noise[i] = (rand () / (RAND_MAX >> 8)) & 0xff;
 	}
 

@@ -1,5 +1,25 @@
 2006-05-28  MenTaLguY  <mental@rydia.net>
 
+	* src/dialogs/clonetiler.cpp, src/dialogs/iconpreview.cpp,
+	  src/dialogs/stroke-style.cpp, src/display/curve.cpp,
+	  src/display/sp-canvas.cpp, src/dyna-draw-context.cpp,
+	  src/extension/internal/gnome.cpp, src/extension/internal/pdf.cpp,
+	  src/extension/internal/ps.cpp, src/extension/internal/win32.cpp,
+	  src/file.cpp, src/inkview.cpp, src/libnr/nr-macros.h,
+	  src/libnr/nr-object.cpp, src/libnr/nr-path.cpp,
+	  src/libnr/nr-pixblock.cpp, src/libnr/nr-pixblock-pattern.cpp,
+	  src/libnr/nr-svp.cpp, src/libnr/nr-svp-render.cpp,
+	  src/libnrtype/FontFactory.cpp, src/libnrtype/Layout-TNG-Output.cpp,
+	  src/libnrtype/nr-type-primitives.cpp, src/path-chemistry.cpp,
+	  src/splivarot.cpp, src/sp-marker.cpp, src/ui/widget/icon-widget.cpp,
+	  src/widgets/icon.cpp:
+
+	  replace nr_new() with g_new(), and try to converge on using the
+	  glib allocator a little more instead of the others (aside from
+	  libgc)
+
+2006-05-28  MenTaLguY  <mental@rydia.net>
+
 	* share/icons/icons.svg:
 
 	  correct vertical text flow icon to  correctly reflect lines stacking

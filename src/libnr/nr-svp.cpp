@@ -21,6 +21,7 @@
 # include <ieeefp.h>
 #endif
 
+#include <glib/gmem.h>
 #include "nr-rect.h"
 #include "nr-svp-private.h"
 
@@ -29,7 +30,7 @@
 void
 nr_svp_free (NRSVP *svp)
 {
-    if (svp->points) nr_free (svp->points);
+    if (svp->points) g_free (svp->points);
     free (svp);
 }
 
@@ -83,7 +84,7 @@ nr_vertex_new (void)
 
     if (v == NULL) {
         int i;
-        v = nr_new (NRVertex, NR_VERTEX_ALLOC_SIZE);
+        v = g_new (NRVertex, NR_VERTEX_ALLOC_SIZE);
         for (i = 1; i < (NR_VERTEX_ALLOC_SIZE - 1); i++) v[i].next = &v[i + 1];
         v[NR_VERTEX_ALLOC_SIZE - 1].next = NULL;
         ffvertex = v + 1;
@@ -91,7 +92,7 @@ nr_vertex_new (void)
         ffvertex = v->next;
     }
 #else
-    v = nr_new (NRVertex, 1);
+    v = g_new (NRVertex, 1);
 #endif
 
     v->next = NULL;
@@ -127,7 +128,7 @@ nr_vertex_free_one (NRVertex * v)
     v->next = ffvertex;
     ffvertex = v;
 #else
-    nr_free (v);
+    g_free (v);
 #endif
 }
 
@@ -144,7 +145,7 @@ nr_vertex_free_list (NRVertex * v)
     l = v;
     while (l) {
         n = l->next;
-        nr_free (l);
+        g_free (l);
         l = n;
     }
 #endif

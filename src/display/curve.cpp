@@ -16,6 +16,7 @@
  */
 
 
+#include <glib/gmem.h>
 #include <display/curve.h>
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-point-matrix-ops.h>
@@ -56,7 +57,7 @@ sp_curve_new_sized(gint length)
     SPCurve *curve = g_new(SPCurve, 1);
 
     curve->refcount = 1;
-    curve->_bpath = nr_new(NArtBpath, length);
+    curve->_bpath = g_new(NArtBpath, length);
     curve->_bpath->code = NR_END;
     curve->end = 0;
     curve->length = length;
@@ -80,7 +81,7 @@ sp_curve_new_from_bpath(NArtBpath *bpath)
     g_return_val_if_fail(bpath != NULL, NULL);
 
     SPCurve *curve = sp_curve_new_from_foreign_bpath(bpath);
-    nr_free(bpath);
+    g_free(bpath);
     return curve;
 }
 
@@ -99,7 +100,7 @@ SPCurve *sp_curve_new_from_foreign_bpath(NArtBpath const bpath[])
         g_return_val_if_fail(new_bpath != NULL, NULL);
     } else {
         unsigned const len = sp_bpath_length(bpath);
-        new_bpath = nr_new(NArtBpath, len);
+        new_bpath = g_new(NArtBpath, len);
         memcpy(new_bpath, bpath, len * sizeof(NArtBpath));
     }
 
@@ -152,7 +153,7 @@ sp_curve_unref(SPCurve *curve)
 
     if (curve->refcount < 1) {
         if (curve->_bpath) {
-            nr_free(curve->_bpath);
+            g_free(curve->_bpath);
         }
         g_free(curve);
     }
@@ -175,7 +176,7 @@ sp_curve_ensure_space(SPCurve *curve, gint space)
     if (space < SP_CURVE_LENSTEP)
         space = SP_CURVE_LENSTEP;
 
-    curve->_bpath = nr_renew(curve->_bpath, NArtBpath, curve->length + space);
+    curve->_bpath = g_renew(NArtBpath, curve->_bpath, curve->length + space);
 
     curve->length += space;
 }
@@ -936,7 +937,7 @@ static bool sp_bpath_good(NArtBpath const bpath[])
  */
 static NArtBpath *sp_bpath_clean(NArtBpath const bpath[])
 {
-    NArtBpath *new_bpath = nr_new(NArtBpath, sp_bpath_length(bpath));
+    NArtBpath *new_bpath = g_new(NArtBpath, sp_bpath_length(bpath));
 
     NArtBpath const *bp = bpath;
     NArtBpath *np = new_bpath;
@@ -956,14 +957,14 @@ static NArtBpath *sp_bpath_clean(NArtBpath const bpath[])
     }
 
     if (np == new_bpath) {
-        nr_free(new_bpath);
+        g_free(new_bpath);
         return NULL;
     }
 
     np->code = NR_END;
     np += 1;
 
-    new_bpath = nr_renew(new_bpath, NArtBpath, np - new_bpath);
+    new_bpath = g_renew(NArtBpath, new_bpath, np - new_bpath);
 
     return new_bpath;
 }

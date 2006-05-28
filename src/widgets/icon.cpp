@@ -18,6 +18,7 @@
 
 
 
+#include <glib/gmem.h>
 #include <gtk/gtkiconfactory.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkimage.h>
@@ -209,12 +210,12 @@ void sp_icon_fetch_pixbuf( SPIcon *icon )
             pixels = sp_icon_image_load( icon, icon->name );
 
             if (pixels) {
-                // don't pass the nr_free because we're caching the pixel
+                // don't pass the g_free because we're caching the pixel
                 // space loaded through ...
                 // I just changed this. make sure sp_icon_image_load still does the right thing.
                 icon->pb = gdk_pixbuf_new_from_data(pixels, GDK_COLORSPACE_RGB, TRUE, 8,
                                                     icon->psize, icon->psize, icon->psize * 4,
-                                                    /*(GdkPixbufDestroyNotify)nr_free*/NULL, NULL);
+                                                    /*(GdkPixbufDestroyNotify)g_free*/NULL, NULL);
                 icon->pb_faded = gdk_pixbuf_copy(icon->pb);
 
                 pixels = gdk_pixbuf_get_pixels(icon->pb_faded);
@@ -583,7 +584,7 @@ sp_icon_image_load_pixmap(gchar const *name, unsigned lsize, unsigned psize)
         }
         guchar *spx = gdk_pixbuf_get_pixels(pb);
         int srs = gdk_pixbuf_get_rowstride(pb);
-        px = nr_new(guchar, 4 * psize * psize);
+        px = g_new(guchar, 4 * psize * psize);
         for (unsigned y = 0; y < psize; y++) {
             memcpy(px + 4 * y * psize, spx + y * srs, 4 * psize);
         }
@@ -703,7 +704,7 @@ sp_icon_doc_icon( SPDocument *doc, NRArenaItem *root,
                     g_message( "   ua     --'%s'  (%f,%f)-(%f,%f)", name, (double)ua.x0, (double)ua.y0, (double)ua.x1, (double)ua.y1 );
                 }
                 /* Set up pixblock */
-                px = nr_new(guchar, 4 * psize * psize);
+                px = g_new(guchar, 4 * psize * psize);
                 memset(px, 0x00, 4 * psize * psize);
                 /* Render */
                 NRPixBlock B;

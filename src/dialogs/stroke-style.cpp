@@ -23,6 +23,7 @@
 
 
 
+#include <glib/gmem.h>
 #include <gtk/gtk.h>
 
 #include <glibmm/i18n.h>
@@ -590,7 +591,7 @@ sp_marker_prev_new(unsigned size, gchar const *mname,
     ua.y1 = MIN(ibox.y1, area.y1);
 
     /* Set up pixblock */
-    guchar *px = nr_new(guchar, 4 * size * size);
+    guchar *px = g_new(guchar, 4 * size * size);
     memset(px, 0x00, 4 * size * size);
 
     /* Render */
@@ -609,7 +610,7 @@ sp_marker_prev_new(unsigned size, gchar const *mname,
                               GDK_COLORSPACE_RGB,
                               TRUE,
                               8, size, size, size * 4,
-                              (GdkPixbufDestroyNotify)nr_free,
+                              (GdkPixbufDestroyNotify)g_free,
                               NULL));
     return pb;
 }

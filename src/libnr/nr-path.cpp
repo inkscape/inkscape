@@ -9,6 +9,7 @@
  * This code is in public domain
  */
 
+#include <glib/gmem.h>
 #include "n-art-bpath.h"
 #include "nr-rect.h"
 #include "nr-path.h"
@@ -31,7 +32,7 @@ NRBPath *nr_path_duplicate_transform(NRBPath *d, NRBPath *s, NRMatrix const *tra
 	i = 0;
 	while (s->path[i].code != NR_END) i += 1;
 
-	d->path = nr_new (NArtBpath, i + 1);
+	d->path = g_new (NArtBpath, i + 1);
 
 	i = 0;
 	while (s->path[i].code != NR_END) {

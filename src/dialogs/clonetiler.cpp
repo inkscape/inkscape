@@ -13,6 +13,7 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+#include <glib/gmem.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 
@@ -778,7 +779,7 @@ clonetiler_trace_pick (NR::Rect box)
     int height = ibox.y1 - ibox.y0;
 
     /* Set up pixblock */
-    guchar *px = nr_new(guchar, 4 * width * height);
+    guchar *px = g_new(guchar, 4 * width * height);
     memset(px, 0x00, 4 * width * height);
 
     /* Render */

@@ -541,7 +541,7 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 		view = NULL;
 	}
 	if (!view) {
-		view = (SPMarkerView *)malloc (sizeof (SPMarkerView) + (size) * sizeof (NRArenaItem *));
+		view = (SPMarkerView *)g_malloc (sizeof (SPMarkerView) + (size) * sizeof (NRArenaItem *));
 		for (i = 0; i < size; i++) view->items[i] = NULL;
 		view->next = marker->views;
 		marker->views = view;

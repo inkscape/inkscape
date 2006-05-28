@@ -994,7 +994,7 @@ shutdown_transients (SPCanvas *canvas)
     if (canvas->need_redraw) {
         canvas->need_redraw = FALSE;
     }
-    if ( canvas->tiles ) free(canvas->tiles);
+    if ( canvas->tiles ) g_free(canvas->tiles);
     canvas->tiles=NULL;
     canvas->tLeft=canvas->tTop=canvas->tRight=canvas->tBottom=0;
     canvas->tileH=canvas->tileV=0;
@@ -2029,7 +2029,7 @@ inline int sp_canvas_tile_ceil(int x)
 void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
 {
     if ( nl >= nr || nt >= nb ) {
-        if ( canvas->tiles ) free(canvas->tiles);
+        if ( canvas->tiles ) g_free(canvas->tiles);
         canvas->tLeft=canvas->tTop=canvas->tRight=canvas->tBottom=0;
         canvas->tileH=canvas->tileV=0;
         canvas->tiles=NULL;
@@ -2041,7 +2041,7 @@ void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
     int tb=sp_canvas_tile_ceil(nb);
 
     int nh=tr-tl,nv=tb-tt;
-    uint8_t* ntiles=(uint8_t*)malloc(nh*nv*sizeof(uint8_t));
+    uint8_t* ntiles=(uint8_t*)g_malloc(nh*nv*sizeof(uint8_t));
     for (int i=tl;i<tr;i++) {
         for (int j=tt;j<tb;j++) {
             int ind=(i-tl)+(j-tt)*nh;
@@ -2052,7 +2052,7 @@ void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb)
             }
         }
     }
-    if ( canvas->tiles ) free(canvas->tiles);
+    if ( canvas->tiles ) g_free(canvas->tiles);
     canvas->tiles=ntiles;
     canvas->tLeft=tl;
     canvas->tTop=tt;

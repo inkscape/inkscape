@@ -35,6 +35,7 @@
 #include <sys/stat.h>
 #include <locale.h>
 
+#include <glib/gmem.h>
 #include <libnr/nr-macros.h>
 
 #include <libxml/tree.h>
@@ -191,7 +192,7 @@ main (int argc, const char **argv)
     ss.size = 32;
     ss.length = 0;
     ss.current = 0;
-    ss.slides = nr_new (char *, ss.size);
+    ss.slides = g_new (char *, ss.size);
     ss.current = 0;
     ss.doc = NULL;
     ss.view = NULL;
@@ -230,7 +231,7 @@ main (int argc, const char **argv)
 			if (ss.length >= ss.size) {
 			    /* Expand */
 			    ss.size <<= 1;
-			    ss.slides = nr_renew (ss.slides, char *, ss.size);
+			    ss.slides = g_renew (char *, ss.slides, ss.size);
 			}
 
 			ss.doc = sp_document_new_from_mem ((const gchar *)gba->data,
@@ -252,7 +253,7 @@ main (int argc, const char **argv)
 		if (ss.length >= ss.size) {
 		    /* Expand */
 		    ss.size <<= 1;
-		    ss.slides = nr_renew (ss.slides, char *, ss.size);
+		    ss.slides = g_renew (char *, ss.slides, ss.size);
 
 		}
 

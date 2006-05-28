@@ -17,10 +17,6 @@
 #endif
 #include <assert.h>
 
-#define nr_new(t,n) ((t *) malloc ((n) * sizeof (t)))
-#define nr_free free
-#define nr_renew(p,t,n) ((t *) realloc (p, (n) * sizeof (t)))
-
 #ifndef TRUE
 #define TRUE (!0)
 #endif

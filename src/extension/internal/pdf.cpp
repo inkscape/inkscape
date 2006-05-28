@@ -31,6 +31,7 @@
 #include <signal.h>
 #include <errno.h>
 
+#include <glib/gmem.h>
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-point-matrix-ops.h>
 
@@ -405,7 +406,7 @@ PrintPDF::finish(Inkscape::Extension::Print *mod)
 
         nr_arena_item_set_transform(mod->root, &affine);
 
-        guchar *const px = nr_new(guchar, 4 * width * 64);
+        guchar *const px = g_new(guchar, 4 * width * 64);
 
         for (int y = 0; y < height; y += 64) {
             /* Set area of interest. */
@@ -439,7 +440,7 @@ PrintPDF::finish(Inkscape::Extension::Print *mod)
             print_image(_stream, px, bbox.x1 - bbox.x0, bbox.y1 - bbox.y0, 4 * width, &imgt);
         }
 
-        nr_free(px);
+        g_free(px);
     }
 
     pdf_file->end_page(page_stream);

@@ -15,6 +15,7 @@
 
 #include <typeinfo>
 
+#include <glib/gmem.h>
 #include <libnr/nr-macros.h>
 
 #include "nr-object.h"
@@ -77,7 +78,7 @@ NRType nr_object_register_type(NRType parent,
 {
     if (classes_len >= classes_size) {
 	classes_size += 32;
-	classes = nr_renew (classes, NRObjectClass *, classes_size);
+	classes = g_renew (NRObjectClass *, classes, classes_size);
 	if (classes_len == 0) {
 	    classes[0] = NULL;
 	    classes_len = 1;
@@ -251,7 +252,7 @@ static void nr_active_object_finalize(NRObject *object)
 		listener->vector->dispose(object, listener->data);
 	    }
 	}
-	free (aobject->callbacks);
+	g_free (aobject->callbacks);
     }
 
     ((NRObjectClass *) (parent_class))->finalize(object);
@@ -263,7 +264,7 @@ void nr_active_object_add_listener(NRActiveObject *object,
 				   void *data)
 {
     if (!object->callbacks) {
-	object->callbacks = (NRObjectCallbackBlock*) malloc(sizeof(NRObjectCallbackBlock));
+	object->callbacks = (NRObjectCallbackBlock*)g_malloc(sizeof(NRObjectCallbackBlock));
 	object->callbacks->size = 1;
 	object->callbacks->length = 0;
     }
@@ -271,7 +272,7 @@ void nr_active_object_add_listener(NRActiveObject *object,
     if (object->callbacks->length >= object->callbacks->size) {
 	int newsize = object->callbacks->size << 1;
 	object->callbacks = (NRObjectCallbackBlock *)
-	    realloc(object->callbacks, sizeof(NRObjectCallbackBlock) + (newsize - 1) * sizeof (NRObjectListener));
+	    g_realloc(object->callbacks, sizeof(NRObjectCallbackBlock) + (newsize - 1) * sizeof (NRObjectListener));
 	object->callbacks->size = newsize;
     }
     
@@ -293,7 +294,7 @@ void nr_active_object_remove_listener_by_data(NRActiveObject *object, void *data
 	if ( listener->data == data ) {
 	    object->callbacks->length -= 1;
 	    if ( object->callbacks->length < 1 ) {
-		free(object->callbacks);
+		g_free(object->callbacks);
 		object->callbacks = NULL;
 	    } else if ( object->callbacks->length != i ) {
 		*listener = object->callbacks->listeners[object->callbacks->length];

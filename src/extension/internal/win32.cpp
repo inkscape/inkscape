@@ -13,6 +13,7 @@
 # include "config.h"
 #endif
 
+#include <glib/gmem.h>
 #include <libnr/nr-macros.h>
 #include <libnr/nr-matrix.h>
 
@@ -312,7 +313,7 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
 	width = x1 - x0;
 	height = y1 - y0;
 
-	px = nr_new (unsigned char, 4 * 64 * width);
+	px = g_new (unsigned char, 4 * 64 * width);
 	sheight = 64;
 
 	/* Printing goes here */
@@ -368,7 +369,7 @@ PrintWin32::finish (Inkscape::Extension::Print *mod)
 		nr_pixblock_release (&pb);
 	}
 
-	nr_free (px);
+	g_free (px);
 
 	res = EndPage (_hDC);
 	res = EndDoc (_hDC);

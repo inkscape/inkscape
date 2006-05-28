@@ -14,6 +14,7 @@
 
 #define noNR_VERBOSE
 
+#include <glib/gmem.h>
 #include "nr-svp-render.h"
 
 static void nr_svp_render (NRSVP *svp, unsigned char *px, unsigned int bpp, unsigned int rs, int x0, int y0, int x1, int y1,
@@ -371,7 +372,7 @@ nr_slice_new (int wind, NRPoint *points, unsigned int length, NR::Coord y)
 
     if (s == NULL) {
         int i;
-        s = nr_new (NRSlice, NR_SLICE_ALLOC_SIZE);
+        s = g_new (NRSlice, NR_SLICE_ALLOC_SIZE);
         for (i = 1; i < (NR_SLICE_ALLOC_SIZE - 1); i++) s[i].next = &s[i + 1];
         s[NR_SLICE_ALLOC_SIZE - 1].next = NULL;
         ffslice = s + 1;
@@ -521,7 +522,7 @@ nr_run_new (NR::Coord x0, NR::Coord y0, NR::Coord x1, NR::Coord y1, int wind)
 
     if (r == NULL) {
         int i;
-        r = nr_new (NRRun, NR_RUN_ALLOC_SIZE);
+        r = g_new (NRRun, NR_RUN_ALLOC_SIZE);
         for (i = 1; i < (NR_RUN_ALLOC_SIZE - 1); i++) (r + i)->next = (r + i + 1);
         (r + NR_RUN_ALLOC_SIZE - 1)->next = NULL;
         ffrun = r + 1;

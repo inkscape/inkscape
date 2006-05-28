@@ -9,6 +9,7 @@
  * This code is in the Public Domain
  */
 
+#include <glib/gmem.h>
 #include "nr-pixblock.h"
 
 /// Size of buffer that needs no allocation (default 4).
@@ -58,7 +59,7 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
 		pb->data.px = nr_pixelstore_1M_new (clear, 0x0);
 	} else {
 		pb->size = NR_PIXBLOCK_SIZE_BIG;
-		pb->data.px = nr_new (unsigned char, size);
+		pb->data.px = g_new (unsigned char, size);
 		if (clear) memset (pb->data.px, 0x0, size);
 	}
 
@@ -72,7 +73,7 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
 }
 
 /**
- * Pixbuf initialisation using nr_new.
+ * Pixbuf initialisation using g_new.
  *
  * After allocating memory, the buffer is cleared if the clear flag is set.
  * \param pb Pointer to the pixbuf struct.
@@ -97,7 +98,7 @@ nr_pixblock_setup (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, int x1
 		if (clear) memset (pb->data.p, 0x0, size);
 	} else {
 		pb->size = NR_PIXBLOCK_SIZE_BIG;
-		pb->data.px = nr_new (unsigned char, size);
+		pb->data.px = g_new (unsigned char, size);
 		if (clear) memset (pb->data.px, 0x0, size);
 	}
 
@@ -183,7 +184,7 @@ nr_pixblock_release (NRPixBlock *pb)
 		nr_pixelstore_1M_free (pb->data.px);
 		break;
 	case NR_PIXBLOCK_SIZE_BIG:
-		nr_free (pb->data.px);
+		g_free (pb->data.px);
 		break;
 	case NR_PIXBLOCK_SIZE_STATIC:
 		break;
@@ -196,14 +197,14 @@ nr_pixblock_release (NRPixBlock *pb)
  * Allocates NRPixBlock and sets it up.
  *
  * \return Pointer to fresh pixblock.
- * Calls nr_new() and nr_pixblock_setup().
+ * Calls g_new() and nr_pixblock_setup().
  */
 NRPixBlock *
 nr_pixblock_new (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear)
 {
 	NRPixBlock *pb;
 
-	pb = nr_new (NRPixBlock, 1);
+	pb = g_new (NRPixBlock, 1);
 
 	nr_pixblock_setup (pb, mode, x0, y0, x1, y1, clear);
 
@@ -220,7 +221,7 @@ nr_pixblock_free (NRPixBlock *pb)
 {
 	nr_pixblock_release (pb);
 
-	nr_free (pb);
+	g_free (pb);
 
 	return NULL;
 }
@@ -241,7 +242,7 @@ nr_pixelstore_4K_new (bool clear, unsigned char val)
 		nr_4K_len -= 1;
 		px = nr_4K_px[nr_4K_len];
 	} else {
-		px = nr_new (unsigned char, 4096);
+		px = g_new (unsigned char, 4096);
 	}
 	
 	if (clear) memset (px, val, 4096);
@@ -254,7 +255,7 @@ nr_pixelstore_4K_free (unsigned char *px)
 {
 	if (nr_4K_len == nr_4K_size) {
 		nr_4K_size += NR_4K_BLOCK;
-		nr_4K_px = nr_renew (nr_4K_px, unsigned char *, nr_4K_size);
+		nr_4K_px = g_renew (unsigned char *, nr_4K_px, nr_4K_size);
 	}
 
 	nr_4K_px[nr_4K_len] = px;
@@ -275,7 +276,7 @@ nr_pixelstore_16K_new (bool clear, unsigned char val)
 		nr_16K_len -= 1;
 		px = nr_16K_px[nr_16K_len];
 	} else {
-		px = nr_new (unsigned char, 16384);
+		px = g_new (unsigned char, 16384);
 	}
 	
 	if (clear) memset (px, val, 16384);
@@ -288,7 +289,7 @@ nr_pixelstore_16K_free (unsigned char *px)
 {
 	if (nr_16K_len == nr_16K_size) {
 		nr_16K_size += NR_16K_BLOCK;
-		nr_16K_px = nr_renew (nr_16K_px, unsigned char *, nr_16K_size);
+		nr_16K_px = g_renew (unsigned char *, nr_16K_px, nr_16K_size);
 	}
 
 	nr_16K_px[nr_16K_len] = px;
@@ -309,7 +310,7 @@ nr_pixelstore_64K_new (bool clear, unsigned char val)
 		nr_64K_len -= 1;
 		px = nr_64K_px[nr_64K_len];
 	} else {
-		px = nr_new (unsigned char, 65536);
+		px = g_new (unsigned char, 65536);
 	}
 
 	if (clear) memset (px, val, 65536);
@@ -322,7 +323,7 @@ nr_pixelstore_64K_free (unsigned char *px)
 {
 	if (nr_64K_len == nr_64K_size) {
 		nr_64K_size += NR_64K_BLOCK;
-		nr_64K_px = nr_renew (nr_64K_px, unsigned char *, nr_64K_size);
+		nr_64K_px = g_renew (unsigned char *, nr_64K_px, nr_64K_size);
 	}
 
 	nr_64K_px[nr_64K_len] = px;
@@ -344,7 +345,7 @@ nr_pixelstore_256K_new (bool clear, unsigned char val)
 		nr_256K_len -= 1;
 		px = nr_256K_px[nr_256K_len];
 	} else {
-           px = nr_new (unsigned char, NR_256K);
+           px = g_new (unsigned char, NR_256K);
 	}
 
 	if (clear) memset (px, val, NR_256K);
@@ -357,7 +358,7 @@ nr_pixelstore_256K_free (unsigned char *px)
 {
 	if (nr_256K_len == nr_256K_size) {
 		nr_256K_size += NR_256K_BLOCK;
-		nr_256K_px = nr_renew (nr_256K_px, unsigned char *, nr_256K_size);
+		nr_256K_px = g_renew (unsigned char *, nr_256K_px, nr_256K_size);
 	}
 
 	nr_256K_px[nr_256K_len] = px;
@@ -379,7 +380,7 @@ nr_pixelstore_1M_new (bool clear, unsigned char val)
 		nr_1M_len -= 1;
 		px = nr_1M_px[nr_1M_len];
 	} else {
-           px = nr_new (unsigned char, NR_1M);
+           px = g_new (unsigned char, NR_1M);
 	}
 
 	if (clear) memset (px, val, NR_1M);
@@ -392,7 +393,7 @@ nr_pixelstore_1M_free (unsigned char *px)
 {
 	if (nr_1M_len == nr_1M_size) {
 		nr_1M_size += NR_1M_BLOCK;
-		nr_1M_px = nr_renew (nr_1M_px, unsigned char *, nr_1M_size);
+		nr_1M_px = g_renew (unsigned char *, nr_1M_px, nr_1M_size);
 	}
 
 	nr_1M_px[nr_1M_len] = px;

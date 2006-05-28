@@ -19,6 +19,7 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "display/curve.h"
+#include <glib/gmem.h>
 #include <glibmm/i18n.h>
 #include "sp-path.h"
 #include "sp-text.h"
@@ -98,7 +99,7 @@ sp_selected_path_combine(void)
         NArtBpath *abp = nr_artpath_affine(SP_CURVE_BPATH(c), SP_ITEM(path)->transform);
         sp_curve_unref(c);
         gchar *str = sp_svg_write_path(abp);
-        nr_free(abp);
+        g_free(abp);
 
         dstring = g_string_append(dstring, str);
         g_free(str);

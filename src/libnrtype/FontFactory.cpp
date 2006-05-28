@@ -16,6 +16,7 @@
 # include "config.h"
 #endif
 
+#include <glib/gmem.h>
 #include <glibmm/i18n.h> // _()
 
 /* Freetype2 */
@@ -237,17 +238,17 @@ style_record_compare(void const *aa, void const *bb)
 static void font_factory_name_list_destructor(NRNameList *list) 
 {
     for (unsigned int i = 0; i < list->length; i++) 
-        free(list->names[i]);
-    if ( list->names ) nr_free(list->names);
+        g_free(list->names[i]);
+    if ( list->names ) g_free(list->names);
 }
 
 static void font_factory_style_list_destructor(NRStyleList *list) 
 {
     for (unsigned int i = 0; i < list->length; i++) {
-        free((void *) (list->records)[i].name);
-        free((void *) (list->records)[i].descr);
+        g_free((void *) (list->records)[i].name);
+        g_free((void *) (list->records)[i].descr);
     }
-    if ( list->records ) nr_free(list->records);
+    if ( list->records ) g_free(list->records);
 }
 
 /**
@@ -295,7 +296,7 @@ font_factory::font_factory(void)
     fontSize = 512;
     nbEnt = 0;
     maxEnt = 32;
-    ents = (font_entry*)malloc(maxEnt*sizeof(font_entry));
+    ents = (font_entry*)g_malloc(maxEnt*sizeof(font_entry));
 
 #ifdef USE_PANGO_WIN32
     hScreenDC = pango_win32_get_dc();
@@ -313,7 +314,7 @@ font_factory::font_factory(void)
 font_factory::~font_factory(void)
 {
     for (int i = 0;i < nbEnt;i++) ents[i].f->Unref();
-    if ( ents ) free(ents);
+    if ( ents ) g_free(ents);
 
     g_object_unref(fontServer);
 #ifdef USE_PANGO_WIN32
@@ -375,7 +376,7 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
                 if ( canFail ) {
                     char *tc = pango_font_description_to_string(descr);
                     PANGO_DEBUG("falling back from %s to Sans because InstallFace failed\n",tc);
-                    free(tc);
+                    g_free(tc);
                     pango_font_description_set_family(descr,"Sans");
                     res = Face(descr,false);
                 }
@@ -477,7 +478,7 @@ void font_factory::UnrefFace(font_instance *who)
         // not found
         char *tc = pango_font_description_to_string(who->descr);
         g_warning("unrefFace %p=%s: failed\n",who,tc);
-        free(tc);
+        g_free(tc);
     } else {
         loadedFaces.erase(loadedFaces.find(who->descr));
         //			printf("unrefFace %p: success\n",who);
@@ -493,7 +494,7 @@ NRNameList *font_factory::Families(NRNameList *flist)
     PANGO_DEBUG("got %d families\n", nbFam);
 	
     flist->length = nbFam;
-    flist->names = (guchar **)malloc(nbFam*sizeof(guchar*));
+    flist->names = (guchar **)g_malloc(nbFam*sizeof(guchar*));
     flist->destructor = font_factory_name_list_destructor;
 	
     for (int i = 0;i < nbFam;i++) {
@@ -545,7 +546,7 @@ NRStyleList *font_factory::Styles(gchar const *family, NRStyleList *slist)
     int nFaces = 0;
     pango_font_family_list_faces(theFam, &faces, &nFaces);
 	
-    slist->records = (NRStyleRecord *) malloc(nFaces * sizeof(NRStyleRecord));
+    slist->records = (NRStyleRecord *) g_malloc(nFaces * sizeof(NRStyleRecord));
     slist->destructor = font_factory_style_list_destructor;
 	
     int nr = 0;

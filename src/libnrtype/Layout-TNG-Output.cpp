@@ -8,6 +8,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+#include <glib/gmem.h>
 #include "Layout-TNG.h"
 #include "display/nr-arena-glyphs.h"
 #include "style.h"
@@ -145,7 +146,7 @@ void Layout::print(SPPrintContext *ctx,
                     sp_print_fill(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
                 if (text_source->style->stroke.type != SP_PAINT_TYPE_NONE)
                     sp_print_stroke(ctx, &abp, &ctm, text_source->style, pbox, dbox, bbox);
-                nr_free(abp.path);
+                g_free(abp.path);
             }
             glyph_index++;
         } else {
