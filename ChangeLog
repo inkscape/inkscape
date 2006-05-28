@@ -1,3 +1,9 @@
+2006-05-28  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/sp-conn-end-pair.cpp: Detach connectors from empty groups
+	  before trying to route connectors to them.  This is required
+	  since empty groups have no physical position.  Fixes bug #1448811.
+
 2006-05-27  Kees Cook  <kees@outflux.net>
 
 	* src/extension/implementation/script.cpp: allow output extension

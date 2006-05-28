@@ -19,6 +19,7 @@
 #include "libavoid/vertices.h"
 #include "libavoid/router.h"
 #include "document.h"
+#include "sp-item-group.h"
 
 
 SPConnEndPair::SPConnEndPair(SPPath *const owner)
@@ -138,6 +139,20 @@ void
 SPConnEndPair::getAttachedItems(SPItem *h2attItem[2]) const {
     for (unsigned h = 0; h < 2; ++h) {
         h2attItem[h] = this->_connEnd[h]->ref.getObject();
+
+        // Deal with the case of the attached object being an empty group.
+        // A group containing no items does not have a valid bbox, so 
+        // causes problems for the auto-routing code.  Also, since such a
+        // group no longer has an onscreen representation and can only be
+        // selected through the XML editor, it makes sense just to detach
+        // connectors from them.
+        if (SP_IS_GROUP(h2attItem[h])) {
+            if (SP_GROUP(h2attItem[h])->group->getItemCount() == 0) {
+                // This group is empty, so detach.
+                sp_conn_end_detach(_path, h);
+                h2attItem[h] = NULL;
+            }
+        }
     }
 }
 
