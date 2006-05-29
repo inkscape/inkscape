@@ -389,8 +389,10 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
             // no match
             if ( canFail ) {
                 PANGO_DEBUG("falling back to Sans\n");
+                descr = pango_font_description_new();
                 pango_font_description_set_family(descr,"Sans");
                 res = Face(descr,false);
+                pango_font_description_free(descr);
             }
         }
     } else {
