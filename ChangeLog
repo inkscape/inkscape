@@ -1,3 +1,8 @@
+2006-05-29  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/desktop.cpp, src/layer-manager.cpp, src/dialogs/layers-panel.cpp:
+	Workaround to avoid assertion upon file revert.
+
 2006-05-28  Bryce <bryce@bryceharrington.org>
 	* sp-marker.cpp:  Adding documentation
 
@@ -37,7 +42,7 @@
 
 2006-05-28  Jon A. Cruz  <jon@joncruz.org>
 
-	* src/layer-manager.cpp, src/layer-manager.cpp,
+	* src/layer-manager.cpp, src/layer-manager.h,
 	  src/preferences-skeleton.h, src/ui/dialog/inkscape-preferences.cpp,
 	  src/ui/dialog/inkscape-preferences.h,
 	  src/widgets/layer-selector.cpp, src/dialogs/layers-panel.cpp:

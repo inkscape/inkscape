@@ -75,10 +75,13 @@ LayerManager::LayerManager(SPDesktop *desktop)
 
 void LayerManager::setCurrentLayer( SPObject* obj )
 {
-    _desktop->setCurrentLayer( obj );
+    //g_return_if_fail( _desktop->currentRoot() );
+    if ( _desktop->currentRoot() ) {
+        _desktop->setCurrentLayer( obj );
 
-    if ( prefs_get_int_attribute_limited("options.selection", "layerdeselect", 1, 0, 1) ) {
-        sp_desktop_selection( _desktop )->clear();
+        if ( prefs_get_int_attribute_limited("options.selection", "layerdeselect", 1, 0, 1) ) {
+            sp_desktop_selection( _desktop )->clear();
+        }
     }
 }
 

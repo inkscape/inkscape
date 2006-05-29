@@ -380,7 +380,7 @@ SPObject *SPDesktop::currentLayer() const
  */
 void SPDesktop::setCurrentLayer(SPObject *object) {
     g_return_if_fail(SP_IS_GROUP(object));
-    g_return_if_fail( currentRoot() == object || currentRoot()->isAncestorOf(object));
+    g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
     // printf("Set Layer to ID: %s\n", SP_OBJECT_ID(object));
     _layer_hierarchy->setBottom(object);
 }

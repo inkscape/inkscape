@@ -499,13 +499,16 @@ SPObject* LayersPanel::_selectedLayer()
 void LayersPanel::_pushTreeSelectionToCurrent()
 {
     SPObject* inTree = _selectedLayer();
-    if ( inTree ) {
-        SPObject* curr = _desktop->currentLayer();
-        if ( curr != inTree ) {
-            _mgr->setCurrentLayer( inTree );
+    // TODO hunt down the possible API abuse in getting NULL
+    if ( _desktop->currentRoot() ) {
+        if ( inTree ) {
+            SPObject* curr = _desktop->currentLayer();
+            if ( curr != inTree ) {
+                _mgr->setCurrentLayer( inTree );
+            }
+        } else {
+            _mgr->setCurrentLayer( _desktop->doc()->root );
         }
-    } else {
-        _mgr->setCurrentLayer( _desktop->doc()->root );
     }
 }
 
