@@ -49,6 +49,9 @@ static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigne
 
 static SPGroupClass *parent_class;
 
+/**
+ * Registers the SPMarker class with Gdk and returns its type number.
+ */
 GType
 sp_marker_get_type (void)
 {
@@ -69,6 +72,10 @@ sp_marker_get_type (void)
 	return type;
 }
 
+/**
+   Initializes a SPMarkerClass object.  Establishes the function pointers to the class' 
+   member routines in the class vtable, and sets pointers to parent classes.
+*/
 static void
 sp_marker_class_init (SPMarkerClass *klass)
 {
@@ -94,6 +101,10 @@ sp_marker_class_init (SPMarkerClass *klass)
 	sp_item_class->print = sp_marker_print;
 }
 
+/**
+ * Initializes an SPMarker object.  This notes the marker's viewBox is
+ * not set and initializes the marker's c2p identity matrix.
+ */
 static void
 sp_marker_init (SPMarker *marker)
 {
@@ -102,6 +113,16 @@ sp_marker_init (SPMarker *marker)
 	nr_matrix_set_identity (&marker->c2p);
 }
 
+/**
+ * Virtual build callback for SPMarker.
+ *
+ * This is to be invoked immediately after creation of an SPMarker.  This
+ * method fills an SPMarker object with its SVG attributes, and calls the
+ * parent class' build routine to attach the object to its document and 
+ * repr.  The result will be creation of the whole document tree.
+ *
+ * \see sp_object_build()
+ */
 static void
 sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
@@ -124,6 +145,18 @@ sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 		((SPObjectClass *) parent_class)->build (object, document, repr);
 }
 
+/**
+ * Removes, releases and unrefs all children of object
+ *
+ * This is the inverse of sp_marker_build().  It must be invoked as soon
+ * as the marker is removed from the tree, even if it is still referenced
+ * by other objects.  It hides and removes any views of the marker, then
+ * calls the parent classes' release function to deregister the object
+ * and release its SPRepr bindings.  The result will be the destruction
+ * of the entire document tree.
+ *
+ * \see sp_object_release()
+ */
 static void
 sp_marker_release (SPObject *object)
 {
@@ -142,6 +175,19 @@ sp_marker_release (SPObject *object)
 		((SPObjectClass *) parent_class)->release (object);
 }
 
+/**
+ * Sets an attribute, 'key', of a marker object to 'value'.  Supported
+ * attributes that can be set with this routine include:
+ *
+ *     SP_ATTR_MARKERUNITS
+ *     SP_ATTR_REFX
+ *     SP_ATTR_REFY
+ *     SP_ATTR_MARKERWIDTH
+ *     SP_ATTR_MARKERHEIGHT
+ *     SP_ATTR_ORIENT
+ *     SP_ATTR_VIEWBOX
+ *     SP_ATTR_PRESERVEASPECTRATIO
+ */
 static void
 sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
 {
@@ -289,11 +335,10 @@ sp_marker_set (SPObject *object, unsigned int key, const gchar *value)
 	}
 }
 
-/*
- * Updating <marker> - we are not renderable anyways, so
- * we as well cascade with identity transforms
+/**
+ * Updates <marker> when its attributes have changed.  Takes care of setting up
+ * transformations and viewBoxes.
  */
-
 static void
 sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 {
@@ -431,6 +476,9 @@ sp_marker_update (SPObject *object, SPCtx *ctx, guint flags)
 	}
 }
 
+/** 
+ * Writes the object's properties into its repr object.
+ */
 static Inkscape::XML::Node *
 sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
@@ -490,6 +538,9 @@ sp_marker_write (SPObject *object, Inkscape::XML::Node *repr, guint flags)
 	return repr;
 }
 
+/**
+ * This routine is disabled to break propagation.
+ */
 static NRArenaItem *
 sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
 {
@@ -497,18 +548,27 @@ sp_marker_private_show (SPItem *item, NRArena *arena, unsigned int key, unsigned
 	return NULL;
 }
 
+/**
+ * This routine is disabled to break propagation.
+ */
 static void
 sp_marker_private_hide (SPItem *item, unsigned int key)
 {
 	/* Break propagation */
 }
 
+/**
+ * This routine is disabled to break propagation.
+ */
 static void
 sp_marker_bbox(SPItem const *, NRRect *, NR::Matrix const &, unsigned const)
 {
 	/* Break propagation */
 }
 
+/**
+ * This routine is disabled to break propagation.
+ */
 static void
 sp_marker_print (SPItem *item, SPPrintContext *ctx)
 {
@@ -518,12 +578,16 @@ sp_marker_print (SPItem *item, SPPrintContext *ctx)
 /* fixme: Remove link if zero-sized (Lauris) */
 
 /**
-* First of all, removes any SPMarkerViews that a marker has with a specific key.
-* Set up the NRArenaItem array's size in the specified SPMarker's SPMarkerView.
-* \param marker Marker to create views in.
-* \param key Key to give each SPMarkerView.
-* \param size Number of NRArenaItems to put in the SPMarkerView.
-*/
+ * Removes any SPMarkerViews that a marker has with a specific key.
+ * Set up the NRArenaItem array's size in the specified SPMarker's SPMarkerView.
+ * This is called from sp_shape_update() for shapes that have markers.  It
+ * removes the old view of the marker and establishes a new one, registering
+ * it with the marker's list of views for future updates.
+ * 
+ * \param marker Marker to create views in.
+ * \param key Key to give each SPMarkerView.
+ * \param size Number of NRArenaItems to put in the SPMarkerView.
+ */
 void
 sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 {
@@ -550,6 +614,10 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
 	}
 }
 
+/** 
+ * Shows an instance of a marker.  This is called during sp_shape_update_marker_view()
+ * show and transform a child item in the arena for all views with the given key.
+ */
 NRArenaItem *
 sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 			 unsigned int key, unsigned int pos,
@@ -594,11 +662,11 @@ sp_marker_show_instance (SPMarker *marker, NRArenaItem *parent,
 	return NULL;
 }
 
-/* This replaces SPItem implementation because we have own views */
-
 /**
-* \param key SPMarkerView key to hide.
-*/
+ * Hides/removes all views of the given marker that have key 'key'.
+ * This replaces SPItem implementation because we have our own views
+ * \param key SPMarkerView key to hide.
+ */
 void
 sp_marker_hide (SPMarker *marker, unsigned int key)
 {
@@ -618,6 +686,10 @@ sp_marker_hide (SPMarker *marker, unsigned int key)
 	}
 }
 
+/**
+ * Removes a given view.  Also will destroy sub-items in the view if destroyitems 
+ * is set to a non-zero value.
+ */
 static void
 sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems)
 {
