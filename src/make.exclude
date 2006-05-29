@@ -72,10 +72,10 @@ io/streamtest.cpp
 ###############################################
 #Uncomment the following to build with Pedro
 ###############################################
-jabber_whiteboard/pedroxmpp.h
-jabber_whiteboard/pedrodom.h
-jabber_whiteboard/pedroxmpp.cpp
-jabber_whiteboard/pedrodom.cpp
+#jabber_whiteboard/pedroxmpp.h
+#jabber_whiteboard/pedrodom.h
+#jabber_whiteboard/pedroxmpp.cpp
+#jabber_whiteboard/pedrodom.cpp
 
 ###############################################
 # Various test harnesses in removeoverlap
