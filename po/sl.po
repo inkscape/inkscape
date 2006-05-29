@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-28 22:12+0200\n"
+"POT-Creation-Date: 2006-05-29 20:24+0200\n"
 "PO-Revision-Date: 2006-05-12 12:01+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Lugos <sl@lugos.si>\n"
@@ -732,13 +732,13 @@ msgstr "Sporočila"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 msgid "_File"
 msgstr "_Datoteka"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 msgid "_Clear"
 msgstr "Po_čisti"
 
@@ -1228,29 +1228,29 @@ msgstr "Oznaka ni veljavna!"
 msgid "Id exists! "
 msgstr "Oznaka obstaja!"
 
-#: ../src/dialogs/layers-panel.cpp:717
+#: ../src/dialogs/layers-panel.cpp:720
 #, fuzzy
 msgid "New"
 msgstr "_Nov"
 
-#: ../src/dialogs/layers-panel.cpp:722
+#: ../src/dialogs/layers-panel.cpp:725
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:728
+#: ../src/dialogs/layers-panel.cpp:731
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:734
+#: ../src/dialogs/layers-panel.cpp:737
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:740
+#: ../src/dialogs/layers-panel.cpp:743
 #, fuzzy
 msgid "Bot"
 msgstr "Okvir"
 
-#: ../src/dialogs/layers-panel.cpp:750
+#: ../src/dialogs/layers-panel.cpp:753
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -2170,7 +2170,7 @@ msgid "Vertical Offset"
 msgstr "Navpični zamiki"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 msgid "Render"
 msgstr "Upodobi"
@@ -2397,12 +2397,6 @@ msgstr ""
 #, fuzzy
 msgid "PDF Print"
 msgstr "Tiskanje LaTeX"
-
-#. A hack to internationalize the title properly
-#: ../src/extension/prefdialog.cpp:33
-#, c-format
-msgid "%s Preferences"
-msgstr "Nastavitve za %s"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3104,33 +3098,33 @@ msgstr ""
 "predmet NE bo poslan, kot tudi njegovi predmeti-otroci ne!"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1108
+#: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
 msgstr "Izberite mesto in ime datoteke"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1110
+#: ../src/jabber_whiteboard/session-manager.cpp:1122
 msgid "Set filename"
 msgstr "Določi ime datoteke"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:413
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
 msgstr "Potrdila SSL ni mogoče najti."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:416
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "Potrdilo SSL, ki ga ponuja strežnik Jabber, ni zaupanja vredno."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:419
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "Veljavnost potrdila SSL, ki ga ponuja strežnik Jabber, je potekla."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:422
+#: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "Potrdilo SSL, ki ga ponuja strežnik Jabber, še ni aktivirano."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3138,20 +3132,20 @@ msgstr ""
 "Potrdilo SSL, ki ga ponuja strežnik Jabber, vsebuje ime strežnika, ki se ne "
 "ujema z imenom strežnika Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 "Potrdilo SSL, ki ga ponuja strežnik Jabber, vsebuje neveljaven prstni odtis."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Med vzpostavljanjem povezave SSL je prišlo do neznane napake."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:449
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3161,24 +3155,24 @@ msgstr ""
 "\n"
 "Se želite še naprej povezovati s strežnikom za Jabber?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
 msgstr "Nadaljuj s povezovanjem in prizri nadaljnje napake"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:441
+#: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Nadaljuj s povezovanjem, vendar opozarjaj na napake"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:442
+#: ../src/jabber_whiteboard/session-manager.cpp:454
 msgid "Cancel connection"
 msgstr "Prekliči povezavo"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:890
+#: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Vzpostavljena seja ob tabli z uporabnikom <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:898
+#: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> je <b>zapustil(-a)</b> tablo."
@@ -3186,7 +3180,7 @@ msgstr "<b>%s</b> je <b>zapustil(-a)</b> tablo."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:903
+#: ../src/jabber_whiteboard/session-manager.cpp:915
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3197,7 +3191,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:905
+#: ../src/jabber_whiteboard/session-manager.cpp:917
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3205,7 +3199,7 @@ msgstr ""
 "Še vedno ste povezani na strežnik Jabber kot <b>%2</b> in lahko vzpostavite "
 "novo sejo z <b>%1</b> ali katerim drugim uporabnikom."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1101
+#: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3219,11 +3213,11 @@ msgstr ""
 "Izberete lahko drugo mesto za snemanje seje ali pa te seje sploh ne "
 "posnamete."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1103
+#: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
 msgstr "Izberite drugo mesto"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1104
+#: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
 msgstr "Izpusti zapisovanje seje"
 
@@ -4774,7 +4768,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Okvir tekočega besedila</b>: %s  &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Vnesite besedilo; <b>Enter</b> začne novo vrstico."
 
@@ -4794,11 +4788,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Presledek brez preloma"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Vnesite tekoče besedilo; <b>Enter</b> začne nov odstavek."
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6377,23 +6371,23 @@ msgstr ""
 "Vključite prikaz beleženja tako, da v preferences.xml nastavite vrednost "
 "lastnosti 'preusmeri' na 1"
 
-#: ../src/ui/dialog/scriptdialog.cpp:185
+#: ../src/ui/dialog/scriptdialog.cpp:181
 msgid "_Execute Python"
 msgstr "_Zaženi Python"
 
-#: ../src/ui/dialog/scriptdialog.cpp:187
+#: ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Execute Perl"
 msgstr "_Zaženi Perl"
 
-#: ../src/ui/dialog/scriptdialog.cpp:196
+#: ../src/ui/dialog/scriptdialog.cpp:192
 msgid "Script"
 msgstr "Skripta"
 
-#: ../src/ui/dialog/scriptdialog.cpp:206
+#: ../src/ui/dialog/scriptdialog.cpp:202
 msgid "Output"
 msgstr "Izvoz"
 
-#: ../src/ui/dialog/scriptdialog.cpp:216
+#: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
 msgstr "Napake"
 
@@ -7380,13 +7374,13 @@ msgid "Stroke width: %.5g%s"
 msgstr "Debelina poteze: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, c-format
-msgid "0:%.3g"
+#, fuzzy, c-format
+msgid "O:%.3g"
 msgstr "0:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, c-format
-msgid "0:.%d"
+#, fuzzy, c-format
+msgid "O:.%d"
 msgstr "0:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8645,7 +8639,8 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Uredi lastnosti tega dokumenta (ki bodo z njim shranjene)"
 
 #: ../src/verbs.cpp:2319
-msgid "_Document Metadata..."
+#, fuzzy
+msgid "Document _Metadata..."
 msgstr "Metapodatki _dokumenta ..."
 
 #: ../src/verbs.cpp:2320
@@ -8827,7 +8822,7 @@ msgstr "Poišči podatke o razširitvah"
 
 #: ../src/verbs.cpp:2369
 #, fuzzy
-msgid "_Layers..."
+msgid "Layer_s..."
 msgstr "_Dodaj sloj ..."
 
 #: ../src/verbs.cpp:2370
@@ -10169,34 +10164,54 @@ msgstr ""
 msgid "Fractal (Koch) - Load Pattern"
 msgstr ""
 
-#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
-msgid "Angle"
-msgstr "Kot"
-
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
 msgstr "Aksiom"
 
+#: ../share/extensions/lindenmayer.inx.h:2
+#, fuzzy
+msgid "L-system"
+msgstr "Sistem"
+
 #: ../share/extensions/lindenmayer.inx.h:3
 #, fuzzy
-msgid "Fractal (Lindenmayer)"
-msgstr "Lindenmayer"
+msgid "Left angle"
+msgstr "Pravokotnik"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "Vrstni red"
 
 #: ../share/extensions/lindenmayer.inx.h:6
+#, fuzzy, no-c-format
+msgid "Randomize angle (%)"
+msgstr "Naključna vozlišča"
+
+#: ../share/extensions/lindenmayer.inx.h:8
+#, fuzzy, no-c-format
+msgid "Randomize step (%)"
+msgstr "Naključna vozlišča"
+
+#: ../share/extensions/lindenmayer.inx.h:10
+#, fuzzy
+msgid "Right angle"
+msgstr "Pravokotnik"
+
+#: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
 msgstr "Ravnila"
 
-#: ../share/extensions/lindenmayer.inx.h:7
-msgid "Step"
-msgstr "Korak"
+#: ../share/extensions/lindenmayer.inx.h:12
+msgid "Step length (px)"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr "Pot merila"
+
+#: ../share/extensions/motion.inx.h:1
+msgid "Angle"
+msgstr "Kot"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10369,6 +10384,16 @@ msgstr "Metadatoteka Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Uvoz Metadatoteke Windows"
+
+#~ msgid "%s Preferences"
+#~ msgstr "Nastavitve za %s"
+
+#, fuzzy
+#~ msgid "Fractal (Lindenmayer)"
+#~ msgstr "Lindenmayer"
+
+#~ msgid "Step"
+#~ msgstr "Korak"
 
 #~ msgid "Adobe PDF (*.pdf)"
 #~ msgstr "Adobe PDF (*.pdf)"

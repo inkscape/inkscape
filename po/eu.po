@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-28 22:12+0200\n"
+"POT-Creation-Date: 2006-05-29 20:24+0200\n"
 "PO-Revision-Date: 2006-03-16 23:09+0100\n"
 "Last-Translator: Iñaki Larrañaga <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -740,13 +740,13 @@ msgstr "Mezuak"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 msgid "_File"
 msgstr "_Fitxategia"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 msgid "_Clear"
 msgstr "_Garbitu"
 
@@ -1242,29 +1242,29 @@ msgstr "ID baliogabea"
 msgid "Id exists! "
 msgstr "IDa badago"
 
-#: ../src/dialogs/layers-panel.cpp:717
+#: ../src/dialogs/layers-panel.cpp:720
 #, fuzzy
 msgid "New"
 msgstr "_Berria"
 
-#: ../src/dialogs/layers-panel.cpp:722
+#: ../src/dialogs/layers-panel.cpp:725
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:728
+#: ../src/dialogs/layers-panel.cpp:731
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:734
+#: ../src/dialogs/layers-panel.cpp:737
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:740
+#: ../src/dialogs/layers-panel.cpp:743
 #, fuzzy
 msgid "Bot"
 msgstr "Koadroa"
 
-#: ../src/dialogs/layers-panel.cpp:750
+#: ../src/dialogs/layers-panel.cpp:753
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -2208,7 +2208,7 @@ msgid "Vertical Offset"
 msgstr "Desplazamendu bertikala"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 #, fuzzy
 msgid "Render"
@@ -2444,12 +2444,6 @@ msgstr ""
 #: ../src/extension/internal/pdf.cpp:1541
 msgid "PDF Print"
 msgstr ""
-
-#. A hack to internationalize the title properly
-#: ../src/extension/prefdialog.cpp:33
-#, fuzzy, c-format
-msgid "%s Preferences"
-msgstr " Hobespenak"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3140,33 +3134,33 @@ msgstr ""
 "Objektu berriak EZ da bidaliko, ezta bere objektu umeak ere."
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1108
+#: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
 msgstr "Hautatu kokalekua eta fitxategi-izena"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1110
+#: ../src/jabber_whiteboard/session-manager.cpp:1122
 msgid "Set filename"
 msgstr "Ezarri fitxategi-izena"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:413
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
 msgstr "Ez da SSL ziurtagiririk aurkitu."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:416
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "Jabber zerbitzariak emandako SSL ziurtagiria ez da fidagarria."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:419
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "Jabber zerbitzariak emandako SSL ziurtagiria iraungituta dago."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:422
+#: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "Jabber zerbitzariak emandako SSL ziurtagiria ez dago aktibatuta."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3174,20 +3168,20 @@ msgstr ""
 "Jabber zerbitzariak emandako SSL ziurtagiriak duen ostalari-izena ez dator "
 "bat Jabber zerbitzariaren ostalari-izenarekin."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 "Jabber zerbitzariak emandako SSL ziurtagiriak hatz-marka baliogabea du."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Errore ezezaguna gertatu da SSL konexioa ezartzean."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:449
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3197,24 +3191,24 @@ msgstr ""
 "\n"
 "Nahi duzu Jabber zerbitzariarekin konexioa jarraitzea?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
 msgstr "Jarraitu konexioa eta ez ikusi beste erroreei"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:441
+#: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Jarraitu konexioa, eta abisatu beste erroreei buruz"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:442
+#: ../src/jabber_whiteboard/session-manager.cpp:454
 msgid "Cancel connection"
 msgstr "bertan behera utzi konexioa"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:890
+#: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "<b>%s</b>(r)ekin arbel zuriko saioa konektatuta"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:898
+#: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b>(e)k arbel zuriko saioa <b>utzi egin du</b>."
@@ -3222,7 +3216,7 @@ msgstr "<b>%s</b>(e)k arbel zuriko saioa <b>utzi egin du</b>."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:903
+#: ../src/jabber_whiteboard/session-manager.cpp:915
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3233,7 +3227,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:905
+#: ../src/jabber_whiteboard/session-manager.cpp:917
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3241,7 +3235,7 @@ msgstr ""
 "Jabber zerbitzari batekin <b>%2</b> gisa konektatuta jarraitzen duzu, eta <b>"
 "%1</b>(e)kin, edo beste erabiltzaile batekin, saio berri bat ezar dezakezu."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1101
+#: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3255,11 +3249,11 @@ msgstr ""
 "Hautatu beste kokaleku bat saioa erregistratzeko, edo aukeratu saio hau ez "
 "erregistratzea."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1103
+#: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
 msgstr "Aukeratu beste kokalekua"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1104
+#: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
 msgstr "Saioa ez erregistratu"
 
@@ -4809,7 +4803,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Testu-marko mugikorra</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Idatzi testua; <b>Sartu</b> lerro berria hasteko."
 
@@ -4829,11 +4823,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Zuriune zatiezina"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Idatzi testu mugikorra; <b>Sartu</b> paragrafo berria hasteko."
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6479,23 +6473,23 @@ msgstr ""
 "Gaitu egunkariak bistaratzea preferences.xml fitxategiko dialogs.debug "
 "'redirect' atributua 1 balioarekin ezartzean"
 
-#: ../src/ui/dialog/scriptdialog.cpp:185
+#: ../src/ui/dialog/scriptdialog.cpp:181
 msgid "_Execute Python"
 msgstr "_Exekutatu Python"
 
-#: ../src/ui/dialog/scriptdialog.cpp:187
+#: ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Execute Perl"
 msgstr "_Exekutatu Perl"
 
-#: ../src/ui/dialog/scriptdialog.cpp:196
+#: ../src/ui/dialog/scriptdialog.cpp:192
 msgid "Script"
 msgstr "Script-a"
 
-#: ../src/ui/dialog/scriptdialog.cpp:206
+#: ../src/ui/dialog/scriptdialog.cpp:202
 msgid "Output"
 msgstr "Irteera"
 
-#: ../src/ui/dialog/scriptdialog.cpp:216
+#: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
 msgstr "Erroreak"
 
@@ -7550,13 +7544,13 @@ msgid "Stroke width: %.5g%s"
 msgstr "Trazu-zabalera"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, c-format
-msgid "0:%.3g"
-msgstr ""
+#, fuzzy, c-format
+msgid "O:%.3g"
+msgstr "Opakutasuna"
 
 #: ../src/ui/widget/style-swatch.cpp:343
 #, c-format
-msgid "0:.%d"
+msgid "O:.%d"
 msgstr ""
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8869,7 +8863,7 @@ msgstr "Dokumentuarekin gordetako hobespenak"
 
 #: ../src/verbs.cpp:2319
 #, fuzzy
-msgid "_Document Metadata..."
+msgid "Document _Metadata..."
 msgstr "Dokumentua gorde da."
 
 #: ../src/verbs.cpp:2320
@@ -9057,7 +9051,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2369
 #, fuzzy
-msgid "_Layers..."
+msgid "Layer_s..."
 msgstr "_Gehitu gerua..."
 
 #: ../src/verbs.cpp:2370
@@ -10419,37 +10413,56 @@ msgstr ""
 msgid "Fractal (Koch) - Load Pattern"
 msgstr ""
 
-#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
-#, fuzzy
-msgid "Angle"
-msgstr "Angelua:"
-
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
 msgstr ""
 
+#: ../share/extensions/lindenmayer.inx.h:2
+#, fuzzy
+msgid "L-system"
+msgstr "Sistema"
+
 #: ../share/extensions/lindenmayer.inx.h:3
 #, fuzzy
-msgid "Fractal (Lindenmayer)"
-msgstr "Aldatu geruzaren izena"
+msgid "Left angle"
+msgstr "Laukizuzena"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:6
+#, fuzzy, no-c-format
+msgid "Randomize angle (%)"
+msgstr "Ausazkoa:"
+
+#: ../share/extensions/lindenmayer.inx.h:8
+#, fuzzy, no-c-format
+msgid "Randomize step (%)"
+msgstr "Ausazkoa:"
+
+#: ../share/extensions/lindenmayer.inx.h:10
+#, fuzzy
+msgid "Right angle"
+msgstr "Laukizuzena"
+
+#: ../share/extensions/lindenmayer.inx.h:11
 #, fuzzy
 msgid "Rules"
 msgstr "E_rregelak"
 
-#: ../share/extensions/lindenmayer.inx.h:7
-#, fuzzy
-msgid "Step"
-msgstr "Urratsak"
+#: ../share/extensions/lindenmayer.inx.h:12
+msgid "Step length (px)"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr ""
+
+#: ../share/extensions/motion.inx.h:1
+#, fuzzy
+msgid "Angle"
+msgstr "Angelua:"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10638,6 +10651,18 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s Preferences"
+#~ msgstr " Hobespenak"
+
+#, fuzzy
+#~ msgid "Fractal (Lindenmayer)"
+#~ msgstr "Aldatu geruzaren izena"
+
+#, fuzzy
+#~ msgid "Step"
+#~ msgstr "Urratsak"
 
 #, fuzzy
 #~ msgid "PDF Output"

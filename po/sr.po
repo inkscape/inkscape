@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.42\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-28 22:12+0200\n"
+"POT-Creation-Date: 2006-05-29 20:24+0200\n"
 "PO-Revision-Date: 2005-07-08 01:23+0200\n"
 "Last-Translator: Александар Урошевић <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -737,13 +737,13 @@ msgstr "Поруке"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 msgid "_File"
 msgstr "_Датотека"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 msgid "_Clear"
 msgstr "_Очисти"
 
@@ -1236,29 +1236,29 @@ msgstr "ИД је неисправан! "
 msgid "Id exists! "
 msgstr "ИД постоји! "
 
-#: ../src/dialogs/layers-panel.cpp:717
+#: ../src/dialogs/layers-panel.cpp:720
 #, fuzzy
 msgid "New"
 msgstr "_Ново"
 
-#: ../src/dialogs/layers-panel.cpp:722
+#: ../src/dialogs/layers-panel.cpp:725
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:728
+#: ../src/dialogs/layers-panel.cpp:731
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:734
+#: ../src/dialogs/layers-panel.cpp:737
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:740
+#: ../src/dialogs/layers-panel.cpp:743
 #, fuzzy
 msgid "Bot"
 msgstr "Оквир"
 
-#: ../src/dialogs/layers-panel.cpp:750
+#: ../src/dialogs/layers-panel.cpp:753
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -2204,7 +2204,7 @@ msgid "Vertical Offset"
 msgstr "Усправни померај"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 #, fuzzy
 msgid "Render"
@@ -2444,12 +2444,6 @@ msgstr ""
 #: ../src/extension/internal/pdf.cpp:1541
 msgid "PDF Print"
 msgstr ""
-
-#. A hack to internationalize the title properly
-#: ../src/extension/prefdialog.cpp:33
-#, fuzzy, c-format
-msgid "%s Preferences"
-msgstr " Поставке"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3121,77 +3115,77 @@ msgid ""
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1108
+#: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1110
+#: ../src/jabber_whiteboard/session-manager.cpp:1122
 #, fuzzy
 msgid "Set filename"
 msgstr "Назив _датотеке"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:413
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:416
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:419
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:422
+#: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr ""
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:449
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
 "Do you wish to continue connecting to the Jabber server?"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:441
+#: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:442
+#: ../src/jabber_whiteboard/session-manager.cpp:454
 #, fuzzy
 msgid "Cancel connection"
 msgstr "Избор"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:890
+#: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:898
+#: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr ""
@@ -3199,7 +3193,7 @@ msgstr ""
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:903
+#: ../src/jabber_whiteboard/session-manager.cpp:915
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3207,13 +3201,13 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:905
+#: ../src/jabber_whiteboard/session-manager.cpp:917
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1101
+#: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3222,11 +3216,11 @@ msgid ""
 "not record this session."
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1103
+#: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
 msgstr ""
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1104
+#: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
 msgstr ""
 
@@ -4753,7 +4747,7 @@ msgstr "Уникод: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Оквир плутајућег текста</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Унесите текст; <b>Ентер</b> за почетак нове линије."
 
@@ -4773,11 +4767,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Непрекидајући размак"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Унесите плитајући текст; <b>Ентер</b> за почетак новог пасуса."
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6421,23 +6415,23 @@ msgid ""
 "preferences.xml"
 msgstr ""
 
-#: ../src/ui/dialog/scriptdialog.cpp:185
+#: ../src/ui/dialog/scriptdialog.cpp:181
 msgid "_Execute Python"
 msgstr "_Изврши Питон"
 
-#: ../src/ui/dialog/scriptdialog.cpp:187
+#: ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Execute Perl"
 msgstr "_Изврши Перл"
 
-#: ../src/ui/dialog/scriptdialog.cpp:196
+#: ../src/ui/dialog/scriptdialog.cpp:192
 msgid "Script"
 msgstr "Скрипт"
 
-#: ../src/ui/dialog/scriptdialog.cpp:206
+#: ../src/ui/dialog/scriptdialog.cpp:202
 msgid "Output"
 msgstr "Излаз"
 
-#: ../src/ui/dialog/scriptdialog.cpp:216
+#: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
 msgstr "Грешке"
 
@@ -7496,13 +7490,13 @@ msgid "Stroke width: %.5g%s"
 msgstr "Ширина потеза"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, c-format
-msgid "0:%.3g"
-msgstr ""
+#, fuzzy, c-format
+msgid "O:%.3g"
+msgstr "Провидност"
 
 #: ../src/ui/widget/style-swatch.cpp:343
 #, c-format
-msgid "0:.%d"
+msgid "O:.%d"
 msgstr ""
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8833,7 +8827,7 @@ msgstr "Поставке се чувају у датотеци документ�
 
 #: ../src/verbs.cpp:2319
 #, fuzzy
-msgid "_Document Metadata..."
+msgid "Document _Metadata..."
 msgstr "Документ је сачуван."
 
 #: ../src/verbs.cpp:2320
@@ -9020,7 +9014,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2369
 #, fuzzy
-msgid "_Layers..."
+msgid "Layer_s..."
 msgstr "_Нови слој..."
 
 #: ../src/verbs.cpp:2370
@@ -10381,37 +10375,56 @@ msgstr ""
 msgid "Fractal (Koch) - Load Pattern"
 msgstr ""
 
-#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
-#, fuzzy
-msgid "Angle"
-msgstr "Угао:"
-
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
 msgstr ""
 
+#: ../share/extensions/lindenmayer.inx.h:2
+#, fuzzy
+msgid "L-system"
+msgstr "Систем"
+
 #: ../share/extensions/lindenmayer.inx.h:3
 #, fuzzy
-msgid "Fractal (Lindenmayer)"
-msgstr "Преименуј слој"
+msgid "Left angle"
+msgstr "Правоугаоник"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:6
+#, fuzzy, no-c-format
+msgid "Randomize angle (%)"
+msgstr "Насумично:"
+
+#: ../share/extensions/lindenmayer.inx.h:8
+#, fuzzy, no-c-format
+msgid "Randomize step (%)"
+msgstr "Насумично:"
+
+#: ../share/extensions/lindenmayer.inx.h:10
+#, fuzzy
+msgid "Right angle"
+msgstr "Правоугаоник"
+
+#: ../share/extensions/lindenmayer.inx.h:11
 #, fuzzy
 msgid "Rules"
 msgstr "_Лењири"
 
-#: ../share/extensions/lindenmayer.inx.h:7
-#, fuzzy
-msgid "Step"
-msgstr "Кораци"
+#: ../share/extensions/lindenmayer.inx.h:12
+msgid "Step length (px)"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr ""
+
+#: ../share/extensions/motion.inx.h:1
+#, fuzzy
+msgid "Angle"
+msgstr "Угао:"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10598,6 +10611,18 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s Preferences"
+#~ msgstr " Поставке"
+
+#, fuzzy
+#~ msgid "Fractal (Lindenmayer)"
+#~ msgstr "Преименуј слој"
+
+#, fuzzy
+#~ msgid "Step"
+#~ msgstr "Кораци"
 
 #, fuzzy
 #~ msgid "PDF Output"

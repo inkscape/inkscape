@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-28 22:12+0200\n"
+"POT-Creation-Date: 2006-05-29 20:24+0200\n"
 "PO-Revision-Date: 2006-05-28 20:25+0800\n"
 "Last-Translator: Chris Jia <Chrisjiasl@gmail.com>\n"
 "Language-Team: \n"
@@ -708,13 +708,13 @@ msgstr "消息"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 msgid "_File"
 msgstr "文件(_F)"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 msgid "_Clear"
 msgstr "清除(_C)"
 
@@ -1197,27 +1197,27 @@ msgstr "Id 无效！"
 msgid "Id exists! "
 msgstr "Id 存在！"
 
-#: ../src/dialogs/layers-panel.cpp:717
+#: ../src/dialogs/layers-panel.cpp:720
 msgid "New"
 msgstr "新建"
 
-#: ../src/dialogs/layers-panel.cpp:722
+#: ../src/dialogs/layers-panel.cpp:725
 msgid "Top"
 msgstr "顶层"
 
-#: ../src/dialogs/layers-panel.cpp:728
+#: ../src/dialogs/layers-panel.cpp:731
 msgid "Up"
 msgstr "上一层"
 
-#: ../src/dialogs/layers-panel.cpp:734
+#: ../src/dialogs/layers-panel.cpp:737
 msgid "Dn"
 msgstr "下一层"
 
-#: ../src/dialogs/layers-panel.cpp:740
+#: ../src/dialogs/layers-panel.cpp:743
 msgid "Bot"
 msgstr "底层"
 
-#: ../src/dialogs/layers-panel.cpp:750
+#: ../src/dialogs/layers-panel.cpp:753
 msgid "X"
 msgstr "X"
 
@@ -2124,7 +2124,7 @@ msgid "Vertical Offset"
 msgstr "垂直偏移"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 msgid "Render"
 msgstr "渲染"
@@ -2348,12 +2348,6 @@ msgstr ""
 #: ../src/extension/internal/pdf.cpp:1541
 msgid "PDF Print"
 msgstr "PDF 打印"
-
-#. A hack to internationalize the title properly
-#: ../src/extension/prefdialog.cpp:33
-#, c-format
-msgid "%s Preferences"
-msgstr "%s 偏好设置"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3018,51 +3012,51 @@ msgstr ""
 "发送！"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1108
+#: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
 msgstr "选择路径和文件名"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1110
+#: ../src/jabber_whiteboard/session-manager.cpp:1122
 msgid "Set filename"
 msgstr "设置文件名"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:413
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
 msgstr "没有发现 SSL 证书。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:416
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "由 Jabber 服务器提供的 SSL 证书不被信任。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:419
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "由 Jabber 服务器提供的 SSL 证书已过期。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:422
+#: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "由 Jabber 服务器提供的 SSL 证书未激活。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
 msgstr "由 Jabber 服务器提供的 SSL 证书包含的主机与 Jabber 服务器不匹配。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr "由 Jabber 服务器提供的 SSL 证书包含无效指纹。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "设置 SSL 连接时发生错误。"
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:449
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3072,24 +3066,24 @@ msgstr ""
 "\n"
 "是否要继续与 Jabber 服务器建立连接？"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
 msgstr "继续连接并忽略之后的错误"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:441
+#: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
 msgstr "继续连接，之后有错误警告我"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:442
+#: ../src/jabber_whiteboard/session-manager.cpp:454
 msgid "Cancel connection"
 msgstr "取消连接"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:890
+#: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "建立白板会话 <b>%s</b>。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:898
+#: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> 已经离开白板会话。"
@@ -3097,7 +3091,7 @@ msgstr "<b>%s</b> 已经离开白板会话。"
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:903
+#: ../src/jabber_whiteboard/session-manager.cpp:915
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3108,7 +3102,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:905
+#: ../src/jabber_whiteboard/session-manager.cpp:917
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3116,7 +3110,7 @@ msgstr ""
 "你仍然作为 <b>%2</b> 与 Jabber 服务器建立连接，可以与 <b>%1</b> 或另一个用户"
 "建立一个新连接。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1101
+#: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3129,11 +3123,11 @@ msgstr ""
 "\n"
 "可以选择另一个路径记录会话，或者选择不记录会话选项。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1103
+#: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
 msgstr "选择另一个路径。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1104
+#: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
 msgstr "跳过会话纪录"
 
@@ -4558,7 +4552,7 @@ msgstr "Unicode："
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>浮动文字框架</b>： %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "输入文字；<b>回车</b>开始新的一行。"
 
@@ -4576,11 +4570,11 @@ msgstr "对于当前字体大小框架<b>太小</b>。不能创建浮动文字�
 msgid "No-break space"
 msgstr "非间断空格"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "输入浮动文字；<b>回车</b>开始新的一段。"
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6082,23 +6076,23 @@ msgid ""
 "preferences.xml"
 msgstr "通过把 dialogs.debug 中的‘redirect’属性设置成 1 来允许显示日志"
 
-#: ../src/ui/dialog/scriptdialog.cpp:185
+#: ../src/ui/dialog/scriptdialog.cpp:181
 msgid "_Execute Python"
 msgstr "执行 Python(_E)"
 
-#: ../src/ui/dialog/scriptdialog.cpp:187
+#: ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Execute Perl"
 msgstr "执行 Perl(_E)"
 
-#: ../src/ui/dialog/scriptdialog.cpp:196
+#: ../src/ui/dialog/scriptdialog.cpp:192
 msgid "Script"
 msgstr "脚本"
 
-#: ../src/ui/dialog/scriptdialog.cpp:206
+#: ../src/ui/dialog/scriptdialog.cpp:202
 msgid "Output"
 msgstr "输出"
 
-#: ../src/ui/dialog/scriptdialog.cpp:216
+#: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
 msgstr "错误"
 
@@ -7075,13 +7069,13 @@ msgid "Stroke width: %.5g%s"
 msgstr "描边宽度： %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, c-format
-msgid "0:%.3g"
+#, fuzzy, c-format
+msgid "O:%.3g"
 msgstr "0:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, c-format
-msgid "0:.%d"
+#, fuzzy, c-format
+msgid "O:.%d"
 msgstr "0:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8328,7 +8322,8 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "编辑文档的属性（同文档一起保存）"
 
 #: ../src/verbs.cpp:2319
-msgid "_Document Metadata..."
+#, fuzzy
+msgid "Document _Metadata..."
 msgstr "文档元数据(_D)..."
 
 #: ../src/verbs.cpp:2320
@@ -8505,7 +8500,8 @@ msgid "Query information about extensions"
 msgstr "查询扩展的信息"
 
 #: ../src/verbs.cpp:2369
-msgid "_Layers..."
+#, fuzzy
+msgid "Layer_s..."
 msgstr "层(_L)..."
 
 #: ../src/verbs.cpp:2370
@@ -9814,33 +9810,54 @@ msgstr "分形（Koch）"
 msgid "Fractal (Koch) - Load Pattern"
 msgstr "分形（Koch）- 加载图案"
 
-#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
-msgid "Angle"
-msgstr "角度"
-
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
 msgstr "公理"
 
+#: ../share/extensions/lindenmayer.inx.h:2
+#, fuzzy
+msgid "L-system"
+msgstr "系统"
+
 #: ../share/extensions/lindenmayer.inx.h:3
-msgid "Fractal (Lindenmayer)"
-msgstr "分形（Lindenmayer）"
+#, fuzzy
+msgid "Left angle"
+msgstr "矩形"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "顺序"
 
 #: ../share/extensions/lindenmayer.inx.h:6
+#, fuzzy, no-c-format
+msgid "Randomize angle (%)"
+msgstr "随机化节点"
+
+#: ../share/extensions/lindenmayer.inx.h:8
+#, fuzzy, no-c-format
+msgid "Randomize step (%)"
+msgstr "随机化节点"
+
+#: ../share/extensions/lindenmayer.inx.h:10
+#, fuzzy
+msgid "Right angle"
+msgstr "矩形"
+
+#: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
 msgstr "规则"
 
-#: ../share/extensions/lindenmayer.inx.h:7
-msgid "Step"
-msgstr "步长"
+#: ../share/extensions/lindenmayer.inx.h:12
+msgid "Step length (px)"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr "测量路径"
+
+#: ../share/extensions/motion.inx.h:1
+msgid "Angle"
+msgstr "角度"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10011,6 +10028,15 @@ msgstr "Windows 图元文件 (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows 图元文件输入"
+
+#~ msgid "%s Preferences"
+#~ msgstr "%s 偏好设置"
+
+#~ msgid "Fractal (Lindenmayer)"
+#~ msgstr "分形（Lindenmayer）"
+
+#~ msgid "Step"
+#~ msgstr "步长"
 
 #~ msgid "Adobe PDF (*.pdf)"
 #~ msgstr "Adobe PDF (*.pdf)"

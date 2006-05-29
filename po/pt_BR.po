@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-28 22:12+0200\n"
+"POT-Creation-Date: 2006-05-29 20:24+0200\n"
 "PO-Revision-Date: 2006-04-27 04:45+0000\n"
 "Last-Translator: Antônio Cláudio (LedStyle) <ledstyle@gmail.com>\n"
 "Language-Team: Brazillian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -731,13 +731,13 @@ msgstr "Mensagens"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 msgid "_File"
 msgstr "_Arquivo"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 msgid "_Clear"
 msgstr "Li_mpar"
 
@@ -1231,29 +1231,29 @@ msgstr "ID inválido! "
 msgid "Id exists! "
 msgstr "ID existe! "
 
-#: ../src/dialogs/layers-panel.cpp:717
+#: ../src/dialogs/layers-panel.cpp:720
 #, fuzzy
 msgid "New"
 msgstr "_Novo"
 
-#: ../src/dialogs/layers-panel.cpp:722
+#: ../src/dialogs/layers-panel.cpp:725
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:728
+#: ../src/dialogs/layers-panel.cpp:731
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:734
+#: ../src/dialogs/layers-panel.cpp:737
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:740
+#: ../src/dialogs/layers-panel.cpp:743
 #, fuzzy
 msgid "Bot"
 msgstr "Caixa"
 
-#: ../src/dialogs/layers-panel.cpp:750
+#: ../src/dialogs/layers-panel.cpp:753
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -2203,7 +2203,7 @@ msgid "Vertical Offset"
 msgstr "Desvio Vertical"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 #, fuzzy
 msgid "Render"
@@ -2442,12 +2442,6 @@ msgstr ""
 #: ../src/extension/internal/pdf.cpp:1541
 msgid "PDF Print"
 msgstr ""
-
-#. A hack to internationalize the title properly
-#: ../src/extension/prefdialog.cpp:33
-#, fuzzy, c-format
-msgid "%s Preferences"
-msgstr " Preferências"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3137,33 +3131,33 @@ msgstr ""
 "filho!"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1108
+#: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
 msgstr "Selecione um local e nome para o arquivo"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1110
+#: ../src/jabber_whiteboard/session-manager.cpp:1122
 msgid "Set filename"
 msgstr "Renomear arquivo"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:413
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
 msgstr "Nenhum certificado SSL encontrado."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:416
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "O certificado SSL provido pelo servidor Jabber é falso."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:419
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "O certificado SSL provido pelo servidor Jabber está expirado."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:422
+#: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "O certificado SSL provido pelo servidor Jabber não foi ativado."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3171,7 +3165,7 @@ msgstr ""
 "O certificado SSL provido pelo servidor Jabber contém um nome de máquina que "
 "não confere com o nome de máquina do servidor Jabber."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
@@ -3179,13 +3173,13 @@ msgstr ""
 "O certificado SSL provido pelo servidor Jabber contém uma impressão digital "
 "inválida."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Um erro desconhecido ocorreu enquanto a conexão SSL era estabelecida"
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:449
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3195,24 +3189,24 @@ msgstr ""
 "\n"
 "Você tem certeza de que deseja continuar conectando ao servidor Jabber?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
 msgstr "Continuar conectando e ignorar futuros erros"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:441
+#: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Continuar conectando, mas alertar-me de futuros erros"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:442
+#: ../src/jabber_whiteboard/session-manager.cpp:454
 msgid "Cancel connection"
 msgstr "Cancelar conexão"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:890
+#: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Sessão whiteboard estabelecida com <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:898
+#: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> <b>saiu</b> da sessão whiteboard."
@@ -3220,7 +3214,7 @@ msgstr "<b>%s</b> <b>saiu</b> da sessão whiteboard."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:903
+#: ../src/jabber_whiteboard/session-manager.cpp:915
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3231,7 +3225,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:905
+#: ../src/jabber_whiteboard/session-manager.cpp:917
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3239,7 +3233,7 @@ msgstr ""
 "Você ainda está conectado a um servidor Jabber como <b>%2</b>, e ainda pode "
 "estabelecer novas conexões com <b>%1</b> ou com um usuário diferente."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1101
+#: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3253,11 +3247,11 @@ msgstr ""
 "Você pode selecionar um local diferente para gravar a sessão, ou pode optar "
 "por não salvar esta sessão."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1103
+#: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
 msgstr "Escolha um local diferente"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1104
+#: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
 msgstr "Pular gravação da sessão"
 
@@ -4816,7 +4810,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Caixa de texto</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Entre com o texto; Pressione <b>Enter</b> para iniciar uma nova linha."
 
@@ -4836,12 +4830,12 @@ msgstr ""
 msgid "No-break space"
 msgstr "Espaço sem quebras"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1422
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 "Entre com o texto; Pressione <b>Enter</b> para começar um novo parágrafo."
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6486,23 +6480,23 @@ msgstr ""
 "Habilitar a exibição de mensagens de depuração mudando no dialogs.debug o "
 "atributo 'redirect' para 1 em preferences.xml"
 
-#: ../src/ui/dialog/scriptdialog.cpp:185
+#: ../src/ui/dialog/scriptdialog.cpp:181
 msgid "_Execute Python"
 msgstr "_Executar Python"
 
-#: ../src/ui/dialog/scriptdialog.cpp:187
+#: ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Execute Perl"
 msgstr "_Executar Perl"
 
-#: ../src/ui/dialog/scriptdialog.cpp:196
+#: ../src/ui/dialog/scriptdialog.cpp:192
 msgid "Script"
 msgstr "Script"
 
-#: ../src/ui/dialog/scriptdialog.cpp:206
+#: ../src/ui/dialog/scriptdialog.cpp:202
 msgid "Output"
 msgstr "Saída"
 
-#: ../src/ui/dialog/scriptdialog.cpp:216
+#: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
 msgstr "Erros"
 
@@ -7555,13 +7549,13 @@ msgid "Stroke width: %.5g%s"
 msgstr "Largura do traço"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, c-format
-msgid "0:%.3g"
-msgstr ""
+#, fuzzy, c-format
+msgid "O:%.3g"
+msgstr "Opacidade"
 
 #: ../src/ui/widget/style-swatch.cpp:343
 #, c-format
-msgid "0:.%d"
+msgid "O:.%d"
 msgstr ""
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8872,7 +8866,7 @@ msgstr "Configurações salvas com o desenho"
 
 #: ../src/verbs.cpp:2319
 #, fuzzy
-msgid "_Document Metadata..."
+msgid "Document _Metadata..."
 msgstr "Desenho salvo."
 
 #: ../src/verbs.cpp:2320
@@ -9059,7 +9053,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2369
 #, fuzzy
-msgid "_Layers..."
+msgid "Layer_s..."
 msgstr "_Adicionar Camada..."
 
 #: ../src/verbs.cpp:2370
@@ -10425,19 +10419,19 @@ msgstr ""
 msgid "Fractal (Koch) - Load Pattern"
 msgstr ""
 
-#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
-#, fuzzy
-msgid "Angle"
-msgstr "Ângulo:"
-
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
 msgstr ""
 
+#: ../share/extensions/lindenmayer.inx.h:2
+#, fuzzy
+msgid "L-system"
+msgstr "Sistema"
+
 #: ../share/extensions/lindenmayer.inx.h:3
 #, fuzzy
-msgid "Fractal (Lindenmayer)"
-msgstr "Renomear Camada"
+msgid "Left angle"
+msgstr "Retângulo"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 #, fuzzy
@@ -10445,18 +10439,37 @@ msgid "Order"
 msgstr "Outro"
 
 #: ../share/extensions/lindenmayer.inx.h:6
+#, fuzzy, no-c-format
+msgid "Randomize angle (%)"
+msgstr "Aleatório:"
+
+#: ../share/extensions/lindenmayer.inx.h:8
+#, fuzzy, no-c-format
+msgid "Randomize step (%)"
+msgstr "Aleatório:"
+
+#: ../share/extensions/lindenmayer.inx.h:10
+#, fuzzy
+msgid "Right angle"
+msgstr "Retângulo"
+
+#: ../share/extensions/lindenmayer.inx.h:11
 #, fuzzy
 msgid "Rules"
 msgstr "_Réguas"
 
-#: ../share/extensions/lindenmayer.inx.h:7
-#, fuzzy
-msgid "Step"
-msgstr "Passos"
+#: ../share/extensions/lindenmayer.inx.h:12
+msgid "Step length (px)"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr ""
+
+#: ../share/extensions/motion.inx.h:1
+#, fuzzy
+msgid "Angle"
+msgstr "Ângulo:"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10645,6 +10658,18 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s Preferences"
+#~ msgstr " Preferências"
+
+#, fuzzy
+#~ msgid "Fractal (Lindenmayer)"
+#~ msgstr "Renomear Camada"
+
+#, fuzzy
+#~ msgid "Step"
+#~ msgstr "Passos"
 
 #, fuzzy
 #~ msgid "PDF Output"
