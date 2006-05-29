@@ -376,6 +376,8 @@ SPObject *SPDesktop::currentLayer() const
 }
 
 /**
+ * Sets the current layer of the desktop.
+ * 
  * Make \a object the top layer.
  */
 void SPDesktop::setCurrentLayer(SPObject *object) {
@@ -516,12 +518,17 @@ SPDesktop::push_event_context (GtkType type, const gchar *config, unsigned int k
     _event_context_changed_signal.emit (this, ec);
 }
 
+/**
+ * Sets the coordinate status to a given point
+ */
 void
 SPDesktop::set_coordinate_status (NR::Point p) {
     _widget->setCoordinateStatus(p);
 }
 
-
+/**
+ * \see sp_document_item_from_list_at_point_bottom()
+ */
 SPItem *
 SPDesktop::item_from_list_at_point_bottom (const GSList *list, NR::Point const p) const
 {
@@ -529,6 +536,9 @@ SPDesktop::item_from_list_at_point_bottom (const GSList *list, NR::Point const p
     return sp_document_item_from_list_at_point_bottom (dkey, SP_GROUP (doc()->root), list, p);
 }
 
+/**
+ * \see sp_document_item_at_point()
+ */
 SPItem *
 SPDesktop::item_at_point (NR::Point const p, bool into_groups, SPItem *upto) const
 {
@@ -536,6 +546,9 @@ SPDesktop::item_at_point (NR::Point const p, bool into_groups, SPItem *upto) con
     return sp_document_item_at_point (doc(), dkey, p, into_groups, upto);
 }
 
+/**
+ * \see sp_document_group_at_point()
+ */
 SPItem *
 SPDesktop::group_at_point (NR::Point const p) const
 {

@@ -56,6 +56,9 @@ static void sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai);
 
 static SPItemClass *parent_class;
 
+/**
+ * Registers the SPShape class with Gdk and returns its type number.
+ */
 GType
 sp_shape_get_type (void)
 {
@@ -76,6 +79,10 @@ sp_shape_get_type (void)
 	return type;
 }
 
+/**
+ * Initializes a SPShapeClass object.  Establishes the function pointers to the class'
+ * member routines in the class vtable, and sets pointers to parent classes.
+ */
 static void
 sp_shape_class_init (SPShapeClass *klass)
 {
@@ -101,12 +108,24 @@ sp_shape_class_init (SPShapeClass *klass)
         item_class->snappoints = sp_shape_snappoints;
 }
 
+/**
+ * Initializes an SPShape object.  Nothing particular is needed to initialize
+ * an SPShape object; this is just here as a stub.
+ */
 static void
 sp_shape_init (SPShape *shape)
 {
 	/* Nothing here */
 }
 
+/**
+ * Virtual build callback for SPMarker.
+ *
+ * This is to be invoked immediately after creation of an SPShape.  This is 
+ * just a stub.
+ *
+ * \see sp_object_build()
+ */
 static void
 sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
@@ -115,6 +134,16 @@ sp_shape_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 	}
 }
 
+/**
+ * Removes, releases and unrefs all children of object
+ *
+ * This is the inverse of sp_shape_build().  It must be invoked as soon
+ * as the shape is removed from the tree, even if it is still referenced
+ * by other objects.  This routine also disconnects/unrefs markers and
+ * curves attached to it.
+ *
+ * \see sp_object_release()
+ */
 static void
 sp_shape_release (SPObject *object)
 {
@@ -144,6 +173,10 @@ sp_shape_release (SPObject *object)
 	}
 }
 
+/** 
+ * Updates the shape when its attributes have changed.  Also establishes
+ * marker objects to match the style settings.  
+ */
 static void
 sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
@@ -252,7 +285,12 @@ is_moveto(NRPathcode const c)
     return c == NR_MOVETO || c == NR_MOVETO_OPEN;
 }
 
-/** \pre The bpath[] containing bp begins with a moveto. */
+/** 
+ * Helper function that advances a subpath's bpath to the first subpath
+ * by checking for moveto segments.
+ *
+ * \pre The bpath[] containing bp begins with a moveto. 
+ */
 static NArtBpath const *
 first_seg_in_subpath(NArtBpath const *bp)
 {
@@ -262,6 +300,9 @@ first_seg_in_subpath(NArtBpath const *bp)
     return bp;
 }
 
+/**
+ * Advances the bpath to the last segment in the subpath.
+ */
 static NArtBpath const *
 last_seg_in_subpath(NArtBpath const *bp)
 {
@@ -299,7 +340,11 @@ last_seg_in_subpath(NArtBpath const *bp)
 
 static double const no_tangent = 128.0;  /* arbitrarily-chosen value outside the range of atan2, i.e. outside of [-pi, pi]. */
 
-/** \pre The bpath[] containing bp0 begins with a moveto. */
+/**
+ * Helper function to calculate the outgoing tangent of a path 
+ * ( atan2(other - p0) )
+ * \pre The bpath[] containing bp0 begins with a moveto. 
+ */
 static double
 outgoing_tangent(NArtBpath const *bp0)
 {
@@ -361,7 +406,12 @@ found:
     return atan2( other - p0 );
 }
 
-/** \pre The bpath[] containing bp0 begins with a moveto. */
+/**
+ * Helper function to calculate the incoming tangent of a path
+ * ( atan2(p0 - other) )
+ * 
+ * \pre The bpath[] containing bp0 begins with a moveto. 
+ */
 static double
 incoming_tangent(NArtBpath const *bp0)
 {
@@ -420,19 +470,18 @@ found:
 
 
 /**
-* Calculate the transform required to get a marker's path object in the
-* right place for particular path segment on a shape.  You should
-* call sp_shape_marker_required first to see if a marker is required
-* at this point.
-*
-* \see sp_shape_marker_required.
-*
-* \param shape Shape which the marker is for.
-* \param m Marker type (e.g. SP_MARKER_LOC_START)
-* \param bp Path segment which the arrow is for.
-* \return Transform matrix.
-*/
-
+ * Calculate the transform required to get a marker's path object in the
+ * right place for particular path segment on a shape.  You should
+ * call sp_shape_marker_required first to see if a marker is required
+ * at this point.
+ *
+ * \see sp_shape_marker_required.
+ *
+ * \param shape Shape which the marker is for.
+ * \param m Marker type (e.g. SP_MARKER_LOC_START)
+ * \param bp Path segment which the arrow is for.
+ * \return Transform matrix.
+ */
 NR::Matrix
 sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
 {
@@ -474,8 +523,11 @@ sp_shape_marker_get_transform(SPShape const *shape, NArtBpath const *bp)
     return NR::Matrix(NR::rotate(ret_angle)) * NR::translate(bp->c(3));
 }
 
-/* Marker views have to be scaled already */
-
+/**
+ * Updates the instances (views) of a given marker in a shape.
+ * Marker views have to be scaled already.  The transformation
+ * is retrieved and then shown by calling sp_marker_show_instance.
+ */
 static void
 sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 {
@@ -502,6 +554,9 @@ sp_shape_update_marker_view (SPShape *shape, NRArenaItem *ai)
 	}
 }
 
+/**
+ * Sets modified flag for all sub-item views.
+ */
 static void
 sp_shape_modified (SPObject *object, unsigned int flags)
 {
@@ -518,6 +573,10 @@ sp_shape_modified (SPObject *object, unsigned int flags)
 	}
 }
 
+/**
+ * Calculates the bounding box for item, storing it into bbox.
+ * This also includes the bounding boxes of any markers included in the shape.
+ */
 static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &transform, unsigned const flags)
 {
     SPShape const *shape = SP_SHAPE (item);
@@ -581,6 +640,12 @@ static void sp_shape_bbox(SPItem const *item, NRRect *bbox, NR::Matrix const &tr
     }
 }
 
+/**
+ * Prepares shape for printing.  Handles printing of comments for printing
+ * debugging, sizes the item to fit into the document width/height,
+ * applies print fill/stroke, sets transforms for markers, and adds
+ * comment labels.
+ */
 void
 sp_shape_print (SPItem *item, SPPrintContext *ctx)
 {
@@ -652,6 +717,9 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         }
 }
 
+/**
+ * Sets style, path, and paintbox.  Updates marker views, including dimensions.
+ */
 static NRArenaItem *
 sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flags)
 {
@@ -667,7 +735,7 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flag
 
         if (sp_shape_has_markers (shape)) {
 
-            /* Dimension marker views */
+            /* Dimension the marker views */
             if (!arenaitem->key) {
                 NR_ARENA_ITEM_SET_KEY (arenaitem, sp_item_display_key_new (SP_MARKER_LOC_QTY));
             }
@@ -688,6 +756,9 @@ sp_shape_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flag
 	return arenaitem;
 }
 
+/**
+ * Hides/removes marker views from the shape.
+ */
 static void
 sp_shape_hide (SPItem *item, unsigned int key)
 {
@@ -712,8 +783,6 @@ sp_shape_hide (SPItem *item, unsigned int key)
 	  ((SPItemClass *) parent_class)->hide (item, key);
 	}
 }
-
-/* Marker stuff */
 
 /**
 * \param shape Shape.
@@ -753,6 +822,11 @@ sp_shape_number_of_markers (SPShape *shape, int type)
     return n;
 }
 
+/**
+ * Checks if the given marker is used in the shape, and if so, it
+ * releases it by calling sp_marker_hide.  Also detaches signals
+ * and unrefs the marker from the shape.
+ */
 static void
 sp_shape_marker_release (SPObject *marker, SPShape *shape)
 {
@@ -778,6 +852,9 @@ sp_shape_marker_release (SPObject *marker, SPShape *shape)
 	}
 }
 
+/**
+ * No-op.  Exists for handling 'modified' messages
+ */
 static void
 sp_shape_marker_modified (SPObject *marker, guint flags, SPItem *item)
 {
@@ -785,6 +862,13 @@ sp_shape_marker_modified (SPObject *marker, guint flags, SPItem *item)
 	/* g_warning ("Item %s mask %s modified", SP_OBJECT_ID (item), SP_OBJECT_ID (mask)); */
 }
 
+/**
+ * Adds a new marker to shape object at the location indicated by key.  value 
+ * must be a valid URI reference resolvable from the shape object (i.e., present
+ * in the document <defs>).  If the shape object already has a marker
+ * registered at the given position, it is removed first.  Then the
+ * new marker is hrefed and its signals connected.
+ */
 void
 sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
 {
@@ -829,6 +913,9 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
 
 /* Shape section */
 
+/**
+ * Calls any registered handlers for the set_shape action
+ */
 void
 sp_shape_set_shape (SPShape *shape)
 {
@@ -840,6 +927,12 @@ sp_shape_set_shape (SPShape *shape)
 	}
 }
 
+/**
+ * Adds a curve to the shape.  If owner is specified, a reference
+ * will be made, otherwise the curve will be copied into the shape.
+ * Any existing curve in the shape will be unreferenced first.
+ * This routine also triggers a request to update the display.
+ */
 void
 sp_shape_set_curve (SPShape *shape, SPCurve *curve, unsigned int owner)
 {
@@ -856,7 +949,9 @@ sp_shape_set_curve (SPShape *shape, SPCurve *curve, unsigned int owner)
         SP_OBJECT(shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
-/* Return duplicate of curve or NULL */
+/**
+ * Return duplicate of curve (if any exists) or NULL if there is no curve
+ */
 SPCurve *
 sp_shape_get_curve (SPShape *shape)
 {
@@ -882,6 +977,9 @@ sp_shape_set_curve_insync (SPShape *shape, SPCurve *curve, unsigned int owner)
 	}
 }
 
+/**
+ * Sets the snappoint p to the end point of the path segment
+ */
 static void sp_shape_snappoints(SPItem const *item, SnapPointsIter p)
 {
     g_assert(item != NULL);

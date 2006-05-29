@@ -73,9 +73,9 @@ sp_marker_get_type (void)
 }
 
 /**
-   Initializes a SPMarkerClass object.  Establishes the function pointers to the class' 
-   member routines in the class vtable, and sets pointers to parent classes.
-*/
+ * Initializes a SPMarkerClass object.  Establishes the function pointers to the class' 
+ * member routines in the class vtable, and sets pointers to parent classes.
+ */
 static void
 sp_marker_class_init (SPMarkerClass *klass)
 {

@@ -1,3 +1,6 @@
+2006-05-29  Bryce <bryce@bryceharrington.org>
+	* sp-shape.cpp:  Adding documentation
+
 2006-05-29  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/desktop.cpp, src/layer-manager.cpp, src/dialogs/layers-panel.cpp:
