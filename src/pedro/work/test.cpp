@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "pedroxmpp.h"
+#include "pedroconfig.h"
 
 //########################################################################
 //# T E S T
@@ -140,9 +141,42 @@ bool doTest()
     return true;
 }
 
+
+bool configTest()
+{
+    printf("#################################\n");
+    printf("## C o n f i g    t e s t\n");
+    printf("#################################\n");
+
+    Pedro::XmppConfig config;
+
+    if (!config.readFile("pedro.ini"))
+        {
+        printf("could not read config file\n");
+        return false;
+        }
+
+    Pedro::DOMString str = config.toXmlBuffer();
+
+    printf("#################################\n");
+    printf("%s\n", str.c_str());
+
+    if (!config.writeFile("pedro2.ini"))
+        {
+        printf("could not write config file\n");
+        return false;
+        }
+
+
+    return true;
+
+};
+
+
+
 int main(int argc, char **argv)
 {
-    if (!doTest())
+    if (!configTest())
         return 1;
     return 0;
 }
