@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-29 20:24+0200\n"
-"PO-Revision-Date: 2006-05-23 21:03+0200\n"
+"PO-Revision-Date: 2006-05-30 00:41+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1254,31 +1254,28 @@ msgid "Id exists! "
 msgstr "ID-Kennung existiert"
 
 #: ../src/dialogs/layers-panel.cpp:720
-#, fuzzy
 msgid "New"
-msgstr "_Neu"
+msgstr "Neu"
 
 #: ../src/dialogs/layers-panel.cpp:725
 msgid "Top"
-msgstr ""
+msgstr "Oben"
 
 #: ../src/dialogs/layers-panel.cpp:731
 msgid "Up"
-msgstr ""
+msgstr "Hoch"
 
 #: ../src/dialogs/layers-panel.cpp:737
 msgid "Dn"
-msgstr ""
+msgstr "Runter"
 
 #: ../src/dialogs/layers-panel.cpp:743
-#, fuzzy
 msgid "Bot"
-msgstr "Umschließendes Rechteck"
+msgstr "Unten"
 
 #: ../src/dialogs/layers-panel.cpp:753
-#, fuzzy
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
@@ -6294,7 +6291,7 @@ msgstr "Gesperrte Objekte ignorieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "Deselect upon layer change"
-msgstr ""
+msgstr "Auswahl bei Ebenenwechsel aufheben"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
@@ -6334,13 +6331,10 @@ msgstr ""
 "für Objekte in gesperrten Ebenen/Gruppierungen)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:505
-#, fuzzy
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
-msgstr ""
-"Dieses abwählen damit gesperrte Objekte ausgewählt werden können (gilt auch "
-"für Objekte in gesperrten Ebenen/Gruppierungen)"
+msgstr "Dieses abwählen um Objekte ausgewählt zu lassen, wenn die aktuelle Ebene geändert wird"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Selecting"
@@ -7233,7 +7227,7 @@ msgstr "Liste"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "Wrap"
-msgstr ""
+msgstr "Umbrechen"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -7522,14 +7516,14 @@ msgid "Stroke width: %.5g%s"
 msgstr "Konturlinienbreite: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "O:%.3g"
-msgstr "0:%.3g"
+msgstr "O:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, fuzzy, c-format
+#, c-format
 msgid "O:.%d"
-msgstr "0:.%d"
+msgstr "O:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
@@ -8819,7 +8813,6 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Einstellungen bearbeiten, die mit dem Dokument gespeichert werden"
 
 #: ../src/verbs.cpp:2319
-#, fuzzy
 msgid "Document _Metadata..."
 msgstr "_Dokument-Metadaten..."
 
@@ -9005,7 +8998,6 @@ msgid "Query information about extensions"
 msgstr "Informationen über Erweiterungen abfragen"
 
 #: ../src/verbs.cpp:2369
-#, fuzzy
 msgid "Layer_s..."
 msgstr "_Ebenen..."
 
@@ -9968,30 +9960,28 @@ msgstr ""
 "wird die Standardschriftart verwenden"
 
 #: ../src/widgets/toolbox.cpp:3394
-#, fuzzy
 msgid "Rag right"
-msgstr "Rechte"
+msgstr "Flattersatz rechts"
 
 #: ../src/widgets/toolbox.cpp:3405
-#, fuzzy
 msgid "Centered"
-msgstr "Zentrum X:"
+msgstr "Zentriert"
 
 #: ../src/widgets/toolbox.cpp:3416
 msgid "Rag left"
-msgstr ""
+msgstr "Flattersatz links"
 
 #: ../src/widgets/toolbox.cpp:3427
 msgid "Justified"
-msgstr ""
+msgstr "Blocksatz"
 
 #: ../src/widgets/toolbox.cpp:3443
 msgid "Bold"
-msgstr ""
+msgstr "Fett"
 
 #: ../src/widgets/toolbox.cpp:3454
 msgid "Italic"
-msgstr ""
+msgstr "Kursiv"
 
 #: ../src/widgets/toolbox.cpp:3552
 msgid "Spacing between letters"
@@ -10379,33 +10369,30 @@ msgid "Axiom"
 msgstr "Axiom"
 
 #: ../share/extensions/lindenmayer.inx.h:2
-#, fuzzy
 msgid "L-system"
-msgstr "System"
+msgstr "L-System"
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "Rechteck"
+msgstr "Linker Winkel"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "Reihenfolge"
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%)"
-msgstr "Knoten zufällig anordnen"
+msgstr "Winkel zufällig machen (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize step (%)"
-msgstr "Knoten zufällig anordnen"
+msgstr "Schrittweite zufällig machen (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "Rechteck"
+msgstr "Rechter Winkel"
 
 # !!!
 #: ../share/extensions/lindenmayer.inx.h:11
@@ -10414,7 +10401,7 @@ msgstr "Lineale"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
-msgstr ""
+msgstr "Schrittweite (px)"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
