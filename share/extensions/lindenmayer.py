@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplestyle, pturtle
+import inkex, simplestyle, pturtle, random
 
 def stripme(s):
     return s.strip()	
@@ -28,19 +28,31 @@ class LSystem(inkex.Effect):
                         action="store", type="int", 
                         dest="order", default=3,
                         help="number of iteration")
-        self.OptionParser.add_option("-a", "--angle",
+        self.OptionParser.add_option("-l", "--langle",
                         action="store", type="float", 
-                        dest="angle", default=16.0,
-                        help="angle for turn commands")
+                        dest="langle", default=16.0,
+                        help="angle for turning left")
+        self.OptionParser.add_option("-r", "--rangle",
+                        action="store", type="float", 
+                        dest="rangle", default=16.0,
+                        help="angle for turning right")
         self.OptionParser.add_option("-s", "--step",
                         action="store", type="float", 
                         dest="step", default=25.0,
                         help="step size")
+        self.OptionParser.add_option("-p", "--randomizestep",
+                        action="store", type="float", 
+                        dest="randomizestep", default=0.0,
+                        help="randomize step")
+        self.OptionParser.add_option("-z", "--randomizeangle",
+                        action="store", type="float", 
+                        dest="randomizeangle", default=0.0,
+                        help="randomize angle")
         self.OptionParser.add_option("-x", "--axiom",
                         action="store", type="string", 
                         dest="axiom", default="++F",
                         help="initial state of system")
-        self.OptionParser.add_option("-r", "--rules",
+        self.OptionParser.add_option("-u", "--rules",
                         action="store", type="string", 
                         dest="rules", default="F=FF-[-F+F+F]+[+F-F-F]",
                         help="replacement rules")
@@ -49,41 +61,44 @@ class LSystem(inkex.Effect):
     def iterate(self):
         self.rules = dict([map(stripme, i.split("=")) for i in self.options.rules.upper().split(";") if i.count("=")==1])
         string = self.__recurse(self.options.axiom.upper(),0)
-	self.__compose_path(string)
+        self.__compose_path(string)
         return self.turtle.getPath()
     def __compose_path(self, string):
-	for c in string:
-	    if c in 'ABCDEF':
-		self.turtle.pd()
-		self.turtle.fd(self.options.step)
-	    elif c in 'GHIJKL':
-		self.turtle.pu()
-		self.turtle.fd(self.options.step)
-	    elif c == '+':
-		self.turtle.lt(self.options.angle)
-	    elif c == '-':
-		self.turtle.rt(self.options.angle)
-	    elif c == '|':
-		self.turtle.lt(180)
-	    elif c == '[':
-		self.stack.append([self.turtle.getpos(), self.turtle.getheading()])
-	    elif c == ']':
-		self.turtle.pu()
-		pos,heading = self.stack.pop()
-		self.turtle.setpos(pos)
-		self.turtle.setheading(heading)
+        self.turtle.pu()
+        self.turtle.setpos(self.view_center)
+        self.turtle.pd()
+        for c in string:
+            if c in 'ABCDEF':
+                self.turtle.pd()
+                self.turtle.fd(self.options.step * (random.normalvariate(1.0, 0.01 * self.options.randomizestep)))
+            elif c in 'GHIJKL':
+                self.turtle.pu()
+                self.turtle.fd(self.options.step * (random.normalvariate(1.0,  0.01 * self.options.randomizestep)))
+            elif c == '+':
+                self.turtle.lt(self.options.langle * (random.normalvariate(1.0,  0.01 * self.options.randomizeangle)))
+            elif c == '-':
+                self.turtle.rt(self.options.rangle * (random.normalvariate(1.0,  0.01 * self.options.randomizeangle)))
+            elif c == '|':
+                self.turtle.lt(180)
+            elif c == '[':
+                self.stack.append([self.turtle.getpos(), self.turtle.getheading()])
+            elif c == ']':
+                self.turtle.pu()
+                pos,heading = self.stack.pop()
+                self.turtle.setpos(pos)
+                self.turtle.setheading(heading)
 
     def __recurse(self,rule,level):
-	level_string = ''
+        level_string = ''
         for c in rule:
             if level < self.options.order:
                 try:
                     level_string = level_string + self.__recurse(self.rules[c],level+1)
                 except KeyError:
-		    level_string = level_string + c
-	    else:
-	        level_string = level_string + c 
-	return level_string
+                    level_string = level_string + c
+            else:
+                level_string = level_string + c 
+        return level_string
             
     def effect(self):
         new = self.document.createElement('svg:path')
@@ -93,7 +108,7 @@ class LSystem(inkex.Effect):
             'fill': 'none'}
         new.setAttribute('style', simplestyle.formatStyle(s))
         new.setAttribute('d', self.iterate())
-        self.document.documentElement.appendChild(new)
+        self.current_layer.appendChild(new)
 
 e = LSystem()
 e.affect()
