@@ -90,16 +90,21 @@ class Effect:
         #defaults
         self.current_layer = self.document.documentElement
         self.view_center = (0.0,0.0)
-        
-        layername = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:current-layer',self.document,context=ctx)[0].value
-        layer = xml.xpath.Evaluate('//g[@id="%s"]' % layername,self.document,context=ctx)[0]
-        if layer:
-            self.current_layer = layer
-            
-        x = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cx',self.document,context=ctx)[0].value
-        y = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cy',self.document,context=ctx)[0].value
-        if x and y:
-            self.view_center = (float(x),float(y))
+
+        layerattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:current-layer',self.document,context=ctx)
+        if layerattr:
+            layername = layerattr[0].value
+            layer = xml.xpath.Evaluate('//g[@id="%s"]' % layername,self.document,context=ctx)[0]
+            if layer:
+                self.current_layer = layer
+
+        xattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cx',self.document,context=ctx)
+        yattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cy',self.document,context=ctx)
+        if xattr and yattr:
+            x = xattr[0].value
+            y = yattr[0].value
+            if x and y:
+                self.view_center = (float(x),float(y))
     def getselected(self):
         """Collect selected nodes"""
         for id in self.options.ids:
