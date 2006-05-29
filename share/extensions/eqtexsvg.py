@@ -55,7 +55,7 @@ def svg_open(self,filename):
     svg_lines.pop(len(svg_lines)-1)
 
     group = self.document.createElement('svg:g')
-    self.document.documentElement.appendChild(group)
+    self.current_layer.appendChild(group)
 
     # deleting "<g... >" "</g>" "<path d=" and "/>" from svg_lines
     nodegroup=''

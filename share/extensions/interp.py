@@ -290,7 +290,7 @@ class Interp(inkex.Effect):
                 steps = [0] + steps + [1]    
             #create an interpolated path for each interval
             group = self.document.createElement('svg:g')    
-            self.document.documentElement.appendChild(group)
+            self.current_layer.appendChild(group)
             for time in steps:
                 interp = []
                 #process subpaths
