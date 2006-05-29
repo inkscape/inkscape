@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
-"PO-Revision-Date: 2006-05-22 23:32+0100\n"
+"POT-Creation-Date: 2006-05-28 22:18+0200\n"
+"PO-Revision-Date: 2006-05-29 20:33+0100\n"
 "Last-Translator: Josef Vybíral <josef.vybiral@gmail.com>\n"
 "Language-Team: Czech <none>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b>Elipsa</b>: %s &#215; %s; s <b>Ctrl</b> se vytvoří kružnici nebo elipsu s "
+"<b>Elipsa</b>: %s &#215; %s; s <b>Ctrl</b> se vytvoří kružnice nebo elipsa s "
 "celočíselným poměrem stran; s <b>Shift</b> se vykreslí kolem počátku"
 
 #: ../src/connector-context.cpp:517
@@ -119,7 +119,7 @@ msgstr "Vyberte <b>jeden objekt</b> jehož dlážděné klony se mají rozházet
 
 #: ../src/dialogs/clonetiler.cpp:896
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Vyberte <b>jeden objekt</b> jehož dlaždicové klony se mají odstranit."
+msgstr "Vyberte <b>jeden objekt</b> jehož dlážděné klony se mají odstranit."
 
 #: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1931
 msgid "Select an <b>object</b> to clone."
@@ -733,13 +733,13 @@ msgstr "Zprávy"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
 msgid "_File"
 msgstr "_Soubor"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Clear"
 msgstr "Vyčistit"
 
@@ -1225,32 +1225,29 @@ msgstr "Id je neplatné!"
 msgid "Id exists! "
 msgstr "Id existuje!"
 
-#: ../src/dialogs/layers-panel.cpp:720
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:717
 msgid "New"
-msgstr "_Nový"
+msgstr "Nový"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:722
 msgid "Top"
-msgstr ""
+msgstr "Nejvýš"
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:728
 msgid "Up"
-msgstr ""
+msgstr "Nahoru"
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:734
 msgid "Dn"
-msgstr ""
+msgstr "Dolů"
 
-#: ../src/dialogs/layers-panel.cpp:743
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:740
 msgid "Bot"
-msgstr "Box"
+msgstr "Naspod"
 
-#: ../src/dialogs/layers-panel.cpp:753
-#, fuzzy
+#: ../src/dialogs/layers-panel.cpp:750
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
@@ -2165,7 +2162,7 @@ msgid "Vertical Offset"
 msgstr "Svislý posun"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 msgid "Render"
 msgstr "Vykreslit"
@@ -2377,24 +2374,26 @@ msgid "Windows 32-bit Print"
 msgstr "Windows 32-bit Tisk"
 
 #: ../src/extension/internal/pdf.cpp:130
-#, fuzzy
 msgid "Print using PDF operators"
-msgstr "Tisknout pomocí operátorů PostScript"
+msgstr "Tisknout pomocí operátorů PDF"
 
 #: ../src/extension/internal/pdf.cpp:132
-#, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
 msgstr ""
-"Používat vektorové operátory PostScriptu. Velikost souboru s výsledným "
-"obrázkem je obvykle menší a obrázek lze libovolně zmenšovat či zvětšovat, "
-"ztratí se však alfa průhlednost, značky a vzory."
+"Používat vektorové operátory PDF. Velikost souboru s výsledným obrázkem je "
+"obvykle menší a obrázek lze libovolně škálovat, ztratí se však vzory."
 
 #: ../src/extension/internal/pdf.cpp:1541
-#, fuzzy
 msgid "PDF Print"
-msgstr "Tisk LaTeX"
+msgstr "Tisk PDF"
+
+#. A hack to internationalize the title properly
+#: ../src/extension/prefdialog.cpp:33
+#, c-format
+msgid "%s Preferences"
+msgstr "Nastavení %s"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -3085,33 +3084,33 @@ msgstr ""
 "vyhledání: nový objekt NEBUDE odeslán a ani žádný z jeho potomků!"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1120
+#: ../src/jabber_whiteboard/session-manager.cpp:1108
 msgid "Select a location and filename"
 msgstr "Vyberte umístění a jméno souboru"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1122
+#: ../src/jabber_whiteboard/session-manager.cpp:1110
 msgid "Set filename"
 msgstr "Nastavit jméno souboru"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:413
 msgid "No SSL certificate was found."
 msgstr "SSL certifikát nebyl nalezen"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:416
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "SSL certifikát poskytnutý Jabber serverem není důvěryhodný"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:419
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "SSL certifikát poskytnutý Jabber serverem vypršel"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:434
+#: ../src/jabber_whiteboard/session-manager.cpp:422
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "SSL certifikát poskytnutý Jabber serverem nebyl aktivován"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
@@ -3119,19 +3118,19 @@ msgstr ""
 "SSL certifikát poskytnutý Jabber serverem obsahuje jméno hostitele, které "
 "nesouhlasí se jménem Jabber serveru."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr "SSL certifikát poskytnutý Jabber serverem obsahuje neplatný otisk."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:443
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "Nastala neznámá chyba při sestavování SSL spojení."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:449
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3141,24 +3140,24 @@ msgstr ""
 "\n"
 "Chcete pokračovat v připojování k Jabber serveru?"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:452
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid "Continue connecting and ignore further errors"
 msgstr "Pokračovat v připojování a ignorovat další chyby"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:453
+#: ../src/jabber_whiteboard/session-manager.cpp:441
 msgid "Continue connecting, but warn me of further errors"
 msgstr "Pokračovat v připojování, ale varovat při dalších chybách"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:454
+#: ../src/jabber_whiteboard/session-manager.cpp:442
 msgid "Cancel connection"
 msgstr "Zrušit spojení"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:902
+#: ../src/jabber_whiteboard/session-manager.cpp:890
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "Vytvořeno whiteboard sezení s <b>%s</b>."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:910
+#: ../src/jabber_whiteboard/session-manager.cpp:898
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> právě <b>opustil</b> sezení whiteboard."
@@ -3166,7 +3165,7 @@ msgstr "<b>%s</b> právě <b>opustil</b> sezení whiteboard."
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:915
+#: ../src/jabber_whiteboard/session-manager.cpp:903
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3177,7 +3176,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:917
+#: ../src/jabber_whiteboard/session-manager.cpp:905
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3185,7 +3184,7 @@ msgstr ""
 "Stále jste připojeni k Jabber serveru jako <b>%2</b> a můžete vytvořit nové "
 "sezení s <b>%1</b> nebo jiným uživatelem."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1113
+#: ../src/jabber_whiteboard/session-manager.cpp:1101
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3199,11 +3198,11 @@ msgstr ""
 "Můžete vybrat jiné místo pro uložení sezení a nebo zvolit možnost neukládat "
 "sezení."
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1115
+#: ../src/jabber_whiteboard/session-manager.cpp:1103
 msgid "Choose a different location"
 msgstr "Vyberte jiné umístění"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1116
+#: ../src/jabber_whiteboard/session-manager.cpp:1104
 msgid "Skip session recording"
 msgstr "Přeskočit nahrávání sezení"
 
@@ -4736,7 +4735,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Rám vlitého textu</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Pište text; <b>Enter</b> vytvoří nový řádek"
 
@@ -4756,11 +4755,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Nezalomitelná mezera"
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1421
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Pište vlitý text; <b>Enter</b> vytvoří nový odstavec."
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -5950,9 +5949,8 @@ msgid "Zoom when window is resized"
 msgstr "Zvětšit či zmenšit kresbu při změně velikosti okna"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
-#, fuzzy
 msgid "Show close button on dialogs"
-msgstr "Ukázat nebo skrýt všechny otevřené dialogy"
+msgstr "Ukázat zavírací tlačítko na dialozích"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Normal"
@@ -5986,7 +5984,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid "Whether dialog windows have a close button (requires restart)"
-msgstr ""
+msgstr "Zda povolit dialogovým oknům zavírací tlačítko (vyžaduje restart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:417
 msgid "Dialogs on top:"
@@ -6148,7 +6146,7 @@ msgstr "Ignorovat zamčené objekty"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "Deselect upon layer change"
-msgstr ""
+msgstr "Zrušit výběr při změně vrstvy"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
@@ -6190,13 +6188,12 @@ msgstr ""
 "(jejich výběrem nebo výběrem skupiny, nebo vrstvy ve které jsou)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:505
-#, fuzzy
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr ""
-"Odznačte tuto volbu a budete moci vybírat i objekty které jsou uzamčeny "
-"(jejich výběrem nebo výběrem skupiny, nebo vrstvy ve které jsou)"
+"Odznačte tuto volbu pokud chcete aby aktuálně vybrané objekty zůstaly "
+"vybranými i po změně vrstvy"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Selecting"
@@ -6348,23 +6345,23 @@ msgstr ""
 "Okno logu zapnete nastavením atributu dialogs.debug 'redirect' na 1 v "
 "preferences.xml"
 
-#: ../src/ui/dialog/scriptdialog.cpp:181
+#: ../src/ui/dialog/scriptdialog.cpp:185
 msgid "_Execute Python"
 msgstr "_Spustit Python"
 
-#: ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/scriptdialog.cpp:187
 msgid "_Execute Perl"
 msgstr "_Spustit Perl"
 
-#: ../src/ui/dialog/scriptdialog.cpp:192
+#: ../src/ui/dialog/scriptdialog.cpp:196
 msgid "Script"
 msgstr "Skript"
 
-#: ../src/ui/dialog/scriptdialog.cpp:202
+#: ../src/ui/dialog/scriptdialog.cpp:206
 msgid "Output"
 msgstr "Výstup"
 
-#: ../src/ui/dialog/scriptdialog.cpp:212
+#: ../src/ui/dialog/scriptdialog.cpp:216
 msgid "Errors"
 msgstr "Chyby"
 
@@ -6717,6 +6714,8 @@ msgid ""
 "Edit the current transform= matrix; otherwise, post-multiply transform= by "
 "this matrix"
 msgstr ""
+"Upraví současnou matici transform= na tuto; jinak vynásobí současnou "
+"transform= matici touto maticí"
 
 #: ../src/ui/dialog/transformation.cpp:115
 msgid "_Move"
@@ -6751,9 +6750,8 @@ msgid "_Use SSL"
 msgstr "Po_užít SSL"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
-#, fuzzy
 msgid "_Register"
-msgstr "Posunout výš"
+msgstr "_Registrace"
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
@@ -6778,9 +6776,8 @@ msgid "Connect"
 msgstr "Připojit"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:145
-#, fuzzy
 msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "Spojení s Jabber serverem <b>%1</b> se nepodařilo sestavit"
+msgstr "Navazuji spojení s Jabber serverem <b>%1</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:172
 #: ../src/ui/dialog/whiteboard-connect.cpp:217
@@ -6807,9 +6804,8 @@ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "Připojen k Jabber serveru <b>%1</b> jako <b>%2</b>"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:260
-#, fuzzy
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "Přihlášení k Jabber serveru <b>%1</b> jako <b>%1</b> selhalo"
+msgstr "Registrace na Jabber serveru <b>%1</b> jako <b>%2</b> selhala"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
@@ -7071,7 +7067,7 @@ msgstr "Seznam"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "Wrap"
-msgstr ""
+msgstr "Zalamování"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -7357,13 +7353,13 @@ msgid "Stroke width: %.5g%s"
 msgstr "Šířka čáry: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, fuzzy, c-format
-msgid "O:%.3g"
+#, c-format
+msgid "0:%.3g"
 msgstr "0:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, fuzzy, c-format
-msgid "O:.%d"
+#, c-format
+msgid "0:.%d"
 msgstr "0:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8629,8 +8625,7 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Upravit nastavení dokumnetu (ukládáno v dokumentu)"
 
 #: ../src/verbs.cpp:2319
-#, fuzzy
-msgid "Document _Metadata..."
+msgid "_Document Metadata..."
 msgstr "Metadata _Dokumentu..."
 
 #: ../src/verbs.cpp:2320
@@ -8810,8 +8805,7 @@ msgid "Query information about extensions"
 msgstr "Získat informace o rozšířeních"
 
 #: ../src/verbs.cpp:2369
-#, fuzzy
-msgid "Layer_s..."
+msgid "_Layers..."
 msgstr "Vrstvy..."
 
 #: ../src/verbs.cpp:2370
@@ -9749,59 +9743,56 @@ msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
+"Toto písmo není ve vašem systému nainstalováno. Inkscape místo něj použije "
+"výchozí písmo."
 
 #: ../src/widgets/toolbox.cpp:3394
-#, fuzzy
 msgid "Rag right"
-msgstr "Práva"
+msgstr "Zarovnání nalevo"
 
 #: ../src/widgets/toolbox.cpp:3405
-#, fuzzy
 msgid "Centered"
-msgstr "Střed X"
+msgstr "Zarovnání na střed"
 
 #: ../src/widgets/toolbox.cpp:3416
 msgid "Rag left"
-msgstr ""
+msgstr "Zarovnání vpravo"
 
 #: ../src/widgets/toolbox.cpp:3427
 msgid "Justified"
-msgstr ""
+msgstr "Zarovnání do bloku"
 
 #: ../src/widgets/toolbox.cpp:3443
 msgid "Bold"
-msgstr ""
+msgstr "Tučné"
 
 #: ../src/widgets/toolbox.cpp:3454
 msgid "Italic"
-msgstr ""
+msgstr "Kurzíva"
 
 #: ../src/widgets/toolbox.cpp:3552
 msgid "Spacing between letters"
-msgstr ""
+msgstr "Mezery mezi písmeny"
 
 #: ../src/widgets/toolbox.cpp:3573
 msgid "Spacing between lines"
-msgstr ""
+msgstr "Mezery mezi řádky"
 
 #: ../src/widgets/toolbox.cpp:3602
-#, fuzzy
 msgid "Horizontal kerning"
-msgstr "Vodorovné mezery"
+msgstr "Vodorovný kerning"
 
 #: ../src/widgets/toolbox.cpp:3623
-#, fuzzy
 msgid "Vertical kerning"
-msgstr "Svislé mezery"
+msgstr "Svislý kerning"
 
 #: ../src/widgets/toolbox.cpp:3650
 msgid "Letter rotation"
-msgstr ""
+msgstr "Rotace znaků"
 
 #: ../src/widgets/toolbox.cpp:3671
-#, fuzzy
 msgid "Remove manual kerns"
-msgstr "Odstranit manuální _kerning"
+msgstr "Odstranit manuální kerning"
 
 #: ../src/widgets/toolbox.cpp:3790
 msgid "Make connectors avoid selected objects"
@@ -10014,21 +10005,21 @@ msgstr "Šířka Můstku"
 
 #: ../share/extensions/ffmet.inx.h:2 ../share/extensions/ffms.inx.h:2
 msgid "First String Length"
-msgstr "Délka prvního řetězce"
+msgstr "Délka první struny"
 
 #: ../share/extensions/ffmet.inx.h:3 ../share/extensions/ffms.inx.h:3
 #: ../share/extensions/ffset.inx.h:2 ../share/extensions/ffss.inx.h:2
 msgid "Fretboard Designer"
-msgstr ""
+msgstr "Návrh hmatníku"
 
 #: ../share/extensions/ffmet.inx.h:4 ../share/extensions/ffms.inx.h:4
 #: ../share/extensions/ffset.inx.h:3 ../share/extensions/ffss.inx.h:3
 msgid "Fretboard Edges"
-msgstr ""
+msgstr "Hrany hmatníku"
 
 #: ../share/extensions/ffmet.inx.h:5 ../share/extensions/ffms.inx.h:5
 msgid "Last String Length"
-msgstr "Délka posledního řetězce"
+msgstr "Délka poslední struny"
 
 #: ../share/extensions/ffmet.inx.h:6
 msgid "Multi Length Equal Temperament"
@@ -10037,17 +10028,17 @@ msgstr ""
 #: ../share/extensions/ffmet.inx.h:7 ../share/extensions/ffms.inx.h:7
 #: ../share/extensions/ffset.inx.h:4 ../share/extensions/ffss.inx.h:4
 msgid "Number of Frets"
-msgstr "Počet podrážděných"
+msgstr "Počet pražců"
 
 #: ../share/extensions/ffmet.inx.h:8 ../share/extensions/ffms.inx.h:8
 #: ../share/extensions/ffset.inx.h:5 ../share/extensions/ffss.inx.h:5
 msgid "Number of Strings"
-msgstr "Počet Řetězců"
+msgstr "Počet strun"
 
 #: ../share/extensions/ffmet.inx.h:9 ../share/extensions/ffms.inx.h:9
 #: ../share/extensions/ffset.inx.h:6 ../share/extensions/ffss.inx.h:6
 msgid "Nut Width"
-msgstr "Šířka cvoku"
+msgstr "Šířka Cvočku"
 
 #: ../share/extensions/ffmet.inx.h:10 ../share/extensions/ffms.inx.h:11
 msgid "Perpendicular Distance"
@@ -10055,11 +10046,11 @@ msgstr "Kolmá vzdálenost"
 
 #: ../share/extensions/ffmet.inx.h:11 ../share/extensions/ffset.inx.h:7
 msgid "Scale Base (2 for Octave)"
-msgstr ""
+msgstr "Základna stupnice (2 na oktávu)"
 
 #: ../share/extensions/ffmet.inx.h:12 ../share/extensions/ffset.inx.h:10
 msgid "Tones in Scale"
-msgstr ""
+msgstr "Tóny na stupnici"
 
 #: ../share/extensions/ffmet.inx.h:13 ../share/extensions/ffms.inx.h:13
 #: ../share/extensions/ffset.inx.h:11 ../share/extensions/ffss.inx.h:11
@@ -10072,15 +10063,15 @@ msgstr ""
 
 #: ../share/extensions/ffms.inx.h:10 ../share/extensions/ffss.inx.h:7
 msgid "Path to Scala *.scl File"
-msgstr "Křivka so souboru Scala *.scl"
+msgstr "Cesta ke Scala *.scl souboru"
 
 #: ../share/extensions/ffms.inx.h:12
 msgid "Tuning (scale step for each string seperated by semicolons)"
-msgstr ""
+msgstr "Ladění (odstupy na stupnici pro každou strunu oddělené středníky)"
 
 #: ../share/extensions/ffset.inx.h:8 ../share/extensions/ffss.inx.h:8
 msgid "Scale Length"
-msgstr "Škálovat délku"
+msgstr "Délka stupnice"
 
 #: ../share/extensions/ffset.inx.h:9
 msgid "Single Length Equal Temperament"
@@ -10092,7 +10083,7 @@ msgstr ""
 
 #: ../share/extensions/ffss.inx.h:10
 msgid "Tuning (Scale step for each string seperated by semicolons)"
-msgstr ""
+msgstr "Ladění (Odstupy na stupnici pro každou strunu oddělené středníky)"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -10152,61 +10143,39 @@ msgstr "Počet kroků interpolace"
 
 #: ../share/extensions/kochify.inx.h:1
 msgid "Fractal (Koch)"
-msgstr ""
+msgstr "Fraktál (Koch)"
 
 #: ../share/extensions/kochify_load.inx.h:1
-#, fuzzy
 msgid "Fractal (Koch) - Load Pattern"
-msgstr "Kochifikace (nahrát vzor)"
+msgstr "Fraktál (Koch) - Nahrát vzor"
 
-#: ../share/extensions/lindenmayer.inx.h:1
+#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
+msgid "Angle"
+msgstr "Úhel"
+
+#: ../share/extensions/lindenmayer.inx.h:2
 msgid "Axiom"
 msgstr "Axiom"
 
-#: ../share/extensions/lindenmayer.inx.h:2
-#, fuzzy
-msgid "L-system"
-msgstr "Systém"
-
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
-msgid "Left angle"
-msgstr "Čtyřúhelník"
+msgid "Fractal (Lindenmayer)"
+msgstr "Fraktál (Lindenmayer)"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "Pořadí"
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
-msgid "Randomize angle (%)"
-msgstr "Uzly náhodně"
-
-#: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
-msgid "Randomize step (%)"
-msgstr "Uzly náhodně"
-
-#: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
-msgid "Right angle"
-msgstr "Čtyřúhelník"
-
-#: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
 msgstr "Pravidla"
 
-#: ../share/extensions/lindenmayer.inx.h:12
-msgid "Step length (px)"
-msgstr ""
+#: ../share/extensions/lindenmayer.inx.h:7
+msgid "Step"
+msgstr "Krok"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr "Změřit Křivku"
-
-#: ../share/extensions/motion.inx.h:1
-msgid "Angle"
-msgstr "Úhel"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10336,7 +10305,7 @@ msgstr "Funkce"
 
 #: ../share/extensions/wavy.inx.h:4
 msgid "Function Plotter"
-msgstr "Vykreslení funkcí"
+msgstr "Vykreslit funkci"
 
 #: ../share/extensions/wavy.inx.h:5
 msgid "Nodes per period"
@@ -10377,16 +10346,6 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Vstup Windows Metafile"
-
-#~ msgid "%s Preferences"
-#~ msgstr "Nastavení %s"
-
-#, fuzzy
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Lindenmayer"
-
-#~ msgid "Step"
-#~ msgstr "Krok"
 
 #~ msgid "Adobe PDF (*.pdf)"
 #~ msgstr "Adobe PDF (*.pdf)"
