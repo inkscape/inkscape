@@ -331,13 +331,25 @@ SessionManager::registerWithServer(Glib::ustring const& username, Glib::ustring 
 
 int
 SessionManager::connectToServer(Glib::ustring const& server, Glib::ustring const& port, 
-				Glib::ustring const& username, Glib::ustring const& pw, bool usessl)
+				Glib::ustring const& entered_username, Glib::ustring const& pw, bool usessl)
 {
 	GError* error = NULL;
+	Glib::ustring username;
+	Glib::ustring jid;
 
 	initializeConnection(server,port,usessl);
 
-	this->session_data->jid = username + "@" + server + "/" + RESOURCE_NAME;
+	Glib::ustring::size_type atPos = entered_username.find('@');
+
+     if (atPos != Glib::ustring::npos) {
+ 		jid += entered_username;
+ 		username = entered_username.substr(0, atPos);
+ 	} else {
+ 		jid += entered_username + "@" + server + "/" + RESOURCE_NAME;
+ 		username = entered_username;
+ 	}
+ 
+	this->session_data->jid = jid;
 
 	if (!lm_connection_authenticate_and_block(this->session_data->connection, username.c_str(), pw.c_str(), RESOURCE_NAME, &error)) {
 		if (error != NULL) {

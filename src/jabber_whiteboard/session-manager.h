@@ -245,14 +245,14 @@ public:
 	 * Connect to a Jabber server.
 	 *
 	 * @param server Jabber server URL
-	 * @param username Jabber username
+	 * @param entered_username Jabber username provided by user (may also be full JID)
 	 * @param pw password for Jabber account
 	 * @param usessl use SSL for connection
 	 *
 	 * @return CONNECT_SUCCESS if connection successful; FAILED_TO_CONNECT if connection failed or INVALID_AUTH
 	 * if authentication invalid
 	 */
-	int connectToServer(Glib::ustring const& server, Glib::ustring const& port, Glib::ustring const& username, Glib::ustring const& pw, bool usessl);
+	int connectToServer(Glib::ustring const& server, Glib::ustring const& port, Glib::ustring const& entered_username, Glib::ustring const& pw, bool usessl);
 	
 	/**
 	 * Register with a Jabber server.
