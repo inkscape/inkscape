@@ -103,12 +103,13 @@ SPStyle const * sp_te_style_at_position(SPItem const *text, Inkscape::Text::Layo
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL)
         return NULL;
-    SPObject const *pos_obj = NULL;
-    layout->getSourceOfCharacter(position, (void**)&pos_obj);
-    if (pos_obj == NULL) pos_obj = text;
-    while (SP_OBJECT_STYLE(pos_obj) == NULL)
-        pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
-    return SP_OBJECT_STYLE(pos_obj);
+    union { SPObject const *op; void *vp; } pos_obj;
+    pos_obj.vp = NULL;
+    layout->getSourceOfCharacter(position, &pos_obj.vp);
+    if (pos_obj.vp == NULL) pos_obj.op = text;
+    while (SP_OBJECT_STYLE(pos_obj.op) == NULL)
+        pos_obj.op = SP_OBJECT_PARENT(pos_obj.op);   // SPStrings don't have style
+    return SP_OBJECT_STYLE(pos_obj.op);
 }
 
 /*
@@ -318,30 +319,30 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
         return position;
 
     Inkscape::Text::Layout const *layout = te_get_layout(item);
-    SPObject *split_obj;
+    union { SPObject *op; void *vp; } split_obj;
     Glib::ustring::iterator split_text_iter;
     if (position == layout->end())
-        split_obj = NULL;
+        split_obj.vp = NULL;
     else
-        layout->getSourceOfCharacter(position, (void**)&split_obj, &split_text_iter);
+        layout->getSourceOfCharacter(position, &split_obj.vp, &split_text_iter);
 
-    if (split_obj == NULL || is_line_break_object(split_obj)) {
-        if (split_obj == NULL) split_obj = item->lastChild();
-        if (split_obj) {
-            Inkscape::XML::Node *new_node = duplicate_node_without_children(SP_OBJECT_REPR(split_obj));
-            SP_OBJECT_REPR(SP_OBJECT_PARENT(split_obj))->addChild(new_node, SP_OBJECT_REPR(split_obj));
+    if (split_obj.vp == NULL || is_line_break_object(split_obj.op)) {
+        if (split_obj.vp == NULL) split_obj.op = item->lastChild();
+        if (split_obj.vp) {
+            Inkscape::XML::Node *new_node = duplicate_node_without_children(SP_OBJECT_REPR(split_obj.op));
+            SP_OBJECT_REPR(SP_OBJECT_PARENT(split_obj.op))->addChild(new_node, SP_OBJECT_REPR(split_obj.op));
             Inkscape::GC::release(new_node);
         }
-    } else if (SP_IS_STRING(split_obj)) {
-        Glib::ustring *string = &SP_STRING(split_obj)->string;
+    } else if (SP_IS_STRING(split_obj.op)) {
+        Glib::ustring *string = &SP_STRING(split_obj.op)->string;
         unsigned char_index = 0;
         for (Glib::ustring::iterator it = string->begin() ; it != split_text_iter ; it++)
             char_index++;
         // we need to split the entire text tree into two
-        SPString *new_string = SP_STRING(split_text_object_tree_at(split_obj, char_index));
+        SPString *new_string = SP_STRING(split_text_object_tree_at(split_obj.op, char_index));
         SP_OBJECT_REPR(new_string)->setContent(&*split_text_iter.base());   // a little ugly
         string->erase(split_text_iter, string->end());
-        SP_OBJECT_REPR(split_obj)->setContent(string->c_str());
+        SP_OBJECT_REPR(split_obj.op)->setContent(string->c_str());
         // TODO: if the split point was at the beginning of a span we have a whole load of empty elements to clean up
     } else {
         // TODO
@@ -404,49 +405,49 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
     }
 
     Inkscape::Text::Layout const *layout = te_get_layout(item);
-    SPObject *source_obj;
+    union { SPObject *op; void *vp; } source_obj;
     Glib::ustring::iterator iter_text;
     // we want to insert after the previous char, not before the current char.
     // it makes a difference at span boundaries
     Inkscape::Text::Layout::iterator it_prev_char = position;
     bool cursor_at_start = !it_prev_char.prevCharacter();
     bool cursor_at_end = position == layout->end();
-    layout->getSourceOfCharacter(it_prev_char, (void**)&source_obj, &iter_text);
-    if (SP_IS_STRING(source_obj)) {
+    layout->getSourceOfCharacter(it_prev_char, &source_obj.vp, &iter_text);
+    if (SP_IS_STRING(source_obj.op)) {
         // the simple case
         if (!cursor_at_start) iter_text++;
-        SPString *string_item = SP_STRING(source_obj);
+        SPString *string_item = SP_STRING(source_obj.op);
         insert_into_spstring(string_item, cursor_at_end ? string_item->string.end() : iter_text, utf8);
     } else {
         // the not-so-simple case where we're at a line break or other control char; add to the next child/sibling SPString
         if (cursor_at_start) {
-            source_obj = item;
-            if (source_obj->hasChildren()) {
-                source_obj = source_obj->firstChild();
+            source_obj.op = item;
+            if (source_obj.op->hasChildren()) {
+                source_obj.op = source_obj.op->firstChild();
                 if (SP_IS_FLOWTEXT(item)) {
-                    while (SP_IS_FLOWREGION(source_obj) || SP_IS_FLOWREGIONEXCLUDE(source_obj))
-                        source_obj = SP_OBJECT_NEXT(source_obj);
-                    if (source_obj == NULL)
-                        source_obj = item;
+                    while (SP_IS_FLOWREGION(source_obj.op) || SP_IS_FLOWREGIONEXCLUDE(source_obj.op))
+                        source_obj.op = SP_OBJECT_NEXT(source_obj.op);
+                    if (source_obj.vp == NULL)
+                        source_obj.op = item;
                 }
             }
-            if (source_obj == item && SP_IS_FLOWTEXT(item)) {
+            if (source_obj.op == item && SP_IS_FLOWTEXT(item)) {
                 Inkscape::XML::Node *para = sp_repr_new("svg:flowPara");
                 SP_OBJECT_REPR(item)->appendChild(para);
-                source_obj = item->lastChild();
+                source_obj.op = item->lastChild();
             }
         } else
-            source_obj = SP_OBJECT_NEXT(source_obj);
+            source_obj.op = SP_OBJECT_NEXT(source_obj.op);
 
-        if (source_obj) {  // never fails
-            SPString *string_item = sp_te_seek_next_string_recursive(source_obj);
+        if (source_obj.vp) {  // never fails
+            SPString *string_item = sp_te_seek_next_string_recursive(source_obj.op);
             if (string_item == NULL) {
                 // need to add an SPString in this (pathological) case
                 Inkscape::XML::Node *rstring = sp_repr_new_text("");
-                SP_OBJECT_REPR(source_obj)->addChild(rstring, NULL);
+                SP_OBJECT_REPR(source_obj.op)->addChild(rstring, NULL);
                 Inkscape::GC::release(rstring);
-                g_assert(SP_IS_STRING(source_obj->firstChild()));
-                string_item = SP_STRING(source_obj->firstChild());
+                g_assert(SP_IS_STRING(source_obj.op->firstChild()));
+                string_item = SP_STRING(source_obj.op->firstChild());
             }
             insert_into_spstring(string_item, cursor_at_end ? string_item->string.end() : string_item->string.begin(), utf8);
         }
@@ -624,33 +625,33 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
         last = start;
     }
     Inkscape::Text::Layout const *layout = te_get_layout(item);
-    SPObject *start_item, *end_item;
+    union { SPObject *op; void *vp; } start_item, end_item;
     Glib::ustring::iterator start_text_iter, end_text_iter;
-    layout->getSourceOfCharacter(first, (void**)&start_item, &start_text_iter);
-    layout->getSourceOfCharacter(last, (void**)&end_item, &end_text_iter);
-    if (start_item == NULL)
+    layout->getSourceOfCharacter(first, &start_item.vp, &start_text_iter);
+    layout->getSourceOfCharacter(last, &end_item.vp, &end_text_iter);
+    if (start_item.vp == NULL)
         return first;   // start is at end of text
-    if (is_line_break_object(start_item))
-        move_to_end_of_paragraph(&start_item, &start_text_iter);
-    if (end_item == NULL) {
-        end_item = item->lastChild();
-        move_to_end_of_paragraph(&end_item, &end_text_iter);
+    if (is_line_break_object(start_item.op))
+        move_to_end_of_paragraph(&start_item.op, &start_text_iter);
+    if (end_item.vp == NULL) {
+        end_item.op = item->lastChild();
+        move_to_end_of_paragraph(&end_item.op, &end_text_iter);
     }
-    else if (is_line_break_object(end_item))
-        move_to_end_of_paragraph(&end_item, &end_text_iter);
+    else if (is_line_break_object(end_item.op))
+        move_to_end_of_paragraph(&end_item.op, &end_text_iter);
 
-    SPObject *common_ancestor = get_common_ancestor(item, start_item, end_item);
+    SPObject *common_ancestor = get_common_ancestor(item, start_item.op, end_item.op);
 
-    if (start_item == end_item) {
+    if (start_item.op == end_item.op) {
         // the quick case where we're deleting stuff all from the same string
-        if (SP_IS_STRING(start_item)) {     // always true (if it_start != it_end anyway)
-            erase_from_spstring(SP_STRING(start_item), start_text_iter, end_text_iter);
+        if (SP_IS_STRING(start_item.op)) {     // always true (if it_start != it_end anyway)
+            erase_from_spstring(SP_STRING(start_item.op), start_text_iter, end_text_iter);
         }
     } else {
-        SPObject *sub_item = start_item;
+        SPObject *sub_item = start_item.op;
         // walk the tree from start_item to end_item, deleting as we go
         while (sub_item != item) {
-            if (sub_item == end_item) {
+            if (sub_item == end_item.op) {
                 if (SP_IS_STRING(sub_item)) {
                     Glib::ustring *string = &SP_STRING(sub_item)->string;
                     erase_from_spstring(SP_STRING(sub_item), string->begin(), end_text_iter);
@@ -659,7 +660,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
             }
             if (SP_IS_STRING(sub_item)) {
                 SPString *string = SP_STRING(sub_item);
-                if (sub_item == start_item)
+                if (sub_item == start_item.op)
                     erase_from_spstring(string, start_text_iter, string->string.end());
                 else
                     erase_from_spstring(string, string->string.begin(), string->string.end());
@@ -683,7 +684,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start, Inksc
                     sub_item = next_item;
                     if (is_sibling) break;
                     // no more siblings, go up a parent
-                } while (sub_item != item && sub_item != end_item);
+                } while (sub_item != item && sub_item != end_item.op);
             }
         }
     }
@@ -748,10 +749,10 @@ sp_te_get_string_multiline (SPItem const *text, Inkscape::Text::Layout::iterator
     Glib::ustring result;
     // not a particularly fast piece of code. I'll optimise it if people start to notice.
     for ( ; first < last ; first.nextCharacter()) {
-        SPObject *char_item;
+        union { SPObject *op; void *vp; } char_item;
         Glib::ustring::iterator text_iter;
-        layout->getSourceOfCharacter(first, (void**)&char_item, &text_iter);
-        if (SP_IS_STRING(char_item))
+        layout->getSourceOfCharacter(first, &char_item.vp, &text_iter);
+        if (SP_IS_STRING(char_item.op))
             result += *text_iter;
         else
             result += '\n';
@@ -832,17 +833,17 @@ text_tag_attributes_at_position(SPItem *item, Inkscape::Text::Layout::iterator c
         return NULL;   // flowtext doesn't support kerning yet
     SPText *text = SP_TEXT(item);
 
-    SPObject *source_item;
+    union { SPObject *op; void *vp; } source_item;
     Glib::ustring::iterator source_text_iter;
-    text->layout.getSourceOfCharacter(position, (void**)&source_item, &source_text_iter);
+    text->layout.getSourceOfCharacter(position, &source_item.vp, &source_text_iter);
 
-    if (!SP_IS_STRING(source_item)) return NULL;
-    Glib::ustring *string = &SP_STRING(source_item)->string;
-    *char_index = sum_sibling_text_lengths_before(source_item);
+    if (!SP_IS_STRING(source_item.op)) return NULL;
+    Glib::ustring *string = &SP_STRING(source_item.op)->string;
+    *char_index = sum_sibling_text_lengths_before(source_item.op);
     for (Glib::ustring::iterator it = string->begin() ; it != source_text_iter ; it++)
         ++*char_index;
 
-    return attributes_for_object(SP_OBJECT_PARENT(source_item));
+    return attributes_for_object(SP_OBJECT_PARENT(source_item.op));
 }
 
 void
@@ -875,12 +876,12 @@ sp_te_adjust_rotation_screen(SPItem *text, Inkscape::Text::Layout::iterator cons
     gdouble factor = 1 / desktop->current_zoom();
     NR::Matrix t = sp_item_i2doc_affine(text);
     factor = factor / NR::expansion(t);
-    SPObject *source_item;
+    union { SPObject *op; void *vp; } source_item;
     Inkscape::Text::Layout const *layout = te_get_layout(text);
     if (layout == NULL) return;
-    layout->getSourceOfCharacter(std::min(start, end), (void**)&source_item);
-    if (source_item == NULL) return;
-    gdouble degrees = (180/M_PI) * atan2(pixels, SP_OBJECT_PARENT(source_item)->style->font_size.computed / factor);
+    layout->getSourceOfCharacter(std::min(start, end), &source_item.vp);
+    if (source_item.op == NULL) return;
+    gdouble degrees = (180/M_PI) * atan2(pixels, SP_OBJECT_PARENT(source_item.op)->style->font_size.computed / factor);
 
     sp_te_adjust_rotation(text, start, end, desktop, degrees);
 }
@@ -913,18 +914,18 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     Inkscape::Text::Layout const *layout = te_get_layout(text);
 
     gdouble val;
-    SPObject *source_obj;
+    union { SPObject *op; void *vp; } source_obj;
     unsigned nb_let;
-    layout->getSourceOfCharacter(std::min(start, end), (void**)&source_obj);
+    layout->getSourceOfCharacter(std::min(start, end), &source_obj.vp);
 
-    if (source_obj == NULL) {   // end of text
-        source_obj = text->lastChild();
+    if (source_obj.vp == NULL) {   // end of text
+        source_obj.op = text->lastChild();
     }
-    if (SP_IS_STRING(source_obj)) {
-        source_obj = source_obj->parent;
+    if (SP_IS_STRING(source_obj.op)) {
+        source_obj.op = source_obj.op->parent;
     }
 
-    SPStyle *style = SP_OBJECT_STYLE (source_obj);
+    SPStyle *style = SP_OBJECT_STYLE (source_obj.op);
 
     // calculate real value
     /* TODO: Consider calculating val unconditionally, i.e. drop the first `if' line, and
@@ -942,9 +943,9 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     }
 
     if (start == end) {
-        while (!is_line_break_object(source_obj))     // move up the tree so we apply to the closest paragraph
-            source_obj = SP_OBJECT_PARENT(source_obj);
-        nb_let = sp_text_get_length(source_obj);
+        while (!is_line_break_object(source_obj.op))     // move up the tree so we apply to the closest paragraph
+            source_obj.op = SP_OBJECT_PARENT(source_obj.op);
+        nb_let = sp_text_get_length(source_obj.op);
     } else {
         nb_let = abs(layout->iteratorToCharIndex(end) - layout->iteratorToCharIndex(start));
     }
@@ -954,7 +955,7 @@ sp_te_adjust_tspan_letterspacing_screen(SPItem *text, Inkscape::Text::Layout::it
     gdouble const zoom = desktop->current_zoom();
     gdouble const zby = (by
                          / (zoom * (nb_let > 1 ? nb_let - 1 : 1))
-                         / NR::expansion(sp_item_i2doc_affine(SP_ITEM(source_obj))));
+                         / NR::expansion(sp_item_i2doc_affine(SP_ITEM(source_obj.op))));
     val += zby;
 
     if (start == end) {
@@ -1645,17 +1646,17 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
         last = start;
     }
     Inkscape::Text::Layout const *layout = te_get_layout(text);
-    SPObject *start_item, *end_item;
+    union { SPObject *op; void *vp; } start_item, end_item;
     Glib::ustring::iterator start_text_iter, end_text_iter;
-    layout->getSourceOfCharacter(first, (void**)&start_item, &start_text_iter);
-    layout->getSourceOfCharacter(last, (void**)&end_item, &end_text_iter);
-    if (start_item == NULL)
+    layout->getSourceOfCharacter(first, &start_item.vp, &start_text_iter);
+    layout->getSourceOfCharacter(last, &end_item.vp, &end_text_iter);
+    if (start_item.vp == NULL)
         return;   // start is at end of text
-    if (is_line_break_object(start_item))
-        start_item = SP_OBJECT_NEXT(start_item);
-    if (is_line_break_object(end_item))
-        end_item = SP_OBJECT_NEXT(end_item);
-    if (end_item == NULL) end_item = text;
+    if (is_line_break_object(start_item.op))
+        start_item.op = SP_OBJECT_NEXT(start_item.op);
+    if (is_line_break_object(end_item.op))
+        end_item.op = SP_OBJECT_NEXT(end_item.op);
+    if (end_item.op == NULL) end_item.op = text;
 
     /* stage 1: applying the style. Go up to the closest common ancestor of
     start and end and then semi-recursively apply the style to all the
@@ -1665,10 +1666,10 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     eg: <span>abcDEF</span><span>GHI</span><span>JKLmno</span>
     The recursion may involve creating new spans.
     */
-    SPObject *common_ancestor = get_common_ancestor(text, start_item, end_item);
-    start_item = ascend_while_first(start_item, start_text_iter, common_ancestor);
-    end_item = ascend_while_first(end_item, end_text_iter, common_ancestor);
-    recursively_apply_style(common_ancestor, css, start_item, start_text_iter, end_item, end_text_iter, span_name_for_text_object(text));
+    SPObject *common_ancestor = get_common_ancestor(text, start_item.op, end_item.op);
+    start_item.op = ascend_while_first(start_item.op, start_text_iter, common_ancestor);
+    end_item.op = ascend_while_first(end_item.op, end_text_iter, common_ancestor);
+    recursively_apply_style(common_ancestor, css, start_item.op, start_text_iter, end_item.op, end_text_iter, span_name_for_text_object(text));
 
     /* stage 2: cleanup the xml tree (of which there are multiple passes) */
     /* discussion: this stage requires a certain level of inventiveness because

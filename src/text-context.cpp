@@ -1356,12 +1356,13 @@ sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
         if (!begin_it.prevCharacter())
             end_it.nextCharacter();
     for (Inkscape::Text::Layout::iterator it = begin_it ; it < end_it ; it.nextStartOfSpan()) {
-        SPObject const *pos_obj = NULL;
-        layout->getSourceOfCharacter(it, (void**)&pos_obj);
-        if (pos_obj == NULL) continue;
-        while (SP_OBJECT_STYLE(pos_obj) == NULL && SP_OBJECT_PARENT(pos_obj))
-            pos_obj = SP_OBJECT_PARENT(pos_obj);   // SPStrings don't have style
-        styles_list = g_slist_prepend(styles_list, (gpointer)pos_obj);
+        union { SPObject const *op; void *vp; } pos_obj;
+        pos_obj.vp = NULL;
+        layout->getSourceOfCharacter(it, &pos_obj.vp);
+        if (pos_obj.vp == NULL) continue;
+        while (SP_OBJECT_STYLE(pos_obj.op) == NULL && SP_OBJECT_PARENT(pos_obj.op))
+            pos_obj.op = SP_OBJECT_PARENT(pos_obj.op);   // SPStrings don't have style
+        styles_list = g_slist_prepend(styles_list, (gpointer)pos_obj.op);
     }
 
     int result = sp_desktop_query_style_from_list (styles_list, style, property);
