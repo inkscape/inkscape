@@ -54,28 +54,27 @@ io/streamtest.cpp
 
 ###############################################
 # Bob:
-# Uncomment these to build Inkboard
 # For the moment, DO NOT remove these from cvs
 # until those files compile everywhere
 ###############################################
-# Uncomment the following to build with Loudmouth
+# Uncomment the following to prevent building with Loudmouth
 ###############################################
-#dialogs/whiteboard-connect-dialog.cpp
-#dialogs/whiteboard-common-dialog.cpp
-#dialogs/whiteboard-sharewithchat-dialog.cpp
-#dialogs/whiteboard-sharewithuser-dialog.cpp
-#jabber_whiteboard
-#ui/dialog/session-player.cpp
-#ui/dialog/whiteboard-connect.cpp
-#ui/dialog/whiteboard-sharewithchat.cpp
-#ui/dialog/whiteboard-sharewithuser.cpp
+dialogs/whiteboard-connect-dialog.cpp
+dialogs/whiteboard-common-dialog.cpp
+dialogs/whiteboard-sharewithchat-dialog.cpp
+dialogs/whiteboard-sharewithuser-dialog.cpp
+jabber_whiteboard
+ui/dialog/session-player.cpp
+ui/dialog/whiteboard-connect.cpp
+ui/dialog/whiteboard-sharewithchat.cpp
+ui/dialog/whiteboard-sharewithuser.cpp
 ###############################################
-#Uncomment the following to build with Pedro
+# Uncomment the following to prevent building with Pedro
 ###############################################
-#jabber_whiteboard/pedroxmpp.h
-#jabber_whiteboard/pedrodom.h
-#jabber_whiteboard/pedroxmpp.cpp
-#jabber_whiteboard/pedrodom.cpp
+jabber_whiteboard/pedroxmpp.h
+jabber_whiteboard/pedrodom.h
+jabber_whiteboard/pedroxmpp.cpp
+jabber_whiteboard/pedrodom.cpp
 
 ###############################################
 # Various test harnesses in removeoverlap
