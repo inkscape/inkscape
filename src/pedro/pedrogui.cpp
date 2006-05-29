@@ -2411,6 +2411,8 @@ bool PedroGui::doSetup()
     Glib::signal_timeout().connect(
            sigc::mem_fun(*this, &PedroGui::checkEventQueue), 20 );
 
+    config.readFile("pedro.ini");
+
     //client.addXmppEventListener(*this);
     client.eventQueueEnable(true);
 

@@ -28,6 +28,7 @@
 #include <gtkmm.h>
 
 #include "pedroxmpp.h"
+#include "pedroconfig.h"
 
 
 namespace Pedro
@@ -678,8 +679,9 @@ public:
 
     virtual ~PedroGui();
 
-    //Let everyone share this
+    //Let everyone share these
     XmppClient client;
+    XmppConfig config;
 
 
     virtual void error(const char *fmt, ...);

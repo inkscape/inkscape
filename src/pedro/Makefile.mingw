@@ -55,7 +55,11 @@ SSL=$(GTK)
 
 CFLAGS = -g -Wall -DHAVE_SSL
 INC  = -I. -I$(GTK)/include -I$(SSL)/include
-LIBS = -mwindows -L$(GTK)/lib -L$(SSL) -lssl -lcrypto -lgdi32 -lws2_32
+
+
+LIBSC = -mconsole -L$(GTK)/lib -L$(SSL) -lssl -lcrypto -lgdi32 -lws2_32
+LIBS  = -mwindows -L$(GTK)/lib -L$(SSL) -lssl -lcrypto -lgdi32 -lws2_32
+
 RM = del
 CP = copy
 S = $(BSLASH)
@@ -110,7 +114,8 @@ endif
 
 OBJ = \
 pedrodom.o \
-pedroxmpp.o
+pedroxmpp.o \
+pedroconfig.o
 
 GUIOBJ = \
 pedrogui.o \
@@ -123,24 +128,24 @@ work/filerec.o  \
 work/groupchat.o
 
 test.exe: libpedro.a work/test.o
-	$(CXX) -o $@ work/test.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/test.o libpedro.a $(LIBSC)
 test: libpedro.a work/test.o
-	$(CXX) -o $@ work/test.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/test.o libpedro.a $(LIBSC)
         
 filesend.exe: libpedro.a work/filesend.o
-	$(CXX) -o $@ work/filesend.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/filesend.o libpedro.a $(LIBSC)
 filesend: libpedro.a work/filesend.o
-	$(CXX) -o $@ work/filesend.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/filesend.o libpedro.a $(LIBSC)
 
 filerec.exe: libpedro.a work/filerec.o
-	$(CXX) -o $@ work/filerec.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/filerec.o libpedro.a $(LIBSC)
 filerec: libpedro.a work/filerec.o
-	$(CXX) -o $@ work/filerec.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/filerec.o libpedro.a $(LIBSC)
 
 groupchat.exe: libpedro.a work/groupchat.o
-	$(CXX) -o $@ work/groupchat.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/groupchat.o libpedro.a $(LIBSC)
 groupchat: libpedro.a work/groupchat.o
-	$(CXX) -o $@ work/groupchat.o libpedro.a $(LIBS)
+	$(CXX) -o $@ work/groupchat.o libpedro.a $(LIBSC)
 
 pedro.exe: libpedro.a pedromain.o pedrogui.o
 	$(CXX) -o $@ pedromain.o pedrogui.o libpedro.a $(GTKLIBS) $(LIBS)
