@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>Fractal (Lindenmayer)</_name>
+    <_name>L-system</_name>
     <id>org.ekips.filter.turtle.lindenmayer</id>
 	<dependency type="executable" location="extensions">lindenmayer.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
