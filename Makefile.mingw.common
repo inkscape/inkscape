@@ -209,7 +209,7 @@ $(GTK)/bin/libxml2.dll \
 $(GTK)/lib/iconv.lib	\
 -lfreetype.dll -lfontconfig.dll  \
 -llcms.dll \
--lloudmouth-1.dll -lssl -lcrypto \
+#-lloudmouth-1.dll -lssl -lcrypto \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
 -lgc -mwindows -lws2_32 -lintl
 
