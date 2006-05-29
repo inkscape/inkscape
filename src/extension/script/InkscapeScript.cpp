@@ -66,6 +66,9 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
 #ifdef WITH_PERL
         langname="Perl";
         interp = new InkscapePerl();
+#else
+        g_print ("Internal Perl script functionality requested, but it was not compiled in!\n");
+        return false;
 #endif
         }
     else if (language == InkscapeScript::PYTHON)
@@ -73,6 +76,9 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
 #ifdef WITH_PYTHON
         langname="Python";
         interp = new InkscapePython();
+#else
+        g_print ("Internal Python script functionality requested, but it was not compiled in!\n");
+        return false;
 #endif
         }
     else

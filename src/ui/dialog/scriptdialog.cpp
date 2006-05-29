@@ -1,9 +1,4 @@
 /*
- * This dialog is for launching scripts whose main purpose if
- * the scripting of Inkscape itself.
- *
- * Authors:
- *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
  * Copyright (C) 2004, 2005 Authors
@@ -146,7 +141,8 @@ lang)
     Glib::ustring output;
     Glib::ustring error;
     Inkscape::Extension::Script::InkscapeScript engine;
-    engine.interpretScript(script, output, error, lang);
+    bool ok = engine.interpretScript(script, output, error, lang);
+    if (!ok) return;
     outputText.get_buffer()->set_text(output);
     errorText.get_buffer()->set_text(error);
 }
