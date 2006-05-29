@@ -30,7 +30,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
     Gtk::Dialog::Dialog("Temp Title", true, true), _help(help), _name(name)
 {
     /* A hack to internationalize the title properly */
-    gchar * title = g_strdup_printf(_("%s Preferences"), name.c_str());
+    gchar * title = g_strdup_printf("%s", name.c_str());
     this->set_title(title);
     g_free(title);
 
