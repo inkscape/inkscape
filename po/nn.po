@@ -5,9 +5,9 @@
 #
 # Merk: Alle statuslinjemeldingar skal slutta på «.» på nynorsk,
 # sjølv om dei ikkje gjer det på engelsk. Koordinatar skal ha
-# mellomrom mellom seg (eks. (34, 78)), og «×» er gongeteikn.
-# Karl Ove Hufthammer <karl@huftis.org>, 2004, 2005.
 #
+# mellomrom mellom seg (eks. (34, 78)), og «×» er gongeteikn.
+# Karl Ove Hufthammer <karl@huftis.org>, 2004, 2005, 2006.
 #: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
 #: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
 #: ../src/widgets/toolbox.cpp:3650
@@ -15,14 +15,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
-"PO-Revision-Date: 2005-07-14 20:29+0200\n"
+"POT-Creation-Date: 2006-05-30 21:57+0200\n"
+"PO-Revision-Date: 2006-04-30 19:00+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.1\n"
+"X-Generator: KBabel 1.11.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../inkscape.desktop.in.h:1
@@ -52,27 +52,25 @@ msgstr ""
 "heiltalsellipse, og med <b>Shift</b> for å teikna rundt startpunktet."
 
 #: ../src/connector-context.cpp:517
-#, fuzzy
 msgid "Creating new connector"
-msgstr "Lagar ny bane"
+msgstr "Lagar ny sambandslinje."
 
 #: ../src/connector-context.cpp:941
-#, fuzzy
 msgid "Finishing connector"
-msgstr "Fullfører penn"
+msgstr "Fullført sambandslinje."
 
 #: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr ""
+msgstr "<b>Sambandspunkt</b>: Klikk eller dra for å laga ei ny sambandslinje."
 
 #: ../src/connector-context.cpp:1156
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
+"<b>Sambandssluttpunkt</b>: Dra for å flytta eller kopla til nye figurar."
 
 #: ../src/connector-context.cpp:1267
-#, fuzzy
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "Merk <b>minst to objekt</b> du vil gruppera."
+msgstr "Merk <b>minst eitt ikkje-sambandsobjekt</b>."
 
 #: ../src/context-fns.cpp:29 ../src/context-fns.cpp:58
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -87,11 +85,11 @@ msgstr "<b>Laget er låst</b>. Du må låsa det opp før du kan teikna på det."
 msgid "%s at %s"
 msgstr "%s på %s"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "Inga førre forstørring."
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "Inga neste forstørring."
 
@@ -1145,7 +1143,7 @@ msgstr "Flytt %s"
 #: ../src/dialogs/iconpreview.cpp:143
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d × %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:876
@@ -1154,9 +1152,8 @@ msgid "Selection"
 msgstr "Utval"
 
 #: ../src/dialogs/iconpreview.cpp:193
-#, fuzzy
 msgid "Selection only or whole document"
-msgstr "Berre merk objekt i gjeldande lag"
+msgstr "Berre utval eller heile dokumentet"
 
 #: ../src/dialogs/iconpreview.cpp:201
 msgid "Refresh the icons"
@@ -1266,23 +1263,20 @@ msgid "Layer name:"
 msgstr "Lagnamn:"
 
 #: ../src/dialogs/layer-properties.cpp:152
-#, fuzzy
 msgid "Above current"
-msgstr "Lagra dokumentet."
+msgstr "Over gjeldande"
 
 #: ../src/dialogs/layer-properties.cpp:156
-#, fuzzy
 msgid "Below current"
-msgstr "Inga lag valt."
+msgstr "Under gjeldande"
 
 #: ../src/dialogs/layer-properties.cpp:159
 msgid "As sublayer of current"
-msgstr ""
+msgstr "Som underlag av gjeldande"
 
 #: ../src/dialogs/layer-properties.cpp:163
-#, fuzzy
 msgid "Position:"
-msgstr "_Rotering"
+msgstr "Plassering:"
 
 #: ../src/dialogs/layer-properties.cpp:181
 msgid "Rename Layer"
@@ -1381,45 +1375,44 @@ msgid "Master _opacity"
 msgstr "Hovud_gjennomsikt"
 
 #: ../src/dialogs/rdf.cpp:178
-#, fuzzy
 msgid "CC Attribution"
-msgstr "Attributt"
+msgstr "CC Tileigning"
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
-msgstr ""
+msgstr "CC Tileigning-Likedeling"
 
 #: ../src/dialogs/rdf.cpp:188
 msgid "CC Attribution-NoDerivs"
-msgstr ""
+msgstr "CC Tileigning-Ikkjeavleiing"
 
 #: ../src/dialogs/rdf.cpp:193
 msgid "CC Attribution-NonCommercial"
-msgstr ""
+msgstr "CC Tileigning-Ikkjekommersiell"
 
 #: ../src/dialogs/rdf.cpp:198
 msgid "CC Attribution-NonCommercial-ShareAlike"
-msgstr ""
+msgstr "CC Tileigning-Ikkjekommersiell-Likedeling"
 
 #: ../src/dialogs/rdf.cpp:203
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "CC Tileigning-Ikkjekommersiell-Ikkjeavleiing"
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
-msgstr ""
+msgstr "GNU General Public License"
 
 #: ../src/dialogs/rdf.cpp:213
 msgid "GNU Lesser General Public License"
-msgstr ""
+msgstr "GNU Lesser General Public License"
 
 #: ../src/dialogs/rdf.cpp:218
 msgid "Public Domain"
-msgstr ""
+msgstr "Public Domain"
 
 #: ../src/dialogs/rdf.cpp:223
 msgid "FreeArt"
-msgstr ""
+msgstr "FreeArt"
 
 #: ../src/dialogs/rdf.cpp:241
 msgid "Name by which this document is formally known."
@@ -1779,19 +1772,16 @@ msgid "Set spacing:"
 msgstr "Vel mellomrom:"
 
 #: ../src/dialogs/tiledialog.cpp:795
-#, fuzzy
 msgid "Vertical spacing between rows (px units)"
-msgstr "Loddrett avstand mellom rader."
+msgstr "Loddrett avstand mellom rader (pikslar)."
 
 #: ../src/dialogs/tiledialog.cpp:820
-#, fuzzy
 msgid "Horizontal spacing between columns (px units)"
-msgstr "Vassrett avstand mellom kolonnar."
+msgstr "Vassrett avstand mellom kolonnar (pikslar)."
 
 #: ../src/dialogs/tiledialog.cpp:844
-#, fuzzy
 msgid "Arrange selected objects"
-msgstr "Grupper merkte objekt."
+msgstr "Ordna merkte objekt."
 
 #: ../src/dialogs/xml-tree.cpp:171
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
@@ -2016,31 +2006,27 @@ msgstr "Klarte ikkje laga feilloggen «%s» for utvidinga."
 
 #: ../src/extension/extension.cpp:677
 msgid "Name:"
-msgstr ""
+msgstr "Namn:"
 
 #: ../src/extension/extension.cpp:678
-#, fuzzy
 msgid "ID:"
-msgstr "ID"
+msgstr "ID:"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "State:"
-msgstr "Start:"
+msgstr "Tilstand:"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Loaded"
-msgstr "Node"
+msgstr "Lasta"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Unloaded"
-msgstr "Namnlaus"
+msgstr "Ikkje lasta"
 
 #: ../src/extension/extension.cpp:679
 msgid "Deactivated"
-msgstr ""
+msgstr "Deaktivert"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:50
@@ -2095,23 +2081,20 @@ msgstr ""
 "ikkje lasta."
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Blur Edge"
-msgstr "Blå"
+msgstr "Uklar kant"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Blur Width"
-msgstr "Breidd:"
+msgstr "Uklarbreidd"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of Steps"
-msgstr "Talet på rader."
+msgstr "Talet på steg"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
@@ -2119,51 +2102,46 @@ msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
-#, fuzzy
 msgid "Generate from Path"
-msgstr "_Fjern frå bane"
+msgstr "Lag frå bane"
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
-msgstr ""
+msgstr "Encapsulated PostScript-skriving"
 
 #: ../src/extension/internal/eps-out.cpp:86
-#, fuzzy
 msgid "Make bounding box around full page"
-msgstr "Fest avgrensingsboks til hjelpelinjer"
+msgstr "Lag avgrensingsboks rundt heile sida"
 
 #: ../src/extension/internal/eps-out.cpp:87
-#, fuzzy
 msgid "Convert text to path"
-msgstr "Gjer om punktbilete til baner"
+msgstr "Lag tekst om til baner"
 
 #: ../src/extension/internal/eps-out.cpp:91
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated Postscript (*.eps)"
-msgstr ""
+msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../src/extension/internal/eps-out.cpp:92
 msgid "Encapsulated Postscript File"
-msgstr ""
+msgstr "Encapsulated PostScript-fil"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:138
 #, c-format
 msgid "%s GDK pixbuf Input"
-msgstr ""
+msgstr "%s GDK pixbuf-inn"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
-#, fuzzy
 msgid "GIMP Gradients"
-msgstr "Fargeovergang"
+msgstr "GIMP-fargeovergangar"
 
 #: ../src/extension/internal/gimpgrad.cpp:279
 msgid "GIMP Gradient (*.ggr)"
-msgstr ""
+msgstr "GIMP-fargeovergang (*.ggr)"
 
 #: ../src/extension/internal/gimpgrad.cpp:280
-#, fuzzy
 msgid "Gradients used in GIMP"
-msgstr "Fargeovergangredigering"
+msgstr "Fargeovergangar brukt i GIMP"
 
 #: ../src/extension/internal/gnome.cpp:80
 msgid "Select printer"
@@ -2175,7 +2153,7 @@ msgstr "Inkscape: Førehandsvising"
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
-msgstr ""
+msgstr "GNOME-utskrift"
 
 #: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
@@ -2204,75 +2182,69 @@ msgstr "Loddrett forskyving"
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
-#, fuzzy
 msgid "Render"
-msgstr "Raud"
+msgstr "Teikn"
 
 #: ../src/extension/internal/grid.cpp:226
 msgid "Draw a path which is a grid"
 msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
-#, fuzzy
 msgid "LaTeX Output"
-msgstr "Utdata"
+msgstr "LaTeX-fil"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
-msgstr ""
+msgstr "LaTeX med PSTricks-makroar (*.tex)"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:112
 msgid "LaTeX PSTricks File"
-msgstr ""
+msgstr "LaTeX PSTricks-fil"
 
 #: ../src/extension/internal/latex-pstricks.cpp:346
 msgid "LaTeX Print"
-msgstr ""
+msgstr "LaTeX-utskrift"
 
 #: ../src/extension/internal/odf.cpp:1897
 msgid "OpenDocument Drawing Output"
-msgstr ""
+msgstr "OpenDocument-teikningfil"
 
 #: ../src/extension/internal/odf.cpp:1902
 msgid "OpenDocument drawing (*.odg)"
-msgstr ""
+msgstr "OpenDocument-teikning (*.odg)"
 
 #: ../src/extension/internal/odf.cpp:1903
 msgid "OpenDocument drawing file"
-msgstr ""
+msgstr "OpenDocument-tekningfil"
 
 #: ../src/extension/internal/pov-out.cpp:457
-#, fuzzy
 msgid "PovRay Output"
-msgstr "Utdata"
+msgstr "PovRay-fil"
 
 #: ../src/extension/internal/pov-out.cpp:462
 msgid "PovRay (*.pov) (export splines)"
-msgstr ""
+msgstr "PovRay (*.pov) (eksporter kurver)"
 
 #: ../src/extension/internal/pov-out.cpp:463
 msgid "PovRay Raytracer File"
-msgstr ""
+msgstr "PovRay Raytracer-fil"
 
 #: ../src/extension/internal/ps-out.cpp:82
-#, fuzzy
 msgid "Postscript Output"
-msgstr "Ståande"
+msgstr "PostScript-fil"
 
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Text to Path"
-msgstr "Objekt til b_ane"
+msgstr "Tekst til bane"
 
 #: ../src/extension/internal/ps-out.cpp:88
 #: ../share/extensions/ps_input.inx.h:2
 msgid "Postscript (*.ps)"
-msgstr ""
+msgstr "PostScript (*.ps)"
 
 #: ../src/extension/internal/ps-out.cpp:89
-#, fuzzy
 msgid "Postscript File"
-msgstr "Ståande"
+msgstr "PostScript-fil"
 
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
 msgid "Print Destination"
@@ -2325,14 +2297,15 @@ msgid "Print destination"
 msgstr "Utskriftsmål"
 
 #: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
-#, fuzzy
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
 "Use '> filename' to print to file.\n"
 "Use '| prog arg...' to pipe to a program."
 msgstr ""
-"Bruk «> filnamn» for å lagra utskrifta i ei fil.\n"
+"Skrivarnamn (som formatet i «lpstat -p»).\n"
+"La feltet stå tomt for å bruka standardskrivaren.Bruk «> filnamn» for å "
+"lagra utskrifta i ei fil.\n"
 "Bruk «| prog arg ...» for å senda ho vidare til eit program."
 
 #: ../src/extension/internal/ps.cpp:1213
@@ -2341,88 +2314,82 @@ msgid "write error occurred"
 msgstr "Det oppstod ein skrivefeil."
 
 #: ../src/extension/internal/ps.cpp:1240
-#, fuzzy
 msgid "Postscript Print"
-msgstr "Ståande"
+msgstr "PostScript-utskrift"
 
 #: ../src/extension/internal/svg.cpp:55
-#, fuzzy
 msgid "SVG Input"
-msgstr "Utdata"
+msgstr "SVG-fil"
 
 #: ../src/extension/internal/svg.cpp:60
-#, fuzzy
 msgid "Scalable Vector Graphic (*.svg)"
-msgstr "Lag og rediger skalerbare vektorbilete (SVG)"
+msgstr "Skalerbart vektorbilete (SVG)"
 
 #: ../src/extension/internal/svg.cpp:61
 msgid "Inkscape native file format and W3C standard"
-msgstr ""
+msgstr "Inkscapes filformat og ein W3C-standard"
 
 #: ../src/extension/internal/svg.cpp:69
-#, fuzzy
 msgid "SVG Output Inkscape"
-msgstr "Avslutt Inkscape."
+msgstr "SVG-format Inkscape"
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
-msgstr ""
+msgstr "Inkscape-SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:75
 msgid "SVG format with Inkscape extensions"
-msgstr ""
+msgstr "SVG-formatet med Inkscape-utvidingar"
 
 #: ../src/extension/internal/svg.cpp:83
-#, fuzzy
 msgid "SVG Output"
-msgstr "Utdata"
+msgstr "SVG-fil"
 
 #: ../src/extension/internal/svg.cpp:88
 msgid "Plain SVG (*.svg)"
-msgstr ""
+msgstr "Rein SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
-msgstr ""
+msgstr "Skalerbart vektorbilete (SVG-format) som definert av W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
-msgstr ""
+msgstr "SVGZ-fil"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
 #: ../share/extensions/svgz_input.inx.h:1
 #: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
-msgstr ""
+msgstr "Komprimert Inkscape-SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:54
 msgid "SVG file format compressed with GZip"
-msgstr ""
+msgstr "SVG-filformat komprimert med GZip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
-#, fuzzy
 msgid "SVGZ Output"
-msgstr "Utdata"
+msgstr "SVGZ-fil"
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
 #: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
-msgstr ""
+msgstr "Inkscape filformat komprimert med GZip"
 
 #: ../src/extension/internal/svgz.cpp:81
 msgid "Compressed plain SVG (*.svgz)"
-msgstr ""
+msgstr "Komprimert rein SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:82
 msgid "Scalable Vector Graphics format compressed with GZip"
-msgstr ""
+msgstr "Skalerbart vektorbilete komprimert med GZip"
 
 #: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
-msgstr ""
+msgstr "Windows 32-bits utskrift"
 
 #: ../src/extension/internal/pdf.cpp:130
 #, fuzzy
@@ -2440,8 +2407,9 @@ msgstr ""
 "gå tapt."
 
 #: ../src/extension/internal/pdf.cpp:1541
+#, fuzzy
 msgid "PDF Print"
-msgstr ""
+msgstr "LaTeX-utskrift"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2551,7 +2519,7 @@ msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: Teikn fargeovergang rundt startpunktet."
 
 #: ../src/gradient-context.cpp:454
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
@@ -2606,7 +2574,7 @@ msgstr ""
 "å skilja fokus."
 
 #: ../src/gradient-drag.cpp:660
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
@@ -2614,7 +2582,7 @@ msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
 msgstr[0] ""
-"Fargeovergangspunkt delt av <b>%d</b> overgangar. Dra med <b>Shift</b> for å "
+"Fargeovergangspunkt delt av <b>%d</b> overgang. Dra med <b>Shift</b> for å "
 "skilja."
 msgstr[1] ""
 "Fargeovergangspunkt delt av <b>%d</b> overgangar. Dra med <b>Shift</b> for å "
@@ -2839,22 +2807,21 @@ msgstr ""
 "%s"
 
 #: ../src/inkscape.cpp:692
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s is not a valid menus file.\n"
 "%s"
 msgstr ""
-"«%s» er ikkje ei gyldig oppsettfil.\n"
+"«%s» er ikkje ei gyldig menyfil.\n"
 "%s"
 
 #: ../src/inkscape.cpp:693
-#, fuzzy
 msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr ""
-"Inkscape køyrer med standardoppsettet.\n"
-"Ny innstillingar vert ikkje lagra."
+"Inkscape køyrer med standardmenyar.\n"
+"Nye menyar vert ikkje lagra."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
@@ -2867,14 +2834,12 @@ msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Vis eller skjul kommandolinja (under menyen)."
 
 #: ../src/interface.cpp:774
-#, fuzzy
 msgid "Tool Controls Bar"
-msgstr "Verktøykontroll"
+msgstr "Verktøykontroll-linje"
 
 #: ../src/interface.cpp:774
-#, fuzzy
 msgid "Show or hide the Tool Controls bar"
-msgstr "Vis eller skjul verktøykontrollpanelet."
+msgstr "Vis eller skjul verktøykontroll-linja"
 
 #: ../src/interface.cpp:776
 msgid "_Toolbox"
@@ -2885,33 +2850,31 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "Vis eller skjul hovudverktøylinja (til venstre)."
 
 #: ../src/interface.cpp:782
+msgid "_Palette"
+msgstr "_Palett"
+
+#: ../src/interface.cpp:782
+msgid "Show or hide the color palette"
+msgstr "Vis eller skjul fargepaletten."
+
+#: ../src/interface.cpp:784
 msgid "_Statusbar"
 msgstr "_Statuslinje"
 
-#: ../src/interface.cpp:782
+#: ../src/interface.cpp:784
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Vis eller skjul statuslinja (nedst i vindauget)."
-
-#: ../src/interface.cpp:784
-#, fuzzy
-msgid "_Palette"
-msgstr "_Lim inn"
-
-#: ../src/interface.cpp:784
-#, fuzzy
-msgid "Show or hide the color palette"
-msgstr "Vis eller skjul verktøykontrollpanelet."
 
 #: ../src/interface.cpp:838
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr ""
+msgstr "Verbet «%s» er ukjent."
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:948
 #, c-format
 msgid "Enter group #%s"
-msgstr "Rediger gruppe nr. %s"
+msgstr "Gå inn i gruppe nr. %s"
 
 #: ../src/interface.cpp:959
 msgid "Go to parent"
@@ -2935,38 +2898,38 @@ msgstr "Fila «%s» finst frå før. Vil du skriva over ho?"
 
 #: ../src/jabber_whiteboard/callbacks.cpp:59
 msgid "Jabber connection lost."
-msgstr ""
+msgstr "Mista Jabber-samband."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:72
 #, c-format
 msgid "Sending message; %u message remaining in send queue."
 msgid_plural "Sending message; %u messages remaining in send queue."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sendar melding. %u melding att i sendekøen."
+msgstr[1] "Sendar melding. %u meldingar att i sendekøen."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:78
 msgid "Receive queue empty."
-msgstr ""
+msgstr "Tom mottakskø."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:154
 #, c-format
 msgid "Receiving change; %u change left to process."
 msgid_plural "Receiving change; %u changes left to process."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mottek endringar. %u endring att."
+msgstr[1] "Mottek endringar. %u endringar att."
 
 #: ../src/jabber_whiteboard/chat-handler.cpp:161
 #, c-format
 msgid "<b>%s</b> has left the chatroom."
-msgstr ""
+msgstr "<b>%s</b> har no forlate praterommet."
 
 #: ../src/jabber_whiteboard/chat-handler.cpp:225
 msgid "Nickname %1 is already in use.  Please choose a different nickname."
-msgstr ""
+msgstr "Kallenamnet «%1» er allereie i bruk. Vel eit anna namn."
 
 #: ../src/jabber_whiteboard/chat-handler.cpp:229
 msgid "An error was encountered while attempting to connect to the server."
-msgstr ""
+msgstr "Det oppstod ein feil ved tilkopling til tenaren."
 
 #. TRANSLATORS: This string is used to inform an Inkboard user that the following
 #. scenario has occurred:
@@ -2984,7 +2947,7 @@ msgstr ""
 #. the best we can do without changing the protocol.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
-msgstr ""
+msgstr "<b>Det oppstod ein invitasjonskonflikt.</b>"
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:162
@@ -2994,43 +2957,48 @@ msgid ""
 "\n"
 "The invitation from <b>%1</b> has been rejected."
 msgstr ""
+"Jabber-brukaren <b>%1</b> prøvde å invitera deg til ei teikneøkt mens du "
+"venta på svar frå ein anna invitasjon.\n"
+"\n"
+"Invitasjonen frå <b>%1</b> vart avslått."
 
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr ""
+msgstr "<b>%1</b> har invitert deg til ei teikneøkt."
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
-msgstr ""
+msgstr "Invitasjon til teikneøkt frå %1."
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:181
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr ""
+msgstr "Vil du takka ja til invitasjonen frå <b>%1</b>?"
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:183
 msgid ""
 "Would you like to accept %1's invitation in a new document window?\n"
 "Accepting the invitation in your current window will discard unsaved changes."
 msgstr ""
+"Vil du takka ja til invitasjonen frå <b>%1</b> i eit nytt dokumentvindauge?\n"
+"Viss du takkar ja til invitasjonen i det gjeldande vindauget, vil alle "
+"endringar du har gjort gå tapt. "
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:189
 #: ../src/jabber_whiteboard/connection-establishment.cpp:244
-#, fuzzy
 msgid "Accept invitation"
-msgstr "Akselerasjon"
+msgstr "Takk ja til invitasjon"
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:190
 #: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
-msgstr ""
+msgstr "Takk neil til invitasjon"
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:191
-#, fuzzy
 msgid "Accept invitation in new document window"
-msgstr "Lag eit nytt dokument."
+msgstr "Takk ja til invitasjon i nytt dokumentvindauge"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
@@ -3039,7 +3007,7 @@ msgstr "Lag eit nytt dokument."
 msgid ""
 "A new document window could not be opened for a whiteboard session with <b>%"
 "1</b>"
-msgstr ""
+msgstr "Klarte ikkja opna nytt dokumentvindauge for teikneøkt med <b>%1</b>."
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:284
@@ -3048,6 +3016,9 @@ msgid ""
 "whiteboard invitation.</span>\n"
 "\n"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Brukaren <b>%1</b> har takka neil til "
+"invitasjonen din.</span>\n"
+"\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:287
@@ -3056,6 +3027,8 @@ msgid ""
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
 "user."
 msgstr ""
+"Du er framleis kopla til ein Jabber-tenar som <b>%2</b>, og kan senda ein "
+"invitasjon til <b>%1</b> på nytt, eller til ein annan brukar."
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:298
@@ -3064,6 +3037,9 @@ msgid ""
 "whiteboard session.</span>\n"
 "\n"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Brukaren <b>%1</b> er allereie med på "
+"ei teikneøkt.</span>\n"
+"\n"
 
 #. TRANSLATORS: %1 is the peer whom we tried to contact, but is already in a whiteboard session.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:301
@@ -3071,30 +3047,32 @@ msgid ""
 "You are still connected to a Jabber server as <b>%1</b>, and may send an "
 "invitation to a different user."
 msgstr ""
+"Du er framleis kopla til ein Jabber-tenar som <b>%2</b>, og kan senda ein "
+"invitasjon til ein annan brukar."
 
 #: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:24
 #: ../src/jabber_whiteboard/session-file-selector.cpp:23
 msgid "_Write session file:"
-msgstr ""
+msgstr "_Skriv øktfil:"
 
 #: ../src/jabber_whiteboard/message-processors.cpp:145
 #, c-format
 msgid "<b>%s</b> has joined the chatroom."
-msgstr ""
+msgstr "<b>%s</b> er no med i praterommet."
 
 #: ../src/jabber_whiteboard/message-queue.cpp:87
-#, fuzzy, c-format
+#, c-format
 msgid "%u change in receive queue."
 msgid_plural "%u changes in receive queue."
-msgstr[0] "Ingen endringar treng lagrast."
-msgstr[1] "Ingen endringar treng lagrast."
+msgstr[0] "%u endring i mottakskøen."
+msgstr[1] "%u endringar i mottakskøen."
 
 #: ../src/jabber_whiteboard/message-queue.cpp:117
-#, fuzzy, c-format
+#, c-format
 msgid "%u change in send queue."
 msgid_plural "%u changes in send queue."
-msgstr[0] "Ingen endringar treng lagrast."
-msgstr[1] "Ingen endringar treng lagrast."
+msgstr[0] "%u endring i sendekøen."
+msgstr[1] "%u endringar i sendekøen."
 
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
@@ -3113,50 +3091,55 @@ msgid ""
 "ID for new object is NULL even after generation and lookup attempts: the new "
 "object will NOT be sent, nor will any of its child objects!"
 msgstr ""
+"ID-en til det nye objekt er NULL, sjølv etter forsøk på generering og "
+"oppslag. Det nye objektet vert IKKJE sendt, og det vert heller ingen "
+"underobjekt."
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
 #: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
-msgstr ""
+msgstr "Vel plassering og filnamn"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
 #: ../src/jabber_whiteboard/session-manager.cpp:1122
-#, fuzzy
 msgid "Set filename"
-msgstr "_Filnamn"
+msgstr "Vel filnamn"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
-msgstr ""
+msgstr "Fann ikkje noko SSL-sertifikat."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
-msgstr ""
+msgstr "SSL-sertifikatet frå Jabber-tenaren er ikkje tiltrudd."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
-msgstr ""
+msgstr "SSL-sertifikatet frå Jabber-tenaren er gått ut på dato."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
-msgstr ""
+msgstr "SSL-sertifikatet frå Jabber-tenaren er ikkje aktivert."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
 msgstr ""
+"SSL-sertifikatet frå Jabber-tenaren inneheld eit vertsnamn som ikkje er i "
+"samsvart med vertsnamnet til tenaren."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr ""
+"SSL-sertifikatet frå Jabber-tenaren inneheld eit ugyldig fingeravtrykk."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
-msgstr ""
+msgstr "Det oppstod ein ukjend feil ved start av SSL-sambandet."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
@@ -3166,29 +3149,31 @@ msgid ""
 "\n"
 "Do you wish to continue connecting to the Jabber server?"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">%1</span>\n"
+"\n"
+"Vil du halda fram med å kopla til Jabber-tenaren?"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
-msgstr ""
+msgstr "Hald fram og ignorer framtidige feil"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
-msgstr ""
+msgstr "Hald fram og med varsla meg ved framtidige feil"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:454
-#, fuzzy
 msgid "Cancel connection"
-msgstr "Utval"
+msgstr "Avbryt samband"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
-msgstr ""
+msgstr "Starta teiknekt med <b>%s</b>."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
-msgstr ""
+msgstr "<b>%s</b> har no <b>forlate</b> teikneøkta."
 
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
@@ -3199,6 +3184,9 @@ msgid ""
 "whiteboard session.</span>\n"
 "\n"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Brukaren <b>%1</b> har no forlate "
+"teikneøkta.</span>\n"
+"\n"
 
 #. TRANSLATORS: %1 and %2 are userids
 #: ../src/jabber_whiteboard/session-manager.cpp:917
@@ -3206,6 +3194,8 @@ msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
 msgstr ""
+"Du er framleis kopla til ein Jabber-tenar som <b>%2</b>, og kan starta ei ny "
+"økt med <b>%1</b> eller ein annan brukar."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
@@ -3215,14 +3205,19 @@ msgid ""
 "You may select a different location to record the session, or you may opt to "
 "not record this session."
 msgstr ""
+"Klarte ikkje opna fila «%1» for øktopptak.\n"
+"Feilen som oppstod var: %2.\n"
+"\n"
+"Du kan velja ei anna plassering for opptak av økta, eller du kan velja å "
+"ikkje ta opp økta."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
-msgstr ""
+msgstr "Vel ei anna plassering"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
-msgstr ""
+msgstr "Ikkje ta opp økta"
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -3270,13 +3265,12 @@ msgid "DPI"
 msgstr "PPT"
 
 #: ../src/main.cpp:229
-#, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
 msgstr ""
-"Eksportert område i SVG-pikslar (standard er heile dokumentet, og 0,0 er "
-"nedre venstre hjørne)."
+"Eksportert område i SVG-brukareiningar (standard er heile dokumentet, og 0,0 "
+"er nedre venstre hjørne)."
 
 #: ../src/main.cpp:230
 msgid "x0:y0:x1:y1"
@@ -3287,15 +3281,16 @@ msgid "Exported area is the entire drawing (not canvas)"
 msgstr "Eksportert område er heile teikninga (ikkje heile lerretet)"
 
 #: ../src/main.cpp:239
-#, fuzzy
 msgid "Exported area is the entire canvas"
-msgstr "Eksportert område er heile teikninga (ikkje heile lerretet)"
+msgstr "Eksportert område er heile lerretet"
 
 #: ../src/main.cpp:244
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
+"Utvida eksportområdet for punktbilete til næraste heiltal (i SVG-"
+"brukareiningar)"
 
 #: ../src/main.cpp:249
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
@@ -3314,9 +3309,8 @@ msgid "HEIGHT"
 msgstr "HØGD"
 
 #: ../src/main.cpp:259
-#, fuzzy
 msgid "The ID of the object to export"
-msgstr "Breidda på lagra punktbilete i pikslar (overstyrer PPT-innstillingen)"
+msgstr "ID-en til objektet som skal eksporterast"
 
 #: ../src/main.cpp:260 ../src/main.cpp:336
 msgid "ID"
@@ -3455,9 +3449,8 @@ msgid "_Edit"
 msgstr "_Rediger"
 
 #: ../src/menus-skeleton.h:63 ../src/verbs.cpp:2031
-#, fuzzy
 msgid "Paste Si_ze"
-msgstr "Lim inn st_il"
+msgstr "Lim inn sto_rleik"
 
 #: ../src/menus-skeleton.h:75
 msgid "Clo_ne"
@@ -3468,18 +3461,16 @@ msgid "_View"
 msgstr "_Vis"
 
 #: ../src/menus-skeleton.h:93
-#, fuzzy
 msgid "_Zoom"
-msgstr "Forstørr"
+msgstr "_Forstørr"
 
 #: ../src/menus-skeleton.h:110
-#, fuzzy
 msgid "Show/Hide"
 msgstr "_Vis/skjul"
 
 #: ../src/menus-skeleton.h:115
 msgid "_Display mode"
-msgstr ""
+msgstr "Vi_singsmodus"
 
 #: ../src/menus-skeleton.h:134
 msgid "_Layer"
@@ -3491,17 +3482,15 @@ msgstr "_Objekt"
 
 #: ../src/menus-skeleton.h:161
 msgid "Cli_p"
-msgstr ""
+msgstr "S_kjer av"
 
 #: ../src/menus-skeleton.h:165
-#, fuzzy
 msgid "Mas_k"
-msgstr "Rutemerke"
+msgstr "_Masker"
 
 #: ../src/menus-skeleton.h:169
-#, fuzzy
 msgid "Patter_n"
-msgstr "Mønster"
+msgstr "Mø_nster"
 
 #: ../src/menus-skeleton.h:188
 msgid "_Path"
@@ -3517,16 +3506,15 @@ msgstr "Effektar"
 
 #: ../src/menus-skeleton.h:230
 msgid "Whiteboa_rd"
-msgstr ""
+msgstr "_Teikneøkt"
 
 #: ../src/menus-skeleton.h:243
 msgid "_Help"
 msgstr "_Hjelp"
 
 #: ../src/menus-skeleton.h:245
-#, fuzzy
 msgid "Tutorials"
-msgstr "_Innføringar"
+msgstr "Innføringar"
 
 #: ../src/node-context.cpp:359
 msgid ""
@@ -3573,13 +3561,13 @@ msgid "Cannot find path between nodes."
 msgstr "Klarte ikkje finna noko bane mllom nodane."
 
 #: ../src/nodepath.cpp:3235
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
 msgstr ""
-"<b>Kontrollpunkt</b>: Ved %0.2f&#176;, lengde %s. Bruk <b>Ctrl</b> for "
+"<b>Kontrollpunkt</b>: Vinkel %0.2f&#176;, lengde %s. Bruk <b>Ctrl</b> for "
 "stegvinkel, <b>Alt</b> for å låsa lengda og <b>Shift</b> for å rotera begge "
 "kontrollpunkta samtidig."
 
@@ -3835,9 +3823,8 @@ msgid "<b>No paths</b> to reverse in the selection."
 msgstr "Det finst <b>ingen baner</b> du kan snu retninga på i utvalet."
 
 #: ../src/pen-context.cpp:218
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "Teikn frihandslinjer."
+msgstr "Avbrote teikning."
 
 #: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
 msgid "Continuing selected path"
@@ -3852,19 +3839,15 @@ msgid "Appending to selected path"
 msgstr "Legg til merkt bane"
 
 #: ../src/pen-context.cpp:539
-#, fuzzy
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
-msgstr ""
-"<b>Trykk</b> for å redigera teksten, eller <b>dra</b> for å merkja delar av "
-"teksten."
+msgstr "<b>Klikk</b> eller <b>klikk og dra</b> for å lukka og avslutta bana."
 
 #: ../src/pen-context.cpp:549
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
-"<b>Trykk</b> for å redigera teksten, eller <b>dra</b> for å merkja delar av "
-"teksten."
+"<b>Klikk</b> eller <b>Klikk og dra</b> for å halda fram bana frå dette "
+"punktet."
 
 #: ../src/pen-context.cpp:1038
 #, fuzzy, c-format
@@ -3872,7 +3855,7 @@ msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
 msgstr ""
-"<b>Kontrollpunkt</b>: Ved %0.2f&#176;, lengde %s. Bruk <b>Ctrl</b> for "
+"<b>Kontrollpunkt</b>: Vinkel %0.2f&#176;, lengde %s. Bruk <b>Ctrl</b> for "
 "stegvinkel, <b>Alt</b> for å låsa lengda og <b>Shift</b> for å rotera begge "
 "kontrollpunkta samtidig."
 
@@ -3889,32 +3872,30 @@ msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
 "with <b>Shift</b> to move this handle only"
 msgstr ""
-"<b>Kontrollpunkt</b>: Ved %0.2f&#176;, lengde %s. Bruk <b>Ctrl</b> for "
+"<b>Kontrollpunkt</b>: Vinkel %0.2f&#176;, lengde %s. Bruk <b>Ctrl</b> for "
 "stegvinkel, <b>Alt</b> for å låsa lengda og <b>Shift</b> for å rotera begge "
 "kontrollpunkta samtidig."
 
 #: ../src/pen-context.cpp:1127
-#, fuzzy
 msgid "Drawing finished"
-msgstr "Teikning"
+msgstr "Fullført teikning."
 
 #: ../src/pencil-context.cpp:315
 msgid "<b>Release</b> here to close and finish the path."
-msgstr ""
+msgstr "<b>Slepp</b> her for å lukka og avslutta bana."
 
 #: ../src/pencil-context.cpp:321
-#, fuzzy
 msgid "Drawing a freehand path"
-msgstr "Teikn frihandslinjer."
+msgstr "Teiknar frihandslinje."
 
 #: ../src/pencil-context.cpp:326
 msgid "<b>Drag</b> to continue the path from this point."
-msgstr ""
+msgstr "<b>Dra</b> for å halda fram bana frå dette punktet."
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:384
 msgid "Finishing freehand"
-msgstr "Fullført frihandsteikning"
+msgstr "Fullført frihandsteikning."
 
 #: ../src/preferences.cpp:59
 #, c-format
@@ -3931,7 +3912,7 @@ msgid ""
 "New settings will not be saved."
 msgstr ""
 "Inkscape køyrer med standardoppsettet.\n"
-"Ny innstillingar vert ikkje lagra."
+"Nye innstillingar vert ikkje lagra."
 
 #: ../src/rect-context.cpp:371
 msgid ""
@@ -3973,11 +3954,9 @@ msgid "<b>Alt</b>: select under, move selected"
 msgstr "<b>Alt</b>: Merk objekt under. Flytt merkte objekt."
 
 #: ../src/select-context.cpp:781
-#, fuzzy
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
-"Kan ikkje skubba inn eller ut, då det merkte objektet <b>ikkje er ei bane</"
-"b>."
+"Dei merkte objekta er ikkje ei gruppa. Kan ikkje gå inni i objektsamlinga."
 
 #: ../src/selection-chemistry.cpp:224
 msgid "<b>Nothing</b> was deleted."
@@ -4004,7 +3983,6 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "Det finst <b>ingen grupper</b> i utvalet som du kan løysa opp."
 
 #: ../src/selection-chemistry.cpp:629
-#, fuzzy
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Merk <b>objekta</b> du vil heva."
 
@@ -4050,9 +4028,8 @@ msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Merk <b>objekta</b> du vil lim inn stilen på."
 
 #: ../src/selection-chemistry.cpp:1157 ../src/selection-chemistry.cpp:1192
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "Merk <b>objekta</b> du vil lim inn stilen på."
+msgstr "Merk <b>objekta</b> du vil lima inn storleiken til."
 
 #: ../src/selection-chemistry.cpp:1225
 msgid "Select <b>object(s)</b> to move to the layer above."
@@ -4120,29 +4097,26 @@ msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Merk <b>objekta</b> du vil laga ein punktbiletkopi av."
 
 #: ../src/selection-chemistry.cpp:2412
-#, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Merk <b>objekta</b> du vil lim inn stilen på."
+msgstr "Merk <b>objekta</b> du vil laga skjeringsbane eller maske frå."
 
 #: ../src/selection-chemistry.cpp:2415
-#, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
-msgstr "Merk <b>objekta</b> du vil lim inn stilen på."
+msgstr ""
+"Merk maskeringsobjekt og <b>objekta</b> du vil bruka skjeringsbane eller "
+"maske på."
 
 #: ../src/selection-chemistry.cpp:2518
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Merk <b>tekstobjekta</b> du vil fjerna kniping frå."
+msgstr "Merk <b>objekta</b> du vil skjeringsbane eller maske frå."
 
 #: ../src/selection-describer.cpp:41
-#, fuzzy
 msgid "Link"
-msgstr "tm"
+msgstr "Lenkje"
 
 #: ../src/selection-describer.cpp:43
-#, fuzzy
 msgid "Circle"
-msgstr "<b>Sirkel</b>"
+msgstr "Sirkel"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
@@ -4151,38 +4125,32 @@ msgid "Ellipse"
 msgstr "Ellipse"
 
 #: ../src/selection-describer.cpp:47
-#, fuzzy
 msgid "Flowed text"
-msgstr "Flytteksten er lagt til."
+msgstr "Flyttekst"
 
 #: ../src/selection-describer.cpp:49
-#, fuzzy
 msgid "Group"
-msgstr "_Grupper"
+msgstr "Gruppe"
 
 #: ../src/selection-describer.cpp:51
-#, fuzzy
 msgid "Image"
 msgstr "Bilete"
 
 #: ../src/selection-describer.cpp:53
-#, fuzzy
 msgid "Line"
-msgstr "Lisensavtale"
+msgstr "Linje"
 
 #: ../src/selection-describer.cpp:55
-#, fuzzy
 msgid "Path"
-msgstr "_Bane"
+msgstr "Bane"
 
 #: ../src/selection-describer.cpp:57 ../src/widgets/toolbox.cpp:1211
 msgid "Polygon"
 msgstr "Mangekant"
 
 #: ../src/selection-describer.cpp:59
-#, fuzzy
 msgid "Polyline"
-msgstr "<b>Fleirlinje</b>"
+msgstr "Fleirlinje"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
@@ -4191,14 +4159,12 @@ msgid "Rectangle"
 msgstr "Rektangel"
 
 #: ../src/selection-describer.cpp:65
-#, fuzzy
 msgid "Clone"
-msgstr "Klo_n"
+msgstr "Klon"
 
 #: ../src/selection-describer.cpp:69
-#, fuzzy
 msgid "Offset path"
-msgstr "Forskyving:"
+msgstr "Forskyving"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
@@ -4225,48 +4191,47 @@ msgstr ""
 "rundt for å velja dei."
 
 #: ../src/selection-describer.cpp:112
-#, fuzzy
 msgid "root"
-msgstr "(rot)"
+msgstr "rot"
 
 #: ../src/selection-describer.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b>%s</b>"
-msgstr " i laget <b>%s</b>"
+msgstr "laget <b>%s</b>"
 
 #: ../src/selection-describer.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b><i>%s</i></b>"
-msgstr " i laget <b><i>%s</i></b>"
+msgstr "laget <b><i>%s</i></b>"
 
 #: ../src/selection-describer.cpp:135
 #, c-format
 msgid "<i>%s</i>"
-msgstr ""
+msgstr "<i>%s</i>"
 
 #: ../src/selection-describer.cpp:144
 #, c-format
 msgid " in %s"
-msgstr ""
+msgstr " i %s"
 
 #: ../src/selection-describer.cpp:146
-#, fuzzy, c-format
+#, c-format
 msgid " in group %s (%s)"
-msgstr "Rediger gruppe nr. %s"
+msgstr "I gruppa %s (%s)"
 
 #: ../src/selection-describer.cpp:148
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] "%s i <b>%i</b> lag. %s."
-msgstr[1] "%s i <b>%i</b> lag. %s."
+msgstr[0] " in <b>%i</b> foreldrar (%s)"
+msgstr[1] " in <b>%i</b> foreldrar (%s)"
 
 #: ../src/selection-describer.cpp:151
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] "%s i <b>%i</b> lag. %s."
-msgstr[1] "%s i <b>%i</b> lag. %s."
+msgstr[0] " i <b>%i</b> lag"
+msgstr[1] " i <b>%i</b> lag"
 
 #: ../src/selection-describer.cpp:161
 msgid "Use <b>Shift+D</b> to look up original"
@@ -4290,35 +4255,35 @@ msgstr[1] "<b>%i</b> merkte objekt."
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
-msgstr[0] "Fann <b>%d</b> objekt (av <b>%d</b>), med %s samsvar."
-msgstr[1] "Fann <b>%d</b> objekt (av <b>%d</b>), med %s samsvar."
+msgstr[0] "<b>%i</b> objekt av typen <b>%s</b>"
+msgstr[1] "<b>%i</b> objekt av typen <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
-msgstr[0] "Fann <b>%d</b> objekt (av <b>%d</b>), med %s samsvar."
-msgstr[1] "Fann <b>%d</b> objekt (av <b>%d</b>), med %s samsvar."
+msgstr[0] "<b>%i</b> objekt av typane <b>%s</b>, <b>%s</b>"
+msgstr[1] "<b>%i</b> objekt av typane <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[0] "Fann <b>%d</b> objekt (av <b>%d</b>), med %s samsvar."
-msgstr[1] "Fann <b>%d</b> objekt (av <b>%d</b>), med %s samsvar."
+msgstr[0] "<b>%i</b> objekt med typane <b>%s</b>, <b>%s</b>, <b>%s</b>"
+msgstr[1] "<b>%i</b> objekt med typane <b>%s</b>, <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
-msgstr[0] "<b>%i</b> av <b>%i</b> node vald. %s."
-msgstr[1] "<b>%i</b> av <b>%i</b> nodar valde. %s."
+msgstr[0] "<b>%i</b> objekt med <b>%i</b> typar"
+msgstr[1] "<b>%i</b> objekt med <b>%i</b> typar"
 
 #: ../src/selection-describer.cpp:209
 #, c-format
@@ -4443,18 +4408,18 @@ msgid "Flow excluded region"
 msgstr "Flyt ekskludert område"
 
 #: ../src/sp-flowtext.cpp:356
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>Flyttekst</b> (%d teikn)"
 msgstr[1] "<b>Flyttekst</b> (%d teikn)"
 
 #: ../src/sp-flowtext.cpp:358
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
-msgstr[0] "<b>Lenkje flyttekst</b> (%d teikn)"
-msgstr[1] "<b>Lenkje flyttekst</b> (%d teikn)"
+msgstr[0] "<b>Lenkja flyttekst</b> (%d teikn)"
+msgstr[1] "<b>Lenkja flyttekst</b> (%d teikn)"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -4489,7 +4454,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Gruppe</b> på <b>%d</b> objekt"
 msgstr[1] "<b>Gruppe</b> på <b>%d</b> objekt"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "Objekt"
 
@@ -4558,11 +4523,11 @@ msgstr[0] "<b>Mangekant</b> med %d hjørne"
 msgstr[1] "<b>Mangekant</b> med %d hjørne"
 
 #: ../src/sp-switch.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>Gruppe</b> på <b>%d</b> objekt"
-msgstr[1] "<b>Gruppe</b> på <b>%d</b> objekt"
+msgstr[0] "<b>Gruppe på vilkår</b> med <b>%d</b> objekt"
+msgstr[1] "<b>Gruppe på vilkår</b> med <b>%d</b> objekt"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:409
@@ -4692,7 +4657,6 @@ msgid "Select <b>a text and a path</b> to put text on path."
 msgstr "Merk <b>ein tekst og ei bane</b> for å leggja teksten på bana."
 
 #: ../src/text-chemistry.cpp:99
-#, fuzzy
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
@@ -4701,11 +4665,10 @@ msgstr ""
 "laus. Bruk <b>Shift + D</b> for å gå til bana."
 
 #: ../src/text-chemistry.cpp:104
-#, fuzzy
 msgid "You cannot put flowtext on a path. Convert flowtext to text first."
 msgstr ""
-"Du kan ikkje leggja tekst i rektangel i denne versjonen. Prøv å gjera "
-"rektangelen om til ei bane først."
+"Du kan ikkje leggja flyttekst på ei bana. Gjer flytteksten om til vanleg "
+"tekst først."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:110
@@ -4771,7 +4734,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Flyttekst-ramme</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Skriv inn tekst. Bruk <b>Enter</b> for å begynna på ny linje."
 
@@ -4791,11 +4754,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Hardt mellomrom"
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Skriv inn tekst. Bruk <b>Enter</b> for å begynna på nytt avsnitt."
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -4853,13 +4816,12 @@ msgstr ""
 "for å leggja til merkt bane."
 
 #: ../src/tools-switch.cpp:169
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path."
 msgstr ""
-"<b>Trykk</b> for å laga ein ny node. <b>Trykk og dra</b> for å laga ein jamn "
-"node. Start teikninga med <b>Shift</b> for å leggja til merkt bane."
+"<b>Klikk</b> eller <b>klikk og dra</b> for å starta ein ny bane. "
+"Bruk<b>Shift</b> for å leggja til den merkte bana."
 
 #: ../src/tools-switch.cpp:175
 msgid ""
@@ -4887,7 +4849,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:205
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
+msgstr "<b>Klikk og dra</b> mellom figurar for å laga ei sambandslinje."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:545
 #: ../src/trace/potrace/inkscape-potrace.cpp:646
@@ -4901,13 +4863,12 @@ msgid "Select an <b>image</b> to trace"
 msgstr "Merk <b>biletet</b> du vil teikna av."
 
 #: ../src/trace/trace.cpp:96
-#, fuzzy
 msgid "Select only one <b>image</b> to trace"
-msgstr "Merk <b>biletet</b> du vil teikna av."
+msgstr "Merk berre eitt <b>bilete</b> du vil teikna av."
 
 #: ../src/trace/trace.cpp:114
 msgid "Select one image and one or more shapes above it"
-msgstr ""
+msgstr "Merk eit bilete og eitt eller fleire figurar over det."
 
 #: ../src/trace/trace.cpp:338
 msgid "Trace: No active document"
@@ -4918,9 +4879,9 @@ msgid "Trace: Image has no bitmap data"
 msgstr "Avteikning: Biletet inneheld ingen punktdata."
 
 #: ../src/trace/trace.cpp:491
-#, c-format
+#, fuzzy, c-format
 msgid "Trace: Done. %ld nodes created"
-msgstr "Avteikning: Ferdig. Laga %ld nodar."
+msgstr "Avteikningar: %d.  %ld nodar"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:96
@@ -4973,21 +4934,19 @@ msgstr "Om Inkscape."
 
 #: ../src/ui/dialog/aboutbox.cpp:71
 msgid "_Splash"
-msgstr ""
+msgstr "_Velkomstskjerm"
 
 #: ../src/ui/dialog/aboutbox.cpp:73
 msgid "_Authors"
-msgstr ""
+msgstr "_Forfattarar"
 
 #: ../src/ui/dialog/aboutbox.cpp:74
-#, fuzzy
 msgid "_Translators"
-msgstr "Omformingar"
+msgstr "_Omsetjarar"
 
 #: ../src/ui/dialog/aboutbox.cpp:75
-#, fuzzy
 msgid "_License"
-msgstr "Lisensavtale"
+msgstr "_Lisensavtale"
 
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
@@ -5006,22 +4965,22 @@ msgstr "about.svg"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:448
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
-msgstr ""
+msgstr "Minste vassrette mellomrom (i pikslar) mellom avgrensingsboksar"
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:450
 #: ../src/widgets/toolbox.cpp:1573
 msgid "H:"
-msgstr ""
+msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:458
 msgid "Minimum vertical gap (in px units) between bounding boxes"
-msgstr ""
+msgstr "Minste loddrette mellomrom (i pikslar) mellom avgrensingsboksar"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:460
 msgid "V:"
-msgstr ""
+msgstr "L:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:747
 msgid "Align"
@@ -5033,12 +4992,11 @@ msgstr "Fordel"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:749
 msgid "Remove overlaps"
-msgstr ""
+msgstr "Fjern overlappingar"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:750
-#, fuzzy
 msgid "Connector network layout"
-msgstr "Opphavsmann"
+msgstr "Sambandslinjenettverk"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:751
 msgid "Nodes"
@@ -5149,11 +5107,12 @@ msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
 msgstr ""
+"Flytt objekta så lite som mogleg for å unngå at avgrensingsboksane deira "
+"overlappar."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
-#, fuzzy
 msgid "Nicely arrange selected connector network"
-msgstr "Grupper merkte objekt."
+msgstr "Ordna dei merkte sambandslinjene automatisk."
 
 #: ../src/ui/dialog/align-and-distribute.cpp:856
 msgid "Align selected nodes horizontally"
@@ -5209,27 +5168,23 @@ msgstr "Lisensavtale"
 
 #: ../src/ui/dialog/document-metadata.cpp:182
 msgid "<b>Dublin Core Entities</b>"
-msgstr ""
+msgstr "<b>Dublin Core-entitetar</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:204
-#, fuzzy
 msgid "<b>License</b>"
-msgstr "<b>Linje</b>"
+msgstr "<b>Lisensvilkår</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:99
-#, fuzzy
 msgid "Grid/Guides"
-msgstr "Hjelpelinjer"
+msgstr "Rutenett/hjelpelinjer"
 
 #: ../src/ui/dialog/document-properties.cpp:100
-#, fuzzy
 msgid "Snap"
-msgstr "Figurar"
+msgstr "Lås til rutenett"
 
 #: ../src/ui/dialog/document-properties.cpp:188
-#, fuzzy
 msgid "Back_ground:"
-msgstr "Bakgrunnsfarge:"
+msgstr "Bak_grunnsfarge:"
 
 #: ../src/ui/dialog/document-properties.cpp:188
 msgid "Background color"
@@ -5243,108 +5198,90 @@ msgstr ""
 "eksportering til punktbilete."
 
 #: ../src/ui/dialog/document-properties.cpp:190
-#, fuzzy
 msgid "Show page _border"
-msgstr "Vis kantlinje rundt lerretet"
+msgstr "Vis _kantlinje rundt lerretet"
 
 #: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
-msgstr ""
+msgstr "Vis rektangulær kantlinje rundt lerret."
 
 #: ../src/ui/dialog/document-properties.cpp:191
-#, fuzzy
 msgid "Border on _top of drawing"
-msgstr "Kantlinje øvst på teikninga"
+msgstr "Kantlinje ø_vst på teikninga"
 
 #: ../src/ui/dialog/document-properties.cpp:191
-#, fuzzy
 msgid "If set, border is always on top of the drawing"
-msgstr "Kantlinje øvst på teikninga"
+msgstr "Kantlinje øvst på teikninga."
 
 #: ../src/ui/dialog/document-properties.cpp:192
-#, fuzzy
 msgid "Border _color:"
-msgstr "Kantlinjefarge:"
+msgstr "Kantlinje_farge:"
 
 #: ../src/ui/dialog/document-properties.cpp:192
-#, fuzzy
 msgid "Page border color"
-msgstr "Farge på kantlinje"
+msgstr "Sidekantlinjefarge"
 
 #: ../src/ui/dialog/document-properties.cpp:193
-#, fuzzy
 msgid "Color of the page border"
-msgstr "Farge på kantlinje rundt lerretet"
+msgstr "Farge på kantlinje rundt sida"
 
 #: ../src/ui/dialog/document-properties.cpp:195
-#, fuzzy
 msgid "_Show border shadow"
-msgstr "Vis sideskugge"
+msgstr "_Vis sideskugge"
 
 #: ../src/ui/dialog/document-properties.cpp:195
 msgid "If set, page border shows a shadow on its right and lower side"
-msgstr ""
+msgstr "Vis skugge til høgre og nedanfor side."
 
 #: ../src/ui/dialog/document-properties.cpp:196
-#, fuzzy
 msgid "Default _units:"
-msgstr "Standardeiningar:"
+msgstr "_Standardeiningar:"
 
 #: ../src/ui/dialog/document-properties.cpp:199
-#, fuzzy
 msgid "<b>General</b>"
-msgstr "<b>Linje</b>"
+msgstr "<b>Generelt</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:201
-#, fuzzy
 msgid "<b>Border</b>"
-msgstr "<b>Boge</b>"
+msgstr "<b>Kantlinje</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:203
-#, fuzzy
 msgid "<b>Format</b>"
-msgstr "<b>Boge</b>"
+msgstr "<b>Format</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
 #: ../src/ui/dialog/document-properties.cpp:233
-#, fuzzy
 msgid "_Show grid"
-msgstr "Vis rutenett"
+msgstr "_Vis rutenett"
 
 #: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
 msgstr "Vis eller skjul rutenett."
 
 #: ../src/ui/dialog/document-properties.cpp:234
-#, fuzzy
 msgid "Grid _units:"
-msgstr "Eining for rutenett:"
+msgstr "Eining _for rutenett:"
 
 #: ../src/ui/dialog/document-properties.cpp:235
-#, fuzzy
 msgid "_Origin X:"
-msgstr "X-origo:"
+msgstr "_X-origo:"
 
 #: ../src/ui/dialog/document-properties.cpp:235
-#, fuzzy
 msgid "X coordinate of grid origin"
-msgstr "Loddrett koordinat til utvalet."
+msgstr "Loddrett koordinat til rutenettet."
 
 #: ../src/ui/dialog/document-properties.cpp:237
-#, fuzzy
 msgid "O_rigin Y:"
-msgstr "Y-origo:"
+msgstr "_Y-origo:"
 
 #: ../src/ui/dialog/document-properties.cpp:237
-#, fuzzy
 msgid "Y coordinate of grid origin"
-msgstr "Loddrett koordinat til utvalet."
+msgstr "Loddrett koordinat til rutenettet."
 
 #: ../src/ui/dialog/document-properties.cpp:239
-#, fuzzy
 msgid "Spacing _X:"
-msgstr "X-mellomrom:"
+msgstr "X-_mellomrom:"
 
 #: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
@@ -5352,9 +5289,8 @@ msgid "Distance of vertical grid lines"
 msgstr "loddrett hjelpelinje"
 
 #: ../src/ui/dialog/document-properties.cpp:241
-#, fuzzy
 msgid "Spacing _Y:"
-msgstr "Y-mellomrom:"
+msgstr "Y-m_ellomrom:"
 
 #: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
@@ -5524,7 +5460,6 @@ msgstr ""
 "rutenettet."
 
 #: ../src/ui/dialog/document-properties.cpp:310
-#, fuzzy
 msgid "Snap sens_itivity:"
 msgstr "Plukkfølsemd:"
 
@@ -8359,7 +8294,6 @@ msgstr "Slett laget."
 
 #. Object
 #: ../src/verbs.cpp:2183
-#, fuzzy
 msgid "Rotate _90&#176; CW"
 msgstr "Roter _90° mot høgre"
 
@@ -8369,7 +8303,6 @@ msgid "Rotate selection 90&#176; clockwise"
 msgstr "Roter utvalet 90° med klokka."
 
 #: ../src/verbs.cpp:2185
-#, fuzzy
 msgid "Rotate 9_0&#176; CCW"
 msgstr "Roter 9_0° mot venstre"
 
@@ -8423,7 +8356,6 @@ msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr "Gjer flyttekst om til eit vanlig tekstobjekt (lik utsjånad)."
 
 #: ../src/verbs.cpp:2198
-#, fuzzy
 msgid "Flip _Horizontal"
 msgstr "Spegla _vassrett"
 
@@ -8433,7 +8365,6 @@ msgid "Flip selected objects horizontally"
 msgstr "Juster merkte nodar vassrett"
 
 #: ../src/verbs.cpp:2201
-#, fuzzy
 msgid "Flip _Vertical"
 msgstr "Spegla _loddrett"
 
@@ -8447,9 +8378,8 @@ msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
 #: ../src/verbs.cpp:2205 ../src/verbs.cpp:2209
-#, fuzzy
 msgid "_Release"
-msgstr "Snu _retning"
+msgstr "_Slepp laus"
 
 #: ../src/verbs.cpp:2206
 #, fuzzy
@@ -8775,22 +8705,20 @@ msgstr "Førehandsvising av ny vising"
 
 #. "view_new_preview"
 #: ../src/verbs.cpp:2298
-#, fuzzy
 msgid "_Normal"
-msgstr "Vanleg"
+msgstr "_Vanleg"
 
 #: ../src/verbs.cpp:2299
 msgid "Switch to normal display mode"
-msgstr ""
+msgstr "Vis teikninga på vanleg måte."
 
 #: ../src/verbs.cpp:2300
-#, fuzzy
 msgid "_Outline"
-msgstr "Boksomriss"
+msgstr "_Omriss"
 
 #: ../src/verbs.cpp:2301
 msgid "Switch to outline (wireframe) display mode"
-msgstr ""
+msgstr "Vis berre omriss av figurane."
 
 #: ../src/verbs.cpp:2303
 msgid "Ico_n Preview"
@@ -8834,9 +8762,8 @@ msgid "Edit global Inkscape preferences"
 msgstr "Globale Inkscape-innstillingar."
 
 #: ../src/verbs.cpp:2317
-#, fuzzy
 msgid "_Document Properties..."
-msgstr "_Dokumentoppsett"
+msgstr "_Dokumenteigenskapar …"
 
 #: ../src/verbs.cpp:2318
 #, fuzzy
@@ -8846,7 +8773,7 @@ msgstr "Innstillingar lagra i dokumentet."
 #: ../src/verbs.cpp:2319
 #, fuzzy
 msgid "Document _Metadata..."
-msgstr "Dokumentet er lagra."
+msgstr "_Dokumentmetadata …"
 
 #: ../src/verbs.cpp:2320
 #, fuzzy
@@ -9013,7 +8940,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2365
 msgid "_Input Devices..."
-msgstr ""
+msgstr "Inneinin_gar …"
 
 #: ../src/verbs.cpp:2366
 msgid "Configure extended input devices, such as a graphics tablet"
@@ -10099,7 +10026,7 @@ msgstr ""
 #: ../share/extensions/aisvg.inx.h:1
 #, fuzzy
 msgid "AI SVG Input"
-msgstr "Utdata"
+msgstr "SVG-fil"
 
 #: ../share/extensions/aisvg.inx.h:2
 msgid "Adobe Illustrator SVG (*.ai.svg)"
@@ -10338,7 +10265,7 @@ msgstr ""
 #: ../share/extensions/fig_input.inx.h:3
 #, fuzzy
 msgid "XFIG Input"
-msgstr "Utdata"
+msgstr "SVG-fil"
 
 #: ../share/extensions/flatten.inx.h:1
 #, fuzzy
@@ -10457,18 +10384,16 @@ msgid "Magnitude"
 msgstr "Magentaraud"
 
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "Postscript"
-msgstr "Ståande"
+msgstr "PostScript"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
 msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Radius"
-msgstr "_Hev"
+msgstr "Radius"
 
 #: ../share/extensions/radiusrand.inx.h:3
 #, fuzzy
@@ -10497,7 +10422,7 @@ msgstr "Rundt hjørne"
 #: ../share/extensions/randompos.inx.h:1
 #, fuzzy
 msgid "Random Position"
-msgstr "_Rotering"
+msgstr "Plassering:"
 
 #: ../share/extensions/rtree.inx.h:1
 #, fuzzy
@@ -10520,15 +10445,15 @@ msgstr ""
 
 #: ../share/extensions/sk_input.inx.h:2
 msgid "Sketch Diagram (*.sk)"
-msgstr ""
+msgstr "Sketch-diagram (*.sk)"
 
 #: ../share/extensions/sk_input.inx.h:3
 msgid "Sketch Input"
-msgstr ""
+msgstr "Sketch-fil"
 
 #: ../share/extensions/straightseg.inx.h:1
 msgid "Behavior"
-msgstr ""
+msgstr "Atferd"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Segment Straightener"
@@ -10539,14 +10464,16 @@ msgid "Envelope"
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
+#, fuzzy
 msgid "Compressed Inkscape SVG with media (*.zip)"
-msgstr ""
+msgstr "Komprimert Inkscape-SVG (*.svgz)"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
+#, fuzzy
 msgid ""
 "Inkscape's native file format compressed with Zip and including all media "
 "files"
-msgstr ""
+msgstr "Inkscape filformat komprimert med GZip"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
 #, fuzzy
@@ -10564,31 +10491,31 @@ msgstr "Vis sideskugge"
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
-msgstr ""
+msgstr "ASCII-tekst"
 
 #: ../share/extensions/txt2svg.inx.h:2
 msgid "Text File (*.txt)"
-msgstr ""
+msgstr "Tekstfil (*.txt)"
 
 #: ../share/extensions/txt2svg.inx.h:3
 msgid "Text Input"
-msgstr ""
+msgstr "Inntekst"
 
 #: ../share/extensions/wavy.inx.h:1
 msgid "Calculate first derivative numerically"
-msgstr ""
+msgstr "Rekne ut førstederiverte numerisk"
 
 #: ../share/extensions/wavy.inx.h:2
 msgid "First derivative"
-msgstr ""
+msgstr "Førstederiverte"
 
 #: ../share/extensions/wavy.inx.h:3
 msgid "Function"
-msgstr ""
+msgstr "Funksjon"
 
 #: ../share/extensions/wavy.inx.h:4
 msgid "Function Plotter"
-msgstr ""
+msgstr "Funksjonsplottar"
 
 #: ../share/extensions/wavy.inx.h:5
 msgid "Nodes per period"
@@ -10627,37 +10554,11 @@ msgstr ""
 
 #: ../share/extensions/wmf_input.inx.h:2
 msgid "Windows Metafile (*.wmf)"
-msgstr ""
+msgstr "Windows-metafil (*.wmf)"
 
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
-msgstr ""
-
-#, fuzzy
-#~ msgid "%s Preferences"
-#~ msgstr " Innstillingar"
-
-#, fuzzy
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Endra namn på lag"
-
-#, fuzzy
-#~ msgid "Step"
-#~ msgstr "Steg"
-
-#, fuzzy
-#~ msgid "PDF Output"
-#~ msgstr "Utdata"
-
-#~ msgid "Enable script effects (requires restart) - EXPERIMENTAL"
-#~ msgstr "Bruk skripteffektar (krev omstart) – EKSPERIMENTELL"
-
-#~ msgid ""
-#~ "When on, the effects menu is enabled, allowing external effect scripts to "
-#~ "be called, requires restart before effective - EXPERIMENTAL"
-#~ msgstr ""
-#~ "Vis effektmenyen, som gjer det mogleg å køyra eksterne skript. Obs: "
-#~ "Funksjonen er EKSPERIMENTELL og krev omstart."
+msgstr "Windows-metafil"
 
 #~ msgid "Export area"
 #~ msgstr "Eksporteringsområde"
@@ -10676,6 +10577,34 @@ msgstr ""
 
 #~ msgid " absolute to "
 #~ msgstr " absolutt til "
+
+#~ msgid " Preferences"
+#~ msgstr " Innstillingar"
+
+#~ msgid "Enable script effects (requires restart) - EXPERIMENTAL"
+#~ msgstr "Bruk skripteffektar (krev omstart) – EKSPERIMENTELL"
+
+#~ msgid ""
+#~ "When on, the effects menu is enabled, allowing external effect scripts to "
+#~ "be called, requires restart before effective - EXPERIMENTAL"
+#~ msgstr ""
+#~ "Vis effektmenyen, som gjer det mogleg å køyra eksterne skript. Obs: "
+#~ "Funksjonen er EKSPERIMENTELL og krev omstart."
+
+#, fuzzy
+#~ msgid "Lindenmayer"
+#~ msgstr "Endra namn på lag"
+
+#, fuzzy
+#~ msgid "Step"
+#~ msgstr "Steg"
+
+#, fuzzy
+#~ msgid "PDF Output"
+#~ msgstr "Utdata"
+
+#~ msgid "Fit canvas to selection"
+#~ msgstr "Tilpass til utvalsboks"
 
 #~ msgid "Finishing pen"
 #~ msgstr "Fullfører penn"
