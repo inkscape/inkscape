@@ -2675,6 +2675,7 @@ msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
 msgstr "Inkscape veiks, bet naudojant pradinius nustatymus,\n"
+"ir jokie nustatymuose daryti keitimai nebus išsaugoti."
 
 #: ../src/inkscape.cpp:689
 #: ../src/preferences.cpp:56
@@ -2694,6 +2695,8 @@ msgid ""
 "you don't have read permissions on it.\n"
 "%s"
 msgstr "%s nėra teisingas XML failas, arba\n"
+"neturite failo skaitymo teisių.\n"
+"%s"
 
 #: ../src/inkscape.cpp:692
 #, c-format
@@ -2709,6 +2712,7 @@ msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr "Inkscape veiks rodant standartinius meniu.\n"
+"Nauji meniu nebus išsaugoti."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
