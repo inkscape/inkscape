@@ -691,6 +691,17 @@ sp_item_write(SPObject *const object, Inkscape::XML::Node *repr, guint flags)
             repr->setAttribute ("inkscape:transform-center-y", NULL);
     }
 
+    if (item->clip_ref->getObject()) {
+        const gchar *value = g_strdup_printf ("url(%s)", item->clip_ref->getURI()->toString());
+        repr->setAttribute ("clip-path", value);
+        g_free ((void *) value);
+    }
+    if (item->mask_ref->getObject()) {
+        const gchar *value = g_strdup_printf ("url(%s)", item->mask_ref->getURI()->toString());
+        repr->setAttribute ("mask", value);
+        g_free ((void *) value);
+    }
+
     if (((SPObjectClass *) (parent_class))->write) {
         ((SPObjectClass *) (parent_class))->write(object, repr, flags);
     }
