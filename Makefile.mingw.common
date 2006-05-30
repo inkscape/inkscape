@@ -205,7 +205,7 @@ $(PERLINC) $(PYTHONINC) -I$(GTK)/include/loudmouth-1.0 \
 
 
 # To enable loudmouth uncomment and move this line below
-#-lloudmouth-1.dll -lssl -lcrypto \
+#-lloudmouth-1.dll -lssl -lcrypto
 LIBS = $(GTKLIB) $(PERLLIB) $(PYTHONLIB) \
 $(GTK)/bin/libxml2.dll \
 $(GTK)/lib/iconv.lib	\
