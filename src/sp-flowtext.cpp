@@ -558,21 +558,21 @@ void SPFlowtext::convert_to_text()
             if (set_y)
                 sp_repr_set_svg_double(span_tspan, "y", anchor_point[NR::Y]);
 
-            union { SPObject *op; void *vp; } source_obj;
+            SPObject *source_obj;
             Glib::ustring::iterator span_text_start_iter;
-            group->layout.getSourceOfCharacter(it, &source_obj.vp, &span_text_start_iter);
-            gchar *style_text = sp_style_write_difference((SP_IS_STRING(source_obj.vp) ? source_obj.op->parent : source_obj.op)->style, group->style);
+            group->layout.getSourceOfCharacter(it, (void**)&source_obj, &span_text_start_iter);
+            gchar *style_text = sp_style_write_difference((SP_IS_STRING(source_obj) ? source_obj->parent : source_obj)->style, group->style);
             if (style_text && *style_text) {
                 span_tspan->setAttribute("style", style_text);
                 g_free(style_text);
             }
 
-            if (SP_IS_STRING(source_obj.vp)) {
-                Glib::ustring *string = &SP_STRING(source_obj.vp)->string;
-                union { SPObject *op; void *vp; } span_end_obj;
+            if (SP_IS_STRING(source_obj)) {
+                Glib::ustring *string = &SP_STRING(source_obj)->string;
+                SPObject *span_end_obj;
                 Glib::ustring::iterator span_text_end_iter;
-                group->layout.getSourceOfCharacter(it_span_end, &span_end_obj.vp, &span_text_end_iter);
-                if (span_end_obj.op != source_obj.op) {
+                group->layout.getSourceOfCharacter(it_span_end, (void**)&span_end_obj, &span_text_end_iter);
+                if (span_end_obj != source_obj) {
                     if (it_span_end == group->layout.end()) {
                         span_text_end_iter = span_text_start_iter;
                         for (int i = group->layout.iteratorToCharIndex(it_span_end) - group->layout.iteratorToCharIndex(it) ; i ; --i)
