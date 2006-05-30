@@ -101,6 +101,8 @@ modules = \
 	flatten.inx \
 	measure.inx \
 	gimp_xcf.inx \
+        randompnt.inx \
+        randompos.inx \
 	eqtexsvg.inx
 
 extension_SCRIPTS = \
