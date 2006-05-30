@@ -290,6 +290,8 @@ sp_mask_create (GSList *reprs, SPDocument *document, NR::Matrix const* applyTran
             sp_item_write_transform(item, SP_OBJECT_REPR(item), transform);
         }
     }
+
+    defsrepr->changeOrder(repr, defsrepr->lastChild()); // workaround for bug 989084
     
     Inkscape::GC::release(repr);
     return mask_id;
