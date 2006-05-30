@@ -284,12 +284,12 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
         if (engine.getMultiScanSmooth())
             {
             RgbMap *gaussMap = rgbMapGaussian(gm);
-            newGm = rgbMapQuantize(gaussMap, 8, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gaussMap,  (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
             gaussMap->destroy(gaussMap);
             }
         else
             {
-            newGm = rgbMapQuantize(gm, 8, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gm,  (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
             }
         gm->destroy(gm);
         }
@@ -301,12 +301,12 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
         if (engine.getMultiScanSmooth())
             {
             RgbMap *gaussMap = rgbMapGaussian(gm);
-            newGm = rgbMapQuantize(gaussMap, 8, engine.getMultiScanNrColors());
+            newGm = rgbMapQuantize(gaussMap, (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
             gaussMap->destroy(gaussMap);
             }
         else
             {
-            newGm = rgbMapQuantize(gm, 8, engine.getMultiScanNrColors());
+           newGm = rgbMapQuantize(gm, (int)log2(engine.getMultiScanNrColors())+2, engine.getMultiScanNrColors());
             }
         gm->destroy(gm);
 
@@ -375,7 +375,7 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
         {
         for (int x=0 ; x<grayMap->width ; x++)
             {
-            BM_UPUT(potraceBitmap, x, y, 
+            BM_UPUT(potraceBitmap, x, y,
                   grayMap->getPixel(grayMap, x, y) ? 0 : 1);
             }
         }
@@ -394,7 +394,7 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
         }
 
     /* trace a bitmap*/
-    potrace_state_t *potraceState = potrace_trace(potraceParams, 
+    potrace_state_t *potraceState = potrace_trace(potraceParams,
 			                          potraceBitmap);
 
     //## Free the Potrace bitmap
@@ -427,7 +427,7 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
     if ( nodeCount)
         *nodeCount = thisNodeCount;
 
-    
+
     return d;
 
 }
