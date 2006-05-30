@@ -1,3 +1,9 @@
+2006-05-29  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/xml/repr-io.cpp:
+	Changed to strip leading BOM from input.
+	Fixes bug# 1121666.
+
 2006-05-29  Bryce <bryce@bryceharrington.org>
 	* sp-shape.cpp:  Adding documentation
 

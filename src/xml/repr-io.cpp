@@ -51,8 +51,9 @@ class XmlSource
 public:
     XmlSource()
         : filename(0),
+          encoding(0),
           fp(0),
-          first(false),
+          firstFewLen(0),
           dummy("x"),
           instr(0),
           gzin(0)
@@ -61,33 +62,93 @@ public:
     virtual ~XmlSource()
     {
         close();
+        if ( encoding ) {
+            g_free(encoding);
+            encoding = 0;
+        }
     }
 
-    void setFile( char const * filename );
+    int setFile( char const * filename );
 
-    static int readCb( void * context, char * buffer, int len);
-    static int closeCb(void * context);
+    static int readCb( void * context, char * buffer, int len );
+    static int closeCb( void * context );
 
-
+    char const* getEncoding() const { return encoding; }
     int read( char * buffer, int len );
     int close();
 private:
     const char* filename;
+    char* encoding;
     FILE* fp;
-    bool first;
+    unsigned char firstFew[4];
+    int firstFewLen;
     Inkscape::URI dummy;
     Inkscape::IO::UriInputStream* instr;
     Inkscape::IO::GzipInputStream* gzin;
 };
 
-void XmlSource::setFile(char const *filename)
+int XmlSource::setFile(char const *filename)
 {
+    int retVal = -1;
+
     this->filename = filename;
+
     fp = Inkscape::IO::fopen_utf8name(filename, "r");
-    if (fp == NULL) {
-        throw std::runtime_error("Could not open file for reading");
+    if ( fp ) {
+        // First peek in the file to see what it is
+        memset( firstFew, 0, sizeof(firstFew) );
+
+        size_t some = fread( firstFew, 1, 4, fp );
+        if ( fp ) {
+            // first check for compression
+            if ( (some >= 2) && (firstFew[0] == 0x1f) && (firstFew[1] == 0x8b) ) {
+                //g_message(" the file being read is gzip'd. extract it");
+                fclose(fp);
+                fp = 0;
+                fp = Inkscape::IO::fopen_utf8name(filename, "r");
+                instr = new Inkscape::IO::UriInputStream(fp, dummy);
+                gzin = new Inkscape::IO::GzipInputStream(*instr);
+
+                memset( firstFew, 0, sizeof(firstFew) );
+                some = 0;
+                int single = 0;
+                while ( some < 4 && single >= 0 )
+                {
+                    single = gzin->get();
+                    if ( single >= 0 ) {
+                        firstFew[some++] = 0x0ff & single;
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            int encSkip = 0;
+            if ( (some >= 2) &&(firstFew[0] == 0xfe) && (firstFew[1] == 0xff) ) {
+                g_warning("File is UTF-16BE");
+                encoding = g_strdup("UTF-16BE");
+                encSkip = 2;
+            } else if ( (some >= 2) && (firstFew[0] == 0xff) && (firstFew[1] == 0xfe) ) {
+                g_warning("File is UTF-16LE");
+                encoding = g_strdup("UTF-16LE");
+                encSkip = 2;
+            } else if ( (some >= 3) && (firstFew[0] == 0xef) && (firstFew[1] == 0xbb) && (firstFew[2] == 0xbf) ) {
+                g_warning("File is UTF-8");
+                encoding = g_strdup("UTF-8");
+                encSkip = 3;
+            }
+
+            if ( encSkip ) {
+                memmove( firstFew, firstFew + encSkip, (some - encSkip) );
+                some -= encSkip;
+            }
+
+            firstFewLen = some;
+            retVal = 0; // no error
+        }
     }
-    first = true;
+
+    return retVal;
 }
 
 
@@ -115,33 +176,14 @@ int XmlSource::read( char *buffer, int len )
     int retVal = 0;
     size_t got = 0;
 
-    if ( first ) {
-        first = false;
-        char tmp[] = {0,0};
-        size_t some = fread( tmp, 1, 2, fp );
-
-        if ( (some >= 2) && (tmp[0] == 0x1f) && ((unsigned char)(tmp[1]) == 0x8b) ) {
-            //g_message(" the file being read is gzip'd. extract it");
-            fclose(fp);
-            fp = 0;
-            fp = Inkscape::IO::fopen_utf8name(filename, "r");
-            instr = new Inkscape::IO::UriInputStream(fp, dummy);
-            gzin = new Inkscape::IO::GzipInputStream(*instr);
-            int single = 0;
-            while ( (int)got < len && single >= 0 )
-            {
-                single = gzin->get();
-                if ( single >= 0 ) {
-                    buffer[got++] = 0x0ff & single;
-                } else {
-                    break;
-                }
-            }
-            //g_message(" extracted %d bytes this pass", got );
-        } else {
-            memcpy( buffer, tmp, some );
-            got = some;
+    if ( firstFewLen > 0 ) {
+        int some = (len < firstFewLen) ? len : firstFewLen;
+        memcpy( buffer, firstFew, some );
+        if ( len < firstFewLen ) {
+            memmove( firstFew, firstFew + some, (firstFewLen - some) );
         }
+        firstFewLen -= some;
+        got = some;
     } else if ( gzin ) {
         int single = 0;
         while ( (int)got < len && single >= 0 )
@@ -153,18 +195,15 @@ int XmlSource::read( char *buffer, int len )
                 break;
             }
         }
-        //g_message(" extracted %d bytes this pass  b", got );
     } else {
         got = fread( buffer, 1, len, fp );
     }
 
     if ( feof(fp) ) {
         retVal = got;
-    }
-    else if ( ferror(fp) ) {
+    } else if ( ferror(fp) ) {
         retVal = -1;
-    }
-    else {
+    } else {
         retVal = got;
     }
 
@@ -217,50 +256,35 @@ sp_repr_read_file (const gchar * filename, const gchar *default_ns)
 
     Inkscape::IO::dump_fopen_call( filename, "N" );
 
-    XmlSource src;
-    try
-    {
-        src.setFile(filename);
-    }
-    catch (...)
-    {
-        return NULL;
-    }
-
-    xmlDocPtr doubleDoc = xmlReadIO( XmlSource::readCb,
-                                     XmlSource::closeCb,
-                                     &src,
-                                     localFilename,
-                                     NULL, //"UTF-8",
-                                     XML_PARSE_NOENT );
-
-
 #ifdef HAVE_LIBWMF
     if (strlen (localFilename) > 4) {
         if ( (strcmp (localFilename + strlen (localFilename) - 4,".wmf") == 0)
-          || (strcmp (localFilename + strlen (localFilename) - 4,".WMF") == 0))
+             || (strcmp (localFilename + strlen (localFilename) - 4,".WMF") == 0)) {
             doc = sp_wmf_convert (localFilename);
-        else
-            doc = xmlParseFile (localFilename);
+        }
     }
-    else {
-        doc = xmlParseFile (localFilename);
+#endif // !HAVE_LIBWMF
+
+    if ( !doc ) {
+        XmlSource src;
+
+        if ( (src.setFile(filename) == 0) ) {
+            doc = xmlReadIO( XmlSource::readCb,
+                             XmlSource::closeCb,
+                             &src,
+                             localFilename,
+                             src.getEncoding(),
+                             XML_PARSE_NOENT );
+        }
     }
-#else /* !HAVE_LIBWMF */
-    //doc = xmlParseFile (localFilename);
-#endif /* !HAVE_LIBWMF */
 
-    //rdoc = sp_repr_do_read (doc, default_ns);
-    rdoc = sp_repr_do_read (doubleDoc, default_ns);
-    if (doc)
-        xmlFreeDoc (doc);
+    rdoc = sp_repr_do_read( doc, default_ns );
+    if ( doc ) {
+        xmlFreeDoc( doc );
+    }
 
-    if ( localFilename != NULL )
-        g_free (localFilename);
-
-    if ( doubleDoc != NULL )
-    {
-        xmlFreeDoc( doubleDoc );
+    if ( localFilename ) {
+        g_free( localFilename );
     }
 
     return rdoc;
