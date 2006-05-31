@@ -856,7 +856,6 @@ Configuration:
         LDFLAGS:                  ${LDFLAGS}
 
         Use Xft font database:    ${xft_ok}
-        Use gnome-print:          ${gp}
 	Use gnome-vfs:            ${gnome_vfs}
         Use openoffice files:     ${ij}
         Use MMX optimizations:    ${use_mmx_asm}
