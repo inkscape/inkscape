@@ -28,6 +28,7 @@
  */
 
 #include <string>
+#include <glibmm.h>
 
 class RegistryTool
 {
@@ -39,13 +40,13 @@ public:
     virtual ~RegistryTool()
         {}
 
-    bool setStringValue(const std::string &key,
-                        const std::string &valueName,
-                        const std::string &value);
+    bool setStringValue(const Glib::ustring &key,
+                        const Glib::ustring &valueName,
+                        const Glib::ustring &value);
 
-    bool getExeInfo(std::string &fullPath,
-                    std::string &path,
-                    std::string &exeName);
+    bool getExeInfo(Glib::ustring &fullPath,
+                    Glib::ustring &path,
+                    Glib::ustring &exeName);
 
     bool setPathInfo();
 

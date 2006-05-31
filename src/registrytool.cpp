@@ -50,11 +50,11 @@ KeyTableEntry keyTable[] =
     { NULL,                 0, NULL                    }
 };
 
-bool RegistryTool::setStringValue(const std::string &keyNameArg,
-                                  const std::string &valueName,
-                                  const std::string &value)
+bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
+                                  const Glib::ustring &valueName,
+                                  const Glib::ustring &value)
 {
-    std::string keyName = keyNameArg;
+    Glib::ustring keyName = keyNameArg;
 
     HKEY rootKey = HKEY_LOCAL_MACHINE; //default root
     //Trim out the root key if necessary
@@ -93,9 +93,9 @@ bool RegistryTool::setStringValue(const std::string &keyNameArg,
     return true;
 }
 
-bool RegistryTool::getExeInfo(std::string &fullPath,
-                              std::string &path,
-                              std::string &exeName)
+bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
+                              Glib::ustring &path,
+                              Glib::ustring &exeName)
 {
 
     char buf[MAX_PATH+1];
@@ -112,7 +112,7 @@ bool RegistryTool::getExeInfo(std::string &fullPath,
     fullPath = buf;
     path     = "";
     exeName  = "";
-    std::string::size_type pos = fullPath.rfind('\\');
+    Glib::ustring::size_type pos = fullPath.rfind('\\');
     if (pos != fullPath.npos)
         {
         path = fullPath.substr(0, pos);
@@ -125,9 +125,9 @@ bool RegistryTool::getExeInfo(std::string &fullPath,
 
 bool RegistryTool::setPathInfo()
 {
-    std::string fullPath;
-    std::string path;
-    std::string exeName;
+    Glib::ustring fullPath;
+    Glib::ustring path;
+    Glib::ustring exeName;
 
     if (!getExeInfo(fullPath, path, exeName))
         return false;
@@ -135,18 +135,18 @@ bool RegistryTool::setPathInfo()
     //printf("full:'%s' path:'%s' exe:'%s'\n",
     //    fullPath.c_str(), path.c_str(), exeName.c_str());
 
-    std::string keyName =
+    Glib::ustring keyName =
     "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\";
     keyName.append(exeName);
 
-    std::string valueName = "";
-    std::string value     = fullPath;
+    Glib::ustring valueName = "";
+    Glib::ustring value     = fullPath;
 
     if (!setStringValue(keyName, valueName, value))
         return false;
 
     //add our subdirectories
-    std::string appPath = path;
+    Glib::ustring appPath = path;
     appPath.append("\\python;");
     appPath.append(path);
     appPath.append("\\perl");
