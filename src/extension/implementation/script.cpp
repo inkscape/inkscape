@@ -20,14 +20,14 @@
 #include <unistd.h>
 
 #include <errno.h>
-#include <gtkmm/textview.h>
-#include <gtkmm/scrolledwindow.h>
+#include <gtkmm.h>
 
 #include "ui/view/view.h"
 #include "desktop-handles.h"
 #include "selection.h"
 #include "sp-namedview.h"
 #include "io/sys.h"
+#include "registrytool.h"
 #include "prefs-utils.h"
 #include "../system.h"
 #include "extension/effect.h"
@@ -37,19 +37,123 @@
 
 #include "util/glib-list-iterators.h"
 
+
+
 #ifdef WIN32
 #include <windows.h>
+#include <sys/stat.h>
 #endif
+
+
 
 /** This is the command buffer that gets allocated from the stack */
 #define BUFSIZE (255)
+
+
 
 /* Namespaces */
 namespace Inkscape {
 namespace Extension {
 namespace Implementation {
 
-/* Real functions */
+
+
+//Interpreter lookup table
+struct interpreter_t {
+        gchar * identity;
+        gchar * prefstring;
+        gchar * defaultval;
+};
+
+
+static interpreter_t interpreterTab[] = {
+        {"perl",   "perl-interpreter",   "perl"   },
+        {"python", "python-interpreter", "python" },
+        {"ruby",   "ruby-interpreter",   "ruby"   },
+        {"shell",  "shell-interpreter",  "sh"     },
+        { NULL,    NULL,                  NULL    }
+};
+
+
+
+/**
+ * Look up an interpreter name, and translate to something that
+ * is executable
+ */
+static Glib::ustring
+resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
+{
+
+    Glib::ustring interpName = interpNameArg;
+
+    interpreter_t *interp;
+    bool foundInterp = false;
+    for (interp =  interpreterTab ; interp->identity ; interp++ ){
+        if (interpName == interp->identity) {
+            foundInterp = true;
+            break;
+        }
+    }
+
+    // Do we have a supported interpreter type?
+    if (!foundInterp)
+        return "";
+    interpName = interp->defaultval;
+
+    // 1.  Check preferences
+    gchar *prefInterp = (gchar *)prefs_get_string_attribute(
+                                "extensions", interp->prefstring);
+
+    if (prefInterp) {
+        interpName = prefInterp;
+        return interpName;
+    }
+
+#ifdef _WIN32
+
+    // 2.  Windows.  Try looking relative to inkscape.exe
+    RegistryTool rt;
+    Glib::ustring fullPath;
+    Glib::ustring path;
+    Glib::ustring exeName;
+    if (rt.getExeInfo(fullPath, path, exeName)) {
+        Glib::ustring interpPath = path;
+        interpPath.append("\\");
+        interpPath.append(interpName);
+        interpPath.append("\\");
+        interpPath.append(interpName);
+        interpPath.append(".exe");
+        struct stat finfo;
+        if (stat(interpPath .c_str(), &finfo) ==0) {
+            g_message("Found local interpreter, '%s',  Size: %d",
+                      interpPath .c_str(),
+                      finfo.st_size);
+            return interpPath;
+        }                       
+    }
+
+    // 3. Try searching the path
+    char szExePath[MAX_PATH];
+    char szCurrentDir[MAX_PATH];
+    GetCurrentDirectory(sizeof(szCurrentDir), szCurrentDir);
+    unsigned int ret = (unsigned int)FindExecutable(
+                  interpName.c_str(), szCurrentDir, szExePath);
+    if (ret > 32) {
+        interpName = szExePath;
+        return interpName;
+    }
+
+#endif // win32
+
+
+    return interpName;
+}
+
+
+
+
+
+
 /**
     \return    A script object
     \brief     This function creates a script object and sets up the
@@ -60,11 +164,19 @@ namespace Implementation {
    of memory in the unloaded state.
 */
 Script::Script() :
-    Implementation(),
-    command(NULL),
-    helper_extension(NULL)
+    Implementation()
 {
 }
+
+
+/**
+ *   brief     Destructor
+ */
+Script::~Script()
+{
+}
+
+
 
 /**
     \return    A string with the complete string with the relative directory expanded
@@ -81,28 +193,44 @@ Script::Script() :
     string.  This means that the caller of this function can always
     free what they are given (and should do it too!).
 */
-gchar *
+Glib::ustring
 Script::solve_reldir(Inkscape::XML::Node *reprin) {
-    gchar const *reldir = reprin->attribute("reldir");
 
-    if (reldir == NULL) {
-        return g_strdup(sp_repr_children(reprin)->content());
+    gchar const *s = reprin->attribute("reldir");
+
+    if (!s) {
+        Glib::ustring str = sp_repr_children(reprin)->content();
+        return str;
     }
 
-    if (!strcmp(reldir, "extensions")) {
-        for(unsigned int i=0; i<Inkscape::Extension::Extension::search_path.size(); i++) {
-            gchar * filename = g_build_filename(Inkscape::Extension::Extension::search_path[i], sp_repr_children(reprin)->content(), NULL);
-            if ( Inkscape::IO::file_test(filename, G_FILE_TEST_EXISTS) ) {
+    Glib::ustring reldir = s;
+
+    if (reldir == "extensions") {
+
+        for (unsigned int i=0;
+            i < Inkscape::Extension::Extension::search_path.size();
+            i++) {
+
+            gchar * fname = g_build_filename(
+               Inkscape::Extension::Extension::search_path[i],
+               sp_repr_children(reprin)->content(),
+               NULL);
+            Glib::ustring filename = fname;
+            g_free(fname);
+
+            if ( Inkscape::IO::file_test(filename.c_str(), G_FILE_TEST_EXISTS) )
                 return filename;
-            }
-            g_free(filename);
+
         }
     } else {
-        return g_strdup(sp_repr_children(reprin)->content());
+        Glib::ustring str = sp_repr_children(reprin)->content();
+        return str;
     }
 
-    return NULL;
+    return "";
 }
+
+
 
 /**
     \return   Whether the command given exists, including in the path
@@ -121,64 +249,63 @@ Script::solve_reldir(Inkscape::XML::Node *reprin) {
     then a FALSE is returned, the command could not be found.
 */
 bool
-Script::check_existance(gchar const *command)
+Script::check_existance(const Glib::ustring &command)
 {
-    if (*command == '\0') {
-        /* We check the simple case first. */
-        return FALSE;
+
+    // Check the simple case first
+    if (command.size() == 0) {
+        return false;
     }
 
-    if (g_utf8_strchr(command, -1, G_DIR_SEPARATOR) != NULL) {
-        /* Don't search when it contains a slash. */
-        if (Inkscape::IO::file_test(command, G_FILE_TEST_EXISTS))
-            return TRUE;
+    //Don't search when it contains a slash. */
+    if (command.find(G_DIR_SEPARATOR) != command.npos) {
+        if (Inkscape::IO::file_test(command.c_str(), G_FILE_TEST_EXISTS))
+            return true;
         else
-            return FALSE;
+            return false;
     }
 
 
-    gchar *path = g_strdup(g_getenv("PATH"));
-    if (path == NULL) {
-        /* There is no `PATH' in the environment.
+    Glib::ustring path; 
+    gchar *s = (gchar *) g_getenv("PATH");
+    if (s)
+        path = s;
+    else
+       /* There is no `PATH' in the environment.
            The default search path is the current directory */
-        path = g_strdup(G_SEARCHPATH_SEPARATOR_S);
-    }
-    gchar *orig_path = path;
+        path = G_SEARCHPATH_SEPARATOR_S;
 
-    for (; path != NULL;) {
-        gchar *const local_path = path;
-        path = g_utf8_strchr(path, -1, G_SEARCHPATH_SEPARATOR);
-        if (path == NULL) {
-            break;
-        }
-        /* Not sure whether this is UTF8 happy, but it would seem
-           like it considering that I'm searching (and finding)
-           the ':' character */
-        if (path != local_path && path != NULL) {
-            path[0] = '\0';
-            path++;
+    unsigned int pos  = 0;
+    unsigned int pos2 = 0;
+    while ( pos < path.size() ) {
+
+        Glib::ustring localPath;
+
+        pos2 = path.find(G_SEARCHPATH_SEPARATOR, pos);
+        if (pos2 == path.npos) {
+            localPath = path.substr(pos);
+            pos = path.size();
         } else {
-            path = NULL;
+            localPath = path.substr(pos, pos2-pos);
+            pos = pos2+1;
         }
+        
+        //printf("### %s\n", localPath.c_str());
+        Glib::ustring candidatePath = 
+                      Glib::build_filename(localPath, command);
 
-        gchar *final_name;
-        if (local_path == '\0') {
-            final_name = g_strdup(command);
-        } else {
-            final_name = g_build_filename(local_path, command, NULL);
-        }
+        if (Inkscape::IO::file_test(candidatePath .c_str(),
+                      G_FILE_TEST_EXISTS))
+            return true;
 
-        if (Inkscape::IO::file_test(final_name, G_FILE_TEST_EXISTS)) {
-            g_free(final_name);
-            g_free(orig_path);
-            return TRUE;
-        }
-
-        g_free(final_name);
     }
 
-    return FALSE;
+    return false;
 }
+
+
+
+
 
 /**
     \return   none
@@ -201,15 +328,14 @@ Script::check_existance(gchar const *command)
 bool
 Script::load(Inkscape::Extension::Extension *module)
 {
-    if (module->loaded()) {
+    if (module->loaded())
         return TRUE;
-    }
 
-    helper_extension = NULL;
+    helper_extension = "";
 
     /* This should probably check to find the executable... */
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
-    gchar *command_text = NULL;
+    Glib::ustring command_text;
     while (child_repr != NULL) {
         if (!strcmp(child_repr->name(), "script")) {
             child_repr = sp_repr_children(child_repr);
@@ -217,46 +343,17 @@ Script::load(Inkscape::Extension::Extension *module)
                 if (!strcmp(child_repr->name(), "command")) {
                     command_text = solve_reldir(child_repr);
 
-                    const gchar * interpretstr = child_repr->attribute("interpreter");
+                    const gchar *interpretstr = child_repr->attribute("interpreter");
                     if (interpretstr != NULL) {
-                        struct interpreter_t {
-                            gchar * identity;
-                            gchar * prefstring;
-                            gchar * defaultval;
-                        };
-                        const interpreter_t interpreterlst[] = {
-                            {"perl", "perl-interpreter", "perl"},
-                            {"python", "python-interpreter", "python"},
-                            {"ruby", "ruby-interpreter", "ruby"},
-                            {"shell", "shell-interpreter", "sh"}
-                        }; /* Change count below if you change structure */
-                        for (unsigned int i = 0; i < 4; i++) {
-                            if (!strcmp(interpretstr, interpreterlst[i].identity)) {
-                                const gchar * insertText = interpreterlst[i].defaultval;
-                                if (prefs_get_string_attribute("extensions", interpreterlst[i].prefstring) != NULL)
-                                    insertText = prefs_get_string_attribute("extensions", interpreterlst[i].prefstring);
-#ifdef _WIN32
-                                else {
-                                    char szExePath[MAX_PATH];
-                                    char szCurrentDir[MAX_PATH];
-                                    GetCurrentDirectory(sizeof(szCurrentDir), szCurrentDir);
-                                    if (reinterpret_cast<unsigned>(FindExecutable(command_text, szCurrentDir, szExePath)) > 32)
-                                        insertText = szExePath;
-                                }
-#endif
-
-                                gchar * temp = command_text;
-                                command_text = g_strconcat(insertText, " ", temp, NULL);
-                                g_free(temp);
-
-                                break;
-                            }
-                        }
+                        Glib::ustring interpString =
+                            resolveInterpreterExecutable(interpretstr);
+                        interpString .append(" ");
+                        interpString .append(command_text);
+                        command_text = interpString;
                     }
                 }
-                if (!strcmp(child_repr->name(), "helper_extension")) {
-                    helper_extension = g_strdup(sp_repr_children(child_repr)->content());
-                }
+                if (!strcmp(child_repr->name(), "helper_extension"))
+                    helper_extension = sp_repr_children(child_repr)->content();
                 child_repr = sp_repr_next(child_repr);
             }
 
@@ -265,14 +362,12 @@ Script::load(Inkscape::Extension::Extension *module)
         child_repr = sp_repr_next(child_repr);
     }
 
-    g_return_val_if_fail(command_text != NULL, FALSE);
+    g_return_val_if_fail(command_text.size() > 0, FALSE);
 
-    if (command != NULL)
-        g_free(command);
     command = command_text;
-
-    return TRUE;
+    return true;
 }
+
 
 /**
     \return   None.
@@ -285,17 +380,12 @@ Script::load(Inkscape::Extension::Extension *module)
 void
 Script::unload(Inkscape::Extension::Extension *module)
 {
-    if (command != NULL) {
-        g_free(command);
-        command = NULL;
-    }
-    if (helper_extension != NULL) {
-        g_free(helper_extension);
-        helper_extension = NULL;
-    }
-
-    return;
+    command          = "";
+    helper_extension = "";
 }
+
+
+
 
 /**
     \return   Whether the check passed or not
@@ -312,13 +402,10 @@ Script::check(Inkscape::Extension::Extension *module)
             child_repr = sp_repr_children(child_repr);
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), "check")) {
-                    gchar *command_text = solve_reldir(child_repr);
-                    if (command_text != NULL) {
+                    Glib::ustring command_text = solve_reldir(child_repr);
+                    if (command_text.size() > 0) {
                         /* I've got the command */
-                        bool existance;
-
-                        existance = check_existance(command_text);
-                        g_free(command_text);
+                        bool existance = check_existance(command_text);
                         if (!existance)
                             return FALSE;
                     }
@@ -339,8 +426,10 @@ Script::check(Inkscape::Extension::Extension *module)
         child_repr = sp_repr_next(child_repr);
     }
 
-    return TRUE;
+    return true;
 }
+
+
 
 /**
     \return   A dialog for preferences
@@ -351,11 +440,14 @@ Script::check(Inkscape::Extension::Extension *module)
     This function should really do something, right now it doesn't.
 */
 Gtk::Widget *
-Script::prefs_input(Inkscape::Extension::Input *module, gchar const *filename)
+Script::prefs_input(Inkscape::Extension::Input *module,
+                    const Glib::ustring &filename)
 {
     /*return module->autogui(); */
     return NULL;
 }
+
+
 
 /**
     \return   A dialog for preferences
@@ -370,6 +462,8 @@ Script::prefs_output(Inkscape::Extension::Output *module)
     return module->autogui(NULL, NULL); 
 }
 
+
+
 /**
     \return   A dialog for preferences
     \brief    A stub funtion right now
@@ -378,18 +472,24 @@ Script::prefs_output(Inkscape::Extension::Output *module)
     This function should really do something, right now it doesn't.
 */
 Gtk::Widget *
-Script::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *view)
+Script::prefs_effect(Inkscape::Extension::Effect *module,
+                     Inkscape::UI::View::View *view)
 {
+
     SPDocument * current_document = view->doc();
 
     using Inkscape::Util::GSListConstIterator;
-    GSListConstIterator<SPItem *> selected = sp_desktop_selection((SPDesktop *)view)->itemList();
+    GSListConstIterator<SPItem *> selected =
+           sp_desktop_selection((SPDesktop *)view)->itemList();
     Inkscape::XML::Node * first_select = NULL;
     if (selected != NULL) 
-        first_select = SP_OBJECT_REPR(*selected);
+           first_select = SP_OBJECT_REPR(*selected);
 
     return module->autogui(current_document, first_select);
 }
+
+
+
 
 /**
     \return  A new document that has been opened
@@ -413,14 +513,15 @@ Script::prefs_effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::Vi
     That document is then returned from this function.
 */
 SPDocument *
-Script::open(Inkscape::Extension::Input *module, gchar const *filename)
+Script::open(Inkscape::Extension::Input *module,
+             const Glib::ustring &filename)
 {
-    int data_read = 0;
-    gint tempfd;
-    gchar *tempfilename_out;
+
+    gchar *tmpname;
 
     // FIXME: process the GError instead of passing NULL
-    if ((tempfd = g_file_open_tmp("ink_ext_XXXXXX", &tempfilename_out, NULL)) == -1) {
+    gint tempfd = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
+    if (tempfd == -1) {
         /* Error, couldn't create temporary filename */
         if (errno == EINVAL) {
             /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
@@ -436,35 +537,45 @@ Script::open(Inkscape::Extension::Input *module, gchar const *filename)
         }
     }
 
+    Glib::ustring tempfilename_out = tmpname;
+    g_free(tmpname);
+
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
     GError *error = NULL;
-    gchar *local_filename = g_filename_from_utf8( filename,
-                                                  -1,  &bytesRead,  &bytesWritten, &error);
+    Glib::ustring local_filename =
+            g_filename_from_utf8( filename.c_str(), -1,
+                                  &bytesRead,  &bytesWritten, &error);
 
-    data_read = execute(command, local_filename, tempfilename_out);
-    g_free(local_filename);
+    int data_read = execute(command, local_filename, tempfilename_out);
+
 
     SPDocument *mydoc = NULL;
     if (data_read > 10) {
-        if (helper_extension == NULL) {
-            mydoc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), tempfilename_out);
+        if (helper_extension.size()==0) {
+            mydoc = Inkscape::Extension::open(
+                Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
+                                            tempfilename_out.c_str());
         } else {
-            mydoc = Inkscape::Extension::open(Inkscape::Extension::db.get(helper_extension), tempfilename_out);
+            mydoc = Inkscape::Extension::open(
+                Inkscape::Extension::db.get(helper_extension.c_str()),
+                                            tempfilename_out.c_str());
         }
     }
 
     if (mydoc != NULL)
-        sp_document_set_uri(mydoc, (const gchar *)filename);
+        sp_document_set_uri(mydoc, (const gchar *)filename.c_str());
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd);
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
-    unlink(tempfilename_out);
-    g_free(tempfilename_out);
+    unlink(tempfilename_out.c_str());
+
 
     return mydoc;
 }
+
+
 
 /**
     \return   none
@@ -491,12 +602,15 @@ Script::open(Inkscape::Extension::Input *module, gchar const *filename)
     delete the temporary file.
 */
 void
-Script::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *filename)
+Script::save(Inkscape::Extension::Output *module,
+             SPDocument *doc,
+             const Glib::ustring &filename)
 {
-    gint tempfd;
-    gchar *tempfilename_in;
+
+    gchar *tmpname;
     // FIXME: process the GError instead of passing NULL
-    if ((tempfd = g_file_open_tmp("ink_ext_XXXXXX", &tempfilename_in, NULL)) == -1) {
+    gint tempfd = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
+    if (tempfd == -1) {
         /* Error, couldn't create temporary filename */
         if (errno == EINVAL) {
             /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
@@ -512,33 +626,40 @@ Script::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *
         }
     }
 
-    if (helper_extension == NULL) {
-        Inkscape::Extension::save(Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE), doc, tempfilename_in, FALSE, FALSE, FALSE);
+    Glib::ustring tempfilename_in = tmpname;
+    g_free(tmpname);
+
+    if (helper_extension.size() == 0) {
+        Inkscape::Extension::save(
+                   Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
+                   doc, tempfilename_in.c_str(), FALSE, FALSE, FALSE);
     } else {
-        Inkscape::Extension::save(Inkscape::Extension::db.get(helper_extension), doc, tempfilename_in, FALSE, FALSE, FALSE);
+        Inkscape::Extension::save(
+                   Inkscape::Extension::db.get(helper_extension.c_str()),
+                   doc, tempfilename_in.c_str(), FALSE, FALSE, FALSE);
     }
 
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
     GError *error = NULL;
-    gchar *local_filename = g_filename_from_utf8( filename,
-                                                  -1,  &bytesRead,  &bytesWritten, &error);
+    Glib::ustring local_filename =
+            g_filename_from_utf8( filename.c_str(), -1,
+                                 &bytesRead,  &bytesWritten, &error);
 
-    Glib::ustring local_command(command);
-    Glib::ustring * paramString = module->paramString();
-    local_command += *paramString;
-    delete paramString;
+    Glib::ustring local_command = command;
+    Glib::ustring paramString   = *module->paramString();
+    local_command.append(paramString);
 
-    execute(local_command.c_str(), tempfilename_in, local_filename);
+    execute(local_command, tempfilename_in, local_filename);
 
-    g_free(local_filename);
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd);
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
-    unlink(tempfilename_in);
-    g_free(tempfilename_in);
+    unlink(tempfilename_in.c_str());
 }
+
+
 
 /**
     \return    none
@@ -571,13 +692,12 @@ Script::save(Inkscape::Extension::Output *module, SPDocument *doc, gchar const *
 void
 Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *doc)
 {
-    int data_read = 0;
     SPDocument * mydoc = NULL;
-    gint tempfd_in;
-    gchar *tempfilename_in;
 
+    gchar *tmpname;
     // FIXME: process the GError instead of passing NULL
-    if ((tempfd_in = g_file_open_tmp("ink_ext_XXXXXX", &tempfilename_in, NULL)) == -1) {
+    gint tempfd_in = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
+    if (tempfd_in == -1) {
         /* Error, couldn't create temporary filename */
         if (errno == EINVAL) {
             /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
@@ -593,10 +713,13 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         }
     }
 
-    gint tempfd_out;
-    gchar *tempfilename_out;
+    Glib::ustring tempfilename_in = tmpname;
+    g_free(tmpname);
+
+
     // FIXME: process the GError instead of passing NULL
-    if ((tempfd_out = g_file_open_tmp("ink_ext_XXXXXX", &tempfilename_out, NULL)) == -1) {
+    gint tempfd_out = g_file_open_tmp("ink_ext_XXXXXX", &tmpname, NULL);
+    if (tempfd_out == -1) {
         /* Error, couldn't create temporary filename */
         if (errno == EINVAL) {
             /* The  last  six characters of template were not XXXXXX.  Now template is unchanged. */
@@ -612,8 +735,12 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         }
     }
 
-    Inkscape::Extension::save(Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
-                              doc->doc(), tempfilename_in, FALSE, FALSE, FALSE);
+    Glib::ustring tempfilename_out= tmpname;
+    g_free(tmpname);
+
+    Inkscape::Extension::save(
+              Inkscape::Extension::db.get(SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE),
+              doc->doc(), tempfilename_in.c_str(), FALSE, FALSE, FALSE);
 
     Glib::ustring local_command(command);
 
@@ -621,8 +748,8 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
      * of classes. */
     SPDesktop *desktop = (SPDesktop *) doc;
     if (desktop != NULL) {
-        using Inkscape::Util::GSListConstIterator;
-        GSListConstIterator<SPItem *> selected = sp_desktop_selection(desktop)->itemList();
+        Inkscape::Util::GSListConstIterator<SPItem *> selected =
+             sp_desktop_selection(desktop)->itemList();
         while ( selected != NULL ) {
             local_command += " --id=";
             local_command += SP_OBJECT_ID(*selected);
@@ -630,34 +757,37 @@ Script::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *do
         }
     }
 
-    Glib::ustring * paramString = module->paramString();
-    local_command += *paramString;
-    delete paramString;
+    Glib::ustring paramString = *module->paramString();
+    local_command.append(paramString);
+
 
     // std::cout << local_command << std::endl;
 
-    data_read = execute(local_command.c_str(), tempfilename_in, tempfilename_out);
+    int data_read = execute(local_command, tempfilename_in, tempfilename_out);
 
     if (data_read > 10)
-        mydoc = Inkscape::Extension::open(Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG), tempfilename_out);
+        mydoc = Inkscape::Extension::open(
+              Inkscape::Extension::db.get(SP_MODULE_KEY_INPUT_SVG),
+              tempfilename_out.c_str());
 
     // make sure we don't leak file descriptors from g_file_open_tmp
     close(tempfd_in);
     close(tempfd_out);
+
     // FIXME: convert to utf8 (from "filename encoding") and unlink_utf8name
-    unlink(tempfilename_in);
-    g_free(tempfilename_in);
-    unlink(tempfilename_out);
-    g_free(tempfilename_out);
+    unlink(tempfilename_in.c_str());
+    unlink(tempfilename_out.c_str());
+
 
     /* Do something with mydoc.... */
-    if (mydoc != NULL) {
+    if (mydoc) {
         doc->doc()->emitReconstructionStart();
         copy_doc(doc->doc()->rroot, mydoc->rroot);
         doc->doc()->emitReconstructionFinish();
         mydoc->release();
     }
 }
+
 
 
 /**
@@ -705,13 +835,17 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
     /** \todo  Restore correct selection */
 }
 
+
+
 /* Helper class used by Script::execute */
 class pipe_t {
 public:
     /* These functions set errno if they return false.
        I'm not sure whether that's a good idea or not, but it should be reasonably
        straightforward to change it if needed. */
-    bool open(char *command, char const *errorFile, int mode);
+    bool open(const Glib::ustring &command,
+              const Glib::ustring &errorFile,
+              int mode);
     bool close();
 
     /* These return the number of bytes read/written. */
@@ -734,6 +868,9 @@ private:
     FILE *ppipe;
 #endif
 };
+
+
+
 
 /**
     \return   none
@@ -765,27 +902,36 @@ private:
     are closed, and we return to what we were doing.
 */
 int
-Script::execute (const gchar * in_command, const gchar * filein, const gchar * fileout)
+Script::execute (const Glib::ustring &in_command,
+                 const Glib::ustring &filein,
+                 const Glib::ustring &fileout)
 {
-    g_return_val_if_fail(in_command != NULL, 0);
+    g_return_val_if_fail(in_command.size() > 0, 0);
     // printf("Executing: %s\n", in_command);
 
-    gchar * errorFile;
+    gchar *tmpname;
     gint errorFileNum;
-    errorFileNum = g_file_open_tmp("ink_ext_stderr_XXXXXX", &errorFile, NULL);
+    errorFileNum = g_file_open_tmp("ink_ext_stderr_XXXXXX", &tmpname, NULL);
     if (errorFileNum != 0) {
         close(errorFileNum);
     } else {
-        g_free(errorFile);
-        errorFile = NULL;
+        g_free(tmpname);
     }
 
-    char *command = g_strdup_printf("%s \"%s\"", in_command, filein);
+    Glib::ustring errorFile = tmpname;
+    g_free(tmpname);
+
+    Glib::ustring localCommand = in_command;
+    localCommand .append(" \"");
+    localCommand .append(filein);
+    localCommand .append("\"");
+
     // std::cout << "Command to run: " << command << std::endl;
 
     pipe_t pipe;
-    bool open_success = pipe.open(command, errorFile, pipe_t::mode_read);
-    g_free(command);
+    bool open_success = pipe.open((char *)localCommand.c_str(),
+                                  errorFile.c_str(),
+                                  pipe_t::mode_read);
 
     /* Run script */
     if (!open_success) {
@@ -800,8 +946,8 @@ Script::execute (const gchar * in_command, const gchar * filein, const gchar * f
         return 0;
     }
 
-    Inkscape::IO::dump_fopen_call(fileout, "J");
-    FILE *pfile = Inkscape::IO::fopen_utf8name(fileout, "w");
+    Inkscape::IO::dump_fopen_call(fileout.c_str(), "J");
+    FILE *pfile = Inkscape::IO::fopen_utf8name(fileout.c_str(), "w");
 
     if (pfile == NULL) {
         /* Error - could not open file */
@@ -852,32 +998,37 @@ Script::execute (const gchar * in_command, const gchar * filein, const gchar * f
          * to count on what was read being good */
         amount_read = 0;
     } else {
-        if (errorFile != NULL) {
+        if (errorFile.size()>0) {
             checkStderr(errorFile, Gtk::MESSAGE_INFO,
                 _("Inkscape has received additional data from the script executed.  "
                   "The script did not return an error, but this may indicate the results will not be as expected."));
         }
     }
 
-    if (errorFile != NULL) {
-        unlink(errorFile);
-        g_free(errorFile);
+    if (errorFile.size()>0) {
+        unlink(errorFile.c_str());
     }
 
     return amount_read;
 }
+
+
+
 
 /**  \brief  This function checks the stderr file, and if it has data,
              shows it in a warning dialog to the user
      \param  filename  Filename of the stderr file
 */
 void
-Script::checkStderr (gchar * filename, Gtk::MessageType type, gchar * message)
+Script::checkStderr (const Glib::ustring &filename,
+                     Gtk::MessageType type,
+                     const Glib::ustring &message)
 {
+
     // magic win32 crlf->lf conversion means the file length is not the same as
     // the text length, but luckily gtk will accept crlf in textviews so we can
     // just use binary mode
-    std::ifstream stderrf (filename, std::ios_base::in | std::ios_base::binary);
+    std::ifstream stderrf (filename.c_str(), std::ios_base::in | std::ios_base::binary);
     if (!stderrf.is_open()) return;
 
     stderrf.seekg(0, std::ios::end);
@@ -915,59 +1066,78 @@ Script::checkStderr (gchar * filename, Gtk::MessageType type, gchar * message)
     return;
 }
 
+
+
+
 #ifdef WIN32
 
-bool pipe_t::open(char *command, char const *errorFile, int mode_p) {
+
+bool pipe_t::open(const Glib::ustring &command,
+                  const Glib::ustring &errorFile,
+                  int mode_p) {
     HANDLE pipe_write;
 
-    // Create pipe
-    {
-        SECURITY_ATTRIBUTES secattrs;
-        ZeroMemory(&secattrs, sizeof(secattrs));
-        secattrs.nLength = sizeof(secattrs);
-        secattrs.lpSecurityDescriptor = 0;
-        secattrs.bInheritHandle = TRUE;
-        HANDLE t_pipe_read = 0;
-        if ( !CreatePipe(&t_pipe_read, &pipe_write, &secattrs, 0) ) {
-            errno = translate_error(GetLastError());
-            return false;
-        }
-        // This duplicate handle makes the read pipe uninheritable
-        if ( !DuplicateHandle(GetCurrentProcess(), t_pipe_read, GetCurrentProcess(), &hpipe, 0, FALSE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS) ) {
-            int en = translate_error(GetLastError());
-            CloseHandle(t_pipe_read);
-            CloseHandle(pipe_write);
-            errno = en;
-            return false;
-        }
+    //###############  Create pipe
+    SECURITY_ATTRIBUTES secattrs;
+    ZeroMemory(&secattrs, sizeof(secattrs));
+    secattrs.nLength = sizeof(secattrs);
+    secattrs.lpSecurityDescriptor = 0;
+    secattrs.bInheritHandle = TRUE;
+    HANDLE t_pipe_read = 0;
+    if ( !CreatePipe(&t_pipe_read, &pipe_write, &secattrs, 0) ) {
+        errno = translate_error(GetLastError());
+        return false;
     }
-    // Open stderr file
-    HANDLE hStdErrFile = CreateFile(errorFile, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, 0, NULL);
+    // This duplicate handle makes the read pipe uninheritable
+    BOOL ret = DuplicateHandle(GetCurrentProcess(),
+                               t_pipe_read,
+                               GetCurrentProcess(),
+                               &hpipe, 0, FALSE,
+                               DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+    if (!ret) {
+        int en = translate_error(GetLastError());
+        CloseHandle(t_pipe_read);
+        CloseHandle(pipe_write);
+        errno = en;
+        return false;
+    }
+
+    //############### Open stderr file
+    HANDLE hStdErrFile = CreateFile(errorFile.c_str(),
+                      GENERIC_WRITE,
+                      FILE_SHARE_READ | FILE_SHARE_WRITE,
+                      NULL, CREATE_ALWAYS, 0, NULL);
     HANDLE hInheritableStdErr;
-    DuplicateHandle(GetCurrentProcess(), hStdErrFile, GetCurrentProcess(), &hInheritableStdErr, 0, TRUE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
+    DuplicateHandle(GetCurrentProcess(),
+                    hStdErrFile,
+                    GetCurrentProcess(),
+                    &hInheritableStdErr,
+                    0, 
+                    TRUE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);
 
-    // Create process
-    {
-        PROCESS_INFORMATION procinfo;
-        STARTUPINFO startupinfo;
-        ZeroMemory(&procinfo, sizeof(procinfo));
-        ZeroMemory(&startupinfo, sizeof(startupinfo));
-        startupinfo.cb = sizeof(startupinfo);
-        //startupinfo.lpReserved = 0;
-        //startupinfo.lpDesktop = 0;
-        //startupinfo.lpTitle = 0;
-        startupinfo.dwFlags = STARTF_USESTDHANDLES;
-        startupinfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
-        startupinfo.hStdOutput = pipe_write;
-        startupinfo.hStdError = hInheritableStdErr;
+    //############### Create process
+    PROCESS_INFORMATION procinfo;
+    STARTUPINFO startupinfo;
+    ZeroMemory(&procinfo, sizeof(procinfo));
+    ZeroMemory(&startupinfo, sizeof(startupinfo));
+    startupinfo.cb = sizeof(startupinfo);
+    //startupinfo.lpReserved = 0;
+    //startupinfo.lpDesktop = 0;
+    //startupinfo.lpTitle = 0;
+    startupinfo.dwFlags = STARTF_USESTDHANDLES;
+    startupinfo.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+    startupinfo.hStdOutput = pipe_write;
+    startupinfo.hStdError = hInheritableStdErr;
 
-        if ( !CreateProcess(NULL, command, NULL, NULL, TRUE, 0, NULL, NULL, &startupinfo, &procinfo) ) {
-            errno = translate_error(GetLastError());
-            return false;
-        }
-        CloseHandle(procinfo.hThread);
-        CloseHandle(procinfo.hProcess);
+    if ( !CreateProcess(NULL, (CHAR *)command.c_str(),
+                        NULL, NULL, TRUE,
+                        0, NULL, NULL,
+                        &startupinfo, &procinfo) ) {
+        errno = translate_error(GetLastError());
+        return false;
     }
+    CloseHandle(procinfo.hThread);
+    CloseHandle(procinfo.hProcess);
 
     // Close our copy of the write handle
     CloseHandle(hInheritableStdErr);
@@ -976,11 +1146,12 @@ bool pipe_t::open(char *command, char const *errorFile, int mode_p) {
     return true;
 }
 
+
+
 bool pipe_t::close() {
     BOOL retval = CloseHandle(hpipe);
-    if ( !retval ) {
+    if ( !retval )
         errno = translate_error(GetLastError());
-    }
     return retval != FALSE;
 }
 
@@ -1008,50 +1179,62 @@ int pipe_t::translate_error(DWORD err) {
     }
 }
 
-#else // Win32
 
-bool pipe_t::open(char *command, char const *errorFile, int mode_p) {
-    char popen_mode[4] = {0,0,0,0};
-    char *popen_mode_cur = popen_mode;
+#else // not Win32
 
-    if ( (mode_p & mode_read) != 0 ) {
-        *popen_mode_cur++ = 'r';
+
+bool pipe_t::open(const Glib::ustring &command,
+                  const Glib::ustring &errorFile,
+                  int mode_p) {
+
+    Glib::ustring popen_mode;
+
+    if ( (mode_p & mode_read) != 0 )
+        popen_mode_cur.append("r");
+
+    if ( (mode_p & mode_write) != 0 )
+        popen_mode_cur.append("w");
+
+    // Get the commandline to be run
+    Glib::ustring pipeStr = command;
+    if (errorFile.size()>0) {
+        pipeStr .append(" 2> ");
+        pipeStr .append(errorFile);
     }
 
-    if ( (mode_p & mode_write) != 0 ) {
-        *popen_mode_cur++ = 'w';
-    }
-
-    /* Get the commandline to be run */
-    if (errorFile != NULL) {
-        char * temp;
-        temp = g_strdup_printf("%s 2> %s", command, errorFile);
-        ppipe = popen(temp, popen_mode);
-        g_free(temp);
-    } else
-        ppipe = popen(command, popen_mode);
+    ppipe = popen(pipeStr.c_str(), popen_mode.c_str());
 
     return ppipe != NULL;
 }
+
 
 bool pipe_t::close() {
     return fclose(ppipe) == 0;
 }
 
+
 size_t pipe_t::read(void *buffer, size_t size) {
     return fread(buffer, 1, size, ppipe);
 }
+
 
 size_t pipe_t::write(void const *buffer, size_t size) {
     return fwrite(buffer, 1, size, ppipe);
 }
 
+
+
+
 #endif // (Non-)Win32
 
 
-}  /* Inkscape  */
-}  /* module  */
-}  /* Implementation  */
+
+
+}  // namespace Implementation
+}  // namespace Extension
+}  // namespace Inkscape
+
+
 
 
 /*
