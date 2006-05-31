@@ -179,18 +179,18 @@ AC_SUBST(FREETYPE_LIBS)
 dnl ******************************
 dnl Win32
 dnl ******************************
-AC_MSG_CHECKING([for native Win32])
+AC_MSG_CHECKING([for Win32 platform])
 case "$host" in
   *-*-mingw*)
-    os_win32=yes
+    platform_win32=yes
     INKSCAPE_CFLAGS="$INKSCAPE_CFLAGS -mms-bitfields -DLIBXML_STATIC"
     ;;
   *)
-    os_win32=no
+    platform_win32=no
     ;;
 esac
-AC_MSG_RESULT([$os_win32])
-AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
+AC_MSG_RESULT([$platform_win32])
+AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
 
 dnl ******************************
 dnl Xft checking
@@ -350,7 +350,7 @@ if test "x$with_perl" = "xyes"; then
     if test "$?" -gt "0"; then
         with_perl="no"
     else
-        checkPERL_LIBS=`perl -MExtUtils::Embed -e ldopts 2>/dev/null`
+        checkPERL_LDFLAGS=`perl -MExtUtils::Embed -e ldopts 2>/dev/null`
         if test "$?" -gt "0"; then
             with_perl="no"
         else
@@ -362,22 +362,22 @@ AC_MSG_RESULT([$with_perl])
 if test "x$with_perl" = "xyes"; then
     # Test that we actually have the perl libraries installed
     oldCFLAGS="$CFLAGS"
-    oldLIBS="$LIBS"
+    oldLDFLAGS="$LDFLAGS"
     CFLAGS="$CFLAGS $checkPERL_CFLAGS"
-    LIBS="$LIBS $checkPERL_LIBS"
+    LDFLAGS="$LDFLAGS $checkPERL_LDFLAGS"
     AC_CHECK_FUNC([perl_parse],[
 	PERL_CFLAGS="$checkPERL_CFLAGS"
-	PERL_LIBS="$checkPERL_LIBS"
+	PERL_LDFLAGS="$checkPERL_LDFLAGS"
         AC_DEFINE(WITH_PERL, 1, [use Perl for embedded scripting])
         ],[
 	with_perl="no"
 	])
     CFLAGS="$oldCFLAGS"
-    LIBS="$oldLIBS"
+    LDFLAGS="$oldLDFLAGS"
 fi
 AM_CONDITIONAL(WITH_PERL, test "x$with_perl" = "xyes")
 AC_SUBST(PERL_CFLAGS)
-AC_SUBST(PERL_LIBS)
+AC_SUBST(PERL_LDFLAGS)
 
 dnl ******************************
 dnl Python checking
@@ -393,7 +393,7 @@ if test "x$with_python" = "xyes"; then
     if test "$?" -gt "0"; then
         with_python="no"
     else
-        checkPYTHON_LIBS=`python -c "import distutils.sysconfig ; print '%s/%s %s' % (distutils.sysconfig.get_config_var('LIBPL'),distutils.sysconfig.get_config_var('LDLIBRARY'),distutils.sysconfig.get_config_var('LIBS'))" 2>/dev/null`
+        checkPYTHON_LIBS=`python -c "import distutils.sysconfig ; print '%s/%s %s' % (distutils.sysconfig.get_config_var('LIBPL'),distutils.sysconfig.get_config_var('LIBRARY'),distutils.sysconfig.get_config_var('LIBS'))" 2>/dev/null`
         if test "$?" -gt "0"; then
             with_python="no"
         else
@@ -861,8 +861,6 @@ Configuration:
         Use openoffice files:     ${ij}
         Use MMX optimizations:    ${use_mmx_asm}
         Use relocation support:   ${enable_binreloc}
-        Use Python extensions:    ${with_python}
-        Use Perl extensions:      ${with_perl}
 	Enable LittleCms:         ${enable_lcms}
 	Enable Inkboard:	  ${with_inkboard}
 "
