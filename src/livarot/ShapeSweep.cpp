@@ -820,22 +820,6 @@ Shape::ConvertToShape (Shape * a, FillRule directed, bool invert)
   delete sEvts;
   sEvts = NULL;
 
-  if ( directed == fill_justDont ) {
-  } else {
-    if (directedEulerian(this) == false)
-    {
-//      Validate();
-      //              printf( "pas euclidian2");
-      MakePointData (false);
-      MakeEdgeData (false);
-      MakeSweepSrcData (false);
-      MakeSweepDestData (false);
-      a->CleanupSweep ();
-      _pts.clear();
-      _aretes.clear();
-      return shape_euler_err;
-    }
-  }
   MakePointData (false);
   MakeEdgeData (false);
   MakeSweepSrcData (false);
