@@ -8493,7 +8493,7 @@ msgstr "Freihandlinien zeichnen"
 
 #: ../src/verbs.cpp:2228
 msgid "Draw Bezier curves and straight lines"
-msgstr "Beziér-Kurven und gerade Linien zeichnen"
+msgstr "Bézier-Kurven und gerade Linien zeichnen"
 
 #: ../src/verbs.cpp:2230
 msgid "Draw calligraphic lines"
@@ -9715,7 +9715,7 @@ msgstr "Die gewählten Abschnitte in Kurven umwandeln"
 
 #: ../src/widgets/toolbox.cpp:467
 msgid "Show the Bezier handles of selected nodes"
-msgstr "Die Beziér-Anfasser von ausgewählten Knoten anzeigen"
+msgstr "Die Bézier-Anfasser von ausgewählten Knoten anzeigen"
 
 #: ../src/widgets/toolbox.cpp:1218
 msgid "Regular polygon (with one handle) instead of a star"
@@ -10318,7 +10318,7 @@ msgstr "Flachheit"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
-msgstr "Beziér flach machen"
+msgstr "Bézier flach machen"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
