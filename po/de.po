@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-29 20:24+0200\n"
-"PO-Revision-Date: 2006-05-30 00:41+0200\n"
+"PO-Revision-Date: 2006-06-01 01:02+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -9503,7 +9503,7 @@ msgstr "Vertikale Koordinate der Auswahl "
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:444
 msgid "select_toolbar|W"
-msgstr "W"
+msgstr "B"
 
 #: ../src/widgets/select-toolbar.cpp:444
 msgid "Width of selection"
