@@ -7,7 +7,7 @@
 #
 # ################################################
 
-if OS_WIN32
+if PLATFORM_WIN32
 win32_sources = winmain.cpp
 win32ldflags = -lcomdlg32
 endif 
