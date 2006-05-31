@@ -290,7 +290,7 @@ all_libs =			\
 	$(FREETYPE_LIBS)	\
 	$(kdeldadd)		\
 	$(win32ldflags)		\
-	$(PERL_LDFLAGS)		\
+	$(PERL_LIBS)		\
 	$(PYTHON_LIBS)	\
 	$(LIBLOUDMOUTH_LIBS) 
 
