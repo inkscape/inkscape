@@ -101,27 +101,32 @@ class SVDMatrix
 {
 public:
 
-    SVDMatrix()
+    SVDMatrix() :
+        badval(0),
+        d(0),
+        rows(0),
+        cols(0),
+        size(0)
         {
-        d = (double *)0;
-        rows = cols = size = 0;
         }
 
-    SVDMatrix(unsigned int rowSize, unsigned int colSize)
+    SVDMatrix(unsigned int rowSize, unsigned int colSize) :
+        badval(0),
+        rows(rowSize),
+        cols(colSize),
+        size(rows * cols)
         {
-        rows = rowSize;
-        cols = colSize;
-        size = rows * cols;
         d = new double[size];
         for (unsigned int i=0 ; i<size ; i++)
             d[i] = 0.0;
         }
 
-    SVDMatrix(double *vals, unsigned int rowSize, unsigned int colSize)
+    SVDMatrix(double *vals, unsigned int rowSize, unsigned int colSize) :
+        badval(0),
+        rows(rowSize),
+        cols(colSize),
+        size(rows * cols)
         {
-        rows = rowSize;
-        cols = colSize;
-        size = rows * cols;
         d = new double[size];
         for (unsigned int i=0 ; i<size ; i++)
             d[i] = vals[i];
@@ -129,10 +134,16 @@ public:
 
     virtual ~SVDMatrix()
         {
-        delete d;
+        delete[] d;
+        d = 0;
         }
 
-    SVDMatrix(const SVDMatrix &other)
+    SVDMatrix(const SVDMatrix &other) :
+        badval(0),
+        d(0),
+        rows(0),
+        cols(0),
+        size(0)
         {
         assign(other);
         }
@@ -207,7 +218,10 @@ private:
      void assign(const SVDMatrix &other)
         {
         if (d)
-            delete d;
+            {
+            delete[] d;
+            d = 0;
+            }
         rows = other.rows;
         cols = other.cols;
         size = other.size;
@@ -259,9 +273,13 @@ public:
    @return     Structure to access U, S and V.
    */
 
-    SingularValueDecomposition (const SVDMatrix &mat)
+    SingularValueDecomposition (const SVDMatrix &mat) :
+        A(mat),
+        U(),
+        s(0),
+        s_size(0),
+        V()
         {
-        A = mat;
         calculate();
         }
 
@@ -284,8 +302,7 @@ public:
 
     /**
      *  Return the s[index] value
-     */
-    double getS(unsigned int index);
+     */    double getS(unsigned int index);
 
     /**
      * Two norm

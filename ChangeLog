@@ -1,3 +1,9 @@
+2006-05-29  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/extension/internal/odf.cpp:
+	Corrected deletes and uninitizlied variables.
+	Fixes bug# 1489961.
+
 2006-05-30 John Cliff <simarilius@yahoo.com>
 	src/trace/potrace/inkscape-potrace.cpp
 	Changed bitsPerSample from hardcoded to calculated for multi color traces
