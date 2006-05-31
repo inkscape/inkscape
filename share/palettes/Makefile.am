@@ -11,6 +11,7 @@ palettes_DATA = \
     Blues.gpl \
     Gold.gpl \
     Greens.gpl \
+    Gray.gpl \
     Hilite.gpl \
     Khaki.gpl \
     Reds.gpl \
