@@ -127,7 +127,7 @@ resolveInterpreterExecutable(const Glib::ustring &interpNameArg)
         if (stat(interpPath .c_str(), &finfo) ==0) {
             g_message("Found local interpreter, '%s',  Size: %d",
                       interpPath .c_str(),
-                      finfo.st_size);
+                      (int)finfo.st_size);
             return interpPath;
         }                       
     }
@@ -441,7 +441,7 @@ Script::check(Inkscape::Extension::Extension *module)
 */
 Gtk::Widget *
 Script::prefs_input(Inkscape::Extension::Input *module,
-                    const Glib::ustring &filename)
+                    const gchar *filename)
 {
     /*return module->autogui(); */
     return NULL;
@@ -514,8 +514,10 @@ Script::prefs_effect(Inkscape::Extension::Effect *module,
 */
 SPDocument *
 Script::open(Inkscape::Extension::Input *module,
-             const Glib::ustring &filename)
+             const gchar *filenameArg)
 {
+
+    Glib::ustring filename = filenameArg;
 
     gchar *tmpname;
 
@@ -604,8 +606,10 @@ Script::open(Inkscape::Extension::Input *module,
 void
 Script::save(Inkscape::Extension::Output *module,
              SPDocument *doc,
-             const Glib::ustring &filename)
+             const gchar *filenameArg)
 {
+
+    Glib::ustring filename = filenameArg;
 
     gchar *tmpname;
     // FIXME: process the GError instead of passing NULL

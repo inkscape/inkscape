@@ -66,14 +66,13 @@ public:
      *
      */
     virtual Gtk::Widget *prefs_input(Inkscape::Extension::Input *module,
-                                     const Glib::ustring &filename);
-
+                                     gchar const *filename);
 
     /**
      *
      */
     virtual SPDocument *open(Inkscape::Extension::Input *module,
-                             const Glib::ustring &filename);
+                             gchar const *filename);
 
     /**
      *
@@ -85,7 +84,7 @@ public:
      */
     virtual void save(Inkscape::Extension::Output *module,
                       SPDocument *doc,
-                      const Glib::ustring &filename);
+                      gchar const *filename);
     /**
      *
      */
