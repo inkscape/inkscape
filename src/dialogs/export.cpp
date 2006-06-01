@@ -780,8 +780,8 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
                 }
             case SELECTION_PAGE:
                 bbox = NR::Rect(NR::Point(0.0, 0.0), 
-                                NR::Point(sp_document_width(doc)),
-                                          sp_document_height(doc));
+                                NR::Point(sp_document_width(doc), sp_document_height(doc))
+                                );
 
                 // std::cout << "Using selection: PAGE" << std::endl;
                 key = SELECTION_PAGE;
