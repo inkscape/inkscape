@@ -320,7 +320,7 @@ bool SvgParser::parseTransform(const DOMString &str)
             while (p < parselen && nrVals < 6)
                 {
                 p = skipwhite(p);
-                double val;
+                double val = 0.0;
                 p2 = getNumber(p, val);
                 if (p2<0)
                     return false;
@@ -375,7 +375,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 return false;
                 }
             p = skipwhite(p);
-            double x;
+            double x = 0.0;
             p2 = getNumber(p, x);
             if (p2<0)
                 return false;
@@ -390,7 +390,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 p++;
                 p = skipwhite(p);
                 }
-            double y;
+            double y = 0.0;
             p2 = getNumber(p, y);
             if (p2<0)
                 return false;
@@ -418,7 +418,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 return false;
                 }
             p = skipwhite(p);
-            double x;
+            double x = 0.0;
             p2 = getNumber(p, x);
             if (p2<0)
                 return false;
@@ -433,7 +433,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 p++;
                 p = skipwhite(p);
                 }
-            double y;
+            double y = 0.0;
             p2 = getNumber(p, y);
             if (p2<0)
                 return false;
@@ -461,7 +461,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 return false;
                 }
             p = skipwhite(p);
-            double angle;
+            double angle = 0.0;
             p2 = getNumber(p, angle);
             if (p2<0)
                 return false;
@@ -518,7 +518,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 return false;
                 }
             p = skipwhite(p);
-            double x;
+            double x = 0.0;
             p2 = getNumber(p, x);
             if (p2<0)
                 return false;
@@ -549,7 +549,7 @@ bool SvgParser::parseTransform(const DOMString &str)
                 return false;
                 }
             p = skipwhite(p);
-            double y;
+            double y = 0.0;
             p2 = getNumber(p, y);
             if (p2<0)
                 return false;
