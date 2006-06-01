@@ -185,6 +185,7 @@ sp_color_get_rgba32_ualpha(SPColor const *color, guint32 alpha)
                                    alpha);
     } else {
         float rgb[3];
+        rgb[0] = rgb[1] = rgb[2] = 0.0;
         sp_color_get_rgb_floatv (color, rgb);
         rgba = SP_RGBA32_U_COMPOSE(SP_COLOR_F_TO_U(rgb[0]),
                                    SP_COLOR_F_TO_U(rgb[1]),
