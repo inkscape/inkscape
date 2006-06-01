@@ -125,15 +125,12 @@ int XmlSource::setFile(char const *filename)
 
             int encSkip = 0;
             if ( (some >= 2) &&(firstFew[0] == 0xfe) && (firstFew[1] == 0xff) ) {
-                g_warning("File is UTF-16BE");
                 encoding = g_strdup("UTF-16BE");
                 encSkip = 2;
             } else if ( (some >= 2) && (firstFew[0] == 0xff) && (firstFew[1] == 0xfe) ) {
-                g_warning("File is UTF-16LE");
                 encoding = g_strdup("UTF-16LE");
                 encSkip = 2;
             } else if ( (some >= 3) && (firstFew[0] == 0xef) && (firstFew[1] == 0xbb) && (firstFew[2] == 0xbf) ) {
-                g_warning("File is UTF-8");
                 encoding = g_strdup("UTF-8");
                 encSkip = 3;
             }
