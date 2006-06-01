@@ -4,14 +4,14 @@
 # Amanpreet Singh Brar Alamwalia <apbrar@gmail.com>, 2005.
 # Amanpreet Singh Brar <amanpreetalam@yahoo.com>, 2005.
 #
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
 "PO-Revision-Date: 2005-09-11 18:09+0530\n"
 "Last-Translator: Amanpreet Singh Brar <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -80,11 +80,11 @@ msgstr "<b>ਮੌਜੂਦਾ ਪਰਤ ਤਾਲਾਬੰਦ ਹੈ</b>। ਇ�
 msgid "%s at %s"
 msgstr "%s, %s ਉੱਤੇ"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "ਕੋਈ ਪਿਛਲਾ ਜ਼ੂਮ ਨਹੀਂ ਹੈ।"
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "ਕੋਈ ਅੱਗੇ ਜ਼ੂਮ ਨਹੀਂ ਹੈ।"
 
@@ -822,34 +822,34 @@ msgstr "ਨਿਰਯਾਤ"
 msgid "Export the bitmap file with these settings"
 msgstr "ਇਸ ਸਥਾਪਨ ਨਾਲ ਬਿੱਟਮੈਪ ਫਾਇਲ ਨਿਰਯਾਤ"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "ਤੁਹਾਨੂੰ ਇੱਕ ਫਾਇਲ ਨਾਂ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "ਨਿਰਯਾਤ ਲਈ ਚੁਣਿਆ ਖੇਤਰ ਗਲਤ ਹੈ"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "ਡਾਇਰੈਕਟਰੀ %s ਮੌਜੂਦ ਨਹੀਂ ਹੈ ਜਾਂ ਇਹ ਇੱਕ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਹੈ।\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "ਨਿਰਯਾਤ ਜਾਰੀ ਹੈ"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "ਨਿਰਯਾਤ ਜਾਰੀ %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "ਫਾਇਲ ਨਾਂ %s ਨੂੰ ਨਿਰਯਾਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "ਨਿਰਯਾਤ ਕਰਨ ਲਈ ਇੱਕ ਫਾਇਲ ਨਾਂ ਚੁਣੋ"
 
@@ -1203,28 +1203,33 @@ msgstr "Id ਗਲਤ ਹੈ! "
 msgid "Id exists! "
 msgstr "Id ਮੌਜੂਦ ਹੈ! "
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "ਬਲੌਰੀਪਨ"
+
+#: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 #, fuzzy
 msgid "Bot"
 msgstr "ਡੱਬਾ"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -1663,13 +1668,13 @@ msgstr "ਕੇਂਦਰੀ ਰੇਖਾਵਾਂ"
 msgid "Align lines right"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "ਖਿਤਿਜੀ ਪਾਠ"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "ਲੰਬਕਾਰੀ ਪਾਠ"
 
@@ -2006,14 +2011,14 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "ਸ਼ੁਰੂ ਸਮੇਂ ਵਾਰਤਾਲਾਪ ਵੇਖਾਓ"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
 "but the action you requested has been cancelled."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2165,15 +2170,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -2788,22 +2793,22 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "ਮੁੱਖ ਸੰਦ-ਪੱਟੀ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ (ਖੱਬੇ ਪਾਸੇ)"
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr "ਹਾਲਤ-ਪੱਟੀ(_S)"
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "ਹਾਲਤ-ਪੱਟੀ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ (ਝਰੋਖੇ ਦੇ ਤਲ ਉੱਤੇ)"
-
-#: ../src/interface.cpp:784
 #, fuzzy
 msgid "_Palette"
 msgstr "ਚੇਪੋ(_P)"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 #, fuzzy
 msgid "Show or hide the color palette"
 msgstr "ਸੰਦ ਕੰਟਰੋਲ ਪੈਨਲ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ"
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr "ਹਾਲਤ-ਪੱਟੀ(_S)"
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
+msgstr "ਹਾਲਤ-ਪੱਟੀ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ (ਝਰੋਖੇ ਦੇ ਤਲ ਉੱਤੇ)"
 
 #: ../src/interface.cpp:838
 #, c-format
@@ -4290,7 +4295,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "ਇਕਾਈ"
 
@@ -4545,7 +4550,7 @@ msgstr "ਯੂਨੀਕੋਡ: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "ਪਾਠ ਲਿਖੋ, ਨਵੀਂ ਰੇਖਾ ਸ਼ੁਰੂ ਕਰਨ ਲਈ <b>Enter</b> ਦਬਾਓ।"
 
@@ -4563,11 +4568,11 @@ msgstr ""
 msgid "No-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -8858,7 +8863,7 @@ msgstr "ਫੋਂਟ ਆਕਾਰ:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 #, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12368.;/()"
@@ -9571,80 +9576,81 @@ msgid ""
 "color including its alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3394
+#: ../src/widgets/toolbox.cpp:3404
 #, fuzzy
-msgid "Rag right"
+msgid "Align right"
 msgstr "ਹੱਕ"
 
-#: ../src/widgets/toolbox.cpp:3405
+#: ../src/widgets/toolbox.cpp:3415
 #, fuzzy
-msgid "Centered"
+msgid "Center"
 msgstr "ਕੇਂਦਰੀ ਰੇਖਾਵਾਂ"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "ਰੇਖਾਵਾਂ ਖੱਬੇ ਪਾਸੇ ਇਕਸਾਰ"
+
+#: ../src/widgets/toolbox.cpp:3437
+msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 #, fuzzy
 msgid "Horizontal kerning"
 msgstr "ਖਿਤਿਜੀ ਖਾਲੀ ਥਾਂ"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 #, fuzzy
 msgid "Vertical kerning"
 msgstr "ਲੰਬਕਾਰੀ ਖਾਲੀ ਥਾਂ"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Remove manual kerns"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 #, fuzzy
 msgid "Make connectors avoid selected objects"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਦੀ ਕਾਟ"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 #, fuzzy
 msgid "Make connectors ignore selected objects"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਦੀ ਕਾਟ"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 #, fuzzy
 msgid "Spacing:"
 msgstr "Y ਦੂਰੀ:"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
@@ -10233,6 +10239,10 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "ਕੇਂਦਰੀ ਰੇਖਾਵਾਂ"
 
 #, fuzzy
 #~ msgid "%s Preferences"

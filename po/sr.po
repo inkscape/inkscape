@@ -5,14 +5,14 @@
 # 
 # Maintainer: Александар Урошевић <urke@users.sourceforge.net>
 #
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.42\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
 "PO-Revision-Date: 2005-07-08 01:23+0200\n"
 "Last-Translator: Александар Урошевић <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -89,11 +89,11 @@ msgstr ""
 msgid "%s at %s"
 msgstr "%s на %s"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "Нема више умањења."
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "Нема више увећања."
 
@@ -850,34 +850,34 @@ msgstr "Извези"
 msgid "Export the bitmap file with these settings"
 msgstr "Извози битмапу са овим подешавањима"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "Морате унети назив датотеке"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "Одабрана површина за извоз је нерегуларна"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Директоријум %s не постоји или није директоријум.\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "Извоз је у току"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Извоз %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Не могу да извезем у датотеку %s.\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "Одаберите назив датотеке за извоз"
 
@@ -1236,29 +1236,34 @@ msgstr "ИД је неисправан! "
 msgid "Id exists! "
 msgstr "ИД постоји! "
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "Провидност"
+
+#: ../src/dialogs/layers-panel.cpp:780
 #, fuzzy
 msgid "New"
 msgstr "_Ново"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 #, fuzzy
 msgid "Bot"
 msgstr "Оквир"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -1701,13 +1706,13 @@ msgstr "Централно поравнање"
 msgid "Align lines right"
 msgstr "Десно поравнање"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "Водоравни текст"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "Усправни текст"
 
@@ -2059,7 +2064,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Прикажи ову поруку при сваком покретању програма"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 #, fuzzy
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
@@ -2070,7 +2075,7 @@ msgstr ""
 "приказан. Inkscape ће наставити са радом, али је захтевана акција "
 "обустављена."
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 #, fuzzy
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
@@ -2231,15 +2236,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -2883,22 +2888,22 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "Прикажи или сакриј главну траку алата (уз леву ивицу)"
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr "_Статусна линија"
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "Прикажи или сакриј статустну линију (на дну прозора)"
-
-#: ../src/interface.cpp:784
 #, fuzzy
 msgid "_Palette"
 msgstr "У_баци"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 #, fuzzy
 msgid "Show or hide the color palette"
 msgstr "Прикажи или сакриј траку за контролна подешавања алата"
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr "_Статусна линија"
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
+msgstr "Прикажи или сакриј статустну линију (на дну прозора)"
 
 #: ../src/interface.cpp:838
 #, c-format
@@ -4470,7 +4475,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Група</b> од <b>%d</b> објекта"
 msgstr[1] "<b>Група</b> од <b>%d</b> објеката"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "Објекат"
 
@@ -4747,7 +4752,7 @@ msgstr "Уникод: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Оквир плутајућег текста</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Унесите текст; <b>Ентер</b> за почетак нове линије."
 
@@ -4767,11 +4772,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Непрекидајући размак"
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Унесите плитајући текст; <b>Ентер</b> за почетак новог пасуса."
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -9210,7 +9215,7 @@ msgstr "Величина фонта:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 #, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "АаБбВвДдЂђЉљЧч12368.;/()„“"
@@ -9948,81 +9953,82 @@ msgstr ""
 "Када је притиснуто, узима видљиву боју без провидности а када није "
 "притиснут, узима боју укључујући и провидност"
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3394
+#: ../src/widgets/toolbox.cpp:3404
 #, fuzzy
-msgid "Rag right"
-msgstr "Права"
+msgid "Align right"
+msgstr "Десно поравнање"
 
-#: ../src/widgets/toolbox.cpp:3405
+#: ../src/widgets/toolbox.cpp:3415
 #, fuzzy
-msgid "Centered"
+msgid "Center"
 msgstr "Централно поравнање"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "Лево поравнање"
+
+#: ../src/widgets/toolbox.cpp:3437
+msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 #, fuzzy
 msgid "Horizontal kerning"
 msgstr "Водоравни размак"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 #, fuzzy
 msgid "Vertical kerning"
 msgstr "Усправни размак"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 #, fuzzy
 msgid "Remove manual kerns"
 msgstr "Уклони ручне _кернинге"
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 #, fuzzy
 msgid "Make connectors avoid selected objects"
 msgstr "Пресецање изабраних објеката"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 #, fuzzy
 msgid "Make connectors ignore selected objects"
 msgstr "Пресецање изабраних објеката"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 #, fuzzy
 msgid "Spacing:"
 msgstr "Усправни корак:"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
@@ -10611,6 +10617,14 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Rag right"
+#~ msgstr "Права"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "Централно поравнање"
 
 #, fuzzy
 #~ msgid "%s Preferences"

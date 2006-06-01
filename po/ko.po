@@ -4,25 +4,25 @@
 # Kitae Kim<bluetux@gmail.com>, 2006.
 # 
 # 
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
-"PO-Revision-Date: 2006-04-10 14:41+0900\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
+"PO-Revision-Date: 2006-06-01 13:22+0900\n"
 "Last-Translator: Kitae <bluetux@gmail.com>\n"
 "Language-Team:  <linuxaz@azerimal.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2;plural=(n>1);\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "SVG(크기 조정 가능한 벡터 그래픽) 이미지 만들고 수정"
+msgstr "SVG(크기 조정 가능한 벡터 그래픽) 이미지  생성"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape SVG Vector Illustrator"
@@ -31,7 +31,7 @@ msgstr "SVG 벡터 일러스터 잉크스케이프"
 #: ../src/arc-context.cpp:328
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
-msgstr ""
+msgstr "<b>Ctrl</b>: 원이나 타원을 만들고, 원호의 각도 조절"
 
 #: ../src/arc-context.cpp:329 ../src/rect-context.cpp:372
 msgid "<b>Shift</b>: draw around the starting point"
@@ -54,7 +54,7 @@ msgstr "연결자 종료"
 
 #: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr ""
+msgstr "<b>연결점</b>: 클릭하거나 드래그 하여 새로운 연결점을 생성"
 
 #: ../src/connector-context.cpp:1156
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
@@ -77,11 +77,11 @@ msgstr ""
 msgid "%s at %s"
 msgstr ""
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "이전 확대/축소 없음."
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "다음 확대/축소 없음."
 
@@ -112,7 +112,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1931
 msgid "Select an <b>object</b> to clone."
-msgstr ""
+msgstr "클론으로 만들 <b>객체</b>를 선택"
 
 #: ../src/dialogs/clonetiler.cpp:970
 msgid ""
@@ -218,13 +218,13 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1720
 msgid "S_hift"
-msgstr ""
+msgstr "Shift(_h)"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
 #: ../src/dialogs/clonetiler.cpp:1730
 #, no-c-format
 msgid "<b>Shift X:</b>"
-msgstr ""
+msgstr "<b>Shift·X:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1738
 #, no-c-format
@@ -244,7 +244,7 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:1763
 #, no-c-format
 msgid "<b>Shift Y:</b>"
-msgstr ""
+msgstr "<b>Shift·Y:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1771
 #, no-c-format
@@ -367,7 +367,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1984
 msgid "_Opacity"
-msgstr ""
+msgstr "불투명도(_O)"
 
 #: ../src/dialogs/clonetiler.cpp:1992
 msgid "<b>Fade out:</b>"
@@ -433,31 +433,31 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2101
 msgid "Change the color saturation by this percentage for each row"
-msgstr ""
+msgstr "색채도를 각 줄의 퍼센트를 조절해서 수정"
 
 #: ../src/dialogs/clonetiler.cpp:2108
 msgid "Change the color saturation by this percentage for each column"
-msgstr ""
+msgstr "색채도를 각 열의 퍼센트를 조절해서 수정"
 
 #: ../src/dialogs/clonetiler.cpp:2115
 msgid "Randomize the color saturation by this percentage"
-msgstr ""
+msgstr "이 퍼센트에 의한 불특정 색채도 설정"
 
 #: ../src/dialogs/clonetiler.cpp:2123
 msgid "<b>L:</b>"
-msgstr ""
+msgstr "<b>L:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2130
 msgid "Change the color lightness by this percentage for each row"
-msgstr ""
+msgstr "색 명도를 각줄의 퍼센트를 조절해서 수정"
 
 #: ../src/dialogs/clonetiler.cpp:2137
 msgid "Change the color lightness by this percentage for each column"
-msgstr ""
+msgstr "색 명도를 각열의 퍼센트를 조절해서 수정"
 
 #: ../src/dialogs/clonetiler.cpp:2144
 msgid "Randomize the color lightness by this percentage"
-msgstr ""
+msgstr "이 퍼센트에 의한 불특정 색명도 설정"
 
 #: ../src/dialogs/clonetiler.cpp:2158
 msgid "Alternate the sign of color changes for each row"
@@ -498,7 +498,7 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:2215 ../src/dialogs/clonetiler.cpp:2364
 #: ../share/extensions/svg_dropshadow.inx.h:3
 msgid "Opacity"
-msgstr ""
+msgstr "불투명도"
 
 #: ../src/dialogs/clonetiler.cpp:2216
 msgid "Pick the total accumulated opacity"
@@ -536,7 +536,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2250
 msgid "Pick the hue of the color"
-msgstr ""
+msgstr "색의 HUE 를 선택"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -783,7 +783,7 @@ msgstr "높이:"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
-msgstr ""
+msgstr "<big><b>비트맵 크기</b></big>"
 
 #: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
@@ -795,7 +795,7 @@ msgstr ""
 
 #: ../src/dialogs/export.cpp:437
 msgid "dp_i"
-msgstr ""
+msgstr "dp_i"
 
 #: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
@@ -811,42 +811,41 @@ msgid "_Browse..."
 msgstr "브라우즈(B)..."
 
 #: ../src/dialogs/export.cpp:577
-#, fuzzy
 msgid "_Export"
-msgstr "포트(_o):"
+msgstr "출력(_E):"
 
 #: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
-msgstr "이 설정 상태도 비트맵 파일 생성"
+msgstr "이 설정 상태로 비트맵 파일 생성"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
-msgstr "반듯이 파일이름을 적으세요"
+msgstr "파일이름을 적어야만 합니다."
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "생성을 위해 선택된 지역이 잘못됨"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "%s 디렉토리가 존제하지 않거나 디렉토리가 아닙니다.\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "생성 중"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "생성중·%s·(%d·x·%d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "%s 파일명으로 생성을 할수 없습니다.\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "새로 생성을 위한 파일명을 선택하세요."
 
@@ -1091,23 +1090,21 @@ msgid "Move guide relative to current position"
 msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:61
-#, fuzzy
 msgid "Move by:"
-msgstr "%s 이동"
+msgstr "다음에 의한 이동 :"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
-#, fuzzy
 msgid "Move to:"
-msgstr "%s 이동"
+msgstr "다음으로 이동:"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Guideline"
 msgstr "가이드 라인"
 
 #: ../src/dialogs/guidelinedialog.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr "%s 이동"
+msgstr "%s %s 이동"
 
 #: ../src/dialogs/iconpreview.cpp:143
 #, c-format
@@ -1118,7 +1115,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:876
 #: ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
-msgstr ""
+msgstr "선택"
 
 #: ../src/dialogs/iconpreview.cpp:193
 msgid "Selection only or whole document"
@@ -1159,17 +1156,17 @@ msgstr ""
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:171 ../src/dialogs/rdf.cpp:240
 msgid "Title"
-msgstr ""
+msgstr "제목"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:188 ../src/dialogs/rdf.cpp:284
 msgid "Description"
-msgstr ""
+msgstr "설명"
 
 #. Hide
 #: ../src/dialogs/item-properties.cpp:215
 msgid "_Hide"
-msgstr ""
+msgstr "숨기기(_H)"
 
 #: ../src/dialogs/item-properties.cpp:216
 msgid "Check to make the object invisible"
@@ -1179,7 +1176,7 @@ msgstr ""
 #. TRANSLATORS: "Lock" is a verb here
 #: ../src/dialogs/item-properties.cpp:225
 msgid "L_ock"
-msgstr ""
+msgstr "잠금(_o)"
 
 #: ../src/dialogs/item-properties.cpp:226
 msgid "Check to make the object insensitive (not selectable by mouse)"
@@ -1198,33 +1195,38 @@ msgstr ""
 msgid "Id exists! "
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "불투명도"
+
+#: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
-msgstr ""
+msgstr "새로만들기"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
-msgstr ""
+msgstr "위"
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
-msgstr ""
+msgstr "위"
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
-msgstr ""
+msgstr "아래로"
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Bot"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
-msgstr ""
+msgstr "레이어 이름:"
 
 #: ../src/dialogs/layer-properties.cpp:152
 msgid "Above current"
@@ -1240,20 +1242,20 @@ msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:163
 msgid "Position:"
-msgstr ""
+msgstr "위치:"
 
 #: ../src/dialogs/layer-properties.cpp:181
 msgid "Rename Layer"
-msgstr ""
+msgstr "레이어 이름변경"
 
 #: ../src/dialogs/layer-properties.cpp:184
 msgid "_Rename"
-msgstr ""
+msgstr "이름변경(_R)"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:195
 msgid "Renamed layer"
-msgstr ""
+msgstr "이름바뀐 레이어"
 
 #: ../src/dialogs/layer-properties.cpp:199
 msgid "Add Layer"
@@ -1261,11 +1263,11 @@ msgstr "레이어 추가"
 
 #: ../src/dialogs/layer-properties.cpp:201
 msgid "_Add"
-msgstr ""
+msgstr "추가(_A)"
 
 #: ../src/dialogs/layer-properties.cpp:223
 msgid "New layer created."
-msgstr ""
+msgstr "새로운 레이어 생성."
 
 #: ../src/dialogs/object-attributes.cpp:30
 msgid "Href:"
@@ -1273,7 +1275,7 @@ msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:31
 msgid "Target:"
-msgstr ""
+msgstr "목적:"
 
 #: ../src/dialogs/object-attributes.cpp:32
 msgid "Type:"
@@ -1283,7 +1285,7 @@ msgstr "타입:"
 #. Identifies the type of the related resource with an absolute URI
 #: ../src/dialogs/object-attributes.cpp:35
 msgid "Role:"
-msgstr ""
+msgstr "역활:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
@@ -1298,7 +1300,7 @@ msgstr "제목:"
 
 #: ../src/dialogs/object-attributes.cpp:41
 msgid "Show:"
-msgstr ""
+msgstr "보이기:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:43
@@ -1307,15 +1309,15 @@ msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:48
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:49
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:50
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: ../src/dialogs/object-attributes.cpp:94
 #, c-format
@@ -1324,7 +1326,7 @@ msgstr ""
 
 #: ../src/dialogs/object-properties.cpp:161
 msgid "_Fill"
-msgstr ""
+msgstr "채우기(_F)"
 
 #: ../src/dialogs/object-properties.cpp:168
 msgid "Stroke _paint"
@@ -1339,9 +1341,8 @@ msgid "Master _opacity"
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:178
-#, fuzzy
 msgid "CC Attribution"
-msgstr "기증자"
+msgstr ""
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
@@ -1365,7 +1366,7 @@ msgstr ""
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
-msgstr ""
+msgstr "그누 General Public License"
 
 #: ../src/dialogs/rdf.cpp:213
 msgid "GNU Lesser General Public License"
@@ -1373,7 +1374,7 @@ msgstr ""
 
 #: ../src/dialogs/rdf.cpp:218
 msgid "Public Domain"
-msgstr ""
+msgstr "퍼블릭 도메인"
 
 #: ../src/dialogs/rdf.cpp:223
 msgid "FreeArt"
@@ -1653,13 +1654,13 @@ msgstr ""
 msgid "Align lines right"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "수직 글자"
 
@@ -1763,7 +1764,7 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:323
 msgid "New text node"
-msgstr ""
+msgstr "새로운 텍스트 노드"
 
 #: ../src/dialogs/xml-tree.cpp:344
 msgid "Duplicate node"
@@ -1783,7 +1784,7 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:408
 msgid "Raise node"
-msgstr ""
+msgstr "노드 올리기"
 
 #: ../src/dialogs/xml-tree.cpp:420
 msgid "Lower node"
@@ -1796,26 +1797,26 @@ msgstr ""
 #. TRANSLATORS: "Attribute" is a noun here
 #: ../src/dialogs/xml-tree.cpp:510
 msgid "Attribute name"
-msgstr ""
+msgstr "속성 이름"
 
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/xml-tree.cpp:530
 msgid "Set attribute"
-msgstr ""
+msgstr "속성 설정"
 
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/xml-tree.cpp:532
 msgid "Set"
-msgstr ""
+msgstr "설정"
 
 #. TRANSLATORS: "Attribute" is a noun here
 #: ../src/dialogs/xml-tree.cpp:555
 msgid "Attribute value"
-msgstr ""
+msgstr "속성 값"
 
 #: ../src/dialogs/xml-tree.cpp:1314
 msgid "New element node..."
-msgstr ""
+msgstr "새로운 개체 노드"
 
 #: ../src/dialogs/xml-tree.cpp:1335
 #: ../src/ui/dialog/whiteboard-connect.cpp:115
@@ -1832,6 +1833,7 @@ msgstr "생성"
 msgid ""
 "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
 msgstr ""
+"<b>%s</b>로 설정할수 없음: 다른 개체가 <b>%s</b> 값을 이미 가지고 있음!"
 
 #: ../src/document.cpp:361
 #, c-format
@@ -1851,12 +1853,12 @@ msgstr "이름이 바뀌지 않은 문서 %d"
 #. We hit green anchor, closing Green-Blue-Red
 #: ../src/draw-context.cpp:438
 msgid "Path is closed."
-msgstr ""
+msgstr "경로 닫힘."
 
 #. We hit bot start and end of single curve, closing paths
 #: ../src/draw-context.cpp:453
 msgid "Closing path."
-msgstr ""
+msgstr "경로 닫는중."
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -1987,16 +1989,16 @@ msgstr ""
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:59
 msgid "Show dialog on startup"
-msgstr ""
+msgstr "시작시 대화창 보이기"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
 "but the action you requested has been cancelled."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2139,16 +2141,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr "라텍스 인쇄"
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr "오픈 문서 드로링 출력"
 
-#: ../src/extension/internal/odf.cpp:1902
-#, fuzzy
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
-msgstr "오픈 문서 드로링 출력"
+msgstr "오픈 문서 드로링 (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -2203,7 +2204,7 @@ msgstr ""
 
 #: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
 msgid "Print as bitmap"
-msgstr ""
+msgstr "비트맴 이미지로 출력"
 
 #: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
 msgid ""
@@ -2240,7 +2241,7 @@ msgstr ""
 
 #: ../src/extension/internal/ps.cpp:1240
 msgid "Postscript Print"
-msgstr ""
+msgstr "포스트 스크립트 프린트"
 
 #: ../src/extension/internal/svg.cpp:55
 msgid "SVG Input"
@@ -2260,7 +2261,7 @@ msgstr ""
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
-msgstr ""
+msgstr "잉크스케이프·SVG·(*.svg)"
 
 #: ../src/extension/internal/svg.cpp:75
 msgid "SVG format with Inkscape extensions"
@@ -2272,7 +2273,7 @@ msgstr ""
 
 #: ../src/extension/internal/svg.cpp:88
 msgid "Plain SVG (*.svg)"
-msgstr ""
+msgstr "일반 ·SVG·(*.svg)"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
@@ -2281,13 +2282,13 @@ msgstr ""
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
-msgstr ""
+msgstr "SVGZ 입력"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
 #: ../share/extensions/svgz_input.inx.h:1
 #: ../share/extensions/svgz_output.inx.h:1
 msgid "Compressed Inkscape SVG (*.svgz)"
-msgstr ""
+msgstr "압축된 잉크 스케이프 SVG·(*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:54
 msgid "SVG file format compressed with GZip"
@@ -2296,7 +2297,7 @@ msgstr ""
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
 msgid "SVGZ Output"
-msgstr ""
+msgstr "SVGZ 출력"
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
@@ -2314,7 +2315,7 @@ msgstr ""
 
 #: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
-msgstr ""
+msgstr "윈도우즈 32 비트 출력"
 
 #: ../src/extension/internal/pdf.cpp:130
 msgid "Print using PDF operators"
@@ -2327,9 +2328,8 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/pdf.cpp:1541
-#, fuzzy
 msgid "PDF Print"
-msgstr "라텍스 인쇄"
+msgstr "PDF 인쇄"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2345,7 +2345,7 @@ msgstr ""
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:131
 msgid "default.svg"
-msgstr ""
+msgstr "default.svg"
 
 #: ../src/file.cpp:219 ../src/file.cpp:904
 #, c-format
@@ -2393,7 +2393,7 @@ msgstr ""
 
 #: ../src/file.cpp:553 ../src/file.cpp:561
 msgid "Document not saved."
-msgstr ""
+msgstr "문서가 저정 되지 않음."
 
 #: ../src/file.cpp:560
 #, c-format
@@ -2402,7 +2402,7 @@ msgstr ""
 
 #: ../src/file.cpp:570
 msgid "Document saved."
-msgstr ""
+msgstr "문서 저장됨."
 
 #: ../src/file.cpp:618
 #, c-format
@@ -2416,7 +2416,7 @@ msgstr ""
 
 #: ../src/file.cpp:659
 msgid "Select file to save to"
-msgstr ""
+msgstr "저장할 파일 선택"
 
 #: ../src/file.cpp:743
 msgid "No changes need to be saved."
@@ -2424,7 +2424,7 @@ msgstr ""
 
 #: ../src/file.cpp:930
 msgid "Select file to import"
-msgstr ""
+msgstr "삽입할 파일 선택"
 
 #: ../src/gradient-context.cpp:253
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2504,100 +2504,100 @@ msgstr ""
 
 #: ../src/helper/units.cpp:37
 msgid "Point"
-msgstr ""
+msgstr "포인트"
 
 #: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:256
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 #: ../src/helper/units.cpp:37
 msgid "Points"
-msgstr ""
+msgstr "포인트"
 
 #: ../src/helper/units.cpp:37
 msgid "Pt"
-msgstr ""
+msgstr "Pt"
 
 #: ../src/helper/units.cpp:38
 msgid "Pixel"
-msgstr ""
+msgstr "픽셀"
 
 #: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:176
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 #: ../src/ui/dialog/inkscape-preferences.cpp:182
 #: ../src/ui/widget/selected-style.cpp:252
 msgid "px"
-msgstr ""
+msgstr "px"
 
 #: ../src/helper/units.cpp:38
 msgid "Pixels"
-msgstr ""
+msgstr "픽셀"
 
 #: ../src/helper/units.cpp:38
 msgid "Px"
-msgstr ""
+msgstr "Px"
 
 #. You can add new elements from this point forward
 #: ../src/helper/units.cpp:40 ../share/extensions/straightseg.inx.h:3
 msgid "Percent"
-msgstr ""
+msgstr "퍼센트"
 
 #: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../src/helper/units.cpp:40
 msgid "Percents"
-msgstr ""
+msgstr "퍼센트"
 
 #: ../src/helper/units.cpp:41
 msgid "Millimeter"
-msgstr ""
+msgstr "밀리미터"
 
 #: ../src/helper/units.cpp:41 ../src/ui/widget/selected-style.cpp:260
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: ../src/helper/units.cpp:41
 msgid "Millimeters"
-msgstr ""
+msgstr "밀리미터"
 
 #: ../src/helper/units.cpp:42
 msgid "Centimeter"
-msgstr ""
+msgstr "센치미터"
 
 #: ../src/helper/units.cpp:42
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../src/helper/units.cpp:42
 msgid "Centimeters"
-msgstr ""
+msgstr "센치미터"
 
 #: ../src/helper/units.cpp:43
 msgid "Meter"
-msgstr ""
+msgstr "미터"
 
 #: ../src/helper/units.cpp:43
 msgid "m"
-msgstr ""
+msgstr "m"
 
 #: ../src/helper/units.cpp:43
 msgid "Meters"
-msgstr ""
+msgstr "미터"
 
 #. no svg_unit
 #: ../src/helper/units.cpp:44
 msgid "Inch"
-msgstr ""
+msgstr "인치"
 
 #: ../src/helper/units.cpp:44
 msgid "in"
-msgstr ""
+msgstr "in"
 
 #: ../src/helper/units.cpp:44
 msgid "Inches"
-msgstr ""
+msgstr "인치"
 
 #. Volatiles do not have default, so there are none here
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
@@ -2633,17 +2633,17 @@ msgstr ""
 #. Show nice dialog box
 #: ../src/inkscape.cpp:476
 msgid "Inkscape encountered an internal error and will close now.\n"
-msgstr ""
+msgstr "잉크 스케이프에 내부 에라가 발생하여 프로그램을 닫습니다.\n"
 
 #: ../src/inkscape.cpp:477
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
-msgstr ""
+msgstr "저장 하지 않은 문의의 자동 백업이 다음 위치에 보관 됩니다:\n"
 
 #: ../src/inkscape.cpp:478
 msgid "Automatic backup of the following documents failed:\n"
-msgstr ""
+msgstr "다음 문서들의 자동 백업이 실폐:\n"
 
 #: ../src/inkscape.cpp:615
 #, c-format
@@ -2651,6 +2651,8 @@ msgid ""
 "Cannot create directory %s.\n"
 "%s"
 msgstr ""
+"%s 디렉토리를 생성할수 없습니다 \n"
+"%s"
 
 #: ../src/inkscape.cpp:616
 #, c-format
@@ -2658,6 +2660,8 @@ msgid ""
 "%s is not a valid directory.\n"
 "%s"
 msgstr ""
+"%s 는 유효한 디렉토리가 아닙니다.\n"
+"%s"
 
 #: ../src/inkscape.cpp:617
 #, c-format
@@ -2665,6 +2669,8 @@ msgid ""
 "Cannot create file %s.\n"
 "%s"
 msgstr ""
+"%s 파일을 생성할수 없습니다.\n"
+"%s"
 
 #: ../src/inkscape.cpp:618
 #, c-format
@@ -2672,6 +2678,8 @@ msgid ""
 "Cannot write file %s.\n"
 "%s"
 msgstr ""
+"%s 파일에 쓸수가 없습니다.\n"
+"%s"
 
 #: ../src/inkscape.cpp:619
 msgid ""
@@ -2685,6 +2693,8 @@ msgid ""
 "%s is not a regular file.\n"
 "%s"
 msgstr ""
+"%s 는 일반 파일이 아닙니다.\n"
+"%s"
 
 #: ../src/inkscape.cpp:690 ../src/preferences.cpp:57
 #, c-format
@@ -2706,6 +2716,8 @@ msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr ""
+"잉크스케이프 를 기본 메뉴와 시작.\n"
+"새 메뉴는 저장되지 않음."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
@@ -2727,26 +2739,26 @@ msgstr ""
 
 #: ../src/interface.cpp:776
 msgid "_Toolbox"
-msgstr ""
+msgstr "도구상자(_T)"
 
 #: ../src/interface.cpp:776
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr ""
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr ""
-
-#: ../src/interface.cpp:784
 msgid "_Palette"
 msgstr ""
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 msgid "Show or hide the color palette"
+msgstr ""
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr ""
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
 #: ../src/interface.cpp:838
@@ -2771,7 +2783,7 @@ msgstr ""
 #: ../src/interface.cpp:1265
 #, c-format
 msgid "Overwrite %s"
-msgstr ""
+msgstr "%s 덥어 쓰기"
 
 #: ../src/interface.cpp:1286
 #, c-format
@@ -2967,7 +2979,7 @@ msgstr ""
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
 #: ../src/jabber_whiteboard/session-manager.cpp:1122
 msgid "Set filename"
-msgstr ""
+msgstr "파일이름 설정"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
@@ -4106,19 +4118,19 @@ msgstr ""
 #: ../src/sp-anchor.cpp:177
 #, c-format
 msgid "<b>Link</b> to %s"
-msgstr ""
+msgstr "<b>링크</b> 를 %s"
 
 #: ../src/sp-anchor.cpp:181
 msgid "<b>Link</b> without URI"
-msgstr ""
+msgstr "URL 을 포함 않한 <b>링크</b>"
 
 #: ../src/sp-ellipse.cpp:430 ../src/sp-ellipse.cpp:817
 msgid "<b>Ellipse</b>"
-msgstr ""
+msgstr "<b>타원</b>"
 
 #: ../src/sp-ellipse.cpp:571
 msgid "<b>Circle</b>"
-msgstr ""
+msgstr "<b>원</b>"
 
 #: ../src/sp-ellipse.cpp:812
 msgid "<b>Segment</b>"
@@ -4126,7 +4138,7 @@ msgstr ""
 
 #: ../src/sp-ellipse.cpp:814
 msgid "<b>Arc</b>"
-msgstr ""
+msgstr "<b>원호</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
 #: ../src/sp-flowregion.cpp:266
@@ -4157,44 +4169,44 @@ msgstr[1] ""
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
-msgstr ""
+msgstr "수직 가이드 라인"
 
 #: ../src/sp-guide.cpp:289
 msgid "horizontal guideline"
-msgstr ""
+msgstr "수평 가이드 라인"
 
 #: ../src/sp-image.cpp:968
 msgid "embedded"
-msgstr ""
+msgstr "삽입된"
 
 #: ../src/sp-image.cpp:972
 msgid "(null_pointer)"
-msgstr ""
+msgstr "(널포인트(_p))"
 
 #: ../src/sp-image.cpp:976
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
-msgstr ""
+msgstr "<b>잘못된 참조의 이미지</b>: %s"
 
 #: ../src/sp-image.cpp:977
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
-msgstr ""
+msgstr "<b>이미지</b> %d·&#215;·%d:·%s"
 
 #: ../src/sp-item-group.cpp:689
-#, c-format
+#, fuzzy, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>%d</b> 객체의 <b>그룹</b>"
+msgstr[1] "<b>%d</b> 객체의 <b>그룹</b>"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
-msgstr ""
+msgstr "객체"
 
 #: ../src/sp-line.cpp:187
 msgid "<b>Line</b>"
-msgstr ""
+msgstr "<b>선</b>"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:423
@@ -4233,7 +4245,7 @@ msgstr ""
 
 #: ../src/sp-rect.cpp:234
 msgid "<b>Rectangle</b>"
-msgstr ""
+msgstr "<b>사각형</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
@@ -4282,7 +4294,7 @@ msgstr ""
 #. * "Clone of: Clone of: ... in Layer 1".
 #: ../src/sp-use.cpp:313
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: ../src/sp-use.cpp:321
 #, c-format
@@ -4443,7 +4455,7 @@ msgstr ""
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr ""
 
@@ -4461,11 +4473,11 @@ msgstr ""
 msgid "No-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -5169,9 +5181,8 @@ msgid "Export"
 msgstr ""
 
 #: ../src/ui/dialog/extension-editor.cpp:80
-#, fuzzy
 msgid "Information"
-msgstr "회전(_R)"
+msgstr "정보"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
 msgid "Help"
@@ -5422,9 +5433,8 @@ msgid "Width is in absolute units"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:305
-#, fuzzy
 msgid "Keep selected"
-msgstr "어떠한 문서도 선택되지 않음"
+msgstr "선택 상태 보존"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "Don't attach connectors to text objects"
@@ -5751,9 +5761,8 @@ msgid "Transforms"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:485
-#, fuzzy
 msgid "Select in all layers"
-msgstr "모든 객체 형태 찾기"
+msgstr "모든 레이어 선택"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
 msgid "Select only within current layer"
@@ -6369,9 +6378,8 @@ msgid "Connect"
 msgstr "연결"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:145
-#, fuzzy
 msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "재버 서버 <b>%1</b> 에 접속하려할때 SSL 활성화 실패"
+msgstr "재버 서버 <b>%1</b> 연결 활성화"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:172
 #: ../src/ui/dialog/whiteboard-connect.cpp:217
@@ -6398,9 +6406,8 @@ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "재버 서버 <b>%1</b> 에 <b>%2</b> 로 연결"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:260
-#, fuzzy
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
-msgstr "재버 서버 <b>%1</b> 에 <b>%2</b> 로 연결"
+msgstr "재버 서버 <b>%1</b> 에 <b>%2</b> 로 등록 실패"
 
 #. Construct labels
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:75
@@ -7050,61 +7057,61 @@ msgstr ""
 
 #: ../src/verbs.cpp:1984
 msgid "Does nothing"
-msgstr ""
+msgstr "아무 작업도 하지 않음"
 
 #. File
 #: ../src/verbs.cpp:1987
 msgid "Default"
-msgstr ""
+msgstr "기본"
 
 #: ../src/verbs.cpp:1987
 msgid "Create new document from the default template"
-msgstr ""
+msgstr "기본 템플릿 바탕으로 새로운 문서를 생성"
 
 #: ../src/verbs.cpp:1989
 msgid "_Open..."
-msgstr ""
+msgstr "열기(_O).."
 
 #: ../src/verbs.cpp:1990
 msgid "Open an existing document"
-msgstr ""
+msgstr "기존 문서 열기"
 
 #: ../src/verbs.cpp:1991
 msgid "Re_vert"
-msgstr ""
+msgstr "되돌리기(_v)"
 
 #: ../src/verbs.cpp:1992
 msgid "Revert to the last saved version of document (changes will be lost)"
-msgstr ""
+msgstr "마지막 저장한 문서로 되돌리기 (변경 작업등 을 잃어 버립니다)"
 
 #: ../src/verbs.cpp:1993
 msgid "_Save"
-msgstr ""
+msgstr "저장(_S)"
 
 #: ../src/verbs.cpp:1993
 msgid "Save document"
-msgstr ""
+msgstr "문서 저장"
 
 #: ../src/verbs.cpp:1995
 msgid "Save _As..."
-msgstr ""
+msgstr "다른이름으로 저장..."
 
 #: ../src/verbs.cpp:1996
 msgid "Save document under a new name"
-msgstr ""
+msgstr "새로운 이름으로 문서 저장"
 
 #: ../src/verbs.cpp:1997
 msgid "_Print..."
-msgstr ""
+msgstr "출력(_P)..."
 
 #: ../src/verbs.cpp:1997
 msgid "Print document"
-msgstr ""
+msgstr "문서 출력"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2000
 msgid "Vac_uum Defs"
-msgstr ""
+msgstr "연계성 청소"
 
 #: ../src/verbs.cpp:2000
 msgid ""
@@ -7592,32 +7599,32 @@ msgstr ""
 
 #: ../src/verbs.cpp:2141
 msgid "Si_mplify"
-msgstr ""
+msgstr "단순화(_m)"
 
 #: ../src/verbs.cpp:2142
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr ""
+msgstr "선택된 경로를 단순화(추가 노드삭제)"
 
 #: ../src/verbs.cpp:2143
 msgid "_Reverse"
-msgstr ""
+msgstr "되돌리기(_R)"
 
 #: ../src/verbs.cpp:2144
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr ""
+msgstr "선택된 경로의 방향을 바꾸기(플림 마크에 유용)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2146
 msgid "_Trace Bitmap..."
-msgstr ""
+msgstr "비트맴 따오기(_T)..."
 
 #: ../src/verbs.cpp:2147
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr ""
+msgstr "비트맴 이미지 따올때 하나 또는 여러 경로를 생성하기"
 
 #: ../src/verbs.cpp:2148
 msgid "_Make a Bitmap Copy"
-msgstr ""
+msgstr "비트맵 복사본 만들기(_M)"
 
 #: ../src/verbs.cpp:2149
 msgid "Export selection to a bitmap and insert it into document"
@@ -7625,7 +7632,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2150
 msgid "_Combine"
-msgstr ""
+msgstr "합치기(_C)"
 
 #: ../src/verbs.cpp:2151
 msgid "Combine several paths into one"
@@ -8365,14 +8372,12 @@ msgid "Query information about extensions"
 msgstr ""
 
 #: ../src/verbs.cpp:2369
-#, fuzzy
 msgid "Layer_s..."
-msgstr "레이어 추가(_A)..."
+msgstr "레이어들(_s)..."
 
 #: ../src/verbs.cpp:2370
-#, fuzzy
 msgid "View Layers"
-msgstr "레이어 추가"
+msgstr "레이어 보기"
 
 #. Help
 #: ../src/verbs.cpp:2373
@@ -8397,7 +8402,7 @@ msgstr "메모리에 대하여(_M)"
 
 #: ../src/verbs.cpp:2378
 msgid "Memory usage information"
-msgstr ""
+msgstr "메모리 사용량 정보"
 
 #: ../src/verbs.cpp:2379
 msgid "_About Inkscape"
@@ -8405,7 +8410,7 @@ msgstr "잉크 스케이프에 대하여(_A)"
 
 #: ../src/verbs.cpp:2380
 msgid "Inkscape version, authors, license"
-msgstr ""
+msgstr "잉크스케이프 버전, 저자, 라이센스"
 
 #. "help_about"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
@@ -8413,38 +8418,38 @@ msgstr ""
 #. Tutorials
 #: ../src/verbs.cpp:2385
 msgid "Inkscape: _Basic"
-msgstr ""
+msgstr "잉크스케이프: 기본(_B)"
 
 #: ../src/verbs.cpp:2386
 msgid "Getting started with Inkscape"
-msgstr ""
+msgstr "잉크스케이프로 새로 시작"
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2387
 msgid "Inkscape: _Shapes"
-msgstr ""
+msgstr "잉크스케이프: 모양(_S)"
 
 #: ../src/verbs.cpp:2388
 msgid "Using shape tools to create and edit shapes"
-msgstr ""
+msgstr "형태를 만들고 수정하기 위해 모양툴 사용"
 
 #: ../src/verbs.cpp:2389
 msgid "Inkscape: _Advanced"
-msgstr ""
+msgstr "잉크스케이프: 고급(_A)"
 
 #: ../src/verbs.cpp:2390
 msgid "Advanced Inkscape topics"
-msgstr ""
+msgstr "고급 잉크스케이프 주제"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2392
 msgid "Inkscape: T_racing"
-msgstr ""
+msgstr "잉크스케이프: 따오기(_r)"
 
 #: ../src/verbs.cpp:2393
 msgid "Using bitmap tracing"
-msgstr ""
+msgstr "비트맴 이미지 따오기 사용"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2394
@@ -8457,16 +8462,16 @@ msgstr ""
 
 #: ../src/verbs.cpp:2396
 msgid "_Elements of Design"
-msgstr ""
+msgstr "디자인 개체(_E)"
 
 #: ../src/verbs.cpp:2397
 msgid "Principles of design in the tutorial form"
-msgstr ""
+msgstr "튜터리얼에 있는 디자인 원리"
 
 #. "tutorial_design"
 #: ../src/verbs.cpp:2398
 msgid "_Tips and Tricks"
-msgstr ""
+msgstr "팁 과 트랙(_T)"
 
 #: ../src/verbs.cpp:2399
 msgid "Miscellaneous tips and tricks"
@@ -8476,98 +8481,100 @@ msgstr ""
 #. Effect
 #: ../src/verbs.cpp:2402
 msgid "Previous Effect"
-msgstr ""
+msgstr "이전 효과"
 
 #: ../src/verbs.cpp:2403
 msgid "Repeat the last effect with the same settings"
-msgstr ""
+msgstr "이전 설정 상태 그대로 마지막 효과 재 사용 "
 
 #. "tutorial_tips"
 #: ../src/verbs.cpp:2404
 msgid "Previous Effect Settings..."
-msgstr ""
+msgstr "이전 효과 설정..."
 
 #: ../src/verbs.cpp:2405
 msgid "Repeat the last effect with new settings"
-msgstr ""
+msgstr "새로운 설정으로 마지막 효과 재 사용"
 
 #. "tutorial_tips"
 #. Fit Canvas
 #: ../src/verbs.cpp:2408
 msgid "Fit Canvas to Selection"
-msgstr ""
+msgstr "캔버스를 선택영역크기로 조정"
 
 #: ../src/verbs.cpp:2409
 msgid "Fit the canvas to the current selection"
-msgstr ""
+msgstr "캔버스를 현재 선택 크기로 조정"
 
 #: ../src/verbs.cpp:2410
 msgid "Fit Canvas to Drawing"
-msgstr ""
+msgstr "캔버스를 그림 크기로 조정"
 
 #: ../src/verbs.cpp:2411
 msgid "Fit the canvas to the drawing"
-msgstr ""
+msgstr "캔버스를 그림 크리고 조정"
 
 #: ../src/verbs.cpp:2412
 msgid "Fit Canvas to Selection or Drawing"
-msgstr ""
+msgstr "캔버스를 선택영역이나 그림 크리고 조정"
 
 #: ../src/verbs.cpp:2413
 msgid ""
 "Fit the canvas to the current selection or the drawing if there is no "
 "selection"
 msgstr ""
+"캔버스 크기를 현재 선택 영역이나,  만약 아무 선택을 하지 않았다면 그램 크기"
+"로 조정"
 
 #: ../src/widgets/dash-selector.cpp:102
 msgid "Dash pattern"
-msgstr ""
+msgstr "점선 유형"
 
 #: ../src/widgets/dash-selector.cpp:117
 msgid "Pattern offset"
-msgstr ""
+msgstr "간격띄우기 유형"
 
 #: ../src/widgets/desktop-widget.cpp:375
 #, c-format
 msgid "%s: %d - Inkscape"
-msgstr ""
+msgstr "%s: %d - 잉크스케이프"
 
 #: ../src/widgets/desktop-widget.cpp:377
 #, c-format
 msgid "%s - Inkscape"
-msgstr ""
+msgstr "%s - 잉크스케이프"
 
 #. Family frame
 #: ../src/widgets/font-selector.cpp:148
 msgid "Font family"
-msgstr ""
+msgstr "글꼴 패밀리"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:179
 msgid "Style"
-msgstr ""
+msgstr "스타일"
 
 #: ../src/widgets/font-selector.cpp:217
 msgid "Font size:"
-msgstr ""
+msgstr "글꼴 크기:"
 
 #. TRANSLATORS: Test string used in text and font dialog (when no
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr ""
+msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
 #: ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:486
 msgid "Duplicate"
-msgstr ""
+msgstr "복사"
 
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:497
 msgid "Edit..."
-msgstr ""
+msgstr "수정..."
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:155
@@ -8584,11 +8591,11 @@ msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:169
 msgid "direct"
-msgstr ""
+msgstr "직접"
 
 #: ../src/widgets/gradient-selector.cpp:177
 msgid "Repeat:"
-msgstr ""
+msgstr "반복:"
 
 #: ../src/widgets/gradient-toolbar.cpp:179
 msgid "<small>No gradients</small>"
@@ -8889,25 +8896,25 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:395
 #: ../src/widgets/sp-color-scales.cpp:396
 msgid "Red"
-msgstr ""
+msgstr "빨강"
 
 #: ../src/widgets/sp-color-scales.cpp:397
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: ../src/widgets/sp-color-scales.cpp:398
 #: ../src/widgets/sp-color-scales.cpp:399
 msgid "Green"
-msgstr ""
+msgstr "녹색"
 
 #: ../src/widgets/sp-color-scales.cpp:400
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: ../src/widgets/sp-color-scales.cpp:401
 #: ../src/widgets/sp-color-scales.cpp:402
 msgid "Blue"
-msgstr ""
+msgstr "파랑"
 
 #. Label
 #: ../src/widgets/sp-color-scales.cpp:403
@@ -8915,7 +8922,7 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:460
 #: ../src/widgets/sp-color-wheel-selector.cpp:134
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: ../src/widgets/sp-color-scales.cpp:404
 #: ../src/widgets/sp-color-scales.cpp:405
@@ -8926,38 +8933,38 @@ msgstr ""
 #: ../src/widgets/sp-color-wheel-selector.cpp:144
 #: ../src/widgets/sp-color-wheel-selector.cpp:156
 msgid "Alpha (opacity)"
-msgstr ""
+msgstr "알파 (불투명도)"
 
 #: ../src/widgets/sp-color-scales.cpp:420
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: ../src/widgets/sp-color-scales.cpp:421
 #: ../src/widgets/sp-color-scales.cpp:422
 msgid "Hue"
-msgstr ""
+msgstr "휴"
 
 #: ../src/widgets/sp-color-scales.cpp:423
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: ../src/widgets/sp-color-scales.cpp:424
 #: ../src/widgets/sp-color-scales.cpp:425
 msgid "Saturation"
-msgstr ""
+msgstr "채도"
 
 #: ../src/widgets/sp-color-scales.cpp:426
 msgid "_L"
-msgstr ""
+msgstr "_L"
 
 #: ../src/widgets/sp-color-scales.cpp:427
 #: ../src/widgets/sp-color-scales.cpp:428
 msgid "Lightness"
-msgstr ""
+msgstr "명도"
 
 #: ../src/widgets/sp-color-scales.cpp:448
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: ../src/widgets/sp-color-scales.cpp:449
 #: ../src/widgets/sp-color-scales.cpp:450
@@ -9266,75 +9273,74 @@ msgid ""
 "color including its alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3394
-msgid "Rag right"
+#: ../src/widgets/toolbox.cpp:3404
+msgid "Align right"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3405
-msgid "Centered"
+#: ../src/widgets/toolbox.cpp:3415
+#, fuzzy
+msgid "Center"
+msgstr "Y 중심"
+
+#: ../src/widgets/toolbox.cpp:3426
+msgid "Align left"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
+#: ../src/widgets/toolbox.cpp:3437
+msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
-msgstr ""
+msgstr "볼드"
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
-msgstr ""
+msgstr "이텔릭"
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3602
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Horizontal kerning"
 msgstr "수평 간격"
 
-#: ../src/widgets/toolbox.cpp:3623
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3633
 msgid "Vertical kerning"
 msgstr "수직 간격"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Remove manual kerns"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 msgid "Spacing:"
-msgstr ""
+msgstr "간격:"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
@@ -9371,7 +9377,7 @@ msgstr ""
 
 #: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
 msgid "Adobe Illustrator (*.ai)"
-msgstr ""
+msgstr "아도비 일러스트 (*.ai)"
 
 #: ../share/extensions/ai_input.inx.h:3
 msgid "Open files saved with Adobe Illustrator"
@@ -9428,7 +9434,7 @@ msgstr ""
 
 #: ../share/extensions/dots.inx.h:2 ../share/extensions/measure.inx.h:1
 msgid "Font size"
-msgstr ""
+msgstr "글콘 크기"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
@@ -9504,11 +9510,11 @@ msgstr ""
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
-msgstr ""
+msgstr "라텍스 수식"
 
 #: ../share/extensions/eqtexsvg.inx.h:2
 msgid "LaTeX formula: "
-msgstr ""
+msgstr "라덱스 수식:"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
@@ -9627,7 +9633,7 @@ msgstr ""
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
-msgstr ""
+msgstr "김프 XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
 msgid "GIMP XCF maintaining layers (*.XCF)"
@@ -9678,28 +9684,26 @@ msgid "L-system"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "사각형"
+msgstr "왼쪽 각"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
-msgstr ""
+msgstr "순서"
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%)"
-msgstr "램덤:"
+msgstr "램덤 각 (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize step (%)"
-msgstr "램덤:"
+msgstr "램덤 단계 (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "사각형"
+msgstr "오른쪽 각"
 
 #: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
@@ -9754,9 +9758,8 @@ msgid "Use normal distribution"
 msgstr ""
 
 #: ../share/extensions/randompnt.inx.h:1
-#, fuzzy
 msgid "Random Point"
-msgstr "램덤:"
+msgstr "램덤 포인트:"
 
 #: ../share/extensions/randompos.inx.h:1
 msgid "Random Position"
@@ -9809,9 +9812,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "PDF 출력"
+msgstr "ZIP 생성"
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
 msgid "Color of shadow"
@@ -9863,11 +9865,11 @@ msgstr ""
 
 #: ../share/extensions/whirl.inx.h:2
 msgid "Center X"
-msgstr ""
+msgstr "X 중심"
 
 #: ../share/extensions/whirl.inx.h:3
 msgid "Center Y"
-msgstr ""
+msgstr "Y 중심"
 
 #: ../share/extensions/whirl.inx.h:5
 msgid "Rotation is clockwise"
@@ -9888,6 +9890,9 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#~ msgid "Centered"
+#~ msgstr "가운데 모음"
 
 #~ msgid "Step"
 #~ msgstr "단계"

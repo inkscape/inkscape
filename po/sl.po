@@ -1,14 +1,14 @@
 # translation of sl.po to sl_SI
 # Boštjan Špetič <igzebedze@cyberpipe.org>, 2004, 2005.
 # Martin Srebotnjak, <miles@filmsi.net>, 2005.
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
 "PO-Revision-Date: 2006-05-12 12:01+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Lugos <sl@lugos.si>\n"
@@ -87,11 +87,11 @@ msgstr ""
 msgid "%s at %s"
 msgstr "%s pri %s"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "Brez prejšnje povečave."
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "Brez naslednje povečave."
 
@@ -845,34 +845,34 @@ msgstr "Izvozi"
 msgid "Export the bitmap file with these settings"
 msgstr "Izvozi bitno sliko s temi nastavitvami"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "Vnesti morate ime datoteke"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "Območje izbrano za izvoz ni veljavno"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Mapa %s ne obstaja ali pa ni mapa.\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "Izvoz je v teku"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Izvoz %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Ni mogoče izvoziti v datoteko %s.\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "Izberite ime datoteke za izvoz"
 
@@ -1228,29 +1228,34 @@ msgstr "Oznaka ni veljavna!"
 msgid "Id exists! "
 msgstr "Oznaka obstaja!"
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "Prosojnost"
+
+#: ../src/dialogs/layers-panel.cpp:780
 #, fuzzy
 msgid "New"
 msgstr "_Nov"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 #, fuzzy
 msgid "Bot"
 msgstr "Okvir"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -1687,13 +1692,13 @@ msgstr "Črte poravnaj sredinsko"
 msgid "Align lines right"
 msgstr "Črte poravnaj desno"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "Vodoravno besedilo"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "Navpično besedilo"
 
@@ -2039,7 +2044,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Pri zagonu pokaži pogovorno okno"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2048,7 +2053,7 @@ msgstr ""
 "Skripta ki jo je Inkscape poklical je vrnila napako. Sporočilo sledi spodaj. "
 "Inkscape bo deloval dalje, željena operacija pa je prekinjena."
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2195,15 +2200,15 @@ msgstr "Datoteka LaTex PSTricks"
 msgid "LaTeX Print"
 msgstr "Tiskanje LaTeX"
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr "Izvoz risbe OpenDocument"
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Risba OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr "Datoteka risbe OpenDocument"
 
@@ -2843,20 +2848,20 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "Kaži ali skrij glavno orodno vrstico (na levi)"
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr "Vrstica _stanja"
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "Kaži ali skrij vrstico stanja (na dnu okna)"
-
-#: ../src/interface.cpp:784
 msgid "_Palette"
 msgstr "_Paleta"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 msgid "Show or hide the color palette"
 msgstr "Pokaži ali skrij barvno paleto"
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr "Vrstica _stanja"
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
+msgstr "Kaži ali skrij vrstico stanja (na dnu okna)"
 
 #: ../src/interface.cpp:838
 #, c-format
@@ -4485,7 +4490,7 @@ msgstr[1] "<b>Skupina %d</b> predmeta"
 msgstr[2] "<b>Skupina %d</b> predmetov"
 msgstr[3] "<b>Skupina %d</b> predmetov"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "Predmet"
 
@@ -4768,7 +4773,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Okvir tekočega besedila</b>: %s  &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Vnesite besedilo; <b>Enter</b> začne novo vrstico."
 
@@ -4788,11 +4793,11 @@ msgstr ""
 msgid "No-break space"
 msgstr "Presledek brez preloma"
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Vnesite tekoče besedilo; <b>Enter</b> začne nov odstavek."
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -9011,7 +9016,7 @@ msgstr "Velikost pisave:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpŠšČčŽžĆćĐđ12369$€¢?.;/()"
 
@@ -9747,78 +9752,79 @@ msgstr ""
 "Če vključen, izbira neprosojne vidne barve, če izključen, izbira barve "
 "skupaj s prosojnostjo"
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3394
+#: ../src/widgets/toolbox.cpp:3404
 #, fuzzy
-msgid "Rag right"
-msgstr "Pravice"
+msgid "Align right"
+msgstr "Poravnaj desne strani"
 
-#: ../src/widgets/toolbox.cpp:3405
+#: ../src/widgets/toolbox.cpp:3415
 #, fuzzy
-msgid "Centered"
-msgstr "Središče X"
+msgid "Center"
+msgstr "Središče Y"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "Črte poravnaj levo"
+
+#: ../src/widgets/toolbox.cpp:3437
+msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 #, fuzzy
 msgid "Horizontal kerning"
 msgstr "Vodoravni razmiki"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 #, fuzzy
 msgid "Vertical kerning"
 msgstr "Navpični razmiki"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 #, fuzzy
 msgid "Remove manual kerns"
 msgstr "Odstrani ročno _zgoščevanje"
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Make connectors avoid selected objects"
 msgstr "Konektorji naj se izogibajo izbranih predmetov"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 msgid "Make connectors ignore selected objects"
 msgstr "Konektorji naj prezrejo izbrane predmete"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 msgid "Spacing:"
 msgstr "Razmiki:"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Količina preostalega prostora okoli predmetov z samousmerjanjem konektorjev"
@@ -10384,6 +10390,14 @@ msgstr "Metadatoteka Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Uvoz Metadatoteke Windows"
+
+#, fuzzy
+#~ msgid "Rag right"
+#~ msgstr "Pravice"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "Središče X"
 
 #~ msgid "%s Preferences"
 #~ msgstr "Nastavitve za %s"

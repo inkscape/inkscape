@@ -4,14 +4,14 @@
 # tad <tad@mail.tnc.edu.tw>, 2004
 # Wei-Lun Chao <william.chao@ossii.com.tw>, 2006
 #
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.43\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
 "PO-Revision-Date: 2006-03-24 16:34+0800\n"
 "Last-Translator: Wei-Lun Chao <william.chao@ossii.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -79,11 +79,11 @@ msgstr "<b>目前圖層已鎖定</b>。解除它的鎖定才可以於其上繪�
 msgid "%s at %s"
 msgstr "%s 在 %s"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "無上次縮放"
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "無下次縮放"
 
@@ -823,34 +823,34 @@ msgstr "匯出"
 msgid "Export the bitmap file with these settings"
 msgstr "以這樣的設定匯出點陣圖檔"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "您必須輸入檔名"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "選取做為匯出的區域無效"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目錄 %s 不存在或者它並不是一個目錄。\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "進行匯出中"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "正在匯出 %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "無法匯出至檔案名稱 %s。\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "選擇一個檔名以匯出"
 
@@ -1202,29 +1202,34 @@ msgstr "Id 無效！"
 msgid "Id exists! "
 msgstr "Id 已存在！"
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "濁度"
+
+#: ../src/dialogs/layers-panel.cpp:780
 #, fuzzy
 msgid "New"
 msgstr "新增(_N)"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 #, fuzzy
 msgid "Bot"
 msgstr "方框"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -1663,13 +1668,13 @@ msgstr "對齊中心"
 msgid "Align lines right"
 msgstr "對齊右邊"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "水平文字"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "垂直文字"
 
@@ -2015,7 +2020,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "啟動時顯示對話框"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2024,7 +2029,7 @@ msgstr ""
 "Inkscape 已經從它呼叫的命令稿中接收到一個錯誤。該錯誤回傳的文字已包含於下。"
 "Inkscape 將會繼續運行，但是您所要求的動作已經取消。"
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2179,15 +2184,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -2810,22 +2815,22 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "顯示或隱藏主要工具列(位於左側)"
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr "狀態列(_S)"
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "顯示或隱藏狀態列(視窗底部)"
-
-#: ../src/interface.cpp:784
 #, fuzzy
 msgid "_Palette"
 msgstr "貼上(_P)"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 #, fuzzy
 msgid "Show or hide the color palette"
 msgstr "顯示或隱藏工具控制列"
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr "狀態列(_S)"
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
+msgstr "顯示或隱藏狀態列(視窗底部)"
 
 #: ../src/interface.cpp:838
 #, c-format
@@ -4351,7 +4356,7 @@ msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>%d</b> 項物件的<b>群組</b>"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "物件"
 
@@ -4607,7 +4612,7 @@ msgstr "萬國碼:"
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>流動的文字訊框</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "輸入文字；按 <b>Enter</b> 以啟始新列。"
 
@@ -4625,11 +4630,11 @@ msgstr "訊框對於目前字型大小來說<b>太小</b>。並未建立流動�
 msgid "No-break space"
 msgstr "不斷列空白"
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "輸入流動文字；按 <b>Enter</b> 以開始新的段落。"
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -8959,7 +8964,7 @@ msgstr "字型大小:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 #, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12368.;/()"
@@ -9679,79 +9684,80 @@ msgid ""
 "color including its alpha"
 msgstr "按下時點取可見的顏色而不含 alpha 值，不按時點取顏色會包含它的 alpha 值"
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3394
+#: ../src/widgets/toolbox.cpp:3404
 #, fuzzy
-msgid "Rag right"
-msgstr "版權"
+msgid "Align right"
+msgstr "對齊右側"
 
-#: ../src/widgets/toolbox.cpp:3405
+#: ../src/widgets/toolbox.cpp:3415
 #, fuzzy
-msgid "Centered"
+msgid "Center"
 msgstr "對齊中心"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "對齊左邊"
+
+#: ../src/widgets/toolbox.cpp:3437
+msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 #, fuzzy
 msgid "Horizontal kerning"
 msgstr "水平間隔"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 #, fuzzy
 msgid "Vertical kerning"
 msgstr "垂直間隔"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 #, fuzzy
 msgid "Remove manual kerns"
 msgstr "手動移除突出物(_K)"
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Make connectors avoid selected objects"
 msgstr "使連接器避免所選物件"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 msgid "Make connectors ignore selected objects"
 msgstr "使連接器忽略所選物件"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 #, fuzzy
 msgid "Spacing:"
 msgstr "Y 間距:"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
@@ -10344,6 +10350,14 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Rag right"
+#~ msgstr "版權"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "對齊中心"
 
 #, fuzzy
 #~ msgid "%s Preferences"

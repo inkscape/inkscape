@@ -2,14 +2,14 @@
 # Copyright (C) 2006 Chrisjiasl
 # Chris jia <Chrisjiasl@gmail.com>, 2006.
 #
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-28 22:18+0200\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
 "PO-Revision-Date: 2006-05-28 20:25+0800\n"
 "Last-Translator: Chris Jia <Chrisjiasl@gmail.com>\n"
 "Language-Team: \n"
@@ -78,11 +78,11 @@ msgstr "<b>当前层已锁定</b>。解除锁定以便在此层上绘制。"
 msgid "%s at %s"
 msgstr "%s 在 %s"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "不能向前缩放。"
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "不能向后缩放。"
 
@@ -708,13 +708,13 @@ msgstr "消息"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
-#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:182
+#: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 msgid "_File"
 msgstr "文件(_F)"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
-#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:183
+#: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 msgid "_Clear"
 msgstr "清除(_C)"
 
@@ -820,34 +820,34 @@ msgstr "导出(_E)"
 msgid "Export the bitmap file with these settings"
 msgstr "使用这些设置导出位图文件"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "必须输入文件名"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "要导出的已选择区域无效"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目录 %s 不存在或者不是目录。\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "正在导出"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "导出中 %s （%d x %d）"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "不能导出到文件名 %s。\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "选择一个文件名导出"
 
@@ -1197,27 +1197,32 @@ msgstr "Id 无效！"
 msgid "Id exists! "
 msgstr "Id 存在！"
 
-#: ../src/dialogs/layers-panel.cpp:717
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "不透明度"
+
+#: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
 msgstr "新建"
 
-#: ../src/dialogs/layers-panel.cpp:722
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr "顶层"
 
-#: ../src/dialogs/layers-panel.cpp:728
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr "上一层"
 
-#: ../src/dialogs/layers-panel.cpp:734
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr "下一层"
 
-#: ../src/dialogs/layers-panel.cpp:740
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Bot"
 msgstr "底层"
 
-#: ../src/dialogs/layers-panel.cpp:750
+#: ../src/dialogs/layers-panel.cpp:813
 msgid "X"
 msgstr "X"
 
@@ -1651,13 +1656,13 @@ msgstr "中心线"
 msgid "Align lines right"
 msgstr "线段右对齐"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "水平文字"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "垂直文字"
 
@@ -1995,7 +2000,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "启动时显示对话框"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2004,7 +2009,7 @@ msgstr ""
 "Inkscape 调用脚本时得到一个错误。错误返回的文字包含在下面。 Inkscape 继续工"
 "作，但是请求的操作已取消。"
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2124,7 +2129,7 @@ msgid "Vertical Offset"
 msgstr "垂直偏移"
 
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
-#: ../share/extensions/lindenmayer.inx.h:5 ../share/extensions/rtree.inx.h:4
+#: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 msgid "Render"
 msgstr "渲染"
@@ -2149,15 +2154,15 @@ msgstr "LaTeX PSTricks 文件"
 msgid "LaTeX Print"
 msgstr "LaTeX 打印"
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr "开放文档 绘制输出"
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr "开放文档绘图 (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr "开放文档绘图文件"
 
@@ -2348,12 +2353,6 @@ msgstr ""
 #: ../src/extension/internal/pdf.cpp:1541
 msgid "PDF Print"
 msgstr "PDF 打印"
-
-#. A hack to internationalize the title properly
-#: ../src/extension/prefdialog.cpp:33
-#, c-format
-msgid "%s Preferences"
-msgstr "%s 偏好设置"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2779,20 +2778,20 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "显示或隐藏主工具箱（在左边）"
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr "状态栏(_S)"
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "显示或隐藏状态栏（在窗口底部）"
-
-#: ../src/interface.cpp:784
 msgid "_Palette"
 msgstr "调色板(_P)"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 msgid "Show or hide the color palette"
 msgstr "显示或隐藏颜色调色板"
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr "状态栏(_S)"
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
+msgstr "显示或隐藏状态栏（在窗口底部）"
 
 #: ../src/interface.cpp:838
 #, c-format
@@ -3018,51 +3017,51 @@ msgstr ""
 "发送！"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:59
-#: ../src/jabber_whiteboard/session-manager.cpp:1108
+#: ../src/jabber_whiteboard/session-manager.cpp:1120
 msgid "Select a location and filename"
 msgstr "选择路径和文件名"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
-#: ../src/jabber_whiteboard/session-manager.cpp:1110
+#: ../src/jabber_whiteboard/session-manager.cpp:1122
 msgid "Set filename"
 msgstr "设置文件名"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:413
+#: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
 msgstr "没有发现 SSL 证书。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:416
+#: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
 msgstr "由 Jabber 服务器提供的 SSL 证书不被信任。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:419
+#: ../src/jabber_whiteboard/session-manager.cpp:431
 msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "由 Jabber 服务器提供的 SSL 证书已过期。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:422
+#: ../src/jabber_whiteboard/session-manager.cpp:434
 msgid ""
 "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "由 Jabber 服务器提供的 SSL 证书未激活。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:425
+#: ../src/jabber_whiteboard/session-manager.cpp:437
 msgid ""
 "The SSL certificate provided by the Jabber server contains a hostname that "
 "does not match the Jabber server's hostname."
 msgstr "由 Jabber 服务器提供的 SSL 证书包含的主机与 Jabber 服务器不匹配。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:428
+#: ../src/jabber_whiteboard/session-manager.cpp:440
 msgid ""
 "The SSL certificate provided by the Jabber server contains an invalid "
 "fingerprint."
 msgstr "由 Jabber 服务器提供的 SSL 证书包含无效指纹。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:431
+#: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
 msgstr "设置 SSL 连接时发生错误。"
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
-#: ../src/jabber_whiteboard/session-manager.cpp:437
+#: ../src/jabber_whiteboard/session-manager.cpp:449
 msgid ""
 "<span weight=\"bold\" size=\"larger\">%1</span>\n"
 "\n"
@@ -3072,24 +3071,24 @@ msgstr ""
 "\n"
 "是否要继续与 Jabber 服务器建立连接？"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:440
+#: ../src/jabber_whiteboard/session-manager.cpp:452
 msgid "Continue connecting and ignore further errors"
 msgstr "继续连接并忽略之后的错误"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:441
+#: ../src/jabber_whiteboard/session-manager.cpp:453
 msgid "Continue connecting, but warn me of further errors"
 msgstr "继续连接，之后有错误警告我"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:442
+#: ../src/jabber_whiteboard/session-manager.cpp:454
 msgid "Cancel connection"
 msgstr "取消连接"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:890
+#: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
 msgid "Established whiteboard session with <b>%s</b>."
 msgstr "建立白板会话 <b>%s</b>。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:898
+#: ../src/jabber_whiteboard/session-manager.cpp:910
 #, c-format
 msgid "<b>%s</b> has <b>left</b> the whiteboard session."
 msgstr "<b>%s</b> 已经离开白板会话。"
@@ -3097,7 +3096,7 @@ msgstr "<b>%s</b> 已经离开白板会话。"
 #. Inform the user
 #. TRANSLATORS: %1 is the name of the user that disconnected, %2 is the name of the user whom the disconnected user disconnected from.
 #. This message is not used in a chatroom context.
-#: ../src/jabber_whiteboard/session-manager.cpp:903
+#: ../src/jabber_whiteboard/session-manager.cpp:915
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
 "whiteboard session.</span>\n"
@@ -3108,7 +3107,7 @@ msgstr ""
 "\n"
 
 #. TRANSLATORS: %1 and %2 are userids
-#: ../src/jabber_whiteboard/session-manager.cpp:905
+#: ../src/jabber_whiteboard/session-manager.cpp:917
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may establish a "
 "new session to <b>%1</b> or a different user."
@@ -3116,7 +3115,7 @@ msgstr ""
 "你仍然作为 <b>%2</b> 与 Jabber 服务器建立连接，可以与 <b>%1</b> 或另一个用户"
 "建立一个新连接。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1101
+#: ../src/jabber_whiteboard/session-manager.cpp:1113
 msgid ""
 "Could not open file %1 for session recording.\n"
 "The error encountered was: %2.\n"
@@ -3129,11 +3128,11 @@ msgstr ""
 "\n"
 "可以选择另一个路径记录会话，或者选择不记录会话选项。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1103
+#: ../src/jabber_whiteboard/session-manager.cpp:1115
 msgid "Choose a different location"
 msgstr "选择另一个路径。"
 
-#: ../src/jabber_whiteboard/session-manager.cpp:1104
+#: ../src/jabber_whiteboard/session-manager.cpp:1116
 msgid "Skip session recording"
 msgstr "跳过会话纪录"
 
@@ -4301,7 +4300,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>组</b>有 <b>%d</b> 个对象"
 msgstr[1] "<b>组</b>有 <b>%d</b> 个对象"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "对象"
 
@@ -4558,7 +4557,7 @@ msgstr "Unicode："
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>浮动文字框架</b>： %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "输入文字；<b>回车</b>开始新的一行。"
 
@@ -4576,11 +4575,11 @@ msgstr "对于当前字体大小框架<b>太小</b>。不能创建浮动文字�
 msgid "No-break space"
 msgstr "非间断空格"
 
-#: ../src/text-context.cpp:1421
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "输入浮动文字；<b>回车</b>开始新的一段。"
 
-#: ../src/text-context.cpp:1431 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6082,23 +6081,23 @@ msgid ""
 "preferences.xml"
 msgstr "通过把 dialogs.debug 中的‘redirect’属性设置成 1 来允许显示日志"
 
-#: ../src/ui/dialog/scriptdialog.cpp:185
+#: ../src/ui/dialog/scriptdialog.cpp:181
 msgid "_Execute Python"
 msgstr "执行 Python(_E)"
 
-#: ../src/ui/dialog/scriptdialog.cpp:187
+#: ../src/ui/dialog/scriptdialog.cpp:183
 msgid "_Execute Perl"
 msgstr "执行 Perl(_E)"
 
-#: ../src/ui/dialog/scriptdialog.cpp:196
+#: ../src/ui/dialog/scriptdialog.cpp:192
 msgid "Script"
 msgstr "脚本"
 
-#: ../src/ui/dialog/scriptdialog.cpp:206
+#: ../src/ui/dialog/scriptdialog.cpp:202
 msgid "Output"
 msgstr "输出"
 
-#: ../src/ui/dialog/scriptdialog.cpp:216
+#: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
 msgstr "错误"
 
@@ -7076,12 +7075,12 @@ msgstr "描边宽度： %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
 #, fuzzy, c-format
-msgid "0:%.3g"
+msgid "O:%.3g"
 msgstr "0:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
 #, fuzzy, c-format
-msgid "0:.%d"
+msgid "O:.%d"
 msgstr "0:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
@@ -8329,7 +8328,7 @@ msgstr "编辑文档的属性（同文档一起保存）"
 
 #: ../src/verbs.cpp:2319
 #, fuzzy
-msgid "_Document Metadata..."
+msgid "Document _Metadata..."
 msgstr "文档元数据(_D)..."
 
 #: ../src/verbs.cpp:2320
@@ -8507,7 +8506,7 @@ msgstr "查询扩展的信息"
 
 #: ../src/verbs.cpp:2369
 #, fuzzy
-msgid "_Layers..."
+msgid "Layer_s..."
 msgstr "层(_L)..."
 
 #: ../src/verbs.cpp:2370
@@ -8695,7 +8694,7 @@ msgstr "字体大小："
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -9408,75 +9407,76 @@ msgid ""
 "color including its alpha"
 msgstr "按住时，拾取不带透明的可见色，不按，连同透明度一起拾取"
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr "您的系统还没有安装当前字体。 Inkscape 使用默认的字体代替。"
 
-#: ../src/widgets/toolbox.cpp:3394
+#: ../src/widgets/toolbox.cpp:3404
 #, fuzzy
-msgid "Rag right"
-msgstr "权限"
+msgid "Align right"
+msgstr "右对齐"
 
-#: ../src/widgets/toolbox.cpp:3405
+#: ../src/widgets/toolbox.cpp:3415
 #, fuzzy
-msgid "Centered"
-msgstr "X 中心"
+msgid "Center"
+msgstr "Y 中心"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "线段左对齐"
+
+#: ../src/widgets/toolbox.cpp:3437
+msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr "字母之间的空隙"
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr "行间距"
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Horizontal kerning"
 msgstr "水平字距"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 msgid "Vertical kerning"
 msgstr "垂直字距"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr "字母旋转"
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Remove manual kerns"
 msgstr "移除手工字距"
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Make connectors avoid selected objects"
 msgstr "避免已选对象的连接器"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 msgid "Make connectors ignore selected objects"
 msgstr "忽略已选对象的连接器"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 msgid "Spacing:"
 msgstr "空隙："
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "自动布线连接器周围的空隙"
 
@@ -9816,33 +9816,54 @@ msgstr "分形（Koch）"
 msgid "Fractal (Koch) - Load Pattern"
 msgstr "分形（Koch）- 加载图案"
 
-#: ../share/extensions/lindenmayer.inx.h:1 ../share/extensions/motion.inx.h:1
-msgid "Angle"
-msgstr "角度"
-
-#: ../share/extensions/lindenmayer.inx.h:2
+#: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
 msgstr "公理"
 
+#: ../share/extensions/lindenmayer.inx.h:2
+#, fuzzy
+msgid "L-system"
+msgstr "系统"
+
 #: ../share/extensions/lindenmayer.inx.h:3
-msgid "Fractal (Lindenmayer)"
-msgstr "分形（Lindenmayer）"
+#, fuzzy
+msgid "Left angle"
+msgstr "矩形"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "顺序"
 
 #: ../share/extensions/lindenmayer.inx.h:6
+#, fuzzy, no-c-format
+msgid "Randomize angle (%)"
+msgstr "随机化节点"
+
+#: ../share/extensions/lindenmayer.inx.h:8
+#, fuzzy, no-c-format
+msgid "Randomize step (%)"
+msgstr "随机化节点"
+
+#: ../share/extensions/lindenmayer.inx.h:10
+#, fuzzy
+msgid "Right angle"
+msgstr "矩形"
+
+#: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
 msgstr "规则"
 
-#: ../share/extensions/lindenmayer.inx.h:7
-msgid "Step"
-msgstr "步长"
+#: ../share/extensions/lindenmayer.inx.h:12
+msgid "Step length (px)"
+msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
 msgstr "测量路径"
+
+#: ../share/extensions/motion.inx.h:1
+msgid "Angle"
+msgstr "角度"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
@@ -10014,25 +10035,22 @@ msgstr "Windows 图元文件 (*.wmf)"
 msgid "Windows Metafile Input"
 msgstr "Windows 图元文件输入"
 
-#, fuzzy
-#~ msgid "L-system"
-#~ msgstr "系统"
+#~ msgid "%s Preferences"
+#~ msgstr "%s 偏好设置"
 
 #, fuzzy
-#~ msgid "Left angle"
-#~ msgstr "矩形"
+#~ msgid "Rag right"
+#~ msgstr "权限"
 
 #, fuzzy
-#~ msgid "Randomize angle (%)"
-#~ msgstr "随机化节点"
+#~ msgid "Centered"
+#~ msgstr "X 中心"
 
-#, fuzzy
-#~ msgid "Randomize step (%)"
-#~ msgstr "随机化节点"
+#~ msgid "Fractal (Lindenmayer)"
+#~ msgstr "分形（Lindenmayer）"
 
-#, fuzzy
-#~ msgid "Right angle"
-#~ msgstr "矩形"
+#~ msgid "Step"
+#~ msgstr "步长"
 
 #~ msgid "Adobe PDF (*.pdf)"
 #~ msgstr "Adobe PDF (*.pdf)"

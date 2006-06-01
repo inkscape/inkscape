@@ -9,14 +9,14 @@
 # Jörg Müller <jfm@ram-brand.de>, 2005.
 # Wolfram Strempfer <wolfram@strempfer.de>, 2006.
 #
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-29 20:24+0200\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
 "PO-Revision-Date: 2006-06-01 01:02+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
@@ -94,11 +94,11 @@ msgstr "<b>Aktuelle Ebene ist gesperrt</b>. Entsperren, um darauf zu zeichnen."
 msgid "%s at %s"
 msgstr "%s um %s"
 
-#: ../src/desktop.cpp:673
+#: ../src/desktop.cpp:686
 msgid "No previous zoom."
 msgstr "Kein vorheriger Zoomfaktor."
 
-#: ../src/desktop.cpp:698
+#: ../src/desktop.cpp:711
 msgid "No next zoom."
 msgstr "Kein nächster Zoomfaktor."
 
@@ -868,34 +868,34 @@ msgstr "_Exportieren"
 msgid "Export the bitmap file with these settings"
 msgstr "Bitmapdatei mit diesen Einstellungen exportieren"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "Sie müssen einen Dateinamen angeben"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "Der zum Exportieren gewählte Bereich ist ungültig"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Das Verzeichnis %s existiert nicht oder ist kein Verzeichnis.\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "Exportieren läuft"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Exportiere %s (%d × %d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Konnte nicht als Datei %s exportieren.\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "Wählen Sie einen Namen für die zu exportierende Datei"
 
@@ -1253,27 +1253,32 @@ msgstr "ID-Kennung ist ungültig"
 msgid "Id exists! "
 msgstr "ID-Kennung existiert"
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "Deckkraft"
+
+#: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
 msgstr "Neu"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr "Oben"
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr "Hoch"
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr "Runter"
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Bot"
 msgstr "Unten"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 msgid "X"
 msgstr "X"
 
@@ -1726,13 +1731,13 @@ msgstr "Zeilen zentrieren"
 msgid "Align lines right"
 msgstr "Zeilen rechts ausrichten"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "Horizontale Textausrichtung"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "Vertikale Textausrichtung"
 
@@ -2080,7 +2085,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Dialog beim Starten des Programmes anzeigen"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2090,7 +2095,7 @@ msgstr ""
 "Textinhalt der Fehlermeldung wird unten angezeigt. Inkscape läuft ohne "
 "Störung weiter, die letzte Aktion wurde jedoch abgebrochen."
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2238,15 +2243,15 @@ msgstr "LaTeX-PSTricks-Datei"
 msgid "LaTeX Print"
 msgstr "LaTeX-Druck"
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr "OpenDocument-Zeichnungsausgabe"
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr "OpenDocument-Zeichnung (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr "OpenDocument-Zeichnungsdatei"
 
@@ -2883,20 +2888,20 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr "Werkzeugleiste (auf der linken Seite) an- oder abschalten"
 
 #: ../src/interface.cpp:782
-msgid "_Statusbar"
-msgstr "_Statuszeile"
-
-#: ../src/interface.cpp:782
-msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "Statusleiste an- oder abschalten (am unteren Ende des Fensters)"
-
-#: ../src/interface.cpp:784
 msgid "_Palette"
 msgstr "_Palette"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:782
 msgid "Show or hide the color palette"
 msgstr "Farbpalette ein-/ausblenden"
+
+#: ../src/interface.cpp:784
+msgid "_Statusbar"
+msgstr "_Statuszeile"
+
+#: ../src/interface.cpp:784
+msgid "Show or hide the statusbar (at the bottom of the window)"
+msgstr "Statusleiste an- oder abschalten (am unteren Ende des Fensters)"
 
 #: ../src/interface.cpp:838
 #, c-format
@@ -4561,7 +4566,7 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>Gruppe</b> von <b>%d</b> Objekt"
 msgstr[1] "<b>Gruppe</b> von <b>%d</b> Objekten"
 
-#: ../src/sp-item.cpp:836
+#: ../src/sp-item.cpp:847
 msgid "Object"
 msgstr "Objekt"
 
@@ -4843,7 +4848,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Fließtext-Rahmen</b>: %s × %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1424
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Text schreiben; <b>Eingabe</b>, um eine neue Zeile zu beginnen."
 
@@ -4863,12 +4868,12 @@ msgstr ""
 msgid "No-break space"
 msgstr "Untrennbares Leerzeichen"
 
-#: ../src/text-context.cpp:1422
+#: ../src/text-context.cpp:1423
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 "Fließtext schreiben; <b>Eingabe</b>, um einen neuen Absatz zu beginnen."
 
-#: ../src/text-context.cpp:1432 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -6334,7 +6339,9 @@ msgstr ""
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
-msgstr "Dieses abwählen um Objekte ausgewählt zu lassen, wenn die aktuelle Ebene geändert wird"
+msgstr ""
+"Dieses abwählen um Objekte ausgewählt zu lassen, wenn die aktuelle Ebene "
+"geändert wird"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Selecting"
@@ -9191,7 +9198,7 @@ msgstr "Schriftgröße:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqÄäÖöÜüß012369€¢?&.;/|()„“»«"
 
@@ -9951,7 +9958,7 @@ msgstr ""
 "Drücken übernimmt sichtbare Farbe ohne Transparenz. Nicht drücken, um den "
 "Farbwert mit Transparenz zu übernehmen"
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9959,67 +9966,71 @@ msgstr ""
 "Diese Schriftart ist im Moment nicht auf Ihrem System installiert. Inkscape "
 "wird die Standardschriftart verwenden"
 
-#: ../src/widgets/toolbox.cpp:3394
-msgid "Rag right"
-msgstr "Flattersatz rechts"
+#: ../src/widgets/toolbox.cpp:3404
+#, fuzzy
+msgid "Align right"
+msgstr "Rechtsbündig ausrichten"
 
-#: ../src/widgets/toolbox.cpp:3405
-msgid "Centered"
-msgstr "Zentriert"
+#: ../src/widgets/toolbox.cpp:3415
+#, fuzzy
+msgid "Center"
+msgstr "Zentrum Y:"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
-msgstr "Flattersatz links"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "Zeilen links ausrichten"
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
+#: ../src/widgets/toolbox.cpp:3437
+#, fuzzy
+msgid "Justify"
 msgstr "Blocksatz"
 
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr "Fett"
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr "Kursiv"
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr "Abstand zwischen Buchstaben"
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr "Abstand zwischen Zeilen"
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Horizontal kerning"
 msgstr "Horizontale Unterschneidung"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 msgid "Vertical kerning"
 msgstr "Vertikale Unterschneidung"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr "Buchstabendrehung"
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Remove manual kerns"
 msgstr "Manuelle Unterschneidungen entfernen"
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Make connectors avoid selected objects"
 msgstr "Objektverbinder weichen den ausgewählten Objekten aus"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 msgid "Make connectors ignore selected objects"
 msgstr "Objektverbinder ignorieren die ausgewählten Objekte"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 msgid "Spacing:"
 msgstr "Abstand:"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Platz, der von den Objektverbindern um Objekte herum gelassen wird"
 
@@ -10583,6 +10594,15 @@ msgstr "Windows-Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows-Metafile einlesen"
+
+#~ msgid "Rag right"
+#~ msgstr "Flattersatz rechts"
+
+#~ msgid "Centered"
+#~ msgstr "Zentriert"
+
+#~ msgid "Rag left"
+#~ msgstr "Flattersatz links"
 
 # !!!
 #~ msgid "%s Preferences"

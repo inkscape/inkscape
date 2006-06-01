@@ -10,15 +10,15 @@
 # Frederic Rodrigo <f.rodrigo free.fr>, 2004-2005.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2006.
 #
-#: ../src/widgets/toolbox.cpp:3552 ../src/widgets/toolbox.cpp:3573
-#: ../src/widgets/toolbox.cpp:3602 ../src/widgets/toolbox.cpp:3623
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3660
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-30 22:53+0200\n"
-"PO-Revision-Date: 2006-05-30 22:59+0100\n"
+"POT-Creation-Date: 2006-06-02 00:37+0200\n"
+"PO-Revision-Date: 2006-06-01 16:31+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -838,7 +838,7 @@ msgstr "y_1 :"
 #: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
-msgstr "_Hauteur :"
+msgstr "Hauteur :"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
@@ -877,34 +877,34 @@ msgstr "_Exporter"
 msgid "Export the bitmap file with these settings"
 msgstr "Exporter le fichier bitmap avec ces réglages"
 
-#: ../src/dialogs/export.cpp:1008
+#: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
 msgstr "Vous devez entrer un nom de fichier"
 
-#: ../src/dialogs/export.cpp:1013
+#: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
 msgstr "La zone d'exportation choisie est invalide"
 
-#: ../src/dialogs/export.cpp:1022
+#: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Le répertoire %s n'existe pas ou n'est pas un répertoire.\n"
 
-#: ../src/dialogs/export.cpp:1038
+#: ../src/dialogs/export.cpp:1045
 msgid "Export in progress"
 msgstr "Exportation en cours"
 
-#: ../src/dialogs/export.cpp:1044
+#: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Export %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1071
+#: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Impossible d'exporter dans le fichier %s.\n"
 
-#: ../src/dialogs/export.cpp:1177
+#: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "Sélectionner un nom de fichier pour exporter"
 
@@ -1261,27 +1261,32 @@ msgstr "ID invalide !"
 msgid "Id exists! "
 msgstr "Cet Id existe déjà !"
 
-#: ../src/dialogs/layers-panel.cpp:720
+#: ../src/dialogs/layers-panel.cpp:755
+#, fuzzy
+msgid "Opacity:"
+msgstr "Opacité"
+
+#: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
 msgstr "Nouveau"
 
-#: ../src/dialogs/layers-panel.cpp:725
+#: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
 msgstr "Devant"
 
-#: ../src/dialogs/layers-panel.cpp:731
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
 msgstr "Haut"
 
-#: ../src/dialogs/layers-panel.cpp:737
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
 msgstr "Bas"
 
-#: ../src/dialogs/layers-panel.cpp:743
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Bot"
 msgstr "Fond"
 
-#: ../src/dialogs/layers-panel.cpp:753
+#: ../src/dialogs/layers-panel.cpp:813
 msgid "X"
 msgstr "X"
 
@@ -1725,13 +1730,13 @@ msgstr "Centrer les lignes"
 msgid "Align lines right"
 msgstr "Aligner les lignes à droite"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3476
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
+#: ../src/widgets/toolbox.cpp:3532
 msgid "Horizontal text"
 msgstr "Texte horizontal"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3487
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
+#: ../src/widgets/toolbox.cpp:3543
 msgid "Vertical text"
 msgstr "Texte vertical"
 
@@ -2085,7 +2090,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Afficher le dialogue au démarrage"
 
-#: ../src/extension/implementation/script.cpp:844
+#: ../src/extension/implementation/script.cpp:994
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2095,7 +2100,7 @@ msgstr ""
 "l'erreur est affiché ci-dessous. Inkscape continue de fonctionner "
 "normalement, mais l'action requise a été annulée."
 
-#: ../src/extension/implementation/script.cpp:857
+#: ../src/extension/implementation/script.cpp:1007
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2245,15 +2250,15 @@ msgstr "Fichier LaTeX PSTricks"
 msgid "LaTeX Print"
 msgstr "Impression LaTeX"
 
-#: ../src/extension/internal/odf.cpp:1897
+#: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
 msgstr "Sortie Dessin OpenDocument"
 
-#: ../src/extension/internal/odf.cpp:1902
+#: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Dessin OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:1903
+#: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
 msgstr "Fichier dessin OpenDocument"
 
@@ -2888,7 +2893,7 @@ msgstr "Afficher ou non la barre des contrôles des outils"
 
 #: ../src/interface.cpp:776
 msgid "_Toolbox"
-msgstr "Boî_te à outils"
+msgstr "Boîte à _outils"
 
 #: ../src/interface.cpp:776
 msgid "Show or hide the main toolbox (on the left)"
@@ -2904,7 +2909,7 @@ msgstr "Afficher ou non la palette de couleurs"
 
 #: ../src/interface.cpp:784
 msgid "_Statusbar"
-msgstr "Barre d'é_tat"
+msgstr "Barre d'_état"
 
 #: ../src/interface.cpp:784
 msgid "Show or hide the statusbar (at the bottom of the window)"
@@ -3530,7 +3535,7 @@ msgstr "Afficher/cacher"
 
 #: ../src/menus-skeleton.h:115
 msgid "_Display mode"
-msgstr "Mo_de d'affichage"
+msgstr "Mode d'_affichage"
 
 #: ../src/menus-skeleton.h:134
 msgid "_Layer"
@@ -3542,7 +3547,7 @@ msgstr "_Objet"
 
 #: ../src/menus-skeleton.h:161
 msgid "Cli_p"
-msgstr "Décou_pe"
+msgstr "D_écoupe"
 
 #: ../src/menus-skeleton.h:165
 msgid "Mas_k"
@@ -3550,7 +3555,7 @@ msgstr "Mas_que"
 
 #: ../src/menus-skeleton.h:169
 msgid "Patter_n"
-msgstr "_Motif"
+msgstr "Moti_f"
 
 #: ../src/menus-skeleton.h:188
 msgid "_Path"
@@ -7738,7 +7743,7 @@ msgstr "Exporter ce document ou la sélection en image bitmap"
 
 #: ../src/verbs.cpp:2010
 msgid "N_ext Window"
-msgstr "Fenêtre suivant_e"
+msgstr "Fenêtre _suivante"
 
 #: ../src/verbs.cpp:2011
 msgid "Switch to the next document window"
@@ -7746,7 +7751,7 @@ msgstr "Passer à la fenêtre (document) suivante"
 
 #: ../src/verbs.cpp:2012
 msgid "P_revious Window"
-msgstr "Fenêtre p_récédente"
+msgstr "Fenêtre _précédente"
 
 #: ../src/verbs.cpp:2013
 msgid "Switch to the previous document window"
@@ -7897,7 +7902,7 @@ msgstr "Supprimer la sélection"
 
 #: ../src/verbs.cpp:2047
 msgid "Duplic_ate"
-msgstr "D_upliquer"
+msgstr "Dupli_quer"
 
 #: ../src/verbs.cpp:2048
 msgid "Duplicate selected objects"
@@ -7967,7 +7972,7 @@ msgstr "Sélectionner tous les objets ou tous les nœuds"
 
 #: ../src/verbs.cpp:2065
 msgid "Select All in All La_yers"
-msgstr "Tout sélectionner dans tous les ca_lques"
+msgstr "Tout s_électionner dans tous les calques"
 
 #: ../src/verbs.cpp:2066
 msgid "Select all objects in all visible and unlocked layers"
@@ -8005,7 +8010,7 @@ msgstr "Désélectionner tous les objets ou nœuds"
 #. Selection
 #: ../src/verbs.cpp:2075
 msgid "Raise to _Top"
-msgstr "Mon_ter au premier plan"
+msgstr "Monter au premier p_lan"
 
 #: ../src/verbs.cpp:2076
 msgid "Raise selection to top"
@@ -8013,7 +8018,7 @@ msgstr "Monter la sélection au premier plan"
 
 #: ../src/verbs.cpp:2077
 msgid "Lower to _Bottom"
-msgstr "Descendre à l'_arrière plan"
+msgstr "Descendre à l'arrière pl_an"
 
 #: ../src/verbs.cpp:2078
 msgid "Lower selection to bottom"
@@ -8021,7 +8026,7 @@ msgstr "Descendre la sélection à l'arrière plan"
 
 #: ../src/verbs.cpp:2079
 msgid "_Raise"
-msgstr "Monte_r"
+msgstr "_Monter"
 
 #: ../src/verbs.cpp:2080
 msgid "Raise selection one step"
@@ -8029,7 +8034,7 @@ msgstr "Monter la sélection d'un cran"
 
 #: ../src/verbs.cpp:2081
 msgid "_Lower"
-msgstr "_Descendre"
+msgstr "D_escendre"
 
 #: ../src/verbs.cpp:2082
 msgid "Lower selection one step"
@@ -8132,7 +8137,7 @@ msgstr "Couper le contour du chemin du dessous, et supprimer son remplissage"
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2114
 msgid "Outs_et"
-msgstr "Dilat_er"
+msgstr "Dil_ater"
 
 #: ../src/verbs.cpp:2115
 msgid "Outset selected paths"
@@ -8159,7 +8164,7 @@ msgstr "Dilater les chemins sélectionnés de 10px"
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2125
 msgid "I_nset"
-msgstr "É_roder"
+msgstr "_Éroder"
 
 #: ../src/verbs.cpp:2126
 msgid "Inset selected paths"
@@ -8215,7 +8220,7 @@ msgstr "Simplifier les chemins sélectionnés (retirer des nœuds superflus)"
 
 #: ../src/verbs.cpp:2143
 msgid "_Reverse"
-msgstr "Inverse_r"
+msgstr "Invers_er"
 
 #: ../src/verbs.cpp:2144
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
@@ -8242,7 +8247,7 @@ msgstr "Exporter la sélection en bitmap et insérer celui-ci dans le document"
 
 #: ../src/verbs.cpp:2150
 msgid "_Combine"
-msgstr "_Combiner"
+msgstr "Com_biner"
 
 #: ../src/verbs.cpp:2151
 msgid "Combine several paths into one"
@@ -8252,7 +8257,7 @@ msgstr "Combiner plusieurs chemins en un seul"
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2154
 msgid "Break _Apart"
-msgstr "Séparer"
+msgstr "Sépa_rer"
 
 #: ../src/verbs.cpp:2155
 msgid "Break selected paths into subpaths"
@@ -8260,7 +8265,7 @@ msgstr "Séparer les chemins sélectionnés en sous-chemins"
 
 #: ../src/verbs.cpp:2156
 msgid "Gri_d Arrange..."
-msgstr "_Disposer sur une grille..."
+msgstr "D_isposer sur une grille..."
 
 #: ../src/verbs.cpp:2157
 msgid "Arrange selected objects in a grid pattern"
@@ -8293,7 +8298,7 @@ msgstr "Passer au calque au-dessus du calque courrant"
 
 #: ../src/verbs.cpp:2165
 msgid "Switch to Layer Belo_w"
-msgstr "Passer au calque _inférieur"
+msgstr "Passer au calque inférie_ur"
 
 #: ../src/verbs.cpp:2166
 msgid "Switch to the layer below the current"
@@ -8301,7 +8306,7 @@ msgstr "Passer au calque en-dessous du calque courrant"
 
 #: ../src/verbs.cpp:2167
 msgid "Move Selection to Layer Abo_ve"
-msgstr "Déplacer la sélection au calque _supérieur"
+msgstr "Déplacer la sélection au calque su_périeur"
 
 #: ../src/verbs.cpp:2168
 msgid "Move selection to the layer above the current"
@@ -8309,7 +8314,7 @@ msgstr "Déplacer la sélection vers le calque au-dessus du calque courant"
 
 #: ../src/verbs.cpp:2169
 msgid "Move Selection to Layer Bel_ow"
-msgstr "Déplacer la sélection au calque i_nférieur"
+msgstr "Déplacer la sélection au calque in_férieur"
 
 #: ../src/verbs.cpp:2170
 msgid "Move selection to the layer below the current"
@@ -8317,7 +8322,7 @@ msgstr "Déplacer la sélection vers le calque en-dessous du calque courant"
 
 #: ../src/verbs.cpp:2171
 msgid "Layer to _Top"
-msgstr "Calque au _premier plan"
+msgstr "Calque au pre_mier plan"
 
 #: ../src/verbs.cpp:2172
 msgid "Raise the current layer to the top"
@@ -8325,7 +8330,7 @@ msgstr "Monter le calque courant au premier plan"
 
 #: ../src/verbs.cpp:2173
 msgid "Layer to _Bottom"
-msgstr "Calque à l'_arrière plan"
+msgstr "Calque à l'a_rrière plan"
 
 #: ../src/verbs.cpp:2174
 msgid "Lower the current layer to the bottom"
@@ -8333,7 +8338,7 @@ msgstr "Descendre le calque courant à l'arrière plan"
 
 #: ../src/verbs.cpp:2175
 msgid "_Raise Layer"
-msgstr "Monte_r le calque"
+msgstr "M_onter le calque"
 
 #: ../src/verbs.cpp:2176
 msgid "Raise the current layer"
@@ -8341,7 +8346,7 @@ msgstr "Monter le calque courant"
 
 #: ../src/verbs.cpp:2177
 msgid "_Lower Layer"
-msgstr "Descendre le ca_lque"
+msgstr "Descen_dre le calque"
 
 #: ../src/verbs.cpp:2178
 msgid "Lower the current layer"
@@ -8729,7 +8734,7 @@ msgstr "Zoommer à 2:1"
 
 #: ../src/verbs.cpp:2290
 msgid "_Fullscreen"
-msgstr "P_lein écran"
+msgstr "Plein _écran"
 
 #: ../src/verbs.cpp:2290
 msgid "Stretch this document window to full screen"
@@ -8737,7 +8742,7 @@ msgstr "Afficher cette fenêtre (document) en plein écran"
 
 #: ../src/verbs.cpp:2293
 msgid "Duplic_ate Window"
-msgstr "Dupliquer l_a fenêtre"
+msgstr "Dupliquer la _fenêtre"
 
 #: ../src/verbs.cpp:2293
 msgid "Open a new window with the same document"
@@ -8762,7 +8767,7 @@ msgstr "Passer en mode d'affichage normal"
 
 #: ../src/verbs.cpp:2300
 msgid "_Outline"
-msgstr "C_ontour"
+msgstr "_Contour"
 
 #: ../src/verbs.cpp:2301
 msgid "Switch to outline (wireframe) display mode"
@@ -8770,7 +8775,7 @@ msgstr "Passer en mode d'affichage contour (grillage)"
 
 #: ../src/verbs.cpp:2303
 msgid "Ico_n Preview"
-msgstr "Aperçu d'icô_ne"
+msgstr "Aperçu d'_icône"
 
 #: ../src/verbs.cpp:2304
 msgid "Open a window to preview objects at different icon resolutions"
@@ -8841,7 +8846,7 @@ msgstr "Sélectionner des couleurs depuis une palette"
 
 #: ../src/verbs.cpp:2326
 msgid "Transfor_m..."
-msgstr "Transfor_mer..."
+msgstr "_Transformer..."
 
 #: ../src/verbs.cpp:2327
 msgid "Precisely control objects' transformations"
@@ -8849,7 +8854,7 @@ msgstr "Contrôler précisément les transformations d'objets"
 
 #: ../src/verbs.cpp:2328
 msgid "_Align and Distribute..."
-msgstr "_Aligner et distribuer..."
+msgstr "Aligner et distri_buer..."
 
 #: ../src/verbs.cpp:2329
 msgid "Align and distribute objects"
@@ -9003,7 +9008,7 @@ msgstr "Demander des informations à propos des extensions"
 
 #: ../src/verbs.cpp:2369
 msgid "Layer_s..."
-msgstr "Calque_s..."
+msgstr "_Calques..."
 
 #: ../src/verbs.cpp:2370
 msgid "View Layers"
@@ -9194,7 +9199,7 @@ msgstr "Taille de police :"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3269
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -9362,7 +9367,7 @@ msgstr "(racine)"
 
 #: ../src/widgets/paint-selector.cpp:168 ../src/widgets/paint-selector.cpp:549
 msgid "No paint"
-msgstr "Pas de peinture"
+msgstr "Pas de remplissage"
 
 #: ../src/widgets/paint-selector.cpp:170 ../src/widgets/paint-selector.cpp:617
 msgid "Flat color"
@@ -9378,8 +9383,7 @@ msgstr "Dégradé radial"
 
 #: ../src/widgets/paint-selector.cpp:178
 msgid "Unset paint (make it undefined so it can be inherited)"
-msgstr ""
-"Indéfinir la peinture (le rendre indéfini de sorte qu'il puisse être hérité)"
+msgstr "Remplissage indéfini (permettant ainsi qu'il soit hérité)"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:190
@@ -9408,7 +9412,7 @@ msgstr "Styles multiples"
 
 #: ../src/widgets/paint-selector.cpp:538
 msgid "Paint is undefined"
-msgstr "La peinture est indéfinie"
+msgstr "Le remplissage est indéfini"
 
 #: ../src/widgets/paint-selector.cpp:745
 msgid "No patterns in document"
@@ -9964,7 +9968,7 @@ msgstr ""
 "Enfoncer ce bouton pour que la couleur visible soit capturée sans alpha; "
 "sinon, la couleur est capturée avec alpha"
 
-#: ../src/widgets/toolbox.cpp:3357
+#: ../src/widgets/toolbox.cpp:3367
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9972,67 +9976,71 @@ msgstr ""
 "Cette police n'est pas installée sur votre système. Inkscape utilisera la "
 "police par défaut à la place"
 
-#: ../src/widgets/toolbox.cpp:3394
-msgid "Rag right"
-msgstr "Aligné à droite"
+#: ../src/widgets/toolbox.cpp:3404
+#, fuzzy
+msgid "Align right"
+msgstr "Aligner les côtés droits"
 
-#: ../src/widgets/toolbox.cpp:3405
-msgid "Centered"
-msgstr "Centré"
+#: ../src/widgets/toolbox.cpp:3415
+#, fuzzy
+msgid "Center"
+msgstr "Centre Y"
 
-#: ../src/widgets/toolbox.cpp:3416
-msgid "Rag left"
-msgstr "Aligné à gauche"
+#: ../src/widgets/toolbox.cpp:3426
+#, fuzzy
+msgid "Align left"
+msgstr "Aligner les lignes à gauche"
 
-#: ../src/widgets/toolbox.cpp:3427
-msgid "Justified"
+#: ../src/widgets/toolbox.cpp:3437
+#, fuzzy
+msgid "Justify"
 msgstr "Justifié"
 
-#: ../src/widgets/toolbox.cpp:3443
+#: ../src/widgets/toolbox.cpp:3453
 msgid "Bold"
 msgstr "Gras"
 
-#: ../src/widgets/toolbox.cpp:3454
+#: ../src/widgets/toolbox.cpp:3464
 msgid "Italic"
 msgstr "Italique"
 
-#: ../src/widgets/toolbox.cpp:3552
+#: ../src/widgets/toolbox.cpp:3562
 msgid "Spacing between letters"
 msgstr "Espacement entre les lettres"
 
-#: ../src/widgets/toolbox.cpp:3573
+#: ../src/widgets/toolbox.cpp:3583
 msgid "Spacing between lines"
 msgstr "Espacement entre les lignes"
 
-#: ../src/widgets/toolbox.cpp:3602
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Horizontal kerning"
 msgstr "Crénage horizontal"
 
-#: ../src/widgets/toolbox.cpp:3623
+#: ../src/widgets/toolbox.cpp:3633
 msgid "Vertical kerning"
 msgstr "Crénage vertical"
 
-#: ../src/widgets/toolbox.cpp:3650
+#: ../src/widgets/toolbox.cpp:3660
 msgid "Letter rotation"
 msgstr "Rotation de caractère"
 
-#: ../src/widgets/toolbox.cpp:3671
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Remove manual kerns"
 msgstr "Retirer les crénages manuels"
 
-#: ../src/widgets/toolbox.cpp:3790
+#: ../src/widgets/toolbox.cpp:3800
 msgid "Make connectors avoid selected objects"
 msgstr "Faire que les connecteurs évitent les objets sélectionnés"
 
-#: ../src/widgets/toolbox.cpp:3794
+#: ../src/widgets/toolbox.cpp:3804
 msgid "Make connectors ignore selected objects"
 msgstr "Faire que les connecteurs ignorent les objets sélectionnés"
 
-#: ../src/widgets/toolbox.cpp:3802
+#: ../src/widgets/toolbox.cpp:3812
 msgid "Spacing:"
 msgstr "Espacement :"
 
-#: ../src/widgets/toolbox.cpp:3803
+#: ../src/widgets/toolbox.cpp:3813
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Espace laissé autour des objets par les connecteurs routés automatiquement"
@@ -10596,6 +10604,15 @@ msgstr "Métafichier Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrée métafichier Windows (*.wmf)"
+
+#~ msgid "Rag right"
+#~ msgstr "Aligné à droite"
+
+#~ msgid "Centered"
+#~ msgstr "Centré"
+
+#~ msgid "Rag left"
+#~ msgstr "Aligné à gauche"
 
 #~ msgid "%s Preferences"
 #~ msgstr "%s  Préférences"
