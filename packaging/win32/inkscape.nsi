@@ -493,10 +493,13 @@ Section $(lng_Core) SecCore
   File /nonfatal /a /r "..\..\inkscape\doc"
   File /nonfatal /a /r "..\..\inkscape\plugins"
   File /nonfatal /a /r /x *.??*.???* /x "examples" /x "tutorials" "..\..\inkscape\share"
-  ; this file is added because it slips through the filter
+  ; this files are added because it slips through the filter
   SetOutPath $INSTDIR\share\clipart
   File /a "..\..\inkscape\share\clipart\inkscape.logo.svg"
   File /a "..\..\inkscape\share\clipart\inkscape.logo.classic.svg"  
+  SetOutPath $INSTDIR\share\extensions
+  File /a "..\..\inkscape\share\extensions\pdf_output.inx.txt"
+  File /a "..\..\inkscape\share\extensions\pdf_output_via_gs_on_win32.inx.txt"
   SetOutPath $INSTDIR\modules
   File /nonfatal /a /r "..\..\inkscape\modules\*.*"
   SetOutPath $INSTDIR\python

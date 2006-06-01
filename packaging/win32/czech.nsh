@@ -17,13 +17,13 @@ LangString lng_LICENSE_BUTTON   ${LANG_CZECH} "Další >"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_CZECH} "$(^Name) je vydáván pod General Public License (GPL). Licenèní ujednání je zde pouze z informaèních dùvodù. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_CZECH} "Inkscape has been installed by user $0.  If you continue you might not complete successfully!  Please log in as $0 and try again."
+LangString lng_DIFFERENT_USER ${LANG_CZECH} "Inkscape byl nainstalovan uzivatelem $0.$\r$\nPokud budete pokracovat nemusite dopadnout dobre!$\r$\nProsim prihlaste se jako $0 a zkuste to znovu."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_CZECH} "You do not have administrator privileges.  Installing Inkscape for all users might not complete successfully.  Uncheck option 'For All Users'."
+LangString lng_NO_ADMIN ${LANG_CZECH} "Nemate administratorska opravneni.$\r$\nInstalace Inkscape pro vsechny uzivatele nemusi dopadnout dobre.$\r$\nOdeberte volbu 'pro všechny uživatele'."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_CZECH} "Inkscape is known not to run under Windows 95/98/ME!\n\nPlease check the official website for detailed information."
+LangString lng_NOT_SUPPORTED ${LANG_CZECH} "Inkscape nepodporuje operacni systemy Windows 95/98/ME!$\r$\nNavstivte homepage Inkscape pro detilni informace."
 
 ; Full install type
 LangString lng_Full $(LANG_CZECH) "Plná"
