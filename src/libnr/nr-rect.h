@@ -80,6 +80,7 @@ namespace NR {
  * points.  Infinities are also permitted. */
 class Rect {
 public:
+    Rect() : _min(0.0, 0.0), _max(0.0, 0.0) {}
     Rect(NRRect const &r) : _min(r.x0, r.y0), _max(r.x1, r.y1) {}
     Rect(Rect const &r) : _min(r._min), _max(r._max) {}
     Rect(Point const &p0, Point const &p1);
@@ -193,7 +194,6 @@ public:
     friend inline std::ostream &operator<<(std::ostream &out_file, NR::Rect const &in_rect);
 
 private:
-    Rect() {}
 
     template <NR::Dim2 axis>
     double extent() const {
