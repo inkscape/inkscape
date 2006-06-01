@@ -409,6 +409,54 @@ private:
 };
 
 
+
+
+//#########################################################################
+//# C O N F I G    D I A L O G
+//#########################################################################
+
+class ConfigDialog : public Gtk::Dialog
+{
+public:
+
+    ConfigDialog (PedroGui &par) : parent(par)
+        { doSetup(); }
+
+    virtual ~ConfigDialog ()
+        {}
+
+   DOMString getPass()
+       { return passField.get_text(); }
+   DOMString getNewPass()
+       { return newField.get_text(); }
+   DOMString getConfirm()
+       { return confField.get_text(); }
+
+protected:
+
+    //Overloaded from Gtk::Dialog
+    virtual void on_response(int response_id);
+
+private:
+
+    void okCallback();
+    void cancelCallback();
+
+    bool doSetup();
+
+    Gtk::Table       table;
+
+    Gtk::Label       passLabel;
+    Gtk::Entry       passField;
+    Gtk::Label       newLabel;
+    Gtk::Entry       newField;
+    Gtk::Label       confLabel;
+    Gtk::Entry       confField;
+
+    PedroGui &parent;
+};
+
+
 //#########################################################################
 //# P A S S W O R D    D I A L O G
 //#########################################################################

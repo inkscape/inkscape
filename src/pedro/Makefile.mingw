@@ -112,14 +112,17 @@ endif
 
 
 
-OBJ = \
-pedrodom.o \
-pedroxmpp.o \
-pedroconfig.o
+OBJ =         \
+pedrodom.o    \
+pedroxmpp.o   \
+pedroconfig.o \
+pedroutil.o
+
 
 GUIOBJ = \
 pedrogui.o \
 pedromain.o
+
 
 TESTOBJ = \
 work/test.o     \

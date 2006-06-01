@@ -894,7 +894,7 @@ bool ChatWindow::doSetup()
     Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Leave",  Gtk::Stock::CANCEL),
-    sigc::mem_fun(*this, &ChatWindow::leaveCallback) );
+        sigc::mem_fun(*this, &ChatWindow::leaveCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -993,7 +993,7 @@ bool GroupChatWindow::doSetup()
     Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Leave",  Gtk::Stock::CANCEL),
-    sigc::mem_fun(*this, &GroupChatWindow::leaveCallback) );
+        sigc::mem_fun(*this, &GroupChatWindow::leaveCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -1120,9 +1120,9 @@ bool ConnectDialog::doSetup()
     Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Connect", Gtk::Stock::CONNECT, "Connect"),
-    sigc::mem_fun(*this, &ConnectDialog::okCallback) );
+        sigc::mem_fun(*this, &ConnectDialog::okCallback) );
     actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
-    sigc::mem_fun(*this, &ConnectDialog::cancelCallback) );
+        sigc::mem_fun(*this, &ConnectDialog::cancelCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -1201,6 +1201,113 @@ bool ConnectDialog::doSetup()
 
 
 //#########################################################################
+//# C O N F I G    D I A L O G
+//#########################################################################
+
+
+void ConfigDialog::okCallback()
+{
+    Glib::ustring pass     = passField.get_text();
+    Glib::ustring newpass  = newField.get_text();
+    Glib::ustring confpass = confField.get_text();
+    if ((pass.size()     < 5 || pass.size()    > 12 ) ||
+        (newpass.size()  < 5 || newpass.size() > 12 ) ||
+        (confpass.size() < 5 || confpass.size()> 12 ))
+        {
+        Gtk::MessageDialog dlg(*this, "Password must be 5 to 12 characters",
+            false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
+        dlg.run();
+        }
+    else if (newpass != confpass)
+        {
+        Gtk::MessageDialog dlg(*this, "New password and confirmation do not match",
+            false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
+        dlg.run();
+        }
+    else
+        {
+        //response(Gtk::RESPONSE_OK);
+        hide();
+        }
+}
+
+void ConfigDialog::cancelCallback()
+{
+    //response(Gtk::RESPONSE_CANCEL);
+    hide();
+}
+
+void ConfigDialog::on_response(int response_id)
+{
+    if (response_id == Gtk::RESPONSE_OK)
+        okCallback();
+    else
+        cancelCallback();
+}
+
+bool ConfigDialog::doSetup()
+{
+    set_title("Change Password");
+    set_size_request(300,200);
+
+    Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
+    actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
+    actionGroup->add( Gtk::Action::create("Change", Gtk::Stock::OK, "Change Password"),
+        sigc::mem_fun(*this, &ConfigDialog::okCallback) );
+    actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
+         sigc::mem_fun(*this, &ConfigDialog::cancelCallback) );
+
+
+    Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
+
+    uiManager->insert_action_group(actionGroup, 0);
+    add_accel_group(uiManager->get_accel_group());
+
+    Glib::ustring ui_info =
+        "<ui>"
+        "  <menubar name='MenuBar'>"
+        "    <menu action='MenuFile'>"
+        "      <menuitem action='Change'/>"
+        "      <separator/>"
+        "      <menuitem action='Cancel'/>"
+        "    </menu>"
+        "  </menubar>"
+        "</ui>";
+
+    uiManager->add_ui_from_string(ui_info);
+    Gtk::Widget* pMenuBar = uiManager->get_widget("/MenuBar");
+    get_vbox()->pack_start(*pMenuBar, Gtk::PACK_SHRINK);
+
+    table.resize(3, 2);
+    get_vbox()->pack_start(table);
+
+    passLabel.set_text("Current Password");
+    table.attach(passLabel, 0, 1, 0, 1);
+    passField.set_visibility(false);
+    passField.set_text(parent.client.getPassword());
+    table.attach(passField, 1, 2, 0, 1);
+
+    newLabel.set_text("New Password");
+    table.attach(newLabel, 0, 1, 1, 2);
+    newField.set_visibility(false);
+    table.attach(newField, 1, 2, 1, 2);
+
+    confLabel.set_text("Confirm New Password");
+    table.attach(confLabel, 0, 1, 2, 3);
+    confField.set_visibility(false);
+    confField.signal_activate().connect(
+           sigc::mem_fun(*this, &ConfigDialog::okCallback) );
+    table.attach(confField, 1, 2, 2, 3);
+
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    add_button(Gtk::Stock::OK,     Gtk::RESPONSE_OK);
+
+    show_all_children();
+
+    return true;
+}
+
+//#########################################################################
 //# P A S S W O R D      D I A L O G
 //#########################################################################
 
@@ -1253,9 +1360,9 @@ bool PasswordDialog::doSetup()
     Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Change", Gtk::Stock::OK, "Change Password"),
-    sigc::mem_fun(*this, &PasswordDialog::okCallback) );
+        sigc::mem_fun(*this, &PasswordDialog::okCallback) );
     actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
-    sigc::mem_fun(*this, &PasswordDialog::cancelCallback) );
+        sigc::mem_fun(*this, &PasswordDialog::cancelCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
