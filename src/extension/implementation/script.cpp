@@ -1190,10 +1190,10 @@ bool pipe_t::open(const Glib::ustring &command,
     Glib::ustring popen_mode;
 
     if ( (mode_p & mode_read) != 0 )
-        popen_mode_cur.append("r");
+        popen_mode.append("r");
 
     if ( (mode_p & mode_write) != 0 )
-        popen_mode_cur.append("w");
+        popen_mode.append("w");
 
     // Get the commandline to be run
     Glib::ustring pipeStr = command;
