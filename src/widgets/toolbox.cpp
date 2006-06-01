@@ -3008,6 +3008,8 @@ namespace {
         sp_repr_css_attr_unref (css);
         free (family);
         gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
+
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
     }
 
     void
@@ -3086,6 +3088,8 @@ namespace {
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
+
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
     }
 
     void
@@ -3129,6 +3133,8 @@ namespace {
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
+
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
     }
 
     void
@@ -3170,6 +3176,8 @@ namespace {
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
+
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
     }
 
 
@@ -3201,6 +3209,8 @@ namespace {
         sp_desktop_set_style (desktop, css, true, true);
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
         sp_repr_css_attr_unref (css);
+
+        gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
     }
 
     void
@@ -3391,7 +3401,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-start", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(0));
-        gtk_tooltips_set_tip(tt, rbutton, _("Rag right"), NULL);
+        gtk_tooltips_set_tip(tt, rbutton, _("Align right"), NULL);
 
         // center
         rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3402,7 +3412,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-middle", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer (1)); 
-        gtk_tooltips_set_tip(tt, rbutton, _("Centered"), NULL);
+        gtk_tooltips_set_tip(tt, rbutton, _("Center"), NULL);
 
         // right
         rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3413,7 +3423,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-end", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(2));
-        gtk_tooltips_set_tip(tt, rbutton, _("Rag left"), NULL);
+        gtk_tooltips_set_tip(tt, rbutton, _("Align left"), NULL);
 
         // fill
         rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3424,7 +3434,7 @@ namespace {
         gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
         g_object_set_data   (G_OBJECT (tbl), "text-fill", rbutton);
         g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(3));
-        gtk_tooltips_set_tip(tt, rbutton, _("Justified"), NULL);
+        gtk_tooltips_set_tip(tt, rbutton, _("Justify"), NULL);
 
         aux_toolbox_space (tbl, 1);
         gtk_box_pack_start (GTK_BOX (tbl), row, FALSE, FALSE, 4);
