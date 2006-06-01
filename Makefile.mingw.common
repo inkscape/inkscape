@@ -139,7 +139,7 @@ endif
 # VERSION_NR = 0.41+devel
 # VERSION = \"$(VERSION_NR)-${DTG}\"
 
-VERSION_NR = 0.43+devel
+VERSION_NR = 0.43+0.44pre2
 VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
