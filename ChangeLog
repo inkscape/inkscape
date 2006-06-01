@@ -1,3 +1,10 @@
+2006-06-01  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
+
+	  Added layer opacity slider.
+	  Fixes RFE #1496569.
+
 2006-05-31  Colin Marquardt  <colin@marquardt-home.de>
 
 	* TRANSLATORS: Add vonHalenbach for tutorial translations.

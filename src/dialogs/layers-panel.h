@@ -15,7 +15,9 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/tooltips.h>
+#include <gtkmm/scale.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 
 #include "ui/widget/panel.h"
@@ -84,6 +86,8 @@ private:
     void _layersChanged();
     void _addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level );
 
+    void _opacityChanged();
+
     SPObject* _selectedLayer();
 
     // Hooked to the layer manager:
@@ -92,6 +96,7 @@ private:
     sigc::connection _changedConnection;
     sigc::connection _addedConnection;
     sigc::connection _removedConnection;
+    sigc::connection _opacityConnection;
 
     int _maxNestDepth;
     Inkscape::LayerManager* _mgr;
@@ -108,6 +113,8 @@ private:
     Gtk::TreeView _tree;
     Gtk::HButtonBox _buttonsRow;
     Gtk::ScrolledWindow _scroller;
+    Gtk::HBox _opacityBox;
+    Gtk::HScale _opacity;
     Gtk::Menu _popupMenu;
 };
 

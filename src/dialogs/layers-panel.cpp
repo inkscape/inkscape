@@ -33,7 +33,11 @@
 #include "sp-item.h"
 #include "widgets/icon.h"
 #include <gtkmm/widget.h>
+#include <gtkmm/spinbutton.h>
 #include "prefs-utils.h"
+#include "xml/repr.h"
+#include "svg/css-ostringstream.h"
+#include "desktop-style.h"
 
 //#define DUMP_LAYERS 1
 
@@ -525,8 +529,16 @@ void LayersPanel::_checkTreeSelection()
 
             sensitiveNonTop = (Inkscape::next_layer(inTree->parent, inTree) != 0);
             sensitiveNonBottom = (Inkscape::previous_layer(inTree->parent, inTree) != 0);
+
+            if ( inTree->repr ) {
+                SPCSSAttr *css = sp_repr_css_attr(inTree->repr, "style");
+                if ( css ) {
+                    _opacity.set_value( sp_repr_css_double_property( css, "opacity", 1.0 ) );
+                }
+            }
         }
     }
+
 
     for ( std::vector<Gtk::Widget*>::iterator it = _watching.begin(); it != _watching.end(); ++it ) {
         (*it)->set_sensitive( sensitive );
@@ -654,6 +666,35 @@ bool LayersPanel::_rowSelectFunction( Glib::RefPtr<Gtk::TreeModel> const & model
     return val;
 }
 
+
+void LayersPanel::_opacityChanged()
+{
+    SPObject* layer = _selectedLayer();
+
+    if ( _desktop && layer && !_opacityConnection.blocked() ) {
+        _opacityConnection.block();
+
+
+        Gtk::Adjustment* adj = _opacity.get_adjustment();
+        SPCSSAttr *css = sp_repr_css_attr_new();
+
+        Inkscape::CSSOStringStream os;
+        os << CLAMP( adj->get_value(), 0.0, 1.0 );
+        sp_repr_css_set_property( css, "opacity", os.str().c_str() );
+
+        sp_desktop_apply_css_recursive( layer, css, true );
+        layer->updateRepr();
+
+        sp_repr_css_attr_unref( css );
+
+        sp_document_maybe_done( _desktop->doc(), "layers:opacity" );
+
+        _opacityConnection.unblock();
+    }
+}
+
+
+
 /**
  * Constructor
  */
@@ -709,8 +750,27 @@ LayersPanel::LayersPanel() :
 
     _scroller.add( _tree );
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+
+
+    _opacityBox.pack_start( *manage( new Gtk::Label(_("Opacity:"))), Gtk::PACK_SHRINK );
+
+    _opacity.set_draw_value(false);
+    _opacity.set_value(1.0);
+    _opacity.set_range(0.0, 1.0);
+    _opacity.set_increments(0.01, 0.1);
+    _opacityBox.pack_start( _opacity, Gtk::PACK_EXPAND_WIDGET );
+
+    Gtk::SpinButton* spinBtn = manage( new Gtk::SpinButton(*_opacity.get_adjustment(), 0.0, 3) );
+
+    _opacityBox.pack_end( *spinBtn, Gtk::PACK_SHRINK );
+    _watching.push_back( &_opacityBox );
+
     _getContents()->pack_start( _scroller, Gtk::PACK_EXPAND_WIDGET );
+
+    _getContents()->pack_end(_opacityBox, Gtk::PACK_SHRINK);
     _getContents()->pack_end(_buttonsRow, Gtk::PACK_SHRINK);
+
+    _opacityConnection = _opacity.get_adjustment()->signal_value_changed().connect( sigc::mem_fun(*this, &LayersPanel::_opacityChanged) );
 
     SPDesktop* targetDesktop = SP_ACTIVE_DESKTOP;
 
