@@ -117,13 +117,13 @@ static void read_shortcuts_file(char const *filename) {
         }
 
         gchar const *keyval_name=iter->attribute("key");
-        if (!keyval_name) {
+        if (!keyval_name || !*keyval_name) {
             // that's ok, it's just listed for reference without assignment, skip it
             continue;
         }
 
         guint keyval=gdk_keyval_from_name(keyval_name);
-        if (keyval == GDK_VoidSymbol) {
+        if (keyval == GDK_VoidSymbol || keyval == 0) {
             g_warning("Unknown keyval %s for %s", keyval_name, verb_name);
             continue;
         }
