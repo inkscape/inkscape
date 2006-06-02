@@ -805,6 +805,13 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
 
                         /* Neither unimode nor IM consumed key; process text tool shortcuts */
                         switch (group0_keyval) {
+                            case GDK_x:
+                            case GDK_X:
+                                if (MOD__ALT_ONLY) {
+                                    desktop->setToolboxFocusTo ("altx-text");
+                                    return TRUE;
+                                }
+                                break;
                             case GDK_space:
                                 if (MOD__CTRL_ONLY) {
                                     /* No-break space */
