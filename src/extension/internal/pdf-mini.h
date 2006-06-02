@@ -170,11 +170,12 @@ long PdfFile::tell() {
 
 PdfObject *PdfFile::begin_document(double version) {
     Inkscape::SVGOStringStream os;
-
+    char bin[5] = {0x80|'B', 0x80|'i', 0x80|'n', 0x80|'!', 0};
     length = 0;
     pages = new PdfXref();;
 
     os << "%PDF-" << version << "\n";
+    os << "%" << bin << "\n";
 
     obj_info = begin_object();
     *obj_info << "<<\n";
@@ -312,7 +313,7 @@ void PdfFile::end_page(PdfObject *page) {
     delete obj_length;
     delete obj_contents;
     
-    delete resources;
+    delete[] resources;
 }
 
 PdfObject *PdfFile::begin_object() {

@@ -1,5 +1,11 @@
 2006-06-01  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/extension/internal/pdf-mini.h
+
+	  Fix for delete[] mismatch and binary tweak from Ulf Erikson.
+
+2006-06-01  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
 
 	  Added layer opacity slider.
