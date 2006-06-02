@@ -27,7 +27,6 @@
 #include "selection.h"
 #include "sp-namedview.h"
 #include "io/sys.h"
-#include "registrytool.h"
 #include "prefs-utils.h"
 #include "../system.h"
 #include "extension/effect.h"
@@ -42,6 +41,7 @@
 #ifdef WIN32
 #include <windows.h>
 #include <sys/stat.h>
+#include "registrytool.h"
 #endif
 
 
