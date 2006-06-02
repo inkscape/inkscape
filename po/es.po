@@ -7,14 +7,14 @@
 # Lucas Vieites Fariña<lucas@asixinformatica.com>, 2003-2005, 2006.
 #
 #
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
 "PO-Revision-Date: 2006-05-25 16:20+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
@@ -1748,13 +1748,13 @@ msgstr "Centrar líneas"
 msgid "Align lines right"
 msgstr "Alinear líneas a la derecha"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
 msgstr "Texto horizontal"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
 msgstr "Texto vertical"
 
@@ -4841,7 +4841,7 @@ msgstr "Carácter no imprimible"
 msgid "Unicode: %s: %s"
 msgstr "Unicode: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr "Unicode: "
 
@@ -4850,7 +4850,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Marco de texto fluido</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Escriba un texto; pulse <b>Enter</b> para saltar de línea."
 
@@ -4866,16 +4866,16 @@ msgstr ""
 "El marco es <b>demasiado pequeño</b> para el tamaño de tipografía actual. No "
 "se ha creado el texto fluido."
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr "Espacio sin retorno"
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 "Escriba un texto fluido; pulse <b>Enter</b> para iniciar un párrafo nuevo."
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -9180,7 +9180,7 @@ msgstr "Tamaño de tipografía:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiÁáÑñPpQq12368$€¿?.;/()"
 
@@ -9938,7 +9938,7 @@ msgstr ""
 "Si está pulsado selecciona el color visible con alfa, si no lo está "
 "selecciona el color con el valor alfa"
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9946,70 +9946,70 @@ msgstr ""
 "Esta tipografía no esta instalada en su sistema, Inkscape utilizará la "
 "tipografía predeterminada en su lugar."
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
 msgid "Align right"
 msgstr "Alinear lados izquierdos"
 
-#: ../src/widgets/toolbox.cpp:3415
+#: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Center"
 msgstr "Centrar Y"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
 msgid "Align left"
 msgstr "Alinear líneas a la izquierda"
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr "Espacio entre letras"
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
 msgstr "Espacio entre líneas"
 
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Horizontal kerning"
 msgstr "Espaciado horizontal"
 
-#: ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3702
 msgid "Vertical kerning"
 msgstr "Espaciado vertical"
 
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3729
 msgid "Letter rotation"
 msgstr "Rotación de letras"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3750
 msgid "Remove manual kerns"
 msgstr "Eliminar el espaciado manual"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
 msgstr "Hacer que los conectores eviten los objetos seleccionados"
 
-#: ../src/widgets/toolbox.cpp:3804
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
 msgstr "Hacer que los conectores ignoren los objetos seleccionados"
 
-#: ../src/widgets/toolbox.cpp:3812
+#: ../src/widgets/toolbox.cpp:3881
 msgid "Spacing:"
 msgstr "Espaciado:"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "El espacio que dejan alrededor de los objetos los conectores auto-trazados"

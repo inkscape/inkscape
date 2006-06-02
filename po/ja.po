@@ -8,14 +8,14 @@
 # Mitsuru Oka <oka326@parkcity.ne.jp>, 2002.
 # Masatake YAMATO <jet@gyve.org>, 2002.
 # shivaken <shivaken@owls-nest.net>, 2004, 2005.
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
 "PO-Revision-Date: 2005-11-16 00:21+0900\n"
 "Last-Translator: shivaken <shivaken@owls-nest.net>\n"
 "Language-Team: Japanese <shivaken@owls-nest.net>\n"
@@ -1682,13 +1682,13 @@ msgstr "中心線"
 msgid "Align lines right"
 msgstr "右に整列"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
 msgstr "横書"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
 msgstr "縦書"
 
@@ -4647,7 +4647,7 @@ msgstr "印刷不可能な文字"
 msgid "Unicode: %s: %s"
 msgstr "ユニコード: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr "ユニコード: "
 
@@ -4656,7 +4656,7 @@ msgstr "ユニコード: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "テキスト入力: <b>Enter</b>で新しい行を開始。"
 
@@ -4670,15 +4670,15 @@ msgid ""
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr "非分割スペース"
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 #, fuzzy
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
@@ -9012,7 +9012,7 @@ msgstr "サイズ:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 #, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12368.;/()"
@@ -9735,80 +9735,80 @@ msgid ""
 "color including its alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
 msgid "Align right"
 msgstr "右揃え"
 
-#: ../src/widgets/toolbox.cpp:3415
+#: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Center"
 msgstr "中心線"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
 msgid "Align left"
 msgstr "左に整列"
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3612
-#, fuzzy
-msgid "Horizontal kerning"
-msgstr "横間隔"
-
-#: ../src/widgets/toolbox.cpp:3633
-#, fuzzy
-msgid "Vertical kerning"
-msgstr "縦間隔"
-
-#: ../src/widgets/toolbox.cpp:3660
-msgid "Letter rotation"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3681
 #, fuzzy
+msgid "Horizontal kerning"
+msgstr "横間隔"
+
+#: ../src/widgets/toolbox.cpp:3702
+#, fuzzy
+msgid "Vertical kerning"
+msgstr "縦間隔"
+
+#: ../src/widgets/toolbox.cpp:3729
+msgid "Letter rotation"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3750
+#, fuzzy
 msgid "Remove manual kerns"
 msgstr "カーニングを元に戻す"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3804
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3812
+#: ../src/widgets/toolbox.cpp:3881
 #, fuzzy
 msgid "Spacing:"
 msgstr "Y方向の間隔:"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 

@@ -10,15 +10,15 @@
 # Frederic Rodrigo <f.rodrigo free.fr>, 2004-2005.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2006.
 #
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
-"PO-Revision-Date: 2006-06-01 16:31+0100\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
+"PO-Revision-Date: 2006-06-02 12:48+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1262,9 +1262,8 @@ msgid "Id exists! "
 msgstr "Cet Id existe déjà !"
 
 #: ../src/dialogs/layers-panel.cpp:755
-#, fuzzy
 msgid "Opacity:"
-msgstr "Opacité"
+msgstr "Opacité :"
 
 #: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
@@ -1730,13 +1729,13 @@ msgstr "Centrer les lignes"
 msgid "Align lines right"
 msgstr "Aligner les lignes à droite"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
 msgstr "Texte horizontal"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
 msgstr "Texte vertical"
 
@@ -4827,7 +4826,7 @@ msgstr "Caractère non imprimable"
 msgid "Unicode: %s: %s"
 msgstr "Unicode : %s : %s "
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr "Unicode : "
 
@@ -4836,7 +4835,7 @@ msgstr "Unicode : "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Cadre de texte </b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Taper le texte; <b>Entrée</b> pour commencer une nouvelle ligne."
 
@@ -4852,16 +4851,16 @@ msgstr ""
 "Le cadre est <b>trop petit</b> pour la taille de police courante. Le texte "
 "encadré n'a pas été créé."
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr "Espace insécable"
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 "Taper le texte encadré; <b>Entrée</b> pour commencer un nouveau paragraphe."
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -9199,7 +9198,7 @@ msgstr "Taille de police :"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -9412,7 +9411,7 @@ msgstr "Styles multiples"
 
 #: ../src/widgets/paint-selector.cpp:538
 msgid "Paint is undefined"
-msgstr "Le remplissage est indéfini"
+msgstr "Remplissage indéfini"
 
 #: ../src/widgets/paint-selector.cpp:745
 msgid "No patterns in document"
@@ -9968,7 +9967,7 @@ msgstr ""
 "Enfoncer ce bouton pour que la couleur visible soit capturée sans alpha; "
 "sinon, la couleur est capturée avec alpha"
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9976,71 +9975,67 @@ msgstr ""
 "Cette police n'est pas installée sur votre système. Inkscape utilisera la "
 "police par défaut à la place"
 
-#: ../src/widgets/toolbox.cpp:3404
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3473
 msgid "Align right"
-msgstr "Aligner les côtés droits"
+msgstr "Aligné à droite"
 
-#: ../src/widgets/toolbox.cpp:3415
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
-msgstr "Centre Y"
+msgstr "Centré"
 
-#: ../src/widgets/toolbox.cpp:3426
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3495
 msgid "Align left"
-msgstr "Aligner les lignes à gauche"
+msgstr "Aligné à gauche"
 
-#: ../src/widgets/toolbox.cpp:3437
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
-msgstr "Justifié"
+msgstr "Justifiié"
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr "Gras"
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr "Italique"
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr "Espacement entre les lettres"
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
 msgstr "Espacement entre les lignes"
 
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Horizontal kerning"
 msgstr "Crénage horizontal"
 
-#: ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3702
 msgid "Vertical kerning"
 msgstr "Crénage vertical"
 
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3729
 msgid "Letter rotation"
 msgstr "Rotation de caractère"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3750
 msgid "Remove manual kerns"
 msgstr "Retirer les crénages manuels"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
 msgstr "Faire que les connecteurs évitent les objets sélectionnés"
 
-#: ../src/widgets/toolbox.cpp:3804
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
 msgstr "Faire que les connecteurs ignorent les objets sélectionnés"
 
-#: ../src/widgets/toolbox.cpp:3812
+#: ../src/widgets/toolbox.cpp:3881
 msgid "Spacing:"
 msgstr "Espacement :"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Espace laissé autour des objets par les connecteurs routés automatiquement"

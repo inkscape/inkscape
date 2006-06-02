@@ -4,17 +4,17 @@
 # Josef Vybiral <josef.vybiral@gmail.com>, 2005, 2006.
 #
 #
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
-"PO-Revision-Date: 2006-05-29 20:33+0100\n"
-"Last-Translator: Josef Vybíral <josef.vybiral@gmail.com>\n"
-"Language-Team: Czech <none>\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
+"PO-Revision-Date: 2006-06-02 19:02+0100\n"
+"Last-Translator: Josef 'cornelius' Vybíral <josef.vybiral@gmail.com>\n"
+"Language-Team:  <none>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1226,9 +1226,8 @@ msgid "Id exists! "
 msgstr "Id existuje!"
 
 #: ../src/dialogs/layers-panel.cpp:755
-#, fuzzy
 msgid "Opacity:"
-msgstr "Krytí"
+msgstr "Krytí:"
 
 #: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
@@ -1687,13 +1686,13 @@ msgstr "Zarovnání na střed"
 msgid "Align lines right"
 msgstr "Zarovnání vpravo"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
 msgstr "Vodorovný text"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
 msgstr "Svislý text"
 
@@ -4725,7 +4724,7 @@ msgstr "Netisknutelný znak"
 msgid "Unicode: %s: %s"
 msgstr "Unicode: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr "Unicode: "
 
@@ -4734,7 +4733,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Rám vlitého textu</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Pište text; <b>Enter</b> vytvoří nový řádek"
 
@@ -4750,15 +4749,15 @@ msgstr ""
 "Rám je <b>příliš malý</b> pro písmo o současné velikosti. Vlitý text nebyl "
 "vytvořen."
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr "Nezalomitelná mezera"
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Pište vlitý text; <b>Enter</b> vytvoří nový odstavec."
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -7352,14 +7351,14 @@ msgid "Stroke width: %.5g%s"
 msgstr "Šířka čáry: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "O:%.3g"
-msgstr "0:%.3g"
+msgstr "K:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, fuzzy, c-format
+#, c-format
 msgid "O:.%d"
-msgstr "0:.%d"
+msgstr "K:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
@@ -8624,9 +8623,8 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Upravit nastavení dokumnetu (ukládáno v dokumentu)"
 
 #: ../src/verbs.cpp:2319
-#, fuzzy
 msgid "Document _Metadata..."
-msgstr "Metadata _Dokumentu..."
+msgstr "_Metadata Dokumentu..."
 
 #: ../src/verbs.cpp:2320
 msgid "Edit document metadata (to be saved with the document)"
@@ -8805,9 +8803,8 @@ msgid "Query information about extensions"
 msgstr "Získat informace o rozšířeních"
 
 #: ../src/verbs.cpp:2369
-#, fuzzy
 msgid "Layer_s..."
-msgstr "Vrstvy..."
+msgstr "Vr_stvy..."
 
 #: ../src/verbs.cpp:2370
 msgid "View Layers"
@@ -8996,7 +8993,7 @@ msgstr "Velikost písma:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqÁáÉéČčŠšřŘřŽž12369$€¢?.;/()"
 
@@ -9739,7 +9736,7 @@ msgstr ""
 "Při stisknutí nabere viditelnou barvu bez alfa průhlednosti. Pokud není "
 "stisknuto, nabere barvu včetně alfy"
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9747,71 +9744,67 @@ msgstr ""
 "Toto písmo není ve vašem systému nainstalováno. Inkscape místo něj použije "
 "výchozí písmo."
 
-#: ../src/widgets/toolbox.cpp:3404
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3473
 msgid "Align right"
-msgstr "Zarovnat pravé strany"
+msgstr "Zarovnat doprava"
 
-#: ../src/widgets/toolbox.cpp:3415
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
-msgstr "Střed Y"
+msgstr "Zarovnat na střed"
 
-#: ../src/widgets/toolbox.cpp:3426
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3495
 msgid "Align left"
-msgstr "Zarovnání vlevo"
+msgstr "Zarovnat doleva"
 
-#: ../src/widgets/toolbox.cpp:3437
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
-msgstr "Zarovnání do bloku"
+msgstr "Zarovnat do bloku"
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr "Tučné"
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr "Kurzíva"
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr "Mezery mezi písmeny"
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
 msgstr "Mezery mezi řádky"
 
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Horizontal kerning"
 msgstr "Vodorovný kerning"
 
-#: ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3702
 msgid "Vertical kerning"
 msgstr "Svislý kerning"
 
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3729
 msgid "Letter rotation"
 msgstr "Rotace znaků"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3750
 msgid "Remove manual kerns"
 msgstr "Odstranit manuální kerning"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
 msgstr "Přinutit konektory vyhýbat se vybraným objektům"
 
-#: ../src/widgets/toolbox.cpp:3804
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
 msgstr "Přinutit konektory ignorovat vybrané objekty"
 
-#: ../src/widgets/toolbox.cpp:3812
+#: ../src/widgets/toolbox.cpp:3881
 msgid "Spacing:"
 msgstr "Mezery:"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Množství místa, které má být ponecháno kolem objektů při automatickém "
@@ -9915,7 +9908,7 @@ msgstr "Velikost písma"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
-msgstr "Počet Uzlů"
+msgstr "Očíslovat Uzly"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
 #: ../share/extensions/measure.inx.h:3
@@ -10064,7 +10057,7 @@ msgstr "px na Jednotku"
 
 #: ../share/extensions/ffms.inx.h:6
 msgid "Multi Length Scala"
-msgstr ""
+msgstr "Škála více délek"
 
 #: ../share/extensions/ffms.inx.h:10 ../share/extensions/ffss.inx.h:7
 msgid "Path to Scala *.scl File"
@@ -10079,12 +10072,13 @@ msgid "Scale Length"
 msgstr "Délka stupnice"
 
 #: ../share/extensions/ffset.inx.h:9
+#, fuzzy
 msgid "Single Length Equal Temperament"
-msgstr ""
+msgstr "Vyrovnaný temperament"
 
 #: ../share/extensions/ffss.inx.h:9
 msgid "Single Length Scala"
-msgstr ""
+msgstr "Škála stejné délky"
 
 #: ../share/extensions/ffss.inx.h:10
 msgid "Tuning (Scale step for each string seperated by semicolons)"
@@ -10159,33 +10153,30 @@ msgid "Axiom"
 msgstr "Axiom"
 
 #: ../share/extensions/lindenmayer.inx.h:2
-#, fuzzy
 msgid "L-system"
-msgstr "Systém"
+msgstr "L-systém"
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "Čtyřúhelník"
+msgstr "levý úhel"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "Pořadí"
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%)"
-msgstr "Uzly náhodně"
+msgstr "Náhodnost úhlu (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize step (%)"
-msgstr "Uzly náhodně"
+msgstr "Náhodnost kroku (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "Čtyřúhelník"
+msgstr "Pravý úhel"
 
 #: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
@@ -10193,7 +10184,7 @@ msgstr "Pravidla"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
-msgstr ""
+msgstr "Délka kroku (px)"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"

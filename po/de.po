@@ -9,14 +9,14 @@
 # Jörg Müller <jfm@ram-brand.de>, 2005.
 # Wolfram Strempfer <wolfram@strempfer.de>, 2006.
 #
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
 "PO-Revision-Date: 2006-06-01 01:02+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
@@ -1731,13 +1731,13 @@ msgstr "Zeilen zentrieren"
 msgid "Align lines right"
 msgstr "Zeilen rechts ausrichten"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
 msgstr "Horizontale Textausrichtung"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
 msgstr "Vertikale Textausrichtung"
 
@@ -4839,7 +4839,7 @@ msgstr "Nicht druckbares Zeichen"
 msgid "Unicode: %s: %s"
 msgstr "Unicode: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr "Unicode: "
 
@@ -4848,7 +4848,7 @@ msgstr "Unicode: "
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Fließtext-Rahmen</b>: %s × %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Text schreiben; <b>Eingabe</b>, um eine neue Zeile zu beginnen."
 
@@ -4864,16 +4864,16 @@ msgstr ""
 "Der Rahmen ist <b>zu klein</b> für die aktuelle Schriftgröße. Der Fließtext "
 "wurde nicht erzeugt."
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr "Untrennbares Leerzeichen"
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 "Fließtext schreiben; <b>Eingabe</b>, um einen neuen Absatz zu beginnen."
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -9198,7 +9198,7 @@ msgstr "Schriftgröße:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqÄäÖöÜüß012369€¢?&.;/|()„“»«"
 
@@ -9958,7 +9958,7 @@ msgstr ""
 "Drücken übernimmt sichtbare Farbe ohne Transparenz. Nicht drücken, um den "
 "Farbwert mit Transparenz zu übernehmen"
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9966,71 +9966,71 @@ msgstr ""
 "Diese Schriftart ist im Moment nicht auf Ihrem System installiert. Inkscape "
 "wird die Standardschriftart verwenden"
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
 msgid "Align right"
 msgstr "Rechtsbündig ausrichten"
 
-#: ../src/widgets/toolbox.cpp:3415
+#: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Center"
 msgstr "Zentrum Y:"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
 msgid "Align left"
 msgstr "Zeilen links ausrichten"
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3506
 #, fuzzy
 msgid "Justify"
 msgstr "Blocksatz"
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr "Fett"
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr "Kursiv"
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr "Abstand zwischen Buchstaben"
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
 msgstr "Abstand zwischen Zeilen"
 
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Horizontal kerning"
 msgstr "Horizontale Unterschneidung"
 
-#: ../src/widgets/toolbox.cpp:3633
+#: ../src/widgets/toolbox.cpp:3702
 msgid "Vertical kerning"
 msgstr "Vertikale Unterschneidung"
 
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3729
 msgid "Letter rotation"
 msgstr "Buchstabendrehung"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3750
 msgid "Remove manual kerns"
 msgstr "Manuelle Unterschneidungen entfernen"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
 msgstr "Objektverbinder weichen den ausgewählten Objekten aus"
 
-#: ../src/widgets/toolbox.cpp:3804
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
 msgstr "Objektverbinder ignorieren die ausgewählten Objekte"
 
-#: ../src/widgets/toolbox.cpp:3812
+#: ../src/widgets/toolbox.cpp:3881
 msgid "Spacing:"
 msgstr "Abstand:"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Platz, der von den Objektverbindern um Objekte herum gelassen wird"
 

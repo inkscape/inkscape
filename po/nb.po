@@ -2,29 +2,29 @@
 # Copyright © 2000-2002 Free Software Foundation, Inc.
 # Kjartan Maraas <kmaraas@gnome.org>, 2000-2002.
 #
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: sodipodi 0.25\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
-"PO-Revision-Date: 2003-01-25 00:49+0100\n"
-"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
+"PO-Revision-Date: 2006-06-02 06:20+0100\n"
+"Last-Translator: srene <srk_translation@yahoo.com>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr ""
+msgstr "Skap og redigerer Skalerbar Vektor Grafikk bilder"
 
 #: ../inkscape.desktop.in.h:2
 #, fuzzy
 msgid "Inkscape SVG Vector Illustrator"
-msgstr "Vektorillustrator"
+msgstr "Inkscape SVG Vektor Illustratør"
 
 #: ../src/arc-context.cpp:328
 msgid ""
@@ -43,35 +43,34 @@ msgid ""
 msgstr ""
 
 #: ../src/connector-context.cpp:517
-#, fuzzy
 msgid "Creating new connector"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Lag ny bindeledd"
 
 #: ../src/connector-context.cpp:941
-#, fuzzy
 msgid "Finishing connector"
-msgstr "Frihånd"
+msgstr "Avslutt bindeledd"
 
 #: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr ""
+msgstr "<b>Kontaktpunkt</b>: klikk eller dra for å lage et nytt bindeledd"
 
 #: ../src/connector-context.cpp:1156
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
+"<b>Bindeledd endepunkt</b>: dra i den for å omdirigere eller koble til ny "
+"form"
 
 #: ../src/connector-context.cpp:1267
-#, fuzzy
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "Ingen gradienter i dokumentet"
+msgstr "Velg <b>minst ett ikke-bindeledd objekt</b>."
 
 #: ../src/context-fns.cpp:29 ../src/context-fns.cpp:58
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
-msgstr ""
+msgstr "<b>Gjeldende lag er skjult</b>. Ta frem for å kunne tegne i den."
 
 #: ../src/context-fns.cpp:35 ../src/context-fns.cpp:64
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
-msgstr ""
+msgstr "<b>Gjeldende lag er låst</b>. Lås den opp for å kunne tegne i den."
 
 #: ../src/desktop-events.cpp:221
 #, c-format
@@ -80,68 +79,63 @@ msgstr ""
 
 #: ../src/desktop.cpp:686
 msgid "No previous zoom."
-msgstr ""
+msgstr "Ingen tidligere zoom."
 
 #: ../src/desktop.cpp:711
 msgid "No next zoom."
-msgstr ""
+msgstr "Ingen neste zoom."
 
 #: ../src/dialogs/clonetiler.cpp:162
-#, fuzzy
 msgid "<small>Nothing selected.</small>"
-msgstr "Sist valgte"
+msgstr "<small>Ingenting valgt.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:168
 msgid "<small>More than one object selected.</small>"
-msgstr ""
+msgstr "<small>Mer enn ett objekt valgt.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:175
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
-msgstr ""
+msgstr "<small>Objekt har <b>%d</b> teglklone.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:180
 msgid "<small>Object has no tiled clones.</small>"
-msgstr ""
+msgstr "<small>Objekt har ingen teglklone.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:845
-#, fuzzy
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "Klipp ut valgte objekter til utklippstavlen"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:896
-#, fuzzy
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Klipp ut valgte objekter til utklippstavlen"
+msgstr "Velg <b>et objekt</b> for fjerning av dets teglklone."
 
 #: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1931
-#, fuzzy
 msgid "Select an <b>object</b> to clone."
-msgstr "Klipp ut valgte objekter til utklippstavlen"
+msgstr "Velg et <b>objekt</b> for kloning."
 
 #: ../src/dialogs/clonetiler.cpp:970
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
 msgstr ""
+"Hvis du vil klone flere objekter, <b>grupper</b> dem og <b>klon gruppen</b>."
 
 #: ../src/dialogs/clonetiler.cpp:1480
 msgid "<small>Per row:</small>"
-msgstr ""
+msgstr "<small>Per rad:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1493
-#, fuzzy
 msgid "<small>Per column:</small>"
-msgstr "Ingen gradient valgt"
+msgstr "<small>Per kolonne:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1501
-#, fuzzy
 msgid "<small>Randomize:</small>"
-msgstr "Sist valgte"
+msgstr "<small>Tilfeldigjør:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1655
 msgid "_Symmetry"
-msgstr ""
+msgstr "_Symmetri "
 
 #. TRANSLATORS: For the following 17 symmetry groups, see
 #. * http://www.bib.ulb.ac.be/coursmath/doc/17.htm (visual examples);
@@ -150,7 +144,7 @@ msgstr ""
 #.
 #: ../src/dialogs/clonetiler.cpp:1663
 msgid "Select one of the 17 symmetry groups for the tiling"
-msgstr ""
+msgstr "Velg ut en av teglenes 17 symmetrigrupper"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
 #: ../src/dialogs/clonetiler.cpp:1674
@@ -225,263 +219,258 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1720
 msgid "S_hift"
-msgstr ""
+msgstr "Forsk_yv"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
 #: ../src/dialogs/clonetiler.cpp:1730
 #, no-c-format
 msgid "<b>Shift X:</b>"
-msgstr ""
+msgstr "<b>Forskyv X:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1738
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
-msgstr ""
+msgstr "Horisontal forskyvning per rad (i % av teglhøyde)"
 
 #: ../src/dialogs/clonetiler.cpp:1746
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
-msgstr ""
+msgstr "Horisontal forskyvning per kolonne (i % av teglhøyde)"
 
 #: ../src/dialogs/clonetiler.cpp:1753
 msgid "Randomize the horizontal shift by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør den horisontale forskyvningen med denne prosentandelen"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
 #: ../src/dialogs/clonetiler.cpp:1763
 #, no-c-format
 msgid "<b>Shift Y:</b>"
-msgstr ""
+msgstr "<b>Forskyv Y:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1771
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
-msgstr ""
+msgstr "Vertikal forskyvning per rad (i % av teglhøyde)"
 
 #: ../src/dialogs/clonetiler.cpp:1779
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
-msgstr ""
+msgstr "Vertikal forskyvning per kolonne (i % av teglhøyde)"
 
 #: ../src/dialogs/clonetiler.cpp:1786
 msgid "Randomize the vertical shift by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør den vertikale forskyvningen med denne prosentandelen"
 
 #: ../src/dialogs/clonetiler.cpp:1794
 msgid "<b>Exponent:</b>"
-msgstr ""
+msgstr "<b>Eksponent:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1801
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
-msgstr ""
+msgstr "Om rekker skilles jevnt (1), samles (<1) eller sprer seg (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:1808
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
-msgstr ""
+msgstr "Om kolonner skilles jevnt (1), samles (<1) eller sprer seg (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:1816 ../src/dialogs/clonetiler.cpp:1906
 #: ../src/dialogs/clonetiler.cpp:1965 ../src/dialogs/clonetiler.cpp:2021
 #: ../src/dialogs/clonetiler.cpp:2152
 msgid "<small>Alternate:</small>"
-msgstr ""
+msgstr "<small>Alterner:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1822
 msgid "Alternate the sign of shifts for each row"
-msgstr ""
+msgstr "Alternerer tegnet på forskyvninger for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:1827
 msgid "Alternate the sign of shifts for each column"
-msgstr ""
+msgstr "Alternerer tegnet på forskyvninger for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:1836
-#, fuzzy
 msgid "Sc_ale"
-msgstr "Skaler"
+msgstr "Sk_ala"
 
 #: ../src/dialogs/clonetiler.cpp:1844
-#, fuzzy
 msgid "<b>Scale X:</b>"
-msgstr "Rektangel"
+msgstr "<b>Skala X:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1852
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
-msgstr ""
+msgstr "Horisontal skala per rad (i % av teglbredde)"
 
 #: ../src/dialogs/clonetiler.cpp:1860
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
-msgstr ""
+msgstr "Horisontal skala per kolonne (i % av teglbredde)"
 
 #: ../src/dialogs/clonetiler.cpp:1867
 msgid "Randomize the horizontal scale by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør den horisontale skalaen med denne prosentandelen"
 
 #: ../src/dialogs/clonetiler.cpp:1875
-#, fuzzy
 msgid "<b>Scale Y:</b>"
-msgstr "Rektangel"
+msgstr "<b>Skala Y:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1883
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
-msgstr ""
+msgstr "Vertikal skala per rad (i % av teglbredde)"
 
 #: ../src/dialogs/clonetiler.cpp:1891
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
-msgstr ""
+msgstr "Vertikal skala per kolonne (i % av teglbredde)"
 
 #: ../src/dialogs/clonetiler.cpp:1898
 msgid "Randomize the vertical scale by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør den vertikale skalaen med denne prosentandelen"
 
 #: ../src/dialogs/clonetiler.cpp:1912
+#, fuzzy
 msgid "Alternate the sign of scales for each row"
-msgstr ""
+msgstr "Alternerer tegnet på skalaen for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:1917
+#, fuzzy
 msgid "Alternate the sign of scales for each column"
-msgstr ""
+msgstr "Alternerer tegnet på skalaen for hver kolonner"
 
 #: ../src/dialogs/clonetiler.cpp:1926
-#, fuzzy
 msgid "_Rotation"
-msgstr "Vending:"
+msgstr "_Rotasjon"
 
 #: ../src/dialogs/clonetiler.cpp:1934
-#, fuzzy
 msgid "<b>Angle:</b>"
-msgstr "Rektangel"
+msgstr "<b>Vinkel:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1942
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
-msgstr ""
+msgstr "Roter teglene med denne vinkelen for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:1950
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
-msgstr ""
+msgstr "Roter teglene med denne vinkelen for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:1957
 msgid "Randomize the rotation angle by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør rotasjonsvinkelen ved denne prosentandel"
 
 #: ../src/dialogs/clonetiler.cpp:1971
 msgid "Alternate the rotation direction for each row"
-msgstr ""
+msgstr "Alterner rotasjonsretningen for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:1976
 msgid "Alternate the rotation direction for each column"
-msgstr ""
+msgstr "Alterner rotasjonsretningen for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:1984
-#, fuzzy
 msgid "_Opacity"
-msgstr "Ugjennomsiktighet"
+msgstr "_Opasitet"
 
 #: ../src/dialogs/clonetiler.cpp:1992
 msgid "<b>Fade out:</b>"
-msgstr ""
+msgstr "<b>Falme:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1999
 msgid "Decrease tile opacity by this percentage for each row"
-msgstr ""
+msgstr "Minker teglopasiteten med denne prosentandel for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:2006
 msgid "Decrease tile opacity by this percentage for each column"
-msgstr ""
+msgstr "Minker teglopasiteten med denne prosentandel for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:2013
 msgid "Randomize the tile opacity by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør teglopasiteten med denne prosenten"
 
 #: ../src/dialogs/clonetiler.cpp:2027
 msgid "Alternate the sign of opacity change for each row"
-msgstr ""
+msgstr "Alterner opasitetsforandringen for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:2032
 msgid "Alternate the sign of opacity change for each column"
-msgstr ""
+msgstr "Alterner opasitetsforandringen for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:2040
-#, fuzzy
 msgid "Co_lor"
-msgstr "Lukk"
+msgstr "Far_ge"
 
 #: ../src/dialogs/clonetiler.cpp:2045
-#, fuzzy
 msgid "Initial color: "
-msgstr "Farge på rutenett:"
+msgstr "Innledende farge:"
 
 #: ../src/dialogs/clonetiler.cpp:2049
 msgid "Initial color of tiled clones"
-msgstr ""
+msgstr "Innledende farge på teglklonene"
 
 #: ../src/dialogs/clonetiler.cpp:2049
 msgid ""
 "Initial color for clones (works only if the original has unset fill or "
 "stroke)"
 msgstr ""
+"Innledende farge på klonene (fungerer bare om originalen har uordnet fyll "
+"eller strøk)"
 
 #: ../src/dialogs/clonetiler.cpp:2064
 msgid "<b>H:</b>"
-msgstr ""
+msgstr "<b>H:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2071
 msgid "Change the tile hue by this percentage for each row"
-msgstr ""
+msgstr "Forandrer teglens fargetone med denne prosentandel for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:2078
 msgid "Change the tile hue by this percentage for each column"
-msgstr ""
+msgstr "Forandrer teglens fargetone med denne prosentandel for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:2085
 msgid "Randomize the tile hue by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør teglens fargetone med denne prosenten"
 
 #: ../src/dialogs/clonetiler.cpp:2094
 msgid "<b>S:</b>"
-msgstr ""
+msgstr "<b>S:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2101
 msgid "Change the color saturation by this percentage for each row"
-msgstr ""
+msgstr "Forandrer fargemetningen med denne prosentandel for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:2108
 msgid "Change the color saturation by this percentage for each column"
-msgstr ""
+msgstr "Forandrer fargemetningen med denne prosentandel for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:2115
 msgid "Randomize the color saturation by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør fargemetningen med denne prosenten"
 
 #: ../src/dialogs/clonetiler.cpp:2123
-#, fuzzy
 msgid "<b>L:</b>"
-msgstr "Lenke til %s"
+msgstr "<b>L:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2130
 msgid "Change the color lightness by this percentage for each row"
-msgstr ""
+msgstr "Forandrer fargelysheten med denne prosentandel for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:2137
 msgid "Change the color lightness by this percentage for each column"
-msgstr ""
+msgstr "Forandrer fargelysheten med denne prosentandel for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:2144
 msgid "Randomize the color lightness by this percentage"
-msgstr ""
+msgstr "Tilfeldiggjør fargelysheten med denne prosenten"
 
 #: ../src/dialogs/clonetiler.cpp:2158
 msgid "Alternate the sign of color changes for each row"
-msgstr ""
+msgstr "Alterner tegnet på fargeendringer for hver rad"
 
 #: ../src/dialogs/clonetiler.cpp:2163
 msgid "Alternate the sign of color changes for each column"
-msgstr ""
+msgstr "Alterner tegnet på fargeendringer for hver kolonne"
 
 #: ../src/dialogs/clonetiler.cpp:2171
 #, fuzzy
@@ -497,36 +486,37 @@ msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
 msgstr ""
+"For hver klone, velg en verdi fra tegningen i den klonens plassering og "
+"anvend den på klonen"
 
 #: ../src/dialogs/clonetiler.cpp:2196
 msgid "1. Pick from the drawing:"
-msgstr ""
+msgstr "1. Velg fra tegningen:"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
 #: ../src/ui/dialog/tracedialog.cpp:458
-#, fuzzy
 msgid "Color"
-msgstr "Lukk"
+msgstr "Farge"
 
 #: ../src/dialogs/clonetiler.cpp:2208
 msgid "Pick the visible color and opacity"
-msgstr ""
+msgstr "Velg den synlige fargen og opasiteten"
 
 #: ../src/dialogs/clonetiler.cpp:2215 ../src/dialogs/clonetiler.cpp:2364
 #: ../share/extensions/svg_dropshadow.inx.h:3
-#, fuzzy
 msgid "Opacity"
-msgstr "Ugjennomsiktighet"
+msgstr "Opasitet"
 
 #: ../src/dialogs/clonetiler.cpp:2216
 msgid "Pick the total accumulated opacity"
-msgstr ""
+msgstr "Velg den totale akkumulerte opasiteten"
 
 #: ../src/dialogs/clonetiler.cpp:2223
 msgid "R"
 msgstr ""
 
+# OVERSETTERE: Er det Pick som i VELG eller FJERN
 #: ../src/dialogs/clonetiler.cpp:2224
 msgid "Pick the Red component of the color"
 msgstr ""
@@ -535,6 +525,7 @@ msgstr ""
 msgid "G"
 msgstr ""
 
+# OVERSETTERE: Er det Pick som i VELG eller FJERN
 #: ../src/dialogs/clonetiler.cpp:2232
 msgid "Pick the Green component of the color"
 msgstr ""
@@ -543,6 +534,7 @@ msgstr ""
 msgid "B"
 msgstr ""
 
+# OVERSETTERE: Er det Pick som i VELG eller FJERN
 #: ../src/dialogs/clonetiler.cpp:2240
 msgid "Pick the Blue component of the color"
 msgstr ""
@@ -591,20 +583,19 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2302
 msgid "Randomize:"
-msgstr ""
+msgstr "Tilfeldigjør:"
 
 #: ../src/dialogs/clonetiler.cpp:2307
 msgid "Randomize the picked value by this percentage"
-msgstr ""
+msgstr "Tilfeldigjør den valgte verdien med denne prosentandel"
 
 #: ../src/dialogs/clonetiler.cpp:2314
-#, fuzzy
 msgid "Invert:"
-msgstr "Punkt"
+msgstr "Vreng:"
 
 #: ../src/dialogs/clonetiler.cpp:2318
 msgid "Invert the picked value"
-msgstr ""
+msgstr "Vreng den valgte verdi"
 
 #: ../src/dialogs/clonetiler.cpp:2324
 msgid "3. Apply the value to the clones':"
@@ -620,78 +611,82 @@ msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
 msgstr ""
+"Hver klone skapes med sannsynligheten fastsatt av den valgte verdi i det "
+"bestemte punktet"
 
 #: ../src/dialogs/clonetiler.cpp:2344
-#, fuzzy
 msgid "Size"
-msgstr "Sider:"
+msgstr "Størrelse "
 
 #: ../src/dialogs/clonetiler.cpp:2347
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr ""
+"Hver klones størrelse fastsetter av den valgte verdi i det bestemte punktet"
 
 #: ../src/dialogs/clonetiler.cpp:2357
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
 msgstr ""
+"Hver klone males med den valgte farge (fungerer bare om originalen har "
+"uordnet fyll eller strøk)"
 
 #: ../src/dialogs/clonetiler.cpp:2367
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr ""
+"Hver klones opasitet fastsetter av den valgte verdi i det bestemte punkt"
 
 #: ../src/dialogs/clonetiler.cpp:2394
 msgid "How many rows in the tiling"
-msgstr ""
+msgstr "Hvordan mange rekker i tegl"
 
 #: ../src/dialogs/clonetiler.cpp:2414
 msgid "How many columns in the tiling"
-msgstr ""
+msgstr "Hvordan mange kolonner i tegl"
 
 #: ../src/dialogs/clonetiler.cpp:2444
 msgid "Width of the rectangle to be filled"
-msgstr ""
+msgstr "Bredden på rektanglet som skal fylles"
 
 #: ../src/dialogs/clonetiler.cpp:2469
 msgid "Height of the rectangle to be filled"
-msgstr ""
+msgstr "Høyden på rektanglet som skal fylles"
 
 #: ../src/dialogs/clonetiler.cpp:2484
-#, fuzzy
 msgid "Rows, columns: "
-msgstr "Lukk"
+msgstr "Rad, kolonner:"
 
 #: ../src/dialogs/clonetiler.cpp:2485
 msgid "Create the specified number of rows and columns"
-msgstr ""
+msgstr "Skap det spesifiserte antall rekker og kolonner"
 
 #: ../src/dialogs/clonetiler.cpp:2494
 msgid "Width, height: "
-msgstr ""
+msgstr "Bredde, høyde:"
 
 #: ../src/dialogs/clonetiler.cpp:2495
 msgid "Fill the specified width and height with the tiling"
-msgstr ""
+msgstr "Fyller den spesifiserte bredde og høyde med tegl"
 
 #: ../src/dialogs/clonetiler.cpp:2511
-#, fuzzy
 msgid "Use saved size and position of the tile"
-msgstr "Objektstørrelse og posisjon"
+msgstr "Bruk lagret størrelse og posisjon av teglen"
 
 #: ../src/dialogs/clonetiler.cpp:2514
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
 msgstr ""
+"Lat som at størrelsen og posisjon på tegl er akkurat som sist gang du teglet "
+"den, i stedet for å bruke den nåværende størrelsen"
 
 #: ../src/dialogs/clonetiler.cpp:2538
-#, fuzzy
 msgid " <b>_Create</b> "
-msgstr "Rektangel"
+msgstr " <b>_Skap</b> "
 
 #: ../src/dialogs/clonetiler.cpp:2540
 msgid "Create and tile the clones of the selection"
-msgstr ""
+msgstr "Skap og tegl klonene på den valgte"
 
 #. TRANSLATORS: if a group of objects are "clumped" together, then they
 #. are unevenly spread in the given amount of space - as shown in the
@@ -704,21 +699,19 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2556
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
-msgstr ""
+msgstr "Spre ut klonen for å redusere klumping; kan gjøres gjentatte ganger"
 
 #: ../src/dialogs/clonetiler.cpp:2562
-#, fuzzy
 msgid " Re_move "
-msgstr "Fjern lenke"
+msgstr "Ta _bort"
 
 #: ../src/dialogs/clonetiler.cpp:2563
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr ""
+msgstr "Fjerner eksisterende teglkloner av det valgte objekt (bare fra søsken)"
 
 #: ../src/dialogs/clonetiler.cpp:2579
-#, fuzzy
 msgid " R_eset "
-msgstr "Fjern lenke"
+msgstr "Tilbak_estill"
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2581
@@ -726,77 +719,70 @@ msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
 msgstr ""
+"Tilbakestiller alle forskyvninger, skalare, roteringer, opasitet og "
+"fargeforandringer i dialogen tilbake til null"
 
 #: ../src/dialogs/debugdialog.cpp:135
 msgid "Messages"
-msgstr ""
+msgstr "Meldinger"
 
 #. ## Add a menu for clear()
 #: ../src/dialogs/debugdialog.cpp:141 ../src/menus-skeleton.h:16
 #: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
-#, fuzzy
 msgid "_File"
-msgstr "Fil"
+msgstr "_Fil"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
 #: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
-#, fuzzy
 msgid "_Clear"
-msgstr "Lukk"
+msgstr "F_jern"
 
 #: ../src/dialogs/debugdialog.cpp:144 ../src/ui/dialog/messages.cpp:57
 msgid "Capture log messages"
-msgstr ""
+msgstr "Fang loggmeldinger"
 
 #: ../src/dialogs/debugdialog.cpp:146 ../src/ui/dialog/messages.cpp:59
 msgid "Release log messages"
-msgstr ""
+msgstr "Avbryt loggmeldinger"
 
 #: ../src/dialogs/eek-color-def.cpp:52
 #: ../src/widgets/gradient-selector.cpp:161
-#, fuzzy
 msgid "none"
-msgstr "Ingen"
+msgstr "ingen"
 
 #. "view_icon_preview"
 #: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2305
-#, fuzzy
 msgid "_Page"
-msgstr "Side"
+msgstr "_Side"
 
 #: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2309
-#, fuzzy
 msgid "_Drawing"
-msgstr "Tegning"
+msgstr "_Tegning"
 
 #: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2311
-#, fuzzy
 msgid "_Selection"
-msgstr "Valg"
+msgstr "_Valg"
 
 #: ../src/dialogs/export.cpp:133
-#, fuzzy
 msgid "_Custom"
-msgstr "Tilpasset"
+msgstr "Egendef_inert"
 
 #: ../src/dialogs/export.cpp:257
 msgid "<big><b>Export area</b></big>"
-msgstr ""
+msgstr "<big><b>Eksport område</b></big>"
 
 #: ../src/dialogs/export.cpp:271
 msgid "Units:"
 msgstr "Enheter:"
 
 #: ../src/dialogs/export.cpp:299
-#, fuzzy
 msgid "_x0:"
-msgstr "x0:"
+msgstr "_x0:"
 
 #: ../src/dialogs/export.cpp:304
-#, fuzzy
 msgid "x_1:"
-msgstr "x1:"
+msgstr "x_1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
@@ -805,14 +791,12 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: ../src/dialogs/export.cpp:315
-#, fuzzy
 msgid "_y0:"
-msgstr "y0:"
+msgstr "_y0:"
 
 #: ../src/dialogs/export.cpp:320
-#, fuzzy
 msgid "y_1:"
-msgstr "y1:"
+msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
@@ -821,12 +805,11 @@ msgstr "Høyde:"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
-msgstr ""
+msgstr "<big><b>Punktgrafikk  størrelse</b></big>"
 
 #: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
-#, fuzzy
 msgid "_Width:"
-msgstr "Bredde:"
+msgstr "_Bredde:"
 
 #: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
 #, fuzzy
@@ -834,9 +817,8 @@ msgid "pixels at"
 msgstr "piksler"
 
 #: ../src/dialogs/export.cpp:437
-#, fuzzy
 msgid "dp_i"
-msgstr "dpi"
+msgstr "dp_i"
 
 #: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
@@ -849,20 +831,19 @@ msgstr ""
 
 #: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
-msgstr ""
+msgstr "_Bla gjennom..."
 
 #: ../src/dialogs/export.cpp:577
-#, fuzzy
 msgid "_Export"
-msgstr "Eksporter"
+msgstr "_Eksporter"
 
 #: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
-msgstr ""
+msgstr "Eksporter punktgrafikk bilde med disse instillingene"
 
 #: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
-msgstr ""
+msgstr "Du må skrive inn et filnavn"
 
 #: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
@@ -874,9 +855,8 @@ msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:1045
-#, fuzzy
 msgid "Export in progress"
-msgstr "Eksporter område"
+msgstr "Eksport i fremdrift"
 
 #: ../src/dialogs/export.cpp:1051
 #, fuzzy, c-format
@@ -889,38 +869,33 @@ msgid "Could not export to filename %s.\n"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:1184
-#, fuzzy
 msgid "Select a filename for exporting"
-msgstr "Velg fil som skal importeres"
+msgstr "Velg et filnavn for eksporteringen"
 
 #: ../src/dialogs/filedialog.cpp:358
-#, fuzzy
 msgid "No preview"
-msgstr "Ny forhåndsvisning"
+msgstr "Ingen forhåndsvisning"
 
 #: ../src/dialogs/filedialog.cpp:459
 msgid "too large for preview"
 msgstr ""
 
 #: ../src/dialogs/filedialog.cpp:751 ../src/dialogs/filedialog.cpp:752
-#, fuzzy
 msgid "All Images"
-msgstr "Bilde"
+msgstr "Alle bilder"
 
 #: ../src/dialogs/filedialog.cpp:756 ../src/dialogs/filedialog.cpp:757
-#, fuzzy
 msgid "All Files"
-msgstr "Fyllstil"
+msgstr "Alle Filer"
 
 #: ../src/dialogs/filedialog.cpp:763 ../src/dialogs/filedialog.cpp:764
-#, fuzzy
 msgid "All Inkscape Files"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Alle Inkscape Filer"
 
 #: ../src/dialogs/filedialog.cpp:1166
 #, fuzzy
 msgid "Guess from extension"
-msgstr "Transformer utvalg"
+msgstr "Gjett fra filtype"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
@@ -938,52 +913,44 @@ msgstr[0] "Slå sammen linjer ved valgte noder"
 msgstr[1] "Slå sammen linjer ved valgte noder"
 
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "exact"
-msgstr "Tekst"
+msgstr "eksakt"
 
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "partial"
-msgstr "Spiral"
+msgstr "delvis"
 
 #: ../src/dialogs/find.cpp:379
-#, fuzzy
 msgid "No objects found"
-msgstr "Ingen objekter"
+msgstr "Ingen objekter funnet"
 
 #: ../src/dialogs/find.cpp:537
-#, fuzzy
 msgid "T_ype: "
-msgstr "Type:"
+msgstr "T_ype:"
 
 #: ../src/dialogs/find.cpp:544
 msgid "Search in all object types"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:544
-#, fuzzy
 msgid "All types"
-msgstr "Fyllstil"
+msgstr "Alle typer"
 
 #: ../src/dialogs/find.cpp:555
 msgid "Search all shapes"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:555
-#, fuzzy
 msgid "All shapes"
-msgstr "Alle formverktøy"
+msgstr "Alle former"
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Search rectangles"
-msgstr "Rektangel"
+msgstr "Søk Rektangler"
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Rectangles"
-msgstr "Rektangel"
+msgstr "Rektangler"
 
 #: ../src/dialogs/find.cpp:577
 msgid "Search ellipses, arcs, circles"
@@ -998,19 +965,16 @@ msgid "Search stars and polygons"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:582
-#, fuzzy
 msgid "Stars"
-msgstr "Stjerne"
+msgstr "Stjerner"
 
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Search spirals"
-msgstr "Opprett lenke"
+msgstr "Søk spiraler"
 
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Spirals"
-msgstr "Spiral"
+msgstr "Spiraler"
 
 #. TRANSLATORS: polyline is a set of connected straight line segments
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
@@ -1023,21 +987,18 @@ msgid "Paths"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Search text objects"
-msgstr "Valgte objekter"
+msgstr "Søk tekst objekter"
 
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Texts"
-msgstr "Tekst"
+msgstr "Tekster"
 
 #: ../src/dialogs/find.cpp:610
 msgid "Search groups"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:610
-#, fuzzy
 msgid "Groups"
 msgstr "Grupper"
 
@@ -1046,9 +1007,8 @@ msgid "Search clones"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:454
-#, fuzzy
 msgid "Clones"
-msgstr "Lukk"
+msgstr "Kloner"
 
 #: ../src/dialogs/find.cpp:620
 msgid "Search images"
@@ -1056,9 +1016,8 @@ msgstr ""
 
 #: ../src/dialogs/find.cpp:620 ../share/extensions/embedimage.inx.h:2
 #: ../share/extensions/extractimage.inx.h:2
-#, fuzzy
 msgid "Images"
-msgstr "Bilde"
+msgstr "Bilder"
 
 #: ../src/dialogs/find.cpp:625
 #, fuzzy
@@ -1070,9 +1029,8 @@ msgid "Offsets"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:689
-#, fuzzy
 msgid "_Text: "
-msgstr "Tekst"
+msgstr "_Tekst:"
 
 #: ../src/dialogs/find.cpp:689
 msgid "Find objects by their text content (exact or partial match)"
@@ -1087,9 +1045,8 @@ msgid "Find objects by the value of the id attribute (exact or partial match)"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:691
-#, fuzzy
 msgid "_Style: "
-msgstr "Stil"
+msgstr "_Stil:"
 
 #: ../src/dialogs/find.cpp:691
 msgid ""
@@ -1097,32 +1054,28 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/find.cpp:692
-#, fuzzy
 msgid "_Attribute: "
-msgstr "Attributt"
+msgstr "_Attributt:"
 
 #: ../src/dialogs/find.cpp:692
 msgid "Find objects by the name of an attribute (exact or partial match)"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:706
-#, fuzzy
 msgid "Search in s_election"
-msgstr "Valg"
+msgstr "_Søk i Utvalgte"
 
 #: ../src/dialogs/find.cpp:710
 msgid "Limit search to the current selection"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:715
-#, fuzzy
 msgid "Search in current _layer"
-msgstr "Velg"
+msgstr "Søk i gjeldende _lag"
 
 #: ../src/dialogs/find.cpp:719
-#, fuzzy
 msgid "Limit search to the current layer"
-msgstr "Velg"
+msgstr "Begrens søk til gjeldende lag"
 
 #: ../src/dialogs/find.cpp:724
 msgid "Include _hidden"
@@ -1137,19 +1090,16 @@ msgid "Include l_ocked"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:737
-#, fuzzy
 msgid "Include locked objects in search"
-msgstr "Valgte objekter"
+msgstr "Inkluder låste objekter i søk"
 
 #: ../src/dialogs/find.cpp:748
-#, fuzzy
 msgid "Clear values"
-msgstr "Tøm alle"
+msgstr "Fjern verdiene"
 
 #: ../src/dialogs/find.cpp:749
-#, fuzzy
 msgid "_Find"
-msgstr "Rutenett"
+msgstr "_Finn"
 
 #: ../src/dialogs/find.cpp:749
 msgid "Select objects matching all of the fields you filled in"
@@ -1157,9 +1107,8 @@ msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 #: ../src/ui/dialog/transformation.cpp:102
-#, fuzzy
 msgid "Rela_tive move"
-msgstr "Relativ flytting"
+msgstr "Re_lativ flytting"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
@@ -1168,12 +1117,11 @@ msgstr ""
 #: ../src/dialogs/guidelinedialog.cpp:61
 #, fuzzy
 msgid "Move by:"
-msgstr "Flytt"
+msgstr "Flytt av:"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
-#, fuzzy
 msgid "Move to:"
-msgstr "Flytt"
+msgstr "Flytt til:"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 #, fuzzy
@@ -1197,9 +1145,8 @@ msgid "Selection"
 msgstr "Valg"
 
 #: ../src/dialogs/iconpreview.cpp:193
-#, fuzzy
 msgid "Selection only or whole document"
-msgstr "Velg"
+msgstr "Bare valgte eller hele dokument"
 
 #: ../src/dialogs/iconpreview.cpp:201
 msgid "Refresh the icons"
@@ -1227,9 +1174,8 @@ msgstr "Velg"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:150
-#, fuzzy
 msgid "_Label"
-msgstr "Sett attributt"
+msgstr "Etikett"
 
 #: ../src/dialogs/item-properties.cpp:159
 msgid "A freeform label for the object"
@@ -1237,9 +1183,8 @@ msgstr ""
 
 #. Create the label for the object title
 #: ../src/dialogs/item-properties.cpp:171 ../src/dialogs/rdf.cpp:240
-#, fuzzy
 msgid "Title"
-msgstr "Tittel:"
+msgstr "Tittel"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:188 ../src/dialogs/rdf.cpp:284
@@ -1249,9 +1194,8 @@ msgstr "Valg"
 
 #. Hide
 #: ../src/dialogs/item-properties.cpp:215
-#, fuzzy
 msgid "_Hide"
-msgstr "Sider:"
+msgstr "Sk_jul"
 
 #: ../src/dialogs/item-properties.cpp:216
 msgid "Check to make the object invisible"
@@ -1273,9 +1217,8 @@ msgid "Ref"
 msgstr ""
 
 #: ../src/dialogs/item-properties.cpp:390
-#, fuzzy
 msgid "Id invalid! "
-msgstr "IDen er gyldig"
+msgstr "Ugyldig ID"
 
 #: ../src/dialogs/item-properties.cpp:392
 msgid "Id exists! "
@@ -1284,10 +1227,9 @@ msgstr ""
 #: ../src/dialogs/layers-panel.cpp:755
 #, fuzzy
 msgid "Opacity:"
-msgstr "Ugjennomsiktighet"
+msgstr "Opasitet"
 
 #: ../src/dialogs/layers-panel.cpp:780
-#, fuzzy
 msgid "New"
 msgstr "Ny"
 
@@ -1308,58 +1250,49 @@ msgid "Bot"
 msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:813
-#, fuzzy
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
 msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:152
-#, fuzzy
 msgid "Above current"
-msgstr "Lagre dokument"
+msgstr "Over aktuelle"
 
 #: ../src/dialogs/layer-properties.cpp:156
-#, fuzzy
 msgid "Below current"
-msgstr "Dokumentnavn:"
+msgstr "Under aktuelle"
 
 #: ../src/dialogs/layer-properties.cpp:159
 msgid "As sublayer of current"
 msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:163
-#, fuzzy
 msgid "Position:"
-msgstr "Vending:"
+msgstr "Posisjon:"
 
 #: ../src/dialogs/layer-properties.cpp:181
-#, fuzzy
 msgid "Rename Layer"
-msgstr "Hev node"
+msgstr "Endre Lagets navn"
 
 #: ../src/dialogs/layer-properties.cpp:184
-#, fuzzy
 msgid "_Rename"
-msgstr "Fil"
+msgstr "Navnend_ring"
 
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:195
-#, fuzzy
 msgid "Renamed layer"
-msgstr "Hev node"
+msgstr "Navnendret Lag"
 
 #: ../src/dialogs/layer-properties.cpp:199
-#, fuzzy
 msgid "Add Layer"
-msgstr "Senk"
+msgstr "Legg til Lag"
 
 #: ../src/dialogs/layer-properties.cpp:201
-#, fuzzy
 msgid "_Add"
-msgstr "Legg til"
+msgstr "Til_før"
 
 #: ../src/dialogs/layer-properties.cpp:223
 msgid "New layer created."
@@ -1386,6 +1319,7 @@ msgstr "Rolle:"
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
 #: ../src/dialogs/object-attributes.cpp:38
+#, fuzzy
 msgid "Arcrole:"
 msgstr "Arkusrolle:"
 
@@ -1421,24 +1355,20 @@ msgid "%s attributes"
 msgstr "%s-attributter"
 
 #: ../src/dialogs/object-properties.cpp:161
-#, fuzzy
 msgid "_Fill"
-msgstr "Fyll"
+msgstr "_Fyll"
 
 #: ../src/dialogs/object-properties.cpp:168
-#, fuzzy
 msgid "Stroke _paint"
-msgstr "Ingen maling"
+msgstr "_Maling Strøk"
 
 #: ../src/dialogs/object-properties.cpp:175
-#, fuzzy
 msgid "Stroke st_yle"
-msgstr "Innstillinger for strøk"
+msgstr "St_røkstil"
 
 #: ../src/dialogs/object-properties.cpp:186
-#, fuzzy
 msgid "Master _opacity"
-msgstr "Ugjennomsiktighet"
+msgstr "Overordnet _opasitet"
 
 #: ../src/dialogs/rdf.cpp:178
 #, fuzzy
@@ -1503,9 +1433,8 @@ msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:249
-#, fuzzy
 msgid "Type"
-msgstr "Type:"
+msgstr "Type"
 
 #: ../src/dialogs/rdf.cpp:250
 msgid "Type of document (DCMI Type)."
@@ -1540,9 +1469,8 @@ msgid "Name of entity responsible for making this document available."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:263
-#, fuzzy
 msgid "Identifier"
-msgstr "Centimeter"
+msgstr "Identifikator "
 
 #: ../src/dialogs/rdf.cpp:264
 msgid "Unique URI to reference this document."
@@ -1557,14 +1485,12 @@ msgid "Unique URI to reference the source of this document."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:269
-#, fuzzy
 msgid "Relation"
-msgstr "Vending:"
+msgstr "Relasjon "
 
 #: ../src/dialogs/rdf.cpp:270
-#, fuzzy
 msgid "Unique URI to a related document."
-msgstr "Dokument uten navn"
+msgstr "Unik URI til et relatert dokument."
 
 #: ../src/dialogs/rdf.cpp:272
 msgid "Language"
@@ -1604,7 +1530,7 @@ msgstr ""
 #: ../src/dialogs/rdf.cpp:289
 #, fuzzy
 msgid "Contributors"
-msgstr "Centimeter"
+msgstr "Bidragsytere"
 
 #: ../src/dialogs/rdf.cpp:290
 msgid ""
@@ -1648,9 +1574,8 @@ msgid "None"
 msgstr "Ingen"
 
 #: ../src/dialogs/stroke-style.cpp:984
-#, fuzzy
 msgid "Stroke width"
-msgstr "Ingen maling"
+msgstr "Strøk bredde"
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
@@ -1695,6 +1620,7 @@ msgstr ""
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
+# OVERSETTERE: For å beskrive formen på linjens topp er "Cap" ikke spesifik nok
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #: ../src/dialogs/stroke-style.cpp:1067
@@ -1721,9 +1647,8 @@ msgstr ""
 
 #. Dash
 #: ../src/dialogs/stroke-style.cpp:1098
-#, fuzzy
 msgid "Dashes:"
-msgstr "Masse:"
+msgstr "Strek:"
 
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
@@ -1769,22 +1694,19 @@ msgstr "Senter Y:"
 msgid "Align lines right"
 msgstr ""
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
-#, fuzzy
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "Horisontal tekst"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
-#, fuzzy
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
-msgstr "Sentrer vertikalt"
+msgstr "Vertikal tekst"
 
 #: ../src/dialogs/text-edit.cpp:315
-#, fuzzy
 msgid "Line spacing:"
-msgstr "Mellomrom X:"
+msgstr "Linje mellomrom:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:361 ../src/selection-describer.cpp:63
@@ -1795,21 +1717,19 @@ msgstr "Tekst"
 
 #: ../src/dialogs/text-edit.cpp:408
 msgid "Set as default"
-msgstr "Sett som forvalg"
+msgstr "Sett som standard forvalg"
 
 #: ../src/dialogs/tiledialog.cpp:632
-#, fuzzy
 msgid "Rows:"
-msgstr "Vis:"
+msgstr "Rekker:"
 
 #: ../src/dialogs/tiledialog.cpp:640
 msgid "Number of rows"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:644
-#, fuzzy
 msgid "Equal height"
-msgstr "Høyde:"
+msgstr "Likestilt høyde"
 
 #: ../src/dialogs/tiledialog.cpp:654
 msgid "If not set, each row has the height of the tallest object in it"
@@ -1824,18 +1744,16 @@ msgstr "Linjestill:"
 
 #. #### Number of columns ####
 #: ../src/dialogs/tiledialog.cpp:702
-#, fuzzy
 msgid "Columns:"
-msgstr "Lukk"
+msgstr "Kolonner:"
 
 #: ../src/dialogs/tiledialog.cpp:710
 msgid "Number of columns"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:714
-#, fuzzy
 msgid "Equal width"
-msgstr "Bredde:"
+msgstr "Likestilt bredde"
 
 #: ../src/dialogs/tiledialog.cpp:723
 msgid "If not set, each column has the width of the widest object in it"
@@ -1848,24 +1766,20 @@ msgid "Fit into selection box"
 msgstr "Valg"
 
 #: ../src/dialogs/tiledialog.cpp:775
-#, fuzzy
 msgid "Set spacing:"
-msgstr "Mellomrom Y:"
+msgstr "Sett mellomrom:"
 
 #: ../src/dialogs/tiledialog.cpp:795
-#, fuzzy
 msgid "Vertical spacing between rows (px units)"
-msgstr "Sentrer vertikalt"
+msgstr "Vertikalt mellomrom mellom rekker (px enheter)"
 
 #: ../src/dialogs/tiledialog.cpp:820
-#, fuzzy
 msgid "Horizontal spacing between columns (px units)"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "Horisontalt mellomrom mellom rekker (px enheter)"
 
 #: ../src/dialogs/tiledialog.cpp:844
-#, fuzzy
 msgid "Arrange selected objects"
-msgstr "Grupper valgte objekter"
+msgstr "Ordne valgte objekter"
 
 #: ../src/dialogs/xml-tree.cpp:171
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
@@ -1884,7 +1798,7 @@ msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:281
 msgid "Drag to reorder nodes"
-msgstr "Dra for å omarrangere noder"
+msgstr "Dra for å omorganisere noder"
 
 #: ../src/dialogs/xml-tree.cpp:301
 msgid "New element node"
@@ -2097,14 +2011,12 @@ msgid "State:"
 msgstr "Stjerne"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Loaded"
-msgstr "Noder"
+msgstr "Lastet"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Unloaded"
-msgstr "Uten navn"
+msgstr "Ulastet"
 
 #: ../src/extension/extension.cpp:679
 msgid "Deactivated"
@@ -2152,14 +2064,12 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Blur Edge"
-msgstr "Blå:"
+msgstr "Diffus Kant"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Blur Width"
-msgstr "Bredde:"
+msgstr "Diffus Bredde"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
@@ -2175,23 +2085,20 @@ msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
-#, fuzzy
 msgid "Generate from Path"
-msgstr "Nullstill transformasjon"
+msgstr "Generer fra Sti"
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
 msgstr ""
 
 #: ../src/extension/internal/eps-out.cpp:86
-#, fuzzy
 msgid "Make bounding box around full page"
-msgstr "Fest til guider"
+msgstr "Lag grenseramme rundt hele siden"
 
 #: ../src/extension/internal/eps-out.cpp:87
-#, fuzzy
 msgid "Convert text to path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Konverter tekst til sti"
 
 #: ../src/extension/internal/eps-out.cpp:91
 #: ../share/extensions/eps_input.inx.h:3
@@ -2208,27 +2115,24 @@ msgid "%s GDK pixbuf Input"
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:274
-#, fuzzy
 msgid "GIMP Gradients"
-msgstr "Gradientvektor"
+msgstr "GIMP Gradient"
 
 #: ../src/extension/internal/gimpgrad.cpp:279
 msgid "GIMP Gradient (*.ggr)"
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:280
-#, fuzzy
 msgid "Gradients used in GIMP"
-msgstr "Gradientvektor"
+msgstr "Gradient brukt i GIMP"
 
 #: ../src/extension/internal/gnome.cpp:80
 msgid "Select printer"
 msgstr "Velg skriver"
 
 #: ../src/extension/internal/gnome.cpp:131
-#, fuzzy
 msgid "Inkscape: Print Preview"
-msgstr "Sodipodi (dokumentnavn %s..): Forhåndsvisning"
+msgstr "Inkscape: Utskrifts Forhåndsvisning"
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
@@ -2239,19 +2143,16 @@ msgid "Grid"
 msgstr "Rutenett"
 
 #: ../src/extension/internal/grid.cpp:216
-#, fuzzy
 msgid "Line Width"
-msgstr "Bredde:"
+msgstr "Linje bredde"
 
 #: ../src/extension/internal/grid.cpp:217
-#, fuzzy
 msgid "Horizontal Spacing"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "Horisontal Mellomrom"
 
 #: ../src/extension/internal/grid.cpp:218
-#, fuzzy
 msgid "Vertical Spacing"
-msgstr "Sentrer vertikalt"
+msgstr "Vertikal Mellomrom"
 
 #: ../src/extension/internal/grid.cpp:219
 #, fuzzy
@@ -2275,9 +2176,8 @@ msgid "Draw a path which is a grid"
 msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
-#, fuzzy
 msgid "LaTeX Output"
-msgstr "Klipp ut"
+msgstr "LaTeX Utdata"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
@@ -2304,9 +2204,8 @@ msgid "OpenDocument drawing file"
 msgstr ""
 
 #: ../src/extension/internal/pov-out.cpp:457
-#, fuzzy
 msgid "PovRay Output"
-msgstr "Klipp ut"
+msgstr "PovRay Utdata"
 
 #: ../src/extension/internal/pov-out.cpp:462
 msgid "PovRay (*.pov) (export splines)"
@@ -2317,14 +2216,12 @@ msgid "PovRay Raytracer File"
 msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:82
-#, fuzzy
 msgid "Postscript Output"
-msgstr "Punkt"
+msgstr "Postscript Utdata"
 
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Text to Path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Tekst til Sti"
 
 #: ../src/extension/internal/ps-out.cpp:88
 #: ../share/extensions/ps_input.inx.h:2
@@ -2332,12 +2229,10 @@ msgid "Postscript (*.ps)"
 msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:89
-#, fuzzy
 msgid "Postscript File"
-msgstr "Punkt"
+msgstr "Postscript Fil"
 
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
-#, fuzzy
 msgid "Print Destination"
 msgstr "Utskriftsmål"
 
@@ -2359,9 +2254,8 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
-#, fuzzy
 msgid "Print as bitmap"
-msgstr "Eksporter bitkart"
+msgstr "Eksporter som punktgrafikk"
 
 #: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
 msgid ""
@@ -2375,9 +2269,8 @@ msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr ""
 
 #: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
-#, fuzzy
 msgid "Resolution:"
-msgstr "Vending:"
+msgstr "Oppløsning:"
 
 #. Print destination frame
 #: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
@@ -2398,14 +2291,12 @@ msgid "write error occurred"
 msgstr ""
 
 #: ../src/extension/internal/ps.cpp:1240
-#, fuzzy
 msgid "Postscript Print"
-msgstr "Punkt"
+msgstr "Postscript Utskrift"
 
 #: ../src/extension/internal/svg.cpp:55
-#, fuzzy
 msgid "SVG Input"
-msgstr "Inndata"
+msgstr "SVG Inndata"
 
 #: ../src/extension/internal/svg.cpp:60
 msgid "Scalable Vector Graphic (*.svg)"
@@ -2416,9 +2307,8 @@ msgid "Inkscape native file format and W3C standard"
 msgstr ""
 
 #: ../src/extension/internal/svg.cpp:69
-#, fuzzy
 msgid "SVG Output Inkscape"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "SVG Utdata Inkscape"
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
@@ -2429,14 +2319,12 @@ msgid "SVG format with Inkscape extensions"
 msgstr ""
 
 #: ../src/extension/internal/svg.cpp:83
-#, fuzzy
 msgid "SVG Output"
-msgstr "Klipp ut"
+msgstr "SVG Utdata"
 
 #: ../src/extension/internal/svg.cpp:88
-#, fuzzy
 msgid "Plain SVG (*.svg)"
-msgstr "Vanlig SVG"
+msgstr "Vanlig SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
@@ -2444,9 +2332,8 @@ msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
-#, fuzzy
 msgid "SVGZ Input"
-msgstr "Inndata"
+msgstr "SVGZ Inndata"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
 #: ../share/extensions/svgz_input.inx.h:1
@@ -2460,9 +2347,8 @@ msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
-#, fuzzy
 msgid "SVGZ Output"
-msgstr "Klipp ut"
+msgstr "SVGZ Utdata"
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
@@ -2519,9 +2405,8 @@ msgid "Failed to load the requested file %s"
 msgstr ""
 
 #: ../src/file.cpp:244
-#, fuzzy
 msgid "Document not saved yet.  Cannot revert."
-msgstr "Dokumentnavn:"
+msgstr "Dokumenterer ikke lagret ennå. Kan ikke tilbakestilles."
 
 #: ../src/file.cpp:250
 #, c-format
@@ -2529,14 +2414,12 @@ msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 
 #: ../src/file.cpp:270
-#, fuzzy
 msgid "Document reverted."
-msgstr "Dokumentnavn:"
+msgstr "Dokument tilbakestilt."
 
 #: ../src/file.cpp:272
-#, fuzzy
 msgid "Document not reverted."
-msgstr "Dokumentnavn:"
+msgstr "Dokument er ikke tilbakestilt."
 
 #: ../src/file.cpp:386
 msgid "Select file to open"
@@ -2561,9 +2444,8 @@ msgid ""
 msgstr ""
 
 #: ../src/file.cpp:553 ../src/file.cpp:561
-#, fuzzy
 msgid "Document not saved."
-msgstr "Dokumentnavn:"
+msgstr "Dokument er ikke lagret."
 
 #: ../src/file.cpp:560
 #, c-format
@@ -2571,9 +2453,8 @@ msgid "File %s could not be saved."
 msgstr ""
 
 #: ../src/file.cpp:570
-#, fuzzy
 msgid "Document saved."
-msgstr "Dokumentnavn:"
+msgstr "Dokument er lagret."
 
 #: ../src/file.cpp:618
 #, fuzzy, c-format
@@ -2586,9 +2467,8 @@ msgid "drawing-%d%s"
 msgstr "Tegning"
 
 #: ../src/file.cpp:659
-#, fuzzy
 msgid "Select file to save to"
-msgstr "Velg fil som skal åpnes"
+msgstr "Velg fil det skal lagres til"
 
 #: ../src/file.cpp:743
 msgid "No changes need to be saved."
@@ -2761,9 +2641,8 @@ msgid "m"
 msgstr "m"
 
 #: ../src/helper/units.cpp:43
-#, fuzzy
 msgid "Meters"
-msgstr "Meter"
+msgstr "Metre"
 
 #. no svg_unit
 #: ../src/helper/units.cpp:44
@@ -2790,7 +2669,7 @@ msgstr "em"
 
 #: ../src/helper/units.cpp:47
 msgid "Em squares"
-msgstr "Em kvadrat"
+msgstr "Em kvadrater"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/REC-CSS2/syndata.html#length-units
 #: ../src/helper/units.cpp:49
@@ -2803,7 +2682,7 @@ msgstr "ex"
 
 #: ../src/helper/units.cpp:49
 msgid "Ex squares"
-msgstr "Ex kvadrat"
+msgstr "Ex kvadrater"
 
 #: ../src/inkscape.cpp:447
 msgid "Untitled document"
@@ -2816,16 +2695,14 @@ msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Det oppsto en intern feil i sodipodi og programmet vil lukkes nå.\n"
 
 #: ../src/inkscape.cpp:477
-#, fuzzy
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr ""
 "Automatiske sikkerhetskopier av dokumenter som ikke er lagret ble utført til "
-"følgende lokasjoner:\n"
+"følgende sted:\n"
 
 #: ../src/inkscape.cpp:478
-#, fuzzy
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Automatisk sikkerhetskopiering av følgende dokumenter feilet:\n"
 
@@ -2900,7 +2777,7 @@ msgstr ""
 #: ../src/interface.cpp:772
 #, fuzzy
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "Vis rutenett"
+msgstr "Vis eller skjul "
 
 #: ../src/interface.cpp:774
 #, fuzzy
@@ -2921,14 +2798,12 @@ msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
 #: ../src/interface.cpp:782
-#, fuzzy
 msgid "_Palette"
-msgstr "Lim inn"
+msgstr "_Palett"
 
 #: ../src/interface.cpp:782
-#, fuzzy
 msgid "Show or hide the color palette"
-msgstr "Vis rutenett"
+msgstr "Vis eller skjul Fargepaletten"
 
 #: ../src/interface.cpp:784
 msgid "_Statusbar"
@@ -2950,9 +2825,8 @@ msgid "Enter group #%s"
 msgstr "Rediger"
 
 #: ../src/interface.cpp:959
-#, fuzzy
 msgid "Go to parent"
-msgstr "Ingen maling"
+msgstr "Gå til foreldre"
 
 #: ../src/interface.cpp:1102
 msgid "Could not parse SVG data"
@@ -3055,9 +2929,8 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:189
 #: ../src/jabber_whiteboard/connection-establishment.cpp:244
-#, fuzzy
 msgid "Accept invitation"
-msgstr "Valg"
+msgstr "Aksepter invitasjon"
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:190
 #: ../src/jabber_whiteboard/connection-establishment.cpp:245
@@ -3065,9 +2938,8 @@ msgid "Decline invitation"
 msgstr ""
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:191
-#, fuzzy
 msgid "Accept invitation in new document window"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Aksepter invitasjon i nytt dokument vindu"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
@@ -3158,9 +3030,8 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:61
 #: ../src/jabber_whiteboard/session-manager.cpp:1122
-#, fuzzy
 msgid "Set filename"
-msgstr "Lagre fil"
+msgstr "Sett filnavn"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
@@ -3213,9 +3084,8 @@ msgid "Continue connecting, but warn me of further errors"
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-manager.cpp:454
-#, fuzzy
 msgid "Cancel connection"
-msgstr "Valg"
+msgstr "Annuller bindeledd "
 
 #: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
@@ -3275,7 +3145,7 @@ msgstr ""
 
 #: ../src/main.cpp:199
 msgid "Do not use X server (only process files from console)"
-msgstr "Ikke bruk X-tjeneren (prosesser filer fra konsollet)"
+msgstr "Ikke bruk X-tjeneren (kun prosesser filer fra konsollen)"
 
 #: ../src/main.cpp:204
 #, fuzzy
@@ -3292,13 +3162,14 @@ msgid "FILENAME"
 msgstr "FILNAVN"
 
 #: ../src/main.cpp:214
+#, fuzzy
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr "Skriv ut dokument(er) til spesifisert utfil (bruk '| program' for rør)"
+msgstr ""
+"Skriv ut dokument(er) til spesifisert utdata fil (bruk '| program' for rør)"
 
 #: ../src/main.cpp:219
-#, fuzzy
 msgid "Export document to a PNG file"
-msgstr "Eksporter dokument som en png-fil"
+msgstr "Eksporter dokument som en PNG-fil"
 
 #: ../src/main.cpp:224
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
@@ -3309,12 +3180,11 @@ msgid "DPI"
 msgstr "DPI"
 
 #: ../src/main.cpp:229
-#, fuzzy
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
 msgstr ""
-"Eksportert område i millimeter (forvalg er hele dokumentet, 0,0 er nedre "
+"Eksportert område i brukerenheter (standard  er hele lerret, 0,0 er nedre "
 "venstre hjørne)"
 
 #: ../src/main.cpp:230
@@ -3387,25 +3257,22 @@ msgid "VALUE"
 msgstr ""
 
 #: ../src/main.cpp:286
-#, fuzzy
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
-"Eksporter dokument til en vanlig SVG-fil (ingen «xmlns:sodipodi» navneområde)"
+"Eksporter dokument til en vanlig SVG-fil (ingen sodipodi eller "
+"inkscape navneområder)"
 
 #: ../src/main.cpp:291
-#, fuzzy
 msgid "Export document to a PS file"
-msgstr "Eksporter dokument som en png-fil"
+msgstr "Eksporter dokument som en PS-fil"
 
 #: ../src/main.cpp:296
-#, fuzzy
 msgid "Export document to an EPS file"
-msgstr "Eksporter dokument som en png-fil"
+msgstr "Eksporter dokument som en EPS-fil"
 
 #: ../src/main.cpp:301
-#, fuzzy
 msgid "Convert text object to paths on export (EPS)"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Konvertertekst objekt til stier når eksport (EPS)"
 
 #: ../src/main.cpp:306
 msgid "Export files with the bounding box set to the page size (EPS)"
@@ -3469,98 +3336,80 @@ msgid ""
 msgstr ""
 
 #: ../src/menus-skeleton.h:17
-#, fuzzy
 msgid "_New"
-msgstr "Ny"
+msgstr "_Ny"
 
 #: ../src/menus-skeleton.h:22
-#, fuzzy
 msgid "Open _Recent"
-msgstr "Åpne"
+msgstr "Åpne n_ylige"
 
 #: ../src/menus-skeleton.h:54
-#, fuzzy
 msgid "_Edit"
-msgstr "Rediger"
+msgstr "_Rediger"
 
 #: ../src/menus-skeleton.h:63 ../src/verbs.cpp:2031
-#, fuzzy
 msgid "Paste Si_ze"
-msgstr "Stil for strøk"
+msgstr "L_im inn Størrelse"
 
 #: ../src/menus-skeleton.h:75
-#, fuzzy
 msgid "Clo_ne"
-msgstr "Lukk"
+msgstr "Klo_ne"
 
 #: ../src/menus-skeleton.h:92
-#, fuzzy
 msgid "_View"
-msgstr "Visning"
+msgstr "_Visning"
 
 #: ../src/menus-skeleton.h:93
-#, fuzzy
 msgid "_Zoom"
-msgstr "Zoom"
+msgstr "_Zoom"
 
 #: ../src/menus-skeleton.h:110
-#, fuzzy
 msgid "Show/Hide"
-msgstr "Vis rutenett"
+msgstr "Vis/Skjul"
 
 #: ../src/menus-skeleton.h:115
-#, fuzzy
 msgid "_Display mode"
-msgstr "Skjerminstillinger"
+msgstr "Visningsmo_dus"
 
 #: ../src/menus-skeleton.h:134
-#, fuzzy
 msgid "_Layer"
-msgstr "Senk"
+msgstr "_Lag"
 
 #: ../src/menus-skeleton.h:153
-#, fuzzy
 msgid "_Object"
-msgstr "Objekt"
+msgstr "_Objekt"
 
 #: ../src/menus-skeleton.h:161
-#, fuzzy
 msgid "Cli_p"
-msgstr "Rydd opp"
+msgstr "Kli_pp"
 
 #: ../src/menus-skeleton.h:165
-#, fuzzy
 msgid "Mas_k"
-msgstr "Masse:"
+msgstr "Mas_ker"
 
 #: ../src/menus-skeleton.h:169
-#, fuzzy
 msgid "Patter_n"
-msgstr "Mønster:"
+msgstr "Mø_nster"
 
 #: ../src/menus-skeleton.h:188
-#, fuzzy
 msgid "_Path"
-msgstr "Lim inn"
+msgstr "_Sti"
 
 #: ../src/menus-skeleton.h:211
-#, fuzzy
 msgid "_Text"
-msgstr "Tekst"
+msgstr "_Tekst"
 
 #: ../src/menus-skeleton.h:223
-#, fuzzy
 msgid "Effects"
-msgstr "Objekt"
+msgstr "Effekter"
 
 #: ../src/menus-skeleton.h:230
 msgid "Whiteboa_rd"
 msgstr ""
 
 #: ../src/menus-skeleton.h:243
-#, fuzzy
 msgid "_Help"
-msgstr "Sider:"
+msgstr "_Hjelp"
 
 #: ../src/menus-skeleton.h:245
 msgid "Tutorials"
@@ -3599,9 +3448,8 @@ msgid ""
 msgstr ""
 
 #: ../src/nodepath.cpp:2176
-#, fuzzy
 msgid "Cannot find path between nodes."
-msgstr "Slå sammen linjer ved valgte noder"
+msgstr "Kan ikke finne sti mellom noder."
 
 #: ../src/nodepath.cpp:3235
 #, c-format
@@ -3837,24 +3685,20 @@ msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
 #: ../src/pen-context.cpp:218
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "Tegnemodus"
+msgstr "Tegning annulert"
 
 #: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
-#, fuzzy
 msgid "Continuing selected path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Fortsett valgte sti"
 
 #: ../src/pen-context.cpp:391 ../src/pencil-context.cpp:236
-#, fuzzy
 msgid "Creating new path"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Skap ny sti"
 
 #: ../src/pen-context.cpp:395 ../src/pencil-context.cpp:240
-#, fuzzy
 msgid "Appending to selected path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Tilføyes valgte sti"
 
 #: ../src/pen-context.cpp:539
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
@@ -3887,18 +3731,16 @@ msgid ""
 msgstr ""
 
 #: ../src/pen-context.cpp:1127
-#, fuzzy
 msgid "Drawing finished"
-msgstr "Tegnemodus"
+msgstr "Tegning avsluttet"
 
 #: ../src/pencil-context.cpp:315
 msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 
 #: ../src/pencil-context.cpp:321
-#, fuzzy
 msgid "Drawing a freehand path"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Tegner en frihånds sti"
 
 #: ../src/pencil-context.cpp:326
 msgid "<b>Drag</b> to continue the path from this point."
@@ -3906,9 +3748,8 @@ msgstr ""
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:384
-#, fuzzy
 msgid "Finishing freehand"
-msgstr "Frihånd"
+msgstr "Avslutter frihånd"
 
 #: ../src/preferences.cpp:59
 #, c-format
@@ -3937,14 +3778,12 @@ msgid ""
 msgstr ""
 
 #: ../src/select-context.cpp:226
-#, fuzzy
 msgid "Move canceled."
-msgstr "Valg"
+msgstr "Flytting annulert"
 
 #: ../src/select-context.cpp:234
-#, fuzzy
 msgid "Selection canceled."
-msgstr "Valg"
+msgstr "Valg annulert"
 
 #: ../src/select-context.cpp:625
 msgid "<b>Ctrl</b>: select in groups, move hor/vert"
@@ -3959,9 +3798,8 @@ msgid "<b>Alt</b>: select under, move selected"
 msgstr ""
 
 #: ../src/select-context.cpp:781
-#, fuzzy
 msgid "Selected object is not a group. Cannot enter."
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Valgte objekt er ikke en gruppe. Kan ikke gå inn."
 
 #: ../src/selection-chemistry.cpp:224
 msgid "<b>Nothing</b> was deleted."
@@ -4031,9 +3869,8 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1089 ../src/selection-chemistry.cpp:1125
 #: ../src/selection-chemistry.cpp:1151 ../src/selection-chemistry.cpp:1186
-#, fuzzy
 msgid "Nothing on the clipboard."
-msgstr "Kopier valgte objekter til utklippstavlen"
+msgstr "Ingenting i utklippstavlen."
 
 #: ../src/selection-chemistry.cpp:1131
 #, fuzzy
@@ -4051,9 +3888,8 @@ msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Klipp ut valgte objekter til utklippstavlen"
 
 #: ../src/selection-chemistry.cpp:1255
-#, fuzzy
 msgid "No more layers above."
-msgstr "Dokumentnavn:"
+msgstr "Ingen flere lag over."
 
 #: ../src/selection-chemistry.cpp:1269
 #, fuzzy
@@ -4061,9 +3897,8 @@ msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Klipp ut valgte objekter til utklippstavlen"
 
 #: ../src/selection-chemistry.cpp:1299
-#, fuzzy
 msgid "No more layers below."
-msgstr "Dokumentnavn:"
+msgstr "Ingen flere lag under."
 
 #: ../src/selection-chemistry.cpp:1981
 #, fuzzy
@@ -4129,14 +3964,12 @@ msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Hev valgte objekter til toppen"
 
 #: ../src/selection-describer.cpp:41
-#, fuzzy
 msgid "Link"
-msgstr "in"
+msgstr "Lenke"
 
 #: ../src/selection-describer.cpp:43
-#, fuzzy
 msgid "Circle"
-msgstr "Fil"
+msgstr "Sirkel"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
@@ -4149,24 +3982,20 @@ msgid "Flowed text"
 msgstr ""
 
 #: ../src/selection-describer.cpp:49
-#, fuzzy
 msgid "Group"
-msgstr "Grupper"
+msgstr "Gruppe"
 
 #: ../src/selection-describer.cpp:51
-#, fuzzy
 msgid "Image"
 msgstr "Bilde"
 
 #: ../src/selection-describer.cpp:53
-#, fuzzy
 msgid "Line"
-msgstr "Lukk"
+msgstr "Linje"
 
 #: ../src/selection-describer.cpp:55
-#, fuzzy
 msgid "Path"
-msgstr "Lim inn"
+msgstr "Sti"
 
 #: ../src/selection-describer.cpp:57 ../src/widgets/toolbox.cpp:1211
 msgid "Polygon"
@@ -4184,9 +4013,8 @@ msgid "Rectangle"
 msgstr "Rektangel"
 
 #: ../src/selection-describer.cpp:65
-#, fuzzy
 msgid "Clone"
-msgstr "Lukk"
+msgstr "Klone"
 
 #: ../src/selection-describer.cpp:69
 msgid "Offset path"
@@ -4376,9 +4204,8 @@ msgid ""
 msgstr ""
 
 #: ../src/slideshow.cpp:89
-#, fuzzy
 msgid "Inkscape slideshow"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Inkscape lysbildefremvisning"
 
 #: ../src/sp-anchor.cpp:177
 #, fuzzy, c-format
@@ -4436,14 +4263,12 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/sp-guide.cpp:287
-#, fuzzy
 msgid "vertical guideline"
-msgstr "Sentrer vertikalt"
+msgstr "Vertikal retningslinje"
 
 #: ../src/sp-guide.cpp:289
-#, fuzzy
 msgid "horizontal guideline"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "Horisontal retningslinje"
 
 #: ../src/sp-image.cpp:968
 msgid "embedded"
@@ -4569,9 +4394,8 @@ msgstr "Lenke til %s"
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
 #: ../src/sp-use.cpp:313
-#, fuzzy
 msgid "..."
-msgstr "Åpne"
+msgstr "..."
 
 #: ../src/sp-use.cpp:321
 #, fuzzy, c-format
@@ -4735,7 +4559,7 @@ msgstr ""
 msgid "Unicode: %s: %s"
 msgstr "Sodipodi: %s: %s: %d"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr ""
 
@@ -4744,7 +4568,7 @@ msgstr ""
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr ""
 
@@ -4758,15 +4582,15 @@ msgid ""
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -4877,57 +4701,48 @@ msgstr "Sist valgte"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:96
-#, fuzzy
 msgid "Object _Properties"
-msgstr "Egenskaper for rektangel"
+msgstr "Objekt Egenska_per"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:106
-#, fuzzy
 msgid "_Select This"
-msgstr "Velg dette"
+msgstr "_Velg denne"
 
 #. Create link
 #: ../src/ui/context-menu.cpp:116
-#, fuzzy
 msgid "_Create Link"
-msgstr "Opprett lenke"
+msgstr "_Opprett lenke"
 
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:189 ../src/verbs.cpp:2085
-#, fuzzy
 msgid "_Ungroup"
-msgstr "Del opp gruppe"
+msgstr "_Del opp gruppe"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:229
-#, fuzzy
 msgid "Link _Properties"
-msgstr "Egenskaper for lenke"
+msgstr "Lenke Egenska_per"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:239
-#, fuzzy
 msgid "_Follow Link"
-msgstr "Følg lenke"
+msgstr "_Følg Lenke"
 
 #. Reset transformations
 #: ../src/ui/context-menu.cpp:244
-#, fuzzy
 msgid "_Remove Link"
-msgstr "Fjern lenke"
+msgstr "Fje_rn Lenke"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:293
-#, fuzzy
 msgid "Image _Properties"
-msgstr "Egenskaper for bilde"
+msgstr "Bilde Egenska_per"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:334
-#, fuzzy
 msgid "_Fill and Stroke"
-msgstr "Fyll og strøk"
+msgstr "_Fyll og Strøk"
 
 #: ../src/ui/dialog/aboutbox.cpp:64
 msgid "About Inkscape"
@@ -4942,14 +4757,12 @@ msgid "_Authors"
 msgstr ""
 
 #: ../src/ui/dialog/aboutbox.cpp:74
-#, fuzzy
 msgid "_Translators"
-msgstr "Transformer:"
+msgstr "Overse_ttere"
 
 #: ../src/ui/dialog/aboutbox.cpp:75
-#, fuzzy
 msgid "_License"
-msgstr "Lenke"
+msgstr "_Lisens"
 
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
@@ -4986,12 +4799,10 @@ msgid "V:"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:747
-#, fuzzy
 msgid "Align"
-msgstr "Linjestill:"
+msgstr "Rette inn"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:748
-#, fuzzy
 msgid "Distribute"
 msgstr "Distribuer"
 
@@ -5005,7 +4816,6 @@ msgid "Connector network layout"
 msgstr "Hjørner:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:751
-#, fuzzy
 msgid "Nodes"
 msgstr "Noder"
 
@@ -5015,54 +4825,44 @@ msgid "Relative to: "
 msgstr "Relativ flytting"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:762
-#, fuzzy
 msgid "Align right sides of objects to left side of anchor"
-msgstr "Høyre side av linjestilte objekter til venstre side av anker "
+msgstr "Rett opp høyresidene på objekter til venstreside på anker "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:765
-#, fuzzy
 msgid "Align left sides"
-msgstr "Juster objekter"
+msgstr "Rett opp venstresider"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:768
-#, fuzzy
 msgid "Center on vertical axis"
-msgstr "Sentrer vertikalt"
+msgstr "Senter på vertikal akse"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:771
-#, fuzzy
 msgid "Align right sides"
-msgstr "Juster objekter"
+msgstr "Rett opp høyresider"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:774
-#, fuzzy
 msgid "Align left sides of objects to right side of anchor"
-msgstr "Venstre side av linjestilte objekter til høyre side av anker"
+msgstr "Rett opp venstresidene på objekter til høyreside på anker"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:777
-#, fuzzy
 msgid "Align bottoms of objects to top of anchor"
-msgstr "Bunn av linjestilte objekter til topp av anker"
+msgstr "Rett opp bunnen på objekter til toppen på anker"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:780
-#, fuzzy
 msgid "Align tops"
-msgstr "Juster objekter"
+msgstr "Rett opp toppene"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:783
-#, fuzzy
 msgid "Center on horizontal axis"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "Senter på horisontal akse"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:786
-#, fuzzy
 msgid "Align bottoms"
-msgstr "Juster objekter"
+msgstr "Rett opp bunnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:789
-#, fuzzy
 msgid "Align tops of objects to bottom of anchor"
-msgstr "Kopier linjestilte objekter til utklippstavlen"
+msgstr "Rett opp toppen på objekter til bunnen på anker"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:794
 #, fuzzy
@@ -5421,7 +5221,7 @@ msgstr "Merk farge:"
 
 #: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
-msgstr "Uthevet farge for retningslinje"
+msgstr "Uthevet retningslinjefarge"
 
 #: ../src/ui/dialog/document-properties.cpp:253
 msgid "Color of a guideline when it is under mouse"
@@ -6333,6 +6133,7 @@ msgid "16x16"
 msgstr "16x16"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
+#, fuzzy
 msgid "Oversample bitmaps:"
 msgstr "Oversample bitkart:"
 
@@ -6395,14 +6196,12 @@ msgid "Combined"
 msgstr "Kombiner"
 
 #: ../src/ui/dialog/memory.cpp:207
-#, fuzzy
 msgid "Recalculate"
-msgstr "Rektangel"
+msgstr "Omberegn"
 
 #: ../src/ui/dialog/messages.cpp:72
-#, fuzzy
 msgid "Ready."
-msgstr "Rød:"
+msgstr "Klar."
 
 #: ../src/ui/dialog/messages.cpp:73
 msgid ""
@@ -6423,9 +6222,8 @@ msgid "Script"
 msgstr ""
 
 #: ../src/ui/dialog/scriptdialog.cpp:202
-#, fuzzy
 msgid "Output"
-msgstr "Klipp ut"
+msgstr "Utdata"
 
 #: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
@@ -6443,9 +6241,8 @@ msgid "Playback controls"
 msgstr "Alternativer for verktøy"
 
 #: ../src/ui/dialog/session-player.cpp:75
-#, fuzzy
 msgid "Message information"
-msgstr "Nullstill transformasjon"
+msgstr "Meldingsinformasjon"
 
 #. Active session file display
 #. fixme: Does this mean the active file for the session, or the file for the active session?
@@ -6573,9 +6370,8 @@ msgid "The number of reduced colors"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:429
-#, fuzzy
 msgid "Colors:"
-msgstr "Lukk"
+msgstr "Farger:"
 
 #: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Quantization / Reduction"
@@ -6633,9 +6429,8 @@ msgstr ""
 
 #. #### Preview ####
 #: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
-#, fuzzy
 msgid "Preview"
-msgstr "Ny forhåndsvisning"
+msgstr "Forhåndsvisning"
 
 #. do not expand
 #: ../src/ui/dialog/tracedialog.cpp:496
@@ -6659,7 +6454,7 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:519
 #, fuzzy
 msgid "Credits"
-msgstr "Hjørner:"
+msgstr "Anerkjennelse"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
@@ -6680,9 +6475,8 @@ msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:80
 #: ../src/ui/dialog/transformation.cpp:90
-#, fuzzy
 msgid "_Horizontal"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "_Horisontal"
 
 #: ../src/ui/dialog/transformation.cpp:80
 msgid "Horizontal displacement (relative) or position (absolute)"
@@ -6690,41 +6484,36 @@ msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:82
 #: ../src/ui/dialog/transformation.cpp:92
-#, fuzzy
 msgid "_Vertical"
-msgstr "Sentrer vertikalt"
+msgstr "_Vertikal"
 
 #: ../src/ui/dialog/transformation.cpp:82
 msgid "Vertical displacement (relative) or position (absolute)"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:84
-#, fuzzy
 msgid "_Width"
-msgstr "Bredde:"
+msgstr "_Bredde"
 
 #: ../src/ui/dialog/transformation.cpp:84
 msgid "Horizontal size increment (absolute or percentage)"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:86
-#, fuzzy
 msgid "_Height"
-msgstr "Høyde:"
+msgstr "_Høyde"
 
 #: ../src/ui/dialog/transformation.cpp:86
 msgid "Vertical size increment (absolute or percentage)"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:88
-#, fuzzy
 msgid "A_ngle"
-msgstr "Vinkel"
+msgstr "Vi_nkel"
 
 #: ../src/ui/dialog/transformation.cpp:88
-#, fuzzy
 msgid "Rotation angle (positive = counterclockwise)"
-msgstr "Roter objekt 90° med klokken"
+msgstr "Rotasjonsvinkel (positiv = mot urviseren)"
 
 #: ../src/ui/dialog/transformation.cpp:90
 msgid ""
@@ -6803,24 +6592,21 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:115
-#, fuzzy
 msgid "_Move"
-msgstr "Flytt"
+msgstr "_Flytt"
 
 #: ../src/ui/dialog/transformation.cpp:118
 #, fuzzy
 msgid "_Scale"
-msgstr "Skaler"
+msgstr "_Mål"
 
 #: ../src/ui/dialog/transformation.cpp:121
-#, fuzzy
 msgid "_Rotate"
-msgstr "Roter"
+msgstr "_Roter"
 
 #: ../src/ui/dialog/transformation.cpp:124
-#, fuzzy
 msgid "Ske_w"
-msgstr "Ingen maling"
+msgstr "_Vri"
 
 #: ../src/ui/dialog/transformation.cpp:127
 msgid "Matri_x"
@@ -6831,9 +6617,8 @@ msgid "Reset the values on the current tab to defaults"
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:148
-#, fuzzy
 msgid "Apply transformation to selection"
-msgstr "Utvalgsverktøy - velg og transformer objekter"
+msgstr "Bruk omformingen på de(n) valgte"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
@@ -6851,9 +6636,8 @@ msgid "_Server:"
 msgstr "Fil"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:77
-#, fuzzy
 msgid "_Username:"
-msgstr "Fil"
+msgstr "Br_ukernavn:"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:78
 msgid "_Password:"
@@ -6938,9 +6722,8 @@ msgid "_Invite user"
 msgstr ""
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
-#, fuzzy
 msgid "_Cancel"
-msgstr "Avbryt"
+msgstr "A_vbryt"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
 msgid "Buddy List"
@@ -7088,9 +6871,8 @@ msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
 #: ../src/ui/view/edit-widget.cpp:1122 ../src/widgets/desktop-widget.cpp:241
-#, fuzzy
 msgid "Zoom drawing if window size changes"
-msgstr "Redigeringsvindu"
+msgstr "Zoom tegningen hvis vinduet endrer størrelse"
 
 #: ../src/ui/view/edit-widget.cpp:1143 ../src/widgets/desktop-widget.cpp:295
 msgid "Cursor coordinates"
@@ -7129,7 +6911,7 @@ msgstr ""
 #: ../src/ui/widget/panel.cpp:97
 #, fuzzy
 msgid "tiny"
-msgstr "in"
+msgstr "bitteliten"
 
 #: ../src/ui/widget/panel.cpp:98
 msgid "small"
@@ -7140,9 +6922,8 @@ msgid "medium"
 msgstr ""
 
 #: ../src/ui/widget/panel.cpp:100
-#, fuzzy
 msgid "large"
-msgstr "Mål:"
+msgstr "stor"
 
 #: ../src/ui/widget/panel.cpp:101
 msgid "huge"
@@ -7181,9 +6962,8 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:132
 #: ../src/ui/widget/selected-style.cpp:947
-#, fuzzy
 msgid "Nothing selected"
-msgstr "Slett valgte objekter"
+msgstr "Ingenting valgt"
 
 #: ../src/ui/widget/selected-style.cpp:137
 #: ../src/ui/widget/style-swatch.cpp:300
@@ -7198,57 +6978,48 @@ msgstr "Ingen maling"
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:292 ../src/widgets/paint-selector.cpp:176
-#, fuzzy
 msgid "Pattern"
-msgstr "Mønster:"
+msgstr "Mønster"
 
 #: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:294 ../src/widgets/paint-selector.cpp:872
-#, fuzzy
 msgid "Pattern fill"
-msgstr "Mønster:"
+msgstr "Mønster fyll"
 
 #: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:294
-#, fuzzy
 msgid "Pattern stroke"
-msgstr "Valgte objekter"
+msgstr "Mønster strøk"
 
 #: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:284
-#, fuzzy
 msgid "L Gradient"
-msgstr "Gradientvektor"
+msgstr "L Gradient"
 
 #: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient fill"
-msgstr "Lineær gradient"
+msgstr "Lineær gradient fyll"
 
 #: ../src/ui/widget/selected-style.cpp:147
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient stroke"
-msgstr "Lineær gradient"
+msgstr "Lineær gradient strøk"
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:288
-#, fuzzy
 msgid "R Gradient"
-msgstr "Gradientvektor"
+msgstr "R Gradient"
 
 #: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:290
-#, fuzzy
 msgid "Radial gradient fill"
-msgstr "Radial gradient"
+msgstr "Radial gradient fyll"
 
 #: ../src/ui/widget/selected-style.cpp:152
 #: ../src/ui/widget/style-swatch.cpp:290
-#, fuzzy
 msgid "Radial gradient stroke"
-msgstr "Radial gradient"
+msgstr "Radial gradient strøk"
 
 #: ../src/ui/widget/selected-style.cpp:154
 #, fuzzy
@@ -7284,20 +7055,18 @@ msgid "Unset stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:165
-#, fuzzy
 msgid "Flat color fill"
-msgstr "Sluttfarge"
+msgstr "Flatt fargefyll"
 
 #: ../src/ui/widget/selected-style.cpp:165
-#, fuzzy
 msgid "Flat color stroke"
-msgstr "Sluttfarge"
+msgstr "Flatt fargestrøk"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:168
 #, fuzzy
 msgid "<b>a</b>"
-msgstr "Lenke til %s"
+msgstr "<b>g</b>"
 
 #: ../src/ui/widget/selected-style.cpp:171
 #, fuzzy
@@ -7316,24 +7085,20 @@ msgid "<b>m</b>"
 msgstr "Lenke til %s"
 
 #: ../src/ui/widget/selected-style.cpp:177
-#, fuzzy
 msgid "Multiple selected objects have the same fill"
-msgstr "Vend valgte objekter vertikalt"
+msgstr "Flere valgte objekter har samme fyll"
 
 #: ../src/ui/widget/selected-style.cpp:177
-#, fuzzy
 msgid "Multiple selected objects have the same stroke"
-msgstr "Vend valgte objekter vertikalt"
+msgstr "Flere valgte objekter har samme strøk"
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Edit fill..."
-msgstr "Rediger"
+msgstr "Rediger fyll..."
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Edit stroke..."
-msgstr "Rediger"
+msgstr "Rediger strøk..."
 
 #: ../src/ui/widget/selected-style.cpp:183
 #, fuzzy
@@ -7727,39 +7492,33 @@ msgid "Switch to the previous document window"
 msgstr ""
 
 #: ../src/verbs.cpp:2014
-#, fuzzy
 msgid "_Close"
-msgstr "Lukk"
+msgstr "_Lukk"
 
 #: ../src/verbs.cpp:2015
-#, fuzzy
 msgid "Close this document window"
-msgstr "Lukk visning"
+msgstr "Lukk dette dokument vindu"
 
 #: ../src/verbs.cpp:2016
 msgid "_Quit"
 msgstr ""
 
 #: ../src/verbs.cpp:2016
-#, fuzzy
 msgid "Quit Inkscape"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Avslutt Inkscape"
 
 #. Edit
 #: ../src/verbs.cpp:2019
-#, fuzzy
 msgid "_Undo"
-msgstr "Angre"
+msgstr "_Angre"
 
 #: ../src/verbs.cpp:2019
-#, fuzzy
 msgid "Undo last action"
 msgstr "Forkast siste handling"
 
 #: ../src/verbs.cpp:2021
-#, fuzzy
 msgid "_Redo"
-msgstr "Gjenopprett"
+msgstr "Gjø_r om"
 
 #: ../src/verbs.cpp:2022
 #, fuzzy
@@ -7767,34 +7526,28 @@ msgid "Do again the last undone action"
 msgstr "Gjenopprett angret handling"
 
 #: ../src/verbs.cpp:2023
-#, fuzzy
 msgid "Cu_t"
 msgstr "Klipp ut"
 
 #: ../src/verbs.cpp:2024
-#, fuzzy
 msgid "Cut selection to clipboard"
 msgstr "Klipp ut valgte objekter til utklippstavlen"
 
 #: ../src/verbs.cpp:2025
-#, fuzzy
 msgid "_Copy"
-msgstr "Kopier"
+msgstr "_Kopier"
 
 #: ../src/verbs.cpp:2026
-#, fuzzy
 msgid "Copy selection to clipboard"
 msgstr "Kopier valgte objekter til utklippstavlen"
 
 #: ../src/verbs.cpp:2027
-#, fuzzy
 msgid "_Paste"
-msgstr "Lim inn"
+msgstr "_Lim inn"
 
 #: ../src/verbs.cpp:2028
-#, fuzzy
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Lim inn objekter fra utklippstavlen"
+msgstr "Lim inn objekter eller tekst fra utklippstavlen"
 
 #: ../src/verbs.cpp:2029
 #, fuzzy
@@ -7811,18 +7564,16 @@ msgid "Scale selection to match the size of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:2033
-#, fuzzy
 msgid "Paste _Width"
-msgstr "Bredde:"
+msgstr "Lim inn _Bredde"
 
 #: ../src/verbs.cpp:2034
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:2035
-#, fuzzy
 msgid "Paste _Height"
-msgstr "Høyde:"
+msgstr "Lim inn _Høyde"
 
 #: ../src/verbs.cpp:2036
 msgid "Scale selection vertically to match the height of the copied object"
@@ -7862,34 +7613,29 @@ msgid "Paste _In Place"
 msgstr "Stil for strøk"
 
 #: ../src/verbs.cpp:2044
-#, fuzzy
 msgid "Paste objects from clipboard to the original location"
-msgstr "Hev valgte objekter til toppen"
+msgstr ""
+"Lim inn valgte objekter fra utklippstavlen til den originale posisjonen"
 
 #: ../src/verbs.cpp:2045
-#, fuzzy
 msgid "_Delete"
-msgstr "Slett"
+msgstr "_Slett"
 
 #: ../src/verbs.cpp:2046
-#, fuzzy
 msgid "Delete selection"
-msgstr "Slett valgte noder"
+msgstr "_Slett valgte"
 
 #: ../src/verbs.cpp:2047
-#, fuzzy
 msgid "Duplic_ate"
-msgstr "Dupliser"
+msgstr "D_upliser"
 
 #: ../src/verbs.cpp:2048
-#, fuzzy
 msgid "Duplicate selected objects"
 msgstr "Dupliser valgte objekter"
 
 #: ../src/verbs.cpp:2049
-#, fuzzy
 msgid "Create Clo_ne"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Skap Klo_ne"
 
 #: ../src/verbs.cpp:2050
 msgid "Create a clone (a copy linked to the original) of selected object"
@@ -7906,14 +7652,12 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:2053
-#, fuzzy
 msgid "Select _Original"
-msgstr "Velg"
+msgstr "Velg _Original"
 
 #: ../src/verbs.cpp:2054
-#, fuzzy
 msgid "Select the object to which the selected clone is linked"
-msgstr "Klipp ut valgte objekter til utklippstavlen"
+msgstr "Velg objektet som valgte klone er lenket til"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2056
@@ -7936,38 +7680,32 @@ msgid "Extract objects from a tiled pattern fill"
 msgstr ""
 
 #: ../src/verbs.cpp:2061
-#, fuzzy
 msgid "Clea_r All"
-msgstr "Tøm alle"
+msgstr "Sle_tt alle"
 
 #: ../src/verbs.cpp:2062
 msgid "Delete all objects from document"
 msgstr ""
 
 #: ../src/verbs.cpp:2063
-#, fuzzy
 msgid "Select Al_l"
-msgstr "Velg"
+msgstr "Velg A_lle"
 
 #: ../src/verbs.cpp:2064
-#, fuzzy
 msgid "Select all objects or all nodes"
-msgstr "Ingen gradienter i dokumentet"
+msgstr "Velg alle objekter eller alle noder"
 
 #: ../src/verbs.cpp:2065
-#, fuzzy
 msgid "Select All in All La_yers"
-msgstr "Velg"
+msgstr "Velg Alle i alle La_g"
 
 #: ../src/verbs.cpp:2066
-#, fuzzy
 msgid "Select all objects in all visible and unlocked layers"
-msgstr "Ingen gradienter i dokumentet"
+msgstr "Velg alle objekter i alle synlige og ulåste lag"
 
 #: ../src/verbs.cpp:2067
-#, fuzzy
 msgid "In_vert Selection"
-msgstr "Valg"
+msgstr "_Vreng Valgte"
 
 #: ../src/verbs.cpp:2068
 msgid "Invert selection (unselect what is selected and select everything else)"
@@ -7984,87 +7722,73 @@ msgstr ""
 #: ../src/verbs.cpp:2071
 #, fuzzy
 msgid "D_eselect"
-msgstr "Velg"
+msgstr "Avv_elg"
 
 #: ../src/verbs.cpp:2072
 #, fuzzy
 msgid "Deselect any selected objects or nodes"
-msgstr "Slett valgte objekter"
+msgstr "Avvelg all valgte objekter eller noder"
 
 #. Selection
 #: ../src/verbs.cpp:2075
-#, fuzzy
 msgid "Raise to _Top"
-msgstr "Hev valgte objekter til toppen"
+msgstr "Hev til toppen"
 
 #: ../src/verbs.cpp:2076
-#, fuzzy
 msgid "Raise selection to top"
 msgstr "Hev valgte objekter til toppen"
 
 #: ../src/verbs.cpp:2077
-#, fuzzy
 msgid "Lower to _Bottom"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Senk til bunnen"
 
 #: ../src/verbs.cpp:2078
-#, fuzzy
 msgid "Lower selection to bottom"
 msgstr "Senk valgte objekter til bunnen"
 
 #: ../src/verbs.cpp:2079
-#, fuzzy
 msgid "_Raise"
-msgstr "Hev"
+msgstr "_Hev"
 
 #: ../src/verbs.cpp:2080
-#, fuzzy
 msgid "Raise selection one step"
-msgstr "Hev valgte objekter til toppen"
+msgstr "Hev valgte objekter et nivå"
 
 #: ../src/verbs.cpp:2081
-#, fuzzy
 msgid "_Lower"
-msgstr "Senk"
+msgstr "_Senk"
 
 #: ../src/verbs.cpp:2082
-#, fuzzy
 msgid "Lower selection one step"
 msgstr "Senk valgte objekter ett nivå"
 
 #: ../src/verbs.cpp:2083
-#, fuzzy
 msgid "_Group"
-msgstr "Grupper"
+msgstr "_Grupper"
 
 #: ../src/verbs.cpp:2084
 msgid "Group selected objects"
 msgstr "Grupper valgte objekter"
 
 #: ../src/verbs.cpp:2086
-#, fuzzy
 msgid "Ungroup selected groups"
-msgstr "Del opp valgt gruppe"
+msgstr "Del opp valgt grupper"
 
 #: ../src/verbs.cpp:2088
-#, fuzzy
 msgid "_Put on Path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "_Plasser på Sti"
 
 #: ../src/verbs.cpp:2089
-#, fuzzy
 msgid "Put text on path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Plasser tekst på sti"
 
 #: ../src/verbs.cpp:2090
-#, fuzzy
 msgid "_Remove from Path"
-msgstr "Nullstill transformasjon"
+msgstr "Fje_rn fra Sti"
 
 #: ../src/verbs.cpp:2091
-#, fuzzy
 msgid "Remove text from path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Fjern tekst fra sti"
 
 #: ../src/verbs.cpp:2092
 msgid "Remove Manual _Kerns"
@@ -8218,14 +7942,12 @@ msgid "Create a dynamic offset object linked to the original path"
 msgstr ""
 
 #: ../src/verbs.cpp:2139
-#, fuzzy
 msgid "_Stroke to Path"
-msgstr "Bredde på strøk"
+msgstr "_Strøk til Sti"
 
 #: ../src/verbs.cpp:2140
-#, fuzzy
 msgid "Convert selected object's stroke to paths"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Konverter valgte objekters strøk til stier"
 
 #: ../src/verbs.cpp:2141
 msgid "Si_mplify"
@@ -8236,9 +7958,8 @@ msgid "Simplify selected paths (remove extra nodes)"
 msgstr ""
 
 #: ../src/verbs.cpp:2143
-#, fuzzy
 msgid "_Reverse"
-msgstr "Fil"
+msgstr "_Reverser"
 
 #: ../src/verbs.cpp:2144
 #, fuzzy
@@ -8256,19 +7977,16 @@ msgid "Create one or more paths from a bitmap by tracing it"
 msgstr ""
 
 #: ../src/verbs.cpp:2148
-#, fuzzy
 msgid "_Make a Bitmap Copy"
-msgstr "Eksporter bitkart"
+msgstr "S_kap en punktgrafikk Kopi"
 
 #: ../src/verbs.cpp:2149
-#, fuzzy
 msgid "Export selection to a bitmap and insert it into document"
-msgstr "Importer bitkart eller SVG-bilde i dokumentet"
+msgstr "Eksporter valgte til punktgrafikk og sett inn i dokument"
 
 #: ../src/verbs.cpp:2150
-#, fuzzy
 msgid "_Combine"
-msgstr "Kombiner"
+msgstr "_Kombiner"
 
 #: ../src/verbs.cpp:2151
 msgid "Combine several paths into one"
@@ -8277,128 +7995,109 @@ msgstr ""
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2154
-#, fuzzy
 msgid "Break _Apart"
-msgstr "Bryt opp"
+msgstr "B_ryt Opp"
 
 #: ../src/verbs.cpp:2155
-#, fuzzy
 msgid "Break selected paths into subpaths"
-msgstr "Bryt opp valgt sti i understier"
+msgstr "Bryt opp valgte sti til understier"
 
 #: ../src/verbs.cpp:2156
 msgid "Gri_d Arrange..."
 msgstr ""
 
 #: ../src/verbs.cpp:2157
-#, fuzzy
 msgid "Arrange selected objects in a grid pattern"
-msgstr "Grupper valgte objekter"
+msgstr "Grupper valgte objekter i et rutenett system"
 
 #. Layer
 #: ../src/verbs.cpp:2159
-#, fuzzy
 msgid "_Add Layer..."
-msgstr "Senk"
+msgstr "Legg til L_ag..."
 
 #: ../src/verbs.cpp:2160
-#, fuzzy
 msgid "Create a new layer"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Skap et nytt Lag"
 
 #: ../src/verbs.cpp:2161
-#, fuzzy
 msgid "Re_name Layer..."
-msgstr "Hev node"
+msgstr "O_mdøp Lag..."
 
 #: ../src/verbs.cpp:2162
-#, fuzzy
 msgid "Rename the current layer"
-msgstr "Velg"
+msgstr "Omdøp det gjeldende lag"
 
 #: ../src/verbs.cpp:2163
-#, fuzzy
 msgid "Switch to Layer Abov_e"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Bytt til Lag Ov_er"
 
 #: ../src/verbs.cpp:2164
 msgid "Switch to the layer above the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2165
-#, fuzzy
 msgid "Switch to Layer Belo_w"
-msgstr "Senk valgte objekter ett nivå"
+msgstr "B_ytt til Lag Under"
 
 #: ../src/verbs.cpp:2166
 msgid "Switch to the layer below the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2167
-#, fuzzy
 msgid "Move Selection to Layer Abo_ve"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Hev gjeldende Ut_valgte ett lag"
 
 #: ../src/verbs.cpp:2168
 msgid "Move selection to the layer above the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2169
-#, fuzzy
 msgid "Move Selection to Layer Bel_ow"
-msgstr "Senk valgte objekter ett nivå"
+msgstr "Senk gjeldende _Utvalgte ett lag"
 
 #: ../src/verbs.cpp:2170
 msgid "Move selection to the layer below the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2171
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "Hev valgte objekter til toppen"
+msgstr "Hev til _Toppen"
 
 #: ../src/verbs.cpp:2172
-#, fuzzy
 msgid "Raise the current layer to the top"
-msgstr "Hev valgte objekter til toppen"
+msgstr "Hev valgte lag til toppen"
 
 #: ../src/verbs.cpp:2173
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Senk til _Bunnen"
 
 #: ../src/verbs.cpp:2174
-#, fuzzy
 msgid "Lower the current layer to the bottom"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Senk valgte lag til bunnen"
 
 #: ../src/verbs.cpp:2175
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "Hev node"
+msgstr "_Hev Lag"
 
 #: ../src/verbs.cpp:2176
 msgid "Raise the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2177
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "Senk node"
+msgstr "Senk _Lag"
 
 #: ../src/verbs.cpp:2178
 msgid "Lower the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2179
-#, fuzzy
 msgid "_Delete Current Layer"
-msgstr "Velg"
+msgstr "Slett gjel_dende lag"
 
 #: ../src/verbs.cpp:2180
-#, fuzzy
 msgid "Delete the current layer"
-msgstr "Velg"
+msgstr "Slett det gjeldende lag"
 
 #. Object
 #: ../src/verbs.cpp:2183
@@ -8422,24 +8121,20 @@ msgid "Rotate selection 90&#176; counter-clockwise"
 msgstr "Roter objekt 90° med klokken"
 
 #: ../src/verbs.cpp:2187
-#, fuzzy
 msgid "Remove _Transformations"
-msgstr "Nullstill transformasjon"
+msgstr "Fjern _Transformasjonen"
 
 #: ../src/verbs.cpp:2188
-#, fuzzy
 msgid "Remove transformations from object"
-msgstr "Fjern transformering"
+msgstr "Fjern transformering fra objekt"
 
 #: ../src/verbs.cpp:2189
-#, fuzzy
 msgid "_Object to Path"
-msgstr "Objekt-transformasjon"
+msgstr "_Objekt til Sti"
 
 #: ../src/verbs.cpp:2190
-#, fuzzy
 msgid "Convert selected object to path"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "Konverter valgte objekt til sti"
 
 #: ../src/verbs.cpp:2191
 msgid "_Flow into Frame"
@@ -8461,9 +8156,8 @@ msgid "Remove text from frame (creates a single-line text object)"
 msgstr ""
 
 #: ../src/verbs.cpp:2195
-#, fuzzy
 msgid "_Convert to Text"
-msgstr "Senk valgte objekter til bunnen"
+msgstr "_Konverter til Tekst"
 
 #: ../src/verbs.cpp:2196
 #, fuzzy
@@ -8471,22 +8165,18 @@ msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr "Senk valgte objekter til bunnen"
 
 #: ../src/verbs.cpp:2198
-#, fuzzy
 msgid "Flip _Horizontal"
-msgstr "Vend valgte objekter horisontalt"
+msgstr "Vend _Horisontalt"
 
 #: ../src/verbs.cpp:2198
-#, fuzzy
 msgid "Flip selected objects horizontally"
 msgstr "Vend valgte objekter horisontalt"
 
 #: ../src/verbs.cpp:2201
-#, fuzzy
 msgid "Flip _Vertical"
-msgstr "Sentrer vertikalt"
+msgstr "Vend _Vertikalt"
 
 #: ../src/verbs.cpp:2201
-#, fuzzy
 msgid "Flip selected objects vertically"
 msgstr "Vend valgte objekter vertikalt"
 
@@ -8495,14 +8185,12 @@ msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
 #: ../src/verbs.cpp:2205 ../src/verbs.cpp:2209
-#, fuzzy
 msgid "_Release"
-msgstr "Fil"
+msgstr ""
 
 #: ../src/verbs.cpp:2206
-#, fuzzy
 msgid "Remove mask from selection"
-msgstr "Transformer utvalg"
+msgstr "Fjern maskering fra valgte"
 
 #: ../src/verbs.cpp:2208
 msgid ""
@@ -8519,19 +8207,16 @@ msgid "Select"
 msgstr "Velg"
 
 #: ../src/verbs.cpp:2214
-#, fuzzy
 msgid "Select and transform objects"
-msgstr "Utvalgsverktøy - velg og transformer objekter"
+msgstr "Velg og transformer objekter"
 
 #: ../src/verbs.cpp:2215
-#, fuzzy
 msgid "Node Edit"
-msgstr "Node"
+msgstr "Rediger Node"
 
 #: ../src/verbs.cpp:2216
-#, fuzzy
 msgid "Edit path nodes or control handles"
-msgstr "Dupliser valgte objekter"
+msgstr ""
 
 #: ../src/verbs.cpp:2218
 msgid "Create rectangles and squares"
@@ -8546,9 +8231,8 @@ msgid "Create stars and polygons"
 msgstr ""
 
 #: ../src/verbs.cpp:2224
-#, fuzzy
 msgid "Create spirals"
-msgstr "Opprett lenke"
+msgstr "Lag spiral"
 
 #: ../src/verbs.cpp:2226
 msgid "Draw freehand lines"
@@ -8559,33 +8243,28 @@ msgid "Draw Bezier curves and straight lines"
 msgstr ""
 
 #: ../src/verbs.cpp:2230
-#, fuzzy
 msgid "Draw calligraphic lines"
-msgstr "Kalligrafisk linje"
+msgstr "Tegn kalligrafisk linje"
 
 #: ../src/verbs.cpp:2232
-#, fuzzy
 msgid "Create and edit text objects"
-msgstr "Distribuer"
+msgstr "Lag og rediger tekst objekt"
 
 #: ../src/verbs.cpp:2234
-#, fuzzy
 msgid "Create and edit gradients"
-msgstr "Distribuer"
+msgstr "Lag og rediger gradient"
 
 #: ../src/verbs.cpp:2236
-#, fuzzy
 msgid "Zoom in or out"
-msgstr "Zoom ut i tegning"
+msgstr "Zoom inn eller ut"
 
 #: ../src/verbs.cpp:2238
 msgid "Pick averaged colors from image"
 msgstr ""
 
 #: ../src/verbs.cpp:2240
-#, fuzzy
 msgid "Create connectors"
-msgstr "Opprett nytt SVG-dokument"
+msgstr "Lag bindeledd"
 
 #. Tool prefs
 #: ../src/verbs.cpp:2243
@@ -8593,192 +8272,155 @@ msgid "Selector Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2244
-#, fuzzy
 msgid "Open Preferences for the Selector tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Velger verktøy"
 
 #: ../src/verbs.cpp:2245
-#, fuzzy
 msgid "Node Tool Preferences"
-msgstr "Manglende brukervalg for verktøy"
+msgstr "Node verktøy innstillinger"
 
 #: ../src/verbs.cpp:2246
-#, fuzzy
 msgid "Open Preferences for the Node tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Node verktøy"
 
 #: ../src/verbs.cpp:2247
-#, fuzzy
 msgid "Rectangle Preferences"
-msgstr "Egenskaper for rektangel"
+msgstr "Rektangel innstillinger"
 
 #: ../src/verbs.cpp:2248
-#, fuzzy
 msgid "Open Preferences for the Rectangle tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Rektangel verktøy"
 
 #: ../src/verbs.cpp:2249
-#, fuzzy
 msgid "Ellipse Preferences"
-msgstr "Oppføring er referanse"
+msgstr "Ellipse innstillinger"
 
 #: ../src/verbs.cpp:2250
-#, fuzzy
 msgid "Open Preferences for the Ellipse tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Ellipse verktøy"
 
 #: ../src/verbs.cpp:2251
-#, fuzzy
 msgid "Star Preferences"
-msgstr "Egenskaper for stjerne"
+msgstr "Stjerne innstillinger"
 
 #: ../src/verbs.cpp:2252
-#, fuzzy
 msgid "Open Preferences for the Star tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Stjerne verktøy"
 
 #: ../src/verbs.cpp:2253
-#, fuzzy
 msgid "Spiral Preferences"
-msgstr "Egenskaper for spiral"
+msgstr "Spiral innstillinger"
 
 #: ../src/verbs.cpp:2254
-#, fuzzy
 msgid "Open Preferences for the Spiral tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Spiral verktøy"
 
 #: ../src/verbs.cpp:2255
-#, fuzzy
 msgid "Pencil Preferences"
-msgstr "Oppføring er referanse"
+msgstr "Blyant innstillinger"
 
 #: ../src/verbs.cpp:2256
-#, fuzzy
 msgid "Open Preferences for the Pencil tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Blyant verktøy"
 
 #: ../src/verbs.cpp:2257
-#, fuzzy
 msgid "Pen Preferences"
-msgstr "Oppføring er referanse"
+msgstr "Penn innstillinger"
 
 #: ../src/verbs.cpp:2258
-#, fuzzy
 msgid "Open Preferences for the Pen tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Penn verktøy"
 
 #: ../src/verbs.cpp:2259
-#, fuzzy
 msgid "Calligraphic Preferences"
-msgstr "Kalligrafisk linje"
+msgstr "Kalligrafi innstillinger"
 
 #: ../src/verbs.cpp:2260
-#, fuzzy
 msgid "Open Preferences for the Calligraphy tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Kalligrafi verktøy"
 
 #: ../src/verbs.cpp:2261
-#, fuzzy
 msgid "Text Preferences"
-msgstr "Oppføring er referanse"
+msgstr "Tekst innstillinger"
 
 #: ../src/verbs.cpp:2262
-#, fuzzy
 msgid "Open Preferences for the Text tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Tekst verktøy"
 
 #: ../src/verbs.cpp:2263
-#, fuzzy
 msgid "Gradient Preferences"
-msgstr "Oppføring er referanse"
+msgstr "Gradient innstillinger"
 
 #: ../src/verbs.cpp:2264
-#, fuzzy
 msgid "Open Preferences for the Gradient tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Gradient verktøy"
 
 #: ../src/verbs.cpp:2265
-#, fuzzy
 msgid "Zoom Preferences"
-msgstr "Oppføring er referanse"
+msgstr "Zoom innstillinger"
 
 #: ../src/verbs.cpp:2266
-#, fuzzy
 msgid "Open Preferences for the Zoom tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Zoom verktøy"
 
 #: ../src/verbs.cpp:2267
-#, fuzzy
 msgid "Dropper Preferences"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr ""
 
 #: ../src/verbs.cpp:2268
-#, fuzzy
 msgid "Open Preferences for the Dropper tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr ""
 
 #: ../src/verbs.cpp:2269
-#, fuzzy
 msgid "Connector Preferences"
-msgstr "Egenskaper for stjerne"
+msgstr "Bindeledd innstillinger"
 
 #: ../src/verbs.cpp:2270
-#, fuzzy
 msgid "Open Preferences for the Connector tool"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Åpne Innstillinger for Bindeledd verktøy"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2273
-#, fuzzy
 msgid "Zoom In"
-msgstr "Zoom"
+msgstr "Zoom Inn"
 
 #: ../src/verbs.cpp:2273
-#, fuzzy
 msgid "Zoom in"
-msgstr "Zoom"
+msgstr "Zoom inn i tegning"
 
 #: ../src/verbs.cpp:2274
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Zoom ut i tegning"
+msgstr "Zoom Ut"
 
 #: ../src/verbs.cpp:2274
-#, fuzzy
 msgid "Zoom out"
 msgstr "Zoom ut i tegning"
 
 #: ../src/verbs.cpp:2275
-#, fuzzy
 msgid "_Rulers"
-msgstr "Fil"
+msgstr "_Linjaler"
 
 #: ../src/verbs.cpp:2275
-#, fuzzy
 msgid "Show or hide the canvas rulers"
-msgstr "Vis rutenett"
+msgstr "Vis eller skjul lerretet linjaler"
 
 #: ../src/verbs.cpp:2276
 msgid "Scroll_bars"
 msgstr ""
 
 #: ../src/verbs.cpp:2276
-#, fuzzy
 msgid "Show or hide the canvas scrollbars"
-msgstr "Vis rutenett"
+msgstr "Vis eller skjul lerretets rullefelt"
 
 #: ../src/verbs.cpp:2277
-#, fuzzy
 msgid "_Grid"
-msgstr "Rutenett"
+msgstr "_Rutenett"
 
 #: ../src/verbs.cpp:2277
-#, fuzzy
 msgid "Show or hide the grid"
-msgstr "Vis rutenett"
+msgstr "Vis eller skjul rutenett"
 
 #: ../src/verbs.cpp:2278
-#, fuzzy
 msgid "G_uides"
 msgstr "Rettesnorer"
 
@@ -8803,34 +8445,28 @@ msgid "Previous zoom (from the history of zooms)"
 msgstr ""
 
 #: ../src/verbs.cpp:2283
-#, fuzzy
 msgid "Zoom 1:_1"
-msgstr "Sett zoom-faktor til 1:1"
+msgstr "Zoom 1:_1"
 
 #: ../src/verbs.cpp:2283
-#, fuzzy
 msgid "Zoom to 1:1"
-msgstr "Sett zoom-faktor til 1:1"
+msgstr "Zoom til 1:1"
 
 #: ../src/verbs.cpp:2285
-#, fuzzy
 msgid "Zoom 1:_2"
-msgstr "Sett zoom-faktor til 1:2"
+msgstr "Zoom 1:_2"
 
 #: ../src/verbs.cpp:2285
-#, fuzzy
 msgid "Zoom to 1:2"
-msgstr "Sett zoom-faktor til 1:2"
+msgstr "Zoom til 1:2"
 
 #: ../src/verbs.cpp:2287
-#, fuzzy
 msgid "_Zoom 2:1"
-msgstr "Sett zoom-faktor til 2:1"
+msgstr "_Zoom 2:1"
 
 #: ../src/verbs.cpp:2287
-#, fuzzy
 msgid "Zoom to 2:1"
-msgstr "Sett zoom-faktor til 2:1"
+msgstr "Zoom til 2:1"
 
 #: ../src/verbs.cpp:2290
 msgid "_Fullscreen"
@@ -8841,24 +8477,20 @@ msgid "Stretch this document window to full screen"
 msgstr ""
 
 #: ../src/verbs.cpp:2293
-#, fuzzy
 msgid "Duplic_ate Window"
-msgstr "Duplisert node"
+msgstr "D_upliser Vindu"
 
 #: ../src/verbs.cpp:2293
-#, fuzzy
 msgid "Open a new window with the same document"
-msgstr "Åpne eksisterende SVG-dokument"
+msgstr "Åpne et nytt vindu med det samme dokument"
 
 #: ../src/verbs.cpp:2295
-#, fuzzy
 msgid "_New View Preview"
-msgstr "Ny forhåndsvisning"
+msgstr "_Ny Se orhåndsvisning"
 
 #: ../src/verbs.cpp:2296
-#, fuzzy
 msgid "New View Preview"
-msgstr "Ny forhåndsvisning"
+msgstr "Ny Se forhåndsvisning"
 
 #. "view_new_preview"
 #: ../src/verbs.cpp:2298
@@ -8870,41 +8502,36 @@ msgid "Switch to normal display mode"
 msgstr ""
 
 #: ../src/verbs.cpp:2300
-#, fuzzy
 msgid "_Outline"
-msgstr "Vis omriss"
+msgstr "K_ontur"
 
 #: ../src/verbs.cpp:2301
 msgid "Switch to outline (wireframe) display mode"
 msgstr ""
 
 #: ../src/verbs.cpp:2303
-#, fuzzy
 msgid "Ico_n Preview"
-msgstr "Ny forhåndsvisning"
+msgstr "Iko_n forhåndsvisning"
 
 #: ../src/verbs.cpp:2304
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr ""
 
 #: ../src/verbs.cpp:2306
-#, fuzzy
 msgid "Zoom to fit page in window"
-msgstr "Redigeringsvindu"
+msgstr "Zoom for å tilpasse siden til vinduet"
 
 #: ../src/verbs.cpp:2307
 msgid "Page _Width"
 msgstr ""
 
 #: ../src/verbs.cpp:2308
-#, fuzzy
 msgid "Zoom to fit page width in window"
-msgstr "Redigeringsvindu"
+msgstr "Zoom for å tilpasse sidebredden til vinduet"
 
 #: ../src/verbs.cpp:2310
-#, fuzzy
 msgid "Zoom to fit drawing in window"
-msgstr "Redigeringsvindu"
+msgstr "Zoom for å tilpasse tegning til vinduet"
 
 #: ../src/verbs.cpp:2312
 msgid "Zoom to fit selection in window"
@@ -8912,39 +8539,34 @@ msgstr ""
 
 #. Dialogs
 #: ../src/verbs.cpp:2315
-#, fuzzy
 msgid "In_kscape Preferences..."
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "In_kscape Innstillinger..."
 
 #: ../src/verbs.cpp:2316
-#, fuzzy
 msgid "Edit global Inkscape preferences"
-msgstr "Skjerminstillinger"
+msgstr "Rediger globale Inkscape innstillinger"
 
 #: ../src/verbs.cpp:2317
-#, fuzzy
 msgid "_Document Properties..."
-msgstr "Innstillinger for dokument"
+msgstr "_Dokument Egenskaper..."
 
 #: ../src/verbs.cpp:2318
-#, fuzzy
 msgid "Edit properties of this document (to be saved with the document)"
-msgstr "Åpne eksisterende SVG-dokument"
+msgstr ""
+"Rediger egenskaper for dette dokument (for å bli lagret med dokumentet)"
 
 #: ../src/verbs.cpp:2319
 #, fuzzy
 msgid "Document _Metadata..."
-msgstr "Dokumentnavn:"
+msgstr "_Dokument Metadata..."
 
 #: ../src/verbs.cpp:2320
-#, fuzzy
 msgid "Edit document metadata (to be saved with the document)"
-msgstr "Åpne eksisterende SVG-dokument"
+msgstr "Rediger dokumentets metadata (for å bli lagret med dokumentet)"
 
 #: ../src/verbs.cpp:2321
-#, fuzzy
 msgid "_Fill and Stroke..."
-msgstr "Fyll og strøk"
+msgstr "_Fyll og Strøk..."
 
 #: ../src/verbs.cpp:2322
 msgid "Edit objects' style, such as color or stroke width"
@@ -8952,61 +8574,52 @@ msgstr ""
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2324
-#, fuzzy
 msgid "S_watches..."
-msgstr "Lagre som"
+msgstr "Farge_utvalg"
 
 #: ../src/verbs.cpp:2325
 msgid "Select colors from a swatches palette"
 msgstr ""
 
 #: ../src/verbs.cpp:2326
-#, fuzzy
 msgid "Transfor_m..."
-msgstr "Transformer:"
+msgstr "Transfor_mer..."
 
 #: ../src/verbs.cpp:2327
-#, fuzzy
 msgid "Precisely control objects' transformations"
-msgstr "Objekt-transformasjon"
+msgstr "Presist kontroller objekt-transformasjoner"
 
 #: ../src/verbs.cpp:2328
-#, fuzzy
 msgid "_Align and Distribute..."
-msgstr "Distribuer"
+msgstr "_Rett opp og Distribuer"
 
 #: ../src/verbs.cpp:2329
-#, fuzzy
 msgid "Align and distribute objects"
-msgstr "Distribuer"
+msgstr "Rett og distribuer objekt"
 
 #: ../src/verbs.cpp:2330
-#, fuzzy
 msgid "_Text and Font..."
-msgstr "Tekst og skrift"
+msgstr "_Tekst og skrifttype..."
 
 #: ../src/verbs.cpp:2331
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 
 #: ../src/verbs.cpp:2332
-#, fuzzy
 msgid "_XML Editor..."
-msgstr "XML-redigering"
+msgstr "_XML Redigerer"
 
 #: ../src/verbs.cpp:2333
 msgid "View and edit the XML tree of the document"
 msgstr ""
 
 #: ../src/verbs.cpp:2334
-#, fuzzy
 msgid "_Find..."
-msgstr "Skriv ut"
+msgstr "_Finn..."
 
 #: ../src/verbs.cpp:2335
-#, fuzzy
 msgid "Find objects in document"
-msgstr "Ingen gradienter i dokumentet"
+msgstr "Finn objekter i dokumentet"
 
 #: ../src/verbs.cpp:2336
 msgid "_Messages..."
@@ -9017,29 +8630,25 @@ msgid "View debug messages"
 msgstr ""
 
 #: ../src/verbs.cpp:2338
-#, fuzzy
 msgid "S_cripts..."
-msgstr "Skriv ut"
+msgstr "S_kript..."
 
 #: ../src/verbs.cpp:2339
 msgid "Run scripts"
 msgstr ""
 
 #: ../src/verbs.cpp:2340
-#, fuzzy
 msgid "Show/Hide D_ialogs"
-msgstr "Vis rutenett"
+msgstr "Vis/Skjul D_ialoger"
 
 #: ../src/verbs.cpp:2341
-#, fuzzy
 msgid "Show or hide all open dialogs"
-msgstr "Vis rutenett"
+msgstr "Vis eller skjul alle åpne dialoger"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
 #: ../src/verbs.cpp:2343
-#, fuzzy
 msgid "Create Tiled Clones..."
-msgstr "Lukk"
+msgstr ""
 
 #: ../src/verbs.cpp:2344
 msgid ""
@@ -9048,9 +8657,8 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:2345
-#, fuzzy
 msgid "_Object Properties..."
-msgstr "Egenskaper for rektangel"
+msgstr "_Objekt Egenskaper..."
 
 #: ../src/verbs.cpp:2346
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -9065,9 +8673,8 @@ msgid "Connect to a Jabber server"
 msgstr ""
 
 #: ../src/verbs.cpp:2351
-#, fuzzy
 msgid "Share with _user..."
-msgstr "Lagre som"
+msgstr "Del med br_uker"
 
 #: ../src/verbs.cpp:2351
 msgid "Establish a whiteboard session with another Jabber user"
@@ -9119,9 +8726,8 @@ msgid "Configure extended input devices, such as a graphics tablet"
 msgstr ""
 
 #: ../src/verbs.cpp:2367
-#, fuzzy
 msgid "_Extensions..."
-msgstr "Utvidelse"
+msgstr "_Ekspansjoner..."
 
 #: ../src/verbs.cpp:2368
 msgid "Query information about extensions"
@@ -9130,12 +8736,11 @@ msgstr ""
 #: ../src/verbs.cpp:2369
 #, fuzzy
 msgid "Layer_s..."
-msgstr "Senk"
+msgstr "_Lag..."
 
 #: ../src/verbs.cpp:2370
-#, fuzzy
 msgid "View Layers"
-msgstr "Hev node"
+msgstr "Se Lag"
 
 #. Help
 #: ../src/verbs.cpp:2373
@@ -9147,23 +8752,20 @@ msgid "Keys and mouse shortcuts reference"
 msgstr ""
 
 #: ../src/verbs.cpp:2375
-#, fuzzy
 msgid "About E_xtensions"
-msgstr "Utvidelse"
+msgstr "Om E_kspansjon"
 
 #: ../src/verbs.cpp:2376
 msgid "Information on Inkscape extensions"
 msgstr ""
 
 #: ../src/verbs.cpp:2377
-#, fuzzy
 msgid "About _Memory"
-msgstr "Utvidelse"
+msgstr "Om _Minne"
 
 #: ../src/verbs.cpp:2378
-#, fuzzy
 msgid "Memory usage information"
-msgstr "Nullstill transformasjon"
+msgstr "Informasjon om minnebruk"
 
 #: ../src/verbs.cpp:2379
 msgid "_About Inkscape"
@@ -9178,9 +8780,8 @@ msgstr ""
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
 #: ../src/verbs.cpp:2385
-#, fuzzy
 msgid "Inkscape: _Basic"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Inkscape: _Grunnleggende"
 
 #: ../src/verbs.cpp:2386
 msgid "Getting started with Inkscape"
@@ -9188,41 +8789,35 @@ msgstr ""
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2387
-#, fuzzy
 msgid "Inkscape: _Shapes"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Inkscape: _Former"
 
 #: ../src/verbs.cpp:2388
 msgid "Using shape tools to create and edit shapes"
 msgstr ""
 
 #: ../src/verbs.cpp:2389
-#, fuzzy
 msgid "Inkscape: _Advanced"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Inkscape: _Avansert"
 
 #: ../src/verbs.cpp:2390
-#, fuzzy
 msgid "Advanced Inkscape topics"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Avanserte Inkscape emner"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2392
-#, fuzzy
 msgid "Inkscape: T_racing"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Inkscape: _Vektorisering"
 
 #: ../src/verbs.cpp:2393
-#, fuzzy
 msgid "Using bitmap tracing"
-msgstr "Størrelse på bitkart"
+msgstr "Om omgjøring av punktgrafikk til vektorgrafikk"
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2394
-#, fuzzy
 msgid "Inkscape: _Calligraphy"
-msgstr "Sodipodi: %s: XML-visning"
+msgstr "Inkscape: _Kalligrafi"
 
 #: ../src/verbs.cpp:2395
 msgid "Using the Calligraphy pen tool"
@@ -9267,28 +8862,24 @@ msgstr ""
 #. "tutorial_tips"
 #. Fit Canvas
 #: ../src/verbs.cpp:2408
-#, fuzzy
 msgid "Fit Canvas to Selection"
-msgstr "Valg"
+msgstr "Tilpass Lerret til Utvalg"
 
 #: ../src/verbs.cpp:2409
-#, fuzzy
 msgid "Fit the canvas to the current selection"
-msgstr "Velg"
+msgstr "Tilpass lerret til gjeldende Utvalg"
 
 #: ../src/verbs.cpp:2410
 msgid "Fit Canvas to Drawing"
 msgstr ""
 
 #: ../src/verbs.cpp:2411
-#, fuzzy
 msgid "Fit the canvas to the drawing"
-msgstr "Lineær gradient"
+msgstr "Tilpass lerret til tegningen"
 
 #: ../src/verbs.cpp:2412
-#, fuzzy
 msgid "Fit Canvas to Selection or Drawing"
-msgstr "Valg"
+msgstr "Tilpass Lerret til Utvalg eller Tegning"
 
 #: ../src/verbs.cpp:2413
 msgid ""
@@ -9297,14 +8888,13 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/dash-selector.cpp:102
-#, fuzzy
 msgid "Dash pattern"
-msgstr "Ingen maling"
+msgstr "Strek Mønster"
 
 #: ../src/widgets/dash-selector.cpp:117
 #, fuzzy
 msgid "Pattern offset"
-msgstr "Valgte objekter"
+msgstr "Mønster forskyvning"
 
 #: ../src/widgets/desktop-widget.cpp:375
 #, c-format
@@ -9328,28 +8918,25 @@ msgstr "Stil"
 
 #: ../src/widgets/font-selector.cpp:217
 msgid "Font size:"
-msgstr "Skriftstørrelse"
+msgstr "Skriftstørrelse:"
 
 #. TRANSLATORS: Test string used in text and font dialog (when no
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
-#, fuzzy
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr "AaBbCcIiPpQq12368.;/()"
+msgstr "AaBbCcIiPpÆæØøÅå128$€.;/()"
 
 #: ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:486
-#, fuzzy
 msgid "Duplicate"
-msgstr "Dupliser"
+msgstr "Fordoble"
 
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:497
-#, fuzzy
 msgid "Edit..."
-msgstr "Rediger"
+msgstr "Rediger.."
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:155
@@ -9361,14 +8948,12 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:165
-#, fuzzy
 msgid "reflected"
-msgstr "Først valgte"
+msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:169
-#, fuzzy
 msgid "direct"
-msgstr "Rektangel"
+msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:177
 msgid "Repeat:"
@@ -9379,9 +8964,8 @@ msgid "<small>No gradients</small>"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:188
-#, fuzzy
 msgid "<small>Nothing selected</small>"
-msgstr "Sist valgte"
+msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:199
 #, fuzzy
@@ -9399,9 +8983,8 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:498
-#, fuzzy
 msgid "Edit the stops of the gradient"
-msgstr "Lineær gradient"
+msgstr "Endre på gradient fasene"
 
 #: ../src/widgets/gradient-toolbar.cpp:555 ../src/widgets/toolbox.cpp:1115
 #: ../src/widgets/toolbox.cpp:1204 ../src/widgets/toolbox.cpp:1502
@@ -9412,9 +8995,8 @@ msgid "<b>New:</b>"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:568
-#, fuzzy
 msgid "Create linear gradient"
-msgstr "Lineær gradient"
+msgstr "Lag lineær gradient"
 
 #: ../src/widgets/gradient-toolbar.cpp:582
 msgid "Create radial (elliptic or circular) gradient"
@@ -9426,9 +9008,8 @@ msgid "on"
 msgstr "Ingen"
 
 #: ../src/widgets/gradient-toolbar.cpp:610
-#, fuzzy
 msgid "Create gradient in the fill"
-msgstr "Gradientvektor"
+msgstr "Lag gradient i fyllet"
 
 #: ../src/widgets/gradient-toolbar.cpp:624
 msgid "Create gradient in the stroke"
@@ -9454,10 +9035,10 @@ msgstr "Ingen gradienter i dokumentet"
 msgid "No gradient selected"
 msgstr "Ingen gradient valgt"
 
+# OVERSETTERE: Siden denne gjelder gradient så er spørsmålet om det bør stå.: Ingen faser i gradient
 #: ../src/widgets/gradient-vector.cpp:517
-#, fuzzy
 msgid "No stops in gradient"
-msgstr "Lineær gradient"
+msgstr "Ingen stop i gradient"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:779
@@ -9468,10 +9049,11 @@ msgstr ""
 msgid "Add another control stop to gradient"
 msgstr ""
 
+# OVERSETTERE: Siden denne gjelder gradient så er spørsmålet om det bør stå.: Slett Fase
 #: ../src/widgets/gradient-vector.cpp:784
 #, fuzzy
 msgid "Delete stop"
-msgstr "Slett node"
+msgstr "Slett stop"
 
 #: ../src/widgets/gradient-vector.cpp:787
 msgid "Delete current control stop from gradient"
@@ -9486,27 +9068,23 @@ msgstr ""
 #: ../src/widgets/gradient-vector.cpp:843
 #, fuzzy
 msgid "Stop Color"
-msgstr "Startfarge"
+msgstr "Stop farge"
 
 #: ../src/widgets/gradient-vector.cpp:872
-#, fuzzy
 msgid "Gradient editor"
-msgstr "Gradientvektor"
+msgstr "Gradient redigerer"
 
 #: ../src/widgets/layer-selector.cpp:112
-#, fuzzy
 msgid "Toggle current layer visibility"
-msgstr "Dokumentnavn:"
+msgstr "Velg gjeldende lags synlighet"
 
 #: ../src/widgets/layer-selector.cpp:132
-#, fuzzy
 msgid "Lock or unlock current layer"
-msgstr "Dokumentnavn:"
+msgstr "Lås eller låse opp gjeldende lag"
 
 #: ../src/widgets/layer-selector.cpp:135
-#, fuzzy
 msgid "Current layer"
-msgstr "Dokumentnavn:"
+msgstr "Gjeldende Lag"
 
 #: ../src/widgets/layer-selector.cpp:560
 msgid "(root)"
@@ -9517,9 +9095,8 @@ msgid "No paint"
 msgstr "Ingen maling"
 
 #: ../src/widgets/paint-selector.cpp:170 ../src/widgets/paint-selector.cpp:617
-#, fuzzy
 msgid "Flat color"
-msgstr "Sluttfarge"
+msgstr "Flat farge"
 
 #: ../src/widgets/paint-selector.cpp:172 ../src/widgets/paint-selector.cpp:684
 msgid "Linear gradient"
@@ -9559,9 +9136,8 @@ msgid "Paint is undefined"
 msgstr ""
 
 #: ../src/widgets/paint-selector.cpp:745
-#, fuzzy
 msgid "No patterns in document"
-msgstr "Ingen gradienter i dokumentet"
+msgstr "Ingen mønster i dokumentet"
 
 #: ../src/widgets/paint-selector.cpp:859
 msgid ""
@@ -9618,7 +9194,7 @@ msgstr ""
 #: ../src/widgets/select-toolbar.cpp:433
 #, fuzzy
 msgid "select_toolbar|X"
-msgstr "Velg"
+msgstr "X"
 
 #: ../src/widgets/select-toolbar.cpp:433
 msgid "Horizontal coordinate of selection"
@@ -9629,7 +9205,7 @@ msgstr ""
 #: ../src/widgets/select-toolbar.cpp:438
 #, fuzzy
 msgid "select_toolbar|Y"
-msgstr "Velg"
+msgstr "Y"
 
 #: ../src/widgets/select-toolbar.cpp:438
 msgid "Vertical coordinate of selection"
@@ -9640,7 +9216,7 @@ msgstr ""
 #: ../src/widgets/select-toolbar.cpp:444
 #, fuzzy
 msgid "select_toolbar|W"
-msgstr "Velg"
+msgstr "B"
 
 #: ../src/widgets/select-toolbar.cpp:444
 msgid "Width of selection"
@@ -9655,7 +9231,7 @@ msgstr ""
 #: ../src/widgets/select-toolbar.cpp:462
 #, fuzzy
 msgid "select_toolbar|H"
-msgstr "Velg"
+msgstr "H"
 
 #: ../src/widgets/select-toolbar.cpp:462
 msgid "Height of selection"
@@ -9678,10 +9254,10 @@ msgstr ""
 msgid "RGB"
 msgstr "RGB"
 
+# OVERSETTERE: Siden denne forkortelsen henviser til et navngitt system så skal den ikke oversettes
 #: ../src/widgets/sp-color-scales.cpp:77
-#, fuzzy
 msgid "HSL"
-msgstr "HSV"
+msgstr "HSL"
 
 #: ../src/widgets/sp-color-scales.cpp:77
 msgid "CMYK"
@@ -9693,9 +9269,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:395
 #: ../src/widgets/sp-color-scales.cpp:396
-#, fuzzy
 msgid "Red"
-msgstr "Rød:"
+msgstr "Rød"
 
 #: ../src/widgets/sp-color-scales.cpp:397
 msgid "_G"
@@ -9703,9 +9278,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:398
 #: ../src/widgets/sp-color-scales.cpp:399
-#, fuzzy
 msgid "Green"
-msgstr "Grønn:"
+msgstr "Grønn"
 
 #: ../src/widgets/sp-color-scales.cpp:400
 msgid "_B"
@@ -9713,9 +9287,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:401
 #: ../src/widgets/sp-color-scales.cpp:402
-#, fuzzy
 msgid "Blue"
-msgstr "Blå:"
+msgstr "Blå"
 
 #. Label
 #: ../src/widgets/sp-color-scales.cpp:403
@@ -9742,9 +9315,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:421
 #: ../src/widgets/sp-color-scales.cpp:422
-#, fuzzy
 msgid "Hue"
-msgstr "Glød:"
+msgstr "Fargetone"
 
 #: ../src/widgets/sp-color-scales.cpp:423
 msgid "_S"
@@ -9752,9 +9324,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:424
 #: ../src/widgets/sp-color-scales.cpp:425
-#, fuzzy
 msgid "Saturation"
-msgstr "Metning:"
+msgstr "Metning"
 
 #: ../src/widgets/sp-color-scales.cpp:426
 msgid "_L"
@@ -9762,9 +9333,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:427
 #: ../src/widgets/sp-color-scales.cpp:428
-#, fuzzy
 msgid "Lightness"
-msgstr "Høyde:"
+msgstr "Lyshet"
 
 #: ../src/widgets/sp-color-scales.cpp:448
 msgid "_C"
@@ -9772,9 +9342,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:449
 #: ../src/widgets/sp-color-scales.cpp:450
-#, fuzzy
 msgid "Cyan"
-msgstr "Cyan:"
+msgstr "Cyan"
 
 #: ../src/widgets/sp-color-scales.cpp:451
 msgid "_M"
@@ -9782,9 +9351,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:452
 #: ../src/widgets/sp-color-scales.cpp:453
-#, fuzzy
 msgid "Magenta"
-msgstr "Magenta:"
+msgstr "Magenta"
 
 #: ../src/widgets/sp-color-scales.cpp:454
 msgid "_Y"
@@ -9792,9 +9360,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:455
 #: ../src/widgets/sp-color-scales.cpp:456
-#, fuzzy
 msgid "Yellow"
-msgstr "Gul:"
+msgstr "Gul"
 
 #: ../src/widgets/sp-color-scales.cpp:457
 msgid "_K"
@@ -9818,51 +9385,47 @@ msgstr "Verdi"
 
 #: ../src/widgets/toolbox.cpp:415
 msgid "Insert new nodes into selected segments"
-msgstr "Sett inn nye noder i valgte segmenter"
+msgstr "Sett inn nye noder i valgte bildesegmenter"
 
 #: ../src/widgets/toolbox.cpp:417
 msgid "Delete selected nodes"
 msgstr "Slett valgte noder"
 
 #: ../src/widgets/toolbox.cpp:422
-#, fuzzy
 msgid "Join selected endnodes"
-msgstr "Slå sammen linjer ved valgte noder"
+msgstr "Slå sammen valgte endenoder"
 
 #: ../src/widgets/toolbox.cpp:424
-#, fuzzy
 msgid "Join selected endnodes with a new segment"
-msgstr "Slå sammen linjer ved valgte noder"
+msgstr "Slå sammen valgte endenoder med et nytt bildesegment"
 
 #: ../src/widgets/toolbox.cpp:427
 msgid "Split path between two non-endpoint nodes"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:430
-#, fuzzy
 msgid "Break path at selected nodes"
-msgstr "Bryt linje ved valgte noder"
+msgstr "Bryt sti ved valgte noder"
 
 #: ../src/widgets/toolbox.cpp:435
 msgid "Make selected nodes corner"
-msgstr "Gjør valgte noder til hjørne"
+msgstr "Gjør valgte noder til hjørner"
 
 #: ../src/widgets/toolbox.cpp:438
 msgid "Make selected nodes smooth"
 msgstr "Jevn ut valgte noder"
 
 #: ../src/widgets/toolbox.cpp:441
-#, fuzzy
 msgid "Make selected nodes symmetric"
-msgstr "Jevn ut valgte noder"
+msgstr "Gjør valgte noder symmetriske"
 
 #: ../src/widgets/toolbox.cpp:446
 msgid "Make selected segments lines"
-msgstr "Gjør valgte segmenter til linjer"
+msgstr "Gjør valgte bildesegmenter til linjer"
 
 #: ../src/widgets/toolbox.cpp:449
 msgid "Make selected segments curves"
-msgstr "Gjør valgte noder om til kurver"
+msgstr "Gjør valgte bildesegmenter om til kurver"
 
 #: ../src/widgets/toolbox.cpp:467
 msgid "Show the Bezier handles of selected nodes"
@@ -9881,9 +9444,8 @@ msgid "Number of corners of a polygon or star"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1240
-#, fuzzy
 msgid "Spoke ratio:"
-msgstr "Proporsjon:"
+msgstr ""
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
@@ -9892,9 +9454,8 @@ msgid "Base radius to tip radius ratio"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1258
-#, fuzzy
 msgid "Rounded:"
-msgstr "Rolle:"
+msgstr "Avrundet:"
 
 #: ../src/widgets/toolbox.cpp:1258
 msgid "How much rounded are the corners (0 for sharp)"
@@ -9911,7 +9472,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1281 ../src/widgets/toolbox.cpp:1860
 #: ../src/widgets/toolbox.cpp:2146
 msgid "Defaults"
-msgstr "Forvalg"
+msgstr "Standard forvalg"
 
 #: ../src/widgets/toolbox.cpp:1282 ../src/widgets/toolbox.cpp:1861
 #: ../src/widgets/toolbox.cpp:2147
@@ -9925,28 +9486,24 @@ msgid "W:"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1561
-#, fuzzy
 msgid "Width of rectangle"
-msgstr "Rektangel"
+msgstr "Bredde på Rektangel"
 
 #: ../src/widgets/toolbox.cpp:1573
-#, fuzzy
 msgid "Height of rectangle"
-msgstr "Rektangel"
+msgstr "Høyde på Rektangel"
 
 #: ../src/widgets/toolbox.cpp:1585
-#, fuzzy
 msgid "Rx:"
-msgstr "x0:"
+msgstr "Rx:"
 
 #: ../src/widgets/toolbox.cpp:1585
 msgid "Horizontal radius of rounded corners"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1595
-#, fuzzy
 msgid "Ry:"
-msgstr "y0:"
+msgstr "Ry:"
 
 #: ../src/widgets/toolbox.cpp:1595
 msgid "Vertical radius of rounded corners"
@@ -9961,9 +9518,8 @@ msgid "Make corners sharp"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1827
-#, fuzzy
 msgid "Turns:"
-msgstr "Transformer:"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1827
 msgid "Number of revolutions"
@@ -9992,7 +9548,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2043
 #, fuzzy
 msgid "Thinning:"
-msgstr "Rendering"
+msgstr "Fortynning:"
 
 #: ../src/widgets/toolbox.cpp:2043
 msgid ""
@@ -10055,9 +9611,8 @@ msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2446
-#, fuzzy
 msgid "Start:"
-msgstr "Stjerne"
+msgstr "Start:"
 
 #: ../src/widgets/toolbox.cpp:2446
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
@@ -10072,9 +9627,8 @@ msgid "The angle (in degrees) from the horizontal to the arc's end point"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2467
-#, fuzzy
 msgid "Open arc"
-msgstr "Åpne"
+msgstr "Åprn Bue"
 
 #: ../src/widgets/toolbox.cpp:2468
 msgid ""
@@ -10095,81 +9649,78 @@ msgid ""
 "color including its alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
 msgid "Align right"
-msgstr "Juster objekter"
+msgstr "Rett opp høyresider"
 
-#: ../src/widgets/toolbox.cpp:3415
+#: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Center"
-msgstr "Senter Y:"
+msgstr "Senter Y"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
 msgid "Align left"
-msgstr "Juster objekter"
+msgstr "Rett opp venstresider"
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3612
-#, fuzzy
+# OVERSETTERE: Kerning er Kniping. Spørsmålet er om det egentlig forklarer tingene
+#: ../src/widgets/toolbox.cpp:3681
 msgid "Horizontal kerning"
-msgstr "Vend valgte objekter horisontalt"
+msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3633
-#, fuzzy
+# OVERSETTERE: Kerning er Kniping. Spørsmålet er om det egentlig forklarer tingene
+#: ../src/widgets/toolbox.cpp:3702
 msgid "Vertical kerning"
-msgstr "Sentrer vertikalt"
+msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3729
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3750
 msgid "Remove manual kerns"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3800
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
-msgstr "Slett valgte objekter"
+msgstr "Tving bindeledd unngå valgte objekter"
 
-#: ../src/widgets/toolbox.cpp:3804
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
-msgstr "Slett valgte objekter"
+msgstr "Tving bindeledd ignorere valgte objekter"
 
-#: ../src/widgets/toolbox.cpp:3812
-#, fuzzy
+#: ../src/widgets/toolbox.cpp:3881
 msgid "Spacing:"
-msgstr "Mellomrom Y:"
+msgstr "Mellomrom:"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
@@ -10186,7 +9737,7 @@ msgstr ""
 #: ../share/extensions/addnodes.inx.h:1
 #, fuzzy
 msgid "Add Nodes"
-msgstr "Noder"
+msgstr "Legg til noder"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "Maximum segment length"
@@ -10202,9 +9753,8 @@ msgid "Modify Path"
 msgstr ""
 
 #: ../share/extensions/ai_input.inx.h:1
-#, fuzzy
 msgid "AI Input"
-msgstr "Inndata"
+msgstr "AI Inndata"
 
 #: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
 msgid "Adobe Illustrator (*.ai)"
@@ -10215,24 +9765,20 @@ msgid "Open files saved with Adobe Illustrator"
 msgstr ""
 
 #: ../share/extensions/ai_output.inx.h:1
-#, fuzzy
 msgid "AI Output"
-msgstr "Klipp ut"
+msgstr "AI Utdata"
 
 #: ../share/extensions/ai_output.inx.h:3
-#, fuzzy
 msgid "Write Adobe Illustrator"
-msgstr "Vektorillustrator"
+msgstr "Skriv Adobe Illustrator"
 
 #: ../share/extensions/aisvg.inx.h:1
-#, fuzzy
 msgid "AI SVG Input"
-msgstr "Inndata"
+msgstr "AI SVG Inndata"
 
 #: ../share/extensions/aisvg.inx.h:2
-#, fuzzy
 msgid "Adobe Illustrator SVG (*.ai.svg)"
-msgstr "Vektorillustrator"
+msgstr "Adobe Illustrator SVG (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
@@ -10247,9 +9793,8 @@ msgid "Dia Diagram (*.dia)"
 msgstr ""
 
 #: ../share/extensions/dia.inx.h:3
-#, fuzzy
 msgid "Dia Input"
-msgstr "Inndata"
+msgstr "Dia Inndata"
 
 #: ../share/extensions/dia.inx.h:4
 msgid ""
@@ -10265,12 +9810,10 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/dots.inx.h:1
-#, fuzzy
 msgid "Dot size"
-msgstr "Sider:"
+msgstr "Punkt størrelse"
 
 #: ../share/extensions/dots.inx.h:2 ../share/extensions/measure.inx.h:1
-#, fuzzy
 msgid "Font size"
 msgstr "Skriftstørrelse"
 
@@ -10289,9 +9832,8 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:2
-#, fuzzy
 msgid "DXF Input"
-msgstr "Inndata"
+msgstr "DXF Inndata"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Import AutoCAD's Document Exchange Format"
@@ -10313,9 +9855,8 @@ msgid "Desktop Cutting Plotter (*.DXF)"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:2
-#, fuzzy
 msgid "DXF Output"
-msgstr "Klipp ut"
+msgstr "DXF Utdata"
 
 #: ../share/extensions/dxf_output.inx.h:3
 msgid "DXF file written by pstoedit"
@@ -10325,24 +9866,23 @@ msgstr ""
 msgid "pstoedit must be installed to run see http://www.pstoedit.net/pstoedit"
 msgstr ""
 
+# OVERSETTERE: Det er et spørmål om Embed bør være: Innlemme, Innebygge eller Feste
 #: ../share/extensions/embedimage.inx.h:1
 #, fuzzy
 msgid "Embed All Images"
-msgstr "Bilde"
+msgstr "Integrer Alle bilder"
 
 #: ../share/extensions/eps_input.inx.h:1
-#, fuzzy
 msgid "EPS Input"
-msgstr "Inndata"
+msgstr "EPS Inndata"
 
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated Postscript"
 msgstr ""
 
 #: ../share/extensions/epsi_output.inx.h:1
-#, fuzzy
 msgid "EPSI Output"
-msgstr "Klipp ut"
+msgstr "EPSI Utdata"
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
@@ -10372,7 +9912,7 @@ msgstr ""
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
 #, fuzzy
 msgid "Bridge Width"
-msgstr "Bredde:"
+msgstr "Bredde"
 
 #: ../share/extensions/ffmet.inx.h:2 ../share/extensions/ffms.inx.h:2
 msgid "First String Length"
@@ -10466,14 +10006,12 @@ msgid "XFIG Graphic File (*.fig)"
 msgstr ""
 
 #: ../share/extensions/fig_input.inx.h:3
-#, fuzzy
 msgid "XFIG Input"
-msgstr "Inndata"
+msgstr "XFIG Inndata"
 
 #: ../share/extensions/flatten.inx.h:1
-#, fuzzy
 msgid "Flatness"
-msgstr "Sider:"
+msgstr "Planhet "
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
@@ -10492,14 +10030,12 @@ msgid "Draw Handles"
 msgstr ""
 
 #: ../share/extensions/interp.inx.h:1
-#, fuzzy
 msgid "Duplicate endpaths"
-msgstr "Duplisert node"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:2
-#, fuzzy
 msgid "Exponent"
-msgstr "Eksporter"
+msgstr "Eksponent"
 
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
@@ -10545,12 +10081,12 @@ msgstr ""
 #: ../share/extensions/lindenmayer.inx.h:6
 #, fuzzy, no-c-format
 msgid "Randomize angle (%)"
-msgstr "Hev node"
+msgstr "Tilfeldigjør nodene"
 
 #: ../share/extensions/lindenmayer.inx.h:8
 #, fuzzy, no-c-format
 msgid "Randomize step (%)"
-msgstr "Hev node"
+msgstr "Tilfeldigjør nodene"
 
 #: ../share/extensions/lindenmayer.inx.h:10
 #, fuzzy
@@ -10560,7 +10096,7 @@ msgstr "Rektangel"
 #: ../share/extensions/lindenmayer.inx.h:11
 #, fuzzy
 msgid "Rules"
-msgstr "Fil"
+msgstr "Regler"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
@@ -10578,39 +10114,35 @@ msgstr "Vinkel"
 msgid "Extrude"
 msgstr ""
 
+# OVERSETTER: Følgende kan direkte oversettes.: Størrelse og størrelsesorden
 #: ../share/extensions/motion.inx.h:4
-#, fuzzy
 msgid "Magnitude"
-msgstr "Magenta:"
+msgstr "Størrelse"
 
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "Postscript"
-msgstr "Punkt"
+msgstr "Postscript"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
 msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Radius"
-msgstr "Radius:"
+msgstr "Radius"
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Radius Randomize"
-msgstr "Hev node"
+msgstr "Tilfeldigjør radius"
 
 #: ../share/extensions/radiusrand.inx.h:4
 #, fuzzy
 msgid "Randomize node handles"
-msgstr "Hev node"
+msgstr "Tilfeldigjør node håndtak"
 
 #: ../share/extensions/radiusrand.inx.h:5
-#, fuzzy
 msgid "Randomize nodes"
-msgstr "Hev node"
+msgstr "Tilfeldigjør nodene"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Use normal distribution"
@@ -10621,19 +10153,16 @@ msgid "Random Point"
 msgstr ""
 
 #: ../share/extensions/randompos.inx.h:1
-#, fuzzy
 msgid "Random Position"
-msgstr " Størrelse og posisjon"
+msgstr "Tilfeldig posisjon"
 
 #: ../share/extensions/rtree.inx.h:1
-#, fuzzy
 msgid "Initial size"
-msgstr "Størrelse på bitkart"
+msgstr "Innledende størrelse"
 
 #: ../share/extensions/rtree.inx.h:2
-#, fuzzy
 msgid "Minimum size"
-msgstr "Tilpasset"
+msgstr "Minimum størrelse"
 
 #: ../share/extensions/rtree.inx.h:3
 msgid "Random Tree"
@@ -10674,13 +10203,12 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "Klipp ut"
+msgstr ""
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
 msgid "Color of shadow"
-msgstr ""
+msgstr "Fargen på skyggen"
 
 #: ../share/extensions/svg_dropshadow.inx.h:2
 msgid "Dropshadow"
@@ -10688,16 +10216,15 @@ msgstr ""
 
 #: ../share/extensions/txt2svg.inx.h:1
 msgid "ASCII Text"
-msgstr ""
+msgstr "ASCII Tekst"
 
 #: ../share/extensions/txt2svg.inx.h:2
 msgid "Text File (*.txt)"
-msgstr ""
+msgstr "Tekst Fil (*.txt)"
 
 #: ../share/extensions/txt2svg.inx.h:3
-#, fuzzy
 msgid "Text Input"
-msgstr "Inndata"
+msgstr "Tekst Inndata"
 
 #: ../share/extensions/wavy.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -10717,7 +10244,7 @@ msgstr ""
 
 #: ../share/extensions/wavy.inx.h:5
 msgid "Nodes per period"
-msgstr ""
+msgstr "Noder per periode"
 
 #: ../share/extensions/wavy.inx.h:6
 msgid "Periods (2*Pi each)"
@@ -10725,30 +10252,27 @@ msgstr ""
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
-msgstr ""
+msgstr "Mengde av virvler"
 
 #: ../share/extensions/whirl.inx.h:2
-#, fuzzy
 msgid "Center X"
-msgstr "Senter X:"
+msgstr "Senter X"
 
 #: ../share/extensions/whirl.inx.h:3
-#, fuzzy
 msgid "Center Y"
-msgstr "Senter Y:"
+msgstr "Senter Y"
 
 #: ../share/extensions/whirl.inx.h:5
-#, fuzzy
 msgid "Rotation is clockwise"
-msgstr "Roter objekt 90° med klokken"
+msgstr "Rotasjonen går med urviseren"
 
 #: ../share/extensions/whirl.inx.h:6
 msgid "Whirl"
-msgstr ""
+msgstr "Virvler"
 
 #: ../share/extensions/wmf_input.inx.h:1
 msgid "A popular graphics file format for clipart"
-msgstr ""
+msgstr "Et populært grafikkformat for clipart"
 
 #: ../share/extensions/wmf_input.inx.h:2
 msgid "Windows Metafile (*.wmf)"
@@ -10756,27 +10280,22 @@ msgstr ""
 
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Rag right"
-#~ msgstr "Høyde:"
-
-#, fuzzy
-#~ msgid "Centered"
-#~ msgstr "Senter X:"
+msgstr "Windows Metafil "
 
 #, fuzzy
 #~ msgid "%s Preferences"
 #~ msgstr "Oppføring er referanse"
 
+#~ msgid "Centered"
+#~ msgstr "Sentrert "
+
+# OVERSETTER: Bør sees om Lindenmayer Fraktal er annet på norsk
 #, fuzzy
 #~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Hev node"
+#~ msgstr "Fraktal (Lindenmayer)"
 
-#, fuzzy
 #~ msgid "Step"
-#~ msgstr "Stil"
+#~ msgstr "Steg"
 
 #, fuzzy
 #~ msgid "PDF Output"

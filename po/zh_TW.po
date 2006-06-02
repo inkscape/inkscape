@@ -4,14 +4,14 @@
 # tad <tad@mail.tnc.edu.tw>, 2004
 # Wei-Lun Chao <william.chao@ossii.com.tw>, 2006
 #
-#: ../src/widgets/toolbox.cpp:3562 ../src/widgets/toolbox.cpp:3583
-#: ../src/widgets/toolbox.cpp:3612 ../src/widgets/toolbox.cpp:3633
-#: ../src/widgets/toolbox.cpp:3660
+#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.43\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:37+0200\n"
+"POT-Creation-Date: 2006-06-02 20:27+0200\n"
 "PO-Revision-Date: 2006-03-24 16:34+0800\n"
 "Last-Translator: Wei-Lun Chao <william.chao@ossii.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1668,13 +1668,13 @@ msgstr "對齊中心"
 msgid "Align lines right"
 msgstr "對齊右邊"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3486
-#: ../src/widgets/toolbox.cpp:3532
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
+#: ../src/widgets/toolbox.cpp:3601
 msgid "Horizontal text"
 msgstr "水平文字"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3497
-#: ../src/widgets/toolbox.cpp:3543
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
+#: ../src/widgets/toolbox.cpp:3612
 msgid "Vertical text"
 msgstr "垂直文字"
 
@@ -4603,7 +4603,7 @@ msgstr "不可列印字元"
 msgid "Unicode: %s: %s"
 msgstr "萬國碼: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:832
+#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
 msgstr "萬國碼:"
 
@@ -4612,7 +4612,7 @@ msgstr "萬國碼:"
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>流動的文字訊框</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1425
+#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "輸入文字；按 <b>Enter</b> 以啟始新列。"
 
@@ -4626,15 +4626,15 @@ msgid ""
 "created."
 msgstr "訊框對於目前字型大小來說<b>太小</b>。並未建立流動文字。"
 
-#: ../src/text-context.cpp:818
+#: ../src/text-context.cpp:825
 msgid "No-break space"
 msgstr "不斷列空白"
 
-#: ../src/text-context.cpp:1423
+#: ../src/text-context.cpp:1430
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "輸入流動文字；按 <b>Enter</b> 以開始新的段落。"
 
-#: ../src/text-context.cpp:1433 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -8964,7 +8964,7 @@ msgstr "字型大小:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3279
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
 #, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12368.;/()"
@@ -9684,80 +9684,80 @@ msgid ""
 "color including its alpha"
 msgstr "按下時點取可見的顏色而不含 alpha 值，不按時點取顏色會包含它的 alpha 值"
 
-#: ../src/widgets/toolbox.cpp:3367
+#: ../src/widgets/toolbox.cpp:3435
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3404
+#: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
 msgid "Align right"
 msgstr "對齊右側"
 
-#: ../src/widgets/toolbox.cpp:3415
+#: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Center"
 msgstr "對齊中心"
 
-#: ../src/widgets/toolbox.cpp:3426
+#: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
 msgid "Align left"
 msgstr "對齊左邊"
 
-#: ../src/widgets/toolbox.cpp:3437
+#: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3453
+#: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3464
+#: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3562
+#: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3583
+#: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3612
-#, fuzzy
-msgid "Horizontal kerning"
-msgstr "水平間隔"
-
-#: ../src/widgets/toolbox.cpp:3633
-#, fuzzy
-msgid "Vertical kerning"
-msgstr "垂直間隔"
-
-#: ../src/widgets/toolbox.cpp:3660
-msgid "Letter rotation"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3681
 #, fuzzy
+msgid "Horizontal kerning"
+msgstr "水平間隔"
+
+#: ../src/widgets/toolbox.cpp:3702
+#, fuzzy
+msgid "Vertical kerning"
+msgstr "垂直間隔"
+
+#: ../src/widgets/toolbox.cpp:3729
+msgid "Letter rotation"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3750
+#, fuzzy
 msgid "Remove manual kerns"
 msgstr "手動移除突出物(_K)"
 
-#: ../src/widgets/toolbox.cpp:3800
+#: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
 msgstr "使連接器避免所選物件"
 
-#: ../src/widgets/toolbox.cpp:3804
+#: ../src/widgets/toolbox.cpp:3873
 msgid "Make connectors ignore selected objects"
 msgstr "使連接器忽略所選物件"
 
-#: ../src/widgets/toolbox.cpp:3812
+#: ../src/widgets/toolbox.cpp:3881
 #, fuzzy
 msgid "Spacing:"
 msgstr "Y 間距:"
 
-#: ../src/widgets/toolbox.cpp:3813
+#: ../src/widgets/toolbox.cpp:3882
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
