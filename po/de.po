@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2006-06-01 01:02+0200\n"
+"PO-Revision-Date: 2006-06-02 00:57+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1254,9 +1254,8 @@ msgid "Id exists! "
 msgstr "ID-Kennung existiert"
 
 #: ../src/dialogs/layers-panel.cpp:755
-#, fuzzy
 msgid "Opacity:"
-msgstr "Deckkraft"
+msgstr "Deckkraft:"
 
 #: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
@@ -7603,7 +7602,7 @@ msgstr ""
 #. otherwise leave as "keys.svg".
 #: ../src/verbs.cpp:1692
 msgid "keys.svg"
-msgstr "keys.de.svg"
+msgstr "keys.svg"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
@@ -7615,12 +7614,12 @@ msgstr "tutorial-basic.de.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1732
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.de.svg"
+msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1736
 msgid "tutorial-advanced.svg"
-msgstr "tutorial-advanced.de.svg"
+msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1740
@@ -7635,7 +7634,7 @@ msgstr "tutorial-calligraphy.de.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1748
 msgid "tutorial-elements.svg"
-msgstr "tutorial-elements.de.svg"
+msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1752
@@ -9967,22 +9966,18 @@ msgstr ""
 "wird die Standardschriftart verwenden"
 
 #: ../src/widgets/toolbox.cpp:3473
-#, fuzzy
 msgid "Align right"
 msgstr "Rechtsbündig ausrichten"
 
 #: ../src/widgets/toolbox.cpp:3484
-#, fuzzy
 msgid "Center"
-msgstr "Zentrum Y:"
+msgstr "Zentrieren"
 
 #: ../src/widgets/toolbox.cpp:3495
-#, fuzzy
 msgid "Align left"
-msgstr "Zeilen links ausrichten"
+msgstr "Linksbündig ausrichten"
 
 #: ../src/widgets/toolbox.cpp:3506
-#, fuzzy
 msgid "Justify"
 msgstr "Blocksatz"
 
