@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2006-05-25 16:20+0200\n"
+"POT-Creation-Date: 2006-06-02 21:11+0200\n"
+"PO-Revision-Date: 2006-06-02 20:36+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1276,36 +1276,32 @@ msgid "Id exists! "
 msgstr "El ID existe "
 
 #: ../src/dialogs/layers-panel.cpp:755
-#, fuzzy
 msgid "Opacity:"
-msgstr "Opacidad"
+msgstr "Opacidad:"
 
 #: ../src/dialogs/layers-panel.cpp:780
-#, fuzzy
 msgid "New"
-msgstr "_Nuevo"
+msgstr "Nuevo"
 
 #: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
-msgstr ""
+msgstr "Superior"
 
 #: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
-msgstr ""
+msgstr "Arriba"
 
 #: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
-msgstr ""
+msgstr "Abajo"
 
 #: ../src/dialogs/layers-panel.cpp:803
-#, fuzzy
 msgid "Bot"
-msgstr "Caja"
+msgstr "Inferior"
 
 #: ../src/dialogs/layers-panel.cpp:813
-#, fuzzy
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
@@ -6291,7 +6287,7 @@ msgstr "Ignorar objetos bloqueados"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "Deselect upon layer change"
-msgstr ""
+msgstr "Deseleccionar al cambiar de capa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
@@ -6334,13 +6330,12 @@ msgstr ""
 "mismos como por estar en un grupo o capa bloqueados)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:505
-#, fuzzy
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr ""
-"Desmarque esto para poder seleccionar objetos bloqueados (tanto por sí "
-"mismos como por estar en un grupo o capa bloqueados)"
+"Desmarque esto para poder mantener los objetos seleccionados cuando cambie "
+"de capa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Selecting"
@@ -7224,7 +7219,7 @@ msgstr "Lista"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "Wrap"
-msgstr ""
+msgstr "Ajustar"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
@@ -7510,14 +7505,14 @@ msgid "Stroke width: %.5g%s"
 msgstr "Ancho de trazo: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "O:%.3g"
-msgstr "0:%.3g"
+msgstr "O:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, fuzzy, c-format
+#, c-format
 msgid "O:.%d"
-msgstr "0:.%d"
+msgstr "O:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
@@ -8802,9 +8797,8 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Editar las propiedades guardadas con el documento"
 
 #: ../src/verbs.cpp:2319
-#, fuzzy
 msgid "Document _Metadata..."
-msgstr "Meta_datos del documento..."
+msgstr "_Metadatos del documento..."
 
 #: ../src/verbs.cpp:2320
 msgid "Edit document metadata (to be saved with the document)"
@@ -8990,9 +8984,8 @@ msgid "Query information about extensions"
 msgstr "Obtenga información acerca de las extensiones"
 
 #: ../src/verbs.cpp:2369
-#, fuzzy
 msgid "Layer_s..."
-msgstr "_Capas..."
+msgstr "Capa_s..."
 
 #: ../src/verbs.cpp:2370
 msgid "View Layers"
@@ -9947,31 +9940,28 @@ msgstr ""
 "tipografía predeterminada en su lugar."
 
 #: ../src/widgets/toolbox.cpp:3473
-#, fuzzy
 msgid "Align right"
-msgstr "Alinear lados izquierdos"
+msgstr "Alinear derecha"
 
 #: ../src/widgets/toolbox.cpp:3484
-#, fuzzy
 msgid "Center"
-msgstr "Centrar Y"
+msgstr "Centrar"
 
 #: ../src/widgets/toolbox.cpp:3495
-#, fuzzy
 msgid "Align left"
-msgstr "Alinear líneas a la izquierda"
+msgstr "Alinear izquierda"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
-msgstr ""
+msgstr "Justificar"
 
 #: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
-msgstr ""
+msgstr "Negrita"
 
 #: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
-msgstr ""
+msgstr "Cursiva"
 
 #: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
@@ -10358,33 +10348,30 @@ msgid "Axiom"
 msgstr "Axioma"
 
 #: ../share/extensions/lindenmayer.inx.h:2
-#, fuzzy
 msgid "L-system"
-msgstr "Sistema"
+msgstr "Sistema-L"
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "Rectángulo"
+msgstr "Ángulo izquierdo"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "Orden"
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%)"
-msgstr "Aleatorizar nodos"
+msgstr "Aleatorizar ángulo (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize step (%)"
-msgstr "Aleatorizar nodos"
+msgstr "Aleatorizar paso (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "Rectángulo"
+msgstr "Ángulo derecho"
 
 #: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
@@ -10392,7 +10379,7 @@ msgstr "Reglas"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
-msgstr ""
+msgstr "Longitud del paso (px)"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -10573,29 +10560,3 @@ msgstr "Metaarchivo de Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrada de metaarchivo de windows"
-
-#, fuzzy
-#~ msgid "Rag right"
-#~ msgstr "Derechos"
-
-#, fuzzy
-#~ msgid "Centered"
-#~ msgstr "Centrar X"
-
-#~ msgid "%s Preferences"
-#~ msgstr "Preferencias de %s"
-
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Fractal (Lindenmayer)"
-
-#~ msgid "Step"
-#~ msgstr "Paso"
-
-#~ msgid "Adobe PDF (*.pdf)"
-#~ msgstr "Adobe PDF (*.pdf)"
-
-#~ msgid "Adobe Portable Document Format"
-#~ msgstr "Adobe Portable Document Format"
-
-#~ msgid "PDF Output"
-#~ msgstr "Salida PDF"
