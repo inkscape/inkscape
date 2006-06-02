@@ -8,7 +8,7 @@
 # ################################################
 
 if PLATFORM_WIN32
-win32_sources = winmain.cpp
+win32_sources = winmain.cpp registrytool.cpp registrytool.h
 win32ldflags = -lcomdlg32
 endif 
 
