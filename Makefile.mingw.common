@@ -199,7 +199,7 @@ PYTHONLIB = -L$(GTK)/python/libs -lpython24
 #PYTHONLIB = -L$(GTK)/python/libs/libpython24.a
 
 ####### remove -DLIBXML_STATIC 
-INC = -I. -I.. -I../.. $(GTKINC) -I$(GTK)/include \
+INC = -I. -I.. -I../.. -I../cxxtest $(GTKINC) -I$(GTK)/include \
 $(PERLINC) $(PYTHONINC) -I$(GTK)/include/loudmouth-1.0 \
 -I$(GTK)/include/libxml2 -I$(GTK)/include/freetype2 \
 
