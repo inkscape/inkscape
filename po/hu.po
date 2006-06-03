@@ -1,4 +1,3 @@
-# translation of hu.po to Hungarian
 # Inkscape Hungarian translation.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004, 2005, 2006.
@@ -10,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2006-06-03 18:34+0200\n"
+"PO-Revision-Date: 2006-06-03 23:36+0200\n"
 "Last-Translator: Arpad Biro\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1127,26 +1126,24 @@ msgstr "Re_latív áthelyezés"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
-msgstr ""
+msgstr "Segédvonal áthelyezése az aktuális pozícióhoz viszonyítva"
 
 #: ../src/dialogs/guidelinedialog.cpp:61
-#, fuzzy
 msgid "Move by:"
-msgstr "Áthelyezés: %s"
+msgstr "Áthelyezés ennyivel:"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
-#, fuzzy
 msgid "Move to:"
-msgstr "Áthelyezés: %s"
+msgstr "Áthelyezés ide:"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Guideline"
 msgstr "Segédvonal"
 
 #: ../src/dialogs/guidelinedialog.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr "Áthelyezés: %s"
+msgstr "\"%2$s\" %1$s áthelyezése"
 
 #: ../src/dialogs/iconpreview.cpp:143
 #, c-format
@@ -1242,14 +1239,12 @@ msgid "Id exists! "
 msgstr "Az azonosító már létezik "
 
 #: ../src/dialogs/layers-panel.cpp:755
-#, fuzzy
 msgid "Opacity:"
-msgstr "Átlátszatlanság"
+msgstr "Átlátszatlanság:"
 
 #: ../src/dialogs/layers-panel.cpp:780
-#, fuzzy
 msgid "New"
-msgstr "Ú_j"
+msgstr "Új"
 
 #: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
@@ -2028,31 +2023,27 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:677
 msgid "Name:"
-msgstr ""
+msgstr "Név:"
 
 #: ../src/extension/extension.cpp:678
-#, fuzzy
 msgid "ID:"
-msgstr "Azonosító"
+msgstr "Azonosító:"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "State:"
-msgstr "Kezdet:"
+msgstr "Állapot:"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Loaded"
-msgstr "Csomópont"
+msgstr "Betöltve"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Unloaded"
-msgstr "Névtelen"
+msgstr "Nincs betöltve"
 
 #: ../src/extension/extension.cpp:679
 msgid "Deactivated"
-msgstr ""
+msgstr "Deaktiválva"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:50
@@ -2571,7 +2562,7 @@ msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: színátmenet rajzolása a kezdőpont köré"
 
 #: ../src/gradient-context.cpp:454
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] "<b>Színátmenet</b> %d objektumhoz. Szöghöz való illesztés: <b>Ctrl</b>."
@@ -2625,16 +2616,14 @@ msgstr ""
 "különválasztása: <b>Shift</b>+húzás."
 
 #: ../src/gradient-drag.cpp:660
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
 msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
-msgstr[0] ""
-"<b>%d</b> színátmenet közös színátmenet-pontja. Különválasztás: <b>Shift</b>"
-"+húzás."
+msgstr[0] "<b>%d</b> színátmenet közös színátmenet-pontja. Különválasztás: <b>Shift</b>+húzás."
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -3337,9 +3326,8 @@ msgid "Exported area is the entire drawing (not canvas)"
 msgstr "Az exportált terület a teljes rajz (nem a rajzvászon)"
 
 #: ../src/main.cpp:239
-#, fuzzy
 msgid "Exported area is the entire canvas"
-msgstr "Az exportált terület a teljes rajz (nem a rajzvászon)"
+msgstr "Az exportált terület a teljes rajzvászon"
 
 #: ../src/main.cpp:244
 msgid ""
@@ -3368,9 +3356,8 @@ msgid "HEIGHT"
 msgstr "MAGASSÁG"
 
 #: ../src/main.cpp:259
-#, fuzzy
 msgid "The ID of the object to export"
-msgstr "Az exportálandó objektum azonosítója (felülbírálja az export-area értéket)"
+msgstr "Az exportálandó objektum azonosítója"
 
 #: ../src/main.cpp:260 ../src/main.cpp:336
 msgid "ID"
@@ -3680,14 +3667,14 @@ msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "mindkét vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
 #: ../src/nodepath.cpp:3986
-#, fuzzy
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
 "Csomópontok illetve csomópont-vezérlőelemek áthelyezése: <b>húzással</b>. "
-"Csomópontok áthelyezése a <b>nyílbillentyűkkel</b> is lehetséges."
+"Alakítás: <b>Alt</b>+csomópontok húzásával. Csomópontok áthelyezése: "
+"<b>nyílbillentyűkkel</b>. Méretezés: <b>&lt; &gt;</b>. Forgatás: <b>[ ]</b>."
 
 #: ../src/nodepath.cpp:3987
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
@@ -3730,10 +3717,10 @@ msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
 #: ../src/nodepath.cpp:4035
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
+msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban (összesen: <b>%i</b>). %s."
 msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
 #: ../src/nodepath.cpp:4041
@@ -3889,9 +3876,8 @@ msgid "<b>No paths</b> to reverse in the selection."
 msgstr "A kijelölésben <b>nincs megfordítható lánc</b>."
 
 #: ../src/pen-context.cpp:218
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "Szabadkézi vonalak rajzolása"
+msgstr "Rajzolás visszavonva"
 
 #: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
 msgid "Continuing selected path"
@@ -3945,9 +3931,8 @@ msgstr ""
 "b>; csak ezen vezérlőelem áthelyezése: <b>Shift</b>."
 
 #: ../src/pen-context.cpp:1127
-#, fuzzy
 msgid "Drawing finished"
-msgstr "Rajz"
+msgstr "Rajzolás befejezve"
 
 #: ../src/pencil-context.cpp:315
 msgid "<b>Release</b> here to close and finish the path."
@@ -4027,11 +4012,8 @@ msgstr ""
 "áthelyezése"
 
 #: ../src/select-context.cpp:781
-#, fuzzy
 msgid "Selected object is not a group. Cannot enter."
-msgstr ""
-"A kijelölt objektum <b>nem lánc</b>; zsugorítás illetve nyújtás nem "
-"végezhető."
+msgstr "A kijelölt objektum nem csoport. Belépés nem végezhető."
 
 #: ../src/selection-chemistry.cpp:224
 msgid "<b>Nothing</b> was deleted."
@@ -4058,9 +4040,8 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "A kijelölésben <b>nincs szétbontható csoport</b>."
 
 #: ../src/selection-chemistry.cpp:629
-#, fuzzy
 msgid "Select <b>object(s)</b> to raise."
-msgstr "Jelölje ki az előrébb helyezendő <b>objektumokat</b>."
+msgstr "Jelölje ki az előrébb helyezendő <b>objektumo(ka)t</b>."
 
 #: ../src/selection-chemistry.cpp:635 ../src/selection-chemistry.cpp:687
 #: ../src/selection-chemistry.cpp:721 ../src/selection-chemistry.cpp:779
@@ -4103,9 +4084,8 @@ msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
 
 #: ../src/selection-chemistry.cpp:1157 ../src/selection-chemistry.cpp:1192
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
+msgstr "Jelöljön ki <b>objektumo(ka)t</b> a méret beillesztéséhez."
 
 #: ../src/selection-chemistry.cpp:1225
 msgid "Select <b>object(s)</b> to move to the layer above."
@@ -4174,19 +4154,20 @@ msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Jelölje ki a bitképbe másolandó <b>objektumo(ka)t</b>."
 
 #: ../src/selection-chemistry.cpp:2412
-#, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
+msgstr "Jelölje ki a vágólánc illetve a maszk létrehozásához használandó <b>objektumo(ka)t</b>."
 
 #: ../src/selection-chemistry.cpp:2415
-#, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
-msgstr "Jelöljön ki <b>objektumo(ka)t</b> a stílus beillesztéséhez."
+msgstr ""
+"Jelölje ki a maszkobjektumot és azon <b>objektumo(ka)t</b>, amely(ek)re "
+"a vágólánc illetve a maszk alkalmazandó."
 
 #: ../src/selection-chemistry.cpp:2518
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Jelöljön ki egy vagy több <b>szöveget</b> az alávágás eltávolításához."
+msgstr ""
+"Jelölje ki azon <b>objektumo(ka)t</b>, amely(ek)ről eltávolítandó "
+"a vágólánc illetve a maszk."
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4297,17 +4278,17 @@ msgid " in group %s (%s)"
 msgstr " a(z) %s csoportban (%s)"
 
 #: ../src/selection-describer.cpp:148
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] "%s <b>%i</b> rétegben. %s."
+msgstr[0] " <b>%i</b> szülőben (%s)"
 msgstr[1] "%s <b>%i</b> rétegben. %s."
 
 #: ../src/selection-describer.cpp:151
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] "%s <b>%i</b> rétegben. %s."
+msgstr[0] " <b>%i</b> rétegben"
 msgstr[1] "%s <b>%i</b> rétegben. %s."
 
 # kiíráskor tesz egy pontot a végére
@@ -4486,13 +4467,13 @@ msgid "Flow excluded region"
 msgstr "Tördelésből kizárt terület"
 
 #: ../src/sp-flowtext.cpp:356
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
 msgstr[0] "<b>Tördelt szöveg</b> (%d karakter)"
 
 #: ../src/sp-flowtext.cpp:358
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] "<b>Kapcsolt tördelt szöveg</b> (%d karakter)"
@@ -4599,10 +4580,10 @@ msgstr[0] "%d csúcsú <b>sokszög</b>"
 msgstr[1] "%d csúcsú <b>sokszög</b>"
 
 #: ../src/sp-switch.cpp:98
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
+msgstr[0] "<b>%d</b> objektumot tartalmazó <b>feltételes csoport</b>"
 msgstr[1] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
 
 #. TRANSLATORS: For description of font with no name.
@@ -4731,7 +4712,6 @@ msgstr ""
 "láncot</b>."
 
 #: ../src/text-chemistry.cpp:99
-#, fuzzy
 msgid ""
 "This text object is <b>already put on a path</b>. Remove it from the path "
 "first. Use <b>Shift+D</b> to look up its path."
@@ -4740,11 +4720,10 @@ msgstr ""
 "láncról. A lánc meghatározása: <b>Shift+D</b>."
 
 #: ../src/text-chemistry.cpp:104
-#, fuzzy
 msgid "You cannot put flowtext on a path. Convert flowtext to text first."
 msgstr ""
-"A jelenlegi verzió nem támogatja a szöveg téglalapra való illesztését. Az "
-"illesztés elvégzéséhez alakítsa lánccá a téglalapot."
+"Tördelt szöveg nem illeszthető láncra. Előbb alakítsa normál szöveggé a "
+"tördelt szöveget."
 
 #. rect is the only SPShape which is not <path> yet, and thus SVG forbids us from putting text on it
 #: ../src/text-chemistry.cpp:110
@@ -4944,13 +4923,12 @@ msgid "Select an <b>image</b> to trace"
 msgstr "Jelölje ki a vektorizálandó <b>képet</b>."
 
 #: ../src/trace/trace.cpp:96
-#, fuzzy
 msgid "Select only one <b>image</b> to trace"
-msgstr "Jelölje ki a vektorizálandó <b>képet</b>."
+msgstr "Csak <b>egy</b> vektorizálandó képet jelöljön ki."
 
 #: ../src/trace/trace.cpp:114
 msgid "Select one image and one or more shapes above it"
-msgstr ""
+msgstr "Jelöljön ki egy képet és egy vagy több, előtte levő alakzatot"
 
 #: ../src/trace/trace.cpp:338
 msgid "Trace: No active document"
@@ -5016,17 +4994,15 @@ msgstr "Az Inkscape névjegye"
 
 #: ../src/ui/dialog/aboutbox.cpp:71
 msgid "_Splash"
-msgstr ""
+msgstr "_Névjegykép"
 
 #: ../src/ui/dialog/aboutbox.cpp:73
-#, fuzzy
 msgid "_Authors"
-msgstr "Szerzők"
+msgstr "_Szerzők"
 
 #: ../src/ui/dialog/aboutbox.cpp:74
-#, fuzzy
 msgid "_Translators"
-msgstr "Fordítók"
+msgstr "_Fordítók"
 
 #: ../src/ui/dialog/aboutbox.cpp:75
 msgid "_License"
@@ -5581,14 +5557,12 @@ msgid "Export"
 msgstr "Exportálás"
 
 #: ../src/ui/dialog/extension-editor.cpp:80
-#, fuzzy
 msgid "Information"
-msgstr "Üzenetinformáció"
+msgstr "Információ"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
-#, fuzzy
 msgid "Help"
-msgstr "_Segítség"
+msgstr "Segítség"
 
 #: ../src/ui/dialog/extension-editor.cpp:82
 #, fuzzy
@@ -7220,7 +7194,7 @@ msgstr "Á:"
 
 #: ../src/ui/widget/selected-style.cpp:129
 msgid "N/A"
-msgstr ""
+msgstr "Nem elérhető"
 
 #: ../src/ui/widget/selected-style.cpp:132
 #: ../src/ui/widget/selected-style.cpp:947
@@ -7249,9 +7223,8 @@ msgstr "Mintával való kitöltés"
 
 #: ../src/ui/widget/selected-style.cpp:142
 #: ../src/ui/widget/style-swatch.cpp:294
-#, fuzzy
 msgid "Pattern stroke"
-msgstr "A minta eltolása"
+msgstr "Mintával megrajzolt körvonal"
 
 #: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:284
@@ -7297,23 +7270,21 @@ msgstr "Többféle körvonal"
 
 #: ../src/ui/widget/selected-style.cpp:159
 #: ../src/ui/widget/style-swatch.cpp:303
-#, fuzzy
 msgid "Unset"
-msgstr "zsugorítva"
+msgstr "Definiálatlan"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/style-swatch.cpp:305
 msgid "Unset fill"
-msgstr ""
+msgstr "Definiálatlan kitöltés"
 
 #: ../src/ui/widget/selected-style.cpp:162
 #: ../src/ui/widget/selected-style.cpp:220
 #: ../src/ui/widget/style-swatch.cpp:305
-#, fuzzy
 msgid "Unset stroke"
-msgstr " (körvonal)"
+msgstr "Definiálatlan körvonal"
 
 #: ../src/ui/widget/selected-style.cpp:165
 msgid "Flat color fill"
@@ -7325,19 +7296,16 @@ msgstr "Egyenletes színű körvonal"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:168
-#, fuzzy
 msgid "<b>a</b>"
-msgstr "<b>F:</b>"
+msgstr "<b>á</b>"
 
 #: ../src/ui/widget/selected-style.cpp:171
-#, fuzzy
 msgid "Fill is averaged over selected objects"
-msgstr "Kizáró VAGY végrehajtása a kijelölt objektumokon"
+msgstr "A kijelölt objektumok kitöltése átlagolva van"
 
 #: ../src/ui/widget/selected-style.cpp:171
-#, fuzzy
 msgid "Stroke is averaged over selected objects"
-msgstr "A kapcsok kerüljék ki a kijelölt objektumokat"
+msgstr "A kijelölt objektumok körvonala átlagolva van"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:174
@@ -7353,24 +7321,20 @@ msgid "Multiple selected objects have the same stroke"
 msgstr "Több kijelölt objektum egyforma körvonallal rendelkezik"
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Edit fill..."
-msgstr "Szerkesztés..."
+msgstr "Kitöltés szerkesztése..."
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Edit stroke..."
-msgstr "Szerkesztés..."
+msgstr "Körvonal szerkesztése..."
 
 #: ../src/ui/widget/selected-style.cpp:183
-#, fuzzy
 msgid "Last set color"
-msgstr "Egyenletes szín"
+msgstr "Legutóbb beállított szín"
 
 #: ../src/ui/widget/selected-style.cpp:187
-#, fuzzy
 msgid "Last selected color"
-msgstr "Legutóbb kijelölt"
+msgstr "Legutóbb kijelölt szín"
 
 #: ../src/ui/widget/selected-style.cpp:195
 msgid "White"
@@ -7383,42 +7347,36 @@ msgid "Black"
 msgstr "Fekete"
 
 #: ../src/ui/widget/selected-style.cpp:203
-#, fuzzy
 msgid "Copy color"
-msgstr "Fázis színe"
+msgstr "Szín másolása"
 
 #: ../src/ui/widget/selected-style.cpp:207
-#, fuzzy
 msgid "Paste color"
-msgstr "Egyenletes szín"
+msgstr "Szín beillesztése"
 
 #: ../src/ui/widget/selected-style.cpp:211
-#, fuzzy
 msgid "Swap fill and stroke"
-msgstr "Kitö_ltés és körvonal"
+msgstr "Kitöltés és körvonal felcserélése"
 
 #: ../src/ui/widget/selected-style.cpp:215
 msgid "Make fill opaque"
-msgstr ""
+msgstr "Kitöltés átlátszatlanná tevése"
 
 #: ../src/ui/widget/selected-style.cpp:215
 msgid "Make stroke opaque"
-msgstr ""
+msgstr "Körvonal átlátszatlanná tevése"
 
 #: ../src/ui/widget/selected-style.cpp:224
-#, fuzzy
 msgid "Remove fill"
-msgstr " _Törlés "
+msgstr "Kitöltés eltávolítása"
 
 #: ../src/ui/widget/selected-style.cpp:224
-#, fuzzy
 msgid "Remove stroke"
-msgstr "Hivatkozás törlé_se"
+msgstr "Körvonal eltávolítása"
 
 #: ../src/ui/widget/selected-style.cpp:277
-#, fuzzy
 msgid "Remove"
-msgstr " _Törlés "
+msgstr "Eltávolítás"
 
 #: ../src/ui/widget/selected-style.cpp:953
 msgid "Master opacity"
@@ -7430,17 +7388,16 @@ msgid "Stroke width: %.5g%s%s"
 msgstr "Körvonalszélesség: %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:987
-#, fuzzy
 msgid " (averaged)"
-msgstr "Hely/idő"
+msgstr " (átlagolt)"
 
 #: ../src/ui/widget/selected-style.cpp:1015
 msgid "0 (transparent)"
-msgstr ""
+msgstr "0 (átlátszó)"
 
 #: ../src/ui/widget/selected-style.cpp:1039
 msgid "1.0 (opaque)"
-msgstr ""
+msgstr "1.0 (átlátszatlan)"
 
 #: ../src/ui/widget/page-sizer.cpp:167
 msgid "Custom"
@@ -7501,14 +7458,14 @@ msgid "Stroke width: %.5g%s"
 msgstr "Körvonalszélesség: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "O:%.3g"
-msgstr "Átlátszatlanság: %.3g"
+msgstr "Á:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
 #, c-format
 msgid "O:.%d"
-msgstr ""
+msgstr "Á:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
@@ -9115,34 +9072,32 @@ msgstr "A legutóbbi effektus megismétlése új beállításokkal"
 #. "tutorial_tips"
 #. Fit Canvas
 #: ../src/verbs.cpp:2408
-#, fuzzy
 msgid "Fit Canvas to Selection"
-msgstr "Illesztés a kijelölési téglalapba"
+msgstr "Rajzvászon illesztése a kijelöléshez"
 
 #: ../src/verbs.cpp:2409
-#, fuzzy
 msgid "Fit the canvas to the current selection"
-msgstr "A keresés csak az aktuális kijelölésre vonatkozzon"
+msgstr "Rajzvászon illesztése az aktuális kijelöléshez"
 
 #: ../src/verbs.cpp:2410
 msgid "Fit Canvas to Drawing"
-msgstr ""
+msgstr "Rajzvászon illesztése a rajzhoz"
 
 #: ../src/verbs.cpp:2411
-#, fuzzy
 msgid "Fit the canvas to the drawing"
-msgstr "A színátmenet fázisainak szerkesztése"
+msgstr "Rajzvászon illesztése a rajzhoz"
 
 #: ../src/verbs.cpp:2412
-#, fuzzy
 msgid "Fit Canvas to Selection or Drawing"
-msgstr "Illesztés a kijelölési téglalapba"
+msgstr "Rajzvászon illesztése a kijelöléshez vagy a rajzhoz"
 
 #: ../src/verbs.cpp:2413
 msgid ""
 "Fit the canvas to the current selection or the drawing if there is no "
 "selection"
 msgstr ""
+"Rajzvászon illesztése az aktuális kijelöléshez, ha pedig olyan nincs, "
+"akkor a rajzhoz"
 
 #: ../src/widgets/dash-selector.cpp:102
 msgid "Dash pattern"
@@ -9181,9 +9136,8 @@ msgstr "Betűtípus-méret:"
 #. * some representative characters that users of your locale will be
 #. * interested in.
 #: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
-#, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr "AaBbCcIiPpQq12368.;/()ÁáÉéÍíÓóÖöŐőÚúÜüŰű"
+msgstr "AaBbCcIiPpQq12369$€¢?.;/()ÁáÉéÍíÓóÖöŐőÚúÜüŰű"
 
 #: ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:486
@@ -9411,46 +9365,64 @@ msgstr ""
 #: ../src/widgets/select-toolbar.cpp:337
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
 msgstr ""
+"A <b>körvonalszélesség</b> a továbbiakban <b>átméreteződik</b> az "
+"objektumok átméretezésekor."
 
 #: ../src/widgets/select-toolbar.cpp:339
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
 msgstr ""
+"A <b>körvonalszélesség</b> a továbbiakban <b>nem méreteződik át</b> az "
+"objektumok átméretezésekor."
 
 #: ../src/widgets/select-toolbar.cpp:347
 msgid ""
 "Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are "
 "scaled."
 msgstr ""
+"A <b>lekerekített téglalap-csúcsok</b> a továbbiakban <b>átméreteződnek</b> "
+"a téglalapok átméretezésekor."
 
 #: ../src/widgets/select-toolbar.cpp:349
 msgid ""
 "Now <b>rounded rectangle corners</b> are <b>not scaled</b> when rectangles "
 "are scaled."
 msgstr ""
+"A <b>lekerekített téglalap-csúcsok</b> a továbbiakban <b>nem méreteződnek át</b> "
+"a téglalapok átméretezésekor."
 
 #: ../src/widgets/select-toolbar.cpp:357
 msgid ""
 "Now <b>gradients</b> are <b>transformed</b> along with their objects when "
 "those are transformed (moved, scaled, rotated, or skewed)."
 msgstr ""
+"A <b>színátmenetek</b> a továbbiakban az objektumok transzformációjakor "
+"(áthelyezés, méretezés, forgatás, nyírás) <b>transzformálásra kerülnek</b> "
+"az objektumaikkal együtt."
 
 #: ../src/widgets/select-toolbar.cpp:359
 msgid ""
 "Now <b>gradients</b> remain <b>fixed</b> when objects are transformed "
 "(moved, scaled, rotated, or skewed)."
 msgstr ""
+"A <b>színátmenetek</b> a továbbiakban az objektumok transzformációjakor "
+"(áthelyezés, méretezés, forgatás, nyírás) <b>rögzítve</b> maradnak."
 
 #: ../src/widgets/select-toolbar.cpp:367
 msgid ""
 "Now <b>patterns</b> are <b>transformed</b> along with their objects when "
 "those are transformed (moved, scaled, rotated, or skewed)."
 msgstr ""
+"A <b>minták</b> a továbbiakban az objektumok transzformációjakor "
+"(áthelyezés, méretezés, forgatás, nyírás) <b>transzformálásra kerülnek</b> "
+"az objektumaikkal együtt."
 
 #: ../src/widgets/select-toolbar.cpp:369
 msgid ""
 "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, "
 "scaled, rotated, or skewed)."
 msgstr ""
+"A <b>minták</b> a továbbiakban az objektumok transzformációjakor "
+"(áthelyezés, méretezés, forgatás, nyírás) <b>rögzítve</b> maradnak."
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -9928,26 +9900,24 @@ msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
+"Ez a betűtípus jelenleg nincs telepítve az Ön rendszerén. Az Inkscape "
+"az alapértelmezett betűtípust fogja használni helyette."
 
 #: ../src/widgets/toolbox.cpp:3473
-#, fuzzy
 msgid "Align right"
-msgstr "Jobb oldalak igazítása"
+msgstr "Jobbra igazítás"
 
 #: ../src/widgets/toolbox.cpp:3484
-#, fuzzy
 msgid "Center"
-msgstr "Sorok igazítása középre"
+msgstr "Középre igazítás"
 
 #: ../src/widgets/toolbox.cpp:3495
-#, fuzzy
 msgid "Align left"
-msgstr "Sorok igazítása balra"
+msgstr "Balra igazítás"
 
 #: ../src/widgets/toolbox.cpp:3506
-#, fuzzy
 msgid "Justify"
-msgstr "Sorkizárt"
+msgstr "Sorkizárás"
 
 #: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
@@ -9959,30 +9929,27 @@ msgstr "Dőlt"
 
 #: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
-msgstr ""
+msgstr "Helykihagyás a betűk között"
 
 #: ../src/widgets/toolbox.cpp:3652
 msgid "Spacing between lines"
-msgstr ""
+msgstr "Helykihagyás a sorok között"
 
 #: ../src/widgets/toolbox.cpp:3681
-#, fuzzy
 msgid "Horizontal kerning"
-msgstr "Vízszintes helykihagyás"
+msgstr "Vízszintes alávágás"
 
 #: ../src/widgets/toolbox.cpp:3702
-#, fuzzy
 msgid "Vertical kerning"
-msgstr "Függőleges helykihagyás"
+msgstr "Függőleges alávágás"
 
 #: ../src/widgets/toolbox.cpp:3729
 msgid "Letter rotation"
-msgstr ""
+msgstr "Betű-elforgatás"
 
 #: ../src/widgets/toolbox.cpp:3750
-#, fuzzy
 msgid "Remove manual kerns"
-msgstr "Kézi _alávágások eltávolítása"
+msgstr "Kézi alávágások eltávolítása"
 
 #: ../src/widgets/toolbox.cpp:3869
 msgid "Make connectors avoid selected objects"
