@@ -1,4 +1,4 @@
-ï»¿; #######################################
+; #######################################
 ; french.nsh
 ; french language strings for inkscape installer
 ; windows code page: 1252
@@ -6,7 +6,7 @@
 ; Adib Taraben theAdib@yahoo.com
 ; matiphas matiphas@free.fr
 ;
-!insertmacro MUI_LANGUAGE "FranÃ§ais"
+!insertmacro MUI_LANGUAGE "French"
 
 ; Product name
 LangString lng_Caption   ${LANG_FRENCH} "${PRODUCT_NAME} -- Editeur vectoriel SVG libre"
@@ -15,19 +15,19 @@ LangString lng_Caption   ${LANG_FRENCH} "${PRODUCT_NAME} -- Editeur vectoriel SV
 LangString lng_LICENSE_BUTTON   ${LANG_FRENCH} "Suivant >"
 
 ; Bottom text for the license page
-LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FRENCH} "$(^Name) est diffusÃ© sous la licence publique gÃ©nÃ©rale (GPL) GNU. La licence est fournie ici pour information uniquement. $_CLICK"
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FRENCH} "$(^Name) est diffusé sous la licence publique générale (GPL) GNU. La licence est fournie ici pour information uniquement. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_FRENCH} "Inkscape a dÃ©jÃ  Ã©tÃ© installÃ© par l'utilisateur $0.$\r$\nSi vous continuez, l'installation pourrait devenir dÃ©fectueuse!$\r$\nVeuillez, svp, vous connecter en tant que $0 et essayer de nouveau."
+LangString lng_DIFFERENT_USER ${LANG_FRENCH} "Inkscape a déjà été installé par l'utilisateur $0.$\r$\nSi vous continuez, l'installation pourrait devenir défectueuse!$\r$\nVeuillez, svp, vous connecter en tant que $0 et essayer de nouveau."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_FRENCH} "Vous n'avez pas les privilÃ¨ges d'administrateur.$\r$\nL'installation d'Inkscape pour tous les utilisateurs pourrait devenir dÃ©fectueuse.$\r$\nVeuillez dÃ©cocher l'option 'pour tous les utilisateurs'."
+LangString lng_NO_ADMIN ${LANG_FRENCH} "Vous n'avez pas les privilèges d'administrateur.$\r$\nL'installation d'Inkscape pour tous les utilisateurs pourrait devenir défectueuse.$\r$\nVeuillez décocher l'option 'pour tous les utilisateurs'."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_FRENCH} "Inkscape n'est pas Ã©xÃ©cutable sur Windows 95/98/ME!$\r$\nVeuillez, svp, consulter les site web officiel pour plus d'informations."
+LangString lng_NOT_SUPPORTED ${LANG_FRENCH} "Inkscape n'est pas éxécutable sur Windows 95/98/ME!$\r$\nVeuillez, svp, consulter les site web officiel pour plus d'informations."
 
 ; Full install type
-LangString lng_Full $(LANG_FRENCH) "ComplÃ¨te"
+LangString lng_Full $(LANG_FRENCH) "Complète"
 
 ; Optimal install type
 LangString lng_Optimal $(LANG_FRENCH) "Optimale"
@@ -36,22 +36,22 @@ LangString lng_Optimal $(LANG_FRENCH) "Optimale"
 LangString lng_Minimal $(LANG_FRENCH) "Minimale"
 
 ; Core install section
-LangString lng_Core $(LANG_FRENCH) "Editeur SVG ${PRODUCT_NAME} (nÃ©cessaire)"
+LangString lng_Core $(LANG_FRENCH) "Editeur SVG ${PRODUCT_NAME} (nécessaire)"
 
 ; Core install section description
 LangString lng_CoreDesc $(LANG_FRENCH) "Fichiers indispensables d'${PRODUCT_NAME} et dlls"
 
 ; GTK+ install section
-LangString lng_GTKFiles $(LANG_FRENCH) "Environnement GTK+ (nÃ©cessaire)"
+LangString lng_GTKFiles $(LANG_FRENCH) "Environnement GTK+ (nécessaire)"
 
 ; GTK+ install section description
-LangString lng_GTKFilesDesc $(LANG_FRENCH) "Une boÃ®te Ã  outils multi-plateformes pour interfaces graphiques,utilisÃ©e par ${PRODUCT_NAME}"
+LangString lng_GTKFilesDesc $(LANG_FRENCH) "Une boîte à outils multi-plateformes pour interfaces graphiques,utilisée par ${PRODUCT_NAME}"
 
 ; shortcuts install section
 LangString lng_Shortcuts $(LANG_FRENCH) "Raccourcis"
 
 ; shortcuts install section description
-LangString lng_ShortcutsDesc $(LANG_FRENCH) "Raccourcis pour dÃ©marrer ${PRODUCT_NAME}"
+LangString lng_ShortcutsDesc $(LANG_FRENCH) "Raccourcis pour démarrer ${PRODUCT_NAME}"
 
 ; All user install section
 LangString lng_Alluser $(LANG_FRENCH) "pour tous les utilisateurs"
@@ -63,25 +63,25 @@ LangString lng_AlluserDesc $(LANG_FRENCH) "Installer cette application pour tous
 LangString lng_Desktop $(LANG_FRENCH) "Bureau"
 
 ; Desktop section description
-LangString lng_DesktopDesc $(LANG_FRENCH) "CrÃ©er un raccourci vers ${PRODUCT_NAME} sur le bureau"
+LangString lng_DesktopDesc $(LANG_FRENCH) "Créer un raccourci vers ${PRODUCT_NAME} sur le bureau"
 
 ; Start Menu  section
-LangString lng_Startmenu $(LANG_FRENCH) "Menu dÃ©marrer"
+LangString lng_Startmenu $(LANG_FRENCH) "Menu démarrer"
 
 ; Start Menu section description
-LangString lng_StartmenuDesc $(LANG_FRENCH) "CrÃ©er une entrÃ©e ${PRODUCT_NAME} dans le menu dÃ©marrer"
+LangString lng_StartmenuDesc $(LANG_FRENCH) "Créer une entrée ${PRODUCT_NAME} dans le menu démarrer"
 
 ; Quick launch section
 LangString lng_Quicklaunch $(LANG_FRENCH) "Lancement rapide"
 
 ; Quick launch section description
-LangString lng_QuicklaunchDesc $(LANG_FRENCH) "CrÃ©er un raccourci vers ${PRODUCT_NAME} dans la barre de lancement rapide"
+LangString lng_QuicklaunchDesc $(LANG_FRENCH) "Créer un raccourci vers ${PRODUCT_NAME} dans la barre de lancement rapide"
 
 ; File type association for editing
 LangString lng_SVGWriter ${LANG_FRENCH} "Ouvrir les fichiers SVG avec ${PRODUCT_NAME}"
 
 ; File type association for editing description
-LangString lng_SVGWriterDesc ${LANG_FRENCH} "Choisir ${PRODUCT_NAME} comme Ã©diteur par dÃ©faut pour les fichiers SVG"
+LangString lng_SVGWriterDesc ${LANG_FRENCH} "Choisir ${PRODUCT_NAME} comme éditeur par défaut pour les fichiers SVG"
 
 ; Context Menu
 LangString lng_ContextMenu ${LANG_FRENCH} "Menu contextuel"
@@ -116,10 +116,10 @@ LangString lng_Languages $(LANG_FRENCH) "Traductions"
 LangString lng_LanguagesDesc $(LANG_FRENCH) "Installer des traductions pour ${PRODUCT_NAME}"
 
 LangString lng_am $(LANG_FRENCH) "am  Amharique"
-LangString lng_az $(LANG_FRENCH) "az  AzerbaÃ¯djanais"
-LangString lng_be $(LANG_FRENCH) "be  BiÃ©lorusse"
+LangString lng_az $(LANG_FRENCH) "az  Azerbaïdjanais"
+LangString lng_be $(LANG_FRENCH) "be  Biélorusse"
 LangString lng_ca $(LANG_FRENCH) "ca  Catalan"
-LangString lng_cs $(LANG_FRENCH) "cs  TchÃ¨que"
+LangString lng_cs $(LANG_FRENCH) "cs  Tchèque"
 LangString lng_da $(LANG_FRENCH) "da  Danois"
 LangString lng_de $(LANG_FRENCH) "de  Allemand"
 LangString lng_el $(LANG_FRENCH) "el  Grec"
@@ -133,35 +133,35 @@ LangString lng_gl $(LANG_FRENCH) "gl  Galicien"
 LangString lng_hu $(LANG_FRENCH) "hu  Hongrois"
 LangString lng_it $(LANG_FRENCH) "it  Italien"
 LangString lng_ja $(LANG_FRENCH) "ja  Japonais"
-LangString lng_ko $(LANG_FRENCH) "ko  CorÃ©en"
+LangString lng_ko $(LANG_FRENCH) "ko  Coréen"
 LangString lng_lt $(LANG_FRENCH) "lt  Lituanien"
-LangString lng_mk $(LANG_FRENCH) "mk  MacÃ©donien"
-LangString lng_nb $(LANG_FRENCH) "nb  NorvÃ©gien Bokmål"
-LangString lng_nl $(LANG_FRENCH) "nl  NÃ©erlandais"
-LangString lng_nn $(LANG_FRENCH) "nn  NorvÃ©gien Nynorsk"
+LangString lng_mk $(LANG_FRENCH) "mk  Macédonien"
+LangString lng_nb $(LANG_FRENCH) "nb  Norvégien Bokmal"
+LangString lng_nl $(LANG_FRENCH) "nl  Néerlandais"
+LangString lng_nn $(LANG_FRENCH) "nn  Norvégien Nynorsk"
 LangString lng_pa $(LANG_FRENCH) "pa  Pendjabi"
 LangString lng_pl $(LANG_FRENCH) "po  Polonais"
 LangString lng_pt $(LANG_FRENCH) "pt  Portugais"
-LangString lng_pt_BR $(LANG_FRENCH) "pt_BR Portugais BrÃ©sil"
+LangString lng_pt_BR $(LANG_FRENCH) "pt_BR Portugais Brésil"
 LangString lng_ru $(LANG_FRENCH) "ru  Russe"
 LangString lng_sk $(LANG_FRENCH) "sk  Slovaque"
-LangString lng_sl $(LANG_FRENCH) "sl  SlovÃ¨ne"
+LangString lng_sl $(LANG_FRENCH) "sl  Slovène"
 LangString lng_sr $(LANG_FRENCH) "sr  Serbe"
 LangString lng_sr@Latn $(LANG_FRENCH) "sr@Latn  Serbe en notation latine"
-LangString lng_sv $(LANG_FRENCH) "sv  SuÃ©dois"
+LangString lng_sv $(LANG_FRENCH) "sv  Suédois"
 LangString lng_tr $(LANG_FRENCH) "tr  Turc"
 LangString lng_uk $(LANG_FRENCH) "uk  Ukrainien"
-LangString lng_zh_CN $(LANG_FRENCH) "zh_CH  Chinois simplifiÃ©"
+LangString lng_zh_CN $(LANG_FRENCH) "zh_CH  Chinois simplifié"
 LangString lng_zh_TW $(LANG_FRENCH) "zh_TW  Chinois traditionnel"
 
 
 
 
 ; uninstallation options
-LangString lng_UInstOpt   ${LANG_FRENCH} "Options de dÃ©sinstallation"
+LangString lng_UInstOpt   ${LANG_FRENCH} "Options de désinstallation"
 
 ; uninstallation options subtitle
 LangString lng_UInstOpt1  ${LANG_FRENCH} "Choisissez parmi les options additionnelles"
 
 ; Ask to purge the personal preferences
-LangString lng_PurgePrefs ${LANG_FRENCH} "Conserver les prÃ©fÃ©rences personnelles"
+LangString lng_PurgePrefs ${LANG_FRENCH} "Conserver les préférences personnelles"

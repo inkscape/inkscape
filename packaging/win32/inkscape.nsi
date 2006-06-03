@@ -497,7 +497,7 @@ Section $(lng_Core) SecCore
   ; this files are added because it slips through the filter
   SetOutPath $INSTDIR\share\clipart
   File /a "..\..\inkscape\share\clipart\inkscape.logo.svg"
-  File /a "..\..\inkscape\share\clipart\inkscape.logo.classic.svg"  
+  ;File /a "..\..\inkscape\share\clipart\inkscape.logo.classic.svg"  
   SetOutPath $INSTDIR\share\extensions
   File /a "..\..\inkscape\share\extensions\pdf_output.inx.txt"
   File /a "..\..\inkscape\share\extensions\pdf_output_via_gs_on_win32.inx.txt"
