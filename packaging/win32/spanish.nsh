@@ -1,0 +1,166 @@
+; #######################################
+; spanish.nsh
+; spanish language strings for inkscape installer
+; windows code page: 1252
+; Authors:
+; Adib Taraben theAdib@yahoo.com
+; Lucas Vieites aka basurero
+!insertmacro MUI_LANGUAGE "Spanish"
+
+; Product name
+LangString lng_Caption   ${LANG_SPANISH} "${PRODUCT_NAME} -- Editor de gráficos vectoriales escalables (SVG) de código abierto"
+
+; Button text "Next >" for the license page
+LangString lng_LICENSE_BUTTON   ${LANG_SPANISH} "Siguiente >"
+
+; Bottom text for the license page
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_SPANISH} "$(^Name) se publica bajo la Licencia Pública General GNU (GPL). Esta licencia se muestra aquí solamente como información. $_CLICK"
+
+;has been installed by different user
+LangString lng_DIFFERENT_USER ${LANG_SPANISH} "Inkscape has been installed by user $0.$\r$\nIf you continue you might not complete successfully!$\r$\nPlease log in as $0 and try again."
+
+;you have no admin rigths
+LangString lng_NO_ADMIN ${LANG_SPANISH} "You do not have administrator privileges.$\r$\nInstalling Inkscape for all users might not complete successfully.$\r$\nUncheck the 'for all users' option."
+
+;win9x is not supported
+LangString lng_NOT_SUPPORTED ${LANG_SPANISH} "Inkscape is known not to run under Windows 95/98/ME!$\r$\nPlease check the official website for detailed information."
+
+; Full install type
+LangString lng_Full $(LANG_SPANISH) "Completa"
+
+; Optimal install type
+LangString lng_Optimal $(LANG_SPANISH) "Óptima"
+
+; Minimal install type
+LangString lng_Minimal $(LANG_SPANISH) "Mínima"
+
+; Core install section
+LangString lng_Core $(LANG_SPANISH) "${PRODUCT_NAME} Editor SVG (requerido)"
+
+; Core install section description
+LangString lng_CoreDesc $(LANG_SPANISH) "Archivos ${PRODUCT_NAME} básicos y dlls"
+
+; GTK+ install section
+LangString lng_GTKFiles $(LANG_SPANISH) "GTK+ Runtime Environment (requerido)"
+
+; GTK+ install section description
+LangString lng_GTKFilesDesc $(LANG_SPANISH) "Un conjunto de herramientas GUI, utilizado por ${PRODUCT_NAME}"
+
+; shortcuts install section
+LangString lng_Shortcuts $(LANG_SPANISH) "Acceso directo"
+
+; shortcuts install section description
+LangString lng_ShortcutsDesc $(LANG_SPANISH) "Accesos directos para iniciar ${PRODUCT_NAME}"
+
+; All user install section
+LangString lng_Alluser $(LANG_SPANISH) "para todos los usuarios"
+
+; All user install section description
+LangString lng_AlluserDesc $(LANG_SPANISH) "Instalar esta aplicación para todos los que utilizan este equipo (todos los usuarios)"
+
+; Desktop section
+LangString lng_Desktop $(LANG_SPANISH) "Escritorio"
+
+; Desktop section description
+LangString lng_DesktopDesc $(LANG_SPANISH) "Crear un acceso directo a ${PRODUCT_NAME} en el escritorio"
+
+; Start Menu  section
+LangString lng_Startmenu $(LANG_SPANISH) "Menú Inicio"
+
+; Start Menu section description
+LangString lng_StartmenuDesc $(LANG_SPANISH) "Crear una entrada en el menú Inicio para ${PRODUCT_NAME}"
+
+; Quick launch section
+LangString lng_Quicklaunch $(LANG_SPANISH) "Acceso rápido"
+
+; Quick launch section description
+LangString lng_QuicklaunchDesc $(LANG_SPANISH) "Crear un acceso directo a ${PRODUCT_NAME} en la barra de acceso rápido"
+
+; File type association for editing
+LangString lng_SVGWriter ${LANG_SPANISH} "Abrir archivos SVG con ${PRODUCT_NAME}"
+
+; File type association for editing description
+LangString lng_SVGWriterDesc ${LANG_SPANISH} "Seleccionar ${PRODUCT_NAME} como editor predeterminado para archivos"
+
+; Context Menu
+LangString lng_ContextMenu ${LANG_SPANISH} "Menú contextual"
+
+; Context Menu description
+LangString lng_ContextMenuDesc ${LANG_SPANISH} "Añadir ${PRODUCT_NAME} al menú contextual para archivos SVG"
+
+
+; Additional files section
+LangString lng_Addfiles $(LANG_SPANISH) "Archivos adicionales"
+
+; Additional files section description
+LangString lng_AddfilesDesc $(LANG_SPANISH) "Archivos adicionales"
+
+; Examples section
+LangString lng_Examples $(LANG_SPANISH) "Ejemplos"
+
+; Examples section description
+LangString lng_ExamplesDesc $(LANG_SPANISH) "Ejemplos de uso de ${PRODUCT_NAME}"
+
+; Tutorials section
+LangString lng_Tutorials $(LANG_SPANISH) "Tutoriales"
+
+; Tutorials section description
+LangString lng_TutorialsDesc $(LANG_SPANISH) "Tutoriales del uso de ${PRODUCT_NAME}"
+
+
+; Languages section
+LangString lng_Languages $(LANG_SPANISH) "Traducciones"
+
+; Languages section dscription
+LangString lng_LanguagesDesc $(LANG_SPANISH) "Instalar varias traducciones para ${PRODUCT_NAME}"
+
+LangString lng_am $(LANG_SPANISH) "am  Amharic"
+LangString lng_az $(LANG_SPANISH) "az  Azerbaijani"
+LangString lng_be $(LANG_SPANISH) "be  Byelorussian"
+LangString lng_ca $(LANG_SPANISH) "ca  Catalan"
+LangString lng_cs $(LANG_SPANISH) "cs  Czech"
+LangString lng_da $(LANG_SPANISH) "da  Danish"
+LangString lng_de $(LANG_SPANISH) "de  German"
+LangString lng_el $(LANG_SPANISH) "el  Greek"
+LangString lng_en $(LANG_SPANISH) "en  English"
+LangString lng_es $(LANG_SPANISH) "es  Español"
+LangString lng_es_MX $(LANG_SPANISH) "es_MX  Español Mexicano"
+LangString lng_et $(LANG_SPANISH) "es  Estonian"
+LangString lng_fr $(LANG_SPANISH) "fr  French"
+LangString lng_ga $(LANG_SPANISH) "ga  Irish"
+LangString lng_gl $(LANG_SPANISH) "gl  Gallegan"
+LangString lng_hu $(LANG_SPANISH) "hu  Hungarian"
+LangString lng_it $(LANG_SPANISH) "it  Italian"
+LangString lng_ja $(LANG_SPANISH) "ja  Japanese"
+LangString lng_ko $(LANG_SPANISH) "ko  Korean"
+LangString lng_lt $(LANG_SPANISH) "lt  Lithuanian"
+LangString lng_mk $(LANG_SPANISH) "mk  Macedonian"
+LangString lng_nb $(LANG_SPANISH) "nb  Norwegian Bokmål"
+LangString lng_nl $(LANG_SPANISH) "nl  Dutch"
+LangString lng_nn $(LANG_SPANISH) "nn  Norwegian Nynorsk"
+LangString lng_pa $(LANG_SPANISH) "pa  Panjabi"
+LangString lng_pl $(LANG_SPANISH) "po  Polish"
+LangString lng_pt $(LANG_SPANISH) "pt  Portuguese"
+LangString lng_pt_BR $(LANG_SPANISH) "pt_BR Brazilian Portuguese"
+LangString lng_ru $(LANG_SPANISH) "ru  Russian"
+LangString lng_sk $(LANG_SPANISH) "sk  Slovak"
+LangString lng_sl $(LANG_SPANISH) "sl  Slovenian"
+LangString lng_sr $(LANG_SPANISH) "sr  Serbian"
+LangString lng_sr@Latn $(LANG_SPANISH) "sr@Latn  Serbian in Latin script"
+LangString lng_sv $(LANG_SPANISH) "sv  Swedish"
+LangString lng_tr $(LANG_SPANISH) "tr  Turkish"
+LangString lng_uk $(LANG_SPANISH) "uk  Ukrainian"
+LangString lng_zh_CN $(LANG_SPANISH) "zh_CH  Simplifed Chinese"
+LangString lng_zh_TW $(LANG_SPANISH) "zh_TW  Chinese (Taiwan)"
+
+
+
+
+; uninstallation options
+LangString lng_UInstOpt   ${LANG_SPANISH} "Opciones de desinstalación"
+
+; uninstallation options subtitle
+LangString lng_UInstOpt1  ${LANG_SPANISH} "Elija sus opciones adicionales"
+
+; Ask to purge the personal preferences
+LangString lng_PurgePrefs ${LANG_SPANISH} "Guardar las preferencias personales"

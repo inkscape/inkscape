@@ -71,10 +71,11 @@ ShowUninstDetails hide
 !include "english.nsh" 
 ;!include "catalan.nsh" 
 !include "czech.nsh" 
-;!include "french.nsh" 
+!include "french.nsh" 
 !include "german.nsh" 
 !include "italian.nsh" 
 ;!include "polish.nsh" 
+!include "spanish.nsh" 
 
 ReserveFile "inkscape.nsi.uninstall"
 
