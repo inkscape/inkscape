@@ -6,9 +6,6 @@
 # Luca Ferretti <elle.uca@infinito.it>, 2005.
 # Luca Bruno <luca.br@uno.it>, 2005, 2006.
 #
-#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
-#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
-#: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.44\n"
