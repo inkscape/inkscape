@@ -1,38 +1,45 @@
-# Greek translation for sodipodi.
-# Copyright (C) 2001 Free Software Foundation.
+# Greek translation for Inkscape.
+# Copyright (C) 2001,2006 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001.
-# 
+# Spyros Blanas <cid_e@users.sourceforge.net>, 2006.
+#
 #: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
 #: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
 #: ../src/widgets/toolbox.cpp:3729
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi 0.25\n"
+"Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2001-12-28 21:07+0000\n"
-"Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
+"POT-Creation-Date: 2006-06-03 19:05+0200\n"
+"PO-Revision-Date: 2006-06-03 12:53+0200\n"
+"Last-Translator: Spyros Blanas <cid_e@users.sourceforge.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
 msgstr ""
+"Δημιουργήστε και τροποποιήστε διανυσματικές εικόνες τύπου Scalable Vector "
+"Graphics"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape SVG Vector Illustrator"
-msgstr ""
+msgstr "Inkscape SVG Vector Illustrator"
 
 #: ../src/arc-context.cpp:328
+#, fuzzy
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
+"<b>Ctrl</b>: κάνε κύκλο ή ακέραιας αναλογίας έλλειψη, snap γωνία τόξου/"
+"τμήματος"
 
 #: ../src/arc-context.cpp:329 ../src/rect-context.cpp:372
 msgid "<b>Shift</b>: draw around the starting point"
-msgstr ""
+msgstr "<b>Shift</b>: ζωγράφισε γύρω από το σημείο εκκίνησης"
 
 #: ../src/arc-context.cpp:414
 #, c-format
@@ -40,114 +47,115 @@ msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
+"<b>Έλλειψη</b>: %s &#215; %s &#183; με <b>Ctrl</b> κάνε κύκλο ή ακέραιας "
+"αναλογίας έλλειψη&#183; με <b>Shift</b> ζωγράφισε γύρω από το αρχικό σημείο"
 
 #: ../src/connector-context.cpp:517
-#, fuzzy
 msgid "Creating new connector"
-msgstr "Έγγραφο"
+msgstr "Δημιουργώ νέα σύνδεση"
 
 #: ../src/connector-context.cpp:941
-#, fuzzy
 msgid "Finishing connector"
-msgstr "Γροιλανδία"
+msgstr "Ολοκληρώνω τη σύνδεση"
 
 #: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
+"<b>Σημείο σύνδεσης</b>: κάνε κλίκ ή σύρε γα να δημιουργήσεις νέο σύνδεσμο"
 
 #: ../src/connector-context.cpp:1156
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
+"<b>Τελικό σημείο σύνδεσης</b>: σύρε για επανασύνδεση ή για να συνδέσεις σε "
+"νέα σχήματα"
 
 #: ../src/connector-context.cpp:1267
-#, fuzzy
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "Διαγραφή επιλεγμένων αντικειμένων"
+msgstr "Επέλεξε <b>τουλάχιστο ένα αντικείμενο που δεν είναι σύνδεσμος</b>."
 
 #: ../src/context-fns.cpp:29 ../src/context-fns.cpp:58
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
 msgstr ""
+"<b>Το τρέχον στρώμα είναι κρυμμένο</b>. Εμφάνισε το για να μπορέσεις να "
+"σχεδιάσεις σε αυτό."
 
 #: ../src/context-fns.cpp:35 ../src/context-fns.cpp:64
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
+"<b>Το τρέχον στρώμα είναι κλειδωμένο</b>. Ξεκλείδωσέ το για να μπορέσεις να "
+"σχεδιάσεις σε αυτό."
 
 #: ../src/desktop-events.cpp:221
 #, c-format
 msgid "%s at %s"
-msgstr ""
+msgstr "%s στα %s"
 
 #: ../src/desktop.cpp:686
 msgid "No previous zoom."
-msgstr ""
+msgstr "Όχι προηγούμενη εστίαση."
 
 #: ../src/desktop.cpp:711
 msgid "No next zoom."
-msgstr ""
+msgstr "Όχι επόμενη εστίαση."
 
 #
 #: ../src/dialogs/clonetiler.cpp:162
-#, fuzzy
 msgid "<small>Nothing selected.</small>"
-msgstr "Επιλέχθησαν \"%s\""
+msgstr "<small>Τίποτα δεν επιλέχθηκε.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:168
 msgid "<small>More than one object selected.</small>"
-msgstr ""
+msgstr "<small>Περισσότερα από ένα επιλεγμένα αντικείμενα.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:175
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
-msgstr ""
+msgstr "<small>Το αντικείμενο έχει <b>%d</b> επιστρωμένους κλώνους.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:180
 msgid "<small>Object has no tiled clones.</small>"
-msgstr ""
+msgstr "<small>Το αντικείμενο δεν έχει επιστρωμένους κλώνους.</small>"
 
 #
 #: ../src/dialogs/clonetiler.cpp:845
-#, fuzzy
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "Διαγραφή επιλεγμένου αντικειμένου"
+msgstr "Επέλεξε <b>ένα αντικείμενο</b> του οποίου οι κλώνοι θα διαχωριστούν."
 
 #
 #: ../src/dialogs/clonetiler.cpp:896
-#, fuzzy
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Διαγραφή επιλεγμένου αντικειμένου"
+msgstr "Επέλεξε <b>ένα αντικείμενο</b> του οποίου οι κλώνοι θα αφαιρεθούν."
 
 #
 #: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1931
-#, fuzzy
 msgid "Select an <b>object</b> to clone."
-msgstr "Διαγραφή επιλεγμένου αντικειμένου"
+msgstr "Επέλεξε ένα <b>αντικείμενο</b> για κλωνοποίηση."
 
 #: ../src/dialogs/clonetiler.cpp:970
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
 msgstr ""
+"Αν θέλεις να κλωνοποιήσεις αρκετά αντικείμενα, <b>ομαδοποίησε</b> τα and "
+"<b>κλωνοποίησε την ομάδα</b>."
 
 #: ../src/dialogs/clonetiler.cpp:1480
 msgid "<small>Per row:</small>"
-msgstr ""
+msgstr "<small>Ανά γραμμή:</small>"
 
 #
 #: ../src/dialogs/clonetiler.cpp:1493
-#, fuzzy
 msgid "<small>Per column:</small>"
-msgstr "Επιλέχθησαν \"%s\""
+msgstr "<small>Ανά στήλη:</small>"
 
 #
 #: ../src/dialogs/clonetiler.cpp:1501
-#, fuzzy
 msgid "<small>Randomize:</small>"
-msgstr "Επιλέχθησαν \"%s\""
+msgstr "<small>Τυχαιότητα:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1655
-#, fuzzy
 msgid "_Symmetry"
-msgstr "Χρήση Μετρικού Συστήματος"
+msgstr "_Συμμετρία"
 
 #. TRANSLATORS: For the following 17 symmetry groups, see
 #. * http://www.bib.ulb.ac.be/coursmath/doc/17.htm (visual examples);
@@ -156,575 +164,563 @@ msgstr "Χρήση Μετρικού Συστήματος"
 #.
 #: ../src/dialogs/clonetiler.cpp:1663
 msgid "Select one of the 17 symmetry groups for the tiling"
-msgstr ""
+msgstr "Επέλεξε ένα από τις 17 ομάδες συμμετρίας για την επίστρωση"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
 #: ../src/dialogs/clonetiler.cpp:1674
 msgid "<b>P1</b>: simple translation"
-msgstr ""
+msgstr "<b>P1</b>: απλή μετατόπιση"
 
 #: ../src/dialogs/clonetiler.cpp:1675
 msgid "<b>P2</b>: 180&#176; rotation"
-msgstr ""
+msgstr "<b>P2</b>: 180&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1676
 msgid "<b>PM</b>: reflection"
-msgstr ""
+msgstr "<b>PM</b>: ανάκλαση"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
 #: ../src/dialogs/clonetiler.cpp:1679
 msgid "<b>PG</b>: glide reflection"
-msgstr ""
+msgstr "<b>PG</b>: μετατοπισμένη ανάκλαση"
 
 #: ../src/dialogs/clonetiler.cpp:1680
 msgid "<b>CM</b>: reflection + glide reflection"
-msgstr ""
+msgstr "<b>CM</b>: ανάκλαση + μετατοπισμένη ανάκλαση"
 
 #: ../src/dialogs/clonetiler.cpp:1681
 msgid "<b>PMM</b>: reflection + reflection"
-msgstr ""
+msgstr "<b>PMM</b>: ανάκλαση + ανάκλαση"
 
 #: ../src/dialogs/clonetiler.cpp:1682
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
-msgstr ""
+msgstr "<b>PMG</b>: ανάκλαση + 180&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1683
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
-msgstr ""
+msgstr "<b>PGG</b>: μετατοπισμένη ανάκλαση + 180&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1684
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
-msgstr ""
+msgstr "<b>CMM</b>: ανάκλαση + ανάκλαση + 180&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1685
 msgid "<b>P4</b>: 90&#176; rotation"
-msgstr ""
+msgstr "<b>P4</b>: 90&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1686
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
-msgstr ""
+msgstr "<b>P4M</b>: 90&#176; περιστροφή + 45&#176; ανάκλαση"
 
 #: ../src/dialogs/clonetiler.cpp:1687
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
-msgstr ""
+msgstr "<b>P4G</b>: 90&#176; περιστροφή + 90&#176; ανάκλαση"
 
 #: ../src/dialogs/clonetiler.cpp:1688
 msgid "<b>P3</b>: 120&#176; rotation"
-msgstr ""
+msgstr "<b>P3</b>: 120&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1689
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
-msgstr ""
+msgstr "<b>P31M</b>: ανάκλαση + 120&#176; περιστροφή, πυκνά"
 
 #: ../src/dialogs/clonetiler.cpp:1690
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
-msgstr ""
+msgstr "<b>P3M1</b>: ανάκλαση + 120&#176; περιστροφή, αραιά"
 
 #: ../src/dialogs/clonetiler.cpp:1691
 msgid "<b>P6</b>: 60&#176; rotation"
-msgstr ""
+msgstr "<b>P6</b>: 60&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1692
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
-msgstr ""
+msgstr "<b>P6M</b>: ανάκλαση + 60&#176; περιστροφή"
 
 #: ../src/dialogs/clonetiler.cpp:1720
 msgid "S_hift"
-msgstr ""
+msgstr "_Μετατόπιση"
 
 #
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
 #: ../src/dialogs/clonetiler.cpp:1730
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "<b>Shift X:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Μετατόπιση X:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1738
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
-msgstr ""
+msgstr "Οριζόντια μετατόπιση ανα γραμμή (σε % του πλάτους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1746
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
-msgstr ""
+msgstr "Οριζόντια μετατόπιση ανά στήλη (σε % του πλάτους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1753
 msgid "Randomize the horizontal shift by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία οριζόντια μετατόπιση με αυτό το ποσοστό"
 
 #
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
 #: ../src/dialogs/clonetiler.cpp:1763
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "<b>Shift Y:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Μετατόπιση Y:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1771
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
-msgstr ""
+msgstr "Κάθετη μετατόπιση ανά γραμμή (σε % του ύψους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1779
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
-msgstr ""
+msgstr "Κάθετη μετατόπιση ανά στήλη (σε % του ύψους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1786
 msgid "Randomize the vertical shift by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία κάθετη μετατόπιση με αυτό το ποσοστό"
 
-#
+# Apaisio! (kai sta agglika kai sta ellhnika)
 #: ../src/dialogs/clonetiler.cpp:1794
-#, fuzzy
 msgid "<b>Exponent:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Εκθέτης:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1801
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
+"Κατα πόσο οι γραμμές είναι παράλληλες (1), συγκλίνουν (<1) ή αποκλίνουν (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:1808
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
+"Κατά πόσο οι στήλες είναι παράλληλες (1), συγκλίνουν (<1) ή αποκλίνουν (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:1816 ../src/dialogs/clonetiler.cpp:1906
 #: ../src/dialogs/clonetiler.cpp:1965 ../src/dialogs/clonetiler.cpp:2021
 #: ../src/dialogs/clonetiler.cpp:2152
 msgid "<small>Alternate:</small>"
-msgstr ""
+msgstr "<small>Ενάλλαξε:</small>"
 
 #: ../src/dialogs/clonetiler.cpp:1822
 msgid "Alternate the sign of shifts for each row"
-msgstr ""
+msgstr "Ενάλλαξε το πρόσημο των μετατοπίσεων για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:1827
 msgid "Alternate the sign of shifts for each column"
-msgstr ""
+msgstr "Ενάλλαξε το πρόσημο των μετατοπίσεων για κάθε στήλη"
 
 #
 #: ../src/dialogs/clonetiler.cpp:1836
-#, fuzzy
 msgid "Sc_ale"
-msgstr "Κλιμάκωση"
+msgstr "_Κλιμάκωση"
 
-#
 #: ../src/dialogs/clonetiler.cpp:1844
-#, fuzzy
 msgid "<b>Scale X:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Κλιμάκωση Χ:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1852
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
-msgstr "οριζόντιο"
+msgstr "Οριζόντια κλιμάκωση ανά γραμμή (σε % του πλάτους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1860
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
-msgstr "οριζόντιο"
+msgstr "Οριζόντια κλιμάκωση ανά στήλη (σε % του πλάτους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1867
 msgid "Randomize the horizontal scale by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία οριζόντια κλιμάκωση με αυτό το ποσοστό"
 
-#
 #: ../src/dialogs/clonetiler.cpp:1875
-#, fuzzy
 msgid "<b>Scale Y:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Κλιμάκωση Y:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1883
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
-msgstr "Μερικό μικρό χαλάζι"
+msgstr "Κάθετη κλιμάκωση ανά γραμμή (σε % του ύψους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1891
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
-msgstr "Μερικό μικρό χαλάζι"
+msgstr "Κάθετη κλιμάκωση ανά στήλη (σε % του ύψους του πλακιδίου)"
 
 #: ../src/dialogs/clonetiler.cpp:1898
 msgid "Randomize the vertical scale by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία κάθετη κλιμάκωση με αυτό το ποσοστό"
 
 #: ../src/dialogs/clonetiler.cpp:1912
-#, fuzzy
 msgid "Alternate the sign of scales for each row"
-msgstr "Μερικό μικρό χαλάζι"
+msgstr "Ενάλλαξε το πρόσημο των κλιμακώσεων για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:1917
-#, fuzzy
 msgid "Alternate the sign of scales for each column"
-msgstr "Μερικό μικρό χαλάζι"
+msgstr "Ενάλλαξε το πρόσημο των κλιμακώσεων για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:1926
-#, fuzzy
 msgid "_Rotation"
-msgstr "Επιλογή"
+msgstr "_Περιστροφή"
 
-#
 #: ../src/dialogs/clonetiler.cpp:1934
-#, fuzzy
 msgid "<b>Angle:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Γωνία:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1942
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
-msgstr ""
+msgstr "Περίστρεψε τα πλακίδια κατά αυτή τη γωνία για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:1950
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
-msgstr ""
+msgstr "Περίστρεψε τα πλακίδια κατά αυτή τη γωνία για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:1957
 msgid "Randomize the rotation angle by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία γωνία περιστροφής με αυτό το ποσοστό"
 
 #: ../src/dialogs/clonetiler.cpp:1971
 msgid "Alternate the rotation direction for each row"
-msgstr ""
+msgstr "Ενάλλαξε την διεύθυνση περιστροφής για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:1976
 msgid "Alternate the rotation direction for each column"
-msgstr ""
+msgstr "Ενάλλαξε την διεύθυνση περιστροφής για κάθε στήλη"
 
-#
 #: ../src/dialogs/clonetiler.cpp:1984
-#, fuzzy
 msgid "_Opacity"
-msgstr "Διαφάνεια:"
+msgstr "_Διαφάνεια:"
 
-#
+# To "axnosvhse" akougetai apaisio, alla pws na peis to "fade out"?
 #: ../src/dialogs/clonetiler.cpp:1992
 #, fuzzy
 msgid "<b>Fade out:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>Αχνοσβήσε:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1999
 msgid "Decrease tile opacity by this percentage for each row"
-msgstr ""
+msgstr "Αύξησε την διαφάνεια του πλακιδίου με αυτό το ποσοστό για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:2006
 msgid "Decrease tile opacity by this percentage for each column"
-msgstr ""
+msgstr "Αύξησε την διαφάνεια του πλακιδίου με αυτό το ποσοστό για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:2013
 msgid "Randomize the tile opacity by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία διαφάνεια με αυτό το ποσοστό"
 
 #: ../src/dialogs/clonetiler.cpp:2027
 msgid "Alternate the sign of opacity change for each row"
-msgstr ""
+msgstr "Ενάλλαξε το πρόσημο της μεταβολής της διαφάνειας για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:2032
 msgid "Alternate the sign of opacity change for each column"
-msgstr ""
+msgstr "Ενάλλαξε το πρόσημο της μεταβολής της διαφάνειας για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:2040
-#, fuzzy
 msgid "Co_lor"
-msgstr "Χρώμα:"
+msgstr "_Χρώμα"
 
 #: ../src/dialogs/clonetiler.cpp:2045
-#, fuzzy
 msgid "Initial color: "
-msgstr " χρώμα"
+msgstr "Αρχικό χρώμα: "
 
 #: ../src/dialogs/clonetiler.cpp:2049
 msgid "Initial color of tiled clones"
-msgstr ""
+msgstr "Αρχικό χρώμα των κλωνοποιημένων πλακιδίων"
 
 #: ../src/dialogs/clonetiler.cpp:2049
 msgid ""
 "Initial color for clones (works only if the original has unset fill or "
 "stroke)"
 msgstr ""
+"Αρχικό χρώμα των κλώνων (δουλεύει μόνο αν το πρωτότυπο δεν έχει γέμισμα ή "
+"περίγραμμα)"
 
-#
 #: ../src/dialogs/clonetiler.cpp:2064
-#, fuzzy
 msgid "<b>H:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>H:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2071
 msgid "Change the tile hue by this percentage for each row"
-msgstr ""
+msgstr "Άλλαξε την απόχρωση του πλακιδίου με αυτό το ποσοστό για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:2078
 msgid "Change the tile hue by this percentage for each column"
-msgstr ""
+msgstr "Άλλαξε την απόχρωση του πλακιδίου με αυτό το ποσοστό για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:2085
 msgid "Randomize the tile hue by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία απόχρωση στο πλακίδιο με αυτό το ποσοστό"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2094
-#, fuzzy
 msgid "<b>S:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>S:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2101
 msgid "Change the color saturation by this percentage for each row"
-msgstr ""
+msgstr "Άλλαξε τον χρωματικό κορεσμό με αυτό το ποσοστό για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:2108
 msgid "Change the color saturation by this percentage for each column"
-msgstr ""
+msgstr "Άλλαξε τον χρωματικό κορεσμό με αυτό το ποσοστό για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:2115
 msgid "Randomize the color saturation by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαίο χρωματικό κορεσμό με αυτό το ποσοστό"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2123
-#, fuzzy
 msgid "<b>L:</b>"
-msgstr "Αλλαγή"
+msgstr "<b>L:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2130
 msgid "Change the color lightness by this percentage for each row"
-msgstr ""
+msgstr "Άλλαξε τη χρωματική φωτεινότητα με αυτό το ποσοστό για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:2137
 msgid "Change the color lightness by this percentage for each column"
-msgstr ""
+msgstr "Άλλαξε τη χρωματική φωτεινότητα με αυτό το ποσοστό για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:2144
 msgid "Randomize the color lightness by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία χρωματική φωτεινότητα με αυτό το ποσοστό"
 
 #: ../src/dialogs/clonetiler.cpp:2158
 msgid "Alternate the sign of color changes for each row"
-msgstr ""
+msgstr "Ενάλλαξε το πρόσημο των χρωματικών αλλαγών για κάθε γραμμή"
 
 #: ../src/dialogs/clonetiler.cpp:2163
 msgid "Alternate the sign of color changes for each column"
-msgstr ""
+msgstr "Ενάλλαξε το πρόσημο των χρωματικών αλλαγών για κάθε στήλη"
 
 #: ../src/dialogs/clonetiler.cpp:2171
-#, fuzzy
 msgid "_Trace"
-msgstr "Διακοπείσα σωλήνωση"
+msgstr "_Ίχνος"
 
 #: ../src/dialogs/clonetiler.cpp:2178
 msgid "Trace the drawing under the tiles"
-msgstr ""
+msgstr "Ιχνηλάτησε το σχέδιο κάτω από τα πλακίδια"
 
 #: ../src/dialogs/clonetiler.cpp:2182
 msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
 msgstr ""
+"Για κάθε κλώνο, επέλεξε μια τιμή από το σχέδιο στην τοποθεσία του κλώνου και "
+"εφάρμοσέ τη στο κλώνο"
 
 #: ../src/dialogs/clonetiler.cpp:2196
 msgid "1. Pick from the drawing:"
-msgstr ""
+msgstr "1. Επέλεξε από το σχέδιο:"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
 #: ../src/ui/dialog/tracedialog.cpp:458
-#, fuzzy
 msgid "Color"
-msgstr "Χρώμα:"
+msgstr "Χρώμα"
 
 #: ../src/dialogs/clonetiler.cpp:2208
 msgid "Pick the visible color and opacity"
-msgstr ""
+msgstr "Επέλεξε το ορατό χρώμα και την διαφάνεια"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2215 ../src/dialogs/clonetiler.cpp:2364
 #: ../share/extensions/svg_dropshadow.inx.h:3
-#, fuzzy
 msgid "Opacity"
-msgstr "Διαφάνεια:"
+msgstr "Διαφάνεια"
 
 #: ../src/dialogs/clonetiler.cpp:2216
 msgid "Pick the total accumulated opacity"
-msgstr ""
+msgstr "Επέλεξε την συνολικά συσσωρευμένη διαφάνεια"
 
 #: ../src/dialogs/clonetiler.cpp:2223
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../src/dialogs/clonetiler.cpp:2224
 msgid "Pick the Red component of the color"
-msgstr ""
+msgstr "Επέλεξε τη κόκκινη συνιστώσα του χρώματος "
 
 #: ../src/dialogs/clonetiler.cpp:2231
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: ../src/dialogs/clonetiler.cpp:2232
 msgid "Pick the Green component of the color"
-msgstr ""
+msgstr "Επέλεξε την πράσινη συνιστώσα του χρώματος"
 
 #: ../src/dialogs/clonetiler.cpp:2239
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: ../src/dialogs/clonetiler.cpp:2240
 msgid "Pick the Blue component of the color"
-msgstr ""
+msgstr "Επέλεξε την μπλε συνιστώσα του χρώματος"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2249
 msgid "clonetiler|H"
-msgstr ""
+msgstr "clonetiler|H"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2250
-#, fuzzy
 msgid "Pick the hue of the color"
-msgstr "Διαλέξτε χρώμα"
+msgstr "Επέλεξε την απόχρωση του χρώματος"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2259
 msgid "clonetiler|S"
-msgstr ""
+msgstr "clonetiler|S"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2260
-#, fuzzy
 msgid "Pick the saturation of the color"
-msgstr "Διαλέξτε χρώμα"
+msgstr "Επέλεξε τον κορεσμό του χρώματος"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/dialogs/clonetiler.cpp:2269
 msgid "clonetiler|L"
-msgstr ""
+msgstr "clonetiler|L"
 
 #: ../src/dialogs/clonetiler.cpp:2270
 msgid "Pick the lightness of the color"
-msgstr ""
+msgstr "Επέλεξε την φωτεινότητα του χρώματος"
 
 #: ../src/dialogs/clonetiler.cpp:2280
 msgid "2. Tweak the picked value:"
-msgstr ""
+msgstr "2. Άλλαξε την επιλεγμένη τιμή:"
 
 #: ../src/dialogs/clonetiler.cpp:2290
 msgid "Gamma-correct:"
-msgstr ""
+msgstr "Διόρθωση gamma:"
 
 #: ../src/dialogs/clonetiler.cpp:2295
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr ""
+"Μετατόπισε το μεσοδιάστημα των επιλεγμένων τιμών προς τα πάνω (>0) ή προς τα "
+"κάτω (<0)"
 
 #: ../src/dialogs/clonetiler.cpp:2302
 msgid "Randomize:"
-msgstr ""
+msgstr "Τυχαιότητα:"
 
 #: ../src/dialogs/clonetiler.cpp:2307
 msgid "Randomize the picked value by this percentage"
-msgstr ""
+msgstr "Πρόσθεσε τυχαία στην επιλεγμένη τιμή με αυτό το ποσοστό"
 
 #: ../src/dialogs/clonetiler.cpp:2314
-#, fuzzy
 msgid "Invert:"
-msgstr "ίντσα"
+msgstr "Αντιστροφή:"
 
 #: ../src/dialogs/clonetiler.cpp:2318
 msgid "Invert the picked value"
-msgstr ""
+msgstr "Αντέστρεψε την επιλεγμένη τιμή"
 
 #: ../src/dialogs/clonetiler.cpp:2324
 msgid "3. Apply the value to the clones':"
-msgstr ""
+msgstr "3. Εφάρμοσε την τιμή στην ακόλουθη ιδιότητα των κλώνων:"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2334
-#, fuzzy
 msgid "Presence"
-msgstr "Προτιμίσεις Ναυτίλου"
+msgstr "Παρουσία"
 
 #: ../src/dialogs/clonetiler.cpp:2337
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
 msgstr ""
+"Κάθε κλώνος δημιουργείται με την πιθανότητα που καθορίζεται από την "
+"επιλεγμένη τιμή σε εκείνο το σημείο"
 
 #: ../src/dialogs/clonetiler.cpp:2344
-#, fuzzy
 msgid "Size"
-msgstr "Γουϊνέα"
+msgstr "Μέγεθος"
 
 #: ../src/dialogs/clonetiler.cpp:2347
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr ""
+"Το μέγεθος κάθε κλώνου καθορίζεται από την επιλεγμένη τιμή σε εκείνο το "
+"σημείο"
 
 #: ../src/dialogs/clonetiler.cpp:2357
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
 msgstr ""
+"Κάθε κλώνος χρωματίζεται με το επιλεγμένο χρώμα (το πρωτότυπο πρέπει να μην "
+"έχει γέμισμα ή περίγραμμα"
 
 #: ../src/dialogs/clonetiler.cpp:2367
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr ""
+"Η διαφάνεια κάθε κλώνου καθορίζεται από την επιλεγμένη τιμή σε εκείνο το "
+"σημείο"
 
 #: ../src/dialogs/clonetiler.cpp:2394
 msgid "How many rows in the tiling"
-msgstr ""
+msgstr "Πόσες γραμμές θα έχει η επίστρωση"
 
 #: ../src/dialogs/clonetiler.cpp:2414
 msgid "How many columns in the tiling"
-msgstr ""
+msgstr "Πόσες στήλες θα έχει η επίστρωση"
 
 #: ../src/dialogs/clonetiler.cpp:2444
 msgid "Width of the rectangle to be filled"
-msgstr ""
+msgstr "Πλάτος του ορθογωνίου που θα γεμιστεί"
 
 #: ../src/dialogs/clonetiler.cpp:2469
 msgid "Height of the rectangle to be filled"
-msgstr ""
+msgstr "Ύψος του ορθογωνίου που θα γεμιστεί"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2484
-#, fuzzy
 msgid "Rows, columns: "
-msgstr "Αλλαγή"
+msgstr "Γραμμές, στήλες: "
 
 #: ../src/dialogs/clonetiler.cpp:2485
 msgid "Create the specified number of rows and columns"
-msgstr ""
+msgstr "Δημιούργησε τον καθορισμένο αριθμό γραμμών και στηλών"
 
 #: ../src/dialogs/clonetiler.cpp:2494
-#, fuzzy
 msgid "Width, height: "
-msgstr "Ύψος: "
+msgstr "Πλάτος, ύψος: "
 
 #: ../src/dialogs/clonetiler.cpp:2495
 msgid "Fill the specified width and height with the tiling"
-msgstr ""
+msgstr "Γέμισε το καθορισμένο πλάτος και ύψος με την επίστρωση"
 
 #: ../src/dialogs/clonetiler.cpp:2511
-#, fuzzy
 msgid "Use saved size and position of the tile"
-msgstr "Θέση"
+msgstr "Χρησιμοποιήσε το αποθηκευμένο μέγεθος και θέση του πλακιδίου"
 
 #: ../src/dialogs/clonetiler.cpp:2514
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
 msgstr ""
+"Υποθέτει ότι το μέγεθος και η θέση του πλακιδίου είναι τα ίδια όπως την "
+"τελευταία φορά που έγινε επίστρωση (αν έγινε), αντί να χρησιμοποιεί τις "
+"τρέχουσες τιμές για το πλακίδιο"
 
 #
 #: ../src/dialogs/clonetiler.cpp:2538
-#, fuzzy
 msgid " <b>_Create</b> "
-msgstr "Αλλαγή"
+msgstr " <b>_Δημιούργησε</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2540
 msgid "Create and tile the clones of the selection"
-msgstr ""
+msgstr "Δημιούργησε και επίστρωσε τους κλώνους της επιλογής"
 
 #. TRANSLATORS: if a group of objects are "clumped" together, then they
 #. are unevenly spread in the given amount of space - as shown in the
@@ -733,25 +729,26 @@ msgstr ""
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/dialogs/clonetiler.cpp:2555
 msgid " _Unclump "
-msgstr ""
+msgstr " Δ_ιαχώρισε "
 
 #: ../src/dialogs/clonetiler.cpp:2556
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr ""
+"Διαχώρισε τους κλώνους για να μειώσεις το στοίβαγμα&#183; μπορεί να "
+"εφαρμοστεί επαναλαμβανόμενα"
 
 #: ../src/dialogs/clonetiler.cpp:2562
-#, fuzzy
 msgid " Re_move "
-msgstr "Διαγραφή συνδέσμου"
+msgstr " Διέγ_ραψε "
 
 #: ../src/dialogs/clonetiler.cpp:2563
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr ""
+"Διέγραψε τους υπάρχοντες επιστρωμένους κλώνους του επιλεγμένου αντικειμένου"
 
 #: ../src/dialogs/clonetiler.cpp:2579
-#, fuzzy
 msgid " R_eset "
-msgstr "Διαγραφή συνδέσμου"
+msgstr " _Επαναρχικοποίησε "
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2581
@@ -759,10 +756,12 @@ msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
 msgstr ""
+"Επαναρχικοποίησε όλες τις μετατοπίσεις, κλιμακώσεις, περιστροφές, διαφάνειες "
+"και χρωματικές αλλαγές σε μηδέν"
 
 #: ../src/dialogs/debugdialog.cpp:135
 msgid "Messages"
-msgstr ""
+msgstr "Μυνήματα"
 
 #
 #. ## Add a menu for clear()
@@ -774,24 +773,22 @@ msgstr "_Αρχείο"
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
 #: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
-#, fuzzy
 msgid "_Clear"
-msgstr "Νέα Προβολή"
+msgstr "_Καθάρισε"
 
 #: ../src/dialogs/debugdialog.cpp:144 ../src/ui/dialog/messages.cpp:57
 msgid "Capture log messages"
-msgstr ""
+msgstr "Κατέγραψε διαγνωστικά μηνύματα"
 
 #: ../src/dialogs/debugdialog.cpp:146 ../src/ui/dialog/messages.cpp:59
 msgid "Release log messages"
-msgstr ""
+msgstr "Απελευθέρωσε διαγνωστικά μηνύματα"
 
 #
 #: ../src/dialogs/eek-color-def.cpp:52
 #: ../src/widgets/gradient-selector.cpp:161
-#, fuzzy
 msgid "none"
-msgstr "Κανένα"
+msgstr "κανένα"
 
 #. "view_icon_preview"
 #: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2305
@@ -799,9 +796,8 @@ msgid "_Page"
 msgstr "_Σελίδα"
 
 #: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2309
-#, fuzzy
 msgid "_Drawing"
-msgstr "Σχεδίαση"
+msgstr "Σ_χέδιο"
 
 #
 #: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2311
@@ -810,28 +806,25 @@ msgstr "_Επιλογή"
 
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
 #: ../src/dialogs/export.cpp:133
-#, fuzzy
 msgid "_Custom"
-msgstr "Προσαρμοσμένο"
+msgstr "_Προσαρμοσμένο"
 
 #: ../src/dialogs/export.cpp:257
 msgid "<big><b>Export area</b></big>"
-msgstr ""
+msgstr "<big><b>Επιφάνεια εξαγωγής</b></big>"
 
 #: ../src/dialogs/export.cpp:271
-#, fuzzy
 msgid "Units:"
-msgstr "&Μονάδες:"
+msgstr "Μονάδες:"
 
 #: ../src/dialogs/export.cpp:299
 msgid "_x0:"
-msgstr ""
+msgstr "_x0:"
 
 #
 #: ../src/dialogs/export.cpp:304
-#, fuzzy
 msgid "x_1:"
-msgstr "1:1"
+msgstr "x_1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
@@ -841,13 +834,12 @@ msgstr "Πλάτος:"
 
 #: ../src/dialogs/export.cpp:315
 msgid "_y0:"
-msgstr ""
+msgstr "_y0:"
 
 #
 #: ../src/dialogs/export.cpp:320
-#, fuzzy
 msgid "y_1:"
-msgstr "1:1"
+msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
 #: ../src/dialogs/object-attributes.cpp:52
@@ -856,252 +848,226 @@ msgstr "Ύψος:"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
-msgstr ""
+msgstr "<big><b>Μέγεθος εικόνας bitmap</b></big>"
 
 #: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
-#, fuzzy
 msgid "_Width:"
-msgstr "Πλάτος:"
+msgstr "_Πλάτος:"
 
 #
 #: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
-#, fuzzy
 msgid "pixels at"
-msgstr "Εικονοστοιχεία"
+msgstr "εικονοστοιχεία σε"
 
 #: ../src/dialogs/export.cpp:437
 msgid "dp_i"
-msgstr ""
+msgstr "dp_i"
 
 #: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #. true = has mnemonic
 #: ../src/dialogs/export.cpp:467
 msgid "<big><b>_Filename</b></big>"
-msgstr ""
+msgstr "<big><b>_Όνομα αρχείου</b></big>"
 
 #: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
-msgstr ""
+msgstr "_Αναζήτηση..."
 
 #
 #: ../src/dialogs/export.cpp:577
-#, fuzzy
 msgid "_Export"
-msgstr "Εξαγωγή"
+msgstr "_Εξαγωγή"
 
 #: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
-msgstr ""
+msgstr "Εξαγωγή της εικόνας bitmap με αυτές τις ρυθμίσεις"
 
 #: ../src/dialogs/export.cpp:1015
-#, fuzzy
 msgid "You have to enter a filename"
-msgstr "Αποθήκευση ως γνήσιο όνομα αρχείου"
+msgstr "Πρέπει να εισάγετε ένα όνομα αρχείου"
 
 #: ../src/dialogs/export.cpp:1020
 msgid "The chosen area to be exported is invalid"
-msgstr ""
+msgstr "Η επιλεγμένη περιοχή δεν είναι έγκυρη για εξαγωγή"
 
 #: ../src/dialogs/export.cpp:1029
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
-msgstr ""
+msgstr "Ο φάκελος %s δεν υπάρχει ή δεν είναι φάκελος.\n"
 
 #: ../src/dialogs/export.cpp:1045
-#, fuzzy
 msgid "Export in progress"
-msgstr "Το %s εισήχθη"
+msgstr "Η εξαγωγή είναι σε εξέλιξη"
 
 #: ../src/dialogs/export.cpp:1051
 #, c-format
 msgid "Exporting %s (%d x %d)"
-msgstr ""
+msgstr "Εξαγάγω %s (%d x %d)"
 
 #: ../src/dialogs/export.cpp:1078
 #, c-format
 msgid "Could not export to filename %s.\n"
-msgstr ""
+msgstr "Δεν μπόρεσα να εξάγω στο αρχείο %s.\n"
 
 #: ../src/dialogs/export.cpp:1184
-#, fuzzy
 msgid "Select a filename for exporting"
-msgstr "Επιλογή αρχείου για φόρτωση"
+msgstr "Επέλεξε ένα αρχείο για εξαγωγή"
 
 #: ../src/dialogs/filedialog.cpp:358
-#, fuzzy
 msgid "No preview"
-msgstr "Χρήση Προεπισκόπησης"
+msgstr "Όχι προεπισκόπηση"
 
 #: ../src/dialogs/filedialog.cpp:459
 msgid "too large for preview"
-msgstr ""
+msgstr "πολύ μεγάλο για προεπισκόπηση"
 
 #
 #: ../src/dialogs/filedialog.cpp:751 ../src/dialogs/filedialog.cpp:752
-#, fuzzy
 msgid "All Images"
-msgstr "Εικόνα"
+msgstr "Όλες οι εικόνες"
 
 #: ../src/dialogs/filedialog.cpp:756 ../src/dialogs/filedialog.cpp:757
-#, fuzzy
 msgid "All Files"
-msgstr "Όλες οι ρυθμίσεις"
+msgstr "Όλα τα αρχεία"
 
 #: ../src/dialogs/filedialog.cpp:763 ../src/dialogs/filedialog.cpp:764
-#, fuzzy
 msgid "All Inkscape Files"
-msgstr "Συμπαγές"
+msgstr "Όλα τα αρχεία Inkscape"
 
 #: ../src/dialogs/filedialog.cpp:1166
-#, fuzzy
 msgid "Guess from extension"
-msgstr "Μετασχηματισμός"
+msgstr "Μάντεψε από την επέκταση"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
 #: ../src/dialogs/filedialog.cpp:1251
 msgid "Append filename extension automatically"
-msgstr ""
+msgstr "Αυτόματη προσθήκη επέκτασης αρχείου"
 
 #
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:369
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "Εκκίνηση επιλεγμένου παροχέα"
-msgstr[1] "Εκκίνηση επιλεγμένου παροχέα"
+msgstr[0] "<b>%d</b> αντικείμενο βρέθηκε (από <b>%d</b>), %s ταίριασμα."
+msgstr[1] "<b>%d</b> αντικείμενα βρέθηκαν (από <b>%d</b>), %s ταίριασμα."
 
 #
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "exact"
-msgstr "Κείμενο"
+msgstr "ακριβές"
 
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "partial"
-msgstr "Ειδικό"
+msgstr "μερικό"
 
 #: ../src/dialogs/find.cpp:379
-#, fuzzy
 msgid "No objects found"
-msgstr "Επιλέξτε αντικείμενο"
+msgstr "Κανένα αντικείμενο δε βρέθηκε"
 
 #: ../src/dialogs/find.cpp:537
 msgid "T_ype: "
-msgstr ""
+msgstr "_Τύπος:"
 
 #: ../src/dialogs/find.cpp:544
 msgid "Search in all object types"
-msgstr ""
+msgstr "Ψάξε όλους τους τύπους αντικειμένων"
 
 #: ../src/dialogs/find.cpp:544
-#, fuzzy
 msgid "All types"
-msgstr "Όλες οι ρυθμίσεις"
+msgstr "Όλοι οι τύποι"
 
 #: ../src/dialogs/find.cpp:555
 msgid "Search all shapes"
-msgstr ""
+msgstr "Ψάξε όλα τα σχήματα"
 
 #: ../src/dialogs/find.cpp:555
 msgid "All shapes"
-msgstr ""
+msgstr "Όλα τα σχήματα"
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Search rectangles"
-msgstr "Ορθογώνιο"
+msgstr "Ψάξε ορθογώνια"
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Rectangles"
-msgstr "Ορθογώνιο"
+msgstr "Ορθογώνια"
 
 #: ../src/dialogs/find.cpp:577
 msgid "Search ellipses, arcs, circles"
-msgstr ""
+msgstr "Ψάξε ελλείψεις, τόξα, κύκλους"
 
 #
 #: ../src/dialogs/find.cpp:577
-#, fuzzy
 msgid "Ellipses"
-msgstr "Έλλειψη"
+msgstr "Ελλείψεις"
 
 #: ../src/dialogs/find.cpp:582
 msgid "Search stars and polygons"
-msgstr ""
+msgstr "Ψάξε αστερίσκους και πολύγωνα"
 
 #: ../src/dialogs/find.cpp:582
-#, fuzzy
 msgid "Stars"
-msgstr "Αστερίσκος"
+msgstr "Αστερίσκοι"
 
 #
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Search spirals"
-msgstr "Δημιουργία γραμμής"
+msgstr "Ψάξε σε σπιράλ"
 
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Spirals"
-msgstr "Ειδικό"
+msgstr "Σπιράλ"
 
 #. TRANSLATORS: polyline is a set of connected straight line segments
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
 #: ../src/dialogs/find.cpp:600
 msgid "Search paths, lines, polylines"
-msgstr ""
+msgstr "Ψάξε μονοπάτια, γραμμές, πολύγωνα"
 
 #: ../src/dialogs/find.cpp:600
 msgid "Paths"
-msgstr ""
+msgstr "Μονοπάτια"
 
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Search text objects"
-msgstr "Διαγραφή επιλεγμένων αντικειμένων"
+msgstr "Ψάξε αντικείμενα κειμένου"
 
 #
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Texts"
-msgstr "Κείμενο"
+msgstr "Κείμενα"
 
 #: ../src/dialogs/find.cpp:610
 msgid "Search groups"
-msgstr ""
+msgstr "Ψάξε ομάδες"
 
 #: ../src/dialogs/find.cpp:610
-#, fuzzy
 msgid "Groups"
-msgstr "Ομάδα"
+msgstr "Ομάδες"
 
 #: ../src/dialogs/find.cpp:615
 msgid "Search clones"
-msgstr ""
+msgstr "Ψάξε κλώνους"
 
 #: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:454
-#, fuzzy
 msgid "Clones"
-msgstr "Νέα Προβολή"
+msgstr "Κλώνοι"
 
 #: ../src/dialogs/find.cpp:620
 msgid "Search images"
-msgstr ""
+msgstr "Ψάξε εικόνες"
 
 #
 #: ../src/dialogs/find.cpp:620 ../share/extensions/embedimage.inx.h:2
 #: ../share/extensions/extractimage.inx.h:2
-#, fuzzy
 msgid "Images"
-msgstr "Εικόνα"
+msgstr "Εικόνες"
 
 #: ../src/dialogs/find.cpp:625
 #, fuzzy
@@ -1335,7 +1301,7 @@ msgstr ""
 #: ../src/dialogs/layers-panel.cpp:755
 #, fuzzy
 msgid "Opacity:"
-msgstr "Διαφάνεια:"
+msgstr "Διαφάνεια"
 
 #
 #: ../src/dialogs/layers-panel.cpp:780
@@ -1474,7 +1440,7 @@ msgstr "Χ:"
 
 #: ../src/dialogs/object-attributes.cpp:50
 msgid "Y:"
-msgstr "Ψ:"
+msgstr "Υ:"
 
 #: ../src/dialogs/object-attributes.cpp:94
 #, fuzzy, c-format
@@ -1503,54 +1469,52 @@ msgid "Master _opacity"
 msgstr "Διαφάνεια:"
 
 #: ../src/dialogs/rdf.cpp:178
-#, fuzzy
 msgid "CC Attribution"
-msgstr "Ιδιότητες"
+msgstr "CC Attribution"
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
-msgstr ""
+msgstr "CC Attribution-ShareAlike"
 
 #: ../src/dialogs/rdf.cpp:188
 msgid "CC Attribution-NoDerivs"
-msgstr ""
+msgstr "CC Attribution-NoDerivs"
 
 #: ../src/dialogs/rdf.cpp:193
 msgid "CC Attribution-NonCommercial"
-msgstr ""
+msgstr "CC Attribution-NonCommercial"
 
 #: ../src/dialogs/rdf.cpp:198
 msgid "CC Attribution-NonCommercial-ShareAlike"
-msgstr ""
+msgstr "CC Attribution-NonCommercial-ShareAlike"
 
 #: ../src/dialogs/rdf.cpp:203
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "CC Attribution-NonCommercial-NoDerivs"
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
-msgstr ""
+msgstr "GNU General Public License"
 
 #: ../src/dialogs/rdf.cpp:213
 msgid "GNU Lesser General Public License"
-msgstr ""
+msgstr "GNU Lesser General Public License"
 
 #: ../src/dialogs/rdf.cpp:218
 msgid "Public Domain"
-msgstr ""
+msgstr "Public Domain"
 
 #: ../src/dialogs/rdf.cpp:223
 msgid "FreeArt"
-msgstr ""
+msgstr "FreeArt"
 
 #: ../src/dialogs/rdf.cpp:241
 msgid "Name by which this document is formally known."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:243
-#, fuzzy
 msgid "Date"
-msgstr "Αλλα_γή γραμμής"
+msgstr "Ημερομηνία"
 
 #: ../src/dialogs/rdf.cpp:244
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
@@ -1574,9 +1538,8 @@ msgstr ""
 
 #
 #: ../src/dialogs/rdf.cpp:253
-#, fuzzy
 msgid "Creator"
-msgstr "Δημιουργία γραμμής"
+msgstr "Δημιουργός"
 
 #: ../src/dialogs/rdf.cpp:254
 msgid ""
@@ -1584,9 +1547,8 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:256
-#, fuzzy
 msgid "Rights"
-msgstr "Ύψος"
+msgstr "Δκαιώματα"
 
 #: ../src/dialogs/rdf.cpp:257
 msgid ""
@@ -1619,18 +1581,16 @@ msgid "Unique URI to reference the source of this document."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:269
-#, fuzzy
 msgid "Relation"
-msgstr "Επιλογή"
+msgstr "Σχέση"
 
 #: ../src/dialogs/rdf.cpp:270
 msgid "Unique URI to a related document."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:272
-#, fuzzy
 msgid "Language"
-msgstr "Διάστημα"
+msgstr "Γλώσσα"
 
 #: ../src/dialogs/rdf.cpp:273
 msgid ""
@@ -1664,9 +1624,8 @@ msgstr ""
 
 #. FIXME: need to handle 1 agent per line of input
 #: ../src/dialogs/rdf.cpp:289
-#, fuzzy
 msgid "Contributors"
-msgstr "εκατοστά"
+msgstr "Συνεισφέροντες"
 
 #: ../src/dialogs/rdf.cpp:290
 msgid ""
@@ -1697,9 +1656,8 @@ msgstr ""
 #
 #: ../src/dialogs/stroke-style.cpp:759 ../src/widgets/gradient-vector.cpp:250
 #: ../src/widgets/paint-selector.cpp:739
-#, fuzzy
 msgid "No document selected"
-msgstr "Επιλέχθησαν \"%s\""
+msgstr "Κανένα έγγραφο δεν επιλέχθηκε"
 
 #
 #: ../src/dialogs/stroke-style.cpp:776 ../src/interface.cpp:760
@@ -1713,43 +1671,38 @@ msgid "None"
 msgstr "Κανένα"
 
 #: ../src/dialogs/stroke-style.cpp:984
-#, fuzzy
 msgid "Stroke width"
-msgstr "Καπνός με άνεμο"
+msgstr ""
 
 #
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/dialogs/stroke-style.cpp:1007
-#, fuzzy
 msgid "Join:"
-msgstr "Όνομα χρήστη:"
+msgstr "Ένωση:"
 
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
 #: ../src/dialogs/stroke-style.cpp:1019
-#, fuzzy
 msgid "Miter join"
-msgstr "Πρωτεύον Μονοφωνικό"
+msgstr "Μυτερή ένωση"
 
 #
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
 #: ../src/dialogs/stroke-style.cpp:1027
-#, fuzzy
 msgid "Round join"
-msgstr "Εκτέλεση σε:"
+msgstr "Στρογγυλοποιημένη ένωση"
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
 #: ../src/dialogs/stroke-style.cpp:1035
-#, fuzzy
 msgid "Bevel join"
-msgstr "Πρώτο επίπεδο"
+msgstr "Κοφτή ένωση"
 
 #. Miterlimit
 #. TRANSLATORS: Miter limit: only for "miter join", this limits the length
@@ -1759,9 +1712,8 @@ msgstr "Πρώτο επίπεδο"
 #. miter limit is to cut off such spikes (i.e. convert them into bevels)
 #. when they become too long.
 #: ../src/dialogs/stroke-style.cpp:1046
-#, fuzzy
 msgid "Miter limit:"
-msgstr "Πρωτεύον Μονοφωνικό"
+msgstr "Όριο μύτης:"
 
 #: ../src/dialogs/stroke-style.cpp:1054
 msgid "Maximum length of the miter (in units of stroke width)"
@@ -1770,30 +1722,27 @@ msgstr ""
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #: ../src/dialogs/stroke-style.cpp:1067
-#, fuzzy
 msgid "Cap:"
-msgstr "Κυανό"
+msgstr "Τερματισμός:"
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
 #: ../src/dialogs/stroke-style.cpp:1078
 msgid "Butt cap"
-msgstr ""
+msgstr "Κοφτός τερματισμός"
 
 #
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
 #: ../src/dialogs/stroke-style.cpp:1085
-#, fuzzy
 msgid "Round cap"
-msgstr "Εκτέλεση σε:"
+msgstr "Στρογγυλοποιημένος τερματισμός"
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
 #: ../src/dialogs/stroke-style.cpp:1092
-#, fuzzy
 msgid "Square cap"
-msgstr "Λίστα Τετραγώνων"
+msgstr "Τετραγωνισμένος τερματισμός"
 
 #. Dash
 #: ../src/dialogs/stroke-style.cpp:1098
@@ -1822,45 +1771,38 @@ msgstr ""
 
 #. TODO:  Insert widgets
 #: ../src/dialogs/text-edit.cpp:198 ../src/ui/dialog/text-properties.cpp:36
-#, fuzzy
 msgid "Font"
-msgstr "Σημείο"
+msgstr "Γραμματοσειρά"
 
 #: ../src/dialogs/text-edit.cpp:221
 msgid "Layout"
 msgstr "Διάταξη"
 
 #: ../src/dialogs/text-edit.cpp:235
-#, fuzzy
 msgid "Align lines left"
-msgstr "Δεξιά προς αριστερά"
+msgstr "Στοίχιση γραμμών αριστερά"
 
 #. TRANSLATORS: `Center' here is a verb.
 #: ../src/dialogs/text-edit.cpp:250
-#, fuzzy
 msgid "Center lines"
-msgstr "Κέντρο"
+msgstr "Κεντράρισμα γραμμών"
 
 #: ../src/dialogs/text-edit.cpp:264
-#, fuzzy
 msgid "Align lines right"
-msgstr "Κύλιση από αριστερά προς δεξιά"
+msgstr "Στοίχιση γραμμών δεξιά"
 
 #: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
 #: ../src/widgets/toolbox.cpp:3601
-#, fuzzy
 msgid "Horizontal text"
-msgstr "οριζόντιο"
+msgstr "Οριζόντιο κείμενο"
 
 #: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
 #: ../src/widgets/toolbox.cpp:3612
-#, fuzzy
 msgid "Vertical text"
-msgstr "Κατακόρυφες Ρίγες"
+msgstr "Κατακόρυφες κείμενο"
 
 #
 #: ../src/dialogs/text-edit.cpp:315
-#, fuzzy
 msgid "Line spacing:"
 msgstr "Διάστιχο:"
 
@@ -1878,18 +1820,16 @@ msgstr ""
 
 #
 #: ../src/dialogs/tiledialog.cpp:632
-#, fuzzy
 msgid "Rows:"
-msgstr "Κόκκινο:"
+msgstr "Γραμμές:"
 
 #: ../src/dialogs/tiledialog.cpp:640
 msgid "Number of rows"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:644
-#, fuzzy
 msgid "Equal height"
-msgstr "Ύψος: "
+msgstr "Ίσο ύψος"
 
 #: ../src/dialogs/tiledialog.cpp:654
 msgid "If not set, each row has the height of the tallest object in it"
@@ -1898,25 +1838,22 @@ msgstr ""
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
 #: ../src/dialogs/tiledialog.cpp:660 ../src/dialogs/tiledialog.cpp:730
-#, fuzzy
 msgid "Align:"
-msgstr "Στοίχιση"
+msgstr "Στοίχιση:"
 
 #
 #. #### Number of columns ####
 #: ../src/dialogs/tiledialog.cpp:702
-#, fuzzy
 msgid "Columns:"
-msgstr "Αλλαγή"
+msgstr "Στήλες:"
 
 #: ../src/dialogs/tiledialog.cpp:710
 msgid "Number of columns"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:714
-#, fuzzy
 msgid "Equal width"
-msgstr "Πλάτος:"
+msgstr "Ίσο πλάτος"
 
 #: ../src/dialogs/tiledialog.cpp:723
 msgid "If not set, each column has the width of the widest object in it"
@@ -2188,9 +2125,8 @@ msgstr ""
 
 #
 #: ../src/extension/extension.cpp:678
-#, fuzzy
 msgid "ID:"
-msgstr "ID"
+msgstr "ID:"
 
 #: ../src/extension/extension.cpp:679
 #, fuzzy
@@ -2199,19 +2135,17 @@ msgstr "Αστερίσκος"
 
 #
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Loaded"
-msgstr "Κανένα"
+msgstr "Φορτωμένο"
 
 #
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Unloaded"
-msgstr "όνομα"
+msgstr "Μη φορτωμένο"
 
 #: ../src/extension/extension.cpp:679
 msgid "Deactivated"
-msgstr ""
+msgstr "Απενεργοποιημένο"
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:50
@@ -2979,6 +2913,8 @@ msgid ""
 "Cannot create directory %s.\n"
 "%s"
 msgstr ""
+"Δεν μπορώ να δημιουργήσω το φάκελο %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:616
 #, c-format
@@ -2986,6 +2922,8 @@ msgid ""
 "%s is not a valid directory.\n"
 "%s"
 msgstr ""
+"%s δεν είναι έγκυρος φάκελος.\n"
+"%s"
 
 #: ../src/inkscape.cpp:617
 #, c-format
@@ -2993,6 +2931,8 @@ msgid ""
 "Cannot create file %s.\n"
 "%s"
 msgstr ""
+"Δεν μπορώ να δημιουργήσω το αρχείο %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:618
 #, c-format
@@ -3000,12 +2940,17 @@ msgid ""
 "Cannot write file %s.\n"
 "%s"
 msgstr ""
+"Δεν μπορώ να γράψω στο αρχείο %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:619
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
 msgstr ""
+"Παρ' όλο που το Inkscape θα τρέξει, θα χρησιμοποιήσει τις προεπιλεγμένες "
+"ρυθμίσεις,\n"
+"και ότι αλλαγές έγιναν στις επιλογές δεν θα αποθηκευτούν."
 
 #: ../src/inkscape.cpp:689 ../src/preferences.cpp:56
 #, c-format
@@ -3013,6 +2958,8 @@ msgid ""
 "%s is not a regular file.\n"
 "%s"
 msgstr ""
+"%s δεν είναι ένα κανονικό αρχείο.\n"
+"%s"
 
 #: ../src/inkscape.cpp:690 ../src/preferences.cpp:57
 #, c-format
@@ -3021,6 +2968,9 @@ msgid ""
 "you don't have read permissions on it.\n"
 "%s"
 msgstr ""
+"%s δεν είναι έγκυρο XML αρχείο, ή\n"
+"δεν έχετε δκαιώματα ανάγνωσης σε αυτό.\n"
+"%s"
 
 #: ../src/inkscape.cpp:692
 #, c-format
@@ -3028,18 +2978,22 @@ msgid ""
 "%s is not a valid menus file.\n"
 "%s"
 msgstr ""
+"%s δεν είναι ένα έγκυρο αρχείο μενού.\n"
+"%s"
 
 #: ../src/inkscape.cpp:693
 msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr ""
+"Το Inkscape θα τρέξει με τα προεπιλεγμένα μενού.\n"
+"Τα νέα μενού δεν θα αποθηκευθούν."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:772
 msgid "Commands Bar"
-msgstr ""
+msgstr "Μπάρα εντολών"
 
 #
 #: ../src/interface.cpp:772
@@ -3060,11 +3014,11 @@ msgstr "Εμφάνιση κόμβων-δ"
 
 #: ../src/interface.cpp:776
 msgid "_Toolbox"
-msgstr ""
+msgstr "_Εργαλειοθήκη"
 
 #: ../src/interface.cpp:776
 msgid "Show or hide the main toolbox (on the left)"
-msgstr ""
+msgstr "Εμφάνισε ή απόκρυψε την κύρια εργαλειοθήκη (στα αριστερά)"
 
 #
 #: ../src/interface.cpp:782
@@ -3080,16 +3034,16 @@ msgstr "Εμφάνιση κόμβων-δ"
 
 #: ../src/interface.cpp:784
 msgid "_Statusbar"
-msgstr ""
+msgstr "Γραμμή _Κατάστασης"
 
 #: ../src/interface.cpp:784
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr ""
+msgstr "Εμφάνισε ή κρύψε την γραμμή κατάστασης (στο κάτω μέρος του παραθύρου)"
 
 #: ../src/interface.cpp:838
 #, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr ""
+msgstr "Το ρήμα \"%s\" είναι άγνωστο"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:948
@@ -3104,12 +3058,12 @@ msgstr "Αλλαγή κλίμακας ώστε να ταιριάξει η σελ
 
 #: ../src/interface.cpp:1102
 msgid "Could not parse SVG data"
-msgstr ""
+msgstr "Δεν μπόρεσα να διαβάσω τη μορφοποίηση των SVG δεδομένων"
 
 #: ../src/interface.cpp:1265
 #, c-format
 msgid "Overwrite %s"
-msgstr ""
+msgstr "Αντικατέστησε %s"
 
 #: ../src/interface.cpp:1286
 #, c-format
@@ -3117,10 +3071,12 @@ msgid ""
 "The file %s already exists.  Do you want to overwrite that file with the "
 "current document?"
 msgstr ""
+"Το αρχείο %s υπάρχει ήδη. Θέλετε να το αντικαταστήσετε αυτο το αρχείο με το "
+"τρέχον έγγραφο?"
 
 #: ../src/jabber_whiteboard/callbacks.cpp:59
 msgid "Jabber connection lost."
-msgstr ""
+msgstr "Η σύνδεση με το Jabber χάθηκε."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:72
 #, c-format
@@ -3611,7 +3567,6 @@ msgid ""
 "Available options:"
 msgstr ""
 
-#
 #: ../src/menus-skeleton.h:17
 msgid "_New"
 msgstr "_Νέο"
@@ -10537,12 +10492,12 @@ msgstr "Κύλιση από αριστερά προς δεξιά"
 #: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
 msgid "Center"
-msgstr "Κέντρο"
+msgstr "Κέντρο Υ"
 
 #: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
 msgid "Align left"
-msgstr "Δεξιά προς αριστερά"
+msgstr "Στοίχιση γραμμών αριστερά"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
@@ -11068,9 +11023,8 @@ msgstr "Μέγεθος Εικόνας:"
 
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
 #: ../share/extensions/rtree.inx.h:2
-#, fuzzy
 msgid "Minimum size"
-msgstr "Προσαρμοσμένο"
+msgstr "Ελάχιστο μέγεθος"
 
 #: ../share/extensions/rtree.inx.h:3
 msgid "Random Tree"
@@ -11101,9 +11055,8 @@ msgid "Envelope"
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
-#, fuzzy
 msgid "Compressed Inkscape SVG with media (*.zip)"
-msgstr "Συμπίεση αρχείων:"
+msgstr "Συμπιεσμένο Inkscape SVG με πολυμέσα (*.zip)"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
 msgid ""
@@ -11113,9 +11066,8 @@ msgstr ""
 
 #
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "Αποκοπή"
+msgstr "ZIP Έξοδος"
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
 msgid "Color of shadow"
@@ -11134,9 +11086,8 @@ msgid "Text File (*.txt)"
 msgstr ""
 
 #: ../share/extensions/txt2svg.inx.h:3
-#, fuzzy
 msgid "Text Input"
-msgstr " χρώμα"
+msgstr "Εισαγωγή κειμένου"
 
 #: ../share/extensions/wavy.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -11167,20 +11118,17 @@ msgid "Amount of whirl"
 msgstr ""
 
 #: ../share/extensions/whirl.inx.h:2
-#, fuzzy
 msgid "Center X"
-msgstr "Κέντρο"
+msgstr "Κέντρο Χ"
 
 #: ../share/extensions/whirl.inx.h:3
-#, fuzzy
 msgid "Center Y"
-msgstr "Κέντρο"
+msgstr "Κέντρο Υ"
 
 #
 #: ../share/extensions/whirl.inx.h:5
-#, fuzzy
 msgid "Rotation is clockwise"
-msgstr "Διαγραφή επιλεγμένου αντικειμένου"
+msgstr "Η περιστροφή γίνεται με τη φορά του ρολογιού"
 
 #: ../share/extensions/whirl.inx.h:6
 msgid "Whirl"
