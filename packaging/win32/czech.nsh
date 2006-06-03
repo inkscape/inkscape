@@ -1,9 +1,10 @@
 ; #######################################
-; czechh.nsh
-; czechh language strings for inkscape installer
-; windows code page: 1029
+; czech.nsh
+; czech language strings for inkscape installer
+; windows code page: 1250
 ; Authors:
-; Michal Kraus Michal.Kraus@wige-mic.cz
+; Michal Kraus Michal.Kraus@wige-mic.cz (original translation)
+; Josef Vybíral josef.vybiral@gmail.com (update for Inkscape 0.44)
 ;
 !insertmacro MUI_LANGUAGE "Czech"
 
@@ -17,13 +18,13 @@ LangString lng_LICENSE_BUTTON   ${LANG_CZECH} "Další >"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_CZECH} "$(^Name) je vydáván pod General Public License (GPL). Licenèní ujednání je zde pouze z informaèních dùvodù. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_CZECH} "Inkscape byl nainstalovan uzivatelem $0.$\r$\nPokud budete pokracovat nemusite dopadnout dobre!$\r$\nProsim prihlaste se jako $0 a zkuste to znovu."
+LangString lng_DIFFERENT_USER ${LANG_CZECH} "Inkscape byl nainstalován uivatelem $0.$\r$\nInstalace nemusí bıt dokonèena správnì pokud v ní budete pokraèovat!$\r$\nProsím pøihlaste se jako $0 a spuste instalaci znovu."
 
 ;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_CZECH} "Nemate administratorska opravneni.$\r$\nInstalace Inkscape pro vsechny uzivatele nemusi dopadnout dobre.$\r$\nOdeberte volbu 'pro všechny uivatele'."
+LangString lng_NO_ADMIN ${LANG_CZECH} "Nemáte administrátorská oprávnìní.$\r$\nInstalace Inkscape pro všechny uivatele nemusí bıt dokonèena úspìšnì.$\r$\nZrušte oznaèení volby 'Pro všechny uivatele'."
 
 ;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_CZECH} "Inkscape nepodporuje operacni systemy Windows 95/98/ME!$\r$\nNavstivte homepage Inkscape pro detilni informace."
+LangString lng_NOT_SUPPORTED ${LANG_CZECH} "Inkscape nebìí na Windows 95/98/ME!$\r$\nPro podrobnìjší informace se prosím obrate na oficiální webové stránky."
 
 ; Full install type
 LangString lng_Full $(LANG_CZECH) "Plná"
@@ -38,7 +39,7 @@ LangString lng_Minimal $(LANG_CZECH) "Minimální"
 LangString lng_Core $(LANG_CZECH) "${PRODUCT_NAME} SVG editor (nutné)"
 
 ; Core install section description
-LangString lng_CoreDesc $(LANG_CZECH) "Core ${PRODUCT_NAME} soubory a dll"
+LangString lng_CoreDesc $(LANG_CZECH) "Soubory a knihovny ${PRODUCT_NAME}"
 
 ; GTK+ install section
 LangString lng_GTKFiles $(LANG_CZECH) "GTK+ bìhové prostøedí (nutné)"
@@ -59,13 +60,13 @@ LangString lng_Alluser $(LANG_CZECH) "pro všechny uivatele"
 LangString lng_AlluserDesc $(LANG_CZECH) "Instalovat aplikaci pro kohokoliv, kdo pouívá tento poèítaè.(všichni uivatelé)"
 
 ; Desktop section
-LangString lng_Desktop $(LANG_CZECH) "Desktop"
+LangString lng_Desktop $(LANG_CZECH) "Plocha"
 
 ; Desktop section description
-LangString lng_DesktopDesc $(LANG_CZECH) "Vztvoøit zástupce ${PRODUCT_NAME} na ploše"
+LangString lng_DesktopDesc $(LANG_CZECH) "Vytvoøit zástupce ${PRODUCT_NAME} na ploše"
 
 ; Start Menu  section
-LangString lng_Startmenu $(LANG_CZECH) "Startovní nabídka"
+LangString lng_Startmenu $(LANG_CZECH) "Nabídka Start"
 
 ; Start Menu section description
 LangString lng_StartmenuDesc $(LANG_CZECH) "Vytvoøit pro ${PRODUCT_NAME} poloku ve startovní nabídce"

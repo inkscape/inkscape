@@ -14,16 +14,16 @@ LangString lng_Caption   ${LANG_ITALIAN} "${PRODUCT_NAME} -- Editor di grafica v
 LangString lng_LICENSE_BUTTON   ${LANG_ITALIAN} "Avanti >"
 
 ; Bottom text for the license page
-LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_ITALIAN} "$(^Name) e' rilasciato sotto GNU General Public License (GPL). La licenza e' fornita solo a scopo informativo. $_CLICK"
+LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_ITALIAN} "$(^Name) e' rilasciato con GNU General Public License (GPL). La licenza e' fornita solo a scopo informativo. $_CLICK"
 
-;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_ITALIAN} "Inkscape è stato installato dall'utente $0. Continuando si potrebbero verificare dei problemi! Autenticarsi come $0 e riprovare nuovamente."
+; has been installed by different user
+LangString lng_DIFFERENT_USER ${LANG_ITALIAN} "Inkscape e' stato installato dall'utente $0.  Potrebbe non essere possibile portare a termine l'installazione.   Accedere come $0 e riprovare."
 
-;you have no admin rigths
-LangString lng_NO_ADMIN ${LANG_ITALIAN} "Non si hanno i privilegi di amministratore. L'installazione di Inkscape per tutti gli utenti potrebbe non andare a buon fine. Deselezionare l'opzione 'Per tutti gli utenti'."
+; you have no admin rigths
+LangString lng_NO_ADMIN ${LANG_ITALIAN} "Non si posseggono i diritti di amministratore.  Potrebbe non essere possibile installare Inkscape per tutti gli utenti.  Non selezionare l'opzione 'Per Tutti Gli Utenti'"
 
-;win9x is not supported
-LangString lng_NOT_SUPPORTED ${LANG_ITALIAN} "Inkscape non funziona su Windows 95/98/ME!\n\nControllare il sito ufficiale per ulteriori dettagli."
+; win9x is not supported
+LangString lng_NOT_SUPPORTED ${LANG_ITALIAN} "Inkscape non e' compatibile con i sistemi operativi Windows 95/98/ME!\n\nPer ulteriori informazioni consultare il sito ufficiale."
 
 ; Full install type
 LangString lng_Full $(LANG_ITALIAN) "Completa"
@@ -44,7 +44,7 @@ LangString lng_CoreDesc $(LANG_ITALIAN) "Core ${PRODUCT_NAME} file e dll"
 LangString lng_GTKFiles $(LANG_ITALIAN) "GTK+ Runtime Environment (richiesto)"
 
 ; GTK+ install section description
-LangString lng_GTKFilesDesc $(LANG_ITALIAN) "Un applicativo multipiattaforma GUI, usato da ${PRODUCT_NAME}"
+LangString lng_GTKFilesDesc $(LANG_ITALIAN) "Applicativo multipiattaforma GUI, usato da ${PRODUCT_NAME}"
 
 ; shortcuts install section
 LangString lng_Shortcuts $(LANG_ITALIAN) "Collegamenti"
@@ -132,8 +132,8 @@ LangString lng_gl $(LANG_ITALIAN) "gl  Gallese"
 LangString lng_hu $(LANG_ITALIAN) "hu  Ungherese"
 LangString lng_it $(LANG_ITALIAN) "it  Italiano"
 LangString lng_ja $(LANG_ITALIAN) "ja  Giopponese"
-LangString lng_ko $(LANG_ITALIAN) "ko  Korean"
-LangString lng_lt $(LANG_ITALIAN) "lt  Lituano"
+LangString lng_ko $(LANG_ITALIAN) "ko  Koreano"
+LangString lng_lt $(LANG_ITALIAN) "lt  Lithuanian"
 LangString lng_mk $(LANG_ITALIAN) "mk  Macedone"
 LangString lng_nb $(LANG_ITALIAN) "nb  Norvegese Bokmål"
 LangString lng_nl $(LANG_ITALIAN) "nl  Olandese"
@@ -151,7 +151,7 @@ LangString lng_sv $(LANG_ITALIAN) "sv  Svedese"
 LangString lng_tr $(LANG_ITALIAN) "tr  Turco"
 LangString lng_uk $(LANG_ITALIAN) "uk  Ucraino"
 LangString lng_zh_CN $(LANG_ITALIAN) "zh_CH  Cinese Semplificato"
-LangString lng_zh_TW $(LANG_ITALIAN) "zh_TW  Cinese Tradizionale"
+LangString lng_zh_TW $(LANG_ITALIAN) "zh_TW  Cinese Traditionale"
 
 
 
