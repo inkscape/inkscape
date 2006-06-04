@@ -17,330 +17,208 @@
  */
 #include "siox.h"
 
-#include <string>
-
-#include <stdarg.h> //for error() and trace()
-#include <math.h>   //sqrt(), pow(), round(), etc
+#include <math.h>
+#include <stdarg.h>
+#include <map>
 
 
 namespace org
 {
+
 namespace siox
 {
 
+
+
 //########################################################################
-//##  U T I L S    (originally Utils.java)
+//#  C L A B
 //########################################################################
 
-/**
- * Collection of auxiliary image processing methods used by the
- * SioxSegmentator mainly for postprocessing.
- *
- * @author G. Friedland, K. Jantz, L. Knipping
- * @version 1.05
- *
- * Conversion to C++ by Bob Jamison
- *
- */
-
-
-/** Caches color conversion values to speed up RGB->CIELAB conversion.*/
-static std::map<unsigned long, CLAB> RGB_TO_LAB;
-
-//forward decls
-static void premultiplyMatrix(float alpha, float *cm, int cmSize);
-//static float colordiffsq(unsigned long rgb0, unsigned long rgb1);
-//static int getAlpha(unsigned long argb);
-static int getRed(unsigned long rgb);
-static int getGreen(unsigned long rgb);
-static int getBlue(unsigned long rgb);
-//static unsigned long packPixel(int a, int r, int g, int b);
-static CLAB rgbToClab(unsigned long rgb);
+static std::map<unsigned long, CLAB> clabLookupTable;
 
 /**
- * Applies the morphological dilate operator.
- *
- * Can be used to close small holes in the given confidence matrix.
- *
- * @param cm Confidence matrix to be processed.
- * @param xres Horizontal resolution of the matrix.
- * @param yres Vertical resolution of the matrix.
+ * Convert integer A, R, G, B values into an pixel value.
  */
-static void dilate(float *cm, int xres, int yres)
+static unsigned long getRGB(int a, int r, int g, int b)
 {
-    for (int y=0; y<yres; y++) {
-        for (int x=0; x<xres-1; x++) {
-            int idx=(y*xres)+x;
-            if (cm[idx+1]>cm[idx])
-                cm[idx]=cm[idx+1];
-            }
-        }
-    for (int y=0; y<yres; y++) {
-            for (int x=xres-1; x>=1; x--) {
-            int idx=(y*xres)+x;
-            if (cm[idx-1]>cm[idx])
-                cm[idx]=cm[idx-1];
-        }
-    }
-    for (int y=0; y<yres-1; y++) {
-        for (int x=0; x<xres; x++) {
-        int idx=(y*xres)+x;
-        if (cm[((y+1)*xres)+x] > cm[idx])
-            cm[idx]=cm[((y+1)*xres)+x];
-        }
-    }
-    for (int y=yres-1; y>=1; y--) {
-        for (int x=0; x<xres; x++) {
-        int idx=(y*xres)+x;
-        if (cm[((y-1)*xres)+x] > cm[idx])
-            cm[idx]=cm[((y-1)*xres)+x];
-        }
-    }
+    if (a<0)  a=0;
+    else if (a>255) a=255;
+
+    if (r<0) r=0;
+    else if (r>255) r=255;
+
+    if (g<0) g=0;
+    else if (g>255) g=255;
+
+    if (b<0) b=0;
+    else if (b>255) b=255;
+
+    return (a<<24)|(r<<16)|(g<<8)|b;
 }
 
+
+
 /**
- * Applies the morphological erode operator.
- *
- * @param cm Confidence matrix to be processed.
- * @param xres Horizontal resolution of the matrix.
- * @param yres Vertical resolution of the matrix.
+ * Convert float A, R, G, B values (0.0-1.0) into an pixel value.
  */
-static void erode(float *cm, int xres, int yres)
+static unsigned long getRGB(float a, float r, float g, float b)
 {
-    for (int y=0; y<yres; y++) {
-        for (int x=0; x<xres-1; x++) {
-            int idx=(y*xres)+x;
-            if (cm[idx+1] < cm[idx])
-                cm[idx]=cm[idx+1];
+    return getRGB((int)(a * 256.0),
+                  (int)(r * 256.0),
+                  (int)(g * 256.0),
+                  (int)(b * 256.0));
+}
+
+
+
+/**
+ * Construct this CLAB from a packed-pixel ARGB value
+ */
+CLAB::CLAB(unsigned long rgb)
+{
+    //First try looking up in the cache
+    std::map<unsigned long, CLAB>::iterator iter;
+    iter = clabLookupTable.find(rgb);
+    if (iter != clabLookupTable.end())
+        {
+        CLAB res = iter->second;
+        C = res.C;
+        L = res.L;
+        A = res.A;
+        B = res.B;
         }
-    }
-    for (int y=0; y<yres; y++) {
-        for (int x=xres-1; x>=1; x--) {
-            int idx=(y*xres)+x;
-            if (cm[idx-1] < cm[idx])
-                cm[idx]=cm[idx-1];
-        }
-    }
-    for (int y=0; y<yres-1; y++) {
-        for (int x=0; x<xres; x++) {
-            int idx=(y*xres)+x;
-            if (cm[((y+1)*xres)+x] < cm[idx])
-                cm[idx]=cm[((y+1)*xres)+x];
-        }
-    }
-    for (int y=yres-1; y>=1; y--) {
-        for (int x=0; x<xres; x++) {
-            int idx=(y*xres)+x;
-            if (cm[((y-1)*xres)+x] < cm[idx])
-                cm[idx]=cm[((y-1)*xres)+x];
-        }
-    }
+
+
+    int ir  = (rgb>>16) & 0xff;
+    int ig  = (rgb>> 8) & 0xff;
+    int ib  = (rgb    ) & 0xff;
+
+    float fr = ((float)ir) / 255.0;
+    float fg = ((float)ig) / 255.0;
+    float fb = ((float)ib) / 255.0;
+
+    if (fr > 0.04045)
+        fr = (float) pow((fr + 0.055) / 1.055, 2.4);
+    else
+        fr = fr / 12.92;
+
+    if (fg > 0.04045)
+        fg = (float) pow((fg + 0.055) / 1.055, 2.4);
+    else
+        fg = fg / 12.92;
+
+    if (fb > 0.04045)
+        fb = (float) pow((fb + 0.055) / 1.055, 2.4);
+    else
+        fb = fb / 12.92;
+
+    fr = fr * 100.0;
+    fg = fg * 100.0;
+    fb = fb * 100.0;
+
+    // Use white = D65
+    float x = fr * 0.4124 + fg * 0.3576 + fb * 0.1805;
+    float y = fr * 0.2126 + fg * 0.7152 + fb * 0.0722;
+    float z = fr * 0.0193 + fg * 0.1192 + fb * 0.9505;
+
+    float vx = x /  95.047;
+    float vy = y / 100.000;
+    float vz = z / 108.883;
+
+    if (vx > 0.008856)
+        vx = (float) pow(vx, 0.3333);
+    else
+        vx = (7.787 * vx) + (16.0 / 116.0);
+
+    if (vy > 0.008856)
+        vy = (float) pow(vy, 0.3333);
+    else
+        vy = (7.787 * vy) + (16.0 / 116.0);
+
+    if (vz > 0.008856)
+        vz = (float) pow(vz, 0.3333);
+    else
+        vz = (7.787 * vz) + (16.0 / 116.0);
+
+    C = 0;
+    L = 116.0 * vy - 16.0;
+    A = 500.0 * (vx - vy);
+    B = 200.0 * (vy - vz);
+
+    // Cache for next time
+    clabLookupTable[rgb] = *this;
+
 }
+
+
 
 /**
- * Normalizes the matrix to values to [0..1].
- *
- * @param cm The matrix to be normalized.
+ * Return this CLAB's value a a packed-pixel ARGB value
  */
-static void normalizeMatrix(float *cm, int cmSize)
+unsigned long CLAB::toRGB()
 {
-    float max=0.0f;
-    for (int i=0; i<cmSize; i++) {
-        if (max<cm[i])
-            max=cm[i];
-    }
-    if (max<=0.0)
-        return;
-    else if (max==1.00)
-        return;
+    float vy = (L + 16.0) / 116.0;
+    float vx = A / 500.0 + vy;
+    float vz = vy - B / 200.0;
 
-    float alpha=1.00f/max;
-    premultiplyMatrix(alpha, cm, cmSize);
+    float vx3 = vx * vx * vx;
+    float vy3 = vy * vy * vy;
+    float vz3 = vz * vz * vz;
+
+    if (vy3 > 0.008856)
+        vy = vy3;
+    else
+        vy = (vy - 16.0 / 116.0) / 7.787;
+
+    if (vx3 > 0.008856)
+        vx = vx3;
+    else
+        vx = (vx - 16.0 / 116.0) / 7.787;
+
+    if (vz3 > 0.008856)
+        vz = vz3;
+    else
+        vz = (vz - 16.0 / 116.0) / 7.787;
+
+    float x =  95.047 * vx; //use white = D65
+    float y = 100.000 * vy;
+    float z = 108.883 * vz;
+
+    vx = x / 100.0;
+    vy = y / 100.0;
+    vz = z / 100.0;
+
+    float vr =(float)(vx *  3.2406 + vy * -1.5372 + vz * -0.4986);
+    float vg =(float)(vx * -0.9689 + vy *  1.8758 + vz *  0.0415);
+    float vb =(float)(vx *  0.0557 + vy * -0.2040 + vz *  1.0570);
+
+    if (vr > 0.0031308)
+        vr = (float)(1.055 * pow(vr, (1.0 / 2.4)) - 0.055);
+    else
+        vr = 12.92 * vr;
+
+    if (vg > 0.0031308)
+        vg = (float)(1.055 * pow(vg, (1.0 / 2.4)) - 0.055);
+    else
+        vg = 12.92 * vg;
+
+    if (vb > 0.0031308)
+        vb = (float)(1.055 * pow(vb, (1.0 / 2.4)) - 0.055);
+    else
+        vb = 12.92 * vb;
+
+    return getRGB(0.0, vr, vg, vb);
 }
 
-/**
- * Multiplies matrix with the given scalar.
- *
- * @param alpha The scalar value.
- * @param cm The matrix of values be multiplied with alpha.
- * @param cmSize The matrix length.
- */
-static void premultiplyMatrix(float alpha, float *cm, int cmSize)
-{
-    for (int i=0; i<cmSize; i++)
-        cm[i]=alpha*cm[i];
-}
-
-/**
- * Blurs confidence matrix with a given symmetrically weighted kernel.
- * <P>
- * In the standard case confidence matrix entries are between 0...1 and
- * the weight factors sum up to 1.
- *
- * @param cm The matrix to be smoothed.
- * @param xres Horizontal resolution of the matrix.
- * @param yres Vertical resolution of the matrix.
- * @param f1 Weight factor for the first pixel.
- * @param f2 Weight factor for the mid-pixel.
- * @param f3 Weight factor for the last pixel.
- */
-static void smoothcm(float *cm, int xres, int yres,
-                     float f1, float f2, float f3)
-{
-    for (int y=0; y<yres; y++) {
-        for (int x=0; x<xres-2; x++) {
-            int idx=(y*xres)+x;
-            cm[idx]=f1*cm[idx]+f2*cm[idx+1]+f3*cm[idx+2];
-        }
-    }
-    for (int y=0; y<yres; y++) {
-        for (int x=xres-1; x>=2; x--) {
-            int idx=(y*xres)+x;
-            cm[idx]=f3*cm[idx-2]+f2*cm[idx-1]+f1*cm[idx];
-        }
-    }
-    for (int y=0; y<yres-2; y++) {
-        for (int x=0; x<xres; x++) {
-            int idx=(y*xres)+x;
-            cm[idx]=f1*cm[idx]+f2*cm[((y+1)*xres)+x]+f3*cm[((y+2)*xres)+x];
-        }
-    }
-    for (int y=yres-1; y>=2; y--) {
-        for (int x=0; x<xres; x++) {
-            int idx=(y*xres)+x;
-            cm[idx]=f3*cm[((y-2)*xres)+x]+f2*cm[((y-1)*xres)+x]+f1*cm[idx];
-        }
-    }
-}
-
-/**
- * Squared Euclidian distance of p and q.
- * <P>
- * Usage hint: When only comparisons between Euclidian distances without
- * actual values are needed, the squared distance can be preferred
- * for being faster to compute.
- *
- * @param p First euclidian point coordinates.
- * @param pSize Length of coordinate array.
- * @param q Second euclidian point coordinates.
- *        Dimension must not be smaller than that of p.
- *        Any extra dimensions will be ignored.
- * @return Squared euclidian distance of p and q.
- * @see #euclid
- */
-static float sqrEuclidianDist(float *p, int pSize, float *q)
-{
-    float sum=0;
-    for (int i=0; i<pSize; i++)
-        sum+=(p[i]-q[i])*(p[i]-q[i]);
-    return sum;
-}
-
-/**
- * Squared Euclidian distance of p and q.
- * <P>
- * Usage hint: When only comparisons between Euclidian distances without
- * actual values are needed, the squared distance can be preferred
- * for being faster to compute.
- *
- * @param p CLAB value
- * @param q second CLAB value
- * @return Squared euclidian distance of p and q.
- * @see #euclid
- */
-static float sqrEuclidianDist(const CLAB &p, const CLAB &q)
-{
-    float sum=0;
-    sum += (p.C - q.C) * (p.C - q.C);
-    sum += (p.L - q.L) * (p.L - q.L);
-    sum += (p.A - q.A) * (p.A - q.A);
-    sum += (p.B - q.B) * (p.B - q.B);
-    return sum;
-}
-
-/**
- * Euclidian distance of p and q.
- *
- * @param p First euclidian point coordinates.
- * @param pSize Length of coordinate array.
- * @param q Second euclidian point coordinates.
- *        Dimension must not be smaller than that of p.
- *        Any extra dimensions will be ignored.
- * @return Squared euclidian distance of p and q.
- * @see #sqrEuclidianDist
- */
-/*
-static float euclid(float *p, int pSize, float *q)
-{
-    return (float)sqrt(sqrEuclidianDist(p, pSize, q));
-}
-*/
-
-/**
- * Computes Euclidian distance of two RGB color values.
- *
- * @param rgb0 First color value.
- * @param rgb1 Second color value.
- * @return Euclidian distance between the two color values.
- */
-/*
-static float colordiff(long rgb0, long rgb1)
-{
-    return (float)sqrt(colordiffsq(rgb0, rgb1));
-}
-*/
-
-/**
- * Computes squared euclidian distance of two RGB color values.
- * <P>
- * Note: Faster to compute than colordiff
- *
- * @param rgb0 First color value.
- * @param rgb1 Second color value.
- * @return Squared Euclidian distance between the two color values.
- */
-/*
-static float colordiffsq(long rgb0, long rgb1)
-{
-    int rDist=getRed(rgb0)   - getRed(rgb1);
-    int gDist=getGreen(rgb0) - getGreen(rgb1);
-    int bDist=getBlue(rgb0)  - getBlue(rgb1);
-
-    return (float)(rDist*rDist+gDist*gDist+bDist*bDist);
-}
-*/
-
-/**
- * Averages two ARGB colors.
- *
- * @param argb0 First color value.
- * @param argb1 Second color value.
- * @return The averaged ARGB color.
- */
-/*
-static long average(long argb0, long argb1)
-{
-    long ret = packPixel(
-         (getAlpha(argb0) + getAlpha(argb1))/2,
-         (getRed(argb0)   + getRed(argb1)  )/2,
-         (getGreen(argb0) + getGreen(argb1))/2,
-         (getBlue(argb0)  + getBlue(argb1) )/2);
-    return ret;
-}
-*/
 
 /**
  * Computes squared euclidian distance in CLAB space for two colors
  * given as RGB values.
- *
- * @param rgb0 First color value.
- * @param rgb1 Second color value.
- * @return Squared Euclidian distance in CLAB space.
  */
-static float labcolordiffsq(unsigned long rgb1, unsigned long rgb2)
+float CLAB::diffSq(unsigned int rgb1, unsigned int rgb2)
 {
-    CLAB c1 = rgbToClab(rgb1);
-    CLAB c2 = rgbToClab(rgb2);
+    CLAB c1(rgb1);
+    CLAB c2(rgb2);
     float euclid=0.0f;
     euclid += (c1.L - c2.L) * (c1.L - c2.L);
     euclid += (c1.A - c2.A) * (c1.A - c2.A);
@@ -352,789 +230,925 @@ static float labcolordiffsq(unsigned long rgb1, unsigned long rgb2)
 /**
  * Computes squared euclidian distance in CLAB space for two colors
  * given as RGB values.
- *
- * @param rgb0 First color value.
- * @param rgb1 Second color value.
- * @return Euclidian distance in CLAB space.
  */
-static float labcolordiff(unsigned long rgb0, unsigned long rgb1)
+float CLAB::diff(unsigned int rgb0, unsigned int rgb1)
 {
-    return (float)sqrt(labcolordiffsq(rgb0, rgb1));
+    return (float) sqrt(diffSq(rgb0, rgb1));
 }
 
 
+//########################################################################
+//#  T U P E L
+//########################################################################
+
 /**
- * Converts 24-bit RGB values to {l,a,b} float values.
- * <P>
- * The conversion used is decribed at
- * <a href="http://www.easyrgb.com/math.php?MATH=M7#text7">CLAB Conversion</a>
- * for reference white D65. Note that that the conversion is computational
- * expensive. Result are cached to speed up further conversion calls.
- *
- * @param rgb RGB color value,
- * @return CLAB color value tripel.
+ * Helper class for storing the minimum distances to a cluster centroid
+ * in background and foreground and the index to the centroids in each
+ * signature for a given color.
  */
-static CLAB rgbToClab(unsigned long rgb)
-{
-    std::map<unsigned long, CLAB>::iterator iter = RGB_TO_LAB.find(rgb);
-    if (iter != RGB_TO_LAB.end())
+class Tupel {
+public:
+
+    Tupel()
         {
-        CLAB res = iter->second;
-        return res;
+        minBgDist  = 0.0f;
+        indexMinBg = 0;
+        minFgDist  = 0.0f;
+        indexMinFg = 0;
         }
+    Tupel(float minBgDistArg, long indexMinBgArg,
+          float minFgDistArg, long indexMinFgArg)
+        {
+	minBgDist  = minBgDistArg;
+	indexMinBg = indexMinBgArg;
+	minFgDist  = minFgDistArg;
+	indexMinFg = indexMinFgArg;
+        }
+    Tupel(const Tupel &other)
+        {
+	minBgDist  = other.minBgDist;
+	indexMinBg = other.indexMinBg;
+	minFgDist  = other.minFgDist;
+	indexMinFg = other.indexMinFg;
+        }
+    Tupel &operator=(const Tupel &other)
+        {
+	minBgDist  = other.minBgDist;
+	indexMinBg = other.indexMinBg;
+	minFgDist  = other.minFgDist;
+	indexMinFg = other.indexMinFg;
+	return *this;
+        }
+    virtual ~Tupel()
+        {}
 
-    int R=getRed(rgb);
-    int G=getGreen(rgb);
-    int B=getBlue(rgb);
+    float minBgDist;
+    long  indexMinBg;
+    float minFgDist;
+    long  indexMinFg;
 
-    float var_R=(R/255.0f); //R = From 0 to 255
-    float var_G=(G/255.0f); //G = From 0 to 255
-    float var_B=(B/255.0f); //B = From 0 to 255
-
-    if (var_R>0.04045)
-        var_R=(float) pow((var_R+0.055f)/1.055f, 2.4);
-    else
-        var_R=var_R/12.92f;
-
-    if (var_G>0.04045)
-        var_G=(float) pow((var_G+0.055f)/1.055f, 2.4);
-    else
-        var_G=var_G/12.92f;
-
-    if (var_B>0.04045)
-        var_B=(float) pow((var_B+0.055f)/1.055f, 2.4);
-    else
-        var_B=var_B/12.92f;
-
-    var_R=var_R*100.0f;
-    var_G=var_G*100.0f;
-    var_B=var_B*100.0f;
-
-    // Observer. = 2�, Illuminant = D65
-    float X=var_R*0.4124f + var_G*0.3576f + var_B*0.1805f;
-    float Y=var_R*0.2126f + var_G*0.7152f + var_B*0.0722f;
-    float Z=var_R*0.0193f + var_G*0.1192f + var_B*0.9505f;
-
-    float var_X=X/95.047f;
-    float var_Y=Y/100.0f;
-    float var_Z=Z/108.883f;
-
-    if (var_X>0.008856f)
-        var_X=(float) pow(var_X, 0.3333f);
-    else
-        var_X=(7.787f*var_X)+(16.0f/116.0f);
-
-    if (var_Y>0.008856f)
-        var_Y=(float) pow(var_Y, 0.3333f);
-    else
-        var_Y=(7.787f*var_Y)+(16.0f/116.0f);
-
-    if (var_Z>0.008856f)
-        var_Z=(float) pow(var_Z, 0.3333f);
-    else
-        var_Z=(7.787f*var_Z)+(16.0f/116.0f);
-
-    CLAB lab((116.0f*var_Y)-16.0f , 500.0f*(var_X-var_Y), 200.0f*(var_Y-var_Z));
-
-    RGB_TO_LAB[rgb] = lab;
-
-    return lab;
-}
-
-/**
- * Converts an CLAB value to a RGB color value.
- * <P>
- * This is the reverse operation to rgbToClab.
- * @param clab CLAB value.
- * @return RGB value.
- * @see #rgbToClab
- */
-/*
-static long clabToRGB(const CLAB &clab)
-{
-    float L=clab.L;
-    float a=clab.A;
-    float b=clab.B;
-
-    float var_Y=(L+16.0f)/116.0f;
-    float var_X=a/500.0f+var_Y;
-    float var_Z=var_Y-b/200.0f;
-
-    float var_yPow3=(float)pow(var_Y, 3.0);
-    float var_xPow3=(float)pow(var_X, 3.0);
-    float var_zPow3=(float)pow(var_Z, 3.0);
-
-    if (var_yPow3>0.008856f)
-        var_Y=var_yPow3;
-    else
-        var_Y=(var_Y-16.0f/116.0f)/7.787f;
-
-    if (var_xPow3>0.008856f)
-        var_X=var_xPow3;
-    else
-        var_X=(var_X-16.0f/116.0f)/7.787f;
-
-    if (var_zPow3>0.008856f)
-        var_Z=var_zPow3;
-    else
-        var_Z=(var_Z-16.0f/116.0f)/7.787f;
-
-    float X=95.047f  * var_X; //ref_X= 95.047  Observer=2�, Illuminant=D65
-    float Y=100.0f   * var_Y; //ref_Y=100.000
-    float Z=108.883f * var_Z; //ref_Z=108.883
-
-    var_X=X/100.0f; //X = From 0 to ref_X
-    var_Y=Y/100.0f; //Y = From 0 to ref_Y
-    var_Z=Z/100.0f; //Z = From 0 to ref_Y
-
-    float var_R=(float)(var_X *  3.2406f + var_Y * -1.5372f + var_Z * -0.4986f);
-    float var_G=(float)(var_X * -0.9689f + var_Y *  1.8758f + var_Z *  0.0415f);
-    float var_B=(float)(var_X *  0.0557f + var_Y * -0.2040f + var_Z *  1.0570f);
-
-    if (var_R>0.0031308f)
-        var_R=(float)(1.055f*pow(var_R, (1.0f/2.4f))-0.055f);
-    else
-        var_R=12.92f*var_R;
-
-    if (var_G>0.0031308f)
-        var_G=(float)(1.055f*pow(var_G, (1.0f/2.4f))-0.055f);
-    else
-        var_G=12.92f*var_G;
-
-    if (var_B>0.0031308f)
-        var_B=(float)(1.055f*pow(var_B, (1.0f/2.4f))-0.055f);
-    else
-        var_B=12.92f*var_B;
-
-    int R = (int)lround(var_R*255.0f);
-    int G = (int)lround(var_G*255.0f);
-    int B = (int)lround(var_B*255.0f);
-
-    return packPixel(0xFF, R, G, B);
-}
-*/
-
-/**
- * Sets the alpha byte of a pixel.
- *
- * Constructs alpha to values from 0 to 255.
- * @param alpha Alpha value from 0 (transparent) to 255 (opaque).
- * @param rgb The 24bit rgb color to be combined with the alpga value.
- * @return An ARBG calor value.
- */
-static long setAlpha(int alpha, unsigned long rgb)
-{
-    if (alpha>255)
-        alpha=0;
-    else if (alpha<0)
-        alpha=0;
-    return (alpha<<24)|(rgb&0xFFFFFF);
-}
-
-/**
- * Sets the alpha byte of a pixel.
- *
- * Constricts alpha to values from 0 to 255.
- * @param alpha Alpha value from 0.0f (transparent) to 1.0f (opaque).
- * @param rgb The 24bit rgb color to be combined with the alpga value.
- * @return An ARBG calor value.
- */
-static long setAlpha(float alpha, unsigned long rgb)
-{
-    return setAlpha((int)(255.0f*alpha), rgb);
-}
-
-/**
- * Limits the values of a,r,g,b to values from 0 to 255 and puts them
- * together into an 32 bit integer.
- *
- * @param a Alpha part, the first byte.
- * @param r Red part, the second byte.
- * @param g Green part, the third byte.
- * @param b Blue part, the fourth byte.
- * @return A ARBG value packed to an int.
- */
-/*
-static long packPixel(int a, int r, int g, int b)
-{
-    if (a<0)
-        a=0;
-    else if (a>255)
-        a=255;
-
-    if (r<0)
-        r=0;
-    else if (r>255)
-        r=255;
-
-    if (g<0)
-        g=0;
-    else if (g>255)
-        g=255;
-
-    if (b<0)
-        b=0;
-    else if (b>255)
-        b=255;
-
-    return (a<<24)|(r<<16)|(g<<8)|b;
-}
-*/
-
-/**
- * Returns the alpha component of an ARGB value.
- *
- * @param argb An ARGB color value.
- * @return The alpha component, ranging from 0 to 255.
- */
-/*
-static int getAlpha(unsigned long argb)
-{
-    return (argb>>24)&0xFF;
-}
-*/
-
-/**
- * Returns the red component of an (A)RGB value.
- *
- * @param rgb An (A)RGB color value.
- * @return The red component, ranging from 0 to 255.
- */
-static int getRed(unsigned long rgb)
-{
-    return (rgb>>16)&0xFF;
-}
+ };
 
 
-/**
- * Returns the green component of an (A)RGB value.
- *
- * @param rgb An (A)RGB color value.
- * @return The green component, ranging from 0 to 255.
- */
-static int getGreen(unsigned long rgb)
-{
-    return (rgb>>8)&0xFF;
-}
-
-/**
- * Returns the blue component of an (A)RGB value.
- *
- * @param rgb An (A)RGB color value.
- * @return The blue component, ranging from 0 to 255.
- */
-static int getBlue(unsigned long rgb)
-{
-    return (rgb)&0xFF;
-}
-
-/**
- * Returns a string representation of a CLAB value.
- *
- * @param clab The CLAB value.
- * @param clabSize Size of the CLAB value.
- * @return A string representation of the CLAB value.
- */
-/*
-static std::string clabToString(const CLAB &clab)
-{
-    std::string buff;
-    char nbuf[60];
-    snprintf(nbuf, 59, "%5.3f, %5.3f, %5.3f", clab.L, clab.A, clab.B);
-    buff = nbuf;
-    return buff;
-}
-*/
 
 //########################################################################
-//##  C O L O R    S I G N A T U R E    (originally ColorSignature.java)
+//#  S I O X    I M A G E
 //########################################################################
 
 /**
- * Representation of a color signature.
- * <br><br>
- * This class implements a clustering algorithm based on a modified kd-tree.
- * The splitting rule is to simply divide the given interval into two equally
- * sized subintervals.
- * In the <code>stageone()</code>, approximate clusters are found by building
- * up such a tree and stopping when an interval at a node has become smaller
- * than the allowed cluster diameter, which is given by <code>limits</code>.
- * At this point, clusters may be split in several nodes.<br>
- * Therefore, in <code>stagetwo()</code>, nodes that belong to several clusters
- * are recombined by another k-d tree clustering on the prior cluster
- * centroids. To guarantee a proper level of abstraction, clusters that contain
- * less than 0.01% of the pixels of the entire sample are removed. Please
- * refer to the file NOTICE to get links to further documentation.
- *
- * @author Gerald Friedland, Lars Knipping
- * @version 1.02
- *
- * Conversion to C++ by Bob Jamison
- *
+ *  Create an image with the given width and height
  */
+SioxImage::SioxImage(unsigned int widthArg, unsigned int heightArg)
+{
+    init(width, height);
+}
 
 /**
- * Stage one of clustering.
- * @param points float[][] the input points in LAB space
- * @param depth int used for recursion, start with 0
- * @param clusters ArrayList an Arraylist to store the clusters
- * @param limits float[] the cluster diameters
+ *  Copy constructor
  */
-static void stageone(std::vector<CLAB> &points,
-                     int depth,
-                     std::vector< std::vector<CLAB> > &clusters,
-                     float *limits)
+SioxImage::SioxImage(const SioxImage &other)
 {
-    if (points.size() < 1)
+    pixdata = NULL;
+    cmdata  = NULL;
+    assign(other);
+}
+
+/**
+ *  Assignment
+ */
+SioxImage &SioxImage::operator=(const SioxImage &other)
+{
+    assign(other);
+    return *this;
+}
+
+
+/**
+ * Clean up after use.
+ */
+SioxImage::~SioxImage()
+{
+    if (pixdata) delete[] pixdata;
+    if (cmdata)  delete[] cmdata;
+}
+
+/**
+ * Returns true if the previous operation on this image
+ * was successful, else false.
+ */
+bool SioxImage::isValid()
+{
+    return valid;
+}
+
+/**
+ * Sets whether an operation was successful, and whether
+ * this image should be considered a valid one.
+ * was successful, else false.
+ */
+void SioxImage::setValid(bool val)
+{
+    valid = val;
+}
+
+
+/**
+ * Set a pixel at the x,y coordinates to the given value.
+ * If the coordinates are out of range, do nothing.
+ */
+void SioxImage::setPixel(unsigned int x,
+                         unsigned int y,
+                         unsigned int pixval)
+{
+    if (x > width || y > height)
+        return;
+    unsigned long offset = width * y + x;
+    pixdata[offset] = pixval; 
+}
+
+/**
+ * Set a pixel at the x,y coordinates to the given r, g, b values.
+ * If the coordinates are out of range, do nothing.
+ */
+void SioxImage::setPixel(unsigned int x, unsigned int y,
+                         unsigned int a, 
+                         unsigned int r, 
+                         unsigned int g,
+                         unsigned int b)
+{
+    if (x > width || y > height)
+        return;
+    unsigned long offset = width * y + x;
+    unsigned int pixval = ((a << 24) & 0xff000000) |
+                          ((r << 16) & 0x00ff0000) |
+                          ((g <<  8) & 0x0000ff00) |
+                          ((b      ) & 0x000000ff);
+    pixdata[offset] = pixval;
+}
+
+
+
+/**
+ *  Get a pixel at the x,y coordinates given.  If
+ *  the coordinates are out of range, return 0;
+ */
+unsigned int SioxImage::getPixel(unsigned int x, unsigned int y)
+{
+    if (x > width || y > height)
+        return 0L;
+    unsigned long offset = width * y + x;
+    return pixdata[offset]; 
+}
+
+/**
+ *  Return the image data buffer
+ */
+unsigned int *SioxImage::getImageData()
+{
+    return pixdata;
+}
+
+/**
+ * Set a confidence value at the x,y coordinates to the given value.
+ * If the coordinates are out of range, do nothing.
+ */
+void SioxImage::setConfidence(unsigned int x,
+                              unsigned int y,
+                              float confval)
+{
+    if (x > width || y > height)
+        return;
+    unsigned long offset = width * y + x;
+    cmdata[offset] = confval; 
+}
+
+/**
+ *  Get a confidence valueat the x,y coordinates given.  If
+ *  the coordinates are out of range, return 0;
+ */
+float SioxImage::getConfidence(unsigned int x, unsigned int y)
+{
+    if (x > width || y > height)
+        return 0.0;
+    unsigned long offset = width * y + x;
+    return cmdata[offset]; 
+}
+
+/**
+ *  Return the confidence data buffer
+ */
+float *SioxImage::getConfidenceData()
+{
+    return cmdata;
+}
+
+
+/**
+ * Return the width of this image
+ */
+int SioxImage::getWidth()
+{
+    return width;
+}
+
+/**
+ * Return the height of this image
+ */
+int SioxImage::getHeight()
+{
+    return height;
+}
+
+/**
+ * Initialize values.  Used by constructors
+ */
+void SioxImage::init(unsigned int widthArg, unsigned int heightArg)
+{
+    valid     = true;
+    width     = widthArg;
+    height    = heightArg;
+    imageSize = width * height;
+    pixdata   = new unsigned int[imageSize];
+    cmdata    = new float[imageSize];
+    for (unsigned long i=0 ; i<imageSize ; i++)
+        {
+        pixdata[i] = 0;
+        cmdata[i]  = 0.0;
+        }
+}
+
+/**
+ * Assign values to that of another
+ */
+void SioxImage::assign(const SioxImage &other)
+{
+    if (pixdata) delete[] pixdata;
+    if (cmdata)  delete[] cmdata;
+    valid     = other.valid;
+    width     = other.width;
+    height    = other.height;
+    imageSize = width * height;
+    pixdata   = new unsigned int[imageSize];
+    cmdata    = new float[imageSize];
+    for (unsigned long i=0 ; i<imageSize ; i++)
+        {
+        pixdata[i] = other.pixdata[i];
+        cmdata[i]  = other.cmdata[i];
+        }
+}
+
+
+/**
+ * Write the image to a PPM file
+ */
+bool SioxImage::writePPM(const std::string fileName)
+{
+
+    FILE *f = fopen(fileName.c_str(), "wb");
+    if (!f)
+        return false;
+
+    fprintf(f, "P6 %d %d 255\n", width, height);
+
+    for (unsigned int y=0 ; y<height; y++)
+        {
+        for (unsigned int x=0 ; x<width ; x++)
+            {
+            unsigned int rgb = getPixel(x, y);
+            //unsigned int alpha = (rgb>>24) & 0xff;
+            unsigned int r = ((rgb>>16) & 0xff);
+            unsigned int g = ((rgb>> 8) & 0xff);
+            unsigned int b = ((rgb    ) & 0xff);
+            fputc((unsigned char) r, f);
+            fputc((unsigned char) g, f);
+            fputc((unsigned char) b, f);
+            }
+        }
+    fclose(f);
+    return true;
+}
+
+
+#ifdef HAVE_GLIB
+
+/**
+ * Create an image from a GdkPixbuf
+ */
+SioxImage::SioxImage(GdkPixbuf *buf)
+{
+    if (!buf)
         return;
 
-    int dims=3;
-    int curdim=depth%dims;
-    float min = 0.0f;
-    float max = 0.0f;
-    if (curdim == 0)
+    unsigned int width  = gdk_pixbuf_get_width(buf);
+    unsigned int height = gdk_pixbuf_get_height(buf);
+    init(width, height); //DO THIS NOW!!
+
+
+    guchar *pixldata    = gdk_pixbuf_get_pixels(buf);
+    int rowstride       = gdk_pixbuf_get_rowstride(buf);
+    int n_channels      = gdk_pixbuf_get_n_channels(buf);
+
+    //### Fill in the cells with RGB values
+    int row  = 0;
+    for (unsigned int y=0 ; y<height ; y++)
         {
-        min=points[0].C;
-        max=points[0].C;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].C)
-                min=points[i].C;
-            if (max<points[i].C)
-                max=points[i].C;
+        guchar *p = pixldata + row;
+        for (unsigned int x=0 ; x<width ; x++)
+            {
+            int r     = (int)p[0];
+            int g     = (int)p[1];
+            int b     = (int)p[2];
+            int alpha = (int)p[3];
+
+            setPixel(x, y, alpha, r, g, b);
+            p += n_channels;
             }
-        }
-    else if (curdim == 1)
-        {
-        min=points[0].L;
-        max=points[0].L;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].L)
-                min=points[i].L;
-            if (max<points[i].L)
-                max=points[i].L;
-            }
-        }
-    else if (curdim == 2)
-        {
-        min=points[0].A;
-        max=points[0].A;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].A)
-                min=points[i].A;
-            if (max<points[i].A)
-                max=points[i].A;
-            }
-        }
-    else if (curdim == 3)
-        {
-        min=points[0].B;
-        max=points[0].B;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].B)
-                min=points[i].B;
-            if (max<points[i].B)
-                max=points[i].B;
-            }
+        row += rowstride;
         }
 
-    if (max-min>limits[curdim]) { // Split according to Rubner-Rule
-        // split
-        float pivotvalue=((max-min)/2.0f)+min;
-
-        std::vector<CLAB> smallerpoints; // allocate mem
-        std::vector<CLAB> biggerpoints;
-
-        for (unsigned int i=0; i<points.size(); i++) { // do actual split
-            float v = 0.0f;
-            if (curdim==0)
-                v = points[i].C;
-            else if (curdim==1)
-                v = points[i].L;
-            else if (curdim==2)
-                v = points[i].A;
-            else if (curdim==3)
-                v = points[i].B;
-            if (v <= pivotvalue) {
-                smallerpoints.push_back(points[i]);
-            } else {
-                biggerpoints.push_back(points[i]);
-            }
-        } // create subtrees
-        stageone(smallerpoints, depth+1, clusters, limits);
-        stageone(biggerpoints,  depth+1, clusters, limits);
-    } else { // create leave
-        clusters.push_back(points);
-    }
 }
+
 
 /**
- * Stage two of clustering.
- * @param points float[][] the input points in LAB space
- * @param depth int used for recursion, start with 0
- * @param clusters ArrayList an Arraylist to store the clusters
- * @param limits float[] the cluster diameters
- * @param total int the total number of points as given to stageone
- * @param threshold should be 0.01 - abstraction threshold
+ * Create a GdkPixbuf from this image
  */
-static void stagetwo(std::vector<CLAB> &points,
-                     int depth,
-                     std::vector< std::vector<CLAB> > &clusters,
-                     float *limits, int total, float threshold)
+GdkPixbuf *SioxImage::getGdkPixbuf()
 {
-    if (points.size() < 1)
-        return;
+    guchar *pixdata = (guchar *)
+          malloc(sizeof(guchar) * width * height * 3);
+    if (!pixdata)
+        return NULL;
 
-    int curdim=depth%3; // without cardinality
-    float min = 0.0f;
-    float max = 0.0f;
-    if (curdim == 0)
+    int n_channels = 3;
+    int rowstride  = width * 3;
+
+    GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata, GDK_COLORSPACE_RGB,
+                        0, 8, width, height,
+                        rowstride, NULL, NULL);
+
+    //### Fill in the cells with RGB values
+    int row  = 0;
+    for (unsigned int y=0 ; y < height ; y++)
         {
-        min=points[0].L;
-        max=points[0].L;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].L)
-                min=points[i].L;
-            if (max<points[i].L)
-                max=points[i].L;
+        guchar *p = pixdata + row;
+        for (unsigned x=0 ; x < width ; x++)
+            {
+            unsigned int rgb = getPixel(x, y);
+            p[0] = (rgb >> 16) & 0xff;
+            p[1] = (rgb >>  8) & 0xff;
+            p[2] = (rgb      ) & 0xff;
+            p += n_channels;
             }
-        }
-    else if (curdim == 1)
-        {
-        min=points[0].A;
-        max=points[0].A;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].A)
-                min=points[i].A;
-            if (max<points[i].A)
-                max=points[i].A;
-            }
-        }
-    else if (curdim == 2)
-        {
-        min=points[0].B;
-        max=points[0].B;
-        // find maximum and minimum
-        for (unsigned int i=1; i<points.size(); i++) {
-            if (min>points[i].B)
-                min=points[i].B;
-            if (max<points[i].B)
-                max=points[i].B;
-            }
+        row += rowstride;
         }
 
-
-    if (max-min>limits[curdim]) { // Split according to Rubner-Rule
-        // split
-        float pivotvalue=((max-min)/2.0f)+min;
-
-        std::vector<CLAB> smallerpoints; // allocate mem
-        std::vector<CLAB> biggerpoints;
-
-        for (unsigned int i=0; i<points.size(); i++) { // do actual split
-            float v = 0.0f;
-	    if (curdim==0)
-	        v = points[i].L;
-	    else if (curdim==1)
-	        v = points[i].A;
-	    else if (curdim==2)
-	        v = points[i].B;
-
-            if (v <= pivotvalue) {
-                smallerpoints.push_back(points[i]);
-            } else {
-                biggerpoints.push_back(points[i]);
-            }
-        } // create subtrees
-        stagetwo(smallerpoints, depth+1, clusters, limits, total, threshold);
-        stagetwo(biggerpoints,  depth+1, clusters, limits, total, threshold);
-    } else { // create leave
-        float sum=0.0;
-        for (unsigned int i=0; i<points.size(); i++) {
-            sum+=points[i].B;
-        }
-        if (((sum*100.0)/total)>=threshold) {
-            CLAB point;
-            for (unsigned int i=0; i<points.size(); i++) {
-                point.C += points[i].C;
-                point.L += points[i].L;
-                point.A += points[i].A;
-                point.B += points[i].B;
-            }
-            point.C /= points.size();
-            point.L /= points.size();
-            point.A /= points.size();
-            point.B /= points.size();
-
-            std::vector<CLAB> newCluster;
-            newCluster.push_back(point);
-            clusters.push_back(newCluster);
-        }
-    }
+    return buf;
 }
 
-/**
- * Create a color signature for the given set of pixels.
- * @param input float[][] a set of pixels in LAB space
- * @param length int the number of pixels that should be processed from the input
- * @param limits float[] the cluster diameters for each dimension
- * @param threshold float the abstraction threshold
- * @return float[][] a color siganture containing cluster centroids in LAB space
- */
-static std::vector<CLAB> createSignature(std::vector<CLAB> &input,
-                                         float *limits, float threshold)
-{
-    std::vector< std::vector<CLAB> > clusters1;
-    std::vector< std::vector<CLAB> > clusters2;
+#endif /* GLIB */
 
-    stageone(input, 0, clusters1, limits);
-
-    std::vector<CLAB> centroids;
-    for (unsigned int i=0; i<clusters1.size(); i++) {
-        std::vector<CLAB> cluster = clusters1[i];
-        CLAB centroid; // +1 for the cardinality
-        for (unsigned int k=0; k<cluster.size(); k++) {
-            centroid.L += cluster[k].L;
-            centroid.A += cluster[k].A;
-            centroid.B += cluster[k].B;
-        }
-        centroid.C =  cluster.size();
-        centroid.L /= cluster.size();
-        centroid.A /= cluster.size();
-        centroid.B /= cluster.size();
-
-        centroids.push_back(centroid);
-    }
-    stagetwo(centroids, 0, clusters2, limits, input.size(), threshold); // 0.1 -> see paper by tomasi
-
-    std::vector<CLAB> res;
-    for (unsigned int i=0 ; i<clusters2.size() ; i++)
-        for (unsigned int j=0 ; j<clusters2[i].size() ; j++)
-            res.push_back(clusters2[i][j]);
-
-    return res;
-}
 
 
 
 //########################################################################
-//##  S I O X  S E G M E N T A T O R    (originally SioxSegmentator.java)
+//#  S I O X
 //########################################################################
 
-//### NOTE: Doxygen comments are in siox.h
+//##############
+//## PUBLIC
+//##############
 
-/** Confidence corresponding to a certain foreground region (equals one). */
-const float SioxSegmentator::CERTAIN_FOREGROUND_CONFIDENCE=1.0f;
+/**
+ * Confidence corresponding to a certain foreground region (equals one).
+ */
+const float Siox::CERTAIN_FOREGROUND_CONFIDENCE=1.0f;
 
-/** Confidence for a region likely being foreground.*/
-const float SioxSegmentator::FOREGROUND_CONFIDENCE=0.8f;
+/**
+ * Confidence for a region likely being foreground.
+ */
+const float Siox::FOREGROUND_CONFIDENCE=0.8f;
 
-/** Confidence for foreground or background type being equally likely.*/
-const float SioxSegmentator::UNKNOWN_REGION_CONFIDENCE=0.5f;
+/** 
+ * Confidence for foreground or background type being equally likely.
+ */
+const float Siox::UNKNOWN_REGION_CONFIDENCE=0.5f;
 
-/** Confidence for a region likely being background.*/
-const float SioxSegmentator::BACKGROUND_CONFIDENCE=0.1f;
+/**
+ * Confidence for a region likely being background.
+ */
+const float Siox::BACKGROUND_CONFIDENCE=0.1f;
 
-/** Confidence corresponding to a certain background reagion (equals zero). */
-const float SioxSegmentator::CERTAIN_BACKGROUND_CONFIDENCE=0.0f;
+/**
+ * Confidence corresponding to a certain background reagion (equals zero).
+ */
+const float Siox::CERTAIN_BACKGROUND_CONFIDENCE=0.0f;
 
-
-SioxSegmentator::SioxSegmentator(int w, int h, float *limitsArg, int limitsSize)
+/**
+ *  Construct a Siox engine
+ */
+Siox::Siox()
 {
-
-    imgWidth   = w;
-    imgHeight  = h;
-    pixelCount = imgWidth * imgHeight;
-
-    labelField = new int[pixelCount];
-
-    if (!limitsArg) {
-        limits = new float[3];
-        limits[0] = 0.64f;
-        limits[1] = 1.28f;
-        limits[2] = 2.56f;
-    } else {
-        limits = new float[limitsSize];
-        for (int i=0 ; i<limitsSize ; i++)
-            limits[i] = limitsArg[i];
-    }
-
-    float negLimits[3];
-    negLimits[0] = -limits[0];
-    negLimits[1] = -limits[1];
-    negLimits[2] = -limits[2];
-    clusterSize = sqrEuclidianDist(limits, 3, negLimits);
-
-    segmentated=false;
-
-    origImage = NULL;
+    init();
 }
 
-SioxSegmentator::~SioxSegmentator()
+
+/**
+ *
+ */
+Siox::~Siox()
 {
-    delete labelField;
-    delete limits;
-    delete origImage;
+    cleanup();
 }
 
 
 /**
  * Error logging
  */
-void SioxSegmentator::error(char *fmt, ...)
+void Siox::error(char *fmt, ...)
 {
+    char msgbuf[256];
     va_list args;
-    fprintf(stderr, "SioxSegmentator error:");
     va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
+    vsnprintf(msgbuf, 255, fmt, args);
     va_end(args) ;
-    fprintf(stderr, "\n");
+#ifdef HAVE_GLIB
+    g_warning("Siox error: %s\n", msgbuf);
+#else
+    fprintf(stderr, "Siox error: %s\n", msgbuf);
+#endif
 }
 
 /**
  * Trace logging
  */
-void SioxSegmentator::trace(char *fmt, ...)
+void Siox::trace(char *fmt, ...)
 {
+    char msgbuf[256];
     va_list args;
-    fprintf(stderr, "SioxSegmentator:");
     va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
+    vsnprintf(msgbuf, 255, fmt, args);
     va_end(args) ;
-    fprintf(stderr, "\n");
+#ifdef HAVE_GLIB
+    g_message("Siox: %s\n", msgbuf);
+#else
+    fprintf(stdout, "Siox: %s\n", msgbuf);
+#endif
 }
 
 
 
-bool SioxSegmentator::segmentate(unsigned long *image,
-                                 float *cm,
-                                 int smoothness, double sizeFactorToKeep)
+
+/**
+ *  Extract the foreground of the original image, according
+ *  to the values in the confidence matrix.
+ */
+SioxImage Siox::extractForeground(const SioxImage &originalImage,
+                                  unsigned int backgroundFillColor)
 {
-    segmentated=false;
+    init();
 
-    hs.clear();
+    SioxImage workImage = originalImage;
 
-    // save image for drb
-    origImage=new long[pixelCount];
-    for (int i=0 ; i<pixelCount ; i++)
-        origImage[i] = image[i];
+    //# fetch some info from the image
+    width      = workImage.getWidth();
+    height     = workImage.getHeight();
+    pixelCount = width * height;
+    image      = workImage.getImageData();
+    cm         = workImage.getConfidenceData();
+    labelField = new int[pixelCount];
 
-    // create color signatures
-    for (int i=0; i<pixelCount; i++) {
-        if (cm[i]<=BACKGROUND_CONFIDENCE)
-            knownBg.push_back(rgbToClab(image[i]));
-        else if (cm[i]>=FOREGROUND_CONFIDENCE)
-            knownFg.push_back(rgbToClab(image[i]));
-    }
+    trace("### Creating signatures");
 
-    bgSignature = createSignature(knownBg, limits, BACKGROUND_CONFIDENCE);
-    fgSignature = createSignature(knownFg, limits, BACKGROUND_CONFIDENCE);
+    //#### create color signatures
+    std::vector<CLAB> knownBg;
+    std::vector<CLAB> knownFg;
+    for (int x = 0 ; x < workImage.getWidth() ; x++)
+        for (int y = 0 ; y < workImage.getHeight() ; y++)
+            {
+            float cm = workImage.getConfidence(x, y);
+            unsigned int pix = workImage.getPixel(x, y);
+            if (cm <= BACKGROUND_CONFIDENCE)
+                knownBg.push_back(pix); //note: uses CLAB(rgb)
+            else if (cm >= FOREGROUND_CONFIDENCE)
+                knownFg.push_back(pix);
+            }
 
-    if (bgSignature.size() < 1) {
+    trace("knownBg:%d knownFg:%d", knownBg.size(), knownFg.size());
+
+
+    std::vector<CLAB> bgSignature ;
+    if (!colorSignature(knownBg, bgSignature, 3))
+        {
+        error("Could not create background signature");
+        workImage.setValid(false);
+        return workImage;
+        }
+    std::vector<CLAB> fgSignature ;
+    if (!colorSignature(knownFg, fgSignature, 3))
+        {
+        error("Could not create foreground signature");
+        delete[] labelField;
+        workImage.setValid(false);
+        return workImage;
+        }
+
+    //trace("### bgSignature:%d", bgSignature.size());
+
+    if (bgSignature.size() < 1)
+        {
         // segmentation impossible
-        return false;
-    }
+        error("Signature size is < 1.  Segmentation is impossible");
+        delete[] labelField;
+        workImage.setValid(false);
+        return workImage;
+        }
 
     // classify using color signatures,
     // classification cached in hashmap for drb and speedup purposes
-    for (int i=0; i<pixelCount; i++) {
-        if (cm[i]>=FOREGROUND_CONFIDENCE) {
-            cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
-            continue;
-        }
-        if (cm[i]>BACKGROUND_CONFIDENCE) {
-            bool isBackground=true;
-            std::map<unsigned long, Tupel>::iterator iter = hs.find(i);
-            Tupel tupel(0.0f, 0, 0.0f, 0);
-            if (iter == hs.end()) {
-                CLAB lab = rgbToClab(image[i]);
+    std::map<unsigned int, Tupel> hs;
+
+    for (unsigned int i=0; i<pixelCount; i++)
+        {
+        if (cm[i] >= FOREGROUND_CONFIDENCE)
+            {
+            cm[i] = CERTAIN_FOREGROUND_CONFIDENCE;
+            }
+        else if (cm[i] <= BACKGROUND_CONFIDENCE)
+            {
+            cm[i] = CERTAIN_BACKGROUND_CONFIDENCE;
+            }
+        else // somewhere in between
+            {
+            bool isBackground = true;
+            std::map<unsigned int, Tupel>::iterator iter = hs.find(i);
+            if (iter != hs.end()) //found
+                {
+                Tupel tupel = iter->second;
+                isBackground = tupel.minBgDist <= tupel.minFgDist;
+                }
+            else
+                {
+                CLAB lab(image[i]);
                 float minBg = sqrEuclidianDist(lab, bgSignature[0]);
                 int minIndex=0;
-                for (unsigned int j=1; j<bgSignature.size(); j++) {
+                for (unsigned int j=1; j<bgSignature.size() ; j++)
+                    {
                     float d = sqrEuclidianDist(lab, bgSignature[j]);
-                    if (d<minBg) {
-                        minBg=d;
-                        minIndex=j;
+                    if (d<minBg)
+                        {
+                        minBg    = d;
+                        minIndex = j;
+                        }
                     }
-                }
-                tupel.minBgDist=minBg;
-                tupel.indexMinBg=minIndex;
+                Tupel tupel(0.0f, 0,  0.0f, 0);
+                tupel.minBgDist  = minBg;
+                tupel.indexMinBg = minIndex;
                 float minFg = 1.0e6f;
-                minIndex=-1;
-                for (unsigned int j=0 ; j<fgSignature.size() ; j++) {
+                minIndex = -1;
+                for (unsigned int j = 0 ; j < fgSignature.size() ; j++)
+                    {
                     float d = sqrEuclidianDist(lab, fgSignature[j]);
-                    if (d<minFg) {
-                        minFg=d;
-                        minIndex=j;
+                    if (d < minFg)
+                        {
+                        minFg    = d;
+                        minIndex = j;
+                        }
                     }
-                }
-                tupel.minFgDist=minFg;
-                tupel.indexMinFg=minIndex;
-                if (fgSignature.size()==0) {
-                    isBackground=(minBg<=clusterSize);
+                tupel.minFgDist  = minFg;
+                tupel.indexMinFg = minIndex;
+                if (fgSignature.size() == 0)
+                    {
+                    isBackground=(minBg <= clusterSize);
                     // remove next line to force behaviour of old algorithm
-                    error("foreground signature does not exist");
-                    return false;
-                } else {
-                    isBackground=minBg<minFg;
-                }
+                    //error("foreground signature does not exist");
+                    //delete[] labelField;
+                    //workImage.setValid(false);
+                    //return workImage;
+                    }
+                else
+                    {
+                    isBackground = minBg < minFg;
+                    }
                 hs[image[i]] = tupel;
-            } else {
-                isBackground=tupel.minBgDist<=tupel.minFgDist;
+                }
+
+            if (isBackground)
+                cm[i] = CERTAIN_BACKGROUND_CONFIDENCE;
+            else
+                cm[i] = CERTAIN_FOREGROUND_CONFIDENCE;
             }
-            if (isBackground) {
-                cm[i]=CERTAIN_BACKGROUND_CONFIDENCE;
-            } else {
-                cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
-            }
-        } else {
-            cm[i]=CERTAIN_BACKGROUND_CONFIDENCE;
         }
-    }
 
-    // postprocessing
-    smoothcm(cm, imgWidth, imgHeight, 0.33f, 0.33f, 0.33f); // average
+    trace("### postProcessing");
+
+    //## postprocessing
+    smooth(cm, width, height, 0.33f, 0.33f, 0.33f); // average
     normalizeMatrix(cm, pixelCount);
-    erode(cm, imgWidth, imgHeight);
-    keepOnlyLargeComponents(cm, UNKNOWN_REGION_CONFIDENCE, sizeFactorToKeep);
+    erode(cm, width, height);
+    keepOnlyLargeComponents(UNKNOWN_REGION_CONFIDENCE, 1.0/*sizeFactorToKeep*/);
 
-    for (int i=0; i<smoothness; i++) {
-        smoothcm(cm, imgWidth, imgHeight, 0.33f, 0.33f, 0.33f); // average
-    }
+    for (int i=0; i < 2/*smoothness*/; i++)
+        smooth(cm, width, height, 0.33f, 0.33f, 0.33f); // average
 
     normalizeMatrix(cm, pixelCount);
 
-    for (int i=0; i<pixelCount; i++) {
-        if (cm[i]>=UNKNOWN_REGION_CONFIDENCE) {
-            cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
-        } else {
-            cm[i]=CERTAIN_BACKGROUND_CONFIDENCE;
+    for (unsigned int i=0; i < pixelCount; i++)
+        {
+        if (cm[i] >= UNKNOWN_REGION_CONFIDENCE)
+            cm[i] = CERTAIN_FOREGROUND_CONFIDENCE;
+        else
+            cm[i] = CERTAIN_BACKGROUND_CONFIDENCE;
         }
-    }
 
-    keepOnlyLargeComponents(cm, UNKNOWN_REGION_CONFIDENCE, sizeFactorToKeep);
-    fillColorRegions(cm, image);
-    dilate(cm, imgWidth, imgHeight);
+    keepOnlyLargeComponents(UNKNOWN_REGION_CONFIDENCE, 1.5/*sizeFactorToKeep*/);
+    fillColorRegions();
+    dilate(cm, width, height);
 
-    segmentated=true;
+    delete[] labelField;
+
+    //#### Yaay.  We are done.  Now clear everything but the background
+    for (unsigned int y = 0 ; y < height ; y++)
+        for (unsigned int x = 0 ; x < width ; x++)
+            {
+            float conf = workImage.getConfidence(x, y);
+            if (conf < FOREGROUND_CONFIDENCE)
+                {
+                workImage.setPixel(x, y, backgroundFillColor);
+                }
+            }
+
+    trace("### Done");
+    return workImage;
+}
+
+
+
+//##############
+//## PRIVATE
+//##############
+
+/**
+ *  Initialize the Siox engine to its 'pristine' state.
+ *  Performed at the beginning of extractForeground().
+ */
+void Siox::init()
+{
+    limits[0] = 0.64f;
+    limits[1] = 1.28f;
+    limits[2] = 2.56f;
+
+    float negLimits[3];
+    negLimits[0] = -limits[0];
+    negLimits[1] = -limits[1];
+    negLimits[2] = -limits[2];
+
+    clusterSize = sqrEuclidianDist(limits, 3, negLimits);
+}
+
+
+/**
+ *  Clean up any debris from processing.
+ */
+void Siox::cleanup()
+{
+}
+
+
+
+
+/**
+ *  Stage 1 of the color signature work.  'dims' will be either
+ *  2 for grays, or 3 for colors
+ */
+void Siox::colorSignatureStage1(CLAB *points,
+                                unsigned int leftBase,
+                                unsigned int rightBase,
+                                unsigned int recursionDepth,
+                                unsigned int *clusterCount,
+                                const unsigned int dims)
+{
+
+    unsigned int currentDim = recursionDepth % dims;
+    CLAB point = points[leftBase];
+    float min = point(currentDim);
+    float max = min;
+
+    for (unsigned int i = leftBase + 1; i < rightBase ; i++)
+        {
+        point = points[i];
+        float curval = point(currentDim);
+        if (curval < min) min = curval;
+        if (curval > max) max = curval;
+        }
+
+    //Do the Rubner-rule split (sounds like a dance)
+    if (max - min > limits[currentDim])
+        {
+        float pivotPoint = (min + max) / 2.0; //average
+        unsigned int left  = leftBase;
+        unsigned int right = rightBase - 1;
+
+        //# partition points according to the dimension
+        while (true)
+            {
+            while ( true )
+                {
+                point = points[left];
+                if (point(currentDim) > pivotPoint)
+                    break;
+                left++;
+                }
+            while ( true )
+                {
+                point = points[right];
+                if (point(currentDim) <= pivotPoint)
+                    break;
+                right--;
+                }
+
+            if (left > right)
+                break;
+
+            point = points[left];
+            points[left] = points[right];
+            points[right] = point;
+
+            left++;
+            right--;
+            }
+
+        //# Recurse and create sub-trees
+        colorSignatureStage1(points, leftBase, left,
+                 recursionDepth + 1, clusterCount, dims);
+        colorSignatureStage1(points, left, rightBase,
+                 recursionDepth + 1, clusterCount, dims);
+        }
+    else
+        {
+        //create a leaf
+        CLAB newpoint;
+
+        newpoint.C = rightBase - leftBase;
+
+        for (; leftBase < rightBase ; leftBase++)
+            {
+            newpoint.add(points[leftBase]);
+            }
+
+        //printf("clusters:%d\n", *clusters);
+
+        if (newpoint.C != 0)
+            newpoint.mul(1.0 / (float)newpoint.C);
+        points[*clusterCount] = newpoint;
+        (*clusterCount)++;
+        }
+}
+
+
+
+/**
+ *  Stage 2 of the color signature work
+ */
+void Siox::colorSignatureStage2(CLAB         *points,
+                                unsigned int leftBase,
+                                unsigned int rightBase,
+                                unsigned int recursionDepth,
+                                unsigned int *clusterCount,
+                                const float  threshold,
+                                const unsigned int dims)
+{
+
+  
+    unsigned int currentDim = recursionDepth % dims;
+    CLAB point = points[leftBase];
+    float min = point(currentDim);
+    float max = min;
+
+    for (unsigned int i = leftBase+ 1; i < rightBase; i++)
+        {
+        point = points[i];
+        float curval = point(currentDim);
+        if (curval < min) min = curval;
+        if (curval > max) max = curval;
+        }
+
+    //Do the Rubner-rule split (sounds like a dance)
+    if (max - min > limits[currentDim])
+        {
+        float pivotPoint = (min + max) / 2.0; //average
+        unsigned int left  = leftBase;
+        unsigned int right = rightBase - 1;
+
+        //# partition points according to the dimension
+        while (true)
+            {
+            while ( true )
+                {
+                point = points[left];
+                if (point(currentDim) > pivotPoint)
+                    break;
+                left++;
+                }
+            while ( true )
+                {
+                point = points[right];
+                if (point(currentDim) <= pivotPoint)
+                    break;
+                right--;
+                }
+
+            if (left > right)
+                break;
+
+            point = points[left];
+            points[left] = points[right];
+            points[right] = point;
+
+            left++;
+            right--;
+            }
+
+        //# Recurse and create sub-trees
+        colorSignatureStage2(points, leftBase, left,
+                 recursionDepth + 1, clusterCount, threshold, dims);
+        colorSignatureStage2(points, left, rightBase,
+                 recursionDepth + 1, clusterCount, threshold, dims);
+        }
+    else
+        {
+        //### Create a leaf
+        unsigned int sum = 0;
+        for (unsigned int i = leftBase; i < rightBase; i++)
+            sum += points[i].C;
+
+        if ((float)sum >= threshold)
+            {
+            float scale = (float)(rightBase - leftBase);
+            CLAB newpoint;
+
+            for (; leftBase < rightBase; leftBase++)
+                newpoint.add(points[leftBase]);
+
+            if (scale != 0.0)
+                newpoint.mul(1.0 / scale);
+            points[*clusterCount] = newpoint;
+            (*clusterCount)++;
+            }
+      }
+}
+
+
+
+/**
+ *  Main color signature method
+ */
+bool Siox::colorSignature(const std::vector<CLAB> &inputVec,
+                          std::vector<CLAB> &result,
+                          const unsigned int dims)
+{
+
+    unsigned int length = inputVec.size();
+
+    if (length < 1) // no error. just don't do anything
+        return true;
+
+    CLAB *input = (CLAB *) malloc(length * sizeof(CLAB));
+
+    if (!input)
+        {
+        error("Could not allocate buffer for signature");
+        return false;
+        }        
+    for (unsigned int i=0 ; i < length ; i++)
+        input[i] = inputVec[i];
+
+    unsigned int stage1length = 0;
+    colorSignatureStage1(input, 0, length, 0,
+                   &stage1length, dims);
+
+    unsigned int stage2length = 0;
+    colorSignatureStage2(input, 0, stage1length, 0,
+                  &stage2length, length * 0.001, dims);
+
+    result.clear();
+    for (unsigned int i=0 ; i < stage2length ; i++)
+        result.push_back(input[i]);
+
+    free(input);
+
     return true;
 }
 
 
 
-void SioxSegmentator::keepOnlyLargeComponents(float *cm,
-                                              float threshold,
-                                              double sizeFactorToKeep)
+/**
+ *
+ */
+void Siox::keepOnlyLargeComponents(float threshold,
+                                   double sizeFactorToKeep)
 {
-    int idx = 0;
-    for (int i=0 ; i<imgHeight ; i++)
-        for (int j=0 ; j<imgWidth ; j++)
-            labelField[idx++] = -1;
+    for (unsigned long idx = 0 ; idx<pixelCount ; idx++)
+        labelField[idx] = -1;
 
     int curlabel = 0;
     int maxregion= 0;
@@ -1142,230 +1156,373 @@ void SioxSegmentator::keepOnlyLargeComponents(float *cm,
 
     // slow but easy to understand:
     std::vector<int> labelSizes;
-    for (int i=0 ; i<pixelCount ; i++) {
-        regionCount=0;
-        if (labelField[i]==-1 && cm[i]>=threshold) {
-            regionCount=depthFirstSearch(cm, i, threshold, curlabel++);
+    for (unsigned long i=0 ; i<pixelCount ; i++)
+        {
+        int regionCount = 0;
+        if (labelField[i] == -1 && cm[i] >= threshold)
+            {
+            regionCount = depthFirstSearch(i, threshold, curlabel++);
             labelSizes.push_back(regionCount);
+            }
+
+        if (regionCount>maxregion)
+            {
+            maxregion = regionCount;
+            maxblob   = curlabel-1;
+            }
         }
 
-        if (regionCount>maxregion) {
-            maxregion=regionCount;
-            maxblob=curlabel-1;
-        }
-    }
-
-    for (int i=0 ; i<pixelCount ; i++) {
-        if (labelField[i]!=-1) {
+    for (unsigned int i=0 ; i<pixelCount ; i++)
+        {
+        if (labelField[i] != -1)
+            {
             // remove if the component is to small
-            if (labelSizes[labelField[i]]*sizeFactorToKeep < maxregion)
-                cm[i]=CERTAIN_BACKGROUND_CONFIDENCE;
+            if (labelSizes[labelField[i]] * sizeFactorToKeep < maxregion)
+                cm[i] = CERTAIN_BACKGROUND_CONFIDENCE;
 
             // add maxblob always to foreground
-            if (labelField[i]==maxblob)
-                cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
+            if (labelField[i] == maxblob)
+                cm[i] = CERTAIN_FOREGROUND_CONFIDENCE;
+            }
         }
-    }
+
 }
 
 
 
-int SioxSegmentator::depthFirstSearch(float *cm, int i, float threshold, int curLabel)
+int Siox::depthFirstSearch(int startPos,
+              float threshold, int curLabel)
 {
     // stores positions of labeled pixels, where the neighbours
     // should still be checked for processing:
+
+    //trace("startPos:%d threshold:%f curLabel:%d",
+    //     startPos, threshold, curLabel);
+
     std::vector<int> pixelsToVisit;
-    int componentSize=0;
-    if (labelField[i]==-1 && cm[i]>=threshold) { // label #i
-        labelField[i] = curLabel;
-        ++componentSize;
-        pixelsToVisit.push_back(i);
-    }
-    while (pixelsToVisit.size() > 0) {
-        int pos=pixelsToVisit[pixelsToVisit.size()-1];
-        pixelsToVisit.erase(pixelsToVisit.end()-1);
-        int x=pos%imgWidth;
-        int y=pos/imgWidth;
+    int componentSize = 0;
+
+    if (labelField[startPos]==-1 && cm[startPos]>=threshold)
+        {
+        labelField[startPos] = curLabel;
+        componentSize++;
+        pixelsToVisit.push_back(startPos);
+        }
+
+
+    while (pixelsToVisit.size() > 0)
+        {
+        int pos = pixelsToVisit[pixelsToVisit.size() - 1];
+        pixelsToVisit.erase(pixelsToVisit.end() - 1);
+        unsigned int x = pos % width;
+        unsigned int y = pos / width;
+
         // check all four neighbours
-        int left = pos-1;
-        if (x-1>=0 && labelField[left]==-1 && cm[left]>=threshold) {
+        int left = pos - 1;
+        if (x-1>=0 && labelField[left]==-1 && cm[left]>=threshold)
+            {
             labelField[left]=curLabel;
-            ++componentSize;
+            componentSize++;
             pixelsToVisit.push_back(left);
-        }
-        int right = pos+1;
-        if (x+1<imgWidth && labelField[right]==-1 && cm[right]>=threshold) {
+            }
+
+        int right = pos + 1;
+        if (x+1 < width && labelField[right]==-1 && cm[right]>=threshold)
+            {
             labelField[right]=curLabel;
-            ++componentSize;
+            componentSize++;
             pixelsToVisit.push_back(right);
-        }
-        int top = pos-imgWidth;
-        if (y-1>=0 && labelField[top]==-1 && cm[top]>=threshold) {
+            }
+
+        int top = pos - width;
+        if (y-1>=0 && labelField[top]==-1 && cm[top]>=threshold)
+            {
             labelField[top]=curLabel;
-            ++componentSize;
+            componentSize++;
             pixelsToVisit.push_back(top);
-        }
-        int bottom = pos+imgWidth;
-        if (y+1<imgHeight && labelField[bottom]==-1
-            && cm[bottom]>=threshold) {
+            }
+
+        int bottom = pos + width;
+        if (y+1 < height && labelField[bottom]==-1
+                         && cm[bottom]>=threshold)
+            {
             labelField[bottom]=curLabel;
-            ++componentSize;
+            componentSize++;
             pixelsToVisit.push_back(bottom);
+            }
+
         }
-    }
     return componentSize;
 }
 
-void SioxSegmentator::subpixelRefine(int x, int y, int brushmode,
-                             float threshold, float *cf, int brushsize)
+
+
+/**
+ *
+ */
+void Siox::fillColorRegions()
 {
-    subpixelRefine(x-brushsize, y-brushsize,
-                   2*brushsize, 2*brushsize,
-                   brushmode, threshold, cf);
-}
-
-
-bool SioxSegmentator::subpixelRefine(int xa, int ya, int dx, int dy,
-                                     int brushmode,
-                                     float threshold, float *cf)
-{
-    if (!segmentated) {
-        error("no segmentation yet");
-        return false;
-    }
-
-    int x0 = (xa > 0) ? xa : 0;
-    int y0 = (ya > 0) ? ya : 0;
-
-    int xTo = (imgWidth  - 1 < xa+dx ) ? imgWidth-1  : xa+dx;
-    int yTo = (imgHeight - 1 < ya+dy ) ? imgHeight-1 : ya+dy;
-
-    for (int ey=y0; ey<yTo; ++ey) {
-        for (int ex=x0; ex<xTo; ++ex) {
-            /*  we are using a rect, not necessary
-            if (!area.contains(ex, ey)) {
-                continue;
-            }
-            */
-            unsigned long val=origImage[ey*imgWidth+ex];
-            unsigned long orig=val;
-            float minDistBg = 0.0f;
-            float minDistFg = 0.0f;
-            std::map<unsigned long, Tupel>::iterator iter = hs.find(val);
-            if (iter != hs.end()) {
-                minDistBg=(float) sqrt((float)iter->second.minBgDist);
-                minDistFg=(float) sqrt((float)iter->second.minFgDist);
-            } else {
-                continue;
-            }
-            if (ADD_EDGE == brushmode) { // handle adder
-                if (cf[ey*imgWidth+ex]<FOREGROUND_CONFIDENCE) { // postprocessing wins
-                  float alpha;
-                  if (minDistFg==0) {
-                      alpha=CERTAIN_FOREGROUND_CONFIDENCE;
-                  } else {
-                      alpha = (minDistBg/minDistFg < CERTAIN_FOREGROUND_CONFIDENCE) ?
-                          minDistBg/minDistFg : CERTAIN_FOREGROUND_CONFIDENCE;
-                  }
-                  if (alpha<threshold) { // background with certain confidence decided by user.
-                      alpha=CERTAIN_BACKGROUND_CONFIDENCE;
-                  }
-                  val = setAlpha(alpha, orig);
-                  cf[ey*imgWidth+ex]=alpha;
-                }
-            } else if (SUB_EDGE == brushmode) { // handle substractor
-                if (cf[ey*imgWidth+ex]>FOREGROUND_CONFIDENCE) {
-                    // foreground, we want to take something away
-                    float alpha;
-                    if (minDistBg==0) {
-                        alpha=CERTAIN_BACKGROUND_CONFIDENCE;
-                    } else {
-                        alpha=CERTAIN_FOREGROUND_CONFIDENCE-
-                            (minDistFg/minDistBg < CERTAIN_FOREGROUND_CONFIDENCE) ? // more background -> >1
-                             minDistFg/minDistBg : CERTAIN_FOREGROUND_CONFIDENCE;
-                        // bg = gf -> 1
-                        // more fg -> <1
-                    }
-                    if (alpha<threshold) { // background with certain confidence decided by user
-                        alpha=CERTAIN_BACKGROUND_CONFIDENCE;
-                    }
-                    val = setAlpha(alpha, orig);
-                    cf[ey*imgWidth+ex]=alpha;
-                }
-            } else {
-                error("unknown brush mode: %d", brushmode);
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-
-
-void SioxSegmentator::fillColorRegions(float *cm, unsigned long *image)
-{
-    int idx = 0;
-    for (int i=0 ; i<imgHeight ; i++)
-        for (int j=0 ; i<imgWidth ; j++)
-            labelField[idx++] = -1;
+    for (unsigned long idx = 0 ; idx<pixelCount ; idx++)
+        labelField[idx] = -1;
 
     //int maxRegion=0; // unused now
     std::vector<int> pixelsToVisit;
-    for (int i=0; i<pixelCount; i++) { // for all pixels
-        if (labelField[i]!=-1 || cm[i]<UNKNOWN_REGION_CONFIDENCE) {
+    for (unsigned long i=0; i<pixelCount; i++)
+        { // for all pixels
+        if (labelField[i]!=-1 || cm[i]<UNKNOWN_REGION_CONFIDENCE)
+            {
             continue; // already visited or bg
-        }
-        int origColor=image[i];
-        int curLabel=i+1;
-        labelField[i]=curLabel;
-        cm[i]=CERTAIN_FOREGROUND_CONFIDENCE;
+            }
+
+        unsigned int  origColor = image[i];
+        unsigned long curLabel  = i+1;
+        labelField[i]           = curLabel;
+        cm[i]                   = CERTAIN_FOREGROUND_CONFIDENCE;
+
         // int componentSize = 1;
         pixelsToVisit.push_back(i);
         // depth first search to fill region
-        while (pixelsToVisit.size() > 0) {
-            int pos=pixelsToVisit[pixelsToVisit.size()-1];
-            pixelsToVisit.erase(pixelsToVisit.end()-1);
-            int x=pos%imgWidth;
-            int y=pos/imgWidth;
+        while (pixelsToVisit.size() > 0)
+            {
+            int pos = pixelsToVisit[pixelsToVisit.size() - 1];
+            pixelsToVisit.erase(pixelsToVisit.end() - 1);
+            unsigned int x=pos % width;
+            unsigned int y=pos / width;
             // check all four neighbours
             int left = pos-1;
-            if (x-1>=0 && labelField[left]==-1
-                && labcolordiff(image[left], origColor)<1.0) {
+            if (x-1 >= 0 && labelField[left] == -1
+                        && CLAB::diff(image[left], origColor)<1.0)
+                {
                 labelField[left]=curLabel;
                 cm[left]=CERTAIN_FOREGROUND_CONFIDENCE;
                 // ++componentSize;
                 pixelsToVisit.push_back(left);
-            }
+                }
             int right = pos+1;
-            if (x+1<imgWidth && labelField[right]==-1
-                && labcolordiff(image[right], origColor)<1.0) {
+            if (x+1 < width && labelField[right]==-1
+                        && CLAB::diff(image[right], origColor)<1.0)
+                {
                 labelField[right]=curLabel;
                 cm[right]=CERTAIN_FOREGROUND_CONFIDENCE;
                 // ++componentSize;
                 pixelsToVisit.push_back(right);
-            }
-            int top = pos-imgWidth;
+                }
+            int top = pos - width;
             if (y-1>=0 && labelField[top]==-1
-                && labcolordiff(image[top], origColor)<1.0) {
+                        && CLAB::diff(image[top], origColor)<1.0)
+                {
                 labelField[top]=curLabel;
                 cm[top]=CERTAIN_FOREGROUND_CONFIDENCE;
                 // ++componentSize;
                 pixelsToVisit.push_back(top);
-            }
-            int bottom = pos+imgWidth;
-            if (y+1<imgHeight && labelField[bottom]==-1
-                && labcolordiff(image[bottom], origColor)<1.0) {
+                }
+            int bottom = pos + width;
+            if (y+1 < height && labelField[bottom]==-1
+                        && CLAB::diff(image[bottom], origColor)<1.0)
+                {
                 labelField[bottom]=curLabel;
                 cm[bottom]=CERTAIN_FOREGROUND_CONFIDENCE;
                 // ++componentSize;
                 pixelsToVisit.push_back(bottom);
+                }
             }
-        }
         //if (componentSize>maxRegion) {
         //    maxRegion=componentSize;
         //}
-    }
+        }
+}
+
+
+
+
+/**
+ * Applies the morphological dilate operator.
+ *
+ * Can be used to close small holes in the given confidence matrix.
+ */
+void Siox::dilate(float *cm, int xres, int yres)
+{
+
+    for (int y=0; y<yres; y++)
+        {
+        for (int x=0; x<xres-1; x++)
+             {
+             int idx=(y*xres)+x;
+             if (cm[idx+1]>cm[idx])
+                 cm[idx]=cm[idx+1];
+             }
+        }
+
+    for (int y=0; y<yres; y++)
+        {
+        for (int x=xres-1; x>=1; x--)
+            {
+            int idx=(y*xres)+x;
+            if (cm[idx-1]>cm[idx])
+                cm[idx]=cm[idx-1];
+            }
+        }
+
+    for (int y=0; y<yres-1; y++)
+        {
+        for (int x=0; x<xres; x++)
+            {
+            int idx=(y*xres)+x;
+            if (cm[((y+1)*xres)+x] > cm[idx])
+                cm[idx]=cm[((y+1)*xres)+x];
+            }
+        }
+
+    for (int y=yres-1; y>=1; y--)
+        {
+        for (int x=0; x<xres; x++)
+            {
+            int idx=(y*xres)+x;
+            if (cm[((y-1)*xres)+x] > cm[idx])
+                cm[idx]=cm[((y-1)*xres)+x];
+            }
+        }
+}
+
+/**
+ * Applies the morphological erode operator.
+ */
+void Siox::erode(float *cm, int xres, int yres)
+{
+    for (int y=0; y<yres; y++)
+        {
+        for (int x=0; x<xres-1; x++)
+            {
+            int idx=(y*xres)+x;
+            if (cm[idx+1] < cm[idx])
+                cm[idx]=cm[idx+1];
+            }
+        }
+    for (int y=0; y<yres; y++)
+        {
+        for (int x=xres-1; x>=1; x--)
+            {
+            int idx=(y*xres)+x;
+            if (cm[idx-1] < cm[idx])
+                cm[idx]=cm[idx-1];
+            }
+        }
+    for (int y=0; y<yres-1; y++)
+        {
+        for (int x=0; x<xres; x++)
+            {
+            int idx=(y*xres)+x;
+            if (cm[((y+1)*xres)+x] < cm[idx])
+                cm[idx]=cm[((y+1)*xres)+x];
+            }
+        }
+    for (int y=yres-1; y>=1; y--)
+        {
+        for (int x=0; x<xres; x++)
+            {
+            int idx=(y*xres)+x;
+            if (cm[((y-1)*xres)+x] < cm[idx])
+                cm[idx]=cm[((y-1)*xres)+x];
+            }
+        }
+}
+
+
+
+
+/**
+ * Normalizes the matrix to values to [0..1].
+ */
+void Siox::normalizeMatrix(float *cm, int cmSize)
+{
+    float max= -1000000.0f;
+    for (int i=0; i<cmSize; i++)
+        if (max<cm[i] > max)
+            max=cm[i];
+
+    if (max<=0.0 || max==1.0)
+        return;
+
+    float alpha=1.00f/max;
+    premultiplyMatrix(alpha, cm, cmSize);
+}
+
+/**
+ * Multiplies matrix with the given scalar.
+ */
+void Siox::premultiplyMatrix(float alpha, float *cm, int cmSize)
+{
+    for (int i=0; i<cmSize; i++)
+        cm[i]=alpha*cm[i];
+}
+
+/**
+ * Blurs confidence matrix with a given symmetrically weighted kernel.
+ *
+ * In the standard case confidence matrix entries are between 0...1 and
+ * the weight factors sum up to 1.
+ */
+void Siox::smooth(float *cm, int xres, int yres,
+                  float f1, float f2, float f3)
+{
+    for (int y=0; y<yres; y++)
+        {
+        for (int x=0; x<xres-2; x++)
+            {
+            int idx=(y*xres)+x;
+            cm[idx]=f1*cm[idx]+f2*cm[idx+1]+f3*cm[idx+2];
+            }
+        }
+    for (int y=0; y<yres; y++)
+        {
+        for (int x=xres-1; x>=2; x--)
+            {
+            int idx=(y*xres)+x;
+            cm[idx]=f3*cm[idx-2]+f2*cm[idx-1]+f1*cm[idx];
+            }
+        }
+    for (int y=0; y<yres-2; y++)
+        {
+        for (int x=0; x<xres; x++)
+            {
+            int idx=(y*xres)+x;
+            cm[idx]=f1*cm[idx]+f2*cm[((y+1)*xres)+x]+f3*cm[((y+2)*xres)+x];
+            }
+        }
+    for (int y=yres-1; y>=2; y--)
+        {
+        for (int x=0; x<xres; x++)
+            {
+            int idx=(y*xres)+x;
+            cm[idx]=f3*cm[((y-2)*xres)+x]+f2*cm[((y-1)*xres)+x]+f1*cm[idx];
+            }
+        }
+}
+
+/**
+ * Squared Euclidian distance of p and q.
+ */
+float Siox::sqrEuclidianDist(float *p, int pSize, float *q)
+{
+    float sum=0.0;
+    for (int i=0; i<pSize; i++)
+        {
+        float v = p[i] - q[i];
+        sum += v*v;
+        }
+    return sum;
+}
+
+/**
+ * Squared Euclidian distance of p and q.
+ */
+float Siox::sqrEuclidianDist(const CLAB &p, const CLAB &q)
+{
+    float sum=0;
+    sum += (p.L - q.L) * (p.L - q.L);
+    sum += (p.A - q.A) * (p.A - q.A);
+    sum += (p.B - q.B) * (p.B - q.B);
+    return sum;
 }
 
 
@@ -1375,14 +1532,10 @@ void SioxSegmentator::fillColorRegions(float *cm, unsigned long *image)
 
 
 
+} // namespace siox
+} // namespace org
 
-
-
-
-
-
-} //namespace siox
-} //namespace org
-
-
+//########################################################################
+//#  E N D    O F    F I L E
+//########################################################################
 

@@ -1,131 +1,94 @@
-#ifndef __SIOX_SEGMENTATOR_H__
-#define __SIOX_SEGMENTATOR_H__
-/*
-   Copyright 2005, 2006 by Gerald Friedland, Kristian Jantz and Lars Knipping
-
-   Conversion to C++ for Inkscape by Bob Jamison
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+#ifndef __SIOX_H__
+#define __SIOX_H__
+/**
+ *  Copyright 2005, 2006 by Gerald Friedland, Kristian Jantz and Lars Knipping
+ *
+ *  Conversion to C++ for Inkscape by Bob Jamison
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
-#include <map>
+/**
+ * Note by Bob Jamison:
+ * After translating the siox.org Java API to C++ and receiving an
+ * education into this wonderful code,  I began again,
+ * and started this version using lessons learned.  This version is
+ * an attempt to provide an dependency-free SIOX engine that anyone
+ * can use in their project with minimal effort.
+ *
+ * Many thanks to the fine people at siox.org.
+ */
+
+#include <string>
 #include <vector>
+
+#define HAVE_GLIB
+
+#ifdef HAVE_GLIB
+#include <glib.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#endif
+
 
 namespace org
 {
+
 namespace siox
 {
 
+
+//########################################################################
+//#  C L A B
+//########################################################################
+
 /**
- * Image segmentator based on
- *<em>SIOX: Simple Interactive Object Extraction</em>.
- * <P>
- * To segmentate an image one has to perform the following steps.
- * <OL><LI>Construct an instance of <code>SioxSegmentator</code>.
- * </LI><LI>Create a confidence matrix, where each entry marks its
- *      corresponding image pixel to belong to the foreground, to the
- *      background, or being of unknown type.
- * </LI><LI>Call <code>segmentate</code> on the image with the confidence
- *       matrix. This stores the result as new foreground confidence into
- *       the confidence matrix, with each entry being either
- *       zero (<code>CERTAIN_BACKGROUND_CONFIDENCE</code>) or one
- *       (<code>CERTAIN_FOREGROUND_CONFIDENCE</code>).
- * </LI><LI>Optionally call <code>subpixelRefine</code> to areas
- *      where pixels contain both foreground and background (e.g.
- *      object borders or highly detailed features like flowing hairs).
- *      The pixel are then assigned confidence values bwetween zero and
- *      one to give them a measure of "foregroundness".
- *      This step may be repeated as often as needed.
- * </LI></OL>
- * <P>
- * For algorithm documentation refer to
- * G. Friedland, K. Jantz, L. Knipping, R. Rojas:<i>
- * Image Segmentation by Uniform Color Clustering
- *  -- Approach and Benchmark Results</i>,
- * <A HREF="http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf">Technical Report B-05-07</A>,
- * Department of Computer Science, Freie Universitaet Berlin, June 2005.<br>
- * <P>
- * See <A HREF="http://www.siox.org/" target="_new">http://www.siox.org</A> for more information.<br>
- * <P>
- * Algorithm idea by Gerald Friedland.
  *
- * @author Gerald Friedland, Kristian Jantz, Lars Knipping
- * @version 1.12
  */
-
-/**
- * Helper class for storing the minimum distances to a cluster centroid
- * in background and foreground and the index to the centroids in each
- * signature for a given color.
- */
-class Tupel {
-public:
-
-    Tupel()
-        {
-        minBgDist  = 0.0f;
-        indexMinBg = 0;
-        minFgDist  = 0.0f;
-        indexMinFg = 0;
-        }
-    Tupel(float minBgDistArg, long indexMinBgArg,
-          float minFgDistArg, long indexMinFgArg)
-        {
-	minBgDist  = minBgDistArg;
-	indexMinBg = indexMinBgArg;
-	minFgDist  = minFgDistArg;
-	indexMinFg = indexMinFgArg;
-        }
-    Tupel(const Tupel &other)
-        {
-	minBgDist  = other.minBgDist;
-	indexMinBg = other.indexMinBg;
-	minFgDist  = other.minFgDist;
-	indexMinFg = other.indexMinFg;
-        }
-    Tupel &operator=(const Tupel &other)
-        {
-	minBgDist  = other.minBgDist;
-	indexMinBg = other.indexMinBg;
-	minFgDist  = other.minFgDist;
-	indexMinFg = other.indexMinFg;
-	return *this;
-        }
-    virtual ~Tupel()
-        {}
-
-    float minBgDist;
-    long  indexMinBg;
-    float minFgDist;
-    long  indexMinFg;
-
- };
-
-
 class CLAB
 {
 public:
+
+    /**
+     *
+     */
     CLAB()
         {
-        C = L = A = B = 0.0f;
+        C = 0;
+        L = A = B = 0.0f;
         }
+
+
+    /**
+     *
+     */
+    CLAB(unsigned long rgb);
+
+
+    /**
+     *
+     */
     CLAB(float lArg, float aArg, float bArg)
         {
-        C = 0.0f;
+        C = 0;
         L = lArg;
         A = aArg;
         B = bArg;
         }
+
+
+    /**
+     *
+     */
     CLAB(const CLAB &other)
         {
         C = other.C;
@@ -133,6 +96,11 @@ public:
         A = other.A;
         B = other.B;
         }
+
+
+    /**
+     *
+     */
     CLAB &operator=(const CLAB &other)
         {
         C = other.C;
@@ -141,260 +109,458 @@ public:
         B = other.B;
         return *this;
         }
+
+    /**
+     *
+     */
     virtual ~CLAB()
         {}
 
-    float C;
+    /**
+     * Retrieve a CLAB value via index.
+     */
+    virtual float operator()(unsigned int index)
+        {
+        if      (index==0) return L;
+        else if (index==1) return A;
+        else if (index==2) return B;
+        else return 0;
+        }
+
+
+    /**
+     *
+     */
+    virtual void add(const CLAB &other)
+        {
+        C += other.C;
+        L += other.L;
+        A += other.A;
+        B += other.B;
+        }
+
+
+    /**
+     *
+     */
+    virtual void mul(float scale)
+        {
+        L *= scale;
+        A *= scale;
+        B *= scale;
+        }
+
+
+    /**
+     *
+     */
+    virtual unsigned long toRGB();
+
+    /**
+     * Computes squared euclidian distance in CLAB space for two colors
+     * given as RGB values.
+     */
+    static float diffSq(unsigned int rgb1, unsigned int rgb2);
+
+    /**
+     * Computes squared euclidian distance in CLAB space for two colors
+     * given as RGB values.
+     */
+    static float diff(unsigned int rgb0, unsigned int rgb1);
+
+
+    unsigned int C;
     float L;
     float A;
     float B;
+
+
 };
 
 
-class SioxSegmentator
+//########################################################################
+//#  S I O X    I M A G E
+//########################################################################
+
+/**
+ * This is a generic image type that provides a consistent interface
+ * to Siox, so that developers will not need to worry about data arrays.
+ */
+class SioxImage
 {
 public:
 
-    /** Confidence corresponding to a certain foreground region (equals one). */
-    static const float CERTAIN_FOREGROUND_CONFIDENCE;  //=1.0f;
+    /**
+     *  Create an image with the given width and height
+     */
+    SioxImage(unsigned int width, unsigned int height);
 
-    /** Confidence for a region likely being foreground.*/
-    static const float FOREGROUND_CONFIDENCE;  //=0.8f;
+    /**
+     *  Copy constructor
+     */
+    SioxImage(const SioxImage &other);
 
-    /** Confidence for foreground or background type being equally likely.*/
-    static const float UNKNOWN_REGION_CONFIDENCE;  //=0.5f;
+    /**
+     *  Assignment
+     */
+    SioxImage &operator=(const SioxImage &other);
 
-    /** Confidence for a region likely being background.*/
-    static const float BACKGROUND_CONFIDENCE;  //=0.1f;
+    /**
+     * Clean up after use.
+     */
+    virtual ~SioxImage();
 
-    /** Confidence corresponding to a certain background reagion (equals zero). */
-    static const float CERTAIN_BACKGROUND_CONFIDENCE;  //=0.0f;
+    /**
+     * Returns true if the previous operation on this image
+     * was successful, else false.
+     */
+    virtual bool isValid();
+
+    /**
+     * Sets whether an operation was successful, and whether
+     * this image should be considered a valid one.
+     * was successful, else false.
+     */
+    virtual void setValid(bool val);
+
+    /**
+     * Set a pixel at the x,y coordinates to the given value.
+     * If the coordinates are out of range, do nothing.
+     */
+    virtual void setPixel(unsigned int x,
+                          unsigned int y,
+                          unsigned int pixval);
+
+    /**
+     * Set a pixel at the x,y coordinates to the given r, g, b values.
+     * If the coordinates are out of range, do nothing.
+     */
+    virtual void setPixel(unsigned int x, unsigned int y,
+                          unsigned int a, 
+                          unsigned int r, 
+                          unsigned int g,
+                          unsigned int b);
+
+    /**
+     *  Get a pixel at the x,y coordinates given.  If
+     *  the coordinates are out of range, return 0
+     */
+    virtual unsigned int getPixel(unsigned int x, unsigned int y);
 
 
     /**
-     * Constructs a SioxSegmentator Object to be used for image segmentation.
-     *
-     * @param w X resolution of the image to be segmentated.
-     * @param h Y resolution of the image to be segmentated.
-     * @param limits Size of the cluster on LAB axises.
-     *        If <code>null</code>, the default value {0.64f,1.28f,2.56f}
-     *        is used.
+     *  Return the image data buffer
      */
-    SioxSegmentator(int w, int h, float *limitsArg, int limitsSize);
+    virtual unsigned int *getImageData();
 
     /**
-     * Destructor
+     * Set a confidence value at the x,y coordinates to the given value.
+     * If the coordinates are out of range, do nothing.
      */
-    virtual ~SioxSegmentator();
-
-
-    /**
-     * Segmentates the given image with information from the confidence
-     * matrix.
-     * <P>
-     * The confidence entries  of <code>BACKGROUND_CONFIDENCE</code> or less
-     * are mark known background pixel for the segmentation, those
-     * of at least <code>FOREGROUND_CONFIDENCE</code> mark known
-     * foreground pixel for the segmentation. Any other entry is treated
-     * as region of unknown affiliation.
-     * <P>
-     * As result, each pixel is classified either as foregroound or
-     * background, stored back into its <code>cm</code> entry as confidence
-     * <code>CERTAIN_FOREGROUND_CONFIDENCE</code> or
-     * <code>CERTAIN_BACKGROUND_CONFIDENCE</code>.
-     *
-     * @param image Pixel data of the image to be segmentated.
-     *        Every integer represents one ARGB-value.
-     * @param cm Confidence matrix specifying the probability of an image
-     *        belonging to the foreground before and after the segmentation.
-     * @param smoothness Number of smoothing steps in the post processing.
-     *        Both arrays should be width * height in size.
-     * @param sizeFactorToKeep Segmentation retains the largest connected
-     *        foreground component plus any component with size at least
-     *        <CODE>sizeOfLargestComponent/sizeFactorToKeep</CODE>.
-     * @return <CODE>true</CODE> if the segmentation algorithm succeeded,
-     *         <CODE>false</CODE> if segmentation is impossible
-     */
-    bool segmentate(unsigned long *image, float *cm,
-                    int smoothness, double sizeFactorToKeep);
+    virtual void setConfidence(unsigned int x,
+                               unsigned int y,
+                               float conf);
 
     /**
-     * Clears given confidence matrix except entries for the largest connected
-     * component and every component with
-     * <CODE>size*sizeFactorToKeep >= sizeOfLargestComponent</CODE>.
-     *
-     * @param cm  Confidence matrix to be analysed
-     * @param threshold Pixel visibility threshold.
-     *        Exactly those cm entries larger than threshold are considered
-     *        to be a "visible" foreground pixel.
-     * @param sizeFactorToKeep This method keeps the largest connected
-     *        component plus any component with size at least
-     *        <CODE>sizeOfLargestComponent/sizeFactorToKeep</CODE>.
+     *  Get a confidence value at the x,y coordinates given.  If
+     *  the coordinates are out of range, return 0
      */
-    void keepOnlyLargeComponents(float *cm,
-                                 float threshold,
-                                 double sizeFactorToKeep);
+    virtual float getConfidence(unsigned int x, unsigned int y);
 
     /**
-     * Depth first search pixels in a foreground component.
-     *
-     * @param cm confidence matrix to be searched.
-     * @param i starting position as index to confidence matrix.
-     * @param threshold defines the minimum value at which a pixel is
-     *        considered foreground.
-     * @param curlabel label no of component.
-     * @return size in pixel of the component found.
+     *  Return the confidence data buffer
      */
-    int depthFirstSearch(float *cm, int i, float threshold, int curLabel);
+    virtual float *getConfidenceData();
 
     /**
-     * Refines the classification stored in the confidence matrix by modifying
-     * the confidences for regions which have characteristics to both
-     * foreground and background if they fall into the specified square.
-     * <P>
-     * The can be used in displaying the image by assigning the alpha values
-     * of the pixels according to the confidence entries.
-     * <P>
-     * In the algorithm descriptions and examples GUIs this step is referrered
-     * to as <EM>Detail Refinement (Brush)</EM>.
-     *
-     * @param x Horizontal coordinate of the squares center.
-     * @param y Vertical coordinate of the squares center.
-     * @param brushmode Mode of the refinement applied, <CODE>ADD_EDGE</CODE>
-     *        or <CODE>SUB_EDGE</CODE>. Add mode only modifies pixels
-     *        formerly classified as background, sub mode only those
-     *        formerly classified as foreground.
-     * @param threshold Threshold for the add and sub refinement, deciding
-     *        at the confidence level to stop at.
-     * @param cf The confidence matrix to modify, generated by
-     *        <CODE>segmentate</CODE>, possibly already refined by privious
-     *        calls to <CODE>subpixelRefine</CODE>.
-     * @param brushsize Halfed diameter of the square shaped brush.
-     *
-     * @see #segmentate
+     * Return the width of this image
      */
-    void subpixelRefine(int x, int y, int brushmode,
-                             float threshold, float *cf, int brushsize);
+    virtual int getWidth();
 
     /**
-     * Refines the classification stored in the confidence matrix by modifying
-     * the confidences for regions which have characteristics to both
-     * foreground and background if they fall into the specified area.
-     * <P>
-     * The can be used in displaying the image by assigning the alpha values
-     * of the pixels according to the confidence entries.
-     * <P>
-     * In the algorithm descriptions and examples GUIs this step is referrered
-     * to as <EM>Detail Refinement (Brush)</EM>.
-     *
-     * @param area Area in which the reworking of the segmentation is
-     *        applied to.
-     * @param brushmode Mode of the refinement applied, <CODE>ADD_EDGE</CODE>
-     *        or <CODE>SUB_EDGE</CODE>. Add mode only modifies pixels
-     *        formerly classified as background, sub mode only those
-     *        formerly classified as foreground.
-     * @param threshold Threshold for the add and sub refinement, deciding
-     *        at the confidence level to stop at.
-     * @param cf The confidence matrix to modify, generated by
-     *        <CODE>segmentate</CODE>, possibly already refined by privious
-     *        calls to <CODE>subpixelRefine</CODE>.
-     *
-     * @see #segmentate
+     * Return the height of this image
      */
-    bool subpixelRefine(int xa, int ya, int dx, int dy,
-                                     int brushmode,
-                                     float threshold, float *cf);
+    virtual int getHeight();
+
     /**
-     * A region growing algorithms used to fill up the confidence matrix
-     * with <CODE>CERTAIN_FOREGROUND_CONFIDENCE</CODE> for corresponding
-     * areas of equal colors.
-     * <P>
-     * Basically, the method works like the <EM>Magic Wand<EM> with a
-     * tolerance threshold of zero.
-     *
-     * @param cm confidence matrix to be searched
-     * @param image image to be searched
+     * Saves this image as a simple color PPM
      */
-    void fillColorRegions(float *cm, unsigned long *image);
+    bool writePPM(const std::string fileName);
+
+
+
+#ifdef HAVE_GLIB
+
+    /**
+     * Special constructor to create an image from a GdkPixbuf.
+     */
+    SioxImage(GdkPixbuf *buf);
+
+    /**
+     * Creates a GdkPixbuf from this image.  The user must
+     * remember to destroy the image when no longer needed.
+     * with g_free(pixbuf)
+     */
+    GdkPixbuf *getGdkPixbuf();
+
+#endif
+
+private:
+
+    SioxImage()
+        {}
+
+    /**
+     * Assign values to that of another
+     */
+    void assign(const SioxImage &other);
+
+    /**
+     * Initialize values.  Used by constructors
+     */
+    void init(unsigned int width, unsigned int height);
+
+    bool valid;
+
+    unsigned int width;
+
+    unsigned int height;
+
+    unsigned long imageSize;
+
+    /**
+     * Pixel data
+     */
+    unsigned int *pixdata;
+
+    /**
+     * Confidence matrix data
+     */
+    float *cmdata;
+};
+
+
+
+
+
+//########################################################################
+//#  S I O X
+//########################################################################
+
+/**
+ *
+ */
+class Siox
+{
+public:
+
+    /**
+     * Confidence corresponding to a certain foreground region (equals one).
+     */
+    static const float CERTAIN_FOREGROUND_CONFIDENCE; //=1.0f;
+
+    /**
+     * Confidence for a region likely being foreground.
+     */
+    static const float FOREGROUND_CONFIDENCE; //=0.8f;
+
+    /** 
+     * Confidence for foreground or background type being equally likely.
+     */
+    static const float UNKNOWN_REGION_CONFIDENCE; //=0.5f;
+
+    /**
+     * Confidence for a region likely being background.
+     */
+    static const float BACKGROUND_CONFIDENCE; //=0.1f;
+
+    /**
+     * Confidence corresponding to a certain background reagion (equals zero).
+     */
+    static const float CERTAIN_BACKGROUND_CONFIDENCE; //=0.0f;
+
+    /**
+     *  Construct a Siox engine
+     */
+    Siox();
+
+    /**
+     *
+     */
+    virtual ~Siox();
+
+    /**
+     *  Extract the foreground of the original image, according
+     *  to the values in the confidence matrix.  If the operation fails,
+     *  sioxImage.isValid()  will be false.
+     *  backgroundFillColor is any ARGB color,  such as 0xffffff (white)
+     *  or 0x000000 (black)
+     */
+    virtual SioxImage extractForeground(const SioxImage &originalImage,
+                                        unsigned int backgroundFillColor);
 
 private:
 
     /**
-     * Prevent this from being used
+     * Our signature limits
      */
-    SioxSegmentator();
+    float limits[3];
 
-    /** error logging **/
-    void error(char *format, ...);
+    /**
+     * Image width
+     */
+    unsigned int width;
 
-    /** trace logging **/
-    void trace(char *format, ...);
+    /**
+     * Image height
+     */
+    unsigned int height;
 
-    typedef enum
-        {
-        ADD_EDGE, /** Add mode for the subpixel refinement. */
-        SUB_EDGE  /** Subtract mode for the subpixel refinement. */
-        } BrushMode;
+    /**
+     * Image size in pixels
+     */
+    unsigned long pixelCount;
 
-    // instance fields:
+    /**
+     * Image data
+     */
+    unsigned int *image;
 
-    /** Horizontal resolution of the image to be segmentated. */
-    int imgWidth;
+    /**
+     * Image confidence matrix
+     */
+    float *cm;
 
-    /** Vertical resolution of the image to be segmentated. */
-    int imgHeight;
-
-    /** Number of pixels and/or confidence matrix values to process.
-        equal to imgWidth * imgHeight
-    */
-    long pixelCount;
-
-    /** Stores component label (index) by pixel it belongs to. */
+    /**
+     * Markup for image editing
+     */
     int *labelField;
 
-    /**
-     * LAB color values of pixels that are definitly known background.
-     * Entries are of form {l,a,b}.
-     */
-    std::vector<CLAB> knownBg;
 
     /**
-     * LAB color values of pixels that are definitly known foreground.
-     * Entries are of form {l,a,b}.
+     * Maximum distance of two lab values.
      */
-    std::vector<CLAB> knownFg;
-
-    /** Holds background signature (a characteristic subset of the bg.) */
-    std::vector<CLAB> bgSignature;
-
-    /** Holds foreground signature (a characteristic subset of the fg).*/
-    std::vector<CLAB> fgSignature;
-
-    /** Size of cluster on lab axis. */
-    float *limits;
-
-    /** Maximum distance of two lab values. */
     float clusterSize;
 
     /**
-     * Stores Tupels for fast access to nearest background/foreground pixels.
+     *  Initialize the Siox engine to its 'pristine' state.
+     *  Performed at the beginning of extractForeground().
      */
-    std::map<unsigned long, Tupel> hs;
+    void init();
 
-    /** Size of the biggest blob.*/
-    int regionCount;
+    /**
+     *  Clean up any debris from processing.
+     */
+    void cleanup();
 
-    /** Copy of the original image, needed for detail refinement. */
-    long *origImage;
-    long origImageSize;
+    /**
+     * Error logging
+     */
+    void error(char *fmt, ...);
 
-    /** A flag that stores if the segmentation algorithm has already ran.*/
-    bool segmentated;
+    /**
+     * Trace logging
+     */
+    void trace(char *fmt, ...);
+
+    /**
+     *  Stage 1 of the color signature work.  'dims' will be either
+     *  2 for grays, or 3 for colors
+     */
+    void colorSignatureStage1(CLAB *points,
+                              unsigned int leftBase,
+                              unsigned int rightBase,
+                              unsigned int recursionDepth,
+                              unsigned int *clusters,
+                              const unsigned int dims);
+
+    /**
+     *  Stage 2 of the color signature work
+     */
+    void colorSignatureStage2(CLAB         *points,
+                              unsigned int leftBase,
+                              unsigned int rightBase,
+                              unsigned int recursionDepth,
+                              unsigned int *clusters,
+                              const float  threshold,
+                              const unsigned int dims);
+
+    /**
+     *  Main color signature method
+     */
+    bool colorSignature(const std::vector<CLAB> &inputVec,
+                        std::vector<CLAB> &result,
+                        const unsigned int dims);
+
+
+    /**
+     *
+     */
+    void keepOnlyLargeComponents(float threshold,
+                                 double sizeFactorToKeep);
+
+    /**
+     *
+     */
+    int depthFirstSearch(int startPos, float threshold, int curLabel);
+
+
+    /**
+     *
+     */
+    void fillColorRegions();
+
+    /**
+     * Applies the morphological dilate operator.
+     *
+     * Can be used to close small holes in the given confidence matrix.
+     */
+    void dilate(float *cm, int xres, int yres);
+
+    /**
+     * Applies the morphological erode operator.
+     */
+    void erode(float *cm, int xres, int yres);
+
+    /**
+     * Normalizes the matrix to values to [0..1].
+     */
+    void normalizeMatrix(float *cm, int cmSize);
+
+    /**
+     * Multiplies matrix with the given scalar.
+     */
+    void premultiplyMatrix(float alpha, float *cm, int cmSize);
+
+    /**
+     * Blurs confidence matrix with a given symmetrically weighted kernel.
+     */
+    void smooth(float *cm, int xres, int yres,
+                  float f1, float f2, float f3);
+
+    /**
+     * Squared Euclidian distance of p and q.
+     */
+    float sqrEuclidianDist(float *p, int pSize, float *q);
+
+    /**
+     * Squared Euclidian distance of p and q.
+     */
+    float sqrEuclidianDist(const CLAB &p, const CLAB &q);
+
 
 };
 
-} //namespace siox
-} //namespace org
 
-#endif /* __SIOX_SEGMENTATOR_H__ */
+
+
+} // namespace siox
+} // namespace org
+
+#endif /* __SIOX_H__ */
+//########################################################################
+//#  E N D    O F    F I L E
+//########################################################################
+
+
 

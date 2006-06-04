@@ -343,11 +343,12 @@ TraceDialogImpl::TraceDialogImpl()
 
     /*#### SIOX ####*/
     //# for now, put at the top of the potrace box.  something better later
-    sioxButton.set_label(_("SIOX subimage selection"));
+    sioxButton.set_label(_("SIOX foreground selection"));
     sioxBox.pack_start(sioxButton, false, false, MARGIN);
-    tips.set_tip(sioxButton, _("Subimage selection with the SIOX algorithm"));
+    tips.set_tip(sioxButton, 
+        _("Cover the area you want to select as the foreground"));
     sioxVBox.pack_start(sioxBox, false, false, MARGIN);
-    sioxFrame.set_label(_("SIOX (W.I.P.)"));
+    sioxFrame.set_label(_("SIOX"));
     sioxFrame.add(sioxVBox);
     potraceBox.pack_start(sioxFrame, false, false, 0);
 

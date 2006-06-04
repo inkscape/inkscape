@@ -33,9 +33,13 @@
 #include "siox.h"
 #include "imagemap-gdk.h"
 
-namespace Inkscape {
 
-namespace Trace {
+
+namespace Inkscape
+{
+
+namespace Trace
+{
 
 
 
@@ -43,11 +47,13 @@ namespace Trace {
 
 
 /**
- *
+ * Get the selected image.  Also check for any SPItems over it, in
+ * case the user wants SIOX pre-processing.
  */
 SPImage *
 Tracer::getSelectedSPImage()
 {
+
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         {
@@ -55,11 +61,13 @@ Tracer::getSelectedSPImage()
         return NULL;
         }
 
+    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+
     Inkscape::Selection *sel = sp_desktop_selection(desktop);
     if (!sel)
         {
         char *msg = _("Select an <b>image</b> to trace");
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         return NULL;
         }
@@ -94,7 +102,7 @@ Tracer::getSelectedSPImage()
                 if (img) //we want only one
                     {
                     char *msg = _("Select only one <b>image</b> to trace");
-                    sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+                    msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
                     return NULL;
                     }
                 img = SP_IMAGE(item);
@@ -112,7 +120,7 @@ Tracer::getSelectedSPImage()
         if (!img || sioxShapes.size() < 1)
             {
             char *msg = _("Select one image and one or more shapes above it");
-            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
             return NULL;
             }
         return img;
@@ -124,7 +132,7 @@ Tracer::getSelectedSPImage()
         if (!item)
             {
             char *msg = _("Select an <b>image</b> to trace");  //same as above
-            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
             //g_warning(msg);
             return NULL;
             }
@@ -132,7 +140,7 @@ Tracer::getSelectedSPImage()
         if (!SP_IS_IMAGE(item))
             {
             char *msg = _("Select an <b>image</b> to trace");
-            sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+            msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
             //g_warning(msg);
             return NULL;
             }
@@ -146,36 +154,18 @@ Tracer::getSelectedSPImage()
 
 
 
-/**
- *
- */
-GdkPixbuf *
-Tracer::getSelectedImage()
-{
-
-    SPImage *img = getSelectedSPImage();
-    if (!img)
-        return NULL;
-
-    GdkPixbuf *pixbuf = img->pixbuf;
-
-    return pixbuf;
-
-}
-
+typedef org::siox::SioxImage SioxImage;
+typedef org::siox::Siox Siox;
 
 GdkPixbuf *
 Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
 {
+    if (!sioxEnabled)
+        return origPixbuf;
 
     //Convert from gdk, so a format we know.  By design, the pixel
     //format in PackedPixelMap is identical to what is needed by SIOX
-    PackedPixelMap *ppMap = gdkPixbufToPackedPixelMap(origPixbuf);
-    //We need to create two things:
-    //  1.  An array of long pixel values of ARGB
-    //  2.  A matching array of per-pixel float 'confidence' values
-    unsigned long *imgBuf = ppMap->pixels;
-    float *confidenceMatrix = new float[ppMap->width * ppMap->height];
+    SioxImage simage(origPixbuf);
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
@@ -184,11 +174,13 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         return NULL;
         }
 
+    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+
     Inkscape::Selection *sel = sp_desktop_selection(desktop);
     if (!sel)
         {
         char *msg = _("Select an <b>image</b> to trace");
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         return NULL;
         }
@@ -200,14 +192,11 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     double width  = (double)(aImg->bbox.x1 - aImg->bbox.x0);
     double height = (double)(aImg->bbox.y1 - aImg->bbox.y0);
 
-    double iwidth  = (double)ppMap->width;
-    double iheight = (double)ppMap->height;
+    double iwidth  = (double)simage.getWidth();
+    double iheight = (double)simage.getHeight();
 
     double iwscale = width  / iwidth;
     double ihscale = height / iheight;
-
-    unsigned long cmIndex = 0;
-
 
     std::vector<NRArenaItem *> arenaItems;
     std::vector<SPShape *>::iterator iter;
@@ -224,12 +213,13 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         }
     //g_message("%d arena items\n", arenaItems.size());
 
-    PackedPixelMap *dumpMap = PackedPixelMapCreate(ppMap->width, ppMap->height);
+    PackedPixelMap *dumpMap = PackedPixelMapCreate(
+                    simage.getWidth(), simage.getHeight());
 
-    for (int row=0 ; row<ppMap->height ; row++)
+    for (int row=0 ; row<simage.getHeight() ; row++)
         {
         double ypos = ((double)aImg->bbox.y0) + ihscale * (double) row;
-        for (int col=0 ; col<ppMap->width ; col++)
+        for (int col=0 ; col<simage.getWidth() ; col++)
             {
             //Get absolute X,Y position
             double xpos = ((double)aImg->bbox.x0) + iwscale * (double)col;
@@ -257,26 +247,33 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
                 {
                 //g_message("hit!\n");
                 dumpMap->setPixelLong(dumpMap, col, row, 0L);
-                confidenceMatrix[cmIndex] =
-                        org::siox::SioxSegmentator::CERTAIN_FOREGROUND_CONFIDENCE;
+                simage.setConfidence(col, row, 
+                        Siox::UNKNOWN_REGION_CONFIDENCE);
                 }
             else
                 {
                 dumpMap->setPixelLong(dumpMap, col, row,
-                        ppMap->getPixel(ppMap, col, row));
-                confidenceMatrix[cmIndex] =
-                        org::siox::SioxSegmentator::CERTAIN_BACKGROUND_CONFIDENCE;
+                        simage.getPixel(col, row));
+                simage.setConfidence(col, row,
+                        Siox::CERTAIN_BACKGROUND_CONFIDENCE);
                 }
-            cmIndex++;
             }
         }
 
-    //## ok we have our pixel buf
-    org::siox::SioxSegmentator ss(ppMap->width, ppMap->height, NULL, 0);
-    ss.segmentate(imgBuf, confidenceMatrix, 0, 0.0);
-
-    dumpMap->writePPM(dumpMap, "siox.ppm");
+    //dumpMap->writePPM(dumpMap, "siox1.ppm");
     dumpMap->destroy(dumpMap);
+
+    //## ok we have our pixel buf
+    org::siox::Siox sengine;
+    org::siox::SioxImage result =
+            sengine.extractForeground(simage, 0xffffff);
+    if (!result.isValid())
+        {
+        g_warning("Invalid SIOX result");
+        return NULL;
+        }
+
+    //result.writePPM("siox2.ppm");
 
     /* Free Arena and ArenaItem */
     /*
@@ -289,13 +286,47 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     nr_object_unref((NRObject *) arena);
     */
 
-    GdkPixbuf *newPixbuf = packedPixelMapToGdkPixbuf(ppMap);
-    ppMap->destroy(ppMap);
-    delete confidenceMatrix;
+    GdkPixbuf *newPixbuf = result.getGdkPixbuf();
 
     return newPixbuf;
 }
 
+
+/**
+ *
+ */
+GdkPixbuf *
+Tracer::getSelectedImage()
+{
+
+    SPImage *img = getSelectedSPImage();
+    if (!img)
+        return NULL;
+
+    GdkPixbuf *pixbuf = img->pixbuf;
+    if (!pixbuf)
+        return NULL;
+
+    if (sioxEnabled)
+        {
+        GdkPixbuf *sioxPixbuf = sioxProcessImage(img, pixbuf);
+        if (!sioxPixbuf)
+            {
+            g_object_ref(pixbuf);
+            return pixbuf;
+            }
+        else
+            {
+            return sioxPixbuf;
+            }
+        }
+    else
+        {
+        g_object_ref(pixbuf);
+        return pixbuf;
+        }
+
+}
 
 
 
@@ -331,12 +362,14 @@ void Tracer::traceThread()
         return;
         }
 
+    Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
+
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
     if (!SP_ACTIVE_DOCUMENT)
         {
         char *msg = _("Trace: No active document");
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         engine = NULL;
         return;
@@ -353,28 +386,17 @@ void Tracer::traceThread()
         }
 
     GdkPixbuf *pixbuf = img->pixbuf;
+    g_object_ref(pixbuf);
+
+    pixbuf = sioxProcessImage(img, pixbuf);
 
     if (!pixbuf)
         {
         char *msg = _("Trace: Image has no bitmap data");
-        sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, msg);
+        msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
         engine = NULL;
         return;
-        }
-
-    //## SIOX pre-processing to get a smart subimage of the pixbuf.
-    //## This is done before any other filters
-    if (sioxEnabled)
-        {
-        /*
-           Ok, we have requested siox, and getSelectedSPImage() has found a single
-           bitmap and one or more SPItems above it.  Now what we need to do is create
-           a siox-segmented subimage pixbuf.  We not need alter 'img' at all, since this
-           pixbuf will be the same dimensions and at the same location.
-           Remember to free this new pixbuf later.
-        */
-        pixbuf = sioxProcessImage(img, pixbuf);
         }
 
     int nrPaths;
@@ -467,11 +489,8 @@ void Tracer::traceThread()
         Inkscape::GC::release(pathRepr);
         }
 
-    //did we allocate a pixbuf copy?
-    if (sioxEnabled)
-        {
-        g_free(pixbuf);
-        }
+    //release our pixbuf
+    g_object_unref(pixbuf);
 
     delete results;
 
@@ -489,7 +508,7 @@ void Tracer::traceThread()
     engine = NULL;
 
     char *msg = g_strdup_printf(_("Trace: Done. %ld nodes created"), totalNodeCount);
-    sp_desktop_message_stack(desktop)->flash(Inkscape::NORMAL_MESSAGE, msg);
+    msgStack->flash(Inkscape::NORMAL_MESSAGE, msg);
     g_free(msg);
 
 }
