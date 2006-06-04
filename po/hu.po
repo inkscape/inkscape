@@ -1,3 +1,4 @@
+# translation of hu.po to Hungarian
 # Inkscape Hungarian translation.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004, 2005, 2006.
@@ -9,7 +10,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2006-06-03 23:36+0200\n"
+"PO-Revision-Date: 2006-06-04 12:24+0200\n"
 "Last-Translator: Arpad Biro\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1248,25 +1249,23 @@ msgstr "Új"
 
 #: ../src/dialogs/layers-panel.cpp:785
 msgid "Top"
-msgstr ""
+msgstr "Elölre"
 
 #: ../src/dialogs/layers-panel.cpp:791
 msgid "Up"
-msgstr ""
+msgstr "Előrébb"
 
 #: ../src/dialogs/layers-panel.cpp:797
 msgid "Dn"
-msgstr ""
+msgstr "Hátrébb"
 
 #: ../src/dialogs/layers-panel.cpp:803
-#, fuzzy
 msgid "Bot"
-msgstr "Téglalap"
+msgstr "Hátulra"
 
 #: ../src/dialogs/layers-panel.cpp:813
-#, fuzzy
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
@@ -1389,45 +1388,44 @@ msgid "Master _opacity"
 msgstr "Ala_p-átlátszatlanság"
 
 #: ../src/dialogs/rdf.cpp:178
-#, fuzzy
 msgid "CC Attribution"
-msgstr "Tulajdonság"
+msgstr "CC Attribution"
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
-msgstr ""
+msgstr "CC Attribution-ShareAlike"
 
 #: ../src/dialogs/rdf.cpp:188
 msgid "CC Attribution-NoDerivs"
-msgstr ""
+msgstr "CC Attribution-NoDerivs"
 
 #: ../src/dialogs/rdf.cpp:193
 msgid "CC Attribution-NonCommercial"
-msgstr ""
+msgstr "CC Attribution-NonCommercial"
 
 #: ../src/dialogs/rdf.cpp:198
 msgid "CC Attribution-NonCommercial-ShareAlike"
-msgstr ""
+msgstr "CC Attribution-NonCommercial-ShareAlike"
 
 #: ../src/dialogs/rdf.cpp:203
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr ""
+msgstr "CC Attribution-NonCommercial-NoDerivs"
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
-msgstr ""
+msgstr "GNU General Public License"
 
 #: ../src/dialogs/rdf.cpp:213
 msgid "GNU Lesser General Public License"
-msgstr ""
+msgstr "GNU Lesser General Public License"
 
 #: ../src/dialogs/rdf.cpp:218
 msgid "Public Domain"
-msgstr ""
+msgstr "Public Domain"
 
 #: ../src/dialogs/rdf.cpp:223
 msgid "FreeArt"
-msgstr ""
+msgstr "FreeArt"
 
 #: ../src/dialogs/rdf.cpp:241
 msgid "Name by which this document is formally known."
@@ -2102,47 +2100,41 @@ msgstr ""
 "betöltve."
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Blur Edge"
-msgstr "Kék"
+msgstr "Szél elmosása"
 
 #: ../src/extension/internal/bluredge.cpp:133
-#, fuzzy
 msgid "Blur Width"
-msgstr "Szélesség"
+msgstr "Elmosási szélesség"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
-msgstr ""
+msgstr "Az elmosott terület szélessége képpontban"
 
 #: ../src/extension/internal/bluredge.cpp:134
-#, fuzzy
 msgid "Number of Steps"
-msgstr "A sorok száma"
+msgstr "Lépések száma"
 
 #: ../src/extension/internal/bluredge.cpp:134
 msgid "Number of copies of the object to make to simulate the blur"
-msgstr ""
+msgstr "Az elmosás szimulálásához készítendő objektum-másolatok száma"
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
-#, fuzzy
 msgid "Generate from Path"
-msgstr "Láncról való _eltávolítás"
+msgstr "Létrehozás lánc alapján"
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
-msgstr ""
+msgstr "Encapsulated PostScript-kimenet"
 
 #: ../src/extension/internal/eps-out.cpp:86
-#, fuzzy
 msgid "Make bounding box around full page"
-msgstr "Határoló téglalapok illesztése a segédvonalakra"
+msgstr "A határoló téglalap a teljes lap köré kerüljön"
 
 #: ../src/extension/internal/eps-out.cpp:87
-#, fuzzy
 msgid "Convert text to path"
-msgstr "Bitkép-objektum átalakítása láncokká"
+msgstr "Szöveg átalakítása lánccá"
 
 #: ../src/extension/internal/eps-out.cpp:91
 #: ../share/extensions/eps_input.inx.h:3
@@ -2151,12 +2143,12 @@ msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../src/extension/internal/eps-out.cpp:92
 msgid "Encapsulated Postscript File"
-msgstr ""
+msgstr "Encapsulated PostScript-fájl"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:138
 #, c-format
 msgid "%s GDK pixbuf Input"
-msgstr ""
+msgstr "%s GDK pixbuf-bemenet"
 
 #: ../src/extension/internal/gimpgrad.cpp:274
 msgid "GIMP Gradients"
@@ -2167,9 +2159,8 @@ msgid "GIMP Gradient (*.ggr)"
 msgstr "GIMP-színátmenet (*.ggr)"
 
 #: ../src/extension/internal/gimpgrad.cpp:280
-#, fuzzy
 msgid "Gradients used in GIMP"
-msgstr "Színátmenet-szerkesztő"
+msgstr "A GIMP-ben használt színátmenetek"
 
 #: ../src/extension/internal/gnome.cpp:80
 msgid "Select printer"
@@ -2181,7 +2172,7 @@ msgstr "Inkscape: nyomtatási kép"
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
-msgstr ""
+msgstr "GNOME-nyomtatás"
 
 #: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
@@ -2210,18 +2201,16 @@ msgstr "Függőleges eltolás"
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
-#, fuzzy
 msgid "Render"
-msgstr "Vörös"
+msgstr "Megjelenítés"
 
 #: ../src/extension/internal/grid.cpp:226
 msgid "Draw a path which is a grid"
-msgstr ""
+msgstr "Rács rajzolása lánc formájában"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
-#, fuzzy
 msgid "LaTeX Output"
-msgstr "Kimenet"
+msgstr "LaTeX-kimenet"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
@@ -2229,15 +2218,15 @@ msgstr "LaTeX PSTricks makrókkal (*.tex)"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:112
 msgid "LaTeX PSTricks File"
-msgstr ""
+msgstr "LaTeX PSTricks-fájl"
 
 #: ../src/extension/internal/latex-pstricks.cpp:346
 msgid "LaTeX Print"
-msgstr ""
+msgstr "LaTeX-nyomtatás"
 
 #: ../src/extension/internal/odf.cpp:1914
 msgid "OpenDocument Drawing Output"
-msgstr ""
+msgstr "OpenDocument-rajz formátumú kimenet"
 
 #: ../src/extension/internal/odf.cpp:1919
 msgid "OpenDocument drawing (*.odg)"
@@ -2245,31 +2234,27 @@ msgstr "OpenDocument-rajz (*.odg)"
 
 #: ../src/extension/internal/odf.cpp:1920
 msgid "OpenDocument drawing file"
-msgstr ""
+msgstr "OpenDocument-rajzfájl"
 
 #: ../src/extension/internal/pov-out.cpp:457
-#, fuzzy
 msgid "PovRay Output"
-msgstr "Kimenet"
+msgstr "PovRay-kimenet"
 
 #: ../src/extension/internal/pov-out.cpp:462
-#, fuzzy
 msgid "PovRay (*.pov) (export splines)"
-msgstr "PovRay (*.pov) (export spline-ok)"
+msgstr "PovRay (*.pov) (spline-ok exportálása)"
 
 #: ../src/extension/internal/pov-out.cpp:463
 msgid "PovRay Raytracer File"
-msgstr ""
+msgstr "PovRay Raytracer-fájl"
 
 #: ../src/extension/internal/ps-out.cpp:82
-#, fuzzy
 msgid "Postscript Output"
-msgstr "Álló"
+msgstr "PostScript-kimenet"
 
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Text to Path"
-msgstr "Objektum átalakítása _lánccá"
+msgstr "Szövegek átalakítása láncokká"
 
 #: ../src/extension/internal/ps-out.cpp:88
 #: ../share/extensions/ps_input.inx.h:2
@@ -2351,14 +2336,12 @@ msgid "write error occurred"
 msgstr "írási hiba történt"
 
 #: ../src/extension/internal/ps.cpp:1240
-#, fuzzy
 msgid "Postscript Print"
-msgstr "Álló"
+msgstr "PostScript-nyomtatás"
 
 #: ../src/extension/internal/svg.cpp:55
-#, fuzzy
 msgid "SVG Input"
-msgstr "Kimenet"
+msgstr "SVG-bemenet"
 
 #: ../src/extension/internal/svg.cpp:60
 msgid "Scalable Vector Graphic (*.svg)"
@@ -2366,12 +2349,11 @@ msgstr "Méretezhető vektorgrafika, SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:61
 msgid "Inkscape native file format and W3C standard"
-msgstr ""
+msgstr "Az Inkscape natív fájlformátuma és a W3C-féle szabvány"
 
 #: ../src/extension/internal/svg.cpp:69
-#, fuzzy
 msgid "SVG Output Inkscape"
-msgstr "Kilépés az Inkscape-ből"
+msgstr "SVG-kimenet - Inkscape"
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
@@ -2379,12 +2361,11 @@ msgstr "Inkscape-SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:75
 msgid "SVG format with Inkscape extensions"
-msgstr ""
+msgstr "SVG formátum Inkscape-féle kiterjesztésekkel"
 
 #: ../src/extension/internal/svg.cpp:83
-#, fuzzy
 msgid "SVG Output"
-msgstr "Kimenet"
+msgstr "SVG-kimenet"
 
 #: ../src/extension/internal/svg.cpp:88
 msgid "Plain SVG (*.svg)"
@@ -2392,12 +2373,12 @@ msgstr "Normál (sima) SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:89
 msgid "Scalable Vector Graphics format as defined by the W3C"
-msgstr ""
+msgstr "SVG vektoros formátum a W3C által definiált formában"
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
 msgid "SVGZ Input"
-msgstr ""
+msgstr "SVGZ-bemenet"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
 #: ../share/extensions/svgz_input.inx.h:1
@@ -2407,19 +2388,18 @@ msgstr "Tömörített Inkscape-SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:54
 msgid "SVG file format compressed with GZip"
-msgstr ""
+msgstr "SVG fájlformátum GZip-pel tömörítve"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
-#, fuzzy
 msgid "SVGZ Output"
-msgstr "Kimenet"
+msgstr "SVGZ-kimenet"
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
 #: ../share/extensions/svgz_output.inx.h:2
 msgid "Inkscape's native file format compressed with GZip"
-msgstr ""
+msgstr "Az Inkscape natív fájlformátuma GZip-pel tömörítve"
 
 #: ../src/extension/internal/svgz.cpp:81
 msgid "Compressed plain SVG (*.svgz)"
@@ -2427,30 +2407,28 @@ msgstr "Tömörített normál SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:82
 msgid "Scalable Vector Graphics format compressed with GZip"
-msgstr ""
+msgstr "SVG vektoros formátum GZip-pel tömörítve"
 
 #: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
-msgstr ""
+msgstr "Windowsos (32 bites) nyomtatás"
 
 #: ../src/extension/internal/pdf.cpp:130
-#, fuzzy
 msgid "Print using PDF operators"
-msgstr "Nyomtatás PostScript-műveletekkel"
+msgstr "Nyomtatás PDF-műveletekkel"
 
 #: ../src/extension/internal/pdf.cpp:132
-#, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
 msgstr ""
-"A PostScript vektorműveleteinek használata. Az így készített kép általában "
-"kisebb fájlméretű és tetszőlegesen méretezhető, viszont az átlátszóság és a "
+"PDF-vektorműveletek használata. Az így készített kép általában "
+"kisebb fájlméretű és tetszőlegesen méretezhető, viszont a "
 "minták elvesznek."
 
 #: ../src/extension/internal/pdf.cpp:1541
 msgid "PDF Print"
-msgstr ""
+msgstr "PDF-nyomtatás"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2986,7 +2964,7 @@ msgstr "Hiba történt a kiszolgálóra való csatlakozás közben."
 #. the best we can do without changing the protocol.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:158
 msgid "<b>An invitation conflict has occurred.</b>"
-msgstr ""
+msgstr "<b>Ütközés történt a meghívások között.</b>"
 
 #. TRANSLATORS: %1 is the JID of the user who sent us the invitation request.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:162
@@ -2996,13 +2974,17 @@ msgid ""
 "\n"
 "The invitation from <b>%1</b> has been rejected."
 msgstr ""
+"A(z) \"<b>%1</b>\" nevű Jabber-felhasználó megkísérelte meghívni Önt egy "
+"rajztábla-munkamenetre, miközben Ön egy meghívásra adandó válaszra várt.\n"
+"\n"
+"\"<b>%1</b>\" meghívása el lett utasítva."
 
 #. Check to see if the user made any modifications to this document.  If so,
 #. we want to give them the option of (1) letting us clear their document or (2)
 #. opening a new, blank document for the whiteboard session.
 #: ../src/jabber_whiteboard/connection-establishment.cpp:177
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> meghívta Önt egy rajztábla-munkamenetre."
+msgstr "\"<b>%1</b>\" meghívta Önt egy rajztábla-munkamenetre."
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:178
 msgid "Incoming whiteboard invitation from %1"
@@ -5565,9 +5547,8 @@ msgid "Help"
 msgstr "Segítség"
 
 #: ../src/ui/dialog/extension-editor.cpp:82
-#, fuzzy
 msgid "Parameters"
-msgstr "Méter"
+msgstr "Paraméterek"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -6842,9 +6823,8 @@ msgid "_Use SSL"
 msgstr "_SSL használata"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
-#, fuzzy
 msgid "_Register"
-msgstr "E_lőrébb helyezés"
+msgstr "_Regisztrálás"
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
@@ -6869,9 +6849,8 @@ msgid "Connect"
 msgstr "Kapcsolódás"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:145
-#, fuzzy
 msgid "Establishing connection to Jabber server <b>%1</b>"
-msgstr "Nem sikerült kapcsolódni a(z) \"<b>%1</b>\" Jabber-kiszolgálóhoz"
+msgstr "Kapcsolódás a(z) \"<b>%1</b>\" Jabber-kiszolgálóhoz"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:172
 #: ../src/ui/dialog/whiteboard-connect.cpp:217
@@ -6904,10 +6883,9 @@ msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
 msgstr "Kapcsolódva a(z) \"<b>%1</b>\" Jabber-kiszolgálóhoz \"<b>%2</b>\" néven"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:260
-#, fuzzy
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
 msgstr ""
-"Nem sikerült az azonosítás a(z) \"<b>%1</b>\" Jabber-kiszolgálón \"<b>%2</b>"
+"Nem sikerült a regisztrálás a(z) \"<b>%1</b>\" Jabber-kiszolgálón \"<b>%2</b>"
 "\" névvel"
 
 #. Construct labels
@@ -7172,7 +7150,7 @@ msgstr "Lista"
 
 #: ../src/ui/widget/panel.cpp:138
 msgid "Wrap"
-msgstr ""
+msgstr "Többsoros"
 
 #: ../src/ui/widget/licensor.cpp:35
 msgid "Proprietary"
