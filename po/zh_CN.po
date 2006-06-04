@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2006-05-28 20:25+0800\n"
+"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"PO-Revision-Date: 2006-06-04 16:07+0800\n"
 "Last-Translator: Chris Jia <Chrisjiasl@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Program Version: 0.44-pre0\n"
+"Program Version: 0.44-pre2\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -488,7 +488,7 @@ msgstr "1、从绘画中拾取"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
-#: ../src/ui/dialog/tracedialog.cpp:458
+#: ../src/ui/dialog/tracedialog.cpp:459
 msgid "Color"
 msgstr "颜色"
 
@@ -1198,9 +1198,8 @@ msgid "Id exists! "
 msgstr "Id 存在！"
 
 #: ../src/dialogs/layers-panel.cpp:755
-#, fuzzy
 msgid "Opacity:"
-msgstr "不透明度"
+msgstr "不透明度:"
 
 #: ../src/dialogs/layers-panel.cpp:780
 msgid "New"
@@ -4665,28 +4664,28 @@ msgstr "在两个形状之间<b>单击并拖动</b>创建连接器。"
 msgid "Trace: %d.  %ld nodes"
 msgstr "描轮廓：%d。 %ld 节点"
 
-#: ../src/trace/trace.cpp:61 ../src/trace/trace.cpp:126
-#: ../src/trace/trace.cpp:134 ../src/trace/trace.cpp:190
+#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
+#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
 msgid "Select an <b>image</b> to trace"
 msgstr "选择一幅<b>图像</b>描轮廓"
 
-#: ../src/trace/trace.cpp:96
+#: ../src/trace/trace.cpp:104
 msgid "Select only one <b>image</b> to trace"
 msgstr "只选择一幅<b>图像</b>描轮廓"
 
-#: ../src/trace/trace.cpp:114
+#: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
 msgstr "选择一幅图像和它之上的一个或多个形状"
 
-#: ../src/trace/trace.cpp:338
+#: ../src/trace/trace.cpp:371
 msgid "Trace: No active document"
 msgstr "描边：没有活动文档"
 
-#: ../src/trace/trace.cpp:359
+#: ../src/trace/trace.cpp:395
 msgid "Trace: Image has no bitmap data"
 msgstr "描边：图像没有位图数据"
 
-#: ../src/trace/trace.cpp:491
+#: ../src/trace/trace.cpp:510
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "描边：完成。%ld 节点创建"
@@ -5401,7 +5400,7 @@ msgid ""
 msgstr "当你在画布边界拖动时自动滚动的速度（0 禁用自动滚动）"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
-#: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
+#: ../src/ui/dialog/tracedialog.cpp:371 ../src/ui/dialog/tracedialog.cpp:404
 msgid "Threshold:"
 msgstr "阈值："
 
@@ -5901,7 +5900,7 @@ msgstr "忽略锁定对象"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
 msgid "Deselect upon layer change"
-msgstr ""
+msgstr "取消层的改变"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
@@ -5934,11 +5933,10 @@ msgid ""
 msgstr "不选这项可以选择锁定对象（不管是自己还是在锁定的组或者层里）"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:505
-#, fuzzy
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
-msgstr "不选这项可以选择锁定对象（不管是自己还是在锁定的组或者层里）"
+msgstr "不选此项当前层更改时保持当前已选对象"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 msgid "Selecting"
@@ -5954,13 +5952,14 @@ msgstr "导出对话框里的默认位图分辨率（单位点每英寸）"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Import bitmap as <image>"
-msgstr ""
+msgstr "做为 <image> 导入位图"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:518
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
 msgstr ""
+"开启时，导入的位图创建一个 <image> 元素；否则就是一个使用位图填充的矩形"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "Add label comments to printing output"
@@ -6165,52 +6164,53 @@ msgstr "打开会话文件"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-msgid "SIOX subimage selection"
+#, fuzzy
+msgid "SIOX foreground selection"
 msgstr "SIOX 子图像选择"
 
-#: ../src/ui/dialog/tracedialog.cpp:348
-msgid "Subimage selection with the SIOX algorithm"
-msgstr "使用 SIOX 算法选择子图像"
+#: ../src/ui/dialog/tracedialog.cpp:349
+msgid "Cover the area you want to select as the foreground"
+msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:350
-msgid "SIOX (W.I.P.)"
-msgstr "SIOX (W.I.P.)"
+#: ../src/ui/dialog/tracedialog.cpp:351
+msgid "SIOX"
+msgstr ""
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
 #. #### Multiple scanning####
 #. ----Hbox1
-#: ../src/ui/dialog/tracedialog.cpp:358 ../src/ui/dialog/tracedialog.cpp:441
+#: ../src/ui/dialog/tracedialog.cpp:359 ../src/ui/dialog/tracedialog.cpp:442
 msgid "Brightness"
 msgstr "亮度"
 
-#: ../src/ui/dialog/tracedialog.cpp:361
+#: ../src/ui/dialog/tracedialog.cpp:362
 msgid "Trace by a given brightness level"
 msgstr "使用给定亮度等级抽取轮廓"
 
-#: ../src/ui/dialog/tracedialog.cpp:368
+#: ../src/ui/dialog/tracedialog.cpp:369
 msgid "Brightness cutoff for black/white"
 msgstr "亮度截断黑/白"
 
-#: ../src/ui/dialog/tracedialog.cpp:375
+#: ../src/ui/dialog/tracedialog.cpp:376
 msgid "Image Brightness"
 msgstr "图像亮度"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:382
+#: ../src/ui/dialog/tracedialog.cpp:383
 msgid "Optimal Edge Detection (Canny)"
 msgstr "优化边缘检测（Canny）"
 
-#: ../src/ui/dialog/tracedialog.cpp:385
+#: ../src/ui/dialog/tracedialog.cpp:386
 msgid "Trace with edge detection by J. Canny's algorithm"
 msgstr "使用 J. Canny 的边缘检测算法抽取轮廓"
 
-#: ../src/ui/dialog/tracedialog.cpp:401
+#: ../src/ui/dialog/tracedialog.cpp:402
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr "邻近像素亮度截断（决定边缘厚度）"
 
-#: ../src/ui/dialog/tracedialog.cpp:408
+#: ../src/ui/dialog/tracedialog.cpp:409
 msgid "Edge Detection"
 msgstr "边缘检测"
 
@@ -6218,114 +6218,114 @@ msgstr "边缘检测"
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:417
+#: ../src/ui/dialog/tracedialog.cpp:418
 msgid "Color Quantization"
 msgstr "颜色量化"
 
-#: ../src/ui/dialog/tracedialog.cpp:420
+#: ../src/ui/dialog/tracedialog.cpp:421
 msgid "Trace along the boundaries of reduced colors"
 msgstr "沿着简化的颜色边界提取轮廓"
 
-#: ../src/ui/dialog/tracedialog.cpp:427
+#: ../src/ui/dialog/tracedialog.cpp:428
 msgid "The number of reduced colors"
 msgstr "精简颜色的数目"
 
-#: ../src/ui/dialog/tracedialog.cpp:429
+#: ../src/ui/dialog/tracedialog.cpp:430
 msgid "Colors:"
 msgstr "颜色："
 
-#: ../src/ui/dialog/tracedialog.cpp:434
+#: ../src/ui/dialog/tracedialog.cpp:435
 msgid "Quantization / Reduction"
 msgstr "量化/精简"
 
-#: ../src/ui/dialog/tracedialog.cpp:444
+#: ../src/ui/dialog/tracedialog.cpp:445
 msgid "Trace the given number of brightness levels"
 msgstr "提取指定亮度的轮廓"
 
-#: ../src/ui/dialog/tracedialog.cpp:451
+#: ../src/ui/dialog/tracedialog.cpp:452
 msgid "Scans:"
 msgstr "扫描："
 
-#: ../src/ui/dialog/tracedialog.cpp:453
+#: ../src/ui/dialog/tracedialog.cpp:454
 msgid "The desired number of scans"
 msgstr "期望扫描数"
 
-#: ../src/ui/dialog/tracedialog.cpp:461
+#: ../src/ui/dialog/tracedialog.cpp:462
 msgid "Trace the given number of reduced colors"
 msgstr "提取给定精简颜色数的轮廓"
 
 #. ---Hbox3
-#: ../src/ui/dialog/tracedialog.cpp:467
+#: ../src/ui/dialog/tracedialog.cpp:468
 msgid "Monochrome"
 msgstr "单色"
 
-#: ../src/ui/dialog/tracedialog.cpp:470
+#: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Same as Color, but convert result to grayscale"
 msgstr "与颜色一样，但把结果转化成灰度"
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:473
+#: ../src/ui/dialog/tracedialog.cpp:474
 msgid "Stack"
 msgstr "栈"
 
-#: ../src/ui/dialog/tracedialog.cpp:476
+#: ../src/ui/dialog/tracedialog.cpp:477
 msgid ""
 "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr "栈扫描垂直地（没有间隙）或者水平平铺（通常有间隙）"
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:479
+#: ../src/ui/dialog/tracedialog.cpp:480
 msgid "Smooth"
 msgstr "光滑"
 
-#: ../src/ui/dialog/tracedialog.cpp:482
+#: ../src/ui/dialog/tracedialog.cpp:483
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr "提取轮廓时对位图应用高斯模糊"
 
-#: ../src/ui/dialog/tracedialog.cpp:486
+#: ../src/ui/dialog/tracedialog.cpp:487
 msgid "Multiple Scanning"
 msgstr "多次扫描"
 
 #. #### Preview ####
-#: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
+#: ../src/ui/dialog/tracedialog.cpp:493 ../src/ui/dialog/tracedialog.cpp:503
 msgid "Preview"
 msgstr "预览"
 
 #. do not expand
-#: ../src/ui/dialog/tracedialog.cpp:496
+#: ../src/ui/dialog/tracedialog.cpp:497
 msgid "Preview the result without actual tracing"
 msgstr "没有实际提取边缘的只是预览"
 
 #. #### swap black and white ####
-#: ../src/ui/dialog/tracedialog.cpp:508
+#: ../src/ui/dialog/tracedialog.cpp:509
 #: ../src/ui/widget/selected-style.cpp:191
 msgid "Invert"
 msgstr "反转"
 
-#: ../src/ui/dialog/tracedialog.cpp:512
+#: ../src/ui/dialog/tracedialog.cpp:513
 msgid "Invert black and white regions for single traces"
 msgstr "对单个提取轮廓反转黑白区域"
 
-#: ../src/ui/dialog/tracedialog.cpp:516
+#: ../src/ui/dialog/tracedialog.cpp:517
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
 msgstr "感谢 Peter Seligner, http://potrace.sourceforge.net"
 
-#: ../src/ui/dialog/tracedialog.cpp:519
+#: ../src/ui/dialog/tracedialog.cpp:520
 msgid "Credits"
 msgstr "字幕"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
-#: ../src/ui/dialog/tracedialog.cpp:527
+#: ../src/ui/dialog/tracedialog.cpp:528
 msgid "Potrace"
 msgstr "Potrace"
 
-#: ../src/ui/dialog/tracedialog.cpp:540
+#: ../src/ui/dialog/tracedialog.cpp:541
 msgid "Abort a trace in progress"
 msgstr "中断描绘"
 
-#: ../src/ui/dialog/tracedialog.cpp:544
+#: ../src/ui/dialog/tracedialog.cpp:545
 msgid "Execute the trace"
 msgstr "执行描绘"
 
@@ -7074,14 +7074,14 @@ msgid "Stroke width: %.5g%s"
 msgstr "描边宽度： %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:341
-#, fuzzy, c-format
+#, c-format
 msgid "O:%.3g"
-msgstr "0:%.3g"
+msgstr "O:%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:343
-#, fuzzy, c-format
+#, c-format
 msgid "O:.%d"
-msgstr "0:.%d"
+msgstr "O:.%d"
 
 #: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
@@ -7996,11 +7996,11 @@ msgstr "创建矩形或正方形"
 
 #: ../src/verbs.cpp:2220
 msgid "Create circles, ellipses, and arcs"
-msgstr "创建圆，椭圆和圆弧"
+msgstr "创建圆，椭圆或圆弧"
 
 #: ../src/verbs.cpp:2222
 msgid "Create stars and polygons"
-msgstr "创建星形和多边形"
+msgstr "创建星形或多边形"
 
 #: ../src/verbs.cpp:2224
 msgid "Create spirals"
@@ -8327,9 +8327,8 @@ msgid "Edit properties of this document (to be saved with the document)"
 msgstr "编辑文档的属性（同文档一起保存）"
 
 #: ../src/verbs.cpp:2319
-#, fuzzy
 msgid "Document _Metadata..."
-msgstr "文档元数据(_D)..."
+msgstr "文档元数据(_M)..."
 
 #: ../src/verbs.cpp:2320
 msgid "Edit document metadata (to be saved with the document)"
@@ -8505,9 +8504,8 @@ msgid "Query information about extensions"
 msgstr "查询扩展的信息"
 
 #: ../src/verbs.cpp:2369
-#, fuzzy
 msgid "Layer_s..."
-msgstr "层(_L)..."
+msgstr "层(_s)..."
 
 #: ../src/verbs.cpp:2370
 msgid "View Layers"
@@ -9414,31 +9412,28 @@ msgid ""
 msgstr "您的系统还没有安装当前字体。 Inkscape 使用默认的字体代替。"
 
 #: ../src/widgets/toolbox.cpp:3473
-#, fuzzy
 msgid "Align right"
 msgstr "右对齐"
 
 #: ../src/widgets/toolbox.cpp:3484
-#, fuzzy
 msgid "Center"
-msgstr "Y 中心"
+msgstr "居中 "
 
 #: ../src/widgets/toolbox.cpp:3495
-#, fuzzy
 msgid "Align left"
-msgstr "线段左对齐"
+msgstr "左对齐"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
-msgstr ""
+msgstr "左右对齐"
 
 #: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
-msgstr ""
+msgstr "粗体"
 
 #: ../src/widgets/toolbox.cpp:3533
 msgid "Italic"
-msgstr ""
+msgstr "斜体"
 
 #: ../src/widgets/toolbox.cpp:3631
 msgid "Spacing between letters"
@@ -9821,33 +9816,30 @@ msgid "Axiom"
 msgstr "公理"
 
 #: ../share/extensions/lindenmayer.inx.h:2
-#, fuzzy
 msgid "L-system"
-msgstr "系统"
+msgstr "L-系统"
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "矩形"
+msgstr "左边角度"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr "顺序"
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%)"
-msgstr "随机化节点"
+msgstr "随机化角度（%）"
 
 #: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize step (%)"
-msgstr "随机化节点"
+msgstr "随机化步长（%）"
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "矩形"
+msgstr "右边角度"
 
 #: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
@@ -9855,7 +9847,7 @@ msgstr "规则"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
-msgstr ""
+msgstr "步长（像素）"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
@@ -10035,16 +10027,20 @@ msgstr "Windows 图元文件 (*.wmf)"
 msgid "Windows Metafile Input"
 msgstr "Windows 图元文件输入"
 
+#~ msgid "Subimage selection with the SIOX algorithm"
+#~ msgstr "使用 SIOX 算法选择子图像"
+
+#~ msgid "SIOX (W.I.P.)"
+#~ msgstr "SIOX (W.I.P.)"
+
 #~ msgid "%s Preferences"
 #~ msgstr "%s 偏好设置"
 
-#, fuzzy
 #~ msgid "Rag right"
-#~ msgstr "权限"
+#~ msgstr "左齐"
 
-#, fuzzy
 #~ msgid "Centered"
-#~ msgstr "X 中心"
+#~ msgstr "居中"
 
 #~ msgid "Fractal (Lindenmayer)"
 #~ msgstr "分形（Lindenmayer）"

@@ -1,10 +1,11 @@
+# translation of sv.po to Svenska
 # Swedish messages for Inkscape.
-# Copyright (C) 2000, 2001, 2002, 2003, 2005 Free Software Foundation, Inc.
+# Copyright (C) 2000, 2001, 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
 #
 # $Id$
 # Andreas Hyden <a.hyden@cyberpoint.se>, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
-# Mattias Hultgren <mattias_hultgren@tele2.se>, 2005.
+# Mattias Hultgren <mattias_hultgren@tele2.se>, 2005, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
 #: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
@@ -13,19 +14,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 20:27+0200\n"
-"PO-Revision-Date: 2005-10-08 21:49+0200\n"
+"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"PO-Revision-Date: 2006-06-04 20:11+0200\n"
 "Last-Translator: Mattias Hultgren <mattias_hultgren@tele2.se>\n"
 "Language-Team: Svenska <C@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2;plural=(n>1);\n"
 "X-Generator: KBabel 1.10.2\n"
 
 #: ../inkscape.desktop.in.h:1
-#, fuzzy
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "Format för skalbar vektorgrafik"
+msgstr "Skapa och redigera SVG-bilder (Scalable Vector Graphics)"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape SVG Vector Illustrator"
@@ -48,14 +49,12 @@ msgid ""
 msgstr ""
 
 #: ../src/connector-context.cpp:517
-#, fuzzy
 msgid "Creating new connector"
-msgstr "Skapa nytt SVG-dokument"
+msgstr ""
 
 #: ../src/connector-context.cpp:941
-#, fuzzy
 msgid "Finishing connector"
-msgstr "Frihand"
+msgstr ""
 
 #: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
@@ -513,7 +512,7 @@ msgstr ""
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
-#: ../src/ui/dialog/tracedialog.cpp:458
+#: ../src/ui/dialog/tracedialog.cpp:459
 msgid "Color"
 msgstr "Färg"
 
@@ -533,27 +532,27 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2223
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../src/dialogs/clonetiler.cpp:2224
 msgid "Pick the Red component of the color"
-msgstr ""
+msgstr "Välj den Röda komponenten av färgen"
 
 #: ../src/dialogs/clonetiler.cpp:2231
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: ../src/dialogs/clonetiler.cpp:2232
 msgid "Pick the Green component of the color"
-msgstr ""
+msgstr "Välj den Gröna komponenten av färgen"
 
 #: ../src/dialogs/clonetiler.cpp:2239
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: ../src/dialogs/clonetiler.cpp:2240
 msgid "Pick the Blue component of the color"
-msgstr ""
+msgstr "Välj den Blåa komponenten av färgen"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -609,7 +608,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2314
 msgid "Invert:"
-msgstr "Invertera"
+msgstr "Invertera:"
 
 #: ../src/dialogs/clonetiler.cpp:2318
 msgid "Invert the picked value"
@@ -781,7 +780,7 @@ msgstr "Egen"
 
 #: ../src/dialogs/export.cpp:257
 msgid "<big><b>Export area</b></big>"
-msgstr ""
+msgstr "<big><b>Exportera yta</b></big>"
 
 #: ../src/dialogs/export.cpp:271
 msgid "Units:"
@@ -816,19 +815,17 @@ msgstr "Höjd:"
 
 #: ../src/dialogs/export.cpp:414
 msgid "<big><b>Bitmap size</b></big>"
-msgstr ""
+msgstr "<big><b>Bitmappens storlek</b></big>"
 
 #: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "Bredd:"
 
 #: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
-#, fuzzy
 msgid "pixels at"
-msgstr "bildpunkter"
+msgstr "bildpunkter med"
 
 #: ../src/dialogs/export.cpp:437
-#, fuzzy
 msgid "dp_i"
 msgstr "punkter/tum"
 
@@ -839,20 +836,19 @@ msgstr "punkter/tum"
 #. true = has mnemonic
 #: ../src/dialogs/export.cpp:467
 msgid "<big><b>_Filename</b></big>"
-msgstr ""
+msgstr "<big><b>_Filnamn</b></big>"
 
 #: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
 msgstr "_Bläddra..."
 
 #: ../src/dialogs/export.cpp:577
-#, fuzzy
 msgid "_Export"
 msgstr "Exportera"
 
 #: ../src/dialogs/export.cpp:581
 msgid "Export the bitmap file with these settings"
-msgstr ""
+msgstr "Exportera bitmappen med dessa inställningar"
 
 #: ../src/dialogs/export.cpp:1015
 msgid "You have to enter a filename"
@@ -918,40 +914,35 @@ msgstr "Lägg till filnamnsändelse automatiskt"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:369
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "Anslut linjer vid markerade noder"
-msgstr[1] "Anslut linjer vid markerade noder"
+msgstr[0] "<b>%d</b> objekt hittade (av <b>%d</b>), %s matchning."
+msgstr[1] "<b>%d</b> objekt hittade (av <b>%d</b>), %s matchning."
 
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "exact"
-msgstr "Text"
+msgstr "exakt"
 
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "partial"
-msgstr "Spiral"
+msgstr "delvis"
 
 #: ../src/dialogs/find.cpp:379
-#, fuzzy
 msgid "No objects found"
-msgstr "Inga objekt"
+msgstr "Inga objekt hittade"
 
 #: ../src/dialogs/find.cpp:537
-#, fuzzy
 msgid "T_ype: "
-msgstr "Typ:"
+msgstr "Typ: "
 
 #: ../src/dialogs/find.cpp:544
 msgid "Search in all object types"
-msgstr ""
+msgstr "Sök i alla objekttyper"
 
 #: ../src/dialogs/find.cpp:544
-#, fuzzy
 msgid "All types"
-msgstr "Fyllningsstil"
+msgstr "Alla typer"
 
 #: ../src/dialogs/find.cpp:555
 msgid "Search all shapes"
@@ -963,43 +954,36 @@ msgid "All shapes"
 msgstr "Alla figurverktyg"
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Search rectangles"
-msgstr "Rita rektangel"
+msgstr "Sök rektanglar"
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Rectangles"
-msgstr "Rektangel"
+msgstr "Rektanglar"
 
 #: ../src/dialogs/find.cpp:577
 msgid "Search ellipses, arcs, circles"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:577
-#, fuzzy
 msgid "Ellipses"
-msgstr "Ellips"
+msgstr "Ellipser"
 
 #: ../src/dialogs/find.cpp:582
-#, fuzzy
 msgid "Search stars and polygons"
-msgstr "Skapa stjärnor och polygoner"
+msgstr "Sök stjärnor och polygoner"
 
 #: ../src/dialogs/find.cpp:582
-#, fuzzy
 msgid "Stars"
-msgstr "Stjärna"
+msgstr "Stjärnor"
 
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Search spirals"
-msgstr "Skapa spiraler"
+msgstr "Sök spiraler"
 
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Spirals"
-msgstr "Spiral"
+msgstr "Spiraler"
 
 #. TRANSLATORS: polyline is a set of connected straight line segments
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
@@ -1012,36 +996,32 @@ msgid "Paths"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Search text objects"
-msgstr "Markerade objekt"
+msgstr "Sök textobjekt"
 
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Texts"
 msgstr "Text"
 
 #: ../src/dialogs/find.cpp:610
 msgid "Search groups"
-msgstr ""
+msgstr "Sök grupper"
 
 #: ../src/dialogs/find.cpp:610
-#, fuzzy
 msgid "Groups"
-msgstr "Gruppera"
+msgstr "Grupper"
 
 #: ../src/dialogs/find.cpp:615
 msgid "Search clones"
-msgstr ""
+msgstr "Sök kloner"
 
 #: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Clones"
 msgstr "Kloner"
 
 #: ../src/dialogs/find.cpp:620
-#, fuzzy
 msgid "Search images"
-msgstr "Skala med bild"
+msgstr "Sök bilder"
 
 #: ../src/dialogs/find.cpp:620 ../share/extensions/embedimage.inx.h:2
 #: ../share/extensions/extractimage.inx.h:2
@@ -1145,28 +1125,26 @@ msgid "Move guide relative to current position"
 msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:61
-#, fuzzy
 msgid "Move by:"
-msgstr "Flytta %s"
+msgstr "Flytta med:"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
-#, fuzzy
 msgid "Move to:"
-msgstr "Flytta %s"
+msgstr "Flytta till:"
 
 #: ../src/dialogs/guidelinedialog.cpp:114
 msgid "Guideline"
 msgstr "Hjälplinje"
 
 #: ../src/dialogs/guidelinedialog.cpp:175
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr " Flytta "
+msgstr "Flyttar %s %s"
 
 #: ../src/dialogs/iconpreview.cpp:143
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:876
@@ -1175,9 +1153,8 @@ msgid "Selection"
 msgstr "Markering"
 
 #: ../src/dialogs/iconpreview.cpp:193
-#, fuzzy
 msgid "Selection only or whole document"
-msgstr "Markera endast inom akivt lager"
+msgstr "Endast markering eller hela dokumentet"
 
 #: ../src/dialogs/iconpreview.cpp:201
 msgid "Refresh the icons"
@@ -1303,9 +1280,8 @@ msgid "As sublayer of current"
 msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:163
-#, fuzzy
 msgid "Position:"
-msgstr "Proportion:"
+msgstr "Position:"
 
 #: ../src/dialogs/layer-properties.cpp:181
 msgid "Rename Layer"
@@ -1790,19 +1766,17 @@ msgstr ""
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
 #: ../src/dialogs/tiledialog.cpp:660 ../src/dialogs/tiledialog.cpp:730
-#, fuzzy
 msgid "Align:"
-msgstr "Justera"
+msgstr "Justera:"
 
 #. #### Number of columns ####
 #: ../src/dialogs/tiledialog.cpp:702
-#, fuzzy
 msgid "Columns:"
-msgstr "Ändra"
+msgstr "Kolumner:"
 
 #: ../src/dialogs/tiledialog.cpp:710
 msgid "Number of columns"
-msgstr ""
+msgstr "Antal kolumner"
 
 #: ../src/dialogs/tiledialog.cpp:714
 #, fuzzy
@@ -1840,8 +1814,9 @@ msgid "Arrange selected objects"
 msgstr "Gruppera markerade objekt"
 
 #: ../src/dialogs/xml-tree.cpp:171
+#, fuzzy
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
-msgstr ""
+msgstr "<b>Klicka</b> för att markera noder, <b>drag</b> för \"rearrange\""
 
 #: ../src/dialogs/xml-tree.cpp:182
 msgid "<b>Click</b> attribute to edit."
@@ -1868,7 +1843,7 @@ msgstr "Ny textnod"
 
 #: ../src/dialogs/xml-tree.cpp:344
 msgid "Duplicate node"
-msgstr "Mångfaldiga nod"
+msgstr "Duplicera nod"
 
 #: ../src/dialogs/xml-tree.cpp:365
 msgid "Delete node"
@@ -2034,7 +2009,7 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:256
 msgid "no implementation was defined for the extension."
-msgstr ""
+msgstr "ingen implementering var definerad för tillägget."
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
 #: ../src/extension/extension.cpp:263
@@ -2042,13 +2017,12 @@ msgid "a dependency was not met."
 msgstr ""
 
 #: ../src/extension/extension.cpp:283
-#, fuzzy
 msgid "Extension \""
-msgstr "Tillägg"
+msgstr "Tillägg \""
 
 #: ../src/extension/extension.cpp:283
 msgid "\" failed to load because "
-msgstr ""
+msgstr "\" misslyckades att laddas eftersom "
 
 #: ../src/extension/extension.cpp:570
 #, c-format
@@ -2057,7 +2031,7 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:677
 msgid "Name:"
-msgstr ""
+msgstr "Namn:"
 
 #: ../src/extension/extension.cpp:678
 #, fuzzy
@@ -2199,23 +2173,21 @@ msgid "Select printer"
 msgstr "Välj skrivare"
 
 #: ../src/extension/internal/gnome.cpp:131
-#, fuzzy
 msgid "Inkscape: Print Preview"
-msgstr "Sodipodi (dokumentnamn %s...): Förhandsgranska"
+msgstr "Inkscape: Förhandsgranska"
 
 #: ../src/extension/internal/gnome.cpp:401
 #, fuzzy
 msgid "GNOME Print"
-msgstr "Skriv ut"
+msgstr "GNOME Print"
 
 #: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
 msgstr "Rutnät"
 
 #: ../src/extension/internal/grid.cpp:216
-#, fuzzy
 msgid "Line Width"
-msgstr " Bredd "
+msgstr "Linjebredd"
 
 #: ../src/extension/internal/grid.cpp:217
 #, fuzzy
@@ -2621,30 +2593,25 @@ msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Klipp ut markerade objekt till urklipp"
 
 #: ../src/gradient-drag.cpp:57
-#, fuzzy
 msgid "Linear gradient <b>start</b>"
-msgstr "Linjär toning"
+msgstr "Linjär toning <b>start</b>"
 
 #. POINT_LG_P1
 #: ../src/gradient-drag.cpp:58
-#, fuzzy
 msgid "Linear gradient <b>end</b>"
-msgstr "Linjär toning"
+msgstr "Linjär toning <b>slut</b>"
 
 #: ../src/gradient-drag.cpp:59
-#, fuzzy
 msgid "Radial gradient <b>center</b>"
-msgstr "Radiell toning"
+msgstr "Radiell toning <b>centrum</b>"
 
 #: ../src/gradient-drag.cpp:60 ../src/gradient-drag.cpp:61
-#, fuzzy
 msgid "Radial gradient <b>radius</b>"
-msgstr "Radiell toning"
+msgstr "Radiell toning <b>radie</b>"
 
 #: ../src/gradient-drag.cpp:62
-#, fuzzy
 msgid "Radial gradient <b>focus</b>"
-msgstr "Radiell toning"
+msgstr "Radiell toning <b>focus</b>"
 
 #: ../src/gradient-drag.cpp:651
 #, c-format
@@ -2764,7 +2731,6 @@ msgid "m"
 msgstr "m"
 
 #: ../src/helper/units.cpp:43
-#, fuzzy
 msgid "Meters"
 msgstr "meter"
 
@@ -2814,12 +2780,10 @@ msgstr "Namnlöst dokument"
 
 #. Show nice dialog box
 #: ../src/inkscape.cpp:476
-#, fuzzy
 msgid "Inkscape encountered an internal error and will close now.\n"
-msgstr "Sodipodi påträffade ett internt fel och kommer nu att stängas.\n"
+msgstr "Inkscape påträffade ett internt fel och kommer nu att stängas.\n"
 
 #: ../src/inkscape.cpp:477
-#, fuzzy
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
@@ -2828,7 +2792,6 @@ msgstr ""
 "platser:\n"
 
 #: ../src/inkscape.cpp:478
-#, fuzzy
 msgid "Automatic backup of the following documents failed:\n"
 msgstr "Automatisk säkerhetskopiering av följande dokument misslyckades:\n"
 
@@ -2838,6 +2801,8 @@ msgid ""
 "Cannot create directory %s.\n"
 "%s"
 msgstr ""
+"Kan inte skapa katalog %s.\n"
+" %s"
 
 #: ../src/inkscape.cpp:616
 #, c-format
@@ -2845,6 +2810,8 @@ msgid ""
 "%s is not a valid directory.\n"
 "%s"
 msgstr ""
+"%s är en ogiltig katalog.\n"
+" %s"
 
 #: ../src/inkscape.cpp:617
 #, c-format
@@ -2852,6 +2819,8 @@ msgid ""
 "Cannot create file %s.\n"
 "%s"
 msgstr ""
+"Kan inte skapa filen %s.\n"
+" %s"
 
 #: ../src/inkscape.cpp:618
 #, c-format
@@ -2859,12 +2828,17 @@ msgid ""
 "Cannot write file %s.\n"
 "%s"
 msgstr ""
+"Kan inte skriva till filen %s.\n"
+" %s"
 
 #: ../src/inkscape.cpp:619
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
 msgstr ""
+"Fastän att Inkscape kommer att köras, kommer det att använda "
+"standardinställningar,\n"
+"och inga ändringar till inställningarna kommer att sparas."
 
 #: ../src/inkscape.cpp:689 ../src/preferences.cpp:56
 #, c-format
@@ -2976,7 +2950,7 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/callbacks.cpp:59
 msgid "Jabber connection lost."
-msgstr ""
+msgstr "Jabber kontakt förlorad."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:72
 #, c-format
@@ -3059,19 +3033,17 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:189
 #: ../src/jabber_whiteboard/connection-establishment.cpp:244
-#, fuzzy
 msgid "Accept invitation"
-msgstr "Markering"
+msgstr "Acceptera inbjudan"
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:190
 #: ../src/jabber_whiteboard/connection-establishment.cpp:245
 msgid "Decline invitation"
-msgstr ""
+msgstr "Avböj inbjudan"
 
 #: ../src/jabber_whiteboard/connection-establishment.cpp:191
-#, fuzzy
 msgid "Accept invitation in new document window"
-msgstr "Skapa nytt dokument"
+msgstr "Acceptera inbjudan i nytt dokumentfönster"
 
 #. We could not create a new desktop; ask the user if she or he wants to
 #. replace the current document and accept the invitation, or reject the invitation.
@@ -3168,7 +3140,7 @@ msgstr "Namn på png-fil"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:425
 msgid "No SSL certificate was found."
-msgstr ""
+msgstr "Inget SSL certifikat hittat"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:428
 msgid "The SSL certificate provided by the Jabber server is untrusted."
@@ -3197,7 +3169,7 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/session-manager.cpp:443
 msgid "An unknown error occurred while setting up the SSL connection."
-msgstr ""
+msgstr "Ett okänt fel inträffade när SSL kontakten skulle upprättas."
 
 #. TRANSLATORS: %1 is the message that describes the specific error that occurred when
 #. establishing the SSL connection.
@@ -3217,9 +3189,8 @@ msgid "Continue connecting, but warn me of further errors"
 msgstr ""
 
 #: ../src/jabber_whiteboard/session-manager.cpp:454
-#, fuzzy
 msgid "Cancel connection"
-msgstr "Markering"
+msgstr "Avbryt kontakten"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:902
 #, c-format
@@ -3275,7 +3246,7 @@ msgstr ""
 
 #: ../src/main.cpp:194
 msgid "Print the Inkscape version number"
-msgstr ""
+msgstr "Skriv ut Inkscape's versionsnummer"
 
 #: ../src/main.cpp:199
 msgid "Do not use X server (only process files from console)"
@@ -3343,34 +3314,32 @@ msgid ""
 msgstr ""
 
 #: ../src/main.cpp:249
-#, fuzzy
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
-"Bredden på den genererade bimappsbilden i bildpunkter (åsidosätter dpi)"
+"Bredden på den exporterade bitmappsbilden i bildpunkter (åsidosätter punkter/"
+"tum)"
 
 #: ../src/main.cpp:250
 msgid "WIDTH"
 msgstr "BREDD"
 
 #: ../src/main.cpp:254
-#, fuzzy
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr "Höjden på den genererade bimappsbilden i bildpunkter (åsidosätter dpi)"
+msgstr ""
+"Höjden på den exporterade bitmappsbilden i bildpunkter (åsidosätter punkter/"
+"tum)"
 
 #: ../src/main.cpp:255
 msgid "HEIGHT"
 msgstr "HÖJD"
 
 #: ../src/main.cpp:259
-#, fuzzy
 msgid "The ID of the object to export"
 msgstr ""
-"Bredden på den genererade bimappsbilden i bildpunkter (åsidosätter dpi)"
 
 #: ../src/main.cpp:260 ../src/main.cpp:336
-#, fuzzy
 msgid "ID"
-msgstr "ID:"
+msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
@@ -3495,9 +3464,8 @@ msgid "_New"
 msgstr "_Ny"
 
 #: ../src/menus-skeleton.h:22
-#, fuzzy
 msgid "Open _Recent"
-msgstr "Öppna"
+msgstr "Öppna senaste"
 
 #: ../src/menus-skeleton.h:54
 msgid "_Edit"
@@ -3550,9 +3518,8 @@ msgid "Mas_k"
 msgstr "Massa:"
 
 #: ../src/menus-skeleton.h:169
-#, fuzzy
 msgid "Patter_n"
-msgstr "Mönster:"
+msgstr "Mönster"
 
 #: ../src/menus-skeleton.h:188
 #, fuzzy
@@ -4150,19 +4117,16 @@ msgid "Flowed text"
 msgstr ""
 
 #: ../src/selection-describer.cpp:49
-#, fuzzy
 msgid "Group"
-msgstr "_Gruppera"
+msgstr "Grupp"
 
 #: ../src/selection-describer.cpp:51
-#, fuzzy
 msgid "Image"
-msgstr "Bilder"
+msgstr "Bild"
 
 #: ../src/selection-describer.cpp:53
-#, fuzzy
 msgid "Line"
-msgstr "Linjär"
+msgstr "Linje"
 
 #: ../src/selection-describer.cpp:55
 #, fuzzy
@@ -4171,7 +4135,7 @@ msgstr "Klistra _in"
 
 #: ../src/selection-describer.cpp:57 ../src/widgets/toolbox.cpp:1211
 msgid "Polygon"
-msgstr ""
+msgstr "Polygon"
 
 #: ../src/selection-describer.cpp:59
 #, fuzzy
@@ -4185,9 +4149,8 @@ msgid "Rectangle"
 msgstr "Rektangel"
 
 #: ../src/selection-describer.cpp:65
-#, fuzzy
 msgid "Clone"
-msgstr "Klona"
+msgstr "Klon"
 
 #: ../src/selection-describer.cpp:69
 msgid "Offset path"
@@ -4207,7 +4170,7 @@ msgstr "Stjärna"
 
 #: ../src/selection-describer.cpp:101
 msgid "Click selection to toggle scale/rotation handles"
-msgstr ""
+msgstr "Klicka på markeringen för att växla mellan skala/roterings-handtagen"
 
 #. no items
 #: ../src/selection-describer.cpp:103
@@ -4220,19 +4183,19 @@ msgid "root"
 msgstr ""
 
 #: ../src/selection-describer.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b>%s</b>"
-msgstr "Höj nod"
+msgstr "lager <b>%s</b>"
 
 #: ../src/selection-describer.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b><i>%s</i></b>"
-msgstr "Höj nod"
+msgstr "lager <b><i>%s</i></b>"
 
 #: ../src/selection-describer.cpp:135
 #, c-format
 msgid "<i>%s</i>"
-msgstr ""
+msgstr "<i>%s</i>"
 
 #: ../src/selection-describer.cpp:144
 #, fuzzy, c-format
@@ -4391,14 +4354,12 @@ msgid "<b>Link</b> without URI"
 msgstr "<b>Länk</b> utan URI"
 
 #: ../src/sp-ellipse.cpp:430 ../src/sp-ellipse.cpp:817
-#, fuzzy
 msgid "<b>Ellipse</b>"
-msgstr "Ellips"
+msgstr "<b>Ellips</b>"
 
 #: ../src/sp-ellipse.cpp:571
-#, fuzzy
 msgid "<b>Circle</b>"
-msgstr "Ändra"
+msgstr "<b>Cirkel</b>"
 
 #: ../src/sp-ellipse.cpp:812
 #, fuzzy
@@ -4530,7 +4491,7 @@ msgstr "Ändra"
 #: ../src/sp-spiral.cpp:302
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
-msgstr ""
+msgstr "<b>Spiral</b> med %3f varv"
 
 #: ../src/sp-star.cpp:281
 #, c-format
@@ -4556,7 +4517,7 @@ msgstr[1] "Grupp med %d objekt"
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:409
 msgid "&lt;no name found&gt;"
-msgstr ""
+msgstr "&lt;inget namn hittat&gt;"
 
 #: ../src/sp-text.cpp:415
 #, fuzzy, c-format
@@ -4571,14 +4532,13 @@ msgstr "Länk till %s"
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
 #: ../src/sp-use.cpp:313
-#, fuzzy
 msgid "..."
-msgstr "Öppna..."
+msgstr "..."
 
 #: ../src/sp-use.cpp:321
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Clone</b> of: %s"
-msgstr "Länk till %s"
+msgstr "<b>Klon</b> av: %s"
 
 #: ../src/sp-use.cpp:325
 #, fuzzy
@@ -4731,16 +4691,16 @@ msgstr ""
 
 #: ../src/text-context.cpp:525
 msgid "Non-printable character"
-msgstr ""
+msgstr "Icke skrivbart tecken"
 
 #: ../src/text-context.cpp:574
-#, fuzzy, c-format
+#, c-format
 msgid "Unicode: %s: %s"
-msgstr "Sodipodi: %s: %s: %d"
+msgstr "Unicode: %s: %s"
 
 #: ../src/text-context.cpp:576 ../src/text-context.cpp:839
 msgid "Unicode: "
-msgstr ""
+msgstr "Unicode: "
 
 #: ../src/text-context.cpp:653
 #, c-format
@@ -4850,31 +4810,31 @@ msgstr ""
 msgid "Trace: %d.  %ld nodes"
 msgstr ""
 
-#: ../src/trace/trace.cpp:61 ../src/trace/trace.cpp:126
-#: ../src/trace/trace.cpp:134 ../src/trace/trace.cpp:190
+#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
+#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
 #, fuzzy
 msgid "Select an <b>image</b> to trace"
 msgstr "Klipp ut markerade objekt till urklipp"
 
-#: ../src/trace/trace.cpp:96
+#: ../src/trace/trace.cpp:104
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "Klipp ut markerade objekt till urklipp"
 
-#: ../src/trace/trace.cpp:114
+#: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:338
+#: ../src/trace/trace.cpp:371
 #, fuzzy
 msgid "Trace: No active document"
 msgstr "Skapa nytt SVG-dokument"
 
-#: ../src/trace/trace.cpp:359
+#: ../src/trace/trace.cpp:395
 msgid "Trace: Image has no bitmap data"
 msgstr ""
 
-#: ../src/trace/trace.cpp:491
+#: ../src/trace/trace.cpp:510
 #, fuzzy, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Senast markerad"
@@ -4978,7 +4938,7 @@ msgstr ""
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:460
 msgid "V:"
-msgstr ""
+msgstr "V:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:747
 msgid "Align"
@@ -5681,7 +5641,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
-#: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
+#: ../src/ui/dialog/tracedialog.cpp:371 ../src/ui/dialog/tracedialog.cpp:404
 msgid "Threshold:"
 msgstr ""
 
@@ -6497,54 +6457,54 @@ msgstr "Öppna SVG-fil"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX subimage selection"
+msgid "SIOX foreground selection"
 msgstr "Sök i markering"
 
-#: ../src/ui/dialog/tracedialog.cpp:348
-msgid "Subimage selection with the SIOX algorithm"
+#: ../src/ui/dialog/tracedialog.cpp:349
+msgid "Cover the area you want to select as the foreground"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:350
-msgid "SIOX (W.I.P.)"
+#: ../src/ui/dialog/tracedialog.cpp:351
+msgid "SIOX"
 msgstr ""
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
 #. #### Multiple scanning####
 #. ----Hbox1
-#: ../src/ui/dialog/tracedialog.cpp:358 ../src/ui/dialog/tracedialog.cpp:441
+#: ../src/ui/dialog/tracedialog.cpp:359 ../src/ui/dialog/tracedialog.cpp:442
 #, fuzzy
 msgid "Brightness"
 msgstr "höger"
 
-#: ../src/ui/dialog/tracedialog.cpp:361
+#: ../src/ui/dialog/tracedialog.cpp:362
 msgid "Trace by a given brightness level"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:368
+#: ../src/ui/dialog/tracedialog.cpp:369
 msgid "Brightness cutoff for black/white"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:375
+#: ../src/ui/dialog/tracedialog.cpp:376
 #, fuzzy
 msgid "Image Brightness"
 msgstr "Bildstorlek"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:382
+#: ../src/ui/dialog/tracedialog.cpp:383
 msgid "Optimal Edge Detection (Canny)"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:385
+#: ../src/ui/dialog/tracedialog.cpp:386
 msgid "Trace with edge detection by J. Canny's algorithm"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:401
+#: ../src/ui/dialog/tracedialog.cpp:402
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:408
+#: ../src/ui/dialog/tracedialog.cpp:409
 #, fuzzy
 msgid "Edge Detection"
 msgstr "Markering"
@@ -6553,105 +6513,105 @@ msgstr "Markering"
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:417
+#: ../src/ui/dialog/tracedialog.cpp:418
 #, fuzzy
 msgid "Color Quantization"
 msgstr "Färgmålning"
 
-#: ../src/ui/dialog/tracedialog.cpp:420
+#: ../src/ui/dialog/tracedialog.cpp:421
 msgid "Trace along the boundaries of reduced colors"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:427
+#: ../src/ui/dialog/tracedialog.cpp:428
 msgid "The number of reduced colors"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:429
+#: ../src/ui/dialog/tracedialog.cpp:430
 #, fuzzy
 msgid "Colors:"
 msgstr "Färg"
 
-#: ../src/ui/dialog/tracedialog.cpp:434
+#: ../src/ui/dialog/tracedialog.cpp:435
 msgid "Quantization / Reduction"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:444
+#: ../src/ui/dialog/tracedialog.cpp:445
 msgid "Trace the given number of brightness levels"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:451
+#: ../src/ui/dialog/tracedialog.cpp:452
 #, fuzzy
 msgid "Scans:"
 msgstr "Form"
 
-#: ../src/ui/dialog/tracedialog.cpp:453
+#: ../src/ui/dialog/tracedialog.cpp:454
 msgid "The desired number of scans"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:461
+#: ../src/ui/dialog/tracedialog.cpp:462
 msgid "Trace the given number of reduced colors"
 msgstr ""
 
 #. ---Hbox3
-#: ../src/ui/dialog/tracedialog.cpp:467
+#: ../src/ui/dialog/tracedialog.cpp:468
 msgid "Monochrome"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:470
+#: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Same as Color, but convert result to grayscale"
 msgstr ""
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:473
+#: ../src/ui/dialog/tracedialog.cpp:474
 #, fuzzy
 msgid "Stack"
 msgstr "Stjärna"
 
-#: ../src/ui/dialog/tracedialog.cpp:476
+#: ../src/ui/dialog/tracedialog.cpp:477
 msgid ""
 "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr ""
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:479
+#: ../src/ui/dialog/tracedialog.cpp:480
 msgid "Smooth"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:482
+#: ../src/ui/dialog/tracedialog.cpp:483
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:486
+#: ../src/ui/dialog/tracedialog.cpp:487
 msgid "Multiple Scanning"
 msgstr ""
 
 #. #### Preview ####
-#: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
+#: ../src/ui/dialog/tracedialog.cpp:493 ../src/ui/dialog/tracedialog.cpp:503
 #, fuzzy
 msgid "Preview"
 msgstr "Ny förhandsgranskning"
 
 #. do not expand
-#: ../src/ui/dialog/tracedialog.cpp:496
+#: ../src/ui/dialog/tracedialog.cpp:497
 msgid "Preview the result without actual tracing"
 msgstr ""
 
 #. #### swap black and white ####
-#: ../src/ui/dialog/tracedialog.cpp:508
+#: ../src/ui/dialog/tracedialog.cpp:509
 #: ../src/ui/widget/selected-style.cpp:191
 #, fuzzy
 msgid "Invert"
 msgstr "Återställ"
 
-#: ../src/ui/dialog/tracedialog.cpp:512
+#: ../src/ui/dialog/tracedialog.cpp:513
 msgid "Invert black and white regions for single traces"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:516
+#: ../src/ui/dialog/tracedialog.cpp:517
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:519
+#: ../src/ui/dialog/tracedialog.cpp:520
 #, fuzzy
 msgid "Credits"
 msgstr "Hörn:"
@@ -6659,17 +6619,17 @@ msgstr "Hörn:"
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
-#: ../src/ui/dialog/tracedialog.cpp:527
+#: ../src/ui/dialog/tracedialog.cpp:528
 #, fuzzy
 msgid "Potrace"
 msgstr "Spår"
 
-#: ../src/ui/dialog/tracedialog.cpp:540
+#: ../src/ui/dialog/tracedialog.cpp:541
 #, fuzzy
 msgid "Abort a trace in progress"
 msgstr "Exportera bild"
 
-#: ../src/ui/dialog/tracedialog.cpp:544
+#: ../src/ui/dialog/tracedialog.cpp:545
 msgid "Execute the trace"
 msgstr ""
 
@@ -7646,7 +7606,6 @@ msgid "Save _As..."
 msgstr "Spara so_m..."
 
 #: ../src/verbs.cpp:1996
-#, fuzzy
 msgid "Save document under a new name"
 msgstr "Spara dokument med nytt namn"
 
@@ -7670,9 +7629,8 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:2002
-#, fuzzy
 msgid "Print _Direct"
-msgstr "Skriv ut direkt..."
+msgstr "Skriv ut direkt"
 
 #: ../src/verbs.cpp:2003
 #, fuzzy
@@ -7680,7 +7638,6 @@ msgid "Print directly without prompting to a file or pipe"
 msgstr "Skriv ut direkt till fil eller rör"
 
 #: ../src/verbs.cpp:2004
-#, fuzzy
 msgid "Print Previe_w"
 msgstr "Förhandsgranska"
 
@@ -7693,7 +7650,6 @@ msgid "_Import..."
 msgstr "_Importera..."
 
 #: ../src/verbs.cpp:2007
-#, fuzzy
 msgid "Import a bitmap or SVG image into this document"
 msgstr "Importera bitmappsbild eller SVG-bild till dokument"
 
@@ -7702,9 +7658,8 @@ msgid "_Export Bitmap..."
 msgstr "_Exportera bitmappbild..."
 
 #: ../src/verbs.cpp:2009
-#, fuzzy
 msgid "Export this document or a selection as a bitmap image"
-msgstr "Exportera dokument eller markering som PNG-bitmappsbild"
+msgstr "Exportera dokument eller markering som en bitmappsbild"
 
 #: ../src/verbs.cpp:2010
 msgid "N_ext Window"
@@ -7727,9 +7682,8 @@ msgid "_Close"
 msgstr "Stän_g"
 
 #: ../src/verbs.cpp:2015
-#, fuzzy
 msgid "Close this document window"
-msgstr "Växla till föregående dokumentfönster"
+msgstr "Stäng dokumentfönster"
 
 #: ../src/verbs.cpp:2016
 msgid "_Quit"
@@ -7753,7 +7707,6 @@ msgid "_Redo"
 msgstr "Gör o_m"
 
 #: ../src/verbs.cpp:2022
-#, fuzzy
 msgid "Do again the last undone action"
 msgstr "Gör om senast ångrade åtgärden"
 
@@ -7778,9 +7731,8 @@ msgid "_Paste"
 msgstr "Klistra _in"
 
 #: ../src/verbs.cpp:2028
-#, fuzzy
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Klistra in objekt från urklipp till muspekare"
+msgstr "Klistra in objekt från urklipp till muspekare, eller klistra in text"
 
 #: ../src/verbs.cpp:2029
 #, fuzzy
@@ -7872,12 +7824,10 @@ msgid "Duplicate selected objects"
 msgstr "Mångfaldiga markerade objekt"
 
 #: ../src/verbs.cpp:2049
-#, fuzzy
 msgid "Create Clo_ne"
-msgstr "Skapa nytt SVG-dokument"
+msgstr "Skapa klon"
 
 #: ../src/verbs.cpp:2050
-#, fuzzy
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr "Klonar markerat objekt (en kopia länkad till originalet)"
 
@@ -7952,9 +7902,8 @@ msgid "Select all objects in all visible and unlocked layers"
 msgstr "Markera alla objekt i dokumentet"
 
 #: ../src/verbs.cpp:2067
-#, fuzzy
 msgid "In_vert Selection"
-msgstr "Markering"
+msgstr "Invertera Markering"
 
 #: ../src/verbs.cpp:2068
 msgid "Invert selection (unselect what is selected and select everything else)"
@@ -7992,29 +7941,24 @@ msgid "Lower to _Bottom"
 msgstr "placera markeringen nederst"
 
 #: ../src/verbs.cpp:2078
-#, fuzzy
 msgid "Lower selection to bottom"
-msgstr "placera markeringen nederst"
+msgstr "Placera markeringen nederst"
 
 #: ../src/verbs.cpp:2079
-#, fuzzy
 msgid "_Raise"
 msgstr "Höj"
 
 #: ../src/verbs.cpp:2080
-#, fuzzy
 msgid "Raise selection one step"
-msgstr "Placera markeringen överst"
+msgstr "Höj markeringen ett steg"
 
 #: ../src/verbs.cpp:2081
-#, fuzzy
 msgid "_Lower"
 msgstr "Sänk"
 
 #: ../src/verbs.cpp:2082
-#, fuzzy
 msgid "Lower selection one step"
-msgstr "Sänk markeringen ett lager"
+msgstr "Sänk markeringen ett steg"
 
 #: ../src/verbs.cpp:2083
 msgid "_Group"
@@ -8294,14 +8238,12 @@ msgid "Create a new layer"
 msgstr "Skapar ett nytt lager"
 
 #: ../src/verbs.cpp:2161
-#, fuzzy
 msgid "Re_name Layer..."
-msgstr "Höj nod"
+msgstr "Byt namn på lager..."
 
 #: ../src/verbs.cpp:2162
-#, fuzzy
 msgid "Rename the current layer"
-msgstr "Markera"
+msgstr "Byt namn på aktuellt lager"
 
 #: ../src/verbs.cpp:2163
 msgid "Switch to Layer Abov_e"
@@ -8336,76 +8278,63 @@ msgid "Move selection to the layer below the current"
 msgstr "Flytta markering till lagret under det aktuella"
 
 #: ../src/verbs.cpp:2171
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "Placera markeringen överst"
+msgstr "Lager till toppen"
 
 #: ../src/verbs.cpp:2172
-#, fuzzy
 msgid "Raise the current layer to the top"
-msgstr "Placera markeringen överst"
+msgstr "Höj aktuellt lager till toppen"
 
 #: ../src/verbs.cpp:2173
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "placera markeringen nederst"
+msgstr "Lager till botten"
 
 #: ../src/verbs.cpp:2174
-#, fuzzy
 msgid "Lower the current layer to the bottom"
-msgstr "placera markeringen nederst"
+msgstr "Sänk aktuellt lager till botten"
 
 #: ../src/verbs.cpp:2175
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "Höj nod"
+msgstr "Höj lager"
 
 #: ../src/verbs.cpp:2176
 msgid "Raise the current layer"
-msgstr ""
+msgstr "Höj det aktuella lagret"
 
 #: ../src/verbs.cpp:2177
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "Sänk nod"
+msgstr "Sänk lager"
 
 #: ../src/verbs.cpp:2178
 msgid "Lower the current layer"
-msgstr ""
+msgstr "Sänk det aktuella lagret"
 
 #: ../src/verbs.cpp:2179
-#, fuzzy
 msgid "_Delete Current Layer"
-msgstr "Markera"
+msgstr "Radera aktuellt lager"
 
 #: ../src/verbs.cpp:2180
-#, fuzzy
 msgid "Delete the current layer"
-msgstr "Markera"
+msgstr "Radera det aktuella lagret"
 
 #. Object
 #: ../src/verbs.cpp:2183
-#, fuzzy
 msgid "Rotate _90&#176; CW"
-msgstr "Rotera 90°"
+msgstr "Rotera 90&#176; medurs"
 
 #: ../src/verbs.cpp:2184
-#, fuzzy
 msgid "Rotate selection 90&#176; clockwise"
-msgstr "Rotera objekt 90 grader medurs"
+msgstr "Rotera markering 90&#176; medurs"
 
 #: ../src/verbs.cpp:2185
-#, fuzzy
 msgid "Rotate 9_0&#176; CCW"
-msgstr "Rotera 90°"
+msgstr "Rotera 90&#176; moturs"
 
 #: ../src/verbs.cpp:2186
-#, fuzzy
 msgid "Rotate selection 90&#176; counter-clockwise"
-msgstr "Rotera objekt 90 grader medurs"
+msgstr "Rotera markering 90&#176; moturs"
 
 #: ../src/verbs.cpp:2187
-#, fuzzy
 msgid "Remove _Transformations"
 msgstr "Ta bort transformering"
 
@@ -8414,9 +8343,8 @@ msgid "Remove transformations from object"
 msgstr "Ta bort transformeringar från objekt"
 
 #: ../src/verbs.cpp:2189
-#, fuzzy
 msgid "_Object to Path"
-msgstr "Objekttransformering"
+msgstr ""
 
 #: ../src/verbs.cpp:2190
 #, fuzzy
@@ -8547,9 +8475,8 @@ msgid "Create and edit text objects"
 msgstr "Skapa och redigera textobjekt"
 
 #: ../src/verbs.cpp:2234
-#, fuzzy
 msgid "Create and edit gradients"
-msgstr "Skapa och redigera textobjekt"
+msgstr "Skapa och redigera toningar"
 
 #: ../src/verbs.cpp:2236
 msgid "Zoom in or out"
@@ -8585,7 +8512,6 @@ msgid "Open Preferences for the Node tool"
 msgstr "Sodipodi-bildspel"
 
 #: ../src/verbs.cpp:2247
-#, fuzzy
 msgid "Rectangle Preferences"
 msgstr "Rektangelegenskaper"
 
@@ -8706,7 +8632,6 @@ msgstr "Sodipodi-bildspel"
 
 #. Zoom/View
 #: ../src/verbs.cpp:2273
-#, fuzzy
 msgid "Zoom In"
 msgstr "Zooma in"
 
@@ -8715,7 +8640,6 @@ msgid "Zoom in"
 msgstr "Zooma in"
 
 #: ../src/verbs.cpp:2274
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Zooma ut"
 
@@ -8743,12 +8667,10 @@ msgid "Show or hide the canvas scrollbars"
 msgstr "Visa hjälplinjer"
 
 #: ../src/verbs.cpp:2277
-#, fuzzy
 msgid "_Grid"
 msgstr "Rutnät"
 
 #: ../src/verbs.cpp:2277
-#, fuzzy
 msgid "Show or hide the grid"
 msgstr "Visa eller göm rutnät"
 
@@ -8763,7 +8685,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2279
 msgid "Nex_t Zoom"
-msgstr ""
+msgstr "Nästa zoom"
 
 #: ../src/verbs.cpp:2279
 msgid "Next zoom (from the history of zooms)"
@@ -8771,34 +8693,31 @@ msgstr ""
 
 #: ../src/verbs.cpp:2281
 msgid "Pre_vious Zoom"
-msgstr ""
+msgstr "Föregående zoom"
 
 #: ../src/verbs.cpp:2281
 msgid "Previous zoom (from the history of zooms)"
 msgstr ""
 
 #: ../src/verbs.cpp:2283
-#, fuzzy
 msgid "Zoom 1:_1"
-msgstr "Zooma till 1:1"
+msgstr "Zooma 1:1"
 
 #: ../src/verbs.cpp:2283
 msgid "Zoom to 1:1"
 msgstr "Zooma till 1:1"
 
 #: ../src/verbs.cpp:2285
-#, fuzzy
 msgid "Zoom 1:_2"
-msgstr "Zooma till 1:2"
+msgstr "Zooma 1:2"
 
 #: ../src/verbs.cpp:2285
 msgid "Zoom to 1:2"
 msgstr "Zooma till 1:2"
 
 #: ../src/verbs.cpp:2287
-#, fuzzy
 msgid "_Zoom 2:1"
-msgstr "Zooma till 2:1"
+msgstr "Zooma 2:1"
 
 #: ../src/verbs.cpp:2287
 msgid "Zoom to 2:1"
@@ -8806,21 +8725,19 @@ msgstr "Zooma till 2:1"
 
 #: ../src/verbs.cpp:2290
 msgid "_Fullscreen"
-msgstr ""
+msgstr "Fullskärm"
 
 #: ../src/verbs.cpp:2290
 msgid "Stretch this document window to full screen"
 msgstr ""
 
 #: ../src/verbs.cpp:2293
-#, fuzzy
 msgid "Duplic_ate Window"
-msgstr "Mångfaldiga nod"
+msgstr "Duplicera Fönster"
 
 #: ../src/verbs.cpp:2293
-#, fuzzy
 msgid "Open a new window with the same document"
-msgstr "Öppna befintligt SVG-dokument"
+msgstr "Öppna ett nytt fönster med samma dokument"
 
 #: ../src/verbs.cpp:2295
 #, fuzzy
@@ -8929,11 +8846,11 @@ msgstr ""
 #: ../src/verbs.cpp:2324
 #, fuzzy
 msgid "S_watches..."
-msgstr "Spara som..."
+msgstr "Färgprover..."
 
 #: ../src/verbs.cpp:2325
 msgid "Select colors from a swatches palette"
-msgstr ""
+msgstr "Välj färger från en färgpalette"
 
 #: ../src/verbs.cpp:2326
 #, fuzzy
@@ -8965,23 +8882,20 @@ msgid "View and select font family, font size and other text properties"
 msgstr ""
 
 #: ../src/verbs.cpp:2332
-#, fuzzy
 msgid "_XML Editor..."
-msgstr "XML-redigerare"
+msgstr "XML-redigerare..."
 
 #: ../src/verbs.cpp:2333
 msgid "View and edit the XML tree of the document"
-msgstr ""
+msgstr "Visa och redigera dokumentets XML-träd"
 
 #: ../src/verbs.cpp:2334
-#, fuzzy
 msgid "_Find..."
-msgstr "Skriv ut..."
+msgstr "Sök..."
 
 #: ../src/verbs.cpp:2335
-#, fuzzy
 msgid "Find objects in document"
-msgstr "Inga toningar i dokument"
+msgstr "Sök efter objekt i dokumentet"
 
 #: ../src/verbs.cpp:2336
 msgid "_Messages..."
@@ -9002,14 +8916,12 @@ msgid "Run scripts"
 msgstr "Rund anslutning"
 
 #: ../src/verbs.cpp:2340
-#, fuzzy
 msgid "Show/Hide D_ialogs"
-msgstr "Stäng dialogfönster"
+msgstr "Visa/Dölj dialogrutor"
 
 #: ../src/verbs.cpp:2341
-#, fuzzy
 msgid "Show or hide all open dialogs"
-msgstr "Visa hjälplinjer"
+msgstr "Visa eller dölj alla öppna dialogrutor"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
 #: ../src/verbs.cpp:2343
@@ -9108,12 +9020,11 @@ msgstr "Format för skalbar vektorgrafik med sodipodi-tillägg"
 #: ../src/verbs.cpp:2369
 #, fuzzy
 msgid "Layer_s..."
-msgstr "Lägg till lager"
+msgstr "Lager..."
 
 #: ../src/verbs.cpp:2370
-#, fuzzy
 msgid "View Layers"
-msgstr "Höj nod"
+msgstr "Visa lager"
 
 #. Help
 #: ../src/verbs.cpp:2373
@@ -9135,9 +9046,8 @@ msgid "Information on Inkscape extensions"
 msgstr "Format för skalbar vektorgrafik med sodipodi-tillägg"
 
 #: ../src/verbs.cpp:2377
-#, fuzzy
 msgid "About _Memory"
-msgstr "Om moduler"
+msgstr "Om _Minne"
 
 #: ../src/verbs.cpp:2378
 #, fuzzy
@@ -9146,11 +9056,11 @@ msgstr "Återställ transformering"
 
 #: ../src/verbs.cpp:2379
 msgid "_About Inkscape"
-msgstr ""
+msgstr "_Om Inkscape"
 
 #: ../src/verbs.cpp:2380
 msgid "Inkscape version, authors, license"
-msgstr ""
+msgstr "Inkscapes version, skapare och licens"
 
 #. "help_about"
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
@@ -9218,17 +9128,17 @@ msgstr ""
 #. "tutorial_design"
 #: ../src/verbs.cpp:2398
 msgid "_Tips and Tricks"
-msgstr ""
+msgstr "Tips och trick"
 
 #: ../src/verbs.cpp:2399
 msgid "Miscellaneous tips and tricks"
-msgstr ""
+msgstr "Blandade tips och trick"
 
 #. "tutorial_tips"
 #. Effect
 #: ../src/verbs.cpp:2402
 msgid "Previous Effect"
-msgstr ""
+msgstr "Föregående effekt"
 
 #: ../src/verbs.cpp:2403
 msgid "Repeat the last effect with the same settings"
@@ -10739,6 +10649,10 @@ msgid "Windows Metafile Input"
 msgstr ""
 
 #, fuzzy
+#~ msgid "%s Preferences"
+#~ msgstr "Objekt är referens"
+
+#, fuzzy
 #~ msgid "Rag right"
 #~ msgstr "höger"
 
@@ -10749,10 +10663,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Rag left"
 #~ msgstr "vänster"
-
-#, fuzzy
-#~ msgid "%s Preferences"
-#~ msgstr "Objekt är referens"
 
 #, fuzzy
 #~ msgid "Fractal (Lindenmayer)"

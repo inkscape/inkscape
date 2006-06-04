@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 20:27+0200\n"
+"POT-Creation-Date: 2006-06-04 20:31+0200\n"
 "PO-Revision-Date: 2006-04-27 04:45+0000\n"
 "Last-Translator: Antônio Cláudio (LedStyle) <ledstyle@gmail.com>\n"
 "Language-Team: Brazillian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -502,7 +502,7 @@ msgstr "1. Capturar do desenho:"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
-#: ../src/ui/dialog/tracedialog.cpp:458
+#: ../src/ui/dialog/tracedialog.cpp:459
 msgid "Color"
 msgstr "Cor"
 
@@ -4941,29 +4941,29 @@ msgstr "<b>Clique e arraste</b> entre as formas para criar um conector."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Traço: %d.  %ld nós"
 
-#: ../src/trace/trace.cpp:61 ../src/trace/trace.cpp:126
-#: ../src/trace/trace.cpp:134 ../src/trace/trace.cpp:190
+#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
+#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
 msgid "Select an <b>image</b> to trace"
 msgstr "Selecione uma <b>imagem</b> para traçar."
 
-#: ../src/trace/trace.cpp:96
+#: ../src/trace/trace.cpp:104
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "Selecione uma <b>imagem</b> para traçar."
 
-#: ../src/trace/trace.cpp:114
+#: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:338
+#: ../src/trace/trace.cpp:371
 msgid "Trace: No active document"
 msgstr "Traçar: Nenhum desenho ativo."
 
-#: ../src/trace/trace.cpp:359
+#: ../src/trace/trace.cpp:395
 msgid "Trace: Image has no bitmap data"
 msgstr "Traçar: A imagem não tem dados de figura."
 
-#: ../src/trace/trace.cpp:491
+#: ../src/trace/trace.cpp:510
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Traçado: Terminado. %ld nós criados"
@@ -5745,7 +5745,7 @@ msgstr ""
 "desligar a rolagem)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
-#: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
+#: ../src/ui/dialog/tracedialog.cpp:371 ../src/ui/dialog/tracedialog.cpp:404
 msgid "Threshold:"
 msgstr "Limiar:"
 
@@ -6570,54 +6570,54 @@ msgstr "Abrir arquivo de sessão"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX subimage selection"
+msgid "SIOX foreground selection"
 msgstr "Procurar na s_eleção"
 
-#: ../src/ui/dialog/tracedialog.cpp:348
-msgid "Subimage selection with the SIOX algorithm"
+#: ../src/ui/dialog/tracedialog.cpp:349
+msgid "Cover the area you want to select as the foreground"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:350
-msgid "SIOX (W.I.P.)"
+#: ../src/ui/dialog/tracedialog.cpp:351
+msgid "SIOX"
 msgstr ""
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
 #. #### Multiple scanning####
 #. ----Hbox1
-#: ../src/ui/dialog/tracedialog.cpp:358 ../src/ui/dialog/tracedialog.cpp:441
+#: ../src/ui/dialog/tracedialog.cpp:359 ../src/ui/dialog/tracedialog.cpp:442
 msgid "Brightness"
 msgstr "Brilho"
 
-#: ../src/ui/dialog/tracedialog.cpp:361
+#: ../src/ui/dialog/tracedialog.cpp:362
 msgid "Trace by a given brightness level"
 msgstr "Traçar por nível de brilho"
 
-#: ../src/ui/dialog/tracedialog.cpp:368
+#: ../src/ui/dialog/tracedialog.cpp:369
 msgid "Brightness cutoff for black/white"
 msgstr "Quantidade de Brilho a desabilitar para preto/branco"
 
-#: ../src/ui/dialog/tracedialog.cpp:375
+#: ../src/ui/dialog/tracedialog.cpp:376
 msgid "Image Brightness"
 msgstr "Brilho da Imagem"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:382
+#: ../src/ui/dialog/tracedialog.cpp:383
 msgid "Optimal Edge Detection (Canny)"
 msgstr "Detecção de Bordas Melhorada (experta)"
 
-#: ../src/ui/dialog/tracedialog.cpp:385
+#: ../src/ui/dialog/tracedialog.cpp:386
 msgid "Trace with edge detection by J. Canny's algorithm"
 msgstr "Traçar com o algoritmo de detecção de borda de J. Canny's"
 
-#: ../src/ui/dialog/tracedialog.cpp:401
+#: ../src/ui/dialog/tracedialog.cpp:402
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr ""
 "Quantidade de Brilho a desabilitar para pixels adjacentes (determina a "
 "espessura da borda)"
 
-#: ../src/ui/dialog/tracedialog.cpp:408
+#: ../src/ui/dialog/tracedialog.cpp:409
 msgid "Edge Detection"
 msgstr "Detecção de Bordas"
 
@@ -6625,114 +6625,114 @@ msgstr "Detecção de Bordas"
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:417
+#: ../src/ui/dialog/tracedialog.cpp:418
 msgid "Color Quantization"
 msgstr "Quantificação de Cor"
 
-#: ../src/ui/dialog/tracedialog.cpp:420
+#: ../src/ui/dialog/tracedialog.cpp:421
 msgid "Trace along the boundaries of reduced colors"
 msgstr "Traçar ao longo dos limites de cores reduzidas"
 
-#: ../src/ui/dialog/tracedialog.cpp:427
+#: ../src/ui/dialog/tracedialog.cpp:428
 msgid "The number of reduced colors"
 msgstr "Número de cores reduzidas"
 
-#: ../src/ui/dialog/tracedialog.cpp:429
+#: ../src/ui/dialog/tracedialog.cpp:430
 msgid "Colors:"
 msgstr "Cores:"
 
-#: ../src/ui/dialog/tracedialog.cpp:434
+#: ../src/ui/dialog/tracedialog.cpp:435
 msgid "Quantization / Reduction"
 msgstr "Quantificação / Redução"
 
-#: ../src/ui/dialog/tracedialog.cpp:444
+#: ../src/ui/dialog/tracedialog.cpp:445
 msgid "Trace the given number of brightness levels"
 msgstr "Traçar o número dado de níveis do brilho"
 
-#: ../src/ui/dialog/tracedialog.cpp:451
+#: ../src/ui/dialog/tracedialog.cpp:452
 msgid "Scans:"
 msgstr "Varreduras:"
 
-#: ../src/ui/dialog/tracedialog.cpp:453
+#: ../src/ui/dialog/tracedialog.cpp:454
 msgid "The desired number of scans"
 msgstr "Número desejado de varreduras"
 
-#: ../src/ui/dialog/tracedialog.cpp:461
+#: ../src/ui/dialog/tracedialog.cpp:462
 msgid "Trace the given number of reduced colors"
 msgstr "Traçar o número dado de cores reduzidas"
 
 #. ---Hbox3
-#: ../src/ui/dialog/tracedialog.cpp:467
+#: ../src/ui/dialog/tracedialog.cpp:468
 msgid "Monochrome"
 msgstr "Monocromático"
 
-#: ../src/ui/dialog/tracedialog.cpp:470
+#: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Same as Color, but convert result to grayscale"
 msgstr "Igual a esta Cor, mas converter o resultado para escala de cinza"
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:473
+#: ../src/ui/dialog/tracedialog.cpp:474
 msgid "Stack"
 msgstr "Pilhar"
 
-#: ../src/ui/dialog/tracedialog.cpp:476
+#: ../src/ui/dialog/tracedialog.cpp:477
 msgid ""
 "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr ""
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:479
+#: ../src/ui/dialog/tracedialog.cpp:480
 msgid "Smooth"
 msgstr "Suavizar"
 
-#: ../src/ui/dialog/tracedialog.cpp:482
+#: ../src/ui/dialog/tracedialog.cpp:483
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr "Aplicar filtro desfoque gaussiano ao bitmap antes de traçá-lo"
 
-#: ../src/ui/dialog/tracedialog.cpp:486
+#: ../src/ui/dialog/tracedialog.cpp:487
 msgid "Multiple Scanning"
 msgstr "Escaneamento múltiplo"
 
 #. #### Preview ####
-#: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
+#: ../src/ui/dialog/tracedialog.cpp:493 ../src/ui/dialog/tracedialog.cpp:503
 msgid "Preview"
 msgstr "Visualização"
 
 #. do not expand
-#: ../src/ui/dialog/tracedialog.cpp:496
+#: ../src/ui/dialog/tracedialog.cpp:497
 msgid "Preview the result without actual tracing"
 msgstr "Pré-visualizar o resultado sem o traçado atual"
 
 #. #### swap black and white ####
-#: ../src/ui/dialog/tracedialog.cpp:508
+#: ../src/ui/dialog/tracedialog.cpp:509
 #: ../src/ui/widget/selected-style.cpp:191
 msgid "Invert"
 msgstr "Inverter"
 
-#: ../src/ui/dialog/tracedialog.cpp:512
+#: ../src/ui/dialog/tracedialog.cpp:513
 msgid "Invert black and white regions for single traces"
 msgstr "Inverter regiões pretas e brancas para traçados simples"
 
-#: ../src/ui/dialog/tracedialog.cpp:516
+#: ../src/ui/dialog/tracedialog.cpp:517
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
 msgstr "Agradecimentos a Peter Selinger, http://potrace.sourceforge.net"
 
-#: ../src/ui/dialog/tracedialog.cpp:519
+#: ../src/ui/dialog/tracedialog.cpp:520
 msgid "Credits"
 msgstr "Créditos"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
-#: ../src/ui/dialog/tracedialog.cpp:527
+#: ../src/ui/dialog/tracedialog.cpp:528
 msgid "Potrace"
 msgstr "Potrace"
 
-#: ../src/ui/dialog/tracedialog.cpp:540
+#: ../src/ui/dialog/tracedialog.cpp:541
 msgid "Abort a trace in progress"
 msgstr "Abortar o traçado em progresso"
 
-#: ../src/ui/dialog/tracedialog.cpp:544
+#: ../src/ui/dialog/tracedialog.cpp:545
 msgid "Execute the trace"
 msgstr "Executar o traçado"
 
