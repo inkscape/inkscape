@@ -6575,17 +6575,16 @@ msgstr "Ouvrir un fichier de session"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection"
-msgstr "Sélection d'image dans l'image SIOX"
+msgstr "Sélection du premier plan pour SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
-msgstr ""
+msgstr "Couvrez la zone que vous voulez sélectionnier comme premier plan"
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "SIOX"
-msgstr ""
+msgstr "SIOX"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
