@@ -442,15 +442,17 @@ void LayersPanel::_layersChanged()
     SPDocument* document = _desktop->doc();
     SPObject* root = document->root;
     if ( root ) {
+        _selectedConnection.block();
         if ( _mgr && _mgr->includes( root ) ) {
             SPObject* target = _desktop->currentLayer();
-            _store->clear();
+            _store->clear(); // TODO BIG FIX
 
 #if DUMP_LAYERS
             g_message("root:%p  {%s}   [%s]", root, root->id, root->label() );
 #endif // DUMP_LAYERS
             _addLayer( document, root, 0, target, 0 );
         }
+        _selectedConnection.unblock();
     }
 }
 
@@ -511,7 +513,7 @@ void LayersPanel::_pushTreeSelectionToCurrent()
                 _mgr->setCurrentLayer( inTree );
             }
         } else {
-            _mgr->setCurrentLayer( _desktop->doc()->root );
+            _mgr->setCurrentLayer( _desktop->doc()->root ); // TODO BIG FIX
         }
     }
 }
@@ -742,7 +744,7 @@ LayersPanel::LayersPanel() :
     _tree.set_expander_column( *_tree.get_column(nameColNum) );
 
 
-    _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
+    _selectedConnection = _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
     _tree.get_selection()->set_select_function( sigc::mem_fun(*this, &LayersPanel::_rowSelectFunction) );
 
     _tree.get_model()->signal_row_changed().connect( sigc::mem_fun(*this, &LayersPanel::_handleRowChange) );

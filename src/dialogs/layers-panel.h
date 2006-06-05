@@ -98,6 +98,9 @@ private:
     sigc::connection _removedConnection;
     sigc::connection _opacityConnection;
 
+    // Internal
+    sigc::connection _selectedConnection;
+
     int _maxNestDepth;
     Inkscape::LayerManager* _mgr;
     SPDesktop* _desktop;

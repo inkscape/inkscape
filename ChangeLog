@@ -1,3 +1,10 @@
+2006-06-01  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
+
+	  Blocked signal when changes are not from the layers UI.
+	  Fixes bug #1495406.
+
 2006-06-02  Colin Marquardt  <colin@marquardt-home.de>
 
 	* TRANSLATORS: Add Stefan Graubner.
