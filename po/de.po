@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-04 20:31+0200\n"
-"PO-Revision-Date: 2006-06-02 00:57+0200\n"
+"PO-Revision-Date: 2006-06-05 22:52+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6584,17 +6584,16 @@ msgstr "Sitzungsdatei öffnen"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection"
-msgstr "Teilbildauswahl mittels SIOX"
+msgstr "Auswahl des Vordergrunds mittels SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
-msgstr ""
+msgstr "Übermalen Sie den Teil des Bildes, den Sie als Vordergrund auswählen möchten"
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "SIOX"
-msgstr ""
+msgstr "SIOX"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
