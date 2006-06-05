@@ -3470,7 +3470,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
     g_object_set_data   (G_OBJECT (tbl), "text-start", rbutton);
     g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(0));
-    gtk_tooltips_set_tip(tt, rbutton, _("Align right"), NULL);
+    gtk_tooltips_set_tip(tt, rbutton, _("Align left"), NULL);
 
     // center
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
@@ -3492,7 +3492,7 @@ sp_text_toolbox_new (SPDesktop *desktop)
     gtk_box_pack_start  (GTK_BOX  (row), rbutton, FALSE, FALSE, 0);
     g_object_set_data   (G_OBJECT (tbl), "text-end", rbutton);
     g_signal_connect    (G_OBJECT (rbutton), "toggled", G_CALLBACK (sp_text_toolbox_anchoring_toggled), gpointer(2));
-    gtk_tooltips_set_tip(tt, rbutton, _("Align left"), NULL);
+    gtk_tooltips_set_tip(tt, rbutton, _("Align right"), NULL);
 
     // fill
     rbutton = gtk_radio_button_new (gtk_radio_button_group (GTK_RADIO_BUTTON (group)));
