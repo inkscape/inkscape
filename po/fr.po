@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
-"PO-Revision-Date: 2006-06-02 12:48+0100\n"
+"POT-Creation-Date: 2006-06-05 19:44+0200\n"
+"PO-Revision-Date: 2006-06-05 12:30+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1261,31 +1261,31 @@ msgstr "ID invalide !"
 msgid "Id exists! "
 msgstr "Cet Id existe déjà !"
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 msgid "Opacity:"
 msgstr "Opacité :"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 msgid "New"
 msgstr "Nouveau"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr "Devant"
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr "Haut"
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr "Bas"
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 msgid "Bot"
 msgstr "Fond"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 msgid "X"
 msgstr "X"
 
@@ -9061,7 +9061,7 @@ msgstr "Premiers pas avec Inkscape"
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2387
 msgid "Inkscape: _Shapes"
-msgstr "Inkscape : forme_s"
+msgstr "Inkscape : _formes"
 
 #: ../src/verbs.cpp:2388
 msgid "Using shape tools to create and edit shapes"
@@ -9079,7 +9079,7 @@ msgstr "Sujets avancés d'Inkscape"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2392
 msgid "Inkscape: T_racing"
-msgstr "Inkscape : vecto_risation"
+msgstr "Inkscape : _vectorisation"
 
 #: ../src/verbs.cpp:2393
 msgid "Using bitmap tracing"
@@ -9096,7 +9096,7 @@ msgstr "Utilisation de la plume calligraphique d'Inkscape"
 
 #: ../src/verbs.cpp:2396
 msgid "_Elements of Design"
-msgstr "Rudiments de d_esign"
+msgstr "Rudiments de _design"
 
 #: ../src/verbs.cpp:2397
 msgid "Principles of design in the tutorial form"
@@ -9976,16 +9976,16 @@ msgstr ""
 "police par défaut à la place"
 
 #: ../src/widgets/toolbox.cpp:3473
-msgid "Align right"
-msgstr "Aligné à droite"
+msgid "Align left"
+msgstr "Aligné à gauche"
 
 #: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
 msgstr "Centré"
 
 #: ../src/widgets/toolbox.cpp:3495
-msgid "Align left"
-msgstr "Aligné à gauche"
+msgid "Align right"
+msgstr "Aligné à droite"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
