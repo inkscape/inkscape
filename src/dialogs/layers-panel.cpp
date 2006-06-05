@@ -445,7 +445,7 @@ void LayersPanel::_layersChanged()
         _selectedConnection.block();
         if ( _mgr && _mgr->includes( root ) ) {
             SPObject* target = _desktop->currentLayer();
-            _store->clear(); // TODO BIG FIX
+            _store->clear();
 
 #if DUMP_LAYERS
             g_message("root:%p  {%s}   [%s]", root, root->id, root->label() );
@@ -513,7 +513,7 @@ void LayersPanel::_pushTreeSelectionToCurrent()
                 _mgr->setCurrentLayer( inTree );
             }
         } else {
-            _mgr->setCurrentLayer( _desktop->doc()->root ); // TODO BIG FIX
+            _mgr->setCurrentLayer( _desktop->doc()->root );
         }
     }
 }
