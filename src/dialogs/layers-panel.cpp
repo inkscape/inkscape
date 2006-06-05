@@ -314,9 +314,13 @@ bool LayersPanel::_executeAction()
 {
     // Make sure selected layer hasn't changed since the action was triggered
     if ( _pending
-         && !( (_desktop && _desktop->currentLayer())
-               && (_desktop->currentLayer() != _pending->_target)
-             ) ) {
+         && (
+             (_pending->_actionCode == BUTTON_NEW)
+             || !( (_desktop && _desktop->currentLayer())
+                   && (_desktop->currentLayer() != _pending->_target)
+                 )
+             )
+        ) {
         int val = _pending->_actionCode;
 //        SPObject* target = _pending->_target;
 

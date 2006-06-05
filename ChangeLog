@@ -1,5 +1,12 @@
 2006-06-02  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/dialogs/layers-panel.cpp:
+
+	  Allow action when no layer selected.
+	  Fixes bugs #1494646.
+
+2006-06-02  Jon A. Cruz  <jon@joncruz.org>
+
 	* trace/siox.cpp:
 
 	  Applied patch #1500659.
@@ -9,7 +16,7 @@
 	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
 
 	  Blocked signal when changes are not from the layers UI.
-	  Fixes bug #1495406.
+	  Fixes bugs #1495406 and most of #1494646.
 
 2006-06-02  Colin Marquardt  <colin@marquardt-home.de>
 
