@@ -1219,7 +1219,7 @@ int Siox::depthFirstSearch(int startPos,
 
         // check all four neighbours
         int left = pos - 1;
-        if (x-1>=0 && labelField[left]==-1 && cm[left]>=threshold)
+        if (((int)x)-1>=0 && labelField[left]==-1 && cm[left]>=threshold)
             {
             labelField[left]=curLabel;
             componentSize++;
@@ -1235,7 +1235,7 @@ int Siox::depthFirstSearch(int startPos,
             }
 
         int top = pos - width;
-        if (y-1>=0 && labelField[top]==-1 && cm[top]>=threshold)
+        if (((int)y)-1>=0 && labelField[top]==-1 && cm[top]>=threshold)
             {
             labelField[top]=curLabel;
             componentSize++;
@@ -1290,7 +1290,7 @@ void Siox::fillColorRegions()
             unsigned int y=pos / width;
             // check all four neighbours
             int left = pos-1;
-            if (x-1 >= 0 && labelField[left] == -1
+            if (((int)x)-1 >= 0 && labelField[left] == -1
                         && CLAB::diff(image[left], origColor)<1.0)
                 {
                 labelField[left]=curLabel;
@@ -1308,7 +1308,7 @@ void Siox::fillColorRegions()
                 pixelsToVisit.push_back(right);
                 }
             int top = pos - width;
-            if (y-1>=0 && labelField[top]==-1
+            if (((int)y)-1>=0 && labelField[top]==-1
                         && CLAB::diff(image[top], origColor)<1.0)
                 {
                 labelField[top]=curLabel;

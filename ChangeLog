@@ -1,4 +1,10 @@
-2006-06-01  Jon A. Cruz  <jon@joncruz.org>
+2006-06-02  Jon A. Cruz  <jon@joncruz.org>
+
+	* trace/siox.cpp:
+
+	  Applied patch #1500659.
+
+2006-06-02  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
 
