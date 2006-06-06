@@ -244,7 +244,8 @@ gchar const *authors_text() {
         "Michael Wybrow\n"
         "Daniel Yacob\n"
         "David Yip\n"
-        "Masatake Yamato";
+        "Masatake Yamato\n"
+        "Miłosz Dereżyński";
 
     return text;
 }
