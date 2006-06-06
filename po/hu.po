@@ -1,4 +1,3 @@
-# translation of hu.po to Hungarian
 # Inkscape Hungarian translation.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004, 2005, 2006.
@@ -10,7 +9,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-04 21:16+0200\n"
+"PO-Revision-Date: 2006-06-06 22:59+0200\n"
 "Last-Translator: Arpad Biro\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -30,8 +29,7 @@ msgid "Inkscape SVG Vector Illustrator"
 msgstr "Inkscape - vektoros (SVG) rajzoló"
 
 #: ../src/arc-context.cpp:328
-msgid ""
-"<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
+msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: kör vagy egész-arányú ellipszis rajzolása; ellipszisív illetve -"
 "cikk szöghöz való illesztése"
@@ -59,8 +57,7 @@ msgstr "Kapocs befejezése"
 
 #: ../src/connector-context.cpp:1085
 msgid "<b>Connection point</b>: click or drag to create a new connector"
-msgstr ""
-"<b>Kapcsolódási pont</b>. Új kapocs létrehozása: kattintással vagy húzással."
+msgstr "<b>Kapcsolódási pont</b>. Új kapocs létrehozása: kattintással vagy húzással."
 
 #: ../src/connector-context.cpp:1156
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
@@ -122,8 +119,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:896
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr ""
-"Jelöljön ki <b>egy objektumot</b>, amelynek a csempézett klónjai törlendők."
+msgstr "Jelöljön ki <b>egy objektumot</b>, amelynek a csempézett klónjai törlendők."
 
 #: ../src/dialogs/clonetiler.cpp:964 ../src/selection-chemistry.cpp:1931
 msgid "Select an <b>object</b> to clone."
@@ -285,8 +281,7 @@ msgstr "<b>Kitevő:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:1801
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
-msgstr ""
-"A sorok egyenletesen oszlanak el (1), konvergálnak (<1) vagy divergálnak (>1)"
+msgstr "A sorok egyenletesen oszlanak el (1), konvergálnak (<1) vagy divergálnak (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:1808
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
@@ -594,8 +589,7 @@ msgstr "Gamma-korrekció:"
 
 #: ../src/dialogs/clonetiler.cpp:2295
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
-msgstr ""
-"A leolvasott érték középtartományának eltolása felfelé (>0) vagy lefelé (<0)"
+msgstr "A leolvasott érték középtartományának eltolása felfelé (>0) vagy lefelé (<0)"
 
 # TODO: ellenőrizni
 #: ../src/dialogs/clonetiler.cpp:2302
@@ -636,8 +630,7 @@ msgstr "Méret"
 
 #: ../src/dialogs/clonetiler.cpp:2347
 msgid "Each clone's size is determined by the picked value in that point"
-msgstr ""
-"Minden egyes klón méretét az azon pontban leolvasott érték határozza meg"
+msgstr "Minden egyes klón méretét az azon pontban leolvasott érték határozza meg"
 
 #: ../src/dialogs/clonetiler.cpp:2357
 msgid ""
@@ -726,8 +719,7 @@ msgstr " _Törlés "
 
 #: ../src/dialogs/clonetiler.cpp:2563
 msgid "Remove existing tiled clones of the selected object (siblings only)"
-msgstr ""
-"A kijelölt objektum csempézett klónjainak eltávolítása (csak testvérek)"
+msgstr "A kijelölt objektum csempézett klónjainak eltávolítása (csak testvérek)"
 
 #: ../src/dialogs/clonetiler.cpp:2579
 msgid " R_eset "
@@ -928,7 +920,6 @@ msgstr "Fájlkiterjesztés automatikus hozzáfűzése"
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
-msgstr[1] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
 
 #: ../src/dialogs/find.cpp:372
 msgid "exact"
@@ -1051,8 +1042,7 @@ msgstr "Szö_veg: "
 
 #: ../src/dialogs/find.cpp:689
 msgid "Find objects by their text content (exact or partial match)"
-msgstr ""
-"Objektumok keresése a szövegtartalmuk alapján (pontos vagy részleges egyezés)"
+msgstr "Objektumok keresése a szövegtartalmuk alapján (pontos vagy részleges egyezés)"
 
 #: ../src/dialogs/find.cpp:690
 msgid "_ID: "
@@ -1069,8 +1059,7 @@ msgid "_Style: "
 msgstr "_Stílus: "
 
 #: ../src/dialogs/find.cpp:691
-msgid ""
-"Find objects by the value of the style attribute (exact or partial match)"
+msgid "Find objects by the value of the style attribute (exact or partial match)"
 msgstr ""
 "Objektumok keresése a stílusuk (a \"style\" tulajdonságuk értéke) alapján "
 "(pontos vagy részleges egyezés)"
@@ -1183,8 +1172,7 @@ msgid "_Id"
 msgstr "_Azonosító"
 
 #: ../src/dialogs/item-properties.cpp:127
-msgid ""
-"The id= attribute (only letters, digits, and the characters .-_: allowed)"
+msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr ""
 "Az \"id=\" tulajdonság (a felhasználható karakterek: betűk, számjegyek, "
 "továbbá a következők: .:-_)"
@@ -1470,8 +1458,7 @@ msgid "Creator"
 msgstr "Készítő"
 
 #: ../src/dialogs/rdf.cpp:254
-msgid ""
-"Name of entity primarily responsible for making the content of this document."
+msgid "Name of entity primarily responsible for making the content of this document."
 msgstr ""
 "A dokumentum tartalmának elkészítéséért elsődlegesen felelős személy "
 "(entitás) neve."
@@ -1481,10 +1468,8 @@ msgid "Rights"
 msgstr "Jogok"
 
 #: ../src/dialogs/rdf.cpp:257
-msgid ""
-"Name of entity with rights to the Intellectual Property of this document."
-msgstr ""
-"A dokumentum szellemi tulajdonjogaival rendelkező személy (entitás) neve."
+msgid "Name of entity with rights to the Intellectual Property of this document."
+msgstr "A dokumentum szellemi tulajdonjogaival rendelkező személy (entitás) neve."
 
 #: ../src/dialogs/rdf.cpp:259
 msgid "Publisher"
@@ -1811,8 +1796,7 @@ msgstr "A kijelölt objektumok elrendezése"
 
 #: ../src/dialogs/xml-tree.cpp:171
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
-msgstr ""
-"Csomópontok kijelölése: <b>kattintással</b>. Átrendezés: <b>húzással</b>."
+msgstr "Csomópontok kijelölése: <b>kattintással</b>. Átrendezés: <b>húzással</b>."
 
 #: ../src/dialogs/xml-tree.cpp:182
 msgid "<b>Click</b> attribute to edit."
@@ -1904,8 +1888,7 @@ msgstr "Létrehozás"
 
 #: ../src/dialogs/xml-tree.cpp:1454
 #, c-format
-msgid ""
-"Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
+msgid "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
 msgstr ""
 "\"<b>%s</b>\" nem állítható be: már létezik \"<b>%s</b>\" értékkel "
 "rendelkező elem."
@@ -2495,7 +2478,6 @@ msgstr "Válassza ki a megnyitandó fájlt"
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "<b>%i</b> felhasználatlan &lt;defs&gt;-definíció eltávolítva."
-msgstr[1] "<b>%i</b> felhasználatlan &lt;defs&gt;-definíció eltávolítva."
 
 #: ../src/file.cpp:527
 msgid "No unused definitions in &lt;defs&gt;."
@@ -2557,8 +2539,7 @@ msgstr "<b>Shift</b>: színátmenet rajzolása a kezdőpont köré"
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] ""
-"<b>Színátmenet</b> %d objektumhoz. Szöghöz való illesztés: <b>Ctrl</b>."
+msgstr[0] "<b>Színátmenet</b> %d objektumhoz. Szöghöz való illesztés: <b>Ctrl</b>."
 
 #: ../src/gradient-context.cpp:458
 msgid "Select <b>objects</b> on which to create gradient."
@@ -2772,8 +2753,7 @@ msgstr "A nem mentett dokumentumokról mentés készült a következő helyekre:
 
 #: ../src/inkscape.cpp:478
 msgid "Automatic backup of the following documents failed:\n"
-msgstr ""
-"Nem sikerült automatikus mentést készíteni a következő dokumentumokról:\n"
+msgstr "Nem sikerült automatikus mentést készíteni a következő dokumentumokról:\n"
 
 #: ../src/inkscape.cpp:615
 #, c-format
@@ -2940,7 +2920,6 @@ msgstr "A Jabber-kapcsolat megszűnt."
 msgid "Sending message; %u message remaining in send queue."
 msgid_plural "Sending message; %u messages remaining in send queue."
 msgstr[0] "Üzenet küldése; %u üzenet van még a küldési sorban."
-msgstr[1] "Üzenet küldése; %u üzenet van még a küldési sorban."
 
 #: ../src/jabber_whiteboard/callbacks.cpp:78
 msgid "Receive queue empty."
@@ -2951,7 +2930,6 @@ msgstr "A fogadási sor üres."
 msgid "Receiving change; %u change left to process."
 msgid_plural "Receiving change; %u changes left to process."
 msgstr[0] "Módosítás fogadása; %u módosítás van hátra."
-msgstr[1] "Módosítás fogadása; %u módosítás van hátra."
 
 #: ../src/jabber_whiteboard/chat-handler.cpp:161
 #, c-format
@@ -3103,14 +3081,12 @@ msgstr "<b>%s</b> csatlakozott a csevegőszobához."
 msgid "%u change in receive queue."
 msgid_plural "%u changes in receive queue."
 msgstr[0] "%u módosítás van a fogadási sorban."
-msgstr[1] "%u módosítás van a fogadási sorban."
 
 #: ../src/jabber_whiteboard/message-queue.cpp:117
 #, c-format
 msgid "%u change in send queue."
 msgid_plural "%u changes in send queue."
 msgstr[0] "%u módosítás van a küldési sorban."
-msgstr[1] "%u módosítás van a küldési sorban."
 
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
@@ -3155,8 +3131,7 @@ msgid "The SSL certificate provided by the Jabber server is expired."
 msgstr "A Jabber-kiszolgáló által adott SSL-tanúsítvány már lejárt."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:434
-msgid ""
-"The SSL certificate provided by the Jabber server has not been activated."
+msgid "The SSL certificate provided by the Jabber server has not been activated."
 msgstr "A Jabber-kiszolgáló által adott SSL-tanúsítvány nem lett aktiválva."
 
 #: ../src/jabber_whiteboard/session-manager.cpp:437
@@ -3273,8 +3248,7 @@ msgstr "Az Inkscape verziószámának kiírása"
 
 #: ../src/main.cpp:199
 msgid "Do not use X server (only process files from console)"
-msgstr ""
-"Az X grafikus rendszer ne legyen használva (fájlok feldolgozása a konzolról)"
+msgstr "Az X grafikus rendszer ne legyen használva (fájlok feldolgozása a konzolról)"
 
 #: ../src/main.cpp:204
 msgid "Try to use X server (even if $DISPLAY is not set)"
@@ -3351,8 +3325,7 @@ msgstr "SZÉLESSÉG"
 
 #: ../src/main.cpp:254
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr ""
-"Az exportált bitkép magassága képpontban (felülbírálja az export-dpi értéket)"
+msgstr "Az exportált bitkép magassága képpontban (felülbírálja az export-dpi értéket)"
 
 #: ../src/main.cpp:255
 msgid "HEIGHT"
@@ -3369,8 +3342,7 @@ msgstr "Azonosító"
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
 #: ../src/main.cpp:266
-msgid ""
-"Export just the object with export-id, hide all others (only with export-id)"
+msgid "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Csak az export-id-vel rendelkező objektum exportálása; a többi elrejtése "
 "(csak export-id esetén)"
@@ -3582,8 +3554,7 @@ msgstr ""
 "mentén"
 
 #: ../src/node-context.cpp:360
-msgid ""
-"<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
+msgid "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Shift</b>: csomópontkijelölés bekapcsolása/kikapcsolása; illesztés "
 "kikapcsolása; mindkét vezérlőelem forgatása"
@@ -3661,8 +3632,7 @@ msgstr "szimmetrikus"
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:3969
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
-msgstr ""
-"szélső csomópont, vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
+msgstr "szélső csomópont, vezérlőelem behúzva (kiterjesztés: <b>Shift</b>+húzás)"
 
 #: ../src/nodepath.cpp:3971
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
@@ -3706,10 +3676,6 @@ msgstr[0] ""
 "<b>%i</b> csomópontból <b>0</b> van kijelölve. Kijelölés: <b>kattintással</"
 "b>, <b>Shift+kattintással</b>, vagy egy terület <b>húzással való "
 "kijelölésével</b>."
-msgstr[1] ""
-"<b>%i</b> csomópontból <b>0</b> van kijelölve. Kijelölés: <b>kattintással</"
-"b>, <b>Shift+kattintással</b>, vagy egy terület <b>húzással való "
-"kijelölésével</b>."
 
 #: ../src/nodepath.cpp:4020
 msgid "Drag the handles of the object to modify it."
@@ -3720,25 +3686,20 @@ msgstr "Az objektum módosítása a vezérlőelemeinek a húzásával végezhet�
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
-msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
 #: ../src/nodepath.cpp:4035
 #, c-format
-msgid ""
-"<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgid_plural ""
-"<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
+msgid_plural "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] ""
 "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>) <b>%i</b> alláncban "
 "(összesen: <b>%i</b>). %s."
-msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>); %s. %s."
 
 #: ../src/nodepath.cpp:4041
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 msgstr[0] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>). %s."
-msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>). %s."
 
 #: ../src/object-edit.cpp:488
 msgid ""
@@ -3766,13 +3727,11 @@ msgstr ""
 
 #: ../src/object-edit.cpp:681
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
-"Az ellipszis <b>szélességének</b> beállítása. Körré alakítás: <b>Ctrl</b>."
+msgstr "Az ellipszis <b>szélességének</b> beállítása. Körré alakítás: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:684
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr ""
-"Az ellipszis <b>magasságának</b> beállítása. Körré alakítás: <b>Ctrl</b>."
+msgstr "Az ellipszis <b>magasságának</b> beállítása. Körré alakítás: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:687
 msgid ""
@@ -3843,8 +3802,7 @@ msgstr "A kitöltőminta egyenletes <b>átméretezése</b>"
 
 #: ../src/object-edit.cpp:1035
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr ""
-"A kitöltőminta <b>elforgatása</b>. Szöghöz való illesztés: <b>Ctrl</b>."
+msgstr "A kitöltőminta <b>elforgatása</b>. Szöghöz való illesztés: <b>Ctrl</b>."
 
 #: ../src/object-edit.cpp:1060
 msgid "Drag to resize the <b>flowed text frame</b>"
@@ -3859,8 +3817,7 @@ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
 msgstr "Egy vagy több objektum <b>nem lánc</b>; összevonás nem végezhető."
 
 #: ../src/path-chemistry.cpp:71
-msgid ""
-"You cannot combine objects from <b>different groups</b> or <b>layers</b>."
+msgid "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "<b>Eltérő csoportban</b> illetve <b>rétegben</b> levő objektumok nem "
 "vonhatók össze."
@@ -3912,8 +3869,7 @@ msgstr ""
 "húzással</b>."
 
 #: ../src/pen-context.cpp:549
-msgid ""
-"<b>Click</b> or <b>click and drag</b> to continue the path from this point."
+msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "A lánc folytatása ebből a pontból: <b>kattintással</b> vagy <b>kattintással "
 "+ húzással</b>."
@@ -4060,8 +4016,7 @@ msgstr "Jelölje ki az előrébb helyezendő <b>objektumo(ka)t</b>."
 
 #: ../src/selection-chemistry.cpp:635 ../src/selection-chemistry.cpp:687
 #: ../src/selection-chemistry.cpp:721 ../src/selection-chemistry.cpp:779
-msgid ""
-"You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
+msgid "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "<b>Eltérő csoportban</b> illetve <b>rétegben</b> levő objektumok nem "
 "helyezhetők előrébb illetve hátrébb."
@@ -4257,13 +4212,11 @@ msgstr "Csillag"
 
 #: ../src/selection-describer.cpp:101
 msgid "Click selection to toggle scale/rotation handles"
-msgstr ""
-"A méretezési és az elforgatási mód közti váltáshoz kattintson a kijelölésre"
+msgstr "A méretezési és az elforgatási mód közti váltáshoz kattintson a kijelölésre"
 
 #. no items
 #: ../src/selection-describer.cpp:103
-msgid ""
-"No objects selected. Click, Shift+click, or drag around objects to select."
+msgid "No objects selected. Click, Shift+click, or drag around objects to select."
 msgstr ""
 "Nincs kijelölve objektum. Kijelölés: kattintással (ha szükséges, Shifttel) "
 "vagy egy terület kijelölésével."
@@ -4302,14 +4255,12 @@ msgstr " a(z) %s csoportban (%s)"
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] " <b>%i</b> szülőben (%s)"
-msgstr[1] "%s <b>%i</b> rétegben. %s."
 
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] " <b>%i</b> rétegben"
-msgstr[1] "%s <b>%i</b> rétegben. %s."
 
 # kiíráskor tesz egy pontot a végére
 #: ../src/selection-describer.cpp:161
@@ -4332,7 +4283,6 @@ msgstr "A keret meghatározása: <b>Shift+D</b>"
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
 msgstr[0] "<b>%i</b> objektum kijelölve"
-msgstr[1] "<b>%i</b> objektum kijelölve"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
@@ -4340,7 +4290,6 @@ msgstr[1] "<b>%i</b> objektum kijelölve"
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
 msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>)"
-msgstr[1] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
@@ -4348,16 +4297,13 @@ msgstr[1] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
 msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b> illetve <b>%s</b>)"
-msgstr[1] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[0] ""
-"<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b> illetve <b>%s</b>)"
-msgstr[1] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
+msgstr[0] "<b>%i</b> darab objektum (típus: <b>%s</b>, <b>%s</b> illetve <b>%s</b>)"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
@@ -4365,7 +4311,6 @@ msgstr[1] "<b>%d</b> találat (<b>%d</b> objektumból), %s egyezés."
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
 msgstr[0] "<b>%i</b> darab objektum (<b>%i</b> féle típusból)"
-msgstr[1] "<b>%i</b> csomópont kijelölve (összesen: <b>%i</b>). %s."
 
 #: ../src/selection-describer.cpp:209
 #, c-format
@@ -4415,8 +4360,7 @@ msgstr ""
 #: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr ""
-"<b>Átméretezés</b>: %0.2f%% x %0.2f%%. Az arány megőrzése: <b>Ctrl</b>."
+msgstr "<b>Átméretezés</b>: %0.2f%% x %0.2f%%. Az arány megőrzése: <b>Ctrl</b>."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
@@ -4531,7 +4475,6 @@ msgstr "%d &#215; %d méretű <b>kép</b>: %s"
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
-msgstr[1] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
 
 #: ../src/sp-item.cpp:847
 msgid "Object"
@@ -4566,7 +4509,6 @@ msgstr "<b>Dinamikus perem</b>; %s %f ponttal (pt)"
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>Lánc</b> (%i csomópont)"
-msgstr[1] "<b>Lánc</b> (%i csomópont)"
 
 #: ../src/sp-polygon.cpp:233
 msgid "<b>Polygon</b>"
@@ -4592,21 +4534,18 @@ msgstr "%3f fordulatú <b>spirál</b>"
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "%d csúcsú <b>csillag</b>"
-msgstr[1] "%d csúcsú <b>csillag</b>"
 
 #: ../src/sp-star.cpp:285
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "%d csúcsú <b>sokszög</b>"
-msgstr[1] "%d csúcsú <b>sokszög</b>"
 
 #: ../src/sp-switch.cpp:98
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
 msgstr[0] "<b>%d</b> objektumot tartalmazó <b>feltételes csoport</b>"
-msgstr[1] "<b>%d</b> objektumot tartalmazó <b>csoport</b>"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:409
@@ -4648,8 +4587,7 @@ msgstr "<b>Alt</b>: a spirál sugarának megőrzése"
 
 #: ../src/spiral-context.cpp:437
 #, c-format
-msgid ""
-"<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Spirál</b>. Sugár: %s, szög: %5g&#176;. Szöghöz való illesztés: <b>Ctrl</"
 "b>."
@@ -4675,8 +4613,7 @@ msgstr ""
 "felosztáshoz illetve láncelvágáshoz kijelölt objektumok <b>z-sorrendjét</b>."
 
 #: ../src/splivarot.cpp:178
-msgid ""
-"One of the objects is <b>not a path</b>, cannot perform boolean operation."
+msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
 msgstr "Az egyik objektum <b>nem lánc</b>; logikai művelet nem hajtható végre."
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
@@ -4717,8 +4654,7 @@ msgstr "<b>Ctrl</b>: szöghöz való illesztés; ágak sugárirányban való tar
 
 #: ../src/star-context.cpp:446
 #, c-format
-msgid ""
-"<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
+msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Sokszög</b>. Sugár: %s, szög: %5g&#176;. Szöghöz való illesztés: <b>Ctrl</"
 "b>."
@@ -4783,8 +4719,7 @@ msgstr ""
 
 #: ../src/text-chemistry.cpp:331
 msgid "Select <b>a flowed text</b> to unflow it."
-msgstr ""
-"Szöveg tördelésének megszüntetéséhez jelölje ki a <b>tördelt szöveget</b>."
+msgstr "Szöveg tördelésének megszüntetéséhez jelölje ki a <b>tördelt szöveget</b>."
 
 #: ../src/text-context.cpp:447
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -4793,8 +4728,7 @@ msgstr ""
 "kijelölése: <b>húzással</b>."
 
 #: ../src/text-context.cpp:449
-msgid ""
-"<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
+msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 "A tördelt szöveg szerkesztése: <b>kattintással</b>. A szöveg egy részének "
 "kijelölése: <b>húzással</b>."
@@ -4819,8 +4753,7 @@ msgstr "<b>Tördelt szöveg kerete</b>: %s &#215; %s"
 
 #: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
 msgid "Type text; <b>Enter</b> to start new line."
-msgstr ""
-"Gépelje be a szöveget. Új sort az <b>Enter</b> billentyűvel lehet kezdeni."
+msgstr "Gépelje be a szöveget. Új sort az <b>Enter</b> billentyűvel lehet kezdeni."
 
 #: ../src/text-context.cpp:696
 msgid "Flowed text is created."
@@ -4937,8 +4870,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:205
 msgid "<b>Click and drag</b> between shapes to create a connector."
-msgstr ""
-"Kapocs létrehozása: az alakzatok közt való <b>kattintással + húzással</b>."
+msgstr "Kapocs létrehozása: az alakzatok közt való <b>kattintással + húzással</b>."
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:545
 #: ../src/trace/potrace/inkscape-potrace.cpp:646
@@ -4960,13 +4892,12 @@ msgid "Select one image and one or more shapes above it"
 msgstr "Jelöljön ki egy képet és egy vagy több, előtte levő alakzatot"
 
 #: ../src/trace/trace.cpp:227
-#, fuzzy
 msgid "Trace: No active desktop"
-msgstr "Vektorizálás: nincs aktív dokumentum"
+msgstr "Vektorizálás: nincs aktív asztal"
 
 #: ../src/trace/trace.cpp:326
 msgid "Invalid SIOX result"
-msgstr ""
+msgstr "Érvénytelen SIOX-eredmény"
 
 #: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
@@ -5293,8 +5224,7 @@ msgid "Background color"
 msgstr "Háttérszín"
 
 #: ../src/ui/dialog/document-properties.cpp:188
-msgid ""
-"Color and transparency of the page background (also used for bitmap export)"
+msgid "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "A lap hátterének színe és átlátszósága (bitkép-exporthoz is fel lesz "
 "használva)"
@@ -5479,8 +5409,7 @@ msgstr "_Határoló téglalapok illesztése az objektumokhoz"
 
 #: ../src/ui/dialog/document-properties.cpp:289
 msgid "Snap the edges of the object bounding boxes to other objects"
-msgstr ""
-"Az objektumok határoló téglalapjának széleinek illesztése más objektumokhoz"
+msgstr "Az objektumok határoló téglalapjának széleinek illesztése más objektumokhoz"
 
 #: ../src/ui/dialog/document-properties.cpp:291
 msgid "Snap nodes _to objects"
@@ -5521,8 +5450,7 @@ msgid "Controls max. snapping distance from object"
 msgstr "Maximális illesztési távolság az objektumtól"
 
 #: ../src/ui/dialog/document-properties.cpp:302
-msgid ""
-"If set, objects snap to the nearest object when moved, regardless of distance"
+msgid "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
 "lesznek a legközelebbi objektumhoz - függetlenül a távolságtól"
@@ -5543,8 +5471,7 @@ msgstr "Cs_omópontok illesztése a rácsra"
 #: ../src/ui/dialog/document-properties.cpp:308
 #: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
-msgstr ""
-"Lánc-csomópontok, szöveg-alapvonalak, ellipszis-középpontok stb. illesztése"
+msgstr "Lánc-csomópontok, szöveg-alapvonalak, ellipszis-középpontok stb. illesztése"
 
 #: ../src/ui/dialog/document-properties.cpp:310
 msgid "Snap sens_itivity:"
@@ -5579,8 +5506,7 @@ msgid "Controls max. snapping distance from guides"
 msgstr "Maximális illesztési távolság a segédvonalaktól"
 
 #: ../src/ui/dialog/document-properties.cpp:322
-msgid ""
-"If set, objects snap to the nearest guide when moved, regardless of distance"
+msgid "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 "Ha az opció be van jelölve, akkor az objektumok elmozdításkor illesztve "
 "lesznek a legközelebbi segédvonalhoz - függetlenül a távolságtól"
@@ -5658,8 +5584,7 @@ msgid "Click/drag threshold:"
 msgstr "Kattintás/húzás határa:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:146
-msgid ""
-"Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
+msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Az a maximális húzási távolság (képernyő-képpontban mérve), amely még "
 "kattintásnak lesz véve, nem pedig húzásnak"
@@ -5758,8 +5683,7 @@ msgid "> and < scale by:"
 msgstr "A \">\" és a \"<\" billentyű méretezési mértéke:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:180
-msgid ""
-"Pressing > or < scales selection up or down by this increment (in px units)"
+msgid "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "A \">\" illetve a \"<\" billentyű lenyomása ennyivel méretezi át (képpontban "
 "(px) mérve) a kijelölést (felfelé illetve lefelé)"
@@ -5769,8 +5693,7 @@ msgid "Inset/Outset by:"
 msgstr "Zsugorítás/nyújtás mértéke:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
-msgid ""
-"Inset and Outset commands displace the path by this distance (in px units)"
+msgid "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "A zsugorítási és a nyújtási művelet ekkora (képpontokban (px) megadott) "
 "távolsággal mozdítja el a láncot"
@@ -5825,8 +5748,7 @@ msgid "Show selection cue"
 msgstr "Kijelölési jel megjelenítése"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:203
-msgid ""
-"Whether selected objects display a selection cue (the same as in selector)"
+msgid "Whether selected objects display a selection cue (the same as in selector)"
 msgstr ""
 "A kijelölt objektumoknál megjelenik-e a megfelelő kijelölési jelző (a "
 "kijelölőeszközzel megegyezően)"
@@ -5966,8 +5888,7 @@ msgstr "A határoló téglalap túlsó széle"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Default scale origin will be on the bounding box of the item"
-msgstr ""
-"Az átméretezés alapértelmezett origója az elem határoló téglalapján lesz"
+msgstr "Az átméretezés alapértelmezett origója az elem határoló téglalapján lesz"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:333
 msgid "Farthest opposite node"
@@ -6166,8 +6087,7 @@ msgstr "Az eredeti objektum áthelyezésekor a klónjai és a kapcsolt peremei:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "Clones are translated by the same vector as their original."
-msgstr ""
-"A klónok ugyanazzal a vektorral lesznek elmozdítva, mint az eredeti objektum"
+msgstr "A klónok ugyanazzal a vektorral lesznek elmozdítva, mint az eredeti objektum"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Clones preserve their positions when their original is moved."
@@ -6243,8 +6163,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:473
 #: ../src/widgets/select-toolbar.cpp:532
 msgid "Transform patterns (in fill or stroke) along with the objects"
-msgstr ""
-"Minták transzformációja (kitöltésben és körvonalban) az objektumokkal együtt"
+msgstr "Minták transzformációja (kitöltésben és körvonalban) az objektumokkal együtt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:474
 msgid "Store transformation:"
@@ -6298,8 +6217,7 @@ msgstr "Ctrl+A, Tab, Shift+Tab:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:494
 msgid "Make keyboard selection commands work on objects in all layers"
-msgstr ""
-"A kijelölési billentyűkombinációk az összes réteg objektumaira vonatkoznak"
+msgstr "A kijelölési billentyűkombinációk az összes réteg objektumaira vonatkoznak"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:496
 msgid "Make keyboard selection commands work on objects in current layer only"
@@ -6387,8 +6305,7 @@ msgstr "Legutóbbi dokumentumok maximális száma:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:524
 msgid "The maximum length of the Open Recent list in the File menu"
-msgstr ""
-"A Fájl menüben megjelenő \"Legutóbbi megnyitása\" lista maximális hossza"
+msgstr "A Fájl menüben megjelenő \"Legutóbbi megnyitása\" lista maximális hossza"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:526
 msgid "Simplification threshold:"
@@ -6431,12 +6348,10 @@ msgstr "Vágás és maszkolás:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Use the topmost selected object as a clipping path or mask"
-msgstr ""
-"A legelöl levő kijelölt objektum használata vágóláncként illetve maszkként"
+msgstr "A legelöl levő kijelölt objektum használata vágóláncként illetve maszkként"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:538
-msgid ""
-"Uncheck this to use the bottom selected object as the clipping path or mask"
+msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Ha a legalsó kijelölt objektumot szeretné használni vágóláncként illetve "
 "maszkként, akkor távolítsa el a bejelölést az opcióról"
@@ -6585,9 +6500,8 @@ msgstr "Munkamenet-fájl megnyitása"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection (experimental)"
-msgstr "SIOX előtér-választás"
+msgstr "SIOX előtér-választás (kísérleti funkció)"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
@@ -6629,8 +6543,7 @@ msgstr "Vektorizálás J. Canny módszere alapján végzett élkereséssel"
 
 #: ../src/ui/dialog/tracedialog.cpp:402
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
-msgstr ""
-"Fényesség-levágás a szomszédos képpontoknál (meghatározza az élvastagságot)"
+msgstr "Fényesség-levágás a szomszédos képpontoknál (meghatározza az élvastagságot)"
 
 #: ../src/ui/dialog/tracedialog.cpp:409
 msgid "Edge Detection"
@@ -6691,8 +6604,7 @@ msgid "Stack"
 msgstr "Egymásra"
 
 #: ../src/ui/dialog/tracedialog.cpp:477
-msgid ""
-"Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
+msgid "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr ""
 "A képek függőleges egymásra helyezése (nincsenek rések) vagy vízszintes "
 "csempézése (általában vannak rések)"
@@ -6718,8 +6630,7 @@ msgstr "Előnézet"
 #. do not expand
 #: ../src/ui/dialog/tracedialog.cpp:497
 msgid "Preview the result without actual tracing"
-msgstr ""
-"Az eredmény előnézetének megjelenítése a vektorizálás végrehajtása nélkül"
+msgstr "Az eredmény előnézetének megjelenítése a vektorizálás végrehajtása nélkül"
 
 #. #### swap black and white ####
 #: ../src/ui/dialog/tracedialog.cpp:509
@@ -6968,8 +6879,7 @@ msgstr ""
 #: ../src/ui/dialog/whiteboard-connect.cpp:233
 #: ../src/ui/dialog/whiteboard-connect.cpp:271
 msgid "Connected to Jabber server <b>%1</b> as <b>%2</b>"
-msgstr ""
-"Kapcsolódva a(z) \"<b>%1</b>\" Jabber-kiszolgálóhoz \"<b>%2</b>\" néven"
+msgstr "Kapcsolódva a(z) \"<b>%1</b>\" Jabber-kiszolgálóhoz \"<b>%2</b>\" néven"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:260
 msgid "Registration failed on Jabber server <b>%1</b> as <b>%2</b>"
@@ -7596,8 +7506,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:1624
 msgid "XML node tracker has not been initialized; nothing to dump"
-msgstr ""
-"Az XML-csomópontok nyomkövetője nem lett inicializálva; nincs kiírandó adat."
+msgstr "Az XML-csomópontok nyomkövetője nem lett inicializálva; nincs kiírandó adat."
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
@@ -7854,8 +7763,7 @@ msgstr "Méret beillesztése egyenként"
 
 #: ../src/verbs.cpp:2038
 msgid "Scale each selected object to match the size of the copied object"
-msgstr ""
-"Minden egyes kijelölt objektum átméretezése a kimásolt objektum méretére"
+msgstr "Minden egyes kijelölt objektum átméretezése a kimásolt objektum méretére"
 
 #: ../src/verbs.cpp:2039
 msgid "Paste Width Separately"
@@ -7911,8 +7819,7 @@ msgstr "Klón létre_hozása"
 
 #: ../src/verbs.cpp:2050
 msgid "Create a clone (a copy linked to the original) of selected object"
-msgstr ""
-"Klón (az eredetihez kapcsolt másolat) létrehozása a kijelölt objektumból"
+msgstr "Klón (az eredetihez kapcsolt másolat) létrehozása a kijelölt objektumból"
 
 #: ../src/verbs.cpp:2051
 msgid "Unlin_k Clone"
@@ -8365,8 +8272,7 @@ msgstr "Elfo_rgatás -90 fokkal"
 
 #: ../src/verbs.cpp:2184
 msgid "Rotate selection 90&#176; clockwise"
-msgstr ""
-"A kijelölt objektumok elforgatása az óramutató járásának irányában 90 fokkal"
+msgstr "A kijelölt objektumok elforgatása az óramutató járásának irányában 90 fokkal"
 
 #: ../src/verbs.cpp:2185
 msgid "Rotate 9_0&#176; CCW"
@@ -8455,8 +8361,7 @@ msgid "Remove mask from selection"
 msgstr "Maszk eltávolítása a kijelölésről"
 
 #: ../src/verbs.cpp:2208
-msgid ""
-"Apply clipping path to selection (using the topmost object as clipping path)"
+msgid "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 "Vágólánc alkalmazása a kijelölésre (a legelöl levő objektumot használva "
 "vágóláncként)"
@@ -8781,8 +8686,7 @@ msgstr "Ik_on-előnézet"
 
 #: ../src/verbs.cpp:2304
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr ""
-"Ablak nyitása az objektumok különböző ikonfelbontásokkal való megtekintésére"
+msgstr "Ablak nyitása az objektumok különböző ikonfelbontásokkal való megtekintésére"
 
 #: ../src/verbs.cpp:2306
 msgid "Zoom to fit page in window"
@@ -8847,8 +8751,7 @@ msgstr "_Kitöltés és körvonal..."
 
 #: ../src/verbs.cpp:2322
 msgid "Edit objects' style, such as color or stroke width"
-msgstr ""
-"Objektumok stílusának (mint például szín vagy körvonalszélesség) szerkesztése"
+msgstr "Objektumok stílusának (mint például szín vagy körvonalszélesség) szerkesztése"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2324
@@ -8969,8 +8872,7 @@ msgid "Share with _chatroom..."
 msgstr "Megosztás egy _csevegőszobával..."
 
 #: ../src/verbs.cpp:2353
-msgid ""
-"Join a chatroom to start a new whiteboard session or join one in progress"
+msgid "Join a chatroom to start a new whiteboard session or join one in progress"
 msgstr ""
 "Csatlakozás egy csevegőszobához egy új rajztábla-munkamenet indítása vagy "
 "egy létezőhöz való csatlakozás céljából"
@@ -9408,8 +9310,7 @@ msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
 #: ../src/widgets/paint-selector.cpp:201
-msgid ""
-"Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
+msgid "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 "A kitöltés egyenletes, kivéve akkor, ha egy allánc ellentétes irányú (fill-"
 "rule: nonzero, azaz kitöltési szabály: nem-nulla)"
@@ -9845,8 +9746,7 @@ msgstr "Tágulás:"
 
 #: ../src/widgets/toolbox.cpp:1837
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
-msgstr ""
-"Mennyivel sűrűbbek illetve ritkábbak a külső fordulatok; 1 = egyenletes"
+msgstr "Mennyivel sűrűbbek illetve ritkábbak a külső fordulatok; 1 = egyenletes"
 
 #: ../src/widgets/toolbox.cpp:1847
 msgid "Inner radius:"
@@ -9858,8 +9758,7 @@ msgstr "A legbelső fordulat sugara (a spirál méretéhez viszonyítva)"
 
 #: ../src/widgets/toolbox.cpp:2033
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr ""
-"A művészi toll szélessége (a látható rajzvászon-területhez viszonyítva)"
+msgstr "A művészi toll szélessége (a látható rajzvászon-területhez viszonyítva)"
 
 #: ../src/widgets/toolbox.cpp:2043
 msgid "Thinning:"
@@ -9925,13 +9824,11 @@ msgstr "Mekkora ellenállás hat a toll mozgására"
 
 #: ../src/widgets/toolbox.cpp:2119
 msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr ""
-"A beviteli eszköz nyomásának használata a tollszélesség változtatásához"
+msgstr "A beviteli eszköz nyomásának használata a tollszélesség változtatásához"
 
 #: ../src/widgets/toolbox.cpp:2132
 msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr ""
-"A beviteli eszköz dőlésének használata a tollhegy szögének változtatásához"
+msgstr "A beviteli eszköz dőlésének használata a tollhegy szögének változtatásához"
 
 #: ../src/widgets/toolbox.cpp:2446
 msgid "Start:"
@@ -9954,8 +9851,7 @@ msgid "Open arc"
 msgstr "Nyitott ellipszisív"
 
 #: ../src/widgets/toolbox.cpp:2468
-msgid ""
-"Switch between arc (unclosed shape) and segment (closed shape with two radii)"
+msgid "Switch between arc (unclosed shape) and segment (closed shape with two radii)"
 msgstr ""
 "Váltás ellipszisív (nem lezárt alakzat) és -cikk (lezárt alakzat két "
 "sugárral) közt"
@@ -10105,8 +10001,7 @@ msgstr "Adobe Illustrator-SVG (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
-msgstr ""
-"A felesleg eltávolítása az Adobe Illustrator-féle SVG-kből a megnyitás előtt"
+msgstr "A felesleg eltávolítása az Adobe Illustrator-féle SVG-kből a megnyitás előtt"
 
 #: ../share/extensions/dia.inx.h:1
 msgid "A diagram created with the program Dia"
@@ -10613,3 +10508,4 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile-bemenet"
+
