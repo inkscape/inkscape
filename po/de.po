@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-05 22:52+0200\n"
+"PO-Revision-Date: 2006-06-06 20:58+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4988,13 +4988,12 @@ msgid "Select one image and one or more shapes above it"
 msgstr "Wählen Sie ein Bild und eine oder mehrere Formen über diesem"
 
 #: ../src/trace/trace.cpp:227
-#, fuzzy
 msgid "Trace: No active desktop"
-msgstr "Vektorisieren: Kein Dokument aktiv"
+msgstr "Vektorisieren: Kein aktiver Desktop"
 
 #: ../src/trace/trace.cpp:326
 msgid "Invalid SIOX result"
-msgstr ""
+msgstr "Ungültiges SIOX-Ergebnis"
 
 #: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
@@ -6593,9 +6592,8 @@ msgstr "Sitzungsdatei öffnen"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection (experimental)"
-msgstr "Auswahl des Vordergrunds mittels SIOX"
+msgstr "Auswahl des Vordergrunds mittels SIOX (experimentell)"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
