@@ -19,6 +19,7 @@
 #include <desktop-handles.h>
 #include <document.h>
 #include <message-stack.h>
+#include <gtkmm.h>
 #include <glibmm/i18n.h>
 #include <selection.h>
 #include <xml/repr.h>
@@ -57,7 +58,7 @@ Tracer::getSelectedSPImage()
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         {
-        g_warning("Trace: No active desktop\n");
+        g_warning("Trace: No active desktop");
         return NULL;
         }
 
@@ -155,8 +156,61 @@ Tracer::getSelectedSPImage()
 
 
 typedef org::siox::SioxImage SioxImage;
+typedef org::siox::SioxObserver SioxObserver;
 typedef org::siox::Siox Siox;
 
+
+class TraceSioxObserver : public SioxObserver
+{
+public:
+
+    /**
+     *
+     */
+    TraceSioxObserver (void *contextArg) :
+                     SioxObserver(contextArg)
+        {}
+
+    /**
+     *
+     */
+    virtual ~TraceSioxObserver ()
+        { }
+
+    /**
+     *  Informs the observer how much has been completed.
+     *  Return false if the processing should be aborted.
+     */
+    virtual bool progress(float percentCompleted)
+        {
+        //Tracer *tracer = (Tracer *)context;
+        //## Allow the GUI to update
+        Gtk::Main::iteration(false); //at least once, non-blocking
+        while( Gtk::Main::events_pending() )
+            Gtk::Main::iteration();
+        return true;
+        }
+
+    /**
+     *  Send an error string to the Observer.  Processing will
+     *  be halted.
+     */
+    virtual void error(const std::string &msg)
+        {
+        //Tracer *tracer = (Tracer *)context;
+        }
+
+
+};
+
+
+
+
+
+/**
+ * Process a GdkPixbuf, according to which areas have been
+ * obscured in the GUI.
+ */
 GdkPixbuf *
 Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
 {
@@ -213,8 +267,8 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         }
     //g_message("%d arena items\n", arenaItems.size());
 
-    PackedPixelMap *dumpMap = PackedPixelMapCreate(
-                    simage.getWidth(), simage.getHeight());
+    //PackedPixelMap *dumpMap = PackedPixelMapCreate(
+    //                simage.getWidth(), simage.getHeight());
 
     for (int row=0 ; row<simage.getHeight() ; row++)
         {
@@ -246,14 +300,14 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
             if (weHaveAHit)
                 {
                 //g_message("hit!\n");
-                dumpMap->setPixelLong(dumpMap, col, row, 0L);
+                //dumpMap->setPixelLong(dumpMap, col, row, 0L);
                 simage.setConfidence(col, row, 
                         Siox::UNKNOWN_REGION_CONFIDENCE);
                 }
             else
                 {
-                dumpMap->setPixelLong(dumpMap, col, row,
-                        simage.getPixel(col, row));
+                //dumpMap->setPixelLong(dumpMap, col, row,
+                //        simage.getPixel(col, row));
                 simage.setConfidence(col, row,
                         Siox::CERTAIN_BACKGROUND_CONFIDENCE);
                 }
@@ -261,7 +315,7 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         }
 
     //dumpMap->writePPM(dumpMap, "siox1.ppm");
-    dumpMap->destroy(dumpMap);
+    //dumpMap->destroy(dumpMap);
 
     //## ok we have our pixel buf
     org::siox::Siox sengine;

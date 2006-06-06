@@ -341,6 +341,56 @@ private:
 
 
 
+//########################################################################
+//#  S I O X    O B S E R V E R
+//########################################################################
+class Siox;
+
+/**
+ *  This is a class for observing the progress of a Siox engine.  Overload
+ *  the methods in your subclass to get the desired behaviour.
+ */
+class SioxObserver
+{
+public:
+
+    /**
+     *  Constructor.  Context can point to anything, and is usually
+     *  used to point to a C++ object or C state object, to delegate
+     *  callback processing to something else.  Use NULL to ignore.
+     */
+    SioxObserver(void *contextArg) : context(NULL)
+        { context = contextArg; }
+
+    /**
+     *  Destructor
+     */
+    virtual ~SioxObserver()
+        { }
+
+    /**
+     *  Informs the observer how much has been completed.
+     *  Return false if the processing should be aborted.
+     */
+    virtual bool progress(float percentCompleted)
+        {
+        return true;
+        }
+
+    /**
+     *  Send an error string to the Observer.  Processing will
+     *  be halted.
+     */
+    virtual void error(const std::string &msg)
+        {
+        }
+
+protected:
+
+    void *context;
+
+};
+
 
 
 //########################################################################
@@ -385,6 +435,11 @@ public:
     Siox();
 
     /**
+     *  Construct a Siox engine.  Use null to ignore
+     */
+    Siox(SioxObserver *observer);
+
+    /**
      *
      */
     virtual ~Siox();
@@ -400,6 +455,18 @@ public:
                                         unsigned int backgroundFillColor);
 
 private:
+
+    SioxObserver *sioxObserver;
+
+    /**
+     * Progress reporting
+     */
+    bool progressReport(float percentCompleted);
+
+    /**
+     * Flag this as false during processing to abort
+     */
+    bool keepGoing;
 
     /**
      * Our signature limits

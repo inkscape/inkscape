@@ -343,7 +343,7 @@ TraceDialogImpl::TraceDialogImpl()
 
     /*#### SIOX ####*/
     //# for now, put at the top of the potrace box.  something better later
-    sioxButton.set_label(_("SIOX foreground selection"));
+    sioxButton.set_label(_("SIOX foreground selection (experimental)"));
     sioxBox.pack_start(sioxButton, false, false, MARGIN);
     tips.set_tip(sioxButton, 
         _("Cover the area you want to select as the foreground"));

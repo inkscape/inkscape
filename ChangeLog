@@ -1,5 +1,12 @@
 2006-06-05  Jon A. Cruz  <jon@joncruz.org>
 
+	* trace/siox.cpp, trace/siox.h, trace/trace.cpp,
+	  src/ui/dialog/tracedialog.cpp:
+
+	  Applied patch #1501375.
+
+2006-06-05  Jon A. Cruz  <jon@joncruz.org>
+
 	* trace/siox.cpp, trace/trace.cpp:
 
 	  Applied patch #1501134.

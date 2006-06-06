@@ -655,7 +655,17 @@ const float Siox::CERTAIN_BACKGROUND_CONFIDENCE=0.0f;
  */
 Siox::Siox()
 {
+    sioxObserver = NULL;
     init();
+}
+
+/**
+ *  Construct a Siox engine
+ */
+Siox::Siox(SioxObserver *observer)
+{
+    init();
+    sioxObserver = observer;
 }
 
 
@@ -704,6 +714,27 @@ void Siox::trace(char *fmt, ...)
 
 
 
+/**
+ * Progress reporting
+ */
+bool Siox::progressReport(float percentCompleted)
+{
+    if (!sioxObserver)
+        return true;
+
+    bool ret = sioxObserver->progress(percentCompleted);
+
+    if (!ret)
+      {
+      trace("User selected abort");
+      keepGoing = false;
+      }
+
+    return ret;
+}
+
+
+
 
 /**
  *  Extract the foreground of the original image, according
@@ -713,6 +744,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
                                   unsigned int backgroundFillColor)
 {
     init();
+    keepGoing = true;
 
     SioxImage workImage = originalImage;
 
@@ -729,16 +761,27 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
     //#### create color signatures
     std::vector<CLAB> knownBg;
     std::vector<CLAB> knownFg;
-    for (int x = 0 ; x < workImage.getWidth() ; x++)
-        for (int y = 0 ; y < workImage.getHeight() ; y++)
+    std::vector<CLAB> imageClab;
+    for (int y = 0 ; y < workImage.getHeight() ; y++)
+        for (int x = 0 ; x < workImage.getWidth() ; x++)
             {
             float cm = workImage.getConfidence(x, y);
             unsigned int pix = workImage.getPixel(x, y);
+            CLAB lab(pix);
+            imageClab.push_back(lab);
             if (cm <= BACKGROUND_CONFIDENCE)
-                knownBg.push_back(pix); //note: uses CLAB(rgb)
+                knownBg.push_back(lab); //note: uses CLAB(rgb)
             else if (cm >= FOREGROUND_CONFIDENCE)
-                knownFg.push_back(pix);
+                knownFg.push_back(lab);
             }
+
+    if (!progressReport(10.0))
+        {
+        error("User aborted");
+        workImage.setValid(false);
+        delete[] labelField;
+        return workImage;
+        }
 
     trace("knownBg:%d knownFg:%d", knownBg.size(), knownFg.size());
 
@@ -748,14 +791,25 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         {
         error("Could not create background signature");
         workImage.setValid(false);
+        delete[] labelField;
         return workImage;
         }
+
+    if (!progressReport(30.0))
+        {
+        error("User aborted");
+        workImage.setValid(false);
+        delete[] labelField;
+        return workImage;
+        }
+
+
     std::vector<CLAB> fgSignature ;
     if (!colorSignature(knownFg, fgSignature, 3))
         {
         error("Could not create foreground signature");
-        delete[] labelField;
         workImage.setValid(false);
+        delete[] labelField;
         return workImage;
         }
 
@@ -765,17 +819,41 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         {
         // segmentation impossible
         error("Signature size is < 1.  Segmentation is impossible");
-        delete[] labelField;
         workImage.setValid(false);
+        delete[] labelField;
         return workImage;
         }
+
+    if (!progressReport(30.0))
+        {
+        error("User aborted");
+        workImage.setValid(false);
+        delete[] labelField;
+        return workImage;
+        }
+
 
     // classify using color signatures,
     // classification cached in hashmap for drb and speedup purposes
     std::map<unsigned int, Tupel> hs;
+    
+    unsigned int progressResolution = pixelCount / 10;
 
     for (unsigned int i=0; i<pixelCount; i++)
         {
+        if (i % progressResolution == 0)
+            {
+            float progress = 
+                30.0 + 60.0 * (float)i / (float)progressResolution;
+            if (!progressReport(progress))
+                {
+                error("User aborted");
+                delete[] labelField;
+                workImage.setValid(false);
+                return workImage;
+                }
+            }
+
         if (cm[i] >= FOREGROUND_CONFIDENCE)
             {
             cm[i] = CERTAIN_FOREGROUND_CONFIDENCE;
@@ -795,7 +873,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
                 }
             else
                 {
-                CLAB lab(image[i]);
+                CLAB lab = imageClab[i];
                 float minBg = sqrEuclidianDist(lab, bgSignature[0]);
                 int minIndex=0;
                 for (unsigned int j=1; j<bgSignature.size() ; j++)
@@ -846,7 +924,10 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
             }
         }
 
+
+
     trace("### postProcessing");
+
 
     //## postprocessing
     smooth(cm, width, height, 0.33f, 0.33f, 0.33f); // average
@@ -871,7 +952,14 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
     fillColorRegions();
     dilate(cm, width, height);
 
-    delete[] labelField;
+    if (!progressReport(100.0))
+        {
+        error("User aborted");
+        delete[] labelField;
+        workImage.setValid(false);
+        return workImage;
+        }
+
 
     //#### Yaay.  We are done.  Now clear everything but the background
     for (unsigned int y = 0 ; y < height ; y++)
@@ -884,7 +972,10 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
                 }
             }
 
+    delete[] labelField;
+
     trace("### Done");
+    keepGoing = false;
     return workImage;
 }
 
