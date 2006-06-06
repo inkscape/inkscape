@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2005-11-26 02:01+0200\n"
 "Last-Translator: Serdar Soytetir <sendirom@gmail.com>\n"
 "Language-Team: turkish <tr@li.org>\n"
@@ -1238,34 +1238,34 @@ msgstr "Id geçersiz!"
 msgid "Id exists! "
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 #, fuzzy
 msgid "Opacity:"
 msgstr "Matlık"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 #, fuzzy
 msgid "New"
 msgstr "_Yeni"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 #, fuzzy
 msgid "Bot"
 msgstr "Kutu"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -4796,31 +4796,40 @@ msgstr ""
 msgid "Trace: %d.  %ld nodes"
 msgstr "İz: %d.  %ld düğüm"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 #, fuzzy
 msgid "Select an <b>image</b> to trace"
 msgstr "Seçili nesneleri panoya kes"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "Seçili nesneleri panoya kes"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Yeni bir SVG dökümanı oluştur"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 #, fuzzy
 msgid "Trace: No active document"
 msgstr "Yeni bir SVG dökümanı oluştur"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "İz: Resim bitmap verisi içermiyor"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, fuzzy, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Son seçilen"
@@ -6398,7 +6407,7 @@ msgstr ""
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Seçileni göster"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9847,8 +9856,8 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
-msgid "Align right"
-msgstr "Nesneleri yatay ortasına hizala"
+msgid "Align left"
+msgstr "Nesne dışını sol kenara hizala"
 
 #: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
@@ -9857,8 +9866,8 @@ msgstr "Merkezi Y:"
 
 #: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
-msgid "Align left"
-msgstr "Nesne dışını sol kenara hizala"
+msgid "Align right"
+msgstr "Nesneleri yatay ortasına hizala"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

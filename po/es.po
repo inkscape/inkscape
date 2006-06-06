@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-06-02 20:36+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
@@ -1275,31 +1275,31 @@ msgstr "ID no válido "
 msgid "Id exists! "
 msgstr "El ID existe "
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 msgid "Opacity:"
 msgstr "Opacidad:"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 msgid "New"
 msgstr "Nuevo"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr "Superior"
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr "Arriba"
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr "Abajo"
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 msgid "Bot"
 msgstr "Inferior"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 msgid "X"
 msgstr "X"
 
@@ -4973,28 +4973,37 @@ msgstr "<b>Pulse y arrastre</b> entre formas para crear un conector."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Vectorizar: %d. %ld nodos"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Seleccione una <b>imagen</b> para vectorizar"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 msgid "Select only one <b>image</b> to trace"
 msgstr "Seleccione solamente una <b>imagen</b> para vectorizar"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr "Seleccione una imagen y una o más formas encima de ella"
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Vectorizar: No hay documento activo"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Vectorizar: No hay documento activo"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Vectorizar: La imagen no tiene datos de mapa de bits"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vectorizar: Terminado. Se han creado %ld nodos"
@@ -6576,7 +6585,7 @@ msgstr "Abrir archivo de sesión"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Selección de subimagen SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9941,16 +9950,16 @@ msgstr ""
 "tipografía predeterminada en su lugar."
 
 #: ../src/widgets/toolbox.cpp:3473
-msgid "Align right"
-msgstr "Alinear derecha"
+msgid "Align left"
+msgstr "Alinear izquierda"
 
 #: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
 msgstr "Centrar"
 
 #: ../src/widgets/toolbox.cpp:3495
-msgid "Align left"
-msgstr "Alinear izquierda"
+msgid "Align right"
+msgstr "Alinear derecha"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

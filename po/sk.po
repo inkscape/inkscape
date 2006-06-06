@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape-sk-0.40\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2005-02-13 17:05+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <<sk-i18n@lists.linux.sk>>\n"
@@ -1268,34 +1268,34 @@ msgstr "ID neplatné "
 msgid "Id exists! "
 msgstr "ID existuje"
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 #, fuzzy
 msgid "Opacity:"
 msgstr "_Krytie"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 #, fuzzy
 msgid "New"
 msgstr "_Nový"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 #, fuzzy
 msgid "Bot"
 msgstr "Ohraničenie"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -4857,30 +4857,39 @@ msgstr ""
 msgid "Trace: %d.  %ld nodes"
 msgstr ""
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 #, fuzzy
 msgid "Select an <b>image</b> to trace"
 msgstr "<Image>/Výber/Do cesty"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "<Image>/Výber/Do cesty"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Prekreslenie (trace): Nie je aktívny dokument"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Prekreslenie (trace): Nie je aktívny dokument"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Prekreslenie (trace): Obrázok nemá bitmapové dáta"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr ""
@@ -6511,7 +6520,7 @@ msgstr ""
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Hľadať vo výb_ere"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9993,8 +10002,8 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
-msgid "Align right"
-msgstr "Zarovnanie čiar doprava"
+msgid "Align left"
+msgstr "Zarovnať čiary doľava"
 
 #: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
@@ -10003,8 +10012,8 @@ msgstr "Stred Y:"
 
 #: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
-msgid "Align left"
-msgstr "Zarovnať čiary doľava"
+msgid "Align right"
+msgstr "Zarovnanie čiar doprava"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

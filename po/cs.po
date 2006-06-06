@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-06-02 19:02+0100\n"
 "Last-Translator: Josef 'cornelius' Vybíral <josef.vybiral@gmail.com>\n"
 "Language-Team:  <none>\n"
@@ -1225,31 +1225,31 @@ msgstr "Id je neplatné!"
 msgid "Id exists! "
 msgstr "Id existuje!"
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 msgid "Opacity:"
 msgstr "Krytí:"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 msgid "New"
 msgstr "Nový"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr "Nejvýš"
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr "Nahoru"
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr "Dolů"
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 msgid "Bot"
 msgstr "Naspod"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 msgid "X"
 msgstr "X"
 
@@ -4857,28 +4857,37 @@ msgstr "<b>Kliknutím a tažením</b> mezi tvary vytvoříte konektor."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Trasování: %d. %ld uzlů"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Vyberte <b>obrázek</b> k převodu na vektory"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 msgid "Select only one <b>image</b> to trace"
 msgstr "Vyberte pouze jeden <b>obrázek</b> k trasování"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr "Vyberte jeden obrázek a jeden nebo více tvarů nad ním"
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Trasování: Není aktivní žádný dokument"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Trasování: Není aktivní žádný dokument"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Trasování: V obrázku nejsou bitmapová data"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Trasování: Dokončeno. %ld uzlů vytvořeno"
@@ -6428,7 +6437,7 @@ msgstr "Otevřít soubor se sezením"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "SIOX výběr z obrázku"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9746,16 +9755,16 @@ msgstr ""
 "výchozí písmo."
 
 #: ../src/widgets/toolbox.cpp:3473
-msgid "Align right"
-msgstr "Zarovnat doprava"
+msgid "Align left"
+msgstr "Zarovnat doleva"
 
 #: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
 msgstr "Zarovnat na střed"
 
 #: ../src/widgets/toolbox.cpp:3495
-msgid "Align left"
-msgstr "Zarovnat doleva"
+msgid "Align right"
+msgstr "Zarovnat doprava"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

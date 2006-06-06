@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-04-27 04:45+0000\n"
 "Last-Translator: Antônio Cláudio (LedStyle) <ledstyle@gmail.com>\n"
 "Language-Team: Brazillian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1231,34 +1231,34 @@ msgstr "ID inválido! "
 msgid "Id exists! "
 msgstr "ID existe! "
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 #, fuzzy
 msgid "Opacity:"
 msgstr "Opacidade"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 #, fuzzy
 msgid "New"
 msgstr "_Novo"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 #, fuzzy
 msgid "Bot"
 msgstr "Caixa"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -4941,29 +4941,38 @@ msgstr "<b>Clique e arraste</b> entre as formas para criar um conector."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Traço: %d.  %ld nós"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Selecione uma <b>imagem</b> para traçar."
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "Selecione uma <b>imagem</b> para traçar."
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Traçar: Nenhum desenho ativo."
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Traçar: Nenhum desenho ativo."
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Traçar: A imagem não tem dados de figura."
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Traçado: Terminado. %ld nós criados"
@@ -6570,7 +6579,7 @@ msgstr "Abrir arquivo de sessão"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Procurar na s_eleção"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -10006,8 +10015,8 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
-msgid "Align right"
-msgstr "Alinhar lados direitos"
+msgid "Align left"
+msgstr "Alinhar linhas à esquerda"
 
 #: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
@@ -10016,8 +10025,8 @@ msgstr "Centro Y:"
 
 #: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
-msgid "Align left"
-msgstr "Alinhar linhas à esquerda"
+msgid "Align right"
+msgstr "Alinhar lados direitos"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-05 19:44+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-06-05 12:30+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -4962,28 +4962,36 @@ msgstr "<b>Cliquer et déplacer</b> entre des formes pour créer un connecteur."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Vectoriser : %d. %ld nœuds"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Sélectionner une <b>image</b> à vectoriser"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 msgid "Select only one <b>image</b> to trace"
 msgstr "Sélectionner une seule <b>image</b> à vectoriser"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr "Sélectionner une image et une ou plusieurs formes au dessus d'elle"
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+msgid "Trace: No active desktop"
+msgstr "Vectoriser : pas de bureau actif"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr "Résultat de SIOX invalide"
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Vectoriser : pas de document actif"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Vectoriser : l'image ne contient pas de données bitmap"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vectorisation effectuée. %ld nœuds créés."
@@ -6575,8 +6583,8 @@ msgstr "Ouvrir un fichier de session"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-msgid "SIOX foreground selection"
-msgstr "Sélection du premier plan pour SIOX"
+msgid "SIOX foreground selection (experimental)"
+msgstr "Sélection du premier plan pour SIOX (expérimental)"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"

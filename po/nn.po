@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-04-30 19:00+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1231,34 +1231,34 @@ msgstr "Ugyldig ID."
 msgid "Id exists! "
 msgstr "ID-en finst allereie."
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 #, fuzzy
 msgid "Opacity:"
 msgstr "Gjennomsikt"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 #, fuzzy
 msgid "New"
 msgstr "_Nytt"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 #, fuzzy
 msgid "Bot"
 msgstr "Boks"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -4862,28 +4862,37 @@ msgstr "<b>Klikk og dra</b> mellom figurar for å laga ei sambandslinje."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Avteikningar: %d.  %ld nodar"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Merk <b>biletet</b> du vil teikna av."
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 msgid "Select only one <b>image</b> to trace"
 msgstr "Merk berre eitt <b>bilete</b> du vil teikna av."
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr "Merk eit bilete og eitt eller fleire figurar over det."
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Avteikning: Ingen aktive dokument."
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Avteikning: Ingen aktive dokument."
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Avteikning: Biletet inneheld ingen punktdata."
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, fuzzy, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Avteikningar: %d.  %ld nodar"
@@ -6464,7 +6473,7 @@ msgstr ""
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Søk i _utval"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9909,8 +9918,8 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
-msgid "Align right"
-msgstr "Juster høgresider."
+msgid "Align left"
+msgstr "Venstrejuster linjer"
 
 #: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
@@ -9919,8 +9928,8 @@ msgstr "Midtlinjer"
 
 #: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
-msgid "Align left"
-msgstr "Venstrejuster linjer"
+msgid "Align right"
+msgstr "Juster høgresider."
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

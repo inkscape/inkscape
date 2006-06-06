@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-06-04 03:47+0100\n"
 "Last-Translator: Stephan Rene <srk_translation@yahoo.com>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -1229,31 +1229,31 @@ msgstr "Ugyldig ID"
 msgid "Id exists! "
 msgstr "Id finnes!"
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 msgid "Opacity:"
 msgstr "Opasitet:"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 msgid "New"
 msgstr "Ny"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr "Topp"
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr "Opp"
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 msgid "Bot"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 msgid "X"
 msgstr "X"
 
@@ -4692,31 +4692,40 @@ msgstr ""
 msgid "Trace: %d.  %ld nodes"
 msgstr "Skisse: %d.  %ld noder"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 #, fuzzy
 msgid "Select an <b>image</b> to trace"
 msgstr "Klipp ut valgte objekter til utklippstavlen"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "Klipp ut valgte objekter til utklippstavlen"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Opprett nytt SVG-dokument"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 #, fuzzy
 msgid "Trace: No active document"
 msgstr "Opprett nytt SVG-dokument"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Skisse: Bilde har ingen punktgrafikk data"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, fuzzy, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Sist valgte"
@@ -6236,7 +6245,7 @@ msgstr ""
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Valg"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9523,16 +9532,16 @@ msgstr ""
 "standard skrifttypen istedenfor."
 
 #: ../src/widgets/toolbox.cpp:3473
-msgid "Align right"
-msgstr "Høyrestill"
+msgid "Align left"
+msgstr "Venstrestill"
 
 #: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
 msgstr "Sentrer"
 
 #: ../src/widgets/toolbox.cpp:3495
-msgid "Align left"
-msgstr "Venstrestill"
+msgid "Align right"
+msgstr "Høyrestill"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

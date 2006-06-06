@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2005-11-07 22:42+0100\n"
 "Last-Translator: Jeroen van der Vegt <ajvdvegt (at) 123mail.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -1245,34 +1245,34 @@ msgstr "Ongeldig ID!"
 msgid "Id exists! "
 msgstr "ID bestaat al!"
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 #, fuzzy
 msgid "Opacity:"
 msgstr "Ondoorzichtigheid"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 #, fuzzy
 msgid "New"
 msgstr "_Nieuw"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr ""
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 #, fuzzy
 msgid "Bot"
 msgstr "Omhullende"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 #, fuzzy
 msgid "X"
 msgstr "X:"
@@ -5001,29 +5001,38 @@ msgstr "<b>Klik en sleep</b> tussen vormen om een verbinder te maken."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Overtrekken: %d. %ld knooppunten"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Selecteer een <b>afbeelding</b> om over te trekken"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 #, fuzzy
 msgid "Select only one <b>image</b> to trace"
 msgstr "Selecteer een <b>afbeelding</b> om over te trekken"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Overtrekken: geen actief document"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Overtrekken: geen actief document"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Overtrekken: afbeelding heeft geen bitmap gegevens"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Overtrekken: klaar. %ld knooppunten gemaakt"
@@ -6635,7 +6644,7 @@ msgstr "Sessie bestand openen"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Doorzoek de s_electie"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -10100,8 +10109,8 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3473
 #, fuzzy
-msgid "Align right"
-msgstr "Rechterkanten uitlijnen"
+msgid "Align left"
+msgstr "Regels links uitlijnen"
 
 #: ../src/widgets/toolbox.cpp:3484
 #, fuzzy
@@ -10110,8 +10119,8 @@ msgstr "Regels centreren"
 
 #: ../src/widgets/toolbox.cpp:3495
 #, fuzzy
-msgid "Align left"
-msgstr "Regels links uitlijnen"
+msgid "Align right"
+msgstr "Rechterkanten uitlijnen"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"

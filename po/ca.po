@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 20:31+0200\n"
+"POT-Creation-Date: 2006-06-06 20:18+0200\n"
 "PO-Revision-Date: 2006-06-03 13:32+0200\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -1234,31 +1234,31 @@ msgstr "L'identificador no és vàlid "
 msgid "Id exists! "
 msgstr "L'identificador existeix "
 
-#: ../src/dialogs/layers-panel.cpp:755
+#: ../src/dialogs/layers-panel.cpp:761
 msgid "Opacity:"
 msgstr "Opacitat:"
 
-#: ../src/dialogs/layers-panel.cpp:780
+#: ../src/dialogs/layers-panel.cpp:786
 msgid "New"
 msgstr "Nou"
 
-#: ../src/dialogs/layers-panel.cpp:785
+#: ../src/dialogs/layers-panel.cpp:791
 msgid "Top"
 msgstr "Sup"
 
-#: ../src/dialogs/layers-panel.cpp:791
+#: ../src/dialogs/layers-panel.cpp:797
 msgid "Up"
 msgstr "Dalt"
 
-#: ../src/dialogs/layers-panel.cpp:797
+#: ../src/dialogs/layers-panel.cpp:803
 msgid "Dn"
 msgstr "Baix"
 
-#: ../src/dialogs/layers-panel.cpp:803
+#: ../src/dialogs/layers-panel.cpp:809
 msgid "Bot"
 msgstr "Inf"
 
-#: ../src/dialogs/layers-panel.cpp:813
+#: ../src/dialogs/layers-panel.cpp:819
 msgid "X"
 msgstr "X"
 
@@ -4887,28 +4887,37 @@ msgstr "<b>Cliqueu i arrossegueu</b> entre formes per a crear un connector."
 msgid "Trace: %d.  %ld nodes"
 msgstr "Vectoritza:  %d.   %ld nodes"
 
-#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
-#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:182
+#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
+#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
 msgid "Select an <b>image</b> to trace"
 msgstr "Seleccioneu una <b>imatge</b> per vectoritzar"
 
-#: ../src/trace/trace.cpp:104
+#: ../src/trace/trace.cpp:105
 msgid "Select only one <b>image</b> to trace"
 msgstr "Seleccioneu només una <b>imatge</b> per vectoritzar"
 
-#: ../src/trace/trace.cpp:122
+#: ../src/trace/trace.cpp:123
 msgid "Select one image and one or more shapes above it"
 msgstr "Seleccioneu una imatge i una o més formes per sobre d'ella"
 
-#: ../src/trace/trace.cpp:371
+#: ../src/trace/trace.cpp:227
+#, fuzzy
+msgid "Trace: No active desktop"
+msgstr "Vectoritza: no hi ha cap document actiu"
+
+#: ../src/trace/trace.cpp:326
+msgid "Invalid SIOX result"
+msgstr ""
+
+#: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
 msgstr "Vectoritza: no hi ha cap document actiu"
 
-#: ../src/trace/trace.cpp:395
+#: ../src/trace/trace.cpp:449
 msgid "Trace: Image has no bitmap data"
 msgstr "Vectoritza: la imatge no té dades de mapa de bits"
 
-#: ../src/trace/trace.cpp:510
+#: ../src/trace/trace.cpp:564
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vectoritza: s'han creat %ld nodes"
@@ -6482,7 +6491,7 @@ msgstr "Obre el fitxer de sessió"
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
 #, fuzzy
-msgid "SIOX foreground selection"
+msgid "SIOX foreground selection (experimental)"
 msgstr "Selecció de subimate SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
@@ -9831,16 +9840,16 @@ msgstr ""
 "L'Inkscape farà servir el tipus de lletra predeterminat."
 
 #: ../src/widgets/toolbox.cpp:3473
-msgid "Align right"
-msgstr "Alinea a la dreta"
+msgid "Align left"
+msgstr "Alinea a l'esquerra"
 
 #: ../src/widgets/toolbox.cpp:3484
 msgid "Center"
 msgstr "Centra"
 
 #: ../src/widgets/toolbox.cpp:3495
-msgid "Align left"
-msgstr "Alinea a l'esquerra"
+msgid "Align right"
+msgstr "Alinea a la dreta"
 
 #: ../src/widgets/toolbox.cpp:3506
 msgid "Justify"
