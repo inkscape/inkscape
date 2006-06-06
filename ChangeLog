@@ -1,17 +1,23 @@
-2006-06-02  Jon A. Cruz  <jon@joncruz.org>
+2006-06-05  Jon A. Cruz  <jon@joncruz.org>
+
+	* trace/siox.cpp, trace/trace.cpp:
+
+	  Applied patch #1501134.
+
+2006-06-05  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/dialogs/layers-panel.cpp:
 
 	  Allow action when no layer selected.
 	  Fixes bugs #1494646.
 
-2006-06-02  Jon A. Cruz  <jon@joncruz.org>
+2006-06-05  Jon A. Cruz  <jon@joncruz.org>
 
 	* trace/siox.cpp:
 
 	  Applied patch #1500659.
 
-2006-06-02  Jon A. Cruz  <jon@joncruz.org>
+2006-06-05  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/dialogs/layers-panel.h, src/dialogs/layers-panel.cpp:
 

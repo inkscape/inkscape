@@ -170,7 +170,7 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         {
-        g_warning("Trace: No active desktop\n");
+        g_warning(_("Trace: No active desktop"));
         return NULL;
         }
 
@@ -269,7 +269,7 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
             sengine.extractForeground(simage, 0xffffff);
     if (!result.isValid())
         {
-        g_warning("Invalid SIOX result");
+        g_warning(_("Invalid SIOX result"));
         return NULL;
         }
 

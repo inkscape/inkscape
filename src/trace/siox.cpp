@@ -574,16 +574,19 @@ SioxImage::SioxImage(GdkPixbuf *buf)
  */
 GdkPixbuf *SioxImage::getGdkPixbuf()
 {
+    bool has_alpha = true;
+    int n_channels = has_alpha ? 4 : 3;
+
     guchar *pixdata = (guchar *)
-          malloc(sizeof(guchar) * width * height * 3);
+          malloc(sizeof(guchar) * width * height * n_channels);
     if (!pixdata)
         return NULL;
 
-    int n_channels = 3;
-    int rowstride  = width * 3;
+    int rowstride  = width * n_channels;
 
-    GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata, GDK_COLORSPACE_RGB,
-                        0, 8, width, height,
+    GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata,
+                        GDK_COLORSPACE_RGB,
+                        has_alpha, 8, width, height,
                         rowstride, NULL, NULL);
 
     //### Fill in the cells with RGB values
@@ -594,9 +597,13 @@ GdkPixbuf *SioxImage::getGdkPixbuf()
         for (unsigned x=0 ; x < width ; x++)
             {
             unsigned int rgb = getPixel(x, y);
-            p[0] = (rgb >> 16) & 0xff;
-            p[1] = (rgb >>  8) & 0xff;
-            p[2] = (rgb      ) & 0xff;
+            p[0] = (rgb >> 16) & 0xff;//r
+            p[1] = (rgb >>  8) & 0xff;//g
+            p[2] = (rgb      ) & 0xff;//b
+            if ( n_channels > 3 )
+                {
+                p[3] = (rgb >> 24) & 0xff;//a
+                }
             p += n_channels;
             }
         row += rowstride;
