@@ -1252,9 +1252,8 @@ msgid "Id exists! "
 msgstr "Id esistente!"
 
 #: ../src/dialogs/layers-panel.cpp:761
-#, fuzzy
 msgid "Opacity:"
-msgstr "Opacità"
+msgstr "Opacità:"
 
 #: ../src/dialogs/layers-panel.cpp:786
 msgid "New"
@@ -2598,7 +2597,7 @@ msgstr ""
 "<b>Maiusc</b> per separare il fuoco"
 
 #: ../src/gradient-drag.cpp:660
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
@@ -2606,11 +2605,11 @@ msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
 msgstr[0] ""
-"<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
-"<b>Maiusc</b> per separare il fuoco"
+"Punto di gradiente condiviso da <b>%d</b> gradiente; trascinare con "
+"<b>Maiusc</b> per separare"
 msgstr[1] ""
-"<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
-"<b>Maiusc</b> per separare il fuoco"
+"Punto di gradiente condiviso da <b>%d</b> gradienti; trascinare con "
+"<b>Maiusc</b> per separare"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -3686,7 +3685,7 @@ msgid "Select a single object to edit its nodes or handles."
 msgstr "Selezionare un singolo oggetto per modificarne i nodi o le maniglie"
 
 #: ../src/nodepath.cpp:4014
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
@@ -3694,10 +3693,10 @@ msgid_plural ""
 "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgstr[0] ""
-"Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno agli "
+"<b>0</b> di <b>%i</b> nodo selezionato. <b>Click<\b>, <b>Maiusc+click<\b>, o <b>trascinare</b> attorno agli "
 "oggetti per selezionare."
 msgstr[1] ""
-"Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno agli "
+"<b>0</b> di <b>%i</b> nodi selezionato. <b>Click<\b>, <b>Maiusc+click<\b>, o <b>trascinare</b> attorno agli "
 "oggetti per selezionare."
 
 #: ../src/nodepath.cpp:4020
@@ -3712,13 +3711,13 @@ msgstr[0] "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
 msgstr[1] "<b>%i</b> di <b>%i</b> nodi selezionati; %s. %s."
 
 #: ../src/nodepath.cpp:4035
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgid_plural ""
 "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
-msgstr[0] "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
-msgstr[1] "<b>%i</b> di <b>%i</b> nodi selezionati; %s. %s."
+msgstr[0] "<b>%i</b> di <b>%i</b> nodo selezionato in <b>%i</b> di <b>%i</b> sottotracciati. %s."
+msgstr[1] "<b>%i</b> di <b>%i</b> nodi selezionati in <b>%i</b> di <b>%i</b> sottotracciati. %s."
 
 #: ../src/nodepath.cpp:4041
 #, c-format
@@ -4315,30 +4314,27 @@ msgstr[1] "<b>%i</b> oggetti selezionati"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
-msgstr[0] ""
-"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s .<b>"
-"%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s ."
+msgstr[0] "<b>%d</b> oggetto del tipo <b>%s</b>"
+msgstr[1] "<b>%d</b> oggetti del tipo <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
-msgstr[0] ""
-"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s .<b>"
-"%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s ."
+msgstr[0] "<b>%d</b> oggetto del tipo <b>%s</b>, <b>%s</b>"
+msgstr[1] "<b>%d</b> oggetti del tipo <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[0] ""
-"<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s .<b>"
-"%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s ."
+msgstr[0] "<b>%d</b> oggetto del tipo <b>%s</b>, <b>%s</b>, <b>%s</b>"
+msgstr[1] "<b>%d</b> oggetto del tipo <b>%s</b>, <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
@@ -4945,7 +4941,6 @@ msgid "Select one image and one or more shapes above it"
 msgstr "Seleziona un'immagine ed una o più forme sopra di essa"
 
 #: ../src/trace/trace.cpp:227
-#, fuzzy
 msgid "Trace: No active desktop"
 msgstr "Vettorizza: Nessun documento attivo"
 
@@ -6542,9 +6537,8 @@ msgstr "Apre file di sessione"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection (experimental)"
-msgstr "Selezione sottoimmagine SIOX"
+msgstr "Selezione sottoimmagine SIOX (sperimentale)"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
@@ -6552,7 +6546,7 @@ msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "SIOX"
-msgstr ""
+msgstr "SIOX"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
@@ -9897,24 +9891,20 @@ msgstr ""
 "suo posto il  carattere predefinito"
 
 #: ../src/widgets/toolbox.cpp:3473
-#, fuzzy
 msgid "Align left"
 msgstr "Allinea a sinistra"
 
 #: ../src/widgets/toolbox.cpp:3484
-#, fuzzy
 msgid "Center"
-msgstr "Centro Y"
+msgstr "Centra"
 
 #: ../src/widgets/toolbox.cpp:3495
-#, fuzzy
 msgid "Align right"
-msgstr "Allinea i lati destri"
+msgstr "Allinea a destra"
 
 #: ../src/widgets/toolbox.cpp:3506
-#, fuzzy
 msgid "Justify"
-msgstr "Giustificato"
+msgstr "Giustifica"
 
 #: ../src/widgets/toolbox.cpp:3522
 msgid "Bold"
@@ -10520,45 +10510,3 @@ msgstr "Windows Metafile (*.wmf)"
 msgid "Windows Metafile Input"
 msgstr "Input Windows Metafile"
 
-#~ msgid "Subimage selection with the SIOX algorithm"
-#~ msgstr "Selezione della sottoimmagine tramite l'algoritmo SIOX"
-
-#~ msgid "SIOX (W.I.P.)"
-#~ msgstr "SIOX (in sviluppo)"
-
-#, fuzzy
-#~ msgid ""
-#~ "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
-#~ "separateGradient point shared by <b>%d</b> gradients; drag with <b>Shift</"
-#~ "b> to separate"
-#~ msgstr ""
-#~ "<b>Centro</b> e <b>fuoco</b> del gradiente radiale; trascinare con "
-#~ "<b>Maiusc</b> per separare il fuoco<b>Centro</b> e <b>fuoco</b> del "
-#~ "gradiente radiale; trascinare con <b>Maiusc</b> per separare il fuoco"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</"
-#~ "b>, or <b>drag around</b> nodes to select.<b>0</b> out of <b>%i</b> nodes "
-#~ "selected. <b>Click</b>, <b>Shift+click</b>, or <b>drag around</b> nodes "
-#~ "to select."
-#~ msgstr ""
-#~ "Nessun oggetto selezionato. Click, Maiusc+click, o trascinare attorno "
-#~ "agli oggetti per selezionare.Nessun oggetto selezionato. Click, Maiusc"
-#~ "+click, o trascinare attorno agli oggetti per selezionare."
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
-#~ "s.<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> "
-#~ "subpaths. %s."
-#~ msgstr "<b>%i</b> di <b>%i</b> nodo selezionato; %s. %s."
-
-#~ msgid "Rag right"
-#~ msgstr "Allineato a destra"
-
-#~ msgid "Centered"
-#~ msgstr "Centrato"
-
-#~ msgid "Rag left"
-#~ msgstr "Allineato a sinistra"
