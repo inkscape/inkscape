@@ -932,8 +932,8 @@ msgstr "Aggiungi automaticamente l'estensione"
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s .<b>"
-msgstr[1] "%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s ."
+msgstr[0] "<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s ."
+msgstr[1] "<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s ."
 
 #: ../src/dialogs/find.cpp:372
 msgid "exact"
