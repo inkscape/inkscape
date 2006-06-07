@@ -4283,14 +4283,14 @@ msgstr " nel gruppo %s (%s)"
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] " in <b>%i</b> parente (%s)"
-msgstr[1] "in <b>%i</b> parenti (%s)"
+msgstr[1] " in <b>%i</b> parenti (%s)"
 
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] " in <b>%i</b> livello"
-msgstr[1] "in <b>%i</b> livelli"
+msgstr[1] " in <b>%i</b> livelli"
 
 #: ../src/selection-describer.cpp:161
 msgid "Use <b>Shift+D</b> to look up original"
