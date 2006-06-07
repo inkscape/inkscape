@@ -932,8 +932,8 @@ msgstr "Aggiungi automaticamente l'estensione"
 #, c-format
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
-msgstr[0] "<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s ."
-msgstr[1] "<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s ."
+msgstr[0] "<b>%d</b> oggetto trovato (su un totale di <b>%d</b>), corrispondenza %s."
+msgstr[1] "<b>%d</b> oggetti trovati (su un totale di <b>%d</b>), corrispondenza %s."
 
 #: ../src/dialogs/find.cpp:372
 msgid "exact"
@@ -4282,14 +4282,14 @@ msgstr " nel gruppo %s (%s)"
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
-msgstr[0] " in <b>%i</b> parenti (%s)"
+msgstr[0] " in <b>%i</b> parente (%s)"
 msgstr[1] "in <b>%i</b> parenti (%s)"
 
 #: ../src/selection-describer.cpp:151
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] " in <b>%i</b> livelli"
+msgstr[0] " in <b>%i</b> livello"
 msgstr[1] "in <b>%i</b> livelli"
 
 #: ../src/selection-describer.cpp:161
@@ -4334,14 +4334,14 @@ msgstr[1] "<b>%d</b> oggetti del tipo <b>%s</b>, <b>%s</b>"
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgstr[0] "<b>%d</b> oggetto del tipo <b>%s</b>, <b>%s</b>, <b>%s</b>"
-msgstr[1] "<b>%d</b> oggetto del tipo <b>%s</b>, <b>%s</b>, <b>%s</b>"
+msgstr[1] "<b>%d</b> oggetti del tipo <b>%s</b>, <b>%s</b>, <b>%s</b>"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
-msgstr[0] "<b>%i</b> oggetti di <b>%i</b> tipi"
+msgstr[0] "<b>%i</b> oggetto di <b>%i</b> tipi"
 msgstr[1] "<b>%i</b> oggetti di <b>%i</b> tipi"
 
 #: ../src/selection-describer.cpp:209
@@ -4474,14 +4474,14 @@ msgstr "Regione non dinamica"
 #, c-format
 msgid "<b>Flowed text</b> (%d character)"
 msgid_plural "<b>Flowed text</b> (%d characters)"
-msgstr[0] "<b>Testo dinamico</b> (%d caratteri)"
+msgstr[0] "<b>Testo dinamico</b> (%d carattere)"
 msgstr[1] "<b>Testo dinamico</b> (%d caratteri)"
 
 #: ../src/sp-flowtext.cpp:358
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
-msgstr[0] "<b>Testo dinamico collegato</b> (%d caratteri)"
+msgstr[0] "<b>Testo dinamico collegato</b> (%d carattere)"
 msgstr[1] "<b>Testo dinamico collegato</b> (%d caratteri)"
 
 #: ../src/sp-guide.cpp:287
@@ -4589,8 +4589,8 @@ msgstr[1] "<b>Poligono</b> con %d vertici"
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
-msgstr[0] "<b>Gruppo condizionale</b> di <b>%d</b> oggetti"
-msgstr[1] "<b>Gruppo</b> di <b>%d</b> oggetti"
+msgstr[0] "<b>Gruppo condizionale</b> di <b>%d</b> oggetto"
+msgstr[1] "<b>Gruppo condizionale</b> di <b>%d</b> oggetti"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:409
