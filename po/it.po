@@ -287,13 +287,13 @@ msgstr "<b>Esponente:</b>"
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Specifica se le righe sono a spaziatura costante (1), convergenti (<1) o "
-"divergenti (<1)"
+"divergenti (>1)"
 
 #: ../src/dialogs/clonetiler.cpp:1808
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr ""
 "Specifica se le colonne sono a spaziatura costante (1), convergenti (<1) o "
-"divergenti (<1)"
+"divergenti (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
 #: ../src/dialogs/clonetiler.cpp:1816 ../src/dialogs/clonetiler.cpp:1906
@@ -3665,14 +3665,14 @@ msgstr ""
 "entrambe le maniglie ritratte (trascinare con <b>Maiusc</b> per estenderle)"
 
 #: ../src/nodepath.cpp:3986
-#, fuzzy
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
-"<b>Trascinare</b> i nodi o le maniglie dei nodi; usare i <b>tasti freccia</"
-"b> per spostare i nodi"
+"<b>Trascinare</b> i nodi o le maniglie dei nodi; <b>Alt+trascinare</b> i nodi "
+"da scolpire; usare i <b>tasti freccia</b> per spostare i nodi, <b>&lt; &gt;</b> "
+"per ridimensionare, <b>[ ]</b> per ruotare"
 
 #: ../src/nodepath.cpp:3987
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
