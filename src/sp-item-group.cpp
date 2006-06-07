@@ -17,9 +17,7 @@
 # include "config.h"
 #endif
 
-#if defined(WIN32) || defined(__APPLE__)
-# include <glibmm/i18n.h>
-#endif
+#include <glibmm/i18n.h>
 
 #include "display/nr-arena-group.h"
 #include "libnr/nr-matrix-ops.h"

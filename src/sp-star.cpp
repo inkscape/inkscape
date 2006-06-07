@@ -16,9 +16,7 @@
 
 #include "config.h"
 
-#if defined(WIN32) || defined(__APPLE__)
-# include <glibmm/i18n.h>
-#endif
+#include <glibmm/i18n.h>
 
 #include "svg/svg.h"
 #include "attributes.h"

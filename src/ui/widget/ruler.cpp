@@ -12,9 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#if defined(WIN32) || defined(__APPLE__)
-# include <glibmm/i18n.h>
-#endif
+#include <glibmm/i18n.h>
 
 #include <gtkmm/ruler.h>
 #include "helper/units.h"

@@ -1,3 +1,10 @@
+2006-06-07  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/sp-item-group.cpp, src/sp-path.cpp, src/sp-star.cpp,
+	  src/sp-switch.cpp, src/ui/widget/ruler.cpp:
+
+	  Applied patch #1501709.
+
 2006-06-05  Jon A. Cruz  <jon@joncruz.org>
 
 	* trace/siox.cpp, trace/siox.h, trace/trace.cpp,
