@@ -2011,7 +2011,7 @@ msgstr "una dipendenza non è stata soddisfatta."
 
 #: ../src/extension/extension.cpp:283
 msgid "Extension \""
-msgstr "Impossibile caricare l'estensione \""
+msgstr "Estensione \""
 
 #: ../src/extension/extension.cpp:283
 msgid "\" failed to load because "
@@ -3693,10 +3693,10 @@ msgid_plural ""
 "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgstr[0] ""
-"<b>0</b> di <b>%i</b> nodo selezionato. <b>Click<\b>, <b>Maiusc+click<\b>, o <b>trascinare</b> attorno agli "
+"<b>0</b> di <b>%i</b> nodo selezionato. <b>Click</b>, <b>Maiusc+click</b>, o <b>trascinare</b> attorno agli "
 "oggetti per selezionare."
 msgstr[1] ""
-"<b>0</b> di <b>%i</b> nodi selezionato. <b>Click<\b>, <b>Maiusc+click<\b>, o <b>trascinare</b> attorno agli "
+"<b>0</b> di <b>%i</b> nodi selezionato. <b>Click</b>, <b>Maiusc+click</b>, o <b>trascinare</b> attorno agli "
 "oggetti per selezionare."
 
 #: ../src/nodepath.cpp:4020
