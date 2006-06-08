@@ -94,9 +94,9 @@ class Effect:
         layerattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:current-layer',self.document,context=ctx)
         if layerattr:
             layername = layerattr[0].value
-            layer = xml.xpath.Evaluate('//g[@id="%s"]' % layername,self.document,context=ctx)[0]
+            layer = xml.xpath.Evaluate('//g[@id="%s"]' % layername,self.document,context=ctx)
             if layer:
-                self.current_layer = layer
+                self.current_layer = layer[0]
 
         xattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cx',self.document,context=ctx)
         yattr = xml.xpath.Evaluate('//sodipodi:namedview/@inkscape:cy',self.document,context=ctx)
