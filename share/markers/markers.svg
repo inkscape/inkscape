@@ -19,7 +19,6 @@ The order in the file is reverse relative to the order of the menu.
   <defs
      id="defs3">
 
-
     <marker
        orient="auto"
        refY="0"
@@ -27,12 +26,12 @@ The order in the file is reverse relative to the order of the menu.
        id="RazorWire"
        inkscape:stockid="RazorWire">
        style="overflow:visible">
-      <path
-         d="M 0.022727273,-0.74009011 L 0.022727273,0.69740989 L -7.7585227,3.0099099 L 10.678977,3.0099099 L 3.4914773,0.69740989 L 3.4914773,-0.74009011 L 10.741477,-2.8963401 L -7.7272727,-2.8963401 L 0.022727273,-0.74009011 z "
+      <path 
+        d="M 0.022727273,-0.74009011 L 0.022727273,0.69740989 L -7.7585227,3.0099099 L 10.678977,3.0099099 L 3.4914773,0.69740989 L 3.4914773,-0.74009011 L 10.741477,-2.8963401 L -7.7272727,-2.8963401 L 0.022727273,-0.74009011 z "
          style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.1pt"
          transform="scale(0.8,0.8)" />
     </marker>
-									     
+
     <marker style="overflow:visible"
        id="Club"
        refX="0.0"
@@ -66,14 +65,14 @@ The order in the file is reverse relative to the order of the menu.
        height="2.7608147"
        x="-10.391706"
        y="-1.7408575"
-       transform="matrix(0.527536,-0.849533,0.887668,0.460484,0.000000,0.000000)" />
+       transform="matrix(0.527536,-0.849533,0.887668,0.460484,0,0)" />
     <rect
        style="fill-rule:evenodd;stroke-width:1.0000000pt;marker-end:none"
        width="2.7327356"
        height="2.8614161"
        x="4.9587269"
        y="-7.9629307"
-       transform="matrix(0.671205,-0.741272,0.790802,0.612072,0.000000,0.000000)" />
+       transform="matrix(0.671205,-0.741272,0.790802,0.612072,0,0)" />
     <path
        sodipodi:type="arc"
        style="fill:#ff0000;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.0000000pt;marker-start:none;marker-end:none"
@@ -82,7 +81,7 @@ The order in the file is reverse relative to the order of the menu.
        sodipodi:rx="0.60731727"
        sodipodi:ry="0.60731727"
        d="M 16.779951 -28.685045 A 0.60731727 0.60731727 0 1 0 15.565317,-28.685045 A 0.60731727 0.60731727 0 1 0 16.779951 -28.685045 z"
-       transform="matrix(6.793608e-17,-1.109517,1.109517,6.793608e-17,25.96648,19.71619)" />
+       transform="matrix(0,-1.109517,1.109517,0,25.96648,19.71619)" />
     <path
        sodipodi:type="arc"
        style="fill:#ff0000;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.0000000pt;marker-start:none;marker-end:none"
@@ -91,7 +90,7 @@ The order in the file is reverse relative to the order of the menu.
        sodipodi:rx="0.60731727"
        sodipodi:ry="0.60731727"
        d="M 16.779951 -28.685045 A 0.60731727 0.60731727 0 1 0 15.565317,-28.685045 A 0.60731727 0.60731727 0 1 0 16.779951 -28.685045 z"
-       transform="matrix(6.793608e-17,-1.109517,1.109517,6.793608e-17,26.82450,16.99126)" />
+       transform="matrix(0,-1.109517,1.109517,0,26.82450,16.99126)" />
   </g>
     </marker>
 
@@ -102,7 +101,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Legs">
   <g transform="scale(-0.7)">
-    <g transform="matrix(-1.836909e-16,-1.000000,-1.000000,1.836909e-16,20.70862,21.31391)">
+    <g transform="matrix(0,-1.000000,-1.000000,0,20.70862,21.31391)">
       <path
          style="fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.0000000pt;marker-start:none;marker-end:none"
          d="M 21.221250,20.675360 C 14.311099,25.396517 18.766725,27.282204 15.380179,34.118595"/>
@@ -315,7 +314,7 @@ The order in the file is reverse relative to the order of the menu.
       <path
          transform="scale(0.2)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
-         d="M -2.1579186e-005,-7.0710768 L -7.0710894,-8.9383918e-006 L -2.1579186e-005,7.0710589 L 7.0710462,-8.9383918e-006 L -2.1579186e-005,-7.0710768 z "/>
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "/>
     </marker>
     <marker style="overflow:visible"
        id="DiamondM"
@@ -326,7 +325,7 @@ The order in the file is reverse relative to the order of the menu.
       <path
          transform="scale(0.4)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
-         d="M -2.1579186e-005,-7.0710768 L -7.0710894,-8.9383918e-006 L -2.1579186e-005,7.0710589 L 7.0710462,-8.9383918e-006 L -2.1579186e-005,-7.0710768 z "/>
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "/>
     </marker>
     <marker style="overflow:visible"
        id="DiamondL"
@@ -337,7 +336,7 @@ The order in the file is reverse relative to the order of the menu.
       <path
          transform="scale(0.8)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
-         d="M -2.1579186e-005,-7.0710768 L -7.0710894,-8.9383918e-006 L -2.1579186e-005,7.0710589 L 7.0710462,-8.9383918e-006 L -2.1579186e-005,-7.0710768 z "/>
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "/>
     </marker>
 
 <!-- squares -->
@@ -384,7 +383,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Dot_s">
       <path
-         transform="scale(0.2) translate(7.125493, 1)"
+         transform="scale(0.2) translate(7.4, 1)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;marker-end:none"
          d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "/>
     </marker>
@@ -395,7 +394,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Dot_m">
       <path
-         transform="scale(0.4) translate(7.125493, 1)"
+         transform="scale(0.4) translate(7.4, 1)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;marker-end:none"
          d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "/>
     </marker>
@@ -406,46 +405,59 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Dot_l">
       <path
-         transform="scale(0.8) translate(7.125493, 1)"
+         transform="scale(0.8) translate(7.4, 1)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;marker-end:none"
          d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "/>
     </marker>
 
 <!-- distance markers -->
-    <marker style="overflow:visible"
+    <marker
+       inkscape:stockid="DistanceOut"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
        id="DistanceOut"
-       refX="0.0"
-       refY="0.0"
-       orient="auto"
-       inkscape:stockid="DistanceOut">
-      <g
-         transform="scale(-0.6,0.6) translate(8,0)">
+       style="overflow:visible">
+      <g id="g2300">
         <path
-           style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
-           d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
+           id="path2316"
+           d="M 0,0 L -2,0"
+           style="fill:none;stroke:#ffffff;stroke-width:1.15;stroke-linecap:square" />
         <path
-           style="fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.2pt;marker-start:none"
-           d="M -14.759949,-7 L -14.759949,65"/>
+           id="path2312"
+           d="M 0,0 L -13,4 L -9,0 -13,-4 L 0,0 z "
+           style="fill:#000000;fill-rule:evenodd;stroke:none" />
+
+        <path
+           id="path2314"
+           d="M 0,-4 L 0,40"
+           style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square" />
       </g>
     </marker>
 
-    <marker style="overflow:visible"
+    <marker
+       inkscape:stockid="DistanceIn"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
        id="DistanceIn"
-       refX="0.0"
-       refY="0.0"
-       orient="auto"
-       inkscape:stockid="DistanceIn">
-      <g
-         transform="scale(0.6,0.6) translate(8,0)">
+       style="overflow:visible">
+      <g id="g2300">
         <path
-           style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
-           d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
+           id="path2306"
+           d="M 0,0 L 2,0"
+           style="fill:none;stroke:#ffffff;stroke-width:1.15;stroke-linecap:square" />
         <path
-           style="fill:none;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.2pt;marker-start:none"
-           d="M -14.759949,-7 L -14.759949,65"/>
+           id="path2302"
+           d="M 0,0 L 13,4 L 9,0 13,-4 L 0,0 z "
+           style="fill:#000000;fill-rule:evenodd;stroke:none" />
+        <path
+           id="path2304"
+           d="M 0,-4 L 0,40"
+           style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:square" />
+
       </g>
     </marker>
-
 
 <!-- Tail -->
     <marker style="overflow:visible"
@@ -457,13 +469,13 @@ The order in the file is reverse relative to the order of the menu.
       <g transform="scale(-1.2)">
   <path
      style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;marker-start:none;marker-end:none;stroke-linecap:round"
-     d="M -3.8048674,-3.9585227 L 0.54352094,-0.00068114835"/>
+     d="M -3.8048674,-3.9585227 L 0.54352094,0"/>
   <path
      style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;marker-start:none;marker-end:none;stroke-linecap:round"
-     d="M -1.2866832,-3.9585227 L 3.0617053,-0.00068114835"/>
+     d="M -1.2866832,-3.9585227 L 3.0617053,0"/>
   <path
      style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;marker-start:none;marker-end:none;stroke-linecap:round"
-     d="M 1.3053582,-3.9585227 L 5.6537466,-0.00068114835"/>
+     d="M 1.3053582,-3.9585227 L 5.6537466,0"/>
   <path
      style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.8;marker-start:none;marker-end:none;stroke-linecap:round"
      d="M -3.8048674,4.1775838 L 0.54352094,0.21974226"/>
@@ -487,7 +499,7 @@ The order in the file is reverse relative to the order of the menu.
       orient="auto"
       inkscape:stockid="Arrow2Send">
      <path
-        transform="scale(0.3) rotate(180) translate(-5,0)"
+        transform="scale(0.3) rotate(180) translate(-2.3,0)"
         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"/>
    </marker>
@@ -498,7 +510,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow2Sstart">
       <path
-         transform="scale(0.3) translate(-5,0)"
+         transform="scale(0.3) translate(-2.3,0)"
          d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
          style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round"/>
     </marker>
@@ -512,7 +524,7 @@ The order in the file is reverse relative to the order of the menu.
       orient="auto"
       inkscape:stockid="Arrow2Mend">
      <path
-        transform="scale(0.6) rotate(180) translate(-5,0)"
+        transform="scale(0.6) rotate(180) translate(0,0)"
         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"/>
    </marker>
@@ -523,7 +535,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow2Mstart">
       <path
-         transform="scale(0.6) translate(-5,0)"
+         transform="scale(0.6) translate(0,0)"
          d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
          style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round"/>
     </marker>
@@ -536,7 +548,7 @@ The order in the file is reverse relative to the order of the menu.
       orient="auto"
       inkscape:stockid="Arrow2Lend">
      <path
-        transform="scale(1.1) rotate(180) translate(-5,0)"
+        transform="scale(1.1) rotate(180) translate(1,0)"
         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"/>
    </marker>
@@ -547,7 +559,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow2Lstart">
       <path
-         transform="scale(1.1) translate(-5,0)"
+         transform="scale(1.1) translate(1,0)"
          d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
          style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round"/>
     </marker>
@@ -560,7 +572,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow1Send">
       <path
-         transform="scale(0.2) rotate(180)"
+         transform="scale(0.2) rotate(180) translate(6,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
     </marker>
@@ -571,7 +583,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow1Sstart">
       <path
-         transform="scale(0.2)"
+         transform="scale(0.2) translate(6,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
     </marker>
@@ -586,7 +598,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow1Mend">
       <path
-         transform="scale(0.4) rotate(180)"
+         transform="scale(0.4) rotate(180) translate(10,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
     </marker>
@@ -597,7 +609,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow1Mstart">
       <path
-         transform="scale(0.4)"
+         transform="scale(0.4) translate(10,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
     </marker>
@@ -610,7 +622,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow1Lend">
       <path
-         transform="scale(0.8) rotate(180)"
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
     </marker>
@@ -621,7 +633,7 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        inkscape:stockid="Arrow1Lstart">
       <path
-         transform="scale(0.8)"
+         transform="scale(0.8) translate(12.5,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "/>
     </marker>
