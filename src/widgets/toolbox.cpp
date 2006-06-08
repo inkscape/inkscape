@@ -2928,20 +2928,23 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
         }
 
         //Orientation
+        //locking both buttons, changing one affect all group (both)
+        GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-horizontal"));
+        g_object_set_data (G_OBJECT (button), "block", gpointer(1));
+        
+        GtkWidget *button1 = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-vertical"));
+        g_object_set_data (G_OBJECT (button1), "block", gpointer(1));
+        
         if (query->writing_mode.computed == SP_CSS_WRITING_MODE_LR_TB)
         {
-            GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-horizontal"));
-            g_object_set_data (G_OBJECT (button), "block", gpointer(1));
             gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-            g_object_set_data (G_OBJECT (button), "block", gpointer(0));
         }
         else
         {
-            GtkWidget *button = GTK_WIDGET (g_object_get_data (G_OBJECT (tbl), "orientation-vertical"));
-            g_object_set_data (G_OBJECT (button), "block", gpointer(1));
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-            g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button1), TRUE);
         }
+        g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+        g_object_set_data (G_OBJECT (button1), "block", gpointer(0));
     }
 }
 
@@ -3142,8 +3145,11 @@ void
 sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
                                      gpointer         data)
 {
-    if (g_object_get_data (G_OBJECT (button), "block")) return;
-
+    if (g_object_get_data (G_OBJECT (button), "block")) {
+        g_object_set_data (G_OBJECT (button), "block", gpointer(0));
+        return;
+    }
+    
     SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
     SPCSSAttr   *css        = sp_repr_css_attr_new (); 
     int          prop       = GPOINTER_TO_INT(data); 

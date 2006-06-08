@@ -1,5 +1,12 @@
 2006-06-07  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/widgets/toolbox.cpp:
+
+	  Applied patch #1502407.
+	  Fixes bug #1500049.
+
+2006-06-07  Jon A. Cruz  <jon@joncruz.org>
+
 	* packaging/macosx/ScriptExec/main.c, packaging/osx-app.sh:
 
 	  Fixing OS X fc-cache problem.
