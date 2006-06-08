@@ -37,6 +37,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <pthread.h>
+#include <stdio.h>
 
 ///////////////////////////////////////
 // Definitions
@@ -183,7 +184,7 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
 	params.position = kWindowDefaultPosition;
 
 	StandardAlert(kAlertStopAlert, "\pFont caches may need to be updated",
-			"\pThere is a problem on OS X 10.4.x where X11 installation does not always generate the necessary fontconfig caches.  This can be corrected by running /usr/X11R6/bin/fc-cache as root.\n\nThis may take some time.  Please do not close Inkscape.",
+			"\pA problem occurs on OS X 10.4 where X11 does not always generate the necessary fontconfig caches.  This can be corrected by running fc-cache as root.\n\nThis can take several minutes, with high processor usage.  Please do not close Inkscape.",
 			&params, &itemHit);
     
 	if (itemHit == kAlertStdAlertOKButton)
@@ -206,7 +207,7 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
 		params.cancelText = NULL;
 
 		StandardAlert(kAlertNoteAlert, "\pFont caches have not been updated",
-				"\pThey can be updated manually by running the following:\n   sudo /usr/X11R6/bin/fc-cache\nOnce you have dealt with this, please re-run Inkscape.", &params, &itemHit);
+				"\pThey can be updated manually by running the following:\n   sudo /usr/X11R6/bin/fc-cache -f\nOnce you have dealt with this, please re-run Inkscape.", &params, &itemHit);
 		system("test -d $HOME/.inkscape || mkdir $HOME/.inkscape; touch $HOME/.inkscape/.fccache");
 	}
     
@@ -216,20 +217,61 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
 }
 
 
+static size_t safeRead(int d, void *buf, size_t nbytes)
+{
+	ssize_t bytesToRead = nbytes;
+	ssize_t bytesRead = 0;
+	char *offset = (char *) buf;
+
+	while ((bytesToRead > 0))
+	{
+		bytesRead = read(d, offset, bytesToRead);
+		if (bytesRead > 0)
+		{
+			offset += bytesRead;
+			bytesToRead -= bytesRead;
+		}
+		else if (bytesRead == 0)
+		{	
+			// Reached EOF.
+			break;
+		}
+		else if (bytesRead == -1)
+		{
+			if ((errno == EINTR) || (errno == EAGAIN))
+			{
+				// Try again.
+				continue;
+			}
+			return 0;
+		}
+	}
+	return bytesRead;
+}
+
+
 /////////////////////////////////////
 // Code to run fc-cache on first run
 /////////////////////////////////////
 static OSStatus FixFCCache (void)
 {
-   char* args[1];
+	FILE *fileConnToChild = NULL;
+	int fdConnToChild = 0;
+	pid_t childPID = WAIT_ANY;
+	size_t bytesChildPID;
+	size_t bytesRead;
+	int status;
+
+	char commandStr[] = "/usr/X11R6/bin/fc-cache";
+	char *commandArgs[] = { "-f", NULL };
 
 	// Run fc-cache
 	AuthorizationItem authItems[] = 
 	{
 	{
 		kAuthorizationRightExecute,
-		23,
-		"/usr/X11R6/bin/fc-cache",
+		strlen(commandStr),
+		commandStr,
 		0
 	}
 	};
@@ -240,18 +282,46 @@ static OSStatus FixFCCache (void)
 	};
 	AuthorizationRef authRef = NULL;
 	OSStatus err = AuthorizationCreate (NULL, &authItemSet,
-			kAuthorizationFlagInteractionAllowed | kAuthorizationFlagExtendRights, &authRef);
+			kAuthorizationFlagInteractionAllowed | 
+			kAuthorizationFlagExtendRights, &authRef);
 
 	if (err == errAuthorizationSuccess)
 	{
-		//the arguments parameter to AuthorizationExecuteWithPrivileges is
-		//a NULL terminated array of C string pointers.
-		args[0]= NULL;
+		err = AuthorizationExecuteWithPrivileges(authRef, commandStr, 
+				kAuthorizationFlagDefaults, commandArgs,
+				&fileConnToChild);
 
-		AuthorizationExecuteWithPrivileges (authRef, "/usr/X11R6/bin/fc-cache", 
-				kAuthorizationFlagDefaults, args, NULL);
+		if (err == errAuthorizationSuccess)
+		{
+			// Unfortunately, AuthorizationExecuteWithPrivileges
+			// does not return the process ID associated with the
+			// process it runs.  The best solution we have it to
+			// try and get the process ID from the file descriptor.
+			// This is based on example code from Apple's
+			// MoreAuthSample.
+
+			fdConnToChild = fileno(fileConnToChild);
+			
+			// Try an get the process ID of the fc-cache command
+			bytesChildPID = sizeof(childPID);
+			bytesRead = safeRead(fdConnToChild, &childPID,
+					bytesChildPID);
+			if (bytesRead != bytesChildPID)
+			{
+				// If we can't get it the best alternative
+				// is to wait for any child to finish.
+				childPID = WAIT_ANY;
+			}
+
+			if (fileConnToChild != NULL) {
+				fclose(fileConnToChild);
+			}
+
+			// Wait for child process to finish.
+			waitpid(childPID, &status, 0);
+		}
 	}
-    AuthorizationFree(authRef, kAuthorizationFlagDestroyRights);
+	AuthorizationFree(authRef, kAuthorizationFlagDestroyRights);
 
 	return err;
 }

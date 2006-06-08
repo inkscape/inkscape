@@ -159,6 +159,7 @@ AliasFiles = "\${HOME}/.inkscape-etc/pangox.aliases"
 END_PANGO
 
 # We use a modified fonts.conf file so only need the dtd
+mkdir -p $pkgetc/fonts
 cp /etc/fonts/fonts.dtd $pkgetc/fonts/
 
 mkdir -p $pkgetc/gtk-2.0
@@ -205,6 +206,7 @@ do
 done
 
 if [ "$strip" = "true" ]; then
+  chmod +w "$package"/Contents/Resources/lib/*.dylib
   strip -x "$package"/Contents/Resources/lib/*.dylib
   strip -ur "$binpath"
 fi

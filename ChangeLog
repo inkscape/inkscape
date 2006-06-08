@@ -1,5 +1,12 @@
 2006-06-07  Jon A. Cruz  <jon@joncruz.org>
 
+	* packaging/macosx/ScriptExec/main.c, packaging/osx-app.sh:
+
+	  Fixing OS X fc-cache problem.
+	  Applied patch #1502063.
+
+2006-06-07  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/sp-item-group.cpp, src/sp-path.cpp, src/sp-star.cpp,
 	  src/sp-switch.cpp, src/ui/widget/ruler.cpp:
 
