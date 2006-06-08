@@ -4,16 +4,16 @@
 # Josef Vybiral <josef.vybiral@gmail.com>, 2005, 2006.
 #
 #
-#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
-#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3637 ../src/widgets/toolbox.cpp:3658
+#: ../src/widgets/toolbox.cpp:3687 ../src/widgets/toolbox.cpp:3708
+#: ../src/widgets/toolbox.cpp:3735
 msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-02 19:02+0100\n"
-"Last-Translator: Josef 'cornelius' Vybíral <josef.vybiral@gmail.com>\n"
+"POT-Creation-Date: 2006-06-08 20:24+0200\n"
+"PO-Revision-Date: 2006-06-08 08:50+0100\n"
+"Last-Translator: Josef Vybíral <josef.vybiral@gmail.com>\n"
 "Language-Team:  <none>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1686,13 +1686,13 @@ msgstr "Zarovnání na střed"
 msgid "Align lines right"
 msgstr "Zarovnání vpravo"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
-#: ../src/widgets/toolbox.cpp:3601
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3561
+#: ../src/widgets/toolbox.cpp:3607
 msgid "Horizontal text"
 msgstr "Vodorovný text"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3572
+#: ../src/widgets/toolbox.cpp:3618
 msgid "Vertical text"
 msgstr "Svislý text"
 
@@ -4293,7 +4293,7 @@ msgstr[2] "<b>%i</b> objektů <b>%i</b> typů"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:448
+#: ../src/seltrans.cpp:461
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4301,7 +4301,7 @@ msgstr ""
 "<b>Střed</b> otáčení a naklánění; tažením změníte jeho pozici; Změna "
 "velikosti za stisknutého Shift též využívá tento střed."
 
-#: ../src/seltrans.cpp:475
+#: ../src/seltrans.cpp:488
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4309,7 +4309,7 @@ msgstr ""
 "<b>Zmáčknout nebo natáhnout</b> výběr; <b>Ctrl</b> uzamkne poměr stran; "
 "<b>Shift</b> mění velikost kolem středu otáčení"
 
-#: ../src/seltrans.cpp:476
+#: ../src/seltrans.cpp:489
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4317,7 +4317,7 @@ msgstr ""
 "<b>Změna velikosti</b> výběru; <b>Ctrl</b> uzamkne poměr stran;s <b>Shift</"
 "b> se mění velikost kolem středu otáčení"
 
-#: ../src/seltrans.cpp:480
+#: ../src/seltrans.cpp:493
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4325,7 +4325,7 @@ msgstr ""
 "<b>Zkosit</b> výběr; <b>Ctrl</b> přichytává na ůhly; <b>Shift</b> kosí kolem "
 "protějšího rohu"
 
-#: ../src/seltrans.cpp:481
+#: ../src/seltrans.cpp:494
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4333,31 +4333,31 @@ msgstr ""
 "<b>Otáčet</b> výběrem; <b>Ctrl</b> přichytává na ůhly; <b>Shift</b> otáčí "
 "kolem protějšího rohu"
 
-#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
+#: ../src/seltrans.cpp:871 ../src/seltrans.cpp:983
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Změna měřítka</b>: %0.2f%% × %0.2f%%; s <b>Ctrl</b> zachovává poměr"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1060
+#: ../src/seltrans.cpp:1073
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Zkosení</b>: %0.2f&#176;; <b>Ctrl</b> přichytává k úhlům"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1109
+#: ../src/seltrans.cpp:1122
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotace</b>: %0.2f&#176;; <b>Ctrl</b> přichytává k úhlům"
 
-#: ../src/seltrans.cpp:1153
+#: ../src/seltrans.cpp:1166
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Přesuň <b>střed</b> na %s, %s"
 
-#: ../src/seltrans.cpp:1411
+#: ../src/seltrans.cpp:1424
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4450,7 +4450,7 @@ msgstr "<b>Obrázek s chybným odkazem</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Obrázek</b> %d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:689
+#: ../src/sp-item-group.cpp:687
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -4486,7 +4486,7 @@ msgstr "smrštit"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Dynamické vytlačení</b>, %s o %f pt"
 
-#: ../src/sp-path.cpp:123
+#: ../src/sp-path.cpp:121
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
@@ -4513,7 +4513,7 @@ msgstr "<b>Čtyřúhelník</b>"
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Spirála</b> s %3f otočkami"
 
-#: ../src/sp-star.cpp:281
+#: ../src/sp-star.cpp:279
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
@@ -4521,7 +4521,7 @@ msgstr[0] "<b>Hvězda</b> s %d vrcholem"
 msgstr[1] "<b>Hvězda</b> s %d vrcholy"
 msgstr[2] "<b>Hvězda</b> s %d vrcholy"
 
-#: ../src/sp-star.cpp:285
+#: ../src/sp-star.cpp:283
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -4529,7 +4529,7 @@ msgstr[0] "<b>Mnohoúhelník</b> s %d vrcholem"
 msgstr[1] "<b>Mnohoúhelník</b> s %d vrcholy"
 msgstr[2] "<b>Mnohoúhelník</b> s %d vrcholy"
 
-#: ../src/sp-switch.cpp:98
+#: ../src/sp-switch.cpp:96
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -4871,13 +4871,12 @@ msgid "Select one image and one or more shapes above it"
 msgstr "Vyberte jeden obrázek a jeden nebo více tvarů nad ním"
 
 #: ../src/trace/trace.cpp:227
-#, fuzzy
 msgid "Trace: No active desktop"
-msgstr "Trasování: Není aktivní žádný dokument"
+msgstr "Trasování: Žádná aktivní plocha"
 
 #: ../src/trace/trace.cpp:326
 msgid "Invalid SIOX result"
-msgstr ""
+msgstr "Neplatný výsledek SIOX"
 
 #: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
@@ -6436,17 +6435,16 @@ msgstr "Otevřít soubor se sezením"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection (experimental)"
-msgstr "SIOX výběr z obrázku"
+msgstr "SIOX výběr popředí (experimentální)"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
-msgstr ""
+msgstr "Zakryjte oblast, kterou chcete vybrat jako popředí"
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "SIOX"
-msgstr ""
+msgstr "SIOX"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
@@ -7445,17 +7443,17 @@ msgstr "keys.svg"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:1728
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.svg"
+msgstr "tutorial-basic.cs.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1732
 msgid "tutorial-shapes.svg"
-msgstr "tutorial-shapes.svg"
+msgstr "tutorial-shapes.cs.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1736
 msgid "tutorial-advanced.svg"
-msgstr "tutorial-advanced.svg"
+msgstr "tutorial-advanced.cs.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1740
@@ -7465,7 +7463,7 @@ msgstr "tutorial-tracing.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1744
 msgid "tutorial-calligraphy.svg"
-msgstr "tutorial-calligraphy.svg"
+msgstr "tutorial-calligraphy.cs.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1748
@@ -9003,7 +9001,7 @@ msgstr "Velikost písma:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3344
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqÁáÉéČčŠšřŘřŽž12369$€¢?.;/()"
 
@@ -9746,7 +9744,7 @@ msgstr ""
 "Při stisknutí nabere viditelnou barvu bez alfa průhlednosti. Pokud není "
 "stisknuto, nabere barvu včetně alfy"
 
-#: ../src/widgets/toolbox.cpp:3435
+#: ../src/widgets/toolbox.cpp:3441
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9754,67 +9752,67 @@ msgstr ""
 "Toto písmo není ve vašem systému nainstalováno. Inkscape místo něj použije "
 "výchozí písmo."
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3479
 msgid "Align left"
 msgstr "Zarovnat doleva"
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3490
 msgid "Center"
 msgstr "Zarovnat na střed"
 
-#: ../src/widgets/toolbox.cpp:3495
+#: ../src/widgets/toolbox.cpp:3501
 msgid "Align right"
 msgstr "Zarovnat doprava"
 
-#: ../src/widgets/toolbox.cpp:3506
+#: ../src/widgets/toolbox.cpp:3512
 msgid "Justify"
 msgstr "Zarovnat do bloku"
 
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/widgets/toolbox.cpp:3528
 msgid "Bold"
 msgstr "Tučné"
 
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/widgets/toolbox.cpp:3539
 msgid "Italic"
 msgstr "Kurzíva"
 
-#: ../src/widgets/toolbox.cpp:3631
+#: ../src/widgets/toolbox.cpp:3637
 msgid "Spacing between letters"
 msgstr "Mezery mezi písmeny"
 
-#: ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3658
 msgid "Spacing between lines"
 msgstr "Mezery mezi řádky"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3687
 msgid "Horizontal kerning"
 msgstr "Vodorovný kerning"
 
-#: ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3708
 msgid "Vertical kerning"
 msgstr "Svislý kerning"
 
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3735
 msgid "Letter rotation"
 msgstr "Rotace znaků"
 
-#: ../src/widgets/toolbox.cpp:3750
+#: ../src/widgets/toolbox.cpp:3756
 msgid "Remove manual kerns"
 msgstr "Odstranit manuální kerning"
 
-#: ../src/widgets/toolbox.cpp:3869
+#: ../src/widgets/toolbox.cpp:3875
 msgid "Make connectors avoid selected objects"
 msgstr "Přinutit konektory vyhýbat se vybraným objektům"
 
-#: ../src/widgets/toolbox.cpp:3873
+#: ../src/widgets/toolbox.cpp:3879
 msgid "Make connectors ignore selected objects"
 msgstr "Přinutit konektory ignorovat vybrané objekty"
 
-#: ../src/widgets/toolbox.cpp:3881
+#: ../src/widgets/toolbox.cpp:3887
 msgid "Spacing:"
 msgstr "Mezery:"
 
-#: ../src/widgets/toolbox.cpp:3882
+#: ../src/widgets/toolbox.cpp:3888
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "Množství místa, které má být ponecháno kolem objektů při automatickém "
@@ -10031,7 +10029,7 @@ msgstr "Délka poslední struny"
 
 #: ../share/extensions/ffmet.inx.h:6
 msgid "Multi Length Equal Temperament"
-msgstr ""
+msgstr "Různé délky, vyrovnaný temperament"
 
 #: ../share/extensions/ffmet.inx.h:7 ../share/extensions/ffms.inx.h:7
 #: ../share/extensions/ffset.inx.h:4 ../share/extensions/ffss.inx.h:4
@@ -10082,9 +10080,8 @@ msgid "Scale Length"
 msgstr "Délka stupnice"
 
 #: ../share/extensions/ffset.inx.h:9
-#, fuzzy
 msgid "Single Length Equal Temperament"
-msgstr "Vyrovnaný temperament"
+msgstr "Shodné délky, vyrovnaný temperament"
 
 #: ../share/extensions/ffss.inx.h:9
 msgid "Single Length Scala"
