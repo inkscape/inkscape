@@ -1,5 +1,12 @@
 2006-06-07  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/seltrans.cpp:
+
+	  Work-around for seltrans not getting calls to grab() and ungrab() as expected.
+	  Fixes bug #1501156.
+
+2006-06-07  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/widgets/toolbox.cpp:
 
 	  Applied patch #1502407.

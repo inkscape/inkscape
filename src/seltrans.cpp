@@ -380,6 +380,13 @@ void Inkscape::SelTrans::stamp()
 {
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
 
+    bool fixup = !_grabbed;
+    if ( fixup && _stamp_cache ) {
+        // TODO - give a proper fix. Simple temproary work-around for the grab() issue
+        g_slist_free(_stamp_cache);
+        _stamp_cache = NULL;
+    }
+
     /* stamping mode */
     if (!_empty) {
         GSList *l;
@@ -430,6 +437,12 @@ void Inkscape::SelTrans::stamp()
             l = l->next;
         }
         sp_document_done(sp_desktop_document(_desktop));
+    }
+
+    if ( fixup && _stamp_cache ) {
+        // TODO - give a proper fix. Simple temproary work-around for the grab() issue
+        g_slist_free(_stamp_cache);
+        _stamp_cache = NULL;
     }
 }
 
