@@ -1,3 +1,10 @@
+2006-06-09  Jon A. Cruz  <jon@joncruz.org>
+
+	* src/widgets/toolbox.cpp:
+
+	  Handle case when function call fails.
+	  Fixes bug #1501150.
+
 2006-06-07  Jon A. Cruz  <jon@joncruz.org>
 
 	* src/seltrans.cpp:

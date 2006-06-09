@@ -2965,16 +2965,19 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
                                 GObject             *tbl) 
 {
     SPDesktop    *desktop = SP_ACTIVE_DESKTOP;
-    GtkTreeModel *model;
+    GtkTreeModel *model = 0;
     GtkWidget    *popdown = GTK_WIDGET (g_object_get_data (tbl, "family-popdown-window"));
     GtkWidget    *entry = GTK_WIDGET (g_object_get_data (tbl, "family-entry"));
     GtkTreeIter   iter;
-    char         *family;
+    char         *family = 0;
 
     gdk_pointer_ungrab (GDK_CURRENT_TIME);
     gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 
-    gtk_tree_selection_get_selected (selection, &model, &iter);
+    if ( !gtk_tree_selection_get_selected( selection, &model, &iter ) ) {
+        return;
+    }
+
     gtk_tree_model_get (model, &iter, 0, &family, -1);
 
     if (g_object_get_data (G_OBJECT (selection), "block"))
