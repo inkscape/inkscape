@@ -342,7 +342,7 @@ dnl ******************************
 
 AC_MSG_CHECKING(for Perl development environment)
 AC_ARG_WITH(perl,
-            AC_HELP_STRING([--with-perl], [use Perl for embedded scripting]),
+            AC_HELP_STRING([--with-perl], [use Perl for embedded scripting (EXPERIMENTAL)]),
             [with_perl=$withval], [with_perl=skipped])
 
 if test "x$with_perl" = "xyes"; then
@@ -385,7 +385,7 @@ dnl ******************************
 
 AC_MSG_CHECKING(for Python development environment)
 AC_ARG_WITH(python,
-            AC_HELP_STRING([--with-python], [use Python for embedded scripting]),
+            AC_HELP_STRING([--with-python], [use Python for embedded scripting (EXPERIMENTAL)]),
             [with_python=$withval], [with_python=skipped])
 
 if test "x$with_python" = "xyes"; then
