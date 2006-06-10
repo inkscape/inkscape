@@ -13,6 +13,8 @@
  */
 
 #include "sp-namedview.h"
+#include "inkscape.h"
+#include "desktop.h"
 #include "display/canvas-grid.h"
 
 /**
@@ -58,10 +60,16 @@ Inkscape::LineSnapper::LineList Inkscape::GridSnapper::_getSnapLines(NR::Point c
     for (unsigned int i = 0; i < 2; ++i) {
 
         /* This is to make sure we snap to only visible grid lines */
-        double const scale = griditem->scaled[i] ? griditem->empspacing : 1;
+        double scaled_spacing = griditem->sw[i]; // this is spacing of visible lines if screen pixels
+
+        // convert screen pixels to px
+        // FIXME: after we switch to snapping dist in screen pixels, this will be unnecessary
+        if (SP_ACTIVE_DESKTOP) {
+            scaled_spacing /= SP_ACTIVE_DESKTOP->current_zoom();
+        }
 
         NR::Coord const rounded = round_to_nearest_multiple_plus(p[i],
-                                                                 _named_view->gridspacing[i] * scale,
+                                                                 scaled_spacing,
                                                                  _named_view->gridorigin[i]);
 
         s.push_back(std::make_pair(NR::Dim2(i), rounded));
