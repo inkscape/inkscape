@@ -1,7 +1,5 @@
                                  Release Notes
 
-   From Inkscape Wiki
-
    Contents
 
      * 1 Inkscape 0.44: overview
@@ -61,7 +59,7 @@
      * 10 Snapping
      * 11 Sublayers
      * 12 Markers
-     * 13 Extensions
+     * 13 Extension effects
      * 14 Formats
      * 15 Miscellaneous shortcuts
      * 16 Miscellaneous improvements
@@ -71,9 +69,10 @@
      * 20 Known problems
 
           * 20.1 Problems with libgc-6.7
-          * 20.2 Namespaces may need fixing
-          * 20.3 Beware of defective themes on Linux
-          * 20.4 Make sure to remove menus.xml if you have it
+          * 20.2 Problems with "Composite" option of X.org
+          * 20.3 Namespaces may need fixing
+          * 20.4 Beware of defective themes on Linux
+          * 20.5 Make sure to remove menus.xml if you have it
 
      * 21 Previous releases
 
@@ -90,7 +89,8 @@ Inkscape 0.44: overview
 
      * Clipping and masking support
 
-     * Configurable keyboard shortcuts, including Xara X emulation
+     * Configurable keyboard shortcuts, including optional Xara X
+       compatibility
 
      * Docked color palette in the editing window
 
@@ -406,7 +406,8 @@ Inkscape Preferences dialog
    Not only was the Inkscape Preferences dialog completely rewritten and
    redesigned, with numerous bugs fixed in the rewrite.
 
-     * The dialog is now fully GNOME-HIG compliant.
+     * The old tabbed dialog is gone; the new dialog fits much betters with
+       the GNOME Human Interface Guidelines.
 
      * As a new feature, the Simplify threshold can now be set with more
        precision.
@@ -450,10 +451,11 @@ Configurable keyboard
 
    Inkscape's keyboard shortcuts are now configurable!
 
-   At this time, not all Inkscape actions can have their shortcuts
-   customized. However, the majority of actions, including everything you see
-   in the menus, are already configurable, and we're working on making more
-   actions configurable.
+   There is no graphical users interface at this time, and not all Inkscape
+   actions can have their shortcuts customized. However, if you do not mind
+   editing a configuration file, the majority of actions, including
+   everything you see in the menus, can already have their keys changed.
+   We're working on making more actions configurable.
 
    On startup, Inkscape reads its keyboard shortcuts from
    share/keys/default.xml. That file is a copy of inkscape.xml in the same
@@ -959,16 +961,29 @@ Pasting size
 
                                     Snapping
 
-     * In addition to be able to snap to guides and grids, you can now snap
-       to objects or their paths or nodes. Be aware, however, that this is
-       both experimental code - there may be surprises - and you can easily
-       find yourself in a situation where inkscape tries to snap your 1000
-       nodes to 1000 surrounding objects, something that will take over your
-       CPU. So be careful what option you turn on in the Document Preferences
-       dialog and where you use it.
+     * In addition to snapping to guides and grids, you can now snap to other
+       objects' paths and/or nodes. As with grid and guide snapping, you can
+       separately enable snapping of bboxes to objects and/or snapping of
+       nodes to objects. Be aware, however, that this is experimental code -
+       there may be surprises. It may also be slow in large documents with
+       thousands of objects.
 
-     * Guidelines are made easier to pick: now you don't need to position
-       mouse exactly over a guideline to activate it, instead there's a small
+     * In addition to the snap sensitivity sliders in Document Preferences
+       (which set snap distances in px), there are Always snap checkboxes
+       (separately for object, grid and guide snapping) which force snapping
+       at any distance.
+
+     * Grid snapping now applies only to the visible grid lines. For example,
+       if you have zoomed out so that only every 10th grid line is visible,
+       snapping will only apply to these visible lines. In addition, default
+       grid snap sensitivity is set to "Always snap". This will hopefully
+       reduce the number of "snapping does not work" complaints from users
+       who didn't zoom in close enough to see that snapping does in fact
+       work, but only at sub-px distances to the 1px-spaced grid. At the same
+       time, you can still snap to finely grained distances if you zoom in.
+
+     * Guidelines are made easier to pick. Now you don't need to position
+       mouse exactly over a guideline to activate it; instead there's a small
        position tolerance (1 screen pixel on each side of the guideline).
 
 
@@ -1015,17 +1030,20 @@ Pasting size
        you can get a good approximation of a razor wire.
 
 
-                                   Extensions
+                               Extension effects
 
-     * The Effects menu is now always on, it's no longer an "experimental
-       feature". The preference setting to enable the menu has been removed.
+     * The Effects menu is now officially on and no longer an optional
+       "experimental feature" as in past versions. The preference setting to
+       enable the menu has been removed. Inkscape 0.44 comes with about 30
+       effects that perform a variety of useful tasks, such as path blending,
+       randomization, function plotting etc.
 
-     * Python extensions (which includes almost all currently available
-       extensions) work on Windows out of the box, using a copy of Python
-       shipping with Inkscape. The only minor inconvenience is that when an
-       effect is launched, you get an empty console window that stays on
-       while the effect is doing its work. (Don't close that window, it will
-       disappear by itself when the effect is finished.)
+     * Python effects (which includes almost all currently available effects)
+       work on Windows out of the box, using a copy of Python shipping with
+       Inkscape. The only minor inconvenience is that when an effect is
+       launched, you get an empty console window that stays on while the
+       effect is doing its work. (Don't close that window, it will disappear
+       by itself when the effect is finished.)
 
      * A new Python effect, Render > LaTeX formula, allows you to type in any
        LaTeX formula and get a vector object with the TeX rendition of this
@@ -1107,10 +1125,10 @@ Pasting size
 
      * The new XCF output extension exports all top-level elements (i.e.
        layers and objects directly under root) as PNGs and assembles them
-       into an XCF for procesing in the Gimp. Requires Python, PyXML and
-       Gimp. Gimp 2.2.x or above must be in the path and be named gimp. A
-       version of Inkscape 0.44 or above must be accessible from the path.
-       Does not function in Windows.
+       into an XCF for procesing in GIMP. Requires Python, PyXML and GIMP.
+       GIMP 2.2.x or above must be in the path and be named gimp. A version
+       of Inkscape 0.44 or above must be accessible from the path. Does not
+       function in Windows yet.
 
 
                             Miscellaneous shortcuts
@@ -1327,10 +1345,11 @@ Pasting size
        file type selections, and extension names can all be translated by
        translators.
 
-     * Now, 38 languages are translated, of which 12 significantly: Catalan,
+     * Now, 38 languages are translated, of which 14 significantly: Catalan,
        Czech, German, Spanish, French, Hungarian, Italian, Lituanian,
-       Russian, Slovene, Simplified Chinese and Traditional Chinese. Average
-       translation ratio has increased from 49% to 55%.
+       Russian, Slovene, Serbian, Latine Serbian, Simplified Chinese and
+       Traditional Chinese. Average translation ratio has increased from 49%
+       to 57%.
 
      * Some new translations of tutorials have been brought by contributors :
        Czech, Portuguese (Brazil) and Russian.
@@ -1353,9 +1372,24 @@ Pasting size
 
   Problems with libgc-6.7
 
-     * Inkscape will hang or even crash when linked with this (newest)
-       version of the Boehm garbage collection library. Make sure you use
-       libgc-6.5 or 6.6 until this is sorted out.
+     * Inkscape will hang or crash when linked with this (newest) version of
+       the Boehm garbage collection library. Make sure you use libgc-6.5 or
+       6.6 until this is sorted out.
+
+
+  Problems with "Composite" option of X.org
+
+     * On Linux, Inkscape may crash if you have the "Composite" option
+       enabled in your X.org configuration. To disable this option, comment
+       out this line in your /etc/X11/xorg.conf:
+
+  Option         "Composite" "Enable"
+
+           so it becomes
+
+  #Option         "Composite" "Enable"
+
+           and restart X.
 
 
   Namespaces may need fixing
@@ -1415,6 +1449,6 @@ Pasting size
 
    Retrieved from "http://wiki.inkscape.org/wiki/index.php/Release_Notes"
 
-   This page has been accessed 18,760 times. This page was last modified
-   19:56, 9 June 2006.
+   This page has been accessed 18,942 times. This page was last modified
+   19:41, 10 June 2006.
 
