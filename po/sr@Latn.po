@@ -1,4 +1,4 @@
-# Serbian translation of Inkscape 0.44
+# Serbian translation of Inkscape
 #
 # This file is distributed under the same license as the Inkscape package.
 #
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-09 18:16+0200\n"
-"PO-Revision-Date: 2006-06-10 14:15+0200\n"
+"PO-Revision-Date: 2006-06-10 22:37+0200\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sf.net>\n"
 "Language-Team: Serbian <prevod@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.11.2\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
@@ -888,7 +887,7 @@ msgstr "Nema prikaza"
 
 #: ../src/dialogs/filedialog.cpp:459
 msgid "too large for preview"
-msgstr "previše veliko da bi se prikazalo"
+msgstr "previše veliko da bi bilo prikazano"
 
 #: ../src/dialogs/filedialog.cpp:751 ../src/dialogs/filedialog.cpp:752
 msgid "All Images"
@@ -900,7 +899,7 @@ msgstr "Sve datoteke"
 
 #: ../src/dialogs/filedialog.cpp:763 ../src/dialogs/filedialog.cpp:764
 msgid "All Inkscape Files"
-msgstr "Sve Inkskejp datoteke"
+msgstr "Sve Inkscape datoteke"
 
 #: ../src/dialogs/filedialog.cpp:1166
 msgid "Guess from extension"
@@ -1077,35 +1076,35 @@ msgstr "Traži objekte po nazivu osobine (apsolutno ili delimično poklapanje)"
 
 #: ../src/dialogs/find.cpp:706
 msgid "Search in s_election"
-msgstr "Traži u _izboru"
+msgstr "Traženje u _izboru"
 
 #: ../src/dialogs/find.cpp:710
 msgid "Limit search to the current selection"
-msgstr "Ograniči pretragu na trenutni izbor"
+msgstr "Ograničava pretragu na trenutni izbor"
 
 #: ../src/dialogs/find.cpp:715
 msgid "Search in current _layer"
-msgstr "Pretraga u aktivnom _sloju"
+msgstr "Traženje u aktivnom _sloju"
 
 #: ../src/dialogs/find.cpp:719
 msgid "Limit search to the current layer"
-msgstr "Ograničavanje pretrage na trenutno odabrani sloj"
+msgstr "Ograničava pretragu na trenutno odabrani sloj"
 
 #: ../src/dialogs/find.cpp:724
 msgid "Include _hidden"
-msgstr "Uključi _skrivene"
+msgstr "Uključujući _skrivene"
 
 #: ../src/dialogs/find.cpp:728
 msgid "Include hidden objects in search"
-msgstr "Uključi skrivene objekte u pretrgu"
+msgstr "Uključuje skrivene objekte u pretrgu"
 
 #: ../src/dialogs/find.cpp:733
 msgid "Include l_ocked"
-msgstr "Uključi _zaključane"
+msgstr "Uključujući _zaključane"
 
 #: ../src/dialogs/find.cpp:737
 msgid "Include locked objects in search"
-msgstr "Uključi zaključane objekte u pretragu"
+msgstr "Uključuje zaključane objekte u pretragu"
 
 #: ../src/dialogs/find.cpp:748
 msgid "Clear values"
@@ -1117,7 +1116,7 @@ msgstr "_Traži"
 
 #: ../src/dialogs/find.cpp:749
 msgid "Select objects matching all of the fields you filled in"
-msgstr "Izaberi objekte koji ispunjavaju sve zadate uslove"
+msgstr "Izabira objekte koji ispunjavaju sve zadate uslove"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 #: ../src/ui/dialog/transformation.cpp:102
@@ -1126,7 +1125,7 @@ msgstr "Rela_tivno pomeranje"
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
-msgstr "POmeranje linije vodilje relativno na trenutnu poziciju"
+msgstr "Pomeranje linije vodilje relativno na trenutnu poziciju"
 
 #: ../src/dialogs/guidelinedialog.cpp:61
 msgid "Move by:"
@@ -1964,9 +1963,9 @@ msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
 msgstr ""
-" Ovo je prouzrokovano neprikladnom .inx datotekom za ovu ekstenziju. "
-"Neprikladna.inx datoteka može da bude rezultat greške pri instalaciji "
-"Inkskejpa."
+"  Ovo je prouzrokovano neprikladnom .inx datotekom za ovu ekstenziju. "
+"Neprikladna .inx datoteka može da bude rezultat greške pri instalaciji "
+"Inkscape-a."
 
 #: ../src/extension/extension.cpp:244
 msgid "an ID was not defined for it."
@@ -2039,7 +2038,7 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">Jedna ili više ekstenzija neuspešno "
 "učitana</span>\n"
 "\n"
-"Problematične ekstenzije su preskočene. Inkskejp će nastaviti izvršavanje, "
+"Problematične ekstenzije su preskočene. Inkscape će nastaviti izvršavanje, "
 "ali ove ekstenzije neće biti dostupne. Za detalje o otklanjanju ovih grešaka, "
 "pogledajte dnevnik geršaka sačuvan u: "
 
@@ -2085,7 +2084,7 @@ msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:131
 msgid "Blur Edge"
-msgstr "Ivica zamućenja"
+msgstr "Zamućenje ivice"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Blur Width"
@@ -2106,7 +2105,7 @@ msgstr "Broj kopija objekta za simulaciju zamućenja"
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
 msgid "Generate from Path"
-msgstr "Generiši od krive"
+msgstr "Pravljenje od krive"
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
@@ -2152,7 +2151,7 @@ msgstr "Izbor štampača"
 
 #: ../src/extension/internal/gnome.cpp:131
 msgid "Inkscape: Print Preview"
-msgstr "Inkskejp: Pregled pred štampu"
+msgstr "Inkscape: Pregled pred štampu"
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
@@ -2186,11 +2185,11 @@ msgstr "Uspravni pomeraj"
 #: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:7
 msgid "Render"
-msgstr "Napravi"
+msgstr "Generisanje"
 
 #: ../src/extension/internal/grid.cpp:226
 msgid "Draw a path which is a grid"
-msgstr "Crta krivu koja je mreža"
+msgstr "Crtanje krivu koja je mreža"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
 msgid "LaTeX Output"
@@ -2473,7 +2472,7 @@ msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr ""
-"Inkskejp ekstenzija za čuvanje dokumenta nije pronađena (%s). Mogući razlog "
+"Inkscape ekstenzija za čuvanje dokumenta nije pronađena (%s). Mogući razlog "
 "ovome je nepoznata ekstenzija datoteke."
 
 #: ../src/file.cpp:553 ../src/file.cpp:561
@@ -2783,7 +2782,7 @@ msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
 msgstr ""
-"Iako će InkSkejp biti pokrenut, koristiće se podrazumevana podešavanja,\n"
+"Iako će Inkscape biti pokrenut, koristiće se podrazumevana podešavanja,\n"
 "i bilo kakve izmene u podešavanjima neće biti sačuvane."
 
 #: ../src/inkscape.cpp:689 ../src/preferences.cpp:56
@@ -2820,7 +2819,7 @@ msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
 msgstr ""
-"InkSkejp će biti pokrenut sa podrazumevanim menijima.\n"
+"Inkscape će biti pokrenut sa podrazumevanim menijima.\n"
 "Novi meniji neće biti sačuvani."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
@@ -3237,7 +3236,7 @@ msgstr "Ignorisanje fonta bez familije koji bi oborili Pango"
 
 #: ../src/main.cpp:194
 msgid "Print the Inkscape version number"
-msgstr "Štampaj oznaku verzije Inkskejpa"
+msgstr "Štampaj oznaku verzije Inkscape-a"
 
 #: ../src/main.cpp:199
 msgid "Do not use X server (only process files from console)"
@@ -3472,11 +3471,11 @@ msgstr "_Pregled"
 
 #: ../src/menus-skeleton.h:93
 msgid "_Zoom"
-msgstr "_Uvećaj"
+msgstr "_Zumiranje"
 
 #: ../src/menus-skeleton.h:110
 msgid "Show/Hide"
-msgstr "Prikaži/sakrij"
+msgstr "Delovi sučelja"
 
 #: ../src/menus-skeleton.h:115
 msgid "_Display mode"
@@ -3924,7 +3923,7 @@ msgid ""
 "Inkscape will run with default settings.\n"
 "New settings will not be saved."
 msgstr ""
-"InkSkejp će biti pokrenut sa podrazumevanim podešavanjima.\n"
+"Inkscape će biti pokrenut sa podrazumevanim podešavanjima.\n"
 "Nova podešavanja neće biti sačuvana."
 
 #: ../src/rect-context.cpp:371
@@ -7037,7 +7036,7 @@ msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
 #: ../src/ui/view/edit-widget.cpp:1122 ../src/widgets/desktop-widget.cpp:241
 msgid "Zoom drawing if window size changes"
-msgstr "Zumiraj crtež kada se promeni veličina prozora"
+msgstr "Zumiranje crteža pri promeni veličine prozora"
 
 #: ../src/ui/view/edit-widget.cpp:1143 ../src/widgets/desktop-widget.cpp:295
 msgid "Cursor coordinates"
@@ -7049,7 +7048,7 @@ msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
-"<b>Dobro došli u Inkskejp!</b> Koristite oblike ili alat za crtanje slobodnom "
+"<b>Dobro došli u Inkscape!</b> Koristite oblike ili alat za crtanje slobodnom "
 "rukom da bi iscrtali objekte; koristite izbornik (strelicu) za njihovo "
 "pomeranje i promenu oblika."
 
@@ -7633,7 +7632,7 @@ msgstr "_Zatvori"
 
 #: ../src/verbs.cpp:2015
 msgid "Close this document window"
-msgstr "Zatvori prozor dokumenta"
+msgstr "Zatvanja prozor dokumenta"
 
 #: ../src/verbs.cpp:2016
 msgid "_Quit"
@@ -7641,7 +7640,7 @@ msgstr "_Izlaz"
 
 #: ../src/verbs.cpp:2016
 msgid "Quit Inkscape"
-msgstr "Napuštanje InkSkejpa"
+msgstr "Zatvara program"
 
 #. Edit
 #: ../src/verbs.cpp:2019
@@ -7650,7 +7649,7 @@ msgstr "_Opozovi"
 
 #: ../src/verbs.cpp:2019
 msgid "Undo last action"
-msgstr "Poništi poslednju akciju"
+msgstr "Poništavanje poslednje akcije"
 
 #: ../src/verbs.cpp:2021
 msgid "_Redo"
@@ -7658,7 +7657,7 @@ msgstr "_Ponovi"
 
 #: ../src/verbs.cpp:2022
 msgid "Do again the last undone action"
-msgstr "Ponovi poslednju opozvanu akciju"
+msgstr "Ponavljanje poslednje opozvane akcije"
 
 #: ../src/verbs.cpp:2023
 msgid "Cu_t"
@@ -7666,7 +7665,7 @@ msgstr "I_seci"
 
 #: ../src/verbs.cpp:2024
 msgid "Cut selection to clipboard"
-msgstr "Iseci izabrane objekte i smesti ih u klipbord"
+msgstr "Iseca izabrane objekte i smešta ih u klipbord"
 
 #: ../src/verbs.cpp:2025
 msgid "_Copy"
@@ -7674,7 +7673,7 @@ msgstr "_Umnoži"
 
 #: ../src/verbs.cpp:2026
 msgid "Copy selection to clipboard"
-msgstr "Umnoži izabrane objekte u klipbord"
+msgstr "Kopira izabrane objekte u klipbord"
 
 #: ../src/verbs.cpp:2027
 msgid "_Paste"
@@ -7682,7 +7681,7 @@ msgstr "U_baci"
 
 #: ../src/verbs.cpp:2028
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Ubaci objekte iz klipborda na poziciju kursora miša, ili ubaci tekst"
+msgstr "Ubacuje objekte iz klipborda na poziciju kursora miša, odnosno ubacuje tekst"
 
 #: ../src/verbs.cpp:2029
 msgid "Paste _Style"
@@ -7690,11 +7689,11 @@ msgstr "Prenesi _stil"
 
 #: ../src/verbs.cpp:2030
 msgid "Apply the style of the copied object to selection"
-msgstr "Primeni stil kopiranog objekta na izbor"
+msgstr "Primenjuje stil kopiranog objekta na izbor"
 
 #: ../src/verbs.cpp:2032
 msgid "Scale selection to match the size of the copied object"
-msgstr "Skaliraj izbor da odgovara veličini kopiranog objekta"
+msgstr "Prilagođava veličinu izbora da odgovara veličini kopiranog objekta"
 
 #: ../src/verbs.cpp:2033
 msgid "Paste _Width"
@@ -7787,7 +7786,7 @@ msgid ""
 "Cut the selected clone's link to its original, turning it into a standalone "
 "object"
 msgstr ""
-"Uklanja povezanost klona sa originalom, pretvarajući ga u samostalan objekat"
+"Uklanja vezu klona sa originalom, pretvarajući ga u samostalan objekat"
 
 #: ../src/verbs.cpp:2053
 msgid "Select _Original"
@@ -7804,7 +7803,7 @@ msgstr "Objekat u _mustru"
 
 #: ../src/verbs.cpp:2057
 msgid "Convert selection to a rectangle with tiled pattern fill"
-msgstr "Pretvaranje izbora u pravougaonik sa popunom od popločane mustre"
+msgstr "Pretvara izbor u pravougaonik sa popunom od popločane mustre"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2059
@@ -7821,7 +7820,7 @@ msgstr "O_čisti sve"
 
 #: ../src/verbs.cpp:2062
 msgid "Delete all objects from document"
-msgstr "Obriši sve objekte iz dokumenta"
+msgstr "Briše sve objekte iz dokumenta"
 
 #: ../src/verbs.cpp:2063
 msgid "Select Al_l"
@@ -7829,7 +7828,7 @@ msgstr "Iza_beri sve"
 
 #: ../src/verbs.cpp:2064
 msgid "Select all objects or all nodes"
-msgstr "Izaberi sve objekte ili sve čvorove"
+msgstr "Izabira sve objekte ili sve čvorove"
 
 #: ../src/verbs.cpp:2065
 msgid "Select All in All La_yers"
@@ -7837,7 +7836,7 @@ msgstr "Izaberi sve na svim s_lojevima"
 
 #: ../src/verbs.cpp:2066
 msgid "Select all objects in all visible and unlocked layers"
-msgstr "Izaberi sve objekte na svim vidljivim i nezaključanim slojevima"
+msgstr "Izabira sve objekte na svim vidljivim i otključanim slojevima"
 
 #: ../src/verbs.cpp:2067
 msgid "In_vert Selection"
@@ -7855,7 +7854,7 @@ msgstr "Izvrni na svim slojevima"
 
 #: ../src/verbs.cpp:2070
 msgid "Invert selection in all visible and unlocked layers"
-msgstr "Izvrni izbor u svim vidljivim i otključanim slojevima"
+msgstr "Izvrtanje izbora u svim vidljivim i otključanim slojevima"
 
 #: ../src/verbs.cpp:2071
 msgid "D_eselect"
@@ -7868,11 +7867,11 @@ msgstr "Ukini izbor objekata ili čvorova"
 #. Selection
 #: ../src/verbs.cpp:2075
 msgid "Raise to _Top"
-msgstr "Izdigni na _vrh"
+msgstr "Podigni na _vrh"
 
 #: ../src/verbs.cpp:2076
 msgid "Raise selection to top"
-msgstr "Izdigni izabrane objekte ispred ostalih"
+msgstr "Postavljanje izabranih objekata ispred ostalih"
 
 #: ../src/verbs.cpp:2077
 msgid "Lower to _Bottom"
@@ -7880,7 +7879,7 @@ msgstr "Zakloni na _dno"
 
 #: ../src/verbs.cpp:2078
 msgid "Lower selection to bottom"
-msgstr "Postavi izabrane objekte iza ostalih"
+msgstr "Postavljanje izabranih objekata iza ostalih"
 
 #: ../src/verbs.cpp:2079
 msgid "_Raise"
@@ -7888,7 +7887,7 @@ msgstr "_Izdigni"
 
 #: ../src/verbs.cpp:2080
 msgid "Raise selection one step"
-msgstr "Izdigni izabrane objekte ispred ostalih"
+msgstr "Izdizanje izbora za jedan nivo"
 
 #: ../src/verbs.cpp:2081
 msgid "_Lower"
@@ -7896,7 +7895,7 @@ msgstr "_Spusti"
 
 #: ../src/verbs.cpp:2082
 msgid "Lower selection one step"
-msgstr "Spusti izabrane objekte za jedan nivo"
+msgstr "Spuštanje izbora za jedan nivo"
 
 #: ../src/verbs.cpp:2083
 msgid "_Group"
@@ -7904,11 +7903,11 @@ msgstr "_Grupiši"
 
 #: ../src/verbs.cpp:2084
 msgid "Group selected objects"
-msgstr "Grupiši izabrane objekte"
+msgstr "Grupisanje izabranih objekata"
 
 #: ../src/verbs.cpp:2086
 msgid "Ungroup selected groups"
-msgstr "Razgrupiši izabrane grupe"
+msgstr "Rasturanje izabrane grupe"
 
 #: ../src/verbs.cpp:2088
 msgid "_Put on Path"
@@ -7924,7 +7923,7 @@ msgstr "_Ukloni sa krive"
 
 #: ../src/verbs.cpp:2091
 msgid "Remove text from path"
-msgstr "ukloni tekst sa krive"
+msgstr "Uklanja tekst sa krive"
 
 #: ../src/verbs.cpp:2092
 msgid "Remove Manual _Kerns"
@@ -7934,7 +7933,7 @@ msgstr "Ukloni ručne _kerninge"
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2095
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Ukloni sve ručne kerninge i rotacije grafema iz tekstualnog objekta"
+msgstr "Uklanja sve ručne kerninge i rotacije grafema iz tekstualnog objekta"
 
 #: ../src/verbs.cpp:2097
 msgid "_Union"
@@ -8332,7 +8331,7 @@ msgstr "Uređivač čvorova"
 
 #: ../src/verbs.cpp:2216
 msgid "Edit path nodes or control handles"
-msgstr "Uređivanje čvorova krive i kontrola ručki"
+msgstr "Uređivanje čvorova krive i kontrolnih ručki"
 
 #: ../src/verbs.cpp:2218
 msgid "Create rectangles and squares"
@@ -8499,19 +8498,19 @@ msgstr "Otvara postavke alata za pravljenje poveznica"
 #. Zoom/View
 #: ../src/verbs.cpp:2273
 msgid "Zoom In"
-msgstr "Uvećaj"
+msgstr "Približi"
 
 #: ../src/verbs.cpp:2273
 msgid "Zoom in"
-msgstr "Uvećavanje"
+msgstr "Približavanje crteža"
 
 #: ../src/verbs.cpp:2274
 msgid "Zoom Out"
-msgstr "Umanji"
+msgstr "Udalji"
 
 #: ../src/verbs.cpp:2274
 msgid "Zoom out"
-msgstr "Umanjivanje"
+msgstr "Udaljavanje crteža"
 
 #: ../src/verbs.cpp:2275
 msgid "_Rulers"
@@ -8587,7 +8586,7 @@ msgstr "Postavljanje razmere na 2:1"
 
 #: ../src/verbs.cpp:2290
 msgid "_Fullscreen"
-msgstr "_Ceo ekran"
+msgstr "Preko _celog ekrana"
 
 #: ../src/verbs.cpp:2290
 msgid "Stretch this document window to full screen"
@@ -8636,7 +8635,7 @@ msgstr "Otvara dijalog za prikaz objekta u različitim rezolucijama ikone"
 
 #: ../src/verbs.cpp:2306
 msgid "Zoom to fit page in window"
-msgstr "Uklopi celu stranu u prozor"
+msgstr "Uklapa celu stranu u prozor"
 
 #: ../src/verbs.cpp:2307
 msgid "Page _Width"
@@ -8644,15 +8643,15 @@ msgstr "_Širina strane"
 
 #: ../src/verbs.cpp:2308
 msgid "Zoom to fit page width in window"
-msgstr "Uklopi širinu strane u prozor"
+msgstr "Uklapa širinu strane u prozor"
 
 #: ../src/verbs.cpp:2310
 msgid "Zoom to fit drawing in window"
-msgstr "Uklopi ceo crtež u prozor"
+msgstr "Uklapa ceo crtež u prozor"
 
 #: ../src/verbs.cpp:2312
 msgid "Zoom to fit selection in window"
-msgstr "Uklopi ceo izbor u prozor"
+msgstr "Uklapa ceo izbor u prozor"
 
 #. Dialogs
 #: ../src/verbs.cpp:2315
@@ -8738,11 +8737,11 @@ msgstr "Traženje objekta u dokumentu"
 
 #: ../src/verbs.cpp:2336
 msgid "_Messages..."
-msgstr "_Poruke..."
+msgstr "_Dnevnik rada..."
 
 #: ../src/verbs.cpp:2337
 msgid "View debug messages"
-msgstr "Pregled poruka dnevnika rada"
+msgstr "Pregled dnevnika rada"
 
 #: ../src/verbs.cpp:2338
 msgid "S_cripts..."
@@ -8750,7 +8749,7 @@ msgstr "_Skripte..."
 
 #: ../src/verbs.cpp:2339
 msgid "Run scripts"
-msgstr "Pokreni skriptu"
+msgstr "Konzola za izvršavanje skripti"
 
 #: ../src/verbs.cpp:2340
 msgid "Show/Hide D_ialogs"
@@ -8901,7 +8900,7 @@ msgstr "Inkscape verzija, autori, licenca"
 #. Tutorials
 #: ../src/verbs.cpp:2385
 msgid "Inkscape: _Basic"
-msgstr "InkSkejp: _Osnove"
+msgstr "Inkscape: _Osnove"
 
 #: ../src/verbs.cpp:2386
 msgid "Getting started with Inkscape"
@@ -8964,20 +8963,20 @@ msgstr "Razni saveti i trikovi za upotrebu programa"
 #. Effect
 #: ../src/verbs.cpp:2402
 msgid "Previous Effect"
-msgstr "Prethodni efekat"
+msgstr "Poslednji efekat"
 
 #: ../src/verbs.cpp:2403
 msgid "Repeat the last effect with the same settings"
-msgstr "Ponovi poslednji efekat sa istim podešavanjima"
+msgstr "Ponavlja poslednji efekat sa istim podešavanjima"
 
 #. "tutorial_tips"
 #: ../src/verbs.cpp:2404
 msgid "Previous Effect Settings..."
-msgstr "Prethodne postavke efekta..."
+msgstr "Postavke poslednjeg efekta..."
 
 #: ../src/verbs.cpp:2405
 msgid "Repeat the last effect with new settings"
-msgstr "Ponavljanje poslednjeg efekta sa novim podešavanjima"
+msgstr "Ponavlja poslednji efekat sa novim podešavanjima"
 
 #. "tutorial_tips"
 #. Fit Canvas
@@ -9615,7 +9614,7 @@ msgid ""
 "Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
 "change defaults)"
 msgstr ""
-"Vraćanje parametara oblika na podrazumevane vrednosti (koristite InkSkejp "
+"Vraćanje parametara oblika na podrazumevane vrednosti (koristite Inkscape "
 "Podešavanja > Alati za promene podrazumevano)"
 
 #: ../src/widgets/toolbox.cpp:1561
@@ -9891,7 +9890,7 @@ msgstr "Maksimalna dužina segmenta"
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
 msgid "Modify Path"
-msgstr "Izmena putanje"
+msgstr "Izmena krive"
 
 #: ../share/extensions/ai_input.inx.h:1
 msgid "AI Input"
@@ -9964,12 +9963,12 @@ msgstr "Veličina fonta"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
-msgstr "Čvorovi sa brojevima"
+msgstr "Tačke sa brojevima"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
 #: ../share/extensions/measure.inx.h:3
 msgid "Visualize Path"
-msgstr "Vizualizacija krive"
+msgstr "Manipulacije krivama"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -10057,29 +10056,29 @@ msgstr "Putanja za čuvanje slike"
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
 msgid "Bridge Width"
-msgstr "Širina mosta"
+msgstr "Širina kobilice"
 
 #: ../share/extensions/ffmet.inx.h:2 ../share/extensions/ffms.inx.h:2
 msgid "First String Length"
-msgstr "Dužina prvog karaktera"
+msgstr "Pozicija prve note"
 
 #: ../share/extensions/ffmet.inx.h:3 ../share/extensions/ffms.inx.h:3
 #: ../share/extensions/ffset.inx.h:2 ../share/extensions/ffss.inx.h:2
 msgid "Fretboard Designer"
-msgstr "Autor vrata"
+msgstr "Generator hvatnika"
 
 #: ../share/extensions/ffmet.inx.h:4 ../share/extensions/ffms.inx.h:4
 #: ../share/extensions/ffset.inx.h:3 ../share/extensions/ffss.inx.h:3
 msgid "Fretboard Edges"
-msgstr "Oblik vrata"
+msgstr "Profil hvatnika"
 
 #: ../share/extensions/ffmet.inx.h:5 ../share/extensions/ffms.inx.h:5
 msgid "Last String Length"
-msgstr "Dužina poslednjeg karaktera"
+msgstr "Pozicija poslednje note"
 
 #: ../share/extensions/ffmet.inx.h:6
 msgid "Multi Length Equal Temperament"
-msgstr "Višedelni jednaki kompleti"
+msgstr "Promenljiva deonica istog tempa"
 
 #: ../share/extensions/ffmet.inx.h:7 ../share/extensions/ffms.inx.h:7
 #: ../share/extensions/ffset.inx.h:4 ../share/extensions/ffss.inx.h:4
@@ -10098,15 +10097,15 @@ msgstr "Širina vrata"
 
 #: ../share/extensions/ffmet.inx.h:10 ../share/extensions/ffms.inx.h:11
 msgid "Perpendicular Distance"
-msgstr "Perpendikulanro rastojanje"
+msgstr "Vertikalno rastojanje"
 
 #: ../share/extensions/ffmet.inx.h:11 ../share/extensions/ffset.inx.h:7
 msgid "Scale Base (2 for Octave)"
-msgstr "Osnova skale (2 za oktavu)"
+msgstr "Osnova deonice (2 za oktavu)"
 
 #: ../share/extensions/ffmet.inx.h:12 ../share/extensions/ffset.inx.h:10
 msgid "Tones in Scale"
-msgstr "Tonovi u skali"
+msgstr "Tonovi u deonici"
 
 #: ../share/extensions/ffmet.inx.h:13 ../share/extensions/ffms.inx.h:13
 #: ../share/extensions/ffset.inx.h:11 ../share/extensions/ffss.inx.h:11
@@ -10115,35 +10114,35 @@ msgstr "px po jedinici"
 
 #: ../share/extensions/ffms.inx.h:6
 msgid "Multi Length Scala"
-msgstr "Višedelna skala"
+msgstr "Promenljiva deonica"
 
 #: ../share/extensions/ffms.inx.h:10 ../share/extensions/ffss.inx.h:7
 msgid "Path to Scala *.scl File"
-msgstr "Kriva u Scala *.scl datoteku"
+msgstr "Putanja do Scala *.scl datoteke"
 
 #: ../share/extensions/ffms.inx.h:12
 msgid "Tuning (scale step for each string seperated by semicolons)"
-msgstr "Štimovanje (koraci skale za svaku notu razdvojeni zarezom)"
+msgstr "Štimovanje (koraci deonice za svaku notu razdvojeni zarezom)"
 
 #: ../share/extensions/ffset.inx.h:8 ../share/extensions/ffss.inx.h:8
 msgid "Scale Length"
-msgstr "Dužina skale"
+msgstr "Dužina deonice"
 
 #: ../share/extensions/ffset.inx.h:9
 msgid "Single Length Equal Temperament"
-msgstr "Jednodelni jednaki komplet"
+msgstr "Fiksna deonica istog tempa"
 
 #: ../share/extensions/ffss.inx.h:9
 msgid "Single Length Scala"
-msgstr "Jednodelna skala"
+msgstr "Fiksna deonica"
 
 #: ../share/extensions/ffss.inx.h:10
 msgid "Tuning (Scale step for each string seperated by semicolons)"
-msgstr "Štimovanje (koraci skale za svaku notu razdvojeni zarezom)"
+msgstr "Štimovanje (koraci deonice za svaku notu razdvojeni zarezom)"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
-msgstr "Otvara datoteke sačuvane sa XFIG"
+msgstr "Otvaranje datoteke sačuvane sa XFIG"
 
 #: ../share/extensions/fig_input.inx.h:2
 msgid "XFIG Graphic File (*.fig)"
@@ -10155,11 +10154,11 @@ msgstr "XFIG ulaz"
 
 #: ../share/extensions/flatten.inx.h:1
 msgid "Flatness"
-msgstr "Pljosnatost"
+msgstr "Dužina segmenata"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
-msgstr "Pljosnate Bezierove krive"
+msgstr "Ispravljanje Bezierove krive"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -10171,7 +10170,7 @@ msgstr "GIMP XCF sa slojevima (*.XCF)"
 
 #: ../share/extensions/handles.inx.h:1
 msgid "Draw Handles"
-msgstr "Crtanje ručki"
+msgstr "Iscrtavanje ručki"
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Duplicate endpaths"
@@ -10183,19 +10182,19 @@ msgstr "Eksponent"
 
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
-msgstr "Interpolacija"
+msgstr "Utapanje"
 
 #: ../share/extensions/interp.inx.h:5
 msgid "Interpolate style (experimental)"
-msgstr "Interpolacija stila (eksperimentalno)"
+msgstr "Utapanje stila (eksperimentalno)"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
-msgstr "Metod interpolacije"
+msgstr "Metod utapanja"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
-msgstr "Veličina interpolacije"
+msgstr "Broj koraka utapanja"
 
 #: ../share/extensions/kochify.inx.h:1
 msgid "Fractal (Koch)"
@@ -10215,11 +10214,11 @@ msgstr "L-sistem"
 
 #: ../share/extensions/lindenmayer.inx.h:3
 msgid "Left angle"
-msgstr "Levi ugao"
+msgstr "Ugao u levo"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
-msgstr "Poredak"
+msgstr "Broj ciklusa"
 
 #: ../share/extensions/lindenmayer.inx.h:6
 #, no-c-format
@@ -10233,7 +10232,7 @@ msgstr "Nasumični korak (%)"
 
 #: ../share/extensions/lindenmayer.inx.h:10
 msgid "Right angle"
-msgstr "Desni ugao"
+msgstr "Ugao u desno"
 
 #: ../share/extensions/lindenmayer.inx.h:11
 msgid "Rules"
@@ -10245,7 +10244,7 @@ msgstr "Dužina koraka (px)"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
-msgstr "RAzmera krive"
+msgstr "Dužina krive"
 
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -10253,7 +10252,7 @@ msgstr "Ugao"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
-msgstr "Isticanje"
+msgstr "Pravljenje treće dimenzije"
 
 #: ../share/extensions/motion.inx.h:4
 msgid "Magnitude"
@@ -10277,15 +10276,15 @@ msgstr "Nasumični poluprečnik"
 
 #: ../share/extensions/radiusrand.inx.h:4
 msgid "Randomize node handles"
-msgstr "Nasumično postavi ručke čvorova"
+msgstr "Nasumično pozicioniranje ručki čvorova"
 
 #: ../share/extensions/radiusrand.inx.h:5
 msgid "Randomize nodes"
-msgstr "Nasumično postavi čvorove"
+msgstr "Nasumično pozicioniranje čvorova"
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Use normal distribution"
-msgstr "Koristi normalno raspoređivanje"
+msgstr "Normalno raspoređivanje"
 
 #: ../share/extensions/randompnt.inx.h:1
 msgid "Random Point"
@@ -10325,7 +10324,7 @@ msgstr "Ponašanje"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Segment Straightener"
-msgstr "Ispravljivač segmenta"
+msgstr "Ispravljanje segmenta"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
@@ -10423,26 +10422,3 @@ msgstr "Windows Metafile (*.wmf)"
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile ulaz"
 
-#~ msgid "%s Preferences"
-#~ msgstr "%s Postavke"
-
-#~ msgid "SIOX subimage selection"
-#~ msgstr "SIOX izbor podslike"
-
-#~ msgid "Subimage selection with the SIOX algorithm"
-#~ msgstr "Izbor podslike SIOX algoritmom"
-
-#~ msgid "SIOX (W.I.P.)"
-#~ msgstr "SIOX (W.I.P.)"
-
-#~ msgid "Rag right"
-#~ msgstr "Desno"
-
-#~ msgid "Centered"
-#~ msgstr "Centralno"
-
-#~ msgid "Rag left"
-#~ msgstr "Levo"
-
-#~ msgid "Step"
-#~ msgstr "Korak"
