@@ -70,7 +70,7 @@ h_steps = 15
 s_steps = 3
 l_steps = 14
 h_step_size = 1.0 / h_steps
-s_step_size = 1.0 / s_steps
+s_step_size = 1.3 / s_steps
 
 for h in range(0, h_steps):
     for s in range(0, s_steps):
