@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-09 18:16+0200\n"
-"PO-Revision-Date: 2006-06-09 18:25+0200\n"
+"PO-Revision-Date: 2006-06-10 14:15+0200\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sf.net>\n"
 "Language-Team: Serbian <prevod@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3301,6 +3301,8 @@ msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
+"Prilagodi spoljašnost površine za izvoz najbližoj celobrojnoj vrednosti (u SVG "
+"korisnički određenoj jedinici mere)"
 
 #: ../src/main.cpp:249
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
@@ -4144,7 +4146,7 @@ msgstr "Uklopljeni tekst"
 
 #: ../src/selection-describer.cpp:49
 msgid "Group"
-msgstr "Grupiši"
+msgstr "Grupa"
 
 #: ../src/selection-describer.cpp:51
 msgid "Image"
@@ -10055,7 +10057,7 @@ msgstr "Putanja za čuvanje slike"
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
 msgid "Bridge Width"
-msgstr ""
+msgstr "Širina mosta"
 
 #: ../share/extensions/ffmet.inx.h:2 ../share/extensions/ffms.inx.h:2
 msgid "First String Length"
@@ -10064,12 +10066,12 @@ msgstr "Dužina prvog karaktera"
 #: ../share/extensions/ffmet.inx.h:3 ../share/extensions/ffms.inx.h:3
 #: ../share/extensions/ffset.inx.h:2 ../share/extensions/ffss.inx.h:2
 msgid "Fretboard Designer"
-msgstr ""
+msgstr "Autor vrata"
 
 #: ../share/extensions/ffmet.inx.h:4 ../share/extensions/ffms.inx.h:4
 #: ../share/extensions/ffset.inx.h:3 ../share/extensions/ffss.inx.h:3
 msgid "Fretboard Edges"
-msgstr ""
+msgstr "Oblik vrata"
 
 #: ../share/extensions/ffmet.inx.h:5 ../share/extensions/ffms.inx.h:5
 msgid "Last String Length"
@@ -10077,7 +10079,7 @@ msgstr "Dužina poslednjeg karaktera"
 
 #: ../share/extensions/ffmet.inx.h:6
 msgid "Multi Length Equal Temperament"
-msgstr ""
+msgstr "Višedelni jednaki kompleti"
 
 #: ../share/extensions/ffmet.inx.h:7 ../share/extensions/ffms.inx.h:7
 #: ../share/extensions/ffset.inx.h:4 ../share/extensions/ffss.inx.h:4
@@ -10087,7 +10089,7 @@ msgstr "Broj pragova"
 #: ../share/extensions/ffmet.inx.h:8 ../share/extensions/ffms.inx.h:8
 #: ../share/extensions/ffset.inx.h:5 ../share/extensions/ffss.inx.h:5
 msgid "Number of Strings"
-msgstr "Broj karaktera"
+msgstr "Broj nota"
 
 #: ../share/extensions/ffmet.inx.h:9 ../share/extensions/ffms.inx.h:9
 #: ../share/extensions/ffset.inx.h:6 ../share/extensions/ffss.inx.h:6
@@ -10096,11 +10098,11 @@ msgstr "Širina vrata"
 
 #: ../share/extensions/ffmet.inx.h:10 ../share/extensions/ffms.inx.h:11
 msgid "Perpendicular Distance"
-msgstr ""
+msgstr "Perpendikulanro rastojanje"
 
 #: ../share/extensions/ffmet.inx.h:11 ../share/extensions/ffset.inx.h:7
 msgid "Scale Base (2 for Octave)"
-msgstr ""
+msgstr "Osnova skale (2 za oktavu)"
 
 #: ../share/extensions/ffmet.inx.h:12 ../share/extensions/ffset.inx.h:10
 msgid "Tones in Scale"
@@ -10121,7 +10123,7 @@ msgstr "Kriva u Scala *.scl datoteku"
 
 #: ../share/extensions/ffms.inx.h:12
 msgid "Tuning (scale step for each string seperated by semicolons)"
-msgstr ""
+msgstr "Štimovanje (koraci skale za svaku notu razdvojeni zarezom)"
 
 #: ../share/extensions/ffset.inx.h:8 ../share/extensions/ffss.inx.h:8
 msgid "Scale Length"
@@ -10129,7 +10131,7 @@ msgstr "Dužina skale"
 
 #: ../share/extensions/ffset.inx.h:9
 msgid "Single Length Equal Temperament"
-msgstr ""
+msgstr "Jednodelni jednaki komplet"
 
 #: ../share/extensions/ffss.inx.h:9
 msgid "Single Length Scala"
@@ -10137,7 +10139,7 @@ msgstr "Jednodelna skala"
 
 #: ../share/extensions/ffss.inx.h:10
 msgid "Tuning (Scale step for each string seperated by semicolons)"
-msgstr ""
+msgstr "Štimovanje (koraci skale za svaku notu razdvojeni zarezom)"
 
 #: ../share/extensions/fig_input.inx.h:1
 msgid "Open files saved with XFIG"
@@ -10185,23 +10187,23 @@ msgstr "Interpolacija"
 
 #: ../share/extensions/interp.inx.h:5
 msgid "Interpolate style (experimental)"
-msgstr ""
+msgstr "Interpolacija stila (eksperimentalno)"
 
 #: ../share/extensions/interp.inx.h:6
 msgid "Interpolation method"
-msgstr ""
+msgstr "Metod interpolacije"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
-msgstr ""
+msgstr "Veličina interpolacije"
 
 #: ../share/extensions/kochify.inx.h:1
 msgid "Fractal (Koch)"
-msgstr ""
+msgstr "Fraktal (Koč)"
 
 #: ../share/extensions/kochify_load.inx.h:1
 msgid "Fractal (Koch) - Load Pattern"
-msgstr ""
+msgstr "Fraktal (Koč) - učitavanje matrice"
 
 #: ../share/extensions/lindenmayer.inx.h:1
 msgid "Axiom"
@@ -10239,11 +10241,11 @@ msgstr "Pravila"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
-msgstr ""
+msgstr "Dužina koraka (px)"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
-msgstr ""
+msgstr "RAzmera krive"
 
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -10323,7 +10325,7 @@ msgstr "Ponašanje"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Segment Straightener"
-msgstr ""
+msgstr "Ispravljivač segmenta"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
@@ -10367,11 +10369,11 @@ msgstr "Tekst ulaz"
 
 #: ../share/extensions/wavy.inx.h:1
 msgid "Calculate first derivative numerically"
-msgstr ""
+msgstr "Izračunavanje prvog numeričkog izvoda"
 
 #: ../share/extensions/wavy.inx.h:2
 msgid "First derivative"
-msgstr ""
+msgstr "Prvi izvod"
 
 #: ../share/extensions/wavy.inx.h:3
 msgid "Function"
@@ -10379,19 +10381,19 @@ msgstr "Funkcija"
 
 #: ../share/extensions/wavy.inx.h:4
 msgid "Function Plotter"
-msgstr ""
+msgstr "Iscrtavanje funkcija"
 
 #: ../share/extensions/wavy.inx.h:5
 msgid "Nodes per period"
-msgstr ""
+msgstr "Broj čvorova po koraku"
 
 #: ../share/extensions/wavy.inx.h:6
 msgid "Periods (2*Pi each)"
-msgstr ""
+msgstr "Periodi (2*Pi svaki)"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
-msgstr ""
+msgstr "Veličina uvijanja"
 
 #: ../share/extensions/whirl.inx.h:2
 msgid "Center X"
