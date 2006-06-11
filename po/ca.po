@@ -4,15 +4,15 @@
 # Francesc Dorca <f.dorca@filnet.es>, 2003. Traducció sodipodi.
 # Xavier Conde Rueda <xavi.conde@gmail.com>, 2004-2006
 #
-#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
-#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3640 ../src/widgets/toolbox.cpp:3661
+#: ../src/widgets/toolbox.cpp:3690 ../src/widgets/toolbox.cpp:3711
+#: ../src/widgets/toolbox.cpp:3738
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-03 13:32+0200\n"
+"POT-Creation-Date: 2006-06-11 19:13+0200\n"
+"PO-Revision-Date: 2006-06-11 13:32+0200\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -1702,13 +1702,13 @@ msgstr "Centra les línies"
 msgid "Align lines right"
 msgstr "Alinea les línies a la dreta"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
-#: ../src/widgets/toolbox.cpp:3601
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3564
+#: ../src/widgets/toolbox.cpp:3610
 msgid "Horizontal text"
 msgstr "Text horitzontal"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3575
+#: ../src/widgets/toolbox.cpp:3621
 msgid "Vertical text"
 msgstr "Text vertical"
 
@@ -4128,14 +4128,18 @@ msgstr "Seleccioneu alguns <b>objectes</b> per fer un còpia de mapa de bits."
 #: ../src/selection-chemistry.cpp:2412
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
+"Seleccioneu <b>objectes</b> per crear-ne un camí de retall o una màscara."
 
 #: ../src/selection-chemistry.cpp:2415
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
+"Seleccioneu un objecte de màscara i altres <b>objectes</b> per aplicar-hi un "
+"camí de retall o una màscara."
 
 #: ../src/selection-chemistry.cpp:2518
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
+"Seleccioneu <b>objectes</b> per suprimir un camí de retall o una màscara."
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4317,7 +4321,7 @@ msgstr[1] "<b>%i</b> objectes de <b>%i</b> tipus"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:448
+#: ../src/seltrans.cpp:461
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4325,7 +4329,7 @@ msgstr ""
 "<b>Centre</b> de rotació i torsió; arrossegueu per a reposicionar; escalar "
 "amb maj també usa aquest centre"
 
-#: ../src/seltrans.cpp:475
+#: ../src/seltrans.cpp:488
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4333,7 +4337,7 @@ msgstr ""
 "<b>Estireu o estrenyeu</b> la selecció; amb <b>ctrl</b> per a escalar "
 "uniformement; amb <b>maj</b> per a escalar al voltant del centre de rotació"
 
-#: ../src/seltrans.cpp:476
+#: ../src/seltrans.cpp:489
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4341,7 +4345,7 @@ msgstr ""
 "<b>Escaleu</b> la selecció; amb <b>ctrl</b> per escalar uniformement; amb "
 "<b>majúscules</b> per escalar al voltant del centre de rotació"
 
-#: ../src/seltrans.cpp:480
+#: ../src/seltrans.cpp:493
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4349,7 +4353,7 @@ msgstr ""
 "<b>Torceu</b> la selecció; amb <b>ctrl</b> per ajustar l'angle; amb "
 "<b>majúscules</b> per girar al voltant de la cantonada contrària"
 
-#: ../src/seltrans.cpp:481
+#: ../src/seltrans.cpp:494
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4357,7 +4361,7 @@ msgstr ""
 "<b>Gireu</b> la selecció; amb <b>ctrl</b> per ajustar l'angle; amb "
 "<b>majúscules</b> per girar al voltant de la cantonada contrària"
 
-#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
+#: ../src/seltrans.cpp:871 ../src/seltrans.cpp:983
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4365,24 +4369,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1060
+#: ../src/seltrans.cpp:1073
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Torceu</b>: %0.2f&#176;; amb <b>ctrl</b> per ajustar l'angle"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1109
+#: ../src/seltrans.cpp:1122
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Gira</b>: %0.2f&#176;; amb <b>ctrl</b> per ajustar l'angle"
 
-#: ../src/seltrans.cpp:1153
+#: ../src/seltrans.cpp:1166
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Mou el <b>centre</b> a %s, %s"
 
-#: ../src/seltrans.cpp:1411
+#: ../src/seltrans.cpp:1424
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4473,7 +4477,7 @@ msgstr "<b>La imatge té una referència incorrecta</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Imatge</b> %d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:689
+#: ../src/sp-item-group.cpp:687
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -4508,7 +4512,7 @@ msgstr "contreu"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Desplaçament dinàmic</b>, %s %f pt"
 
-#: ../src/sp-path.cpp:123
+#: ../src/sp-path.cpp:121
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
@@ -4534,21 +4538,21 @@ msgstr "<b>Rectangle</b>"
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Espiral</b> amb %3f voltes"
 
-#: ../src/sp-star.cpp:281
+#: ../src/sp-star.cpp:279
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>Estel</b> amb %d vèrtex"
 msgstr[1] "<b>Estel</b> amb %d vèrtexs"
 
-#: ../src/sp-star.cpp:285
+#: ../src/sp-star.cpp:283
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Polígon</b> amb %d vèrtex"
 msgstr[1] "<b>Polígon</b> amb %d vèrtexs"
 
-#: ../src/sp-switch.cpp:98
+#: ../src/sp-switch.cpp:96
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -4901,13 +4905,12 @@ msgid "Select one image and one or more shapes above it"
 msgstr "Seleccioneu una imatge i una o més formes per sobre d'ella"
 
 #: ../src/trace/trace.cpp:227
-#, fuzzy
 msgid "Trace: No active desktop"
-msgstr "Vectoritza: no hi ha cap document actiu"
+msgstr "Vectoritza: no hi ha cap escriptori actiu"
 
 #: ../src/trace/trace.cpp:326
 msgid "Invalid SIOX result"
-msgstr ""
+msgstr "Resultat invàlid del SIOX"
 
 #: ../src/trace/trace.cpp:425
 msgid "Trace: No active document"
@@ -5031,7 +5034,7 @@ msgstr "Distribueix"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:749
 msgid "Remove overlaps"
-msgstr ""
+msgstr "Suprimeix les superposicions"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:750
 msgid "Connector network layout"
@@ -6338,26 +6341,30 @@ msgstr "Sobremostreja els mapes de bits:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:535
 msgid "Clipping and masking:"
-msgstr ""
+msgstr "Retalls i màscares:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid "Use the topmost selected object as a clipping path or mask"
-msgstr ""
+msgstr "Usa l'objecte seleccionat més elevat com a camí de retall o màscara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
+"Inhabiliteu això per usar l'objecte seleccionat de més a sota com a camí de "
+"retall o màscara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:539
 msgid "Remove clipping path or mask after applying"
-msgstr ""
+msgstr "Suprimeix el camí de retall o la màscara després d'aplicar"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:541
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
+"Després d'aplicar, suprimeix del dibuix l'objecte usat com a camí de retall "
+"o màscara"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:543
 msgid "Misc"
@@ -6490,17 +6497,16 @@ msgstr "Obre el fitxer de sessió"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
 msgid "SIOX foreground selection (experimental)"
-msgstr "Selecció de subimate SIOX"
+msgstr "Selecció de primer pla SIOX (experimental)"
 
 #: ../src/ui/dialog/tracedialog.cpp:349
 msgid "Cover the area you want to select as the foreground"
-msgstr ""
+msgstr "Cobriu l'àrea que voleu seleccionar com a primer pla"
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "SIOX"
-msgstr ""
+msgstr "SIOX"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
@@ -7592,7 +7598,7 @@ msgstr "Im_primeix..."
 
 #: ../src/verbs.cpp:1997
 msgid "Print document"
-msgstr "Imprimeix document"
+msgstr "Imprimeix el document"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
 #: ../src/verbs.cpp:2000
@@ -7604,6 +7610,8 @@ msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
+"Suprimeix les definicions sense emprar (com ara degradats o camins de "
+"retall) de la secció &lt;defs&gt; del document"
 
 #: ../src/verbs.cpp:2002
 msgid "Print _Direct"
@@ -8019,7 +8027,7 @@ msgstr "Re_talla el camí"
 
 #: ../src/verbs.cpp:2110
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr ""
+msgstr "Retalla el traç del camí inferior en trosos i suprimeix-ne l'emplenat"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -8343,10 +8351,12 @@ msgstr "Suprimeix la màscara de la selecció"
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
+"Aplica el camí de retall a la selecció (fent servir l'objecte més elevat com "
+"a camí de retall)"
 
 #: ../src/verbs.cpp:2210
 msgid "Remove clipping path from selection"
-msgstr ""
+msgstr "Suprimeix el camí de retall de la selecció"
 
 #. Tools
 #: ../src/verbs.cpp:2213
@@ -8805,6 +8815,8 @@ msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
+"Crea múltiples clons de l'objecte seleccionat i ordena'ls en un patró o "
+"dispersant-los"
 
 #: ../src/verbs.cpp:2345
 msgid "_Object Properties..."
@@ -9080,7 +9092,7 @@ msgstr "Mida de la lletra:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3347
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQqcÇ12369$€¢?.;/()"
 
@@ -9280,6 +9292,8 @@ msgstr ""
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
+"L'emplenat és solid excepte si el subcamí va en sentit oposat (regla: "
+"nonzero)"
 
 #: ../src/widgets/paint-selector.cpp:516
 msgid "No objects"
@@ -9831,7 +9845,7 @@ msgstr ""
 "Quan estigui premut, selecciona el color visible sense opacitat i quan no ho "
 "estigui, selecciona amb opacitat"
 
-#: ../src/widgets/toolbox.cpp:3435
+#: ../src/widgets/toolbox.cpp:3444
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9839,67 +9853,67 @@ msgstr ""
 "Aquest tipus de lletra no es troba instal·lat en el vostre sistema. "
 "L'Inkscape farà servir el tipus de lletra predeterminat."
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3482
 msgid "Align left"
 msgstr "Alinea a l'esquerra"
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3493
 msgid "Center"
 msgstr "Centra"
 
-#: ../src/widgets/toolbox.cpp:3495
+#: ../src/widgets/toolbox.cpp:3504
 msgid "Align right"
 msgstr "Alinea a la dreta"
 
-#: ../src/widgets/toolbox.cpp:3506
+#: ../src/widgets/toolbox.cpp:3515
 msgid "Justify"
 msgstr "Justifica"
 
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/widgets/toolbox.cpp:3531
 msgid "Bold"
 msgstr "Negreta"
 
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/widgets/toolbox.cpp:3542
 msgid "Italic"
 msgstr "Cursiva"
 
-#: ../src/widgets/toolbox.cpp:3631
+#: ../src/widgets/toolbox.cpp:3640
 msgid "Spacing between letters"
 msgstr "Espai entre lletres"
 
-#: ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3661
 msgid "Spacing between lines"
 msgstr "Espai entre línies"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3690
 msgid "Horizontal kerning"
 msgstr "Espaiat horitzontal"
 
-#: ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3711
 msgid "Vertical kerning"
 msgstr "Espaiat vertical"
 
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3738
 msgid "Letter rotation"
 msgstr "Rotació de les lletres"
 
-#: ../src/widgets/toolbox.cpp:3750
+#: ../src/widgets/toolbox.cpp:3759
 msgid "Remove manual kerns"
 msgstr "Suprimeix l'espait manual"
 
-#: ../src/widgets/toolbox.cpp:3869
+#: ../src/widgets/toolbox.cpp:3878
 msgid "Make connectors avoid selected objects"
 msgstr "Els connectors tenen en compte els objectes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:3873
+#: ../src/widgets/toolbox.cpp:3882
 msgid "Make connectors ignore selected objects"
 msgstr "Els connectors ignoren els objectes seleccionats"
 
-#: ../src/widgets/toolbox.cpp:3881
+#: ../src/widgets/toolbox.cpp:3890
 msgid "Spacing:"
 msgstr "Espaiat:"
 
-#: ../src/widgets/toolbox.cpp:3882
+#: ../src/widgets/toolbox.cpp:3891
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "La quantitat d'espai que queda al voltant dels objectes en girar "
@@ -10089,7 +10103,7 @@ msgstr "Fórmula en LaTeX:"
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
-msgstr "Extreu una imatge:"
+msgstr "Extreu una imatge"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Path to save image"
@@ -10196,11 +10210,11 @@ msgstr "Entrada XFIG"
 
 #: ../share/extensions/flatten.inx.h:1
 msgid "Flatness"
-msgstr ""
+msgstr "Aplanament"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
-msgstr ""
+msgstr "Aplana una bezier"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -10366,7 +10380,7 @@ msgstr "Comportament"
 
 #: ../share/extensions/straightseg.inx.h:4
 msgid "Segment Straightener"
-msgstr ""
+msgstr "Fes recte un segment"
 
 #: ../share/extensions/summersnight.inx.h:1
 msgid "Envelope"
@@ -10463,759 +10477,3 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrada de Windows Metafile"
-
-#~ msgid "Subimage selection with the SIOX algorithm"
-#~ msgstr "Selecció de la subimatge amb algorisme SIOX"
-
-#~ msgid "SIOX (W.I.P.)"
-#~ msgstr "SIOX (W.I.P.)"
-
-#~ msgid "%s Preferences"
-#~ msgstr "Preferències de l'%s"
-
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Fractal (Lindenmayer)"
-
-#~ msgid "Step"
-#~ msgstr "Pas"
-
-#~ msgid "Adobe PDF (*.pdf)"
-#~ msgstr "PDF d'Adobe (*.pdf)"
-
-#~ msgid "Adobe Portable Document Format"
-#~ msgstr "Format de document portable d'Adobe"
-
-#~ msgid "PDF Output"
-#~ msgstr "Sortida PDF"
-
-#~ msgid "Kochify"
-#~ msgstr "Kochify"
-
-#~ msgid "Enable script effects (requires restart) - EXPERIMENTAL"
-#~ msgstr ""
-#~ "Habilita els efectes de fitxer d'ordres (cal reiniciar) - EXPERIMENTAL"
-
-#~ msgid ""
-#~ "When on, the effects menu is enabled, allowing external effect scripts to "
-#~ "be called, requires restart before effective - EXPERIMENTAL"
-#~ msgstr ""
-#~ "Quan està activat, el menú d'efectes està habilitat i es permeten les "
-#~ "seqüències d'efectes externes. Es necessita reiniciar abans de ser "
-#~ "efectiu - EXPERIMENTAL"
-
-#~ msgid "Export area"
-#~ msgstr "Àrea d'exportació"
-
-#~ msgid "Bitmap size"
-#~ msgstr "Mida del mapa de bits"
-
-#~ msgid "_Filename"
-#~ msgstr "Nom del _fitxer"
-
-#~ msgid " <b>_Export</b> "
-#~ msgstr " <b>_Exporta</b> "
-
-#~ msgid ""
-#~ "<b>%d</b> object found (out of <b>%d</b>), %s match.<b>%d</b> objects "
-#~ "found (out of <b>%d</b>), %s match."
-#~ msgstr ""
-#~ "S'ha trobat <b>%d</b> objecte (d'un total de %d), la concordança és %s. "
-#~ "S'ha trobat <b>%d</b> objectes (d'un total de %d), la concordança és %s"
-
-#~ msgid ""
-#~ "Removed <b>%i</b> unused definition in &lt;defs&gt;.Removed <b>%i</b> "
-#~ "unused definitions in &lt;defs&gt;."
-#~ msgstr ""
-#~ "S'ha suprimit <b>%i</b> definició sense fer servir a &lt;defs&gt;.S'ha "
-#~ "suprimit <b>%i</b> definicions sense fer servir a &lt;defs&gt;."
-
-#~ msgid ""
-#~ "Sending message; %u message remaining in send queue.Sending message; %u "
-#~ "messages remaining in send queue."
-#~ msgstr ""
-#~ "S'està enviant el missatge; queda %u missatge a la cua d'enviament. "
-#~ "S'està enviant el missatge; queden %u missatges a la cua d'enviament."
-
-#~ msgid ""
-#~ "Receiving change; %u change left to process.Receiving change; %u changes "
-#~ "left to process."
-#~ msgstr ""
-#~ "S'està rebent el canvi; queda %u canvi per processar.S'està rebent el "
-#~ "canvi; queden %u canvis per processar."
-
-#~ msgid "%u change in receive queue.%u changes in receive queue."
-#~ msgstr "%u canvi a la cua de recepció.%u canvis a la cua de recepció."
-
-#~ msgid "%u change in send queue.%u changes in send queue."
-#~ msgstr "%u canvi a la cua d'enviament.%u canvis a la cua d'enviament."
-
-#~ msgid " relative by "
-#~ msgstr " relatiu per "
-
-#~ msgid " absolute to "
-#~ msgstr " absolut a "
-
-#~ msgid "Tool Controls"
-#~ msgstr "Controls d'eina"
-
-#~ msgid "_Panels"
-#~ msgstr "_Quadres"
-
-#~ msgid "Show or hide the panels"
-#~ msgstr "Mostra o oculta els quadres"
-
-#~ msgid ""
-#~ "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap "
-#~ "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate the "
-#~ "opposite handle in sync"
-#~ msgstr ""
-#~ "<b>Torç</b> la selecció; amb <b>maj</b> per tòrcer al voltant del lloc "
-#~ "oposat"
-
-#~ msgid "Finishing pen"
-#~ msgstr "Fi del retolador"
-
-#~ msgid "Close window"
-#~ msgstr "Tanca la finestra"
-
-#~ msgid "Union of selected objects"
-#~ msgstr "Unió dels objectes seleccionats"
-
-#~ msgid "Exclusive OR of selected objects"
-#~ msgstr "O exclusiva dels objectes seleccionats"
-
-#~ msgid "Convert selected strokes to paths"
-#~ msgstr "Converteix els contorns seleccionats en camins"
-
-#~ msgid "Convert bitmap object to paths"
-#~ msgstr "Converteix el text en camí"
-
-#~ msgid "Put text into frames"
-#~ msgstr "Posa text en marcs"
-
-#~ msgid "Fill and Stroke dialog"
-#~ msgstr "Diàleg d'emplenat i contorn"
-
-#~ msgid "View color swatches"
-#~ msgstr "Visualitza mostres de colors"
-
-#~ msgid "Transform dialog"
-#~ msgstr "Diàleg de transformacions"
-
-#~ msgid "Align and Distribute dialog"
-#~ msgstr "Diàleg d'alineació i distribució"
-
-#~ msgid "Text and Font dialog"
-#~ msgstr "Diàleg de text i tipus de lletra"
-
-#~ msgid "XML Editor"
-#~ msgstr "Editor XML"
-
-#~ msgid "Create and arrange multiple clones of selection"
-#~ msgstr "Crea i ordena múltiples clons de la selecció"
-
-#~ msgid "Object Properties dialog"
-#~ msgstr "Diàleg de propietats de l'objecte"
-
-#~ msgid "About Memory..."
-#~ msgstr "Quant a la memòria..."
-
-#~ msgid "Close"
-#~ msgstr "Tanca"
-
-#~ msgid "Snap units:"
-#~ msgstr "Unitats d'ajust:"
-
-#~ msgid "Snap distance:"
-#~ msgstr "Distància d'ajust:"
-
-#~ msgid "Units for the tool controls, ruler, and the statusbar"
-#~ msgstr "Unitats per als controls d'eines, regla i barra d'estat"
-
-#~ msgid "Custom canvas"
-#~ msgstr "Llenç personalitzat"
-
-#~ msgid "Current style"
-#~ msgstr "Estil actual"
-
-#~ msgid " X "
-#~ msgstr " X "
-
-#~ msgid "Row spacing:   "
-#~ msgstr "Espaiat entre files:   "
-
-#~ msgid "Column spacing:"
-#~ msgstr "Espaiat entre columnes:"
-
-#~ msgid "Arrange Objects"
-#~ msgstr "Ordena objectes"
-
-#~ msgid "deg"
-#~ msgstr "graus"
-
-#~ msgid "<b>Current layer is hidden</b>. Unhide it to be able to paste to it."
-#~ msgstr ""
-#~ "<b>La capa actual està amagada</b>. Mostreu-la per poder-hi enganxar."
-
-#~ msgid "<b>Current layer is locked</b>. Unlock it to be able to paste to it."
-#~ msgstr ""
-#~ "<b>La capa actual està blocada</b>. Mostreu-la per poder-hi enganxar."
-
-#~ msgid "<b>Current layer is hidden</b>. Unhide it to be able to add text."
-#~ msgstr "<b>La capa actual està amagada</b>. Mostreu-la per afegir-hi text."
-
-#~ msgid "<b>Current layer is locked</b>. Unlock it to be able to add text."
-#~ msgstr ""
-#~ "<b>La capa actual està blocada</b>. Desbloqueu-la per afegir-hi text."
-
-#~ msgid "_Credits"
-#~ msgstr "_Crèdits"
-
-#~ msgid "Grab sensitivity"
-#~ msgstr "Proximitat per seleccionar"
-
-#~ msgid "Click/drag threshold"
-#~ msgstr "Llindar per clicar/arrossegar"
-
-#~ msgid "Mouse wheel scrolls by"
-#~ msgstr "La roda del ratolí desplaça"
-
-#~ msgid "Scroll by"
-#~ msgstr "Desplaça"
-
-#~ msgid "Acceleration"
-#~ msgstr "Acceleració"
-
-#~ msgid "Speed"
-#~ msgstr "Velocitat"
-
-#~ msgid "Threshold"
-#~ msgstr "Llindar"
-
-#~ msgid "Arrow keys move by"
-#~ msgstr "Les tecles de fletxa mouen"
-
-#~ msgid "> and < scale by"
-#~ msgstr "> i < escalen per"
-
-#~ msgid "Inset/Outset by"
-#~ msgstr "Contreu/expandeix per"
-
-#~ msgid "Rotation snaps every"
-#~ msgstr "Gira cada"
-
-#~ msgid "Zoom in/out by"
-#~ msgstr "Ampliació per"
-
-#~ msgid "Transform"
-#~ msgstr "Transforma"
-
-#~ msgid "Flip selection horizontally"
-#~ msgstr "Volteja horitzontalment la selecció"
-
-#~ msgid "Flip selection vertically"
-#~ msgstr "Volteja verticalment la selecció"
-
-#~ msgid "Create new document"
-#~ msgstr "Crea un nou document"
-
-#~ msgid "Open one of the recently visited documents"
-#~ msgstr "Obre un document amb el que s'ha treballat recentment"
-
-#~ msgid "Interactive Inkscape tutorials"
-#~ msgstr "Tutorials interactius de l'Inkscape"
-
-#~ msgid "_Trace Bitmap"
-#~ msgstr "_Vectoritza un mapa de bits"
-
-#~ msgid "Rotate _90 deg CW"
-#~ msgstr "Gira _90 horaris"
-
-#~ msgid "Rotate 9_0 deg CCW"
-#~ msgstr "Gira 9_0º antihoraris"
-
-#~ msgid "_Document Preferences..."
-#~ msgstr "Preferències _del document..."
-
-#~ msgid "Modifying or Redistributing Inkscape"
-#~ msgstr "Modificació o redistribució de l'Inkscape"
-
-#~ msgid "Show license to modify and/or redistribute Inkscape: GNU GPL"
-#~ msgstr ""
-#~ "Mostra la llicència per a modificar i/o redistribuir l'Inkscape: GNU GPL"
-
-#~ msgid "Edit"
-#~ msgstr "Edita"
-
-#~ msgid "Add"
-#~ msgstr "Afegeix"
-
-#~ msgid "C_reate"
-#~ msgstr "C_rea"
-
-#~ msgid "L"
-#~ msgstr "L"
-
-#~ msgid "No of Rows"
-#~ msgstr "Nombre de files"
-
-#~ msgid "Automatically scale Rows to fit selected objects."
-#~ msgstr ""
-#~ "Escala automàticament les files per ajustar-se als objectes seleccionats."
-
-#~ msgid "Y"
-#~ msgstr "_Y"
-
-#~ msgid "Unicode: %c%c%c%c"
-#~ msgstr "Unicode: %c%c%c%c"
-
-#~ msgid "Sides:"
-#~ msgstr "Costats:"
-
-#~ msgid "R1:"
-#~ msgstr "R1:"
-
-#~ msgid "R2:"
-#~ msgstr "R2:"
-
-#~ msgid "ARG1:"
-#~ msgstr "ARG1:"
-
-#~ msgid "ARG2:"
-#~ msgstr "ARG2:"
-
-#~ msgid "Radius X:"
-#~ msgstr "Radi X:"
-
-#~ msgid "Radius Y:"
-#~ msgstr "Radi Y:"
-
-#~ msgid "Start Angle:"
-#~ msgstr "Angle inicial:"
-
-#~ msgid "End Angle:"
-#~ msgstr "Angle final:"
-
-#~ msgid "Open:"
-#~ msgstr "Obre:"
-
-#~ msgid "Expansion:"
-#~ msgstr "Expansió:"
-
-#~ msgid "Revolutions:"
-#~ msgstr "Revolucions:"
-
-#~ msgid "Argument:"
-#~ msgstr "Argument:"
-
-#~ msgid "T0:"
-#~ msgstr "T0:"
-
-#~ msgid "RX:"
-#~ msgstr "RX:"
-
-#~ msgid "RY:"
-#~ msgstr "RY:"
-
-#~ msgid "Row height."
-#~ msgstr "Alçada de la fila."
-
-#~ msgid "Row height:"
-#~ msgstr "Alçada de la fila:"
-
-#~ msgid "Column width."
-#~ msgstr "Amplada de la fila."
-
-#~ msgid "Column width:"
-#~ msgstr "Amplada de les columnes:"
-
-#~ msgid "Rectangle _Properties"
-#~ msgstr "_Propietats del rectangle"
-
-#~ msgid "Star _Properties"
-#~ msgstr "_Propietats de l'estel"
-
-#~ msgid "Ellipse _Properties"
-#~ msgstr "_Propietats de l'el·lipse"
-
-#~ msgid "Spiral _Properties"
-#~ msgstr "_Propietats de l'espiral"
-
-#~ msgid "Align and Distribute Dialog"
-#~ msgstr "Diàleg d'alineació i distribució"
-
-#~ msgid "Export Dialog"
-#~ msgstr "Diàleg d'exportació"
-
-#~ msgid "Extension Editor"
-#~ msgstr "Editor d'extensions"
-
-#~ msgid "Extension Editor Dialog"
-#~ msgstr "Diàleg d'edició d'extensions"
-
-#~ msgid "Fill and Stroke Dialog"
-#~ msgstr "Diàleg de farciment i contorn"
-
-#~ msgid "Find Dialog"
-#~ msgstr "Diàleg de cerca"
-
-#~ msgid "Inkscape Preferences"
-#~ msgstr "Preferències de l'Inkscape"
-
-#~ msgid "Inkscape Preferences Dialog"
-#~ msgstr "Diàleg de preferències de l'Inkscape"
-
-#~ msgid "Layer Editor"
-#~ msgstr "Editor de capes"
-
-#~ msgid "Layer Editor Dialog"
-#~ msgstr "Diàleg d'edició de capes"
-
-#~ msgid "Text Properties"
-#~ msgstr "Propietats del text"
-
-#~ msgid "Text Properties Dialog"
-#~ msgstr "Diàleg de propietats del text"
-
-#~ msgid "Transformation Dialog"
-#~ msgstr "Diàleg de transformacions"
-
-#~ msgid "Tree Editor"
-#~ msgstr "Editor d'arbre"
-
-#~ msgid "XML Editor Dialog"
-#~ msgstr "Diàleg d'edició XML"
-
-#~ msgid "_Export..."
-#~ msgstr "_Exporta..."
-
-#~ msgid "In_kscape Preferences"
-#~ msgstr "Preferències de l'In_kscape"
-
-#~ msgid "Select _Original Clone"
-#~ msgstr "Selecci_ona el clon original"
-
-#~ msgid "Tile"
-#~ msgstr "Mosàic"
-
-#~ msgid "Select A_ll"
-#~ msgstr "Se_lecciona-ho tot"
-
-#~ msgid "Select Non_e"
-#~ msgstr "No s_eleccionis res"
-
-#~ msgid "Zoom _In"
-#~ msgstr "A_propa"
-
-#~ msgid "Zoom _Out"
-#~ msgstr "All_unya"
-
-#~ msgid "1:_1 (100%)"
-#~ msgstr "1:_1 (100%)"
-
-#~ msgid "1:_2 (50%)"
-#~ msgstr "1:_2 (50%)"
-
-#~ msgid "2:1 (2_00%)"
-#~ msgstr "2:1 (2_00%)"
-
-#~ msgid "Pre_vious"
-#~ msgstr "An_terior"
-
-#~ msgid "Nex_t"
-#~ msgstr "Següen_t"
-
-#~ msgid "_Commands bar"
-#~ msgstr "_Barra d'ordres"
-
-#~ msgid "_Tools bar"
-#~ msgstr "Ba_rra d'eines"
-
-#~ msgid "R_ename Layer..."
-#~ msgstr "R_eanomena la capa..."
-
-#~ msgid "D_uplicate Layer"
-#~ msgstr "D_uplica la capa"
-
-#~ msgid "_Anchor Layer"
-#~ msgstr "_Ancora la capa"
-
-#~ msgid "Merge Do_wn"
-#~ msgstr "_Fusiona"
-
-#~ msgid "_Delete Layer"
-#~ msgstr "Suprimeix la _capa"
-
-#~ msgid "Select Ne_xt Layer"
-#~ msgstr "Sele_cciona la capa següent"
-
-#~ msgid "Select Pre_vious Layer"
-#~ msgstr "Se_lecciona la capa anterior"
-
-#~ msgid "Select To_p Layer"
-#~ msgstr "Selecciona la ca_pa superior"
-
-#~ msgid "Select Botto_m Layer"
-#~ msgstr "Selecciona la capa in_ferior"
-
-#~ msgid "Move to Ne_w Layer"
-#~ msgstr "Mogut a una no_va capa"
-
-#~ msgid "Move to Ne_xt Layer"
-#~ msgstr "Mou a la capa següe_nt"
-
-#~ msgid "Move to Pre_vious Layer"
-#~ msgstr "Mo_u a la capa anterior"
-
-#~ msgid "Move to To_p Layer"
-#~ msgstr "Mou a la ca_pa superior"
-
-#~ msgid "Move to B_ottom Layer"
-#~ msgstr "M_ou a la capa inferior"
-
-#~ msgid "_Remove Text from Path"
-#~ msgstr "Sup_rimeix el text del camí"
-
-#~ msgid "Arc"
-#~ msgstr "Arc"
-
-#~ msgid "Freehand"
-#~ msgstr "Mà alçada"
-
-#~ msgid "DynaDraw"
-#~ msgstr "Dibuix dinàmic"
-
-#~ msgid "Stroke"
-#~ msgstr "Contorn"
-
-#~ msgid "Corners"
-#~ msgstr "Cantonades"
-
-#~ msgid "Delete"
-#~ msgstr "Suprimeix"
-
-#~ msgid "Join"
-#~ msgstr "Cantonada"
-
-#~ msgid "Join Segment"
-#~ msgstr "Segment de cantonada"
-
-#~ msgid "Delete Segment"
-#~ msgstr "Suprimeix el segment"
-
-#~ msgid "Break"
-#~ msgstr "Separa"
-
-#~ msgid "Symmetric"
-#~ msgstr "Simètric"
-
-#~ msgid "Curve"
-#~ msgstr "Corba"
-
-#~ msgid "Invert Selection"
-#~ msgstr "Inverteix selecció"
-
-#~ msgid "_Scripts..."
-#~ msgstr "_Seqüències..."
-
-#~ msgid "Revert to Saved"
-#~ msgstr "Recupera el desat"
-
-#~ msgid "Save"
-#~ msgstr "Desa"
-
-#~ msgid "Import..."
-#~ msgstr "Importa..."
-
-#~ msgid "Export..."
-#~ msgstr "Exporta..."
-
-#~ msgid "Print..."
-#~ msgstr "Imprimeix..."
-
-#~ msgid "Document properties (Shift+Ctrl+D)"
-#~ msgstr "Propietats del document (maj+ctrl+D)"
-
-#~ msgid "Global Inkscape preferences (Shift+Ctrl+P)"
-#~ msgstr "Preferències globals de l'Inkscape (maj+ctrl+D)"
-
-#~ msgid "Undo"
-#~ msgstr "Desfés"
-
-#~ msgid "Redo"
-#~ msgstr "Torna a fer"
-
-#~ msgid "Cut"
-#~ msgstr "Retalla"
-
-#~ msgid "Copy"
-#~ msgstr "Copia"
-
-#~ msgid "Duplicate selected object(s) (Ctrl+D)"
-#~ msgstr "Duplica els objectes seleccionats (ctrl+D)"
-
-#~ msgid "Clone selected object (Alt+D)"
-#~ msgstr "Clona els objectes seleccionats (alt+D)"
-
-#~ msgid "Unlink clone from its original (Shift+Alt+D)"
-#~ msgstr "Desenllaça el clon de l'original (maj+alt+D)"
-
-#~ msgid "XML Editor dialog (Shift+Ctrl+X)"
-#~ msgstr "Diàleg de l'editor XML (maj+ctrl+X)"
-
-#~ msgid "Zoom in (+)"
-#~ msgstr "Amplia (+)"
-
-#~ msgid "Zoom out (-)"
-#~ msgstr "Redueix (-)"
-
-#~ msgid "Zoom to 1:1 (100%) (1)"
-#~ msgstr "Amplia a 1:1 (100%) (1)"
-
-#~ msgid "Zoom to 1:2 (50%) (2)"
-#~ msgstr "Amplia a 1:2 (50%) (2)"
-
-#~ msgid "Zoom to 2:1 (200%) (0)"
-#~ msgstr "Amplia a 2:1 (200%) (0)"
-
-#~ msgid "Zoom to fit selection in window (3)"
-#~ msgstr "Ajusta la selecció a la finestra (3)"
-
-#~ msgid "Zoom to fit drawing in window (4)"
-#~ msgstr "Ajusta el dibuix a la finestra (4)"
-
-#~ msgid "Zoom to fit page in window (5)"
-#~ msgstr "Ajusta la pàgina a la finestra (5)"
-
-#~ msgid "Zoom to fit page width in window (6)"
-#~ msgstr "Ajusta la pàgina a la finestra (6)"
-
-#~ msgid "Previous zoom (from history of zooms) (`)"
-#~ msgstr "Ampliació anterior (de l'historial) (`)"
-
-#~ msgid "Next zoom (from history of zooms) (Shift+`)"
-#~ msgstr "Ampliació següent (de l'historial) (maj+`)"
-
-#~ msgid "Fill and Stroke dialog (Shift+Ctrl+F)"
-#~ msgstr "Diàleg de farciment i contorn (maj+ctrl+F)"
-
-#~ msgid "Group selected objects (Ctrl+G)"
-#~ msgstr "Agrupa els objectes seleccionats (ctrl+G)"
-
-#~ msgid "Ungroup selected group(s) (Ctrl+U)"
-#~ msgstr "Desagrupa els grups seleccionats (ctrl+U)"
-
-#~ msgid "Raise selection up one step (PgUp)"
-#~ msgstr "Puja la selecció una posició (Av pàg)"
-
-#~ msgid "Lower selection down one step (PgDn)"
-#~ msgstr "Baixa la selecció una posició (Re pàg)"
-
-#~ msgid "Raise selection to top (Home)"
-#~ msgstr "Puja la selecció a dalt (Inici)"
-
-#~ msgid "Lower selection to bottom (End)"
-#~ msgstr "Baixa la selecció a baix de tot (Fi)"
-
-#~ msgid "Move selection to next layer"
-#~ msgstr "Mou la selecció a la capa següent"
-
-#~ msgid "Move selection to previous layer"
-#~ msgstr "Mou la selecció a la capa anterior"
-
-#~ msgid "Move selection to top layer"
-#~ msgstr "Mou la selecció la capa superior"
-
-#~ msgid "Move selection to bottom layer"
-#~ msgstr "Mou la selecció a la capa inferior"
-
-#~ msgid "Rotate selection 90° clockwise (Shift+Ctrl+Right)"
-#~ msgstr "Gira la selecció 90 graus en sentit horari (maj+ctrl+dreta)"
-
-#~ msgid "Rotate selection 90° counter-clockwise (Shift+Ctrl+Left)"
-#~ msgstr "Gira la selecció 90 graus en sentit antihorari (maj+ctrl+esq)"
-
-#~ msgid "Flip selection horizontally (H)"
-#~ msgstr "Volteja horitzontalment la selecció (H)"
-
-#~ msgid "Flip selection vertically (V)"
-#~ msgstr "Volteja verticalment la selecció (V)"
-
-#~ msgid "Align and Distribute dialog (Shift+Ctrl+A)"
-#~ msgstr "Diàleg d'alineació i distribució (maj+ctrl+A)"
-
-#~ msgid "Convert selected object(s) to path(s) (Shift+Ctrl+C)"
-#~ msgstr "Converteix els objectes seleccionats en camins (maj+ctrl+C)"
-
-#~ msgid "Convert selected stroke(s) to path(s) (Ctrl+Alt+C)"
-#~ msgstr "Converteix els contorns seleccionats en camins (ctrl+alt+C)"
-
-#~ msgid "Text and Font dialog (Shift+Ctrl+T)"
-#~ msgstr "Diàleg de text i tipus de lletra (maj+ctrl+T)"
-
-#~ msgid "Node tool"
-#~ msgstr "Eina de nodes"
-
-#~ msgid "Zoom tool"
-#~ msgstr "Eina d'ampliació"
-
-#~ msgid "Rectangle tool"
-#~ msgstr "Eina de rectangle"
-
-#~ msgid "Arc tool"
-#~ msgstr "Eina d'arc"
-
-#~ msgid "Star tool"
-#~ msgstr "Eina d'estel"
-
-#~ msgid "Spiral tool"
-#~ msgstr "Eina d'espiral"
-
-#~ msgid "Freehand tool"
-#~ msgstr "Eina de mà alçada"
-
-#~ msgid "Pen tool"
-#~ msgstr "Eina del rotulador"
-
-#~ msgid "Calligraphy tool"
-#~ msgstr "Eina de cal·ligrafia"
-
-#~ msgid "Dropper tool"
-#~ msgstr "Eina comptagotes"
-
-#~ msgid "When scaling objects, scale stroke width by same proportion"
-#~ msgstr ""
-#~ "En escalar objectes, escala l'amplada del contorn per la mateixa proporció"
-
-#~ msgid "When scaling rectangles, scale radii of rounded corners"
-#~ msgstr ""
-#~ "En escalar els rectangles, escala el radi de les cantonades arrodonides"
-
-#~ msgid "Transform gradients (in fill or stroke) along with objects"
-#~ msgstr ""
-#~ "Transforma els degradats (en omplir o contorn) juntament amb els objectes"
-
-#~ msgid "Transform patterns (in fill or stroke) along with objects"
-#~ msgstr ""
-#~ "Transforma els patrons (en omplir o contorn) juntament amb els objectes"
-
-#~ msgid "Delete segment between two nodes"
-#~ msgstr "Suprimeix segments entre dos nodes"
-
-#~ msgid "URI:"
-#~ msgstr "URI:"
-
-#~ msgid "Creating anchor at (%g,%g)"
-#~ msgstr "S'està creant una àncora a (%g,%g)"
-
-#~ msgid "EPS Output Settings"
-#~ msgstr "Configuració de la sortida EPS"
-
-#~ msgid "<b>Skew</b>: %0.2f%% x %0.2f%%"
-#~ msgstr "<b>Torç</b>: %0.2f%% x %0.2f%%"
-
-#~ msgid "elementsofdesign.svg"
-#~ msgstr "elementsofdesign.svg"
-
-#~ msgid "tipsandtricks.svg"
-#~ msgstr "tipsandtricks.svg"
