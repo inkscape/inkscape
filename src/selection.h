@@ -272,6 +272,12 @@ public:
     std::vector<NR::Point> getBBoxPoints() const;
 
     /**
+     * @return A vector containing the 2 (top-left and bottom-right)
+     * corners of the selection bounding box.
+     */
+    std::vector<NR::Point> Selection::getBBoxPointsOuter() const;
+
+    /**
      * @brief Connects a slot to be notified of selection changes
      *
      * This method connects the given slot such that it will

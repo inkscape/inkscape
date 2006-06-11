@@ -1,5 +1,11 @@
 2006-06-09  Jon A. Cruz  <jon@joncruz.org>
 
+	* src/object-snapper.cpp, src/selection.cpp, src/selection.h, src/seltrans.cpp:
+
+	  Applied patch #1503864.
+
+2006-06-09  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/widgets/toolbox.cpp:
 
 	  Handle case when function call fails.

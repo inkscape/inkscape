@@ -253,8 +253,8 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
 
     _point = p;
 
-    _snap_points = selection->getSnapPoints();
-    _bbox_points = selection->getBBoxPoints();
+    _snap_points = selection->getSnapPointsConvexHull();
+    _bbox_points = selection->getBBoxPointsOuter();
 
     gchar const *scale_origin = prefs_get_string_attribute("tools.select", "scale_origin");
     bool const origin_on_bbox = (scale_origin == NULL || !strcmp(scale_origin, "bbox"));

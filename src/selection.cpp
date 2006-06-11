@@ -446,6 +446,14 @@ std::vector<NR::Point> Selection::getBBoxPoints() const {
     return p;
 }
 
+std::vector<NR::Point> Selection::getBBoxPointsOuter() const {
+    std::vector<NR::Point> p;
+    NR::Rect bbox = bounds();
+    p.push_back(bbox.min());
+    p.push_back(bbox.max());
+    return p;
+}
+
 void Selection::_removeObjectDescendants(SPObject *obj) {
     GSList *iter, *next;
     for ( iter = _objs ; iter ; iter = next ) {

@@ -15,6 +15,7 @@
 #include "document.h"
 #include "sp-namedview.h"
 #include "sp-path.h"
+#include "sp-item-group.h"
 #include "display/curve.h"
 #include "desktop.h"
 #include "inkscape.h"
@@ -37,8 +38,9 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
                                               std::list<SPItem const *> const &it,
                                               NR::Point const &p) const
 {
-    for (SPObject* o = r->children; o != NULL; o = o->next) {
-        if (SP_IS_ITEM(o)) {
+    SPDesktop const *desktop = SP_ACTIVE_DESKTOP;
+    for (SPObject* o = sp_object_first_child(r); o != NULL; o = SP_OBJECT_NEXT(o)) {
+        if (SP_IS_ITEM(o) && !SP_ITEM(o)->isLocked() && !desktop->itemIsHidden(SP_ITEM(o))) {
 
             /* See if this item is on the ignore list */
             std::list<SPItem const *>::const_iterator i = it.begin();
@@ -48,14 +50,17 @@ void Inkscape::ObjectSnapper::_findCandidates(std::list<SPItem*>& c,
 
             if (i == it.end()) {
                 /* See if the item is within range */
-                NR::Rect const b = NR::expand(sp_item_bbox_desktop(SP_ITEM(o)), -getDistance());
-                if (b.contains(p)) {
-                    c.push_back(SP_ITEM(o));
+                if (SP_IS_GROUP(o)) {
+                    _findCandidates(c, o, it, p);
+                } else {
+                    NR::Rect const b = NR::expand(sp_item_bbox_desktop(SP_ITEM(o)), -getDistance());
+                    if (b.contains(p)) {
+                        c.push_back(SP_ITEM(o));
+                    }
                 }
             }
-        }
 
-        _findCandidates(c, o, it, p);
+        }
     }
 }
 
