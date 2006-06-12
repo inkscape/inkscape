@@ -69,7 +69,7 @@ ShowUninstDetails hide
 
 ; Language files
 !include "english.nsh" 
-;!include "catalan.nsh" 
+!include "catalan.nsh" 
 !include "czech.nsh" 
 !include "french.nsh" 
 !include "german.nsh" 
