@@ -108,7 +108,7 @@ public:
 
     virtual void flush();
 
-    virtual void put(XMLCh ch);
+    virtual int put(XMLCh ch);
 
     /**
      * Sets the maximum line length for base64 output.  If

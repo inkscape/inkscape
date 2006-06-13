@@ -214,17 +214,17 @@ void GzipOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */
-void GzipOutputStream::put(XMLCh ch)
+int GzipOutputStream::put(XMLCh ch)
 {
     if (closed)
         {
         //probably throw an exception here
-        return;
+        return -1;
         }
 
     //Add char to buffer
     buffer.push_back(ch);
-
+    return 1;
 }
 
 

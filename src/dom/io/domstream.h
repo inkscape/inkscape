@@ -215,7 +215,7 @@ public:
     /**
      * Send one byte to the destination stream.
      */
-    virtual void put(XMLCh ch) = 0;
+    virtual int put(XMLCh ch) = 0;
 
 
 }; // class OutputStream
@@ -238,7 +238,7 @@ public:
 
     virtual void flush();
 
-    virtual void put(XMLCh ch);
+    virtual int put(XMLCh ch);
 
 protected:
 
@@ -264,8 +264,8 @@ public:
     void flush()
         { }
 
-    void put(XMLCh ch)
-        {  putchar(ch); }
+    int put(XMLCh ch)
+        {  putchar(ch); return 1; }
 
 };
 
@@ -489,7 +489,7 @@ public:
 
     virtual void flush() = 0;
 
-    virtual void put(XMLCh ch) = 0;
+    virtual int put(XMLCh ch) = 0;
 
     /* Formatted output */
     virtual Writer& printf(char *fmt, ...) = 0;
@@ -539,7 +539,7 @@ public:
 
     virtual void flush();
 
-    virtual void put(XMLCh ch);
+    virtual int put(XMLCh ch);
 
 
 
@@ -626,7 +626,7 @@ public:
 
     virtual void flush();
 
-    virtual void put(XMLCh ch);
+    virtual int put(XMLCh ch);
 
 
 private:
@@ -654,7 +654,7 @@ public:
     virtual void flush();
 
 
-    virtual void put(XMLCh ch);
+    virtual int put(XMLCh ch);
 
 
 private:

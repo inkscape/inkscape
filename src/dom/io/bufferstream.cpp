@@ -146,11 +146,12 @@ void BufferOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */
-void BufferOutputStream::put(XMLCh ch)
+int BufferOutputStream::put(XMLCh ch)
 {
     if (closed)
-        return;
+        return -1;
     buffer.push_back(ch);
+    return 1;
 }
 
 

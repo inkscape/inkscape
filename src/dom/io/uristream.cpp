@@ -411,10 +411,10 @@ void UriOutputStream::flush() throw(StreamException)
 /**
  * Writes the specified byte to this output stream.
  */
-void UriOutputStream::put(XMLCh ch) throw(StreamException)
+int UriOutputStream::put(XMLCh ch) throw(StreamException)
 {
     if (closed)
-        return;
+        return -1;
 
     switch (scheme)
         {
@@ -422,7 +422,7 @@ void UriOutputStream::put(XMLCh ch) throw(StreamException)
         case URI::SCHEME_FILE:
             {
             if (!outf)
-                return;
+                return -1;
             unsigned char uch = (unsigned char)(ch & 0xff);
             fputc(uch, outf);
             //fwrite(uch, 1, 1, outf);
@@ -436,7 +436,7 @@ void UriOutputStream::put(XMLCh ch) throw(StreamException)
             }
 
         }//switch
-
+    return 1;
 }
 
 
@@ -479,10 +479,12 @@ void UriWriter::flush() throw(StreamException)
 /**
  *
  */
-void UriWriter::put(XMLCh ch) throw(StreamException)
+int UriWriter::put(XMLCh ch) throw(StreamException)
 {
     int ich = (int)ch;
-    outputStream->put(ich);
+    if (outputStream->put(ich) < 0)
+        return -1;
+    return 1;
 }
 
 

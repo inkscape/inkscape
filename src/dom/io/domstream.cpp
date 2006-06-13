@@ -34,6 +34,7 @@
  *
  */
 
+#include <math.h>
 #include <stdarg.h>
 
 #include "domstream.h"
@@ -64,6 +65,305 @@ void pipeStream(InputStream &source, OutputStream &dest)
         }
     dest.flush();
 }
+
+
+
+//#########################################################################
+//# F O R M A T T E D    P R I N T I N G
+//#########################################################################
+
+static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+static int dprintInt(Writer &outs,
+                     long arg, int base,
+                     int flag, int width, int precision)
+{
+
+    DOMString buf;
+
+    //### Get the digits
+    while (arg > 0)
+        {
+        int ch = arg % base;
+        buf.insert(buf.begin(), digits[ch]);        
+        arg /= base;        
+        }
+
+    if (flag == '#' && base == 16)
+        {
+        buf.insert(buf.begin(), 'x');
+        buf.insert(buf.begin(), '0');
+        }
+
+    //### Output the result
+    for (unsigned int i=0 ; i<buf.size() ; i++)
+        {
+        if (outs.put(buf[i]) < 0)
+            return -1;
+        }
+
+    return 1;
+}
+
+
+
+static int dprintDouble(Writer &outs,
+                        double val, 
+                        int flag, int width, int precision)
+{
+
+    DOMString buf;
+
+    //printf("int:%f  frac:%f\n", intPart, fracPart);
+
+    bool negative = false;
+    if (val < 0)
+        {
+        negative = true;
+        val = -val;
+        }
+
+    int intDigits = 0;
+    double scale = 1.0;
+    while (scale < val)
+        {
+        intDigits++;
+        scale *= 10.0;
+        }
+
+    double intPart;
+    double fracPart = modf(val, &intPart);
+
+    if (precision <= 0)
+        precision = 5;
+
+    //### How many pad digits?
+    int pad = width - intDigits;
+    if (precision > 0)
+        pad -= precision + 1;
+    else if (flag == '#')
+        pad--;
+
+
+    //### Signs
+    if (negative)
+        buf.push_back('-');
+    else if (flag == '+')
+        buf.push_back('+');
+
+    //### Prefix pad
+    if (pad > 0 && flag == '0')
+        {
+        while (pad--)
+            buf.push_back('0');
+        }
+
+    //### Integer digits
+    intPart = (intPart + 0.1 ) / scale;    // turn 12345.678 to .12345678
+    while (intDigits--)
+        {
+        intPart *= 10.0;
+        double dig;
+        intPart = modf(intPart, &dig);
+        char ch = '0' + (int)dig;
+        buf.push_back(ch);
+        }
+
+    //### Decimal point
+    if (flag == '#' || precision > 0)
+        {
+        buf.push_back('.');
+        }    
+
+    //### Fractional digits
+    while (precision--)
+        {
+        fracPart *= 10.0;
+        double dig;
+        fracPart = modf(fracPart, &dig);
+        char ch = '0' + (int)dig;
+        buf.push_back(ch);
+        }
+
+    //### Left justify if requested
+    if (pad > 0 && flag == '-')
+        {
+        while (pad--)
+            buf.push_back(' ');
+        }
+
+    //### Output the result
+    for (unsigned int i=0 ; i<buf.size() ; i++)
+        {
+        if (outs.put(buf[i]) < 0)
+            return -1;
+        }
+    return 1;
+}
+
+static int dprintString(Writer &outs,
+                        char *arg, 
+                        int flags, int width, int precision)
+{
+    while (*arg)
+        {
+        if (outs.put(*arg++) < 0)
+            return -1;
+        }
+
+    return 1;
+}
+
+
+
+static char *getint(char *s, int *ret)
+{
+    bool has_sign = false;
+    int val = 0;
+    if (*s == '-')
+        {
+        has_sign = true;
+        s++;
+        }
+    while (*s >= '0' && *s <= '9')
+        {
+        val = val * 10 + (*s - '0');
+        s++;
+        }
+    if (has_sign)
+        val = -val;
+
+    *ret = val;
+
+    return s;
+}
+
+
+
+static int dprintf(Writer &outs, const char *fmt, va_list ap)
+{
+
+    char *s = (char *) fmt;
+
+    while (*s)
+        {
+        unsigned char ch = *s++;
+
+        if (ch != '%')
+            {
+            if (outs.put(ch)<0)
+                {
+                return -1;
+                }
+            }
+        else
+            //expecting  %[flag][width][.precision][length][char]
+            {
+            if (!*s)
+                {
+                return -1;
+                }
+            if (*s == '%') // escaped '%'
+                {
+                if (outs.put('%')<0)
+                    {
+                    return -1;
+                    }
+                s++;
+                continue;
+                }
+            char flag = '\0';
+            if (*s == '-' || *s == '+' || *s == ' ' ||
+                *s == '#' || *s == '0')
+                {
+                flag = *s++;
+                if (!*s)
+                    {
+                    return -1;
+                    }
+                }
+            int width     = 0;
+            int precision = 0;
+            s = getint(s, &width);
+            if (!*s)
+                {
+                return -1;
+                }
+            if (*s == '.')
+                {
+                s++;
+                if (!*s)
+                    {
+                    return -1;
+                    }
+                s = getint(s, &precision);
+                }
+            char length = '\0';
+            if (*s == 'l' || *s == 'h')
+                {
+                length = *s++;
+                if (!*s)
+                    {
+                    return -1;
+                    }
+                }
+            ch = *s++;
+            if (!ch)
+                {
+                return -1;
+                }
+            switch (ch)
+                {
+                case 'f':
+                case 'g':
+                    {
+                    double val = va_arg(ap, double);
+                    dprintDouble(outs, val, flag, width, precision);
+                    break;
+                    }
+                case 'd':
+                    {
+                    long val = 0;
+                    if (length == 'l')
+                        val = va_arg(ap, long);
+                    else if (length == 'h')
+                        val = (long)va_arg(ap, int);
+                    else
+                        val = (long)va_arg(ap, int);
+                    dprintInt(outs, val, 10, flag, width, precision);
+                    break;
+                    }
+                case 'x':
+                    {
+                    long val = 0;
+                    if (length == 'l')
+                        val = va_arg(ap, long);
+                    else if (length == 'h')
+                        val = (long)va_arg(ap, int);
+                    else
+                        val = (long)va_arg(ap, int);
+                    dprintInt(outs, val, 16, flag, width, precision);
+                    break;
+                    }
+                case 's':
+                    {
+                    char *val = va_arg(ap, char *);
+                    dprintString(outs, val, flag, width, precision);
+                    break;
+                    }
+                default:
+                    {
+                    break;
+                    }
+                }
+            }
+
+        }
+
+
+    return 1;
+}
+
 
 //#########################################################################
 //# B A S I C    I N P U T    S T R E A M
@@ -155,11 +455,13 @@ void BasicOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */
-void BasicOutputStream::put(XMLCh ch)
+int BasicOutputStream::put(XMLCh ch)
 {
     if (closed)
-        return;
-    destination.put(ch);
+        return -1;
+    if (destination.put(ch) < 0)
+        return -1;
+    return 1;
 }
 
 
@@ -529,15 +831,17 @@ void BasicWriter::flush()
 /**
  * Writes the specified byte to this output writer.
  */
-void BasicWriter::put(XMLCh ch)
+int BasicWriter::put(XMLCh ch)
 {
-    if (destination)
-        destination->put(ch);
+    if (destination && destination->put(ch)>=0)
+        return 1;
+    return -1;
 }
 
 /**
  * Provide printf()-like formatting
  */
+/*
 Writer &BasicWriter::printf(char *fmt, ...)
 {
     va_list args;
@@ -549,6 +853,17 @@ Writer &BasicWriter::printf(char *fmt, ...)
 
     return *this;
 }
+*/
+Writer &BasicWriter::printf(char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    dprintf(*this, fmt, args);
+
+    return *this;
+}
+
+
 /**
  * Writes the specified character to this output writer.
  */
@@ -710,11 +1025,13 @@ void OutputStreamWriter::flush()
  *  Overloaded to redirect the output chars from the next Writer
  *  in the chain to an OutputStream instead.
  */
-void OutputStreamWriter::put(XMLCh ch)
+int OutputStreamWriter::put(XMLCh ch)
 {
     //Do we need conversions here?
     int intCh = (int) ch;
-    outputStream.put(intCh);
+    if (outputStream.put(intCh) < 0)
+        return -1;
+    return 1;
 }
 
 //#########################################################################
@@ -762,11 +1079,13 @@ void StdWriter::flush()
  *  Overloaded to redirect the output chars from the next Writer
  *  in the chain to an OutputStream instead.
  */
-void StdWriter::put(XMLCh ch)
+int StdWriter::put(XMLCh ch)
 {
     //Do we need conversions here?
     int intCh = (int) ch;
-    outputStream->put(intCh);
+    if (outputStream->put(intCh) < 0)
+        return -1;
+    return 1;
 }
 
 

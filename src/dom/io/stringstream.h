@@ -98,7 +98,7 @@ public:
 
     virtual void flush();
 
-    virtual void put(XMLCh ch);
+    virtual int put(XMLCh ch);
 
     virtual DOMString &getString()
         { return buffer; }

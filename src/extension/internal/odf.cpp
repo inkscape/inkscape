@@ -1361,9 +1361,9 @@ bool OdfOutput::writeStyle(Writer &outs)
     outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"none\"\n");
     outs.printf("       draw:textarea-horizontal-align=\"center\"\n");
     outs.printf("       draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\"\n");
-    outs.printf("       draw:luminance=\"0%\" draw:contrast=\"0%\" draw:gamma=\"100%\" draw:red=\"0%\"\n");
-    outs.printf("       draw:green=\"0%\" draw:blue=\"0%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\"\n");
-    outs.printf("       draw:image-opacity=\"100%\" style:mirror=\"none\"/>\n");
+    outs.printf("       draw:luminance=\"0%%\" draw:contrast=\"0%%\" draw:gamma=\"100%%\" draw:red=\"0%%\"\n");
+    outs.printf("       draw:green=\"0%%\" draw:blue=\"0%%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\"\n");
+    outs.printf("       draw:image-opacity=\"100%%\" style:mirror=\"none\"/>\n");
     outs.printf("</style:style>\n");
     outs.printf("<style:style style:name=\"P1\" style:family=\"paragraph\">\n");
     outs.printf("  <style:paragraph-properties fo:text-align=\"center\"/>\n");

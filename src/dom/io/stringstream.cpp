@@ -140,9 +140,10 @@ void StringOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */
-void StringOutputStream::put(XMLCh ch)
+int StringOutputStream::put(XMLCh ch)
 {
     buffer.push_back(ch);
+    return 1;
 }
 
 
