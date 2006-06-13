@@ -1345,12 +1345,13 @@ Pasting size
        file type selections, and extension names can all be translated by
        translators.
 
-     * Inkscape is now significantly translated to 15 languages: Basque,
+     * Inkscape is now significantly translated to 17 languages: Basque,
        Catalan, Czech, French, German, Hungarian, Italian, Lithuanian,
-       Russian, Serbian (Cyrillic and Latin), Simplified Chinese, Slovenian,
-       Spanish and Traditional Chinese. Additionally, 23 more languages have
-       some level of translation. Average translation ratio has increased
-       from 49% to 58% in this release.
+       Norwegian (bokmaal dialect), Polish, Russian, Serbian (Cyrillic and
+       Latin), Simplified Chinese, Slovenian, Spanish and Traditional
+       Chinese. Additionally, 21 more languages have some level of
+       translation. Average translation ratio has increased from 49% to 59%
+       in this release.
 
      * Some new translations of tutorials have been brought by contributors:
        Czech, Portuguese (Brazilian) and Russian.
@@ -1449,6 +1450,6 @@ Pasting size
 
    Retrieved from "http://wiki.inkscape.org/wiki/index.php/Release_Notes"
 
-   This page has been accessed 19,267 times. This page was last modified
-   07:44, 12 June 2006.
+   This page has been accessed 19,310 times. This page was last modified
+   19:45, 13 June 2006.
 
