@@ -7,7 +7,7 @@
 ; DEFINES
 ; #######################################
 !define PRODUCT_NAME "Inkscape"
-!define PRODUCT_VERSION "0.43+devel"
+!define PRODUCT_VERSION "0.43+0.44pre4"
 !define PRODUCT_PUBLISHER "Inkscape Organization"
 !define PRODUCT_WEB_SITE "http://www.inkscape.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
