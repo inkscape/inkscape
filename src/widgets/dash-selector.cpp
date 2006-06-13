@@ -56,6 +56,7 @@ static double **dashes = NULL;
 static void sp_dash_selector_class_init (SPDashSelectorClass *klass);
 static void sp_dash_selector_init (SPDashSelector *dsel);
 static GtkWidget *sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern);
+static void sp_dash_selector_menu_item_image_realize (GtkWidget *mi, double *pattern);
 static void sp_dash_selector_dash_activate (GtkObject *object, SPDashSelector *dsel);
 static void sp_dash_selector_offset_value_changed (GtkAdjustment *adj, SPDashSelector *dsel);
 
@@ -255,8 +256,22 @@ static GtkWidget *
 sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 {
 	GtkWidget *mi = gtk_menu_item_new ();
+	GtkWidget *px = gtk_image_new_from_pixmap (NULL, NULL);
 
-	GdkPixmap *pixmap = gdk_pixmap_new (GTK_WIDGET (dsel)->window, DASH_PREVIEW_LENGTH + 4, 16, gdk_visual_get_best_depth ());
+	gtk_widget_show (px);
+	gtk_container_add (GTK_CONTAINER (mi), px);
+
+	gtk_object_set_data (GTK_OBJECT (mi), "pattern", pattern);
+	gtk_object_set_data (GTK_OBJECT (mi), "px", px);
+	gtk_signal_connect (GTK_OBJECT (mi), "activate", G_CALLBACK (sp_dash_selector_dash_activate), dsel);
+
+	g_signal_connect_after(G_OBJECT(px), "realize", G_CALLBACK(sp_dash_selector_menu_item_image_realize), pattern);
+
+	return mi;
+}
+
+static void sp_dash_selector_menu_item_image_realize (GtkWidget *px, double *pattern) {
+	GdkPixmap *pixmap = gdk_pixmap_new(px->window, DASH_PREVIEW_LENGTH + 4, 16, -1);
 	GdkGC *gc = gdk_gc_new (pixmap);
 
 	gdk_rgb_gc_set_foreground (gc, 0xffffffff);
@@ -350,17 +365,8 @@ sp_dash_selector_menu_item_new (SPDashSelector *dsel, double *pattern)
 
 	gdk_gc_unref (gc);
 
-	GtkWidget *px = gtk_pixmap_new (pixmap, NULL);
-
-	gdk_pixmap_unref (pixmap);
-
-	gtk_widget_show (px);
-	gtk_container_add (GTK_CONTAINER (mi), px);
-
-	gtk_object_set_data (GTK_OBJECT (mi), "pattern", pattern);
-	gtk_signal_connect (GTK_OBJECT (mi), "activate", G_CALLBACK (sp_dash_selector_dash_activate), dsel);
-
-	return mi;
+	gtk_image_set_from_pixmap(GTK_IMAGE(px), pixmap, NULL);
+	gdk_pixmap_unref(pixmap);
 }
 
 static void
