@@ -24,7 +24,7 @@
 # include <string.h>
 #endif
 
-#include <gdk/gdkpixbuf.h>
+#include <gtkmm.h>
 
 #include <vector>
 #include <sp-shape.h>
@@ -133,7 +133,8 @@ class TracingEngine
      *  compatible with the d="" attribute
      *  of an SVG <path> element.
      */
-    virtual  TracingEngineResult *trace(GdkPixbuf *pixbuf, int *nrPaths)
+    virtual  TracingEngineResult *trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
+                                        int *nrPaths)
         { return NULL; }
 
 
@@ -189,7 +190,7 @@ public:
      *  A convenience method to allow other software to 'see' the
      *  same image that this class sees.
      */
-    GdkPixbuf *getSelectedImage();
+    Glib::RefPtr<Gdk::Pixbuf> getSelectedImage();
 
     /**
      * This is the main working method.  Trace the selected image, if
@@ -235,7 +236,11 @@ private:
 
     bool sioxEnabled;
 
-    GdkPixbuf *sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf);
+    Glib::RefPtr<Gdk::Pixbuf> sioxProcessImage(
+           SPImage *img, Glib::RefPtr<Gdk::Pixbuf> origPixbuf);
+
+    Glib::RefPtr<Gdk::Pixbuf> lastSioxPixbuf;
+    Glib::RefPtr<Gdk::Pixbuf> lastOrigPixbuf;
 
 };//class Tracer
 

@@ -232,20 +232,19 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
     pte.setMultiScanSmooth(do_i_smooth);
 
     //##### Get intermediate bitmap image
-    GdkPixbuf *pixbuf = tracer.getSelectedImage();
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf = tracer.getSelectedImage();
     if (pixbuf)
          {
-         GdkPixbuf *preview = pte.preview(pixbuf);
+         Glib::RefPtr<Gdk::Pixbuf> preview = pte.preview(pixbuf);
          if (preview)
              {
-             Glib::RefPtr<Gdk::Pixbuf> thePreview = Glib::wrap(preview);
-             int width  = thePreview->get_width();
-             int height = thePreview->get_height();
+             int width  = preview->get_width();
+             int height = preview->get_height();
              double scaleFactor = 100.0 / (double)height;
              int newWidth  = (int) (((double)width)  * scaleFactor);
              int newHeight = (int) (((double)height) * scaleFactor);
              Glib::RefPtr<Gdk::Pixbuf> scaledPreview =
-                    thePreview->scale_simple(newWidth, newHeight,
+                    preview->scale_simple(newWidth, newHeight,
                        Gdk::INTERP_NEAREST);
              //g_object_unref(preview);
              potracePreviewImage.set(scaledPreview);

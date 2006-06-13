@@ -54,15 +54,16 @@ namespace siox
 /**
  *
  */
-class CLAB
+class CieLab
 {
 public:
 
     /**
      *
      */
-    CLAB()
+    CieLab()
         {
+        init();
         C = 0;
         L = A = B = 0.0f;
         }
@@ -71,14 +72,15 @@ public:
     /**
      *
      */
-    CLAB(unsigned long rgb);
+    CieLab(unsigned long rgb);
 
 
     /**
      *
      */
-    CLAB(float lArg, float aArg, float bArg)
+    CieLab(float lArg, float aArg, float bArg)
         {
+        init();
         C = 0;
         L = lArg;
         A = aArg;
@@ -89,8 +91,9 @@ public:
     /**
      *
      */
-    CLAB(const CLAB &other)
+    CieLab(const CieLab &other)
         {
+        init();
         C = other.C;
         L = other.L;
         A = other.A;
@@ -101,8 +104,9 @@ public:
     /**
      *
      */
-    CLAB &operator=(const CLAB &other)
+    CieLab &operator=(const CieLab &other)
         {
+        init();
         C = other.C;
         L = other.L;
         A = other.A;
@@ -113,11 +117,11 @@ public:
     /**
      *
      */
-    virtual ~CLAB()
+    virtual ~CieLab()
         {}
 
     /**
-     * Retrieve a CLAB value via index.
+     * Retrieve a CieLab value via index.
      */
     virtual float operator()(unsigned int index)
         {
@@ -131,7 +135,7 @@ public:
     /**
      *
      */
-    virtual void add(const CLAB &other)
+    virtual void add(const CieLab &other)
         {
         C += other.C;
         L += other.L;
@@ -157,13 +161,33 @@ public:
     virtual unsigned long toRGB();
 
     /**
-     * Computes squared euclidian distance in CLAB space for two colors
+     * Approximate cube roots
+     */
+    double cbrt(double x);
+
+    /**
+     *
+     */
+    double qnrt(double x);
+
+    /**
+     * Raise to the 2.4 power
+     */
+    double pow24(double x);
+
+    /**
+     * Squared Euclidian distance between this and another color
+     */
+    float diffSq(const CieLab &other);
+
+    /**
+     * Computes squared euclidian distance in CieLab space for two colors
      * given as RGB values.
      */
     static float diffSq(unsigned int rgb1, unsigned int rgb2);
 
     /**
-     * Computes squared euclidian distance in CLAB space for two colors
+     * Computes squared euclidian distance in CieLab space for two colors
      * given as RGB values.
      */
     static float diff(unsigned int rgb0, unsigned int rgb1);
@@ -173,6 +197,13 @@ public:
     float L;
     float A;
     float B;
+
+private:
+
+    /**
+     *
+     */
+    void init();
 
 
 };
@@ -534,7 +565,7 @@ private:
      *  Stage 1 of the color signature work.  'dims' will be either
      *  2 for grays, or 3 for colors
      */
-    void colorSignatureStage1(CLAB *points,
+    void colorSignatureStage1(CieLab *points,
                               unsigned int leftBase,
                               unsigned int rightBase,
                               unsigned int recursionDepth,
@@ -544,7 +575,7 @@ private:
     /**
      *  Stage 2 of the color signature work
      */
-    void colorSignatureStage2(CLAB         *points,
+    void colorSignatureStage2(CieLab         *points,
                               unsigned int leftBase,
                               unsigned int rightBase,
                               unsigned int recursionDepth,
@@ -555,8 +586,8 @@ private:
     /**
      *  Main color signature method
      */
-    bool colorSignature(const std::vector<CLAB> &inputVec,
-                        std::vector<CLAB> &result,
+    bool colorSignature(const std::vector<CieLab> &inputVec,
+                        std::vector<CieLab> &result,
                         const unsigned int dims);
 
 
@@ -610,10 +641,7 @@ private:
      */
     float sqrEuclidianDist(float *p, int pSize, float *q);
 
-    /**
-     * Squared Euclidian distance of p and q.
-     */
-    float sqrEuclidianDist(const CLAB &p, const CLAB &q);
+
 
 
 };

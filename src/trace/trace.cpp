@@ -46,7 +46,6 @@ namespace Trace
 
 
 
-
 /**
  * Get the selected image.  Also check for any SPItems over it, in
  * case the user wants SIOX pre-processing.
@@ -211,21 +210,27 @@ public:
  * Process a GdkPixbuf, according to which areas have been
  * obscured in the GUI.
  */
-GdkPixbuf *
-Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
+Glib::RefPtr<Gdk::Pixbuf>
+Tracer::sioxProcessImage(SPImage *img,
+             Glib::RefPtr<Gdk::Pixbuf>origPixbuf)
 {
     if (!sioxEnabled)
         return origPixbuf;
 
+    if (origPixbuf == lastOrigPixbuf)
+        return lastSioxPixbuf;
+
+    //g_message("siox: start");
+
     //Convert from gdk, so a format we know.  By design, the pixel
     //format in PackedPixelMap is identical to what is needed by SIOX
-    SioxImage simage(origPixbuf);
+    SioxImage simage(origPixbuf->gobj());
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop)
         {
         g_warning(_("Trace: No active desktop"));
-        return NULL;
+        return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 
     Inkscape::MessageStack *msgStack = sp_desktop_message_stack(desktop);
@@ -236,7 +241,7 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
         char *msg = _("Select an <b>image</b> to trace");
         msgStack->flash(Inkscape::ERROR_MESSAGE, msg);
         //g_warning(msg);
-        return NULL;
+        return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 
     NRArenaItem *aImg = sp_item_get_arenaitem(img, desktop->dkey);
@@ -257,20 +262,18 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; iter++)
         {
         SPItem *item = *iter;
-        //### Create ArenaItems and set transform
         NRArenaItem *aItem = sp_item_get_arenaitem(item, desktop->dkey);
-
-        //nr_arena_item_set_transform(aItem, item->transform);
-        //g_message("%d %d %d %d\n", aItem->bbox.x0, aItem->bbox.y0,
-        //                           aItem->bbox.x1, aItem->bbox.y1);
         arenaItems.push_back(aItem);
         }
+
     //g_message("%d arena items\n", arenaItems.size());
 
     //PackedPixelMap *dumpMap = PackedPixelMapCreate(
     //                simage.getWidth(), simage.getHeight());
 
-    for (int row=0 ; row<simage.getHeight() ; row++)
+    //g_message("siox: start selection");
+
+    for (int row=0 ; row<iheight ; row++)
         {
         double ypos = ((double)aImg->bbox.y0) + ihscale * (double) row;
         for (int col=0 ; col<simage.getWidth() ; col++)
@@ -281,7 +284,6 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
             point *= aImg->transform;
             //point *= imgMat;
             //point = desktop->doc2dt(point);
-            std::vector<SPShape *>::iterator iter;
             //g_message("x:%f    y:%f\n", point[0], point[1]);
             bool weHaveAHit = false;
             std::vector<NRArenaItem *>::iterator aIter;
@@ -314,17 +316,19 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
             }
         }
 
+    //g_message("siox: selection done");
+
     //dumpMap->writePPM(dumpMap, "siox1.ppm");
     //dumpMap->destroy(dumpMap);
 
     //## ok we have our pixel buf
-    org::siox::Siox sengine;
-    org::siox::SioxImage result =
-            sengine.extractForeground(simage, 0xffffff);
+    TraceSioxObserver observer(this);
+    Siox sengine(&observer);
+    SioxImage result = sengine.extractForeground(simage, 0xffffff);
     if (!result.isValid())
         {
         g_warning(_("Invalid SIOX result"));
-        return NULL;
+        return Glib::RefPtr<Gdk::Pixbuf>(NULL);
         }
 
     //result.writePPM("siox2.ppm");
@@ -340,7 +344,11 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
     nr_object_unref((NRObject *) arena);
     */
 
-    GdkPixbuf *newPixbuf = result.getGdkPixbuf();
+    Glib::RefPtr<Gdk::Pixbuf> newPixbuf = Glib::wrap(result.getGdkPixbuf());
+
+    //g_message("siox: done");
+
+    lastSioxPixbuf = newPixbuf;
 
     return newPixbuf;
 }
@@ -349,24 +357,27 @@ Tracer::sioxProcessImage(SPImage *img, GdkPixbuf *origPixbuf)
 /**
  *
  */
-GdkPixbuf *
+Glib::RefPtr<Gdk::Pixbuf>
 Tracer::getSelectedImage()
 {
 
+
     SPImage *img = getSelectedSPImage();
     if (!img)
-        return NULL;
+        return Glib::RefPtr<Gdk::Pixbuf>(NULL);
 
-    GdkPixbuf *pixbuf = img->pixbuf;
-    if (!pixbuf)
-        return NULL;
+    if (!img->pixbuf)
+        return Glib::RefPtr<Gdk::Pixbuf>(NULL);
+
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf =
+          Glib::wrap(img->pixbuf, true);
 
     if (sioxEnabled)
         {
-        GdkPixbuf *sioxPixbuf = sioxProcessImage(img, pixbuf);
+        Glib::RefPtr<Gdk::Pixbuf> sioxPixbuf =
+             sioxProcessImage(img, pixbuf);
         if (!sioxPixbuf)
             {
-            g_object_ref(pixbuf);
             return pixbuf;
             }
         else
@@ -376,7 +387,6 @@ Tracer::getSelectedImage()
         }
     else
         {
-        g_object_ref(pixbuf);
         return pixbuf;
         }
 
@@ -439,8 +449,7 @@ void Tracer::traceThread()
         return;
         }
 
-    GdkPixbuf *pixbuf = img->pixbuf;
-    g_object_ref(pixbuf);
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(img->pixbuf, true);
 
     pixbuf = sioxProcessImage(img, pixbuf);
 
@@ -487,8 +496,8 @@ void Tracer::traceThread()
 
     NR::Matrix trans(NR::translate(x, y));
 
-    double iwidth  = (double)gdk_pixbuf_get_width(pixbuf);
-    double iheight = (double)gdk_pixbuf_get_height(pixbuf);
+    double iwidth  = (double)pixbuf->get_width();
+    double iheight = (double)pixbuf->get_height();
 
     double iwscale = width  / iwidth;
     double ihscale = height / iheight;
@@ -542,9 +551,6 @@ void Tracer::traceThread()
             }
         Inkscape::GC::release(pathRepr);
         }
-
-    //release our pixbuf
-    g_object_unref(pixbuf);
 
     delete results;
 

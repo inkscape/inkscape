@@ -34,7 +34,7 @@ namespace siox
 //#  C L A B
 //########################################################################
 
-static std::map<unsigned long, CLAB> clabLookupTable;
+static std::map<unsigned long, CieLab> clabLookupTable;
 
 /**
  * Convert integer A, R, G, B values into an pixel value.
@@ -71,17 +71,71 @@ static unsigned long getRGB(float a, float r, float g, float b)
 
 
 
-/**
- * Construct this CLAB from a packed-pixel ARGB value
- */
-CLAB::CLAB(unsigned long rgb)
+//#########################################
+//# Root approximations for large speedup.
+//# By njh!
+//#########################################
+static const int ROOT_TAB_SIZE = 16;
+static float cbrt_table[ROOT_TAB_SIZE +1];
+
+double CieLab::cbrt(double x)
 {
+    double y = cbrt_table[int(x*ROOT_TAB_SIZE )]; // assuming x \in [0, 1]
+    y = (2.0 * y + x/(y*y))/3.0;
+    y = (2.0 * y + x/(y*y))/3.0; // polish twice
+    return y;
+}
+
+static float qn_table[ROOT_TAB_SIZE +1];
+
+double CieLab::qnrt(double x)
+{
+    double y = qn_table[int(x*ROOT_TAB_SIZE )]; // assuming x \in [0, 1]
+    double Y = y*y;
+    y = (4.0*y + x/(Y*Y))/5.0;
+    Y = y*y;
+    y = (4.0*y + x/(Y*Y))/5.0; // polish twice
+    return y;
+}
+
+double CieLab::pow24(double x)
+{
+    double onetwo = x*qnrt(x);
+    return onetwo*onetwo;
+}
+
+
+static bool _clab_inited_ = false;
+void CieLab::init()
+{
+    if (!_clab_inited_)
+        {
+        cbrt_table[0] = pow(float(1)/float(ROOT_TAB_SIZE*2), 0.3333);
+	qn_table[0]   = pow(float(1)/float(ROOT_TAB_SIZE*2), 0.2);
+        for(int i = 1; i < ROOT_TAB_SIZE +1; i++)
+            {
+            cbrt_table[i] = pow(float(i)/float(ROOT_TAB_SIZE), 0.3333);
+            qn_table[i] = pow(float(i)/float(ROOT_TAB_SIZE), 0.2);
+            }
+        _clab_inited_ = true;
+        }
+}
+	
+
+
+/**
+ * Construct this CieLab from a packed-pixel ARGB value
+ */
+CieLab::CieLab(unsigned long rgb)
+{
+    init();
+
     //First try looking up in the cache
-    std::map<unsigned long, CLAB>::iterator iter;
+    std::map<unsigned long, CieLab>::iterator iter;
     iter = clabLookupTable.find(rgb);
     if (iter != clabLookupTable.end())
         {
-        CLAB res = iter->second;
+        CieLab res = iter->second;
         C = res.C;
         L = res.L;
         A = res.A;
@@ -97,18 +151,22 @@ CLAB::CLAB(unsigned long rgb)
     float fg = ((float)ig) / 255.0;
     float fb = ((float)ib) / 255.0;
 
+    //printf("fr:%f fg:%f fb:%f\n", fr, fg, fb);
     if (fr > 0.04045)
-        fr = (float) pow((fr + 0.055) / 1.055, 2.4);
+        //fr = (float) pow((fr + 0.055) / 1.055, 2.4);
+        fr = (float) pow24((fr + 0.055) / 1.055);
     else
         fr = fr / 12.92;
 
     if (fg > 0.04045)
-        fg = (float) pow((fg + 0.055) / 1.055, 2.4);
+        //fg = (float) pow((fg + 0.055) / 1.055, 2.4);
+        fg = (float) pow24((fg + 0.055) / 1.055);
     else
         fg = fg / 12.92;
 
     if (fb > 0.04045)
-        fb = (float) pow((fb + 0.055) / 1.055, 2.4);
+        //fb = (float) pow((fb + 0.055) / 1.055, 2.4);
+        fb = (float) pow24((fb + 0.055) / 1.055);
     else
         fb = fb / 12.92;
 
@@ -125,18 +183,22 @@ CLAB::CLAB(unsigned long rgb)
     float vy = y / 100.000;
     float vz = z / 108.883;
 
+    //printf("vx:%f vy:%f vz:%f\n", vx, vy, vz);
     if (vx > 0.008856)
-        vx = (float) pow(vx, 0.3333);
+        //vx = (float) pow(vx, 0.3333);
+        vx = (float) cbrt(vx);
     else
         vx = (7.787 * vx) + (16.0 / 116.0);
 
     if (vy > 0.008856)
-        vy = (float) pow(vy, 0.3333);
+        //vy = (float) pow(vy, 0.3333);
+        vy = (float) cbrt(vy);
     else
         vy = (7.787 * vy) + (16.0 / 116.0);
 
     if (vz > 0.008856)
-        vz = (float) pow(vz, 0.3333);
+        //vz = (float) pow(vz, 0.3333);
+        vz = (float) cbrt(vz);
     else
         vz = (7.787 * vz) + (16.0 / 116.0);
 
@@ -153,9 +215,9 @@ CLAB::CLAB(unsigned long rgb)
 
 
 /**
- * Return this CLAB's value a a packed-pixel ARGB value
+ * Return this CieLab's value a a packed-pixel ARGB value
  */
-unsigned long CLAB::toRGB()
+unsigned long CieLab::toRGB()
 {
     float vy = (L + 16.0) / 116.0;
     float vx = A / 500.0 + vy;
@@ -212,29 +274,39 @@ unsigned long CLAB::toRGB()
 
 
 /**
- * Computes squared euclidian distance in CLAB space for two colors
+ * Squared Euclidian distance between this and another color
+ */
+float CieLab::diffSq(const CieLab &other)
+{
+    float sum=0.0;
+    sum += (L - other.L) * (L - other.L);
+    sum += (A - other.A) * (A - other.A);
+    sum += (B - other.B) * (B - other.B);
+    return sum;
+}
+
+/**
+ * Computes squared euclidian distance in CieLab space for two colors
  * given as RGB values.
  */
-float CLAB::diffSq(unsigned int rgb1, unsigned int rgb2)
+float CieLab::diffSq(unsigned int rgb1, unsigned int rgb2)
 {
-    CLAB c1(rgb1);
-    CLAB c2(rgb2);
-    float euclid=0.0f;
-    euclid += (c1.L - c2.L) * (c1.L - c2.L);
-    euclid += (c1.A - c2.A) * (c1.A - c2.A);
-    euclid += (c1.B - c2.B) * (c1.B - c2.B);
+    CieLab c1(rgb1);
+    CieLab c2(rgb2);
+    float euclid = c1.diffSq(c2);
     return euclid;
 }
 
 
 /**
- * Computes squared euclidian distance in CLAB space for two colors
+ * Computes squared euclidian distance in CieLab space for two colors
  * given as RGB values.
  */
-float CLAB::diff(unsigned int rgb0, unsigned int rgb1)
+float CieLab::diff(unsigned int rgb0, unsigned int rgb1)
 {
     return (float) sqrt(diffSq(rgb0, rgb1));
 }
+
 
 
 //########################################################################
@@ -743,6 +815,8 @@ bool Siox::progressReport(float percentCompleted)
 SioxImage Siox::extractForeground(const SioxImage &originalImage,
                                   unsigned int backgroundFillColor)
 {
+    trace("### Start");
+
     init();
     keepGoing = true;
 
@@ -759,26 +833,42 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
     trace("### Creating signatures");
 
     //#### create color signatures
-    std::vector<CLAB> knownBg;
-    std::vector<CLAB> knownFg;
-    std::vector<CLAB> imageClab;
+    std::vector<CieLab> knownBg;
+    std::vector<CieLab> knownFg;
+    CieLab *imageClab = new CieLab[pixelCount];
+    for (unsigned long i=0 ; i<pixelCount ; i++)
+        {
+        float conf = cm[i];
+        unsigned int pix = image[i];
+        CieLab lab(pix);
+        imageClab[i] = lab;
+        if (conf <= BACKGROUND_CONFIDENCE)
+            knownBg.push_back(lab);
+        else if (conf >= FOREGROUND_CONFIDENCE)
+            knownFg.push_back(lab);
+        }
+
+    /*
+    std::vector<CieLab> imageClab;
     for (int y = 0 ; y < workImage.getHeight() ; y++)
         for (int x = 0 ; x < workImage.getWidth() ; x++)
             {
             float cm = workImage.getConfidence(x, y);
             unsigned int pix = workImage.getPixel(x, y);
-            CLAB lab(pix);
+            CieLab lab(pix);
             imageClab.push_back(lab);
             if (cm <= BACKGROUND_CONFIDENCE)
-                knownBg.push_back(lab); //note: uses CLAB(rgb)
+                knownBg.push_back(lab); //note: uses CieLab(rgb)
             else if (cm >= FOREGROUND_CONFIDENCE)
                 knownFg.push_back(lab);
             }
+    */
 
     if (!progressReport(10.0))
         {
         error("User aborted");
         workImage.setValid(false);
+        delete[] imageClab;
         delete[] labelField;
         return workImage;
         }
@@ -786,11 +876,12 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
     trace("knownBg:%d knownFg:%d", knownBg.size(), knownFg.size());
 
 
-    std::vector<CLAB> bgSignature ;
+    std::vector<CieLab> bgSignature ;
     if (!colorSignature(knownBg, bgSignature, 3))
         {
         error("Could not create background signature");
         workImage.setValid(false);
+        delete[] imageClab;
         delete[] labelField;
         return workImage;
         }
@@ -799,16 +890,18 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         {
         error("User aborted");
         workImage.setValid(false);
+        delete[] imageClab;
         delete[] labelField;
         return workImage;
         }
 
 
-    std::vector<CLAB> fgSignature ;
+    std::vector<CieLab> fgSignature ;
     if (!colorSignature(knownFg, fgSignature, 3))
         {
         error("Could not create foreground signature");
         workImage.setValid(false);
+        delete[] imageClab;
         delete[] labelField;
         return workImage;
         }
@@ -820,6 +913,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         // segmentation impossible
         error("Signature size is < 1.  Segmentation is impossible");
         workImage.setValid(false);
+        delete[] imageClab;
         delete[] labelField;
         return workImage;
         }
@@ -828,6 +922,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         {
         error("User aborted");
         workImage.setValid(false);
+        delete[] imageClab;
         delete[] labelField;
         return workImage;
         }
@@ -835,6 +930,8 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
 
     // classify using color signatures,
     // classification cached in hashmap for drb and speedup purposes
+    trace("### Analyzing image");
+
     std::map<unsigned int, Tupel> hs;
     
     unsigned int progressResolution = pixelCount / 10;
@@ -844,10 +941,12 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         if (i % progressResolution == 0)
             {
             float progress = 
-                30.0 + 60.0 * (float)i / (float)progressResolution;
+                30.0 + 60.0 * (float)i / (float)pixelCount;
+            //trace("### progress:%f", progress);
             if (!progressReport(progress))
                 {
                 error("User aborted");
+                delete[] imageClab;
                 delete[] labelField;
                 workImage.setValid(false);
                 return workImage;
@@ -868,17 +967,17 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
             std::map<unsigned int, Tupel>::iterator iter = hs.find(i);
             if (iter != hs.end()) //found
                 {
-                Tupel tupel = iter->second;
+                Tupel tupel  = iter->second;
                 isBackground = tupel.minBgDist <= tupel.minFgDist;
                 }
             else
                 {
-                CLAB lab = imageClab[i];
-                float minBg = sqrEuclidianDist(lab, bgSignature[0]);
-                int minIndex=0;
+                CieLab lab   = imageClab[i];
+                float minBg  = lab.diffSq(bgSignature[0]);
+                int minIndex = 0;
                 for (unsigned int j=1; j<bgSignature.size() ; j++)
                     {
-                    float d = sqrEuclidianDist(lab, bgSignature[j]);
+                    float d = lab.diffSq(bgSignature[j]);
                     if (d<minBg)
                         {
                         minBg    = d;
@@ -888,11 +987,11 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
                 Tupel tupel(0.0f, 0,  0.0f, 0);
                 tupel.minBgDist  = minBg;
                 tupel.indexMinBg = minIndex;
-                float minFg = 1.0e6f;
-                minIndex = -1;
+                float minFg      = 1.0e6f;
+                minIndex         = -1;
                 for (unsigned int j = 0 ; j < fgSignature.size() ; j++)
                     {
-                    float d = sqrEuclidianDist(lab, fgSignature[j]);
+                    float d = lab.diffSq(fgSignature[j]);
                     if (d < minFg)
                         {
                         minFg    = d;
@@ -903,7 +1002,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
                 tupel.indexMinFg = minIndex;
                 if (fgSignature.size() == 0)
                     {
-                    isBackground=(minBg <= clusterSize);
+                    isBackground = (minBg <= clusterSize);
                     // remove next line to force behaviour of old algorithm
                     //error("foreground signature does not exist");
                     //delete[] labelField;
@@ -925,18 +1024,19 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         }
 
 
+    delete[] imageClab;
 
     trace("### postProcessing");
 
 
-    //## postprocessing
-    smooth(cm, width, height, 0.33f, 0.33f, 0.33f); // average
+    //#### postprocessing
+    smooth(cm, width, height, 0.333f, 0.333f, 0.333f); // average
     normalizeMatrix(cm, pixelCount);
     erode(cm, width, height);
     keepOnlyLargeComponents(UNKNOWN_REGION_CONFIDENCE, 1.0/*sizeFactorToKeep*/);
 
-    for (int i=0; i < 2/*smoothness*/; i++)
-        smooth(cm, width, height, 0.33f, 0.33f, 0.33f); // average
+    //for (int i=0; i < 2/*smoothness*/; i++)
+    //    smooth(cm, width, height, 0.333f, 0.333f, 0.333f); // average
 
     normalizeMatrix(cm, pixelCount);
 
@@ -961,16 +1061,13 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
         }
 
 
-    //#### Yaay.  We are done.  Now clear everything but the background
-    for (unsigned int y = 0 ; y < height ; y++)
-        for (unsigned int x = 0 ; x < width ; x++)
-            {
-            float conf = workImage.getConfidence(x, y);
-            if (conf < FOREGROUND_CONFIDENCE)
-                {
-                workImage.setPixel(x, y, backgroundFillColor);
-                }
-            }
+    //#### We are done.  Now clear everything but the background
+    for (unsigned long i = 0; i<pixelCount ; i++)
+        {
+        float conf = cm[i];
+        if (conf < FOREGROUND_CONFIDENCE)
+            image[i] = backgroundFillColor;
+        }
 
     delete[] labelField;
 
@@ -1018,7 +1115,7 @@ void Siox::cleanup()
  *  Stage 1 of the color signature work.  'dims' will be either
  *  2 for grays, or 3 for colors
  */
-void Siox::colorSignatureStage1(CLAB *points,
+void Siox::colorSignatureStage1(CieLab *points,
                                 unsigned int leftBase,
                                 unsigned int rightBase,
                                 unsigned int recursionDepth,
@@ -1027,7 +1124,7 @@ void Siox::colorSignatureStage1(CLAB *points,
 {
 
     unsigned int currentDim = recursionDepth % dims;
-    CLAB point = points[leftBase];
+    CieLab point = points[leftBase];
     float min = point(currentDim);
     float max = min;
 
@@ -1084,7 +1181,7 @@ void Siox::colorSignatureStage1(CLAB *points,
     else
         {
         //create a leaf
-        CLAB newpoint;
+        CieLab newpoint;
 
         newpoint.C = rightBase - leftBase;
 
@@ -1107,7 +1204,7 @@ void Siox::colorSignatureStage1(CLAB *points,
 /**
  *  Stage 2 of the color signature work
  */
-void Siox::colorSignatureStage2(CLAB         *points,
+void Siox::colorSignatureStage2(CieLab         *points,
                                 unsigned int leftBase,
                                 unsigned int rightBase,
                                 unsigned int recursionDepth,
@@ -1118,7 +1215,7 @@ void Siox::colorSignatureStage2(CLAB         *points,
 
   
     unsigned int currentDim = recursionDepth % dims;
-    CLAB point = points[leftBase];
+    CieLab point = points[leftBase];
     float min = point(currentDim);
     float max = min;
 
@@ -1182,7 +1279,7 @@ void Siox::colorSignatureStage2(CLAB         *points,
         if ((float)sum >= threshold)
             {
             float scale = (float)(rightBase - leftBase);
-            CLAB newpoint;
+            CieLab newpoint;
 
             for (; leftBase < rightBase; leftBase++)
                 newpoint.add(points[leftBase]);
@@ -1200,8 +1297,8 @@ void Siox::colorSignatureStage2(CLAB         *points,
 /**
  *  Main color signature method
  */
-bool Siox::colorSignature(const std::vector<CLAB> &inputVec,
-                          std::vector<CLAB> &result,
+bool Siox::colorSignature(const std::vector<CieLab> &inputVec,
+                          std::vector<CieLab> &result,
                           const unsigned int dims)
 {
 
@@ -1210,7 +1307,7 @@ bool Siox::colorSignature(const std::vector<CLAB> &inputVec,
     if (length < 1) // no error. just don't do anything
         return true;
 
-    CLAB *input = (CLAB *) malloc(length * sizeof(CLAB));
+    CieLab *input = (CieLab *) malloc(length * sizeof(CieLab));
 
     if (!input)
         {
@@ -1389,7 +1486,7 @@ void Siox::fillColorRegions()
             // check all four neighbours
             int left = pos-1;
             if (((int)x)-1 >= 0 && labelField[left] == -1
-                        && CLAB::diff(image[left], origColor)<1.0)
+                        && CieLab::diff(image[left], origColor)<1.0)
                 {
                 labelField[left]=curLabel;
                 cm[left]=CERTAIN_FOREGROUND_CONFIDENCE;
@@ -1398,7 +1495,7 @@ void Siox::fillColorRegions()
                 }
             int right = pos+1;
             if (x+1 < width && labelField[right]==-1
-                        && CLAB::diff(image[right], origColor)<1.0)
+                        && CieLab::diff(image[right], origColor)<1.0)
                 {
                 labelField[right]=curLabel;
                 cm[right]=CERTAIN_FOREGROUND_CONFIDENCE;
@@ -1407,7 +1504,7 @@ void Siox::fillColorRegions()
                 }
             int top = pos - width;
             if (((int)y)-1>=0 && labelField[top]==-1
-                        && CLAB::diff(image[top], origColor)<1.0)
+                        && CieLab::diff(image[top], origColor)<1.0)
                 {
                 labelField[top]=curLabel;
                 cm[top]=CERTAIN_FOREGROUND_CONFIDENCE;
@@ -1416,7 +1513,7 @@ void Siox::fillColorRegions()
                 }
             int bottom = pos + width;
             if (y+1 < height && labelField[bottom]==-1
-                        && CLAB::diff(image[bottom], origColor)<1.0)
+                        && CieLab::diff(image[bottom], origColor)<1.0)
                 {
                 labelField[bottom]=curLabel;
                 cm[bottom]=CERTAIN_FOREGROUND_CONFIDENCE;
@@ -1610,20 +1707,6 @@ float Siox::sqrEuclidianDist(float *p, int pSize, float *q)
         }
     return sum;
 }
-
-/**
- * Squared Euclidian distance of p and q.
- */
-float Siox::sqrEuclidianDist(const CLAB &p, const CLAB &q)
-{
-    float sum=0;
-    sum += (p.L - q.L) * (p.L - q.L);
-    sum += (p.A - q.A) * (p.A - q.A);
-    sum += (p.B - q.B) * (p.B - q.B);
-    return sum;
-}
-
-
 
 
 

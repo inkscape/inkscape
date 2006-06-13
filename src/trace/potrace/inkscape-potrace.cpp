@@ -13,8 +13,10 @@
  *
  */
 
+#include "inkscape-potrace.h"
+
 #include <glibmm/i18n.h>
-#include <gtkmm/main.h>
+#include <gtkmm.h>
 
 #include "trace/filterset.h"
 #include "trace/imagemap-gdk.h"
@@ -27,7 +29,6 @@
 #include "curve.h"
 #include "bitmap.h"
 
-#include "inkscape-potrace.h"
 
 
 static void updateGui()
@@ -326,17 +327,20 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
 
 
 
-GdkPixbuf *
-PotraceTracingEngine::preview(GdkPixbuf * pixbuf)
+Glib::RefPtr<Gdk::Pixbuf>
+PotraceTracingEngine::preview(Glib::RefPtr<Gdk::Pixbuf> thePixbuf)
 {
+    GdkPixbuf *pixbuf = thePixbuf->gobj();
+
     if ( traceType == TRACE_QUANT_COLOR ||
          traceType == TRACE_QUANT_MONO   )
         {
         IndexedMap *gm = filterIndexed(*this, pixbuf);
         if (!gm)
-            return NULL;
+            return Glib::RefPtr<Gdk::Pixbuf>(NULL);
 
-        GdkPixbuf *newBuf = indexedMapToGdkPixbuf(gm);
+        Glib::RefPtr<Gdk::Pixbuf> newBuf =
+             Glib::wrap(indexedMapToGdkPixbuf(gm), false);
 
         gm->destroy(gm);
 
@@ -346,9 +350,10 @@ PotraceTracingEngine::preview(GdkPixbuf * pixbuf)
         {
         GrayMap *gm = filter(*this, pixbuf);
         if (!gm)
-            return NULL;
+            return Glib::RefPtr<Gdk::Pixbuf>(NULL);
 
-        GdkPixbuf *newBuf = grayMapToGdkPixbuf(gm);
+        Glib::RefPtr<Gdk::Pixbuf> newBuf =
+            Glib::wrap(grayMapToGdkPixbuf(gm), false);
 
         gm->destroy(gm);
 
@@ -668,8 +673,11 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
  *  of an SVG <path> element.
  */
 TracingEngineResult *
-PotraceTracingEngine::trace(GdkPixbuf * thePixbuf, int *nrPaths)
+PotraceTracingEngine::trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
+                            int *nrPaths)
 {
+
+    GdkPixbuf *thePixbuf = pixbuf->gobj();
 
     //Set up for messages
     keepGoing             = 1;

@@ -16,7 +16,7 @@
 #ifndef __INKSCAPE_POTRACE_H__
 #define __INKSCAPE_POTRACE_H__
 
-#include <glib.h>
+#include <gtkmm.h>
 #include <trace/trace.h>
 #include <trace/imagemap.h>
 
@@ -165,7 +165,8 @@ class PotraceTracingEngine : public TracingEngine
      *  return the path data that is compatible with the d="" attribute
      *  of an SVG <path> element.
      */
-    virtual TracingEngineResult *trace(GdkPixbuf *pixbuf, int *nrPaths);
+    virtual TracingEngineResult *trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
+                                       int *nrPaths);
 
     /**
      *  Abort the thread that is executing getPathDataFromPixbuf()
@@ -175,7 +176,7 @@ class PotraceTracingEngine : public TracingEngine
     /**
      *
      */
-    GdkPixbuf *preview(GdkPixbuf * pixbuf);
+    Glib::RefPtr<Gdk::Pixbuf> preview(Glib::RefPtr<Gdk::Pixbuf> pixbuf);
 
     /**
      *
