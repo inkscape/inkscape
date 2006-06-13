@@ -1345,14 +1345,15 @@ Pasting size
        file type selections, and extension names can all be translated by
        translators.
 
-     * Now, 38 languages are translated, of which 14 significantly: Catalan,
-       Czech, German, Spanish, French, Hungarian, Italian, Lituanian,
-       Russian, Slovene, Serbian, Latine Serbian, Simplified Chinese and
-       Traditional Chinese. Average translation ratio has increased from 49%
-       to 57%.
+     * Inkscape is now significantly translated to 15 languages: Basque,
+       Catalan, Czech, French, German, Hungarian, Italian, Lithuanian,
+       Russian, Serbian (Cyrillic and Latin), Simplified Chinese, Slovenian,
+       Spanish and Traditional Chinese. Additionally, 23 more languages have
+       some level of translation. Average translation ratio has increased
+       from 49% to 58% in this release.
 
-     * Some new translations of tutorials have been brought by contributors :
-       Czech, Portuguese (Brazil) and Russian.
+     * Some new translations of tutorials have been brought by contributors:
+       Czech, Portuguese (Brazilian) and Russian.
 
 
                                     Internal
@@ -1405,11 +1406,10 @@ Pasting size
      * Inkscape and other Gtk programs can crash on any Linux, when the
        gtk2-engines-smooth / libsmooth package is installed. We have filed a
        bug against libsmooth which is now in gtk-engine and part of gnome.
-       Removing the package resolves the problem, however, but it would be
+       Removing the package resolves the problem. Update: this bug appears to
+       be fixed in newer versions of gtk-engines. However, but it would be
        nice if you as affected user would inform the gtk-engines maintainers
-       of the problem. See especially
-       http://bugzilla.gnome.org/show_bug.cgi?id=312115 (thanks to Thomas
-       Wood)
+       of any further problem.
      * A similar crash happens if the KDE Baghira theme or the package
        gtk_qt_engine are installed. If you experience Inkscape crashes on
        KDE, please try to install a different theme from Baghira, or
@@ -1449,6 +1449,6 @@ Pasting size
 
    Retrieved from "http://wiki.inkscape.org/wiki/index.php/Release_Notes"
 
-   This page has been accessed 18,942 times. This page was last modified
-   19:41, 10 June 2006.
+   This page has been accessed 19,267 times. This page was last modified
+   07:44, 12 June 2006.
 
