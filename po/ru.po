@@ -9,15 +9,15 @@
 # bulia byak <buliabyak@users.sf.net>, 2004.
 # Alexandre Prokoudine <avp@lrn.ru>, 2004, 2005.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006.
-#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
-#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3640 ../src/widgets/toolbox.cpp:3661
+#: ../src/widgets/toolbox.cpp:3690 ../src/widgets/toolbox.cpp:3711
+#: ../src/widgets/toolbox.cpp:3738
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-06 04:31+0400\n"
+"POT-Creation-Date: 2006-06-13 20:00+0200\n"
+"PO-Revision-Date: 2006-06-13 09:45+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -564,7 +564,7 @@ msgstr "1. Взять значение:"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
-#: ../src/ui/dialog/tracedialog.cpp:459
+#: ../src/ui/dialog/tracedialog.cpp:458
 msgid "Color"
 msgstr "Цвет"
 
@@ -1756,13 +1756,13 @@ msgstr "Центрировать строки"
 msgid "Align lines right"
 msgstr "Выровнять строки по правому краю"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
-#: ../src/widgets/toolbox.cpp:3601
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3564
+#: ../src/widgets/toolbox.cpp:3610
 msgid "Horizontal text"
 msgstr "Горизонтальный текст"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3575
+#: ../src/widgets/toolbox.cpp:3621
 msgid "Vertical text"
 msgstr "Вертикальный текст"
 
@@ -2175,7 +2175,7 @@ msgstr "Экспорт в Encapsulated Postscript"
 
 #: ../src/extension/internal/eps-out.cpp:86
 msgid "Make bounding box around full page"
-msgstr "Создать площадку вокруг целой страницы"
+msgstr "Создать рамку вокруг целой страницы"
 
 #: ../src/extension/internal/eps-out.cpp:87
 msgid "Convert text to path"
@@ -4378,7 +4378,7 @@ msgstr[2] "<b>%i</b> объектов типов <b>%i</b>"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:448
+#: ../src/seltrans.cpp:461
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4386,7 +4386,7 @@ msgstr ""
 "<b>Центр</b> вращения и перекоса: его можно перетащить; изменение размера с "
 "Shift также происходит относительно этого центра"
 
-#: ../src/seltrans.cpp:475
+#: ../src/seltrans.cpp:488
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4394,7 +4394,7 @@ msgstr ""
 "<b>Сжать или растянуть</b> выделение; с <b>Ctrl</b> — сохранять пропорцию; с "
 "<b>Shift</b> — вокруг центра вращения"
 
-#: ../src/seltrans.cpp:476
+#: ../src/seltrans.cpp:489
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4402,7 +4402,7 @@ msgstr ""
 "<b>Менять размер</b> выделения; с <b>Ctrl</b>  —сохранять пропорцию; с "
 "<b>Shift</b> — вокруг центра вращения"
 
-#: ../src/seltrans.cpp:480
+#: ../src/seltrans.cpp:493
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4410,7 +4410,7 @@ msgstr ""
 "<b>Перекашивать</b> выделение; с <b>Ctrl</b> — ограничивать угол; с "
 "<b>Shift</b> — вокруг противоположной стороны"
 
-#: ../src/seltrans.cpp:481
+#: ../src/seltrans.cpp:494
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4418,7 +4418,7 @@ msgstr ""
 "<b>Вращать</b> выделение; с <b>Ctrl</b> — ограничивать угол; с <b>Shift</b> "
 "— вокруг противоположного угла"
 
-#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
+#: ../src/seltrans.cpp:871 ../src/seltrans.cpp:983
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4426,24 +4426,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1060
+#: ../src/seltrans.cpp:1073
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Перекашивание</b>: %0.2f&#176;; <b>Ctrl</b> ограничивает угол"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1109
+#: ../src/seltrans.cpp:1122
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Вращение</b>: %0.2f&#176;; <b>Ctrl</b> ограничивает угол"
 
-#: ../src/seltrans.cpp:1153
+#: ../src/seltrans.cpp:1166
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Переместить <b>центр</b> в %s, %s"
 
-#: ../src/seltrans.cpp:1411
+#: ../src/seltrans.cpp:1424
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4536,7 +4536,7 @@ msgstr "<b>Изображение без ссылки</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Изображение</b> %d x %d: %s"
 
-#: ../src/sp-item-group.cpp:689
+#: ../src/sp-item-group.cpp:687
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -4572,7 +4572,7 @@ msgstr "втянута"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Динамическая втяжка</b>, %s на %f pt"
 
-#: ../src/sp-path.cpp:123
+#: ../src/sp-path.cpp:121
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
@@ -4599,7 +4599,7 @@ msgstr "<b>Прямоугольник</b>"
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Спираль</b> на %3f оборотов"
 
-#: ../src/sp-star.cpp:281
+#: ../src/sp-star.cpp:279
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
@@ -4607,7 +4607,7 @@ msgstr[0] "<b>Звезда</b> с %d лучом"
 msgstr[1] "<b>Звезда</b> с %d лучами"
 msgstr[2] "<b>Звезда</b> с %d лучами"
 
-#: ../src/sp-star.cpp:285
+#: ../src/sp-star.cpp:283
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -4615,7 +4615,7 @@ msgstr[0] "<b>Многоугольник</b> с %d вершиной"
 msgstr[1] "<b>Многоугольник</b> с %d вершинами"
 msgstr[2] "<b>Многоугольник</b> с %d вершинами"
 
-#: ../src/sp-switch.cpp:98
+#: ../src/sp-switch.cpp:96
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -4941,43 +4941,43 @@ msgid "<b>Click and drag</b> between shapes to create a connector."
 msgstr ""
 "<b>Щелчок с перетаскиванием</b> между фигурами создают линию соединения."
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:545
-#: ../src/trace/potrace/inkscape-potrace.cpp:646
+#: ../src/trace/potrace/inkscape-potrace.cpp:550
+#: ../src/trace/potrace/inkscape-potrace.cpp:651
 #, c-format
 msgid "Trace: %d.  %ld nodes"
 msgstr "Векторизация: %d. Узлов - %ld"
 
-#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
-#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
+#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
+#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:241
 msgid "Select an <b>image</b> to trace"
 msgstr "Выделите <b>растровое изображение</b> для векторизации"
 
-#: ../src/trace/trace.cpp:105
+#: ../src/trace/trace.cpp:104
 msgid "Select only one <b>image</b> to trace"
 msgstr "Выделите <b>растровое изображение</b> для векторизации"
 
-#: ../src/trace/trace.cpp:123
+#: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
 msgstr "Выберите изображение и один или более объектов над ним"
 
-#: ../src/trace/trace.cpp:227
+#: ../src/trace/trace.cpp:232
 #, fuzzy
 msgid "Trace: No active desktop"
 msgstr "Векторизация: Нет активного документа"
 
-#: ../src/trace/trace.cpp:326
+#: ../src/trace/trace.cpp:330
 msgid "Invalid SIOX result"
 msgstr ""
 
-#: ../src/trace/trace.cpp:425
+#: ../src/trace/trace.cpp:435
 msgid "Trace: No active document"
 msgstr "Векторизация: Нет активного документа"
 
-#: ../src/trace/trace.cpp:449
+#: ../src/trace/trace.cpp:458
 msgid "Trace: Image has no bitmap data"
 msgstr "Векторизация: В изображении нет растровых данных"
 
-#: ../src/trace/trace.cpp:564
+#: ../src/trace/trace.cpp:570
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Векторизация: Готово. Создано узлов: %ld"
@@ -5064,7 +5064,7 @@ msgstr "about.svg"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:448
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
-msgstr "Минимальный горизонтальный интервал в px между площадками"
+msgstr "Минимальный горизонтальный интервал в px между рамками"
 
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:450
@@ -5074,7 +5074,7 @@ msgstr "В:"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:458
 msgid "Minimum vertical gap (in px units) between bounding boxes"
-msgstr "Минимальный вертикальный интервал в px между площадками"
+msgstr "Минимальный вертикальный интервал в px между рамками"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:460
@@ -5205,7 +5205,7 @@ msgstr "Попробовать выравнять расстояния межд�
 msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
-msgstr "Переместить объекты так, чтобы их площадки едва-едва не пересекались"
+msgstr "Переместить объекты так, чтобы их рамки едва-едва не пересекались"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:851
 msgid "Nicely arrange selected connector network"
@@ -5469,7 +5469,7 @@ msgstr "П_лощадки прилипают к объектам"
 
 #: ../src/ui/dialog/document-properties.cpp:289
 msgid "Snap the edges of the object bounding boxes to other objects"
-msgstr "Края площадки объекта прилипают к другим объектам"
+msgstr "Края рамки объекта прилипают к другим объектам"
 
 #: ../src/ui/dialog/document-properties.cpp:291
 msgid "Snap nodes _to objects"
@@ -5523,7 +5523,7 @@ msgstr "Пло_щадки прилипают к сетке"
 #: ../src/ui/dialog/document-properties.cpp:305
 #: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap the edges of the object bounding boxes"
-msgstr "Прилипать краями площадки объекта"
+msgstr "Прилипать краями рамки объекта"
 
 #: ../src/ui/dialog/document-properties.cpp:307
 msgid "Snap nodes to _grid"
@@ -5554,7 +5554,7 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:314
 msgid "Snap bounding boxes to g_uides"
-msgstr "Площадки прилипают к направля_ющим"
+msgstr "Рамки прилипают к направля_ющим"
 
 #: ../src/ui/dialog/document-properties.cpp:317
 msgid "Snap p_oints to guides"
@@ -5712,7 +5712,7 @@ msgstr ""
 "пределы окна (0 отменяет автопрокрутку)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
-#: ../src/ui/dialog/tracedialog.cpp:371 ../src/ui/dialog/tracedialog.cpp:404
+#: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
 msgid "Threshold:"
 msgstr "Порог:"
 
@@ -6531,16 +6531,16 @@ msgstr "Открыть файл сессии"
 
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
-#: ../src/ui/dialog/tracedialog.cpp:346
+#: ../src/ui/dialog/tracedialog.cpp:345
 #, fuzzy
 msgid "SIOX foreground selection (experimental)"
 msgstr "Выделение переднего плана при помощи SIOX"
 
-#: ../src/ui/dialog/tracedialog.cpp:349
+#: ../src/ui/dialog/tracedialog.cpp:348
 msgid "Cover the area you want to select as the foreground"
 msgstr "Обведите область изображения, которая находится на переднем плане"
 
-#: ../src/ui/dialog/tracedialog.cpp:351
+#: ../src/ui/dialog/tracedialog.cpp:350
 msgid "SIOX"
 msgstr "SIOX"
 
@@ -6548,37 +6548,37 @@ msgstr "SIOX"
 #. #### brightness ####
 #. #### Multiple scanning####
 #. ----Hbox1
-#: ../src/ui/dialog/tracedialog.cpp:359 ../src/ui/dialog/tracedialog.cpp:442
+#: ../src/ui/dialog/tracedialog.cpp:358 ../src/ui/dialog/tracedialog.cpp:441
 msgid "Brightness"
 msgstr "Яркость"
 
-#: ../src/ui/dialog/tracedialog.cpp:362
+#: ../src/ui/dialog/tracedialog.cpp:361
 msgid "Trace by a given brightness level"
 msgstr "Векторизовать по заданному уровню яркости"
 
-#: ../src/ui/dialog/tracedialog.cpp:369
+#: ../src/ui/dialog/tracedialog.cpp:368
 msgid "Brightness cutoff for black/white"
 msgstr "Порог яркости для черно-белого"
 
-#: ../src/ui/dialog/tracedialog.cpp:376
+#: ../src/ui/dialog/tracedialog.cpp:375
 msgid "Image Brightness"
 msgstr "Яркость изображения"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:383
+#: ../src/ui/dialog/tracedialog.cpp:382
 msgid "Optimal Edge Detection (Canny)"
 msgstr "Оптимальное определение краев (Canny)"
 
-#: ../src/ui/dialog/tracedialog.cpp:386
+#: ../src/ui/dialog/tracedialog.cpp:385
 msgid "Trace with edge detection by J. Canny's algorithm"
 msgstr "Векторизовать с определением краев по алгоритму J. Canny"
 
-#: ../src/ui/dialog/tracedialog.cpp:402
+#: ../src/ui/dialog/tracedialog.cpp:401
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr "Порог яркости для смежных пикселов (определяет толщину краев)"
 
-#: ../src/ui/dialog/tracedialog.cpp:409
+#: ../src/ui/dialog/tracedialog.cpp:408
 msgid "Edge Detection"
 msgstr "Определение краев"
 
@@ -6586,59 +6586,59 @@ msgstr "Определение краев"
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:418
+#: ../src/ui/dialog/tracedialog.cpp:417
 msgid "Color Quantization"
 msgstr "Квантование цветов"
 
-#: ../src/ui/dialog/tracedialog.cpp:421
+#: ../src/ui/dialog/tracedialog.cpp:420
 msgid "Trace along the boundaries of reduced colors"
 msgstr "Векторизовать вдоль границы сокращенных цветов"
 
-#: ../src/ui/dialog/tracedialog.cpp:428
+#: ../src/ui/dialog/tracedialog.cpp:427
 msgid "The number of reduced colors"
 msgstr "Количество цветов после сокращения"
 
-#: ../src/ui/dialog/tracedialog.cpp:430
+#: ../src/ui/dialog/tracedialog.cpp:429
 msgid "Colors:"
 msgstr "Цветов:"
 
-#: ../src/ui/dialog/tracedialog.cpp:435
+#: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Quantization / Reduction"
 msgstr "Квантование / Сокращение"
 
-#: ../src/ui/dialog/tracedialog.cpp:445
+#: ../src/ui/dialog/tracedialog.cpp:444
 msgid "Trace the given number of brightness levels"
 msgstr "Трассировать указанное количество уровней яркости"
 
-#: ../src/ui/dialog/tracedialog.cpp:452
+#: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Scans:"
 msgstr "Сканирований:"
 
-#: ../src/ui/dialog/tracedialog.cpp:454
+#: ../src/ui/dialog/tracedialog.cpp:453
 msgid "The desired number of scans"
 msgstr "Желаемое количество сканирований"
 
-#: ../src/ui/dialog/tracedialog.cpp:462
+#: ../src/ui/dialog/tracedialog.cpp:461
 msgid "Trace the given number of reduced colors"
 msgstr "Трассировать указанное количество цветов"
 
 #. ---Hbox3
-#: ../src/ui/dialog/tracedialog.cpp:468
+#: ../src/ui/dialog/tracedialog.cpp:467
 msgid "Monochrome"
 msgstr "Черно-белое"
 
-#: ../src/ui/dialog/tracedialog.cpp:471
+#: ../src/ui/dialog/tracedialog.cpp:470
 msgid "Same as Color, but convert result to grayscale"
 msgstr ""
 "То же, что и для \"В цвете\", но преобразовать\n"
 "результат в черно-белое изображение"
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:474
+#: ../src/ui/dialog/tracedialog.cpp:473
 msgid "Stack"
 msgstr "Стопкой"
 
-#: ../src/ui/dialog/tracedialog.cpp:477
+#: ../src/ui/dialog/tracedialog.cpp:476
 msgid ""
 "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr ""
@@ -6646,60 +6646,60 @@ msgstr ""
 "или встык (обычно с щелями)"
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:480
+#: ../src/ui/dialog/tracedialog.cpp:479
 msgid "Smooth"
 msgstr "Сгладить"
 
-#: ../src/ui/dialog/tracedialog.cpp:483
+#: ../src/ui/dialog/tracedialog.cpp:482
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr "Применить Гауссово размывание растра перед векторизацией"
 
-#: ../src/ui/dialog/tracedialog.cpp:487
+#: ../src/ui/dialog/tracedialog.cpp:486
 msgid "Multiple Scanning"
 msgstr "Многократное сканирование"
 
 #. #### Preview ####
-#: ../src/ui/dialog/tracedialog.cpp:493 ../src/ui/dialog/tracedialog.cpp:503
+#: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
 msgid "Preview"
 msgstr "Просмотреть"
 
 #. do not expand
-#: ../src/ui/dialog/tracedialog.cpp:497
+#: ../src/ui/dialog/tracedialog.cpp:496
 msgid "Preview the result without actual tracing"
 msgstr "Просмотреть результат перед собственно векторизацией"
 
 #. #### swap black and white ####
-#: ../src/ui/dialog/tracedialog.cpp:509
+#: ../src/ui/dialog/tracedialog.cpp:508
 #: ../src/ui/widget/selected-style.cpp:191
 msgid "Invert"
 msgstr "Инвертировать"
 
-#: ../src/ui/dialog/tracedialog.cpp:513
+#: ../src/ui/dialog/tracedialog.cpp:512
 msgid "Invert black and white regions for single traces"
 msgstr ""
 "Поменять местами черные и белые области\n"
 "для одиночного трассирования"
 
-#: ../src/ui/dialog/tracedialog.cpp:517
+#: ../src/ui/dialog/tracedialog.cpp:516
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
 msgstr "Спасибо Питеру Селинджеру, http://potrace.sourceforge.net"
 
-#: ../src/ui/dialog/tracedialog.cpp:520
+#: ../src/ui/dialog/tracedialog.cpp:519
 msgid "Credits"
 msgstr "Благодарности"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
-#: ../src/ui/dialog/tracedialog.cpp:528
+#: ../src/ui/dialog/tracedialog.cpp:527
 msgid "Potrace"
 msgstr "Potrace"
 
-#: ../src/ui/dialog/tracedialog.cpp:541
+#: ../src/ui/dialog/tracedialog.cpp:540
 msgid "Abort a trace in progress"
 msgstr "Прервать векторизацию"
 
-#: ../src/ui/dialog/tracedialog.cpp:545
+#: ../src/ui/dialog/tracedialog.cpp:544
 msgid "Execute the trace"
 msgstr "Векторизовать"
 
@@ -9018,7 +9018,7 @@ msgstr "Использование каллиграфического пера"
 
 #: ../src/verbs.cpp:2396
 msgid "_Elements of Design"
-msgstr "_Элементы дизайна"
+msgstr "_Основы дизайна"
 
 #: ../src/verbs.cpp:2397
 msgid "Principles of design in the tutorial form"
@@ -9082,11 +9082,11 @@ msgstr ""
 "Откадрировать холст до текущего выделения или рисунка, если ничего не "
 "выделено"
 
-#: ../src/widgets/dash-selector.cpp:102
+#: ../src/widgets/dash-selector.cpp:103
 msgid "Dash pattern"
 msgstr "Пунктир"
 
-#: ../src/widgets/dash-selector.cpp:117
+#: ../src/widgets/dash-selector.cpp:118
 msgid "Pattern offset"
 msgstr "Смещение пунктира"
 
@@ -9118,7 +9118,7 @@ msgstr "Кегль шрифта:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3347
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
@@ -9866,7 +9866,7 @@ msgstr ""
 "Включено: выбирает видимый цвет без альфа-канала; выключено: выбирает "
 "видимый цвет, включая альфа-канал"
 
-#: ../src/widgets/toolbox.cpp:3435
+#: ../src/widgets/toolbox.cpp:3444
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9874,67 +9874,67 @@ msgstr ""
 "Этот шрифт сейчас отсутствует в системе. Вместо него Inkscape использует "
 "шрифт по умолчанию."
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3482
 msgid "Align left"
 msgstr "Выровнять по левому краю"
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3493
 msgid "Center"
 msgstr "По центру"
 
-#: ../src/widgets/toolbox.cpp:3495
+#: ../src/widgets/toolbox.cpp:3504
 msgid "Align right"
 msgstr "Выровнять по правому краю"
 
-#: ../src/widgets/toolbox.cpp:3506
+#: ../src/widgets/toolbox.cpp:3515
 msgid "Justify"
 msgstr "Выровнять по ширине"
 
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/widgets/toolbox.cpp:3531
 msgid "Bold"
 msgstr "Полужирный"
 
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/widgets/toolbox.cpp:3542
 msgid "Italic"
 msgstr "Курсив"
 
-#: ../src/widgets/toolbox.cpp:3631
+#: ../src/widgets/toolbox.cpp:3640
 msgid "Spacing between letters"
 msgstr "Межбуквенное расстояние"
 
-#: ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3661
 msgid "Spacing between lines"
 msgstr "Интерлиньяж"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3690
 msgid "Horizontal kerning"
 msgstr "Горизонтальный кернинг"
 
-#: ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3711
 msgid "Vertical kerning"
 msgstr "Вертикальный кернинг"
 
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3738
 msgid "Letter rotation"
 msgstr "Вращение символа"
 
-#: ../src/widgets/toolbox.cpp:3750
+#: ../src/widgets/toolbox.cpp:3759
 msgid "Remove manual kerns"
 msgstr "Убрать ручной кернинг"
 
-#: ../src/widgets/toolbox.cpp:3869
+#: ../src/widgets/toolbox.cpp:3878
 msgid "Make connectors avoid selected objects"
 msgstr "Линии обходят выделенные объекты"
 
-#: ../src/widgets/toolbox.cpp:3873
+#: ../src/widgets/toolbox.cpp:3882
 msgid "Make connectors ignore selected objects"
 msgstr "Линии игнорируют выделенные объекты"
 
-#: ../src/widgets/toolbox.cpp:3881
+#: ../src/widgets/toolbox.cpp:3890
 msgid "Spacing:"
 msgstr "Интервал:"
 
-#: ../src/widgets/toolbox.cpp:3882
+#: ../src/widgets/toolbox.cpp:3891
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Оставшееся пространство вокруг объектов при автосоединении"
 
