@@ -1,4 +1,10 @@
-2006-06-09  Jon A. Cruz  <jon@joncruz.org>
+2006-06-13  Jon A. Cruz  <jon@joncruz.org>
+
+	* TRANSLATORS, src/ui/dialog/aboutbox.cpp:
+
+	  Applied patch #1505715.
+
+2006-06-13  Jon A. Cruz  <jon@joncruz.org>
 
 	* packaging/macosx/Resources/etc/fonts/fonts.conf:
 
