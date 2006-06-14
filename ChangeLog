@@ -1,5 +1,11 @@
 2006-06-09  Jon A. Cruz  <jon@joncruz.org>
 
+	* packaging/macosx/Resources/etc/fonts/fonts.conf:
+
+	  Applied patch #1505765.
+
+2006-06-09  Jon A. Cruz  <jon@joncruz.org>
+
 	* src/object-snapper.cpp, src/selection.cpp, src/selection.h, src/seltrans.cpp:
 
 	  Applied patch #1503864.

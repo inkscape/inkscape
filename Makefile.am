@@ -112,6 +112,7 @@ EXTRA_DIST = \
 	packaging/macosx/Resources/ProgressWindow.nib/objects.xib	\
 	packaging/macosx/Resources/bin/getdisplay.sh	\
 	packaging/macosx/Resources/bin/inkscape	\
+	packaging/macosx/Resources/etc/fonts/fonts.conf	\
 	packaging/macosx/ScriptExec/English.lproj/main.nib/classes.nib	\
 	packaging/macosx/ScriptExec/English.lproj/main.nib/info.nib	\
 	packaging/macosx/ScriptExec/English.lproj/main.nib/objects.xib	\
