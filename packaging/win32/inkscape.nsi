@@ -766,6 +766,10 @@ Section $(lng_uk) SecUkrainian
   !insertmacro Language uk uk
 SectionEnd
 
+Section $(lng_vi) SecVietnamese
+  !insertmacro Language vi vi
+SectionEnd
+
 Section $(lng_zh_CN) SecChineseSimplified
   !insertmacro Language zh_CN zh_CN
 SectionEnd

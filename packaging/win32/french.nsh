@@ -151,6 +151,7 @@ LangString lng_sr@Latn $(LANG_FRENCH) "sr@Latn  Serbe en notation latine"
 LangString lng_sv $(LANG_FRENCH) "sv  Suédois"
 LangString lng_tr $(LANG_FRENCH) "tr  Turc"
 LangString lng_uk $(LANG_FRENCH) "uk  Ukrainien"
+LangString lng_vi $(LANG_FRENCH) "vi  Vietnamese"
 LangString lng_zh_CN $(LANG_FRENCH) "zh_CH  Chinois simplifié"
 LangString lng_zh_TW $(LANG_FRENCH) "zh_TW  Chinois traditionnel"
 

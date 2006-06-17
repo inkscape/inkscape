@@ -153,6 +153,7 @@ LangString lng_sr@Latn $(LANG_GERMAN) "sr@Latn Serbisch mit lat. Buchstaben"
 LangString lng_sv $(LANG_GERMAN) "sv  Schwedisch"
 LangString lng_tr $(LANG_GERMAN) "tr  Türkisch"
 LangString lng_uk $(LANG_GERMAN) "uk  Ukrainisch"
+LangString lng_vi $(LANG_GERMAN) "vi  Vietnamesisch"
 LangString lng_zh_CN $(LANG_GERMAN) "zh_CH  Chinesisch (vereinfacht)"
 LangString lng_zh_TW $(LANG_GERMAN) "zh_TW  Chinesisch (traditionell)"
 

@@ -151,6 +151,7 @@ LangString lng_sr@Latn $(LANG_CZECH) "sr@Latn  Serbian in Latin script"
 LangString lng_sv $(LANG_CZECH) "sv  Swedish"
 LangString lng_tr $(LANG_CZECH) "tr  Turkish"
 LangString lng_uk $(LANG_CZECH) "uk  Ukrainian"
+LangString lng_vi $(LANG_CZECH) "vi  Vietnamese"
 LangString lng_zh_CN $(LANG_CZECH) "zh_CH  Simplifed Chinese"
 LangString lng_zh_TW $(LANG_CZECH) "zh_TW  Traditional Chinese"
 
