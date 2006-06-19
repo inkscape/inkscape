@@ -24,7 +24,7 @@ if test "$GCC" = "yes"; then
   # -Wno-pointer-sign is probably new in gcc 4.0; certainly it isn't accepted
   # by gcc 2.95.
   ink_svd_CFLAGS="$CFLAGS"
-  CFLAGS="-Wno-invalid-offsetof -Wno-pointer-sign $CFLAGS"
+  CFLAGS="-Wno-pointer-sign $CFLAGS"
   AC_COMPILE_IFELSE([int dummy;
 ], , CFLAGS="$ink_svd_CFLAGS",)
   CFLAGS="-Wall -W $CFLAGS"
