@@ -68,7 +68,7 @@
      * 19 Internal
      * 20 Known problems
 
-          * 20.1 Problems with libgc-6.7
+          * 20.1 Problems with some Debian libgc-6.7 packages
           * 20.2 Problems with "Composite" option of X.org
           * 20.3 Namespaces may need fixing
           * 20.4 Beware of defective themes on Linux
@@ -226,7 +226,7 @@ Layers dialog
 
      * In the dialog, you can click on a layer to make it current, as well as
        toggle layers visible/hidden and locked/unlocked. You don't need to
-       make a layer current to toggle it visibility or lock status.
+       make a layer current to toggle its visibility or lock status.
 
      * A hierarchical tree of layers is represented by a tree-like display in
        the dialog. You can expand or collapse branches of the tree to make
@@ -406,7 +406,7 @@ Inkscape Preferences dialog
    Not only was the Inkscape Preferences dialog completely rewritten and
    redesigned, with numerous bugs fixed in the rewrite.
 
-     * The old tabbed dialog is gone; the new dialog fits much betters with
+     * The old tabbed dialog is gone; the new dialog fits much better with
        the GNOME Human Interface Guidelines.
 
      * As a new feature, the Simplify threshold can now be set with more
@@ -576,13 +576,13 @@ Node tool
    nodes of that fragment and press Ins a few times to populate it with
    nodes.)
 
-   Moreover, node sculpting is sensitive to pressure of your tablet pen. If
-   you press slightly, your curve will have a narrow sharp tip (i.e. the
-   nearest neighbors of your dragged node will move only a bit); if you press
-   hard, the curve's tip will be wide and blunt (i.e. the nearest neighbors
-   will move almost as much as the dragged node). (Hint: to stop dragging
-   without losing your shape, first release Alt and then lift the tip of the
-   pen.)
+   Moreover, node sculpting is pressure-sensitive when you are using a tablet
+   pen. If you press slightly, your curve will have a narrow sharp tip (i.e.
+   the nearest neighbors of your dragged node will move only a bit); if you
+   press hard, the curve's tip will be wide and blunt (i.e. the nearest
+   neighbors will move almost as much as the dragged node). (Hint: to stop
+   dragging without losing your shape, first release Alt and then lift the
+   tip of the pen.)
 
    There are many possible applications of the sculpting technique. To take a
    simple example, selecting all nodes of an ellipse-like shape and
@@ -1345,11 +1345,11 @@ Pasting size
        file type selections, and extension names can all be translated by
        translators.
 
-     * Inkscape is now significantly translated to 17 languages: Basque,
+     * Inkscape is now significantly translated to 18 languages: Basque,
        Catalan, Czech, French, German, Hungarian, Italian, Lithuanian,
-       Norwegian (bokmaal dialect), Polish, Russian, Serbian (Cyrillic and
-       Latin), Simplified Chinese, Slovenian, Spanish and Traditional
-       Chinese. Additionally, 21 more languages have some level of
+       Norwegian (Bokmaal dialect), Polish, Russian, Serbian (Cyrillic and
+       Latin), Simplified Chinese, Slovenian, Spanish, Traditional Chinese,
+       and Vietnamese. Additionally, 21 more languages have some level of
        translation. Average translation ratio has increased from 49% to 59%
        in this release.
 
@@ -1372,26 +1372,20 @@ Pasting size
                                  Known problems
 
 
-  Problems with libgc-6.7
+  Problems with some Debian libgc-6.7 packages
 
-     * Inkscape will hang or crash when linked with this (newest) version of
-       the Boehm garbage collection library. Make sure you use libgc-6.5 or
-       6.6 until this is sorted out.
+     * Inkscape will hang or crash when linked with the first Debian packaged
+       version of the Boehm garbage collection library. This problem was
+       fixed in version 1:6.7-2 of the package. If you have libgc 6.7 on your
+       Debian-based system, make sure that you are using that version of the
+       package or later.
 
 
   Problems with "Composite" option of X.org
 
-     * On Linux, Inkscape may crash if you have the "Composite" option
-       enabled in your X.org configuration. To disable this option, comment
-       out this line in your /etc/X11/xorg.conf:
-
-  Option         "Composite" "Enable"
-
-           so it becomes
-
-  #Option         "Composite" "Enable"
-
-           and restart X.
+     * Some prereleases of inkscape-0.44 could crash if the "Composite"
+       option were enabled in X.org's configuration. This is not a problem in
+       the final release.
 
 
   Namespaces may need fixing
@@ -1399,7 +1393,18 @@ Pasting size
      * Previous versions of inkscape sometimes silently saved documents with
        wrong namespace URIs. This has been fixed, but such corrupted
        documents will no longer load successfully. Such documents may require
-       their namespace declarations to be fixed by hand.
+       their namespace declarations to be fixed by hand. Correct namespace
+       URLs are as follows, with typical namespace prefixes given in
+       parenthesis:
+
+          * Sodipodi (sodipodi):
+            http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd
+          * Inkscape (inkscape): http://www.inkscape.org/namespaces/inkscape
+          * XLink (xlink): http://www.w3.org/1999/xlink
+          * SVG (svg or none): http://www.w3.org/2000/svg
+          * RDF (rdf): http://www.w3.org/1999/02/22-rdf-syntax-ns#
+          * Creative Commons (cc): http://web.resource.org/cc/
+          * Dublin Core Metadata (dc): http://purl.org/dc/elements/1.1/
 
 
   Beware of defective themes on Linux
@@ -1450,6 +1455,6 @@ Pasting size
 
    Retrieved from "http://wiki.inkscape.org/wiki/index.php/Release_Notes"
 
-   This page has been accessed 19,310 times. This page was last modified
-   19:45, 13 June 2006.
+   This page has been accessed 20,078 times. This page was last modified
+   09:07, 19 June 2006.
 
