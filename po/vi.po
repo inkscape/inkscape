@@ -6,7 +6,7 @@ msgid ""
 msgstr "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-16 17:35+0930\n"
+"PO-Revision-Date: 2006-06-19 22:38+0200\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -38,9 +38,7 @@ msgstr "<b>Shift</b>: vẽ vòng quanh điểm bắt đầu"
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Bầu dục</b>: %s &#215; %s; cùng với phím:<br>\n"
-"	• <b>Ctrl</b> để tạo hình tròn hay hình bầu dục có tỷ lệ số nguyên\n"
-" 	• <b>Shift</b> để vẽ vòng quanh điểm bắt đầu"
+msgstr "<b>Bầu dục</b>: %s &#215; %s; cùng với phím: <b>Ctrl</b> để tạo hình tròn hay hình bầu dục có tỷ lệ số nguyên; <b>Shift</b> để vẽ vòng quanh điểm bắt đầu"
 
 #: ../src/connector-context.cpp:517
 msgid "Creating new connector"
@@ -100,7 +98,7 @@ msgstr "<small>Đối tượng có <b>%d</b> bộ nhái được lát đều.</s
 
 #: ../src/dialogs/clonetiler.cpp:180
 msgid "<small>Object has no tiled clones.</small>"
-msgstr "<small>Đối tượng không có bộ nhái được lát đều nào.<small>"
+msgstr "<small>Đối tượng không có bộ nhái được lát đều nào.</small>"
 
 #: ../src/dialogs/clonetiler.cpp:845
 msgid "Select <b>one object</b> whose tiled clones to unclump."
@@ -1797,7 +1795,7 @@ msgstr "<b>Nhấn</b> thuộc tính để sửa đổi."
 msgid ""
 "Attribute <b>%s</b> selected. Press <b>Ctrl+Enter</b> when done editing to "
 "commit changes."
-msgstr "Thuộc tính <b>%s</b> đã được chọn. Hãy bấm tổ hợp phím b>Ctrl+Enter</b> khi sửa đổi xong, để đệ trình các thay đổi."
+msgstr "Thuộc tính <b>%s</b> đã được chọn. Hãy bấm tổ hợp phím <b>Ctrl+Enter</b> khi sửa đổi xong, để đệ trình các thay đổi."
 
 #: ../src/dialogs/xml-tree.cpp:281
 msgid "Drag to reorder nodes"
@@ -1932,11 +1930,7 @@ msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
 "to copy the color under mouse to clipboard"
-msgstr "<b>Nhấn</b> để đặt tô<br>\n"
-"<b>Shift+click</b> để đặt nét vẽ<br>\n"
-"<b>kéo</b> để tính trung bình màu trong vùng<br>\n"
-"<b>Alt</b> để nhặt màu đảo<br>\n"
-"<b>Ctrl+C</b> để sao chép màu dưới chuột sang bảng nháp"
+msgstr "<b>Nhấn</b> để đặt tô; <b>Shift+click</b> để đặt nét vẽ; <b>kéo</b> để tính trung bình màu trong vùng; <b>Alt</b> để nhặt màu đảo; <b>Ctrl+C</b> để sao chép màu dưới chuột sang bảng nháp"
 
 #: ../src/extension/dependency.cpp:238
 msgid "Dependency::"
@@ -2542,10 +2536,7 @@ msgstr "<b>Tiêu điểm</b> dốc xuyên tâm"
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
-msgstr "%s đối với: %s%s; kéo bằng phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Ctrl+Alt</b> để bảo tồn góc<br>\n"
-"	<b>Ctrl+Shift</b> để co dãn vòng trung tâm"
+msgstr "%s đối với: %s%s; kéo bằng phím: <b>Ctrl</b> để dính góc; <b>Ctrl+Alt</b> để bảo tồn góc; <b>Ctrl+Shift</b> để co dãn vòng trung tâm"
 
 #: ../src/gradient-drag.cpp:654
 msgid " (stroke)"
@@ -3458,8 +3449,7 @@ msgstr "Trợ lý"
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
-msgstr "<b>Ctrl</b>: bật/tắt kiểu nút, dính góc móc, chuyển ngang/dọc;<br>\n"
-"<b>Ctrl+Alt</b>: chuyển qua móc"
+msgstr "<b>Ctrl</b>: bật/tắt kiểu nút, dính góc móc, chuyển ngang/dọc; <b>Ctrl+Alt</b>: chuyển qua móc"
 
 #: ../src/node-context.cpp:360
 msgid ""
@@ -3468,17 +3458,13 @@ msgstr "<b>Shift</b>: bật/tắt chọn nút, tắt dính, xoay cả hai móc"
 
 #: ../src/node-context.cpp:361
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-msgstr "<b>Alt</b>: khoá độ dài móc<br>\n"
-"<b>Ctrl+Alt</b>: chuyển qua móc"
+msgstr "<b>Alt</b>: khoá độ dài móc; <b>Ctrl+Alt</b>: chuyển qua móc"
 
 #: ../src/nodepath.cpp:1255
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
-msgstr "<b>Móc nút</b>: kéo để tạo hình của cung; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Alt</b> để khoá độ dài<br>\n"
-"	<b>Shift</b> để xoay cả hai móc"
+msgstr "<b>Móc nút</b>: kéo để tạo hình của cung; với phím: <b>Ctrl</b> để dính góc; <b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai móc"
 
 #: ../src/nodepath.cpp:1699
 #: ../src/nodepath.cpp:1711
@@ -3504,18 +3490,13 @@ msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
-msgstr "<b>Móc nút</b>: góc %0.2f&#176;, độ dài %s; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Alt</b> để khoá độ dài<br>\n"
-"	<b>Shift</b> để xoay cả hai móc"
+msgstr "<b>Móc nút</b>: góc %0.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> để dính góc; <b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai móc"
 
 #: ../src/nodepath.cpp:3750
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
-msgstr "<b>Nút</b>: kéo để sửa đổi đường dẫn; với phím:<br>\n"
-"	<b>Ctrl</b> để dính ngang/dọc<br>\n"
-"	<b>Ctrl+Alt</b> để dính hướng của móc"
+msgstr "<b>Nút</b>: kéo để sửa đổi đường dẫn; với phím: <b>Ctrl</b> để dính ngang/dọc; <b>Ctrl+Alt</b> để dính hướng của móc"
 
 #.TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:3953
@@ -3554,16 +3535,11 @@ msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
-msgstr "<b>Kéo</b> nút hay móc nút<br>\n"
-"<b>Alt+drag</b> nút để điêu khắc<br>\n"
-"<b>mũi tên</b> để di chuyển nút<br>\n"
-"<b>&lt; &gt;</b> để co dãn<br>\n"
-"<b>[ ]</b> để xoay"
+msgstr "<b>Kéo</b> nút hay móc nút; <b>Alt+drag</b> nút để điêu khắc; <b>mũi tên</b> để di chuyển nút; <b>&lt; &gt;</b> để co dãn; <b>[ ]</b> để xoay"
 
 #: ../src/nodepath.cpp:3987
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-msgstr "<b>Kéo</b> nút hay móc của nó<br>\n"
-"<b>mũi tên</b> để di chuyển nút"
+msgstr "<b>Kéo</b> nút hay móc của nó; <b>mũi tên</b> để di chuyển nút"
 
 #: ../src/nodepath.cpp:4010
 #: ../src/nodepath.cpp:4022
@@ -3612,87 +3588,67 @@ msgstr[1] "<b>%i</b> trên <b>%i</b> nút được chọn. %s."
 msgid ""
 "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the "
 "vertical radius the same"
-msgstr "Điều chỉnh bán kính <b>làm tròn ngang</b>; với phím:<br>\n"
-"	<b>Ctrl</b> để làm cho bán kính dọc là trùng."
+msgstr "Điều chỉnh bán kính <b>làm tròn ngang</b>; với phím: <b>Ctrl</b> để làm cho bán kính dọc là trùng."
 
 #: ../src/object-edit.cpp:494
 msgid ""
 "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the "
 "horizontal radius the same"
-msgstr "Điều chỉnh bán kính <b>làm tròn dọc</b>; với phím:<br>\n"
-"	<b>Ctrl</b> để làm cho bán kính ngang là trùng."
+msgstr "Điều chỉnh bán kính <b>làm tròn dọc</b>; với phím: <b>Ctrl</b> để làm cho bán kính ngang là trùng."
 
 #: ../src/object-edit.cpp:501
 #: ../src/object-edit.cpp:508
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr "Điều chỉnh <b>độ rộng và độ cao</b> của hình chữ nhật; với phím:<br>\n"
-"	<b>Ctrl</b> để khoá tỷ lệ hay kéo giãn theo chỉ một chiều."
+msgstr "Điều chỉnh <b>độ rộng và độ cao</b> của hình chữ nhật; với phím: <b>Ctrl</b> để khoá tỷ lệ hay kéo giãn theo chỉ một chiều."
 
 #: ../src/object-edit.cpp:681
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr "Điều chỉnh <b>độ rộng</b> của hình bầu dục, với phím:<br>\n"
-"	<b>Ctrl</b> để làm tròn."
+msgstr "Điều chỉnh <b>độ rộng</b> của hình bầu dục, với phím: <b>Ctrl</b> để làm tròn."
 
 #: ../src/object-edit.cpp:684
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr "Điều chỉnh <b>độ cao</b> của hình bầu dục, với phím:<br>\n"
-"	<b>Ctrl</b> để làm tròn."
+msgstr "Điều chỉnh <b>độ cao</b> của hình bầu dục, với phím: <b>Ctrl</b> để làm tròn."
 
 #: ../src/object-edit.cpp:687
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
-msgstr "Để vị trí của <b>điểm đầu</b> của hình cung hay đoạn; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"kéo 	<b>bên trong</b> hình bầu dục cho hình cung<br>\n"
-"	<b>bên ngoài</b> cho đoạn."
+msgstr "Để vị trí của <b>điểm đầu</b> của hình cung hay đoạn; với phím:\t<b>Ctrl</b> để dính góc; kéo <b>bên trong</b> hình bầu dục cho hình cung; <b>bên ngoài</b> cho đoạn."
 
 #: ../src/object-edit.cpp:690
 msgid ""
 "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
-msgstr "Để vị trí của <b>điểm cuối</b> của hình cung hay đoạn; với phím:<br>\n"
-"			<b>Ctrl</b> để dính góc<br>\n"
-"kéo 	<b>bên trong</b> hình bầu dục cho hình cung<br>\n"
-"	<b>bên ngoài</b> cho đoạn."
+msgstr "Để vị trí của <b>điểm cuối</b> của hình cung hay đoạn; với phím: <b>Ctrl</b> để dính góc; kéo <b>bên trong</b> hình bầu dục cho hình cung; <b>bên ngoài</b> cho đoạn."
 
 #: ../src/object-edit.cpp:795
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
-msgstr "Điều chỉnh <b>bán kính đỉnh</b> của hình sao hay hình đa giác: với phím:<br>\n"
-"	<b>Shift</b> để làm tròn<br>\n"
-"	<b>Alt</b> để ngẫu nhiên hoá."
+msgstr "Điều chỉnh <b>bán kính đỉnh</b> của hình sao hay hình đa giác: với phím: <b>Shift</b> để làm tròn; <b>Alt</b> để ngẫu nhiên hoá."
 
 #: ../src/object-edit.cpp:798
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
 "randomize"
-msgstr "Điều chỉnh <b>bán kính cơ bản</b> của hình sao: với phím:<br>\n"
-"	<b>Ctrl</b> để giữ các tia sao là xuyên tâm (không có độ lệch)<br>\n"
-"	<b>Shift</b> để làm tròn<br>\n"
-"	<b>Alt</b> để ngẫu nhiên hoá."
+msgstr "Điều chỉnh <b>bán kính cơ bản</b> của hình sao: với phím: <b>Ctrl</b> để giữ các tia sao là xuyên tâm (không có độ lệch); <b>Shift</b> để làm tròn; <b>Alt</b> để ngẫu nhiên hoá."
 
 #: ../src/object-edit.cpp:962
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
-msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên trong</b>; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Alt</b> để hội tụ/phân kỳ."
+msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên trong</b>; với phím: <b>Ctrl</b> để dính góc; <b>Alt</b> để hội tụ/phân kỳ."
 
 #: ../src/object-edit.cpp:964
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
-msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên ngoài</b>; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Alt</b> để co dãn/xoay."
+msgstr "Cuộn/bỏ cuộn xoắn ốc từ <b>bên ngoài</b>; với phím: <b>Ctrl</b> để dính góc; <b>Alt</b> để co dãn/xoay."
 
 #: ../src/object-edit.cpp:1001
 msgid "Adjust the <b>offset distance</b>"
@@ -3709,8 +3665,7 @@ msgstr "<b>Co dãn</b> mẫu tô một cách cùng kiểu"
 
 #: ../src/object-edit.cpp:1035
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Xoay</b>mẫu tô; với phím:<br>\n "
-"	<b>Ctrl</b> để dính góc."
+msgstr "<b>Xoay</b>mẫu tô; với phím: <b>Ctrl</b> để dính góc."
 
 #: ../src/object-edit.cpp:1060
 msgid "Drag to resize the <b>flowed text frame</b>"
@@ -3786,26 +3741,21 @@ msgstr "<b>Nhấn</b> hay <b>nhấn và kéo</b> để tiếp tục đường d�
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
-msgstr "<b>%s</b>: góc %3.2f&#176;, khoảng cách %s; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Enter</b> để tạo xong đường dẫn."
+msgstr "<b>%s</b>: góc %3.2f&#176;, khoảng cách %s; với phím: <b>Ctrl</b> để dính góc; <b>Enter</b> để tạo xong đường dẫn."
 
 #: ../src/pen-context.cpp:1063
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b>Móc cong</b>: góc %3.2f&#176;, độ dài %s; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc."
+msgstr "<b>Móc cong</b>: góc %3.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> để dính góc."
 
 #: ../src/pen-context.cpp:1093
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
 "with <b>Shift</b> to move this handle only"
-msgstr "<b>%s</b>: góc %3.2f&#176;, độ dài %s; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Shift</b> để di chuyển chỉ móc này."
+msgstr "<b>%s</b>: góc %3.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> để dính góc; <b>Shift</b> để di chuyển chỉ móc này."
 
 #: ../src/pen-context.cpp:1127
 msgid "Drawing finished"
@@ -3854,9 +3804,7 @@ msgstr "Phím <b>Ctrl</b>: làm hình chữ nhất kiểu vuông hay kiểu tỷ
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
-msgstr "<b>Chữ nhật</b>: %s &#215; %s; với phím:<br>\n"
-"	<b>Ctrl</b> để tạo hình chữ nhật kiểu vuông hay kiểu tỷ lệ số nguyên<br>\n"
-"	<b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
+msgstr "<b>Chữ nhật</b>: %s &#215; %s; với phím: <b>Ctrl</b> để tạo hình chữ nhật kiểu vuông hay kiểu tỷ lệ số nguyên; <b>Shift</b> để vẽ vòng quanh điểm bắt đầu."
 
 #: ../src/select-context.cpp:226
 msgid "Move canceled."
@@ -3987,10 +3935,7 @@ msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
-msgstr "Chọn một:<br>\n"
-"	<b>bộ nhái</b> để tới điều gốc của nó. <br>\n"
-"	<b>chữ trên đường dẫn</b> để tới đường dẫn đó<br>\n"
-"	<b>chữ được luồng</b> để tới khung của nó."
+msgstr "Chọn một: <b>bộ nhái</b> để tới điều gốc của nó. <b>chữ trên đường dẫn</b> để tới đường dẫn đó. <b>chữ được luồng</b> để tới khung của nó."
 
 #: ../src/selection-chemistry.cpp:2052
 msgid ""
@@ -4225,56 +4170,45 @@ msgstr "<b>Tâm</b> của việc xoay và lệch: kéo để đắt lại vị t
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
-msgstr "<b>Vắt hay kéo giãn</b> vùng chọn; với phím:<br>\n"
-"	<b>Ctrl</b> để co dãn đều đều<br>\n"
-"	<b>Shift</b> để co dãn vòng quanh tâm xoay."
+msgstr "<b>Vắt hay kéo giãn</b> vùng chọn; với phím: <b>Ctrl</b> để co dãn đều đều; <b>Shift</b> để co dãn vòng quanh tâm xoay."
 
 #: ../src/seltrans.cpp:476
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
-msgstr "<b>Co dãn</b> vùng chọn; với phím:<br>\n"
-"	<b>Ctrl</b> để co dãn đều đều<br>\n"
-"	<b>Shift</b> để co dãn vòng quanh tâm xoay."
+msgstr "<b>Co dãn</b> vùng chọn; với phím: <b>Ctrl</b> để co dãn đều đều; <b>Shift</b> để co dãn vòng quanh tâm xoay."
 
 #: ../src/seltrans.cpp:480
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
-msgstr "<b>Đối xứng lệch</b> vùng chọn; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Shift</b> để đối xứng lệch quanh bên đối diện."
+msgstr "<b>Đối xứng lệch</b> vùng chọn; với phím: <b>Ctrl</b> để dính góc; <b>Shift</b> để đối xứng lệch quanh bên đối diện."
 
 #: ../src/seltrans.cpp:481
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
-msgstr "<b>Xoay</b> vùng chọn; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc<br>\n"
-"	<b>Shift</b> để xoay quanh góc đối diện."
+msgstr "<b>Xoay</b> vùng chọn; với phím: <b>Ctrl</b> để dính góc; <b>Shift</b> để xoay quanh góc đối diện."
 
 #: ../src/seltrans.cpp:858
 #: ../src/seltrans.cpp:970
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
-msgstr "<b>Co dãn</b>: %0.2f%% x %0.2f%%; với phím:<br>\n"
-"	<b>Ctrl</b> để khoá tỷ lệ."
+msgstr "<b>Co dãn</b>: %0.2f%% x %0.2f%%; với phím: <b>Ctrl</b> để khoá tỷ lệ."
 
 #.TRANSLATORS: don't modify the first ";"
 #.(it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1060
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Đối xứng lệch</b>: %0.2f&#176;; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc."
+msgstr "<b>Đối xứng lệch</b>: %0.2f&#176;; với phím: <b>Ctrl</b> để dính góc."
 
 #.TRANSLATORS: don't modify the first ";"
 #.(it will NOT be displayed as ";" - only the second one will be)
 #: ../src/seltrans.cpp:1109
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Xoay</b> %0.2f&#176;; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc"
+msgstr "<b>Xoay</b> %0.2f&#176;; với phím: <b>Ctrl</b> để dính góc"
 
 #: ../src/seltrans.cpp:1153
 #, c-format
@@ -4286,9 +4220,7 @@ msgstr "Chuyển <b>tâm</b> sang %s, %s"
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
 "with <b>Shift</b> to disable snapping"
-msgstr "<b>Chuyển</b> theo %s, %s; với phím:<br>\n"
-"	<b>Ctrl</b> để hạn chế thành ngang/dọc<br>\n"
-"	<b>Shift</b> để tắt khả năng dính."
+msgstr "<b>Chuyển</b> theo %s, %s; với phím: <b>Ctrl</b> để hạn chế thành ngang/dọc; <b>Shift</b> để tắt khả năng dính."
 
 #: ../src/slideshow.cpp:89
 msgid "Inkscape slideshow"
@@ -4497,8 +4429,7 @@ msgstr "<b>Alt</b>: khoá bán kính xoắn ốc"
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Xoắn ốc</b>: bán kính %s, góc %5g&#176;; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc."
+msgstr "<b>Xoắn ốc</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> để dính góc."
 
 #: ../src/splivarot.cpp:110
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -4560,14 +4491,12 @@ msgstr "<b>Ctrl</b>: dính góc, giữ tia là xuyên tâm"
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Đa giác</b>: bán kính %s, góc %5g&#176;; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc."
+msgstr "<b>Đa giác</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> để dính góc."
 
 #: ../src/star-context.cpp:447
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
-msgstr "<b>Sao</b>: bán kính %s, góc %5g&#176;; với phím:<br>\n"
-"	<b>Ctrl</b> để dính góc."
+msgstr "<b>Sao</b>: bán kính %s, góc %5g&#176;; với phím: <b>Ctrl</b> để dính góc."
 
 #: ../src/text-chemistry.cpp:94
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -4714,8 +4643,7 @@ msgstr "<b>Kéo</b> để tạo một dòng vẽ bằng tay. Bắt đầu vẽ v
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to start a path; with <b>Shift</b> to "
 "append to selected path."
-msgstr "<b>Nhấn</b> hay <b>nhấn và kéo</b> để bắt đầu vẽ đường dẫn; với phím:<br>\n"
-"	<b>Shift</b> để phụ thêm nó vào đường dẫn khác đã chọn."
+msgstr "<b>Nhấn</b> hay <b>nhấn và kéo</b> để bắt đầu vẽ đường dẫn; với phím: <b>Shift</b> để phụ thêm nó vào đường dẫn khác đã chọn."
 
 #: ../src/tools-switch.cpp:175
 msgid ""
