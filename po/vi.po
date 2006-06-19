@@ -2,13 +2,7 @@
 # Copyright © 2006 Free Software Foundation, Inc.
 # Clytie Siddall <clytie@riverland.net.au>, 2006.
 # 
-#: ../src/widgets/toolbox.cpp:3631
-#: ../src/widgets/toolbox.cpp:3652
-#: ../src/widgets/toolbox.cpp:3681
-#: ../src/widgets/toolbox.cpp:3702
-#: ../src/widgets/toolbox.cpp:3729
 msgid ""
-""
 msgstr "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
