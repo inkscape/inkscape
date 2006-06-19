@@ -37,6 +37,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+#include "config.h"
+
 #ifdef HAVE_LIBINTL_H
 #include <libintl.h>
 #endif
