@@ -37,7 +37,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+#ifdef HAVE_LIBINTL_H
 #include <libintl.h>
+#endif
 
 #if !defined(_)
 #define _(s) gettext(s)
