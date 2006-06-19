@@ -2509,6 +2509,146 @@ void sp_nodepath_select_rect(Inkscape::NodePath::Path *nodepath, NR::Rect const 
 }
 
 
+void
+nodepath_grow_selection_linearly (Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *n, int grow)
+{
+    g_assert (n);
+    g_assert (nodepath);
+    g_assert (n->subpath->nodepath == nodepath);
+
+    if (g_list_length (nodepath->selected) == 0) {
+        if (grow > 0) {
+            sp_nodepath_node_select(n, TRUE, TRUE);
+        }
+        return;
+    }
+
+    if (g_list_length (nodepath->selected) == 1) {
+        if (grow < 0) {
+            sp_nodepath_deselect (nodepath);
+            return;
+        }
+    }
+
+        double n_sel_range = 0, p_sel_range = 0;
+            Inkscape::NodePath::Node *farthest_n_node = n;
+            Inkscape::NodePath::Node *farthest_p_node = n;
+
+        // Calculate ranges
+        {
+            double n_range = 0, p_range = 0;
+            bool n_going = true, p_going = true;
+            Inkscape::NodePath::Node *n_node = n;
+            Inkscape::NodePath::Node *p_node = n;
+            do {
+                // Do one step in both directions from n, until reaching the end of subpath or bumping into each other
+                if (n_node && n_going)
+                    n_node = n_node->n.other;
+                if (n_node == NULL) {
+                    n_going = false;
+                } else {
+                    n_range += bezier_length (n_node->p.other->pos, n_node->p.other->n.pos, n_node->p.pos, n_node->pos);
+                    if (n_node->selected) {
+                        n_sel_range = n_range;
+                        farthest_n_node = n_node;
+                    }
+                    if (n_node == p_node) {
+                        n_going = false;
+                        p_going = false;
+                    }
+                }
+                if (p_node && p_going)
+                    p_node = p_node->p.other;
+                if (p_node == NULL) {
+                    p_going = false;
+                } else {
+                    p_range += bezier_length (p_node->n.other->pos, p_node->n.other->p.pos, p_node->n.pos, p_node->pos);
+                    if (p_node->selected) {
+                        p_sel_range = p_range;
+                        farthest_p_node = p_node;
+                    }
+                    if (p_node == n_node) {
+                        n_going = false;
+                        p_going = false;
+                    }
+                }
+            } while (n_going || p_going);
+        }
+
+    if (grow > 0) {
+        if (n_sel_range < p_sel_range && farthest_n_node && farthest_n_node->n.other && !(farthest_n_node->n.other->selected)) {
+                sp_nodepath_node_select(farthest_n_node->n.other, TRUE, TRUE);
+        } else if (farthest_p_node && farthest_p_node->p.other && !(farthest_p_node->p.other->selected)) {
+                sp_nodepath_node_select(farthest_p_node->p.other, TRUE, TRUE);
+        }
+    } else {
+        if (n_sel_range > p_sel_range && farthest_n_node && farthest_n_node->selected) {
+                sp_nodepath_node_select(farthest_n_node, TRUE, FALSE);
+        } else if (farthest_p_node && farthest_p_node->selected) {
+                sp_nodepath_node_select(farthest_p_node, TRUE, FALSE);
+        }
+    }
+}
+
+void
+nodepath_grow_selection_spatially (Inkscape::NodePath::Path *nodepath, Inkscape::NodePath::Node *n, int grow)
+{
+    g_assert (n);
+    g_assert (nodepath);
+    g_assert (n->subpath->nodepath == nodepath);
+
+    if (g_list_length (nodepath->selected) == 0) {
+        if (grow > 0) {
+            sp_nodepath_node_select(n, TRUE, TRUE);
+        }
+        return;
+    }
+
+    if (g_list_length (nodepath->selected) == 1) {
+        if (grow < 0) {
+            sp_nodepath_deselect (nodepath);
+            return;
+        }
+    }
+
+    Inkscape::NodePath::Node *farthest_selected = NULL;
+    double farthest_dist = 0;
+
+    Inkscape::NodePath::Node *closest_unselected = NULL;
+    double closest_dist = NR_HUGE;
+
+    for (GList *spl = nodepath->subpaths; spl != NULL; spl = spl->next) {
+       Inkscape::NodePath::SubPath *subpath = (Inkscape::NodePath::SubPath *) spl->data;
+        for (GList *nl = subpath->nodes; nl != NULL; nl = nl->next) {
+           Inkscape::NodePath::Node *node = (Inkscape::NodePath::Node *) nl->data;
+           if (node == n)
+               continue;
+           if (node->selected) {
+               if (NR::L2(node->pos - n->pos) > farthest_dist) {
+                   farthest_dist = NR::L2(node->pos - n->pos);
+                   farthest_selected = node;
+               }
+           } else {
+               if (NR::L2(node->pos - n->pos) < closest_dist) {
+                   closest_dist = NR::L2(node->pos - n->pos);
+                   closest_unselected = node;
+               }
+           }
+        }
+    }
+
+    if (grow > 0) {
+        if (closest_unselected) {
+            sp_nodepath_node_select(closest_unselected, TRUE, TRUE);
+        }
+    } else {
+        if (farthest_selected) {
+            sp_nodepath_node_select(farthest_selected, TRUE, FALSE);
+        }
+    }
+}
+
+
 /**
 \brief  Saves all nodes' and handles' current positions in their origin members
 */
@@ -2685,7 +2825,7 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
 /**
  * Node event callback.
  */
-static gboolean node_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePath::Node *n)
+static gboolean node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n)
 {
     gboolean ret = FALSE;
     switch (event->type) {
@@ -2702,6 +2842,20 @@ static gboolean node_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePath::Nod
                         Inkscape::NodePath::Path *nodepath = n->subpath->nodepath;
                         stamp_repr(nodepath);
                         ret = TRUE;
+                    }
+                    break;
+                case GDK_Page_Up:
+                    if (event->key.state & GDK_CONTROL_MASK) {
+                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, +1);
+                    } else {
+                        nodepath_grow_selection_linearly (n->subpath->nodepath, n, +1);
+                    }
+                    break;
+                case GDK_Page_Down:
+                    if (event->key.state & GDK_CONTROL_MASK) {
+                        nodepath_grow_selection_spatially (n->subpath->nodepath, n, -1);
+                    } else {
+                        nodepath_grow_selection_linearly (n->subpath->nodepath, n, -1);
                     }
                     break;
                 default:
