@@ -172,22 +172,17 @@ sp_event_context_update_cursor(SPEventContext *ec)
 {
     GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(ec->desktop));
     if (w->window) {
-        /* fixme: */
-        if (ec->cursor_shape) {
-            GdkBitmap *bitmap = NULL;
-            GdkBitmap *mask = NULL;
-            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, ec->cursor_shape);
-            if ((bitmap != NULL) && (mask != NULL)) {
-                if (ec->cursor)
-                    gdk_cursor_unref (ec->cursor);
-                ec->cursor = gdk_cursor_new_from_pixmap(bitmap, mask,
-                                                        &w->style->black,
-                                                        &w->style->white,
-                                                        ec->hot_x, ec->hot_y);
-                g_object_unref (bitmap);
-                g_object_unref (mask);
-            }
-        }
+         GdkDisplay *display=gdk_display_get_default();
+ 
+         if (ec->cursor) 
+             gdk_cursor_unref(ec->cursor);
+ 
+         ec->cursor=sp_cursor_new(
+                 display,
+                 ec->cursor_pixbuf,
+                 ec->cursor_shape,
+                 ec->hot_x,
+                 ec->hot_y);
         gdk_window_set_cursor(w->window, ec->cursor);
     }
 }

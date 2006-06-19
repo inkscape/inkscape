@@ -40,6 +40,7 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-calligraphy.xpm"
+#include "pixmaps/cursor-calligraphy.pixbuf"
 #include "dyna-draw-context.h"
 #include "libnr/n-art-bpath.h"
 #include "libnr/nr-path.h"
@@ -126,6 +127,11 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
     SPEventContext *event_context = SP_EVENT_CONTEXT(ddc);
 
     event_context->cursor_shape = cursor_calligraphy_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_calligraphy_pixbuf,
+            FALSE,
+            NULL);  
     event_context->hot_x = 4;
     event_context->hot_y = 4;
 

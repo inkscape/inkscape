@@ -39,7 +39,9 @@
 #include "message-stack.h"
 #include "message-context.h"
 #include "pixmaps/cursor-text.xpm"
+#include "pixmaps/cursor-text.pixbuf"
 #include "pixmaps/cursor-text-insert.xpm"
+#include "pixmaps/cursor-text-insert.pixbuf"
 #include <glibmm/i18n.h>
 #include "object-edit.h"
 #include "xml/repr.h"
@@ -122,6 +124,11 @@ sp_text_context_init(SPTextContext *tc)
     SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
 
     event_context->cursor_shape = cursor_text_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_text_pixbuf,
+            FALSE,
+            NULL);  
     event_context->hot_x = 7;
     event_context->hot_y = 7;
 
@@ -438,6 +445,11 @@ sp_text_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *event)
                 SP_CTRLRECT(tc->indicator)->setRectangle(sp_item_bbox_desktop(item_ungrouped));
 
                 ec->cursor_shape = cursor_text_insert_xpm;
+                ec->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+                        -1,
+                        cursor_text_insert_pixbuf,
+                        FALSE,
+                        NULL);  
                 ec->hot_x = 7;
                 ec->hot_y = 10;
                 sp_event_context_update_cursor(ec);
@@ -624,6 +636,11 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                 tc->over_text = 0;
                 // update cursor and statusbar: we are not over a text object now
                 ec->cursor_shape = cursor_text_xpm;
+                ec->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+                        -1,
+                        cursor_text_pixbuf,
+                        FALSE,
+                        NULL);  
                 ec->hot_x = 7;
                 ec->hot_y = 7;
                 sp_event_context_update_cursor(ec);

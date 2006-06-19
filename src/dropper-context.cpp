@@ -39,6 +39,7 @@
 #include "document.h"
 
 #include "pixmaps/cursor-dropper.xpm"
+#include "pixmaps/cursor-dropper.pixbuf"
 
 #include "dropper-context.h"
 #include "message-context.h"
@@ -99,6 +100,11 @@ static void sp_dropper_context_init(SPDropperContext *dc)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(dc);
     event_context->cursor_shape = cursor_dropper_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_dropper_pixbuf,
+            FALSE,
+            NULL);  
     event_context->hot_x = 7;
     event_context->hot_y = 7;
 }

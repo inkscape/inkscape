@@ -31,6 +31,7 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-spiral.xpm"
+#include "pixmaps/cursor-spiral.pixbuf"
 #include "spiral-context.h"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
@@ -94,6 +95,11 @@ sp_spiral_context_init(SPSpiralContext *spiral_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(spiral_context);
 
     event_context->cursor_shape = cursor_spiral_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_spiral_pixbuf,
+            FALSE,
+            NULL); 
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;

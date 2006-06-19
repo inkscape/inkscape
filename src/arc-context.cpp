@@ -30,6 +30,7 @@
 #include "desktop-handles.h"
 #include "snap.h"
 #include "pixmaps/cursor-ellipse.xpm"
+#include "pixmaps/cursor-ellipse.pixbuf"
 #include "sp-metrics.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
@@ -94,6 +95,11 @@ static void sp_arc_context_init(SPArcContext *arc_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(arc_context);
 
     event_context->cursor_shape = cursor_ellipse_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_ellipse_pixbuf,
+            FALSE,
+            NULL);  
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;

@@ -1,12 +1,13 @@
 #define __SP_CURSOR_C__
 
 /*
- * Some convenience stuff
+ * Use a pixmap to make a cursor.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   James ----
  *
- * Copyright (C) 1999-2002 authors
+ * Copyright (C) 1999-2006 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -16,90 +17,53 @@
 #include <ctype.h>
 #include "sp-cursor.h"
 
-void sp_cursor_bitmap_and_mask_from_xpm (GdkBitmap **bitmap, GdkBitmap **mask, gchar **xpm)
+GdkCursor *sp_cursor_new (GdkDisplay *display, GdkPixbuf *pixbuf, gchar **xpm, gint hot_x, gint hot_y)
 {
-    int height;
-    int width;
-    int colors;
-    int pix;
-    sscanf(xpm[0], "%d %d %d %d", &height, &width, &colors, &pix);
+    GdkCursor *new_cursor=NULL;
 
-    g_return_if_fail (height == 32);
-    g_return_if_fail (width == 32);
-    g_return_if_fail (colors >= 3);
-
-    int transparent_color = ' ';
-    int black_color = '.';
-	
-    char pixmap_buffer[(32 * 32)/8];
-    char mask_buffer[(32 * 32)/8];
-
-    for (int i = 0; i < colors; i++) {
-
-        char const *p = xpm[1 + i];
-        char const ccode = *p;
-
-        p++;
-        while (isspace(*p)) {
-            p++;
-        }
-        p++;
-        while (isspace(*p)) {
-            p++;
-        }
-
-	if (strcmp(p, "None") == 0) {
-            transparent_color = ccode;
-        }
-
-        if (strcmp(p, "#000000") == 0) {
-            black_color = ccode;
-        }
+    if ((!pixbuf && xpm) || !gdk_display_supports_cursor_alpha(display)) 
+        //if there is no pixbuf, but there is xpm data, or the display 
+        //doesn't support alpha, use bitmap cursor.
+    {
+        pixbuf=gdk_pixbuf_new_from_xpm_data((const char**)xpm);
     }
-
-    for (int y = 0; y < 32; y++) {
-        for (int x = 0; x < 32; ) {
-
-            char value = 0;
-            char maskv = 0;
-			
-            for (int pix = 0; pix < 8; pix++, x++){
-                if (xpm [4+y][x] != transparent_color) {
-                    maskv |= 1 << pix;
-
-                    if (xpm [4+y][x] == black_color) {
-                        value |= 1 << pix;
-                    }
-                }
-            }
-
-            pixmap_buffer[(y * 4 + x/8)-1] = value;
-            mask_buffer[(y * 4 + x/8)-1] = maskv;
-        }
+    if(pixbuf) {
+        new_cursor = gdk_cursor_new_from_pixbuf(display,pixbuf,hot_x,hot_y);
     }
-
-    *bitmap = gdk_bitmap_create_from_data(NULL, pixmap_buffer, 32, 32);
-    *mask   = gdk_bitmap_create_from_data(NULL, mask_buffer, 32, 32);
+    return new_cursor;
 }
+
+
 
 GdkCursor *sp_cursor_new_from_xpm (gchar **xpm, gint hot_x, gint hot_y)
 {
-    GdkColor const fg = { 0, 0, 0, 0 };
-    GdkColor const bg = { 0, 65535, 65535, 65535 };
-
-    GdkBitmap *bitmap = NULL;
-    GdkBitmap *mask = NULL;
-
-    sp_cursor_bitmap_and_mask_from_xpm (&bitmap, &mask, xpm);
-    if ( bitmap != NULL && mask != NULL ) {
-        GdkCursor *new_cursor = gdk_cursor_new_from_pixmap (bitmap, mask,
-                                           &fg, &bg,
-                                           hot_x, hot_y);
-        g_object_unref (bitmap);
-        g_object_unref (mask);
+    GdkDisplay *display=gdk_display_get_default();
+    GdkPixbuf *pixbuf=NULL;
+    GdkCursor *new_cursor=NULL;
+    pixbuf=gdk_pixbuf_new_from_xpm_data((const char**)xpm);
+    if (pixbuf != NULL){
+        new_cursor = gdk_cursor_new_from_pixbuf(display,pixbuf,hot_x,hot_y);
+        g_message("xpm cursor defined\n");
         return new_cursor;
     }
+    g_warning("xpm cursor not defined\n");
 
+    return NULL;
+}
+
+
+
+GdkCursor *sp_cursor_new_from_pixbuf (GdkPixbuf *pixbuf, gint hot_x, gint hot_y)
+{
+    GdkDisplay *display=gdk_display_get_default();
+    GdkCursor *new_cursor=NULL;
+    if (pixbuf) {
+        new_cursor = gdk_cursor_new_from_pixbuf(display,pixbuf,hot_x,hot_y);
+        g_message("pixbuf cursor defined\n");
+        return new_cursor;
+     }
+    g_warning("pixbuf cursor not defined\n");
+        return new_cursor;
     return NULL;
 }
 

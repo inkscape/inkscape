@@ -30,6 +30,7 @@
 #include "sp-path.h"
 
 #include "pixmaps/cursor-pen.xpm"
+#include "pixmaps/cursor-pen.pixbuf"
 #include "display/canvas-bpath.h"
 #include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
@@ -124,6 +125,11 @@ sp_pen_context_init(SPPenContext *pc)
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
 
     event_context->cursor_shape = cursor_pen_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_pen_pixbuf,
+            FALSE,
+            NULL);  
     event_context->hot_x = 4;
     event_context->hot_y = 4;
 

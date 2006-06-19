@@ -26,9 +26,11 @@
 #include "desktop-handles.h"
 #include "selection.h"
 #include "pixmaps/cursor-node.xpm"
+#include "pixmaps/cursor-node.pixbuf"
 #include "message-context.h"
 #include "node-context.h"
 #include "pixmaps/cursor-node-d.xpm"
+#include "pixmaps/cursor-node-d.pixbuf"
 #include "prefs-utils.h"
 #include "xml/node-event-vector.h"
 #include "style.h"
@@ -98,6 +100,11 @@ sp_node_context_init(SPNodeContext *node_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(node_context);
 
     event_context->cursor_shape = cursor_node_xpm;
+    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+            -1,
+            cursor_node_pixbuf,
+            FALSE,
+            NULL);  
     event_context->hot_x = 1;
     event_context->hot_y = 1;
 
@@ -584,12 +591,22 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                 if (nc->cursor_drag && !over_stroke) {
                     event_context->cursor_shape = cursor_node_xpm;
+                    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+                            -1,
+                            cursor_node_pixbuf,
+                            FALSE,
+                            NULL);  
                     event_context->hot_x = 1;
                     event_context->hot_y = 1;
                     sp_event_context_update_cursor(event_context);
                     nc->cursor_drag = false;
                 } else if (!nc->cursor_drag && over_stroke) {
                     event_context->cursor_shape = cursor_node_d_xpm;
+                    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
+                            -1,
+                            cursor_node_d_pixbuf,
+                            FALSE,
+                            NULL);  
                     event_context->hot_x = 1;
                     event_context->hot_y = 1;
                     sp_event_context_update_cursor(event_context);
