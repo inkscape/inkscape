@@ -80,6 +80,16 @@ bool XmppConfig::read(const DOMString &buffer)
 
     accounts.clear();
 
+    std::vector<Element *> mucElems = root->findElements("muc");
+    if (mucElems.size() > 0)
+        {
+        Element *elem = mucElems[0];
+        mucGroup    = elem->getTagValue("group");
+        mucHost     = elem->getTagValue("host");
+        mucNick     = elem->getTagValue("nick");
+        mucPassword = elem->getTagValue("password");
+        }
+
     std::vector<Element *> accountElems = root->findElements("account");
 
     for (unsigned int i=0 ; i<accountElems .size() ; i++)
@@ -87,7 +97,7 @@ bool XmppConfig::read(const DOMString &buffer)
         XmppAccount account;
         Element *elem = accountElems [i];
 
-        DOMString str = elem ->getTagValue("name");
+        DOMString str = elem->getTagValue("name");
         if (str.size()==0)
             str = "unnamed account";
         account.setName(str);
@@ -95,7 +105,7 @@ bool XmppConfig::read(const DOMString &buffer)
         str = elem->getTagValue("host");
         if (str.size()==0)
             str = "jabber.org";
-        account.setName(str);
+        account.setHost(str);
 
         str = elem->getTagValue("port");
         int port = (int) getInt(str);
@@ -161,6 +171,20 @@ DOMString XmppConfig::toXmlBuffer()
     char fmtbuf[32];
 
     buf.append("<pedro>\n");
+    buf.append("    <muc>\n");
+    buf.append("        <group>");
+    buf.append(mucGroup);
+    buf.append("</group>\n");
+    buf.append("        <host>");
+    buf.append(mucHost);
+    buf.append("</host>\n");
+    buf.append("        <nick>");
+    buf.append(mucNick);
+    buf.append("</nick>\n");
+    buf.append("        <password>");
+    buf.append(mucPassword);
+    buf.append("</password>\n");
+    buf.append("    </muc>\n");
 
     for (unsigned int i = 0 ; i<accounts.size() ; i++)
         {
@@ -218,6 +242,153 @@ bool XmppConfig::writeFile(const DOMString &fileName)
         return false;
 
     return true;
+}
+
+
+/**
+ *
+ */
+DOMString XmppConfig::getMucGroup()
+{
+    return mucGroup;
+}
+
+/**
+ *
+ */
+void XmppConfig::setMucGroup(const DOMString &val)
+{
+    mucGroup = val;
+}
+
+/**
+ *
+ */
+DOMString XmppConfig::getMucHost()
+{
+    return mucHost;
+}
+
+/**
+ *
+ */
+void XmppConfig::setMucHost(const DOMString &val)
+{
+    mucHost = val;
+}
+
+/**
+ *
+ */
+DOMString XmppConfig::getMucNick()
+{
+    return mucNick;
+}
+
+/**
+ *
+ */
+void XmppConfig::setMucNick(const DOMString &val)
+{
+    mucNick = val;
+}
+
+/**
+ *
+ */
+DOMString XmppConfig::getMucPassword()
+{
+    return mucPassword;
+}
+
+/**
+ *
+ */
+void XmppConfig::setMucPassword(const DOMString &val)
+{
+    mucPassword = val;
+}
+
+
+
+/**
+ *
+ */
+std::vector<XmppAccount> &XmppConfig::getAccounts()
+{
+    return accounts;
+}
+
+
+/**
+ *
+ */
+bool XmppConfig::accountAdd(const XmppAccount &account)
+{
+    DOMString name = account.getName();
+    if (name.size() < 1)
+        return false;
+    if (accountExists(name))
+        return false;
+    accounts.push_back(account);
+    return true;
+}
+
+
+/**
+ *
+ */
+bool XmppConfig::accountExists(const DOMString &accountName)
+{
+    if (accountName.size() < 1)
+        return false;
+    std::vector<XmppAccount>::iterator iter;
+    for (iter = accounts.begin() ; iter!= accounts.end() ; iter++)
+        {
+        if (iter->getName() == accountName)
+            return true;
+        }
+    return false;
+}
+
+
+
+/**
+ *
+ */
+void XmppConfig::accountRemove(const DOMString &accountName)
+{
+    if (accountName.size() < 1)
+        return;
+    std::vector<XmppAccount>::iterator iter;
+    for (iter = accounts.begin() ; iter!= accounts.end() ; )
+        {
+        if (iter->getName() == accountName)
+            iter = accounts.erase(iter);
+        else
+            iter++;
+        }        
+}
+
+
+/**
+ *
+ */
+bool XmppConfig::accountFind(const DOMString &accountName,
+                             XmppAccount &retVal)
+{
+    if (accountName.size() < 1)
+        return false;
+    std::vector<XmppAccount>::iterator iter;
+    for (iter = accounts.begin() ; iter!= accounts.end() ; iter++)
+        {
+        if (iter->getName() == accountName)
+            {
+            retVal = (*iter);
+            return true;
+            }
+        }        
+    return false;
 }
 
 

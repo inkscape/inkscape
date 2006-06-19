@@ -183,6 +183,9 @@ public:
 
     DOMString getAttribute(const DOMString &name);
 
+    std::vector<Attribute> &getAttributes()
+        { return attributes; } 
+
     DOMString getTagAttribute(const DOMString &tagName, const DOMString &attrName);
 
     DOMString getTagValue(const DOMString &tagName);
@@ -277,7 +280,7 @@ public:
      * @param fileName the name of the file to read
      * @return a pointer to the root of the XML document;
      */
-    Element *parseFile(const char *fileName);
+    Element *parseFile(const DOMString &fileName);
 
     /**
      * Utility method to preprocess a string for XML
@@ -286,6 +289,10 @@ public:
      */
     static DOMString encode(const DOMString &str);
 
+    /**
+     *  Removes whitespace from beginning and end of a string
+     */
+    DOMString trim(const DOMString &s);
 
 private:
 

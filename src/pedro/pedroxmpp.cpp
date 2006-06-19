@@ -27,6 +27,8 @@
 
 #include <sys/stat.h>
 
+#include <time.h>
+
 #include "pedroxmpp.h"
 #include "pedrodom.h"
 #include "pedroutil.h"
@@ -755,7 +757,7 @@ bool XmppClient::pause(unsigned long millis)
 static int strIndex(const DOMString &str, char *key)
 {
     unsigned int p = str.find(key);
-    if (p == DOMString::npos)
+    if (p == str.npos)
         return -1;
     return p;
 }
@@ -833,6 +835,7 @@ void XmppClient::setUsername(const DOMString &val)
 
 DOMString XmppClient::readStanza()
 {
+
     int  openCount    = 0;
     bool inTag        = false;
     bool slashSeen    = false;
@@ -841,6 +844,9 @@ DOMString XmppClient::readStanza()
     bool inQuote      = false;
     bool textSeen     = false;
     DOMString buf;
+
+
+    time_t timeout = time((time_t *)0) + 180;
 
     while (true)
         {
@@ -853,6 +859,17 @@ DOMString XmppClient::readStanza()
                 //Since we are timed out, let's assume that we
                 //are between chunks of text.  Let's reset all states.
                 //printf("-----#### Timeout\n");
+                time_t currentTime = time((time_t *)0);
+                if (currentTime > timeout)
+                    {
+                    timeout = currentTime + 180;
+                    if (!write("\n"))
+                        {
+                        error("ping send error");
+                        disconnect();
+                        return "";
+                        }
+                    }
                 continue;
                 }
             else
@@ -1472,7 +1489,7 @@ bool XmppClient::receiveAndProcessLoop()
         {
         if (!keepGoing)
             {
-            printf("Abort requested\n");
+            status("Abort requested");
             break;
             }
         if (!receiveAndProcess())

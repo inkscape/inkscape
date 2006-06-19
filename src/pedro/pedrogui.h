@@ -357,59 +357,6 @@ private:
  };
 
 
-//#########################################################################
-//# C O N N E C T    D I A L O G
-//#########################################################################
-class ConnectDialog : public Gtk::Dialog
-{
-public:
-
-    ConnectDialog(PedroGui &par) : parent(par)
-        { doSetup(); }
-
-    virtual ~ConnectDialog()
-        {}
-
-   DOMString getHost()
-       { return hostField.get_text(); }
-   int getPort()
-       { return (int)portSpinner.get_value(); }
-   DOMString getUser()
-       { return userField.get_text(); }
-   DOMString getPass()
-       { return passField.get_text(); }
-   DOMString getResource()
-       { return resourceField.get_text(); }
-   bool getRegister()
-       { return registerButton.get_active(); }
-
-private:
-
-    void okCallback();
-    void cancelCallback();
-
-    bool doSetup();
-
-    Gtk::Table       table;
-
-    Gtk::Label       hostLabel;
-    Gtk::Entry       hostField;
-    Gtk::Label       portLabel;
-    Gtk::SpinButton  portSpinner;
-    Gtk::Label       userLabel;
-    Gtk::Entry       userField;
-    Gtk::Label       passLabel;
-    Gtk::Entry       passField;
-    Gtk::Label       resourceLabel;
-    Gtk::Entry       resourceField;
-    Gtk::Label       registerLabel;
-    Gtk::CheckButton registerButton;
-
-    PedroGui &parent;
-};
-
-
-
 
 //#########################################################################
 //# C O N F I G    D I A L O G
@@ -583,6 +530,117 @@ private:
 
     PedroGui &parent;
 };
+
+
+//#########################################################################
+//#  C O N N E C T    D I A L O G
+//#########################################################################
+class ConnectDialog : public Gtk::Dialog
+{
+public:
+
+    ConnectDialog (PedroGui &par) : parent(par)
+        { doSetup(); }
+
+    virtual ~ConnectDialog ()
+        {}
+
+   DOMString getHost()
+       { return hostField.get_text(); }
+   void setHost(const DOMString &val)
+       { hostField.set_text(val); }
+   int getPort()
+       { return (int)portSpinner.get_value(); }
+   void setPort(int val)
+       { portSpinner.set_value(val); }
+   DOMString getUser()
+       { return userField.get_text(); }
+   void setUser(const DOMString &val)
+       { userField.set_text(val); }
+   DOMString getPass()
+       { return passField.get_text(); }
+   void setPass(const DOMString &val)
+       { passField.set_text(val); }
+   DOMString getResource()
+       { return resourceField.get_text(); }
+   void setResource(const DOMString &val)
+       { resourceField.set_text(val); }
+   bool getRegister()
+       { return registerButton.get_active(); }
+
+    /**
+     * Regenerate the account list
+     */
+    virtual void refresh();
+
+private:
+
+    void okCallback();
+    void saveCallback();
+    void cancelCallback();
+    void doubleClickCallback(
+                   const Gtk::TreeModel::Path &path,
+                   Gtk::TreeViewColumn *col);
+    void selectedCallback();
+
+    bool doSetup();
+
+    Gtk::Table       table;
+
+    Gtk::Label       hostLabel;
+    Gtk::Entry       hostField;
+    Gtk::Label       portLabel;
+    Gtk::SpinButton  portSpinner;
+    Gtk::Label       userLabel;
+    Gtk::Entry       userField;
+    Gtk::Label       passLabel;
+    Gtk::Entry       passField;
+    Gtk::Label       resourceLabel;
+    Gtk::Entry       resourceField;
+    Gtk::Label       registerLabel;
+    Gtk::CheckButton registerButton;
+
+    Glib::RefPtr<Gtk::UIManager> uiManager;
+
+
+    //##  Account list
+
+    void buttonPressCallback(GdkEventButton* event);
+
+    Gtk::ScrolledWindow accountScroll;
+
+    void connectCallback();
+
+    void modifyCallback();
+
+    void deleteCallback();
+
+
+    class AccountColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            AccountColumns()
+                {
+                add(nameColumn);
+                add(hostColumn);
+                }
+
+            Gtk::TreeModelColumn<Glib::ustring> nameColumn;
+            Gtk::TreeModelColumn<Glib::ustring> hostColumn;
+        };
+
+    AccountColumns accountColumns;
+
+    Glib::RefPtr<Gtk::UIManager> accountUiManager;
+
+    Glib::RefPtr<Gtk::ListStore> accountListStore;
+    Gtk::TreeView accountView;
+
+
+    PedroGui &parent;
+};
+
+
 
 
 //#########################################################################
@@ -802,6 +860,11 @@ public:
 
     //# Help menu
     void aboutCallback();
+
+    //# Configuration file
+    bool configLoad();
+    bool configSave();
+
 
 private:
 

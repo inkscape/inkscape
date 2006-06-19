@@ -1,2 +1,2 @@
-set path=c:\inkscape;%path%
+set path=c:\gtk28\bin;%path%
 start pedro.exe

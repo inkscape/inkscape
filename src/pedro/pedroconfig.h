@@ -72,7 +72,7 @@ public:
     /**
      *
      */
-    virtual DOMString getName()
+    virtual DOMString getName() const
         { return name; }
 
     /**
@@ -84,7 +84,7 @@ public:
     /**
      *
      */
-    virtual DOMString getHost()
+    virtual DOMString getHost() const
         { return host; }
 
     /**
@@ -96,7 +96,7 @@ public:
     /**
      *
      */
-    virtual int getPort()
+    virtual int getPort() const
         { return port; }
 
     /**
@@ -108,7 +108,7 @@ public:
     /**
      *
      */
-    virtual DOMString getUsername()
+    virtual DOMString getUsername() const
         { return username; }
 
     /**
@@ -120,7 +120,7 @@ public:
     /**
      *
      */
-    virtual DOMString getPassword()
+    virtual DOMString getPassword() const
         { return password; }
 
     /**
@@ -217,9 +217,68 @@ public:
     /**
      *
      */
-    virtual std::vector<XmppAccount> &getAccounts()
-        { return accounts; }
+    virtual std::vector<XmppAccount> &getAccounts();
 
+    /**
+     *
+     */
+    virtual DOMString getMucGroup();
+
+    /**
+     *
+     */
+    virtual void setMucGroup(const DOMString &val);
+
+    /**
+     *
+     */
+    virtual DOMString getMucHost();
+
+    /**
+     *
+     */
+    virtual void setMucHost(const DOMString &val);
+
+    /**
+     *
+     */
+    virtual DOMString getMucNick();
+
+    /**
+     *
+     */
+    virtual void setMucNick(const DOMString &val);
+
+    /**
+     *
+     */
+    virtual DOMString getMucPassword();
+
+    /**
+     *
+     */
+    virtual void setMucPassword(const DOMString &val);
+
+    /**
+     *
+     */
+    virtual bool accountAdd(const XmppAccount &account);
+
+    /**
+     *
+     */
+    virtual bool accountExists(const DOMString &accountName);
+
+    /**
+     *
+     */
+    virtual void accountRemove(const DOMString &accountName);
+
+    /**
+     *
+     */
+    bool accountFind(const DOMString &accountName,
+                     XmppAccount &retVal);
 
 
 private:
@@ -232,6 +291,15 @@ private:
         {
         accounts = other.accounts;
         }
+
+    //# Group stuff
+    DOMString mucGroup;
+
+    DOMString mucHost;
+
+    DOMString mucNick;
+
+    DOMString mucPassword;
 
     std::vector<XmppAccount> accounts;
 

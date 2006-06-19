@@ -26,9 +26,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#if defined(HAVE_MALLOC_H)
-#include <malloc.h>
-#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -198,6 +195,35 @@ static EntityEntry entities[] =
 };
 
 
+
+/**
+ *  Removes whitespace from beginning and end of a string
+ */
+DOMString Parser::trim(const DOMString &s)
+{
+    if (s.size() < 1)
+        return s;
+    
+    //Find first non-ws char
+    unsigned int begin = 0;
+    for ( ; begin < s.size() ; begin++)
+        {
+        if (!isspace(s[begin]))
+            break;
+        }
+
+    //Find first non-ws char, going in reverse
+    unsigned int end = s.size() - 1;
+    for ( ; end > begin ; end--)
+        {
+        if (!isspace(s[end]))
+            break;
+        }
+    //trace("begin:%d  end:%d", begin, end);
+
+    DOMString res = s.substr(begin, end-begin+1);
+    return res;
+}
 
 void Parser::getLineAndColumn(long pos, long *lineNr, long *colNr)
 {
@@ -659,44 +685,36 @@ Element *Parser::parse(XMLCh *buf,int pos,int len)
 
 Element *Parser::parse(const char *buf, int pos, int len)
 {
-
-    XMLCh *charbuf = (XMLCh *)malloc((len+1) * sizeof(XMLCh));
+    XMLCh *charbuf = new XMLCh[len + 1];
     long i = 0;
-    while (i< len)
-        {
+    for ( ; i < len ; i++)
         charbuf[i] = (XMLCh)buf[i];
-        i++;
-        }
     charbuf[i] = '\0';
-    Element *n = parse(charbuf, 0, len);
-    free(charbuf);
+
+    Element *n = parse(charbuf, pos, len);
+    delete[] charbuf;
     return n;
 }
 
 Element *Parser::parse(const DOMString &buf)
 {
-    long len = buf.size();
-    XMLCh *charbuf = (XMLCh *)malloc((len+1) * sizeof(XMLCh));
+    long len = (long)buf.size();
+    XMLCh *charbuf = new XMLCh[len + 1];
     long i = 0;
-    while (i< len)
-        {
+    for ( ; i < len ; i++)
         charbuf[i] = (XMLCh)buf[i];
-        i++;
-        }
     charbuf[i] = '\0';
+
     Element *n = parse(charbuf, 0, len);
-    free(charbuf);
+    delete[] charbuf;
     return n;
 }
 
-Element *Parser::parseFile(const char *fileName)
+Element *Parser::parseFile(const DOMString &fileName)
 {
 
     //##### LOAD INTO A CHAR BUF, THEN CONVERT TO XMLCh
-    if (!fileName)
-        return NULL;
-
-    FILE *f = fopen(fileName, "rb");
+    FILE *f = fopen(fileName.c_str(), "rb");
     if (!f)
         return NULL;
 
@@ -709,7 +727,7 @@ Element *Parser::parseFile(const char *fileName)
     long filelen = statBuf.st_size;
 
     //printf("length:%d\n",filelen);
-    XMLCh *charbuf = (XMLCh *)malloc((filelen+1) * sizeof(XMLCh));
+    XMLCh *charbuf = new XMLCh[filelen + 1];
     for (XMLCh *p=charbuf ; !feof(f) ; p++)
         {
         *p = (XMLCh)fgetc(f);
@@ -723,7 +741,7 @@ Element *Parser::parseFile(const char *fileName)
     printf("buf:%ls\n======\n",charbuf);
     */
     Element *n = parse(charbuf, 0, filelen);
-    free(charbuf);
+    delete [] charbuf;
     return n;
 }
 

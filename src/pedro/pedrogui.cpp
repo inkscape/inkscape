@@ -1060,7 +1060,10 @@ bool GroupChatWindow::receivePresence(const DOMString &fromNick,
             presStr.append(show);
             }
         }
-    messageList.postMessage("*", presStr);
+
+    if (presStr != "xa")
+        messageList.postMessage("*", presStr);
+
     userList.clear();
     std::vector<XmppUser> memberList =
          parent.client.groupChatGetUserList(groupJid);
@@ -1090,111 +1093,6 @@ void GroupChatWindow::doSendFile(const DOMString &nick)
     fullJid.append(nick);
     parent.doSendFile(fullJid);
 
-}
-
-
-
-//#########################################################################
-//# C O N N E C T    D I A L O G
-//#########################################################################
-
-
-void ConnectDialog::okCallback()
-{
-    response(Gtk::RESPONSE_OK);
-    hide();
-}
-
-void ConnectDialog::cancelCallback()
-{
-    response(Gtk::RESPONSE_CANCEL);
-    hide();
-}
-
-
-bool ConnectDialog::doSetup()
-{
-    set_title("Connect");
-    set_size_request(300,200);
-
-    Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
-    actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
-    actionGroup->add( Gtk::Action::create("Connect", Gtk::Stock::CONNECT, "Connect"),
-        sigc::mem_fun(*this, &ConnectDialog::okCallback) );
-    actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
-        sigc::mem_fun(*this, &ConnectDialog::cancelCallback) );
-
-
-    Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
-
-    uiManager->insert_action_group(actionGroup, 0);
-    add_accel_group(uiManager->get_accel_group());
-
-    Glib::ustring ui_info =
-        "<ui>"
-        "  <menubar name='MenuBar'>"
-        "    <menu action='MenuFile'>"
-        "      <menuitem action='Connect'/>"
-        "      <separator/>"
-        "      <menuitem action='Cancel'/>"
-        "    </menu>"
-        "  </menubar>"
-        "</ui>";
-
-    uiManager->add_ui_from_string(ui_info);
-    Gtk::Widget* pMenuBar = uiManager->get_widget("/MenuBar");
-    get_vbox()->pack_start(*pMenuBar, Gtk::PACK_SHRINK);
-
-    table.resize(6, 2);
-    get_vbox()->pack_start(table);
-
-    parent.client.setHost("broadway.dynalias.com");
-    parent.client.setPort(5222);
-    parent.client.setUsername("");
-    parent.client.setPassword("");
-    parent.client.setResource("pedroXmpp");
-
-    hostLabel.set_text("Host");
-    table.attach(hostLabel, 0, 1, 0, 1);
-    hostField.set_text(parent.client.getHost());
-    table.attach(hostField, 1, 2, 0, 1);
-
-    portLabel.set_text("Port");
-    table.attach(portLabel, 0, 1, 1, 2);
-    portSpinner.set_digits(0);
-    portSpinner.set_range(1, 65000);
-    portSpinner.set_value(parent.client.getPort());
-    table.attach(portSpinner, 1, 2, 1, 2);
-
-    userLabel.set_text("Username");
-    table.attach(userLabel, 0, 1, 2, 3);
-    userField.set_text(parent.client.getUsername());
-    table.attach(userField, 1, 2, 2, 3);
-
-    passLabel.set_text("Password");
-    table.attach(passLabel, 0, 1, 3, 4);
-    passField.set_visibility(false);
-    passField.set_text(parent.client.getPassword());
-    passField.signal_activate().connect(
-           sigc::mem_fun(*this, &ConnectDialog::okCallback) );
-    table.attach(passField, 1, 2, 3, 4);
-
-    resourceLabel.set_text("Resource");
-    table.attach(resourceLabel, 0, 1, 4, 5);
-    resourceField.set_text(parent.client.getResource());
-    table.attach(resourceField, 1, 2, 4, 5);
-
-    registerLabel.set_text("Register");
-    table.attach(registerLabel, 0, 1, 5, 6);
-    registerButton.set_active(false);
-    table.attach(registerButton, 1, 2, 5, 6);
-
-    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-    add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
-
-    show_all_children();
-
-    return true;
 }
 
 
@@ -1540,22 +1438,23 @@ bool GroupChatDialog::doSetup()
 
     groupLabel.set_text("Group");
     table.attach(groupLabel, 0, 1, 0, 1);
-    groupField.set_text("inkscape");
+    groupField.set_text(parent.config.getMucGroup());
     table.attach(groupField, 1, 2, 0, 1);
 
     hostLabel.set_text("Host");
     table.attach(hostLabel, 0, 1, 1, 2);
-    hostField.set_text("conference.gristle.org");
+    hostField.set_text(parent.config.getMucHost());
     table.attach(hostField, 1, 2, 1, 2);
 
     nickLabel.set_text("Alt Name");
     table.attach(nickLabel, 0, 1, 2, 3);
+    nickField.set_text(parent.config.getMucNick());
     table.attach(nickField, 1, 2, 2, 3);
 
     passLabel.set_text("Password");
     table.attach(passLabel, 0, 1, 3, 4);
     passField.set_visibility(false);
-    //passField.set_text("");
+    passField.set_text(parent.config.getMucPassword());
     table.attach(passField, 1, 2, 3, 4);
 
 
@@ -1567,8 +1466,302 @@ bool GroupChatDialog::doSetup()
     return true;
 }
 
+
+
+
 //#########################################################################
-//# F I L E    S E N D   D I A L O G
+//# C O N N E C T    D I A L O G
+//#########################################################################
+
+
+void ConnectDialog::okCallback()
+{
+    response(Gtk::RESPONSE_OK);
+    hide();
+}
+
+void ConnectDialog::saveCallback()
+{
+    Gtk::Entry txtField;
+    Gtk::Dialog dlg("Account name", *this, true, true);
+    dlg.get_vbox()->pack_start(txtField);
+    txtField.signal_activate().connect(
+           sigc::bind(sigc::mem_fun(dlg, &Gtk::Dialog::response),
+              Gtk::RESPONSE_OK  ));
+    dlg.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    dlg.add_button(Gtk::Stock::OK,     Gtk::RESPONSE_OK);
+    dlg.show_all_children();
+    int ret = dlg.run();
+    if (ret != Gtk::RESPONSE_OK)
+        return;
+
+    Glib::ustring name = txtField.get_text();
+    if (name.size() < 1)
+        {
+        parent.error("Account name too short");
+        return;
+        }
+
+    if (parent.config.accountExists(name))
+        {
+        parent.config.accountRemove(name);          
+        }
+
+    XmppAccount account;
+    account.setName(name);
+    account.setHost(getHost());
+    account.setPort(getPort());
+    account.setUsername(getUser());
+    account.setPassword(getPass());
+    parent.config.accountAdd(account);
+
+    refresh();
+
+    parent.configSave();
+}
+
+void ConnectDialog::cancelCallback()
+{
+    response(Gtk::RESPONSE_CANCEL);
+    hide();
+}
+
+
+void ConnectDialog::doubleClickCallback(
+                   const Gtk::TreeModel::Path &path,
+                   Gtk::TreeViewColumn *col)
+{
+    Glib::RefPtr<Gtk::TreeModel> model = accountView.get_model();
+    Glib::RefPtr<Gtk::TreeSelection> sel = accountView.get_selection();
+    Gtk::TreeModel::iterator iter = sel->get_selected();
+    DOMString name = iter->get_value(accountColumns.nameColumn);
+    //printf("Double clicked:%s\n", name.c_str());
+    XmppAccount account;
+    if (!parent.config.accountFind(name, account))
+        return;
+    setHost(account.getHost()); 
+    setPort(account.getPort()); 
+    setUser(account.getUsername()); 
+    setPass(account.getPassword()); 
+
+    response(Gtk::RESPONSE_OK);
+    hide();
+}
+
+void ConnectDialog::selectedCallback()
+{
+    Glib::RefPtr<Gtk::TreeModel> model = accountView.get_model();
+    Glib::RefPtr<Gtk::TreeSelection> sel = accountView.get_selection();
+    Gtk::TreeModel::iterator iter = sel->get_selected();
+    DOMString name = iter->get_value(accountColumns.nameColumn);
+    //printf("Single clicked:%s\n", name.c_str());
+    XmppAccount account;
+    if (!parent.config.accountFind(name, account))
+        return;
+    setHost(account.getHost()); 
+    setPort(account.getPort()); 
+    setUser(account.getUsername()); 
+    setPass(account.getPassword()); 
+}
+
+void ConnectDialog::deleteCallback()
+{
+    Glib::RefPtr<Gtk::TreeModel> model = accountView.get_model();
+    Glib::RefPtr<Gtk::TreeSelection> sel = accountView.get_selection();
+    Gtk::TreeModel::iterator iter = sel->get_selected();
+    DOMString name = iter->get_value(accountColumns.nameColumn);
+
+    parent.config.accountRemove(name);
+    refresh();
+    parent.configSave();
+    
+}
+
+
+
+void ConnectDialog::buttonPressCallback(GdkEventButton* event)
+{
+    if( (event->type == GDK_BUTTON_PRESS) && (event->button == 3) )
+        {
+        Gtk::Widget *wid = accountUiManager->get_widget("/PopupMenu");
+        Gtk::Menu *popupMenu = dynamic_cast<Gtk::Menu*>(wid);
+        popupMenu->popup(event->button, event->time);
+        }
+}
+
+
+bool ConnectDialog::doSetup()
+{
+    set_title("Connect");
+    set_size_request(300,400);
+
+    Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
+    actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
+    actionGroup->add( Gtk::Action::create("Connect",
+        Gtk::Stock::CONNECT, "Connect"),
+        sigc::mem_fun(*this, &ConnectDialog::okCallback) );
+    actionGroup->add( Gtk::Action::create("Save",
+        Gtk::Stock::CONNECT, "Save as account"),
+        sigc::mem_fun(*this, &ConnectDialog::saveCallback) );
+    actionGroup->add( Gtk::Action::create("Cancel",
+        Gtk::Stock::CANCEL, "Cancel"),
+        sigc::mem_fun(*this, &ConnectDialog::cancelCallback) );
+
+
+    Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
+
+    uiManager->insert_action_group(actionGroup, 0);
+    add_accel_group(uiManager->get_accel_group());
+
+    Glib::ustring ui_info =
+        "<ui>"
+        "  <menubar name='MenuBar'>"
+        "    <menu action='MenuFile'>"
+        "      <menuitem action='Connect'/>"
+        "      <separator/>"
+        "      <menuitem action='Save'/>"
+        "      <separator/>"
+        "      <menuitem action='Cancel'/>"
+        "    </menu>"
+        "  </menubar>"
+        "</ui>";
+
+    uiManager->add_ui_from_string(ui_info);
+    Gtk::Widget* pMenuBar = uiManager->get_widget("/MenuBar");
+    get_vbox()->pack_start(*pMenuBar, Gtk::PACK_SHRINK);
+
+    table.resize(6, 2);
+    get_vbox()->pack_start(table);
+
+    parent.client.setHost("broadway.dynalias.com");
+    parent.client.setPort(5222);
+    parent.client.setUsername("");
+    parent.client.setPassword("");
+    parent.client.setResource("pedroXmpp");
+
+    hostLabel.set_text("Host");
+    table.attach(hostLabel, 0, 1, 0, 1);
+    hostField.set_text(parent.client.getHost());
+    table.attach(hostField, 1, 2, 0, 1);
+
+    portLabel.set_text("Port");
+    table.attach(portLabel, 0, 1, 1, 2);
+    portSpinner.set_digits(0);
+    portSpinner.set_range(1, 65000);
+    portSpinner.set_value(parent.client.getPort());
+    table.attach(portSpinner, 1, 2, 1, 2);
+
+    userLabel.set_text("Username");
+    table.attach(userLabel, 0, 1, 2, 3);
+    userField.set_text(parent.client.getUsername());
+    table.attach(userField, 1, 2, 2, 3);
+
+    passLabel.set_text("Password");
+    table.attach(passLabel, 0, 1, 3, 4);
+    passField.set_visibility(false);
+    passField.set_text(parent.client.getPassword());
+    passField.signal_activate().connect(
+           sigc::mem_fun(*this, &ConnectDialog::okCallback) );
+    table.attach(passField, 1, 2, 3, 4);
+
+    resourceLabel.set_text("Resource");
+    table.attach(resourceLabel, 0, 1, 4, 5);
+    resourceField.set_text(parent.client.getResource());
+    table.attach(resourceField, 1, 2, 4, 5);
+
+    registerLabel.set_text("Register");
+    table.attach(registerLabel, 0, 1, 5, 6);
+    registerButton.set_active(false);
+    table.attach(registerButton, 1, 2, 5, 6);
+
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
+
+
+    //######################
+    //# ACCOUNT LIST
+    //######################
+
+
+    accountListStore = Gtk::ListStore::create(accountColumns);
+    accountView.set_model(accountListStore);
+
+    accountView.signal_row_activated().connect(
+        sigc::mem_fun(*this, &ConnectDialog::doubleClickCallback) );
+
+    accountView.get_selection()->signal_changed().connect(
+        sigc::mem_fun(*this, &ConnectDialog::selectedCallback) );
+
+    accountView.append_column("Account", accountColumns.nameColumn);
+    accountView.append_column("Host",    accountColumns.hostColumn);
+
+    //accountView.signal_row_activated().connect(
+    //    sigc::mem_fun(*this, &AccountDialog::connectCallback) );
+
+    accountScroll.add(accountView);
+    accountScroll.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_ALWAYS);
+
+    get_vbox()->pack_start(accountScroll);
+
+    //##### POPUP MENU
+    accountView.signal_button_press_event().connect_notify(
+        sigc::mem_fun(*this, &ConnectDialog::buttonPressCallback) );
+
+    Glib::RefPtr<Gtk::ActionGroup> accountActionGroup =
+                Gtk::ActionGroup::create();
+
+    accountActionGroup->add( Gtk::Action::create("PopupMenu", "_Account") );
+
+    accountActionGroup->add( Gtk::Action::create("Delete",
+                                  Gtk::Stock::DELETE, "Delete"),
+        sigc::mem_fun(*this, &ConnectDialog::deleteCallback) );
+
+
+    accountUiManager = Gtk::UIManager::create();
+
+    accountUiManager->insert_action_group(accountActionGroup, 0);
+
+    Glib::ustring account_ui_info =
+        "<ui>"
+        "  <popup name='PopupMenu'>"
+        "    <menuitem action='Delete'/>"
+        "  </popup>"
+        "</ui>";
+
+    accountUiManager->add_ui_from_string(account_ui_info);
+    //Gtk::Widget* accountMenuBar = uiManager->get_widget("/PopupMenu");
+    //get_vbox()->pack_start(*accountMenuBar, Gtk::PACK_SHRINK);
+
+    refresh();
+
+    show_all_children();
+
+    return true;
+}
+
+
+/**
+ * Regenerate the account list
+ */
+void ConnectDialog::refresh()
+{
+    accountListStore->clear();
+
+    std::vector<XmppAccount> accounts = parent.config.getAccounts();
+    for (unsigned int i=0 ; i<accounts.size() ; i++)
+        {
+        XmppAccount account = accounts[i];
+        Gtk::TreeModel::Row row = *(accountListStore->append());
+        row[accountColumns.nameColumn] = account.getName();
+        row[accountColumns.hostColumn] = account.getHost();
+        }
+    accountView.expand_all();
+}
+
+
+
+//#########################################################################
+//# F I L E    S E N D    D I A L O G
 //#########################################################################
 
 
@@ -1607,9 +1800,9 @@ bool FileSendDialog::doSetup()
     Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Send", Gtk::Stock::NETWORK, "Send File"),
-    sigc::mem_fun(*this, &FileSendDialog::okCallback) );
+        sigc::mem_fun(*this, &FileSendDialog::okCallback) );
     actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
-    sigc::mem_fun(*this, &FileSendDialog::cancelCallback) );
+        sigc::mem_fun(*this, &FileSendDialog::cancelCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -1699,9 +1892,9 @@ bool FileReceiveDialog::doSetup()
     Glib::RefPtr<Gtk::ActionGroup> actionGroup = Gtk::ActionGroup::create();
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Send", Gtk::Stock::NETWORK, "Send File"),
-    sigc::mem_fun(*this, &FileReceiveDialog::okCallback) );
+        sigc::mem_fun(*this, &FileReceiveDialog::okCallback) );
     actionGroup->add( Gtk::Action::create("Cancel",  Gtk::Stock::CANCEL, "Cancel"),
-    sigc::mem_fun(*this, &FileReceiveDialog::cancelCallback) );
+        sigc::mem_fun(*this, &FileReceiveDialog::cancelCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -1881,9 +2074,11 @@ bool PedroGui::chatMessage(const DOMString &from, const DOMString &data)
     return true;
 }
 
+
 //################################
 //# GROUP CHAT WINDOW MANAGEMENT
 //################################
+
 bool PedroGui::groupChatCreate(const DOMString &groupJid, const DOMString &nick)
 {
     std::vector<GroupChatWindow *>::iterator iter;
@@ -2016,6 +2211,7 @@ void PedroGui::handleDisconnectEvent()
      set_title(title);
      chatDeleteAll();
      groupChatDeleteAll();
+     roster.clear();
 }
 
 
@@ -2269,6 +2465,12 @@ void PedroGui::groupChatCallback()
         }
     groupChatCreate(groupJid, dialog.getNick());
     client.groupChatJoin(groupJid, dialog.getNick(), dialog.getPass() );
+    config.setMucGroup(dialog.getGroup());
+    config.setMucHost(dialog.getHost());
+    config.setMucNick(dialog.getNick());
+    config.setMucPassword(dialog.getPass());
+ 
+    configSave();
 }
 
 
@@ -2395,10 +2597,28 @@ void PedroGui::actionEnable(const DOMString &name, bool val)
 }
 
 
+bool PedroGui::configLoad()
+{
+    if (!config.readFile("pedro.ini"))
+        return false;
+    return true;
+}
+
+
+bool PedroGui::configSave()
+{
+    if (!config.writeFile("pedro.ini"))
+        return false;
+    return true;
+}
+
+
 
 
 bool PedroGui::doSetup()
 {
+    configLoad();
+
     set_title("Pedro XMPP Client");
     set_size_request(500, 300);
     add(mainBox);
@@ -2517,8 +2737,6 @@ bool PedroGui::doSetup()
     //# Start a timer to check the queue every nn milliseconds
     Glib::signal_timeout().connect(
            sigc::mem_fun(*this, &PedroGui::checkEventQueue), 20 );
-
-    config.readFile("pedro.ini");
 
     //client.addXmppEventListener(*this);
     client.eventQueueEnable(true);
