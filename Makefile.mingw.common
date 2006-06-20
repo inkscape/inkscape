@@ -83,10 +83,10 @@ else
 # NATIVE COMPILER SETTINGS
 ##########################################################################
 
-CC      = mingw32-gcc
-CXX     = mingw32-g++
+CC      = i686-pc-mingw32-gcc
+CXX     = i686-pc-mingw32-g++
 AS      = as
-AR      = mingw32-ar
+AR      = i686-pc-mingw32-ar
 OBJCOPY = objcopy
 RANLIB  = ranlib
 WINDRES = windres
@@ -143,12 +143,12 @@ VERSION_NR = 0.44+devel
 VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
-CFLAGS = -g -O3 -Wall -mms-bitfields -DVERSION=$(VERSION) \
+CFLAGS = -O3 -Wall -mms-bitfields -DVERSION=$(VERSION) \
 -DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-#CFLAGS += -DWITH_INKBOARD
+CFLAGS += -DWITH_INKBOARD
 
 ####### IMPLICIT RULES
 .cpp.o:
@@ -205,12 +205,12 @@ $(PERLINC) $(PYTHONINC) -I$(GTK)/include/loudmouth-1.0 \
 
 
 # To enable loudmouth uncomment and move this line below
-#-lloudmouth-1.dll -lssl -lcrypto
 LIBS = $(GTKLIB) $(PERLLIB) $(PYTHONLIB) \
 $(GTK)/bin/libxml2.dll \
 $(GTK)/lib/iconv.lib	\
 -lfreetype.dll -lfontconfig.dll  \
 -llcms.dll \
+-lloudmouth-1.dll -lssl -lcrypto \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
 -lgc -mwindows -lws2_32 -lintl
 
