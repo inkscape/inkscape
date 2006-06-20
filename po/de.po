@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-13 21:07+0200\n"
+"PO-Revision-Date: 2006-06-15 19:48+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2006,32 +2006,32 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:244
 msgid "an ID was not defined for it."
-msgstr "es wurde hierfür keine ID definiert."
+msgstr "hierfür keine ID definiert wurde."
 
 #: ../src/extension/extension.cpp:248
 msgid "there was no name defined for it."
-msgstr "hierfür wurde kein Name definiert."
+msgstr "hierfür kein Name definiert wurde."
 
 #: ../src/extension/extension.cpp:252
 msgid "the XML description of it got lost."
-msgstr "Zugehörige XML-Beschreibung ist nicht auffindbar."
+msgstr "die zugehörige XML-Beschreibung nicht auffindbar ist."
 
 #: ../src/extension/extension.cpp:256
 msgid "no implementation was defined for the extension."
-msgstr "Für diese Erweiterung existiert keine Implementierung."
+msgstr "für diese Erweiterung keine Implementierung existiert."
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
 #: ../src/extension/extension.cpp:263
 msgid "a dependency was not met."
-msgstr "die Abhängigkeiten nicht aufgelöst werden konnten."
+msgstr "eine Abhängigkeit nicht aufgelöst werden konnte."
 
 #: ../src/extension/extension.cpp:283
 msgid "Extension \""
-msgstr "Erweiterung \""
+msgstr "Erweiterung »"
 
 #: ../src/extension/extension.cpp:283
 msgid "\" failed to load because "
-msgstr "\": Laden fehlgeschlagen, da "
+msgstr "«: Laden fehlgeschlagen, da "
 
 #: ../src/extension/extension.cpp:570
 #, c-format
@@ -4942,10 +4942,7 @@ msgstr ""
 msgid ""
 "<b>Drag</b> to paint a calligraphic stroke. <b>Left</b>/<b>right</b> arrow "
 "keys adjust width, <b>up</b>/<b>down</b> adjust angle."
-msgstr ""
-"<b>Ziehen</b>, um kalligraphische Linien zu zeichnen. Pfeiltasten <b>links</"
-"b>/<b>rechts</b> verändern die Breite, <b>hoch</b>/<b>runter</b> verändern "
-"Winkel."
+msgstr "<b>Ziehen</b>, um kalligrafische Linien zu zeichnen. Pfeiltasten <b>links</b>/<b>rechts</b> verändern die Breite, <b>hoch</b>/<b>runter</b> verändern Winkel."
 
 #: ../src/tools-switch.cpp:187
 msgid ""
@@ -5790,14 +5787,12 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid "Inset/Outset by:"
-msgstr "Schrumpfen/Ausweiten um:"
+msgstr "Schrumpfen/Erweitern um:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:183
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
-msgstr ""
-"Schrumpfungs- und Ausweitungsbefehle verändern den Pfad um diese Distanz (in "
-"SVG-Pixeln)"
+msgstr "Schrumpfungs- und Erweiterungsbefehle verändern den Pfad um diese Distanz (in SVG-Pixeln)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:184
 msgid "Compass-like display of angles"
@@ -6043,7 +6038,7 @@ msgstr "Füller (Linien & Bézierkurven)"
 #. Calligraphy
 #: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2229
 msgid "Calligraphy"
-msgstr "Kalligraphie"
+msgstr "Kalligrafie"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:377
 msgid ""
@@ -8252,6 +8247,7 @@ msgstr "Kopie als Bit_map"
 msgid "Export selection to a bitmap and insert it into document"
 msgstr "Auswahl als Bitmap exportieren und in das Dokument re-importieren"
 
+# !!! maybe use "verbinden"
 #: ../src/verbs.cpp:2150
 msgid "_Combine"
 msgstr "_Kombinieren"
@@ -8512,7 +8508,7 @@ msgstr "Bézier-Kurven und gerade Linien zeichnen"
 
 #: ../src/verbs.cpp:2230
 msgid "Draw calligraphic lines"
-msgstr "Kalligraphische Linien zeichnen"
+msgstr "Kalligrafische Linien zeichnen"
 
 #: ../src/verbs.cpp:2232
 msgid "Create and edit text objects"
@@ -8601,11 +8597,11 @@ msgstr "Eigenschaften für das Zeichenwerkzeug öffnen"
 
 #: ../src/verbs.cpp:2259
 msgid "Calligraphic Preferences"
-msgstr "Einstellungen für Kalligraphiewerkzeug"
+msgstr "Einstellungen für Kalligrafiewerkzeug"
 
 #: ../src/verbs.cpp:2260
 msgid "Open Preferences for the Calligraphy tool"
-msgstr "Eigenschaften für das Kalligraphiewerkzeug öffnen"
+msgstr "Eigenschaften für das Kalligrafiewerkzeug öffnen"
 
 #: ../src/verbs.cpp:2261
 msgid "Text Preferences"
@@ -9069,7 +9065,7 @@ msgstr "Erste Schritte mit Inkscape"
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2387
 msgid "Inkscape: _Shapes"
-msgstr "Inkscape: Grund_formen"
+msgstr "Inkscape: _Formen"
 
 #: ../src/verbs.cpp:2388
 msgid "Using shape tools to create and edit shapes"
@@ -9096,11 +9092,11 @@ msgstr "Verwendung der Bitmap-Vektorisierung"
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2394
 msgid "Inkscape: _Calligraphy"
-msgstr "Inkscape: _Kalligraphie"
+msgstr "Inkscape: _Kalligrafie"
 
 #: ../src/verbs.cpp:2395
 msgid "Using the Calligraphy pen tool"
-msgstr "Verwendung des kalligraphischen Füllers"
+msgstr "Verwendung des kalligrafischen Füllers"
 
 #: ../src/verbs.cpp:2396
 msgid "_Elements of Design"
@@ -9846,9 +9842,7 @@ msgstr "Radius der innersten Umdrehung (relativ zur Gesamtgröße der Spirale)"
 
 #: ../src/widgets/toolbox.cpp:2033
 msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr ""
-"Breite des kalligraphischen Füllers (relativ zum sichtbaren "
-"Dokumentausschnitt)"
+msgstr "Breite des kalligrafischen Füllers (relativ zum sichtbaren Dokumentausschnitt)"
 
 #: ../src/widgets/toolbox.cpp:2043
 msgid "Thinning:"
