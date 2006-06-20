@@ -7,15 +7,15 @@
 # Lucas Vieites Fariña<lucas@asixinformatica.com>, 2003-2005, 2006.
 #
 #
-#: ../src/widgets/toolbox.cpp:3631 ../src/widgets/toolbox.cpp:3652
-#: ../src/widgets/toolbox.cpp:3681 ../src/widgets/toolbox.cpp:3702
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3640 ../src/widgets/toolbox.cpp:3661
+#: ../src/widgets/toolbox.cpp:3690 ../src/widgets/toolbox.cpp:3711
+#: ../src/widgets/toolbox.cpp:3738
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-02 20:36+0200\n"
+"POT-Creation-Date: 2006-06-20 21:10+0200\n"
+"PO-Revision-Date: 2006-06-20 20:26+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,18 +32,18 @@ msgstr "Cree y edite Gráficos Vectoriales Escalables (SVG)"
 msgid "Inkscape SVG Vector Illustrator"
 msgstr "Inkscape, ilustrador vectorial SVG"
 
-#: ../src/arc-context.cpp:328
+#: ../src/arc-context.cpp:334
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: crear un círculo o elipse de proporción entera, ajustar el "
 "ángulo del arco/segmento"
 
-#: ../src/arc-context.cpp:329 ../src/rect-context.cpp:372
+#: ../src/arc-context.cpp:335 ../src/rect-context.cpp:378
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Mayús</b>: dibujar alrededor del punto inicial"
 
-#: ../src/arc-context.cpp:414
+#: ../src/arc-context.cpp:420
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
@@ -52,25 +52,25 @@ msgstr ""
 "<b>Elipse</b>: %s &#215; %s; con <b>Ctrl</b> para crear círculo o elipse de "
 "radio entero; con <b>Mayús</b> para dibujar alrededor del punto inicial"
 
-#: ../src/connector-context.cpp:517
+#: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Crear un conector nuevo"
 
-#: ../src/connector-context.cpp:941
+#: ../src/connector-context.cpp:947
 msgid "Finishing connector"
 msgstr "Conector final"
 
-#: ../src/connector-context.cpp:1085
+#: ../src/connector-context.cpp:1091
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Punto de conexión</b>: pulse o arrastre para crear un conector nuevo"
 
-#: ../src/connector-context.cpp:1156
+#: ../src/connector-context.cpp:1162
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Fin de conector</b>: arrastre para redirigir o conectar a formas nuevas"
 
-#: ../src/connector-context.cpp:1267
+#: ../src/connector-context.cpp:1273
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Seleccione <b>por lo menos un objeto que no sea un conector</b>."
 
@@ -540,7 +540,7 @@ msgstr "1. Seleccionar del dibujo:"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2207 ../src/dialogs/clonetiler.cpp:2354
-#: ../src/ui/dialog/tracedialog.cpp:459
+#: ../src/ui/dialog/tracedialog.cpp:458
 msgid "Color"
 msgstr "Color"
 
@@ -795,7 +795,7 @@ msgstr "Capturar los mensajes de registro"
 msgid "Release log messages"
 msgstr "Dejar de capturar los mensajes de registro"
 
-#: ../src/dialogs/eek-color-def.cpp:52
+#: ../src/dialogs/eek-color-def.cpp:56
 #: ../src/widgets/gradient-selector.cpp:161
 msgid "none"
 msgstr "ninguno"
@@ -1744,13 +1744,13 @@ msgstr "Centrar líneas"
 msgid "Align lines right"
 msgstr "Alinear líneas a la derecha"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3555
-#: ../src/widgets/toolbox.cpp:3601
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3564
+#: ../src/widgets/toolbox.cpp:3610
 msgid "Horizontal text"
 msgstr "Texto horizontal"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3566
-#: ../src/widgets/toolbox.cpp:3612
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3575
+#: ../src/widgets/toolbox.cpp:3621
 msgid "Vertical text"
 msgstr "Texto vertical"
 
@@ -1960,27 +1960,27 @@ msgstr "Cerrar trazo."
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:348
+#: ../src/dropper-context.cpp:354
 #, c-format
 msgid " alpha %.3g"
 msgstr " alfa %.3g"
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:350
+#: ../src/dropper-context.cpp:356
 #, c-format
 msgid ", averaged with radius %d"
 msgstr ", media con radio %d"
 
-#: ../src/dropper-context.cpp:350
+#: ../src/dropper-context.cpp:356
 msgid " under cursor"
 msgstr " bajo el cursor"
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:352
+#: ../src/dropper-context.cpp:358
 msgid "<b>Release mouse</b> to set color."
 msgstr "<b>Suelte el ratón</b> para fijar el color."
 
-#: ../src/dropper-context.cpp:352 ../src/tools-switch.cpp:199
+#: ../src/dropper-context.cpp:358 ../src/tools-switch.cpp:199
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
@@ -2565,15 +2565,15 @@ msgstr "No hay cambios que necesiten ser guardados."
 msgid "Select file to import"
 msgstr "Seleccionar el archivo a importar"
 
-#: ../src/gradient-context.cpp:253
+#: ../src/gradient-context.cpp:259
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>: ajusta el ángulo del gradiente"
 
-#: ../src/gradient-context.cpp:254
+#: ../src/gradient-context.cpp:260
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Mayús</b>: dibuja el gradiente alrededor del punto inicial"
 
-#: ../src/gradient-context.cpp:454
+#: ../src/gradient-context.cpp:460
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
@@ -2582,7 +2582,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>Gradiente</b> para %d objetos; con <b>Ctrl</b> para ajustar el ángulo"
 
-#: ../src/gradient-context.cpp:458
+#: ../src/gradient-context.cpp:464
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Seleccione los <b>objetos</b> en los que crear un gradiente."
 
@@ -3596,7 +3596,7 @@ msgstr "A_yuda"
 msgid "Tutorials"
 msgstr "Tutoriales"
 
-#: ../src/node-context.cpp:359
+#: ../src/node-context.cpp:366
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
@@ -3604,14 +3604,14 @@ msgstr ""
 "<b>Ctrl</b>: conmutar el tipo de nodo, ajustar el ángulo del tirador, mover "
 "hor/vert; <b>Ctrl+Alt</b>: mover a lo largo de los tiradores"
 
-#: ../src/node-context.cpp:360
+#: ../src/node-context.cpp:367
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
 msgstr ""
 "<b>Mayús:</b> para conmutar a selección de nodos, desactivar ajuste, rotar "
 "ambos tiradores."
 
-#: ../src/node-context.cpp:361
+#: ../src/node-context.cpp:368
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 "<b>Alt</b>: bloquear longitud de tirador; <b>Ctrl+Alt</b>: mover a lo largo "
@@ -3643,7 +3643,7 @@ msgstr ""
 msgid "Cannot find path between nodes."
 msgstr "No se ha encontrado un trazo entre los nodos."
 
-#: ../src/nodepath.cpp:3235
+#: ../src/nodepath.cpp:3389
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3654,7 +3654,7 @@ msgstr ""
 "para ajustar al ángulo; con <b>Alt</b> para bloquear la longitud, con "
 "<b>Mayús</b> para girar ambos tiradores"
 
-#: ../src/nodepath.cpp:3750
+#: ../src/nodepath.cpp:3904
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3664,39 +3664,39 @@ msgstr ""
 "de los tiradores"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3953
+#: ../src/nodepath.cpp:4107
 msgid "end node"
 msgstr "nodo final"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:3958
+#: ../src/nodepath.cpp:4112
 msgid "cusp"
 msgstr "agudo"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:3961
+#: ../src/nodepath.cpp:4115
 msgid "smooth"
 msgstr "suave"
 
-#: ../src/nodepath.cpp:3963
+#: ../src/nodepath.cpp:4117
 msgid "symmetric"
 msgstr "simétrico"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:3969
+#: ../src/nodepath.cpp:4123
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "nodo final, tirador retraído (arrastre con <b>Mayús</b> para extenderlo)"
 
-#: ../src/nodepath.cpp:3971
+#: ../src/nodepath.cpp:4125
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "un tirador retraído (arrastre con <b>Mayús</b> para extenderlo)"
 
-#: ../src/nodepath.cpp:3974
+#: ../src/nodepath.cpp:4128
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "ambos tiradores retraídos (arrastre con <b>Mayús</b> para extenderlos)"
 
-#: ../src/nodepath.cpp:3986
+#: ../src/nodepath.cpp:4140
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3706,17 +3706,17 @@ msgstr ""
 "esculpir; las teclas de <b>flecha</b> para mover nodos, <b>&lt; &gt;</b> "
 "para escalar, <b>[ ]</b> para rotar"
 
-#: ../src/nodepath.cpp:3987
+#: ../src/nodepath.cpp:4141
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Arrastre</b> el nodo o sus tiradores, use las teclas de <b>flecha</b> "
 "para moverlo"
 
-#: ../src/nodepath.cpp:4010 ../src/nodepath.cpp:4022
+#: ../src/nodepath.cpp:4164 ../src/nodepath.cpp:4176
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Seleccione un objeto para editar sus nodos o tiradores."
 
-#: ../src/nodepath.cpp:4014
+#: ../src/nodepath.cpp:4168
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3731,18 +3731,18 @@ msgstr[1] ""
 "Seleccionados <b>0</b> de <b>%i</b> nodos. <b>Clic</b>, <b>Mayús+clic</b> o "
 "<b>arrastre alrededor</b> de nodos para seleccionarlos."
 
-#: ../src/nodepath.cpp:4020
+#: ../src/nodepath.cpp:4174
 msgid "Drag the handles of the object to modify it."
 msgstr "Arrastre los tiradores del objeto para modificarlo."
 
-#: ../src/nodepath.cpp:4028
+#: ../src/nodepath.cpp:4182
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> de <b>%i</b> nodo seleccionado; %s. %s."
 msgstr[1] "<b>%i</b> de <b>%i</b> nodos seleccionados; %s. %s."
 
-#: ../src/nodepath.cpp:4035
+#: ../src/nodepath.cpp:4189
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3755,7 +3755,7 @@ msgstr[1] ""
 "<b>%i</b> de <b>%i</b> nodos seleccionados en <b>%i</b> de <b>%i</b> "
 "subtrazos. %s."
 
-#: ../src/nodepath.cpp:4041
+#: ../src/nodepath.cpp:4195
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3913,33 +3913,33 @@ msgstr "Seleccione los <b>trazos</b> que desea revertir."
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "<b>No hay trazos</b> reversibles en la selección."
 
-#: ../src/pen-context.cpp:218
+#: ../src/pen-context.cpp:224
 msgid "Drawing cancelled"
 msgstr "Trazo cancelado"
 
-#: ../src/pen-context.cpp:380 ../src/pencil-context.cpp:227
+#: ../src/pen-context.cpp:386 ../src/pencil-context.cpp:233
 msgid "Continuing selected path"
 msgstr "Continuar el trazo seleccionado"
 
-#: ../src/pen-context.cpp:391 ../src/pencil-context.cpp:236
+#: ../src/pen-context.cpp:397 ../src/pencil-context.cpp:242
 msgid "Creating new path"
 msgstr "Crear un trazo nuevo"
 
-#: ../src/pen-context.cpp:395 ../src/pencil-context.cpp:240
+#: ../src/pen-context.cpp:401 ../src/pencil-context.cpp:246
 msgid "Appending to selected path"
 msgstr "Añadir al trazo seleccionado"
 
-#: ../src/pen-context.cpp:539
+#: ../src/pen-context.cpp:545
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Haga clic</b> o <b>arrastre</b> para cerrar y terminar el trazo."
 
-#: ../src/pen-context.cpp:549
+#: ../src/pen-context.cpp:555
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 "<b>Haga clic</b> o <b>arrastre</b> para continuar el trazo desde este punto."
 
-#: ../src/pen-context.cpp:1038
+#: ../src/pen-context.cpp:1044
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
@@ -3948,7 +3948,7 @@ msgstr ""
 "<b>%s</b>: ángulo de %3.2f&#176;,distancia %s; con <b>Ctrl</b> para ajustar "
 "al ángulo; <b>Enter</b> para terminar el trazo"
 
-#: ../src/pen-context.cpp:1063
+#: ../src/pen-context.cpp:1069
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3957,7 +3957,7 @@ msgstr ""
 "<b>Tirador de curva</b>: ángulo %3.2f&#176;, longitud %s; con <b>Ctrl</b> "
 "para ajustar el ángulo"
 
-#: ../src/pen-context.cpp:1093
+#: ../src/pen-context.cpp:1099
 #, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
@@ -3966,24 +3966,24 @@ msgstr ""
 "<b>%s</b>: ángulo %3.2f&#176;, longitud %s; con <b>Ctrl</b> para ajustar al "
 "ángulo, con <b>Mayús</b> para mover solamente este tirador"
 
-#: ../src/pen-context.cpp:1127
+#: ../src/pen-context.cpp:1133
 msgid "Drawing finished"
 msgstr "Dibujo terminado"
 
-#: ../src/pencil-context.cpp:315
+#: ../src/pencil-context.cpp:321
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Suelte</b> aquí para cerrar y terminar el trazo."
 
-#: ../src/pencil-context.cpp:321
+#: ../src/pencil-context.cpp:327
 msgid "Drawing a freehand path"
 msgstr "Dibujando una línea a mano alzada"
 
-#: ../src/pencil-context.cpp:326
+#: ../src/pencil-context.cpp:332
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Arrastre</b> para continuar el trazo desde este punto."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:384
+#: ../src/pencil-context.cpp:390
 msgid "Finishing freehand"
 msgstr "Terminando mano alzada"
 
@@ -4004,7 +4004,7 @@ msgstr ""
 "Se ejecutará Inkscape con los ajustes predeterminados.\n"
 "No se guardarán nuevos ajustes."
 
-#: ../src/rect-context.cpp:371
+#: ../src/rect-context.cpp:377
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
@@ -4013,7 +4013,7 @@ msgstr ""
 "esquina redondeada a circular"
 
 #  fixme: CTRL SNAP!!! remove "skew and scale"
-#: ../src/rect-context.cpp:466
+#: ../src/rect-context.cpp:472
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -4390,7 +4390,7 @@ msgstr[1] "<b>%i</b> objetos de <b>%i</b> tipos"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:448
+#: ../src/seltrans.cpp:461
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4398,7 +4398,7 @@ msgstr ""
 "<b>Centro</b> de rotación e inclinación: arrastre para reposicionar; escalar "
 "con Mayús también utiliza este centro"
 
-#: ../src/seltrans.cpp:475
+#: ../src/seltrans.cpp:488
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4406,7 +4406,7 @@ msgstr ""
 "<b>Apretar o estirar</b> selección; con <b>Ctrl</b> para escalado uniforme; "
 "con <b>Mayús</b> para escalar alrededor del centro de rotación"
 
-#: ../src/seltrans.cpp:476
+#: ../src/seltrans.cpp:489
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4415,7 +4415,7 @@ msgstr ""
 "<b>Mayús</b> para escalar alrededor del centro de rotación"
 
 #  fixme: CTRL SNAP!!! remove "skew and scale"
-#: ../src/seltrans.cpp:480
+#: ../src/seltrans.cpp:493
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4424,7 +4424,7 @@ msgstr ""
 "<b>Mayús</b> para inclinar alrededor del lado opuesto"
 
 #  fixme: CTRL SNAP!!! remove "skew and scale"
-#: ../src/seltrans.cpp:481
+#: ../src/seltrans.cpp:494
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4432,7 +4432,7 @@ msgstr ""
 "<b>Rotar</b> selección; con <b>Ctrl</b> para ajustar al ángulo; con "
 "<b>Mayús</b> para rotar alrededor de la esquina opuesta"
 
-#: ../src/seltrans.cpp:858 ../src/seltrans.cpp:970
+#: ../src/seltrans.cpp:871 ../src/seltrans.cpp:983
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4440,24 +4440,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1060
+#: ../src/seltrans.cpp:1073
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Inclinar</b>: %0.2f&#176;; con <b>Ctrl</b> para fijar el ángulo"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1109
+#: ../src/seltrans.cpp:1122
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotar</b>: %0.2f&#176;; con <b>Ctrl</b> para fijar el ángulo"
 
-#: ../src/seltrans.cpp:1153
+#: ../src/seltrans.cpp:1166
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Mover el <b>centro</b> a %s, %s"
 
-#: ../src/seltrans.cpp:1411
+#: ../src/seltrans.cpp:1424
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4552,7 +4552,7 @@ msgstr "<b>Imagen con referencia incorrecta</b>: %s"
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Imagen</b> %d &#215; %d : %s"
 
-#: ../src/sp-item-group.cpp:689
+#: ../src/sp-item-group.cpp:687
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -4587,7 +4587,7 @@ msgstr "reducir"
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Desvío dinámico</b>, %s por %f pt"
 
-#: ../src/sp-path.cpp:123
+#: ../src/sp-path.cpp:121
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
@@ -4617,21 +4617,21 @@ msgstr "<b>Rectángulo</b>"
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Espiral</b> con %3f vueltas"
 
-#: ../src/sp-star.cpp:281
+#: ../src/sp-star.cpp:279
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>Estrella</b> de %d vértice"
 msgstr[1] "<b>Estrella</b> de %d vértices"
 
-#: ../src/sp-star.cpp:285
+#: ../src/sp-star.cpp:283
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Polígono</b> de %d vértice"
 msgstr[1] "<b>Polígono</b> de %d vértices"
 
-#: ../src/sp-switch.cpp:98
+#: ../src/sp-switch.cpp:96
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -4668,15 +4668,15 @@ msgstr "<b>Clon</b> de: %s"
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Clon huérfano</b>"
 
-#: ../src/spiral-context.cpp:331
+#: ../src/spiral-context.cpp:337
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b>: ajuste al ángulo"
 
-#: ../src/spiral-context.cpp:333
+#: ../src/spiral-context.cpp:339
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: bloquear radio de la espiral"
 
-#: ../src/spiral-context.cpp:437
+#: ../src/spiral-context.cpp:443
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
@@ -4744,11 +4744,11 @@ msgstr "Seleccione <b>trazos</b> para simplificar."
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "No hay <b>trazos</b> simplificables en la selección."
 
-#: ../src/star-context.cpp:341
+#: ../src/star-context.cpp:347
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: ajustar al ángulo; mantiene los rayos radiales"
 
-#: ../src/star-context.cpp:446
+#: ../src/star-context.cpp:452
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
@@ -4756,7 +4756,7 @@ msgstr ""
 "<b>Polígono</b>: radio %s, ángulo %5g&#176;; con <b>Ctrl</b> para ajustar al "
 "ángulo"
 
-#: ../src/star-context.cpp:447
+#: ../src/star-context.cpp:453
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
@@ -4815,46 +4815,46 @@ msgstr ""
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Seleccione una <b>texto fluido</b> para desactivar el flujo."
 
-#: ../src/text-context.cpp:447
+#: ../src/text-context.cpp:459
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
 msgstr ""
 "<b>Haga clic</b> para editar el texto, <b>arrastre</b> para seleccionar "
 "parte del texto."
 
-#: ../src/text-context.cpp:449
+#: ../src/text-context.cpp:461
 msgid ""
 "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 "<b>Haga clic</b> para editar el texto fluido, <b>arrastre</b> para "
 "seleccionar parte del texto."
 
-#: ../src/text-context.cpp:525
+#: ../src/text-context.cpp:537
 msgid "Non-printable character"
 msgstr "Carácter no imprimible"
 
-#: ../src/text-context.cpp:574
+#: ../src/text-context.cpp:586
 #, c-format
 msgid "Unicode: %s: %s"
 msgstr "Unicode: %s: %s"
 
-#: ../src/text-context.cpp:576 ../src/text-context.cpp:839
+#: ../src/text-context.cpp:588 ../src/text-context.cpp:856
 msgid "Unicode: "
 msgstr "Unicode: "
 
-#: ../src/text-context.cpp:653
+#: ../src/text-context.cpp:670
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Marco de texto fluido</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:685 ../src/text-context.cpp:1432
+#: ../src/text-context.cpp:702 ../src/text-context.cpp:1449
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Escriba un texto; pulse <b>Enter</b> para saltar de línea."
 
-#: ../src/text-context.cpp:696
+#: ../src/text-context.cpp:713
 msgid "Flowed text is created."
 msgstr "Se ha creado un texto fluido."
 
-#: ../src/text-context.cpp:699
+#: ../src/text-context.cpp:716
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
@@ -4862,16 +4862,16 @@ msgstr ""
 "El marco es <b>demasiado pequeño</b> para el tamaño de tipografía actual. No "
 "se ha creado el texto fluido."
 
-#: ../src/text-context.cpp:825
+#: ../src/text-context.cpp:842
 msgid "No-break space"
 msgstr "Espacio sin retorno"
 
-#: ../src/text-context.cpp:1430
+#: ../src/text-context.cpp:1447
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr ""
 "Escriba un texto fluido; pulse <b>Enter</b> para iniciar un párrafo nuevo."
 
-#: ../src/text-context.cpp:1440 ../src/tools-switch.cpp:181
+#: ../src/text-context.cpp:1457 ../src/tools-switch.cpp:181
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
@@ -4967,43 +4967,42 @@ msgstr ""
 msgid "<b>Click and drag</b> between shapes to create a connector."
 msgstr "<b>Pulse y arrastre</b> entre formas para crear un conector."
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:545
-#: ../src/trace/potrace/inkscape-potrace.cpp:646
+#: ../src/trace/potrace/inkscape-potrace.cpp:550
+#: ../src/trace/potrace/inkscape-potrace.cpp:651
 #, c-format
 msgid "Trace: %d.  %ld nodes"
 msgstr "Vectorizar: %d. %ld nodos"
 
-#: ../src/trace/trace.cpp:70 ../src/trace/trace.cpp:135
-#: ../src/trace/trace.cpp:143 ../src/trace/trace.cpp:236
+#: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
+#: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:241
 msgid "Select an <b>image</b> to trace"
 msgstr "Seleccione una <b>imagen</b> para vectorizar"
 
-#: ../src/trace/trace.cpp:105
+#: ../src/trace/trace.cpp:104
 msgid "Select only one <b>image</b> to trace"
 msgstr "Seleccione solamente una <b>imagen</b> para vectorizar"
 
-#: ../src/trace/trace.cpp:123
+#: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
 msgstr "Seleccione una imagen y una o más formas encima de ella"
 
-#: ../src/trace/trace.cpp:227
-#, fuzzy
+#: ../src/trace/trace.cpp:232
 msgid "Trace: No active desktop"
-msgstr "Vectorizar: No hay documento activo"
+msgstr "Vectorizar: No hay escritorio activo"
 
-#: ../src/trace/trace.cpp:326
+#: ../src/trace/trace.cpp:330
 msgid "Invalid SIOX result"
-msgstr ""
+msgstr "Resultado SIOX inválido"
 
-#: ../src/trace/trace.cpp:425
+#: ../src/trace/trace.cpp:435
 msgid "Trace: No active document"
 msgstr "Vectorizar: No hay documento activo"
 
-#: ../src/trace/trace.cpp:449
+#: ../src/trace/trace.cpp:458
 msgid "Trace: Image has no bitmap data"
 msgstr "Vectorizar: La imagen no tiene datos de mapa de bits"
 
-#: ../src/trace/trace.cpp:564
+#: ../src/trace/trace.cpp:570
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vectorizar: Terminado. Se han creado %ld nodos"
@@ -5744,7 +5743,7 @@ msgstr ""
 "borde (0 desactiva el autodesplazamiento)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
-#: ../src/ui/dialog/tracedialog.cpp:371 ../src/ui/dialog/tracedialog.cpp:404
+#: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
 msgid "Threshold:"
 msgstr "Umbral:"
 
@@ -6583,55 +6582,54 @@ msgstr "Abrir archivo de sesión"
 
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
-#: ../src/ui/dialog/tracedialog.cpp:346
-#, fuzzy
+#: ../src/ui/dialog/tracedialog.cpp:345
 msgid "SIOX foreground selection (experimental)"
-msgstr "Selección de subimagen SIOX"
+msgstr "Selección de primer plano SIOX (experimental)"
 
-#: ../src/ui/dialog/tracedialog.cpp:349
+#: ../src/ui/dialog/tracedialog.cpp:348
 msgid "Cover the area you want to select as the foreground"
-msgstr ""
+msgstr "Cubra el área que desee seleccionar como primer plano"
 
-#: ../src/ui/dialog/tracedialog.cpp:351
+#: ../src/ui/dialog/tracedialog.cpp:350
 msgid "SIOX"
-msgstr ""
+msgstr "SIOX"
 
 #. ##Set up the Potrace panel
 #. #### brightness ####
 #. #### Multiple scanning####
 #. ----Hbox1
-#: ../src/ui/dialog/tracedialog.cpp:359 ../src/ui/dialog/tracedialog.cpp:442
+#: ../src/ui/dialog/tracedialog.cpp:358 ../src/ui/dialog/tracedialog.cpp:441
 msgid "Brightness"
 msgstr "Luminosidad"
 
-#: ../src/ui/dialog/tracedialog.cpp:362
+#: ../src/ui/dialog/tracedialog.cpp:361
 msgid "Trace by a given brightness level"
 msgstr "Vectorizar por un nivel de luminosidad dado"
 
-#: ../src/ui/dialog/tracedialog.cpp:369
+#: ../src/ui/dialog/tracedialog.cpp:368
 msgid "Brightness cutoff for black/white"
 msgstr "Límite de luminosidad para blanco/negro"
 
-#: ../src/ui/dialog/tracedialog.cpp:376
+#: ../src/ui/dialog/tracedialog.cpp:375
 msgid "Image Brightness"
 msgstr "Luminosidad de la imagen"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:383
+#: ../src/ui/dialog/tracedialog.cpp:382
 msgid "Optimal Edge Detection (Canny)"
 msgstr "Detección de bordes óptima (Canny)"
 
-#: ../src/ui/dialog/tracedialog.cpp:386
+#: ../src/ui/dialog/tracedialog.cpp:385
 msgid "Trace with edge detection by J. Canny's algorithm"
 msgstr "Vectorizar con detección de bordes según el algoritmo de J. Canny"
 
-#: ../src/ui/dialog/tracedialog.cpp:402
+#: ../src/ui/dialog/tracedialog.cpp:401
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr ""
 "Límite de luminosidad para píxeles adyacentes (determina el grosor del borde)"
 
-#: ../src/ui/dialog/tracedialog.cpp:409
+#: ../src/ui/dialog/tracedialog.cpp:408
 msgid "Edge Detection"
 msgstr "Detección de bordes"
 
@@ -6639,57 +6637,57 @@ msgstr "Detección de bordes"
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:418
+#: ../src/ui/dialog/tracedialog.cpp:417
 msgid "Color Quantization"
 msgstr "Reducción de colores"
 
-#: ../src/ui/dialog/tracedialog.cpp:421
+#: ../src/ui/dialog/tracedialog.cpp:420
 msgid "Trace along the boundaries of reduced colors"
 msgstr "Vectorizar por los límites de colores reducidos"
 
-#: ../src/ui/dialog/tracedialog.cpp:428
+#: ../src/ui/dialog/tracedialog.cpp:427
 msgid "The number of reduced colors"
 msgstr "El número de colores reducidos"
 
-#: ../src/ui/dialog/tracedialog.cpp:430
+#: ../src/ui/dialog/tracedialog.cpp:429
 msgid "Colors:"
 msgstr "Colores:"
 
-#: ../src/ui/dialog/tracedialog.cpp:435
+#: ../src/ui/dialog/tracedialog.cpp:434
 msgid "Quantization / Reduction"
 msgstr "Reducción"
 
-#: ../src/ui/dialog/tracedialog.cpp:445
+#: ../src/ui/dialog/tracedialog.cpp:444
 msgid "Trace the given number of brightness levels"
 msgstr "Vectorizar por el número de niveles de luminosidad datos"
 
-#: ../src/ui/dialog/tracedialog.cpp:452
+#: ../src/ui/dialog/tracedialog.cpp:451
 msgid "Scans:"
 msgstr "Pasadas:"
 
-#: ../src/ui/dialog/tracedialog.cpp:454
+#: ../src/ui/dialog/tracedialog.cpp:453
 msgid "The desired number of scans"
 msgstr "El número de pasadas deseado"
 
-#: ../src/ui/dialog/tracedialog.cpp:462
+#: ../src/ui/dialog/tracedialog.cpp:461
 msgid "Trace the given number of reduced colors"
 msgstr "Vectorizar el número de colores reducidos"
 
 #. ---Hbox3
-#: ../src/ui/dialog/tracedialog.cpp:468
+#: ../src/ui/dialog/tracedialog.cpp:467
 msgid "Monochrome"
 msgstr "Monocromo"
 
-#: ../src/ui/dialog/tracedialog.cpp:471
+#: ../src/ui/dialog/tracedialog.cpp:470
 msgid "Same as Color, but convert result to grayscale"
 msgstr "Igual que «Color» pero convierte el resultado a escala de grises"
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:474
+#: ../src/ui/dialog/tracedialog.cpp:473
 msgid "Stack"
 msgstr "Apilar"
 
-#: ../src/ui/dialog/tracedialog.cpp:477
+#: ../src/ui/dialog/tracedialog.cpp:476
 msgid ""
 "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr ""
@@ -6697,58 +6695,58 @@ msgstr ""
 "(normalmente con separaciones)"
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:480
+#: ../src/ui/dialog/tracedialog.cpp:479
 msgid "Smooth"
 msgstr "Suave"
 
-#: ../src/ui/dialog/tracedialog.cpp:483
+#: ../src/ui/dialog/tracedialog.cpp:482
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr "Aplicar un desenfoque gaussiano al mapa de bits antes de vectorizar"
 
-#: ../src/ui/dialog/tracedialog.cpp:487
+#: ../src/ui/dialog/tracedialog.cpp:486
 msgid "Multiple Scanning"
 msgstr "Pasadas múltiples"
 
 #. #### Preview ####
-#: ../src/ui/dialog/tracedialog.cpp:493 ../src/ui/dialog/tracedialog.cpp:503
+#: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
 msgid "Preview"
 msgstr "Vista preliminar"
 
 #. do not expand
-#: ../src/ui/dialog/tracedialog.cpp:497
+#: ../src/ui/dialog/tracedialog.cpp:496
 msgid "Preview the result without actual tracing"
 msgstr "Realizar una vista preliminar sin realizar la vectorización"
 
 #. #### swap black and white ####
-#: ../src/ui/dialog/tracedialog.cpp:509
+#: ../src/ui/dialog/tracedialog.cpp:508
 #: ../src/ui/widget/selected-style.cpp:191
 msgid "Invert"
 msgstr "Invertir"
 
-#: ../src/ui/dialog/tracedialog.cpp:513
+#: ../src/ui/dialog/tracedialog.cpp:512
 msgid "Invert black and white regions for single traces"
 msgstr "Invertir las zonas blancas y negras para vectorizaciones simples"
 
-#: ../src/ui/dialog/tracedialog.cpp:517
+#: ../src/ui/dialog/tracedialog.cpp:516
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
 msgstr "Gracias a Peter Selinger, http://potrace.sourceforge.net"
 
-#: ../src/ui/dialog/tracedialog.cpp:520
+#: ../src/ui/dialog/tracedialog.cpp:519
 msgid "Credits"
 msgstr "Créditos"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
-#: ../src/ui/dialog/tracedialog.cpp:528
+#: ../src/ui/dialog/tracedialog.cpp:527
 msgid "Potrace"
 msgstr "Potrace"
 
-#: ../src/ui/dialog/tracedialog.cpp:541
+#: ../src/ui/dialog/tracedialog.cpp:540
 msgid "Abort a trace in progress"
 msgstr "Detener una vectorización en progreso"
 
-#: ../src/ui/dialog/tracedialog.cpp:545
+#: ../src/ui/dialog/tracedialog.cpp:544
 msgid "Execute the trace"
 msgstr "Ejecutar la vectorización"
 
@@ -9147,11 +9145,11 @@ msgid ""
 msgstr ""
 "Ajusta el lienzo al tamaño de la selección o del dibujo si no hay selección"
 
-#: ../src/widgets/dash-selector.cpp:102
+#: ../src/widgets/dash-selector.cpp:103
 msgid "Dash pattern"
 msgstr "Patrón de rayas"
 
-#: ../src/widgets/dash-selector.cpp:117
+#: ../src/widgets/dash-selector.cpp:118
 msgid "Pattern offset"
 msgstr "Desvío del patrón"
 
@@ -9183,7 +9181,7 @@ msgstr "Tamaño de tipografía:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3338
+#: ../src/widgets/font-selector.cpp:580 ../src/widgets/toolbox.cpp:3347
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiÁáÑñPpQq12368$€¿?.;/()"
 
@@ -9941,7 +9939,7 @@ msgstr ""
 "Si está pulsado selecciona el color visible con alfa, si no lo está "
 "selecciona el color con el valor alfa"
 
-#: ../src/widgets/toolbox.cpp:3435
+#: ../src/widgets/toolbox.cpp:3444
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
@@ -9949,67 +9947,67 @@ msgstr ""
 "Esta tipografía no esta instalada en su sistema, Inkscape utilizará la "
 "tipografía predeterminada en su lugar."
 
-#: ../src/widgets/toolbox.cpp:3473
+#: ../src/widgets/toolbox.cpp:3482
 msgid "Align left"
 msgstr "Alinear izquierda"
 
-#: ../src/widgets/toolbox.cpp:3484
+#: ../src/widgets/toolbox.cpp:3493
 msgid "Center"
 msgstr "Centrar"
 
-#: ../src/widgets/toolbox.cpp:3495
+#: ../src/widgets/toolbox.cpp:3504
 msgid "Align right"
 msgstr "Alinear derecha"
 
-#: ../src/widgets/toolbox.cpp:3506
+#: ../src/widgets/toolbox.cpp:3515
 msgid "Justify"
 msgstr "Justificar"
 
-#: ../src/widgets/toolbox.cpp:3522
+#: ../src/widgets/toolbox.cpp:3531
 msgid "Bold"
 msgstr "Negrita"
 
-#: ../src/widgets/toolbox.cpp:3533
+#: ../src/widgets/toolbox.cpp:3542
 msgid "Italic"
 msgstr "Cursiva"
 
-#: ../src/widgets/toolbox.cpp:3631
+#: ../src/widgets/toolbox.cpp:3640
 msgid "Spacing between letters"
 msgstr "Espacio entre letras"
 
-#: ../src/widgets/toolbox.cpp:3652
+#: ../src/widgets/toolbox.cpp:3661
 msgid "Spacing between lines"
 msgstr "Espacio entre líneas"
 
-#: ../src/widgets/toolbox.cpp:3681
+#: ../src/widgets/toolbox.cpp:3690
 msgid "Horizontal kerning"
 msgstr "Espaciado horizontal"
 
-#: ../src/widgets/toolbox.cpp:3702
+#: ../src/widgets/toolbox.cpp:3711
 msgid "Vertical kerning"
 msgstr "Espaciado vertical"
 
-#: ../src/widgets/toolbox.cpp:3729
+#: ../src/widgets/toolbox.cpp:3738
 msgid "Letter rotation"
 msgstr "Rotación de letras"
 
-#: ../src/widgets/toolbox.cpp:3750
+#: ../src/widgets/toolbox.cpp:3759
 msgid "Remove manual kerns"
 msgstr "Eliminar el espaciado manual"
 
-#: ../src/widgets/toolbox.cpp:3869
+#: ../src/widgets/toolbox.cpp:3878
 msgid "Make connectors avoid selected objects"
 msgstr "Hacer que los conectores eviten los objetos seleccionados"
 
-#: ../src/widgets/toolbox.cpp:3873
+#: ../src/widgets/toolbox.cpp:3882
 msgid "Make connectors ignore selected objects"
 msgstr "Hacer que los conectores ignoren los objetos seleccionados"
 
-#: ../src/widgets/toolbox.cpp:3881
+#: ../src/widgets/toolbox.cpp:3890
 msgid "Spacing:"
 msgstr "Espaciado:"
 
-#: ../src/widgets/toolbox.cpp:3882
+#: ../src/widgets/toolbox.cpp:3891
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 "El espacio que dejan alrededor de los objetos los conectores auto-trazados"
@@ -10570,9 +10568,3 @@ msgstr "Metaarchivo de Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrada de metaarchivo de windows"
-
-#~ msgid "Subimage selection with the SIOX algorithm"
-#~ msgstr "Selección de subimagen con el algoritmo SIOX"
-
-#~ msgid "SIOX (W.I.P.)"
-#~ msgstr "SIOX (W.I.P.)"
