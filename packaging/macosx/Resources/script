@@ -20,7 +20,7 @@ echo ":0" > /tmp/display.$UID
 while [ "$?" == "0" -a ! -f /tmp/display.$UID ]; do
     sleep 1
 done
-export "DISPLAY=`cat /tmp/display.$UID`"
+export DISPLAY="`cat /tmp/display.$UID`"
 
 ps -wx -ocommand | grep -e '[X]11' > /dev/null || exit 11
 

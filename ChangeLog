@@ -1,3 +1,26 @@
+2006-06-19  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* packaging/macosx/Resources/script,
+	  packaging/macosx/Resources/bin/inkscape:
+
+	  Improve quoting of shell variables.
+
+	* packaging/macosx/ScriptExec/ScriptExec.xcodeproj/project.pbxproj:
+
+	  Xcode 2 project file for the OS X launcher.  This will build a
+	  Universal version of the launcher by default.  The project files for
+	  different versions are named differently, so this will be picked up and
+	  used if the package builder has a sufficiently new version of Xcode.
+
+	* packaging/macosx/ScriptExec/ScriptExec.xcode/sveinbjornt.pbxuser,
+	  packaging/macosx/ScriptExec/ScriptExec.xcode/voisine.pbxuser:
+
+	  Remove unnecessary user preference files.
+
+	* Makefile.am:
+	
+	  Update the Xcode project files included when creating releases.
+
 2006-06-13  Jon A. Cruz  <jon@joncruz.org>
 
 	* TRANSLATORS, src/ui/dialog/aboutbox.cpp:
@@ -12,7 +35,8 @@
 
 2006-06-09  Jon A. Cruz  <jon@joncruz.org>
 
-	* src/object-snapper.cpp, src/selection.cpp, src/selection.h, src/seltrans.cpp:
+	* src/object-snapper.cpp, src/selection.cpp, src/selection.h,
+	  src/seltrans.cpp:
 
 	  Applied patch #1503864.
 
@@ -27,7 +51,8 @@
 
 	* src/seltrans.cpp:
 
-	  Work-around for seltrans not getting calls to grab() and ungrab() as expected.
+	  Work-around for seltrans not getting calls to grab() and ungrab() as
+	  expected.
 	  Fixes bug #1501156.
 
 2006-06-07  Jon A. Cruz  <jon@joncruz.org>

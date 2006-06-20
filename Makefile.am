@@ -127,8 +127,7 @@ EXTRA_DIST = \
 	packaging/macosx/ScriptExec/MenuBar.nib/info.nib	\
 	packaging/macosx/ScriptExec/MenuBar.nib/objects.xib	\
 	packaging/macosx/ScriptExec/ScriptExec.xcode/project.pbxproj	\
-	packaging/macosx/ScriptExec/ScriptExec.xcode/sveinbjornt.pbxuser	\
-	packaging/macosx/ScriptExec/ScriptExec.xcode/voisine.pbxuser	\
+	packaging/macosx/ScriptExec/ScriptExec.xcodeproj/project.pbxproj \
 	packaging/win32/inkscape.nsi	\
 	packaging/win32/inkscape.nsi.uninstall	\
 	packaging/win32/catalan.nsh	\
