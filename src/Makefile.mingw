@@ -30,12 +30,11 @@ inkscape_version.h: inkscape_version.h.mingw
 # D E P E N D E N C I E S
 ###################################
 
-include ./make.ofiles
 include ./make.dep
 
-INC += $(INCLUDEPATH)
+INC += $(DEPTOOL_INCLUDE)
 
-OBJ = $(OBJECTS)
+OBJ = $(DEPTOOL_OBJECTS)
 
 
 
