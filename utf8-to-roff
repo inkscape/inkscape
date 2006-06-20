@@ -77,6 +77,7 @@ my %map = (
  0xe3, q{\[~a]},
  0xf1, q{\[~n]},
  0xf5, q{\[~o]},
+ 0x107, q{\[ah]c},  # Added manually; see above.
  0x10d, q{\[ah]c},  # Added manually; see above.
  0x160, q{\[vS]},
  0x161, q{\[vs]},
