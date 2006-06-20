@@ -241,7 +241,7 @@ gchar const *authors_text() {
         "Pat Suwalski\n"
         "Adib Taraben\n"
         "David Turner\n"
-        "Aleksandar Urosevic\n"
+        "Aleksandar Urošević\n"
         "Lucas Vieites\n"
         "Michael Wybrow\n"
         "Daniel Yacob\n"
