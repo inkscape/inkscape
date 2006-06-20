@@ -1,8 +1,9 @@
 ﻿<root xmlns="http://www.inkscape.org/namespaces/keys">
-<!-- Translated to French, based on cvs revision 1.44 of the English version 2005, Matiphas, matiphas@free.fr -->
-<p>
-Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les flèches et les chiffres par exemple) sont supposées se comporter comme des touches normales. Se référer au wiki, sur la page KeyboardShortcutsToDo (en anglais), pour voir la discussion sur les autres raccourcis que nous prévoyons d'instaurer; vous pouvez y laisser vos idées et requêtes.
-</p>
+<!-- Translated to French, based on svn revision 11789 of the English version 2006, Matiphas, matiphas@free.fr -->
+
+<p>Ce document décrit les raccourcis clavier par défaut d'Inkscape, correspondant au fichier share/keys/default.xml distribué avec Inkscape. La plupart (mais pas tous) de ces raccourcis est configurable par l'utilisateur; Consultez le fichier default.xml pour plus de détails à ce sujet.</p>
+
+<p>Sauf mention contraire, les touches du pavé numérique (comme Début, Fin, +, -, les flèches et les chiffres) sont supposées se comporter comme des touches normales. Si vous avez de nouvelles idées de raccourcis, vous pouvez s'il vous plait contacter les développeurs (en envoyant un courrier sur la  <a href="http://lists.sourceforge.net/lists/listinfo/inkscape-devel">liste électronique des développeurs</a> ou en envoyant une <a href="http://sourceforge.net/tracker/?group_id=93438&amp;atid=604309">proposition de nouvelle fonctionnalité</a>).</p>
 
 <column>
 
@@ -11,7 +12,7 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <group>
 <keys><key><keyf f="F1"/></key><key>s</key>    <action>sélecteur</action></keys>
 <keys><key><misc-wide f="Espace"/></key>   <action>sélecteur (temporaire)</action></keys>
-<note>Espace bascule temporairement vers le sélecteur. Espace de nouveau rebascule vers l'outil précédent.</note>
+<note>Espace bascule temporairement vers le sélecteur, puis de nouveau à l'outil précédent lors d'un nouvel appui.</note>
 <keys><key><keyf f="F2"/></key><key>n</key>	<action>nœud</action></keys>
 <keys><key><keyf f="F3"/></key><key>z</key>	 <action>zoom</action></keys>
 <keys><key><keyf f="F4"/></key><key>r</key>	 <action>rectangle</action></keys>
@@ -19,60 +20,23 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <keys><key><keyf f="F6"/></key><key>p</key>	 <action>crayon (main levée)</action></keys>
 <keys><key><shift/><keyf f="F6"/></key><key>b</key>	 <action>stylo (Bézier)</action></keys>
 <keys><key><ctrl/><keyf f="F6"/></key><key/>	 <action>plume calligraphique</action></keys>
+<keys><key><ctrl/><keyf f="F1"/></key><key>g</key>	 <action>dégradé</action></keys>
 <keys><key><keyf f="F7"/></key><key>d</key>	 <action>pipette</action></keys>
 <keys><key><keyf f="F8"/></key><key>t</key>	 <action>texte</action></keys>
 <keys><key><keyf f="F9"/></key><key>i</key>	 <action>spirale</action></keys>
 <keys><key><shift/><keyf f="F9"/></key><key>*</key>	 <action>étoile</action></keys>
-<note>Un double clic sur le bouton d'un outil ouvre la boîte de dialogue des préférences à l'onglet de l'outil correspondant.
-</note>
+<keys><key><ctrl/><keyf f="F2"/></key><key>o</key>	 <action>connecteur</action></keys>
+<note>Un double clic sur le bouton d'un outil ouvre la boîte de dialogue des préférences à l'onglet de l'outil correspondant.</note>
 </group>
 </section>
-
-*<section title="Fichier" color="f3f2e2">
-
-<group>
-<keys><key><ctrl/>N</key>	 <action>créer un nouveau document</action></keys>
-<keys><key><ctrl/>O</key>	 <action>ouvrir un document SVG</action></keys>
-<keys><key><shift/><ctrl/>E</key>	 <action>exporter en PNG</action></keys>
-<keys><key><ctrl/>I</key>	 <action>importer un bitmap ou SVG</action></keys>
-<keys><key><ctrl/>P</key>	 <action>imprimer le document</action></keys>
-<keys><key><ctrl/>S</key>	 <action>sauver le document</action></keys>
-<keys><key><shift/><ctrl/>S</key>	 <action>sauver sous un autre nom</action></keys>
-<keys><key><ctrl/>Q</key>	 <action>quitter Inkscape</action></keys>
-</group>
-
-</section>
-
-*<section title="Fenêtre" color="e8fae1">
-
-<group>
-<keys><key><ctrl/>R</key> <action>(dés)afficher les règles</action></keys>
-<keys><key><ctrl/>B</key> <action>(dés)afficher les barres de défilement</action></keys>
-<keys><key><keyf f="F11"/></key> <action>(dés)afficher en plein écran</action></keys>
-</group>
-
-<group>
-<keys><key><keyf f="F10"/></key> <action>menu principal</action></keys>
-<note>Les menus peuvent aussi être activés en appuyant simultanément sur Alt et la lettre soulignée dans le nom du menu.</note>
-<keys><key><shift/><keyf f="F10"/></key> <key><right-click/></key> <action>menu contextuel</action></keys>
-</group>
-
-<group>
-<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key>	 <action>fermer la fenêtre (document)</action></keys>
-<note>Quitte Inkscape si la fenêtre courante est le seul document ouvert.</note>
-<keys><key><ctrl/><misc f="Tab"/></key> <action>fenêtre (document) suivante</action></keys>
-<keys><key><shift/><ctrl/><misc f="Tab"/></key> <action>fenêtre (document) précédente</action></keys>
-<note>Permet de circuler entre les fenêtres (documents) en avant ou en arrière.</note>
-</group>
-
-</section>
-
 
 *<section title="Dialogues" color="f0eae7">
 <group>
 <keys><key><shift/><ctrl/>F</key> <action>Remplissage et contour</action></keys>
+<keys><key><shift/><ctrl/>W</key> <action>Palettes</action></keys>
 <keys><key><shift/><ctrl/>T</key> <action>Texte et police</action></keys>
 <keys><key><shift/><ctrl/>M</key> <action>Transformer</action></keys>
+<keys><key><shift/><ctrl/>L</key> <action>Calques</action></keys>
 <keys><key><shift/><ctrl/>A</key> <action>Aligner et distribuer</action></keys>
 <keys><key><shift/><ctrl/>O</key> <action>Propriétés de l'objet</action></keys>
 <keys><key><shift/><ctrl/>X</key> <action>Editeur XML</action></keys>
@@ -85,7 +49,7 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 </group>
 
 <group>
-<title>(dés)Afficher</title>
+<title>(Dés)afficher</title>
 <keys><key><keyf f="F12"/></key> <action>(dés)afficher les boîtes de dialogue</action></keys>
 <note>Masque temporairement les boîtes de dialogue ouvertes. Un appui de plus sur F12 les rend de nouveau visibles.</note>
 </group>
@@ -99,40 +63,34 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <keys><key><misc-wide f="Entrée"/></key> <action>valider la nouvelle valeur</action></keys>
 <note>Valide la nouvelle valeur entrée dans un champ et retourne au canevas.</note>
 <keys><key><ctrl/><misc-wide f="Entrée"/></key> <action>définir la valeur d'un attribut (éditeur XML)</action></keys>
-<note>Valide la nouvelle valeur d'un attribut dans l'éditeur XML (comme cliquer sur le bouton "Définir l'attribut".</note>
-<keys><key><misc-wide f="Espace"/></key> <key><misc-wide f="Entrée"/></key> <action>activer le bouton ou la valeur d'une liste.</action></keys>
+<note>Valide la nouvelle valeur d'un attribut dans l'éditeur XML (comme un clic sur le bouton "Définir l'attribut".</note>
+<keys><key><misc-wide f="Espace"/></key> <key><misc-wide f="Entrée"/></key> <action>activer bouton/liste courant</action></keys>
 <keys><key><ctrl/><misc f="Préc."/></key> <key><ctrl/><misc f="Suiv."/></key> <action>naviguer parmi les onglets d'un dialogue</action></keys>
 </group>
 </section>
 
-*<section title="Contrôle" color="f8f3e9">
-
+*<section title="Contrôles" color="f8f3e9">
 <group>
-<note>La barre de contrôle en haut de la fenêtre document affiche des champs et des contrôles pour chacun des outils.</note>
+<note>La barre des contrôles en haut de la fenêtre document affiche des champs et des contrôles pour chacun des outils.</note>
 <keys><key><alt/>X</key> <action>aller au premier champ</action></keys>
 <keys><key><misc-wide f="Entrée"/></key> <action>valider la nouvelle valeur</action></keys>
 <note>Valide la nouvelle valeur entrée dans un champ et retourne au canevas.</note>
-<keys><key><misc f="Esc"/></key>   <action>annuler les modifications, retourner au canevas</action></keys>
-<note>Annule la modification d'un champ et retourne au canevas.</note>
+<keys><key><misc f="Esc"/></key> <action>annuler les modifications, retourner au canevas</action></keys>
+<note>Annule toute modification d'un champ et retourne au canevas.</note>
 <keys><key><ctrl/>Z</key> <action>annuler les modifications</action></keys>
-<note>Annule la modification d'un champ mais reste dans ce champ.</note>
+<note>Annule toute modification d'un champ mais reste dans ce champ.</note>
 <keys><key><misc f="Tab"/></key> <action>passer au champ suivant</action></keys>
 <keys><key><shift/><misc f="Tab"/></key> <action>passer au champ précédent</action></keys>
-<note>Permet de naviguer entre les différents champs de la barre de contrôle (les modifications du champs quitté sont validées).</note>
+<note>Permet de naviguer entre les différents champs de la barre de contrôle (toute modification du champ quitté est validée).</note>
 </group>
 
 <group>
 <title>Modification des valeurs</title>
-<mouse><key><up/></key> <key><down/></key> <action>modifier la valeur de 0.1</action></mouse>
-<keys><key><misc f="Préc."/></key><key><misc f="Suiv."/></key> <action>modifier la valeur de 5.0</action></keys>
+<mouse><key><up/></key> <key><down/></key> <action>modifier la valeur de 0,1</action></mouse>
+<keys><key><misc f="Préc."/></key><key><misc f="Suiv."/></key> <action>modifier la valeur de 5,0</action></keys>
 </group>
- 
 </section>
 
-</column>
-
-
-<column>
 
 *<section title="Canevas" color="e5f1e7">
 
@@ -140,10 +98,11 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <title>Zoom</title>
 <keys><key>=</key> <key>+</key> 	 <action>zoommer</action></keys>
 <keys><key>-</key>	 <action>dézoommer</action></keys>
-<note>Les touches +/- du pavé numérique permettent de zoommer même pendant l'édition d'un objet texte.</note>
+<note>Les touches +/- du pavé numérique permettent de zoommer même pendant l'édition d'un objet texte, sauf si NumLock est actif.</note>
 <mouse><key><mid-click/></key>  <key><ctrl/><right-click/></key>   <action>zoommer</action></mouse>
 <mouse><key><shift/><mid-click/></key>  <key><shift/><right-click/></key> <action>dézoommer</action></mouse>
 <mouse><key><ctrl/><wheel/></key> <action>(dé)zoommer</action></mouse>
+<mouse><key><shift/><mid-drag/></key> <action>zoommer sur la zone</action></mouse>
 <keys><key><alt/>Z</key> <action>activer le champ de zoom</action></keys>
 <note>Le champ zoom dans le coin inférieur gauche de la fenêtre vous permet de spécifier précisément la valeur de zoom.</note>
 </group>
@@ -179,12 +138,64 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <title>Guides et grille</title>
 <mouse><key><left-drag/></key> <action>créer un guide en le tirant depuis une règle</action></mouse>
 <note>Cliquer-déplacer d'une règle vers le canevas pour créer un nouveau guide. Déplacer un guide vers la règle pour le supprimer.</note>
-<keys><key>|</key> <key><shift/>\</key> <action>(dés)activer affichage et collage des guides</action></keys>
-<note>Pour des valeurs différentes d'affichage/collage des guides, les régler dans les Préférences du document.</note>
-<note>Lors de sa création par cliquer-déplacer depuis une règle, l'affichage et le collage des guides sont activés.</note>
-<keys><key>#</key> <key><shift/>3</key> <action>(dés)activer affichage et collage de la grille</action></keys>
-<note>Pour des valeurs différentes d'affichage/collage de la grille, les régler dans les Préférences du document.</note>
+<keys><key>|</key> <key><shift/>\</key> <action>(dés)activer affichage et adhérence des guides</action></keys>
+<note>Pour des valeurs différentes d'affichage/adhérence des guides, les régler dans les Préférences du document.</note>
+<note>Lors de la création de guides par cliquer-déplacer depuis une règle, l'affichage et l'adhérence des guides sont activés.</note>
+<keys><key>#</key> <key><shift/>3</key> <action>(dés)activer affichage et adhérence de la grille</action></keys>
+<note>Pour des valeurs différentes d'affichage/adhérence de la grille, les régler dans les Préférences du document.</note>
 <note>Notez que seule la touche 3 du clavier principal a une action, pas celle du pavé numérique.</note>
+</group>
+</section>
+
+*<section title="Palette" color="efcfdf">
+<group>
+<note>Ces raccourcis pour la palette fonctionnent dans le dialogue flottant et dans le cadre en bas de la fenêtre.</note>
+<mouse><key><left-click/></key> <action>appliquer une couleur de remplissage à la sélection</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>appliquer une couleur de contour à la sélection</action></mouse>
+<mouse><key><left-drag/></key> <action>déplacer une couleur de remplissage sur des objets</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>déplacer une couleur de contour sur des objetss</action></mouse>
+<note>L'objet sur lequel vous déplacez une couleur de remplissage/contour n'a pas besoin d'être sélectionné.</note>
+<note>Vous pouvez aussi déplacer des couleurs sur les indicateurs remplissage (R) et contour (C) de la barre de statut</note>
+<note> pour affecter la sélection.</note>
+</group>
+</section>
+
+</column>
+
+<column>
+
+*<section title="Fichier" color="f3f2e2">
+<group>
+<keys><key><ctrl/>N</key>	 <action>créer un nouveau document</action></keys>
+<keys><key><ctrl/>O</key>	 <action>ouvrir un document SVG</action></keys>
+<keys><key><shift/><ctrl/>E</key>	 <action>exporter en PNG</action></keys>
+<keys><key><ctrl/>I</key>	 <action>importer un bitmap ou SVG</action></keys>
+<keys><key><ctrl/>P</key>	 <action>imprimer le document</action></keys>
+<keys><key><ctrl/>S</key>	 <action>enregistrer le document</action></keys>
+<keys><key><shift/><ctrl/>S</key>	 <action>enregistrer sous un autre nom</action></keys>
+<keys><key><ctrl/>Q</key>	 <action>quitter Inkscape</action></keys>
+</group>
+</section>
+
+*<section title="Fenêtre" color="e8fae1">
+<group>
+<keys><key><ctrl/>R</key> <action>(dés)afficher les règles</action></keys>
+<keys><key><ctrl/>B</key> <action>(dés)afficher les barres de défilement</action></keys>
+<keys><key><keyf f="F11"/></key> <action>(dés)afficher en plein écran</action></keys>
+</group>
+
+<group>
+<keys><key><keyf f="F10"/></key> <action>menu principal</action></keys>
+<note>Les menus peuvent aussi être activés en appuyant simultanément sur Alt et la lettre soulignée dans le nom du menu.</note>
+<keys><key><shift/><keyf f="F10"/></key> <key><right-click/></key> <action>menu contextuel</action></keys>
+</group>
+
+<group>
+<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key>	 <action>fermer la fenêtre (document)</action></keys>
+<note>Quitte Inkscape si la fenêtre courante est le seul document ouvert.</note>
+<keys><key><ctrl/><misc f="Tab"/></key> <action>fenêtre (document) suivante</action></keys>
+<keys><key><shift/><ctrl/><misc f="Tab"/></key> <action>fenêtre (document) précédente</action></keys>
+<note>Permet de circuler entre les fenêtres (documents) en avant ou en arrière.</note>
 </group>
 </section>
 
@@ -202,9 +213,7 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 </group>
 </section>
 
-
 *<section title="Objet" color="f4ecf5">
-
 <group>
 <title>Annuler/refaire</title>
 <keys><key><shift/><ctrl/>Y</key> <key><ctrl/>Z</key> 	 <action>annuler</action></keys>
@@ -221,19 +230,20 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <note>Ceci place les objets du presse-papier sous la souris, ou au centre de la fenêtre si la souris est hors du canevas.</note>
 <note>Lors de l'édition d'un texte avec l'outil texte, colle le texte du presse-papiers système dans l'objet texte courant.</note>
 <keys><key><ctrl/><alt/>V</key>	 <action>coller sur place</action></keys>
-<note>Ceci place les objets du presse-papiers au même emplacement que lors de leur copie.</note>
+<note>Ceci place les objets du presse-papiers au même emplacement que lorsque qu'ils ont été copiés.</note>
 <keys><key><shift/><ctrl/>V</key>  <action>coller le style</action></keys> 
 <note>Ceci applique le style du premier des objet copiés à la sélection courante.</note>
+<note>Si une poignée de dégradé ou une plage de texte sont sélectionnés, le style leur est appliqué plutôt qu'à l'objet entier.</note>
 </group>
 
 <group>
-<title>Dupliquer</title>
+<title>Duplication</title>
 <keys><key><ctrl/>D</key>	 <action>dupliquer la sélection</action></keys> 
 <note>Les nouveaux objet(s) sont placés exactement au même endroit, au dessus des originaux et sont sélectionnés.</note>
 </group>
 
 <group>
-<title>Cloner</title>
+<title>Clonage</title>
 <keys><key><alt/>D</key>	 <action>cloner l'objet</action></keys> 
 <note>Un clone peut être déplacé/redimensionné/tourné/incliné indépendament, mais reçoit ses tracé/remplissage/contour de l'original.</note>
 <note>Le clone est placé exactement au même endroit, au dessus de l'original et est sélectionné.</note>
@@ -248,21 +258,21 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <title>Bitmaps</title>
 <keys><key><alt/>B</key> <action>créer une copie bitmap</action></keys>
 <note>Exporte en PNG les objet(s) sélectionnés (les autres objets étant masqués) dans le répertoire du document et réimporte ce PNG.</note>
-<note>Le bitmap (PNG) importé est placé exactement au même endroit, au dessus de la sélection originale, et est sélectionné.</note>
-<keys><key><shift/><alt/>B</key> <action>vectoriser le bitmap</action></keys>
-<note>Ceci ouvre la boîte de dialogue vectoriser un bitmap, vous permettant de convertir une image bitmap en chemin.</note> 
+<note>Le bitmap importé est placé exactement au même endroit, au dessus de la sélection originale, et est sélectionné.</note>
+<keys><key><shift/><alt/>B</key> <action>vectoriser un bitmap</action></keys>
+<note>Ceci ouvre la boîte de dialogue vectoriser un bitmap, vous permettant de convertir une image bitmap en chemins.</note> 
 </group>
 
 <group>
-<title>Motif</title>
-<keys><key><alt/>I</key>	 <action>objet en motif</action></keys> 
+<title>Motifs</title>
+<keys><key><alt/>I</key>	 <action>objet(s) en motif</action></keys> 
 <note>Ceci convertit la sélection en un rectangle rempli avec la sélection comme motif de remplissage.</note>
-<keys><key><shift/><alt/>I</key>	 <action>motif en objet</action></keys> 
+<keys><key><shift/><alt/>I</key>	 <action>motif en objet(s)</action></keys> 
 <note>Sépare tout objet sélectionné rempli avec un motif en deux objets : ce même objet sans remplissage et le motif seul.</note>
 </group>
 
 <group>
-<title>Grouper</title>
+<title>Groupes</title>
 <keys> <key><shift/><ctrl/>U</key>  <key><ctrl/>G</key> <action>grouper les objets sélectionnés</action></keys>
 <note>Ctrl+cliquer permet de sélectionner des objets au sein d'un groupe.</note>
 <keys><key><shift/><ctrl/>G</key> <key><ctrl/>U</key>  <action>dégrouper les groupe(s) sélectionnés</action></keys>
@@ -276,15 +286,13 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <keys><key><misc f="Préc."/></key>	 <action>monter la sélection d'un cran</action></keys>
 <keys><key><misc f="Suiv."/></key>      <action>descendre la sélection d'un cran</action></keys>
  </group>
-
 </section>
 
 *<section title="Chemin" color="f9f1d9">
-
 <group>
 <title>Convertir en chemin</title>
 <keys><key><shift/><ctrl/>C</key> <action>convertir les objet(s) sélectionnés en chemin</action></keys>
-<keys><key><ctrl/><alt/>C</key> <action>convertir les contour(s) sélectionnés en chemin</action></keys>
+<keys><key><ctrl/><alt/>C</key> <action>convertir un contour en chemin</action></keys>
 </group>
 
 <group>
@@ -315,7 +323,7 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <keys><key><alt/>)</key>  <action>dilater le chemin d'1 pixel</action></keys>
 <keys><key><shift/><alt/>(</key>  <action>éroder le chemin de 10 pixels</action></keys>
 <keys><key><shift/><alt/>)</key>  <action>dilater le chemin de 10 pixels</action></keys>
-<note>Le déplacement réel des pixels dépend du niveau de zoom. Zommer pour ajuster plus finement.</note>
+<note>L'offset réel à l'échelle du pixel dépend du niveau de zoom. Zommer pour ajuster plus finement.</note>
 <note>Toutes les commandes (, ) convertissent l'objet en chemin si nécessaire, et produisent un chemin normal.</note>
 <keys><key><ctrl/>J</key>  <action>créer un offset dynamique</action></keys>
 <keys><key><ctrl/><alt/>J</key>  <action>créer un offset lié</action></keys>
@@ -326,23 +334,22 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 </group>
 
 <group>
-<title>Combiner</title>
+<title>Combinaison</title>
 <keys><key><ctrl/>K</key>  <action>combiner les chemins</action></keys>
 <note>Cette commande est différente de grouper : des chemins combinés créent un objet, pas un groupe.</note>
-<note>Différente aussi d'une union : les recouvrements ne sont pas affectés..</note>
+<note>Différente aussi d'une union : les recouvrements ne sont pas affectés.</note>
 <note>Le remplissage des recouvrements est géré par le champ remplissage (complet/alternatif) du dialogue Remplissage et contour.</note>
 <keys><key><shift/><ctrl/>K</key>  <action>séparer les chemins</action></keys>
 <note>Sépare les sous-chemins d'un chemin composé; ceci échouera si l'objet est constitué d'un seul chemin.</note>
 </group>
 
 <group>
-<title>Simplifier</title>
+<title>Simplification</title>
 <keys><key><ctrl/>L</key>  <action>simplifier</action></keys>
 <note>Simplifie les chemin(s) sélectionnés en supprimant quelques nœuds. Si nécessaire, les objets sont convertis en chemins.</note>
 <note>En invoquant cette commande plusieurs fois de suite rapidement, elle agira de plus en plus agressivement.</note>
 <note>Le seuil par défaut (réglable dans les préférences d'Inkscape) est restauré après une pause.</note>
 </group>
-
 </section>
 
 </column>
@@ -350,7 +357,6 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <column>
 
 *<section title="Sélecteur" color="eee4dc">
-
 <group>
 <title>Sélection au clavier</title>
 <keys><key><misc f="Tab"/></key>  <action>sélectionner l'objet suivant</action></keys>
@@ -375,19 +381,10 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <title>Déplacement au clavier</title>
 <mouse><key><arrows/></key>  <action>déplacer la sélection par incrément(s)</action></mouse>
 <mouse><key><shift/><arrows/></key>  <action>déplacer la sélection de 10x l'incrément</action></mouse>
-<note>L'incrément de déplacement par défaut est 1mm.</note>
+<note>L'incrément de déplacement par défaut est de 2 px (en pixels SVG, pas en pixels à l'écran).</note>
 <mouse><key><alt/><arrows/></key>  <action>déplacer la sélection d'1 pixel</action></mouse>
 <mouse><key><alt/><shift/><arrows/></key>  <action>déplacer la sélection de 10 pixels</action></mouse>
 <note>Le déplacement réel à l'échelle du pixel dépend du niveau de zoom. Zommer pour déplacer plus finement.</note>
-</group>
-
-<group>
-<title>Rotation au clavier</title>
-<keys><key>[</key> <key>]</key> <action>tourner la sélection par incrément(s)</action></keys> 
-<note>L'incrément de rotation par défaut est 15°. ] tourne en sens horaire, [ en sens anti-horaire.</note>
-<keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>tourner la sélection de 90 degrés</action></keys>
-<keys><key><alt/>[</key> <key><alt/>]</key> <action>tourner la sélection d'1 pixel</action></keys>
-<note>La rotation réelle à l'échelle du pixel dépend du niveau de zoom. Zommer pour tourner plus finement.</note>
 </group>
 
 <group>
@@ -404,6 +401,16 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 </group>
 
 <group>
+<title>Rotation au clavier</title>
+<keys><key>[</key> <key>]</key> <action>tourner la sélection par incrément(s)</action></keys> 
+<note>L'incrément de rotation par défaut est 15°. ] tourne en sens horaire, [ en sens anti-horaire.</note>
+<keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>tourner la sélection de 90 degrés</action></keys>
+<keys><key><alt/>[</key> <key><alt/>]</key> <action>tourner la sélection d'1 pixel</action></keys>
+<note>La rotation réelle à l'échelle du pixel dépend du niveau de zoom. Zommer pour tourner plus finement.</note>
+<note>Ces commandes utilisent le centre de rotation (par défaut le centre  de géométrie), qui peut être déplacé dans le sélecteur.</note>
+</group>
+
+<group>
 <title>Retournement au clavier</title>
 <keys><key>h</key> <action>retourner la sélection horizontalement</action></keys>
 <keys><key>v</key> <action>retourner la sélection verticalement</action></keys>
@@ -412,9 +419,13 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <group>
 <title>Sélection à la souris</title>
 <mouse><key><left-click/></key> <action>sélectionner un objet</action></mouse>
-<note>En cliquant (bouton gauche) sur un objet, la sélection précédente est desélectionnée.</note>
+<note>En cliquant (bouton gauche) sur un objet, la sélection précédente est désélectionnée.</note>
 <mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
 <note>Maj+cliquer ajoute un objet à la sélection courante s'il n'était pas sélectionné, le retire sinon.</note>
+<mouse><key><left-click/><left-click/></key> <action>editer l'objet</action></mouse>
+<note>Passe à l'outil chemin en double-cliquant sur un chemin; à l'outil forme correspondant pour une forme; à l'outil texte pour un texte.</note>
+<note>Entrer dans le groupe (qui devient un calque temporaire) en double-cliquant sur un groupe.</note>
+<note>Passe au calque parent dans la hiérarchie (s'il y en a un) en double-cliquant sur un emplacement vide.</note>
 </group>
 
 <group>
@@ -430,6 +441,8 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <mouse><key><shift/><alt/><left-click/></key> <action>alterner en-dessous</action></mouse>
 <mouse><key><ctrl/><alt/><left-click/></key> <action>sélectionner en-dessous, dans des groupes</action></mouse>
 <mouse><key><shift/><ctrl/><alt/><left-click/></key> <action>alterner en-dessous, dans des groupes</action></mouse>
+<keys><key><ctrl/><misc-wide f="Entrée"/></key> <action>entrer dans le groupe</action></keys>
+<keys><key><ctrl/><misc-wide f="Backspace"/></key>	 <action>aller au calque/groupe parent</action></keys>
 </group>
 
 <group>
@@ -449,10 +462,9 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 <note>Déplace la sélection courante  (sans sélectionner ce qui est sous le curseur), quel que soit le point de départ.</note>
 <note>Sous Linux, Alt+cliquer et Alt+cliquer-déplacer peuvent être utilisés par le gestionnaire de fenêtre.</note>
 <note>Reconfigurez celui-ci afin de pouvoir utiliser ces raccourcis dans Inkscape.</note>
-
 <mouse><key><ctrl/><left-drag/></key> <action>restreindre à un mouvement vertical/horizontal</action></mouse>
-<mouse><key><shift/><left-drag/></key> <action>désactiver temporairement le collage</action></mouse>
-<note>Désactive temporairement le collage à la grille ou aux guides lors de déplacements (grille/guides étant actifs).</note>
+<mouse><key><shift/><left-drag/></key> <action>désactiver temporairement l'adhérence</action></mouse>
+<note>Désactive temporairement l'adhérence à la grille ou aux guides lors de déplacements (grille/guides étant actifs).</note>
 <mouse><key><left-drag/><misc-wide f="Espace"/></key> <action>tamponner une copie</action></mouse>
 <note>Lors de déplacements/transformations à la souris, un appui sur la barre d'espace dépose une copie de l'objet sélectionné.</note> 
 <note>Vous pouvez maintenir la barre d'espace appuyée lors d'un déplacement pour obtenir une belle "trainée".</note>
@@ -460,7 +472,7 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 
 <group>
 <title>Transformation à la souris</title>
-<mouse><key><left-click/></key> <action>alterner poignées arrondi/redimensionnement</action></mouse>
+<mouse><key><left-click/></key> <action>alterner poignées rotation/redimensionnement</action></mouse>
 <mouse><key><left-drag/></key> <action>redimensionner</action></mouse>
 <note>S'applique aux poignées de redimensionnement.</note>
 <mouse><key><left-drag/></key> <action>tourner ou incliner</action></mouse>
@@ -469,6 +481,7 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 
 <group>
 <title>Poignées de redimensionnement</title>
+<mouse><key><left-drag/></key> <action>redimensionner</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>redimensionner en préservant le ratio</action></mouse>
 <!--<mouse><key><ctrl/><left-drag/></key> only smaller, keep aspect ratio--> <!-- TO BE REMOVED -->
 <mouse><key><shift/><left-drag/></key> <action>transformation symétrique</action></mouse>
@@ -480,80 +493,29 @@ Sauf mention contraire, les touches du pavé numérique (Début, Fin, +, -, les 
 
 <group>
 <title>Poignées de rotation</title>
-<mouse><key><ctrl/><left-drag/></key> <action>incliner et étirer</action></mouse>
-<note>Appuyer sur Ctrl tout en déplaçant une poignée d'inclinaison (pas un coin) permet d'étirer tout en inclinant.</note> <!-- FIXME! -->
-<mouse><key><ctrl/><left-drag/></key> <action>tourner la sélection par incrément(s)</action></mouse>
-<note>L'incrément de rotation par défaut est 15 degrés.</note>
+<mouse><key><left-drag/></key> <action>tourner ou incliner</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>incliner par incrément(s)</action></mouse>
+<note>Appuyer sur Ctrl tout en déplaçant une poignée d'inclinaison (pas un coin) pour incliner par incréments (15 degrés par défaut).</note>
+<mouse><key><ctrl/><left-drag/></key> <action>tourner par incrément(s)</action></mouse>
+<note>Appuyer sur Ctrl tout en déplaçant une poignée de rotation (coin) pour tourer par incréments (15 degrés par défaut).</note>
 </group>
 
 <group>
-<title>Annuler</title>
+<title>Centre de rotation</title>
+<mouse><key><left-drag/></key> <action>déplacer le centre de rotation</action></mouse>
+<note>Une fois déplacé, le centre de rotation retient sa position pour tous les objets sélectionnés, jusqu'à sa remise à zéro.</note>
+<mouse><key><shift/><left-click/></key> <action>r-à-z du centre de rotation</action></mouse>
+<note>Remettre à zéro un centre de rotation revient à le remettre au centre géométrique de l'objet/boîte de contour de la sélection.</note>
+</group>
+
+<group>
+<title>Annulation</title>
 <keys><key><misc f="Esc"/></key> <action>annuler bande étirable/déplacer/transformer</action></keys>
 <note>Un appui sur Esc (le bouton de la souris étant encore pressé) annule la bande étirable, le déplacement ou la transformation.</note>
 </group>
-
 </section>
-
-*<section title="Main levée" color="e9efc5">
-<group>
-<mouse><key><left-drag/></key> <action>dessiner une ligne à main levée</action></mouse>
-<mouse><key><shift/><left-drag/></key> <action>désactiver temporairement le collage</action></mouse>
-<note>Désactive temporairement le collage à la grille ou aux guides lors de déplacements (grille/guides étant actifs).</note>
-<keys><key>a</key>    <action>alterner créer/prolonger</action></keys>
-<note>Alterne entre créer une nouvelle ligne et prolonger la ligne sélectionnée (des ancres sont affichées en mode prolonger).</note>
-</group>
-</section>
-
-*<section title="Bézier" color="e7f5d7">
-
-<group>
-<title>Créer des nœuds</title>
-<mouse><key><left-click/></key> <action>créer un nœud anguleux</action></mouse>
-<mouse><key><left-drag/></key> <action>créer un nœud de Bézier avec 2 poignées</action></mouse>
-<mouse><key><shift/><left-drag/></key> <action>ne déplacer qu'une poignée</action></mouse>
-<!-- FIXME: also disables snapping! another conflict -->
-<note>Ceci ne déplace qu'une poignée (au lieu des deux), pour créer un nœud dur.</note> 
-<mouse><key><ctrl/><left-drag/></key> <action>tourner la poignée par incrément(s)</action></mouse>
-<note>L'incrément de rotation par défaut est 15 degrés.</note>
-</group>
-
-<group>
-<title>Créer des segments</title>
-<keys><key><ctrl/></key> <action>tourner le segment par incrément(s)</action></keys>
-<note>
-Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précédent) par incrément(s) (15 degrés par défaut) .</note>
-</group>
-
-<group>
-<title>Terminer</title>
-<keys><key><misc-wide f="Entrée"/></key>  <action>terminer le tracé courant</action></keys>
-<mouse><key><right-click/></key> <action>terminer le tracé courant</action></mouse>
-<mouse><key><left-click/><left-click/></key> <action>terminer le tracé courant</action></mouse>
-<note>Entrée, clic-droit ou double-clic terminent la ligne courante, annulant le dernier segment non fini (en rouge).</note>
-</group>
-
-<group>
-<title>Clavier</title>
-<keys><key><misc f="Esc"/></key>  <action>annuler le tracé courant</action></keys>
-<keys><key><misc-wide f="Backspace"/></key> <action>effacer le dernier segment du tracé courant</action></keys>
-<keys><key>a</key>    <action>alterner créer/prolonger</action></keys>
-<note>Alterne entre créer une nouvelle ligne et prolonger la ligne sélectionnée (des ancres sont affichées en mode prolonger).</note>
-</group>
-</section>
-
-*<section title="Calligraphie" color="e9dfef">
-<group>
-<mouse><key><left-drag/></key> <action>traver une ligne calligraphique</action></mouse>
-<mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>ajuster la largeur de la plume</action></mouse>
-<mouse><key><up/></key> <key><down/></key> <action>aduster l'angle de la plume</action></mouse>
-<note>La largeur et l'angle de la plume peuvent être ajustés tout en dessinant.</note>
-</group>
-</section>
-
-
 
 </column>
-
 <column>
 *<section title="Nœud" color="f9f1d9">
 
@@ -562,7 +524,14 @@ Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précéden
 <keys><key><misc f="Tab"/></key>  <action>sélectionner le nœud suivant</action></keys> 
 <keys><key><shift/><misc f="Tab"/></key> <action>sélectionner le nœud précédent</action></keys>
 <note>Ces raccourcis vous permettent de sélectionner n'importe quel nœud du chemin sélectionné.</note>
-<keys><key><ctrl/>A</key>	 <action>sélectionner tous les nœuds du chemin</action></keys>
+<keys><key><ctrl/>A</key>	 <action>sélectionner tous les nœuds du sous-chemin</action></keys>
+<note>Si le chemin a plusieurs sous-chemins, sélectionne tous les nœuds uniquement dans le sous-chemin qui a déjà des nœuds sélectionnés.</note>
+<keys><key><ctrl/><alt/>A</key>	 <action>sélectionner tous les nœuds du chemin</action></keys>
+<note>Sélectionne tous les nœuds du chemin entier.</note>
+<keys><key>!</key> <action>inverser la sélection dans le(s) sous-chemin(s)</action></keys>
+<note>Si le chemin a plusieurs sous-chemins, inverse la sélection uniquement dans les sous-chemins qui ont déjà des nœuds sélectionnés.</note>
+<keys><key><alt/>!</key> <action>inverser la sélection dans le chemin</action></keys>
+<note>Inverse la sélection (désélectionne ce qui était sélectionné et vice versa) dans le chemin entier.</note>
 <keys><key><misc f="Esc"/></key> <action>désélectionner tous les nœuds</action></keys>
 </group>
 
@@ -570,24 +539,14 @@ Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précéden
 <title>Déplacement au clavier</title>
 <mouse><key><arrows/></key>  <action>déplacer les nœuds sélect. par incrément(s)</action></mouse>
 <mouse><key><shift/><arrows/></key>  <action>déplacer les nœuds sélect. de 10x l'incrément</action></mouse>
-<note>L'incrément de déplacement par défaut est 1mm.</note>
+<note>L'incrément de déplacement par défaut est de 2 px (en pixels SVG, pas en pixels à l'écran).</note>
 <mouse><key><alt/><arrows/></key>  <action>déplacer les nœuds sélectionnés d'1 pixel</action></mouse>
 <mouse><key><alt/><shift/><arrows/></key>  <action>déplacer les nœuds sélectionnés de 10 pixels</action></mouse>
 <note>Le déplacement réel à l'échelle du pixel dépend du niveau de zoom. Zommer pour déplacer plus finement.</note>
 </group>
 
 <group>
-<title>Rotation des poignées au clavier</title>
-<keys><key>[</key> <key>]</key> <action>tourner les deux poignées par incrément(s)</action></keys>
-<note>L'incrément de rotation par défaut est 15 degrés. ] tourne en sens horaire, [ en sens anti-horaire. Applicable à plusieurs nœuds.</note>
-<keys><key><left/><ctrl/>[</key> <key><left/><ctrl/>]</key> <action>tourner la poignée gauche par incrément(s)</action></keys>
-<keys><key><right/><ctrl/>[</key> <key><right/><ctrl/>]</key> <action>tourner la poignée droite par incrément(s)</action></keys>
-<keys><key><left/><alt/>[</key> <key><left/><alt/>]</key> <action>tourner la poignée gauche d'1 pixel</action></keys>
-<keys><key><right/><alt/>[</key> <key><right/><alt/>]</key> <action>tourner la poignée droite d'1 pixel</action></keys>
-</group>
-
-<group>
-<title>Redim. des poignées au clavier</title>
+<title>Redim. poignées clavier (1 nœud sélect.)</title>
 <keys><key>&lt;</key> <key>&gt;</key> <action>redim. les deux poignées par incrément(s)</action></keys> 
 <note>L'incrément de redimensionnement par défaut est de 2 px (en pixels SVG, pas en pixels à l'écran). Applicable à plusieurs nœuds.</note>
 <keys>
@@ -615,60 +574,119 @@ Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précéden
 </group>
 
 <group>
-<title>Modifier le type de segment</title>
+<title>Rotation poignées clavier (1 nœud sélect.)</title>
+<keys><key>[</key> <key>]</key> <action>tourner les deux poignées par incrément(s)</action></keys>
+<note>L'incrément de rotation par défaut est 15 degrés. ] tourne en sens horaire, [ en sens anti-horaire. Applicable à plusieurs nœuds.</note>
+<keys><key><left/><ctrl/>[</key> <key><left/><ctrl/>]</key> <action>tourner la poignée gauche par incrément(s)</action></keys>
+<keys><key><right/><ctrl/>[</key> <key><right/><ctrl/>]</key> <action>tourner la poignée droite par incrément(s)</action></keys>
+<note>L'incrément de rotation par défaut est 15 degrés.</note>
+<keys><key><left/><alt/>[</key> <key><left/><alt/>]</key> <action>tourner la poignée gauche d'1 pixel</action></keys>
+<keys><key><right/><alt/>[</key> <key><right/><alt/>]</key> <action>tourner la poignée droite d'1 pixel</action></keys>
+<note>La rotation réelle à l'échelle du pixel dépend du niveau de zoom. Zommer pour tourner plus finement.</note>
+</group>
+
+<group>
+<title>Redim. au clavier (&gt;1 nœuds sélect.)</title>
+<note>Ces commandes redimensionnent les nœuds sélectionnés comme s'ils formaient un objet autour du centre de cet objet.</note>
+<keys><key>.</key> <key>&gt;</key> <action>agrandir les nœuds par incrément(s)</action></keys> 
+<keys><key>,</key> <key>&lt;</key> <action>rétrécir les nœuds par incrément(s)</action></keys> 
+<note>L'incrément de redimensionnement par défaut est de 2 px (en pixels SVG, pas en pixels à l'écran).</note>
+<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>agrandir les nœuds d'1 pixel</action></keys>
+<keys><key><alt/>,</key> <key><alt/>&lt;</key> <action>rétrécir les nœuds d'1 pixel</action></keys>
+<note>Le redimensionnement réel à l'échelle du pixel dépend du niveau de zoom. Zommer pour dimensionner plus finement.</note>
+<note>Le redimensionnement est uniforme autour du centre : il est donc appliqué à la plus grande des deux dimensions.</note>
+</group>
+
+<group>
+<title>Rotation au clavier (&gt;1 nœuds sélect.)</title>
+<note>Ces commandes font tourner les nœuds sélectionnés comme s'ils formaient un objet autour du centre de cet objet.</note>
+<keys><key>[</key> <key>]</key> <action>tourner les nœuds par incrément(s)</action></keys> 
+<note>L'incrément de rotation par défaut est 15 degrés. ] tourne en sens horaire, [ en sens anti-horaire.</note>
+<keys><key><alt/>[</key> <key><alt/>]</key> <action>tourner les nœuds d'1 pixel</action></keys>
+<note>La rotation réelle à l'échelle du pixel dépend du niveau de zoom. Zommer pour tourner plus finement.</note>
+</group>
+
+<group>
+<title>Retournement au clavier (&gt;1 nœuds sélect.)</title>
+<note>Ces commandes retournent les nœuds sélectionnés comme s'ils formaient un objet autour du centre de cet objet.</note>
+<keys><key>h</key> <action>retourner les nœuds horizontalement</action></keys>
+<keys><key>v</key> <action>retourner les nœuds verticalement</action></keys>
+</group>
+
+<group>
+<title>Modification du type de segment</title>
 <keys><key><shift/>L</key>  <action>rendre rectiligne</action></keys>
-<keys><key><shift/>K</key>  <action>rendre courbe</action></keys>
+<keys><key><shift/>U</key>  <action>rendre courbe</action></keys>
 <note>Ces commandes exigent que plus de deux nœuds adjacents soient sélectionnés.</note>
 </group>
 
 <group>
-<title>Modifier le type de nœud</title>
+<title>Modification du type de nœud</title>
 <keys><key><shift/>C</key>  <action>rendre dur</action></keys>
 <keys><key><shift/>S</key>  <action>rendre doux</action></keys>
 <keys><key><shift/>Y</key>  <action>rendre symétrique</action></keys>
+<note>Quand vous rendez un nœud doux ou symétrique, passer la souris au-dessus d'une des poignées pour en préserver la position.</note>
 <mouse><key><ctrl/><left-click/></key> <action>alterner doux/dur/symétrique</action></mouse>
 </group>
 
 <group>
 <title>Joindre/briser</title>
 <keys><key><shift/>J</key>  <action>joindre les nœuds sélectionnés</action></keys>
-<note>Egige que deux (et seulement deux) nœuds terminaux du chemin soient sélectionnés.</note>
+<note>Nécessite que deux (et seulement deux) nœuds terminaux du chemin soient sélectionnés.</note>
 <keys><key><shift/>B</key>  <action>briser les nœud(s) sélectionnés</action></keys>
 <note>Après brisure, un seul des deux nœuds est sélectionné. Applicable à plus d'un nœud à la fois.</note>
 </group>
 
 <group>
-<title>Supprimer, créer, dupliquer</title>
-<keys><key><misc-wide f="Backspace"/></key><key><misc f="Suppr."/></key> <action>supprimer les nœud(s) sélectionnés</action></keys>
-<mouse><key><ctrl/><alt/><left-click/></key> <action>supprimer le nœud</action></mouse>
+<title>Suppression, création, duplication</title>
+<keys><key><misc-wide f="Backspace"/></key><key><misc f="Suppr."/></key> <action>supprimer le(s) nœud(s) sélectionné(s)</action></keys>
+<keys><key><ctrl/><misc-wide f="Backspace"/></key><key><ctrl/><misc f="Suppr."/></key> <action>supprimer sans préserver la forme</action></keys>
+<note>Supprimer sans Ctrl ajuste les poignées des nœuds restant afin de préserver au mieux la forme de la courbe.</note>
+<note>Supprimer avec Ctrl ne modifie pas les nœuds restant.</note>
+<mouse><key><ctrl/><alt/><left-click/></key> <action>insérer/supprimer un nœud</action></mouse>
+<note>Ctrl+Alt+click sur un nœud le supprime;</note>
+<note>Ctrl+Alt+click sur un chemin entre deux nœuds y insère un nouveau nœud.</note>
+<note>La suppression de nœuds de cette manière essaie toujours de préserver la forme de la courbe (comme Suppr./Backspace).</note>
+<mouse><key><left-click/><left-click/></key> <action>insérer un nœud</action></mouse>
+<note>Double cliquer sur un chemin entre deux nœuds y insère un nouveau nœud.</note>
 <keys><key><misc f="Ins."/></key> <action>insérer des nouveaux nœuds </action></keys>
-<note>Ajoute de nouveaux nœud(s) au milieu des segment(s) sélectionnés, et exige la sélection de plus de deux nœuds adjacents.</note>
+<note>Ajoute de nouveaux nœud(s) au milieu des segment(s) sélectionnés (nécessite donc la sélection de plus de deux nœuds adjacents).</note>
 <keys><key><shift/>D</key> <action>dupliquer les nœud(s) sélectionnés</action></keys>
 <note>Les nouveaux nœuds sont créés sur le même chemin; ils sont placés au-dessus des précédents et sont sélectionnés.</note>
 </group>
 
+<!-- does not seem to work
 <group>
 <title>Nœud actif</title>
 <note>Le nœud actif est celui sous la souris ou en train d'être déplacé.</note>
 <note>Lorsque qu'un nœud est actif, certains raccourcis peuvent ne pas fonctionner;</note> 
-<note>déplacez votre souris de façon à ce qu'il n'y aie pas de nœud actif si vous voulez les utiliser.</note>
+<note>déplacez votre souris de façon à ce qu'il n'y ait pas de nœud actif si vous voulez les utiliser.</note>
 <keys><key>c</key>  <action>rendre le nœud actif dur</action></keys> 
 <keys><key>s</key>  <action>rendre le nœud actif doux</action></keys>
 <keys><key>y</key>  <action>rendre le nœud actif symétrique</action></keys>
 <keys><key>b</key>  <action>briser le nœud actif</action></keys>
 <keys><key><misc-wide f="Backspace"/></key> <action>supprimer le nœud actif</action></keys>
 </group>
+-->
 
 <group>
-<title>Sélection à la souris</title>
-<mouse><key><left-click/></key> <action>sélectionner un objet</action></mouse> 
-<note>Cliquer sur un objet pour le sélectionner.</note> 
-<note>Les nœuds/poignées de l'objet sélectionné deviennent éditables (vous évitant d'avoir à basculer vers l'outil sélecteur).</note>
+<title>Sélection à la souris : objets</title>
+<mouse><key><left-click/></key> <action>sélectionner un objet non sélectionné</action></mouse> 
+<mouse><key><alt/><left-click/></key> <action>sélectionner en dessous</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
+<note>Ces raccourcis fonctionnent comme ceux du sélecteur. Les nœuds et poignées de l'objet sélectionné deviennent éditables.</note>
+</group>
+
+<group>
+<title>Sélection à la souris : nœuds</title>
 <mouse><key><left-click/></key> <action>sélectionner un nœud</action></mouse> 
 <note>Cliquer sur un nœud pour le sélectionner.</note>
-<mouse><key><shift/><left-click/></key> <action>alterner la sélection d'un nœud</action></mouse>
+<mouse><key><left-click/></key> <action>sélectionner deux nœuds adjacents</action></mouse> 
+<note>Cliquer sur un chemin sélectionné entre deux nœuds sélectionne les deux nœuds les plus proches.</note>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
+<note>(Dé)sélectionne un nœud (clic sur un nœud) ou deux (clic sur le chemin entre deux nœuds).</note>
 <mouse><key><left-click/></key> <action>désélectionner</action></mouse> 
-<note>Cliquer sur une zone vide désélectionne  tous les nœuds sélectionnés.</note>
+<note>Cliquer sur une zone vide désélectionne tous les nœuds sélectionnés. Le clic suivant désélectionne l'objet.</note>
 </group>
 
 <group>
@@ -676,18 +694,22 @@ Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précéden
 <mouse><key><left-drag/></key> <action>sélectionner plusieurs nœuds</action></mouse>
 <note>Cliquer-déplacer autour de nœuds les sélectionne par bande étirable; la sélection précédente est désélectionnée.</note>
 <mouse><key><shift/><left-drag/></key> <action>ajouter des nœuds à la sélection</action></mouse>
+<note>Normalement, vous devez commencer la bande étirable d'un point en dehors d'un chemin ou d'un nœud.</note> 
+<note>Sauf si vous appuyez sur Maj avant de la commencer.</note>
 </group>
 
 <group>
-<title>Déplacement à la souris</title>
+<title>Déplacement des nœuds à la souris</title>
 <mouse><key><left-drag/></key> <action>déplacer les nœuds sélectionnés</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>restreindre à des mouvements horiz./vert.    </action></mouse>
 <mouse><key><ctrl/><alt/><left-drag/></key> <action>déplacer le long des poignées</action></mouse>
 <note>Restreint les déplacements selon les directions des poignées et leurs perpendiculaires (soit 8 directions).</note>
 <note>Si le nœud a des droites d'un côté ou des deux, le déplacement sera restreint à ces droites et leurs perpendiculaires.</note>
-<mouse><key><shift/><left-drag/></key> <action>désactiver temporairement le collage</action></mouse>
-<note>Le collage des nœuds est activable dans les préférences du document. </note>
-<note>Par défaut, seules les boîtes de contour des objets collent à la grille ou aux guides.</note>
+<mouse><key><shift/><left-drag/></key> <action>désactiver temporairement l'adhérence</action></mouse>
+<note>L'adhérence des nœuds est activable dans les préférences du document. </note>
+<note>Par défaut, seules les boîtes de contour des objets adhèrent à la grille ou aux guides.</note>
+<mouse><key><shift/><left-drag/></key> <action>extraire une poignée</action></mouse>
+<note>Si un nœud possède une poignée rétractée, Maj+déplacer vous permet de la faire ressortir.</note>
 <mouse><key><left-drag/><misc-wide f="Espace"/></key> <action>tamponner une copie</action></mouse>
  <note>Lors du déplacement nœuds de à la souris, un appui sur la barre d'espace dépose une copie de l'objet sélectionné.</note> 
 <note>Vous pouvez maintenir la barre d'espace appuyée lors d'un déplacement pour obtenir une belle "trainée".</note>
@@ -697,60 +719,38 @@ Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précéden
 <title>Déplacement des poignées à la souris</title>
 <mouse><key><left-drag/></key> <action>déplacer une poignée de nœud</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>tourner la poignée par incrément(s)</action></mouse>
-<note>
-L'incrément de rotation par défaut est 15 degrés.</note>
+<note>L'incrément de rotation par défaut est 15 degrés.</note>
 <note> Permet aussi de forcer le déplacement selon la direction de la poignée et sa perpendiculaire.</note>
 <mouse><key><shift/><left-drag/></key> <action>tourner les deux poignées</action></mouse> 
 <mouse><key><alt/><left-drag/></key> <action>préserver la longueur de la poignée</action></mouse>
 <note>Ctrl, Maj, Alt peuvent être combinés lors du cliquer-déplacer de contrôles.</note>
+<mouse><key><ctrl/><left-click/></key> <action>rétracter une poignée</action></mouse>
+<note>Une poignée rétractée a une longueur nulle; Maj+déplacer permet de l'extraire à nouveau.</note>
 </group>
 
 <group>
-<title>Inverser</title>
+<title>Inversion</title>
 <keys><key>r</key>  <action>inverser la direction du chemin</action></keys> 
 </group>
 
 <group>
-<title>Editer des formes</title>
+<title>Edition de formes</title>
 <note>
 L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, étoiles, spirales).</note>
 <note>Cliquer sur une forme pour la sélectionner.</note> 
-<note>Voir les les raccourcis des outils de formes correspondants, qui fonctionnent aussi dans l'outil nœud.</note>
+<note>Consultez les raccourcis des outils de formes correspondant, qui fonctionnent aussi dans l'outil nœud.</note>
 </group>
 
-
 <group>
-<title>Annuler</title>
+<title>Annulation</title>
 <keys><key><misc f="Esc"/></key> <action>annuler bande étirable/déplacer</action></keys>
 <note>Un appui sur Esc (le bouton de la souris étant encore pressé) annule la bande étirable, le déplacement de nœud/poignée.</note>
 </group>
-
 </section>
-
-*<section title="Zoom" color="e7e9f3">
-<group>
-<mouse><key><left-click/></key> <action>zoommer</action></mouse>
-<mouse><key><shift/><left-click/></key> <action>dézoommer</action></mouse>  
-<mouse><key><left-drag/></key> <action>zoommer sur la zone</action></mouse>
-</group>
-</section>
-
 </column>
+
+
 <column>
-
-*<section title="Pipette" color="feeffa">
-<group>
-<mouse><key><left-click/></key> <action>capturer la couleur de remplissage</action></mouse>
-<mouse><key><shift/><left-click/></key> <action>capturer la couleur de contour</action></mouse>
-<mouse><key><left-drag/></key> <action>couleur moyenne de remplissage</action></mouse>
-<mouse><key><shift/><left-drag/></key> <action>couleur moyenne de contour</action></mouse>
-<note>Cliquer applique la couleur sous le curseur à la sélection courante. Cliquer-déplacer un disque en calcule la couleur moyenne.</note>
-<keys><key><ctrl/>C</key> <action>copier la couleur</action></keys>
-<note>Copie la couleur sous le curseur vers le presse-papiers, en tant que texte au format RRVVBBAA (8 chiffres hexadécimaux).</note>
-</group>
-</section>
-
-
 
 *<section title="Rectangle" color="ebf1fd">
 <group>
@@ -761,10 +761,13 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 <mouse><key><shift/><left-drag/></key> <action>dessiner autour du point de départ</action></mouse>
 <note>Ceci crée un rectangle symétriquement autour du point de départ.</note>
 </group>
+
 <group>
 <title>Edition</title>
 <mouse><key><left-click/></key> <action>cliquer sur un rectangle à sélectionner</action></mouse>
-<mouse><key><left-drag/></key> <action>redimensionner ou arrondir</action></mouse>
+<mouse><key><alt/><left-click/></key> <action>sélectionner en dessous</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
+<mouse><key><left-drag/></key> <action>redimensionner ou arrondir les coins</action></mouse>
 <note>Les deux poignées d'arrondi sont en haut à droite; celles de redimensionnement, en haut à gauche et en bas à droite.</note>
 <mouse><key><ctrl/><left-drag/></key> <action>préserver largeur, hauteur ou ratio</action></mouse>
 <note>S'applique aux poignées de redimensionnement.</note>
@@ -790,7 +793,9 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 <group>
 <title>Edition</title>
 <mouse><key><left-click/></key> <action>cliquer sur une ellipse à sélectionner</action></mouse>
-<mouse><key><left-drag/></key> <action>redimensionner ou "ouvrir"</action></mouse>
+<mouse><key><alt/><left-click/></key> <action>sélectionner en dessous</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
+<mouse><key><left-drag/></key> <action>redimensionner, former un arc ou camembert</action></mouse>
 <note>Les deux poignées d'arc/camembert sont tout à droite; celles de redimensionnement, tout en haut et tout à gauche.</note>
 <mouse><key><ctrl/><left-drag/></key> <action>forcer la circularité</action></mouse>
 <note>S'applique aux poignées de redimensionnement.</note>
@@ -812,6 +817,8 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 <group>
 <title>Edition</title>
 <mouse><key><left-click/></key> <action>cliquer sur une étoile à sélectionner</action></mouse>
+<mouse><key><alt/><left-click/></key> <action>sélectionner en dessous</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
 <mouse><key><left-drag/></key> <action>déplacer une poignée pour modifier l'étoile</action></mouse>
 <mouse><key><ctrl/><left-drag/></key> <action>garder l'étoile strictement radiale</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>arrondir l'étoile</action></mouse>
@@ -832,7 +839,8 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 <group>
 <title>Edition</title>
 <mouse><key><left-click/></key> <action>cliquer sur une spirale à sélectionner</action></mouse>
-
+<mouse><key><alt/><left-click/></key> <action>sélectionner en dessous</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
 <mouse><key><left-drag/></key> <action>enrouler/dérouler (poignée intérieure)</action></mouse>
 <note>Déplacer la poignée intérieure pour modifier le paramètre "rayon intérieur".
 </note>
@@ -841,7 +849,6 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 <note>Alt+déplacer verticalement sur la poignée intérieure pour modifier la divergence, Alt+cliquer la remet à 1.</note>
 <mouse><key><shift/><left-click/></key> <action>forcer rayon intérieur=0 (poignée intérieure)</action></mouse>
 <note>Maj+cliquer sur la poignée intérieure la déplace (et donc le départ de la spirale) au centre.</note>
-
 <mouse><key><left-drag/></key> <action>enrouler/dérouler (poignée extérieure)</action></mouse>
 <note>Déplacer la poignée extérieure modifie le nombre de tours. Maj+Alt+cliquer-déplacer pour en/dé-rouler en préservant le rayon.</note>
 <mouse><key><shift/><left-drag/></key> <action>redimensionner/tourner (poignée extérieure)</action></mouse>
@@ -854,50 +861,252 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 </group>
 </section>
 
+</column>
+<column>
 
-*<section title="Texte" color="eefdf3">
 
+*<section title="Zoom" color="e7e9f3">
 <group>
-<mouse><key><left-click/></key> <action>créer/activer un objet texte</action></mouse>
-<!--<keys><key>letters, digits, space, ...</key> <action>type text in a text object</action></keys>-->
-<note>Cliquer sur un espace libre ou sur un objet autre qu'un texte affiche un curseur texte; vous pouvez alors taper votre texte.</note>
-<note>Cliquer sur un objet texte pour l'activer; le curseur est placé à la fin du texte.</note>
-<note>Pour taper des caractères + ou -, utilisez le clavier principal, les touches + et - du pavé numérique étant réservées pour le zoom.</note> 
-<mouse><key><arrows/></key> <action>se déplacer dans un objet texte</action></mouse>
-<keys><key><misc f="Début"/></key> <key><misc f="Fin"/></key> <action>aller au début/à la fin de la ligne</action></keys>
-<keys><key><misc-wide f="Entrée"/></key> <action>commencer une nouvelle ligne</action></keys>
-<keys><key><misc f="Esc"/></key> <action>désélectionner l'objet texte</action></keys>
+<mouse><key><left-click/></key> <action>zoommer</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>dézoommer</action></mouse>  
+<mouse><key><left-drag/></key> <action>zoommer sur la zone</action></mouse>
+</group>
+</section>
+
+*<section title="Main levée" color="e9efc5">
+<group>
+<mouse><key><left-drag/></key> <action>dessiner une ligne à main levée</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>ajouter au chemin sélectionné</action></mouse>
+<note>Si un chemin est sélectionné, Maj+cliquer-déplacer crée un nouveau sous-chemin plutôt qu'un chemin indépendant.</note>
+<mouse><key><shift/><left-drag/></key> <action>désactiver temporairement l'adhérence</action></mouse>
+<note>Désactive temporairement aussi l'adhérence à la grille ou aux guides lors de déplacements (grille/guides étant actifs).</note>
+</group>
+</section>
+
+*<section title="Bézier" color="e7f5d7">
+<group>
+<title>Création de nœuds</title>
+<mouse><key><left-click/></key> <action>créer un nœud anguleux</action></mouse>
+<note>Commence un nouveau chemin si aucun chemin n'est en cours de création.</note>
+<mouse><key><shift/><left-drag/></key> <action>ajouter au chemin sélectionné</action></mouse>
+<note>Si un chemin est sélectionné, Maj+cliquer-déplacer crée un nouveau sous-chemin plutôt qu'un chemin indépendant.</note>
+<mouse><key><left-drag/></key> <action>créer un nœud de Bézier avec 2 poignées</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>ne déplacer qu'une poignée</action></mouse>
+<!-- FIXME: also disables snapping! another conflict -->
+<note>Ceci ne déplace qu'une poignée (au lieu des deux), pour créer un nœud dur.</note> 
+<mouse><key><ctrl/><left-drag/></key> <action>tourner la poignée par incrément(s)</action></mouse>
+<note>L'incrément de rotation par défaut est 15 degrés.</note>
 </group>
 
 <group>
-<title>Caractères spéciaux</title>
+<title>Déplacement du dernier nœud</title>
+<note>Ces commandes permettent de déplacer le dernier nœud créé (début du segment rouge) lors de la création de chemins</note>
+<mouse><key><arrows/></key>  <action>déplacer le dernier nœud par incrément(s)</action></mouse>
+<mouse><key><shift/><arrows/></key>  <action>déplacer le dernier nœud de 10x l'incrément</action></mouse>
+<note>L'incrément de déplacement par défaut est de 2 px (en pixels SVG, pas en pixels à l'écran).</note>
+<mouse><key><alt/><arrows/></key>  <action>déplacer le dernier nœud d'1 pixel</action></mouse>
+<mouse><key><alt/><shift/><arrows/></key>  <action>déplacer le dernier nœud de 10 pixels</action></mouse>
+<note>Le déplacement réel à l'échelle du pixel dépend du niveau de zoom. Zommer pour déplacer plus finement.</note>
+</group>
+
+
+<group>
+<title>Création/modification des segments</title>
+<keys><key><ctrl/></key> <action>tourner le segment par incrément(s)</action></keys>
+<note>Ceci force la rotation d'un nœud (nouvel angle relativement au nœud précédent) par incrément(s) (15 degrés par défaut).</note>
+<keys><key><shift/>L</key>  <action>rendre le dernier segment rectiligne</action></keys>
+<keys><key><shift/>U</key>  <action>rendre le dernier segment courbe</action></keys>
+<note>Ces commandes modifient le dernier segment (rouge) en ligne droite ou courbe.</note>
+</group>
+
+<group>
+<title>Terminaison</title>
+<keys><key><misc-wide f="Entrée"/></key>  <action>terminer le tracé courant</action></keys>
+<mouse><key><right-click/></key> <action>terminer le tracé courant</action></mouse>
+<mouse><key><left-click/><left-click/></key> <action>terminer le tracé courant</action></mouse>
+<note>Entrée, clic-droit ou double-clic terminent la ligne courante, annulant le dernier segment non fini (en rouge).</note>
+</group>
+
+<group>
+<title>Annulation</title>
+<keys><key><misc f="Esc"/></key><key><ctrl/>z</key>  <action>annule la ligne courante</action></keys>
+<keys><key><misc-wide f="Backspace"/></key><key><misc f="Suppr."/></key> <action>efface le dernier segment de la ligne courante</action></keys>
+</group>
+</section>
+
+*<section title="Calligraphie" color="e9dfef">
+<group>
+<mouse><key><left-drag/></key> <action>tracer une ligne calligraphique</action></mouse>
+<mouse><key><left-arrow/></key> <key><right-arrow/></key> <action>ajuster la largeur de la plume</action></mouse>
+<mouse><key><up/></key> <key><down/></key> <action>ajuster l'angle de la plume</action></mouse>
+<note>La largeur et l'angle de la plume peuvent être ajustés tout en dessinant.</note>
+<keys><key><misc f="Esc"/></key> <action>désélectionner</action></keys>
+</group>
+</section>
+
+*<section title="Dégradé" color="e9f3e7">
+<group>
+<title>Création de dégradés</title>
+<mouse><key><left-drag/></key> <action>appliquer un dégradé</action></mouse>
+<note>Applique un dégradé sur les objets sélectionnés.</note>
+<note>Vous pouvez choisir caractéristiques linéaire/radial remplissage/contour dans la barre des contrôles.</note>
+<mouse><key><left-click/><left-click/></key> <action>appliquer le dégradé par défaut</action></mouse>
+<note>Applique le dégradé par défaut (linéaire : horizontal de bord à bord; radial centré de bord à bord) sur l'objet cliqué).</note>
+</group>
+
+<group>
+<title>Poignées</title>
+<keys><key><misc f="Tab"/></key>  <action>sélectionner la poignée suivante</action></keys> 
+<keys><key><shift/><misc f="Tab"/></key> <action>sélectionner la poignée précédente</action></keys>
+<mouse><key><arrows/></key>  <action>déplacer la poignée sélectionnée par incrément(s)</action></mouse>
+<mouse><key><shift/><arrows/></key>  <action>déplacer la poignée sélectionnée de 10x l'incrément</action></mouse>
+<note>L'incrément de déplacement par défaut est de 2 px (en pixels SVG, pas en pixels à l'écran).</note>
+<mouse><key><alt/><arrows/></key>  <action>déplacer la poignée sélectionnée d'1 pixel</action></mouse>
+<mouse><key><alt/><shift/><arrows/></key>  <action>déplacer la poignée sélectionnée de 10 pixels</action></mouse>
+<note>Le déplacement réel à l'échelle du pixel dépend du niveau de zoom. Zommer pour déplacer plus finement.</note>
+<keys><key><misc f="Esc"/></key> <action>désélectionner la poignée</action></keys>
+<mouse><key><left-click/><left-click/></key> <action>ouvrir l'éditeur de dégradé</action></mouse>
+<note>Double-cliquer sur une poignée de dégradé ouvre l'éditeur de dégradé sur ce dégradé et sur cette poignée dans la liste des stops.</note>
+</group>
+
+<group>
+<title>Retournement</title>
+<keys><key><shift/>r</key>  <action>retourner la définition du dégradé</action></keys> 
+<note>Ceci retourne les positions des stops du dégradé sans déplacer ses poignées.</note>
+</group>
+
+<group>
+<title>Sélection à la souris</title>
+<mouse><key><left-click/></key> <action>cliquer sur un objet à sélectionner</action></mouse>
+<mouse><key><alt/><left-click/></key> <action>sélectionner en dessous</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>alterner la sélection</action></mouse>
+</group>
+
+</section>
+
+
+*<section title="Pipette" color="feeffa">
+<group>
+<mouse><key><left-click/></key> <action>capturer la couleur de remplissage</action></mouse>
+<mouse><key><shift/><left-click/></key> <action>capturer la couleur de contour</action></mouse>
+<mouse><key><left-drag/></key> <action>couleur moyenne de remplissage</action></mouse>
+<mouse><key><shift/><left-drag/></key> <action>couleur moyenne de contour</action></mouse>
+<note>Cliquer applique la couleur sous le curseur à la sélection courante. Cliquer-déplacer un disque en calcule la couleur moyenne.</note>
+<note>Si une poignée de dégradé (dans l'outil dégradé) est sélectionnée, celle-ci (et non l'objet entier) reçoit la couleur capturée.</note>
+<mouse><key><alt/><left-click/></key><key><alt/><left-drag/></key> <action>capturer la couleur inverse</action></mouse>
+<note>Un appui sur Alt permet de capturer (combiné ou non avec Maj, cliquer, cliquer-déplacer) l'inverse de la couleur.</note>
+<keys><key><ctrl/>C</key> <action>copier la couleur</action></keys>
+<note>Copie la couleur sous le curseur vers le presse-papiers, en tant que texte au format RRVVBBAA (8 chiffres hexadécimaux).</note>
+</group>
+</section>
+
+</column>
+<column>
+
+*<section title="Texte" color="eefdf3">
+<group>
+<title>Sélection/création</title>
+<mouse><key><left-click/></key> <action>créer/sélectionner un objet texte</action></mouse>
+<!--<keys><key>letters, digits, space, ...</key> <action>type text in a text object</action></keys>-->
+<note>Cliquer sur un espace libre ou sur un objet autre qu'un texte affiche un curseur texte; vous pouvez alors taper votre texte.</note>
+<note>Cliquer sur un objet texte pour le sélectionner; le curseur est placé à côté du point cliqué</note>
+<keys><key><misc f="Esc"/></key> <action>désélectionner l'objet texte</action></keys>
+</group>
+
+
+<group>
+<title>Navigation dans le texte</title>
+<mouse><key><arrows/></key> <action>déplacer le curseur d'un caractère</action></mouse>
+<mouse><key><ctrl/><left-arrow/></key> <key><ctrl/><right-arrow/></key> <action>déplacer le curseur d'un mot</action></mouse>
+<mouse><key><ctrl/><up-arrow/></key> <key><ctrl/><down-arrow/></key> <action>déplacer le curseur d'un paragraphe</action></mouse>
+<keys><key><misc f="Début"/></key> <key><misc f="Fin"/></key> <action>aller au début/fin de la ligne</action></keys>
+<keys><key><ctrl/><misc f="Home"/></key> <key><ctrl/><misc f="End"/></key> <action>aller au début/fin du texte</action></keys>
+<note>Toutes ces commandes annulent (si existante) la sélection de texte courante.</note>
+</group>
+
+<group>
+<title>Texte encadré (cadre interne)</title>
+<mouse><key><left-drag/></key> <action>créer un texte encadré</action></mouse>
+<note>Cliquer-déplacer sur une zone vide ou sans texte permet de créer un texte encadré dans un cadre interne.</note>
+<mouse><key><left-drag/></key> <action>ajuster les dimensions du cadre</action></mouse>
+<note>Déplacer la poignée inférieure droite du texte encadré sélectionné permet de modifier la hauteur/largeur du cadre.</note>
+<mouse><key><ctrl/><left-drag/></key> <action>verrouille largeur, hauteur ou ratio du cadre</action></mouse>
+<note>Déplacer cette même poignée en appuyant sur Ctrl préserve la largeur, la hauteur ou le ratio du cadre.</note>
+</group>
+
+<group>
+<title>Texte encadré (cadre externe)</title>
+<keys><key><alt/>W</key>	 <action>insére du texte dans un cadre</action></keys> 
+<note>Avec un objet texte et une forme ou un chemin sélectionnés, permet d'insérer (encadrer) le texte dans la forme ou le chemin.</note>
+<note>Tous deux restent des objets séparés mais liés; editer le chemin ou la forme causera la mise à jour du cadre de texte.</note>
+<keys><key><alt/><shift/>W</key>	 <action>désencadrer un texte</action></keys> 
+<note>Coupe le lien entre le texte encadré et son cadre, produisant un simple objet texte d'une seule ligne.</note>
+<keys><key><shift/>D</key>	 <action>sélectionner le cadre externe</action></keys> 
+<note>TPour trouver l'objet qui encadre un texte, sélectionner celui-ci et appuyer sur Maj+D; l'objet encadrant est alors sélectionné.</note>
+</group>
+
+<group>
+<title>Texte suivant un chemin</title>
+<keys><key><shift/>D</key>	 <action>sélectionner le chemin</action></keys> 
+<note>Sélectionner un texte suivant un chemin puis utiliser ce raccourci permet de sélectionner le chemin source du texte.</note>
+</group>
+
+
+
+<group>
+<title>Edition de texte</title> 
+<note>Pour taper des caractères + ou -, utilisez le clavier principal.</note>
+<note> les touches + et - du pavé numérique sont réservées pour le zoom, sauf si NumLock est activé.</note> 
+<keys><key><misc-wide f="Enter"/></key> <action>commencer nouvelle ligne/nouveau paragraphe</action></keys>
+<note>Entrée dans un objet texte normal commence une nouvelle ligne; un nouveau paragraphe dans un texte encadré.</note>
 <keys><key><ctrl/>U</key> <action>(dés)activer le mode Unicode</action></keys> 
 <note>Dans ce mode, entrez des chiffres hexadécimaux et validez (Entrée ou Espace) pour obtenir le caractère Unicode correspondant.</note> 
 <note>Exemple : Ctrl+U 2 0 1 4 Entrée insère un tiret long et sort du mode Unicode.</note>
 <note>Utilisez Espace au lieu d'Entrée pour rester en mode Unicode après avoir inséré un caractère.</note>
-<note>Un appui sur Esc annule le mode Unicode (sans insérer de caractère).</note>
-
+<note>Un appui sur Esc ou Ctrl+U annule le mode Unicode (sans insérer de caractère).</note>
 <keys><key><ctrl/><misc-wide f="Espace"/></key> <action>insérer un espace insécable</action></keys>
 <note>Un espace insécable est visible même dans un objet texte sans attribut xml:space="preserve".</note>
 </group>
 
 <group>
-<title>Inter-lettrage</title>
-<keys><key><alt/>&gt;</key> <action>allonger la ligne d'1 pixel</action></keys>
-<keys><key><shift/><alt/>&gt;</key> <action>allonger la ligne de 10 pixels</action></keys>
-<keys><key><alt/>&lt;</key> <action>rétrécir la ligne d'1 pixel</action></keys>
-<keys><key><shift/><alt/>&lt;</key> <action>rétrécir la ligne de 10 pixels</action></keys>
-<note>Ces raccourcis agissent lorsque vous éditez un objet texte. Ils ajustent l'inter-lignage de la ligne courante seulement.</note>
+<title>Sélection de texte</title>
+<mouse><key><left-drag/></key> <action>sélectionner du texte</action></mouse>
+<note>Cliquer-déplacer sur un objet texte permet de sélectionner une plage de texte.</note>
+<mouse><key><shift/><arrows/></key> <action>sélectionner du texte par caractère</action></mouse>
+<mouse><key><ctrl/><shift/><arrows/></key> <action>sélectionner du texte par mot</action></mouse>
+<keys><key><shift/><misc f="Début"/></key> <key><shift/><misc f="Fin"/></key> <action>sélectionner jusqu'au début/la fin de la ligne</action></keys>
+<keys><key><ctrl/><shift/><misc f="Début"/></key> <key><ctrl/><shift/><misc f="Fin"/></key> <action>sélectionner jusqu'au début/la fin du texte</action></keys>
+<mouse><key><left-click/><left-click/></key> <action>sélectionner un mot</action></mouse>
+<mouse><key><left-click/><left-click/><left-click/></key> <action>sélectionner une ligne</action></mouse>
+<keys><key><ctrl/>A</key>	 <action>sélectionner le texte entier</action></keys>
+<note>Sélectionne tout le texte contenu dans l'objet texte courant.</note>
+</group>
+
+<group>
+<title>Style</title>
+<keys><key><ctrl/>B</key>	 <action>rendre la sélection grasse</action></keys>
+<keys><key><ctrl/>I</key>	 <action>rendre la sélection italique</action></keys>
+<note>Vous pouvez aussi utiliser la boîte de dialogue Texte et police pour affecter un style à une sélection de texte.</note>
+</group>
+
+<group>
+<title>Interlettre</title>
+<keys><key><alt/>&gt;</key> <action>allonger la ligne/le paragraphe d'1 pixel</action></keys>
+<keys><key><shift/><alt/>&gt;</key> <action>allonger la ligne/le paragraphe de 10 pixels</action></keys>
+<keys><key><alt/>&lt;</key> <action>rétrécir la/le paragraphe ligne d'1 pixel</action></keys>
+<keys><key><shift/><alt/>&lt;</key> <action>rétrécir la ligne/le paragraphe de 10 pixels</action></keys>
+<note>Ces raccourcis agissent lorsque vous éditez un objet texte.</note>
+<note>Ils ajustent l'inter-lettrage de la ligne (texte normal) ou du paragraphe (texte encadré) courant seulement.</note>
 <note>La précision réelle de ces ajustements (à l'échelle du pixel) dépend du niveau de zoom. Zommer pour un ajustement plus fin.</note>
 </group>
 
 <group>
-<title>Inter-lignage</title>
+<title>Interligne</title>
 <keys><key><ctrl/><alt/>&gt;</key> <action>rendre l'objet texte plus haut d'1 pixel</action></keys>
 <keys><key><shift/><ctrl/><alt/>&gt;</key> <action>rendre l'objet texte plus haut de 10 pixels</action></keys>
 <keys><key><ctrl/><alt/>&lt;</key> <action>rendre l'objet texte plus bas d'1 pixel</action></keys>
 <keys><key><shift/><ctrl/><alt/>&lt;</key> <action>rendre l'objet texte plus bas de 10 pixels</action></keys>
-<note>Ces raccourcis agissent lorsque vous éditez un objet texte. Ils ajustent l'inter-lignage de l'objet texte courant seulement.</note>
+<note>Ces raccourcis agissent lorsque vous éditez un objet texte. Ils ajustent l'inter-lignage de l'objet texte courant (normal ou encadré).</note>
 <note>La précision réelle de ces ajustements (à l'échelle du pixel) dépend du niveau de zoom. Zommer pour un ajustement plus fin.</note>
 </group>
 
@@ -905,20 +1114,19 @@ L'outil nœud agit aussi sur les poignées des formes (rectangles, ellipses, ét
 <title>Crénage et déplacement</title>
 <mouse><key><alt/><arrows/></key> <action>déplacer les caractères suivants d'1 pixel</action></mouse>
 <mouse><key><shift/><alt/><arrows/></key> <action>déplacer les caractères suivants de 10 pixels</action></mouse>
-<note>Ces raccourcis agissent lorsque vous éditez un objet texte.</note> 
-<note>Elles déplacent (horizontalement ou verticalement) le caractère suivant le curseur et tous les autres jusqu'à la fin de la ligne.</note>
-<note>Exemeple : déplacer vers le bas un seul caractère.</note>
-<note>Placez le curseur devant le caractère, appuyez sur Alt+Bas, puis derrière et appuyez sur Alt+Haut.
-</note>
-
-
-<note>La précision réelle des déplacements (à l'échelle du  pixel) dépend du niveau de zoom. Zommer pour un ajustement plus fin.</note>
+<note>Ces raccourcis agissent lorsque vous éditez un objet texte normal. Le crénage ne fonctionne pas dans un texte encadré.</note> 
+<note>Sans sélection, ils déplacent (horizontalement ou verticalement) le caractères entre le curseur et la fin de la ligne.</note>
+<note>Avec sélection, celle-ci est déplacée relativement au reste du texte (Chaque extrémité recevant des crénages opposés).</note>
+<note>La précision réelle des déplacements à l'échelle du pixel dépend du niveau de zoom. Zommer pour un ajustement plus fin.</note>
 </group>
 
 <group>
-<title>Texte suivant un chemin</title>
-<keys><key><shift/>D</key>	 <action>sélectionner le chemin</action></keys> 
-<note>Sélectionner un texte suivant un chemin puis utiliser ce raccourci permet de sélectionner le chemin source du texte.</note>
+<title>Rotation</title>
+<keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>tourner les caractère(s) de 90 degrés</action></keys>
+<keys><key><alt/>[</key> <key><alt/>]</key> <action>tourner les caractère(s) d'1 pixel</action></keys>
+<note>Ces raccourcis font tourner le caractère suivant (aucune sélection) ou tous les caractères de la sélection (avec sélection).</note>
+<note>La rotation ne fonctionne que dans les objets textes normax (pas dans les textes encadrés).</note>
+<note>La précision réelle des rotations à l'échelle du pixel dépend du niveau de zoom. Zommer pour une rotation plus fine.</note>
 </group>
 </section>
 
