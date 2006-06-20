@@ -81,7 +81,7 @@ make.ref: contains a reverse-dependency listing.  This takes each file
 
 
 //# This will allow us to redefine the string in the future
-typedef std::string DTString;
+typedef std::string String;
 
 /**
  *  Class which holds information for each file.
@@ -130,17 +130,17 @@ public:
     /**
      *  Directory part of the file name
      */
-    DTString path;
+    String path;
 
     /**
      *  Base name, sans directory and suffix
      */
-    DTString baseName;
+    String baseName;
 
     /**
      *  File extension, such as cpp or h
      */
-    DTString suffix;
+    String suffix;
 
     /**
      *  Type of file: CFILE, HFILE, OFILE
@@ -156,7 +156,7 @@ public:
      * Used to list files ref'd by this one, in the case of allFiles,
      * or other files which reference this one, such as refFiles;
      */
-    std::map<DTString, FileRec *> files;
+    std::map<String, FileRec *> files;
 
 
 private:
@@ -234,20 +234,20 @@ private:
     /**
      *  Removes whitespace from beginning and end of a string
      */
-    DTString trim(const DTString &val);
+    String trim(const String &val);
 
     /**
      *
      */
-    DTString getSuffix(const DTString &fname);
+    String getSuffix(const String &fname);
 
     /**
      *
      */
-    void parseName(const DTString &fullname,
-                   DTString &path,
-                   DTString &basename,
-                   DTString &suffix);
+    void parseName(const String &fullname,
+                   String &path,
+                   String &basename,
+                   String &suffix);
 
     /**
      *
@@ -262,7 +262,7 @@ private:
     /**
      *
      */
-    int getword(int pos, DTString &ret);
+    int getword(int pos, String &ret);
 
     /**
      *
@@ -272,7 +272,7 @@ private:
     /**
      *
      */
-    bool listFilesInDirectory(const DTString &dirname, int depth);
+    bool listFilesInDirectory(const String &dirname, int depth);
 
     /**
      *
@@ -287,17 +287,17 @@ private:
     /**
      *
      */
-    bool saveRefFile();
+    bool saveRefFile(bool doXml);
 
     /**
      *
      */
-    bool addIncludeFile(FileRec *frec, const DTString &fname);
+    bool addIncludeFile(FileRec *frec, const String &fname);
 
     /**
      *
      */
-    bool scanFile(const DTString &fname, FileRec *frec);
+    bool scanFile(const String &fname, FileRec *frec);
 
     /**
      *
@@ -310,46 +310,46 @@ private:
      *
      */
     bool processReference(FileRec *ofile,
-                          DTString &fname,
+                          String &fname,
                           int depth);
 
     /**
      *
      */
-    std::set<DTString> excludes;
+    std::set<String> excludes;
 
     /**
      *
      */
-    std::set<DTString> excludesUsed;
+    std::set<String> excludesUsed;
 
     /**
      *
      */
-    std::set<DTString> excludesUnused;
+    std::set<String> excludesUnused;
 
     /**
      *
      */
-    std::vector<DTString> directories;
+    std::vector<String> directories;
 
     /**
      * A list of all files which will be processed for
      * dependencies.
      */
-    std::map<DTString, FileRec *> allFiles;
+    std::map<String, FileRec *> allFiles;
 
     /**
      * A list of .h files, with a list for each one
      * of which other files include them.
      */
-    std::map<DTString, FileRec *> refFiles;
+    std::map<String, FileRec *> refFiles;
 
     /**
      * The list of .o files, and the
      * dependencies upon them.
      */
-    std::map<DTString, FileRec *> depFiles;
+    std::map<String, FileRec *> depFiles;
 
     char *fileBuf;
     int   fileSize;
@@ -384,7 +384,7 @@ DepTool::~DepTool()
  */
 void DepTool::reset()
 {
-    std::map<DTString, FileRec *>::iterator iter;
+    std::map<String, FileRec *>::iterator iter;
     for (iter=allFiles.begin() ; iter!=allFiles.end() ; iter++)
         {
         FileRec *frec = iter->second;
@@ -446,7 +446,7 @@ void DepTool::trace(char *fmt, ...)
 /**
  *  Removes whitespace from beginning and end of a string
  */
-DTString DepTool::trim(const DTString &s)
+String DepTool::trim(const String &s)
 {
     if (s.size() < 1)
         return s;
@@ -468,7 +468,7 @@ DTString DepTool::trim(const DTString &s)
         }
     //trace("begin:%d  end:%d", begin, end);
 
-    DTString res = s.substr(begin, end-begin+1);
+    String res = s.substr(begin, end-begin+1);
     return res;
 }
 
@@ -476,10 +476,10 @@ DTString DepTool::trim(const DTString &s)
 /**
  *  Parse a full path name into path, base name, and suffix
  */
-void DepTool::parseName(const DTString &fullname,
-                        DTString &path,
-                        DTString &basename,
-                        DTString &suffix)
+void DepTool::parseName(const String &fullname,
+                        String &path,
+                        String &basename,
+                        String &suffix)
 {
     if (fullname.size() < 2)
         return;
@@ -512,7 +512,7 @@ void DepTool::parseName(const DTString &fullname,
 /**
  *  Return the suffix, if any, of a file name
  */
-DTString DepTool::getSuffix(const DTString &fname)
+String DepTool::getSuffix(const String &fname)
 {
     if (fname.size() < 2)
         return "";
@@ -520,7 +520,7 @@ DTString DepTool::getSuffix(const DTString &fname)
     if (pos == fname.npos)
         return "";
     pos++;
-    DTString res = fname.substr(pos, fname.size()-pos);
+    String res = fname.substr(pos, fname.size()-pos);
     //trace("suffix:%s", res.c_str()); 
     return res;
 }
@@ -535,23 +535,23 @@ DTString DepTool::getSuffix(const DTString &fname)
  *  Recursively list all files and directories under 'dirname', except
  *  those in the exclude list.
  */
-bool DepTool::listFilesInDirectory(const DTString &dirname, int depth)
+bool DepTool::listFilesInDirectory(const String &dirname, int depth)
 {
     //trace("### listFilesInDirectory(%s, %d)", dirname.c_str(), depth);
 
     int cFiles = 0;
     int hFiles = 0;
 
-    std::vector<DTString> subdirs;
+    std::vector<String> subdirs;
     DIR *dir = opendir(dirname.c_str());
     while (true)
         {
         struct dirent *de = readdir(dir);
         if (!de)
             break;
-        DTString s = de->d_name;
+        String s = de->d_name;
         struct stat finfo;
-        DTString fname;
+        String fname;
         if (s.size() == 0 || s[0] == '.')
             continue;
 
@@ -581,9 +581,9 @@ bool DepTool::listFilesInDirectory(const DTString &dirname, int depth)
             }
         else
             {
-            DTString path;
-            DTString basename;
-            DTString sfx;
+            String path;
+            String basename;
+            String sfx;
             parseName(fname, path, basename, sfx);
             if (sfx == "cpp" || sfx == "c" || sfx == "cxx"   || sfx == "cc")
                 {
@@ -639,7 +639,7 @@ bool DepTool::createFileList()
             {
             if (!fgets(readBuf, 255, f))
                 break;
-            DTString s = readBuf;
+            String s = readBuf;
             s = trim(s);
             //trace("s: %d '%s' ", s.size(), s.c_str());
             if (s.size() > 0 && s[0]!='#')
@@ -651,11 +651,11 @@ bool DepTool::createFileList()
     listFilesInDirectory(".", 0);
 
     // Note which files in the exclude list were not used.
-    std::set<DTString>::iterator iter;
+    std::set<String>::iterator iter;
     for (iter=excludes.begin() ; iter!=excludes.end() ; iter++)
         {
-        DTString fname = *iter;
-        std::set<DTString>::iterator citer = excludesUsed.find(fname);
+        String fname = *iter;
+        std::set<String>::iterator citer = excludesUsed.find(fname);
         if (citer == excludesUsed.end())
             excludesUnused.insert(fname);
         }
@@ -703,7 +703,7 @@ int DepTool::skipwhite(int pos)
  *  'ret' with the result.  Return the position after the
  *  word.
  */
-int DepTool::getword(int pos, DTString &ret)
+int DepTool::getword(int pos, String &ret)
 {
     while (pos < fileSize)
         {
@@ -740,10 +740,10 @@ bool DepTool::sequ(int pos, char *key)
  *  is not found in allFiles explicitly, try prepending include
  *  directory names to it and try again.
  */
-bool DepTool::addIncludeFile(FileRec *frec, const DTString &iname)
+bool DepTool::addIncludeFile(FileRec *frec, const String &iname)
 {
 
-    std::map<DTString, FileRec *>::iterator iter =
+    std::map<String, FileRec *>::iterator iter =
            allFiles.find(iname);
     if (iter != allFiles.end())
         {
@@ -756,11 +756,11 @@ bool DepTool::addIncludeFile(FileRec *frec, const DTString &iname)
     else 
         {
         //look in other dirs
-        std::vector<DTString>::iterator diter;
+        std::vector<String>::iterator diter;
         for (diter=directories.begin() ;
              diter!=directories.end() ; diter++)
             {
-            DTString dfname = *diter;
+            String dfname = *diter;
             dfname.append("/");
             dfname.append(iname);
             iter = allFiles.find(dfname);
@@ -783,7 +783,7 @@ bool DepTool::addIncludeFile(FileRec *frec, const DTString &iname)
  *  a bit of state machine stuff to make sure that the directive
  *  is valid.  (Like not in a comment).
  */
-bool DepTool::scanFile(const DTString &fname, FileRec *frec)
+bool DepTool::scanFile(const String &fname, FileRec *frec)
 {
     FILE *f = fopen(fname.c_str(), "r");
     if (!f)
@@ -791,7 +791,7 @@ bool DepTool::scanFile(const DTString &fname, FileRec *frec)
         error("Could not open '%s' for reading", fname.c_str());
         return false;
         }
-    DTString buf;
+    String buf;
     while (true)
         {
         int ch = fgetc(f);
@@ -845,7 +845,7 @@ bool DepTool::scanFile(const DTString &fname, FileRec *frec)
             {
             pos += 8;
             pos = skipwhite(pos);
-            DTString iname;
+            String iname;
             pos = getword(pos, iname);
             if (iname.size()>2)
                 {
@@ -872,10 +872,10 @@ bool DepTool::processDependency(FileRec *ofile,
                                 FileRec *include,
                                 int depth)
 {
-    std::map<DTString, FileRec *>::iterator iter;
+    std::map<String, FileRec *>::iterator iter;
     for (iter=include->files.begin() ; iter!=include->files.end() ; iter++)
         {
-        DTString fname  = iter->first;
+        String fname  = iter->first;
         if (ofile->files.find(fname) != ofile->files.end())
             {
             //trace("file '%s' already seen", fname.c_str());
@@ -899,18 +899,18 @@ bool DepTool::processDependency(FileRec *ofile,
  *  the inverse of processDependency().
  */
 bool DepTool::processReference(FileRec *hfile,
-                               DTString &fname,
+                               String &fname,
                                int depth)
 {
-    std::map<DTString, FileRec *>::iterator iter;
+    std::map<String, FileRec *>::iterator iter;
     for (iter=allFiles.begin() ; iter!=allFiles.end() ; iter++)
         {
         FileRec *frec = iter->second;
-        std::map<DTString, FileRec *>::iterator fiter =
+        std::map<String, FileRec *>::iterator fiter =
                   frec->files.find(fname);
         if (fiter != frec->files.end())
             {
-            DTString cfname  = iter->first;
+            String cfname  = iter->first;
             if (hfile->files.find(cfname) != hfile->files.end())
                 {
                 //trace("%d reffile '%s' already seen", depth, cfname.c_str());
@@ -933,7 +933,7 @@ bool DepTool::processReference(FileRec *hfile,
  */
 bool DepTool::generateDependencies()
 {
-    std::map<DTString, FileRec *>::iterator iter;
+    std::map<String, FileRec *>::iterator iter;
     //# First pass.  Scan for all includes
     for (iter=allFiles.begin() ; iter!=allFiles.end() ; iter++)
         {
@@ -950,12 +950,12 @@ bool DepTool::generateDependencies()
         FileRec *include = iter->second;
         if (include->type == FileRec::CFILE)
             {
-            DTString cFileName = iter->first;
+            String cFileName = iter->first;
             FileRec *ofile     = new FileRec(FileRec::OFILE);
             ofile->path        = include->path;
             ofile->baseName    = include->baseName;
             ofile->suffix      = include->suffix;
-            DTString fname     = include->path;
+            String fname     = include->path;
             if (fname.size()>0)
                 fname.append("/");
             fname.append(include->baseName);
@@ -969,7 +969,7 @@ bool DepTool::generateDependencies()
             }
         else if (include->type == FileRec::HFILE)
             {
-            DTString fname     = iter->first;
+            String fname     = iter->first;
             FileRec *hfile     = new FileRec(FileRec::HFILE);
             hfile->path        = include->path;
             hfile->baseName    = include->baseName;
@@ -997,7 +997,7 @@ bool DepTool::run()
     if (!generateDependencies())
         return false;
     saveDepFile();
-    saveRefFile();
+    saveRefFile(true);
     return true;
 }
 
@@ -1032,7 +1032,7 @@ bool DepTool::saveFileList()
     fprintf(f, "## F I L E S\n");
     fprintf(f, "########################################################\n");
 
-    std::map<DTString, FileRec *>::iterator iter;
+    std::map<String, FileRec *>::iterator iter;
     for (iter=allFiles.begin() ; iter!=allFiles.end() ; iter++)
         {
         fprintf(f, "%s\n", iter->first.c_str());
@@ -1043,10 +1043,10 @@ bool DepTool::saveFileList()
     fprintf(f, "## E X C L U D E D\n");
     fprintf(f, "########################################################\n");
 
-    std::set<DTString>::iterator uiter;
+    std::set<String>::iterator uiter;
     for (uiter=excludesUsed.begin() ; uiter!=excludesUsed.end() ; uiter++)
         {
-        DTString fname = *uiter;
+        String fname = *uiter;
         fprintf(f, "%s\n", fname.c_str());
         }
 
@@ -1057,7 +1057,7 @@ bool DepTool::saveFileList()
 
     for (uiter=excludesUnused.begin() ; uiter!=excludesUnused.end() ; uiter++)
         {
-        DTString fname = *uiter;
+        String fname = *uiter;
         fprintf(f, "%s\n", fname.c_str());
         }
 
@@ -1098,11 +1098,11 @@ bool DepTool::saveDepFile()
     fprintf(f, "########################################################\n");
     fprintf(f, "DEPTOOL_INCLUDE =");
     
-    std::vector<DTString>::iterator inciter;
+    std::vector<String>::iterator inciter;
     for (inciter=directories.begin() ; inciter!=directories.end() ; inciter++)
         {
         fprintf(f, " \\\n");
-        DTString dirname = *inciter;
+        String dirname = *inciter;
         fprintf(f, "-I%s", dirname.c_str());
         }
 
@@ -1112,14 +1112,14 @@ bool DepTool::saveDepFile()
     fprintf(f, "########################################################\n");
     fprintf(f, "DEPTOOL_OBJECTS =");
     
-    std::map<DTString, FileRec *>::iterator oiter;
+    std::map<String, FileRec *>::iterator oiter;
     for (oiter=allFiles.begin() ; oiter!=allFiles.end() ; oiter++)
         {
         FileRec *frec = oiter->second;
         if (frec->type == FileRec::CFILE)
             {
             fprintf(f, " \\\n");
-            DTString fname = frec->path;
+            String fname = frec->path;
             if (fname.size()>0)
                 fname.append("/");
             fname.append(frec->baseName);
@@ -1133,18 +1133,18 @@ bool DepTool::saveDepFile()
     fprintf(f, "########################################################\n");
     fprintf(f, "## D E P E N D E N C I E S\n");
     fprintf(f, "########################################################\n");
-    std::map<DTString, FileRec *>::iterator iter;
+    std::map<String, FileRec *>::iterator iter;
     for (iter=depFiles.begin() ; iter!=depFiles.end() ; iter++)
         {
         FileRec *frec = iter->second;
         if (frec->type == FileRec::OFILE)
             {
-            DTString fname = iter->first;
+            String fname = iter->first;
             fprintf(f, "%s:", fname.c_str());
-            std::map<DTString, FileRec *>::iterator citer;
+            std::map<String, FileRec *>::iterator citer;
             for (citer=frec->files.begin() ; citer!=frec->files.end() ; citer++)
                 {
-                DTString cfname = citer->first;
+                String cfname = citer->first;
                 fprintf(f, " \\\n");
                 fprintf(f, "\t%s", cfname.c_str());
                 }
@@ -1167,7 +1167,7 @@ bool DepTool::saveDepFile()
  *  Save the "reference" file, which lists each include file, and any files
  *  that are judged to be dependent upon it.
  */
-bool DepTool::saveRefFile()
+bool DepTool::saveRefFile(bool doXml)
 {
     time_t tim;
     time(&tim);
@@ -1177,38 +1177,83 @@ bool DepTool::saveRefFile()
         {
         trace("cannot open 'make.ref' for writing");
         }
-    fprintf(f, "########################################################\n");
-    fprintf(f, "## File: make.ref\n");
-    fprintf(f, "## Generated by DepTool at :%s", ctime(&tim));
-    fprintf(f, "## Note: The metric is the 'distance' of inclusion from\n");
-    fprintf(f, "##    the given file.\n");
-    fprintf(f, "########################################################\n");
-
-    fprintf(f, "\n\n");
-    
-    std::map<DTString, FileRec *>::iterator iter;
-    for (iter=refFiles.begin() ; iter!=refFiles.end() ; iter++)
+    if (doXml)
         {
-        FileRec *frec = iter->second;
-        if (frec->type == FileRec::HFILE)
+        fprintf(f, "<?xml version='1.0'?>\n");
+        fprintf(f, "<deptool>\n\n");
+        fprintf(f, "<!--\n");
+        fprintf(f, "########################################################\n");
+        fprintf(f, "## File: make.ref\n");
+        fprintf(f, "## Generated by DepTool at :%s", ctime(&tim));
+        fprintf(f, "## Note: The metric is the 'distance' of inclusion from\n");
+        fprintf(f, "##    the given file.\n");
+        fprintf(f, "########################################################\n");
+        fprintf(f, "--!>\n");
+        fprintf(f, "\n\n");
+    
+
+        std::map<String, FileRec *>::iterator iter;
+        for (iter=refFiles.begin() ; iter!=refFiles.end() ; iter++)
             {
-            DTString fname = iter->first;
-            fprintf(f, "### %s\n", fname.c_str());
-            std::map<DTString, FileRec *>::iterator citer;
-            for (citer=frec->files.begin() ; citer!=frec->files.end() ; citer++)
+            FileRec *frec = iter->second;
+            if (frec->type == FileRec::HFILE)
                 {
-                DTString cfname = citer->first;
-                fprintf(f, "%3d %s\n", citer->second->distance,
-                               cfname.c_str());
+                String fname = iter->first;
+                fprintf(f, "<file name='%s'>\n", fname.c_str());
+                std::map<String, FileRec *>::iterator citer;
+                for (citer=frec->files.begin() ; citer!=frec->files.end() ; citer++)
+                    {
+                    String cfname = citer->first;
+                    fprintf(f, "    <ref d='%d' name='%s'/>\n", 
+                               citer->second->distance, cfname.c_str());
+                    }
+                fprintf(f, "</file>\n\n");
                 }
-            fprintf(f, "\n");
             }
+        fprintf(f, "\n\n\n");
+        fprintf(f, "</deptool>\n");
+        fprintf(f, "<!--\n");
+        fprintf(f, "########################################################\n");
+        fprintf(f, "## E N D\n");
+        fprintf(f, "########################################################\n");
+        fprintf(f, "--!>\n");
         }
 
-    fprintf(f, "\n\n\n");
-    fprintf(f, "########################################################\n");
-    fprintf(f, "## E N D\n");
-    fprintf(f, "########################################################\n");
+    else //######### not xml
+        {
+        fprintf(f, "########################################################\n");
+        fprintf(f, "## File: make.ref\n");
+        fprintf(f, "## Generated by DepTool at :%s", ctime(&tim));
+        fprintf(f, "## Note: The metric is the 'distance' of inclusion from\n");
+        fprintf(f, "##    the given file.\n");
+        fprintf(f, "########################################################\n");
+        fprintf(f, "\n\n");
+    
+
+        std::map<String, FileRec *>::iterator iter;
+        for (iter=refFiles.begin() ; iter!=refFiles.end() ; iter++)
+            {
+            FileRec *frec = iter->second;
+            if (frec->type == FileRec::HFILE)
+                {
+                String fname = iter->first;
+                fprintf(f, "### %s\n", fname.c_str());
+                std::map<String, FileRec *>::iterator citer;
+                for (citer=frec->files.begin() ; citer!=frec->files.end() ; citer++)
+                    {
+                    String cfname = citer->first;
+                    fprintf(f, "%3d %s\n", citer->second->distance,
+                                   cfname.c_str());
+                    }
+                fprintf(f, "\n");
+                }
+            }
+
+        fprintf(f, "\n\n\n");
+        fprintf(f, "########################################################\n");
+        fprintf(f, "## E N D\n");
+        fprintf(f, "########################################################\n");
+        }
 
     fclose(f);
 
