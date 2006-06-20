@@ -28,6 +28,7 @@
 #define PACKAGE_STRING                VERSION
 
 #define HAVE_STRING_H                 1
+#define HAVE_LIBINTL_H                1
 #define HAVE_MALLOC_H                 1
 #define HAVE_STDLIB_H                 1
 #define HAVE_SYS_STAT_H               1
