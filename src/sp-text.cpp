@@ -375,6 +375,8 @@ sp_text_show(SPItem *item, NRArena *arena, unsigned /* key*/, unsigned /*flags*/
     NRArenaGroup *flowed = NRArenaGroup::create(arena);
     nr_arena_group_set_transparent (flowed, FALSE);
 
+    nr_arena_group_set_style(flowed, group->style);
+
     // pass the bbox of the text object as paintbox (used for paintserver fills)
     NRRect paintbox;
     sp_item_invoke_bbox(item, &paintbox, NR::identity(), TRUE);

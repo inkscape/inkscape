@@ -141,9 +141,16 @@ libinkpre_a_SOURCES =	\
 	sp-cursor.cpp sp-cursor.h	\
 	sp-defs.cpp sp-defs.h	\
 	sp-ellipse.cpp sp-ellipse.h	\
+	sp-filter-fns.h	\
+	sp-filter-reference.cpp       \
+	sp-filter-reference.h       \
+        sp-filter-units.h       \
+	sp-filter.cpp sp-filter.h	\
 	sp-flowdiv.h sp-flowdiv.cpp \
 	sp-flowregion.h sp-flowregion.cpp \
 	sp-flowtext.h sp-flowtext.cpp \
+	sp-gaussian-blur.cpp sp-gaussian-blur.h	\
+	sp-gaussian-blur-fns.h	\
 	sp-gradient-fns.h	\
 	sp-gradient-reference.cpp	\
 	sp-gradient-reference.h	\

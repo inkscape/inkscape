@@ -171,6 +171,12 @@ static SPStyleProp const props[] = {
     {SP_ATTR_STARTOFFSET, "startOffset"},
     /* SPStop */
     {SP_ATTR_OFFSET, "offset"},
+    /* SPFilter */
+    {SP_ATTR_FILTERUNITS, "filterUnits"},
+    {SP_ATTR_PRIMITIVEUNITS, "primitiveUnits"},
+    {SP_ATTR_FILTERRES, "filterRes"},
+    /* SPGaussianBlur */
+    {SP_ATTR_STDDEVIATION, "stdDeviation"},
     /* SPGradient */
     {SP_ATTR_GRADIENTUNITS, "gradientUnits"},
     {SP_ATTR_GRADIENTTRANSFORM, "gradientTransform"},

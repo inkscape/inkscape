@@ -12,7 +12,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "nr-arena-group.h"
+#include "display/nr-arena-group.h"
+#include "display/nr-filter.h"
+#include "style.h"
 
 static void nr_arena_group_class_init (NRArenaGroupClass *klass);
 static void nr_arena_group_init (NRArenaGroup *group);
@@ -75,6 +77,7 @@ nr_arena_group_init (NRArenaGroup *group)
 	group->transparent = FALSE;
 	group->children = NULL;
 	group->last = NULL;
+	group->style = NULL;
 	nr_matrix_set_identity (&group->child_transform);
   
 #ifdef arena_item_tile_cache
@@ -179,6 +182,20 @@ nr_arena_group_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int 
 	}
 
 	return beststate;
+}
+
+void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
+{
+  g_return_if_fail(group != NULL);
+  g_return_if_fail(NR_IS_ARENA_GROUP(group));
+
+  if (style) sp_style_ref(style);
+  if (group->style) sp_style_unref(group->style);
+  group->style = style;
+
+  if (style && style->filter.set && style->filter.filter) {
+    group->filter = new NR::Filter();
+  }
 }
 
 static unsigned int

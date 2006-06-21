@@ -43,6 +43,8 @@
 #include "sp-switch.h"
 #include "color-profile-fns.h"
 #include "xml/repr.h"
+#include "sp-filter.h"
+#include "sp-gaussian-blur.h"
 
 enum NameType { REPR_NAME, SODIPODI_TYPE };
 static unsigned const N_NAME_TYPES = SODIPODI_TYPE + 1;
@@ -100,6 +102,7 @@ populate_dtables()
         { "svg:clipPath", SP_TYPE_CLIPPATH },
         { "svg:defs", SP_TYPE_DEFS },
         { "svg:ellipse", SP_TYPE_ELLIPSE },
+        { "svg:filter", SP_TYPE_FILTER },
         /* Note: flow* elements are proposed additions for SVG 1.2, they aren't in
            SVG 1.1. */
         { "svg:flowDiv", SP_TYPE_FLOWDIV },
@@ -111,6 +114,7 @@ populate_dtables()
         { "svg:flowRoot", SP_TYPE_FLOWTEXT },
         { "svg:flowSpan", SP_TYPE_FLOWTSPAN },
         { "svg:g", SP_TYPE_GROUP },
+        { "svg:gaussianBlur", SP_TYPE_GAUSSIANBLUR },
         { "svg:image", SP_TYPE_IMAGE },
         { "svg:line", SP_TYPE_LINE },
         { "svg:linearGradient", SP_TYPE_LINEARGRADIENT },

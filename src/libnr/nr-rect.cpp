@@ -150,6 +150,17 @@ nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NRMatrix const *m)
     return nr_rect_d_matrix_transform(d, s, *m);
 }
 
+/** Enlarges the rectangle given amount of pixels to all directions */
+NRRectL *
+nr_rect_l_enlarge(NRRectL *d, int amount)
+{
+    d->x0 -= amount;
+    d->y0 -= amount;
+    d->x1 += amount;
+    d->y1 += amount;
+    return d;
+}
+
 namespace NR {
 
 Rect::Rect(const Point &p0, const Point &p1)

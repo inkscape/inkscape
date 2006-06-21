@@ -20,8 +20,11 @@
 #include <libnr/nr-pixops.h>
 #include "nr-arena.h"
 #include "nr-arena-item.h"
-//#include "nr-arena-group.h"
 #include "gc-core.h"
+
+#include "nr-filter.h"
+#include "libnr/nr-rect.h"
+#include "nr-arena-group.h"
 
 namespace GC = Inkscape::GC;
 
@@ -93,6 +96,7 @@ nr_arena_item_init (NRArenaItem *item)
 	item->mask = NULL;
 	item->px = NULL;
 	item->data = NULL;
+	item->filter = NULL;
 }
 
 static void
@@ -243,10 +247,17 @@ nr_arena_item_invoke_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigne
 	if (item->transform) {
 		nr_matrix_multiply (&childgc.transform, item->transform, &childgc.transform);
 	}
+	/* Remember the transformation matrix */
+	item->ctm = childgc.transform;
 
 	/* Invoke the real method */
 	item->state = NR_ARENA_ITEM_VIRTUAL (item, update) (item, area, &childgc, state, reset);
 	if (item->state & NR_ARENA_ITEM_STATE_INVALID) return item->state;
+	/* Enlarge the bounding box to contain filter effects */
+	if(item->filter) {
+	  item->filter->bbox_enlarge(item->bbox);
+	}
+	    
 	/* Clipping */
 	if (item->clip) {
 		unsigned int newstate;
@@ -300,6 +311,10 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 	if (!item->visible) return item->state | NR_ARENA_ITEM_STATE_RENDER;
 	nr_rect_l_intersect (&carea, area, &item->bbox);
 	if (nr_rect_l_test_empty (&carea)) return item->state | NR_ARENA_ITEM_STATE_RENDER;
+	if(item->filter) {
+	  nr_rect_l_enlarge(&carea, item->filter->get_enlarge(item->ctm));
+	  nr_rect_l_intersect(&carea, &carea, &item->bbox);
+	}
 
 	if (item->px) {
 		/* Has cache pixblock, render this and return */
@@ -537,7 +552,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 #endif
   } else {
     /* Determine, whether we need temporary buffer */
-    if (item->clip || item->mask || ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE)) {
+    if (item->clip || item->mask || ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE) || item->filter) {
       NRPixBlock ipb, mpb;
 
       /* Setup and render item buffer */
@@ -552,6 +567,11 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
         return item->state;
       }
       ipb.empty = FALSE;
+
+      /* Run filtering test, if a filter is set for this object */
+      if(item->filter) {
+	item->filter->render(item, &ipb);
+      }
 
       if (item->clip || item->mask) {
         /* Setup mask pixblock */

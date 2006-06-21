@@ -69,6 +69,7 @@ NRRectL *nr_rect_l_union_xy(NRRectL *d, NR::ICoord x, NR::ICoord y);
 
 NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NR::Matrix const &m);
 NRRect *nr_rect_d_matrix_transform(NRRect *d, NRRect const *s, NRMatrix const *m);
+NRRectL *nr_rect_l_enlarge(NRRectL *d, int amount);
 
 namespace NR {
 

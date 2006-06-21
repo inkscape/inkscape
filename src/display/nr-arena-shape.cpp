@@ -16,6 +16,7 @@
 
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
+#include "display/nr-filter.h"
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-path.h>
 #include <libnr/nr-pixops.h>
@@ -26,6 +27,8 @@
 #include <livarot/float-line.h>
 #include <livarot/int-line.h>
 #include <style.h>
+/* prefs-utils used for deciding, whether to run filtering test or not */
+#include "prefs-utils.h"
 
 //int  showRuns=0;
 void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS);
@@ -1081,6 +1084,12 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
         }
     }
     shape->setMitreLimit(style->stroke_miterlimit.value);
+
+    /* TODO: after SPStyle handles filters, get the correct filter
+     * from there. */
+    //if (prefs_get_double_attribute("options.filtertest", "value", 0) != 0)
+    if (style->filter.set && style->filter.filter)
+        shape->filter = new NR::Filter();
 
     nr_arena_item_request_update(shape, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }

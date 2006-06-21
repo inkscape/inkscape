@@ -79,7 +79,7 @@ typedef struct NRArenaGlyphsGroupClass NRArenaGlyphsGroupClass;
 NRType nr_arena_glyphs_group_get_type (void);
 
 struct NRArenaGlyphsGroup : public NRArenaGroup {
-	SPStyle *style;
+  //SPStyle *style;
 	NRRect paintbox;
 	/* State data */
 	SPPainter *fill_painter;

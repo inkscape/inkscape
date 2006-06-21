@@ -600,6 +600,13 @@ void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+      SPObject *object = SP_OBJECT(_group);
+      for (SPItemView *v = SP_ITEM(_group)->display; v != NULL; v = v->next) {
+	nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+      }
+    }
+
     GSList *l = g_slist_reverse(_childList(true, ActionUpdate));
     while (l) {
         child = SP_OBJECT (l->data);
@@ -634,6 +641,13 @@ void CGroup::onModified(guint flags) {
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     flags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+      SPObject *object = SP_OBJECT(_group);
+      for (SPItemView *v = SP_ITEM(_group)->display; v != NULL; v = v->next) {
+	nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+      }
+    }
 
     GSList *l = g_slist_reverse(_childList(true));
     while (l) {
@@ -691,11 +705,14 @@ gchar *CGroup::getDescription() {
 
 NRArenaItem *CGroup::show (NRArena *arena, unsigned int key, unsigned int flags) {
     NRArenaItem *ai;
+    SPObject *object = SP_OBJECT(_group);
 
     ai = NRArenaGroup::create(arena);
+
     nr_arena_group_set_transparent(NR_ARENA_GROUP (ai),
                                    _group->effectiveLayerMode(key) ==
                          SPGroup::LAYER);
+    nr_arena_group_set_style(NR_ARENA_GROUP(ai), SP_OBJECT_STYLE(object));
 
     _showChildren(arena, ai, key, flags);
     return ai;

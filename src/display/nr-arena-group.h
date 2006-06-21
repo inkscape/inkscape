@@ -18,6 +18,7 @@
 #define NR_IS_ARENA_GROUP(o) (NR_CHECK_INSTANCE_TYPE ((o), NR_TYPE_ARENA_GROUP))
 
 #include "nr-arena-item.h"
+#include "style.h"
 
 NRType nr_arena_group_get_type (void);
 
@@ -26,6 +27,7 @@ struct NRArenaGroup : public NRArenaItem{
 	NRArenaItem *children;
 	NRArenaItem *last;
 	NRMatrix child_transform;
+        SPStyle *style;
 
 	static NRArenaGroup *create(NRArena *arena) {
 		NRArenaGroup *obj=reinterpret_cast<NRArenaGroup *>(nr_object_new(NR_TYPE_ARENA_GROUP));
@@ -42,5 +44,6 @@ void nr_arena_group_set_transparent (NRArenaGroup *group, unsigned int transpare
 
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NR::Matrix const &t);
 void nr_arena_group_set_child_transform(NRArenaGroup *group, NRMatrix const *t);
+void nr_arena_group_set_style(NRArenaGroup *group, SPStyle *style);
 
 #endif

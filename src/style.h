@@ -16,6 +16,7 @@
 #include "color.h"
 #include "forward.h"
 #include "sp-marker-loc.h"
+#include "sp-filter.h"
 
 namespace Inkscape {
 namespace XML {
@@ -164,6 +165,14 @@ struct SPIPaint {
         } paint;
     } value;
     SVGICCColor *iccColor;
+};
+
+/// Filter type internal to SPStyle
+struct SPIFilter {
+    unsigned set : 1;
+    unsigned inherit : 1;
+    SPFilter *filter;
+    gchar *uri;
 };
 
 enum {
@@ -321,6 +330,9 @@ struct SPStyle {
 
     /** Marker list */
     SPIString marker[SP_MARKER_LOC_QTY];
+
+    /** Filter effect */
+    SPIFilter filter;
 
     /// style belongs to a cloned object, must not href anything
     bool cloned; 

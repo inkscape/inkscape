@@ -58,6 +58,12 @@
 #include <libnr/nr-object.h>
 #include "gc-soft-ptr.h"
 #include "nr-arena-forward.h"
+#include "display/nr-filter.h"
+/* TODO: without this, gcc barfs on clause "NR::Filter *filter" later on.
+ * Obviously we shouldn't need to have the next three rows */
+namespace NR {
+class Filter;
+}
 
 // My testing shows that disabling cache reduces the amount 
 // of leaked memory when many documents are loaded one from the other,
@@ -71,6 +77,7 @@ struct NRGC {
 };
 
 struct NRArenaItem : public NRObject {
+
 	NRArena *arena;
 	Inkscape::GC::soft_ptr<NRArenaItem> parent;
 	NRArenaItem *next;
@@ -102,11 +109,16 @@ struct NRArenaItem : public NRObject {
 	NRArenaItem *clip;
 	/* Mask item */
 	NRArenaItem *mask;
+        /* Filter to be applied after rendering this object, NULL if none */
+        NR::Filter *filter;
 	/* Rendered buffer */
 	unsigned char *px;
 
 	/* Single data member */
 	void *data;
+
+        /* Current Transformation Matrix */
+        NR::Matrix ctm;
 
 	void init(NRArena *arena) {
 		this->arena = arena;

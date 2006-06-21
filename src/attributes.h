@@ -171,6 +171,12 @@ enum SPAttributeEnum {
     SP_ATTR_STARTOFFSET,
     /* SPStop */
     SP_ATTR_OFFSET,
+    /* SPFilter */
+    SP_ATTR_FILTERUNITS,
+    SP_ATTR_PRIMITIVEUNITS,
+    SP_ATTR_FILTERRES,
+    /* SPGaussianBlur */
+    SP_ATTR_STDDEVIATION,
     /* SPGradient */
     SP_ATTR_GRADIENTUNITS,
     SP_ATTR_GRADIENTTRANSFORM,

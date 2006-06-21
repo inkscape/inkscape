@@ -115,6 +115,7 @@ static void sp_style_clear(SPStyle *style);
 static void sp_style_merge_property(SPStyle *style, gint id, gchar const *val);
 
 static void sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent);
+static void sp_style_merge_ifilter(SPIFilter *child, SPIFilter const *parent);
 static void sp_style_read_dash(SPStyle *style, gchar const *str);
 
 static SPTextStyle *sp_text_style_new(void);
@@ -134,6 +135,7 @@ static void sp_style_read_itextdecoration(SPITextDecoration *val, gchar const *s
 static void sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
 static void sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
 static void sp_style_read_ifontsize(SPIFontSize *val, gchar const *str);
+static void sp_style_read_ifilter(SPIFilter *f, gchar const *str, SPDocument *document);
 
 static void sp_style_read_penum(SPIEnum *val, Inkscape::XML::Node *repr, gchar const *key, SPStyleEnum const *dict, bool can_explicitly_inherit);
 static void sp_style_read_plength(SPILength *val, Inkscape::XML::Node *repr, gchar const *key);
@@ -648,6 +650,14 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
         }
     }
 
+    /* filter effects */
+    if (!style->filter.set) {
+        val = repr->attribute("filter");
+        if (val) {
+            sp_style_read_ifilter(&style->filter, val, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
+        }
+    }
+            
     /* 3. Merge from parent */
     if (object) {
         if (object->parent) {
@@ -875,12 +885,14 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
                 sp_style_read_iscale24(&style->opacity, val);
             }
             break;
-            /* Filter */
         case SP_PROP_ENABLE_BACKGROUND:
             g_warning("Unimplemented style property SP_PROP_ENABLE_BACKGROUND: value: %s", val);
             break;
+            /* Filter */
         case SP_PROP_FILTER:
-            g_warning("Unimplemented style property SP_PROP_FILTER: value: %s", val);
+            if (style->filter.set && style->filter.inherit) {
+                sp_style_read_ifilter(&style->filter, val, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL);
+            }
             break;
         case SP_PROP_FLOOD_COLOR:
             g_warning("Unimplemented style property SP_PROP_FLOOD_COLOR: value: %s", val);
@@ -1414,6 +1426,11 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
             g_free(style->marker[i].value);
             style->marker[i].value = g_strdup(parent->marker[i].value);
         }
+    }
+
+    /* Filter effects */
+    if(style->filter.set && style->filter.inherit) {
+        sp_style_merge_ifilter(&style->filter, &parent->filter);
     }
 }
 
@@ -2041,6 +2058,19 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
     }
 }
 
+
+/**
+ * Merge filter style from parent.
+ * Filter effects do not inherit by default
+ */
+static void
+sp_style_merge_ifilter(SPIFilter *child, SPIFilter const *parent)
+{
+    child->set = parent->set;
+    child->inherit = parent->inherit;
+    child->filter = parent->filter;
+    child->uri = parent->uri;
+}
 
 /**
  * Dumps the style to a CSS string, with either SP_STYLE_FLAG_IFSET or
@@ -2993,6 +3023,56 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
 }
 
 
+
+/**
+ * Set SPIFilter object from string.
+ */
+static void
+sp_style_read_ifilter(SPIFilter *f, gchar const *str, SPDocument *document)
+{
+    /* Try all possible values: inherit, none, uri */
+    if (streq(str, "inherit")) {
+        f->set = TRUE;
+        f->inherit = TRUE;
+        f->filter = NULL;
+    } else if(streq(str, "none")) {
+        f->set = TRUE;
+        f->inherit = FALSE;
+        f->filter = NULL;
+    } else if (strneq(str, "url", 3)) {
+        f->uri = extract_uri(str);
+        if(f->uri == NULL || f->uri[0] == '\0') {
+            g_warning("Specified filter url is empty");
+            f->set = TRUE;
+            f->inherit = FALSE;
+            f->filter = NULL;
+            return;
+        }
+        f->set = TRUE;
+        f->inherit = FALSE;
+        f->filter = NULL;
+        if (document) {
+            SPObject *obj;
+            obj = sp_uri_reference_resolve(document, str);
+            if (SP_IS_FILTER(obj)) {
+                f->filter = SP_FILTER(obj);
+                //g_signal_connect(G_OBJECT(f->filter), "release",
+                //                 G_CALLBACK(sp_style_filter_release), style);
+                //g_signal_connect(G_OBJECT(f->filter), "modified",
+                //                 G_CALLBACK(sp_style_filter_modified), style);
+            } else {
+                g_warning("Element '%s' not found or is not a filter", f->uri);
+            }
+        }
+
+    } else {
+        /* We shouldn't reach this if SVG input is well-formed */
+        f->set = FALSE;
+        f->inherit = FALSE;
+        f->filter = NULL;
+        f->uri = NULL;
+    }
+}
 
 /**
  * Set SPIEnum object from repr attribute.
