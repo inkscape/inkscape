@@ -60,11 +60,11 @@ E = /
 
 ####### file manipulation programs
 CP     = cp
-RMDIR  = rm -rf 
+RMDIR  = rm -rf
 MKDIR  = mkdir
-CPDIR  = cp -rf 
+CPDIR  = cp -rf
 MSGFMT = msgfmt
-RMREC  = find ./inkscape -type f -name 
+RMREC  = find ./inkscape -type f -name
 RMREC1 = |xargs $(RM)
 RMDIRREC = find ./inkscape -type d -name
 RMDIRREC1 = |xargs $(RMDIR)
@@ -97,7 +97,7 @@ DLLTOOL = dlltool
 S = $(BSLASH)
 
 ####### escape character for echo
-E = 
+E =
 
 ####### file manipulation programs
 CP = copy
@@ -112,9 +112,9 @@ RM    = del
 endif
 MKDIR = mkdir
 CPDIR = xcopy /e /i
-RMREC = cd  inkscape & $(RM) /s /q 
+RMREC = cd  inkscape & $(RM) /s /q
 RMREC1 = & cd ..
-RMDIRREC = cd inkscape & $(RMDIR) /s 
+RMDIRREC = cd inkscape & $(RMDIR) /s
 RMDIRREC1 = & cd ..
 
 #######  Where is your GTK directory?
@@ -148,7 +148,7 @@ CFLAGS = -O3 -Wall -mms-bitfields -DVERSION=$(VERSION) \
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-CFLAGS += -DWITH_INKBOARD
+##CFLAGS += -DWITH_INKBOARD
 
 ####### IMPLICIT RULES
 .cpp.o:
@@ -198,7 +198,7 @@ PYTHONINC = -I$(GTK)/python/include
 PYTHONLIB = -L$(GTK)/python/libs -lpython24
 #PYTHONLIB = -L$(GTK)/python/libs/libpython24.a
 
-####### remove -DLIBXML_STATIC 
+####### remove -DLIBXML_STATIC
 INC = -I. -I.. -I../.. -I../cxxtest $(GTKINC) -I$(GTK)/include \
 $(PERLINC) $(PYTHONINC) -I$(GTK)/include/loudmouth-1.0 \
 -I$(GTK)/include/libxml2 -I$(GTK)/include/freetype2 \
