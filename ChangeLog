@@ -1,3 +1,11 @@
+2006-06-21  Colin Marquardt  <colin@marquardt-home.de>
+
+	* share/templates/DVD_cover_regular_300dpi.svg,
+	share/templates/DVD_cover_slim_300dpi.svg,
+	share/templates/DVD_cover_superslim_300dpi.svg,
+	share/templates/DVD_cover_ultraslim_300dpi.svg:
+	DVD templates by Aleksandar Urosevic. Closes #1507164.
+
 2006-06-19  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* packaging/macosx/Resources/script,
