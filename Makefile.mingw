@@ -25,7 +25,7 @@ $(GTKDOS)$(S)bin$(S)intl.dll:
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll $(GTKDOS)$(S)bin$(S)intl.dll
 
 ###################################
-# R E Q U I R E D    F I L E S
+# 
 ###################################
 
 dist-strip: dist
@@ -168,7 +168,7 @@ dist:	generated
 	-$(RMDIR) inkscape$(S)lib$(S)gtk-2.0$(S)include
 	@echo "##################### D O N E ####################"
 
-clean:	required
+clean:	
 	-$(RMDIR) inkscape
 	-$(RM) inkscape*.zip
 	$(MAKE) -C src -f Makefile.mingw clean
