@@ -21,6 +21,8 @@ namespace NR {
 class FilterPrimitive {
 public:
     FilterPrimitive();
+    virtual ~FilterPrimitive()
+        {}
     int render(NRPixBlock **pb, NRMatrix const *trans);
     virtual int render(NRPixBlock **pb, Matrix const &trans) = 0;
     virtual int get_enlarge(Matrix const &m);
