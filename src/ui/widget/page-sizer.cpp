@@ -183,9 +183,9 @@ SizeMenuItem::on_activate()
     sp_convert_distance (&w, &src_unit, &_px_unit);
     sp_convert_distance (&h, &src_unit, &_px_unit);
     if (_parent->_landscape)
-        _parent->setDim (h, w, true);
+        _parent->setDim (h, w);
     else
-        _parent->setDim (w, h, true);
+        _parent->setDim (w, h);
 }
 
 //---------------------------------------------------
@@ -272,37 +272,50 @@ PageSizer::init (Registry& reg)
     show_all_children();
 }
 
+
 /**
+ * Set document dimensions (if not called by Doc prop's update()) and
+ * set the PageSizer's widgets and text entries accordingly. This is
+ * somewhat slow, is there something done too often invisibly?
+ *
  * \param w, h given in px
  */
-void 
-PageSizer::setDim (double w, double h, bool update)
-{
-    _landscape = w>h;
-    _rb_land->set_active (_landscape ? true : false);
-    _rb_port->set_active (_landscape ? false : true);
-    _omenu_size->set_history (1 + find_paper_size (w, h));
-    
-    Unit const& unit = _rum._sel->getUnit();
-    if (!update) _changedw_connection.block();
-    _rusw.setValue (w / unit.factor);
-    if (!update) _changedw_connection.unblock();
-    if (!update) _changedh_connection.block();
-    _rush.setValue (h / unit.factor);
-    if (!update) _changedh_connection.unblock();
-}
-
 void
-PageSizer::setDoc (double w, double h)
+PageSizer::setDim (double w, double h)
 {
+    static bool _called = false;
+    if (_called) return;
+
+    _called = true;
+    
+    _landscape_connection.block();
+    _portrait_connection.block(); 
+    _changedw_connection.block();
+    _changedh_connection.block();
+
     if (SP_ACTIVE_DESKTOP && !_wr->isUpdating()) {
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         sp_document_set_width (doc, w, &_px_unit);
         sp_document_set_height (doc, h, &_px_unit);
         sp_document_done (doc);
-    } else {
-        setDim (w, h);
-    }
+    } 
+    
+    _landscape = w>h;
+    _rb_land->set_active (_landscape ? true : false);
+    _rb_port->set_active (_landscape ? false : true);
+    
+    _omenu_size->set_history (1 + find_paper_size (w, h));
+    
+    Unit const& unit = _rum._sel->getUnit();
+    _rusw.setValue (w / unit.factor);
+    _rush.setValue (h / unit.factor);
+
+    _landscape_connection.unblock();
+    _portrait_connection.unblock();
+    _changedw_connection.unblock();
+    _changedh_connection.unblock();
+    
+    _called = false;
 }
 
 /** 
@@ -353,7 +366,7 @@ PageSizer::on_portrait()
         return;
     double w = _rusw.getSU()->getValue ("px");
     double h = _rush.getSU()->getValue ("px");
-    if (h<w) setDoc (h, w);
+    if (h<w) setDim (h, w);
 }
 
 void
@@ -363,7 +376,7 @@ PageSizer::on_landscape()
         return;
     double w = _rusw.getSU()->getValue ("px");
     double h = _rush.getSU()->getValue ("px");
-    if (w<h) setDoc (h, w);
+    if (w<h) setDim (h, w);
 }
 
 void
@@ -371,7 +384,7 @@ PageSizer::on_value_changed()
 {
     if (_wr->isUpdating()) return;
 
-    setDoc (_rusw.getSU()->getValue("px"), _rush.getSU()->getValue("px"));
+    setDim (_rusw.getSU()->getValue("px"), _rush.getSU()->getValue("px"));
 }
 
 } // namespace Widget
