@@ -22,6 +22,7 @@ class FilterGaussian : public FilterPrimitive {
 public:
     FilterGaussian();
     static FilterPrimitive *create();
+    virtual ~FilterGaussian();
 
     virtual int render(NRPixBlock **pb, Matrix const &trans);
     virtual int get_enlarge(Matrix const &m);

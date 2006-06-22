@@ -33,6 +33,11 @@ FilterPrimitive *FilterGaussian::create()
     return new FilterGaussian();
 }
 
+FilterGaussian::~FilterGaussian()
+{
+    // Nothing to do here
+}
+
 int FilterGaussian::_kernel_size(Matrix const &trans)
 {
     int length_x = _effect_area_scr_x(trans);

@@ -29,6 +29,11 @@ FilterPrimitive::FilterPrimitive()
     _region_height.set(SVGLength::PERCENT, 100, 0);
 }
 
+FilterPrimitive::~FilterPrimitive()
+{
+    // Nothing to do here
+}
+
 int FilterPrimitive::render(NRPixBlock **pb, NRMatrix const *trans) {
     if(trans) {
         return this->render(pb, *trans);
