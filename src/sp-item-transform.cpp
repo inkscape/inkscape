@@ -102,15 +102,17 @@ get_scale_transform_with_stroke (NR::Rect &bbox_param, gdouble strokewidth, bool
     gdouble h1 = y1 - y0;
     gdouble r0 = strokewidth;
 
-    if (bbox.isEmpty() || bbox.extent(NR::X) < 1e-06 || bbox.extent(NR::Y) < 1e-06 ||
-        fabs(w0 - r0) < 1e-6 || fabs(h0 - r0) < 1e-6 ||
-        (!transform_stroke && (fabs(w1 - r0) < 1e-6 || fabs(h1 - r0) < 1e-6))
-        ) {
+    if (bbox.isEmpty() || bbox.extent(NR::X) < 1e-06 || bbox.extent(NR::Y) < 1e-06) {
         NR::Matrix move = NR::Matrix(NR::translate(x0 - bbox.min()[NR::X], y0 - bbox.min()[NR::Y]));
-        return (move); // sorry, cannot scale from or to empty boxes, so only translate
+        return (move); // cannot scale from empty boxes at all, so only translate
     }
 
     NR::Matrix direct = NR::Matrix (NR::scale(w1 / w0,   h1 / h0));
+
+    if (fabs(w0 - r0) < 1e-6 || fabs(h0 - r0) < 1e-6 || (!transform_stroke && (fabs(w1 - r0) < 1e-6 || fabs(h1 - r0) < 1e-6))) {
+        return (p2o * direct * o2n); // can't solve the equation: one of the dimensions is equal to stroke width, so return the straightforward scaler
+    }
+
     gdouble ratio_x = (w1 - r0) / (w0 - r0);
     gdouble ratio_y = (h1 - r0) / (h0 - r0);
     NR::Matrix direct_constant_r = NR::Matrix (NR::scale(ratio_x, ratio_y));
