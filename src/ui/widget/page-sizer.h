@@ -32,11 +32,10 @@ public:
     PageSizer();
     virtual ~PageSizer();
     void init (Registry& reg);
-    void setDim (double w, double h, bool update = false);
+    void setDim (double w, double h);
     bool                 _landscape;
 
 protected:
-    void setDoc (double w, double h);
     int find_paper_size (double w, double h) const;
     void fire_fit_canvas_to_selection_or_drawing();
     void on_portrait();
