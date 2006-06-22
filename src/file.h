@@ -129,7 +129,7 @@ void sp_file_export_dialog (void *widget);
  */
 int sp_export_png_file (SPDocument *doc, const gchar *filename,
 			 double x0, double y0, double x1, double y1,
-			 unsigned int width, unsigned int height,
+			 unsigned int width, unsigned int height, double xdpi, double ydpi,
 			 unsigned long bgcolor,
 			 unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, GSList *items_only = NULL);
 

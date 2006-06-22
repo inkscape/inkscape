@@ -53,18 +53,18 @@ sp_png_get_block_stripe (const guchar **rows, int row, int num_rows, void *data)
 }
 
 int
-sp_png_write_rgba (const gchar *filename, const guchar *px, int width, int height, int rowstride)
+sp_png_write_rgba (const gchar *filename, const guchar *px, int width, int height, double xdpi, double ydpi, int rowstride)
 {
 	SPPNGBD bd;
 
 	bd.px = px;
 	bd.rowstride = rowstride;
 
-	return sp_png_write_rgba_striped (filename, width, height, sp_png_get_block_stripe, &bd);
+	return sp_png_write_rgba_striped (filename, width, height, xdpi, ydpi, sp_png_get_block_stripe, &bd);
 }
 
 int
-sp_png_write_rgba_striped (const gchar *filename, int width, int height,
+sp_png_write_rgba_striped (const gchar *filename, int width, int height, double xdpi, double ydpi,
 			   int (* get_rows) (const guchar **rows, int row, int num_rows, void *data),
 			   void *data)
 {
@@ -151,6 +151,7 @@ sp_png_write_rgba_striped (const gchar *filename, int width, int height,
 	/* other optional chunks like cHRM, bKGD, tRNS, tIME, oFFs, pHYs, */
 	/* note that if sRGB is present the cHRM chunk must be ignored
 	 * on read and must be written in accordance with the sRGB profile */
+        png_set_pHYs(png_ptr, info_ptr, unsigned(xdpi / 0.0254 + 0.5), unsigned(ydpi / 0.0254 + 0.5), PNG_RESOLUTION_METER); 
 
 	/* Write the file header information.  REQUIRED */
 	png_write_info(png_ptr, info_ptr);

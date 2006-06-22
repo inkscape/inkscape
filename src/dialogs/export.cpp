@@ -1070,7 +1070,7 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
     
     /* Do export */
     if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), filename, 
-                             x0, y0, x1, y1, width, height, 
+                             x0, y0, x1, y1, width, height, xdpi, ydpi, 
                              nv->pagecolor, 
                              sp_export_progress_callback, base)) {
         gchar * error;

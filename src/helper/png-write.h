@@ -14,9 +14,9 @@
 
 #include <glib/gtypes.h>
 
-int sp_png_write_rgba(gchar const *filename, guchar const *px, int width, int height, int rowstride);
+int sp_png_write_rgba(gchar const *filename, guchar const *px, int width, int height, double xdpi, double ydpi, int rowstride);
 
-int sp_png_write_rgba_striped(gchar const *filename, int width, int height,
+int sp_png_write_rgba_striped(gchar const *filename, int width, int height, double xdpi, double ydpi,
 			      int (* get_rows) (guchar const **rows, int row, int num_rows, void *data),
 			      void *data);
 

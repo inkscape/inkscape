@@ -2332,7 +2332,7 @@ sp_selection_create_bitmap_copy ()
     // Do the export
     sp_export_png_file(document, filepath,
                    bbox.x0, bbox.y0, bbox.x1, bbox.y1,
-                   width, height,
+                   width, height, res, res,
                    (guint32) 0xffffff00,
                    NULL, NULL,
                    true,  /*bool force_overwrite,*/

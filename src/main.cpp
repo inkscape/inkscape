@@ -955,7 +955,7 @@ sp_do_export_png(SPDocument *doc)
     g_print("Bitmap saved as: %s\n", filename);
 
     if ((width >= 1) && (height >= 1) && (width < 65536) && (height < 65536)) {
-        sp_export_png_file(doc, filename, area.x0, area.y0, area.x1, area.y1, width, height, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+        sp_export_png_file(doc, filename, area.x0, area.y0, area.x1, area.y1, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
     } else {
         g_warning("Calculated bitmap dimensions %d %d are out of range (1 - 65535). Nothing exported.", width, height);
     }

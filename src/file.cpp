@@ -1091,7 +1091,7 @@ hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
 int
 sp_export_png_file(SPDocument *doc, gchar const *filename,
                    double x0, double y0, double x1, double y1,
-                   unsigned width, unsigned height,
+                   unsigned width, unsigned height, double xdpi, double ydpi,
                    unsigned long bgcolor,
                    unsigned (*status)(float, void *),
                    void *data, bool force_overwrite,
@@ -1168,12 +1168,12 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     if ((width < 256) || ((width * height) < 32768)) {
         ebp.px = nr_pixelstore_64K_new(FALSE, 0);
         ebp.sheight = 65536 / (4 * width);
-        write_status = sp_png_write_rgba_striped(filename, width, height, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         nr_pixelstore_64K_free(ebp.px);
     } else {
         ebp.px = g_new(guchar, 4 * 64 * width);
         ebp.sheight = 64;
-        write_status = sp_png_write_rgba_striped(filename, width, height, sp_export_get_rows, &ebp);
+        write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
         g_free(ebp.px);
     }
 
