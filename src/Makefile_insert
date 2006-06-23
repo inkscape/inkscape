@@ -49,6 +49,7 @@ libinkpre_a_SOURCES =	\
 	conn-avoid-ref.cpp conn-avoid-ref.h	\
 	connector-context.cpp connector-context.h	\
 	connection-pool.h \
+	console-output-undo-observer.h console-output-undo-observer.cpp \
 	context-fns.cpp context-fns.h \
 	desktop-affine.cpp desktop-affine.h	\
 	desktop-events.cpp desktop-events.h	\

@@ -106,6 +106,9 @@ SPDocument::SPDocument() {
     p->redo = NULL;
 
     priv = p;
+
+    // XXX only for testing!
+    priv->undoStackObservers.add(p->console_output_undo_observer);
 }
 
 SPDocument::~SPDocument() {

@@ -22,6 +22,9 @@
 
 #include "composite-undo-stack-observer.h"
 
+// XXX only for testing!
+#include "console-output-undo-observer.h"
+
 #define SP_DOCUMENT_DEFS(d) ((SPObject *) SP_ROOT (SP_DOCUMENT_ROOT (d))->defs)
 
 namespace Inkscape {
@@ -62,6 +65,8 @@ struct SPDocumentPrivate {
 	/* Undo listener */
 	Inkscape::CompositeUndoStackObserver undoStackObservers;
 
+	// XXX only for testing!
+	Inkscape::ConsoleOutputUndoObserver console_output_undo_observer;
 };
 
 #endif
