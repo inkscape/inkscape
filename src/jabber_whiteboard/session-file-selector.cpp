@@ -9,11 +9,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm.h>
+#include <gtkmm.h>
+
 #include "session-file-selector.h"
 
 #include <glibmm/i18n.h>
-#include <gtkmm/filechooserdialog.h>
-#include <gtkmm/stock.h>
 
 namespace Inkscape {
 

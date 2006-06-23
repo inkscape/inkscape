@@ -16,7 +16,6 @@
 #include <map>
 
 #include "gc-alloc.h"
-
 #include "gc-managed.h"
 
 #include "util/list-container.h"
@@ -25,7 +24,6 @@ namespace Inkscape {
 
 namespace Whiteboard {
 
-class SessionManager;
 class MessageNode;
 
 /// Definition of the basic message node queue
@@ -50,37 +48,40 @@ public:
 	 *
 	 * \param sm The SessionManager to associate this MessageQueue with. 
 	 */
-	MessageQueue(SessionManager *sm);
-	virtual ~MessageQueue();
+	MessageQueue() { }
+	virtual ~MessageQueue()
+	{
+		this->_queue.clear();
+	}
 
 	/**
 	 * Retrieve the MessageNode at the front of the queue.
 	 */
-	MessageNode* first();
+	virtual MessageNode* first();
 
 	/**
 	 * Remove the element at the front of the queue. 
 	 */
-	void popFront();
+	virtual void popFront();
 
 	/**
 	 * Get the size of the queue.
 	 *
 	 * \return The size of the queue.
 	 */
-	unsigned int size();
+	virtual unsigned int size();
 
 	/**
 	 * Returns whether or not the queue is empty.
 	 *
 	 * \return Whether or not the queue is empty.
 	 */
-	bool empty();
+	virtual bool empty();
 
 	/**
 	 * Clear the queue.
 	 */
-	void clear();
+	virtual void clear();
 
 	/**
 	 * The insertion method.  The insertion procedure must be defined
@@ -95,11 +96,6 @@ protected:
 	 * Implementation of the queue.
 	 */
 	MessageQueueBuffer _queue;
-
-	/**
-	 * Pointer to SessionManager.
-	 */
-	SessionManager* _sm;
 };
 
 
@@ -111,7 +107,7 @@ protected:
  */
 class ReceiveMessageQueue : public MessageQueue, public GC::Managed<> {
 public:
-	ReceiveMessageQueue(SessionManager* sm);
+	ReceiveMessageQueue() : _latest(0) { }
 
 	/**
 	 * Insert a message into the queue.  
@@ -149,7 +145,7 @@ private:
  */
 class SendMessageQueue : public MessageQueue {
 public:
-	SendMessageQueue(SessionManager* sm);
+	SendMessageQueue() { }
 
 	/**
 	 * Insert a message into the queue.  
@@ -169,9 +165,9 @@ public:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

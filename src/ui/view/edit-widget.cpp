@@ -59,12 +59,6 @@
 #include "interface.h"
 #include "extension/db.h"
 
-#ifdef WITH_INKBOARD
-#include "ui/dialog/whiteboard-connect.h"
-#include "ui/dialog/whiteboard-sharewithuser.h"
-#include "ui/dialog/whiteboard-sharewithchat.h"
-#endif
-
 using namespace Inkscape::UI;
 using namespace Inkscape::UI::Widget;
 
@@ -302,45 +296,6 @@ EditWidget::onDialogXmlEditor()
     _dlg_mgr.showDialog("XmlEditor");
 }
 
-#ifdef WITH_INKBOARD
-void
-EditWidget::onDialogWhiteboardConnect()
-{
-	Dialog::WhiteboardConnectDialogImpl* dlg = dynamic_cast< Dialog::WhiteboardConnectDialogImpl* >(_dlg_mgr.getDialog("WhiteboardConnect"));
-	dlg->setSessionManager();
-	_dlg_mgr.showDialog("WhiteboardConnect");
-}
-
-void
-EditWidget::onDialogWhiteboardShareWithUser()
-{
-		Dialog::WhiteboardShareWithUserDialogImpl* dlg = dynamic_cast< Dialog::WhiteboardShareWithUserDialogImpl* >(_dlg_mgr.getDialog("WhiteboardShareWithUser"));
-		dlg->setSessionManager();
-		_dlg_mgr.showDialog("WhiteboardShareWithUser");
-}
-
-void
-EditWidget::onDialogWhiteboardShareWithChat()
-{
-	Dialog::WhiteboardShareWithChatroomDialogImpl* dlg = dynamic_cast< Dialog::WhiteboardShareWithChatroomDialogImpl* >(_dlg_mgr.getDialog("WhiteboardShareWithChat"));
-	dlg->setSessionManager();
-	_dlg_mgr.showDialog("WhiteboardShareWithChat");
-}
-
-void
-EditWidget::onDialogOpenSessionFile()
-{
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "not reimplemented yet");
-}
-
-void
-EditWidget::onDumpXMLTracker()
-{
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "not reimplemented yet");
-}
-
-#endif
-
 void
 EditWidget::onUriChanged()
 {
@@ -361,9 +316,6 @@ EditWidget::initMenuActions()
 //    _act_grp->add(Gtk::Action::create("MenuObject", _("PLACEHOLDER, do not translate")));
 //    _act_grp->add(Gtk::Action::create("MenuPath",   _("PLACEHOLDER, do not translate")));
 //    _act_grp->add(Gtk::Action::create("MenuText",   _("PLACEHOLDER, do not translate")));
-#ifdef WITH_INKBOARD
-//    _act_grp->add(Gtk::Action::create("MenuWhiteboard",   _("PLACEHOLDER, do not translate")));
-#endif
 //    _act_grp->add(Gtk::Action::create("MenuHelp",   _("PLACEHOLDER, do not translate")));
 // temporarily replaced with non-gettext version to have a well-sized menu
 // for testing:
@@ -375,9 +327,6 @@ EditWidget::initMenuActions()
     _act_grp->add(Gtk::Action::create("MenuObject", "Object"));
     _act_grp->add(Gtk::Action::create("MenuPath",   "Path"));
     _act_grp->add(Gtk::Action::create("MenuText",   "Text"));
-#ifdef WITH_INKBOARD
-    _act_grp->add(Gtk::Action::create("MenuWhiteboard",   "Whiteboard"));
-#endif
     _act_grp->add(Gtk::Action::create("MenuHelp",   "Help"));
 
     // File menu
@@ -821,30 +770,6 @@ EditWidget::initMenuActions()
 
 	// Whiteboard menu
 #ifdef WITH_INKBOARD
-    _act_grp->add(Gtk::Action::create("DialogWhiteboardConnect",
-                                      Gtk::Stock::CLEAR, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")),
-                  sigc::mem_fun(*this, &EditWidget::onDialogWhiteboardConnect));
-
-    _act_grp->add(Gtk::Action::create("DialogWhiteboardShareWithUser",
-                                      Gtk::Stock::CLEAR, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")),
-                  sigc::mem_fun(*this, &EditWidget::onDialogWhiteboardShareWithUser));
-
-    _act_grp->add(Gtk::Action::create("DialogWhiteboardShareWithChat",
-                                      Gtk::Stock::CLEAR, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")),
-                  sigc::mem_fun(*this, &EditWidget::onDialogWhiteboardShareWithChat));
-
-    _act_grp->add(Gtk::Action::create("WhiteboardOpenSessionFile",
-                                      Gtk::Stock::CLEAR, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")),
-                  sigc::mem_fun(*this, &EditWidget::onDialogOpenSessionFile));
-
-    _act_grp->add(Gtk::Action::create("WhiteboardDumpXMLTracker",
-                                      Gtk::Stock::CLEAR, Glib::ustring(),
-                                      _("PLACEHOLDER, do not translate")),
-                  sigc::mem_fun(*this, &EditWidget::onDumpXMLTracker));
 #endif
 
     // About menu

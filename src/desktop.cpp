@@ -77,10 +77,6 @@
 #include "message-context.h"
 #include "layer-manager.h"
 
-#ifdef WITH_INKBOARD
-#include "jabber_whiteboard/session-manager.h"
-#endif
-
 namespace Inkscape { namespace XML { class Node; }}
 
 // Callback declarations
@@ -245,14 +241,6 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     /* Ugly hack */
     _namedview_modified (namedview, SP_OBJECT_MODIFIED_FLAG, this);
 
-	/* Construct SessionManager
-	 *
-	 * SessionManager construction needs to be done after document connection
-	 */
-#ifdef WITH_INKBOARD
-	_whiteboard_session_manager = new Inkscape::Whiteboard::SessionManager(this);
-#endif
-
 /* Set up notification of rebuilding the document, this allows
        for saving object related settings in the document. */
     _reconstruction_start_connection =
@@ -324,12 +312,6 @@ void SPDesktop::destroy()
         sp_item_invoke_hide (SP_ITEM (sp_document_root (doc())), dkey);
         drawing = NULL;
     }
-
-#ifdef WITH_INKBOARD
-	if (_whiteboard_session_manager) {
-		delete _whiteboard_session_manager;
-	}
-#endif
 
     delete _guides_message_context;
     _guides_message_context = NULL;

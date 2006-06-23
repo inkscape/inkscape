@@ -49,11 +49,7 @@
 #include "dialogs/input.h"
 
 #ifdef WITH_INKBOARD
-#include "ui/dialog/whiteboard-connect.h"
-#include "ui/dialog/whiteboard-sharewithuser.h"
-#include "ui/dialog/whiteboard-sharewithchat.h"
 #include "jabber_whiteboard/session-manager.h"
-#include "jabber_whiteboard/node-tracker.h"
 #endif
 
 #include "extension/effect.h"
@@ -1576,90 +1572,9 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             sp_item_dialog();
             break;
 #ifdef WITH_INKBOARD
-        case SP_VERB_DIALOG_WHITEBOARD_CONNECT: {
-            // We need to ensure that this dialog is associated with the correct SessionManager,
-            // since the user may have opened a new document (and hence swapped SessionManager
-            // instances) sometime before this dialog invocation
-            Inkscape::UI::Dialog::WhiteboardConnectDialogImpl *dlg = dynamic_cast< Inkscape::UI::Dialog::WhiteboardConnectDialogImpl *>(dt->_dlg_mgr->getDialog("WhiteboardConnect"));
-            dlg->setSessionManager();
-            dt->_dlg_mgr->showDialog("WhiteboardConnect");
-            break;
-        }
-        case SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER: {
-            //sp_whiteboard_sharewithuser_dialog(NULL);
-            Inkscape::Whiteboard::SessionManager *sm = SP_ACTIVE_DESKTOP->whiteboard_session_manager();
-            if (sm->session_data && sm->session_data->status[Inkscape::Whiteboard::LOGGED_IN]) {
-                // We need to ensure that this dialog is associated with the correct SessionManager,
-                // since the user may have opened a new document (and hence swapped SessionManager
-                // instances) sometime before this dialog invocation
-                Inkscape::UI::Dialog::WhiteboardShareWithUserDialogImpl *dlg = dynamic_cast< Inkscape::UI::Dialog::WhiteboardShareWithUserDialogImpl *>(dt->_dlg_mgr->getDialog("WhiteboardShareWithUser"));
-                dlg->setSessionManager();
-                dt->_dlg_mgr->showDialog("WhiteboardShareWithUser");
-            } else {
-                Gtk::MessageDialog dlg(_("You need to connect to a Jabber server before sharing a document with another user."), true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_CLOSE);
-                dlg.run();
-            }
-            break;
-        }
-        case SP_VERB_DIALOG_WHITEBOARD_SHAREWITHCHAT: {
-            Inkscape::Whiteboard::SessionManager *sm = SP_ACTIVE_DESKTOP->whiteboard_session_manager();
-            if (sm->session_data && sm->session_data->status[Inkscape::Whiteboard::LOGGED_IN]) {
-                // We need to ensure that this dialog is associated with the correct SessionManager,
-                // since the user may have opened a new document (and hence swapped SessionManager
-                // instances) sometime before this dialog invocation
-                Inkscape::UI::Dialog::WhiteboardShareWithChatroomDialogImpl *dlg = dynamic_cast< Inkscape::UI::Dialog::WhiteboardShareWithChatroomDialogImpl *>(dt->_dlg_mgr->getDialog("WhiteboardShareWithChat"));
-                dlg->setSessionManager();
-                dt->_dlg_mgr->showDialog("WhiteboardShareWithChat");
-            } else {
-                Gtk::MessageDialog dlg(_("You need to connect to a Jabber server before sharing a document with a chatroom."), true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_CLOSE);
-                dlg.run();
-            }
-            break;
-        }
-
-        case SP_VERB_DIALOG_WHITEBOARD_DUMPXMLTRACKER:
-            if (SP_ACTIVE_DESKTOP->whiteboard_session_manager()->node_tracker()) {
-                SP_ACTIVE_DESKTOP->whiteboard_session_manager()->node_tracker()->dump();
-            } else {
-                g_log(NULL, G_LOG_LEVEL_DEBUG, _("XML node tracker has not been initialized; nothing to dump"));
-            }
-            break;
-        case SP_VERB_DIALOG_WHITEBOARD_OPENSESSIONFILE: {
-            Gtk::FileChooserDialog sessionfiledlg(_("Open session file"), Gtk::FILE_CHOOSER_ACTION_OPEN);
-            sessionfiledlg.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-            sessionfiledlg.add_button(Gtk::Stock::OPEN, Gtk::RESPONSE_OK);
-
-            int result = sessionfiledlg.run();
-            switch (result) {
-                case Gtk::RESPONSE_OK:
-                {
-                    SP_ACTIVE_DESKTOP->whiteboard_session_manager()->clearDocument();
-                    SP_ACTIVE_DESKTOP->whiteboard_session_manager()->loadSessionFile(sessionfiledlg.get_filename());
-                    dt->_dlg_mgr->showDialog("SessionPlayer");
-                    //SP_ACTIVE_DESKTOP->whiteboard_session_manager()->session_player()->start();
-                    break;
-                }
-                case Gtk::RESPONSE_CANCEL:
-                default:
-                    break;
-            }
-            break;
-        }
-
-		case SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SESSION:
+        case SP_VERB_XMPP_CLIENT:
 		{
-            Inkscape::Whiteboard::SessionManager *sm = SP_ACTIVE_DESKTOP->whiteboard_session_manager();
-            if (sm->session_data && sm->session_data->status[Inkscape::Whiteboard::IN_WHITEBOARD]) {
-				SP_ACTIVE_DESKTOP->whiteboard_session_manager()->disconnectFromDocument();
-			}
-			break;
-		}
-		case SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SERVER:
-		{
-            Inkscape::Whiteboard::SessionManager *sm = SP_ACTIVE_DESKTOP->whiteboard_session_manager();
-            if (sm->session_data && sm->session_data->status[Inkscape::Whiteboard::LOGGED_IN]) {
-				SP_ACTIVE_DESKTOP->whiteboard_session_manager()->disconnectFromServer();
-			}
+            Inkscape::Whiteboard::SessionManager::showClient();
 			break;
 		}
 #endif
@@ -2345,22 +2260,8 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_ITEM, "DialogObjectProperties", N_("_Object Properties..."),
                    N_("Edit the ID, locked and visible status, and other object properties"), "dialog_item_properties"),
 #ifdef WITH_INKBOARD
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_CONNECT, "DialogWhiteboardConnect",
-                   N_("_Connect to Jabber server..."), N_("Connect to a Jabber server"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_SHAREWITHUSER, "DialogWhiteboardShareWithUser",
-                   N_("Share with _user..."), N_("Establish a whiteboard session with another Jabber user"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_SHAREWITHCHAT, "DialogWhiteboardShareWithChat",
-                   N_("Share with _chatroom..."), N_("Join a chatroom to start a new whiteboard session or join one in progress"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_DUMPXMLTRACKER, "DialogWhiteboardDumpXMLTracker",
-                   N_("_Dump XML node tracker"), N_("Dump the contents of the XML tracker to the console"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_OPENSESSIONFILE, "DialogWhiteboardOpenSessionFile",
-                   N_("_Open session file..."), N_("Open and browse through records of past whiteboard sessions"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_SESSIONPLAYBACK, "DialogWhiteboardSessionPlayback",
-                   N_("Session file playback"), "", NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SESSION, "DialogWhiteboardDisconnectSession",
-                   N_("_Disconnect from session"), "", NULL),
-    new DialogVerb(SP_VERB_DIALOG_WHITEBOARD_DISCONNECT_FROM_SERVER, "DialogWhiteboardDisconnectServer",
-                   N_("Disconnect from _server"), "", NULL),
+    new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
+                   N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
 #endif
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
                    N_("Configure extended input devices, such as a graphics tablet"), NULL),

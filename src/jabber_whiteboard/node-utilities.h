@@ -30,12 +30,15 @@ class XMLNodeTracker;
 class NodeUtilities {
 public:
 	// Node utilities
-//	static Inkscape::XML::Node* lookupReprByValue(Inkscape::XML::Node* root, gchar const* key, ustring const* value);
-	static Glib::ustring const nodeTypeToString(XML::Node const& node);
+        //static Inkscape::XML::Node* lookupReprByValue(Inkscape::XML::Node* root,
+        //                      gchar const* key, Glib::ustring const* value);
+	static Glib::ustring nodeTypeToString(XML::Node const& node);
 	static XML::NodeType stringToNodeType(Glib::ustring const& type);
 
 	// Node key search utility method
-	static std::string const findNodeID(XML::Node const& node, XMLNodeTracker* tracker, NodeToKeyMap const& newnodes);
+	static Glib::ustring findNodeID(XML::Node const& node, 
+                              XMLNodeTracker* tracker, 
+                              KeyNodeTable const& newnodes);
 
 private:
 	// noncopyable, nonassignable
@@ -53,9 +56,9 @@ private:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

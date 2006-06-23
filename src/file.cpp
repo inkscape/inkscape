@@ -204,9 +204,6 @@ sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_
         // resize the window to match the document properties
         // (this may be redundant for new windows... if so, move to the "virgin"
         //  section above)
-#ifdef WITH_INKBOARD
-		desktop->whiteboard_session_manager()->setDesktop(desktop);
-#endif
         sp_namedview_window_from_document(desktop);
 
         if (add_to_recent) {

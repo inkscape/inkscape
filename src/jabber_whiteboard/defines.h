@@ -10,8 +10,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef __WHITEBOARD_DEFINES_H__
-#define __WHITEBOARD_DEFINES_H__
+#ifndef __INKSCAPE_WHITEBOARD_DEFINES_H__
+#define __INKSCAPE_WHITEBOARD_DEFINES_H__
 
 #include "jabber_whiteboard/message-tags.h"
 #include "jabber_whiteboard/internal-constants.h"
@@ -31,10 +31,10 @@ enum MessageType {
 	DOCUMENT_BEGIN = 4,
 	DOCUMENT_END = 5,
     // 1-1 connections
-    CONNECT_REQUEST_USER = 6,
+        CONNECT_REQUEST_USER = 6,
 	CONNECT_REQUEST_RESPONSE_USER = 7, 
     // chat connections
-    CONNECT_REQUEST_RESPONSE_CHAT = 8,
+CONNECT_REQUEST_RESPONSE_CHAT = 8,
 	// chatroom document synchronization
 	CHATROOM_SYNCHRONIZE_REQUEST = 9, 
 	CHATROOM_SYNCHRONIZE_RESPONSE = 10,
@@ -58,9 +58,9 @@ enum MessageType {
 // Responses to whiteboard invitations
 enum InvitationResponses {
 	ACCEPT_INVITATION,
-	ACCEPT_INVITATION_IN_NEW_WINDOW,
 	DECLINE_INVITATION,
-	PEER_ALREADY_IN_SESSION
+	PEER_ALREADY_IN_SESSION,
+	UNSUPPORTED_PROTOCOL
 };
 
 // Message handler modes

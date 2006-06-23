@@ -9,59 +9,34 @@ jabber_whiteboard/clean:
 	rm -f jabber_whiteboard/libjabber_whiteboard.a $(jabber_whiteboard_libjabber_whiteboard_a_OBJECTS)
 
 jabber_whiteboard_SOURCES = \
-	jabber_whiteboard/buddy-list-manager.cpp \
-	jabber_whiteboard/buddy-list-manager.h \
-	jabber_whiteboard/callbacks.cpp \
-	jabber_whiteboard/callbacks.h \
-	jabber_whiteboard/chat-handler.cpp \
-	jabber_whiteboard/chat-handler.h \
-	jabber_whiteboard/connection-establishment.cpp \
 	jabber_whiteboard/defines.h \
-	jabber_whiteboard/deserializer.cpp \
-	jabber_whiteboard/deserializer.h \
-	jabber_whiteboard/error-codes.h \
+	jabber_whiteboard/empty.cpp \
+	jabber_whiteboard/keynode.cpp \
+	jabber_whiteboard/keynode.h \
 	jabber_whiteboard/internal-constants.cpp \
 	jabber_whiteboard/internal-constants.h \
-	jabber_whiteboard/invitation-confirm-dialog.cpp \
-	jabber_whiteboard/invitation-confirm-dialog.h \
-	jabber_whiteboard/jabber-handlers.cpp \
-	jabber_whiteboard/jabber-handlers.h \
 	jabber_whiteboard/message-aggregator.cpp \
 	jabber_whiteboard/message-aggregator.h \
-	jabber_whiteboard/message-contexts.cpp \
-	jabber_whiteboard/message-contexts.h \
-	jabber_whiteboard/message-handler.cpp \
-	jabber_whiteboard/message-handler.h \
 	jabber_whiteboard/message-node.h \
-	jabber_whiteboard/message-processors.cpp \
-	jabber_whiteboard/message-processors.h \
 	jabber_whiteboard/message-queue.cpp \
 	jabber_whiteboard/message-queue.h \
 	jabber_whiteboard/message-tags.cpp \
 	jabber_whiteboard/message-tags.h \
 	jabber_whiteboard/message-utilities.cpp \
 	jabber_whiteboard/message-utilities.h \
-	jabber_whiteboard/node-tracker.cpp \
-	jabber_whiteboard/node-tracker-event-tracker.cpp \
-	jabber_whiteboard/node-tracker-event-tracker.h \
-	jabber_whiteboard/node-tracker.h \
-	jabber_whiteboard/node-tracker-observer.h \
-	jabber_whiteboard/node-utilities.cpp \
-	jabber_whiteboard/node-utilities.h \
-	jabber_whiteboard/serializer.cpp \
-	jabber_whiteboard/serializer.h \
-	jabber_whiteboard/session-file.cpp \
-	jabber_whiteboard/session-file.h \
-	jabber_whiteboard/session-file-player.cpp \
-	jabber_whiteboard/session-file-player.h \
+	jabber_whiteboard/new-inkboard-document.cpp \
+	jabber_whiteboard/new-inkboard-document.h \
+	jabber_whiteboard/inkboard-document.cpp \
+	jabber_whiteboard/inkboard-document.h \
+	jabber_whiteboard/invitation-confirm-dialog.cpp \
+	jabber_whiteboard/invitation-confirm-dialog.h \
+	jabber_whiteboard/invitation-handlers.cpp \
 	jabber_whiteboard/session-file-selector.cpp \
 	jabber_whiteboard/session-file-selector.h \
 	jabber_whiteboard/session-manager.cpp \
 	jabber_whiteboard/session-manager.h \
 	jabber_whiteboard/tracker-node.h \
-	jabber_whiteboard/typedefs.h \
-	jabber_whiteboard/undo-stack-observer.cpp \
-	jabber_whiteboard/undo-stack-observer.h
+	jabber_whiteboard/typedefs.h 
 
 
 if WITH_INKBOARD

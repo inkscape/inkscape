@@ -33,13 +33,6 @@
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"
 
-#ifdef WITH_INKBOARD
-#include "ui/dialog/whiteboard-sharewithchat.h"
-#include "ui/dialog/whiteboard-sharewithuser.h"
-#include "ui/dialog/whiteboard-connect.h"
-#include "ui/dialog/session-player.h"
-#endif
-
 #include "ui/dialog/xml-editor.h"
 
 #include "dialogs/tiledialog.h"
@@ -92,12 +85,6 @@ DialogManager::DialogManager() {
     registerFactory("TileDialog",          &create<TileDialog>);
     registerFactory("Trace",               &create<TraceDialog>);
     registerFactory("Transformation",      &create<Transformation>);
-#ifdef WITH_INKBOARD
-	registerFactory("SessionPlayer",       &create<SessionPlaybackDialog>);
-    registerFactory("WhiteboardConnect",   &create<WhiteboardConnectDialog>);
-    registerFactory("WhiteboardShareWithUser",   &create<WhiteboardShareWithUserDialog>);
-    registerFactory("WhiteboardShareWithChat",   &create<WhiteboardShareWithChatroomDialog>);
-#endif
     registerFactory("XmlEditor",           &create<XmlEditor>);
 }
 

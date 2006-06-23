@@ -69,19 +69,19 @@ class XMLNodeTracker  {
 public:
 	/**
 	 * Constructor.
+       	 */
+	XMLNodeTracker();
+
+	/**
+	 * Constructor.
 	 *
 	 * \param sm The SessionManager with which an XMLNodeTracker instance is to be associated with.
 	 */
 	XMLNodeTracker(SessionManager* sm);
+
 	~XMLNodeTracker();
 
-	/** 
-	 * Insert a (key,node) pair into the tracker.
-	 *
-	 * \param key The key to associate with the node.
-	 * \param node The node to associate with the key.
-	 */
-	void put(std::string key, XML::Node& node);
+        void setSessionManager(const SessionManager *val);
 
 	/** 
 	 * Insert a (key,node) pair into the tracker.
@@ -89,31 +89,14 @@ public:
 	 * \param key The key to associate with the node.
 	 * \param node The node to associate with the key.
 	 */
-	void put(std::string key, XML::Node const& node);
-
-	/** 
-	 * Insert a range of (key,node) pairs into the tracker.
-	 *
-	 * The size of the two maps must be the same.
-	 * \param newids The keys to associate with the nodes.
-	 * \param newnodes The nodes to associate with the keys.
-	 */
-	void put(KeyToNodeMap& newids, NodeToKeyMap& newnodes);
+	void put(const Glib::ustring &key, const XML::Node &node);
 
 	/**
 	 * Process a list of node actions to add and remove nodes from the tracker.
 	 *
 	 * \param actions The action list to process.
 	 */
-	void process(KeyToNodeActionList& actions);
-
-	/**
-	 * Retrieve an XML::Node given a key.
-	 *
-	 * \param key Reference to a string key.
-	 * \return Pointer to an XML::Node, or NULL if no associated node could be found.
-	 */
-	XML::Node* get(std::string& key);
+	void process(const KeyToNodeActionList& actions);
 
 	/**
 	 * Retrieve an XML::Node given a key.
@@ -121,15 +104,7 @@ public:
 	 * \param key Reference to a const string key.
 	 * \return Pointer to an XML::Node, or NULL if no associated node could be found.
 	 */
-	XML::Node* get(std::string const& key);
-
-	/**
-	 * Retrieve a string key given a reference to an XML::Node.
-	 *
-	 * \param node Reference to an XML::Node.
-	 * \return The associated string key, or an empty string if no associated key could be found.
-	 */
-	std::string const get(XML::Node& node);
+	XML::Node* get(const Glib::ustring &key);
 
 	/**
 	 * Retrieve a string key given a reference to an XML::Node.
@@ -137,21 +112,21 @@ public:
 	 * \param node Reference to a const XML::Node.
 	 * \return The associated string key, or an empty string if no associated key could be found.
 	 */
-	std::string const get(XML::Node const& node);
+	Glib::ustring get(const XML::Node &node);
 
 	/**
 	 * Remove an entry from the tracker based on key.
 	 *
 	 * \param The key of the entry to remove.
 	 */
-	void remove(std::string& key);
+	void remove(const Glib::ustring& key);
 
 	/**
 	 * Remove an entry from the tracker based on XML::Node.
 	 *
 	 * \param A reference to the XML::Node associated with the entry to remove.
 	 */
-	void remove(XML::Node& node);
+	void remove(const XML::Node& node);
 
 	/**
 	 * Return whether or not a (key,node) pair is being tracked, given a string key.
@@ -159,15 +134,7 @@ public:
 	 * \param The key associated with the pair to check.
 	 * \return Whether or not the pair is being tracked.
 	 */
-	bool isTracking(std::string& key);
-
-	/**
-	 * Return whether or not a (key,node) pair is being tracked, given a string key.
-	 *
-	 * \param The key associated with the pair to check.
-	 * \return Whether or not the pair is being tracked.
-	 */
-	bool isTracking(std::string const& key);
+	bool isTracking(const Glib::ustring &key);
 
 	/**
 	 * Return whether or not a (key,node) pair is being tracked, given a node.
@@ -175,15 +142,7 @@ public:
 	 * \param The node associated with the pair to check.
 	 * \return Whether or not the pair is being tracked.
 	 */
-	bool isTracking(XML::Node& node);
-
-	/**
-	 * Return whether or not a (key,node) pair is being tracked, given a node.
-	 *
-	 * \param The node associated with the pair to check.
-	 * \return Whether or not the pair is being tracked.
-	 */
-	bool isTracking(XML::Node const& node);
+	bool isTracking(const XML::Node & node);
 
 	/**
 	 * Return whether or not a node identified by a given name is a special node.
@@ -194,18 +153,7 @@ public:
 	 * \param The name associated with the node.
 	 * \return Whether or not the node is a special node.
 	 */
-	bool isSpecialNode(char const* name);
-
-	/**
-	 * Return whether or not a node identified by a given name is a special node.
-	 *
-	 * \see Inkscape::Whiteboard::specialnodekeys
-	 * \see Inkscape::Whiteboard::specialnodenames
-	 *
-	 * \param The name associated with the node.
-	 * \return Whether or not the node is a special node.
-	 */
-	bool isSpecialNode(std::string const& name);
+	bool isSpecialNode(Glib::ustring const& name);
 
 	/**
 	 * Retrieve the key of a special node given the name of a special node.
@@ -216,18 +164,8 @@ public:
 	 * \param The name associated with the node.
 	 * \return The key of the special node.
 	 */
-	std::string const getSpecialNodeKeyFromName(Glib::ustring const& name);
-
-	/**
-	 * Retrieve the key of a special node given the name of a special node.
-	 *
-	 * \see Inkscape::Whiteboard::specialnodekeys
-	 * \see Inkscape::Whiteboard::specialnodenames
-	 *
-	 * \param The name associated with the node.
-	 * \return The key of the special node.
-	 */
-	std::string const getSpecialNodeKeyFromName(Glib::ustring const* name);
+	Glib::ustring getSpecialNodeKeyFromName(
+                               const Glib::ustring &name);
 
 	/**
 	 * Returns whether or not the given node is the root node of the SPDocument associated
@@ -236,7 +174,7 @@ public:
 	 * \param Reference to an XML::Node to test.
 	 * \return Whether or not the given node is the document root node.
 	 */
-	bool isRootNode(XML::Node& node);
+	bool isRootNode(const XML::Node& node);
 
 	/** 
 	 * Generate a node key given a JID.
@@ -244,7 +182,7 @@ public:
 	 * \param The JID to use in the key.
 	 * \return A node string key.
 	 */
-	std::string generateKey(gchar const* JID);
+	Glib::ustring generateKey(gchar const* JID);
 
 	/** 
 	 * Generate a node key given the JID specified in the SessionData structure associated
@@ -252,30 +190,31 @@ public:
 	 *
 	 * \return A node string key.
 	 */
-	std::string generateKey();
+	Glib::ustring generateKey();
 
 	// TODO: remove debugging function
 	void dump();
 	void reset();
 
 private:
+        //common code called by constructors
+        void init();
+        
 	void createSpecialNodeTables();
 	void _clear();
 	
 	unsigned int _counter;
 	SessionManager* _sm;
-
-	// defined in typedefs.h
-	KeyToTrackerNodeMap _keyToNode;
-	TrackerNodeToKeyMap _nodeToKey;
+        
+        KeyNodeTable keyNodeTable;
 
 	std::map< char const*, char const*, strcmpless > _specialnodes;
 
 	// Keys for special nodes
-	std::string _rootKey;
-	std::string _defsKey;
-	std::string _namedviewKey;
-	std::string _metadataKey;
+	Glib::ustring _rootKey;
+	Glib::ustring _defsKey;
+	Glib::ustring _namedviewKey;
+	Glib::ustring _metadataKey;
 
 	// noncopyable, nonassignable
 	XMLNodeTracker(XMLNodeTracker const&);
@@ -292,9 +231,9 @@ private:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

@@ -5,18 +5,6 @@ ui/dialog/all: ui/dialog/libuidialog.a
 ui/dialog/clean:
 	rm -f ui/dialog/libuidialog.a $(ui_libuidialog_a_OBJECTS)
 
-if WITH_INKBOARD
-inkboard_dialogs = \
-	ui/dialog/session-player.cpp	\
-	ui/dialog/session-player.h	\
-	ui/dialog/whiteboard-connect.cpp \
-	ui/dialog/whiteboard-connect.h \
-	ui/dialog/whiteboard-sharewithuser.cpp \
-	ui/dialog/whiteboard-sharewithuser.h \
-	ui/dialog/whiteboard-sharewithchat.cpp \
-	ui/dialog/whiteboard-sharewithchat.h
-endif
-
 ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/dialog-manager.cpp		\
 	ui/dialog/dialog-manager.h		\
@@ -54,7 +42,6 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/transformation.h		\
 	ui/dialog/tree-editor.cpp		\
 	ui/dialog/tree-editor.h			\
-	$(inkboard_dialogs)	\
 	ui/dialog/xml-editor.cpp		\
 	ui/dialog/xml-editor.h			\
 	ui/dialog/aboutbox.cpp		\

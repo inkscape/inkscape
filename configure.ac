@@ -464,29 +464,33 @@ dnl Inkboard dependency checking
 dnl ******************************
 
 with_inkboard="no"
+with_inkboard_ssl="no"
 
-AC_MSG_CHECKING(for loudmouth-1.0+)
+INKBOARD_CFLAGS=""
 
 AC_ARG_ENABLE(inkboard,
 		AS_HELP_STRING([--enable-inkboard], [enable Inkboard online whiteboard facility (disabled by default)]),
        with_inkboard=$enableval,with_inkboard=no)
 
 if test "x$with_inkboard" = "xyes"; then
-	PKG_CHECK_MODULES(LIBLOUDMOUTH, loudmouth-1.0, loudmouth_ok=yes, loudmouth_ok=no)
-	if test "x$loudmouth_ok" = "xyes"; then
 		with_inkboard="yes"
 		AC_DEFINE(WITH_INKBOARD,1,[Build in Inkboard support])
-	else
-		with_inkboard="no"
-	fi
+		
+		dnl Test for OpenSSL
+		PKG_CHECK_MODULES(INKBOARD, openssl, with_inkboard_ssl=yes, with_inkboard_ssl=no)
+		if test "x$with_inkboard_ssl" = "xyes"; then
+			dnl OpenSSL found; enable SSL support in Pedro
+			INKBOARD_CFLAGS="$INKBOARD_CFLAGS -DHAVE_SSL"
+			AC_DEFINE(WITH_INKBOARD_SSL,1,[Build in SSL support for Inkboard])
+		fi
 else
 	with_inkboard="no"
 fi
 
 AC_MSG_RESULT($with_inkboard)
 AM_CONDITIONAL(WITH_INKBOARD, test "x$with_inkboard" = "xyes")
-AC_SUBST(LIBLOUDMOUTH_CFLAGS)
-AC_SUBST(LIBLOUDMOUTH_LIBS)
+AC_SUBST(INKBOARD_LIBS)
+AC_SUBST(INKBOARD_CFLAGS)
 
 dnl ******************************
 dnl   Unconditional dependencies
@@ -801,6 +805,7 @@ src/libnr/makefile
 src/libnrtype/makefile
 src/libavoid/makefile
 src/livarot/makefile
+src/pedro/makefile
 src/jabber_whiteboard/makefile
 src/removeoverlap/makefile
 src/svg/makefile
@@ -862,4 +867,5 @@ Configuration:
         Use relocation support:   ${enable_binreloc}
 	Enable LittleCms:         ${enable_lcms}
 	Enable Inkboard:	  ${with_inkboard}
+	Enable SSL in Inkboard:   ${with_inkboard_ssl}
 "

@@ -207,7 +207,7 @@ void SPDocument::reset_key (void *dummy)
     actionkey = NULL;
 }
 
-static SPDocument *
+SPDocument *
 sp_document_create(Inkscape::XML::Document *rdoc,
                    gchar const *uri,
                    gchar const *base,

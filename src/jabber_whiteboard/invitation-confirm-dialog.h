@@ -13,12 +13,10 @@
 #ifndef __WHITEBOARD_INVITATION_CONFIRM_DIALOG_H__
 #define __WHITEBOARD_INVITATION_CONFIRM_DIALOG_H__
 
-#include <gtkmm/messagedialog.h>
-#include <gtkmm/checkbutton.h>
-#include <gtkmm/entry.h>
+#include <gtkmm.h>
+#include <glibmm.h>
 
-#include "jabber_whiteboard/session-file-selector.h"
-
+#include "session-file-selector.h"
 
 namespace Inkscape {
 

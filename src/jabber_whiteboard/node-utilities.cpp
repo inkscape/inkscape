@@ -10,7 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "util/share.h"
+#include "util/shared-c-string-ptr.h"
 #include "util/list.h"
 
 #include "xml/node-observer.h"
@@ -54,7 +54,7 @@ NodeUtilities::lookupReprByValue(Inkscape::XML::Node* root, gchar const* key, Gl
 }
 */
 
-Glib::ustring const
+Glib::ustring
 NodeUtilities::nodeTypeToString(XML::Node const& node)
 {
 	switch(node.type()) {
@@ -84,21 +84,21 @@ NodeUtilities::stringToNodeType(Glib::ustring const& type)
 	}
 }
 
-std::string const
-NodeUtilities::findNodeID(XML::Node const& node, XMLNodeTracker* tracker, NodeToKeyMap const& newnodes)
+Glib::ustring
+NodeUtilities::findNodeID(XML::Node       const& node, 
+                          XMLNodeTracker* tracker,
+                          KeyNodeTable    const& newnodes)
 {
-//	g_log(NULL, G_LOG_LEVEL_DEBUG, "Attempting to locate id for %p", &node);
-	NodeToKeyMap::const_iterator result = newnodes.find(&node);
-	if (result != newnodes.end()) {
-//		g_log(NULL, G_LOG_LEVEL_DEBUG, "Located id for %p: %s", &node, (*result).second.c_str());
-		return (*result).second;
-	}
+        //g_log(NULL, G_LOG_LEVEL_DEBUG, "Attempting to locate id for %p", &node);
+        Glib::ustring key = newnodes.get((XML::Node *)&node);
+        if (key.size()>0)
+            return key;
 
 	if (tracker->isTracking(node)) {
-//		g_log(NULL, G_LOG_LEVEL_DEBUG, "Located id for %p (in tracker): %s", &node, tracker->get(node).c_str());
+                 //g_log(NULL, G_LOG_LEVEL_DEBUG, "Located id for %p (in tracker): %s", &node, tracker->get(node).c_str());
 		return tracker->get(node);
 	} else {
-//		g_log(NULL, G_LOG_LEVEL_DEBUG, "Failed to locate id");
+                //g_log(NULL, G_LOG_LEVEL_DEBUG, "Failed to locate id");
 		return "";
 	}
 }
@@ -111,9 +111,9 @@ NodeUtilities::findNodeID(XML::Node const& node, XMLNodeTracker* tracker, NodeTo
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

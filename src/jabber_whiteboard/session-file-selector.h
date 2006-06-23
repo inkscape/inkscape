@@ -12,10 +12,8 @@
 #ifndef __WHITEBOARD_SESSION_FILE_SELECTOR_BOX_H__
 #define __WHITEBOARD_SESSION_FILE_SELECTOR_BOX_H__
 
-#include <glibmm/ustring.h>
-#include <gtkmm/checkbutton.h>
-#include <gtkmm/entry.h>
-#include <gtkmm/box.h>
+#include <glibmm.h>
+#include <gtkmm.h>
 
 namespace Inkscape {
 

@@ -52,217 +52,187 @@ char const* specialnodenames[] = {
 };
 
 XMLNodeTracker::XMLNodeTracker(SessionManager* sm) :
-	_rootKey(DOCUMENT_ROOT_NODE),
-	_namedviewKey(DOCUMENT_NAMEDVIEW_NODE)
+                         _rootKey(DOCUMENT_ROOT_NODE),
+                         _namedviewKey(DOCUMENT_NAMEDVIEW_NODE)
 {
-	this->_sm = sm;
-	this->_counter = 0;
+    _sm = sm;
+   init();
+}
 
-	// Construct special node maps
-	this->createSpecialNodeTables();
-	this->reset();
+XMLNodeTracker::XMLNodeTracker() :
+                         _rootKey(DOCUMENT_ROOT_NODE),
+                         _namedviewKey(DOCUMENT_NAMEDVIEW_NODE)
+{
+    _sm = NULL;
+    init();
 }
 
 XMLNodeTracker::~XMLNodeTracker()
 {
-	this->_clear();
+    _clear();
+}
+
+
+void
+XMLNodeTracker::init()
+{
+    _counter = 0;
+
+    // Construct special node maps
+    createSpecialNodeTables();
+    if (_sm)
+        reset();
 }
 
 void
-XMLNodeTracker::put(std::string key, XML::Node const& node)
+XMLNodeTracker::setSessionManager(const SessionManager *val)
 {
-	this->put(key, const_cast< XML::Node& >(node));
+    _sm = (SessionManager *)val;
+    if (_sm)
+        reset();
 }
 
 void 
-XMLNodeTracker::put(std::string key, XML::Node& node)
+XMLNodeTracker::put(const Glib::ustring &key, const XML::Node &nodeArg)
 {	
-	KeyToTrackerNodeMap::iterator i = this->_keyToNode.find(key);
-	if (i != this->_keyToNode.end()) {
-		this->_keyToNode.erase(i);
-	}
-	this->_keyToNode.insert(std::make_pair< std::string, XML::Node* >(key, &node));
-
-	TrackerNodeToKeyMap::iterator j = this->_nodeToKey.find(&node);
-	if (j != this->_nodeToKey.end()) {
-		this->_nodeToKey.erase(j);
-	}
-	this->_nodeToKey.insert(std::make_pair< XML::Node*, std::string >(&node, key));
+    keyNodeTable.put(key, &nodeArg);
 }
 
-void
-XMLNodeTracker::put(KeyToNodeMap& newids, NodeToKeyMap& newnodes)
-{
-	// TODO: redo
-	KeyToNodeMap::iterator i = newids.begin();
-
-	for(; i != newids.end(); i++) {
-		this->put((*i).first, *((*i).second));
-	}
-}
 
 void
-XMLNodeTracker::process(KeyToNodeActionList& actions)
+XMLNodeTracker::process(const KeyToNodeActionList &actions)
 {
-	KeyToNodeActionList::iterator i = actions.begin();
-	for(; i != actions.end(); i++) {
-		// Get the action to perform.
-		SerializedEventNodeAction action = *i;
-		switch(action.second) {
-			case NODE_ADD:
-				this->put(action.first.first, *action.first.second);
-				break;
-			case NODE_REMOVE:
-		//		this->remove(const_cast< XML::Node& >(*action.first.second));
-				break;
-			default:
-				break;
-		}
-	}
+    KeyToNodeActionList::const_iterator iter = actions.begin();
+    for(; iter != actions.end(); iter++) {
+        // Get the action to perform.
+        SerializedEventNodeAction action = *iter;
+        switch(action.second) {
+            case NODE_ADD:
+                //g_log(NULL, G_LOG_LEVEL_DEBUG, 
+                //"NODE_ADD event: key %s, node %p", 
+                //action.first.first.c_str(), action.first.second);
+                put(action.first.key, *action.first.node);
+                break;
+            case NODE_REMOVE:
+                //g_log(NULL, G_LOG_LEVEL_DEBUG,
+                //"NODE_REMOVE event: key %s, node %p",
+                // action.first.first.c_str(), action.first.second);
+                //remove(const_cast< XML::Node& >(*action.first.second));
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 XML::Node*
-XMLNodeTracker::get(std::string& key)
+XMLNodeTracker::get(const Glib::ustring &key)
 {
-	KeyToTrackerNodeMap::iterator i = this->_keyToNode.find(key);
-	if (i != this->_keyToNode.end()) {
-		return (*i).second;
-	} else {
-		g_warning("Key %s is not being tracked!", key.c_str());
-		return NULL;
-	}
+    XML::Node *node = keyNodeTable.get(key);
+    if (node)
+        return node;
+
+    g_warning("Key %s is not being tracked!", key.c_str());
+    return NULL;
 }
 
-XML::Node*
-XMLNodeTracker::get(std::string const& key)
+Glib::ustring
+XMLNodeTracker::get(const XML::Node &nodeArg)
 {
-	return this->get(const_cast< std::string& >(key));
-}
-
-
-std::string const
-XMLNodeTracker::get(XML::Node& node)
-{
-	TrackerNodeToKeyMap::iterator i = this->_nodeToKey.find(&node);
-	if (i != this->_nodeToKey.end()) {
-		return (*i).second;
-	} else {
-		return "";
-	}
-}
-
-std::string const
-XMLNodeTracker::get(XML::Node const& node)
-{
-	return this->get(const_cast< XML::Node& >(node));
+    Glib::ustring key = keyNodeTable.get((XML::Node *)&nodeArg);
+    return key;
 }
 
 bool
-XMLNodeTracker::isTracking(std::string& key)
+XMLNodeTracker::isTracking(const Glib::ustring &key)
 {
-	return (this->_keyToNode.find(key) != this->_keyToNode.end());
+    return (get(key)!=NULL);
 }
 
 bool
-XMLNodeTracker::isTracking(std::string const& key)
+XMLNodeTracker::isTracking(const XML::Node &node)
 {
-	return this->isTracking(const_cast< std::string& >(key));
+    return (get(node).size()>0);
 }
 
-bool
-XMLNodeTracker::isTracking(XML::Node& node)
-{
-	return (this->_nodeToKey.find(&node) != this->_nodeToKey.end());
-}
 
 bool
-XMLNodeTracker::isTracking(XML::Node const& node)
+XMLNodeTracker::isRootNode(const XML::Node &node)
 {
-	return this->isTracking(const_cast< XML::Node& >(node));
-}
-
-bool
-XMLNodeTracker::isRootNode(XML::Node& node)
-{
-	XML::Node* docroot = sp_document_repr_root(this->_sm->document());
-	return (docroot == &node);
+    XML::Node* docroot = sp_document_repr_root(_sm->getDocument());
+    return (docroot == &node);
 }
 
 
 void
-XMLNodeTracker::remove(std::string& key)
+XMLNodeTracker::remove(const Glib::ustring& key)
 {
-	if (this->isTracking(key)) {
-		XML::Node* element = this->get(key);
-		this->_keyToNode.erase(key);
-		this->_nodeToKey.erase(element);
-	} 
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "Removing node with key %s", key.c_str());
+    keyNodeTable.remove(key);
 }
 
 void
-XMLNodeTracker::remove(XML::Node& node)
+XMLNodeTracker::remove(const XML::Node &nodeArg)
 {
-	if (this->isTracking(node)) {
-		std::string const element = this->get(node);
-		this->_nodeToKey.erase(&node);
-		this->_keyToNode.erase(element);
-	}
+    //g_log(NULL, G_LOG_LEVEL_DEBUG, "Removing node %p", &node);
+    keyNodeTable.remove((XML::Node *)&nodeArg);
 }
+
 
 bool 
-XMLNodeTracker::isSpecialNode(char const* name)
+XMLNodeTracker::isSpecialNode(const Glib::ustring &name)
 {
-	return (this->_specialnodes.find(name) != this->_specialnodes.end());	
+    return (_specialnodes.find(name.data()) != _specialnodes.end());	
 }
 
-bool 
-XMLNodeTracker::isSpecialNode(std::string const& name)
-{
-	return (this->_specialnodes.find(name.data()) != this->_specialnodes.end());	
-}
-
-std::string const
+Glib::ustring
 XMLNodeTracker::getSpecialNodeKeyFromName(Glib::ustring const& name)
 {
-	return this->_specialnodes[name.data()];
+    return _specialnodes[name.data()];
 }
 
-std::string const
-XMLNodeTracker::getSpecialNodeKeyFromName(Glib::ustring const* name)
-{
-	return this->_specialnodes[name->data()];	
-}
-
-std::string
+Glib::ustring
 XMLNodeTracker::generateKey(gchar const* JID)
 {
-	return String::compose("%1;%2", this->_counter++, JID);
+    return String::compose("%1;%2", _counter++, JID);
 }
 
-std::string 
+Glib::ustring 
 XMLNodeTracker::generateKey()
 {
-	SessionData* sd = this->_sm->session_data;
-	std::bitset< NUM_FLAGS >& status = sd->status;
-	if (status[IN_CHATROOM]) {
-		// This is not strictly required for chatrooms: chatrooms will
-		// function just fine with the user-to-user ID scheme.  However,
-		// the user-to-user scheme can lead to loss of anonymity
-		// in anonymous chat rooms, since it contains the real JID
-		// of a user.
-		return String::compose("%1;%2@%3/%4", this->_counter++, sd->chat_name, sd->chat_server, sd->chat_handle);
-	} else {
-		return String::compose("%1;%2", this->_counter++, sd->jid);
-	}
+    std::bitset< NUM_FLAGS >& status = _sm->getStatus();
+    Glib::ustring ret;
+    if (status[IN_CHATROOM]) {
+        // This is not strictly required for chatrooms: chatrooms will
+        // function just fine with the user-to-user ID scheme.  However,
+        // the user-to-user scheme can lead to loss of anonymity
+        // in anonymous chat rooms, since it contains the real JID
+        // of a user.
+        /*
+        ret = String::compose("%1;%2@%3/%4",
+                 _counter++,
+                 _sm->getClient().getUsername(),
+                 _sm->getClient().getHost(),
+                 sd->chat_handle);
+       */
+       //We need to work on this since Pedro allows multiple chatrooms
+        ret = String::compose("%1;%2",
+                 _counter++, 
+                 _sm->getClient().getJid());
+    } else {
+        ret = String::compose("%1;%2",
+                 _counter++, 
+                 _sm->getClient().getJid());
+    }
+    return  ret;
 }
 
 void
 XMLNodeTracker::createSpecialNodeTables()
 {
-	int const sz = sizeof(specialnodekeys) / sizeof(char const*);
-	for(int i = 0; i < sz; i++) {
-		this->_specialnodes[specialnodenames[i]] = specialnodekeys[i];
-	}
+    int const sz = sizeof(specialnodekeys) / sizeof(char const*);
+    for(int i = 0; i < sz; i++)
+         _specialnodes[specialnodenames[i]] = specialnodekeys[i];
 }
 
 
@@ -270,89 +240,69 @@ XMLNodeTracker::createSpecialNodeTables()
 void 
 XMLNodeTracker::dump()
 {
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker dump for %s", this->_sm->session_data->jid.c_str());
-	KeyToTrackerNodeMap::iterator i = this->_keyToNode.begin();
-	TrackerNodeToKeyMap::iterator j = this->_nodeToKey.begin();
-	std::map< char const*, char const* >::iterator k = this->_specialnodes.begin();
-	
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker dump for %s",
+           _sm->getClient().getJid().c_str());
 
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "%u entries in keyToNode, %u entries in nodeToKey", this->_keyToNode.size(), this->_nodeToKey.size());
 
-	if (this->_keyToNode.size() != this->_nodeToKey.size()) {
-		g_warning("Map sizes do not match!");
-	}
 
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker keyToNode dump");
-	while(i != this->_keyToNode.end()) {
-		if (!((*i).first.empty())) {
-			if ((*i).second != NULL) {
-				g_log(NULL, G_LOG_LEVEL_DEBUG, "%s\t->\t%p (%s) (%s)", (*i).first.c_str(), (*i).second, (*i).second->name(), (*i).second->content());
-			} else {
-				g_log(NULL, G_LOG_LEVEL_DEBUG, "%s\t->\t(null)", (*i).first.c_str());
-			}
-		} else {
-			g_log(NULL, G_LOG_LEVEL_DEBUG, "(null)\t->\t%p (%s)", (*i).second, (*i).second->name());
-		}
-		i++;
-	}
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "%u entries in keyNodeTable", 
+                         keyNodeTable.size());
 
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker nodeToKey dump");
-	while(j != this->_nodeToKey.end()) {
-		if (!((*j).second.empty())) {
-			if ((*j).first) {
-				g_log(NULL, G_LOG_LEVEL_DEBUG, "%p\t->\t%s (parent %p)", (*j).first, (*j).second.c_str(), (*j).first->parent());
-			} else {
-				g_log(NULL, G_LOG_LEVEL_DEBUG, "(null)\t->\t%s", (*j).second.c_str());
-			}
-		} else {
-			g_log(NULL, G_LOG_LEVEL_DEBUG, "%p\t->\t(null)", (*j).first);
-		}
-		j++;
-	}
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "XMLNodeTracker keyNodeTable dump");
+    for (unsigned int i=0 ; i<keyNodeTable.size() ; i++)
+        {
+        KeyNodePair pair = keyNodeTable.item(i);
+        Glib::ustring key = pair.key;
+        XML::Node *node = pair.node;
+        char *name    = "none";
+        char *content = "none";
+        if (node)
+            {
+            name = (char *)node->name();
+            content = (char *)node->content();
+            }
+        g_log(NULL, G_LOG_LEVEL_DEBUG, "%s\t->\t%p (%s) (%s)",
+                  key.c_str(), node, name, content);
+        }
 
-	g_log(NULL, G_LOG_LEVEL_DEBUG, "_specialnodes dump");
-	while(k != this->_specialnodes.end()) {
-		g_log(NULL, G_LOG_LEVEL_DEBUG, "%s\t->\t%s", (*k).first, (*k).second);
-		k++;
-	}
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "_specialnodes dump");
+    std::map< char const*, char const* >::iterator k = _specialnodes.begin();
+    while(k != _specialnodes.end()) {
+            g_log(NULL, G_LOG_LEVEL_DEBUG, "%s\t->\t%s", (*k).first, (*k).second);
+            k++;
+    }
 }
 
 void
 XMLNodeTracker::reset()
 {
-	this->_clear();
+    _clear();
 
-	// Find and insert special nodes
-	// root node
-	this->put(this->_rootKey, *(sp_document_repr_root(this->_sm->document())));
+    // Find and insert special nodes
+    // root node
+    put(_rootKey, *(sp_document_repr_root(_sm->getDocument())));
 
-	// namedview node
-	SPObject* namedview = sp_item_group_get_child_by_name((SPGroup *)this->_sm->document()->root, NULL, DOCUMENT_NAMEDVIEW_NAME);
-	if (!namedview) {
-		g_warning("namedview node does not exist; it will be created during synchronization");
-	} else {
-		this->put(this->_namedviewKey, *(SP_OBJECT_REPR(namedview)));
-	}
+    // namedview node
+    SPObject* namedview = sp_item_group_get_child_by_name(
+                 (SPGroup *)_sm->getDocument()->root,
+                  NULL, DOCUMENT_NAMEDVIEW_NAME);
+    if (!namedview) {
+            g_warning("namedview node does not exist; it will be created during synchronization");
+    } else {
+            put(_namedviewKey, *(SP_OBJECT_REPR(namedview)));
+    }
 }
 
 void
 XMLNodeTracker::_clear()
 {
-	// Remove all keys in both trackers, and delete each key.
-	this->_keyToNode.clear();
-	this->_nodeToKey.clear();
-
-	/*
-	TrackerNodeToKeyMap::iterator j = this->_nodeToKey.begin();
-	for(; j != this->_nodeToKey.end(); j++) {
-		this->_nodeToKey.erase(j);
-	}
-	*/
+    // Remove all keys in both trackers, and delete each key.
+    keyNodeTable.clear();
 }
 
-}
+}  // namespace Whiteboard
 
-}
+}  // namespace Inkscape
 
 
 
@@ -360,9 +310,9 @@ XMLNodeTracker::_clear()
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

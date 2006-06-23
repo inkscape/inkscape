@@ -73,8 +73,9 @@ public:
 	/**
 	 * Return the aggregate message.
 	 *
-	 * Because this method returns a reference to a string, it is not safe for use 
-	 * across multiple invocations of this Deserializer.
+	 * Because this method returns a reference to a string, it is not safe to assume
+         * that its contents will remain untouched across two calls to this MessageAggregator.
+         * If you require that guarantee, make a copy.
 	 *
 	 * \return A reference to the aggregate message.
 	 */
@@ -127,9 +128,9 @@ private:
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"
-  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
   indent-tabs-mode:nil
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=c++:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

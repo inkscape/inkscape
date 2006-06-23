@@ -135,6 +135,9 @@ SPDocument *sp_document_new_dummy();
 SPDocument *sp_document_ref (SPDocument *doc);
 SPDocument *sp_document_unref (SPDocument *doc);
 
+
+SPDocument *sp_document_create(Inkscape::XML::Document *rdoc, gchar const *uri, gchar const *base, gchar const *name, unsigned int keepalive);
+
 /*
  * Access methods
  */

@@ -228,16 +228,7 @@ static char const menus_skeleton[] =
 "   </submenu>\n"
 #ifdef WITH_INKBOARD
 "	<submenu name=\"" N_("Whiteboa_rd") "\">\n"
-"		<verb verb-id=\"DialogWhiteboardConnect\" />\n"
-"		<verb verb-id=\"DialogWhiteboardDisconnectSession\" />\n"
-"		<verb verb-id=\"DialogWhiteboardDisconnectServer\" />\n"
-"		<separator/>\n"
-"		<verb verb-id=\"DialogWhiteboardShareWithUser\" />\n"
-"		<verb verb-id=\"DialogWhiteboardShareWithChat\" />\n"
-"		<separator/>\n"
-"		<verb verb-id=\"DialogWhiteboardOpenSessionFile\" />\n"
-"		<separator/>\n"
-"		<verb verb-id=\"DialogWhiteboardDumpXMLTracker\" />\n"
+"		<verb verb-id=\"DialogXmppClient\" />\n"
 "	</submenu>\n"
 #endif
 "   <submenu name=\"" N_("_Help") "\">\n"
