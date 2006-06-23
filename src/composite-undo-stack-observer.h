@@ -26,13 +26,11 @@ class Event;
 
 }
 
-class UndoStackObserver;
-
 /**
  * Aggregates UndoStackObservers for management and triggering in an SPDocument's undo/redo
  * system.
  */
-class CompositeUndoStackObserver {
+class CompositeUndoStackObserver : public UndoStackObserver {
 public:
 
 	/**
