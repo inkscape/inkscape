@@ -330,6 +330,7 @@ gchar const *translators_text() {
         "Wei-Lun Chao <william.chao@ossii.com.tw>, 2006.\n"
         "Xavier Conde Rueda <xavi.conde@gmail.com>, 2004, 2005\n"
         "Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.\n"
+        "Yuri Beznos <zhiz0id@gmail.com>, 2006.\n"
         "Yuri Syrota <rasta@renome.rovno.ua>, 2000.\n"
         "Yves Guillou <yvesguillou@users.sourceforge.net>, 2004.\n"
         "Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.\n";
