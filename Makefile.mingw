@@ -111,6 +111,7 @@ dist:	generated
 	$(CP) $(GTKDOS)$(S)bin$(S)libtiff3.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libpng13.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)msvcr70.dll inkscape
+	$(CP) $(GTKDOS)$(S)bin$(S)msvcr71.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)zlib1.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)iconv.dll inkscape
 	$(CP) $(GTKDOS)$(S)bin$(S)libintl-2.dll inkscape
