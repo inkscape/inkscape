@@ -11,6 +11,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+extern "C" {           // glib-2.4 needs this
+#include <libintl.h>
+}
+
 #include <glibmm/i18n.h>
 
 #include "desktop-handles.h"
