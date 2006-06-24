@@ -525,6 +525,14 @@ Section $(lng_Alluser) SecAlluser
   ; disable this option in Win95/Win98/WinME
   SectionIn 1 2 3 
   StrCpy $MultiUser "1"
+  StrCmp $MultiUser "1" "" SingleUser
+    DetailPrint "admin mode, registry root will be HKLM"
+    SetShellVarContext all
+    Goto endSingleUser
+  SingleUser:
+    DetailPrint "single user mode, registry root will be HKCU"
+    SetShellVarContext current
+  endSingleUser:		
 SectionEnd
 
 SectionGroup $(lng_Shortcuts) SecShortcuts
