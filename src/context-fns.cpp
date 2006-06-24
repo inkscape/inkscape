@@ -1,3 +1,6 @@
+extern "C" {
+#include <libintl.h>
+}
 #include <glibmm/i18n.h>
 #include "sp-item.h"
 #include "desktop.h"
