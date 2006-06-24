@@ -8,7 +8,10 @@
  */
 
 
-// #include <glibmm/ustring.h>
+extern "C" {           // glib-2.4 needs this
+#include <libintl.h>
+}
+
 #include <glibmm/i18n.h>
 
 
