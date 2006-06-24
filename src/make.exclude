@@ -39,7 +39,6 @@ libnr/nr-types-test.cpp
 livarot/Path-test.cpp
 main.cpp
 mod360-test.cpp
-pedro
 trace/potrace/potest.cpp
 round-test.cpp
 sp-gradient-test.cpp
@@ -57,24 +56,25 @@ io/streamtest.cpp
 # For the moment, DO NOT remove these from cvs
 # until those files compile everywhere
 ###############################################
-# Uncomment the following to prevent building with Loudmouth
-###############################################
-dialogs/whiteboard-connect-dialog.cpp
-dialogs/whiteboard-common-dialog.cpp
-dialogs/whiteboard-sharewithchat-dialog.cpp
-dialogs/whiteboard-sharewithuser-dialog.cpp
-jabber_whiteboard
 ui/dialog/session-player.cpp
 ui/dialog/whiteboard-connect.cpp
 ui/dialog/whiteboard-sharewithchat.cpp
 ui/dialog/whiteboard-sharewithuser.cpp
+dialogs/whiteboard-connect-dialog.cpp
+dialogs/whiteboard-common-dialog.cpp
+dialogs/whiteboard-sharewithchat-dialog.cpp
+dialogs/whiteboard-sharewithuser-dialog.cpp
+
 ###############################################
-# Uncomment the following to prevent building with Pedro
+# Uncomment the following to prevent building with Loudmouth
 ###############################################
-jabber_whiteboard/pedroxmpp.h
-jabber_whiteboard/pedrodom.h
-jabber_whiteboard/pedroxmpp.cpp
-jabber_whiteboard/pedrodom.cpp
+jabber_whiteboard/node-tracker.cpp
+jabber_whiteboard/inkboard-session.h
+jabber_whiteboard/message-verifier.h
+jabber_whiteboard/node-tracker.h
+jabber_whiteboard/node-utilities.h
+jabber_whiteboard/inkboard-session.cpp
+jabber_whiteboard/node-utilities.cpp
 
 ###############################################
 # Various test harnesses in removeoverlap

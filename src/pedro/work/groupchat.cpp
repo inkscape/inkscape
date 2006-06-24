@@ -53,7 +53,8 @@ public:
                 {
                 printf("PRESENCE\n");
                 printf("from     : %s\n", evt.getFrom().c_str());
-                printf("presence : %s\n", evt.getPresence().c_str());
+                //printf("presence : %s\n", evt.getPresence().c_str());
+                // TODO: Just Commented out to compile
                 break;
                 }
             case Pedro::XmppEvent::EVENT_MUC_MESSAGE:
@@ -66,7 +67,8 @@ public:
                 printf("MUC JOIN\n");
                 printf("group: %s\n", evt.getGroup().c_str());
                 printf("from    : %s\n", evt.getFrom().c_str());
-                printf("presence: %s\n", evt.getPresence().c_str());
+                //printf("presence: %s\n", evt.getPresence().c_str());
+                // TODO: Just Commented out to compile
                 break;
                 }
             case Pedro::XmppEvent::EVENT_MUC_LEAVE:
@@ -74,7 +76,8 @@ public:
                 printf("MUC LEAVE\n");
                 printf("group: %s\n", evt.getGroup().c_str());
                 printf("from    : %s\n", evt.getFrom().c_str());
-                printf("presence: %s\n", evt.getPresence().c_str());
+                //printf("presence: %s\n", evt.getPresence().c_str());
+                // TODO: Just Commented out to compile
                 break;
                 }
             case Pedro::XmppEvent::EVENT_MUC_PRESENCE:
@@ -82,7 +85,8 @@ public:
                 printf("MUC PRESENCE\n");
                 printf("group   : %s\n", evt.getGroup().c_str());
                 printf("from    : %s\n", evt.getFrom().c_str());
-                printf("presence: %s\n", evt.getPresence().c_str());
+                //printf("presence: %s\n", evt.getPresence().c_str());
+                // TODO: Just Commented out to compile
                 break;
                 }
 
