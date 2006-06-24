@@ -135,6 +135,7 @@ EXTRA_DIST = \
 	packaging/win32/english.nsh	\
 	packaging/win32/french.nsh	\
 	packaging/win32/italian.nsh	\
+	packaging/win32/polish.nsh	\
 	packaging/win32/german.nsh	\
 	packaging/win32/spanish.nsh	\
 	packaging/win32/header.bmp	\
