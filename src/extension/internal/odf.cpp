@@ -1715,8 +1715,15 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
                                   iwidth, iheight);
         if (itemTransformString.size() > 0)
+            {
             outs.printf("draw:transform=\"%s translate(%.3fcm, %.3fcm)\" ",
-                itemTransformString.c_str(), ix, iy);
+                           itemTransformString.c_str(), ix, iy);
+            }
+        else
+            {
+            outs.printf("draw:transform=\"translate(%.3fcm, %.3fcm)\" ",
+                                ix, iy);
+            }
 
         outs.printf(">\n");
         outs.printf("    <draw:image xlink:href=\"%s\" xlink:type=\"simple\"\n",
