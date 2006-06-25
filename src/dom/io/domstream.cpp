@@ -168,6 +168,8 @@ static int dprintDouble(Writer &outs,
         char ch = '0' + (int)dig;
         buf.push_back(ch);
         }
+    if (buf.size() == 0)
+        buf = "0";
 
     //### Decimal point
     if (flag == '#' || precision > 0)
