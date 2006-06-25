@@ -114,6 +114,17 @@ nr_rgradient_render_block_end(NRRenderer *r, NRPixBlock *pb, NRPixBlock *m)
     nr_blit_pixblock_mask_rgba32(pb, m, (c[0] << 24) | (c[1] << 16) | (c[2] << 8) | c[3]);
 }
 
+float fast_sqrt (float in)
+{
+    float x = in;
+    float xhalf = 0.5f*x;
+    int i = *(int*)&x;
+    i = 0x5f3759df - (i >> 1); // This line hides a LOT of math!
+    x = *(float*)&i;
+    x = x*(1.5f - xhalf*x*x); // repeat this statement for a better approximation
+    return x * in;
+}
+
 /*
  * The archetype is following
  *
@@ -150,7 +161,7 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
             NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
             NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
             for (int x = pb->area.x0; x < pb->area.x1; x++) {
-                NR::Coord const pos = hypot(gx, gy);
+                float const pos = fast_sqrt((gx*gx) + (gy*gy));
                 int idx;
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
                     idx = (int) ((long long) pos & NRG_2MASK);
@@ -176,7 +187,7 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
             NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
             NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
             for (int x = pb->area.x0; x < pb->area.x1; x++) {
-                NR::Coord const pos = hypot(gx, gy);
+                float pos = fast_sqrt((gx*gx) + (gy*gy));
                 int idx;
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
                     idx = (int) ((long long) pos & NRG_2MASK);
@@ -221,7 +232,7 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
             NR::Coord gx = rgr->px2gs.c[0] * pb->area.x0 + rgr->px2gs.c[2] * y + rgr->px2gs.c[4];
             NR::Coord gy = rgr->px2gs.c[1] * pb->area.x0 + rgr->px2gs.c[3] * y + rgr->px2gs.c[5];
             for (int x = pb->area.x0; x < pb->area.x1; x++) {
-                NR::Coord const pos = hypot(gx, gy);
+                NR::Coord const pos = fast_sqrt((gx*gx) + (gy*gy));
                 int idx;
                 if (rgr->spread == NR_GRADIENT_SPREAD_REFLECT) {
                     idx = (int) ((long long) pos & NRG_2MASK);
