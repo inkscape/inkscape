@@ -243,6 +243,9 @@ private:
 
     void reset();
 
+    //cc or dc metadata name/value pairs
+    std::map<std::string, std::string> metadata;
+
     /* Style table
        Uses a two-stage lookup to avoid style duplication.
        Use like:

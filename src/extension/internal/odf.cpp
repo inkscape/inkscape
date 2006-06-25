@@ -1015,6 +1015,22 @@ static void analyzeTransform(NR::Matrix &tf,
 
 
 
+static void gatherText(Inkscape::XML::Node *node, std::string &buf)
+{
+    if (node->type() == Inkscape::XML::TEXT_NODE)
+        {
+        char *s = (char *)node->content();
+        if (s)
+            buf.append(s);
+        }
+    
+    for (Inkscape::XML::Node *child = node->firstChild() ;
+                child != NULL; child = child->next())
+        {
+        gatherText(child, buf);
+        }
+
+}
 
 /**
  * FIRST PASS.
@@ -1028,6 +1044,28 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
     std::string nodeName = node->name();
     std::string id       = getAttribute(node, "id");
 
+    //### First, check for metadata
+    if (nodeName == "metadata" || nodeName == "svg:metadata")
+        {
+        Inkscape::XML::Node *mchild = node->firstChild() ;
+        if (!mchild || strcmp(mchild->name(), "rdf:RDF"))
+            return;
+        Inkscape::XML::Node *rchild = mchild->firstChild() ;
+        if (!rchild || strcmp(rchild->name(), "cc:Work"))
+            return;
+        for (Inkscape::XML::Node *cchild = rchild->firstChild() ;
+            cchild ; cchild = cchild->next())
+            {
+            std::string ccName = cchild->name();
+            std::string ccVal;
+            gatherText(cchild, ccVal);
+            //g_message("ccName: %s  ccVal:%s", ccName.c_str(), ccVal.c_str());
+            metadata[ccName] = ccVal;
+            }
+        return;
+        }
+
+    //Now consider items.
     SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
     if (!reprobj)
         return;
@@ -1038,7 +1076,6 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
     SPItem *item  = SP_ITEM(reprobj);
     //### Get SVG-to-ODF transform
     NR::Matrix tf = getODFTransform(item);
-
 
     if (nodeName == "image" || nodeName == "svg:image")
         {
@@ -1297,6 +1334,16 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     time_t tim;
     time(&tim);
 
+    std::map<std::string, std::string>::iterator iter;
+    std::string creator = "unknown";
+    iter = metadata.find("dc:creator");
+    if (iter != metadata.end())
+        creator = iter->second;
+    std::string date = "";
+    iter = metadata.find("dc:date");
+    if (iter != metadata.end())
+        date = iter->second;
+
     outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     outs.printf("\n");
     outs.printf("\n");
@@ -1320,12 +1367,20 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
     outs.printf("office:version=\"1.0\">\n");
     outs.printf("<office:meta>\n");
-    outs.printf("    <meta:generator>Inkscape.org - 0.44</meta:generator>\n");
-    outs.printf("    <meta:initial-creator>clark kent</meta:initial-creator>\n");
-    outs.printf("    <meta:creation-date>2006-04-13T17:12:29</meta:creation-date>\n");
-    outs.printf("    <dc:creator>clark kent</dc:creator>\n");
-    outs.printf("    <dc:date>2006-04-13T17:13:20</dc:date>\n");
-    outs.printf("    <dc:language>en-US</dc:language>\n");
+    outs.printf("    <meta:generator>Inkscape.org - 0.45</meta:generator>\n");
+    outs.printf("    <meta:initial-creator>%s</meta:initial-creator>\n",
+                          creator.c_str());
+    outs.printf("    <meta:creation-date>%s</meta:creation-date>\n", date.c_str());
+    for (iter = metadata.begin() ; iter != metadata.end() ; iter++)
+        {
+        std::string name  = iter->first;
+        std::string value = iter->second;
+        if (name.size() > 0 && value.size()>0)
+            {
+            outs.printf("    <%s>%s</%s>\n", 
+                 name.c_str(), value.c_str(), name.c_str());
+            }
+        }
     outs.printf("    <meta:editing-cycles>2</meta:editing-cycles>\n");
     outs.printf("    <meta:editing-duration>PT56S</meta:editing-duration>\n");
     outs.printf("    <meta:user-defined meta:name=\"Info 1\"/>\n");
@@ -1878,6 +1933,7 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
 void
 OdfOutput::reset()
 {
+    metadata.clear();
     styleTable.clear();
     styleLookupTable.clear();
     gradientTable.clear();
