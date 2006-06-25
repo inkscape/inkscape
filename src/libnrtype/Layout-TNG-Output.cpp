@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 #include <glib/gmem.h>
+#include <gtk/gtkversion.h>
 #include "Layout-TNG.h"
 #include "display/nr-arena-glyphs.h"
 #include "style.h"
@@ -219,7 +220,7 @@ static char const *weight_to_text(PangoWeight w)
     switch (w) {
         case PANGO_WEIGHT_ULTRALIGHT: return "ultralight";
         case PANGO_WEIGHT_LIGHT     : return "light";
-#ifdef PANGO_WEIGHT_SEMIBOLD                                      
+#if GTK_CHECK_VERSION(2,6,0)                                      
         case PANGO_WEIGHT_SEMIBOLD  : return "semibold";
 #endif                                      
         case PANGO_WEIGHT_NORMAL    : return "normalweight";

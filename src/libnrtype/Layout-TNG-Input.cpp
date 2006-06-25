@@ -8,6 +8,8 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
+
+#include <gtk/gtkversion.h>
 #include "Layout-TNG.h"
 #include "style.h"
 #include "svg/svg-length.h"
@@ -229,7 +231,7 @@ static const Layout::EnumConversionItem enum_convert_spstyle_weight_to_pango_wei
     {SP_CSS_FONT_WEIGHT_200, PANGO_WEIGHT_ULTRALIGHT},
     {SP_CSS_FONT_WEIGHT_300, PANGO_WEIGHT_LIGHT},
     {SP_CSS_FONT_WEIGHT_400, PANGO_WEIGHT_NORMAL},
-#ifdef PANGO_WEIGHT_SEMIBOLD    
+#if GTK_CHECK_VERSION(2,6,0)
     {SP_CSS_FONT_WEIGHT_500, PANGO_WEIGHT_SEMIBOLD},
 #else 
     {SP_CSS_FONT_WEIGHT_500, PANGO_WEIGHT_NORMAL},
