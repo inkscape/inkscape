@@ -72,6 +72,7 @@
 #include "dom/util/ziptool.h"
 #include "dom/io/domstream.h"
 #include "dom/io/bufferstream.h"
+#include "dom/io/stringstream.h"
 
 
 
@@ -91,6 +92,7 @@ namespace Internal
 typedef org::w3c::dom::DOMString DOMString;
 typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
 typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
+typedef org::w3c::dom::io::StringOutputStream StringOutputStream;
 
 //########################################################################
 //# C L A S S    SingularValueDecomposition
@@ -101,50 +103,37 @@ class SVDMatrix
 {
 public:
 
-    SVDMatrix() :
-        badval(0),
-        d(0),
-        rows(0),
-        cols(0),
-        size(0)
+    SVDMatrix()
         {
+        init();
         }
 
-    SVDMatrix(unsigned int rowSize, unsigned int colSize) :
-        badval(0),
-        rows(rowSize),
-        cols(colSize),
-        size(rows * cols)
+    SVDMatrix(unsigned int rowSize, unsigned int colSize)
         {
-        d = new double[size];
+        init();
+        rows = rowSize;
+        cols = colSize;
+        size = rows * cols;
+        d    = new double[size];
         for (unsigned int i=0 ; i<size ; i++)
             d[i] = 0.0;
         }
 
-    SVDMatrix(double *vals, unsigned int rowSize, unsigned int colSize) :
-        badval(0),
-        rows(rowSize),
-        cols(colSize),
-        size(rows * cols)
+    SVDMatrix(double *vals, unsigned int rowSize, unsigned int colSize)
         {
-        d = new double[size];
+        init();
+        rows = rowSize;
+        cols = colSize;
+        size = rows * cols;
+        d    = new double[size];
         for (unsigned int i=0 ; i<size ; i++)
             d[i] = vals[i];
         }
 
-    virtual ~SVDMatrix()
-        {
-        delete[] d;
-        d = 0;
-        }
 
-    SVDMatrix(const SVDMatrix &other) :
-        badval(0),
-        d(0),
-        rows(0),
-        cols(0),
-        size(0)
+    SVDMatrix(const SVDMatrix &other)
         {
+        init();
         assign(other);
         }
 
@@ -152,6 +141,11 @@ public:
         {
         assign(other);
         return *this;
+        }
+
+    virtual ~SVDMatrix()
+        {
+        delete[] d;
         }
 
      double& operator() (unsigned int row, unsigned int col)
@@ -215,6 +209,15 @@ public:
 private:
 
 
+    virtual void init()
+        {
+        badval = 0.0;
+        d      = NULL;
+        rows   = 0;
+        cols   = 0;
+        size   = 0;
+        }
+
      void assign(const SVDMatrix &other)
         {
         if (d)
@@ -237,6 +240,8 @@ private:
     unsigned int cols;
     unsigned int size;
 };
+
+
 
 /**
  *
@@ -273,19 +278,17 @@ public:
    @return     Structure to access U, S and V.
    */
 
-    SingularValueDecomposition (const SVDMatrix &mat) :
-        A(mat),
-        U(),
-        s(0),
-        s_size(0),
-        V()
+    SingularValueDecomposition (const SVDMatrix &mat)
         {
+        A      = mat;
+        s      = NULL;
+        s_size = 0;
         calculate();
         }
 
     virtual ~SingularValueDecomposition()
         {
-        delete s;
+        delete[] s;
         }
 
     /**
@@ -866,7 +869,7 @@ int SingularValueDecomposition::rank()
 
 #define pi 3.14159
 //#define pxToCm  0.0275
-#define pxToCm  0.04
+#define pxToCm  0.03
 #define piToRad 0.0174532925
 #define docHeightCm 22.86
 
@@ -914,10 +917,11 @@ static std::string formatTransform(NR::Matrix &tf)
     std::string str;
     if (!tf.test_identity())
         {
-        char buf[128];
-        snprintf(buf, 127, "matrix(%.3f %.3f %.3f %.3f %.3f %.3f)",
+        StringOutputStream outs;
+        OutputStreamWriter out(outs);
+        out.printf("matrix(%.3f %.3f %.3f %.3f %.3f %.3f)",
                 tf[0], tf[1], tf[2], tf[3], tf[4], tf[5]);
-        str = buf;
+        str = outs.getString();
         }
     return str;
 }
@@ -1469,41 +1473,57 @@ bool OdfOutput::writeStyle(Writer &outs)
 /**
  * Writes an SVG path as an ODF <draw:path>
  */
-static void
+static int
 writePath(Writer &outs, NArtBpath const *bpath,
           NR::Matrix &tf, double xoff, double yoff)
 {
-    bool closed = false;
+    bool closed   = false;
+    int nrPoints  = 0;
     NArtBpath *bp = (NArtBpath *)bpath;
+
+    double destx = 0.0;
+    double desty = 0.0;
+    int code = -1;
+
     for (  ; bp->code != NR_END; bp++)
         {
+        code = bp->code;
+
         NR::Point const p1(bp->c(1) * tf);
 	NR::Point const p2(bp->c(2) * tf);
 	NR::Point const p3(bp->c(3) * tf);
 	double x1 = (p1[NR::X] - xoff) * 1000.0;
+        if (fabs(x1)<1.0) x1=0.0;
 	double y1 = (p1[NR::Y] - yoff) * 1000.0;
+        if (fabs(y1)<1.0) y1=0.0;
 	double x2 = (p2[NR::X] - xoff) * 1000.0;
+        if (fabs(x2)<1.0) x2=0.0;
 	double y2 = (p2[NR::Y] - yoff) * 1000.0;
+        if (fabs(y2)<1.0) y2=0.0;
 	double x3 = (p3[NR::X] - xoff) * 1000.0;
+        if (fabs(x3)<1.0) x3=0.0;
 	double y3 = (p3[NR::Y] - yoff) * 1000.0;
+        if (fabs(y3)<1.0) y3=0.0;
+        destx = x3;
+        desty = y3;
 
-        switch (bp->code)
+        switch (code)
             {
             case NR_LINETO:
-                outs.printf("L %.3f,%.3f ",  x3 , y3);
+                outs.printf("L %.3f %.3f ",  destx, desty);
                 break;
 
             case NR_CURVETO:
-                outs.printf("C %.3f,%.3f %.3f,%.3f %.3f,%.3f ",
-                              x1, y1, x2, y2, x3, y3);
+                outs.printf("C %.3f %.3f %.3f %.3f %.3f %.3f ",
+                              x1, y1, x2, y2, destx, desty);
                 break;
 
             case NR_MOVETO_OPEN:
             case NR_MOVETO:
                 if (closed)
-                    outs.printf("z ");
-                closed = ( bp->code == NR_MOVETO );
-                outs.printf("M %.3f,%.3f ",  x3 , y3);
+                    outs.printf("Z ");
+                closed = ( code == NR_MOVETO );
+                outs.printf("M %.3f %.3f ",  destx, desty);
                 break;
 
             default:
@@ -1511,11 +1531,15 @@ writePath(Writer &outs, NArtBpath const *bpath,
 
             }
 
+        nrPoints++;
         }
 
     if (closed)
-        outs.printf("z");;
+        {
+        outs.printf("Z");
+        }
 
+    return nrPoints;
 }
 
 
@@ -1691,11 +1715,13 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 	               bbox_width * 1000.0, bbox_height * 1000.0);
 
 	outs.printf("    svg:d=\"");
-	writePath(outs, SP_CURVE_BPATH(curve), tf, bbox_x, bbox_y);
+	int nrPoints = writePath(outs, SP_CURVE_BPATH(curve),
+                             tf, bbox_x, bbox_y);
 	outs.printf("\"");
 
 	outs.printf(">\n");
-        outs.printf("</draw:path>\n");
+        outs.printf("    <!-- %d nodes -->\n", nrPoints);
+        outs.printf("</draw:path>\n\n");
 
 
         sp_curve_unref(curve);
