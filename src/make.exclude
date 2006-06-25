@@ -2,11 +2,8 @@
 # File: make.exclude
 #
 # This is a list of files to exclude from
-# building using the Makedep scheme.
-# To use, run:
-# perl mkfiles.pl
-# then
-# perl mkdep.pl
+# building using the DepTool.
+# To use, edit this file, then run deptool
 #
 ######################################################################
 
