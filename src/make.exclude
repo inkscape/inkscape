@@ -66,6 +66,7 @@ dialogs/whiteboard-sharewithuser-dialog.cpp
 # Uncomment the following to prevent building with Loudmouth
 ###############################################
 jabber_whiteboard/node-tracker.cpp
+jabber_whiteboard/inkboard-session.cpp
 jabber_whiteboard/inkboard-session.h
 jabber_whiteboard/message-verifier.h
 jabber_whiteboard/node-tracker.h
