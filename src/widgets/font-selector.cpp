@@ -307,7 +307,16 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
 
 static void sp_font_selector_size_changed (GtkComboBox *cbox, SPFontSelector *fsel)
 {
+#if GTK_CHECK_VERSION(2,6,0)
     char *sstr = gtk_combo_box_get_active_text (GTK_COMBO_BOX (fsel->size));
+#else // GTK_CHECK_VERSION(2,6,0)
+    GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (fsel->size));
+    GtkTreeIter iter;
+    char *sstr = NULL;
+
+    if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (fsel->size), &iter) && model)
+        gtk_tree_model_get (model, &iter, 0, &sstr, -1);
+#endif // GTK_CHECK_VERSION(2,6,0)
     gfloat old_size = fsel->fontsize;
     fsel->fontsize = MAX(atof(sstr), 0.1);
     if ( fabs(fsel->fontsize-old_size) > 0.001)

@@ -219,7 +219,9 @@ static char const *weight_to_text(PangoWeight w)
     switch (w) {
         case PANGO_WEIGHT_ULTRALIGHT: return "ultralight";
         case PANGO_WEIGHT_LIGHT     : return "light";
+#ifdef PANGO_WEIGHT_SEMIBOLD                                      
         case PANGO_WEIGHT_SEMIBOLD  : return "semibold";
+#endif                                      
         case PANGO_WEIGHT_NORMAL    : return "normalweight";
         case PANGO_WEIGHT_BOLD      : return "bold";
         case PANGO_WEIGHT_ULTRABOLD : return "ultrabold";

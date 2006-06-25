@@ -1,5 +1,5 @@
 
-
+#include <cstdio>
 #include "InkscapeBinding.h"
 
 #include "help.h"

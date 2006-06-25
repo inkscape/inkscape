@@ -14,6 +14,7 @@
  */
 
 #include <cmath>
+#include <cstdio>
 #include <string.h>
 #include "widget-sizes.h"
 #include "ruler.h"
