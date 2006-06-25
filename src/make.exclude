@@ -46,7 +46,7 @@ winmain.cpp
 xml/quote-test.cpp
 xml/repr-action-test.cpp
 io/streamtest.cpp
-
+pedro/work
 
 ###############################################
 # Bob:
