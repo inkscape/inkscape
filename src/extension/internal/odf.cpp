@@ -90,6 +90,7 @@ namespace Internal
 
 //# Shorthand notation
 typedef org::w3c::dom::DOMString DOMString;
+typedef org::w3c::dom::XMLCh XMLCh;
 typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
 typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
 typedef org::w3c::dom::io::StringOutputStream StringOutputStream;
@@ -881,9 +882,9 @@ int SingularValueDecomposition::rank()
 /**
  * Get the value of a node/attribute pair
  */
-static std::string getAttribute( Inkscape::XML::Node *node, char *attrName)
+static Glib::ustring getAttribute( Inkscape::XML::Node *node, char *attrName)
 {
-    std::string val;
+    Glib::ustring val;
     char *valstr = (char *)node->attribute(attrName);
     if (valstr)
         val = (const char *)valstr;
@@ -895,9 +896,9 @@ static std::string getAttribute( Inkscape::XML::Node *node, char *attrName)
 /**
  * Get the extension suffix from the end of a file name
  */
-static std::string getExtension(const std::string &fname)
+static Glib::ustring getExtension(const Glib::ustring &fname)
 {
-    std::string ext;
+    Glib::ustring ext;
 
     unsigned int pos = fname.rfind('.');
     if (pos == fname.npos)
@@ -912,9 +913,9 @@ static std::string getExtension(const std::string &fname)
 }
 
 
-static std::string formatTransform(NR::Matrix &tf)
+static Glib::ustring formatTransform(NR::Matrix &tf)
 {
-    std::string str;
+    Glib::ustring str;
     if (!tf.test_identity())
         {
         StringOutputStream outs;
@@ -924,6 +925,33 @@ static std::string formatTransform(NR::Matrix &tf)
         str = outs.getString();
         }
     return str;
+}
+
+
+/**
+ * Encode a string, checking for XML entities, to
+ * make an XML string safe for output
+ */
+static Glib::ustring toXml(const Glib::ustring &str)
+{
+    Glib::ustring outbuf;
+    for (unsigned int i=0 ; i<str.size() ; i++)
+        {
+        XMLCh ch = (XMLCh) str[i];
+        if (ch == '&')
+            outbuf.append("&ampr;");
+        else if (ch == '<')
+            outbuf.append("&lt;");
+        else if (ch == '>')
+            outbuf.append("&gt;");
+        else if (ch == '"')
+            outbuf.append("&quot;");
+        else if (ch == '\'')
+            outbuf.append("&apos;");
+        else
+            outbuf.push_back(ch);
+        }
+    return outbuf;
 }
 
 
@@ -1015,7 +1043,7 @@ static void analyzeTransform(NR::Matrix &tf,
 
 
 
-static void gatherText(Inkscape::XML::Node *node, std::string &buf)
+static void gatherText(Inkscape::XML::Node *node, Glib::ustring &buf)
 {
     if (node->type() == Inkscape::XML::TEXT_NODE)
         {
@@ -1041,8 +1069,8 @@ void
 OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
 {
 
-    std::string nodeName = node->name();
-    std::string id       = getAttribute(node, "id");
+    Glib::ustring nodeName = node->name();
+    Glib::ustring id       = getAttribute(node, "id");
 
     //### First, check for metadata
     if (nodeName == "metadata" || nodeName == "svg:metadata")
@@ -1056,8 +1084,8 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
         for (Inkscape::XML::Node *cchild = rchild->firstChild() ;
             cchild ; cchild = cchild->next())
             {
-            std::string ccName = cchild->name();
-            std::string ccVal;
+            Glib::ustring ccName = cchild->name();
+            Glib::ustring ccVal;
             gatherText(cchild, ccVal);
             //g_message("ccName: %s  ccVal:%s", ccName.c_str(), ccVal.c_str());
             metadata[ccName] = ccVal;
@@ -1080,11 +1108,11 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
     if (nodeName == "image" || nodeName == "svg:image")
         {
         //g_message("image");
-        std::string href = getAttribute(node, "xlink:href");
+        Glib::ustring href = getAttribute(node, "xlink:href");
         if (href.size() > 0)
             {
-            std::string oldName = href;
-            std::string ext = getExtension(oldName);
+            Glib::ustring oldName = href;
+            Glib::ustring ext = getExtension(oldName);
             if (ext == ".jpeg")
                 ext = ".jpg";
             if (imageTable.find(oldName) == imageTable.end())
@@ -1092,9 +1120,9 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 char buf[64];
                 snprintf(buf, 63, "Pictures/image%d%s",
                     (int)imageTable.size(), ext.c_str());
-                std::string newName = buf;
+                Glib::ustring newName = buf;
                 imageTable[oldName] = newName;
-                std::string comment = "old name was: ";
+                Glib::ustring comment = "old name was: ";
                 comment.append(oldName);
                 URI oldUri(oldName);
                 //g_message("oldpath:%s", oldUri.getNativePath().c_str());
@@ -1184,7 +1212,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 if (gi.equals(*iter))
                     {
                     //map to existing gradientTable entry
-                    std::string gradientName = iter->name;
+                    Glib::ustring gradientName = iter->name;
                     //g_message("found duplicate style:%s", gradientName.c_str());
                     gradientLookupTable[id] = gradientName;
                     gradientMatch = true;
@@ -1196,7 +1224,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 {
                 char buf[16];
                 snprintf(buf, 15, "gradient%d", (int)gradientTable.size());
-                std::string gradientName = buf;
+                Glib::ustring gradientName = buf;
                 gi.name = gradientName;
                 gradientTable.push_back(gi);
                 gradientLookupTable[id] = gradientName;
@@ -1233,7 +1261,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 if (si.equals(*iter))
                     {
                     //map to existing styleTable entry
-                    std::string styleName = iter->name;
+                    Glib::ustring styleName = iter->name;
                     //g_message("found duplicate style:%s", styleName.c_str());
                     styleLookupTable[id] = styleName;
                     styleMatch = true;
@@ -1245,7 +1273,7 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
                 {
                 char buf[16];
                 snprintf(buf, 15, "style%d", (int)styleTable.size());
-                std::string styleName = buf;
+                Glib::ustring styleName = buf;
                 si.name = styleName;
                 styleTable.push_back(si);
                 styleLookupTable[id] = styleName;
@@ -1290,13 +1318,13 @@ bool OdfOutput::writeManifest(ZipFile &zf)
     outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"content.xml\"/>\n");
     outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n");
     outs.printf("    <!--List our images here-->\n");
-    std::map<std::string, std::string>::iterator iter;
+    std::map<Glib::ustring, Glib::ustring>::iterator iter;
     for (iter = imageTable.begin() ; iter!=imageTable.end() ; iter++)
         {
-        std::string oldName = iter->first;
-        std::string newName = iter->second;
+        Glib::ustring oldName = iter->first;
+        Glib::ustring newName = iter->second;
 
-        std::string ext = getExtension(oldName);
+        Glib::ustring ext = getExtension(oldName);
         if (ext == ".jpeg")
             ext = ".jpg";
         outs.printf("    <manifest:file-entry manifest:media-type=\"");
@@ -1334,12 +1362,12 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     time_t tim;
     time(&tim);
 
-    std::map<std::string, std::string>::iterator iter;
-    std::string creator = "unknown";
+    std::map<Glib::ustring, Glib::ustring>::iterator iter;
+    Glib::ustring creator = "unknown";
     iter = metadata.find("dc:creator");
     if (iter != metadata.end())
         creator = iter->second;
-    std::string date = "";
+    Glib::ustring date = "";
     iter = metadata.find("dc:date");
     if (iter != metadata.end())
         date = iter->second;
@@ -1369,16 +1397,16 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("<office:meta>\n");
     outs.printf("    <meta:generator>Inkscape.org - 0.45</meta:generator>\n");
     outs.printf("    <meta:initial-creator>%s</meta:initial-creator>\n",
-                          creator.c_str());
+                          toXml(creator).c_str());
     outs.printf("    <meta:creation-date>%s</meta:creation-date>\n", date.c_str());
     for (iter = metadata.begin() ; iter != metadata.end() ; iter++)
         {
-        std::string name  = iter->first;
-        std::string value = iter->second;
+        Glib::ustring name  = iter->first;
+        Glib::ustring value = iter->second;
         if (name.size() > 0 && value.size()>0)
             {
             outs.printf("    <%s>%s</%s>\n", 
-                 name.c_str(), value.c_str(), name.c_str());
+                 toXml(name).c_str(), toXml(value).c_str(), toXml(name).c_str());
             }
         }
     outs.printf("    <meta:editing-cycles>2</meta:editing-cycles>\n");
@@ -1618,8 +1646,8 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     SPItem *item = SP_ITEM(reprobj);
 
 
-    std::string nodeName = node->name();
-    std::string id       = getAttribute(node, "id");
+    Glib::ustring nodeName = node->name();
+    Glib::ustring id       = getAttribute(node, "id");
 
     //### Get SVG-to-ODF transform
     NR::Matrix tf        = getODFTransform(item);
@@ -1696,16 +1724,16 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
         NR::Matrix itemTransform = getODFItemTransform(item);
 
-        std::string itemTransformString = formatTransform(itemTransform);
+        Glib::ustring itemTransformString = formatTransform(itemTransform);
 
-        std::string href = getAttribute(node, "xlink:href");
-        std::map<std::string, std::string>::iterator iter = imageTable.find(href);
+        Glib::ustring href = getAttribute(node, "xlink:href");
+        std::map<Glib::ustring, Glib::ustring>::iterator iter = imageTable.find(href);
         if (iter == imageTable.end())
             {
             g_warning("image '%s' not in table", href.c_str());
             return false;
             }
-        std::string newName = iter->second;
+        Glib::ustring newName = iter->second;
 
         outs.printf("<draw:frame ");
         if (id.size() > 0)
@@ -1752,19 +1780,19 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         if (id.size()>0)
             outs.printf("id=\"%s\" ", id.c_str());
 
-        std::map<std::string, std::string>::iterator siter;
+        std::map<Glib::ustring, Glib::ustring>::iterator siter;
         siter = styleLookupTable.find(id);
         if (siter != styleLookupTable.end())
             {
-            std::string styleName = siter->second;
+            Glib::ustring styleName = siter->second;
             outs.printf("draw:style-name=\"%s\" ", styleName.c_str());
             }
 
-        std::map<std::string, std::string>::iterator giter;
+        std::map<Glib::ustring, Glib::ustring>::iterator giter;
         giter = gradientLookupTable.find(id);
         if (giter != gradientLookupTable.end())
             {
-            std::string gradientName = giter->second;
+            Glib::ustring gradientName = giter->second;
             outs.printf("draw:fill-gradient-name=\"%s\" ",
                  gradientName.c_str());
             }

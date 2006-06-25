@@ -36,7 +36,7 @@
 #include <dom/io/stringstream.h>
 #include <dom/uri.h>
 
-#include <glib.h>
+#include <glibmm.h>
 #include "extension/implementation/implementation.h"
 
 
@@ -123,14 +123,14 @@ public:
         return true;
         }
 
-    std::string name;
-    std::string stroke;
-    std::string strokeColor;
-    std::string strokeWidth;
-    std::string strokeOpacity;
-    std::string fill;
-    std::string fillColor;
-    std::string fillOpacity;
+    Glib::ustring name;
+    Glib::ustring stroke;
+    Glib::ustring strokeColor;
+    Glib::ustring strokeWidth;
+    Glib::ustring strokeOpacity;
+    Glib::ustring fill;
+    Glib::ustring fillColor;
+    Glib::ustring fillOpacity;
 
 };
 
@@ -208,8 +208,8 @@ public:
         return true;
         }
 
-    std::string name;
-    std::string style;
+    Glib::ustring name;
+    Glib::ustring style;
     double cx;
     double cy;
     double fx;
@@ -244,7 +244,7 @@ private:
     void reset();
 
     //cc or dc metadata name/value pairs
-    std::map<std::string, std::string> metadata;
+    std::map<Glib::ustring, Glib::ustring> metadata;
 
     /* Style table
        Uses a two-stage lookup to avoid style duplication.
@@ -253,17 +253,17 @@ private:
        but check for errors, of course
     */
     //element id -> style entry name
-    std::map<std::string, std::string> styleLookupTable;
+    std::map<Glib::ustring, Glib::ustring> styleLookupTable;
     //style entry name -> style info
     std::vector<StyleInfo> styleTable;
 
     //element id -> gradient entry name
-    std::map<std::string, std::string> gradientLookupTable;
+    std::map<Glib::ustring, Glib::ustring> gradientLookupTable;
     //gradient entry name -> gradient info
     std::vector<GradientInfo> gradientTable;
 
     //for renaming image file names
-    std::map<std::string, std::string> imageTable;
+    std::map<Glib::ustring, Glib::ustring> imageTable;
 
     void preprocess(ZipFile &zf, Inkscape::XML::Node *node);
 
