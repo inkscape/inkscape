@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-15 19:48+0200\n"
+"PO-Revision-Date: 2006-06-25 23:39+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1328,45 +1328,45 @@ msgstr "Neue Ebene angelegt."
 
 #: ../src/dialogs/object-attributes.cpp:30
 msgid "Href:"
-msgstr ""
+msgstr "Href:"
 
 #: ../src/dialogs/object-attributes.cpp:31
 msgid "Target:"
-msgstr ""
+msgstr "Target:"
 
 #: ../src/dialogs/object-attributes.cpp:32
 msgid "Type:"
-msgstr ""
+msgstr "Type:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
 #: ../src/dialogs/object-attributes.cpp:35
 msgid "Role:"
-msgstr ""
+msgstr "Role:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
 #: ../src/dialogs/object-attributes.cpp:38
 msgid "Arcrole:"
-msgstr ""
+msgstr "Arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/dialogs/object-attributes.cpp:40
 msgid "Title:"
-msgstr ""
+msgstr "Title:"
 
 #: ../src/dialogs/object-attributes.cpp:41
 msgid "Show:"
-msgstr ""
+msgstr "Show:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:43
 msgid "Actuate:"
-msgstr ""
+msgstr "Actuate:"
 
 #: ../src/dialogs/object-attributes.cpp:48
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:49
 msgid "X:"
@@ -7157,11 +7157,11 @@ msgstr "Sende Whiteboard-Einladung zu <b>%1</b>"
 #: ../src/ui/view/edit-widget.cpp:966 ../src/ui/view/edit-widget.cpp:970
 #: ../src/ui/view/edit-widget.cpp:974 ../src/ui/view/edit-widget.cpp:978
 msgid "PLACEHOLDER, do not translate"
-msgstr ""
+msgstr "PLACEHOLDER, do not translate"
 
 #: ../src/ui/view/edit-widget.cpp:1063
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
-msgstr ""
+msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
 #: ../src/ui/view/edit-widget.cpp:1122 ../src/widgets/desktop-widget.cpp:241
 msgid "Zoom drawing if window size changes"
@@ -7251,7 +7251,7 @@ msgstr "F:"
 #: ../src/ui/widget/selected-style.cpp:89
 #: ../src/ui/widget/style-swatch.cpp:105
 msgid "S:"
-msgstr "S"
+msgstr "S:"
 
 #: ../src/ui/widget/selected-style.cpp:90
 msgid "O:"
