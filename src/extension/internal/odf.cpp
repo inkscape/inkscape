@@ -928,33 +928,6 @@ static Glib::ustring formatTransform(NR::Matrix &tf)
 }
 
 
-/**
- * Encode a string, checking for XML entities, to
- * make an XML string safe for output
- */
-static Glib::ustring toXml(const Glib::ustring &str)
-{
-    Glib::ustring outbuf;
-    for (unsigned int i=0 ; i<str.size() ; i++)
-        {
-        XMLCh ch = (XMLCh) str[i];
-        if (ch == '&')
-            outbuf.append("&ampr;");
-        else if (ch == '<')
-            outbuf.append("&lt;");
-        else if (ch == '>')
-            outbuf.append("&gt;");
-        else if (ch == '"')
-            outbuf.append("&quot;");
-        else if (ch == '\'')
-            outbuf.append("&apos;");
-        else
-            outbuf.push_back(ch);
-        }
-    return outbuf;
-}
-
-
 
 
 
@@ -1396,17 +1369,17 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("office:version=\"1.0\">\n");
     outs.printf("<office:meta>\n");
     outs.printf("    <meta:generator>Inkscape.org - 0.45</meta:generator>\n");
-    outs.printf("    <meta:initial-creator>%s</meta:initial-creator>\n",
-                          toXml(creator).c_str());
-    outs.printf("    <meta:creation-date>%s</meta:creation-date>\n", date.c_str());
+    outs.printf("    <meta:initial-creator>%#s</meta:initial-creator>\n",
+                                  creator.c_str());
+    outs.printf("    <meta:creation-date>%#s</meta:creation-date>\n", date.c_str());
     for (iter = metadata.begin() ; iter != metadata.end() ; iter++)
         {
         Glib::ustring name  = iter->first;
         Glib::ustring value = iter->second;
         if (name.size() > 0 && value.size()>0)
             {
-            outs.printf("    <%s>%s</%s>\n", 
-                 toXml(name).c_str(), toXml(value).c_str(), toXml(name).c_str());
+            outs.printf("    <%#s>%#s</%#s>\n", 
+                      name.c_str(), value.c_str(), name.c_str());
             }
         }
     outs.printf("    <meta:editing-cycles>2</meta:editing-cycles>\n");
