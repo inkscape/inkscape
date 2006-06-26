@@ -107,8 +107,7 @@ static int dprintInt(Writer &outs,
 
 
 
-static int dprintDouble(Writer &outs,
-                        double val, 
+static int dprintDouble(Writer &outs, double val, 
                         int flag, int width, int precision)
 {
 
@@ -203,14 +202,39 @@ static int dprintDouble(Writer &outs,
     return 1;
 }
 
-static int dprintString(Writer &outs,
-                        char *arg, 
+
+/**
+ * Output a string.  We veer from the standard a tiny bit.
+ * Normally, a flag of '#' is undefined for strings.  We use
+ * it as an indicator that the user wants to XML-escape any
+ * XML entities.
+ */
+static int dprintString(Writer &outs, const DOMString &str,
                         int flags, int width, int precision)
 {
-    while (*arg)
+    int len = str.size();
+    if (flags == '#')
         {
-        if (outs.put(*arg++) < 0)
-            return -1;
+        for (int pos = 0; pos < len; pos++)
+            {
+            XMLCh ch = (XMLCh) str[pos];
+            if (ch == '&')
+                outs.writeString("&ampr;");
+            else if (ch == '<')
+                outs.writeString("&lt;");
+            else if (ch == '>')
+                outs.writeString("&gt;");
+            else if (ch == '"')
+                outs.writeString("&quot;");
+            else if (ch == '\'')
+                outs.writeString("&apos;");
+            else
+                outs.put(ch);
+            }
+        }
+    else
+        {
+        outs.writeString(str);
         }
 
     return 1;
@@ -218,150 +242,171 @@ static int dprintString(Writer &outs,
 
 
 
-static char *getint(char *s, int *ret)
+static int getint(const DOMString &buf, int pos, int *ret)
 {
+    int len = buf.size();
+    if (!len)
+        {
+        *ret = 0;
+        return pos;
+        }
+
     bool has_sign = false;
     int val = 0;
-    if (*s == '-')
+    if (buf[pos] == '-')
         {
         has_sign = true;
-        s++;
+        pos++;
         }
-    while (*s >= '0' && *s <= '9')
+    while (pos < len)
         {
-        val = val * 10 + (*s - '0');
-        s++;
+        XMLCh ch = buf[pos];
+        if (ch >= '0' && ch <= '9')
+            val = val * 10 + (ch - '0');
+        else
+            break;
+        pos++;
         }
     if (has_sign)
         val = -val;
 
     *ret = val;
 
-    return s;
+    return pos;
 }
 
 
 
-static int dprintf(Writer &outs, const char *fmt, va_list ap)
+static int dprintf(Writer &outs, const DOMString &fmt, va_list ap)
 {
 
-    char *s = (char *) fmt;
+    int len = fmt.size();
 
-    while (*s)
+    for (int pos=0 ; pos < len ; pos++)
         {
-        unsigned char ch = *s++;
+        XMLCh ch = fmt[pos];
 
+        //## normal character
         if (ch != '%')
             {
             if (outs.put(ch)<0)
                 {
                 return -1;
                 }
+            continue;
             }
-        else
-            //expecting  %[flag][width][.precision][length][char]
+
+        if (++pos >= len)
             {
-            if (!*s)
-                {
-                return -1;
-                }
-            if (*s == '%') // escaped '%'
-                {
-                if (outs.put('%')<0)
-                    {
-                    return -1;
-                    }
-                s++;
-                continue;
-                }
-            char flag = '\0';
-            if (*s == '-' || *s == '+' || *s == ' ' ||
-                *s == '#' || *s == '0')
-                {
-                flag = *s++;
-                if (!*s)
-                    {
-                    return -1;
-                    }
-                }
-            int width     = 0;
-            int precision = 0;
-            s = getint(s, &width);
-            if (!*s)
-                {
-                return -1;
-                }
-            if (*s == '.')
-                {
-                s++;
-                if (!*s)
-                    {
-                    return -1;
-                    }
-                s = getint(s, &precision);
-                }
-            char length = '\0';
-            if (*s == 'l' || *s == 'h')
-                {
-                length = *s++;
-                if (!*s)
-                    {
-                    return -1;
-                    }
-                }
-            ch = *s++;
-            if (!ch)
-                {
-                return -1;
-                }
-            switch (ch)
-                {
-                case 'f':
-                case 'g':
-                    {
-                    double val = va_arg(ap, double);
-                    dprintDouble(outs, val, flag, width, precision);
-                    break;
-                    }
-                case 'd':
-                    {
-                    long val = 0;
-                    if (length == 'l')
-                        val = va_arg(ap, long);
-                    else if (length == 'h')
-                        val = (long)va_arg(ap, int);
-                    else
-                        val = (long)va_arg(ap, int);
-                    dprintInt(outs, val, 10, flag, width, precision);
-                    break;
-                    }
-                case 'x':
-                    {
-                    long val = 0;
-                    if (length == 'l')
-                        val = va_arg(ap, long);
-                    else if (length == 'h')
-                        val = (long)va_arg(ap, int);
-                    else
-                        val = (long)va_arg(ap, int);
-                    dprintInt(outs, val, 16, flag, width, precision);
-                    break;
-                    }
-                case 's':
-                    {
-                    char *val = va_arg(ap, char *);
-                    dprintString(outs, val, flag, width, precision);
-                    break;
-                    }
-                default:
-                    {
-                    break;
-                    }
-                }
+            return -1;
             }
 
-        }
+        ch = fmt[pos];
 
+        //## is this %% ?
+        if (ch == '%') // escaped '%'
+            {
+            if (outs.put('%')<0)
+                {
+                return -1;
+                }
+            continue;
+            }
+
+        //## flag
+        char flag = '\0';
+        if (ch == '-' || ch == '+' || ch == ' ' ||
+            ch == '#' || ch == '0')
+            {
+            flag = ch;
+            if (++pos >= len)
+                {
+                return -1;
+                }
+            ch = fmt[pos];
+            }
+
+        //## width.precision
+        int width     = 0;
+        int precision = 0;
+        pos = getint(fmt, pos, &width);
+        if (pos >= len)
+            {
+            return -1;
+            }
+        ch = fmt[pos];
+        if (ch == '.')
+            {
+            if (++pos >= len)
+                {
+                return -1;
+                }
+            pos = getint(fmt, pos, &precision);
+            if (pos >= len)
+                {
+                return -1;
+                }
+            ch = fmt[pos];
+            }
+
+        //## length
+        char length = '\0';
+        if (ch == 'l' || ch == 'h')
+            {
+            length = ch;
+            if (++pos >= len)
+                {
+                return -1;
+                }
+            ch = fmt[pos];
+            }
+
+        //## data type
+        switch (ch)
+            {
+            case 'f':
+            case 'g':
+                {
+                double val = va_arg(ap, double);
+                dprintDouble(outs, val, flag, width, precision);
+                break;
+                }
+            case 'd':
+                {
+                long val = 0;
+                if (length == 'l')
+                    val = va_arg(ap, long);
+                else if (length == 'h')
+                    val = (long)va_arg(ap, int);
+                else
+                    val = (long)va_arg(ap, int);
+                dprintInt(outs, val, 10, flag, width, precision);
+                break;
+                }
+            case 'x':
+                {
+                long val = 0;
+                if (length == 'l')
+                    val = va_arg(ap, long);
+                else if (length == 'h')
+                    val = (long)va_arg(ap, int);
+                else
+                    val = (long)va_arg(ap, int);
+                dprintInt(outs, val, 16, flag, width, precision);
+                break;
+                }
+            case 's':
+                {
+                DOMString val = va_arg(ap, char *);
+                dprintString(outs, val, flag, width, precision);
+                break;
+                }
+            default:
+                {
+                break;
+                }
+            }
+        }
 
     return 1;
 }
@@ -856,12 +901,11 @@ Writer &BasicWriter::printf(char *fmt, ...)
     return *this;
 }
 */
-Writer &BasicWriter::printf(char *fmt, ...)
+Writer &BasicWriter::printf(const DOMString &fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
     dprintf(*this, fmt, args);
-
     return *this;
 }
 

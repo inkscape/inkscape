@@ -492,7 +492,7 @@ public:
     virtual int put(XMLCh ch) = 0;
 
     /* Formatted output */
-    virtual Writer& printf(char *fmt, ...) = 0;
+    virtual Writer& printf(const DOMString &fmt, ...) = 0;
 
     virtual Writer& writeChar(char val) = 0;
 
@@ -544,7 +544,7 @@ public:
 
 
     /* Formatted output */
-    virtual Writer &printf(char *fmt, ...);
+    virtual Writer &printf(const DOMString &fmt, ...);
 
     virtual Writer& writeChar(char val);
 
