@@ -12,6 +12,7 @@
  */
 
 #include <cmath>
+#include <glib.h>
 
 using std::isnormal;
 
@@ -121,11 +122,35 @@ int FilterGaussian::_effect_subsample_step_log2(int scr_len_x)
     }
 }
 
+/**
+ * Sanity check function for indexing pixblocks.
+ * Catches reading and writing outside the pixblock area.
+ * When enabled, decreases filter rendering speed massively.
+ */
+inline void _check_index(NRPixBlock const * const pb, int const location, int const line)
+{
+    if(true) {
+        int max_loc = pb->rs * (pb->area.y1 - pb->area.y0);
+        if (location < 0 || location >= max_loc)
+            g_warning("Location %d out of bounds (0 ... %d) at line %d", location, max_loc, line);
+    }
+}
 
 int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
 {
     /* in holds the input pixblock */
     NRPixBlock *in = pb[0];
+
+    /* If to either direction, the standard deviation is zero, a transparent
+     * black image should be returned */
+    if (_deviation_x <= 0 || _deviation_y <= 0) {
+        NRPixBlock *out = new NRPixBlock;
+        nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
+                               in->area.x1, in->area.y1, true);
+        out->empty = false;
+        pb[1] = out;
+        return 0;
+    }
 
     /* Blur radius in screen units (pixels) */
     int scr_len_x = _effect_area_scr_x(trans);
@@ -215,6 +240,7 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
                     }
 
                     // value at the pixel
+                    _check_index(in, in_line + NR_PIXBLOCK_BPP(in) * x_in + byte, __LINE__);
                     unsigned char in_byte = NR_PIXBLOCK_PX(in)[in_line + NR_PIXBLOCK_BPP(in) * x_in + byte];
 
                     // is it the same as last one we saw?
@@ -226,6 +252,7 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
                 }
 
                 // store the result in bufx
+                _check_index(bufx, bufx_line + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte, __LINE__);
                 NR_PIXBLOCK_PX(bufx)[bufx_line + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte] = (unsigned char)sum;
 
                 // optimization: if there was no variation within this point's neighborhood, 
@@ -236,6 +263,8 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
                     while(((pos << stepx_l2) + scr_len_x) < in->area.x1 &&
                           NR_PIXBLOCK_PX(in)[in_line + NR_PIXBLOCK_BPP(in) * ((pos << stepx_l2) + scr_len_x - in->area.x0) + byte] == last_in)
                     {
+                        _check_index(in, in_line + NR_PIXBLOCK_BPP(in) * ((pos << stepx_l2) + scr_len_x - in->area.x0) + byte, __LINE__);
+                        _check_index(bufx, bufx_line + NR_PIXBLOCK_BPP(bufx) * (pos - xd0) + byte, __LINE__);
                         NR_PIXBLOCK_PX(bufx)[bufx_line + NR_PIXBLOCK_BPP(bufx) * (pos - xd0) + byte] = last_in;
                         pos++;
                     }
@@ -278,15 +307,17 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
                     if (dist > scr_len_y) 
                         dist = scr_len_y;
 
-                    if (y_in > (yd1 - yd0)) y_in = (yd1 - yd0);
+                    if (y_in >= (yd1 - yd0)) y_in = (yd1 - yd0) - 1;
                     if (y_in < 0) y_in = 0;
 
+                    _check_index(bufx, y_in * bufx->rs + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte, __LINE__);
                     unsigned char in_byte = NR_PIXBLOCK_PX(bufx)[y_in * bufx->rs + NR_PIXBLOCK_BPP(bufx) * (x - xd0) + byte];
                     if(in_byte != last_in) different_count++;
                     last_in = in_byte;
                     sum += stepy * in_byte * kernel[scr_len_y + dist];
                 }
 
+                _check_index(bufy, bufy_line + bufy_disp + byte, __LINE__);
                 NR_PIXBLOCK_PX(bufy)[bufy_line + bufy_disp + byte] = (unsigned char)sum;
 
                 if (different_count <= 1) {
@@ -294,6 +325,8 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
                     while((pos + (scr_len_y >> stepy_l2) + 1) < yd1 &&
                           NR_PIXBLOCK_PX(bufx)[(pos + (scr_len_y >> stepy_l2) + 1 - yd0) * bufx->rs + bufx_disp + byte] == last_in)
                     {
+                        _check_index(bufx, (pos + (scr_len_y >> stepy_l2) + 1 - yd0) * bufx->rs + bufx_disp + byte, __LINE__);
+                        _check_index(bufy, (pos - yd0) * bufy->rs + bufy_disp + byte, __LINE__);
                         NR_PIXBLOCK_PX(bufy)[(pos - yd0) * bufy->rs + bufy_disp + byte] = last_in;
                         pos++;
                     }
@@ -321,13 +354,18 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
             for ( int byte = 0 ; byte < NR_PIXBLOCK_BPP(bufy) ; byte++) {
 
                 // get 4 values at the corners of the pixel from bufy
+                _check_index(bufy, ((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x - xd0) + byte, __LINE__);
                 unsigned char a00 = NR_PIXBLOCK_PX(bufy)[((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte];
                 if (stepx == 1 && stepy == 1) { // if there was no subsampling, just use a00
+                    _check_index(out, ((y - yd0) * out->rs) + NR_PIXBLOCK_BPP(out) * (x - xd0) + byte, __LINE__);
                     NR_PIXBLOCK_PX(out)[((y - yd0) * out->rs) + NR_PIXBLOCK_BPP(out) * (x - xd0) + byte] = a00;
                     continue;
                 }
+                _check_index(bufy, ((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x + 1 - xd0) + byte, __LINE__);
                 unsigned char a10 = NR_PIXBLOCK_PX(bufy)[((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte];
+                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x - xd0) + byte, __LINE__);
                 unsigned char a01 = NR_PIXBLOCK_PX(bufy)[((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte];
+                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x + 1 - xd0) + byte, __LINE__);
                 unsigned char a11 = NR_PIXBLOCK_PX(bufy)[((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte];
 
                 // iterate over the rectangle to be interpolated
@@ -347,6 +385,7 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
                         // simple linear interpolation
                         int a = (a00*ix*iy + a10*xi*iy + a01*ix*yi + a11*xi*yi) >> divisor;
 
+                        _check_index(out, out_line + NR_PIXBLOCK_BPP(out) * (x_out - out->area.x0) + byte, __LINE__);
                         NR_PIXBLOCK_PX(out)[out_line + NR_PIXBLOCK_BPP(out) * (x_out - out->area.x0) + byte] = (unsigned char) a;
                     }
                 }
