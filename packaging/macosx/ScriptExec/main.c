@@ -198,7 +198,7 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
 
 			StandardAlert(kAlertNoteAlert, "\pFont caches have been updated",
 					"\pPlease re-run Inkscape.", &params, &itemHit);
-			system("test -d $HOME/.inkscape || mkdir $HOME/.inkscape; touch $HOME/.inkscape/.fccache");
+			system("test -d \"$HOME/.inkscape\" || mkdir \"$HOME/.inkscape\"; touch \"$HOME/.inkscape/.fccache\"");
 		}
 	}
 	else
@@ -208,7 +208,7 @@ static OSStatus FCCacheFailedHandler(EventHandlerCallRef theHandlerCall,
 
 		StandardAlert(kAlertNoteAlert, "\pFont caches have not been updated",
 				"\pThey can be updated manually by running the following:\n   sudo /usr/X11R6/bin/fc-cache -f\nOnce you have dealt with this, please re-run Inkscape.", &params, &itemHit);
-		system("test -d $HOME/.inkscape || mkdir $HOME/.inkscape; touch $HOME/.inkscape/.fccache");
+		system("test -d \"$HOME/.inkscape\" || mkdir \"$HOME/.inkscape\"; touch \"$HOME/.inkscape/.fccache\"");
 	}
     
 	ExitToShell();
