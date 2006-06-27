@@ -130,6 +130,7 @@ enum {
     SP_ARG_EXPORT_SVG,
     SP_ARG_EXPORT_PS,
     SP_ARG_EXPORT_EPS,
+    SP_ARG_EXPORT_PDF,
     SP_ARG_EXPORT_TEXT_TO_PATH,
     SP_ARG_EXPORT_BBOX_PAGE,
     SP_ARG_EXTENSIONDIR,
@@ -149,6 +150,7 @@ int sp_main_gui(int argc, char const **argv);
 int sp_main_console(int argc, char const **argv);
 static void sp_do_export_png(SPDocument *doc);
 static void do_export_ps(SPDocument* doc, gchar const* uri, char const *mime);
+static void do_export_pdf(SPDocument* doc, gchar const* uri, char const *mime);
 static void do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axis, const gchar *id);
 
 
@@ -170,6 +172,7 @@ static gboolean sp_export_id_only = FALSE;
 static gchar *sp_export_svg = NULL;
 static gchar *sp_export_ps = NULL;
 static gchar *sp_export_eps = NULL;
+static gchar *sp_export_pdf = NULL;
 static gboolean sp_export_text_to_path = FALSE;
 static gboolean sp_export_bbox_page = FALSE;
 static gboolean sp_query_x = FALSE;
@@ -294,6 +297,11 @@ struct poptOption options[] = {
     {"export-eps", 'E',
      POPT_ARG_STRING, &sp_export_eps, SP_ARG_EXPORT_EPS,
      N_("Export document to an EPS file"),
+     N_("FILENAME")},
+
+    {"export-pdf", 'A',
+     POPT_ARG_STRING, &sp_export_pdf, SP_ARG_EXPORT_PDF,
+     N_("Export document to a PDF file"),
      N_("FILENAME")},
 
     {"export-text-to-path", 'T',
@@ -438,6 +446,8 @@ main(int argc, char **argv)
             || !strncmp(argv[i], "--export-ps", 11)
             || !strcmp(argv[i], "-E")
             || !strncmp(argv[i], "--export-eps", 12)
+            || !strcmp(argv[i], "-A")
+            || !strncmp(argv[i], "--export-pdf", 12)
             || !strcmp(argv[i], "-W")
             || !strncmp(argv[i], "--query-width", 13)
             || !strcmp(argv[i], "-H")
@@ -712,6 +722,9 @@ sp_main_console(int argc, char const **argv)
             if (sp_export_eps) {
                 do_export_ps(doc, sp_export_eps, "image/x-e-postscript");
             }
+            if (sp_export_pdf) {
+                do_export_pdf(doc, sp_export_pdf, "application/pdf");
+            }
             if (sp_query_width || sp_query_height) {
                 do_query_dimension (doc, true, sp_query_width? NR::X : NR::Y, sp_query_id);
             } else if (sp_query_x || sp_query_y) {
@@ -974,12 +987,6 @@ sp_do_export_png(SPDocument *doc)
 
 static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
 {
-    /** \todo
-     * FIXME: I've no idea if this is the `proper' way to do this.
-     * If anyone feels qualified to say that it is, perhaps they
-     * could remove this comment.
-     */
-
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);
     Inkscape::Extension::DB::OutputList::const_iterator i = o.begin();
@@ -1017,6 +1024,49 @@ static void do_export_ps(SPDocument* doc, gchar const* uri, char const* mime)
     try {
         (*i)->set_param_bool("textToPath", old_text_to_path);
         (*i)->set_param_bool("pageBoundingBox", old_bbox_page);
+    }
+    catch (...) {
+
+    }
+}
+
+/**
+ *  Perform a PDF export
+ *
+ *  \param doc Document to export.
+ *  \param uri URI to export to.
+ *  \param mime MIME type to export as.
+ */
+
+static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
+{
+    Inkscape::Extension::DB::OutputList o;
+    Inkscape::Extension::db.get_output_list(o);
+    Inkscape::Extension::DB::OutputList::const_iterator i = o.begin();
+    while (i != o.end() && strcmp( (*i)->get_mimetype(), mime ) != 0) {
+        i++;
+    }
+
+    if (i == o.end())
+    {
+        g_warning ("Could not find an extension to export this file.");
+        return;
+    }
+
+    bool old_text_to_path = false;
+
+    try {
+        old_text_to_path = (*i)->get_param_bool("textToPath");
+        (*i)->set_param_bool("textToPath", sp_export_text_to_path);
+    }
+    catch (...) {
+        g_warning ("Could not set export-text-to-path option for this export.");
+    }
+
+    (*i)->save(doc, uri);
+
+    try {
+        (*i)->set_param_bool("textToPath", old_text_to_path);
     }
     catch (...) {
 
