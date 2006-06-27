@@ -109,11 +109,12 @@ SelectedStyle::SelectedStyle(bool layout)
 
       _sw_unit(NULL),
 
-      _tooltips (),
+      _tooltips ()
 
-      _drop((void*[]){0,0}),
-      _dropEnabled((bool[]){false, false})
 {
+    _drop[0] = _drop[1] = 0;
+    _dropEnabled[0] = _dropEnabled[1] = false;
+    
     _fill_label.set_alignment(0.0, 0.5);
     _fill_label.set_padding(0, 0);
     _stroke_label.set_alignment(0.0, 0.5);
