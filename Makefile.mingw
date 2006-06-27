@@ -30,7 +30,7 @@ $(GTKDOS)$(S)bin$(S)intl.dll:
 
 dist-strip: dist
 	strip inkscape$(S)inkscape.exe
-	strip inkscape$(S)inkview.exe
+#	strip inkscape$(S)inkview.exe
 	strip inkscape$(S)libatkmm-1.6-1.dll
 	strip inkscape$(S)libglibmm-2.4-1.dll
 	strip inkscape$(S)libgdkmm-2.4-1.dll
@@ -73,8 +73,8 @@ dist:	generated
 	$(MKDIR) inkscape
 	$(CP) src$(S)inkscape.exe inkscape
 	$(CP) src$(S)inkscape.dbg inkscape
-	$(CP) src$(S)inkview.exe inkscape
-	$(CP) src$(S)inkview.dbg inkscape
+#	$(CP) src$(S)inkview.exe inkscape
+#	$(CP) src$(S)inkview.dbg inkscape
 	$(CP) AUTHORS inkscape
 	$(CP) COPYING inkscape
 	$(CP) COPYING.LIB inkscape
@@ -157,6 +157,7 @@ dist:	generated
 	$(MKDIR) inkscape$(S)plugins
 	-$(CP) src$(S)extension$(S)plugin$(S)*.dll inkscape$(S)plugins
 	$(CP) $(GTKDOS)$(S)bin$(S)gdb.exe inkscape
+	$(CP) packaging$(S)win32$(S)inkscape.bat inkscape
 #
 #       remove unneeded files
 #
