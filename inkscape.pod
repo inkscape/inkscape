@@ -32,6 +32,8 @@ options:
 
     -P, --export-ps=FILENAME
     -E, --export-eps=FILENAME
+    -A, --export-pdf=FILENAME
+
     -T, --export-text-to-path
     -B, --export-bbox-page 
 
@@ -214,19 +216,23 @@ then the value of 255 (full opacity) will be used.
 
 =item B<-P> I<FILENAME>, B<--export-ps>=I<FILENAME>
 
-Export document(s) to PostScript format.
+Export document(s) to PostScript format. Note that PostScript does not support transparency, so any transparency in the original SVG will be lost. This option can be used together with --export-bbox-page and --export-text-to-path.
 
 =item B<-E> I<FILENAME>, B<--export-eps>=I<FILENAME>
 
-Export document(s) to Encapsulated PostScript format.
+Export document(s) to Encapsulated PostScript format. Note that PostScript does not support transparency, so any transparency in the original SVG will be lost. This option can be used together with --export-bbox-page and --export-text-to-path.
+
+=item B<-A> I<FILENAME>, B<--export-pdf>=I<FILENAME>
+
+Export document(s) to PDF 1.4 format. This format preserves the transparency in the original SVG (though not all PDF viewers can display it yet). This option can be used together with --export-text-to-path (currently this is required, because exporting text as text is not yet supported).
 
 =item B<-T>, B<--export-text-to-path>
 
-Convert text objects to paths on export, where applicable (currently works with EPS only).
+Convert text objects to paths on export, where applicable (currently works for PS, EPS, and PDF export).
 
 =item B<-B>, B<--export-bbox-page>
 
-Export files with the bounding box set to the page size, where applicable (currently works with EPS only).
+Export files with the bounding box set to the page size, where applicable (currently works for PS and EPS export).
 
 =item B<-I>, B<--query-id>
 
