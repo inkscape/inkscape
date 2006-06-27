@@ -533,6 +533,9 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
         if (SP_IS_LINEARGRADIENT (SP_STYLE_FILL_SERVER (style))) {
             
             SPLinearGradient *lg=SP_LINEARGRADIENT(SP_STYLE_FILL_SERVER (style));
+
+            sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
+
             NR::Point p1 (lg->x1.computed, lg->y1.computed);
             NR::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
@@ -571,7 +574,6 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
                     *pdf_alpha << "/Domain [0 1]\n";
                     *pdf_alpha << "/Function <<\n/FunctionType 3\n/Functions\n[\n";
 
-                    sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
                     for (gint i = 0; unsigned(i) < lg->vector.stops.size() - 1; i++) {
                         *pdf_alpha << "<<\n/FunctionType 2\n/Domain [0 1]\n";
                         *pdf_alpha << "/C0 [" << lg->vector.stops[i].opacity << "]\n";
@@ -658,6 +660,9 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
         } else if (SP_IS_RADIALGRADIENT (SP_STYLE_FILL_SERVER (style))) {
 
             SPRadialGradient *rg=SP_RADIALGRADIENT(SP_STYLE_FILL_SERVER (style));
+
+            sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
+
             NR::Point c (rg->cx.computed, rg->cy.computed);
             NR::Point f (rg->fx.computed, rg->fy.computed);
             double r = rg->r.computed;
@@ -698,7 +703,6 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
                     *pdf_alpha << "/Domain [0 1]\n";
                     *pdf_alpha << "/Function <<\n/FunctionType 3\n/Functions\n[\n";
 
-                    sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
                     for (gint i = 0; unsigned(i) < rg->vector.stops.size() - 1; i++) {
                         *pdf_alpha << "<<\n/FunctionType 2\n/Domain [0 1]\n";
                         *pdf_alpha << "/C0 [" << rg->vector.stops[i].opacity << "]\n";
