@@ -13,6 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <cstdio>
 #include <string.h>
 #include <ctype.h>
 #include "sp-cursor.h"
