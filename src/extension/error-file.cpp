@@ -8,9 +8,9 @@
  */
 
 
-extern "C" {           // glib-2.4 needs this
-#include <libintl.h>
-}
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <glibmm/i18n.h>
 

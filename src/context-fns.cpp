@@ -1,6 +1,7 @@
-extern "C" {
-#include <libintl.h>
-}
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <glibmm/i18n.h>
 #include "sp-item.h"
 #include "desktop.h"
