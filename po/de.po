@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-06 20:18+0200\n"
-"PO-Revision-Date: 2006-06-25 23:39+0200\n"
+"PO-Revision-Date: 2006-06-29 21:04+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1700,7 +1700,7 @@ msgstr "Markierungen dazwischen:"
 
 #: ../src/dialogs/stroke-style.cpp:1140
 msgid "End Markers:"
-msgstr "Endmarkierungen"
+msgstr "Endmarkierungen:"
 
 # !!! palettes, not swatches?
 #: ../src/dialogs/swatches.cpp:873
@@ -2072,12 +2072,9 @@ msgid ""
 "normally but those extensions will be unavailable.  For details to "
 "troubleshoot this problem, please refer to the error log located at: "
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Eine oder mehrere Erweiterungen "
-"konnten nicht geladen werden.</span>\n"
+"<span weight=\"bold\" size=\"larger\">Eine oder mehrere Erweiterungen konnten nicht geladen werden.</span>\n"
 "\n"
-"Nicht verfügbare Eweiterungen wurden ausgelassen. Inkscape setzt seinen "
-"normalen Ablauf fort, doch diese Erweiterungen können nicht benutzt werden. "
-"Details zum Beheben des Problems finden sich in der Logdatei unter:"
+"Nicht verfügbare Eweiterungen wurden ausgelassen. Inkscape setzt seinen normalen Ablauf fort, doch diese Erweiterungen können nicht benutzt werden. Details zum Beheben des Problems finden sich in der Logdatei unter: "
 
 #. This is some filler text, needs to change before relase
 #: ../src/extension/error-file.cpp:59
@@ -3566,7 +3563,7 @@ msgstr "_Text"
 
 #: ../src/menus-skeleton.h:223
 msgid "Effects"
-msgstr "Effekte"
+msgstr "E_ffekte"
 
 #: ../src/menus-skeleton.h:230
 msgid "Whiteboa_rd"
@@ -4602,7 +4599,7 @@ msgstr[1] "<b>Pfad</b> (%i Knoten) "
 
 #: ../src/sp-polygon.cpp:233
 msgid "<b>Polygon</b>"
-msgstr "<b>Polygon</b>:"
+msgstr "<b>Polygon</b>"
 
 #: ../src/sp-polyline.cpp:176
 msgid "<b>Polyline</b>"
@@ -10567,11 +10564,11 @@ msgstr "Stärke des Wirbels"
 
 #: ../share/extensions/whirl.inx.h:2
 msgid "Center X"
-msgstr "Zentrum X:"
+msgstr "Zentrum X"
 
 #: ../share/extensions/whirl.inx.h:3
 msgid "Center Y"
-msgstr "Zentrum Y:"
+msgstr "Zentrum Y"
 
 #: ../share/extensions/whirl.inx.h:5
 msgid "Rotation is clockwise"
