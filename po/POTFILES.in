@@ -66,6 +66,7 @@ src/draw-context.cpp
 src/dropper-context.cpp
 src/dyna-draw-context.cpp
 src/event-context.cpp
+src/event-log.cpp
 src/extension/db.cpp
 src/extension/dependency.cpp
 src/extension/extension.cpp
@@ -111,16 +112,11 @@ src/inkscape-stock.cpp
 src/inkscape.cpp
 src/inkview.cpp
 src/interface.cpp
-src/jabber_whiteboard/callbacks.cpp
-src/jabber_whiteboard/chat-handler.cpp
-src/jabber_whiteboard/connection-establishment.cpp
 src/jabber_whiteboard/invitation-confirm-dialog.cpp
-src/jabber_whiteboard/message-handler.cpp
-src/jabber_whiteboard/message-processors.cpp
+src/jabber_whiteboard/invitation-handlers.cpp
 src/jabber_whiteboard/message-queue.cpp
 src/jabber_whiteboard/message-utilities.cpp
-src/jabber_whiteboard/session-file.cpp
-src/jabber_whiteboard/session-file-player.cpp
+src/jabber_whiteboard/new-inkboard-document.cpp
 src/jabber_whiteboard/session-file-selector.cpp
 src/jabber_whiteboard/session-manager.cpp
 src/knot.cpp
