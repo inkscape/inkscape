@@ -304,21 +304,9 @@ sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
     debug("0x%p",object);
     SPFilter *filter = SP_FILTER(object);
 
-    // Inkscape-only object, not copied during an "plain SVG" dump:
-/*    if (flags & SP_OBJECT_WRITE_EXT) {
-        if (repr) {
-            // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
-        } else {
-            repr = SP_OBJECT_REPR(object)->duplicate();
-        }
+    if (!repr) {
+        repr = SP_OBJECT_REPR(object)->duplicate();
     }
-*/
-
-
-//FIXME: repr node is null at this point,
-//       preventing plain svg save. Need to fix this.
-
 
     if ((flags & SP_OBJECT_WRITE_ALL) || filter->filterUnits_set) {
         switch (filter->filterUnits) {
