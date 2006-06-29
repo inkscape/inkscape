@@ -16,7 +16,11 @@
 
 namespace Inkscape {
 
+namespace XML {
+
 class Event;
+
+}
 
 /**
  * Observes changes made to the undo and redo stacks.
@@ -42,21 +46,21 @@ public:
 	 *
 	 * \param log Pointer to an Event describing the undone event.
 	 */
-	virtual void notifyUndoEvent(Event* log) = 0;
+	virtual void notifyUndoEvent(XML::Event* log) = 0;
 
 	/**
 	 * Triggered when the user issues a redo command.
 	 *
 	 * \param log Pointer to an Event describing the redone event.
 	 */
-	virtual void notifyRedoEvent(Event* log) = 0;
+	virtual void notifyRedoEvent(XML::Event* log) = 0;
 
 	/**
 	 * Triggered when a set of transactions is committed to the undo log.
 	 *
 	 * \param log Pointer to an Event describing the committed events.
 	 */
-	virtual void notifyUndoCommitEvent(Event* log) = 0;
+	virtual void notifyUndoCommitEvent(XML::Event* log) = 0;
 };
 
 }
