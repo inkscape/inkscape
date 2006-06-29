@@ -7,7 +7,7 @@ enum SPFilterUnits {
 };
 
 
-#endif /* !SEEN_SP_GRADIENT_UNITS_H */
+#endif /* !SEEN_SP_FILTER_UNITS_H */
 
 /*
   Local Variables:

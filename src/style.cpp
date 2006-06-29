@@ -151,6 +151,7 @@ static gint sp_style_write_ipaint(gchar *b, gint len, gchar const *key, SPIPaint
 static gint sp_style_write_ifontsize(gchar *p, gint len, gchar const *key, SPIFontSize const *val, SPIFontSize const *base, guint flags);
 static gint sp_style_write_ilengthornormal(gchar *p, gint const len, gchar const *const key, SPILengthOrNormal const *const val, SPILengthOrNormal const *const base, guint const flags);
 static gint sp_style_write_itextdecoration(gchar *p, gint const len, gchar const *const key, SPITextDecoration const *const val, SPITextDecoration const *const base, guint const flags);
+static gint sp_style_write_ifilter(gchar *b, gint len, gchar const *key, SPIFilter const *filter, SPIFilter const *base, guint flags);
 
 static void css2_unescape_unquote(SPIString *val);
 
@@ -890,7 +891,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
             /* Filter */
         case SP_PROP_FILTER:
-            if (style->filter.set && style->filter.inherit) {
+            if (!style->filter.set && !style->filter.inherit) {
                 sp_style_read_ifilter(&style->filter, val, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL);
             }
             break;
@@ -1942,6 +1943,8 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
          * represent it as a normal SPILength; though will need to do something about existing
          * users of stroke_dash.offset and stroke_dashoffset_set. */
     }
+
+    /* TODO: deal with filters */
 }
 
 
@@ -2193,6 +2196,9 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     p += sp_style_write_ienum(p, c + BMAX - p, "display", enum_display, &style->display, NULL, flags);
     p += sp_style_write_ienum(p, c + BMAX - p, "overflow", enum_overflow, &style->overflow, NULL, flags);
 
+    /* filter: */
+    p += sp_style_write_ifilter(p, c + BMAX - p, "filter", &style->filter, NULL, flags);
+
     /* fixme: */
     p += sp_text_style_write(p, c + BMAX - p, style->text, flags);
 
@@ -2306,6 +2312,9 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_style_write_ienum(p, c + BMAX - p, "visibility", enum_visibility, &from->visibility, &to->visibility, SP_STYLE_FLAG_IFSET);
     p += sp_style_write_ienum(p, c + BMAX - p, "display", enum_display, &from->display, &to->display, SP_STYLE_FLAG_IFSET);
     p += sp_style_write_ienum(p, c + BMAX - p, "overflow", enum_overflow, &from->overflow, &to->overflow, SP_STYLE_FLAG_IFSET);
+
+    /* filter: */
+    p += sp_style_write_ifilter(p, c + BMAX - p, "filter", &from->filter, &to->filter, SP_STYLE_FLAG_IFDIFF);
 
     p += sp_text_style_write(p, c + BMAX - p, from->text, SP_STYLE_FLAG_IFDIFF);
 
@@ -2457,6 +2466,13 @@ sp_style_clear(SPStyle *style)
         g_free(style->marker[i].value);
         style->marker[i].set = FALSE;
     }
+
+    style->filter.set = FALSE;
+//Are these really needed?
+    style->filter.inherit = FALSE;
+    style->filter.uri = NULL;
+    style->filter.filter = FALSE;
+
 }
 
 
@@ -3537,6 +3553,30 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
 
 
 /**
+ * Write SPIFilter object into string.
+ */
+static gint
+sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
+                         SPIFilter const *const val, SPIFilter const *const base,
+                         guint const flags)
+{
+    if ((flags & SP_STYLE_FLAG_ALWAYS)
+        || ((flags & SP_STYLE_FLAG_IFSET) && val->set)
+        || ((flags & SP_STYLE_FLAG_IFDIFF) && val->set))
+    {
+        if (val->inherit) {
+            return g_snprintf(p, len, "%s:inherit;", key);
+        } else if (val->uri) {
+            return g_snprintf(p, len, "%s:url(%s);", key, val->uri);
+        }
+    }
+
+
+    return 0;
+}
+
+
+/**
  * Clear paint object, and disconnect style from paintserver (if present).
  */
 static void
@@ -3644,6 +3684,9 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->writing_mode.set) {
         repr->setAttribute("writing_mode", NULL);
+    }
+    if (style->filter.set) {
+        repr->setAttribute("filter", NULL);
     }
 }
 
