@@ -42,7 +42,7 @@ CompositeUndoStackObserver::remove(UndoStackObserver& observer)
 }
 
 void
-CompositeUndoStackObserver::notifyUndoEvent(Event* log)
+CompositeUndoStackObserver::notifyUndoEvent(XML::Event* log)
 {
 	this->_lock();
 	for(UndoObserverRecordList::iterator i = this->_active.begin(); i != _active.end(); ++i) {
@@ -54,7 +54,7 @@ CompositeUndoStackObserver::notifyUndoEvent(Event* log)
 }
 
 void
-CompositeUndoStackObserver::notifyRedoEvent(Event* log)
+CompositeUndoStackObserver::notifyRedoEvent(XML::Event* log)
 {
 
 	this->_lock();
@@ -67,7 +67,7 @@ CompositeUndoStackObserver::notifyRedoEvent(Event* log)
 }
 
 void
-CompositeUndoStackObserver::notifyUndoCommitEvent(Event* log)
+CompositeUndoStackObserver::notifyUndoCommitEvent(XML::Event* log)
 {
 	this->_lock();
 	for(UndoObserverRecordList::iterator i = this->_active.begin(); i != _active.end(); ++i) {
