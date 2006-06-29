@@ -219,7 +219,8 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         NR::Matrix scaler = get_scale_transform_with_stroke (bbox, strokewidth, transform_stroke, x0, y0, x1, y1);
 
         sp_selection_apply_affine(selection, scaler);
-        sp_document_maybe_done (document, actionkey);
+        sp_document_maybe_done (document, actionkey, SP_VERB_CONTEXT_SELECT, 
+                                /* TODO: annotate */ "select-toolbar.cpp:223");
 
         // defocus spinbuttons by moving focus to the canvas, unless "stay" is on
         spinbutton_defocus(GTK_OBJECT(spw));

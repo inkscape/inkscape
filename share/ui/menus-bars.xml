@@ -27,6 +27,7 @@
     <menu action='MenuEdit'>
       <menuitem action='Undo'/>
       <menuitem action='Redo'/>
+      <menuitem action='UndoHistory'/>
       <separator/>
       <menuitem action='Cut'/>
       <menuitem action='Copy'/>

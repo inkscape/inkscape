@@ -27,6 +27,7 @@
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <glibmm/ustring.h>
+#include "verbs.h"
 
 namespace Avoid {
 class Router;
@@ -42,6 +43,7 @@ namespace Inkscape {
     struct Application;
     class Selection; 
     class UndoStackObserver;
+    class EventLog;
     namespace XML {
         class Document;
         class Node;
@@ -110,6 +112,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
 	void addUndoObserver(Inkscape::UndoStackObserver& observer);
 	void removeUndoObserver(Inkscape::UndoStackObserver& observer);
+
+	Inkscape::EventLog& getEventLog() const;
 
 private:
 	SPDocument(SPDocument const &); // no copy
@@ -184,8 +188,8 @@ void sp_document_request_modified (SPDocument *doc);
 gint sp_document_ensure_up_to_date (SPDocument *doc);
 
 /* Save all previous actions to stack, as one undo step */
-void sp_document_done (SPDocument *document);
-void sp_document_maybe_done (SPDocument *document, const gchar *key);
+void sp_document_done (SPDocument *document, unsigned int event_type, Glib::ustring event_description);
+void sp_document_maybe_done (SPDocument *document, const gchar *keyconst, unsigned int event_type, Glib::ustring event_description);
 void sp_document_reset_key (Inkscape::Application *inkscape, SPDesktop *desktop, GtkObject *base);
 
 /* Cancel (and revert) current unsaved actions */

@@ -61,7 +61,8 @@ LicenseItem::on_toggled()
 
     _wr.setUpdating (true);
     rdf_set_license (SP_ACTIVE_DOCUMENT, _lic->details ? _lic : 0);
-    sp_document_done (SP_ACTIVE_DOCUMENT);
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_NONE, 
+                      /* TODO: annotate */ "licensor.cpp:65");
     _wr.setUpdating (false);
     reinterpret_cast<Gtk::Entry*>(_eep->_packable)->set_text (_lic->uri);
     _eep->on_changed();

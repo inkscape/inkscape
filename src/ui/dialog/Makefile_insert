@@ -42,6 +42,9 @@ ui_dialog_libuidialog_a_SOURCES =		\
 	ui/dialog/transformation.h		\
 	ui/dialog/tree-editor.cpp		\
 	ui/dialog/tree-editor.h			\
+	ui/dialog/undo-history.cpp		\
+	ui/dialog/undo-history.h		\
+	$(inkboard_dialogs)	\
 	ui/dialog/xml-editor.cpp		\
 	ui/dialog/xml-editor.h			\
 	ui/dialog/aboutbox.cpp		\

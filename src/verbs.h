@@ -187,6 +187,7 @@ enum {
     SP_VERB_DIALOG_SWATCHES,
     SP_VERB_DIALOG_TRANSFORM,
     SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+    SP_VERB_DIALOG_UNDO_HISTORY,
     SP_VERB_DIALOG_TEXT,
     SP_VERB_DIALOG_XML_EDITOR,
     SP_VERB_DIALOG_FIND,
@@ -307,6 +308,8 @@ public:
     gchar const * get_id (void) { return _id; }
     /** \brief Accessor to get the internal variable. */
     gchar const * get_name (void) { return _name; }
+    /** \brief Accessor to get the internal variable. */
+    gchar const * get_image (void) { return _image; }
 
     /** \brief Set the name after initialization. */
     gchar const * set_name (gchar const * name) { _name = name; return _name; }

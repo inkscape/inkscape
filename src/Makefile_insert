@@ -67,6 +67,7 @@ libinkpre_a_SOURCES =	\
 	dyna-draw-context.cpp dyna-draw-context.h	\
 	enums.h	\
 	event-context.cpp event-context.h	\
+	event-log.cpp event-log.h       \
 	extract-uri.cpp extract-uri.h	\
 	file.cpp file.h	\
 	fontsize-expansion.cpp fontsize-expansion.h	\

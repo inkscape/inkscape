@@ -685,7 +685,8 @@ set_to_accumulated(SPDynaDrawContext *dc)
         dc->repr = NULL;
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC, 
+                     /* TODO: annotate */ "dyna-draw-context.cpp:689");
 }
 
 static void

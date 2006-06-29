@@ -884,7 +884,8 @@ void after_tree_move(GtkCTree *tree,
     if (GTK_CTREE_ROW(node)->parent  == new_parent &&
         GTK_CTREE_ROW(node)->sibling == new_sibling)
     {
-        sp_document_done(current_document);
+        sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
+                         /* TODO: annotate */ "xml-tree.cpp:888");
     } else {
         sp_document_cancel(current_document);
     }
@@ -1383,7 +1384,8 @@ void cmd_new_text_node(GtkObject *object, gpointer data)
     Inkscape::XML::Node *text = sp_repr_new_text("");
     selected_repr->appendChild(text);
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
+                     /* TODO: annotate */ "xml-tree.cpp:1388");
 
     set_tree_select(text);
     set_dt_select(text);
@@ -1400,7 +1402,8 @@ void cmd_duplicate_node(GtkObject *object, gpointer data)
     Inkscape::XML::Node *dup = selected_repr->duplicate();
     parent->addChild(dup, selected_repr);
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
+                     /* TODO: annotate */ "xml-tree.cpp:1406");
 
     GtkCTreeNode *node = sp_xmlview_tree_get_repr_node(SP_XMLVIEW_TREE(tree), dup);
 
@@ -1416,7 +1419,8 @@ void cmd_delete_node(GtkObject *object, gpointer data)
     g_assert(selected_repr != NULL);
     sp_repr_unparent(selected_repr);
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
+                     /* TODO: annotate */ "xml-tree.cpp:1423");
 }
 
 
@@ -1433,7 +1437,8 @@ void cmd_delete_attr(GtkObject *object, gpointer data)
         updated->updateRepr();
     }
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+                     /* TODO: annotate */ "xml-tree.cpp:1441");
 }
 
 
@@ -1465,7 +1470,8 @@ void cmd_set_attr(GtkObject *object, gpointer data)
         updated->updateRepr();
     }
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
+                     /* TODO: annotate */ "xml-tree.cpp:1474");
 
     /* TODO: actually, the row won't have been created yet.  why? */
     gint row = sp_xmlview_attr_list_find_row_from_key(GTK_CLIST(attributes),
@@ -1494,7 +1500,8 @@ void cmd_raise_node(GtkObject *object, gpointer data)
 
     parent->changeOrder(selected_repr, ref);
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+                     /* TODO: annotate */ "xml-tree.cpp:1504");
 
     set_tree_select(selected_repr);
     set_dt_select(selected_repr);
@@ -1510,7 +1517,8 @@ void cmd_lower_node(GtkObject *object, gpointer data)
 
     parent->changeOrder(selected_repr, selected_repr->next());
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR,
+                     /* TODO: annotate */ "xml-tree.cpp:1521");
 
     set_tree_select(selected_repr);
     set_dt_select(selected_repr);
@@ -1539,7 +1547,8 @@ void cmd_indent_node(GtkObject *object, gpointer data)
     parent->removeChild(repr);
     prev->addChild(repr, ref);
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+                     /* TODO: annotate */ "xml-tree.cpp:1551");
     set_tree_select(repr);
     set_dt_select(repr);
 
@@ -1559,7 +1568,8 @@ void cmd_unindent_node(GtkObject *object, gpointer data)
     parent->removeChild(repr);
     grandparent->addChild(repr, parent);
 
-    sp_document_done(current_document);
+    sp_document_done(current_document, SP_VERB_DIALOG_XML_EDITOR, 
+                     /* TODO: annotate */ "xml-tree.cpp:1572");
     set_tree_select(repr);
     set_dt_select(repr);
 

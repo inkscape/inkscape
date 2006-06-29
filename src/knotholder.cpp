@@ -20,6 +20,15 @@
 #include "knot.h"
 #include "knotholder.h"
 #include "knot-holder-entity.h"
+#include "rect-context.h"
+#include "sp-rect.h"
+#include "arc-context.h"
+#include "sp-ellipse.h"
+#include "star-context.h"
+#include "sp-star.h"
+#include "spiral-context.h"
+#include "sp-spiral.h"
+
 #include <libnr/nr-matrix-div.h>
 
 class SPDesktop;
@@ -221,8 +230,20 @@ static void knot_clicked_handler(SPKnot *knot, guint state, gpointer data)
     knotholder_update_knots(knot_holder, item);
     g_object_unref(knot_holder);
 
+    unsigned int object_verb = SP_VERB_NONE;
+
+    if (SP_IS_RECT(item))
+        object_verb = SP_VERB_CONTEXT_RECT;
+    else if (SP_IS_GENERICELLIPSE(item))
+        object_verb = SP_VERB_CONTEXT_ARC;
+    else if (SP_IS_STAR(item))
+        object_verb = SP_VERB_CONTEXT_STAR;
+    else if (SP_IS_SPIRAL(item))
+        object_verb = SP_VERB_CONTEXT_SPIRAL;
+
     // for drag, this is done by ungrabbed_handler, but for click we must do it here
-    sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item));
+    sp_document_done(SP_OBJECT_DOCUMENT(knot_holder->item), object_verb, 
+                     /* TODO: annotate */ "knotholder.cpp:246");
 }
 
 static void knot_moved_handler(SPKnot *knot, NR::Point const *p, guint state, gpointer data)
@@ -255,7 +276,20 @@ static void knot_ungrabbed_handler(SPKnot *knot, unsigned int state, SPKnotHolde
     } else {
         SPObject *object = (SPObject *) kh->item;
         object->updateRepr(object->repr, SP_OBJECT_WRITE_EXT);
-        sp_document_done(SP_OBJECT_DOCUMENT (object));
+
+        unsigned int object_verb = SP_VERB_NONE;
+
+        if (SP_IS_RECT(object))
+            object_verb = SP_VERB_CONTEXT_RECT;
+        else if (SP_IS_GENERICELLIPSE(object))
+            object_verb = SP_VERB_CONTEXT_ARC;
+        else if (SP_IS_STAR(object))
+            object_verb = SP_VERB_CONTEXT_STAR;
+        else if (SP_IS_SPIRAL(object))
+            object_verb = SP_VERB_CONTEXT_SPIRAL;
+
+        sp_document_done(SP_OBJECT_DOCUMENT (object), object_verb, 
+                         /* TODO: annotate */ "knotholder.cpp:292");
     }
 }
 

@@ -226,6 +226,9 @@ override) the bindings in the main default.xml.
   <bind key="y" modifiers="Ctrl" action="EditRedo" />
   <bind key="Y" modifiers="Ctrl" action="EditRedo" />
 
+  <bind key="h" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
+  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
+
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
   <bind key="X" modifiers="Ctrl" action="EditCut" />
 

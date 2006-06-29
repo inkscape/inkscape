@@ -470,7 +470,8 @@ sp_star_finish (SPStarContext * sc)
         object->updateRepr(NULL, SP_OBJECT_WRITE_EXT);
 
         sp_desktop_selection(desktop)->set(sc->item);
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
+                         /* TODO: annotate */ "star-context.cpp:474");
 
         sc->item = NULL;
     }

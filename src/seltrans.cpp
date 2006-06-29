@@ -39,6 +39,7 @@
 #include "seltrans.h"
 #include "selection-chemistry.h"
 #include "sp-metrics.h"
+#include "verbs.h"
 #include <glibmm/i18n.h>
 #include "display/sp-ctrlline.h"
 #include "prefs-utils.h"
@@ -222,7 +223,8 @@ void Inkscape::SelTrans::setCenter(NR::Point const &p)
         it->setCenter(p);
         SP_OBJECT(it)->updateRepr();
     }
-    sp_document_maybe_done (sp_desktop_document(_desktop), "center::move");
+    sp_document_maybe_done (sp_desktop_document(_desktop), "center::move", SP_VERB_CONTEXT_SELECT, 
+                            /* TODO: annotate */ "seltrans.cpp:227");
 
     _updateHandles();
 }
@@ -340,7 +342,8 @@ void Inkscape::SelTrans::ungrab()
             }
         }
 
-        sp_document_done(sp_desktop_document(_desktop));
+        sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                         /* TODO: annotate */ "seltrans.cpp:346");
         updh = false;
     }
 
@@ -436,7 +439,8 @@ void Inkscape::SelTrans::stamp()
             Inkscape::GC::release(copy_repr);
             l = l->next;
         }
-        sp_document_done(sp_desktop_document(_desktop));
+        sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                         /* TODO: annotate */ "seltrans.cpp:443");
     }
 
     if ( fixup && _stamp_cache ) {
@@ -621,7 +625,8 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
                     _center_is_set = false;  // center has changed
                     _updateHandles();
                 }
-                sp_document_maybe_done (sp_desktop_document(_desktop), "center::unset");
+                sp_document_maybe_done (sp_desktop_document(_desktop), "center::unset", SP_VERB_CONTEXT_SELECT, 
+                                        /* TODO: annotate */ "seltrans.cpp:629");
             }
             break;
         default:

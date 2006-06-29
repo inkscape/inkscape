@@ -24,6 +24,7 @@ extern Gtk::StockID const IMPORT;
 extern Gtk::StockID const EXPORT;
 extern Gtk::StockID const VACUUM_DEFS;
 // Edit menu
+extern Gtk::StockID const UNDO_HISTORY;
 extern Gtk::StockID const PASTE_IN_PLACE;
 extern Gtk::StockID const PASTE_STYLE;
 extern Gtk::StockID const DUPLICATE;

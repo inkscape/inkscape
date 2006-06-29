@@ -40,6 +40,7 @@
 #include "desktop.h"
 #include "desktop-style.h"
 #include "context-fns.h"
+#include "verbs.h"
 
 #include "arc-context.h"
 
@@ -432,7 +433,8 @@ static void sp_arc_finish(SPArcContext *ac)
         SP_OBJECT(ac->item)->updateRepr();
 
         sp_desktop_selection(desktop)->set(ac->item);
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC, 
+                         /* TODO: annotate */ "arc-context.cpp:437");
 
         ac->item = NULL;
     }

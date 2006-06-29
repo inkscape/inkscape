@@ -511,7 +511,8 @@ sp_file_vacuum()
 
     unsigned int diff = vacuum_document (doc);
 
-    sp_document_done(doc);
+    sp_document_done(doc, SP_VERB_FILE_VACUUM, 
+                     /* TODO: annotate */ "file.cpp:515");
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     if (diff > 0) {
@@ -895,7 +896,8 @@ file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension
         }
 
         sp_document_unref(doc);
-        sp_document_done(in_doc);
+        sp_document_done(in_doc, SP_VERB_FILE_IMPORT,
+                         /* TODO: annotate */ "file.cpp:900");
 
     } else {
         gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), uri);

@@ -285,7 +285,8 @@ sp_fill_style_widget_fillrule_changed ( SPPaintSelector *psel,
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_done (SP_ACTIVE_DOCUMENT);
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "fill-style.cpp:289");
 }
 
 static gchar *undo_label_1 = "fill:flatcolor:1";
@@ -324,7 +325,8 @@ sp_fill_style_widget_paint_dragged (SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "fill", "fill-opacity");
-            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label);
+            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
+                                    /* TODO: annotate */ "fill-style.cpp:329");
             g_object_set_data (G_OBJECT (spw), "local", GINT_TO_POINTER (TRUE)); // local change, do not update from selection
             break;
         }
@@ -385,7 +387,8 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
             sp_repr_css_attr_unref (css);
 
-            sp_document_done (document);
+            sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                              /* TODO: annotate */ "fill-style.cpp:391");
             break;
         }
 
@@ -393,7 +396,8 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, desktop, "fill", "fill-opacity");
-            sp_document_maybe_done (sp_desktop_document(desktop), undo_label);
+            sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE,
+                                    /* TODO: annotate */ "fill-style.cpp:400");
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
@@ -459,7 +463,8 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
                 sp_repr_css_attr_unref (css);
 
-                sp_document_done (document);
+                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                                  /* TODO: annotate */ "fill-style.cpp:467");
             }
             break;
 
@@ -505,7 +510,8 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
 
                 } // end if
 
-                sp_document_done (document);
+                sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                                  /* TODO: annotate */ "fill-style.cpp:514");
 
             } // end if
 
@@ -519,7 +525,8 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                     sp_desktop_set_style (desktop, css);
                     sp_repr_css_attr_unref (css);
 
-                    sp_document_done (document);
+                    sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
+                                      /* TODO: annotate */ "fill-style.cpp:529");
             }
             break;
 

@@ -160,7 +160,8 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
                 sp_gradient_reset_to_userspace(priv, item);
             }
 
-            sp_document_done (sp_desktop_document (desktop));
+            sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                              /* TODO: annotate */ "gradient-context.cpp:164");
 
             ret = TRUE;
         }
@@ -365,7 +366,8 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
                     }
                 }
                 // we did an undoable action
-                sp_document_done (sp_desktop_document (desktop));
+                sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                                  /* TODO: annotate */ "gradient-context.cpp:370");
                 ret = TRUE;
             }
             break;

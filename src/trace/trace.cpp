@@ -563,7 +563,8 @@ void Tracer::traceThread()
         }
 
     //## inform the document, so we can undo
-    sp_document_done(doc);
+    sp_document_done(doc, SP_VERB_NONE, 
+		     /* TODO: annotate */ "trace.cpp:567");
 
     engine = NULL;
 

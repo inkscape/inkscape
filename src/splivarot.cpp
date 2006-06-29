@@ -405,7 +405,8 @@ sp_selected_path_boolop(bool_op bop)
         {
             SP_OBJECT(l->data)->deleteObject();
         }
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
+                         /* TODO: annotate */ "splivarot.cpp:409");
         selection->clear();
 
         delete res;
@@ -540,7 +541,18 @@ sp_selected_path_boolop(bool_op bop)
         Inkscape::GC::release(repr);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    unsigned int operation_verb = SP_VERB_NONE;
+    switch(bop) {
+        case bool_op_union   : operation_verb = SP_VERB_SELECTION_UNION;     break;
+        case bool_op_inters  : operation_verb = SP_VERB_SELECTION_INTERSECT; break;
+        case bool_op_diff    : operation_verb = SP_VERB_SELECTION_DIFF;      break;
+        case bool_op_symdiff : operation_verb = SP_VERB_SELECTION_SYMDIFF;   break;
+        case bool_op_cut     : operation_verb = SP_VERB_SELECTION_CUT;       break;
+        case bool_op_slice   : operation_verb = SP_VERB_SELECTION_SLICE;     break;
+    }
+
+    sp_document_done(sp_desktop_document(desktop), operation_verb, 
+                     /* TODO: annotate */ "splivarot.cpp:555");
 
     delete res;
 }
@@ -830,7 +842,8 @@ sp_selected_path_outline()
     }
 
     if (did) {
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_OUTLINE, 
+                         /* TODO: annotate */ "splivarot.cpp:846");
     } else {
         // TRANSLATORS: "to outline" means "to convert stroke to path"
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No stroked paths</b> to outline in the selection."));
@@ -1034,7 +1047,8 @@ sp_selected_path_create_offset_object(int expand, bool updating)
     {
         // pas vraiment de points sur le resultat
         // donc il ne reste rien
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
+                         /* TODO: annotate */ "splivarot.cpp:1051");
         selection->clear();
 
         delete res;
@@ -1098,7 +1112,8 @@ sp_selected_path_create_offset_object(int expand, bool updating)
         selection->set(nitem);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
+                     /* TODO: annotate */ "splivarot.cpp:1116");
 
     delete res;
     delete orig;
@@ -1340,7 +1355,8 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
     }
 
     if (did) {
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
+                         /* TODO: annotate */ "splivarot.cpp:1359");
     } else {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to inset/outset in the selection."));
         return;
@@ -1500,7 +1516,8 @@ sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
 
 
     if (didSomething)
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_SIMPLIFY, 
+                         /* TODO: annotate */ "splivarot.cpp:1520");
     else
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to simplify in the selection."));
 

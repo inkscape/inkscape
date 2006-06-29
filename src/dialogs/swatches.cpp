@@ -417,7 +417,8 @@ void ColorItem::_colorDefChanged(void* data)
                         str = 0;
 
                         if ( bruteForce( document, rroot, paletteName, item->def.getR(), item->def.getG(), item->def.getB() ) ) {
-                            sp_document_done( document );
+                            sp_document_done( document , SP_VERB_DIALOG_SWATCHES, 
+                                              /* TODO: annotate */ "swatches.cpp:421");
                         }
                     }
                 }
@@ -551,7 +552,8 @@ void ColorItem::buttonClicked(bool secondary)
         sp_desktop_set_style(desktop, css);
 
         sp_repr_css_attr_unref(css);
-        sp_document_done (sp_desktop_document (desktop));
+        sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_SWATCHES, 
+                          /* TODO: annotate */ "swatches.cpp:556");
     }
 }
 

@@ -156,7 +156,8 @@ sp_attribute_widget_changed (GtkEditable *editable)
                 text = SP_OBJECT_REPR (spaw->src.object)->attribute(spaw->attribute);
                 gtk_entry_set_text (GTK_ENTRY (spaw), text ? text : "");
             }
-            sp_document_done (SP_OBJECT_DOCUMENT (spaw->src.object));
+            sp_document_done (SP_OBJECT_DOCUMENT (spaw->src.object), SP_VERB_NONE, 
+                              /* TODO: annotate */ "sp-attribute-widget.cpp:160");
             
         } else if (spaw->src.repr) {
         
@@ -767,7 +768,8 @@ sp_attribute_table_entry_changed ( GtkEditable *editable,
                         gtk_entry_set_text ( GTK_ENTRY (spat->entries[i]), 
                                              text ? text : (const gchar *) "");
                     }
-                    sp_document_done (SP_OBJECT_DOCUMENT (spat->src.object));
+                    sp_document_done (SP_OBJECT_DOCUMENT (spat->src.object), SP_VERB_NONE, 
+                                      /* TODO: annotate */ "sp-attribute-widget.cpp:772");
                     
                 } else if (spat->src.repr) {
                     

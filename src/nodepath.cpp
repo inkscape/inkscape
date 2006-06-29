@@ -40,6 +40,7 @@
 #include "libnr/nr-matrix-ops.h"
 #include "splivarot.h"
 #include "svg/svg.h"
+#include "verbs.h"
 #include "display/bezier-utils.h"
 #include <vector>
 #include <algorithm>
@@ -479,7 +480,8 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
 void sp_nodepath_update_repr(Inkscape::NodePath::Path *np)
 {
     update_repr_internal(np);
-    sp_document_done(sp_desktop_document(np->desktop));
+    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
+                     /* TODO: annotate */ "nodepath.cpp:484");
 
     if (np->livarot_path) {
         delete np->livarot_path;
@@ -499,7 +501,8 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np)
 static void sp_nodepath_update_repr_keyed(Inkscape::NodePath::Path *np, gchar const *key)
 {
     update_repr_internal(np);
-    sp_document_maybe_done(sp_desktop_document(np->desktop), key);
+    sp_document_maybe_done(sp_desktop_document(np->desktop), key, SP_VERB_CONTEXT_NODE, 
+                           /* TODO: annotate */ "nodepath.cpp:505");
 
     if (np->livarot_path) {
         delete np->livarot_path;
@@ -541,7 +544,8 @@ static void stamp_repr(Inkscape::NodePath::Path *np)
     // move to the saved position
     new_repr->setPosition(pos > 0 ? pos : 0);
 
-    sp_document_done(sp_desktop_document(np->desktop));
+    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE,
+                     /* TODO: annotate */ "nodepath.cpp:548");
 
     Inkscape::GC::release(new_repr);
     g_free(svgpath);
@@ -2003,7 +2007,8 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             //delete this nodepath's object, not the entire selection! (though at this time, this
             //does not matter)
             sp_selection_delete();
-            sp_document_done (document);
+            sp_document_done (document, SP_VERB_CONTEXT_NODE,
+                              /* TODO: annotate */ "nodepath.cpp:2011");
         } else {
             sp_nodepath_update_repr(nodepath);
             sp_nodepath_update_statusbar(nodepath);
@@ -2039,7 +2044,8 @@ void sp_node_selected_delete()
         sp_nodepath_get_node_count(nodepath) < 2) {
         SPDocument *document = sp_desktop_document (nodepath->desktop);
         sp_selection_delete();
-        sp_document_done (document);
+        sp_document_done (document, SP_VERB_CONTEXT_NODE, 
+                          /* TODO: annotate */ "nodepath.cpp:2048");
         return;
     }
 

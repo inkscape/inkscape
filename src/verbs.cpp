@@ -1073,7 +1073,8 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
             if (next) {
                 dt->setCurrentLayer(next);
-                sp_document_done(sp_desktop_document(dt));
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_NEXT, 
+                                 /* TODO: annotate */ "verbs.cpp:1077");
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to next layer."));
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past last layer."));
@@ -1084,7 +1085,8 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             SPObject *prev=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
             if (prev) {
                 dt->setCurrentLayer(prev);
-                sp_document_done(sp_desktop_document(dt));
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_PREV, 
+                                 /* TODO: annotate */ "verbs.cpp:1089");
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to previous layer."));
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past first layer."));
@@ -1140,7 +1142,8 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                         message = g_strdup_printf(_("Lowered layer <b>%s</b>."), layer->defaultLabel());
                         break;
                 };
-                sp_document_done(sp_desktop_document(dt));
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_LOWER, 
+                                 /* TODO: annotate */ "verbs.cpp:1146");
                 if (message) {
                     dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
                     g_free((void *) message);
@@ -1173,7 +1176,8 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                     dt->setCurrentLayer(survivor);
                 }
 
-                sp_document_done(sp_desktop_document(dt));
+                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DELETE, 
+                                 /* TODO: annotate */ "verbs.cpp:1180");
 
                 // TRANSLATORS: this means "The layer has been deleted."
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Deleted layer."));
@@ -1232,7 +1236,8 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
             }
-            sp_document_done(sp_desktop_document(dt));
+            sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_HORIZONTAL,
+                             /* TODO: annotate */ "verbs.cpp:1240");
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
             if (tools_isactive(dt, TOOLS_NODES)) {
@@ -1240,7 +1245,8 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
             } else {
                 sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
             }
-            sp_document_done(sp_desktop_document(dt));
+            sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_VERTICAL,
+                             /* TODO: annotate */ "verbs.cpp:1249");
             break;
         case SP_VERB_OBJECT_SET_MASK:
             sp_selection_set_mask(false, false);
@@ -1561,6 +1567,9 @@ DialogVerb::perform(SPAction *action, void *data, void *pdata)
             break;
         case SP_VERB_DIALOG_SCRIPT:
             dt->_dlg_mgr->showDialog("Script");
+            break;
+        case SP_VERB_DIALOG_UNDO_HISTORY:
+            dt->_dlg_mgr->showDialog("UndoHistory");
             break;
         case SP_VERB_DIALOG_TOGGLE:
             inkscape_dialogs_toggle();
@@ -2242,6 +2251,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Precisely control objects' transformations"), "object_trans"),
     new DialogVerb(SP_VERB_DIALOG_ALIGN_DISTRIBUTE, "DialogAlignDistribute", N_("_Align and Distribute..."),
                    N_("Align and distribute objects"), "object_align"),
+    new DialogVerb(SP_VERB_DIALOG_UNDO_HISTORY, "DialogUndoHistory", N_("Undo _History..."),
+                   N_("Undo History"), "edit_undo_history"),
     new DialogVerb(SP_VERB_DIALOG_TEXT, "DialogText", N_("_Text and Font..."),
                    N_("View and select font family, font size and other text properties"), "object_font"),
     new DialogVerb(SP_VERB_DIALOG_XML_EDITOR, "DialogXMLEditor", N_("_XML Editor..."),

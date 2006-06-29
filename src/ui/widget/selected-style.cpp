@@ -35,6 +35,7 @@
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
 #include "helper/units.h"
+#include "verbs.h"
 
 static gdouble const _sw_presets[]     = { 32 ,  16 ,  10 ,  8 ,  6 ,  4 ,  3 ,  2 ,  1.5 ,  1 ,  0.75 ,  0.5 ,  0.25 ,  0.1 };
 static gchar* const _sw_presets_str[] = {"32", "16", "10", "8", "6", "4", "3", "2", "1.5", "1", "0.75", "0.5", "0.25", "0.1"};
@@ -425,7 +426,8 @@ void SelectedStyle::dragDataReceived( GtkWidget *widget,
                 sp_repr_css_set_property( css, (tracker->item == SS_FILL) ? "fill":"stroke", c );
                 sp_desktop_set_style( tracker->parent->_desktop, css );
                 sp_repr_css_attr_unref( css );
-                sp_document_done( sp_desktop_document(tracker->parent->_desktop) );
+                sp_document_done( sp_desktop_document(tracker->parent->_desktop) , SP_VERB_NONE, 
+                                  /* TODO: annotate */ "selected-style.cpp:429");
             }
         }
         break;
@@ -437,7 +439,8 @@ void SelectedStyle::on_fill_remove() {
     sp_repr_css_set_property (css, "fill", "none");
     sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:442");
 }
 
 void SelectedStyle::on_stroke_remove() {
@@ -445,7 +448,8 @@ void SelectedStyle::on_stroke_remove() {
     sp_repr_css_set_property (css, "stroke", "none");
     sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:451");
 }
 
 void SelectedStyle::on_fill_unset() {
@@ -453,7 +457,8 @@ void SelectedStyle::on_fill_unset() {
     sp_repr_css_unset_property (css, "fill");
     sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:460");
 }
 
 void SelectedStyle::on_stroke_unset() {
@@ -461,7 +466,8 @@ void SelectedStyle::on_stroke_unset() {
     sp_repr_css_unset_property (css, "stroke");
     sp_desktop_set_style (_desktop, css, true, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:469");
 }
 
 void SelectedStyle::on_fill_opaque() {
@@ -469,7 +475,8 @@ void SelectedStyle::on_fill_opaque() {
     sp_repr_css_set_property (css, "fill-opacity", "1");
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:478");
 }
 
 void SelectedStyle::on_stroke_opaque() {
@@ -477,7 +484,8 @@ void SelectedStyle::on_stroke_opaque() {
     sp_repr_css_set_property (css, "stroke-opacity", "1");
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:487");
 }
 
 void SelectedStyle::on_fill_lastused() {
@@ -488,7 +496,8 @@ void SelectedStyle::on_fill_lastused() {
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:499");
 }
 
 void SelectedStyle::on_stroke_lastused() {
@@ -499,7 +508,8 @@ void SelectedStyle::on_stroke_lastused() {
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:511");
 }
 
 void SelectedStyle::on_fill_lastselected() {
@@ -509,7 +519,8 @@ void SelectedStyle::on_fill_lastselected() {
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:522");
 }
 
 void SelectedStyle::on_stroke_lastselected() {
@@ -519,7 +530,8 @@ void SelectedStyle::on_stroke_lastselected() {
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:533");
 }
 
 void SelectedStyle::on_fill_invert() {
@@ -538,7 +550,8 @@ void SelectedStyle::on_fill_invert() {
     sp_repr_css_set_property (css, "fill", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:553");
 }
 
 void SelectedStyle::on_stroke_invert() {
@@ -557,7 +570,8 @@ void SelectedStyle::on_stroke_invert() {
     sp_repr_css_set_property (css, "stroke", c);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:573");
 } 
 
 void SelectedStyle::on_fill_white() {
@@ -568,7 +582,8 @@ void SelectedStyle::on_fill_white() {
     sp_repr_css_set_property (css, "fill-opacity", "1");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                      /* TODO: annotate */ "selected-style.cpp:585");
 }
 
 void SelectedStyle::on_stroke_white() {
@@ -579,7 +594,8 @@ void SelectedStyle::on_stroke_white() {
     sp_repr_css_set_property (css, "stroke-opacity", "1");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:597");
 }
 
 void SelectedStyle::on_fill_black() {
@@ -590,7 +606,8 @@ void SelectedStyle::on_fill_black() {
     sp_repr_css_set_property (css, "fill-opacity", "1.0");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:609");
 }
 
 void SelectedStyle::on_stroke_black() {
@@ -601,7 +618,8 @@ void SelectedStyle::on_stroke_black() {
     sp_repr_css_set_property (css, "stroke-opacity", "1.0");
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:621");
 }
 
 void SelectedStyle::on_fill_copy() {
@@ -643,7 +661,8 @@ void SelectedStyle::on_fill_paste() {
         sp_repr_css_set_property (css, "fill", text.c_str());
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
-        sp_document_done (sp_desktop_document(_desktop));
+        sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                          /* TODO: annotate */ "selected-style.cpp:664");
     }
 }
 
@@ -660,7 +679,8 @@ void SelectedStyle::on_stroke_paste() {
         sp_repr_css_set_property (css, "stroke", text.c_str());
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
-        sp_document_done (sp_desktop_document(_desktop));
+        sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                          /* TODO: annotate */ "selected-style.cpp:682");
     }
 }
 
@@ -715,7 +735,8 @@ void SelectedStyle::on_fillstroke_swap() {
 
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
+                      /* TODO: annotate */ "selected-style.cpp:738");
 }
 
 void SelectedStyle::on_fill_edit() {
@@ -782,7 +803,8 @@ SelectedStyle::on_opacity_click(GdkEventButton *event)
         sp_repr_css_set_property (css, "opacity", opacity);
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
-        sp_document_done (sp_desktop_document (_desktop));
+        sp_document_done (sp_desktop_document (_desktop), SP_VERB_DIALOG_FILL_STROKE,
+                          /* TODO: annotate */ "selected-style.cpp:806");
         return true;
     }
 
@@ -815,7 +837,8 @@ void SelectedStyle::on_popup_preset(int i) {
     sp_repr_css_set_property (css, "stroke-width", os.str().c_str());
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
-    sp_document_done (sp_desktop_document(_desktop));
+    sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_SWATCHES,
+                      /* TODO: annotate */ "selected-style.cpp:840");
 }
 
 void
@@ -1055,7 +1078,8 @@ void SelectedStyle::on_opacity_changed () {
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
-    sp_document_maybe_done (sp_desktop_document (_desktop), "fillstroke:opacity");
+    sp_document_maybe_done (sp_desktop_document (_desktop), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
+                            /* TODO: annotate */ "selected-style.cpp:1082");
     spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }

@@ -1043,7 +1043,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     item->updateRepr();
 
                     SPDocument *doc = SP_ACTIVE_DOCUMENT;
-                    sp_document_done( doc );
+                    sp_document_done( doc , SP_VERB_NONE, 
+                                      /* TODO: annotate */ "interface.cpp:1047");
 
                     if ( srgbProf ) {
                         cmsCloseProfile( srgbProf );
@@ -1084,7 +1085,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
                     item->updateRepr();
 
                     SPDocument *doc = SP_ACTIVE_DOCUMENT;
-                    sp_document_done( doc );
+                    sp_document_done( doc , SP_VERB_NONE, 
+                                      /* TODO: annotate */ "interface.cpp:1089");
                 }
             }
         }
@@ -1137,7 +1139,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
             }
 
             Inkscape::GC::release(newgroup);
-            sp_document_done(doc);
+            sp_document_done(doc, SP_VERB_NONE, 
+                             /* TODO: annotate */ "interface.cpp:1143");
             break;
         }
 
@@ -1196,7 +1199,8 @@ sp_ui_drag_data_received(GtkWidget *widget,
             desktop->currentLayer()->appendChildRepr(newImage);
 
             Inkscape::GC::release(newImage);
-            sp_document_done( doc );
+            sp_document_done( doc , SP_VERB_NONE, 
+                              /* TODO: annotate */ "interface.cpp:1203");
             break;
         }
     }

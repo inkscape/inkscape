@@ -8,12 +8,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="0.43+devel"
+   inkscape:version="0.44+devel"
    sodipodi:docname="icons.svg"
    height="1000.0000pt"
    width="1000.0000pt"
    sodipodi:version="0.32"
-   id="svg1">
+   id="svg1"
+   sodipodi:docbase="/usr/local/src/inkscape/share/icons">
   <defs
      id="defs3">
     <linearGradient
@@ -3580,7 +3581,7 @@
   </defs>
   <sodipodi:namedview
      inkscape:guide-bbox="true"
-     inkscape:current-layer="grid_arrange"
+     inkscape:current-layer="svg1"
      inkscape:grid-bbox="true"
      inkscape:pageopacity="1.0000000"
      pagecolor="#e8e8e4"
@@ -3590,9 +3591,9 @@
      inkscape:window-x="0"
      inkscape:window-height="949"
      inkscape:window-width="1272"
-     inkscape:cy="912.29243"
-     inkscape:cx="207.30874"
-     inkscape:zoom="22.224763"
+     inkscape:cy="1131.5205"
+     inkscape:cx="178.49469"
+     inkscape:zoom="2.7780954"
      gridtolerance="1.0000000px"
      snaptogrid="false"
      showgrid="true"
@@ -6082,7 +6083,7 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      id="edit_duplicate"
-     transform="translate(50.0399,-139.9404)">
+     transform="translate(50.0399,-119.9404)">
     <g
        id="g6144">
       <rect
@@ -6199,7 +6200,7 @@ http://www.inkscape.org/</dc:description>
        height="1250" />
   </g>
   <g
-     transform="translate(-298.3567,-167.1852)"
+     transform="translate(-298.3567,-147.1852)"
      id="edit_clone">
     <g
        id="use6150"
@@ -6264,7 +6265,7 @@ http://www.inkscape.org/</dc:description>
        id="path5069" />
   </g>
   <g
-     transform="translate(-298.3836,-147.1851)"
+     transform="translate(-298.3836,-127.1851)"
      id="edit_unlink_clone">
     <use
        transform="translate(2.690009e-2,-4.867687e-6)"
@@ -6377,7 +6378,7 @@ http://www.inkscape.org/</dc:description>
   <g
      id="xml_editor"
      style="fill:url(#linearGradient14902);fill-opacity:1;stroke:url(#linearGradient14917)"
-     transform="translate(-105,-35)">
+     transform="translate(-105,-15)">
     <path
        style="color:black;fill:url(#linearGradient14909);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient14919);stroke-width:1.00000036;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;display:inline"
        d="M 160.5,205.5 L 171.5,205.5 L 175.5,209.5 L 175.5,220.5 L 160.5,220.5 L 160.5,205.5 z "
@@ -8005,7 +8006,7 @@ http://www.inkscape.org/</dc:description>
   </g>
   <g
      id="selection_bitmap"
-     transform="matrix(-1,0,0,1,321.0144,55.92699)"
+     transform="matrix(-1,0,0,1,321.0144,75.92699)"
      inkscape:label="#selection_bitmap">
     <path
        style="color:black;fill:url(#linearGradient11197);fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient11286);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;display:inline"
@@ -8106,7 +8107,7 @@ http://www.inkscape.org/</dc:description>
        id="path5624" />
   </g>
   <g
-     transform="translate(-298.3149,-107.1388)"
+     transform="translate(-298.3149,-87.1388)"
      id="selection_select_all"
      inkscape:label="#selection_select_all">
     <use
@@ -10545,7 +10546,7 @@ http://www.inkscape.org/</dc:description>
   <g
      id="selection_paste_in_place"
      inkscape:label="#selection_paste_in_place"
-     transform="translate(-429.9517,-49.93562)">
+     transform="translate(-429.9517,-29.93562)">
     <g
        transform="translate(-4.83e-2,-5.4332e-2)"
        id="g6202">
@@ -10591,7 +10592,7 @@ http://www.inkscape.org/</dc:description>
   <g
      id="selection_paste_style"
      inkscape:label="#selection_paste_style"
-     transform="translate(-429.9489,-29.94566)">
+     transform="translate(-429.9489,-9.94566)">
     <use
        transform="translate(0,-4.298023e-6)"
        x="0"
@@ -12801,5 +12802,46 @@ http://www.inkscape.org/</dc:description>
        id="use4589"
        width="1250"
        height="1250" />
+  </g>
+  <g
+     id="edit_undo_history"
+     transform="matrix(1.00075,0,0,0.995637,-4.124129e-2,0.179073)">
+    <g
+       transform="matrix(0.723037,0,0,0.675336,-257.1363,-6.948167)"
+       id="g2661">
+      <path
+         style="fill:#fac32d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 432.57586,60.789275 L 440.01434,53.384696 L 440.01434,57.086985 C 440.01434,57.086985 448.78292,57.019152 448.78292,57.019152 C 448.78292,57.019152 448.78292,70.32655 448.78292,70.32655 C 448.78292,70.32655 445.5535,70.255081 445.5535,70.255081 C 445.5535,70.255081 445.5535,63.562531 445.5535,63.562531 C 445.5535,63.562531 438.61178,63.562531 438.61178,63.562531 C 438.61178,63.562531 438.61178,66.536998 438.61178,66.536998 C 438.61178,66.536998 432.57586,60.789275 432.57586,60.789275 z "
+         id="path2640" />
+      <path
+         style="fill:#efe4b6;fill-opacity:1;fill-rule:evenodd;stroke:#efe7c1;stroke-width:1.43366158;stroke-linecap:butt;stroke-linejoin:bevel;stroke-opacity:1"
+         d="M 432.55799,61.527847 L 439.14373,54.492253"
+         id="path2645" />
+      <path
+         style="fill:#ca8f0b;fill-opacity:1;fill-rule:evenodd;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 442.91075,70.258235 C 445.63204,70.163303 445.59879,70.32655 445.59879,70.32655 C 445.59879,70.32655 445.52187,63.562531 445.52187,63.562531 C 445.52187,62.075298 445.52187,62.075298 443.44884,62.075298 C 443.44884,62.075298 433.69657,61.965339 433.69657,61.965339 L 439.1693,67.94512 L 439.1693,64.464649 C 439.1693,64.464649 440.36473,64.494501 441.60518,64.494501 C 444.08614,64.494501 442.91075,67.280498 442.91075,70.258235 z "
+         id="path2642" />
+      <path
+         id="path2647"
+         d="M 432.39322,60.653071 L 439.32362,53.250046 L 439.32362,56.896141 C 439.32362,56.896141 446.48989,56.847305 448.98989,56.847305 C 448.98989,56.847305 449.02305,56.999851 449.02305,70.32655 C 449.02305,70.32655 444.55365,70.347313 443.45479,70.32655 C 443.45479,70.32655 443.45767,64.354932 443.45767,64.354932 C 442.20767,64.354932 439.3085,64.354932 439.3085,64.354932 L 439.32362,68.250046 L 432.39322,60.653071 z "
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.39714611;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       id="g11177"
+       transform="translate(-254.4684,4.926264)">
+      <path
+         style="opacity:1.0000000;color:#000000;fill:url(#linearGradient5612);fill-opacity:1.0;fill-rule:evenodd;stroke:url(#linearGradient5620);stroke-width:0.71197993;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:0.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+         id="path14377"
+         d="M 284.00000 23.000000 A 3.0000000 3.0000000 0 1 1  278.00000,23.000000 A 3.0000000 3.0000000 0 1 1  284.00000 23.000000 z"
+         transform="matrix(1.331759,0,0,1.327869,-53.22381,-6.040984)" />
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+         d="M 320.4594,22.007813 L 321.4594,21.007813 L 321.4594,25.007813 L 320.4594,25.007813 L 320.4594,22.007813 z "
+         id="path11169" />
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+         d="M 319.4609,24.02096 L 321.4609,24.02096 L 321.4609,25.02096 L 318.4609,25.02096 L 319.4609,24.02096 z "
+         id="path11171" />
+    </g>
   </g>
 </svg>

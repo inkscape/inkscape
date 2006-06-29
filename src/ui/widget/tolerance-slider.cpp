@@ -169,7 +169,8 @@ ToleranceSlider::update (double val)
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc);
+    sp_document_done (doc, SP_VERB_NONE,
+                      /* TODO: annotate */ "tolerance-slider.cpp:173");
     
     _wr->setUpdating (false);
 }

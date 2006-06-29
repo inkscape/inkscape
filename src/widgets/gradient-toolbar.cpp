@@ -142,7 +142,8 @@ gr_item_activate (GtkMenuItem *menuitem, gpointer data)
 
     gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr);
 
-    sp_document_done (sp_desktop_document (desktop));
+    sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                      /* TODO: annotate */ "gradient-toolbar.cpp:146");
 }
 
 gchar *
@@ -414,7 +415,8 @@ gr_fork (GtkWidget *button, GtkWidget *widget)
             SPGradient *gr_new = sp_gradient_fork_vector_if_necessary (gr);
             if (gr_new != gr) {
                 gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr_new);
-                sp_document_done (document);
+                sp_document_done (document, SP_VERB_CONTEXT_GRADIENT,
+                                  /* TODO: annotate */ "gradient-toolbar.cpp:419");
             }
         }
     }

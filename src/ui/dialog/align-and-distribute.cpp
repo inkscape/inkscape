@@ -215,7 +215,8 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( sp_desktop_document (desktop) );
+            sp_document_done ( sp_desktop_document (desktop) , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
+                               /* TODO: annotate */ "align-and-distribute.cpp:219" );
         }
 
 
@@ -374,7 +375,8 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         if (changed) {
-            sp_document_done ( sp_desktop_document (desktop) );
+            sp_document_done ( sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                               /* TODO: annotate */ "align-and-distribute.cpp:379");
         }
     }
     guint _index;
@@ -484,7 +486,8 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                         /* TODO: annotate */ "align-and-distribute.cpp:490");
     }
 };
 
@@ -513,7 +516,8 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                         /* TODO: annotate */ "align-and-distribute.cpp:520");
     }
 };
 
@@ -542,7 +546,8 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                          /* TODO: annotate */ "align-and-distribute.cpp:550");
     }
 };
 
@@ -605,7 +610,8 @@ private :
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+        sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                          /* TODO: annotate */ "align-and-distribute.cpp:614");
     }
 };
 
@@ -717,7 +723,8 @@ private :
         }
 
         if (changed) {
-            sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP));
+            sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                              /* TODO: annotate */ "align-and-distribute.cpp:727");
         }
     }
 };

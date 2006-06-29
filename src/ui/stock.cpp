@@ -21,6 +21,7 @@ Gtk::StockID const IMPORT("import");
 Gtk::StockID const EXPORT("export");
 Gtk::StockID const VACUUM_DEFS("vacuum-defs");
 // Edit menu
+Gtk::StockID const UNDO_HISTORY("undo-history");
 Gtk::StockID const PASTE_IN_PLACE("paste-in-place");
 Gtk::StockID const PASTE_STYLE("paste-style");
 Gtk::StockID const DUPLICATE("duplicate");

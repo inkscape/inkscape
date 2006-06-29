@@ -155,6 +155,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"script\" />\n"
 "    <group id=\"input\" />\n"
 "    <group id=\"colorpickerwindow\" />\n"
+"    <group id=\"undo-history\" />\n"
 "  </group>\n"
 "  <group id=\"printing\">\n"
 "    <settings id=\"ps\"/>\n"

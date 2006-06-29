@@ -613,7 +613,8 @@ void SPFlowtext::convert_to_text()
     selection->set(new_item);
     item->deleteObject();
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
+                     /* TODO: annotate */ "sp-flowtext.cpp:617");
 }
 
 SPItem *SPFlowtext::get_frame(SPItem *after)

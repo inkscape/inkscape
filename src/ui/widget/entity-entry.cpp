@@ -97,7 +97,8 @@ EntityLineEntry::on_changed()
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     char const *text = reinterpret_cast<Gtk::Entry*>(_packable)->get_text().c_str();
     if (rdf_set_work_entity (doc, _entity, text))
-        sp_document_done (doc);
+        sp_document_done (doc, SP_VERB_NONE, 
+                          /* TODO: annotate */ "entity-entry.cpp:101");
     _wr->setUpdating (false);
 }
 
@@ -141,7 +142,8 @@ EntityMultiLineEntry::on_changed()
     Gtk::TextView *tv = reinterpret_cast<Gtk::TextView*>(s->get_child());
     char const *text = tv->get_buffer()->get_text().c_str();
     if (rdf_set_work_entity (doc, _entity, text))
-        sp_document_done (doc);
+        sp_document_done (doc, SP_VERB_NONE, 
+                          /* TODO: annotate */ "entity-entry.cpp:146");
     _wr->setUpdating (false);
 }
 

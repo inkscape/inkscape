@@ -557,7 +557,8 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             item->updateRepr();
         }
 
-        sp_document_done(doc);
+        sp_document_done(doc, SP_IS_PEN_CONTEXT(dc)? SP_VERB_CONTEXT_PEN : SP_VERB_CONTEXT_PENCIL, 
+                         /* TODO: annotate */ "draw-context.cpp:561");
     }
 
     sp_curve_unref(c);

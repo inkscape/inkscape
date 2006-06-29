@@ -22,6 +22,8 @@
 
 #include "composite-undo-stack-observer.h"
 
+#include "event-log.h"
+
 // XXX only for testing!
 #include "console-output-undo-observer.h"
 
@@ -64,6 +66,9 @@ struct SPDocumentPrivate {
 
 	/* Undo listener */
 	Inkscape::CompositeUndoStackObserver undoStackObservers;
+
+        /* Event log */
+        Inkscape::EventLog event_log;
 
 	// XXX only for testing!
 	Inkscape::ConsoleOutputUndoObserver console_output_undo_observer;

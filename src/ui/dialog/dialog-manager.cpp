@@ -32,7 +32,7 @@
 #include "ui/dialog/text-properties.h"
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"
-
+#include "ui/dialog/undo-history.h"
 #include "ui/dialog/xml-editor.h"
 
 #include "dialogs/tiledialog.h"
@@ -85,6 +85,7 @@ DialogManager::DialogManager() {
     registerFactory("TileDialog",          &create<TileDialog>);
     registerFactory("Trace",               &create<TraceDialog>);
     registerFactory("Transformation",      &create<Transformation>);
+    registerFactory("UndoHistory",         &create<UndoHistory>);
     registerFactory("XmlEditor",           &create<XmlEditor>);
 }
 

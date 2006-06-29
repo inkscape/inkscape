@@ -213,7 +213,8 @@ void sp_selection_delete()
 
     if (tools_isactive (desktop, TOOLS_TEXT))
         if (sp_text_delete_selection(desktop->event_context)) {
-            sp_document_done(sp_desktop_document(desktop));
+            sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
+                             /* TODO: annotate */ "selection-chemistry.cpp:217");
             return;
         }
 
@@ -238,7 +239,8 @@ void sp_selection_delete()
      */
     tools_switch ( desktop, tools_active ( desktop ) );
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DELETE, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:243");
 }
 
 /* fixme: sequencing */
@@ -276,7 +278,8 @@ void sp_selection_duplicate()
         Inkscape::GC::release(copy);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_DUPLICATE, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:282");
 
     selection->setReprList(newsel);
 
@@ -300,7 +303,8 @@ void sp_edit_clear_all()
         items = g_slist_remove(items, items->data);
     }
 
-    sp_document_done(doc);
+    sp_document_done(doc, SP_VERB_EDIT_CLEAR_ALL,
+                     /* TODO: annotate */ "selection-chemistry.cpp:307");
 }
 
 GSList *
@@ -501,7 +505,8 @@ void sp_selection_group()
     // Move to the position of the topmost, reduced by the number of items deleted from topmost_parent
     group->setPosition(topmost + 1);
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_GROUP, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:509");
 
     selection->set(group);
     Inkscape::GC::release(group);
@@ -562,7 +567,8 @@ void sp_selection_ungroup()
 
     g_slist_free(items);
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_UNGROUP, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:571");
 }
 
 static SPGroup *
@@ -663,7 +669,8 @@ sp_selection_raise()
         rev = g_slist_remove(rev, child);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_RAISE,
+                     /* TODO: annotate */ "selection-chemistry.cpp:673");
 }
 
 void sp_selection_raise_to_top()
@@ -698,7 +705,8 @@ void sp_selection_raise_to_top()
 
     g_slist_free(rl);
 
-    sp_document_done(document);
+    sp_document_done(document, SP_VERB_SELECTION_TO_FRONT, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:709");
 }
 
 void
@@ -754,7 +762,8 @@ sp_selection_lower()
         rev = g_slist_remove(rev, child);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_LOWER, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:766");
 
 }
 
@@ -802,7 +811,8 @@ void sp_selection_lower_to_bottom()
 
     g_slist_free(rl);
 
-    sp_document_done(document);
+    sp_document_done(document, SP_VERB_SELECTION_TO_BACK, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:815");
 }
 
 void
@@ -1110,7 +1120,8 @@ void sp_selection_paste(bool in_place)
         sp_selection_move_relative(selection, m);
     }
 
-    sp_document_done(document);
+    sp_document_done(document, SP_VERB_EDIT_PASTE, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:1124");
 }
 
 void sp_selection_paste_style()
@@ -1136,7 +1147,8 @@ void sp_selection_paste_style()
 
     sp_desktop_set_style (desktop, style_clipboard);
 
-    sp_document_done(sp_desktop_document (desktop));
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_STYLE,
+                     /* TODO: annotate */ "selection-chemistry.cpp:1151");
 }
 
 void sp_selection_paste_size (bool apply_x, bool apply_y)
@@ -1171,7 +1183,8 @@ void sp_selection_paste_size (bool apply_x, bool apply_y)
                                      apply_x? scale_x : (desktop->isToolboxButtonActive ("lock")? scale_y : 1.0),
                                      apply_y? scale_y : (desktop->isToolboxButtonActive ("lock")? scale_x : 1.0)));
 
-    sp_document_done(sp_desktop_document (desktop));
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_SIZE,
+                     /* TODO: annotate */ "selection-chemistry.cpp:1187");
 }
 
 void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
@@ -1211,7 +1224,8 @@ void sp_selection_paste_size_separately (bool apply_x, bool apply_y)
 
     }
 
-    sp_document_done(sp_desktop_document (desktop));
+    sp_document_done(sp_desktop_document (desktop), SP_VERB_EDIT_PASTE_SIZE_SEPARATELY,
+                     /* TODO: annotate */ "selection-chemistry.cpp:1228");
 }
 
 void sp_selection_to_next_layer ()
@@ -1246,7 +1260,8 @@ void sp_selection_to_next_layer ()
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
         if (next) dt->setCurrentLayer(next);
-        sp_document_done(sp_desktop_document (dt));
+        sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_NEXT, 
+                         /* TODO: annotate */ "selection-chemistry.cpp:1264");
     } else {
         no_more = true;
     }
@@ -1290,7 +1305,8 @@ void sp_selection_to_prev_layer ()
         g_slist_free (copied);
         if (temp_clip) g_slist_free (temp_clip);
         if (next) dt->setCurrentLayer(next);
-        sp_document_done(sp_desktop_document (dt));
+        sp_document_done(sp_desktop_document (dt), SP_VERB_LAYER_MOVE_TO_PREV,
+                         /* TODO: annotate */ "selection-chemistry.cpp:1309");
     } else {
         no_more = true;
     }
@@ -1437,7 +1453,8 @@ void sp_selection_remove_transform()
         l = l->next;
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_FLATTEN, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:1457");
 }
 
 void
@@ -1545,7 +1562,8 @@ void sp_selection_rotate_90_cw()
         sp_item_rotate_rel(item, rot_neg_90);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_ROTATE_90_CCW, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:1566");
 }
 
 
@@ -1572,7 +1590,8 @@ void sp_selection_rotate_90_ccw()
         sp_item_rotate_rel(item, rot_neg_90);
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_ROTATE_90_CW,
+                     /* TODO: annotate */ "selection-chemistry.cpp:1594");
 }
 
 void
@@ -1588,7 +1607,9 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( ( angle_degrees > 0 )
                              ? "selector:rotate:ccw"
-                             : "selector:rotate:cw" ));
+                             : "selector:rotate:cw" ), 
+                           SP_VERB_CONTEXT_SELECT, 
+                           /* TODO: annotate */ "selection-chemistry.cpp:1612");
 }
 
 /**
@@ -1615,7 +1636,9 @@ sp_selection_rotate_screen(Inkscape::Selection *selection, gdouble angle)
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( (angle > 0)
                              ? "selector:rotate:ccw"
-                             : "selector:rotate:cw" ));
+                             : "selector:rotate:cw" ),
+                           SP_VERB_CONTEXT_SELECT, 
+                           /* TODO: annotate */ "selection-chemistry.cpp:1641");
 }
 
 void
@@ -1639,7 +1662,9 @@ sp_selection_scale(Inkscape::Selection *selection, gdouble grow)
     sp_document_maybe_done(sp_desktop_document(selection->desktop()),
                            ( (grow > 0)
                              ? "selector:scale:larger"
-                             : "selector:scale:smaller" ));
+                             : "selector:scale:smaller" ),
+                           SP_VERB_CONTEXT_SELECT,
+                           /* TODO: annotate */ "selection-chemistry.cpp:1667");
 }
 
 void
@@ -1657,7 +1682,8 @@ sp_selection_scale_times(Inkscape::Selection *selection, gdouble times)
 
     NR::Point const center(selection->bounds().midpoint());
     sp_selection_scale_relative(selection, center, NR::scale(times, times));
-    sp_document_done(sp_desktop_document(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_CONTEXT_SELECT, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:1685");
 }
 
 void
@@ -1672,11 +1698,14 @@ sp_selection_move(gdouble dx, gdouble dy)
     sp_selection_move_relative(selection, dx, dy);
 
     if (dx == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical");
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT, 
+                               /* TODO: annotate */ "selection-chemistry.cpp:1702");
     } else if (dy == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal");
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT, 
+                               /* TODO: annotate */ "selection-chemistry.cpp:1705");
     } else {
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT, 
+                         /* TODO: annotate */ "selection-chemistry.cpp:1707");
     }
 }
 
@@ -1697,11 +1726,14 @@ sp_selection_move_screen(gdouble dx, gdouble dy)
     sp_selection_move_relative(selection, zdx, zdy);
 
     if (dx == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical");
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT, 
+                               /* TODO: annotate */ "selection-chemistry.cpp:1730");
     } else if (dy == 0) {
-        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal");
+        sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT, 
+                               /* TODO: annotate */ "selection-chemistry.cpp:1733");
     } else {
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT, 
+                         /* TODO: annotate */ "selection-chemistry.cpp:1735");
     }
 }
 
@@ -1961,7 +1993,8 @@ sp_selection_clone()
         Inkscape::GC::release(clone);
     }
     
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:1996");
 
     selection->setReprList(newsel);
  
@@ -2012,7 +2045,8 @@ sp_selection_unlink()
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No clones to unlink</b> in the selection."));
     }
 
-    sp_document_done(sp_desktop_document(desktop));
+    sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_UNLINK_CLONE,
+                     /* TODO: annotate */ "selection-chemistry.cpp:2048");
 }
 
 void
@@ -2157,7 +2191,8 @@ sp_selection_tile(bool apply)
 
     g_slist_free (items);
 
-    sp_document_done (document);
+    sp_document_done (document, SP_VERB_EDIT_TILE, 
+                      /* TODO: annotate */ "selection-chemistry.cpp:2194");
 }
 
 void
@@ -2228,7 +2263,8 @@ sp_selection_untile()
     if (!did) {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No pattern fills</b> in the selection."));
     } else {
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_EDIT_UNTILE, 
+                         /* TODO: annotate */ "selection-chemistry.cpp:2266");
         selection->setList(new_select);
     }
 }
@@ -2377,7 +2413,8 @@ sp_selection_create_bitmap_copy ()
         gdk_pixbuf_unref (pb);
 
         // Complete undoable transaction
-        sp_document_done (document);
+        sp_document_done (document, SP_VERB_SELECTION_CREATE_BITMAP,
+                          /* TODO: annotate */ "selection-chemistry.cpp:2416");
     }
 
     g_free (filename);
@@ -2502,7 +2539,8 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     g_slist_free (mask_items);
     g_slist_free (apply_to_items);
 
-    sp_document_done (document);
+    sp_document_done (document, SP_VERB_OBJECT_SET_MASK,
+                      /* TODO: annotate */ "selection-chemistry.cpp:2542");
 }
 
 void sp_selection_unset_mask(bool apply_clip_path) {
@@ -2582,7 +2620,8 @@ void sp_selection_unset_mask(bool apply_clip_path) {
         g_slist_free (items_to_move);
     }
 
-    sp_document_done (document);
+    sp_document_done (document, SP_VERB_OBJECT_UNSET_MASK, 
+                      /* TODO: annotate */ "selection-chemistry.cpp:2623");
 }
 
 void fit_canvas_to_selection(SPDesktop *desktop) {
@@ -2625,7 +2664,8 @@ void fit_canvas_to_selection_or_drawing(SPDesktop *desktop) {
         fit_canvas_to_selection(desktop);
     }
 
-    sp_document_done(doc);
+    sp_document_done(doc, SP_VERB_FIT_CANVAS_TO_DRAWING, 
+                     /* TODO: annotate */ "selection-chemistry.cpp:2667");
 };
 
 /*

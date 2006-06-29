@@ -458,7 +458,8 @@ sp_spiral_finish(SPSpiralContext *sc)
         SP_OBJECT(spiral)->updateRepr(NULL, SP_OBJECT_WRITE_EXT);
 
         sp_desktop_selection(desktop)->set(sc->item);
-        sp_document_done(sp_desktop_document(desktop));
+        sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL, 
+                         /* TODO: annotate */ "spiral-context.cpp:462");
 
         sc->item = NULL;
     }

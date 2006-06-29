@@ -22,7 +22,7 @@
  * stack. Two methods exist to indicate that the given action is completed:
  *
  * \verbatim
-   void sp_document_done (SPDocument *document)
+   void sp_document_done (SPDocument *document);
    void sp_document_maybe_done (SPDocument *document, const unsigned char *key) \endverbatim
  *
  * Both move the recent action list into the undo stack and clear the
@@ -62,6 +62,7 @@
 #include "inkscape.h"
 #include "debug/event-tracker.h"
 #include "debug/simple-event.h"
+#include "event.h"
 
 
 /*
@@ -108,9 +109,9 @@ gboolean sp_document_get_undo_sensitive(SPDocument const *document) {
 }
 
 void
-sp_document_done (SPDocument *doc)
+sp_document_done (SPDocument *doc, const unsigned int event_type, Glib::ustring event_description)
 {
-	sp_document_maybe_done (doc, NULL);
+        sp_document_maybe_done (doc, NULL, event_type, event_description);
 }
 
 void
@@ -121,7 +122,8 @@ sp_document_reset_key (Inkscape::Application *inkscape, SPDesktop *desktop, GtkO
 }
 
 void
-sp_document_maybe_done (SPDocument *doc, const gchar *key)
+sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int event_type,
+                        Glib::ustring event_description)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -142,11 +144,14 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key)
 	}
 
 	if (key && doc->actionkey && !strcmp (key, doc->actionkey) && doc->priv->undo) {
-		doc->priv->undo->data = sp_repr_coalesce_log ((Inkscape::XML::Event *)doc->priv->undo->data, log);
+                doc->priv->undo->data = 
+                    new Inkscape::Event(sp_repr_coalesce_log (((Inkscape::Event *)
+                                                               doc->priv->undo->data)->event, log));
 	} else {
-		doc->priv->undo = g_slist_prepend (doc->priv->undo, log);
+                Inkscape::Event *event = new Inkscape::Event(log, event_type, event_description);
+                doc->priv->undo = g_slist_prepend (doc->priv->undo, event);
 		doc->priv->history_size++;
-		doc->priv->undoStackObservers.notifyUndoCommitEvent(log);
+		doc->priv->undoStackObservers.notifyUndoCommitEvent(event);
 	}
 
 	doc->actionkey = key;
@@ -214,13 +219,13 @@ sp_document_undo (SPDocument *doc)
 	finish_incomplete_transaction(*doc);
 
 	if (doc->priv->undo) {
-		Inkscape::XML::Event *log=(Inkscape::XML::Event *)doc->priv->undo->data;
+		Inkscape::Event *log=(Inkscape::Event *)doc->priv->undo->data;
 		doc->priv->undo = g_slist_remove (doc->priv->undo, log);
-		sp_repr_undo_log (log);
+		sp_repr_undo_log (log->event);
 		doc->priv->redo = g_slist_prepend (doc->priv->redo, log);
 
 		doc->rroot->setAttribute("sodipodi:modified", "true");
-		doc->priv->undoStackObservers.notifyUndoEvent(log);
+                doc->priv->undoStackObservers.notifyUndoEvent(log);
 
 		ret = TRUE;
 	} else {
@@ -258,9 +263,9 @@ sp_document_redo (SPDocument *doc)
 	finish_incomplete_transaction(*doc);
 
 	if (doc->priv->redo) {
-		Inkscape::XML::Event *log=(Inkscape::XML::Event *)doc->priv->redo->data;
+		Inkscape::Event *log=(Inkscape::Event *)doc->priv->redo->data;
 		doc->priv->redo = g_slist_remove (doc->priv->redo, log);
-		sp_repr_replay_log (log);
+		sp_repr_replay_log (log->event);
 		doc->priv->undo = g_slist_prepend (doc->priv->undo, log);
 
 		doc->rroot->setAttribute("sodipodi:modified", "true");
@@ -291,7 +296,7 @@ sp_document_clear_undo (SPDocument *doc)
 		doc->priv->undo = current->next;
 		doc->priv->history_size--;
 
-		sp_repr_free_log ((Inkscape::XML::Event *)current->data);
+                delete ((Inkscape::Event *) current->data);
 		g_slist_free_1 (current);
 	}
 }
@@ -306,7 +311,7 @@ sp_document_clear_redo (SPDocument *doc)
 		doc->priv->redo = current->next;
 		doc->priv->history_size--;
 
-		sp_repr_free_log ((Inkscape::XML::Event *)current->data);
+                delete ((Inkscape::Event *) current->data);
 		g_slist_free_1 (current);
 	}
 }

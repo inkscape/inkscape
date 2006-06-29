@@ -33,6 +33,7 @@
 #include "sp-namedview.h"
 
 #include "registered-widget.h"
+#include "verbs.h"
 
 namespace Inkscape {
 namespace UI {
@@ -98,7 +99,8 @@ RegisteredCheckButton::on_toggled()
     sp_repr_set_boolean(repr, _key.c_str(), _button->get_active());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc);
+    sp_document_done (doc, SP_VERB_NONE,
+                      /* TODO: annotate */ "registered-widget.cpp:103");
     
     _wr->setUpdating (false);
 }
@@ -156,7 +158,8 @@ RegisteredUnitMenu::on_changed()
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc);
+    sp_document_done (doc, SP_VERB_NONE, 
+                      /* TODO: annotate */ "registered-widget.cpp:162");
     
     _wr->setUpdating (false);
 }
@@ -223,7 +226,8 @@ RegisteredScalarUnit::on_value_changed()
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc);
+    sp_document_done (doc, SP_VERB_NONE, 
+                      /* TODO: annotate */ "registered-widget.cpp:230");
     
     _wr->setUpdating (false);
 }
@@ -333,7 +337,8 @@ RegisteredSuffixedInteger::on_value_changed()
     os << value;
 
     repr->setAttribute(_key.c_str(), os.str().c_str());
-    sp_document_done(sp_desktop_document(dt));
+    sp_document_done(sp_desktop_document(dt), SP_VERB_NONE, 
+                     /* TODO: annotate */ "registered-widget.cpp:341");
     
     _wr->setUpdating (false);
 }
@@ -396,7 +401,8 @@ RegisteredRadioButtonPair::on_value_changed()
     repr->setAttribute(_key.c_str(), second ? "true" : "false");
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
-    sp_document_done (doc);
+    sp_document_done (doc, SP_VERB_NONE, 
+                      /* TODO: annotate */ "registered-widget.cpp:405");
     
     _wr->setUpdating (false);
 }

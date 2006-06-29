@@ -126,7 +126,8 @@ sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
     (ptr->_preview).setRgba32 (rgba);
 
     if (ptr->_undo && SP_ACTIVE_DESKTOP)
-        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP));
+        sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_NONE, 
+                         /* TODO: annotate */ "color-picker.cpp:130");
 
     ptr->on_changed (rgba);
     _in_use = false;

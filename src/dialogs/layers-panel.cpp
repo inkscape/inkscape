@@ -587,7 +587,8 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 row[_model->_colVisible] = newValue;
                 item->setHidden( !newValue  );
                 item->updateRepr();
-                sp_document_done( _desktop->doc() );
+                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS, 
+                                  /* TODO: annotate */ "layers-panel.cpp:591");
             }
             break;
 
@@ -597,7 +598,8 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 row[_model->_colLocked] = newValue;
                 item->setLocked( newValue );
                 item->updateRepr();
-                sp_document_done( _desktop->doc() );
+                sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS, 
+                                  /* TODO: annotate */ "layers-panel.cpp:602");
             }
             break;
         }
@@ -693,7 +695,8 @@ void LayersPanel::_opacityChanged()
 
         sp_repr_css_attr_unref( css );
 
-        sp_document_maybe_done( _desktop->doc(), "layers:opacity" );
+        sp_document_maybe_done( _desktop->doc(), "layers:opacity", SP_VERB_NONE, 
+                                /* TODO: annotate */ "layers-panel.cpp:699" );
 
         _opacityConnection.unblock();
     }

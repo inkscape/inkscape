@@ -105,6 +105,8 @@ SPDocument::SPDocument() {
     p->undo = NULL;
     p->redo = NULL;
 
+    p->undoStackObservers.add(p->event_log);
+
     priv = p;
 
     // XXX only for testing!
@@ -646,6 +648,12 @@ void
 SPDocument::removeUndoObserver(Inkscape::UndoStackObserver& observer)
 {
 	this->priv->undoStackObservers.remove(observer);
+}
+
+Inkscape::EventLog&
+SPDocument::getEventLog() const
+{
+  return priv->event_log;
 }
 
 SPObject *SPDocument::getObjectById(gchar const *id) {

@@ -408,6 +408,10 @@ EditWidget::initMenuActions()
                                       Gtk::Stock::REDO, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));
 
+    _act_grp->add(Gtk::Action::create("UndoHistory",
+                                      Stock::UNDO_HISTORY, Glib::ustring(),
+                                      _("PLACEHOLDER, do not translate")));
+
     _act_grp->add(Gtk::Action::create("Cut",
                                       Gtk::Stock::CUT, Glib::ustring(),
                                       _("PLACEHOLDER, do not translate")));

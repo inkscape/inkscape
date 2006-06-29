@@ -65,6 +65,12 @@ init()
     icons->add(Stock::VACUUM_DEFS, _vacuum_defs);
 
     // Edit menu
+    //  Undo History
+    Gtk::IconSet _undo_history;
+    src.set_icon_name("UndoHistory");
+    src.set_filename(get_icon_path("undo-history.svg"));
+    _undo_history.add_source(src);
+    icons->add(Stock::UNDO_HISTORY, _undo_history);
     //  Paste In Place
     Gtk::IconSet _paste_in_place;
     src.set_icon_name("PasteInPlace");

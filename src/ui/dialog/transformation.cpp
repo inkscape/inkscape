@@ -581,7 +581,8 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
             x - bbox.min()[NR::X], y - bbox.min()[NR::Y]);
     }
 
-    sp_document_done ( sp_desktop_document (selection->desktop()) );
+    sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM, 
+                       /* TODO: annotate */ "transformation.cpp:585");
 }
 
 void
@@ -632,7 +633,8 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
         sp_selection_scale_relative(selection, center, scale);
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+                     /* TODO: annotate */ "transformation.cpp:637");
 }
 
 void
@@ -650,7 +652,8 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
         sp_selection_rotate_relative(selection, center, angle);
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+                     /* TODO: annotate */ "transformation.cpp:656");
 }
 
 void
@@ -702,7 +705,8 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
         }
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+                     /* TODO: annotate */ "transformation.cpp:709");
 }
 
 
@@ -728,7 +732,8 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
         sp_selection_apply_affine(selection, displayed); // post-multiply each object's transform
     }
 
-    sp_document_done(sp_desktop_document(selection->desktop()));
+    sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
+                     /* TODO: annotate */ "transformation.cpp:736");
 }
 
 

@@ -30,6 +30,7 @@
 #include "dialogs/layer-properties.h"
 #include "layer-manager.h"
 #include "xml/node-event-vector.h"
+#include "verbs.h"
 
 namespace Inkscape {
 namespace Widgets {
@@ -577,14 +578,16 @@ void LayerSelector::_prepareLabelRenderer(
 void LayerSelector::_lockLayer(bool lock) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setLocked(lock);
-        sp_document_maybe_done(sp_desktop_document(_desktop), "LayerSelector:lock");
+        sp_document_maybe_done(sp_desktop_document(_desktop), "LayerSelector:lock", SP_VERB_NONE, 
+                               /* TODO: annotate */ "layer-selector.cpp:582");
     }
 }
 
 void LayerSelector::_hideLayer(bool hide) {
     if ( _layer && SP_IS_ITEM(_layer) ) {
         SP_ITEM(_layer)->setHidden(hide);
-        sp_document_maybe_done(sp_desktop_document(_desktop), "LayerSelector:hide");
+        sp_document_maybe_done(sp_desktop_document(_desktop), "LayerSelector:hide", SP_VERB_NONE, 
+                               /* TODO: annotate */ "layer-selector.cpp:590");
     }
 }
 
