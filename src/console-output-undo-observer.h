@@ -22,9 +22,9 @@ public:
     ConsoleOutputUndoObserver() : UndoStackObserver() { }
     ~ConsoleOutputUndoObserver() { }
 
-    void notifyUndoEvent(XML::Event* log);
-    void notifyRedoEvent(XML::Event* log);
-    void notifyUndoCommitEvent(XML::Event* log);
+    void notifyUndoEvent(Event* log);
+    void notifyRedoEvent(Event* log);
+    void notifyUndoCommitEvent(Event* log);
 
 };
 }
