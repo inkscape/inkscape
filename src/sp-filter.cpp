@@ -26,17 +26,6 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
-#define DEBUG_FILTER
-#ifdef DEBUG_FILTER
-# define debug(f, a...) { g_print("%s(%d) %s:", \
-                                  __FILE__,__LINE__,__FUNCTION__); \
-                          g_print(f, ## a); \
-                          g_print("\n"); \
-                        }
-#else
-# define debug(f, a...) /**/
-#endif
-
 
 /*
  * For debugging purposes only
@@ -146,7 +135,6 @@ sp_filter_init(SPFilter *filter)
 static void
 sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    debug("0x%p",object);
     if (((SPObjectClass *) filter_parent_class)->build) {
         ((SPObjectClass *) filter_parent_class)->build(object, document, repr);
     }
@@ -171,7 +159,6 @@ sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 static void
 sp_filter_release(SPObject *object)
 {
-    debug("0x%p",object);
     SPFilter *filter = SP_FILTER(object);
 
     if (SP_OBJECT_DOCUMENT(object)) {
@@ -201,8 +188,6 @@ sp_filter_release(SPObject *object)
 static void
 sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    debug("0x%p %s(%u): '%s'",object,
-            sp_attribute_name(key),key,value);
     SPFilter *filter = SP_FILTER(object);
 
     switch (key) {
@@ -266,7 +251,7 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         default:
-            /* See if any parents need this value. */
+            // See if any parents need this value. 
             if (((SPObjectClass *) filter_parent_class)->set) {
                 ((SPObjectClass *) filter_parent_class)->set(object, key, value);
             }
@@ -280,7 +265,6 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_filter_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    debug("0x%p",object);
     //SPFilter *filter = SP_FILTER(object);
 
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
@@ -301,7 +285,6 @@ sp_filter_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    debug("0x%p",object);
     SPFilter *filter = SP_FILTER(object);
 
     if (!repr) {
