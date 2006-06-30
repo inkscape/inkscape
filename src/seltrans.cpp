@@ -224,7 +224,7 @@ void Inkscape::SelTrans::setCenter(NR::Point const &p)
         SP_OBJECT(it)->updateRepr();
     }
     sp_document_maybe_done (sp_desktop_document(_desktop), "center::move", SP_VERB_CONTEXT_SELECT, 
-                            /* TODO: annotate */ "seltrans.cpp:227");
+                            _("Set center"));
 
     _updateHandles();
 }
@@ -342,8 +342,20 @@ void Inkscape::SelTrans::ungrab()
             }
         }
 
-        sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                         /* TODO: annotate */ "seltrans.cpp:346");
+        if (_current.is_translation()) {
+            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                             _("Move"));
+        } else if (_current.is_scale()) {
+            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                             _("Scale"));
+        } else if (_current.is_rotation()) {
+            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                             _("Rotate"));
+        } else {
+            sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
+                             _("Skew"));
+        }
+
         updh = false;
     }
 
@@ -440,7 +452,7 @@ void Inkscape::SelTrans::stamp()
             l = l->next;
         }
         sp_document_done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_SELECT,
-                         /* TODO: annotate */ "seltrans.cpp:443");
+                         _("Stamp"));
     }
 
     if ( fixup && _stamp_cache ) {
@@ -626,7 +638,7 @@ void Inkscape::SelTrans::handleClick(SPKnot *knot, guint state, SPSelTransHandle
                     _updateHandles();
                 }
                 sp_document_maybe_done (sp_desktop_document(_desktop), "center::unset", SP_VERB_CONTEXT_SELECT, 
-                                        /* TODO: annotate */ "seltrans.cpp:629");
+                                        _("Reset center"));
             }
             break;
         default:
