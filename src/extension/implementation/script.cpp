@@ -989,7 +989,7 @@ Script::execute (const Glib::ustring &in_command,
         } else if (errno == ECHILD) {
             perror("Extension::Script:  Could not obtain child status for pclose\n");
         } else {
-            if (errorFile != NULL) {
+            if (!errorFile.empty()) {
                 checkStderr(errorFile, Gtk::MESSAGE_ERROR,
                     _("Inkscape has received an error from the script that it called.  "
                       "The text returned with the error is included below.  "
