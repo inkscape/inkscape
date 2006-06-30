@@ -3848,7 +3848,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     }
     
     sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
-                     /* TODO: annotate */ "toolbox.cpp:3851");
+            _("Change connector spacing distance"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
     

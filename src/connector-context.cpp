@@ -714,7 +714,7 @@ connector_handle_button_release(SPConnectorContext *const cc, GdkEventButton con
                 sp_conn_adjust_path(SP_PATH(cc->clickeditem));
                 cc->clickeditem->updateRepr();
                 sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
-                                 /* TODO: annotate */ "connector-context.cpp:717");
+                                 _("Reroute connector"));
                 cc_set_active_conn(cc, cc->clickeditem);
                 sp_document_ensure_up_to_date(doc);
                 cc->state = SP_CONNECTOR_CONTEXT_IDLE;
@@ -921,8 +921,7 @@ spcc_flush_white(SPConnectorContext *cc, SPCurve *gc)
     sp_curve_unref(c);
 
     /* Flush pending updates */
-    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
-                     /* TODO: annotate */ "connector-context.cpp:925");
+    sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, _("Create connector"));
     sp_document_ensure_up_to_date(doc);
 }
 
@@ -1276,8 +1275,10 @@ void cc_selection_set_avoid(bool const set_avoid)
         return;
     }
 
-    sp_document_done(document, SP_VERB_CONTEXT_CONNECTOR,
-                     /* TODO: annotate */ "connector-context.cpp:1280");
+    char *event_desc = (set_avoid) ?
+            _("Make connectors avoid selected objects") :
+            _("Make connectors ignore selected objects");
+    sp_document_done(document, SP_VERB_CONTEXT_CONNECTOR, event_desc);
 }
 
 
