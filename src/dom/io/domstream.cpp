@@ -95,6 +95,13 @@ static int dprintInt(Writer &outs,
         buf.insert(buf.begin(), '0');
         }
 
+    if (buf.size() == 0)
+        buf = "0";
+
+    int pad = width - (int)buf.size();
+    for (int i=0 ; i<pad ; i++)
+        buf.insert(buf.begin(), '0');
+
     //### Output the result
     for (unsigned int i=0 ; i<buf.size() ; i++)
         {
