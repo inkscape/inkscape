@@ -248,6 +248,16 @@ class Matrix {
      */
     bool is_translation(Coord const eps = 1e-6) const;
 
+    /**
+     *
+     */
+    bool is_scale(Coord const eps = 1e-6) const;
+
+    /**
+     *
+     */
+    bool is_rotation(Coord const eps = 1e-6) const;
+
 
     /**
      *
