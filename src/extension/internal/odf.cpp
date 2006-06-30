@@ -1470,14 +1470,13 @@ bool OdfOutput::writeStyle(Writer &outs)
         }
 
     //##  Dump our gradient table
+    int gradientCount = 0;
     outs.printf("\n");
     outs.printf("<!-- ####### Gradients from Inkscape document ####### -->\n");
     std::vector<GradientInfo>::iterator giter;
     for (giter = gradientTable.begin() ; giter != gradientTable.end() ; giter++)
         {
         GradientInfo gi(*giter);
-        outs.printf("<draw:gradient draw:name=\"%s\" ", gi.name.c_str());
-        outs.printf("draw:style=\"%s\" ", gi.style.c_str());
         if (gi.style == "linear")
             {
             /*
@@ -1491,7 +1490,28 @@ bool OdfOutput::writeStyle(Writer &outs)
                 draw:angle="150" draw:border="0%"/>
             ===================================================================
             */
-            outs.printf("draw:display-name=\"linear borderless\" ");
+            outs.printf("<svg:linearGradient ");
+            outs.printf("id=\"%#s_g\" ", gi.name.c_str());
+            outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+            outs.printf("draw:display-name=\"imported linear %d\"\n",
+                        gradientCount);
+            outs.printf("    svg:x1=\"%05.3f\" svg:y1=\"%05.3f\"\n",
+                        gi.x1, gi.y1);
+            outs.printf("    svg:x2=\"%05.3f\" svg:y2=\"%05.3f\">\n",
+                        gi.x2, gi.y2);
+            outs.printf("    <svg:stop\n");
+            outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                        0 /*gi.startColor*/);
+            outs.printf("        svg:stop-opacity=\"%f\"\n",
+                        0 /*gi.startOpacity*/);
+            outs.printf("        svg:offset=\"0\"/>\n");
+            outs.printf("    <svg:stop\n");
+            outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                        0 /*gi.stopColor*/);
+            outs.printf("        svg:stop-opacity=\"%f\"\n",
+                        0 /*gi.stopOpacity*/);
+            outs.printf("        svg:offset=\"0\"/>\n");
+            outs.printf("</svg:linearGradient>\n");
             }
         else if (gi.style == "radial")
             {
@@ -1507,14 +1527,46 @@ bool OdfOutput::writeStyle(Writer &outs)
                 draw:border="0%"/>
             ===================================================================
             */
-            outs.printf("draw:display-name=\"radial borderless\" ");
-            outs.printf("draw:cx=\".2f%%\" draw:cy=\".2f%%\" ", gi.cx, gi.cy);
+            outs.printf("<svg:radialGradient ");
+            outs.printf("id=\"%#s_g\" ", gi.name.c_str());
+            outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+            outs.printf("draw:display-name=\"imported radial %d\"\n",
+                        gradientCount);
+            outs.printf("    svg:cx=\"%05.3f\" svg:cy=\"%05.3f\"\n",
+                        gi.cx, gi.cy);
+            outs.printf("    svg:fx=\"%05.3f\" svg:fy=\"%05.3f\"\n",
+                        gi.fx, gi.fy);
+            outs.printf("    svg:r=\"%05.3f\">\n",
+                        gi.r);
+            outs.printf("    <svg:stop\n");
+            outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                        0 /*gi.startColor*/);
+            outs.printf("        svg:stop-opacity=\"%f\"\n",
+                        0 /*gi.startOpacity*/);
+            outs.printf("        svg:offset=\"0\"/>\n");
+            outs.printf("    <svg:stop\n");
+            outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                        0 /*gi.stopColor*/);
+            outs.printf("        svg:stop-opacity=\"%f\"\n",
+                        0 /*gi.stopOpacity*/);
+            outs.printf("        svg:offset=\"0\"/>\n");
+            outs.printf("</svg:radialGradient>\n");
             }
         else
             {
             g_warning("unsupported gradient style '%s'", gi.style.c_str());
             }
-        outs.printf("/>\n");
+        outs.printf("<style:style style:name=\"%#s\" style:family=\"graphic\" ",
+                  gi.name.c_str());
+        outs.printf("style:parent-style-name=\"standard\">\n");
+        outs.printf("    <style:graphic-properties draw:fill=\"gradient\" ");
+        outs.printf("draw:fill-gradient-name=\"%#s_g\"\n",
+                  gi.name.c_str());
+        outs.printf("        draw:textarea-horizontal-align=\"center\" ");
+        outs.printf("draw:textarea-vertical-align=\"middle\"/>\n");
+        outs.printf("</style:style>\n\n");
+
+        gradientCount++;
         }
 
     outs.printf("\n");
