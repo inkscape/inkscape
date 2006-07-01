@@ -101,16 +101,10 @@ PdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar 
     if (ext == NULL)
         return;
 
-    bool old_textToPath  = ext->get_param_bool("textToPath");
-    bool new_val         = mod->get_param_bool("textToPath");
-    ext->set_param_bool("textToPath", new_val);
-
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
 	pdf_print_document_to_file(doc, final_name);
 	g_free(final_name);
-
-    ext->set_param_bool("textToPath", old_textToPath);
 
 	return;
 }
@@ -129,7 +123,6 @@ PdfOutput::init (void)
 		"<inkscape-extension>\n"
 			"<name>PDF Output</name>\n"
 			"<id>org.inkscape.output.pdf</id>\n"
-			"<param name=\"textToPath\" gui-text=\"Text to Path\" type=\"boolean\">true</param>\n"
 			"<output>\n"
 				"<extension>.pdf</extension>\n"
 				"<mimetype>application/pdf</mimetype>\n"

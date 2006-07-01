@@ -35,6 +35,9 @@ class PrintPDF : public Inkscape::Extension::Implementation::Implementation {
     PdfFile   *pdf_file;
     PdfObject *doc_info;
     PdfObject *page_stream;
+    float *_pushed_alphas;
+    int _num_alphas;
+    int _curr_alpha;
     unsigned short _dpi;
     bool _bitmap;
     std::set<std::string> _latin1_encoded_fonts;

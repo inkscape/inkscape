@@ -74,10 +74,14 @@ PrintPDF::PrintPDF() :
     _dpi(72),
     _bitmap(false)
 {
+    _num_alphas = 10;
+    _pushed_alphas = (float*) malloc(_num_alphas*sizeof(float));
 }
 
 PrintPDF::~PrintPDF(void)
 {
+    free(_pushed_alphas);
+
     /* fixme: should really use pclose for popen'd streams */
     if (_stream) fclose(_stream);
 
@@ -232,6 +236,9 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 
     FILE *osf = NULL;
     FILE *osp = NULL;
+
+    _curr_alpha = 0;
+    _pushed_alphas[_curr_alpha] = 1.0;
 
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
@@ -473,6 +480,31 @@ PrintPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float
                  << transform->c[4] << " "
                  << transform->c[5] << " cm\n";
 
+    if (opacity!=1.0) {
+        float alpha = opacity * _pushed_alphas[_curr_alpha];
+
+        fprintf(stderr, "bind: opacity=%f, pushed=%f, alpha=%f\n",
+                opacity, _pushed_alphas[_curr_alpha], alpha);
+        
+        _curr_alpha++;
+        if (_curr_alpha >= _num_alphas) {
+            _num_alphas = _num_alphas*2;
+            _pushed_alphas = (float *) realloc(_pushed_alphas, _num_alphas*sizeof(float));
+        }
+        _pushed_alphas[_curr_alpha] = alpha;
+        
+        PdfObject *pdf_alpha = pdf_file->begin_resource(pdf_extgstate);
+        *pdf_alpha << "<< /Type /ExtGState\n";
+        *pdf_alpha << "   /ca " << alpha << "\n";
+        *pdf_alpha << "   /AIS false\n";
+        *pdf_alpha << ">>\n";
+        
+        *page_stream << pdf_alpha->get_name()
+                     << " gs\n";
+        
+        pdf_file->end_resource(pdf_alpha);
+    }
+
     return 1;
 }
 
@@ -481,6 +513,8 @@ PrintPDF::release(Inkscape::Extension::Print *mod)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
+
+    _curr_alpha--;
 
     *page_stream << "Q\n";
 
@@ -507,23 +541,25 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
     
     if (style->fill.type == SP_PAINT_TYPE_COLOR) {
         float alpha = 1.0;
-        
-        if (style->opacity.set)
-            alpha *= SP_SCALE24_TO_FLOAT(style->opacity.value);
-        
-        if (style->fill_opacity.set)
-            alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
+        alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
 
         if (alpha != 1.0) {
             PdfObject *pdf_alpha = pdf_file->begin_resource(pdf_extgstate);
             *pdf_alpha << "<< /Type /ExtGState\n";
-            *pdf_alpha << "   /ca " << alpha << "\n";
+            *pdf_alpha << "   /ca " << alpha*_pushed_alphas[_curr_alpha] << "\n";
             *pdf_alpha << "   /AIS false\n";
             *pdf_alpha << ">>\n";
             
             *page_stream << pdf_alpha->get_name()
                          << " gs\n";
             
+            
+        fprintf(stderr, "print_fill_alpha: opacity=%f, fill-opacity=%f, pushed_alphas=%f ==> %f\n",
+                SP_SCALE24_TO_FLOAT(style->opacity.value),
+                SP_SCALE24_TO_FLOAT(style->fill_opacity.value),
+                _pushed_alphas[_curr_alpha],
+                alpha*_pushed_alphas[_curr_alpha]);
+
             pdf_file->end_resource(pdf_alpha);
         }
     } else {
@@ -550,12 +586,12 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
                 alpha *= lg->vector.stops[i].opacity;
             }
             
-            if (alpha != 1.0 || style->opacity.set) {
+            if (alpha != 1.0) {
                 PdfObject *pdf_gstate = pdf_file->begin_resource(pdf_extgstate);
                 *pdf_gstate << "<< /Type /ExtGState\n";
                 
-                if (style->opacity.set) {
-                    *pdf_gstate << "   /ca " << SP_SCALE24_TO_FLOAT(style->opacity.value) << "\n";
+                if (_pushed_alphas[_curr_alpha] != 1.0) {
+                    *pdf_gstate << "   /ca " << _pushed_alphas[_curr_alpha] << "\n";
                     *pdf_gstate << "   /AIS false\n";
                 }
                 
@@ -679,12 +715,12 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
                 alpha *= rg->vector.stops[i].opacity;
             }
 
-            if (alpha != 1.0 || style->opacity.set) {
+            if (alpha != 1.0) {
                 PdfObject *pdf_gstate = pdf_file->begin_resource(pdf_extgstate);
                 *pdf_gstate << "<< /Type /ExtGState\n";
                 
-                if (style->opacity.set) {
-                    *pdf_gstate << "   /ca " << SP_SCALE24_TO_FLOAT(style->opacity.value) << "\n";
+                if (_pushed_alphas[_curr_alpha] != 1.0) {
+                    *pdf_gstate << "   /ca " << _pushed_alphas[_curr_alpha] << "\n";
                     *pdf_gstate << "   /AIS false\n";
                 }
                 
@@ -914,17 +950,12 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
     *page_stream << rgb[0] << " " << rgb[1] << " " << rgb[2] << " RG\n";
         
     float alpha = 1.0;
-
-    if (style->opacity.set)
-        alpha *= SP_SCALE24_TO_FLOAT(style->opacity.value);
-        
-    if (style->stroke_opacity.set)
-        alpha *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
+    alpha *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
 
     if (alpha != 1.0) {
         PdfObject *pdf_alpha = pdf_file->begin_resource(pdf_extgstate);
         *pdf_alpha << "<< /Type /ExtGState\n";
-        *pdf_alpha << "   /CA " << alpha << "\n";
+        *pdf_alpha << "   /CA " << alpha*_pushed_alphas[_curr_alpha] << "\n";
         *pdf_alpha << "   /AIS false\n";
         *pdf_alpha << ">>\n";
         
@@ -937,8 +968,7 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
     // invalid PS-lines such as "[0.0000000 0.0000000] 0.0000000 setdash", which should be "[] 0 setdash",
     // we first check if all components of stroke_dash.dash are 0.
     bool LineSolid = true;
-    if (style->stroke_dasharray_set &&
-        style->stroke_dash.n_dash   &&
+    if (style->stroke_dash.n_dash   &&
         style->stroke_dash.dash       )
     {
         int i = 0;
@@ -966,9 +996,9 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
     *page_stream << style->stroke_width.computed << " w\n";
     *page_stream << style->stroke_linejoin.computed << " j\n";
     *page_stream << style->stroke_linecap.computed << " J\n";
-    if (style->stroke_miterlimit.set) {
-        *page_stream << style->stroke_miterlimit.value << " M\n";
-    }
+    *page_stream <<
+        ( style->stroke_miterlimit.value > 1 ?
+          style->stroke_miterlimit.value : 1 ) << " M\n";
 }
 
 

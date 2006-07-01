@@ -14,7 +14,7 @@ that they get into the tarball
     <output>
         <extension>.pdf</extension>
         <mimetype>image/x-portable-document-format</mimetype>
-        <_filetypename>Adobe PDF (*.pdf)</_filetypename>
+        <_filetypename>Adobe PDF via postscript (*.pdf)</_filetypename>
         <_filetypetooltip>Adobe Portable Document Format</_filetypetooltip>
     </output>
     <script>

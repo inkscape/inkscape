@@ -385,6 +385,10 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                << d.x0 << " "
                << (_height - d.y0) << " "
                << d.x1 << "\n";
+            os << "%%DocumentMedia: plain "
+               << (int) ceil(_height) << " "
+               << (int) ceil(_width) << " "
+               << "0 () ()\n";
         } else {
             os << "%%Orientation: Portrait\n";
             os << "%%BoundingBox: " << (int) d.x0 << " "
@@ -395,6 +399,10 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                << d.y0 << " "
                << d.x1 << " "
                << d.y1 << "\n";
+            os << "%%DocumentMedia: plain "
+               << (int) ceil(_width) << " "
+               << (int) ceil(_height) << " "
+               << "0 () ()\n";
         }
 
         os << "%%EndComments\n";
@@ -656,8 +664,7 @@ PrintPS::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
     // invalid PS-lines such as "[0.0000000 0.0000000] 0.0000000 setdash", which should be "[] 0 setdash",
     // we first check if all components of stroke_dash.dash are 0.
     bool LineSolid = true;
-    if (style->stroke_dasharray_set &&
-        style->stroke_dash.n_dash   &&
+    if (style->stroke_dash.n_dash   &&
         style->stroke_dash.dash       )
     {
         int i = 0;
@@ -784,44 +791,6 @@ PrintPS::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, unsi
     if (_bitmap) return 0;
 
     return print_image(_stream, px, w, h, rs, transform);
-#if 0
-    fprintf(_stream, "gsave\n");
-    fprintf(_stream, "/rowdata %d string def\n", 3 * w);
-    fprintf(_stream, "[%g %g %g %g %g %g] concat\n",
-            transform->c[0],
-            transform->c[1],
-            transform->c[2],
-            transform->c[3],
-            transform->c[4],
-            transform->c[5]);
-    fprintf(_stream, "%d %d 8 [%d 0 0 -%d 0 %d]\n", w, h, w, h, h);
-    fprintf(_stream, "{currentfile rowdata readhexstring pop}\n");
-    fprintf(_stream, "false 3 colorimage\n");
-
-    for (unsigned int r = 0; r < h; r++) {
-        guchar *s;
-        unsigned int c0, c1, c;
-        s = px + r * rs;
-        for (c0 = 0; c0 < w; c0 += 24) {
-            c1 = MIN(w, c0 + 24);
-            for (c = c0; c < c1; c++) {
-                static char const xtab[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-                fputc(xtab[s[0] >> 4], _stream);
-                fputc(xtab[s[0] & 0xf], _stream);
-                fputc(xtab[s[1] >> 4], _stream);
-                fputc(xtab[s[1] & 0xf], _stream);
-                fputc(xtab[s[2] >> 4], _stream);
-                fputc(xtab[s[2] & 0xf], _stream);
-                s += 4;
-            }
-            fputs("\n", _stream);
-        }
-    }
-
-    fprintf(_stream, "grestore\n");
-
-    return 0;
-#endif
 }
 
 char const *
@@ -1142,85 +1111,87 @@ PrintPS::print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int hei
     Inkscape::SVGOStringStream os;
 
     os << "gsave\n";
+
     os << "[" << transform->c[0] << " "
        << transform->c[1] << " "
        << transform->c[2] << " "
        << transform->c[3] << " "
        << transform->c[4] << " "
        << transform->c[5] << "] concat\n";
-    os << width << " " << height << " 8 ["
-       << width << " 0 0 -" << height << " 0 " << height << "]\n";
-
 
     /* Write read image procedure */
-    os << "% Strings to hold RGB-samples per scanline\n";
-    os << "/rstr " << width << " string def\n";
-    os << "/gstr " << width << " string def\n";
-    os << "/bstr " << width << " string def\n";
-    os << "{currentfile /ASCII85Decode filter /RunLengthDecode filter rstr readstring pop}\n";
-    os << "{currentfile /ASCII85Decode filter /RunLengthDecode filter gstr readstring pop}\n";
-    os << "{currentfile /ASCII85Decode filter /RunLengthDecode filter bstr readstring pop}\n";
-    os << "true 3\n";
+    os << "<<\n";
+    os << "  /ImageType 3\n";
+    os << "  /InterleaveType 1\n";
+
+    os << "  /MaskDict\n";
+    os << "  <<\n";
+    os << "    /ImageType 1\n";
+    os << "    /Width " << width << "\n";
+    os << "    /Height " << height << "\n";
+    os << "    /ImageMatrix "
+       << "[" << transform->c[0] << " "
+       << transform->c[1] << " "
+       << transform->c[2] << " "
+       << transform->c[3] << " "
+       << 0 << " "
+       << height << "]\n";
+    os << "    /BitsPerComponent 8\n";
+    os << "    /Decode [1 0]\n";
+    os << "  >>\n";
+
+    os << "  /DataDict\n";
+    os << "  <<\n";
+    os << "    /ImageType 1\n";
+    os << "    /Width " << width << "\n";
+    os << "    /Height " << height << "\n";
+    os << "    /ImageMatrix "
+       << "[" << transform->c[0] << " "
+       << transform->c[1] << " "
+       << transform->c[2] << " "
+       << transform->c[3] << " "
+       << 0 << " "
+       << height << "]\n";
+    os << "    /DataSource currentfile /ASCII85Decode filter\n";
+    os << "    /BitsPerComponent 8\n";
+    os << "    /Decode [0 1 0 1 0 1]\n";
+    os << "  >>\n";
+
+    os << ">>\n";
 
     /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    guchar *const packb = (guchar *)g_malloc((width * 105)/100+2);
-    guchar *const plane = (guchar *)g_malloc(width);
+    guchar *const packb = (guchar *)g_malloc((4*width * 105)/100+2);
+    guchar *const plane = (guchar *)g_malloc(4*width);
 
-    /* ps_begin_data(ofp); */
-    os << "colorimage\n";
+    os << "image\n";
 
-/*#define GET_RGB_TILE(begin)                   \
- *  {int scan_lines;                                                    \
- *    scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
- *    gimp_pixel_rgn_get_rect(&pixel_rgn, begin, 0, i, width, scan_lines); \
- *    src = begin; }
- */
-
+    ascii85_init();
+    
     for (unsigned i = 0; i < height; i++) {
-        /* if ((i % tile_height) == 0) GET_RGB_TILE(data); */ /* Get more data */
         guchar const *const src = px + i * rs;
 
-        /* Iterate over RGB */
-        for (int rgb = 0; rgb < 3; rgb++) {
-            guchar const *src_ptr = src + rgb;
-            guchar *plane_ptr = plane;
-            for (unsigned j = 0; j < width; j++) {
-                *(plane_ptr++) = *src_ptr;
-                src_ptr += 4;
-            }
-
-            int nout;
-            compress_packbits(width, plane, &nout, packb);
-
-            ascii85_init();
-            ascii85_nout(nout, packb, os);
-            ascii85_out(128, os); /* Write EOD of RunLengthDecode filter */
-            ascii85_done(os);
+        guchar const *src_ptr = src;
+        guchar *plane_ptr = plane;
+        for (unsigned j = 0; j < width; j++) {
+            *(plane_ptr++) = *(src_ptr+3);
+            *(plane_ptr++) = *(src_ptr+0);
+            *(plane_ptr++) = *(src_ptr+1);
+            *(plane_ptr++) = *(src_ptr+2);
+            src_ptr += 4;
         }
+        
+        ascii85_nout(4*width, plane, os);
     }
-    /* ps_end_data(ofp); */
-
-#if 0
-    fprintf(ofp, "showpage\n");
-    g_free(data);
-#endif
+    ascii85_done(os);
 
     g_free(packb);
     g_free(plane);
-
-#if 0
-    if (ferror(ofp)) {
-        g_message(_("write error occurred"));
-        return (FALSE);
-    }
-#endif
 
     os << "grestore\n";
 
     fprintf(ofp, "%s", os.str().c_str());
 
     return 0;
-//#undef GET_RGB_TILE
 }
 
 bool
