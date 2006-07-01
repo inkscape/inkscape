@@ -1053,24 +1053,7 @@ static void do_export_pdf(SPDocument* doc, gchar const* uri, char const* mime)
         return;
     }
 
-    bool old_text_to_path = false;
-
-    try {
-        old_text_to_path = (*i)->get_param_bool("textToPath");
-        (*i)->set_param_bool("textToPath", sp_export_text_to_path);
-    }
-    catch (...) {
-        g_warning ("Could not set export-text-to-path option for this export.");
-    }
-
     (*i)->save(doc, uri);
-
-    try {
-        (*i)->set_param_bool("textToPath", old_text_to_path);
-    }
-    catch (...) {
-
-    }
 }
 
 #ifdef WIN32
