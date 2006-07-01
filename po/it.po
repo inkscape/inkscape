@@ -4290,7 +4290,7 @@ msgstr "(null_pointer)"
 #: ../src/sp-image.cpp:976
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
-msgstr "<b>Immmagine con un descrittore sbagliato</b>: %s"
+msgstr "<b>Immagine con un descrittore sbagliato</b>: %s"
 
 #: ../src/sp-image.cpp:977
 #, c-format
@@ -4692,8 +4692,8 @@ msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
 msgstr ""
-"<b>Trascinare</b> o <b>doppio click</b> per creare un gradiente un gradiente "
-"sull'oggetto selezionato; <b>trascniare le maniglie</b> per modificare il "
+"<b>Trascinare</b> o <b>doppio click</b> per creare un gradiente "
+"sull'oggetto selezionato; <b>trascinare le maniglie</b> per modificare il "
 "gradiente."
 
 #: ../src/tools-switch.cpp:193
