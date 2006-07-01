@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-29 23:35+0200\n"
-"PO-Revision-Date: 2006-06-29 21:04+0200\n"
+"PO-Revision-Date: 2006-07-01 14:50+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1976,7 +1976,7 @@ msgstr ""
 
 #: ../src/event-log.cpp:32
 msgid "[Unchanged]"
-msgstr ""
+msgstr "[Unverändert]"
 
 #: ../src/extension/dependency.cpp:239
 msgid "Dependency::"
@@ -2985,15 +2985,11 @@ msgstr ""
 "Benutzer senden."
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:117
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
 "incompatible version of Inkboard.</span>\n"
 "\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Der Benutzer <b>%1</b> nimmt bereits "
-"in einer Whiteboard-Sitzung teil.</span>\n"
-"\n"
+msgstr "<span weight=\"bold\" size=\"larger\">Der Benutzer <b>%1</b> benutzt eine inkompatible Version von Inkboard.</span>\n\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:120
@@ -3002,6 +2998,9 @@ msgid ""
 "\n"
 "You are still connected to a Jabber server as <b>%2</b>."
 msgstr ""
+"Inkscape kann sich nicht mit <b>%1</b> verbinden.\n"
+"\n"
+"Sie sind immer noch mit einem Jabber-Server als <b>%2</b> verbunden."
 
 #: ../src/jabber_whiteboard/message-queue.cpp:75
 #, c-format
@@ -3032,7 +3031,7 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/new-inkboard-document.cpp:60
 msgid "Inkboard session (%1 to %2)"
-msgstr ""
+msgstr "Inkboard-Sitzung (%1 mit %2)"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
@@ -3198,9 +3197,8 @@ msgid "Export document to an EPS file"
 msgstr "Das Dokument in eine EPS-Datei exportieren"
 
 #: ../src/main.cpp:304
-#, fuzzy
 msgid "Export document to a PDF file"
-msgstr "Das Dokument in eine PS-Datei exportieren"
+msgstr "Das Dokument in eine PDF-Datei exportieren"
 
 #: ../src/main.cpp:309
 msgid "Convert text object to paths on export (EPS)"
@@ -7385,7 +7383,7 @@ msgstr "tutorial-shapes.de.svg"
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1660
 msgid "tutorial-advanced.svg"
-msgstr "tutorial-advanced.svg"
+msgstr "tutorial-advanced.de.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1664
@@ -8628,11 +8626,11 @@ msgstr "Objekte ausrichten und ihre Abstände ausgleichen"
 
 #: ../src/verbs.cpp:2254
 msgid "Undo _History..."
-msgstr ""
+msgstr "Bearbeitungs_historie..."
 
 #: ../src/verbs.cpp:2255
 msgid "Undo History"
-msgstr ""
+msgstr "Bearbeitungshistorie"
 
 #: ../src/verbs.cpp:2256
 msgid "_Text and Font..."
@@ -8706,13 +8704,12 @@ msgstr ""
 "Kennung, Status (gesperrt, sichtbar) und andere Objekteigenschaften ändern"
 
 #: ../src/verbs.cpp:2275
-#, fuzzy
 msgid "_Instant Messaging..."
-msgstr "Nachrichten..."
+msgstr "_Instant Messaging..."
 
 #: ../src/verbs.cpp:2275
 msgid "Jabber Instant Messaging Client"
-msgstr ""
+msgstr "Jabber-Instant-Messaging-Client"
 
 #: ../src/verbs.cpp:2277
 msgid "_Input Devices..."
