@@ -143,7 +143,7 @@ VERSION_NR = 0.44+devel
 VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
-CFLAGS = -O3 -Wall -mms-bitfields -DVERSION=$(VERSION) \
+CFLAGS = -Wall -O3 -g -mms-bitfields -DVERSION=$(VERSION) \
 -DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
 
 ####### Inkboard abilities.
@@ -186,7 +186,7 @@ GTKLIB = -L$(GTK)/lib \
 -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0 \
 -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0 \
 -lgdk_pixbuf-2.0 -lm -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0 \
--lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0
+-lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
 
 ####### For PERL
 ####### (note: perl's config.h has some nested comments)
