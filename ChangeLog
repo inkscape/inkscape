@@ -1,3 +1,8 @@
+2006-07-02  Colin Marquardt  <colin@marquardt-home.de>
+
+	* AUTHORS, src/ui/dialog/aboutbox.cpp: Add Niko, Hugo, Dale and
+   	  Gustav.
+
 2006-06-30  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/connector-context.cpp, src/widgets/toolbox.cpp:
