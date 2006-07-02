@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-02 13:30+0200\n"
-"PO-Revision-Date: 2006-07-03 00:32+0200\n"
+"PO-Revision-Date: 2006-07-03 00:45+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -879,7 +879,7 @@ msgstr "<big><b>_Dateiname</b></big>"
 
 #: ../src/dialogs/export.cpp:538
 msgid "_Browse..."
-msgstr "_Auswählen..."
+msgstr "_Auswählen…"
 
 #: ../src/dialogs/export.cpp:577
 msgid "_Export"
@@ -1918,7 +1918,7 @@ msgstr "Attributwert"
 
 #: ../src/dialogs/xml-tree.cpp:1315
 msgid "New element node..."
-msgstr "Neuer Elementknoten..."
+msgstr "Neuer Elementknoten…"
 
 #: ../src/dialogs/xml-tree.cpp:1336
 #: ../src/ui/dialog/whiteboard-connect.cpp:115
@@ -2369,7 +2369,7 @@ msgstr ""
 "Druckername (wie von lpstat -p angezeigt);\n"
 "leer lassen, um den Standarddrucker zu verwenden.\n"
 "Verwenden Sie »> Dateiname« zum Drucken in eine Datei.\n"
-"Verwenden Sie »| Prog. Arg. ...« zur Weiterleitung an ein Programm."
+"Verwenden Sie »| Prog. Arg. …« zur Weiterleitung an ein Programm."
 
 #: ../src/extension/internal/ps.cpp:1211
 msgid "Postscript Print"
@@ -7215,11 +7215,11 @@ msgstr "Mehrere ausgewählte Objekte haben die selbe Konturlinie"
 
 #: ../src/ui/widget/selected-style.cpp:181
 msgid "Edit fill..."
-msgstr "Füllung bearbeiten..."
+msgstr "Füllung bearbeiten…"
 
 #: ../src/ui/widget/selected-style.cpp:181
 msgid "Edit stroke..."
-msgstr "Konturlinie bearbeiten..."
+msgstr "Konturlinie bearbeiten…"
 
 #: ../src/ui/widget/selected-style.cpp:185
 msgid "Last set color"
@@ -7467,7 +7467,7 @@ msgstr "Ein neues Dokument mit der Standardvorlage anlegen"
 
 #: ../src/verbs.cpp:1913
 msgid "_Open..."
-msgstr "Ö_ffnen..."
+msgstr "Ö_ffnen…"
 
 #: ../src/verbs.cpp:1914
 msgid "Open an existing document"
@@ -7493,7 +7493,7 @@ msgstr "Das Dokument speichern"
 
 #: ../src/verbs.cpp:1919
 msgid "Save _As..."
-msgstr "Speichern _unter..."
+msgstr "Speichern _unter…"
 
 #: ../src/verbs.cpp:1920
 msgid "Save document under a new name"
@@ -7501,7 +7501,7 @@ msgstr "Dokument unter einem anderen Namen speichern"
 
 #: ../src/verbs.cpp:1921
 msgid "_Print..."
-msgstr "_Drucken..."
+msgstr "_Drucken…"
 
 #: ../src/verbs.cpp:1921
 msgid "Print document"
@@ -7522,7 +7522,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:1926
 msgid "Print _Direct"
-msgstr "D_irekt drucken..."
+msgstr "D_irekt drucken"
 
 #: ../src/verbs.cpp:1927
 msgid "Print directly without prompting to a file or pipe"
@@ -7538,7 +7538,7 @@ msgstr "Vorschau auf Dokumentenausdruck"
 
 #: ../src/verbs.cpp:1930
 msgid "_Import..."
-msgstr "_Importieren..."
+msgstr "_Importieren…"
 
 #: ../src/verbs.cpp:1931
 msgid "Import a bitmap or SVG image into this document"
@@ -7546,7 +7546,7 @@ msgstr "Ein Bitmap- oder SVG-Bild in dieses Dokument importieren"
 
 #: ../src/verbs.cpp:1932
 msgid "_Export Bitmap..."
-msgstr "Bitmap _exportieren..."
+msgstr "Bitmap _exportieren…"
 
 #: ../src/verbs.cpp:1933
 msgid "Export this document or a selection as a bitmap image"
@@ -8040,7 +8040,7 @@ msgstr ""
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2070
 msgid "_Trace Bitmap..."
-msgstr "Bitmap _vektorisieren..."
+msgstr "Bitmap _vektorisieren…"
 
 #: ../src/verbs.cpp:2071
 msgid "Create one or more paths from a bitmap by tracing it"
@@ -8075,7 +8075,7 @@ msgstr "Die markierten Pfade in Unterpfade zerlegen"
 
 #: ../src/verbs.cpp:2080
 msgid "Gri_d Arrange..."
-msgstr "An_ordnen im Raster..."
+msgstr "An_ordnen im Raster…"
 
 #: ../src/verbs.cpp:2081
 msgid "Arrange selected objects in a grid pattern"
@@ -8084,7 +8084,7 @@ msgstr "Ausgewählte Objekte im Raster anordnen"
 #. Layer
 #: ../src/verbs.cpp:2083
 msgid "_Add Layer..."
-msgstr "Ebene hinzufügen..."
+msgstr "Ebene hinzufügen…"
 
 #: ../src/verbs.cpp:2084
 msgid "Create a new layer"
@@ -8092,7 +8092,7 @@ msgstr "Eine neue Ebene anlegen"
 
 #: ../src/verbs.cpp:2085
 msgid "Re_name Layer..."
-msgstr "Ebene umbe_nennen"
+msgstr "Ebene umbe_nennen…"
 
 #: ../src/verbs.cpp:2086
 msgid "Rename the current layer"
@@ -8616,7 +8616,7 @@ msgstr "Die Auswahl in das Fenster einpassen"
 #. Dialogs
 #: ../src/verbs.cpp:2239
 msgid "In_kscape Preferences..."
-msgstr "In_kscape-Einstellungen..."
+msgstr "In_kscape-Einstellungen…"
 
 #: ../src/verbs.cpp:2240
 msgid "Edit global Inkscape preferences"
@@ -8624,7 +8624,7 @@ msgstr "Globale Einstellungen für Inkscape bearbeiten"
 
 #: ../src/verbs.cpp:2241
 msgid "_Document Properties..."
-msgstr "D_okumenteneinstellungen..."
+msgstr "D_okumenteneinstellungen…"
 
 #: ../src/verbs.cpp:2242
 msgid "Edit properties of this document (to be saved with the document)"
@@ -8632,7 +8632,7 @@ msgstr "Einstellungen bearbeiten, die mit dem Dokument gespeichert werden"
 
 #: ../src/verbs.cpp:2243
 msgid "Document _Metadata..."
-msgstr "_Dokument-Metadaten..."
+msgstr "_Dokument-Metadaten…"
 
 #: ../src/verbs.cpp:2244
 msgid "Edit document metadata (to be saved with the document)"
@@ -8640,7 +8640,7 @@ msgstr "Dokument-Metadaten bearbeiten, die mit dem Dokument gespeichert werden"
 
 #: ../src/verbs.cpp:2245
 msgid "_Fill and Stroke..."
-msgstr "Füllung und _Kontur..."
+msgstr "Füllung und _Kontur…"
 
 #: ../src/verbs.cpp:2246
 msgid "Edit objects' style, such as color or stroke width"
@@ -8649,7 +8649,7 @@ msgstr "Stil eines Objektes ändern, z.B. Farbe oder Breite der Konturlinie"
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2248
 msgid "S_watches..."
-msgstr "_Farbfelder-Palette..."
+msgstr "_Farbfelder-Palette…"
 
 #: ../src/verbs.cpp:2249
 msgid "Select colors from a swatches palette"
@@ -8657,7 +8657,7 @@ msgstr "Farben aus einer Farbfelder-Palette auswählen"
 
 #: ../src/verbs.cpp:2250
 msgid "Transfor_m..."
-msgstr "_Transformationen..."
+msgstr "_Transformationen…"
 
 #: ../src/verbs.cpp:2251
 msgid "Precisely control objects' transformations"
@@ -8665,7 +8665,7 @@ msgstr "Transformationen eines Objektes präzise einstellen"
 
 #: ../src/verbs.cpp:2252
 msgid "_Align and Distribute..."
-msgstr "Ausri_chten und Abstände ausgleichen..."
+msgstr "Ausri_chten und Abstände ausgleichen…"
 
 #: ../src/verbs.cpp:2253
 msgid "Align and distribute objects"
@@ -8673,7 +8673,7 @@ msgstr "Objekte ausrichten und ihre Abstände ausgleichen"
 
 #: ../src/verbs.cpp:2254
 msgid "Undo _History..."
-msgstr "Bearbeitungs_historie..."
+msgstr "Bearbeitungs_historie…"
 
 #: ../src/verbs.cpp:2255
 msgid "Undo History"
@@ -8681,7 +8681,7 @@ msgstr "Bearbeitungshistorie"
 
 #: ../src/verbs.cpp:2256
 msgid "_Text and Font..."
-msgstr "_Schrift und Text..."
+msgstr "_Schrift und Text…"
 
 #: ../src/verbs.cpp:2257
 msgid "View and select font family, font size and other text properties"
@@ -8690,7 +8690,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2258
 msgid "_XML Editor..."
-msgstr "_XML-Editor..."
+msgstr "_XML-Editor…"
 
 #: ../src/verbs.cpp:2259
 msgid "View and edit the XML tree of the document"
@@ -8698,7 +8698,7 @@ msgstr "Zeige und ändere den XML-Baum des Dokuments"
 
 #: ../src/verbs.cpp:2260
 msgid "_Find..."
-msgstr "_Suchen..."
+msgstr "_Suchen…"
 
 #: ../src/verbs.cpp:2261
 msgid "Find objects in document"
@@ -8706,7 +8706,7 @@ msgstr "Objekte im Dokument suchen"
 
 #: ../src/verbs.cpp:2262
 msgid "_Messages..."
-msgstr "Nachrichten..."
+msgstr "Nachrichten…"
 
 #: ../src/verbs.cpp:2263
 msgid "View debug messages"
@@ -8714,7 +8714,7 @@ msgstr "Nachrichten zur Fehlersuche anzeigen"
 
 #: ../src/verbs.cpp:2264
 msgid "S_cripts..."
-msgstr "_Skripte..."
+msgstr "_Skripte…"
 
 #: ../src/verbs.cpp:2265
 msgid "Run scripts"
@@ -8731,7 +8731,7 @@ msgstr "Alle offenen Dialoge zeigen oder ausblenden"
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
 #: ../src/verbs.cpp:2269
 msgid "Create Tiled Clones..."
-msgstr "Gekachelte Klone erzeugen..."
+msgstr "Gekachelte Klone erzeugen…"
 
 #: ../src/verbs.cpp:2270
 msgid ""
@@ -8743,7 +8743,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2271
 msgid "_Object Properties..."
-msgstr "Objekt_eigenschaften..."
+msgstr "Objekt_eigenschaften…"
 
 #: ../src/verbs.cpp:2272
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -8752,7 +8752,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2275
 msgid "_Instant Messaging..."
-msgstr "_Instant Messaging..."
+msgstr "_Instant Messaging…"
 
 #: ../src/verbs.cpp:2275
 msgid "Jabber Instant Messaging Client"
@@ -8760,7 +8760,7 @@ msgstr "Jabber-Instant-Messaging-Client"
 
 #: ../src/verbs.cpp:2277
 msgid "_Input Devices..."
-msgstr "_Eingabegeräte..."
+msgstr "_Eingabegeräte…"
 
 #: ../src/verbs.cpp:2278
 msgid "Configure extended input devices, such as a graphics tablet"
@@ -8768,7 +8768,7 @@ msgstr "Erweiterte Eingabegeräte konfigurieren, wie z.B. Grafiktabletts"
 
 #: ../src/verbs.cpp:2279
 msgid "_Extensions..."
-msgstr "_Erweiterungen..."
+msgstr "_Erweiterungen…"
 
 #: ../src/verbs.cpp:2280
 msgid "Query information about extensions"
@@ -8776,7 +8776,7 @@ msgstr "Informationen über Erweiterungen abfragen"
 
 #: ../src/verbs.cpp:2281
 msgid "Layer_s..."
-msgstr "_Ebenen..."
+msgstr "_Ebenen…"
 
 #: ../src/verbs.cpp:2282
 msgid "View Layers"
@@ -8894,7 +8894,7 @@ msgstr "Letzten Effekt mit den gleichen Einstellungen anwenden"
 #. "tutorial_tips"
 #: ../src/verbs.cpp:2316
 msgid "Previous Effect Settings..."
-msgstr "Einstellungen des vorherigen Effekts..."
+msgstr "Einstellungen des vorherigen Effekts…"
 
 #: ../src/verbs.cpp:2317
 msgid "Repeat the last effect with new settings"
@@ -8980,7 +8980,7 @@ msgstr "Duplizieren"
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:499
 msgid "Edit..."
-msgstr "Bearbeiten..."
+msgstr "Bearbeiten…"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:155
@@ -10558,13 +10558,13 @@ msgstr "Windows-Metafile einlesen"
 #~ "vorhanden"
 
 #~ msgid "_Connect to Jabber server..."
-#~ msgstr "Mit Jabber-Server _verbinden..."
+#~ msgstr "Mit Jabber-Server _verbinden…"
 
 #~ msgid "Connect to a Jabber server"
 #~ msgstr "Mit einem Jabber-Server verbinden"
 
 #~ msgid "Share with _user..."
-#~ msgstr "Whiteboard mit anderem _Benutzer..."
+#~ msgstr "Whiteboard mit anderem _Benutzer…"
 
 #~ msgid "Establish a whiteboard session with another Jabber user"
 #~ msgstr ""
@@ -10572,7 +10572,7 @@ msgstr "Windows-Metafile einlesen"
 #~ "aufbauen"
 
 #~ msgid "Share with _chatroom..."
-#~ msgstr "Whiteboard mit _Chat-Raum..."
+#~ msgstr "Whiteboard mit _Chat-Raum…"
 
 # !!! 2x join
 #~ msgid ""
@@ -10588,7 +10588,7 @@ msgstr "Windows-Metafile einlesen"
 #~ msgstr "Das XML-Knotenprotokoll auf die Konsole ausgeben"
 
 #~ msgid "_Open session file..."
-#~ msgstr "Sitzungsdatei _öffnen..."
+#~ msgstr "Sitzungsdatei _öffnen…"
 
 #~ msgid "Open and browse through records of past whiteboard sessions"
 #~ msgstr "Aufzeichnungen von früheren Whiteboard-Sitzungen öffnen"
@@ -10725,7 +10725,7 @@ msgstr "Windows-Metafile einlesen"
 #~ msgstr "Objekteigenschaften"
 
 #~ msgid "About Memory..."
-#~ msgstr "Speichernutzung von Inkscape"
+#~ msgstr "Speichernutzung von Inkscape…"
 
 #~ msgid "Close"
 #~ msgstr "Schließen"
