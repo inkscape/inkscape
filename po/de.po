@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-02 13:30+0200\n"
-"PO-Revision-Date: 2006-07-01 14:50+0200\n"
+"PO-Revision-Date: 2006-07-03 00:32+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -55,22 +55,19 @@ msgstr ""
 "aus"
 
 #: ../src/arc-context.cpp:437
-#, fuzzy
 msgid "Create ellipse"
-msgstr "_Klon erzeugen"
+msgstr "Ellipse erzeugen"
 
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Einen neuen Objektverbinder erzeugen"
 
 #: ../src/connector-context.cpp:717
-#, fuzzy
 msgid "Reroute connector"
-msgstr "Objektverbinder erzeugen"
+msgstr "Objektverbinder neu verlegen"
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:924
-#, fuzzy
 msgid "Create connector"
 msgstr "Objektverbinder erzeugen"
 
@@ -346,7 +343,7 @@ msgstr "<b>X-Skalierung:</b>"
 #: ../src/dialogs/clonetiler.cpp:1855
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
-msgstr "Horizontale Verschiebung pro Reihe (in % der Kachelbreite)"
+msgstr "Horizontale Skalierung pro Reihe (in % der Kachelbreite)"
 
 #: ../src/dialogs/clonetiler.cpp:1863
 #, no-c-format
@@ -364,12 +361,12 @@ msgstr "<b>Y-Skalierung:</b>"
 #: ../src/dialogs/clonetiler.cpp:1886
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
-msgstr "Vertikale Verschiebung pro Reihe (in % der Kachelhöhe)"
+msgstr "Vertikale Skalierung pro Reihe (in % der Kachelhöhe)"
 
 #: ../src/dialogs/clonetiler.cpp:1894
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
-msgstr "Vertikale Verschiebung pro Spalte (in % der Kachelhöhe)"
+msgstr "Vertikale Skalierung pro Spalte (in % der Kachelhöhe)"
 
 #: ../src/dialogs/clonetiler.cpp:1901
 msgid "Randomize the vertical scale by this percentage"
@@ -377,11 +374,11 @@ msgstr "Vertikale Skalierung um diesen Prozentsatz zufällig verändern"
 
 #: ../src/dialogs/clonetiler.cpp:1915
 msgid "Alternate the sign of scales for each row"
-msgstr "Vorzeichen der Verschiebungen für jede Reihe umkehren"
+msgstr "Vorzeichen der Skalierungen für jede Reihe umkehren"
 
 #: ../src/dialogs/clonetiler.cpp:1920
 msgid "Alternate the sign of scales for each column"
-msgstr "Vorzeichen der Verschiebungen für jede Spalte umkehren"
+msgstr "Vorzeichen der Skalierungen für jede Spalte umkehren"
 
 #: ../src/dialogs/clonetiler.cpp:1929
 msgid "_Rotation"
@@ -2619,9 +2616,7 @@ msgstr "<b>Fokus</b> des radialen Farbverlaufs"
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
-msgstr ""
-"%s für %s%s; Ziehen mit <b>Strg</b> rastet Winkel ein, Ziehen mit <b>Strg"
-"+Alt</b> behält Winkel bei"
+msgstr "%s für %s%s; Ziehen mit <b>Strg</b> rastet Winkel ein, Ziehen mit <b>Strg+Alt</b> behält Winkel bei; <b>Strg+Umschalt</b> skaliert um den Mittelpunkt"
 
 #: ../src/gradient-drag.cpp:660
 msgid " (stroke)"
@@ -3348,7 +3343,7 @@ msgstr "_Objekt"
 
 #: ../src/menus-skeleton.h:163
 msgid "Cli_p"
-msgstr "_Ausschneidepfad"
+msgstr "Ausschneide_pfad"
 
 #: ../src/menus-skeleton.h:167
 msgid "Mas_k"
@@ -3637,9 +3632,7 @@ msgstr ""
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
-msgstr ""
-"Spirale von <b>außen</b> ausrollen/einrollen; Winkel mit <b>Strg</b> "
-"einrasten; <b>Umschalt</b> rotiert/skaliert"
+msgstr "Spirale von <b>außen</b> ausrollen/einrollen; Winkel mit <b>Strg</b> einrasten; <b>Umschalt</b> skaliert/rotiert"
 
 #: ../src/object-edit.cpp:1001
 msgid "Adjust the <b>offset distance</b>"
@@ -4204,35 +4197,28 @@ msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:227
-#, fuzzy
 msgid "Set center"
-msgstr "Drucker wählen"
+msgstr "Mittelpunkt setzen"
 
 #: ../src/seltrans.cpp:347
-#, fuzzy
 msgid "Move"
-msgstr "_Verschieben"
+msgstr "Verschieben"
 
 #: ../src/seltrans.cpp:350
-#, fuzzy
 msgid "Scale"
-msgstr "_Maßstab"
+msgstr "Skalieren"
 
 #: ../src/seltrans.cpp:353
-#, fuzzy
 msgid "Rotate"
-msgstr "_Drehen"
+msgstr "Drehen"
 
 #: ../src/seltrans.cpp:356
-#, fuzzy
 msgid "Skew"
-msgstr "_Scheren"
+msgstr "Scheren"
 
-# !!!
 #: ../src/seltrans.cpp:455
-#, fuzzy
 msgid "Stamp"
-msgstr "Schritte"
+msgstr "Stempeln"
 
 #: ../src/seltrans.cpp:477
 msgid ""
@@ -4275,9 +4261,8 @@ msgstr ""
 "dreht entlang der gegenüberliegenden Seite"
 
 #: ../src/seltrans.cpp:641
-#, fuzzy
 msgid "Reset center"
-msgstr "Die aktuelle Ebene anheben"
+msgstr "Mittelpunkt zurücksetzen"
 
 #: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
@@ -4849,7 +4834,7 @@ msgstr "Vektorisieren abgeschlossen: %ld Knoten erzeugt"
 #. Item dialog
 #: ../src/ui/context-menu.cpp:96
 msgid "Object _Properties"
-msgstr "_Objekteigenschaften..."
+msgstr "Objekt_eigenschaften"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:106
@@ -4864,7 +4849,7 @@ msgstr "Verknüpfung erzeugen"
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2009
 msgid "_Ungroup"
-msgstr "Gruppierung _aufheben"
+msgstr "Grupp_ierung aufheben"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:230
@@ -4889,7 +4874,7 @@ msgstr "Bildeigenschaften"
 #. Item dialog
 #: ../src/ui/context-menu.cpp:335
 msgid "_Fill and Stroke"
-msgstr "_Füllung und Kontur"
+msgstr "Füllung und _Kontur"
 
 #: ../src/ui/dialog/aboutbox.cpp:64
 msgid "About Inkscape"
@@ -7829,7 +7814,7 @@ msgstr "Die Auswahl von Objekten oder Knoten aufheben"
 #. Selection
 #: ../src/verbs.cpp:1999
 msgid "Raise to _Top"
-msgstr "Nach ganz _oben anheben"
+msgstr "Nach ganz o_ben anheben"
 
 #: ../src/verbs.cpp:2000
 msgid "Raise selection to top"
@@ -7837,7 +7822,7 @@ msgstr "Die gewählten Objekte nach ganz oben anheben"
 
 #: ../src/verbs.cpp:2001
 msgid "Lower to _Bottom"
-msgstr "Nach ganz _unten absenken"
+msgstr "Nach ganz u_nten absenken"
 
 #: ../src/verbs.cpp:2002
 msgid "Lower selection to bottom"
@@ -7845,7 +7830,7 @@ msgstr "Die gewählten Objekte nach ganz unten absenken"
 
 #: ../src/verbs.cpp:2003
 msgid "_Raise"
-msgstr "An_heben"
+msgstr "_Anheben"
 
 #: ../src/verbs.cpp:2004
 msgid "Raise selection one step"
@@ -8090,7 +8075,7 @@ msgstr "Die markierten Pfade in Unterpfade zerlegen"
 
 #: ../src/verbs.cpp:2080
 msgid "Gri_d Arrange..."
-msgstr "Anordnen im Raster..."
+msgstr "An_ordnen im Raster..."
 
 #: ../src/verbs.cpp:2081
 msgid "Arrange selected objects in a grid pattern"
@@ -8188,7 +8173,7 @@ msgstr "Die aktuelle Ebene löschen"
 #. Object
 #: ../src/verbs.cpp:2107
 msgid "Rotate _90&#176; CW"
-msgstr "Um _90&#176; im Uhrzeigersinn rotieren"
+msgstr "Um 90&#176; im Uhr_zeigersinn rotieren"
 
 #: ../src/verbs.cpp:2108
 msgid "Rotate selection 90&#176; clockwise"
@@ -8196,7 +8181,7 @@ msgstr "Gewählte Objekte um 90&#176; im Uhrzeigersinn drehen"
 
 #: ../src/verbs.cpp:2109
 msgid "Rotate 9_0&#176; CCW"
-msgstr "Um _90&#176; entgegen Uhrzeigersinn rotieren"
+msgstr "Um 90&#176; entgegen Uhrzeigersinn _rotieren"
 
 #: ../src/verbs.cpp:2110
 msgid "Rotate selection 90&#176; counter-clockwise"
@@ -8204,11 +8189,11 @@ msgstr "Gewählte Objekte um 90&#176; gegen den Uhrzeigersinn drehen"
 
 #: ../src/verbs.cpp:2111
 msgid "Remove _Transformations"
-msgstr "Umformungen _zurücksetzen"
+msgstr "Transformationen _zurücksetzen"
 
 #: ../src/verbs.cpp:2112
 msgid "Remove transformations from object"
-msgstr "Umformungen des Objekts rückgängig machen"
+msgstr "Transformationen des Objekts rückgängig machen"
 
 #: ../src/verbs.cpp:2113
 msgid "_Object to Path"
@@ -8655,7 +8640,7 @@ msgstr "Dokument-Metadaten bearbeiten, die mit dem Dokument gespeichert werden"
 
 #: ../src/verbs.cpp:2245
 msgid "_Fill and Stroke..."
-msgstr "_Füllung und Kontur..."
+msgstr "Füllung und _Kontur..."
 
 #: ../src/verbs.cpp:2246
 msgid "Edit objects' style, such as color or stroke width"
@@ -8664,7 +8649,7 @@ msgstr "Stil eines Objektes ändern, z.B. Farbe oder Breite der Konturlinie"
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2248
 msgid "S_watches..."
-msgstr "Farbfelder-Palette..."
+msgstr "_Farbfelder-Palette..."
 
 #: ../src/verbs.cpp:2249
 msgid "Select colors from a swatches palette"
@@ -8672,15 +8657,15 @@ msgstr "Farben aus einer Farbfelder-Palette auswählen"
 
 #: ../src/verbs.cpp:2250
 msgid "Transfor_m..."
-msgstr "_Umformen..."
+msgstr "_Transformationen..."
 
 #: ../src/verbs.cpp:2251
 msgid "Precisely control objects' transformations"
-msgstr "Umformungen eines Objektes präzise einstellen"
+msgstr "Transformationen eines Objektes präzise einstellen"
 
 #: ../src/verbs.cpp:2252
 msgid "_Align and Distribute..."
-msgstr "_Ausrichten und Abstände ausgleichen..."
+msgstr "Ausri_chten und Abstände ausgleichen..."
 
 #: ../src/verbs.cpp:2253
 msgid "Align and distribute objects"
@@ -8758,7 +8743,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2271
 msgid "_Object Properties..."
-msgstr "_Objekteigenschaften..."
+msgstr "Objekt_eigenschaften..."
 
 #: ../src/verbs.cpp:2272
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -9801,7 +9786,7 @@ msgstr "Manuelle Unterschneidungen entfernen"
 
 #: ../src/widgets/toolbox.cpp:3851
 msgid "Change connector spacing distance"
-msgstr ""
+msgstr "Abstand der Objektverbinder einstellen"
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"
