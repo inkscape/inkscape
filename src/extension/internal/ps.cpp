@@ -426,6 +426,12 @@ PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         }
     }
 
+    os << "0 0 0 setrgbcolor\n"
+       << "[] 0 setdash\n"
+       << "1 setlinewidth\n"
+       << "0 setlinejoin\n"
+       << "0 setlinecap\n";
+
     /* FIXME: This function is declared to return unsigned, whereas fprintf returns a signed int *
      * that can be zero if the first fprintf failed (os is empty) or "negative" (i.e. very positive
      * in unsigned int interpretation) if the first fprintf failed but this one succeeds, or
@@ -859,10 +865,10 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
                   "definefont} def\n";      // create the new font and leave it on the stack, define the proc
             _newlatin1font_proc_defined = true;
         }
-        os << "/" << fn << "-ISOLatin1 /" << fn << " newlatin1font\n";
+        os << "/(" << fn << "-ISOLatin1) /(" << fn << ") newlatin1font\n";
         _latin1_encoded_fonts.insert(fn);
     } else
-        os << "/" << fn << "-ISOLatin1 findfont\n";
+        os << "/(" << fn << "-ISOLatin1) findfont\n";
     os << style->font_size.computed << " scalefont\n";
     os << "setfont\n";
     g_free((void *) fn);
@@ -1130,10 +1136,10 @@ PrintPS::print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int hei
     os << "    /Width " << width << "\n";
     os << "    /Height " << height << "\n";
     os << "    /ImageMatrix "
-       << "[" << transform->c[0] << " "
-       << transform->c[1] << " "
-       << transform->c[2] << " "
-       << transform->c[3] << " "
+       << "[" << width << " "
+       << 0 << " "
+       << 0 << " "
+       << -((long) height) << " "
        << 0 << " "
        << height << "]\n";
     os << "    /BitsPerComponent 8\n";
@@ -1146,10 +1152,10 @@ PrintPS::print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int hei
     os << "    /Width " << width << "\n";
     os << "    /Height " << height << "\n";
     os << "    /ImageMatrix "
-       << "[" << transform->c[0] << " "
-       << transform->c[1] << " "
-       << transform->c[2] << " "
-       << transform->c[3] << " "
+       << "[" << width << " "
+       << 0 << " "
+       << 0 << " "
+       << -((long )height) << " "
        << 0 << " "
        << height << "]\n";
     os << "    /DataSource currentfile /ASCII85Decode filter\n";
