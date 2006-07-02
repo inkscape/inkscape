@@ -2316,13 +2316,13 @@ Verb *Verb::_base_verbs[] = {
     new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("Previous Effect Settings..."),
                        N_("Repeat the last effect with new settings"), NULL/*"tutorial_tips"*/),
 
-    /* Fit Canvas */
-    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION, "FitCanvasToSelection", N_("Fit Canvas to Selection"),
-                       N_("Fit the canvas to the current selection"), NULL),
-    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_DRAWING, "FitCanvasToDrawing", N_("Fit Canvas to Drawing"),
-                       N_("Fit the canvas to the drawing"), NULL),
-    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Canvas to Selection or Drawing"),
-                       N_("Fit the canvas to the current selection or the drawing if there is no selection"), NULL),
+    /* Fit Page */
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION, "FitCanvasToSelection", N_("Fit Page to Selection"),
+                       N_("Fit the page to the current selection"), NULL),
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_DRAWING, "FitCanvasToDrawing", N_("Fit Page to Drawing"),
+                       N_("Fit the page to the drawing"), NULL),
+    new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING, "FitCanvasToSelectionOrDrawing", N_("Fit Page to Selection or Drawing"),
+                       N_("Fit the page to the current selection or the drawing if there is no selection"), NULL),
     /* Footer */
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };
