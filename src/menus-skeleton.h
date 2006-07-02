@@ -222,7 +222,7 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"SelectionTextRemoveKerns\" />\n"
 "   </submenu>\n"
-"   <submenu name=\"" N_("Effects") "\">\n"
+"   <submenu name=\"" N_("Effe_cts") "\">\n"
 "       <verb verb-id=\"EffectLast\" />\n"
 "       <verb verb-id=\"EffectLastPref\" />\n"
 "       <separator/>\n"
