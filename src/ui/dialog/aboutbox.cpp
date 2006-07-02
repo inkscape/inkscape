@@ -197,6 +197,7 @@ gchar const *authors_text() {
         "Ben Fowler\n"
         "Ted Gould\n"
         "Bryce Harrington\n"
+        "Dale Harvey\n"
         "Carl Hetherington\n"
         "Karl Ove Hufthammer\n"
         "Richard Hughes\n"
