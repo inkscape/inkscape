@@ -46,6 +46,7 @@ RFE</a>).</p>
 <keys><key><shift/><ctrl/>L</key> <action>Layers</action></keys>
 <keys><key><shift/><ctrl/>A</key> <action>Align and Distribute</action></keys>
 <keys><key><shift/><ctrl/>O</key> <action>Object Properties</action></keys>
+<keys><key><shift/><ctrl/>H</key> <action>Undo history</action></keys>
 <keys><key><shift/><ctrl/>X</key> <action>XML Editor</action></keys>
 <keys><key><shift/><ctrl/>D</key> <action>Document Preferences</action></keys>
 <keys><key><shift/><ctrl/>P</key> <action>Inkscape Preferences</action></keys>
