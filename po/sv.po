@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2006-06-04 20:11+0200\n"
 "Last-Translator: Mattias Hultgren <mattias_hultgren@tele2.se>\n"
 "Language-Team: Svenska <C@li.org>\n"
@@ -48,26 +48,52 @@ msgid ""
 "ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "Rita ellips"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "Skapa nytt SVG-dokument"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "Skapa nytt SVG-dokument"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 #, fuzzy
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Markera <b>minst två objekt</b> att gruppera."
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+#, fuzzy
+msgid "Make connectors avoid selected objects"
+msgstr "Ta bort markerade objekt"
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+#, fuzzy
+msgid "Make connectors ignore selected objects"
+msgstr "Ta bort markerade objekt"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2243,16 +2269,16 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr "Skriv ut"
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 #, fuzzy
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Öppna ny teckning"
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 #, fuzzy
 msgid "OpenDocument drawing file"
 msgstr "Öppna ny teckning"
@@ -2290,12 +2316,12 @@ msgstr ""
 msgid "Postscript File"
 msgstr "Porträtt"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "Utskriftsdestination"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "Utskriftsegenskaper"
 
@@ -2313,11 +2339,11 @@ msgstr ""
 "mindre och kan skalas godtyckligt, men alfatransparens, och mönster kommer "
 "att gå förlorade"
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "Skriv ut som bitmappsbild"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 #, fuzzy
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
@@ -2328,20 +2354,20 @@ msgstr ""
 "att bli större och dess kvalitet beror på zoomfaktorn, men all grafik kommer "
 "att renderas identiskt till displayen"
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Föredragen upplösning (punkter per tum) av bitmappsbild"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "Upplösning:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "Utskriftsdestination"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 #, fuzzy
 msgid ""
 "Printer name (as given by lpstat -p);\n"
@@ -2352,12 +2378,7 @@ msgstr ""
 "Använd \"> filnamn\" för att skriva till fil.\n"
 "Använd \"| prog arg...\" för att skicka via rör till program"
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "skrivfel inträffade"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 #, fuzzy
 msgid "Postscript Print"
 msgstr "Porträtt"
@@ -2455,12 +2476,12 @@ msgstr "Format för skalbar vektorgrafik med sodipodi-tillägg"
 msgid "Windows 32-bit Print"
 msgstr ""
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 #, fuzzy
 msgid "Print using PDF operators"
 msgstr "Skriv ut genom användning av PostScript-operatorer"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 #, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
@@ -2470,7 +2491,11 @@ msgstr ""
 "mindre och kan skalas godtyckligt, men alfatransparens, och mönster kommer "
 "att gå förlorade"
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "skrivfel inträffade"
+
+#: ../src/extension/internal/pdf.cpp:1575
 #, fuzzy
 msgid "PDF Print"
 msgstr "Skriv ut"
@@ -4089,61 +4114,96 @@ msgstr[1] "Anslut linjer vid markerade noder"
 msgid "%s%s. %s."
 msgstr ""
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "Välj skrivare"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "Flytta"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "Skala"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "Rotera"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "Snedställ"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "Steg"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr ""
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "Höj det aktuella lagret"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, fuzzy, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Länk till %s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9802,15 +9862,9 @@ msgstr ""
 msgid "Remove manual kerns"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3904
-#, fuzzy
-msgid "Make connectors avoid selected objects"
-msgstr "Ta bort markerade objekt"
-
-#: ../src/widgets/toolbox.cpp:3908
-#, fuzzy
-msgid "Make connectors ignore selected objects"
-msgstr "Ta bort markerade objekt"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
 #, fuzzy
@@ -10453,10 +10507,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Fractal (Lindenmayer)"
 #~ msgstr "Byt namn på lager"
-
-#, fuzzy
-#~ msgid "Step"
-#~ msgstr "Steg"
 
 #, fuzzy
 #~ msgid "PDF Output"
@@ -12303,9 +12353,6 @@ msgstr ""
 
 #~ msgid "Set page height"
 #~ msgstr "Ställ in pappershöjden"
-
-#~ msgid "Draw ellipse"
-#~ msgstr "Rita ellips"
 
 #~ msgid "Del"
 #~ msgstr "Ta bort"

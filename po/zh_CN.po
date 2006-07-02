@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2006-06-04 16:07+0800\n"
 "Last-Translator: Chris Jia <Chrisjiasl@gmail.com>\n"
 "Language-Team: \n"
@@ -45,25 +45,49 @@ msgstr ""
 "<b>椭圆</b>： %s &#215; %s; 按住 <b>Ctrl</b> 制作圆或者整数比率的椭圆；按住 "
 "<b>Shift</b> 在起点周围绘制"
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "创建克隆(_n)"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "创建新的连接器"
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "创建连接器"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "创建连接器"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr "完成连接器"
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>连接点</b>：点击或者拖动创建新的连接器"
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr "<b>连接器终点</b>：拖动重新连接或者连接到新的形状"
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "<b>至少选择一个非连接器对象</b>。"
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+msgid "Make connectors avoid selected objects"
+msgstr "避免已选对象的连接器"
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+msgid "Make connectors ignore selected objects"
+msgstr "忽略已选对象的连接器"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2158,15 +2182,15 @@ msgstr "LaTeX PSTricks 文件"
 msgid "LaTeX Print"
 msgstr "LaTeX 打印"
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr "开放文档 绘制输出"
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 msgid "OpenDocument drawing (*.odg)"
 msgstr "开放文档绘图 (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 msgid "OpenDocument drawing file"
 msgstr "开放文档绘图文件"
 
@@ -2199,12 +2223,12 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Postscript 文件"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "打印目标"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "打印属性"
 
@@ -2221,11 +2245,11 @@ msgstr ""
 "使用 PostScript 矢量操作符。 最终图像通常文件尺寸更小可以任意缩放，但是透明值"
 "和图案会丢失。"
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "作为位图打印"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2234,20 +2258,20 @@ msgstr ""
 "按位图打印所有的东西。最终的图像通常文件尺寸更大不能够任意无损缩放，但是所有"
 "的对象完全按照显示的来渲染。"
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "指定位图分辨率（点/英寸）"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "分辨率："
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "打印目标"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2259,12 +2283,7 @@ msgstr ""
 "使用 “> 文件名” 打印到文件。\n"
 "使用 “| prog arg...”通过管道输出到另一个程序。"
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "写出错"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 msgid "Postscript Print"
 msgstr "Postscript 打印"
 
@@ -2342,11 +2361,11 @@ msgstr "可伸缩矢量图形格式使用 GZip 压缩"
 msgid "Windows 32-bit Print"
 msgstr "Windows 32位打印"
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 msgid "Print using PDF operators"
 msgstr "使用 PDF 操作符打印"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
@@ -2354,7 +2373,11 @@ msgstr ""
 "使用 PDF 矢量操作符。 最终图像通常文件尺寸更小可以任意缩放，但是透明值和图案"
 "会丢失。"
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "写出错"
+
+#: ../src/extension/internal/pdf.cpp:1575
 msgid "PDF Print"
 msgstr "PDF 打印"
 
@@ -3939,13 +3962,43 @@ msgstr[1] "<b>%i</b>个对象个<b>%i</b>类型"
 msgid "%s%s. %s."
 msgstr "%s%s。 %s。"
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "选择打印机"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "移动(_M)"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "缩放(_S)"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "旋转(_R)"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "错切(_w)"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "步长"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr "<b>中心</b>旋转错切：拖动调整位置；使用 Shift 缩放也使用此中心"
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -3953,52 +4006,57 @@ msgstr ""
 "<b>收缩或拉伸</b>选区；按住 <b>Ctrl</b> 统一缩放；按住 <b>Shift</b> 在旋转中"
 "心缩放"
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 "<b>缩放</b>选区；按住 <b>Ctrl</b> 统一缩放；按住 <b>Shift</b> 在旋转中心缩放"
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 "<b>错切</b>选区；按住 <b>Ctrl</b> 捕捉角度；按住 <b>Shift</b> 在另一面错切"
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 "<b>旋转</b>选区；按住 <b>Ctrl</b> 捕捉角度；按住 <b>Shift</b> 在对角旋转"
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "提升当前层"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>缩放</b>：%0.2f%% x %0.2f%%；按住 <b>Ctrl</b> 锁定比率"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>错切</b>：%0.2f&#176;；按住 <b>Ctrl</b> 捕捉角度"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>旋转</b>：%0.2f&#176;；按住 <b>Ctrl</b> 捕捉角度"
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "移动<b>中心</b>到%s，%s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9214,13 +9272,9 @@ msgstr "字母旋转"
 msgid "Remove manual kerns"
 msgstr "移除手工字距"
 
-#: ../src/widgets/toolbox.cpp:3904
-msgid "Make connectors avoid selected objects"
-msgstr "避免已选对象的连接器"
-
-#: ../src/widgets/toolbox.cpp:3908
-msgid "Make connectors ignore selected objects"
-msgstr "忽略已选对象的连接器"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"
@@ -10009,9 +10063,6 @@ msgstr "Windows 图元文件输入"
 
 #~ msgid "Fractal (Lindenmayer)"
 #~ msgstr "分形（Lindenmayer）"
-
-#~ msgid "Step"
-#~ msgstr "步长"
 
 #~ msgid "Adobe PDF (*.pdf)"
 #~ msgstr "Adobe PDF (*.pdf)"

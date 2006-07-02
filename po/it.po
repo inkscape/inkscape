@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2006-06-01 15:26+0200\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>>\n"
 "Language-Team:  Italian <tp@lists.linux.it>\n"
@@ -50,29 +50,53 @@ msgstr ""
 "<b>Ellisse</b>: %s &#215; %s; con <b>Ctrl</b> per fare cerchi o elissi in "
 "scala; con <b>Maiusc</b> per disegnare attorno al punto iniziale"
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "Crea clo_ne"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Creazione nuovo connettore"
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "Crea connettori"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "Crea connettori"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr "Terminazione connettore"
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Punto di connessione</b>: fare clic o trascinare per creare una nuovo "
 "connettore"
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Punto finale connettore</b>: trascinare per ritracciare o connettere a "
 "nuove forme"
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Selezionare <b>almeno un oggetto non-connettore</b>."
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+msgid "Make connectors avoid selected objects"
+msgstr "Fa sì che i connettori evitino gli oggetti selezionati"
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+msgid "Make connectors ignore selected objects"
+msgstr "Fa sì che i connettori ignorino gli oggetti selezionati"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2237,15 +2261,15 @@ msgstr "LaTeX PSTricks File"
 msgid "LaTeX Print"
 msgstr "Stampa LaTeX"
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr "Output OpenDocument Drawing"
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Disegno OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 msgid "OpenDocument drawing file"
 msgstr "File di disegno OpenDocument"
 
@@ -2278,12 +2302,12 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "File Postscript"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "Destinazione stampa"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "Impostazioni stampa"
 
@@ -2301,11 +2325,11 @@ msgstr ""
 "di dimensioni più contenute e può essere ridimensionata a piacere, ma "
 "verranno persi i motivi e la trasparenza alpha."
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "Stampa come bitmap"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2315,20 +2339,20 @@ msgstr ""
 "maggiori e non può essere ridimensionata senza una perdità di qualità, ma "
 "tutti gli oggetti verranno disegnati esattamente come vengono mostrati."
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Risoluzione preferita della bitmap (in punti per pollice)"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "Destinazione stampa"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2340,12 +2364,7 @@ msgstr ""
 "Usare '> filename' per stampare su file.\n"
 "Usare '| prog arg...' per mandare in pipe ad un programma."
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "errore in scrittura"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 msgid "Postscript Print"
 msgstr "Stampa Postscript"
 
@@ -2423,11 +2442,11 @@ msgstr "Fomrato Scalable Vector Graphics compresso con GZip"
 msgid "Windows 32-bit Print"
 msgstr "Stampa Windows 32-bit"
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 msgid "Print using PDF operators"
 msgstr "Stampa usando gli operatori PDF"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
@@ -2436,7 +2455,11 @@ msgstr ""
 "dimensioni più contenute e può essere ridimensionata a piacere, ma verranno "
 "persi i motivi."
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "errore in scrittura"
+
+#: ../src/extension/internal/pdf.cpp:1575
 msgid "PDF Print"
 msgstr "Stampa PDF"
 
@@ -4136,7 +4159,37 @@ msgstr[1] "<b>%i</b> oggetti di <b>%i</b> tipi"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "Seleziona stampante"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "_Muovi"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "_Scala"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "_Ruota"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "D_istorsione"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "Aggancio"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4144,7 +4197,7 @@ msgstr ""
 "<b>Centro</b> di rotazione e distorsione: trascinare per riposizionarlo; "
 "anche il ridimensionamento con Maiusc usa questo centro"
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4153,7 +4206,7 @@ msgstr ""
 "uniformemente; con <b>Maiusc</b> per ridimensionare attorno al centro di "
 "rotazione"
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4162,7 +4215,7 @@ msgstr ""
 "uniformemente; con <b>Maiusc</b> per ridimensionare attorno al centro di "
 "rotazione"
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4170,7 +4223,7 @@ msgstr ""
 "<b>Distorce</b> la selezione; con <b>Ctrl</b> per far scattare l'angolo; con "
 "<b>Maiusc</b> per distorcere attorno al lato opposto"
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4178,7 +4231,12 @@ msgstr ""
 "<b>Ruota</b> la selezione; con <b>Ctrl</b> per far scattare l'angolo; con "
 "<b>Maiusc</b> per ruotare attorno all'angolo opposto"
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "Alza il livello attuale"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4187,7 +4245,7 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
@@ -4195,18 +4253,18 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Rotazione</b>: %0.2f gradi; con <b>Ctrl</b> per far scattare l'angolo"
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Muove il <b>centro</b> in %s, %s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4692,9 +4750,8 @@ msgid ""
 "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, "
 "<b>drag handles</b> to adjust gradients."
 msgstr ""
-"<b>Trascinare</b> o <b>doppio click</b> per creare un gradiente "
-"sull'oggetto selezionato; <b>trascinare le maniglie</b> per modificare il "
-"gradiente."
+"<b>Trascinare</b> o <b>doppio click</b> per creare un gradiente sull'oggetto "
+"selezionato; <b>trascinare le maniglie</b> per modificare il gradiente."
 
 #: ../src/tools-switch.cpp:193
 msgid ""
@@ -9668,13 +9725,9 @@ msgstr "Rotazione del carattere"
 msgid "Remove manual kerns"
 msgstr "Rimuovi trasformazioni manuali"
 
-#: ../src/widgets/toolbox.cpp:3904
-msgid "Make connectors avoid selected objects"
-msgstr "Fa sì che i connettori evitino gli oggetti selezionati"
-
-#: ../src/widgets/toolbox.cpp:3908
-msgid "Make connectors ignore selected objects"
-msgstr "Fa sì che i connettori ignorino gli oggetti selezionati"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2006-06-11 13:32+0200\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -49,28 +49,52 @@ msgstr ""
 "el·lipse de radi enter; amb <b>majúscules</b> per dibuixar al voltant del "
 "punt d'inici"
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "Crea un clo_n"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "S'està creant un nou connector"
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "Crea connectors"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "Crea connectors"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr "Fi del connector"
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Punt de connexió</b>: cliqueu o arrossegueu per a crear un nou connector"
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Punt final de connexió</b>: arrossegueu per reencaminar o connectar a "
 "noves formes"
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Seleccioneu <b>almenys un objecte que no sigui connector</b>."
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+msgid "Make connectors avoid selected objects"
+msgstr "Els connectors tenen en compte els objectes seleccionats"
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+msgid "Make connectors ignore selected objects"
+msgstr "Els connectors ignoren els objectes seleccionats"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2217,15 +2241,15 @@ msgstr "Fitxer LaTex PSTricks"
 msgid "LaTeX Print"
 msgstr "Impressió LaTeX"
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr "Sortida d'OpenDocument Drawing"
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Dibuix d'OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 msgid "OpenDocument drawing file"
 msgstr "Fitxer de dibuix d'OpenDocument"
 
@@ -2258,12 +2282,12 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Fitxer Postscript"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "Destí d'impressió"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "Propietats d'impressió"
 
@@ -2281,11 +2305,11 @@ msgstr ""
 "mida més petita, i es pot escalar arbitràriament, però la transparència, els "
 "degradats, els marcadors i els patrons es perdran."
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "Imprimeix com a mapa de bits"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2295,20 +2319,20 @@ msgstr ""
 "mida més gran, i no es podrà escalar sense pèrdua de qualitat, però tots els "
 "objectes es dibuixaran exactament com es visualitzen."
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Resolució preferida (punts per polzada) del mapa de bits"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "Resolució:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "Destí d'impressió"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2320,12 +2344,7 @@ msgstr ""
 "Useu '> nomFitxer' per imprimir a un fitxer.\n"
 "Useu '| prog arg...' per enviar la sortida al conducte d'un programa."
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "hi ha hagut un error d'escriptura"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 msgid "Postscript Print"
 msgstr "Impressió Postscript"
 
@@ -2403,11 +2422,11 @@ msgstr "Format de gràfics de vectors escalables comprimit amb GZip"
 msgid "Windows 32-bit Print"
 msgstr "Impressió de Windows de 32 bits"
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 msgid "Print using PDF operators"
 msgstr "Imprimeix usant els operadors PDF"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
@@ -2416,7 +2435,11 @@ msgstr ""
 "mida més petita, i es pot escalar arbitràriament, però els patrons es "
 "perdran."
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "hi ha hagut un error d'escriptura"
+
+#: ../src/extension/internal/pdf.cpp:1575
 msgid "PDF Print"
 msgstr "Impressió PDF"
 
@@ -4103,7 +4126,37 @@ msgstr[1] "<b>%i</b> objectes de <b>%i</b> tipus"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "Selecció d'impressora"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "_Mou"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "E_scala"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "Gi_ra"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "_Torç"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "Ajusta"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4111,7 +4164,7 @@ msgstr ""
 "<b>Centre</b> de rotació i torsió; arrossegueu per a reposicionar; escalar "
 "amb maj també usa aquest centre"
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4119,7 +4172,7 @@ msgstr ""
 "<b>Estireu o estrenyeu</b> la selecció; amb <b>ctrl</b> per a escalar "
 "uniformement; amb <b>maj</b> per a escalar al voltant del centre de rotació"
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4127,7 +4180,7 @@ msgstr ""
 "<b>Escaleu</b> la selecció; amb <b>ctrl</b> per escalar uniformement; amb "
 "<b>majúscules</b> per escalar al voltant del centre de rotació"
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4135,7 +4188,7 @@ msgstr ""
 "<b>Torceu</b> la selecció; amb <b>ctrl</b> per ajustar l'angle; amb "
 "<b>majúscules</b> per girar al voltant de la cantonada contrària"
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4143,7 +4196,12 @@ msgstr ""
 "<b>Gireu</b> la selecció; amb <b>ctrl</b> per ajustar l'angle; amb "
 "<b>majúscules</b> per girar al voltant de la cantonada contrària"
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "Puja un nivell la capa actual"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4151,24 +4209,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Torceu</b>: %0.2f&#176;; amb <b>ctrl</b> per ajustar l'angle"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Gira</b>: %0.2f&#176;; amb <b>ctrl</b> per ajustar l'angle"
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Mou el <b>centre</b> a %s, %s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9622,13 +9680,9 @@ msgstr "Rotació de les lletres"
 msgid "Remove manual kerns"
 msgstr "Suprimeix l'espait manual"
 
-#: ../src/widgets/toolbox.cpp:3904
-msgid "Make connectors avoid selected objects"
-msgstr "Els connectors tenen en compte els objectes seleccionats"
-
-#: ../src/widgets/toolbox.cpp:3908
-msgid "Make connectors ignore selected objects"
-msgstr "Els connectors ignoren els objectes seleccionats"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"

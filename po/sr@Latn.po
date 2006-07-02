@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2006-06-10 22:37+0200\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sf.net>\n"
 "Language-Team: Serbian <prevod@gnome.org>\n"
@@ -50,28 +50,52 @@ msgstr ""
 "ili proporcionalne elipse; pritisnite <b>Shift</b> za iscrtavanje oko "
 "početne tačke"
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "Napravi _klon"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Pravljenje nove poveznice"
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "Pravljenje poveznice"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "Pravljenje poveznice"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr "Završetak poveznice"
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr ""
 "<b>Tačka poveznice</b>: kliknite ili povucite za pravljenje nove poveznice"
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Završetak poveznice</b>: povucite za preusmeravanje ili povezivanje na "
 "novi oblik"
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Izaberite <b>najmanje jedan nepovezan objekat</b>."
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+msgid "Make connectors avoid selected objects"
+msgstr "Poveznice zaobilaze izabrane objekte"
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+msgid "Make connectors ignore selected objects"
+msgstr "Poveznice se iscrtavaju preko izabranih objekata (ne zaobilaze ih)"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2213,15 +2237,15 @@ msgstr "LaTeX PSTricks datoteka"
 msgid "LaTeX Print"
 msgstr "LaTeX štampa"
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr "Izlaz kao OpenDocument Drawing"
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 msgid "OpenDocument drawing (*.odg)"
 msgstr "OpenDocument crtež (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 msgid "OpenDocument drawing file"
 msgstr "Datoteka OpenDocument crteža"
 
@@ -2254,12 +2278,12 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Postscript datoteka"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "Odredište štampe"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "Osobine štampe"
 
@@ -2277,11 +2301,11 @@ msgstr ""
 "biti umanjena i datoteka će biti manje veličine, ali providnost i obrasci će "
 "biti izgubljeni"
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "Štampanje bitmape"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2291,20 +2315,20 @@ msgstr ""
 "da se uvećava bez gubitka na kvalitetu, što zavisi od razmere uvećanja, ali "
 "sva grafika će se iscrtati isto kao što je i prikazana"
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Željena rezolucija (tačaka po inču) bitmape"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "Rezolucija:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "Odredište štampe"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2316,12 +2340,7 @@ msgstr ""
 "Koristite „> datoteka“ za štampanje u datoteku.\n"
 "Koristite „| program argument...“ za prosleđivanje programu."
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "greška pri pisanju"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 msgid "Postscript Print"
 msgstr "Postscript štampa"
 
@@ -2399,11 +2418,11 @@ msgstr "Scalable Vector Graphics format kompresovan sa GZip"
 msgid "Windows 32-bit Print"
 msgstr "Vindouz 32-bitna štampa"
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 msgid "Print using PDF operators"
 msgstr "Štampaj pomoću PDF operatora"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
@@ -2411,7 +2430,11 @@ msgstr ""
 "Koriste se vektorski operatori iz PDF-a. Dobijena slika će verovatno biti "
 "umanjena i datoteka će biti manje veličine, ali će obrasci biti izgubljeni"
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "greška pri pisanju"
+
+#: ../src/extension/internal/pdf.cpp:1575
 msgid "PDF Print"
 msgstr "PDF štampa"
 
@@ -4104,7 +4127,37 @@ msgstr[2] "<b>%i</b> objekata <b>%i</b> tipa"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "Izbor štampača"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "_Pomeraj"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "_Skaliranje"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "_Rotacija"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "_Krivljenje"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "Prijanjanje"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4112,7 +4165,7 @@ msgstr ""
 "<b>Centar</b> rotacije i ukošavanja: povucite za premeštanje; promena "
 "veličine sa "
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4120,7 +4173,7 @@ msgstr ""
 "<b>Stiskanje i razvlačenje</b> izbora; sa <b>Ctrl</b> za proporcionalno; sa "
 "<b>Shift</b> za promenu oko centra rotacije"
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4128,7 +4181,7 @@ msgstr ""
 "<b>Promena veličine</b> izbora; sa <b>Ctrl</b> za proporcionalno; sa "
 "<b>Shift</b> za promenu oko centra rotacije"
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4136,7 +4189,7 @@ msgstr ""
 "<b>Iskošavanje</b> izbora; sa <b>Ctrl</b> za prijanjanje ugla; sa <b>Shift</"
 "b> za rotiranje oko suprotne strane"
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4144,31 +4197,36 @@ msgstr ""
 "<b>Rotacija</b> izbora; sa <b>Ctrl</b> za fiksni ugao; sa <b>Shift</b> za "
 "rotiranje oko suprotnog ćoška"
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "Izdizanje trenutnog sloja"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Skaliranje</b>: %0.2f%% x %0.2f%%; sa <b>Ctrl</b> za proporcionalno"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Iskošavanje</b>: %0.2f&#176;; sa <b>Ctrl</b> za prijanjanje ugla"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Rotacija</b>: %0.2f&#176;; sa <b>Ctrl</b> za prijanjanje ugla"
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "<b>Centar</b> premešten na %s, %s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9590,13 +9648,9 @@ msgstr "Rotacija karaktera"
 msgid "Remove manual kerns"
 msgstr "Ukloni ručne kerninge"
 
-#: ../src/widgets/toolbox.cpp:3904
-msgid "Make connectors avoid selected objects"
-msgstr "Poveznice zaobilaze izabrane objekte"
-
-#: ../src/widgets/toolbox.cpp:3908
-msgid "Make connectors ignore selected objects"
-msgstr "Poveznice se iscrtavaju preko izabranih objekata (ne zaobilaze ih)"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2006-06-19 22:38+0200\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
@@ -48,26 +48,50 @@ msgstr ""
 "hay hình bầu dục có tỷ lệ số nguyên; <b>Shift</b> để vẽ vòng quanh điểm bắt "
 "đầu"
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "_Nhái"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Đang tạo bộ kết nối mới..."
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "Tạo bộ kết nối"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "Tạo bộ kết nối"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr "Đang tạo xong bộ kết nối..."
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>Điểm kết nối</b>: nhấn hay kéo để tạo một bộ kết nối mới"
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 "<b>Điểm cuối bộ kết nối</b>: kéo để định tuyến lại hoặc kết nối đến hình mới"
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Chọn <b>ít nhất một đối tượng khác bộ kết nối</b>"
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+msgid "Make connectors avoid selected objects"
+msgstr "Làm cho bộ kết nối tránh các đối tượng đã chọn"
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+msgid "Make connectors ignore selected objects"
+msgstr "Làm cho bộ kết nối bỏ qua các đối tượng đã chọn"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2207,15 +2231,15 @@ msgstr "Tập tin LaTeX PSTricks"
 msgid "LaTeX Print"
 msgstr "In LaTeX"
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr "Kết xuất vẽ OpenDocument"
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 msgid "OpenDocument drawing (*.odg)"
 msgstr "Bản vẽ OpenDocument (*.odg)"
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 msgid "OpenDocument drawing file"
 msgstr "Tập tin bản vẽ OpenDocument"
 
@@ -2248,12 +2272,12 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Tập tin Postscript"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "Đích in"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "Tài sản in"
 
@@ -2271,11 +2295,11 @@ msgstr ""
 "hơn, và có thể được co dãn tùy ý, nhưng độ trong suốt anfa và các mẫu sẽ bị "
 "mất."
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "In dạng mảng ảnh"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2285,20 +2309,20 @@ msgstr ""
 "hơn, và không thể được co dãn tùy ý và bảo tồn chất lượng, nhưng mọi đối "
 "tượng sẽ được vẽ chính xác như được hiển thị."
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của mảng ảnh"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "Độ phân giải:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "Đích in"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
@@ -2310,12 +2334,7 @@ msgstr ""
 "Dùng « > tên_tập_tin » để in vào tập tin.\n"
 "Dùng « | chương_trình đối_số » để gởi qua ống dẫn cho chương trình."
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "gặp lỗi ghi"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 msgid "Postscript Print"
 msgstr "In PostScript"
 
@@ -2393,11 +2412,11 @@ msgstr "Dạng thức Đồ họa véc-tơ có khả năng co dãn, được né
 msgid "Windows 32-bit Print"
 msgstr "In 32-bit Windows"
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 msgid "Print using PDF operators"
 msgstr "In dùng toán từ PDF"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
@@ -2405,7 +2424,11 @@ msgstr ""
 "Dùng các toán tử véc-tơ kiểu PDF. Ảnh kết quả thường có kích cỡ tập tin nhỏ "
 "hơn, và có khả năng được co dãn tùy ý, nhưng các mẫu sẽ bị mất."
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "gặp lỗi ghi"
+
+#: ../src/extension/internal/pdf.cpp:1575
 msgid "PDF Print"
 msgstr "In PDF"
 
@@ -4066,7 +4089,37 @@ msgstr[0] "<b>%i</b> đối tượng kiểu <b>%i</b>"
 msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "Chọn máy in"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "_Chuyển"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "_Co dãn"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "_Xoay"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "_Lệch"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "Dính"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4074,7 +4127,7 @@ msgstr ""
 "<b>Tâm</b> của việc xoay và lệch: kéo để đắt lại vị trí; việc co dãn với "
 "phím Shift cũng dùng tâm này"
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4082,7 +4135,7 @@ msgstr ""
 "<b>Vắt hay kéo giãn</b> vùng chọn; với phím: <b>Ctrl</b> để co dãn đều đều; "
 "<b>Shift</b> để co dãn vòng quanh tâm xoay."
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4090,7 +4143,7 @@ msgstr ""
 "<b>Co dãn</b> vùng chọn; với phím: <b>Ctrl</b> để co dãn đều đều; <b>Shift</"
 "b> để co dãn vòng quanh tâm xoay."
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4098,7 +4151,7 @@ msgstr ""
 "<b>Đối xứng lệch</b> vùng chọn; với phím: <b>Ctrl</b> để dính góc; <b>Shift</"
 "b> để đối xứng lệch quanh bên đối diện."
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4106,31 +4159,36 @@ msgstr ""
 "<b>Xoay</b> vùng chọn; với phím: <b>Ctrl</b> để dính góc; <b>Shift</b> để "
 "xoay quanh góc đối diện."
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "Nâng lên lớp hiện có"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Co dãn</b>: %0.2f%% x %0.2f%%; với phím: <b>Ctrl</b> để khoá tỷ lệ."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Đối xứng lệch</b>: %0.2f&#176;; với phím: <b>Ctrl</b> để dính góc."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Xoay</b> %0.2f&#176;; với phím: <b>Ctrl</b> để dính góc"
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Chuyển <b>tâm</b> sang %s, %s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9561,13 +9619,9 @@ msgstr "Xoay chữ"
 msgid "Remove manual kerns"
 msgstr "Gỡ bỏ cách tự định chỗ"
 
-#: ../src/widgets/toolbox.cpp:3904
-msgid "Make connectors avoid selected objects"
-msgstr "Làm cho bộ kết nối tránh các đối tượng đã chọn"
-
-#: ../src/widgets/toolbox.cpp:3908
-msgid "Make connectors ignore selected objects"
-msgstr "Làm cho bộ kết nối bỏ qua các đối tượng đã chọn"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"

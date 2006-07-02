@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-29 23:35+0200\n"
+"POT-Creation-Date: 2006-07-02 13:30+0200\n"
 "PO-Revision-Date: 2005-11-16 00:21+0900\n"
 "Last-Translator: shivaken <shivaken@owls-nest.net>\n"
 "Language-Team: Japanese <shivaken@owls-nest.net>\n"
@@ -51,25 +51,49 @@ msgstr ""
 "<b>円／弧</b>: %s x %s … <b>Ctrl</b>: 比率をスナップ, <b>Shift</b>: 始点を中"
 "心に描画"
 
+#: ../src/arc-context.cpp:437
+#, fuzzy
+msgid "Create ellipse"
+msgstr "新規コネクタの作成"
+
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "新規コネクタを作成"
 
-#: ../src/connector-context.cpp:949
+#: ../src/connector-context.cpp:717
+#, fuzzy
+msgid "Reroute connector"
+msgstr "新規コネクタの作成"
+
+#. Flush pending updates
+#: ../src/connector-context.cpp:924
+#, fuzzy
+msgid "Create connector"
+msgstr "新規コネクタの作成"
+
+#: ../src/connector-context.cpp:948
 msgid "Finishing connector"
 msgstr "コネクタを終了"
 
-#: ../src/connector-context.cpp:1093
+#: ../src/connector-context.cpp:1092
 msgid "<b>Connection point</b>: click or drag to create a new connector"
 msgstr "<b>コネクタ 始点</b>: クリックまたはドラッグで新しいコネクタを作成"
 
-#: ../src/connector-context.cpp:1164
+#: ../src/connector-context.cpp:1163
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr "<b>コネクタ 終点</b>: ドラッグでオブジェクトに接続"
 
-#: ../src/connector-context.cpp:1275
+#: ../src/connector-context.cpp:1274
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "<b>一つ以上のコネクタ以外のオブジェクトを選択してください。</b>"
+
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+msgid "Make connectors avoid selected objects"
+msgstr ""
+
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+msgid "Make connectors ignore selected objects"
+msgstr ""
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -2198,15 +2222,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2004
+#: ../src/extension/internal/odf.cpp:2056
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2009
+#: ../src/extension/internal/odf.cpp:2061
 msgid "OpenDocument drawing (*.odg)"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2010
+#: ../src/extension/internal/odf.cpp:2062
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -2243,12 +2267,12 @@ msgstr ""
 msgid "Postscript File"
 msgstr "縦書き"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
 msgstr "印刷先"
 
 #. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
 msgid "Print properties"
 msgstr "印刷のプロパティ"
 
@@ -2265,11 +2289,11 @@ msgstr ""
 "PostScriptベクトルオペレータを使うと、出力されるデータは小さくなり自動的にサ"
 "イズ調整されます。透明度、パターンが失われます"
 
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "ビットマップ印刷"
 
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
@@ -2278,20 +2302,20 @@ msgstr ""
 "すべてをビットマップで印刷します。出力するデータは大きくなり品質はズームに依"
 "存します。すべてのグラフィックは表示と同様に印刷されます。"
 
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "ビットマップ解像度(インチあたりのドット数)"
 
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
 msgstr "解像度:"
 
 #. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
 msgid "Print destination"
 msgstr "印刷先"
 
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 #, fuzzy
 msgid ""
 "Printer name (as given by lpstat -p);\n"
@@ -2302,12 +2326,7 @@ msgstr ""
 "'> ファイル名'でファイルに出力\n"
 "'| プログラム 引数...'で他のプログラムに出力を渡します。"
 
-#: ../src/extension/internal/ps.cpp:1213
-#: ../src/extension/internal/pdf.cpp:1518
-msgid "write error occurred"
-msgstr "書き込みエラーが起こりました。"
-
-#: ../src/extension/internal/ps.cpp:1240
+#: ../src/extension/internal/ps.cpp:1211
 #, fuzzy
 msgid "Postscript Print"
 msgstr "縦書き"
@@ -2390,12 +2409,12 @@ msgstr ""
 msgid "Windows 32-bit Print"
 msgstr ""
 
-#: ../src/extension/internal/pdf.cpp:130
+#: ../src/extension/internal/pdf.cpp:134
 #, fuzzy
 msgid "Print using PDF operators"
 msgstr "PostScriptを経由"
 
-#: ../src/extension/internal/pdf.cpp:132
+#: ../src/extension/internal/pdf.cpp:136
 #, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
@@ -2404,7 +2423,11 @@ msgstr ""
 "PostScriptベクトルオペレータを使うと、出力されるデータは小さくなり自動的にサ"
 "イズ調整されます。透明度、パターンが失われます"
 
-#: ../src/extension/internal/pdf.cpp:1545
+#: ../src/extension/internal/pdf.cpp:1548
+msgid "write error occurred"
+msgstr "書き込みエラーが起こりました。"
+
+#: ../src/extension/internal/pdf.cpp:1575
 msgid "PDF Print"
 msgstr ""
 
@@ -4034,7 +4057,37 @@ msgstr[1] "%i個のノードを選択しています。(%i個が選択可能) �
 msgid "%s%s. %s."
 msgstr ""
 
-#: ../src/seltrans.cpp:465
+#: ../src/seltrans.cpp:227
+#, fuzzy
+msgid "Set center"
+msgstr "プリンタの選択"
+
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "移動"
+
+#: ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "スケール"
+
+#: ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "回転"
+
+#: ../src/seltrans.cpp:356
+#, fuzzy
+msgid "Skew"
+msgstr "傾斜"
+
+#: ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "変化度"
+
+#: ../src/seltrans.cpp:477
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4042,14 +4095,14 @@ msgstr ""
 "回転／傾ける の<b>中心</b> … マウスで中心を変更できます。拡大／縮小もこの中心"
 "を使います。"
 
-#: ../src/seltrans.cpp:492
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 "<b>縮める／伸ばす</b> … <b>Ctrl</b>: 形状を固定、<b>Shift</b>: 中心を使う"
 
-#: ../src/seltrans.cpp:493
+#: ../src/seltrans.cpp:505
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4057,7 +4110,7 @@ msgstr ""
 "オブジェクトを<b>拡大／縮小</b> … <b>Ctrl</b>: 形状を固定、<b>Shift</b>: 中心"
 "を固定"
 
-#: ../src/seltrans.cpp:497
+#: ../src/seltrans.cpp:509
 #, fuzzy
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
@@ -4065,38 +4118,43 @@ msgid ""
 msgstr ""
 "<b>回転</b> <b>Ctrl</b>: 角度をスナップ, <b>Shift</b>: 反対の端を中心に"
 
-#: ../src/seltrans.cpp:498
+#: ../src/seltrans.cpp:510
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 "<b>回転</b> <b>Ctrl</b>: 角度をスナップ, <b>Shift</b>: 反対の端を中心に"
 
-#: ../src/seltrans.cpp:876 ../src/seltrans.cpp:988
+#: ../src/seltrans.cpp:641
+#, fuzzy
+msgid "Reset center"
+msgstr "現在のレイヤーを前面へ移動"
+
+#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>拡大／縮小</b>: %0.2f%% x %0.2f%%; <b>Ctrl</b>: 比率を固定"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1078
+#: ../src/seltrans.cpp:1090
 #, fuzzy, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>回転</b>: %0.2f度; <b>Ctrl</b>: 角度をスナップ"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1127
+#: ../src/seltrans.cpp:1139
 #, fuzzy, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>回転</b>: %0.2f度; <b>Ctrl</b>: 角度をスナップ"
 
-#: ../src/seltrans.cpp:1171
+#: ../src/seltrans.cpp:1183
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "移動 <b>中心</b>を%s, %s"
 
-#: ../src/seltrans.cpp:1429
+#: ../src/seltrans.cpp:1441
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -9560,12 +9618,8 @@ msgstr ""
 msgid "Remove manual kerns"
 msgstr "カーニングを元に戻す"
 
-#: ../src/widgets/toolbox.cpp:3904
-msgid "Make connectors avoid selected objects"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3908
-msgid "Make connectors ignore selected objects"
+#: ../src/widgets/toolbox.cpp:3851
+msgid "Change connector spacing distance"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3916
@@ -10212,10 +10266,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Fractal (Lindenmayer)"
 #~ msgstr "レイヤーの名前を編集"
-
-#, fuzzy
-#~ msgid "Step"
-#~ msgstr "変化度"
 
 #, fuzzy
 #~ msgid "PDF Output"
