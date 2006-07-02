@@ -105,7 +105,7 @@ MessageUtilities::newObjectMessage(Glib::ustring &msgbuf,
                 //g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing special node; not generating key");
 		id = xmt->get(*node);
 		if (id.empty()) {
-			g_warning(_("Node %p (name %s) is a special node, but it could not be found in the node tracker (possible unexpected duplicate?)  Generating unique ID anyway."), node, node->name());
+			g_warning("Node %p (name %s) is a special node, but it could not be found in the node tracker (possible unexpected duplicate?)  Generating unique ID anyway.", node, node->name());
 			id = xmt->generateKey();
 			newnodesbuf.put(id, node);
 		}

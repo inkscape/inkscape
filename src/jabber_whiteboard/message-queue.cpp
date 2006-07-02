@@ -72,7 +72,7 @@ ReceiveMessageQueue::insert(MessageNode* msg)
     // by this message's sender.  If it does, drop the message and produce
     // a warning.
     if (msg->sequence() < _latest) {
-        g_warning(_("Received late message (message sequence number is %u, but latest processed message had sequence number %u).  Discarding message; session may be desynchronized."), msg->sequence(), this->_latest);
+        g_warning("Received late message (message sequence number is %u, but latest processed message had sequence number %u).  Discarding message; session may be desynchronized.", msg->sequence(), this->_latest);
         return;
     }
 
