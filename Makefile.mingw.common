@@ -83,10 +83,10 @@ else
 # NATIVE COMPILER SETTINGS
 ##########################################################################
 
-CC      = i686-pc-mingw32-gcc
-CXX     = i686-pc-mingw32-g++
+CC      = mingw32-gcc
+CXX     = mingw32-g++
 AS      = as
-AR      = i686-pc-mingw32-ar
+AR      = mingw32-ar
 OBJCOPY = objcopy
 RANLIB  = ranlib
 WINDRES = windres
@@ -212,7 +212,7 @@ $(GTK)/lib/iconv.lib	\
 -llcms.dll \
 -lloudmouth-1.dll -lssl -lcrypto \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
--lgc -mwindows -lws2_32 -lintl
+-lgc -mwindows -lws2_32 -lintl -lcairo
 
 
 ##########################################################################
