@@ -123,26 +123,32 @@ prefs_set_recent_file(gchar const *uri, gchar const *name)
     if (uri != NULL) {
         Inkscape::XML::Node *recent = inkscape_get_repr(INKSCAPE, "documents.recent");
         if (recent) {
-            Inkscape::XML::Node *child = sp_repr_lookup_child(recent, "uri", uri);
-            if (child) {
-                recent->changeOrder(child, NULL);
-            } else {
-                if (recent->childCount() >= max_documents) {
-                    child = recent->firstChild();
-                    // count to the last
-                    for (unsigned i = 0; i + 2 < max_documents; ++i) {
-                        child = child->next();
-                    }
-                    // remove all after the last
-                    while (child->next()) {
-                        sp_repr_unparent(child->next());
-                    }
+            // remove excess recent files
+            if (recent->childCount() >= max_documents) {
+                Inkscape::XML::Node *child = recent->firstChild();
+                // count to the last
+                for (unsigned i = 0; child && i + 1 < max_documents; ++i) {
+                    child = child->next();
                 }
-                child = sp_repr_new("document");
-                child->setAttribute("uri", uri);
-                recent->addChild(child, NULL);
+                // remove all after the last
+                while (child) {
+                    Inkscape::XML::Node *next = child->next();
+                    sp_repr_unparent(child);
+                    child = next;
+                }
             }
-            child->setAttribute("name", name);
+
+            if (max_documents > 0) {
+                Inkscape::XML::Node *child = sp_repr_lookup_child(recent, "uri", uri);
+                if (child) {
+                    recent->changeOrder(child, NULL);
+                } else {
+                    child = sp_repr_new("document");
+                    child->setAttribute("uri", uri);
+                    recent->addChild(child, NULL);
+                }
+                child->setAttribute("name", name);
+            }
         }
     }
 }
