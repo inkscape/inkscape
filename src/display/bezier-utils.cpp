@@ -30,7 +30,7 @@
 #endif
 
 #ifdef HAVE_IEEEFP_H
-# include <ieefp.h>
+# include <ieeefp.h>
 #endif
 
 #include <glib/gmessages.h>
