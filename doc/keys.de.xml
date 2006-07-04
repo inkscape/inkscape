@@ -28,7 +28,7 @@ Verbesserungsvorschlag</a>).</p>
 <keys><key><keyf f="F9"/></key><key>i</key>	 <action>Spiralwerkzeug</action></keys>
 <keys><key><shift/><keyf f="F9"/></key><key>*</key>	 <action>Sternwerkzeug</action></keys>
 <keys><key><ctrl/><keyf f="F2"/></key><key>o</key>	 <action>Objektverbinder</action></keys>
-<note>Doppel-Klick auf die Werkzeug-Schaltflächen öffnet den Einstellungsdialog mit der passenden Seite.</note>
+<note>Doppelklick auf die Werkzeug-Schaltflächen öffnet den Einstellungsdialog mit der passenden Seite.</note>
 </group>
 </section>
 
@@ -40,7 +40,7 @@ Verbesserungsvorschlag</a>).</p>
 <keys><key><shift/><ctrl/>T</key> <action>Schrift und Text</action></keys>
 <keys><key><shift/><ctrl/>M</key> <action>Verändern</action></keys>
 <keys><key><shift/><ctrl/>A</key> <action>Anordungen und Abstände</action></keys>
-<keys><key><shift/><ctrl/>O</key> <action>Objekteigentschaften</action></keys>
+<keys><key><shift/><ctrl/>O</key> <action>Objekteigenschaften</action></keys>
 <keys><key><shift/><ctrl/>X</key> <action>XML-Editor</action></keys>
 <keys><key><shift/><ctrl/>D</key> <action>Dokumenteneinstellungen</action></keys>
 <keys><key><shift/><ctrl/>P</key> <action>Inkscape-Einstellungen</action></keys>
@@ -58,38 +58,38 @@ Verbesserungsvorschlag</a>).</p>
 <group>
 <title>Innerhalb eines Dialoges</title>
 <keys><key><misc f="Esc"/></key> <action>Zurück zur Arbeitsfläche</action></keys>
-<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key> <action>Dialog schliesen</action></keys>
-<keys><key><misc f="Tab"/></key> <action>springe zum nächsten Element</action></keys>
-<keys><key><shift/><misc f="Tab"/></key> <action>springe zum vorhergehenden Element</action></keys>
-<keys><key><misc-wide f="Eingabe"/></key> <action>Setzen der neuen Werte</action></keys>
+<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key> <action>Dialog schließen</action></keys>
+<keys><key><misc f="Tab"/></key> <action>Zum nächsten Element springen</action></keys>
+<keys><key><shift/><misc f="Tab"/></key> <action>Zum vorhergehenden Element springen</action></keys>
+<keys><key><misc-wide f="Eingabe"/></key> <action>Neue Werte setzen</action></keys>
 <note>Übernimmt die neuen Werte, die Sie eingegeben haben und kehrt zur Arbeitsfläche zurück.</note>
-<keys><key><ctrl/><misc-wide f="Eingabe"/></key> <action>Setzen des »attr«-Wertes im XML-Editor</action></keys>
-<note>Beim Bearbeiten eines Attribut-Wertes im XML-Editor, setzten des neuen Wertes (entspricht dem Klicken des »Setzen«-Knopfes).</note>
-<keys><key><misc-wide f="Leertaste"/></key> <key><misc-wide f="Eingabe"/></key> <action>Aktiviert den aktuellen Knopf oder Liste</action></keys>
-<keys><key><ctrl/><misc f="PgUp"/></key> <key><ctrl/><misc f="PgDn"/></key> <action>in einem Dialog mit mehreren Reitern, wechseln des reiters</action></keys>
+<keys><key><ctrl/><misc-wide f="Eingabe"/></key> <action>»attr«-Wert im XML-Editor setzen</action></keys>
+<note>Setzen des neuen Wertes (entspricht dem Klicken des »Setzen«-Knopfes) beim Bearbeiten eines Attribut-Wertes im XML-Editor.</note>
+<keys><key><misc-wide f="Leertaste"/></key> <key><misc-wide f="Eingabe"/></key> <action>Aktuellen Knopf oder Liste aktivieren</action></keys>
+<keys><key><ctrl/><misc f="PgUp"/></key> <key><ctrl/><misc f="PgDn"/></key> <action>Reiter in einem Dialog wechseln</action></keys>
 </group>
 </section>
 
 *<section title="Einstellungen" color="f8f3e9">
 
 <group>
-<note>Die Werkzeugeinstellungsleiste über dem Dokument bietet veschiedene Knöpfe und Einsteller für jedes Werkzeug.</note>
-<keys><key><alt/>X</key> <action>springe zum ersten Eingabefeld</action></keys>
-<keys><key><misc-wide f="Eingabe"/></key> <action>bestätigt den neuen Wert</action></keys>
-<note>Das bestätigt den neuen Wert, den Sie gerade in einem Textfeld eingegeben haben und kehrt zur Arbeitsfläche zurück.</note>
-<keys><key><misc f="Esc"/></key>   <action>Abbrechen der Änderungen und</action></keys>
+<note>Die Werkzeugeinstellungsleiste über dem Dokument bietet verschiedene Knöpfe und Einsteller für jedes Werkzeug.</note>
+<keys><key><alt/>X</key> <action>Zum ersten Eingabefeld springen</action></keys>
+<keys><key><misc-wide f="Eingabe"/></key> <action>Neuen Wert bestätigen</action></keys>
+<note>Bestätigt den neuen Wert, den Sie gerade in einem Textfeld eingegeben haben und kehrt zur Arbeitsfläche zurück.</note>
+<keys><key><misc f="Esc"/></key>   <action>Abbrechen der Änderungen</action></keys>
 <note>Bricht die Änderungen, die Sie in einem Textfeld gemacht haben, ab, und kehrt zur Arbeitsfläche zurück.</note>
 <keys><key><ctrl/>Z</key> <action>Änderungen abbrechen</action></keys>
 <note>Bricht die Änderungen, die Sie in einem Textfeld gemacht haben, ab, aber Sie verbleiben in diesem Textfeld.</note>
-<keys><key><misc f="Tab"/></key> <action>springe zum nächsten Feld</action></keys>
-<keys><key><shift/><misc f="Tab"/></key> <action>springe zum vorhergehenden Feld</action></keys>
+<keys><key><misc f="Tab"/></key> <action>Zum nächsten Feld springen</action></keys>
+<keys><key><shift/><misc f="Tab"/></key> <action>Zum vorhergehenden springen Feld</action></keys>
 <note>Navigieren zwischen den Feldern in der Werkzeugeinstellungsleiste (geänderte Werte werden übernommen).</note>
 </group>
 
 <group>
 <title>Ändern von Werten</title>
-<mouse><key><up/></key> <key><down/></key> <action>Verändert den Wert um 0,1</action></mouse>
-<keys><key><misc f="PgUp"/></key><key><misc f="PgDn"/></key> <action>Verändert den Wert um 5,0</action></keys>
+<mouse><key><up/></key> <key><down/></key> <action>Wert um 0,1 verändern</action></mouse>
+<keys><key><misc f="PgUp"/></key><key><misc f="PgDn"/></key> <action>Wert um 5,0 verändern</action></keys>
 </group>
  
 </section>
@@ -100,12 +100,12 @@ Verbesserungsvorschlag</a>).</p>
 <title>Zoom</title>
 <keys><key>=</key> <key>+</key> 	 <action>Vergrössern</action></keys>
 <keys><key>-</key>	 <action>Verkleinern</action></keys>
-<note>+/- auf der Nummerntastatur (mit »NumLock« aus) vergrössern/verkleinern, auch wenn Sie einen Text editieren.</note>
+<note>+/- auf der Nummerntastatur (mit »NumLock« aus) vergrössert/verkleinert, auch wenn Sie einen Text editieren.</note>
 <mouse><key><mid-click/></key>  <key><ctrl/><right-click/></key>   <action>vergrössern</action></mouse>
 <mouse><key><shift/><mid-click/></key>  <key><shift/><right-click/></key> <action>verkleinern</action></mouse>
 <mouse><key><ctrl/><wheel/></key> <action>Vergrössern bzw. Verkleinern</action></mouse>
-<mouse><key><shift/><mid-drag/></key> <action>Vergrössern des Bereiches</action></mouse>
-<keys><key><alt/>Z</key> <action>Aktiviert Zoom-Feld</action></keys>
+<mouse><key><shift/><mid-drag/></key> <action>Bereich vergrössern</action></mouse>
+<keys><key><alt/>Z</key> <action>Zoom-Feld aktivieren</action></keys>
 <note>Das Zoom-Feld in der unteren linken Ecke des Fensters erlaubt das präzise Festlegen des Zoom-Wertes.</note>
 </group>
 
@@ -129,7 +129,7 @@ Verbesserungsvorschlag</a>).</p>
 <group>
 <title>Verschieben</title>
 <mouse><key><ctrl/><arrows/></key>  <action>Arbeitsfläche verschieben</action></mouse>
-<note>Verschieben mittels Tasten ist beschleunigt, d.h. es verschnellert sich, wenn Sie Strg+Pfeil in schneller Folge drücken bzw. gedrückt lassen.</note>
+<note>Verschieben mittels Tasten ist beschleunigt, d.h. es verschnellert sich, wenn Sie Strg+Pfeil in schneller Folge drücken.</note>
 <mouse><key><mid-drag/></key>  <action>Arbeitsfläche verschieben</action></mouse>
 <mouse><key><shift/><right-drag/></key> <key><ctrl/><right-drag/></key> <action>Arbeitsfläche verschieben</action></mouse>
 <mouse><key><wheel/></key> <action>Arbeitsfläche vertikal verschieben</action></mouse>
@@ -138,9 +138,9 @@ Verbesserungsvorschlag</a>).</p>
 
 <group>
 <title>Hilfslinien und Gitter</title>
-<mouse><key><left-drag/></key> <action>Herunterziehen eines Lineals erstellt Führungslinie</action></mouse>
-<note>Ziehe das horizontale oder vertikale Lineal, um eine neue Führungslinie zu erzeugen.</note>
-<note>Ziehe eine Führungslinie wieder auf das Lineal, um sie zu löschen.</note>
+<mouse><key><left-drag/></key> <action>Führungslinie durch Herunterziehen eines Lineals erstellen</action></mouse>
+<note>Ziehen Sie das horizontale oder vertikale Lineal, um eine neue Führungslinie zu erzeugen.</note>
+<note>Ziehen Sie eine Führungslinie wieder auf das Lineal, um sie zu löschen.</note>
 <keys><key>|</key> <key><shift/>\</key> <action>Hilfslinien und Einrasten an Hilfslinien umschalten</action></keys>
 <note>Unterschiedliche Werte für Sichtbarkeit und Einrasten an Hilfslinien sind in den Dokumenteneinstellungen änderbar.</note>
 <note>Erzeugen einer neuen Führungslinie durch das Ziehen eines Lineals schaltet Führungsliniensichtbarkeit und Einrasten an Hilfslinien ein.</note>
@@ -162,13 +162,13 @@ Verbesserungsvorschlag</a>).</p>
 *<section title="Datei" color="f3f2e2">
 
 <group>
-<keys><key><ctrl/>N</key>	 <action>neues Dokument anlegen</action></keys>
-<keys><key><ctrl/>O</key>	 <action>ein bestehendes Dokument öffnen</action></keys>
-<keys><key><shift/><ctrl/>E</key>	 <action>als Bitmap exportieren</action></keys>
+<keys><key><ctrl/>N</key>	 <action>Neues Dokument anlegen</action></keys>
+<keys><key><ctrl/>O</key>	 <action>Bestehendes Dokument öffnen</action></keys>
+<keys><key><shift/><ctrl/>E</key>	 <action>Bitmap exportieren</action></keys>
 <keys><key><ctrl/>I</key>	 <action>Bitmap oder SVG-Bild importieren</action></keys>
 <keys><key><ctrl/>P</key>	 <action>Dokument drucken</action></keys>
 <keys><key><ctrl/>S</key>	 <action>Dokument speichern</action></keys>
-<keys><key><shift/><ctrl/>S</key>	 <action>Dokument unter anderen Namen speichern</action></keys>
+<keys><key><shift/><ctrl/>S</key><action>Dokument unter anderen Namen speichern</action></keys>
 <keys><key><ctrl/>Q</key>	 <action>Inkscape verlassen</action></keys>
 </group>
 
@@ -189,10 +189,10 @@ Verbesserungsvorschlag</a>).</p>
 </group>
 
 <group>
-<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key>	 <action>Dokument schliessen</action></keys>
+<keys><key><ctrl/><keyf f="F4"/></key> <key><ctrl/>W</key>	 <action>Dokument schließen</action></keys>
 <note>Beendet Inkscape, wenn nur ein Dokument geöffnet ist.</note>
-<keys><key><ctrl/><misc f="Tab"/></key> <action>zum nächsten Dokumentenfenster</action></keys>
-<keys><key><shift/><ctrl/><misc f="Tab"/></key> <action>zum vorhergehenden Dokumentenfenster</action></keys>
+<keys><key><ctrl/><misc f="Tab"/></key> <action>Zum nächsten Dokumentenfenster</action></keys>
+<keys><key><shift/><ctrl/><misc f="Tab"/></key> <action>Zum vorhergehenden Dokumentenfenster</action></keys>
 <note>Es werden die aktiven Dokumentenfenster vor- und rückwarts durchlaufen.</note>
 </group>
 
@@ -201,15 +201,15 @@ Verbesserungsvorschlag</a>).</p>
 
 *<section title="Ebenen" color="f6f9d9">
 <group>
-<keys><key><shift/><misc f="PgUp"/></key> <action>zur darüberliegenden Ebene verschieben</action></keys>
-<keys><key><shift/><misc f="PgDn"/></key> <action>zur darunterliegenden Ebene verschieben</action></keys>
-<note>Es werden die ausgewählten Objekte von einer in eine andere Ebene verschoben.</note>
+<keys><key><shift/><misc f="PgUp"/></key> <action>Zur darüberliegenden Ebene verschieben</action></keys>
+<keys><key><shift/><misc f="PgDn"/></key> <action>Zur darunterliegenden Ebene verschieben</action></keys>
+<note>Die ausgewählten Objekte werden von einer in eine andere Ebene verschoben.</note>
 
 <keys><key><shift/><ctrl/><misc f="PgUp"/></key> <action>Ebene anheben</action></keys>
 <keys><key><shift/><ctrl/><misc f="PgDn"/></key> <action>Ebene absenken</action></keys>
 <keys><key><shift/><ctrl/><misc f="Pos1"/></key> <action>Ebene ganz nach oben</action></keys>
 <keys><key><shift/><ctrl/><misc f="Ende"/></key> <action>Ebene ganz nach unten</action></keys>
-<note>Befehle verschieben die aktuell ausgewählte Ebene entlang ihrer Geschwister (normalerweise andere Ebenen).</note>
+<note>Die aktuell ausgewählte Ebene entlang ihrer Geschwister (normalerweise andere Ebenen) verschieben.</note>
 </group>
 </section>
 
@@ -229,27 +229,27 @@ Verbesserungsvorschlag</a>).</p>
 <keys><key><ctrl/>X</key>	 <action>Auswahl verschieben</action></keys>
 <note>Funktioniert wie »Auswahl kopieren«, jodoch wird die Auswahl im Dokument gelöscht.</note>
 <keys><key><ctrl/>V</key>	 <action>Zwischenablage einfügen</action></keys>
-<note>Einfügen der Objekte aus der Zwischenablage an der Mausposition oder in der Mitte des Dokumentes, wenn sich die Mausposition ausserhalb der Zeichenfläche befindet.</note>
-<note>Beim Bearbeiten von Text mit dem Textwerkzeug wird der Text aus der System-Zwischenablage in das aktuelle Textobjekt eingefügt.</note>
+<note>Einfügen an der Mausposition oder in der Mitte des Dokumentes (wenn Mausposition ausserhalb der Zeichenfläche).</note>
+<note>Bei aktivem Textwerkzeug wird der Text aus der System-Zwischenablage in das aktuelle Textobjekt eingefügt.</note>
 <keys><key><ctrl/><alt/>V</key>	 <action>Einfügen an Ursprungsposition</action></keys>
 <note>Fügt die Objekte der Zwischenablage an der Position ein, von der sie kopiert wurden.</note>
 <keys><key><shift/><ctrl/>V</key>  <action>Stil anwenden</action></keys> 
 <note>Anwenden des Stils des (zuerst) kopierten Objektes auf die aktuelle Auswahl.</note>
-<note>Wenn ein Farbverlaufsanfasser (im Farbverlaufswerkzeug) oder ein Textabschnitt ausgewählt sind, dann bekommen nur diese den Stil, und nicht das gesamte Objekt.</note>
+<note>Wenn ein Farbverlaufsanfasser oder ein Textabschnitt ausgewählt sind, dann bekommen nur genau diese den Stil.</note>
 </group>
 
 <group>
 <title>Duplizieren</title>
 <keys><key><ctrl/>D</key>	 <action>Auswahl duplizieren</action></keys> 
-<note>Neue Objekte werden ganau über den Originalen eingefügt und ausgewählt.</note>
+<note>Neue Objekte werden genau über den Originalen eingefügt und ausgewählt.</note>
 </group>
 
 <group>
 <title>Klonen</title>
 <keys><key><alt/>D</key>	 <action>Auswahl klonen</action></keys> 
-<note>Ein Klon kann unabhängig verschoben, skaliert, rotiert und geschert werden aktualisiert Form, Füllung und Kontur von seinem Original.</note>
+<note>Ein Klon kann unabhängig verschoben, skaliert, rotiert und geschert werden. Er behält Form, Füllung und Kontur seines Originals.</note>
 <note>Der Klon wird genau über dem Original eingefügt und ausgewählt.</note>
-<note>Sie können nur ein Objekt jeweils klonen; wenn Sie verschiedene Objekte zusammen klonen wollen, gruppieren Sie die Objekte und klonen Sie diese dann.</note>
+<note>Sie können nur jeweils ein Objekt klonen; mehrere Objekte können als Gruppe geklont werden.</note>
 <keys><key><shift/><alt/>D</key>	 <action>Klonverbindung auflösen</action></keys> 
 <note>Durch das Auflösen der Klonverbindung verliert der Klon jeden Bezug zu seinem Original und wird zur exakten Kopie.</note>
 <keys><key><shift/>D</key>	 <action>Original auswählen</action></keys> 
@@ -275,10 +275,10 @@ Verbesserungsvorschlag</a>).</p>
 
 <group>
 <title>Gruppieren</title>
-<keys> <key><shift/><ctrl/>U</key>  <key><ctrl/>G</key> <action>ausgewählte Objekte gruppieren</action></keys>
+<keys> <key><shift/><ctrl/>U</key>  <key><ctrl/>G</key> <action>Ausgewählte Objekte gruppieren</action></keys>
 <note>Strg+Klick, um Objekte innerhalb einer Gruppe auszuwählen.</note>
 <keys><key><shift/><ctrl/>G</key> <key><ctrl/>U</key>  <action>Ausgewählte Gruppe(n) auflösen</action></keys>
-<note>Löscht nur das erste Level einer Gruppierung; drücke Strg+U wiederholend für verschachtelte Gruppen.</note>
+<note>Löscht nur die erste Ebene einer Gruppierung; Strg+U wiederholt für verschachtelte Gruppen drücken.</note>
 </group>
 
 <group>
@@ -310,7 +310,7 @@ Verbesserungsvorschlag</a>).</p>
 <keys><key><ctrl/>^</key>  <action>Exklusiv-Oder (Ausschluss)</action></keys>
 <note>Ausschluss ist ähnlich zur Vereinigung, arbeitet jedoch nur mit genau 2 Objekten und entfernt überlappende Bereiche.</note>
 <keys><key><ctrl/>/</key>  <action>Division</action></keys>
-<note>Division erzeugt mehrere Objekte; Den überlappenden Bereich aller Objekte und den ausgeschlossenen Bereich des unteren Objektes.</note>
+<note>Division erzeugt mehrere Objekte; den überlappenden Bereich aller Objekte und den ausgeschlossenen Bereich des unteren Objektes.</note>
 <keys><key><ctrl/><alt/>/</key>  <action>Pfad zerschneiden</action></keys>
 <note>Zerschneidet die Konturlinie des unteren Objektes an den Überschneidungen mit dem oberen Objekt. Die Füllung wird entfernt.</note>
 <note>Das Ergebnis von Vereinigung, Differenz, Intersektion und Ausschluss erbt das »id«-Attribut und so auch die Klone des unteren Objektes.</note>
@@ -318,21 +318,21 @@ Verbesserungsvorschlag</a>).</p>
 </group>
 
 <group>
-<title>Offset</title>
-<keys><key><ctrl/>(</key>  <action>Schrumpft den Pfad (zum Zentrum hin)</action></keys>
-<keys><key><ctrl/>)</key>  <action>Erweitert den Pfad (vom Zentrum weg)</action></keys>
-<note>Die voreingestellte Offset-Schrittweite sind 2 px (SVG-Pixel-Einheiten, keine Bildschirm-Pixel).</note>
-<keys><key><alt/>(</key>  <action>Schrumpft den Pfad um 1 Pixel</action></keys>
-<keys><key><alt/>)</key>  <action>Erweitert den Pfad um 1 Pixel</action></keys>
-<keys><key><shift/><alt/>(</key>  <action>Schrumpft den Pfad um 10 Pixel</action></keys>
-<keys><key><shift/><alt/>)</key>  <action>Erweitert den Pfad um 10 Pixel</action></keys>
-<note>Die aktuelle Distanz der Pixel für den Offset ist vom Zoom-Level abhängig. Zoome für feinere Einstellungen hinein.</note>
-<note>Alle (, ) Kommandos konvertieren die Objekte zu Pfaden, wenn notwendig, und erstellen reguläre Pfade.</note>
-<keys><key><ctrl/>J</key>  <action>Erstellt dynamischen Offset</action></keys>
-<keys><key><ctrl/><alt/>J</key>  <action>Erstellt verknüpften Offset</action></keys>
-<note>Diese Kommandos produzieren ein Offset-Objekt, editierbar durch das Knotenwerkzeug, allein für sich, oder verknüpft zum Original.</note>
-<keys><key><shift/>D</key>	 <action>Wählt die Quelle</action></keys> 
-<note>Bei der Auswahl eines verknüpften Offset wählt dieses Kommando den Quellpfad des verlinkten Offset.</note>
+<title>Versatz</title>
+<keys><key><ctrl/>(</key>  <action>Pfad schrumpfen (zum Zentrum hin)</action></keys>
+<keys><key><ctrl/>)</key>  <action>Pfad erweitern (vom Zentrum weg)</action></keys>
+<note>Die voreingestellte Versatz-Schrittweite ist 2 px (SVG-Pixel-Einheiten, keine Bildschirm-Pixel).</note>
+<keys><key><alt/>(</key>  <action>Pfad um 1 Pixel schrumpfen</action></keys>
+<keys><key><alt/>)</key>  <action>Pfad um 1 Pixel erweitern</action></keys>
+<keys><key><shift/><alt/>(</key>  <action>Pfad um 10 Pixel schrumpfen</action></keys>
+<keys><key><shift/><alt/>)</key>  <action>Pfad um 10 Pixel erweitern</action></keys>
+<note>Die aktuelle Distanz der Pixel für den Versatz ist vom Zoom-Level abhängig. Für feinere Einstellungen hineinzoomen.</note>
+<note>Alle (- und )-Befehles konvertieren die Objekte zu Pfaden wenn notwendig und erstellen reguläre Pfade.</note>
+<keys><key><ctrl/>J</key>  <action>Dynamischen Versatz erzeugen</action></keys>
+<keys><key><ctrl/><alt/>J</key>  <action>Verknüpften Versatz erzeugen</action></keys>
+<note>Diese Befehle produzieren ein Versatz-Objekt, editierbar durch das Knotenwerkzeug, allein für sich, oder verknüpft zum Original.</note>
+<keys><key><shift/>D</key>	 <action>Quelle wählen</action></keys> 
+<note>Bei der Auswahl eines verknüpften Versatzes wählt dieses Befehl den Quellpfad des verlinkten Versatzes.</note>
 </group>
 
 <group>
@@ -342,14 +342,14 @@ Verbesserungsvorschlag</a>).</p>
 <note>Im Unterschied zur Vereinigung werden Überlappungen nicht verändert.</note>
 <note>Ob überlappende Bereiche gefüllt werden, hängt von den Einstellungen im Dialog »Füllung und Kontur« ab.</note>
 <keys><key><shift/><ctrl/>K</key>  <action>Pfade zerlegen</action></keys>
-<note>Versucht einen Pfad in Unterpfade zu zerlegen. Funktioniert nicht an einem einzelnen geschlossenem Pfad.</note>
+<note>Versucht einen Pfad in Unterpfade zu zerlegen. Funktioniert nicht an einem einzelnen geschlossenen Pfad.</note>
 </group>
 
 <group>
 <title>Vereinfachen</title>
 <keys><key><ctrl/>L</key>  <action>Vereinfachen</action></keys>
-<note>Selektierte Pfade durch Entfernen überflüssiger Knoten vereinfachen. Objekte werden zuerst in Pfade umgewandelt.</note>
-<note>Wird diese Operation mehrmals schnell hintereinander ausgeführt, erhöht sich die Stärke</note>
+<note>Ausgewählte Pfade durch Entfernen überflüssiger Knoten vereinfachen. Objekte werden zuerst in Pfade umgewandelt.</note>
+<note>Wird diese Operation mehrmals schnell hintereinander ausgeführt, erhöht sich die Stärke.</note>
 <note>Eine kurze Pause dazwischen setzt die Stärke wieder zurück (einstellbar im Dialog »Inkscape-Einstellungen«).</note>
 </group>
 
@@ -362,7 +362,7 @@ Verbesserungsvorschlag</a>).</p>
 *<section title="Auswahl" color="eee4dc">
 
 <group>
-<title>Tastaturkommandos zur Auswahl</title>
+<title>Tastaturbefehle zur Auswahl</title>
 <keys><key><misc f="Tab"/></key>  <action>nächstes Object selektieren </action></keys>
 <keys><key><shift/><misc f="Tab"/></key> <action>vorheriges Objekt selektieren </action></keys>
 <note>Diese Tasten wählen die Objekte nach deren Z-Tiefe (Tab von unten nach oben, Umsch+Tab von oben nach unten).</note> 
@@ -426,9 +426,9 @@ Verbesserungsvorschlag</a>).</p>
 <mouse><key><shift/><left-click/></key> <action>Auswahl umschalten</action></mouse>
 <note>Umsch+Klick fügt ein Objekt der aktuellen Auswahl hinzu oder, falls es schon ausgewählt war, entfernt es von dieser.</note>
 <mouse><key><left-click/><left-click/></key> <action>Objekt bearbeiten</action></mouse>
-<note>Bei Pfaden schaltet Doppel-Klicken in das Knotenwerkzeug, bei Formen in das entsprechende Formenwerkzeug, bei Text in das Textwerkzeug.</note>
-<note>Bei Gruppen bewirkt Doppel-Klicken das »Gruppe bearbeiten«-Kommando (die Gruppe wird eine vorübergehende Ebene).</note>
-<note>Doppel-Klicken in einem leeren Bereich schaltet wieder in die übergeordnete Ebene zurück.</note>
+<note>Bei Pfaden schaltet Doppelklicken in das Knotenwerkzeug, bei Formen in das entsprechende Formenwerkzeug, bei Text in das Textwerkzeug.</note>
+<note>Bei Gruppen bewirkt Doppelklicken den Befehl »Gruppe bearbeiten« (die Gruppe wird eine vorübergehende Ebene).</note>
+<note>Doppelklicken in einem leeren Bereich schaltet wieder in die übergeordnete Ebene zurück.</note>
 </group>
 
 <group>
@@ -466,17 +466,17 @@ Wählt das darunter, in Gruppen</action></mouse>
 <mouse><key><alt/><left-drag/></key> <action>Verschiebung ausgewählt</action></mouse>
 <note>Alt+Ziehen bewegt die derzeitige Auswahl (ohne Auszuwählen, was unter dem Cursor ist), egal wo Sie mit dem Ziehen beginnen.</note>
 <note>Bei Linux können Alt+Klick sowie Alt+Ziehen durch den Fenstermanager reserviert sein. Konfigurieren Sie diese um, damit Sie diese im Inkscape benutzen können.</note>
-<mouse><key><ctrl/><left-drag/></key> <action>Beschränkt die Verschiebung auf horizontal oder vertikal</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>Verschiebung horizontal oder vertikal beschränken</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>Einrasten temporär verhindern</action></mouse>
 <note>Verhindert temporär das Einrasten am Gitter oder den Führungslinien, wenn Sie mit »Gitter und Führungslinie eingeschaltet« arbeiten.</note>
 <mouse><key><left-drag/><misc-wide f="Leertaste"/></key> <action>Ziehen einer Kopie</action></mouse>
-<note>Wenn Sie mit der Maus Ziehen oder transformieren hinterläßt jede »Leertaste« eine Kopie der ausgewählten Objekte.</note> 
-<note>Sie können die Leertaste drücken und halten während des Ziehens, für einen schönen »Pfad«.</note>
+<note>Wenn Sie mit der Maus ziehen oder transformieren, hinterläßt jeder Druck der Leertaste eine Kopie der ausgewählten Objekte.</note> 
+<note>Sie können die Leertaste für einen schönen »Pfad« während des Ziehens drücken und halten.</note>
 </group>
 
 <group>
 <title>Maustransformation</title>
-<mouse><key><left-click/></key> <action>Schalttet skalieren/rotieren der Anfasser um</action></mouse>
+<mouse><key><left-click/></key> <action>Schaltet skalieren/rotieren der Anfasser um</action></mouse>
 <mouse><key><left-drag/></key> <action>Skaliert (Skalierungsanfasser)</action></mouse>
 <mouse><key><left-drag/></key> <action>Rotiert oder verzerrt (Rotationsanfasser)</action></mouse>
 </group>
@@ -690,7 +690,7 @@ Wählt das darunter, in Gruppen</action></mouse>
 <group>
 <title>Knoten verschieben (Maus)</title>
 <mouse><key><left-drag/></key> <action>Verschiebt ausgewählte Knoten</action></mouse>
-<mouse><key><ctrl/><left-drag/></key> <action>schränkt die Verschiebung auf horizontal und vertikal ein</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>Verschiebung auf horizontal und vertikal einschränken</action></mouse>
 <mouse><key><ctrl/><alt/><left-drag/></key> <action>Verschiebt entlang der Anfasser</action></mouse>
 <note>Schränkt die Verschiebung zu der Richtung der Knoten-Anfasser ein, ihrer Fortführung und Senkrechten (insgesamt 8 Einrastpunkte).</note>
 <note>Wenn der Knoten gerade Linien auf einer oder beiden Seiten hat, wird es an diesen Linien einrasten anstelle der Richtungen und Senkrechten.</note>
