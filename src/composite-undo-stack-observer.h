@@ -14,6 +14,8 @@
 #ifndef __COMPOSITE_UNDO_COMMIT_OBSERVER_H__
 #define __COMPOSITE_UNDO_COMMIT_OBSERVER_H__
 
+#include "gc-alloc.h"
+#include "gc-managed.h"
 #include "undo-stack-observer.h"
 
 #include <list>
@@ -32,7 +34,7 @@ public:
 	/**
 	 * Structure for tracking UndoStackObservers.
 	 */
-	struct UndoStackObserverRecord {
+	struct UndoStackObserverRecord : public GC::Managed<> {
 	public:
 		/**
 		 * Constructor.
@@ -88,7 +90,7 @@ public:
 	};
 
 	/// A list of UndoStackObserverRecords, used to aggregate multiple UndoStackObservers.
-	typedef std::list< UndoStackObserverRecord > UndoObserverRecordList;
+	typedef std::list< UndoStackObserverRecord, GC::Alloc< UndoStackObserverRecord, GC::MANUAL > > UndoObserverRecordList;
 
 	/**
 	 * Constructor.

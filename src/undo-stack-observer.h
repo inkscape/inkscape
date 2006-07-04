@@ -14,6 +14,8 @@
 #ifndef __UNDO_COMMIT_OBSERVER_H__
 #define __UNDO_COMMIT_OBSERVER_H__
 
+#include "gc-managed.h"
+
 namespace Inkscape {
 
 class Event;
@@ -32,7 +34,7 @@ class Event;
  * UndoStackObservers should not be used on their own.  Instead, they should be registered
  * with a CompositeUndoStackObserver.
  */
-class UndoStackObserver {
+class UndoStackObserver : public GC::Managed<> {
 public:
 	UndoStackObserver() { }
 	virtual ~UndoStackObserver() { }
