@@ -34,13 +34,13 @@ FilterPrimitive::~FilterPrimitive()
     // Nothing to do here
 }
 
-int FilterPrimitive::render(NRPixBlock **pb, NRMatrix const *trans) {
+int FilterPrimitive::render(FilterSlot &slot, NRMatrix const *trans) {
     if(trans) {
-        return this->render(pb, *trans);
+        return this->render(slot, *trans);
     } else {
         Matrix tmp;
         tmp.set_identity();
-        return this->render(pb, tmp);
+        return this->render(slot, tmp);
     }
 }
 

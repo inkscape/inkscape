@@ -18,6 +18,7 @@ using std::isnormal;
 
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-types.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "prefs-utils.h"
@@ -136,10 +137,10 @@ inline void _check_index(NRPixBlock const * const pb, int const location, int co
     }
 }
 
-int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
+int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
 {
     /* in holds the input pixblock */
-    NRPixBlock *in = pb[0];
+    NRPixBlock *in = slot.get(_input);
 
     /* If to either direction, the standard deviation is zero, a transparent
      * black image should be returned */
@@ -148,7 +149,7 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
         nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
                                in->area.x1, in->area.y1, true);
         out->empty = false;
-        pb[1] = out;
+        slot.set(_output, out);
         return 0;
     }
 
@@ -397,7 +398,7 @@ int FilterGaussian::render(NRPixBlock **pb, Matrix const &trans)
     delete bufy;
 
     out->empty = FALSE;
-    pb[1] = out;
+    slot.set(_output, out);
 
     return 0;
 }

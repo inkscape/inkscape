@@ -84,7 +84,7 @@ Constant name			Corresponding SVG input name
 NR_FILTER_SOURCEGRAPHIC		SourceGraphic
 NR_FILTER_SOURCEALPHA		SourceAlpha
 NR_FILTER_BACKGROUNDIMAGE	BackgroundImage
-NR_FILTER_BACKGROUNDAPLHA	BackgroundAlpha
+NR_FILTER_BACKGROUNDALPHA	BackgroundAlpha
 NR_FILTER_FILLPAINT		FillPaint
 NR_FILTER_SOURCEPAINT		SourcePaint
 (defined in display/nr-filter-types.h)

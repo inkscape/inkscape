@@ -14,6 +14,8 @@
 #include "display/nr-filter.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-slot.h"
+#include "display/nr-filter-types.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
@@ -47,7 +49,7 @@ Filter::Filter(int n)
 
 void Filter::_common_init() {
     _slot_count = 1;
-    _output_slot = -1;
+    _output_slot = NR_FILTER_SLOT_NOT_SET;
 
     _region_x.set(SVGLength::PERCENT, -10, 0);
     _region_y.set(SVGLength::PERCENT, -10, 0);
@@ -70,24 +72,27 @@ Filter::~Filter()
 
 int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
-    NRPixBlock *slot[2];
-    slot[0] = pb;
-    slot[1] = NULL;
+    FilterSlot slot(_slot_count);
+    NRPixBlock *in = new NRPixBlock;
+    nr_pixblock_setup_fast(in, pb->mode,
+                           pb->area.x0, pb->area.y0,
+                           pb->area.x1, pb->area.y1, true);
+    nr_blit_pixblock_pixblock(in, pb);
+    slot.set(NR_FILTER_SOURCEGRAPHIC, in);
+    in = NULL; // in is now handled by FilterSlot, we should not touch it
 
     _primitive[0]->render(slot, *item->ctm);
 
+    NRPixBlock *out = slot.get(_output_slot);
 
-    int size = (slot[0]->area.x1 - slot[0]->area.x0)
-        * (slot[0]->area.y1 - slot[0]->area.y0)
-        * NR_PIXBLOCK_BPP(slot[0]);
-    memset(NR_PIXBLOCK_PX(slot[0]), 0, size);
+    int size = (pb->area.x1 - pb->area.x0)
+        * (pb->area.y1 - pb->area.y0)
+        * NR_PIXBLOCK_BPP(pb);
+    memset(NR_PIXBLOCK_PX(pb), 0, size);
 
-    nr_blit_pixblock_pixblock(slot[0], slot[1]);
+    nr_blit_pixblock_pixblock(pb, out);
 
-    slot[0]->visible_area = slot[0]->area;
-
-    nr_pixblock_release(slot[1]);
-
+    _slot_count = slot.get_slot_count();
     return 0;
 }
 

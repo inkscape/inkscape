@@ -13,6 +13,7 @@
  */
 
 #include "display/nr-filter-primitive.h"
+#include "display/nr-filter-slot.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 
@@ -24,7 +25,7 @@ public:
     static FilterPrimitive *create();
     virtual ~FilterGaussian();
 
-    virtual int render(NRPixBlock **pb, Matrix const &trans);
+    virtual int render(FilterSlot &slot, Matrix const &trans);
     virtual int get_enlarge(Matrix const &m);
 
     /**

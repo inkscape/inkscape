@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "display/nr-filter-slot.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
 #include "svg/svg-length.h"
@@ -23,8 +24,8 @@ public:
     FilterPrimitive();
     virtual ~FilterPrimitive();
 
-    int render(NRPixBlock **pb, NRMatrix const *trans);
-    virtual int render(NRPixBlock **pb, Matrix const &trans) = 0;
+    int render(FilterSlot &slot, NRMatrix const *trans);
+    virtual int render(FilterSlot &slot, Matrix const &trans) = 0;
     virtual int get_enlarge(Matrix const &m);
 
     /**
