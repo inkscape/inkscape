@@ -34,7 +34,7 @@ public:
 	/**
 	 * Structure for tracking UndoStackObservers.
 	 */
-	struct UndoStackObserverRecord : public GC::Managed<> {
+	struct UndoStackObserverRecord {
 	public:
 		/**
 		 * Constructor.
@@ -90,7 +90,7 @@ public:
 	};
 
 	/// A list of UndoStackObserverRecords, used to aggregate multiple UndoStackObservers.
-	typedef std::list< UndoStackObserverRecord, GC::Alloc< UndoStackObserverRecord, GC::MANUAL > > UndoObserverRecordList;
+	typedef std::list< UndoStackObserverRecord > UndoObserverRecordList;
 
 	/**
 	 * Constructor.
