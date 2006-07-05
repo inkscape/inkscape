@@ -158,9 +158,11 @@ void sp_dropper_context_copy(SPEventContext *ec)
     int pick = prefs_get_int_attribute("tools.dropper", "pick",
                                        SP_DROPPER_PICK_VISIBLE);
 
+    int setalpha = prefs_get_int_attribute("tools.dropper", "setalpha", 1);
+
     gchar c[64];
     g_snprintf(c, 64, "%06x%02x", c32 >> 8,
-               pick == SP_DROPPER_PICK_ACTUAL? SP_COLOR_F_TO_U(dc->alpha) : 255);
+               (pick == SP_DROPPER_PICK_ACTUAL && setalpha)? SP_COLOR_F_TO_U(dc->alpha) : 255);
 
     Glib::ustring text;
     text += c;
@@ -227,6 +229,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
     int ret = FALSE;
 
     int pick = prefs_get_int_attribute("tools.dropper", "pick", SP_DROPPER_PICK_VISIBLE);
+    int setalpha = prefs_get_int_attribute("tools.dropper", "setalpha", 1);
 
     switch (event->type) {
 	case GDK_BUTTON_PRESS:
@@ -344,14 +347,15 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 dc->alpha = A;
 
                 // status message
-                guint32 c32 = SP_RGBA32_F_COMPOSE(R, G, B, A);
+                double alpha_to_set = setalpha? dc->alpha : 1.0;
+                guint32 c32 = SP_RGBA32_F_COMPOSE(R, G, B, alpha_to_set);
 
                 gchar c[64];
                 sp_svg_write_color(c, 64, c32);
 
                 // alpha of color under cursor, to show in the statusbar
                 // locale-sensitive printf is OK, since this goes to the UI, not into SVG
-                gchar *alpha = g_strdup_printf(_(" alpha %.3g"), A);
+                gchar *alpha = g_strdup_printf(_(" alpha %.3g"), alpha_to_set);
                 // where the color is picked, to show in the statusbar
                 gchar *where = dc->dragging ? g_strdup_printf(_(", averaged with radius %d"), (int) rw) : g_strdup_printf(_(" under cursor"));
                 // message, to show in the statusbar
@@ -375,10 +379,12 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
                 sp_canvas_item_hide(dc->area);
                 dc->dragging = FALSE;
 
+                double alpha_to_set = setalpha? dc->alpha : 1.0;
+
                 // do the actual color setting
                 sp_desktop_set_color(ec->desktop,
                                      (event->button.state & GDK_MOD1_MASK)?
-                                     ColorRGBA(1 - dc->R, 1 - dc->G, 1 - dc->B, dc->alpha) : ColorRGBA(dc->R, dc->G, dc->B, dc->alpha),
+                                     ColorRGBA(1 - dc->R, 1 - dc->G, 1 - dc->B, alpha_to_set) : ColorRGBA(dc->R, dc->G, dc->B, alpha_to_set),
                                      false,  !(event->button.state & GDK_SHIFT_MASK));
 
                 // REJON: set aux. toolbar input to hex color!

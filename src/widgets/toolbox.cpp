@@ -2535,10 +2535,22 @@ sp_arc_toolbox_new(SPDesktop *desktop)
 //##      Dropper       ##
 //########################
 
-static void toggle_dropper_color_pick (GtkWidget *button, gpointer data) {
+static void toggle_dropper_pick_alpha (GtkWidget *button, gpointer tbl) {
     prefs_set_int_attribute ("tools.dropper", "pick", 
-        // 0 and 1 are backwards here because of pref
-        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 0 : 1);
+        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
+    GtkWidget *set_checkbox = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "set_checkbox");
+    if (set_checkbox) {
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+            gtk_widget_set_sensitive (GTK_WIDGET (set_checkbox), TRUE);
+        } else {
+            gtk_widget_set_sensitive (GTK_WIDGET (set_checkbox), FALSE);
+        }
+    }
+}
+
+static void toggle_dropper_set_alpha (GtkWidget *button, gpointer data) {
+    prefs_set_int_attribute ("tools.dropper", "setalpha", 
+        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
 }
 
 
@@ -2721,26 +2733,43 @@ sp_dropper_toolbox_new(SPDesktop *desktop)
     
     {
         GtkWidget *hb = gtk_hbox_new(FALSE, 1);
-        
-        GtkWidget *button = 
-            sp_button_new_from_data( Inkscape::ICON_SIZE_DECORATION,
-                                     SP_BUTTON_TYPE_TOGGLE,
-                                     NULL,
-                                     "pick_color",
-                                     _("When pressed, picks visible color "
-				       "without alpha and when not pressed, "
-				       "picks color including its "
-				       "alpha"),
-                                     tt);
 
+        GtkWidget *button = gtk_check_button_new_with_label(_("Pick alpha"));
+        gtk_tooltips_set_tip(tt, button, _("Pick both the color and the alpha (transparency) under cursor; otherwise, pick only the visible color premultiplied by alpha"), NULL);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+                                      prefs_get_int_attribute ("tools.dropper", 
+                                                               "pick", 1));
         gtk_widget_show(button);
         gtk_container_add (GTK_CONTAINER (hb), button);
+        gtk_object_set_data(GTK_OBJECT(tbl), "pick_checkbox", button);
+        g_signal_connect (G_OBJECT (button), "toggled", G_CALLBACK (toggle_dropper_pick_alpha), tbl);
+        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, 
+                   AUX_BETWEEN_BUTTON_GROUPS);
+    }
 
-        g_signal_connect_after (G_OBJECT (button), "clicked", 
-                                G_CALLBACK (toggle_dropper_color_pick), NULL);
+    {
+        GtkWidget *hb = gtk_hbox_new(FALSE, 1);
+
+        GtkWidget *button = gtk_check_button_new_with_label(_("Set alpha"));
+        gtk_tooltips_set_tip(tt, button, _("If alpha was picked, assign it to selection as fill or stroke transparency"), NULL);
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
-                                      !prefs_get_int_attribute ("tools.dropper", 
-                                                               "pick", 0));
+                                      prefs_get_int_attribute ("tools.dropper", 
+                                                               "setalpha", 1));
+        gtk_widget_show(button);
+        gtk_container_add (GTK_CONTAINER (hb), button);
+        gtk_object_set_data(GTK_OBJECT(tbl), "set_checkbox", button);
+        g_signal_connect (G_OBJECT (button), "toggled", G_CALLBACK (toggle_dropper_set_alpha), tbl);
+
+        // make sure it's disabled if we're not picking alpha
+        GtkWidget *pick_checkbox = (GtkWidget*) g_object_get_data(G_OBJECT(tbl), "pick_checkbox");
+        if (pick_checkbox) {
+            if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pick_checkbox))) {
+                gtk_widget_set_sensitive (GTK_WIDGET (button), TRUE);
+            } else {
+                gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
+            }
+        }
+
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, 
                    AUX_BETWEEN_BUTTON_GROUPS);
     }
