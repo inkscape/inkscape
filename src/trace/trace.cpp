@@ -462,12 +462,13 @@ void Tracer::traceThread()
         return;
         }
 
-    int nrPaths;
-    TracingEngineResult *results = engine->trace(pixbuf, &nrPaths);
-    //printf("nrPaths:%d\n", nrPaths);
+    std::vector<TracingEngineResult> results =
+                engine->trace(pixbuf);
+    //printf("nrPaths:%d\n", results.size());
+    int nrPaths = results.size();
 
     //### Check if we should stop
-    if (!keepGoing || !results || nrPaths<1)
+    if (!keepGoing || nrPaths<1)
         {
         engine = NULL;
         return;
@@ -523,14 +524,14 @@ void Tracer::traceThread()
 
     long totalNodeCount = 0L;
 
-    for (TracingEngineResult *result=results ;
-                  result ; result=result->next)
+    for (unsigned int i=0 ; i<results.size() ; i++)
         {
-        totalNodeCount += result->getNodeCount();
+        TracingEngineResult result = results[i];
+        totalNodeCount += result.getNodeCount();
 
         Inkscape::XML::Node *pathRepr = sp_repr_new("svg:path");
-        pathRepr->setAttribute("style", result->getStyle());
-        pathRepr->setAttribute("d",     result->getPathData());
+        pathRepr->setAttribute("style", result.getStyle().c_str());
+        pathRepr->setAttribute("d",     result.getPathData().c_str());
 
         if (nrPaths > 1)
             groupRepr->addChild(pathRepr, NULL);
@@ -551,8 +552,6 @@ void Tracer::traceThread()
             }
         Inkscape::GC::release(pathRepr);
         }
-
-    delete results;
 
     // If we have a group, then focus on, then forget it
     if (nrPaths > 1)

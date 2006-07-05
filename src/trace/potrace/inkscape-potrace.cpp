@@ -363,7 +363,8 @@ PotraceTracingEngine::preview(Glib::RefPtr<Gdk::Pixbuf> thePixbuf)
 
 
 //*This is the core inkscape-to-potrace binding
-char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
+std::string
+PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 {
 
     /* get default parameters */
@@ -395,7 +396,7 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
     if (!keepGoing)
         {
         g_warning("aborted");
-        return NULL;
+        return "";
         }
 
     /* trace a bitmap*/
@@ -410,7 +411,7 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
         g_warning("aborted");
         potrace_state_free(potraceState);
         potrace_param_free(potraceParams);
-        return NULL;
+        return "";
         }
 
     Inkscape::SVGOStringStream data;
@@ -426,12 +427,11 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
     potrace_param_free(potraceParams);
 
     if (!keepGoing)
-        return NULL;
+        return "";
 
-    char *d = strdup((char *)data.str().c_str());
+    std::string d = data.str();
     if ( nodeCount)
         *nodeCount = thisNodeCount;
-
 
     return d;
 
@@ -442,51 +442,47 @@ char *PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 /**
  *  This is called for a single scan
  */
-TracingEngineResult *
-PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf, int *nrPaths)
+std::vector<TracingEngineResult>
+PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf)
 {
 
+    std::vector<TracingEngineResult> results;
+
     if (!thePixbuf)
-        return NULL;
+        return results;
 
     brightnessFloor = 0.0; //important to set this
 
     GrayMap *grayMap = filter(*this, thePixbuf);
     if (!grayMap)
-        return NULL;
+        return results;
 
     long nodeCount;
-    char *d = grayMapToPath(grayMap, &nodeCount);
+    std::string d = grayMapToPath(grayMap, &nodeCount);
 
     grayMap->destroy(grayMap);
 
-    if (!d)
-        {
-        *nrPaths = 0;
-        return NULL;
-        }
     char *style = "fill:#000000";
 
     //g_message("### GOT '%s' \n", d);
-    TracingEngineResult *result = new TracingEngineResult(style, d, nodeCount);
+    TracingEngineResult result(style, d, nodeCount);
+    results.push_back(result);
 
-    free(d);
-
-    *nrPaths = 1;
-
-    return result;
+    return results;
 }
 
 
 /**
  *  Called for multiple-scanning algorithms
  */
-TracingEngineResult *
-PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
+std::vector<TracingEngineResult>
+PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf)
 {
 
+    std::vector<TracingEngineResult> results;
+
     if (!thePixbuf)
-        return NULL;
+        return results;
 
     double low     = 0.2; //bottom of range
     double high    = 0.9; //top of range
@@ -496,7 +492,6 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
 
     int traceCount = 0;
 
-    TracingEngineResult *results = NULL;
     for ( brightnessThreshold = low ;
           brightnessThreshold <= high ;
           brightnessThreshold += delta)
@@ -505,18 +500,15 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
 
         GrayMap *grayMap = filter(*this, thePixbuf);
         if (!grayMap)
-            return NULL;
+            return results;
 
         long nodeCount;
-        char *d = grayMapToPath(grayMap, &nodeCount);
+        std::string d = grayMapToPath(grayMap, &nodeCount);
 
         grayMap->destroy(grayMap);
 
-        if (!d)
-            {
-            *nrPaths = 0;
-            return NULL;
-            }
+        if (d.size() == 0)
+            return results;
 
         int grayVal = (int)(256.0 * brightnessThreshold);
         char style[31];
@@ -524,22 +516,8 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
                     grayVal, grayVal, grayVal);
 
         //g_message("### GOT '%s' \n", d);
-        TracingEngineResult *result = new TracingEngineResult(style, d, nodeCount);
-
-        free(d);
-
-        if (!results)
-            {
-            results = result; //first one
-            }
-        else
-            {
-            //walk to end of list
-            TracingEngineResult *r;
-            for (r=results ; r->next ; r=r->next)
-                {}
-            r->next = result;
-            }
+        TracingEngineResult result(style, d, nodeCount);
+        results.push_back(result);
 
         if (!multiScanStack)
             brightnessFloor = brightnessThreshold;
@@ -553,9 +531,12 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
             }
         }
 
-    //report the count of paths processed
-    *nrPaths = multiScanNrColors;
-
+    //# Remove the bottom-most scan, if requested
+    if (results.size() > 1 && multiScanRemoveBackground)
+        {
+        g_message("remove background");
+        results.erase(results.end() - 1);
+        }
 
     return results;
 }
@@ -564,18 +545,18 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf, int *nrPaths)
 /**
  *  Quantization
  */
-TracingEngineResult *
-PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
+std::vector<TracingEngineResult>
+PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf)
 {
 
+    std::vector<TracingEngineResult> results;
+
     if (!thePixbuf)
-        return NULL;
+        return results;
 
     IndexedMap *iMap = filterIndexed(*this, thePixbuf);
     if (!iMap)
-        return NULL;
-
-    TracingEngineResult *results = NULL;
+        return results;
 
     //Create and clear a gray map
     GrayMap *gm = GrayMapCreate(iMap->width, iMap->height);
@@ -607,13 +588,10 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
 
         //## Now we have a traceable graymap
         long nodeCount;
-        char *d = grayMapToPath(gm, &nodeCount);
+        std::string d = grayMapToPath(gm, &nodeCount);
 
-        if (!d)
-            {
-            *nrPaths = 0;
-            return NULL;
-            }
+        if (d.size() == 0)
+            return results;
 
         //### get style info
         char style[13];
@@ -621,29 +599,8 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
         sprintf(style, "fill:#%02x%02x%02x", rgb.r, rgb.g, rgb.b);
 
         //g_message("### GOT '%s' \n", d);
-        TracingEngineResult *result = new TracingEngineResult(style, d, nodeCount);
-
-        free(d);
-
-        if (!results)
-            {
-            results = result; //first one
-            }
-        else
-            {
-            //prepend
-            /*
-            result->next = results;
-            results = result;
-            */
-
-            //append
-            TracingEngineResult *r;
-            for (r=results ; r->next ; r=r->next)
-                {}
-            r->next = result;
-            }
-
+        TracingEngineResult result(style, d, nodeCount);
+        results.push_back(result);
 
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (desktop)
@@ -654,13 +611,17 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
             }
 
 
-        }
-
-    //report the count of paths processed
-    *nrPaths = iMap->nrColors;
+        }// for colorIndex
 
     gm->destroy(gm);
     iMap->destroy(iMap);
+
+    //# Remove the bottom-most scan, if requested
+    if (results.size() > 1 && multiScanRemoveBackground)
+        {
+        g_message("remove background");
+        results.erase(results.end() - 1);
+        }
 
     return results;
 }
@@ -672,9 +633,8 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf, int *nrPaths)
  *  return the path data that is compatible with the d="" attribute
  *  of an SVG <path> element.
  */
-TracingEngineResult *
-PotraceTracingEngine::trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
-                            int *nrPaths)
+std::vector<TracingEngineResult>
+PotraceTracingEngine::trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf)
 {
 
     GdkPixbuf *thePixbuf = pixbuf->gobj();
@@ -685,15 +645,15 @@ PotraceTracingEngine::trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
     if ( traceType == TRACE_QUANT_COLOR ||
          traceType == TRACE_QUANT_MONO   )
         {
-        return traceQuant(thePixbuf, nrPaths);
+        return traceQuant(thePixbuf);
         }
     else if ( traceType == TRACE_BRIGHTNESS_MULTI )
         {
-        return traceBrightnessMulti(thePixbuf, nrPaths);
+        return traceBrightnessMulti(thePixbuf);
         }
     else
         {
-        return traceSingle(thePixbuf, nrPaths);
+        return traceSingle(thePixbuf);
         }
 }
 

@@ -49,38 +49,39 @@ public:
     /**
      *
      */
-    TracingEngineResult(char *theStyle, char *thePathData, long theNodeCount)
+    TracingEngineResult(const std::string &theStyle,
+                        const std::string &thePathData,
+                        long theNodeCount)
         {
-        next      = NULL;
-        style     = strdup(theStyle);
-        pathData  = strdup(thePathData);
+        style     = theStyle;
+        pathData  = thePathData;
         nodeCount = theNodeCount;
         }
+
+    TracingEngineResult(const TracingEngineResult &other)
+        { assign(other); }
+
+    virtual TracingEngineResult &operator=(const TracingEngineResult &other)
+        { assign(other); return *this; }
+
 
     /**
      *
      */
     virtual ~TracingEngineResult()
-        {
-        if (next)
-            delete next;
-        if (style)
-            free(style);
-        if (pathData)
-            free(pathData);
-        }
+        { }
 
 
     /**
      *
      */
-    char *getStyle()
+    std::string getStyle()
         { return style; }
 
     /**
      *
      */
-    char *getPathData()
+    std::string getPathData()
         { return pathData; }
 
     /**
@@ -89,16 +90,18 @@ public:
     long getNodeCount()
         { return nodeCount; }
 
-    /**
-     *
-     */
-    TracingEngineResult *next;
-
 private:
 
-    char *style;
+    void assign(const TracingEngineResult &other)
+        {
+        style = other.style;
+        pathData = other.pathData;
+        nodeCount = other.nodeCount;
+        }
 
-    char *pathData;
+    std::string style;
+
+    std::string pathData;
 
     long nodeCount;
 
@@ -133,9 +136,9 @@ class TracingEngine
      *  compatible with the d="" attribute
      *  of an SVG <path> element.
      */
-    virtual  TracingEngineResult *trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
-                                        int *nrPaths)
-        { return NULL; }
+    virtual  std::vector<TracingEngineResult> trace(
+                           Glib::RefPtr<Gdk::Pixbuf> pixbuf)
+        { std::vector<TracingEngineResult> dummy;  return dummy; }
 
 
     /**

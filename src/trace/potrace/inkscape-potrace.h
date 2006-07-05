@@ -158,6 +158,18 @@ class PotraceTracingEngine : public TracingEngine
         return multiScanSmooth;
         }
 
+    /**
+     * Sets whether we want to remove the background (bottom) trace
+     */
+    void setMultiScanRemoveBackground(bool val)
+        {
+        multiScanRemoveBackground= val;
+        }
+    bool getMultiScanRemoveBackground()
+        {
+        return multiScanRemoveBackground;
+        }
+
 
     /**
      *  This is the working method of this implementing class, and all
@@ -165,8 +177,8 @@ class PotraceTracingEngine : public TracingEngine
      *  return the path data that is compatible with the d="" attribute
      *  of an SVG <path> element.
      */
-    virtual TracingEngineResult *trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf,
-                                       int *nrPaths);
+    virtual std::vector<TracingEngineResult> trace(
+                        Glib::RefPtr<Gdk::Pixbuf> pixbuf);
 
     /**
      *  Abort the thread that is executing getPathDataFromPixbuf()
@@ -206,16 +218,16 @@ class PotraceTracingEngine : public TracingEngine
     int multiScanNrColors;
     bool multiScanStack; //do we tile or stack?
     bool multiScanSmooth;//do we use gaussian filter?
-
+    bool multiScanRemoveBackground; //do we remove the bottom trace?
     /**
      * This is the actual wrapper of the call to Potrace.  nodeCount
      * returns the count of nodes created.  May be NULL if ignored.
      */
-    char *grayMapToPath(GrayMap *gm, long *nodeCount);
+    std::string grayMapToPath(GrayMap *gm, long *nodeCount);
 
-    TracingEngineResult *traceBrightnessMulti(GdkPixbuf *pixbuf, int *nrPaths);
-    TracingEngineResult *traceQuant(GdkPixbuf *pixbuf, int *nrPaths);
-    TracingEngineResult *traceSingle(GdkPixbuf *pixbuf, int *nrPaths);
+    std::vector<TracingEngineResult>traceBrightnessMulti(GdkPixbuf *pixbuf);
+    std::vector<TracingEngineResult>traceQuant(GdkPixbuf *pixbuf);
+    std::vector<TracingEngineResult>traceSingle(GdkPixbuf *pixbuf);
 
 
 };//class PotraceTracingEngine

@@ -136,13 +136,14 @@ class TraceDialogImpl : public TraceDialog
 
     Gtk::HBox             potraceMultiScanHBox2;
     Gtk::RadioButton      potraceMultiScanColorRadioButton;
-    Gtk::CheckButton      potraceMultiScanStackButton;
 
     Gtk::HBox             potraceMultiScanHBox3;
     Gtk::RadioButton      potraceMultiScanMonoRadioButton;
     Gtk::Label            potraceMultiScanNrColorLabel;
 
+    Gtk::CheckButton      potraceMultiScanStackButton;
     Gtk::CheckButton      potraceMultiScanSmoothButton;
+    Gtk::CheckButton      potraceMultiScanBackgroundButton;
 
 
     //preview
@@ -230,6 +231,8 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
     pte.setMultiScanStack(do_i_stack);
     bool do_i_smooth = potraceMultiScanSmoothButton.get_active();
     pte.setMultiScanSmooth(do_i_smooth);
+    bool do_i_remove_background = potraceMultiScanBackgroundButton.get_active();
+    pte.setMultiScanRemoveBackground(do_i_remove_background);
 
     //##### Get intermediate bitmap image
     Glib::RefPtr<Gdk::Pixbuf> pixbuf = tracer.getSelectedImage();
@@ -342,7 +345,7 @@ TraceDialogImpl::TraceDialogImpl()
 
     /*#### SIOX ####*/
     //# for now, put at the top of the potrace box.  something better later
-    sioxButton.set_label(_("SIOX foreground selection (experimental)"));
+    sioxButton.set_label(_("SIOX foreground selection"));
     sioxBox.pack_start(sioxButton, false, false, MARGIN);
     tips.set_tip(sioxButton, 
         _("Cover the area you want to select as the foreground"));
@@ -461,6 +464,12 @@ TraceDialogImpl::TraceDialogImpl()
     tips.set_tip(potraceMultiScanColorRadioButton, _("Trace the given number of reduced colors"));
 
 
+    // TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
+    potraceMultiScanBackgroundButton.set_label(_("Remove background"));
+    potraceMultiScanBackgroundButton.set_active(false);
+    potraceMultiScanHBox2.pack_end(potraceMultiScanBackgroundButton, false, false, MARGIN);
+    tips.set_tip(potraceMultiScanBackgroundButton, _("Remove bottom (background) layer when done"));
+
     potraceMultiScanVBox.pack_start(potraceMultiScanHBox2, false, false, MARGIN);
 
     //---Hbox3
@@ -480,6 +489,7 @@ TraceDialogImpl::TraceDialogImpl()
     potraceMultiScanSmoothButton.set_active(true);
     potraceMultiScanHBox3.pack_end(potraceMultiScanSmoothButton, false, false, MARGIN);
     tips.set_tip(potraceMultiScanSmoothButton, _("Apply Gaussian blur to the bitmap before tracing"));
+
 
     potraceMultiScanVBox.pack_start(potraceMultiScanHBox3, false, false, MARGIN);
 
