@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-02 13:30+0200\n"
-"PO-Revision-Date: 2006-07-03 00:45+0200\n"
+"PO-Revision-Date: 2006-07-05 21:43+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -261,6 +261,7 @@ msgstr "<b>P6M</b>: Reflektion + 60&#176; Rotation"
 msgid "S_hift"
 msgstr "Verschiebung"
 
+# !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
 #: ../src/dialogs/clonetiler.cpp:1733
 #, no-c-format
@@ -281,6 +282,7 @@ msgstr "Horizontale Verschiebung pro Spalte (in % der Kachelbreite)"
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "Zufällige horizontale Verschiebung um diesen Prozentsatz"
 
+# !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
 #: ../src/dialogs/clonetiler.cpp:1766
 #, no-c-format
@@ -301,6 +303,7 @@ msgstr "Vertikale Verschiebung pro Spalte (in % der Kachelhöhe)"
 msgid "Randomize the vertical shift by this percentage"
 msgstr "Zufällige vertikale Verschiebung um diesen Prozentsatz"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:1797
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
@@ -336,6 +339,7 @@ msgstr "Vorzeichenumkehrung bei der Verschiebungen für jede Spalte"
 msgid "Sc_ale"
 msgstr "Maßstab"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:1847
 msgid "<b>Scale X:</b>"
 msgstr "<b>X-Skalierung:</b>"
@@ -354,6 +358,7 @@ msgstr "Horizontale Skalierung pro Spalte (in % der Kachelbreite)"
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "Horizontale Skalierung um diesen Prozentsatz zufällig verändern"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:1878
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Y-Skalierung:</b>"
@@ -384,6 +389,7 @@ msgstr "Vorzeichen der Skalierungen für jede Spalte umkehren"
 msgid "_Rotation"
 msgstr "_Rotation"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:1937
 msgid "<b>Angle:</b>"
 msgstr "<b>Winkel:</b>"
@@ -414,6 +420,7 @@ msgstr "Vorzeichenumkehr des Rotationsfaktors bei jeder Spalte"
 msgid "_Opacity"
 msgstr "_Deckkraft"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:1995
 msgid "<b>Fade out:</b>"
 msgstr "<b>Ausblenden:</b>"
@@ -460,6 +467,7 @@ msgstr ""
 "Ursprüngliche Farbe der Klone (Füllung oder Kontur des Originals dürfen "
 "nicht gesetzt sein )"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:2067
 msgid "<b>H:</b>"
 msgstr "<b>H:</b>"
@@ -476,6 +484,7 @@ msgstr "Farbton der Kacheln um diesen Prozentsatz für jede Spalte verändern"
 msgid "Randomize the tile hue by this percentage"
 msgstr "Farbton der Kachel zufällig um diesen Prozentsatz verändern"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:2097
 msgid "<b>S:</b>"
 msgstr "<b>S:</b>"
@@ -494,6 +503,7 @@ msgstr ""
 msgid "Randomize the color saturation by this percentage"
 msgstr "Farbsättigung um diesen Prozentsatz zufällig verändern"
 
+# !!!
 #: ../src/dialogs/clonetiler.cpp:2126
 msgid "<b>L:</b>"
 msgstr "<b>L:</b>"
@@ -1425,23 +1435,23 @@ msgstr "CC-Namensnennung"
 
 #: ../src/dialogs/rdf.cpp:183
 msgid "CC Attribution-ShareAlike"
-msgstr "CC-Namensnennung-ShareAlike"
+msgstr "CC-Namensnennung-Weitergabe unter gleichen Bedingungen"
 
 #: ../src/dialogs/rdf.cpp:188
 msgid "CC Attribution-NoDerivs"
-msgstr "CC-Namensnennung-NoDerivs"
+msgstr "CC-Namensnennung-KeineBearbeitung"
 
 #: ../src/dialogs/rdf.cpp:193
 msgid "CC Attribution-NonCommercial"
-msgstr "CC-Namensnennung-NonCommercial"
+msgstr "CC-Namensnennung-NichtKommerziell"
 
 #: ../src/dialogs/rdf.cpp:198
 msgid "CC Attribution-NonCommercial-ShareAlike"
-msgstr "CC-Namensnennung-NonCommercial-ShareAlike"
+msgstr "CC-Namensnennung-NichtKommerziell-Weitergabe unter gleichen Bedingungen"
 
 #: ../src/dialogs/rdf.cpp:203
 msgid "CC Attribution-NonCommercial-NoDerivs"
-msgstr "CC-Namensnennung-NonCommercial-NoDerivs"
+msgstr "CC-Namensnennung-NichtKommerziell-KeineBearbeitung"
 
 #: ../src/dialogs/rdf.cpp:208
 msgid "GNU General Public License"
@@ -4110,6 +4120,7 @@ msgstr "Ebene <b>%s</b>"
 msgid "layer <b><i>%s</i></b>"
 msgstr "Ebene <b><i>%s</i></b>"
 
+# !!!
 #: ../src/selection-describer.cpp:135
 #, c-format
 msgid "<i>%s</i>"
@@ -4312,18 +4323,22 @@ msgstr "Mit %s <b>verknüpfen</b>"
 msgid "<b>Link</b> without URI"
 msgstr "<b>Verknüpfung</b> ohne URI"
 
+# !!!
 #: ../src/sp-ellipse.cpp:430 ../src/sp-ellipse.cpp:817
 msgid "<b>Ellipse</b>"
 msgstr "<b>Ellipse</b>"
 
+# !!!
 #: ../src/sp-ellipse.cpp:571
 msgid "<b>Circle</b>"
 msgstr "<b>Kreis</b>"
 
+# !!!
 #: ../src/sp-ellipse.cpp:812
 msgid "<b>Segment</b>"
 msgstr "<b>Segment</b>"
 
+# !!!
 #: ../src/sp-ellipse.cpp:814
 msgid "<b>Arc</b>"
 msgstr "<b>Kreisbogen</b>"
@@ -4392,6 +4407,7 @@ msgstr[1] "<b>Gruppe</b> von <b>%d</b> Objekten"
 msgid "Object"
 msgstr "Objekt"
 
+# !!!
 #: ../src/sp-line.cpp:187
 msgid "<b>Line</b>"
 msgstr "<b>Linie</b>"
@@ -4423,14 +4439,17 @@ msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>Pfad</b> (%i Knoten)"
 msgstr[1] "<b>Pfad</b> (%i Knoten) "
 
+# !!!
 #: ../src/sp-polygon.cpp:233
 msgid "<b>Polygon</b>"
 msgstr "<b>Polygon</b>"
 
+# !!!
 #: ../src/sp-polyline.cpp:176
 msgid "<b>Polyline</b>"
 msgstr "<b>Linienzug</b>"
 
+# !!!
 #: ../src/sp-rect.cpp:234
 msgid "<b>Rectangle</b>"
 msgstr "<b>Rechteck</b>"
@@ -4490,6 +4509,7 @@ msgstr "…"
 msgid "<b>Clone</b> of: %s"
 msgstr "<b>Klon</b> von: %s"
 
+# !!!
 #: ../src/sp-use.cpp:325
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Verwaister Klon</b>"
@@ -5120,10 +5140,12 @@ msgstr "Metadaten"
 msgid "License"
 msgstr "Nutzungsbedingungen - Lizenz"
 
+# !!!
 #: ../src/ui/dialog/document-metadata.cpp:182
 msgid "<b>Dublin Core Entities</b>"
 msgstr "<b>Dublin-Core-Entities</b>"
 
+# !!!
 #: ../src/ui/dialog/document-metadata.cpp:204
 msgid "<b>License</b>"
 msgstr "<b>Lizenz</b>"
@@ -5193,14 +5215,17 @@ msgstr ""
 msgid "Default _units:"
 msgstr "_Standard-Einheiten:"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:199
 msgid "<b>General</b>"
 msgstr "<b>Allgemein</b>"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:201
 msgid "<b>Border</b>"
 msgstr "<b>Rand</b>"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:203
 msgid "<b>Format</b>"
 msgstr "<b>Format</b>"
@@ -5315,10 +5340,12 @@ msgstr "Farbe der hervorgehobenen Führungslinien"
 msgid "Color of a guideline when it is under mouse"
 msgstr "Farbe der Führungslinie unter dem Mauszeiger"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "<b>Grid</b>"
 msgstr "<b>Gitter</b>"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:258
 msgid "<b>Guides</b>"
 msgstr "<b>Führungslinien</b>"
@@ -5435,14 +5462,17 @@ msgstr ""
 "Wenn gesetzt, dann rasten Objekte beim Verschieben immer an der nahesten "
 "Führungslinie ein, unabhängig von der Entfernung"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:329
 msgid "<b>Object Snapping</b>"
 msgstr "<b>Einrasten an Objekten</b>"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
 msgstr "<b>Einrasten am Gitter</b>"
 
+# !!!
 #: ../src/ui/dialog/document-properties.cpp:333
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>Einrasten an Führungslinien</b>"
@@ -9035,6 +9065,7 @@ msgstr ""
 msgid "Edit the stops of the gradient"
 msgstr "Zwischenfarbe des Farbverlaufs bearbeiten"
 
+# !!!
 #: ../src/widgets/gradient-toolbar.cpp:557 ../src/widgets/toolbox.cpp:1120
 #: ../src/widgets/toolbox.cpp:1209 ../src/widgets/toolbox.cpp:1508
 #: ../src/widgets/toolbox.cpp:1557 ../src/widgets/toolbox.cpp:1795
@@ -9064,6 +9095,7 @@ msgstr "Farbverlauf für die Füllung erzeugen"
 msgid "Create gradient in the stroke"
 msgstr "Farbverlauf für die Kontur erzeugen"
 
+# !!!
 #. FIXME: implement averaging of all parameters for multiple selected stars
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #. FIXME: implement averaging of all parameters for multiple selected
