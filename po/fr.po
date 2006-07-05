@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-02 13:30+0200\n"
-"PO-Revision-Date: 2006-06-05 12:30+0100\n"
+"POT-Creation-Date: 2006-07-05 20:48+0200\n"
+"PO-Revision-Date: 2006-07-05 17:19+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,24 +58,21 @@ msgstr ""
 "ellipses de ratio entier, <b>Maj</b> pour dessiner autour du point de départ"
 
 #: ../src/arc-context.cpp:437
-#, fuzzy
 msgid "Create ellipse"
-msgstr "Créer un clo_ne"
+msgstr "Créer une ellipse"
 
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Création d'un nouveau connecteur"
 
 #: ../src/connector-context.cpp:717
-#, fuzzy
 msgid "Reroute connector"
-msgstr "Créer des connecteurs"
+msgstr "Rerouter un connecteur"
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:924
-#, fuzzy
 msgid "Create connector"
-msgstr "Créer des connecteurs"
+msgstr "Créer un connecteur"
 
 #: ../src/connector-context.cpp:948
 msgid "Finishing connector"
@@ -2005,7 +2002,7 @@ msgstr ""
 
 #: ../src/event-log.cpp:32
 msgid "[Unchanged]"
-msgstr ""
+msgstr "[Inchangé]"
 
 #: ../src/extension/dependency.cpp:239
 msgid "Dependency::"
@@ -2381,7 +2378,7 @@ msgstr ""
 "Utiliser '> nomdefichier' pour imprimer dans un fichier.\n"
 "Utiliser '| prog...' pour relier à un programme."
 
-#: ../src/extension/internal/ps.cpp:1211
+#: ../src/extension/internal/ps.cpp:1217
 msgid "Postscript Print"
 msgstr "Impression Postscript"
 
@@ -2472,11 +2469,11 @@ msgstr ""
 "général moins volumineux et reste redimensionnable; cependant les motifs de "
 "remplissage seront perdus."
 
-#: ../src/extension/internal/pdf.cpp:1548
+#: ../src/extension/internal/pdf.cpp:1528
 msgid "write error occurred"
 msgstr "une erreur d'écriture s'est produite"
 
-#: ../src/extension/internal/pdf.cpp:1575
+#: ../src/extension/internal/pdf.cpp:1555
 msgid "PDF Print"
 msgstr "Impression PDF"
 
@@ -3020,14 +3017,13 @@ msgstr ""
 "utilisateur."
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:117
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
 "incompatible version of Inkboard.</span>\n"
 "\n"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">L'utilisateur <b>%1</b> participe déjà "
-"à une session de tableau blanc.</span>\n"
+"<span weight=\"bold\" size=\"larger\">L'utilisateur <b>%1</b> untilise une "
+"version incompatible d'Inkboard (tableau blanc).</span>\n"
 "\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
@@ -3037,21 +3033,9 @@ msgid ""
 "\n"
 "You are still connected to a Jabber server as <b>%2</b>."
 msgstr ""
-
-#: ../src/jabber_whiteboard/message-queue.cpp:75
-#, c-format
-msgid ""
-"Received late message (message sequence number is %u, but latest processed "
-"message had sequence number %u).  Discarding message; session may be "
-"desynchronized."
-msgstr ""
-
-#: ../src/jabber_whiteboard/message-utilities.cpp:108
-#, c-format
-msgid ""
-"Node %p (name %s) is a special node, but it could not be found in the node "
-"tracker (possible unexpected duplicate?)  Generating unique ID anyway."
-msgstr ""
+"Inkscape ne peut établir de connection vers <b>%1</b>.\n"
+"\n"
+"Vous êtes toujours connecté au serveur Jabber en tant que <b>%2</b>."
 
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
@@ -3066,7 +3050,7 @@ msgstr ""
 
 #: ../src/jabber_whiteboard/new-inkboard-document.cpp:60
 msgid "Inkboard session (%1 to %2)"
-msgstr ""
+msgstr "Session Inkboard (tableau blanc) (de %1 à %2)"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
@@ -3226,9 +3210,8 @@ msgid "Export document to an EPS file"
 msgstr "Exporter le document en fichier EPS"
 
 #: ../src/main.cpp:304
-#, fuzzy
 msgid "Export document to a PDF file"
-msgstr "Exporter le document en fichier PS"
+msgstr "Exporter le document en fichier PDF"
 
 #: ../src/main.cpp:309
 msgid "Convert text object to paths on export (EPS)"
@@ -3370,7 +3353,8 @@ msgid "_Text"
 msgstr "_Texte"
 
 #: ../src/menus-skeleton.h:225
-msgid "Effects"
+#, fuzzy
+msgid "Effe_cts"
 msgstr "Effets"
 
 #: ../src/menus-skeleton.h:232
@@ -3847,13 +3831,33 @@ msgstr "<b>Alt</b> : sélectionner sous, déplacer la sélection"
 msgid "Selected object is not a group. Cannot enter."
 msgstr "L'objet sélectionné n'est pas un groupe. Impossible d'y entrer."
 
+#: ../src/selection-chemistry.cpp:217
+#, fuzzy
+msgid "Delete text"
+msgstr "Supprimer le nœud"
+
 #: ../src/selection-chemistry.cpp:225
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Rien</b> n'a été supprimé."
 
+#: ../src/selection-chemistry.cpp:243
+#, fuzzy
+msgid "Delete"
+msgstr "_Supprimer"
+
 #: ../src/selection-chemistry.cpp:257
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Sélectionner des <b>objet(s)</b> à dupliquer."
+
+#: ../src/selection-chemistry.cpp:282 ../src/widgets/gradient-selector.cpp:133
+#: ../src/widgets/gradient-toolbar.cpp:488
+msgid "Duplicate"
+msgstr "Dupliquer"
+
+#: ../src/selection-chemistry.cpp:307
+#, fuzzy
+msgid "Delete all"
+msgstr "_Supprimer"
 
 #: ../src/selection-chemistry.cpp:430
 msgid "Select <b>two or more objects</b> to group."
@@ -3863,6 +3867,10 @@ msgstr "Sélectionner <b>deux objets ou plus</b> pour les grouper."
 msgid "Select <b>at least two objects</b> to group."
 msgstr "Sélectionner <b>au moins deux objets</b> pour les grouper."
 
+#: ../src/selection-chemistry.cpp:509 ../src/selection-describer.cpp:49
+msgid "Group"
+msgstr "Groupe"
+
 #: ../src/selection-chemistry.cpp:524
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Sélectionner un <b>groupe</b> à dégrouper."
@@ -3870,6 +3878,11 @@ msgstr "Sélectionner un <b>groupe</b> à dégrouper."
 #: ../src/selection-chemistry.cpp:565
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Aucun groupe</b> à dégrouper dans la sélection."
+
+#: ../src/selection-chemistry.cpp:571
+#, fuzzy
+msgid "Ungroup"
+msgstr "_Dégrouper"
 
 #: ../src/selection-chemistry.cpp:635
 msgid "Select <b>object(s)</b> to raise."
@@ -3883,17 +3896,37 @@ msgstr ""
 "Vous ne pouvez pas monter/descendre des objets de <b>différents groupes</b> "
 "ou <b>calques</b>."
 
+#: ../src/selection-chemistry.cpp:673
+#, fuzzy
+msgid "Raise"
+msgstr "_Monter"
+
 #: ../src/selection-chemistry.cpp:686
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Sélectionner des <b>objets</b> à monter au premier plan."
+
+#: ../src/selection-chemistry.cpp:709
+#, fuzzy
+msgid "Raise to top"
+msgstr "Monter au premier p_lan"
 
 #: ../src/selection-chemistry.cpp:723
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Sélectionner des <b>objet(s)</b> à descendre."
 
+#: ../src/selection-chemistry.cpp:766
+#, fuzzy
+msgid "Lower"
+msgstr "D_escendre"
+
 #: ../src/selection-chemistry.cpp:780
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Sélectionner des <b>objet(s)</b> à descendre à l'arrière plan."
+
+#: ../src/selection-chemistry.cpp:815
+#, fuzzy
+msgid "Lower to bottom"
+msgstr "Descendre à l'arrière pl_an"
 
 #: ../src/selection-chemistry.cpp:822
 msgid "Nothing to undo."
@@ -3912,17 +3945,42 @@ msgstr "Rien n'a été copié."
 msgid "Nothing on the clipboard."
 msgstr "Rien dans le presse-papiers."
 
+#: ../src/selection-chemistry.cpp:1124
+#, fuzzy
+msgid "Paste"
+msgstr "C_oller"
+
 #: ../src/selection-chemistry.cpp:1142
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Sélectionner des <b>objet(s)</b> sur lesquels coller un style ."
+
+#: ../src/selection-chemistry.cpp:1151
+#, fuzzy
+msgid "Paste style"
+msgstr "Coller le st_yle"
 
 #: ../src/selection-chemistry.cpp:1169 ../src/selection-chemistry.cpp:1205
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Sélectionner des <b>objet(s)</b> sur lesquels coller une taille."
 
+#: ../src/selection-chemistry.cpp:1187
+#, fuzzy
+msgid "Paste size"
+msgstr "Coller les d_imensions"
+
+#: ../src/selection-chemistry.cpp:1228
+#, fuzzy
+msgid "Paste size separately"
+msgstr "Coller la taille séparément"
+
 #: ../src/selection-chemistry.cpp:1239
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Sélectionner des <b>objet(s)</b> à déplacer au calque du dessus."
+
+#: ../src/selection-chemistry.cpp:1264
+#, fuzzy
+msgid "Raise to next layer"
+msgstr "Déplacé au calque suivant."
 
 #: ../src/selection-chemistry.cpp:1270
 msgid "No more layers above."
@@ -3932,9 +3990,71 @@ msgstr "Plus de calque au-dessus."
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Sélectionner des <b>objet(s)</b> à déplacer au calque du dessous."
 
+#: ../src/selection-chemistry.cpp:1309
+#, fuzzy
+msgid "Lower to previous layer"
+msgstr "Déplacé au calque précédent."
+
 #: ../src/selection-chemistry.cpp:1315
 msgid "No more layers below."
 msgstr "Plus de calque en-dessous."
+
+#: ../src/selection-chemistry.cpp:1457
+#, fuzzy
+msgid "Remove transform"
+msgstr "Supprimer les _transformations"
+
+#: ../src/selection-chemistry.cpp:1566
+#, fuzzy
+msgid "Rotate 90&#176; CW"
+msgstr "Tourner de _90&#176; à droite"
+
+#: ../src/selection-chemistry.cpp:1594
+#, fuzzy
+msgid "Rotate 90&#176; CCW"
+msgstr "Tourner de 9_0&#176; à gauche"
+
+#: ../src/selection-chemistry.cpp:1612 ../src/seltrans.cpp:353
+msgid "Rotate"
+msgstr "Tourner"
+
+#: ../src/selection-chemistry.cpp:1641
+msgid "Rotate by pixels"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1667 ../src/seltrans.cpp:350
+msgid "Scale"
+msgstr "Redimensionner"
+
+#: ../src/selection-chemistry.cpp:1686
+msgid "Scale by whole factor"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1702
+msgid "Nudge vertically"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1705
+#, fuzzy
+msgid "Nudge horizontally"
+msgstr "_Horizontal"
+
+#: ../src/selection-chemistry.cpp:1708 ../src/selection-chemistry.cpp:1736
+#: ../src/seltrans.cpp:347
+msgid "Move"
+msgstr "Déplacer"
+
+#: ../src/selection-chemistry.cpp:1730
+msgid "Nudge vertically by pixels"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1733
+msgid "Nudge horizontally by pixels"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1997 ../src/selection-describer.cpp:65
+msgid "Clone"
+msgstr "Clone"
 
 #: ../src/selection-chemistry.cpp:2014
 msgid "Select a <b>clone</b> to unlink."
@@ -3943,6 +4063,11 @@ msgstr "Sélectionner un <b>clone</b> à délier."
 #: ../src/selection-chemistry.cpp:2045
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Aucun clone à délier</b> dans la sélection."
+
+#: ../src/selection-chemistry.cpp:2049
+#, fuzzy
+msgid "Unlink clone"
+msgstr "_Délier le clone"
 
 #: ../src/selection-chemistry.cpp:2063
 msgid ""
@@ -3975,6 +4100,11 @@ msgstr ""
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Sélectionner des <b>objet(s)</b> à convertir en motif de remplissage."
 
+#: ../src/selection-chemistry.cpp:2195
+#, fuzzy
+msgid "Objects to pattern"
+msgstr "Objets en _motif"
+
 #: ../src/selection-chemistry.cpp:2211
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
@@ -3985,9 +4115,19 @@ msgstr ""
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Aucun motif de remplissage</b> dans la sélection."
 
+#: ../src/selection-chemistry.cpp:2267
+#, fuzzy
+msgid "Pattern to objects"
+msgstr "Motif en _objets"
+
 #: ../src/selection-chemistry.cpp:2285
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Sélectionner des <b>objet(s)</b> pour en faire une copie bitmap."
+
+#: ../src/selection-chemistry.cpp:2417
+#, fuzzy
+msgid "Create bitmap"
+msgstr "Créer des spirales"
 
 #: ../src/selection-chemistry.cpp:2449
 msgid "Select <b>object(s)</b> to create clippath or mask from."
@@ -4001,11 +4141,36 @@ msgstr ""
 "Sélectionner un objet masque et des <b>objet(s)</b> auxquels appliquer ce "
 "chemin de découpe ou masque."
 
-#: ../src/selection-chemistry.cpp:2556
+#: ../src/selection-chemistry.cpp:2543
+#, fuzzy
+msgid "Set clipping path"
+msgstr "Fermeture de chemin."
+
+#: ../src/selection-chemistry.cpp:2545
+#, fuzzy
+msgid "Set mask"
+msgstr "Étoiles"
+
+#: ../src/selection-chemistry.cpp:2558
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 "Sélectionner des <b>objet(s)</b> pour en retirer le chemin de découpe ou le "
 "masque."
+
+#: ../src/selection-chemistry.cpp:2626
+#, fuzzy
+msgid "Release clipping path"
+msgstr "Retirer le chemin de découpe de la sélection"
+
+#: ../src/selection-chemistry.cpp:2628
+#, fuzzy
+msgid "Release mask"
+msgstr "_Retirer"
+
+#: ../src/selection-chemistry.cpp:2672
+#, fuzzy
+msgid "Fit page to selection"
+msgstr "A_juster la page à la sélection"
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4024,10 +4189,6 @@ msgstr "Ellipse"
 #: ../src/selection-describer.cpp:47
 msgid "Flowed text"
 msgstr "Texte encadré"
-
-#: ../src/selection-describer.cpp:49
-msgid "Group"
-msgstr "Groupe"
 
 #: ../src/selection-describer.cpp:51
 msgid "Image"
@@ -4054,10 +4215,6 @@ msgstr "Polyligne"
 #: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2141
 msgid "Rectangle"
 msgstr "Rectangle"
-
-#: ../src/selection-describer.cpp:65
-msgid "Clone"
-msgstr "Clone"
 
 #: ../src/selection-describer.cpp:69
 msgid "Offset path"
@@ -4189,34 +4346,16 @@ msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:227
-#, fuzzy
 msgid "Set center"
-msgstr "Sélectionner l'imprimante"
-
-#: ../src/seltrans.cpp:347
-#, fuzzy
-msgid "Move"
-msgstr "Déplace_ment"
-
-#: ../src/seltrans.cpp:350
-#, fuzzy
-msgid "Scale"
-msgstr "Dimen_sions"
-
-#: ../src/seltrans.cpp:353
-#, fuzzy
-msgid "Rotate"
-msgstr "_Rotation"
+msgstr "Définir le centre"
 
 #: ../src/seltrans.cpp:356
-#, fuzzy
 msgid "Skew"
-msgstr "_Inclinaison"
+msgstr "Incliner"
 
 #: ../src/seltrans.cpp:455
-#, fuzzy
 msgid "Stamp"
-msgstr "Incrément"
+msgstr "Tamponner"
 
 #: ../src/seltrans.cpp:477
 msgid ""
@@ -4259,9 +4398,8 @@ msgstr ""
 "<b>Maj</b> pour tourner autour du coin opposé"
 
 #: ../src/seltrans.cpp:641
-#, fuzzy
 msgid "Reset center"
-msgstr "Monter le calque courant"
+msgstr "Rétablir le centre"
 
 #: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
@@ -8689,11 +8827,11 @@ msgstr "Aligner et distribuer des objets"
 
 #: ../src/verbs.cpp:2254
 msgid "Undo _History..."
-msgstr ""
+msgstr "_Historique des annulations"
 
 #: ../src/verbs.cpp:2255
 msgid "Undo History"
-msgstr ""
+msgstr "Historique des annulations"
 
 #: ../src/verbs.cpp:2256
 msgid "_Text and Font..."
@@ -8769,13 +8907,12 @@ msgstr ""
 "propriétés des objets"
 
 #: ../src/verbs.cpp:2275
-#, fuzzy
 msgid "_Instant Messaging..."
-msgstr "_Messages..."
+msgstr "Messagerie instantannée"
 
 #: ../src/verbs.cpp:2275
 msgid "Jabber Instant Messaging Client"
-msgstr ""
+msgstr "Client de messagerie instantannée Jabber"
 
 #: ../src/verbs.cpp:2277
 msgid "_Input Devices..."
@@ -8920,31 +9057,36 @@ msgid "Repeat the last effect with new settings"
 msgstr "Répéter le dernier effet avec les nouveaux paramètres"
 
 #. "tutorial_tips"
-#. Fit Canvas
+#. Fit Page
 #: ../src/verbs.cpp:2320
-msgid "Fit Canvas to Selection"
-msgstr "Ajuster le canevas à la sélection"
+#, fuzzy
+msgid "Fit Page to Selection"
+msgstr "A_juster la page à la sélection"
 
 #: ../src/verbs.cpp:2321
-msgid "Fit the canvas to the current selection"
+#, fuzzy
+msgid "Fit the page to the current selection"
 msgstr "Ajuster le canevas à la sélection courante"
 
 #: ../src/verbs.cpp:2322
-msgid "Fit Canvas to Drawing"
+#, fuzzy
+msgid "Fit Page to Drawing"
 msgstr "Fit Canvas to Drawing"
 
 #: ../src/verbs.cpp:2323
-msgid "Fit the canvas to the drawing"
+#, fuzzy
+msgid "Fit the page to the drawing"
 msgstr "Ajuster le canevas au dessin"
 
 #: ../src/verbs.cpp:2324
-msgid "Fit Canvas to Selection or Drawing"
+#, fuzzy
+msgid "Fit Page to Selection or Drawing"
 msgstr "Ajuster le canevas à la sélection ou au dessin"
 
 #: ../src/verbs.cpp:2325
+#, fuzzy
 msgid ""
-"Fit the canvas to the current selection or the drawing if there is no "
-"selection"
+"Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
 "Ajuster le canevas à la sélection courante ou au dessin s'il n'y a pas de "
 "sélection"
@@ -8990,11 +9132,6 @@ msgstr "Taille de police :"
 #: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3370
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
-
-#: ../src/widgets/gradient-selector.cpp:133
-#: ../src/widgets/gradient-toolbar.cpp:488
-msgid "Duplicate"
-msgstr "Dupliquer"
 
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:499
@@ -9814,7 +9951,7 @@ msgstr "Retirer les crénages manuels"
 
 #: ../src/widgets/toolbox.cpp:3851
 msgid "Change connector spacing distance"
-msgstr ""
+msgstr "Modifier la marge des connecteurs"
 
 #: ../src/widgets/toolbox.cpp:3916
 msgid "Spacing:"
@@ -10384,6 +10521,27 @@ msgstr "Métafichier Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrée métafichier Windows (*.wmf)"
+
+#~ msgid ""
+#~ "Received late message (message sequence number is %u, but latest "
+#~ "processed message had sequence number %u).  Discarding message; session "
+#~ "may be desynchronized."
+#~ msgstr ""
+#~ "Reception d'un message en retard (le numéro de séquence du message est %"
+#~ "u, mais le dernier message traité avait pour numéro de séquence %u). "
+#~ "Message annulé, la session peut être désynchronisée."
+
+#~ msgid ""
+#~ "Node %p (name %s) is a special node, but it could not be found in the "
+#~ "node tracker (possible unexpected duplicate?)  Generating unique ID "
+#~ "anyway."
+#~ msgstr ""
+#~ " Le nœud %p (nom %s) est un nœud spécial, mais il n'a pas été trouvé dans "
+#~ "le traceur de nœuds (il est possible que cela soit du à une duplication "
+#~ "imprévue). Génération d'un ID unique de toute façon."
+
+#~ msgid "Fit Canvas to Selection"
+#~ msgstr "Ajuster le canevas à la sélection"
 
 #~ msgid "Jabber connection lost."
 #~ msgstr "Connection Jabber perdue."
