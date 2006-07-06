@@ -37,7 +37,7 @@
  * or GlibMM's Glib::ustring.  If neither one is defined, then DOMString
  * is defined as stdc++'s std::string.
  */
-//#define DOM_STRING_GLIBMM
+#define DOM_STRING_GLIBMM
 //#define DOM_STRING_OWN
 
 
