@@ -621,7 +621,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Maybe<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
 
                 if (nc->hit && !event_context->within_tolerance) { //drag curve
-                    sp_nodepath_update_repr (nc->nodepath);
+                    sp_nodepath_update_repr (nc->nodepath, _("Drag curve"));
                 } else if (b != NR::Nothing() && !event_context->within_tolerance) { // drag to select
                     if (nc->nodepath) {
                         sp_nodepath_select_rect(nc->nodepath, b.assume(), event->button.state & GDK_SHIFT_MASK);

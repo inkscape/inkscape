@@ -1699,10 +1699,10 @@ sp_selection_move(gdouble dx, gdouble dy)
 
     if (dx == 0) {
         sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:vertical", SP_VERB_CONTEXT_SELECT, 
-                               _("Nudge vertically"));
+                               _("Move vertically"));
     } else if (dy == 0) {
         sp_document_maybe_done(sp_desktop_document(desktop), "selector:move:horizontal", SP_VERB_CONTEXT_SELECT, 
-                               _("Nudge horizontally"));
+                               _("Move horizontally"));
     } else {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SELECT, 
                          _("Move"));

@@ -253,7 +253,7 @@ void restore_nodepath_selection (Inkscape::NodePath::Path *nodepath, GList *r);
 gboolean nodepath_repr_d_changed (Inkscape::NodePath::Path * np, const char *newd);
 gboolean nodepath_repr_typestr_changed (Inkscape::NodePath::Path * np, const char *newtypestr);
 gboolean node_key (GdkEvent * event);
-void sp_nodepath_update_repr(Inkscape::NodePath::Path *np);
+void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotation);
 void sp_nodepath_update_statusbar (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
 void sp_nodepath_selected_distribute(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);
