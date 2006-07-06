@@ -58,6 +58,8 @@
 #include "xml/attribute-record.h"
 #include "sp-image.h"
 #include "sp-gradient.h"
+#include "sp-stop.h"
+#include "gradient-chemistry.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-path.h"
@@ -1116,144 +1118,6 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
             }
         }
 
-
-
-    //###### Get style
-    SPStyle *style = SP_OBJECT_STYLE(item);
-    if (style && id.size()>0)
-        {
-        bool isGradient = false;
-
-        StyleInfo si;
-        //## Style.  Look in writeStyle() below to see what info
-        //   we need to read into StyleInfo.  Note that we need to
-        //   determine whether information goes into a style element
-        //   or a gradient element.
-        //## FILL
-        if (style->fill.type == SP_PAINT_TYPE_COLOR)
-            {
-            guint32 fillCol =
-                sp_color_get_rgba32_ualpha(&style->fill.value.color, 0);
-            char buf[16];
-            int r = (fillCol >> 24) & 0xff;
-            int g = (fillCol >> 16) & 0xff;
-            int b = (fillCol >>  8) & 0xff;
-            //g_message("## %s %lx", id.c_str(), (unsigned int)fillCol);
-            snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
-            si.fillColor = buf;
-            si.fill      = "solid";
-            double opacityPercent = 100.0 *
-                 (SP_SCALE24_TO_FLOAT(style->fill_opacity.value));
-            snprintf(buf, 15, "%.3f%%", opacityPercent);
-            si.fillOpacity = buf;
-            }
-        else if (style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
-            {
-            //## Gradient.  Look in writeStyle() below to see what info
-            //   we need to read into GradientInfo.
-            if (!SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)))
-                return;
-            isGradient = true;
-            GradientInfo gi;
-            SPGradient *gradient = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
-            if (SP_IS_LINEARGRADIENT(gradient))
-                {
-                gi.style = "linear";
-                SPLinearGradient *linGrad = SP_LINEARGRADIENT(gradient);
-                gi.x1 = linGrad->x1.value;
-                gi.y1 = linGrad->y1.value;
-                gi.x2 = linGrad->x2.value;
-                gi.y2 = linGrad->y2.value;
-                }
-            else if (SP_IS_RADIALGRADIENT(gradient))
-                {
-                gi.style = "radial";
-                SPRadialGradient *radGrad = SP_RADIALGRADIENT(gradient);
-                gi.cx = radGrad->cx.computed * 100.0;//ODG cx is percentages
-                gi.cy = radGrad->cy.computed * 100.0;
-                }
-            else
-                {
-                g_warning("not a supported gradient type");
-                }
-
-            //Look for existing identical style;
-            bool gradientMatch = false;
-            std::vector<GradientInfo>::iterator iter;
-            for (iter=gradientTable.begin() ; iter!=gradientTable.end() ; iter++)
-                {
-                if (gi.equals(*iter))
-                    {
-                    //map to existing gradientTable entry
-                    Glib::ustring gradientName = iter->name;
-                    //g_message("found duplicate style:%s", gradientName.c_str());
-                    gradientLookupTable[id] = gradientName;
-                    gradientMatch = true;
-                    break;
-                    }
-                }
-            //None found, make a new pair or entries
-            if (!gradientMatch)
-                {
-                char buf[16];
-                snprintf(buf, 15, "gradient%d", (int)gradientTable.size());
-                Glib::ustring gradientName = buf;
-                gi.name = gradientName;
-                gradientTable.push_back(gi);
-                gradientLookupTable[id] = gradientName;
-                }
-            }
-
-        //## STROKE
-        if (style->stroke.type == SP_PAINT_TYPE_COLOR)
-            {
-            guint32 strokeCol =
-                sp_color_get_rgba32_ualpha(&style->stroke.value.color, 0);
-            char buf[16];
-            int r = (strokeCol >> 24) & 0xff;
-            int g = (strokeCol >> 16) & 0xff;
-            int b = (strokeCol >>  8) & 0xff;
-            snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
-            si.strokeColor = buf;
-            snprintf(buf, 15, "%.3fpt", style->stroke_width.value);
-            si.strokeWidth = buf;
-            si.stroke      = "solid";
-            double opacityPercent = 100.0 *
-                 (SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));
-            snprintf(buf, 15, "%.3f%%", opacityPercent);
-            si.strokeOpacity = buf;
-            }
-
-        if (!isGradient)
-            {
-            //Look for existing identical style;
-            bool styleMatch = false;
-            std::vector<StyleInfo>::iterator iter;
-            for (iter=styleTable.begin() ; iter!=styleTable.end() ; iter++)
-                {
-                if (si.equals(*iter))
-                    {
-                    //map to existing styleTable entry
-                    Glib::ustring styleName = iter->name;
-                    //g_message("found duplicate style:%s", styleName.c_str());
-                    styleLookupTable[id] = styleName;
-                    styleMatch = true;
-                    break;
-                    }
-                }
-            //None found, make a new pair or entries
-            if (!styleMatch)
-                {
-                char buf[16];
-                snprintf(buf, 15, "style%d", (int)styleTable.size());
-                Glib::ustring styleName = buf;
-                si.name = styleName;
-                styleTable.push_back(si);
-                styleLookupTable[id] = styleName;
-                }
-            }
-        }
-
     for (Inkscape::XML::Node *child = node->firstChild() ;
             child ; child = child->next())
         preprocess(zf, child);
@@ -1289,6 +1153,7 @@ bool OdfOutput::writeManifest(ZipFile &zf)
     outs.printf("<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\">\n");
     outs.printf("    <manifest:file-entry manifest:media-type=\"application/vnd.oasis.opendocument.graphics\" manifest:full-path=\"/\"/>\n");
     outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"content.xml\"/>\n");
+    outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"styles.xml\"/>\n");
     outs.printf("    <manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n");
     outs.printf("    <!--List our images here-->\n");
     std::map<Glib::ustring, Glib::ustring>::iterator iter;
@@ -1412,22 +1277,10 @@ bool OdfOutput::writeMeta(ZipFile &zf)
  * This is called just before writeTree(), since it will write style and
  * gradient information above the <draw> tag in the content.xml file
  */
-bool OdfOutput::writeStyle(Writer &outs)
+bool OdfOutput::writeStyle(ZipFile &zf)
 {
-    outs.printf("<office:automatic-styles>\n");
-    outs.printf("<!-- ####### 'Standard' styles ####### -->\n");
-    outs.printf("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
-    outs.printf("<style:style style:name=\"gr1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
-    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"none\"\n");
-    outs.printf("       draw:textarea-horizontal-align=\"center\"\n");
-    outs.printf("       draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\"\n");
-    outs.printf("       draw:luminance=\"0%%\" draw:contrast=\"0%%\" draw:gamma=\"100%%\" draw:red=\"0%%\"\n");
-    outs.printf("       draw:green=\"0%%\" draw:blue=\"0%%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\"\n");
-    outs.printf("       draw:image-opacity=\"100%%\" style:mirror=\"none\"/>\n");
-    outs.printf("</style:style>\n");
-    outs.printf("<style:style style:name=\"P1\" style:family=\"paragraph\">\n");
-    outs.printf("  <style:paragraph-properties fo:text-align=\"center\"/>\n");
-    outs.printf("</style:style>\n");
+    BufferOutputStream bouts;
+    OutputStreamWriter outs(bouts);
 
     /*
     ==========================================================
@@ -1490,27 +1343,33 @@ bool OdfOutput::writeStyle(Writer &outs)
                 draw:angle="150" draw:border="0%"/>
             ===================================================================
             */
+            if (gi.stops.size() < 2)
+                {
+                g_warning("Need at least 2 tops for a linear gradient");
+                continue;
+                }
             outs.printf("<svg:linearGradient ");
             outs.printf("id=\"%#s_g\" ", gi.name.c_str());
             outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
-            outs.printf("draw:display-name=\"imported linear %d\"\n",
+            outs.printf("    draw:display-name=\"imported linear %d\"\n",
                         gradientCount);
-            outs.printf("    svg:x1=\"%05.3f\" svg:y1=\"%05.3f\"\n",
+            outs.printf("    svg:x1=\"%05.3fcm\" svg:y1=\"%05.3fcm\"\n",
                         gi.x1, gi.y1);
-            outs.printf("    svg:x2=\"%05.3f\" svg:y2=\"%05.3f\">\n",
+            outs.printf("    svg:x2=\"%05.3fcm\" svg:y2=\"%05.3fcm\"\n",
                         gi.x2, gi.y2);
+            outs.printf("    svg:gradientUnits=\"objectBoundingBox\">\n");
             outs.printf("    <svg:stop\n");
             outs.printf("        svg:stop-color=\"#%06lx\"\n",
-                        0 /*gi.startColor*/);
-            outs.printf("        svg:stop-opacity=\"%f\"\n",
-                        0 /*gi.startOpacity*/);
+                        gi.stops[0].rgb);
+            outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                        gi.stops[0].opacity * 100.0);
             outs.printf("        svg:offset=\"0\"/>\n");
             outs.printf("    <svg:stop\n");
             outs.printf("        svg:stop-color=\"#%06lx\"\n",
-                        0 /*gi.stopColor*/);
-            outs.printf("        svg:stop-opacity=\"%f\"\n",
-                        0 /*gi.stopOpacity*/);
-            outs.printf("        svg:offset=\"0\"/>\n");
+                        gi.stops[1].rgb);
+            outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                        gi.stops[1].opacity * 100.0);
+            outs.printf("        svg:offset=\"1\"/>\n");
             outs.printf("</svg:linearGradient>\n");
             }
         else if (gi.style == "radial")
@@ -1527,29 +1386,35 @@ bool OdfOutput::writeStyle(Writer &outs)
                 draw:border="0%"/>
             ===================================================================
             */
+            if (gi.stops.size() < 2)
+                {
+                g_warning("Need at least 2 tops for a radial gradient");
+                continue;
+                }
             outs.printf("<svg:radialGradient ");
             outs.printf("id=\"%#s_g\" ", gi.name.c_str());
             outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
-            outs.printf("draw:display-name=\"imported radial %d\"\n",
+            outs.printf("    draw:display-name=\"imported radial %d\"\n",
                         gradientCount);
             outs.printf("    svg:cx=\"%05.3f\" svg:cy=\"%05.3f\"\n",
                         gi.cx, gi.cy);
             outs.printf("    svg:fx=\"%05.3f\" svg:fy=\"%05.3f\"\n",
                         gi.fx, gi.fy);
-            outs.printf("    svg:r=\"%05.3f\">\n",
+            outs.printf("    svg:r=\"%05.3f\"\n",
                         gi.r);
+            outs.printf("    svg:gradientUnits=\"objectBoundingBox\">\n");
             outs.printf("    <svg:stop\n");
             outs.printf("        svg:stop-color=\"#%06lx\"\n",
-                        0 /*gi.startColor*/);
-            outs.printf("        svg:stop-opacity=\"%f\"\n",
-                        0 /*gi.startOpacity*/);
+                        gi.stops[0].rgb);
+            outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                        gi.stops[0].opacity * 100.0);
             outs.printf("        svg:offset=\"0\"/>\n");
             outs.printf("    <svg:stop\n");
             outs.printf("        svg:stop-color=\"#%06lx\"\n",
-                        0 /*gi.stopColor*/);
-            outs.printf("        svg:stop-opacity=\"%f\"\n",
-                        0 /*gi.stopOpacity*/);
-            outs.printf("        svg:offset=\"0\"/>\n");
+                        gi.stops[1].rgb);
+            outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                        gi.stops[1].opacity * 100.0);
+            outs.printf("        svg:offset=\"1\"/>\n");
             outs.printf("</svg:radialGradient>\n");
             }
         else
@@ -1572,6 +1437,36 @@ bool OdfOutput::writeStyle(Writer &outs)
     outs.printf("\n");
     outs.printf("</office:automatic-styles>\n");
     outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<office:master-styles>\n");
+    outs.printf("<draw:layer-set>\n");
+    outs.printf("    <draw:layer draw:name=\"layout\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"background\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"backgroundobjects\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"controls\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"measurelines\"/>\n");
+    outs.printf("</draw:layer-set>\n");
+    outs.printf("\n");
+    outs.printf("<style:master-page style:name=\"Default\"\n");
+    outs.printf("    style:page-master-name=\"PM1\" draw:style-name=\"dp1\"/>\n");
+    outs.printf("</office:master-styles>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("</office:document-styles>\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  E N D    O F    F I L E\n");
+    outs.printf("  Have a nice day  - ishmal\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+
+    //Make our entry
+    ZipEntry *ze = zf.newEntry("styles.xml", "ODF style file");
+    ze->setUncompressedData(bouts.getBuffer());
+    ze->finish();
 
     return true;
 }
@@ -1652,13 +1547,306 @@ writePath(Writer &outs, NArtBpath const *bpath,
 
 
 
+bool OdfOutput::processStyle(Writer &outs, SPItem *item,
+                             const Glib::ustring &id)
+{
+    SPStyle *style = item->style;
+
+    StyleInfo si;
+
+    //## FILL
+    if (style->fill.type == SP_PAINT_TYPE_COLOR)
+        {
+        guint32 fillCol =
+            sp_color_get_rgba32_ualpha(&style->fill.value.color, 0);
+        char buf[16];
+        int r = (fillCol >> 24) & 0xff;
+        int g = (fillCol >> 16) & 0xff;
+        int b = (fillCol >>  8) & 0xff;
+        //g_message("## %s %lx", id.c_str(), (unsigned int)fillCol);
+        snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
+        si.fillColor = buf;
+        si.fill      = "solid";
+        double opacityPercent = 100.0 *
+             (SP_SCALE24_TO_FLOAT(style->fill_opacity.value));
+        snprintf(buf, 15, "%.3f%%", opacityPercent);
+        si.fillOpacity = buf;
+        }
+
+    //## STROKE
+    if (style->stroke.type == SP_PAINT_TYPE_COLOR)
+        {
+        guint32 strokeCol =
+            sp_color_get_rgba32_ualpha(&style->stroke.value.color, 0);
+        char buf[16];
+        int r = (strokeCol >> 24) & 0xff;
+        int g = (strokeCol >> 16) & 0xff;
+        int b = (strokeCol >>  8) & 0xff;
+        snprintf(buf, 15, "#%02x%02x%02x", r, g, b);
+        si.strokeColor = buf;
+        snprintf(buf, 15, "%.3fpt", style->stroke_width.value);
+        si.strokeWidth = buf;
+        si.stroke      = "solid";
+        double opacityPercent = 100.0 *
+             (SP_SCALE24_TO_FLOAT(style->stroke_opacity.value));
+        snprintf(buf, 15, "%.3f%%", opacityPercent);
+        si.strokeOpacity = buf;
+        }
+
+    //Look for existing identical style;
+    bool styleMatch = false;
+    std::vector<StyleInfo>::iterator iter;
+    for (iter=styleTable.begin() ; iter!=styleTable.end() ; iter++)
+        {
+        if (si.equals(*iter))
+            {
+            //map to existing styleTable entry
+            Glib::ustring styleName = iter->name;
+            //g_message("found duplicate style:%s", styleName.c_str());
+            styleLookupTable[id] = styleName;
+            styleMatch = true;
+            break;
+            }
+        }
+
+    //## Dont need a new style
+    if (styleMatch)
+        return false;
+
+    char buf[16];
+    snprintf(buf, 15, "style%d", (int)styleTable.size());
+    Glib::ustring styleName = buf;
+    si.name = styleName;
+    styleTable.push_back(si);
+    styleLookupTable[id] = styleName;
+
+    outs.printf("<style:style style:name=\"%s\"", si.name.c_str());
+    outs.printf(" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
+    outs.printf("  <style:graphic-properties");
+    outs.printf(" draw:fill=\"%s\" ", si.fill.c_str());
+    if (si.fill != "none")
+        {
+        outs.printf(" draw:fill-color=\"%s\" ", si.fillColor.c_str());
+        outs.printf(" draw:fill-opacity=\"%s\" ", si.fillOpacity.c_str());
+        }
+    outs.printf(" draw:stroke=\"%s\" ", si.stroke.c_str());
+    if (si.stroke != "none")
+        {
+        outs.printf(" svg:stroke-width=\"%s\" ", si.strokeWidth.c_str());
+        outs.printf(" svg:stroke-color=\"%s\" ", si.strokeColor.c_str());
+        outs.printf(" svg:stroke-opacity=\"%s\" ", si.strokeOpacity.c_str());
+        }
+    outs.printf("/>\n");
+    outs.printf("</style:style>\n");
+
+    return true;
+}
+
+
+
+
+bool OdfOutput::processGradient(Writer &outs, SPItem *item,
+                                const Glib::ustring &id, NR::Matrix &tf)
+{
+    SPStyle *style = item->style;
+
+    //## Gradient.  Look in writeStyle() below to see what info
+    //   we need to read into GradientInfo.
+    if (!SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)))
+        return false;
+
+    SPGradient *gradient = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
+
+    GradientInfo gi;
+
+    SPGradient *grvec = sp_gradient_get_vector(gradient, FALSE);
+    for (SPStop *stop = sp_first_stop(grvec) ;
+          stop ; stop = sp_next_stop(stop))
+        {
+        unsigned long rgba = sp_stop_get_rgba32(stop);
+        unsigned long rgb  = (rgba >> 8) & 0xffffff;
+        double opacity     = ((double)(rgba & 0xff)) / 256.0;
+        GradientStop gs(rgb, opacity);
+        gi.stops.push_back(gs);
+        }
+
+    if (SP_IS_LINEARGRADIENT(gradient))
+        {
+        gi.style = "linear";
+        SPLinearGradient *linGrad = SP_LINEARGRADIENT(gradient);
+        /*
+        NR::Point p1(linGrad->x1.value, linGrad->y1.value);
+        p1 = p1 * tf;
+        gi.x1 = p1[NR::X];
+        gi.y1 = p1[NR::Y];
+        NR::Point p2(linGrad->x2.value, linGrad->y2.value);
+        p2 = p2 * tf;
+        gi.x2 = p2[NR::X];
+        gi.y2 = p2[NR::Y];
+        */
+        gi.x1 = linGrad->x1.value;
+        gi.y1 = linGrad->y1.value;
+        gi.x2 = linGrad->x2.value;
+        gi.y2 = linGrad->y2.value;
+        }
+    else if (SP_IS_RADIALGRADIENT(gradient))
+        {
+        gi.style = "radial";
+        SPRadialGradient *radGrad = SP_RADIALGRADIENT(gradient);
+        gi.cx = radGrad->cx.computed * 100.0;//ODG cx is percentages
+        gi.cy = radGrad->cy.computed * 100.0;
+        }
+    else
+        {
+        g_warning("not a supported gradient type");
+        return false;
+        }
+
+    //Look for existing identical style;
+    bool gradientMatch = false;
+    std::vector<GradientInfo>::iterator iter;
+    for (iter=gradientTable.begin() ; iter!=gradientTable.end() ; iter++)
+        {
+        if (gi.equals(*iter))
+            {
+            //map to existing gradientTable entry
+            Glib::ustring gradientName = iter->name;
+            //g_message("found duplicate style:%s", gradientName.c_str());
+            gradientLookupTable[id] = gradientName;
+            gradientMatch = true;
+            break;
+            }
+        }
+
+    if (gradientMatch)
+        return true;
+
+    //## No match, let us write a new entry
+    char buf[16];
+    snprintf(buf, 15, "gradient%d", (int)gradientTable.size());
+    Glib::ustring gradientName = buf;
+    gi.name = gradientName;
+    gradientTable.push_back(gi);
+    gradientLookupTable[id] = gradientName;
+
+    int gradientCount = gradientTable.size();
+
+    if (gi.style == "linear")
+        {
+        /*
+        ===================================================================
+        LINEAR gradient.  We need something that looks like this:
+        <draw:gradient draw:name="Gradient_20_7"
+            draw:display-name="Gradient 7"
+            draw:style="linear"
+            draw:start-color="#008080" draw:end-color="#993366"
+            draw:start-intensity="100%" draw:end-intensity="100%"
+            draw:angle="150" draw:border="0%"/>
+        ===================================================================
+        */
+        if (gi.stops.size() < 2)
+            {
+            g_warning("Need at least 2 stops for a linear gradient");
+            return false;;
+            }
+        outs.printf("<svg:linearGradient ");
+        outs.printf("id=\"%#s_g\" ", gi.name.c_str());
+        outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+        outs.printf("    draw:display-name=\"imported linear %d\"\n",
+                    gradientCount);
+        outs.printf("    svg:gradientUnits=\"objectBoundingBox\"\n");
+        outs.printf("    svg:x1=\"%05.3fcm\" svg:y1=\"%05.3fcm\"\n",
+                    gi.x1 * pxToCm, gi.y1 * pxToCm);
+        outs.printf("    svg:x2=\"%05.3fcm\" svg:y2=\"%05.3fcm\">\n",
+                    gi.x2 * pxToCm, gi.y2 * pxToCm);
+        outs.printf("    <svg:stop\n");
+        outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                    gi.stops[0].rgb);
+        outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                    gi.stops[0].opacity * 100.0);
+        outs.printf("        svg:offset=\"0\"/>\n");
+        outs.printf("    <svg:stop\n");
+        outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                    gi.stops[1].rgb);
+        outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                    gi.stops[1].opacity * 100.0);
+        outs.printf("        svg:offset=\"1\"/>\n");
+        outs.printf("</svg:linearGradient>\n");
+        }
+    else if (gi.style == "radial")
+        {
+        /*
+        ===================================================================
+        RADIAL gradient.  We need something that looks like this:
+        <!-- radial gradient, light gray to white, centered, 0% border -->
+        <draw:gradient draw:name="radial_20_borderless"
+            draw:display-name="radial borderless"
+            draw:style="radial"
+            draw:cx="50%" draw:cy="50%"
+            draw:start-color="#999999" draw:end-color="#ffffff"
+            draw:border="0%"/>
+        ===================================================================
+        */
+        if (gi.stops.size() < 2)
+            {
+            g_warning("Need at least 2 stops for a radial gradient");
+            return false;
+            }
+        outs.printf("<svg:radialGradient ");
+        outs.printf("id=\"%#s_g\" ", gi.name.c_str());
+        outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+        outs.printf("    draw:display-name=\"imported radial %d\"\n",
+                    gradientCount);
+        outs.printf("    svg:gradientUnits=\"objectBoundingBox\"\n");
+        outs.printf("    svg:cx=\"%05.3f\" svg:cy=\"%05.3f\"\n",
+                    gi.cx, gi.cy);
+        outs.printf("    svg:fx=\"%05.3f\" svg:fy=\"%05.3f\"\n",
+                    gi.fx, gi.fy);
+        outs.printf("    svg:r=\"%05.3f\">\n",
+                    gi.r);
+        outs.printf("    <svg:stop\n");
+        outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                    gi.stops[0].rgb);
+        outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                    gi.stops[0].opacity * 100.0);
+        outs.printf("        svg:offset=\"0\"/>\n");
+        outs.printf("    <svg:stop\n");
+        outs.printf("        svg:stop-color=\"#%06lx\"\n",
+                    gi.stops[1].rgb);
+        outs.printf("        svg:stop-opacity=\"%f%%\"\n",
+                    gi.stops[1].opacity * 100.0);
+        outs.printf("        svg:offset=\"1\"/>\n");
+        outs.printf("</svg:radialGradient>\n");
+        }
+    else
+        {
+        g_warning("unsupported gradient style '%s'", gi.style.c_str());
+        return false;
+        }
+    outs.printf("<style:style style:name=\"%#s\" style:family=\"graphic\" ",
+              gi.name.c_str());
+    outs.printf("style:parent-style-name=\"standard\">\n");
+    outs.printf("    <style:graphic-properties draw:fill=\"gradient\" ");
+    outs.printf("draw:fill-gradient-name=\"%#s_g\"\n",
+              gi.name.c_str());
+    outs.printf("        draw:textarea-horizontal-align=\"center\" ");
+    outs.printf("draw:textarea-vertical-align=\"middle\"/>\n");
+    outs.printf("</style:style>\n\n");
+ 
+    return true;
+}
+
+
+
+
 /**
  * SECOND PASS.
  * This is the main SPObject tree output to ODF.  preprocess()
  * must be called prior to this, as elements will often reference
  * data parsed and tabled in preprocess().
  */
-bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
+bool OdfOutput::writeTree(Writer &couts, Writer &souts,
+                          Inkscape::XML::Node *node)
 {
     //# Get the SPItem, if applicable
     SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
@@ -1694,14 +1882,15 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     //# Do our stuff
     SPCurve *curve = NULL;
 
-    //g_message("##### %s #####", nodeName.c_str());
+
 
     if (nodeName == "svg" || nodeName == "svg:svg")
         {
         //# Iterate through the children
-        for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
+        for (Inkscape::XML::Node *child = node->firstChild() ;
+               child ; child = child->next())
             {
-            if (!writeTree(outs, child))
+            if (!writeTree(couts, souts, child))
                 return false;
             }
         return true;
@@ -1709,22 +1898,41 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
     else if (nodeName == "g" || nodeName == "svg:g")
         {
         if (id.size() > 0)
-            outs.printf("<draw:g id=\"%s\">\n", id.c_str());
+            couts.printf("<draw:g id=\"%s\">\n", id.c_str());
         else
-            outs.printf("<draw:g>\n");
+            couts.printf("<draw:g>\n");
         //# Iterate through the children
-        for (Inkscape::XML::Node *child = node->firstChild() ; child ; child = child->next())
+        for (Inkscape::XML::Node *child = node->firstChild() ;
+               child ; child = child->next())
             {
-            if (!writeTree(outs, child))
+            if (!writeTree(couts, souts, child))
                 return false;
             }
         if (id.size() > 0)
-            outs.printf("</draw:g> <!-- id=\"%s\" -->\n", id.c_str());
+            couts.printf("</draw:g> <!-- id=\"%s\" -->\n", id.c_str());
         else
-            outs.printf("</draw:g>\n");
+            couts.printf("</draw:g>\n");
         return true;
         }
-    else if (nodeName == "image" || nodeName == "svg:image")
+
+    //######################################
+    //# S T Y L E
+    //######################################
+    processStyle(souts, item, id);
+
+    //######################################
+    //# G R A D I E N T
+    //######################################
+    processGradient(souts, item, id, tf);
+
+
+
+
+    //######################################
+    //# I T E M    D A T A
+    //######################################
+    //g_message("##### %s #####", nodeName.c_str());
+    if (nodeName == "image" || nodeName == "svg:image")
         {
         if (!SP_IS_IMAGE(item))
             {
@@ -1760,31 +1968,31 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
             }
         Glib::ustring newName = iter->second;
 
-        outs.printf("<draw:frame ");
+        couts.printf("<draw:frame ");
         if (id.size() > 0)
-            outs.printf("id=\"%s\" ", id.c_str());
-        outs.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\" ");
+            couts.printf("id=\"%s\" ", id.c_str());
+        couts.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\" ");
         //no x or y.  make them the translate transform, last one
-        outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
+        couts.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
                                   iwidth, iheight);
         if (itemTransformString.size() > 0)
             {
-            outs.printf("draw:transform=\"%s translate(%.3fcm, %.3fcm)\" ",
+            couts.printf("draw:transform=\"%s translate(%.3fcm, %.3fcm)\" ",
                            itemTransformString.c_str(), ix, iy);
             }
         else
             {
-            outs.printf("draw:transform=\"translate(%.3fcm, %.3fcm)\" ",
+            couts.printf("draw:transform=\"translate(%.3fcm, %.3fcm)\" ",
                                 ix, iy);
             }
 
-        outs.printf(">\n");
-        outs.printf("    <draw:image xlink:href=\"%s\" xlink:type=\"simple\"\n",
+        couts.printf(">\n");
+        couts.printf("    <draw:image xlink:href=\"%s\" xlink:type=\"simple\"\n",
                               newName.c_str());
-        outs.printf("        xlink:show=\"embed\" xlink:actuate=\"onLoad\">\n");
-        outs.printf("        <text:p/>\n");
-        outs.printf("    </draw:image>\n");
-        outs.printf("</draw:frame>\n");
+        couts.printf("        xlink:show=\"embed\" xlink:actuate=\"onLoad\">\n");
+        couts.printf("        <text:p/>\n");
+        couts.printf("    </draw:image>\n");
+        couts.printf("</draw:frame>\n");
         return true;
         }
     else if (SP_IS_SHAPE(item))
@@ -1801,16 +2009,16 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         {
         //### Default <path> output
 
-        outs.printf("<draw:path ");
+        couts.printf("<draw:path ");
         if (id.size()>0)
-            outs.printf("id=\"%s\" ", id.c_str());
+            couts.printf("id=\"%s\" ", id.c_str());
 
         std::map<Glib::ustring, Glib::ustring>::iterator siter;
         siter = styleLookupTable.find(id);
         if (siter != styleLookupTable.end())
             {
             Glib::ustring styleName = siter->second;
-            outs.printf("draw:style-name=\"%s\" ", styleName.c_str());
+            couts.printf("draw:style-name=\"%s\" ", styleName.c_str());
             }
 
         std::map<Glib::ustring, Glib::ustring>::iterator giter;
@@ -1818,25 +2026,25 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
         if (giter != gradientLookupTable.end())
             {
             Glib::ustring gradientName = giter->second;
-            outs.printf("draw:fill-gradient-name=\"%s\" ",
+            couts.printf("draw:fill-gradient-name=\"%s\" ",
                  gradientName.c_str());
             }
 
-        outs.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
+        couts.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
                        bbox_x, bbox_y);
-	outs.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
+	couts.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
 	               bbox_width, bbox_height);
-	outs.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
+	couts.printf("svg:viewBox=\"0.0 0.0 %.3f %.3f\"\n",
 	               bbox_width * 1000.0, bbox_height * 1000.0);
 
-	outs.printf("    svg:d=\"");
-	int nrPoints = writePath(outs, SP_CURVE_BPATH(curve),
+	couts.printf("    svg:d=\"");
+	int nrPoints = writePath(couts, SP_CURVE_BPATH(curve),
                              tf, bbox_x, bbox_y);
-	outs.printf("\"");
+	couts.printf("\"");
 
-	outs.printf(">\n");
-        outs.printf("    <!-- %d nodes -->\n", nrPoints);
-        outs.printf("</draw:path>\n\n");
+	couts.printf(">\n");
+        couts.printf("    <!-- %d nodes -->\n", nrPoints);
+        couts.printf("</draw:path>\n\n");
 
 
         sp_curve_unref(curve);
@@ -1848,14 +2056,133 @@ bool OdfOutput::writeTree(Writer &outs, Inkscape::XML::Node *node)
 
 
 /**
- * Write the content.xml file.  Writes the namesspace headers, then
- * calls writeStyle() and writeTree().
+ * Write the header for the content.xml file
  */
-bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
+bool OdfOutput::writeStyleHeader(Writer &outs)
 {
-    BufferOutputStream bouts;
-    OutputStreamWriter outs(bouts);
+    time_t tim;
+    time(&tim);
 
+    outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  file:  styles.xml\n");
+    outs.printf("  Generated by Inkscape: %s", ctime(&tim)); //ctime has its own <cr>
+    outs.printf("  http://www.inkscape.org\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<office:document-styles\n");
+    outs.printf("    xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n");
+    outs.printf("    xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n");
+    outs.printf("    xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n");
+    outs.printf("    xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n");
+    outs.printf("    xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n");
+    outs.printf("    xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n");
+    outs.printf("    xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n");
+    outs.printf("    xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+    outs.printf("    xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n");
+    outs.printf("    xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n");
+    outs.printf("    xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\"\n");
+    outs.printf("    xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n");
+    outs.printf("    xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n");
+    outs.printf("    xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n");
+    outs.printf("    xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n");
+    outs.printf("    xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n");
+    outs.printf("    xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n");
+    outs.printf("    xmlns:ooo=\"http://openoffice.org/2004/office\"\n");
+    outs.printf("    xmlns:ooow=\"http://openoffice.org/2004/writer\"\n");
+    outs.printf("    xmlns:oooc=\"http://openoffice.org/2004/calc\"\n");
+    outs.printf("    xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n");
+    outs.printf("    xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n");
+    outs.printf("    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n");
+    outs.printf("    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+    outs.printf("    xmlns:smil=\"urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0\"\n");
+    outs.printf("    xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
+    outs.printf("    office:version=\"1.0\">\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  S T Y L E S\n");
+    outs.printf("  Style entries have been pulled from the svg style and\n");
+    outs.printf("  representation attributes in the SVG tree.  The tree elements\n");
+    outs.printf("  then refer to them by name, in the ODF manner\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+    outs.printf("<office:styles>\n");
+    outs.printf("\n");
+
+    return true;
+}
+
+
+/**
+ * Write the footer for the style.xml file
+ */
+bool OdfOutput::writeStyleFooter(Writer &outs)
+{
+    outs.printf("\n");
+    outs.printf("</office:styles>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<office:automatic-styles>\n");
+    outs.printf("<!-- ####### 'Standard' styles ####### -->\n");
+    outs.printf("<style:style style:name=\"dp1\" style:family=\"drawing-page\"/>\n");
+    outs.printf("<style:style style:name=\"gr1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n");
+    outs.printf("  <style:graphic-properties draw:stroke=\"none\" draw:fill=\"none\"\n");
+    outs.printf("       draw:textarea-horizontal-align=\"center\"\n");
+    outs.printf("       draw:textarea-vertical-align=\"middle\" draw:color-mode=\"standard\"\n");
+    outs.printf("       draw:luminance=\"0%%\" draw:contrast=\"0%%\" draw:gamma=\"100%%\" draw:red=\"0%%\"\n");
+    outs.printf("       draw:green=\"0%%\" draw:blue=\"0%%\" fo:clip=\"rect(0cm 0cm 0cm 0cm)\"\n");
+    outs.printf("       draw:image-opacity=\"100%%\" style:mirror=\"none\"/>\n");
+    outs.printf("</style:style>\n");
+    outs.printf("<style:style style:name=\"P1\" style:family=\"paragraph\">\n");
+    outs.printf("  <style:paragraph-properties fo:text-align=\"center\"/>\n");
+    outs.printf("</style:style>\n");
+    outs.printf("</office:automatic-styles>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("<office:master-styles>\n");
+    outs.printf("<draw:layer-set>\n");
+    outs.printf("    <draw:layer draw:name=\"layout\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"background\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"backgroundobjects\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"controls\"/>\n");
+    outs.printf("    <draw:layer draw:name=\"measurelines\"/>\n");
+    outs.printf("</draw:layer-set>\n");
+    outs.printf("\n");
+    outs.printf("<style:master-page style:name=\"Default\"\n");
+    outs.printf("    style:page-master-name=\"PM1\" draw:style-name=\"dp1\"/>\n");
+    outs.printf("</office:master-styles>\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("\n");
+    outs.printf("</office:document-styles>\n");
+    outs.printf("\n");
+    outs.printf("<!--\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("  E N D    O F    F I L E\n");
+    outs.printf("  Have a nice day  - ishmal\n");
+    outs.printf("*************************************************************************\n");
+    outs.printf("-->\n");
+    outs.printf("\n");
+
+    return true;
+}
+
+
+
+
+/**
+ * Write the header for the content.xml file
+ */
+bool OdfOutput::writeContentHeader(Writer &outs)
+{
     time_t tim;
     time(&tim);
 
@@ -1904,28 +2231,6 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("<office:scripts/>\n");
     outs.printf("\n");
     outs.printf("\n");
-    outs.printf("<!-- ######### CONVERSION FROM SVG STARTS ######## -->\n");
-    outs.printf("<!--\n");
-    outs.printf("*************************************************************************\n");
-    outs.printf("  S T Y L E S\n");
-    outs.printf("  Style entries have been pulled from the svg style and\n");
-    outs.printf("  representation attributes in the SVG tree.  The tree elements\n");
-    outs.printf("  then refer to them by name, in the ODF manner\n");
-    outs.printf("*************************************************************************\n");
-    outs.printf("-->\n");
-    outs.printf("\n");
-    outs.printf("\n");
-
-    if (!writeStyle(outs))
-        {
-        g_warning("Failed to write styles");
-        return false;
-        }
-
-    outs.printf("\n");
-    outs.printf("\n");
-    outs.printf("\n");
-    outs.printf("\n");
     outs.printf("<!--\n");
     outs.printf("*************************************************************************\n");
     outs.printf("  D R A W I N G\n");
@@ -1944,12 +2249,15 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("\n");
     outs.printf("\n");
 
-    if (!writeTree(outs, node))
-        {
-        g_warning("Failed to convert SVG tree");
-        return false;
-        }
+    return true;
+}
 
+
+/**
+ * Write the footer for the content.xml file
+ */
+bool OdfOutput::writeContentFooter(Writer &outs)
+{
     outs.printf("\n");
     outs.printf("\n");
 
@@ -1976,11 +2284,58 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     outs.printf("\n");
     outs.printf("\n");
 
+    return true;
+}
 
 
-    //Make our entry
+
+/**
+ * Write the content.xml file.  Writes the namesspace headers, then
+ * calls writeTree().
+ */
+bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
+{
+    //Content.xml stream
+    BufferOutputStream cbouts;
+    OutputStreamWriter couts(cbouts);
+
+    if (!writeContentHeader(couts))
+        return false;
+
+    //Style.xml stream
+    BufferOutputStream sbouts;
+    OutputStreamWriter souts(sbouts);
+
+    if (!writeStyleHeader(souts))
+        return false;
+
+
+    //# Descend into the tree, doing all of our conversions
+    //# to both files as the same time
+    if (!writeTree(couts, souts, node))
+        {
+        g_warning("Failed to convert SVG tree");
+        return false;
+        }
+
+
+
+    //# Finish content file
+    if (!writeContentFooter(couts))
+        return false;
+
     ZipEntry *ze = zf.newEntry("content.xml", "ODF master content file");
-    ze->setUncompressedData(bouts.getBuffer());
+    ze->setUncompressedData(cbouts.getBuffer());
+    ze->finish();
+
+
+
+    //# Finish style file
+    if (!writeStyleFooter(souts))
+        return false;
+
+    ze = zf.newEntry("styles.xml", "ODF style file");
+    ze->setUncompressedData(sbouts.getBuffer());
     ze->finish();
 
     return true;
@@ -2024,15 +2379,15 @@ OdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *
         return;
         }
 
-    if (!writeMeta(zf))
-        {
-        g_warning("Failed to write metafile");
-        return;
-        }
-
     if (!writeContent(zf, doc->rroot))
         {
         g_warning("Failed to write content");
+        return;
+        }
+
+    if (!writeMeta(zf))
+        {
+        g_warning("Failed to write metafile");
         return;
         }
 

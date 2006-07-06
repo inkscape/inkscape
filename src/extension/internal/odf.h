@@ -135,6 +135,32 @@ public:
 };
 
 
+
+
+class GradientStop
+{
+public:
+    GradientStop()
+        {}
+    GradientStop(unsigned long rgbArg, double opacityArg)
+        { rgb = rgbArg; opacity = opacityArg; }
+    virtual ~GradientStop()
+        {}
+    GradientStop(const GradientStop &other)
+        {  assign(other); }
+    virtual GradientStop operator=(const GradientStop &other)
+        {  assign(other); return *this; }
+    void assign(const GradientStop &other)
+        {
+        rgb = other.rgb;
+        opacity = other.opacity;
+        }
+    unsigned long rgb;
+    double opacity;
+};
+
+
+
 class GradientInfo
 {
 public:
@@ -168,6 +194,7 @@ public:
         y1            = other.y1;
         x2            = other.x2;
         y2            = other.y2;
+        stops         = other.stops;
         }
 
     void init()
@@ -183,6 +210,7 @@ public:
         y1            = 0.0;
         x2            = 0.0;
         y2            = 0.0;
+        stops.clear();
         }
 
     virtual ~GradientInfo()
@@ -205,6 +233,17 @@ public:
             y2          != other.y2
            )
             return false;
+        if (stops.size() != other.stops.size())
+            return false;
+        for (unsigned int i=0 ; i<stops.size() ; i++)
+            {
+            GradientStop g1 = stops[i];
+            GradientStop g2 = other.stops[i];
+            if (g1.rgb != g2.rgb)
+                return false;
+            if (g1.opacity != g2.opacity)
+                return false;
+            }
         return true;
         }
 
@@ -219,6 +258,7 @@ public:
     double y1;
     double x2;
     double y2;
+    std::vector<GradientStop> stops;
 
 };
 
@@ -271,9 +311,22 @@ private:
 
     bool writeMeta(ZipFile &zf);
 
-    bool writeStyle(Writer &outs);
+    bool writeStyle(ZipFile &zf);
 
-    bool writeTree(Writer &outs, Inkscape::XML::Node *node);
+    bool processStyle(Writer &outs, SPItem *item, const Glib::ustring &id);
+
+    bool processGradient(Writer &outs, SPItem *item,
+                    const Glib::ustring &id, NR::Matrix &tf);
+
+    bool writeStyleHeader(Writer &outs);
+
+    bool writeStyleFooter(Writer &outs);
+
+    bool writeContentHeader(Writer &outs);
+
+    bool writeContentFooter(Writer &outs);
+
+    bool writeTree(Writer &couts, Writer &souts, Inkscape::XML::Node *node);
 
     bool writeContent(ZipFile &zf, Inkscape::XML::Node *node);
 
