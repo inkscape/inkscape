@@ -10,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2005-2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,7 @@
 
 
 
-#include "svg/svglsimpl.h"
+#include "lsimpl.h"
 #include "io/uristream.h"
 
 
@@ -39,7 +39,7 @@ using namespace org::w3c::dom;
 bool doTest(char *filename)
 {
 
-    svg::SVGDOMImplementationLSImpl domImpl;
+    ls::DOMImplementationLSImpl domImpl;
     ls::LSInput input  = domImpl.createLSInput();
     ls::LSParser &parser = domImpl.createLSParser(0, "");
 
