@@ -98,13 +98,13 @@ Verbesserungsvorschlag</a>).</p>
 
 <group>
 <title>Zoom</title>
-<keys><key>=</key> <key>+</key> 	 <action>Vergrössern</action></keys>
+<keys><key>=</key> <key>+</key> 	 <action>Vergrößern</action></keys>
 <keys><key>-</key>	 <action>Verkleinern</action></keys>
-<note>+/- auf der Nummerntastatur (mit »NumLock« aus) vergrössert/verkleinert, auch wenn Sie einen Text editieren.</note>
-<mouse><key><mid-click/></key>  <key><ctrl/><right-click/></key>   <action>vergrössern</action></mouse>
+<note>+/- auf der Nummerntastatur (mit »NumLock« aus) vergrößert/verkleinert, auch wenn Sie einen Text editieren.</note>
+<mouse><key><mid-click/></key>  <key><ctrl/><right-click/></key>   <action>vergrößern</action></mouse>
 <mouse><key><shift/><mid-click/></key>  <key><shift/><right-click/></key> <action>verkleinern</action></mouse>
-<mouse><key><ctrl/><wheel/></key> <action>Vergrössern bzw. Verkleinern</action></mouse>
-<mouse><key><shift/><mid-drag/></key> <action>Bereich vergrössern</action></mouse>
+<mouse><key><ctrl/><wheel/></key> <action>Vergrößern bzw. Verkleinern</action></mouse>
+<mouse><key><shift/><mid-drag/></key> <action>Bereich vergrößern</action></mouse>
 <keys><key><alt/>Z</key> <action>Zoom-Feld aktivieren</action></keys>
 <note>Das Zoom-Feld in der unteren linken Ecke des Fensters erlaubt das präzise Festlegen des Zoom-Wertes.</note>
 </group>
@@ -120,7 +120,7 @@ Verbesserungsvorschlag</a>).</p>
 </group>
 
 <group>
-<title>Liste bisheriger Zoom-Faktoren</title>
+<title>Liste bisheriger Zoomfaktoren</title>
 <keys><key>`</key> <action>Vorheriger Zoomfaktor </action></keys>
 <keys><key><shift/>`</key> <action>Nächster Zoomfaktor</action></keys>
 <note>Mit diesen Tasten können Sie vor- und rückwärts in der Liste der bisherigen Zoomfaktoren gehen.</note>
@@ -253,7 +253,7 @@ Verbesserungsvorschlag</a>).</p>
 <keys><key><shift/><alt/>D</key>	 <action>Klonverbindung auflösen</action></keys> 
 <note>Durch das Auflösen der Klonverbindung verliert der Klon jeden Bezug zu seinem Original und wird zur exakten Kopie.</note>
 <keys><key><shift/>D</key>	 <action>Original auswählen</action></keys> 
-<note>Klon auswählen, um das Original zu finden. Das Original wird selektiert.</note>
+<note>Klon auswählen, um das Original zu finden. Das Original wird ausgewählt.</note>
 </group>
 
 <group>
@@ -326,7 +326,7 @@ Verbesserungsvorschlag</a>).</p>
 <keys><key><alt/>)</key>  <action>Pfad um 1 Pixel erweitern</action></keys>
 <keys><key><shift/><alt/>(</key>  <action>Pfad um 10 Pixel schrumpfen</action></keys>
 <keys><key><shift/><alt/>)</key>  <action>Pfad um 10 Pixel erweitern</action></keys>
-<note>Die aktuelle Distanz der Pixel für den Versatz ist vom Zoom-Level abhängig. Für feinere Einstellungen hineinzoomen.</note>
+<note>Die aktuelle Distanz der Pixel für den Versatz ist vom Zoomfaktor abhängig. Für feinere Einstellungen hineinzoomen.</note>
 <note>Alle (- und )-Befehles konvertieren die Objekte zu Pfaden wenn notwendig und erstellen reguläre Pfade.</note>
 <keys><key><ctrl/>J</key>  <action>Dynamischen Versatz erzeugen</action></keys>
 <keys><key><ctrl/><alt/>J</key>  <action>Verknüpften Versatz erzeugen</action></keys>
@@ -363,15 +363,15 @@ Verbesserungsvorschlag</a>).</p>
 
 <group>
 <title>Tastaturbefehle zur Auswahl</title>
-<keys><key><misc f="Tab"/></key>  <action>nächstes Object selektieren </action></keys>
-<keys><key><shift/><misc f="Tab"/></key> <action>vorheriges Objekt selektieren </action></keys>
-<note>Diese Tasten wählen die Objekte nach deren Z-Tiefe (Tab von unten nach oben, Umsch+Tab von oben nach unten).</note> 
+<keys><key><misc f="Tab"/></key>  <action>Nächstes Object auswählen</action></keys>
+<keys><key><shift/><misc f="Tab"/></key> <action>Vorheriges Objekt auswählen</action></keys>
+<note>Diese Tasten wählen die Objekte nach deren Z-Tiefe (Tab von unten nach oben, Umschalttaste+Tab von oben nach unten).</note> 
 <note>Sofern Sie nicht manuelle Umordnungen gemacht haben, ist das zuletzt erstellte Objekt ganz oben.</note> 
-<note>Als Ergebnis, falls nichts selektiert ist, selektiert das einmalige Drücken von Umsch+Tab das zuletzt erzeugte Objekt.</note>
+<note>Falls nichts ausgewählt ist, wählt das einmalige Drücken von Umschalttaste+Tab das zuletzt erzeugte Objekt.</note>
 <note>Das funktioniert an Objekten in der aktuellen Ebene (falls Sie das nicht in den Einstellungen geändert haben).</note>
-<keys><key><ctrl/>A</key>	 <action>Alles selektieren (aktuelle Ebene)</action></keys>
+<keys><key><ctrl/>A</key>	 <action>Alles auswählen (aktuelle Ebene)</action></keys>
 <note>Das funktioniert an Objekten der aktuellen Ebene (falls Sie das nicht in den Einstellungen geändert haben).</note>
-<keys><key><ctrl/><alt/>A</key>	 <action>Alles selektieren (alle Ebenen)</action></keys>
+<keys><key><ctrl/><alt/>A</key>	 <action>Alles auswählen (alle Ebenen)</action></keys>
 <note>Das funktioniert an allen Objekten in allen sichtbaren und entsperrten Ebenen.</note>
 <keys><key>!</key> <action>Auswahl invertieren (aktuelle Ebene)</action></keys>
 <note>Auswahl invertieren (alle ausgewählten Objekte deselektieren und alle anderen auswählen) in aktueller Ebene.</note>
@@ -388,29 +388,29 @@ Verbesserungsvorschlag</a>).</p>
 <note>Die Mindestschrittweite beträgt 2 px (SVG-Pixel-Einheiten, nicht Bildschirm-Pixel).</note>
 <mouse><key><alt/><arrows/></key>  <action>Auswahl um 1 Pixel verschieben</action></mouse>
 <mouse><key><alt/><shift/><arrows/></key>  <action>Auswahl um 10 Pixel verschieben</action></mouse>
-<note>Die Schrittweite in Pixel hängt vom aktuellen Grössenfaktor ab. Vergrössern Sie für kleinere Schrittweiten.</note>
+<note>Die Schrittweite in Pixel hängt vom aktuellen Zoomfaktor ab. Vergrößern Sie für kleinere Schrittweiten.</note>
 </group>
 
 <group>
-<title>Vergrössern mittels Tastatur</title>
-<keys><key>.</key> <key>&gt;</key> <action>Auswahl um eine Stufe vergrössern</action></keys> 
+<title>Vergrößern mittels Tastatur</title>
+<keys><key>.</key> <key>&gt;</key> <action>Auswahl um eine Stufe vergrößern</action></keys> 
 <keys><key>,</key> <key>&lt;</key> <action>Auswahl um eine Stufe verkleinern</action></keys> 
-<note>Die Standard-Vergrösserungsstufe beträgt 2 px (SVG-Pixel-Einheiten, nicht Bildschirm-Pixel).</note>
-<keys><key><ctrl/>.</key> <key><ctrl/>&gt;</key> <action>Auswahl auf 200% vergrössern</action></keys>
+<note>Die Standard-Vergrößerungsstufe beträgt 2 px (SVG-Pixel-Einheiten, nicht Bildschirm-Pixel).</note>
+<keys><key><ctrl/>.</key> <key><ctrl/>&gt;</key> <action>Auswahl auf 200% vergrößern</action></keys>
 <keys><key><ctrl/>,</key> <key><ctrl/>&lt;</key> <action>Auswahl auf 50% verkleinern</action></keys>
-<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>Auswahl um 1 Pixel vergrössern</action></keys>
+<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>Auswahl um 1 Pixel vergrößern</action></keys>
 <keys><key><alt/>,</key> <key><alt/>&lt;</key> <action>Auswahl um 1 Pixel verkleinern</action></keys>
-<note>Der Vergrößerungsschritt hängt von der Vergrößerung ab. Vergrössern Sie für kleinere Schrittweite.</note>
-<note>Die Vergrösserung ist gleichmässig um das Zentrum, so dass der Vergrößerungsschritt auf die grössere der zwei Dimensionen angewendet wird.</note>
+<note>FIXME Der Vergrößerungsschritt hängt von der Vergrößerung ab. Vergrößern Sie für kleinere Schrittweite.</note>
+<note>Die Vergrößerung ist gleichmässig um das Zentrum, so dass der Vergrößerungsschritt auf die größere der zwei Dimensionen angewendet wird.</note>
 </group>
 
 <group>
 <title>Drehen mittels Tastatur</title>
-<keys><key>[</key> <key>]</key> <action>Auswahl drehen um Winkel Schrittweite</action></keys> 
+<keys><key>[</key> <key>]</key> <action>Auswahl drehen um Winkelschrittweite</action></keys> 
 <note>Die Standard-Winkelschrittweite beträgt 15°. ] dreht im Uhrzeigersinn, [ dreht entgegen.</note>
 <keys><key><ctrl/>[</key> <key><ctrl/>]</key> <action>Auswahl um 90° drehen</action></keys>
 <keys><key><alt/>[</key> <key><alt/>]</key> <action>Auswahl um 1 Pixel drehen </action></keys>
-<note>Der Winkel für die Drehung um ein Pixel hängt vom aktuellen Größenfaktor ab. Vergrößern Sie für feinere Winkel.</note>
+<note>Der Winkel für die Drehung um ein Pixel hängt vom aktuellen Zoomfaktor ab. Vergrößern Sie für feinere Winkel.</note>
 </group>
 
 <group>
@@ -422,11 +422,11 @@ Verbesserungsvorschlag</a>).</p>
 <group>
 <title>Auswahl mittels Maus</title>
 <mouse><key><left-click/></key> <action>Objekt auswählen</action></mouse>
-<note>Beim Links-Klicken auf ein Objekt, wird die vorherige Auswahl aufgehoben.</note>
+<note>Beim Links-Klicken auf ein Objekt wird die vorherige Auswahl aufgehoben.</note>
 <mouse><key><shift/><left-click/></key> <action>Auswahl umschalten</action></mouse>
-<note>Umsch+Klick fügt ein Objekt der aktuellen Auswahl hinzu oder, falls es schon ausgewählt war, entfernt es von dieser.</note>
+<note>Umschalttaste+Klick fügt ein Objekt der aktuellen Auswahl hinzu oder, falls es schon ausgewählt war, entfernt es von dieser.</note>
 <mouse><key><left-click/><left-click/></key> <action>Objekt bearbeiten</action></mouse>
-<note>Bei Pfaden schaltet Doppelklicken in das Knotenwerkzeug, bei Formen in das entsprechende Formenwerkzeug, bei Text in das Textwerkzeug.</note>
+<note>Bei Pfaden schaltet Doppelklicken zum Knotenwerkzeug, bei Formen zum entsprechenden Formenwerkzeug, bei Text zum Textwerkzeug.</note>
 <note>Bei Gruppen bewirkt Doppelklicken den Befehl »Gruppe bearbeiten« (die Gruppe wird eine vorübergehende Ebene).</note>
 <note>Doppelklicken in einem leeren Bereich schaltet wieder in die übergeordnete Ebene zurück.</note>
 </group>
@@ -434,38 +434,38 @@ Verbesserungsvorschlag</a>).</p>
 <group>
 <title>Auswahl innerhalb einer Gruppe und verdeckter Objekte</title>
 <mouse><key><ctrl/><left-click/></key> <action>Auswahl innerhalb einer Gruppe</action></mouse>
-<note>Strg+Klick selektiert das Objekt an diesem Punkt ungeachtet jeglicher Gruppierungen zu dem das Objekt gehören könnte.</note>
+<note>Strg+Klick wählt das Objekt an diesem Punkt, ungeachtet jeglicher Gruppierungen, zu dem das Objekt gehören könnte.</note>
 <mouse><key><ctrl/><shift/><left-click/></key> <action>Auswahl innerhalb der Gruppe umschalten</action></mouse>
 <mouse><key><alt/><left-click/></key> <action>Auswahl verdeckter Objekte</action></mouse>
-<note>Alt+Klick selektiert das Objekt an diesem Punkt, das sich unterhalb (in der Z-Tiefe) des untersten selektierten an diesem Punkt befindlichen Objekt befindet.</note>
-<note>Wenn das unterste Objekt erreicht ist, selektiert Alt+Klick wieder das oberste Objekt. Durch das mehrfache betätigen von Alt+klick, werden die Objekte an diesem Punkt in Z-Tiefe immer wieder durchlaufen.</note>
-<note>Bei Linux kann Alt+Klick und Klicken+Ziehen durch den Fenstermanager reserviert sein. Stellen Sie ihn so ein, dass Sie diese unter Inkscape benutzen können.</note>
-<mouse><key><shift/><alt/><left-click/></key> <action>Umschalten verdeckter Objekte</action></mouse>
-<mouse><key><ctrl/><alt/><left-click/></key> <action>
-
-
-Wählt das darunter, in Gruppen</action></mouse>
-<mouse><key><shift/><ctrl/><alt/><left-click/></key> <action>Schaltet auf das untere um, in Gruppen</action></mouse>
-<keys><key><ctrl/><misc-wide f="Eingabe"/></key> <action>Öffnet Gruppe</action></keys>
-<keys><key><ctrl/><misc-wide f="Rückschr."/></key>	 <action>Geht zur übergeordneten Gruppe</action></keys>
+<note>Alt+Klick wählt das Objekt, dass sich an diesem Punkt unter dem an diesem Punkt untersten aktuell gewählten Objekt befindet.</note>
+<note>Wenn das unterste Objekt erreicht ist, wählt Alt+Klick wieder das oberste Objekt.</note>
+<note>Durch das mehrfache betätigen von Alt+Klick werden die Objekte an diesem Punkt in Z-Tiefe immer wieder durchlaufen.</note>
+<note>Unter Linux kann Alt+Klick und Klicken+Ziehen durch den Fenstermanager reserviert sein.</note>
+<note>Stellen Sie ihn so ein, dass Sie diese unter Inkscape benutzen können.</note>
+<mouse><key><shift/><alt/><left-click/></key> <action>Verdeckte Objekte umschalten</action></mouse>
+<mouse><key><ctrl/><alt/><left-click/></key> <action>FIXME Wählt das darunter, in Gruppen</action></mouse>
+<mouse><key><shift/><ctrl/><alt/><left-click/></key> <action>FIXME Schaltet auf das untere um, in Gruppen</action></mouse>
+<keys><key><ctrl/><misc-wide f="Eingabe"/></key> <action>Gruppe öffnen</action></keys>
+<keys><key><ctrl/><misc-wide f="Rückschr."/></key>	 <action>Zur übergeordneten Gruppe</action></keys>
 </group>
 
 <group>
 <title>Gummiband</title>
-<mouse><key><left-drag/></key> <action>Wählt mehrfache Objekte aus.</action></mouse>
-<note>Ziehen um Objekte wählt mit »Gummiband« aus; vorhergehende Auswahl ist abgewählt.</note>
-<mouse><key><shift/><left-drag/></key> <action>Fügt Objekte der Auswahl hinzu.</action></mouse>
+<mouse><key><left-drag/></key> <action>Mehrere Objekte auswählen</action></mouse>
+<note>Ziehen um Objekte wählt mit Gummiband aus; vorhergehende Auswahl wird abgewählt.</note>
+<mouse><key><shift/><left-drag/></key> <action>Objekte der Auswahl hinzufügen</action></mouse>
 <note>Normalerweise müssen Sie auf einem leeren Platz starten, um das Gummiband auszulösen.</note> 
-<note>Wenn Sie jedoch die Umschalttaste drücken bevor Sie ziehen wird Inkscape das Gummiband nehmen, genauso, als würden Sie von einem leeren Platz aus starten.</note>
+<note>Mit gedrückter Umschalttaste vor dem Ziehen wird immer das Gummiband ausgelöst, auch wenn ein Objekt unter der Maus liegt.</note>
 </group>
 
 <group>
-<title>Maus-Verschiebung</title>
+<title>Verschiebung mit der Maus</title>
 <mouse><key><left-drag/></key> <action>Auswählen + Verschieben</action></mouse>
 <note>Ziehen eines Objektes wählt es aus, wenn es nicht angewählt war und verschiebt es.</note>
 <mouse><key><alt/><left-drag/></key> <action>Verschiebung ausgewählt</action></mouse>
 <note>Alt+Ziehen bewegt die derzeitige Auswahl (ohne Auszuwählen, was unter dem Cursor ist), egal wo Sie mit dem Ziehen beginnen.</note>
-<note>Bei Linux können Alt+Klick sowie Alt+Ziehen durch den Fenstermanager reserviert sein. Konfigurieren Sie diese um, damit Sie diese im Inkscape benutzen können.</note>
+<note>Unter Linux können Alt+Klick sowie Alt+Ziehen durch den Fenstermanager reserviert sein.</note>
+<note>Konfigurieren Sie diese um, damit Sie diese unter Inkscape benutzen können.</note>
 <mouse><key><ctrl/><left-drag/></key> <action>Verschiebung horizontal oder vertikal beschränken</action></mouse>
 <mouse><key><shift/><left-drag/></key> <action>Einrasten temporär verhindern</action></mouse>
 <note>Verhindert temporär das Einrasten am Gitter oder den Führungslinien, wenn Sie mit »Gitter und Führungslinie eingeschaltet« arbeiten.</note>
@@ -475,15 +475,15 @@ Wählt das darunter, in Gruppen</action></mouse>
 </group>
 
 <group>
-<title>Maustransformation</title>
-<mouse><key><left-click/></key> <action>Schaltet skalieren/rotieren der Anfasser um</action></mouse>
-<mouse><key><left-drag/></key> <action>Skaliert (Skalierungsanfasser)</action></mouse>
-<mouse><key><left-drag/></key> <action>Rotiert oder verzerrt (Rotationsanfasser)</action></mouse>
+<title>Transformationen mit der Maus</title>
+<mouse><key><left-click/></key> <action>Skalieren/Rotieren der Anfasser umschalten</action></mouse>
+<mouse><key><left-drag/></key> <action>Skalieren (Skalierungsanfasser)</action></mouse>
+<mouse><key><left-drag/></key> <action>Rotieren oder verzerren (Rotationsanfasser)</action></mouse>
 </group>
 
 <group>
 <title>Skalierungsanfasser</title>
-<mouse><key><ctrl/><left-drag/></key> <action>Skaliert mit Beibehalten des Verhältnisses</action></mouse>
+<mouse><key><ctrl/><left-drag/></key> <action>Mit Beibehalten des Verhältnisses skalieren</action></mouse>
 <!--<mouse><key><ctrl/><left-drag/></key> only smaller, keep aspect ratio--> <!-- TO BE REMOVED -->
 <mouse><key><shift/><left-drag/></key> <action>Symmetrische Transformation</action></mouse>
 <note>Drücken Sie die Umschalttaste während der Transformation, damit die Transformation symmetrisch um das Zentrum der Auswahl wird.</note>
@@ -494,15 +494,15 @@ Wählt das darunter, in Gruppen</action></mouse>
 
 <group>
 <title>Rotationsanfasser</title>
-<mouse><key><ctrl/><left-drag/></key> <action>Einrasten im verzerrten Winkel</action></mouse>
-<note>Halten Sie Strg während des Ziehen eines Verzerrungsanfassers (keine Ecke) gedrückt, rastet der Verzerrungswinkel in Schritten im Winkel ein. (Standard 15°).</note>
-<mouse><key><ctrl/><left-drag/></key> <action>Einrasten im Rotationswinkel</action></mouse>
-<note>Halten Sie Strg während des Ziehen eines Rotationsanfassers (Ecke), rastet die Rotation in Schritten im Winkel ein. (Standard 15°).</note>
+<mouse><key><ctrl/><left-drag/></key> <action>Verzerrunswinkel einrasten</action></mouse>
+<note>Wenn Strg während des Ziehen eines Verzerrungsanfassers (keine Ecke) gedrückt ist, rastet der Verzerrungswinkel in Schritten im Winkel ein. (Standard 15°).</note>
+<mouse><key><ctrl/><left-drag/></key> <action>Rotationswinkel einrasten</action></mouse>
+<note>Wenn Strg während des Ziehen eines Rotationsanfassers (Ecke) gedrückt ist, rastet die Rotation in Schritten im Winkel ein. (Standard 15°).</note>
 </group>
 
 <group>
 <title>Abbruch</title>
-<keys><key><misc f="Esc"/></key> <action>Bricht Gummiband, Bewegung und Transformation ab</action></keys>
+<keys><key><misc f="Esc"/></key> <action>Gummiband, Bewegung und Transformation abbrechen</action></keys>
 <note>Drücken Sie Esc während die Maustaste gedrückt ist, um Gummiband-Auswahl, Verschiebung oder Transformation jeglicher Art abzubrechen.</note>
 </group>
 
@@ -515,92 +515,92 @@ Wählt das darunter, in Gruppen</action></mouse>
 
 <group>
 <title>Mit der Tastatur auswählen</title>
-<keys><key><misc f="Tab"/></key>  <action>Wählt nächsten Knoten aus</action></keys> 
-<keys><key><shift/><misc f="Tab"/></key> <action>Wählt vorherigen Knoten aus</action></keys>
+<keys><key><misc f="Tab"/></key>  <action>Nächsten Knoten auswählen</action></keys> 
+<keys><key><shift/><misc f="Tab"/></key> <action>Vorherigen Knoten auswählen</action></keys>
 <note>Diese Tasten wählen Knoten im ausgewählten Pfad aus.</note>
-<keys><key><ctrl/>A</key>	 <action>Wählt alle Knoten in Unterpfaden aus</action></keys>
+<keys><key><ctrl/>A</key>	 <action>Alle Knoten in Unterpfaden auswählen</action></keys>
 <note>Hat der Pfad mehrere Unterpfade und einige ausgewählte Knoten, wählt dieser alle Knoten, die sich im Unterpfad befinden und deren Knoten bereits ausgewählt sind.</note>
-<keys><key><ctrl/><alt/>A</key>	 <action>Wählt alle Knoten im Pfad aus</action></keys>
+<keys><key><ctrl/><alt/>A</key>	 <action>Alle Knoten im Pfad auswählen</action></keys>
 <note>Wählt alle Knoten im gesamten Pfad aus.</note>
-<keys><key>!</key> <action>Invertiert Auswahl in Unterpfaden</action></keys>
+<keys><key>!</key> <action>Auswahl in Unterpfaden invertieren</action></keys>
 <note>Hat der Pfad mehrere Unterpfade mit einigen ausgewählten Knoten, dreht es die Auswahl der Knoten herum, die sich im Unterpfad der ausgewählten Knoten befinden.</note>
-<keys><key><alt/>!</key> <action>Invertiert Auswahl im Pfad</action></keys>
+<keys><key><alt/>!</key> <action>Auswahl im Pfad invertieren</action></keys>
 <note>Invertiert die Auswahl (abwählen, was ausgewählt war und anders herum) im gesamten Pfad.</note>
-<keys><key><misc f="Esc"/></key> <action>Wählt alle Knoten ab.</action></keys>
+<keys><key><misc f="Esc"/></key> <action>Alle Knoten abwählen</action></keys>
 </group>
 
 <group>
-<title>Mit der Taststur verschieben</title>
-<mouse><key><arrows/></key>  <action>Verschiebt ausgewählte Knoten um die Schubdistanz</action></mouse>
-<mouse><key><shift/><arrows/></key>  <action>Verschiebt ausgewählte Knoten um die 10-fache Schubdistanz</action></mouse>
+<title>Mit der Tastatur verschieben</title>
+<mouse><key><arrows/></key>  <action>Ausgewählte Knoten um die Schubdistanz verschieben</action></mouse>
+<mouse><key><shift/><arrows/></key>  <action>Ausgewählte Knoten um die 10-fache Schubdistanz verschieben</action></mouse>
 <note>Die Standard-Schubdistanz ist 2 px (SVG-Pixel-Einheiten, keine Bildschirm-Pixel).</note>
-<mouse><key><alt/><arrows/></key>  <action>verschiebt ausgewählte Knoten um 1 Pixel</action></mouse>
-<mouse><key><alt/><shift/><arrows/></key>  <action>verschiebt ausgewählte Knoten um 10 Pixel</action></mouse>
-<note>Die aktuelle Entfernung für Pixel-Verschiebung ist vom Zoom-Level abhängig. Zoome für feinere Justierung hinein.</note>
+<mouse><key><alt/><arrows/></key>  <action>Ausgewählte Knoten um 1 Pixel verschieben</action></mouse>
+<mouse><key><alt/><shift/><arrows/></key>  <action>Ausgewählte Knoten um 10 Pixel verschieben</action></mouse>
+<note>Die aktuelle Entfernung für Pixel-Verschiebung ist vom Zoomfaktor abhängig. Für feinere Justierung hineinzoomen.</note>
 </group>
 
 <group>
-<title>Mit der Tastatur den Anfasser skalieren (1 Knoten ist ausgewählt)</title>
-<keys><key>&lt;</key> <key>&gt;</key> <action>Verringern/Erweitern beide Anfasser um einen Schritt</action></keys> 
+<title>Anfasser mit Tastatur skalieren (1 Knoten ausgewählt)</title>
+<keys><key>&lt;</key> <key>&gt;</key> <action>FIXME Verringern/Erweitern beide Anfasser um einen Schritt</action></keys> 
 <note>Der Standard-Schritt beträgt 2 px (SVG-Pixel-Einheiten, keine Bildschirm-Pixel). Kann für mehr als nur einen Knoten funktionieren.</note>
 <keys>
 <key><left/><ctrl/>&lt;</key> 
 <key><left/><ctrl/>&gt;</key> 
-<action>Skaliert den linken Anfasser um einen Skalierungsschritt</action>
+<action>Linken Anfasser um einen Skalierungsschritt skalieren</action>
 </keys>
 <keys>
 <key><right/><ctrl/>&lt;</key> 
 <key><right/><ctrl/>&gt;</key> 
-<action>Skaliert den rechten Anfasser um einen Skalierungsschritt</action>
+<action>Rechten Anfasser um einen Skalierungsschritt skalieren</action>
 </keys>
 <keys>
 <key><left/><alt/>&lt;</key> 
 <key><left/><alt/>&gt;</key> 
-<action>Skaliert den linken Anfasser um 1 Pixel</action>
+<action>Linken Anfasser um 1 Pixel skalieren</action>
 </keys>
 <keys>
 <key><right/><alt/>&lt;</key> 
 <key><right/><alt/>&gt;</key> 
-<action>Skaliert den rechten Anfasser um 1 Pixel</action>
+<action>Rechten Anfasser um 1 Pixel skalieren</action>
 </keys>
-<note>Die aktuelle Schrittweite für Pixelskalierung ist abhängig vom Zoom-Level. Zoome für feinere Skalierung hinein.</note>
+<note>Die aktuelle Schrittweite für Pixelskalierung ist abhängig vom Zoomfaktor. Zoomen Sie für feinere Skalierung hinein.</note>
 <note>Anstelle der &lt;- und &gt;-Tasten können Sie auch die ,- und .-Tasten (Komma und Punkt) verwenden.</note>
 </group>
 
 <group>
-<title>Mit der Tastatur den Anfasser rotieren (1 Knoten ist ausgewählt)</title>
-<keys><key>[</key> <key>]</key> <action>Läßt beide Anfasser im Winkelschritt rotieren.</action></keys>
+<title>Anfasser mit Tastatur rotieren (1 Knoten ausgewählt)</title>
+<keys><key>[</key> <key>]</key> <action>Beide Anfasser mit Winkelschritt rotieren</action></keys>
 <note>Der Standard-Winkelschritt beträgt 15°. ] drecht im Uhrzeigersinn, [ dreht gegen den Uhrzeigersinn. Kann für mehr als nur einen Knoten funktionieren.</note>
-<keys><key><left/><ctrl/>[</key> <key><left/><ctrl/>]</key> <action>dreht den linken Anfasser um den Winkelschritt</action></keys>
-<keys><key><right/><ctrl/>[</key> <key><right/><ctrl/>]</key> <action>dreht den rechten Anfasser um den Winkelschritt</action></keys>
-<keys><key><left/><alt/>[</key> <key><left/><alt/>]</key> <action>dreht den linken Anfasser um 1 Pixel</action></keys>
-<keys><key><right/><alt/>[</key> <key><right/><alt/>]</key> <action>dreht den rechten Anfasser um 1 Pixel</action></keys>
+<keys><key><left/><ctrl/>[</key> <key><left/><ctrl/>]</key> <action>Linken Anfasser um den Winkelschritt drehen</action></keys>
+<keys><key><right/><ctrl/>[</key> <key><right/><ctrl/>]</key> <action>Rechten Anfasser um den Winkelschritt drehen</action></keys>
+<keys><key><left/><alt/>[</key> <key><left/><alt/>]</key> <action>Linken Anfasser um 1 Pixel drehen</action></keys>
+<keys><key><right/><alt/>[</key> <key><right/><alt/>]</key> <action>Rechten Anfasser um 1 Pixel drehen</action></keys>
 </group>
 
 
 <group>
-<title>Mit der Tastatur skalieren (&gt;1 Knoten ausgewählt)</title>
-<note>Skaliert die ausgewählten Knoten als wären sie ein »Objekt«, rund um das Zentrum des »Objektes«.</note>
-<keys><key>.</key> <key>&gt;</key> <action>Skaliert die Knoten nach oben um den Skalierungsschritt</action></keys> 
-<keys><key>,</key> <key>&lt;</key> <action>Skaliert die Knoten nach unten um einen Skalierungsschritt</action></keys> 
+<title>Mit Tastatur skalieren (&gt;1 Knoten ausgewählt)</title>
+<note>Skaliert die ausgewählten Knoten, als wären sie ein »Objekt«, rund um das Zentrum des »Objektes«.</note>
+<keys><key>.</key> <key>&gt;</key> <action>Knoten um einen Schritt vergrößern</action></keys> 
+<keys><key>,</key> <key>&lt;</key> <action>Knoten um einen Schritt verkleinern</action></keys> 
 <note>Der Standardwert beträgt 2 px (SVG-Pixel-Einheiten, keine Bildschirm-Pixel).</note>
-<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>Skaliert die Knoten nach oben um 1 Pixel</action></keys>
-<keys><key><alt/>,</key> <key><alt/>&lt;</key> <action>Skaliert die Knoten nach unten um 1 Pixel</action></keys>
-<note>Die aktuelle Größe der Erhöhung ist vom Zoom-Level abhängig. Zoome für feieres Skalieren hinein.</note>
-<note>Das Skalieren ist rund um das Zentrum einheitlich, so daß sich die Größe der Erhöhung auf die größere der zwei Dimensionen bezieht.</note>
+<keys><key><alt/>.</key> <key><alt/>&gt;</key> <action>Knoten um 1 Pixel vergrößern</action></keys>
+<keys><key><alt/>,</key> <key><alt/>&lt;</key> <action>Knoten um 1 Pixel verkleinern</action></keys>
+<note>Die Skalierung ist vom Zoomfaktor abhängig. Zoomen Sie für feineres Skalieren hinein.</note>
+<note>FIXME Das Skalieren ist rund um das Zentrum einheitlich, so daß sich die Größe der Erhöhung auf die größere der zwei Dimensionen bezieht.</note>
 </group>
 
 <group>
-<title>Mit der Tastatur rotieren (&gt;1 Knoten ausgewählt)</title>
+<title>Mit Tastatur rotieren (&gt;1 Knoten ausgewählt)</title>
 <note>Dreht die ausgewählten Knoten als wären sie ein »Objekt«, rund um das Zentrum dieses »Objektes«.</note>
 <keys><key>[</key> <key>]</key> <action>dreht den Knoten um einen Winkelschritt</action></keys> 
 <note>Der Standardwert beträgt 15°. ] dreht im Uhrzeigersinn, [ dreht gegen den Uhrzeigersinn.</note>
 <keys><key><alt/>[</key> <key><alt/>]</key> <action>dreht die Knoten um 1 Pixel</action></keys>
-<note>Der aktuelle Wert für die Erhöhung der Drehung ist vom Zoom-Level abhängig. Zoome für feinere Drehungen hinein.</note>
+<note>Der aktuelle Wert für die Erhöhung der Drehung ist vom Zoomfaktor abhängig. Zoomen Sie für feinere Drehungen hinein.</note>
 </group>
 
 <group>
-<title>Mit der Tastatur umdrehen/spiegeln (&gt;1 Knoten ausgewählt)</title>
+<title>Mit Tastatur umdrehen/spiegeln (&gt;1 Knoten ausgewählt)</title>
 <note>Drehen/spiegeln der gewählten Knoten als wären sie ein »Objekt«, rund um das Zentrum des Objektes.</note>
 <keys><key>H</key> <action>dreht/spiegelt die Knoten horizontal</action></keys>
 <keys><key>V</key> <action>dreht/spiegelt die Knoten vertikal</action></keys>
@@ -723,14 +723,14 @@ Wählt das darunter, in Gruppen</action></mouse>
 <group>
 <title>Formen bearbeiten</title>
 <note>Das Knotenwerkzeug kann auch die Anfasser einer Form (Rechteck, Ellipse, Stern, Spirale) ziehen. Klicken Sie auf eine Form, um diese auszuwählen.</note> 
-<note>Schauen Sie sich die Bearbeitungs-Kurzbefehle der entsprechenden Formenwerkzeuge an, all diese funktionieren auch im Knotenwerkzeug.</note>
+<note>Schauen Sie sich die Bearbeitungs-Kurzbefehle der entsprechenden Formenwerkzeuge an, diese funktionieren auch im Knotenwerkzeug.</note>
 </group>
 
 
 <group>
 <title>Abbrechen</title>
 <keys><key><misc f="Esc"/></key> <action>Bricht Gummiband oder Verschiebung ab</action></keys>
-<note>Drücken Sie Esc während die Maustaste gedrückt ist, um eine Gummiband-Auswahl, Knotenverschiebung oder Anfasserverschiebung abzubrechen.</note>
+<note>Drücken Sie Esc während die Maustaste gedrückt ist, um eine Gummibandauswahl, Knotenverschiebung oder Anfasserverschiebung abzubrechen.</note>
 </group>
 
 </section>
@@ -936,7 +936,7 @@ Wählt das darunter, in Gruppen</action></mouse>
 <note>Der Standardwert der Anstoßdistanz beträgt 2 px (SVG-Pixel-Einheiten, keine Bildschirm-Pixel).</note>
 <mouse><key><alt/><arrows/></key>  <action>Verschiebt ausgewählten Anfasser um 1 Pixel</action></mouse>
 <mouse><key><alt/><shift/><arrows/></key>  <action>Verschiebt ausgewählten Anfasser um 10 Pixel</action></mouse>
-<note>Die aktuelle Entfernung für Pixel-Verschiebungen ist vom Zoom-Level abhängig. Zoomen Sie für feinere Verschiebungen hinein.</note>
+<note>Die aktuelle Entfernung für Pixel-Verschiebungen ist vom Zoomfaktor abhängig. Zoomen Sie für feinere Verschiebungen hinein.</note>
 <keys><key><misc f="Esc"/></key> <action>Wählt Anfasser ab</action></keys>
 <mouse><key><left-click/><left-click/></key> <action>Öffnet Verlaufseditor</action></mouse>
 <note>Doppelklicken eines Verlaufsanfassers öffnet den Verlaufseditor mit dem entsprechenden Verlauf und der angeklichte Anfasser ist in der Stop-Liste ausgewählt.</note>
@@ -1069,7 +1069,7 @@ Wählt das darunter, in Gruppen</action></mouse>
 <keys><key><alt/>&lt;</key> <action>Verengt Zeile/Absatz um 1 Pixel</action></keys>
 <keys><key><shift/><alt/>&lt;</key> <action>Verengt Zeile/Absatz um 10 Pixel</action></keys>
 <note>Gleicht den Buchstabenabstand in der derzeitigen Zeile (regulärer Text) oder Absatz (Fließtext) an (wenn Text bearbeitet wird).</note>
-<note>Die aktuelle Angleichung für Pixel-Verschiebungen ist vom Zoom-Level abhängig. Zoomen Sie für feinere Abgleichungen hinein.</note>
+<note>Die aktuelle Angleichung für Pixel-Verschiebungen ist vom Zoomfaktor abhängig. Zoomen Sie für feinere Abgleichungen hinein.</note>
 </group>
 
 <group>
@@ -1079,7 +1079,7 @@ Wählt das darunter, in Gruppen</action></mouse>
 <keys><key><ctrl/><alt/>&lt;</key> <action>macht das Textobjekt kürzer um 1 Pixel</action></keys>
 <keys><key><shift/><ctrl/><alt/>&lt;</key> <action>macht das Textobjekt kürzer um 10 Pixel</action></keys>
 <note>Gleicht den Zeilenabstand im gesamten Textobjekt (normal oder Fließtext) an (wenn Text bearbeitet wird).</note>
-<note>Die aktuelle Angleichung für Pixel-Verschiebungen ist vom Zoom-Level abhängig. Zoomen Sie für feinere Abgleichungen hinein.</note>
+<note>Die aktuelle Angleichung für Pixel-Verschiebungen ist vom Zoomfaktor abhängig. Zoomen Sie für feinere Abgleichungen hinein.</note>
 </group>
 
 <group>
@@ -1089,7 +1089,7 @@ Wählt das darunter, in Gruppen</action></mouse>
 <note>Diese Befehle funktionieren, wenn Sie reguläre Textobjekte bearbeiten. Proportionalschrift funktioniert nicht in Fließtext.</note> 
 <note>Ohne Auswahl werden die Zeichen (horizontal oder vertikal) nach dem Cursor bis zum Ende der Zeile versetzt.</note>
 <note>FIXME With selection, they shift the selection relative to the rest of text (by inserting opposite kerns at both ends of selection).</note>
-<note>Die aktuelle Angleichung für Pixel-Verschiebungen ist vom Zoom-Level abhängig. Zoomen Sie für feinere Abgleichungen hinein.</note>
+<note>Die aktuelle Angleichung für Pixel-Verschiebungen ist vom Zoomfaktor abhängig. Zoomen Sie für feinere Abgleichungen hinein.</note>
 </group>
 
 <group>
@@ -1098,7 +1098,7 @@ Wählt das darunter, in Gruppen</action></mouse>
 <keys><key><alt/>[</key> <key><alt/>]</key> <action>dreht Zeichen um 1 Pixel</action></keys>
 <note>Nächstes Zeichen (ohne Auswahl) oder alle Zeichen in der Auswahl drehen.</note>
 <note>Die Drehung funktioniert nur in regulärem Text (nicht in Fließtext).</note>
-<note>Der aktuelle Winkel für Pixel-Drehungen ist vom Zoom-Level abhängig. Zoomen Sie für feinere Drehungen hinein.</note>
+<note>Der aktuelle Winkel für Pixel-Drehungen ist vom Zoomfaktor abhängig. Zoomen Sie für feinere Drehungen hinein.</note>
 </group>
 
 </section>
