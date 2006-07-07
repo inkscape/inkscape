@@ -64,8 +64,6 @@ dom_libdom_a_SOURCES =	         \
 	dom/svg/svg.h            \
 	dom/svg/svgimpl.cpp      \
 	dom/svg/svgimpl.h        \
-	dom/svg/svglsimpl.cpp    \
-	dom/svg/svglsimpl.h      \
 	dom/svg/svgparser.cpp    \
 	dom/svg/svgparser.h      \
 	dom/svg/svgtypes.h       \
