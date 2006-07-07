@@ -12,8 +12,6 @@ pedro_SOURCES= \
 	pedro/pedroconfig.h \
 	pedro/pedrodom.cpp \
 	pedro/pedrodom.h \
-	pedro/pedrogui.cpp \
-	pedro/pedrogui.h \
 	pedro/pedroutil.cpp \
 	pedro/pedroutil.h \
 	pedro/pedroxmpp.cpp \

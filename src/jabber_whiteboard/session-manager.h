@@ -13,7 +13,7 @@
 #ifndef __INKSCAPE_WHITEBOARD_SESSION_MANAGER_H__
 #define __INKSCAPE_WHITEBOARD_SESSION_MANAGER_H__
 
-#include "pedro/pedrogui.h"
+#include "jabber_whiteboard/pedrogui.h"
 
 #include <glibmm.h>
 

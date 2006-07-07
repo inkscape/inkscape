@@ -36,6 +36,8 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/session-manager.cpp \
 	jabber_whiteboard/session-manager.h \
 	jabber_whiteboard/tracker-node.h \
+	jabber_whiteboard/pedrogui.cpp \
+	jabber_whiteboard/pedrogui.h \
 	jabber_whiteboard/typedefs.h 
 
 
