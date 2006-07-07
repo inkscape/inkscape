@@ -42,91 +42,834 @@ namespace dom
 namespace xpath
 {
 
+
+
 //########################################################################
 //# X P A T H    T O K E N
 //########################################################################
+
+//########################################################################
+//# X P A T H    T O K E N    T Y P E S
+//########################################################################
+
+
+
+//###########################
+//# V A L U E S
+//###########################
+
+static bool tokStr(Token &tok, TokenExecutor &exec)
+{
+    StackItem item;
+    item.sval = tok.sval;
+    exec.push(item);
+    return true;
+}
+
+static bool tokFloat(Token &tok, TokenExecutor &exec)
+{
+        StackItem item;
+        item.dval = tok.dval;
+        exec.push(item);
+        return true;
+}
+
+static bool tokInt(Token &tok, TokenExecutor &exec)
+{
+    StackItem item;
+    item.ival = tok.ival;
+    exec.push(item);
+    return true;
+}
+
+static bool tokAnd(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = item1.ival && item2.ival;
+    exec.push(item1);
+    return true;
+}
+
+static bool tokOr(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = item1.ival || item2.ival;
+    exec.push(item1);
+    return true;
+}
+
+static bool tokMod(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.dval = fmod(item1.dval, item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokDiv(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.dval /= item2.dval;
+    exec.push(item1);
+    return true;
+}
+
+static bool tokMul(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.dval *= item2.dval;
+    exec.push(item1);
+    return true;
+}
+
+static bool tokPlus(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.dval += item2.dval;
+    exec.push(item1);
+    return true;
+}
+
+static bool tokMinus(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.dval -= item2.dval;
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokNeg(Token &tok, TokenExecutor &exec)
+{
+    StackItem item = exec.pop();
+    item.dval = -item.dval;
+    item.ival = -item.ival;
+    exec.push(item);
+    return true;
+}
+
+
+static bool tokEquals(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = (item1.dval == item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokNotEquals(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = (item1.dval != item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokLessThan(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = (item1.dval < item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokLessThanEquals(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = (item1.dval <= item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokGreaterThanEquals(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = (item1.dval >= item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+static bool tokGreaterThan(Token &tok, TokenExecutor &exec)
+{
+    StackItem item1 = exec.pop();
+    StackItem item2 = exec.pop();
+    item1.ival = (item1.dval > item2.dval);
+    exec.push(item1);
+    return true;
+}
+
+
+
+
+
+
+//###########################
+//# X P A T H    I T E M S
+//###########################
+
+static bool tokAbsolute(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+static bool tokRelative(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+static bool tokStep(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+static bool tokNameTest(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+static bool tokExpr(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+static bool tokUnion(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+
+
+//###########################
+//# A X I S
+//###########################
+
+
+static bool tokAxisAncestorOrSelf(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisAncestor(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisAttribute(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisChild(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisDescendantOrSelf(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisDescendant(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisFollowingSibling(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisFollowing(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisNamespace(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisParent(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisPrecedingSibling(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisPreceding(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokAxisSelf(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+
+//###########################
+//# F U N C T I O N S
+//###########################
+
+
+static bool tokFuncLast(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncPosition(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncCount(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncId(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncLocalName(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncNamespaceUri(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncName(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncString(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncConcat(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncStartsWith(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncContains(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncSubstringBefore(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncSubstringAfter(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncSubstring(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncStringLength(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncNormalizeSpace(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncTranslate(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncBoolean(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncNot(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncTrue(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncFalse(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncLang(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncNumber(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncSum(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncFloor(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncCeiling(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+static bool tokFuncRound(Token &tok, TokenExecutor &exec)
+{
+    return true;
+}
+
+
+
+
 
 typedef struct
 {
     int ival;
     char *sval;
-} TokenStringPair;
+    TokenFunc tokenFunc;
+} TokenTableEntry;
 
-static TokenStringPair tokenStrings[] =
+static TokenTableEntry tokenTable[] =
 {
-    //primitives
-    { Token::TOK_NOP,                     "nop"                     },
-    { Token::TOK_STR,                     "str"                     },
-    { Token::TOK_INT,                     "int"                     },
-    { Token::TOK_FLOAT,                   "float"                   },
-    //operators
-    { Token::TOK_AND,                     "and"                     },
-    { Token::TOK_OR,                      "or"                      },
-    { Token::TOK_MOD,                     "mod"                     },
-    { Token::TOK_DIV,                     "div"                     },
-    { Token::TOK_MULTIPLY,                "multiply"                },
-    { Token::TOK_DOUBLE_SLASH,            "double-slash"            },
-    { Token::TOK_SLASH,                   "slash"                   },
-    { Token::TOK_PIPE,                    "pipe"                    },
-    { Token::TOK_PLUS,                    "plus"                    },
-    { Token::TOK_MINUS,                   "minus"                   },
-    { Token::TOK_NEG,                     "neg"                     },
-    { Token::TOK_EQUALS,                  "equals"                  },
-    { Token::TOK_NOT_EQUALS,              "not-equals"              },
-    { Token::TOK_LESS_THAN_EQUALS,        "less-than-equals"        },
-    { Token::TOK_LESS_THAN,               "less-than"               },
-    { Token::TOK_GREATER_THAN_EQUALS,     "greater-than-equals"     },
-    { Token::TOK_GREATER_THAN,            "greater-than"            },
-    //path types
-    { Token::TOK_ABSOLUTE,                "absolute"                },
-    { Token::TOK_RELATIVE,                "relative"                },
-    { Token::TOK_STEP,                    "step"                    },
-    { Token::TOK_NAME_TEST,               "name-test"               },
-    { Token::TOK_EXPR,                    "expr"                    },
-    { Token::TOK_UNION,                   "union"                   },
-    //axis types
-    { Token::TOK_AXIS_ANCESTOR_OR_SELF,   "axis-ancestor-or-self"   },
-    { Token::TOK_AXIS_ANCESTOR,           "axis-ancestor"           },
-    { Token::TOK_AXIS_ATTRIBUTE,          "axis-attribute"          },
-    { Token::TOK_AXIS_CHILD,              "axis-child"              },
-    { Token::TOK_AXIS_DESCENDANT_OR_SELF, "axis-descendant-or-self" },
-    { Token::TOK_AXIS_DESCENDANT,         "axis-descendant"         },
-    { Token::TOK_AXIS_FOLLOWING_SIBLING,  "axis-following-sibling"  },
-    { Token::TOK_AXIS_FOLLOWING,          "axis-following"          },
-    { Token::TOK_AXIS_NAMESPACE,          "axis-namespace"          },
-    { Token::TOK_AXIS_PARENT,             "axis-parent"             },
-    { Token::TOK_AXIS_PRECEDING_SIBLING,  "axis-preceding-sibling"  },
-    { Token::TOK_AXIS_PRECEDING,          "axis-preceding"          },
-    { Token::TOK_AXIS_SELF,               "axis-self"               },
-    //function types
-    { Token::TOK_FUNC_LAST,               "func-last"               },
-    { Token::TOK_FUNC_POSITION,           "func-position"           },
-    { Token::TOK_FUNC_COUNT,              "func-count"              },
-    { Token::TOK_FUNC_ID,                 "func-id"                 },
-    { Token::TOK_FUNC_LOCAL_NAME,         "func-local-name"         },
-    { Token::TOK_FUNC_NAMESPACE_URI,      "func-namespace-uri"      },
-    { Token::TOK_FUNC_NAME,               "func-name"               },
-    { Token::TOK_FUNC_STRING,             "func-string"             },
-    { Token::TOK_FUNC_CONCAT,             "func-concat"             },
-    { Token::TOK_FUNC_STARTS_WITH,        "func-starts-with"        },
-    { Token::TOK_FUNC_CONTAINS,           "func-contains"           },
-    { Token::TOK_FUNC_SUBSTRING_BEFORE,   "func-substring-before"   },
-    { Token::TOK_FUNC_SUBSTRING_AFTER,    "func-substring-after"    },
-    { Token::TOK_FUNC_SUBSTRING,          "func-substring"          },
-    { Token::TOK_FUNC_STRING_LENGTH,      "func-string-length"      },
-    { Token::TOK_FUNC_NORMALIZE_SPACE,    "func-normalize-space"    },
-    { Token::TOK_FUNC_TRANSLATE,          "func-translate"          },
-    { Token::TOK_FUNC_BOOLEAN,            "func-boolean"            },
-    { Token::TOK_FUNC_NOT,                "func-not"                },
-    { Token::TOK_FUNC_TRUE,               "func-true"               },
-    { Token::TOK_FUNC_FALSE,              "func-false"              },
-    { Token::TOK_FUNC_LANG,               "func-lang"               },
-    { Token::TOK_FUNC_NUMBER,             "func-number"             },
-    { Token::TOK_FUNC_SUM,                "func-sum"                },
-    { Token::TOK_FUNC_FLOOR,              "func-floor"              },
-    { Token::TOK_FUNC_CEILING,            "func-ceiling"            },
-    { Token::TOK_FUNC_ROUND,              "func-round"              },
-    { -1,                                 (char *)0                 }
+    //### primitives
+    {
+      Token::TOK_NOP,
+      "nop",
+      NULL
+    },
+    {
+      Token::TOK_STR,
+      "str",
+      tokStr
+    },
+    {
+      Token::TOK_INT,
+      "int",
+      tokInt
+    },
+    {
+      Token::TOK_FLOAT,
+      "float",
+      tokFloat
+    },
+
+    //### operators
+    {
+      Token::TOK_AND,
+      "and",
+      tokAnd
+    },
+    {
+      Token::TOK_OR,
+      "or",
+      tokOr
+    },
+    {
+      Token::TOK_MOD,
+      "mod",
+      tokMod
+    },
+    {
+      Token::TOK_DIV,
+      "div",
+      tokDiv
+    },
+    {
+      Token::TOK_MUL,
+      "multiply",
+      tokMul
+    },
+    {
+      Token::TOK_DOUBLE_SLASH,
+      "double-slash",
+      NULL
+    },
+    {
+      Token::TOK_SLASH,
+      "slash",
+      NULL
+    },
+    {
+      Token::TOK_PIPE,
+      "pipe",
+      NULL
+    },
+    {
+      Token::TOK_PLUS,
+      "plus",
+      tokPlus
+    },
+    {
+      Token::TOK_MINUS,
+      "minus",
+      tokMinus
+    },
+    {
+      Token::TOK_NEG,
+      "neg",
+      tokNeg
+    },
+    {
+      Token::TOK_EQUALS,
+      "equals",
+      tokEquals
+    },
+    {
+      Token::TOK_NOT_EQUALS,
+      "not-equals",
+      tokNotEquals
+    },
+    {
+      Token::TOK_LESS_THAN_EQUALS,
+      "less-than-equals",
+      tokLessThanEquals
+    },
+    {
+      Token::TOK_LESS_THAN,
+      "less-than",
+      tokLessThan
+    },
+    {
+      Token::TOK_GREATER_THAN_EQUALS,
+      "greater-than-equals",
+      tokGreaterThanEquals
+    },
+    {
+      Token::TOK_GREATER_THAN,
+      "greater-than",
+      tokGreaterThan
+    },
+
+    //### path types
+    {
+      Token::TOK_ABSOLUTE,
+      "absolute",
+      tokAbsolute
+    },
+    {
+      Token::TOK_RELATIVE,
+      "relative",
+      tokRelative
+    },
+    {
+      Token::TOK_STEP,
+      "step",
+      tokStep
+    },
+    {
+      Token::TOK_NAME_TEST,
+      "name-test",
+      tokNameTest
+    },
+    {
+      Token::TOK_EXPR,
+      "expr",
+      tokExpr
+    },
+    {
+      Token::TOK_UNION,
+      "union",
+      tokUnion
+    },
+
+    //### axis types
+    {
+      Token::TOK_AXIS_ANCESTOR_OR_SELF,
+      "axis-ancestor-or-self",
+      tokAxisAncestorOrSelf
+    },
+    {
+      Token::TOK_AXIS_ANCESTOR,
+      "axis-ancestor",
+      tokAxisAncestor
+    },
+    {
+      Token::TOK_AXIS_ATTRIBUTE,
+      "axis-attribute",
+      tokAxisAttribute
+    },
+    {
+      Token::TOK_AXIS_CHILD,
+      "axis-child",
+      tokAxisChild
+    },
+    {
+      Token::TOK_AXIS_DESCENDANT_OR_SELF,
+      "axis-descendant-or-self",
+      tokAxisDescendantOrSelf
+    },
+    {
+      Token::TOK_AXIS_DESCENDANT,
+      "axis-descendant",
+      tokAxisDescendant
+    },
+    {
+      Token::TOK_AXIS_FOLLOWING_SIBLING,
+      "axis-following-sibling",
+      tokAxisFollowingSibling
+    },
+    {
+      Token::TOK_AXIS_FOLLOWING,
+      "axis-following",
+      tokAxisFollowing
+    },
+    {
+      Token::TOK_AXIS_NAMESPACE,
+      "axis-namespace",
+      tokAxisNamespace
+    },
+    {
+      Token::TOK_AXIS_PARENT,
+      "axis-parent",
+      tokAxisParent
+    },
+    {
+      Token::TOK_AXIS_PRECEDING_SIBLING,
+      "axis-preceding-sibling",
+      tokAxisPrecedingSibling
+    },
+    {
+      Token::TOK_AXIS_PRECEDING,
+      "axis-preceding",
+      tokAxisPreceding
+    },
+    {
+      Token::TOK_AXIS_SELF,
+      "axis-self",
+      tokAxisSelf
+    },
+
+    //### function types
+    {
+      Token::TOK_FUNC_LAST,
+      "func-last",
+      tokFuncLast
+    },
+    {
+      Token::TOK_FUNC_POSITION,
+      "func-position",
+      tokFuncPosition
+    },
+    {
+      Token::TOK_FUNC_COUNT,
+      "func-count",
+      tokFuncCount
+    },
+    {
+      Token::TOK_FUNC_ID,
+      "func-id",
+      tokFuncId
+    },
+    {
+      Token::TOK_FUNC_LOCAL_NAME,
+      "func-local-name",
+      tokFuncLocalName
+    },
+    {
+      Token::TOK_FUNC_NAMESPACE_URI,
+      "func-namespace-uri",
+      tokFuncNamespaceUri
+    },
+    {
+      Token::TOK_FUNC_NAME,
+      "func-name",
+      tokFuncName
+    },
+    {
+      Token::TOK_FUNC_STRING,
+      "func-string",
+      tokFuncString
+    },
+    {
+      Token::TOK_FUNC_CONCAT,
+      "func-concat",
+      tokFuncConcat
+    },
+    {
+      Token::TOK_FUNC_STARTS_WITH,
+      "func-starts-with",
+      tokFuncStartsWith
+    },
+    {
+      Token::TOK_FUNC_CONTAINS,
+      "func-contains",
+      tokFuncContains
+    },
+    {
+      Token::TOK_FUNC_SUBSTRING_BEFORE,
+      "func-substring-before",
+      tokFuncSubstringBefore
+    },
+    {
+      Token::TOK_FUNC_SUBSTRING_AFTER,
+      "func-substring-after",
+      tokFuncSubstringAfter
+    },
+    {
+      Token::TOK_FUNC_SUBSTRING,
+      "func-substring",
+      tokFuncSubstring
+    },
+    {
+      Token::TOK_FUNC_STRING_LENGTH,
+      "func-string-length",
+      tokFuncStringLength
+    },
+    {
+      Token::TOK_FUNC_NORMALIZE_SPACE,
+      "func-normalize-space",
+      tokFuncNormalizeSpace
+    },
+    {
+      Token::TOK_FUNC_TRANSLATE,
+      "func-translate",
+      tokFuncTranslate
+    },
+    {
+      Token::TOK_FUNC_BOOLEAN,
+      "func-boolean",
+      tokFuncBoolean
+    },
+    {
+      Token::TOK_FUNC_NOT,
+      "func-not",
+      tokFuncNot
+    },
+    {
+      Token::TOK_FUNC_TRUE,
+      "func-true",
+      tokFuncTrue
+    },
+    {
+      Token::TOK_FUNC_FALSE,
+      "func-false",
+      tokFuncFalse
+    },
+    {
+      Token::TOK_FUNC_LANG,
+      "func-lang",
+      tokFuncLang
+    },
+    {
+      Token::TOK_FUNC_NUMBER,
+      "func-number",
+      tokFuncNumber
+    },
+    {
+      Token::TOK_FUNC_SUM,
+      "func-sum",
+      tokFuncSum
+    },
+    {
+      Token::TOK_FUNC_FLOOR,
+      "func-floor",
+      tokFuncFloor
+    },
+    {
+      Token::TOK_FUNC_CEILING,
+      "func-ceiling",
+      tokFuncCeiling
+    },
+    {
+      Token::TOK_FUNC_ROUND,
+      "func-round",
+      tokFuncRound
+    },
+
+    { -1,
+      (char *)0,
+      NULL
+    }
 };
 
 
@@ -137,11 +880,11 @@ static TokenStringPair tokenStrings[] =
 DOMString Token::getTypeString()
 {
     DOMString ret = "unknown";
-    for (TokenStringPair *pair = tokenStrings ; pair->sval ; pair++)
+    for (TokenTableEntry *entry = tokenTable ; entry->sval ; entry++)
         {
-        if (pair->ival == type)
+        if (entry->ival == type)
             {
-            ret = pair->sval;
+            ret = entry->sval;
             break;
             }
         }
@@ -149,245 +892,31 @@ DOMString Token::getTypeString()
 }
 
 
-
-//########################################################################
-//# X P A T H    A X I S
-//########################################################################
-
 /**
- *
+ * Create a token of the given type, giving it
+ * the data and personalities it needs
  */
-Axis::Axis()
+Token Token::create(int type, long ival,
+           double dval, const DOMString &sval)
 {
-    init();
-}
-
-
-/**
- *
- */
-Axis::Axis(int tokPos)
-{
-    init();
-    tokenPosition = tokPos;
-}
-
-
-/**
- *
- */
-Axis::Axis(const Axis &other)
-{
-    init();
-    assign(other);
-}
-
-
-/**
- *
- */
-Axis::~Axis()
-{
-}
-
-
-/**
- *
- */
-Axis &Axis::operator=(const Axis &other)
-{
-    assign(other);
-    return *this;
-}
-
-/**
- *
- */
-void Axis::init()
-{
-    tokenPosition = 0;
-}
-
-/**
- *
- */
-void Axis::assign(const Axis &other)
-{
-    tokenPosition = other.tokenPosition;
-}
-
-/**
- *
- */
-void Axis::setPosition(unsigned int val)
-{
-    tokenPosition = val;
-}
-
-/**
- *
- */
-unsigned int Axis::getPosition()
-{
-    return tokenPosition;
-}
-
-/**
- *
- */
-void Axis::setNode(const Node *val)
-{
-    node = (Node *)val;
-}
-
-/**
- *
- */
-Node *Axis::getNode()
-{
-    return node;
-}
-
-//########################################################################
-//# X P A T H    S T A C K    I T E M
-//########################################################################
-
-/**
- *
- */
-StackItem::StackItem()
-{
-    ival = 0L;
-    dval = 0.0;
-}
-
-
-/**
- *
- */
-StackItem::StackItem(const StackItem &other)
-{
-    assign(other);
-}
-
-
-/**
- *
- */
-StackItem::~StackItem()
-{
-}
-
-
-/**
- *
- */
-StackItem &StackItem::operator=(const StackItem &other)
-{
-    assign(other);
-    return *this;
-}
-
-/**
- *
- */
-void StackItem::assign(const StackItem &other)
-{
-    sval = other.sval;
-    ival = other.ival;
-    dval = other.dval;
-}
-
-
-//########################################################################
-//# T O K E N    L I S T
-//########################################################################
-
-/**
- *
- */
-TokenList::TokenList()
-{
-}
-
-
-/**
- *
- */
-TokenList::TokenList(const TokenList &other)
-{
-    assign(other);
-}
-
-/**
- *
- */
-TokenList &TokenList::operator=(const TokenList &other)
-{
-    assign(other);
-    return *this;
-}
-
-/**
- *
- */
-void TokenList::assign(const TokenList &other)
-{
-    tokens = other.tokens;
-}
-
-/**
- *
- */
-TokenList::~TokenList()
-{
-    clear();
-}
-
-/**
- *
- */
-void TokenList::clear()
-{
-    std::vector<Token *>::iterator iter;
-    for (iter = tokens.begin() ; iter!= tokens.end() ; iter++)
+    Token tok(type, ival, dval, sval);
+    for (TokenTableEntry *entry = tokenTable ; entry->sval ; entry++)
         {
-        delete (*iter);
+        if (entry->ival == type)
+            {
+            tok.tokenFunc = entry->tokenFunc;
+            break;
+            }
         }
-    tokens.clear();
-}
-
-/**
- *
- */
-void TokenList::add(Token *tok)
-{
-    tokens.push_back(tok);
+    
+    return tok;
 }
 
 
-/**
- *
- */
-unsigned int TokenList::size() const
-{
-    return (unsigned int)tokens.size();
-}
 
 
-/**
- *
- */
-void TokenList::dump()
-{
-    std::vector<Token *>::iterator iter;
-    printf("############# TOKENS\n");
-    for (iter = tokens.begin() ; iter != tokens.end() ; iter++)
-        {
-        Token *tok = *iter;
-        tok->dump();
-        }
-}
+
+
 
 
 //########################################################################
@@ -426,11 +955,8 @@ TokenExecutor::~TokenExecutor()
  */
 void TokenExecutor::assign(const TokenExecutor &other)
 {
-    axis        = other.axis;
-    axisStack   = other.axisStack;
-    stackSize   = other.stackSize;
-    for (int i=0 ; i<stackSize ; i++)
-        stack[i] = other.stack[i];
+    tokenList   = other.tokenList;
+    stack       = other.stack;
 }
 
 
@@ -439,9 +965,7 @@ void TokenExecutor::assign(const TokenExecutor &other)
  */
 void TokenExecutor::reset()
 {
-    axis.setPosition(0);
-    axis.setNode(NULL);
-    stackSize = 0;
+    stack.clear();
 }
 
 
@@ -453,14 +977,7 @@ void TokenExecutor::reset()
 NodeList TokenExecutor::execute(const TokenList &tokens, const Node *node)
 {
 
-    axis.setPosition(0);
-    axis.setNode(node);
-
     nodeList.clear();
-
-    while (axis.getPosition() < tokens.size())
-        {
-        }
 
     return nodeList;
 }
@@ -474,11 +991,7 @@ NodeList TokenExecutor::execute(const TokenList &tokens, const Node *node)
  */
 void TokenExecutor::push(StackItem &item)
 {
-    if (stackSize>=STACK_SIZE)
-        {
-        return;
-        }
-    stack[stackSize++] = item;
+    stack.push_back(item);
 }
 
 /**
@@ -486,12 +999,15 @@ void TokenExecutor::push(StackItem &item)
  */
 StackItem TokenExecutor::pop()
 {
-    if (stackSize<1)
+    if (stack.size()<1)
         {
         StackItem item;
         return item;
         }
-    return stack[--stackSize];
+    std::vector<StackItem>::iterator iter = stack.end()-1;
+    StackItem item = *iter;
+    stack.erase(iter);
+    return item;
 }
 
 

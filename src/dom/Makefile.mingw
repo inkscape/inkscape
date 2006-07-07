@@ -81,8 +81,8 @@ else
 # NATIVE COMPILER SETTINGS
 ##########################################################################
 
-CC      = mingw32-gcc
-CXX     = mingw32-g++
+CC      = i686-pc-mingw32-gcc
+CXX     = i686-pc-mingw32-g++
 AS      = as
 AR      = mingw32-ar
 RANLIB  = ranlib
@@ -160,7 +160,6 @@ io/uristream.o    \
 io/socket.o       \
 odf/odfdocument.o \
 svg/svgimpl.o     \
-svg/svglsimpl.o   \
 svg/svgparser.o   \
 util/thread.o     \
 util/ziptool.o

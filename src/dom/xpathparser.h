@@ -515,7 +515,7 @@ private:
     /**
      * Add a newly derived token to the token list;
      */
-    void tokAdd(Token *token);
+    void tokAdd(const Token &token);
 
     /**
      * The grammar definitions marked [1]-[39] are directly
