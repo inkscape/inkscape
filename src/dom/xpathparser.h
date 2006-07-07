@@ -517,6 +517,15 @@ private:
      */
     void tokAdd(const Token &token);
 
+    void tokAdd(int type);
+
+    void tokAdd(int type, long val);
+
+    void tokAdd(int type, double val);
+
+    void tokAdd(int type, const DOMString &val);
+
+
     /**
      * The grammar definitions marked [1]-[39] are directly
      * from the W3C XPath grammar spacification.

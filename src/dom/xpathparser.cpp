@@ -618,11 +618,39 @@ int XPathParser::lexicalScan()
 //# X P A T H    G R A M M A R    P A R S I N G
 //#########################################################################
 
-
+//## Various shorthand methods to add a token to the list
 void XPathParser::tokAdd(const Token &tok)
 {
     tokens.add(tok);
 }
+
+void XPathParser::tokAdd(int type)
+{
+    tokens.add(Token::create(type));
+}
+
+void XPathParser::tokAdd(int type, long val)
+{
+    tokens.add(Token::create(type, val));
+}
+
+void XPathParser::tokAdd(int type, double val)
+{
+    tokens.add(Token::create(type, val));
+}
+
+void XPathParser::tokAdd(int type, const DOMString &val)
+{
+    tokens.add(Token::create(type, val));
+}
+
+
+
+
+
+//########################################
+//# Grammar - specific parsing
+//########################################
 
 /**
  * [1]  LocationPath ::=
@@ -639,14 +667,14 @@ int XPathParser::getLocationPath(int p0, int depth)
     int p2 = getAbsoluteLocationPath(p, depth+1);
     if (p2 > p)
         {
-        tokens.add(Token::create(Token::TOK_ABSOLUTE));
+        tokAdd(Token::TOK_ABSOLUTE);
         return p2;
         }
 
     p2 = getRelativeLocationPath(p, depth+1);
     if (p2 > p)
         {
-        tokens.add(Token::create(Token::TOK_RELATIVE));
+        tokAdd(Token::TOK_RELATIVE);
         return p2;
         }
 
@@ -731,7 +759,7 @@ int XPathParser::getRelativeLocationPath(int p0, int depth)
             {
             p++;
             // a '//' is an abbreviation for /descendant-or-self:node()/
-            tokAdd(Token::create(Token::TOK_AXIS_DESCENDANT_OR_SELF));
+            tokAdd(Token::TOK_AXIS_DESCENDANT_OR_SELF);
             p2 = getRelativeLocationPath(p, depth+1);
             if (p2 < 0)
                 {
@@ -831,31 +859,31 @@ int XPathParser::getAxisSpecifier(int p0, int depth)
         switch (axisType)
             {
             case ANCESTOR_OR_SELF:
-                tokAdd(Token::create(Token::TOK_AXIS_ANCESTOR_OR_SELF));
+                tokAdd(Token::TOK_AXIS_ANCESTOR_OR_SELF);
             case ANCESTOR:
-                tokAdd(Token::create(Token::TOK_AXIS_ANCESTOR));
+                tokAdd(Token::TOK_AXIS_ANCESTOR);
             case ATTRIBUTE:
-                tokAdd(Token::create(Token::TOK_AXIS_ATTRIBUTE));
+                tokAdd(Token::TOK_AXIS_ATTRIBUTE);
             case CHILD:
-                tokAdd(Token::create(Token::TOK_AXIS_CHILD));
+                tokAdd(Token::TOK_AXIS_CHILD);
             case DESCENDANT_OR_SELF:
-                tokAdd(Token::create(Token::TOK_AXIS_DESCENDANT_OR_SELF));
+                tokAdd(Token::TOK_AXIS_DESCENDANT_OR_SELF);
             case DESCENDANT:
-                tokAdd(Token::create(Token::TOK_AXIS_DESCENDANT));
+                tokAdd(Token::TOK_AXIS_DESCENDANT);
             case FOLLOWING_SIBLING:
-                tokAdd(Token::create(Token::TOK_AXIS_FOLLOWING_SIBLING));
+                tokAdd(Token::TOK_AXIS_FOLLOWING_SIBLING);
             case FOLLOWING:
-                tokAdd(Token::create(Token::TOK_AXIS_FOLLOWING));
+                tokAdd(Token::TOK_AXIS_FOLLOWING);
             case NAMESPACE:
-                tokAdd(Token::create(Token::TOK_AXIS_NAMESPACE));
+                tokAdd(Token::TOK_AXIS_NAMESPACE);
             case PARENT:
-                tokAdd(Token::create(Token::TOK_AXIS_PARENT));
+                tokAdd(Token::TOK_AXIS_PARENT);
             case PRECEDING_SIBLING:
-                tokAdd(Token::create(Token::TOK_AXIS_PRECEDING_SIBLING));
+                tokAdd(Token::TOK_AXIS_PRECEDING_SIBLING);
             case PRECEDING:
-                tokAdd(Token::create(Token::TOK_AXIS_PRECEDING));
+                tokAdd(Token::TOK_AXIS_PRECEDING);
             case SELF:
-                tokAdd(Token::create(Token::TOK_AXIS_SELF));
+                tokAdd(Token::TOK_AXIS_SELF);
             default:
                 {
                 error("unknown axis type %d", axisType);
@@ -917,7 +945,7 @@ int XPathParser::getNodeTest(int p0, int depth)
     if (t.getType() == NAME_TEST)
         {
         p++;
-        tokAdd(Token::create(Token::TOK_NAME_TEST, t.getStringValue()));
+        tokAdd(Token::TOK_NAME_TEST, t.getStringValue());
         return p;
         }
     if (t.getType() == NODE_TYPE)
@@ -1110,16 +1138,14 @@ int XPathParser::getPrimaryExpr(int p0, int depth)
 
     if (lexTokType(p) == LITERAL)
         {
-        tokens.add(Token::create(Token::TOK_STR, 
-                   lexTok(p).getStringValue()));
+        tokAdd(Token::TOK_STR, lexTok(p).getStringValue());
         p++;
         return p;
         }
 
     if (lexTokType(p) == NUMBER)
         {
-        tokens.add(Token::create(Token::TOK_FLOAT,
-                    lexTok(p).getDoubleValue()));
+        tokAdd(Token::TOK_FLOAT, lexTok(p).getDoubleValue());
         p++;
         return p;
         }
@@ -1197,59 +1223,59 @@ int XPathParser::getFunctionCall(int p0, int depth)
 
     // Function names from http://www.w3.org/TR/xpath#NT-FunctionName
     if (name == "last")
-        tokens.add(Token::create(Token::TOK_FUNC_LAST));
+        tokAdd(Token::TOK_FUNC_LAST);
     else if (name == "position")
-        tokens.add(Token::create(Token::TOK_FUNC_POSITION));
+        tokAdd(Token::TOK_FUNC_POSITION);
     else if (name == "count")
-        tokens.add(Token::create(Token::TOK_FUNC_COUNT));
+        tokAdd(Token::TOK_FUNC_COUNT);
     else if (name == "id")
-        tokens.add(Token::create(Token::TOK_FUNC_ID));
+        tokAdd(Token::TOK_FUNC_ID);
     else if (name == "local-name")
-        tokens.add(Token::create(Token::TOK_FUNC_LOCAL_NAME));
+        tokAdd(Token::TOK_FUNC_LOCAL_NAME);
     else if (name == "namespace-uri")
-        tokens.add(Token::create(Token::TOK_FUNC_NAMESPACE_URI));
+        tokAdd(Token::TOK_FUNC_NAMESPACE_URI);
     else if (name == "name")
-        tokens.add(Token::create(Token::TOK_FUNC_NAME));
+        tokAdd(Token::TOK_FUNC_NAME);
     else if (name == "string")
-        tokens.add(Token::create(Token::TOK_FUNC_STRING));
+        tokAdd(Token::TOK_FUNC_STRING);
     else if (name == "concat")
-        tokens.add(Token::create(Token::TOK_FUNC_CONCAT));
+        tokAdd(Token::TOK_FUNC_CONCAT);
     else if (name == "starts-with")
-        tokens.add(Token::create(Token::TOK_FUNC_STARTS_WITH));
+        tokAdd(Token::TOK_FUNC_STARTS_WITH);
     else if (name == "contains")
-        tokens.add(Token::create(Token::TOK_FUNC_CONTAINS));
+        tokAdd(Token::TOK_FUNC_CONTAINS);
     else if (name == "substring-before")
-        tokens.add(Token::create(Token::TOK_FUNC_SUBSTRING_BEFORE));
+        tokAdd(Token::TOK_FUNC_SUBSTRING_BEFORE);
     else if (name == "substring-after")
-        tokens.add(Token::create(Token::TOK_FUNC_SUBSTRING_AFTER));
+        tokAdd(Token::TOK_FUNC_SUBSTRING_AFTER);
     else if (name == "substring")
-        tokens.add(Token::create(Token::TOK_FUNC_SUBSTRING));
+        tokAdd(Token::TOK_FUNC_SUBSTRING);
     else if (name == "string-length")
-        tokens.add(Token::create(Token::TOK_FUNC_STRING_LENGTH));
+        tokAdd(Token::TOK_FUNC_STRING_LENGTH);
     else if (name == "normalize-space")
-        tokens.add(Token::create(Token::TOK_FUNC_NORMALIZE_SPACE));
+        tokAdd(Token::TOK_FUNC_NORMALIZE_SPACE);
     else if (name == "translate")
-        tokens.add(Token::create(Token::TOK_FUNC_TRANSLATE));
+        tokAdd(Token::TOK_FUNC_TRANSLATE);
     else if (name == "boolean")
-        tokens.add(Token::create(Token::TOK_FUNC_BOOLEAN));
+        tokAdd(Token::TOK_FUNC_BOOLEAN);
     else if (name == "not")
-        tokens.add(Token::create(Token::TOK_FUNC_NOT));
+        tokAdd(Token::TOK_FUNC_NOT);
     else if (name == "true")
-        tokens.add(Token::create(Token::TOK_FUNC_TRUE));
+        tokAdd(Token::TOK_FUNC_TRUE);
     else if (name == "false")
-        tokens.add(Token::create(Token::TOK_FUNC_FALSE));
+        tokAdd(Token::TOK_FUNC_FALSE);
     else if (name == "lang")
-        tokens.add(Token::create(Token::TOK_FUNC_LANG));
+        tokAdd(Token::TOK_FUNC_LANG);
     else if (name == "number")
-        tokens.add(Token::create(Token::TOK_FUNC_NUMBER));
+        tokAdd(Token::TOK_FUNC_NUMBER);
     else if (name == "sum")
-        tokens.add(Token::create(Token::TOK_FUNC_SUM));
+        tokAdd(Token::TOK_FUNC_SUM);
     else if (name == "floor")
-        tokens.add(Token::create(Token::TOK_FUNC_FLOOR));
+        tokAdd(Token::TOK_FUNC_FLOOR);
     else if (name == "ceiling")
-        tokens.add(Token::create(Token::TOK_FUNC_CEILING));
+        tokAdd(Token::TOK_FUNC_CEILING);
     else if (name == "round")
-        tokens.add(Token::create(Token::TOK_FUNC_ROUND));
+        tokAdd(Token::TOK_FUNC_ROUND);
     else
         {
         error("unknown function name:'%s'", name.c_str());
@@ -1304,7 +1330,7 @@ int XPathParser::getUnionExpr(int p0, int depth)
             error("OR (|) requires union expression on the left");
             return -1;
             }
-        tokens.add(Token::create(Token::TOK_UNION));
+        tokAdd(Token::TOK_UNION);
         p = p2;
         }
     return p;
@@ -1448,7 +1474,7 @@ int XPathParser::getOrExpr(int p0, int depth)
             p = p2;
             return p;
             }
-        tokens.add(Token::create(Token::TOK_OR));
+        tokAdd(Token::TOK_OR);
         return p;
         }
 
@@ -1487,7 +1513,7 @@ int XPathParser::getAndExpr(int p0, int depth)
             p = p2;
             return p;
             }
-        tokens.add(Token::create(Token::TOK_AND));
+        tokAdd(Token::TOK_AND);
         return p;
         }
 
@@ -1524,7 +1550,7 @@ int XPathParser::getEqualityExpr(int p0, int depth)
                 error("Equality expression expected after ==");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_EQUALS));
+            tokAdd(Token::TOK_EQUALS);
             p = p2;
             return p;
             }
@@ -1538,7 +1564,7 @@ int XPathParser::getEqualityExpr(int p0, int depth)
                 error("Equality expression expected after !=");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_NOT_EQUALS));
+            tokAdd(Token::TOK_NOT_EQUALS);
             p = p2;
             return p;
             }
@@ -1582,7 +1608,7 @@ int XPathParser::getRelationalExpr(int p0, int depth)
                 error("Relational expression after '>'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_GREATER_THAN));
+            tokAdd(Token::TOK_GREATER_THAN);
             p = p2;
             return p;
             }
@@ -1595,7 +1621,7 @@ int XPathParser::getRelationalExpr(int p0, int depth)
                 error("Relational expression after '<'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_LESS_THAN));
+            tokAdd(Token::TOK_LESS_THAN);
             p = p2;
             return p;
             }
@@ -1608,7 +1634,7 @@ int XPathParser::getRelationalExpr(int p0, int depth)
                 error("Relational expression after '>='");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_GREATER_THAN_EQUALS));
+            tokAdd(Token::TOK_GREATER_THAN_EQUALS);
             p = p2;
             return p;
             }
@@ -1621,7 +1647,7 @@ int XPathParser::getRelationalExpr(int p0, int depth)
                 error("Relational expression after '<='");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_LESS_THAN_EQUALS));
+            tokAdd(Token::TOK_LESS_THAN_EQUALS);
             p = p2;
             return p;
             }
@@ -1664,7 +1690,7 @@ int XPathParser::getAdditiveExpr(int p0, int depth)
                 error("Additive expression after '+'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_PLUS));
+            tokAdd(Token::TOK_MINUS);
             p = p2;
             return p;
             }
@@ -1677,7 +1703,7 @@ int XPathParser::getAdditiveExpr(int p0, int depth)
                 error("Additive expression after '-'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_MINUS));
+            tokAdd(Token::TOK_MINUS);
             p = p2;
             return p;
             }
@@ -1721,7 +1747,7 @@ int XPathParser::getMultiplicativeExpr(int p0, int depth)
                 error("Multiplicative expression after '*'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_MUL));
+            tokAdd(Token::TOK_MUL);
             p = p2;
             return p;
             }
@@ -1735,7 +1761,7 @@ int XPathParser::getMultiplicativeExpr(int p0, int depth)
                 error("Multiplicative expression after 'div'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_DIV));
+            tokAdd(Token::TOK_DIV);
             p = p2;
             return p;
             }
@@ -1749,7 +1775,7 @@ int XPathParser::getMultiplicativeExpr(int p0, int depth)
                 error("Multiplicative expression after 'mod'");
                 return -1;
                 }
-            tokens.add(Token::create(Token::TOK_MOD));
+            tokAdd(Token::TOK_MOD);
             p = p2;
             return p;
             }
@@ -1792,7 +1818,7 @@ int XPathParser::getUnaryExpr(int p0, int depth)
             error("Unary expression after '-'");
             return -1;
             }
-            tokens.add(Token::create(Token::TOK_NEG));
+            tokAdd(Token::TOK_NEG);
         p = p2;
         return p;
         }
