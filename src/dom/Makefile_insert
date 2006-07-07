@@ -42,6 +42,7 @@ dom_libdom_a_SOURCES =	         \
 	dom/xpathparser.cpp      \
 	dom/xpathparser.h        \
         dom/xpathtoken.h         \
+        dom/xpathtoken.cpp       \
 	dom/io/base64stream.cpp  \
 	dom/io/base64stream.h    \
 	dom/io/bufferstream.cpp  \
