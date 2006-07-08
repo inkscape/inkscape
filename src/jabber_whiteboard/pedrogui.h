@@ -94,6 +94,7 @@ private:
 
     void sendFileCallback();
     void chatCallback();
+    void shareCallback();
     bool buttonPressCallback(GdkEventButton* event);
 
     bool doSetup();
@@ -221,6 +222,7 @@ private:
 
     void sendFileCallback();
     void chatCallback();
+    void shareCallback();
     bool buttonPressCallback(GdkEventButton* event);
 
     bool doSetup();
@@ -279,6 +281,7 @@ private:
 
     void leaveCallback();
     void hideCallback();
+    void shareCallback();
     void textEnterCallback();
 
     bool doSetup();
@@ -330,6 +333,7 @@ public:
     virtual void doSendFile(const DOMString &nick);
 
     virtual void doChat(const DOMString &nick);
+    virtual void doShare(const DOMString &nick);
 
 
 private:
@@ -337,6 +341,7 @@ private:
     void textEnterCallback();
     void leaveCallback();
     void hideCallback();
+    void shareCallback();
 
     bool doSetup();
 
@@ -839,6 +844,8 @@ public:
                        long  size,
                        const DOMString &hash);
 
+    void doShare(const DOMString &jid);
+    void doGroupShare(const DOMString &groupJid);
 
     //# File menu
     void connectCallback();

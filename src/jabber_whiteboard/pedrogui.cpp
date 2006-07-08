@@ -21,7 +21,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "pedrogui.h"
+#include "jabber_whiteboard/pedrogui.h"
+#include "jabber_whiteboard/session-manager.h"
+
 
 #include <stdarg.h>
 
@@ -412,6 +414,17 @@ void Roster::sendFileCallback()
         parent->doSendFile(nick);
 }
 
+void Roster::shareCallback()
+{
+    Glib::RefPtr<Gtk::TreeModel> model = rosterView.get_model();
+    Glib::RefPtr<Gtk::TreeSelection> sel = rosterView.get_selection();
+    Gtk::TreeModel::iterator iter = sel->get_selected();
+    DOMString nick = iter->get_value(rosterColumns.userColumn);
+    //printf("share to:%s\n", nick.c_str());
+    if (parent)
+        parent->doShare(nick);
+}
+
 bool Roster::buttonPressCallback(GdkEventButton* event)
 {
     if( (event->type == GDK_BUTTON_PRESS) && (event->button == 3) )
@@ -492,6 +505,9 @@ bool Roster::doSetup()
     actionGroup->add( Gtk::Action::create("SendFile",
                                   Gtk::Stock::CONNECT, "Send file"),
     sigc::mem_fun(*this, &Roster::sendFileCallback) );
+    actionGroup->add( Gtk::Action::create("Share",
+                                  Gtk::Stock::CONNECT, "Share whiteboard"),
+    sigc::mem_fun(*this, &Roster::shareCallback) );
 
 
     uiManager = Gtk::UIManager::create();
@@ -503,6 +519,7 @@ bool Roster::doSetup()
         "  <popup name='PopupMenu'>"
         "    <menuitem action='Chat'/>"
         "    <menuitem action='SendFile'/>"
+        "    <menuitem action='Share'/>"
         "  </popup>"
         "</ui>";
 
@@ -716,6 +733,17 @@ void UserList::sendFileCallback()
         parent->doSendFile(nick);
 }
 
+void UserList::shareCallback()
+{
+    Glib::RefPtr<Gtk::TreeModel> model = userList.get_model();
+    Glib::RefPtr<Gtk::TreeSelection> sel = userList.get_selection();
+    Gtk::TreeModel::iterator iter = sel->get_selected();
+    DOMString nick = iter->get_value(userListColumns.userColumn);
+    //printf("Send file to:%s\n", nick.c_str());
+    if (parent)
+        parent->doShare(nick);
+}
+
 bool UserList::buttonPressCallback(GdkEventButton* event)
 {
     if( (event->type == GDK_BUTTON_PRESS) && (event->button == 3) )
@@ -785,6 +813,9 @@ bool UserList::doSetup()
     actionGroup->add( Gtk::Action::create("SendFile",
                                   Gtk::Stock::CONNECT, "Send file"),
     sigc::mem_fun(*this, &UserList::sendFileCallback) );
+    actionGroup->add( Gtk::Action::create("Share",
+                                  Gtk::Stock::CONNECT, "Share whiteboard"),
+    sigc::mem_fun(*this, &UserList::shareCallback) );
 
 
     uiManager = Gtk::UIManager::create();
@@ -796,6 +827,7 @@ bool UserList::doSetup()
         "  <popup name='PopupMenu'>"
         "    <menuitem action='Chat'/>"
         "    <menuitem action='SendFile'/>"
+        "    <menuitem action='Share'/>"
         "  </popup>"
         "</ui>";
 
@@ -870,6 +902,11 @@ void ChatWindow::hideCallback()
     parent.chatDelete(jid);
 }
 
+void ChatWindow::shareCallback()
+{
+//    hide();
+    parent.doShare(this->jid);
+}
 
 void ChatWindow::textEnterCallback()
 {
@@ -895,6 +932,8 @@ bool ChatWindow::doSetup()
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Leave",  Gtk::Stock::CANCEL),
         sigc::mem_fun(*this, &ChatWindow::leaveCallback) );
+    actionGroup->add( Gtk::Action::create("Share",  Gtk::Stock::CONNECT,
+        "Share whiteboard"), sigc::mem_fun(*this, &ChatWindow::shareCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -907,6 +946,7 @@ bool ChatWindow::doSetup()
         "  <menubar name='MenuBar'>"
         "    <menu action='MenuFile'>"
         "      <menuitem action='Leave'/>"
+        "      <menuitem action='Share'/>"
         "    </menu>"
         "  </menubar>"
         "</ui>";
@@ -977,6 +1017,11 @@ void GroupChatWindow::textEnterCallback()
     inputTxt.set_text("");
 }
 
+void GroupChatWindow::shareCallback()
+{
+    parent.doGroupShare(groupJid);
+}
+
 bool GroupChatWindow::doSetup()
 {
     DOMString title = "Group Chat - ";
@@ -994,6 +1039,8 @@ bool GroupChatWindow::doSetup()
     actionGroup->add( Gtk::Action::create("MenuFile", "_File") );
     actionGroup->add( Gtk::Action::create("Leave",  Gtk::Stock::CANCEL),
         sigc::mem_fun(*this, &GroupChatWindow::leaveCallback) );
+    actionGroup->add( Gtk::Action::create("Share",  Gtk::Stock::CONNECT, "Share whiteboard"),
+        sigc::mem_fun(*this, &GroupChatWindow::shareCallback) );
 
 
     Glib::RefPtr<Gtk::UIManager> uiManager = Gtk::UIManager::create();
@@ -1005,7 +1052,8 @@ bool GroupChatWindow::doSetup()
         "<ui>"
         "  <menubar name='MenuBar'>"
         "    <menu action='MenuFile'>"
-         "      <menuitem action='Leave'/>"
+        "      <menuitem action='Leave'/>"
+        "      <menuitem action='Share'/>"
         "    </menu>"
         "  </menubar>"
         "</ui>";
@@ -1095,7 +1143,15 @@ void GroupChatWindow::doSendFile(const DOMString &nick)
 
 }
 
+void GroupChatWindow::doShare(const DOMString &nick)
+{
+    printf("##Share inkboard with %s\n", nick.c_str());
+    DOMString fullJid = groupJid;
+    fullJid.append("/");
+    fullJid.append(nick);
+    parent.doShare(fullJid);
 
+}
 
 
 //#########################################################################
@@ -2412,6 +2468,21 @@ void PedroGui::doReceiveFile(
 
 }
 
+void PedroGui::doShare(const DOMString &jid)
+{
+    Inkscape::Whiteboard::SessionManager& sm = Inkscape::Whiteboard::SessionManager::instance();
+    sm.doShare(jid, Inkscape::Whiteboard::INKBOARD_PRIVATE);
+
+//  Inkscape::Whiteboard::SessionManager::instance().createInkboardDesktop(jid, Inkscape::Whiteboard::INKBOARD_PRIVATE);
+}
+
+void PedroGui::doGroupShare(const DOMString &groupJid)
+{
+    Inkscape::Whiteboard::SessionManager& sm = Inkscape::Whiteboard::SessionManager::instance();
+    sm.doShare(groupJid, Inkscape::Whiteboard::INKBOARD_MUC);
+
+//  Inkscape::Whiteboard::SessionManager::instance().createInkboardDesktop(groupJid, Inkscape::Whiteboard::INKBOARD_MUC);
+}
 
 //##################
 //# CALLBACKS
