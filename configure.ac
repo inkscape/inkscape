@@ -586,7 +586,7 @@ fi
 dnl ******************************
 dnl   Boost graph library is required for graphlayout functions
 dnl ******************************
-AC_CHECK_HEADER([boost/graph/adjacency_list.hpp],
+AC_CHECK_HEADER([boost/graph/kamada_kawai_spring_layout.hpp],
                 [AC_DEFINE([HAVE_BOOST_GRAPH_LIB],[],[Will enable connector network layout])],
                 [AC_MSG_WARN([Boost graph lib not found, can't include connector network layout functionality.])])
 
