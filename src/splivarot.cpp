@@ -56,49 +56,49 @@
 
 bool   Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who);
 
-void sp_selected_path_boolop(bool_op bop);
+void sp_selected_path_boolop(bool_op bop, const unsigned int verb=SP_VERB_NONE, const Glib::ustring description="");
 void sp_selected_path_do_offset(bool expand, double prefOffset);
 void sp_selected_path_create_offset_object(int expand, bool updating);
 
 void
 sp_selected_path_union()
 {
-    sp_selected_path_boolop(bool_op_union);
+    sp_selected_path_boolop(bool_op_union, SP_VERB_SELECTION_UNION, _("Union"));
 }
 
 void
 sp_selected_path_intersect()
 {
-    sp_selected_path_boolop(bool_op_inters);
+    sp_selected_path_boolop(bool_op_inters, SP_VERB_SELECTION_INTERSECT, _("Intersection"));
 }
 
 void
 sp_selected_path_diff()
 {
-    sp_selected_path_boolop(bool_op_diff);
+    sp_selected_path_boolop(bool_op_diff, SP_VERB_SELECTION_DIFF, _("Difference"));
 }
 
 void
 sp_selected_path_symdiff()
 {
-    sp_selected_path_boolop(bool_op_symdiff);
+    sp_selected_path_boolop(bool_op_symdiff, SP_VERB_SELECTION_SYMDIFF, _("Exclusion"));
 }
 void
 sp_selected_path_cut()
 {
-    sp_selected_path_boolop(bool_op_cut);
+    sp_selected_path_boolop(bool_op_cut, SP_VERB_SELECTION_CUT, _("Division"));
 }
 void
 sp_selected_path_slice()
 {
-    sp_selected_path_boolop(bool_op_slice);
+    sp_selected_path_boolop(bool_op_slice, SP_VERB_SELECTION_SLICE,  _("Cut Path"));
 }
 
 
 // boolean operations
 // take the source paths from the file, do the operation, delete the originals and add the results
 void
-sp_selected_path_boolop(bool_op bop)
+sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustring description)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
@@ -541,18 +541,7 @@ sp_selected_path_boolop(bool_op bop)
         Inkscape::GC::release(repr);
     }
 
-    unsigned int operation_verb = SP_VERB_NONE;
-    switch(bop) {
-        case bool_op_union   : operation_verb = SP_VERB_SELECTION_UNION;     break;
-        case bool_op_inters  : operation_verb = SP_VERB_SELECTION_INTERSECT; break;
-        case bool_op_diff    : operation_verb = SP_VERB_SELECTION_DIFF;      break;
-        case bool_op_symdiff : operation_verb = SP_VERB_SELECTION_SYMDIFF;   break;
-        case bool_op_cut     : operation_verb = SP_VERB_SELECTION_CUT;       break;
-        case bool_op_slice   : operation_verb = SP_VERB_SELECTION_SLICE;     break;
-    }
-
-    sp_document_done(sp_desktop_document(desktop), operation_verb, 
-                     /* TODO: annotate */ "splivarot.cpp:555");
+    sp_document_done(sp_desktop_document(desktop), verb, description);
 
     delete res;
 }
@@ -1517,7 +1506,7 @@ sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
 
     if (didSomething)
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_SIMPLIFY, 
-                         /* TODO: annotate */ "splivarot.cpp:1520");
+                         _("Simplify"));
     else
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to simplify in the selection."));
 

@@ -486,8 +486,8 @@ static void sp_rect_finish(SPRectContext *rc)
         SP_OBJECT(rc->item)->updateRepr();
 
         sp_desktop_selection(dt)->set(rc->item);
-        sp_document_done(sp_desktop_document(dt), SP_VERB_CONTEXT_RECT, 
-                         /* TODO: annotate */ "rect-context.cpp:490");
+        sp_document_done(sp_desktop_document(dt), SP_VERB_CONTEXT_RECT,
+                         _("Create rectangle"));
 
         rc->item = NULL;
     }

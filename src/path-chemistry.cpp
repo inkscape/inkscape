@@ -136,7 +136,7 @@ sp_selected_path_combine(void)
     repr->setPosition(topmost > 0 ? topmost + 1 : 0);
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_COMBINE, 
-                     /* TODO: annotate */ "path-chemistry.cpp:139");
+                         _("Combine"));
 
     selection->set(repr);
 
@@ -230,7 +230,7 @@ sp_selected_path_break_apart(void)
 
     if (did) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
-                         /* TODO: annotate */ "path-chemistry.cpp:233");
+                         _("Break Apart"));
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
         return;
