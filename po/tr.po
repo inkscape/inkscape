@@ -1,14 +1,14 @@
 # translation of tr.po to turkish
 # Serdar Soytetir <sendirom@gmail.com>, 2005.
 # Serdar Soytetir <sendirom@gmail.com>, 2005.
-#: ../src/widgets/toolbox.cpp:3665 ../src/widgets/toolbox.cpp:3686
-#: ../src/widgets/toolbox.cpp:3715 ../src/widgets/toolbox.cpp:3736
-#: ../src/widgets/toolbox.cpp:3763
+#: ../src/widgets/toolbox.cpp:3694 ../src/widgets/toolbox.cpp:3715
+#: ../src/widgets/toolbox.cpp:3744 ../src/widgets/toolbox.cpp:3765
+#: ../src/widgets/toolbox.cpp:3792
 msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-02 13:30+0200\n"
+"POT-Creation-Date: 2006-07-09 21:26+0200\n"
 "PO-Revision-Date: 2005-11-26 02:01+0200\n"
 "Last-Translator: Serdar Soytetir <sendirom@gmail.com>\n"
 "Language-Team: turkish <tr@li.org>\n"
@@ -88,11 +88,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "<b>En az bir bağlayıcı olmayan nesne Seçin</b>."
 
-#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3904
+#: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3933
 msgid "Make connectors avoid selected objects"
 msgstr "Seçili nesnelerden kaçınarak bağlayıcılar oluştur"
 
-#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3908
+#: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3937
 msgid "Make connectors ignore selected objects"
 msgstr "Seçili nesneleri engelleyerek bağlayıcılar oluştur"
 
@@ -529,7 +529,7 @@ msgstr "1. Çizimden al:"
 
 #. ----Hbox2
 #: ../src/dialogs/clonetiler.cpp:2210 ../src/dialogs/clonetiler.cpp:2357
-#: ../src/ui/dialog/tracedialog.cpp:458
+#: ../src/ui/dialog/tracedialog.cpp:461
 #, fuzzy
 msgid "Color"
 msgstr "Renk"
@@ -783,15 +783,15 @@ msgid "none"
 msgstr "hiçbiri"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2229
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2244
 msgid "_Page"
 msgstr "S_ayfa"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2233
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2248
 msgid "_Drawing"
 msgstr "_Çizim"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2235
+#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2250
 msgid "_Selection"
 msgstr "_Seçim"
 
@@ -903,34 +903,34 @@ msgstr "%s dosyası aktarılamadı.\n"
 msgid "Select a filename for exporting"
 msgstr "Dışarı aktarılacak dosyayı seçin"
 
-#: ../src/dialogs/filedialog.cpp:358
+#: ../src/dialogs/filedialog.cpp:359
 msgid "No preview"
 msgstr "Önizleme yok"
 
-#: ../src/dialogs/filedialog.cpp:459
+#: ../src/dialogs/filedialog.cpp:460
 msgid "too large for preview"
 msgstr "önizleme için çok büyük"
 
-#: ../src/dialogs/filedialog.cpp:751 ../src/dialogs/filedialog.cpp:752
+#: ../src/dialogs/filedialog.cpp:752 ../src/dialogs/filedialog.cpp:753
 msgid "All Images"
 msgstr "Tüm Resimler"
 
-#: ../src/dialogs/filedialog.cpp:756 ../src/dialogs/filedialog.cpp:757
+#: ../src/dialogs/filedialog.cpp:757 ../src/dialogs/filedialog.cpp:758
 msgid "All Files"
 msgstr "Tüm Dosyalar"
 
-#: ../src/dialogs/filedialog.cpp:763 ../src/dialogs/filedialog.cpp:764
+#: ../src/dialogs/filedialog.cpp:764 ../src/dialogs/filedialog.cpp:765
 msgid "All Inkscape Files"
 msgstr "Tüm Inkscape Dosyaları"
 
-#: ../src/dialogs/filedialog.cpp:1166
+#: ../src/dialogs/filedialog.cpp:1167
 msgid "Guess from extension"
 msgstr "Uzantıdan tahmin et"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/dialogs/filedialog.cpp:1251
+#: ../src/dialogs/filedialog.cpp:1252
 msgid "Append filename extension automatically"
 msgstr "Dosya uzantısını otomatik olarak ekle"
 
@@ -1206,8 +1206,8 @@ msgid ""
 msgstr ""
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2127
-#: ../src/verbs.cpp:2131
+#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2146
 msgid "_Set"
 msgstr "_Ata"
 
@@ -1602,13 +1602,13 @@ msgstr ""
 msgid "No document selected"
 msgstr "Hiçbir belge seçilmedi"
 
-#: ../src/dialogs/stroke-style.cpp:782 ../src/interface.cpp:760
+#: ../src/dialogs/stroke-style.cpp:782 ../src/interface.cpp:764
 #: ../src/ui/dialog/inkscape-preferences.cpp:188
 #: ../src/ui/dialog/inkscape-preferences.cpp:320
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 #: ../src/ui/widget/selected-style.cpp:136
-#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1908
+#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1923
 msgid "None"
 msgstr "Hiçbiri"
 
@@ -1736,13 +1736,13 @@ msgstr "Merkezi Y:"
 msgid "Align lines right"
 msgstr "Nesne dışını sağ kenara hizala"
 
-#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3589
-#: ../src/widgets/toolbox.cpp:3635
+#: ../src/dialogs/text-edit.cpp:286 ../src/widgets/toolbox.cpp:3618
+#: ../src/widgets/toolbox.cpp:3664
 msgid "Horizontal text"
 msgstr "Yatay yazı"
 
-#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3600
-#: ../src/widgets/toolbox.cpp:3646
+#: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3629
+#: ../src/widgets/toolbox.cpp:3675
 msgid "Vertical text"
 msgstr "Dikey yazı"
 
@@ -1753,7 +1753,7 @@ msgstr "Çizgi aralığı:"
 #. Text
 #: ../src/dialogs/text-edit.cpp:361 ../src/selection-describer.cpp:63
 #: ../src/ui/dialog/inkscape-preferences.cpp:381
-#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2155
+#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2170
 msgid "Text"
 msgstr "Metin"
 
@@ -1852,11 +1852,11 @@ msgstr "Yeni üye düğümü"
 msgid "New text node"
 msgstr "Yeni metin düğümü"
 
-#: ../src/dialogs/xml-tree.cpp:344
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1698
 msgid "Duplicate node"
 msgstr "Düğümü çiftle"
 
-#: ../src/dialogs/xml-tree.cpp:365
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2902
 msgid "Delete node"
 msgstr "Düğümü sil"
 
@@ -1921,17 +1921,17 @@ msgid ""
 "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
 msgstr ""
 
-#: ../src/document.cpp:366
+#: ../src/document.cpp:367
 #, c-format
 msgid "New document %d"
 msgstr "Yeni belge %d"
 
-#: ../src/document.cpp:398
+#: ../src/document.cpp:399
 #, c-format
 msgid "Memory document %d"
 msgstr "%d hafıza belgesi"
 
-#: ../src/document.cpp:541
+#: ../src/document.cpp:542
 #, c-format
 msgid "Unnamed document %d"
 msgstr "İsimsiz %d belgesi"
@@ -1948,36 +1948,45 @@ msgstr ""
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:354
+#: ../src/dropper-context.cpp:358
 #, c-format
 msgid " alpha %.3g"
 msgstr ""
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:356
+#: ../src/dropper-context.cpp:360
 #, c-format
 msgid ", averaged with radius %d"
 msgstr ""
 
-#: ../src/dropper-context.cpp:356
+#: ../src/dropper-context.cpp:360
 msgid " under cursor"
 msgstr ""
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:358
+#: ../src/dropper-context.cpp:362
 msgid "<b>Release mouse</b> to set color."
 msgstr ""
 
-#: ../src/dropper-context.cpp:358 ../src/tools-switch.cpp:199
+#: ../src/dropper-context.cpp:362 ../src/tools-switch.cpp:199
 msgid ""
 "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to "
 "average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> "
 "to copy the color under mouse to clipboard"
 msgstr ""
 
-#: ../src/event-log.cpp:32
+#: ../src/event-log.cpp:34
 msgid "[Unchanged]"
 msgstr ""
+
+#. Edit
+#: ../src/event-log.cpp:270 ../src/event-log.cpp:273 ../src/verbs.cpp:1958
+msgid "_Undo"
+msgstr "_Geri Al"
+
+#: ../src/event-log.cpp:280 ../src/event-log.cpp:284 ../src/verbs.cpp:1960
+msgid "_Redo"
+msgstr "_Yinele"
 
 #: ../src/extension/dependency.cpp:239
 msgid "Dependency::"
@@ -2251,15 +2260,15 @@ msgstr ""
 msgid "LaTeX Print"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2056
+#: ../src/extension/internal/odf.cpp:2411
 msgid "OpenDocument Drawing Output"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2061
+#: ../src/extension/internal/odf.cpp:2416
 msgid "OpenDocument drawing (*.odg)"
 msgstr ""
 
-#: ../src/extension/internal/odf.cpp:2062
+#: ../src/extension/internal/odf.cpp:2417
 msgid "OpenDocument drawing file"
 msgstr ""
 
@@ -2355,7 +2364,7 @@ msgstr ""
 "Dosyaya yazmak için '>dosyaadi' \n"
 "Programa yönlendirmek için '|' kullanın"
 
-#: ../src/extension/internal/ps.cpp:1211
+#: ../src/extension/internal/ps.cpp:1217
 msgid "Postscript Print"
 msgstr ""
 
@@ -2452,11 +2461,11 @@ msgstr ""
 "olarak küçüktür ve keyfi olarak ölçeklenebilir, fakat alfa şeffaflık değeri "
 "ve örüntüler kaybolacaktır."
 
-#: ../src/extension/internal/pdf.cpp:1548
+#: ../src/extension/internal/pdf.cpp:1528
 msgid "write error occurred"
 msgstr ""
 
-#: ../src/extension/internal/pdf.cpp:1575
+#: ../src/extension/internal/pdf.cpp:1555
 msgid "PDF Print"
 msgstr ""
 
@@ -2872,75 +2881,75 @@ msgstr ""
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
-#: ../src/interface.cpp:772
+#: ../src/interface.cpp:776
 msgid "Commands Bar"
 msgstr "Komutlar Çubuğu"
 
-#: ../src/interface.cpp:772
+#: ../src/interface.cpp:776
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr "Yönerge çubuğunu göster veya gizle (menünün altındaki)"
 
-#: ../src/interface.cpp:774
+#: ../src/interface.cpp:778
 #, fuzzy
 msgid "Tool Controls Bar"
 msgstr "Araç Denetimleri"
 
-#: ../src/interface.cpp:774
+#: ../src/interface.cpp:778
 #, fuzzy
 msgid "Show or hide the Tool Controls bar"
 msgstr "Araç Denetim panelini göster veya gizle"
 
-#: ../src/interface.cpp:776
+#: ../src/interface.cpp:780
 msgid "_Toolbox"
 msgstr "_Araç kutusu"
 
-#: ../src/interface.cpp:776
+#: ../src/interface.cpp:780
 msgid "Show or hide the main toolbox (on the left)"
 msgstr "Ana araç kutusunun gösterir veya gizler (soldaki)"
 
-#: ../src/interface.cpp:782
+#: ../src/interface.cpp:786
 #, fuzzy
 msgid "_Palette"
 msgstr "_Yapıştır"
 
-#: ../src/interface.cpp:782
+#: ../src/interface.cpp:786
 #, fuzzy
 msgid "Show or hide the color palette"
 msgstr "Araç Denetim panelini göster veya gizle"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:788
 msgid "_Statusbar"
 msgstr "_Durum çubuğu"
 
-#: ../src/interface.cpp:784
+#: ../src/interface.cpp:788
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr "Durum çubuğunu gösterir veya gizler (pencerenin en altındaki)"
 
-#: ../src/interface.cpp:838
+#: ../src/interface.cpp:842
 #, c-format
 msgid "Verb \"%s\" Unknown"
 msgstr "Fiil \"%s\" Bilinmiyor"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
-#: ../src/interface.cpp:948
+#: ../src/interface.cpp:952
 #, c-format
 msgid "Enter group #%s"
 msgstr "Gruba gir #%s"
 
-#: ../src/interface.cpp:959
+#: ../src/interface.cpp:963
 msgid "Go to parent"
 msgstr "Üste git"
 
-#: ../src/interface.cpp:1104
+#: ../src/interface.cpp:1108
 msgid "Could not parse SVG data"
 msgstr "SVG verisi ayrıştırılamıyor"
 
-#: ../src/interface.cpp:1269
+#: ../src/interface.cpp:1273
 #, c-format
 msgid "Overwrite %s"
 msgstr "Üzerine Yaz %s"
 
-#: ../src/interface.cpp:1290
+#: ../src/interface.cpp:1294
 #, c-format
 msgid ""
 "The file %s already exists.  Do you want to overwrite that file with the "
@@ -2999,21 +3008,6 @@ msgid ""
 "Inkscape cannot connect to <b>%1</b>.\n"
 "\n"
 "You are still connected to a Jabber server as <b>%2</b>."
-msgstr ""
-
-#: ../src/jabber_whiteboard/message-queue.cpp:75
-#, c-format
-msgid ""
-"Received late message (message sequence number is %u, but latest processed "
-"message had sequence number %u).  Discarding message; session may be "
-"desynchronized."
-msgstr ""
-
-#: ../src/jabber_whiteboard/message-utilities.cpp:108
-#, c-format
-msgid ""
-"Node %p (name %s) is a special node, but it could not be found in the node "
-"tracker (possible unexpected duplicate?)  Generating unique ID anyway."
 msgstr ""
 
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
@@ -3274,7 +3268,7 @@ msgstr "_Son Kullanılanlar"
 msgid "_Edit"
 msgstr "_Düzen"
 
-#: ../src/menus-skeleton.h:64 ../src/verbs.cpp:1955
+#: ../src/menus-skeleton.h:64 ../src/verbs.cpp:1970
 #, fuzzy
 msgid "Paste Si_ze"
 msgstr "Stil Yapıştır"
@@ -3331,7 +3325,8 @@ msgid "_Text"
 msgstr "_Metin"
 
 #: ../src/menus-skeleton.h:225
-msgid "Effects"
+#, fuzzy
+msgid "Effe_cts"
 msgstr "Efektler"
 
 #: ../src/menus-skeleton.h:232
@@ -3361,28 +3356,128 @@ msgstr ""
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 
+#. drag curve
+#: ../src/node-context.cpp:624
+msgid "Drag curve"
+msgstr ""
+
+#: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
+#, fuzzy
+msgid "Stamp"
+msgstr "Basamaklar"
+
+#: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
+#, fuzzy
+msgid "Move nodes vertically"
+msgstr "Seçili nesneleri dikey çevir"
+
+#: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
+#, fuzzy
+msgid "Move nodes horizontally"
+msgstr "Seçili nesneleri yatay çevir"
+
+#: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
+#, fuzzy
+msgid "Move nodes"
+msgstr "Düğümü alçalt"
+
 #: ../src/nodepath.cpp:1259
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:1703 ../src/nodepath.cpp:1715 ../src/nodepath.cpp:1802
-#: ../src/nodepath.cpp:1814
+#: ../src/nodepath.cpp:1430
+#, fuzzy
+msgid "Align nodes"
+msgstr "Nesneleri hizala"
+
+#: ../src/nodepath.cpp:1492
+#, fuzzy
+msgid "Distribute nodes"
+msgstr "Özellik"
+
+#: ../src/nodepath.cpp:1531
+#, fuzzy
+msgid "Add nodes"
+msgstr "Düğümler"
+
+#: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
+#, fuzzy
+msgid "Add node"
+msgstr "Düğümler"
+
+#: ../src/nodepath.cpp:1668
+#, fuzzy
+msgid "Break path"
+msgstr "_Kopar"
+
+#: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
+#: ../src/nodepath.cpp:1821
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr ""
 
-#: ../src/nodepath.cpp:2072 ../src/nodepath.cpp:2086
+#: ../src/nodepath.cpp:1743
+msgid "Close subpath"
+msgstr ""
+
+#: ../src/nodepath.cpp:1795
+#, fuzzy
+msgid "Join nodes"
+msgstr "bitiş düğümü"
+
+#: ../src/nodepath.cpp:1842
+msgid "Close subpath by segment"
+msgstr ""
+
+#: ../src/nodepath.cpp:1896
+#, fuzzy
+msgid "Join nodes by segment"
+msgstr "Yeni parça ile seçili düğümlerdeki yolları birleştirir"
+
+#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
+#, fuzzy
+msgid "Delete nodes"
+msgstr "Düğümü sil"
+
+#: ../src/nodepath.cpp:2020
+msgid "Delete nodes preserving shape"
+msgstr ""
+
+#: ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2093
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
 
-#: ../src/nodepath.cpp:2182
+#: ../src/nodepath.cpp:2189
 msgid "Cannot find path between nodes."
 msgstr "Düğümler arasında yol bulunamadı."
 
-#: ../src/nodepath.cpp:3395
+#: ../src/nodepath.cpp:2218
+#, fuzzy
+msgid "Delete segment"
+msgstr "Seçimi siler"
+
+#: ../src/nodepath.cpp:2240
+msgid "Change segment type"
+msgstr ""
+
+#: ../src/nodepath.cpp:2256 ../src/nodepath.cpp:2946
+msgid "Change node type"
+msgstr ""
+
+#: ../src/nodepath.cpp:3214
+#, fuzzy
+msgid "Retract handle"
+msgstr "Dikdörtgen"
+
+#: ../src/nodepath.cpp:3262
+#, fuzzy
+msgid "Move node handle"
+msgstr "Seçim"
+
+#: ../src/nodepath.cpp:3402
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3390,45 +3485,60 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/nodepath.cpp:3910
+#: ../src/nodepath.cpp:3580
+#, fuzzy
+msgid "Rotate nodes"
+msgstr "Düğümü yükselt"
+
+#: ../src/nodepath.cpp:3705
+#, fuzzy
+msgid "Scale nodes"
+msgstr "Düğümü yükselt"
+
+#: ../src/nodepath.cpp:3752
+#, fuzzy
+msgid "Flip nodes"
+msgstr "çizgiler"
+
+#: ../src/nodepath.cpp:3917
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr ""
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4113
+#: ../src/nodepath.cpp:4120
 msgid "end node"
 msgstr "bitiş düğümü"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4118
+#: ../src/nodepath.cpp:4125
 msgid "cusp"
 msgstr "zirve"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4121
+#: ../src/nodepath.cpp:4128
 msgid "smooth"
 msgstr "düz"
 
-#: ../src/nodepath.cpp:4123
+#: ../src/nodepath.cpp:4130
 msgid "symmetric"
 msgstr "Simetrik"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4129
+#: ../src/nodepath.cpp:4136
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4131
+#: ../src/nodepath.cpp:4138
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4134
+#: ../src/nodepath.cpp:4141
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 
-#: ../src/nodepath.cpp:4146
+#: ../src/nodepath.cpp:4153
 #, fuzzy
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
@@ -3436,17 +3546,17 @@ msgid ""
 "rotate"
 msgstr "Yeni bir eğri yaratılıyor. '+'a basarak Yeni/Ekleye ulaşabilirsiniz"
 
-#: ../src/nodepath.cpp:4147
+#: ../src/nodepath.cpp:4154
 #, fuzzy
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "Yeni bir eğri yaratılıyor. '+'a basarak Yeni/Ekleye ulaşabilirsiniz"
 
-#: ../src/nodepath.cpp:4170 ../src/nodepath.cpp:4182
+#: ../src/nodepath.cpp:4177 ../src/nodepath.cpp:4189
 #, fuzzy
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Dökümanda geçiş yok"
 
-#: ../src/nodepath.cpp:4174
+#: ../src/nodepath.cpp:4181
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3457,18 +3567,18 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/nodepath.cpp:4180
+#: ../src/nodepath.cpp:4187
 msgid "Drag the handles of the object to modify it."
 msgstr ""
 
-#: ../src/nodepath.cpp:4188
+#: ../src/nodepath.cpp:4195
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "Seçilen düğümleri çizgilere ekle"
 msgstr[1] "Seçilen düğümleri çizgilere ekle"
 
-#: ../src/nodepath.cpp:4195
+#: ../src/nodepath.cpp:4202
 #, fuzzy, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3477,7 +3587,7 @@ msgid_plural ""
 msgstr[0] "Seçilen düğümleri çizgilere ekle"
 msgstr[1] "Seçilen düğümleri çizgilere ekle"
 
-#: ../src/nodepath.cpp:4201
+#: ../src/nodepath.cpp:4208
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3585,10 +3695,20 @@ msgid ""
 "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 
+#: ../src/path-chemistry.cpp:139
+#, fuzzy
+msgid "Combine"
+msgstr "Birleştir"
+
 #: ../src/path-chemistry.cpp:154
 #, fuzzy
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "Seçili nesneleri panoya kes"
+
+#: ../src/path-chemistry.cpp:233
+#, fuzzy
+msgid "Break Apart"
+msgstr "_Kopar"
 
 #: ../src/path-chemistry.cpp:235
 msgid "<b>No path(s)</b> to break apart in the selection."
@@ -3713,6 +3833,11 @@ msgid ""
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr ""
 
+#: ../src/rect-context.cpp:490
+#, fuzzy
+msgid "Create rectangle"
+msgstr "Dörtgenleri ara"
+
 #: ../src/select-context.cpp:226
 #, fuzzy
 msgid "Move canceled."
@@ -3740,14 +3865,35 @@ msgstr ""
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Seçili nesneleri eğrilere dönder"
 
+#: ../src/selection-chemistry.cpp:217
+#, fuzzy
+msgid "Delete text"
+msgstr "Düğümü sil"
+
 #: ../src/selection-chemistry.cpp:225
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
+
+#: ../src/selection-chemistry.cpp:243
+#, fuzzy
+msgid "Delete"
+msgstr "S_il"
 
 #: ../src/selection-chemistry.cpp:257
 #, fuzzy
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Seçili nesneleri panoya kes"
+
+#: ../src/selection-chemistry.cpp:282 ../src/widgets/gradient-selector.cpp:133
+#: ../src/widgets/gradient-toolbar.cpp:488
+#, fuzzy
+msgid "Duplicate"
+msgstr "Çiftle"
+
+#: ../src/selection-chemistry.cpp:307
+#, fuzzy
+msgid "Delete all"
+msgstr "S_il"
 
 #: ../src/selection-chemistry.cpp:430
 #, fuzzy
@@ -3759,6 +3905,11 @@ msgstr "Seçili nesneleri üste taşı"
 msgid "Select <b>at least two objects</b> to group."
 msgstr "Dökümanda geçiş yok"
 
+#: ../src/selection-chemistry.cpp:509 ../src/selection-describer.cpp:49
+#, fuzzy
+msgid "Group"
+msgstr "_Grupla"
+
 #: ../src/selection-chemistry.cpp:524
 #, fuzzy
 msgid "Select a <b>group</b> to ungroup."
@@ -3767,6 +3918,11 @@ msgstr "Seçili nesneleri üste taşı"
 #: ../src/selection-chemistry.cpp:565
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
+
+#: ../src/selection-chemistry.cpp:571
+#, fuzzy
+msgid "Ungroup"
+msgstr "Gr_ubu çöz"
 
 #: ../src/selection-chemistry.cpp:635
 #, fuzzy
@@ -3779,20 +3935,40 @@ msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 
+#: ../src/selection-chemistry.cpp:673
+#, fuzzy
+msgid "Raise"
+msgstr "_Yukarı Al"
+
 #: ../src/selection-chemistry.cpp:686
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Seçili nesneleri eğrilere dönder"
+
+#: ../src/selection-chemistry.cpp:709
+#, fuzzy
+msgid "Raise to top"
+msgstr "En _Yukarı Al"
 
 #: ../src/selection-chemistry.cpp:723
 #, fuzzy
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Seçili nesneleri panoya kes"
 
+#: ../src/selection-chemistry.cpp:766
+#, fuzzy
+msgid "Lower"
+msgstr "_Aşağı Al"
+
 #: ../src/selection-chemistry.cpp:780
 #, fuzzy
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Seçili nesneleri panoya kes"
+
+#: ../src/selection-chemistry.cpp:815
+#, fuzzy
+msgid "Lower to bottom"
+msgstr "En _Aşağı Al"
 
 #: ../src/selection-chemistry.cpp:822
 msgid "Nothing to undo."
@@ -3812,20 +3988,44 @@ msgstr ""
 msgid "Nothing on the clipboard."
 msgstr "Seçileni panoya kopyala"
 
+#: ../src/selection-chemistry.cpp:1124
+#, fuzzy
+msgid "Paste"
+msgstr "_Yapıştır"
+
 #: ../src/selection-chemistry.cpp:1142
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Seçili nesneleri eğrilere dönder"
+
+#: ../src/selection-chemistry.cpp:1151
+#, fuzzy
+msgid "Paste style"
+msgstr "Stil Yapıştır"
 
 #: ../src/selection-chemistry.cpp:1169 ../src/selection-chemistry.cpp:1205
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Seçili nesneleri eğrilere dönder"
 
+#: ../src/selection-chemistry.cpp:1187
+#, fuzzy
+msgid "Paste size"
+msgstr "Stil Yapıştır"
+
+#: ../src/selection-chemistry.cpp:1228
+msgid "Paste size separately"
+msgstr ""
+
 #: ../src/selection-chemistry.cpp:1239
 #, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Seçili nesneleri panoya kes"
+
+#: ../src/selection-chemistry.cpp:1264
+#, fuzzy
+msgid "Raise to next layer"
+msgstr "Sonraki katmana taşındı."
 
 #: ../src/selection-chemistry.cpp:1270
 #, fuzzy
@@ -3837,10 +4037,76 @@ msgstr "Döküman Adı:"
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Seçili nesneleri panoya kes"
 
+#: ../src/selection-chemistry.cpp:1309
+#, fuzzy
+msgid "Lower to previous layer"
+msgstr "Önceki katmana taşındı."
+
 #: ../src/selection-chemistry.cpp:1315
 #, fuzzy
 msgid "No more layers below."
 msgstr "Döküman Adı:"
+
+#: ../src/selection-chemistry.cpp:1457
+#, fuzzy
+msgid "Remove transform"
+msgstr "Dönüşümleri _Kaldır"
+
+#: ../src/selection-chemistry.cpp:1566
+#, fuzzy
+msgid "Rotate 90&#176; CW"
+msgstr "SY 90 Derece Döndürür"
+
+#: ../src/selection-chemistry.cpp:1594
+#, fuzzy
+msgid "Rotate 90&#176; CCW"
+msgstr "SYT 90 Derece Döndür"
+
+#: ../src/selection-chemistry.cpp:1612 ../src/seltrans.cpp:353
+#, fuzzy
+msgid "Rotate"
+msgstr "Döndür"
+
+#: ../src/selection-chemistry.cpp:1641
+msgid "Rotate by pixels"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1667 ../src/seltrans.cpp:350
+#, fuzzy
+msgid "Scale"
+msgstr "Ölçekle"
+
+#: ../src/selection-chemistry.cpp:1686
+msgid "Scale by whole factor"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1702
+msgid "Move vertically"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1705
+#, fuzzy
+msgid "Move horizontally"
+msgstr "Yatay"
+
+#: ../src/selection-chemistry.cpp:1708 ../src/selection-chemistry.cpp:1736
+#: ../src/seltrans.cpp:347
+#, fuzzy
+msgid "Move"
+msgstr "Taşı"
+
+#: ../src/selection-chemistry.cpp:1730
+msgid "Nudge vertically by pixels"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1733
+msgid "Nudge horizontally by pixels"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:1997 ../src/selection-describer.cpp:65
+#, fuzzy
+msgid "Clone"
+msgstr "Kopya Oluştur"
 
 #: ../src/selection-chemistry.cpp:2014
 #, fuzzy
@@ -3850,6 +4116,11 @@ msgstr "Açılacak dosyayı seçin"
 #: ../src/selection-chemistry.cpp:2045
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
+
+#: ../src/selection-chemistry.cpp:2049
+#, fuzzy
+msgid "Unlink clone"
+msgstr "Kopya Bağını Kopar"
 
 #: ../src/selection-chemistry.cpp:2063
 msgid ""
@@ -3875,6 +4146,11 @@ msgstr ""
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Seçili nesneleri panoya kes"
 
+#: ../src/selection-chemistry.cpp:2195
+#, fuzzy
+msgid "Objects to pattern"
+msgstr "Nesn_eden Örüntüye"
+
 #: ../src/selection-chemistry.cpp:2211
 #, fuzzy
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
@@ -3885,10 +4161,20 @@ msgstr "Seçili nesneleri panoya kes"
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Seçili nesneleri panoya kes"
 
+#: ../src/selection-chemistry.cpp:2267
+#, fuzzy
+msgid "Pattern to objects"
+msgstr "Örüntüden Nesney_e"
+
 #: ../src/selection-chemistry.cpp:2285
 #, fuzzy
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Seçili nesneleri eğrilere dönder"
+
+#: ../src/selection-chemistry.cpp:2417
+#, fuzzy
+msgid "Create bitmap"
+msgstr "Sarmal oluşturur"
 
 #: ../src/selection-chemistry.cpp:2449
 #, fuzzy
@@ -3900,10 +4186,33 @@ msgstr "Seçili nesneleri eğrilere dönder"
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Seçili nesneleri eğrilere dönder"
 
-#: ../src/selection-chemistry.cpp:2556
+#: ../src/selection-chemistry.cpp:2543
+msgid "Set clipping path"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:2545
+#, fuzzy
+msgid "Set mask"
+msgstr "Yıldızlar"
+
+#: ../src/selection-chemistry.cpp:2558
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Seçili nesneleri üste taşı"
+
+#: ../src/selection-chemistry.cpp:2626
+msgid "Release clipping path"
+msgstr ""
+
+#: ../src/selection-chemistry.cpp:2628
+#, fuzzy
+msgid "Release mask"
+msgstr "_Tersini Al"
+
+#: ../src/selection-chemistry.cpp:2672
+#, fuzzy
+msgid "Fit page to selection"
+msgstr "Seçileni kes"
 
 #: ../src/selection-describer.cpp:41
 #, fuzzy
@@ -3917,18 +4226,13 @@ msgstr "Değiştir"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2143
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2158
 msgid "Ellipse"
 msgstr "Elips"
 
 #: ../src/selection-describer.cpp:47
 msgid "Flowed text"
 msgstr ""
-
-#: ../src/selection-describer.cpp:49
-#, fuzzy
-msgid "Group"
-msgstr "_Grupla"
 
 #: ../src/selection-describer.cpp:51
 #, fuzzy
@@ -3956,14 +4260,9 @@ msgstr "Elips"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2141
+#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2156
 msgid "Rectangle"
 msgstr "Dikdörtgen"
-
-#: ../src/selection-describer.cpp:65
-#, fuzzy
-msgid "Clone"
-msgstr "Kopya Oluştur"
 
 #: ../src/selection-describer.cpp:69
 #, fuzzy
@@ -3972,13 +4271,13 @@ msgstr "Konum:"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2147
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2162
 msgid "Spiral"
 msgstr "Sarmal"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2145
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2160
 msgid "Star"
 msgstr "Yıldız"
 
@@ -4100,30 +4399,10 @@ msgstr ""
 msgid "Set center"
 msgstr "Yazıcıyı seçin"
 
-#: ../src/seltrans.cpp:347
-#, fuzzy
-msgid "Move"
-msgstr "Taşı"
-
-#: ../src/seltrans.cpp:350
-#, fuzzy
-msgid "Scale"
-msgstr "Ölçekle"
-
-#: ../src/seltrans.cpp:353
-#, fuzzy
-msgid "Rotate"
-msgstr "Döndür"
-
 #: ../src/seltrans.cpp:356
 #, fuzzy
 msgid "Skew"
 msgstr "Eğilt"
-
-#: ../src/seltrans.cpp:455
-#, fuzzy
-msgid "Stamp"
-msgstr "Basamaklar"
 
 #: ../src/seltrans.cpp:477
 msgid ""
@@ -4409,6 +4688,36 @@ msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
+#: ../src/splivarot.cpp:66
+#, fuzzy
+msgid "Union"
+msgstr "_Birleşim"
+
+#: ../src/splivarot.cpp:72
+#, fuzzy
+msgid "Intersection"
+msgstr "_Kesişim"
+
+#: ../src/splivarot.cpp:78
+#, fuzzy
+msgid "Difference"
+msgstr "_Fark"
+
+#: ../src/splivarot.cpp:84
+#, fuzzy
+msgid "Exclusion"
+msgstr "_Çıkartım"
+
+#: ../src/splivarot.cpp:89
+#, fuzzy
+msgid "Division"
+msgstr "Bö_lüm"
+
+#: ../src/splivarot.cpp:94
+#, fuzzy
+msgid "Cut Path"
+msgstr "Yol Kes"
+
 #: ../src/splivarot.cpp:110
 #, fuzzy
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -4433,36 +4742,41 @@ msgid ""
 msgstr "Seçili nesneleri eğrilere dönder"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:570
+#: ../src/splivarot.cpp:559
 #, fuzzy
 msgid "Select <b>path(s)</b> to outline."
 msgstr "Seçili nesneleri panoya kes"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:849
+#: ../src/splivarot.cpp:838
 msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:933
+#: ../src/splivarot.cpp:922
 #, fuzzy
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Seçili nesneleri eğrilere dönder"
 
-#: ../src/splivarot.cpp:1143
+#: ../src/splivarot.cpp:1132
 #, fuzzy
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Seçili nesneleri panoya kes"
 
-#: ../src/splivarot.cpp:1361
+#: ../src/splivarot.cpp:1350
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1494
+#: ../src/splivarot.cpp:1483
 #, fuzzy
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Seçili nesneleri panoya kes"
 
-#: ../src/splivarot.cpp:1522
+#: ../src/splivarot.cpp:1509
+#, fuzzy
+msgid "Simplify"
+msgstr "Sadeleştir"
+
+#: ../src/splivarot.cpp:1511
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
@@ -4655,8 +4969,8 @@ msgstr ""
 msgid "<b>Click and drag</b> between shapes to create a connector."
 msgstr ""
 
-#: ../src/trace/potrace/inkscape-potrace.cpp:550
-#: ../src/trace/potrace/inkscape-potrace.cpp:651
+#: ../src/trace/potrace/inkscape-potrace.cpp:528
+#: ../src/trace/potrace/inkscape-potrace.cpp:608
 #, c-format
 msgid "Trace: %d.  %ld nodes"
 msgstr "İz: %d.  %ld düğüm"
@@ -4694,7 +5008,7 @@ msgstr "Yeni bir SVG dökümanı oluştur"
 msgid "Trace: Image has no bitmap data"
 msgstr "İz: Resim bitmap verisi içermiyor"
 
-#: ../src/trace/trace.cpp:571
+#: ../src/trace/trace.cpp:570
 #, fuzzy, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Son seçilen"
@@ -4718,7 +5032,7 @@ msgid "_Create Link"
 msgstr "Bağlantı _Oluştur"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2009
+#: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2024
 msgid "_Ungroup"
 msgstr "Gr_ubu çöz"
 
@@ -5498,7 +5812,7 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
-#: ../src/ui/dialog/tracedialog.cpp:370 ../src/ui/dialog/tracedialog.cpp:403
+#: ../src/ui/dialog/tracedialog.cpp:373 ../src/ui/dialog/tracedialog.cpp:406
 msgid "Threshold:"
 msgstr "Eşik:"
 
@@ -5727,7 +6041,7 @@ msgstr "Düğüm"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
-#: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2159
+#: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2174
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
 msgstr "Büyüt"
@@ -5738,7 +6052,7 @@ msgid "Shapes"
 msgstr "Şekiller"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2149
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2164
 msgid "Pencil"
 msgstr "Kurşun Kalem"
 
@@ -5753,12 +6067,12 @@ msgid ""
 msgstr ""
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2151
+#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2166
 msgid "Pen"
 msgstr "Kalem"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2153
+#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2168
 msgid "Calligraphy"
 msgstr "El yazısı"
 
@@ -5775,12 +6089,12 @@ msgid ""
 msgstr ""
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2157
+#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2172
 msgid "Gradient"
 msgstr "Artımlı geçiş"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2163
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2178
 #, fuzzy
 msgid "Connector"
 msgstr "Oluşturan"
@@ -5790,7 +6104,7 @@ msgid "If on, connector attachment points will not be shown for text objects"
 msgstr ""
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2161
+#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2176
 msgid "Dropper"
 msgstr "Damlalık"
 
@@ -6270,16 +6584,16 @@ msgstr ""
 
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
-#: ../src/ui/dialog/tracedialog.cpp:345
+#: ../src/ui/dialog/tracedialog.cpp:348
 #, fuzzy
-msgid "SIOX foreground selection (experimental)"
+msgid "SIOX foreground selection"
 msgstr "Seçileni göster"
 
-#: ../src/ui/dialog/tracedialog.cpp:348
+#: ../src/ui/dialog/tracedialog.cpp:351
 msgid "Cover the area you want to select as the foreground"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:350
+#: ../src/ui/dialog/tracedialog.cpp:353
 msgid "SIOX"
 msgstr ""
 
@@ -6287,37 +6601,37 @@ msgstr ""
 #. #### brightness ####
 #. #### Multiple scanning####
 #. ----Hbox1
-#: ../src/ui/dialog/tracedialog.cpp:358 ../src/ui/dialog/tracedialog.cpp:441
+#: ../src/ui/dialog/tracedialog.cpp:361 ../src/ui/dialog/tracedialog.cpp:444
 msgid "Brightness"
 msgstr "Parlaklık"
 
-#: ../src/ui/dialog/tracedialog.cpp:361
+#: ../src/ui/dialog/tracedialog.cpp:364
 msgid "Trace by a given brightness level"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:368
+#: ../src/ui/dialog/tracedialog.cpp:371
 msgid "Brightness cutoff for black/white"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:375
+#: ../src/ui/dialog/tracedialog.cpp:378
 msgid "Image Brightness"
 msgstr "Resim Parlaklığı"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
-#: ../src/ui/dialog/tracedialog.cpp:382
+#: ../src/ui/dialog/tracedialog.cpp:385
 msgid "Optimal Edge Detection (Canny)"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:385
+#: ../src/ui/dialog/tracedialog.cpp:388
 msgid "Trace with edge detection by J. Canny's algorithm"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:401
+#: ../src/ui/dialog/tracedialog.cpp:404
 msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:408
+#: ../src/ui/dialog/tracedialog.cpp:411
 msgid "Edge Detection"
 msgstr "Kenar Tespiti"
 
@@ -6325,118 +6639,128 @@ msgstr "Kenar Tespiti"
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
-#: ../src/ui/dialog/tracedialog.cpp:417
+#: ../src/ui/dialog/tracedialog.cpp:420
 #, fuzzy
 msgid "Color Quantization"
 msgstr "Renkli resim"
 
-#: ../src/ui/dialog/tracedialog.cpp:420
+#: ../src/ui/dialog/tracedialog.cpp:423
 msgid "Trace along the boundaries of reduced colors"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:427
+#: ../src/ui/dialog/tracedialog.cpp:430
 msgid "The number of reduced colors"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:429
+#: ../src/ui/dialog/tracedialog.cpp:432
 msgid "Colors:"
 msgstr "Renkler:"
 
-#: ../src/ui/dialog/tracedialog.cpp:434
+#: ../src/ui/dialog/tracedialog.cpp:437
 msgid "Quantization / Reduction"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:444
+#: ../src/ui/dialog/tracedialog.cpp:447
 msgid "Trace the given number of brightness levels"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:451
+#: ../src/ui/dialog/tracedialog.cpp:454
 #, fuzzy
 msgid "Scans:"
 msgstr "Şekillendir"
 
-#: ../src/ui/dialog/tracedialog.cpp:453
+#: ../src/ui/dialog/tracedialog.cpp:456
 msgid "The desired number of scans"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:461
+#: ../src/ui/dialog/tracedialog.cpp:464
 msgid "Trace the given number of reduced colors"
 msgstr ""
 
+#. TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
+#: ../src/ui/dialog/tracedialog.cpp:468
+#, fuzzy
+msgid "Remove background"
+msgstr "Arkaplan:"
+
+#: ../src/ui/dialog/tracedialog.cpp:471
+msgid "Remove bottom (background) layer when done"
+msgstr ""
+
 #. ---Hbox3
-#: ../src/ui/dialog/tracedialog.cpp:467
+#: ../src/ui/dialog/tracedialog.cpp:476
 msgid "Monochrome"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:470
+#: ../src/ui/dialog/tracedialog.cpp:479
 msgid "Same as Color, but convert result to grayscale"
 msgstr ""
 
 #. TRANSLATORS: "Stack" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:473
+#: ../src/ui/dialog/tracedialog.cpp:482
 msgid "Stack"
 msgstr "Yığın"
 
-#: ../src/ui/dialog/tracedialog.cpp:476
+#: ../src/ui/dialog/tracedialog.cpp:485
 msgid ""
 "Stack scans vertically (no gaps) or tile horizontally (usually with gaps)"
 msgstr ""
 
 #. TRANSLATORS: "Smooth" is a verb here
-#: ../src/ui/dialog/tracedialog.cpp:479
+#: ../src/ui/dialog/tracedialog.cpp:488
 msgid "Smooth"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:482
+#: ../src/ui/dialog/tracedialog.cpp:491
 msgid "Apply Gaussian blur to the bitmap before tracing"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:486
+#: ../src/ui/dialog/tracedialog.cpp:496
 msgid "Multiple Scanning"
 msgstr ""
 
 #. #### Preview ####
-#: ../src/ui/dialog/tracedialog.cpp:492 ../src/ui/dialog/tracedialog.cpp:502
+#: ../src/ui/dialog/tracedialog.cpp:502 ../src/ui/dialog/tracedialog.cpp:512
 msgid "Preview"
 msgstr "Ön izleme"
 
 #. do not expand
-#: ../src/ui/dialog/tracedialog.cpp:496
+#: ../src/ui/dialog/tracedialog.cpp:506
 msgid "Preview the result without actual tracing"
 msgstr ""
 
 #. #### swap black and white ####
-#: ../src/ui/dialog/tracedialog.cpp:508
+#: ../src/ui/dialog/tracedialog.cpp:518
 #: ../src/ui/widget/selected-style.cpp:193
 msgid "Invert"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:512
+#: ../src/ui/dialog/tracedialog.cpp:522
 msgid "Invert black and white regions for single traces"
 msgstr ""
 
-#: ../src/ui/dialog/tracedialog.cpp:516
+#: ../src/ui/dialog/tracedialog.cpp:526
 msgid "Thanks to Peter Selinger, http://potrace.sourceforge.net"
 msgstr "Peter Selinger'e teşekkürler, http://potrace.sourceforge.net"
 
-#: ../src/ui/dialog/tracedialog.cpp:519
+#: ../src/ui/dialog/tracedialog.cpp:529
 msgid "Credits"
 msgstr "Katkıda bulunanlar"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
-#: ../src/ui/dialog/tracedialog.cpp:527
+#: ../src/ui/dialog/tracedialog.cpp:537
 #, fuzzy
 msgid "Potrace"
 msgstr "İpucu"
 
-#: ../src/ui/dialog/tracedialog.cpp:540
+#: ../src/ui/dialog/tracedialog.cpp:550
 #, fuzzy
 msgid "Abort a trace in progress"
 msgstr "Bölümü dışarı aktar"
 
-#: ../src/ui/dialog/tracedialog.cpp:544
+#: ../src/ui/dialog/tracedialog.cpp:554
 msgid "Execute the trace"
 msgstr ""
 
@@ -7266,585 +7590,576 @@ msgid "Opacity: %.3g"
 msgstr "Matlık"
 
 #. TODO: annotate
-#: ../src/verbs.cpp:1078
+#: ../src/verbs.cpp:1093
 msgid "Moved to next layer."
 msgstr "Sonraki katmana taşındı."
 
-#: ../src/verbs.cpp:1080
+#: ../src/verbs.cpp:1095
 msgid "Cannot move past last layer."
 msgstr ""
 
 #. TODO: annotate
-#: ../src/verbs.cpp:1090
+#: ../src/verbs.cpp:1105
 msgid "Moved to previous layer."
 msgstr "Önceki katmana taşındı."
 
-#: ../src/verbs.cpp:1092
+#: ../src/verbs.cpp:1107
 msgid "Cannot move past first layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1109 ../src/verbs.cpp:1185
+#: ../src/verbs.cpp:1124 ../src/verbs.cpp:1200
 msgid "No current layer."
 msgstr "Güncel katman yok."
 
-#: ../src/verbs.cpp:1138
+#: ../src/verbs.cpp:1153
 #, c-format
 msgid "Raised layer <b>%s</b>."
 msgstr "Yükseltilmiş katman <b>%s</b>."
 
-#: ../src/verbs.cpp:1142
+#: ../src/verbs.cpp:1157
 #, c-format
 msgid "Lowered layer <b>%s</b>."
 msgstr "Alçaltılmış katman <b>%s</b>."
 
-#: ../src/verbs.cpp:1152
+#: ../src/verbs.cpp:1167
 msgid "Cannot move layer any further."
 msgstr "Katman daha fazla taşınamaz."
 
 #. TODO: annotate
 #. TRANSLATORS: this means "The layer has been deleted."
-#: ../src/verbs.cpp:1183
+#: ../src/verbs.cpp:1198
 msgid "Deleted layer."
 msgstr "Silinmiş Katman."
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
 #. otherwise leave as "keys.svg".
-#: ../src/verbs.cpp:1616
+#: ../src/verbs.cpp:1631
 msgid "keys.svg"
 msgstr "keys.svg"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:1652
+#: ../src/verbs.cpp:1667
 msgid "tutorial-basic.svg"
 msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1656
+#: ../src/verbs.cpp:1671
 msgid "tutorial-shapes.svg"
 msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1660
+#: ../src/verbs.cpp:1675
 msgid "tutorial-advanced.svg"
 msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1664
+#: ../src/verbs.cpp:1679
 msgid "tutorial-tracing.svg"
 msgstr "tutorial-tracing.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1668
+#: ../src/verbs.cpp:1683
 msgid "tutorial-calligraphy.svg"
 msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1672
+#: ../src/verbs.cpp:1687
 msgid "tutorial-elements.svg"
 msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1676
+#: ../src/verbs.cpp:1691
 msgid "tutorial-tips.svg"
 msgstr "tutorial-tips.svg"
 
-#: ../src/verbs.cpp:1908
+#: ../src/verbs.cpp:1923
 msgid "Does nothing"
 msgstr "Hiçbirşey yapmaz"
 
 #. File
-#: ../src/verbs.cpp:1911
+#: ../src/verbs.cpp:1926
 msgid "Default"
 msgstr "Varsayılan"
 
-#: ../src/verbs.cpp:1911
+#: ../src/verbs.cpp:1926
 #, fuzzy
 msgid "Create new document from the default template"
 msgstr "Varsayılan şablondan yeni bir belge oluşturur"
 
-#: ../src/verbs.cpp:1913
+#: ../src/verbs.cpp:1928
 msgid "_Open..."
 msgstr "_Aç..."
 
-#: ../src/verbs.cpp:1914
+#: ../src/verbs.cpp:1929
 #, fuzzy
 msgid "Open an existing document"
 msgstr "Varolan bir belgeyi aç"
 
-#: ../src/verbs.cpp:1915
+#: ../src/verbs.cpp:1930
 msgid "Re_vert"
 msgstr "Geri _Dön"
 
-#: ../src/verbs.cpp:1916
+#: ../src/verbs.cpp:1931
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr "Belgenin Son kaydedilen haline döner (değişiklikler kaybolacaktır)"
 
-#: ../src/verbs.cpp:1917
+#: ../src/verbs.cpp:1932
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: ../src/verbs.cpp:1917
+#: ../src/verbs.cpp:1932
 msgid "Save document"
 msgstr "Belgeyi kaydet"
 
-#: ../src/verbs.cpp:1919
+#: ../src/verbs.cpp:1934
 msgid "Save _As..."
 msgstr "_Farklı kaydet"
 
-#: ../src/verbs.cpp:1920
+#: ../src/verbs.cpp:1935
 #, fuzzy
 msgid "Save document under a new name"
 msgstr "Belgeyi yeni bir isimle kaydet"
 
-#: ../src/verbs.cpp:1921
+#: ../src/verbs.cpp:1936
 msgid "_Print..."
 msgstr "_Yazdır..."
 
-#: ../src/verbs.cpp:1921
+#: ../src/verbs.cpp:1936
 msgid "Print document"
 msgstr "Belgeyi yazdır"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:1924
+#: ../src/verbs.cpp:1939
 msgid "Vac_uum Defs"
 msgstr "Tanım Bölümünü Temizle"
 
-#: ../src/verbs.cpp:1924
+#: ../src/verbs.cpp:1939
 #, fuzzy
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr "Belgenin &lt;defs&gt; bölümündeki kullanılmayan ifadeleri temizler"
 
-#: ../src/verbs.cpp:1926
+#: ../src/verbs.cpp:1941
 msgid "Print _Direct"
 msgstr "_Doğrudan Yazdır"
 
-#: ../src/verbs.cpp:1927
+#: ../src/verbs.cpp:1942
 #, fuzzy
 msgid "Print directly without prompting to a file or pipe"
 msgstr "Doğrudan dosya veya tünel'e yazar"
 
-#: ../src/verbs.cpp:1928
+#: ../src/verbs.cpp:1943
 msgid "Print Previe_w"
 msgstr "_Baskı Önizleme"
 
-#: ../src/verbs.cpp:1929
+#: ../src/verbs.cpp:1944
 msgid "Preview document printout"
 msgstr "Belge Çıktısı Ön görünümü"
 
-#: ../src/verbs.cpp:1930
+#: ../src/verbs.cpp:1945
 msgid "_Import..."
 msgstr "İçeri _Aktar..."
 
-#: ../src/verbs.cpp:1931
+#: ../src/verbs.cpp:1946
 #, fuzzy
 msgid "Import a bitmap or SVG image into this document"
 msgstr "Bitmap veya SVG dosyasını belge içine aktar"
 
-#: ../src/verbs.cpp:1932
+#: ../src/verbs.cpp:1947
 msgid "_Export Bitmap..."
 msgstr "_Dışarı Aktar..."
 
-#: ../src/verbs.cpp:1933
+#: ../src/verbs.cpp:1948
 #, fuzzy
 msgid "Export this document or a selection as a bitmap image"
 msgstr "Belge veya seçimi PNG resmi olarak aktar"
 
-#: ../src/verbs.cpp:1934
+#: ../src/verbs.cpp:1949
 msgid "N_ext Window"
 msgstr "_Sonraki Pencere"
 
-#: ../src/verbs.cpp:1935
+#: ../src/verbs.cpp:1950
 msgid "Switch to the next document window"
 msgstr "Sonraki belge pencerisine geçer"
 
-#: ../src/verbs.cpp:1936
+#: ../src/verbs.cpp:1951
 msgid "P_revious Window"
 msgstr "Ö_nceki Pencere"
 
-#: ../src/verbs.cpp:1937
+#: ../src/verbs.cpp:1952
 msgid "Switch to the previous document window"
 msgstr "Önceki belge pencerisine geçer"
 
-#: ../src/verbs.cpp:1938
+#: ../src/verbs.cpp:1953
 msgid "_Close"
 msgstr "_Kapat"
 
-#: ../src/verbs.cpp:1939
+#: ../src/verbs.cpp:1954
 #, fuzzy
 msgid "Close this document window"
 msgstr "Önceki belge pencerisine geçer"
 
-#: ../src/verbs.cpp:1940
+#: ../src/verbs.cpp:1955
 msgid "_Quit"
 msgstr "Çı_kış"
 
-#: ../src/verbs.cpp:1940
+#: ../src/verbs.cpp:1955
 msgid "Quit Inkscape"
 msgstr "Inkscape'den Çıkar"
 
-#. Edit
-#: ../src/verbs.cpp:1943
-msgid "_Undo"
-msgstr "_Geri Al"
-
-#: ../src/verbs.cpp:1943
+#: ../src/verbs.cpp:1958
 msgid "Undo last action"
 msgstr "Son hareketi geri alır"
 
-#: ../src/verbs.cpp:1945
-msgid "_Redo"
-msgstr "_Yinele"
-
-#: ../src/verbs.cpp:1946
+#: ../src/verbs.cpp:1961
 #, fuzzy
 msgid "Do again the last undone action"
 msgstr "Son geri alınmış hareketi tekrar yapar"
 
-#: ../src/verbs.cpp:1947
+#: ../src/verbs.cpp:1962
 msgid "Cu_t"
 msgstr "_Kes"
 
-#: ../src/verbs.cpp:1948
+#: ../src/verbs.cpp:1963
 msgid "Cut selection to clipboard"
 msgstr "Seçili nesneleri panoya taşır"
 
-#: ../src/verbs.cpp:1949
+#: ../src/verbs.cpp:1964
 msgid "_Copy"
 msgstr "Kop_yala"
 
-#: ../src/verbs.cpp:1950
+#: ../src/verbs.cpp:1965
 msgid "Copy selection to clipboard"
 msgstr "Seçili nesneleri panoya kopyalar"
 
-#: ../src/verbs.cpp:1951
+#: ../src/verbs.cpp:1966
 msgid "_Paste"
 msgstr "_Yapıştır"
 
-#: ../src/verbs.cpp:1952
+#: ../src/verbs.cpp:1967
 #, fuzzy
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr "Fare imlecinin bulunduğu yere panodaki nesne(ler)i yapıştırır"
 
-#: ../src/verbs.cpp:1953
+#: ../src/verbs.cpp:1968
 msgid "Paste _Style"
 msgstr "Stil Yapıştır"
 
-#: ../src/verbs.cpp:1954
+#: ../src/verbs.cpp:1969
 #, fuzzy
 msgid "Apply the style of the copied object to selection"
 msgstr "Kopyalanmış nesnenin stilini seçime uygular"
 
-#: ../src/verbs.cpp:1956
+#: ../src/verbs.cpp:1971
 #, fuzzy
 msgid "Scale selection to match the size of the copied object"
 msgstr "Seçimi güncel katmanın bir üstündeki katmana taşır"
 
-#: ../src/verbs.cpp:1957
+#: ../src/verbs.cpp:1972
 #, fuzzy
 msgid "Paste _Width"
 msgstr "Sayfa _Genişliği"
 
-#: ../src/verbs.cpp:1958
+#: ../src/verbs.cpp:1973
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:1959
+#: ../src/verbs.cpp:1974
 #, fuzzy
 msgid "Paste _Height"
 msgstr "Yükseklik"
 
-#: ../src/verbs.cpp:1960
+#: ../src/verbs.cpp:1975
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:1961
+#: ../src/verbs.cpp:1976
 msgid "Paste Size Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:1962
+#: ../src/verbs.cpp:1977
 msgid "Scale each selected object to match the size of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:1978
 msgid "Paste Width Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:1964
+#: ../src/verbs.cpp:1979
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:1965
+#: ../src/verbs.cpp:1980
 msgid "Paste Height Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:1966
+#: ../src/verbs.cpp:1981
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:1967
+#: ../src/verbs.cpp:1982
 msgid "Paste _In Place"
 msgstr "_Yerine Yapıştır"
 
-#: ../src/verbs.cpp:1968
+#: ../src/verbs.cpp:1983
 #, fuzzy
 msgid "Paste objects from clipboard to the original location"
 msgstr "Panodaki Nesne(ler)i asıl olan yerlerine yapıştırır"
 
-#: ../src/verbs.cpp:1969
+#: ../src/verbs.cpp:1984
 msgid "_Delete"
 msgstr "S_il"
 
-#: ../src/verbs.cpp:1970
+#: ../src/verbs.cpp:1985
 msgid "Delete selection"
 msgstr "Seçimi siler"
 
-#: ../src/verbs.cpp:1971
+#: ../src/verbs.cpp:1986
 msgid "Duplic_ate"
 msgstr "Çiftle"
 
-#: ../src/verbs.cpp:1972
+#: ../src/verbs.cpp:1987
 #, fuzzy
 msgid "Duplicate selected objects"
 msgstr "Seçili nesneleri çiftler"
 
-#: ../src/verbs.cpp:1973
+#: ../src/verbs.cpp:1988
 #, fuzzy
 msgid "Create Clo_ne"
 msgstr "Yeni belge oluşturur"
 
-#: ../src/verbs.cpp:1974
+#: ../src/verbs.cpp:1989
 #, fuzzy
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr ""
 "Seçili nesnenin bir kopyasını oluşturur (aslına bağlanmış bir kopyasını)"
 
-#: ../src/verbs.cpp:1975
+#: ../src/verbs.cpp:1990
 msgid "Unlin_k Clone"
 msgstr "Kopya Bağını Kopar"
 
-#: ../src/verbs.cpp:1976
+#: ../src/verbs.cpp:1991
 #, fuzzy
 msgid ""
 "Cut the selected clone's link to its original, turning it into a standalone "
 "object"
 msgstr "Kopyanın aslı ile olan bağlantısını keser"
 
-#: ../src/verbs.cpp:1977
+#: ../src/verbs.cpp:1992
 msgid "Select _Original"
 msgstr "Aslını Seç"
 
-#: ../src/verbs.cpp:1978
+#: ../src/verbs.cpp:1993
 #, fuzzy
 msgid "Select the object to which the selected clone is linked"
 msgstr "Kopyasının bağlı olduğu nesneyi seçer"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
-#: ../src/verbs.cpp:1980
+#: ../src/verbs.cpp:1995
 #, fuzzy
 msgid "Objects to Patter_n"
 msgstr "Nesn_eden Örüntüye"
 
-#: ../src/verbs.cpp:1981
+#: ../src/verbs.cpp:1996
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr "Seçimi döşenmiş örüntülü bir dikdörtgene dönüştürür"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
-#: ../src/verbs.cpp:1983
+#: ../src/verbs.cpp:1998
 #, fuzzy
 msgid "Pattern to _Objects"
 msgstr "Örüntüden Nesney_e"
 
-#: ../src/verbs.cpp:1984
+#: ../src/verbs.cpp:1999
 msgid "Extract objects from a tiled pattern fill"
 msgstr "Nesneleri döşenmiş bir örüntü alanından çıkarır"
 
-#: ../src/verbs.cpp:1985
+#: ../src/verbs.cpp:2000
 msgid "Clea_r All"
 msgstr "Tümünü Temizle"
 
-#: ../src/verbs.cpp:1986
+#: ../src/verbs.cpp:2001
 msgid "Delete all objects from document"
 msgstr ""
 
-#: ../src/verbs.cpp:1987
+#: ../src/verbs.cpp:2002
 msgid "Select Al_l"
 msgstr "Tümünü Seç"
 
-#: ../src/verbs.cpp:1988
+#: ../src/verbs.cpp:2003
 msgid "Select all objects or all nodes"
 msgstr "Tüm nesneleri veya tüm düğümleri seçer"
 
-#: ../src/verbs.cpp:1989
+#: ../src/verbs.cpp:2004
 msgid "Select All in All La_yers"
 msgstr "Tüm _Katmanlardaki Herşeyi Seç"
 
-#: ../src/verbs.cpp:1990
+#: ../src/verbs.cpp:2005
 msgid "Select all objects in all visible and unlocked layers"
 msgstr "Tüm görünür ve kilitli katmanlardaki nesneleri seçer"
 
-#: ../src/verbs.cpp:1991
+#: ../src/verbs.cpp:2006
 msgid "In_vert Selection"
 msgstr "Seçimi Tersine Çevir"
 
-#: ../src/verbs.cpp:1992
+#: ../src/verbs.cpp:2007
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr ""
 
-#: ../src/verbs.cpp:1993
+#: ../src/verbs.cpp:2008
 msgid "Invert in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:1994
+#: ../src/verbs.cpp:2009
 msgid "Invert selection in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:1995
+#: ../src/verbs.cpp:2010
 msgid "D_eselect"
 msgstr "Seçimi Bırak"
 
-#: ../src/verbs.cpp:1996
+#: ../src/verbs.cpp:2011
 msgid "Deselect any selected objects or nodes"
 msgstr "Herhangi seçili nesne veya düğümün seçimini bırakır"
 
 #. Selection
-#: ../src/verbs.cpp:1999
+#: ../src/verbs.cpp:2014
 msgid "Raise to _Top"
 msgstr "En _Yukarı Al"
 
-#: ../src/verbs.cpp:2000
+#: ../src/verbs.cpp:2015
 msgid "Raise selection to top"
 msgstr "Seçimi en yukarı getirir"
 
-#: ../src/verbs.cpp:2001
+#: ../src/verbs.cpp:2016
 msgid "Lower to _Bottom"
 msgstr "En _Aşağı Al"
 
-#: ../src/verbs.cpp:2002
+#: ../src/verbs.cpp:2017
 msgid "Lower selection to bottom"
 msgstr "Seçimi en aşağı alır"
 
-#: ../src/verbs.cpp:2003
+#: ../src/verbs.cpp:2018
 msgid "_Raise"
 msgstr "_Yukarı Al"
 
-#: ../src/verbs.cpp:2004
+#: ../src/verbs.cpp:2019
 msgid "Raise selection one step"
 msgstr "Seçimi bir basamak yukarı alır"
 
-#: ../src/verbs.cpp:2005
+#: ../src/verbs.cpp:2020
 msgid "_Lower"
 msgstr "_Aşağı Al"
 
-#: ../src/verbs.cpp:2006
+#: ../src/verbs.cpp:2021
 msgid "Lower selection one step"
 msgstr "Seçimi bir basamak aşağı alır"
 
-#: ../src/verbs.cpp:2007
+#: ../src/verbs.cpp:2022
 msgid "_Group"
 msgstr "_Grupla"
 
-#: ../src/verbs.cpp:2008
+#: ../src/verbs.cpp:2023
 msgid "Group selected objects"
 msgstr "Seçili nesneleri gruplar"
 
-#: ../src/verbs.cpp:2010
+#: ../src/verbs.cpp:2025
 #, fuzzy
 msgid "Ungroup selected groups"
 msgstr "Seçili grupların gruplandırmasını çözer"
 
-#: ../src/verbs.cpp:2012
+#: ../src/verbs.cpp:2027
 #, fuzzy
 msgid "_Put on Path"
 msgstr "Seçili nesneleri eğrilere dönder"
 
-#: ../src/verbs.cpp:2013
+#: ../src/verbs.cpp:2028
 #, fuzzy
 msgid "Put text on path"
 msgstr "Seçili nesneleri eğrilere dönder"
 
-#: ../src/verbs.cpp:2014
+#: ../src/verbs.cpp:2029
 #, fuzzy
 msgid "_Remove from Path"
 msgstr "Dönüştürmeyi kaldır"
 
-#: ../src/verbs.cpp:2015
+#: ../src/verbs.cpp:2030
 #, fuzzy
 msgid "Remove text from path"
 msgstr "Seçili nesneleri eğrilere dönder"
 
-#: ../src/verbs.cpp:2016
+#: ../src/verbs.cpp:2031
 msgid "Remove Manual _Kerns"
 msgstr ""
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2019
+#: ../src/verbs.cpp:2034
 #, fuzzy
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr "Dönüşümleri kaldır"
 
-#: ../src/verbs.cpp:2021
+#: ../src/verbs.cpp:2036
 msgid "_Union"
 msgstr "_Birleşim"
 
-#: ../src/verbs.cpp:2022
+#: ../src/verbs.cpp:2037
 #, fuzzy
 msgid "Create union of selected paths"
 msgstr "Seçileni göster"
 
-#: ../src/verbs.cpp:2023
+#: ../src/verbs.cpp:2038
 msgid "_Intersection"
 msgstr "_Kesişim"
 
-#: ../src/verbs.cpp:2024
+#: ../src/verbs.cpp:2039
 #, fuzzy
 msgid "Create intersection of selected paths"
 msgstr "Seçili nesnelerin kesişimi"
 
-#: ../src/verbs.cpp:2025
+#: ../src/verbs.cpp:2040
 msgid "_Difference"
 msgstr "_Fark"
 
-#: ../src/verbs.cpp:2026
+#: ../src/verbs.cpp:2041
 #, fuzzy
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr "Seçili nesnelerin farkı (alt eksi üst)"
 
-#: ../src/verbs.cpp:2027
+#: ../src/verbs.cpp:2042
 msgid "E_xclusion"
 msgstr "_Çıkartım"
 
-#: ../src/verbs.cpp:2028
+#: ../src/verbs.cpp:2043
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2029
+#: ../src/verbs.cpp:2044
 msgid "Di_vision"
 msgstr "Bö_lüm"
 
-#: ../src/verbs.cpp:2030
+#: ../src/verbs.cpp:2045
 #, fuzzy
 msgid "Cut the bottom path into pieces"
 msgstr "Alttaki nesneyi parçalara ayırır"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2033
+#: ../src/verbs.cpp:2048
 msgid "Cut _Path"
 msgstr "Yol Kes"
 
-#: ../src/verbs.cpp:2034
+#: ../src/verbs.cpp:2049
 #, fuzzy
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr "Alttaki nesne çizgisini parçalara keser, dolguyu kaldırır"
@@ -7852,32 +8167,32 @@ msgstr "Alttaki nesne çizgisini parçalara keser, dolguyu kaldırır"
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2038
+#: ../src/verbs.cpp:2053
 #, fuzzy
 msgid "Outs_et"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2039
+#: ../src/verbs.cpp:2054
 #, fuzzy
 msgid "Outset selected paths"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2041
+#: ../src/verbs.cpp:2056
 #, fuzzy
 msgid "O_utset Path by 1 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2042
+#: ../src/verbs.cpp:2057
 #, fuzzy
 msgid "Outset selected paths by 1 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2044
+#: ../src/verbs.cpp:2059
 #, fuzzy
 msgid "O_utset Path by 10 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2045
+#: ../src/verbs.cpp:2060
 #, fuzzy
 msgid "Outset selected paths by 10 px"
 msgstr "Seçili yolları birleştir"
@@ -7885,74 +8200,74 @@ msgstr "Seçili yolları birleştir"
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2049
+#: ../src/verbs.cpp:2064
 msgid "I_nset"
 msgstr ""
 
-#: ../src/verbs.cpp:2050
+#: ../src/verbs.cpp:2065
 #, fuzzy
 msgid "Inset selected paths"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2052
+#: ../src/verbs.cpp:2067
 #, fuzzy
 msgid "I_nset Path by 1 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2053
+#: ../src/verbs.cpp:2068
 #, fuzzy
 msgid "Inset selected paths by 1 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2055
+#: ../src/verbs.cpp:2070
 #, fuzzy
 msgid "I_nset Path by 10 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2056
+#: ../src/verbs.cpp:2071
 #, fuzzy
 msgid "Inset selected paths by 10 px"
 msgstr "Seçili yolları birleştir"
 
-#: ../src/verbs.cpp:2058
+#: ../src/verbs.cpp:2073
 msgid "D_ynamic Offset"
 msgstr "Devingen Konum"
 
-#: ../src/verbs.cpp:2058
+#: ../src/verbs.cpp:2073
 msgid "Create a dynamic offset object"
 msgstr "Bir devingen konum nesnesi oluturur"
 
-#: ../src/verbs.cpp:2060
+#: ../src/verbs.cpp:2075
 msgid "_Linked Offset"
 msgstr "_Bağlı Konum"
 
-#: ../src/verbs.cpp:2061
+#: ../src/verbs.cpp:2076
 msgid "Create a dynamic offset object linked to the original path"
 msgstr "Asıl yola bağlı devingen konum nesnesi oluşturur"
 
-#: ../src/verbs.cpp:2063
+#: ../src/verbs.cpp:2078
 msgid "_Stroke to Path"
 msgstr "_Çizgiden yola"
 
-#: ../src/verbs.cpp:2064
+#: ../src/verbs.cpp:2079
 #, fuzzy
 msgid "Convert selected object's stroke to paths"
 msgstr "Seçili nesne(ler)i yol(lar)a dönüştür"
 
-#: ../src/verbs.cpp:2065
+#: ../src/verbs.cpp:2080
 msgid "Si_mplify"
 msgstr "Sadeleştir"
 
-#: ../src/verbs.cpp:2066
+#: ../src/verbs.cpp:2081
 #, fuzzy
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr "Ek düğümleri kaldırarak yol(lar)ı sadeleştirir"
 
-#: ../src/verbs.cpp:2067
+#: ../src/verbs.cpp:2082
 msgid "_Reverse"
 msgstr "_Tersini Al"
 
-#: ../src/verbs.cpp:2068
+#: ../src/verbs.cpp:2083
 #, fuzzy
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr ""
@@ -7960,732 +8275,732 @@ msgstr ""
 "kullanışlıdır"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2070
+#: ../src/verbs.cpp:2085
 #, fuzzy
 msgid "_Trace Bitmap..."
 msgstr "_Bitmap'i Dönüştür"
 
-#: ../src/verbs.cpp:2071
+#: ../src/verbs.cpp:2086
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr ""
 
-#: ../src/verbs.cpp:2072
+#: ../src/verbs.cpp:2087
 msgid "_Make a Bitmap Copy"
 msgstr "_Bir Bitmap Kopyası Yap"
 
-#: ../src/verbs.cpp:2073
+#: ../src/verbs.cpp:2088
 msgid "Export selection to a bitmap and insert it into document"
 msgstr "Seçimi bir bitmap'e aktarıp belgeye ekler"
 
-#: ../src/verbs.cpp:2074
+#: ../src/verbs.cpp:2089
 msgid "_Combine"
 msgstr "_Birleştir"
 
-#: ../src/verbs.cpp:2075
+#: ../src/verbs.cpp:2090
 msgid "Combine several paths into one"
 msgstr "Birçok yolu tek bir yola birleştirir"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2078
+#: ../src/verbs.cpp:2093
 msgid "Break _Apart"
 msgstr "_Kopar"
 
-#: ../src/verbs.cpp:2079
+#: ../src/verbs.cpp:2094
 #, fuzzy
 msgid "Break selected paths into subpaths"
 msgstr "Seçilen yol(lar)ı alt yol(lar)a böler"
 
-#: ../src/verbs.cpp:2080
+#: ../src/verbs.cpp:2095
 msgid "Gri_d Arrange..."
 msgstr "Izgara_yı Ayarla..."
 
-#: ../src/verbs.cpp:2081
+#: ../src/verbs.cpp:2096
 #, fuzzy
 msgid "Arrange selected objects in a grid pattern"
 msgstr "Seçimi Izgaralı örüntü içerisinde düzelt"
 
 #. Layer
-#: ../src/verbs.cpp:2083
+#: ../src/verbs.cpp:2098
 msgid "_Add Layer..."
 msgstr "_Katman Ekle..."
 
-#: ../src/verbs.cpp:2084
+#: ../src/verbs.cpp:2099
 msgid "Create a new layer"
 msgstr "Yeni bir katman oluşturur"
 
-#: ../src/verbs.cpp:2085
+#: ../src/verbs.cpp:2100
 msgid "Re_name Layer..."
 msgstr "Katmanı _Yeniden Adlandır"
 
-#: ../src/verbs.cpp:2086
+#: ../src/verbs.cpp:2101
 msgid "Rename the current layer"
 msgstr "Güncel katmanın ismini değiştirir"
 
-#: ../src/verbs.cpp:2087
+#: ../src/verbs.cpp:2102
 msgid "Switch to Layer Abov_e"
 msgstr "Ü_st Katman ile Değiştir"
 
-#: ../src/verbs.cpp:2088
+#: ../src/verbs.cpp:2103
 msgid "Switch to the layer above the current"
 msgstr "Güncel katmanı üzerindeki ile değiştirir"
 
-#: ../src/verbs.cpp:2089
+#: ../src/verbs.cpp:2104
 msgid "Switch to Layer Belo_w"
 msgstr "_Alt Katman ile Değiştir"
 
-#: ../src/verbs.cpp:2090
+#: ../src/verbs.cpp:2105
 msgid "Switch to the layer below the current"
 msgstr "Güncel katmanı altındaki ile değiştirir"
 
-#: ../src/verbs.cpp:2091
+#: ../src/verbs.cpp:2106
 msgid "Move Selection to Layer Abo_ve"
 msgstr "Seçimi Üs_t Katmana Taşı"
 
-#: ../src/verbs.cpp:2092
+#: ../src/verbs.cpp:2107
 msgid "Move selection to the layer above the current"
 msgstr "Seçimi güncel katmanın bir üstündeki katmana taşır"
 
-#: ../src/verbs.cpp:2093
+#: ../src/verbs.cpp:2108
 msgid "Move Selection to Layer Bel_ow"
 msgstr "Seçimi A_lt Katmana Taşı"
 
-#: ../src/verbs.cpp:2094
+#: ../src/verbs.cpp:2109
 msgid "Move selection to the layer below the current"
 msgstr "Seçimi güncel katmanın bir altındaki katmana taşır"
 
-#: ../src/verbs.cpp:2095
+#: ../src/verbs.cpp:2110
 msgid "Layer to _Top"
 msgstr "_En Üste Taşı"
 
-#: ../src/verbs.cpp:2096
+#: ../src/verbs.cpp:2111
 msgid "Raise the current layer to the top"
 msgstr "Güncel katmanı en üst katmana taşır"
 
-#: ../src/verbs.cpp:2097
+#: ../src/verbs.cpp:2112
 msgid "Layer to _Bottom"
 msgstr "E_n Alta Taşı"
 
-#: ../src/verbs.cpp:2098
+#: ../src/verbs.cpp:2113
 msgid "Lower the current layer to the bottom"
 msgstr "Güncel katmanı en alt katmana taşır"
 
-#: ../src/verbs.cpp:2099
+#: ../src/verbs.cpp:2114
 msgid "_Raise Layer"
 msgstr "Katmanı _Yukarı Al"
 
-#: ../src/verbs.cpp:2100
+#: ../src/verbs.cpp:2115
 msgid "Raise the current layer"
 msgstr "Güncel katmanı yukarı alır"
 
-#: ../src/verbs.cpp:2101
+#: ../src/verbs.cpp:2116
 msgid "_Lower Layer"
 msgstr "Katmanı Aşağı _Al"
 
-#: ../src/verbs.cpp:2102
+#: ../src/verbs.cpp:2117
 msgid "Lower the current layer"
 msgstr "Güncel katmanı aşağı alır"
 
-#: ../src/verbs.cpp:2103
+#: ../src/verbs.cpp:2118
 msgid "_Delete Current Layer"
 msgstr "Güncel Katmanı _Sil"
 
-#: ../src/verbs.cpp:2104
+#: ../src/verbs.cpp:2119
 msgid "Delete the current layer"
 msgstr "Güncel katmanı siler"
 
 #. Object
-#: ../src/verbs.cpp:2107
+#: ../src/verbs.cpp:2122
 #, fuzzy
 msgid "Rotate _90&#176; CW"
 msgstr "SY 90 Derece Döndürür"
 
-#: ../src/verbs.cpp:2108
+#: ../src/verbs.cpp:2123
 #, fuzzy
 msgid "Rotate selection 90&#176; clockwise"
 msgstr "Seçimi 90 derece saat yönünde döndürür"
 
-#: ../src/verbs.cpp:2109
+#: ../src/verbs.cpp:2124
 #, fuzzy
 msgid "Rotate 9_0&#176; CCW"
 msgstr "SYT 90 Derece Döndür"
 
-#: ../src/verbs.cpp:2110
+#: ../src/verbs.cpp:2125
 #, fuzzy
 msgid "Rotate selection 90&#176; counter-clockwise"
 msgstr "Seçimi saat yönünün tersinde 90 derece döndürür"
 
-#: ../src/verbs.cpp:2111
+#: ../src/verbs.cpp:2126
 msgid "Remove _Transformations"
 msgstr "Dönüşümleri _Kaldır"
 
-#: ../src/verbs.cpp:2112
+#: ../src/verbs.cpp:2127
 msgid "Remove transformations from object"
 msgstr "Nesneden dönüşümleri kaldır"
 
-#: ../src/verbs.cpp:2113
+#: ../src/verbs.cpp:2128
 msgid "_Object to Path"
 msgstr "_Nesneden Yola"
 
-#: ../src/verbs.cpp:2114
+#: ../src/verbs.cpp:2129
 #, fuzzy
 msgid "Convert selected object to path"
 msgstr "Seçili nesne(ler)i yol(lar)a dönüştür"
 
-#: ../src/verbs.cpp:2115
+#: ../src/verbs.cpp:2130
 msgid "_Flow into Frame"
 msgstr "_Çerçeveye doldur"
 
-#: ../src/verbs.cpp:2116
+#: ../src/verbs.cpp:2131
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
 msgstr ""
 
-#: ../src/verbs.cpp:2117
+#: ../src/verbs.cpp:2132
 msgid "_Unflow"
 msgstr "_Akma"
 
-#: ../src/verbs.cpp:2118
+#: ../src/verbs.cpp:2133
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr "Metni çerçeveden kaldır (tek satırlık metin nesnesi oluşturur)"
 
-#: ../src/verbs.cpp:2119
+#: ../src/verbs.cpp:2134
 msgid "_Convert to Text"
 msgstr "_Metine Dönüştür"
 
-#: ../src/verbs.cpp:2120
+#: ../src/verbs.cpp:2135
 #, fuzzy
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr "Akan metin(ler)i düzenli metin nesnelerine dönüştür (görünümü korur)"
 
-#: ../src/verbs.cpp:2122
+#: ../src/verbs.cpp:2137
 #, fuzzy
 msgid "Flip _Horizontal"
 msgstr "_Yatay Çevir"
 
-#: ../src/verbs.cpp:2122
+#: ../src/verbs.cpp:2137
 #, fuzzy
 msgid "Flip selected objects horizontally"
 msgstr "Seçili nesneleri yatay çevir"
 
-#: ../src/verbs.cpp:2125
+#: ../src/verbs.cpp:2140
 #, fuzzy
 msgid "Flip _Vertical"
 msgstr "_Dikey Çevir"
 
-#: ../src/verbs.cpp:2125
+#: ../src/verbs.cpp:2140
 #, fuzzy
 msgid "Flip selected objects vertically"
 msgstr "Seçili nesneleri dikey çevir"
 
-#: ../src/verbs.cpp:2128
+#: ../src/verbs.cpp:2143
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
-#: ../src/verbs.cpp:2129 ../src/verbs.cpp:2133
+#: ../src/verbs.cpp:2144 ../src/verbs.cpp:2148
 #, fuzzy
 msgid "_Release"
 msgstr "_Tersini Al"
 
-#: ../src/verbs.cpp:2130
+#: ../src/verbs.cpp:2145
 #, fuzzy
 msgid "Remove mask from selection"
 msgstr "Seçimden al"
 
-#: ../src/verbs.cpp:2132
+#: ../src/verbs.cpp:2147
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2134
+#: ../src/verbs.cpp:2149
 msgid "Remove clipping path from selection"
 msgstr ""
 
 #. Tools
-#: ../src/verbs.cpp:2137
+#: ../src/verbs.cpp:2152
 msgid "Select"
 msgstr "Seç"
 
-#: ../src/verbs.cpp:2138
+#: ../src/verbs.cpp:2153
 msgid "Select and transform objects"
 msgstr "Nesneleri seçer ve dönüştürür"
 
-#: ../src/verbs.cpp:2139
+#: ../src/verbs.cpp:2154
 msgid "Node Edit"
 msgstr "Düğüm Düzenle"
 
-#: ../src/verbs.cpp:2140
+#: ../src/verbs.cpp:2155
 msgid "Edit path nodes or control handles"
 msgstr "Yol düğümlerini veya denetim tutucularını düzenler"
 
-#: ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2157
 msgid "Create rectangles and squares"
 msgstr "Dikdörtgenler ve kareler oluşturur"
 
-#: ../src/verbs.cpp:2144
+#: ../src/verbs.cpp:2159
 msgid "Create circles, ellipses, and arcs"
 msgstr "Çemberler, elipsler ve yaylar oluşturur"
 
-#: ../src/verbs.cpp:2146
+#: ../src/verbs.cpp:2161
 msgid "Create stars and polygons"
 msgstr "Yıldızlar ve çokgenler oluşturur"
 
-#: ../src/verbs.cpp:2148
+#: ../src/verbs.cpp:2163
 msgid "Create spirals"
 msgstr "Sarmal oluşturur"
 
-#: ../src/verbs.cpp:2150
+#: ../src/verbs.cpp:2165
 msgid "Draw freehand lines"
 msgstr "Serbest şekiller çizer"
 
-#: ../src/verbs.cpp:2152
+#: ../src/verbs.cpp:2167
 msgid "Draw Bezier curves and straight lines"
 msgstr "Bezier eğrileri ve düz çizgiler çizer"
 
-#: ../src/verbs.cpp:2154
+#: ../src/verbs.cpp:2169
 msgid "Draw calligraphic lines"
 msgstr "El yazısı çigileri çizer"
 
-#: ../src/verbs.cpp:2156
+#: ../src/verbs.cpp:2171
 msgid "Create and edit text objects"
 msgstr "Metin nesnelerini oluşturur ve düzenler"
 
-#: ../src/verbs.cpp:2158
+#: ../src/verbs.cpp:2173
 msgid "Create and edit gradients"
 msgstr "Artımlı geçiş oluşturur ve düzenler"
 
-#: ../src/verbs.cpp:2160
+#: ../src/verbs.cpp:2175
 msgid "Zoom in or out"
 msgstr "Büyültür veya küçültür"
 
-#: ../src/verbs.cpp:2162
+#: ../src/verbs.cpp:2177
 msgid "Pick averaged colors from image"
 msgstr "Resimden ortalama bir renk alır"
 
-#: ../src/verbs.cpp:2164
+#: ../src/verbs.cpp:2179
 #, fuzzy
 msgid "Create connectors"
 msgstr "Yeni belge oluşturur"
 
 #. Tool prefs
-#: ../src/verbs.cpp:2167
+#: ../src/verbs.cpp:2182
 msgid "Selector Preferences"
 msgstr "Seçici Seçenekleri"
 
-#: ../src/verbs.cpp:2168
+#: ../src/verbs.cpp:2183
 #, fuzzy
 msgid "Open Preferences for the Selector tool"
 msgstr "Seçim Aracı için Inkscape Seçeneklerini Açar"
 
-#: ../src/verbs.cpp:2169
+#: ../src/verbs.cpp:2184
 msgid "Node Tool Preferences"
 msgstr "Düğüm Aracı Seçenekleri"
 
-#: ../src/verbs.cpp:2170
+#: ../src/verbs.cpp:2185
 #, fuzzy
 msgid "Open Preferences for the Node tool"
 msgstr "Düğüm aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2171
+#: ../src/verbs.cpp:2186
 msgid "Rectangle Preferences"
 msgstr "Dikdörtgen Seçenekleri"
 
-#: ../src/verbs.cpp:2172
+#: ../src/verbs.cpp:2187
 #, fuzzy
 msgid "Open Preferences for the Rectangle tool"
 msgstr "Dikdörtgen aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2173
+#: ../src/verbs.cpp:2188
 msgid "Ellipse Preferences"
 msgstr "Elips Seçenekleri"
 
-#: ../src/verbs.cpp:2174
+#: ../src/verbs.cpp:2189
 #, fuzzy
 msgid "Open Preferences for the Ellipse tool"
 msgstr "Elips aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2175
+#: ../src/verbs.cpp:2190
 msgid "Star Preferences"
 msgstr "Yıldız Seçenekleri"
 
-#: ../src/verbs.cpp:2176
+#: ../src/verbs.cpp:2191
 #, fuzzy
 msgid "Open Preferences for the Star tool"
 msgstr "Yıldız aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2177
+#: ../src/verbs.cpp:2192
 msgid "Spiral Preferences"
 msgstr "Sarmal Seçenekleri"
 
-#: ../src/verbs.cpp:2178
+#: ../src/verbs.cpp:2193
 #, fuzzy
 msgid "Open Preferences for the Spiral tool"
 msgstr "Sarmal aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2179
+#: ../src/verbs.cpp:2194
 msgid "Pencil Preferences"
 msgstr "Kurşun Kalem Seçenekleri"
 
-#: ../src/verbs.cpp:2180
+#: ../src/verbs.cpp:2195
 #, fuzzy
 msgid "Open Preferences for the Pencil tool"
 msgstr "Kurşun kalem aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2181
+#: ../src/verbs.cpp:2196
 msgid "Pen Preferences"
 msgstr "Kalem Seçenekleri"
 
-#: ../src/verbs.cpp:2182
+#: ../src/verbs.cpp:2197
 #, fuzzy
 msgid "Open Preferences for the Pen tool"
 msgstr "Kalem aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2183
+#: ../src/verbs.cpp:2198
 msgid "Calligraphic Preferences"
 msgstr "El Yazısı Seçenekleri"
 
-#: ../src/verbs.cpp:2184
+#: ../src/verbs.cpp:2199
 #, fuzzy
 msgid "Open Preferences for the Calligraphy tool"
 msgstr "El yazısı aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2185
+#: ../src/verbs.cpp:2200
 msgid "Text Preferences"
 msgstr "Metin Seçenekleri"
 
-#: ../src/verbs.cpp:2186
+#: ../src/verbs.cpp:2201
 #, fuzzy
 msgid "Open Preferences for the Text tool"
 msgstr "Metin aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2187
+#: ../src/verbs.cpp:2202
 msgid "Gradient Preferences"
 msgstr "Artımlı Geçiş Seçenekleri"
 
-#: ../src/verbs.cpp:2188
+#: ../src/verbs.cpp:2203
 #, fuzzy
 msgid "Open Preferences for the Gradient tool"
 msgstr "Artımlı geçiş aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2189
+#: ../src/verbs.cpp:2204
 msgid "Zoom Preferences"
 msgstr "Büyültme Seçenekleri"
 
-#: ../src/verbs.cpp:2190
+#: ../src/verbs.cpp:2205
 #, fuzzy
 msgid "Open Preferences for the Zoom tool"
 msgstr "Büyültme aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2191
+#: ../src/verbs.cpp:2206
 msgid "Dropper Preferences"
 msgstr "Damlalık Seçenekleri"
 
-#: ../src/verbs.cpp:2192
+#: ../src/verbs.cpp:2207
 #, fuzzy
 msgid "Open Preferences for the Dropper tool"
 msgstr "Damlalık aleti için Inkscape seçeneklerini açar"
 
-#: ../src/verbs.cpp:2193
+#: ../src/verbs.cpp:2208
 #, fuzzy
 msgid "Connector Preferences"
 msgstr "Seçici Seçenekleri"
 
-#: ../src/verbs.cpp:2194
+#: ../src/verbs.cpp:2209
 #, fuzzy
 msgid "Open Preferences for the Connector tool"
 msgstr "Seçim Aracı için Inkscape Seçeneklerini Açar"
 
 #. Zoom/View
-#: ../src/verbs.cpp:2197
+#: ../src/verbs.cpp:2212
 msgid "Zoom In"
 msgstr "Büyült"
 
-#: ../src/verbs.cpp:2197
+#: ../src/verbs.cpp:2212
 msgid "Zoom in"
 msgstr "Büyült"
 
-#: ../src/verbs.cpp:2198
+#: ../src/verbs.cpp:2213
 msgid "Zoom Out"
 msgstr "Küçült"
 
-#: ../src/verbs.cpp:2198
+#: ../src/verbs.cpp:2213
 msgid "Zoom out"
 msgstr "Küçült"
 
-#: ../src/verbs.cpp:2199
+#: ../src/verbs.cpp:2214
 msgid "_Rulers"
 msgstr "_Cetveller"
 
-#: ../src/verbs.cpp:2199
+#: ../src/verbs.cpp:2214
 msgid "Show or hide the canvas rulers"
 msgstr "Tuval cetvellerini gösterir veya gizler"
 
-#: ../src/verbs.cpp:2200
+#: ../src/verbs.cpp:2215
 msgid "Scroll_bars"
 msgstr "_Kaydırma çubukları"
 
-#: ../src/verbs.cpp:2200
+#: ../src/verbs.cpp:2215
 msgid "Show or hide the canvas scrollbars"
 msgstr "Tuval kaydırma çubuklarını gösterir veya gizler"
 
-#: ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2216
 msgid "_Grid"
 msgstr "_Izgara"
 
-#: ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2216
 #, fuzzy
 msgid "Show or hide the grid"
 msgstr "Izgarayı gösterir veya gizler"
 
-#: ../src/verbs.cpp:2202
+#: ../src/verbs.cpp:2217
 msgid "G_uides"
 msgstr "_Rehberler"
 
-#: ../src/verbs.cpp:2202
+#: ../src/verbs.cpp:2217
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
 
-#: ../src/verbs.cpp:2203
+#: ../src/verbs.cpp:2218
 msgid "Nex_t Zoom"
 msgstr "_Sonraki Büyültme"
 
-#: ../src/verbs.cpp:2203
+#: ../src/verbs.cpp:2218
 msgid "Next zoom (from the history of zooms)"
 msgstr "Sonraki Büyültme (büyültme geçmişinden)"
 
-#: ../src/verbs.cpp:2205
+#: ../src/verbs.cpp:2220
 msgid "Pre_vious Zoom"
 msgstr "_Önceki Büyültme"
 
-#: ../src/verbs.cpp:2205
+#: ../src/verbs.cpp:2220
 msgid "Previous zoom (from the history of zooms)"
 msgstr "Önceki büyültme (büyültme geçmişinden)"
 
-#: ../src/verbs.cpp:2207
+#: ../src/verbs.cpp:2222
 msgid "Zoom 1:_1"
 msgstr "1:1 oranında büyült"
 
-#: ../src/verbs.cpp:2207
+#: ../src/verbs.cpp:2222
 msgid "Zoom to 1:1"
 msgstr "1:1 oranına büyültür"
 
-#: ../src/verbs.cpp:2209
+#: ../src/verbs.cpp:2224
 msgid "Zoom 1:_2"
 msgstr "1:2 oranında büyült"
 
-#: ../src/verbs.cpp:2209
+#: ../src/verbs.cpp:2224
 msgid "Zoom to 1:2"
 msgstr "1:2 oranına kadar büyültür"
 
-#: ../src/verbs.cpp:2211
+#: ../src/verbs.cpp:2226
 msgid "_Zoom 2:1"
 msgstr "2:1 oranında büyült"
 
-#: ../src/verbs.cpp:2211
+#: ../src/verbs.cpp:2226
 msgid "Zoom to 2:1"
 msgstr "2:1 oranına kadar büyültür"
 
-#: ../src/verbs.cpp:2214
+#: ../src/verbs.cpp:2229
 msgid "_Fullscreen"
 msgstr "_Tam Ekran"
 
-#: ../src/verbs.cpp:2214
+#: ../src/verbs.cpp:2229
 msgid "Stretch this document window to full screen"
 msgstr "Belge penceresini tam ekrana yayar"
 
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2232
 msgid "Duplic_ate Window"
 msgstr "Pencereyi Çiftle"
 
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2232
 msgid "Open a new window with the same document"
 msgstr "Aynı belge ile yeni bir pencere açar"
 
-#: ../src/verbs.cpp:2219
+#: ../src/verbs.cpp:2234
 msgid "_New View Preview"
 msgstr "_Yeni Görünüm Önizlemesi"
 
-#: ../src/verbs.cpp:2220
+#: ../src/verbs.cpp:2235
 msgid "New View Preview"
 msgstr "Yeni Görünüm Önizlemesi"
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2237
 #, fuzzy
 msgid "_Normal"
 msgstr "Normal"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2238
 msgid "Switch to normal display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2224
+#: ../src/verbs.cpp:2239
 #, fuzzy
 msgid "_Outline"
 msgstr "Kutu çerçevesi"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2240
 msgid "Switch to outline (wireframe) display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2227
+#: ../src/verbs.cpp:2242
 msgid "Ico_n Preview"
 msgstr "Simge Önizleme"
 
-#: ../src/verbs.cpp:2228
+#: ../src/verbs.cpp:2243
 #, fuzzy
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr "Öğeleri farklı çözünürlüklerde görüntülemek için bir pencere açar"
 
-#: ../src/verbs.cpp:2230
+#: ../src/verbs.cpp:2245
 msgid "Zoom to fit page in window"
 msgstr "Tüm sayfayı pencereye uydurur"
 
-#: ../src/verbs.cpp:2231
+#: ../src/verbs.cpp:2246
 msgid "Page _Width"
 msgstr "Sayfa _Genişliği"
 
-#: ../src/verbs.cpp:2232
+#: ../src/verbs.cpp:2247
 msgid "Zoom to fit page width in window"
 msgstr "Penceredeki sayfa genişliğine uyacak kadar büyültür"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2249
 msgid "Zoom to fit drawing in window"
 msgstr "Penceredeki çizime uyacak kadar büyültür"
 
-#: ../src/verbs.cpp:2236
+#: ../src/verbs.cpp:2251
 msgid "Zoom to fit selection in window"
 msgstr "Penceredeki seçime uyacak kadar büyültür"
 
 #. Dialogs
-#: ../src/verbs.cpp:2239
+#: ../src/verbs.cpp:2254
 msgid "In_kscape Preferences..."
 msgstr "In_kscape Seçenekleri..."
 
-#: ../src/verbs.cpp:2240
+#: ../src/verbs.cpp:2255
 #, fuzzy
 msgid "Edit global Inkscape preferences"
 msgstr "Küresel Inkscape seçenekleri"
 
-#: ../src/verbs.cpp:2241
+#: ../src/verbs.cpp:2256
 #, fuzzy
 msgid "_Document Properties..."
 msgstr "_Belge Seçenekleri..."
 
-#: ../src/verbs.cpp:2242
+#: ../src/verbs.cpp:2257
 #, fuzzy
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr "Belge ile kaydedilen seçenekler"
 
-#: ../src/verbs.cpp:2243
+#: ../src/verbs.cpp:2258
 #, fuzzy
 msgid "Document _Metadata..."
 msgstr "Döküman Adı:"
 
-#: ../src/verbs.cpp:2244
+#: ../src/verbs.cpp:2259
 #, fuzzy
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "Belge ile kaydedilen seçenekler"
 
-#: ../src/verbs.cpp:2245
+#: ../src/verbs.cpp:2260
 msgid "_Fill and Stroke..."
 msgstr "Doldur ve Çiz..."
 
-#: ../src/verbs.cpp:2246
+#: ../src/verbs.cpp:2261
 msgid "Edit objects' style, such as color or stroke width"
 msgstr ""
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2248
+#: ../src/verbs.cpp:2263
 msgid "S_watches..."
 msgstr "Örnek _renkler..."
 
-#: ../src/verbs.cpp:2249
+#: ../src/verbs.cpp:2264
 msgid "Select colors from a swatches palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2250
+#: ../src/verbs.cpp:2265
 msgid "Transfor_m..."
 msgstr "Dönüştür..."
 
-#: ../src/verbs.cpp:2251
+#: ../src/verbs.cpp:2266
 msgid "Precisely control objects' transformations"
 msgstr ""
 
-#: ../src/verbs.cpp:2252
+#: ../src/verbs.cpp:2267
 msgid "_Align and Distribute..."
 msgstr "_Hizalama ve Dağılım..."
 
-#: ../src/verbs.cpp:2253
+#: ../src/verbs.cpp:2268
 #, fuzzy
 msgid "Align and distribute objects"
 msgstr "Hizalama ve dağılım iletişim penceresi"
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2269
 msgid "Undo _History..."
 msgstr ""
 
-#: ../src/verbs.cpp:2255
+#: ../src/verbs.cpp:2270
 msgid "Undo History"
 msgstr ""
 
-#: ../src/verbs.cpp:2256
+#: ../src/verbs.cpp:2271
 msgid "_Text and Font..."
 msgstr "_Metin ve Yazı tipi..."
 
-#: ../src/verbs.cpp:2257
+#: ../src/verbs.cpp:2272
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2258
+#: ../src/verbs.cpp:2273
 msgid "_XML Editor..."
 msgstr "_XML Düzenleyici"
 
-#: ../src/verbs.cpp:2259
+#: ../src/verbs.cpp:2274
 msgid "View and edit the XML tree of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:2260
+#: ../src/verbs.cpp:2275
 msgid "_Find..."
 msgstr "_Bul..."
 
-#: ../src/verbs.cpp:2261
+#: ../src/verbs.cpp:2276
 msgid "Find objects in document"
 msgstr "Belgedeki nesneleri bulur"
 
-#: ../src/verbs.cpp:2262
+#: ../src/verbs.cpp:2277
 msgid "_Messages..."
 msgstr "_İletiler..."
 
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2278
 msgid "View debug messages"
 msgstr "Ayıklama iletilerini görüntüler"
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2279
 msgid "S_cripts..."
 msgstr "_Betikler..."
 
-#: ../src/verbs.cpp:2265
+#: ../src/verbs.cpp:2280
 msgid "Run scripts"
 msgstr "Betikleri çalıştırır"
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2281
 msgid "Show/Hide D_ialogs"
 msgstr "İletişim Pencerelerini Göster/Gizle"
 
-#: ../src/verbs.cpp:2267
+#: ../src/verbs.cpp:2282
 #, fuzzy
 msgid "Show or hide all open dialogs"
 msgstr "Tüm etkin iletişim pencerelerini gösterir veya gizler"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
-#: ../src/verbs.cpp:2269
+#: ../src/verbs.cpp:2284
 #, fuzzy
 msgid "Create Tiled Clones..."
 msgstr "Kopyaları döşe..."
 
-#: ../src/verbs.cpp:2270
+#: ../src/verbs.cpp:2285
 #, fuzzy
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
@@ -8693,83 +9008,83 @@ msgid ""
 msgstr ""
 "Seçili nesnenin bir kopyasını oluşturur (aslına bağlanmış bir kopyasını)"
 
-#: ../src/verbs.cpp:2271
+#: ../src/verbs.cpp:2286
 msgid "_Object Properties..."
 msgstr "_Nesne Özellikleri..."
 
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2287
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2290
 #, fuzzy
 msgid "_Instant Messaging..."
 msgstr "_İletiler..."
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2290
 msgid "Jabber Instant Messaging Client"
 msgstr ""
 
-#: ../src/verbs.cpp:2277
+#: ../src/verbs.cpp:2292
 msgid "_Input Devices..."
 msgstr "_Girdi Aygıtları..."
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2293
 #, fuzzy
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr "İleri girdi aygıtlarını yapılandır"
 
-#: ../src/verbs.cpp:2279
+#: ../src/verbs.cpp:2294
 #, fuzzy
 msgid "_Extensions..."
 msgstr "Eklentiler Hakkında..."
 
-#: ../src/verbs.cpp:2280
+#: ../src/verbs.cpp:2295
 msgid "Query information about extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2281
+#: ../src/verbs.cpp:2296
 #, fuzzy
 msgid "Layer_s..."
 msgstr "_Katman Ekle..."
 
-#: ../src/verbs.cpp:2282
+#: ../src/verbs.cpp:2297
 #, fuzzy
 msgid "View Layers"
 msgstr "Katmanı _Yukarı Al"
 
 #. Help
-#: ../src/verbs.cpp:2285
+#: ../src/verbs.cpp:2300
 msgid "_Keys and Mouse"
 msgstr "_Tuşlar ve Fare"
 
-#: ../src/verbs.cpp:2286
+#: ../src/verbs.cpp:2301
 #, fuzzy
 msgid "Keys and mouse shortcuts reference"
 msgstr "Tuş ve fare kısa yolları başvurusu"
 
-#: ../src/verbs.cpp:2287
+#: ../src/verbs.cpp:2302
 msgid "About E_xtensions"
 msgstr "_Eklentiler Hakkında"
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2303
 msgid "Information on Inkscape extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2289
+#: ../src/verbs.cpp:2304
 msgid "About _Memory"
 msgstr "_Hafıza Kullanımı"
 
-#: ../src/verbs.cpp:2290
+#: ../src/verbs.cpp:2305
 #, fuzzy
 msgid "Memory usage information"
 msgstr "Dönüşümleri _Kaldır"
 
-#: ../src/verbs.cpp:2291
+#: ../src/verbs.cpp:2306
 msgid "_About Inkscape"
 msgstr "Inkscape _Hakkında"
 
-#: ../src/verbs.cpp:2292
+#: ../src/verbs.cpp:2307
 msgid "Inkscape version, authors, license"
 msgstr ""
 
@@ -8777,116 +9092,114 @@ msgstr ""
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2312
 msgid "Inkscape: _Basic"
 msgstr "Inkscape: _Temel"
 
-#: ../src/verbs.cpp:2298
+#: ../src/verbs.cpp:2313
 msgid "Getting started with Inkscape"
 msgstr "Inkscape'e başlarken"
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2314
 msgid "Inkscape: _Shapes"
 msgstr "Inkscape: _Şekiller"
 
-#: ../src/verbs.cpp:2300
+#: ../src/verbs.cpp:2315
 msgid "Using shape tools to create and edit shapes"
 msgstr "Şekilleri oluştutup ve düzenlemek için şekil araçlarının kullanımı"
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2316
 msgid "Inkscape: _Advanced"
 msgstr "Inkscape: Gelişmiş"
 
-#: ../src/verbs.cpp:2302
+#: ../src/verbs.cpp:2317
 msgid "Advanced Inkscape topics"
 msgstr "Gelişmiş Inkscape konuları"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2304
+#: ../src/verbs.cpp:2319
 msgid "Inkscape: T_racing"
 msgstr "Inkscape: _İz bulma"
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2320
 msgid "Using bitmap tracing"
 msgstr "Bitmap iz takibinin kullanımı"
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2306
+#: ../src/verbs.cpp:2321
 msgid "Inkscape: _Calligraphy"
 msgstr "Inkscape: _El yazısı"
 
-#: ../src/verbs.cpp:2307
+#: ../src/verbs.cpp:2322
 msgid "Using the Calligraphy pen tool"
 msgstr "El yazısı kalem aracını kullanma"
 
-#: ../src/verbs.cpp:2308
+#: ../src/verbs.cpp:2323
 msgid "_Elements of Design"
 msgstr "_Tasarım Öğeleri"
 
-#: ../src/verbs.cpp:2309
+#: ../src/verbs.cpp:2324
 msgid "Principles of design in the tutorial form"
 msgstr "Öğetici şeklinde tasarım ilkeleri"
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2310
+#: ../src/verbs.cpp:2325
 msgid "_Tips and Tricks"
 msgstr "İpuçları ve Önemli noktalar"
 
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2326
 msgid "Miscellaneous tips and tricks"
 msgstr "Çeşitli ipuçları ve önemli noktalar"
 
 #. "tutorial_tips"
 #. Effect
-#: ../src/verbs.cpp:2314
+#: ../src/verbs.cpp:2329
 msgid "Previous Effect"
 msgstr "Önceki Etki"
 
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2330
 msgid "Repeat the last effect with the same settings"
 msgstr "Önceki etkiyi aynı ayarlar ile tekrarlar"
 
-#. "tutorial_tips"
-#: ../src/verbs.cpp:2316
+#: ../src/verbs.cpp:2331
 msgid "Previous Effect Settings..."
 msgstr "Önceki Etki Ayarları..."
 
-#: ../src/verbs.cpp:2317
+#: ../src/verbs.cpp:2332
 msgid "Repeat the last effect with new settings"
 msgstr "Son etkiyi yeni ayarlar ile tekrarlar"
 
-#. "tutorial_tips"
-#. Fit Canvas
-#: ../src/verbs.cpp:2320
+#. Fit Page
+#: ../src/verbs.cpp:2335
 #, fuzzy
-msgid "Fit Canvas to Selection"
+msgid "Fit Page to Selection"
 msgstr "Seçileni kes"
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2336
 #, fuzzy
-msgid "Fit the canvas to the current selection"
+msgid "Fit the page to the current selection"
 msgstr "Seç"
 
-#: ../src/verbs.cpp:2322
-msgid "Fit Canvas to Drawing"
-msgstr ""
-
-#: ../src/verbs.cpp:2323
+#: ../src/verbs.cpp:2337
 #, fuzzy
-msgid "Fit the canvas to the drawing"
-msgstr "Çizgisel geçiş"
-
-#: ../src/verbs.cpp:2324
-#, fuzzy
-msgid "Fit Canvas to Selection or Drawing"
+msgid "Fit Page to Drawing"
 msgstr "Seçileni kes"
 
-#: ../src/verbs.cpp:2325
+#: ../src/verbs.cpp:2338
+#, fuzzy
+msgid "Fit the page to the drawing"
+msgstr "Çizgisel geçiş"
+
+#: ../src/verbs.cpp:2339
+#, fuzzy
+msgid "Fit Page to Selection or Drawing"
+msgstr "Seçileni kes"
+
+#: ../src/verbs.cpp:2340
 msgid ""
-"Fit the canvas to the current selection or the drawing if there is no "
-"selection"
+"Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
 
 #: ../src/widgets/dash-selector.cpp:103
@@ -8925,16 +9238,10 @@ msgstr "Yazı tipi boyutu:"
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
-#: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3370
+#: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3399
 #, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12368.;/()"
-
-#: ../src/widgets/gradient-selector.cpp:133
-#: ../src/widgets/gradient-toolbar.cpp:488
-#, fuzzy
-msgid "Duplicate"
-msgstr "Çiftle"
 
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:499
@@ -9656,81 +9963,95 @@ msgstr "Şekli Tümleştir"
 msgid "Make the shape a whole ellipse, not arc or segment"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2730
-msgid ""
-"When pressed, picks visible color without alpha and when not pressed, picks "
-"color including its alpha"
+#: ../src/widgets/toolbox.cpp:2737
+msgid "Pick alpha"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3469
+#: ../src/widgets/toolbox.cpp:2738
+msgid ""
+"Pick both the color and the alpha (transparency) under cursor; otherwise, "
+"pick only the visible color premultiplied by alpha"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:2753
+#, fuzzy
+msgid "Set alpha"
+msgstr "Varsayılan ata"
+
+#: ../src/widgets/toolbox.cpp:2754
+msgid ""
+"If alpha was picked, assign it to selection as fill or stroke transparency"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:3498
 msgid ""
 "This font is currently not installed on your system. Inkscape will use the "
 "default font instead."
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3507
+#: ../src/widgets/toolbox.cpp:3536
 #, fuzzy
 msgid "Align left"
 msgstr "Nesne dışını sol kenara hizala"
 
-#: ../src/widgets/toolbox.cpp:3518
+#: ../src/widgets/toolbox.cpp:3547
 #, fuzzy
 msgid "Center"
 msgstr "Merkezi Y:"
 
-#: ../src/widgets/toolbox.cpp:3529
+#: ../src/widgets/toolbox.cpp:3558
 #, fuzzy
 msgid "Align right"
 msgstr "Nesneleri yatay ortasına hizala"
 
-#: ../src/widgets/toolbox.cpp:3540
+#: ../src/widgets/toolbox.cpp:3569
 msgid "Justify"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3556
+#: ../src/widgets/toolbox.cpp:3585
 msgid "Bold"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3567
+#: ../src/widgets/toolbox.cpp:3596
 msgid "Italic"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3665
+#: ../src/widgets/toolbox.cpp:3694
 msgid "Spacing between letters"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3686
+#: ../src/widgets/toolbox.cpp:3715
 msgid "Spacing between lines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3715
+#: ../src/widgets/toolbox.cpp:3744
 #, fuzzy
 msgid "Horizontal kerning"
 msgstr "yatay"
 
-#: ../src/widgets/toolbox.cpp:3736
+#: ../src/widgets/toolbox.cpp:3765
 #, fuzzy
 msgid "Vertical kerning"
 msgstr "dikey"
 
-#: ../src/widgets/toolbox.cpp:3763
+#: ../src/widgets/toolbox.cpp:3792
 msgid "Letter rotation"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3784
+#: ../src/widgets/toolbox.cpp:3813
 msgid "Remove manual kerns"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3851
+#: ../src/widgets/toolbox.cpp:3880
 msgid "Change connector spacing distance"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:3916
+#: ../src/widgets/toolbox.cpp:3945
 #, fuzzy
 msgid "Spacing:"
 msgstr "Y aralığı:"
 
-#: ../src/widgets/toolbox.cpp:3917
+#: ../src/widgets/toolbox.cpp:3946
 msgid "The amount of space left around objects by auto-routing connectors"
 msgstr ""
 
@@ -10321,6 +10642,10 @@ msgstr ""
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Fit Canvas to Selection"
+#~ msgstr "Seçileni kes"
 
 #~ msgid "Jabber connection lost."
 #~ msgstr "Jabber bağlantısı kayıp."
