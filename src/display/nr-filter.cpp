@@ -11,6 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glib.h>
+
 #include "display/nr-filter.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-gaussian.h"
@@ -51,10 +53,10 @@ void Filter::_common_init() {
     _slot_count = 1;
     _output_slot = NR_FILTER_SLOT_NOT_SET;
 
-    _region_x.set(SVGLength::PERCENT, -10, 0);
-    _region_y.set(SVGLength::PERCENT, -10, 0);
-    _region_width.set(SVGLength::PERCENT, 120, 0);
-    _region_height.set(SVGLength::PERCENT, 120, 0);
+    _region_x.set(SVGLength::PERCENT, -.10, 0);
+    _region_y.set(SVGLength::PERCENT, -.10, 0);
+    _region_width.set(SVGLength::PERCENT, 1.20, 0);
+    _region_height.set(SVGLength::PERCENT, 1.20, 0);
 
     _x_pixels = -1.0;
     _y_pixels = -1.0;
@@ -109,12 +111,42 @@ void Filter::bbox_enlarge(NRRectL &bbox)
 {
     int len_x = bbox.x1 - bbox.x0;
     int len_y = bbox.y1 - bbox.y0;
-    int enlarge_x = (int)std::ceil(len_x / 10.0);
-    int enlarge_y = (int)std::ceil(len_y / 10.0);
-    bbox.x0 -= enlarge_x;
-    bbox.x1 += enlarge_x;
-    bbox.y0 -= enlarge_y;
-    bbox.y1 += enlarge_y;
+    /* TODO: fetch somehow the object ex and em lengths */
+    _region_x.update(12, 6, len_x);
+    _region_y.update(12, 6, len_y);
+    _region_width.update(12, 6, len_x);
+    _region_height.update(12, 6, len_y);
+    if (_filter_units == SP_FILTER_UNITS_BOUNDINGBOX) {
+        if (_region_x.unit == PERCENT) {
+            bbox.x0 += _region_x.computed;
+        } else {
+            bbox.x0 += _region_x.computed * len_x;
+        }
+        if (_region_width.unit == PERCENT) {
+            bbox.x1 = bbox.x0 + _region_width.computed;
+        } else {
+            bbox.x1 = bbox.x0 + _region_width.computed * len_x;
+        }
+
+        if (_region_y.unit == PERCENT) {
+            bbox.y0 += _region_y.computed;
+        } else {
+            bbox.y0 += _region_y.computed * len_y;
+        }
+        if (_region_height.unit == PERCENT) {
+            bbox.y1 = bbox.y0 + _region_height.computed;
+        } else {
+            bbox.y1 = bbox.y0 + _region_height.computed * len_y;
+        }
+    } else if (_filter_units == SP_FILTER_UNITS_USERSPACEONUSE) {
+        /* TODO: make sure bbox and fe region are in same coordinate system */
+        bbox.x0 = _region_x.computed;
+        bbox.x1 = bbox.x0 + _region_width.computed;
+        bbox.y0 = _region_y.computed;
+        bbox.y1 = bbox.y0 + _region_height.computed;
+    } else {
+        g_warning("Error in NR::Filter::bbox_enlarge: unrecognized value of _filter_units");
+    }
 }
 
 typedef FilterPrimitive*(*FilterConstructor)();
