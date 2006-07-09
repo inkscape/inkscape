@@ -118,10 +118,14 @@ RMDIRREC = cd inkscape & $(RMDIR) /s
 RMDIRREC1 = & cd ..
 
 #######  Where is your GTK directory?
+ifndef GTK
 GTK=c:/gtk28
+endif
 
 ####### Same thing, DOS style
+ifndef GTKDOS
 GTKDOS=c:\gtk28
+endif
 
 ####### Command to process .po files --> .mo
 MSGFMT = $(GTKDOS)$(S)bin$(S)msgfmt
