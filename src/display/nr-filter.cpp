@@ -140,10 +140,10 @@ void Filter::bbox_enlarge(NRRectL &bbox)
         }
     } else if (_filter_units == SP_FILTER_UNITS_USERSPACEONUSE) {
         /* TODO: make sure bbox and fe region are in same coordinate system */
-        bbox.x0 = _region_x.computed;
-        bbox.x1 = bbox.x0 + _region_width.computed;
-        bbox.y0 = _region_y.computed;
-        bbox.y1 = bbox.y0 + _region_height.computed;
+        bbox.x0 = (NR::ICoord) _region_x.computed;
+        bbox.x1 = bbox.x0 + (NR::ICoord) _region_width.computed;
+        bbox.y0 = (NR::ICoord) _region_y.computed;
+        bbox.y1 = bbox.y0 + (NR::ICoord) _region_height.computed;
     } else {
         g_warning("Error in NR::Filter::bbox_enlarge: unrecognized value of _filter_units");
     }
