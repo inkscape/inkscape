@@ -116,27 +116,27 @@ void Filter::bbox_enlarge(NRRectL &bbox)
     _region_y.update(12, 6, len_y);
     _region_width.update(12, 6, len_x);
     _region_height.update(12, 6, len_y);
-    if (_filter_units == SP_FILTER_UNITS_BOUNDINGBOX) {
-        if (_region_x.unit == PERCENT) {
-            bbox.x0 += _region_x.computed;
+    if (_filter_units == SP_FILTER_UNITS_OBJECTBOUNDINGBOX) {
+        if (_region_x.unit == SVGLength::PERCENT) {
+            bbox.x0 += (ICoord)_region_x.computed;
         } else {
-            bbox.x0 += _region_x.computed * len_x;
+            bbox.x0 += (ICoord)(_region_x.computed * len_x);
         }
-        if (_region_width.unit == PERCENT) {
-            bbox.x1 = bbox.x0 + _region_width.computed;
+        if (_region_width.unit == SVGLength::PERCENT) {
+            bbox.x1 = bbox.x0 + (ICoord)_region_width.computed;
         } else {
-            bbox.x1 = bbox.x0 + _region_width.computed * len_x;
+            bbox.x1 = bbox.x0 + (ICoord)(_region_width.computed * len_x);
         }
 
-        if (_region_y.unit == PERCENT) {
-            bbox.y0 += _region_y.computed;
+        if (_region_y.unit == SVGLength::PERCENT) {
+            bbox.y0 += (ICoord)_region_y.computed;
         } else {
-            bbox.y0 += _region_y.computed * len_y;
+            bbox.y0 += (ICoord)(_region_y.computed * len_y);
         }
-        if (_region_height.unit == PERCENT) {
-            bbox.y1 = bbox.y0 + _region_height.computed;
+        if (_region_height.unit == SVGLength::PERCENT) {
+            bbox.y1 = bbox.y0 + (ICoord)_region_height.computed;
         } else {
-            bbox.y1 = bbox.y0 + _region_height.computed * len_y;
+            bbox.y1 = bbox.y0 + (ICoord)(_region_height.computed * len_y);
         }
     } else if (_filter_units == SP_FILTER_UNITS_USERSPACEONUSE) {
         /* TODO: make sure bbox and fe region are in same coordinate system */
