@@ -4,7 +4,8 @@ screensdir = $(datadir)/inkscape/screens
 screens_DATA = \
 	about.svg \
 	keys.svg \
-	keys.sl.svg \
+	keys.de.svg \
+        keys.sl.svg \
 	keys.fr.svg
 
 
