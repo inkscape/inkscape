@@ -13,7 +13,6 @@
 
 #include <string.h>
 
-
 #include "helper/action.h"
 
 static void sp_action_class_init (SPActionClass *klass);
@@ -205,6 +204,37 @@ sp_action_set_sensitive (SPAction *action, unsigned int sensitive)
 		}
 	}
 }
+
+
+/**
+ * Change name for all actions that can be taken with the action.
+ */
+void
+sp_action_set_name (SPAction *action, Glib::ustring name)
+{
+	nr_return_if_fail (action != NULL);
+	nr_return_if_fail (SP_IS_ACTION (action));
+
+        NRActiveObject *aobject;
+        g_free(action->name);
+        action->name = g_strdup(name.c_str());
+        aobject = (NRActiveObject *) action;
+        if (aobject->callbacks) {
+            unsigned int i;
+            for (i = 0; i < aobject->callbacks->length; i++) {
+                NRObjectListener *listener;
+                SPActionEventVector *avector;
+                listener = aobject->callbacks->listeners + i;
+                avector = (SPActionEventVector *) listener->vector;
+                if ((listener->size >= sizeof (SPActionEventVector)) && avector->set_name) {
+                    avector->set_name (action, name, listener->data);
+                }
+            }
+        }
+}
+
+
+
 
 /**
  * Return View associated with the action.

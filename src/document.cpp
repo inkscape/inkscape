@@ -106,6 +106,7 @@ SPDocument::SPDocument() {
     p->redo = NULL;
 
     p->undoStackObservers.add(p->event_log);
+    p->event_log.setDocument(this);
 
     priv = p;
 

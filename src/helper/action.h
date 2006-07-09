@@ -25,6 +25,7 @@
 #include "libnr/nr-object.h"
 #include "forward.h"
 
+#include <glibmm/ustring.h>
 //class Inkscape::UI::View::View; 
 
 namespace Inkscape {
@@ -41,6 +42,7 @@ struct SPActionEventVector {
     void (* set_active)(SPAction *action, unsigned active, void *data);       /**< Callback for activation change */
     void (* set_sensitive)(SPAction *action, unsigned sensitive, void *data); /**< Callback for a change in sensitivity */
     void (* set_shortcut)(SPAction *action, unsigned shortcut, void *data);   /**< Callback for setting the shortcut for this function */
+    void (* set_name)(SPAction *action, Glib::ustring, void *data);           /**< Callback for setting the name for this function */
 };
 
 /** All the data that is required to be an action.  This
@@ -74,6 +76,7 @@ SPAction *sp_action_new(Inkscape::UI::View::View *view,
 void sp_action_perform(SPAction *action, void *data);
 void sp_action_set_active(SPAction *action, unsigned active);
 void sp_action_set_sensitive(SPAction *action, unsigned sensitive);
+void sp_action_set_name (SPAction *action, Glib::ustring);
 Inkscape::UI::View::View *sp_action_get_view(SPAction *action);
 
 #endif

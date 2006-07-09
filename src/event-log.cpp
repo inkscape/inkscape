@@ -10,14 +10,16 @@
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
-
 #include "event-log.h"
+#include "inkscape.h"
+#include "util/ucompose.hpp"
 
 namespace Inkscape {
 
 EventLog::EventLog() :
     UndoStackObserver(),
     _connected (false),
+    _document (NULL),
     _event_list_store (Gtk::TreeStore::create(_columns)),
     _event_list_selection (NULL),
     _event_list_view (NULL),
@@ -39,7 +41,7 @@ void
 EventLog::notifyUndoEvent(Event* log) 
 {
     if ( !_notifications_blocked ) {
-      
+    
         // if we're on the first child event...
         if ( _curr_event->parent() &&
              _curr_event == _curr_event->parent()->children().begin() )
@@ -81,7 +83,9 @@ EventLog::notifyUndoEvent(Event* log)
             (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
         }
 
+        updateUndoVerbs();
     }
+
 }
 
 void
@@ -137,7 +141,9 @@ EventLog::notifyRedoEvent(Event* log)
             (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
         }
 
+        updateUndoVerbs();
     }
+
 }
 
 void 
@@ -219,7 +225,17 @@ EventLog::notifyUndoCommitEvent(Event* log)
         (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
     }
 
+    updateUndoVerbs();
 }
+
+
+void
+EventLog::setDocument(SPDocument *document)
+{
+    _document = document;
+    updateUndoVerbs();
+}
+
 
 void 
 EventLog::connectWithDialog(Gtk::TreeView *event_list_view, CallbackMap *callback_connections)
@@ -242,7 +258,76 @@ EventLog::connectWithDialog(Gtk::TreeView *event_list_view, CallbackMap *callbac
     _connected = true;
 }
 
+void
+EventLog::updateUndoVerbs()
+{
+    if(_document) {
+
+        if(_getUndoEvent()) { 
+            Inkscape::Verb::get(SP_VERB_EDIT_UNDO)->sensitive(_document, true);
+
+            Inkscape::Verb::get(SP_VERB_EDIT_UNDO)->name(_document, String::ucompose("%1 %2", 
+                      Glib::ustring(_("_Undo")),
+                      Glib::ustring((*_getUndoEvent())[_columns.description])));
+        } else {
+            Inkscape::Verb::get(SP_VERB_EDIT_UNDO)->name(_document, _("_Undo"));
+            Inkscape::Verb::get(SP_VERB_EDIT_UNDO)->sensitive(_document, false);
+        }
+
+        if(_getRedoEvent()) {
+            Inkscape::Verb::get(SP_VERB_EDIT_REDO)->sensitive(_document, true);
+            Inkscape::Verb::get(SP_VERB_EDIT_REDO)->name(_document, String::ucompose("%1 %2", 
+                      Glib::ustring(_("_Redo")),
+                      Glib::ustring((*_getRedoEvent())[_columns.description])));
+
+        } else {
+            Inkscape::Verb::get(SP_VERB_EDIT_REDO)->name(_document, _("_Redo"));
+            Inkscape::Verb::get(SP_VERB_EDIT_REDO)->sensitive(_document, false);
+        }
+
+    }
+
 }
+
+
+EventLog::const_iterator
+EventLog::_getUndoEvent() const
+{
+    const_iterator undo_event = (const_iterator)NULL;
+    if( _curr_event != _event_list_store->children().begin() )
+        undo_event = _curr_event;
+    return undo_event;
+}
+
+EventLog::const_iterator
+EventLog::_getRedoEvent() const
+{
+    const_iterator redo_event = (const_iterator)NULL;
+
+    if ( _curr_event != _last_event ) {
+
+        if ( !_curr_event->children().empty() )
+            redo_event = _curr_event->children().begin();
+        else  {
+            redo_event = _curr_event;
+            ++redo_event;
+
+            if ( redo_event->parent() &&
+                 redo_event == redo_event->parent()->children().end() ) {
+
+                redo_event = redo_event->parent();
+                ++redo_event;
+
+            }
+        }
+
+    }
+
+    return redo_event;
+}
+
+}
+
 /*
   Local Variables:
   mode:c++

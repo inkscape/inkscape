@@ -85,6 +85,8 @@ public:
     void setCurrEventParent(iterator event)    { _curr_event_parent = event; }
     void blockNotifications(bool status=true)  { _notifications_blocked = status; }
 
+    void setDocument(SPDocument *document);
+
     /* 
      * Callback types for TreeView changes.
      */
@@ -103,9 +105,16 @@ public:
      */
     void connectWithDialog(Gtk::TreeView *event_list_view, CallbackMap *callback_connections);
 
+    /*
+     * Updates the sensitivity and names of SP_VERB_EDIT_UNDO and SP_VERB_EDIT_REDO to reflect the
+     * current state.
+     */
+    void updateUndoVerbs();
+
 private:
     bool _connected;             //< connected with dialog
- 
+    SPDocument *_document;       //< document that is logged
+
     const EventModelColumns _columns;
 
     /**
@@ -124,6 +133,9 @@ private:
 
     // Map of connections used to temporary block/unblock callbacks in a TreeView
     CallbackMap *_callback_connections;
+
+    const_iterator _getUndoEvent() const; //< returns the current undoable event or NULL if none
+    const_iterator _getRedoEvent() const; //< returns the current redoable event or NULL if none
 
     // noncopyable, nonassignable
     EventLog(EventLog const &other);

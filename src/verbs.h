@@ -16,6 +16,7 @@
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include "helper/helper-forward.h"
 #include "forward.h"
+#include <glibmm/ustring.h>
 
 /** \brief This anonymous enum is used to provide a list of the Verbs
            which are defined staticly in the verb files.  There may be
@@ -380,6 +381,7 @@ public:
     void delete_view (Inkscape::UI::View::View * view);
 
     void sensitive (SPDocument * in_doc = NULL, bool in_sensitive = true);
+    void name (SPDocument * in_doc = NULL, Glib::ustring in_name = "");
 
 // Yes, multiple public, protected and private sections are bad. We'll clean that up later
 protected:

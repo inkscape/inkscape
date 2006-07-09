@@ -23,6 +23,7 @@
 #include "document.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
+#include "event-log.h"
 #include "sp-guide.h"
 #include "sp-item-group.h"
 #include "sp-namedview.h"
@@ -674,6 +675,9 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
     if (layer) {
         desktop->setCurrentLayer(layer);
     }
+
+    // FIXME: find a better place to do this
+    sp_desktop_document(desktop)->getEventLog().updateUndoVerbs();
 }
 
 void sp_namedview_document_from_window(SPDesktop *desktop)

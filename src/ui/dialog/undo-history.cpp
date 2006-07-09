@@ -175,7 +175,7 @@ UndoHistory::_onListSelectionChange()
     EventLog::const_iterator selected = _event_list_selection->get_selected();
 
     /* If no event is selected in the view, find the right one and select it. This happens whenever
-     *  a branch we're currently in is collapsed.
+     * a branch we're currently in is collapsed.
      */
     if (!selected) {
 
@@ -239,6 +239,7 @@ UndoHistory::_onListSelectionChange()
                 }
             }
             _event_log->blockNotifications(false);        
+            _event_log->updateUndoVerbs();
 
         } else { // An event after the current one has been selected. Redo to the selected event.
 
@@ -267,6 +268,7 @@ UndoHistory::_onListSelectionChange()
         }
 
         _event_log->setCurrEvent(selected);
+        _event_log->updateUndoVerbs();
     }
 
 }

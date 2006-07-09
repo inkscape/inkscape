@@ -305,7 +305,7 @@ Effect::EffectVerb::perform (SPAction *action, void * data, void *pdata)
  * is called.
  */
 SPActionEventVector Effect::EffectVerb::vector =
-            {{NULL},Effect::EffectVerb::perform, NULL, NULL, NULL};
+            {{NULL}, Effect::EffectVerb::perform, NULL, NULL, NULL, NULL};
 
 
 } }  /* namespace Inkscape, Extension */

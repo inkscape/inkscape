@@ -112,13 +112,17 @@ static void sp_ui_drag_data_received(GtkWidget *widget,
 static void sp_ui_menu_item_set_sensitive(SPAction *action,
                                           unsigned int sensitive,
                                           void *data);
+static void sp_ui_menu_item_set_name(SPAction *action, 
+                                     Glib::ustring name,
+                                     void *data);
 
 SPActionEventVector menu_item_event_vector = {
     {NULL},
     NULL,
     NULL, /* set_active */
     sp_ui_menu_item_set_sensitive, /* set_sensitive */
-    NULL  /* set_shortcut */
+    NULL, /* set_shortcut */
+    sp_ui_menu_item_set_name /* set_name */
 };
 
 void
@@ -1316,6 +1320,15 @@ sp_ui_menu_item_set_sensitive(SPAction *action, unsigned int sensitive, void *da
 {
     return gtk_widget_set_sensitive(GTK_WIDGET(data), sensitive);
 }
+
+static void
+sp_ui_menu_item_set_name(SPAction *action, Glib::ustring name, void *data)
+{
+    gtk_label_set_markup_with_mnemonic(
+        GTK_LABEL (gtk_container_get_children(GTK_CONTAINER (GTK_BIN (data)->child))->data), 
+        name.c_str());
+}
+
 
 /*
   Local Variables:

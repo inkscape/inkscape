@@ -654,6 +654,21 @@ Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
     return;
 }
 
+
+void
+Verb::name(SPDocument *in_doc, Glib::ustring in_name)
+{
+    if (_actions != NULL) {
+        for (ActionTable::iterator cur_action = _actions->begin();
+             cur_action != _actions->end();
+             cur_action++) {
+			if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
+                            sp_action_set_name(cur_action->second, in_name);
+            }
+        }
+    }
+}
+
 /** \brief  A function to remove the action associated with a view.
     \param  view  Which view's actions should be removed.
     \return None
@@ -1686,48 +1701,48 @@ TutorialVerb::perform(SPAction *action, void *data, void *pdata)
  * is called.
  */
 SPActionEventVector FileVerb::vector =
-            {{NULL},FileVerb::perform, NULL, NULL, NULL};
+            {{NULL},FileVerb::perform, NULL, NULL, NULL, NULL};
 /**
  * Action vector to define functions called if a staticly defined edit verb is
  * called.
  */
 SPActionEventVector EditVerb::vector =
-            {{NULL},EditVerb::perform, NULL, NULL, NULL};
+            {{NULL},EditVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined selection
  * verb is called
  */
 SPActionEventVector SelectionVerb::vector =
-            {{NULL},SelectionVerb::perform, NULL, NULL, NULL};
+            {{NULL},SelectionVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined layer
  * verb is called
  */
 SPActionEventVector LayerVerb::vector =
-            {{NULL}, LayerVerb::perform, NULL, NULL, NULL};
+            {{NULL}, LayerVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined object
  * editing verb is called
  */
 SPActionEventVector ObjectVerb::vector =
-            {{NULL},ObjectVerb::perform, NULL, NULL, NULL};
+            {{NULL},ObjectVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined context
  * verb is called
  */
 SPActionEventVector ContextVerb::vector =
-            {{NULL},ContextVerb::perform, NULL, NULL, NULL};
+            {{NULL},ContextVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined zoom verb
  * is called
  */
 SPActionEventVector ZoomVerb::vector =
-            {{NULL},ZoomVerb::perform, NULL, NULL, NULL};
+            {{NULL},ZoomVerb::perform, NULL, NULL, NULL, NULL};
 
 
 /**
@@ -1735,28 +1750,28 @@ SPActionEventVector ZoomVerb::vector =
  * is called
  */
 SPActionEventVector DialogVerb::vector =
-            {{NULL},DialogVerb::perform, NULL, NULL, NULL};
+            {{NULL},DialogVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined help verb
  * is called
  */
 SPActionEventVector HelpVerb::vector =
-            {{NULL},HelpVerb::perform, NULL, NULL, NULL};
+            {{NULL},HelpVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined tutorial verb
  * is called
  */
 SPActionEventVector TutorialVerb::vector =
-            {{NULL},TutorialVerb::perform, NULL, NULL, NULL};
+            {{NULL},TutorialVerb::perform, NULL, NULL, NULL, NULL};
 
 /**
  * Action vector to define functions called if a staticly defined tutorial verb
  * is called
  */
 SPActionEventVector TextVerb::vector =
-            {{NULL},TextVerb::perform, NULL, NULL, NULL};
+            {{NULL},TextVerb::perform, NULL, NULL, NULL, NULL};
 
 
 /* *********** Effect Last ********** */
@@ -1785,7 +1800,7 @@ public:
  * The vector to attach in the last effect verb.
  */
 SPActionEventVector EffectLastVerb::vector =
-            {{NULL},EffectLastVerb::perform, NULL, NULL, NULL};
+            {{NULL},EffectLastVerb::perform, NULL, NULL, NULL, NULL};
 
 /** \brief  Create an action for a \c EffectLastVerb
     \param  view  Which view the action should be created for
@@ -1854,7 +1869,7 @@ public:
  * The vector to attach in the fit canvas verb.
  */
 SPActionEventVector FitCanvasVerb::vector =
-            {{NULL},FitCanvasVerb::perform, NULL, NULL, NULL};
+            {{NULL},FitCanvasVerb::perform, NULL, NULL, NULL, NULL};
 
 /** \brief  Create an action for a \c FitCanvasVerb
     \param  view  Which view the action should be created for
@@ -2312,9 +2327,9 @@ Verb *Verb::_base_verbs[] = {
 
     /* Effect */
     new EffectLastVerb(SP_VERB_EFFECT_LAST, "EffectLast", N_("Previous Effect"),
-                       N_("Repeat the last effect with the same settings"), NULL/*"tutorial_tips"*/),
+                       N_("Repeat the last effect with the same settings"), NULL),
     new EffectLastVerb(SP_VERB_EFFECT_LAST_PREF, "EffectLastPref", N_("Previous Effect Settings..."),
-                       N_("Repeat the last effect with new settings"), NULL/*"tutorial_tips"*/),
+                       N_("Repeat the last effect with new settings"), NULL),
 
     /* Fit Page */
     new FitCanvasVerb(SP_VERB_FIT_CANVAS_TO_SELECTION, "FitCanvasToSelection", N_("Fit Page to Selection"),

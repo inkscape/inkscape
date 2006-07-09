@@ -52,7 +52,8 @@ SPActionEventVector button_event_vector = {
 	 NULL,
 	 sp_button_action_set_active,
 	 sp_button_action_set_sensitive,
-	 sp_button_action_set_shortcut
+         sp_button_action_set_shortcut,
+         NULL
 };
 
 GtkType
