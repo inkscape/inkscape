@@ -58,161 +58,161 @@ namespace xpath
 //# V A L U E S
 //###########################
 
-static bool tokStr(Token &tok, TokenExecutor &exec)
+static bool tokStr(Token &tok, Stack &stack)
 {
     StackItem item;
     item.sval = tok.sval;
-    exec.push(item);
+    stack.push(item);
     return true;
 }
 
-static bool tokFloat(Token &tok, TokenExecutor &exec)
+static bool tokFloat(Token &tok, Stack &stack)
 {
         StackItem item;
         item.dval = tok.dval;
-        exec.push(item);
+        stack.push(item);
         return true;
 }
 
-static bool tokInt(Token &tok, TokenExecutor &exec)
+static bool tokInt(Token &tok, Stack &stack)
 {
     StackItem item;
     item.ival = tok.ival;
-    exec.push(item);
+    stack.push(item);
     return true;
 }
 
-static bool tokAnd(Token &tok, TokenExecutor &exec)
+static bool tokAnd(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = item1.ival && item2.ival;
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
-static bool tokOr(Token &tok, TokenExecutor &exec)
+static bool tokOr(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = item1.ival || item2.ival;
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
-static bool tokMod(Token &tok, TokenExecutor &exec)
+static bool tokMod(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.dval = fmod(item1.dval, item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokDiv(Token &tok, TokenExecutor &exec)
+static bool tokDiv(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.dval /= item2.dval;
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
-static bool tokMul(Token &tok, TokenExecutor &exec)
+static bool tokMul(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.dval *= item2.dval;
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
-static bool tokPlus(Token &tok, TokenExecutor &exec)
+static bool tokPlus(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.dval += item2.dval;
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
-static bool tokMinus(Token &tok, TokenExecutor &exec)
+static bool tokMinus(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.dval -= item2.dval;
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokNeg(Token &tok, TokenExecutor &exec)
+static bool tokNeg(Token &tok, Stack &stack)
 {
-    StackItem item = exec.pop();
+    StackItem item = stack.pop();
     item.dval = -item.dval;
     item.ival = -item.ival;
-    exec.push(item);
+    stack.push(item);
     return true;
 }
 
 
-static bool tokEquals(Token &tok, TokenExecutor &exec)
+static bool tokEquals(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = (item1.dval == item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokNotEquals(Token &tok, TokenExecutor &exec)
+static bool tokNotEquals(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = (item1.dval != item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokLessThan(Token &tok, TokenExecutor &exec)
+static bool tokLessThan(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = (item1.dval < item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokLessThanEquals(Token &tok, TokenExecutor &exec)
+static bool tokLessThanEquals(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = (item1.dval <= item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokGreaterThanEquals(Token &tok, TokenExecutor &exec)
+static bool tokGreaterThanEquals(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = (item1.dval >= item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
 
-static bool tokGreaterThan(Token &tok, TokenExecutor &exec)
+static bool tokGreaterThan(Token &tok, Stack &stack)
 {
-    StackItem item1 = exec.pop();
-    StackItem item2 = exec.pop();
+    StackItem item1 = stack.pop();
+    StackItem item2 = stack.pop();
     item1.ival = (item1.dval > item2.dval);
-    exec.push(item1);
+    stack.push(item1);
     return true;
 }
 
@@ -225,32 +225,32 @@ static bool tokGreaterThan(Token &tok, TokenExecutor &exec)
 //# X P A T H    I T E M S
 //###########################
 
-static bool tokAbsolute(Token &tok, TokenExecutor &exec)
+static bool tokAbsolute(Token &tok, Stack &stack)
 {
     return true;
 }
 
-static bool tokRelative(Token &tok, TokenExecutor &exec)
+static bool tokRelative(Token &tok, Stack &stack)
 {
     return true;
 }
 
-static bool tokStep(Token &tok, TokenExecutor &exec)
+static bool tokStep(Token &tok, Stack &stack)
 {
     return true;
 }
 
-static bool tokNameTest(Token &tok, TokenExecutor &exec)
+static bool tokNameTest(Token &tok, Stack &stack)
 {
     return true;
 }
 
-static bool tokExpr(Token &tok, TokenExecutor &exec)
+static bool tokExpr(Token &tok, Stack &stack)
 {
     return true;
 }
 
-static bool tokUnion(Token &tok, TokenExecutor &exec)
+static bool tokUnion(Token &tok, Stack &stack)
 {
     return true;
 }
@@ -263,79 +263,79 @@ static bool tokUnion(Token &tok, TokenExecutor &exec)
 //###########################
 
 
-static bool tokAxisAncestorOrSelf(Token &tok, TokenExecutor &exec)
+static bool tokAxisAncestorOrSelf(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisAncestor(Token &tok, TokenExecutor &exec)
+static bool tokAxisAncestor(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisAttribute(Token &tok, TokenExecutor &exec)
+static bool tokAxisAttribute(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisChild(Token &tok, TokenExecutor &exec)
+static bool tokAxisChild(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisDescendantOrSelf(Token &tok, TokenExecutor &exec)
+static bool tokAxisDescendantOrSelf(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisDescendant(Token &tok, TokenExecutor &exec)
+static bool tokAxisDescendant(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisFollowingSibling(Token &tok, TokenExecutor &exec)
+static bool tokAxisFollowingSibling(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisFollowing(Token &tok, TokenExecutor &exec)
+static bool tokAxisFollowing(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisNamespace(Token &tok, TokenExecutor &exec)
+static bool tokAxisNamespace(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisParent(Token &tok, TokenExecutor &exec)
+static bool tokAxisParent(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisPrecedingSibling(Token &tok, TokenExecutor &exec)
+static bool tokAxisPrecedingSibling(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisPreceding(Token &tok, TokenExecutor &exec)
+static bool tokAxisPreceding(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokAxisSelf(Token &tok, TokenExecutor &exec)
+static bool tokAxisSelf(Token &tok, Stack &stack)
 {
     return true;
 }
@@ -347,163 +347,163 @@ static bool tokAxisSelf(Token &tok, TokenExecutor &exec)
 //###########################
 
 
-static bool tokFuncLast(Token &tok, TokenExecutor &exec)
+static bool tokFuncLast(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncPosition(Token &tok, TokenExecutor &exec)
+static bool tokFuncPosition(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncCount(Token &tok, TokenExecutor &exec)
+static bool tokFuncCount(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncId(Token &tok, TokenExecutor &exec)
+static bool tokFuncId(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncLocalName(Token &tok, TokenExecutor &exec)
+static bool tokFuncLocalName(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncNamespaceUri(Token &tok, TokenExecutor &exec)
+static bool tokFuncNamespaceUri(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncName(Token &tok, TokenExecutor &exec)
+static bool tokFuncName(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncString(Token &tok, TokenExecutor &exec)
+static bool tokFuncString(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncConcat(Token &tok, TokenExecutor &exec)
+static bool tokFuncConcat(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncStartsWith(Token &tok, TokenExecutor &exec)
+static bool tokFuncStartsWith(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncContains(Token &tok, TokenExecutor &exec)
+static bool tokFuncContains(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncSubstringBefore(Token &tok, TokenExecutor &exec)
+static bool tokFuncSubstringBefore(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncSubstringAfter(Token &tok, TokenExecutor &exec)
+static bool tokFuncSubstringAfter(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncSubstring(Token &tok, TokenExecutor &exec)
+static bool tokFuncSubstring(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncStringLength(Token &tok, TokenExecutor &exec)
+static bool tokFuncStringLength(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncNormalizeSpace(Token &tok, TokenExecutor &exec)
+static bool tokFuncNormalizeSpace(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncTranslate(Token &tok, TokenExecutor &exec)
+static bool tokFuncTranslate(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncBoolean(Token &tok, TokenExecutor &exec)
+static bool tokFuncBoolean(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncNot(Token &tok, TokenExecutor &exec)
+static bool tokFuncNot(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncTrue(Token &tok, TokenExecutor &exec)
+static bool tokFuncTrue(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncFalse(Token &tok, TokenExecutor &exec)
+static bool tokFuncFalse(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncLang(Token &tok, TokenExecutor &exec)
+static bool tokFuncLang(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncNumber(Token &tok, TokenExecutor &exec)
+static bool tokFuncNumber(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncSum(Token &tok, TokenExecutor &exec)
+static bool tokFuncSum(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncFloor(Token &tok, TokenExecutor &exec)
+static bool tokFuncFloor(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncCeiling(Token &tok, TokenExecutor &exec)
+static bool tokFuncCeiling(Token &tok, Stack &stack)
 {
     return true;
 }
 
 
-static bool tokFuncRound(Token &tok, TokenExecutor &exec)
+static bool tokFuncRound(Token &tok, Stack &stack)
 {
     return true;
 }
@@ -956,7 +956,6 @@ TokenExecutor::~TokenExecutor()
 void TokenExecutor::assign(const TokenExecutor &other)
 {
     tokenList   = other.tokenList;
-    stack       = other.stack;
 }
 
 
@@ -965,50 +964,83 @@ void TokenExecutor::assign(const TokenExecutor &other)
  */
 void TokenExecutor::reset()
 {
-    stack.clear();
 }
 
 
 
 
 /**
- * Set the root node
+ * Execute a list upon a given node.  For each Axis encountered,
+ * get the nodes encountered so far, and execute the rest of the
+ * list of tokens upon each of the nodes.
  */
-NodeList TokenExecutor::execute(const TokenList &tokens, const Node *node)
+int TokenExecutor::execute(std::vector<Token> &tokens,
+                            int position,
+                            const Node *node,
+                            NodeList &result)
 {
+    Stack stack(*this);
 
-    nodeList.clear();
+    NodeList contextNodes;
 
-    return nodeList;
-}
+    int length = (int) tokens.size();
 
-
-
-
-
-/**
- *
- */
-void TokenExecutor::push(StackItem &item)
-{
-    stack.push_back(item);
-}
-
-/**
- *
- */
-StackItem TokenExecutor::pop()
-{
-    if (stack.size()<1)
+    for ( ; position < length ; position ++)
         {
-        StackItem item;
-        return item;
-        }
-    std::vector<StackItem>::iterator iter = stack.end()-1;
-    StackItem item = *iter;
-    stack.erase(iter);
-    return item;
+        Token tok = tokens[position];
+        if (tok.isAxis())
+            {
+            int pos2 = 0;
+            //Do rest of tokens with the nodes we have found so far
+            for (unsigned int i = 0 ; i<contextNodes.getLength() ; i++)
+                {
+                Node *contextNode = contextNodes.item(i);
+                pos2 = execute(tokens, position, contextNode, result);
+                if (pos2 < 0)
+                    {
+                    return -1;
+                    }
+                }
+            position = pos2;
+            }
+        else
+            {
+            if (!tok.execute(stack))
+                {
+                return -1;
+                } 
+            }
+
+        }//for
+
+    return position;
 }
+
+
+/**
+ * Execute the tokens in a TokenList upon a given node
+ */
+bool TokenExecutor::execute(TokenList &tokenList,
+                            const Node *node,
+                            NodeList &result)
+{
+
+    NodeList nodelist;
+
+    std::vector<Token> &tokens = tokenList.getTokens();
+    if (execute(tokens, 0, node, nodeList) < 0)
+        {
+        //error message
+        return false;
+        }
+
+    result = nodeList;
+
+    return true;
+}
+
+
+
 
 
 

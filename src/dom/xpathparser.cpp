@@ -2055,9 +2055,13 @@ NodeList XPathParser::evaluate(const Node *root,
 
     //### Execute the token list
     TokenExecutor executor;
-    list = executor.execute(tokens, root);
+    NodeList results;
+    if (!executor.execute(tokens, root, results))
+        {
+        //error
+        }
 
-    return list;
+    return results;
 }
 
 

@@ -126,20 +126,14 @@ private:
 
 
 
-/**
- * Contains the StackItem stack;
- */
-typedef std::vector<StackItem> Stack;
-
-
 //########################################################################
 //# X P A T H    T O K E N
 //########################################################################
 
 class Token;
-class TokenExecutor;
+class Stack;
 
-typedef bool (*TokenFunc)(Token &tok, TokenExecutor &exec);
+typedef bool (*TokenFunc)(Token &tok, Stack &stack);
 
 
 /**
@@ -285,6 +279,16 @@ public:
      */
     virtual int getType()
         { return type; }
+
+    /**
+     *  Return true if the type is one of the Axis types
+     *  above;
+     */
+    virtual bool isAxis()
+        {
+        return type>=TOK_AXIS_ANCESTOR_OR_SELF &&
+                 type <= TOK_AXIS_SELF;
+        }
     /**
      *  Return the string TokenType of this token
      */
@@ -294,10 +298,10 @@ public:
      *  Let this token execute itself on the given stack,
      *  possibly adding Nodes to the node list.
      */
-    virtual bool execute(TokenExecutor &exec)
+    virtual bool execute(Stack &stack)
         {
         if (tokenFunc)
-            return tokenFunc(*this, exec);
+            return tokenFunc(*this, stack);
         return false;
         }
 
@@ -396,13 +400,13 @@ private:
 
 
 //########################################################################
-//# C O N T E X T
+//# S T A C K
 //########################################################################
 
 /**
  *
  */
-class Context
+class Stack
 {
 public:
 
@@ -417,61 +421,49 @@ public:
     /**
      *  Constructor
      */
-    Context()
-        { init(); }
-
-    /**
-     *  Constructor
-     */
-    Context(int principalNodeTypeArg)
-        { init(); principalNodeType = principalNodeTypeArg; }
+    Stack(TokenExecutor &par) : parent(par)
+        { clear(); }
 
     /**
      *  Copy constructor
      */
-    Context(const Context &other)
+    Stack(const Stack &other) : parent(other.parent)
         { assign(other); }
 
     /**
      *  Destructor
      */
-    virtual ~Context()
+    virtual ~Stack()
         {}
 
     /**
      *
      */
-    Context &operator=(const Context &other)
+    Stack &operator=(const Stack &other)
         { assign(other); return *this; }
 
     /**
      *
      */
-    std::vector<Token> &getTokens()
-        { return tokens; }
+    void push(StackItem &item)
+        { return stackItems.push_back(item); }
 
     /**
      *
      */
-    void setTokens(const std::vector<Token> &tokensArg)
-        { tokens = tokensArg; }
-
-    /**
-     *
-     */
-    void add(const Token &token)
-        { tokens.push_back(token); }
-
-    /**
-     *
-     */
-    virtual void dump()
+    StackItem pop()
         {
-        for (unsigned int i=0 ; i<tokens.size() ; i++)
+        if (stackItems.size() < 1)
             {
-            Token token = tokens[i];
-            token.dump();
+            //TODO: error here
+            StackItem item;
+            return item;
             }
+        std::vector<StackItem>::iterator iter =
+                   stackItems.end() - 1;
+        StackItem item = *iter;
+        stackItems.erase(iter);
+        return item;
         }
 
     /**
@@ -479,27 +471,27 @@ public:
      */
     virtual void clear()
         {
-        tokens.clear();
+        stackItems.clear();
+        principalNodeType = AXIS_ELEMENT;
         }
 
 private:
 
-    void init()
-        {
-        principalNodeType = AXIS_ELEMENT;
-        }
-
-    void assign(const Context &other)
+    void assign(const Stack &other)
         {
         principalNodeType = other.principalNodeType;
-        tokens = other.tokens;
+        stackItems        = other.stackItems;
         }
 
     int principalNodeType;
 
-    std::vector<Token> tokens;
+    std::vector<StackItem> stackItems;
+
+    TokenExecutor &parent;
 
 };
+
+
 
 
 //########################################################################
@@ -537,30 +529,28 @@ public:
     virtual ~TokenList()
         { }
 
-    /**
-     *
-     */
-    virtual void add(const Context &contextArg)
-        {
-        contexts.push_back(currentContext);
-        currentContext=contextArg;
-        }
 
     /**
      *
      */
     virtual void add(const Token &token)
-        { currentContext.add(token); }
+        { tokens.push_back(token); }
+
+    /**
+     *
+     */
+    virtual std::vector<Token> &getTokens()
+        { return tokens; }
 
     /**
      *
      */
     virtual void dump()
         {
-        for (unsigned int i=0 ; i<contexts.size() ; i++)
+        for (unsigned int i=0 ; i<tokens.size() ; i++)
             {
-            Context context = contexts[i];
-            context.dump();
+            Token token = tokens[i];
+            token.dump();
             }
         }
 
@@ -569,8 +559,7 @@ public:
      */
     virtual void clear()
        {
-       currentContext.clear();
-       contexts.clear();
+       tokens.clear();
        }
 
 private:
@@ -583,13 +572,10 @@ private:
 
     void assign(const TokenList &other)
         {
-        currentContext = other.currentContext;
-        contexts = other.contexts;
+        tokens = other.tokens;
         }
 
-    Context currentContext;
-
-    std::vector<Context> contexts;
+    std::vector<Token> tokens;
 
 
 };
@@ -635,27 +621,23 @@ public:
     virtual void reset();
 
     /**
-     * Push a stack item onto the stack
+     * Execute a list upon a given node.  For each Axis encountered,
+     * get the nodes encountered so far, and execute the rest of the
+     * list of tokens upon each of the nodes.
      */
-    virtual void push(StackItem &item);
-
-    /**
-     * Pop a stack item from the stack
-     */
-    virtual StackItem pop();
+    int execute(std::vector<Token> &tokens,
+                int position,
+                const Node *node,
+                NodeList &nodeList);
 
     /**
      * Execute a token list on the stack
      */
-    NodeList execute(const TokenList &list, const Node *node);
+    bool execute(TokenList &list,
+                 const Node *node,
+                 NodeList &result);
 
 private:
-
-    /**
-     * Contains the StackItem stack;
-     */
-    Stack stack;
-
 
     /**
      *
