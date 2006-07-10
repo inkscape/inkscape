@@ -297,7 +297,7 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
     if (interactive) {
         if (did) {
             sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
-                             /* TODO: annotate */ "path-chemistry.cpp:300");
+                             _("Object to Path"));
         } else {
             sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
             return;

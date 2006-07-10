@@ -1147,18 +1147,26 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
 
             if ( SP_OBJECT_NEXT(layer) != old_pos ) {
                 char const *message = NULL;
+                Glib::ustring description = "";
                 switch (verb) {
                     case SP_VERB_LAYER_TO_TOP:
+                        message = g_strdup_printf(_("Raised layer <b>%s</b>."), layer->defaultLabel());
+                        description = _("Layer to Top");
+                        break;
                     case SP_VERB_LAYER_RAISE:
                         message = g_strdup_printf(_("Raised layer <b>%s</b>."), layer->defaultLabel());
+                        description = _("Raise Layer");
                         break;
                     case SP_VERB_LAYER_TO_BOTTOM:
+                        message = g_strdup_printf(_("Lowered layer <b>%s</b>."), layer->defaultLabel());
+                        description = _("Layer to Bottom");
+                        break;
                     case SP_VERB_LAYER_LOWER:
                         message = g_strdup_printf(_("Lowered layer <b>%s</b>."), layer->defaultLabel());
+                        description = _("Lower Layer");
                         break;
                 };
-                sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_LOWER, 
-                                 /* TODO: annotate */ "verbs.cpp:1146");
+                sp_document_done(sp_desktop_document(dt), verb, description);
                 if (message) {
                     dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
                     g_free((void *) message);
@@ -1192,7 +1200,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                 }
 
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_DELETE, 
-                                 /* TODO: annotate */ "verbs.cpp:1180");
+                                 _("Delete layer"));
 
                 // TRANSLATORS: this means "The layer has been deleted."
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Deleted layer."));
@@ -1252,7 +1260,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
                 sp_selection_scale_relative(sel, center, NR::scale(-1.0, 1.0));
             }
             sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_HORIZONTAL,
-                             /* TODO: annotate */ "verbs.cpp:1240");
+                             _("Flip horizontally"));
             break;
         case SP_VERB_OBJECT_FLIP_VERTICAL:
             if (tools_isactive(dt, TOOLS_NODES)) {
@@ -1261,7 +1269,7 @@ ObjectVerb::perform( SPAction *action, void *data, void *pdata )
                 sp_selection_scale_relative(sel, center, NR::scale(1.0, -1.0));
             }
             sp_document_done(sp_desktop_document(dt), SP_VERB_OBJECT_FLIP_VERTICAL,
-                             /* TODO: annotate */ "verbs.cpp:1249");
+                             _("Flip vertically"));
             break;
         case SP_VERB_OBJECT_SET_MASK:
             sp_selection_set_mask(false, false);
