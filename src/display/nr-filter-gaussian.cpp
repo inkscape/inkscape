@@ -362,11 +362,11 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
                     NR_PIXBLOCK_PX(out)[((y - yd0) * out->rs) + NR_PIXBLOCK_BPP(out) * (x - xd0) + byte] = a00;
                     continue;
                 }
-                _check_index(bufy, ((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x + 1 - xd0) + byte, __LINE__);
+                _check_index(bufy, ((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte, __LINE__);
                 unsigned char a10 = NR_PIXBLOCK_PX(bufy)[((y - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte];
-                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x - xd0) + byte, __LINE__);
+                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte, __LINE__);
                 unsigned char a01 = NR_PIXBLOCK_PX(bufy)[((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x - xd0) + byte];
-                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) + (x + 1 - xd0) + byte, __LINE__);
+                _check_index(bufy, ((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte, __LINE__);
                 unsigned char a11 = NR_PIXBLOCK_PX(bufy)[((y + 1 - yd0) * bufy->rs) + NR_PIXBLOCK_BPP(bufy) * (x + 1 - xd0) + byte];
 
                 // iterate over the rectangle to be interpolated

@@ -18,10 +18,13 @@
 #include "display/nr-filter-gaussian.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-types.h"
+#include "display/pixblock-scaler.h"
 
 #include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-blit.h"
+#include "libnr/nr-matrix.h"
+#include "libnr/nr-scale.h"
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
 
@@ -74,16 +77,42 @@ Filter::~Filter()
 
 int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
+    Matrix trans = *item->ctm;
     FilterSlot slot(_slot_count);
     NRPixBlock *in = new NRPixBlock;
-    nr_pixblock_setup_fast(in, pb->mode,
-                           pb->area.x0, pb->area.y0,
-                           pb->area.x1, pb->area.y1, true);
-    nr_blit_pixblock_pixblock(in, pb);
+    if (_x_pixels >= 0) {
+        /* If filter resolution is zero, the object should not be rendered */
+        if (_x_pixels == 0 || _y_pixels == 0) {
+            int size = (pb->area.x1 - pb->area.x0)
+                * (pb->area.y1 - pb->area.y0)
+                * NR_PIXBLOCK_BPP(pb);
+            memset(NR_PIXBLOCK_PX(pb), 0, size);
+            return 0;
+        }
+        int x_len = (int)round(((pb->area.x1 - pb->area.x0) * _x_pixels) / (item->bbox.x1 - item->bbox.x0));
+        if (x_len < 1) x_len = 1;
+        int y_len;
+        if (_y_pixels > 0) {
+            y_len = (int)round(((pb->area.y1 - pb->area.y0) * _y_pixels) / (item->bbox.y1 - item->bbox.y0));
+        } else {
+            y_len = (int)round((x_len * (pb->area.y1 - pb->area.y0)) / (double)(pb->area.x1 - pb->area.x0));
+        }
+        if (y_len < 1) y_len = 1;
+        nr_pixblock_setup_fast(in, pb->mode, 0, 0, x_len, y_len, true);
+        scale_bicubic(in, pb);
+        scale res_scaling(x_len / (double)(pb->area.x1 - pb->area.x0),
+                          y_len / (double)(pb->area.y1 - pb->area.y0));
+        trans *= res_scaling;
+    } else {
+        nr_pixblock_setup_fast(in, pb->mode,
+                               pb->area.x0, pb->area.y0,
+                               pb->area.x1, pb->area.y1, true);
+        nr_blit_pixblock_pixblock(in, pb);
+    }
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
-    _primitive[0]->render(slot, *item->ctm);
+    _primitive[0]->render(slot, trans);
 
     NRPixBlock *out = slot.get(_output_slot);
 
@@ -91,8 +120,12 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         * (pb->area.y1 - pb->area.y0)
         * NR_PIXBLOCK_BPP(pb);
     memset(NR_PIXBLOCK_PX(pb), 0, size);
-
-    nr_blit_pixblock_pixblock(pb, out);
+        
+    if (_x_pixels < 0) {
+        nr_blit_pixblock_pixblock(pb, out);
+    } else {
+        scale_bicubic(pb, out);
+    }
 
     _slot_count = slot.get_slot_count();
     return 0;

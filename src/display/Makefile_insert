@@ -69,7 +69,9 @@ display_libspdisplay_a_SOURCES = \
 	display/nr-filter-gaussian.h    \
 	display/nr-filter-slot.cpp      \
 	display/nr-filter-slot.h        \
-	display/nr-filter-types.h
+	display/nr-filter-types.h       \
+	display/pixblock-scaler.cpp     \
+	display/pixblock-scaler.h
 
 display_bezier_utils_test_SOURCES = display/bezier-utils-test.cpp
 display_bezier_utils_test_LDADD = libnr/libnr.a -lglib-2.0

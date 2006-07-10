@@ -25,8 +25,8 @@ FilterPrimitive::FilterPrimitive()
 
     _region_x.set(SVGLength::PERCENT, 0, 0);
     _region_y.set(SVGLength::PERCENT, 0, 0);
-    _region_width.set(SVGLength::PERCENT, 100, 0);
-    _region_height.set(SVGLength::PERCENT, 100, 0);
+    _region_width.set(SVGLength::PERCENT, 1, 0);
+    _region_height.set(SVGLength::PERCENT, 1, 0);
 }
 
 FilterPrimitive::~FilterPrimitive()
