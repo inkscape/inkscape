@@ -14,7 +14,7 @@ class Extension;
 }
 
 namespace UI {
-namespace Dialogs {
+namespace Dialog {
 
 
 /**
@@ -153,7 +153,7 @@ public:
 }; //FileSaveDialog
 
 
-} //namespace Dialogs
+} //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
 

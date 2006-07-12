@@ -43,7 +43,7 @@
 #include "print.h"
 #include "file.h"
 #include "message-stack.h"
-#include "dialogs/filedialog.h"
+#include "ui/dialog/filedialog.h"
 #include "prefs-utils.h"
 #include "path-prefix.h"
 
@@ -352,7 +352,7 @@ void dump_ustr(Glib::ustring const &ustr)
     g_message("---------------");
 }
 
-static Inkscape::UI::Dialogs::FileOpenDialog *openDialogInstance = NULL;
+static Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance = NULL;
 
 /**
  *  Display an file Open selector.  Open a document if OK is pressed.
@@ -377,9 +377,9 @@ sp_file_open_dialog(gpointer object, gpointer data)
 
     if (!openDialogInstance) {
         openDialogInstance =
-              Inkscape::UI::Dialogs::FileOpenDialog::create(
+              Inkscape::UI::Dialog::FileOpenDialog::create(
                  (char const *)open_path,
-                 Inkscape::UI::Dialogs::SVG_TYPES,
+                 Inkscape::UI::Dialog::SVG_TYPES,
                  (char const *)_("Select file to open"));
     }
     bool const success = openDialogInstance->show();
@@ -569,7 +569,7 @@ file_save(SPDocument *doc, gchar const *uri, Inkscape::Extension::Extension *key
     return TRUE;
 }
 
-static Inkscape::UI::Dialogs::FileSaveDialog *saveDialogInstance = NULL;
+static Inkscape::UI::Dialog::FileSaveDialog *saveDialogInstance = NULL;
 
 /**
  *  Display a SaveAs dialog.  Save the document if OK pressed.
@@ -651,9 +651,9 @@ sp_file_save_dialog(SPDocument *doc)
 
     if (!saveDialogInstance) {
         saveDialogInstance =
-             Inkscape::UI::Dialogs::FileSaveDialog::create(
+             Inkscape::UI::Dialog::FileSaveDialog::create(
                  (char const *) save_loc,
-                 Inkscape::UI::Dialogs::SVG_TYPES,
+                 Inkscape::UI::Dialog::SVG_TYPES,
                  (char const *) _("Select file to save to"),
                  default_extension
             );
@@ -909,7 +909,7 @@ file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension
 }
 
 
-static Inkscape::UI::Dialogs::FileOpenDialog *importDialogInstance = NULL;
+static Inkscape::UI::Dialog::FileOpenDialog *importDialogInstance = NULL;
 
 /**
  *  Display an Open dialog, import a resource if OK pressed.
@@ -923,9 +923,9 @@ sp_file_import(GtkWidget *widget)
 
     if (!importDialogInstance) {
         importDialogInstance =
-             Inkscape::UI::Dialogs::FileOpenDialog::create(
+             Inkscape::UI::Dialog::FileOpenDialog::create(
                  (char const *)import_path,
-                 Inkscape::UI::Dialogs::IMPORT_TYPES,
+                 Inkscape::UI::Dialog::IMPORT_TYPES,
                  (char const *)_("Select file to import"));
     }
     bool success = importDialogInstance->show();

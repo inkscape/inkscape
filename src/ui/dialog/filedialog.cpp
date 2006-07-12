@@ -57,7 +57,7 @@ void dump_ustr( const Glib::ustring& ustr );
 
 namespace Inkscape {
 namespace UI {
-namespace Dialogs {
+namespace Dialog {
 
 void FileDialogExtensionToPattern (Glib::ustring &pattern, gchar * in_file_extension);
 
@@ -1431,7 +1431,7 @@ FileDialogExtensionToPattern (Glib::ustring &pattern, gchar * in_file_extension)
     }
 }
 
-} //namespace Dialogs
+} //namespace Dialog
 } //namespace UI
 } //namespace Inkscape
 

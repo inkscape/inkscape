@@ -26,8 +26,6 @@ dialogs_libspdialogs_a_SOURCES = \
 	dialogs/export.h	\
 	dialogs/extensions.cpp	\
 	dialogs/extensions.h	\
-	dialogs/filedialog.cpp	\
-	dialogs/filedialog.h	\
 	dialogs/fill-style.cpp	\
 	dialogs/fill-style.h	\
 	dialogs/guidelinedialog.cpp	\
