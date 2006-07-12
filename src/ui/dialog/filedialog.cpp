@@ -55,11 +55,99 @@ void dump_str( const gchar* str, const gchar* prefix );
 void dump_ustr( const Glib::ustring& ustr );
 #endif
 
-namespace Inkscape {
-namespace UI {
-namespace Dialog {
+namespace Inkscape
+{
+namespace UI
+{
+namespace Dialog
+{
 
-void FileDialogExtensionToPattern (Glib::ustring &pattern, gchar * in_file_extension);
+
+
+
+
+//########################################################################
+//### U T I L I T Y
+//########################################################################
+
+/**
+    \brief  A quick function to turn a standard extension into a searchable
+            pattern for the file dialogs
+    \param  pattern  The patter that the extension should be written to
+    \param  in_file_extension  The C string that represents the extension
+
+    This function just goes through the string, and takes all characters
+    and puts a [<upper><lower>] so that both are searched and shown in
+    the file dialog.  This function edits the pattern string to make
+    this happen.
+*/
+static void
+fileDialogExtensionToPattern(Glib::ustring &pattern,
+                      Glib::ustring &extension)
+{
+    for (unsigned int i = 0; i < extension.length(); i++ )
+        {
+        Glib::ustring::value_type ch = extension[i];
+        if ( Glib::Unicode::isalpha(ch) )
+            {
+            pattern += '[';
+            pattern += Glib::Unicode::toupper(ch);
+            pattern += Glib::Unicode::tolower(ch);
+            pattern += ']';
+            }
+        else
+            {
+            pattern += ch;
+            }
+        }
+}
+
+
+/**
+ *  Hack:  Find all entry widgets in a container
+ */
+void findEntryWidgets(Gtk::Container *parent,
+                      std::vector<Gtk::Entry *> &result)
+{
+    if (!parent)
+        return;
+    std::vector<Gtk::Widget *> children = parent->get_children();
+    for (unsigned int i=0; i<children.size() ; i++)
+        {
+        Gtk::Widget *child = children[i];
+        GtkWidget *wid = child->gobj();
+        if (GTK_IS_ENTRY(wid))
+           result.push_back((Gtk::Entry *)child);
+        else if (GTK_IS_CONTAINER(wid))
+            findEntryWidgets((Gtk::Container *)child, result);
+        }
+
+}
+
+
+
+
+/**
+ *  Hack:  Find all expander widgets in a container
+ */
+void findExpanderWidgets(Gtk::Container *parent,
+                        std::vector<Gtk::Expander *> &result)
+{
+    if (!parent)
+        return;
+    std::vector<Gtk::Widget *> children = parent->get_children();
+    for (unsigned int i=0; i<children.size() ; i++)
+        {
+        Gtk::Widget *child = children[i];
+        GtkWidget *wid = child->gobj();
+        if (GTK_IS_EXPANDER(wid))
+           result.push_back((Gtk::Expander *)child);
+        else if (GTK_IS_CONTAINER(wid))
+            findExpanderWidgets((Gtk::Container *)child, result);
+        }
+
+}
+
 
 /*#########################################################################
 ### SVG Preview Widget
@@ -72,7 +160,9 @@ void FileDialogExtensionToPattern (Glib::ustring &pattern, gchar * in_file_exten
 class SVGPreview : public Gtk::VBox
 {
 public:
+
     SVGPreview();
+
     ~SVGPreview();
 
     bool setDocument(SPDocument *doc);
@@ -596,9 +686,9 @@ SVGPreview::~SVGPreview()
 class FileOpenDialogImpl : public FileOpenDialog, public Gtk::FileChooserDialog
 {
 public:
-    FileOpenDialogImpl(char const *dir,
+    FileOpenDialogImpl(const Glib::ustring &dir,
                        FileDialogType fileTypes,
-                       char const *title);
+                       const Glib::ustring &title);
 
     virtual ~FileOpenDialogImpl();
 
@@ -777,7 +867,8 @@ void FileOpenDialogImpl::createFilterMenu()
         if (imod->deactivated()) continue;
 
         Glib::ustring upattern("*");
-        FileDialogExtensionToPattern (upattern, imod->get_extension());
+        Glib::ustring extension = imod->get_extension();
+        fileDialogExtensionToPattern(upattern, extension);
 
         Gtk::FileFilter filter;
         Glib::ustring uname(_(imod->get_filetypename()));
@@ -800,10 +891,10 @@ void FileOpenDialogImpl::createFilterMenu()
 /**
  * Constructor.  Not called directly.  Use the factory.
  */
-FileOpenDialogImpl::FileOpenDialogImpl(char const *dir,
+FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
                                        FileDialogType fileTypes,
-                                       char const *title) :
-                 Gtk::FileChooserDialog(Glib::ustring(title))
+                                       const Glib::ustring &title) :
+                                       Gtk::FileChooserDialog(title)
 {
 
 
@@ -821,15 +912,15 @@ FileOpenDialogImpl::FileOpenDialogImpl(char const *dir,
 
 
     /* Set the pwd and/or the filename */
-    if (dir != NULL)
-    {
+    if (dir.size() > 0)
+        {
         Glib::ustring udir(dir);
         Glib::ustring::size_type len = udir.length();
         // leaving a trailing backslash on the directory name leads to the infamous
         // double-directory bug on win32
         if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
         set_current_folder(udir.c_str());
-    }
+        }
 
     //###### Add the file types menu
     createFilterMenu();
@@ -869,9 +960,9 @@ FileOpenDialogImpl::FileOpenDialogImpl(char const *dir,
 /**
  * Public factory.  Called by file.cpp, among others.
  */
-FileOpenDialog *FileOpenDialog::create(char const *path,
+FileOpenDialog *FileOpenDialog::create(const Glib::ustring &path,
                                        FileDialogType fileTypes,
-                                       char const *title)
+                                       const Glib::ustring &title)
 {
     FileOpenDialog *dialog = new FileOpenDialogImpl(path, fileTypes, title);
     return dialog;
@@ -962,9 +1053,9 @@ Glib::SListHandle<Glib::ustring>FileOpenDialogImpl::getFilenames()
 
 
 
-/*#########################################################################
-# F I L E    S A V E
-#########################################################################*/
+//########################################################################
+//# F I L E    S A V E
+//########################################################################
 
 class FileType
 {
@@ -983,10 +1074,10 @@ class FileSaveDialogImpl : public FileSaveDialog, public Gtk::FileChooserDialog
 {
 
 public:
-    FileSaveDialogImpl(char const *dir,
+    FileSaveDialogImpl(const Glib::ustring &dir,
                        FileDialogType fileTypes,
-                       char const *title,
-                       char const *default_key);
+                       const Glib::ustring &title,
+                       const Glib::ustring &default_key);
 
     virtual ~FileSaveDialogImpl();
 
@@ -1159,7 +1250,8 @@ void FileSaveDialogImpl::createFileTypeMenu()
         FileType type;
         type.name     = (_(omod->get_filetypename()));
         type.pattern  = "*";
-        FileDialogExtensionToPattern (type.pattern, omod->get_extension());
+        Glib::ustring extension = omod->get_extension();
+        fileDialogExtensionToPattern (type.pattern, extension);
         type.extension= omod;
         fileTypeComboBox.append_text(type.name);
         fileTypes.push_back(type);
@@ -1179,52 +1271,18 @@ void FileSaveDialogImpl::createFileTypeMenu()
 }
 
 
-void findEntryWidgets(Gtk::Container *parent, std::vector<Gtk::Entry *> &result)
-{
-    if (!parent)
-        return;
-    std::vector<Gtk::Widget *> children = parent->get_children();
-    for (unsigned int i=0; i<children.size() ; i++)
-        {
-        Gtk::Widget *child = children[i];
-        GtkWidget *wid = child->gobj();
-        if (GTK_IS_ENTRY(wid))
-           result.push_back((Gtk::Entry *)child);
-        else if (GTK_IS_CONTAINER(wid))
-            findEntryWidgets((Gtk::Container *)child, result);
-        }
-
-}
-
-void findExpanderWidgets(Gtk::Container *parent, std::vector<Gtk::Expander *> &result)
-{
-    if (!parent)
-        return;
-    std::vector<Gtk::Widget *> children = parent->get_children();
-    for (unsigned int i=0; i<children.size() ; i++)
-        {
-        Gtk::Widget *child = children[i];
-        GtkWidget *wid = child->gobj();
-        if (GTK_IS_EXPANDER(wid))
-           result.push_back((Gtk::Expander *)child);
-        else if (GTK_IS_CONTAINER(wid))
-            findExpanderWidgets((Gtk::Container *)child, result);
-        }
-
-}
-
 
 /**
  * Constructor
  */
-FileSaveDialogImpl::FileSaveDialogImpl(char const *dir,
+FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
                                        FileDialogType fileTypes,
-                                       char const *title,
-                                       char const *default_key) :
-                                       Gtk::FileChooserDialog(Glib::ustring(title),
-                                           Gtk::FILE_CHOOSER_ACTION_SAVE)
+                                       const Glib::ustring &title,
+                                       const Glib::ustring &default_key) :
+            Gtk::FileChooserDialog(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
 {
-    append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
+    append_extension = (bool)prefs_get_int_attribute("dialogs.save_as",
+                                                  "append_extension", 1);
 
     /* One file at a time */
     set_select_multiple(false);
@@ -1238,15 +1296,15 @@ FileSaveDialogImpl::FileSaveDialogImpl(char const *dir,
     dialogType = fileTypes;
 
     /* Set the pwd and/or the filename */
-    if (dir != NULL)
-    {
+    if (dir.size() > 0)
+        {
         Glib::ustring udir(dir);
         Glib::ustring::size_type len = udir.length();
         // leaving a trailing backslash on the directory name leads to the infamous
         // double-directory bug on win32
         if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
         set_current_folder(udir.c_str());
-    }
+        }
 
     //###### Add the file types menu
     //createFilterMenu();
@@ -1317,10 +1375,10 @@ FileSaveDialogImpl::FileSaveDialogImpl(char const *dir,
 /**
  * Public factory method.  Used in file.cpp
  */
-FileSaveDialog *FileSaveDialog::create(char const *path,
+FileSaveDialog *FileSaveDialog::create(const Glib::ustring &path,
                                        FileDialogType fileTypes,
-                                       char const *title,
-                                       char const *default_key)
+                                       const Glib::ustring &title,
+                                       const Glib::ustring &default_key)
 {
     FileSaveDialog *dialog = new FileSaveDialogImpl(path, fileTypes, title, default_key);
     return dialog;
@@ -1402,34 +1460,409 @@ FileSaveDialogImpl::getFilename()
     return g_strdup(myFilename.c_str());
 }
 
+
+
+
+
+
+
+
+//########################################################################
+//# F I L E     E X P O R T
+//########################################################################
+
+
 /**
-    \brief  A quick function to turn a standard extension into a searchable
-            pattern for the file dialogs
-    \param  pattern  The patter that the extension should be written to
-    \param  in_file_extension  The C string that represents the extension
-
-    This function just goes through the string, and takes all characters
-    and puts a [<upper><lower>] so that both are searched and shown in
-    the file dialog.  This function edits the pattern string to make
-    this happen.
-*/
-void
-FileDialogExtensionToPattern (Glib::ustring &pattern, gchar * in_file_extension)
+ * Our implementation of the FileExportDialog interface.
+ */
+class FileExportDialogImpl : public FileExportDialog, public Gtk::FileChooserDialog
 {
-    Glib::ustring tmp(in_file_extension);
 
-    for ( guint i = 0; i < tmp.length(); i++ ) {
-        Glib::ustring::value_type ch = tmp.at(i);
-        if ( Glib::Unicode::isalpha(ch) ) {
-            pattern += '[';
-            pattern += Glib::Unicode::toupper(ch);
-            pattern += Glib::Unicode::tolower(ch);
-            pattern += ']';
-        } else {
-            pattern += ch;
-        }
+public:
+    FileExportDialogImpl(const Glib::ustring &dir,
+                       FileDialogType fileTypes,
+                       const Glib::ustring &title,
+                       const Glib::ustring &default_key);
+
+    virtual ~FileExportDialogImpl();
+
+    bool show();
+
+    Inkscape::Extension::Extension *getSelectionType();
+
+    gchar *getFilename();
+
+
+private:
+
+    /**
+     * What type of 'open' are we? (save, export, etc)
+     */
+    FileDialogType dialogType;
+
+    /**
+     * Our svg preview widget
+     */
+    SVGPreview svgPreview;
+
+    /**
+     * Fix to allow the user to type the file name
+     */
+    Gtk::Entry *fileNameEntry;
+
+    /**
+     * Callback for seeing if the preview needs to be drawn
+     */
+    void updatePreviewCallback();
+
+
+
+    /**
+     * Allow the specification of the output file type
+     */
+    Gtk::HBox fileTypeBox;
+
+    /**
+     * Allow the specification of the output file type
+     */
+    Gtk::ComboBoxText fileTypeComboBox;
+
+
+    /**
+     *  Data mirror of the combo box
+     */
+    std::vector<FileType> fileTypes;
+
+    //# Child widgets
+    Gtk::CheckButton fileTypeCheckbox;
+
+
+    /**
+     * Callback for user input into fileNameEntry
+     */
+    void fileTypeChangedCallback();
+
+    /**
+     *  Create a filter menu for this type of dialog
+     */
+    void createFileTypeMenu();
+
+
+    bool append_extension;
+
+    /**
+     * The extension to use to write this file
+     */
+    Inkscape::Extension::Extension *extension;
+
+    /**
+     * Callback for user input into fileNameEntry
+     */
+    void fileNameEntryChangedCallback();
+
+    /**
+     * Filename that was given
+     */
+    Glib::ustring myFilename;
+};
+
+
+
+
+
+
+/**
+ * Callback for checking if the preview needs to be redrawn
+ */
+void FileExportDialogImpl::updatePreviewCallback()
+{
+    Glib::ustring fileName = get_preview_filename();
+    if (!fileName.c_str())
+        return;
+    bool retval = svgPreview.set(fileName, dialogType);
+    set_preview_widget_active(retval);
+}
+
+
+
+/**
+ * Callback for fileNameEntry widget
+ */
+void FileExportDialogImpl::fileNameEntryChangedCallback()
+{
+    if (!fileNameEntry)
+        return;
+
+    Glib::ustring fileName = fileNameEntry->get_text();
+    if (!Glib::get_charset()) //If we are not utf8
+        fileName = Glib::filename_to_utf8(fileName);
+
+    //g_message("User hit return.  Text is '%s'\n", fileName.c_str());
+
+    if (!Glib::path_is_absolute(fileName)) {
+        //try appending to the current path
+        // not this way: fileName = get_current_folder() + "/" + fileName;
+        std::vector<Glib::ustring> pathSegments;
+        pathSegments.push_back( get_current_folder() );
+        pathSegments.push_back( fileName );
+        fileName = Glib::build_filename(pathSegments);
+    }
+
+    //g_message("path:'%s'\n", fileName.c_str());
+
+    if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
+        set_current_folder(fileName);
+    } else if (/*Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR)*/1) {
+        //dialog with either (1) select a regular file or (2) cd to dir
+        //simulate an 'OK'
+        set_filename(fileName);
+        response(Gtk::RESPONSE_OK);
     }
 }
+
+
+
+/**
+ * Callback for fileNameEntry widget
+ */
+void FileExportDialogImpl::fileTypeChangedCallback()
+{
+    int sel = fileTypeComboBox.get_active_row_number();
+    if (sel<0 || sel >= (int)fileTypes.size())
+        return;
+    FileType type = fileTypes[sel];
+    //g_message("selected: %s\n", type.name.c_str());
+    Gtk::FileFilter filter;
+    filter.add_pattern(type.pattern);
+    set_filter(filter);
+}
+
+
+
+void FileExportDialogImpl::createFileTypeMenu()
+{
+    Inkscape::Extension::DB::OutputList extension_list;
+    Inkscape::Extension::db.get_output_list(extension_list);
+
+    for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
+         current_item != extension_list.end(); current_item++)
+    {
+        Inkscape::Extension::Output * omod = *current_item;
+
+        // FIXME: would be nice to grey them out instead of not listing them
+        if (omod->deactivated()) continue;
+
+        FileType type;
+        type.name     = (_(omod->get_filetypename()));
+        type.pattern  = "*";
+        Glib::ustring extension = omod->get_extension();
+        fileDialogExtensionToPattern (type.pattern, extension);
+        type.extension= omod;
+        fileTypeComboBox.append_text(type.name);
+        fileTypes.push_back(type);
+    }
+
+    //#Let user choose
+    FileType guessType;
+    guessType.name = _("Guess from extension");
+    guessType.pattern = "*";
+    guessType.extension = NULL;
+    fileTypeComboBox.append_text(guessType.name);
+    fileTypes.push_back(guessType);
+
+
+    fileTypeComboBox.set_active(0);
+    fileTypeChangedCallback(); //call at least once to set the filter
+}
+
+
+/**
+ * Constructor
+ */
+FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
+                                       FileDialogType fileTypes,
+                                       const Glib::ustring &title,
+                                       const Glib::ustring &default_key) :
+            Gtk::FileChooserDialog(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
+{
+    append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
+
+    /* One file at a time */
+    set_select_multiple(false);
+
+    /* Initalize to Autodetect */
+    extension = NULL;
+    /* No filename to start out with */
+    myFilename = "";
+
+    /* Set our dialog type (save, export, etc...)*/
+    dialogType = fileTypes;
+
+    /* Set the pwd and/or the filename */
+    if (dir.size()>0)
+        {
+        Glib::ustring udir(dir);
+        Glib::ustring::size_type len = udir.length();
+        // leaving a trailing backslash on the directory name leads to the infamous
+        // double-directory bug on win32
+        if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
+        set_current_folder(udir.c_str());
+        }
+
+    //###### Add the file types menu
+    //createFilterMenu();
+
+    //###### Do we want the .xxx extension automatically added?
+    fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
+    fileTypeCheckbox.set_active(append_extension);
+
+    fileTypeBox.pack_start(fileTypeCheckbox);
+    createFileTypeMenu();
+    fileTypeComboBox.set_size_request(200,40);
+    fileTypeComboBox.signal_changed().connect(
+         sigc::mem_fun(*this, &FileExportDialogImpl::fileTypeChangedCallback) );
+
+    fileTypeBox.pack_start(fileTypeComboBox);
+
+    set_extra_widget(fileTypeBox);
+    //get_vbox()->pack_start(fileTypeBox, false, false, 0);
+    //get_vbox()->reorder_child(fileTypeBox, 2);
+
+    //###### Add a preview widget
+    set_preview_widget(svgPreview);
+    set_preview_widget_active(true);
+    set_use_preview_label (false);
+
+    //Catch selection-changed events, so we can adjust the text widget
+    signal_update_preview().connect(
+         sigc::mem_fun(*this, &FileExportDialogImpl::updatePreviewCallback) );
+
+
+    //Let's do some customization
+    fileNameEntry = NULL;
+    Gtk::Container *cont = get_toplevel();
+    std::vector<Gtk::Entry *> entries;
+    findEntryWidgets(cont, entries);
+    //g_message("Found %d entry widgets\n", entries.size());
+    if (entries.size() >=1 )
+        {
+        //Catch when user hits [return] on the text field
+        fileNameEntry = entries[0];
+        fileNameEntry->signal_activate().connect(
+             sigc::mem_fun(*this, &FileExportDialogImpl::fileNameEntryChangedCallback) );
+        }
+
+    //Let's do more customization
+    std::vector<Gtk::Expander *> expanders;
+    findExpanderWidgets(cont, expanders);
+    //g_message("Found %d expander widgets\n", expanders.size());
+    if (expanders.size() >=1 )
+        {
+        //Always show the file list
+        Gtk::Expander *expander = expanders[0];
+        expander->set_expanded(true);
+        }
+
+
+    //if (extension == NULL)
+    //    checkbox.set_sensitive(FALSE);
+
+    add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+    add_button(Gtk::Stock::SAVE,   Gtk::RESPONSE_OK);
+
+    show_all_children();
+}
+
+
+
+/**
+ * Public factory method.  Used in file.cpp
+ */
+FileExportDialog *FileExportDialog::create(const Glib::ustring &path,
+                                       FileDialogType fileTypes,
+                                       const Glib::ustring &title,
+                                       const Glib::ustring &default_key)
+{
+    FileExportDialog *dialog = new FileExportDialogImpl(path, fileTypes, title, default_key);
+    return dialog;
+}
+
+
+
+
+
+/**
+ * Destructor
+ */
+FileExportDialogImpl::~FileExportDialogImpl()
+{
+}
+
+
+
+/**
+ * Show this dialog modally.  Return true if user hits [OK]
+ */
+bool
+FileExportDialogImpl::show()
+{
+    Glib::ustring s = Glib::filename_to_utf8 (get_current_folder());
+    if (s.length() == 0) 
+        s = getcwd (NULL, 0);
+    set_current_folder(Glib::filename_from_utf8(s)); //hack to force initial dir listing
+    set_modal (TRUE);                      //Window
+    sp_transientize((GtkWidget *)gobj());  //Make transient
+    gint b = run();                        //Dialog
+    svgPreview.showNoPreview();
+    hide();
+
+    if (b == Gtk::RESPONSE_OK)
+        {
+        int sel = fileTypeComboBox.get_active_row_number ();
+        if (sel>=0 && sel< (int)fileTypes.size())
+            {
+            FileType &type = fileTypes[sel];
+            extension = type.extension;
+            }
+        myFilename = get_filename();
+
+        /*
+
+        // FIXME: Why do we have more code
+
+        append_extension = checkbox.get_active();
+        prefs_set_int_attribute("dialogs.save_as", "append_extension", append_extension);
+        prefs_set_string_attribute("dialogs.save_as", "default",
+                  ( extension != NULL ? extension->get_id() : "" ));
+        */
+        return TRUE;
+        }
+    else
+        {
+        return FALSE;
+        }
+}
+
+
+/**
+ * Get the file extension type that was selected by the user. Valid after an [OK]
+ */
+Inkscape::Extension::Extension *
+FileExportDialogImpl::getSelectionType()
+{
+    return extension;
+}
+
+
+/**
+ * Get the file name chosen by the user.   Valid after an [OK]
+ */
+gchar *
+FileExportDialogImpl::getFilename()
+{
+    return g_strdup(myFilename.c_str());
+}
+
 
 } //namespace Dialog
 } //namespace UI

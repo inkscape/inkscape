@@ -66,7 +66,9 @@ public:
      * @param fileTypes one of FileDialogTypes
      * @param title the title of the dialog
      */
-    static FileOpenDialog *create(const char *path, FileDialogType fileTypes, const char *title);
+    static FileOpenDialog *create(const Glib::ustring &path,
+                                  FileDialogType fileTypes,
+                                  const Glib::ustring &title);
 
 
     /**
@@ -124,7 +126,10 @@ public:
      * @param title the title of the dialog
      * @param key a list of file types from which the user can select
      */
-    static FileSaveDialog *create(const char *path, FileDialogType fileTypes, const char *title, const char * default_key);
+    static FileSaveDialog *create(const Glib::ustring &path,
+                                  FileDialogType fileTypes,
+                                  const Glib::ustring &title,
+                                  const Glib::ustring &default_key);
 
 
     /**
@@ -132,6 +137,66 @@ public:
      * Perform any necessary cleanups.
      */
     virtual ~FileSaveDialog() {};
+
+
+    /**
+     * Show an SaveAs file selector.
+     * @return the selected path if user selected one, else NULL
+     */
+    virtual bool show() =0;
+
+    /**
+     * Return the 'key' (filetype) of the selection, if any
+     * @return a pointer to a string if successful (which must
+     * be later freed with g_free(), else NULL.
+     */
+    virtual Inkscape::Extension::Extension * getSelectionType() = 0;
+
+    virtual gchar * getFilename () =0;
+
+
+}; //FileSaveDialog
+
+
+
+
+/**
+ * This class provides an implementation-independent API for
+ * file "Export" dialogs.  Saving as these types will not affect
+ * the original file.
+ */
+class FileExportDialog
+{
+public:
+
+    /**
+     * Constructor.  Do not call directly .   Use the factory.
+     * @param path the directory where to start searching
+     * @param fileTypes one of FileDialogTypes
+     * @param title the title of the dialog
+     * @param key a list of file types from which the user can select
+     */
+    FileExportDialog()
+        {}
+
+    /**
+     * Factory.
+     * @param path the directory where to start searching
+     * @param fileTypes one of FileDialogTypes
+     * @param title the title of the dialog
+     * @param key a list of file types from which the user can select
+     */
+    static FileExportDialog *create(const Glib::ustring &path,
+                                    FileDialogType fileTypes,
+                                    const Glib::ustring &title,
+                                    const Glib::ustring &default_key);
+
+
+    /**
+     * Destructor.
+     * Perform any necessary cleanups.
+     */
+    virtual ~FileExportDialog () {};
 
 
     /**
