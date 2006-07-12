@@ -3890,18 +3890,40 @@ static void sp_connector_graph_layout(void)
 {
     if (!SP_ACTIVE_DESKTOP) return;
 
-    // see comment in ActionAlign above
+    // hack for clones, see comment in align-and-distribute.cpp
     int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
     prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-    graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList(),
-            prefs_get_double_attribute("tools.connector","length",100));
+    graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
 
-    // restore compensation setting
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
     sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, /* TODO: annotate */ "toolbox.cpp:129");
 }
+
+static void
+sp_directed_graph_layout_toggled(GtkWidget *widget, GtkObject *tbl)
+{
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+        prefs_set_string_attribute("tools.connector", "directedlayout", 
+                "true");
+    } else {
+        prefs_set_string_attribute("tools.connector", "directedlayout", 
+                "false");
+    }
+}
+static void
+sp_nooverlaps_graph_layout_toggled(GtkWidget *widget, GtkObject *tbl)
+{
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+        prefs_set_string_attribute("tools.connector", "avoidoverlaplayout", 
+                "true");
+    } else {
+        prefs_set_string_attribute("tools.connector", "avoidoverlaplayout", 
+                "false");
+    }
+}
+
 
 static void connector_length_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
@@ -3989,6 +4011,35 @@ sp_connector_toolbox_new(SPDesktop *desktop)
 
         gtk_box_pack_start(GTK_BOX(tbl), connector_length, FALSE, FALSE,
                 AUX_SPACING);
+    }
+    gchar const *tbuttonstate;
+    // Directed edges toggle button
+    {
+        GtkWidget *tbutton = gtk_toggle_button_new (); 
+        gtk_button_set_relief       (GTK_BUTTON (tbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (tbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, "directed_graph")); 
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (tbutton), FALSE);
+        gtk_tooltips_set_tip(tt, tbutton, _("Make connectors point downwards"), NULL);
+
+        gtk_box_pack_start  (GTK_BOX  (tbl), tbutton, FALSE, FALSE, 0);
+        g_signal_connect(G_OBJECT(tbutton), "toggled", GTK_SIGNAL_FUNC(sp_directed_graph_layout_toggled), tbl);
+        tbuttonstate = prefs_get_string_attribute("tools.connector", "directedlayout");
+        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(tbutton), 
+                (tbuttonstate && !strcmp(tbuttonstate, "true"))?TRUE:FALSE );
+    }
+    // Avoid overlaps toggle button
+    {
+        GtkWidget *tbutton = gtk_toggle_button_new (); 
+        gtk_button_set_relief       (GTK_BUTTON (tbutton), GTK_RELIEF_NONE);
+        gtk_container_add           (GTK_CONTAINER (tbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, "remove_overlaps")); 
+        gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (tbutton), FALSE);
+        gtk_tooltips_set_tip(tt, tbutton, _("Do not allow overlapping shapes"), NULL);
+
+        gtk_box_pack_start  (GTK_BOX  (tbl), tbutton, FALSE, FALSE, 0);
+        g_signal_connect(G_OBJECT(tbutton), "toggled", GTK_SIGNAL_FUNC(sp_nooverlaps_graph_layout_toggled), tbl);
+        tbuttonstate = prefs_get_string_attribute("tools.connector", "avoidoverlaplayout");
+        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(tbutton), 
+                (tbuttonstate && !strcmp(tbuttonstate, "true"))?TRUE:FALSE );
     }
 
     gtk_widget_show_all(tbl);

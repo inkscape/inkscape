@@ -9,11 +9,15 @@
 *
 * Released under GNU GPL.  Read the file 'COPYING' for more information.
 */
-#include "util/glib-list-iterators.h"
-#include "graphlayout/graphlayout.h"
 #include <iostream>
 #include <config.h>
+#include <map>
+#include <vector>
+#include <algorithm>
+#include <float.h>
 
+#include "util/glib-list-iterators.h"
+#include "graphlayout/graphlayout.h"
 #include "sp-path.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
@@ -23,10 +27,7 @@
 #include "libavoid/geomtypes.h"
 #include "libcola/cola.h"
 #include "libvpsc/generate-constraints.h"
-#include <map>
-#include <vector>
-#include <algorithm>
-#include <float.h>
+#include "prefs-utils.h"
 
 using namespace std;
 using namespace cola;
@@ -59,7 +60,7 @@ void filterConnectors(GSList const *const items, list<SPItem *> &filtered) {
 * connectors between them, and uses graph layout techniques to find
 * a nice layout
 */
-void graphlayout(GSList const *const items, double edgeLength) {
+void graphlayout(GSList const *const items) {
 	if(!items) {
 		return;
 	}
@@ -70,7 +71,6 @@ void graphlayout(GSList const *const items, double edgeLength) {
 	if (selected.empty()) return;
 
 	const unsigned n=selected.size();
-	cout<<"|V|="<<n<<endl;
 	//Check 2 or more selected objects
 	if (n < 2) return;
 
@@ -89,7 +89,6 @@ void graphlayout(GSList const *const items, double edgeLength) {
 		NR::Point ur(item_box.max());
 		minX=min(ll[0],minX); minY=min(ll[1],minY);
 	        maxX=max(ur[0],maxX); maxY=max(ur[1],maxY);
-		cout<<"Creating node for id: "<<u->id<<endl;
 		nodelookup[u->id]=rs.size();
 		rs.push_back(new Rectangle(ll[0],ur[0],ll[1],ur[1]));
 	}
@@ -100,7 +99,6 @@ void graphlayout(GSList const *const items, double edgeLength) {
 		++i)
 	{
 		SPItem *iu=*i;
-		cout<<"Getting neighbours for id: "<<iu->id<<endl;
 		unsigned u=nodelookup[iu->id];
 		GSList *nlist=iu->avoidRef->getAttachedShapes(Avoid::runningFrom);
 		list<SPItem *> neighbours;
@@ -124,7 +122,24 @@ void graphlayout(GSList const *const items, double edgeLength) {
 	double eweights[E];
 	fill(eweights,eweights+E,1);
 
-	ConstrainedMajorizationLayout alg(rs,es,eweights,edgeLength);
+	ConstrainedMajorizationLayout alg(rs,es,eweights,
+	       	prefs_get_double_attribute("tools.connector","length",100));
+	gchar const *directed = NULL, *overlaps = NULL;
+	directed = prefs_get_string_attribute("tools.connector",
+		       	"directedlayout");
+	overlaps = prefs_get_string_attribute("tools.connector",
+		       	"avoidoverlaplayout");
+	bool avoid_overlaps = false;
+        if (directed && !strcmp(directed, "true")) {
+            cout << "Directed layout requested, but not yet implemented\n";
+            cout << "  because we haven't coded cyclic removal alg...\n";
+	}
+        if (overlaps && !strcmp(overlaps, "true")) {
+            cout << "Avoid overlaps requested.\n";
+	    avoid_overlaps = true;
+	}
+	alg.setupConstraints(NULL,NULL,avoid_overlaps,
+			NULL,NULL,NULL,NULL,NULL,NULL);
 	alg.run();
 	
 	for (list<SPItem *>::iterator it(selected.begin());

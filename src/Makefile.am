@@ -182,7 +182,6 @@ TESTS =	\
 	libnr/nr-translate-test$(EXEEXT)	\
 	libnr/nr-types-test$(EXEEXT)	\
 	libnr/test-nr$(EXEEXT)	\
-	removeoverlap/remove_rectangle_overlap-test$(EXEEXT)	\
 	svg/test-svg$(EXEEXT)	\
 	util/list-container-test$(EXEEXT)	\
 	xml/test-xml$(EXEEXT)	\
@@ -210,7 +209,6 @@ check_PROGRAMS =	\
 	libnr/nr-translate-test	\
 	libnr/nr-types-test	\
 	libnr/test-nr	\
-	removeoverlap/remove_rectangle_overlap-test	\
 	svg/test-svg	\
 	util/list-container-test	\
 	xml/test-xml	\

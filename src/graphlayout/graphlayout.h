@@ -13,7 +13,7 @@
 #define SEEN_GRAPHLAYOUT_H
 
 struct _GSList;
-void graphlayout(_GSList const *const items, double edgeLength);
+void graphlayout(_GSList const *const items);
 class SPItem;
 bool isConnector(SPItem const *const item);
 #include <list>

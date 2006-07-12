@@ -97,8 +97,8 @@ conjugate_gradient(valarray<double> const &A,
         r -= alpha_k*Ap;
         r_r = r_r_new;
     }
-    printf("njh: %d iters, Linfty = %g L2 = %g\n", k, 
-    std::max(-r.min(), r.max()), sqrt(r_r));
+    //printf("njh: %d iters, Linfty = %g L2 = %g\n", k, 
+    //std::max(-r.min(), r.max()), sqrt(r_r));
     // x is solution
 }
 /*
