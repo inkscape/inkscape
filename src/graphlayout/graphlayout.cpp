@@ -59,7 +59,7 @@ void filterConnectors(GSList const *const items, list<SPItem *> &filtered) {
 * connectors between them, and uses graph layout techniques to find
 * a nice layout
 */
-void graphlayout(GSList const *const items) {
+void graphlayout(GSList const *const items, double edgeLength) {
 	if(!items) {
 		return;
 	}
@@ -124,7 +124,7 @@ void graphlayout(GSList const *const items) {
 	double eweights[E];
 	fill(eweights,eweights+E,1);
 
-	ConstrainedMajorizationLayout alg(rs,es,eweights,width/n);
+	ConstrainedMajorizationLayout alg(rs,es,eweights,edgeLength);
 	alg.run();
 	
 	for (list<SPItem *>::iterator it(selected.begin());

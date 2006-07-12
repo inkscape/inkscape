@@ -511,7 +511,7 @@ private :
         int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
-        graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+        graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList(),100);
 
         // restore compensation setting
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);

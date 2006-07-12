@@ -76,6 +76,7 @@
 #include "../prefs-utils.h"
 #include "../inkscape-stock.h"
 #include "icon.h"
+#include "graphlayout/graphlayout.h"
 
 #include "mod360.h"
 
@@ -3841,6 +3842,7 @@ static void sp_connector_path_set_ignore(void)
 }
 
 
+
 static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
     // quit if run by the _changed callbacks
@@ -3884,6 +3886,28 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
+static void sp_connector_graph_layout(void)
+{
+    if (!SP_ACTIVE_DESKTOP) return;
+
+    // see comment in ActionAlign above
+    int saved_compensation = prefs_get_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+    prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
+
+    graphlayout(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList(),
+            prefs_get_double_attribute("tools.connector","length",100));
+
+    // restore compensation setting
+    prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
+
+    sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, /* TODO: annotate */ "toolbox.cpp:129");
+}
+
+static void connector_length_changed(GtkAdjustment *adj, GtkWidget *tbl)
+{
+    prefs_set_double_attribute("tools.connector", "length", adj->value);
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
 
 static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
         gchar const *name, gchar const *old_value, gchar const *new_value,
@@ -3949,6 +3973,21 @@ sp_connector_toolbox_new(SPDesktop *desktop)
                 connector_spacing_changed, 1, 0);
 
         gtk_box_pack_start(GTK_BOX(tbl), object_spacing, FALSE, FALSE,
+                AUX_SPACING);
+    }
+    // Graph (connector network) layout
+    sp_toolbox_button_new(tbl, Inkscape::ICON_SIZE_SMALL_TOOLBAR,
+            "graph_layout", GTK_SIGNAL_FUNC(sp_connector_graph_layout),
+            tt, _("Nicely arrange selected connector network"));
+    // Default connector length spinbox
+    {
+        GtkWidget *connector_length = sp_tb_spinbutton(_("Length:"),
+                _("Ideal length for connectors when layout is applied"),
+                "tools.connector", "length", 100, NULL, tbl, TRUE,
+                "inkscape:connector-length", 10, 1000, 10.0, 100.0,
+                connector_length_changed, 1, 0);
+
+        gtk_box_pack_start(GTK_BOX(tbl), connector_length, FALSE, FALSE,
                 AUX_SPACING);
     }
 
