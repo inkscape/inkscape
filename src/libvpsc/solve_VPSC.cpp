@@ -28,14 +28,16 @@ using std::ostringstream;
 using std::list;
 using std::set;
 
-IncVPSC::IncVPSC(const unsigned n, Variable *vs[], const unsigned m, Constraint *cs[]) 
+static const double ZERO_UPPERBOUND=-0.0000001;
+
+IncVPSC::IncVPSC(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]) 
 	: VPSC(n,vs,m,cs) {
 	inactive.assign(cs,cs+m);
 	for(ConstraintList::iterator i=inactive.begin();i!=inactive.end();++i) {
 		(*i)->active=false;
 	}
 }
-VPSC::VPSC(const unsigned n, Variable *vs[], const unsigned m, Constraint *cs[]) : cs(cs), m(m), vs(vs) {
+VPSC::VPSC(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]) : m(m), cs(cs), n(n), vs(vs) {
 	bs=new Blocks(n, vs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	printBlocks();
@@ -79,7 +81,7 @@ void VPSC::satisfy() {
 	}
 	bs->cleanup();
 	for(unsigned i=0;i<m;i++) {
-		if(cs[i]->slack()<-0.0000001) {
+		if(cs[i]->slack() < ZERO_UPPERBOUND) {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 			ofstream f(LOGFILE,ios::app);
 			f<<"Error: Unsatisfied constraint: "<<*cs[i]<<endl;
@@ -96,7 +98,7 @@ void VPSC::refine() {
 	// Solve shouldn't loop indefinately
 	// ... but just to make sure we limit the number of iterations
 	unsigned maxtries=100;
-	while(!solved&&maxtries>0) {
+	while(!solved&&maxtries>=0) {
 		solved=true;
 		maxtries--;
 		for(set<Block*>::const_iterator i=bs->begin();i!=bs->end();++i) {
@@ -123,8 +125,8 @@ void VPSC::refine() {
 		}
 	}
 	for(unsigned i=0;i<m;i++) {
-		if(cs[i]->slack()<-0.0000001) {
-			assert(cs[i]->slack()>-0.0000001);
+		if(cs[i]->slack() < ZERO_UPPERBOUND) {
+			assert(cs[i]->slack()>ZERO_UPPERBOUND);
 			throw "Unsatisfied constraint";
 		}
 	}
@@ -177,7 +179,7 @@ void IncVPSC::satisfy() {
 	splitBlocks();
 	long splitCtr = 0;
 	Constraint* v = NULL;
-	while((v=mostViolated(inactive))&&(v->equality || v->slack()<-0.000001)) {
+	while((v=mostViolated(inactive))&&(v->equality || v->slack() < ZERO_UPPERBOUND)) {
 		assert(!v->active);
 		Block *lb = v->left->block, *rb = v->right->block;
 		if(lb != rb) {
@@ -198,10 +200,13 @@ void IncVPSC::satisfy() {
 	bs->cleanup();
 	for(unsigned i=0;i<m;i++) {
 		v=cs[i];
-		if(v->slack()<-0.0000001) {
-			//assert(cs[i]->slack()>-0.0000001);
+		if(v->slack() < ZERO_UPPERBOUND) {
 			ostringstream s;
 			s<<"Unsatisfied constraint: "<<*v;
+#ifdef RECTANGLE_OVERLAP_LOGGING
+			ofstream f(LOGFILE,ios::app);
+			f<<s.str()<<endl;
+#endif
 			throw s.str().c_str();
 		}
 	}
@@ -234,7 +239,7 @@ void IncVPSC::splitBlocks() {
 	for(set<Block*>::const_iterator i(bs->begin());i!=bs->end();++i) {
 		Block* b = *i;
 		Constraint* v=b->findMinLM();
-		if(v!=NULL && v->lm < -0.0000001) {
+		if(v!=NULL && v->lm < ZERO_UPPERBOUND) {
 			assert(!v->equality);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 			f<<"    found split point: "<<*v<<" lm="<<v->lm<<endl;
@@ -289,7 +294,7 @@ Constraint* IncVPSC::mostViolated(ConstraintList &l) {
 	// move the last element over the deletePoint and resize
 	// downwards.  There is always at least 1 element in the
 	// vector because of search.
-	if(deletePoint != end && (minSlack<-0.0000001||v->equality)) {
+	if(deletePoint != end && (minSlack<ZERO_UPPERBOUND||v->equality)) {
 		*deletePoint = l[l.size()-1];
 		l.resize(l.size()-1);
 	}

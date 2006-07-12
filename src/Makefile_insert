@@ -279,6 +279,8 @@ inkscape_private_libs =	\
 	ui/widget/libuiwidget.a	\
 	graphlayout/libgraphlayout.a	\
 	removeoverlap/libremoveoverlap.a		\
+	libcola/libcola.a	\
+	libvpsc/libvpsc.a	\
 	extension/libextension.a	\
 	extension/implementation/libimplementation.a	\
 	extension/internal/libinternal.a	\

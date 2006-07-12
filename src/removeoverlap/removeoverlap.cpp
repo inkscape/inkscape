@@ -12,8 +12,8 @@
 #include "util/glib-list-iterators.h"
 #include "sp-item.h"
 #include "sp-item-transform.h"
-#include "removeoverlap/generate-constraints.h"
-#include "removeoverlap/remove_rectangle_overlap.h"
+#include "libvpsc/generate-constraints.h"
+#include "libvpsc/remove_rectangle_overlap.h"
 
 /**
 * Takes a list of inkscape items and moves them as little as possible
@@ -29,7 +29,7 @@ void removeoverlap(GSList const *const items, double const xGap, double const yG
 	std::list<SPItem *> selected;
 	selected.insert<GSListConstIterator<SPItem *> >(selected.end(), items, NULL);
 	if (selected.empty()) return;
-	unsigned n=selected.size();
+	int n=selected.size();
 
 	//Check 2 or more selected objects
 	if (n < 2) return;

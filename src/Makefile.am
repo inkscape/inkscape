@@ -43,6 +43,8 @@ include libnr/Makefile_insert
 include libnrtype/Makefile_insert
 include libavoid/Makefile_insert
 include livarot/Makefile_insert
+include libvpsc/Makefile_insert
+include libcola/Makefile_insert
 include removeoverlap/Makefile_insert
 include graphlayout/Makefile_insert
 include svg/Makefile_insert
@@ -86,6 +88,8 @@ noinst_LIBRARIES =	\
 	libnr/libnr.a	\
 	libnrtype/libnrtype.a	\
 	libavoid/libavoid.a	\
+	libvpsc/libvpsc.a	\
+	libcola/libcola.a	\
 	livarot/libvarot.a	\
 	removeoverlap/libremoveoverlap.a	\
 	graphlayout/libgraphlayout.a	\

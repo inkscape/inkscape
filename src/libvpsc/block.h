@@ -23,16 +23,20 @@ class StupidPriorityQueue;
 
 class Block
 {
+	typedef std::vector<Variable*> Variables;
+	typedef std::vector<Constraint*>::iterator Cit;
+	typedef std::vector<Variable*>::iterator Vit;
+
 	friend std::ostream& operator <<(std::ostream &os,const Block &b);
 public:
-	std::vector<Variable*> *vars;
+	Variables *vars;
 	double posn;
 	double weight;
 	double wposn;
-	Block(Variable *v=NULL);
+	Block(Variable* const v=NULL);
 	~Block(void);
 	Constraint* findMinLM();
-	Constraint* findMinLMBetween(Variable* lv, Variable* rv);
+	Constraint* findMinLMBetween(Variable* const lv, Variable* const rv);
 	Constraint* findMinInConstraint();
 	Constraint* findMinOutConstraint();
 	void deleteMinInConstraint();
@@ -54,14 +58,16 @@ public:
 private:
 	typedef enum {NONE, LEFT, RIGHT} Direction;
 	typedef std::pair<double, Constraint*> Pair;
-	void reset_active_lm(Variable *v, Variable *u);
-	double compute_dfdv(Variable *v, Variable *u, Constraint *&min_lm);
+	void reset_active_lm(Variable* const v, Variable* const u);
+	double compute_dfdv(Variable* const v, Variable* const u,
+		       	Constraint *&min_lm);
 	Pair compute_dfdv_between(
-			Variable*, Variable*, Variable*, Direction, bool);
-	bool canFollowLeft(Constraint *c, Variable *last);
-	bool canFollowRight(Constraint *c, Variable *last);
-	void populateSplitBlock(Block *b, Variable *v, Variable *u);
-	void addVariable(Variable *v);
+			Variable*, Variable* const, Variable* const,
+		       	const Direction, bool);
+	bool canFollowLeft(Constraint *c, const Variable* const last);
+	bool canFollowRight(Constraint *c, const Variable* const last);
+	void populateSplitBlock(Block *b, Variable* const v, Variable* const u);
+	void addVariable(Variable* const v);
 	void setUpConstraintHeap(PairingHeap<Constraint*>* &h,bool in);
 };
 

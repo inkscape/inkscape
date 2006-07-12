@@ -23,16 +23,14 @@ using std::endl;
 #endif
 using std::vector;
 
-typedef vector<Constraint*>::iterator Cit;
-
-void Block::addVariable(Variable *v) {
+void Block::addVariable(Variable* const v) {
 	v->block=this;
 	vars->push_back(v);
 	weight+=v->weight;
 	wposn += v->weight * (v->desiredPosition - v->offset);
 	posn=wposn/weight;
 }
-Block::Block(Variable *v) {
+Block::Block(Variable* const v) {
 	timeStamp=0;
 	posn=weight=wposn=0;
 	in=NULL;
@@ -47,7 +45,7 @@ Block::Block(Variable *v) {
 
 double Block::desiredWeightedPosition() {
 	double wp = 0;
-	for (vector<Variable*>::iterator v=vars->begin();v!=vars->end();++v) {
+	for (Vit v=vars->begin();v!=vars->end();++v) {
 		wp += ((*v)->desiredPosition - (*v)->offset) * (*v)->weight;
 	}
 	return wp;
@@ -67,7 +65,7 @@ void Block::setUpOutConstraints() {
 void Block::setUpConstraintHeap(PairingHeap<Constraint*>* &h,bool in) {
 	delete h;
 	h = new PairingHeap<Constraint*>(&compareConstraints);
-	for (vector<Variable*>::iterator i=vars->begin();i!=vars->end();++i) {
+	for (Vit i=vars->begin();i!=vars->end();++i) {
 		Variable *v=*i;
 		vector<Constraint*> *cs=in?&(v->in):&(v->out);
 		for (Cit j=cs->begin();j!=cs->end();++j) {
@@ -112,7 +110,7 @@ void Block::merge(Block *b, Constraint *c, double dist) {
 	wposn+=b->wposn-dist*b->weight;
 	weight+=b->weight;
 	posn=wposn/weight;
-	for(vector<Variable*>::iterator i=b->vars->begin();i!=b->vars->end();++i) {
+	for(Vit i=b->vars->begin();i!=b->vars->end();++i) {
 		Variable *v=*i;
 		v->block=this;
 		v->offset+=dist;
@@ -209,10 +207,10 @@ void Block::deleteMinInConstraint() {
 void Block::deleteMinOutConstraint() {
 	out->deleteMin();
 }
-inline bool Block::canFollowLeft(Constraint *c, Variable *last) {
+inline bool Block::canFollowLeft(Constraint *c, const Variable* const last) {
 	return c->left->block==this && c->active && last!=c->left;
 }
-inline bool Block::canFollowRight(Constraint *c, Variable *last) {
+inline bool Block::canFollowRight(Constraint *c, const Variable* const last) {
 	return c->right->block==this && c->active && last!=c->right;
 }
 
@@ -221,7 +219,8 @@ inline bool Block::canFollowRight(Constraint *c, Variable *last) {
 // Does not backtrack over u.
 // also records the constraint with minimum lagrange multiplier
 // in min_lm
-double Block::compute_dfdv(Variable *v, Variable *u, Constraint *&min_lm) {
+double Block::compute_dfdv(Variable* const v, Variable* const u,
+	       	Constraint *&min_lm) {
 	double dfdv=v->weight*(v->position() - v->desiredPosition);
 	for(Cit it=v->out.begin();it!=v->out.end();++it) {
 		Constraint *c=*it;
@@ -254,8 +253,9 @@ double Block::compute_dfdv(Variable *v, Variable *u, Constraint *&min_lm) {
 // the recursion (checking only constraints traversed left-to-right 
 // in order to avoid creating any new violations).
 // We also do not consider equality constraints as potential split points
-Block::Pair Block::compute_dfdv_between(Variable* r, Variable* v, Variable* u, 
-		Direction dir = NONE, bool changedDirection = false) {
+Block::Pair Block::compute_dfdv_between(
+		Variable* r, Variable* const v, Variable* const u, 
+		const Direction dir = NONE, bool changedDirection = false) {
 	double dfdv=v->weight*(v->position() - v->desiredPosition);
 	Constraint *m=NULL;
 	for(Cit it(v->in.begin());it!=v->in.end();++it) {
@@ -300,7 +300,7 @@ Block::Pair Block::compute_dfdv_between(Variable* r, Variable* v, Variable* u,
 // resets LMs for all active constraints to 0 by
 // traversing active constraint tree starting from v,
 // not back tracking over u
-void Block::reset_active_lm(Variable *v, Variable *u) {
+void Block::reset_active_lm(Variable* const v, Variable* const u) {
 	for(Cit it=v->out.begin();it!=v->out.end();++it) {
 		Constraint *c=*it;
 		if(canFollowRight(c,u)) {
@@ -326,7 +326,7 @@ Constraint *Block::findMinLM() {
 	compute_dfdv(vars->front(),NULL,min_lm);
 	return min_lm;
 }
-Constraint *Block::findMinLMBetween(Variable* lv, Variable* rv) {
+Constraint *Block::findMinLMBetween(Variable* const lv, Variable* const rv) {
 	Constraint *min_lm=NULL;
 	reset_active_lm(vars->front(),NULL);
 	min_lm=compute_dfdv_between(rv,lv,NULL).second;
@@ -335,7 +335,7 @@ Constraint *Block::findMinLMBetween(Variable* lv, Variable* rv) {
 
 // populates block b by traversing the active constraint tree adding variables as they're 
 // visited.  Starts from variable v and does not backtrack over variable u.
-void Block::populateSplitBlock(Block *b, Variable *v, Variable *u) {
+void Block::populateSplitBlock(Block *b, Variable* const v, Variable* const u) {
 	b->addVariable(v);
 	for (Cit c=v->in.begin();c!=v->in.end();++c) {
 		if (canFollowLeft(*c,u))
@@ -352,7 +352,8 @@ void Block::populateSplitBlock(Block *b, Variable *v, Variable *u) {
  * with min lagrangrian multiplier and split at that point.
  * Returns the split constraint
  */
-Constraint* Block::splitBetween(Variable* vl, Variable* vr, Block* &lb, Block* &rb) {
+Constraint* Block::splitBetween(Variable* const vl, Variable* const vr,
+	       	Block* &lb, Block* &rb) {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	f<<"  need to split between: "<<*vl<<" and "<<*vr<<endl;
@@ -384,16 +385,16 @@ void Block::split(Block* &l, Block* &r, Constraint* c) {
  */
 double Block::cost() {
 	double c = 0;
-	for (vector<Variable*>::iterator v=vars->begin();v!=vars->end();++v) {
+	for (Vit v=vars->begin();v!=vars->end();++v) {
 		double diff = (*v)->position() - (*v)->desiredPosition;
 		c += (*v)->weight * diff * diff;
 	}
 	return c;
 }
-ostream& operator <<(ostream &os, const Block &b)
+ostream& operator <<(ostream &os, const Block& b)
 {
 	os<<"Block:";
-	for(vector<Variable*>::iterator v=b.vars->begin();v!=b.vars->end();++v) {
+	for(Block::Vit v=b.vars->begin();v!=b.vars->end();++v) {
 		os<<" "<<**v;
 	}
 	if(b.deleted) {
