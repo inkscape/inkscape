@@ -1,3 +1,9 @@
+2006-07-13  Jon Phillips  <jon@rejon.org>
+
+	* src/inkview: Added commandline option capability to inkview and 
+	  got code ready to add a timer for an automatic slideshow capability.
+
+
 2006-07-02  Colin Marquardt  <colin@marquardt-home.de>
 
 	* AUTHORS, src/ui/dialog/aboutbox.cpp: Add Niko, Hugo, Dale and

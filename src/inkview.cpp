@@ -38,6 +38,8 @@
 #include <glib/gmem.h>
 #include <libnr/nr-macros.h>
 
+// #include <stropts.h>
+
 #include <libxml/tree.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
@@ -68,6 +70,9 @@ Inkscape::Application *inkscape;
 #define bind_textdomain_codeset(p,c)
 #endif
 
+extern char *optarg;
+extern int  optind, opterr;
+
 struct SPSlideShow {
     char **slides;
     int size;
@@ -77,6 +82,7 @@ struct SPSlideShow {
     GtkWidget *view;
     GtkWindow *window;
     bool fullscreen;
+    int timer;
 };
 
 static GtkWidget *sp_svgview_control_show (struct SPSlideShow *ss);
@@ -165,6 +171,24 @@ main (int argc, const char **argv)
 
     struct SPSlideShow ss;
 
+    int option,
+        num_parsed_options = 0;
+
+    // the list of arguments is in the net line
+    while ((option = getopt(argc, (char* const* )argv, "t:")) != -1) 
+    {
+        switch(option) {
+	    case 't': // for timer
+                // fprintf(stderr, "set timer arg %s\n", optarg );
+	        ss.timer = int(optarg);	
+	        num_parsed_options += 2; // 2 because of flag + option
+                break;
+            case '?':
+            default:
+		usage();
+        }	
+    }
+   
     GtkWidget *w;
     int i;
 
@@ -200,8 +224,10 @@ main (int argc, const char **argv)
 
     inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
     Inkscape::Preferences::load();
-
-    for (i = 1; i < argc; i++) {
+    
+    // starting at where the commandline options stopped parsing because
+    // we want all the files to be in the list
+    for (i = num_parsed_options + 1 ; i < argc; i++) {
 	struct stat st;
 	if (stat (argv[i], &st)
 	      || !S_ISREG (st.st_mode)
@@ -460,11 +486,14 @@ is_jar(char const *filename)
 static void usage()
 {
     fprintf(stderr,
-	    "Usage: inkview [FILES ...]\n"
+	    "Usage: inkview [OPTIONS...] [FILES ...]\n"
 	    "\twhere FILES are SVG (.svg or .svgz)"
 #ifdef WITH_INKJAR
-	    "or archives of SVGs (.sxw, .jar)"
+	    " or archives of SVGs (.sxw, .jar)"
 #endif
+	    "\n\n"
+	    "Available options:\n"
+	    "\t-t\t\tTimer for automatically changing slides in seconds.\n"
 	    "\n");
     exit(1);
 }
