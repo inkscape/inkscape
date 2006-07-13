@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-12 21:20+0200\n"
+"POT-Creation-Date: 2006-07-13 22:14+0200\n"
 "PO-Revision-Date: 2006-05-30 10:33+0200\n"
 "Last-Translator: Andrius R. <knutux@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -895,37 +895,6 @@ msgstr "Nepavyko išeksportuoti failo %s.\n"
 #: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "Parinkite eksporto failą"
-
-#: ../src/dialogs/filedialog.cpp:359
-msgid "No preview"
-msgstr "Be peržiūros"
-
-#: ../src/dialogs/filedialog.cpp:460
-msgid "too large for preview"
-msgstr "per didelis peržiūrai"
-
-#: ../src/dialogs/filedialog.cpp:752 ../src/dialogs/filedialog.cpp:753
-msgid "All Images"
-msgstr "Visi grafiniai failai"
-
-#: ../src/dialogs/filedialog.cpp:757 ../src/dialogs/filedialog.cpp:758
-msgid "All Files"
-msgstr "Visi failai"
-
-#: ../src/dialogs/filedialog.cpp:764 ../src/dialogs/filedialog.cpp:765
-msgid "All Inkscape Files"
-msgstr "Visi Inkscape failai"
-
-#: ../src/dialogs/filedialog.cpp:1170
-msgid "Guess from extension"
-msgstr "Spėti pagal failo plėtinį"
-
-#. ###### Add the file types menu
-#. createFilterMenu();
-#. ###### Do we want the .xxx extension automatically added?
-#: ../src/dialogs/filedialog.cpp:1255
-msgid "Append filename extension automatically"
-msgstr "Automatiškai pridėti plėtinį"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:369
@@ -2174,7 +2143,7 @@ msgstr "Inkscape: Spaudinio peržiūra"
 msgid "GNOME Print"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
+#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
 msgstr "Langeliai"
 
@@ -5687,6 +5656,37 @@ msgstr "Pagalba"
 msgid "Parameters"
 msgstr "Parametrai"
 
+#: ../src/ui/dialog/filedialog.cpp:449
+msgid "No preview"
+msgstr "Be peržiūros"
+
+#: ../src/ui/dialog/filedialog.cpp:550
+msgid "too large for preview"
+msgstr "per didelis peržiūrai"
+
+#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+msgid "All Images"
+msgstr "Visi grafiniai failai"
+
+#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+msgid "All Files"
+msgstr "Visi failai"
+
+#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+msgid "All Inkscape Files"
+msgstr "Visi Inkscape failai"
+
+#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+msgid "Guess from extension"
+msgstr "Spėti pagal failo plėtinį"
+
+#. ###### Add the file types menu
+#. createFilterMenu();
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+msgid "Append filename extension automatically"
+msgstr "Automatiškai pridėti plėtinį"
+
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
 msgstr "Užpildas"
@@ -7224,31 +7224,31 @@ msgid ""
 "Do you want to save this file in another format?"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:97
+#: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
 msgstr "smulkus"
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:99
 msgid "small"
 msgstr "maži"
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:100
 msgid "medium"
 msgstr "vidutiniai"
 
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:101
 msgid "large"
 msgstr "dideli"
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:102
 msgid "huge"
 msgstr "milžiniški"
 
-#: ../src/ui/widget/panel.cpp:116
+#: ../src/ui/widget/panel.cpp:117
 msgid "List"
 msgstr "Sąrašas"
 
-#: ../src/ui/widget/panel.cpp:138
+#: ../src/ui/widget/panel.cpp:139
 msgid "Wrap"
 msgstr ""
 

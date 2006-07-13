@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sodipodi.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-12 21:20+0200\n"
+"POT-Creation-Date: 2006-07-13 22:14+0200\n"
 "PO-Revision-Date: 2003-06-15 09:44+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <mk@li.org>\n"
@@ -902,40 +902,6 @@ msgstr ""
 
 #: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
-msgstr ""
-
-#: ../src/dialogs/filedialog.cpp:359
-#, fuzzy
-msgid "No preview"
-msgstr "Печати на екран"
-
-#: ../src/dialogs/filedialog.cpp:460
-msgid "too large for preview"
-msgstr ""
-
-#: ../src/dialogs/filedialog.cpp:752 ../src/dialogs/filedialog.cpp:753
-#, fuzzy
-msgid "All Images"
-msgstr "Слика"
-
-#: ../src/dialogs/filedialog.cpp:757 ../src/dialogs/filedialog.cpp:758
-msgid "All Files"
-msgstr ""
-
-#: ../src/dialogs/filedialog.cpp:764 ../src/dialogs/filedialog.cpp:765
-msgid "All Inkscape Files"
-msgstr ""
-
-#: ../src/dialogs/filedialog.cpp:1170
-#, fuzzy
-msgid "Guess from extension"
-msgstr "Избриши"
-
-#. ###### Add the file types menu
-#. createFilterMenu();
-#. ###### Do we want the .xxx extension automatically added?
-#: ../src/dialogs/filedialog.cpp:1255
-msgid "Append filename extension automatically"
 msgstr ""
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
@@ -2252,7 +2218,7 @@ msgstr "Печати на екран"
 msgid "GNOME Print"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
+#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 #, fuzzy
 msgid "Grid"
 msgstr "Решетка"
@@ -5656,6 +5622,40 @@ msgstr "Водичи"
 msgid "Parameters"
 msgstr "метри"
 
+#: ../src/ui/dialog/filedialog.cpp:449
+#, fuzzy
+msgid "No preview"
+msgstr "Печати на екран"
+
+#: ../src/ui/dialog/filedialog.cpp:550
+msgid "too large for preview"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+#, fuzzy
+msgid "All Images"
+msgstr "Слика"
+
+#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+msgid "All Files"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+msgid "All Inkscape Files"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+#, fuzzy
+msgid "Guess from extension"
+msgstr "Избриши"
+
+#. ###### Add the file types menu
+#. createFilterMenu();
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+msgid "Append filename extension automatically"
+msgstr ""
+
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 #, fuzzy
 msgid "Fill"
@@ -7170,34 +7170,34 @@ msgid ""
 "Do you want to save this file in another format?"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:97
+#: ../src/ui/widget/panel.cpp:98
 #, fuzzy
 msgid "tiny"
 msgstr "во"
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:99
 msgid "small"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:100
 msgid "medium"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:101
 #, fuzzy
 msgid "large"
 msgstr "Страница"
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:102
 msgid "huge"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:116
+#: ../src/ui/widget/panel.cpp:117
 #, fuzzy
 msgid "List"
 msgstr "Точка"
 
-#: ../src/ui/widget/panel.cpp:138
+#: ../src/ui/widget/panel.cpp:139
 msgid "Wrap"
 msgstr ""
 

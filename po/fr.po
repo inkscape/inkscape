@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-12 21:20+0200\n"
+"POT-Creation-Date: 2006-07-13 22:14+0200\n"
 "PO-Revision-Date: 2006-07-11 23:56+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -931,37 +931,6 @@ msgstr "Impossible d'exporter dans le fichier %s.\n"
 #: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "Sélectionner un nom de fichier pour exporter"
-
-#: ../src/dialogs/filedialog.cpp:359
-msgid "No preview"
-msgstr "Pas d'aperçu"
-
-#: ../src/dialogs/filedialog.cpp:460
-msgid "too large for preview"
-msgstr "trop grand pour un aperçu"
-
-#: ../src/dialogs/filedialog.cpp:752 ../src/dialogs/filedialog.cpp:753
-msgid "All Images"
-msgstr "Toutes les images"
-
-#: ../src/dialogs/filedialog.cpp:757 ../src/dialogs/filedialog.cpp:758
-msgid "All Files"
-msgstr "Tous les fichiers"
-
-#: ../src/dialogs/filedialog.cpp:764 ../src/dialogs/filedialog.cpp:765
-msgid "All Inkscape Files"
-msgstr "Tous les fichiers Inkscape"
-
-#: ../src/dialogs/filedialog.cpp:1170
-msgid "Guess from extension"
-msgstr "Selon l'extension"
-
-#. ###### Add the file types menu
-#. createFilterMenu();
-#. ###### Do we want the .xxx extension automatically added?
-#: ../src/dialogs/filedialog.cpp:1255
-msgid "Append filename extension automatically"
-msgstr "Ajouter automatiquement une extension aux noms de fichiers"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:369
@@ -2242,7 +2211,7 @@ msgstr "Inkscape : aperçu avant impression"
 msgid "GNOME Print"
 msgstr "Impression GNOME"
 
-#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
+#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
 msgstr "Grille"
 
@@ -5736,6 +5705,37 @@ msgstr "Aide"
 msgid "Parameters"
 msgstr "Paramètres"
 
+#: ../src/ui/dialog/filedialog.cpp:449
+msgid "No preview"
+msgstr "Pas d'aperçu"
+
+#: ../src/ui/dialog/filedialog.cpp:550
+msgid "too large for preview"
+msgstr "trop grand pour un aperçu"
+
+#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+msgid "All Images"
+msgstr "Toutes les images"
+
+#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+msgid "All Files"
+msgstr "Tous les fichiers"
+
+#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+msgid "All Inkscape Files"
+msgstr "Tous les fichiers Inkscape"
+
+#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+msgid "Guess from extension"
+msgstr "Selon l'extension"
+
+#. ###### Add the file types menu
+#. createFilterMenu();
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+msgid "Append filename extension automatically"
+msgstr "Ajouter automatiquement une extension aux noms de fichiers"
+
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
 msgstr "Remplissage"
@@ -7320,31 +7320,31 @@ msgstr ""
 "\n"
 "Voulez-vous enregistrer ce fichier dans un autre format ?"
 
-#: ../src/ui/widget/panel.cpp:97
+#: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
 msgstr "minuscule"
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:99
 msgid "small"
 msgstr "petit"
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:100
 msgid "medium"
 msgstr "moyen"
 
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:101
 msgid "large"
 msgstr "grand"
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:102
 msgid "huge"
 msgstr "très grand"
 
-#: ../src/ui/widget/panel.cpp:116
+#: ../src/ui/widget/panel.cpp:117
 msgid "List"
 msgstr "Liste"
 
-#: ../src/ui/widget/panel.cpp:138
+#: ../src/ui/widget/panel.cpp:139
 msgid "Wrap"
 msgstr "Envelopper"
 

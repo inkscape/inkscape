@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-12 21:20+0200\n"
+"POT-Creation-Date: 2006-07-13 22:14+0200\n"
 "PO-Revision-Date: 2006-06-04 16:07+0800\n"
 "Last-Translator: Chris Jia <Chrisjiasl@gmail.com>\n"
 "Language-Team: \n"
@@ -874,37 +874,6 @@ msgstr "不能导出到文件名 %s。\n"
 #: ../src/dialogs/export.cpp:1184
 msgid "Select a filename for exporting"
 msgstr "选择一个文件名导出"
-
-#: ../src/dialogs/filedialog.cpp:359
-msgid "No preview"
-msgstr "没有预览"
-
-#: ../src/dialogs/filedialog.cpp:460
-msgid "too large for preview"
-msgstr "太大不能预览"
-
-#: ../src/dialogs/filedialog.cpp:752 ../src/dialogs/filedialog.cpp:753
-msgid "All Images"
-msgstr "所有图像"
-
-#: ../src/dialogs/filedialog.cpp:757 ../src/dialogs/filedialog.cpp:758
-msgid "All Files"
-msgstr "所有文件"
-
-#: ../src/dialogs/filedialog.cpp:764 ../src/dialogs/filedialog.cpp:765
-msgid "All Inkscape Files"
-msgstr "所有 Inkscape 文件"
-
-#: ../src/dialogs/filedialog.cpp:1170
-msgid "Guess from extension"
-msgstr "通过扩展名预测"
-
-#. ###### Add the file types menu
-#. createFilterMenu();
-#. ###### Do we want the .xxx extension automatically added?
-#: ../src/dialogs/filedialog.cpp:1255
-msgid "Append filename extension automatically"
-msgstr "自动附加文件扩展名"
 
 #. TRANSLATORS: "%s" is replaced with "exact" or "partial" when this string is displayed
 #: ../src/dialogs/find.cpp:369
@@ -2141,7 +2110,7 @@ msgstr "Inkscape：打印预览"
 msgid "GNOME Print"
 msgstr "GNOME 打印"
 
-#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:117
+#: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
 msgstr "网格"
 
@@ -5489,6 +5458,37 @@ msgstr "帮助"
 msgid "Parameters"
 msgstr "参数"
 
+#: ../src/ui/dialog/filedialog.cpp:449
+msgid "No preview"
+msgstr "没有预览"
+
+#: ../src/ui/dialog/filedialog.cpp:550
+msgid "too large for preview"
+msgstr "太大不能预览"
+
+#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+msgid "All Images"
+msgstr "所有图像"
+
+#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+msgid "All Files"
+msgstr "所有文件"
+
+#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+msgid "All Inkscape Files"
+msgstr "所有 Inkscape 文件"
+
+#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+msgid "Guess from extension"
+msgstr "通过扩展名预测"
+
+#. ###### Add the file types menu
+#. createFilterMenu();
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+msgid "Append filename extension automatically"
+msgstr "自动附加文件扩展名"
+
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
 msgstr "填色"
@@ -6959,31 +6959,31 @@ msgstr ""
 "\n"
 "是否要已另一种格式保存此文件？"
 
-#: ../src/ui/widget/panel.cpp:97
+#: ../src/ui/widget/panel.cpp:98
 msgid "tiny"
 msgstr "微小"
 
-#: ../src/ui/widget/panel.cpp:98
+#: ../src/ui/widget/panel.cpp:99
 msgid "small"
 msgstr "小"
 
-#: ../src/ui/widget/panel.cpp:99
+#: ../src/ui/widget/panel.cpp:100
 msgid "medium"
 msgstr "中"
 
-#: ../src/ui/widget/panel.cpp:100
+#: ../src/ui/widget/panel.cpp:101
 msgid "large"
 msgstr "大"
 
-#: ../src/ui/widget/panel.cpp:101
+#: ../src/ui/widget/panel.cpp:102
 msgid "huge"
 msgstr "巨大"
 
-#: ../src/ui/widget/panel.cpp:116
+#: ../src/ui/widget/panel.cpp:117
 msgid "List"
 msgstr "列表"
 
-#: ../src/ui/widget/panel.cpp:138
+#: ../src/ui/widget/panel.cpp:139
 msgid "Wrap"
 msgstr "折行"
 

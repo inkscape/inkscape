@@ -19,7 +19,6 @@ src/dialogs/dialog-events.cpp
 src/dialogs/eek-color-def.cpp
 src/dialogs/export.cpp
 src/dialogs/filedialog-win32.cpp
-src/dialogs/filedialog.cpp
 src/dialogs/fill-style.cpp
 src/dialogs/find.cpp
 src/dialogs/guidelinedialog.cpp
@@ -259,6 +258,7 @@ src/ui/dialog/document-metadata.cpp
 src/ui/dialog/document-properties.cpp
 src/ui/dialog/export.cpp
 src/ui/dialog/extension-editor.cpp
+src/ui/dialog/filedialog.cpp
 src/ui/dialog/fill-and-stroke.cpp
 src/ui/dialog/find.cpp
 src/ui/dialog/inkscape-preferences.cpp
