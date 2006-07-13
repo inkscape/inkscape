@@ -27,6 +27,14 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_SYS_FILIO_H
+#include <sys/filio.h>   // needed on Solaris 8
+#endif
+
 #include "socket.h"
 #include "dom/util/thread.h"
 

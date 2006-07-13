@@ -82,6 +82,9 @@ if test "x$PKG_CONFIG" = "xno"; then
 	AC_MSG_ERROR(You have to install pkg-config to compile inkscape.)
 fi
 
+dnl ******************************
+dnl Check for libpng 
+dnl ******************************
 AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=no)], png_ok=no, -lz -lm)
 if test "x$png_ok" != "xyes"; then
 	AC_MSG_ERROR([libpng >= 1.2 is needed to compile inkscape])
@@ -156,6 +159,10 @@ fi
 if test "x$gc_ok" != "xyes"; then
 	AC_MSG_ERROR([libgc (the Boehm Conservative Collector) 6.4+, is needed to compile inkscape -- http://www.hpl.hp.com/personal/Hans_Boehm/gc])
 fi
+
+dnl This check is to get a FIONREAD definition on Solaris 8
+AC_CHECK_HEADERS([sys/filio.h])
+
 
 AC_CHECK_HEADERS([malloc.h])
 AC_CHECK_FUNCS([mallinfo], [
