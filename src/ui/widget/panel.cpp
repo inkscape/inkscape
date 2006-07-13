@@ -74,6 +74,7 @@ void Panel::_popper(GdkEventButton* event)
 void Panel::init()
 {
     Glib::ustring tmp("<");
+    _anchor = Gtk::ANCHOR_CENTER;
     tabTitle.set_label(this->label);
 
     guint panel_size = 0;
