@@ -677,15 +677,55 @@ SVGPreview::~SVGPreview()
 
 
 /*#########################################################################
+### F I L E     D I A L O G    B A S E    C L A S S
+#########################################################################*/
+
+/**
+ * This class is the base implementation for the others.  This
+ * reduces redundancies and bugs.
+ */
+class FileDialogBase : public Gtk::FileChooserDialog
+{
+public:
+
+    /**
+     *
+     */
+    FileDialogBase(const Glib::ustring &title) :
+                        Gtk::FileChooserDialog(title)
+        {
+        }
+
+    /**
+     *
+     */
+    FileDialogBase(const Glib::ustring &title,
+                   Gtk::FileChooserAction dialogType) :
+                   Gtk::FileChooserDialog(title, dialogType)
+        {
+        }
+
+    /**
+     *
+     */
+    virtual ~FileDialogBase()
+        {}
+
+};
+
+
+
+/*#########################################################################
 ### F I L E    O P E N
 #########################################################################*/
 
 /**
  * Our implementation class for the FileOpenDialog interface..
  */
-class FileOpenDialogImpl : public FileOpenDialog, public Gtk::FileChooserDialog
+class FileOpenDialogImpl : public FileOpenDialog, public FileDialogBase
 {
 public:
+
     FileOpenDialogImpl(const Glib::ustring &dir,
                        FileDialogType fileTypes,
                        const Glib::ustring &title);
@@ -699,6 +739,7 @@ public:
     gchar *getFilename();
 
     Glib::SListHandle<Glib::ustring> getFilenames ();
+
 protected:
 
 
@@ -783,12 +824,11 @@ void FileOpenDialogImpl::updatePreviewCallback()
  */
 void FileOpenDialogImpl::fileNameEntryChangedCallback()
 {
-    Glib::ustring fileName = fileNameEntry.get_text();
+    Glib::ustring rawFileName = fileNameEntry.get_text();
 
-    // TODO remove this leak
-    fileName = Glib::filename_from_utf8(fileName);
+    Glib::ustring fileName = Glib::filename_from_utf8(rawFileName);
 
-    //g_message("User hit return.  Text is '%s'\n", fName.c_str());
+    //g_message("User hit return.  Text is '%s'\n", fileName.c_str());
 
     if (!Glib::path_is_absolute(fileName)) {
         //try appending to the current path
@@ -894,7 +934,7 @@ void FileOpenDialogImpl::createFilterMenu()
 FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
                                        FileDialogType fileTypes,
                                        const Glib::ustring &title) :
-                                       Gtk::FileChooserDialog(title)
+                                       FileDialogBase(title)
 {
 
 
@@ -1070,7 +1110,7 @@ class FileType
 /**
  * Our implementation of the FileSaveDialog interface.
  */
-class FileSaveDialogImpl : public FileSaveDialog, public Gtk::FileChooserDialog
+class FileSaveDialogImpl : public FileSaveDialog, public FileDialogBase
 {
 
 public:
@@ -1276,10 +1316,10 @@ void FileSaveDialogImpl::createFileTypeMenu()
  * Constructor
  */
 FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
-                                       FileDialogType fileTypes,
-                                       const Glib::ustring &title,
-                                       const Glib::ustring &default_key) :
-            Gtk::FileChooserDialog(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
+            FileDialogType fileTypes,
+            const Glib::ustring &title,
+            const Glib::ustring &default_key) :
+            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
 {
     append_extension = (bool)prefs_get_int_attribute("dialogs.save_as",
                                                   "append_extension", 1);
@@ -1475,7 +1515,7 @@ FileSaveDialogImpl::getFilename()
 /**
  * Our implementation of the FileExportDialog interface.
  */
-class FileExportDialogImpl : public FileExportDialog, public Gtk::FileChooserDialog
+class FileExportDialogImpl : public FileExportDialog, public FileDialogBase
 {
 
 public:
@@ -1680,10 +1720,10 @@ void FileExportDialogImpl::createFileTypeMenu()
  * Constructor
  */
 FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
-                                       FileDialogType fileTypes,
-                                       const Glib::ustring &title,
-                                       const Glib::ustring &default_key) :
-            Gtk::FileChooserDialog(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
+            FileDialogType fileTypes,
+            const Glib::ustring &title,
+            const Glib::ustring &default_key) :
+            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
 {
     append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
 
