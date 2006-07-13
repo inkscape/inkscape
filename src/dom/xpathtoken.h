@@ -384,6 +384,7 @@ private:
         type      = TOK_NOP;
         ival      = 0L;
         dval      = 0.0;
+        //sval      = ""; //not necessary
         }
 
     void assign(const Token &other)

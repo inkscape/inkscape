@@ -860,30 +860,43 @@ int XPathParser::getAxisSpecifier(int p0, int depth)
             {
             case ANCESTOR_OR_SELF:
                 tokAdd(Token::TOK_AXIS_ANCESTOR_OR_SELF);
+                break;
             case ANCESTOR:
                 tokAdd(Token::TOK_AXIS_ANCESTOR);
+                break;
             case ATTRIBUTE:
                 tokAdd(Token::TOK_AXIS_ATTRIBUTE);
+                break;
             case CHILD:
                 tokAdd(Token::TOK_AXIS_CHILD);
+                break;
             case DESCENDANT_OR_SELF:
                 tokAdd(Token::TOK_AXIS_DESCENDANT_OR_SELF);
+                break;
             case DESCENDANT:
                 tokAdd(Token::TOK_AXIS_DESCENDANT);
+                break;
             case FOLLOWING_SIBLING:
                 tokAdd(Token::TOK_AXIS_FOLLOWING_SIBLING);
+                break;
             case FOLLOWING:
                 tokAdd(Token::TOK_AXIS_FOLLOWING);
+                break;
             case NAMESPACE:
                 tokAdd(Token::TOK_AXIS_NAMESPACE);
+                break;
             case PARENT:
                 tokAdd(Token::TOK_AXIS_PARENT);
+                break;
             case PRECEDING_SIBLING:
                 tokAdd(Token::TOK_AXIS_PRECEDING_SIBLING);
+                break;
             case PRECEDING:
                 tokAdd(Token::TOK_AXIS_PRECEDING);
+                break;
             case SELF:
                 tokAdd(Token::TOK_AXIS_SELF);
+                break;
             default:
                 {
                 error("unknown axis type %d", axisType);

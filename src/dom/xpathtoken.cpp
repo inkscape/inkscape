@@ -58,6 +58,12 @@ namespace xpath
 //# V A L U E S
 //###########################
 
+/**
+ * The following functions are called by a token's execute()
+ * method.  These functions are what differentiate one token
+ * from another and give each its personality.
+*/
+
 static bool tokStr(Token &tok, Stack &stack)
 {
     StackItem item;
@@ -510,8 +516,9 @@ static bool tokFuncRound(Token &tok, Stack &stack)
 
 
 
-
-
+/**
+ * An entry for the token 'personality' table
+ */
 typedef struct
 {
     int ival;
@@ -519,6 +526,10 @@ typedef struct
     TokenFunc tokenFunc;
 } TokenTableEntry;
 
+
+/**
+ * The token personality table
+ */
 static TokenTableEntry tokenTable[] =
 {
     //### primitives
