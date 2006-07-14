@@ -91,6 +91,8 @@ SPDocument::SPDocument() {
 
     // Initialise instance of connector router.
     router = new Avoid::Router();
+    // Don't use the Consolidate moves optimisation.
+    router->ConsolidateMoves = false;
 
     p = new SPDocumentPrivate();
 

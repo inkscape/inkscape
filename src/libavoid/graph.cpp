@@ -31,6 +31,8 @@
 
 #include <math.h>
 
+using std::pair;
+
 namespace Avoid {
 
 

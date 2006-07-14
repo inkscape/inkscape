@@ -52,12 +52,17 @@ class ShapeRef
         void makeInactive(void);
 
         void removeFromGraph(void);
+        void markForMove(void);
+        void clearMoveMark(void);
+
+        VertInf *getPointVertex(const Point& point);
 
     private:
         Router *_router;
         unsigned int _id;
         Polygn _poly;
         bool _active;
+        bool _inMoveList;
         ShapeRefList::iterator _pos;
         VertInf *_firstVert;
         VertInf *_lastVert;

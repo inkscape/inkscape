@@ -51,9 +51,12 @@ class ConnRef
         void calcRouteDist(void);
         void updateEndPoint(const unsigned int type, const Point& point);
         void setEndPointId(const unsigned int type, const unsigned int id);
+        unsigned int getSrcShapeId(void);
+        unsigned int getDstShapeId(void);
         void makeActive(void);
         void makeInactive(void);
         void lateSetup(const Point& src, const Point& dst);
+        unsigned int id(void);
         VertInf *src(void);
         VertInf *dst(void);
         void removeFromGraph(void);
@@ -64,6 +67,8 @@ class ConnRef
         int generatePath(Point p0, Point p1);
         void makePathInvalid(void);
         Router *router(void);
+        void setHateCrossings(bool value);
+        bool doesHateCrossings(void);
         
         friend void Router::attachedShapes(IntList &shapes,
                 const unsigned int shapeId, const unsigned int type);
@@ -87,6 +92,7 @@ class ConnRef
         bool _initialised;
         void (*_callback)(void *);
         void *_connector;
+        bool _hateCrossings;
 };
 
 

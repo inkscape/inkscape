@@ -220,8 +220,8 @@ SPConnEndPair::update(void)
             NR::Point endPt[2];
             getEndpoints(endPt);
 
-            Avoid::Point src = { endPt[0][NR::X], endPt[0][NR::Y] };
-            Avoid::Point dst = { endPt[1][NR::X], endPt[1][NR::Y] };
+            Avoid::Point src(endPt[0][NR::X], endPt[0][NR::Y]);
+            Avoid::Point dst(endPt[1][NR::X], endPt[1][NR::Y]);
 
             _connRef->lateSetup(src, dst);
             _connRef->setCallback(&emitPathInvalidationNotification, _path);
@@ -283,8 +283,8 @@ SPConnEndPair::reroutePath(void)
     NR::Point endPt[2];
     getEndpoints(endPt);
 
-    Avoid::Point src = { endPt[0][NR::X], endPt[0][NR::Y] };
-    Avoid::Point dst = { endPt[1][NR::X], endPt[1][NR::Y] };
+    Avoid::Point src(endPt[0][NR::X], endPt[0][NR::Y]);
+    Avoid::Point dst(endPt[1][NR::X], endPt[1][NR::Y]);
 
     _connRef->updateEndPoint(Avoid::VertID::src, src);
     _connRef->updateEndPoint(Avoid::VertID::tar, dst);

@@ -30,6 +30,8 @@
 #include <cstdlib>
 #include <cassert>
 
+using std::ostream;
+
 
 namespace Avoid {
 
@@ -125,7 +127,6 @@ void VertID::print(FILE *file) const
     fprintf(file, "[%u,%d]", objID, vn);
 }
 
-
 void VertID::db_print(void) const
 {
     db_printf("[%u,%d]", objID, vn);
@@ -134,6 +135,13 @@ void VertID::db_print(void) const
 
 const int VertID::src = 1;
 const int VertID::tar = 2;
+
+
+ostream& operator<<(ostream& os, const VertID& vID)
+{
+    return os << '[' << vID.objID << ',' << vID.vn << ']';
+}
+
 
 
 VertInf::VertInf(Router *router, const VertID& vid, const Point& vpoint)

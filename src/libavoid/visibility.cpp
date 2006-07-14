@@ -316,14 +316,6 @@ static bool sweepVisible(EdgeSet& T, VertInf *currInf, VertInf *lastInf,
                 *blocker = (*closestIt).vInf1->id.objID;
                 return false;
             }
-            else
-            {
-                return true;
-            }
-        }
-        else
-        {
-            return true;
         }
     }
     else
@@ -350,9 +342,9 @@ static bool sweepVisible(EdgeSet& T, VertInf *currInf, VertInf *lastInf,
                     return false;
                 }
             }
-            return true;
         }
     }
+    return true;
 }
 
 
@@ -443,7 +435,7 @@ void vertexSweep(VertInf *vert)
             continue;
         }
 
-        Point xaxis = { DBL_MAX, centerInf->point.y };
+        Point xaxis(DBL_MAX, centerInf->point.y);
 
         if (segmentIntersect(centerInf->point, xaxis, kPrev->point, k->point))
         {

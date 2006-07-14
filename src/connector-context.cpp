@@ -794,8 +794,8 @@ spcc_connector_set_subsequent_point(SPConnectorContext *const cc, NR::Point cons
     SPDesktop *dt = cc->desktop;
     NR::Point o = dt->dt2doc(cc->p[0]);
     NR::Point d = dt->dt2doc(p);
-    Avoid::Point src = { o[NR::X], o[NR::Y] };
-    Avoid::Point dst = { d[NR::X], d[NR::Y] };
+    Avoid::Point src(o[NR::X], o[NR::Y]);
+    Avoid::Point dst(d[NR::X], d[NR::Y]);
 
     if (!cc->newConnRef) {
         Avoid::Router *router = sp_desktop_document(dt)->router;

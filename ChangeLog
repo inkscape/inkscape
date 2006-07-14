@@ -1,4 +1,10 @@
-2006-07-13 Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
+2006-07-13  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/sp-conn-end-pair.cpp, src/connector-context.cpp,
+	  src/document.cpp, src/libavoid/*:
+	  Update libavoid with upstream fixes, optimisations and new features.
+
+2006-07-13  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
 
 	* src/libvpsc/*,
 	  src/graphlayout/graphlayout.cpp:

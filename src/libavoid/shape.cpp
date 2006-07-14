@@ -37,6 +37,7 @@ ShapeRef::ShapeRef(Router *router, unsigned int id, Polygn& ply)
     , _id(id)
     , _poly(copyPoly(ply))
     , _active(false)
+    , _inMoveList(false)
     , _firstVert(NULL)
     , _lastVert(NULL)
 {
@@ -60,18 +61,15 @@ ShapeRef::ShapeRef(Router *router, unsigned int id, Polygn& ply)
             //node->lstPrev = last;
             //last->lstNext = node;
         }
-        _router->vertices.addVertex(node);
         
         last = node;
         i++;
-        // Increase total vertices count ++;
     }
     _lastVert = node;
     
     _lastVert->shNext = _firstVert;
     _firstVert->shPrev = _lastVert;
     
-    // Increase total shape count ++;
     makeActive();
 }
 
@@ -80,23 +78,20 @@ ShapeRef::~ShapeRef()
 {
     assert(_firstVert != NULL);
     
+    makeInactive();
+
     VertInf *it = _firstVert;
     do
     {
         VertInf *tmp = it;
         it = it->shNext;
 
-        // XXX: This could possibly be done less
-        //      safely but faster, all at once.
-        _router->vertices.removeVertex(tmp);
         delete tmp;
     }
     while (it != _firstVert);
     _firstVert = _lastVert = NULL;
 
     freePoly(_poly);
-    
-    makeInactive();
 }
 
 
@@ -131,6 +126,18 @@ void ShapeRef::makeActive(void)
     
     // Add to connRefs list.
     _pos = _router->shapeRefs.insert(_router->shapeRefs.begin(), this);
+
+    // Add points to vertex list.
+    VertInf *it = _firstVert;
+    do
+    {
+        VertInf *tmp = it;
+        it = it->shNext;
+
+        _router->vertices.addVertex(tmp);
+    }
+    while (it != _firstVert);
+    
     _active = true;
 }
 
@@ -141,6 +148,18 @@ void ShapeRef::makeInactive(void)
     
     // Remove from connRefs list.
     _router->shapeRefs.erase(_pos);
+
+    // Remove points from vertex list.
+    VertInf *it = _firstVert;
+    do
+    {
+        VertInf *tmp = it;
+        it = it->shNext;
+
+        _router->vertices.removeVertex(tmp);
+    }
+    while (it != _firstVert);
+    
     _active = false;
 }
     
@@ -221,6 +240,43 @@ void ShapeRef::removeFromGraph(void)
             delete (*edge);
         }
     }
+}
+
+
+void ShapeRef::markForMove(void)
+{
+    if (!_inMoveList)
+    {
+        _inMoveList = true;
+    }
+    else
+    {
+        fprintf(stderr, "WARNING: two moves queued for same shape prior to "
+                "rerouting.\n         This is not safe.\n");
+    }
+}
+
+
+void ShapeRef::clearMoveMark(void)
+{
+    _inMoveList = false;
+}
+
+
+VertInf *ShapeRef::getPointVertex(const Point& point)
+{
+    VertInf *curr = _firstVert;
+    do
+    {
+        if (curr->point == point)
+        {
+            return curr;
+        }
+        curr = curr->shNext;
+    }
+    while (curr != _firstVert);
+
+    return NULL;
 }
 
 

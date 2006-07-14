@@ -46,6 +46,7 @@ ConnRef::ConnRef(Router *router, const unsigned int id)
     , _initialised(false)
     , _callback(NULL)
     , _connector(NULL)
+    , _hateCrossings(false)
 {
     // TODO: Store endpoints and details.
     _route.pn = 0;
@@ -69,6 +70,7 @@ ConnRef::ConnRef(Router *router, const unsigned int id,
     , _initialised(false)
     , _callback(NULL)
     , _connector(NULL)
+    , _hateCrossings(false)
 {
     _route.pn = 0;
     _route.ps = NULL;
@@ -121,7 +123,9 @@ void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
 {
     assert((type == (unsigned int) VertID::src) ||
            (type == (unsigned int) VertID::tar));
-    //assert(IncludeEndpoints);
+    
+    // XXX: This was commented out.  Is there a case where it isn't true? 
+    assert(_router->IncludeEndpoints);
 
     if (!_initialised)
     {
@@ -163,8 +167,11 @@ void ConnRef::updateEndPoint(const unsigned int type, const Point& point)
         altered = _dstVert;
         partner = _srcVert;
     }
-
-    bool knownNew = false;
+    
+    // XXX: Seems to be faster to just remove the edges and recreate
+    bool isConn = true;
+    altered->removeFromGraph(isConn);
+    bool knownNew = true;
     vertexVisibility(altered, partner, knownNew, true);
 }
 
@@ -179,6 +186,18 @@ void ConnRef::setEndPointId(const unsigned int type, const unsigned int id)
     {
         _dstId = id;
     }
+}
+
+
+unsigned int ConnRef::getSrcShapeId(void)
+{
+    return _srcId;
+}
+
+
+unsigned int ConnRef::getDstShapeId(void)
+{
+    return _dstId;
 }
 
 
@@ -246,6 +265,12 @@ void ConnRef::lateSetup(const Point& src, const Point& dst)
     _router->vertices.addVertex(_dstVert);
     makeActive();
     _initialised = true;
+}
+
+
+unsigned int ConnRef::id(void)
+{
+    return _id;
 }
 
 
@@ -355,8 +380,9 @@ int ConnRef::generatePath(Point p0, Point p1)
         tar = _dstVert;
    
         bool knownNew = true;
-        vertexVisibility(src, tar, knownNew);
-        vertexVisibility(tar, src, knownNew);
+        bool genContains = true;
+        vertexVisibility(src, tar, knownNew, genContains);
+        vertexVisibility(tar, src, knownNew, genContains);
     }
 
     bool *flag = &(_needs_reroute_flag);
@@ -405,7 +431,9 @@ int ConnRef::generatePath(Point p0, Point p1)
         {
             _false_path = true;
         }
-        path[j--] = i->point;
+        path[j] = i->point;
+        path[j].id = i->id.objID;
+        j--;
     }
     path[0] = src->point;
 
@@ -415,8 +443,26 @@ int ConnRef::generatePath(Point p0, Point p1)
     PolyLine& output_route = route();
     output_route.pn = pathlen;
     output_route.ps = path;
+ 
+    if ( !(_router->IncludeEndpoints) )
+    {
+        assert(_initialised);
+        unInitialise();
+    }
    
     return (int) result;
+}
+
+
+void ConnRef::setHateCrossings(bool value)
+{
+    _hateCrossings = value;
+}
+
+
+bool ConnRef::doesHateCrossings(void)
+{
+    return _hateCrossings;
 }
 
 

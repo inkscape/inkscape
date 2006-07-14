@@ -59,6 +59,7 @@ class VertID
         VertID& operator++(int);
         void print(FILE *file = stdout) const;
         void db_print(void) const;
+        friend std::ostream& operator<<(std::ostream& os, const VertID& vID);
 };
 
 

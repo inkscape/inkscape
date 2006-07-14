@@ -37,10 +37,6 @@
 namespace Avoid {
 
 
-double segmt_penalty = 0;
-double angle_penalty = 0;
-
-
 static double Dot(const Point& l, const Point& r)
 {
     return (l.x * r.x) + (l.y * r.y);
@@ -57,8 +53,8 @@ static double CrossLength(const Point& l, const Point& r)
 //
 static double angleBetween(const Point& p1, const Point& p2, const Point& p3)
 {
-    Point v1 = { p1.x - p2.x, p1.y - p2.y };
-    Point v2 = { p3.x - p2.x, p3.y - p2.y };
+    Point v1(p1.x - p2.x, p1.y - p2.y);
+    Point v2(p3.x - p2.x, p3.y - p2.y);
 
     return fabs(atan2(CrossLength(v1, v2), Dot(v1, v2)));
 }
@@ -69,13 +65,17 @@ static double angleBetween(const Point& p1, const Point& p2, const Point& p3)
 // possibly the previous point (inf1) [from inf1--inf2], return a
 // cost associated with this route.
 //
-double cost(const double dist, VertInf *inf1,
+double cost(ConnRef *lineRef, const double dist, VertInf *inf1,
         VertInf *inf2, VertInf *inf3)
 {
     double result = dist;
 
+    Router *router = inf2->_router;
     if (inf2->pathNext != NULL)
     {
+        double& angle_penalty = router->angle_penalty;
+        double& segmt_penalty = router->segmt_penalty;
+
         // This is not the first segment, so there is a bend
         // between it and the last one in the existing path.
         if ((angle_penalty > 0) || (segmt_penalty > 0))
@@ -86,9 +86,14 @@ double cost(const double dist, VertInf *inf1,
 
             double rad = M_PI - angleBetween(p1, p2, p3);
 
-            // Make `rad' between 0--10 then take its log so small
+            // Make `xval' between 0--10 then take its log so small
             // angles are not penalised as much as large ones.
-            result += (angle_penalty * log((rad * 10 / M_PI) + 1));
+            //
+            double xval = rad * 10 / M_PI;
+            double yval = xval * log10(xval + 1) / 10.5;
+            result += (angle_penalty * yval);
+            //printf("deg from straight: %g\tpenalty: %g\n",
+            //        rad * 180 / M_PI, (angle_penalty * yval));
 
             // Don't penalise as an extra segment if there is no turn.
             if (rad > 0.0005)
@@ -96,9 +101,160 @@ double cost(const double dist, VertInf *inf1,
                 result += segmt_penalty;
             }
         }
-
     }
 
+    if (lineRef->doesHateCrossings() && (router->crossing_penalty > 0))
+    {
+        Point& a1 = inf2->point;
+        Point& a2 = inf3->point;
+
+        ConnRefList::iterator curr, finish = router->connRefs.end();
+        for (curr = router->connRefs.begin(); curr != finish; ++curr)
+        {
+            ConnRef *connRef = *curr;
+
+            if (connRef->id() == lineRef->id())
+            {
+                continue;
+            }
+            Avoid::PolyLine& route2 = connRef->route();
+            for (int j = 1; j < route2.pn; ++j)
+            {
+                Avoid::Point& b1 = route2.ps[j - 1];
+                Avoid::Point& b2 = route2.ps[j];
+            
+                if (((a1 == b1) && (a2 == b2)) ||
+                    ((a2 == b1) && (a1 == b2)))
+                {
+                    // Route along same segment: no penalty.  We detect
+                    // crossovers when we see the segments diverge.
+                    continue;
+                }
+
+                if ((a2 == b2) || (a2 == b1) || (b2 == a1))
+                {
+                    // Each crossing that is at a vertex in the 
+                    // visibility graph gets noticed four times.
+                    // We ignore three of these cases.
+                    // This also catches the case of a shared path,
+                    // but this is one that terminates at a common
+                    // endpoint, so we don't care about it.
+                    continue;
+                }
+
+                if (a1 == b1)
+                {
+                    if (j == 1)
+                    {
+                        // common source point.
+                        continue;
+                    }
+                    Avoid::Point& b0 = route2.ps[j - 2];
+                    // The segments share an endpoint -- a1==b1.
+                    if (a2 == b0)
+                    {
+                        // a2 is not a split, continue.
+                        continue;
+                    }
+                    
+                    // If here, then we know that a2 != b2
+                    // And a2 and its pair in b are a split.
+                    assert(a2 != b2);
+
+                    if (inf2->pathNext == NULL)
+                    {
+                        continue;
+                    }
+                    Avoid::Point& a0 = inf1->point;
+
+                    if ((a0 == b0) || (a0 == b2))
+                    {
+                        //printf("Shared path... ");
+                        bool normal = (a0 == b0) ? true : false;
+                        // Determine direction we have to look through
+                        // the points of connector b.
+                        int dir = normal ? -1 : 1;
+                        
+                        int traceJ = j - 1 + dir;
+                        
+                        int endCornerSide = Avoid::cornerSide(
+                                a0, a1, a2, normal ? b2 : b0);
+
+                        
+                        VertInf *traceInf1 = inf2->pathNext;
+                        VertInf *traceInf2 = inf2;
+                        VertInf *traceInf3 = inf3;
+                        while (traceInf1 &&
+                                (traceJ >= 0) && (traceJ < route2.pn) &&
+                                (traceInf1->point == route2.ps[traceJ]))
+                        {
+                            traceInf3 = traceInf2;
+                            traceInf2 = traceInf1;
+                            traceInf1 = traceInf1->pathNext;
+                            traceJ += dir;
+                        }
+                        
+                        if (!traceInf1 ||
+                                (traceJ < 0) || (traceJ >= route2.pn))
+                        {
+                            //printf("common source or destination.\n");
+                            // The connectors have a shared path, but it
+                            // comes from a common source point.
+                            // XXX: There might be a better way to
+                            //      check this by asking the connectors
+                            //      for the IDs of the attached shapes.
+                            continue;
+                        }
+                        
+                        int startCornerSide = Avoid::cornerSide(
+                                traceInf1->point, traceInf2->point,
+                                traceInf3->point, route2.ps[traceJ]);
+                        
+                        if (endCornerSide != startCornerSide)
+                        {
+                            //printf("crosses.\n");
+                            result += router->crossing_penalty;
+                        }
+                        else
+                        {
+                            //printf("doesn't cross.\n");
+                        }
+                    }
+                    else
+                    {
+                        // The connectors cross or touch at this point.
+                        //printf("Cross or touch at point... ");
+                    
+                        int side1 = Avoid::cornerSide(a0, a1, a2, b0);
+                        int side2 = Avoid::cornerSide(a0, a1, a2, b2);
+
+                        if (side1 != side2)
+                        {
+                            //printf("cross.\n");
+                            // The connectors cross at this point.
+                            result += router->crossing_penalty;
+                        }
+                        else
+                        {
+                            //printf("touch.\n");
+                            // The connectors touch at this point.
+                        }
+                    }
+                    continue;
+                }
+
+                double xc, yc;
+                int intersectResult = Avoid::segmentIntersectPoint(
+                        a1, a2, b1, b2, &xc, &yc);
+
+                if (intersectResult == Avoid::DO_INTERSECT)
+                {
+                    result += router->crossing_penalty;
+                }
+            }
+        }
+    }
+    
     return result;
 }
 
@@ -110,7 +266,7 @@ double cost(const double dist, VertInf *inf1,
 //
 // Based on the code of 'matrixpfs'.
 //
-static void dijkstraPath(VertInf *src, VertInf *tar)
+static void dijkstraPath(ConnRef *lineRef, VertInf *src, VertInf *tar)
 {
     Router *router = src->_router;
 
@@ -150,7 +306,7 @@ static void dijkstraPath(VertInf *src, VertInf *tar)
             {
                 double kt_dist = (*edge)->getDist();
                 double priority = k->pathDist +
-                        cost(kt_dist, k->pathNext, k, t);
+                        cost(lineRef, kt_dist, k->pathNext, k, t);
 
                 if ((kt_dist != 0) && (t->pathDist < -priority))
                 {
@@ -232,7 +388,7 @@ bool operator>(const ANode &a, const ANode &b)
 // The aStar STL code is based on public domain code available on the
 // internet.
 //
-static void aStarPath(VertInf *src, VertInf *tar)
+static void aStarPath(ConnRef *lineRef, VertInf *src, VertInf *tar)
 {
     std::vector<ANode> PENDING;     // STL Vectors chosen because of rapid
     std::vector<ANode> DONE;        // insertions/deletions at back,
@@ -316,7 +472,7 @@ static void aStarPath(VertInf *src, VertInf *tar)
 
             VertInf *prevInf = BestNode.inf->pathNext;
 
-            Node.g = BestNode.g + cost(edgeDist, prevInf,
+            Node.g = BestNode.g + cost(lineRef, edgeDist, prevInf,
                     BestNode.inf, Node.inf);
 
             // Calculate the Heuristic.
@@ -409,6 +565,9 @@ void makePath(ConnRef *lineRef, bool *flag)
     VertInf *src = lineRef->src();
     VertInf *tar = lineRef->dst();
 
+    // If the connector hates crossings then we want to examine direct paths:
+    bool examineDirectPath = lineRef->doesHateCrossings();
+    
     // TODO: Could be more efficient here.
     EdgeInf *directEdge = EdgeInf::existingEdge(src, tar);
     if (!(router->IncludeEndpoints) && directVis(src, tar))
@@ -426,7 +585,7 @@ void makePath(ConnRef *lineRef, bool *flag)
         return;
     }
     else if (router->IncludeEndpoints && directEdge &&
-            (directEdge->getDist() > 0))
+            (directEdge->getDist() > 0) && !examineDirectPath)
     {
         tar->pathNext = src;
         directEdge->addConn(flag);
@@ -446,11 +605,11 @@ void makePath(ConnRef *lineRef, bool *flag)
 
         if (router->UseAStarSearch)
         {
-            aStarPath(src, tar);
+            aStarPath(lineRef, src, tar);
         }
         else
         {
-            dijkstraPath(src, tar);
+            dijkstraPath(lineRef, src, tar);
         }
 
 #if 0

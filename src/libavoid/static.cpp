@@ -39,7 +39,7 @@ static void computeCompleteVis(Router *router);
 // This should only be used for the static algorithm.
 //
 // XXX: If to set up the vis graph for incremental it would need 
-//      the shapeRef ppinters in obs.
+//      the shapeRef pointers in obs.
 //
 void CreateVisGraph(Router *router, Polygn **obs, int n_obs)
 {
@@ -94,6 +94,8 @@ void DestroyVisGraph(Router *router)
         conn->removeFromGraph();
         conn->unInitialise();
     }
+    // Clear contains info.
+    router->contains.clear();
 
     assert(router->vertices.connsBegin() == NULL);
 }

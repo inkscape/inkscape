@@ -26,6 +26,7 @@
 #include "libavoid/connector.h"
 #include "libavoid/polyutil.h"
 #include "libavoid/debug.h"
+#include "libavoid/region.h"
 #include "math.h"
 
 //#define ORTHOGONAL_ROUTING
@@ -33,8 +34,34 @@
 namespace Avoid {
 
 
+static const unsigned int infoAdd = 1;
+static const unsigned int infoDel = 2;
+static const unsigned int infoMov = 3;
+
+
+class MoveInfo {
+    public:
+        MoveInfo(ShapeRef *s, Polygn *p, bool fM)
+            : shape(s)
+            , newPoly(copyPoly(*p))
+            , firstMove(fM)
+        { }
+        ~MoveInfo()
+        {
+            freePoly(newPoly);
+        }
+        ShapeRef *shape;
+        Polygn newPoly;
+        bool firstMove;
+};
+
+
+
 Router::Router()
     : PartialTime(false)
+    , segmt_penalty(0)
+    , angle_penalty(0)
+    , crossing_penalty(200)
     // Algorithm options:
     , UseAStarSearch(true)
     , IgnoreRegions(true)
@@ -42,7 +69,7 @@ Router::Router()
     , IncludeEndpoints(true)
     , UseLeesAlgorithm(false)
     , InvisibilityGrph(true)
-    , ConsolidateMoves(false)
+    , ConsolidateMoves(true)
     , PartialFeedback(false)
     // Instrumentation:
     , st_checked_edges(0)
@@ -118,31 +145,94 @@ void Router::delShape(ShapeRef *shape)
 
 void Router::moveShape(ShapeRef *shape, Polygn *newPoly, const bool first_move)
 {
-    unsigned int pid = shape->id();
-    bool notPartialTime = !(PartialFeedback && PartialTime);
-
-    // o  Remove entries related to this shape's vertices
-    shape->removeFromGraph();
-    
-    if (SelectiveReroute && (notPartialTime || first_move))
+    // Sanely cope with the case where the user requests moving the same
+    // shape multiple times before rerouting connectors.
+    bool alreadyThere = false;
+    unsigned int id = shape->id();
+    MoveInfoList::iterator finish = moveList.end();
+    for (MoveInfoList::iterator it = moveList.begin(); it != finish; ++it)
     {
-        markConnectors(shape);
+        if ((*it)->shape->id() == id)
+        {
+            fprintf(stderr,
+                    "warning: multiple moves requested for shape %d.\n",
+                    (int) id);
+            // Just update the MoveInfo with the second polygon, but
+            // leave the firstMove setting alone.
+            (*it)->newPoly = copyPoly(*newPoly);
+            alreadyThere = true;
+        }
     }
 
-    adjustContainsWithDel(pid);
-    
+    if (!alreadyThere)
+    {
+        MoveInfo *moveInfo = new MoveInfo(shape, newPoly, first_move);
+        moveList.push_back(moveInfo);
+    }
+
+    if (!ConsolidateMoves)
+    {
+        processMoves();
+    }
+}
+
+
+void Router::processMoves(void)
+{
+    if (moveList.empty())
+    {
+        return;
+    }
+
+    MoveInfoList::iterator curr;
+    MoveInfoList::iterator finish = moveList.end();
+    for (curr = moveList.begin(); curr != finish; ++curr)
+    {
+        MoveInfo *moveInf = *curr;
+        ShapeRef *shape = moveInf->shape;
+        Polygn *newPoly = &(moveInf->newPoly);
+        bool first_move = moveInf->firstMove;
+
+        unsigned int pid = shape->id();
+        bool notPartialTime = !(PartialFeedback && PartialTime);
+
+        // o  Remove entries related to this shape's vertices
+        shape->removeFromGraph();
+        
+        if (SelectiveReroute && (notPartialTime || first_move))
+        {
+            markConnectors(shape);
+        }
+
+        adjustContainsWithDel(pid);
+        
 #ifdef ORTHOGONAL_ROUTING
-    Region::removeShape(shape);
+        Region::removeShape(shape);
 #endif
 
-    shape->setNewPoly(*newPoly);
+        shape->setNewPoly(*newPoly);
 
-    adjustContainsWithAdd(*newPoly, pid);
+        adjustContainsWithAdd(*newPoly, pid);
+
+        // Ignore this shape for visibility.
+        // XXX: We don't really need to do this if we're not using Partial
+        //      Feedback.  Without this the blocked edges still route
+        //      around the shape until it leaves the connector.
+        shape->makeInactive();
+        
+    }
     
-    // o  Check all edges that were blocked by this shape.
     if (InvisibilityGrph)
     {
-        checkAllBlockedEdges(pid);
+        for (curr = moveList.begin(); curr != finish; ++curr)
+        {
+            MoveInfo *moveInf = *curr;
+            ShapeRef *shape = moveInf->shape;
+            unsigned int pid = shape->id();
+            
+            // o  Check all edges that were blocked by this shape.
+            checkAllBlockedEdges(pid);
+        }
     }
     else
     {
@@ -150,29 +240,44 @@ void Router::moveShape(ShapeRef *shape, Polygn *newPoly, const bool first_move)
         checkAllMissingEdges();
     }
 
+    while ( ! moveList.empty() )
+    {
+        MoveInfo *moveInf = moveList.front();
+        ShapeRef *shape = moveInf->shape;
+        Polygn *newPoly = &(moveInf->newPoly);
+
+        unsigned int pid = shape->id();
+        bool notPartialTime = !(PartialFeedback && PartialTime);
+
+        // Restore this shape for visibility.
+        shape->makeActive();
+
 #ifdef ORTHOGONAL_ROUTING
-    Region::addShape(shape);
+        Region::addShape(shape);
 #endif
 
-    // o  Check all visibility edges to see if this one shape
-    //    blocks them.
-    if (notPartialTime)
-    {
-        newBlockingShape(newPoly, pid);
-    }
+        // o  Check all visibility edges to see if this one shape
+        //    blocks them.
+        if (notPartialTime)
+        {
+            newBlockingShape(newPoly, pid);
+        }
 
-    // o  Calculate visibility for the new vertices.
-    if (UseLeesAlgorithm)
-    {
-        shapeVisSweep(shape);
-    }
-    else
-    {
-        shapeVis(shape);
+        // o  Calculate visibility for the new vertices.
+        if (UseLeesAlgorithm)
+        {
+            shapeVisSweep(shape);
+        }
+        else
+        {
+            shapeVis(shape);
+        }
+        
+        moveList.pop_front();
+        delete moveInf;
     }
     callbackAllInvalidConnectors();
 }
-
 
 
 //----------------------------------------------------------------------------
@@ -248,10 +353,10 @@ void Router::newBlockingShape(Polygn *poly, int pid)
 
         if (tmp->getDist() != 0)
         {
-            pair<VertID, VertID> ids(tmp->ids());
+            std::pair<VertID, VertID> ids(tmp->ids());
             VertID eID1 = ids.first;
             VertID eID2 = ids.second;
-            pair<Point, Point> points(tmp->points());
+            std::pair<Point, Point> points(tmp->points());
             Point e1 = points.first;
             Point e2 = points.second;
             bool blocked = false;
@@ -426,6 +531,11 @@ void Router::markConnectors(ShapeRef *shape)
             // Ignore uninitialised connectors.
             continue;
         }
+        else if (conn->_needs_reroute_flag)
+        {
+            // Already marked, so skip.
+            continue;
+        }
 
         Point start = conn->_route.ps[0];
         Point end = conn->_route.ps[conn->_route.pn - 1];
@@ -478,9 +588,9 @@ void Router::markConnectors(ShapeRef *shape)
             else
             {
                 // Need to do rotation
-                Point n_p2 = { p2.x - p1.x, p2.y - p1.y };
-                Point n_start = { start.x - p1.x, start.y - p1.y };
-                Point n_end = { end.x - p1.x, end.y - p1.y };
+                Point n_p2(p2.x - p1.x, p2.y - p1.y);
+                Point n_start(start.x - p1.x, start.y - p1.y);
+                Point n_end(end.x - p1.x, end.y - p1.y);
                 //printf("n_p2:    (%.1f, %.1f)\n", n_p2.x, n_p2.y);
                 //printf("n_start: (%.1f, %.1f)\n", n_start.x, n_start.y);
                 //printf("n_end:   (%.1f, %.1f)\n", n_end.x, n_end.y);
@@ -488,7 +598,7 @@ void Router::markConnectors(ShapeRef *shape)
                 double theta = 0 - atan2(n_p2.y, n_p2.x);
                 //printf("theta = %.2f\n", theta * (180 / PI));
 
-                Point r_p1 = {0, 0};
+                Point r_p1(0, 0);
                 Point r_p2 = n_p2;
                 start = n_start;
                 end = n_end;

@@ -9,6 +9,10 @@
  * and/or described in "Computational Geometry in C" (Second Edition),
  * Copyright (C) 1998  Joseph O'Rourke <orourke@cs.smith.edu>
  * --------------------------------------------------------------------
+ * The segmentIntersectPoint function is based on code published and
+ * described in Franklin Antonio, Faster Line Segment Intersection,
+ * Graphics Gems III, p. 199-202, code: p. 500-501.
+ * --------------------------------------------------------------------
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,6 +37,38 @@
 #include <math.h>
 
 namespace Avoid {
+
+
+Point::Point()
+{
+}
+
+
+Point::Point(const double xv, const double yv)
+    : x(xv)
+    , y(yv)
+{
+}
+
+
+bool Point::operator==(const Point& rhs) const
+{
+    if ((x == rhs.x) && (y == rhs.y))
+    {
+        return true;
+    }
+    return false;
+}
+
+
+bool Point::operator!=(const Point& rhs) const
+{
+    if ((x != rhs.x) || (y != rhs.y))
+    {
+        return true;
+    }
+    return false;
+}
 
 
 // Returns true iff the point c lies on the closed segment ab.
@@ -89,7 +125,7 @@ bool segmentIntersect(const Point& a, const Point& b, const Point& c,
     // and c and d are on opposite sides of the line ab.
     //
     // Note: this is safe even though the textbook warns about it
-    // since, unlike them, out vecDir is equivilent to 'AreaSign'
+    // since, unlike them, our vecDir is equivilent to 'AreaSign'
     // rather than 'Area2'.
     return (((ab_c * ab_d) < 0) && ((cd_a * cd_b) < 0));
 }
@@ -153,6 +189,55 @@ bool inValidRegion(bool IgnoreRegions, const Point& a0, const Point& a1,
 }
 
 
+// Gives the side of a corner that a point lies on:
+//      1   anticlockwise
+//     -1   clockwise
+// e.g.                     /|
+//       /s2          -1   / |s1
+//      /                 /  |
+//  1  |s1  -1           / 1 |  -1
+//     |                /    |
+//     |s0           s2/     |s0
+//     
+int cornerSide(const Point &c1, const Point &c2, const Point &c3,
+        const Point& p)
+{
+    int s123 = vecDir(c1, c2, c3);
+    int s12p = vecDir(c1, c2, p);
+    int s23p = vecDir(c2, c3, p);
+
+    if (s12p == 0)
+    {
+        // Case of p being somewhere on c1-c2.
+        return s23p;
+    }
+    if (s23p == 0)
+    {
+        // Case of p being somewhere on c2-c3.
+        return s12p;
+    }
+
+    if (s123 == 1)
+    {
+        if ((s12p == 1) && (s23p == 1))
+        {
+            return 1;
+        }
+        return -1;
+    }
+    else if (s123 == -1)
+    {
+        if ((s12p == -1) && (s23p == -1))
+        {
+            return -1;
+        }
+        return 1;
+    }
+    // Case of c3 being somewhere on c1-c2.
+    return s12p;
+}
+
+
 // Returns the distance between points a and b.
 //
 double dist(const Point& a, const Point& b)
@@ -163,13 +248,59 @@ double dist(const Point& a, const Point& b)
     return sqrt((xdiff * xdiff) + (ydiff * ydiff));
 }
 
+// Returns the total length of all line segments in the polygon
+double totalLength(const Polygn& poly)
+{
+    double l = 0;
+    for (int i = 0; i < poly.pn-1; ++i) {
+        l += dist(poly.ps[i], poly.ps[i+1]);
+    }
+    return l;
+}
+
+// Uses the dot-product rule to find the angle (radians) between ab and bc
+double angle(const Point& a, const Point& b, const Point& c)
+{
+    double ux = b.x - a.x,
+           uy = b.y - a.y,
+           vx = c.x - b.x,
+           vy = c.y - b.y,
+           lu = sqrt(ux*ux+uy*uy),
+           lv = sqrt(vx*vx+vy*vy),
+           udotv = ux * vx + uy * vy,
+           costheta = udotv / (lu * lv);
+    return acos(costheta);
+}
+
+// Returns true iff the point q is inside (or on the edge of) the
+// polygon argpoly.
+//
+// This is a fast version that only works for convex shapes.  The
+// other version (inPolyGen) is more general.
+//
+bool inPoly(const Polygn& poly, const Point& q)
+{
+    int n = poly.pn;
+    Point *P = poly.ps;
+    for (int i = 0; i < n; i++)
+    {
+        // point index; i1 = i-1 mod n
+        int prev = (i + n - 1) % n;
+        if (vecDir(P[prev], P[i], q) == 1)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 // Returns true iff the point q is inside (or on the edge of) the
 // polygon argpoly.
 //
 // Based on the code of 'InPoly'.
 //
-bool inPoly(const Polygn& argpoly, const Point& q)
+bool inPolyGen(const Polygn& argpoly, const Point& q)
 {
     // Numbers of right and left edge/ray crossings.
     int Rcross = 0;
@@ -254,6 +385,118 @@ bool inPoly(const Polygn& argpoly, const Point& q)
 
     // Outside.
     return false;
+}
+
+
+
+// Line Segment Intersection
+// Original code by Franklin Antonio 
+// 
+// The SAME_SIGNS macro assumes arithmetic where the exclusive-or
+// operation will work on sign bits.  This works for twos-complement,
+// and most other machine arithmetic.
+#define SAME_SIGNS( a, b ) \
+        (((long) ((unsigned long) a ^ (unsigned long) b)) >= 0 )
+// 
+int segmentIntersectPoint(const Point& a1, const Point& a2,
+        const Point& b1, const Point& b2, double *x, double *y) 
+{
+
+    double Ax,Bx,Cx,Ay,By,Cy,d,e,f,num,offset;
+    double x1lo,x1hi,y1lo,y1hi;
+
+    Ax = a2.x - a1.x;
+    Bx = b1.x - b2.x;
+
+    // X bound box test:
+    if (Ax < 0)
+    {
+        x1lo = a2.x;
+        x1hi = a1.x;
+    }
+    else
+    {
+        x1hi = a2.x;
+        x1lo = a1.x;
+    }
+    if (Bx > 0)
+    {
+        if (x1hi < b2.x || b1.x < x1lo) return DONT_INTERSECT;
+    }
+    else
+    {
+        if (x1hi < b1.x || b2.x < x1lo) return DONT_INTERSECT;
+    }
+
+    Ay = a2.y - a1.y;
+    By = b1.y - b2.y;
+
+    // Y bound box test:
+    if (Ay < 0)
+    {
+        y1lo = a2.y;
+        y1hi = a1.y;
+    }
+    else
+    {
+        y1hi = a2.y;
+        y1lo = a1.y;
+    }
+    if (By > 0)
+    {
+        if (y1hi < b2.y || b1.y < y1lo) return DONT_INTERSECT;
+    }
+    else
+    {
+        if (y1hi < b1.y || b2.y < y1lo) return DONT_INTERSECT;
+    }
+
+
+    Cx = a1.x - b1.x;
+    Cy = a1.y - b1.y;
+    // alpha numerator:
+    d = By*Cx - Bx*Cy;
+    // Both denominator:
+    f = Ay*Bx - Ax*By;
+    // aplha tests:
+    if (f > 0)
+    {
+        if (d < 0 || d > f) return DONT_INTERSECT;
+    }
+    else
+    {
+        if (d > 0 || d < f) return DONT_INTERSECT;
+    }
+
+    // beta numerator:
+    e = Ax*Cy - Ay*Cx;       
+    // beta tests:
+    if (f > 0)
+    {
+        if (e < 0 || e > f) return DONT_INTERSECT;
+    }
+    else
+    {
+        if (e > 0 || e < f) return DONT_INTERSECT;
+    }
+
+    // compute intersection coordinates:
+
+    if (f == 0) return PARALLEL;
+    
+    // Numerator:
+    num = d*Ax;
+    // Round direction:
+    offset = SAME_SIGNS(num,f) ? f/2 : -f/2;
+    // Intersection X:
+    *x = a1.x + (num+offset) / f;
+
+    num = d*Ay;
+    offset = SAME_SIGNS(num,f) ? f/2 : -f/2;
+    // Intersection Y:
+    *y = a1.y + (num+offset) / f;
+
+    return DO_INTERSECT;
 }
 
 

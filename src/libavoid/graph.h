@@ -27,7 +27,6 @@
 #include <cassert>
 #include <list>
 #include <utility>
-using std::pair;
 #include "libavoid/vertices.h"
 
 namespace Avoid {
@@ -55,8 +54,8 @@ class EdgeInf
         void addCycleBlocker(void);
         void addBlocker(int b);
 
-        pair<VertID, VertID> ids(void);
-        pair<Point, Point> points(void);
+        std::pair<VertID, VertID> ids(void);
+        std::pair<Point, Point> points(void);
         void db_print(void);
         void checkVis(void);
         VertInf *otherVert(VertInf *vert);

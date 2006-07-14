@@ -29,11 +29,19 @@ namespace Avoid
 {
 
     
-typedef struct
+class Point
 {
-    double x;
-    double y;
-} Point;
+    public:
+        Point();
+        Point(const double xv, const double yv);
+        bool operator==(const Point& rhs) const;
+        bool operator!=(const Point& rhs) const;
+
+        double x;
+        double y;
+        int id;
+
+};
 
 
 typedef Point Vector;

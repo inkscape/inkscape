@@ -41,7 +41,8 @@ namespace Avoid {
 class ConnRef;
 typedef std::list<ConnRef *> ConnRefList;
 typedef std::list<unsigned int> IntList;
-typedef std::pair<ShapeRef *, Polygn *> MoveInfo;
+class MoveInfo;
+typedef std::list<MoveInfo *> MoveInfoList;
 
 
 static const unsigned int runningTo = 1;
@@ -63,6 +64,8 @@ class Router {
         bool PartialTime;
         double segmt_penalty;
         double angle_penalty;
+        double crossing_penalty;
+
 
         bool UseAStarSearch;
         bool IgnoreRegions;
@@ -84,6 +87,7 @@ class Router {
         void delShape(ShapeRef *shape);
         void moveShape(ShapeRef *shape, Polygn *newPoly,
                 const bool first_move = false);
+        void processMoves(void);
         
         void attachedConns(IntList &conns, const unsigned int shapeId,
                 const unsigned int type);
@@ -100,6 +104,8 @@ class Router {
         void adjustContainsWithAdd(const Polygn& poly, const int p_shape);
         void adjustContainsWithDel(const int p_shape);
         void callbackAllInvalidConnectors(void);
+
+        MoveInfoList moveList;
 };
 
 }
