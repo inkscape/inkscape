@@ -20,6 +20,7 @@
 #include <math.h>
 #include <stdarg.h>
 #include <map>
+#include <algorithm>
 
 
 namespace org
@@ -33,8 +34,6 @@ namespace siox
 //########################################################################
 //#  C L A B
 //########################################################################
-
-static std::map<unsigned long, CieLab> clabLookupTable;
 
 /**
  * Convert integer A, R, G, B values into an pixel value.
@@ -130,19 +129,6 @@ CieLab::CieLab(unsigned long rgb)
 {
     init();
 
-    //First try looking up in the cache
-    std::map<unsigned long, CieLab>::iterator iter;
-    iter = clabLookupTable.find(rgb);
-    if (iter != clabLookupTable.end())
-        {
-        CieLab res = iter->second;
-        C = res.C;
-        L = res.L;
-        A = res.A;
-        B = res.B;
-        }
-
-
     int ir  = (rgb>>16) & 0xff;
     int ig  = (rgb>> 8) & 0xff;
     int ib  = (rgb    ) & 0xff;
@@ -170,18 +156,14 @@ CieLab::CieLab(unsigned long rgb)
     else
         fb = fb / 12.92;
 
-    fr = fr * 100.0;
-    fg = fg * 100.0;
-    fb = fb * 100.0;
-
     // Use white = D65
-    float x = fr * 0.4124 + fg * 0.3576 + fb * 0.1805;
-    float y = fr * 0.2126 + fg * 0.7152 + fb * 0.0722;
-    float z = fr * 0.0193 + fg * 0.1192 + fb * 0.9505;
+    const float x = fr * 0.4124 + fg * 0.3576 + fb * 0.1805;
+    const float y = fr * 0.2126 + fg * 0.7152 + fb * 0.0722;
+    const float z = fr * 0.0193 + fg * 0.1192 + fb * 0.9505;
 
-    float vx = x /  95.047;
-    float vy = y / 100.000;
-    float vz = z / 108.883;
+    float vx = x / 0.95047;
+    float vy = y;
+    float vz = z / 1.08883;
 
     //printf("vx:%f vy:%f vz:%f\n", vx, vy, vz);
     if (vx > 0.008856)
@@ -206,16 +188,12 @@ CieLab::CieLab(unsigned long rgb)
     L = 116.0 * vy - 16.0;
     A = 500.0 * (vx - vy);
     B = 200.0 * (vy - vz);
-
-    // Cache for next time
-    clabLookupTable[rgb] = *this;
-
 }
 
 
 
 /**
- * Return this CieLab's value a a packed-pixel ARGB value
+ * Return this CieLab's value converted to a packed-pixel ARGB value
  */
 unsigned long CieLab::toRGB()
 {
@@ -242,13 +220,8 @@ unsigned long CieLab::toRGB()
     else
         vz = (vz - 16.0 / 116.0) / 7.787;
 
-    float x =  95.047 * vx; //use white = D65
-    float y = 100.000 * vy;
-    float z = 108.883 * vz;
-
-    vx = x / 100.0;
-    vy = y / 100.0;
-    vz = z / 100.0;
+    vx *= 0.95047; //use white = D65
+    vz *= 1.08883;
 
     float vr =(float)(vx *  3.2406 + vy * -1.5372 + vz * -0.4986);
     float vg =(float)(vx * -0.9689 + vy *  1.8758 + vz *  0.0415);
@@ -1624,16 +1597,12 @@ void Siox::erode(float *cm, int xres, int yres)
 
 
 
-
 /**
  * Normalizes the matrix to values to [0..1].
  */
 void Siox::normalizeMatrix(float *cm, int cmSize)
 {
-    float max= -1000000.0f;
-    for (int i=0; i<cmSize; i++)
-        if (max<cm[i] > max)
-            max=cm[i];
+    float max = *std::max(cm, cm + cmSize);
 
     if (max<=0.0 || max==1.0)
         return;
