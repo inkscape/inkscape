@@ -191,10 +191,10 @@ void Router::attachedConns(IntList &conns, const unsigned int shapeId,
     for (ConnRefList::iterator i = connRefs.begin(); i != fin; ++i) {
 
         if ((type & runningTo) && ((*i)->_dstId == shapeId)) {
-            conns.push_back((*i)->_srcId);
+            conns.push_back((*i)->_id);
         }
         else if ((type & runningFrom) && ((*i)->_srcId == shapeId)) {
-            conns.push_back((*i)->_dstId);
+            conns.push_back((*i)->_id);
         }
     }
 }

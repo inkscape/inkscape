@@ -1,3 +1,9 @@
+2006-07-13  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* src/libavoid/router.cpp: Fixed a bug in the libavoid function
+	  Router::attachedConns().  Previously unused, but needed by Tim
+	  for new Graph Layout code.
+
 2006-07-13  Jon Phillips  <jon@rejon.org>
 
 	* src/inkview: Added commandline option capability to inkview and 
@@ -7,7 +13,7 @@
 2006-07-02  Colin Marquardt  <colin@marquardt-home.de>
 
 	* AUTHORS, src/ui/dialog/aboutbox.cpp: Add Niko, Hugo, Dale and
-   	  Gustav.
+	  Gustav.
 
 2006-06-30  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
@@ -1480,7 +1486,7 @@
 	  src/widgets/desktop-widget.h, src/widgets/desktop-widget.cpp:
 	  Adding panels/swatches to main UI.
 
-2005-11-23  Tim Dwyer  <tdwyer@mail.csse.monash.edu.au>
+2005-12-23  Tim Dwyer  <tdwyer@mail.csse.monash.edu.au>
 
 	* src/removeoverlap/*.{cpp,h}: Bug fix in removeoverlap algorithm that
 	  should finally get timestamps working properly.  Specifically, heap
