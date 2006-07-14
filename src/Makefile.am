@@ -226,7 +226,7 @@ test-all.cpp: \
 		$(svg_test_svg_includes)	\
 		$(xml_test_xml_includes)	\
 		$(test_all_includes)
-	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=selfname.tpl -root -o test-all.cpp	\
+	$(top_srcdir)/cxxtest/cxxtestgen.pl --template=$(srcdir)/selfname.tpl -root -o test-all.cpp	\
 		$(libnr_test_nr_includes)	\
 		$(svg_test_svg_includes)	\
 		$(xml_test_xml_includes)	\

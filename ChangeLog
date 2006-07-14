@@ -1,5 +1,11 @@
 2006-07-13  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
+	* src/Makefile_insert, src/Makefile.am, src/svg/Makefile_insert,
+	  src/xml/Makefile_insert, src/libnr/Makefile_insert:
+	  Add "$(srcdir)/" to some things so that "make check" works in 
+	  the case that the build directory is somewhere other than the
+	  source directory.
+
 	* src/sp-conn-end-pair.cpp, src/connector-context.cpp,
 	  src/document.cpp, src/libavoid/*:
 	  Update libavoid with upstream fixes, optimisations and new features.

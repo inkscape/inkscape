@@ -342,17 +342,17 @@ inkscape_version.h: ../configure.ac
 	echo '#define INKSCAPE_VERSION "$(VERSION)"' > inkscape_version.h
 
 test_all_includes = \
-		attributes-test.h	\
-		color-profile-test.h	\
-                MultiPrinter.h  \
-                TRPIFormatter.h \
-                PylogFormatter.h \
-		dir-util-test.h	\
-		extract-uri-test.h	\
-		mod360-test.h	\
-		round-test.h	\
-		sp-gradient-test.h	\
-		sp-style-elem-test.h	\
-		style-test.h	\
-                test-helpers.h  \
-		verbs-test.h
+		$(srcdir)/attributes-test.h	\
+		$(srcdir)/color-profile-test.h	\
+		$(srcdir)/MultiPrinter.h  \
+		$(srcdir)/TRPIFormatter.h \
+		$(srcdir)/PylogFormatter.h \
+		$(srcdir)/dir-util-test.h	\
+		$(srcdir)/extract-uri-test.h	\
+		$(srcdir)/mod360-test.h	\
+		$(srcdir)/round-test.h	\
+		$(srcdir)/sp-gradient-test.h	\
+		$(srcdir)/sp-style-elem-test.h	\
+		$(srcdir)/style-test.h	\
+		$(srcdir)/test-helpers.h  \
+		$(srcdir)/verbs-test.h
