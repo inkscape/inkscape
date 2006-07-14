@@ -16,10 +16,10 @@
 
 #include <vector>
 #include <iostream>
+template <class T> class PairingHeap;
+namespace vpsc {
 class Variable;
 class Constraint;
-template <class T> class PairingHeap;
-class StupidPriorityQueue;
 
 class Block
 {
@@ -55,6 +55,7 @@ public:
 	long timeStamp;
 	PairingHeap<Constraint*> *in;
 	PairingHeap<Constraint*> *out;
+	bool isActiveDirectedPathBetween(Variable* u, Variable *v);
 private:
 	typedef enum {NONE, LEFT, RIGHT} Direction;
 	typedef std::pair<double, Constraint*> Pair;
@@ -71,4 +72,5 @@ private:
 	void setUpConstraintHeap(PairingHeap<Constraint*>* &h,bool in);
 };
 
+}
 #endif // SEEN_REMOVEOVERLAP_BLOCK_H

@@ -121,7 +121,7 @@ namespace cola {
 	class ConstrainedMajorizationLayout {
     public:
 		ConstrainedMajorizationLayout(
-                vector<Rectangle*>& rs,
+                vector<vpsc::Rectangle*>& rs,
                 vector<Edge>& es,
 				double* eweights,
                 double idealLength,
@@ -141,7 +141,7 @@ namespace cola {
               straightenEdges(NULL)
         {
             assert(rs.size()==n);
-            boundingBoxes = new Rectangle*[rs.size()];
+            boundingBoxes = new vpsc::Rectangle*[rs.size()];
             copy(rs.begin(),rs.end(),boundingBoxes);
 
             double** D=new double*[n];
@@ -229,7 +229,7 @@ namespace cola {
         double** Dij;
         double tol;
 		TestConvergence& done;
-        Rectangle** boundingBoxes;
+        vpsc::Rectangle** boundingBoxes;
         double *X, *Y;
         Clusters* clusters;
         double edge_length;

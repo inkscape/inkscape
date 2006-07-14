@@ -11,8 +11,8 @@
 
 using namespace std;
 
-typedef vector<Constraint*> Constraints;
-typedef vector<Variable*> Variables;
+typedef vector<vpsc::Constraint*> Constraints;
+typedef vector<vpsc::Variable*> Variables;
 typedef vector<pair<unsigned,double> > OffsetList;
 
 class SimpleConstraint {
@@ -35,7 +35,7 @@ public:
     void* guide;
     double position;
 private:
-    Variable* variable;
+    vpsc::Variable* variable;
 };
 typedef vector<AlignmentConstraint*> AlignmentConstraints;
 
@@ -44,16 +44,16 @@ public:
     PageBoundaryConstraints(double lm, double rm, double w)
         : leftMargin(lm), rightMargin(rm), weight(w) { }
     void createVarsAndConstraints(Variables &vs, Constraints &cs) {
-        Variable* vl, * vr;
+        vpsc::Variable* vl, * vr;
         // create 2 dummy vars, based on the dimension we are in
-        vs.push_back(vl=new Variable(vs.size(), leftMargin, weight));
-        vs.push_back(vr=new Variable(vs.size(), rightMargin, weight));
+        vs.push_back(vl=new vpsc::Variable(vs.size(), leftMargin, weight));
+        vs.push_back(vr=new vpsc::Variable(vs.size(), rightMargin, weight));
 
         // for each of the "real" variables, create a constraint that puts that var
         // between our two new dummy vars, depending on the dimension.
         for(OffsetList::iterator o=offsets.begin(); o!=offsets.end(); ++o)  {
-            cs.push_back(new Constraint(vl, vs[o->first], o->second));
-            cs.push_back(new Constraint(vs[o->first], vr, o->second));
+            cs.push_back(new vpsc::Constraint(vl, vs[o->first], o->second));
+            cs.push_back(new vpsc::Constraint(vs[o->first], vr, o->second));
         }
     }
     OffsetList offsets;
@@ -99,19 +99,19 @@ friend class GradientProjection;
      */
     void setupVPSC(Variables &vars, Constraints &cs) {
         double weight=1;
-        left = new Variable(vars.size(),place_l,weight);
+        left = new vpsc::Variable(vars.size(),place_l,weight);
         vars.push_back(left);
-        right = new Variable(vars.size(),place_r,weight);
+        right = new vpsc::Variable(vars.size(),place_r,weight);
         vars.push_back(right);
         for(CList::iterator cit=leftof.begin();
                 cit!=leftof.end(); ++cit) {
-            Variable* v = vars[(*cit).first];
-            cs.push_back(new Constraint(left,v,(*cit).second)); 
+            vpsc::Variable* v = vars[(*cit).first];
+            cs.push_back(new vpsc::Constraint(left,v,(*cit).second)); 
         }
         for(CList::iterator cit=rightof.begin();
                 cit!=rightof.end(); ++cit) {
-            Variable* v = vars[(*cit).first];
-            cs.push_back(new Constraint(v,right,(*cit).second)); 
+            vpsc::Variable* v = vars[(*cit).first];
+            cs.push_back(new vpsc::Constraint(v,right,(*cit).second)); 
         }
     }
     /**
@@ -163,8 +163,8 @@ friend class GradientProjection;
     }
     double dist; // ideal distance between vars
     double b; // linear coefficient in quad form for left (b_right = -b)
-    Variable* left; // Variables used in constraints
-    Variable* right;
+    vpsc::Variable* left; // Variables used in constraints
+    vpsc::Variable* right;
     double lap2; // laplacian entry
     double g; // descent vec for quad form for left (g_right = -g)
     double old_place_l; // old_place is where the descent vec g was computed
@@ -185,7 +185,7 @@ public:
 		unsigned max_iterations,
         AlignmentConstraints* acs=NULL,
         bool nonOverlapConstraints=false,
-        Rectangle** rs=NULL,
+        vpsc::Rectangle** rs=NULL,
         PageBoundaryConstraints *pbc = NULL,
         SimpleConstraints *sc = NULL)
             : k(k), n(n), A(A), place(x), rs(rs),
@@ -195,18 +195,18 @@ public:
               constrained(false)
     {
         for(unsigned i=0;i<n;i++) {
-            vars.push_back(new Variable(i,1,1));
+            vars.push_back(new vpsc::Variable(i,1,1));
         }
         if(acs) {
             for(AlignmentConstraints::iterator iac=acs->begin();
                     iac!=acs->end();++iac) {
                 AlignmentConstraint* ac=*iac;
-                Variable *v=ac->variable=new Variable(vars.size(),ac->position,0.0001);
+                vpsc::Variable *v=ac->variable=new vpsc::Variable(vars.size(),ac->position,0.0001);
                 vars.push_back(v);
                 for(OffsetList::iterator o=ac->offsets.begin();
                         o!=ac->offsets.end();
                         o++) {
-                    gcs.push_back(new Constraint(v,vars[o->first],o->second,true));
+                    gcs.push_back(new vpsc::Constraint(v,vars[o->first],o->second,true));
                 }
             }
         }
@@ -215,7 +215,7 @@ public:
         }
         if (sc) {
             for(SimpleConstraints::iterator c=sc->begin(); c!=sc->end();++c) {
-                gcs.push_back(new Constraint(
+                gcs.push_back(new vpsc::Constraint(
                         vars[(*c)->left],vars[(*c)->right],(*c)->gap));
             }
         }
@@ -239,8 +239,8 @@ public:
 	unsigned solve(double* b);
     DummyVars dummy_vars; // special vars that must be considered in Lapl.
 private:
-    IncVPSC* setupVPSC();
-    void destroyVPSC(IncVPSC *vpsc);
+    vpsc::IncSolver* setupVPSC();
+    void destroyVPSC(vpsc::IncSolver *vpsc);
     Dim k;
 	unsigned n; // number of actual vars
 	double** A; // Graph laplacian matrix
@@ -250,7 +250,7 @@ private:
     Constraints gcs; /* global constraints - persist throughout all
                                 iterations */
     Constraints lcs; /* local constraints - only for current iteration */
-    Rectangle** rs;
+    vpsc::Rectangle** rs;
     bool nonOverlapConstraints;
     double tolerance;
     AlignmentConstraints* acs;

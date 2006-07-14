@@ -21,6 +21,8 @@
 #define SEEN_REMOVEOVERLAP_SOLVE_VPSC_H
 
 #include <vector>
+
+namespace vpsc {
 class Variable;
 class Constraint;
 class Blocks;
@@ -28,13 +30,13 @@ class Blocks;
 /**
  * Variable Placement with Separation Constraints problem instance
  */
-class VPSC {
+class Solver {
 public:
 	virtual void satisfy();
 	virtual void solve();
 
-	VPSC(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
-	virtual ~VPSC();
+	Solver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
+	virtual ~Solver();
 	Constraint** getConstraints(unsigned &m) { m=this->m; return cs; }
 	const Variable* const * getVariables(unsigned &n) { n=this->n; return vs; }
 protected:
@@ -46,21 +48,22 @@ protected:
 	void printBlocks();
 private:
 	void refine();
-	bool constraintGraphIsCyclic(const unsigned n, Variable *vs[]);
+	bool constraintGraphIsCyclic(const unsigned n, Variable* const vs[]);
 	bool blockGraphIsCyclic();
 };
 
-class IncVPSC : public VPSC {
+class IncSolver : public Solver {
 public:
 	unsigned splitCnt;
 	void satisfy();
 	void solve();
 	void moveBlocks();
 	void splitBlocks();
-	IncVPSC(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
+	IncSolver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
 private:
 	typedef std::vector<Constraint*> ConstraintList;
 	ConstraintList inactive;
 	Constraint* mostViolated(ConstraintList &l);
 };
+}
 #endif // SEEN_REMOVEOVERLAP_SOLVE_VPSC_H

@@ -20,10 +20,12 @@
 using std::set;
 using std::vector;
 
+namespace vpsc {
 std::ostream& operator <<(std::ostream &os, const Rectangle &r) {
 	os << "{"<<r.minX<<","<<r.maxX<<","<<r.minY<<","<<r.maxY<<"},";
 	return os;
 }
+
 Rectangle::Rectangle(double x, double X, double y, double Y) 
 : minX(x),maxX(X),minY(y),maxY(Y) {
 		assert(x<=X);
@@ -300,4 +302,5 @@ int generateYConstraints(const int n, Rectangle** rs, Variable** vars, Constrain
 	cs=new Constraint*[m=constraints.size()];
 	for(i=0;i<m;i++) cs[i]=constraints[i];
 	return m;
+}
 }

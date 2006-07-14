@@ -12,6 +12,7 @@
 
 #include "constraint.h"
 #include <cassert>
+namespace vpsc {
 Constraint::Constraint(Variable *left, Variable *right, double gap, bool equality)
 : left(left),
   right(right),
@@ -44,4 +45,5 @@ std::ostream& operator <<(std::ostream &os, const Constraint &c)
 		os<<*c.left<<"+"<<c.gap<<type<<*c.right<<"("<<c.slack()<<")"<<(c.active?"-active":"");
 	}
 	return os;
+}
 }

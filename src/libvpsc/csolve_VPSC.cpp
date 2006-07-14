@@ -15,6 +15,7 @@
 #include "generate-constraints.h"
 #include "solve_VPSC.h"
 #include "csolve_VPSC.h"
+using namespace vpsc;
 extern "C" {
 Variable* newVariable(int id, double desiredPos, double weight) {
 	return new Variable(id,desiredPos,weight);
@@ -22,11 +23,11 @@ Variable* newVariable(int id, double desiredPos, double weight) {
 Constraint* newConstraint(Variable* left, Variable* right, double gap) {
 	return new Constraint(left,right,gap);
 }
-VPSC* newVPSC(int n, Variable* vs[], int m, Constraint* cs[]) {
-	return new VPSC(n,vs,m,cs);
+Solver* newSolver(int n, Variable* vs[], int m, Constraint* cs[]) {
+	return new Solver(n,vs,m,cs);
 }
-VPSC* newIncVPSC(int n, Variable* vs[], int m, Constraint* cs[]) {
-	return (VPSC*)new IncVPSC(n,vs,m,cs);
+Solver* newIncSolver(int n, Variable* vs[], int m, Constraint* cs[]) {
+	return (Solver*)new vpsc::IncSolver(n,vs,m,cs);
 }
 
 int genXConstraints(int n, boxf* bb, Variable** vs, Constraint*** cs,int transitiveClosure) {
@@ -67,7 +68,7 @@ void deleteConstraint(Constraint* c) {
 void deleteVariable(Variable* v) {
 	delete v;
 }
-void satisfyVPSC(VPSC* vpsc) {
+void satisfyVPSC(Solver* vpsc) {
 	try {
 		vpsc->satisfy();
 	} catch(const char *e) {
@@ -75,17 +76,17 @@ void satisfyVPSC(VPSC* vpsc) {
 		exit(1);
 	}
 }
-int getSplitCnt(IncVPSC *vpsc) {
+int getSplitCnt(IncSolver *vpsc) {
 	return vpsc->splitCnt;
 }
-void deleteVPSC(VPSC *vpsc) {
+void deleteVPSC(Solver *vpsc) {
 	assert(vpsc!=NULL);
 	delete vpsc;
 }
-void solveVPSC(VPSC* vpsc) {
+void solveVPSC(Solver* vpsc) {
 	vpsc->solve();
 }
-void splitIncVPSC(IncVPSC* vpsc) {
+void splitIncVPSC(IncSolver* vpsc) {
 	vpsc->splitBlocks();
 }
 void setVariableDesiredPos(Variable *v, double desiredPos) {

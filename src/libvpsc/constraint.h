@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include "variable.h"
+namespace vpsc {
 
 class Constraint
 {
@@ -53,6 +54,7 @@ static inline bool compareConstraints(Constraint *const &l, Constraint *const &r
 		return false;
 	}
 	return sl < sr;
+}
 }
 
 #endif // SEEN_REMOVEOVERLAP_CONSTRAINT_H

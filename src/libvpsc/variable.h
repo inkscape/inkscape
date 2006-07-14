@@ -12,10 +12,11 @@
 
 #include <vector>
 #include <iostream>
-class Block;
-class Constraint;
 #include "block.h"
 
+namespace vpsc {
+
+class Constraint;
 typedef std::vector<Constraint*> Constraints;
 class Variable
 {
@@ -48,4 +49,5 @@ public:
 		out.clear();
 	}
 };
+}
 #endif // SEEN_REMOVEOVERLAP_VARIABLE_H

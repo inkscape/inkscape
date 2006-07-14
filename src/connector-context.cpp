@@ -9,7 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
  * TODO:
- *  o  Have shapes avoid coonvex hulls of objects, rather than their
+ *  o  Have shapes avoid convex hulls of objects, rather than their
  *     bounding box.  Possibly implement the unfinished ConvexHull
  *     class in libnr.
  *     (HOWEVER, using the convex hull C of a shape S does the wrong thing if a

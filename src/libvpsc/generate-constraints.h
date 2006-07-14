@@ -13,6 +13,7 @@
 #define SEEN_REMOVEOVERLAP_GENERATE_CONSTRAINTS_H
 #include <iostream>
 
+namespace vpsc {
 class Rectangle {	
 	friend std::ostream& operator <<(std::ostream &os, const Rectangle &r);
 public:
@@ -74,5 +75,6 @@ class Constraint;
 int generateXConstraints(const int n, Rectangle** rs, Variable** vars, Constraint** &cs, const bool useNeighbourLists);
 int generateYConstraints(const int n, Rectangle** rs, Variable** vars, Constraint** &cs);
 
+}
 
 #endif // SEEN_REMOVEOVERLAP_GENERATE_CONSTRAINTS_H

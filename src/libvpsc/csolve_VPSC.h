@@ -11,19 +11,26 @@
 #ifndef _CSOLVE_VPSC_H_
 #define _CSOLVE_VPSC_H_
 #ifdef __cplusplus
+class vpsc::Variable;
+class vpsc::Constraint;
+class vpsc::Solver;
+class vpsc::IncSolver;
+using namespace vpsc;
 extern "C" {
-#endif
+#else
 typedef struct Variable Variable;
+typedef struct Constraint Constraint;
+typedef struct Solver Solver;
+typedef struct IncSolver IncSolver;
+#endif
 Variable* newVariable(int id, double desiredPos, double weight);
 void setVariableDesiredPos(Variable *, double desiredPos);
 double getVariablePos(Variable*);
 
-typedef struct Constraint Constraint;
 Constraint* newConstraint(Variable* left, Variable* right, double gap);
 
-typedef struct VPSC VPSC;
-VPSC* newVPSC(int n, Variable* vs[], int m, Constraint* cs[]);
-void deleteVPSC(VPSC*);
+Solver* newSolver(int n, Variable* vs[], int m, Constraint* cs[]);
+void deleteSolver(Solver*);
 void deleteConstraint(Constraint*);
 void deleteVariable(Variable*);
 Constraint** newConstraints(int m);
@@ -42,12 +49,11 @@ int genXConstraints(int n, boxf[], Variable** vs, Constraint*** cs,
 		int transitiveClosure);
 int genYConstraints(int n, boxf[], Variable** vs, Constraint*** cs);
 
-void satisfyVPSC(VPSC*);
-void solveVPSC(VPSC*);
-typedef struct IncVPSC IncVPSC;
-VPSC* newIncVPSC(int n, Variable* vs[], int m, Constraint* cs[]);
-void splitIncVPSC(IncVPSC*);
-int getSplitCnt(IncVPSC *vpsc);
+void satisfyVPSC(Solver*);
+void solveVPSC(Solver*);
+Solver* newIncSolver(int n, Variable* vs[], int m, Constraint* cs[]);
+void splitIncSolver(IncSolver*);
+int getSplitCnt(IncSolver *vpsc);
 #ifdef __cplusplus
 }
 #endif

@@ -19,12 +19,13 @@
 #include <iostream>
 
 using namespace std;
+using namespace vpsc;
 //#define CONMAJ_LOGGING 1
 
-static void dumpVPSCException(char const *str, IncVPSC* vpsc) {
+static void dumpVPSCException(char const *str, IncSolver* solver) {
     cerr<<str<<endl;
     unsigned m;
-    Constraint** cs = vpsc->getConstraints(m);
+    Constraint** cs = solver->getConstraints(m);
     for(unsigned i=0;i<m;i++) {
         cerr << *cs[i] << endl;
     }
@@ -41,9 +42,9 @@ unsigned GradientProjection::solve(double * b) {
 
 	bool converged=false;
 
-    IncVPSC* vpsc=NULL;
+    IncSolver* solver=NULL;
 
-    vpsc = setupVPSC();
+    solver = setupVPSC();
     //cerr << "in gradient projection: n=" << n << endl;
     for (i=0;i<n;i++) {
         assert(!isnan(place[i]));
@@ -51,9 +52,9 @@ unsigned GradientProjection::solve(double * b) {
         vars[i]->desiredPosition=place[i];
     }
     try {
-        vpsc->satisfy();
+        solver->satisfy();
     } catch (char const *str) {
-        dumpVPSCException(str,vpsc);
+        dumpVPSCException(str,solver);
 	}
 
     for (i=0;i<n;i++) {
@@ -104,9 +105,9 @@ unsigned GradientProjection::solve(double * b) {
 
         //project to constraint boundary
         try {
-            vpsc->satisfy();
+            solver->satisfy();
         } catch (char const *str) {
-            dumpVPSCException(str,vpsc);
+            dumpVPSCException(str,solver);
         }
         for (i=0;i<n;i++) {
             place[i]=vars[i]->position();
@@ -155,7 +156,7 @@ unsigned GradientProjection::solve(double * b) {
 			converged=false;
 		}
 	}
-    destroyVPSC(vpsc);
+    destroyVPSC(solver);
 	return counter;
 }
 // Setup an instance of the Variable Placement with Separation Constraints
@@ -164,7 +165,7 @@ unsigned GradientProjection::solve(double * b) {
 // --- that are only relevant to one iteration, and merge these with the
 // global constraint list (including alignment constraints,
 // dir-edge constraints, containment constraints, etc).
-IncVPSC* GradientProjection::setupVPSC() {
+IncSolver* GradientProjection::setupVPSC() {
     Constraint **cs;
     //assert(lcs.size()==0);
     
@@ -192,13 +193,13 @@ IncVPSC* GradientProjection::setupVPSC() {
     }
     cs = new Constraint*[lcs.size() + gcs.size()];
     unsigned m = 0 ;
-    for(Constraints::iterator ci = lcs.begin();ci!=lcs.end();++ci) {
+    for(vector<Constraint*>::iterator ci = lcs.begin();ci!=lcs.end();++ci) {
         cs[m++] = *ci;
     }
-    for(Constraints::iterator ci = gcs.begin();ci!=gcs.end();++ci) {
+    for(vector<Constraint*>::iterator ci = gcs.begin();ci!=gcs.end();++ci) {
         cs[m++] = *ci;
     }
-    return new IncVPSC(vars.size(),vs,m,cs);
+    return new IncSolver(vars.size(),vs,m,cs);
 }
 void GradientProjection::clearDummyVars() {
     for(DummyVars::iterator i=dummy_vars.begin();i!=dummy_vars.end();++i) {
@@ -206,7 +207,7 @@ void GradientProjection::clearDummyVars() {
     }
     dummy_vars.clear();
 }
-void GradientProjection::destroyVPSC(IncVPSC *vpsc) {
+void GradientProjection::destroyVPSC(IncSolver *vpsc) {
     if(acs) {
         for(AlignmentConstraints::iterator ac=acs->begin(); ac!=acs->end();++ac) {
             (*ac)->updatePosition();
@@ -218,7 +219,7 @@ void GradientProjection::destroyVPSC(IncVPSC *vpsc) {
     delete vpsc;
     delete [] cs;
     delete [] vs;
-    for(Constraints::iterator i=lcs.begin();i!=lcs.end();i++) {
+    for(vector<Constraint*>::iterator i=lcs.begin();i!=lcs.end();i++) {
             delete *i;
     }
     lcs.clear();

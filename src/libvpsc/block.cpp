@@ -23,6 +23,7 @@ using std::endl;
 #endif
 using std::vector;
 
+namespace vpsc {
 void Block::addVariable(Variable* const v) {
 	v->block=this;
 	vars->push_back(v);
@@ -346,6 +347,22 @@ void Block::populateSplitBlock(Block *b, Variable* const v, Variable* const u) {
 			populateSplitBlock(b, (*c)->right, v);
 	}
 }
+// Search active constraint tree from u to see if there is a directed path to v.
+// Returns true if path is found with all constraints in path having their visited flag
+// set true.
+bool Block::isActiveDirectedPathBetween(Variable* u, Variable *v) {
+	if(u==v) return true;
+	for (Cit c=u->out.begin();c!=u->out.end();++c) {
+		if(canFollowRight(*c,NULL)) {
+			if(isActiveDirectedPathBetween((*c)->right,v)) {
+				(*c)->visited=true;
+				return true;
+			}
+			(*c)->visited=false;
+		}
+	}
+	return false;
+}
 /**
  * Block needs to be split because of a violated constraint between vl and vr.
  * We need to search the active constraint tree between l and r and find the constraint
@@ -401,4 +418,5 @@ ostream& operator <<(ostream &os, const Block& b)
 		os<<" Deleted!";
 	}
     return os;
+}
 }

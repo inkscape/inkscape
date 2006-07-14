@@ -15,6 +15,8 @@
 #include "libvpsc/generate-constraints.h"
 #include "libvpsc/remove_rectangle_overlap.h"
 
+using vpsc::Rectangle;
+
 /**
 * Takes a list of inkscape items and moves them as little as possible
 * such that rectangular bounding boxes are separated by at least xGap

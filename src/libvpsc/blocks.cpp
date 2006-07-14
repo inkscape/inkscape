@@ -28,6 +28,8 @@ using std::iterator;
 using std::list;
 using std::copy;
 
+namespace vpsc {
+
 long blockTimeCtr;
 
 Blocks::Blocks(const int n, Variable* const vs[]) : vs(vs),nvs(n) {
@@ -194,3 +196,4 @@ double Blocks::cost() {
 	return c;
 }
 
+}

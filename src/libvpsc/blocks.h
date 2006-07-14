@@ -23,6 +23,7 @@
 #include <set>
 #include <list>
 
+namespace vpsc {
 class Block;
 class Variable;
 class Constraint;
@@ -50,4 +51,5 @@ private:
 };
 
 extern long blockTimeCtr;
+}
 #endif // SEEN_REMOVEOVERLAP_BLOCKS_H

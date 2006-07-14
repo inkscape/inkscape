@@ -19,37 +19,35 @@
 #include <sstream>
 #ifdef RECTANGLE_OVERLAP_LOGGING
 #include <fstream>
-using std::ios;
-using std::ofstream;
-using std::endl;
 #endif
+#include <map>
 
-using std::ostringstream;
-using std::list;
-using std::set;
+using namespace std;
+
+namespace vpsc {
 
 static const double ZERO_UPPERBOUND=-0.0000001;
 
-IncVPSC::IncVPSC(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]) 
-	: VPSC(n,vs,m,cs) {
+IncSolver::IncSolver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]) 
+	: Solver(n,vs,m,cs) {
 	inactive.assign(cs,cs+m);
 	for(ConstraintList::iterator i=inactive.begin();i!=inactive.end();++i) {
 		(*i)->active=false;
 	}
 }
-VPSC::VPSC(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]) : m(m), cs(cs), n(n), vs(vs) {
+Solver::Solver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]) : m(m), cs(cs), n(n), vs(vs) {
 	bs=new Blocks(n, vs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	printBlocks();
-	assert(!constraintGraphIsCyclic(n,vs));
+	//assert(!constraintGraphIsCyclic(n,vs));
 #endif
 }
-VPSC::~VPSC() {
+Solver::~Solver() {
 	delete bs;
 }
 
 // useful in debugging
-void VPSC::printBlocks() {
+void Solver::printBlocks() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	for(set<Block*>::iterator i=bs->begin();i!=bs->end();++i) {
@@ -71,7 +69,7 @@ void VPSC::printBlocks() {
 * first) fixing the position of variables inside blocks relative to one
 * another so that constraints internal to the block are satisfied.
 */
-void VPSC::satisfy() {
+void Solver::satisfy() {
 	list<Variable*> *vs=bs->totalOrder();
 	for(list<Variable*>::iterator i=vs->begin();i!=vs->end();++i) {
 		Variable *v=*i;
@@ -93,7 +91,7 @@ void VPSC::satisfy() {
 	delete vs;
 }
 
-void VPSC::refine() {
+void Solver::refine() {
 	bool solved=false;
 	// Solve shouldn't loop indefinately
 	// ... but just to make sure we limit the number of iterations
@@ -137,12 +135,12 @@ void VPSC::refine() {
  * refinement is possible by splitting the block. This is done repeatedly
  * until no further improvement is possible.
  */
-void VPSC::solve() {
+void Solver::solve() {
 	satisfy();
 	refine();
 }
 
-void IncVPSC::solve() {
+void IncSolver::solve() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	f<<"solve_inc()..."<<endl;
@@ -171,7 +169,7 @@ void IncVPSC::solve() {
  * over an active constraint between the two variables.  We choose the 
  * constraint with the most negative lagrangian multiplier. 
  */
-void IncVPSC::satisfy() {
+void IncSolver::satisfy() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	f<<"satisfy_inc()..."<<endl;
@@ -185,6 +183,11 @@ void IncVPSC::satisfy() {
 		if(lb != rb) {
 			lb->merge(rb,v);
 		} else {
+			if(lb->isActiveDirectedPathBetween(v->right,v->left)) {
+				// cycle found, relax the violated, cyclic constraint
+				v->gap = v->slack();
+				continue;
+			}
 			if(splitCtr++>10000) {
 				throw "Cycle Error!";
 			}
@@ -215,7 +218,7 @@ void IncVPSC::satisfy() {
 	printBlocks();
 #endif
 }
-void IncVPSC::moveBlocks() {
+void IncSolver::moveBlocks() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	f<<"moveBlocks()..."<<endl;
@@ -229,7 +232,7 @@ void IncVPSC::moveBlocks() {
 	f<<"  moved blocks."<<endl;
 #endif
 }
-void IncVPSC::splitBlocks() {
+void IncSolver::splitBlocks() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 #endif
@@ -271,7 +274,7 @@ void IncVPSC::splitBlocks() {
  * Scan constraint list for the most violated constraint, or the first equality
  * constraint
  */
-Constraint* IncVPSC::mostViolated(ConstraintList &l) {
+Constraint* IncSolver::mostViolated(ConstraintList &l) {
 	double minSlack = DBL_MAX;
 	Constraint* v=NULL;
 #ifdef RECTANGLE_OVERLAP_LOGGING
@@ -304,15 +307,12 @@ Constraint* IncVPSC::mostViolated(ConstraintList &l) {
 	return v;
 }
 
-#include <map>
-using std::map;
-using std::vector;
 struct node {
 	set<node*> in;
 	set<node*> out;
 };
 // useful in debugging - cycles would be BAD
-bool VPSC::constraintGraphIsCyclic(const unsigned n, Variable *vs[]) {
+bool Solver::constraintGraphIsCyclic(const unsigned n, Variable* const vs[]) {
 	map<Variable*, node*> varmap;
 	vector<node*> graph;
 	for(unsigned i=0;i<n;i++) {
@@ -359,7 +359,7 @@ bool VPSC::constraintGraphIsCyclic(const unsigned n, Variable *vs[]) {
 }
 
 // useful in debugging - cycles would be BAD
-bool VPSC::blockGraphIsCyclic() {
+bool Solver::blockGraphIsCyclic() {
 	map<Block*, node*> bmap;
 	vector<node*> graph;
 	for(set<Block*>::const_iterator i=bs->begin();i!=bs->end();++i) {
@@ -414,4 +414,4 @@ bool VPSC::blockGraphIsCyclic() {
 	}
 	return false;
 }
-
+}

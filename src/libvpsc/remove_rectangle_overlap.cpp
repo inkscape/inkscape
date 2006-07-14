@@ -24,6 +24,7 @@ using std::endl;
 #endif
 
 #define EXTRA_GAP 0.0001
+using namespace vpsc;
 
 double Rectangle::xBorder=0;
 double Rectangle::yBorder=0;
@@ -55,7 +56,7 @@ void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double 
 	for(int i=0;i<n;i++) {
 		oldX[i]=vs[i]->desiredPosition;
 	}
-	VPSC vpsc_x(n,vs,m,cs);
+	Solver vpsc_x(n,vs,m,cs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
 	f<<"Calling VPSC: Horizontal pass 1"<<endl;
@@ -73,7 +74,7 @@ void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double 
 	// one another above are not considered overlapping
 	Rectangle::setXBorder(Rectangle::xBorder-EXTRA_GAP);
 	m=generateYConstraints(n,rs,vs,cs);
-	VPSC vpsc_y(n,vs,m,cs);
+	Solver vpsc_y(n,vs,m,cs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	f.open(LOGFILE,ios::app);
 	f<<"Calling VPSC: Vertical pass"<<endl;
@@ -91,7 +92,7 @@ void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double 
 	delete [] cs;
 	Rectangle::setYBorder(Rectangle::yBorder-EXTRA_GAP);
 	m=generateXConstraints(n,rs,vs,cs,false);
-	VPSC vpsc_x2(n,vs,m,cs);
+	Solver vpsc_x2(n,vs,m,cs);
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	f.open(LOGFILE,ios::app);
 	f<<"Calling VPSC: Horizontal pass 2"<<endl;

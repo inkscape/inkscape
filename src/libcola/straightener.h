@@ -97,7 +97,7 @@ namespace straightener {
         bool dummy;
         double weight;
         bool open;
-        Node(unsigned id, Rectangle* r) :
+        Node(unsigned id, vpsc::Rectangle* r) :
             id(id),x(r->getCentreX()),y(r->getCentreY()), width(r->width()), height(r->height()),
             xmin(x-width/2),xmax(x+width/2),
             ymin(y-height/2),ymax(y+height/2),

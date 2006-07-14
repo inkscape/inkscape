@@ -253,7 +253,7 @@ void ConstrainedMajorizationLayout::straighten(vector<straightener::Edge*>& sedg
         }
     }
 	GradientProjection gp(dim,n,Q,coords,tol,100,
-            (AlignmentConstraints*)NULL,false,(Rectangle**)NULL,(PageBoundaryConstraints*)NULL,&cs);
+            (AlignmentConstraints*)NULL,false,(vpsc::Rectangle**)NULL,(PageBoundaryConstraints*)NULL,&cs);
     constrainedLayout = true;
     majlayout(Dij,&gp,coords,b);
     for(unsigned i=0;i<sedges.size();i++) {
