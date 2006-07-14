@@ -1,3 +1,10 @@
+2006-07-13 Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
+
+	* src/libvpsc/*,
+	  src/graphlayout/graphlayout.cpp:
+	  Toggle on connector toolbar can force connectors with 
+	  end-markers (arrows) to point downwards
+
 2006-07-13  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/libavoid/router.cpp: Fixed a bug in the libavoid function
@@ -9,6 +16,18 @@
 	* src/inkview: Added commandline option capability to inkview and 
 	  got code ready to add a timer for an automatic slideshow capability.
 
+2006-07-12 Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
+
+	* src/libvpsc/*,
+	  src/libcola/*,
+	  src/graphlayout/graphlayout.cpp,
+	  src/removeoverlaps/removeoverlaps.cpp:
+	  Boost graph layout algorithms replaced by custom constraint layout
+	  algorithm (implemented in libcola).  New layout supports constraints
+	  such as downward pointing connectors (directed graph layout) or
+	  non-overlapping shapes.
+	  libvpsc contains updated code for quadratic program solver used by
+	  libcola and removeoverlaps.  Fixes bug #1441411.
 
 2006-07-02  Colin Marquardt  <colin@marquardt-home.de>
 

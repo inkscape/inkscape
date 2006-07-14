@@ -4019,7 +4019,7 @@ sp_connector_toolbox_new(SPDesktop *desktop)
         gtk_button_set_relief       (GTK_BUTTON (tbutton), GTK_RELIEF_NONE);
         gtk_container_add           (GTK_CONTAINER (tbutton), sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, "directed_graph")); 
         gtk_toggle_button_set_mode  (GTK_TOGGLE_BUTTON (tbutton), FALSE);
-        gtk_tooltips_set_tip(tt, tbutton, _("Make connectors point downwards"), NULL);
+        gtk_tooltips_set_tip(tt, tbutton, _("Make connectors with end-markers (arrows) point downwards"), NULL);
 
         gtk_box_pack_start  (GTK_BOX  (tbl), tbutton, FALSE, FALSE, 0);
         g_signal_connect(G_OBJECT(tbutton), "toggled", GTK_SIGNAL_FUNC(sp_directed_graph_layout_toggled), tbl);
