@@ -41,19 +41,18 @@ double Rectangle::yBorder=0;
  *    too much in the first pass.
  */
 void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double yBorder) {
-	assert(0 <= n);
 	try {
 	// The extra gap avoids numerical imprecision problems
 	Rectangle::setXBorder(xBorder+EXTRA_GAP);
 	Rectangle::setYBorder(yBorder+EXTRA_GAP);
 	Variable **vs=new Variable*[n];
-	for(int i=0;i<n;i++) {
+	for(unsigned i=0;i<n;i++) {
 		vs[i]=new Variable(i,0,1);
 	}
 	Constraint **cs;
 	double *oldX = new double[n];
-	int m=generateXConstraints(n,rs,vs,cs,true);
-	for(int i=0;i<n;i++) {
+	unsigned m=generateXConstraints(n,rs,vs,cs,true);
+	for(unsigned i=0;i<n;i++) {
 		oldX[i]=vs[i]->desiredPosition;
 	}
 	Solver vpsc_x(n,vs,m,cs);
@@ -63,10 +62,10 @@ void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double 
 	f.close();
 #endif
 	vpsc_x.solve();
-	for(int i=0;i<n;i++) {
+	for(unsigned i=0;i<n;i++) {
 		rs[i]->moveCentreX(vs[i]->position());
 	}
-	for(int i = 0; i < m; ++i) {
+	for(unsigned i = 0; i < m; ++i) {
 		delete cs[i];
 	}
 	delete [] cs;
@@ -81,12 +80,12 @@ void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double 
 	f.close();
 #endif
 	vpsc_y.solve();
-	for(int i=0;i<n;i++) {
+	for(unsigned i=0;i<n;i++) {
 		rs[i]->moveCentreY(vs[i]->position());
 		rs[i]->moveCentreX(oldX[i]);
 	}
 	delete [] oldX;
-	for(int i = 0; i < m; ++i) {
+	for(unsigned i = 0; i < m; ++i) {
 		delete cs[i];
 	}
 	delete [] cs;
@@ -99,18 +98,18 @@ void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double 
 	f.close();
 #endif
 	vpsc_x2.solve();
-	for(int i = 0; i < m; ++i) {
+	for(unsigned i = 0; i < m; ++i) {
 		delete cs[i];
 	}
 	delete [] cs;
-	for(int i=0;i<n;i++) {
+	for(unsigned i=0;i<n;i++) {
 		rs[i]->moveCentreX(vs[i]->position());
 		delete vs[i];
 	}
 	delete [] vs;
 	} catch (char const *str) {
 		std::cerr<<str<<std::endl;
-		for(int i=0;i<n;i++) {
+		for(unsigned i=0;i<n;i++) {
 			std::cerr << *rs[i]<<std::endl;
 		}
 	}

@@ -92,7 +92,6 @@ void graphlayout(GSList const *const items) {
 		minX=min(ll[0],minX); minY=min(ll[1],minY);
 	        maxX=max(ur[0],maxX); maxY=max(ur[1],maxY);
 		nodelookup[u->id]=rs.size();
-		cout << "Node " << rs.size() << endl;
 		rs.push_back(new Rectangle(ll[0],ur[0],ll[1],ur[1]));
 	}
 
@@ -106,12 +105,10 @@ void graphlayout(GSList const *const items) {
 		       	"avoidoverlaplayout");
 	bool avoid_overlaps = false;
 	bool directed = false;
-        if (directed_str && !strcmp(directed_str, "true")) {
-            cout << "Directed layout requested.\n";
+    if (directed_str && !strcmp(directed_str, "true")) {
 	    directed = true;
 	}
-        if (overlaps_str && !strcmp(overlaps_str, "true")) {
-            cout << "Avoid overlaps requested.\n";
+    if (overlaps_str && !strcmp(overlaps_str, "true")) {
 	    avoid_overlaps = true;
 	}
 
@@ -143,11 +140,10 @@ void graphlayout(GSList const *const items) {
 			map<string,unsigned>::iterator v_pair=nodelookup.find(iv->id);
 			if(v_pair!=nodelookup.end()) {
 				unsigned v=v_pair->second;
-				cout << "Edge: (" << u <<","<<v<<")"<<endl;
+				//cout << "Edge: (" << u <<","<<v<<")"<<endl;
 				es.push_back(make_pair(u,v));
 				if(conn->style->marker[SP_MARKER_LOC_END].set) {
 					if(directed && strcmp(conn->style->marker[SP_MARKER_LOC_END].value,"none")) {
-						cout << conn->style->marker[SP_MARKER_LOC_END].value << endl;
 						scy.push_back(new SimpleConstraint(v, u, 
                                     (ideal_connector_length * directed_edge_height_modifier)));
 					}
@@ -158,8 +154,8 @@ void graphlayout(GSList const *const items) {
 			g_slist_free(nlist);
 		}
 	}
-	double width=maxX-minX;
-	double height=maxY-minY;
+	//double width=maxX-minX;
+	//double height=maxY-minY;
 	const unsigned E = es.size();
 	double eweights[E];
 	fill(eweights,eweights+E,1);

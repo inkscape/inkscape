@@ -35,9 +35,11 @@ matrix_times_vector(valarray<double> const &matrix, /* m * n */
     }
 }
 
+/*
 static double Linfty(valarray<double> const &vec) {
     return std::max(vec.max(), -vec.min());
 }
+*/
 
 double
 inner(valarray<double> const &x, 
