@@ -31,6 +31,10 @@
 # include "config.h"
 #endif
 
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#endif
+
 #include <string.h>
 #include <sys/stat.h>
 #include <locale.h>
