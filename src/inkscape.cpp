@@ -1401,6 +1401,14 @@ inkscape_get_menus (Inkscape::Application * inkscape)
     return repr->firstChild();
 }
 
+void
+inkscape_get_all_desktops(std::list< SPDesktop* >& listbuf)
+{
+    for(GSList* l = inkscape->desktops; l != NULL; l = l->next) {
+        listbuf.push_back(static_cast< SPDesktop* >(l->data));
+    }
+}
+
 
 
 /*

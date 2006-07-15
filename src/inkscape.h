@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <list>
 #include <glib/gtypes.h>
 
 struct SPDesktop;
@@ -54,8 +55,10 @@ bool inkscape_is_sole_desktop_for_document(SPDesktop const &desktop);
 gchar *homedir_path(const char *filename);
 gchar *profile_path(const char *filename);
 
+/* Inkscape desktop stuff */
 void inkscape_switch_desktops_next ();
 void inkscape_switch_desktops_prev ();
+void inkscape_get_all_desktops (std::list< SPDesktop* >& listbuf);
 
 void inkscape_dialogs_hide ();
 void inkscape_dialogs_unhide ();
