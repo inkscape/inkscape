@@ -184,7 +184,7 @@ main (int argc, const char **argv)
         switch(option) {
 	    case 't': // for timer
                 // fprintf(stderr, "set timer arg %s\n", optarg );
-	        ss.timer = int(optarg);	
+	        ss.timer = atoi(optarg);	
 	        num_parsed_options += 2; // 2 because of flag + option
                 break;
             case '?':
