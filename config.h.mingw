@@ -27,6 +27,7 @@
 
 #define PACKAGE_STRING                VERSION
 
+#define HAVE_GETOPT_H                 1
 #define HAVE_STRING_H                 1
 #define HAVE_LIBINTL_H                1
 #define HAVE_MALLOC_H                 1
