@@ -76,8 +76,6 @@ void graphlayout(GSList const *const items) {
 	//Check 2 or more selected objects
 	if (n < 2) return;
 
-	double minX=DBL_MAX, minY=DBL_MAX, maxX=-DBL_MAX, maxY=-DBL_MAX;
-
 	map<string,unsigned> nodelookup;
 	vector<Rectangle*> rs;
 	vector<Edge> es;
@@ -89,8 +87,6 @@ void graphlayout(GSList const *const items) {
 		NR::Rect const item_box(sp_item_bbox_desktop(u));
 		NR::Point ll(item_box.min());
 		NR::Point ur(item_box.max());
-		minX=min(ll[0],minX); minY=min(ll[1],minY);
-	        maxX=max(ur[0],maxX); maxY=max(ur[1],maxY);
 		nodelookup[u->id]=rs.size();
 		rs.push_back(new Rectangle(ll[0],ur[0],ll[1],ur[1]));
 	}
@@ -140,7 +136,7 @@ void graphlayout(GSList const *const items) {
 			map<string,unsigned>::iterator v_pair=nodelookup.find(iv->id);
 			if(v_pair!=nodelookup.end()) {
 				unsigned v=v_pair->second;
-				//cout << "Edge: (" << u <<","<<v<<")"<<endl;
+				cout << "Edge: (" << u <<","<<v<<")"<<endl;
 				es.push_back(make_pair(u,v));
 				if(conn->style->marker[SP_MARKER_LOC_END].set) {
 					if(directed && strcmp(conn->style->marker[SP_MARKER_LOC_END].value,"none")) {
@@ -154,16 +150,25 @@ void graphlayout(GSList const *const items) {
 			g_slist_free(nlist);
 		}
 	}
-	//double width=maxX-minX;
-	//double height=maxY-minY;
 	const unsigned E = es.size();
 	double eweights[E];
 	fill(eweights,eweights+E,1);
-
-	ConstrainedMajorizationLayout alg(rs,es,eweights,ideal_connector_length);
-	alg.setupConstraints(NULL,NULL,avoid_overlaps,
-			NULL,NULL,NULL,&scy,NULL,NULL);
-	alg.run();
+    vector<Component*> cs;
+    connectedComponents(rs,es,cs);
+    for(unsigned i=0;i<cs.size();i++) {
+        Component* c=cs[i];
+		printf("Component %d:\n",i);
+		for(unsigned j=0;j<c->edges.size();j++) {
+			Edge& e=c->edges[j];
+			printf("(%d,%d) ",e.first,e.second);
+		}
+        if(c->edges.size()<2) continue;
+		cout << endl;
+        ConstrainedMajorizationLayout alg(c->rects,c->edges,eweights,ideal_connector_length);
+        alg.setupConstraints(NULL,NULL,avoid_overlaps,
+                NULL,NULL,NULL,&scy,NULL,NULL);
+        alg.run();
+    }
 	
 	for (list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();

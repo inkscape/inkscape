@@ -17,8 +17,23 @@
 typedef vector<unsigned> Cluster;
 typedef vector<Cluster*> Clusters;
 
+using vpsc::Rectangle;
+
 namespace cola {
     typedef pair<unsigned, unsigned> Edge;
+
+    // a graph component with a list of node_ids giving indices for some larger list of nodes
+    // for the nodes in this component, and a list of edges - node indices relative to this component
+    struct Component {
+        vector<unsigned> node_ids;
+        vector<Rectangle*> rects;
+        vector<Edge> edges;
+    };
+    // for a graph of n nodes, return connected components
+    void connectedComponents(
+            vector<Rectangle*> &rs,
+            vector<Edge> &es, 
+            vector<Component*> &components);
 
     // defines references to three variables for which the goal function
     // will be altered to prefer points u-b-v are in a linear arrangement
@@ -121,7 +136,7 @@ namespace cola {
 	class ConstrainedMajorizationLayout {
     public:
 		ConstrainedMajorizationLayout(
-                vector<vpsc::Rectangle*>& rs,
+                vector<Rectangle*>& rs,
                 vector<Edge>& es,
 				double* eweights,
                 double idealLength,
@@ -141,7 +156,7 @@ namespace cola {
               straightenEdges(NULL)
         {
             assert(rs.size()==n);
-            boundingBoxes = new vpsc::Rectangle*[rs.size()];
+            boundingBoxes = new Rectangle*[rs.size()];
             copy(rs.begin(),rs.end(),boundingBoxes);
 
             double** D=new double*[n];
@@ -229,7 +244,7 @@ namespace cola {
         double** Dij;
         double tol;
 		TestConvergence& done;
-        vpsc::Rectangle** boundingBoxes;
+        Rectangle** boundingBoxes;
         double *X, *Y;
         Clusters* clusters;
         double edge_length;
