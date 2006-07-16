@@ -14,6 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtkmm.h>
 #include <glib/gslist.h>
 #include <gtk/gtkwidget.h>
 
@@ -36,7 +37,7 @@ namespace Inkscape {
  * Creates a new Inkscape document and window.
  * Return value is a pointer to the newly created desktop.
  */
-SPDesktop* sp_file_new (const gchar *templ);
+SPDesktop* sp_file_new (const Glib::ustring &templ);
 SPDesktop* sp_file_new_default (void);
 
 /*######################
@@ -56,9 +57,11 @@ void sp_file_exit (void);
  * Opens a new file and window from the given URI
  */
 bool sp_file_open(
-  const gchar *uri, Inkscape::Extension::Extension *key,
-  bool add_to_recent = true, bool replace_empty = true
-  );
+    const Glib::ustring &uri,
+    Inkscape::Extension::Extension *key,
+    bool add_to_recent = true,
+    bool replace_empty = true
+    );
 
 /**
  * Displays a file open dialog. Calls sp_file_open on
@@ -90,10 +93,10 @@ bool sp_file_save_as (gpointer object, gpointer data);
  *  Saves the given document.  Displays a file select dialog
  *  if needed.
  */
-gboolean sp_file_save_document (SPDocument *document);
+bool sp_file_save_document (SPDocument *document);
 
 /* Do the saveas dialog with a document as the parameter */
-gboolean sp_file_save_dialog (SPDocument *doc);
+bool sp_file_save_dialog (SPDocument *doc);
 
 
 /*######################
@@ -109,7 +112,8 @@ void sp_file_import (GtkWidget * widget);
 /**
  * Imports a resource
  */
-void file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension *key);
+void file_import(SPDocument *in_doc, const Glib::ustring &uri,
+                 Inkscape::Extension::Extension *key);
 
 /*######################
 ## E X P O R T

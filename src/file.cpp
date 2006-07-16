@@ -66,13 +66,6 @@
 #include "jabber_whiteboard/session-manager.h"
 #endif
 
-/**
- * 'Current' paths.  Used to remember which directory
- * had the last file accessed.
- * Static globals are evil.  This will be gone soon
- * as C++ification continues
- */
-static gchar *import_path = NULL;
 
 //#define INK_DUMP_FILENAME_CONV 1
 #undef INK_DUMP_FILENAME_CONV
@@ -92,9 +85,9 @@ void dump_ustr(Glib::ustring const &ustr);
  * Create a blank document and add it to the desktop
  */
 SPDesktop*
-sp_file_new(gchar const *templ)
+sp_file_new(const Glib::ustring &templ)
 {
-    SPDocument *doc = sp_document_new(templ, TRUE, true);
+    SPDocument *doc = sp_document_new(templ.c_str(), TRUE, true);
     g_return_val_if_fail(doc != NULL, NULL);
 
     SPDesktop *dt;
@@ -167,11 +160,13 @@ sp_file_exit()
  *  will replace the empty one.
  */
 bool
-sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_recent, bool replace_empty)
+sp_file_open(const Glib::ustring &uri,
+             Inkscape::Extension::Extension *key,
+             bool add_to_recent, bool replace_empty)
 {
-    SPDocument *doc;
+    SPDocument *doc = NULL;
     try {
-        doc = Inkscape::Extension::open(key, uri);
+        doc = Inkscape::Extension::open(key, uri.c_str());
     } catch (Inkscape::Extension::Input::no_extension_found &e) {
         doc = NULL;
     } catch (Inkscape::Extension::Input::open_failed &e) {
@@ -212,7 +207,7 @@ sp_file_open(gchar const *uri, Inkscape::Extension::Extension *key, bool add_to_
 
         return TRUE;
     } else {
-        gchar *safeUri = Inkscape::IO::sanitizeString(uri);
+        gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
         gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), safeUri);
         sp_ui_error_dialog(text);
         g_free(text);
@@ -361,134 +356,86 @@ static Inkscape::UI::Dialog::FileOpenDialog *openDialogInstance = NULL;
 void
 sp_file_open_dialog(gpointer object, gpointer data)
 {
-    gchar *open_path2 = NULL;
 
-    gchar *open_path = g_strdup(prefs_get_string_attribute("dialogs.open", "path"));
-    if (open_path != NULL && open_path[0] == '\0') {
-        g_free(open_path);
-        open_path = NULL;
-    }
-    if (open_path && !Inkscape::IO::file_test(open_path, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
-        g_free(open_path);
-        open_path = NULL;
-    }
-    if (open_path == NULL)
-        open_path = g_strconcat(g_get_home_dir(), G_DIR_SEPARATOR_S, NULL);
+    //# Get the current directory for finding files
+    Glib::ustring open_path;
+    char *attr = (char *)prefs_get_string_attribute("dialogs.open", "path");
+    if (attr)
+        open_path = attr;
 
+
+    //# Test if the open_path directory exists  
+    if (!Inkscape::IO::file_test(open_path.c_str(),
+              (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+        open_path = "";
+
+    //# If no open path, default to our home directory
+    if (open_path.size() < 1)
+        {
+        open_path = g_get_home_dir();
+        open_path.append(G_DIR_SEPARATOR_S);
+        }
+
+    //# Create a dialog if we don't already have one
     if (!openDialogInstance) {
         openDialogInstance =
               Inkscape::UI::Dialog::FileOpenDialog::create(
-                 (char const *)open_path,
+                 open_path,
                  Inkscape::UI::Dialog::SVG_TYPES,
                  (char const *)_("Select file to open"));
     }
+
+    //# Show the dialog
     bool const success = openDialogInstance->show();
-    gchar *fileName = ( success
-                        ? g_strdup(openDialogInstance->getFilename())
-                        : NULL );
+    if (!success)
+        return;
+
+    //# User selected something.  Get name and type
+    Glib::ustring fileName = openDialogInstance->getFilename();
     Inkscape::Extension::Extension *selection =
             openDialogInstance->getSelectionType();
-    g_free(open_path);
 
-    if (!success) return;
+    //# Code to check & open iff multiple files.
+    std::vector<Glib::ustring> flist=openDialogInstance->getFilenames();
 
-    // Code to check & open iff multiple files.
-    Glib::SListHandle<Glib::ustring> flist=openDialogInstance->getFilenames();
-    GSList *list=flist.data();
-
-    if(g_slist_length(list)>1)
-    {
-        gchar *fileName=NULL;
-
-        while(list!=NULL)
+    //# Iterate through filenames if more than 1
+    if (flist.size() > 1)
         {
-
-#ifdef INK_DUMP_FILENAME_CONV
-            g_message(" FileName: %s",(const char *)list->data);
-#endif
-
-            fileName=(gchar *)g_strdup((gchar *)list->data);
-
-            if (fileName && !g_file_test(fileName,G_FILE_TEST_IS_DIR)) {
-                gsize bytesRead = 0;
-                gsize bytesWritten = 0;
-                GError *error = NULL;
-#ifdef INK_DUMP_FILENAME_CONV
-                dump_str( fileName, "A file pre  is " );
-#endif
-                gchar *newFileName = g_filename_to_utf8(fileName,
-                                                -1,
-                                                        &bytesRead,
-                                                        &bytesWritten,
-                                                        &error);
-                if ( newFileName != NULL ) {
-                    g_free(fileName);
-                    fileName = newFileName;
-#ifdef INK_DUMP_FILENAME_CONV
-                    dump_str( fileName, "A file post is " );
-#endif
-                } else {
-                    // TODO: bulia, please look over
-                    g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
-                }
-
-#ifdef INK_DUMP_FILENAME_CONV
-                g_message("Opening File %s\n",fileName);
-#endif
-
-                sp_file_open(fileName, selection);
-                g_free(fileName);
-            }
-            else
+        for (unsigned int i=1 ; i<flist.size() ; i++)
             {
-                g_message("Cannot Open Directory %s\n",fileName);
+            Glib::ustring fName = flist[i];
+
+            if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
+            Glib::ustring newFileName = Glib::filename_to_utf8(fName);
+            if ( newFileName.size() > 0 )
+                fName = newFileName;
+            else
+                g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
+
+#ifdef INK_DUMP_FILENAME_CONV
+            g_message("Opening File %s\n",fileName);
+#endif
+            sp_file_open(fileName, selection);
             }
-
-            list=list->next;
         }
-
         return;
     }
 
 
-    if (fileName) {
-        gsize bytesRead = 0;
-        gsize bytesWritten = 0;
-        GError *error = NULL;
-#ifdef INK_DUMP_FILENAME_CONV
-        dump_str( fileName, "A file pre  is " );
-#endif
-        gchar *newFileName = g_filename_to_utf8(fileName,
-                                                -1,
-                                                &bytesRead,
-                                                &bytesWritten,
-                                                &error);
-        if ( newFileName != NULL ) {
-            g_free(fileName);
+    if (fileName.size() > 0) {
+
+        Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+
+        if ( newFileName.size() > 0)
             fileName = newFileName;
-#ifdef INK_DUMP_FILENAME_CONV
-            dump_str( fileName, "A file post is " );
-#endif
-        } else {
-            // TODO: bulia, please look over
+        else
             g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
-        }
 
-
-        if ( !g_utf8_validate(fileName, -1, NULL) ) {
-            // TODO: bulia, please look over
-            g_warning( "INPUT FILENAME IS NOT UTF-8" );
-        }
-
-
-        open_path = g_dirname(fileName);
-        open_path2 = g_strconcat(open_path, G_DIR_SEPARATOR_S, NULL);
-        prefs_set_string_attribute("dialogs.open", "path", open_path2);
-        g_free(open_path);
-        g_free(open_path2);
+        open_path = fileName;
+        open_path.append(G_DIR_SEPARATOR_S);
+        prefs_set_string_attribute("dialogs.open", "path", open_path.c_str());
 
         sp_file_open(fileName, selection);
-        g_free(fileName);
     }
 
     return;
@@ -536,17 +483,18 @@ sp_file_vacuum()
  * This 'save' function called by the others below
  */
 static bool
-file_save(SPDocument *doc, gchar const *uri, Inkscape::Extension::Extension *key, bool saveas)
+file_save(SPDocument *doc, const Glib::ustring &uri,
+          Inkscape::Extension::Extension *key, bool saveas)
 {
-    if (!doc || !uri) //Safety check
-        return FALSE;
+    if (!doc || uri.size()<1) //Safety check
+        return false;
 
     try {
-        Inkscape::Extension::save(key, doc, uri,
-                                  saveas && prefs_get_int_attribute("dialogs.save_as", "append_extension", 1),
-                                  saveas, TRUE); // save officially, with inkscape: attributes set
+        Inkscape::Extension::save(key, doc, uri.c_str(),
+                 saveas && prefs_get_int_attribute("dialogs.save_as", "append_extension", 1),
+                 saveas, TRUE); // save officially, with inkscape: attributes set
     } catch (Inkscape::Extension::Output::no_extension_found &e) {
-        gchar *safeUri = Inkscape::IO::sanitizeString(uri);
+        gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
         gchar *text = g_strdup_printf(_("No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."), safeUri);
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
         sp_ui_error_dialog(text);
@@ -554,7 +502,7 @@ file_save(SPDocument *doc, gchar const *uri, Inkscape::Extension::Extension *key
         g_free(safeUri);
         return FALSE;
     } catch (Inkscape::Extension::Output::save_failed &e) {
-        gchar *safeUri = Inkscape::IO::sanitizeString(uri);
+        gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
         gchar *text = g_strdup_printf(_("File %s could not be saved."), safeUri);
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Document not saved."));
         sp_ui_error_dialog(text);
@@ -566,162 +514,134 @@ file_save(SPDocument *doc, gchar const *uri, Inkscape::Extension::Extension *key
     }
 
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Document saved."));
-    return TRUE;
+    return true;
 }
+
+
+
+
 
 static Inkscape::UI::Dialog::FileSaveDialog *saveDialogInstance = NULL;
 
 /**
  *  Display a SaveAs dialog.  Save the document if OK pressed.
  */
-gboolean
+bool
 sp_file_save_dialog(SPDocument *doc)
 {
-    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-    gchar const *default_extension = NULL;
-    gchar *save_loc;
-    Inkscape::Extension::Output *extension;
-    gchar *save_path = NULL;
 
-    default_extension = repr->attribute("inkscape:output_extension");
-    if (default_extension == NULL) {
-        default_extension = prefs_get_string_attribute("dialogs.save_as", "default");
-    }
-    //g_warning("%s: extension name: '%s'", __FUNCTION__, default_extension);
+    Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+
+    Inkscape::Extension::Output *extension;
+
+    //# Get the default extension name
+    Glib::ustring default_extension;
+    char *attr = (char *)repr->attribute("inkscape:output_extension");
+    if (!attr)
+        attr = (char *)prefs_get_string_attribute("dialogs.save_as", "default");
+    if (attr)
+        default_extension = attr;
+    //g_message("%s: extension name: '%s'", __FUNCTION__, default_extension);
+
+    Glib::ustring save_path;
+    Glib::ustring save_loc;
 
     if (doc->uri == NULL) {
+        char formatBuf[256];
         int i = 1;
-        char const *filename_extension;
-        char *temp_filename;
 
-        extension = dynamic_cast<Inkscape::Extension::Output *>(Inkscape::Extension::db.get(default_extension));
+        Glib::ustring filename_extension = ".svg";
+        extension = dynamic_cast<Inkscape::Extension::Output *>
+              (Inkscape::Extension::db.get(default_extension.c_str()));
         //g_warning("%s: extension ptr: 0x%x", __FUNCTION__, (unsigned int)extension);
-        if (extension == NULL) {
-            filename_extension = ".svg";
-        } else {
+        if (extension)
             filename_extension = extension->get_extension();
-        }
 
-        save_path = g_strdup(prefs_get_string_attribute("dialogs.save_as", "path"));
-        if (save_path != NULL && save_path[0] == '\0') {
-            g_free(save_path);
-            save_path = NULL;
-        }
-        if (save_path && !Inkscape::IO::file_test(save_path, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
-            g_free(save_path);
-            save_path = NULL;
-        }
-        if (save_path == NULL)
-            save_path = g_strdup(g_get_home_dir());
-        temp_filename = g_strdup_printf(_("drawing%s"), filename_extension);
-        save_loc = g_build_filename(save_path, temp_filename, NULL);
-        g_free(temp_filename);
+        attr = (char *)prefs_get_string_attribute("dialogs.save_as", "path");
+        if (attr)
+            save_path = attr;
 
-        while (Inkscape::IO::file_test(save_loc, G_FILE_TEST_EXISTS)) {
-            g_free(save_loc);
-            temp_filename = g_strdup_printf(_("drawing-%d%s"), i++, filename_extension);
-            save_loc = g_build_filename(save_path, temp_filename, NULL);
-            g_free(temp_filename);
+        if (!Inkscape::IO::file_test(save_path.c_str(),
+              (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+            save_path = "";
+
+        if (save_path.size()<1)
+            save_path = g_get_home_dir();
+
+        save_loc = save_path;
+        save_loc.append(G_DIR_SEPARATOR_S);
+        snprintf(formatBuf, 255, _("drawing%s"), filename_extension.c_str());
+        save_loc.append(formatBuf);
+
+        while (Inkscape::IO::file_test(save_loc.c_str(), G_FILE_TEST_EXISTS)) {
+            save_loc = save_path;
+            save_loc.append(G_DIR_SEPARATOR_S);
+            snprintf(formatBuf, 255, _("drawing-%d%s"), i++, filename_extension.c_str());
+            save_loc.append(formatBuf);
         }
     } else {
-        save_loc = g_path_get_dirname(doc->uri); /* \todo should use a getter */
+        save_loc = Glib::path_get_dirname(doc->uri);
     }
 
-    { // convert save_loc from utf-8 to locale
-      // is this needed any more, now that everything is handled in
-      // Inkscape::IO?
-        gsize bytesRead = 0;
-        gsize bytesWritten = 0;
-        GError* error = NULL;
-#ifdef INK_DUMP_FILENAME_CONV
-        dump_str( save_loc, "B file pre  is " );
-#endif
-        gchar* save_loc_local = g_filename_from_utf8( save_loc, -1, &bytesRead, &bytesWritten, &error);
+    // convert save_loc from utf-8 to locale
+    // is this needed any more, now that everything is handled in
+    // Inkscape::IO?
+    Glib::ustring save_loc_local = Glib::filename_from_utf8(save_loc);
 
-        if ( save_loc_local != NULL ) {
-            g_free(save_loc);
-            save_loc = save_loc_local;
-#ifdef INK_DUMP_FILENAME_CONV
-            dump_str( save_loc, "B file post is " );
-#endif
-        } else {
-            //g_warning( "Error converting save filename stored in the file to locale encoding.");
-        }
-    }
+    if ( save_loc_local.size() > 0) 
+        save_loc = save_loc_local;
 
-    if (!saveDialogInstance) {
+    //# Show the SaveAs dialog
+    if (!saveDialogInstance)
         saveDialogInstance =
              Inkscape::UI::Dialog::FileSaveDialog::create(
-                 (char const *) save_loc,
+                 save_loc,
                  Inkscape::UI::Dialog::SVG_TYPES,
                  (char const *) _("Select file to save to"),
                  default_extension
             );
-    } // FIXME: else (i.e. if reshowing an already shown dialog) save_loc is not used, it thus always displays the previously opened dir
+
     bool success = saveDialogInstance->show();
-    char *fileName = ( success
-                       ? g_strdup(saveDialogInstance->getFilename())
-                       : NULL );
+    if (!success)
+        return success;
+
+    Glib::ustring fileName = saveDialogInstance->getFilename();
+
     Inkscape::Extension::Extension *selectionType =
         saveDialogInstance->getSelectionType();
-    g_free(save_loc);
-    g_free(save_path);
-    if (!success) {
-        return success;
-    }
 
-    if (fileName && *fileName) {
-        gsize bytesRead = 0;
-        gsize bytesWritten = 0;
-        GError *error = NULL;
-#ifdef INK_DUMP_FILENAME_CONV
-        dump_str( fileName, "C file pre  is " );
-#endif
-        gchar *newFileName = g_filename_to_utf8(fileName,
-                                                -1,
-                                                &bytesRead,
-                                                &bytesWritten,
-                                                &error);
-        if ( newFileName != NULL ) {
-            g_free(fileName);
+
+    if (fileName.size() > 0) {
+        Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+
+        if ( newFileName.size()>0 )
             fileName = newFileName;
-#ifdef INK_DUMP_FILENAME_CONV
-            dump_str( fileName, "C file post is " );
-#endif
-        } else {
+        else
             g_warning( "Error converting save filename to UTF-8." );
-        }
-
-        if (!g_utf8_validate(fileName, -1, NULL)) {
-            // TODO: bulia, please look over
-            g_warning( "The filename is not UTF-8." );
-        }
 
         success = file_save(doc, fileName, selectionType, TRUE);
 
-        if (success) {
+        if (success)
             prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
-        }
 
-        save_path = g_dirname(fileName);
-        prefs_set_string_attribute("dialogs.save_as", "path", save_path);
-        g_free(save_path);
+        save_path = fileName;
+        prefs_set_string_attribute("dialogs.save_as", "path", save_path.c_str());
 
-        g_free(fileName);
         return success;
-    } else {
-        return FALSE;
     }
+
+
+    return false;
 }
 
 
 /**
  * Save a document, displaying a SaveAs dialog if necessary.
  */
-gboolean
+bool
 sp_file_save_document(SPDocument *doc)
 {
-    gboolean success = TRUE;
+    bool success = true;
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
 
@@ -782,14 +702,15 @@ sp_file_save_as(gpointer object, gpointer data)
  *  Import a resource.  Called by sp_file_import()
  */
 void
-file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension *key)
+file_import(SPDocument *in_doc, const Glib::ustring &uri,
+               Inkscape::Extension::Extension *key)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     //DEBUG_MESSAGE( fileImport, "file_import( in_doc:%p uri:[%s], key:%p", in_doc, uri, key );
     SPDocument *doc;
     try {
-        doc = Inkscape::Extension::open(key, uri);
+        doc = Inkscape::Extension::open(key, uri.c_str());
     } catch (Inkscape::Extension::Input::no_extension_found &e) {
         doc = NULL;
     } catch (Inkscape::Extension::Input::open_failed &e) {
@@ -900,7 +821,7 @@ file_import(SPDocument *in_doc, gchar const *uri, Inkscape::Extension::Extension
                          /* TODO: annotate */ "file.cpp:900");
 
     } else {
-        gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), uri);
+        gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), uri.c_str());
         sp_ui_error_dialog(text);
         g_free(text);
     }
@@ -917,6 +838,8 @@ static Inkscape::UI::Dialog::FileOpenDialog *importDialogInstance = NULL;
 void
 sp_file_import(GtkWidget *widget)
 {
+    static Glib::ustring import_path;
+
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     if (!doc)
         return;
@@ -924,53 +847,35 @@ sp_file_import(GtkWidget *widget)
     if (!importDialogInstance) {
         importDialogInstance =
              Inkscape::UI::Dialog::FileOpenDialog::create(
-                 (char const *)import_path,
+                 import_path,
                  Inkscape::UI::Dialog::IMPORT_TYPES,
                  (char const *)_("Select file to import"));
     }
+
     bool success = importDialogInstance->show();
-    char *fileName = ( success
-                       ? g_strdup(importDialogInstance->getFilename())
-                       : NULL );
+    if (!success)
+        return;
+
+    //# Get file name and extension type
+    Glib::ustring fileName = importDialogInstance->getFilename();
     Inkscape::Extension::Extension *selection =
         importDialogInstance->getSelectionType();
 
-    if (!success) return;
-    if (fileName) {
-        gsize bytesRead = 0;
-        gsize bytesWritten = 0;
-        GError *error = NULL;
-#ifdef INK_DUMP_FILENAME_CONV
-        dump_str( fileName, "D file pre  is " );
-#endif
-        gchar *newFileName = g_filename_to_utf8( fileName,
-                                                 -1,
-                                                 &bytesRead,
-                                                 &bytesWritten,
-                                                 &error);
-        if ( newFileName != NULL ) {
-            g_free(fileName);
+
+    if (fileName.size() > 0) {
+ 
+        Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+
+        if ( newFileName.size() > 0)
             fileName = newFileName;
-#ifdef INK_DUMP_FILENAME_CONV
-            dump_str( fileName, "D file post is " );
-#endif
-        } else {
-            // TODO: bulia, please look over
+        else
             g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
-        }
 
-
-        if (!g_utf8_validate(fileName, -1, NULL)) {
-            // TODO: bulia, please look over
-            g_warning( "INPUT FILENAME IS NOT UTF-8" );
-        }
-
-        g_free(import_path);
-        import_path = g_dirname(fileName);
-        if (import_path) import_path = g_strconcat(import_path, G_DIR_SEPARATOR_S, NULL);
+        import_path = fileName;
+        if (import_path.size()>0)
+            import_path.append(G_DIR_SEPARATOR_S);
 
         file_import(doc, fileName, selection);
-        g_free(fileName);
     }
 
     return;
