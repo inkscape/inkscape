@@ -5,7 +5,7 @@
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
- * Copyright (C) 2004 The Inkscape Organization
+ * Copyright (C) 2004-2006 The Inkscape Organization
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -736,9 +736,9 @@ public:
 
     Inkscape::Extension::Extension *getSelectionType();
 
-    gchar *getFilename();
+    Glib::ustring getFilename();
 
-    Glib::SListHandle<Glib::ustring> getFilenames ();
+    std::vector<Glib::ustring> getFilenames ();
 
 protected:
 
@@ -1073,7 +1073,7 @@ FileOpenDialogImpl::getSelectionType()
 /**
  * Get the file name chosen by the user.   Valid after an [OK]
  */
-gchar *
+Glib::ustring
 FileOpenDialogImpl::getFilename (void)
 {
     return g_strdup(myFilename.c_str());
@@ -1083,9 +1083,10 @@ FileOpenDialogImpl::getFilename (void)
 /**
  * To Get Multiple filenames selected at-once.
  */
-Glib::SListHandle<Glib::ustring>FileOpenDialogImpl::getFilenames()
+std::vector<Glib::ustring>FileOpenDialogImpl::getFilenames()
 {    
-    return get_filenames();
+    std::vector<Glib::ustring> result = get_filenames();
+    return result;
 }
 
 
@@ -1125,7 +1126,7 @@ public:
 
     Inkscape::Extension::Extension *getSelectionType();
 
-    gchar *getFilename();
+    Glib::ustring getFilename();
 
 
 private:
@@ -1494,10 +1495,10 @@ FileSaveDialogImpl::getSelectionType()
 /**
  * Get the file name chosen by the user.   Valid after an [OK]
  */
-gchar *
+Glib::ustring
 FileSaveDialogImpl::getFilename()
 {
-    return g_strdup(myFilename.c_str());
+    return myFilename;
 }
 
 
@@ -1530,7 +1531,7 @@ public:
 
     Inkscape::Extension::Extension *getSelectionType();
 
-    gchar *getFilename();
+    Glib::ustring getFilename();
 
 
 private:
@@ -1897,11 +1898,13 @@ FileExportDialogImpl::getSelectionType()
 /**
  * Get the file name chosen by the user.   Valid after an [OK]
  */
-gchar *
+Glib::ustring
 FileExportDialogImpl::getFilename()
 {
-    return g_strdup(myFilename.c_str());
+    return myFilename;
 }
+
+
 
 
 } //namespace Dialog

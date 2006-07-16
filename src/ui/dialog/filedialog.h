@@ -1,20 +1,32 @@
 #ifndef __FILE_DIALOG_H__
 #define __FILE_DIALOG_H__
+/**
+ * Defines the FileOpenDialog, FileSaveDialog, and FileExportDialog
+ * and their supporting classes.
+ *
+ * Authors:
+ *   Bob Jamison <rwjj@earthlink.net>
+ *   Inkscape Guys
+ *
+ * Copyright (C) 2004-2006, Inkscape Authors
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
 
-/** \file Defines classes FileOpenDialog, FileSaveDialog,
- *    and enums FileDialogType, FileDialogSelectionType. */
+#include <glibmm.h>
+#include <vector>
 
-#include <glib/gtypes.h>
-#include <glibmm/slisthandle.h>
 
-namespace Inkscape {
 
-namespace Extension {
-class Extension;
-}
+class Inkscape::Extension::Extension;
 
-namespace UI {
-namespace Dialog {
+
+namespace Inkscape
+{
+namespace UI
+{
+namespace Dialog
+{
 
 
 /**
@@ -90,9 +102,9 @@ public:
      */
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
-    virtual gchar * getFilename () =0;
+    virtual Glib::ustring getFilename () =0;
 
-    virtual Glib::SListHandle<Glib::ustring> getFilenames () = 0;
+    virtual std::vector<Glib::ustring> getFilenames () = 0;
 
 }; //FileOpenDialog
 
@@ -152,7 +164,7 @@ public:
      */
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
-    virtual gchar * getFilename () =0;
+    virtual Glib::ustring getFilename () =0;
 
 
 }; //FileSaveDialog
@@ -212,7 +224,7 @@ public:
      */
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
-    virtual gchar * getFilename () =0;
+    virtual Glib::ustring getFilename () =0;
 
 
 }; //FileSaveDialog
