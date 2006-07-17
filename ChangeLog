@@ -1,3 +1,12 @@
+2006-07-13  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
+
+	* src/libcola/cola.h,
+	  src/libcola/connected_components.cpp,
+	  src/graphlayout/graphlayout.cpp:
+	  Disconnected graphs are now handled more gracefully,
+	  connected components are arranged separated (in place) and
+	  then overlaps between components are removed.
+
 2006-07-13  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* src/Makefile_insert, src/Makefile.am, src/svg/Makefile_insert,
