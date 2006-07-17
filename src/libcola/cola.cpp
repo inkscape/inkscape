@@ -1,6 +1,7 @@
 #include "cola.h"
 #include "conjugate_gradient.h"
 #include "straightener.h"
+#include "shortest_paths.h"
 
 namespace cola {
 
@@ -11,6 +12,58 @@ inline double dummy_var_euclidean_dist(GradientProjection* gpx, GradientProjecti
     double dx = gpx->dummy_vars[i]->place_r - gpx->dummy_vars[i]->place_l,
         dy = gpy->dummy_vars[i]->place_r - gpy->dummy_vars[i]->place_l;
     return sqrt(dx*dx + dy*dy);
+}
+ConstrainedMajorizationLayout
+::ConstrainedMajorizationLayout(
+        vector<Rectangle*>& rs,
+        vector<Edge>& es,
+        double* eweights,
+        double idealLength,
+        TestConvergence& done)
+    : constrainedLayout(false),
+      n(rs.size()),
+      lapSize(n), lap2(new double*[lapSize]), 
+      Q(lap2), Dij(new double*[lapSize]),
+      tol(0.0001),
+      done(done),
+      X(new double[n]),
+      Y(new double[n]),
+      clusters(NULL),
+      linearConstraints(NULL),
+      gpX(NULL),
+      gpY(NULL),
+      straightenEdges(NULL)
+{
+    assert(rs.size()==n);
+    boundingBoxes = new Rectangle*[rs.size()];
+    copy(rs.begin(),rs.end(),boundingBoxes);
+
+    done.reset();
+
+    double** D=new double*[n];
+    for(unsigned i=0;i<n;i++) {
+        D[i]=new double[n];
+    }
+    shortest_paths::johnsons(n,D,es,eweights);
+    edge_length = idealLength;
+    // Lij_{i!=j}=1/(Dij^2)
+    //
+    for(unsigned i = 0; i<n; i++) {
+        X[i]=rs[i]->getCentreX();
+        Y[i]=rs[i]->getCentreY();
+        double degree = 0;
+        lap2[i]=new double[n];
+        Dij[i]=new double[n];
+        for(unsigned j=0;j<n;j++) {
+            double w = edge_length * D[i][j];
+            Dij[i][j]=w;
+            if(i==j) continue;
+            degree+=lap2[i][j]=w>1e-30?1.f/(w*w):0;
+        }
+        lap2[i][i]=-degree;
+        delete [] D[i];
+    }
+    delete [] D;
 }
 
 void 

@@ -8,18 +8,16 @@
 #include <cmath>
 #include <iostream>
 #include <cassert>
-#include "shortest_paths.h"
 #include "gradient_projection.h"
-#include <libvpsc/generate-constraints.h>
 #include "straightener.h"
 
 
 typedef vector<unsigned> Cluster;
 typedef vector<Cluster*> Clusters;
-
-using vpsc::Rectangle;
+namespace vpsc { class Rectangle; }
 
 namespace cola {
+    using vpsc::Rectangle;
     typedef pair<unsigned, unsigned> Edge;
 
     // a graph component with a list of node_ids giving indices for some larger list of nodes
@@ -153,52 +151,7 @@ namespace cola {
                 vector<Edge>& es,
 				double* eweights,
                 double idealLength,
-				TestConvergence& done=defaultTest)
-			: constrainedLayout(false),
-              n(rs.size()),
-              lapSize(n), lap2(new double*[lapSize]), 
-              Q(lap2), Dij(new double*[lapSize]),
-              tol(0.0001),
-              done(done),
-              X(new double[n]),
-              Y(new double[n]),
-              clusters(NULL),
-              linearConstraints(NULL),
-              gpX(NULL),
-              gpY(NULL),
-              straightenEdges(NULL)
-        {
-            assert(rs.size()==n);
-            boundingBoxes = new Rectangle*[rs.size()];
-            copy(rs.begin(),rs.end(),boundingBoxes);
-
-            done.reset();
-
-            double** D=new double*[n];
-            for(unsigned i=0;i<n;i++) {
-                D[i]=new double[n];
-            }
-            shortest_paths::johnsons(n,D,es,eweights);
-            edge_length = idealLength;
-            // Lij_{i!=j}=1/(Dij^2)
-            //
-            for(unsigned i = 0; i<n; i++) {
-                X[i]=rs[i]->getCentreX();
-                Y[i]=rs[i]->getCentreY();
-                double degree = 0;
-                lap2[i]=new double[n];
-                Dij[i]=new double[n];
-                for(unsigned j=0;j<n;j++) {
-                    double w = edge_length * D[i][j];
-                    Dij[i][j]=w;
-                    if(i==j) continue;
-                    degree+=lap2[i][j]=w>1e-30?1.f/(w*w):0;
-                }
-                lap2[i][i]=-degree;
-                delete [] D[i];
-            }
-            delete [] D;
-        }
+				TestConvergence& done=defaultTest);
 
         void moveBoundingBoxes() {
             for(unsigned i=0;i<lapSize;i++) {
