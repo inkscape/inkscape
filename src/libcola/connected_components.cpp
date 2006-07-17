@@ -1,8 +1,35 @@
 #include <map>
 #include "cola.h"
+#include <libvpsc/remove_rectangle_overlap.h>
 using namespace std;
 
 namespace cola {
+    Component::~Component() {
+        for(unsigned i=0;i<scx.size();i++) {
+            delete scx[i];
+        }
+        for(unsigned i=0;i<scy.size();i++) {
+            delete scy[i];
+        }
+    }
+    void Component::moveRectangles(double x, double y) {
+        for(unsigned i=0;i<rects.size();i++) {
+            rects[i]->moveCentreX(rects[i]->getCentreX()+x);
+            rects[i]->moveCentreY(rects[i]->getCentreY()+y);
+        }
+    }
+    Rectangle* Component::getBoundingBox() {
+        double llx=DBL_MAX, lly=DBL_MAX, urx=-DBL_MAX, ury=-DBL_MAX;
+        for(unsigned i=0;i<rects.size();i++) {
+            llx=min(llx,rects[i]->getMinX());
+            lly=min(lly,rects[i]->getMinY());
+            urx=max(urx,rects[i]->getMaxX());
+            ury=max(ury,rects[i]->getMaxY());
+        }
+        printf("Bounding Box=(%f,%f,%f,%f)\n",llx,urx,lly,ury);
+        return new Rectangle(llx,urx,lly,ury);
+    }
+
     namespace ccomponents {
         struct Node {
             unsigned id;
@@ -79,6 +106,23 @@ namespace cola {
             assert(u.first==v.first);
             u.first->scy.push_back(
                     new SimpleConstraint(u.second,v.second,c->gap));
+        }
+    }
+    void separateComponents(const vector<Component*> &components) {
+        unsigned n=components.size();
+        Rectangle* bbs[n];
+        double origX[n], origY[n];
+        for(unsigned i=0;i<n;i++) {
+            bbs[i]=components[i]->getBoundingBox();
+            origX[i]=bbs[i]->getCentreX();
+            origY[i]=bbs[i]->getCentreY();
+        }
+        removeRectangleOverlap(n,bbs,0,0);
+        for(unsigned i=0;i<n;i++) {
+            components[i]->moveRectangles(
+                    bbs[i]->getCentreX()-origX[i],
+                    bbs[i]->getCentreY()-origY[i]);
+            delete bbs[i];
         }
     }
 }

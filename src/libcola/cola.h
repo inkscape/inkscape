@@ -24,19 +24,15 @@ namespace cola {
 
     // a graph component with a list of node_ids giving indices for some larger list of nodes
     // for the nodes in this component, and a list of edges - node indices relative to this component
-    struct Component {
+    class Component {
+    public:
         vector<unsigned> node_ids;
         vector<Rectangle*> rects;
         vector<Edge> edges;
         SimpleConstraints scx, scy;
-        ~Component() {
-            for(unsigned i=0;i<scx.size();i++) {
-                delete scx[i];
-            }
-            for(unsigned i=0;i<scy.size();i++) {
-                delete scy[i];
-            }
-        }
+        ~Component();
+        void moveRectangles(double x, double y);
+        Rectangle* getBoundingBox();
     };
     // for a graph of n nodes, return connected components
     void connectedComponents(
@@ -45,6 +41,10 @@ namespace cola {
             const SimpleConstraints &scx,
             const SimpleConstraints &scy, 
             vector<Component*> &components);
+
+    // move the contents of each component so that the components do not
+    // overlap.
+    void separateComponents(const vector<Component*> &components);
 
     // defines references to three variables for which the goal function
     // will be altered to prefer points u-b-v are in a linear arrangement
@@ -116,10 +116,8 @@ namespace cola {
     public:
         double old_stress;
 		TestConvergence(const double& tolerance = 0.001, const unsigned maxiterations = 1000)
-			: old_stress(DBL_MAX),
-              tolerance(tolerance),
-              maxiterations(maxiterations),
-              iterations(0) { }
+			: tolerance(tolerance),
+              maxiterations(maxiterations) { reset(); }
         virtual ~TestConvergence() {}
 
 		virtual bool operator()(double new_stress, double* X, double* Y) {
@@ -138,9 +136,13 @@ namespace cola {
             old_stress = new_stress;
 			return converged;
 		}
+        void reset() {
+            old_stress = DBL_MAX;
+            iterations = 0;
+        }
   	private:
-        double tolerance;
-        unsigned maxiterations;
+        const double tolerance;
+        const unsigned maxiterations;
         unsigned iterations;
   	};
     static TestConvergence defaultTest(0.0001,100);
@@ -169,6 +171,8 @@ namespace cola {
             assert(rs.size()==n);
             boundingBoxes = new Rectangle*[rs.size()];
             copy(rs.begin(),rs.end(),boundingBoxes);
+
+            done.reset();
 
             double** D=new double*[n];
             for(unsigned i=0;i<n;i++) {

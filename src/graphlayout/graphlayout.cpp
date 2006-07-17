@@ -169,6 +169,7 @@ void graphlayout(GSList const *const items) {
                 NULL,NULL,&c->scx,&c->scy,NULL,NULL);
         alg.run();
     }
+    separateComponents(cs);
 	
 	for (list<SPItem *>::iterator it(selected.begin());
 		it != selected.end();
