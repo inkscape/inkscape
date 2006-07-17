@@ -120,22 +120,12 @@ void file_import(SPDocument *in_doc, const Glib::ustring &uri,
 ######################*/
 
 /**
- * Displays a "Save as" dialog for the user, with an
+ * Displays a FileExportDialog for the user, with an
  * additional type selection, to allow the user to export
  * the a document as a given type.
  */
-void sp_file_export_dialog (void *widget);
+bool sp_file_export_dialog (void *widget);
 
-/**
- * Export the given document as a Portable Network Graphics (PNG)
- * file.  Returns FALSE if an error was encountered while writing
- * the file, TRUE otherwise.
- */
-int sp_export_png_file (SPDocument *doc, const gchar *filename,
-			 double x0, double y0, double x1, double y1,
-			 unsigned int width, unsigned int height, double xdpi, double ydpi,
-			 unsigned long bgcolor,
-			 unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, GSList *items_only = NULL);
 
 
 /*######################

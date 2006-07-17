@@ -16,10 +16,18 @@
 # include "config.h"
 #endif
 
+#include <interface.h>
+#include <libnr/nr-pixops.h>
 #include <glib/gmessages.h>
 #include <png.h>
 #include "png-write.h"
 #include "io/sys.h"
+#include <display/nr-arena-item.h>
+#include <display/nr-arena.h>
+#include <document.h>
+#include <sp-item.h>
+#include <sp-root.h>
+#include <sp-defs.h>
 
 /* This is an example of how to use libpng to read and write PNG files.
  * The file libpng.txt is much more verbose then this.  If you have not
@@ -202,5 +210,199 @@ sp_png_write_rgba_striped (const gchar *filename, int width, int height, double 
 
 	/* that's it */
 	return TRUE;
+}
+
+
+
+struct SPEBP {
+    int width, height, sheight;
+    guchar r, g, b, a;
+    NRArenaItem *root; // the root arena item to show; it is assumed that all unneeded items are hidden
+    guchar *px;
+    unsigned (*status)(float, void *);
+    void *data;
+};
+
+
+/**
+ *
+ */
+static int
+sp_export_get_rows(guchar const **rows, int row, int num_rows, void *data)
+{
+    struct SPEBP *ebp = (struct SPEBP *) data;
+
+    if (ebp->status) {
+        if (!ebp->status((float) row / ebp->height, ebp->data)) return 0;
+    }
+
+    num_rows = MIN(num_rows, ebp->sheight);
+    num_rows = MIN(num_rows, ebp->height - row);
+
+    /* Set area of interest */
+    NRRectL bbox;
+    bbox.x0 = 0;
+    bbox.y0 = row;
+    bbox.x1 = ebp->width;
+    bbox.y1 = row + num_rows;
+    /* Update to renderable state */
+    NRGC gc(NULL);
+    nr_matrix_set_identity(&gc.transform);
+
+    nr_arena_item_invoke_update(ebp->root, &bbox, &gc,
+           NR_ARENA_ITEM_STATE_ALL, NR_ARENA_ITEM_STATE_NONE);
+
+    NRPixBlock pb;
+    nr_pixblock_setup_extern(&pb, NR_PIXBLOCK_MODE_R8G8B8A8N,
+                             bbox.x0, bbox.y0, bbox.x1, bbox.y1,
+                             ebp->px, 4 * ebp->width, FALSE, FALSE);
+
+    for (int r = 0; r < num_rows; r++) {
+        guchar *p = NR_PIXBLOCK_PX(&pb) + r * pb.rs;
+        for (int c = 0; c < ebp->width; c++) {
+            *p++ = ebp->r;
+            *p++ = ebp->g;
+            *p++ = ebp->b;
+            *p++ = ebp->a;
+        }
+    }
+
+    /* Render */
+    nr_arena_item_invoke_render(ebp->root, &bbox, &pb, 0);
+
+    for (int r = 0; r < num_rows; r++) {
+        rows[r] = NR_PIXBLOCK_PX(&pb) + r * pb.rs;
+    }
+
+    nr_pixblock_release(&pb);
+
+    return num_rows;
+}
+
+/**
+Hide all items which are not listed in list, recursively, skipping groups and defs
+*/
+static void
+hide_other_items_recursively(SPObject *o, GSList *list, unsigned dkey)
+{
+    if (SP_IS_ITEM(o)
+        && !SP_IS_DEFS(o)
+        && !SP_IS_ROOT(o)
+        && !SP_IS_GROUP(o)
+        && !g_slist_find(list, o))
+    {
+        sp_item_invoke_hide(SP_ITEM(o), dkey);
+    }
+
+     // recurse
+    if (!g_slist_find(list, o)) {
+        for (SPObject *child = sp_object_first_child(o) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+            hide_other_items_recursively(child, list, dkey);
+        }
+    }
+}
+
+
+/**
+ *  Render the SVG drawing onto a PNG raster image, then save to
+ *  a file.  Returns TRUE if succeeded in writing the file,
+ *  FALSE otherwise.
+ */
+int
+sp_export_png_file(SPDocument *doc, gchar const *filename,
+                   double x0, double y0, double x1, double y1,
+                   unsigned width, unsigned height, double xdpi, double ydpi,
+                   unsigned long bgcolor,
+                   unsigned (*status)(float, void *),
+                   void *data, bool force_overwrite,
+                   GSList *items_only)
+{
+    int write_status = TRUE;
+    g_return_val_if_fail(doc != NULL, FALSE);
+    g_return_val_if_fail(filename != NULL, FALSE);
+    g_return_val_if_fail(width >= 1, FALSE);
+    g_return_val_if_fail(height >= 1, FALSE);
+
+    if (!force_overwrite && !sp_ui_overwrite_file(filename)) {
+        return FALSE;
+    }
+
+    sp_document_ensure_up_to_date(doc);
+
+    /* Go to document coordinates */
+    gdouble t = y0;
+    y0 = sp_document_height(doc) - y1;
+    y1 = sp_document_height(doc) - t;
+
+    /*
+     * 1) a[0] * x0 + a[2] * y1 + a[4] = 0.0
+     * 2) a[1] * x0 + a[3] * y1 + a[5] = 0.0
+     * 3) a[0] * x1 + a[2] * y1 + a[4] = width
+     * 4) a[1] * x0 + a[3] * y0 + a[5] = height
+     * 5) a[1] = 0.0;
+     * 6) a[2] = 0.0;
+     *
+     * (1,3) a[0] * x1 - a[0] * x0 = width
+     * a[0] = width / (x1 - x0)
+     * (2,4) a[3] * y0 - a[3] * y1 = height
+     * a[3] = height / (y0 - y1)
+     * (1) a[4] = -a[0] * x0
+     * (2) a[5] = -a[3] * y1
+     */
+
+    NRMatrix affine;
+    affine.c[0] = width / (x1 - x0);
+    affine.c[1] = 0.0;
+    affine.c[2] = 0.0;
+    affine.c[3] = height / (y1 - y0);
+    affine.c[4] = -affine.c[0] * x0;
+    affine.c[5] = -affine.c[3] * y0;
+
+    //SP_PRINT_MATRIX("SVG2PNG", &affine);
+
+    struct SPEBP ebp;
+    ebp.width  = width;
+    ebp.height = height;
+    ebp.r      = NR_RGBA32_R(bgcolor);
+    ebp.g      = NR_RGBA32_G(bgcolor);
+    ebp.b      = NR_RGBA32_B(bgcolor);
+    ebp.a      = NR_RGBA32_A(bgcolor);
+
+    /* Create new arena */
+    NRArena *arena = NRArena::create();
+    unsigned dkey = sp_item_display_key_new(1);
+
+    /* Create ArenaItems and set transform */
+    ebp.root = sp_item_invoke_show(SP_ITEM(sp_document_root(doc)), arena, dkey, SP_ITEM_SHOW_DISPLAY);
+    nr_arena_item_set_transform(NR_ARENA_ITEM(ebp.root), NR::Matrix(&affine));
+
+    // We show all and then hide all items we don't want, instead of showing only requested items,
+    // because that would not work if the shown item references something in defs
+    if (items_only) {
+        hide_other_items_recursively(sp_document_root(doc), items_only, dkey);
+    }
+
+    ebp.status = status;
+    ebp.data   = data;
+
+    if ((width < 256) || ((width * height) < 32768)) {
+        ebp.px = nr_pixelstore_64K_new(FALSE, 0);
+        ebp.sheight = 65536 / (4 * width);
+        write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        nr_pixelstore_64K_free(ebp.px);
+    } else {
+        ebp.px = g_new(guchar, 4 * 64 * width);
+        ebp.sheight = 64;
+        write_status = sp_png_write_rgba_striped(filename, width, height, xdpi, ydpi, sp_export_get_rows, &ebp);
+        g_free(ebp.px);
+    }
+
+    // Hide items
+    sp_item_invoke_hide(SP_ITEM(sp_document_root(doc)), dkey);
+
+    /* Free Arena and ArenaItem */
+    nr_arena_item_unref(ebp.root);
+    nr_object_unref((NRObject *) arena);
+    return write_status;
 }
 

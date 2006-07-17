@@ -20,4 +20,15 @@ int sp_png_write_rgba_striped(gchar const *filename, int width, int height, doub
 			      int (* get_rows) (guchar const **rows, int row, int num_rows, void *data),
 			      void *data);
 
+/**
+ * Export the given document as a Portable Network Graphics (PNG)
+ * file.  Returns FALSE if an error was encountered while writing
+ * the file, TRUE otherwise.
+ */
+int sp_export_png_file (SPDocument *doc, const gchar *filename,
+			 double x0, double y0, double x1, double y1,
+			 unsigned int width, unsigned int height, double xdpi, double ydpi,
+			 unsigned long bgcolor,
+			 unsigned int (*status) (float, void *), void *data, bool force_overwrite = false, GSList *items_only = NULL);
+
 #endif

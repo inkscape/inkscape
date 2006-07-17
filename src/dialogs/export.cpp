@@ -54,6 +54,8 @@
 
 #include "io/sys.h"
 
+#include "helper/png-write.h"
+
 
 #define SP_EXPORT_MIN_SIZE 1.0
 
