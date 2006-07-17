@@ -12,8 +12,9 @@
  *
  * Released under GNU LGPL.  Read the file 'COPYING' for more information.
  */
-
-class vpsc::Rectangle;
+namespace vpsc { 
+	class Rectangle;
+}
 
 void removeRectangleOverlap(unsigned n, vpsc::Rectangle *rs[], double xBorder, double yBorder);
 

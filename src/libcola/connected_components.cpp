@@ -1,6 +1,7 @@
 #include <map>
-#include "cola.h"
+#include <list>
 #include <libvpsc/remove_rectangle_overlap.h>
+#include "cola.h"
 using namespace std;
 
 namespace cola {
@@ -34,15 +35,16 @@ namespace cola {
             unsigned id;
             bool visited;
             vector<Node*> neighbours;
+            list<Node*>::iterator listPos;
             Rectangle* r;
         };
         // Depth first search traversal of graph to find connected component
         void dfs(Node* v,
-                set<Node*>& remaining,
+                list<Node*>& remaining,
                 Component* component,
                 map<unsigned,pair<Component*,unsigned> > &cmap) {
             v->visited=true;
-            remaining.erase(v);
+            remaining.erase(v->listPos);
             cmap[v->id]=make_pair(component,component->node_ids.size());
             component->node_ids.push_back(v->id);
             component->rects.push_back(v->r);
@@ -66,12 +68,12 @@ namespace cola {
             vector<Component*> &components) {
         unsigned n=rs.size();
         vector<Node> vs(n);
-        set<Node*> remaining;
+        list<Node*> remaining;
         for(unsigned i=0;i<n;i++) {
             vs[i].id=i;
             vs[i].visited=false;
             vs[i].r=rs[i];
-            remaining.insert(&vs[i]);
+            vs[i].listPos = remaining.insert(remaining.end(),&vs[i]);
         }
         vector<Edge>::const_iterator ei;
         SimpleConstraints::const_iterator ci;
