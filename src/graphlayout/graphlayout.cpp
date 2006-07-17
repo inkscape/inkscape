@@ -91,7 +91,7 @@ void graphlayout(GSList const *const items) {
 		rs.push_back(new Rectangle(ll[0],ur[0],ll[1],ur[1]));
 	}
 
-	SimpleConstraints scy;
+	SimpleConstraints scx,scy;
 	double ideal_connector_length = prefs_get_double_attribute("tools.connector","length",100);
 	double directed_edge_height_modifier = 1.0;
 	gchar const *directed_str = NULL, *overlaps_str = NULL;
@@ -154,7 +154,7 @@ void graphlayout(GSList const *const items) {
 	double eweights[E];
 	fill(eweights,eweights+E,1);
     vector<Component*> cs;
-    connectedComponents(rs,es,cs);
+    connectedComponents(rs,es,scx,scy,cs);
     for(unsigned i=0;i<cs.size();i++) {
         Component* c=cs[i];
 		printf("Component %d:\n",i);
@@ -166,7 +166,7 @@ void graphlayout(GSList const *const items) {
 		cout << endl;
         ConstrainedMajorizationLayout alg(c->rects,c->edges,eweights,ideal_connector_length);
         alg.setupConstraints(NULL,NULL,avoid_overlaps,
-                NULL,NULL,NULL,&scy,NULL,NULL);
+                NULL,NULL,&c->scx,&c->scy,NULL,NULL);
         alg.run();
     }
 	
@@ -183,6 +183,15 @@ void graphlayout(GSList const *const items) {
 			sp_item_move_rel(u, NR::translate(dest - curr));
 		}
 	}
+    for(unsigned i=0;i<scx.size();i++) {
+        delete scx[i];
+    }
+    for(unsigned i=0;i<scy.size();i++) {
+        delete scy[i];
+    }
+    for(unsigned i=0;i<rs.size();i++) {
+        delete rs[i];
+    }
 }
 // vim: set cindent 
 // vim: ts=4 sw=4 et tw=0 wm=0

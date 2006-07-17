@@ -33,8 +33,10 @@ namespace cola {
 
     // for a graph of n nodes, return connected components
     void connectedComponents(
-            vector<Rectangle*> &rs,
-            vector<Edge> &es, 
+            const vector<Rectangle*> &rs,
+            const vector<Edge> &es, 
+            const SimpleConstraints &scx,
+            const SimpleConstraints &scy,
             vector<Component*> &components) {
         unsigned n=rs.size();
         vector<Node> vs(n);
@@ -45,7 +47,7 @@ namespace cola {
             vs[i].r=rs[i];
             remaining.insert(&vs[i]);
         }
-        for(vector<Edge>::iterator e=es.begin();e!=es.end();e++) {
+        for(vector<Edge>::const_iterator e=es.begin();e!=es.end();e++) {
             vs[e->first].neighbours.push_back(&vs[e->second]);
             vs[e->second].neighbours.push_back(&vs[e->first]);
         }
@@ -56,11 +58,27 @@ namespace cola {
             dfs(v,remaining,component,cmap);
             components.push_back(component);
         }
-        for(vector<Edge>::iterator e=es.begin();e!=es.end();e++) {
+        for(vector<Edge>::const_iterator e=es.begin();e!=es.end();e++) {
             pair<Component*,unsigned> u=cmap[e->first],
                                       v=cmap[e->second];
             assert(u.first==v.first);
             u.first->edges.push_back(make_pair(u.second,v.second));
+        }
+        for(SimpleConstraints::const_iterator ci=scx.begin();ci!=scx.end();ci++) {
+            SimpleConstraint *c=*ci;
+            pair<Component*,unsigned> u=cmap[c->left],
+                                      v=cmap[c->right];
+            assert(u.first==v.first);
+            u.first->scx.push_back(
+                    new SimpleConstraint(u.second,v.second,c->gap));
+        }
+        for(SimpleConstraints::const_iterator ci=scy.begin();ci!=scy.end();ci++) {
+            SimpleConstraint *c=*ci;
+            pair<Component*,unsigned> u=cmap[c->left],
+                                      v=cmap[c->right];
+            assert(u.first==v.first);
+            u.first->scy.push_back(
+                    new SimpleConstraint(u.second,v.second,c->gap));
         }
     }
 }

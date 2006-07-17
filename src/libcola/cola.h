@@ -28,11 +28,22 @@ namespace cola {
         vector<unsigned> node_ids;
         vector<Rectangle*> rects;
         vector<Edge> edges;
+        SimpleConstraints scx, scy;
+        ~Component() {
+            for(unsigned i=0;i<scx.size();i++) {
+                delete scx[i];
+            }
+            for(unsigned i=0;i<scy.size();i++) {
+                delete scy[i];
+            }
+        }
     };
     // for a graph of n nodes, return connected components
     void connectedComponents(
-            vector<Rectangle*> &rs,
-            vector<Edge> &es, 
+            const vector<Rectangle*> &rs,
+            const vector<Edge> &es,
+            const SimpleConstraints &scx,
+            const SimpleConstraints &scy, 
             vector<Component*> &components);
 
     // defines references to three variables for which the goal function
