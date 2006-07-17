@@ -29,6 +29,8 @@
 #include <sys/stat.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
+#include <gtkmm/colorbutton.h>
+#include <gtkmm/frame.h>
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/menu.h>
@@ -47,6 +49,10 @@
 #include "svg-view-widget.h"
 #include "filedialog.h"
 #include "gc-core.h"
+
+//For export dialog
+#include "ui/widget/scalar-unit.h"
+
 
 #undef INK_DUMP_FILENAME_CONV
 
@@ -1556,12 +1562,56 @@ private:
      */
     void updatePreviewCallback();
 
+    //##########################################
+    //# EXTRA WIDGET -- SOURCE SIDE
+    //##########################################
+
+    Gtk::Frame            sourceFrame;
+    Gtk::VBox             sourceBox;
+
+    Gtk::HBox             scopeBox;
+    Gtk::RadioButtonGroup scopeGroup;
+    Gtk::RadioButton      documentButton;
+    Gtk::RadioButton      pageButton;
+    Gtk::RadioButton      selectionButton;
+
+    Gtk::Table                      sourceTable;
+    Inkscape::UI::Widget::Scalar    sourceX0;
+    Inkscape::UI::Widget::Scalar    sourceY0;
+    Inkscape::UI::Widget::Scalar    sourceX1;
+    Inkscape::UI::Widget::Scalar    sourceY1;
+    Inkscape::UI::Widget::Scalar    sourceWidth;
+    Inkscape::UI::Widget::Scalar    sourceHeight;
+    Inkscape::UI::Widget::UnitMenu  sourceUnits;
+
+
+    //##########################################
+    //# EXTRA WIDGET -- DESTINATION SIDE
+    //##########################################
+
+    Gtk::Frame       destFrame;
+    Gtk::VBox        destBox;
+
+    Gtk::Table                      destTable;
+    Inkscape::UI::Widget::Scalar    destWidth;
+    Inkscape::UI::Widget::Scalar    destHeight;
+    Inkscape::UI::Widget::Scalar    destDPI;
+    Inkscape::UI::Widget::UnitMenu  destUnits;
+
+    Gtk::HBox        otherOptionBox;
+    Gtk::CheckButton cairoButton;
+    Gtk::CheckButton antiAliasButton;
+    Gtk::ColorButton backgroundButton;
 
 
     /**
-     * Allow the specification of the output file type
+     * 'Extra' widget that holds two boxes above
      */
-    Gtk::HBox fileTypeBox;
+    Gtk::HBox exportOptionsBox;
+
+
+    //# Child widgets
+    Gtk::CheckButton fileTypeCheckbox;
 
     /**
      * Allow the specification of the output file type
@@ -1574,8 +1624,6 @@ private:
      */
     std::vector<FileType> fileTypes;
 
-    //# Child widgets
-    Gtk::CheckButton fileTypeCheckbox;
 
 
     /**
@@ -1724,7 +1772,16 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
             FileDialogType fileTypes,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
-            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE)
+            FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE),
+            sourceX0("X0",         _("Source left bound")),
+            sourceY0("Y0",         _("Source top bound")),
+            sourceX1("X1",         _("Source right bound")),
+            sourceY1("Y1",         _("Source bottom bound")),
+            sourceWidth("Width",   _("Source width")),
+            sourceHeight("Height", _("Source height")),
+            destWidth("Width",   _("Destination width")),
+            destHeight("Height", _("Destination height")),
+            destDPI("DPI", _("Dots per inch resolution"))
 {
     append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
 
@@ -1750,26 +1807,102 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
         set_current_folder(udir.c_str());
         }
 
-    //###### Add the file types menu
-    //createFilterMenu();
+    //#########################################
+    //## EXTRA WIDGET -- SOURCE SIDE
+    //#########################################
 
+    //##### Export options buttons/spinners, etc
+    documentButton.set_label(_("Document"));
+    scopeBox.pack_start(documentButton);
+    scopeGroup = documentButton.get_group();
+
+    pageButton.set_label(_("Page"));
+    pageButton.set_group(scopeGroup);
+    scopeBox.pack_start(pageButton);
+
+    selectionButton.set_label(_("Selection"));
+    selectionButton.set_group(scopeGroup);
+    scopeBox.pack_start(selectionButton);
+
+    sourceBox.pack_start(scopeBox);
+
+
+
+    //dimension buttons
+    sourceTable.resize(3,3);
+    sourceTable.attach(sourceX0,     0,1,0,1);
+    sourceTable.attach(sourceY0,     1,2,0,1);
+    sourceUnits.setUnitType(UNIT_TYPE_LINEAR);
+    sourceTable.attach(sourceUnits,  2,3,0,1);
+    sourceTable.attach(sourceX1,     0,1,1,2);
+    sourceTable.attach(sourceY1,     1,2,1,2);
+    sourceTable.attach(sourceWidth,  0,1,2,3);
+    sourceTable.attach(sourceHeight, 1,2,2,3);
+
+    sourceBox.pack_start(sourceTable);
+    sourceFrame.set_label(_("Source"));
+    sourceFrame.add(sourceBox);
+    exportOptionsBox.pack_start(sourceFrame);
+
+
+    //#########################################
+    //## EXTRA WIDGET -- SOURCE SIDE
+    //#########################################
+
+
+    destTable.resize(3,3);
+    destTable.attach(destWidth,    0,1,0,1);
+    destTable.attach(destHeight,   1,2,0,1);
+    destUnits.setUnitType(UNIT_TYPE_LINEAR);
+    destTable.attach(destUnits,    2,3,0,1);
+    destTable.attach(destDPI,      0,1,1,2);
+
+    destBox.pack_start(destTable);
+
+
+    cairoButton.set_label(_("Cairo"));
+    otherOptionBox.pack_start(cairoButton);
+
+    antiAliasButton.set_label(_("Antialias"));
+    otherOptionBox.pack_start(antiAliasButton);
+
+    backgroundButton.set_label(_("Background"));
+    otherOptionBox.pack_start(backgroundButton);
+
+    destBox.pack_start(otherOptionBox);
+
+
+
+
+
+    //###### File options
     //###### Do we want the .xxx extension automatically added?
     fileTypeCheckbox.set_label(Glib::ustring(_("Append filename extension automatically")));
     fileTypeCheckbox.set_active(append_extension);
+    destBox.pack_start(fileTypeCheckbox);
 
-    fileTypeBox.pack_start(fileTypeCheckbox);
+    //###### File type menu
     createFileTypeMenu();
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
          sigc::mem_fun(*this, &FileExportDialogImpl::fileTypeChangedCallback) );
 
-    fileTypeBox.pack_start(fileTypeComboBox);
+    destBox.pack_start(fileTypeComboBox);
 
-    set_extra_widget(fileTypeBox);
-    //get_vbox()->pack_start(fileTypeBox, false, false, 0);
-    //get_vbox()->reorder_child(fileTypeBox, 2);
+    destFrame.set_label(_("Destination"));
+    destFrame.add(destBox);
+    exportOptionsBox.pack_start(destFrame);
 
-    //###### Add a preview widget
+    //##### Put the two boxes and their parent onto the dialog    
+    exportOptionsBox.pack_start(sourceFrame);
+    exportOptionsBox.pack_start(destFrame);
+
+    set_extra_widget(exportOptionsBox);
+
+
+
+
+    //###### PREVIEW WIDGET
     set_preview_widget(svgPreview);
     set_preview_widget_active(true);
     set_use_preview_label (false);
