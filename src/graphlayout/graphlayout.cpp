@@ -136,7 +136,7 @@ void graphlayout(GSList const *const items) {
 			map<string,unsigned>::iterator v_pair=nodelookup.find(iv->id);
 			if(v_pair!=nodelookup.end()) {
 				unsigned v=v_pair->second;
-				cout << "Edge: (" << u <<","<<v<<")"<<endl;
+				//cout << "Edge: (" << u <<","<<v<<")"<<endl;
 				es.push_back(make_pair(u,v));
 				if(conn->style->marker[SP_MARKER_LOC_END].set) {
 					if(directed && strcmp(conn->style->marker[SP_MARKER_LOC_END].value,"none")) {
@@ -157,13 +157,7 @@ void graphlayout(GSList const *const items) {
     connectedComponents(rs,es,scx,scy,cs);
     for(unsigned i=0;i<cs.size();i++) {
         Component* c=cs[i];
-		printf("Component %d:\n",i);
-		for(unsigned j=0;j<c->edges.size();j++) {
-			Edge& e=c->edges[j];
-			printf("(%d,%d) ",e.first,e.second);
-		}
         if(c->edges.size()<2) continue;
-		cout << endl;
         ConstrainedMajorizationLayout alg(c->rects,c->edges,eweights,ideal_connector_length);
         alg.setupConstraints(NULL,NULL,avoid_overlaps,
                 NULL,NULL,&c->scx,&c->scy,NULL,NULL);

@@ -26,7 +26,6 @@ namespace cola {
             urx=max(urx,rects[i]->getMaxX());
             ury=max(ury,rects[i]->getMaxY());
         }
-        printf("Bounding Box=(%f,%f,%f,%f)\n",llx,urx,lly,ury);
         return new Rectangle(llx,urx,lly,ury);
     }
 
@@ -74,9 +73,11 @@ namespace cola {
             vs[i].r=rs[i];
             remaining.insert(&vs[i]);
         }
-        for(vector<Edge>::const_iterator e=es.begin();e!=es.end();e++) {
-            vs[e->first].neighbours.push_back(&vs[e->second]);
-            vs[e->second].neighbours.push_back(&vs[e->first]);
+        vector<Edge>::const_iterator ei;
+        SimpleConstraints::const_iterator ci;
+        for(ei=es.begin();ei!=es.end();ei++) {
+            vs[ei->first].neighbours.push_back(&vs[ei->second]);
+            vs[ei->second].neighbours.push_back(&vs[ei->first]);
         }
         map<unsigned,pair<Component*,unsigned> > cmap;
         while(!remaining.empty()) {
@@ -85,13 +86,13 @@ namespace cola {
             dfs(v,remaining,component,cmap);
             components.push_back(component);
         }
-        for(vector<Edge>::const_iterator e=es.begin();e!=es.end();e++) {
-            pair<Component*,unsigned> u=cmap[e->first],
-                                      v=cmap[e->second];
+        for(ei=es.begin();ei!=es.end();ei++) {
+            pair<Component*,unsigned> u=cmap[ei->first],
+                                      v=cmap[ei->second];
             assert(u.first==v.first);
             u.first->edges.push_back(make_pair(u.second,v.second));
         }
-        for(SimpleConstraints::const_iterator ci=scx.begin();ci!=scx.end();ci++) {
+        for(ci=scx.begin();ci!=scx.end();ci++) {
             SimpleConstraint *c=*ci;
             pair<Component*,unsigned> u=cmap[c->left],
                                       v=cmap[c->right];
@@ -99,7 +100,7 @@ namespace cola {
             u.first->scx.push_back(
                     new SimpleConstraint(u.second,v.second,c->gap));
         }
-        for(SimpleConstraints::const_iterator ci=scy.begin();ci!=scy.end();ci++) {
+        for(ci=scy.begin();ci!=scy.end();ci++) {
             SimpleConstraint *c=*ci;
             pair<Component*,unsigned> u=cmap[c->left],
                                       v=cmap[c->right];
