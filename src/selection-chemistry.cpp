@@ -65,6 +65,7 @@
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "file.h"
+#include "helper/png-write.h"
 #include "layer-fns.h"
 #include "context-fns.h"
 #include <map>
