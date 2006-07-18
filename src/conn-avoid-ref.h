@@ -55,7 +55,7 @@ extern GSList *get_avoided_items(GSList *list, SPObject *from,
 extern void avoid_item_move(NR::Matrix const *mp, SPItem *moved_item);
 extern void init_avoided_shape_geometry(SPDesktop *desktop);
 
-static const double defaultConnSpacing = 10.0;
+static const double defaultConnSpacing = 3.0;
 
 #endif /* !SEEN_CONN_AVOID_REF */
 

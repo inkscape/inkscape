@@ -3,7 +3,7 @@
  */
 /*
 * Authors:
-*   Tim Dwyer <tgdwyer@gmail.com>
+*   Tim Dwyer <Tim.Dwyer@infotech.monash.edu.au>
 *
 * Copyright (C) 2005 Authors
 *
@@ -16,6 +16,9 @@
 #include <algorithm>
 #include <float.h>
 
+#include "desktop.h"
+#include "inkscape.h"
+#include "sp-namedview.h"
 #include "util/glib-list-iterators.h"
 #include "graphlayout/graphlayout.h"
 #include "sp-path.h"
@@ -76,6 +79,12 @@ void graphlayout(GSList const *const items) {
 	//Check 2 or more selected objects
 	if (n < 2) return;
 
+    // add the connector spacing to the size of node bounding boxes
+    // so that connectors can always be routed between shapes
+    SPDesktop* desktop = inkscape_active_desktop();
+    double spacing = 0;
+    if(desktop) spacing = desktop->namedview->connector_spacing+0.1;
+
 	map<string,unsigned> nodelookup;
 	vector<Rectangle*> rs;
 	vector<Edge> es;
@@ -88,7 +97,8 @@ void graphlayout(GSList const *const items) {
 		NR::Point ll(item_box.min());
 		NR::Point ur(item_box.max());
 		nodelookup[u->id]=rs.size();
-		rs.push_back(new Rectangle(ll[0],ur[0],ll[1],ur[1]));
+		rs.push_back(new Rectangle(ll[0]-spacing,ur[0]+spacing,
+                    ll[1]-spacing,ur[1]+spacing));
 	}
 
 	SimpleConstraints scx,scy;
