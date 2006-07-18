@@ -1,5 +1,16 @@
 #define __NR_PIXBLOCK_SCALER_CPP__
 
+/*
+ * Functions for blitting pixblocks using scaling
+ *
+ * Author:
+ *   Niko Kiirala <niko@kiirala.com>
+ *
+ * Copyright (C) 2006 Niko Kiirala
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
 #include <glib.h>
 #include <cmath>
 using std::floor;
@@ -12,7 +23,20 @@ struct RGBA {
     int r, g, b, a;
 };
 
-inline int sampley(unsigned const char a, unsigned const char b, unsigned const char c, unsigned const char d, const double len) {
+/** Calculates cubically interpolated value of the four given pixel values.
+ * The pixel values should be from four vertically adjacent pixels.
+ * If we are calculating a pixel, whose y-coordinate in source image is
+ * i, these pixel values a, b, c and d should come from lines
+ * floor(i) - 1, floor(i), floor(i) + 1, floor(i) + 2, respectively.
+ * Parameter len should be set to i.
+ * Returns the interpolated value in fixed point format with 8 bit
+ * decimal part. (24.8 assuming 32-bit int)
+ */
+__attribute__ ((const))
+inline int sampley(unsigned const char a, unsigned const char b,
+                   unsigned const char c, unsigned const char d,
+                   const double len)
+{
     double lenf = len - floor(len);
     int sum = 0;
     sum += (int)((((-1.0 / 3.0) * lenf + 4.0 / 5.0) * lenf - 7.0 / 15.0)
@@ -26,6 +50,17 @@ inline int sampley(unsigned const char a, unsigned const char b, unsigned const 
     return sum;
 }
 
+/** Calculates cubically interpolated value of the four given pixel values.
+ * The pixel values should be interpolated values from sampley, from four
+ * horizontally adjacent vertical lines. The parameters a, b, c and d
+ * should be in fixed point format with 8-bit decimal part.
+ * If we are calculating a pixel, whose x-coordinate in source image is
+ * i, these vertical  lines from where a, b, c and d are calculated, should be
+ * floor(i) - 1, floor(i), floor(i) + 1, floor(i) + 2, respectively.
+ * Parameter len should be set to i.
+ * Returns the interpolated value in 8-bit format, ready to be written
+ * to output buffer.
+ */
 inline unsigned char samplex(const int a, const int b, const int c, const int d, const double len) {
     double lenf = len - floor(len);
     int sum = 0;
@@ -34,7 +69,7 @@ inline unsigned char samplex(const int a, const int b, const int c, const int d,
     sum += (int)(c * ((((1 - lenf) - 9.0 / 5.0) * (1 - lenf) - 1.0 / 5.0) * (1 - lenf) + 1.0));
     sum += (int)(d * (((-1.0 / 3.0) * (1 - lenf) + 4.0 / 5.0) * (1 - lenf) - 7.0 / 15.0) * (1 - lenf));
     if (sum < 0) sum = 0;
-    if (sum > 255*256) sum = 255 * 256;
+    if (sum >= 256*256) sum = 255 * 256;
     return (unsigned char)(sum / 256);
 }
 
@@ -54,16 +89,27 @@ inline void _check_index(NRPixBlock const * const pb, int const location, int co
 
 void scale_bicubic(NRPixBlock *to, NRPixBlock *from)
 {
+    if (NR_PIXBLOCK_BPP(from) != 4 || NR_PIXBLOCK_BPP(to) != 4) {
+        g_warning("A non-32-bpp image passed to scale_bicubic: scaling aborted.");
+        return;
+    }
+
+    // Precalculate sizes of source and destination pixblocks
     int from_width = from->area.x1 - from->area.x0;
     int from_height = from->area.y1 - from->area.y0;
     int to_width = to->area.x1 - to->area.x0;
     int to_height = to->area.y1 - to->area.y0;
 
+    // from_step: when advancing one pixel in destination image,
+    // how much we should advance in source image
     double from_stepx = (double)from_width / (double)to_width;
     double from_stepy = (double)from_height / (double)to_height;
 
+    // Loop through every pixel of destination image, a line at a time
     for (int to_y = 0 ; to_y < to_height ; to_y++) {
         double from_y = to_y * from_stepy + from_stepy / 2;
+        // Pre-calculate beginning of the four horizontal lines, from
+        // which we should read
         int from_line[4];
         for (int i = 0 ; i < 4 ; i++) {
             if ((int)floor(from_y) + i - 1 >= 0) {
@@ -76,6 +122,9 @@ void scale_bicubic(NRPixBlock *to, NRPixBlock *from)
                 from_line[i] = 0;
             }
         }
+        // Loop through this horizontal line in destination image
+        // For every pixel, calculate the color of pixel with
+        // bicubic interpolation and set the pixel value in destination image
         for (int to_x = 0 ; to_x < to_width ; to_x++) {
             double from_x = to_x * from_stepx + from_stepx / 2;
             RGBA line[4];

@@ -54,13 +54,19 @@ Filter::Filter(int n)
 
 void Filter::_common_init() {
     _slot_count = 1;
+    // Having "not set" here as value means the output of last filter
+    // primitive will be used as output of this filter
     _output_slot = NR_FILTER_SLOT_NOT_SET;
 
+    // These are the default values for filter region,
+    // as specified in SVG standard
+    // NB: SVGLength.set takes prescaled percent values: -.10 means -10%
     _region_x.set(SVGLength::PERCENT, -.10, 0);
     _region_y.set(SVGLength::PERCENT, -.10, 0);
     _region_width.set(SVGLength::PERCENT, 1.20, 0);
     _region_height.set(SVGLength::PERCENT, 1.20, 0);
 
+    // Filter resolution, negative value here stands for "automatic"
     _x_pixels = -1.0;
     _y_pixels = -1.0;
 
@@ -80,6 +86,9 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     Matrix trans = *item->ctm;
     FilterSlot slot(_slot_count);
     NRPixBlock *in = new NRPixBlock;
+
+    // First, if filter resolution is not set to automatic, we should
+    // scale the input image to correct resolution
     if (_x_pixels >= 0) {
         /* If filter resolution is zero, the object should not be rendered */
         if (_x_pixels == 0 || _y_pixels == 0) {
@@ -89,8 +98,14 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
             memset(NR_PIXBLOCK_PX(pb), 0, size);
             return 0;
         }
+        // Resolution is specified as pixel length of our internal buffer.
+        // Though, we might not be rendering the whole object at time,
+        // so we need to calculate the correct pixel size
         int x_len = (int)round(((pb->area.x1 - pb->area.x0) * _x_pixels) / (item->bbox.x1 - item->bbox.x0));
         if (x_len < 1) x_len = 1;
+        // If y-resolution is also set, count y-area in the same way as x-area
+        // Otherwise, make y-area so, that aspect ratio of input pixblock and
+        // internal pixblock are the same.
         int y_len;
         if (_y_pixels > 0) {
             y_len = (int)round(((pb->area.y1 - pb->area.y0) * _y_pixels) / (item->bbox.y1 - item->bbox.y0));
@@ -104,6 +119,7 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
                           y_len / (double)(pb->area.y1 - pb->area.y0));
         trans *= res_scaling;
     } else {
+        // If filter resolution is automatic, just make copy of input image
         nr_pixblock_setup_fast(in, pb->mode,
                                pb->area.x0, pb->area.y0,
                                pb->area.x1, pb->area.y1, true);
@@ -112,27 +128,38 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
+    // TODO: loop through the primitives and render them one at a time
     _primitive[0]->render(slot, trans);
 
     NRPixBlock *out = slot.get(_output_slot);
 
+    // Clear the pixblock, where the output will be put
+    // -> the original image does not show through
     int size = (pb->area.x1 - pb->area.x0)
         * (pb->area.y1 - pb->area.y0)
         * NR_PIXBLOCK_BPP(pb);
     memset(NR_PIXBLOCK_PX(pb), 0, size);
-        
+
+    // If the filter resolution is automatic, just copy our final image
+    // to output pixblock, otherwise use bicubic scaling
     if (_x_pixels < 0) {
         nr_blit_pixblock_pixblock(pb, out);
     } else {
         scale_bicubic(pb, out);
     }
 
+    // Take note of the amount of used image slots
+    // -> next time this filter is rendered, we can reserve enough slots
+    // immediately
     _slot_count = slot.get_slot_count();
     return 0;
 }
 
 int Filter::get_enlarge(Matrix const &m)
 {
+    // Just sum the enlargement factor of all filter elements.
+    // TODO: this both sucks and blows for filters like feOffset
+    // -> ditch this method and design a better one...
     int enlarge = 0;
     for ( int i = 0 ; i < _primitive_count ; i++ ) {
         if(_primitive[i]) enlarge += _primitive[i]->get_enlarge(m);
@@ -182,11 +209,17 @@ void Filter::bbox_enlarge(NRRectL &bbox)
     }
 }
 
+/* Constructor table holds pointers to static methods returning filter
+ * primitives. This table is indexed with FilterPrimitiveType, so that
+ * for example method in _constructor[NR_FILTER_GAUSSIANBLUR]
+ * returns a filter object of type NR::FilterGaussian.
+ */
 typedef FilterPrimitive*(*FilterConstructor)();
 static FilterConstructor _constructor[NR_FILTER_ENDPRIMITIVETYPE];
 
 void Filter::_create_constructor_table()
 {
+    // Constructor table won't change in run-time, so no need to recreate
     static bool created = false;
     if(created) return;
 
@@ -207,8 +240,13 @@ void Filter::_create_constructor_table()
     _constructor[NR_FILTER_SPECULARLIGHTING] = NULL;
     _constructor[NR_FILTER_TILE] = NULL;
     _constructor[NR_FILTER_TURBULENCE] = NULL;
+    created = true;
 }
 
+/** Helper method for enlarging table of filter primitives. When new
+ * primitives are added, but we have no space for them, this function
+ * makes some more space.
+ */
 void Filter::_enlarge_primitive_table() {
     FilterPrimitive **new_tbl = new FilterPrimitive*[_primitive_table_size * 2];
     for (int i = 0 ; i < _primitive_count ; i++) {

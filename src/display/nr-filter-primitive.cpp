@@ -23,6 +23,8 @@ FilterPrimitive::FilterPrimitive()
     _input = NR_FILTER_SLOT_NOT_SET;
     _output = NR_FILTER_SLOT_NOT_SET;
 
+    // These defaults are according to SVG standard.
+    // NB: SVGLength.set takes prescaled percent values: 1 means 100%
     _region_x.set(SVGLength::PERCENT, 0, 0);
     _region_y.set(SVGLength::PERCENT, 0, 0);
     _region_width.set(SVGLength::PERCENT, 1, 0);
@@ -34,6 +36,7 @@ FilterPrimitive::~FilterPrimitive()
     // Nothing to do here
 }
 
+/** Wrapper function for rendering with C-style matrices. */
 int FilterPrimitive::render(FilterSlot &slot, NRMatrix const *trans) {
     if(trans) {
         return this->render(slot, *trans);
