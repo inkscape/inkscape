@@ -81,6 +81,8 @@
 
 #include "debug/logger.h"
 
+//#include "helper/png-write.h"
+
 #include <extension/extension.h>
 #include <extension/system.h>
 #include <extension/db.h>
