@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 22:14+0200\n"
+"POT-Creation-Date: 2006-07-18 20:40+0200\n"
 "PO-Revision-Date: 2006-04-27 04:45+0000\n"
 "Last-Translator: Antônio Cláudio (LedStyle) <ledstyle@gmail.com>\n"
 "Language-Team: Brazillian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -139,7 +139,7 @@ msgstr "Selecione <b>um objeto</b> para separar clones."
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Selecione <b>um objeto</b> clonado para remover clones."
 
-#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1963
+#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1964
 msgid "Select an <b>object</b> to clone."
 msgstr "Selecione um <b>objeto</b> para clonar."
 
@@ -779,123 +779,123 @@ msgid "none"
 msgstr "nenhum"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2252
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2252
 msgid "_Page"
 msgstr "_Página"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2256
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2256
 msgid "_Drawing"
 msgstr "_Desenho"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2258
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
 msgid "_Selection"
 msgstr "_Seleção"
 
-#: ../src/dialogs/export.cpp:133
+#: ../src/dialogs/export.cpp:135
 msgid "_Custom"
 msgstr "_Personalizado"
 
-#: ../src/dialogs/export.cpp:257
+#: ../src/dialogs/export.cpp:259
 msgid "<big><b>Export area</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:271
+#: ../src/dialogs/export.cpp:273
 msgid "Units:"
 msgstr "Unidades:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:301
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:304
+#: ../src/dialogs/export.cpp:306
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "Largura:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:317
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:320
+#: ../src/dialogs/export.cpp:322
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Altura:"
 
-#: ../src/dialogs/export.cpp:414
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "_Largura:"
 
-#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "pixels em"
 
-#: ../src/dialogs/export.cpp:437
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:467
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr ""
 
-#: ../src/dialogs/export.cpp:538
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "_Navegar..."
 
-#: ../src/dialogs/export.cpp:577
+#: ../src/dialogs/export.cpp:579
 #, fuzzy
 msgid "_Export"
 msgstr "Exportar"
 
-#: ../src/dialogs/export.cpp:581
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "Exportar o arquivo bitmap com estas configurações"
 
-#: ../src/dialogs/export.cpp:1015
+#: ../src/dialogs/export.cpp:1017
 msgid "You have to enter a filename"
 msgstr "Você deve informar um nome de arquivo"
 
-#: ../src/dialogs/export.cpp:1020
+#: ../src/dialogs/export.cpp:1022
 msgid "The chosen area to be exported is invalid"
 msgstr "A área escolhida para ser exportada não é válida"
 
-#: ../src/dialogs/export.cpp:1029
+#: ../src/dialogs/export.cpp:1031
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "A pasta %s não existe ou não é uma pasta.\n"
 
-#: ../src/dialogs/export.cpp:1045
+#: ../src/dialogs/export.cpp:1047
 msgid "Export in progress"
 msgstr "Exportação em progresso"
 
-#: ../src/dialogs/export.cpp:1051
+#: ../src/dialogs/export.cpp:1053
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Exportando %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1078
+#: ../src/dialogs/export.cpp:1080
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Não foi possível exportar para o arquivo %s.\n"
 
-#: ../src/dialogs/export.cpp:1184
+#: ../src/dialogs/export.cpp:1186
 msgid "Select a filename for exporting"
 msgstr "Selecione um nome de arquivo para exportar"
 
@@ -1139,7 +1139,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1823 ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "Seleção"
 
@@ -1481,7 +1481,7 @@ msgstr "Identificador"
 msgid "Unique URI to reference this document."
 msgstr "URL única para referenciar este desenho."
 
-#: ../src/dialogs/rdf.cpp:266
+#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1843
 msgid "Source"
 msgstr "Fonte"
 
@@ -1886,17 +1886,17 @@ msgstr ""
 "Não foi possível ajustar <b>%s</b>: Outro elemento com este valor <b>%s</b> "
 "já existe!"
 
-#: ../src/document.cpp:367
+#: ../src/document.cpp:369
 #, c-format
 msgid "New document %d"
 msgstr "Novo desenho %d"
 
-#: ../src/document.cpp:399
+#: ../src/document.cpp:401
 #, c-format
 msgid "Memory document %d"
 msgstr "Desenho de memória %d"
 
-#: ../src/document.cpp:542
+#: ../src/document.cpp:544
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Desenho sem nome %d"
@@ -2466,49 +2466,49 @@ msgstr "Detecção de formato falhou. O arquivo será aberto como SVG."
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:131
+#: ../src/file.cpp:124
 msgid "default.svg"
 msgstr "padrao.svg"
 
-#: ../src/file.cpp:216 ../src/file.cpp:903
+#: ../src/file.cpp:211 ../src/file.cpp:824
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Falha ao carregar o arquivo %s"
 
-#: ../src/file.cpp:241
+#: ../src/file.cpp:236
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Desenho não foi salvo ainda. Não posso reverter."
 
-#: ../src/file.cpp:247
+#: ../src/file.cpp:242
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "As mudanças serão perdidas! Tem certeza que deseja recarregar o desenho %s?"
 
-#: ../src/file.cpp:267
+#: ../src/file.cpp:262
 msgid "Document reverted."
 msgstr "Desenho revertido."
 
-#: ../src/file.cpp:269
+#: ../src/file.cpp:264
 msgid "Document not reverted."
 msgstr "Desenho não foi revertido."
 
-#: ../src/file.cpp:383
+#: ../src/file.cpp:385
 msgid "Select file to open"
 msgstr "Selecionar um arquivo para abrir"
 
-#: ../src/file.cpp:520
+#: ../src/file.cpp:467
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "<b>%i</b> definição não usada em &lt;defs&gt; removida."
 msgstr[1] "<b>%i</b> definições não usadas em &lt;defs&gt; removidas."
 
-#: ../src/file.cpp:525
+#: ../src/file.cpp:472
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Sem definições indefinidas em &lt;defs&gt;."
 
-#: ../src/file.cpp:550
+#: ../src/file.cpp:498
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2517,39 +2517,44 @@ msgstr ""
 "Nenhum extensão do Inkscape foi encontrada para salvar o desenho (%s). Isto "
 "deve ter sido causado por uma extensão de arquivo desconhecida."
 
-#: ../src/file.cpp:551 ../src/file.cpp:559
+#: ../src/file.cpp:499 ../src/file.cpp:507
 msgid "Document not saved."
 msgstr "Desenho não foi salvo."
 
-#: ../src/file.cpp:558
+#: ../src/file.cpp:506
 #, c-format
 msgid "File %s could not be saved."
 msgstr "O arquivo %s não pode ser salvo."
 
-#: ../src/file.cpp:568
+#: ../src/file.cpp:516
 msgid "Document saved."
 msgstr "Desenho salvo."
 
-#: ../src/file.cpp:616
+#: ../src/file.cpp:573 ../src/file.cpp:947
 #, c-format
 msgid "drawing%s"
 msgstr "desenho%s"
 
-#: ../src/file.cpp:622
+#: ../src/file.cpp:579
 #, c-format
 msgid "drawing-%d%s"
 msgstr "desenho-%d%s"
 
-#: ../src/file.cpp:657
+#: ../src/file.cpp:600
 msgid "Select file to save to"
 msgstr "Selecionar um arquivo para salvar"
 
-#: ../src/file.cpp:741
+#: ../src/file.cpp:661
 msgid "No changes need to be saved."
 msgstr "Nenhuma mudança que precise ser salva."
 
-#: ../src/file.cpp:929
+#: ../src/file.cpp:852
 msgid "Select file to import"
+msgstr "Selecione o arquivo a importar"
+
+#: ../src/file.cpp:969
+#, fuzzy
+msgid "Select file to export to"
 msgstr "Selecione o arquivo a importar"
 
 #: ../src/gradient-context.cpp:260
@@ -3036,48 +3041,48 @@ msgstr "Arrasto de nó ou alça cancelado."
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignorando fonte sem família que irá travar o Pango"
 
-#: ../src/main.cpp:197
+#: ../src/main.cpp:199
 msgid "Print the Inkscape version number"
 msgstr "Imprimir o número de versão do Inkscape"
 
-#: ../src/main.cpp:202
+#: ../src/main.cpp:204
 msgid "Do not use X server (only process files from console)"
 msgstr "Não usar o servidor X (somente arquivos de processos do console)"
 
-#: ../src/main.cpp:207
+#: ../src/main.cpp:209
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Tente usar o servidor X (mesmo se $DISPLAY não foi definido)"
 
-#: ../src/main.cpp:212
+#: ../src/main.cpp:214
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr ""
 "Abrir o(s) desenho(s) especificado(s) (frase de opção pode ser excluída)"
 
-#: ../src/main.cpp:213 ../src/main.cpp:218 ../src/main.cpp:223
-#: ../src/main.cpp:290 ../src/main.cpp:295 ../src/main.cpp:300
-#: ../src/main.cpp:305
+#: ../src/main.cpp:215 ../src/main.cpp:220 ../src/main.cpp:225
+#: ../src/main.cpp:292 ../src/main.cpp:297 ../src/main.cpp:302
+#: ../src/main.cpp:307
 msgid "FILENAME"
 msgstr "ARQUIVO"
 
-#: ../src/main.cpp:217
+#: ../src/main.cpp:219
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "Imprimir desenho(s) para arquivo especificado (  use '| programa' para "
 "redirecionamento)"
 
-#: ../src/main.cpp:222
+#: ../src/main.cpp:224
 msgid "Export document to a PNG file"
 msgstr "Exportar desenho para um arquivo PNG"
 
-#: ../src/main.cpp:227
+#: ../src/main.cpp:229
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr "A resolução usada para converter o SVG para um bitmap (padrão 90)"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:232
+#: ../src/main.cpp:234
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
@@ -3085,20 +3090,20 @@ msgstr ""
 "Área exportada em unidades de usuário SVG (padrão é todo o desenho, 0,0 é o "
 "canto esquerdo inferior)"
 
-#: ../src/main.cpp:233
+#: ../src/main.cpp:235
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:237
+#: ../src/main.cpp:239
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "A área esportada é o desenho inteiro (não a tela de pintura)"
 
-#: ../src/main.cpp:242
+#: ../src/main.cpp:244
 #, fuzzy
 msgid "Exported area is the entire canvas"
 msgstr "A área esportada é o desenho inteiro (não a tela de pintura)"
 
-#: ../src/main.cpp:247
+#: ../src/main.cpp:249
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -3106,91 +3111,91 @@ msgstr ""
 "Copie a imagem exportada para a área de transferência mantendo os valores "
 "inteiros (no SVG com unidades do usuário)"
 
-#: ../src/main.cpp:252
+#: ../src/main.cpp:254
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "A largura da figura exportada em pixels (sobrescreve export-dpi)"
 
-#: ../src/main.cpp:253
+#: ../src/main.cpp:255
 msgid "WIDTH"
 msgstr "LARGURA"
 
-#: ../src/main.cpp:257
+#: ../src/main.cpp:259
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "A altura da figura exportadaa em pixels (sobrescreve export-dpi)"
 
-#: ../src/main.cpp:258
+#: ../src/main.cpp:260
 msgid "HEIGHT"
 msgstr "ALTURA"
 
-#: ../src/main.cpp:262
+#: ../src/main.cpp:264
 #, fuzzy
 msgid "The ID of the object to export"
 msgstr "O ID do objeto para exportar (sobrescreve área-de-exportação)"
 
-#: ../src/main.cpp:263 ../src/main.cpp:344
+#: ../src/main.cpp:265 ../src/main.cpp:346
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:269
+#: ../src/main.cpp:271
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Exportar somente o objeto com id-exportação, esconder todos os outros "
 "(somente com id-exportação)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:276
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 "Usar nome de arquivo armazenado e dicas de DPI ao exportar (somente com id-"
 "exportação)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:281
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "Cor de fundo da figura exportada (qualquer palavra de cor do SVG)"
 
-#: ../src/main.cpp:280
+#: ../src/main.cpp:282
 msgid "COLOR"
 msgstr "COR"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:286
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "Opacidado do fundo da figura exportada (De 0 a 1, ou 1 a 255)"
 
-#: ../src/main.cpp:285
+#: ../src/main.cpp:287
 msgid "VALUE"
 msgstr "VALOR"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:291
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Exportar o desenho para um arquivo SVG simples (sem namespaces sodipodi ou "
 "inkscape)"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:296
 msgid "Export document to a PS file"
 msgstr "Exportar documento para um arquivo PS"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:301
 msgid "Export document to an EPS file"
 msgstr "Exportar documento para um arquivo EPS"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:306
 #, fuzzy
 msgid "Export document to a PDF file"
 msgstr "Exportar documento para um arquivo PS"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:311
 msgid "Convert text object to paths on export (EPS)"
 msgstr "Converter texto em objetos ao exportar (EPS)"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:316
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr "Exportar arquivos com as margens ajustadas ao tamanho da página (EPS)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:320
+#: ../src/main.cpp:322
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3199,7 +3204,7 @@ msgstr ""
 "query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:326
+#: ../src/main.cpp:328
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3208,7 +3213,7 @@ msgstr ""
 "query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:332
+#: ../src/main.cpp:334
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3217,7 +3222,7 @@ msgstr ""
 "id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:338
+#: ../src/main.cpp:340
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3225,29 +3230,29 @@ msgstr ""
 "Perguntar a largura de um desenho ou, se especificado, do objeto com --query-"
 "id"
 
-#: ../src/main.cpp:343
+#: ../src/main.cpp:345
 msgid "The ID of the object whose dimensions are queried"
 msgstr "O ID do objeto cujas dimensões são pesquisadas"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:349
+#: ../src/main.cpp:351
 msgid "Print out the extension directory and exit"
 msgstr "Imprime o diretório das extensões e sai"
 
-#: ../src/main.cpp:354
+#: ../src/main.cpp:356
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr ""
 "Mostrar os arquivo um a um e pula para o próximo em qualquer tecla ou clique"
 
-#: ../src/main.cpp:359
+#: ../src/main.cpp:361
 msgid "Use the new Gtkmm GUI interface"
 msgstr "Utilizar a nova interface gráfica Gtkmm"
 
-#: ../src/main.cpp:364
+#: ../src/main.cpp:366
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Apagar definições não usadas da(s) seção(ões) <defs> do documento"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:561
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3925,252 +3930,252 @@ msgstr ""
 "O objeto selecionado <b>não é um caminho</b>. Não é possível comprimir/"
 "expandir"
 
-#: ../src/selection-chemistry.cpp:217
+#: ../src/selection-chemistry.cpp:218
 #, fuzzy
 msgid "Delete text"
 msgstr "Apagar nó"
 
-#: ../src/selection-chemistry.cpp:225
+#: ../src/selection-chemistry.cpp:226
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Nada</b> foi apagado."
 
-#: ../src/selection-chemistry.cpp:243
+#: ../src/selection-chemistry.cpp:244
 #, fuzzy
 msgid "Delete"
 msgstr "Apa_gar"
 
-#: ../src/selection-chemistry.cpp:257
+#: ../src/selection-chemistry.cpp:258
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Selecione <b>alguns objetos</b> para duplicar."
 
-#: ../src/selection-chemistry.cpp:282 ../src/widgets/gradient-selector.cpp:133
+#: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:488
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: ../src/selection-chemistry.cpp:307
+#: ../src/selection-chemistry.cpp:308
 #, fuzzy
 msgid "Delete all"
 msgstr "Apa_gar"
 
-#: ../src/selection-chemistry.cpp:430
+#: ../src/selection-chemistry.cpp:431
 msgid "Select <b>two or more objects</b> to group."
 msgstr "Selecione <b>dois ou mais objetos</b> para agrupar."
 
-#: ../src/selection-chemistry.cpp:438
+#: ../src/selection-chemistry.cpp:439
 msgid "Select <b>at least two objects</b> to group."
 msgstr "Selecione <b>pelo menos dois objetos</b> para agrupar."
 
-#: ../src/selection-chemistry.cpp:509 ../src/selection-describer.cpp:49
+#: ../src/selection-chemistry.cpp:510 ../src/selection-describer.cpp:49
 #, fuzzy
 msgid "Group"
 msgstr "A_grupar"
 
-#: ../src/selection-chemistry.cpp:524
+#: ../src/selection-chemistry.cpp:525
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Selecione um <b>grupo</b> para desagrupar."
 
-#: ../src/selection-chemistry.cpp:565
+#: ../src/selection-chemistry.cpp:566
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Nenhum grupo</b> para desagrupar na seleção."
 
-#: ../src/selection-chemistry.cpp:571
+#: ../src/selection-chemistry.cpp:572
 #, fuzzy
 msgid "Ungroup"
 msgstr "Desagr_upar"
 
-#: ../src/selection-chemistry.cpp:635
+#: ../src/selection-chemistry.cpp:636
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Selecione <b>algum objetos</b> para levantar."
 
-#: ../src/selection-chemistry.cpp:641 ../src/selection-chemistry.cpp:694
-#: ../src/selection-chemistry.cpp:729 ../src/selection-chemistry.cpp:788
+#: ../src/selection-chemistry.cpp:642 ../src/selection-chemistry.cpp:695
+#: ../src/selection-chemistry.cpp:730 ../src/selection-chemistry.cpp:789
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "Você não pode levantar/abaixar objetos de <b>diferentes grupos ou camadas</"
 "b>."
 
-#: ../src/selection-chemistry.cpp:673
+#: ../src/selection-chemistry.cpp:674
 #, fuzzy
 msgid "Raise"
 msgstr "Levanta_r"
 
-#: ../src/selection-chemistry.cpp:686
+#: ../src/selection-chemistry.cpp:687
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Selecione <b>alguns objetos</b> para levantar até o topo."
 
-#: ../src/selection-chemistry.cpp:709
+#: ../src/selection-chemistry.cpp:710
 #, fuzzy
 msgid "Raise to top"
 msgstr "Levantar no _Topo"
 
-#: ../src/selection-chemistry.cpp:723
+#: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Selecione <b>alguns objetos</b> para abaixar."
 
-#: ../src/selection-chemistry.cpp:766
+#: ../src/selection-chemistry.cpp:767
 #, fuzzy
 msgid "Lower"
 msgstr "Abai_xar"
 
-#: ../src/selection-chemistry.cpp:780
+#: ../src/selection-chemistry.cpp:781
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Selecione <b>alguns objetos</b> para abaixar até o fundo."
 
-#: ../src/selection-chemistry.cpp:815
+#: ../src/selection-chemistry.cpp:816
 #, fuzzy
 msgid "Lower to bottom"
 msgstr "A_baixar para o Fundo"
 
-#: ../src/selection-chemistry.cpp:822
+#: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
 msgstr "Nada para desfazer."
 
-#: ../src/selection-chemistry.cpp:829
+#: ../src/selection-chemistry.cpp:830
 msgid "Nothing to redo."
 msgstr "Nada para refazer."
 
-#: ../src/selection-chemistry.cpp:999
+#: ../src/selection-chemistry.cpp:1000
 msgid "Nothing was copied."
 msgstr "Nada foi copiado."
 
-#: ../src/selection-chemistry.cpp:1099 ../src/selection-chemistry.cpp:1136
-#: ../src/selection-chemistry.cpp:1163 ../src/selection-chemistry.cpp:1199
+#: ../src/selection-chemistry.cpp:1100 ../src/selection-chemistry.cpp:1137
+#: ../src/selection-chemistry.cpp:1164 ../src/selection-chemistry.cpp:1200
 msgid "Nothing on the clipboard."
 msgstr "Nada na área de transferência."
 
-#: ../src/selection-chemistry.cpp:1124
+#: ../src/selection-chemistry.cpp:1125
 #, fuzzy
 msgid "Paste"
 msgstr "Co_lar"
 
-#: ../src/selection-chemistry.cpp:1142
+#: ../src/selection-chemistry.cpp:1143
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Selecione <b>os objetos</b> para onde será colado o estilo."
 
-#: ../src/selection-chemistry.cpp:1151
+#: ../src/selection-chemistry.cpp:1152
 #, fuzzy
 msgid "Paste style"
 msgstr "Colar E_stilo"
 
-#: ../src/selection-chemistry.cpp:1169 ../src/selection-chemistry.cpp:1205
+#: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Selecione <b>os objetos</b> para onde será colado o estilo."
 
-#: ../src/selection-chemistry.cpp:1187
+#: ../src/selection-chemistry.cpp:1188
 #, fuzzy
 msgid "Paste size"
 msgstr "Colar E_stilo"
 
-#: ../src/selection-chemistry.cpp:1228
+#: ../src/selection-chemistry.cpp:1229
 msgid "Paste size separately"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1239
+#: ../src/selection-chemistry.cpp:1240
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Selecione <b>objeto(s)</b> para mover para a camada acima."
 
-#: ../src/selection-chemistry.cpp:1264
+#: ../src/selection-chemistry.cpp:1265
 #, fuzzy
 msgid "Raise to next layer"
 msgstr "Movido para a próxima camada."
 
-#: ../src/selection-chemistry.cpp:1270
+#: ../src/selection-chemistry.cpp:1271
 msgid "No more layers above."
 msgstr "Não há mais camadas acima."
 
-#: ../src/selection-chemistry.cpp:1284
+#: ../src/selection-chemistry.cpp:1285
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Selecione <b>objeto(s)</b> para mover para a camada abaixo."
 
-#: ../src/selection-chemistry.cpp:1309
+#: ../src/selection-chemistry.cpp:1310
 #, fuzzy
 msgid "Lower to previous layer"
 msgstr "Movido para a camada anterior."
 
-#: ../src/selection-chemistry.cpp:1315
+#: ../src/selection-chemistry.cpp:1316
 msgid "No more layers below."
 msgstr "Não há mais camadas abaixo."
 
-#: ../src/selection-chemistry.cpp:1457
+#: ../src/selection-chemistry.cpp:1458
 #, fuzzy
 msgid "Remove transform"
 msgstr "Remover _Transformações"
 
-#: ../src/selection-chemistry.cpp:1566
+#: ../src/selection-chemistry.cpp:1567
 #, fuzzy
 msgid "Rotate 90&#176; CW"
 msgstr "Girar +_90 graus"
 
-#: ../src/selection-chemistry.cpp:1594
+#: ../src/selection-chemistry.cpp:1595
 #, fuzzy
 msgid "Rotate 90&#176; CCW"
 msgstr "Girar -9_0 graus"
 
-#: ../src/selection-chemistry.cpp:1612 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
 #, fuzzy
 msgid "Rotate"
 msgstr "Girar"
 
-#: ../src/selection-chemistry.cpp:1641
+#: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1667 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
 #, fuzzy
 msgid "Scale"
 msgstr "Ampliar"
 
-#: ../src/selection-chemistry.cpp:1686
+#: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1702
+#: ../src/selection-chemistry.cpp:1703
 #, fuzzy
 msgid "Move vertically"
 msgstr "Inverter a posição da seleção verticalmente"
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1706
 #, fuzzy
 msgid "Move horizontally"
 msgstr "Horizontal"
 
-#: ../src/selection-chemistry.cpp:1708 ../src/selection-chemistry.cpp:1736
+#: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
 #, fuzzy
 msgid "Move"
 msgstr "Mover"
 
-#: ../src/selection-chemistry.cpp:1730
+#: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1733
+#: ../src/selection-chemistry.cpp:1734
 msgid "Nudge horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1997 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 #, fuzzy
 msgid "Clone"
 msgstr "Clo_nar"
 
-#: ../src/selection-chemistry.cpp:2014
+#: ../src/selection-chemistry.cpp:2015
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Selecionar um <b>clone</b> para romper a ligação."
 
-#: ../src/selection-chemistry.cpp:2045
+#: ../src/selection-chemistry.cpp:2046
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b>Nenhum clone</b> para romper a ligação na seleção."
 
-#: ../src/selection-chemistry.cpp:2049
+#: ../src/selection-chemistry.cpp:2050
 #, fuzzy
 msgid "Unlink clone"
 msgstr "Desl_igar Clone"
 
-#: ../src/selection-chemistry.cpp:2063
+#: ../src/selection-chemistry.cpp:2064
 #, fuzzy
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
@@ -4182,7 +4187,7 @@ msgstr ""
 "caminho</b> pra ir para o caminho. Selecione uma <b>caixa de texto</b> para "
 "ir à sua moldura."
 
-#: ../src/selection-chemistry.cpp:2086
+#: ../src/selection-chemistry.cpp:2087
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4190,7 +4195,7 @@ msgstr ""
 "<b>Não foi encontrado</b> o objeto para selecionar (clone órfão, tipografia "
 "ou texto flutuante?)"
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2093
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4198,74 +4203,74 @@ msgstr ""
 "O objeto que você está tentando selecionar <b>não está visível</b> (está no "
 "&lt;defs&gt;)"
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2120
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Selecione <b>um ou mais objetos</b> para converter em padrão."
 
-#: ../src/selection-chemistry.cpp:2195
+#: ../src/selection-chemistry.cpp:2196
 #, fuzzy
 msgid "Objects to pattern"
 msgstr "O_bjeto para Padrão"
 
-#: ../src/selection-chemistry.cpp:2211
+#: ../src/selection-chemistry.cpp:2212
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 "Selecione um <b>objeto com padrão de preenchimento</b> para extrair objetos "
 "dele."
 
-#: ../src/selection-chemistry.cpp:2264
+#: ../src/selection-chemistry.cpp:2265
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Nenhum preenchimento com padrões de preenchimento</b> na seleção."
 
-#: ../src/selection-chemistry.cpp:2267
+#: ../src/selection-chemistry.cpp:2268
 #, fuzzy
 msgid "Pattern to objects"
 msgstr "Padrão para O_bjeto"
 
-#: ../src/selection-chemistry.cpp:2285
+#: ../src/selection-chemistry.cpp:2286
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Selecione alguns objetos para levantar até o topo."
 
-#: ../src/selection-chemistry.cpp:2417
+#: ../src/selection-chemistry.cpp:2418
 #, fuzzy
 msgid "Create bitmap"
 msgstr "_Traçar Bitmap"
 
-#: ../src/selection-chemistry.cpp:2449
+#: ../src/selection-chemistry.cpp:2450
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Selecione <b>alguns objetos</b> para levantar até o topo."
 
-#: ../src/selection-chemistry.cpp:2452
+#: ../src/selection-chemistry.cpp:2453
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Selecione <b>os objetos</b> para onde será colado o estilo."
 
-#: ../src/selection-chemistry.cpp:2543
+#: ../src/selection-chemistry.cpp:2544
 #, fuzzy
 msgid "Set clipping path"
 msgstr "Fechando o caminho."
 
-#: ../src/selection-chemistry.cpp:2545
+#: ../src/selection-chemistry.cpp:2546
 #, fuzzy
 msgid "Set mask"
 msgstr "Estrelas"
 
-#: ../src/selection-chemistry.cpp:2558
+#: ../src/selection-chemistry.cpp:2559
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Selecione <b>texto(s)</b> para remover kerns."
 
-#: ../src/selection-chemistry.cpp:2626
+#: ../src/selection-chemistry.cpp:2627
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2628
+#: ../src/selection-chemistry.cpp:2629
 #, fuzzy
 msgid "Release mask"
 msgstr "_Reverso"
 
-#: ../src/selection-chemistry.cpp:2672
+#: ../src/selection-chemistry.cpp:2673
 #, fuzzy
 msgid "Fit page to selection"
 msgstr "Ajustar à caixa de seleção"
@@ -5382,7 +5387,7 @@ msgstr "Menor item"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1819 ../src/widgets/desktop-widget.cpp:1070
 msgid "Page"
 msgstr "Página"
 
@@ -5783,36 +5788,106 @@ msgstr "Aj_uda"
 msgid "Parameters"
 msgstr "Metros"
 
-#: ../src/ui/dialog/filedialog.cpp:449
+#: ../src/ui/dialog/filedialog.cpp:455
 msgid "No preview"
 msgstr "Nenhuma visualização"
 
-#: ../src/ui/dialog/filedialog.cpp:550
+#: ../src/ui/dialog/filedialog.cpp:556
 msgid "too large for preview"
 msgstr "muito grande para visualização"
 
-#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+#: ../src/ui/dialog/filedialog.cpp:888 ../src/ui/dialog/filedialog.cpp:889
 msgid "All Images"
 msgstr "Todas as Imagens"
 
-#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+#: ../src/ui/dialog/filedialog.cpp:893 ../src/ui/dialog/filedialog.cpp:894
 msgid "All Files"
 msgstr "Todos os arquivos"
 
-#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+#: ../src/ui/dialog/filedialog.cpp:900 ../src/ui/dialog/filedialog.cpp:901
 msgid "All Inkscape Files"
 msgstr "Todos os arquivos do Inkscape"
 
-#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+#: ../src/ui/dialog/filedialog.cpp:1309 ../src/ui/dialog/filedialog.cpp:1756
 msgid "Guess from extension"
 msgstr "Sugerir a partir da extensão"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+#. ###### File options
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1360 ../src/ui/dialog/filedialog.cpp:1880
 msgid "Append filename extension automatically"
 msgstr "Acrescentar extensão de arquivo automaticamente"
+
+#: ../src/ui/dialog/filedialog.cpp:1776
+msgid "Source left bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1777
+msgid "Source top bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1778
+msgid "Source right bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1779
+msgid "Source bottom bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1780
+#, fuzzy
+msgid "Source width"
+msgstr "Largura do traço"
+
+#: ../src/ui/dialog/filedialog.cpp:1781
+#, fuzzy
+msgid "Source height"
+msgstr "Altura:"
+
+#: ../src/ui/dialog/filedialog.cpp:1782
+#, fuzzy
+msgid "Destination width"
+msgstr "Destino da impressão"
+
+#: ../src/ui/dialog/filedialog.cpp:1783
+#, fuzzy
+msgid "Destination height"
+msgstr "Destino da impressão"
+
+#: ../src/ui/dialog/filedialog.cpp:1784
+#, fuzzy
+msgid "Dots per inch resolution"
+msgstr "Resolução padrão de exportação"
+
+#. #########################################
+#. ## EXTRA WIDGET -- SOURCE SIDE
+#. #########################################
+#. ##### Export options buttons/spinners, etc
+#: ../src/ui/dialog/filedialog.cpp:1815
+#, fuzzy
+msgid "Document"
+msgstr "Nome do Desenho:"
+
+#: ../src/ui/dialog/filedialog.cpp:1863
+msgid "Cairo"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1866
+msgid "Antialias"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1869
+#, fuzzy
+msgid "Background"
+msgstr "Plano de Fundo:"
+
+#: ../src/ui/dialog/filedialog.cpp:1892
+#, fuzzy
+msgid "Destination"
+msgstr "Destino da impressão"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -10241,7 +10316,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4022
 #, fuzzy
-msgid "Make connectors point downwards"
+msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Fazer com que os conectores evitem os objetos selecionados"
 
 #: ../src/widgets/toolbox.cpp:4036
@@ -11834,10 +11909,6 @@ msgstr ""
 #~ msgstr "Janela do Editor XML"
 
 #, fuzzy
-#~ msgid "Row height:"
-#~ msgstr "Altura:"
-
-#, fuzzy
 #~ msgid "Column width:"
 #~ msgstr "<b>Círculo</b>"
 
@@ -12062,9 +12133,6 @@ msgstr ""
 
 #~ msgid "Untitled"
 #~ msgstr "Sem Título"
-
-#~ msgid "Document Name:"
-#~ msgstr "Nome do Desenho:"
 
 #~ msgid "Image URI:"
 #~ msgstr "URI da Imagem:"

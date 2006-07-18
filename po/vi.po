@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 22:14+0200\n"
+"POT-Creation-Date: 2006-07-18 20:40+0200\n"
 "PO-Revision-Date: 2006-06-19 22:38+0200\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
@@ -139,7 +139,7 @@ msgstr "Chọn <b>một đối tượng</b> có bộ nhái được lát đều 
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Chọn <b>một đối tượng</b> có bộ nhái được lát đều cần gỡ bỏ."
 
-#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1963
+#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1964
 msgid "Select an <b>object</b> to clone."
 msgstr "Chọn <b>một đối tượng</b> cần khái."
 
@@ -780,122 +780,122 @@ msgid "none"
 msgstr "không có"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2252
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2252
 msgid "_Page"
 msgstr "T_rang"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2256
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2256
 msgid "_Drawing"
 msgstr "_Vẽ"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2258
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
 msgid "_Selection"
 msgstr "_Vùng chọn"
 
-#: ../src/dialogs/export.cpp:133
+#: ../src/dialogs/export.cpp:135
 msgid "_Custom"
 msgstr "Tự _chọn"
 
-#: ../src/dialogs/export.cpp:257
+#: ../src/dialogs/export.cpp:259
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>Xuất vùng</b></big>"
 
-#: ../src/dialogs/export.cpp:271
+#: ../src/dialogs/export.cpp:273
 msgid "Units:"
 msgstr "Đơn vị:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:301
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:304
+#: ../src/dialogs/export.cpp:306
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "Rộng:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:317
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:320
+#: ../src/dialogs/export.cpp:322
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Cao :"
 
-#: ../src/dialogs/export.cpp:414
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Cỡ mảng ảnh</b></big>"
 
-#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "_Rộng:"
 
-#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "điểm ảnh tại"
 
-#: ../src/dialogs/export.cpp:437
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:467
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Tên tập tin</b></big>"
 
-#: ../src/dialogs/export.cpp:538
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "_Duyệt..."
 
-#: ../src/dialogs/export.cpp:577
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "_Xuất"
 
-#: ../src/dialogs/export.cpp:581
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "Xuất khẩu tập tin mảng ảnh với thiết lập này"
 
-#: ../src/dialogs/export.cpp:1015
+#: ../src/dialogs/export.cpp:1017
 msgid "You have to enter a filename"
 msgstr "Bạn phải nhập tên tập tin."
 
-#: ../src/dialogs/export.cpp:1020
+#: ../src/dialogs/export.cpp:1022
 msgid "The chosen area to be exported is invalid"
 msgstr "Bạn đã chọn xuất khẩu một vùng không hợp lệ."
 
-#: ../src/dialogs/export.cpp:1029
+#: ../src/dialogs/export.cpp:1031
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Thư mục %s không tồn tại hay không phải là một thư mục.\n"
 
-#: ../src/dialogs/export.cpp:1045
+#: ../src/dialogs/export.cpp:1047
 msgid "Export in progress"
 msgstr "Tiến trình xuất khẩu đang chạy"
 
-#: ../src/dialogs/export.cpp:1051
+#: ../src/dialogs/export.cpp:1053
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Đang xuất %s (%d x %d)"
 
-#: ../src/dialogs/export.cpp:1078
+#: ../src/dialogs/export.cpp:1080
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Không thể xuất khẩu vào tập tin %s.\n"
 
-#: ../src/dialogs/export.cpp:1184
+#: ../src/dialogs/export.cpp:1186
 msgid "Select a filename for exporting"
 msgstr "Chọn tên tập tin cần xuất khẩu"
 
@@ -1137,7 +1137,7 @@ msgstr "%d × %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1823 ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "Vùng chọn"
 
@@ -1470,7 +1470,7 @@ msgstr "Bộ nhận diện"
 msgid "Unique URI to reference this document."
 msgstr "Địa chỉ duy nhất tham chiếu đến tài liệu này."
 
-#: ../src/dialogs/rdf.cpp:266
+#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1843
 msgid "Source"
 msgstr "Nguồn"
 
@@ -1871,17 +1871,17 @@ msgid ""
 msgstr ""
 "Không thể đặt <b>%s</b>: một thuộc tính khác có giá trị <b>%s</b> đã có !"
 
-#: ../src/document.cpp:367
+#: ../src/document.cpp:369
 #, c-format
 msgid "New document %d"
 msgstr "Tài liệu mới %d"
 
-#: ../src/document.cpp:399
+#: ../src/document.cpp:401
 #, c-format
 msgid "Memory document %d"
 msgstr "Tài liệu nhớ %d"
 
-#: ../src/document.cpp:542
+#: ../src/document.cpp:544
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Tài liệu không tên %d"
@@ -2422,47 +2422,47 @@ msgstr "Việc phát hiện tự động dạng thức bị lỗi nên đang m�
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:131
+#: ../src/file.cpp:124
 msgid "default.svg"
 msgstr "hình.svg"
 
-#: ../src/file.cpp:216 ../src/file.cpp:903
+#: ../src/file.cpp:211 ../src/file.cpp:824
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Lỗi tải tập tin được yêu cầu %s"
 
-#: ../src/file.cpp:241
+#: ../src/file.cpp:236
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Chưa lưu tài liệu nên không thể hoàn nguyên."
 
-#: ../src/file.cpp:247
+#: ../src/file.cpp:242
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "Các thay đổi sẽ bị mất ! Bạn có chắc muốn tải lại tài liệu %s không?"
 
-#: ../src/file.cpp:267
+#: ../src/file.cpp:262
 msgid "Document reverted."
 msgstr "Tài liệu đã được hoàn nguyên."
 
-#: ../src/file.cpp:269
+#: ../src/file.cpp:264
 msgid "Document not reverted."
 msgstr "Chưa hoàn nguyên tài liệu."
 
-#: ../src/file.cpp:383
+#: ../src/file.cpp:385
 msgid "Select file to open"
 msgstr "Chọn tập tin cần mở"
 
-#: ../src/file.cpp:520
+#: ../src/file.cpp:467
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Mới gỡ bỏ <b>%i</b> lời xác định chưa được dùng ra &lt;defs&gt;."
 
-#: ../src/file.cpp:525
+#: ../src/file.cpp:472
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Không có lời xác định chưa được dùng trong &lt;defs&gt;."
 
-#: ../src/file.cpp:550
+#: ../src/file.cpp:498
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2471,39 +2471,44 @@ msgstr ""
 "Không tìm thấy phần mở rộng Inkscape để lưu tài liệu (%s). Trường hợp có thể "
 "được gây ra bởi một phần mở rộng tên tập tin lạ."
 
-#: ../src/file.cpp:551 ../src/file.cpp:559
+#: ../src/file.cpp:499 ../src/file.cpp:507
 msgid "Document not saved."
 msgstr "Chưa lưu tài liệu."
 
-#: ../src/file.cpp:558
+#: ../src/file.cpp:506
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Không thể lưu tập tin %s."
 
-#: ../src/file.cpp:568
+#: ../src/file.cpp:516
 msgid "Document saved."
 msgstr "Tài liệu đã được tải."
 
-#: ../src/file.cpp:616
+#: ../src/file.cpp:573 ../src/file.cpp:947
 #, c-format
 msgid "drawing%s"
 msgstr "hình%s"
 
-#: ../src/file.cpp:622
+#: ../src/file.cpp:579
 #, c-format
 msgid "drawing-%d%s"
 msgstr "hình-%d%s"
 
-#: ../src/file.cpp:657
+#: ../src/file.cpp:600
 msgid "Select file to save to"
 msgstr "Chọn tập tin vào đó cần lưu"
 
-#: ../src/file.cpp:741
+#: ../src/file.cpp:661
 msgid "No changes need to be saved."
 msgstr "Không có thay đổi cần lưu."
 
-#: ../src/file.cpp:929
+#: ../src/file.cpp:852
 msgid "Select file to import"
+msgstr "Chọn tập tin cần nhập"
+
+#: ../src/file.cpp:969
+#, fuzzy
+msgid "Select file to export to"
 msgstr "Chọn tập tin cần nhập"
 
 #: ../src/gradient-context.cpp:260
@@ -2985,47 +2990,47 @@ msgstr "Việc kéo nút hay móc bị thôi."
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Đang bỏ qua phông chữ không có nhóm mà sẽ làm cho Pango sụp đổ."
 
-#: ../src/main.cpp:197
+#: ../src/main.cpp:199
 msgid "Print the Inkscape version number"
 msgstr "In ra số hiệu phiên bản của Inkscape"
 
-#: ../src/main.cpp:202
+#: ../src/main.cpp:204
 msgid "Do not use X server (only process files from console)"
 msgstr "Không dùng trình phục vụ X (chỉ xử lý tập tin từ bàn giao tiếp)"
 
-#: ../src/main.cpp:207
+#: ../src/main.cpp:209
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "Thử dùng trình phục vụ X (ngay cả nếu chưa đặt biến $DISPLAY)"
 
-#: ../src/main.cpp:212
+#: ../src/main.cpp:214
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "Mở (các) tài liệu đã xác định (có thể loại trừ chuỗi tùy chọn)"
 
-#: ../src/main.cpp:213 ../src/main.cpp:218 ../src/main.cpp:223
-#: ../src/main.cpp:290 ../src/main.cpp:295 ../src/main.cpp:300
-#: ../src/main.cpp:305
+#: ../src/main.cpp:215 ../src/main.cpp:220 ../src/main.cpp:225
+#: ../src/main.cpp:292 ../src/main.cpp:297 ../src/main.cpp:302
+#: ../src/main.cpp:307
 msgid "FILENAME"
 msgstr "TÊN TẬP TIN"
 
-#: ../src/main.cpp:217
+#: ../src/main.cpp:219
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 "In (các) tài liệu vào tập tin xuất đã xác định (dùng « | chương_trình » để "
 "gởi qua ống dẫn)"
 
-#: ../src/main.cpp:222
+#: ../src/main.cpp:224
 msgid "Export document to a PNG file"
 msgstr "Xuất tài liệu vào tập tin PNG"
 
-#: ../src/main.cpp:227
+#: ../src/main.cpp:229
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr "Độ phân giải được dùng để xuất SVG sang mảng ảnh (mặc định 90)"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:232
+#: ../src/main.cpp:234
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
@@ -3034,19 +3039,19 @@ msgstr ""
 "trái dưới)"
 
 # Literal: don't translate / Nghĩa chữ: đừng dịch
-#: ../src/main.cpp:233
+#: ../src/main.cpp:235
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:237
+#: ../src/main.cpp:239
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "Vùng được xuất là toàn bộ bản vẽ (không phải vùng vẽ)"
 
-#: ../src/main.cpp:242
+#: ../src/main.cpp:244
 msgid "Exported area is the entire canvas"
 msgstr "Vùng được xuất là toàn bộ vùng vẽ"
 
-#: ../src/main.cpp:247
+#: ../src/main.cpp:249
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
@@ -3054,90 +3059,90 @@ msgstr ""
 "Dính vùng xuất mảng ảnh ra đến những giá trị số nguyên gần nhất (theo đơn vị "
 "người dùng SVG)"
 
-#: ../src/main.cpp:252
+#: ../src/main.cpp:254
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 "Độ rộng của mảng ảnh được xuất theo điểm ảnh (có quyền cao hơn export-dpi)"
 
-#: ../src/main.cpp:253
+#: ../src/main.cpp:255
 msgid "WIDTH"
 msgstr "RỘNG"
 
-#: ../src/main.cpp:257
+#: ../src/main.cpp:259
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 "Độ cao của mảng ảnh được xuất theo điểm ảnh (có quyền cao hơn export-dpi)"
 
-#: ../src/main.cpp:258
+#: ../src/main.cpp:260
 msgid "HEIGHT"
 msgstr "CAO"
 
-#: ../src/main.cpp:262
+#: ../src/main.cpp:264
 msgid "The ID of the object to export"
 msgstr "Mã hiệu ID của đối tượng cần xuất"
 
-#: ../src/main.cpp:263 ../src/main.cpp:344
+#: ../src/main.cpp:265 ../src/main.cpp:346
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:269
+#: ../src/main.cpp:271
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 "Xuất chỉ đối tượng cùng với export-id, ẩn các điều khác (chỉ với export-id)"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:276
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr "Dùng tên tập tin được cất giữ và mẹo DPI khi xuất (chỉ với export-id)"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:281
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "Màu nền của mảng ảnh được xuất (bất cứ chuỗi màu nào được SVG hỗ trợ)"
 
-#: ../src/main.cpp:280
+#: ../src/main.cpp:282
 msgid "COLOR"
 msgstr "MÀU"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:286
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 "Độ mờ đục nền của mảng ảnh được xuất (hoặc 0.0 đến 1.0, hoặc 1 đến 255)"
 
-#: ../src/main.cpp:285
+#: ../src/main.cpp:287
 msgid "VALUE"
 msgstr "GIÁ TRỊ"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:291
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 "Xuất tài liệu dang tập tin SVG chuẩn (không có miền tên sodipodi hay "
 "inkscape)"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:296
 msgid "Export document to a PS file"
 msgstr "Xuất tài liệu dang tập tin PS"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:301
 msgid "Export document to an EPS file"
 msgstr "Xuất tài liệu dang tập tin EPS"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:306
 #, fuzzy
 msgid "Export document to a PDF file"
 msgstr "Xuất tài liệu dang tập tin PS"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:311
 msgid "Convert text object to paths on export (EPS)"
 msgstr "Chuyển đổi đối tượng chữ sang đường dẫn khi xuất (EPS)"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:316
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr "Xuất tập tin với hộp giới hạn được đặt là kích cỡ của trang (EPS)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:320
+#: ../src/main.cpp:322
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3146,7 +3151,7 @@ msgstr ""
 "« --query-id »"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:326
+#: ../src/main.cpp:328
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
@@ -3155,7 +3160,7 @@ msgstr ""
 "« --query-id »"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:332
+#: ../src/main.cpp:334
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3164,7 +3169,7 @@ msgstr ""
 "--query-id »"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:338
+#: ../src/main.cpp:340
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
@@ -3172,30 +3177,30 @@ msgstr ""
 "Truy vấn độ cao của bản vẽ nếu, nếu được xác định, của đối tượng cùng với « "
 "--query-id »"
 
-#: ../src/main.cpp:343
+#: ../src/main.cpp:345
 msgid "The ID of the object whose dimensions are queried"
 msgstr "Mã hiệu ID của đối tượng có các chiều đang được truy vấn"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:349
+#: ../src/main.cpp:351
 msgid "Print out the extension directory and exit"
 msgstr "In ra thư mục phần mở rộng rồi thoát"
 
-#: ../src/main.cpp:354
+#: ../src/main.cpp:356
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr ""
 "Hiển thị các tập tin được cho, từng cái một, chuyển đổi sang điều kế tiếp "
 "với bất cứ sự kiện phím/chuột nào"
 
-#: ../src/main.cpp:359
+#: ../src/main.cpp:361
 msgid "Use the new Gtkmm GUI interface"
 msgstr "Dùng giao diện đồ họa người dùng (GUI) Gtkmm mới"
 
-#: ../src/main.cpp:364
+#: ../src/main.cpp:366
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "Gỡ bỏ những lời xác định chưa dùng ra phần xác định của tài liệu"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:561
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3860,248 +3865,248 @@ msgstr "Phím <b>Alt</b>: chọn dưới, chuyển điều được chọn"
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Đối tượng được chọn không phải là nhóm nên không thể vào."
 
-#: ../src/selection-chemistry.cpp:217
+#: ../src/selection-chemistry.cpp:218
 #, fuzzy
 msgid "Delete text"
 msgstr "Xoá bỏ nút"
 
-#: ../src/selection-chemistry.cpp:225
+#: ../src/selection-chemistry.cpp:226
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Chưa</b> xoá bỏ gì."
 
-#: ../src/selection-chemistry.cpp:243
+#: ../src/selection-chemistry.cpp:244
 #, fuzzy
 msgid "Delete"
 msgstr "_Xóa bỏ"
 
-#: ../src/selection-chemistry.cpp:257
+#: ../src/selection-chemistry.cpp:258
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Chọn (các) <b>đối tượng</b> cần nhân đôi."
 
-#: ../src/selection-chemistry.cpp:282 ../src/widgets/gradient-selector.cpp:133
+#: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:488
 msgid "Duplicate"
 msgstr "Nhân đôi"
 
-#: ../src/selection-chemistry.cpp:307
+#: ../src/selection-chemistry.cpp:308
 #, fuzzy
 msgid "Delete all"
 msgstr "_Xóa bỏ"
 
-#: ../src/selection-chemistry.cpp:430
+#: ../src/selection-chemistry.cpp:431
 msgid "Select <b>two or more objects</b> to group."
 msgstr "Chọn <b>hai hay nhiều đối tượng</b> cần nhóm lại."
 
-#: ../src/selection-chemistry.cpp:438
+#: ../src/selection-chemistry.cpp:439
 msgid "Select <b>at least two objects</b> to group."
 msgstr "Chọn <b>ít nhất hai đối tượng</b> cần nhóm lại."
 
-#: ../src/selection-chemistry.cpp:509 ../src/selection-describer.cpp:49
+#: ../src/selection-chemistry.cpp:510 ../src/selection-describer.cpp:49
 msgid "Group"
 msgstr "Nhóm"
 
-#: ../src/selection-chemistry.cpp:524
+#: ../src/selection-chemistry.cpp:525
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Chọn một <b>nhóm</b> cần tách nhóm."
 
-#: ../src/selection-chemistry.cpp:565
+#: ../src/selection-chemistry.cpp:566
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "Trong vùng chọn, <b>không có nhóom</b> cần tách nhóm."
 
-#: ../src/selection-chemistry.cpp:571
+#: ../src/selection-chemistry.cpp:572
 #, fuzzy
 msgid "Ungroup"
 msgstr "_Rã nhóm"
 
-#: ../src/selection-chemistry.cpp:635
+#: ../src/selection-chemistry.cpp:636
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Chọn (các) <b>đối tượng</b> cần nâng lên."
 
-#: ../src/selection-chemistry.cpp:641 ../src/selection-chemistry.cpp:694
-#: ../src/selection-chemistry.cpp:729 ../src/selection-chemistry.cpp:788
+#: ../src/selection-chemistry.cpp:642 ../src/selection-chemistry.cpp:695
+#: ../src/selection-chemistry.cpp:730 ../src/selection-chemistry.cpp:789
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 "Không cho phép bạn nâng lên/hạ thấp đối tượng từ <b>nhóm</b> hay <b>lớp</b> "
 "khác nhau."
 
-#: ../src/selection-chemistry.cpp:673
+#: ../src/selection-chemistry.cpp:674
 #, fuzzy
 msgid "Raise"
 msgstr "Nâng _lên"
 
-#: ../src/selection-chemistry.cpp:686
+#: ../src/selection-chemistry.cpp:687
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Chọn (các) <b>đối tượng</b> cần nâng lên trên."
 
-#: ../src/selection-chemistry.cpp:709
+#: ../src/selection-chemistry.cpp:710
 #, fuzzy
 msgid "Raise to top"
 msgstr "Nâng lên _trên"
 
-#: ../src/selection-chemistry.cpp:723
+#: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Chọn (các) <b>đối tượng</b> cần hạ thấp."
 
-#: ../src/selection-chemistry.cpp:766
+#: ../src/selection-chemistry.cpp:767
 #, fuzzy
 msgid "Lower"
 msgstr "_Hạ thấp"
 
-#: ../src/selection-chemistry.cpp:780
+#: ../src/selection-chemistry.cpp:781
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Chọn (các) <b>đối tượng</b> cần hạ thấp xuống dưới."
 
-#: ../src/selection-chemistry.cpp:815
+#: ../src/selection-chemistry.cpp:816
 #, fuzzy
 msgid "Lower to bottom"
 msgstr "Hạ thấp xuống _dưới"
 
-#: ../src/selection-chemistry.cpp:822
+#: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
 msgstr "Không có bước cần hủy."
 
-#: ../src/selection-chemistry.cpp:829
+#: ../src/selection-chemistry.cpp:830
 msgid "Nothing to redo."
 msgstr "Không có bước cần làm lại."
 
-#: ../src/selection-chemistry.cpp:999
+#: ../src/selection-chemistry.cpp:1000
 msgid "Nothing was copied."
 msgstr "Chưa sao chép gì."
 
-#: ../src/selection-chemistry.cpp:1099 ../src/selection-chemistry.cpp:1136
-#: ../src/selection-chemistry.cpp:1163 ../src/selection-chemistry.cpp:1199
+#: ../src/selection-chemistry.cpp:1100 ../src/selection-chemistry.cpp:1137
+#: ../src/selection-chemistry.cpp:1164 ../src/selection-chemistry.cpp:1200
 msgid "Nothing on the clipboard."
 msgstr "Không có gì trên bảng nháp."
 
-#: ../src/selection-chemistry.cpp:1124
+#: ../src/selection-chemistry.cpp:1125
 #, fuzzy
 msgid "Paste"
 msgstr "_Dán"
 
-#: ../src/selection-chemistry.cpp:1142
+#: ../src/selection-chemistry.cpp:1143
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kiểu dáng."
 
-#: ../src/selection-chemistry.cpp:1151
+#: ../src/selection-chemistry.cpp:1152
 #, fuzzy
 msgid "Paste style"
 msgstr "Dán _kiểu dáng"
 
-#: ../src/selection-chemistry.cpp:1169 ../src/selection-chemistry.cpp:1205
+#: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kích cỡ."
 
-#: ../src/selection-chemistry.cpp:1187
+#: ../src/selection-chemistry.cpp:1188
 #, fuzzy
 msgid "Paste size"
 msgstr "Dán _cỡ"
 
-#: ../src/selection-chemistry.cpp:1228
+#: ../src/selection-chemistry.cpp:1229
 #, fuzzy
 msgid "Paste size separately"
 msgstr "Dán riêng kích cỡ"
 
-#: ../src/selection-chemistry.cpp:1239
+#: ../src/selection-chemistry.cpp:1240
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Chọn (các) <b>đối tượng</b> cần nâng lên lớp bên trên."
 
-#: ../src/selection-chemistry.cpp:1264
+#: ../src/selection-chemistry.cpp:1265
 #, fuzzy
 msgid "Raise to next layer"
 msgstr "Được di chuyển sang lớp kế tiếp."
 
-#: ../src/selection-chemistry.cpp:1270
+#: ../src/selection-chemistry.cpp:1271
 msgid "No more layers above."
 msgstr "Không có lớp nữa bên trên."
 
-#: ../src/selection-chemistry.cpp:1284
+#: ../src/selection-chemistry.cpp:1285
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Chọn (các) <b>đối tượng</b> cần hạ thấp xuống lớp bên dưới."
 
-#: ../src/selection-chemistry.cpp:1309
+#: ../src/selection-chemistry.cpp:1310
 #, fuzzy
 msgid "Lower to previous layer"
 msgstr "Được di chuyển về lớp trước đó."
 
-#: ../src/selection-chemistry.cpp:1315
+#: ../src/selection-chemistry.cpp:1316
 msgid "No more layers below."
 msgstr "Không có lớp nữa bên dưới."
 
-#: ../src/selection-chemistry.cpp:1457
+#: ../src/selection-chemistry.cpp:1458
 #, fuzzy
 msgid "Remove transform"
 msgstr "_Hủy chuyển dạng"
 
-#: ../src/selection-chemistry.cpp:1566
+#: ../src/selection-chemistry.cpp:1567
 #, fuzzy
 msgid "Rotate 90&#176; CW"
 msgstr "Xoay _90º xuôi chiều"
 
-#: ../src/selection-chemistry.cpp:1594
+#: ../src/selection-chemistry.cpp:1595
 #, fuzzy
 msgid "Rotate 90&#176; CCW"
 msgstr "Xoay 9_0º ngược chiều"
 
-#: ../src/selection-chemistry.cpp:1612 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
 #, fuzzy
 msgid "Rotate"
 msgstr "_Xoay"
 
-#: ../src/selection-chemistry.cpp:1641
+#: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1667 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
 #, fuzzy
 msgid "Scale"
 msgstr "_Co dãn"
 
-#: ../src/selection-chemistry.cpp:1686
+#: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1702
+#: ../src/selection-chemistry.cpp:1703
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1706
 #, fuzzy
 msgid "Move horizontally"
 msgstr "_Ngang"
 
-#: ../src/selection-chemistry.cpp:1708 ../src/selection-chemistry.cpp:1736
+#: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
 #, fuzzy
 msgid "Move"
 msgstr "_Chuyển"
 
-#: ../src/selection-chemistry.cpp:1730
+#: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1733
+#: ../src/selection-chemistry.cpp:1734
 msgid "Nudge horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1997 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "Nhái"
 
-#: ../src/selection-chemistry.cpp:2014
+#: ../src/selection-chemistry.cpp:2015
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Chọn một <b>bộ nhái</b> cần bỏ liên kết."
 
-#: ../src/selection-chemistry.cpp:2045
+#: ../src/selection-chemistry.cpp:2046
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "Trong vùng chọn, <b>không có bộ nhái cần bỏ liên kết</b>."
 
-#: ../src/selection-chemistry.cpp:2049
+#: ../src/selection-chemistry.cpp:2050
 #, fuzzy
 msgid "Unlink clone"
 msgstr "Bỏ liên kết nhái"
 
-#: ../src/selection-chemistry.cpp:2063
+#: ../src/selection-chemistry.cpp:2064
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -4110,7 +4115,7 @@ msgstr ""
 "Chọn một: <b>bộ nhái</b> để tới điều gốc của nó. <b>chữ trên đường dẫn</b> "
 "để tới đường dẫn đó. <b>chữ được luồng</b> để tới khung của nó."
 
-#: ../src/selection-chemistry.cpp:2086
+#: ../src/selection-chemistry.cpp:2087
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
@@ -4118,7 +4123,7 @@ msgstr ""
 "<b>Không tìm thấy</b> đối tượng cần chọn (bộ nhái mồ côi, hiệu số, đường dẫn "
 "chữ, chữ được luồng?)"
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2093
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
@@ -4126,72 +4131,72 @@ msgstr ""
 "Bạn đang cố gắng chọn một đối tượng <b>không hiện rõ</b> (nó nằm trong &lt;"
 "defs&gt;)."
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2120
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Chọn (các) <b>đối tượng</b> để chuyển đổi sang mẫu."
 
-#: ../src/selection-chemistry.cpp:2195
+#: ../src/selection-chemistry.cpp:2196
 #, fuzzy
 msgid "Objects to pattern"
 msgstr "Đối tượng cần làm _mẫu"
 
-#: ../src/selection-chemistry.cpp:2211
+#: ../src/selection-chemistry.cpp:2212
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Chọn một <b>đối tượng với mẫu tô</b> ra đó cần trích đối tượng."
 
-#: ../src/selection-chemistry.cpp:2264
+#: ../src/selection-chemistry.cpp:2265
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "Trong vùng chọn, <b>không có mẫu tô</b>."
 
-#: ../src/selection-chemistry.cpp:2267
+#: ../src/selection-chemistry.cpp:2268
 #, fuzzy
 msgid "Pattern to objects"
 msgstr "Mẫu _sang đối tượng"
 
-#: ../src/selection-chemistry.cpp:2285
+#: ../src/selection-chemistry.cpp:2286
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Chọn (các) <b>đối tượng</b> để tạo một bản sao mảng ảnh."
 
-#: ../src/selection-chemistry.cpp:2417
+#: ../src/selection-chemistry.cpp:2418
 #, fuzzy
 msgid "Create bitmap"
 msgstr "Tạo xoắn ốc"
 
-#: ../src/selection-chemistry.cpp:2449
+#: ../src/selection-chemistry.cpp:2450
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Chọn (các) <b>đối tượng</b> từ đó cần tạo đường dẫn xén hay mặt nạ."
 
-#: ../src/selection-chemistry.cpp:2452
+#: ../src/selection-chemistry.cpp:2453
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 "Chọn đối tượng mặt nạ và (các) <b>đối tượng</b> cho đó cần áp dụng đường dẫn "
 "xén hay mặt nạ."
 
-#: ../src/selection-chemistry.cpp:2543
+#: ../src/selection-chemistry.cpp:2544
 #, fuzzy
 msgid "Set clipping path"
 msgstr "Đang đóng đường dẫn..."
 
-#: ../src/selection-chemistry.cpp:2545
+#: ../src/selection-chemistry.cpp:2546
 #, fuzzy
 msgid "Set mask"
 msgstr "Sao"
 
-#: ../src/selection-chemistry.cpp:2558
+#: ../src/selection-chemistry.cpp:2559
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Chọn (các) <b>đối tượng</b> từ đó cần gỡ bỏ đường dẫn xén hay mặt nạ."
 
-#: ../src/selection-chemistry.cpp:2626
+#: ../src/selection-chemistry.cpp:2627
 #, fuzzy
 msgid "Release clipping path"
 msgstr "Gỡ bỏ đường dẫn xén ra vùng chọn"
 
-#: ../src/selection-chemistry.cpp:2628
+#: ../src/selection-chemistry.cpp:2629
 #, fuzzy
 msgid "Release mask"
 msgstr "_Buông"
 
-#: ../src/selection-chemistry.cpp:2672
+#: ../src/selection-chemistry.cpp:2673
 #, fuzzy
 msgid "Fit page to selection"
 msgstr "_Vừa trang khít vùng chọn"
@@ -5282,7 +5287,7 @@ msgstr "Mục nhỏ nhất"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1819 ../src/widgets/desktop-widget.cpp:1070
 msgid "Page"
 msgstr "Trang"
 
@@ -5637,36 +5642,106 @@ msgstr "Trợ giúp"
 msgid "Parameters"
 msgstr "Tham số"
 
-#: ../src/ui/dialog/filedialog.cpp:449
+#: ../src/ui/dialog/filedialog.cpp:455
 msgid "No preview"
 msgstr "Không có ô xem thử"
 
-#: ../src/ui/dialog/filedialog.cpp:550
+#: ../src/ui/dialog/filedialog.cpp:556
 msgid "too large for preview"
 msgstr "quá lớn để xem thử"
 
-#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+#: ../src/ui/dialog/filedialog.cpp:888 ../src/ui/dialog/filedialog.cpp:889
 msgid "All Images"
 msgstr "Mọi ảnh"
 
-#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+#: ../src/ui/dialog/filedialog.cpp:893 ../src/ui/dialog/filedialog.cpp:894
 msgid "All Files"
 msgstr "Mọi tập tin"
 
-#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+#: ../src/ui/dialog/filedialog.cpp:900 ../src/ui/dialog/filedialog.cpp:901
 msgid "All Inkscape Files"
 msgstr "Mọi tập tin Inkscape"
 
-#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+#: ../src/ui/dialog/filedialog.cpp:1309 ../src/ui/dialog/filedialog.cpp:1756
 msgid "Guess from extension"
 msgstr "Đoán từ phần mở rộng"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+#. ###### File options
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1360 ../src/ui/dialog/filedialog.cpp:1880
 msgid "Append filename extension automatically"
 msgstr "Thêm tự động phần mở rộng tập tin"
+
+#: ../src/ui/dialog/filedialog.cpp:1776
+msgid "Source left bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1777
+msgid "Source top bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1778
+msgid "Source right bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1779
+msgid "Source bottom bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1780
+#, fuzzy
+msgid "Source width"
+msgstr "Rộng nét"
+
+#: ../src/ui/dialog/filedialog.cpp:1781
+#, fuzzy
+msgid "Source height"
+msgstr "Độ cao bằng"
+
+#: ../src/ui/dialog/filedialog.cpp:1782
+#, fuzzy
+msgid "Destination width"
+msgstr "Đích in"
+
+#: ../src/ui/dialog/filedialog.cpp:1783
+#, fuzzy
+msgid "Destination height"
+msgstr "Đích in"
+
+#: ../src/ui/dialog/filedialog.cpp:1784
+#, fuzzy
+msgid "Dots per inch resolution"
+msgstr "Độ phân giải xuất mặc định:"
+
+#. #########################################
+#. ## EXTRA WIDGET -- SOURCE SIDE
+#. #########################################
+#. ##### Export options buttons/spinners, etc
+#: ../src/ui/dialog/filedialog.cpp:1815
+#, fuzzy
+msgid "Document"
+msgstr "Tài liệu đã được tải."
+
+#: ../src/ui/dialog/filedialog.cpp:1863
+msgid "Cairo"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1866
+msgid "Antialias"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1869
+#, fuzzy
+msgid "Background"
+msgstr "_Nền:"
+
+#: ../src/ui/dialog/filedialog.cpp:1892
+#, fuzzy
+msgid "Destination"
+msgstr "Đích in"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -10013,7 +10088,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4022
 #, fuzzy
-msgid "Make connectors point downwards"
+msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Làm cho bộ kết nối tránh các đối tượng đã chọn"
 
 #: ../src/widgets/toolbox.cpp:4036

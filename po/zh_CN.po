@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 22:14+0200\n"
+"POT-Creation-Date: 2006-07-18 20:40+0200\n"
 "PO-Revision-Date: 2006-06-04 16:07+0800\n"
 "Last-Translator: Chris Jia <Chrisjiasl@gmail.com>\n"
 "Language-Team: \n"
@@ -135,7 +135,7 @@ msgstr "选择一个平铺克隆<b>对象</b>来unclump。"
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "选择一个平铺克隆<b>对象</b>清除。"
 
-#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1963
+#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1964
 msgid "Select an <b>object</b> to clone."
 msgstr "选择一个要克隆的<b>对象</b>"
 
@@ -756,122 +756,122 @@ msgid "none"
 msgstr "没有"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2252
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2252
 msgid "_Page"
 msgstr "页面(_P)"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2256
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2256
 msgid "_Drawing"
 msgstr "绘制(_D)"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2258
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
 msgid "_Selection"
 msgstr "选择(_S)"
 
-#: ../src/dialogs/export.cpp:133
+#: ../src/dialogs/export.cpp:135
 msgid "_Custom"
 msgstr "自定义(_C)"
 
-#: ../src/dialogs/export.cpp:257
+#: ../src/dialogs/export.cpp:259
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b>导出区域</b></big>"
 
-#: ../src/dialogs/export.cpp:271
+#: ../src/dialogs/export.cpp:273
 msgid "Units:"
 msgstr "单位："
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:301
 msgid "_x0:"
 msgstr "_x0："
 
-#: ../src/dialogs/export.cpp:304
+#: ../src/dialogs/export.cpp:306
 msgid "x_1:"
 msgstr "x_1："
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "宽度："
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:317
 msgid "_y0:"
 msgstr "_y0："
 
-#: ../src/dialogs/export.cpp:320
+#: ../src/dialogs/export.cpp:322
 msgid "y_1:"
 msgstr "y_1："
 
-#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "高度："
 
-#: ../src/dialogs/export.cpp:414
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>位图尺寸</b></big>"
 
-#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "宽度(_W)："
 
-#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "像素在"
 
-#: ../src/dialogs/export.cpp:437
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
 msgstr "点每英寸"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:467
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>文件名(_F)</b></big>"
 
-#: ../src/dialogs/export.cpp:538
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "浏览(_B)..."
 
-#: ../src/dialogs/export.cpp:577
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: ../src/dialogs/export.cpp:581
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "使用这些设置导出位图文件"
 
-#: ../src/dialogs/export.cpp:1015
+#: ../src/dialogs/export.cpp:1017
 msgid "You have to enter a filename"
 msgstr "必须输入文件名"
 
-#: ../src/dialogs/export.cpp:1020
+#: ../src/dialogs/export.cpp:1022
 msgid "The chosen area to be exported is invalid"
 msgstr "要导出的已选择区域无效"
 
-#: ../src/dialogs/export.cpp:1029
+#: ../src/dialogs/export.cpp:1031
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "目录 %s 不存在或者不是目录。\n"
 
-#: ../src/dialogs/export.cpp:1045
+#: ../src/dialogs/export.cpp:1047
 msgid "Export in progress"
 msgstr "正在导出"
 
-#: ../src/dialogs/export.cpp:1051
+#: ../src/dialogs/export.cpp:1053
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "导出中 %s （%d x %d）"
 
-#: ../src/dialogs/export.cpp:1078
+#: ../src/dialogs/export.cpp:1080
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "不能导出到文件名 %s。\n"
 
-#: ../src/dialogs/export.cpp:1184
+#: ../src/dialogs/export.cpp:1186
 msgid "Select a filename for exporting"
 msgstr "选择一个文件名导出"
 
@@ -1108,7 +1108,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1823 ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "选择"
 
@@ -1437,7 +1437,7 @@ msgstr "检验人"
 msgid "Unique URI to reference this document."
 msgstr "引用本文档的唯一统一资源定位符"
 
-#: ../src/dialogs/rdf.cpp:266
+#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1843
 msgid "Source"
 msgstr "源"
 
@@ -1829,17 +1829,17 @@ msgid ""
 "Cannot set <b>%s</b>: Another element with value <b>%s</b> already exists!"
 msgstr "不能设置<b>%s</b>：已经存在值为<b>%s</b>另一个元素！"
 
-#: ../src/document.cpp:367
+#: ../src/document.cpp:369
 #, c-format
 msgid "New document %d"
 msgstr "新建文档 %d"
 
-#: ../src/document.cpp:399
+#: ../src/document.cpp:401
 #, c-format
 msgid "Memory document %d"
 msgstr "内存文档 %d"
 
-#: ../src/document.cpp:542
+#: ../src/document.cpp:544
 #, c-format
 msgid "Unnamed document %d"
 msgstr "未命名文档 %d"
@@ -2371,87 +2371,92 @@ msgstr "自动侦测文件格式失败。按照 SVG 打开此文件"
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:131
+#: ../src/file.cpp:124
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:216 ../src/file.cpp:903
+#: ../src/file.cpp:211 ../src/file.cpp:824
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "请求文件%s加载失败"
 
-#: ../src/file.cpp:241
+#: ../src/file.cpp:236
 msgid "Document not saved yet.  Cannot revert."
 msgstr "文档未保存。不能还原"
 
-#: ../src/file.cpp:247
+#: ../src/file.cpp:242
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr "更改将丢失！确认重新加载文档%s？"
 
-#: ../src/file.cpp:267
+#: ../src/file.cpp:262
 msgid "Document reverted."
 msgstr "文档已恢复。"
 
-#: ../src/file.cpp:269
+#: ../src/file.cpp:264
 msgid "Document not reverted."
 msgstr "文档没有恢复。"
 
-#: ../src/file.cpp:383
+#: ../src/file.cpp:385
 msgid "Select file to open"
 msgstr "选择要打开的文件"
 
-#: ../src/file.cpp:520
+#: ../src/file.cpp:467
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "去除了<b>%i</b>个在&lt;defs&gt;中未使用定义。"
 msgstr[1] "去除了<b>%i</b>个在&lt;defs&gt;中未使用定义。"
 
-#: ../src/file.cpp:525
+#: ../src/file.cpp:472
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "在&lt;defs&gt;没有未使用定义。"
 
-#: ../src/file.cpp:550
+#: ../src/file.cpp:498
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr "没有找到 Inkscape 扩展来保存文档（%s）。可能由于未知文件扩展名导致。"
 
-#: ../src/file.cpp:551 ../src/file.cpp:559
+#: ../src/file.cpp:499 ../src/file.cpp:507
 msgid "Document not saved."
 msgstr "文档未保存。"
 
-#: ../src/file.cpp:558
+#: ../src/file.cpp:506
 #, c-format
 msgid "File %s could not be saved."
 msgstr "文件 %s 不能保存。"
 
-#: ../src/file.cpp:568
+#: ../src/file.cpp:516
 msgid "Document saved."
 msgstr "文档已保存。"
 
-#: ../src/file.cpp:616
+#: ../src/file.cpp:573 ../src/file.cpp:947
 #, c-format
 msgid "drawing%s"
 msgstr "绘图%s"
 
-#: ../src/file.cpp:622
+#: ../src/file.cpp:579
 #, c-format
 msgid "drawing-%d%s"
 msgstr "绘图-%d%s"
 
-#: ../src/file.cpp:657
+#: ../src/file.cpp:600
 msgid "Select file to save to"
 msgstr "选择要保存的文件"
 
-#: ../src/file.cpp:741
+#: ../src/file.cpp:661
 msgid "No changes need to be saved."
 msgstr "没有更改，不需要保存。"
 
-#: ../src/file.cpp:929
+#: ../src/file.cpp:852
 msgid "Select file to import"
+msgstr "选择要导入的文件"
+
+#: ../src/file.cpp:969
+#, fuzzy
+msgid "Select file to export to"
 msgstr "选择要导入的文件"
 
 #: ../src/gradient-context.cpp:260
@@ -2920,194 +2925,194 @@ msgstr "节点或控制点拖动取消。"
 msgid "Ignoring font without family that will crash Pango"
 msgstr "字体没有名称会崩溃"
 
-#: ../src/main.cpp:197
+#: ../src/main.cpp:199
 msgid "Print the Inkscape version number"
 msgstr "打印 Inkscape 版本号"
 
-#: ../src/main.cpp:202
+#: ../src/main.cpp:204
 msgid "Do not use X server (only process files from console)"
 msgstr "不使用 X 服务 （只通过控制台处理文件）"
 
-#: ../src/main.cpp:207
+#: ../src/main.cpp:209
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr "试着使用 X 服务（即使 $DISPLAY 没有设置）"
 
-#: ../src/main.cpp:212
+#: ../src/main.cpp:214
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr "打开指定文档（可选字符串可能排除）"
 
-#: ../src/main.cpp:213 ../src/main.cpp:218 ../src/main.cpp:223
-#: ../src/main.cpp:290 ../src/main.cpp:295 ../src/main.cpp:300
-#: ../src/main.cpp:305
+#: ../src/main.cpp:215 ../src/main.cpp:220 ../src/main.cpp:225
+#: ../src/main.cpp:292 ../src/main.cpp:297 ../src/main.cpp:302
+#: ../src/main.cpp:307
 msgid "FILENAME"
 msgstr "文件名"
 
-#: ../src/main.cpp:217
+#: ../src/main.cpp:219
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr "打印文档到指定输出文件（使用管道“| program”）"
 
-#: ../src/main.cpp:222
+#: ../src/main.cpp:224
 msgid "Export document to a PNG file"
 msgstr "把文档导出到 PNG 文件"
 
-#: ../src/main.cpp:227
+#: ../src/main.cpp:229
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
 msgstr "导出SVG到位图的分辨率（默认90）"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:232
+#: ../src/main.cpp:234
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
 msgstr "按照 SVG 用户单位到处区域（默认是画布；0，0 在左下角）"
 
-#: ../src/main.cpp:233
+#: ../src/main.cpp:235
 msgid "x0:y0:x1:y1"
 msgstr "x0：y0：x1：y1"
 
-#: ../src/main.cpp:237
+#: ../src/main.cpp:239
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "导出区域是整个绘画（不是画布）"
 
-#: ../src/main.cpp:242
+#: ../src/main.cpp:244
 msgid "Exported area is the entire canvas"
 msgstr "导出区域是整个画布"
 
-#: ../src/main.cpp:247
+#: ../src/main.cpp:249
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr "捕捉位图导出区域到靠外的最接近的整数（按照 SVG 用户单位）"
 
-#: ../src/main.cpp:252
+#: ../src/main.cpp:254
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr "导出位图的像素宽度（覆盖导出 dpi）"
 
-#: ../src/main.cpp:253
+#: ../src/main.cpp:255
 msgid "WIDTH"
 msgstr "宽度"
 
-#: ../src/main.cpp:257
+#: ../src/main.cpp:259
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr "导出位图的像素高度（覆盖导出 dpi）"
 
-#: ../src/main.cpp:258
+#: ../src/main.cpp:260
 msgid "HEIGHT"
 msgstr "高度"
 
-#: ../src/main.cpp:262
+#: ../src/main.cpp:264
 msgid "The ID of the object to export"
 msgstr "要导出的对象的 ID"
 
-#: ../src/main.cpp:263 ../src/main.cpp:344
+#: ../src/main.cpp:265 ../src/main.cpp:346
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:269
+#: ../src/main.cpp:271
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr "只导出有导出 id 的对象，隐藏其它的（只包括导出 id）"
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:276
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr "导出时使用保存的文件名和 DPI （只包括导出 id）"
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:281
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr "导出位图的背景色（SVG 导出颜色字符串）"
 
-#: ../src/main.cpp:280
+#: ../src/main.cpp:282
 msgid "COLOR"
 msgstr "颜色"
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:286
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr "导出位图的背景不透明度（0.0到1.0，或者1到255）"
 
-#: ../src/main.cpp:285
+#: ../src/main.cpp:287
 msgid "VALUE"
 msgstr "值"
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:291
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr "把文档导出到普通 SVG 文件（没有 sodipodi 或者 inkscape 名字空间）"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:296
 msgid "Export document to a PS file"
 msgstr "导出文档到 PS 文件"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:301
 msgid "Export document to an EPS file"
 msgstr "导出文档到 EPS 文件"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:306
 #, fuzzy
 msgid "Export document to a PDF file"
 msgstr "导出文档到 PS 文件"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:311
 msgid "Convert text object to paths on export (EPS)"
 msgstr "把文字转化成路径导出（EPS）"
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:316
 msgid "Export files with the bounding box set to the page size (EPS)"
 msgstr "导出文件使用边界设置页面尺寸（EPS）"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:320
+#: ../src/main.cpp:322
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr "查询绘图的 X 坐标，如果指定查询对象的 --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:326
+#: ../src/main.cpp:328
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr "查询绘图的 Y 坐标，如果指定查询对象的 --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:332
+#: ../src/main.cpp:334
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "查询绘图的宽度，如果指定查询对象的 --query-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:338
+#: ../src/main.cpp:340
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr "查询绘图的高度，如果指定查询对象的 --query-id"
 
-#: ../src/main.cpp:343
+#: ../src/main.cpp:345
 msgid "The ID of the object whose dimensions are queried"
 msgstr "对象 ID 的尺寸被查询"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:349
+#: ../src/main.cpp:351
 msgid "Print out the extension directory and exit"
 msgstr "打印扩展路径然后退出"
 
-#: ../src/main.cpp:354
+#: ../src/main.cpp:356
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr "依次显示给定文件，通过任意键/鼠标事件切换到下一个"
 
-#: ../src/main.cpp:359
+#: ../src/main.cpp:361
 msgid "Use the new Gtkmm GUI interface"
 msgstr "使用新的 Gtkmm GUI 界面"
 
-#: ../src/main.cpp:364
+#: ../src/main.cpp:366
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr "从文档的定义段去除未使用的定义"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:561
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3740,246 +3745,246 @@ msgstr "<b>Alt</b>：选择下面，移动选择"
 msgid "Selected object is not a group. Cannot enter."
 msgstr "选择的对象不在一个组。不能进入。"
 
-#: ../src/selection-chemistry.cpp:217
+#: ../src/selection-chemistry.cpp:218
 #, fuzzy
 msgid "Delete text"
 msgstr "删除节点"
 
-#: ../src/selection-chemistry.cpp:225
+#: ../src/selection-chemistry.cpp:226
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>什么也没有</b>删除。"
 
-#: ../src/selection-chemistry.cpp:243
+#: ../src/selection-chemistry.cpp:244
 #, fuzzy
 msgid "Delete"
 msgstr "删除(_D)"
 
-#: ../src/selection-chemistry.cpp:257
+#: ../src/selection-chemistry.cpp:258
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "选择<b>对象</b>复制。"
 
-#: ../src/selection-chemistry.cpp:282 ../src/widgets/gradient-selector.cpp:133
+#: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:488
 msgid "Duplicate"
 msgstr "双份"
 
-#: ../src/selection-chemistry.cpp:307
+#: ../src/selection-chemistry.cpp:308
 #, fuzzy
 msgid "Delete all"
 msgstr "删除(_D)"
 
-#: ../src/selection-chemistry.cpp:430
+#: ../src/selection-chemistry.cpp:431
 msgid "Select <b>two or more objects</b> to group."
 msgstr "选择<b>两个或更多对象</b>组合。"
 
-#: ../src/selection-chemistry.cpp:438
+#: ../src/selection-chemistry.cpp:439
 msgid "Select <b>at least two objects</b> to group."
 msgstr "选择<b>至少两个对象</b>组合。"
 
-#: ../src/selection-chemistry.cpp:509 ../src/selection-describer.cpp:49
+#: ../src/selection-chemistry.cpp:510 ../src/selection-describer.cpp:49
 msgid "Group"
 msgstr "组"
 
-#: ../src/selection-chemistry.cpp:524
+#: ../src/selection-chemistry.cpp:525
 msgid "Select a <b>group</b> to ungroup."
 msgstr "选择一个<b>组合</b>解除组合。"
 
-#: ../src/selection-chemistry.cpp:565
+#: ../src/selection-chemistry.cpp:566
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "选区里<b>没有组合</b>可以解除组合。"
 
-#: ../src/selection-chemistry.cpp:571
+#: ../src/selection-chemistry.cpp:572
 #, fuzzy
 msgid "Ungroup"
 msgstr "解除组合(_U)"
 
-#: ../src/selection-chemistry.cpp:635
+#: ../src/selection-chemistry.cpp:636
 msgid "Select <b>object(s)</b> to raise."
 msgstr "选择<b>对象</b>提升。"
 
-#: ../src/selection-chemistry.cpp:641 ../src/selection-chemistry.cpp:694
-#: ../src/selection-chemistry.cpp:729 ../src/selection-chemistry.cpp:788
+#: ../src/selection-chemistry.cpp:642 ../src/selection-chemistry.cpp:695
+#: ../src/selection-chemistry.cpp:730 ../src/selection-chemistry.cpp:789
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "不能够提升/降低来自<b>不同组</b>或者<b>层</b>的对象。"
 
-#: ../src/selection-chemistry.cpp:673
+#: ../src/selection-chemistry.cpp:674
 #, fuzzy
 msgid "Raise"
 msgstr "提升(_R)"
 
-#: ../src/selection-chemistry.cpp:686
+#: ../src/selection-chemistry.cpp:687
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "选择<b>对象</b>提升到顶部。"
 
-#: ../src/selection-chemistry.cpp:709
+#: ../src/selection-chemistry.cpp:710
 #, fuzzy
 msgid "Raise to top"
 msgstr "置于顶层(_T)"
 
-#: ../src/selection-chemistry.cpp:723
+#: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr "选择<b>对象</b>降低。"
 
-#: ../src/selection-chemistry.cpp:766
+#: ../src/selection-chemistry.cpp:767
 #, fuzzy
 msgid "Lower"
 msgstr "下降(_L)"
 
-#: ../src/selection-chemistry.cpp:780
+#: ../src/selection-chemistry.cpp:781
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "选择<b>对象</b>到最底层。"
 
-#: ../src/selection-chemistry.cpp:815
+#: ../src/selection-chemistry.cpp:816
 #, fuzzy
 msgid "Lower to bottom"
 msgstr "置于底层(_B)"
 
-#: ../src/selection-chemistry.cpp:822
+#: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
 msgstr "不能撤销。"
 
-#: ../src/selection-chemistry.cpp:829
+#: ../src/selection-chemistry.cpp:830
 msgid "Nothing to redo."
 msgstr "不能重做。"
 
-#: ../src/selection-chemistry.cpp:999
+#: ../src/selection-chemistry.cpp:1000
 msgid "Nothing was copied."
 msgstr "没有对象拷贝。"
 
-#: ../src/selection-chemistry.cpp:1099 ../src/selection-chemistry.cpp:1136
-#: ../src/selection-chemistry.cpp:1163 ../src/selection-chemistry.cpp:1199
+#: ../src/selection-chemistry.cpp:1100 ../src/selection-chemistry.cpp:1137
+#: ../src/selection-chemistry.cpp:1164 ../src/selection-chemistry.cpp:1200
 msgid "Nothing on the clipboard."
 msgstr "剪贴板是空的。"
 
-#: ../src/selection-chemistry.cpp:1124
+#: ../src/selection-chemistry.cpp:1125
 #, fuzzy
 msgid "Paste"
 msgstr "粘贴(_P)"
 
-#: ../src/selection-chemistry.cpp:1142
+#: ../src/selection-chemistry.cpp:1143
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "选择对象来粘贴风格。"
 
-#: ../src/selection-chemistry.cpp:1151
+#: ../src/selection-chemistry.cpp:1152
 #, fuzzy
 msgid "Paste style"
 msgstr "粘贴风格(_S)"
 
-#: ../src/selection-chemistry.cpp:1169 ../src/selection-chemistry.cpp:1205
+#: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "选择对象来粘贴尺寸。"
 
-#: ../src/selection-chemistry.cpp:1187
+#: ../src/selection-chemistry.cpp:1188
 #, fuzzy
 msgid "Paste size"
 msgstr "粘贴尺寸(_z)"
 
-#: ../src/selection-chemistry.cpp:1228
+#: ../src/selection-chemistry.cpp:1229
 #, fuzzy
 msgid "Paste size separately"
 msgstr "分别粘贴尺寸"
 
-#: ../src/selection-chemistry.cpp:1239
+#: ../src/selection-chemistry.cpp:1240
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "选择<b>对象</b>移动到层之上。"
 
-#: ../src/selection-chemistry.cpp:1264
+#: ../src/selection-chemistry.cpp:1265
 #, fuzzy
 msgid "Raise to next layer"
 msgstr "移动到下一层"
 
-#: ../src/selection-chemistry.cpp:1270
+#: ../src/selection-chemistry.cpp:1271
 msgid "No more layers above."
 msgstr "上面没有层。"
 
-#: ../src/selection-chemistry.cpp:1284
+#: ../src/selection-chemistry.cpp:1285
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "选择<b>对象</b>移动到层之下。"
 
-#: ../src/selection-chemistry.cpp:1309
+#: ../src/selection-chemistry.cpp:1310
 #, fuzzy
 msgid "Lower to previous layer"
 msgstr "移动到上一层"
 
-#: ../src/selection-chemistry.cpp:1315
+#: ../src/selection-chemistry.cpp:1316
 msgid "No more layers below."
 msgstr "下面没有层。"
 
-#: ../src/selection-chemistry.cpp:1457
+#: ../src/selection-chemistry.cpp:1458
 #, fuzzy
 msgid "Remove transform"
 msgstr "移除变换(_T)"
 
-#: ../src/selection-chemistry.cpp:1566
+#: ../src/selection-chemistry.cpp:1567
 #, fuzzy
 msgid "Rotate 90&#176; CW"
 msgstr "顺时针旋转 _90&#176;"
 
-#: ../src/selection-chemistry.cpp:1594
+#: ../src/selection-chemistry.cpp:1595
 #, fuzzy
 msgid "Rotate 90&#176; CCW"
 msgstr "逆时针旋转 9_0&#176;"
 
-#: ../src/selection-chemistry.cpp:1612 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
 #, fuzzy
 msgid "Rotate"
 msgstr "旋转(_R)"
 
-#: ../src/selection-chemistry.cpp:1641
+#: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1667 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
 #, fuzzy
 msgid "Scale"
 msgstr "缩放(_S)"
 
-#: ../src/selection-chemistry.cpp:1686
+#: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1702
+#: ../src/selection-chemistry.cpp:1703
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1706
 #, fuzzy
 msgid "Move horizontally"
 msgstr "水平(_H)"
 
-#: ../src/selection-chemistry.cpp:1708 ../src/selection-chemistry.cpp:1736
+#: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
 #, fuzzy
 msgid "Move"
 msgstr "移动(_M)"
 
-#: ../src/selection-chemistry.cpp:1730
+#: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1733
+#: ../src/selection-chemistry.cpp:1734
 msgid "Nudge horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1997 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "克隆"
 
-#: ../src/selection-chemistry.cpp:2014
+#: ../src/selection-chemistry.cpp:2015
 msgid "Select a <b>clone</b> to unlink."
 msgstr "选择一个克隆解除连接。"
 
-#: ../src/selection-chemistry.cpp:2045
+#: ../src/selection-chemistry.cpp:2046
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "选区里没有克隆来解除连接。"
 
-#: ../src/selection-chemistry.cpp:2049
+#: ../src/selection-chemistry.cpp:2050
 #, fuzzy
 msgid "Unlink clone"
 msgstr "解除克隆(_k)"
 
-#: ../src/selection-chemistry.cpp:2063
+#: ../src/selection-chemistry.cpp:2064
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
@@ -3988,82 +3993,82 @@ msgstr ""
 "选择一个<b>克隆</b>回到原始位置。选择<b>连接偏移</b>回到源。选择<b>路径上的文"
 "字</b>到路径上。选择<b>浮动文字</b>到达框架。"
 
-#: ../src/selection-chemistry.cpp:2086
+#: ../src/selection-chemistry.cpp:2087
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr "<b>找不到</b>要选择的目标（孤立克隆，偏移，文字路径，浮动文字？）"
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2093
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "试图图选择的对象<b>不可见</b>（位于 &lt;定义&gt;内）"
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2120
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "选择<b>对象</b>转化成图案。"
 
-#: ../src/selection-chemistry.cpp:2195
+#: ../src/selection-chemistry.cpp:2196
 #, fuzzy
 msgid "Objects to pattern"
 msgstr "对象转化成图案(_n)"
 
-#: ../src/selection-chemistry.cpp:2211
+#: ../src/selection-chemistry.cpp:2212
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "选择一个<b>使用图案填色的对象</b>，提取对象形状。"
 
-#: ../src/selection-chemistry.cpp:2264
+#: ../src/selection-chemistry.cpp:2265
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "选区<b>没有图案填色</b>。"
 
-#: ../src/selection-chemistry.cpp:2267
+#: ../src/selection-chemistry.cpp:2268
 #, fuzzy
 msgid "Pattern to objects"
 msgstr "图案转化成对象(_O)"
 
-#: ../src/selection-chemistry.cpp:2285
+#: ../src/selection-chemistry.cpp:2286
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "选择<b>对象</b>生成位图拷贝。"
 
-#: ../src/selection-chemistry.cpp:2417
+#: ../src/selection-chemistry.cpp:2418
 #, fuzzy
 msgid "Create bitmap"
 msgstr "创建螺旋"
 
-#: ../src/selection-chemistry.cpp:2449
+#: ../src/selection-chemistry.cpp:2450
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "选择<b>对象</b>创建剪裁路径或者遮罩。"
 
-#: ../src/selection-chemistry.cpp:2452
+#: ../src/selection-chemistry.cpp:2453
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "选择遮罩对象和<b>对象</b>应用剪裁路径或者遮罩。"
 
-#: ../src/selection-chemistry.cpp:2543
+#: ../src/selection-chemistry.cpp:2544
 #, fuzzy
 msgid "Set clipping path"
 msgstr "关闭路径。"
 
-#: ../src/selection-chemistry.cpp:2545
+#: ../src/selection-chemistry.cpp:2546
 #, fuzzy
 msgid "Set mask"
 msgstr "星形"
 
-#: ../src/selection-chemistry.cpp:2558
+#: ../src/selection-chemistry.cpp:2559
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "选择<b>对象</b>去除剪裁路径或者遮罩。"
 
-#: ../src/selection-chemistry.cpp:2626
+#: ../src/selection-chemistry.cpp:2627
 #, fuzzy
 msgid "Release clipping path"
 msgstr "从选区中移除剪裁路径"
 
-#: ../src/selection-chemistry.cpp:2628
+#: ../src/selection-chemistry.cpp:2629
 #, fuzzy
 msgid "Release mask"
 msgstr "释放(_R)"
 
-#: ../src/selection-chemistry.cpp:2672
+#: ../src/selection-chemistry.cpp:2673
 #, fuzzy
 msgid "Fit page to selection"
 msgstr "页面适应选区"
@@ -5110,7 +5115,7 @@ msgstr "最小项"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1819 ../src/widgets/desktop-widget.cpp:1070
 msgid "Page"
 msgstr "页面"
 
@@ -5458,36 +5463,106 @@ msgstr "帮助"
 msgid "Parameters"
 msgstr "参数"
 
-#: ../src/ui/dialog/filedialog.cpp:449
+#: ../src/ui/dialog/filedialog.cpp:455
 msgid "No preview"
 msgstr "没有预览"
 
-#: ../src/ui/dialog/filedialog.cpp:550
+#: ../src/ui/dialog/filedialog.cpp:556
 msgid "too large for preview"
 msgstr "太大不能预览"
 
-#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+#: ../src/ui/dialog/filedialog.cpp:888 ../src/ui/dialog/filedialog.cpp:889
 msgid "All Images"
 msgstr "所有图像"
 
-#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+#: ../src/ui/dialog/filedialog.cpp:893 ../src/ui/dialog/filedialog.cpp:894
 msgid "All Files"
 msgstr "所有文件"
 
-#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+#: ../src/ui/dialog/filedialog.cpp:900 ../src/ui/dialog/filedialog.cpp:901
 msgid "All Inkscape Files"
 msgstr "所有 Inkscape 文件"
 
-#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+#: ../src/ui/dialog/filedialog.cpp:1309 ../src/ui/dialog/filedialog.cpp:1756
 msgid "Guess from extension"
 msgstr "通过扩展名预测"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+#. ###### File options
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1360 ../src/ui/dialog/filedialog.cpp:1880
 msgid "Append filename extension automatically"
 msgstr "自动附加文件扩展名"
+
+#: ../src/ui/dialog/filedialog.cpp:1776
+msgid "Source left bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1777
+msgid "Source top bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1778
+msgid "Source right bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1779
+msgid "Source bottom bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1780
+#, fuzzy
+msgid "Source width"
+msgstr "描边宽度"
+
+#: ../src/ui/dialog/filedialog.cpp:1781
+#, fuzzy
+msgid "Source height"
+msgstr "等高"
+
+#: ../src/ui/dialog/filedialog.cpp:1782
+#, fuzzy
+msgid "Destination width"
+msgstr "打印目标"
+
+#: ../src/ui/dialog/filedialog.cpp:1783
+#, fuzzy
+msgid "Destination height"
+msgstr "打印目标"
+
+#: ../src/ui/dialog/filedialog.cpp:1784
+#, fuzzy
+msgid "Dots per inch resolution"
+msgstr "导出分辨率："
+
+#. #########################################
+#. ## EXTRA WIDGET -- SOURCE SIDE
+#. #########################################
+#. ##### Export options buttons/spinners, etc
+#: ../src/ui/dialog/filedialog.cpp:1815
+#, fuzzy
+msgid "Document"
+msgstr "文档已保存。"
+
+#: ../src/ui/dialog/filedialog.cpp:1863
+msgid "Cairo"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1866
+msgid "Antialias"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1869
+#, fuzzy
+msgid "Background"
+msgstr "背景(_g)"
+
+#: ../src/ui/dialog/filedialog.cpp:1892
+#, fuzzy
+msgid "Destination"
+msgstr "打印目标"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -9665,7 +9740,7 @@ msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4022
 #, fuzzy
-msgid "Make connectors point downwards"
+msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "避免已选对象的连接器"
 
 #: ../src/widgets/toolbox.cpp:4036

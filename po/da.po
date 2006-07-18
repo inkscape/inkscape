@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: da\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-13 22:14+0200\n"
-"PO-Revision-Date: 2006-07-13 20:44+0200\n"
+"POT-Creation-Date: 2006-07-18 20:40+0200\n"
+"PO-Revision-Date: 2006-07-16 18:58+0200\n"
 "Last-Translator: Rune Rønde Laursen <runerl@skjoldhoej.dk>\n"
 "Language-Team: Dansk <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgstr "Markér <b>et objekt</b> hvis fliselagte kloner skal afklumpes."
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Markér <b>et objekt</b> hvis fliselagte kloner skal fjernes."
 
-#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1963
+#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1964
 msgid "Select an <b>object</b> to clone."
 msgstr "Markér et <b>objekt</b> til kloning."
 
@@ -779,122 +779,122 @@ msgid "none"
 msgstr "ingen"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2252
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2252
 msgid "_Page"
 msgstr "_Side"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2256
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2256
 msgid "_Drawing"
 msgstr "_Tegning"
 
-#: ../src/dialogs/export.cpp:133 ../src/verbs.cpp:2258
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
 msgid "_Selection"
 msgstr "_Markering"
 
-#: ../src/dialogs/export.cpp:133
+#: ../src/dialogs/export.cpp:135
 msgid "_Custom"
 msgstr "_Brugerdefineret"
 
-#: ../src/dialogs/export.cpp:257
+#: ../src/dialogs/export.cpp:259
 msgid "<big><b>Export area</b></big>"
 msgstr "<big><b> Eksportéringsområde</b></big>"
 
-#: ../src/dialogs/export.cpp:271
+#: ../src/dialogs/export.cpp:273
 msgid "Units:"
 msgstr "Enheder:"
 
-#: ../src/dialogs/export.cpp:299
+#: ../src/dialogs/export.cpp:301
 msgid "_x0:"
 msgstr "_x0:"
 
-#: ../src/dialogs/export.cpp:304
+#: ../src/dialogs/export.cpp:306
 msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:309 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "Bredde:"
 
-#: ../src/dialogs/export.cpp:315
+#: ../src/dialogs/export.cpp:317
 msgid "_y0:"
 msgstr "_y0:"
 
-#: ../src/dialogs/export.cpp:320
+#: ../src/dialogs/export.cpp:322
 msgid "y_1:"
 msgstr "y_1:"
 
-#: ../src/dialogs/export.cpp:325 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:52
 msgid "Height:"
 msgstr "Højde:"
 
-#: ../src/dialogs/export.cpp:414
+#: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
 msgstr "<big><b>Punktbilledstørrelse</b></big>"
 
-#: ../src/dialogs/export.cpp:427 ../src/ui/widget/page-sizer.cpp:257
+#: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:257
 msgid "_Width:"
 msgstr "_Bredde:"
 
-#: ../src/dialogs/export.cpp:427 ../src/dialogs/export.cpp:443
+#: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 msgid "pixels at"
 msgstr "pixler ved"
 
-#: ../src/dialogs/export.cpp:437
+#: ../src/dialogs/export.cpp:439
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:456 ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "dpi"
 msgstr "dpi"
 
 #. true = has mnemonic
-#: ../src/dialogs/export.cpp:467
+#: ../src/dialogs/export.cpp:469
 msgid "<big><b>_Filename</b></big>"
 msgstr "<big><b>_Filnavn</b></big>"
 
-#: ../src/dialogs/export.cpp:538
+#: ../src/dialogs/export.cpp:540
 msgid "_Browse..."
 msgstr "_Gennemsøg..."
 
-#: ../src/dialogs/export.cpp:577
+#: ../src/dialogs/export.cpp:579
 msgid "_Export"
 msgstr "_Eksportér"
 
-#: ../src/dialogs/export.cpp:581
+#: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
 msgstr "Eksportér punktbilledfilen med disse indstillinger"
 
-#: ../src/dialogs/export.cpp:1015
+#: ../src/dialogs/export.cpp:1017
 msgid "You have to enter a filename"
 msgstr "Du skal indtaste et filnavn"
 
-#: ../src/dialogs/export.cpp:1020
+#: ../src/dialogs/export.cpp:1022
 msgid "The chosen area to be exported is invalid"
 msgstr "Eksporteringsområdet er ugyldigt"
 
-#: ../src/dialogs/export.cpp:1029
+#: ../src/dialogs/export.cpp:1031
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr "Mappen %s eksisterer ikke eller er ikke en mappe.\n"
 
-#: ../src/dialogs/export.cpp:1045
+#: ../src/dialogs/export.cpp:1047
 msgid "Export in progress"
 msgstr "Eksporterer"
 
-#: ../src/dialogs/export.cpp:1051
+#: ../src/dialogs/export.cpp:1053
 #, c-format
 msgid "Exporting %s (%d x %d)"
 msgstr "Eksporterer %s (%d ×%d)"
 
-#: ../src/dialogs/export.cpp:1078
+#: ../src/dialogs/export.cpp:1080
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr "Kunne ikke eksportere til filnavn %s.\n"
 
-#: ../src/dialogs/export.cpp:1184
+#: ../src/dialogs/export.cpp:1186
 msgid "Select a filename for exporting"
 msgstr "Vælg et filnavn til eksporteringen"
 
@@ -1135,7 +1135,7 @@ msgstr "%d × %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1823 ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "Markering"
 
@@ -1465,7 +1465,7 @@ msgstr "Identifikation"
 msgid "Unique URI to reference this document."
 msgstr "Entydig URI til dokumentet."
 
-#: ../src/dialogs/rdf.cpp:266
+#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1843
 msgid "Source"
 msgstr "Kilde"
 
@@ -1475,7 +1475,7 @@ msgstr "Entydig URI til kilde til dokumentet."
 
 #: ../src/dialogs/rdf.cpp:269
 msgid "Relation"
-msgstr "Relation"
+msgstr "Relationer"
 
 #: ../src/dialogs/rdf.cpp:270
 msgid "Unique URI to a related document."
@@ -1865,17 +1865,17 @@ msgstr ""
 "Kan ikke sætte <b>%s</b>: Et andet element med værdien <b>%s</b> eksisterer "
 "allerede!"
 
-#: ../src/document.cpp:367
+#: ../src/document.cpp:369
 #, c-format
 msgid "New document %d"
 msgstr "Nyt dokument %d"
 
-#: ../src/document.cpp:399
+#: ../src/document.cpp:401
 #, c-format
 msgid "Memory document %d"
 msgstr "Lagret dokument %d"
 
-#: ../src/document.cpp:542
+#: ../src/document.cpp:544
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Unavngivet dokument %d"
@@ -1938,7 +1938,7 @@ msgstr "Ann_uller fortryd"
 
 #: ../src/extension/dependency.cpp:239
 msgid "Dependency::"
-msgstr "Afhængighed::"
+msgstr "Afhængighed:"
 
 #: ../src/extension/dependency.cpp:240
 msgid "  type: "
@@ -2068,16 +2068,17 @@ msgstr ""
 "som forventet."
 
 #: ../src/extension/init.cpp:169
-#, fuzzy
 msgid "Null external module directory name.  Modules will not be loaded."
-msgstr "Null modul navn Moduler Indlæst."
+msgstr "Intet eksternt modulmappenavn. Moduler vil ikke blive indlæst."
 
 #: ../src/extension/init.cpp:183
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
 "will not be loaded."
-msgstr "Moduler s er ikke tilgængelig Eksterne i Indlæst."
+msgstr ""
+"Modulmappe (%s) er ikke til rådighed. Eksterne moduler i mappen vil ikke "
+"blive indlæst."
 
 #: ../src/extension/internal/bluredge.cpp:131
 msgid "Blur Edge"
@@ -2106,7 +2107,7 @@ msgstr "Opret fra sti"
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
-msgstr "Encapsulated Postscript uddata"
+msgstr "Encapsulated PostScript-uddata"
 
 #: ../src/extension/internal/eps-out.cpp:86
 msgid "Make bounding box around full page"
@@ -2119,11 +2120,11 @@ msgstr "Konvertér tekst til sti"
 #: ../src/extension/internal/eps-out.cpp:91
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated Postscript (*.eps)"
-msgstr "Encapsulated Postscript (*.eps)"
+msgstr "Encapsulated PostScript (*.eps)"
 
 #: ../src/extension/internal/eps-out.cpp:92
 msgid "Encapsulated Postscript File"
-msgstr "Encapsulated Postscript Fil"
+msgstr "Encapsulated PostScript Fil"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:138
 #, c-format
@@ -2152,7 +2153,7 @@ msgstr "Inkscape: forhåndsvisning af udskrift"
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
-msgstr "GNOME Print"
+msgstr "GNOME-udskrift"
 
 #: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
@@ -2185,13 +2186,12 @@ msgid "Render"
 msgstr "Optegn"
 
 #: ../src/extension/internal/grid.cpp:226
-#, fuzzy
 msgid "Draw a path which is a grid"
-msgstr "Træk a sti er a"
+msgstr "Tegn en sti som er et gitter"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
 msgid "LaTeX Output"
-msgstr "LaTeX uddata"
+msgstr "LaTeX-uddata"
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
@@ -2203,7 +2203,7 @@ msgstr "LaTeX PSTricks-fil"
 
 #: ../src/extension/internal/latex-pstricks.cpp:346
 msgid "LaTeX Print"
-msgstr "LaTeX Print"
+msgstr "LaTeX udskrivning"
 
 #: ../src/extension/internal/odf.cpp:2411
 msgid "OpenDocument Drawing Output"
@@ -2219,7 +2219,7 @@ msgstr "OpenDocument drawing fil"
 
 #: ../src/extension/internal/pov-out.cpp:457
 msgid "PovRay Output"
-msgstr "PovRay uddata"
+msgstr "PovRay-uddata"
 
 #: ../src/extension/internal/pov-out.cpp:462
 msgid "PovRay (*.pov) (export splines)"
@@ -2231,7 +2231,7 @@ msgstr "PovRay Raytracer fil"
 
 #: ../src/extension/internal/ps-out.cpp:82
 msgid "Postscript Output"
-msgstr "Postscript uddata"
+msgstr "PostScript-uddata"
 
 #: ../src/extension/internal/ps-out.cpp:84
 msgid "Text to Path"
@@ -2240,11 +2240,11 @@ msgstr "Tekst-til-sti"
 #: ../src/extension/internal/ps-out.cpp:88
 #: ../share/extensions/ps_input.inx.h:2
 msgid "Postscript (*.ps)"
-msgstr "Postscript (*.ps)"
+msgstr "PostScript (*.ps)"
 
 #: ../src/extension/internal/ps-out.cpp:89
 msgid "Postscript File"
-msgstr "Postscript-fil"
+msgstr "PostScript-fil"
 
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 msgid "Print Destination"
@@ -2256,34 +2256,36 @@ msgid "Print properties"
 msgstr "Udskrivningsegenskaber"
 
 #: ../src/extension/internal/ps.cpp:126
-#, fuzzy
 msgid "Print using PostScript operators"
-msgstr "Udskriv"
+msgstr "Udskriv ved hjælp af PostScript operatorer"
 
 #: ../src/extension/internal/ps.cpp:128
-#, fuzzy
 msgid ""
 "Use PostScript vector operators. The resulting image is usually smaller in "
 "file size and can be arbitrarily scaled, but alpha transparency and patterns "
 "will be lost."
-msgstr "Brug vektor billede er i fil størrelse og alpha Gennemsigtighed og."
+msgstr ""
+"Benyt PostScript vektoroperatorer. Det resulterende billede har normalt "
+"mindre filstørrelse og kan skaleres vilkårligt, men alfagennemsigtighed og "
+"mønstre går tabt."
 
 #: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
 msgid "Print as bitmap"
 msgstr "Udskriv som punktbillede"
 
 #: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
-#, fuzzy
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
 "size and cannot be arbitrarily scaled without quality loss, but all objects "
 "will be rendered exactly as displayed."
-msgstr "Udskriv billede er i fil størrelse og alle."
+msgstr ""
+"Udskriv alt som punktbillede. Det resulterende billede har normalt større "
+"filstørrelse og kan ikke skaleres vilkårligt uden kvalitetstab, men alle "
+"objekter udskrives præcis som vist."
 
 #: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
-#, fuzzy
 msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "Foretrukken tomme ud af "
+msgstr "Foretrukken opløsning af punktbillede (dpi)"
 
 #: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
 msgid "Resolution:"
@@ -2295,17 +2297,20 @@ msgid "Print destination"
 msgstr "Udskrivningsdestination"
 
 #: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
-#, fuzzy
 msgid ""
 "Printer name (as given by lpstat -p);\n"
 "leave empty to use the system default printer.\n"
 "Use '> filename' to print to file.\n"
 "Use '| prog arg...' to pipe to a program."
-msgstr "Printer navn tom til standard filnavn til til fil til til a program."
+msgstr ""
+"Printernavn (som angivet af lpstat -p);\n"
+"lad være tomt for at benytte systemets standardprinter.\n"
+"Brug '> filnavn' for at udskrive til fil.\n"
+"Brug '| prog arg...' for at kanalisere videre til et program (pipe)."
 
 #: ../src/extension/internal/ps.cpp:1217
 msgid "Postscript Print"
-msgstr "Postscript-udskrivning"
+msgstr "PostScript-udskrivning"
 
 #: ../src/extension/internal/svg.cpp:55
 msgid "SVG Input"
@@ -2316,9 +2321,8 @@ msgid "Scalable Vector Graphic (*.svg)"
 msgstr "Scalable Vector Graphic (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:61
-#, fuzzy
 msgid "Inkscape native file format and W3C standard"
-msgstr "fil og"
+msgstr "Inkscapes eget filformat og W3C-standard"
 
 #: ../src/extension/internal/svg.cpp:69
 msgid "SVG Output Inkscape"
@@ -2341,9 +2345,8 @@ msgid "Plain SVG (*.svg)"
 msgstr "Almindelig SVG (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:89
-#, fuzzy
 msgid "Scalable Vector Graphics format as defined by the W3C"
-msgstr "Vektor Grafik"
+msgstr "Skalérbar vektorgrafik format som defineret af W3C"
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
@@ -2357,9 +2360,8 @@ msgid "Compressed Inkscape SVG (*.svgz)"
 msgstr "Komprimeret Inkscape SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:54
-#, fuzzy
 msgid "SVG file format compressed with GZip"
-msgstr "SVG fil"
+msgstr "SVG filformat komprimeret med GZip"
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
@@ -2377,149 +2379,154 @@ msgid "Compressed plain SVG (*.svgz)"
 msgstr "Komprimeret almindelig SVG (*.svgz)"
 
 #: ../src/extension/internal/svgz.cpp:82
-#, fuzzy
 msgid "Scalable Vector Graphics format compressed with GZip"
-msgstr "Vektor Grafik"
+msgstr "Skalérbar vektorgrafik-format komprimeret med GZip"
 
 #: ../src/extension/internal/win32.cpp:491
 msgid "Windows 32-bit Print"
-msgstr "Windows 32-bit Print"
+msgstr "Windows 32-bit-udskrift"
 
 #: ../src/extension/internal/pdf.cpp:134
-#, fuzzy
 msgid "Print using PDF operators"
-msgstr "Udskriv PDF"
+msgstr "Udskriv vha. PDF-operatorer"
 
 #: ../src/extension/internal/pdf.cpp:136
-#, fuzzy
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
 "size and can be arbitrarily scaled, but patterns will be lost."
-msgstr "Brug PDF vektor billede er i fil størrelse og."
+msgstr ""
+"Brug PDF-vektoroperatorer. Det endelige billede er normalt mindre i "
+"filstørrelse og kan skaleres vilkårligt, men mønstre går tabt."
 
 #: ../src/extension/internal/pdf.cpp:1528
-#, fuzzy
 msgid "write error occurred"
-msgstr "fejl"
+msgstr "der skete en skrivefejl"
 
 #: ../src/extension/internal/pdf.cpp:1555
 msgid "PDF Print"
-msgstr "PDF Print"
+msgstr "PDF-udskrift"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
 #. routines will cause a segfault.  See bug 1000350 - bryce
 #. sp_ui_error_dialog(_("Format autodetect failed. The file is being opened as SVG."));
 #: ../src/extension/system.cpp:100
-#, fuzzy
 msgid "Format autodetect failed. The file is being opened as SVG."
-msgstr "Format mislykket fil er SVG."
+msgstr "Format-autodetektion mislykkedes. Filen åbnes som SVG."
 
 #. TRANSLATORS: default.svg is localizable - this is the name of the default document
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:131
+#: ../src/file.cpp:124
 msgid "default.svg"
 msgstr "standard.svg"
 
-#: ../src/file.cpp:216 ../src/file.cpp:903
-#, fuzzy, c-format
+#: ../src/file.cpp:211 ../src/file.cpp:824
+#, c-format
 msgid "Failed to load the requested file %s"
-msgstr "til fil s"
+msgstr "Kunne ikke indlæse den valgte fil %s"
 
-#: ../src/file.cpp:241
+#: ../src/file.cpp:236
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokument endnu ikke gemt, kan ikke fortryde."
 
-#: ../src/file.cpp:247
-#, fuzzy, c-format
+#: ../src/file.cpp:242
+#, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
-msgstr "Ændringer til s?"
+msgstr ""
+"Ændringer vil gå tabt!  Er du sikker på du vil genindlæse dokumentet %s?"
 
-#: ../src/file.cpp:267
+#: ../src/file.cpp:262
 msgid "Document reverted."
 msgstr "Dokumentændringer fortrudt."
 
-#: ../src/file.cpp:269
+#: ../src/file.cpp:264
 msgid "Document not reverted."
 msgstr "Dokumentændringer ej fortrudt."
 
-#: ../src/file.cpp:383
+#: ../src/file.cpp:385
 msgid "Select file to open"
 msgstr "Vælg fil der skal åbnes"
 
-#: ../src/file.cpp:520
-#, fuzzy, c-format
+#: ../src/file.cpp:467
+#, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
-msgstr[0] "Fjernet<b> i</b> ubrugt i&lt;&gt;."
-msgstr[1] "Fjernet<b> i</b> ubrugt i&lt;&gt;."
+msgstr[0] "Fjernede <b>%i</b> ubrugt definition i &lt;defs&gt;."
+msgstr[1] "Fjernede <b>%i</b> ubrugte definitioner i &lt;defs&gt;."
 
-#: ../src/file.cpp:525
-#, fuzzy
+#: ../src/file.cpp:472
 msgid "No unused definitions in &lt;defs&gt;."
-msgstr "Nej ubrugt i&lt;&gt;."
+msgstr "Ingen ubrugte definitioner i &lt;defs&gt;."
 
-#: ../src/file.cpp:550
-#, fuzzy, c-format
+#: ../src/file.cpp:498
+#, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
-msgstr "Nej ekstension til s ukendt filnavn ekstension."
+msgstr ""
+"Ingen Inkscape -udvidelse fundet at gemme dokumentet (%s) med. Dette kan "
+"være forårsaget af en ukendt filnavneendelse."
 
-#: ../src/file.cpp:551 ../src/file.cpp:559
+#: ../src/file.cpp:499 ../src/file.cpp:507
 msgid "Document not saved."
 msgstr "Dokument ikke gemt."
 
-#: ../src/file.cpp:558
-#, fuzzy, c-format
+#: ../src/file.cpp:506
+#, c-format
 msgid "File %s could not be saved."
-msgstr "Fil s."
+msgstr "Filen %s kunne ikke gemmes."
 
-#: ../src/file.cpp:568
+#: ../src/file.cpp:516
 msgid "Document saved."
 msgstr "Dokument gemt."
 
-#: ../src/file.cpp:616
+#: ../src/file.cpp:573 ../src/file.cpp:947
 #, c-format
 msgid "drawing%s"
 msgstr "tegning%s"
 
-#: ../src/file.cpp:622
+#: ../src/file.cpp:579
 #, c-format
 msgid "drawing-%d%s"
 msgstr "tegning-%d%s"
 
-#: ../src/file.cpp:657
+#: ../src/file.cpp:600
 msgid "Select file to save to"
 msgstr "Vælg fil at gemme i"
 
-#: ../src/file.cpp:741
-#, fuzzy
+#: ../src/file.cpp:661
 msgid "No changes need to be saved."
-msgstr "Nej til."
+msgstr "Ingen ændringer behøver at gemmes."
 
-#: ../src/file.cpp:929
+#: ../src/file.cpp:852
 msgid "Select file to import"
 msgstr "Vælg fil der skal importeres"
 
-#: ../src/gradient-context.cpp:260
+#: ../src/file.cpp:969
 #, fuzzy
+msgid "Select file to export to"
+msgstr "Vælg fil der skal importeres"
+
+#: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
-msgstr "<b> Ctrl</b> vinkel"
+msgstr "<b>Ctrl</b>: trinvis justering af overgangsvinkel"
 
 #: ../src/gradient-context.cpp:261
-#, fuzzy
 msgid "<b>Shift</b>: draw gradient around the starting point"
-msgstr "<b> Shift</b> punkt"
+msgstr "<b>Shift</b>: tegn overgang omkring startpunktet"
 
 #: ../src/gradient-context.cpp:462
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
-msgstr[0] "<b> Overgang</b> for d objekt<b> Ctrl</b> til vinkel"
-msgstr[1] "<b> Overgang</b> for d objekt<b> Ctrl</b> til vinkel"
+msgstr[0] ""
+"<b>Overgang</b> for %d objekt; med <b>Ctrl</b> for trinvis justering af "
+"vinkel"
+msgstr[1] ""
+"<b>Overgang</b> for %d objekter; med <b>Ctrl</b> for trinvis justering af "
+"vinkel"
 
 #: ../src/gradient-context.cpp:466
 msgid "Select <b>objects</b> on which to create gradient."
@@ -2547,35 +2554,41 @@ msgid "Radial gradient <b>focus</b>"
 msgstr "<b>Fokus</b> af radial overgang"
 
 #: ../src/gradient-drag.cpp:657
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
-"s for s s<b> Ctrl</b> til vinkel<b> Ctrl Alt</b> til vinkel<b> Ctrl Shift</"
-"b> til skalér"
+"%s til: %s%s; træk med <b>Ctrl</b> for trinvis justering af vinkel, med "
+"<b>Ctrl+Alt</b> for at bevare vinkel, med <b>Ctrl+Shift</b> for at skalere "
+"omkring centrum"
 
 #: ../src/gradient-drag.cpp:660
 msgid " (stroke)"
 msgstr " (streg)"
 
 #: ../src/gradient-drag.cpp:663
-#, fuzzy
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
-msgstr "Radial<b></b> og<b></b><b> Shift</b> til"
+msgstr ""
+"Radialovergang <b>centrum</b> og <b>fokus</b>; træk med <b>Shift</b> for at "
+"adskille fokus"
 
 #: ../src/gradient-drag.cpp:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
 "separate"
 msgid_plural ""
 "Gradient point shared by <b>%d</b> gradients; drag with <b>Shift</b> to "
 "separate"
-msgstr[0] "Overgang punkt<b> d</b><b> Shift</b> til"
-msgstr[1] "Overgang punkt<b> d</b><b> Shift</b> til"
+msgstr[0] ""
+"Overgangspunkt delt af <b>%d</b> overgang; træk med  <b>Shift</b> for at "
+"adskille"
+msgstr[1] ""
+"Overgangspunkt delt af <b>%d</b> overgange; træk med <b>Shift</b> for at "
+"adskille"
 
 #: ../src/helper/units.cpp:36
 msgid "Unit"
@@ -2614,7 +2627,7 @@ msgstr "px"
 
 #: ../src/helper/units.cpp:38
 msgid "Pixels"
-msgstr "Pixsler"
+msgstr "Pixler"
 
 #: ../src/helper/units.cpp:38
 msgid "Px"
@@ -2719,91 +2732,107 @@ msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr "Der opstod en intern fejl i Inkscape. Programmet vil derfor lukke.\n"
 
 #: ../src/inkscape.cpp:477
-#, fuzzy
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
-msgstr "Automatisk ud af  dokumenter færdig til n"
+msgstr ""
+"Automatisk sikkerhedskopi af ikke-gemte dokumenter blev flyttet til disse "
+"placeringer:\n"
 
 #: ../src/inkscape.cpp:478
-#, fuzzy
 msgid "Automatic backup of the following documents failed:\n"
-msgstr "Automatisk ud af  dokumenter mislykket n"
+msgstr "Automatisk sikkerhedskopi af følgende dokumenter mislykkedes:\n"
 
 #: ../src/inkscape.cpp:615
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot create directory %s.\n"
 "%s"
-msgstr "s n s"
+msgstr ""
+"Kan ikke oprette mappe %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:616
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s is not a valid directory.\n"
 "%s"
-msgstr "s er a n s"
+msgstr ""
+"%s er ikke en gyldig mappe.\n"
+"%s"
 
 #: ../src/inkscape.cpp:617
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot create file %s.\n"
 "%s"
-msgstr "fil s n s"
+msgstr ""
+"Kan ikke oprette fil %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:618
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot write file %s.\n"
 "%s"
-msgstr "fil s n s"
+msgstr ""
+"Kan ikke skrive til fil %s.\n"
+"%s"
 
 #: ../src/inkscape.cpp:619
-#, fuzzy
 msgid ""
 "Although Inkscape will run, it will use default settings,\n"
 "and any changes made in preferences will not be saved."
-msgstr "standard hvadsomhelst i."
+msgstr ""
+"Selvom Inkscape vil køre, vil det bruge standardindstillinger,\n"
+"og alle ændringer i indstillingerne vil ikke blive gemt."
 
 #: ../src/inkscape.cpp:689 ../src/preferences.cpp:56
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s is not a regular file.\n"
 "%s"
-msgstr "s er a regulær fil n s"
+msgstr ""
+"%s er ikke en almindelig fil.\n"
+"%s"
 
 #: ../src/inkscape.cpp:690 ../src/preferences.cpp:57
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s not a valid XML file, or\n"
 "you don't have read permissions on it.\n"
 "%s"
-msgstr "s a XML fil eller til n s"
+msgstr ""
+"%s er ikke en gyldig XML-fil, eller\n"
+"du har ikke læserettigheder til filen.\n"
+"%s"
 
 #: ../src/inkscape.cpp:692
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s is not a valid menus file.\n"
 "%s"
-msgstr "s er a fil n s"
+msgstr ""
+"%s er ikke en gyldig menufil.\n"
+"%s"
 
 #: ../src/inkscape.cpp:693
-#, fuzzy
 msgid ""
 "Inkscape will run with default menus.\n"
 "New menus will not be saved."
-msgstr "standard."
+msgstr ""
+"Inkscape vil køre med standardmenuer.\n"
+"Nye menuer vil ikke blive gemt."
 
 #. sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
 #. checkitem_toggled, checkitem_update, 0);
 #: ../src/interface.cpp:776
-#, fuzzy
 msgid "Commands Bar"
-msgstr "Kommandoer Bjælke"
+msgstr "Kommandoværktøjslinje"
 
 #: ../src/interface.cpp:776
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "Vis eller skjul kommandolinjen (uden menuen)"
+msgstr "Vis eller skjul kommandoværktøjslinjen (under menuen)"
 
 #: ../src/interface.cpp:778
 msgid "Tool Controls Bar"
@@ -2814,14 +2843,12 @@ msgid "Show or hide the Tool Controls bar"
 msgstr "Vis eller skjul kontrolværktøjslinjen"
 
 #: ../src/interface.cpp:780
-#, fuzzy
 msgid "_Toolbox"
-msgstr "Værktøjskasse"
+msgstr "_Værktøjskasse"
 
 #: ../src/interface.cpp:780
-#, fuzzy
 msgid "Show or hide the main toolbox (on the left)"
-msgstr "Vis eller til venstre"
+msgstr "Vis eller skjul værktøjskassen (til venstre)"
 
 #: ../src/interface.cpp:786
 msgid "_Palette"
@@ -2832,19 +2859,17 @@ msgid "Show or hide the color palette"
 msgstr "Vis eller skjul farvepaletten"
 
 #: ../src/interface.cpp:788
-#, fuzzy
 msgid "_Statusbar"
-msgstr "Statuslinje"
+msgstr "_Statuslinje"
 
 #: ../src/interface.cpp:788
-#, fuzzy
 msgid "Show or hide the statusbar (at the bottom of the window)"
-msgstr "Vis eller ved bund ud af "
+msgstr "Vis eller skjul statuslinjen (i bunden af vinduet)"
 
 #: ../src/interface.cpp:842
-#, fuzzy, c-format
+#, c-format
 msgid "Verb \"%s\" Unknown"
-msgstr "Verbum s Ukendt"
+msgstr "Verbum \"%s\" er ukendt"
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:952
@@ -2857,327 +2882,333 @@ msgid "Go to parent"
 msgstr "Gå til forælder"
 
 #: ../src/interface.cpp:1108
-#, fuzzy
 msgid "Could not parse SVG data"
-msgstr "SVG"
+msgstr "Kunne ikke fortolke SVG-data"
 
 #: ../src/interface.cpp:1273
-#, fuzzy, c-format
+#, c-format
 msgid "Overwrite %s"
-msgstr "Overskriv s"
+msgstr "Overskriv %s"
 
 #: ../src/interface.cpp:1294
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The file %s already exists.  Do you want to overwrite that file with the "
 "current document?"
-msgstr "fil s til fil?"
+msgstr ""
+"Filen %s, eksisterer i forvejen. Vil du overskrive filen med det aktuelle "
+"dokument?"
 
 #: ../src/jabber_whiteboard/invitation-confirm-dialog.cpp:26
 #: ../src/jabber_whiteboard/session-file-selector.cpp:24
-#, fuzzy
 msgid "_Write session file:"
-msgstr "Skriv fil:"
+msgstr "_Skriv sessionsfil:"
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:46
-#, fuzzy
 msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b></b> til a."
+msgstr "<b>%1</b> har inviteret dig til at samarbejde på whiteboard."
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:47
-#, fuzzy
 msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "til<b></b> s?"
+msgstr "Vil du acceptere <b>%1</b>s invitation?"
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:51
 msgid "Accept invitation"
 msgstr "Acceptér invitation"
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:52
-#, fuzzy
 msgid "Decline invitation"
-msgstr "Afslå"
+msgstr "Afslå invitation"
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:102
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
 "whiteboard invitation.</span>\n"
 "\n"
-msgstr "<span weight=\"bold\" size=\"larger\"><b></b></span> n n"
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">Brugeren <b>%1</b> har afslået din "
+"invitation.</span>\n"
+"\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:105
-#, fuzzy
 msgid ""
 "You are still connected to a Jabber server as <b>%2</b>, and may send an "
 "invitation to <b>%1</b> again, or you may send an invitation to a different "
 "user."
-msgstr "Dig koblet på til a<b></b> og til<b></b> eller til a."
+msgstr ""
+"Du er stadig tilkoblet Jabber-serveren som <b>%2</b> og kan sende en "
+"invitation til <b>%1</b> igen, eller du kan sende en invitation til en anden "
+"bruger."
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:117
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
 "incompatible version of Inkboard.</span>\n"
 "\n"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\"><b></b> er version ud af </span> n n"
+"<span weight=\"bold\" size=\"larger\">Brugeren <b>%1</b> bruger en ikke-"
+"kompatibel udgave af Inkboard.</span>\n"
+"\n"
 
 #. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:120
-#, fuzzy
 msgid ""
 "Inkscape cannot connect to <b>%1</b>.\n"
 "\n"
 "You are still connected to a Jabber server as <b>%2</b>."
-msgstr "til<b></b> n koblet på til a<b></b>."
+msgstr ""
+"Inkscape kan ikke forbinde <b>%1</b>.\n"
+"\n"
+"Du er stadig tilkoblet Jabber-serveren som  <b>%2</b>."
 
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
 #. no way to let the other client(s) uniquely identify this object.
 #: ../src/jabber_whiteboard/message-utilities.cpp:169
-#, fuzzy
 msgid ""
 "ID for new object is NULL even after generation and lookup attempts: the new "
 "object will NOT be sent, nor will any of its child objects!"
-msgstr "ID for ny objekt er og ny objekt NOT hvadsomhelst ud af !"
+msgstr ""
+"Det nye objekts ID er NULL, selv efter oprettelse og søgning, vil det "
+"nyeobjekt ikke blive sendt, endsige nogle af objektets afledte objekter!"
 
 #: ../src/jabber_whiteboard/new-inkboard-document.cpp:60
-#, fuzzy
 msgid "Inkboard session (%1 to %2)"
-msgstr "til"
+msgstr "Inkboard session (%1 til %2)"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
-#, fuzzy
 msgid "Select a location and filename"
-msgstr "Vælg a og filnavn"
+msgstr "Vælg en placering og et filnavn"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 msgid "Set filename"
 msgstr "Sæt filnavn"
 
 #: ../src/knot.cpp:425
-#, fuzzy
 msgid "Node or handle drag canceled."
-msgstr "Knude eller."
+msgstr "Træk i knudepunkt eller håndtag, annulleret."
 
 #: ../src/libnrtype/FontFactory.cpp:358
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Ignorér skrifttype uden familie. (der får Pango til at bryde sammen)"
 
-#: ../src/main.cpp:197
-#, fuzzy
+#: ../src/main.cpp:199
 msgid "Print the Inkscape version number"
-msgstr "Udskriv version tal"
+msgstr "Udskriv Inkscapes versionsnummer"
 
-#: ../src/main.cpp:202
+#: ../src/main.cpp:204
 msgid "Do not use X server (only process files from console)"
 msgstr "Benyt ikke X-serveren (behandl kun filer fra konsollen)"
 
-#: ../src/main.cpp:207
-#, fuzzy
+#: ../src/main.cpp:209
 msgid "Try to use X server (even if $DISPLAY is not set)"
-msgstr "Prøv til X er set"
+msgstr "Forsøgt at benytte X-serveren (selv når $DISPLAY ikke er sat)"
 
-#: ../src/main.cpp:212
-#, fuzzy
+#: ../src/main.cpp:214
 msgid "Open specified document(s) (option string may be excluded)"
-msgstr "Åbn s tekststreng"
+msgstr "Åbn angivede dokument(er) (tilvalgstekststreng kan blive udeladt)"
 
-#: ../src/main.cpp:213 ../src/main.cpp:218 ../src/main.cpp:223
-#: ../src/main.cpp:290 ../src/main.cpp:295 ../src/main.cpp:300
-#: ../src/main.cpp:305
+#: ../src/main.cpp:215 ../src/main.cpp:220 ../src/main.cpp:225
+#: ../src/main.cpp:292 ../src/main.cpp:297 ../src/main.cpp:302
+#: ../src/main.cpp:307
 msgid "FILENAME"
 msgstr "FILNAVN"
 
-#: ../src/main.cpp:217
-#, fuzzy
+#: ../src/main.cpp:219
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
-msgstr "Udskriv s til uddata fil program for"
+msgstr ""
+"Udskrivdokument(er) til angivet uddatafil (brug | for at kanalisere videre "
+"(pipe))"
 
-#: ../src/main.cpp:222
+#: ../src/main.cpp:224
 msgid "Export document to a PNG file"
 msgstr "Eksportér dokument til PNG-fil"
 
-#: ../src/main.cpp:227
-#, fuzzy
+#: ../src/main.cpp:229
 msgid "The resolution used for exporting SVG into bitmap (default 90)"
-msgstr "for SVG standard"
+msgstr ""
+"Opløsningen der bruges ved eksportering af punktbillede fra SVG (standard 90)"
 
-#: ../src/main.cpp:228
+#: ../src/main.cpp:230
 msgid "DPI"
 msgstr "DPI"
 
-#: ../src/main.cpp:232
-#, fuzzy
+#: ../src/main.cpp:234
 msgid ""
 "Exported area in SVG user units (default is the canvas; 0,0 is lower-left "
 "corner)"
-msgstr "i SVG standard er er venstre"
+msgstr ""
+"Eksporteret område i SVG-enheder (standard er lærredet, 0,0 er nederste "
+"venstre hjørne)"
 
-#: ../src/main.cpp:233
+#: ../src/main.cpp:235
 msgid "x0:y0:x1:y1"
 msgstr "x0:y0:x1:y1"
 
-#: ../src/main.cpp:237
+#: ../src/main.cpp:239
 msgid "Exported area is the entire drawing (not canvas)"
 msgstr "Eksporteret område er hele tegningen (ikke lærredet)"
 
-#: ../src/main.cpp:242
+#: ../src/main.cpp:244
 msgid "Exported area is the entire canvas"
 msgstr "Eksporteret område er hele lærredet"
 
-#: ../src/main.cpp:247
-#, fuzzy
+#: ../src/main.cpp:249
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
-msgstr "Hæng på gitter til i SVG"
+msgstr ""
+"Udvid punktbilledets eksporteringsområde til nærmeste heltalsværdi (i SVG-"
+"enheder)"
 
-#: ../src/main.cpp:252
-#, fuzzy
+#: ../src/main.cpp:254
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
-msgstr "bredde ud af  i billedpunkter dpi"
+msgstr ""
+"Bredde af det eksporterede punktbillede pixler (overtrumfer eksporterings-"
+"dpi)"
 
-#: ../src/main.cpp:253
+#: ../src/main.cpp:255
 msgid "WIDTH"
 msgstr "BREDDE"
 
-#: ../src/main.cpp:257
-#, fuzzy
+#: ../src/main.cpp:259
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
-msgstr "højde ud af  i billedpunkter dpi"
+msgstr ""
+"Højden af det eksporterede punktbillede i pixler (overtrumfer eksporterings-"
+"dpi)"
 
-#: ../src/main.cpp:258
+#: ../src/main.cpp:260
 msgid "HEIGHT"
 msgstr "HØJDE"
 
-#: ../src/main.cpp:262
-#, fuzzy
+#: ../src/main.cpp:264
 msgid "The ID of the object to export"
-msgstr "ID ud af  objekt til"
+msgstr "ID af objektet der eksporteres"
 
-#: ../src/main.cpp:263 ../src/main.cpp:344
+#: ../src/main.cpp:265 ../src/main.cpp:346
 msgid "ID"
 msgstr "ID"
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:269
-#, fuzzy
+#: ../src/main.cpp:271
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
-msgstr "Eksportér objekt alle"
+msgstr ""
+"Eksportér kun objektet med eksporterings-ID, skjul alle andre (kun med "
+"eksporterings-id)"
 
-#: ../src/main.cpp:274
-#, fuzzy
+#: ../src/main.cpp:276
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
-msgstr "Brug filnavn og"
+msgstr ""
+"Brug gemt filnavn og DPI-vink når der eksporteres (kun med eksporterings-id)"
 
-#: ../src/main.cpp:279
-#, fuzzy
+#: ../src/main.cpp:281
 msgid "Background color of exported bitmap (any SVG-supported color string)"
-msgstr "Baggrund ud af  hvadsomhelst SVG tekststreng"
+msgstr ""
+"Baggrundsfarve for det eksporterede punktbillede (et hvilken som helst SVG-"
+"understøttet farvenavn)"
 
-#: ../src/main.cpp:280
+#: ../src/main.cpp:282
 msgid "COLOR"
 msgstr "FARVE"
 
-#: ../src/main.cpp:284
-#, fuzzy
+#: ../src/main.cpp:286
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
-msgstr "Baggrund opacitet ud af  til eller til"
+msgstr ""
+"Baggrundsuigennemsigtighed for det eksporterede punktbillede (enten 0.0 til "
+"1.0 eller 1 til 255)"
 
-#: ../src/main.cpp:285
+#: ../src/main.cpp:287
 msgid "VALUE"
 msgstr "VÆRDI"
 
-#: ../src/main.cpp:289
-#, fuzzy
+#: ../src/main.cpp:291
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
-msgstr "Eksportér til almindelig SVG fil nej eller"
+msgstr ""
+"Eksportér dokument til almindelig SVG-fil (ingen Sodipodi- eller Inkscape-"
+"navnerum)"
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:296
 msgid "Export document to a PS file"
 msgstr "Eksportér dokument til PS-fil"
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:301
 msgid "Export document to an EPS file"
 msgstr "Eksportér dokument til EPS-fil"
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:306
 msgid "Export document to a PDF file"
 msgstr "Eksportér dokument til PDF-fil"
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:311
 msgid "Convert text object to paths on export (EPS)"
 msgstr "Konvertér tekstobjekt til sti ved eksport (EPS)"
 
-#: ../src/main.cpp:314
-#, fuzzy
+#: ../src/main.cpp:316
 msgid "Export files with the bounding box set to the page size (EPS)"
-msgstr "Eksportér felt set til side størrelse EPS"
+msgstr "Eksportér filer med afgrænsningsboks sat til sidestørrelsen (EPS)"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:320
-#, fuzzy
+#: ../src/main.cpp:322
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
-msgstr "Forespørgsel X ud af  eller ud af  objekt"
+msgstr ""
+"Spørg efter tegningens X-koordinat eller, hvis angivet, X-koordinaten af "
+"objektet, med forespørgsels-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:326
-#, fuzzy
+#: ../src/main.cpp:328
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
-msgstr "Forespørgsel Y ud af  eller ud af  objekt"
+msgstr ""
+"Spørg efter tegningens Y-koordinat eller, hvis angivet, Y-koordinaten af "
+"objektet, med forespørgsels-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:332
-#, fuzzy
+#: ../src/main.cpp:334
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
-msgstr "Forespørgsel bredde ud af  eller ud af  objekt"
+msgstr ""
+"Spørg efter tegningens bredde eller, hvis angivet, bredden af objektet, med "
+"forespørgsels-id"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:338
-#, fuzzy
+#: ../src/main.cpp:340
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
-msgstr "Forespørgsel højde ud af  eller ud af  objekt"
+msgstr ""
+"Spørg efter tegningens højde eller, hvis angivet, højden af objektet, med "
+"forespørgsels-id"
 
-#: ../src/main.cpp:343
-#, fuzzy
+#: ../src/main.cpp:345
 msgid "The ID of the object whose dimensions are queried"
-msgstr "ID ud af  objekt hvis"
+msgstr "ID for objektet, hvis størrelse forespørges"
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:349
-#, fuzzy
+#: ../src/main.cpp:351
 msgid "Print out the extension directory and exit"
-msgstr "Udskriv ekstension og"
+msgstr "Udskriv mappennavnet, og forlad"
 
-#: ../src/main.cpp:354
+#: ../src/main.cpp:356
 msgid "Show given files one-by-one, switch to next on any key/mouse event"
 msgstr ""
 "Vis givne filer en-efter-en, skift til næste ved enhver taste/muse-hændelse"
 
-#: ../src/main.cpp:359
-#, fuzzy
+#: ../src/main.cpp:361
 msgid "Use the new Gtkmm GUI interface"
-msgstr "Brug ny GUI grænseflade"
+msgstr "Brug den nye Gtkmm brugergrænseflade"
 
-#: ../src/main.cpp:364
-#, fuzzy
+#: ../src/main.cpp:366
 msgid "Remove unused definitions from the defs section(s) of the document"
-msgstr "Fjern ubrugt fra s ud af "
+msgstr "Fjern ubrugte definitioner fra definitionsdelen(e) af dokumentet"
 
-#: ../src/main.cpp:559
+#: ../src/main.cpp:561
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -3233,7 +3264,7 @@ msgstr "_Objekt"
 
 #: ../src/menus-skeleton.h:163
 msgid "Cli_p"
-msgstr "Kli_p"
+msgstr "Besk_ær"
 
 #: ../src/menus-skeleton.h:167
 msgid "Mas_k"
@@ -3252,9 +3283,8 @@ msgid "_Text"
 msgstr "_Tekst"
 
 #: ../src/menus-skeleton.h:225
-#, fuzzy
 msgid "Effe_cts"
-msgstr "Effekter"
+msgstr "Effe_kter"
 
 #: ../src/menus-skeleton.h:232
 msgid "Whiteboa_rd"
@@ -3269,22 +3299,23 @@ msgid "Tutorials"
 msgstr "Gennemgange"
 
 #: ../src/node-context.cpp:366
-#, fuzzy
 msgid ""
 "<b>Ctrl</b>: toggle node type, snap handle angle, move hor/vert; <b>Ctrl"
 "+Alt</b>: move along handles"
-msgstr "<b> Ctrl</b> type vinkel<b> Ctrl Alt</b>"
+msgstr ""
+"<b>Ctrl</b>: slå knudepunktstype til/fra, trinvis justeringsvinkel, flyt "
+"vandret/lodret; <b>Ctrl+Alt</b>: flyt langs håndtag"
 
 #: ../src/node-context.cpp:367
-#, fuzzy
 msgid ""
 "<b>Shift</b>: toggle node selection, disable snapping, rotate both handles"
-msgstr "<b> Shift</b> deaktivér rotér"
+msgstr ""
+"<b>Shift</b>: slå knudepunktsmarkering til/fra, slå trinvis justering fra, "
+"rotér begge håndtag"
 
 #: ../src/node-context.cpp:368
-#, fuzzy
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
-msgstr "<b> Alt</b> længde<b> Ctrl Alt</b>"
+msgstr "<b>Alt</b>: lås håndtagslængde; <b>Ctrl+Alt</b>: flyt langs håndtag"
 
 #. drag curve
 #: ../src/node-context.cpp:624
@@ -3296,94 +3327,82 @@ msgid "Stamp"
 msgstr "Stempl"
 
 #: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
-#, fuzzy
 msgid "Move nodes vertically"
-msgstr "Justér markerede knudepunkter lodret"
+msgstr "Flyt knudepunkter lodret"
 
 #: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
-#, fuzzy
 msgid "Move nodes horizontally"
-msgstr "Justér markerede knudepunkter vandret"
+msgstr "Flyt knudepunkter vandret"
 
 #: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
-#, fuzzy
 msgid "Move nodes"
-msgstr "Sænk"
+msgstr "Flyt knudepunkter"
 
 #: ../src/nodepath.cpp:1259
-#, fuzzy
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
 msgstr ""
-"<b> Knude</b> til kurve<b> Ctrl</b> til vinkel<b> Alt</b> til længde<b> "
-"Shift</b> til rotér"
+"<b>Knudepunktshåndtag</b>: træk for at forme kurven; med <b>Ctrl</b> for "
+"trinvis justering; med <b>Alt</b> for at låse længden; med <b>Shift</b> for "
+"at rotere begge håndtag"
 
 #: ../src/nodepath.cpp:1430
-#, fuzzy
 msgid "Align nodes"
-msgstr "Justér toppe"
+msgstr "Justér knudepunkter"
 
 #: ../src/nodepath.cpp:1492
-#, fuzzy
 msgid "Distribute nodes"
-msgstr "Distribuér"
+msgstr "Fordel knudepunkter"
 
 #: ../src/nodepath.cpp:1531
-#, fuzzy
 msgid "Add nodes"
 msgstr "Tilføj knudepunkter"
 
 #: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
-#, fuzzy
 msgid "Add node"
-msgstr "Tilføj knudepunkter"
+msgstr "Tilføj knudepunkt"
 
 #: ../src/nodepath.cpp:1668
-#, fuzzy
 msgid "Break path"
-msgstr "_Bryd op"
+msgstr "Bryd sti op"
 
 #: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
 #: ../src/nodepath.cpp:1821
-#, fuzzy
 msgid "To join, you must have <b>two endnodes</b> selected."
-msgstr "Til<b> to</b>."
+msgstr "For at sammenføje, skal <b>to endekundepunkter</b> være markeret."
 
 #: ../src/nodepath.cpp:1743
-#, fuzzy
 msgid "Close subpath"
-msgstr "Lukker sti."
+msgstr "Luk understi"
 
 #: ../src/nodepath.cpp:1795
-#, fuzzy
 msgid "Join nodes"
-msgstr "endeknudepunkt"
+msgstr "Sammenføj knudepunkter"
 
 #: ../src/nodepath.cpp:1842
 msgid "Close subpath by segment"
 msgstr "Luk understi ved linjestykke"
 
 #: ../src/nodepath.cpp:1896
-#, fuzzy
 msgid "Join nodes by segment"
-msgstr "Forbind a ny linjestykke"
+msgstr "Sammenføj med nyt linjestykke"
 
 #: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
-#, fuzzy
 msgid "Delete nodes"
-msgstr "Slet knudepunkt"
+msgstr "Slet knudepunkter"
 
 #: ../src/nodepath.cpp:2020
 msgid "Delete nodes preserving shape"
 msgstr "Slet knudepunkter uden at ændre form"
 
 #: ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2093
-#, fuzzy
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
-msgstr "Vælg<b> to</b> til a sti mellem til."
+msgstr ""
+"Vælg <b>to ikke-endeknudepunkter</b> mellem hvilke du vil slette "
+"linjestykker."
 
 #: ../src/nodepath.cpp:2189
 msgid "Cannot find path between nodes."
@@ -3402,47 +3421,44 @@ msgid "Change node type"
 msgstr "Ændr knudepunkttype"
 
 #: ../src/nodepath.cpp:3214
-#, fuzzy
 msgid "Retract handle"
-msgstr "Firkant"
+msgstr "Træk håndtag tilbage"
 
 #: ../src/nodepath.cpp:3262
-#, fuzzy
 msgid "Move node handle"
-msgstr "Tilfældiggør"
+msgstr "Flyt knudepunkts-håndtag"
 
 #: ../src/nodepath.cpp:3402
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle; with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both "
 "handles"
 msgstr ""
-"<b> Knude</b> vinkel&#176; længde s<b> Ctrl</b> til vinkel<b> Alt</b> til "
-"længde<b> Shift</b> til rotér"
+"<b>Knudepunktshåndtag</b>: vinkel %0.2f°, længde %s; med <b>Ctrl</b> for "
+"trinvis justering; med <b>Alt</b> for at låse til længde; med <b>Shift</b> "
+"for at rotere begge håndtag"
 
 #: ../src/nodepath.cpp:3580
-#, fuzzy
 msgid "Rotate nodes"
-msgstr "Hæv knudepunkt"
+msgstr "Rotér knudepunkter"
 
 #: ../src/nodepath.cpp:3705
-#, fuzzy
 msgid "Scale nodes"
-msgstr "Hæv knudepunkt"
+msgstr "Skalér knudepunkter"
 
 #: ../src/nodepath.cpp:3752
-#, fuzzy
 msgid "Flip nodes"
-msgstr "linjer"
+msgstr "Vend knudepunkter"
 
 #: ../src/nodepath.cpp:3917
-#, fuzzy
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
 msgstr ""
-"<b> Knude</b> til redigér sti<b> Ctrl</b> til til<b> Ctrl Alt</b> til til"
+"<b>Knudepunkt</b>: træk for at redigere stien; med <b>Ctrl</b> for trinvis "
+"vandret/lodret justering; med <b>Ctrl+Alt</b> for trinvis justering i "
+"håndtagenes retninger"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4120
@@ -3465,55 +3481,57 @@ msgstr "symmetrisk"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4136
-#, fuzzy
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
-msgstr "<b> Shift</b> til udvider"
+msgstr ""
+"endeknudepunkt, håndtag tilbagetrukket (træk med <b>Shift</b> for at udvide)"
 
 #: ../src/nodepath.cpp:4138
-#, fuzzy
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
-msgstr "en<b> Shift</b> til udvider"
+msgstr "et håndtag trukket tilbage (træk med <b>Shift</b> for at udvide)"
 
 #: ../src/nodepath.cpp:4141
-#, fuzzy
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
-msgstr "<b> Shift</b> til udvider"
+msgstr "begge håndtag trukket tilbage (træk med <b>Shift</b> for at udvide)"
 
 #: ../src/nodepath.cpp:4153
-#, fuzzy
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
 "rotate"
 msgstr ""
-"<b> Træk</b> eller<b> Alt</b> til<b></b> til<b>&lt;&gt;</b> til skalér<b></"
-"b> til rotér"
+"<b>Træk</b> knudepunkter eller knudepunkthåndtag; <b>Alt+træk</b> "
+"knudpunkter at forme; <b>pile</b>taster for at flytte knudepunkter, <b>&lt; "
+"&gt;</b> for at skalere, <b>[ ]</b> for at rotere"
 
 #: ../src/nodepath.cpp:4154
-#, fuzzy
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
-msgstr "<b> Træk</b> eller<b></b> til"
+msgstr ""
+"<b>Træk</b> i knudepunktet eller dets håndtag; <b>pile</b>taster for at "
+"flytte knudepunktet"
 
 #: ../src/nodepath.cpp:4177 ../src/nodepath.cpp:4189
-#, fuzzy
 msgid "Select a single object to edit its nodes or handles."
-msgstr "Vælg a single objekt til redigér eller."
+msgstr ""
+"Vælg et enkelt objekt, for at redigere dets knudepunkter eller håndtag."
 
 #: ../src/nodepath.cpp:4181
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
 msgid_plural ""
 "<b>0</b> out of <b>%i</b> nodes selected. <b>Click</b>, <b>Shift+click</b>, "
 "or <b>drag around</b> nodes to select."
-msgstr[0] "<b></b> ud af <b> i</b><b> Klik</b><b> Shift</b> eller<b></b> til."
-msgstr[1] "<b></b> ud af <b> i</b><b> Klik</b><b> Shift</b> eller<b></b> til."
+msgstr[0] ""
+"<b>0</b> af <b>%i</b> knudepunkt markeret. <b>Klik</b>, <b>Shift+klik</b>, "
+"eller <b>træk omkring</b> knudepunkter for at markere."
+msgstr[1] ""
+"<b>0</b> af <b>%i</b> knudepunkter markeret. <b>Klik</b>, <b>Shift+klik</b>, "
+"eller <b>træk omkring</b> knudepunkter for at markere."
 
 #: ../src/nodepath.cpp:4187
-#, fuzzy
 msgid "Drag the handles of the object to modify it."
-msgstr "Træk ud af  objekt til."
+msgstr "Træk i objektets håndtag for at ændre det."
 
 #: ../src/nodepath.cpp:4195
 #, c-format
@@ -3543,113 +3561,112 @@ msgstr[0] "<b>%i</b> af <b>%i</b> knudepunkt markeret. %s."
 msgstr[1] "<b>%i</b> af <b>%i</b> knudepunkter markeret. %s."
 
 #: ../src/object-edit.cpp:488
-#, fuzzy
 msgid ""
 "Adjust the <b>horizontal rounding</b> radius; with <b>Ctrl</b> to make the "
 "vertical radius the same"
-msgstr "Justér<b></b><b> Ctrl</b> til"
+msgstr ""
+"Justér den <b>vandrette afrundingsradius</b>; med <b>Ctrl</b> for at gøre "
+"den lodrette radius den samme"
 
 #: ../src/object-edit.cpp:494
-#, fuzzy
 msgid ""
 "Adjust the <b>vertical rounding</b> radius; with <b>Ctrl</b> to make the "
 "horizontal radius the same"
-msgstr "Justér<b></b><b> Ctrl</b> til"
+msgstr ""
+"Justér den <b>lodrette afrundingsradius</b>; med <b>Ctrl</b> for at gøre den "
+"vandrette radius den samme"
 
 #: ../src/object-edit.cpp:501 ../src/object-edit.cpp:508
-#, fuzzy
 msgid ""
 "Adjust the <b>width and height</b> of the rectangle; with <b>Ctrl</b> to "
 "lock ratio or stretch in one dimension only"
-msgstr "Justér<b> bredde og højde</b> ud af <b> Ctrl</b> til ratio eller i en"
+msgstr ""
+"Justér firkantens <b>bredde og højde</b> med <b>Ctrl</b> for at låse ratio "
+"eller for at strække i kun én dimension"
 
 #: ../src/object-edit.cpp:681
-#, fuzzy
 msgid "Adjust ellipse <b>width</b>, with <b>Ctrl</b> to make circle"
-msgstr "Justér<b> bredde</b><b> Ctrl</b> til cirkel"
+msgstr "Justér <b>ellipse</b>, med <b>Ctrl</b> for at lave en cirkel"
 
 #: ../src/object-edit.cpp:684
-#, fuzzy
 msgid "Adjust ellipse <b>height</b>, with <b>Ctrl</b> to make circle"
-msgstr "Justér<b> højde</b><b> Ctrl</b> til cirkel"
+msgstr "Justér <b>ellipse</b>højde, med <b>Ctrl</b> for at lave en cirkel"
 
 #: ../src/object-edit.cpp:687
-#, fuzzy
 msgid ""
 "Position the <b>start point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
-"Position<b> start punkt</b> ud af  bue eller linjestykke<b> Ctrl</b> til "
-"vinkel<b></b> for bue<b></b> for linjestykke"
+"Placér buen eller linjestykkets <b>startpunkt</b> med <b>Ctrl</b> for "
+"trinvis justering; træk <b>indeni</b> ellipsen for bue, <b>udenfor</b> for "
+"linjestykke"
 
 #: ../src/object-edit.cpp:690
-#, fuzzy
 msgid ""
 "Position the <b>end point</b> of the arc or segment; with <b>Ctrl</b> to "
 "snap angle; drag <b>inside</b> the ellipse for arc, <b>outside</b> for "
 "segment"
 msgstr ""
-"Position<b> punkt</b> ud af  bue eller linjestykke<b> Ctrl</b> til "
-"vinkel<b></b> for bue<b></b> for linjestykke"
+"Placér buen eller linjestykkets <b>slutpunkt</b> med <b>Ctrl</b> for trinvis "
+"justering; træk <b>indeni</b> ellipsen for bue, <b>udenfor</b> for "
+"linjestykke"
 
 #: ../src/object-edit.cpp:795
-#, fuzzy
 msgid ""
 "Adjust the <b>tip radius</b> of the star or polygon; with <b>Shift</b> to "
 "round; with <b>Alt</b> to randomize"
 msgstr ""
-"Justér<b> vink</b> ud af  stjerne eller polygon<b> Shift</b> til<b> Alt</b> "
-"til"
+"Justér polygonens eller stjernens <b>spidsradius</b> med <b>Shift</b> for at "
+"afrunde; med <b>Alt</b> for at tilfældiggøre"
 
 #: ../src/object-edit.cpp:798
-#, fuzzy
 msgid ""
 "Adjust the <b>base radius</b> of the star; with <b>Ctrl</b> to keep star "
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
 "randomize"
 msgstr ""
-"Justér<b> basis</b> ud af  stjerne<b> Ctrl</b> til stjerne nej<b> Shift</b> "
-"til<b> Alt</b> til"
+"Justér stjernens <b>basisradius</b>; med <b>Ctrl</b> for at holde stjernens "
+"stråler radiale (intet vrid); med <b>Shift</b> for at afrunde; med <b>Alt</"
+"b> for at tilfældiggøre"
 
 #: ../src/object-edit.cpp:962
-#, fuzzy
 msgid ""
 "Roll/unroll the spiral from <b>inside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to converge/diverge"
-msgstr "fra<b></b><b> Ctrl</b> til vinkel<b> Alt</b> til"
+msgstr ""
+"Rul/udrul spiralen fra <b>inderst</b>; med <b>Ctrl</b> for trinvis "
+"justering; med <b>Alt</b> for at konvergere/divergere"
 
 #: ../src/object-edit.cpp:964
-#, fuzzy
 msgid ""
 "Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
 "with <b>Shift</b> to scale/rotate"
-msgstr "fra<b></b><b> Ctrl</b> til vinkel<b> Shift</b> til skalér rotér"
+msgstr ""
+"Rul/udrul spiralen fra <b>yderst</b>; med <b>Ctrl</b> for trinvis justering; "
+"med <b>Alt</b> for at skalere/rotere"
 
 #: ../src/object-edit.cpp:1001
-#, fuzzy
 msgid "Adjust the <b>offset distance</b>"
-msgstr "Justér<b></b>"
+msgstr "Justér <b>forskydningsafstand</b>"
 
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/object-edit.cpp:1031
-#, fuzzy
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "<b> Flyt</b> mønster objekt"
+msgstr "<b>Flyt</b> udfyldningsmønsteret indeni objektet"
 
 #: ../src/object-edit.cpp:1033
 msgid "<b>Scale</b> the pattern fill uniformly"
 msgstr "<b>Skalér</b> mønsterudfyldningen ensartet"
 
 #: ../src/object-edit.cpp:1035
-#, fuzzy
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
-msgstr "<b> Rotér</b> mønster<b> Ctrl</b> til vinkel"
+msgstr ""
+"<b>Rotér</b> udfyldningsmønsteret med; <b>Ctrl</b> for trinvis justering"
 
 #: ../src/object-edit.cpp:1060
-#, fuzzy
 msgid "Drag to resize the <b>flowed text frame</b>"
-msgstr "Træk til<b> tekst</b>"
+msgstr "Træk for at ændre størrelsen på den <b>flydende tekstramme</b>"
 
 #: ../src/path-chemistry.cpp:56
 msgid "Select <b>at least two objects</b> to combine."
@@ -3660,38 +3677,35 @@ msgid "At least one of the objects is <b>not a path</b>, cannot combine."
 msgstr "Mindst et af objekterne er <b>ikke en sti</b>, kan ikke kombinere."
 
 #: ../src/path-chemistry.cpp:71
-#, fuzzy
 msgid ""
 "You cannot combine objects from <b>different groups</b> or <b>layers</b>."
-msgstr "Dig fra<b></b> eller<b></b>."
+msgstr ""
+"Du kan ikke kombinere objekter fra <b>forskellige grupper</b> eller <b>lag</"
+"b>."
 
 #: ../src/path-chemistry.cpp:139
-#, fuzzy
 msgid "Combine"
-msgstr "Kombineret"
+msgstr "Kombinér"
 
 #: ../src/path-chemistry.cpp:154
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "Markér <b>sti(er)</b> at bryde."
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break Apart"
-msgstr "_Bryd op"
+msgstr "Bryd op"
 
 #: ../src/path-chemistry.cpp:235
-#, fuzzy
 msgid "<b>No path(s)</b> to break apart in the selection."
-msgstr "<b> Nej sti s</b> til i."
+msgstr "<b>Ingen sti(er)</b> at bryde op i det markerede."
 
 #: ../src/path-chemistry.cpp:256
 msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Markér <b>objekt(er)</b> at konvertere til sti."
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to Path"
-msgstr "Objekt til Sti"
+msgstr "Objekt til sti"
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
@@ -3702,9 +3716,8 @@ msgid "Select <b>path(s)</b> to reverse."
 msgstr "Markér <b>sti(er)</b> at vende om."
 
 #: ../src/path-chemistry.cpp:380
-#, fuzzy
 msgid "<b>No paths</b> to reverse in the selection."
-msgstr "<b> Nej</b> til i."
+msgstr "<b>Ingen stier</b> at vende om i det markerede."
 
 #: ../src/pen-context.cpp:224
 msgid "Drawing cancelled"
@@ -3723,47 +3736,49 @@ msgid "Appending to selected path"
 msgstr "Føj til markeret sti"
 
 #: ../src/pen-context.cpp:545
-#, fuzzy
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
-msgstr "<b> Klik</b> eller<b> og</b> til og afslut sti."
+msgstr "<b>Klik</b> eller <b>klik og træk</b> for at lukke og afslutte stien."
 
 #: ../src/pen-context.cpp:555
-#, fuzzy
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
-msgstr "<b> Klik</b> eller<b> og</b> til sti fra punkt."
+msgstr ""
+"<b>Klik</b> eller <b>klik og træk</b> for at fortsætte stien fra dette punkt."
 
 #: ../src/pen-context.cpp:1044
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, "
 "<b>Enter</b> to finish the path"
 msgstr ""
-"<b> s</b> vinkel&#176; s<b> Ctrl</b> til vinkel<b> Enter</b> til afslut sti"
+"<b>%s</b>: vinkel %3.2f°, afstand %s; med <b>Ctrl</b> for trinvis justering, "
+"<b>Enter</b> for at afslutte stien"
 
 #: ../src/pen-context.cpp:1069
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
-msgstr "<b> Kurve</b> vinkel&#176; længde s<b> Ctrl</b> til vinkel"
+msgstr ""
+"<b>Kurvehåndtag</b>: vinkel %3.3f °, længde %s; med <b>Ctrl</b> for trinvis "
+"justering"
 
 #: ../src/pen-context.cpp:1099
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>%s</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, "
 "with <b>Shift</b> to move this handle only"
 msgstr ""
-"<b> s</b> vinkel&#176; længde s<b> Ctrl</b> til vinkel<b> Shift</b> til"
+"<b>%s</b>: vinkel %3.2f°, afstand %s; med <b>Ctrl</b> for trinvis justering, "
+"med <b>Shift</b> for at flytte kun dette håndtag"
 
 #: ../src/pen-context.cpp:1133
 msgid "Drawing finished"
 msgstr "Tegning udført"
 
 #: ../src/pencil-context.cpp:321
-#, fuzzy
 msgid "<b>Release</b> here to close and finish the path."
-msgstr "<b> Udgivelse</b> til og afslut sti."
+msgstr "<b>Frigiv</b> her for at lukke og afslutte stien."
 
 #: ../src/pencil-context.cpp:327
 msgid "Drawing a freehand path"
@@ -3779,39 +3794,43 @@ msgid "Finishing freehand"
 msgstr "Frihåndstegning udført"
 
 #: ../src/preferences.cpp:59
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s is not a valid preferences file.\n"
 "%s"
-msgstr "s er a fil n s"
+msgstr ""
+"%s er ikke en gyldig indstillingsfil.\n"
+"%s"
 
 #: ../src/preferences.cpp:60
-#, fuzzy
 msgid ""
 "Inkscape will run with default settings.\n"
 "New settings will not be saved."
-msgstr "standard."
+msgstr ""
+"Inkscape vil køre med standardindstillinger.\n"
+"Nye indstillinger vil ikke blive gemt."
 
 #: ../src/rect-context.cpp:377
-#, fuzzy
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
-msgstr "<b> Ctrl</b> eller ratio a"
+msgstr ""
+"<b>Ctrl</b>: opret kvadrat eller ratiobestemt firkant, med låst "
+"hjørneafrunding"
 
 #: ../src/rect-context.cpp:472
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
 "ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr ""
-"<b> Rektangel</b> s&#215; s<b> Ctrl</b> til eller ratio<b> Shift</b> til "
-"punkt"
+"<b>Rektangel</b>: %s &#215; %s; med <b>Ctrl</b> for at oprette kvadrat eller "
+"heltalsratiobestemt firkant; med <b>Shift</b> for at tegne omkring "
+"startpunktet"
 
 #: ../src/rect-context.cpp:490
-#, fuzzy
 msgid "Create rectangle"
-msgstr "Søg efter firkanter"
+msgstr "Opret firkant"
 
 #: ../src/select-context.cpp:226
 msgid "Move canceled."
@@ -3841,259 +3860,243 @@ msgstr "<b> Alt</b>"
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Markeret objekt er a gruppe."
 
-#: ../src/selection-chemistry.cpp:217
-#, fuzzy
+#: ../src/selection-chemistry.cpp:218
 msgid "Delete text"
-msgstr "Slet knudepunkt"
+msgstr "Slet tekst"
 
-#: ../src/selection-chemistry.cpp:225
+#: ../src/selection-chemistry.cpp:226
 #, fuzzy
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b> Intet</b> slettet."
 
-#: ../src/selection-chemistry.cpp:243
-#, fuzzy
+#: ../src/selection-chemistry.cpp:244
 msgid "Delete"
-msgstr "S_let"
+msgstr "Slet"
 
-#: ../src/selection-chemistry.cpp:257
+#: ../src/selection-chemistry.cpp:258
 #, fuzzy
 msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Vælg<b> objekt s</b> til duplikeret."
 
-#: ../src/selection-chemistry.cpp:282 ../src/widgets/gradient-selector.cpp:133
+#: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:488
 msgid "Duplicate"
 msgstr "Duplikér"
 
-#: ../src/selection-chemistry.cpp:307
-#, fuzzy
+#: ../src/selection-chemistry.cpp:308
 msgid "Delete all"
-msgstr "S_let"
+msgstr "Slet alle"
 
-#: ../src/selection-chemistry.cpp:430
+#: ../src/selection-chemistry.cpp:431
 #, fuzzy
 msgid "Select <b>two or more objects</b> to group."
 msgstr "Vælg<b> to eller mere</b> til gruppe."
 
-#: ../src/selection-chemistry.cpp:438
+#: ../src/selection-chemistry.cpp:439
 #, fuzzy
 msgid "Select <b>at least two objects</b> to group."
 msgstr "Vælg<b> ved to</b> til gruppe."
 
-#: ../src/selection-chemistry.cpp:509 ../src/selection-describer.cpp:49
+#: ../src/selection-chemistry.cpp:510 ../src/selection-describer.cpp:49
 msgid "Group"
 msgstr "Gruppe"
 
-#: ../src/selection-chemistry.cpp:524
+#: ../src/selection-chemistry.cpp:525
 #, fuzzy
 msgid "Select a <b>group</b> to ungroup."
 msgstr "Vælg a<b> gruppe</b> til."
 
-#: ../src/selection-chemistry.cpp:565
+#: ../src/selection-chemistry.cpp:566
 #, fuzzy
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b> Nej</b> til i."
 
-#: ../src/selection-chemistry.cpp:571
-#, fuzzy
+#: ../src/selection-chemistry.cpp:572
 msgid "Ungroup"
-msgstr "_Opdel gruppe"
+msgstr "Afgruppér"
 
-#: ../src/selection-chemistry.cpp:635
+#: ../src/selection-chemistry.cpp:636
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise."
 msgstr "Vælg<b> objekt s</b> til."
 
-#: ../src/selection-chemistry.cpp:641 ../src/selection-chemistry.cpp:694
-#: ../src/selection-chemistry.cpp:729 ../src/selection-chemistry.cpp:788
+#: ../src/selection-chemistry.cpp:642 ../src/selection-chemistry.cpp:695
+#: ../src/selection-chemistry.cpp:730 ../src/selection-chemistry.cpp:789
 #, fuzzy
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr "Dig fra<b></b> eller<b></b>."
 
-#: ../src/selection-chemistry.cpp:673
-#, fuzzy
+#: ../src/selection-chemistry.cpp:674
 msgid "Raise"
-msgstr "_Hæv"
+msgstr "Hæv"
 
-#: ../src/selection-chemistry.cpp:686
+#: ../src/selection-chemistry.cpp:687
 #, fuzzy
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Vælg<b> objekt s</b> til til top."
 
-#: ../src/selection-chemistry.cpp:709
-#, fuzzy
+#: ../src/selection-chemistry.cpp:710
 msgid "Raise to top"
-msgstr "Til ø_verst"
+msgstr "Hæv til øverst"
 
-#: ../src/selection-chemistry.cpp:723
+#: ../src/selection-chemistry.cpp:724
 #, fuzzy
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Vælg<b> objekt s</b> til."
 
-#: ../src/selection-chemistry.cpp:766
-#, fuzzy
+#: ../src/selection-chemistry.cpp:767
 msgid "Lower"
-msgstr "_Sænk"
+msgstr "Sænk"
 
-#: ../src/selection-chemistry.cpp:780
+#: ../src/selection-chemistry.cpp:781
 #, fuzzy
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Vælg<b> objekt s</b> til til bund."
 
-#: ../src/selection-chemistry.cpp:815
-#, fuzzy
+#: ../src/selection-chemistry.cpp:816
 msgid "Lower to bottom"
-msgstr "Sænk til _nederst"
+msgstr "Sænk til nederst"
 
-#: ../src/selection-chemistry.cpp:822
-#, fuzzy
+#: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
-msgstr "Intet til."
+msgstr "Intet at fortryde."
 
-#: ../src/selection-chemistry.cpp:829
-#, fuzzy
+#: ../src/selection-chemistry.cpp:830
 msgid "Nothing to redo."
-msgstr "Intet til."
+msgstr "Ingen fortrydelse at annullere"
 
-#: ../src/selection-chemistry.cpp:999
-#, fuzzy
+#: ../src/selection-chemistry.cpp:1000
 msgid "Nothing was copied."
-msgstr "Intet."
+msgstr "Intet kopieret."
 
-#: ../src/selection-chemistry.cpp:1099 ../src/selection-chemistry.cpp:1136
-#: ../src/selection-chemistry.cpp:1163 ../src/selection-chemistry.cpp:1199
+#: ../src/selection-chemistry.cpp:1100 ../src/selection-chemistry.cpp:1137
+#: ../src/selection-chemistry.cpp:1164 ../src/selection-chemistry.cpp:1200
 msgid "Nothing on the clipboard."
 msgstr "Intet på klippebordet."
 
-#: ../src/selection-chemistry.cpp:1124
-#, fuzzy
+#: ../src/selection-chemistry.cpp:1125
 msgid "Paste"
-msgstr "_Indsæt"
+msgstr "Indsæt"
 
-#: ../src/selection-chemistry.cpp:1142
+#: ../src/selection-chemistry.cpp:1143
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Vælg<b> objekt s</b> til til."
 
-#: ../src/selection-chemistry.cpp:1151
+#: ../src/selection-chemistry.cpp:1152
 msgid "Paste style"
 msgstr "Indsæt _stil"
 
-#: ../src/selection-chemistry.cpp:1169 ../src/selection-chemistry.cpp:1205
+#: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
 #, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Vælg<b> objekt s</b> til størrelse til."
 
-#: ../src/selection-chemistry.cpp:1187
-#, fuzzy
+#: ../src/selection-chemistry.cpp:1188
 msgid "Paste size"
-msgstr "Inds_æt størrelse"
+msgstr "Indsæt størrelse"
 
-#: ../src/selection-chemistry.cpp:1228
+#: ../src/selection-chemistry.cpp:1229
 msgid "Paste size separately"
 msgstr "Indsæt størrelse separat"
 
-#: ../src/selection-chemistry.cpp:1239
+#: ../src/selection-chemistry.cpp:1240
 #, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Vælg<b> objekt s</b> til til."
 
-#: ../src/selection-chemistry.cpp:1264
-#, fuzzy
+#: ../src/selection-chemistry.cpp:1265
 msgid "Raise to next layer"
-msgstr "Flyttet til næste lag."
+msgstr "Hæv til næste lag"
 
-#: ../src/selection-chemistry.cpp:1270
+#: ../src/selection-chemistry.cpp:1271
 msgid "No more layers above."
 msgstr "Ikke flere lag ovenfor."
 
-#: ../src/selection-chemistry.cpp:1284
+#: ../src/selection-chemistry.cpp:1285
 #, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Vælg<b> objekt s</b> til til."
 
-#: ../src/selection-chemistry.cpp:1309
-#, fuzzy
+#: ../src/selection-chemistry.cpp:1310
 msgid "Lower to previous layer"
-msgstr "Flyttet til forrige lag."
+msgstr "Sænk til forrige lag"
 
-#: ../src/selection-chemistry.cpp:1315
+#: ../src/selection-chemistry.cpp:1316
 msgid "No more layers below."
 msgstr "Ikke flere lag under."
 
-#: ../src/selection-chemistry.cpp:1457
+#: ../src/selection-chemistry.cpp:1458
 msgid "Remove transform"
 msgstr "Fjern transformation"
 
-#: ../src/selection-chemistry.cpp:1566
+#: ../src/selection-chemistry.cpp:1567
 #, fuzzy
 msgid "Rotate 90&#176; CW"
 msgstr "Rotér _90&#176; i urets retning"
 
-#: ../src/selection-chemistry.cpp:1594
+#: ../src/selection-chemistry.cpp:1595
 #, fuzzy
 msgid "Rotate 90&#176; CCW"
 msgstr "Rotér 9_0&#176; mod urets retning"
 
-#: ../src/selection-chemistry.cpp:1612 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
 msgid "Rotate"
 msgstr "Rotér"
 
-#: ../src/selection-chemistry.cpp:1641
+#: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
 msgstr "Rotér ved pixler"
 
-#: ../src/selection-chemistry.cpp:1667 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
 msgid "Scale"
 msgstr "Skalér"
 
-#: ../src/selection-chemistry.cpp:1686
+#: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
 msgstr "Skalér med hel faktor"
 
-#: ../src/selection-chemistry.cpp:1702
+#: ../src/selection-chemistry.cpp:1703
 msgid "Move vertically"
 msgstr "Flyt lodret"
 
-#: ../src/selection-chemistry.cpp:1705
+#: ../src/selection-chemistry.cpp:1706
 msgid "Move horizontally"
 msgstr "FLyt vandret"
 
-#: ../src/selection-chemistry.cpp:1708 ../src/selection-chemistry.cpp:1736
+#: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
 msgid "Move"
 msgstr "Flyt"
 
-#: ../src/selection-chemistry.cpp:1730
+#: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
 msgstr "Skub til pixler lodret"
 
-#: ../src/selection-chemistry.cpp:1733
+#: ../src/selection-chemistry.cpp:1734
 msgid "Nudge horizontally by pixels"
 msgstr "Skub til pixler vandret"
 
-#: ../src/selection-chemistry.cpp:1997 ../src/selection-describer.cpp:65
+#: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 msgid "Clone"
 msgstr "Klon"
 
-#: ../src/selection-chemistry.cpp:2014
+#: ../src/selection-chemistry.cpp:2015
 #, fuzzy
 msgid "Select a <b>clone</b> to unlink."
 msgstr "Vælg a<b></b> til."
 
-#: ../src/selection-chemistry.cpp:2045
+#: ../src/selection-chemistry.cpp:2046
 #, fuzzy
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr "<b> Nej til</b> i."
 
-#: ../src/selection-chemistry.cpp:2049
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2050
 msgid "Unlink clone"
-msgstr "Klon"
+msgstr "Aflænk klon"
 
-#: ../src/selection-chemistry.cpp:2063
+#: ../src/selection-chemistry.cpp:2064
 #, fuzzy
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
@@ -4103,95 +4106,89 @@ msgstr ""
 "Vælg a<b></b> til til original Vælg a<b></b> til til kilde Vælg a<b> tekst "
 "til sti</b> til til sti Vælg a<b> tekst</b> til til."
 
-#: ../src/selection-chemistry.cpp:2086
+#: ../src/selection-chemistry.cpp:2087
 #, fuzzy
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr "<b></b> objekt til tekst"
 
-#: ../src/selection-chemistry.cpp:2092
+#: ../src/selection-chemistry.cpp:2093
 #, fuzzy
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr "objekt til er<b> synlig</b> er i&lt;&gt;"
 
-#: ../src/selection-chemistry.cpp:2119
+#: ../src/selection-chemistry.cpp:2120
 #, fuzzy
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Vælg<b> objekt s</b> til til mønster."
 
-#: ../src/selection-chemistry.cpp:2195
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2196
 msgid "Objects to pattern"
-msgstr "Objekt til _mønster"
+msgstr "Objekter til mønster"
 
-#: ../src/selection-chemistry.cpp:2211
+#: ../src/selection-chemistry.cpp:2212
 #, fuzzy
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr "Vælg<b> objekt mønster</b> til fra."
 
-#: ../src/selection-chemistry.cpp:2264
+#: ../src/selection-chemistry.cpp:2265
 msgid "<b>No pattern fills</b> in the selection."
 msgstr "<b>Ingen mønsterudfyldninger</b> i markeringen."
 
-#: ../src/selection-chemistry.cpp:2267
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2268
 msgid "Pattern to objects"
-msgstr "Mønster til _objekter"
+msgstr "Mønstre til objekter"
 
-#: ../src/selection-chemistry.cpp:2285
+#: ../src/selection-chemistry.cpp:2286
 #, fuzzy
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Vælg<b> objekt s</b> til a kopi."
 
-#: ../src/selection-chemistry.cpp:2417
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2418
 msgid "Create bitmap"
-msgstr "Opret spiraler"
+msgstr "Opret punktbillede"
 
-#: ../src/selection-chemistry.cpp:2449
+#: ../src/selection-chemistry.cpp:2450
 #, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr "Vælg<b> objekt s</b> til eller fra."
 
-#: ../src/selection-chemistry.cpp:2452
+#: ../src/selection-chemistry.cpp:2453
 #, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr "Vælg objekt og<b> objekt s</b> til eller til."
 
-#: ../src/selection-chemistry.cpp:2543
+#: ../src/selection-chemistry.cpp:2544
 msgid "Set clipping path"
-msgstr "Vælg Lukker sti."
+msgstr "Vælg beskæringssti"
 
-#: ../src/selection-chemistry.cpp:2545
+#: ../src/selection-chemistry.cpp:2546
 msgid "Set mask"
 msgstr "Vælg maske"
 
-#: ../src/selection-chemistry.cpp:2558
+#: ../src/selection-chemistry.cpp:2559
 #, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Vælg<b> objekt s</b> til eller fra."
 
-#: ../src/selection-chemistry.cpp:2626
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2627
 msgid "Release clipping path"
-msgstr "Fjern sti fra"
+msgstr "Frigør beskæringssti"
 
-#: ../src/selection-chemistry.cpp:2628
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2629
 msgid "Release mask"
-msgstr "_Slip"
+msgstr "Frigiv maske"
 
-#: ../src/selection-chemistry.cpp:2672
-#, fuzzy
+#: ../src/selection-chemistry.cpp:2673
 msgid "Fit page to selection"
-msgstr "_Tilpas til markering"
+msgstr "Tilpas side til markering"
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
-msgstr "Link"
+msgstr "Henvisning"
 
 #: ../src/selection-describer.cpp:43
 msgid "Circle"
@@ -4648,34 +4645,28 @@ msgid ""
 msgstr "<b> Spiral</b> s vinkel&#176;<b> Ctrl</b> til vinkel"
 
 #: ../src/splivarot.cpp:66
-#, fuzzy
 msgid "Union"
-msgstr "_Forening"
+msgstr "Forening"
 
 #: ../src/splivarot.cpp:72
-#, fuzzy
 msgid "Intersection"
-msgstr "_Gennemsnit"
+msgstr "Gennemskæring"
 
 #: ../src/splivarot.cpp:78
-#, fuzzy
 msgid "Difference"
-msgstr "F_orskel"
+msgstr "Forskel"
 
 #: ../src/splivarot.cpp:84
-#, fuzzy
 msgid "Exclusion"
-msgstr "Eks_klusion"
+msgstr "Ekskludering"
 
 #: ../src/splivarot.cpp:89
-#, fuzzy
 msgid "Division"
-msgstr "Objektop_deling"
+msgstr "Opdeling"
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut Path"
-msgstr "Skær _sti"
+msgstr "Skær sti"
 
 #: ../src/splivarot.cpp:110
 #, fuzzy
@@ -4732,9 +4723,8 @@ msgid "Select <b>path(s)</b> to simplify."
 msgstr "Vælg<b> sti s</b> til."
 
 #: ../src/splivarot.cpp:1509
-#, fuzzy
 msgid "Simplify"
-msgstr "S_implificér"
+msgstr "Simplificér"
 
 #: ../src/splivarot.cpp:1511
 #, fuzzy
@@ -4832,9 +4822,8 @@ msgid "Unicode: %s: %s"
 msgstr "Unicode: %s: %s"
 
 #: ../src/text-context.cpp:591 ../src/text-context.cpp:861
-#, fuzzy
 msgid "Unicode: "
-msgstr "Unicode "
+msgstr "Unicode: "
 
 #: ../src/text-context.cpp:673
 #, fuzzy, c-format
@@ -4886,11 +4875,12 @@ msgstr ""
 "til objekt til."
 
 #: ../src/tools-switch.cpp:139
-#, fuzzy
 msgid ""
 "<b>Drag</b> to create a rectangle. <b>Drag controls</b> to round corners and "
 "resize. <b>Click</b> to select."
-msgstr "<b> Træk</b> til a<b> Træk</b> til og<b> Klik</b> til."
+msgstr ""
+"<b>Træk </b> for at oprette en firkant. <b>Træk i håndtag</b> for at afrunde "
+"hjørner og ændre størrelse. <b>Klik</b> for at markere."
 
 #: ../src/tools-switch.cpp:145
 #, fuzzy
@@ -5090,7 +5080,6 @@ msgstr "Minimum i px mellem"
 #. TRANSLATORS: Horizontal gap
 #: ../src/ui/dialog/align-and-distribute.cpp:452
 #: ../src/widgets/toolbox.cpp:1580
-#, fuzzy
 msgid "H:"
 msgstr "H:"
 
@@ -5101,7 +5090,6 @@ msgstr "Minimum i px mellem"
 
 #. TRANSLATORS: Vertical gap
 #: ../src/ui/dialog/align-and-distribute.cpp:462
-#, fuzzy
 msgid "V:"
 msgstr "V:"
 
@@ -5274,7 +5262,7 @@ msgstr "Mindste element"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1819 ../src/widgets/desktop-widget.cpp:1070
 msgid "Page"
 msgstr "Side"
 
@@ -5632,36 +5620,106 @@ msgstr "Hjælp"
 msgid "Parameters"
 msgstr "Parametre"
 
-#: ../src/ui/dialog/filedialog.cpp:449
+#: ../src/ui/dialog/filedialog.cpp:455
 msgid "No preview"
 msgstr "Ingen forhåndsvisning"
 
-#: ../src/ui/dialog/filedialog.cpp:550
+#: ../src/ui/dialog/filedialog.cpp:556
 msgid "too large for preview"
 msgstr "for stor til forhåndsvisning"
 
-#: ../src/ui/dialog/filedialog.cpp:882 ../src/ui/dialog/filedialog.cpp:883
+#: ../src/ui/dialog/filedialog.cpp:888 ../src/ui/dialog/filedialog.cpp:889
 msgid "All Images"
 msgstr "Alle billeder"
 
-#: ../src/ui/dialog/filedialog.cpp:887 ../src/ui/dialog/filedialog.cpp:888
+#: ../src/ui/dialog/filedialog.cpp:893 ../src/ui/dialog/filedialog.cpp:894
 msgid "All Files"
 msgstr "Alle filer"
 
-#: ../src/ui/dialog/filedialog.cpp:894 ../src/ui/dialog/filedialog.cpp:895
+#: ../src/ui/dialog/filedialog.cpp:900 ../src/ui/dialog/filedialog.cpp:901
 msgid "All Inkscape Files"
 msgstr "Alle Inkscape-filer"
 
-#: ../src/ui/dialog/filedialog.cpp:1302 ../src/ui/dialog/filedialog.cpp:1707
+#: ../src/ui/dialog/filedialog.cpp:1309 ../src/ui/dialog/filedialog.cpp:1756
 msgid "Guess from extension"
 msgstr "Gæt ud fra filnavneendelse"
 
 #. ###### Add the file types menu
 #. createFilterMenu();
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialog.cpp:1353 ../src/ui/dialog/filedialog.cpp:1756
+#. ###### File options
+#. ###### Do we want the .xxx extension automatically added?
+#: ../src/ui/dialog/filedialog.cpp:1360 ../src/ui/dialog/filedialog.cpp:1880
 msgid "Append filename extension automatically"
 msgstr "Tilføj filnavneendelse automatisk"
+
+#: ../src/ui/dialog/filedialog.cpp:1776
+msgid "Source left bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1777
+msgid "Source top bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1778
+msgid "Source right bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1779
+msgid "Source bottom bound"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1780
+#, fuzzy
+msgid "Source width"
+msgstr "Bredde på streg"
+
+#: ../src/ui/dialog/filedialog.cpp:1781
+#, fuzzy
+msgid "Source height"
+msgstr "Ens højde"
+
+#: ../src/ui/dialog/filedialog.cpp:1782
+#, fuzzy
+msgid "Destination width"
+msgstr "Udskrivningsdestination"
+
+#: ../src/ui/dialog/filedialog.cpp:1783
+#, fuzzy
+msgid "Destination height"
+msgstr "Udskrivningsdestination"
+
+#: ../src/ui/dialog/filedialog.cpp:1784
+#, fuzzy
+msgid "Dots per inch resolution"
+msgstr "Standard:"
+
+#. #########################################
+#. ## EXTRA WIDGET -- SOURCE SIDE
+#. #########################################
+#. ##### Export options buttons/spinners, etc
+#: ../src/ui/dialog/filedialog.cpp:1815
+#, fuzzy
+msgid "Document"
+msgstr "Dokument gemt."
+
+#: ../src/ui/dialog/filedialog.cpp:1863
+msgid "Cairo"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1866
+msgid "Antialias"
+msgstr ""
+
+#: ../src/ui/dialog/filedialog.cpp:1869
+#, fuzzy
+msgid "Background"
+msgstr "Ba_ggrund:"
+
+#: ../src/ui/dialog/filedialog.cpp:1892
+#, fuzzy
+msgid "Destination"
+msgstr "Udskrivningsdestination"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -6075,7 +6133,7 @@ msgstr "til objekt afslut"
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2180
 msgid "Gradient"
-msgstr "Gradient"
+msgstr "Overgang"
 
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2186
@@ -6111,7 +6169,6 @@ msgid "Show close button on dialogs"
 msgstr "Vis lukkeknap på dialoger"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:406
-#, fuzzy
 msgid "Normal"
 msgstr "Normal"
 
@@ -6707,9 +6764,8 @@ msgstr "Spor tal ud af "
 
 #. TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
 #: ../src/ui/dialog/tracedialog.cpp:468
-#, fuzzy
 msgid "Remove background"
-msgstr "Ba_ggrund:"
+msgstr "Fjern baggrund"
 
 #: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Remove bottom (background) layer when done"
@@ -7629,9 +7685,8 @@ msgid "Cannot move layer any further."
 msgstr "Kan ikke flytte laget yderligere."
 
 #: ../src/verbs.cpp:1203
-#, fuzzy
 msgid "Delete layer"
-msgstr "Slettet lag."
+msgstr "Slet lag"
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1206
@@ -9445,9 +9500,8 @@ msgstr "Slet fra"
 
 #. Label
 #: ../src/widgets/gradient-vector.cpp:802
-#, fuzzy
 msgid "Offset:"
-msgstr "Offset:"
+msgstr "Forskydning:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:847
@@ -9641,7 +9695,6 @@ msgid "Height of selection"
 msgstr "Højde på markering"
 
 #: ../src/widgets/sp-color-gtkselector.cpp:50
-#, fuzzy
 msgid "System"
 msgstr "System"
 
@@ -10011,7 +10064,6 @@ msgid "How uneven or trembling is the pen stroke"
 msgstr "Hvor uensartet eller skælvende er pennestrøget"
 
 #: ../src/widgets/toolbox.cpp:2096
-#, fuzzy
 msgid "Mass:"
 msgstr "Masse:"
 
@@ -10022,7 +10074,6 @@ msgstr "ud af "
 
 #. TRANSLATORS: "drag" means "resistance" here
 #: ../src/widgets/toolbox.cpp:2107
-#, fuzzy
 msgid "Drag:"
 msgstr "Træk:"
 
@@ -10042,7 +10093,6 @@ msgid "Use the tilt of the input device to alter the angle of the pen's nib"
 msgstr "Brug ud af  til vinkel ud af  s"
 
 #: ../src/widgets/toolbox.cpp:2456
-#, fuzzy
 msgid "Start:"
 msgstr "Start:"
 
@@ -10184,9 +10234,8 @@ msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "ud af  venstre automatisk"
 
 #: ../src/widgets/toolbox.cpp:4006
-#, fuzzy
 msgid "Length:"
-msgstr "Skalér Længde"
+msgstr "Længde:"
 
 #: ../src/widgets/toolbox.cpp:4007
 msgid "Ideal length for connectors when layout is applied"
@@ -10194,7 +10243,7 @@ msgstr "Ideel længde for forbindelser når layout anvendes"
 
 #: ../src/widgets/toolbox.cpp:4022
 #, fuzzy
-msgid "Make connectors point downwards"
+msgid "Make connectors with end-markers (arrows) point downwards"
 msgstr "Lad forbindelser undvige markerede objekter"
 
 #: ../src/widgets/toolbox.cpp:4036
@@ -10275,7 +10324,7 @@ msgstr "A program"
 
 #: ../share/extensions/dia.inx.h:2
 msgid "Dia Diagram (*.dia)"
-msgstr "Dia Diagram (*.dia)"
+msgstr "Dia diagram (*.dia)"
 
 #: ../share/extensions/dia.inx.h:3
 #, fuzzy
@@ -10308,9 +10357,8 @@ msgid "Font size"
 msgstr "Skrifttype størrelse"
 
 #: ../share/extensions/dots.inx.h:3
-#, fuzzy
 msgid "Number Nodes"
-msgstr "Nummer"
+msgstr "Nummerér knudpunkter"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
 #: ../share/extensions/measure.inx.h:3
@@ -10374,7 +10422,7 @@ msgstr "EPS Inddata"
 
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated Postscript"
-msgstr "Encapsulated Postscript"
+msgstr "Encapsulated PostScript"
 
 #: ../share/extensions/epsi_output.inx.h:1
 msgid "EPSI Output"
@@ -10382,11 +10430,11 @@ msgstr "EPSI uddata"
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
-msgstr "Encapsulated Postscript Interchange (*.epsi)"
+msgstr "Encapsulated PostScript Interchange (*.epsi)"
 
 #: ../share/extensions/epsi_output.inx.h:3
 msgid "Encapsulated Postscript with a thumbnail"
-msgstr "Encapsulated Postscript med forhåndsvisning"
+msgstr "Encapsulated PostScript med forhåndsvisning"
 
 #: ../share/extensions/eqtexsvg.inx.h:1
 msgid "LaTeX formula"
@@ -10595,7 +10643,7 @@ msgstr "Trinlængde (px)"
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
-msgstr "Målesti"
+msgstr "Mål sti"
 
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -10611,11 +10659,11 @@ msgstr "Udstrækning"
 
 #: ../share/extensions/ps_input.inx.h:1
 msgid "Postscript"
-msgstr "Postscript"
+msgstr "PostScript"
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
-msgstr "Postscript-inddata"
+msgstr "PostScript-inddata"
 
 #: ../share/extensions/radiusrand.inx.h:2
 msgid "Radius"
