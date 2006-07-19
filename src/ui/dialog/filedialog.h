@@ -181,6 +181,14 @@ class FileExportDialog
 {
 public:
 
+    typedef enum
+        {
+        SCOPE_DOCUMENT,
+        SCOPE_PAGE,
+        SCOPE_SELECTION,
+        SCOPE_CUSTOM
+        } ScopeType;
+
     /**
      * Constructor.  Do not call directly .   Use the factory.
      * @param path the directory where to start searching
@@ -224,10 +232,80 @@ public:
      */
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
+    /**
+     * Return the selected filename, if any.  If not, return ""
+     */
     virtual Glib::ustring getFilename () =0;
+    
+    /**
+     * Return the scope of the export.  One of the enumerated types
+     * in ScopeType     
+     */
+    virtual ScopeType getScope() = 0;
+    
+    /**
+     * Return left side of the exported region
+     */
+    virtual double getSourceX() = 0;
+    
+    /**
+     * Return the top of the exported region
+     */
+    virtual double getSourceY() = 0;
+    
+    /**
+     * Return the width of the exported region
+     */
+    virtual double getSourceWidth() = 0;
+    
+    /**
+     * Return the height of the exported region
+     */
+    virtual double getSourceHeight() = 0;
 
+    /**
+     * Return the units of the coordinates of exported region
+     */
+    virtual Glib::ustring getSourceUnits() = 0;
 
-}; //FileSaveDialog
+    /**
+     * Return the width of the destination document
+     */
+    virtual double getDestinationWidth() = 0;
+
+    /**
+     * Return the height of the destination document
+     */
+    virtual double getDestinationHeight() = 0;
+
+    /**
+     * Return the height of the exported region
+     */
+    virtual Glib::ustring getDestinationUnits() = 0;
+
+    /**
+     * Return the destination DPI image resulution, if bitmap
+     */
+    virtual double getDestinationDPI() = 0;
+
+    /**
+     * Return whether we should use Cairo for rendering
+     */
+    virtual bool getUseCairo() = 0;
+
+    /**
+     * Return whether we should use antialiasing
+     */
+    virtual bool getUseAntialias() = 0;
+
+    /**
+     * Return the background color for exporting
+     */
+    virtual unsigned long getBackground() = 0;
+
+    
+
+}; //FileExportDialog
 
 
 } //namespace Dialog

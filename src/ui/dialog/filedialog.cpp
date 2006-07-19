@@ -112,8 +112,9 @@ fileDialogExtensionToPattern(Glib::ustring &pattern,
 /**
  *  Hack:  Find all entry widgets in a container
  */
-void findEntryWidgets(Gtk::Container *parent,
-                      std::vector<Gtk::Entry *> &result)
+static void
+findEntryWidgets(Gtk::Container *parent,
+                 std::vector<Gtk::Entry *> &result)
 {
     if (!parent)
         return;
@@ -136,8 +137,9 @@ void findEntryWidgets(Gtk::Container *parent,
 /**
  *  Hack:  Find all expander widgets in a container
  */
-void findExpanderWidgets(Gtk::Container *parent,
-                        std::vector<Gtk::Expander *> &result)
+static void
+findExpanderWidgets(Gtk::Container *parent,
+                    std::vector<Gtk::Expander *> &result)
 {
     if (!parent)
         return;
@@ -158,6 +160,7 @@ void findExpanderWidgets(Gtk::Container *parent,
 /*#########################################################################
 ### SVG Preview Widget
 #########################################################################*/
+
 /**
  * Simple class for displaying an SVG file in the "preview widget."
  * Currently, this is just a wrapper of the sp_svg_view Gtk widget.
@@ -224,9 +227,8 @@ bool SVGPreview::setDocument(SPDocument *doc)
     document = doc;
 
     //This should remove it from the box, and free resources
-    if (viewerGtk) {
+    if (viewerGtk)
         gtk_widget_destroy(viewerGtk);
-    }
 
     viewerGtk  = sp_svg_view_widget_new(doc);
     GtkWidget *vbox = (GtkWidget *)gobj();
@@ -563,28 +565,30 @@ void SVGPreview::showTooLarge(long fileLength)
 
 }
 
+
+/**
+ * Return true if the string ends with the given suffix
+ */ 
 static bool
 hasSuffix(Glib::ustring &str, Glib::ustring &ext)
 {
     int strLen = str.length();
     int extLen = ext.length();
     if (extLen > strLen)
-    {
         return false;
-    }
     int strpos = strLen-1;
     for (int extpos = extLen-1 ; extpos>=0 ; extpos--, strpos--)
-    {
+        {
         Glib::ustring::value_type ch = str[strpos];
         if (ch != ext[extpos])
-        {
+            {
             if ( ((ch & 0xff80) != 0) ||
                  static_cast<Glib::ustring::value_type>( g_ascii_tolower( static_cast<gchar>(0x07f & ch) ) ) != ext[extpos] )
-            {
+                {
                 return false;
+                }
             }
         }
-    }
     return true;
 }
 
@@ -604,9 +608,7 @@ isValidImageFile(Glib::ustring &fileName)
             {
             Glib::ustring ext = extensions[j];
             if (hasSuffix(fileName, ext))
-                {
                 return true;
-                }
             }
         }
     return false;
@@ -1540,6 +1542,95 @@ public:
     Glib::ustring getFilename();
 
 
+    /**
+     * Return the scope of the export.  One of the enumerated types
+     * in ScopeType     
+     */
+    ScopeType getScope()
+        { 
+        if (pageButton.get_active())
+            return SCOPE_PAGE;
+        else if (selectionButton.get_active())
+            return SCOPE_SELECTION;
+        else if (customButton.get_active())
+            return SCOPE_CUSTOM;
+        else
+            return SCOPE_DOCUMENT;
+
+        }
+    
+    /**
+     * Return left side of the exported region
+     */
+    double getSourceX()
+        { return sourceX0Spinner.getValue(); }
+    
+    /**
+     * Return the top of the exported region
+     */
+    double getSourceY()
+        { return sourceY1Spinner.getValue(); }
+    
+    /**
+     * Return the width of the exported region
+     */
+    double getSourceWidth()
+        { return sourceWidthSpinner.getValue(); }
+    
+    /**
+     * Return the height of the exported region
+     */
+    double getSourceHeight()
+        { return sourceHeightSpinner.getValue(); }
+
+    /**
+     * Return the units of the coordinates of exported region
+     */
+    Glib::ustring getSourceUnits()
+        { return sourceUnitsSpinner.getUnitAbbr(); }
+
+    /**
+     * Return the width of the destination document
+     */
+    double getDestinationWidth()
+        { return destWidthSpinner.getValue(); }
+
+    /**
+     * Return the height of the destination document
+     */
+    double getDestinationHeight()
+        { return destHeightSpinner.getValue(); }
+
+    /**
+     * Return the height of the exported region
+     */
+    Glib::ustring getDestinationUnits()
+        { return destUnitsSpinner.getUnitAbbr(); }
+
+    /**
+     * Return the destination DPI image resulution, if bitmap
+     */
+    double getDestinationDPI()
+        { return destDPISpinner.getValue(); }
+
+    /**
+     * Return whether we should use Cairo for rendering
+     */
+    bool getUseCairo()
+        { return cairoButton.get_active(); }
+
+    /**
+     * Return whether we should use antialiasing
+     */
+    bool getUseAntialias()
+        { return antiAliasButton.get_active(); }
+
+    /**
+     * Return the background color for exporting
+     */
+    unsigned long getBackground()
+        { return backgroundButton.get_color().get_pixel(); }
+
 private:
 
     /**
@@ -1574,15 +1665,16 @@ private:
     Gtk::RadioButton      documentButton;
     Gtk::RadioButton      pageButton;
     Gtk::RadioButton      selectionButton;
+    Gtk::RadioButton      customButton;
 
     Gtk::Table                      sourceTable;
-    Inkscape::UI::Widget::Scalar    sourceX0;
-    Inkscape::UI::Widget::Scalar    sourceY0;
-    Inkscape::UI::Widget::Scalar    sourceX1;
-    Inkscape::UI::Widget::Scalar    sourceY1;
-    Inkscape::UI::Widget::Scalar    sourceWidth;
-    Inkscape::UI::Widget::Scalar    sourceHeight;
-    Inkscape::UI::Widget::UnitMenu  sourceUnits;
+    Inkscape::UI::Widget::Scalar    sourceX0Spinner;
+    Inkscape::UI::Widget::Scalar    sourceY0Spinner;
+    Inkscape::UI::Widget::Scalar    sourceX1Spinner;
+    Inkscape::UI::Widget::Scalar    sourceY1Spinner;
+    Inkscape::UI::Widget::Scalar    sourceWidthSpinner;
+    Inkscape::UI::Widget::Scalar    sourceHeightSpinner;
+    Inkscape::UI::Widget::UnitMenu  sourceUnitsSpinner;
 
 
     //##########################################
@@ -1593,10 +1685,10 @@ private:
     Gtk::VBox        destBox;
 
     Gtk::Table                      destTable;
-    Inkscape::UI::Widget::Scalar    destWidth;
-    Inkscape::UI::Widget::Scalar    destHeight;
-    Inkscape::UI::Widget::Scalar    destDPI;
-    Inkscape::UI::Widget::UnitMenu  destUnits;
+    Inkscape::UI::Widget::Scalar    destWidthSpinner;
+    Inkscape::UI::Widget::Scalar    destHeightSpinner;
+    Inkscape::UI::Widget::Scalar    destDPISpinner;
+    Inkscape::UI::Widget::UnitMenu  destUnitsSpinner;
 
     Gtk::HBox        otherOptionBox;
     Gtk::CheckButton cairoButton;
@@ -1773,15 +1865,15 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
             const Glib::ustring &title,
             const Glib::ustring &default_key) :
             FileDialogBase(title, Gtk::FILE_CHOOSER_ACTION_SAVE),
-            sourceX0("X0",         _("Source left bound")),
-            sourceY0("Y0",         _("Source top bound")),
-            sourceX1("X1",         _("Source right bound")),
-            sourceY1("Y1",         _("Source bottom bound")),
-            sourceWidth("Width",   _("Source width")),
-            sourceHeight("Height", _("Source height")),
-            destWidth("Width",   _("Destination width")),
-            destHeight("Height", _("Destination height")),
-            destDPI("DPI", _("Dots per inch resolution"))
+            sourceX0Spinner("X0",         _("Source left bound")),
+            sourceY0Spinner("Y0",         _("Source top bound")),
+            sourceX1Spinner("X1",         _("Source right bound")),
+            sourceY1Spinner("Y1",         _("Source bottom bound")),
+            sourceWidthSpinner("Width",   _("Source width")),
+            sourceHeightSpinner("Height", _("Source height")),
+            destWidthSpinner("Width",     _("Destination width")),
+            destHeightSpinner("Height",   _("Destination height")),
+            destDPISpinner("DPI",         _("Dots per inch resolution"))
 {
     append_extension = (bool)prefs_get_int_attribute("dialogs.save_as", "append_extension", 1);
 
@@ -1824,20 +1916,24 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
     selectionButton.set_group(scopeGroup);
     scopeBox.pack_start(selectionButton);
 
+    customButton.set_label(_("Custom"));
+    customButton.set_group(scopeGroup);
+    scopeBox.pack_start(customButton);
+
     sourceBox.pack_start(scopeBox);
 
 
 
     //dimension buttons
     sourceTable.resize(3,3);
-    sourceTable.attach(sourceX0,     0,1,0,1);
-    sourceTable.attach(sourceY0,     1,2,0,1);
-    sourceUnits.setUnitType(UNIT_TYPE_LINEAR);
-    sourceTable.attach(sourceUnits,  2,3,0,1);
-    sourceTable.attach(sourceX1,     0,1,1,2);
-    sourceTable.attach(sourceY1,     1,2,1,2);
-    sourceTable.attach(sourceWidth,  0,1,2,3);
-    sourceTable.attach(sourceHeight, 1,2,2,3);
+    sourceTable.attach(sourceX0Spinner,     0,1,0,1);
+    sourceTable.attach(sourceY0Spinner,     1,2,0,1);
+    sourceUnitsSpinner.setUnitType(UNIT_TYPE_LINEAR);
+    sourceTable.attach(sourceUnitsSpinner,  2,3,0,1);
+    sourceTable.attach(sourceX1Spinner,     0,1,1,2);
+    sourceTable.attach(sourceY1Spinner,     1,2,1,2);
+    sourceTable.attach(sourceWidthSpinner,  0,1,2,3);
+    sourceTable.attach(sourceHeightSpinner, 1,2,2,3);
 
     sourceBox.pack_start(sourceTable);
     sourceFrame.set_label(_("Source"));
@@ -1851,11 +1947,11 @@ FileExportDialogImpl::FileExportDialogImpl(const Glib::ustring &dir,
 
 
     destTable.resize(3,3);
-    destTable.attach(destWidth,    0,1,0,1);
-    destTable.attach(destHeight,   1,2,0,1);
-    destUnits.setUnitType(UNIT_TYPE_LINEAR);
-    destTable.attach(destUnits,    2,3,0,1);
-    destTable.attach(destDPI,      0,1,1,2);
+    destTable.attach(destWidthSpinner,    0,1,0,1);
+    destTable.attach(destHeightSpinner,   1,2,0,1);
+    destUnitsSpinner.setUnitType(UNIT_TYPE_LINEAR);
+    destTable.attach(destUnitsSpinner,    2,3,0,1);
+    destTable.attach(destDPISpinner,      0,1,1,2);
 
     destBox.pack_start(destTable);
 
