@@ -32,7 +32,7 @@ class MyEffect(inkex.Effect):
         self.ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
         defs = self.xpathSingle('/svg/defs')  
         for id, node in self.selected.iteritems():
-            mprops = ['marker-start','marker-mid','marker-end']
+            mprops = ['marker','marker-start','marker-mid','marker-end']
             style = simplestyle.parseStyle(node.attributes.getNamedItem('style').value)
             
             try:
@@ -43,15 +43,16 @@ class MyEffect(inkex.Effect):
             for mprop in mprops:
                 if style.has_key(mprop) and style[mprop] != 'none'and style[mprop][:5] == 'url(#':
                     marker_id = style[mprop][5:-1]
-                    old_mnode = self.xpathSingle('/svg/defs/marker[@id="%s"]' % marker_id)
+                    old_mnode = self.xpathSingle('/svg//marker[@id="%s"]' % marker_id)
                     mnode = old_mnode.cloneNode(True)
                     new_id = "%s%s" % (marker_id,2)
                     style[mprop] = "url(#%s)" % new_id
                     mnode.attributes.getNamedItem('id').value = new_id
                     defs.appendChild(mnode)
                     
-                    children = inkex.xml.xpath.Evaluate('/svg/defs/marker[@id="%s"]//*[@style]' % new_id,self.document,context=self.ctx)
+                    children = inkex.xml.xpath.Evaluate('/svg//marker[@id="%s"]//*[@style]' % new_id,self.document,context=self.ctx)
                     for child in children:
+                        inkex.debug(child.attributes.getNamedItem('style').value)
                         cstyle = simplestyle.parseStyle(child.attributes.getNamedItem('style').value)
                         if (cstyle.has_key('stroke') and cstyle['stroke'] != 'none') or not cstyle.has_key('stroke'):
                                 cstyle['stroke'] = stroke

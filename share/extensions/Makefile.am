@@ -52,7 +52,8 @@ extensions = \
 	flatten.py \
 	measure.py \
 	gimp_xcf.py \
-	eqtexsvg.py
+	eqtexsvg.py \
+	markers_strokepaint.py 
 
 otherstuff = \
     aisvg.xslt
@@ -103,7 +104,8 @@ modules = \
 	gimp_xcf.inx \
         randompnt.inx \
         randompos.inx \
-	eqtexsvg.inx
+	eqtexsvg.inx \
+	markers_strokepaint.inx
 
 extension_SCRIPTS = \
 	$(extensions)
