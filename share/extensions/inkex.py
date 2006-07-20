@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
-import sys, copy, optparse
+import sys, copy, optparse, random
 
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {
@@ -60,8 +60,11 @@ class InkOption(optparse.Option):
 class Effect:
     """A class for creating Inkscape SVG Effects"""
     def __init__(self):
+        self.id_characters = '0123456789abcdefghijklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.document=None
+        self.ctx=None
         self.selected={}
+        self.doc_ids={}
         self.options=None
         self.args=None
         self.OptionParser = optparse.OptionParser(usage="usage: %prog [options] SVGfile",option_class=InkOption)
@@ -84,6 +87,7 @@ class Effect:
         except:
             stream = sys.stdin
         self.document = reader.fromStream(stream)
+        self.ctx = xml.xpath.Context.Context(self.document,processorNss=NSS)
         stream.close()
     def getposinlayer(self):
         ctx = xml.xpath.Context.Context(self.document,processorNss=NSS)
@@ -111,6 +115,10 @@ class Effect:
             path = '//*[@id="%s"]' % id
             for node in xml.xpath.Evaluate(path,self.document):
                 self.selected[id] = node
+    def getdocids(self):
+        docIdNodes = xml.xpath.Evaluate('//@id',self.document,context=self.ctx)
+        for m in docIdNodes:
+            self.doc_ids[m.value] = 1
     def output(self):
         """Serialize document into XML on stdout"""
         xml.dom.ext.Print(self.document)
@@ -120,5 +128,22 @@ class Effect:
         self.parse()
         self.getposinlayer()
         self.getselected()
+        self.getdocids()
         self.effect()
         self.output()
+        
+    def uniqueId(self, old_id, make_new_id = True):
+        new_id = old_id
+        if make_new_id:
+            while new_id in self.doc_ids:
+                new_id = "%s%s" % (new_id,random.choice(self.id_characters))
+            self.doc_ids[new_id] = 1
+        return new_id
+    def xpathSingle(self, path):
+        try:
+            retval = xml.xpath.Evaluate(path,self.document,context=self.ctx)[0]
+        except:
+            debug("No matching node for expression: %s" % path)
+            retval = None
+        return retval
+    

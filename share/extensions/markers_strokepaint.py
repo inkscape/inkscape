@@ -21,27 +21,16 @@ import random, inkex, simplestyle
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-    def xpathSingle(self, path):
-        try:
-            retval = inkex.xml.xpath.Evaluate(path,self.document,context=self.ctx)[0]
-        except:
-            inkex.debug("No matching node for expression: %s" % path)
-            retval = None
-        return retval
+        self.OptionParser.add_option("-m", "--modify",
+                        action="store", type="inkbool", 
+                        dest="modify", default=False,
+                        help="do not create a copy, modify the markers")
         
     def effect(self):
-        self.ctx = inkex.xml.xpath.Context.Context(self.document,processorNss=inkex.NSS)
-        id_characters = '0123456789abcdefghijklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        
         defs = self.xpathSingle('/svg//defs')
         if not defs:
             defs = self.document.createElement('svg:defs')
             self.document.documentElement.appendChile(defs)
-        
-        doc_ids = {}
-        docIdNodes = inkex.xml.xpath.Evaluate('//@id',self.document,context=self.ctx)
-        for m in docIdNodes:
-            doc_ids[m.value] = 1
         
         for id, node in self.selected.iteritems():
             mprops = ['marker','marker-start','marker-mid','marker-end']
@@ -58,19 +47,19 @@ class MyEffect(inkex.Effect):
                     marker_id = style[mprop][5:-1]
                     try:
                         old_mnode = self.xpathSingle('/svg//marker[@id="%s"]' % marker_id)
-                        mnode = old_mnode.cloneNode(True)
+                        if not self.options.modify:
+                            mnode = old_mnode.cloneNode(True)
+                        else:
+                            mnode = old_mnode
                     except:
                         inkex.debug("unable to locate marker: %s" % marker_id)
                         continue
                         
-                    #generate a unique id
-                    new_id = marker_id
-                    while new_id in doc_ids:
-                        new_id = "%s%s" % (new_id,random.choice(id_characters))
-                    doc_ids[new_id] = 1
+                    new_id = self.uniqueId(marker_id, not self.options.modify)
                     
                     style[mprop] = "url(#%s)" % new_id
                     mnode.attributes.getNamedItem('id').value = new_id
+                    mnode.attributes.getNamedItemNS(inkex.NSS['inkscape'],'stockid').value = new_id
                     defs.appendChild(mnode)
                     
                     children = inkex.xml.xpath.Evaluate('/svg//marker[@id="%s"]//*[@style]' % new_id,self.document,context=self.ctx)
