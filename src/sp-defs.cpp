@@ -83,21 +83,14 @@ static void sp_defs_update(SPObject *object, SPCtx *ctx, guint flags)
 
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
-    GSList *l = NULL;
-    for ( SPObject *child = sp_object_first_child(object) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
-        g_object_ref(G_OBJECT(child));
-        l = g_slist_prepend(l, child);
-    }
-
-    l = g_slist_reverse(l);
-
+    GSList *l = g_slist_reverse(object->childList(true));
     while (l) {
         SPObject *child = SP_OBJECT(l->data);
         l = g_slist_remove(l, child);
-        if (flags || (child->uflags & SP_OBJECT_MODIFIED_FLAG)) {
+        if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             child->updateDisplay(ctx, flags);
         }
-        g_object_unref(G_OBJECT(child));
+        g_object_unref (G_OBJECT (child));
     }
 }
 

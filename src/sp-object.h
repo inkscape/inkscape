@@ -206,6 +206,10 @@ struct SPObject : public GObject {
     SPObject *lastChild() { return _last_child; }
     SPObject const *lastChild() const { return _last_child; }
 
+    enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };    
+    /** @brief Retrieves children as a GSList */
+    GSList *childList(bool add_ref, Action action = ActionGeneral);
+
     SPObject *appendChildRepr(Inkscape::XML::Node *repr);
 
     /** @brief Gets the author-visible label for this object. */ 

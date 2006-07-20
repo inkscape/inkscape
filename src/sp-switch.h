@@ -38,7 +38,7 @@ public:
     virtual gchar *getDescription();
 
 protected:
-    virtual GSList *_childList(bool add_ref, Action action);
+    virtual GSList *_childList(bool add_ref, SPObject::Action action);
     virtual void _showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, unsigned int flags);
     
     SPObject *_evaluateFirst();

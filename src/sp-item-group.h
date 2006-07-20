@@ -79,8 +79,6 @@ public:
     gint getItemCount();
 
 protected:
-    enum Action { ActionGeneral, ActionBBox, ActionUpdate, ActionShow };
-    virtual GSList *_childList(bool add_ref, Action action = ActionGeneral);
     virtual void _showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, unsigned int flags);
 
     SPGroup *_group;

@@ -458,6 +458,22 @@ SPObject::appendChildRepr(Inkscape::XML::Node *repr) {
     }
 }
 
+/**
+ * Retrieves the children as a GSList object, optionally ref'ing the children
+ * in the process, if add_ref is specified.
+ */
+GSList *SPObject::childList(bool add_ref, Action) {
+    GSList *l = NULL;
+    for (SPObject *child = sp_object_first_child(this) ; child != NULL; child = SP_OBJECT_NEXT(child) ) {
+        if (add_ref)
+            g_object_ref (G_OBJECT (child));
+
+        l = g_slist_prepend (l, child);
+    }
+    return l;
+
+}
+
 /** Gets the label property for the object or a default if no label
  *  is defined.
  */
@@ -1168,26 +1184,31 @@ SPObject::updateRepr(Inkscape::XML::Node *repr, unsigned int flags) {
 void
 SPObject::requestDisplayUpdate(unsigned int flags)
 {
+    g_return_if_fail( this->document != NULL );
+
     if (update_in_progress) {
         g_print("WARNING: Requested update while update in progress, counter = %d\n", update_in_progress);
     }
 
+    /* requestModified must be used only to set one of SP_OBJECT_MODIFIED_FLAG or
+     * SP_OBJECT_CHILD_MODIFIED_FLAG */
     g_return_if_fail(!(flags & SP_OBJECT_PARENT_MODIFIED_FLAG));
     g_return_if_fail((flags & SP_OBJECT_MODIFIED_FLAG) || (flags & SP_OBJECT_CHILD_MODIFIED_FLAG));
     g_return_if_fail(!((flags & SP_OBJECT_MODIFIED_FLAG) && (flags & SP_OBJECT_CHILD_MODIFIED_FLAG)));
 
-    /* Check for propagate before we set any flags */
-    /* Propagate means, that this is not passed through by modification request cascade yet */
-    unsigned int propagate = (!(this->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG)));
+    bool already_propagated = (!(this->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG)));
 
-    /* Just set this flags safe even if some have been set before */
     this->uflags |= flags;
 
-    if (propagate) {
-        if (this->parent) {
-            this->parent->requestDisplayUpdate(SP_OBJECT_CHILD_MODIFIED_FLAG);
+    /* If requestModified has already been called on this object or one of its children, then we
+     * don't need to set CHILD_MODIFIED on our ancestors because it's already been done.
+     */
+    if (already_propagated) {
+        SPObject *parent = SP_OBJECT_PARENT(this);
+        if (parent) {
+            parent->requestDisplayUpdate(SP_OBJECT_CHILD_MODIFIED_FLAG);
         } else {
-            sp_document_request_modified(this->document);
+            sp_document_request_modified(SP_OBJECT_DOCUMENT(this));
         }
     }
 }
@@ -1228,29 +1249,30 @@ SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
     update_in_progress --;
 }
 
+/**
+ * Request modified always bubbles *up* the tree, as opposed to 
+ * request display update, which trickles down and relies on the 
+ * flags set during this pass...
+ */
 void
 SPObject::requestModified(unsigned int flags)
 {
     g_return_if_fail( this->document != NULL );
 
-    /* PARENT_MODIFIED is computed later on and is not intended to be
-     * "manually" queued */
+    /* requestModified must be used only to set one of SP_OBJECT_MODIFIED_FLAG or
+     * SP_OBJECT_CHILD_MODIFIED_FLAG */
     g_return_if_fail(!(flags & SP_OBJECT_PARENT_MODIFIED_FLAG));
-
-    /* we should be setting either MODIFIED or CHILD_MODIFIED... */
     g_return_if_fail((flags & SP_OBJECT_MODIFIED_FLAG) || (flags & SP_OBJECT_CHILD_MODIFIED_FLAG));
-
-    /* ...but not both */
     g_return_if_fail(!((flags & SP_OBJECT_MODIFIED_FLAG) && (flags & SP_OBJECT_CHILD_MODIFIED_FLAG)));
 
-    unsigned int old_mflags=this->mflags;
+    bool already_propagated = (!(this->mflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG)));
+
     this->mflags |= flags;
 
-    /* If we already had MODIFIED or CHILD_MODIFIED queued, we will
-     * have already queued CHILD_MODIFIED with our ancestors and
-     * need not disturb them again.
+    /* If requestModified has already been called on this object or one of its children, then we
+     * don't need to set CHILD_MODIFIED on our ancestors because it's already been done.
      */
-    if (!( old_mflags & ( SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG ) )) {
+    if (already_propagated) {
         SPObject *parent=SP_OBJECT_PARENT(this);
         if (parent) {
             parent->requestModified(SP_OBJECT_CHILD_MODIFIED_FLAG);
@@ -1260,6 +1282,9 @@ SPObject::requestModified(unsigned int flags)
     }
 }
 
+/** 
+ * This is what actually delivers the modified signals
+ */
 void
 SPObject::emitModified(unsigned int flags)
 {

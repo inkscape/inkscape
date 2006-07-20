@@ -746,69 +746,75 @@ sp_document_setup_viewport (SPDocument *doc, SPItemCtx *ctx)
     ctx->i2vp = NR::identity();
 }
 
+/**
+ * Tries to update the document state based on the modified and 
+ * "update required" flags, and return true if the document has
+ * been brought fully up to date.
+ */
+bool
+SPDocument::_updateDocument()
+{
+    /* Process updates */
+    if (this->root->uflags || this->root->mflags) {
+        if (this->root->uflags) {
+            SPItemCtx ctx;
+            sp_document_setup_viewport (this, &ctx);
+
+            bool saved = sp_document_get_undo_sensitive(this);
+            sp_document_set_undo_sensitive(this, FALSE);
+
+            this->root->updateDisplay((SPCtx *)&ctx, 0);
+
+            sp_document_set_undo_sensitive(this, saved);
+        }
+        this->_emitModified();
+    }
+
+    return !(this->root->uflags || this->root->mflags);
+}
+
+
+/**
+ * Repeatedly works on getting the document updated, since sometimes
+ * it takes more than one pass to get the document updated.  But it
+ * usually should not take more than a few loops, and certainly never
+ * more than 32 iterations.  So we bail out if we hit 32 iterations,
+ * since this typically indicates we're stuck in an update loop.
+ */
 gint
 sp_document_ensure_up_to_date(SPDocument *doc)
 {
-    int lc;
-    lc = 32;
-    while (doc->root->uflags || doc->root->mflags) {
-        lc -= 1;
-        if (lc < 0) {
-            g_warning("More than 32 iterations while updating document '%s'", doc->uri);
-            if (doc->modified_id) {
-                /* Remove handler */
-                gtk_idle_remove(doc->modified_id);
-                doc->modified_id = 0;
-            }
-            return FALSE;
+    int counter = 32;
+    while (!doc->_updateDocument()) {
+        if (counter == 0) {
+            g_warning("More than 32 iteration while updating document '%s'", doc->uri);
+            break;
         }
-        /* Process updates */
-        if (doc->root->uflags) {
-            SPItemCtx ctx;
-            sp_document_setup_viewport (doc, &ctx);
-            doc->root->updateDisplay((SPCtx *)&ctx, 0);
-        }
-        doc->_emitModified();
+        counter--;
     }
+
     if (doc->modified_id) {
         /* Remove handler */
         gtk_idle_remove(doc->modified_id);
         doc->modified_id = 0;
     }
-    return TRUE;
+    return counter>0;
 }
 
+/**
+ * An idle handler to update the document.  Returns true if
+ * the document needs further updates.
+ */
 static gint
 sp_document_idle_handler(gpointer data)
 {
-    SPDocument *doc;
-    int repeat;
-
-    doc = static_cast<SPDocument *>(data);
-
-#ifdef SP_DOCUMENT_DEBUG_IDLE
-    g_print("->\n");
-#endif
-
-    /* Process updates */
-    if (doc->root->uflags) {
-        SPItemCtx ctx;
-        sp_document_setup_viewport (doc, &ctx);
-
-        gboolean saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive(doc, FALSE);
-
-        doc->root->updateDisplay((SPCtx *)&ctx, 0);
-
-        sp_document_set_undo_sensitive(doc, saved);
-        /* if (doc->root->uflags & SP_OBJECT_MODIFIED_FLAG) return TRUE; */
+    SPDocument *doc = static_cast<SPDocument *>(data);
+    if (doc->_updateDocument()) {
+        doc->modified_id = 0;
+        return false;
+    } else {
+        return true;
     }
-
-    doc->_emitModified();
-
-    repeat = (doc->root->uflags || doc->root->mflags);
-    if (!repeat) doc->modified_id = 0;
-    return repeat;
 }
 
 static bool is_within(NR::Rect const &area, NR::Rect const &box)

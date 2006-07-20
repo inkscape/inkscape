@@ -115,6 +115,8 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 
 	Inkscape::EventLog& getEventLog() const;
 
+        bool _updateDocument();
+
 private:
 	SPDocument(SPDocument const &); // no copy
 	void operator=(SPDocument const &); // no assign

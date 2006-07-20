@@ -592,13 +592,15 @@ void CGroup::onChildRemoved(Inkscape::XML::Node */*child*/) {
 }
 
 void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {    
-    SPObject *child;
     SPItemCtx *ictx, cctx;
 
     ictx = (SPItemCtx *) ctx;
     cctx = *ictx;
 
-    if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+      flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
+    }
+
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
@@ -608,9 +610,9 @@ void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
       }
     }
 
-    GSList *l = g_slist_reverse(_childList(true, ActionUpdate));
+    GSList *l = g_slist_reverse(_group->childList(true, SPObject::ActionUpdate));
     while (l) {
-        child = SP_OBJECT (l->data);
+        SPObject *child = SP_OBJECT (l->data);
         l = g_slist_remove (l, child);
         if (flags || (child->uflags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG))) {
             if (SP_IS_ITEM (child)) {
@@ -626,17 +628,6 @@ void CGroup::onUpdate(SPCtx *ctx, unsigned int flags) {
     }
 }
 
-GSList *CGroup::_childList(bool add_ref, Action) {
-    GSList *l = NULL;
-    for (SPObject *child = sp_object_first_child(_group) ; child != NULL ; child = SP_OBJECT_NEXT(child) ) {
-        if (add_ref)
-            g_object_ref (G_OBJECT (child));
-
-        l = g_slist_prepend (l, child);
-    }
-    return l;
-}
-
 void CGroup::onModified(guint flags) {
     SPObject *child;
 
@@ -650,7 +641,7 @@ void CGroup::onModified(guint flags) {
       }
     }
 
-    GSList *l = g_slist_reverse(_childList(true));
+    GSList *l = g_slist_reverse(_group->childList(true));
     while (l) {
         child = SP_OBJECT (l->data);
         l = g_slist_remove (l, child);
@@ -662,7 +653,7 @@ void CGroup::onModified(guint flags) {
 }
 
 void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned const flags) {
-    GSList *l = _childList(false, ActionBBox);
+    GSList *l = _group->childList(false, SPObject::ActionBBox);
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o)) {
@@ -675,7 +666,7 @@ void CGroup::calculateBBox(NRRect *bbox, NR::Matrix const &transform, unsigned c
 }
 
 void CGroup::onPrint(SPPrintContext *ctx) {
-    GSList *l = g_slist_reverse(_childList(false));
+    GSList *l = g_slist_reverse(_group->childList(false));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM(o)) {
@@ -723,7 +714,7 @@ void CGroup::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, u
     NRArenaItem *ac = NULL;
     NRArenaItem *ar = NULL;
     SPItem * child = NULL;
-    GSList *l = g_slist_reverse(_childList(false, ActionShow));
+    GSList *l = g_slist_reverse(_group->childList(false, SPObject::ActionShow));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM (o)) {
@@ -742,7 +733,7 @@ void CGroup::_showChildren (NRArena *arena, NRArenaItem *ai, unsigned int key, u
 void CGroup::hide (unsigned int key) {
     SPItem * child;
 
-    GSList *l = g_slist_reverse(_childList(false, ActionShow));
+    GSList *l = g_slist_reverse(_group->childList(false, SPObject::ActionShow));
     while (l) {
         SPObject *o = SP_OBJECT (l->data);
         if (SP_IS_ITEM (o)) {

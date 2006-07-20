@@ -1,3 +1,10 @@
+2006-07-18  Bryce Harrington <bryce@bryceharrington.org>
+	* src/document.h, src/document.cpp:  Refactoring from mental &
+	  bryce to consolidate document update functionality from
+	  sp_document_ensure_is_up_to_date() and
+	  sp_document_idle_handler().  This is the first step in getting
+	  updates of defs fixed.
+
 2006-07-18  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
 
 	* src/graphlayout/graphlayout.cpp,
