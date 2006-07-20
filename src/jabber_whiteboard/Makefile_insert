@@ -34,6 +34,8 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/session-file-selector.cpp \
 	jabber_whiteboard/session-file-selector.h \
 	jabber_whiteboard/session-manager.cpp \
+	jabber_whiteboard/dialog/choose-desktop.cpp \
+	jabber_whiteboard/dialog/choose-desktop.h \
 	jabber_whiteboard/session-manager.h \
 	jabber_whiteboard/tracker-node.h \
 	jabber_whiteboard/pedrogui.cpp \

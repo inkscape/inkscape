@@ -19,6 +19,8 @@
 
 #include "xml/node-observer.h"
 
+#include "pedro/pedrodom.h"
+
 #include "document.h"
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -27,6 +29,8 @@
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/inkboard-document.h"
 #include "jabber_whiteboard/new-inkboard-document.h"
+
+#include "jabber_whiteboard/dialog/choose-desktop.h"
 
 #define INKBOARD_XMLNS "http://inkscape.org/inkboard"
 
@@ -81,7 +85,7 @@ SessionManager::send(const Glib::ustring &destJid,
     Pedro::DOMString xmlData = Pedro::Parser::encode(data);
     char *fmt=
     "<message type='chat' from='%s' to='%s' id='ink_%d'>"
-    "<inkboard xmlns='%s' "
+    "<w xmlns='%s' "
     "protocol='%d' type='%d' seq='%d'><x:inkboard-data>%s</x:inkboard-data></inkboard>"
     "<body></body>"
     "</message>";
@@ -214,13 +218,31 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
 void
 SessionManager::doShare(Glib::ustring const& to, SessionType type)
 {
-    SPDesktop* dt = createInkboardDesktop(to, type);
-	if (dt != NULL) {
-		InkboardDocument* doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-		if (doc != NULL) {
-			doc->startSessionNegotiation();
-		}
-	}
+    ChooseDesktop dialog;
+    int result = dialog.run();
+
+    if(result == Gtk::RESPONSE_OK)
+    {
+        InkboardDocument* doc;
+        SPDesktop *desktop = dialog.getDesktop();
+
+        if(desktop == NULL)
+        {
+            SPDesktop* dt = createInkboardDesktop(to, type);
+            if (dt != NULL) 
+            {
+                 doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
+            }
+        }else 
+        {
+            doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(desktop)->rdoc);
+        }
+
+        if (doc != NULL) 
+        {
+            doc->startSessionNegotiation();
+        }
+    }
 }
 
 /**
