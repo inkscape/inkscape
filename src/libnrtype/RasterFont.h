@@ -7,7 +7,7 @@
 #ifndef my_raster_font
 #define my_raster_font
 
-#include <ext/hash_map>
+#include <map>
 
 #include <libnr/nr-forward.h>
 #include <libnrtype/nrtype-forward.h>
@@ -22,7 +22,7 @@ public:
 
     font_style                    style;  
 
-    __gnu_cxx::hash_map<int,int>             glyph_id_to_raster_glyph_no;
+    std::map<int,int>             glyph_id_to_raster_glyph_no;
 		// an array of glyphs in this rasterfont.
 		// it's a bit redundant with the one in the daddy font_instance, but these glyphs
 		// contains the real rasterization data

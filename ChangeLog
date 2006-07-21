@@ -1,3 +1,9 @@
+2006-07-20  MenTaLguY  <mental@rydia.net>
+
+	* src/libnrtype/RasterFont.h, src/libnrtype/font-instance.h:
+
+	  replace two uses of hash_map with standard STL map
+
 2006-07-18  Bryce Harrington <bryce@bryceharrington.org>
 	* src/document.h, src/document.cpp:  Refactoring from mental &
 	  bryce to consolidate document update functionality from

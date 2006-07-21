@@ -2,6 +2,7 @@
 #define SEEN_LIBNRTYPE_FONT_INSTANCE_H
 
 #include <ext/hash_map>
+#include <map>
 #include <pango/pango-types.h>
 #include <pango/pango-font.h>
 #include <require-config.h>
@@ -43,7 +44,7 @@ public:
     font_factory*         daddy;
 
     // common glyph definitions for all the rasterfonts
-    __gnu_cxx::hash_map<int, int>     id_to_no;
+    std::map<int, int>    id_to_no;
     int                   nbGlyph, maxGlyph;
     font_glyph*           glyphs;
 
