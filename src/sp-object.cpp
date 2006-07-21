@@ -195,6 +195,8 @@ sp_object_init(SPObject *object)
 
     object->_collection_policy = SPObject::COLLECT_WITH_PARENT;
 
+    new (&object->_release_signal) sigc::signal<void, SPObject *>();
+    new (&object->_modified_signal) sigc::signal<void, SPObject *, unsigned int>();
     new (&object->_delete_signal) sigc::signal<void, SPObject *>();
     new (&object->_position_changed_signal) sigc::signal<void, SPObject *>();
     object->_successor = NULL;
@@ -225,6 +227,8 @@ sp_object_finalize(GObject *object)
         (* ((GObjectClass *) (parent_class))->finalize)(object);
     }
 
+    spobject->_release_signal.~signal();
+    spobject->_modified_signal.~signal();
     spobject->_delete_signal.~signal();
     spobject->_position_changed_signal.~signal();
 }
@@ -653,7 +657,7 @@ sp_object_detach(SPObject *parent, SPObject *object) {
     g_return_if_fail(SP_IS_OBJECT(object));
     g_return_if_fail(object->parent == parent);
 
-    sp_object_invoke_release(object);
+    object->releaseReferences();
 
     SPObject *prev=NULL;
     for ( SPObject *child = parent->children ; child && child != object ;
@@ -859,45 +863,41 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
     sp_repr_add_listener(repr, &object_event_vector, object);
 }
 
-void
-sp_object_invoke_release(SPObject *object)
-{
-    g_assert(object != NULL);
-    g_assert(SP_IS_OBJECT(object));
+void SPObject::releaseReferences() {
+    g_assert(this->document);
+    g_assert(this->repr);
 
-    g_assert(object->document);
-    g_assert(object->repr);
+    sp_repr_remove_listener_by_data(this->repr, this);
 
-    sp_repr_remove_listener_by_data(object->repr, object);
-
-    g_signal_emit(G_OBJECT(object), object_signals[RELEASE], 0);
+    g_signal_emit(G_OBJECT(this), object_signals[RELEASE], 0);
+    this->_release_signal.emit(this);
 
     /* all hrefs should be released by the "release" handlers */
-    g_assert(object->hrefcount == 0);
+    g_assert(this->hrefcount == 0);
 
-    if (!SP_OBJECT_IS_CLONED(object)) {
-        if (object->id) {
-            object->document->bindObjectToId(object->id, NULL);
+    if (!SP_OBJECT_IS_CLONED(this)) {
+        if (this->id) {
+            this->document->bindObjectToId(this->id, NULL);
         }
-        g_free(object->id);
-        object->id = NULL;
+        g_free(this->id);
+        this->id = NULL;
 
-        g_free(object->_default_label);
-        object->_default_label = NULL;
+        g_free(this->_default_label);
+        this->_default_label = NULL;
 
-        object->document->bindObjectToRepr(object->repr, NULL);
+        this->document->bindObjectToRepr(this->repr, NULL);
     } else {
-        g_assert(!object->id);
+        g_assert(!this->id);
     }
 
-    if (object->style) {
-        object->style = sp_style_unref(object->style);
+    if (this->style) {
+        this->style = sp_style_unref(this->style);
     }
 
-    Inkscape::GC::release(object->repr);
+    Inkscape::GC::release(this->repr);
 
-    object->document = NULL;
-    object->repr = NULL;
+    this->document = NULL;
+    this->repr = NULL;
 }
 
 /**
@@ -1303,6 +1303,7 @@ SPObject::emitModified(unsigned int flags)
 
     g_object_ref(G_OBJECT(this));
     g_signal_emit(G_OBJECT(this), object_signals[MODIFIED], 0, flags);
+    _modified_signal.emit(this, flags);
     g_object_unref(G_OBJECT(this));
 }
 

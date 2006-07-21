@@ -158,6 +158,21 @@ struct SPObject : public GObject {
     Inkscape::XML::Node *repr; /* Our xml representation */
     gchar *id; /* Our very own unique id */
 
+    /** @brief cleans up an SPObject, releasing its references and
+     *         requesting that references to it be released
+     */
+    void releaseReferences();
+
+    /** @brief connects to the release request signal
+     *
+     *  @param slot the slot to connect
+     *
+     *  @returns the sigc::connection formed
+     */
+    sigc::connection connectRelease(sigc::slot<void, SPObject *> slot) {
+        return _release_signal.connect(slot);
+    }
+
     /**
      * Represents the style properties, whether from presentation attributes, the <tt>style</tt>
      * attribute, or inherited.
@@ -445,6 +460,18 @@ struct SPObject : public GObject {
      */
     void emitModified(unsigned int flags);
 
+    /** @brief Connects to the modification notification signal
+     *
+     *  @param slot the slot to connect
+     *
+     *  @returns the connection formed thereby
+     */
+    sigc::connection connectModified(
+      sigc::slot<void, SPObject *, unsigned int> slot
+    ) {
+        return _modified_signal.connect(slot);
+    }
+
     void _sendDeleteSignalRecursive();
     void _updateTotalHRefCount(int increment);
 
@@ -453,8 +480,10 @@ struct SPObject : public GObject {
     }
     void _requireSVGVersion(Inkscape::Version version);
 
+    sigc::signal<void, SPObject *> _release_signal;
     sigc::signal<void, SPObject *> _delete_signal;
     sigc::signal<void, SPObject *> _position_changed_signal;
+    sigc::signal<void, SPObject *, unsigned int> _modified_signal;
     SPObject *_successor;
     CollectionPolicy _collection_policy;
     gchar *_label;
@@ -501,7 +530,6 @@ inline SPObject *sp_object_first_child(SPObject *parent) {
 SPObject *sp_object_get_child_by_repr(SPObject *object, Inkscape::XML::Node *repr);
 
 void sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned);
-void sp_object_invoke_release(SPObject *object);
 
 void sp_object_set(SPObject *object, unsigned int key, gchar const *value);
 

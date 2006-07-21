@@ -1,3 +1,11 @@
+2006-07-21  MenTaLguY  <mental@rydia.net>
+
+	* src/document.cpp, src/sp-object.cpp, src/sp-object.h:
+
+	  sp_object_invoke_release -> SPObject::releaseReferences,
+	  plus the introduction of sigc++ signals for "release" and 
+	  "modified" which will eventually replace the GObject signals
+
 2006-07-20  MenTaLguY  <mental@rydia.net>
 
 	* src/libnrtype/RasterFont.h, src/libnrtype/font-instance.h:

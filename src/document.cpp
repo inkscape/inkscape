@@ -131,7 +131,7 @@ SPDocument::~SPDocument() {
         sp_document_clear_undo(this);
 
         if (root) {
-            sp_object_invoke_release(root);
+            root->releaseReferences();
             sp_object_unref(root);
             root = NULL;
         }
