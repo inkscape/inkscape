@@ -1,5 +1,11 @@
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
+	* src/ui/view/edit-widget.cpp, src/ui/view/edit-widget.cpp:
+
+	  switched to using sigc++ "modified" signal
+
+2006-07-21  MenTaLguY  <mental@rydia.net>
+
 	* src/document.cpp, src/sp-object.cpp, src/sp-object.h:
 
 	  sp_object_invoke_release -> SPObject::releaseReferences,

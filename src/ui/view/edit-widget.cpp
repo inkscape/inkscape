@@ -38,6 +38,8 @@
 #include <gtkmm/separator.h>
 #include <gtkmm/base.h>
 
+#include <sigc++/functors/mem_fun.h>
+
 #include "macros.h"
 #include "path-prefix.h"
 #include "prefs-utils.h"
@@ -1472,17 +1474,15 @@ EditWidget::warnDialog (gchar* msg)
 }
 
 
-/// \todo make this a member function when the signal is a sigc++ signal
-void _namedview_modified (SPNamedView* nv, guint flags, EditWidget* ew)
-{
-    if (flags & SP_OBJECT_MODIFIED_FLAG)
-    {
-        ew->_dt2r = 1.0 / nv->doc_units->unittobase;
-        ew->_top_ruler.update_metric();
-        ew->_left_ruler.update_metric();
-        ew->_tooltips.set_tip (ew->_top_ruler, ew->_top_ruler.get_tip());
-        ew->_tooltips.set_tip (ew->_left_ruler, ew->_left_ruler.get_tip());
-        ew->updateRulers();
+void EditWidget::_namedview_modified (SPObject *obj, guint flags) {
+    SPNamedView *nv = static_cast<SPNamedView *>(obj);
+    if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        this->_dt2r = 1.0 / nv->doc_units->unittobase;
+        this->_top_ruler.update_metric();
+        this->_left_ruler.update_metric();
+        this->_tooltips.set_tip(this->_top_ruler, this->_top_ruler.get_tip());
+        this->_tooltips.set_tip(this->_left_ruler, this->_left_ruler.get_tip());
+        this->updateRulers();
     }
 }
 
@@ -1500,8 +1500,7 @@ EditWidget::initEdit (SPDocument *doc)
 
     /// \todo convert to sigc++ when SPObject hierarchy gets converted
     /* Listen on namedview modification */
-    g_signal_connect (G_OBJECT (_desktop->namedview), "modified",
-        G_CALLBACK (_namedview_modified), this);
+    _namedview_modified_connection = _desktop->namedview->connectModified(sigc::mem_fun(*this, &EditWidget::_namedview_modified));
     _layer_selector.setDesktop (_desktop);
     _selected_style_status.setDesktop (_desktop);
 
@@ -1519,7 +1518,7 @@ EditWidget::destroyEdit()
     if (_desktop) {
         _layer_selector.unreference();
         Inkscape::NSApplication::Editor::removeDesktop (_desktop); // clears selection too
-        sp_signal_disconnect_by_data (G_OBJECT (_desktop->namedview), this);
+        _namedview_modified_connection.disconnect();
         _desktop->destroy();
         Inkscape::GC::release (_desktop);
         _desktop = 0;
@@ -1601,7 +1600,7 @@ EditWidget::onWindowRealize()
     }
 
     _desktop->set_display_area(d.min()[NR::X], d.min()[NR::Y], d.max()[NR::X], d.max()[NR::Y], 10);
-    _namedview_modified(_desktop->namedview, SP_OBJECT_MODIFIED_FLAG, this);
+    _namedview_modified(_desktop->namedview, SP_OBJECT_MODIFIED_FLAG);
     setTitle (SP_DOCUMENT_NAME(_desktop->doc()));
 }
 

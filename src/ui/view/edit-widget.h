@@ -125,7 +125,7 @@ public:
     virtual bool warnDialog (gchar*);
 
 protected:
-    friend void _namedview_modified (SPNamedView*, guint, EditWidget*);
+    void _namedview_modified(SPObject *namedview, guint);
 
     Gtk::Tooltips        _tooltips;
     
@@ -192,6 +192,8 @@ private:
     void onAdjValueChanged();
 
     bool _update_s_f, _update_a_f;
+
+    sigc::connection _namedview_modified_connection;
 };
 } // namespace View
 } // namespace UI
