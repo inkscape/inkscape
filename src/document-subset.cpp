@@ -36,10 +36,10 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
         SPObject *parent;
         Siblings children;
 
-        gulong release_connection;
+        sigc::connection release_connection;
         sigc::connection position_changed_connection;
 
-        Record() : parent(NULL), release_connection(0) {}
+        Record() : parent(NULL) {}
 
         unsigned childIndex(SPObject *obj) {
             Siblings::iterator found;
@@ -163,8 +163,9 @@ private:
         sp_object_ref(obj);
         Record &record=records[obj];
         record.release_connection
-          = g_signal_connect(obj, "release",
-                             (GCallback)&Relations::_release_object, this);
+          = obj->connectRelease(
+              sigc::mem_fun(this, &Relations::_release_object)
+            );
         record.position_changed_connection
           = obj->connectPositionChanged(
               sigc::mem_fun(this, &Relations::reorder)
@@ -178,10 +179,7 @@ private:
 
     void _doRemove(SPObject *obj) {
         Record &record=records[obj];
-        if (record.release_connection) {
-            g_signal_handler_disconnect(obj, record.release_connection);
-            record.release_connection = 0;
-        }
+        record.release_connection.disconnect();
         record.position_changed_connection.disconnect();
         records.erase(obj);
 
@@ -212,10 +210,9 @@ private:
         }
     }
 
-    static void _release_object(SPObject *obj, void *relations_p) {
-        Relations &relations=*static_cast<Relations *>(relations_p);
-        if (relations.get(obj)) {
-            relations.remove(obj, true);
+    void _release_object(SPObject *obj) {
+        if (get(obj)) {
+            remove(obj, true);
         }
     }
 };
