@@ -119,13 +119,14 @@ protected:
 private:
 	SPObject *_owner;
 	sigc::connection _connection;
+	sigc::connection _release_connection;
 	SPObject *_obj;
 	URI *_uri;
 
 	sigc::signal<void, SPObject *, SPObject *> _changed_signal;
 
 	void _setObject(SPObject *object);
-	static void _release(SPObject *object, URIReference *reference);
+	void _release(SPObject *object);
 
 	void operator=(const URIReference &ref);
 	/* Private and definition-less to prevent accidental use. */

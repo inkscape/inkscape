@@ -17,6 +17,8 @@
 #include "uri.h"
 #include "uri-references.h"
 
+#include <sigc++/functors/mem_fun.h>
+
 static gchar *uri_to_id(SPDocument *document, const gchar *uri);
 
 namespace Inkscape {
@@ -97,12 +99,12 @@ void URIReference::_setObject(SPObject *obj) {
 
 	if (_obj) {
 		sp_object_href(_obj, _owner);
-		g_signal_connect(G_OBJECT(_obj), "release", G_CALLBACK(&URIReference::_release), reinterpret_cast<gpointer>(this));
+		_release_connection = _obj->connectRelease(sigc::mem_fun(*this, &URIReference::_release));
 	}
 	_changed_signal.emit(old_obj, _obj);
 	if (old_obj) {
+		_release_connection.disconnect();
 		/* release the old object _after_ the signal emission */
-		g_signal_handlers_disconnect_by_func(G_OBJECT(old_obj), (void *)&URIReference::_release, reinterpret_cast<gpointer>(this));
 		sp_object_hunref(old_obj, _owner);
 	}
 }
@@ -111,9 +113,9 @@ void URIReference::_setObject(SPObject *obj) {
  * it on its "release" signal, rather than later, when its ID is actually
  * unregistered from the document.
  */
-void URIReference::_release(SPObject *obj, URIReference *reference) {
-	g_assert( reference->_obj == obj );
-	reference->_setObject(NULL);
+void URIReference::_release(SPObject *obj) {
+	g_assert( _obj == obj );
+	_setObject(NULL);
 }
 
 } /* namespace Inkscape */

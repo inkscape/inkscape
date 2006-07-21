@@ -1,20 +1,10 @@
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
-	* src/document-subset.cpp:
-
-	  switch to sigc++ signal for "release"
-
-2006-07-21  MenTaLguY  <mental@rydia.net>
-
-	* src/selection.cpp, src/selection.h:
-
+	* src/document-subset.cpp, src/selection.cpp, src/selection.h,
+	  src/ui/view/edit-widget.cpp, src/ui/view/edit-widget.h,
+	  src/uri-references.cpp, src/uri-references.h:
+	
 	  switch to sigc++ signals for "modified" and "release"
-
-2006-07-21  MenTaLguY  <mental@rydia.net>
-
-	* src/ui/view/edit-widget.cpp, src/ui/view/edit-widget.cpp:
-
-	  switched to using sigc++ "modified" signal
 
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
