@@ -12,6 +12,8 @@
 #include "sp-object.h"
 #include "object-hierarchy.h"
 
+#include <sigc++/functors/mem_fun.h>
+
 namespace Inkscape {
 
 /**
@@ -173,29 +175,31 @@ void ObjectHierarchy::_addBottom(SPObject *object) {
     _added_signal.emit(object);
 }
 
-void ObjectHierarchy::_trim_for_release(SPObject *object, ObjectHierarchy *hier)
-{
-    hier->_trimBelow(object);
-    g_assert(!hier->_hierarchy.empty());
-    g_assert(hier->_hierarchy.front().object == object);
+void ObjectHierarchy::_trim_for_release(SPObject *object) {
+    this->_trimBelow(object);
+    g_assert(!this->_hierarchy.empty());
+    g_assert(this->_hierarchy.front().object == object);
 
     sp_object_ref(object, NULL);
-    hier->_detach(hier->_hierarchy.front());
-    hier->_hierarchy.pop_front();
-    hier->_removed_signal.emit(object);
+    this->_detach(this->_hierarchy.front());
+    this->_hierarchy.pop_front();
+    this->_removed_signal.emit(object);
     sp_object_unref(object, NULL);
 
-    hier->_changed_signal.emit(hier->top(), hier->bottom());
+    this->_changed_signal.emit(this->top(), this->bottom());
 }
 
 ObjectHierarchy::Record ObjectHierarchy::_attach(SPObject *object) {
     sp_object_ref(object, NULL);
-    gulong id = g_signal_connect(G_OBJECT(object), "release", GCallback(&ObjectHierarchy::_trim_for_release), this);
-    return Record(object, id);
+    sigc::connection connection
+      = object->connectRelease(
+          sigc::mem_fun(*this, &ObjectHierarchy::_trim_for_release)
+        );
+    return Record(object, connection);
 }
 
-void ObjectHierarchy::_detach(ObjectHierarchy::Record const &rec) {
-    g_signal_handler_disconnect(G_OBJECT(rec.object), rec.handler_id);
+void ObjectHierarchy::_detach(ObjectHierarchy::Record &rec) {
+    rec.connection.disconnect();
     sp_object_unref(rec.object, NULL);
 }
 

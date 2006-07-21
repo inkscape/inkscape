@@ -68,10 +68,11 @@ public:
 
 private:
     struct Record {
-        Record(SPObject *o, gulong id) : object(o), handler_id(id) {}
+        Record(SPObject *o, sigc::connection c)
+        : object(o), connection(c) {}
 
         SPObject *object;
-        gulong handler_id;
+        sigc::connection connection;
     };
 
     ObjectHierarchy(ObjectHierarchy const &); // no copy
@@ -92,11 +93,11 @@ private:
     void _trimBelow(SPObject *limit);
 
     Record _attach(SPObject *object);
-    void _detach(Record const &record);
+    void _detach(Record &record);
 
     void _clear() { _trimBelow(NULL); }
 
-    static void _trim_for_release(SPObject *released, ObjectHierarchy *hier);
+    void _trim_for_release(SPObject *released);
 
     std::list<Record> _hierarchy;
     sigc::signal<void, SPObject *> _added_signal;
