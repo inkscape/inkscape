@@ -3,7 +3,7 @@
 	  bryce to consolidate document update functionality from
 	  sp_document_ensure_is_up_to_date() and
 	  sp_document_idle_handler().  This is the first step in getting
-	  updates of defs fixed.
+	  updates of defs (and markers) fixed.
 
 2006-07-18  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
 
