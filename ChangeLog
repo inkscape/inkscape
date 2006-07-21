@@ -1,5 +1,12 @@
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
+	* src/layer-manager.cpp, src/layer-manager.h:
+
+	  switch to sigc++ signals and manually clean up signal connections
+	  (although it may not be strictly necessary to do so here)
+
+2006-07-21  MenTaLguY  <mental@rydia.net>
+
 	* src/document-subset.cpp, src/object-hierarchy.cpp,
 	  src/object-hierarchy.h, src/selection.cpp, src/selection.h,
 	  src/ui/view/edit-widget.cpp, src/ui/view/edit-widget.h,

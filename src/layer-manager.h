@@ -14,6 +14,7 @@
 #include "gc-finalized.h"
 #include "gc-soft-ptr.h"
 #include <vector>
+#include <map>
 
 class SPDesktop;
 class SPDocument;
@@ -40,8 +41,6 @@ public:
 private:
     friend class LayerWatcher;
     class LayerWatcher;
-
-    static void _objectModifiedCB( SPObject* obj, guint flags, LayerManager* mgr );
 
     void _objectModified( SPObject* obj, guint flags );
     void _setDocument(SPDocument *document);

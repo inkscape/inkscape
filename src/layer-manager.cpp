@@ -30,9 +30,10 @@ using Inkscape::XML::Node;
 
 class LayerManager::LayerWatcher : public Inkscape::XML::NodeObserver {
 public:
-    LayerWatcher(LayerManager* mgr, SPObject* obj) :
+    LayerWatcher(LayerManager* mgr, SPObject* obj, sigc::connection c) :
         _mgr(mgr),
         _obj(obj),
+        _connection(c),
         _lockedAttr(g_quark_from_string("sodipodi:insensitive")),
         _labelAttr(g_quark_from_string("inkscape:label"))
     {}
@@ -51,6 +52,7 @@ public:
 
     LayerManager* _mgr;
     SPObject* _obj;
+    sigc::connection _connection;
     GQuark _lockedAttr;
     GQuark _labelAttr;
 };
@@ -146,12 +148,6 @@ void LayerManager::_setDocument(SPDocument *document) {
     _rebuild();
 }
 
-
-void LayerManager::_objectModifiedCB( SPObject* obj, guint flags, LayerManager* mgr )
-{
-    mgr->_objectModified( obj, flags );
-}
-
 void LayerManager::_objectModified( SPObject* obj, guint flags )
 {
     _details_changed_signal.emit( obj );
@@ -166,6 +162,7 @@ void LayerManager::_rebuild() {
             if ( node ) {
                 node->removeObserver(*one);
             }
+            one->_connection.disconnect();
         }
     }
 
@@ -185,15 +182,16 @@ void LayerManager::_rebuild() {
 
                     // Such may have been the cause of bug 1339397.
                     // See http://sourceforge.net/tracker/index.php?func=detail&aid=1339397&group_id=93438&atid=604306
+
                     SPObject const *higher = curr;
                     while ( higher && (SP_OBJECT_PARENT(higher) != root) ) {
                         higher = SP_OBJECT_PARENT(higher);
                     }
                     Node* node = higher ? SP_OBJECT_REPR(higher) : 0;
                     if ( node && node->parent() ) {
-                        g_signal_connect( G_OBJECT(curr), "modified", G_CALLBACK( _objectModifiedCB ), this );
+                        sigc::connection connection = curr->connectModified(sigc::mem_fun(*this, &LayerManager::_objectModified));
 
-                        LayerWatcher* eye = new LayerWatcher(this, curr);
+                        LayerWatcher *eye = new LayerWatcher(this, curr, connection);
                         _watchers.push_back( eye );
                         SP_OBJECT_REPR(curr)->addObserver(*eye);
 
