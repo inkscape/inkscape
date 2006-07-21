@@ -17,6 +17,7 @@
  */
 
 #include <vector>
+#include <map>
 #include <sigc++/sigc++.h>
 
 #include "libnr/nr-rect.h"
@@ -318,11 +319,7 @@ private:
     /** @brief Issues modification notification signals */
     static gboolean _emit_modified(Selection *selection);
     /** @brief Schedules an item modification signal to be sent */
-    static void _schedule_modified(SPObject *obj, guint flags, Selection *selection);
-    /** @brief Releases a selected object that is being removed */
-    static void _release(SPObject *obj, Selection *selection);
-    /** @brief Releases an active layer object that is being removed */
-    static void _releaseSelectionContext(SPObject *obj, Selection *selection);
+    void _schedule_modified(SPObject *obj, guint flags);
 
     /** @brief Issues modified selection signal */
     void _emitModified(guint flags);
@@ -352,9 +349,12 @@ private:
 
     GC::soft_ptr<SPDesktop> _desktop;
     SPObject* _selection_context;
-    gulong _context_release_handler_id;
     guint _flags;
     guint _idle;
+
+    std::map<SPObject *, sigc::connection> _modified_connections;
+    std::map<SPObject *, sigc::connection> _release_connections;
+    sigc::connection _context_release_connection;
 
     sigc::signal<void, Selection *> _changed_signal;
     sigc::signal<void, Selection *, guint> _modified_signal;

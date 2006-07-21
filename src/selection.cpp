@@ -28,6 +28,7 @@
 
 #include "sp-shape.h"
 
+#include <sigc++/functors/mem_fun.h>
 
 #define SP_SELECTION_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE + 1)
 
@@ -39,7 +40,6 @@ Selection::Selection(SPDesktop *desktop) :
     _items(NULL),
     _desktop(desktop),
     _selection_context(NULL),
-    _context_release_handler_id(0),
     _flags(0),
     _idle(0)
 {
@@ -54,24 +54,16 @@ Selection::~Selection() {
     }
 }
 
-void
-Selection::_release(SPObject *obj, Selection *selection)
-{
-    selection->remove(obj);
-}
-
 /* Handler for selected objects "modified" signal */
 
-void
-Selection::_schedule_modified(SPObject *obj, guint flags, Selection *selection)
-{
-    if (!selection->_idle) {
+void Selection::_schedule_modified(SPObject *obj, guint flags) {
+    if (!this->_idle) {
         /* Request handling to be run in _idle loop */
-        selection->_idle = g_idle_add_full(SP_SELECTION_UPDATE_PRIORITY, GSourceFunc(&Selection::_emit_modified), selection, NULL);
+        this->_idle = g_idle_add_full(SP_SELECTION_UPDATE_PRIORITY, GSourceFunc(&Selection::_emit_modified), this, NULL);
     }
 
     /* Collect all flags */
-    selection->_flags |= flags;
+    this->_flags |= flags;
 }
 
 gboolean
@@ -98,10 +90,7 @@ void Selection::_emitChanged(bool persist_selection_context/* = false */) {
         if (NULL == _selection_context) {
             _selection_context = desktop()->currentLayer();
             sp_object_ref(_selection_context, NULL);
-            _context_release_handler_id = g_signal_connect(
-                                            G_OBJECT(_selection_context), "release",
-                                            G_CALLBACK(&Selection::_releaseSelectionContext),
-                                            this);
+            _context_release_connection = _selection_context->connectRelease(sigc::mem_fun(*this, &Selection::_releaseContext));
         }
     } else {
         _releaseContext(_selection_context);
@@ -112,20 +101,14 @@ void Selection::_emitChanged(bool persist_selection_context/* = false */) {
 }
 
 void
-Selection::_releaseSelectionContext(SPObject *obj, Selection *selection)
-{
-    selection->_releaseContext(obj);
-}
-
-void
 Selection::_releaseContext(SPObject *obj)
 {
     if (NULL == _selection_context || _selection_context != obj)
         return;
 
-    g_signal_handler_disconnect(G_OBJECT(_selection_context), _context_release_handler_id);
+    _context_release_connection.disconnect();
+
     sp_object_unref(_selection_context, NULL);
-    _context_release_handler_id = 0;
     _selection_context = NULL;
 }
 
@@ -141,8 +124,7 @@ void Selection::_clear() {
     _invalidateCachedLists();
     while (_objs) {
         SPObject *obj=reinterpret_cast<SPObject *>(_objs->data);
-        sp_signal_disconnect_by_data(obj, this);
-        _objs = g_slist_remove(_objs, obj);
+        _remove(obj);
     }
 }
 
@@ -181,16 +163,9 @@ void Selection::_add(SPObject *obj) {
     _removeObjectAncestors(obj);
 
     _objs = g_slist_prepend(_objs, obj);
-    g_signal_connect(G_OBJECT(obj), "release",
-                     G_CALLBACK(&Selection::_release), this);
-    g_signal_connect(G_OBJECT(obj), "modified",
-                     G_CALLBACK(&Selection::_schedule_modified), this);
 
-    /*
-    if (!SP_IS_SHAPE(obj)) {
-        printf("This is not a shape\n");
-    }
-    */
+    _release_connections[obj] = obj->connectRelease(sigc::mem_fun(*this, (void (Selection::*)(SPObject *))&Selection::remove));
+    _modified_connections[obj] = obj->connectModified(sigc::mem_fun(*this, &Selection::_schedule_modified));
 }
 
 void Selection::set(SPObject *object, bool persist_selection_context) {
@@ -217,7 +192,12 @@ void Selection::remove(SPObject *obj) {
 }
 
 void Selection::_remove(SPObject *obj) {
-    sp_signal_disconnect_by_data(obj, this);
+    _modified_connections[obj].disconnect();
+    _modified_connections.erase(obj);
+
+    _release_connections[obj].disconnect();
+    _release_connections.erase(obj);
+
     _objs = g_slist_remove(_objs, obj);
 }
 
