@@ -1,5 +1,11 @@
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
+	* src/style.cpp, src/style.h:
+
+	  switch to using sigc++ signals
+
+2006-07-21  MenTaLguY  <mental@rydia.net>
+
 	* src/layer-manager.cpp, src/layer-manager.h:
 
 	  switch to sigc++ signals and manually clean up signal connections

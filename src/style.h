@@ -18,6 +18,8 @@
 #include "sp-marker-loc.h"
 #include "sp-filter.h"
 
+#include <sigc++/connection.h>
+
 namespace Inkscape {
 namespace XML {
 class Node;
@@ -339,9 +341,12 @@ struct SPStyle {
     /// style has hreffed its fill/stroke paintservers, needs to release.
     bool fill_hreffed; 
     bool stroke_hreffed; 
-    /// style is listening to changes in fill/stroke paintservers, needs to disconnect.
-    bool fill_listening; 
-    bool stroke_listening; 
+
+    sigc::connection fill_release_connection;
+    sigc::connection fill_modified_connection;
+
+    sigc::connection stroke_release_connection;
+    sigc::connection stroke_modified_connection;
 };
 
 SPStyle *sp_style_new();

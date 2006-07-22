@@ -41,6 +41,9 @@
 #include "unit-constants.h"
 #include "isnan.h"
 
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
+
 using Inkscape::CSSOStringStream;
 using std::vector;
 
@@ -401,8 +404,11 @@ sp_style_new()
     style->fill_hreffed = false;
     style->stroke_hreffed = false;
 
-    style->fill_listening = false;
-    style->stroke_listening = false;
+    new (&style->fill_release_connection) sigc::connection();
+    new (&style->fill_modified_connection) sigc::connection();
+
+    new (&style->stroke_release_connection) sigc::connection();
+    new (&style->stroke_modified_connection) sigc::connection();
 
     return style;
 }
@@ -462,6 +468,14 @@ sp_style_unref(SPStyle *style)
         if (style->text) sp_text_style_unref(style->text);
         sp_style_paint_clear(style, &style->fill);
         sp_style_paint_clear(style, &style->stroke);
+        style->fill_release_connection.disconnect();
+        style->fill_release_connection.~connection();
+        style->fill_modified_connection.disconnect();
+        style->fill_modified_connection.~connection();
+        style->stroke_release_connection.disconnect();
+        style->stroke_release_connection.~connection();
+        style->stroke_modified_connection.disconnect();
+        style->stroke_modified_connection.~connection();
         g_free(style->stroke_dash.dash);
         g_free(style);
     }
@@ -1953,8 +1967,9 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
  * Disconnects from possible fill and stroke paint servers.
  */
 static void
-sp_style_paint_server_release(SPPaintServer *server, SPStyle *style)
+sp_style_paint_server_release(SPObject *obj, SPStyle *style)
 {
+    SPPaintServer *server=static_cast<SPPaintServer *>(obj);
     if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
         && (server == style->fill.value.paint.server))
     {
@@ -1976,8 +1991,9 @@ sp_style_paint_server_release(SPPaintServer *server, SPStyle *style)
  * or stroke paint server.
  */
 static void
-sp_style_paint_server_modified(SPPaintServer *server, guint flags, SPStyle *style)
+sp_style_paint_server_modified(SPObject *obj, guint flags, SPStyle *style)
 {
+    SPPaintServer *server = static_cast<SPPaintServer *>(obj);
     if ((style->fill.type == SP_PAINT_TYPE_PAINTSERVER)
         && (server == style->fill.value.paint.server))
     {
@@ -2040,15 +2056,18 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
                     }
                 }
                 if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
-                    g_signal_connect(G_OBJECT(paint->value.paint.server), "release",
-                                     G_CALLBACK(sp_style_paint_server_release), style);
-                    g_signal_connect(G_OBJECT(paint->value.paint.server), "modified",
-                                     G_CALLBACK(sp_style_paint_server_modified), style);
+                    SPObject *server = paint->value.paint.server;
+                    sigc::connection release_connection
+                      = server->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_paint_server_release), style));
+                    sigc::connection modified_connection
+                      = server->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_paint_server_modified), style));
                     if (paint == &style->fill) {
-                        style->fill_listening = true;
+                        style->fill_release_connection = release_connection;
+                        style->fill_modified_connection = modified_connection;
                     } else {
                         assert(paint == &style->stroke);
-                        style->stroke_listening = true;
+                        style->stroke_release_connection = release_connection;
+                        style->stroke_modified_connection = modified_connection;
                     }
                 }
             }
@@ -2933,15 +2952,18 @@ sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocume
                     }
                 }
                 if (style->object || style->cloned) {
-                    g_signal_connect(G_OBJECT(paint->value.paint.server), "release",
-                                     G_CALLBACK(sp_style_paint_server_release), style);
-                    g_signal_connect(G_OBJECT(paint->value.paint.server), "modified",
-                                     G_CALLBACK(sp_style_paint_server_modified), style);
+                    SPObject *server = paint->value.paint.server;
+                    sigc::connection release_connection
+                      = server->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_paint_server_release), style));
+                    sigc::connection modified_connection
+                      = server->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_paint_server_modified), style));
                     if (paint == &style->fill) {
-                        style->fill_listening = true;
+                        style->fill_release_connection = release_connection;
+                        style->fill_modified_connection = modified_connection;
                     } else {
                         assert(paint == &style->stroke);
-                        style->stroke_listening = true;
+                        style->stroke_release_connection = release_connection;
+                        style->stroke_modified_connection = modified_connection;
                     }
                 }
             } else {
@@ -3588,22 +3610,16 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
                 sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
                 style->fill_hreffed = false;
             }
-            if (style->fill_listening) {
-                g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
-                                                 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
-                style->fill_listening = false;
-            }
+            style->fill_release_connection.disconnect();
+            style->fill_modified_connection.disconnect();
         } else {
             assert(paint == &style->stroke);  // Only fill & stroke can have a paint server.
             if (style->stroke_hreffed) {
                 sp_object_hunref(SP_OBJECT(paint->value.paint.server), style);
                 style->stroke_hreffed = false;
             }
-            if (style->stroke_listening) {
-                g_signal_handlers_disconnect_matched(G_OBJECT(paint->value.paint.server),
-                                                 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
-                style->stroke_listening = false;
-            }
+            style->stroke_release_connection.disconnect();
+            style->stroke_modified_connection.disconnect();
         }
 
         paint->value.paint.server = NULL;
