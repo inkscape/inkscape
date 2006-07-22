@@ -1,5 +1,12 @@
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
+	* src/splivarot.cpp:
+	
+	  patch from John Bintz, adding pref to simplify multiple
+	  paths separately
+
+2006-07-21  MenTaLguY  <mental@rydia.net>
+
 	* configure.ac: first shot at implementing --enable-lsb
 
 2006-07-21  MenTaLguY  <mental@rydia.net>

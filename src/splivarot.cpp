@@ -1353,10 +1353,18 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
 }
 
 
+static bool
+sp_selected_path_simplify_items(SPDesktop *desktop,
+                                Inkscape::Selection *selection, GSList *items,
+                                float threshold,  bool justCoalesce,
+                                float angleLimit, bool breakableAngles,
+                                bool modifySelection);
+
 
 //return true if we changed something, else false
 bool
-sp_selected_path_simplify_item(SPDesktop *desktop, Inkscape::Selection *selection, SPItem *item,
+sp_selected_path_simplify_item(SPDesktop *desktop,
+                 Inkscape::Selection *selection, SPItem *item,
                  float threshold,  bool justCoalesce,
                  float angleLimit, bool breakableAngles,
                  gdouble size,     bool modifySelection)
@@ -1366,18 +1374,12 @@ sp_selected_path_simplify_item(SPDesktop *desktop, Inkscape::Selection *selectio
 
     //If this is a group, do the children instead
     if (SP_IS_GROUP(item)) {
-
-        bool didSomething = false;
-
-        for ( GSList *children = sp_item_group_item_list(SP_GROUP(item));
-                 children  ; children = children->next) {
-
-            SPItem *child = (SPItem *) children->data;
-            didSomething |= sp_selected_path_simplify_item(desktop, selection, child, threshold, justCoalesce,
-                   angleLimit, breakableAngles, size, false);
-        }
-
-        return didSomething;
+        GSList *items = sp_item_group_item_list(SP_GROUP(item));
+        
+        return sp_selected_path_simplify_items(desktop, selection, items,
+                                               threshold, justCoalesce,
+                                               angleLimit, breakableAngles,
+                                               false);
     }
 
 
@@ -1470,6 +1472,41 @@ sp_selected_path_simplify_item(SPDesktop *desktop, Inkscape::Selection *selectio
 }
 
 
+bool
+sp_selected_path_simplify_items(SPDesktop *desktop,
+                                Inkscape::Selection *selection, GSList *items,
+                                float threshold,  bool justCoalesce,
+                                float angleLimit, bool breakableAngles,
+                                bool modifySelection)
+{
+  bool simplifyIndividualPaths =
+    (bool) prefs_get_int_attribute("options.simplifyindividualpaths", "value", 0);
+  
+  bool didSomething = false;
+
+  NR::Rect selectionBbox = selection->bounds();
+  gdouble selectionSize  = L2(selectionBbox.dimensions());
+
+  gdouble simplifySize  = selectionSize;
+  
+  for (; items != NULL; items = items->next) {
+      SPItem *item = (SPItem *) items->data;
+      
+      if (!(SP_IS_GROUP(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item)))
+          continue;
+
+      if (simplifyIndividualPaths) {
+          NR::Rect itemBbox = item->invokeBbox(sp_item_i2d_affine(item));        
+          simplifySize      = L2(itemBbox.dimensions());
+      }
+
+      didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
+                          threshold, justCoalesce, angleLimit, breakableAngles, simplifySize, modifySelection);
+  }
+
+  return didSomething;
+}
+
 void
 sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
                        float angleLimit, bool breakableAngles)
@@ -1484,25 +1521,13 @@ sp_selected_path_simplify_selection(float threshold, bool justCoalesce,
         return;
     }
 
-    // remember selection size
-    NR::Rect bbox = selection->bounds();
-    gdouble size  = L2(bbox.dimensions());
+    GSList *items = g_slist_copy((GSList *) selection->itemList());
 
-    bool didSomething = false;
-
-    //Loop through all of the items in the selection
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
-                        items != NULL; items = items->next) {
-
-        SPItem *item = (SPItem *) items->data;
-
-        if (!(SP_IS_GROUP(item) || SP_IS_SHAPE(item) || SP_IS_TEXT(item)))
-            continue;
-
-        didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
-                           threshold, justCoalesce, angleLimit, breakableAngles, size, true);
-    }
-
+    bool didSomething = sp_selected_path_simplify_items(desktop, selection,
+                                                        items, threshold,
+                                                        justCoalesce,
+                                                        angleLimit,
+                                                        breakableAngles, true);
 
     if (didSomething)
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_SIMPLIFY, 
