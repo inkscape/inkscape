@@ -11,6 +11,11 @@ AC_CANONICAL_HOST
 AC_CONFIG_SRCDIR(src/main.cpp)
 AM_INIT_AUTOMAKE
 
+AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-comaptible build configuration]), [
+  prefix=/opt/inkscape
+  # FIXME: need to force static linking of libraries not in LSB whitelist
+])
+
 AM_CONFIG_HEADER(config.h)
 
 AC_PROG_INTLTOOL(0.22)
