@@ -1,5 +1,9 @@
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
+	* configure.ac: first shot at implementing --enable-lsb
+
+2006-07-21  MenTaLguY  <mental@rydia.net>
+
 	* src/style.cpp, src/style.h:
 
 	  switch to using sigc++ signals
