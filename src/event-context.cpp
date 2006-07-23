@@ -460,6 +460,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 panning = 0;
                 sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                       event->button.time);
+                desktop->updateNow();
                 ret = TRUE;
             } else if (zoom_rb == event->button.button) {
                 zoom_rb = 0;

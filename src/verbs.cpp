@@ -1536,6 +1536,8 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
         default:
             break;
     }
+    
+    dt->updateNow();
 
 } // end of sp_verb_action_zoom_perform()
 

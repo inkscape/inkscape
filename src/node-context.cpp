@@ -548,6 +548,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                          event->button.y);
                 NR::Point const button_dt(desktop->w2d(button_w));
                 Inkscape::Rubberband::get()->start(desktop, button_dt);
+                desktop->updateNow();
                 ret = TRUE;
             }
             break;
