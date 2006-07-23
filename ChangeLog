@@ -2,7 +2,7 @@
 
 	* packaging/osx-app.sh, packaging/macosx/inkscape.ds_store
 	  packaging/macosx/dmg_background.svg, packaging/macosx/osx-dmg.sh,
-	  packaging/macosx/dmg_background.png,
+	  packaging/macosx/dmg_background.png, Makefile.am,
 	  packaging/macosx/dmg_set_style.scpt:
 
 	  Improve the disk image layout for Mac OS X releases.  This is 

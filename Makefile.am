@@ -96,6 +96,9 @@ EXTRA_DIST = \
 	debian/rules	\
 	packaging/autopackage/default.apspec.in	\
 	packaging/osx-app.sh	\
+	packaging/macosx/dmg_background.png	\
+	packaging/macosx/inkscape.ds_store	\
+	packaging/macosx/osx-dmg.sh	\
 	packaging/macosx/Resources/MenuBar.nib/classes.nib	\
 	packaging/macosx/Resources/MenuBar.nib/info.nib	\
 	packaging/macosx/Resources/MenuBar.nib/objects.xib	\
