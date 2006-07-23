@@ -1,21 +1,32 @@
+2006-07-23  Michael Wybrow  <mjwybrow@users.sourceforge.net>
+
+	* packaging/osx-app.sh, packaging/macosx/inkscape.ds_store
+	  packaging/macosx/dmg_background.svg, packaging/macosx/osx-dmg.sh,
+	  packaging/macosx/dmg_background.png,
+	  packaging/macosx/dmg_set_style.scpt:
+
+	  Improve the disk image layout for Mac OS X releases.  This is 
+	  based on Jean-Olivier Irisson's work and patches, submitted as
+	  #1516212.
+
 2006-07-23  John Bintz  <jcoswell@coswellproductions.org>
 
-  * src/desktop.cpp, src/desktop.h
-  
-    added SPDesktop::updateNow()
-  
-  * src/event-context.cpp, src/select-context.cpp, src/node-context.cpp
-  
-    forced redraw of canvas upon completion of selection or panning
-    to work around event starvation issue at high zoom levels
+	* src/desktop.cpp, src/desktop.h
+
+	  added SPDesktop::updateNow()
+
+	* src/event-context.cpp, src/select-context.cpp, src/node-context.cpp
+
+	  forced redraw of canvas upon completion of selection or panning
+	  to work around event starvation issue at high zoom levels
 
 2006-07-22  John Bintz  <jcoswell@coswellproductions.org>
 
-  * src/desktop.cpp, src/desktop.h, src/document-undo.cpp,
-    src/document.h, src/document-private.h, src/document.cpp:
+	* src/desktop.cpp, src/desktop.h, src/document-undo.cpp,
+	  src/document.h, src/document-private.h, src/document.cpp:
 
-    forced redraw of canvas upon document commit to work
-    around event starvation issue at high zoom levels
+	  forced redraw of canvas upon document commit to work
+	  around event starvation issue at high zoom levels
 
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
@@ -65,6 +76,7 @@
 	  replace two uses of hash_map with standard STL map
 
 2006-07-18  Bryce Harrington <bryce@bryceharrington.org>
+
 	* src/document.h, src/document.cpp:  Refactoring from mental &
 	  bryce to consolidate document update functionality from
 	  sp_document_ensure_is_up_to_date() and
@@ -73,8 +85,7 @@
 
 2006-07-18  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
 
-	* src/graphlayout/graphlayout.cpp,
-	  src/conn-avoid-ref.h:
+	* src/graphlayout/graphlayout.cpp, src/conn-avoid-ref.h:
 	  We now use connector spacing to determine the minimum space required
 	  between shape bounding boxes when graph layout with avoid overlap
 	  constraints is applied.  This means that there should always be enough
@@ -83,8 +94,7 @@
 
 2006-07-17  Tim Dwyer  <Tim.Dwyer@infotech.monash.edu.au>
 
-	* src/libcola/cola.h,
-	  src/libcola/connected_components.cpp,
+	* src/libcola/cola.h, src/libcola/connected_components.cpp,
 	  src/graphlayout/graphlayout.cpp:
 	  Disconnected graphs are now handled more gracefully,
 	  connected components are arranged separated (in place) and

@@ -230,4 +230,5 @@ rsync -av $resdir/Resources/* $package/Contents/Resources/
 
 
 # Make an image
-/usr/bin/hdiutil create -srcfolder "$pkg.app" "$pkg.dmg"
+#/usr/bin/hdiutil create -srcfolder "$pkg.app" "$pkg.dmg"
+( cd macosx && ./osx-dmg.sh )
