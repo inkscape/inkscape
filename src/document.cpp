@@ -611,6 +611,12 @@ SPDocument::emitReconstructionFinish(void)
     return;
 }
 
+sigc::connection SPDocument::connectCommit(SPDocument::CommitSignal::slot_type slot)
+{
+    return priv->commit_signal.connect(slot);
+}
+
+
 
 void SPDocument::_emitModified() {
     static guint const flags = SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_CHILD_MODIFIED_FLAG | SP_OBJECT_PARENT_MODIFIED_FLAG;

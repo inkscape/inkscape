@@ -64,6 +64,7 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	typedef sigc::signal<void, double, double> ResizedSignal;
 	typedef sigc::signal<void> ReconstructionStart;
 	typedef sigc::signal<void> ReconstructionFinish;
+  typedef sigc::signal<void> CommitSignal;
 
 	SPDocument();
 	~SPDocument();
@@ -93,6 +94,7 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	sigc::connection connectModified(ModifiedSignal::slot_type slot);
 	sigc::connection connectURISet(URISetSignal::slot_type slot);
 	sigc::connection connectResized(ResizedSignal::slot_type slot);
+  sigc::connection connectCommit(CommitSignal::slot_type slot);
 
 	void bindObjectToId(gchar const *id, SPObject *object);
 	SPObject *getObjectById(gchar const *id);

@@ -248,7 +248,9 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     _reconstruction_finish_connection =
         document->connectReconstructionFinish(sigc::bind(sigc::ptr_fun(_reconstruction_finish), this));
     _reconstruction_old_layer_id = NULL;
-
+    
+    _commit_connection = document->connectCommit(sigc::bind(sigc::ptr_fun(&sp_canvas_update_now), this->canvas));
+    
     // ?
     // sp_active_desktop_set (desktop);
     _inkscape = INKSCAPE;
@@ -1048,6 +1050,7 @@ SPDesktop::onRedrawRequested ()
 /**
  * Associate document with desktop.
  */
+/// \todo fixme: refactor SPDesktop::init to use setDocument
 void
 SPDesktop::setDocument (SPDocument *doc)
 {
@@ -1065,6 +1068,9 @@ SPDesktop::setDocument (SPDocument *doc)
     _layer_hierarchy->connectRemoved(sigc::bind(sigc::ptr_fun(_layer_deactivated), this));
     _layer_hierarchy->connectChanged(sigc::bind(sigc::ptr_fun(_layer_hierarchy_changed), this));
     _layer_hierarchy->setTop(SP_DOCUMENT_ROOT(doc));
+
+    _commit_connection.disconnect();
+    _commit_connection = doc->connectCommit(sigc::bind(sigc::ptr_fun(&sp_canvas_update_now), this->canvas));
 
     /// \todo fixme: This condition exists to make sure the code
     /// inside is called only once on initialization. But there

@@ -1,3 +1,11 @@
+2006-07-22  John Bintz  <jcoswell@coswellproductions.org>
+
+  * src/desktop.cpp, src/desktop.h, src/document-undo.cpp,
+    src/document.h, src/document-private.h, src/document.cpp:
+
+    forced redraw of canvas upon document commit to work
+    around event starvation issue at high zoom levels
+
 2006-07-21  MenTaLguY  <mental@rydia.net>
 
 	* src/splivarot.cpp:

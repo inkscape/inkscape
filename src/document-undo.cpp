@@ -162,6 +162,8 @@ sp_document_maybe_done (SPDocument *doc, const gchar *key, const unsigned int ev
 	}
 
 	sp_repr_begin_transaction (doc->rdoc);
+
+  doc->priv->commit_signal.emit();
 }
 
 void

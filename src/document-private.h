@@ -56,6 +56,7 @@ struct SPDocumentPrivate {
 	SPDocument::ResizedSignal resized_signal;
 	SPDocument::ReconstructionStart _reconstruction_start_signal;
 	SPDocument::ReconstructionFinish  _reconstruction_finish_signal;
+  SPDocument::CommitSignal commit_signal;
 
 	/* Undo/Redo state */
 	guint sensitive: 1; /* If we save actions to undo stack */
