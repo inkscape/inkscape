@@ -856,7 +856,7 @@ sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelectorMode mo
         {
             GtkWidget *hb = gtk_hbox_new(FALSE, 0);
             GtkWidget *l = gtk_label_new(NULL);
-            gtk_label_set_markup(GTK_LABEL(l), _("Use <b>Edit &gt; Object(s) to Pattern</b> to create a new pattern from selection."));
+            gtk_label_set_markup(GTK_LABEL(l), _("Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."));
             gtk_label_set_line_wrap(GTK_LABEL(l), true);
             gtk_widget_set_size_request(l, 180, -1);
             gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);

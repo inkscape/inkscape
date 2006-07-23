@@ -1,3 +1,11 @@
+2006-07-23  MenTaLguY  <mental@rydia.net>
+
+  * src/widgets/paint-selector.cpp:
+
+    Update pattern creation help text to reflect new menu layout.  We
+    probably need some way to automatically generate
+    "menu navigation strings" for a given verb.
+
 2006-07-23  Michael Wybrow  <mjwybrow@users.sourceforge.net>
 
 	* packaging/osx-app.sh, packaging/macosx/inkscape.ds_store
