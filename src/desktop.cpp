@@ -49,6 +49,7 @@
 #endif
 
 #include <glibmm/i18n.h>
+#include <sigc++/functors/mem_fun.h>
 
 #include "macros.h"
 #include "inkscape-private.h"
@@ -249,7 +250,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
         document->connectReconstructionFinish(sigc::bind(sigc::ptr_fun(_reconstruction_finish), this));
     _reconstruction_old_layer_id = NULL;
     
-    _commit_connection = document->connectCommit(sigc::bind(sigc::ptr_fun(&sp_canvas_update_now), this->canvas));
+    _commit_connection = document->connectCommit(sigc::mem_fun(*this, &SPDesktop::updateNow));
     
     // ?
     // sp_active_desktop_set (desktop);
@@ -1021,6 +1022,12 @@ SPDesktop::emitToolSubselectionChanged(gpointer data)
 	inkscape_subselection_changed (this);
 }
 
+void
+SPDesktop::updateNow()
+{
+  sp_canvas_update_now(canvas);
+}
+
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.
 
@@ -1070,7 +1077,7 @@ SPDesktop::setDocument (SPDocument *doc)
     _layer_hierarchy->setTop(SP_DOCUMENT_ROOT(doc));
 
     _commit_connection.disconnect();
-    _commit_connection = doc->connectCommit(sigc::bind(sigc::ptr_fun(&sp_canvas_update_now), this->canvas));
+    _commit_connection = doc->connectCommit(sigc::mem_fun(*this, &SPDesktop::updateNow));
 
     /// \todo fixme: This condition exists to make sure the code
     /// inside is called only once on initialization. But there

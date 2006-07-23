@@ -610,6 +610,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     sp_canvas_item_ungrab(sc->grabbed, event->button.time);
                     sc->grabbed = NULL;
                 }
+                
+                desktop->updateNow();
             }
             sc->button_press_shift = false;
             sc->button_press_ctrl = false;

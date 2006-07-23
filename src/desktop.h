@@ -223,6 +223,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setToolboxFocusTo (gchar const* label);
     void setToolboxAdjustmentValue (gchar const* id, double val);
     bool isToolboxButtonActive (gchar const *id);
+    void updateNow();
     
     void fullscreen();
 

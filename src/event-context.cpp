@@ -454,6 +454,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                 desktop->zoom_relative_keep_point(event_dt,
                                                   pow(zoom_inc, zoom_power));
                 gtk_timeout_add(250, (GtkFunction) grab_allow_again, NULL);
+                desktop->updateNow();
             }
             if (panning == event->button.button) {
                 panning = 0;

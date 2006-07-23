@@ -1,3 +1,14 @@
+2006-07-23  John Bintz  <jcoswell@coswellproductions.org>
+
+  * src/desktop.cpp, src/desktop.h
+  
+    added SPDesktop::updateNow()
+  
+  * src/event-context.cpp, src/select-context.cpp, src/node-context.cpp
+  
+    forced redraw of canvas upon completion of selection or panning
+    to work around event starvation issue at high zoom levels
+
 2006-07-22  John Bintz  <jcoswell@coswellproductions.org>
 
   * src/desktop.cpp, src/desktop.h, src/document-undo.cpp,

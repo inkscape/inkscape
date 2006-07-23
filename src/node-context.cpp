@@ -452,6 +452,7 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                                     } else {
                                         sp_nodepath_select_segment_near_point(nc->nodepath, nc->curvepoint_doc, false);
                                     }
+                                    desktop->updateNow();
                                 }
                                 break;
                             case GDK_2BUTTON_PRESS:
@@ -464,8 +465,10 @@ sp_node_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
                         }
                     } else if (event->button.state & GDK_SHIFT_MASK) {
                         selection->toggle(item_clicked);
+                        desktop->updateNow();
                     } else {
                         selection->set(item_clicked);
+                        desktop->updateNow();
                     }
 
                     ret = TRUE;
@@ -636,6 +639,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 }
                 ret = TRUE;
                 Inkscape::Rubberband::get()->stop();
+                desktop->updateNow();
                 nc->rb_escaped = false;
                 nc->drag = FALSE;
                 nc->hit = false;
