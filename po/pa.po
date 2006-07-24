@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 20:40+0200\n"
+"POT-Creation-Date: 2006-07-24 19:54+0200\n"
 "PO-Revision-Date: 2005-09-11 18:09+0530\n"
 "Last-Translator: Amanpreet Singh Brar <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -106,11 +106,11 @@ msgstr "<b>ਮੌਜੂਦਾ ਪਰਤ ਤਾਲਾਬੰਦ ਹੈ</b>। ਇ�
 msgid "%s at %s"
 msgstr "%s, %s ਉੱਤੇ"
 
-#: ../src/desktop.cpp:668
+#: ../src/desktop.cpp:671
 msgid "No previous zoom."
 msgstr "ਕੋਈ ਪਿਛਲਾ ਜ਼ੂਮ ਨਹੀਂ ਹੈ।"
 
-#: ../src/desktop.cpp:693
+#: ../src/desktop.cpp:696
 msgid "No next zoom."
 msgstr "ਕੋਈ ਅੱਗੇ ਜ਼ੂਮ ਨਹੀਂ ਹੈ।"
 
@@ -759,15 +759,15 @@ msgid "none"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
 #. "view_icon_preview"
-#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2252
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2254
 msgid "_Page"
 msgstr "ਸਫ਼ਾ(_P)"
 
-#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2256
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
 msgid "_Drawing"
 msgstr "ਡਰਾਇੰਗ(_D)"
 
-#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
+#: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2260
 msgid "_Selection"
 msgstr "ਚੋਣ(_S)"
 
@@ -1115,7 +1115,7 @@ msgstr ""
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1823 ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1078
 msgid "Selection"
 msgstr "ਚੋਣ"
 
@@ -1142,8 +1142,8 @@ msgid ""
 msgstr ""
 
 #. Button for setting the object's id, label, title and description.
-#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2150
-#: ../src/verbs.cpp:2154
+#: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2152
+#: ../src/verbs.cpp:2156
 msgid "_Set"
 msgstr "ਦਿਓ(_S)"
 
@@ -1452,7 +1452,7 @@ msgstr "ਪਛਾਣਕਰਤਾ"
 msgid "Unique URI to reference this document."
 msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਦੇ ਹਵਾਲੇ ਲਈ ਵਿਲੱਖਣ URI ਹੈ।"
 
-#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1843
+#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1939
 msgid "Source"
 msgstr "ਸਰੋਤ"
 
@@ -1543,7 +1543,7 @@ msgstr "ਕੋਈ ਦਸਤਾਵੇਜ਼ ਨਹੀਂ ਚੁਣਿਆ"
 #: ../src/ui/dialog/inkscape-preferences.cpp:405
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 #: ../src/ui/widget/selected-style.cpp:136
-#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1931
+#: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1933
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
@@ -1681,7 +1681,7 @@ msgstr "ਰੇਖਾ ਖਾਲੀ ਥਾਂ:"
 #. Text
 #: ../src/dialogs/text-edit.cpp:361 ../src/selection-describer.cpp:63
 #: ../src/ui/dialog/inkscape-preferences.cpp:381
-#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2178
+#: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2180
 msgid "Text"
 msgstr "ਪਾਠ"
 
@@ -1906,11 +1906,11 @@ msgid "[Unchanged]"
 msgstr ""
 
 #. Edit
-#: ../src/event-log.cpp:270 ../src/event-log.cpp:273 ../src/verbs.cpp:1966
+#: ../src/event-log.cpp:270 ../src/event-log.cpp:273 ../src/verbs.cpp:1968
 msgid "_Undo"
 msgstr "ਵਾਪਸ(_U)"
 
-#: ../src/event-log.cpp:280 ../src/event-log.cpp:284 ../src/verbs.cpp:1968
+#: ../src/event-log.cpp:280 ../src/event-log.cpp:284 ../src/verbs.cpp:1970
 msgid "_Redo"
 msgstr "ਮੁੜ-ਵਾਪਸ(_R)"
 
@@ -3149,7 +3149,7 @@ msgstr "ਖੁੱਲੀ ਚਾਪ"
 msgid "_Edit"
 msgstr "ਸੋਧ..."
 
-#: ../src/menus-skeleton.h:64 ../src/verbs.cpp:1978
+#: ../src/menus-skeleton.h:64 ../src/verbs.cpp:1980
 #, fuzzy
 msgid "Paste Si_ze"
 msgstr "ਸ਼ੈਲੀ ਚੇਪੋ(_S)"
@@ -3246,7 +3246,7 @@ msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr ""
 
 #. drag curve
-#: ../src/node-context.cpp:624
+#: ../src/node-context.cpp:628
 msgid "Drag curve"
 msgstr ""
 
@@ -3729,19 +3729,19 @@ msgstr "ਭੇਜਣਾ ਰੱਦ ਕੀਤਾ ਗਿਆ ਹੈ।"
 msgid "Selection canceled."
 msgstr "ਚੋਣ ਰੱਦ ਕੀਤੀ ਗਈ ਹੈ।"
 
-#: ../src/select-context.cpp:625
+#: ../src/select-context.cpp:627
 msgid "<b>Ctrl</b>: select in groups, move hor/vert"
 msgstr ""
 
-#: ../src/select-context.cpp:626
+#: ../src/select-context.cpp:628
 msgid "<b>Shift</b>: toggle select, force rubberband, disable snapping"
 msgstr ""
 
-#: ../src/select-context.cpp:627
+#: ../src/select-context.cpp:629
 msgid "<b>Alt</b>: select under, move selected"
 msgstr ""
 
-#: ../src/select-context.cpp:781
+#: ../src/select-context.cpp:783
 msgid "Selected object is not a group. Cannot enter."
 msgstr ""
 
@@ -4085,7 +4085,7 @@ msgstr "<b>ਚੱਕਰ</b>"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2166
+#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2168
 msgid "Ellipse"
 msgstr "ਅੰਡਾਕਾਰ"
 
@@ -4119,7 +4119,7 @@ msgstr "<b>ਬਹੁ-ਰੇਖਾ</b>"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2164
+#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2166
 msgid "Rectangle"
 msgstr "ਚਤੁਰਭੁਜ"
 
@@ -4130,13 +4130,13 @@ msgstr "ਅੰਤਰਲੰਬ :"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2170
+#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2172
 msgid "Spiral"
 msgstr ""
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2168
+#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2170
 msgid "Star"
 msgstr "ਤਾਰਾ"
 
@@ -4409,7 +4409,7 @@ msgstr ""
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>ਚਿੱਤਰ</b> %d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:702
+#: ../src/sp-item-group.cpp:693
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -4608,16 +4608,16 @@ msgstr ""
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
-#: ../src/splivarot.cpp:1483
+#: ../src/splivarot.cpp:1520
 msgid "Select <b>path(s)</b> to simplify."
 msgstr ""
 
-#: ../src/splivarot.cpp:1509
+#: ../src/splivarot.cpp:1534
 #, fuzzy
 msgid "Simplify"
 msgstr "ਸਧਾਰਨ(_m)"
 
-#: ../src/splivarot.cpp:1511
+#: ../src/splivarot.cpp:1536
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr ""
 
@@ -4857,7 +4857,7 @@ msgid "_Create Link"
 msgstr "ਸਬੰਧ ਬਣਾਓ(_C)"
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2032
+#: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2034
 msgid "_Ungroup"
 msgstr "ਗਰੁੱਪ ਖੋਲੋ(_U)"
 
@@ -5110,7 +5110,7 @@ msgstr "ਸਭ ਤੋਂ ਛੋਟੀ ਇਕਾਈ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1819 ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1070
 msgid "Page"
 msgstr "ਸਫ਼ਾ"
 
@@ -5502,27 +5502,27 @@ msgstr "ਭੰਡਾਰ"
 msgid "Parameters"
 msgstr "ਮੀਟਰ"
 
-#: ../src/ui/dialog/filedialog.cpp:455
+#: ../src/ui/dialog/filedialog.cpp:457
 msgid "No preview"
 msgstr "ਕੋਈ ਝਲਕ ਨਹੀਂ"
 
-#: ../src/ui/dialog/filedialog.cpp:556
+#: ../src/ui/dialog/filedialog.cpp:558
 msgid "too large for preview"
 msgstr "ਝਲਕ ਲਈ ਬਹੁਤ ਵੱਡਾ ਹੈ"
 
-#: ../src/ui/dialog/filedialog.cpp:888 ../src/ui/dialog/filedialog.cpp:889
+#: ../src/ui/dialog/filedialog.cpp:890 ../src/ui/dialog/filedialog.cpp:891
 msgid "All Images"
 msgstr "ਸਭ ਚਿੱਤਰ"
 
-#: ../src/ui/dialog/filedialog.cpp:893 ../src/ui/dialog/filedialog.cpp:894
+#: ../src/ui/dialog/filedialog.cpp:895 ../src/ui/dialog/filedialog.cpp:896
 msgid "All Files"
 msgstr "ਸਭ ਫਾਇਲਾਂ"
 
-#: ../src/ui/dialog/filedialog.cpp:900 ../src/ui/dialog/filedialog.cpp:901
+#: ../src/ui/dialog/filedialog.cpp:902 ../src/ui/dialog/filedialog.cpp:903
 msgid "All Inkscape Files"
 msgstr "ਸਭ ਇੰਕਸਕੇਪੀ ਫਾਇਲਾਂ"
 
-#: ../src/ui/dialog/filedialog.cpp:1309 ../src/ui/dialog/filedialog.cpp:1756
+#: ../src/ui/dialog/filedialog.cpp:1311 ../src/ui/dialog/filedialog.cpp:1848
 msgid "Guess from extension"
 msgstr "ਸਹਿਯੋਗ ਲਈ ਪਛਾਣ"
 
@@ -5531,47 +5531,47 @@ msgstr "ਸਹਿਯੋਗ ਲਈ ਪਛਾਣ"
 #. ###### Do we want the .xxx extension automatically added?
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialog.cpp:1360 ../src/ui/dialog/filedialog.cpp:1880
+#: ../src/ui/dialog/filedialog.cpp:1362 ../src/ui/dialog/filedialog.cpp:1976
 msgid "Append filename extension automatically"
 msgstr "ਫਾਇਲ ਨਾਂ ਐਕਸ਼ਟੇਸ਼ਨ ਸਵੈ-ਚਾਲਤ ਹੀ ਜੋੜੋ"
 
-#: ../src/ui/dialog/filedialog.cpp:1776
+#: ../src/ui/dialog/filedialog.cpp:1868
 msgid "Source left bound"
 msgstr ""
 
-#: ../src/ui/dialog/filedialog.cpp:1777
+#: ../src/ui/dialog/filedialog.cpp:1869
 msgid "Source top bound"
 msgstr ""
 
-#: ../src/ui/dialog/filedialog.cpp:1778
+#: ../src/ui/dialog/filedialog.cpp:1870
 msgid "Source right bound"
 msgstr ""
 
-#: ../src/ui/dialog/filedialog.cpp:1779
+#: ../src/ui/dialog/filedialog.cpp:1871
 msgid "Source bottom bound"
 msgstr ""
 
-#: ../src/ui/dialog/filedialog.cpp:1780
+#: ../src/ui/dialog/filedialog.cpp:1872
 #, fuzzy
 msgid "Source width"
 msgstr "ਛੋਹ ਚੌੜਾਈ"
 
-#: ../src/ui/dialog/filedialog.cpp:1781
+#: ../src/ui/dialog/filedialog.cpp:1873
 #, fuzzy
 msgid "Source height"
 msgstr "ਬਰਾਬਰ ਉਚਾਈ"
 
-#: ../src/ui/dialog/filedialog.cpp:1782
+#: ../src/ui/dialog/filedialog.cpp:1874
 #, fuzzy
 msgid "Destination width"
 msgstr "ਛਾਪਣ ਟਿਕਾਣਾ"
 
-#: ../src/ui/dialog/filedialog.cpp:1783
+#: ../src/ui/dialog/filedialog.cpp:1875
 #, fuzzy
 msgid "Destination height"
 msgstr "ਛਾਪਣ ਟਿਕਾਣਾ"
 
-#: ../src/ui/dialog/filedialog.cpp:1784
+#: ../src/ui/dialog/filedialog.cpp:1876
 #, fuzzy
 msgid "Dots per inch resolution"
 msgstr "ਮੂਲ ਨਿਰਯਾਤ ਰੈਜ਼ੋਲੇਸ਼ਨ:"
@@ -5580,25 +5580,29 @@ msgstr "ਮੂਲ ਨਿਰਯਾਤ ਰੈਜ਼ੋਲੇਸ਼ਨ:"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialog.cpp:1815
+#: ../src/ui/dialog/filedialog.cpp:1907
 #, fuzzy
 msgid "Document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
 
-#: ../src/ui/dialog/filedialog.cpp:1863
+#: ../src/ui/dialog/filedialog.cpp:1919 ../src/ui/widget/page-sizer.cpp:167
+msgid "Custom"
+msgstr "ਪਸੰਦੀਦਾ"
+
+#: ../src/ui/dialog/filedialog.cpp:1959
 msgid "Cairo"
 msgstr ""
 
-#: ../src/ui/dialog/filedialog.cpp:1866
+#: ../src/ui/dialog/filedialog.cpp:1962
 msgid "Antialias"
 msgstr ""
 
-#: ../src/ui/dialog/filedialog.cpp:1869
+#: ../src/ui/dialog/filedialog.cpp:1965
 #, fuzzy
 msgid "Background"
 msgstr "ਪਿੱਠਭੂਮੀ:"
 
-#: ../src/ui/dialog/filedialog.cpp:1892
+#: ../src/ui/dialog/filedialog.cpp:1988
 #, fuzzy
 msgid "Destination"
 msgstr "ਛਾਪਣ ਟਿਕਾਣਾ"
@@ -5930,7 +5934,7 @@ msgstr "ਨੋਡ"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
-#: ../src/ui/view/edit-widget.cpp:1062 ../src/verbs.cpp:2182
+#: ../src/ui/view/edit-widget.cpp:1064 ../src/verbs.cpp:2184
 #: ../src/widgets/desktop-widget.cpp:275
 msgid "Zoom"
 msgstr "ਜ਼ੂਮ"
@@ -5941,7 +5945,7 @@ msgid "Shapes"
 msgstr "ਸ਼ਕਲ"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2172
+#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2174
 msgid "Pencil"
 msgstr "ਪਿਨਸਲ"
 
@@ -5956,12 +5960,12 @@ msgid ""
 msgstr ""
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2174
+#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2176
 msgid "Pen"
 msgstr "ਪੈਨ"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2176
+#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2178
 msgid "Calligraphy"
 msgstr "ਕੈਲੀਗਰਾਫ਼"
 
@@ -5978,12 +5982,12 @@ msgid ""
 msgstr ""
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2180
+#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2182
 msgid "Gradient"
 msgstr "ਢਾਲਵਾਂ"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2186
+#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2188
 #, fuzzy
 msgid "Connector"
 msgstr "ਨਿਰਮਾਤਾ"
@@ -5993,7 +5997,7 @@ msgid "If on, connector attachment points will not be shown for text objects"
 msgstr ""
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2184
+#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2186
 msgid "Dropper"
 msgstr "ਚੂਸਕ"
 
@@ -7010,63 +7014,63 @@ msgstr ""
 #: ../src/ui/stock-items.cpp:192 ../src/ui/stock-items.cpp:195
 #: ../src/ui/stock-items.cpp:196 ../src/ui/stock-items.cpp:197
 #: ../src/ui/stock-items.cpp:198 ../src/ui/stock-items.cpp:199
-#: ../src/ui/view/edit-widget.cpp:335 ../src/ui/view/edit-widget.cpp:340
-#: ../src/ui/view/edit-widget.cpp:348 ../src/ui/view/edit-widget.cpp:353
-#: ../src/ui/view/edit-widget.cpp:358 ../src/ui/view/edit-widget.cpp:363
-#: ../src/ui/view/edit-widget.cpp:368 ../src/ui/view/edit-widget.cpp:373
-#: ../src/ui/view/edit-widget.cpp:386 ../src/ui/view/edit-widget.cpp:391
-#: ../src/ui/view/edit-widget.cpp:405 ../src/ui/view/edit-widget.cpp:409
-#: ../src/ui/view/edit-widget.cpp:413 ../src/ui/view/edit-widget.cpp:417
-#: ../src/ui/view/edit-widget.cpp:421 ../src/ui/view/edit-widget.cpp:425
-#: ../src/ui/view/edit-widget.cpp:439 ../src/ui/view/edit-widget.cpp:443
-#: ../src/ui/view/edit-widget.cpp:447 ../src/ui/view/edit-widget.cpp:478
-#: ../src/ui/view/edit-widget.cpp:487 ../src/ui/view/edit-widget.cpp:491
-#: ../src/ui/view/edit-widget.cpp:495 ../src/ui/view/edit-widget.cpp:499
-#: ../src/ui/view/edit-widget.cpp:503 ../src/ui/view/edit-widget.cpp:507
-#: ../src/ui/view/edit-widget.cpp:511 ../src/ui/view/edit-widget.cpp:515
-#: ../src/ui/view/edit-widget.cpp:519 ../src/ui/view/edit-widget.cpp:523
-#: ../src/ui/view/edit-widget.cpp:527 ../src/ui/view/edit-widget.cpp:624
-#: ../src/ui/view/edit-widget.cpp:633 ../src/ui/view/edit-widget.cpp:637
-#: ../src/ui/view/edit-widget.cpp:641 ../src/ui/view/edit-widget.cpp:645
-#: ../src/ui/view/edit-widget.cpp:649 ../src/ui/view/edit-widget.cpp:653
-#: ../src/ui/view/edit-widget.cpp:657 ../src/ui/view/edit-widget.cpp:661
-#: ../src/ui/view/edit-widget.cpp:665 ../src/ui/view/edit-widget.cpp:669
-#: ../src/ui/view/edit-widget.cpp:673 ../src/ui/view/edit-widget.cpp:677
-#: ../src/ui/view/edit-widget.cpp:681 ../src/ui/view/edit-widget.cpp:685
-#: ../src/ui/view/edit-widget.cpp:689 ../src/ui/view/edit-widget.cpp:693
-#: ../src/ui/view/edit-widget.cpp:698 ../src/ui/view/edit-widget.cpp:704
-#: ../src/ui/view/edit-widget.cpp:708 ../src/ui/view/edit-widget.cpp:758
-#: ../src/ui/view/edit-widget.cpp:763 ../src/ui/view/edit-widget.cpp:799
-#: ../src/ui/view/edit-widget.cpp:804 ../src/ui/view/edit-widget.cpp:809
-#: ../src/ui/view/edit-widget.cpp:813 ../src/ui/view/edit-widget.cpp:817
-#: ../src/ui/view/edit-widget.cpp:821 ../src/ui/view/edit-widget.cpp:825
-#: ../src/ui/view/edit-widget.cpp:829 ../src/ui/view/edit-widget.cpp:833
-#: ../src/ui/view/edit-widget.cpp:837 ../src/ui/view/edit-widget.cpp:841
-#: ../src/ui/view/edit-widget.cpp:845 ../src/ui/view/edit-widget.cpp:850
-#: ../src/ui/view/edit-widget.cpp:854 ../src/ui/view/edit-widget.cpp:858
-#: ../src/ui/view/edit-widget.cpp:862 ../src/ui/view/edit-widget.cpp:867
-#: ../src/ui/view/edit-widget.cpp:871 ../src/ui/view/edit-widget.cpp:875
-#: ../src/ui/view/edit-widget.cpp:879 ../src/ui/view/edit-widget.cpp:883
-#: ../src/ui/view/edit-widget.cpp:887 ../src/ui/view/edit-widget.cpp:891
-#: ../src/ui/view/edit-widget.cpp:895 ../src/ui/view/edit-widget.cpp:899
-#: ../src/ui/view/edit-widget.cpp:903 ../src/ui/view/edit-widget.cpp:907
+#: ../src/ui/view/edit-widget.cpp:337 ../src/ui/view/edit-widget.cpp:342
+#: ../src/ui/view/edit-widget.cpp:350 ../src/ui/view/edit-widget.cpp:355
+#: ../src/ui/view/edit-widget.cpp:360 ../src/ui/view/edit-widget.cpp:365
+#: ../src/ui/view/edit-widget.cpp:370 ../src/ui/view/edit-widget.cpp:375
+#: ../src/ui/view/edit-widget.cpp:388 ../src/ui/view/edit-widget.cpp:393
+#: ../src/ui/view/edit-widget.cpp:407 ../src/ui/view/edit-widget.cpp:411
+#: ../src/ui/view/edit-widget.cpp:415 ../src/ui/view/edit-widget.cpp:419
+#: ../src/ui/view/edit-widget.cpp:423 ../src/ui/view/edit-widget.cpp:427
+#: ../src/ui/view/edit-widget.cpp:441 ../src/ui/view/edit-widget.cpp:445
+#: ../src/ui/view/edit-widget.cpp:449 ../src/ui/view/edit-widget.cpp:480
+#: ../src/ui/view/edit-widget.cpp:489 ../src/ui/view/edit-widget.cpp:493
+#: ../src/ui/view/edit-widget.cpp:497 ../src/ui/view/edit-widget.cpp:501
+#: ../src/ui/view/edit-widget.cpp:505 ../src/ui/view/edit-widget.cpp:509
+#: ../src/ui/view/edit-widget.cpp:513 ../src/ui/view/edit-widget.cpp:517
+#: ../src/ui/view/edit-widget.cpp:521 ../src/ui/view/edit-widget.cpp:525
+#: ../src/ui/view/edit-widget.cpp:529 ../src/ui/view/edit-widget.cpp:626
+#: ../src/ui/view/edit-widget.cpp:635 ../src/ui/view/edit-widget.cpp:639
+#: ../src/ui/view/edit-widget.cpp:643 ../src/ui/view/edit-widget.cpp:647
+#: ../src/ui/view/edit-widget.cpp:651 ../src/ui/view/edit-widget.cpp:655
+#: ../src/ui/view/edit-widget.cpp:659 ../src/ui/view/edit-widget.cpp:663
+#: ../src/ui/view/edit-widget.cpp:667 ../src/ui/view/edit-widget.cpp:671
+#: ../src/ui/view/edit-widget.cpp:675 ../src/ui/view/edit-widget.cpp:679
+#: ../src/ui/view/edit-widget.cpp:683 ../src/ui/view/edit-widget.cpp:687
+#: ../src/ui/view/edit-widget.cpp:691 ../src/ui/view/edit-widget.cpp:695
+#: ../src/ui/view/edit-widget.cpp:700 ../src/ui/view/edit-widget.cpp:706
+#: ../src/ui/view/edit-widget.cpp:710 ../src/ui/view/edit-widget.cpp:760
+#: ../src/ui/view/edit-widget.cpp:765 ../src/ui/view/edit-widget.cpp:801
+#: ../src/ui/view/edit-widget.cpp:806 ../src/ui/view/edit-widget.cpp:811
+#: ../src/ui/view/edit-widget.cpp:815 ../src/ui/view/edit-widget.cpp:819
+#: ../src/ui/view/edit-widget.cpp:823 ../src/ui/view/edit-widget.cpp:827
+#: ../src/ui/view/edit-widget.cpp:831 ../src/ui/view/edit-widget.cpp:835
+#: ../src/ui/view/edit-widget.cpp:839 ../src/ui/view/edit-widget.cpp:843
+#: ../src/ui/view/edit-widget.cpp:847 ../src/ui/view/edit-widget.cpp:852
+#: ../src/ui/view/edit-widget.cpp:856 ../src/ui/view/edit-widget.cpp:860
+#: ../src/ui/view/edit-widget.cpp:864 ../src/ui/view/edit-widget.cpp:869
+#: ../src/ui/view/edit-widget.cpp:873 ../src/ui/view/edit-widget.cpp:877
+#: ../src/ui/view/edit-widget.cpp:881 ../src/ui/view/edit-widget.cpp:885
+#: ../src/ui/view/edit-widget.cpp:889 ../src/ui/view/edit-widget.cpp:893
+#: ../src/ui/view/edit-widget.cpp:897 ../src/ui/view/edit-widget.cpp:901
+#: ../src/ui/view/edit-widget.cpp:905 ../src/ui/view/edit-widget.cpp:909
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:992
+#: ../src/ui/view/edit-widget.cpp:994
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1051 ../src/widgets/desktop-widget.cpp:241
+#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:241
 msgid "Zoom drawing if window size changes"
 msgstr "ਜੇਕਰ ਝਰੋਖੇ ਦਾ ਅਕਾਰ ਬਦਲ ਤਾਂ ਡਰਾਇੰਗ ਜ਼ੂਮ"
 
-#: ../src/ui/view/edit-widget.cpp:1072 ../src/widgets/desktop-widget.cpp:295
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:295
 msgid "Cursor coordinates"
 msgstr "ਕਰਸਰ ਧੁਰੇ"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1089 ../src/widgets/desktop-widget.cpp:327
+#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:327
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7074,7 +7078,7 @@ msgstr ""
 "<b>ਇੰਕਸਕੇਪੀ ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ!</b> ਇਕਾਈਆਂ ਬਣਾਉਣ ਲਈ ਸ਼ਕਲ ਜਾਂ ਹੱਥਲੀ ਸੰਦ ਦੀ ਵਰਤੋਂ; ਏਧਰ ਓਧਰ ਕਰਨ "
 "ਜਾਂ ਤਬਦੀਲ ਕਰਨ ਲਈ ਤੀਰ ਵਰਤੋਂ।"
 
-#: ../src/ui/view/edit-widget.cpp:1191 ../src/widgets/desktop-widget.cpp:533
+#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:533
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7083,12 +7087,12 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1202 ../src/ui/view/edit-widget.cpp:1249
+#: ../src/ui/view/edit-widget.cpp:1204 ../src/ui/view/edit-widget.cpp:1251
 #: ../src/widgets/desktop-widget.cpp:549 ../src/widgets/desktop-widget.cpp:613
 msgid "Close _without saving"
 msgstr "ਬਿਨਾਂ ਸੰਭਾਲੇ ਬੰਦ(_w)"
 
-#: ../src/ui/view/edit-widget.cpp:1237 ../src/widgets/desktop-widget.cpp:596
+#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:596
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -7384,10 +7388,6 @@ msgstr ""
 msgid "1.0 (opaque)"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:167
-msgid "Custom"
-msgstr "ਪਸੰਦੀਦਾ"
-
 #: ../src/ui/widget/page-sizer.cpp:198
 msgid "P_age size:"
 msgstr ""
@@ -7546,1420 +7546,1420 @@ msgstr "ਲੰਬਕਾਰੀ ਝਟਕੋ(_V):"
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
 #. otherwise leave as "keys.svg".
-#: ../src/verbs.cpp:1639
+#: ../src/verbs.cpp:1641
 msgid "keys.svg"
 msgstr "keys.svg"
 
 #. TRANSLATORS: If you have translated the tutorial-basic.svg file to your language,
 #. then translate this string as "tutorial-basic.LANG.svg" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:1675
+#: ../src/verbs.cpp:1677
 msgid "tutorial-basic.svg"
 msgstr "tutorial-basic.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1679
+#: ../src/verbs.cpp:1681
 msgid "tutorial-shapes.svg"
 msgstr "tutorial-shapes.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1683
+#: ../src/verbs.cpp:1685
 msgid "tutorial-advanced.svg"
 msgstr "tutorial-advanced.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1687
+#: ../src/verbs.cpp:1689
 msgid "tutorial-tracing.svg"
 msgstr "tutorial-tracing.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1691
+#: ../src/verbs.cpp:1693
 msgid "tutorial-calligraphy.svg"
 msgstr "tutorial-calligraphy.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1695
+#: ../src/verbs.cpp:1697
 msgid "tutorial-elements.svg"
 msgstr "tutorial-elements.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:1699
+#: ../src/verbs.cpp:1701
 msgid "tutorial-tips.svg"
 msgstr "tutorial-tips.svg"
 
-#: ../src/verbs.cpp:1931
+#: ../src/verbs.cpp:1933
 msgid "Does nothing"
 msgstr "ਕੁਝ ਨਾ ਕਰੋ"
 
 #. File
-#: ../src/verbs.cpp:1934
+#: ../src/verbs.cpp:1936
 msgid "Default"
 msgstr "ਮੂਲ"
 
-#: ../src/verbs.cpp:1934
+#: ../src/verbs.cpp:1936
 #, fuzzy
 msgid "Create new document from the default template"
 msgstr "ਮੂਲ ਨਮੂਨੇ ਤੋਂ ਨਵਾਂ ਦਸਤਾਵੇਜ਼ ਬਣਾਓ"
 
-#: ../src/verbs.cpp:1936
+#: ../src/verbs.cpp:1938
 msgid "_Open..."
 msgstr "ਖੋਲੋ(_O)..."
 
-#: ../src/verbs.cpp:1937
+#: ../src/verbs.cpp:1939
 #, fuzzy
 msgid "Open an existing document"
 msgstr "ਮੌਜੂਦਾ ਦਸਤਾਵੇਜ਼ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:1938
+#: ../src/verbs.cpp:1940
 msgid "Re_vert"
 msgstr "ਮੁੜ-ਪਰਾਪਤ(_v)"
 
-#: ../src/verbs.cpp:1939
+#: ../src/verbs.cpp:1941
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr ""
 
-#: ../src/verbs.cpp:1940
+#: ../src/verbs.cpp:1942
 msgid "_Save"
 msgstr "ਸੰਭਾਲੋ(_S)"
 
-#: ../src/verbs.cpp:1940
+#: ../src/verbs.cpp:1942
 msgid "Save document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਸੰਭਾਲੋ"
 
-#: ../src/verbs.cpp:1942
+#: ../src/verbs.cpp:1944
 msgid "Save _As..."
 msgstr "ਇੰਞ ਸੰਭਾਲੋ(_A)..."
 
-#: ../src/verbs.cpp:1943
+#: ../src/verbs.cpp:1945
 #, fuzzy
 msgid "Save document under a new name"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਨਵੇਂ ਨਾਂ ਹੇਠ ਸੰਭਾਲੋ"
 
-#: ../src/verbs.cpp:1944
+#: ../src/verbs.cpp:1946
 msgid "_Print..."
 msgstr "ਛਾਪੋ(_P)..."
 
-#: ../src/verbs.cpp:1944
+#: ../src/verbs.cpp:1946
 msgid "Print document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਛਾਪੋ"
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:1947
+#: ../src/verbs.cpp:1949
 msgid "Vac_uum Defs"
 msgstr ""
 
-#: ../src/verbs.cpp:1947
+#: ../src/verbs.cpp:1949
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:1949
+#: ../src/verbs.cpp:1951
 msgid "Print _Direct"
 msgstr "ਸਿੱਧਾ ਛਾਪੋ(_D)"
 
-#: ../src/verbs.cpp:1950
+#: ../src/verbs.cpp:1952
 #, fuzzy
 msgid "Print directly without prompting to a file or pipe"
 msgstr "ਫਾਇਲ ਜਾਂ ਪਾਈਪ ਵਿੱਚ ਸਿੱਧਾ ਛਾਪੋ"
 
-#: ../src/verbs.cpp:1951
+#: ../src/verbs.cpp:1953
 msgid "Print Previe_w"
 msgstr "ਛਾਪਾਈ ਝਲਕ(_w)"
 
-#: ../src/verbs.cpp:1952
+#: ../src/verbs.cpp:1954
 msgid "Preview document printout"
 msgstr "ਦਸਤਾਵੇਜ਼ ਛਪਾਈ ਦੀ ਝਲਕ"
 
-#: ../src/verbs.cpp:1953
+#: ../src/verbs.cpp:1955
 msgid "_Import..."
 msgstr "ਅਯਾਤ(_I)..."
 
-#: ../src/verbs.cpp:1954
+#: ../src/verbs.cpp:1956
 #, fuzzy
 msgid "Import a bitmap or SVG image into this document"
 msgstr "ਬਿੱਟਮੈਪ ਜਾਂ SVG ਚਿੱਤਰ ਨੂੰ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਅਯਾਤ"
 
-#: ../src/verbs.cpp:1955
+#: ../src/verbs.cpp:1957
 msgid "_Export Bitmap..."
 msgstr "ਬਿੱਟਮੈਪ ਨਿਰਯਾਤ(_E)..."
 
-#: ../src/verbs.cpp:1956
+#: ../src/verbs.cpp:1958
 #, fuzzy
 msgid "Export this document or a selection as a bitmap image"
 msgstr "ਦਸਤਾਵੇਜ਼ ਜਾਂ ਚੋਣ ਨੂੰ PNG ਬਿੱਟਮੈਪ ਦੇ ਤੌਰ 'ਤੇ ਨਿਰਯਾਤ"
 
-#: ../src/verbs.cpp:1957
+#: ../src/verbs.cpp:1959
 msgid "N_ext Window"
 msgstr "ਨਵਾਂ ਝਰੋਖਾ(_e)"
 
-#: ../src/verbs.cpp:1958
+#: ../src/verbs.cpp:1960
 msgid "Switch to the next document window"
 msgstr "ਨਵੇਂ ਦਸਤਾਵੇਜ਼ ਝਰੋਖੇ ਲਈ ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:1959
+#: ../src/verbs.cpp:1961
 msgid "P_revious Window"
 msgstr "ਪਿਛਲਾ ਝਰੋਖਾ(_r)"
 
-#: ../src/verbs.cpp:1960
+#: ../src/verbs.cpp:1962
 msgid "Switch to the previous document window"
 msgstr ""
 
-#: ../src/verbs.cpp:1961
+#: ../src/verbs.cpp:1963
 msgid "_Close"
 msgstr "ਬੰਦ(_C)"
 
-#: ../src/verbs.cpp:1962
+#: ../src/verbs.cpp:1964
 #, fuzzy
 msgid "Close this document window"
 msgstr "ਨਵੇਂ ਦਸਤਾਵੇਜ਼ ਝਰੋਖੇ ਲਈ ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:1965
 msgid "_Quit"
 msgstr "ਬਾਹਰ(_Q)"
 
-#: ../src/verbs.cpp:1963
+#: ../src/verbs.cpp:1965
 msgid "Quit Inkscape"
 msgstr "ਇੰਕਸਕੇਪੀ ਬੰਦ ਕਰੋ"
 
-#: ../src/verbs.cpp:1966
+#: ../src/verbs.cpp:1968
 msgid "Undo last action"
 msgstr "ਆਖਰੀ ਕਾਰਵਾਈ ਕਰੋ"
 
-#: ../src/verbs.cpp:1969
+#: ../src/verbs.cpp:1971
 #, fuzzy
 msgid "Do again the last undone action"
 msgstr "ਆਖਰੀ ਵਾਪਸ ਲਈ ਕਾਰਵਾਈ ਮੁੜ ਕਰੋ"
 
-#: ../src/verbs.cpp:1970
+#: ../src/verbs.cpp:1972
 msgid "Cu_t"
 msgstr "ਕੱਟੋ(_t)"
 
-#: ../src/verbs.cpp:1971
+#: ../src/verbs.cpp:1973
 msgid "Cut selection to clipboard"
 msgstr "ਚੋਣ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕੱਟੋ"
 
-#: ../src/verbs.cpp:1972
+#: ../src/verbs.cpp:1974
 msgid "_Copy"
 msgstr "ਨਕਲ(_C)"
 
-#: ../src/verbs.cpp:1973
+#: ../src/verbs.cpp:1975
 msgid "Copy selection to clipboard"
 msgstr "ਚੋਣ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਨਕਲ"
 
-#: ../src/verbs.cpp:1974
+#: ../src/verbs.cpp:1976
 msgid "_Paste"
 msgstr "ਚੇਪੋ(_P)"
 
-#: ../src/verbs.cpp:1975
+#: ../src/verbs.cpp:1977
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr ""
 
-#: ../src/verbs.cpp:1976
+#: ../src/verbs.cpp:1978
 msgid "Paste _Style"
 msgstr "ਸ਼ੈਲੀ ਚੇਪੋ(_S)"
 
-#: ../src/verbs.cpp:1977
+#: ../src/verbs.cpp:1979
 #, fuzzy
 msgid "Apply the style of the copied object to selection"
 msgstr "ਇਕਾਈ ਲਈ ਤਬਦੀਲੀ ਲਾਗੂ"
 
-#: ../src/verbs.cpp:1979
-msgid "Scale selection to match the size of the copied object"
-msgstr ""
-
-#: ../src/verbs.cpp:1980
-#, fuzzy
-msgid "Paste _Width"
-msgstr "ਸਫ਼ਾ ਚੌੜਾਈ(_W)"
-
 #: ../src/verbs.cpp:1981
-msgid "Scale selection horizontally to match the width of the copied object"
+msgid "Scale selection to match the size of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:1982
 #, fuzzy
-msgid "Paste _Height"
-msgstr "ਉਚਾਈ"
+msgid "Paste _Width"
+msgstr "ਸਫ਼ਾ ਚੌੜਾਈ(_W)"
 
 #: ../src/verbs.cpp:1983
-msgid "Scale selection vertically to match the height of the copied object"
+msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:1984
-msgid "Paste Size Separately"
-msgstr ""
+#, fuzzy
+msgid "Paste _Height"
+msgstr "ਉਚਾਈ"
 
 #: ../src/verbs.cpp:1985
-msgid "Scale each selected object to match the size of the copied object"
+msgid "Scale selection vertically to match the height of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:1986
-msgid "Paste Width Separately"
+msgid "Paste Size Separately"
 msgstr ""
 
 #: ../src/verbs.cpp:1987
+msgid "Scale each selected object to match the size of the copied object"
+msgstr ""
+
+#: ../src/verbs.cpp:1988
+msgid "Paste Width Separately"
+msgstr ""
+
+#: ../src/verbs.cpp:1989
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:1988
+#: ../src/verbs.cpp:1990
 msgid "Paste Height Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:1989
+#: ../src/verbs.cpp:1991
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:1990
+#: ../src/verbs.cpp:1992
 msgid "Paste _In Place"
 msgstr "ਥਾਂ ਵਿੱਚ ਚੇਪੋ(_I)"
 
-#: ../src/verbs.cpp:1991
+#: ../src/verbs.cpp:1993
 msgid "Paste objects from clipboard to the original location"
 msgstr ""
 
-#: ../src/verbs.cpp:1992
+#: ../src/verbs.cpp:1994
 msgid "_Delete"
 msgstr "ਹਟਾਓ(_D)"
 
-#: ../src/verbs.cpp:1993
+#: ../src/verbs.cpp:1995
 msgid "Delete selection"
 msgstr "ਚੋਣ ਹਟਾਓ"
 
-#: ../src/verbs.cpp:1994
+#: ../src/verbs.cpp:1996
 msgid "Duplic_ate"
 msgstr "ਦੁਹਰਾ(_a)"
 
-#: ../src/verbs.cpp:1995
+#: ../src/verbs.cpp:1997
 #, fuzzy
 msgid "Duplicate selected objects"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਦੋਹਰੀਆਂ"
 
-#: ../src/verbs.cpp:1996
+#: ../src/verbs.cpp:1998
 #, fuzzy
 msgid "Create Clo_ne"
 msgstr "ਕੇਂਦਰੀ ਰੇਖਾਵਾਂ"
 
-#: ../src/verbs.cpp:1997
+#: ../src/verbs.cpp:1999
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr ""
 
-#: ../src/verbs.cpp:1998
+#: ../src/verbs.cpp:2000
 msgid "Unlin_k Clone"
 msgstr ""
 
-#: ../src/verbs.cpp:1999
+#: ../src/verbs.cpp:2001
 msgid ""
 "Cut the selected clone's link to its original, turning it into a standalone "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:2000
+#: ../src/verbs.cpp:2002
 msgid "Select _Original"
 msgstr "ਅਸਲੀ ਚੁਣੋ(_O)"
 
-#: ../src/verbs.cpp:2001
+#: ../src/verbs.cpp:2003
 msgid "Select the object to which the selected clone is linked"
 msgstr ""
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
-#: ../src/verbs.cpp:2003
+#: ../src/verbs.cpp:2005
 #, fuzzy
 msgid "Objects to Patter_n"
 msgstr "ਤਰਤੀਬ ਲਈ ਇਕਾਈਆਂ(_b)"
 
-#: ../src/verbs.cpp:2004
+#: ../src/verbs.cpp:2006
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr ""
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
-#: ../src/verbs.cpp:2006
+#: ../src/verbs.cpp:2008
 #, fuzzy
 msgid "Pattern to _Objects"
 msgstr "ਇਕਾਈਆਂ ਲਈ ਤਰਤੀਬ(_j)"
 
-#: ../src/verbs.cpp:2007
+#: ../src/verbs.cpp:2009
 msgid "Extract objects from a tiled pattern fill"
 msgstr ""
 
-#: ../src/verbs.cpp:2008
+#: ../src/verbs.cpp:2010
 msgid "Clea_r All"
 msgstr "ਸਭ ਸਾਫ਼(_r)"
 
-#: ../src/verbs.cpp:2009
+#: ../src/verbs.cpp:2011
 msgid "Delete all objects from document"
 msgstr "ਦਸਤਾਵੇਜ਼ਾਂ ਤੋਂ ਸਭ ਇਕਾਈਆਂ ਹਟਾਓ"
 
-#: ../src/verbs.cpp:2010
+#: ../src/verbs.cpp:2012
 msgid "Select Al_l"
 msgstr "ਸਭ ਚੁਣੋ(_L)"
 
-#: ../src/verbs.cpp:2011
+#: ../src/verbs.cpp:2013
 msgid "Select all objects or all nodes"
 msgstr "ਸਭ ਇਕਾਈਆਂ ਜਾਂ ਸਭ ਨੋਡ ਚੁਣੋ"
 
-#: ../src/verbs.cpp:2012
+#: ../src/verbs.cpp:2014
 msgid "Select All in All La_yers"
 msgstr "ਸਭ ਪਰਤਾਂ ਵਿੱਚ ਸਭ ਚੁਣੋ(_y)"
 
-#: ../src/verbs.cpp:2013
+#: ../src/verbs.cpp:2015
 msgid "Select all objects in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2014
+#: ../src/verbs.cpp:2016
 msgid "In_vert Selection"
 msgstr "ਉਲਟ ਚੋਣ(_v)"
 
-#: ../src/verbs.cpp:2015
+#: ../src/verbs.cpp:2017
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr ""
 
-#: ../src/verbs.cpp:2016
+#: ../src/verbs.cpp:2018
 msgid "Invert in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2017
+#: ../src/verbs.cpp:2019
 msgid "Invert selection in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2018
+#: ../src/verbs.cpp:2020
 msgid "D_eselect"
 msgstr "ਅਣ-ਚੁਣਿਆ(_e)"
 
-#: ../src/verbs.cpp:2019
+#: ../src/verbs.cpp:2021
 msgid "Deselect any selected objects or nodes"
 msgstr ""
 
 #. Selection
-#: ../src/verbs.cpp:2022
+#: ../src/verbs.cpp:2024
 msgid "Raise to _Top"
 msgstr ""
 
-#: ../src/verbs.cpp:2023
+#: ../src/verbs.cpp:2025
 msgid "Raise selection to top"
 msgstr ""
 
-#: ../src/verbs.cpp:2024
+#: ../src/verbs.cpp:2026
 msgid "Lower to _Bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2025
+#: ../src/verbs.cpp:2027
 msgid "Lower selection to bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2026
+#: ../src/verbs.cpp:2028
 msgid "_Raise"
 msgstr "ਉਭਾਰੋ(_R)"
 
-#: ../src/verbs.cpp:2027
+#: ../src/verbs.cpp:2029
 msgid "Raise selection one step"
 msgstr ""
 
-#: ../src/verbs.cpp:2028
+#: ../src/verbs.cpp:2030
 msgid "_Lower"
 msgstr "ਹੇਠ(_L)"
 
-#: ../src/verbs.cpp:2029
+#: ../src/verbs.cpp:2031
 msgid "Lower selection one step"
 msgstr ""
 
-#: ../src/verbs.cpp:2030
+#: ../src/verbs.cpp:2032
 msgid "_Group"
 msgstr "ਗਰੁੱਪ(_G)"
 
-#: ../src/verbs.cpp:2031
+#: ../src/verbs.cpp:2033
 msgid "Group selected objects"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈ ਗਰੁੱਪ ਵਿੱਚ"
 
-#: ../src/verbs.cpp:2033
+#: ../src/verbs.cpp:2035
 #, fuzzy
 msgid "Ungroup selected groups"
 msgstr "ਚੁਣੇ ਗਰੁੱਪ ਖਿਲਾਰੋ"
 
-#: ../src/verbs.cpp:2035
+#: ../src/verbs.cpp:2037
 msgid "_Put on Path"
 msgstr "ਮਾਰਗ ਉੱਤੇ ਦਿਓ(_P)"
 
-#: ../src/verbs.cpp:2036
+#: ../src/verbs.cpp:2038
 msgid "Put text on path"
 msgstr "ਮਾਰਗ ਉੱਤੇ ਪਾਠ ਦਿਓ"
 
-#: ../src/verbs.cpp:2037
+#: ../src/verbs.cpp:2039
 msgid "_Remove from Path"
 msgstr "ਮਾਰਗ ਤੋਂ ਹਟਾਓ(_R)"
 
-#: ../src/verbs.cpp:2038
+#: ../src/verbs.cpp:2040
 msgid "Remove text from path"
 msgstr "ਮਾਰਗ ਤੋਂ ਪਾਠ ਹਟਾਓ"
 
-#: ../src/verbs.cpp:2039
+#: ../src/verbs.cpp:2041
 msgid "Remove Manual _Kerns"
 msgstr ""
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2042
+#: ../src/verbs.cpp:2044
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr ""
 
-#: ../src/verbs.cpp:2044
+#: ../src/verbs.cpp:2046
 msgid "_Union"
 msgstr "ਸਾਂਝ(_U)"
 
-#: ../src/verbs.cpp:2045
+#: ../src/verbs.cpp:2047
 #, fuzzy
 msgid "Create union of selected paths"
 msgstr "ਚੁਣੇ ਮਾਰਗ ਵਿੱਚ ਜੋੜਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/verbs.cpp:2046
+#: ../src/verbs.cpp:2048
 msgid "_Intersection"
 msgstr "ਕਾਟ(_I)"
 
-#: ../src/verbs.cpp:2047
+#: ../src/verbs.cpp:2049
 #, fuzzy
 msgid "Create intersection of selected paths"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਦੀ ਕਾਟ"
 
-#: ../src/verbs.cpp:2048
+#: ../src/verbs.cpp:2050
 msgid "_Difference"
 msgstr "ਅੰਤਰ(_D)"
 
-#: ../src/verbs.cpp:2049
+#: ../src/verbs.cpp:2051
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr ""
 
-#: ../src/verbs.cpp:2050
+#: ../src/verbs.cpp:2052
 msgid "E_xclusion"
 msgstr ""
 
-#: ../src/verbs.cpp:2051
+#: ../src/verbs.cpp:2053
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2052
+#: ../src/verbs.cpp:2054
 msgid "Di_vision"
 msgstr "ਵੰਡ(_v)"
 
-#: ../src/verbs.cpp:2053
+#: ../src/verbs.cpp:2055
 msgid "Cut the bottom path into pieces"
 msgstr ""
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2056
+#: ../src/verbs.cpp:2058
 msgid "Cut _Path"
 msgstr "ਮਾਰਗ ਕੱਟੋ(_P)"
 
-#: ../src/verbs.cpp:2057
+#: ../src/verbs.cpp:2059
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr ""
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2061
+#: ../src/verbs.cpp:2063
 msgid "Outs_et"
 msgstr ""
 
-#: ../src/verbs.cpp:2062
+#: ../src/verbs.cpp:2064
 #, fuzzy
 msgid "Outset selected paths"
 msgstr "ਚੁਣੇ ਮਾਰਗ ਵਿੱਚ ਜੋੜਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/verbs.cpp:2064
+#: ../src/verbs.cpp:2066
 msgid "O_utset Path by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2065
+#: ../src/verbs.cpp:2067
 msgid "Outset selected paths by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2067
+#: ../src/verbs.cpp:2069
 msgid "O_utset Path by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2068
+#: ../src/verbs.cpp:2070
 msgid "Outset selected paths by 10 px"
 msgstr ""
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2072
+#: ../src/verbs.cpp:2074
 msgid "I_nset"
 msgstr ""
 
-#: ../src/verbs.cpp:2073
+#: ../src/verbs.cpp:2075
 #, fuzzy
 msgid "Inset selected paths"
 msgstr "ਚੁਣੇ ਮਾਰਗ ਵਿੱਚ ਜੋੜਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/verbs.cpp:2075
+#: ../src/verbs.cpp:2077
 msgid "I_nset Path by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2076
+#: ../src/verbs.cpp:2078
 msgid "Inset selected paths by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2078
+#: ../src/verbs.cpp:2080
 msgid "I_nset Path by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2079
+#: ../src/verbs.cpp:2081
 msgid "Inset selected paths by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2081
+#: ../src/verbs.cpp:2083
 msgid "D_ynamic Offset"
 msgstr "ਸਫ਼ਰੀ ਅੰਤਰਲੰਬ(_y)"
 
-#: ../src/verbs.cpp:2081
+#: ../src/verbs.cpp:2083
 msgid "Create a dynamic offset object"
 msgstr ""
 
-#: ../src/verbs.cpp:2083
+#: ../src/verbs.cpp:2085
 msgid "_Linked Offset"
 msgstr "ਸਬੰਧਤ ਅੰਤਰਲੰਬ(_L)"
 
-#: ../src/verbs.cpp:2084
+#: ../src/verbs.cpp:2086
 msgid "Create a dynamic offset object linked to the original path"
 msgstr ""
 
-#: ../src/verbs.cpp:2086
+#: ../src/verbs.cpp:2088
 msgid "_Stroke to Path"
 msgstr "ਮਾਰਗ ਲਈ ਛੋਹ(_S)"
 
-#: ../src/verbs.cpp:2087
+#: ../src/verbs.cpp:2089
 #, fuzzy
 msgid "Convert selected object's stroke to paths"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਨੂੰ ਮਾਰਗ ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:2088
+#: ../src/verbs.cpp:2090
 msgid "Si_mplify"
 msgstr "ਸਧਾਰਨ(_m)"
 
-#: ../src/verbs.cpp:2089
+#: ../src/verbs.cpp:2091
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr ""
 
-#: ../src/verbs.cpp:2090
+#: ../src/verbs.cpp:2092
 msgid "_Reverse"
 msgstr "ਉਲਟ(_R)"
 
-#: ../src/verbs.cpp:2091
+#: ../src/verbs.cpp:2093
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr ""
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2093
+#: ../src/verbs.cpp:2095
 #, fuzzy
 msgid "_Trace Bitmap..."
 msgstr "ਬਿੱਟਮੈਪ ਨਿਰਯਾਤ(_E)..."
 
-#: ../src/verbs.cpp:2094
+#: ../src/verbs.cpp:2096
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr ""
 
-#: ../src/verbs.cpp:2095
+#: ../src/verbs.cpp:2097
 msgid "_Make a Bitmap Copy"
 msgstr ""
 
-#: ../src/verbs.cpp:2096
+#: ../src/verbs.cpp:2098
 msgid "Export selection to a bitmap and insert it into document"
 msgstr ""
 
-#: ../src/verbs.cpp:2097
+#: ../src/verbs.cpp:2099
 msgid "_Combine"
 msgstr "ਜੋੜੋ(_C)"
 
-#: ../src/verbs.cpp:2098
+#: ../src/verbs.cpp:2100
 msgid "Combine several paths into one"
 msgstr ""
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2101
+#: ../src/verbs.cpp:2103
 msgid "Break _Apart"
 msgstr ""
 
-#: ../src/verbs.cpp:2102
+#: ../src/verbs.cpp:2104
 #, fuzzy
 msgid "Break selected paths into subpaths"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਨੂੰ ਮਾਰਗ ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:2103
+#: ../src/verbs.cpp:2105
 msgid "Gri_d Arrange..."
 msgstr ""
 
-#: ../src/verbs.cpp:2104
+#: ../src/verbs.cpp:2106
 #, fuzzy
 msgid "Arrange selected objects in a grid pattern"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈ ਗਰੁੱਪ ਵਿੱਚ"
 
 #. Layer
-#: ../src/verbs.cpp:2106
+#: ../src/verbs.cpp:2108
 msgid "_Add Layer..."
 msgstr "ਪਰਤ ਸ਼ਾਮਲ(_A)..."
 
-#: ../src/verbs.cpp:2107
+#: ../src/verbs.cpp:2109
 msgid "Create a new layer"
 msgstr "ਇੱਕ ਨਵੀਂ ਪਰਤ ਬਣਾਓ"
 
-#: ../src/verbs.cpp:2108
+#: ../src/verbs.cpp:2110
 msgid "Re_name Layer..."
 msgstr "ਪਰਤ ਨਾਂ-ਤਬਦੀਲ(_n)..."
 
-#: ../src/verbs.cpp:2109
+#: ../src/verbs.cpp:2111
 msgid "Rename the current layer"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਦਾ ਨਾਂ-ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:2110
+#: ../src/verbs.cpp:2112
 msgid "Switch to Layer Abov_e"
 msgstr "ਪਰਤ ਨੂੰ ਮੌਜੂਦਾ ਤੋਂ ਉੱਤੇ(_e)"
 
-#: ../src/verbs.cpp:2111
+#: ../src/verbs.cpp:2113
 msgid "Switch to the layer above the current"
 msgstr "ਪਰਤ ਨੂੰ ਮੌਜੂਦਾ ਦੇ ਉੱਪਰ ਭੇਜੋ"
 
-#: ../src/verbs.cpp:2112
+#: ../src/verbs.cpp:2114
 msgid "Switch to Layer Belo_w"
 msgstr "ਪਰਤ ਨੂੰ ਮੌਜੂਦਾ ਦੇ ਹੇਠਾਂ ਕਰੋ(_w)"
 
-#: ../src/verbs.cpp:2113
+#: ../src/verbs.cpp:2115
 msgid "Switch to the layer below the current"
 msgstr "ਪਰਤ ਨੂੰ ਮੌਜੂਦਾ ਦੇ ਹੇਠ"
 
-#: ../src/verbs.cpp:2114
+#: ../src/verbs.cpp:2116
 msgid "Move Selection to Layer Abo_ve"
 msgstr ""
 
-#: ../src/verbs.cpp:2115
+#: ../src/verbs.cpp:2117
 msgid "Move selection to the layer above the current"
 msgstr ""
 
-#: ../src/verbs.cpp:2116
+#: ../src/verbs.cpp:2118
 msgid "Move Selection to Layer Bel_ow"
 msgstr ""
 
-#: ../src/verbs.cpp:2117
+#: ../src/verbs.cpp:2119
 msgid "Move selection to the layer below the current"
 msgstr ""
 
-#: ../src/verbs.cpp:2118
+#: ../src/verbs.cpp:2120
 msgid "Layer to _Top"
 msgstr "ਪਰਤ ਉੱਤੇ(_T)"
 
-#: ../src/verbs.cpp:2119
+#: ../src/verbs.cpp:2121
 msgid "Raise the current layer to the top"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਨੂੰ ਉੱਤੇ ਭੇਜੋ"
 
-#: ../src/verbs.cpp:2120
+#: ../src/verbs.cpp:2122
 msgid "Layer to _Bottom"
 msgstr "ਪਰਤ ਤਲ ਉੱਤੇ(_B)"
 
-#: ../src/verbs.cpp:2121
+#: ../src/verbs.cpp:2123
 msgid "Lower the current layer to the bottom"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਨੂੰ ਤਲ ਉੱਤੇ ਭੇਜੋ"
 
-#: ../src/verbs.cpp:2122
+#: ../src/verbs.cpp:2124
 msgid "_Raise Layer"
 msgstr "ਪਰਤ ਉਭਾਰੋ(_R)"
 
-#: ../src/verbs.cpp:2123
+#: ../src/verbs.cpp:2125
 msgid "Raise the current layer"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਉਭਾਰੋ"
 
-#: ../src/verbs.cpp:2124
+#: ../src/verbs.cpp:2126
 msgid "_Lower Layer"
 msgstr "ਪਰਤ ਹੇਠਾਂ(_L)"
 
-#: ../src/verbs.cpp:2125
+#: ../src/verbs.cpp:2127
 msgid "Lower the current layer"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਹੇਠਾਂ"
 
-#: ../src/verbs.cpp:2126
+#: ../src/verbs.cpp:2128
 msgid "_Delete Current Layer"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਹਟਾਓ(_D)"
 
-#: ../src/verbs.cpp:2127
+#: ../src/verbs.cpp:2129
 msgid "Delete the current layer"
 msgstr "ਮੌਜੂਦਾ ਪਰਤ ਹਟਾਓ"
 
 #. Object
-#: ../src/verbs.cpp:2130
+#: ../src/verbs.cpp:2132
 msgid "Rotate _90&#176; CW"
 msgstr ""
 
-#: ../src/verbs.cpp:2131
+#: ../src/verbs.cpp:2133
 msgid "Rotate selection 90&#176; clockwise"
 msgstr ""
 
-#: ../src/verbs.cpp:2132
+#: ../src/verbs.cpp:2134
 msgid "Rotate 9_0&#176; CCW"
 msgstr ""
 
-#: ../src/verbs.cpp:2133
+#: ../src/verbs.cpp:2135
 msgid "Rotate selection 90&#176; counter-clockwise"
 msgstr ""
 
-#: ../src/verbs.cpp:2134
+#: ../src/verbs.cpp:2136
 msgid "Remove _Transformations"
 msgstr "ਤਬਦੀਲੀਆਂ ਹਟਾਓ(_T)"
 
-#: ../src/verbs.cpp:2135
+#: ../src/verbs.cpp:2137
 msgid "Remove transformations from object"
 msgstr "ਇਕਾਈਆਂ ਤੋਂ ਤਬਦੀਲੀਆਂ ਹਟਾਓ"
 
-#: ../src/verbs.cpp:2136
+#: ../src/verbs.cpp:2138
 msgid "_Object to Path"
 msgstr "ਇਕਾਈ ਤੋਂ ਮਾਰਗ(_O)"
 
-#: ../src/verbs.cpp:2137
+#: ../src/verbs.cpp:2139
 #, fuzzy
 msgid "Convert selected object to path"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈਆਂ ਨੂੰ ਮਾਰਗ ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:2138
+#: ../src/verbs.cpp:2140
 msgid "_Flow into Frame"
 msgstr "ਫਰੇਮ ਵਿੱਚ ਵਹਾ(_F)"
 
-#: ../src/verbs.cpp:2139
+#: ../src/verbs.cpp:2141
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
 msgstr ""
 
-#: ../src/verbs.cpp:2140
+#: ../src/verbs.cpp:2142
 msgid "_Unflow"
 msgstr ""
 
-#: ../src/verbs.cpp:2141
+#: ../src/verbs.cpp:2143
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr ""
 
-#: ../src/verbs.cpp:2142
+#: ../src/verbs.cpp:2144
 msgid "_Convert to Text"
 msgstr "ਪਾਠ ਲਈ ਤਬਦੀਲ(_C)"
 
-#: ../src/verbs.cpp:2143
+#: ../src/verbs.cpp:2145
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr ""
 
-#: ../src/verbs.cpp:2145
+#: ../src/verbs.cpp:2147
 #, fuzzy
 msgid "Flip _Horizontal"
 msgstr "ਖਿਤਿਜੀ ਝਟਕੋ(_H):"
 
-#: ../src/verbs.cpp:2145
+#: ../src/verbs.cpp:2147
 #, fuzzy
 msgid "Flip selected objects horizontally"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈ ਗਰੁੱਪ ਵਿੱਚ"
 
-#: ../src/verbs.cpp:2148
+#: ../src/verbs.cpp:2150
 #, fuzzy
 msgid "Flip _Vertical"
 msgstr "ਲੰਬਕਾਰੀ ਝਟਕੋ(_V):"
 
-#: ../src/verbs.cpp:2148
+#: ../src/verbs.cpp:2150
 #, fuzzy
 msgid "Flip selected objects vertically"
 msgstr "ਚੁਣੀਆਂ ਇਕਾਈ ਗਰੁੱਪ ਵਿੱਚ"
 
-#: ../src/verbs.cpp:2151
+#: ../src/verbs.cpp:2153
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
-#: ../src/verbs.cpp:2152 ../src/verbs.cpp:2156
+#: ../src/verbs.cpp:2154 ../src/verbs.cpp:2158
 #, fuzzy
 msgid "_Release"
 msgstr "ਉਲਟ(_R)"
 
-#: ../src/verbs.cpp:2153
+#: ../src/verbs.cpp:2155
 #, fuzzy
 msgid "Remove mask from selection"
 msgstr "ਚੋਣ ਤੋਂ ਲਵੋ"
 
-#: ../src/verbs.cpp:2155
+#: ../src/verbs.cpp:2157
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2157
+#: ../src/verbs.cpp:2159
 msgid "Remove clipping path from selection"
 msgstr ""
 
 #. Tools
-#: ../src/verbs.cpp:2160
+#: ../src/verbs.cpp:2162
 msgid "Select"
 msgstr "ਚੋਣ"
 
-#: ../src/verbs.cpp:2161
+#: ../src/verbs.cpp:2163
 msgid "Select and transform objects"
 msgstr "ਇਕਾਈਆਂ ਚੁਣੋ ਅਤੇ ਤਬਦੀਲ"
 
-#: ../src/verbs.cpp:2162
+#: ../src/verbs.cpp:2164
 msgid "Node Edit"
 msgstr "ਨੋਡ ਸੋਧ"
 
-#: ../src/verbs.cpp:2163
+#: ../src/verbs.cpp:2165
 msgid "Edit path nodes or control handles"
 msgstr ""
 
-#: ../src/verbs.cpp:2165
+#: ../src/verbs.cpp:2167
 msgid "Create rectangles and squares"
 msgstr "ਚਤੁਰਭੁਜ ਅਤੇ ਵਰਗ ਬਣਾਓ"
 
-#: ../src/verbs.cpp:2167
+#: ../src/verbs.cpp:2169
 msgid "Create circles, ellipses, and arcs"
 msgstr "ਚੱਕਰ, ਅੰਡਾਕਾਰ ਅਤੇ ਚਾਪਾਂ ਬਣਾਓ"
 
-#: ../src/verbs.cpp:2169
+#: ../src/verbs.cpp:2171
 msgid "Create stars and polygons"
 msgstr "ਤਾਰਾ ਅਤੇ ਬਹੁਭੁਜ ਬਣਾਓ"
 
-#: ../src/verbs.cpp:2171
+#: ../src/verbs.cpp:2173
 msgid "Create spirals"
 msgstr ""
 
-#: ../src/verbs.cpp:2173
+#: ../src/verbs.cpp:2175
 msgid "Draw freehand lines"
 msgstr "ਹੱਥ ਨਾਲ ਰੇਖਾਵਾਂ ਖਿੱਚੋ"
 
-#: ../src/verbs.cpp:2175
+#: ../src/verbs.cpp:2177
 msgid "Draw Bezier curves and straight lines"
 msgstr ""
 
-#: ../src/verbs.cpp:2177
+#: ../src/verbs.cpp:2179
 msgid "Draw calligraphic lines"
 msgstr ""
 
-#: ../src/verbs.cpp:2179
+#: ../src/verbs.cpp:2181
 msgid "Create and edit text objects"
 msgstr "ਪਾਠ ਇਕਾਈਆਂ ਬਣਾਓ ਅਤੇ ਸੋਧੋ"
 
-#: ../src/verbs.cpp:2181
+#: ../src/verbs.cpp:2183
 msgid "Create and edit gradients"
 msgstr "ਢਾਲਵੇਂ ਬਣਾਓ ਅਤੇ ਸੋਧੋ"
 
-#: ../src/verbs.cpp:2183
+#: ../src/verbs.cpp:2185
 msgid "Zoom in or out"
 msgstr "ਜ਼ੂਮ ਅੰਦਰ ਜਾਂ ਬਾਹਰ"
 
-#: ../src/verbs.cpp:2185
+#: ../src/verbs.cpp:2187
 msgid "Pick averaged colors from image"
 msgstr "ਚਿੱਤਰ ਤੋਂ ਔਸਤ ਰੰਗ ਚੁਣੋ"
 
-#: ../src/verbs.cpp:2187
+#: ../src/verbs.cpp:2189
 msgid "Create connectors"
 msgstr ""
 
 #. Tool prefs
-#: ../src/verbs.cpp:2190
+#: ../src/verbs.cpp:2192
 msgid "Selector Preferences"
 msgstr "ਚੋਣਕਾਰ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2191
+#: ../src/verbs.cpp:2193
 #, fuzzy
 msgid "Open Preferences for the Selector tool"
 msgstr "ਚੋਣਕਾਰ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2192
+#: ../src/verbs.cpp:2194
 msgid "Node Tool Preferences"
 msgstr "ਨੋਡ ਸੰਦ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2193
+#: ../src/verbs.cpp:2195
 #, fuzzy
 msgid "Open Preferences for the Node tool"
 msgstr "ਨੋਡ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2194
+#: ../src/verbs.cpp:2196
 msgid "Rectangle Preferences"
 msgstr "ਵਾਰਤਾਲਾਪ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2195
+#: ../src/verbs.cpp:2197
 #, fuzzy
 msgid "Open Preferences for the Rectangle tool"
 msgstr "ਚਤੁਰਭੁਜ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2196
+#: ../src/verbs.cpp:2198
 msgid "Ellipse Preferences"
 msgstr "ਅੰਡਾਕਾਰ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2197
+#: ../src/verbs.cpp:2199
 #, fuzzy
 msgid "Open Preferences for the Ellipse tool"
 msgstr "ਅੰਡਾਕਾਰ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2198
+#: ../src/verbs.cpp:2200
 msgid "Star Preferences"
 msgstr "ਤਾਰਾ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2199
+#: ../src/verbs.cpp:2201
 #, fuzzy
 msgid "Open Preferences for the Star tool"
 msgstr "ਤਾਰਾ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2200
+#: ../src/verbs.cpp:2202
 msgid "Spiral Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2201
+#: ../src/verbs.cpp:2203
 #, fuzzy
 msgid "Open Preferences for the Spiral tool"
 msgstr "ਤਾਰਾ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2202
+#: ../src/verbs.cpp:2204
 msgid "Pencil Preferences"
 msgstr "ਪੈਨਸਿਲ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2203
+#: ../src/verbs.cpp:2205
 #, fuzzy
 msgid "Open Preferences for the Pencil tool"
 msgstr "ਪਿਨਸਲ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2204
+#: ../src/verbs.cpp:2206
 msgid "Pen Preferences"
 msgstr "ਪੈਨ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2205
+#: ../src/verbs.cpp:2207
 #, fuzzy
 msgid "Open Preferences for the Pen tool"
 msgstr "ਪੈਨ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2206
+#: ../src/verbs.cpp:2208
 msgid "Calligraphic Preferences"
 msgstr "ਕੈਲੀਗਰਾਫ਼ੀ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2207
+#: ../src/verbs.cpp:2209
 #, fuzzy
 msgid "Open Preferences for the Calligraphy tool"
 msgstr "ਕੈਲੀਗਰਾਫ਼ੀ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2208
+#: ../src/verbs.cpp:2210
 msgid "Text Preferences"
 msgstr "ਪਾਠ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2209
+#: ../src/verbs.cpp:2211
 #, fuzzy
 msgid "Open Preferences for the Text tool"
 msgstr "ਪਾਠ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2210
+#: ../src/verbs.cpp:2212
 msgid "Gradient Preferences"
 msgstr "ਢਾਲਵਾਂ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2211
+#: ../src/verbs.cpp:2213
 #, fuzzy
 msgid "Open Preferences for the Gradient tool"
 msgstr "ਢਾਲਵਾਂ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2212
+#: ../src/verbs.cpp:2214
 msgid "Zoom Preferences"
 msgstr "ਜ਼ੂਮ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2213
+#: ../src/verbs.cpp:2215
 #, fuzzy
 msgid "Open Preferences for the Zoom tool"
 msgstr "ਜ਼ੂਮ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2214
+#: ../src/verbs.cpp:2216
 msgid "Dropper Preferences"
 msgstr "ਚੂਸਕ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2215
+#: ../src/verbs.cpp:2217
 #, fuzzy
 msgid "Open Preferences for the Dropper tool"
 msgstr "ਚੂਸਕ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2216
+#: ../src/verbs.cpp:2218
 #, fuzzy
 msgid "Connector Preferences"
 msgstr "ਚੋਣਕਾਰ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2217
+#: ../src/verbs.cpp:2219
 #, fuzzy
 msgid "Open Preferences for the Connector tool"
 msgstr "ਚੋਣਕਾਰ ਸੰਦ ਲਈ ਇੰਕਸਕੇਪੀ ਪਸੰਦ ਖੋਲੋ"
 
 #. Zoom/View
-#: ../src/verbs.cpp:2220
+#: ../src/verbs.cpp:2222
 msgid "Zoom In"
 msgstr "ਜ਼ੂਮ ਅੰਦਰ"
 
-#: ../src/verbs.cpp:2220
+#: ../src/verbs.cpp:2222
 msgid "Zoom in"
 msgstr "ਜ਼ੂਮ ਅੰਦਰ"
 
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2223
 msgid "Zoom Out"
 msgstr "ਜ਼ੂਮ ਬਾਹਰ"
 
-#: ../src/verbs.cpp:2221
+#: ../src/verbs.cpp:2223
 msgid "Zoom out"
 msgstr "ਜ਼ੂਮ ਬਾਹਰ"
 
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2224
 msgid "_Rulers"
 msgstr "ਪੈਮਾਨਾ(_R)"
 
-#: ../src/verbs.cpp:2222
+#: ../src/verbs.cpp:2224
 msgid "Show or hide the canvas rulers"
 msgstr ""
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2225
 msgid "Scroll_bars"
 msgstr "ਸਕਰੋਲ ਪੱਟੀ(_b)"
 
-#: ../src/verbs.cpp:2223
+#: ../src/verbs.cpp:2225
 msgid "Show or hide the canvas scrollbars"
 msgstr ""
 
-#: ../src/verbs.cpp:2224
+#: ../src/verbs.cpp:2226
 msgid "_Grid"
 msgstr "ਗਰਿੱਡ(_G)"
 
-#: ../src/verbs.cpp:2224
+#: ../src/verbs.cpp:2226
 #, fuzzy
 msgid "Show or hide the grid"
 msgstr "ਗਰਿੱਡ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2227
 msgid "G_uides"
 msgstr "ਗਾਈਡ(_u)"
 
-#: ../src/verbs.cpp:2225
+#: ../src/verbs.cpp:2227
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
 
-#: ../src/verbs.cpp:2226
+#: ../src/verbs.cpp:2228
 msgid "Nex_t Zoom"
 msgstr "ਅੱਗੇ ਜ਼ੂਮ(_t)"
 
-#: ../src/verbs.cpp:2226
+#: ../src/verbs.cpp:2228
 msgid "Next zoom (from the history of zooms)"
 msgstr "ਅੱਗੇ ਜ਼ੂਮ (ਜ਼ੂਮਾਂ ਦੇ ਅਤੀਤ ਤੋਂ)"
 
-#: ../src/verbs.cpp:2228
+#: ../src/verbs.cpp:2230
 msgid "Pre_vious Zoom"
 msgstr "ਪਿੱਛੇ ਜ਼ੂਮ(_v)"
 
-#: ../src/verbs.cpp:2228
+#: ../src/verbs.cpp:2230
 msgid "Previous zoom (from the history of zooms)"
 msgstr "ਪਿਛਲਾ ਜ਼ੂਮ (ਜ਼ੂਮਾਂ ਦੇ ਅਤੀਤ ਤੋਂ)"
 
-#: ../src/verbs.cpp:2230
+#: ../src/verbs.cpp:2232
 msgid "Zoom 1:_1"
 msgstr "ਜ਼ੂਮ 1:_1"
 
-#: ../src/verbs.cpp:2230
+#: ../src/verbs.cpp:2232
 msgid "Zoom to 1:1"
 msgstr "1:1 ਜ਼ੂਮ"
 
-#: ../src/verbs.cpp:2232
+#: ../src/verbs.cpp:2234
 msgid "Zoom 1:_2"
 msgstr "ਜ਼ੂਮ 1:_2"
 
-#: ../src/verbs.cpp:2232
+#: ../src/verbs.cpp:2234
 msgid "Zoom to 1:2"
 msgstr "1:2 ਲਈ ਜ਼ੂਮ"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2236
 msgid "_Zoom 2:1"
 msgstr "ਜ਼ੂਮ(_Z) 2:1"
 
-#: ../src/verbs.cpp:2234
+#: ../src/verbs.cpp:2236
 msgid "Zoom to 2:1"
 msgstr "2:1 ਨਾਲ ਜ਼ੂਮ"
 
-#: ../src/verbs.cpp:2237
+#: ../src/verbs.cpp:2239
 msgid "_Fullscreen"
 msgstr "ਪੂਰੇ ਪਰਦੇ 'ਤੇ(_F)"
 
-#: ../src/verbs.cpp:2237
+#: ../src/verbs.cpp:2239
 msgid "Stretch this document window to full screen"
 msgstr "ਪੂਰੇ ਪਰਦੇ ਲਈ ਇਸ ਦਸਤਾਵੇਜ਼ ਝਰੋਖੇ ਨੂੰ ਤਾਣੋ"
 
-#: ../src/verbs.cpp:2240
+#: ../src/verbs.cpp:2242
 msgid "Duplic_ate Window"
 msgstr "ਦੁਹਰਾ ਝਰੋਖਾ(_a)"
 
-#: ../src/verbs.cpp:2240
+#: ../src/verbs.cpp:2242
 msgid "Open a new window with the same document"
 msgstr "ਨਵਾਂ ਝਰੋਖਾ ਉਸੇ ਦਸਤਾਵੇਜ਼ ਨਾਲ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2242
+#: ../src/verbs.cpp:2244
 msgid "_New View Preview"
 msgstr "ਨਵੀਂ ਦਿੱਖ ਝਲਕ(_N)"
 
-#: ../src/verbs.cpp:2243
+#: ../src/verbs.cpp:2245
 msgid "New View Preview"
 msgstr "ਨਵੀਂ ਦਿੱਖ ਝਲਕ"
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2245
+#: ../src/verbs.cpp:2247
 #, fuzzy
 msgid "_Normal"
 msgstr "ਸਧਾਰਨ"
 
-#: ../src/verbs.cpp:2246
+#: ../src/verbs.cpp:2248
 msgid "Switch to normal display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2247
+#: ../src/verbs.cpp:2249
 #, fuzzy
 msgid "_Outline"
 msgstr "ਬਕਸਾ ਬਾਹਰੀ-ਰੇਖਾ"
 
-#: ../src/verbs.cpp:2248
+#: ../src/verbs.cpp:2250
 msgid "Switch to outline (wireframe) display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2250
+#: ../src/verbs.cpp:2252
 msgid "Ico_n Preview"
 msgstr "ਆਈਕਾਨ ਝਲਕ(_n)"
 
-#: ../src/verbs.cpp:2251
+#: ../src/verbs.cpp:2253
 #, fuzzy
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr "ਵੱਖਰ ਆਈਕਾਨ ਰੈਜ਼ੋਲੇਸ਼ਨ ਨਾਲ ਇਕਾਈ ਝਲਕ ਵੇਖਾਉਣ ਲਈ ਇੱਕ ਝਰੋਖਾ ਖੋਲੋ"
 
-#: ../src/verbs.cpp:2253
+#: ../src/verbs.cpp:2255
 msgid "Zoom to fit page in window"
 msgstr "ਝਰੋਖੇ ਵਿੱਚ ਜ਼ੂਮ ਨਾਲ ਸਫ਼ਾ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2254
+#: ../src/verbs.cpp:2256
 msgid "Page _Width"
 msgstr "ਸਫ਼ਾ ਚੌੜਾਈ(_W)"
 
-#: ../src/verbs.cpp:2255
+#: ../src/verbs.cpp:2257
 msgid "Zoom to fit page width in window"
 msgstr "ਝਰੋਖੇ ਵਿੱਚ ਜ਼ੂਮ ਨਾਲ ਸਫ਼ਾ ਚੌੜਾਈ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2257
+#: ../src/verbs.cpp:2259
 msgid "Zoom to fit drawing in window"
 msgstr "ਝਰੋਖੇ ਵਿੱਚ ਜ਼ੂਮ ਨਾਲ ਡਰਾਇੰਗ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2259
+#: ../src/verbs.cpp:2261
 msgid "Zoom to fit selection in window"
 msgstr "ਝਰੋਖੇ ਵਿੱਚ ਜ਼ੂਮ ਨਾਲ ਚੋਣ ਫਿੱਟ"
 
 #. Dialogs
-#: ../src/verbs.cpp:2262
+#: ../src/verbs.cpp:2264
 msgid "In_kscape Preferences..."
 msgstr "ਇੰਕਸਕੇਪੀ ਪਸੰਦ(_k)..."
 
-#: ../src/verbs.cpp:2263
+#: ../src/verbs.cpp:2265
 #, fuzzy
 msgid "Edit global Inkscape preferences"
 msgstr "ਗਲੋਬਲ ਇੰਕਸਕੇਪੀ ਪਸੰਦ"
 
-#: ../src/verbs.cpp:2264
+#: ../src/verbs.cpp:2266
 #, fuzzy
 msgid "_Document Properties..."
 msgstr "ਦਸਤਾਵੇਜ਼ ਪਸੰਦ(_D)..."
 
-#: ../src/verbs.cpp:2265
+#: ../src/verbs.cpp:2267
 #, fuzzy
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨਾਲ ਪਸੰਦ ਸੰਭਾਲੋ"
 
-#: ../src/verbs.cpp:2266
+#: ../src/verbs.cpp:2268
 #, fuzzy
 msgid "Document _Metadata..."
 msgstr "ਦਸਤਾਵੇਜ਼ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
 
-#: ../src/verbs.cpp:2267
+#: ../src/verbs.cpp:2269
 #, fuzzy
 msgid "Edit document metadata (to be saved with the document)"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨਾਲ ਪਸੰਦ ਸੰਭਾਲੋ"
 
-#: ../src/verbs.cpp:2268
+#: ../src/verbs.cpp:2270
 msgid "_Fill and Stroke..."
 msgstr "ਭਰਨ ਅਤੇ ਛੋਹ(_F)..."
 
-#: ../src/verbs.cpp:2269
+#: ../src/verbs.cpp:2271
 msgid "Edit objects' style, such as color or stroke width"
 msgstr ""
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2271
+#: ../src/verbs.cpp:2273
 msgid "S_watches..."
 msgstr ""
 
-#: ../src/verbs.cpp:2272
+#: ../src/verbs.cpp:2274
 msgid "Select colors from a swatches palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2273
+#: ../src/verbs.cpp:2275
 msgid "Transfor_m..."
 msgstr "ਤਬਦੀਲ(_m)..."
 
-#: ../src/verbs.cpp:2274
+#: ../src/verbs.cpp:2276
 msgid "Precisely control objects' transformations"
 msgstr ""
 
-#: ../src/verbs.cpp:2275
+#: ../src/verbs.cpp:2277
 msgid "_Align and Distribute..."
 msgstr "ਇਕਸਾਰ ਅਤੇ ਵੰਡ(_A)..."
 
-#: ../src/verbs.cpp:2276
+#: ../src/verbs.cpp:2278
 #, fuzzy
 msgid "Align and distribute objects"
 msgstr "ਇਕਸਾਰ ਅਤੇ ਵੰਡਣ ਵਾਰਤਾਲਾਪ"
 
-#: ../src/verbs.cpp:2277
+#: ../src/verbs.cpp:2279
 msgid "Undo _History..."
 msgstr ""
 
-#: ../src/verbs.cpp:2278
+#: ../src/verbs.cpp:2280
 msgid "Undo History"
 msgstr ""
 
-#: ../src/verbs.cpp:2279
+#: ../src/verbs.cpp:2281
 msgid "_Text and Font..."
 msgstr "ਪਾਠ ਅਤੇ ਫੋਂਟ(_T)..."
 
-#: ../src/verbs.cpp:2280
+#: ../src/verbs.cpp:2282
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2281
+#: ../src/verbs.cpp:2283
 msgid "_XML Editor..."
 msgstr "_XML ਸੰਪਾਦਕ..."
 
-#: ../src/verbs.cpp:2282
+#: ../src/verbs.cpp:2284
 msgid "View and edit the XML tree of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:2283
+#: ../src/verbs.cpp:2285
 msgid "_Find..."
 msgstr "ਖੋਜ(_F)..."
 
-#: ../src/verbs.cpp:2284
+#: ../src/verbs.cpp:2286
 msgid "Find objects in document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਇਕਾਈਆਂ ਖੋਜੋ"
 
-#: ../src/verbs.cpp:2285
+#: ../src/verbs.cpp:2287
 msgid "_Messages..."
 msgstr "ਸੁਨੇਹੇ(_M)..."
 
-#: ../src/verbs.cpp:2286
+#: ../src/verbs.cpp:2288
 msgid "View debug messages"
 msgstr "ਡੀਬੱਗ ਸੁਨੇਹੇ ਵੇਖਾਓ"
 
-#: ../src/verbs.cpp:2287
+#: ../src/verbs.cpp:2289
 msgid "S_cripts..."
 msgstr "ਸਕਰਿਪਟਾਂ(_c)..."
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2290
 msgid "Run scripts"
 msgstr "ਸਕਰਿਪਟਾਂ ਚਲਾਓ"
 
-#: ../src/verbs.cpp:2289
+#: ../src/verbs.cpp:2291
 msgid "Show/Hide D_ialogs"
 msgstr "ਵਾਰਤਾਲਾਪ ਵੇਖਾਓ/ਓਹਲੇ(_i)"
 
-#: ../src/verbs.cpp:2290
+#: ../src/verbs.cpp:2292
 #, fuzzy
 msgid "Show or hide all open dialogs"
 msgstr "ਸਭ ਸਰਗਰਮ ਵਾਰਤਾਲਾਪ ਵੇਖਾਓ ਜਾਂ ਓਹਲੇ"
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
-#: ../src/verbs.cpp:2292
+#: ../src/verbs.cpp:2294
 #, fuzzy
 msgid "Create Tiled Clones..."
 msgstr "ਟਾਇਲ ਸਮਰੂਪ..."
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2295
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
 
-#: ../src/verbs.cpp:2294
+#: ../src/verbs.cpp:2296
 msgid "_Object Properties..."
 msgstr "ਇਕਾਈ ਵਿਸ਼ੇਸਤਾ(_O)..."
 
-#: ../src/verbs.cpp:2295
+#: ../src/verbs.cpp:2297
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2298
+#: ../src/verbs.cpp:2300
 #, fuzzy
 msgid "_Instant Messaging..."
 msgstr "ਸੁਨੇਹੇ(_M)..."
 
-#: ../src/verbs.cpp:2298
+#: ../src/verbs.cpp:2300
 msgid "Jabber Instant Messaging Client"
 msgstr ""
 
-#: ../src/verbs.cpp:2300
+#: ../src/verbs.cpp:2302
 msgid "_Input Devices..."
 msgstr "ਇੰਪੁੱਟ ਜੰਤਰ(_I)..."
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2303
 #, fuzzy
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr "ਹੋਰ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਰਚਨਾ"
 
-#: ../src/verbs.cpp:2302
+#: ../src/verbs.cpp:2304
 #, fuzzy
 msgid "_Extensions..."
 msgstr "ਸਹਿਯੋਗੀਆਂ ਬਾਰੇ..."
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2305
 msgid "Query information about extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2304
+#: ../src/verbs.cpp:2306
 #, fuzzy
 msgid "Layer_s..."
 msgstr "ਪਰਤ ਸ਼ਾਮਲ(_A)..."
 
-#: ../src/verbs.cpp:2305
+#: ../src/verbs.cpp:2307
 #, fuzzy
 msgid "View Layers"
 msgstr "ਪਰਤ ਉਭਾਰੋ(_R)"
 
 #. Help
-#: ../src/verbs.cpp:2308
+#: ../src/verbs.cpp:2310
 msgid "_Keys and Mouse"
 msgstr "ਸਵਿੱਚਾਂ ਅਤੇ ਮਾਊਂਸ(_K)"
 
-#: ../src/verbs.cpp:2309
+#: ../src/verbs.cpp:2311
 #, fuzzy
 msgid "Keys and mouse shortcuts reference"
 msgstr "ਸਵਿੱਚ ਅਤੇ ਮਾਊਸ ਸ਼ਾਰਟਕੱਟ ਹਵਾਲਾ"
 
-#: ../src/verbs.cpp:2310
+#: ../src/verbs.cpp:2312
 msgid "About E_xtensions"
 msgstr "ਸਹਿਯੋਗੀਆਂ ਬਾਰੇ(_x)"
 
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2313
 msgid "Information on Inkscape extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2312
+#: ../src/verbs.cpp:2314
 msgid "About _Memory"
 msgstr "ਮੈਮੋਰੀ ਬਾਰੇ(_M)"
 
-#: ../src/verbs.cpp:2313
+#: ../src/verbs.cpp:2315
 #, fuzzy
 msgid "Memory usage information"
 msgstr "ਤਬਦੀਲੀਆਂ ਹਟਾਓ(_T)"
 
-#: ../src/verbs.cpp:2314
+#: ../src/verbs.cpp:2316
 msgid "_About Inkscape"
 msgstr "ਇੰਕਸਕੇਪੀ ਬਾਰੇ(_A)"
 
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2317
 msgid "Inkscape version, authors, license"
 msgstr ""
 
@@ -8967,112 +8967,112 @@ msgstr ""
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2320
+#: ../src/verbs.cpp:2322
 msgid "Inkscape: _Basic"
 msgstr "ਇੰਕਸਕੇਪੀ: ਮੂਲ(_B)"
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2323
 msgid "Getting started with Inkscape"
 msgstr "ਇੰਕਸਕੇਪੀ ਨਾਲ ਸ਼ੁਰੂ ਕਰੋ"
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2322
+#: ../src/verbs.cpp:2324
 msgid "Inkscape: _Shapes"
 msgstr "ਇੰਕਸਕੇਪੀ: ਸ਼ਕਲਾਂ(_S)"
 
-#: ../src/verbs.cpp:2323
+#: ../src/verbs.cpp:2325
 msgid "Using shape tools to create and edit shapes"
 msgstr "ਸ਼ਕਲਾਂ ਬਣਾਉਣ ਅਤੇ ਸੋਧ ਲਈ ਸ਼ਕਲ ਸੰਦ ਵਰਤੋਂ"
 
-#: ../src/verbs.cpp:2324
+#: ../src/verbs.cpp:2326
 msgid "Inkscape: _Advanced"
 msgstr "ਇੰਕਸਕੇਪੀ: ਤਕਨੀਕੀ(_A)"
 
-#: ../src/verbs.cpp:2325
+#: ../src/verbs.cpp:2327
 msgid "Advanced Inkscape topics"
 msgstr "ਤਕਨੀਕੀ ਇੰਕਸਕੇਪੀ ਵਿਸ਼ੇ"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2327
+#: ../src/verbs.cpp:2329
 msgid "Inkscape: T_racing"
 msgstr "ਇੰਨਸਕੇਪੀ: ਟਰੇਸ(_r)"
 
-#: ../src/verbs.cpp:2328
+#: ../src/verbs.cpp:2330
 msgid "Using bitmap tracing"
 msgstr "ਬਿੱਟਮੈਪ ਟਰੇਸਿੰਗ ਵਰਤੋਂ"
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2329
+#: ../src/verbs.cpp:2331
 msgid "Inkscape: _Calligraphy"
 msgstr "ਇੰਕਸਕੇਪੀ: ਕੈਲੀਗਰਾਫ਼ੀ(_C)"
 
-#: ../src/verbs.cpp:2330
+#: ../src/verbs.cpp:2332
 msgid "Using the Calligraphy pen tool"
 msgstr "ਕੈਲੀਗਰਾਫ਼ੀ ਪੈਨ ਸੰਦ ਦੀ ਵਰਤੋਂ ਕਰਕੇ"
 
-#: ../src/verbs.cpp:2331
+#: ../src/verbs.cpp:2333
 msgid "_Elements of Design"
 msgstr "ਡਿਜ਼ਾਈਨ ਦੀਆਂ ਇਕਾਈਆਂ(_E)"
 
-#: ../src/verbs.cpp:2332
+#: ../src/verbs.cpp:2334
 msgid "Principles of design in the tutorial form"
 msgstr ""
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2333
+#: ../src/verbs.cpp:2335
 msgid "_Tips and Tricks"
 msgstr "ਸੰਕੇਤ ਅਤੇ ਇਸ਼ਾਰੇ(_T)"
 
-#: ../src/verbs.cpp:2334
+#: ../src/verbs.cpp:2336
 msgid "Miscellaneous tips and tricks"
 msgstr "ਫੁਟਕਲ ਇਸ਼ਾਰੇ ਅਤੇ ਸੰਕੇਤ"
 
 #. "tutorial_tips"
 #. Effect
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2339
 msgid "Previous Effect"
 msgstr "ਪਿਛਲਾ ਪਰਭਾਵ"
 
-#: ../src/verbs.cpp:2338
+#: ../src/verbs.cpp:2340
 msgid "Repeat the last effect with the same settings"
 msgstr "ਇਸੇ ਸਥਾਪਨ ਨਾਲ ਆਖਰੀ ਪਰਭਾਵ ਦੁਹਰਾਓ"
 
-#: ../src/verbs.cpp:2339
+#: ../src/verbs.cpp:2341
 msgid "Previous Effect Settings..."
 msgstr "ਪਿਛਲੀ ਪਰਭਾਵ ਵਿਵਸਥਾ..."
 
-#: ../src/verbs.cpp:2340
+#: ../src/verbs.cpp:2342
 msgid "Repeat the last effect with new settings"
 msgstr "ਨਵੀਂ ਵਿਵਸਥਾ ਵਿੱਚ ਆਖਰੀ ਪਰਭਾਵ ਦੁਹਰਾਓ"
 
 #. Fit Page
-#: ../src/verbs.cpp:2343
+#: ../src/verbs.cpp:2345
 #, fuzzy
 msgid "Fit Page to Selection"
 msgstr "ਚੋਣ ਬਕਸੇ ਵਿੱਚ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2344
+#: ../src/verbs.cpp:2346
 #, fuzzy
 msgid "Fit the page to the current selection"
 msgstr "ਖੋਜ ਨੂੰ ਮੌਜੂਦ ਚੋਣ ਤੱਕ ਸੀਮਿਤ ਕਰੋ"
 
-#: ../src/verbs.cpp:2345
+#: ../src/verbs.cpp:2347
 #, fuzzy
 msgid "Fit Page to Drawing"
 msgstr "ਚੋਣ ਬਕਸੇ ਵਿੱਚ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2346
+#: ../src/verbs.cpp:2348
 #, fuzzy
 msgid "Fit the page to the drawing"
 msgstr "ਚੋਣ ਬਕਸੇ ਵਿੱਚ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2347
+#: ../src/verbs.cpp:2349
 #, fuzzy
 msgid "Fit Page to Selection or Drawing"
 msgstr "ਚੋਣ ਬਕਸੇ ਵਿੱਚ ਫਿੱਟ"
 
-#: ../src/verbs.cpp:2348
+#: ../src/verbs.cpp:2350
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
@@ -9320,8 +9320,8 @@ msgstr "ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੋਈ ਤਰਤੀਬ ਨਹ�
 
 #: ../src/widgets/paint-selector.cpp:859
 msgid ""
-"Use <b>Edit &gt; Object(s) to Pattern</b> to create a new pattern from "
-"selection."
+"Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
+"pattern from selection."
 msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:338
