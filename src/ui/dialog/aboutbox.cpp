@@ -318,6 +318,8 @@ gchar const *translators_text() {
         "Przemysław Loesch <p_loesch@poczta.onet.pl>, 2005.\n"
         "Quico Llach <quico@softcatala.org>, 2000. Traducció sodipodi.\n"
         "Raymond Ostertag <raymond@linuxgraphic.org>, 2002-2003.\n"
+        "Riku Leino <tsoots@gmail.com>, 2006.\n"
+        "Rune Rønde Laursen <runerl@skjoldhoej.dk>, 2006.\n"
         "Serdar Soytetir <sendirom@gmail.com>, 2005.\n"
         "shivaken <shivaken@owls-nest.net>, 2004.\n"
         "Simos Xenitellis <simos@hellug.gr>, 2001.\n"
