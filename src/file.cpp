@@ -87,7 +87,10 @@ void dump_ustr(Glib::ustring const &ustr);
 SPDesktop*
 sp_file_new(const Glib::ustring &templ)
 {
-    SPDocument *doc = sp_document_new(templ.c_str(), TRUE, true);
+    char *templName = NULL;
+    if (templ.size()>0)
+        templName = (char *)templ.c_str();
+    SPDocument *doc = sp_document_new(templName, TRUE, true);
     g_return_val_if_fail(doc != NULL, NULL);
 
     SPDesktop *dt;
@@ -130,7 +133,7 @@ sp_file_new_default()
         sources.pop_front();
     }
 
-    return sp_file_new(NULL);
+    return sp_file_new("");
 }
 
 
