@@ -218,30 +218,58 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
 void
 SessionManager::doShare(Glib::ustring const& to, SessionType type)
 {
-    ChooseDesktop dialog;
-    int result = dialog.run();
+    InkboardDocument* doc;
+    SPDesktop* dt;
 
-    if(result == Gtk::RESPONSE_OK)
+    switch (type) 
     {
-        InkboardDocument* doc;
-        SPDesktop *desktop = dialog.getDesktop();
+        // Just create a new blank canvas for MUC sessions
+        case INKBOARD_MUC:
 
-        if(desktop == NULL)
-        {
-            SPDesktop* dt = createInkboardDesktop(to, type);
+            dt = createInkboardDesktop(to, type);
+
             if (dt != NULL) 
             {
-                 doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-            }
-        }else 
-        {
-            doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(desktop)->rdoc);
-        }
+                doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
 
-        if (doc != NULL) 
-        {
-            doc->startSessionNegotiation();
-        }
+                if (doc != NULL) 
+                {
+                    doc->startSessionNegotiation();
+                }
+            }
+            break;
+
+        // Let the user pick the document which to start a peer ro peer session
+        // with, or a blank one, then create a blank document, copy over the contents
+        // and initialise session
+        case INKBOARD_PRIVATE:
+        default:
+
+            ChooseDesktop dialog;
+            int result = dialog.run();
+
+            if(result == Gtk::RESPONSE_OK)
+            {
+                SPDesktop *desktop = dialog.getDesktop();
+                dt = createInkboardDesktop(to, type);
+
+                if (dt != NULL) 
+                {
+                    doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
+
+                    if (doc != NULL) 
+                    {
+                        if(desktop != NULL)
+                        {
+                            Inkscape::XML::Document *old_doc = sp_desktop_document(desktop)->rdoc;
+                            doc->root()->mergeFrom(old_doc->root(),"id");
+                        }
+
+                        doc->startSessionNegotiation();
+                    }
+                }
+            }
+        break;
     }
 }
 
