@@ -38,6 +38,9 @@
 #include "svg/css-ostringstream.h"
 #include "sp-stop.h"
 
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
+
 enum {
 	VECTOR_SET,
 	LAST_SIGNAL
@@ -47,7 +50,7 @@ static void sp_gradient_vector_selector_class_init (SPGradientVectorSelectorClas
 static void sp_gradient_vector_selector_init (SPGradientVectorSelector *gvs);
 static void sp_gradient_vector_selector_destroy (GtkObject *object);
 
-static void sp_gvs_gradient_release (SPGradient *gr, SPGradientVectorSelector *gvs);
+static void sp_gvs_gradient_release (SPObject *obj, SPGradientVectorSelector *gvs);
 static void sp_gvs_defs_release (SPObject *defs, SPGradientVectorSelector *gvs);
 static void sp_gvs_defs_modified (SPObject *defs, guint flags, SPGradientVectorSelector *gvs);
 
@@ -108,6 +111,10 @@ sp_gradient_vector_selector_init (SPGradientVectorSelector *gvs)
 	gvs->doc = NULL;
 	gvs->gr = NULL;
 
+	new (&gvs->gradient_release_connection) sigc::connection();
+	new (&gvs->defs_release_connection) sigc::connection();
+	new (&gvs->defs_modified_connection) sigc::connection();
+
 	gvs->menu = gtk_option_menu_new ();
 	gtk_widget_show (gvs->menu);
 	gtk_box_pack_start (GTK_BOX (gvs), gvs->menu, TRUE, TRUE, 0);
@@ -121,14 +128,19 @@ sp_gradient_vector_selector_destroy (GtkObject *object)
 	gvs = SP_GRADIENT_VECTOR_SELECTOR (object);
 
 	if (gvs->gr) {
-  		sp_signal_disconnect_by_data (gvs->gr, gvs);
+		gvs->gradient_release_connection.disconnect();
 		gvs->gr = NULL;
 	}
 
 	if (gvs->doc) {
-  		sp_signal_disconnect_by_data (SP_DOCUMENT_DEFS (gvs->doc), gvs);
+		gvs->defs_release_connection.disconnect();
+		gvs->defs_modified_connection.disconnect();
 		gvs->doc = NULL;
 	}
+
+	gvs->gradient_release_connection.~connection();
+	gvs->defs_release_connection.~connection();
+	gvs->defs_modified_connection.~connection();
 
 	if (((GtkObjectClass *) (parent_class))->destroy)
 		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
@@ -168,21 +180,21 @@ sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, SPDocum
 	if (doc != gvs->doc) {
 		/* Disconnect signals */
 		if (gvs->gr) {
-  			sp_signal_disconnect_by_data (gvs->gr, gvs);
-			g_signal_handlers_disconnect_matched (G_OBJECT(gvs->gr), G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, gvs);
+			gvs->gradient_release_connection.disconnect();
 			gvs->gr = NULL;
 		}
 		if (gvs->doc) {
-  			sp_signal_disconnect_by_data (SP_DOCUMENT_DEFS (gvs->doc), gvs);
+			gvs->defs_release_connection.disconnect();
+			gvs->defs_modified_connection.disconnect();
 			gvs->doc = NULL;
 		}
 		/* Connect signals */
 		if (doc) {
-			g_signal_connect (G_OBJECT (SP_DOCUMENT_DEFS (doc)), "release", G_CALLBACK (sp_gvs_defs_release), gvs);
-			g_signal_connect (G_OBJECT (SP_DOCUMENT_DEFS (doc)), "modified", G_CALLBACK (sp_gvs_defs_modified), gvs);
+			gvs->defs_release_connection = SP_DOCUMENT_DEFS(doc)->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_defs_release), gvs));
+			gvs->defs_modified_connection = SP_DOCUMENT_DEFS(doc)->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_gvs_defs_modified), gvs));
 		}
 		if (gr) {
-			g_signal_connect (G_OBJECT (gr), "release", G_CALLBACK (sp_gvs_gradient_release), gvs);
+			gvs->gradient_release_connection = gr->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_gradient_release), gvs));
 		}
 		gvs->doc = doc;
 		gvs->gr = gr;
@@ -330,14 +342,12 @@ sp_gvs_gradient_activate (GtkMenuItem *mi, SPGradientVectorSelector *gvs)
 	/* fixme: Really we would want to use _set_vector */
 	/* Detach old */
 	if (gvs->gr) {
-  		sp_signal_disconnect_by_data (gvs->gr, gvs);
+		gvs->gradient_release_connection.disconnect();
 		gvs->gr = NULL;
 	}
 	/* Attach new */
 	if (norm) {
-		g_signal_connect (G_OBJECT (norm), "release", G_CALLBACK (sp_gvs_gradient_release), gvs);
-		/* fixme: Connect 'modified'? (Lauris) */
-		/* fixme: I think we do not need it (Lauris) */
+		gvs->gradient_release_connection = norm->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_gradient_release), gvs));
 		gvs->gr = norm;
 	}
 
@@ -352,11 +362,11 @@ sp_gvs_gradient_activate (GtkMenuItem *mi, SPGradientVectorSelector *gvs)
 }
 
 static void
-sp_gvs_gradient_release (SPGradient *gr, SPGradientVectorSelector *gvs)
+sp_gvs_gradient_release (SPObject *obj, SPGradientVectorSelector *gvs)
 {
 	/* Disconnect gradient */
 	if (gvs->gr) {
-  		sp_signal_disconnect_by_data (gvs->gr, gvs);
+		gvs->gradient_release_connection.disconnect();
 		gvs->gr = NULL;
 	}
 
@@ -368,9 +378,13 @@ static void
 sp_gvs_defs_release (SPObject *defs, SPGradientVectorSelector *gvs)
 {
 	gvs->doc = NULL;
+
+	gvs->defs_release_connection.disconnect();
+	gvs->defs_modified_connection.disconnect();
+
 	/* Disconnect gradient as well */
 	if (gvs->gr) {
-  		sp_signal_disconnect_by_data (gvs->gr, gvs);
+		gvs->gradient_release_connection.disconnect();
 		gvs->gr = NULL;
 	}
 

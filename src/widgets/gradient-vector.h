@@ -15,7 +15,7 @@
 
 #include <glib.h>
 
-
+#include <sigc++/connection.h>
 
 #include <gtk/gtkvbox.h>
 #include "../forward.h"
@@ -36,6 +36,10 @@ struct SPGradientVectorSelector {
 
 	/* Vector menu */
 	GtkWidget *menu;
+
+	sigc::connection gradient_release_connection;
+	sigc::connection defs_release_connection;
+	sigc::connection defs_modified_connection;
 };
 
 struct SPGradientVectorSelectorClass {

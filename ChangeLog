@@ -1,5 +1,11 @@
 2006-07-25  MenTaLguY  <mental@rydia.net>
 
+	* src/widgets/gradient-vector.cpp, src/widgets/gradient-vector.h:
+
+	  switch to sigc++ SPObject signals for SPGradientVectorSelector
+
+2006-07-25  MenTaLguY  <mental@rydia.net>
+
 	* autogen.sh, configure.ac, debian/control, tools-version.sh:
 
 	  un-libtoolize the build process (yay!) -- we haven't actually
