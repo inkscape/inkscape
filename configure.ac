@@ -11,9 +11,14 @@ AC_CANONICAL_HOST
 AC_CONFIG_SRCDIR(src/main.cpp)
 AM_INIT_AUTOMAKE
 
-AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-comaptible build configuration]), [
+AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
   prefix=/opt/inkscape
-  # FIXME: need to force static linking of libraries not in LSB whitelist
+  PATH="/opt/lsb/bin:$PATH"
+  AC_CHECK_PROG(LSBCC, lsbcc, [], AC_MSG_ERROR([lsbcc not found; do you have the LSB SDK installed?]))
+  AC_CHECK_PROG(LSBCXX, lsbc++, [], AC_MSG_ERROR([lsbc++ not found; do you have the LSB SDK installed?]))
+  CC=lsbcc
+  CXX=lsbc++
+  export CC CXX
 ])
 
 AM_CONFIG_HEADER(config.h)

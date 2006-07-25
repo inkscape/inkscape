@@ -1,3 +1,7 @@
+2006-07-24  MenTaLguY  <mental@rydia.net>
+
+    * configure.ac: further work on LSB build configuration
+
 2006-07-23  John Bintz  <jcoswell@coswellproductions.org>
 
   * src/verbs.cpp, src/event-context.cpp, src/node-context.cpp:
