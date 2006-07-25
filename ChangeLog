@@ -1,5 +1,12 @@
 2006-07-25  MenTaLguY  <mental@rydia.net>
 
+	* autogen.sh, configure.ac, debian/control, tools-version.sh:
+
+	  un-libtoolize the build process (yay!) -- we haven't actually
+	  used libtool for ages
+
+2006-07-25  MenTaLguY  <mental@rydia.net>
+
 	* src/extension/plugin, src/extension/plugin/Makefile_insert,
 	  src/extension/plugin/makefile.in, src/extension/plugin/.cvsignore,
 	  src/Makefile.am, configure.ac:

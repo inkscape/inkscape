@@ -58,7 +58,7 @@ attempt_command () {
 }
 
 echo
-echo "I am testing that you have the required versions of libtool, autoconf," 
+echo "I am testing that you have the required versions of autoconf," 
 echo "automake, glib-gettextize and intltoolize. This test is not foolproof and"
 echo "if anything goes wrong, there may be guidance in the file HACKING.txt"
 echo
@@ -187,7 +187,6 @@ attempt_command 'underquoted definition of|[\)\#]Extending' \
 	attempt_command '' autoheader
 }
 
-attempt_command '' libtoolize --copy --force
 attempt_command '' $AUTOMAKE --add-missing
 attempt_command '' autoconf
 attempt_command '^(Please add the files|  codeset|  progtest|from the|or directly|You will also|ftp://ftp.gnu.org|$)' \

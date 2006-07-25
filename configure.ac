@@ -48,9 +48,7 @@ AC_HEADER_STDC
 dnl Honor aclocal flags
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
-dnl RANLIB is outdated now
-dnl AC_PROG_RANLIB
-AM_PROG_LIBTOOL
+AC_PROG_RANLIB
 
 dnl Verify our GCC version
 if test "x$GXX" = "xyes"; then
