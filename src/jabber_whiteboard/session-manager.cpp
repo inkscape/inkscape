@@ -107,6 +107,35 @@ SessionManager::send(const Glib::ustring &destJid,
 }
 
 bool
+SessionManager::sendProtocol(const Glib::ustring &destJid, 
+					 const MessageType type,
+                     const Glib::ustring &data)
+{
+    Pedro::DOMString xmlData = Pedro::Parser::encode(data);
+    char *fmt=
+    "<message type='chat' from='%s' to='%s' id='ink_%d'>"
+    "<wb xmlns='%s' "
+    "protocol='%d' type='%d' seq='%d'><x:inkboard-data>%s</x:inkboard-data></inkboard>"
+    "<body></body>"
+    "</message>";
+    if (!getClient().write(fmt, 
+                           getClient().getJid().c_str(),
+                           destJid.c_str(),
+                           getClient().getMsgId(),
+                           INKBOARD_XMLNS,
+                           2,
+                           (MessageType)type,
+                           getSequenceNumber(),
+                           xmlData.c_str()
+                           ))
+        {
+        return false;
+        }
+        
+    return true;
+}
+
+bool
 SessionManager::sendGroup(const Glib::ustring &groupJid,
 						  const MessageType type,
                           const Glib::ustring &data)
