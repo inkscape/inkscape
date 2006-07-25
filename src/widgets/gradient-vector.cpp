@@ -6,11 +6,13 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   MenTaLguY <mental@rydia.net>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
  * Copyright (C) 2004 Monash University
  * Copyright (C) 2004 David Turner
+ * Copyright (C) 2006 MenTaLguY
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -420,8 +422,8 @@ static gint sp_gradient_vector_dialog_delete (GtkWidget *widget, GdkEvent *event
 static void sp_gradient_vector_dialog_destroy (GtkObject *object, gpointer data);
 
 static void sp_gradient_vector_widget_destroy (GtkObject *object, gpointer data);
-static void sp_gradient_vector_gradient_release (SPGradient *gradient, GtkWidget *widget);
-static void sp_gradient_vector_gradient_modified (SPGradient *gradient, guint flags, GtkWidget *widget);
+static void sp_gradient_vector_gradient_release (SPObject *obj, GtkWidget *widget);
+static void sp_gradient_vector_gradient_modified (SPObject *obj, guint flags, GtkWidget *widget);
 static void sp_gradient_vector_color_dragged (SPColorSelector *csel, GtkObject *object);
 static void sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object);
 static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_stop);
@@ -954,14 +956,44 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
 	SPGradient *old;
 
 	old = (SPGradient*)g_object_get_data (G_OBJECT (widget), "gradient");
+
 	if (old != gradient) {
+		sigc::connection *release_connection;
+		sigc::connection *modified_connection;
+
+		release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(widget), "gradient_release_connection");
+		modified_connection = (sigc::connection *)g_object_get_data(G_OBJECT(widget), "gradient_modified_connection");
+
 		if (old) {
+			g_assert( release_connection != NULL );
+			g_assert( modified_connection != NULL );
+			release_connection->disconnect();
+			modified_connection->disconnect();
 			sp_signal_disconnect_by_data (old, widget);
 		}
+
 		if (gradient) {
-			g_signal_connect (G_OBJECT (gradient), "release", G_CALLBACK (sp_gradient_vector_gradient_release), widget);
-			g_signal_connect (G_OBJECT (gradient), "modified", G_CALLBACK (sp_gradient_vector_gradient_modified), widget);
+			if (!release_connection) {
+				release_connection = new sigc::connection();
+			}
+			if (!modified_connection) {
+				modified_connection = new sigc::connection();
+			}
+			*release_connection = gradient->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gradient_vector_gradient_release), widget));
+			*modified_connection = gradient->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_gradient_vector_gradient_modified), widget));
+		} else {
+			if (release_connection) {
+				delete release_connection;
+				release_connection = NULL;
+			}
+			if (modified_connection) {
+				delete modified_connection;
+				modified_connection = NULL;
+			}
 		}
+
+		g_object_set_data(G_OBJECT(widget), "gradient_release_connection", release_connection);
+		g_object_set_data(G_OBJECT(widget), "gradient_modified_connection", modified_connection);
 	}
 
 	g_object_set_data (G_OBJECT (widget), "gradient", gradient);
@@ -1045,14 +1077,15 @@ sp_gradient_vector_widget_destroy (GtkObject *object, gpointer data)
 }
 
 static void
-sp_gradient_vector_gradient_release (SPGradient *gradient, GtkWidget *widget)
+sp_gradient_vector_gradient_release (SPObject *object, GtkWidget *widget)
 {
 	sp_gradient_vector_widget_load_gradient (widget, NULL);
 }
 
 static void
-sp_gradient_vector_gradient_modified (SPGradient *gradient, guint flags, GtkWidget *widget)
+sp_gradient_vector_gradient_modified (SPObject *object, guint flags, GtkWidget *widget)
 {
+	SPGradient *gradient=SP_GRADIENT(object);
 	if (!blocked) {
 		blocked = TRUE;
 		sp_gradient_vector_widget_load_gradient (widget, gradient);
