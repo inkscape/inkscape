@@ -125,7 +125,6 @@ EXTRA_DIST =	\
 	extension/implementation/makefile.in	\
 	extension/internal/makefile.in	\
 	extension/makefile.in	\
-	extension/plugin/makefile.in	\
 	extension/script/makefile.in	\
 	helper/makefile.in	\
 	inkjar/makefile.in	\

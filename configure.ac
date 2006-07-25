@@ -679,19 +679,6 @@ if test "$GXX" = "yes"; then
   esac
 fi
 
-dnl ******************************
-dnl   Plugin Support
-dnl ******************************
-dnl
-dnl UPDATE: This is unconditional now (Lauris)
-dnl
-dnl AC_ARG_WITH(modules, AC_HELP_STRING([--with-modules], [Compile with plugin support (experimental)]), [mod=$withval], [mod=yes])
-dnl
-dnl AM_CONDITIONAL(USE_MODULES, test "x$mod" = "xyes")
-dnl if test "x$mod" = "xyes"; then
-dnl 	AC_DEFINE(WITH_MODULES, 1, [Use experimental module support])
-dnl fi
-
 AC_DEFINE(WITH_MODULES, 1, [Use experimental module support])
 
 dnl ******************************
@@ -803,7 +790,6 @@ src/dom/makefile
 src/extension/implementation/makefile
 src/extension/internal/makefile
 src/extension/makefile
-src/extension/plugin/makefile
 src/extension/script/makefile
 src/helper/makefile
 src/inkjar/makefile

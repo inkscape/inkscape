@@ -1,3 +1,11 @@
+2006-07-25  MenTaLguY  <mental@rydia.net>
+
+	* src/extension/plugin, src/extension/plugin/Makefile_insert,
+	  src/extension/plugin/makefile.in, src/extension/plugin/.cvsignore,
+	  src/Makefile.am, configure.ac:
+
+	  remove vestigal plugin support
+
 2006-07-24  MenTaLguY  <mental@rydia.net>
 
     * configure.ac: further work on LSB build configuration
