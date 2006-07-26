@@ -346,6 +346,8 @@ struct SPStyle {
     bool fill_hreffed; 
     bool stroke_hreffed; 
 
+    sigc::connection release_connection;
+
     sigc::connection fill_release_connection;
     sigc::connection fill_modified_connection;
 

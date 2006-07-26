@@ -1,3 +1,9 @@
+2006-07-26  MenTaLguY  <mental@rydia.net>
+
+	* src/style.cpp, src/style.h:
+
+	  finish switching to sigc++ SPObject signals for SPStyle
+
 2006-07-25  MenTaLguY  <mental@rydia.net>
 
 	* src/widgets/gradient-vector.cpp, src/widgets/gradient-vector.h:

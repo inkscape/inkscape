@@ -410,6 +410,8 @@ sp_style_new()
     style->fill_hreffed = false;
     style->stroke_hreffed = false;
 
+    new (&style->release_connection) sigc::connection();
+
     new (&style->fill_release_connection) sigc::connection();
     new (&style->fill_modified_connection) sigc::connection();
 
@@ -431,7 +433,7 @@ sp_style_new_from_object(SPObject *object)
 
     SPStyle *style = sp_style_new();
     style->object = object;
-    g_signal_connect(G_OBJECT(object), "release", G_CALLBACK(sp_style_object_release), style);
+    style->release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_object_release), style));
 
     if (object && SP_OBJECT_IS_CLONED(object)) {
         style->cloned = true;
@@ -468,9 +470,8 @@ sp_style_unref(SPStyle *style)
     style->refcount -= 1;
 
     if (style->refcount < 1) {
-        if (style->object)
-            g_signal_handlers_disconnect_matched(G_OBJECT(style->object),
-                                                 G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, style);
+        style->release_connection.disconnect();
+        style->release_connection.~connection();
         if (style->text) sp_text_style_unref(style->text);
         sp_style_paint_clear(style, &style->fill);
         sp_style_paint_clear(style, &style->stroke);
