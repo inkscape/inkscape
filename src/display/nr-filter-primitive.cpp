@@ -57,7 +57,7 @@ void FilterPrimitive::set_input(int slot) {
 }
 
 void FilterPrimitive::set_input(int input, int slot) {
-    if (slot == 0) _input = slot;
+    if (input == 0) _input = slot;
 }
 
 void FilterPrimitive::set_output(int slot) {

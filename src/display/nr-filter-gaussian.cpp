@@ -27,7 +27,7 @@ namespace NR {
 
 FilterGaussian::FilterGaussian()
 {
-    _deviation_x = _deviation_y = prefs_get_double_attribute("options.filtertest", "value", 0.0);
+    _deviation_x = _deviation_y = prefs_get_double_attribute("options.filtertest", "value", 1.0);
 }
 
 FilterPrimitive *FilterGaussian::create()
@@ -142,10 +142,16 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     /* in holds the input pixblock */
     NRPixBlock *in = slot.get(_input);
 
-    /* If to either direction, the standard deviation is zero, a transparent
-     * black image should be returned */
-    if (_deviation_x <= 0 || _deviation_y <= 0) {
+    /* If to either direction, the standard deviation is zero or
+     * input image is not defined,
+     * a transparent black image should be returned. */
+    if (_deviation_x <= 0 || _deviation_y <= 0 || in == NULL) {
         NRPixBlock *out = new NRPixBlock;
+        if (in == NULL) {
+            // A bit guessing here, but source graphic is likely to be of
+            // right size
+            in = slot.get(NR_FILTER_SOURCEGRAPHIC);
+        }
         nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
                                in->area.x1, in->area.y1, true);
         out->empty = false;

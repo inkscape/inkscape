@@ -196,6 +196,11 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
   if (style && style->filter.set && style->filter.filter) {
     group->filter = new NR::Filter();
   }
+
+  if (style && style->enable_background.set
+      && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
+    group->background_new = true;
+  }
 }
 
 static unsigned int

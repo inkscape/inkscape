@@ -115,6 +115,10 @@ struct NRArenaItem : public NRObject {
         /* Current Transformation Matrix */
         NR::Matrix ctm;
 
+        /* These hold background buffer state for filter rendering */
+        NRPixBlock *background_pb;
+        bool background_new;
+
 	void init(NRArena *arena) {
 		this->arena = arena;
 	}
@@ -179,6 +183,8 @@ void nr_arena_item_set_visible (NRArenaItem *item, unsigned int visible);
 void nr_arena_item_set_clip (NRArenaItem *item, NRArenaItem *clip);
 void nr_arena_item_set_mask (NRArenaItem *item, NRArenaItem *mask);
 void nr_arena_item_set_order (NRArenaItem *item, int order);
+
+NRPixBlock *nr_arena_item_get_background (NRArenaItem const *item, int depth = 0);
 
 /* Helpers */
 

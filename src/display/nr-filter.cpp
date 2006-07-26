@@ -84,7 +84,7 @@ Filter::~Filter()
 int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
     Matrix trans = *item->ctm;
-    FilterSlot slot(_slot_count);
+    FilterSlot slot(_slot_count, item);
     NRPixBlock *in = new NRPixBlock;
 
     // First, if filter resolution is not set to automatic, we should

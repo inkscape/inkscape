@@ -16,14 +16,20 @@
 
 #include "libnr/nr-pixblock.h"
 
+struct NRArenaItem;
+
 namespace NR {
 
 class FilterSlot {
 public:
-    /** Creates a new FilterSlot object, with two slots. */
-    FilterSlot();
-    /** Creates a new FilterSlot object, with specified amount of slots */
-    FilterSlot(int slots);
+    /** Creates a new FilterSlot object.
+     * First parameter specifies the amount of slots this SilterSlot
+     * should reserve beforehand. If a negative number is given,
+     * two slots will be reserved.
+     * Second parameter specifies the arena item, which should be used
+     * for background accesses from filters.
+     */
+    FilterSlot(int slots, NRArenaItem const *item);
     /** Destroys the FilterSlot object and all its contents */
     ~FilterSlot();
 
@@ -58,7 +64,9 @@ private:
 
     int _last_out;
 
-    /** Returns the table index of given slot. If that slot dows not exist,
+    NRArenaItem const *_arena_item;
+
+    /** Returns the table index of given slot. If that slot does not exist,
      * it is created. Table index can be used to read the correct
      * pixblock from _slot */
     int _get_index(int slot);

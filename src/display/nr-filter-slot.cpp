@@ -14,15 +14,17 @@
  */
 
 #include <assert.h>
+
+#include "display/nr-arena-item.h"
 #include "libnr/nr-pixblock.h"
 #include "display/nr-filter-types.h"
 #include "display/nr-filter-slot.h"
 
 namespace NR {
 
-FilterSlot::FilterSlot()
+FilterSlot::FilterSlot(int slots, NRArenaItem const *item)
 {
-    _slot_count = 2;
+    _slot_count = ((slots > 0) ? slots : 2);
     _slot = new NRPixBlock*[_slot_count];
     _slot_number = new int[_slot_count];
 
@@ -32,20 +34,8 @@ FilterSlot::FilterSlot()
     }
 
     _last_out = -1;
-}
 
-FilterSlot::FilterSlot(int slots)
-{
-    _slot_count = slots;
-    _slot = new NRPixBlock*[_slot_count];
-    _slot_number = new int[_slot_count];
-
-    for (int i = 0 ; i < _slot_count ; i++) {
-        _slot[i] = NULL;
-        _slot_number[i] = NR_FILTER_SLOT_NOT_SET;
-    }
-
-    _last_out = -1;
+    _arena_item = item;
 }
 
 FilterSlot::~FilterSlot()
@@ -64,6 +54,40 @@ NRPixBlock *FilterSlot::get(int slot_nr)
 {
     int index = _get_index(slot_nr);
     assert(index >= 0);
+
+    /* If we didn't have the specified image, but we could create it
+     * from the other information we have, let's do that */
+    if (_slot[index] == NULL
+        && (slot_nr == NR_FILTER_SOURCEALPHA
+            || slot_nr == NR_FILTER_BACKGROUNDIMAGE
+            || slot_nr == NR_FILTER_BACKGROUNDALPHA
+            || slot_nr == NR_FILTER_FILLPAINT
+            || slot_nr == NR_FILTER_SOURCEPAINT))
+    {
+        /* If needed, fetch background */
+        if (slot_nr == NR_FILTER_BACKGROUNDIMAGE
+            || slot_nr == NR_FILTER_BACKGROUNDALPHA)
+        {
+            NRPixBlock *pb;
+            pb = nr_arena_item_get_background(_arena_item);
+            this->set(NR_FILTER_BACKGROUNDIMAGE, pb);
+        }
+        /* If only a alpha channel is needed, strip it from full image */
+        if (slot_nr == NR_FILTER_SOURCEALPHA) {
+            // TODO
+        }
+        if (slot_nr == NR_FILTER_BACKGROUNDALPHA) {
+            // TODO
+        }
+        /* When a paint is needed, fetch it from arena item */
+        if (slot_nr == NR_FILTER_FILLPAINT) {
+            // TODO
+        }
+        if (slot_nr == NR_FILTER_SOURCEPAINT) {
+            // TODO
+        }
+    }
+
     assert(slot_nr == NR_FILTER_SLOT_NOT_SET ||_slot_number[index] == slot_nr);
     return _slot[index];
 }
@@ -120,7 +144,7 @@ int FilterSlot::_get_index(int slot_nr)
         int seek = _slot_count;
         do {
             seek--;
-        } while (_slot[seek] == NULL);
+        } while (_slot[seek] == NULL && seek > 0);
         /* If there is no space for more slots, create more space */
         if (seek == _slot_count - 1) {
             NRPixBlock **new_slot = new NRPixBlock*[_slot_count * 2];
@@ -130,8 +154,8 @@ int FilterSlot::_get_index(int slot_nr)
                 new_number[i] = _slot_number[i];
             }
             for (int i = _slot_count ; i < _slot_count * 2 ; i++) {
-                _slot[i] = NULL;
-                _slot_number[i] = NR_FILTER_SLOT_NOT_SET;
+                new_slot[i] = NULL;
+                new_number[i] = NR_FILTER_SLOT_NOT_SET;
             }
             delete[] _slot;
             delete[] _slot_number;

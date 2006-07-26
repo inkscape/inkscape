@@ -97,6 +97,8 @@ nr_arena_item_init (NRArenaItem *item)
 	item->px = NULL;
 	item->data = NULL;
 	item->filter = NULL;
+	item->background_pb = NULL;
+	item->background_new = false;
 }
 
 static void
@@ -552,11 +554,21 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 #endif
   } else {
     /* Determine, whether we need temporary buffer */
-    if (item->clip || item->mask || ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE) || item->filter) {
+    if (item->clip || item->mask
+	|| ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE)
+	|| item->filter || item->background_new
+	|| (item->parent && item->parent->background_pb) )
+      {
       NRPixBlock ipb, mpb;
 
       /* Setup and render item buffer */
       nr_pixblock_setup_fast (&ipb, NR_PIXBLOCK_MODE_R8G8B8A8P, carea.x0, carea.y0, carea.x1, carea.y1, TRUE);
+      /* If background access is used, save the pixblock address.
+       * This address is set to NULL at the end of this block */
+      if (item->background_new
+	  || (item->parent && item->parent->background_pb)) {
+	item->background_pb = &ipb;
+      }
       ipb.visible_area = pb->visible_area; 
       state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, &ipb, flags);
       if (state & NR_ARENA_ITEM_STATE_INVALID) {
@@ -568,7 +580,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
       }
       ipb.empty = FALSE;
 
-      /* Run filtering test, if a filter is set for this object */
+      /* Run filtering, if a filter is set for this object */
       if(item->filter) {
 	item->filter->render(item, &ipb);
       }
@@ -656,6 +668,8 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
         /* Compose rendering pixblock int destination */
         nr_blit_pixblock_pixblock_mask (dpb, &ipb, &mpb);
         nr_pixblock_release (&mpb);
+	/* This pointer wouldn't be valid outside this block, so clear it */
+	item->background_pb = NULL;
       } else {
         /* Opacity only */
         nr_blit_pixblock_pixblock_alpha (dpb, &ipb, item->opacity);
@@ -918,6 +932,28 @@ nr_arena_item_set_order (NRArenaItem *item, int order)
 	}
 
 	nr_arena_item_set_child_position (item->parent, item, ref);
+}
+
+/** Returns a background image for use with filter effects. */
+NRPixBlock *nr_arena_item_get_background (NRArenaItem const *item, int depth)
+{
+  NRPixBlock *pb;
+  if (!item->background_pb) return NULL;
+  if (item->background_new) {
+    pb = new NRPixBlock();
+    nr_pixblock_setup_fast(pb, item->background_pb->mode,
+			   item->background_pb->area.x0,
+			   item->background_pb->area.y0,
+			   item->background_pb->area.x1,
+			   item->background_pb->area.y1, true);
+  } else if (item->parent) {
+    pb = nr_arena_item_get_background(item->parent, depth + 1);
+  } else return NULL;
+
+  if (depth > 0)
+    nr_blit_pixblock_pixblock(pb, item->background_pb);
+
+  return pb;
 }
 
 /* Helpers */
