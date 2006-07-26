@@ -12,7 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/nr-arena-item.h"
+//#include "display/nr-arena-item.h"
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-types.h"
 #include "libnr/nr-pixblock.h"
@@ -21,6 +21,8 @@
 #include "svg/svg-length.h"
 #include "sp-filter-units.h"
 #include "gc-managed.h"
+
+struct NRArenaItem;
 
 namespace NR {
 

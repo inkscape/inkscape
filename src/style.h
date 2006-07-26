@@ -336,6 +336,10 @@ struct SPStyle {
     /** Filter effect */
     SPIFilter filter;
 
+    /** enable-background, used for defining where filter effects get
+     * their background image */
+    SPIEnum enable_background;
+
     /// style belongs to a cloned object, must not href anything
     bool cloned; 
     /// style has hreffed its fill/stroke paintservers, needs to release.
@@ -499,6 +503,11 @@ enum SPCSSDisplay {
     SP_CSS_DISPLAY_TABLE_COLUMN,
     SP_CSS_DISPLAY_TABLE_CELL,
     SP_CSS_DISPLAY_TABLE_CAPTION
+};
+
+enum SPEnableBackground {
+    SP_CSS_BACKGROUND_ACCUMULATE,
+    SP_CSS_BACKGROUND_NEW
 };
 
 /// An SPTextStyle has a refcount, a font family, and a font name.

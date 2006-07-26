@@ -59,11 +59,6 @@
 #include "gc-soft-ptr.h"
 #include "nr-arena-forward.h"
 #include "display/nr-filter.h"
-/* TODO: without this, gcc barfs on clause "NR::Filter *filter" later on.
- * Obviously we shouldn't need to have the next three rows */
-namespace NR {
-class Filter;
-}
 
 // My testing shows that disabling cache reduces the amount 
 // of leaked memory when many documents are loaded one from the other,

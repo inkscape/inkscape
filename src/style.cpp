@@ -372,6 +372,12 @@ static SPStyleEnum const enum_text_rendering[] = {
     {NULL, -1}
 };
 
+static SPStyleEnum const enum_enable_background[] = {
+    {"accumulate", SP_CSS_BACKGROUND_ACCUMULATE},
+    {"new", SP_CSS_BACKGROUND_NEW},
+    {NULL, -1}
+};
+
 /**
  * Release callback.
  */
@@ -669,9 +675,12 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->filter.set) {
         val = repr->attribute("filter");
         if (val) {
-            sp_style_read_ifilter(&style->filter, val, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
+            sp_style_read_ifilter(&style->filter, val,
+                                  (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
         }
     }
+    SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
+                            "enable-background", enum_enable_background, true);
             
     /* 3. Merge from parent */
     if (object) {
@@ -901,7 +910,8 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             }
             break;
         case SP_PROP_ENABLE_BACKGROUND:
-            g_warning("Unimplemented style property SP_PROP_ENABLE_BACKGROUND: value: %s", val);
+            SPS_READ_IENUM_IF_UNSET(&style->enable_background, val,
+                                    enum_enable_background, true);
             break;
             /* Filter */
         case SP_PROP_FILTER:
@@ -1447,6 +1457,10 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     if(style->filter.set && style->filter.inherit) {
         sp_style_merge_ifilter(&style->filter, &parent->filter);
     }
+
+    if(style->enable_background.inherit) {
+        style->enable_background.value = parent->enable_background.value;
+    }
 }
 
 template <typename T>
@@ -1900,6 +1914,18 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
             /* Leave as is.  (display doesn't inherit by default.) */
         }
 
+        /* enable-background - this is rather complicated, because
+         * it is valid only when applied to container elements.
+         * Let's check a simple case anyhow. */
+        if (parent->enable_background.set
+            && !parent->enable_background.inherit
+            && style->enable_background.inherit)
+        {
+            style->enable_background.set = true;
+            style->enable_background.inherit = false;
+            style->enable_background.value = parent->enable_background.value;
+        }
+
         /** \todo
          * fixme: Check that we correctly handle all properties that don't
          * inherit by default (as shown in
@@ -2218,6 +2244,8 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     /* filter: */
     p += sp_style_write_ifilter(p, c + BMAX - p, "filter", &style->filter, NULL, flags);
 
+    p += sp_style_write_ienum(p, c + BMAX - p, "enable-background", enum_enable_background, &style->enable_background, NULL, flags);
+
     /* fixme: */
     p += sp_text_style_write(p, c + BMAX - p, style->text, flags);
 
@@ -2334,6 +2362,8 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
 
     /* filter: */
     p += sp_style_write_ifilter(p, c + BMAX - p, "filter", &from->filter, &to->filter, SP_STYLE_FLAG_IFDIFF);
+
+    p += sp_style_write_ienum(p, c + BMAX - p, "enable-background", enum_enable_background, &from->enable_background, &to->enable_background, SP_STYLE_FLAG_IFSET);
 
     p += sp_text_style_write(p, c + BMAX - p, from->text, SP_STYLE_FLAG_IFDIFF);
 
@@ -2487,11 +2517,14 @@ sp_style_clear(SPStyle *style)
     }
 
     style->filter.set = FALSE;
-//Are these really needed?
+    //Are these really needed?
     style->filter.inherit = FALSE;
     style->filter.uri = NULL;
     style->filter.filter = FALSE;
 
+    style->enable_background.value = SP_CSS_BACKGROUND_ACCUMULATE;
+    style->enable_background.set = false;
+    style->enable_background.inherit = false;
 }
 
 
@@ -3703,6 +3736,9 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->filter.set) {
         repr->setAttribute("filter", NULL);
+    }
+    if (style->enable_background.set) {
+        repr->setAttribute("enable-background", NULL);
     }
 }
 
