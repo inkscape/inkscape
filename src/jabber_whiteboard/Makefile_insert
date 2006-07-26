@@ -9,6 +9,7 @@ jabber_whiteboard/clean:
 	rm -f jabber_whiteboard/libjabber_whiteboard.a $(jabber_whiteboard_libjabber_whiteboard_a_OBJECTS)
 
 jabber_whiteboard_SOURCES = \
+	jabber_whiteboard/defines.cpp \
 	jabber_whiteboard/defines.h \
 	jabber_whiteboard/empty.cpp \
 	jabber_whiteboard/keynode.cpp \

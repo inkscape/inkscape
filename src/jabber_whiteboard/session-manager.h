@@ -79,8 +79,7 @@ public:
      *
      */
     virtual bool sendProtocol(const Glib::ustring &destJid, 
-                      const MessageType type,
-                      const Glib::ustring &data);
+                      const MessageType type);
 
     /**
      *

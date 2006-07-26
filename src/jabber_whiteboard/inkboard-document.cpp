@@ -58,7 +58,7 @@ InkboardDocument::startSessionNegotiation()
                 break;
             case INKBOARD_PRIVATE:
             default:
-                sm.send(_recipient, CONNECT_REQUEST_USER, " ");
+                sm.sendProtocol(_recipient, CONNECT_REQUEST_USER);
                 break;
         }
 }

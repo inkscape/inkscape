@@ -29,6 +29,7 @@
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/inkboard-document.h"
 #include "jabber_whiteboard/new-inkboard-document.h"
+#include "jabber_whiteboard/defines.h"
 
 #include "jabber_whiteboard/dialog/choose-desktop.h"
 
@@ -108,30 +109,26 @@ SessionManager::send(const Glib::ustring &destJid,
 
 bool
 SessionManager::sendProtocol(const Glib::ustring &destJid, 
-					 const MessageType type,
-                     const Glib::ustring &data)
+					 const MessageType type)
 {
-    Pedro::DOMString xmlData = Pedro::Parser::encode(data);
     char *fmt=
-    "<message type='chat' from='%s' to='%s' id='ink_%d'>"
-    "<wb xmlns='%s' "
-    "protocol='%d' type='%d' seq='%d'><x:inkboard-data>%s</x:inkboard-data></inkboard>"
-    "<body></body>"
+    "<message type='chat' from='%s' to='%s'>"
+        "<wb xmlns='%s'>"
+            "<protocol>"
+                "<%s />"
+            "</protocol>"
+        "</wb>"
     "</message>";
     if (!getClient().write(fmt, 
                            getClient().getJid().c_str(),
                            destJid.c_str(),
-                           getClient().getMsgId(),
                            INKBOARD_XMLNS,
-                           2,
-                           (MessageType)type,
-                           getSequenceNumber(),
-                           xmlData.c_str()
+                           MessageString[type]
                            ))
         {
         return false;
         }
-        
+
     return true;
 }
 

@@ -24,36 +24,43 @@ namespace Whiteboard {
 // explicitly numbered to aid protocol description later on
 enum MessageType {
     // image and internal data
-    CHANGE_NOT_REPEATABLE = 0,
+        CHANGE_NOT_REPEATABLE = 0,
 	CHANGE_REPEATABLE = 1,
 	DUMMY_CHANGE = 2,
 	CHANGE_COMMIT = 3,
 	DOCUMENT_BEGIN = 4,
 	DOCUMENT_END = 5,
+
     // 1-1 connections
         CONNECT_REQUEST_USER = 6,
 	CONNECT_REQUEST_RESPONSE_USER = 7, 
     // chat connections
-CONNECT_REQUEST_RESPONSE_CHAT = 8,
-	// chatroom document synchronization
+        CONNECT_REQUEST_RESPONSE_CHAT = 8,
+
+    // chatroom document synchronization
 	CHATROOM_SYNCHRONIZE_REQUEST = 9, 
 	CHATROOM_SYNCHRONIZE_RESPONSE = 10,
+
     // requests
-    DOCUMENT_SENDER_REQUEST = 11,
+        DOCUMENT_SENDER_REQUEST = 11,
 	DOCUMENT_SENDER_REQUEST_RESPONSE = 12, 
 	DOCUMENT_REQUEST = 13,
+
     // notifications
-    CONNECTED_SIGNAL = 14,
+        CONNECTED_SIGNAL = 14,
 	DISCONNECTED_FROM_USER_SIGNAL = 15,
-	// error responses
+
+    // error responses
 	CONNECT_REQUEST_REFUSED_BY_PEER = 16, 
 	UNSUPPORTED_PROTOCOL_VERSION = 17,
 	ALREADY_IN_SESSION = 18,
 	
-	// error cases, i.e. garbled messages or bad clients.  These should
-	// never actually be transmitted
+    // error cases, i.e. garbled messages or bad clients.  These should
+    // never actually be transmitted
 	UNKNOWN = 21
 };
+
+extern char const * const MessageString[];
 
 // Responses to whiteboard invitations
 enum InvitationResponses {
