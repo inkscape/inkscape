@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:54+0200\n"
+"POT-Creation-Date: 2006-07-26 20:45+0200\n"
 "PO-Revision-Date: 2006-06-13 09:45+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -1618,7 +1618,7 @@ msgstr "Фрагмент"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "XML-фрагмент RDF-раздела \"Лицензия\"."
 
-#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Документ не выбран"
@@ -2491,39 +2491,39 @@ msgstr "Невозможно определить формат файла. Фа�
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:124
+#: ../src/file.cpp:127
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:211 ../src/file.cpp:824
+#: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Невозможно загрузить запрошенный файл %s"
 
-#: ../src/file.cpp:236
+#: ../src/file.cpp:239
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Документ еще не был сохранен. Вернуться к сохраненному невозможно."
 
-#: ../src/file.cpp:242
+#: ../src/file.cpp:245
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Изменения будут потеряны! Вы уверены, что хотите загрузить документ %s "
 "заново?"
 
-#: ../src/file.cpp:262
+#: ../src/file.cpp:265
 msgid "Document reverted."
 msgstr "Документ возвращен к последнему сохраненному состоянию."
 
-#: ../src/file.cpp:264
+#: ../src/file.cpp:267
 msgid "Document not reverted."
 msgstr "Документ не возвращен к сохраненному состоянию."
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:388
 msgid "Select file to open"
 msgstr "Выберите файл"
 
-#: ../src/file.cpp:467
+#: ../src/file.cpp:470
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -2531,11 +2531,11 @@ msgstr[0] "Удалено <b>%i</b> ненужное определение в &
 msgstr[1] "Удалено <b>%i</b> ненужных определения в &lt;defs&gt;."
 msgstr[2] "Удалено <b>%i</b> ненужных определений в &lt;defs&gt;."
 
-#: ../src/file.cpp:472
+#: ../src/file.cpp:475
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Нет ненужных элементов в &lt;defs&gt;."
 
-#: ../src/file.cpp:498
+#: ../src/file.cpp:501
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2544,42 +2544,42 @@ msgstr ""
 "Не найдено расширение Inkscape для сохранения документа (%s). Возможно, "
 "задано неизвестное расширение имени файла."
 
-#: ../src/file.cpp:499 ../src/file.cpp:507
+#: ../src/file.cpp:502 ../src/file.cpp:510
 msgid "Document not saved."
 msgstr "Документ не сохранен."
 
-#: ../src/file.cpp:506
+#: ../src/file.cpp:509
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Невозможно сохранить файл %s."
 
-#: ../src/file.cpp:516
+#: ../src/file.cpp:519
 msgid "Document saved."
 msgstr "Документ сохранен."
 
-#: ../src/file.cpp:573 ../src/file.cpp:947
+#: ../src/file.cpp:576 ../src/file.cpp:950
 #, c-format
 msgid "drawing%s"
 msgstr "рисунок%s"
 
-#: ../src/file.cpp:579
+#: ../src/file.cpp:582
 #, c-format
 msgid "drawing-%d%s"
 msgstr "рисунок-%d%s"
 
-#: ../src/file.cpp:600
+#: ../src/file.cpp:603
 msgid "Select file to save to"
 msgstr "Выберите файл для сохранения"
 
-#: ../src/file.cpp:661
+#: ../src/file.cpp:664
 msgid "No changes need to be saved."
 msgstr "Файл не был изменен. Сохранение не требуется."
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:855
 msgid "Select file to import"
 msgstr "Выберите файл для импорта"
 
-#: ../src/file.cpp:969
+#: ../src/file.cpp:972
 #, fuzzy
 msgid "Select file to export to"
 msgstr "Выберите файл для импорта"
@@ -9435,46 +9435,46 @@ msgstr "Создать градиент в штрихе"
 msgid "<b>Change:</b>"
 msgstr "<b>Менять:</b>"
 
-#: ../src/widgets/gradient-vector.cpp:256
+#: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
 msgstr "Документ не содержит градиентов"
 
-#: ../src/widgets/gradient-vector.cpp:262
+#: ../src/widgets/gradient-vector.cpp:276
 msgid "No gradient selected"
 msgstr "Градиент не выделен"
 
-#: ../src/widgets/gradient-vector.cpp:518
+#: ../src/widgets/gradient-vector.cpp:534
 msgid "No stops in gradient"
 msgstr "В градиенте нет опорных точек"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:783
+#: ../src/widgets/gradient-vector.cpp:799
 msgid "Add stop"
 msgstr "Добавить опорную точку"
 
-#: ../src/widgets/gradient-vector.cpp:786
+#: ../src/widgets/gradient-vector.cpp:802
 msgid "Add another control stop to gradient"
 msgstr "Добавить еще одну опорную точку в градиент"
 
-#: ../src/widgets/gradient-vector.cpp:788
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Delete stop"
 msgstr "Удалить опорную точку"
 
-#: ../src/widgets/gradient-vector.cpp:791
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
 msgstr "Удалить опорную точку градиента"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:802
+#: ../src/widgets/gradient-vector.cpp:818
 msgid "Offset:"
 msgstr "Смещение:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:847
+#: ../src/widgets/gradient-vector.cpp:863
 msgid "Stop Color"
 msgstr "Цвет опорной точки"
 
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:892
 msgid "Gradient editor"
 msgstr "Редактор градиентов"
 

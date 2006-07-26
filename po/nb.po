@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:54+0200\n"
+"POT-Creation-Date: 2006-07-26 20:45+0200\n"
 "PO-Revision-Date: 2006-06-15 20:03+0100\n"
 "Last-Translator: Stephan Rene <srk_translation@yahoo.com>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -1550,7 +1550,7 @@ msgstr "Fragment"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "XML fragment av RDF 'Lisens' seksjonen."
 
-#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Ingen dokumenter valgt"
@@ -2417,49 +2417,49 @@ msgstr "Autosporing av format feilet. Filen blir åpnet som SVG."
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:124
+#: ../src/file.cpp:127
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:211 ../src/file.cpp:824
+#: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Feilet i å laste forespurte fil %s"
 
-#: ../src/file.cpp:236
+#: ../src/file.cpp:239
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokumenterer ikke lagret ennå. Kan ikke tilbakestilles."
 
-#: ../src/file.cpp:242
+#: ../src/file.cpp:245
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Endringer vil bli tapt! Er du sikker på at du vil gjennopplaste dokument %s?"
 
-#: ../src/file.cpp:262
+#: ../src/file.cpp:265
 msgid "Document reverted."
 msgstr "Dokument tilbakestilt."
 
-#: ../src/file.cpp:264
+#: ../src/file.cpp:267
 msgid "Document not reverted."
 msgstr "Dokument er ikke tilbakestilt."
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:388
 msgid "Select file to open"
 msgstr "Velg fil som skal åpnes"
 
-#: ../src/file.cpp:467
+#: ../src/file.cpp:470
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Fjernet <b>%i</b> ubrukt definisjon i &lt;defs&gt;."
 msgstr[1] "Fjernet <b>%i</b> ubrukte definisjoner i &lt;defs&gt;."
 
-#: ../src/file.cpp:472
+#: ../src/file.cpp:475
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Ingen ubrukte definisjoner i &lt;defs&gt;."
 
-#: ../src/file.cpp:498
+#: ../src/file.cpp:501
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2468,42 +2468,42 @@ msgstr ""
 "Ingen Inkscape filtype funnet for å lagre dokument (%s).  Dette kan være på "
 "grunn av en ukjent filtypenavn."
 
-#: ../src/file.cpp:499 ../src/file.cpp:507
+#: ../src/file.cpp:502 ../src/file.cpp:510
 msgid "Document not saved."
 msgstr "Dokument er ikke lagret."
 
-#: ../src/file.cpp:506
+#: ../src/file.cpp:509
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Fil %s kunne ikke lagres."
 
-#: ../src/file.cpp:516
+#: ../src/file.cpp:519
 msgid "Document saved."
 msgstr "Dokument er lagret."
 
-#: ../src/file.cpp:573 ../src/file.cpp:947
+#: ../src/file.cpp:576 ../src/file.cpp:950
 #, c-format
 msgid "drawing%s"
 msgstr "tegning%s"
 
-#: ../src/file.cpp:579
+#: ../src/file.cpp:582
 #, c-format
 msgid "drawing-%d%s"
 msgstr "tegning-%d%s"
 
-#: ../src/file.cpp:600
+#: ../src/file.cpp:603
 msgid "Select file to save to"
 msgstr "Velg fil det skal lagres til"
 
-#: ../src/file.cpp:661
+#: ../src/file.cpp:664
 msgid "No changes need to be saved."
 msgstr "Ingen endringer som trengs å lagres."
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:855
 msgid "Select file to import"
 msgstr "Velg fil som skal importeres"
 
-#: ../src/file.cpp:969
+#: ../src/file.cpp:972
 #, fuzzy
 msgid "Select file to export to"
 msgstr "Velg fil som skal importeres"
@@ -9306,46 +9306,46 @@ msgstr "Skap gradient i strøket"
 msgid "<b>Change:</b>"
 msgstr "<b>Endre:</b>"
 
-#: ../src/widgets/gradient-vector.cpp:256
+#: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
 msgstr "Ingen gradienter i dokumentet"
 
-#: ../src/widgets/gradient-vector.cpp:262
+#: ../src/widgets/gradient-vector.cpp:276
 msgid "No gradient selected"
 msgstr "Ingen gradient valgt"
 
-#: ../src/widgets/gradient-vector.cpp:518
+#: ../src/widgets/gradient-vector.cpp:534
 msgid "No stops in gradient"
 msgstr "Ingen faser i gradient"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:783
+#: ../src/widgets/gradient-vector.cpp:799
 msgid "Add stop"
 msgstr "Legg til fase"
 
-#: ../src/widgets/gradient-vector.cpp:786
+#: ../src/widgets/gradient-vector.cpp:802
 msgid "Add another control stop to gradient"
 msgstr "Legg til en ny fase i gradient"
 
-#: ../src/widgets/gradient-vector.cpp:788
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Delete stop"
 msgstr "Slett fase"
 
-#: ../src/widgets/gradient-vector.cpp:791
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
 msgstr "Slett valgte fase i gradient"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:802
+#: ../src/widgets/gradient-vector.cpp:818
 msgid "Offset:"
 msgstr "Forskyv: "
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:847
+#: ../src/widgets/gradient-vector.cpp:863
 msgid "Stop Color"
 msgstr "Fase Farge"
 
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:892
 msgid "Gradient editor"
 msgstr "Gradient redigerer"
 

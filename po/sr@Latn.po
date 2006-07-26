@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:54+0200\n"
+"POT-Creation-Date: 2006-07-26 20:45+0200\n"
 "PO-Revision-Date: 2006-06-10 22:37+0200\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sf.net>\n"
 "Language-Team: Serbian <prevod@gnome.org>\n"
@@ -1559,7 +1559,7 @@ msgstr "Delovi"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "XML delovi za RDF deo licence."
 
-#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Niste izabrali dokument"
@@ -2429,39 +2429,39 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:124
+#: ../src/file.cpp:127
 msgid "default.svg"
 msgstr "default.svg"
 
-#: ../src/file.cpp:211 ../src/file.cpp:824
+#: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Ne moću da učitam zahtevanu datoteku %s"
 
-#: ../src/file.cpp:236
+#: ../src/file.cpp:239
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Dokument još uvek nije sačuvan. Ne mogu da povratim pređašnje stanje."
 
-#: ../src/file.cpp:242
+#: ../src/file.cpp:245
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Izmene će biti izgubljene! Da li ste sigurni da želite ponovo da učitate "
 "dokument %s?"
 
-#: ../src/file.cpp:262
+#: ../src/file.cpp:265
 msgid "Document reverted."
 msgstr "Dokument povraćen na pređašnje stanje."
 
-#: ../src/file.cpp:264
+#: ../src/file.cpp:267
 msgid "Document not reverted."
 msgstr "Dokument nije povraćen na pređašnje stanje."
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:388
 msgid "Select file to open"
 msgstr "Izaberite koju datoteku želite da otvorite"
 
-#: ../src/file.cpp:467
+#: ../src/file.cpp:470
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -2469,11 +2469,11 @@ msgstr[0] "Uklonjena <b>%i</b> neiskorišćena stavka u &lt;defs&gt;."
 msgstr[1] "Uklonjeno <b>%i</b> neiskorišćene stavke u &lt;defs&gt;."
 msgstr[2] "Uklonjeno <b>%i</b> neiskorišćenih stavki u &lt;defs&gt;."
 
-#: ../src/file.cpp:472
+#: ../src/file.cpp:475
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Nema neiskorišćenih stavki u &lt;defs&gt;."
 
-#: ../src/file.cpp:498
+#: ../src/file.cpp:501
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2482,42 +2482,42 @@ msgstr ""
 "Inkscape ekstenzija za čuvanje dokumenta nije pronađena (%s). Mogući razlog "
 "ovome je nepoznata ekstenzija datoteke."
 
-#: ../src/file.cpp:499 ../src/file.cpp:507
+#: ../src/file.cpp:502 ../src/file.cpp:510
 msgid "Document not saved."
 msgstr "Dokument nije sačuvan."
 
-#: ../src/file.cpp:506
+#: ../src/file.cpp:509
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Datoteka %s ne može biti sačuvana."
 
-#: ../src/file.cpp:516
+#: ../src/file.cpp:519
 msgid "Document saved."
 msgstr "Dokument je sačuvan."
 
-#: ../src/file.cpp:573 ../src/file.cpp:947
+#: ../src/file.cpp:576 ../src/file.cpp:950
 #, c-format
 msgid "drawing%s"
 msgstr "crtež%s"
 
-#: ../src/file.cpp:579
+#: ../src/file.cpp:582
 #, c-format
 msgid "drawing-%d%s"
 msgstr "crtež-%d%s"
 
-#: ../src/file.cpp:600
+#: ../src/file.cpp:603
 msgid "Select file to save to"
 msgstr "Izaberite datoteku u koju želite da sačuvate dokument"
 
-#: ../src/file.cpp:661
+#: ../src/file.cpp:664
 msgid "No changes need to be saved."
 msgstr "Nema izmena potrebnih za snimanje."
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:855
 msgid "Select file to import"
 msgstr "Odaberite datoteku za uvoz"
 
-#: ../src/file.cpp:969
+#: ../src/file.cpp:972
 #, fuzzy
 msgid "Select file to export to"
 msgstr "Odaberite datoteku za uvoz"
@@ -9385,46 +9385,46 @@ msgstr "Napravi preliv u liniji"
 msgid "<b>Change:</b>"
 msgstr "<b>Izmena:</b>"
 
-#: ../src/widgets/gradient-vector.cpp:256
+#: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
 msgstr "Nema preliva u dokumentu"
 
-#: ../src/widgets/gradient-vector.cpp:262
+#: ../src/widgets/gradient-vector.cpp:276
 msgid "No gradient selected"
 msgstr "Preliv nije izabran"
 
-#: ../src/widgets/gradient-vector.cpp:518
+#: ../src/widgets/gradient-vector.cpp:534
 msgid "No stops in gradient"
 msgstr "Bez stanice boje u prelivu"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:783
+#: ../src/widgets/gradient-vector.cpp:799
 msgid "Add stop"
 msgstr "Dodaj stanicu boje"
 
-#: ../src/widgets/gradient-vector.cpp:786
+#: ../src/widgets/gradient-vector.cpp:802
 msgid "Add another control stop to gradient"
 msgstr "Dodavanje još jedne kontrolne stanice boje u preliv"
 
-#: ../src/widgets/gradient-vector.cpp:788
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Delete stop"
 msgstr "Ukloni stanicu boje"
 
-#: ../src/widgets/gradient-vector.cpp:791
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
 msgstr "Uklanjanje trenutne kontrolne stanice boje iz preliva"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:802
+#: ../src/widgets/gradient-vector.cpp:818
 msgid "Offset:"
 msgstr "Razmak:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:847
+#: ../src/widgets/gradient-vector.cpp:863
 msgid "Stop Color"
 msgstr "Stanica boje"
 
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:892
 msgid "Gradient editor"
 msgstr "Uređivač preliva"
 

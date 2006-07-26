@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:54+0200\n"
+"POT-Creation-Date: 2006-07-26 20:45+0200\n"
 "PO-Revision-Date: 2006-06-20 20:26+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
@@ -1606,7 +1606,7 @@ msgstr "Fragmento"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "Fragmento XML para la sección RDF «Licencia»."
 
-#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Sin documentos seleccionados"
@@ -2485,49 +2485,49 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:124
+#: ../src/file.cpp:127
 msgid "default.svg"
 msgstr "default.es.svg"
 
-#: ../src/file.cpp:211 ../src/file.cpp:824
+#: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Error al cargar el archivo pedido %s"
 
-#: ../src/file.cpp:236
+#: ../src/file.cpp:239
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Todavía no se ha guardado el documento. No se puede revertir."
 
-#: ../src/file.cpp:242
+#: ../src/file.cpp:245
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Se perderán los cambios. ¿Está seguro de querer recargar el documento %s?"
 
-#: ../src/file.cpp:262
+#: ../src/file.cpp:265
 msgid "Document reverted."
 msgstr "Documento revertido."
 
-#: ../src/file.cpp:264
+#: ../src/file.cpp:267
 msgid "Document not reverted."
 msgstr "No se ha revertido el documento."
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:388
 msgid "Select file to open"
 msgstr "Seleccione el archivo que desea abrir"
 
-#: ../src/file.cpp:467
+#: ../src/file.cpp:470
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "Se ha eliminado <b>%i</b> definición no usada en &lt;defs&gt;."
 msgstr[1] "Se han eliminado <b>%i</b> definiciones no usadas en &lt;defs&gt;."
 
-#: ../src/file.cpp:472
+#: ../src/file.cpp:475
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "No hay definiciones sin usar en &lt;defs&gt;."
 
-#: ../src/file.cpp:498
+#: ../src/file.cpp:501
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2536,42 +2536,42 @@ msgstr ""
 "No se ha encontrado una extensión de inkscape para guardar el documento (%"
 "s). Esto pudo ser causado por una extensión de archivo desconocida."
 
-#: ../src/file.cpp:499 ../src/file.cpp:507
+#: ../src/file.cpp:502 ../src/file.cpp:510
 msgid "Document not saved."
 msgstr "No se ha guardado el documento."
 
-#: ../src/file.cpp:506
+#: ../src/file.cpp:509
 #, c-format
 msgid "File %s could not be saved."
 msgstr "No se ha podido guardar el archivo %s."
 
-#: ../src/file.cpp:516
+#: ../src/file.cpp:519
 msgid "Document saved."
 msgstr "Documento guardado."
 
-#: ../src/file.cpp:573 ../src/file.cpp:947
+#: ../src/file.cpp:576 ../src/file.cpp:950
 #, c-format
 msgid "drawing%s"
 msgstr "dibujo%s"
 
-#: ../src/file.cpp:579
+#: ../src/file.cpp:582
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dibujo-%d%s"
 
-#: ../src/file.cpp:600
+#: ../src/file.cpp:603
 msgid "Select file to save to"
 msgstr "Seleccione el archivo en el que se guardará"
 
-#: ../src/file.cpp:661
+#: ../src/file.cpp:664
 msgid "No changes need to be saved."
 msgstr "No hay cambios que necesiten ser guardados."
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:855
 msgid "Select file to import"
 msgstr "Seleccionar el archivo a importar"
 
-#: ../src/file.cpp:969
+#: ../src/file.cpp:972
 #, fuzzy
 msgid "Select file to export to"
 msgstr "Seleccionar el archivo a importar"
@@ -9506,46 +9506,46 @@ msgstr "Crear gradiente en el trazo"
 msgid "<b>Change:</b>"
 msgstr "<b>Cambio:</b>"
 
-#: ../src/widgets/gradient-vector.cpp:256
+#: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
 msgstr "Sin gradientes en el documento"
 
-#: ../src/widgets/gradient-vector.cpp:262
+#: ../src/widgets/gradient-vector.cpp:276
 msgid "No gradient selected"
 msgstr "Sin gradiente seleccionado"
 
-#: ../src/widgets/gradient-vector.cpp:518
+#: ../src/widgets/gradient-vector.cpp:534
 msgid "No stops in gradient"
 msgstr "Gradiente sin paradas"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:783
+#: ../src/widgets/gradient-vector.cpp:799
 msgid "Add stop"
 msgstr "Añadir parada"
 
-#: ../src/widgets/gradient-vector.cpp:786
+#: ../src/widgets/gradient-vector.cpp:802
 msgid "Add another control stop to gradient"
 msgstr "Añadir otro control de parada al gradiente"
 
-#: ../src/widgets/gradient-vector.cpp:788
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Delete stop"
 msgstr "Borrar parada"
 
-#: ../src/widgets/gradient-vector.cpp:791
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
 msgstr "Eliminar el control de parada actual"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:802
+#: ../src/widgets/gradient-vector.cpp:818
 msgid "Offset:"
 msgstr "Desvío:"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:847
+#: ../src/widgets/gradient-vector.cpp:863
 msgid "Stop Color"
 msgstr "Color de parada"
 
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:892
 msgid "Gradient editor"
 msgstr "Editor de gradiente"
 

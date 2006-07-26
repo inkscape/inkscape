@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:54+0200\n"
+"POT-Creation-Date: 2006-07-26 20:45+0200\n"
 "PO-Revision-Date: 2006-06-03 12:53+0200\n"
 "Last-Translator: Spyros Blanas <cid_e@users.sourceforge.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -1649,7 +1649,7 @@ msgid "XML fragment for the RDF 'License' section."
 msgstr ""
 
 #
-#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Κανένα έγγραφο δεν επιλέχθηκε"
@@ -2570,99 +2570,99 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:124
+#: ../src/file.cpp:127
 #, fuzzy
 msgid "default.svg"
 msgstr "Διαγρ."
 
-#: ../src/file.cpp:211 ../src/file.cpp:824
+#: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr ""
 
-#: ../src/file.cpp:236
+#: ../src/file.cpp:239
 #, fuzzy
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Έγγραφο"
 
-#: ../src/file.cpp:242
+#: ../src/file.cpp:245
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 
-#: ../src/file.cpp:262
+#: ../src/file.cpp:265
 #, fuzzy
 msgid "Document reverted."
 msgstr "Έγγραφο"
 
-#: ../src/file.cpp:264
+#: ../src/file.cpp:267
 #, fuzzy
 msgid "Document not reverted."
 msgstr "Έγγραφο"
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:388
 #, fuzzy
 msgid "Select file to open"
 msgstr "Επιλογή αρχείου προς ανάγνωση"
 
-#: ../src/file.cpp:467
+#: ../src/file.cpp:470
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/file.cpp:472
+#: ../src/file.cpp:475
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr ""
 
-#: ../src/file.cpp:498
+#: ../src/file.cpp:501
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
 "caused by an unknown filename extension."
 msgstr ""
 
-#: ../src/file.cpp:499 ../src/file.cpp:507
+#: ../src/file.cpp:502 ../src/file.cpp:510
 #, fuzzy
 msgid "Document not saved."
 msgstr "Έγγραφο"
 
-#: ../src/file.cpp:506
+#: ../src/file.cpp:509
 #, c-format
 msgid "File %s could not be saved."
 msgstr ""
 
-#: ../src/file.cpp:516
+#: ../src/file.cpp:519
 #, fuzzy
 msgid "Document saved."
 msgstr "Έγγραφο"
 
-#: ../src/file.cpp:573 ../src/file.cpp:947
+#: ../src/file.cpp:576 ../src/file.cpp:950
 #, fuzzy, c-format
 msgid "drawing%s"
 msgstr "Σχεδίαση"
 
-#: ../src/file.cpp:579
+#: ../src/file.cpp:582
 #, fuzzy, c-format
 msgid "drawing-%d%s"
 msgstr "Σχεδίαση"
 
-#: ../src/file.cpp:600
+#: ../src/file.cpp:603
 #, fuzzy
 msgid "Select file to save to"
 msgstr "Επιλογή αρχείου προς ανάγνωση"
 
-#: ../src/file.cpp:661
+#: ../src/file.cpp:664
 msgid "No changes need to be saved."
 msgstr ""
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:855
 #, fuzzy
 msgid "Select file to import"
 msgstr "Επιλογή αρχείου για φόρτωση"
 
-#: ../src/file.cpp:969
+#: ../src/file.cpp:972
 #, fuzzy
 msgid "Select file to export to"
 msgstr "Επιλογή αρχείου για φόρτωση"
@@ -10053,54 +10053,54 @@ msgstr ""
 msgid "<b>Change:</b>"
 msgstr "Αλλαγή"
 
-#: ../src/widgets/gradient-vector.cpp:256
+#: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
 msgstr ""
 
 #
-#: ../src/widgets/gradient-vector.cpp:262
+#: ../src/widgets/gradient-vector.cpp:276
 #, fuzzy
 msgid "No gradient selected"
 msgstr "Επιλέχθησαν \"%s\""
 
 #
-#: ../src/widgets/gradient-vector.cpp:518
+#: ../src/widgets/gradient-vector.cpp:534
 #, fuzzy
 msgid "No stops in gradient"
 msgstr "Προσθήκη νέου παροχέα"
 
 #
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:783
+#: ../src/widgets/gradient-vector.cpp:799
 #, fuzzy
 msgid "Add stop"
 msgstr "Επιφάνεια εργασίας"
 
-#: ../src/widgets/gradient-vector.cpp:786
+#: ../src/widgets/gradient-vector.cpp:802
 msgid "Add another control stop to gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-vector.cpp:788
+#: ../src/widgets/gradient-vector.cpp:804
 #, fuzzy
 msgid "Delete stop"
 msgstr "Διαγραφή επιλογής"
 
-#: ../src/widgets/gradient-vector.cpp:791
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
 msgstr ""
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:802
+#: ../src/widgets/gradient-vector.cpp:818
 msgid "Offset:"
 msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:847
+#: ../src/widgets/gradient-vector.cpp:863
 #, fuzzy
 msgid "Stop Color"
 msgstr " χρώμα"
 
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:892
 #, fuzzy
 msgid "Gradient editor"
 msgstr "Βαθμίδα"

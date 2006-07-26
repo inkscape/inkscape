@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-24 19:54+0200\n"
-"PO-Revision-Date: 2006-07-11 23:56+0100\n"
+"POT-Creation-Date: 2006-07-26 20:45+0200\n"
+"PO-Revision-Date: 2006-07-26 17:04+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1596,7 +1596,7 @@ msgstr "Fragment"
 msgid "XML fragment for the RDF 'License' section."
 msgstr "Fragment XML pour la section « Licence » (RDF)."
 
-#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:250
+#: ../src/dialogs/stroke-style.cpp:765 ../src/widgets/gradient-vector.cpp:264
 #: ../src/widgets/paint-selector.cpp:739
 msgid "No document selected"
 msgstr "Aucun document sélectionné"
@@ -2477,39 +2477,39 @@ msgstr ""
 #. template. This way you can localize the default pagesize, translate the name of
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
-#: ../src/file.cpp:124
+#: ../src/file.cpp:127
 msgid "default.svg"
 msgstr "default.fr.svg"
 
-#: ../src/file.cpp:211 ../src/file.cpp:824
+#: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Échec du chargement du fichier %s"
 
-#: ../src/file.cpp:236
+#: ../src/file.cpp:239
 msgid "Document not saved yet.  Cannot revert."
 msgstr "Document non enregistré. Impossible de le recharger."
 
-#: ../src/file.cpp:242
+#: ../src/file.cpp:245
 #, c-format
 msgid "Changes will be lost!  Are you sure you want to reload document %s?"
 msgstr ""
 "Les changements seront perdus ! Êtes-vous sûr de vouloir recharger le "
 "document %s ?"
 
-#: ../src/file.cpp:262
+#: ../src/file.cpp:265
 msgid "Document reverted."
 msgstr "Document rechargé."
 
-#: ../src/file.cpp:264
+#: ../src/file.cpp:267
 msgid "Document not reverted."
 msgstr "Document non rechargé."
 
-#: ../src/file.cpp:385
+#: ../src/file.cpp:388
 msgid "Select file to open"
 msgstr "Sélectionner un fichier à ouvrir"
 
-#: ../src/file.cpp:467
+#: ../src/file.cpp:470
 #, c-format
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
@@ -2518,11 +2518,11 @@ msgstr[0] ""
 msgstr[1] ""
 "Suppression de <b>%i</b> définitions inutilisées dans les &lt;defs&gt;."
 
-#: ../src/file.cpp:472
+#: ../src/file.cpp:475
 msgid "No unused definitions in &lt;defs&gt;."
 msgstr "Aucune définition inutilisée dans les &lt;defs&gt;."
 
-#: ../src/file.cpp:498
+#: ../src/file.cpp:501
 #, c-format
 msgid ""
 "No Inkscape extension found to save document (%s).  This may have been "
@@ -2531,45 +2531,44 @@ msgstr ""
 "Aucune extension Inkscape pour enregistrer le document (%s) n'a été trouvée. "
 "Cela peut venir d'une extension de fichier inconnue."
 
-#: ../src/file.cpp:499 ../src/file.cpp:507
+#: ../src/file.cpp:502 ../src/file.cpp:510
 msgid "Document not saved."
 msgstr "Document non enregistré."
 
-#: ../src/file.cpp:506
+#: ../src/file.cpp:509
 #, c-format
 msgid "File %s could not be saved."
 msgstr "Le fichier %s n'a pas pu être enregistré."
 
-#: ../src/file.cpp:516
+#: ../src/file.cpp:519
 msgid "Document saved."
 msgstr "Document enregistré."
 
-#: ../src/file.cpp:573 ../src/file.cpp:947
+#: ../src/file.cpp:576 ../src/file.cpp:950
 #, c-format
 msgid "drawing%s"
 msgstr "dessin%s"
 
-#: ../src/file.cpp:579
+#: ../src/file.cpp:582
 #, c-format
 msgid "drawing-%d%s"
 msgstr "dessin-%d%s"
 
-#: ../src/file.cpp:600
+#: ../src/file.cpp:603
 msgid "Select file to save to"
 msgstr "Sélectionner le fichier dans lequel enregistrer"
 
-#: ../src/file.cpp:661
+#: ../src/file.cpp:664
 msgid "No changes need to be saved."
 msgstr "Aucun changement à enregistrer."
 
-#: ../src/file.cpp:852
+#: ../src/file.cpp:855
 msgid "Select file to import"
 msgstr "Sélectionner un fichier à importer"
 
-#: ../src/file.cpp:969
-#, fuzzy
+#: ../src/file.cpp:972
 msgid "Select file to export to"
-msgstr "Sélectionner un fichier à importer"
+msgstr "Sélectionner un fichier vers lequel exporter"
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -5745,53 +5744,47 @@ msgstr "Ajouter automatiquement une extension aux noms de fichiers"
 
 #: ../src/ui/dialog/filedialog.cpp:1868
 msgid "Source left bound"
-msgstr ""
+msgstr "Limite gauche de la source"
 
 #: ../src/ui/dialog/filedialog.cpp:1869
 msgid "Source top bound"
-msgstr ""
+msgstr "Limite supérieure de la source"
 
 #: ../src/ui/dialog/filedialog.cpp:1870
 msgid "Source right bound"
-msgstr ""
+msgstr "Limite droite de la source"
 
 #: ../src/ui/dialog/filedialog.cpp:1871
 msgid "Source bottom bound"
-msgstr ""
+msgstr "Limite inférieure de la source"
 
 #: ../src/ui/dialog/filedialog.cpp:1872
-#, fuzzy
 msgid "Source width"
-msgstr "Largeur du contour"
+msgstr "Largeur de la source"
 
 #: ../src/ui/dialog/filedialog.cpp:1873
-#, fuzzy
 msgid "Source height"
-msgstr "Égaliser la hauteur"
+msgstr "Hauteur de la source"
 
 #: ../src/ui/dialog/filedialog.cpp:1874
-#, fuzzy
 msgid "Destination width"
-msgstr "Destination d'impression"
+msgstr "Largeur de la destination"
 
 #: ../src/ui/dialog/filedialog.cpp:1875
-#, fuzzy
 msgid "Destination height"
-msgstr "Destination d'impression"
+msgstr "Hauteur de la destination"
 
 #: ../src/ui/dialog/filedialog.cpp:1876
-#, fuzzy
 msgid "Dots per inch resolution"
-msgstr "Résolution par défaut d'exportation :"
+msgstr "Résolution en points par pouce"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialog.cpp:1907
-#, fuzzy
 msgid "Document"
-msgstr "Document enregistré."
+msgstr "Document"
 
 #: ../src/ui/dialog/filedialog.cpp:1919 ../src/ui/widget/page-sizer.cpp:167
 msgid "Custom"
@@ -5803,17 +5796,15 @@ msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1962
 msgid "Antialias"
-msgstr ""
+msgstr "Anticrénelage"
 
 #: ../src/ui/dialog/filedialog.cpp:1965
-#, fuzzy
 msgid "Background"
-msgstr "Couleur de _fond :"
+msgstr "Couleur de fond :"
 
 #: ../src/ui/dialog/filedialog.cpp:1988
-#, fuzzy
 msgid "Destination"
-msgstr "Destination d'impression"
+msgstr "Destination"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -9453,46 +9444,46 @@ msgstr "Appliquer le dégradé au contour"
 msgid "<b>Change:</b>"
 msgstr "<b>Modifier :</b>"
 
-#: ../src/widgets/gradient-vector.cpp:256
+#: ../src/widgets/gradient-vector.cpp:270
 msgid "No gradients in document"
 msgstr "Le document ne contient pas de dégradé"
 
-#: ../src/widgets/gradient-vector.cpp:262
+#: ../src/widgets/gradient-vector.cpp:276
 msgid "No gradient selected"
 msgstr "Aucun dégradé n'est sélectionné"
 
-#: ../src/widgets/gradient-vector.cpp:518
+#: ../src/widgets/gradient-vector.cpp:534
 msgid "No stops in gradient"
 msgstr "Il n'y a pas de stop dans le dégradé"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:783
+#: ../src/widgets/gradient-vector.cpp:799
 msgid "Add stop"
 msgstr "Ajouter un stop"
 
-#: ../src/widgets/gradient-vector.cpp:786
+#: ../src/widgets/gradient-vector.cpp:802
 msgid "Add another control stop to gradient"
 msgstr "Ajouter un nouveau stop de contrôle au dégradé"
 
-#: ../src/widgets/gradient-vector.cpp:788
+#: ../src/widgets/gradient-vector.cpp:804
 msgid "Delete stop"
 msgstr "Supprimer un stop"
 
-#: ../src/widgets/gradient-vector.cpp:791
+#: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
 msgstr "Supprimer le stop courant du dégradé"
 
 #. Label
-#: ../src/widgets/gradient-vector.cpp:802
+#: ../src/widgets/gradient-vector.cpp:818
 msgid "Offset:"
 msgstr "Décalage :"
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
-#: ../src/widgets/gradient-vector.cpp:847
+#: ../src/widgets/gradient-vector.cpp:863
 msgid "Stop Color"
 msgstr "Couleur du stop"
 
-#: ../src/widgets/gradient-vector.cpp:876
+#: ../src/widgets/gradient-vector.cpp:892
 msgid "Gradient editor"
 msgstr "Éditeur de dégradé"
 
@@ -9566,13 +9557,12 @@ msgid "No patterns in document"
 msgstr "Aucun motif de remplissage dans le document"
 
 #: ../src/widgets/paint-selector.cpp:859
-#, fuzzy
 msgid ""
 "Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
 "pattern from selection."
 msgstr ""
-"Utiliser <b>Édition &gt; Objet(s) en motif</b> pour faire de la sélection un "
-"nouveau motif de remplissage."
+"Utiliser <b>Objet &gt; Motif &gt; Objets en motif</b> pour faire de la "
+"sélection un nouveau motif de remplissage."
 
 #: ../src/widgets/select-toolbar.cpp:338
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
@@ -10202,22 +10192,22 @@ msgstr ""
 "Espace laissé autour des objets par les connecteurs routés automatiquement"
 
 #: ../src/widgets/toolbox.cpp:4006
-#, fuzzy
 msgid "Length:"
-msgstr "Diapason"
+msgstr "Longueur :"
 
 #: ../src/widgets/toolbox.cpp:4007
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
+msgstr "Longueur idéale pour les connecteurs après routage"
 
 #: ../src/widgets/toolbox.cpp:4022
-#, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Faire que les connecteurs évitent les objets sélectionnés"
+msgstr ""
+"Faire que les connecteurs avec des marqueurs de fin (des flèches) pointent "
+"vers le bas"
 
 #: ../src/widgets/toolbox.cpp:4036
 msgid "Do not allow overlapping shapes"
-msgstr ""
+msgstr "Ne pas permettre que deux formes se chevauchent"
 
 #.
 #. Local Variables:
@@ -10551,7 +10541,7 @@ msgstr "Méthode d'interpolation"
 
 #: ../share/extensions/interp.inx.h:7
 msgid "Interpolation steps"
-msgstr "Etapes d'interpolation"
+msgstr "Étapes d'interpolation"
 
 #: ../share/extensions/kochify.inx.h:1
 msgid "Fractal (Koch)"
