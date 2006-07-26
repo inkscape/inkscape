@@ -1,7 +1,7 @@
 include ../Makefile.mingw.common
 
-INKLANG = am az be ca cs da de el en_GB es es_MX et fi fr ga gl hu it ja ko lt mk \
-nb nl nn pa pl pt pt_BR ru sk sl sr sr@Latn sv tr uk vi zh_CN zh_TW
+INKLANG = am az be ca cs da de el en_GB en_CA es es_MX et fi fr ga gl hr hu it ja ko lt mk \
+mn nb ne nl nn pa pl pt pt_BR ru rw sk sl sq sr sr@Latn sv tr uk vi zh_CN zh_TW
 
 LOBJ := $(foreach a, $(INKLANG),$(a).mo )
 

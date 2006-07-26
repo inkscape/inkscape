@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sodipodi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 20:45+0200\n"
+"POT-Creation-Date: 2006-07-26 21:00+0200\n"
 "PO-Revision-Date: 2003-02-01 10:13+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
@@ -46,23 +46,20 @@ msgstr ""
 #: ../src/arc-context.cpp:437
 #, fuzzy
 msgid "Create ellipse"
-msgstr "ሰነድ አስቀምት"
+msgstr "አያያዝ ፍጠር"
 
 #: ../src/connector-context.cpp:523
-#, fuzzy
 msgid "Creating new connector"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/connector-context.cpp:717
-#, fuzzy
 msgid "Reroute connector"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:924
-#, fuzzy
 msgid "Create connector"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/connector-context.cpp:948
 msgid "Finishing connector"
@@ -317,9 +314,8 @@ msgid "Sc_ale"
 msgstr "መለኪያ"
 
 #: ../src/dialogs/clonetiler.cpp:1847
-#, fuzzy
 msgid "<b>Scale X:</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1855
 #, no-c-format
@@ -336,9 +332,8 @@ msgid "Randomize the horizontal scale by this percentage"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1878
-#, fuzzy
 msgid "<b>Scale Y:</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1886
 #, no-c-format
@@ -365,12 +360,11 @@ msgstr ""
 #: ../src/dialogs/clonetiler.cpp:1929
 #, fuzzy
 msgid "_Rotation"
-msgstr "ምርጫ"
+msgstr "ያሽከርክሩ"
 
 #: ../src/dialogs/clonetiler.cpp:1937
-#, fuzzy
 msgid "<b>Angle:</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1945
 #, no-c-format
@@ -423,14 +417,13 @@ msgid "Alternate the sign of opacity change for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2043
-#, fuzzy
 msgid "Co_lor"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2048
 #, fuzzy
 msgid "Initial color: "
-msgstr "የማጉያ ቀለም፦"
+msgstr "የመጀመሪያ ቀለም"
 
 #: ../src/dialogs/clonetiler.cpp:2052
 msgid "Initial color of tiled clones"
@@ -499,9 +492,8 @@ msgid "Alternate the sign of color changes for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2174
-#, fuzzy
 msgid "_Trace"
-msgstr "ላኩ"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2181
 msgid "Trace the drawing under the tiles"
@@ -612,9 +604,8 @@ msgid "Randomize the picked value by this percentage"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2317
-#, fuzzy
 msgid "Invert:"
-msgstr "ነጥብ"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2321
 msgid "Invert the picked value"
@@ -625,9 +616,8 @@ msgid "3. Apply the value to the clones':"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2337
-#, fuzzy
 msgid "Presence"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2340
 msgid ""
@@ -670,9 +660,8 @@ msgid "Height of the rectangle to be filled"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2487
-#, fuzzy
 msgid "Rows, columns: "
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2488
 msgid "Create the specified number of rows and columns"
@@ -697,9 +686,8 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2541
-#, fuzzy
 msgid " <b>_Create</b> "
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2543
 msgid "Create and tile the clones of the selection"
@@ -728,9 +716,8 @@ msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2582
-#, fuzzy
 msgid " R_eset "
-msgstr "አያያዝን አስወግድ"
+msgstr ""
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2584
@@ -755,7 +742,7 @@ msgstr "ፋይል"
 #: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 #, fuzzy
 msgid "_Clear"
-msgstr "ዝጋ"
+msgstr "ሁሉንም ሰርዝ"
 
 #: ../src/dialogs/debugdialog.cpp:144 ../src/ui/dialog/messages.cpp:57
 msgid "Capture log messages"
@@ -920,9 +907,8 @@ msgid "partial"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:379
-#, fuzzy
 msgid "No objects found"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:537
 #, fuzzy
@@ -950,9 +936,8 @@ msgid "Search rectangles"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Rectangles"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:577
 msgid "Search ellipses, arcs, circles"
@@ -987,8 +972,9 @@ msgid "Search paths, lines, polylines"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:600
+#, fuzzy
 msgid "Paths"
-msgstr ""
+msgstr "ለጥፍ"
 
 #: ../src/dialogs/find.cpp:605
 msgid "Search text objects"
@@ -1081,14 +1067,12 @@ msgid "Limit search to the current selection"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:715
-#, fuzzy
 msgid "Search in current _layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:719
-#, fuzzy
 msgid "Limit search to the current layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:724
 msgid "Include _hidden"
@@ -1112,9 +1096,8 @@ msgid "Clear values"
 msgstr "ሁሉንም ሰርዝ"
 
 #: ../src/dialogs/find.cpp:749
-#, fuzzy
 msgid "_Find"
-msgstr "ወደ ነበረበት መልስ"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:749
 msgid "Select objects matching all of the fields you filled in"
@@ -1122,9 +1105,8 @@ msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 #: ../src/ui/dialog/transformation.cpp:102
-#, fuzzy
 msgid "Rela_tive move"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
@@ -1145,9 +1127,9 @@ msgid "Guideline"
 msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr "መንቀሳቅስ"
+msgstr ""
 
 #: ../src/dialogs/iconpreview.cpp:143
 #, c-format
@@ -1161,9 +1143,8 @@ msgid "Selection"
 msgstr "ምርጫ"
 
 #: ../src/dialogs/iconpreview.cpp:193
-#, fuzzy
 msgid "Selection only or whole document"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/dialogs/iconpreview.cpp:201
 msgid "Refresh the icons"
@@ -1191,9 +1172,8 @@ msgstr "ምርጡ"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:150
-#, fuzzy
 msgid "_Label"
-msgstr "ዝቅተኛ"
+msgstr ""
 
 #: ../src/dialogs/item-properties.cpp:159
 msgid "A freeform label for the object"
@@ -1213,9 +1193,8 @@ msgstr "ምርጫ"
 
 #. Hide
 #: ../src/dialogs/item-properties.cpp:215
-#, fuzzy
 msgid "_Hide"
-msgstr "ወደ ነበረበት መልስ"
+msgstr ""
 
 #: ../src/dialogs/item-properties.cpp:216
 msgid "Check to make the object invisible"
@@ -1245,12 +1224,10 @@ msgid "Id exists! "
 msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:764
-#, fuzzy
 msgid "Opacity:"
-msgstr "ክፍተት Y፦"
+msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:789
-#, fuzzy
 msgid "New"
 msgstr "አዲስ"
 
@@ -1285,9 +1262,8 @@ msgid "Above current"
 msgstr "ሰነድ አስቀምት"
 
 #: ../src/dialogs/layer-properties.cpp:157
-#, fuzzy
 msgid "Below current"
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:160
 msgid "As sublayer of current"
@@ -1296,29 +1272,25 @@ msgstr ""
 #: ../src/dialogs/layer-properties.cpp:164
 #, fuzzy
 msgid "Position:"
-msgstr "ምርጫ"
+msgstr "መጠን እና ቦታ"
 
 #: ../src/dialogs/layer-properties.cpp:182
-#, fuzzy
 msgid "Rename Layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:185
-#, fuzzy
 msgid "_Rename"
-msgstr "ፋይል"
+msgstr ""
 
 #. TODO: annotate
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
-#, fuzzy
 msgid "Renamed layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:201
-#, fuzzy
 msgid "Add Layer"
-msgstr "ዝቅተኛ"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:203
 #, fuzzy
@@ -1390,14 +1362,12 @@ msgid "_Fill"
 msgstr "ፋይል"
 
 #: ../src/dialogs/object-properties.cpp:168
-#, fuzzy
 msgid "Stroke _paint"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/dialogs/object-properties.cpp:175
-#, fuzzy
 msgid "Stroke st_yle"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/dialogs/object-properties.cpp:186
 msgid "Master _opacity"
@@ -1587,9 +1557,8 @@ msgstr ""
 
 #. TRANSLATORS: fragment of XML representing the license of the document
 #: ../src/dialogs/rdf.cpp:300
-#, fuzzy
 msgid "Fragment"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #: ../src/dialogs/rdf.cpp:301
 msgid "XML fragment for the RDF 'License' section."
@@ -1724,7 +1693,7 @@ msgstr ""
 #: ../src/dialogs/text-edit.cpp:250
 #, fuzzy
 msgid "Center lines"
-msgstr "መሀከል Y፦"
+msgstr "አያያዝ ፍጠር"
 
 #: ../src/dialogs/text-edit.cpp:264
 msgid "Align lines right"
@@ -1766,9 +1735,8 @@ msgid "Number of rows"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:645
-#, fuzzy
 msgid "Equal height"
-msgstr "እርዝማኔ፦"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:655
 msgid "If not set, each row has the height of the tallest object in it"
@@ -1783,18 +1751,16 @@ msgstr "ኩልኩል፦"
 
 #. #### Number of columns ####
 #: ../src/dialogs/tiledialog.cpp:703
-#, fuzzy
 msgid "Columns:"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:711
 msgid "Number of columns"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:715
-#, fuzzy
 msgid "Equal width"
-msgstr "ስፋት፦"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:724
 msgid "If not set, each column has the width of the widest object in it"
@@ -1802,14 +1768,13 @@ msgstr ""
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/dialogs/tiledialog.cpp:770
-#, fuzzy
 msgid "Fit into selection box"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:776
 #, fuzzy
 msgid "Set spacing:"
-msgstr "ክፍተት Y፦"
+msgstr "ክፍተት X፦"
 
 #: ../src/dialogs/tiledialog.cpp:796
 msgid "Vertical spacing between rows (px units)"
@@ -1820,9 +1785,8 @@ msgid "Horizontal spacing between columns (px units)"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:845
-#, fuzzy
 msgid "Arrange selected objects"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:171
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
@@ -1999,18 +1963,16 @@ msgid "  type: "
 msgstr "ዓይነት፦"
 
 #: ../src/extension/dependency.cpp:241
-#, fuzzy
 msgid "  location: "
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/extension/dependency.cpp:242
 msgid "  string: "
 msgstr ""
 
 #: ../src/extension/dependency.cpp:245
-#, fuzzy
 msgid "  description: "
-msgstr "ምርጫ"
+msgstr ""
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
@@ -2065,12 +2027,11 @@ msgstr ""
 #: ../src/extension/extension.cpp:679
 #, fuzzy
 msgid "State:"
-msgstr "ኮከብ"
+msgstr "ያሽከርክሩ"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Loaded"
-msgstr "ምንም"
+msgstr ""
 
 #: ../src/extension/extension.cpp:679
 #, fuzzy
@@ -2123,9 +2084,8 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Blur Edge"
-msgstr "ሰማያዊ፦"
+msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
@@ -2158,9 +2118,8 @@ msgid "Make bounding box around full page"
 msgstr ""
 
 #: ../src/extension/internal/eps-out.cpp:87
-#, fuzzy
 msgid "Convert text to path"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/extension/internal/eps-out.cpp:91
 #: ../share/extensions/eps_input.inx.h:3
@@ -2177,9 +2136,8 @@ msgid "%s GDK pixbuf Input"
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:274
-#, fuzzy
 msgid "GIMP Gradients"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:279
 msgid "GIMP Gradient (*.ggr)"
@@ -2196,7 +2154,7 @@ msgstr "ማተሚያ ምረጥ"
 #: ../src/extension/internal/gnome.cpp:131
 #, fuzzy
 msgid "Inkscape: Print Preview"
-msgstr "ሶዲፖዲ (የሰነድ ስም %s..)፦ የቅድመ ህትመት ዕይታ"
+msgstr "የቅድመ ህትመት ዕይታ"
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
@@ -2239,9 +2197,8 @@ msgid "Draw a path which is a grid"
 msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
-#, fuzzy
 msgid "LaTeX Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
@@ -2268,9 +2225,8 @@ msgid "OpenDocument drawing file"
 msgstr ""
 
 #: ../src/extension/internal/pov-out.cpp:457
-#, fuzzy
 msgid "PovRay Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/extension/internal/pov-out.cpp:462
 msgid "PovRay (*.pov) (export splines)"
@@ -2281,14 +2237,12 @@ msgid "PovRay Raytracer File"
 msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:82
-#, fuzzy
 msgid "Postscript Output"
-msgstr "ነጥብ"
+msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Text to Path"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:88
 #: ../share/extensions/ps_input.inx.h:2
@@ -2296,9 +2250,8 @@ msgid "Postscript (*.ps)"
 msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:89
-#, fuzzy
 msgid "Postscript File"
-msgstr "ነጥብ"
+msgstr ""
 
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
 #, fuzzy
@@ -2356,9 +2309,8 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/ps.cpp:1217
-#, fuzzy
 msgid "Postscript Print"
-msgstr "ነጥብ"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:55
 #, fuzzy
@@ -2374,9 +2326,8 @@ msgid "Inkscape native file format and W3C standard"
 msgstr ""
 
 #: ../src/extension/internal/svg.cpp:69
-#, fuzzy
 msgid "SVG Output Inkscape"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:74
 msgid "Inkscape SVG (*.svg)"
@@ -2387,9 +2338,8 @@ msgid "SVG format with Inkscape extensions"
 msgstr ""
 
 #: ../src/extension/internal/svg.cpp:83
-#, fuzzy
 msgid "SVG Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:88
 #, fuzzy
@@ -2418,9 +2368,8 @@ msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
-#, fuzzy
 msgid "SVGZ Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
@@ -2481,9 +2430,8 @@ msgid "Failed to load the requested file %s"
 msgstr ""
 
 #: ../src/file.cpp:239
-#, fuzzy
 msgid "Document not saved yet.  Cannot revert."
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/file.cpp:245
 #, c-format
@@ -2548,9 +2496,8 @@ msgid "drawing-%d%s"
 msgstr ""
 
 #: ../src/file.cpp:603
-#, fuzzy
 msgid "Select file to save to"
-msgstr "ማተሚያ ምረጥ"
+msgstr ""
 
 #: ../src/file.cpp:664
 msgid "No changes need to be saved."
@@ -2561,9 +2508,8 @@ msgid "Select file to import"
 msgstr ""
 
 #: ../src/file.cpp:972
-#, fuzzy
 msgid "Select file to export to"
-msgstr "ማተሚያ ምረጥ"
+msgstr ""
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2854,9 +2800,8 @@ msgid "Commands Bar"
 msgstr ""
 
 #: ../src/interface.cpp:776
-#, fuzzy
 msgid "Show or hide the Commands bar (under the menu)"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../src/interface.cpp:778
 #, fuzzy
@@ -2864,9 +2809,8 @@ msgid "Tool Controls Bar"
 msgstr "የመስሪያውን ምርጫዎች"
 
 #: ../src/interface.cpp:778
-#, fuzzy
 msgid "Show or hide the Tool Controls bar"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../src/interface.cpp:780
 msgid "_Toolbox"
@@ -2879,12 +2823,11 @@ msgstr ""
 #: ../src/interface.cpp:786
 #, fuzzy
 msgid "_Palette"
-msgstr "ለጥፍ"
+msgstr "ንድፍ፦"
 
 #: ../src/interface.cpp:786
-#, fuzzy
 msgid "Show or hide the color palette"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../src/interface.cpp:788
 msgid "_Statusbar"
@@ -2901,9 +2844,9 @@ msgstr ""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:952
-#, fuzzy, c-format
+#, c-format
 msgid "Enter group #%s"
-msgstr "አስተካክል"
+msgstr ""
 
 #: ../src/interface.cpp:963
 msgid "Go to parent"
@@ -2939,13 +2882,13 @@ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr ""
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:51
-#, fuzzy
 msgid "Accept invitation"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:52
+#, fuzzy
 msgid "Decline invitation"
-msgstr ""
+msgstr "አቀማመጥ፦"
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:102
 msgid ""
@@ -3125,8 +3068,9 @@ msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 
 #: ../src/main.cpp:296
+#, fuzzy
 msgid "Export document to a PS file"
-msgstr ""
+msgstr "የpng ፋይል ላኩ"
 
 #: ../src/main.cpp:301
 msgid "Export document to an EPS file"
@@ -3206,9 +3150,8 @@ msgid "_New"
 msgstr "አዲስ"
 
 #: ../src/menus-skeleton.h:22
-#, fuzzy
 msgid "Open _Recent"
-msgstr "ክፈት"
+msgstr ""
 
 #: ../src/menus-skeleton.h:54
 #, fuzzy
@@ -3218,7 +3161,7 @@ msgstr "አስተካክል"
 #: ../src/menus-skeleton.h:64 ../src/verbs.cpp:1980
 #, fuzzy
 msgid "Paste Si_ze"
-msgstr "ለጥፍ"
+msgstr "የወረከት መጠን፦"
 
 #: ../src/menus-skeleton.h:76
 #, fuzzy
@@ -3238,7 +3181,7 @@ msgstr "በቅርበት አሳይ"
 #: ../src/menus-skeleton.h:111
 #, fuzzy
 msgid "Show/Hide"
-msgstr "ወደ ነበረበት መልስ"
+msgstr "ወሰንን አሳይ"
 
 #: ../src/menus-skeleton.h:116
 #, fuzzy
@@ -3246,9 +3189,8 @@ msgid "_Display mode"
 msgstr "የእስክሪን ምርጫዎች"
 
 #: ../src/menus-skeleton.h:136
-#, fuzzy
 msgid "_Layer"
-msgstr "ዝቅተኛ"
+msgstr ""
 
 #: ../src/menus-skeleton.h:155
 msgid "_Object"
@@ -3286,9 +3228,8 @@ msgid "Whiteboa_rd"
 msgstr ""
 
 #: ../src/menus-skeleton.h:236
-#, fuzzy
 msgid "_Help"
-msgstr "ወደ ነበረበት መልስ"
+msgstr ""
 
 #: ../src/menus-skeleton.h:238
 msgid "Tutorials"
@@ -3317,22 +3258,19 @@ msgstr ""
 #: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
 #, fuzzy
 msgid "Stamp"
-msgstr "ዓይነት"
+msgstr "ኮከብ"
 
 #: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
-#, fuzzy
 msgid "Move nodes vertically"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
-#, fuzzy
 msgid "Move nodes horizontally"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
-#, fuzzy
 msgid "Move nodes"
-msgstr "መንቀሳቅስ"
+msgstr ""
 
 #: ../src/nodepath.cpp:1259
 msgid ""
@@ -3351,19 +3289,16 @@ msgid "Distribute nodes"
 msgstr "ጠባየ-አንቀጽ"
 
 #: ../src/nodepath.cpp:1531
-#, fuzzy
 msgid "Add nodes"
-msgstr "ምንም"
+msgstr ""
 
 #: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
-#, fuzzy
 msgid "Add node"
-msgstr "ምንም"
+msgstr ""
 
 #: ../src/nodepath.cpp:1668
-#, fuzzy
 msgid "Break path"
-msgstr "ጥቁር፦"
+msgstr ""
 
 #: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
 #: ../src/nodepath.cpp:1821
@@ -3375,9 +3310,8 @@ msgid "Close subpath"
 msgstr ""
 
 #: ../src/nodepath.cpp:1795
-#, fuzzy
 msgid "Join nodes"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/nodepath.cpp:1842
 msgid "Close subpath by segment"
@@ -3420,14 +3354,12 @@ msgid "Change node type"
 msgstr ""
 
 #: ../src/nodepath.cpp:3214
-#, fuzzy
 msgid "Retract handle"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/nodepath.cpp:3262
-#, fuzzy
 msgid "Move node handle"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/nodepath.cpp:3402
 #, c-format
@@ -3448,9 +3380,8 @@ msgid "Scale nodes"
 msgstr "መለኪያ"
 
 #: ../src/nodepath.cpp:3752
-#, fuzzy
 msgid "Flip nodes"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/nodepath.cpp:3917
 msgid ""
@@ -3643,18 +3574,16 @@ msgid ""
 msgstr ""
 
 #: ../src/path-chemistry.cpp:139
-#, fuzzy
 msgid "Combine"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:154
 msgid "Select <b>path(s)</b> to break apart."
 msgstr ""
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break Apart"
-msgstr "ጥቁር፦"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:235
 msgid "<b>No path(s)</b> to break apart in the selection."
@@ -3665,9 +3594,8 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr ""
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to Path"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
@@ -3682,19 +3610,16 @@ msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
 #: ../src/pen-context.cpp:224
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/pen-context.cpp:386 ../src/pencil-context.cpp:233
-#, fuzzy
 msgid "Continuing selected path"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/pen-context.cpp:397 ../src/pencil-context.cpp:242
-#, fuzzy
 msgid "Creating new path"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/pen-context.cpp:401 ../src/pencil-context.cpp:246
 msgid "Appending to selected path"
@@ -3739,9 +3664,8 @@ msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 
 #: ../src/pencil-context.cpp:327
-#, fuzzy
 msgid "Drawing a freehand path"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/pencil-context.cpp:332
 msgid "<b>Drag</b> to continue the path from this point."
@@ -3784,9 +3708,8 @@ msgid "Create rectangle"
 msgstr "አያያዝ ፍጠር"
 
 #: ../src/select-context.cpp:226
-#, fuzzy
 msgid "Move canceled."
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/select-context.cpp:234
 #, fuzzy
@@ -3819,7 +3742,6 @@ msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:244
-#, fuzzy
 msgid "Delete"
 msgstr "አጥፉ"
 
@@ -3829,7 +3751,6 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:488
-#, fuzzy
 msgid "Duplicate"
 msgstr "አባዛ"
 
@@ -3847,7 +3768,6 @@ msgid "Select <b>at least two objects</b> to group."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:510 ../src/selection-describer.cpp:49
-#, fuzzy
 msgid "Group"
 msgstr "መድረክ"
 
@@ -3860,9 +3780,8 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:572
-#, fuzzy
 msgid "Ungroup"
-msgstr "መድረክ"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:636
 msgid "Select <b>object(s)</b> to raise."
@@ -3875,7 +3794,6 @@ msgid ""
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:674
-#, fuzzy
 msgid "Raise"
 msgstr "አሳድግ"
 
@@ -3884,16 +3802,14 @@ msgid "Select <b>object(s)</b> to raise to top."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:710
-#, fuzzy
 msgid "Raise to top"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:767
-#, fuzzy
 msgid "Lower"
 msgstr "ዝቅተኛ"
 
@@ -3923,7 +3839,6 @@ msgid "Nothing on the clipboard."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1125
-#, fuzzy
 msgid "Paste"
 msgstr "ለጥፍ"
 
@@ -3943,7 +3858,7 @@ msgstr ""
 #: ../src/selection-chemistry.cpp:1188
 #, fuzzy
 msgid "Paste size"
-msgstr "ለጥፍ"
+msgstr "የወረከት መጠን፦"
 
 #: ../src/selection-chemistry.cpp:1229
 msgid "Paste size separately"
@@ -3954,33 +3869,28 @@ msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1265
-#, fuzzy
 msgid "Raise to next layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1271
-#, fuzzy
 msgid "No more layers above."
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1285
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1310
-#, fuzzy
 msgid "Lower to previous layer"
-msgstr "ማተሚያ ምረጥ"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1316
-#, fuzzy
 msgid "No more layers below."
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1458
-#, fuzzy
 msgid "Remove transform"
-msgstr "አያያዝን አስወግድ"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1567
 msgid "Rotate 90&#176; CW"
@@ -3991,7 +3901,6 @@ msgid "Rotate 90&#176; CCW"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
-#, fuzzy
 msgid "Rotate"
 msgstr "ያሽከርክሩ"
 
@@ -4000,7 +3909,6 @@ msgid "Rotate by pixels"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
-#, fuzzy
 msgid "Scale"
 msgstr "መለኪያ"
 
@@ -4018,7 +3926,6 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
-#, fuzzy
 msgid "Move"
 msgstr "መንቀሳቅስ"
 
@@ -4071,9 +3978,8 @@ msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2196
-#, fuzzy
 msgid "Objects to pattern"
-msgstr "ዕቃ ምርጫዎች"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2212
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
@@ -4084,9 +3990,8 @@ msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2268
-#, fuzzy
 msgid "Pattern to objects"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2286
 msgid "Select <b>object(s)</b> to make a bitmap copy."
@@ -4095,7 +4000,7 @@ msgstr ""
 #: ../src/selection-chemistry.cpp:2418
 #, fuzzy
 msgid "Create bitmap"
-msgstr "ላኩ"
+msgstr "አያያዝ ፍጠር"
 
 #: ../src/selection-chemistry.cpp:2450
 msgid "Select <b>object(s)</b> to create clippath or mask from."
@@ -4123,19 +4028,16 @@ msgid "Release clipping path"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2629
-#, fuzzy
 msgid "Release mask"
-msgstr "ፋይል"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2673
-#, fuzzy
 msgid "Fit page to selection"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/selection-describer.cpp:41
-#, fuzzy
 msgid "Link"
-msgstr "ኢንቾች"
+msgstr "አያያዝ"
 
 #: ../src/selection-describer.cpp:43
 #, fuzzy
@@ -4153,14 +4055,13 @@ msgid "Flowed text"
 msgstr ""
 
 #: ../src/selection-describer.cpp:51
-#, fuzzy
 msgid "Image"
 msgstr "ምስል"
 
 #: ../src/selection-describer.cpp:53
 #, fuzzy
 msgid "Line"
-msgstr "ዝጋ"
+msgstr "አያያዝ"
 
 #: ../src/selection-describer.cpp:55
 #, fuzzy
@@ -4174,7 +4075,7 @@ msgstr ""
 #: ../src/selection-describer.cpp:59
 #, fuzzy
 msgid "Polyline"
-msgstr "መቶኛዎች"
+msgstr "ነጥብ"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
@@ -4213,14 +4114,14 @@ msgid "root"
 msgstr ""
 
 #: ../src/selection-describer.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b>%s</b>"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/selection-describer.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b><i>%s</i></b>"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/selection-describer.cpp:135
 #, c-format
@@ -4233,9 +4134,9 @@ msgid " in %s"
 msgstr ""
 
 #: ../src/selection-describer.cpp:146
-#, fuzzy, c-format
+#, c-format
 msgid " in group %s (%s)"
-msgstr "አስተካክል"
+msgstr ""
 
 #: ../src/selection-describer.cpp:148
 #, c-format
@@ -4245,11 +4146,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/selection-describer.cpp:151
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] "ምርጡ"
-msgstr[1] "ምርጡ"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/selection-describer.cpp:161
 msgid "Use <b>Shift+D</b> to look up original"
@@ -4314,9 +4215,8 @@ msgid "Set center"
 msgstr "ማተሚያ ምረጥ"
 
 #: ../src/seltrans.cpp:356
-#, fuzzy
 msgid "Skew"
-msgstr "ኮከብ"
+msgstr ""
 
 #: ../src/seltrans.cpp:477
 msgid ""
@@ -4373,9 +4273,9 @@ msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #: ../src/seltrans.cpp:1183
-#, fuzzy, c-format
+#, c-format
 msgid "Move <b>center</b> to %s, %s"
-msgstr "መንቀሳቅስ"
+msgstr ""
 
 #: ../src/seltrans.cpp:1441
 #, c-format
@@ -4407,9 +4307,8 @@ msgid "<b>Circle</b>"
 msgstr ""
 
 #: ../src/sp-ellipse.cpp:812
-#, fuzzy
 msgid "<b>Segment</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/sp-ellipse.cpp:814
 msgid "<b>Arc</b>"
@@ -4464,9 +4363,9 @@ msgid "<b>Image with bad reference</b>: %s"
 msgstr ""
 
 #: ../src/sp-image.cpp:977
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
-msgstr "ቀለም ምስል %d በ %d፦ %s"
+msgstr ""
 
 #: ../src/sp-item-group.cpp:693
 #, c-format
@@ -4480,9 +4379,8 @@ msgid "Object"
 msgstr ""
 
 #: ../src/sp-line.cpp:187
-#, fuzzy
 msgid "<b>Line</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:423
@@ -4491,14 +4389,13 @@ msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr ""
 
 #: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
-#, fuzzy
 msgid "outset"
-msgstr "መንቀሳቅስ"
+msgstr ""
 
 #: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
 #, fuzzy
 msgid "inset"
-msgstr "ነጥብ"
+msgstr "አሳድግ"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:427
@@ -4507,26 +4404,23 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr ""
 
 #: ../src/sp-path.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "መንቀሳቅስ"
-msgstr[1] "መንቀሳቅስ"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/sp-polygon.cpp:233
-#, fuzzy
 msgid "<b>Polygon</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/sp-polyline.cpp:176
-#, fuzzy
 msgid "<b>Polyline</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/sp-rect.cpp:234
-#, fuzzy
 msgid "<b>Rectangle</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
@@ -4562,14 +4456,14 @@ msgid "&lt;no name found&gt;"
 msgstr ""
 
 #: ../src/sp-text.cpp:417
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text on path</b> (%s, %s)"
-msgstr "መንቀሳቅስ"
+msgstr ""
 
 #: ../src/sp-text.cpp:418
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text</b> (%s, %s)"
-msgstr "መንቀሳቅስ"
+msgstr ""
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -4579,9 +4473,9 @@ msgid "..."
 msgstr "ክፈት"
 
 #: ../src/sp-use.cpp:321
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Clone</b> of: %s"
-msgstr "ቀለም ምስል %d በ %d፦ %s"
+msgstr ""
 
 #: ../src/sp-use.cpp:325
 msgid "<b>Orphaned clone</b>"
@@ -4612,9 +4506,8 @@ msgid "Intersection"
 msgstr "ምርጫ"
 
 #: ../src/splivarot.cpp:78
-#, fuzzy
 msgid "Difference"
-msgstr "መቶኛ"
+msgstr ""
 
 #: ../src/splivarot.cpp:84
 msgid "Exclusion"
@@ -4625,9 +4518,8 @@ msgid "Division"
 msgstr ""
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut Path"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/splivarot.cpp:110
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -4882,9 +4774,8 @@ msgid "Select one image and one or more shapes above it"
 msgstr ""
 
 #: ../src/trace/trace.cpp:232
-#, fuzzy
 msgid "Trace: No active desktop"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/trace/trace.cpp:330
 msgid "Invalid SIOX result"
@@ -4908,13 +4799,13 @@ msgstr ""
 #: ../src/ui/context-menu.cpp:96
 #, fuzzy
 msgid "Object _Properties"
-msgstr "ዕቃ ምርጫዎች"
+msgstr "የጽሑፍ ምርጫዎች"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:106
 #, fuzzy
 msgid "_Select This"
-msgstr "ምርጫ"
+msgstr "ምርጡ"
 
 #. Create link
 #: ../src/ui/context-menu.cpp:116
@@ -4970,14 +4861,12 @@ msgid "_Authors"
 msgstr ""
 
 #: ../src/ui/dialog/aboutbox.cpp:74
-#, fuzzy
 msgid "_Translators"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/aboutbox.cpp:75
-#, fuzzy
 msgid "_License"
-msgstr "አያያዝ"
+msgstr ""
 
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
@@ -5024,41 +4913,37 @@ msgid "Distribute"
 msgstr "ጠባየ-አንቀጽ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:756
+#, fuzzy
 msgid "Remove overlaps"
-msgstr ""
+msgstr "አያያዝን አስወግድ"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:757
-#, fuzzy
 msgid "Connector network layout"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:758
-#, fuzzy
 msgid "Nodes"
-msgstr "ምንም"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:764
-#, fuzzy
 msgid "Relative to: "
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:769
 msgid "Align right sides of objects to left side of anchor"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:772
-#, fuzzy
 msgid "Align left sides"
-msgstr "ኩልኩል፦"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:775
 msgid "Center on vertical axis"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:778
-#, fuzzy
 msgid "Align right sides"
-msgstr "ኩልኩል፦"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:781
 msgid "Align left sides of objects to right side of anchor"
@@ -5078,9 +4963,8 @@ msgid "Center on horizontal axis"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:793
-#, fuzzy
 msgid "Align bottoms"
-msgstr "ኩልኩል፦"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:796
 msgid "Align tops of objects to bottom of anchor"
@@ -5150,9 +5034,8 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:858
 #: ../src/widgets/toolbox.cpp:4003
-#, fuzzy
 msgid "Nicely arrange selected connector network"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:863
 msgid "Align selected nodes horizontally"
@@ -5211,9 +5094,8 @@ msgid "<b>Dublin Core Entities</b>"
 msgstr ""
 
 #: ../src/ui/dialog/document-metadata.cpp:204
-#, fuzzy
 msgid "<b>License</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:99
 msgid "Grid/Guides"
@@ -5261,14 +5143,12 @@ msgid "Border _color:"
 msgstr "የመጨረሺያ ቀለም"
 
 #: ../src/ui/dialog/document-properties.cpp:192
-#, fuzzy
 msgid "Page border color"
-msgstr "የመጨረሺያ ቀለም"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:193
-#, fuzzy
 msgid "Color of the page border"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:195
 #, fuzzy
@@ -5285,30 +5165,28 @@ msgid "Default _units:"
 msgstr "ነባሮች"
 
 #: ../src/ui/dialog/document-properties.cpp:199
-#, fuzzy
 msgid "<b>General</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:201
-#, fuzzy
 msgid "<b>Border</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:203
-#, fuzzy
 msgid "<b>Format</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
 #: ../src/ui/dialog/document-properties.cpp:233
 #, fuzzy
 msgid "_Show grid"
-msgstr "ወደ ነበረበት መልስ"
+msgstr "ወሰንን አሳይ"
 
 #: ../src/ui/dialog/document-properties.cpp:233
+#, fuzzy
 msgid "Show or hide grid"
-msgstr ""
+msgstr "ወሰንን አሳይ"
 
 #: ../src/ui/dialog/document-properties.cpp:234
 msgid "Grid _units:"
@@ -5319,18 +5197,16 @@ msgid "_Origin X:"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:235
-#, fuzzy
 msgid "X coordinate of grid origin"
-msgstr "ክፍተት X፦"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:237
 msgid "O_rigin Y:"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:237
-#, fuzzy
 msgid "Y coordinate of grid origin"
-msgstr "ክፍተት X፦"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:239
 #, fuzzy
@@ -5361,9 +5237,8 @@ msgid "Grid line color"
 msgstr "የመጨረሺያ ቀለም"
 
 #: ../src/ui/dialog/document-properties.cpp:244
-#, fuzzy
 msgid "Color of grid lines"
-msgstr "ክፍተት X፦"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:245
 #, fuzzy
@@ -5371,32 +5246,31 @@ msgid "Ma_jor grid line color:"
 msgstr "የመጨረሺያ ቀለም"
 
 #: ../src/ui/dialog/document-properties.cpp:245
-#, fuzzy
 msgid "Major grid line color"
-msgstr "የመጨረሺያ ቀለም"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:248
-#, fuzzy
 msgid "_Major grid line every:"
-msgstr "የመጨረሺያ ቀለም"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:248
 #, fuzzy
 msgid "lines"
-msgstr "ዝጋ"
+msgstr "ኩልኩል፦"
 
 #: ../src/ui/dialog/document-properties.cpp:249
 #, fuzzy
 msgid "Show _guides"
-msgstr "ወደ ነበረበት መልስ"
+msgstr "ወሰንን አሳይ"
 
 #: ../src/ui/dialog/document-properties.cpp:249
+#, fuzzy
 msgid "Show or hide guides"
-msgstr ""
+msgstr "ወሰንን አሳይ"
 
 #: ../src/ui/dialog/document-properties.cpp:250
 #, fuzzy
@@ -5425,14 +5299,12 @@ msgid "Color of a guideline when it is under mouse"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:256
-#, fuzzy
 msgid "<b>Grid</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:258
-#, fuzzy
 msgid "<b>Guides</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:288
 msgid "_Snap bounding boxes to objects"
@@ -5443,9 +5315,8 @@ msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:291
-#, fuzzy
 msgid "Snap nodes _to objects"
-msgstr "ጠባየ-አንቀጽ"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:292
 msgid "Snap the nodes of objects to other objects"
@@ -5456,9 +5327,8 @@ msgid "Snap to object _paths"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:295
-#, fuzzy
 msgid "Snap to other object paths"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:297
 msgid "Snap to object _nodes"
@@ -5541,9 +5411,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:329
-#, fuzzy
 msgid "<b>Object Snapping</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
@@ -5563,9 +5432,8 @@ msgid "Information"
 msgstr "ምርጫ"
 
 #: ../src/ui/dialog/extension-editor.cpp:81
-#, fuzzy
 msgid "Help"
-msgstr "ወደ ነበረበት መልስ"
+msgstr ""
 
 #: ../src/ui/dialog/extension-editor.cpp:82
 #, fuzzy
@@ -5587,18 +5455,17 @@ msgid "All Images"
 msgstr "ምስል"
 
 #: ../src/ui/dialog/filedialog.cpp:895 ../src/ui/dialog/filedialog.cpp:896
+#, fuzzy
 msgid "All Files"
-msgstr ""
+msgstr "ፋይል"
 
 #: ../src/ui/dialog/filedialog.cpp:902 ../src/ui/dialog/filedialog.cpp:903
-#, fuzzy
 msgid "All Inkscape Files"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1311 ../src/ui/dialog/filedialog.cpp:1848
-#, fuzzy
 msgid "Guess from extension"
-msgstr "አጥፉ"
+msgstr ""
 
 #. ###### Add the file types menu
 #. createFilterMenu();
@@ -5626,24 +5493,20 @@ msgid "Source bottom bound"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1872
-#, fuzzy
 msgid "Source width"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1873
-#, fuzzy
 msgid "Source height"
-msgstr "እርዝማኔ፦"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1874
-#, fuzzy
 msgid "Destination width"
-msgstr "አቀማመጥ፦"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1875
-#, fuzzy
 msgid "Destination height"
-msgstr "አቀማመጥ፦"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1876
 msgid "Dots per inch resolution"
@@ -5680,29 +5543,26 @@ msgid "Destination"
 msgstr "አቀማመጥ፦"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
-#, fuzzy
 msgid "Fill"
-msgstr "ፋይል"
+msgstr ""
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:37
-#, fuzzy
 msgid "Stroke Paint"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:38
-#, fuzzy
 msgid "Stroke Style"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/ui/dialog/find.cpp:34
 #, fuzzy
 msgid "Find"
-msgstr "ወደ ነበረበት መልስ"
+msgstr "ኢንቾች"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:140
 #, fuzzy
 msgid "Mouse"
-msgstr "መንቀሳቅስ"
+msgstr "የአሠራሩ ዘዴ፦"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:142
 msgid "Grab sensitivity:"
@@ -5854,9 +5714,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:195
-#, fuzzy
 msgid "Zoom in/out by:"
-msgstr "በቅርበት አሳይ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid ""
@@ -5893,14 +5752,12 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:266
-#, fuzzy
 msgid "Create new objects with:"
-msgstr "ጠባየ-አንቀጽ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:268
-#, fuzzy
 msgid "Last used style"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "Apply the style you last set on an object"
@@ -5917,9 +5774,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:284
-#, fuzzy
 msgid "Take from selection"
-msgstr "አጥፉ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:296
 msgid "Remember the style of the (first) selected object as this tool's style"
@@ -5934,9 +5790,8 @@ msgid "Width is in absolute units"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:305
-#, fuzzy
 msgid "Keep selected"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "Don't attach connectors to text objects"
@@ -6027,8 +5882,9 @@ msgstr "በቅርበት አሳይ"
 
 #. Shapes
 #: ../src/ui/dialog/inkscape-preferences.cpp:345
+#, fuzzy
 msgid "Shapes"
-msgstr ""
+msgstr "አስቀምጥ"
 
 #. Pencil
 #: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2174
@@ -6070,15 +5926,13 @@ msgstr ""
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2182
-#, fuzzy
 msgid "Gradient"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2188
-#, fuzzy
 msgid "Connector"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "If on, connector attachment points will not be shown for text objects"
@@ -6103,9 +5957,8 @@ msgid "Zoom when window is resized"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:404
-#, fuzzy
 msgid "Show close button on dialogs"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Normal"
@@ -6170,13 +6023,13 @@ msgid "Move according to transform"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:436
+#, fuzzy
 msgid "Are unlinked"
-msgstr ""
+msgstr "አያያዝ ፍጠር"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
-#, fuzzy
 msgid "Are deleted"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "When the original moves, its clones and linked offsets:"
@@ -6222,9 +6075,8 @@ msgid "Transform gradients"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:462
-#, fuzzy
 msgid "Transform patterns"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Optimized"
@@ -6275,17 +6127,15 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:485
 #, fuzzy
 msgid "Select in all layers"
-msgstr "ምርጡ"
+msgstr "ማተሚያ ምረጥ"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
-#, fuzzy
 msgid "Select only within current layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:487
-#, fuzzy
 msgid "Select in current layer and sublayers"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Ignore hidden objects"
@@ -6442,19 +6292,18 @@ msgstr ""
 #: ../src/ui/dialog/memory.cpp:95
 #, fuzzy
 msgid "In Use"
-msgstr "ነጥብ"
+msgstr "ተጠቃሚ"
 
 #. TRANSLATORS: "Slack" refers to memory which is in the heap but currently unused.
 #. More typical usage is to call this memory "free" rather than "slack".
 #: ../src/ui/dialog/memory.cpp:98
 #, fuzzy
 msgid "Slack"
-msgstr "ኮከብ"
+msgstr "ጥቁር፦"
 
 #: ../src/ui/dialog/memory.cpp:99
-#, fuzzy
 msgid "Total"
-msgstr "አርእስት፦"
+msgstr ""
 
 #: ../src/ui/dialog/memory.cpp:139 ../src/ui/dialog/memory.cpp:145
 #: ../src/ui/dialog/memory.cpp:152 ../src/ui/dialog/memory.cpp:184
@@ -6508,9 +6357,8 @@ msgid "Session file"
 msgstr "ፋይልን አስቀምጥ"
 
 #: ../src/ui/dialog/session-player.cpp:74
-#, fuzzy
 msgid "Playback controls"
-msgstr "የመስሪያውን ምርጫዎች"
+msgstr ""
 
 #: ../src/ui/dialog/session-player.cpp:75
 msgid "Message information"
@@ -6531,7 +6379,7 @@ msgstr ""
 #: ../src/ui/dialog/session-player.cpp:94
 #, fuzzy
 msgid "Close file"
-msgstr "ዝጋ"
+msgstr "ዕይታ ዝጋ"
 
 #: ../src/ui/dialog/session-player.cpp:95
 msgid "Open new file"
@@ -6570,9 +6418,8 @@ msgstr ""
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:348
-#, fuzzy
 msgid "SIOX foreground selection"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "Cover the area you want to select as the foreground"
@@ -6587,9 +6434,8 @@ msgstr ""
 #. #### Multiple scanning####
 #. ----Hbox1
 #: ../src/ui/dialog/tracedialog.cpp:361 ../src/ui/dialog/tracedialog.cpp:444
-#, fuzzy
 msgid "Brightness"
-msgstr "እርዝማኔ፦"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:364
 msgid "Trace by a given brightness level"
@@ -6666,9 +6512,8 @@ msgstr ""
 
 #. TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
 #: ../src/ui/dialog/tracedialog.cpp:468
-#, fuzzy
 msgid "Remove background"
-msgstr "የመጨረሺያ ቀለም"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Remove bottom (background) layer when done"
@@ -6743,7 +6588,7 @@ msgstr "ፍጠር"
 #: ../src/ui/dialog/tracedialog.cpp:537
 #, fuzzy
 msgid "Potrace"
-msgstr "ነጥብ"
+msgstr "ያሽከርክሩ"
 
 #: ../src/ui/dialog/tracedialog.cpp:550
 #, fuzzy
@@ -6811,34 +6656,28 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:95
-#, fuzzy
 msgid "Transformation matrix element A"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:96
-#, fuzzy
 msgid "Transformation matrix element B"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:97
-#, fuzzy
 msgid "Transformation matrix element C"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:98
-#, fuzzy
 msgid "Transformation matrix element D"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:99
-#, fuzzy
 msgid "Transformation matrix element E"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:100
-#, fuzzy
 msgid "Transformation matrix element F"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid ""
@@ -6890,9 +6729,8 @@ msgid "_Rotate"
 msgstr "ያሽከርክሩ"
 
 #: ../src/ui/dialog/transformation.cpp:124
-#, fuzzy
 msgid "Ske_w"
-msgstr "ኮከብ"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:127
 msgid "Matri_x"
@@ -6911,20 +6749,17 @@ msgid "_Use SSL"
 msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
-#, fuzzy
 msgid "_Register"
-msgstr "አሳድግ"
+msgstr ""
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
-#, fuzzy
 msgid "_Server:"
-msgstr "ፋይል"
+msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:77
-#, fuzzy
 msgid "_Username:"
-msgstr "ፋይል"
+msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:78
 msgid "_Password:"
@@ -6936,9 +6771,8 @@ msgstr ""
 
 #. Buttons
 #: ../src/ui/dialog/whiteboard-connect.cpp:114
-#, fuzzy
 msgid "Connect"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Establishing connection to Jabber server <b>%1</b>"
@@ -7217,9 +7051,8 @@ msgid "huge"
 msgstr ""
 
 #: ../src/ui/widget/panel.cpp:117
-#, fuzzy
 msgid "List"
-msgstr "ነጥብ"
+msgstr ""
 
 #: ../src/ui/widget/panel.cpp:139
 msgid "Wrap"
@@ -7249,9 +7082,8 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:134
 #: ../src/ui/widget/selected-style.cpp:971
-#, fuzzy
 msgid "Nothing selected"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:300
@@ -7260,9 +7092,8 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:300
-#, fuzzy
 msgid "No stroke"
-msgstr "ኮከብ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:141
 #: ../src/ui/widget/style-swatch.cpp:292 ../src/widgets/paint-selector.cpp:176
@@ -7284,27 +7115,23 @@ msgstr "ንድፍ፦"
 
 #: ../src/ui/widget/selected-style.cpp:146
 #: ../src/ui/widget/style-swatch.cpp:284
-#, fuzzy
 msgid "L Gradient"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient fill"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient stroke"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:151
 #: ../src/ui/widget/style-swatch.cpp:288
-#, fuzzy
 msgid "R Gradient"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:154
 #: ../src/ui/widget/style-swatch.cpp:290
@@ -7333,15 +7160,14 @@ msgstr ""
 #: ../src/ui/widget/style-swatch.cpp:303
 #, fuzzy
 msgid "Unset"
-msgstr "ነጥብ"
+msgstr "ተጠቃሚ"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
 #: ../src/ui/widget/style-swatch.cpp:305
-#, fuzzy
 msgid "Unset fill"
-msgstr "ያልተሰየመ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
@@ -7352,64 +7178,54 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:167
 #, fuzzy
 msgid "Flat color fill"
-msgstr "የመጨረሺያ ቀለም"
+msgstr "የመጀመሪያ ቀለም"
 
 #: ../src/ui/widget/selected-style.cpp:167
-#, fuzzy
 msgid "Flat color stroke"
-msgstr "የመጨረሺያ ቀለም"
+msgstr ""
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:170
-#, fuzzy
 msgid "<b>a</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:173
-#, fuzzy
 msgid "Fill is averaged over selected objects"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:173
-#, fuzzy
 msgid "Stroke is averaged over selected objects"
-msgstr "ምርጡ"
+msgstr ""
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:176
-#, fuzzy
 msgid "<b>m</b>"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Multiple selected objects have the same fill"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Multiple selected objects have the same stroke"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:181
-#, fuzzy
 msgid "Edit fill..."
-msgstr "አስተካክል"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:181
-#, fuzzy
 msgid "Edit stroke..."
-msgstr "አስተካክል"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:185
 #, fuzzy
 msgid "Last set color"
-msgstr "የመጨረሺያ ቀለም"
+msgstr "የመጀመሪያ ቀለም"
 
 #: ../src/ui/widget/selected-style.cpp:189
-#, fuzzy
 msgid "Last selected color"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:197
 msgid "White"
@@ -7425,12 +7241,12 @@ msgstr "ጥቁር፦"
 #: ../src/ui/widget/selected-style.cpp:205
 #, fuzzy
 msgid "Copy color"
-msgstr "የመጀመሪያ ቀለም"
+msgstr "የመጨረሺያ ቀለም"
 
 #: ../src/ui/widget/selected-style.cpp:209
 #, fuzzy
 msgid "Paste color"
-msgstr "የመጨረሺያ ቀለም"
+msgstr "የመጀመሪያ ቀለም"
 
 #: ../src/ui/widget/selected-style.cpp:213
 #, fuzzy
@@ -7492,14 +7308,12 @@ msgid "Page orientation:"
 msgstr "አቀማመጥ፦"
 
 #: ../src/ui/widget/page-sizer.cpp:230
-#, fuzzy
 msgid "_Landscape"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:233
-#, fuzzy
 msgid "_Portrait"
-msgstr "ነጥብ"
+msgstr ""
 
 #. Custom paper frame
 #: ../src/ui/widget/page-sizer.cpp:239
@@ -7508,9 +7322,8 @@ msgid "Custom size"
 msgstr "የተለየ"
 
 #: ../src/ui/widget/page-sizer.cpp:246
-#, fuzzy
 msgid "_Fit page to selection"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:247
 msgid ""
@@ -7524,8 +7337,9 @@ msgid "U_nits:"
 msgstr "ክፍሎች፦"
 
 #: ../src/ui/widget/page-sizer.cpp:257
+#, fuzzy
 msgid "Width of paper"
-msgstr ""
+msgstr "የተለመደው ወረቀት"
 
 #: ../src/ui/widget/page-sizer.cpp:258
 #, fuzzy
@@ -7575,9 +7389,8 @@ msgid "Cannot move past first layer."
 msgstr ""
 
 #: ../src/verbs.cpp:1124 ../src/verbs.cpp:1208
-#, fuzzy
 msgid "No current layer."
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/verbs.cpp:1153 ../src/verbs.cpp:1157
 #, c-format
@@ -7585,9 +7398,8 @@ msgid "Raised layer <b>%s</b>."
 msgstr ""
 
 #: ../src/verbs.cpp:1154
-#, fuzzy
 msgid "Layer to Top"
-msgstr "የXML ማቀናጃ"
+msgstr ""
 
 #: ../src/verbs.cpp:1158
 #, fuzzy
@@ -7595,9 +7407,9 @@ msgid "Raise Layer"
 msgstr "አሳድግ"
 
 #: ../src/verbs.cpp:1161 ../src/verbs.cpp:1165
-#, fuzzy, c-format
+#, c-format
 msgid "Lowered layer <b>%s</b>."
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:1162
 msgid "Layer to Bottom"
@@ -7606,7 +7418,7 @@ msgstr ""
 #: ../src/verbs.cpp:1166
 #, fuzzy
 msgid "Lower Layer"
-msgstr "ምርጡ"
+msgstr "ዝቅተኛ"
 
 #: ../src/verbs.cpp:1175
 msgid "Cannot move layer any further."
@@ -7615,23 +7427,21 @@ msgstr ""
 #: ../src/verbs.cpp:1203
 #, fuzzy
 msgid "Delete layer"
-msgstr "ምርጡ"
+msgstr "አጥፉ"
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1206
 #, fuzzy
 msgid "Deleted layer."
-msgstr "ምርጡ"
+msgstr "አጥፉ"
 
 #: ../src/verbs.cpp:1263
-#, fuzzy
 msgid "Flip horizontally"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:1272
-#, fuzzy
 msgid "Flip vertically"
-msgstr "ምርጡ"
+msgstr ""
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
@@ -7688,9 +7498,8 @@ msgid "Default"
 msgstr "ነባሮች"
 
 #: ../src/verbs.cpp:1936
-#, fuzzy
 msgid "Create new document from the default template"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/verbs.cpp:1938
 #, fuzzy
@@ -7698,9 +7507,8 @@ msgid "_Open..."
 msgstr "ክፈት"
 
 #: ../src/verbs.cpp:1939
-#, fuzzy
 msgid "Open an existing document"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr ""
 
 #: ../src/verbs.cpp:1940
 msgid "Re_vert"
@@ -7777,27 +7585,24 @@ msgid "Import a bitmap or SVG image into this document"
 msgstr ""
 
 #: ../src/verbs.cpp:1957
-#, fuzzy
 msgid "_Export Bitmap..."
-msgstr "ላኩ"
+msgstr ""
 
 #: ../src/verbs.cpp:1958
 msgid "Export this document or a selection as a bitmap image"
 msgstr ""
 
 #: ../src/verbs.cpp:1959
-#, fuzzy
 msgid "N_ext Window"
-msgstr "አዲስ ዕይታ"
+msgstr ""
 
 #: ../src/verbs.cpp:1960
 msgid "Switch to the next document window"
 msgstr ""
 
 #: ../src/verbs.cpp:1961
-#, fuzzy
 msgid "P_revious Window"
-msgstr "አዲስ ዕይታ"
+msgstr ""
 
 #: ../src/verbs.cpp:1962
 msgid "Switch to the previous document window"
@@ -7809,18 +7614,16 @@ msgid "_Close"
 msgstr "ዝጋ"
 
 #: ../src/verbs.cpp:1964
-#, fuzzy
 msgid "Close this document window"
-msgstr "ዕይታ ዝጋ"
+msgstr ""
 
 #: ../src/verbs.cpp:1965
 msgid "_Quit"
 msgstr ""
 
 #: ../src/verbs.cpp:1965
-#, fuzzy
 msgid "Quit Inkscape"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:1968
 msgid "Undo last action"
@@ -7858,9 +7661,8 @@ msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr ""
 
 #: ../src/verbs.cpp:1978
-#, fuzzy
 msgid "Paste _Style"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/verbs.cpp:1979
 msgid "Apply the style of the copied object to selection"
@@ -7871,9 +7673,8 @@ msgid "Scale selection to match the size of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:1982
-#, fuzzy
 msgid "Paste _Width"
-msgstr "ስፋት፦"
+msgstr ""
 
 #: ../src/verbs.cpp:1983
 msgid "Scale selection horizontally to match the width of the copied object"
@@ -7917,9 +7718,8 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:1992
-#, fuzzy
 msgid "Paste _In Place"
-msgstr "ለጥፍ"
+msgstr ""
 
 #: ../src/verbs.cpp:1993
 msgid "Paste objects from clipboard to the original location"
@@ -7933,7 +7733,7 @@ msgstr "አጥፉ"
 #: ../src/verbs.cpp:1995
 #, fuzzy
 msgid "Delete selection"
-msgstr "አጥፉ"
+msgstr "ምርጫ"
 
 #: ../src/verbs.cpp:1996
 #, fuzzy
@@ -7941,14 +7741,13 @@ msgid "Duplic_ate"
 msgstr "አባዛ"
 
 #: ../src/verbs.cpp:1997
-#, fuzzy
 msgid "Duplicate selected objects"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:1998
 #, fuzzy
 msgid "Create Clo_ne"
-msgstr "ሰነድ አስቀምት"
+msgstr "አያያዝ ፍጠር"
 
 #: ../src/verbs.cpp:1999
 msgid "Create a clone (a copy linked to the original) of selected object"
@@ -7967,7 +7766,7 @@ msgstr ""
 #: ../src/verbs.cpp:2002
 #, fuzzy
 msgid "Select _Original"
-msgstr "ምርጡ"
+msgstr "ማተሚያ ምረጥ"
 
 #: ../src/verbs.cpp:2003
 msgid "Select the object to which the selected clone is linked"
@@ -7984,9 +7783,8 @@ msgstr ""
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2008
-#, fuzzy
 msgid "Pattern to _Objects"
-msgstr "ንድፍ፦"
+msgstr ""
 
 #: ../src/verbs.cpp:2009
 msgid "Extract objects from a tiled pattern fill"
@@ -8011,9 +7809,8 @@ msgid "Select all objects or all nodes"
 msgstr ""
 
 #: ../src/verbs.cpp:2014
-#, fuzzy
 msgid "Select All in All La_yers"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2015
 msgid "Select all objects in all visible and unlocked layers"
@@ -8094,9 +7891,8 @@ msgid "Ungroup selected groups"
 msgstr ""
 
 #: ../src/verbs.cpp:2037
-#, fuzzy
 msgid "_Put on Path"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/verbs.cpp:2038
 msgid "Put text on path"
@@ -8126,9 +7922,8 @@ msgid "_Union"
 msgstr "ወደ ነበረበት መልስ"
 
 #: ../src/verbs.cpp:2047
-#, fuzzy
 msgid "Create union of selected paths"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2048
 #, fuzzy
@@ -8136,9 +7931,8 @@ msgid "_Intersection"
 msgstr "ምርጫ"
 
 #: ../src/verbs.cpp:2049
-#, fuzzy
 msgid "Create intersection of selected paths"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2050
 msgid "_Difference"
@@ -8169,9 +7963,8 @@ msgstr ""
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2058
-#, fuzzy
 msgid "Cut _Path"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../src/verbs.cpp:2059
 msgid "Cut the bottom path's stroke into pieces, removing fill"
@@ -8183,12 +7976,11 @@ msgstr ""
 #: ../src/verbs.cpp:2063
 #, fuzzy
 msgid "Outs_et"
-msgstr "መንቀሳቅስ"
+msgstr "ቁረጥ"
 
 #: ../src/verbs.cpp:2064
-#, fuzzy
 msgid "Outset selected paths"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2066
 msgid "O_utset Path by 1 px"
@@ -8214,27 +8006,24 @@ msgid "I_nset"
 msgstr ""
 
 #: ../src/verbs.cpp:2075
-#, fuzzy
 msgid "Inset selected paths"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2077
 msgid "I_nset Path by 1 px"
 msgstr ""
 
 #: ../src/verbs.cpp:2078
-#, fuzzy
 msgid "Inset selected paths by 1 px"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2080
 msgid "I_nset Path by 10 px"
 msgstr ""
 
 #: ../src/verbs.cpp:2081
-#, fuzzy
 msgid "Inset selected paths by 10 px"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2083
 msgid "D_ynamic Offset"
@@ -8257,9 +8046,8 @@ msgid "_Stroke to Path"
 msgstr ""
 
 #: ../src/verbs.cpp:2089
-#, fuzzy
 msgid "Convert selected object's stroke to paths"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2090
 msgid "Si_mplify"
@@ -8270,9 +8058,8 @@ msgid "Simplify selected paths (remove extra nodes)"
 msgstr ""
 
 #: ../src/verbs.cpp:2092
-#, fuzzy
 msgid "_Reverse"
-msgstr "ፋይል"
+msgstr ""
 
 #: ../src/verbs.cpp:2093
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
@@ -8280,9 +8067,8 @@ msgstr ""
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2095
-#, fuzzy
 msgid "_Trace Bitmap..."
-msgstr "ላኩ"
+msgstr ""
 
 #: ../src/verbs.cpp:2096
 msgid "Create one or more paths from a bitmap by tracing it"
@@ -8319,30 +8105,25 @@ msgid "Gri_d Arrange..."
 msgstr ""
 
 #: ../src/verbs.cpp:2106
-#, fuzzy
 msgid "Arrange selected objects in a grid pattern"
-msgstr "ምርጡ"
+msgstr ""
 
 #. Layer
 #: ../src/verbs.cpp:2108
-#, fuzzy
 msgid "_Add Layer..."
-msgstr "ዝቅተኛ"
+msgstr ""
 
 #: ../src/verbs.cpp:2109
-#, fuzzy
 msgid "Create a new layer"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #: ../src/verbs.cpp:2110
-#, fuzzy
 msgid "Re_name Layer..."
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2111
-#, fuzzy
 msgid "Rename the current layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2112
 msgid "Switch to Layer Abov_e"
@@ -8361,18 +8142,16 @@ msgid "Switch to the layer below the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2116
-#, fuzzy
 msgid "Move Selection to Layer Abo_ve"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2117
 msgid "Move selection to the layer above the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2118
-#, fuzzy
 msgid "Move Selection to Layer Bel_ow"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2119
 msgid "Move selection to the layer below the current"
@@ -8395,32 +8174,28 @@ msgid "Lower the current layer to the bottom"
 msgstr ""
 
 #: ../src/verbs.cpp:2124
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "አሳድግ"
+msgstr ""
 
 #: ../src/verbs.cpp:2125
 msgid "Raise the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2126
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2127
 msgid "Lower the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2128
-#, fuzzy
 msgid "_Delete Current Layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2129
-#, fuzzy
 msgid "Delete the current layer"
-msgstr "ምርጡ"
+msgstr ""
 
 #. Object
 #: ../src/verbs.cpp:2132
@@ -8452,9 +8227,8 @@ msgid "_Object to Path"
 msgstr ""
 
 #: ../src/verbs.cpp:2139
-#, fuzzy
 msgid "Convert selected object to path"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2140
 msgid "_Flow into Frame"
@@ -8467,9 +8241,8 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:2142
-#, fuzzy
 msgid "_Unflow"
-msgstr "ወደ ነበረበት መልስ"
+msgstr ""
 
 #: ../src/verbs.cpp:2143
 msgid "Remove text from frame (creates a single-line text object)"
@@ -8488,18 +8261,16 @@ msgid "Flip _Horizontal"
 msgstr ""
 
 #: ../src/verbs.cpp:2147
-#, fuzzy
 msgid "Flip selected objects horizontally"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2150
 msgid "Flip _Vertical"
 msgstr ""
 
 #: ../src/verbs.cpp:2150
-#, fuzzy
 msgid "Flip selected objects vertically"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2153
 msgid "Apply mask to selection (using the topmost object as mask)"
@@ -8508,12 +8279,11 @@ msgstr ""
 #: ../src/verbs.cpp:2154 ../src/verbs.cpp:2158
 #, fuzzy
 msgid "_Release"
-msgstr "ፋይል"
+msgstr "አሳድግ"
 
 #: ../src/verbs.cpp:2155
-#, fuzzy
 msgid "Remove mask from selection"
-msgstr "አጥፉ"
+msgstr ""
 
 #: ../src/verbs.cpp:2157
 msgid ""
@@ -8572,28 +8342,24 @@ msgid "Draw calligraphic lines"
 msgstr ""
 
 #: ../src/verbs.cpp:2181
-#, fuzzy
 msgid "Create and edit text objects"
-msgstr "ጠባየ-አንቀጽ"
+msgstr ""
 
 #: ../src/verbs.cpp:2183
-#, fuzzy
 msgid "Create and edit gradients"
-msgstr "ጠባየ-አንቀጽ"
+msgstr ""
 
 #: ../src/verbs.cpp:2185
-#, fuzzy
 msgid "Zoom in or out"
-msgstr "በቅርበት አሳይ"
+msgstr ""
 
 #: ../src/verbs.cpp:2187
 msgid "Pick averaged colors from image"
 msgstr ""
 
 #: ../src/verbs.cpp:2189
-#, fuzzy
 msgid "Create connectors"
-msgstr "ሰነድ አስቀምት"
+msgstr ""
 
 #. Tool prefs
 #: ../src/verbs.cpp:2192
@@ -8601,38 +8367,32 @@ msgid "Selector Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2193
-#, fuzzy
 msgid "Open Preferences for the Selector tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2194
 msgid "Node Tool Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2195
-#, fuzzy
 msgid "Open Preferences for the Node tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2196
-#, fuzzy
 msgid "Rectangle Preferences"
-msgstr "ዕቃ ምርጫዎች"
+msgstr ""
 
 #: ../src/verbs.cpp:2197
-#, fuzzy
 msgid "Open Preferences for the Rectangle tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2198
-#, fuzzy
 msgid "Ellipse Preferences"
-msgstr "የእስክሪን ምርጫዎች"
+msgstr ""
 
 #: ../src/verbs.cpp:2199
-#, fuzzy
 msgid "Open Preferences for the Ellipse tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2200
 #, fuzzy
@@ -8640,98 +8400,81 @@ msgid "Star Preferences"
 msgstr "የኮከብ ምርጫዎች"
 
 #: ../src/verbs.cpp:2201
-#, fuzzy
 msgid "Open Preferences for the Star tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2202
-#, fuzzy
 msgid "Spiral Preferences"
-msgstr "የኮከብ ምርጫዎች"
+msgstr ""
 
 #: ../src/verbs.cpp:2203
-#, fuzzy
 msgid "Open Preferences for the Spiral tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2204
-#, fuzzy
 msgid "Pencil Preferences"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2205
-#, fuzzy
 msgid "Open Preferences for the Pencil tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2206
-#, fuzzy
 msgid "Pen Preferences"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2207
-#, fuzzy
 msgid "Open Preferences for the Pen tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2208
 msgid "Calligraphic Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2209
-#, fuzzy
 msgid "Open Preferences for the Calligraphy tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2210
 #, fuzzy
 msgid "Text Preferences"
-msgstr "ሶዲፖዲ"
+msgstr "የጽሑፍ ምርጫዎች"
 
 #: ../src/verbs.cpp:2211
-#, fuzzy
 msgid "Open Preferences for the Text tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2212
-#, fuzzy
 msgid "Gradient Preferences"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2213
-#, fuzzy
 msgid "Open Preferences for the Gradient tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2214
-#, fuzzy
 msgid "Zoom Preferences"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2215
-#, fuzzy
 msgid "Open Preferences for the Zoom tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2216
-#, fuzzy
 msgid "Dropper Preferences"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2217
-#, fuzzy
 msgid "Open Preferences for the Dropper tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2218
-#, fuzzy
 msgid "Connector Preferences"
-msgstr "የኮከብ ምርጫዎች"
+msgstr ""
 
 #: ../src/verbs.cpp:2219
-#, fuzzy
 msgid "Open Preferences for the Connector tool"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #. Zoom/View
 #: ../src/verbs.cpp:2222
@@ -8755,14 +8498,12 @@ msgid "Zoom out"
 msgstr "በቅርበት አሳይ"
 
 #: ../src/verbs.cpp:2224
-#, fuzzy
 msgid "_Rulers"
-msgstr "ፋይል"
+msgstr ""
 
 #: ../src/verbs.cpp:2224
-#, fuzzy
 msgid "Show or hide the canvas rulers"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../src/verbs.cpp:2225
 msgid "Scroll_bars"
@@ -8846,9 +8587,8 @@ msgid "Duplic_ate Window"
 msgstr "አባዛ"
 
 #: ../src/verbs.cpp:2242
-#, fuzzy
 msgid "Open a new window with the same document"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr ""
 
 #: ../src/verbs.cpp:2244
 #, fuzzy
@@ -8870,9 +8610,8 @@ msgid "Switch to normal display mode"
 msgstr ""
 
 #: ../src/verbs.cpp:2249
-#, fuzzy
 msgid "_Outline"
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/verbs.cpp:2250
 msgid "Switch to outline (wireframe) display mode"
@@ -8881,7 +8620,7 @@ msgstr ""
 #: ../src/verbs.cpp:2252
 #, fuzzy
 msgid "Ico_n Preview"
-msgstr "አዲስ ቅድመ ዕይታ"
+msgstr "የቅድመ ህትመት ዕይታ"
 
 #: ../src/verbs.cpp:2253
 msgid "Open a window to preview objects at different icon resolutions"
@@ -8909,24 +8648,21 @@ msgstr ""
 
 #. Dialogs
 #: ../src/verbs.cpp:2264
-#, fuzzy
 msgid "In_kscape Preferences..."
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2265
-#, fuzzy
 msgid "Edit global Inkscape preferences"
-msgstr "የእስክሪን ምርጫዎች"
+msgstr ""
 
 #: ../src/verbs.cpp:2266
 #, fuzzy
 msgid "_Document Properties..."
-msgstr "የሰነድ ምርጫዎች"
+msgstr "የምስሉ ምርጫዎች"
 
 #: ../src/verbs.cpp:2267
-#, fuzzy
 msgid "Edit properties of this document (to be saved with the document)"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr ""
 
 #: ../src/verbs.cpp:2268
 #, fuzzy
@@ -8934,9 +8670,8 @@ msgid "Document _Metadata..."
 msgstr "የሰነድ ስም፦"
 
 #: ../src/verbs.cpp:2269
-#, fuzzy
 msgid "Edit document metadata (to be saved with the document)"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr ""
 
 #: ../src/verbs.cpp:2270
 #, fuzzy
@@ -9009,7 +8744,7 @@ msgstr "አትም"
 #: ../src/verbs.cpp:2286
 #, fuzzy
 msgid "Find objects in document"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr "ሰነዱ ይታተም"
 
 #: ../src/verbs.cpp:2287
 msgid "_Messages..."
@@ -9029,20 +8764,17 @@ msgid "Run scripts"
 msgstr ""
 
 #: ../src/verbs.cpp:2291
-#, fuzzy
 msgid "Show/Hide D_ialogs"
-msgstr "የእስክሪን ምርጫዎች"
+msgstr ""
 
 #: ../src/verbs.cpp:2292
-#, fuzzy
 msgid "Show or hide all open dialogs"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
 #: ../src/verbs.cpp:2294
-#, fuzzy
 msgid "Create Tiled Clones..."
-msgstr "ዝጋ"
+msgstr ""
 
 #: ../src/verbs.cpp:2295
 msgid ""
@@ -9053,7 +8785,7 @@ msgstr ""
 #: ../src/verbs.cpp:2296
 #, fuzzy
 msgid "_Object Properties..."
-msgstr "ዕቃ ምርጫዎች"
+msgstr "የኮከብ ምርጫዎች"
 
 #: ../src/verbs.cpp:2297
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -9076,9 +8808,8 @@ msgid "Configure extended input devices, such as a graphics tablet"
 msgstr ""
 
 #: ../src/verbs.cpp:2304
-#, fuzzy
 msgid "_Extensions..."
-msgstr "አጥፉ"
+msgstr ""
 
 #: ../src/verbs.cpp:2305
 msgid "Query information about extensions"
@@ -9087,12 +8818,11 @@ msgstr ""
 #: ../src/verbs.cpp:2306
 #, fuzzy
 msgid "Layer_s..."
-msgstr "ዝቅተኛ"
+msgstr "በሌላ ስም አስቀምጥ"
 
 #: ../src/verbs.cpp:2307
-#, fuzzy
 msgid "View Layers"
-msgstr "አሳድግ"
+msgstr ""
 
 #. Help
 #: ../src/verbs.cpp:2310
@@ -9104,18 +8834,16 @@ msgid "Keys and mouse shortcuts reference"
 msgstr ""
 
 #: ../src/verbs.cpp:2312
-#, fuzzy
 msgid "About E_xtensions"
-msgstr "አጥፉ"
+msgstr ""
 
 #: ../src/verbs.cpp:2313
 msgid "Information on Inkscape extensions"
 msgstr ""
 
 #: ../src/verbs.cpp:2314
-#, fuzzy
 msgid "About _Memory"
-msgstr "አጥፉ"
+msgstr ""
 
 #: ../src/verbs.cpp:2315
 msgid "Memory usage information"
@@ -9134,9 +8862,8 @@ msgstr ""
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
 #: ../src/verbs.cpp:2322
-#, fuzzy
 msgid "Inkscape: _Basic"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2323
 msgid "Getting started with Inkscape"
@@ -9144,30 +8871,26 @@ msgstr ""
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2324
-#, fuzzy
 msgid "Inkscape: _Shapes"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2325
 msgid "Using shape tools to create and edit shapes"
 msgstr ""
 
 #: ../src/verbs.cpp:2326
-#, fuzzy
 msgid "Inkscape: _Advanced"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2327
-#, fuzzy
 msgid "Advanced Inkscape topics"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2329
-#, fuzzy
 msgid "Inkscape: T_racing"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2330
 msgid "Using bitmap tracing"
@@ -9175,9 +8898,8 @@ msgstr ""
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2331
-#, fuzzy
 msgid "Inkscape: _Calligraphy"
-msgstr "ሶዲፖዲ"
+msgstr ""
 
 #: ../src/verbs.cpp:2332
 msgid "Using the Calligraphy pen tool"
@@ -9225,24 +8947,20 @@ msgid "Fit Page to Selection"
 msgstr "ምርጫ"
 
 #: ../src/verbs.cpp:2346
-#, fuzzy
 msgid "Fit the page to the current selection"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/verbs.cpp:2347
-#, fuzzy
 msgid "Fit Page to Drawing"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/verbs.cpp:2348
-#, fuzzy
 msgid "Fit the page to the drawing"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/verbs.cpp:2349
-#, fuzzy
 msgid "Fit Page to Selection or Drawing"
-msgstr "ምርጫ"
+msgstr ""
 
 #: ../src/verbs.cpp:2350
 msgid ""
@@ -9358,7 +9076,7 @@ msgstr ""
 #: ../src/widgets/gradient-toolbar.cpp:570
 #, fuzzy
 msgid "Create linear gradient"
-msgstr "ሰነድ አስቀምት"
+msgstr "አያያዝ ፍጠር"
 
 #: ../src/widgets/gradient-toolbar.cpp:584
 msgid "Create radial (elliptic or circular) gradient"
@@ -9435,19 +9153,16 @@ msgid "Gradient editor"
 msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:113
-#, fuzzy
 msgid "Toggle current layer visibility"
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:133
-#, fuzzy
 msgid "Lock or unlock current layer"
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:136
-#, fuzzy
 msgid "Current layer"
-msgstr "የሰነድ ስም፦"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:561
 msgid "(root)"
@@ -9460,7 +9175,7 @@ msgstr ""
 #: ../src/widgets/paint-selector.cpp:170 ../src/widgets/paint-selector.cpp:617
 #, fuzzy
 msgid "Flat color"
-msgstr "የመጨረሺያ ቀለም"
+msgstr "የመጀመሪያ ቀለም"
 
 #: ../src/widgets/paint-selector.cpp:172 ../src/widgets/paint-selector.cpp:684
 msgid "Linear gradient"
@@ -9502,7 +9217,7 @@ msgstr ""
 #: ../src/widgets/paint-selector.cpp:745
 #, fuzzy
 msgid "No patterns in document"
-msgstr "ያልተሰየመ ሰነድ"
+msgstr "ሰነዱ ይታተም"
 
 #: ../src/widgets/paint-selector.cpp:859
 msgid ""
@@ -9557,9 +9272,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:434
-#, fuzzy
 msgid "select_toolbar|X"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:434
 msgid "Horizontal coordinate of selection"
@@ -9568,9 +9282,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:439
-#, fuzzy
 msgid "select_toolbar|Y"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:439
 msgid "Vertical coordinate of selection"
@@ -9579,9 +9292,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:445
-#, fuzzy
 msgid "select_toolbar|W"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:445
 msgid "Width of selection"
@@ -9594,17 +9306,17 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:463
-#, fuzzy
 msgid "select_toolbar|H"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:463
 msgid "Height of selection"
 msgstr ""
 
 #: ../src/widgets/sp-color-gtkselector.cpp:50
+#, fuzzy
 msgid "System"
-msgstr ""
+msgstr "ዕቃ"
 
 #: ../src/widgets/sp-color-notebook.cpp:319
 #, fuzzy
@@ -9683,9 +9395,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:421
 #: ../src/widgets/sp-color-scales.cpp:422
-#, fuzzy
 msgid "Hue"
-msgstr "Href፦"
+msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:423
 msgid "_S"
@@ -9695,7 +9406,7 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:425
 #, fuzzy
 msgid "Saturation"
-msgstr "አቀማመጥ፦"
+msgstr "ምርጫ"
 
 #: ../src/widgets/sp-color-scales.cpp:426
 msgid "_L"
@@ -9703,9 +9414,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:427
 #: ../src/widgets/sp-color-scales.cpp:428
-#, fuzzy
 msgid "Lightness"
-msgstr "እርዝማኔ፦"
+msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:448
 msgid "_C"
@@ -9723,9 +9433,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:452
 #: ../src/widgets/sp-color-scales.cpp:453
-#, fuzzy
 msgid "Magenta"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:454
 msgid "_Y"
@@ -9766,9 +9475,8 @@ msgid "Delete selected nodes"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:423
-#, fuzzy
 msgid "Join selected endnodes"
-msgstr "ምርጡ"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:425
 msgid "Join selected endnodes with a new segment"
@@ -9819,9 +9527,8 @@ msgid "Number of corners of a polygon or star"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1246
-#, fuzzy
 msgid "Spoke ratio:"
-msgstr "አቀማመጥ፦"
+msgstr ""
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
@@ -9832,7 +9539,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1264
 #, fuzzy
 msgid "Rounded:"
-msgstr "የአሠራሩ ዘዴ፦"
+msgstr "ቀይ፦"
 
 #: ../src/widgets/toolbox.cpp:1264
 msgid "How much rounded are the corners (0 for sharp)"
@@ -9873,7 +9580,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1592
 #, fuzzy
 msgid "Rx:"
-msgstr "x0፦"
+msgstr "RY፦"
 
 #: ../src/widgets/toolbox.cpp:1592
 msgid "Horizontal radius of rounded corners"
@@ -9882,7 +9589,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1602
 #, fuzzy
 msgid "Ry:"
-msgstr "y0፦"
+msgstr "RY፦"
 
 #: ../src/widgets/toolbox.cpp:1602
 msgid "Vertical radius of rounded corners"
@@ -10056,7 +9763,7 @@ msgstr "ኩልኩል፦"
 #: ../src/widgets/toolbox.cpp:3548
 #, fuzzy
 msgid "Center"
-msgstr "መሀከል Y፦"
+msgstr "መሀከል X፦"
 
 #: ../src/widgets/toolbox.cpp:3559
 #, fuzzy
@@ -10096,8 +9803,9 @@ msgid "Letter rotation"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3814
+#, fuzzy
 msgid "Remove manual kerns"
-msgstr ""
+msgstr "አያያዝን አስወግድ"
 
 #: ../src/widgets/toolbox.cpp:3882
 msgid "Change connector spacing distance"
@@ -10139,9 +9847,8 @@ msgstr ""
 #.
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 #: ../share/extensions/addnodes.inx.h:1
-#, fuzzy
 msgid "Add Nodes"
-msgstr "ምንም"
+msgstr ""
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "Maximum segment length"
@@ -10170,18 +9877,16 @@ msgid "Open files saved with Adobe Illustrator"
 msgstr ""
 
 #: ../share/extensions/ai_output.inx.h:1
-#, fuzzy
 msgid "AI Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../share/extensions/ai_output.inx.h:3
 msgid "Write Adobe Illustrator"
 msgstr ""
 
 #: ../share/extensions/aisvg.inx.h:1
-#, fuzzy
 msgid "AI SVG Input"
-msgstr "አስገባ"
+msgstr ""
 
 #: ../share/extensions/aisvg.inx.h:2
 msgid "Adobe Illustrator SVG (*.ai.svg)"
@@ -10266,9 +9971,8 @@ msgid "Desktop Cutting Plotter (*.DXF)"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:2
-#, fuzzy
 msgid "DXF Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:3
 msgid "DXF file written by pstoedit"
@@ -10279,9 +9983,8 @@ msgid "pstoedit must be installed to run see http://www.pstoedit.net/pstoedit"
 msgstr ""
 
 #: ../share/extensions/embedimage.inx.h:1
-#, fuzzy
 msgid "Embed All Images"
-msgstr "ምስል"
+msgstr ""
 
 #: ../share/extensions/eps_input.inx.h:1
 #, fuzzy
@@ -10293,9 +9996,8 @@ msgid "Encapsulated Postscript"
 msgstr ""
 
 #: ../share/extensions/epsi_output.inx.h:1
-#, fuzzy
 msgid "EPSI Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
@@ -10323,9 +10025,8 @@ msgstr ""
 
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
-#, fuzzy
 msgid "Bridge Width"
-msgstr "ስፋት፦"
+msgstr ""
 
 #: ../share/extensions/ffmet.inx.h:2 ../share/extensions/ffms.inx.h:2
 msgid "First String Length"
@@ -10426,7 +10127,7 @@ msgstr "አስገባ"
 #: ../share/extensions/flatten.inx.h:1
 #, fuzzy
 msgid "Flatness"
-msgstr "ዝጋ"
+msgstr "ፋይል"
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
@@ -10487,13 +10188,12 @@ msgid "L-system"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
-msgstr ""
+msgstr "ቅደም ተከተል"
 
 #: ../share/extensions/lindenmayer.inx.h:6
 #, no-c-format
@@ -10506,14 +10206,13 @@ msgid "Randomize step (%)"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "መቶኛዎች"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:11
 #, fuzzy
 msgid "Rules"
-msgstr "ፋይል"
+msgstr "የአሠራሩ ዘዴ፦"
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
@@ -10532,14 +10231,12 @@ msgid "Extrude"
 msgstr ""
 
 #: ../share/extensions/motion.inx.h:4
-#, fuzzy
 msgid "Magnitude"
-msgstr "ኢላማ፦"
+msgstr ""
 
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "Postscript"
-msgstr "ነጥብ"
+msgstr ""
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
@@ -10581,9 +10278,8 @@ msgid "Initial size"
 msgstr "የፊደሉ ቅርጽ መጠን፦"
 
 #: ../share/extensions/rtree.inx.h:2
-#, fuzzy
 msgid "Minimum size"
-msgstr "የተለየ"
+msgstr ""
 
 #: ../share/extensions/rtree.inx.h:3
 msgid "Random Tree"
@@ -10624,14 +10320,12 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "ቁረጥ"
+msgstr ""
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
-#, fuzzy
 msgid "Color of shadow"
-msgstr "ወሰንን አሳይ"
+msgstr ""
 
 #: ../share/extensions/svg_dropshadow.inx.h:2
 msgid "Dropshadow"
@@ -10659,8 +10353,9 @@ msgid "First derivative"
 msgstr ""
 
 #: ../share/extensions/wavy.inx.h:3
+#, fuzzy
 msgid "Function"
-msgstr ""
+msgstr "ምርጫ"
 
 #: ../share/extensions/wavy.inx.h:4
 msgid "Function Plotter"
@@ -10708,152 +10403,20 @@ msgstr ""
 msgid "Windows Metafile Input"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Fit Canvas to Selection"
-#~ msgstr "ምርጫ"
-
-#, fuzzy
-#~ msgid "Accept invitation in new document window"
-#~ msgstr "ሰነድ አስቀምት"
-
-#, fuzzy
-#~ msgid "Cancel connection"
-#~ msgstr "ምርጫ"
-
-#, fuzzy
-#~ msgid "Share with _user..."
-#~ msgstr "በሌላ ስም አስቀምጥ"
-
-#, fuzzy
-#~ msgid "Rag right"
-#~ msgstr "እርዝማኔ፦"
-
-#, fuzzy
-#~ msgid "Centered"
-#~ msgstr "መሀከል X፦"
-
-#, fuzzy
-#~ msgid "%s Preferences"
+#~ msgid "Sodipodi"
 #~ msgstr "ሶዲፖዲ"
 
-#, fuzzy
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "PDF Output"
-#~ msgstr "ቁረጥ"
-
-#, fuzzy
-#~ msgid "_Filename"
-#~ msgstr "ፋይል"
-
-#, fuzzy
-#~ msgid " <b>_Export</b> "
-#~ msgstr "መቶኛዎች"
-
-#, fuzzy
-#~ msgid "Tool Controls"
-#~ msgstr "የመስሪያውን ምርጫዎች"
-
-#, fuzzy
-#~ msgid "_Panels"
-#~ msgstr "ተወው"
-
-#, fuzzy
-#~ msgid "Convert selected strokes to paths"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "Fill and Stroke dialog"
+#~ msgid "Display settings"
 #~ msgstr "የእስክሪን ምርጫዎች"
 
-#, fuzzy
-#~ msgid "Align and Distribute dialog"
-#~ msgstr "ጠባየ-አንቀጽ"
+#~ msgid "Document settings"
+#~ msgstr "የሰነድ ምርጫዎች"
 
-#, fuzzy
-#~ msgid "Text and Font dialog"
-#~ msgstr "ጽሑፍ እና የፊደል ቅርጽ"
+#~ msgid "Visible"
+#~ msgstr "የሚታይ"
 
-#~ msgid "XML Editor"
-#~ msgstr "የXML ማቀናጃ"
-
-#, fuzzy
-#~ msgid "Object Properties dialog"
-#~ msgstr "ዕቃ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "About Memory..."
-#~ msgstr "አጥፉ"
-
-#~ msgid "Close"
-#~ msgstr "ዝጋ"
-
-#, fuzzy
-#~ msgid "Row spacing:   "
-#~ msgstr "ክፍተት X፦"
-
-#, fuzzy
-#~ msgid "Column spacing:"
-#~ msgstr "ክፍተት X፦"
-
-#, fuzzy
-#~ msgid "Font Size"
-#~ msgstr "የፊደሉ ቅርጽ መጠን፦"
-
-#, fuzzy
-#~ msgid "Direction"
-#~ msgstr "ምርጫ"
-
-#, fuzzy
-#~ msgid "_Credits"
-#~ msgstr "ፍጠር"
-
-#, fuzzy
-#~ msgid "Canvas size:"
-#~ msgstr "የፊደሉ ቅርጽ መጠን፦"
-
-#, fuzzy
-#~ msgid "Custom canvas"
-#~ msgstr "የተለመደው ወረቀት"
-
-#~ msgid "deg"
-#~ msgstr "deg"
-
-#, fuzzy
-#~ msgid "Acceleration"
-#~ msgstr "ምርጫ"
-
-#, fuzzy
-#~ msgid "Speed"
-#~ msgstr "ቀይ፦"
-
-#, fuzzy
-#~ msgid "Zoom in/out by"
-#~ msgstr "በቅርበት አሳይ"
-
-#, fuzzy
-#~ msgid "Transform"
-#~ msgstr "ንድፍ፦"
-
-#~ msgid "Edit"
-#~ msgstr "አስተካክል"
-
-#~ msgid "Add"
-#~ msgstr "ጨምር"
-
-#, fuzzy
-#~ msgid "C_reate"
-#~ msgstr "ፍጠር"
-
-#, fuzzy
-#~ msgid "Go to root"
-#~ msgstr "አስተካክል"
-
-#, fuzzy
-#~ msgid "Y"
-#~ msgstr "Y፦"
+#~ msgid "Item properties"
+#~ msgstr "የዕቃ ምርጫዎች"
 
 #~ msgid "R1:"
 #~ msgstr "R1፦"
@@ -10867,393 +10430,65 @@ msgstr ""
 #~ msgid "ARG2:"
 #~ msgstr "ARG2፦"
 
-#, fuzzy
-#~ msgid "Start Angle:"
-#~ msgstr "ኮከብ"
-
-#, fuzzy
-#~ msgid "Open:"
-#~ msgstr "ክፈት"
-
-#, fuzzy
-#~ msgid "Revolutions:"
-#~ msgstr "ምርጫ"
-
 #~ msgid "T0:"
 #~ msgstr "ወደ፦"
 
 #~ msgid "RX:"
 #~ msgstr "RX፦"
 
-#~ msgid "RY:"
-#~ msgstr "RY፦"
-
-#, fuzzy
-#~ msgid "Rectangle _Properties"
-#~ msgstr "ዕቃ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Star _Properties"
-#~ msgstr "የኮከብ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Ellipse _Properties"
-#~ msgstr "የአያያዝ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Spiral _Properties"
-#~ msgstr "የኮከብ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Document Preferences"
-#~ msgstr "ሶዲፖዲ"
-
-#, fuzzy
-#~ msgid "Extensions Editor"
-#~ msgstr "አጥፉ"
-
-#, fuzzy
-#~ msgid "Preferences"
-#~ msgstr "ሶዲፖዲ"
-
-#, fuzzy
-#~ msgid "Text Properties"
-#~ msgstr "የጽሑፍ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "_Export..."
-#~ msgstr "ከውጭ አስገባ"
-
-#, fuzzy
-#~ msgid "In_kscape Preferences"
-#~ msgstr "ሶዲፖዲ"
-
-#, fuzzy
-#~ msgid "Select _Original Clone"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "Tile"
-#~ msgstr "አርእስት፦"
-
-#, fuzzy
-#~ msgid "Select A_ll"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "Select Non_e"
-#~ msgstr "ምርጫ"
-
-#, fuzzy
-#~ msgid "Zoom _In"
-#~ msgstr "በቅርበት አሳይ"
-
-#, fuzzy
-#~ msgid "Zoom _Out"
-#~ msgstr "በቅርበት አሳይ"
-
-#, fuzzy
-#~ msgid "Pre_vious"
-#~ msgstr "አዲስ ዕይታ"
-
-#, fuzzy
-#~ msgid "Nex_t"
-#~ msgstr "ጽሑፍ"
-
-#, fuzzy
-#~ msgid "D_uplicate Layer"
-#~ msgstr "አባዛ"
-
-#, fuzzy
-#~ msgid "_Anchor Layer"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "_Delete Layer"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "Select Ne_xt Layer"
-#~ msgstr "ምርጡ"
-
-#, fuzzy
-#~ msgid "Select To_p Layer"
-#~ msgstr "ማተሚያ ምረጥ"
-
-#, fuzzy
-#~ msgid "Move to Ne_w Layer"
-#~ msgstr "ሰነድ አስቀምት"
-
-#, fuzzy
-#~ msgid "Freehand"
-#~ msgstr "አረንጓዴ፦"
-
-#, fuzzy
-#~ msgid "Corners"
-#~ msgstr "ዝጋ"
-
-#, fuzzy
-#~ msgid "Join"
-#~ msgstr "አገጣጥም፦"
-
-#, fuzzy
-#~ msgid "Save"
-#~ msgstr "አስቀምጥ"
-
-#, fuzzy
-#~ msgid "Save As..."
-#~ msgstr "በሌላ ስም አስቀምጥ"
-
-#, fuzzy
-#~ msgid "Import..."
-#~ msgstr "ከውጭ አስገባ"
-
-#, fuzzy
-#~ msgid "Export..."
-#~ msgstr "ላኩ"
-
-#, fuzzy
-#~ msgid "Print..."
-#~ msgstr "አትም"
-
-#, fuzzy
-#~ msgid "Global Inkscape preferences (Shift+Ctrl+P)"
-#~ msgstr "የእስክሪን ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Undo"
-#~ msgstr "ወደ ነበረበት መልስ"
-
-#, fuzzy
-#~ msgid "Redo"
-#~ msgstr "እንደገና አድርግ"
-
-#, fuzzy
-#~ msgid "Cut"
-#~ msgstr "ቁረጥ"
-
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "ቅጂ"
-
-#, fuzzy
-#~ msgid "Zoom in (+)"
-#~ msgstr "በቅርበት አሳይ"
-
-#, fuzzy
-#~ msgid "Zoom out (-)"
-#~ msgstr "በቅርበት አሳይ"
-
-#, fuzzy
-#~ msgid "Fill and Stroke dialog (Shift+Ctrl+F)"
-#~ msgstr "የእስክሪን ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Align and Distribute dialog (Shift+Ctrl+A)"
-#~ msgstr "ጠባየ-አንቀጽ"
-
-#, fuzzy
-#~ msgid "Text and Font dialog (Shift+Ctrl+T)"
-#~ msgstr "ጽሑፍ እና የፊደል ቅርጽ"
-
-#, fuzzy
-#~ msgid "Node tool"
-#~ msgstr "አስተካክል"
-
-#, fuzzy
-#~ msgid "Zoom tool"
-#~ msgstr "በቅርበት አሳይ"
-
-#, fuzzy
-#~ msgid "Rectangle tool"
-#~ msgstr "መቶኛዎች"
-
-#, fuzzy
-#~ msgid "Arc tool"
-#~ msgstr "የኮከብ መሣሪያ"
+#~ msgid "Apply to:"
+#~ msgstr "ለ... አውል፦"
 
 #~ msgid "Star tool"
 #~ msgstr "የኮከብ መሣሪያ"
 
 #, fuzzy
-#~ msgid "Spiral tool"
-#~ msgstr "የኮከብ መሣሪያ"
-
-#, fuzzy
-#~ msgid "Text tool"
-#~ msgstr "የኮከብ መሣሪያ"
-
-#, fuzzy
-#~ msgid "URI:"
-#~ msgstr "URL፦"
-
-#, fuzzy
-#~ msgid "Invert Selection"
-#~ msgstr "ምርጫ"
-
-#, fuzzy
-#~ msgid "_Scripts..."
-#~ msgstr "አትም"
-
-#, fuzzy
-#~ msgid "Align and Distribute Dialog"
-#~ msgstr "ጠባየ-አንቀጽ"
-
-#, fuzzy
-#~ msgid "Export Dialog"
-#~ msgstr "የpng ፋይል ላኩ"
-
-#, fuzzy
-#~ msgid "Fill and Stroke Dialog"
-#~ msgstr "የእስክሪን ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Inkscape Preferences"
-#~ msgstr "ሶዲፖዲ"
-
-#, fuzzy
-#~ msgid "Inkscape Preferences Dialog"
-#~ msgstr "ሶዲፖዲ"
-
-#, fuzzy
-#~ msgid "Text Properties Dialog"
-#~ msgstr "ዕቃ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Tree Editor"
-#~ msgstr "የXML ማቀናጃ"
-
-#, fuzzy
-#~ msgid "XML Editor Dialog"
-#~ msgstr "የXML ማቀናጃ"
-
-#, fuzzy
-#~ msgid "EPS Output Settings"
-#~ msgstr "የሰነድ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Inkscape"
-#~ msgstr "ሶዲፖዲ"
-
-#, fuzzy
-#~ msgid "Alternate sign"
-#~ msgstr "አቀማመጥ፦"
-
-#, fuzzy
-#~ msgid "Grid emphasis color"
-#~ msgstr "የመጨረሺያ ቀለም"
-
-#, fuzzy
-#~ msgid "Background (also for export):"
-#~ msgstr "የመጨረሺያ ቀለም"
-
-#, fuzzy
-#~ msgid "Fill:"
-#~ msgstr "ፋይል"
-
-#, fuzzy
-#~ msgid "alternating"
-#~ msgstr "አቀማመጥ፦"
-
-#, fuzzy
-#~ msgid "Update Properties"
-#~ msgstr "ዕቃ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "executable"
-#~ msgstr "መቶኛዎች"
-
-#, fuzzy
-#~ msgid "path"
-#~ msgstr "ነጥብ"
-
-#, fuzzy
-#~ msgid "absolute"
-#~ msgstr "ዕሴት"
-
-#, fuzzy
-#~ msgid "Layer Properties"
-#~ msgstr "የኮከብ ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Apply"
-#~ msgstr "ለ... አውል፦"
-
-#~ msgid "Document Name:"
-#~ msgstr "የሰነድ ስም፦"
-
-#~ msgid "Image URI:"
-#~ msgstr "የምስል URI፦"
-
-#~ msgid "Visible"
-#~ msgstr "የሚታይ"
-
-#, fuzzy
-#~ msgid "Other"
-#~ msgstr "ቅደም ተከተል"
-
-#~ msgid "Alignment:"
-#~ msgstr "ኩልኩል፦"
+#~ msgid "Object Size and Position"
+#~ msgstr "መጠን እና ቦታ"
 
 #~ msgid "Text and font"
 #~ msgstr "ጽሑፍ እና የፊደል ቅርጽ"
 
-#, fuzzy
-#~ msgid "Pattern Fill"
-#~ msgstr "ንድፍ፦"
+#~ msgid "About sodipodi"
+#~ msgstr "ስለ ሶዲፖዲ"
 
-#, fuzzy
-#~ msgid "Rect"
-#~ msgstr "አስተካክል"
+#~ msgid "About Sodipodi"
+#~ msgstr "ስለ ሶዲፖዲ"
 
-#~ msgid "User"
-#~ msgstr "ተጠቃሚ"
-
-#, fuzzy
-#~ msgid "Ru_lers"
-#~ msgstr "ፋይል"
-
-#~ msgid "Alpha:"
-#~ msgstr "አልፋ፦"
-
-#~ msgid "Value:"
-#~ msgstr "ዕሴት፦"
-
-#~ msgid "Item properties"
-#~ msgstr "የዕቃ ምርጫዎች"
-
-#, fuzzy
 #~ msgid "New View"
 #~ msgstr "አዲስ ዕይታ"
 
 #, fuzzy
-#~ msgid "Fill and stroke settings"
-#~ msgstr "የእስክሪን ምርጫዎች"
+#~ msgid "Exit program"
+#~ msgstr "ከፕሮግራሙ ውጣ"
 
-#, fuzzy
-#~ msgid "Text editing and font settings"
-#~ msgstr "ጽሑፍ እና የፊደል ቅርጽ"
+#~ msgid "SVG with \"xmlns:sodipodi\" namespace"
+#~ msgstr "SVG በ \"xmlns:sodipodi\" namespace"
+
+#~ msgid "Sodipodi (doc name %s..): Print Preview"
+#~ msgstr "ሶዲፖዲ (የሰነድ ስም %s..)፦ የቅድመ ህትመት ዕይታ"
+
+#~ msgid "Item Properties"
+#~ msgstr "ዕቃ ምርጫዎች"
+
+#~ msgid "Group Properties"
+#~ msgstr "የመድረክ ምርጫዎች"
 
 #~ msgid "Show content"
 #~ msgstr "ይዞታ አሳይ"
 
-#, fuzzy
-#~ msgid "Inkscape _Options"
-#~ msgstr "ሶዲፖዲ"
+#~ msgid "Color image %d x %d: %s"
+#~ msgstr "ቀለም ምስል %d በ %d፦ %s"
+
+#~ msgid "Image URI:"
+#~ msgstr "የምስል URI፦"
+
+#~ msgid "Unknown item :-("
+#~ msgstr "ያልታወቀ ዕቃ :-("
 
 #, fuzzy
-#~ msgid "Tool Optio_ns"
-#~ msgstr "የመስሪያውን ምርጫዎች"
-
-#, fuzzy
-#~ msgid "Object Size and Position"
-#~ msgstr "መጠን እና ቦታ"
-
-#~ msgid "Item"
-#~ msgstr "ዕቃ"
-
-#~ msgid "Group Properties"
-#~ msgstr "የመድረክ ምርጫዎች"
+#~ msgid "Exit"
+#~ msgstr "አስተካክል"
 
 #, fuzzy
 #~ msgid "In"
@@ -11269,33 +10504,28 @@ msgstr ""
 #~ msgstr "2:1"
 
 #, fuzzy
+#~ msgid "Global display settings"
+#~ msgstr "የእስክሪን ምርጫዎች"
+
+#, fuzzy
 #~ msgid "Editing window properties"
 #~ msgstr "የአያያዝ ምርጫዎች"
 
-#~ msgid "Sodipodi"
-#~ msgstr "ሶዲፖዲ"
-
-#~ msgid "Display settings"
-#~ msgstr "የእስክሪን ምርጫዎች"
-
-#~ msgid "Exit Program"
-#~ msgstr "ከፕሮግራሙ ውጣ"
-
-#~ msgid "SVG with \"xmlns:sodipodi\" namespace"
-#~ msgstr "SVG በ \"xmlns:sodipodi\" namespace"
-
-#~ msgid "Unknown item :-("
-#~ msgstr "ያልታወቀ ዕቃ :-("
+#~ msgid "Tool Options"
+#~ msgstr "የመስሪያውን ምርጫዎች"
 
 #, fuzzy
-#~ msgid "Document variant:"
-#~ msgstr "የሰነድ ስም፦"
+#~ msgid "Text editing and font settings"
+#~ msgstr "ጽሑፍ እና የፊደል ቅርጽ"
 
-#~ msgid "About sodipodi"
-#~ msgstr "ስለ ሶዲፖዲ"
+#~ msgid "Mode:"
+#~ msgstr "የአሠራሩ ዘዴ፦"
 
-#~ msgid "About Sodipodi"
-#~ msgstr "ስለ ሶዲፖዲ"
+#~ msgid "Alpha:"
+#~ msgstr "አልፋ፦"
+
+#~ msgid "Value:"
+#~ msgstr "ዕሴት፦"
 
 #~ msgid "Display Properties"
 #~ msgstr "የእስክሪን ምርጫዎች"

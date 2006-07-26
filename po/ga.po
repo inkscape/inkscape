@@ -1,5 +1,5 @@
 # Irish language translation of sodipodi
-# Copyright (C) 2000 Free Software Foundation, Inc.
+# Copyright (C) 2000,2004 Free Software Foundation, Inc.
 # Alastair McKinstry <mckinstry@computer.org>, 2000.
 #
 #: ../src/widgets/toolbox.cpp:3695 ../src/widgets/toolbox.cpp:3716
@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sodipodi 0.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 20:45+0200\n"
-"PO-Revision-Date: 2000-08-24 20:00-0000\n"
+"POT-Creation-Date: 2006-07-26 21:00+0200\n"
+"PO-Revision-Date: 2004-02-03 08:18+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
-"Language-Team: Irish <ga@li.org>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -44,23 +44,20 @@ msgstr ""
 #: ../src/arc-context.cpp:437
 #, fuzzy
 msgid "Create ellipse"
-msgstr "Sábháil Comhad"
+msgstr "Cruthaigh"
 
 #: ../src/connector-context.cpp:523
-#, fuzzy
 msgid "Creating new connector"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/connector-context.cpp:717
-#, fuzzy
 msgid "Reroute connector"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:924
-#, fuzzy
 msgid "Create connector"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/connector-context.cpp:948
 msgid "Finishing connector"
@@ -75,19 +72,16 @@ msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr ""
 
 #: ../src/connector-context.cpp:1274
-#, fuzzy
 msgid "Select <b>at least one non-connector object</b>."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/connector-context.cpp:1279 ../src/widgets/toolbox.cpp:3979
-#, fuzzy
 msgid "Make connectors avoid selected objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/connector-context.cpp:1280 ../src/widgets/toolbox.cpp:3983
-#, fuzzy
 msgid "Make connectors ignore selected objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
@@ -111,9 +105,8 @@ msgid "No next zoom."
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:162
-#, fuzzy
 msgid "<small>Nothing selected.</small>"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:168
 msgid "<small>More than one object selected.</small>"
@@ -129,19 +122,16 @@ msgid "<small>Object has no tiled clones.</small>"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:845
-#, fuzzy
 msgid "Select <b>one object</b> whose tiled clones to unclump."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:897
-#, fuzzy
 msgid "Select <b>one object</b> whose tiled clones to remove."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1964
-#, fuzzy
 msgid "Select an <b>object</b> to clone."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:972
 msgid ""
@@ -154,14 +144,12 @@ msgid "<small>Per row:</small>"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1496
-#, fuzzy
 msgid "<small>Per column:</small>"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1504
-#, fuzzy
 msgid "<small>Randomize:</small>"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1658
 msgid "_Symmetry"
@@ -319,13 +307,13 @@ msgid "Alternate the sign of shifts for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1839
+#, fuzzy
 msgid "Sc_ale"
-msgstr ""
+msgstr "Sábháil"
 
 #: ../src/dialogs/clonetiler.cpp:1847
-#, fuzzy
 msgid "<b>Scale X:</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1855
 #, no-c-format
@@ -342,9 +330,8 @@ msgid "Randomize the horizontal scale by this percentage"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1878
-#, fuzzy
 msgid "<b>Scale Y:</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1886
 #, no-c-format
@@ -369,14 +356,12 @@ msgid "Alternate the sign of scales for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1929
-#, fuzzy
 msgid "_Rotation"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1937
-#, fuzzy
 msgid "<b>Angle:</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:1945
 #, no-c-format
@@ -429,14 +414,13 @@ msgid "Alternate the sign of opacity change for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2043
-#, fuzzy
 msgid "Co_lor"
-msgstr "Dath 2"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2048
 #, fuzzy
 msgid "Initial color: "
-msgstr "Dath"
+msgstr "Dath Leathanach:"
 
 #: ../src/dialogs/clonetiler.cpp:2052
 msgid "Initial color of tiled clones"
@@ -505,9 +489,8 @@ msgid "Alternate the sign of color changes for each column"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2174
-#, fuzzy
 msgid "_Trace"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2181
 msgid "Trace the drawing under the tiles"
@@ -528,7 +511,7 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:461
 #, fuzzy
 msgid "Color"
-msgstr "Dath 2"
+msgstr "Dún"
 
 #: ../src/dialogs/clonetiler.cpp:2211
 msgid "Pick the visible color and opacity"
@@ -618,9 +601,8 @@ msgid "Randomize the picked value by this percentage"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2317
-#, fuzzy
 msgid "Invert:"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2321
 msgid "Invert the picked value"
@@ -631,9 +613,8 @@ msgid "3. Apply the value to the clones':"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2337
-#, fuzzy
 msgid "Presence"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2340
 msgid ""
@@ -676,18 +657,16 @@ msgid "Height of the rectangle to be filled"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2487
-#, fuzzy
 msgid "Rows, columns: "
-msgstr "Dath"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2488
 msgid "Create the specified number of rows and columns"
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2497
-#, fuzzy
 msgid "Width, height: "
-msgstr "Airde"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2498
 msgid "Fill the specified width and height with the tiling"
@@ -704,9 +683,8 @@ msgid ""
 msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2541
-#, fuzzy
 msgid " <b>_Create</b> "
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2543
 msgid "Create and tile the clones of the selection"
@@ -753,14 +731,14 @@ msgstr ""
 #: ../src/ui/dialog/messages.cpp:54 ../src/ui/dialog/scriptdialog.cpp:178
 #, fuzzy
 msgid "_File"
-msgstr "Comhad _Nua"
+msgstr "Comhad"
 
 #. TRANSLATORS: "Clear" is a verb here
 #: ../src/dialogs/debugdialog.cpp:142 ../src/dialogs/find.cpp:748
 #: ../src/ui/dialog/messages.cpp:55 ../src/ui/dialog/scriptdialog.cpp:179
 #, fuzzy
 msgid "_Clear"
-msgstr "Radharc Nua"
+msgstr "Bánaigh gach rud"
 
 #: ../src/dialogs/debugdialog.cpp:144 ../src/ui/dialog/messages.cpp:57
 msgid "Capture log messages"
@@ -778,8 +756,9 @@ msgstr "Tada"
 
 #. "view_icon_preview"
 #: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2254
+#, fuzzy
 msgid "_Page"
-msgstr "_Leathanach"
+msgstr "Leathanach"
 
 #: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2258
 msgid "_Drawing"
@@ -788,12 +767,12 @@ msgstr ""
 #: ../src/dialogs/export.cpp:135 ../src/verbs.cpp:2260
 #, fuzzy
 msgid "_Selection"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #: ../src/dialogs/export.cpp:135
 #, fuzzy
 msgid "_Custom"
-msgstr "Gearr"
+msgstr "Féindheanamh"
 
 #: ../src/dialogs/export.cpp:259
 msgid "<big><b>Export area</b></big>"
@@ -804,35 +783,35 @@ msgid "Units:"
 msgstr ""
 
 #: ../src/dialogs/export.cpp:301
+#, fuzzy
 msgid "_x0:"
-msgstr ""
+msgstr "x0:"
 
 #: ../src/dialogs/export.cpp:306
 #, fuzzy
 msgid "x_1:"
-msgstr "1:1"
+msgstr "x1:"
 
 #. Stroke width
 #: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
-#, fuzzy
 msgid "Width:"
-msgstr "Leitheid"
+msgstr "Leitheid:"
 
 #: ../src/dialogs/export.cpp:317
+#, fuzzy
 msgid "_y0:"
-msgstr ""
+msgstr "y0:"
 
 #: ../src/dialogs/export.cpp:322
 #, fuzzy
 msgid "y_1:"
-msgstr "1:1"
+msgstr "y1:"
 
 #: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
 #: ../src/dialogs/object-attributes.cpp:52
-#, fuzzy
 msgid "Height:"
-msgstr "Airde"
+msgstr "Airde:"
 
 #: ../src/dialogs/export.cpp:416
 msgid "<big><b>Bitmap size</b></big>"
@@ -841,12 +820,12 @@ msgstr ""
 #: ../src/dialogs/export.cpp:429 ../src/ui/widget/page-sizer.cpp:257
 #, fuzzy
 msgid "_Width:"
-msgstr "Leitheid"
+msgstr "Leitheid:"
 
 #: ../src/dialogs/export.cpp:429 ../src/dialogs/export.cpp:445
 #, fuzzy
 msgid "pixels at"
-msgstr "pixelanna"
+msgstr "picsil"
 
 #: ../src/dialogs/export.cpp:439
 #, fuzzy
@@ -867,9 +846,8 @@ msgid "_Browse..."
 msgstr ""
 
 #: ../src/dialogs/export.cpp:579
-#, fuzzy
 msgid "_Export"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/export.cpp:583
 msgid "Export the bitmap file with these settings"
@@ -920,18 +898,17 @@ msgid "exact"
 msgstr "Teacs"
 
 #: ../src/dialogs/find.cpp:372
-#, fuzzy
 msgid "partial"
-msgstr "Spéisialta"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:379
-#, fuzzy
 msgid "No objects found"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:537
+#, fuzzy
 msgid "T_ype: "
-msgstr ""
+msgstr "Cinéal:"
 
 #: ../src/dialogs/find.cpp:544
 msgid "Search in all object types"
@@ -940,7 +917,7 @@ msgstr ""
 #: ../src/dialogs/find.cpp:544
 #, fuzzy
 msgid "All types"
-msgstr "Ainm comhad:"
+msgstr "Cinéal comhad:"
 
 #: ../src/dialogs/find.cpp:555
 msgid "Search all shapes"
@@ -955,9 +932,8 @@ msgid "Search rectangles"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:572
-#, fuzzy
 msgid "Rectangles"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:577
 msgid "Search ellipses, arcs, circles"
@@ -974,17 +950,16 @@ msgstr ""
 #: ../src/dialogs/find.cpp:582
 #, fuzzy
 msgid "Stars"
-msgstr "Dath"
+msgstr "Realta"
 
 #: ../src/dialogs/find.cpp:587
-#, fuzzy
 msgid "Search spirals"
-msgstr "Spéisialta"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:587
 #, fuzzy
 msgid "Spirals"
-msgstr "Spéisialta"
+msgstr "picsil"
 
 #. TRANSLATORS: polyline is a set of connected straight line segments
 #. http://www.w3.org/TR/SVG11/shapes.html#PolylineElement
@@ -993,13 +968,13 @@ msgid "Search paths, lines, polylines"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:600
+#, fuzzy
 msgid "Paths"
-msgstr ""
+msgstr "Greamaigh"
 
 #: ../src/dialogs/find.cpp:605
-#, fuzzy
 msgid "Search text objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:605
 #, fuzzy
@@ -1013,7 +988,7 @@ msgstr ""
 #: ../src/dialogs/find.cpp:610
 #, fuzzy
 msgid "Groups"
-msgstr "_Grupa"
+msgstr "Grupa"
 
 #: ../src/dialogs/find.cpp:615
 msgid "Search clones"
@@ -1022,7 +997,7 @@ msgstr ""
 #: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:454
 #, fuzzy
 msgid "Clones"
-msgstr "Radharc Nua"
+msgstr "Dún"
 
 #: ../src/dialogs/find.cpp:620
 msgid "Search images"
@@ -1032,12 +1007,11 @@ msgstr ""
 #: ../share/extensions/extractimage.inx.h:2
 #, fuzzy
 msgid "Images"
-msgstr "Meid pictiúr"
+msgstr "Dealbh"
 
 #: ../src/dialogs/find.cpp:625
-#, fuzzy
 msgid "Search offset objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:625
 msgid "Offsets"
@@ -1063,7 +1037,7 @@ msgstr ""
 #: ../src/dialogs/find.cpp:691
 #, fuzzy
 msgid "_Style: "
-msgstr "Greamaigh"
+msgstr "Stíl"
 
 #: ../src/dialogs/find.cpp:691
 msgid ""
@@ -1079,23 +1053,20 @@ msgid "Find objects by the name of an attribute (exact or partial match)"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:706
-#, fuzzy
 msgid "Search in s_election"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:710
 msgid "Limit search to the current selection"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:715
-#, fuzzy
 msgid "Search in current _layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:719
-#, fuzzy
 msgid "Limit search to the current layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:724
 msgid "Include _hidden"
@@ -1110,19 +1081,17 @@ msgid "Include l_ocked"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:737
-#, fuzzy
 msgid "Include locked objects in search"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:748
 #, fuzzy
 msgid "Clear values"
-msgstr "Dath 1"
+msgstr "Bánaigh gach rud"
 
 #: ../src/dialogs/find.cpp:749
-#, fuzzy
 msgid "_Find"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/dialogs/find.cpp:749
 msgid "Select objects matching all of the fields you filled in"
@@ -1130,9 +1099,8 @@ msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 #: ../src/ui/dialog/transformation.cpp:102
-#, fuzzy
 msgid "Rela_tive move"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:42
 msgid "Move guide relative to current position"
@@ -1141,21 +1109,21 @@ msgstr ""
 #: ../src/dialogs/guidelinedialog.cpp:61
 #, fuzzy
 msgid "Move by:"
-msgstr "Nód"
+msgstr "Mód:"
 
 #: ../src/dialogs/guidelinedialog.cpp:63
 #, fuzzy
 msgid "Move to:"
-msgstr "Nód"
+msgstr "Mód:"
 
 #: ../src/dialogs/guidelinedialog.cpp:116
 msgid "Guideline"
 msgstr ""
 
 #: ../src/dialogs/guidelinedialog.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "Moving %s %s"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/dialogs/iconpreview.cpp:143
 #, c-format
@@ -1169,9 +1137,8 @@ msgid "Selection"
 msgstr ""
 
 #: ../src/dialogs/iconpreview.cpp:193
-#, fuzzy
 msgid "Selection only or whole document"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/iconpreview.cpp:201
 msgid "Refresh the icons"
@@ -1195,7 +1162,7 @@ msgstr ""
 #: ../src/verbs.cpp:2156
 #, fuzzy
 msgid "_Set"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:150
@@ -1210,7 +1177,7 @@ msgstr ""
 #: ../src/dialogs/item-properties.cpp:171 ../src/dialogs/rdf.cpp:240
 #, fuzzy
 msgid "Title"
-msgstr "Comhad Nua"
+msgstr "Tideál:"
 
 #. Create the frame for the object description
 #: ../src/dialogs/item-properties.cpp:188 ../src/dialogs/rdf.cpp:284
@@ -1219,9 +1186,8 @@ msgstr ""
 
 #. Hide
 #: ../src/dialogs/item-properties.cpp:215
-#, fuzzy
 msgid "_Hide"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/dialogs/item-properties.cpp:216
 msgid "Check to make the object invisible"
@@ -1251,9 +1217,8 @@ msgid "Id exists! "
 msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:764
-#, fuzzy
 msgid "Opacity:"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:789
 msgid "New"
@@ -1265,7 +1230,7 @@ msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:800
 msgid "Up"
-msgstr "Suas"
+msgstr ""
 
 #: ../src/dialogs/layers-panel.cpp:806
 msgid "Dn"
@@ -1278,52 +1243,45 @@ msgstr ""
 #: ../src/dialogs/layers-panel.cpp:822
 #, fuzzy
 msgid "X"
-msgstr "X1"
+msgstr "X:"
 
 #: ../src/dialogs/layer-properties.cpp:47
 msgid "Layer name:"
 msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:153
-#, fuzzy
 msgid "Above current"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:157
-#, fuzzy
 msgid "Below current"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:160
 msgid "As sublayer of current"
 msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:164
-#, fuzzy
 msgid "Position:"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:182
-#, fuzzy
 msgid "Rename Layer"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:185
-#, fuzzy
 msgid "_Rename"
-msgstr "ainm"
+msgstr ""
 
 #. TODO: annotate
 #. TRANSLATORS: This means "The layer has been renamed"
 #: ../src/dialogs/layer-properties.cpp:197
-#, fuzzy
 msgid "Renamed layer"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:201
-#, fuzzy
 msgid "Add Layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/layer-properties.cpp:203
 #, fuzzy
@@ -1335,9 +1293,8 @@ msgid "New layer created."
 msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:30
-#, fuzzy
 msgid "Href:"
-msgstr "Luach:"
+msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:31
 msgid "Target:"
@@ -1345,14 +1302,13 @@ msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:32
 msgid "Type:"
-msgstr ""
+msgstr "Cinéal:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
 #: ../src/dialogs/object-attributes.cpp:35
-#, fuzzy
 msgid "Role:"
-msgstr "Luach:"
+msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
@@ -1362,13 +1318,12 @@ msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/dialogs/object-attributes.cpp:40
-#, fuzzy
 msgid "Title:"
-msgstr "Comhad Nua"
+msgstr "Tideál:"
 
 #: ../src/dialogs/object-attributes.cpp:41
 msgid "Show:"
-msgstr ""
+msgstr "Taispeáin:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
 #: ../src/dialogs/object-attributes.cpp:43
@@ -1377,15 +1332,15 @@ msgstr ""
 
 #: ../src/dialogs/object-attributes.cpp:48
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../src/dialogs/object-attributes.cpp:49
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: ../src/dialogs/object-attributes.cpp:50
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: ../src/dialogs/object-attributes.cpp:94
 #, c-format
@@ -1395,17 +1350,15 @@ msgstr ""
 #: ../src/dialogs/object-properties.cpp:161
 #, fuzzy
 msgid "_Fill"
-msgstr "Comhad Nua"
+msgstr "Comhad"
 
 #: ../src/dialogs/object-properties.cpp:168
-#, fuzzy
 msgid "Stroke _paint"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/object-properties.cpp:175
-#, fuzzy
 msgid "Stroke st_yle"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/dialogs/object-properties.cpp:186
 msgid "Master _opacity"
@@ -1458,7 +1411,7 @@ msgstr ""
 #: ../src/dialogs/rdf.cpp:243
 #, fuzzy
 msgid "Date"
-msgstr "Scríobh teacs"
+msgstr "Greamaigh"
 
 #: ../src/dialogs/rdf.cpp:244
 msgid "Date associated with the creation of this document (YYYY-MM-DD)."
@@ -1473,8 +1426,9 @@ msgid "The physical or digital manifestation of this document (MIME type)."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:249
+#, fuzzy
 msgid "Type"
-msgstr ""
+msgstr "Cinéal:"
 
 #: ../src/dialogs/rdf.cpp:250
 msgid "Type of document (DCMI Type)."
@@ -1483,7 +1437,7 @@ msgstr ""
 #: ../src/dialogs/rdf.cpp:253
 #, fuzzy
 msgid "Creator"
-msgstr "Radharc Nua"
+msgstr "Cruthaigh"
 
 #: ../src/dialogs/rdf.cpp:254
 msgid ""
@@ -1493,7 +1447,7 @@ msgstr ""
 #: ../src/dialogs/rdf.cpp:256
 #, fuzzy
 msgid "Rights"
-msgstr "deis"
+msgstr "Airde:"
 
 #: ../src/dialogs/rdf.cpp:257
 msgid ""
@@ -1525,9 +1479,8 @@ msgid "Unique URI to reference the source of this document."
 msgstr ""
 
 #: ../src/dialogs/rdf.cpp:269
-#, fuzzy
 msgid "Relation"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/rdf.cpp:270
 msgid "Unique URI to a related document."
@@ -1613,9 +1566,8 @@ msgid "None"
 msgstr "Tada"
 
 #: ../src/dialogs/stroke-style.cpp:991
-#, fuzzy
 msgid "Stroke width"
-msgstr "Priontáil"
+msgstr ""
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
@@ -1692,8 +1644,9 @@ msgstr ""
 #. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
 #. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
 #: ../src/dialogs/stroke-style.cpp:1126
+#, fuzzy
 msgid "Start Markers:"
-msgstr ""
+msgstr "Álbachtaí Realta"
 
 #: ../src/dialogs/stroke-style.cpp:1136
 msgid "Mid Markers:"
@@ -1710,9 +1663,8 @@ msgstr ""
 
 #. TODO:  Insert widgets
 #: ../src/dialogs/text-edit.cpp:198 ../src/ui/dialog/text-properties.cpp:36
-#, fuzzy
 msgid "Font"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/text-edit.cpp:221
 msgid "Layout"
@@ -1724,8 +1676,9 @@ msgstr ""
 
 #. TRANSLATORS: `Center' here is a verb.
 #: ../src/dialogs/text-edit.cpp:250
+#, fuzzy
 msgid "Center lines"
-msgstr ""
+msgstr "Sa Lár Y:"
 
 #: ../src/dialogs/text-edit.cpp:264
 msgid "Align lines right"
@@ -1735,7 +1688,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:3665
 #, fuzzy
 msgid "Horizontal text"
-msgstr "Tóg"
+msgstr "Cas ar Cothromach"
 
 #: ../src/dialogs/text-edit.cpp:300 ../src/widgets/toolbox.cpp:3630
 #: ../src/widgets/toolbox.cpp:3676
@@ -1760,16 +1713,15 @@ msgstr ""
 #: ../src/dialogs/tiledialog.cpp:633
 #, fuzzy
 msgid "Rows:"
-msgstr "Luach:"
+msgstr "Taispeáin:"
 
 #: ../src/dialogs/tiledialog.cpp:641
 msgid "Number of rows"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:645
-#, fuzzy
 msgid "Equal height"
-msgstr "Airde"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:655
 msgid "If not set, each row has the height of the tallest object in it"
@@ -1778,24 +1730,21 @@ msgstr ""
 #. #### Radio buttons to control vertical alignment ####
 #. #### Radio buttons to control horizontal alignment ####
 #: ../src/dialogs/tiledialog.cpp:661 ../src/dialogs/tiledialog.cpp:731
-#, fuzzy
 msgid "Align:"
-msgstr "Nódanna"
+msgstr ""
 
 #. #### Number of columns ####
 #: ../src/dialogs/tiledialog.cpp:703
-#, fuzzy
 msgid "Columns:"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:711
 msgid "Number of columns"
 msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:715
-#, fuzzy
 msgid "Equal width"
-msgstr "Leitheid"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:724
 msgid "If not set, each column has the width of the widest object in it"
@@ -1803,29 +1752,24 @@ msgstr ""
 
 #. #### Radio buttons to control spacing manually or to fit selection bbox ####
 #: ../src/dialogs/tiledialog.cpp:770
-#, fuzzy
 msgid "Fit into selection box"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:776
-#, fuzzy
 msgid "Set spacing:"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:796
-#, fuzzy
 msgid "Vertical spacing between rows (px units)"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:821
-#, fuzzy
 msgid "Horizontal spacing between columns (px units)"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/tiledialog.cpp:845
-#, fuzzy
 msgid "Arrange selected objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:171
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
@@ -1859,9 +1803,8 @@ msgid "Duplicate node"
 msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2902
-#, fuzzy
 msgid "Delete node"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:381
 msgid "Unindent node"
@@ -1872,9 +1815,8 @@ msgid "Indent node"
 msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:408
-#, fuzzy
 msgid "Raise node"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/dialogs/xml-tree.cpp:420
 msgid "Lower node"
@@ -1898,7 +1840,7 @@ msgstr ""
 #: ../src/dialogs/xml-tree.cpp:532
 #, fuzzy
 msgid "Set"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #. TRANSLATORS: "Attribute" is a noun here
 #: ../src/dialogs/xml-tree.cpp:555
@@ -1913,11 +1855,11 @@ msgstr ""
 #: ../src/ui/dialog/whiteboard-connect.cpp:115
 #: ../src/ui/dialog/whiteboard-sharewithchat.cpp:103
 msgid "Cancel"
-msgstr ""
+msgstr "Cealaigh"
 
 #: ../src/dialogs/xml-tree.cpp:1342
 msgid "Create"
-msgstr ""
+msgstr "Cruthaigh"
 
 #: ../src/dialogs/xml-tree.cpp:1459
 #, c-format
@@ -1990,8 +1932,9 @@ msgid "_Undo"
 msgstr "Leasú"
 
 #: ../src/event-log.cpp:280 ../src/event-log.cpp:284 ../src/verbs.cpp:1970
+#, fuzzy
 msgid "_Redo"
-msgstr ""
+msgstr "Dearg:"
 
 #: ../src/extension/dependency.cpp:239
 msgid "Dependency::"
@@ -2000,12 +1943,11 @@ msgstr ""
 #: ../src/extension/dependency.cpp:240
 #, fuzzy
 msgid "  type: "
-msgstr "Ainm comhad:"
+msgstr "Cinéal comhad:"
 
 #: ../src/extension/dependency.cpp:241
-#, fuzzy
 msgid "  location: "
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/extension/dependency.cpp:242
 msgid "  string: "
@@ -2068,17 +2010,16 @@ msgstr ""
 #: ../src/extension/extension.cpp:679
 #, fuzzy
 msgid "State:"
-msgstr "Dath"
+msgstr "Sábháil"
 
 #: ../src/extension/extension.cpp:679
-#, fuzzy
 msgid "Loaded"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/extension/extension.cpp:679
 #, fuzzy
 msgid "Unloaded"
-msgstr "ainm"
+msgstr "Gan tidéal"
 
 #: ../src/extension/extension.cpp:679
 msgid "Deactivated"
@@ -2126,14 +2067,13 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Blur Edge"
-msgstr "Luach:"
+msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
 msgid "Blur Width"
-msgstr "Leitheid"
+msgstr "Leitheid:"
 
 #: ../src/extension/internal/bluredge.cpp:133
 msgid "Width in pixels of the blurred area"
@@ -2149,9 +2089,8 @@ msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
-#, fuzzy
 msgid "Generate from Path"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
@@ -2162,9 +2101,8 @@ msgid "Make bounding box around full page"
 msgstr ""
 
 #: ../src/extension/internal/eps-out.cpp:87
-#, fuzzy
 msgid "Convert text to path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/extension/internal/eps-out.cpp:91
 #: ../share/extensions/eps_input.inx.h:3
@@ -2181,28 +2119,24 @@ msgid "%s GDK pixbuf Input"
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:274
-#, fuzzy
 msgid "GIMP Gradients"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:279
 msgid "GIMP Gradient (*.ggr)"
 msgstr ""
 
 #: ../src/extension/internal/gimpgrad.cpp:280
-#, fuzzy
 msgid "Gradients used in GIMP"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/gnome.cpp:80
-#, fuzzy
 msgid "Select printer"
-msgstr "Tóg"
+msgstr "Roghnaigh Printéir"
 
 #: ../src/extension/internal/gnome.cpp:131
-#, fuzzy
 msgid "Inkscape: Print Preview"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/gnome.cpp:401
 msgid "GNOME Print"
@@ -2215,21 +2149,19 @@ msgstr ""
 #: ../src/extension/internal/grid.cpp:216
 #, fuzzy
 msgid "Line Width"
-msgstr "Leitheid"
+msgstr "Leitheid:"
 
 #: ../src/extension/internal/grid.cpp:217
-#, fuzzy
 msgid "Horizontal Spacing"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/extension/internal/grid.cpp:218
 msgid "Vertical Spacing"
 msgstr ""
 
 #: ../src/extension/internal/grid.cpp:219
-#, fuzzy
 msgid "Horizontal Offset"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/extension/internal/grid.cpp:220
 msgid "Vertical Offset"
@@ -2240,16 +2172,15 @@ msgstr ""
 #: ../share/extensions/wavy.inx.h:7
 #, fuzzy
 msgid "Render"
-msgstr "Luach:"
+msgstr "Dearg:"
 
 #: ../src/extension/internal/grid.cpp:226
 msgid "Draw a path which is a grid"
 msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:106
-#, fuzzy
 msgid "LaTeX Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../src/extension/internal/latex-pstricks-out.cpp:111
 msgid "LaTeX With PSTricks macros (*.tex)"
@@ -2276,9 +2207,8 @@ msgid "OpenDocument drawing file"
 msgstr ""
 
 #: ../src/extension/internal/pov-out.cpp:457
-#, fuzzy
 msgid "PovRay Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../src/extension/internal/pov-out.cpp:462
 msgid "PovRay (*.pov) (export splines)"
@@ -2289,14 +2219,12 @@ msgid "PovRay Raytracer File"
 msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:82
-#, fuzzy
 msgid "Postscript Output"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:84
-#, fuzzy
 msgid "Text to Path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:88
 #: ../share/extensions/ps_input.inx.h:2
@@ -2304,20 +2232,17 @@ msgid "Postscript (*.ps)"
 msgstr ""
 
 #: ../src/extension/internal/ps-out.cpp:89
-#, fuzzy
 msgid "Postscript File"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
-#, fuzzy
 msgid "Print Destination"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #. Print properties frame
 #: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
-#, fuzzy
 msgid "Print properties"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/ps.cpp:126
 msgid "Print using PostScript operators"
@@ -2351,9 +2276,8 @@ msgstr ""
 
 #. Print destination frame
 #: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
-#, fuzzy
 msgid "Print destination"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
 msgid ""
@@ -2364,14 +2288,13 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/ps.cpp:1217
-#, fuzzy
 msgid "Postscript Print"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:55
 #, fuzzy
 msgid "SVG Input"
-msgstr "Gearr"
+msgstr "Inchur"
 
 #: ../src/extension/internal/svg.cpp:60
 msgid "Scalable Vector Graphic (*.svg)"
@@ -2382,23 +2305,20 @@ msgid "Inkscape native file format and W3C standard"
 msgstr ""
 
 #: ../src/extension/internal/svg.cpp:69
-#, fuzzy
 msgid "SVG Output Inkscape"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:74
-#, fuzzy
 msgid "Inkscape SVG (*.svg)"
-msgstr "Oscáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:75
 msgid "SVG format with Inkscape extensions"
 msgstr ""
 
 #: ../src/extension/internal/svg.cpp:83
-#, fuzzy
 msgid "SVG Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../src/extension/internal/svg.cpp:88
 msgid "Plain SVG (*.svg)"
@@ -2410,15 +2330,15 @@ msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:47
 #: ../share/extensions/svgz_input.inx.h:3
+#, fuzzy
 msgid "SVGZ Input"
-msgstr ""
+msgstr "Inchur"
 
 #: ../src/extension/internal/svgz.cpp:53 ../src/extension/internal/svgz.cpp:67
 #: ../share/extensions/svgz_input.inx.h:1
 #: ../share/extensions/svgz_output.inx.h:1
-#, fuzzy
 msgid "Compressed Inkscape SVG (*.svgz)"
-msgstr "Oscáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:54
 msgid "SVG file format compressed with GZip"
@@ -2426,9 +2346,8 @@ msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:62 ../src/extension/internal/svgz.cpp:76
 #: ../share/extensions/svgz_output.inx.h:3
-#, fuzzy
 msgid "SVGZ Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:68
 #: ../share/extensions/svgz_input.inx.h:2
@@ -2437,9 +2356,8 @@ msgid "Inkscape's native file format compressed with GZip"
 msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:81
-#, fuzzy
 msgid "Compressed plain SVG (*.svgz)"
-msgstr "Oscáil comhad"
+msgstr ""
 
 #: ../src/extension/internal/svgz.cpp:82
 msgid "Scalable Vector Graphics format compressed with GZip"
@@ -2480,9 +2398,8 @@ msgstr ""
 #. the default layer, etc. If you wish to localize this file, please create a
 #. localized share/templates/default.xx.svg file, where xx is your language code.
 #: ../src/file.cpp:127
-#, fuzzy
 msgid "default.svg"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/file.cpp:214 ../src/file.cpp:827
 #, c-format
@@ -2490,9 +2407,8 @@ msgid "Failed to load the requested file %s"
 msgstr ""
 
 #: ../src/file.cpp:239
-#, fuzzy
 msgid "Document not saved yet.  Cannot revert."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/file.cpp:245
 #, c-format
@@ -2502,12 +2418,11 @@ msgstr ""
 #: ../src/file.cpp:265
 #, fuzzy
 msgid "Document reverted."
-msgstr "Roghanna Dath"
+msgstr "Documéid"
 
 #: ../src/file.cpp:267
-#, fuzzy
 msgid "Document not reverted."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/file.cpp:388
 msgid "Select file to open"
@@ -2532,9 +2447,8 @@ msgid ""
 msgstr ""
 
 #: ../src/file.cpp:502 ../src/file.cpp:510
-#, fuzzy
 msgid "Document not saved."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/file.cpp:509
 #, c-format
@@ -2544,7 +2458,7 @@ msgstr ""
 #: ../src/file.cpp:519
 #, fuzzy
 msgid "Document saved."
-msgstr "Roghanna Dath"
+msgstr "Documéid"
 
 #: ../src/file.cpp:576 ../src/file.cpp:950
 #, c-format
@@ -2557,9 +2471,8 @@ msgid "drawing-%d%s"
 msgstr ""
 
 #: ../src/file.cpp:603
-#, fuzzy
 msgid "Select file to save to"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/file.cpp:664
 msgid "No changes need to be saved."
@@ -2570,9 +2483,8 @@ msgid "Select file to import"
 msgstr ""
 
 #: ../src/file.cpp:972
-#, fuzzy
 msgid "Select file to export to"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2590,9 +2502,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/gradient-context.cpp:466
-#, fuzzy
 msgid "Select <b>objects</b> on which to create gradient."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/gradient-drag.cpp:61
 msgid "Linear gradient <b>start</b>"
@@ -2652,58 +2563,52 @@ msgid "Units"
 msgstr ""
 
 #: ../src/helper/units.cpp:37
-#, fuzzy
 msgid "Point"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/helper/units.cpp:37 ../src/ui/widget/selected-style.cpp:258
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 #: ../src/helper/units.cpp:37
-#, fuzzy
 msgid "Points"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/helper/units.cpp:37
 msgid "Pt"
-msgstr ""
+msgstr "Pt"
 
 #: ../src/helper/units.cpp:38
-#, fuzzy
 msgid "Pixel"
-msgstr "pixelanna"
+msgstr "picsil"
 
 #: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:176
 #: ../src/ui/dialog/inkscape-preferences.cpp:179
 #: ../src/ui/dialog/inkscape-preferences.cpp:182
 #: ../src/ui/widget/selected-style.cpp:254
 msgid "px"
-msgstr ""
+msgstr "pl"
 
 #: ../src/helper/units.cpp:38
-#, fuzzy
 msgid "Pixels"
-msgstr "pixelanna"
+msgstr "Picsil"
 
 #: ../src/helper/units.cpp:38
 msgid "Px"
-msgstr ""
+msgstr "Pl"
 
 #. You can add new elements from this point forward
 #: ../src/helper/units.cpp:40 ../share/extensions/straightseg.inx.h:3
-#, fuzzy
 msgid "Percent"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../src/helper/units.cpp:40
-#, fuzzy
 msgid "Percents"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/helper/units.cpp:41
 msgid "Millimeter"
@@ -2711,7 +2616,7 @@ msgstr ""
 
 #: ../src/helper/units.cpp:41 ../src/ui/widget/selected-style.cpp:262
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: ../src/helper/units.cpp:41
 msgid "Millimeters"
@@ -2723,7 +2628,7 @@ msgstr ""
 
 #: ../src/helper/units.cpp:42
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../src/helper/units.cpp:42
 msgid "Centimeters"
@@ -2735,7 +2640,7 @@ msgstr ""
 
 #: ../src/helper/units.cpp:43
 msgid "m"
-msgstr ""
+msgstr "m"
 
 #: ../src/helper/units.cpp:43
 msgid "Meters"
@@ -2762,7 +2667,7 @@ msgstr ""
 
 #: ../src/helper/units.cpp:47
 msgid "em"
-msgstr ""
+msgstr "em"
 
 #: ../src/helper/units.cpp:47
 msgid "Em squares"
@@ -2774,9 +2679,8 @@ msgid "Ex square"
 msgstr ""
 
 #: ../src/helper/units.cpp:49
-#, fuzzy
 msgid "ex"
-msgstr "Teacs"
+msgstr "ex"
 
 #: ../src/helper/units.cpp:49
 msgid "Ex squares"
@@ -2876,12 +2780,11 @@ msgstr ""
 #: ../src/interface.cpp:778
 #, fuzzy
 msgid "Tool Controls Bar"
-msgstr "Roghanna Oaf"
+msgstr "Rognachais Uirlisí"
 
 #: ../src/interface.cpp:778
-#, fuzzy
 msgid "Show or hide the Tool Controls bar"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/interface.cpp:780
 msgid "_Toolbox"
@@ -2915,14 +2818,13 @@ msgstr ""
 
 #. TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number.
 #: ../src/interface.cpp:952
-#, fuzzy, c-format
+#, c-format
 msgid "Enter group #%s"
-msgstr "Eagar Nód"
+msgstr ""
 
 #: ../src/interface.cpp:963
-#, fuzzy
 msgid "Go to parent"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/interface.cpp:1108
 msgid "Could not parse SVG data"
@@ -2954,9 +2856,8 @@ msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
 msgstr ""
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:51
-#, fuzzy
 msgid "Accept invitation"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/jabber_whiteboard/invitation-handlers.cpp:52
 msgid "Decline invitation"
@@ -3012,7 +2913,7 @@ msgstr ""
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 #, fuzzy
 msgid "Set filename"
-msgstr "ainm"
+msgstr "Sábháil comhad"
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -3068,7 +2969,7 @@ msgstr ""
 
 #: ../src/main.cpp:235
 msgid "x0:y0:x1:y1"
-msgstr ""
+msgstr "x0:y0:x1:y1"
 
 #: ../src/main.cpp:239
 msgid "Exported area is the entire drawing (not canvas)"
@@ -3090,7 +2991,7 @@ msgstr ""
 
 #: ../src/main.cpp:255
 msgid "WIDTH"
-msgstr ""
+msgstr "LEITHEID"
 
 #: ../src/main.cpp:259
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
@@ -3098,7 +2999,7 @@ msgstr ""
 
 #: ../src/main.cpp:260
 msgid "HEIGHT"
-msgstr ""
+msgstr "AIRDE"
 
 #: ../src/main.cpp:264
 msgid "The ID of the object to export"
@@ -3125,7 +3026,7 @@ msgstr ""
 
 #: ../src/main.cpp:282
 msgid "COLOR"
-msgstr ""
+msgstr "DATH"
 
 #: ../src/main.cpp:286
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
@@ -3152,9 +3053,8 @@ msgid "Export document to a PDF file"
 msgstr ""
 
 #: ../src/main.cpp:311
-#, fuzzy
 msgid "Convert text object to paths on export (EPS)"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/main.cpp:316
 msgid "Export files with the bounding box set to the page size (EPS)"
@@ -3222,54 +3122,49 @@ msgid "_New"
 msgstr "Nua"
 
 #: ../src/menus-skeleton.h:22
-#, fuzzy
 msgid "Open _Recent"
-msgstr "Oscáil"
+msgstr ""
 
 #: ../src/menus-skeleton.h:54
 #, fuzzy
 msgid "_Edit"
-msgstr "Eagar Nód"
+msgstr "Eagar"
 
 #: ../src/menus-skeleton.h:64 ../src/verbs.cpp:1980
 #, fuzzy
 msgid "Paste Si_ze"
-msgstr "Greamaigh"
+msgstr "Méid páipéir:"
 
 #: ../src/menus-skeleton.h:76
 #, fuzzy
 msgid "Clo_ne"
-msgstr "Radharc Nua"
+msgstr "Dún"
 
 #: ../src/menus-skeleton.h:93
 #, fuzzy
 msgid "_View"
-msgstr "Radharc Nua"
+msgstr "Amharc"
 
 #: ../src/menus-skeleton.h:94
-#, fuzzy
 msgid "_Zoom"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/menus-skeleton.h:111
-#, fuzzy
 msgid "Show/Hide"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/menus-skeleton.h:116
 #, fuzzy
 msgid "_Display mode"
-msgstr "Roghanna Dath"
+msgstr "Taispeán"
 
 #: ../src/menus-skeleton.h:136
-#, fuzzy
 msgid "_Layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/menus-skeleton.h:155
-#, fuzzy
 msgid "_Object"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/menus-skeleton.h:163
 msgid "Cli_p"
@@ -3282,7 +3177,7 @@ msgstr ""
 #: ../src/menus-skeleton.h:171
 #, fuzzy
 msgid "Patter_n"
-msgstr "Priontáil comhad"
+msgstr "Greamaigh"
 
 #: ../src/menus-skeleton.h:190
 #, fuzzy
@@ -3303,9 +3198,8 @@ msgid "Whiteboa_rd"
 msgstr ""
 
 #: ../src/menus-skeleton.h:236
-#, fuzzy
 msgid "_Help"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/menus-skeleton.h:238
 msgid "Tutorials"
@@ -3334,22 +3228,20 @@ msgstr ""
 #: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
 #, fuzzy
 msgid "Stamp"
-msgstr "Sábháil\t"
+msgstr "Realta"
 
 #: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
-#, fuzzy
 msgid "Move nodes vertically"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
 #, fuzzy
 msgid "Move nodes horizontally"
-msgstr "Tóg"
+msgstr "Cas ar Cothromach"
 
 #: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
-#, fuzzy
 msgid "Move nodes"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/nodepath.cpp:1259
 msgid ""
@@ -3358,24 +3250,20 @@ msgid ""
 msgstr ""
 
 #: ../src/nodepath.cpp:1430
-#, fuzzy
 msgid "Align nodes"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/nodepath.cpp:1492
-#, fuzzy
 msgid "Distribute nodes"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/nodepath.cpp:1531
-#, fuzzy
 msgid "Add nodes"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
-#, fuzzy
 msgid "Add node"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/nodepath.cpp:1668
 msgid "Break path"
@@ -3391,9 +3279,8 @@ msgid "Close subpath"
 msgstr ""
 
 #: ../src/nodepath.cpp:1795
-#, fuzzy
 msgid "Join nodes"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/nodepath.cpp:1842
 msgid "Close subpath by segment"
@@ -3406,7 +3293,7 @@ msgstr ""
 #: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
 #, fuzzy
 msgid "Delete nodes"
-msgstr "Scríos"
+msgstr "Dealaigh"
 
 #: ../src/nodepath.cpp:2020
 msgid "Delete nodes preserving shape"
@@ -3419,14 +3306,13 @@ msgid ""
 msgstr ""
 
 #: ../src/nodepath.cpp:2189
-#, fuzzy
 msgid "Cannot find path between nodes."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/nodepath.cpp:2218
 #, fuzzy
 msgid "Delete segment"
-msgstr "Scríos"
+msgstr "Dealaigh"
 
 #: ../src/nodepath.cpp:2240
 msgid "Change segment type"
@@ -3437,14 +3323,12 @@ msgid "Change node type"
 msgstr ""
 
 #: ../src/nodepath.cpp:3214
-#, fuzzy
 msgid "Retract handle"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/nodepath.cpp:3262
-#, fuzzy
 msgid "Move node handle"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/nodepath.cpp:3402
 #, c-format
@@ -3455,19 +3339,16 @@ msgid ""
 msgstr ""
 
 #: ../src/nodepath.cpp:3580
-#, fuzzy
 msgid "Rotate nodes"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/nodepath.cpp:3705
-#, fuzzy
 msgid "Scale nodes"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/nodepath.cpp:3752
-#, fuzzy
 msgid "Flip nodes"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/nodepath.cpp:3917
 msgid ""
@@ -3477,9 +3358,8 @@ msgstr ""
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
 #: ../src/nodepath.cpp:4120
-#, fuzzy
 msgid "end node"
-msgstr "Greamaigh"
+msgstr ""
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
 #: ../src/nodepath.cpp:4125
@@ -3520,9 +3400,8 @@ msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 
 #: ../src/nodepath.cpp:4177 ../src/nodepath.cpp:4189
-#, fuzzy
 msgid "Select a single object to edit its nodes or handles."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/nodepath.cpp:4181
 #, c-format
@@ -3637,9 +3516,8 @@ msgid "<b>Move</b> the pattern fill inside the object"
 msgstr ""
 
 #: ../src/object-edit.cpp:1033
-#, fuzzy
 msgid "<b>Scale</b> the pattern fill uniformly"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/object-edit.cpp:1035
 msgid "<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"
@@ -3650,14 +3528,12 @@ msgid "Drag to resize the <b>flowed text frame</b>"
 msgstr ""
 
 #: ../src/path-chemistry.cpp:56
-#, fuzzy
 msgid "Select <b>at least two objects</b> to combine."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:63
-#, fuzzy
 msgid "At least one of the objects is <b>not a path</b>, cannot combine."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:71
 msgid ""
@@ -3665,14 +3541,12 @@ msgid ""
 msgstr ""
 
 #: ../src/path-chemistry.cpp:139
-#, fuzzy
 msgid "Combine"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:154
-#, fuzzy
 msgid "Select <b>path(s)</b> to break apart."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:233
 msgid "Break Apart"
@@ -3683,48 +3557,40 @@ msgid "<b>No path(s)</b> to break apart in the selection."
 msgstr ""
 
 #: ../src/path-chemistry.cpp:256
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to path."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to Path"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:302
-#, fuzzy
 msgid "<b>No objects</b> to convert to path in the selection."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:353
-#, fuzzy
 msgid "Select <b>path(s)</b> to reverse."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:380
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
 #: ../src/pen-context.cpp:224
-#, fuzzy
 msgid "Drawing cancelled"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/pen-context.cpp:386 ../src/pencil-context.cpp:233
-#, fuzzy
 msgid "Continuing selected path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/pen-context.cpp:397 ../src/pencil-context.cpp:242
-#, fuzzy
 msgid "Creating new path"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/pen-context.cpp:401 ../src/pencil-context.cpp:246
-#, fuzzy
 msgid "Appending to selected path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/pen-context.cpp:545
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
@@ -3765,9 +3631,8 @@ msgid "<b>Release</b> here to close and finish the path."
 msgstr ""
 
 #: ../src/pencil-context.cpp:327
-#, fuzzy
 msgid "Drawing a freehand path"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/pencil-context.cpp:332
 msgid "<b>Drag</b> to continue the path from this point."
@@ -3805,18 +3670,16 @@ msgid ""
 msgstr ""
 
 #: ../src/rect-context.cpp:490
-#, fuzzy
 msgid "Create rectangle"
-msgstr "Spéisialta"
+msgstr ""
 
 #: ../src/select-context.cpp:226
 msgid "Move canceled."
 msgstr ""
 
 #: ../src/select-context.cpp:234
-#, fuzzy
 msgid "Selection canceled."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/select-context.cpp:627
 msgid "<b>Ctrl</b>: select in groups, move hor/vert"
@@ -3831,73 +3694,63 @@ msgid "<b>Alt</b>: select under, move selected"
 msgstr ""
 
 #: ../src/select-context.cpp:783
-#, fuzzy
 msgid "Selected object is not a group. Cannot enter."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:218
 #, fuzzy
 msgid "Delete text"
-msgstr "Scríos"
+msgstr "Dealaigh"
 
 #: ../src/selection-chemistry.cpp:226
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:244
-#, fuzzy
 msgid "Delete"
-msgstr "_Scríos"
+msgstr "Dealaigh"
 
 #: ../src/selection-chemistry.cpp:258
-#, fuzzy
 msgid "Select <b>object(s)</b> to duplicate."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
 #: ../src/widgets/gradient-toolbar.cpp:488
-#, fuzzy
 msgid "Duplicate"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:308
 #, fuzzy
 msgid "Delete all"
-msgstr "_Scríos"
+msgstr "Dealaigh"
 
 #: ../src/selection-chemistry.cpp:431
-#, fuzzy
 msgid "Select <b>two or more objects</b> to group."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:439
-#, fuzzy
 msgid "Select <b>at least two objects</b> to group."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:510 ../src/selection-describer.cpp:49
-#, fuzzy
 msgid "Group"
-msgstr "_Grupa"
+msgstr "Grupa"
 
 #: ../src/selection-chemistry.cpp:525
-#, fuzzy
 msgid "Select a <b>group</b> to ungroup."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:566
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:572
-#, fuzzy
 msgid "Ungroup"
-msgstr "_Grupa"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:636
-#, fuzzy
 msgid "Select <b>object(s)</b> to raise."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:642 ../src/selection-chemistry.cpp:695
 #: ../src/selection-chemistry.cpp:730 ../src/selection-chemistry.cpp:789
@@ -3906,38 +3759,32 @@ msgid ""
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:674
-#, fuzzy
 msgid "Raise"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:687
-#, fuzzy
 msgid "Select <b>object(s)</b> to raise to top."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:710
-#, fuzzy
 msgid "Raise to top"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:724
-#, fuzzy
 msgid "Select <b>object(s)</b> to lower."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:767
 msgid "Lower"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:781
-#, fuzzy
 msgid "Select <b>object(s)</b> to lower to bottom."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:816
-#, fuzzy
 msgid "Lower to bottom"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
@@ -3953,19 +3800,16 @@ msgstr ""
 
 #: ../src/selection-chemistry.cpp:1100 ../src/selection-chemistry.cpp:1137
 #: ../src/selection-chemistry.cpp:1164 ../src/selection-chemistry.cpp:1200
-#, fuzzy
 msgid "Nothing on the clipboard."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1125
-#, fuzzy
 msgid "Paste"
 msgstr "Greamaigh"
 
 #: ../src/selection-chemistry.cpp:1143
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste style to."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1152
 #, fuzzy
@@ -3973,48 +3817,41 @@ msgid "Paste style"
 msgstr "Greamaigh"
 
 #: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
-#, fuzzy
 msgid "Select <b>object(s)</b> to paste size to."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1188
 #, fuzzy
 msgid "Paste size"
-msgstr "Greamaigh"
+msgstr "Méid páipéir:"
 
 #: ../src/selection-chemistry.cpp:1229
 msgid "Paste size separately"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1240
-#, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer above."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1265
-#, fuzzy
 msgid "Raise to next layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1271
-#, fuzzy
 msgid "No more layers above."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1285
-#, fuzzy
 msgid "Select <b>object(s)</b> to move to the layer below."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1310
-#, fuzzy
 msgid "Lower to previous layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1316
-#, fuzzy
 msgid "No more layers below."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1458
 #, fuzzy
@@ -4030,18 +3867,16 @@ msgid "Rotate 90&#176; CCW"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
-#, fuzzy
 msgid "Rotate"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
-#, fuzzy
 msgid "Scale"
-msgstr "Sábháil\t"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
@@ -4050,18 +3885,17 @@ msgstr ""
 #: ../src/selection-chemistry.cpp:1703
 #, fuzzy
 msgid "Move vertically"
-msgstr "Tóg"
+msgstr "Cas ar Ingearach"
 
 #: ../src/selection-chemistry.cpp:1706
 #, fuzzy
 msgid "Move horizontally"
-msgstr "Tóg"
+msgstr "Cas ar Cothromach"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
-#, fuzzy
 msgid "Move"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
@@ -4074,12 +3908,11 @@ msgstr ""
 #: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 #, fuzzy
 msgid "Clone"
-msgstr "Radharc Nua"
+msgstr "Dún"
 
 #: ../src/selection-chemistry.cpp:2015
-#, fuzzy
 msgid "Select a <b>clone</b> to unlink."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2046
 msgid "<b>No clones to unlink</b> in the selection."
@@ -4109,77 +3942,65 @@ msgid ""
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2120
-#, fuzzy
 msgid "Select <b>object(s)</b> to convert to pattern."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2196
-#, fuzzy
 msgid "Objects to pattern"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2212
-#, fuzzy
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2265
-#, fuzzy
 msgid "<b>No pattern fills</b> in the selection."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2268
-#, fuzzy
 msgid "Pattern to objects"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2286
-#, fuzzy
 msgid "Select <b>object(s)</b> to make a bitmap copy."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2418
 #, fuzzy
 msgid "Create bitmap"
-msgstr "Spéisialta"
+msgstr "Cruthaigh"
 
 #: ../src/selection-chemistry.cpp:2450
-#, fuzzy
 msgid "Select <b>object(s)</b> to create clippath or mask from."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2453
-#, fuzzy
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2544
 msgid "Set clipping path"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2546
-#, fuzzy
 msgid "Set mask"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2559
-#, fuzzy
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2627
 msgid "Release clipping path"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2629
-#, fuzzy
 msgid "Release mask"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/selection-chemistry.cpp:2673
-#, fuzzy
 msgid "Fit page to selection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4188,7 +4009,7 @@ msgstr ""
 #: ../src/selection-describer.cpp:43
 #, fuzzy
 msgid "Circle"
-msgstr "Comhad _Nua"
+msgstr "Comhad"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
@@ -4201,14 +4022,12 @@ msgid "Flowed text"
 msgstr ""
 
 #: ../src/selection-describer.cpp:51
-#, fuzzy
 msgid "Image"
-msgstr "Meid pictiúr"
+msgstr "Dealbh"
 
 #: ../src/selection-describer.cpp:53
-#, fuzzy
 msgid "Line"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/selection-describer.cpp:55
 #, fuzzy
@@ -4220,9 +4039,8 @@ msgid "Polygon"
 msgstr ""
 
 #: ../src/selection-describer.cpp:59
-#, fuzzy
 msgid "Polyline"
-msgstr "Priontáil"
+msgstr ""
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
@@ -4237,15 +4055,14 @@ msgstr ""
 #. spiral
 #: ../src/selection-describer.cpp:71
 #: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2172
-#, fuzzy
 msgid "Spiral"
-msgstr "Spéisialta"
+msgstr ""
 
 #. star
 #: ../src/selection-describer.cpp:73
 #: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2170
 msgid "Star"
-msgstr ""
+msgstr "Realta"
 
 #: ../src/selection-describer.cpp:101
 msgid "Click selection to toggle scale/rotation handles"
@@ -4262,14 +4079,14 @@ msgid "root"
 msgstr ""
 
 #: ../src/selection-describer.cpp:124
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b>%s</b>"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/selection-describer.cpp:126
-#, fuzzy, c-format
+#, c-format
 msgid "layer <b><i>%s</i></b>"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/selection-describer.cpp:135
 #, c-format
@@ -4282,9 +4099,9 @@ msgid " in %s"
 msgstr ""
 
 #: ../src/selection-describer.cpp:146
-#, fuzzy, c-format
+#, c-format
 msgid " in group %s (%s)"
-msgstr "Eagar Nód"
+msgstr ""
 
 #: ../src/selection-describer.cpp:148
 #, c-format
@@ -4294,11 +4111,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/selection-describer.cpp:151
-#, fuzzy, c-format
+#, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
-msgstr[0] "Greamaigh"
-msgstr[1] "Greamaigh"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/selection-describer.cpp:161
 msgid "Use <b>Shift+D</b> to look up original"
@@ -4360,12 +4177,11 @@ msgstr ""
 #: ../src/seltrans.cpp:227
 #, fuzzy
 msgid "Set center"
-msgstr "Tóg"
+msgstr "Roghnaigh Printéir"
 
 #: ../src/seltrans.cpp:356
-#, fuzzy
 msgid "Skew"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/seltrans.cpp:477
 msgid ""
@@ -4400,7 +4216,7 @@ msgstr ""
 #: ../src/seltrans.cpp:641
 #, fuzzy
 msgid "Reset center"
-msgstr "Tóg"
+msgstr "Roghnaigh Printéir"
 
 #: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
 #, c-format
@@ -4422,9 +4238,9 @@ msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #: ../src/seltrans.cpp:1183
-#, fuzzy, c-format
+#, c-format
 msgid "Move <b>center</b> to %s, %s"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/seltrans.cpp:1441
 #, c-format
@@ -4434,9 +4250,8 @@ msgid ""
 msgstr ""
 
 #: ../src/slideshow.cpp:89
-#, fuzzy
 msgid "Inkscape slideshow"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/sp-anchor.cpp:177
 #, c-format
@@ -4456,9 +4271,8 @@ msgid "<b>Circle</b>"
 msgstr ""
 
 #: ../src/sp-ellipse.cpp:812
-#, fuzzy
 msgid "<b>Segment</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/sp-ellipse.cpp:814
 msgid "<b>Arc</b>"
@@ -4496,9 +4310,8 @@ msgid "vertical guideline"
 msgstr ""
 
 #: ../src/sp-guide.cpp:289
-#, fuzzy
 msgid "horizontal guideline"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/sp-image.cpp:968
 msgid "embedded"
@@ -4530,9 +4343,8 @@ msgid "Object"
 msgstr ""
 
 #: ../src/sp-line.cpp:187
-#, fuzzy
 msgid "<b>Line</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:423
@@ -4541,14 +4353,12 @@ msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr ""
 
 #: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
-#, fuzzy
 msgid "outset"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
-#, fuzzy
 msgid "inset"
-msgstr "Priontáil"
+msgstr ""
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:427
@@ -4557,26 +4367,23 @@ msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr ""
 
 #: ../src/sp-path.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "Nód"
-msgstr[1] "Nód"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/sp-polygon.cpp:233
-#, fuzzy
 msgid "<b>Polygon</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/sp-polyline.cpp:176
-#, fuzzy
 msgid "<b>Polyline</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/sp-rect.cpp:234
-#, fuzzy
 msgid "<b>Rectangle</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
@@ -4612,21 +4419,21 @@ msgid "&lt;no name found&gt;"
 msgstr ""
 
 #: ../src/sp-text.cpp:417
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text on path</b> (%s, %s)"
-msgstr "Nód"
+msgstr ""
 
 #: ../src/sp-text.cpp:418
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Text</b> (%s, %s)"
-msgstr "Nód"
+msgstr ""
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
 #: ../src/sp-use.cpp:313
 #, fuzzy
 msgid "..."
-msgstr "Oscáil"
+msgstr "Oscail..."
 
 #: ../src/sp-use.cpp:321
 #, c-format
@@ -4654,17 +4461,15 @@ msgstr ""
 #: ../src/splivarot.cpp:66
 #, fuzzy
 msgid "Union"
-msgstr "Tada"
+msgstr "Leasú"
 
 #: ../src/splivarot.cpp:72
-#, fuzzy
 msgid "Intersection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/splivarot.cpp:78
-#, fuzzy
 msgid "Difference"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/splivarot.cpp:84
 msgid "Exclusion"
@@ -4675,14 +4480,12 @@ msgid "Division"
 msgstr ""
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut Path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/splivarot.cpp:110
-#, fuzzy
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/splivarot.cpp:116
 msgid ""
@@ -4697,16 +4500,14 @@ msgid ""
 msgstr ""
 
 #: ../src/splivarot.cpp:178
-#, fuzzy
 msgid ""
 "One of the objects is <b>not a path</b>, cannot perform boolean operation."
-msgstr "Tóg"
+msgstr ""
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:559
-#, fuzzy
 msgid "Select <b>path(s)</b> to outline."
-msgstr "Tóg"
+msgstr ""
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:838
@@ -4714,23 +4515,20 @@ msgid "<b>No stroked paths</b> to outline in the selection."
 msgstr ""
 
 #: ../src/splivarot.cpp:922
-#, fuzzy
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/splivarot.cpp:1132
-#, fuzzy
 msgid "Select <b>path(s)</b> to inset/outset."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/splivarot.cpp:1350
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 
 #: ../src/splivarot.cpp:1520
-#, fuzzy
 msgid "Select <b>path(s)</b> to simplify."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/splivarot.cpp:1534
 msgid "Simplify"
@@ -4756,9 +4554,8 @@ msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #: ../src/text-chemistry.cpp:94
-#, fuzzy
 msgid "Select <b>a text and a path</b> to put text on path."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/text-chemistry.cpp:99
 msgid ""
@@ -4778,31 +4575,26 @@ msgid ""
 msgstr ""
 
 #: ../src/text-chemistry.cpp:169
-#, fuzzy
 msgid "Select <b>a text on path</b> to remove it from path."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/text-chemistry.cpp:191
-#, fuzzy
 msgid "<b>No texts-on-paths</b> in the selection."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/text-chemistry.cpp:220 ../src/text-chemistry.cpp:240
-#, fuzzy
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/text-chemistry.cpp:262
-#, fuzzy
 msgid ""
 "Select <b>a text</b> and one or more <b>paths or shapes</b> to flow text "
 "into frame."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/text-chemistry.cpp:335
-#, fuzzy
 msgid "Select <b>a flowed text</b> to unflow it."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/text-context.cpp:460
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -4818,9 +4610,9 @@ msgid "Non-printable character"
 msgstr ""
 
 #: ../src/text-context.cpp:589
-#, c-format
+#, fuzzy, c-format
 msgid "Unicode: %s: %s"
-msgstr ""
+msgstr "Sodipodi: %s: %s: %d"
 
 #: ../src/text-context.cpp:591 ../src/text-context.cpp:861
 msgid "Unicode: "
@@ -4932,70 +4724,67 @@ msgstr ""
 
 #: ../src/trace/trace.cpp:69 ../src/trace/trace.cpp:134
 #: ../src/trace/trace.cpp:142 ../src/trace/trace.cpp:241
-#, fuzzy
 msgid "Select an <b>image</b> to trace"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/trace/trace.cpp:104
-#, fuzzy
 msgid "Select only one <b>image</b> to trace"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/trace/trace.cpp:122
 msgid "Select one image and one or more shapes above it"
 msgstr ""
 
 #: ../src/trace/trace.cpp:232
-#, fuzzy
 msgid "Trace: No active desktop"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/trace/trace.cpp:330
 msgid "Invalid SIOX result"
 msgstr ""
 
 #: ../src/trace/trace.cpp:435
-#, fuzzy
 msgid "Trace: No active document"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/trace/trace.cpp:458
 msgid "Trace: Image has no bitmap data"
 msgstr ""
 
 #: ../src/trace/trace.cpp:570
-#, fuzzy, c-format
+#, c-format
 msgid "Trace: Done. %ld nodes created"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:96
 #, fuzzy
 msgid "Object _Properties"
-msgstr "Meid pictiúr"
+msgstr "Álbachtaî teacs"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:106
 #, fuzzy
 msgid "_Select This"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #. Create link
 #: ../src/ui/context-menu.cpp:116
+#, fuzzy
 msgid "_Create Link"
-msgstr ""
+msgstr "Cruthaigh"
 
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2034
 #, fuzzy
 msgid "_Ungroup"
-msgstr "_Grupa"
+msgstr "Grupa"
 
 #. Link dialog
 #: ../src/ui/context-menu.cpp:230
 #, fuzzy
 msgid "Link _Properties"
-msgstr "Priontáil comhad"
+msgstr "Álbachtaí Realta"
 
 #. Select item
 #: ../src/ui/context-menu.cpp:240
@@ -5011,13 +4800,12 @@ msgstr ""
 #: ../src/ui/context-menu.cpp:294
 #, fuzzy
 msgid "Image _Properties"
-msgstr "Meid pictiúr"
+msgstr "Álbachtaí Dealbh"
 
 #. Item dialog
 #: ../src/ui/context-menu.cpp:335
-#, fuzzy
 msgid "_Fill and Stroke"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/ui/dialog/aboutbox.cpp:64
 msgid "About Inkscape"
@@ -5032,14 +4820,12 @@ msgid "_Authors"
 msgstr ""
 
 #: ../src/ui/dialog/aboutbox.cpp:74
-#, fuzzy
 msgid "_Translators"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/aboutbox.cpp:75
-#, fuzzy
 msgid "_License"
-msgstr "Priontáil"
+msgstr ""
 
 #. TRANSLATORS: This is the filename of the `About Inkscape' picture in
 #. the `screens' directory.  Thus the translation of "about.svg" should be
@@ -5088,125 +4874,104 @@ msgid "Remove overlaps"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:757
-#, fuzzy
 msgid "Connector network layout"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:758
-#, fuzzy
 msgid "Nodes"
-msgstr "Nód"
+msgstr "Nódanna"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:764
-#, fuzzy
 msgid "Relative to: "
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:769
-#, fuzzy
 msgid "Align right sides of objects to left side of anchor"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:772
-#, fuzzy
 msgid "Align left sides"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:775
 msgid "Center on vertical axis"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:778
-#, fuzzy
 msgid "Align right sides"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:781
-#, fuzzy
 msgid "Align left sides of objects to right side of anchor"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:784
-#, fuzzy
 msgid "Align bottoms of objects to top of anchor"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:787
-#, fuzzy
 msgid "Align tops"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:790
-#, fuzzy
 msgid "Center on horizontal axis"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:793
-#, fuzzy
 msgid "Align bottoms"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:796
-#, fuzzy
 msgid "Align tops of objects to bottom of anchor"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:801
-#, fuzzy
 msgid "Align baseline anchors of texts vertically"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:804
-#, fuzzy
 msgid "Align baseline anchors of texts horizontally"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:809
 msgid "Make horizontal gaps between objects equal"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:813
-#, fuzzy
 msgid "Distribute left sides equidistantly"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:816
-#, fuzzy
 msgid "Distribute centers equidistantly horizontally"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:819
-#, fuzzy
 msgid "Distribute right sides equidistantly"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:823
 msgid "Make vertical gaps between objects equal"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:827
-#, fuzzy
 msgid "Distribute tops equidistantly"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:830
-#, fuzzy
 msgid "Distribute centers equidistantly vertically"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:833
 msgid "Distribute bottoms equidistantly"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:838
-#, fuzzy
 msgid "Distribute baseline anchors of texts horizontally"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:841
-#, fuzzy
 msgid "Distribute baseline anchors of texts vertically"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:846
 msgid "Randomize centers in both dimensions"
@@ -5224,29 +4989,24 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:858
 #: ../src/widgets/toolbox.cpp:4003
-#, fuzzy
 msgid "Nicely arrange selected connector network"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:863
-#, fuzzy
 msgid "Align selected nodes horizontally"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:866
-#, fuzzy
 msgid "Align selected nodes vertically"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:869
-#, fuzzy
 msgid "Distribute selected nodes horizontally"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:872
-#, fuzzy
 msgid "Distribute selected nodes vertically"
-msgstr "Tóg"
+msgstr ""
 
 #. Rest of the widgetry
 #: ../src/ui/dialog/align-and-distribute.cpp:877
@@ -5289,28 +5049,25 @@ msgid "<b>Dublin Core Entities</b>"
 msgstr ""
 
 #: ../src/ui/dialog/document-metadata.cpp:204
-#, fuzzy
 msgid "<b>License</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:99
 msgid "Grid/Guides"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:100
-#, fuzzy
 msgid "Snap"
-msgstr "Sábháil\t"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:188
 #, fuzzy
 msgid "Back_ground:"
-msgstr "Dath"
+msgstr "Dath Cúlra"
 
 #: ../src/ui/dialog/document-properties.cpp:188
-#, fuzzy
 msgid "Background color"
-msgstr "Dath"
+msgstr "Dath Cúlra"
 
 #: ../src/ui/dialog/document-properties.cpp:188
 msgid ""
@@ -5318,9 +5075,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:190
-#, fuzzy
 msgid "Show page _border"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:190
 msgid "If set, rectangular page border is shown"
@@ -5337,17 +5093,15 @@ msgstr ""
 #: ../src/ui/dialog/document-properties.cpp:192
 #, fuzzy
 msgid "Border _color:"
-msgstr "Dath"
+msgstr "Dath Leathanach:"
 
 #: ../src/ui/dialog/document-properties.cpp:192
-#, fuzzy
 msgid "Page border color"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:193
-#, fuzzy
 msgid "Color of the page border"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:195
 msgid "_Show border shadow"
@@ -5358,31 +5112,26 @@ msgid "If set, page border shows a shadow on its right and lower side"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:196
-#, fuzzy
 msgid "Default _units:"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:199
-#, fuzzy
 msgid "<b>General</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:201
-#, fuzzy
 msgid "<b>Border</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:203
-#, fuzzy
 msgid "<b>Format</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
 #: ../src/ui/dialog/document-properties.cpp:233
-#, fuzzy
 msgid "_Show grid"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:233
 msgid "Show or hide grid"
@@ -5397,81 +5146,68 @@ msgid "_Origin X:"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:235
-#, fuzzy
 msgid "X coordinate of grid origin"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:237
 msgid "O_rigin Y:"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:237
-#, fuzzy
 msgid "Y coordinate of grid origin"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:239
-#, fuzzy
 msgid "Spacing _X:"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:239
 msgid "Distance of vertical grid lines"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:241
-#, fuzzy
 msgid "Spacing _Y:"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:241
-#, fuzzy
 msgid "Distance of horizontal grid lines"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:243
-#, fuzzy
 msgid "Grid line _color:"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:243
-#, fuzzy
 msgid "Grid line color"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:244
-#, fuzzy
 msgid "Color of grid lines"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:245
-#, fuzzy
 msgid "Ma_jor grid line color:"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:245
-#, fuzzy
 msgid "Major grid line color"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:246
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:248
-#, fuzzy
 msgid "_Major grid line every:"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:248
-#, fuzzy
 msgid "lines"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:249
-#, fuzzy
 msgid "Show _guides"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:249
 msgid "Show or hide guides"
@@ -5480,21 +5216,19 @@ msgstr ""
 #: ../src/ui/dialog/document-properties.cpp:250
 #, fuzzy
 msgid "Guide co_lor:"
-msgstr "Dath"
+msgstr "Dath Leathanach:"
 
 #: ../src/ui/dialog/document-properties.cpp:250
 msgid "Guideline color"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:251
-#, fuzzy
 msgid "Color of guidelines"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:252
-#, fuzzy
 msgid "_Highlight color:"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:252
 msgid "Highlighted guideline color"
@@ -5505,14 +5239,12 @@ msgid "Color of a guideline when it is under mouse"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:256
-#, fuzzy
 msgid "<b>Grid</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:258
-#, fuzzy
 msgid "<b>Guides</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:288
 msgid "_Snap bounding boxes to objects"
@@ -5523,29 +5255,24 @@ msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:291
-#, fuzzy
 msgid "Snap nodes _to objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:292
-#, fuzzy
 msgid "Snap the nodes of objects to other objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:294
-#, fuzzy
 msgid "Snap to object _paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:295
-#, fuzzy
 msgid "Snap to other object paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:297
-#, fuzzy
 msgid "Snap to object _nodes"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:298
 msgid "Snap to other object nodes"
@@ -5624,9 +5351,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:329
-#, fuzzy
 msgid "<b>Object Snapping</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:331
 msgid "<b>Grid Snapping</b>"
@@ -5637,19 +5363,16 @@ msgid "<b>Guide Snapping</b>"
 msgstr ""
 
 #: ../src/ui/dialog/export.cpp:34
-#, fuzzy
 msgid "Export"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/extension-editor.cpp:80
-#, fuzzy
 msgid "Information"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/extension-editor.cpp:81
-#, fuzzy
 msgid "Help"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/ui/dialog/extension-editor.cpp:82
 msgid "Parameters"
@@ -5658,7 +5381,7 @@ msgstr ""
 #: ../src/ui/dialog/filedialog.cpp:457
 #, fuzzy
 msgid "No preview"
-msgstr "Radharc Nua"
+msgstr "Reamhthaispeántas Nua"
 
 #: ../src/ui/dialog/filedialog.cpp:558
 msgid "too large for preview"
@@ -5667,22 +5390,20 @@ msgstr ""
 #: ../src/ui/dialog/filedialog.cpp:890 ../src/ui/dialog/filedialog.cpp:891
 #, fuzzy
 msgid "All Images"
-msgstr "Meid pictiúr"
+msgstr "Dealbh"
 
 #: ../src/ui/dialog/filedialog.cpp:895 ../src/ui/dialog/filedialog.cpp:896
 #, fuzzy
 msgid "All Files"
-msgstr "Ainm comhad:"
+msgstr "Comhad"
 
 #: ../src/ui/dialog/filedialog.cpp:902 ../src/ui/dialog/filedialog.cpp:903
-#, fuzzy
 msgid "All Inkscape Files"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1311 ../src/ui/dialog/filedialog.cpp:1848
-#, fuzzy
 msgid "Guess from extension"
-msgstr "Scríos"
+msgstr ""
 
 #. ###### Add the file types menu
 #. createFilterMenu();
@@ -5710,24 +5431,20 @@ msgid "Source bottom bound"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1872
-#, fuzzy
 msgid "Source width"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1873
-#, fuzzy
 msgid "Source height"
-msgstr "Airde"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1874
-#, fuzzy
 msgid "Destination width"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1875
-#, fuzzy
 msgid "Destination height"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1876
 msgid "Dots per inch resolution"
@@ -5738,14 +5455,12 @@ msgstr ""
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialog.cpp:1907
-#, fuzzy
 msgid "Document"
-msgstr "Roghanna Dath"
+msgstr "Documéid"
 
 #: ../src/ui/dialog/filedialog.cpp:1919 ../src/ui/widget/page-sizer.cpp:167
-#, fuzzy
 msgid "Custom"
-msgstr "Gearr"
+msgstr "Féindheanamh"
 
 #: ../src/ui/dialog/filedialog.cpp:1959
 msgid "Cairo"
@@ -5758,37 +5473,32 @@ msgstr ""
 #: ../src/ui/dialog/filedialog.cpp:1965
 #, fuzzy
 msgid "Background"
-msgstr "Dath"
+msgstr "Dath Cúlra"
 
 #: ../src/ui/dialog/filedialog.cpp:1988
-#, fuzzy
 msgid "Destination"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
-#, fuzzy
 msgid "Fill"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:37
-#, fuzzy
 msgid "Stroke Paint"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:38
-#, fuzzy
 msgid "Stroke Style"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/ui/dialog/find.cpp:34
-#, fuzzy
 msgid "Find"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:140
 #, fuzzy
 msgid "Mouse"
-msgstr "Nód"
+msgstr "Mód:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:142
 msgid "Grab sensitivity:"
@@ -5800,7 +5510,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:157
 #: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid "pixels"
-msgstr "pixelanna"
+msgstr "picsil"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:143
 msgid ""
@@ -5844,9 +5554,8 @@ msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:160
-#, fuzzy
 msgid "Acceleration:"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:161
 msgid ""
@@ -5861,7 +5570,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:164
 #, fuzzy
 msgid "Speed:"
-msgstr "Luach:"
+msgstr "Dearg:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:165
 msgid ""
@@ -5881,8 +5590,9 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:173
+#, fuzzy
 msgid "Steps"
-msgstr ""
+msgstr "Stíl"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:176
 msgid "Arrow keys move by:"
@@ -5938,9 +5648,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:195
-#, fuzzy
 msgid "Zoom in/out by:"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:196
 msgid ""
@@ -5949,9 +5658,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:202
-#, fuzzy
 msgid "Show selection cue"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:203
 msgid ""
@@ -5959,18 +5667,16 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:209
-#, fuzzy
 msgid "Enable gradient editing"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:210
 msgid "Whether selected objects display gradient editing controls"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:223
-#, fuzzy
 msgid "<b>No objects selected</b> to take the style from."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:232
 msgid ""
@@ -5979,14 +5685,12 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:266
-#, fuzzy
 msgid "Create new objects with:"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:268
-#, fuzzy
 msgid "Last used style"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "Apply the style you last set on an object"
@@ -6003,9 +5707,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:284
-#, fuzzy
 msgid "Take from selection"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:296
 msgid "Remember the style of the (first) selected object as this tool's style"
@@ -6020,25 +5723,22 @@ msgid "Width is in absolute units"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:305
-#, fuzzy
 msgid "Keep selected"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:306
-#, fuzzy
 msgid "Don't attach connectors to text objects"
-msgstr "Tóg"
+msgstr ""
 
 #. Selector
 #: ../src/ui/dialog/inkscape-preferences.cpp:309
 #, fuzzy
 msgid "Selector"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:312
-#, fuzzy
 msgid "When transforming, show:"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:313
 msgid "Objects"
@@ -6102,8 +5802,9 @@ msgstr ""
 
 #. Node
 #: ../src/ui/dialog/inkscape-preferences.cpp:337
+#, fuzzy
 msgid "Node"
-msgstr "Nód"
+msgstr "Nódanna"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
@@ -6116,12 +5817,12 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:345
 #, fuzzy
 msgid "Shapes"
-msgstr "Sábháil\t"
+msgstr "Sábháil"
 
 #. Pencil
 #: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2174
 msgid "Pencil"
-msgstr ""
+msgstr "Peann Luaidte"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:365
 msgid "Tolerance:"
@@ -6135,9 +5836,8 @@ msgstr ""
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2176
-#, fuzzy
 msgid "Pen"
-msgstr "Priontáil"
+msgstr "Peann"
 
 #. Calligraphy
 #: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2178
@@ -6158,15 +5858,13 @@ msgstr ""
 
 #. Gradient
 #: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2182
-#, fuzzy
 msgid "Gradient"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #. Connector
 #: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2188
-#, fuzzy
 msgid "Connector"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:392
 msgid "If on, connector attachment points will not be shown for text objects"
@@ -6239,9 +5937,8 @@ msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:425
-#, fuzzy
 msgid "Windows"
-msgstr "fuinneog1"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:430
 msgid "Move in parallel"
@@ -6260,9 +5957,8 @@ msgid "Are unlinked"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:438
-#, fuzzy
 msgid "Are deleted"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:441
 msgid "When the original moves, its clones and linked offsets:"
@@ -6296,23 +5992,20 @@ msgid "Orphaned clones are deleted along with their original."
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:459
-#, fuzzy
 msgid "Scale stroke width"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:460
 msgid "Scale rounded corners in rectangles"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:461
-#, fuzzy
 msgid "Transform gradients"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:462
-#, fuzzy
 msgid "Transform patterns"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Optimized"
@@ -6358,38 +6051,33 @@ msgid "Always store transformation as a transform= attribute on objects"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:480
-#, fuzzy
 msgid "Transforms"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:485
 #, fuzzy
 msgid "Select in all layers"
-msgstr "Tóg"
+msgstr "Roghnaigh Printéir"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:486
-#, fuzzy
 msgid "Select only within current layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:487
-#, fuzzy
 msgid "Select in current layer and sublayers"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Ignore hidden objects"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
-#, fuzzy
 msgid "Ignore locked objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:490
-#, fuzzy
 msgid "Deselect upon layer change"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:492
 msgid "Ctrl+A, Tab, Shift+Tab:"
@@ -6430,7 +6118,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:507
 #, fuzzy
 msgid "Selecting"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:514
 msgid "Default export resolution:"
@@ -6461,9 +6149,8 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:523
-#, fuzzy
 msgid "Max recent documents:"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:524
 msgid "The maximum length of the Open Recent list in the File menu"
@@ -6482,19 +6169,19 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "2x2"
-msgstr ""
+msgstr "2x2"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "4x4"
-msgstr ""
+msgstr "4x4"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "8x8"
-msgstr ""
+msgstr "8x8"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid "16x16"
-msgstr ""
+msgstr "16x16"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid "Oversample bitmaps:"
@@ -6534,25 +6221,23 @@ msgstr ""
 #: ../src/ui/dialog/memory.cpp:95
 #, fuzzy
 msgid "In Use"
-msgstr "Priontáil"
+msgstr "Úsáideor"
 
 #. TRANSLATORS: "Slack" refers to memory which is in the heap but currently unused.
 #. More typical usage is to call this memory "free" rather than "slack".
 #: ../src/ui/dialog/memory.cpp:98
 #, fuzzy
 msgid "Slack"
-msgstr "Dath"
+msgstr "Dubh"
 
 #: ../src/ui/dialog/memory.cpp:99
-#, fuzzy
 msgid "Total"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/ui/dialog/memory.cpp:139 ../src/ui/dialog/memory.cpp:145
 #: ../src/ui/dialog/memory.cpp:152 ../src/ui/dialog/memory.cpp:184
-#, fuzzy
 msgid "Unknown"
-msgstr "Tada"
+msgstr "Anathnid"
 
 #: ../src/ui/dialog/memory.cpp:165
 msgid "Combined"
@@ -6565,7 +6250,7 @@ msgstr ""
 #: ../src/ui/dialog/messages.cpp:72
 #, fuzzy
 msgid "Ready."
-msgstr "Luach:"
+msgstr "Dearg:"
 
 #: ../src/ui/dialog/messages.cpp:73
 msgid ""
@@ -6588,7 +6273,7 @@ msgstr ""
 #: ../src/ui/dialog/scriptdialog.cpp:202
 #, fuzzy
 msgid "Output"
-msgstr "Gearr"
+msgstr "Amach"
 
 #: ../src/ui/dialog/scriptdialog.cpp:212
 msgid "Errors"
@@ -6596,18 +6281,17 @@ msgstr ""
 
 #. Dialog organization
 #: ../src/ui/dialog/session-player.cpp:73
+#, fuzzy
 msgid "Session file"
-msgstr ""
+msgstr "Sábháil comhad"
 
 #: ../src/ui/dialog/session-player.cpp:74
-#, fuzzy
 msgid "Playback controls"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/session-player.cpp:75
-#, fuzzy
 msgid "Message information"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #. Active session file display
 #. fixme: Does this mean the active file for the session, or the file for the active session?
@@ -6624,7 +6308,7 @@ msgstr ""
 #: ../src/ui/dialog/session-player.cpp:94
 #, fuzzy
 msgid "Close file"
-msgstr "Radharc Nua"
+msgstr "Dún Amharc"
 
 #: ../src/ui/dialog/session-player.cpp:95
 msgid "Open new file"
@@ -6637,7 +6321,7 @@ msgstr ""
 #: ../src/ui/dialog/session-player.cpp:138
 #, fuzzy
 msgid "Rewind"
-msgstr "Luach:"
+msgstr "Dearg:"
 
 #: ../src/ui/dialog/session-player.cpp:139
 msgid "Go back one change"
@@ -6663,9 +6347,8 @@ msgstr ""
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:348
-#, fuzzy
 msgid "SIOX foreground selection"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "Cover the area you want to select as the foreground"
@@ -6680,9 +6363,8 @@ msgstr ""
 #. #### Multiple scanning####
 #. ----Hbox1
 #: ../src/ui/dialog/tracedialog.cpp:361 ../src/ui/dialog/tracedialog.cpp:444
-#, fuzzy
 msgid "Brightness"
-msgstr "deis"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:364
 msgid "Trace by a given brightness level"
@@ -6695,7 +6377,7 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:378
 #, fuzzy
 msgid "Image Brightness"
-msgstr "Meid pictiúr"
+msgstr "Álbachtaí Dealbh"
 
 #. #### canny edge detection ####
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
@@ -6712,18 +6394,16 @@ msgid "Brightness cutoff for adjacent pixels (determines edge thickness)"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:411
-#, fuzzy
 msgid "Edge Detection"
-msgstr "Scríos"
+msgstr ""
 
 #. #### quantization ####
 #. TRANSLATORS: Color Quantization: the process of reducing the number of colors
 #. in an image by selecting an optimized set of representative colors and then
 #. re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:420
-#, fuzzy
 msgid "Color Quantization"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:423
 msgid "Trace along the boundaries of reduced colors"
@@ -6736,7 +6416,7 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:432
 #, fuzzy
 msgid "Colors:"
-msgstr "Dath"
+msgstr "Dún"
 
 #: ../src/ui/dialog/tracedialog.cpp:437
 msgid "Quantization / Reduction"
@@ -6760,9 +6440,8 @@ msgstr ""
 
 #. TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
 #: ../src/ui/dialog/tracedialog.cpp:468
-#, fuzzy
 msgid "Remove background"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Remove bottom (background) layer when done"
@@ -6781,7 +6460,7 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:482
 #, fuzzy
 msgid "Stack"
-msgstr "Dath"
+msgstr "Realta"
 
 #: ../src/ui/dialog/tracedialog.cpp:485
 msgid ""
@@ -6805,7 +6484,7 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:502 ../src/ui/dialog/tracedialog.cpp:512
 #, fuzzy
 msgid "Preview"
-msgstr "Radharc Nua"
+msgstr "Reamhthaispeántas Nua"
 
 #. do not expand
 #: ../src/ui/dialog/tracedialog.cpp:506
@@ -6829,15 +6508,14 @@ msgstr ""
 #: ../src/ui/dialog/tracedialog.cpp:529
 #, fuzzy
 msgid "Credits"
-msgstr "Dath 1"
+msgstr "Cruthaigh"
 
 #. done
 #. TRANSLATORS: Potrace is an application for transforming bitmaps into
 #. vector graphics (http://potrace.sourceforge.net/)
 #: ../src/ui/dialog/tracedialog.cpp:537
-#, fuzzy
 msgid "Potrace"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:550
 msgid "Abort a trace in progress"
@@ -6851,7 +6529,7 @@ msgstr ""
 #: ../src/ui/dialog/transformation.cpp:90
 #, fuzzy
 msgid "_Horizontal"
-msgstr "Tóg"
+msgstr "Cas ar Cothromach"
 
 #: ../src/ui/dialog/transformation.cpp:80
 msgid "Horizontal displacement (relative) or position (absolute)"
@@ -6861,7 +6539,7 @@ msgstr ""
 #: ../src/ui/dialog/transformation.cpp:92
 #, fuzzy
 msgid "_Vertical"
-msgstr "Tóg"
+msgstr "Cas ar Ingearach"
 
 #: ../src/ui/dialog/transformation.cpp:82
 msgid "Vertical displacement (relative) or position (absolute)"
@@ -6870,7 +6548,7 @@ msgstr ""
 #: ../src/ui/dialog/transformation.cpp:84
 #, fuzzy
 msgid "_Width"
-msgstr "Leitheid"
+msgstr "Leitheid:"
 
 #: ../src/ui/dialog/transformation.cpp:84
 msgid "Horizontal size increment (absolute or percentage)"
@@ -6879,7 +6557,7 @@ msgstr ""
 #: ../src/ui/dialog/transformation.cpp:86
 #, fuzzy
 msgid "_Height"
-msgstr "Airde"
+msgstr "Airde:"
 
 #: ../src/ui/dialog/transformation.cpp:86
 msgid "Vertical size increment (absolute or percentage)"
@@ -6906,34 +6584,28 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:95
-#, fuzzy
 msgid "Transformation matrix element A"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:96
-#, fuzzy
 msgid "Transformation matrix element B"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:97
-#, fuzzy
 msgid "Transformation matrix element C"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:98
-#, fuzzy
 msgid "Transformation matrix element D"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:99
-#, fuzzy
 msgid "Transformation matrix element E"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:100
-#, fuzzy
 msgid "Transformation matrix element F"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:102
 msgid ""
@@ -6972,22 +6644,20 @@ msgstr ""
 #: ../src/ui/dialog/transformation.cpp:115
 #, fuzzy
 msgid "_Move"
-msgstr "Nód"
+msgstr "Mód:"
 
 #: ../src/ui/dialog/transformation.cpp:118
 #, fuzzy
 msgid "_Scale"
-msgstr "Sábháil\t"
+msgstr "Sábháil"
 
 #: ../src/ui/dialog/transformation.cpp:121
-#, fuzzy
 msgid "_Rotate"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:124
-#, fuzzy
 msgid "Ske_w"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:127
 msgid "Matri_x"
@@ -7000,27 +6670,24 @@ msgstr ""
 #: ../src/ui/dialog/transformation.cpp:148
 #, fuzzy
 msgid "Apply transformation to selection"
-msgstr "Tóg"
+msgstr "Roghanna Oaf"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
 msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
-#, fuzzy
 msgid "_Register"
-msgstr "Greamaigh"
+msgstr ""
 
 #. Construct dialog interface
 #: ../src/ui/dialog/whiteboard-connect.cpp:76
-#, fuzzy
 msgid "_Server:"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:77
-#, fuzzy
 msgid "_Username:"
-msgstr "ainm"
+msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:78
 msgid "_Password:"
@@ -7032,9 +6699,8 @@ msgstr ""
 
 #. Buttons
 #: ../src/ui/dialog/whiteboard-connect.cpp:114
-#, fuzzy
 msgid "Connect"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:145
 msgid "Establishing connection to Jabber server <b>%1</b>"
@@ -7107,7 +6773,7 @@ msgstr ""
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:81
 #, fuzzy
 msgid "_Cancel"
-msgstr "Radharc Nua"
+msgstr "Cealaigh"
 
 #: ../src/ui/dialog/whiteboard-sharewithuser.cpp:92
 msgid "Buddy List"
@@ -7312,9 +6978,8 @@ msgid "huge"
 msgstr ""
 
 #: ../src/ui/widget/panel.cpp:117
-#, fuzzy
 msgid "List"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/widget/panel.cpp:139
 msgid "Wrap"
@@ -7344,104 +7009,89 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:134
 #: ../src/ui/widget/selected-style.cpp:971
-#, fuzzy
 msgid "Nothing selected"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:300
-#, fuzzy
 msgid "No fill"
-msgstr "Dath 1"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:300
-#, fuzzy
 msgid "No stroke"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:141
 #: ../src/ui/widget/style-swatch.cpp:292 ../src/widgets/paint-selector.cpp:176
 #, fuzzy
 msgid "Pattern"
-msgstr "Priontáil comhad"
+msgstr "Greamaigh"
 
 #: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:294 ../src/widgets/paint-selector.cpp:872
-#, fuzzy
 msgid "Pattern fill"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:294
-#, fuzzy
 msgid "Pattern stroke"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:146
 #: ../src/ui/widget/style-swatch.cpp:284
-#, fuzzy
 msgid "L Gradient"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient fill"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:286
-#, fuzzy
 msgid "Linear gradient stroke"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:151
 #: ../src/ui/widget/style-swatch.cpp:288
-#, fuzzy
 msgid "R Gradient"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:154
 #: ../src/ui/widget/style-swatch.cpp:290
-#, fuzzy
 msgid "Radial gradient fill"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:154
 #: ../src/ui/widget/style-swatch.cpp:290
-#, fuzzy
 msgid "Radial gradient stroke"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:156
-#, fuzzy
 msgid "Different"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:159
-#, fuzzy
 msgid "Different fills"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:159
-#, fuzzy
 msgid "Different strokes"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:161
 #: ../src/ui/widget/style-swatch.cpp:303
 #, fuzzy
 msgid "Unset"
-msgstr "Priontáil"
+msgstr "Úsáideor"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
 #: ../src/ui/widget/style-swatch.cpp:305
-#, fuzzy
 msgid "Unset fill"
-msgstr "Comhad _Nua"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
@@ -7450,66 +7100,55 @@ msgid "Unset stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:167
-#, fuzzy
 msgid "Flat color fill"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:167
-#, fuzzy
 msgid "Flat color stroke"
-msgstr "Dath"
+msgstr ""
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:170
-#, fuzzy
 msgid "<b>a</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:173
-#, fuzzy
 msgid "Fill is averaged over selected objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:173
-#, fuzzy
 msgid "Stroke is averaged over selected objects"
-msgstr "Tóg"
+msgstr ""
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:176
-#, fuzzy
 msgid "<b>m</b>"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Multiple selected objects have the same fill"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:179
-#, fuzzy
 msgid "Multiple selected objects have the same stroke"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:181
-#, fuzzy
 msgid "Edit fill..."
-msgstr "Eagar Nód"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:181
-#, fuzzy
 msgid "Edit stroke..."
-msgstr "Eagar Nód"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:185
 #, fuzzy
 msgid "Last set color"
-msgstr "Dath"
+msgstr "Dath leathanach"
 
 #: ../src/ui/widget/selected-style.cpp:189
-#, fuzzy
 msgid "Last selected color"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:197
 msgid "White"
@@ -7518,23 +7157,23 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:201
 #: ../src/widgets/sp-color-scales.cpp:458
 #: ../src/widgets/sp-color-scales.cpp:459
+#, fuzzy
 msgid "Black"
-msgstr ""
+msgstr "Dubh"
 
 #: ../src/ui/widget/selected-style.cpp:205
 #, fuzzy
 msgid "Copy color"
-msgstr "Dath"
+msgstr "Dath leathanach"
 
 #: ../src/ui/widget/selected-style.cpp:209
 #, fuzzy
 msgid "Paste color"
-msgstr "Dath"
+msgstr "Dath leathanach"
 
 #: ../src/ui/widget/selected-style.cpp:213
-#, fuzzy
 msgid "Swap fill and stroke"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:217
 msgid "Make fill opaque"
@@ -7545,26 +7184,26 @@ msgid "Make stroke opaque"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:226
+#, fuzzy
 msgid "Remove fill"
-msgstr ""
+msgstr "Sábháil comhad"
 
 #: ../src/ui/widget/selected-style.cpp:226
 msgid "Remove stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:279
-#, fuzzy
 msgid "Remove"
-msgstr "ainm"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:977
 msgid "Master opacity"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:1007
-#, fuzzy, c-format
+#, c-format
 msgid "Stroke width: %.5g%s%s"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:1011
 msgid " (averaged)"
@@ -7581,33 +7220,29 @@ msgstr ""
 #: ../src/ui/widget/page-sizer.cpp:198
 #, fuzzy
 msgid "P_age size:"
-msgstr "Meid pictiúr"
+msgstr "Méid páipéir:"
 
 #: ../src/ui/widget/page-sizer.cpp:228
-#, fuzzy
 msgid "Page orientation:"
-msgstr "Meid pictiúr"
+msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:230
-#, fuzzy
 msgid "_Landscape"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:233
-#, fuzzy
 msgid "_Portrait"
-msgstr "Priontáil"
+msgstr ""
 
 #. Custom paper frame
 #: ../src/ui/widget/page-sizer.cpp:239
 #, fuzzy
 msgid "Custom size"
-msgstr "Gearr"
+msgstr "Féindheanamh"
 
 #: ../src/ui/widget/page-sizer.cpp:246
-#, fuzzy
 msgid "_Fit page to selection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/ui/widget/page-sizer.cpp:247
 msgid ""
@@ -7626,16 +7261,16 @@ msgstr ""
 #: ../src/ui/widget/page-sizer.cpp:258
 #, fuzzy
 msgid "_Height:"
-msgstr "Airde"
+msgstr "Airde:"
 
 #: ../src/ui/widget/page-sizer.cpp:258
 msgid "Height of paper"
 msgstr ""
 
 #: ../src/ui/widget/style-swatch.cpp:325
-#, fuzzy, c-format
+#, c-format
 msgid "Stroke width: %.5g%s"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/ui/widget/style-swatch.cpp:341
 #, c-format
@@ -7671,39 +7306,34 @@ msgid "Cannot move past first layer."
 msgstr ""
 
 #: ../src/verbs.cpp:1124 ../src/verbs.cpp:1208
-#, fuzzy
 msgid "No current layer."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:1153 ../src/verbs.cpp:1157
-#, fuzzy, c-format
+#, c-format
 msgid "Raised layer <b>%s</b>."
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:1154
-#, fuzzy
 msgid "Layer to Top"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1158
-#, fuzzy
 msgid "Raise Layer"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:1161 ../src/verbs.cpp:1165
-#, fuzzy, c-format
+#, c-format
 msgid "Lowered layer <b>%s</b>."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1162
-#, fuzzy
 msgid "Layer to Bottom"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1166
-#, fuzzy
 msgid "Lower Layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1175
 msgid "Cannot move layer any further."
@@ -7712,23 +7342,23 @@ msgstr ""
 #: ../src/verbs.cpp:1203
 #, fuzzy
 msgid "Delete layer"
-msgstr "Tóg"
+msgstr "Dealaigh"
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1206
 #, fuzzy
 msgid "Deleted layer."
-msgstr "Tóg"
+msgstr "Dealaigh"
 
 #: ../src/verbs.cpp:1263
 #, fuzzy
 msgid "Flip horizontally"
-msgstr "Tóg"
+msgstr "Cas ar Cothromach"
 
 #: ../src/verbs.cpp:1272
 #, fuzzy
 msgid "Flip vertically"
-msgstr "Tóg"
+msgstr "Cas ar Ingearach"
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
@@ -7782,22 +7412,20 @@ msgstr ""
 #: ../src/verbs.cpp:1936
 #, fuzzy
 msgid "Default"
-msgstr "Scríos"
+msgstr "Dealaigh"
 
 #: ../src/verbs.cpp:1936
-#, fuzzy
 msgid "Create new document from the default template"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:1938
 #, fuzzy
 msgid "_Open..."
-msgstr "Oscáil"
+msgstr "Oscail..."
 
 #: ../src/verbs.cpp:1939
-#, fuzzy
 msgid "Open an existing document"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:1940
 msgid "Re_vert"
@@ -7810,7 +7438,7 @@ msgstr ""
 #: ../src/verbs.cpp:1942
 #, fuzzy
 msgid "_Save"
-msgstr "Sábháil\t"
+msgstr "Sábháil"
 
 #: ../src/verbs.cpp:1942
 msgid "Save document"
@@ -7819,7 +7447,7 @@ msgstr ""
 #: ../src/verbs.cpp:1944
 #, fuzzy
 msgid "Save _As..."
-msgstr "Sábháil Comhad"
+msgstr "Sábháil Mar..."
 
 #: ../src/verbs.cpp:1945
 msgid "Save document under a new name"
@@ -7828,7 +7456,7 @@ msgstr ""
 #: ../src/verbs.cpp:1946
 #, fuzzy
 msgid "_Print..."
-msgstr "Priontáil"
+msgstr "Priontáil..."
 
 #: ../src/verbs.cpp:1946
 msgid "Print document"
@@ -7846,9 +7474,8 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:1951
-#, fuzzy
 msgid "Print _Direct"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:1952
 msgid "Print directly without prompting to a file or pipe"
@@ -7857,7 +7484,7 @@ msgstr ""
 #: ../src/verbs.cpp:1953
 #, fuzzy
 msgid "Print Previe_w"
-msgstr "Priontáil comhad"
+msgstr "Reamhthaispeántas Nua"
 
 #: ../src/verbs.cpp:1954
 msgid "Preview document printout"
@@ -7880,18 +7507,16 @@ msgid "Export this document or a selection as a bitmap image"
 msgstr ""
 
 #: ../src/verbs.cpp:1959
-#, fuzzy
 msgid "N_ext Window"
-msgstr "fuinneog1"
+msgstr ""
 
 #: ../src/verbs.cpp:1960
 msgid "Switch to the next document window"
 msgstr ""
 
 #: ../src/verbs.cpp:1961
-#, fuzzy
 msgid "P_revious Window"
-msgstr "fuinneog1"
+msgstr ""
 
 #: ../src/verbs.cpp:1962
 msgid "Switch to the previous document window"
@@ -7900,21 +7525,19 @@ msgstr ""
 #: ../src/verbs.cpp:1963
 #, fuzzy
 msgid "_Close"
-msgstr "Radharc Nua"
+msgstr "Dún"
 
 #: ../src/verbs.cpp:1964
-#, fuzzy
 msgid "Close this document window"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:1965
 msgid "_Quit"
 msgstr ""
 
 #: ../src/verbs.cpp:1965
-#, fuzzy
 msgid "Quit Inkscape"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:1968
 msgid "Undo last action"
@@ -7930,9 +7553,8 @@ msgid "Cu_t"
 msgstr "Gearr"
 
 #: ../src/verbs.cpp:1973
-#, fuzzy
 msgid "Cut selection to clipboard"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1974
 #, fuzzy
@@ -7940,9 +7562,8 @@ msgid "_Copy"
 msgstr "Cóip"
 
 #: ../src/verbs.cpp:1975
-#, fuzzy
 msgid "Copy selection to clipboard"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1976
 #, fuzzy
@@ -7950,28 +7571,24 @@ msgid "_Paste"
 msgstr "Greamaigh"
 
 #: ../src/verbs.cpp:1977
-#, fuzzy
 msgid "Paste objects from clipboard to mouse point, or paste text"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1978
-#, fuzzy
 msgid "Paste _Style"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:1979
-#, fuzzy
 msgid "Apply the style of the copied object to selection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1981
 msgid "Scale selection to match the size of the copied object"
 msgstr ""
 
 #: ../src/verbs.cpp:1982
-#, fuzzy
 msgid "Paste _Width"
-msgstr "Leitheid"
+msgstr ""
 
 #: ../src/verbs.cpp:1983
 msgid "Scale selection horizontally to match the width of the copied object"
@@ -7980,7 +7597,7 @@ msgstr ""
 #: ../src/verbs.cpp:1984
 #, fuzzy
 msgid "Paste _Height"
-msgstr "Airde"
+msgstr "Airde:"
 
 #: ../src/verbs.cpp:1985
 msgid "Scale selection vertically to match the height of the copied object"
@@ -8015,37 +7632,34 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:1992
-#, fuzzy
 msgid "Paste _In Place"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:1993
-#, fuzzy
 msgid "Paste objects from clipboard to the original location"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1994
+#, fuzzy
 msgid "_Delete"
-msgstr "_Scríos"
+msgstr "Dealaigh"
 
 #: ../src/verbs.cpp:1995
-#, fuzzy
 msgid "Delete selection"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/verbs.cpp:1996
 msgid "Duplic_ate"
 msgstr ""
 
 #: ../src/verbs.cpp:1997
-#, fuzzy
 msgid "Duplicate selected objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:1998
 #, fuzzy
 msgid "Create Clo_ne"
-msgstr "Sábháil Comhad"
+msgstr "Cruthaigh"
 
 #: ../src/verbs.cpp:1999
 msgid "Create a clone (a copy linked to the original) of selected object"
@@ -8064,18 +7678,16 @@ msgstr ""
 #: ../src/verbs.cpp:2002
 #, fuzzy
 msgid "Select _Original"
-msgstr "Tóg"
+msgstr "Roghnaigh Printéir"
 
 #: ../src/verbs.cpp:2003
-#, fuzzy
 msgid "Select the object to which the selected clone is linked"
-msgstr "Tóg"
+msgstr ""
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2005
-#, fuzzy
 msgid "Objects to Patter_n"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/verbs.cpp:2006
 msgid "Convert selection to a rectangle with tiled pattern fill"
@@ -8083,9 +7695,8 @@ msgstr ""
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2008
-#, fuzzy
 msgid "Pattern to _Objects"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2009
 msgid "Extract objects from a tiled pattern fill"
@@ -8094,7 +7705,7 @@ msgstr ""
 #: ../src/verbs.cpp:2010
 #, fuzzy
 msgid "Clea_r All"
-msgstr "Dath 1"
+msgstr "Bánaigh gach rud"
 
 #: ../src/verbs.cpp:2011
 msgid "Delete all objects from document"
@@ -8103,27 +7714,23 @@ msgstr ""
 #: ../src/verbs.cpp:2012
 #, fuzzy
 msgid "Select Al_l"
-msgstr "Tóg"
+msgstr "Roghnaigh Gach rud"
 
 #: ../src/verbs.cpp:2013
-#, fuzzy
 msgid "Select all objects or all nodes"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2014
-#, fuzzy
 msgid "Select All in All La_yers"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2015
-#, fuzzy
 msgid "Select all objects in all visible and unlocked layers"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2016
-#, fuzzy
 msgid "In_vert Selection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2017
 msgid "Invert selection (unselect what is selected and select everything else)"
@@ -8140,85 +7747,73 @@ msgstr ""
 #: ../src/verbs.cpp:2020
 #, fuzzy
 msgid "D_eselect"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #: ../src/verbs.cpp:2021
-#, fuzzy
 msgid "Deselect any selected objects or nodes"
-msgstr "Tóg"
+msgstr ""
 
 #. Selection
 #: ../src/verbs.cpp:2024
-#, fuzzy
 msgid "Raise to _Top"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2025
-#, fuzzy
 msgid "Raise selection to top"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2026
-#, fuzzy
 msgid "Lower to _Bottom"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2027
-#, fuzzy
 msgid "Lower selection to bottom"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2028
-#, fuzzy
 msgid "_Raise"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:2029
-#, fuzzy
 msgid "Raise selection one step"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2030
 msgid "_Lower"
 msgstr ""
 
 #: ../src/verbs.cpp:2031
-#, fuzzy
 msgid "Lower selection one step"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2032
+#, fuzzy
 msgid "_Group"
-msgstr "_Grupa"
+msgstr "Grupa"
 
 #: ../src/verbs.cpp:2033
 msgid "Group selected objects"
 msgstr ""
 
 #: ../src/verbs.cpp:2035
-#, fuzzy
 msgid "Ungroup selected groups"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2037
-#, fuzzy
 msgid "_Put on Path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2038
-#, fuzzy
 msgid "Put text on path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2039
-#, fuzzy
 msgid "_Remove from Path"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/verbs.cpp:2040
-#, fuzzy
 msgid "Remove text from path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2041
 msgid "Remove Manual _Kerns"
@@ -8234,31 +7829,27 @@ msgstr "Roghanna Oaf"
 #: ../src/verbs.cpp:2046
 #, fuzzy
 msgid "_Union"
-msgstr "Tada"
+msgstr "Leasú"
 
 #: ../src/verbs.cpp:2047
-#, fuzzy
 msgid "Create union of selected paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2048
 msgid "_Intersection"
 msgstr ""
 
 #: ../src/verbs.cpp:2049
-#, fuzzy
 msgid "Create intersection of selected paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2050
-#, fuzzy
 msgid "_Difference"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/verbs.cpp:2051
-#, fuzzy
 msgid "Create difference of selected paths (bottom minus top)"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2052
 msgid "E_xclusion"
@@ -8281,9 +7872,8 @@ msgstr ""
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2058
-#, fuzzy
 msgid "Cut _Path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2059
 msgid "Cut the bottom path's stroke into pieces, removing fill"
@@ -8295,32 +7885,27 @@ msgstr ""
 #: ../src/verbs.cpp:2063
 #, fuzzy
 msgid "Outs_et"
-msgstr "Tóg"
+msgstr "Amach"
 
 #: ../src/verbs.cpp:2064
-#, fuzzy
 msgid "Outset selected paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2066
-#, fuzzy
 msgid "O_utset Path by 1 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2067
-#, fuzzy
 msgid "Outset selected paths by 1 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2069
-#, fuzzy
 msgid "O_utset Path by 10 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2070
-#, fuzzy
 msgid "Outset selected paths by 10 px"
-msgstr "Tóg"
+msgstr ""
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -8330,29 +7915,24 @@ msgid "I_nset"
 msgstr ""
 
 #: ../src/verbs.cpp:2075
-#, fuzzy
 msgid "Inset selected paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2077
-#, fuzzy
 msgid "I_nset Path by 1 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2078
-#, fuzzy
 msgid "Inset selected paths by 1 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2080
-#, fuzzy
 msgid "I_nset Path by 10 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2081
-#, fuzzy
 msgid "Inset selected paths by 10 px"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2083
 msgid "D_ynamic Offset"
@@ -8371,14 +7951,12 @@ msgid "Create a dynamic offset object linked to the original path"
 msgstr ""
 
 #: ../src/verbs.cpp:2088
-#, fuzzy
 msgid "_Stroke to Path"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2089
-#, fuzzy
 msgid "Convert selected object's stroke to paths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2090
 msgid "Si_mplify"
@@ -8389,14 +7967,12 @@ msgid "Simplify selected paths (remove extra nodes)"
 msgstr ""
 
 #: ../src/verbs.cpp:2092
-#, fuzzy
 msgid "_Reverse"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:2093
-#, fuzzy
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr "Tóg"
+msgstr ""
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2095
@@ -8430,123 +8006,105 @@ msgid "Break _Apart"
 msgstr ""
 
 #: ../src/verbs.cpp:2104
-#, fuzzy
 msgid "Break selected paths into subpaths"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2105
 msgid "Gri_d Arrange..."
 msgstr ""
 
 #: ../src/verbs.cpp:2106
-#, fuzzy
 msgid "Arrange selected objects in a grid pattern"
-msgstr "Tóg"
+msgstr ""
 
 #. Layer
 #: ../src/verbs.cpp:2108
-#, fuzzy
 msgid "_Add Layer..."
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:2109
-#, fuzzy
 msgid "Create a new layer"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2110
-#, fuzzy
 msgid "Re_name Layer..."
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:2111
-#, fuzzy
 msgid "Rename the current layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2112
-#, fuzzy
 msgid "Switch to Layer Abov_e"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2113
 msgid "Switch to the layer above the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2114
-#, fuzzy
 msgid "Switch to Layer Belo_w"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2115
 msgid "Switch to the layer below the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2116
-#, fuzzy
 msgid "Move Selection to Layer Abo_ve"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2117
 msgid "Move selection to the layer above the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2118
-#, fuzzy
 msgid "Move Selection to Layer Bel_ow"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2119
 msgid "Move selection to the layer below the current"
 msgstr ""
 
 #: ../src/verbs.cpp:2120
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2121
-#, fuzzy
 msgid "Raise the current layer to the top"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2122
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2123
-#, fuzzy
 msgid "Lower the current layer to the bottom"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2124
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../src/verbs.cpp:2125
 msgid "Raise the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2126
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2127
 msgid "Lower the current layer"
 msgstr ""
 
 #: ../src/verbs.cpp:2128
-#, fuzzy
 msgid "_Delete Current Layer"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2129
-#, fuzzy
 msgid "Delete the current layer"
-msgstr "Tóg"
+msgstr ""
 
 #. Object
 #: ../src/verbs.cpp:2132
@@ -8571,19 +8129,16 @@ msgid "Remove _Transformations"
 msgstr "Roghanna Oaf"
 
 #: ../src/verbs.cpp:2137
-#, fuzzy
 msgid "Remove transformations from object"
 msgstr "Roghanna Oaf"
 
 #: ../src/verbs.cpp:2138
-#, fuzzy
 msgid "_Object to Path"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/verbs.cpp:2139
-#, fuzzy
 msgid "Convert selected object to path"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2140
 msgid "_Flow into Frame"
@@ -8596,57 +8151,51 @@ msgid ""
 msgstr ""
 
 #: ../src/verbs.cpp:2142
-#, fuzzy
 msgid "_Unflow"
-msgstr "Leasú"
+msgstr ""
 
 #: ../src/verbs.cpp:2143
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr ""
 
 #: ../src/verbs.cpp:2144
-#, fuzzy
 msgid "_Convert to Text"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2145
-#, fuzzy
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2147
 #, fuzzy
 msgid "Flip _Horizontal"
-msgstr "Tóg"
+msgstr "Cas ar Cothromach"
 
 #: ../src/verbs.cpp:2147
-#, fuzzy
 msgid "Flip selected objects horizontally"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2150
 #, fuzzy
 msgid "Flip _Vertical"
-msgstr "Tóg"
+msgstr "Cas ar Ingearach"
 
 #: ../src/verbs.cpp:2150
-#, fuzzy
 msgid "Flip selected objects vertically"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2153
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
 #: ../src/verbs.cpp:2154 ../src/verbs.cpp:2158
-#, fuzzy
 msgid "_Release"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:2155
 #, fuzzy
 msgid "Remove mask from selection"
-msgstr "Scríos"
+msgstr "Roghanna Oaf"
 
 #: ../src/verbs.cpp:2157
 msgid ""
@@ -8660,17 +8209,16 @@ msgstr ""
 #. Tools
 #: ../src/verbs.cpp:2162
 msgid "Select"
-msgstr "Tóg"
+msgstr "Roghnaigh"
 
 #: ../src/verbs.cpp:2163
-#, fuzzy
 msgid "Select and transform objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2164
 #, fuzzy
 msgid "Node Edit"
-msgstr "Eagar Nód"
+msgstr "Eagar nód"
 
 #: ../src/verbs.cpp:2165
 msgid "Edit path nodes or control handles"
@@ -8689,9 +8237,8 @@ msgid "Create stars and polygons"
 msgstr ""
 
 #: ../src/verbs.cpp:2173
-#, fuzzy
 msgid "Create spirals"
-msgstr "Spéisialta"
+msgstr ""
 
 #: ../src/verbs.cpp:2175
 msgid "Draw freehand lines"
@@ -8706,28 +8253,25 @@ msgid "Draw calligraphic lines"
 msgstr ""
 
 #: ../src/verbs.cpp:2181
-#, fuzzy
 msgid "Create and edit text objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2183
-#, fuzzy
 msgid "Create and edit gradients"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2185
 #, fuzzy
 msgid "Zoom in or out"
-msgstr "Priontáil comhad"
+msgstr "Súmáil istach sa pictiúr"
 
 #: ../src/verbs.cpp:2187
 msgid "Pick averaged colors from image"
 msgstr ""
 
 #: ../src/verbs.cpp:2189
-#, fuzzy
 msgid "Create connectors"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #. Tool prefs
 #: ../src/verbs.cpp:2192
@@ -8735,163 +8279,137 @@ msgid "Selector Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2193
-#, fuzzy
 msgid "Open Preferences for the Selector tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2194
 msgid "Node Tool Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2195
-#, fuzzy
 msgid "Open Preferences for the Node tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2196
-#, fuzzy
 msgid "Rectangle Preferences"
-msgstr "Meid pictiúr"
+msgstr ""
 
 #: ../src/verbs.cpp:2197
-#, fuzzy
 msgid "Open Preferences for the Rectangle tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2198
-#, fuzzy
 msgid "Ellipse Preferences"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2199
-#, fuzzy
 msgid "Open Preferences for the Ellipse tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2200
 #, fuzzy
 msgid "Star Preferences"
-msgstr "Meid pictiúr"
+msgstr "Álbachtaí Realta"
 
 #: ../src/verbs.cpp:2201
-#, fuzzy
 msgid "Open Preferences for the Star tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2202
-#, fuzzy
 msgid "Spiral Preferences"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2203
-#, fuzzy
 msgid "Open Preferences for the Spiral tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2204
-#, fuzzy
 msgid "Pencil Preferences"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2205
-#, fuzzy
 msgid "Open Preferences for the Pencil tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2206
-#, fuzzy
 msgid "Pen Preferences"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2207
-#, fuzzy
 msgid "Open Preferences for the Pen tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2208
 msgid "Calligraphic Preferences"
 msgstr ""
 
 #: ../src/verbs.cpp:2209
-#, fuzzy
 msgid "Open Preferences for the Calligraphy tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2210
 #, fuzzy
 msgid "Text Preferences"
-msgstr "Sodipodi"
+msgstr "Álbachtaî teacs"
 
 #: ../src/verbs.cpp:2211
-#, fuzzy
 msgid "Open Preferences for the Text tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2212
-#, fuzzy
 msgid "Gradient Preferences"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2213
-#, fuzzy
 msgid "Open Preferences for the Gradient tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2214
-#, fuzzy
 msgid "Zoom Preferences"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2215
-#, fuzzy
 msgid "Open Preferences for the Zoom tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2216
-#, fuzzy
 msgid "Dropper Preferences"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2217
-#, fuzzy
 msgid "Open Preferences for the Dropper tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2218
-#, fuzzy
 msgid "Connector Preferences"
-msgstr "Meid pictiúr"
+msgstr ""
 
 #: ../src/verbs.cpp:2219
-#, fuzzy
 msgid "Open Preferences for the Connector tool"
-msgstr "Sodipodi"
+msgstr ""
 
 #. Zoom/View
 #: ../src/verbs.cpp:2222
-#, fuzzy
 msgid "Zoom In"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2222
 #, fuzzy
 msgid "Zoom in"
-msgstr "Priontáil comhad"
+msgstr "Súmáil istach sa pictiúr"
 
 #: ../src/verbs.cpp:2223
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2223
 #, fuzzy
 msgid "Zoom out"
-msgstr "Priontáil comhad"
+msgstr "iSúmáil amach sa pictiúr"
 
 #: ../src/verbs.cpp:2224
-#, fuzzy
 msgid "_Rulers"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:2224
 msgid "Show or hide the canvas rulers"
@@ -8938,27 +8456,24 @@ msgid "Previous zoom (from the history of zooms)"
 msgstr ""
 
 #: ../src/verbs.cpp:2232
-#, fuzzy
 msgid "Zoom 1:_1"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2232
 msgid "Zoom to 1:1"
 msgstr ""
 
 #: ../src/verbs.cpp:2234
-#, fuzzy
 msgid "Zoom 1:_2"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2234
 msgid "Zoom to 1:2"
 msgstr ""
 
 #: ../src/verbs.cpp:2236
-#, fuzzy
 msgid "_Zoom 2:1"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2236
 msgid "Zoom to 2:1"
@@ -8973,9 +8488,8 @@ msgid "Stretch this document window to full screen"
 msgstr ""
 
 #: ../src/verbs.cpp:2242
-#, fuzzy
 msgid "Duplic_ate Window"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:2242
 msgid "Open a new window with the same document"
@@ -8984,12 +8498,12 @@ msgstr ""
 #: ../src/verbs.cpp:2244
 #, fuzzy
 msgid "_New View Preview"
-msgstr "Radharc Nua"
+msgstr "Reamhthaispeántas Nua"
 
 #: ../src/verbs.cpp:2245
 #, fuzzy
 msgid "New View Preview"
-msgstr "Radharc Nua"
+msgstr "Reamhthaispeántas Nua"
 
 #. "view_new_preview"
 #: ../src/verbs.cpp:2247
@@ -9001,9 +8515,8 @@ msgid "Switch to normal display mode"
 msgstr ""
 
 #: ../src/verbs.cpp:2249
-#, fuzzy
 msgid "_Outline"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:2250
 msgid "Switch to outline (wireframe) display mode"
@@ -9012,7 +8525,7 @@ msgstr ""
 #: ../src/verbs.cpp:2252
 #, fuzzy
 msgid "Ico_n Preview"
-msgstr "Radharc Nua"
+msgstr "Reamhthaispeántas Nua"
 
 #: ../src/verbs.cpp:2253
 msgid "Open a window to preview objects at different icon resolutions"
@@ -9023,17 +8536,17 @@ msgid "Zoom to fit page in window"
 msgstr ""
 
 #: ../src/verbs.cpp:2256
-#, fuzzy
 msgid "Page _Width"
-msgstr "Leitheid"
+msgstr ""
 
 #: ../src/verbs.cpp:2257
 msgid "Zoom to fit page width in window"
 msgstr ""
 
 #: ../src/verbs.cpp:2259
+#, fuzzy
 msgid "Zoom to fit drawing in window"
-msgstr ""
+msgstr "iSúmáil amach sa pictiúr"
 
 #: ../src/verbs.cpp:2261
 msgid "Zoom to fit selection in window"
@@ -9041,37 +8554,33 @@ msgstr ""
 
 #. Dialogs
 #: ../src/verbs.cpp:2264
-#, fuzzy
 msgid "In_kscape Preferences..."
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2265
-#, fuzzy
 msgid "Edit global Inkscape preferences"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2266
 #, fuzzy
 msgid "_Document Properties..."
-msgstr "Roghanna Dath"
+msgstr "Álbachtaí Dealbh"
 
 #: ../src/verbs.cpp:2267
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr ""
 
 #: ../src/verbs.cpp:2268
-#, fuzzy
 msgid "Document _Metadata..."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2269
 msgid "Edit document metadata (to be saved with the document)"
 msgstr ""
 
 #: ../src/verbs.cpp:2270
-#, fuzzy
 msgid "_Fill and Stroke..."
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2271
 msgid "Edit objects' style, such as color or stroke width"
@@ -9081,31 +8590,27 @@ msgstr ""
 #: ../src/verbs.cpp:2273
 #, fuzzy
 msgid "S_watches..."
-msgstr "Sábháil Comhad"
+msgstr "Sábháil Mar..."
 
 #: ../src/verbs.cpp:2274
 msgid "Select colors from a swatches palette"
 msgstr ""
 
 #: ../src/verbs.cpp:2275
-#, fuzzy
 msgid "Transfor_m..."
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/verbs.cpp:2276
-#, fuzzy
 msgid "Precisely control objects' transformations"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/verbs.cpp:2277
-#, fuzzy
 msgid "_Align and Distribute..."
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2278
-#, fuzzy
 msgid "Align and distribute objects"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2279
 msgid "Undo _History..."
@@ -9118,15 +8623,16 @@ msgstr ""
 #: ../src/verbs.cpp:2281
 #, fuzzy
 msgid "_Text and Font..."
-msgstr "Roghanna Dath"
+msgstr "Teacs agus Clófhoireann"
 
 #: ../src/verbs.cpp:2282
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 
 #: ../src/verbs.cpp:2283
+#, fuzzy
 msgid "_XML Editor..."
-msgstr ""
+msgstr "Eagarthóir XML"
 
 #: ../src/verbs.cpp:2284
 msgid "View and edit the XML tree of the document"
@@ -9135,12 +8641,11 @@ msgstr ""
 #: ../src/verbs.cpp:2285
 #, fuzzy
 msgid "_Find..."
-msgstr "Priontáil"
+msgstr "Priontáil..."
 
 #: ../src/verbs.cpp:2286
-#, fuzzy
 msgid "Find objects in document"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/verbs.cpp:2287
 msgid "_Messages..."
@@ -9153,16 +8658,15 @@ msgstr ""
 #: ../src/verbs.cpp:2289
 #, fuzzy
 msgid "S_cripts..."
-msgstr "Priontáil"
+msgstr "Priontáil..."
 
 #: ../src/verbs.cpp:2290
 msgid "Run scripts"
 msgstr ""
 
 #: ../src/verbs.cpp:2291
-#, fuzzy
 msgid "Show/Hide D_ialogs"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/verbs.cpp:2292
 msgid "Show or hide all open dialogs"
@@ -9170,9 +8674,8 @@ msgstr ""
 
 #. TRANSLATORS: "Tile Clones" means: "Create tiled clones"
 #: ../src/verbs.cpp:2294
-#, fuzzy
 msgid "Create Tiled Clones..."
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../src/verbs.cpp:2295
 msgid ""
@@ -9183,7 +8686,7 @@ msgstr ""
 #: ../src/verbs.cpp:2296
 #, fuzzy
 msgid "_Object Properties..."
-msgstr "Meid pictiúr"
+msgstr "Álbachtaí Realta"
 
 #: ../src/verbs.cpp:2297
 msgid "Edit the ID, locked and visible status, and other object properties"
@@ -9206,9 +8709,8 @@ msgid "Configure extended input devices, such as a graphics tablet"
 msgstr ""
 
 #: ../src/verbs.cpp:2304
-#, fuzzy
 msgid "_Extensions..."
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/verbs.cpp:2305
 msgid "Query information about extensions"
@@ -9217,12 +8719,11 @@ msgstr ""
 #: ../src/verbs.cpp:2306
 #, fuzzy
 msgid "Layer_s..."
-msgstr "Greamaigh"
+msgstr "Sábháil Mar..."
 
 #: ../src/verbs.cpp:2307
-#, fuzzy
 msgid "View Layers"
-msgstr "Greamaigh"
+msgstr ""
 
 #. Help
 #: ../src/verbs.cpp:2310
@@ -9234,23 +8735,20 @@ msgid "Keys and mouse shortcuts reference"
 msgstr ""
 
 #: ../src/verbs.cpp:2312
-#, fuzzy
 msgid "About E_xtensions"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/verbs.cpp:2313
 msgid "Information on Inkscape extensions"
 msgstr ""
 
 #: ../src/verbs.cpp:2314
-#, fuzzy
 msgid "About _Memory"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/verbs.cpp:2315
-#, fuzzy
 msgid "Memory usage information"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #: ../src/verbs.cpp:2316
 msgid "_About Inkscape"
@@ -9265,9 +8763,8 @@ msgstr ""
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
 #: ../src/verbs.cpp:2322
-#, fuzzy
 msgid "Inkscape: _Basic"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2323
 msgid "Getting started with Inkscape"
@@ -9275,41 +8772,35 @@ msgstr ""
 
 #. "tutorial_basic"
 #: ../src/verbs.cpp:2324
-#, fuzzy
 msgid "Inkscape: _Shapes"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2325
 msgid "Using shape tools to create and edit shapes"
 msgstr ""
 
 #: ../src/verbs.cpp:2326
-#, fuzzy
 msgid "Inkscape: _Advanced"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2327
-#, fuzzy
 msgid "Advanced Inkscape topics"
-msgstr "Sodipodi"
+msgstr ""
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2329
-#, fuzzy
 msgid "Inkscape: T_racing"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2330
-#, fuzzy
 msgid "Using bitmap tracing"
-msgstr "Meid pictiúr"
+msgstr ""
 
 #. "tutorial_tracing"
 #: ../src/verbs.cpp:2331
-#, fuzzy
 msgid "Inkscape: _Calligraphy"
-msgstr "Sodipodi"
+msgstr ""
 
 #: ../src/verbs.cpp:2332
 msgid "Using the Calligraphy pen tool"
@@ -9352,29 +8843,24 @@ msgstr ""
 
 #. Fit Page
 #: ../src/verbs.cpp:2345
-#, fuzzy
 msgid "Fit Page to Selection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2346
-#, fuzzy
 msgid "Fit the page to the current selection"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2347
-#, fuzzy
 msgid "Fit Page to Drawing"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2348
-#, fuzzy
 msgid "Fit the page to the drawing"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2349
-#, fuzzy
 msgid "Fit Page to Selection or Drawing"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/verbs.cpp:2350
 msgid ""
@@ -9382,14 +8868,12 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/dash-selector.cpp:103
-#, fuzzy
 msgid "Dash pattern"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/widgets/dash-selector.cpp:118
-#, fuzzy
 msgid "Pattern offset"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/widgets/desktop-widget.cpp:375
 #, c-format
@@ -9404,30 +8888,31 @@ msgstr ""
 #. Family frame
 #: ../src/widgets/font-selector.cpp:148
 msgid "Font family"
-msgstr ""
+msgstr "Clann chlófhoireann"
 
 #. Style frame
 #: ../src/widgets/font-selector.cpp:179
 msgid "Style"
-msgstr ""
+msgstr "Stíl"
 
 #: ../src/widgets/font-selector.cpp:217
 msgid "Font size:"
-msgstr ""
+msgstr "Meíd chlófhoireann"
 
 #. TRANSLATORS: Test string used in text and font dialog (when no
 #. * text has been entered) to get a preview of the font.  Choose
 #. * some representative characters that users of your locale will be
 #. * interested in.
 #: ../src/widgets/font-selector.cpp:589 ../src/widgets/toolbox.cpp:3400
+#, fuzzy
 msgid "AaBbCcIiPpQq12369$€¢?.;/()"
-msgstr ""
+msgstr "AaÁaBcCdIiPpQa12368.;/()"
 
 #: ../src/widgets/gradient-selector.cpp:138
 #: ../src/widgets/gradient-toolbar.cpp:499
 #, fuzzy
 msgid "Edit..."
-msgstr "Eagar Nód"
+msgstr "Eagar"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:155
@@ -9441,12 +8926,12 @@ msgstr ""
 #: ../src/widgets/gradient-selector.cpp:165
 #, fuzzy
 msgid "reflected"
-msgstr "Scríos"
+msgstr "Roghnaigh"
 
 #: ../src/widgets/gradient-selector.cpp:169
 #, fuzzy
 msgid "direct"
-msgstr "Tóg"
+msgstr "Eagar"
 
 #: ../src/widgets/gradient-selector.cpp:177
 msgid "Repeat:"
@@ -9457,14 +8942,12 @@ msgid "<small>No gradients</small>"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:189
-#, fuzzy
 msgid "<small>Nothing selected</small>"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:200
-#, fuzzy
 msgid "<small>No gradients in selection</small>"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:210
 msgid "<small>Multiple gradients</small>"
@@ -9489,9 +8972,8 @@ msgid "<b>New:</b>"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:570
-#, fuzzy
 msgid "Create linear gradient"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:584
 msgid "Create radial (elliptic or circular) gradient"
@@ -9500,12 +8982,11 @@ msgstr ""
 #: ../src/widgets/gradient-toolbar.cpp:599
 #, fuzzy
 msgid "on"
-msgstr "Síos"
+msgstr "Tada"
 
 #: ../src/widgets/gradient-toolbar.cpp:612
-#, fuzzy
 msgid "Create gradient in the fill"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:626
 msgid "Create gradient in the stroke"
@@ -9528,9 +9009,8 @@ msgid "No gradients in document"
 msgstr ""
 
 #: ../src/widgets/gradient-vector.cpp:276
-#, fuzzy
 msgid "No gradient selected"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/widgets/gradient-vector.cpp:534
 msgid "No stops in gradient"
@@ -9548,7 +9028,7 @@ msgstr ""
 #: ../src/widgets/gradient-vector.cpp:804
 #, fuzzy
 msgid "Delete stop"
-msgstr "Scríos"
+msgstr "Dealaigh"
 
 #: ../src/widgets/gradient-vector.cpp:807
 msgid "Delete current control stop from gradient"
@@ -9561,43 +9041,37 @@ msgstr ""
 
 #. TRANSLATORS: "Stop" means: a "phase" of a gradient
 #: ../src/widgets/gradient-vector.cpp:863
-#, fuzzy
 msgid "Stop Color"
-msgstr "Dath"
+msgstr ""
 
 #: ../src/widgets/gradient-vector.cpp:892
-#, fuzzy
 msgid "Gradient editor"
-msgstr "Priontáil comhad"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:113
-#, fuzzy
 msgid "Toggle current layer visibility"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:133
-#, fuzzy
 msgid "Lock or unlock current layer"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:136
-#, fuzzy
 msgid "Current layer"
-msgstr "Roghanna Dath"
+msgstr ""
 
 #: ../src/widgets/layer-selector.cpp:561
 msgid "(root)"
 msgstr ""
 
 #: ../src/widgets/paint-selector.cpp:168 ../src/widgets/paint-selector.cpp:549
-#, fuzzy
 msgid "No paint"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/widgets/paint-selector.cpp:170 ../src/widgets/paint-selector.cpp:617
 #, fuzzy
 msgid "Flat color"
-msgstr "Dath"
+msgstr "Dath leathanach"
 
 #: ../src/widgets/paint-selector.cpp:172 ../src/widgets/paint-selector.cpp:684
 msgid "Linear gradient"
@@ -9637,9 +9111,8 @@ msgid "Paint is undefined"
 msgstr ""
 
 #: ../src/widgets/paint-selector.cpp:745
-#, fuzzy
 msgid "No patterns in document"
-msgstr "Sábháil Comhad"
+msgstr ""
 
 #: ../src/widgets/paint-selector.cpp:859
 msgid ""
@@ -9694,9 +9167,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:434
-#, fuzzy
 msgid "select_toolbar|X"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:434
 msgid "Horizontal coordinate of selection"
@@ -9705,9 +9177,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:439
-#, fuzzy
 msgid "select_toolbar|Y"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:439
 msgid "Vertical coordinate of selection"
@@ -9716,9 +9187,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:445
-#, fuzzy
 msgid "select_toolbar|W"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:445
 msgid "Width of selection"
@@ -9731,9 +9201,8 @@ msgstr ""
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
 #: ../src/widgets/select-toolbar.cpp:463
-#, fuzzy
 msgid "select_toolbar|H"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:463
 msgid "Height of selection"
@@ -9744,8 +9213,9 @@ msgid "System"
 msgstr ""
 
 #: ../src/widgets/sp-color-notebook.cpp:319
+#, fuzzy
 msgid "RGBA_:"
-msgstr ""
+msgstr "RGB"
 
 #: ../src/widgets/sp-color-notebook.cpp:327
 msgid "Hexadecimal RGBA value of the color"
@@ -9753,15 +9223,16 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:77
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../src/widgets/sp-color-scales.cpp:77
+#, fuzzy
 msgid "HSL"
-msgstr ""
+msgstr "HSV"
 
 #: ../src/widgets/sp-color-scales.cpp:77
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: ../src/widgets/sp-color-scales.cpp:394
 msgid "_R"
@@ -9771,7 +9242,7 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:396
 #, fuzzy
 msgid "Red"
-msgstr "Luach:"
+msgstr "Dearg:"
 
 #: ../src/widgets/sp-color-scales.cpp:397
 msgid "_G"
@@ -9779,8 +9250,9 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:398
 #: ../src/widgets/sp-color-scales.cpp:399
+#, fuzzy
 msgid "Green"
-msgstr ""
+msgstr "Glas:"
 
 #: ../src/widgets/sp-color-scales.cpp:400
 msgid "_B"
@@ -9790,7 +9262,7 @@ msgstr ""
 #: ../src/widgets/sp-color-scales.cpp:402
 #, fuzzy
 msgid "Blue"
-msgstr "Luach:"
+msgstr "Gorm:"
 
 #. Label
 #: ../src/widgets/sp-color-scales.cpp:403
@@ -9817,9 +9289,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:421
 #: ../src/widgets/sp-color-scales.cpp:422
-#, fuzzy
 msgid "Hue"
-msgstr "Luach:"
+msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:423
 msgid "_S"
@@ -9836,9 +9307,8 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:427
 #: ../src/widgets/sp-color-scales.cpp:428
-#, fuzzy
 msgid "Lightness"
-msgstr "deis"
+msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:448
 msgid "_C"
@@ -9846,8 +9316,9 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:449
 #: ../src/widgets/sp-color-scales.cpp:450
+#, fuzzy
 msgid "Cyan"
-msgstr ""
+msgstr "Cealaigh"
 
 #: ../src/widgets/sp-color-scales.cpp:451
 msgid "_M"
@@ -9864,17 +9335,17 @@ msgstr ""
 
 #: ../src/widgets/sp-color-scales.cpp:455
 #: ../src/widgets/sp-color-scales.cpp:456
+#, fuzzy
 msgid "Yellow"
-msgstr ""
+msgstr "Buí:"
 
 #: ../src/widgets/sp-color-scales.cpp:457
 msgid "_K"
 msgstr ""
 
 #: ../src/widgets/sp-color-selector.cpp:63
-#, fuzzy
 msgid "Unnamed"
-msgstr "ainm"
+msgstr ""
 
 #: ../src/widgets/sp-color-wheel-selector.cpp:61
 msgid "Wheel"
@@ -9897,9 +9368,8 @@ msgid "Delete selected nodes"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:423
-#, fuzzy
 msgid "Join selected endnodes"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:425
 msgid "Join selected endnodes with a new segment"
@@ -9950,9 +9420,8 @@ msgid "Number of corners of a polygon or star"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1246
-#, fuzzy
 msgid "Spoke ratio:"
-msgstr "Roghanna Oaf"
+msgstr ""
 
 #. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
 #. Base radius is the same for the closest handle.
@@ -9963,7 +9432,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1264
 #, fuzzy
 msgid "Rounded:"
-msgstr "Luach:"
+msgstr "Dearg:"
 
 #: ../src/widgets/toolbox.cpp:1264
 msgid "How much rounded are the corners (0 for sharp)"
@@ -10004,7 +9473,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1592
 #, fuzzy
 msgid "Rx:"
-msgstr "1:1"
+msgstr "RY:"
 
 #: ../src/widgets/toolbox.cpp:1592
 msgid "Horizontal radius of rounded corners"
@@ -10013,7 +9482,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:1602
 #, fuzzy
 msgid "Ry:"
-msgstr "1:1"
+msgstr "RY:"
 
 #: ../src/widgets/toolbox.cpp:1602
 msgid "Vertical radius of rounded corners"
@@ -10036,9 +9505,8 @@ msgid "Number of revolutions"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1845
-#, fuzzy
 msgid "Divergence:"
-msgstr "Scríos"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:1845
 msgid "How much denser/sparser are outer revolutions; 1 = uniform"
@@ -10122,7 +9590,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2456
 #, fuzzy
 msgid "Start:"
-msgstr "Dath"
+msgstr "Realta"
 
 #: ../src/widgets/toolbox.cpp:2456
 msgid "The angle (in degrees) from the horizontal to the arc's start point"
@@ -10139,7 +9607,7 @@ msgstr ""
 #: ../src/widgets/toolbox.cpp:2477
 #, fuzzy
 msgid "Open arc"
-msgstr "Oscáil"
+msgstr "Oscail"
 
 #: ../src/widgets/toolbox.cpp:2478
 msgid ""
@@ -10180,19 +9648,17 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3537
-#, fuzzy
 msgid "Align left"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3548
 #, fuzzy
 msgid "Center"
-msgstr "Luach:"
+msgstr "Sa Lár X:"
 
 #: ../src/widgets/toolbox.cpp:3559
-#, fuzzy
 msgid "Align right"
-msgstr "Nódanna"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3570
 msgid "Justify"
@@ -10215,14 +9681,12 @@ msgid "Spacing between lines"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3745
-#, fuzzy
 msgid "Horizontal kerning"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3766
-#, fuzzy
 msgid "Vertical kerning"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3793
 msgid "Letter rotation"
@@ -10237,9 +9701,8 @@ msgid "Change connector spacing distance"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3991
-#, fuzzy
 msgid "Spacing:"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:3992
 msgid "The amount of space left around objects by auto-routing connectors"
@@ -10254,9 +9717,8 @@ msgid "Ideal length for connectors when layout is applied"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4022
-#, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Tóg"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:4036
 msgid "Do not allow overlapping shapes"
@@ -10275,7 +9737,7 @@ msgstr ""
 #: ../share/extensions/addnodes.inx.h:1
 #, fuzzy
 msgid "Add Nodes"
-msgstr "Nód"
+msgstr "Nódanna"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "Maximum segment length"
@@ -10291,8 +9753,9 @@ msgid "Modify Path"
 msgstr ""
 
 #: ../share/extensions/ai_input.inx.h:1
+#, fuzzy
 msgid "AI Input"
-msgstr ""
+msgstr "Inchur"
 
 #: ../share/extensions/ai_input.inx.h:2 ../share/extensions/ai_output.inx.h:2
 msgid "Adobe Illustrator (*.ai)"
@@ -10303,18 +9766,16 @@ msgid "Open files saved with Adobe Illustrator"
 msgstr ""
 
 #: ../share/extensions/ai_output.inx.h:1
-#, fuzzy
 msgid "AI Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../share/extensions/ai_output.inx.h:3
 msgid "Write Adobe Illustrator"
 msgstr ""
 
 #: ../share/extensions/aisvg.inx.h:1
-#, fuzzy
 msgid "AI SVG Input"
-msgstr "Gearr"
+msgstr ""
 
 #: ../share/extensions/aisvg.inx.h:2
 msgid "Adobe Illustrator SVG (*.ai.svg)"
@@ -10333,8 +9794,9 @@ msgid "Dia Diagram (*.dia)"
 msgstr ""
 
 #: ../share/extensions/dia.inx.h:3
+#, fuzzy
 msgid "Dia Input"
-msgstr ""
+msgstr "Inchur"
 
 #: ../share/extensions/dia.inx.h:4
 msgid ""
@@ -10352,12 +9814,12 @@ msgstr ""
 #: ../share/extensions/dots.inx.h:1
 #, fuzzy
 msgid "Dot size"
-msgstr "Priontáil"
+msgstr "Meíd chlófhoireann"
 
 #: ../share/extensions/dots.inx.h:2 ../share/extensions/measure.inx.h:1
 #, fuzzy
 msgid "Font size"
-msgstr "Priontáil"
+msgstr "Meíd chlófhoireann"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
@@ -10374,8 +9836,9 @@ msgid "AutoCAD DXF (*.dxf)"
 msgstr ""
 
 #: ../share/extensions/dxf_input.inx.h:2
+#, fuzzy
 msgid "DXF Input"
-msgstr ""
+msgstr "Inchur"
 
 #: ../share/extensions/dxf_input.inx.h:3
 msgid "Import AutoCAD's Document Exchange Format"
@@ -10390,16 +9853,15 @@ msgstr ""
 #: ../share/extensions/dxf_outlines.inx.h:1
 #, fuzzy
 msgid "Desktop Cutting Plotter"
-msgstr "Roghanna Dath"
+msgstr "Roghnachais Deasc"
 
 #: ../share/extensions/dxf_outlines.inx.h:2
 msgid "Desktop Cutting Plotter (*.DXF)"
 msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:2
-#, fuzzy
 msgid "DXF Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../share/extensions/dxf_output.inx.h:3
 msgid "DXF file written by pstoedit"
@@ -10410,22 +9872,21 @@ msgid "pstoedit must be installed to run see http://www.pstoedit.net/pstoedit"
 msgstr ""
 
 #: ../share/extensions/embedimage.inx.h:1
-#, fuzzy
 msgid "Embed All Images"
-msgstr "Meid pictiúr"
+msgstr ""
 
 #: ../share/extensions/eps_input.inx.h:1
+#, fuzzy
 msgid "EPS Input"
-msgstr ""
+msgstr "Inchur"
 
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated Postscript"
 msgstr ""
 
 #: ../share/extensions/epsi_output.inx.h:1
-#, fuzzy
 msgid "EPSI Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../share/extensions/epsi_output.inx.h:2
 msgid "Encapsulated Postscript Interchange (*.epsi)"
@@ -10453,9 +9914,8 @@ msgstr ""
 
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
-#, fuzzy
 msgid "Bridge Width"
-msgstr "Leitheid"
+msgstr ""
 
 #: ../share/extensions/ffmet.inx.h:2 ../share/extensions/ffms.inx.h:2
 msgid "First String Length"
@@ -10493,7 +9953,7 @@ msgstr ""
 #: ../share/extensions/ffset.inx.h:6 ../share/extensions/ffss.inx.h:6
 #, fuzzy
 msgid "Nut Width"
-msgstr "Leitheid"
+msgstr "Leitheid:"
 
 #: ../share/extensions/ffmet.inx.h:10 ../share/extensions/ffms.inx.h:11
 msgid "Perpendicular Distance"
@@ -10551,12 +10011,11 @@ msgstr ""
 #: ../share/extensions/fig_input.inx.h:3
 #, fuzzy
 msgid "XFIG Input"
-msgstr "Gearr"
+msgstr "Inchur"
 
 #: ../share/extensions/flatten.inx.h:1
-#, fuzzy
 msgid "Flatness"
-msgstr "Sábháil\t"
+msgstr ""
 
 #: ../share/extensions/flatten.inx.h:2
 msgid "Flatten Bezier"
@@ -10575,14 +10034,12 @@ msgid "Draw Handles"
 msgstr ""
 
 #: ../share/extensions/interp.inx.h:1
-#, fuzzy
 msgid "Duplicate endpaths"
-msgstr "Radharc Nua"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:2
-#, fuzzy
 msgid "Exponent"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
@@ -10617,33 +10074,30 @@ msgid "L-system"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:3
-#, fuzzy
 msgid "Left angle"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Order"
 msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize angle (%)"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:8
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Randomize step (%)"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:10
-#, fuzzy
 msgid "Right angle"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:11
-#, fuzzy
 msgid "Rules"
-msgstr "Comhad Nua"
+msgstr ""
 
 #: ../share/extensions/lindenmayer.inx.h:12
 msgid "Step length (px)"
@@ -10666,33 +10120,28 @@ msgid "Magnitude"
 msgstr ""
 
 #: ../share/extensions/ps_input.inx.h:1
-#, fuzzy
 msgid "Postscript"
-msgstr "Priontáil"
+msgstr ""
 
 #: ../share/extensions/ps_input.inx.h:3
 msgid "Postscript Input"
 msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:2
-#, fuzzy
 msgid "Radius"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:3
-#, fuzzy
 msgid "Radius Randomize"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:4
-#, fuzzy
 msgid "Randomize node handles"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:5
-#, fuzzy
 msgid "Randomize nodes"
-msgstr "Greamaigh"
+msgstr ""
 
 #: ../share/extensions/radiusrand.inx.h:6
 msgid "Use normal distribution"
@@ -10703,19 +10152,17 @@ msgid "Random Point"
 msgstr ""
 
 #: ../share/extensions/randompos.inx.h:1
-#, fuzzy
 msgid "Random Position"
-msgstr "Tóg"
+msgstr ""
 
 #: ../share/extensions/rtree.inx.h:1
 #, fuzzy
 msgid "Initial size"
-msgstr "Meid pictiúr"
+msgstr "Meíd chlófhoireann"
 
 #: ../share/extensions/rtree.inx.h:2
-#, fuzzy
 msgid "Minimum size"
-msgstr "Gearr"
+msgstr ""
 
 #: ../share/extensions/rtree.inx.h:3
 msgid "Random Tree"
@@ -10746,9 +10193,8 @@ msgid "Envelope"
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:1
-#, fuzzy
 msgid "Compressed Inkscape SVG with media (*.zip)"
-msgstr "Oscáil comhad"
+msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:2
 msgid ""
@@ -10757,9 +10203,8 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:3
-#, fuzzy
 msgid "ZIP Output"
-msgstr "Gearr"
+msgstr ""
 
 #: ../share/extensions/svg_dropshadow.inx.h:1
 msgid "Color of shadow"
@@ -10780,7 +10225,7 @@ msgstr ""
 #: ../share/extensions/txt2svg.inx.h:3
 #, fuzzy
 msgid "Text Input"
-msgstr "Dath"
+msgstr "Inchur"
 
 #: ../share/extensions/wavy.inx.h:1
 msgid "Calculate first derivative numerically"
@@ -10791,8 +10236,9 @@ msgid "First derivative"
 msgstr ""
 
 #: ../share/extensions/wavy.inx.h:3
+#, fuzzy
 msgid "Function"
-msgstr ""
+msgstr "Leasú"
 
 #: ../share/extensions/wavy.inx.h:4
 msgid "Function Plotter"
@@ -10811,12 +10257,14 @@ msgid "Amount of whirl"
 msgstr ""
 
 #: ../share/extensions/whirl.inx.h:2
+#, fuzzy
 msgid "Center X"
-msgstr ""
+msgstr "Sa Lár X:"
 
 #: ../share/extensions/whirl.inx.h:3
+#, fuzzy
 msgid "Center Y"
-msgstr ""
+msgstr "Sa Lár Y:"
 
 #: ../share/extensions/whirl.inx.h:5
 msgid "Rotation is clockwise"
@@ -10838,635 +10286,62 @@ msgstr ""
 msgid "Windows Metafile Input"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Fit Canvas to Selection"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Accept invitation in new document window"
-#~ msgstr "Sábháil Comhad"
-
-#, fuzzy
-#~ msgid "Share with _user..."
-#~ msgstr "Sábháil Comhad"
-
-#, fuzzy
-#~ msgid "Rag right"
-#~ msgstr "deis"
-
-#, fuzzy
-#~ msgid "Rag left"
-#~ msgstr "clé"
-
-#, fuzzy
-#~ msgid "%s Preferences"
+#~ msgid "Sodipodi"
 #~ msgstr "Sodipodi"
 
-#, fuzzy
-#~ msgid "Fractal (Lindenmayer)"
-#~ msgstr "Greamaigh"
+#~ msgid "Display settings"
+#~ msgstr "Álbachtaí Táispeanach"
 
-#, fuzzy
-#~ msgid "PDF Output"
-#~ msgstr "Gearr"
-
-#, fuzzy
-#~ msgid "Bitmap size"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "_Filename"
-#~ msgstr "ainm"
-
-#, fuzzy
-#~ msgid " <b>_Export</b> "
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid " relative by "
-#~ msgstr "Greamaigh"
-
-#, fuzzy
-#~ msgid " absolute to "
-#~ msgstr "Greamaigh"
-
-#, fuzzy
-#~ msgid "Tool Controls"
-#~ msgstr "Roghanna Oaf"
-
-#, fuzzy
-#~ msgid "_Panels"
-#~ msgstr "Radharc Nua"
-
-#, fuzzy
-#~ msgid "Union of selected objects"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Exclusive OR of selected objects"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Convert selected strokes to paths"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Convert bitmap object to paths"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Put text into frames"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Fill and Stroke dialog"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Transform dialog"
-#~ msgstr "Roghanna Oaf"
-
-#, fuzzy
-#~ msgid "Align and Distribute dialog"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Text and Font dialog"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Object Properties dialog"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "About Memory..."
-#~ msgstr "Scríos"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "Radharc Nua"
-
-#, fuzzy
-#~ msgid "Row spacing:   "
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid "Direction"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Direction of Rotation"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Custom canvas"
-#~ msgstr "Gearr"
-
-#, fuzzy
-#~ msgid "Current style"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "_Credits"
-#~ msgstr "Dath 1"
-
-#, fuzzy
-#~ msgid "Acceleration"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Speed"
-#~ msgstr "Luach:"
-
-#, fuzzy
-#~ msgid "Zoom in/out by"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Transform"
-#~ msgstr "Roghanna Oaf"
-
-#, fuzzy
-#~ msgid "Flip selection horizontally"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "Eagar Nód"
-
-#~ msgid "Add"
-#~ msgstr "Suim"
-
-#, fuzzy
-#~ msgid "C_reate"
-#~ msgstr "Radharc Nua"
-
-#, fuzzy
-#~ msgid "Automatically scale Rows to fit selected objects."
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Go to root"
-#~ msgstr "Eagar Nód"
-
-#, fuzzy
-#~ msgid "Y"
-#~ msgstr "Y1"
-
-#, fuzzy
 #~ msgid "R1:"
-#~ msgstr "1:1"
+#~ msgstr "R1:"
 
-#, fuzzy
 #~ msgid "R2:"
-#~ msgstr "2:1"
+#~ msgstr "R2:"
 
-#, fuzzy
-#~ msgid "Start Angle:"
-#~ msgstr "Dath"
+#~ msgid "ARG1:"
+#~ msgstr "ARG1:"
 
-#, fuzzy
-#~ msgid "Open:"
-#~ msgstr "Oscáil"
+#~ msgid "ARG2:"
+#~ msgstr "ARG2:"
 
-#, fuzzy
-#~ msgid "Rectangle _Properties"
-#~ msgstr "Meid pictiúr"
+#~ msgid "T0:"
+#~ msgstr "Ó:"
 
-#, fuzzy
-#~ msgid "Star _Properties"
-#~ msgstr "Meid pictiúr"
+#~ msgid "RX:"
+#~ msgstr "RX:"
 
-#, fuzzy
-#~ msgid "Ellipse _Properties"
-#~ msgstr "Priontáil comhad"
+#~ msgid "About sodipodi"
+#~ msgstr "Faoi Sodipodi"
 
-#, fuzzy
-#~ msgid "Spiral _Properties"
-#~ msgstr "Roghanna Dath"
+#~ msgid "About Sodipodi"
+#~ msgstr "Faoi Sodipodi"
 
-#, fuzzy
-#~ msgid "Document Preferences"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Extensions Editor"
-#~ msgstr "Scríos"
-
-#, fuzzy
-#~ msgid "Preferences"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Layer Editor"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Text Properties"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "In_kscape Preferences"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Select _Original Clone"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Tile"
-#~ msgstr "Comhad Nua"
-
-#, fuzzy
-#~ msgid "Select A_ll"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Select Non_e"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Zoom _In"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Zoom _Out"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Pre_vious"
-#~ msgstr "fuinneog1"
-
-#, fuzzy
-#~ msgid "Nex_t"
-#~ msgstr "Teacs"
-
-#, fuzzy
-#~ msgid "R_ename Layer..."
-#~ msgstr "Greamaigh"
-
-#, fuzzy
-#~ msgid "D_uplicate Layer"
-#~ msgstr "Radharc Nua"
-
-#, fuzzy
-#~ msgid "_Delete Layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Select Ne_xt Layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Select Pre_vious Layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Select To_p Layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Move to Ne_w Layer"
-#~ msgstr "Sábháil Comhad"
-
-#, fuzzy
-#~ msgid "Move to B_ottom Layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "_Remove Text from Path"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Corners"
-#~ msgstr "Radharc Nua"
-
-#, fuzzy
-#~ msgid "Join"
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid "Save"
-#~ msgstr "Sábháil\t"
-
-#, fuzzy
-#~ msgid "Save As..."
-#~ msgstr "Sábháil Comhad"
-
-#, fuzzy
-#~ msgid "Print..."
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid "Global Inkscape preferences (Shift+Ctrl+P)"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Undo"
-#~ msgstr "Leasú"
-
-#, fuzzy
-#~ msgid "Redo"
-#~ msgstr "Luach:"
-
-#, fuzzy
-#~ msgid "Cut"
-#~ msgstr "Gearr"
-
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "Cóip"
-
-#, fuzzy
-#~ msgid "Duplicate selected object(s) (Ctrl+D)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Clone selected object (Alt+D)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Zoom in (+)"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Zoom out (-)"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Fill and Stroke dialog (Shift+Ctrl+F)"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Group selected objects (Ctrl+G)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Raise selection up one step (PgUp)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Lower selection down one step (PgDn)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Raise selection to top (Home)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Lower selection to bottom (End)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Move selection to top layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Move selection to bottom layer"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Flip selection horizontally (H)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Flip selection vertically (V)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Align and Distribute dialog (Shift+Ctrl+A)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Convert selected object(s) to path(s) (Shift+Ctrl+C)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Convert selected stroke(s) to path(s) (Ctrl+Alt+C)"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Text and Font dialog (Shift+Ctrl+T)"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Node tool"
-#~ msgstr "Eagar Nód"
-
-#, fuzzy
-#~ msgid "Zoom tool"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Rectangle tool"
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid "Arc tool"
-#~ msgstr "Dath"
-
-#, fuzzy
-#~ msgid "Star tool"
-#~ msgstr "Dath"
-
-#, fuzzy
-#~ msgid "Spiral tool"
-#~ msgstr "Spéisialta"
-
-#, fuzzy
-#~ msgid "Delete segment between two nodes"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "_Scripts..."
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid "Align and Distribute Dialog"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Export Dialog"
-#~ msgstr "Spéisialta"
-
-#, fuzzy
-#~ msgid "Fill and Stroke Dialog"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Inkscape Preferences"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Inkscape Preferences Dialog"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Layer Editor Dialog"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Text Properties Dialog"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "Transformation Dialog"
-#~ msgstr "Roghanna Oaf"
-
-#, fuzzy
-#~ msgid "Tree Editor"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Column width:"
-#~ msgstr "Dath"
-
-#, fuzzy
-#~ msgid "Creating anchor at (%g,%g)"
-#~ msgstr "Scríobh teacs"
-
-#, fuzzy
-#~ msgid "EPS Output Settings"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "Inkscape"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Grid emphasis color"
-#~ msgstr "Dath"
-
-#, fuzzy
-#~ msgid "Background (also for export):"
-#~ msgstr "Dath"
-
-#, fuzzy
-#~ msgid "Fill:"
-#~ msgstr "Comhad Nua"
-
-#, fuzzy
-#~ msgid "Update Properties"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "executable"
-#~ msgstr "Priontáil"
-
-#, fuzzy
-#~ msgid "absolute"
-#~ msgstr "Greamaigh"
-
-#, fuzzy
-#~ msgid "SVG Files"
-#~ msgstr "Oscáil comhad"
-
-#, fuzzy
-#~ msgid "Layer Properties"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "Select <b>object(s)</b> to tile."
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Printable"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "Image URI:"
-#~ msgstr "Meid pictiúr"
-
-#, fuzzy
-#~ msgid "Trace: Selected object is not an image"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Coordinates:"
-#~ msgstr "Dath 1"
-
-#, fuzzy
-#~ msgid "typeset object"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Pattern Fill"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "_Menu"
-#~ msgstr "Oscáil"
-
-#, fuzzy
-#~ msgid "Rect"
-#~ msgstr "Tóg"
-
-#, fuzzy
-#~ msgid "Ru_lers"
-#~ msgstr "Comhad Nua"
-
-#, fuzzy
-#~ msgid "Mode:"
-#~ msgstr "Nód"
-
-#~ msgid "Value:"
-#~ msgstr "Luach:"
-
-#, fuzzy
-#~ msgid "Stroke settings"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
 #~ msgid "New View"
-#~ msgstr "Radharc Nua"
+#~ msgstr "Amharc Nua"
 
-#, fuzzy
-#~ msgid "Fill and stroke settings"
-#~ msgstr "Roghanna Dath"
+#~ msgid ""
+#~ "*.svg *.svgz|SVG files\n"
+#~ "*.xml|XML files\n"
+#~ "*|All files"
+#~ msgstr ""
+#~ "*.svg *.svgz|comhaid SVG\n"
+#~ "*.xml|comhaid XML\n"
+#~ "*|Gach comhaid"
 
-#, fuzzy
-#~ msgid "Text editing and font settings"
-#~ msgstr "Roghanna Dath"
+#~ msgid "Group Properties"
+#~ msgstr "Álbachtaí Grupa"
 
-#, fuzzy
-#~ msgid "Fill Rule"
-#~ msgstr "Comhad Nua"
+#~ msgid "Image URI:"
+#~ msgstr "URI Dealbh:"
 
-#, fuzzy
-#~ msgid "Tool has no options"
-#~ msgstr "Roghanna Oaf"
+#~ msgid "Text and font settings"
+#~ msgstr "Álbachtaí Teacs agus chófhoireann"
 
-#, fuzzy
-#~ msgid "Selected object has no curve, cannot outline."
-#~ msgstr "Tóg"
+#~ msgid "Exit"
+#~ msgstr "Eagar"
 
-#, fuzzy
-#~ msgid "Inkscape _Options"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Tool Optio_ns"
-#~ msgstr "Roghanna Oaf"
-
-#, fuzzy
-#~ msgid "gradientUnits"
-#~ msgstr "Priontáil comhad"
-
-#, fuzzy
-#~ msgid "nonzero"
-#~ msgstr "Tada"
-
-#, fuzzy
-#~ msgid "End color"
-#~ msgstr "Dath"
-
-#, fuzzy
-#~ msgid "Object Size and Position"
-#~ msgstr "Roghanna Oaf"
-
-#, fuzzy
-#~ msgid "Lower selected objects one position"
-#~ msgstr "Tóg"
+#~ msgid "In"
+#~ msgstr "Isteach"
 
 #~ msgid "1:1"
 #~ msgstr "1:1"
@@ -11477,49 +10352,11 @@ msgstr ""
 #~ msgid "2:1"
 #~ msgstr "2:1"
 
-#~ msgid "Sodipodi"
-#~ msgstr "Sodipodi"
+#~ msgid "Tool Options"
+#~ msgstr "Roghnachais Uirlís"
 
-#, fuzzy
-#~ msgid "Display settings"
-#~ msgstr "Roghanna Dath"
+#~ msgid "Alpha:"
+#~ msgstr "Alpha:"
 
-#, fuzzy
-#~ msgid "Document variant:"
-#~ msgstr "Roghanna Dath"
-
-#, fuzzy
-#~ msgid "About sodipodi"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "About Sodipodi"
-#~ msgstr "Sodipodi"
-
-#, fuzzy
-#~ msgid "Choose fill color"
-#~ msgstr "Dath 1"
-
-#~ msgid "1.0MB"
-#~ msgstr "1.0MB"
-
-#~ msgid "X0"
-#~ msgstr "X0"
-
-#~ msgid "Y0"
-#~ msgstr "Y0"
-
-#, fuzzy
-#~ msgid "Nope !"
-#~ msgstr "Tada"
-
-#~ msgid "Key"
-#~ msgstr "Eoachair"
-
-#, fuzzy
-#~ msgid "No"
-#~ msgstr "Nód"
-
-#, fuzzy
-#~ msgid "Pixels\n"
-#~ msgstr "pixelanna"
+#~ msgid "Value:"
+#~ msgstr "Luach:"
