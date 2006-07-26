@@ -1,0 +1,396 @@
+
+   Using Xen and Crucible for Automated Testing of Inkscape and Cairo
+   ------------------------------------------------------------------
+
+* title
+
+                         Using Xen and Crucible
+                         for Automated Testing
+                         of Inkscape and Cairo
+
+
+                               OSCON 2006
+
+          Bryce Harrington, Senior Performance Engineer, OSDL
+                 Kees Cook, Senior Network Admin, OSDL
+
+* Overview
+
+   Intersection of Technologies
+	- Crucible	http://crucible.sourceforge.net/
+	- Xen		http://www.cl.cam.ac.uk/Research/SRG/netos/xen/
+	- Inkscape	http://inkscape.org/
+	- Cario		http://cairographics.org/
+
+"Crucible is a framework for controlling bulk testing -- kind of like a 
+old-school batch processor.  Xen is used to create virtual machines 
+within the master operating system.  Crucible uses Xen to create 
+identical, isolated, test environments.  Inkscape is a vector graphic
+editor, with a large number of dependancies.  Cario is a 2D graphics 
+library.  Inkscape hopes to make Cario a dependancy in the future."
+
+
+* The Subject:  Inkscape, a GUI drawing application
+
+  - 76 developers with commit access
+
+  - Inkscapers love Inkscape
+
+  - Inkscapers also love to use Inkscape right out of SVN
+
+
+* The Problem:  Build breakage
+
+  - Developers are on different platforms (Linux, Win, OSX)
+
+  - Developers sometimes have different lib versions installed
+
+  - "But the change worked fine on my system..."
+
+
+* The Need:  Daily automated build testing
+
+  - Thrice-daily builds
+
+  - Need to be able to compile against multiple platforms, distros, lib
+    versions... 
+
+  - Unfortunately, only one machine is at our disposal
+
+
+* The Solution:  Use Xen to create a virtual testing lab
+
+  - Always start from a clean distro install
+
+  - System-Under-Test (SUT) is isolated, so no build-time security concerns
+  
+
+* What is Virtualization?
+  - Make many small systems from one big one (Xen, VMWare)
+	or
+  - Make a big system from many small ones (Beowulf, MOSIX)
+        or
+  - Many other variants
+
+
+* What is Crucible?
+  - Originated from the Samba Test Farm code
+  - Developed for the NFSv4 testing project
+  - Assembly of separate tools, organized into a framework
+  - Built in the "Unix Way"
+	- Small parts
+	- Clean interfaces
+	- Everything is a file
+
+
+* Crucible's capabilities
+  - Auto-pulls snapshots of:
+       codebases, patches, tests, etc.
+    from:
+       web, ftp, cvs, svn, git, etc.
+  - Coordinates multi-node testing:
+       client(s)/server, server/server, peer-to-peer, etc.
+  - Tests variety of things:
+       kernels, libs, apps, and services
+  - Powerful system-level control:
+       - Patches, builds, installs, boots the kernel
+       - Automatic or by-request reimaging 
+       - Console logging, archiving, and filtering
+       - Power cycling by-request and via watchdog timer
+  - Manages remote developer login
+  - Customizable with any scripting language
+  - 100% open-source: http://sf.net/projects/crucible/
+
+
+* Using Crucible
+  - The Crucible /testing NFS mount points
+  - Adding software to be downloaded
+  - Defining a test plan
+  - System-Under-Test
+  - Adding systems to run tests on
+  - The Run Profile file
+  - Adding custom test commands
+
+
+* The Crucible /testing NFS mount points
+  /testing/etc:      Config files
+  /testing/packages: Tarballs, patches, tests, tools...
+  /testing/plans:    Test plan definitions and commands
+  /testing/runs:     Test data, logs, reports
+  /testing/suts:     Test system config files and tools
+  /testing/usr:      Test harness tools
+
+
+* Adding software to be downloaded (from the Web)
+  - mkdir /testing/packages/cairo
+  - Append to /testing/etc/pkgfind.cnf:
+
+    PACKAGE:     cairo
+    URL:         http://cairographics.org/releases/
+    DEPTH:       0
+    WANTED:      ^cairo-.*\.tar\.gz$
+
+  - DEPTH is how far below URL to spider
+  - WANTED is a regexp for what href's to download
+  - NOTWANTED regexp also allowed
+
+
+* Adding software (from SourceForge)
+  - mkdir /testing/packages/inkscape
+  - Must handle SF's mirror system
+
+    PACKAGE:     inkscape
+    URL:         http://prdownloads.sourceforge.net/inkscape
+    DEPTH:       0
+    WANTED:      inkscape-.*\.tar\.gz$
+    MIRRORS:     superb-west,superb-east,umn,easynews,switch,surfnet,heanet
+    MIRROR_URL:  http://MIRROR.dl.sourceforge.net/sourceforge/inkscape/FILENAME
+
+* Adding software (from Git)
+  - mkdir /testing/packages/cairo
+  - Add a crontab script:
+
+    # Once a day at 6am, fetch any cairo changes
+    00 6 * * * git-pkgfind -r git://git.cairographics.org/git/cairo \
+                           -d /testing/packages/cairo/ \
+                           -c /var/cache/git \
+                           -s /testing/packages/QUEUE \
+                           >/dev/null
+
+  - Can also pull branches (-b flag)
+
+
+* Defining a test plan
+  - /testing/plans/cairo
+
+    wanted=cairo            # Want new pkgs in /testing/packages/cairo
+
+    tests=gentoo01:build    # Compile & make test on 3 distros
+    tests=debian04:build
+    tests=fedora02:build
+
+* A more sophisticated test plan
+  - /testing/plans/hotplug-cpu
+
+    wanted=linux
+
+    tests=ita01: create_patched_kernel, 
+                 build_kernel,
+                 boot_kernel, 
+                 verify_kernel,
+                 collect_system_info,
+                 install_packages,
+                 runtest_lhcs_regression,
+                 collect_system_info,
+                 finish
+
+    export ita01_packages="lhcs_regression"
+
+
+* Client/Server testing
+  - /testing/plans/inkscape
+
+    wanted=inkscape
+
+    tests=gentoo01: build, start_inkboard, wait_1_hour, finish
+    tests=gentoo02: build, wait_for_ready, run_inkboard_workload
+    tests=gentoo03: build, wait_for_ready, wait_10_min, run_inkboard_workload
+    tests=gentoo04: build, wait_for_ready, wait_20_min, run_inkboard_workload
+    tests=gentoo05: build, wait_for_ready, wait_30_min, run_inkboard_workload
+    tests=gentoo06: build, wait_for_ready, wait_40_min, run_inkboard_workload
+
+
+* System-Under-Test
+  - SUT:  A physical or virtual machine
+
+  - 'sut' tool allows control over the hardware:
+
+    usage:  /testing/usr/bin/sut <subcommand> [options] [args]
+
+    Available subcommands:
+       help
+       lock <sut-name>
+       unlock <sut-name>
+       power <sut-name> [cycle|on|off|status]
+       reimage <sut-name> [image-name]
+       mkimage <sut-name> [image-name]
+       lsimage [sut-name]
+       lnimage <sut-name> <image-name>
+       conlog <sut-name> [begin-time] [end-time]
+       status
+
+
+* Example:  sut status
+    SUT               RUN       STATE     PKG
+    amd01             1073      finished  cairo-1.4.0.tar
+    ita01             1076      finished  cairo-1.4.0.tar
+    gentoo01          1100      running   inkscape-0.44.1
+    gentoo02          1100      running   inkscape-0.44.1
+    gentoo03          1100      running   inkscape-0.44.1
+    gentoo04          1100      running   inkscape-0.44.1
+    gentoo05          1100      running   inkscape-0.44.1
+    gentoo06          1100      running   inkscape-0.44.1
+
+
+* Test runs
+
+   - Automatically queued by pkgfind
+
+   - Manual queue:
+     $ queue_package inkscape/inkscape-0.44.1.tgz
+
+   - Test run script
+     $ testrun requeue 1110
+
+* Testrun script
+
+    usage:  /testing/usr/bin/testrun <subcommand> [options] [args]
+
+    Available subcommands:
+       help
+       status <run-id>
+       cancel <run-id>
+       info <run-id>
+       delete <run-id>
+       requeue <run-id>
+       restart <run-id>
+       summary
+
+* Example:  testrun status
+
+  RUN PLAN               STATE        SUTS         TIME(m)  PACKAGE
+ 1089 nfsv4_xeon64       finished     nfs13,nfs12  151      linux-2.6.17-gae9dce8-nfs-server-stable
+ 1090 cairo              finished     nfs09,nfs08,nfs11 2        cairo-1.2.0.tar.gz
+ 1091 nfsv3              finished     nfs07,nfs06  97       linux-2.6.18-rc1-g0468fb5-server-cluster-locking-api
+ 1092 nfsv4              finished     nfs03,nfs02  330      linux-2.6.18-rc1-g0468fb5-server-cluster-locking-api
+ 1093 nfsv4_xeon64       finished     nfs13,nfs12  146      linux-2.6.18-rc1-g0468fb5-server-cluster-locking-api
+ 1094 netem_test         finished     nfs05,nfs04  33       linux-2.6.17-rc1-CITI_NFS4_ALL-1
+ 1095 nfsv3              finished     nfs07,nfs06  98       linux-2.6.18-rc1-CITI_NFS4_ALL-1
+ 1096 nfsv4              finished     nfs03,nfs02  369      linux-2.6.18-rc1-CITI_NFS4_ALL-1
+ 1097 nfsv4_xeon64       finished     nfs13,nfs12  732      linux-2.6.18-rc1-CITI_NFS4_ALL-1
+ 1098 nfsv3              finished     nfs07,nfs06  97       linux-2.6.18-rc1-g3efad9f-nfs-client-stable
+ 1099 nfsv4              finished     nfs03,nfs02  387      linux-2.6.18-rc1-g3efad9f-nfs-client-stable
+ 1100 nfsv4_xeon64       finished     nfs13,nfs12  216      linux-2.6.18-rc1-g3efad9f-nfs-client-stable
+ 1101 netem_test         finished     nfs05,nfs04  46       linux-2.6.17-rc1-CITI_NFS4_ALL-1
+ 1102 netem_test         finished     nfs05,nfs04  45       linux-2.6.17-rc1-CITI_NFS4_ALL-1
+ 1103 nfsv3              finished     nfs07,nfs06  98       linux-2.6.18-rc1-g3efad9f-nfs-client-stable
+ 1104 nfsv4              finished     nfs03,nfs02  411      linux-2.6.18-rc1-g3efad9f-nfs-client-stable
+ 1105 nfsv4_xeon64       finished     nfs13,nfs12  248      linux-2.6.18-rc1-g3efad9f-nfs-client-stable
+ 1107 netem_test         finished     nfs05,nfs04  0        linux-2.6.17-rc1-CITI_NFS4_ALL-1
+ 1108 netem_test         finished     nfs05,nfs04  0        linux-2.6.17-rc1-CITI_NFS4_ALL-1
+ 1109 netem_test         finished     nfs05,nfs04  45       linux-2.6.17-rc1-CITI_NFS4_ALL-1
+
+   
+* Adding systems to run tests on
+
+  - 0. Install the O/S on the new sut, and install wanted software
+
+  - 1. Create SystemImager or Xen image, if needed/desired
+
+  - 2. Establish NFS mount points on the new sut:
+
+       # /etc/fstab
+       crucible:/testing/packages /testing/packages       nfs     defaults,soft,bg,intr   0       0
+       crucible:/testing/plans    /testing/plans  nfs     defaults,soft,bg,intr   0       0
+       crucible:/testing/runs     /testing/runs   nfs     defaults,soft,bg,intr   0       0
+       crucible:/testing/suts     /testing/suts   nfs     defaults,soft,bg,intr   0       0
+       crucible:/testing/usr      /testing/usr    nfs     defaults,soft,bg,intr   0       0
+       crucible:/testing/etc      /testing/etc    nfs     defaults,soft,bg,intr   0       0
+
+  - 3. Start the sut_dispatcher pseudo-service on the new sut:
+
+       * * * * * pgrep sut_dispatcher>/dev/null \
+              || /testing/usr/bin/sut_dispatcher \
+              >>/testing/suts/`hostname --short`/log/crontab.sut_dispatcher 2>&1
+
+  - 4. Setup new sut dir in /testing/suts/$sutname/
+
+    /testing/suts/slack01/
+                        ./RUN_ID           # Current testrun ID stored here
+                        ./watchdog_timer   # Minutes between pings (e.g. '4')
+                        ./bin/power        # Wrapper to power control tool(s)
+                        ./log/             # Various logs will go here
+
+
+* Adding custom test commands
+  - Allows extending harness to do new kinds of things
+  - Any scripting language permitted; bash typically used
+
+
+* Implementing Xen in Crucible
+
+                               Kees Cook
+
+
+* Types of SUTs
+  - Physical SUT:
+    - Controlled via NFS (or SSH), remote power control (IPMI)
+    - Need to rebuild it to get a clean distro install
+    - Need hardware to run the OS
+
+  - Virtual SUT:
+    - Controlled via virtualization tools, including "power" control
+    - Can be "instantly" created using LVM, or whole-partition copying
+    - Just need enough CPU and memory in the host OS to launch a new SUT
+
+
+* Design considerations
+  - Expect CPUs to be non-idle, so over-subscription okay
+  - Design for 1-2 Xen clients per physical CPU
+
+* Setup Procedure
+  - Install Xen using prebuilt host/client pair from Xen website
+  - To add distro images:
+    - get your new partition created (LVM is easiest for this)
+    - format and mount it
+    - perform a "bootstrap" for your distro onto the new filesystem
+  - Add record to /testing/suts/$sutname
+
+* Troubleshooting in Xen
+  - Boot to the distro image from a Xen client
+  - Using Crucible, mark SUT offline
+  - Use SUT/bin scripts to create image and power it on
+  - Log in normally using "xm console SUT" command
+
+* NFS mounts and Xen
+  - Needed to be able to do NFS mount from the Crucible Driver
+    (Xen client to Xen host)
+  - Tried to make Xen host be a router ("routed" network config)
+  - Didn't seem to work
+  - Changed to default "bridged" connection
+  - Used firewall to block access to virtual hosts
+
+
+* How the testing has been working so far
+  - Reports sent to inkscape-testing mailing list daily
+  - When issues found, they're forwarded to devs and fixed quickly
+  - Breakages rarely last longer than a day
+  - Frequently finds issues from mis-merged patches (e.g. translations),
+  - Catches inadvertant dependency version mistakes
+  - Unit tests added, but rarely find issues
+  - Minimal maintenance required (power outages, SCM changes, etc.)
+
+* Current and future plans
+  - Cairo testing
+  - Performance testing
+  - X3C SVG testsuite
+  - Upgrade hardware so can support more distros
+  - Document conversion checking
+  - Document rendering regression checks
+  - GUI testing (Dogtail?)
+
+* Other cool stuff you could do with Xen and Crucible...
+  - Network testing
+  - Stress/robustness testing
+  - General job management
+  - Kernel testing
+    - Pausing a Xen instance during a failure mode, for developer to
+      review at their leisure
+
+* Summary
+  - Crucible enables bulk testing
+  - Xen allows creating identical, isolated test environments
+  - Using Xen and Crucible together provides a very powerful testing
+    functionality 
+
+* Questions
