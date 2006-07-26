@@ -3,7 +3,9 @@
 # This is a script to render a plain text outline file into SVG.
 # 
 # Copyright (C) 2006 Bryce Harrington.  Available for use under the GPL.
-
+#
+# Usage:  outline2svg.pl <presentation.outline> [ --master=template.svg ]
+#
 use strict;
 use Getopt::Long;
 use Pod::Usage;
