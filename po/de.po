@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-26 20:45+0200\n"
-"PO-Revision-Date: 2006-07-05 21:43+0200\n"
+"PO-Revision-Date: 2006-07-26 23:13+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -556,7 +556,7 @@ msgstr "Farbe"
 
 #: ../src/dialogs/clonetiler.cpp:2211
 msgid "Pick the visible color and opacity"
-msgstr "Sichtbare Farbe und Deckkraft aufnehmen"
+msgstr "Sichtbare Farbe und Deckkraft übernehmen"
 
 #: ../src/dialogs/clonetiler.cpp:2218 ../src/dialogs/clonetiler.cpp:2367
 #: ../share/extensions/svg_dropshadow.inx.h:3
@@ -581,7 +581,7 @@ msgstr "G"
 
 #: ../src/dialogs/clonetiler.cpp:2235
 msgid "Pick the Green component of the color"
-msgstr "Grünanteil des Farbwertes wählen"
+msgstr "Grünanteil der Farbe übernehmen"
 
 #: ../src/dialogs/clonetiler.cpp:2242
 msgid "B"
@@ -589,7 +589,7 @@ msgstr "B"
 
 #: ../src/dialogs/clonetiler.cpp:2243
 msgid "Pick the Blue component of the color"
-msgstr "Blauanteil des Farbwertes wählen"
+msgstr "Blauanteil der Farbe übernehmen"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -599,7 +599,7 @@ msgstr "H"
 
 #: ../src/dialogs/clonetiler.cpp:2253
 msgid "Pick the hue of the color"
-msgstr "Farbton des Farbwertes wählen"
+msgstr "Farbton des Farbwertes übernehmen"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -609,7 +609,7 @@ msgstr "S"
 
 #: ../src/dialogs/clonetiler.cpp:2263
 msgid "Pick the saturation of the color"
-msgstr "Sättigung des Farbwertes auswählen"
+msgstr "Sättigung des Farbwertes übernehmen"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -619,11 +619,11 @@ msgstr "L"
 
 #: ../src/dialogs/clonetiler.cpp:2273
 msgid "Pick the lightness of the color"
-msgstr "Helligkeit des Farbwertes auswählen"
+msgstr "Helligkeit des Farbwertes übernehmen"
 
 #: ../src/dialogs/clonetiler.cpp:2283
 msgid "2. Tweak the picked value:"
-msgstr "2. übernommenen Wert feinjustieren:"
+msgstr "2. Übernommenen Wert feinjustieren:"
 
 #: ../src/dialogs/clonetiler.cpp:2293
 msgid "Gamma-correct:"
@@ -631,9 +631,7 @@ msgstr "Gammakorrektur:"
 
 #: ../src/dialogs/clonetiler.cpp:2298
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
-msgstr ""
-"Mittenbereich des gewählten Wertes verschieben; nach oben (>0) oder unten "
-"(<0)"
+msgstr "Mittenbereich des übernommenen Wertes verschieben; nach oben (>0) oder unten (<0)"
 
 #: ../src/dialogs/clonetiler.cpp:2305
 msgid "Randomize:"
@@ -641,7 +639,7 @@ msgstr "Zufallsänderung:"
 
 #: ../src/dialogs/clonetiler.cpp:2310
 msgid "Randomize the picked value by this percentage"
-msgstr "Gewählten Wert um diesen Prozentsatz zufällig verändern"
+msgstr "Übernommenen Wert um diesen Prozentsatz zufällig verändern"
 
 #: ../src/dialogs/clonetiler.cpp:2317
 msgid "Invert:"
@@ -649,7 +647,7 @@ msgstr "Invertieren:"
 
 #: ../src/dialogs/clonetiler.cpp:2321
 msgid "Invert the picked value"
-msgstr "Gewählten Wert invertieren"
+msgstr "Übernommenen Wert invertieren"
 
 #: ../src/dialogs/clonetiler.cpp:2327
 msgid "3. Apply the value to the clones':"
@@ -680,9 +678,7 @@ msgstr ""
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
-msgstr ""
-"Jeder Klon wird in der gewählten Farbe gezeichnet (Füllung oder Kontur des "
-"Originals dürfen nicht gesetzt sein)"
+msgstr "Jeder Klon wird in der übernommenen Farbe gezeichnet (Füllung oder Kontur des Originals dürfen nicht gesetzt sein)"
 
 #: ../src/dialogs/clonetiler.cpp:2370
 msgid "Each clone's opacity is determined by the picked value in that point"
@@ -2562,9 +2558,8 @@ msgid "Select file to import"
 msgstr "Wählen Sie die zu importierende Datei"
 
 #: ../src/file.cpp:972
-#, fuzzy
 msgid "Select file to export to"
-msgstr "Wählen Sie die zu importierende Datei"
+msgstr "Wählen Sie die Datei, in die exportiert werden soll"
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -3344,7 +3339,6 @@ msgid "_Text"
 msgstr "_Text"
 
 #: ../src/menus-skeleton.h:225
-#, fuzzy
 msgid "Effe_cts"
 msgstr "E_ffekte"
 
@@ -3385,26 +3379,23 @@ msgstr ""
 #. drag curve
 #: ../src/node-context.cpp:628
 msgid "Drag curve"
-msgstr ""
+msgstr "Kurve ziehen"
 
 #: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
 msgid "Stamp"
 msgstr "Stempeln"
 
 #: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
-#, fuzzy
 msgid "Move nodes vertically"
-msgstr "Ausgewählte Knoten vertikal ausrichten"
+msgstr "Knoten vertikal verschieben"
 
 #: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
-#, fuzzy
 msgid "Move nodes horizontally"
-msgstr "Ausgewählte Knoten horizontal ausrichten"
+msgstr "Knoten horizontal verschieben"
 
 #: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
-#, fuzzy
 msgid "Move nodes"
-msgstr "Knoten absenken"
+msgstr "Knoten verschieben"
 
 #: ../src/nodepath.cpp:1259
 msgid ""
@@ -3416,30 +3407,25 @@ msgstr ""
 "<b>Umschalt</b> rotiert beide Anfasser symmetrisch"
 
 #: ../src/nodepath.cpp:1430
-#, fuzzy
 msgid "Align nodes"
-msgstr "An Oberkanten ausrichten"
+msgstr "Knoten ausrichten"
 
 # CHECK
 #: ../src/nodepath.cpp:1492
-#, fuzzy
 msgid "Distribute nodes"
-msgstr "Abstände ausgleichen"
+msgstr "Knoten ausgleichen"
 
 #: ../src/nodepath.cpp:1531
-#, fuzzy
 msgid "Add nodes"
-msgstr "Knoten hinzufügen"
+msgstr "Mehrere Knoten hinzufügen"
 
 #: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
-#, fuzzy
 msgid "Add node"
 msgstr "Knoten hinzufügen"
 
 #: ../src/nodepath.cpp:1668
-#, fuzzy
 msgid "Break path"
-msgstr "_Zerlegen"
+msgstr "Pfad zerlegen"
 
 #: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
 #: ../src/nodepath.cpp:1821
@@ -3448,32 +3434,28 @@ msgstr ""
 "Zum Verbinden der Pfade müssen <b>zwei Endpunkte</b> (Knoten) angewählt sein."
 
 #: ../src/nodepath.cpp:1743
-#, fuzzy
 msgid "Close subpath"
-msgstr "Geschlossener Pfad."
+msgstr "Unterpfad schliessen"
 
 #: ../src/nodepath.cpp:1795
-#, fuzzy
 msgid "Join nodes"
-msgstr "Endknoten"
+msgstr "Knoten verbinden"
 
 #: ../src/nodepath.cpp:1842
 msgid "Close subpath by segment"
-msgstr ""
+msgstr "Unterpfad mit einem Segment schliessen"
 
 #: ../src/nodepath.cpp:1896
-#, fuzzy
 msgid "Join nodes by segment"
-msgstr "Gewählte Endknoten durch ein neues Segment verbinden"
+msgstr "Knoten durch Segment verbinden"
 
 #: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
-#, fuzzy
 msgid "Delete nodes"
 msgstr "Knoten löschen"
 
 #: ../src/nodepath.cpp:2020
 msgid "Delete nodes preserving shape"
-msgstr ""
+msgstr "Knoten löschen, Form beibehalten"
 
 #: ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2093
 msgid ""
@@ -3488,27 +3470,24 @@ msgid "Cannot find path between nodes."
 msgstr "Kein Pfad zwischen den Knoten."
 
 #: ../src/nodepath.cpp:2218
-#, fuzzy
 msgid "Delete segment"
-msgstr "Auswahl löschen"
+msgstr "Segment löschen"
 
 #: ../src/nodepath.cpp:2240
 msgid "Change segment type"
-msgstr ""
+msgstr "Segmenttyp ändern"
 
 #: ../src/nodepath.cpp:2256 ../src/nodepath.cpp:2946
 msgid "Change node type"
-msgstr ""
+msgstr "Knotentyp ändern"
 
 #: ../src/nodepath.cpp:3214
-#, fuzzy
 msgid "Retract handle"
-msgstr "Rechteck"
+msgstr "Anfasser zurückziehen"
 
 #: ../src/nodepath.cpp:3262
-#, fuzzy
 msgid "Move node handle"
-msgstr "Knotenanfasser zufällig anordnen"
+msgstr "Knotenanfasser verschieben"
 
 #: ../src/nodepath.cpp:3402
 #, c-format
@@ -3522,19 +3501,16 @@ msgstr ""
 "rotiert beide Anfasser"
 
 #: ../src/nodepath.cpp:3580
-#, fuzzy
 msgid "Rotate nodes"
-msgstr "Knoten anheben"
+msgstr "Knoten rotieren"
 
 #: ../src/nodepath.cpp:3705
-#, fuzzy
 msgid "Scale nodes"
-msgstr "Knoten anheben"
+msgstr "Knoten skalieren"
 
 #: ../src/nodepath.cpp:3752
-#, fuzzy
 msgid "Flip nodes"
-msgstr "Linien"
+msgstr "Knoten umkehren"
 
 #: ../src/nodepath.cpp:3917
 msgid ""
@@ -3774,18 +3750,16 @@ msgstr ""
 "verbunden werden."
 
 #: ../src/path-chemistry.cpp:139
-#, fuzzy
 msgid "Combine"
-msgstr "Kombiniert"
+msgstr "Kombinieren"
 
 #: ../src/path-chemistry.cpp:154
 msgid "Select <b>path(s)</b> to break apart."
 msgstr "<b>Pfad</b>muss zum Zerlegen ausgewählt sein."
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break Apart"
-msgstr "_Zerlegen"
+msgstr "Zerlegen"
 
 #: ../src/path-chemistry.cpp:235
 msgid "<b>No path(s)</b> to break apart in the selection."
@@ -3796,9 +3770,8 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "<b>Objekte</b> auswählen, die in einen Pfad umgewandelt werden sollen."
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to Path"
-msgstr "_Objekt in Pfad umwandeln"
+msgstr "Objekt in Pfad umwandeln"
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
@@ -3928,9 +3901,8 @@ msgstr ""
 "Höhen/Breitenverhältnis; <b>Umschalt</b> - Rechteck vom Zentrum aus zeichnen"
 
 #: ../src/rect-context.cpp:490
-#, fuzzy
 msgid "Create rectangle"
-msgstr "Rechtecke durchsuchen"
+msgstr "Rechteck erzeugen"
 
 # !!!
 #: ../src/select-context.cpp:226
@@ -3964,18 +3936,16 @@ msgid "Selected object is not a group. Cannot enter."
 msgstr "Ausgewähltes Objekt ist keine Gruppe - kann diese nicht betreten."
 
 #: ../src/selection-chemistry.cpp:218
-#, fuzzy
 msgid "Delete text"
-msgstr "Knoten löschen"
+msgstr "Text löschen"
 
 #: ../src/selection-chemistry.cpp:226
 msgid "<b>Nothing</b> was deleted."
 msgstr "Es wurde <b>nichts</b> gelöscht."
 
 #: ../src/selection-chemistry.cpp:244
-#, fuzzy
 msgid "Delete"
-msgstr "_Löschen"
+msgstr "Löschen"
 
 #: ../src/selection-chemistry.cpp:258
 msgid "Select <b>object(s)</b> to duplicate."
@@ -3987,9 +3957,8 @@ msgid "Duplicate"
 msgstr "Duplizieren"
 
 #: ../src/selection-chemistry.cpp:308
-#, fuzzy
 msgid "Delete all"
-msgstr "_Löschen"
+msgstr "Alles löschen"
 
 #: ../src/selection-chemistry.cpp:431
 msgid "Select <b>two or more objects</b> to group."
@@ -4013,9 +3982,8 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "<b>Keine Gruppe</b> zum Aufheben in dieser Auswahl."
 
 #: ../src/selection-chemistry.cpp:572
-#, fuzzy
 msgid "Ungroup"
-msgstr "Grupp_ierung aufheben"
+msgstr "Gruppierung aufheben"
 
 #: ../src/selection-chemistry.cpp:636
 msgid "Select <b>object(s)</b> to raise."
@@ -4030,9 +3998,8 @@ msgstr ""
 "angehoben oder abgesenkt werden."
 
 #: ../src/selection-chemistry.cpp:674
-#, fuzzy
 msgid "Raise"
-msgstr "_Anheben"
+msgstr "Anheben"
 
 #: ../src/selection-chemistry.cpp:687
 msgid "Select <b>object(s)</b> to raise to top."
@@ -4040,18 +4007,16 @@ msgstr ""
 "<b>Objekt(e)</b> auswählen, die in den Vordergrund angehoben werden sollen."
 
 #: ../src/selection-chemistry.cpp:710
-#, fuzzy
 msgid "Raise to top"
-msgstr "Nach ganz o_ben anheben"
+msgstr "Nach ganz oben anheben"
 
 #: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr "<b>Objekt(e)</b> zum Absenken auswählen."
 
 #: ../src/selection-chemistry.cpp:767
-#, fuzzy
 msgid "Lower"
-msgstr "Ab_senken"
+msgstr "Absenken"
 
 #: ../src/selection-chemistry.cpp:781
 msgid "Select <b>object(s)</b> to lower to bottom."
@@ -4060,9 +4025,8 @@ msgstr ""
 "sollen."
 
 #: ../src/selection-chemistry.cpp:816
-#, fuzzy
 msgid "Lower to bottom"
-msgstr "Nach ganz u_nten absenken"
+msgstr "Nach ganz unten absenken"
 
 # !!! just make the menu item insensitive
 #: ../src/selection-chemistry.cpp:823
@@ -4084,30 +4048,26 @@ msgid "Nothing on the clipboard."
 msgstr "Es ist nichts in der Zwischenablage."
 
 #: ../src/selection-chemistry.cpp:1125
-#, fuzzy
 msgid "Paste"
-msgstr "E_infügen"
+msgstr "Einfügen"
 
 #: ../src/selection-chemistry.cpp:1143
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Objekt(e) auswählen, um Stil darauf anzuwenden."
 
 #: ../src/selection-chemistry.cpp:1152
-#, fuzzy
 msgid "Paste style"
-msgstr "Stil an_wenden"
+msgstr "Stil anwenden"
 
 #: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "<b>Objekt(e)</b> auswählen, um Größe einzufügen."
 
 #: ../src/selection-chemistry.cpp:1188
-#, fuzzy
 msgid "Paste size"
-msgstr "_Größe einfügen"
+msgstr "Größe einfügen"
 
 #: ../src/selection-chemistry.cpp:1229
-#, fuzzy
 msgid "Paste size separately"
 msgstr "Größe getrennt einfügen"
 
@@ -4118,9 +4078,8 @@ msgstr ""
 "werden sollen."
 
 #: ../src/selection-chemistry.cpp:1265
-#, fuzzy
 msgid "Raise to next layer"
-msgstr "Auf nächste Ebene verschoben."
+msgstr "Auf nächste Ebene anheben"
 
 #: ../src/selection-chemistry.cpp:1271
 msgid "No more layers above."
@@ -4133,28 +4092,24 @@ msgstr ""
 "sollen."
 
 #: ../src/selection-chemistry.cpp:1310
-#, fuzzy
 msgid "Lower to previous layer"
-msgstr "Zur vorherigen Ebene verschoben"
+msgstr "Zur nächsten Ebene absenken"
 
 #: ../src/selection-chemistry.cpp:1316
 msgid "No more layers below."
 msgstr "Keine weiteren Ebenen unter dieser."
 
 #: ../src/selection-chemistry.cpp:1458
-#, fuzzy
 msgid "Remove transform"
-msgstr "Transformationen _zurücksetzen"
+msgstr "Transformationen zurücksetzen"
 
 #: ../src/selection-chemistry.cpp:1567
-#, fuzzy
 msgid "Rotate 90&#176; CW"
-msgstr "Um 90&#176; im Uhr_zeigersinn rotieren"
+msgstr "Um 90&#176; im Uhrzeigersinn rotieren"
 
 #: ../src/selection-chemistry.cpp:1595
-#, fuzzy
 msgid "Rotate 90&#176; CCW"
-msgstr "Um 90&#176; entgegen Uhrzeigersinn _rotieren"
+msgstr "Um 90&#176; entgegen Uhrzeigersinn rotieren"
 
 #: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
 msgid "Rotate"
@@ -4162,7 +4117,7 @@ msgstr "Drehen"
 
 #: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
-msgstr ""
+msgstr "Um Pixel rotieren"
 
 #: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
 msgid "Scale"
@@ -4170,16 +4125,15 @@ msgstr "Skalieren"
 
 #: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
-msgstr ""
+msgstr "Um einen ganzzahligen Faktor skalieren"
 
 #: ../src/selection-chemistry.cpp:1703
 msgid "Move vertically"
-msgstr ""
+msgstr "Vertikal verschieben"
 
 #: ../src/selection-chemistry.cpp:1706
-#, fuzzy
 msgid "Move horizontally"
-msgstr "_Horizontal"
+msgstr "Horizontal verschieben"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:347
@@ -4188,11 +4142,11 @@ msgstr "Verschieben"
 
 #: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
-msgstr ""
+msgstr "Vertikal um einzelne Pixel verschieben"
 
 #: ../src/selection-chemistry.cpp:1734
 msgid "Nudge horizontally by pixels"
-msgstr ""
+msgstr "Horizontal um einzelne Pixel verschieben"
 
 #: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 msgid "Clone"
@@ -4208,9 +4162,8 @@ msgstr ""
 "<b>Keine Klone</b> in der Auswahl, deren Verknüpfung aufgehoben werden kann."
 
 #: ../src/selection-chemistry.cpp:2050
-#, fuzzy
 msgid "Unlink clone"
-msgstr "Klonverbindung auf_trennen"
+msgstr "Klonverbindung auftrennen"
 
 #: ../src/selection-chemistry.cpp:2064
 msgid ""
@@ -4245,9 +4198,8 @@ msgstr ""
 "<b>Objekt(e)</b> auswählen, die in ein Füllmuster umgewandelt werden sollen."
 
 #: ../src/selection-chemistry.cpp:2196
-#, fuzzy
 msgid "Objects to pattern"
-msgstr "_Objekte in Füllmuster umwandeln"
+msgstr "Objekte in Füllmuster umwandeln"
 
 #: ../src/selection-chemistry.cpp:2212
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
@@ -4259,18 +4211,16 @@ msgid "<b>No pattern fills</b> in the selection."
 msgstr "Die Auswahl enthält <b>keine Musterfüllung</b>."
 
 #: ../src/selection-chemistry.cpp:2268
-#, fuzzy
 msgid "Pattern to objects"
-msgstr "Füllmuster in Ob_jekte umwandeln"
+msgstr "Füllmuster in Objekte umwandeln"
 
 #: ../src/selection-chemistry.cpp:2286
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "<b>Objekt(e) auswählen</b>, um eine Bitmap-Kopie zu erstellen."
 
 #: ../src/selection-chemistry.cpp:2418
-#, fuzzy
 msgid "Create bitmap"
-msgstr "Spiralen erstellen"
+msgstr "Bitmap erstellen"
 
 #: ../src/selection-chemistry.cpp:2450
 msgid "Select <b>object(s)</b> to create clippath or mask from."
@@ -4285,14 +4235,12 @@ msgstr ""
 "Maskierung darauf anzuwenden."
 
 #: ../src/selection-chemistry.cpp:2544
-#, fuzzy
 msgid "Set clipping path"
-msgstr "Geschlossener Pfad."
+msgstr "Ausschneidepfad setzen"
 
 #: ../src/selection-chemistry.cpp:2546
-#, fuzzy
 msgid "Set mask"
-msgstr "Sterne"
+msgstr "Maskierung setzen"
 
 #: ../src/selection-chemistry.cpp:2559
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
@@ -4301,19 +4249,16 @@ msgstr ""
 "entfernen"
 
 #: ../src/selection-chemistry.cpp:2627
-#, fuzzy
 msgid "Release clipping path"
-msgstr "Ausschneidepfad von Auswahl entfernen"
+msgstr "Ausschneidepfad entfernen"
 
 #: ../src/selection-chemistry.cpp:2629
-#, fuzzy
 msgid "Release mask"
-msgstr "_Entfernen"
+msgstr "Maskierung entfernen"
 
 #: ../src/selection-chemistry.cpp:2673
-#, fuzzy
 msgid "Fit page to selection"
-msgstr "Seite in Auswahl ein_passen"
+msgstr "Seite in Auswahl einpassen"
 
 # !!! verb or noun?
 #: ../src/selection-describer.cpp:41
@@ -4798,34 +4743,28 @@ msgstr ""
 "<b>Spirale</b>: Radius %s, Winkel %5g&#176;; Winkel mit <b>Strg</b> einrasten"
 
 #: ../src/splivarot.cpp:66
-#, fuzzy
 msgid "Union"
-msgstr "_Vereinigung"
+msgstr "Vereinigung"
 
 #: ../src/splivarot.cpp:72
-#, fuzzy
 msgid "Intersection"
-msgstr "_Überschneidung"
+msgstr "Überschneidung"
 
 #: ../src/splivarot.cpp:78
-#, fuzzy
 msgid "Difference"
-msgstr "_Differenz"
+msgstr "Differenz"
 
 #: ../src/splivarot.cpp:84
-#, fuzzy
 msgid "Exclusion"
-msgstr "E_xklusiv-Oder (Ausschluss)"
+msgstr "Exklusiv-Oder (Ausschluss)"
 
 #: ../src/splivarot.cpp:89
-#, fuzzy
 msgid "Division"
-msgstr "Divi_sion"
+msgstr "Division"
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut Path"
-msgstr "Pfad _zerschneiden"
+msgstr "Pfad zerschneiden"
 
 #: ../src/splivarot.cpp:110
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -4886,9 +4825,8 @@ msgid "Select <b>path(s)</b> to simplify."
 msgstr "<b>Pfad</b> zum Vereinfachen auswählen."
 
 #: ../src/splivarot.cpp:1534
-#, fuzzy
 msgid "Simplify"
-msgstr "Ver_einfachen"
+msgstr "Vereinfachen"
 
 #: ../src/splivarot.cpp:1536
 msgid "<b>No paths</b> to simplify in the selection."
@@ -5847,38 +5785,32 @@ msgid "Source bottom bound"
 msgstr ""
 
 #: ../src/ui/dialog/filedialog.cpp:1872
-#, fuzzy
 msgid "Source width"
-msgstr "Breite der Konturlinie"
+msgstr "Quellenbreite"
 
 #: ../src/ui/dialog/filedialog.cpp:1873
-#, fuzzy
 msgid "Source height"
-msgstr "Gleiche Höhe"
+msgstr "Quellenhöhe"
 
 #: ../src/ui/dialog/filedialog.cpp:1874
-#, fuzzy
 msgid "Destination width"
-msgstr "Druckziel"
+msgstr "Zielbreite"
 
 #: ../src/ui/dialog/filedialog.cpp:1875
-#, fuzzy
 msgid "Destination height"
-msgstr "Druckziel"
+msgstr "Zielhöhe"
 
 #: ../src/ui/dialog/filedialog.cpp:1876
-#, fuzzy
 msgid "Dots per inch resolution"
-msgstr "Bevorzugte Auflösung für das Exportieren:"
+msgstr "Auflösung in Punkten pro Zoll"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialog.cpp:1907
-#, fuzzy
 msgid "Document"
-msgstr "Dokument wurde gespeichert."
+msgstr "Dokument"
 
 #: ../src/ui/dialog/filedialog.cpp:1919 ../src/ui/widget/page-sizer.cpp:167
 msgid "Custom"
@@ -5886,21 +5818,19 @@ msgstr "Benutzerdefiniert"
 
 #: ../src/ui/dialog/filedialog.cpp:1959
 msgid "Cairo"
-msgstr ""
+msgstr "Cairo"
 
 #: ../src/ui/dialog/filedialog.cpp:1962
 msgid "Antialias"
-msgstr ""
+msgstr "Antialias"
 
 #: ../src/ui/dialog/filedialog.cpp:1965
-#, fuzzy
 msgid "Background"
-msgstr "_Hintergrund:"
+msgstr "Hintergrund"
 
 #: ../src/ui/dialog/filedialog.cpp:1988
-#, fuzzy
 msgid "Destination"
-msgstr "Druckziel"
+msgstr "Ziel"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -6854,9 +6784,8 @@ msgstr "Sitzungsdatei öffnen"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:348
-#, fuzzy
 msgid "SIOX foreground selection"
-msgstr "Auswahl des Vordergrunds mittels SIOX (experimentell)"
+msgstr "Auswahl des Vordergrunds mittels SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "Cover the area you want to select as the foreground"
@@ -6949,13 +6878,12 @@ msgstr "Nachzeichnen auf angegebene Anzahl von Farben beschränken"
 
 #. TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
 #: ../src/ui/dialog/tracedialog.cpp:468
-#, fuzzy
 msgid "Remove background"
-msgstr "_Hintergrund:"
+msgstr "Hintergrund entfernen"
 
 #: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Remove bottom (background) layer when done"
-msgstr ""
+msgstr "Unterste Ebene (Hintergrund) nach Fertigstellung entfernen"
 
 #. ---Hbox3
 #: ../src/ui/dialog/tracedialog.cpp:476
@@ -7840,14 +7768,12 @@ msgid "Raised layer <b>%s</b>."
 msgstr "Ebene <b>%s</b> angehoben."
 
 #: ../src/verbs.cpp:1154
-#, fuzzy
 msgid "Layer to Top"
-msgstr "Ebene nach ganz _oben"
+msgstr "Ebene nach ganz oben"
 
 #: ../src/verbs.cpp:1158
-#, fuzzy
 msgid "Raise Layer"
-msgstr "Ebene an_heben"
+msgstr "Ebene anheben"
 
 #: ../src/verbs.cpp:1161 ../src/verbs.cpp:1165
 #, c-format
@@ -7855,23 +7781,20 @@ msgid "Lowered layer <b>%s</b>."
 msgstr "Ebene <b>%s</b> abgesenkt."
 
 #: ../src/verbs.cpp:1162
-#, fuzzy
 msgid "Layer to Bottom"
-msgstr "Ebene nach ganz _unten"
+msgstr "Ebene nach ganz unten"
 
 #: ../src/verbs.cpp:1166
-#, fuzzy
 msgid "Lower Layer"
-msgstr "Ebene ab_senken"
+msgstr "Ebene absenken"
 
 #: ../src/verbs.cpp:1175
 msgid "Cannot move layer any further."
 msgstr "Kann Ebene nicht weiter verschieben."
 
 #: ../src/verbs.cpp:1203
-#, fuzzy
 msgid "Delete layer"
-msgstr "Ebene wurde gelöscht."
+msgstr "Ebene löschen"
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1206
@@ -7879,14 +7802,12 @@ msgid "Deleted layer."
 msgstr "Ebene wurde gelöscht."
 
 #: ../src/verbs.cpp:1263
-#, fuzzy
 msgid "Flip horizontally"
-msgstr "_Horizontal umkehren"
+msgstr "Horizontal umkehren"
 
 #: ../src/verbs.cpp:1272
-#, fuzzy
 msgid "Flip vertically"
-msgstr "_Vertikal umkehren"
+msgstr "Vertikal umkehren"
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
@@ -8801,7 +8722,7 @@ msgstr "Zoomfaktor vergrößern oder verringern"
 
 #: ../src/verbs.cpp:2187
 msgid "Pick averaged colors from image"
-msgstr "Gemittelte Farben aus dem Bild auswählen"
+msgstr "Gemittelte Farben aus dem Bild übernehmen"
 
 #: ../src/verbs.cpp:2189
 msgid "Create connectors"
@@ -9371,39 +9292,31 @@ msgstr "Letzten Effekt mit anderen Einstellungen wiederholen"
 
 #. Fit Page
 #: ../src/verbs.cpp:2345
-#, fuzzy
 msgid "Fit Page to Selection"
-msgstr "Seite in Auswahl ein_passen"
+msgstr "Seite in Auswahl einpassen"
 
 # !!!
 #: ../src/verbs.cpp:2346
-#, fuzzy
 msgid "Fit the page to the current selection"
-msgstr "Die Zeichenfläche auf die aktuelle Auswahl einpassen"
+msgstr "Die Seite in die aktuelle Auswahl einpassen"
 
 #: ../src/verbs.cpp:2347
-#, fuzzy
 msgid "Fit Page to Drawing"
-msgstr "Zeichenfläche in Zeichnungsgröße einpassen"
+msgstr "Seite in Zeichnungsgröße einpassen"
 
 # !!!
 #: ../src/verbs.cpp:2348
-#, fuzzy
 msgid "Fit the page to the drawing"
-msgstr "Die Zeichenfläche in die Zeichnungsgröße einpassen"
+msgstr "Die Seite in die Zeichnungsgröße einpassen"
 
 #: ../src/verbs.cpp:2349
-#, fuzzy
 msgid "Fit Page to Selection or Drawing"
-msgstr "Zeichenfläche in Auswahl oder ganze Zeichnung einpassen"
+msgstr "Seite in Auswahl oder ganze Zeichnung einpassen"
 
 #: ../src/verbs.cpp:2350
-#, fuzzy
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
-msgstr ""
-"Die Zeichenfläche in die aktuelle Auswahl einpassen (oder die ganze "
-"Zeichnung, wenn es keine Auswahl gibt)"
+msgstr "Die Seite in die aktuelle Auswahl einpassen (oder die ganze Zeichnung, wenn es keine Auswahl gibt)"
 
 #: ../src/widgets/dash-selector.cpp:103
 msgid "Dash pattern"
@@ -9659,13 +9572,10 @@ msgid "No patterns in document"
 msgstr "Keine Füllmuster im Dokument"
 
 #: ../src/widgets/paint-selector.cpp:859
-#, fuzzy
 msgid ""
 "Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
 "pattern from selection."
-msgstr ""
-"Benutze <b>Bearbeiten » Objekte in Füllmuster umwandeln</b>, um ein neues "
-"Füllmuster vom ausgewählten Objekt zu erzeugen."
+msgstr "Benutze <b>Objekt » Fülmuster » Objekte in Füllmuster umwandeln</b>, um ein neues Füllmuster vom ausgewählten Objekt zu erzeugen."
 
 #: ../src/widgets/select-toolbar.cpp:338
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
@@ -10193,23 +10103,22 @@ msgstr "Die Form zur ganzen Ellipse anstelle eines Bogens oder Segments machen"
 
 #: ../src/widgets/toolbox.cpp:2738
 msgid "Pick alpha"
-msgstr ""
+msgstr "Transparenz übernehmen"
 
 #: ../src/widgets/toolbox.cpp:2739
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
-msgstr ""
+msgstr "Farbe und Transparenz unter dem Cursor übernehmen; ansonsten nur die sichtbare Farbe mit dem Transparenzwert vormultipliziert übernehmen"
 
 #: ../src/widgets/toolbox.cpp:2754
-#, fuzzy
 msgid "Set alpha"
-msgstr "Verzögerung setzen"
+msgstr "Transparenz setzen"
 
 #: ../src/widgets/toolbox.cpp:2755
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr ""
+msgstr "Wenn Transparenz übernommenen wurde, wende diese als Füllung oder Kontur der Auswahl an."
 
 #: ../src/widgets/toolbox.cpp:3499
 msgid ""
@@ -10280,22 +10189,20 @@ msgid "The amount of space left around objects by auto-routing connectors"
 msgstr "Platz, der von den Objektverbindern um Objekte herum gelassen wird"
 
 #: ../src/widgets/toolbox.cpp:4006
-#, fuzzy
 msgid "Length:"
-msgstr "Tonleiterlänge"
+msgstr "Länge"
 
 #: ../src/widgets/toolbox.cpp:4007
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
+msgstr "Ideale Länge für Objektverbinder wenn das Layout angewendet wird"
 
 #: ../src/widgets/toolbox.cpp:4022
-#, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Objektverbinder weichen den ausgewählten Objekten aus"
+msgstr "Objektverbinder mit Endemarkierungen (Pfeilen) zeigen nach unten"
 
 #: ../src/widgets/toolbox.cpp:4036
 msgid "Do not allow overlapping shapes"
-msgstr ""
+msgstr "Keine überlappenden Formen erlauben"
 
 #.
 #. Local Variables:
