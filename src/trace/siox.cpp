@@ -1642,8 +1642,8 @@ void Siox::normalizeMatrix(float *cm, int cmSize)
 {
     float max= -1000000.0f;
     for (int i=0; i<cmSize; i++)
-      if (max<cm[i] > max)
-          max=cm[i];
+        if (cm[i] > max) max=cm[i];
+        
     //good to use STL, but max() is not iterative
     //float max = *std::max(cm, cm + cmSize);
 
