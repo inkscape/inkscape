@@ -69,7 +69,7 @@ static void sp_filter_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
-static void filter_ref_modified(SPObject *href, SPFilter *filter);
+static void filter_ref_modified(SPObject *href, guint flags, SPFilter *filter);
 
 static SPObjectClass *filter_parent_class;
 
@@ -370,14 +370,15 @@ filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter)
     if ( SP_IS_FILTER(ref)
          && ref != filter )
     {
-        g_signal_connect(G_OBJECT(ref), "modified", G_CALLBACK(filter_ref_modified), filter);
+        ref->connectModified(sigc::bind(sigc::ptr_fun(&filter_ref_modified), filter));
+        //g_signal_connect(G_OBJECT(ref), "modified", G_CALLBACK(filter_ref_modified), filter);
     }
 
-    filter_ref_modified(ref, filter);
+    filter_ref_modified(ref, 0, filter);
 }
 
 static void
-filter_ref_modified(SPObject *href, SPFilter *filter)
+filter_ref_modified(SPObject *href, guint flags, SPFilter *filter)
 {
     SP_OBJECT(filter)->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
