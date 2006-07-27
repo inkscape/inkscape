@@ -368,6 +368,14 @@ private:
      * Confidence matrix data
      */
     float *cmdata;
+    
+private:
+
+    /**
+     * Error logging
+     */
+    void error(char *fmt, ...);
+
 };
 
 

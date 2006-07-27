@@ -1,11 +1,11 @@
-/*
+/**
  * A generic interface for plugging different
  *  autotracers into Inkscape.
  *
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
- * Copyright (C) 2004 Bob Jamison
+ * Copyright (C) 2004-2006 Bob Jamison
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

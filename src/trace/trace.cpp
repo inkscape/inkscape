@@ -1,4 +1,4 @@
-/*
+/**
  * A generic interface for plugging different
  *  autotracers into Inkscape.
  *
@@ -308,6 +308,7 @@ Tracer::sioxProcessImage(SPImage *img,
                 }
             else
                 {
+                //g_message("miss!\n");
                 //dumpMap->setPixelLong(dumpMap, col, row,
                 //        simage.getPixel(col, row));
                 simage.setConfidence(col, row,

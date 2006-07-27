@@ -110,7 +110,7 @@ void CieLab::init()
     if (!_clab_inited_)
         {
         cbrt_table[0] = pow(float(1)/float(ROOT_TAB_SIZE*2), 0.3333);
-	qn_table[0]   = pow(float(1)/float(ROOT_TAB_SIZE*2), 0.2);
+        qn_table[0]   = pow(float(1)/float(ROOT_TAB_SIZE*2), 0.2);
         for(int i = 1; i < ROOT_TAB_SIZE +1; i++)
             {
             cbrt_table[i] = pow(float(i)/float(ROOT_TAB_SIZE), 0.3333);
@@ -304,25 +304,25 @@ public:
     Tupel(float minBgDistArg, long indexMinBgArg,
           float minFgDistArg, long indexMinFgArg)
         {
-	minBgDist  = minBgDistArg;
-	indexMinBg = indexMinBgArg;
-	minFgDist  = minFgDistArg;
-	indexMinFg = indexMinFgArg;
+        minBgDist  = minBgDistArg;
+        indexMinBg = indexMinBgArg;
+        minFgDist  = minFgDistArg;
+        indexMinFg = indexMinFgArg;
         }
     Tupel(const Tupel &other)
         {
-	minBgDist  = other.minBgDist;
-	indexMinBg = other.indexMinBg;
-	minFgDist  = other.minFgDist;
-	indexMinFg = other.indexMinFg;
+        minBgDist  = other.minBgDist;
+        indexMinBg = other.indexMinBg;
+        minFgDist  = other.minFgDist;
+        indexMinFg = other.indexMinFg;
         }
     Tupel &operator=(const Tupel &other)
         {
-	minBgDist  = other.minBgDist;
-	indexMinBg = other.indexMinBg;
-	minFgDist  = other.minFgDist;
-	indexMinFg = other.indexMinFg;
-	return *this;
+        minBgDist  = other.minBgDist;
+        indexMinBg = other.indexMinBg;
+        minFgDist  = other.minFgDist;
+        indexMinFg = other.indexMinFg;
+        return *this;
         }
     virtual ~Tupel()
         {}
@@ -378,6 +378,24 @@ SioxImage::~SioxImage()
 }
 
 /**
+ * Error logging
+ */
+void SioxImage::error(char *fmt, ...)
+{
+    char msgbuf[256];
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(msgbuf, 255, fmt, args);
+    va_end(args) ;
+#ifdef HAVE_GLIB
+    g_warning("SioxImage error: %s\n", msgbuf);
+#else
+    fprintf(stderr, "SioxImage error: %s\n", msgbuf);
+#endif
+}
+
+
+/**
  * Returns true if the previous operation on this image
  * was successful, else false.
  */
@@ -405,8 +423,12 @@ void SioxImage::setPixel(unsigned int x,
                          unsigned int y,
                          unsigned int pixval)
 {
-    if (x > width || y > height)
+    if (x >= width || y >= height)
+        {
+        error("setPixel: out of bounds (%d,%d)/(%d,%d)",
+                   x, y, width, height);
         return;
+        }
     unsigned long offset = width * y + x;
     pixdata[offset] = pixval; 
 }
@@ -421,8 +443,12 @@ void SioxImage::setPixel(unsigned int x, unsigned int y,
                          unsigned int g,
                          unsigned int b)
 {
-    if (x > width || y > height)
+    if (x >= width || y >= height)
+        {
+        error("setPixel: out of bounds (%d,%d)/(%d,%d)",
+                   x, y, width, height);
         return;
+        }
     unsigned long offset = width * y + x;
     unsigned int pixval = ((a << 24) & 0xff000000) |
                           ((r << 16) & 0x00ff0000) |
@@ -439,8 +465,12 @@ void SioxImage::setPixel(unsigned int x, unsigned int y,
  */
 unsigned int SioxImage::getPixel(unsigned int x, unsigned int y)
 {
-    if (x > width || y > height)
+    if (x >= width || y >= height)
+        {
+        error("getPixel: out of bounds (%d,%d)/(%d,%d)",
+                   x, y, width, height);
         return 0L;
+        }
     unsigned long offset = width * y + x;
     return pixdata[offset]; 
 }
@@ -461,8 +491,12 @@ void SioxImage::setConfidence(unsigned int x,
                               unsigned int y,
                               float confval)
 {
-    if (x > width || y > height)
+    if (x >= width || y >= height)
+        {
+        error("setConfidence: out of bounds (%d,%d)/(%d,%d)",
+                   x, y, width, height);
         return;
+        }
     unsigned long offset = width * y + x;
     cmdata[offset] = confval; 
 }
@@ -473,8 +507,12 @@ void SioxImage::setConfidence(unsigned int x,
  */
 float SioxImage::getConfidence(unsigned int x, unsigned int y)
 {
-    if (x > width || y > height)
+    if (x >= width || y >= height)
+        {
+        g_warning("getConfidence: out of bounds (%d,%d)/(%d,%d)",
+                   x, y, width, height);
         return 0.0;
+        }
     unsigned long offset = width * y + x;
     return cmdata[offset]; 
 }
@@ -1602,7 +1640,12 @@ void Siox::erode(float *cm, int xres, int yres)
  */
 void Siox::normalizeMatrix(float *cm, int cmSize)
 {
-    float max = *std::max(cm, cm + cmSize);
+    float max= -1000000.0f;
+    for (int i=0; i<cmSize; i++)
+      if (max<cm[i] > max)
+          max=cm[i];
+    //good to use STL, but max() is not iterative
+    //float max = *std::max(cm, cm + cmSize);
 
     if (max<=0.0 || max==1.0)
         return;
