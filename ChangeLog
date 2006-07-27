@@ -1,5 +1,11 @@
 2006-07-26  MenTaLguY  <mental@rydia.net>
 
+	* src/dialogs/object-attributes.cpp:
+
+	  switch to sigc++ "release"
+
+2006-07-26  MenTaLguY  <mental@rydia.net>
+
 	* src/style.cpp, src/style.h:
 
 	  finish switching to sigc++ SPObject signals for SPStyle

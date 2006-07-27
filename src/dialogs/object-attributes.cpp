@@ -21,6 +21,10 @@
 #include "sp-anchor.h"
 #include "sp-attribute-widget.h"
 
+#include <sigc++/connection.h>
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
+
 struct SPAttrDesc {
     gchar const *label;
     gchar const *attribute;
@@ -55,7 +59,7 @@ static const SPAttrDesc image_desc[] = {
 
 
 static void
-object_released (GtkObject *object, GtkWidget *widget)
+object_released (SPObject *object, GtkWidget *widget)
 {
     gtk_widget_destroy (widget);
 }
@@ -65,7 +69,9 @@ object_released (GtkObject *object, GtkWidget *widget)
 static void
 window_destroyed (GtkObject *window, GtkObject *object)
 {
-    sp_signal_disconnect_by_data (object, window);
+    sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(window), "release_connection");
+    release_connection->disconnect();
+    delete release_connection;
 }
 
 
@@ -102,8 +108,9 @@ sp_object_attr_show_dialog ( SPObject *object,
     g_signal_connect ( G_OBJECT (w), "destroy",
                        G_CALLBACK (window_destroyed), object );
 
-    g_signal_connect ( G_OBJECT (object), "release",
-                       G_CALLBACK (object_released), w );
+    sigc::connection *release_connection = new sigc::connection();
+    *release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&object_released), w));
+    g_object_set_data(G_OBJECT(w), "release_connection", release_connection);
 
     gtk_widget_show (w);
 
