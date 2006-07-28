@@ -17,7 +17,7 @@
 
 #include <glib.h>
 
-
+#include <sigc++/connection.h>
 
 #define SP_TYPE_ATTRIBUTE_WIDGET (sp_attribute_widget_get_type ())
 #define SP_ATTRIBUTE_WIDGET(obj) (GTK_CHECK_CAST ((obj), SP_TYPE_ATTRIBUTE_WIDGET, SPAttributeWidget))
@@ -58,6 +58,9 @@ struct SPAttributeWidget {
         Inkscape::XML::Node *repr;
     } src;
     gchar *attribute;
+
+    sigc::connection modified_connection;
+    sigc::connection release_connection;
 };
 
 struct SPAttributeWidgetClass {
@@ -90,6 +93,9 @@ struct SPAttributeTable {
     gint num_attr;
     gchar **attributes;
     GtkWidget **entries;
+
+    sigc::connection modified_connection;
+    sigc::connection release_connection;
 };
 
 struct SPAttributeTableClass {

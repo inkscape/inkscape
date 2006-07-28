@@ -1,6 +1,8 @@
 2006-06-27  MenTaLguY  <mental@rydia.net>
 
-	* src/sp-offset.cpp, src/sp-offset.h, src/sp-shape.cpp, src/sp-shape.h:
+	* src/dialogs/sp-attribute-widget.cpp,
+	  src/dialogs/sp-attribute-widget.h, src/sp-offset.cpp,
+	  src/sp-offset.h, src/sp-shape.cpp, src/sp-shape.h:
 
 	  switch to sigc++ SPObject signals
 

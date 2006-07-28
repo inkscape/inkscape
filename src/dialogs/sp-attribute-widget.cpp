@@ -24,6 +24,9 @@
 #include "sp-object.h"
 #include <glibmm/i18n.h>
 
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
+
 #include "sp-attribute-widget.h"
 
 static void sp_attribute_widget_class_init (SPAttributeWidgetClass *klass);
@@ -94,6 +97,9 @@ sp_attribute_widget_init (SPAttributeWidget *spaw)
     spaw->src.object = NULL;
 
     spaw->attribute = NULL;
+
+    new (&spaw->modified_connection) sigc::connection();
+    new (&spaw->release_connection) sigc::connection();
 }
 
 
@@ -115,7 +121,8 @@ sp_attribute_widget_destroy (GtkObject *object)
     if (spaw->hasobj) {
         
         if (spaw->src.object) {
-            sp_signal_disconnect_by_data (spaw->src.object, spaw);
+            spaw->modified_connection.disconnect();
+            spaw->release_connection.disconnect();
             spaw->src.object = NULL;
         }
     } else {
@@ -124,6 +131,9 @@ sp_attribute_widget_destroy (GtkObject *object)
             spaw->src.repr = Inkscape::GC::release(spaw->src.repr);
         }
     } // end of if()
+
+    spaw->modified_connection.~connection();
+    spaw->release_connection.~connection();
     
     ((GtkObjectClass *) parent_class)->destroy (object);
 
@@ -228,7 +238,8 @@ sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
     if (spaw->hasobj) {
     
         if (spaw->src.object) {
-            sp_signal_disconnect_by_data (spaw->src.object, spaw);
+            spaw->modified_connection.disconnect();
+            spaw->release_connection.disconnect();
             spaw->src.object = NULL;
         }
     } else {
@@ -245,12 +256,9 @@ sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
 
         spaw->blocked = TRUE;
         spaw->src.object = object;
-        g_signal_connect ( G_OBJECT (object), "modified", 
-                           G_CALLBACK (sp_attribute_widget_object_modified), 
-                           spaw );
-        g_signal_connect ( G_OBJECT (object), "release", 
-                           G_CALLBACK (sp_attribute_widget_object_release), 
-                           spaw );
+
+        spaw->modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_widget_object_modified), spaw));
+        spaw->release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_attribute_widget_object_release), spaw));
 
         spaw->attribute = g_strdup (attribute);
 
@@ -283,7 +291,8 @@ sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
     if (spaw->hasobj) {
     
         if (spaw->src.object) {
-            sp_signal_disconnect_by_data (spaw->src.object, spaw);
+            spaw->modified_connection.disconnect();
+            spaw->release_connection.disconnect();
             spaw->src.object = NULL;
         }
     } else {
@@ -415,6 +424,9 @@ sp_attribute_table_init ( SPAttributeTable *spat )
     spat->num_attr = 0;
     spat->attributes = NULL;
     spat->entries = NULL;
+
+    new (&spat->modified_connection) sigc::connection();
+    new (&spat->release_connection) sigc::connection();
 }
 
 static void
@@ -436,7 +448,8 @@ sp_attribute_table_destroy ( GtkObject *object )
     if (spat->hasobj) {
         
         if (spat->src.object) {
-            sp_signal_disconnect_by_data (spat->src.object, spat);
+            spat->modified_connection.disconnect();
+            spat->release_connection.disconnect();
             spat->src.object = NULL;
         }
     } else {
@@ -445,6 +458,8 @@ sp_attribute_table_destroy ( GtkObject *object )
         }
     } // end of if()
 
+    spat->modified_connection.~connection();
+    spat->release_connection.~connection();
     
     if (spat->entries) {
         g_free (spat->entries);
@@ -540,7 +555,8 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
 
     if (spat->hasobj) {
         if (spat->src.object) {
-            sp_signal_disconnect_by_data (spat->src.object, spat);
+            spat->modified_connection.disconnect();
+            spat->release_connection.disconnect();
             spat->src.object = NULL;
         }
     } else {
@@ -559,12 +575,10 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
         /* Set up object */
         spat->src.object = object;
         spat->num_attr = num_attr;
-        g_signal_connect ( G_OBJECT (object), "modified", 
-                           G_CALLBACK (sp_attribute_table_object_modified), 
-                           spat );
-        g_signal_connect ( G_OBJECT (object), "release", 
-                           G_CALLBACK (sp_attribute_table_object_release), 
-                           spat );
+
+        spat->modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), spat));
+        spat->modified_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), spat));
+
         /* Create table */
         spat->table = gtk_table_new (num_attr, 2, FALSE);
         gtk_container_add (GTK_CONTAINER (spat), spat->table);
@@ -642,7 +656,8 @@ sp_attribute_table_set_repr ( SPAttributeTable *spat,
 
     if (spat->hasobj) {
         if (spat->src.object) {
-            sp_signal_disconnect_by_data (spat->src.object, spat);
+            spat->modified_connection.disconnect();
+            spat->release_connection.disconnect();
             spat->src.object = NULL;
         }
     } else {
