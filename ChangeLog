@@ -1,8 +1,8 @@
 2006-06-27  MenTaLguY  <mental@rydia.net>
 
-	* src/sp-shape.cpp, src/sp-shape.h:
+	* src/sp-offset.cpp, src/sp-offset.h, src/sp-shape.cpp, src/sp-shape.h:
 
-	  switch to sigc++ SPObject signals for SPShape
+	  switch to sigc++ SPObject signals
 
 2006-07-26  MenTaLguY  <mental@rydia.net>
 

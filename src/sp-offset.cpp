@@ -179,6 +179,7 @@ sp_offset_init(SPOffset *offset)
     offset->sourceHref = NULL;
     offset->sourceRepr = NULL;
     offset->sourceObject = NULL;
+    new (&offset->_modified_connection) sigc::connection();
     new (&offset->_delete_connection) sigc::connection();
     new (&offset->_changed_connection) sigc::connection();
     new (&offset->_transformed_connection) sigc::connection();
@@ -196,8 +197,14 @@ sp_offset_finalize(GObject *obj)
     SPOffset *offset = (SPOffset *) obj;
 
     delete offset->sourceRef;
+
+    offset->_modified_connection.disconnect();
+    offset->_modified_connection.~connection();
+    offset->_delete_connection.disconnect();
     offset->_delete_connection.~connection();
+    offset->_changed_connection.disconnect();
     offset->_changed_connection.~connection();
+    offset->_transformed_connection.disconnect();
     offset->_transformed_connection.~connection();
 }
 
@@ -1057,7 +1064,7 @@ static void sp_offset_start_listening(SPOffset *offset,SPObject* to)
 
     offset->_delete_connection = SP_OBJECT(to)->connectDelete(sigc::bind(sigc::ptr_fun(&sp_offset_delete_self), offset));
     offset->_transformed_connection = SP_ITEM(to)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_offset_move_compensate), offset));
-    offset->_modified_connection = g_signal_connect (G_OBJECT (to), "modified", G_CALLBACK (sp_offset_source_modified), offset);
+    offset->_modified_connection = SP_OBJECT(to)->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_offset_source_modified), offset));
 }
 
 static void sp_offset_quit_listening(SPOffset *offset)
@@ -1065,7 +1072,7 @@ static void sp_offset_quit_listening(SPOffset *offset)
     if ( offset->sourceObject == NULL )
         return;
 
-    g_signal_handler_disconnect (offset->sourceObject, offset->_modified_connection);
+    offset->_modified_connection.disconnect();
     offset->_delete_connection.disconnect();
     offset->_transformed_connection.disconnect();
 

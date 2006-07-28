@@ -73,7 +73,7 @@ struct SPOffset : public SPShape {
   Inkscape::XML::Node         *sourceRepr; ///< the repr associated with that id
 	SPObject			 *sourceObject;
 	
-	gulong           _modified_connection;
+        sigc::connection _modified_connection;
 	sigc::connection _delete_connection;
 	sigc::connection _changed_connection;
 	sigc::connection _transformed_connection;
