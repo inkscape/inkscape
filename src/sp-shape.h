@@ -17,7 +17,7 @@
 #include "sp-item.h"
 #include "sp-marker-loc.h"
 
-
+#include <sigc++/connection.h>
 
 #define SP_TYPE_SHAPE (sp_shape_get_type ())
 #define SP_SHAPE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SHAPE, SPShape))
@@ -31,8 +31,8 @@ struct SPShape : public SPItem {
 	SPCurve *curve;
 
       SPObject *marker[SP_MARKER_LOC_QTY];
-      gulong release_connect [SP_MARKER_LOC_QTY];
-      gulong modified_connect [SP_MARKER_LOC_QTY];
+      sigc::connection release_connect [SP_MARKER_LOC_QTY];
+      sigc::connection modified_connect [SP_MARKER_LOC_QTY];
 };
 
 struct SPShapeClass {

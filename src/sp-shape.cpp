@@ -24,6 +24,8 @@
 #include <libnr/nr-matrix-translate-ops.h>
 #include <libnr/nr-scale-matrix-ops.h>
 
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
 
 #include "macros.h"
 #include "display/nr-arena-shape.h"
@@ -39,6 +41,7 @@
 
 static void sp_shape_class_init (SPShapeClass *klass);
 static void sp_shape_init (SPShape *shape);
+static void sp_shape_finalize (GObject *object);
 
 static void sp_shape_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_shape_release (SPObject *object);
@@ -86,15 +89,19 @@ sp_shape_get_type (void)
 static void
 sp_shape_class_init (SPShapeClass *klass)
 {
+        GObjectClass *gobject_class;
 	SPObjectClass *sp_object_class;
 	SPItemClass * item_class;
 	SPPathClass * path_class;
 
+        gobject_class = (GObjectClass *) klass;
 	sp_object_class = (SPObjectClass *) klass;
 	item_class = (SPItemClass *) klass;
 	path_class = (SPPathClass *) klass;
 
 	parent_class = (SPItemClass *)g_type_class_peek_parent (klass);
+
+        gobject_class->finalize = sp_shape_finalize;
 
 	sp_object_class->build = sp_shape_build;
 	sp_object_class->release = sp_shape_release;
@@ -109,13 +116,32 @@ sp_shape_class_init (SPShapeClass *klass)
 }
 
 /**
- * Initializes an SPShape object.  Nothing particular is needed to initialize
- * an SPShape object; this is just here as a stub.
+ * Initializes an SPShape object.
  */
 static void
 sp_shape_init (SPShape *shape)
 {
-	/* Nothing here */
+    for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
+        new (&shape->release_connect[i]) sigc::connection();
+        new (&shape->modified_connect[i]) sigc::connection();
+    }
+}
+
+static void
+sp_shape_finalize (GObject *object)
+{
+    SPShape *shape=(SPShape *)object;
+
+    for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
+        shape->release_connect[i].disconnect();
+        shape->release_connect[i].~connection();
+        shape->modified_connect[i].disconnect();
+        shape->modified_connect[i].~connection();
+    }
+
+    if (((GObjectClass *) (parent_class))->finalize) {
+        (* ((GObjectClass *) (parent_class))->finalize)(object);
+    }
 }
 
 /**
@@ -885,8 +911,8 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
             SPItemView *v;
 
             /* Detach marker */
-            g_signal_handler_disconnect (shape->marker[key], shape->release_connect[key]);
-            g_signal_handler_disconnect (shape->marker[key], shape->modified_connect[key]);
+            shape->release_connect[key].disconnect();
+            shape->modified_connect[key].disconnect();
 
             /* Hide marker */
             for (v = item->display; v != NULL; v = v->next) {
@@ -901,10 +927,8 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
         }
         if (SP_IS_MARKER (mrk)) {
             shape->marker[key] = sp_object_href (mrk, object);
-            shape->release_connect[key] = g_signal_connect (G_OBJECT (shape->marker[key]), "release",
-                              G_CALLBACK (sp_shape_marker_release), shape);
-            shape->modified_connect[key] = g_signal_connect (G_OBJECT (shape->marker[key]), "modified",
-                              G_CALLBACK (sp_shape_marker_modified), shape);
+            shape->release_connect[key] = mrk->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_shape_marker_release), shape));
+            shape->modified_connect[key] = mrk->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_shape_marker_modified), shape));
         }
     }
 }

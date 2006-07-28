@@ -1,3 +1,9 @@
+2006-06-27  MenTaLguY  <mental@rydia.net>
+
+	* src/sp-shape.cpp, src/sp-shape.h:
+
+	  switch to sigc++ SPObject signals for SPShape
+
 2006-07-26  MenTaLguY  <mental@rydia.net>
 
 	* src/dialogs/object-attributes.cpp:
