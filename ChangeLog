@@ -2,7 +2,8 @@
 
 	* src/dialogs/sp-attribute-widget.cpp,
 	  src/dialogs/sp-attribute-widget.h, src/sp-offset.cpp,
-	  src/sp-offset.h, src/sp-shape.cpp, src/sp-shape.h:
+	  src/sp-offset.h, src/sp-shape.cpp, src/sp-shape.h,
+	  src/sp-use-reference.cpp, src/sp-use-reference.h:
 
 	  switch to sigc++ SPObject signals
 

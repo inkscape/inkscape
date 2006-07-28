@@ -39,7 +39,7 @@ bool SPUseReference::_acceptObject(SPObject * const obj) const
 static void sp_usepath_href_changed(SPObject *old_ref, SPObject *ref, SPUsePath *offset);
 static void sp_usepath_move_compensate(NR::Matrix const *mp, SPItem *original, SPUsePath *self);
 static void sp_usepath_delete_self(SPObject *deleted, SPUsePath *offset);
-static void sp_usepath_source_modified(SPObject *iSource, guint flags, SPItem *item);
+static void sp_usepath_source_modified(SPObject *iSource, guint flags, SPUsePath *offset);
 
 SPUsePath::SPUsePath(SPObject* i_owner):SPUseReference(i_owner)
 {
@@ -49,6 +49,7 @@ SPUsePath::SPUsePath(SPObject* i_owner):SPUseReference(i_owner)
     sourceHref = NULL;
     sourceRepr = NULL;
     sourceObject = NULL;
+    new (&_modified_connection) sigc::connection();
     new (&_delete_connection) sigc::connection();
     new (&_changed_connection) sigc::connection();
     new (&_transformed_connection) sigc::connection();
@@ -67,6 +68,7 @@ SPUsePath::~SPUsePath(void)
     quit_listening();
     unlink();
 
+    _modified_connection.~connection();
     _delete_connection.~connection();
     _changed_connection.~connection();
     _transformed_connection.~connection();
@@ -113,7 +115,7 @@ SPUsePath::start_listening(SPObject* to)
     sourceRepr = SP_OBJECT_REPR(to);
     _delete_connection = to->connectDelete(sigc::bind(sigc::ptr_fun(&sp_usepath_delete_self), this));
     _transformed_connection = SP_ITEM(to)->connectTransformed(sigc::bind(sigc::ptr_fun(&sp_usepath_move_compensate), this));
-    _modified_connection = g_signal_connect(G_OBJECT(to), "modified", G_CALLBACK(sp_usepath_source_modified), this);
+    _modified_connection = to->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_usepath_source_modified), this));
 }
 
 void
@@ -122,7 +124,7 @@ SPUsePath::quit_listening(void)
     if ( sourceObject == NULL ) {
         return;
     }
-    g_signal_handler_disconnect(sourceObject, _modified_connection);
+    _modified_connection.disconnect();
     _delete_connection.disconnect();
     _transformed_connection.disconnect();
     sourceRepr = NULL;
@@ -196,9 +198,8 @@ sp_usepath_delete_self(SPObject */*deleted*/, SPUsePath *offset)
 }
 
 static void
-sp_usepath_source_modified(SPObject *iSource, guint flags, SPItem *item)
+sp_usepath_source_modified(SPObject *iSource, guint flags, SPUsePath *offset)
 {
-    SPUsePath *offset = (SPUsePath*)item;
     offset->sourceDirty = true;
     offset->owner->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }

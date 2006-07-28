@@ -45,7 +45,7 @@ public:
   Inkscape::XML::Node         *sourceRepr;
 	SPObject			 *sourceObject;
 	
-	gulong           _modified_connection;
+        sigc::connection _modified_connection;
 	sigc::connection _delete_connection;
 	sigc::connection _changed_connection;
 	sigc::connection _transformed_connection;
