@@ -14,10 +14,9 @@ endif
 extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/bluredge.h	\
 	extension/internal/bluredge.cpp	\
-        extension/internal/clear-n_.h   \
+  extension/internal/clear-n_.h   \
 	extension/internal/grid.h	\
 	extension/internal/grid.cpp	\
-\
 	extension/internal/gimpgrad.h	\
 	extension/internal/gimpgrad.cpp	\
 	extension/internal/svg.h	\
@@ -33,6 +32,10 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/pdf-mini.h	\
 	extension/internal/pdf-out.h	\
 	extension/internal/pdf-out.cpp	\
+	extension/internal/pdf-cairo.cpp \
+	extension/internal/pdf-cairo.h \
+	extension/internal/cairo-pdf-out.h	\
+	extension/internal/cairo-pdf-out.cpp	\
 	extension/internal/eps-out.h	\
 	extension/internal/eps-out.cpp	\
 	extension/internal/gdkpixbuf-input.h	\
@@ -45,6 +48,5 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks.h	\
 	extension/internal/latex-pstricks-out.cpp	\
 	extension/internal/latex-pstricks-out.h	\
-\
 	$(extension_internal_gnome_print_sources)
 

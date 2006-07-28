@@ -26,6 +26,7 @@
 #include "internal/svgz.h"
 #include "internal/ps.h"
 #include "internal/pdf.h"
+#include "internal/pdf-cairo.h"
 #ifdef WITH_GNOME_PRINT
 # include "internal/gnome.h"
 #endif
@@ -34,6 +35,7 @@
 #endif
 #include "internal/ps-out.h"
 #include "internal/pdf-out.h"
+#include "internal/cairo-pdf-out.h"
 #include "internal/pov-out.h"
 #include "internal/odf.h"
 #include "internal/latex-pstricks-out.h"
@@ -107,6 +109,8 @@ init()
     Internal::PrintPS::init();
     Internal::PdfOutput::init();
     Internal::PrintPDF::init();
+    Internal::CairoPdfOutput::init();
+    Internal::PrintCairoPDF::init();
 #ifdef WITH_GNOME_PRINT
     Internal::PrintGNOME::init();
 #endif

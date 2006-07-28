@@ -45,6 +45,7 @@
 #define SP_MODULE_KEY_PRINT_PS    "org.inkscape.print.ps"
 /** Defines the key for PDF printing */
 #define SP_MODULE_KEY_PRINT_PDF    "org.inkscape.print.pdf"
+#define SP_MODULE_KEY_PRINT_CAIRO_PDF	"org.inkscape.print.pdf.cairo"
 /** Defines the key for LaTeX printing */
 #define SP_MODULE_KEY_PRINT_LATEX    "org.inkscape.print.latex"
 /** Defines the key for printing with GNOME Print */
