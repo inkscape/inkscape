@@ -425,7 +425,7 @@ FunctionEnd
 
 ;--------------------------------
 ; Installer Sections
-
+; @todo better idea is to call the original uninstaller first
 Section -removeInkscape
   ; check for an old installation and clean that dlls and stuff
   ClearErrors
@@ -471,6 +471,18 @@ Section -removeInkscape
     FindNext $0 $1
     Goto FindNextLoop
   FindNextDone:
+  
+  ;remove the old inkscape shortcuts from the startmenu
+  ;just in case they are still there
+  SetShellVarContext current
+  Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
+  Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
+  RMDir  "$SMPROGRAMS\Inkscape"
+  SetShellVarContext all
+  Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
+  Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
+  RMDir  "$SMPROGRAMS\Inkscape"
+  
 SectionEnd
 
 Section $(lng_Core) SecCore
@@ -664,6 +676,14 @@ Section $(lng_en) SecEnglish
   SectionIn 1 2 3 RO
 SectionEnd
 
+Section $(lng_en_CA) SecEnglishCanadian
+  !insertmacro Language en_CA en_CA
+SectionEnd
+
+Section $(lng_en_GB) SecEnglishBritain
+  !insertmacro Language en_GB en_GB
+SectionEnd
+
 Section $(lng_es) SecSpanish
   !insertmacro Language 'es' 'es'
 SectionEnd
@@ -680,12 +700,21 @@ Section $(lng_fr) SecFrench
   !insertmacro Language 'fr' 'fr'
 SectionEnd
 
+Section $(lng_fi) SecFinish
+  !insertmacro Language 'fi' 'fi'
+SectionEnd
+
 Section $(lng_ga) SecIrish
   !insertmacro Language ga ga
 SectionEnd
 
 Section $(lng_gl) SecGallegan
   !insertmacro Language gl gl
+  SectionIn 1 2 3
+SectionEnd
+
+Section $(lng_hr) SecCroatian
+  !insertmacro Language hr hr
   SectionIn 1 2 3
 SectionEnd
 
@@ -711,12 +740,20 @@ Section $(lng_lt) SecLithuanian
   !insertmacro Language 'lt' 'lt'
 SectionEnd
 
+Section $(lng_mn) SecMongolian
+  !insertmacro Language mn mn
+SectionEnd
+
 Section $(lng_mk) SecMacedonian
   !insertmacro Language mk mk
 SectionEnd
 
 Section $(lng_nb) SecNorwegianBokmal
   !insertmacro Language nb nb
+SectionEnd
+
+Section $(lng_ne) SecNepali
+  !insertmacro Language ne ne
 SectionEnd
 
 Section $(lng_nl) SecDutch
@@ -747,12 +784,20 @@ Section $(lng_ru) SecRussian
   !insertmacro Language ru ru
 SectionEnd
 
+Section $(lng_rw) SecKinyarwanda
+  !insertmacro Language rw rw
+SectionEnd
+
 Section $(lng_sk) SecSlovak
   !insertmacro Language sk sk
 SectionEnd
 
 Section $(lng_sl) SecSlovenian
   !insertmacro Language sl sl
+SectionEnd
+
+Section $(lng_sq) SecAlbanian
+  !insertmacro Language sq sq
 SectionEnd
 
 Section $(lng_sr) SecSerbian
@@ -815,9 +860,7 @@ Section -FinalizeInstallation
 
   ; start menu entries
   ClearErrors
-  CreateDirectory "$SMPROGRAMS\Inkscape"
-  CreateShortCut "$SMPROGRAMS\Inkscape\Inkscape.lnk" "$INSTDIR\inkscape.exe"
-  CreateShortCut "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\Inkscape.lnk" "$INSTDIR\inkscape.exe"
   IfErrors 0 +2
     DetailPrint "fatal: failed to write to start menu info"
 
@@ -1153,6 +1196,8 @@ Section Uninstall
   DetailPrint "removing shortcuts"
   Delete "$DESKTOP\Inkscape.lnk"
   Delete "$QUICKLAUNCH\Inkscape.lnk"
+  Delete "$SMPROGRAMS\Inkscape.lnk"
+  ;just in case they are still there
   Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
   RMDir  "$SMPROGRAMS\Inkscape"
@@ -1165,6 +1210,8 @@ Section Uninstall
   DetailPrint "removing shortcuts"
   Delete "$DESKTOP\Inkscape.lnk"
   Delete "$QUICKLAUNCH\Inkscape.lnk"
+  Delete "$SMPROGRAMS\Inkscape.lnk"
+  ;just in case they are still there
   Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
   RMDir  "$SMPROGRAMS\Inkscape"
