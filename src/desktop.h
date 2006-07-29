@@ -266,6 +266,7 @@ private:
     sigc::connection _reconstruction_start_connection;
     sigc::connection _reconstruction_finish_connection;
     sigc::connection _commit_connection;
+    sigc::connection _modified_connection;
     
     virtual void onPositionSet (double, double);
     virtual void onResized (double, double);

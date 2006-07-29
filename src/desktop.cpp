@@ -88,7 +88,7 @@ static void _layer_deactivated(SPObject *layer, SPDesktop *desktop);
 static void _layer_hierarchy_changed(SPObject *top, SPObject *bottom, SPDesktop *desktop);
 static void _reconstruction_start(SPDesktop * desktop);
 static void _reconstruction_finish(SPDesktop * desktop);
-static void _namedview_modified (SPNamedView *nv, guint flags, SPDesktop *desktop);
+static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop);
 static void _update_snap_distances (SPDesktop *desktop);
 
 /**
@@ -224,8 +224,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     _doc2dt[5] = sp_document_height (document);
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (drawing), _doc2dt);
 
-    g_signal_connect (G_OBJECT (namedview), "modified", G_CALLBACK (_namedview_modified), this);
-
+    _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
 
     NRArenaItem *ai = sp_item_invoke_show (SP_ITEM (sp_document_root (document)),
             SP_CANVAS_ARENA (drawing)->arena,
@@ -295,6 +294,7 @@ void SPDesktop::destroy()
     _deactivate_connection.disconnect();
     _sel_modified_connection.disconnect();
     _sel_changed_connection.disconnect();
+    _modified_connection.disconnect();
 
     while (event_context) {
         SPEventContext *ec = event_context;
@@ -319,7 +319,7 @@ void SPDesktop::destroy()
     delete _guides_message_context;
     _guides_message_context = NULL;
 
-    sp_signal_disconnect_by_data (G_OBJECT (namedview), this);
+    _modified_connection.disconnect();
 
     g_list_free (zooms_past);
     g_list_free (zooms_future);
@@ -1086,7 +1086,7 @@ SPDesktop::setDocument (SPDocument *doc)
         NRArenaItem *ai;
 
         namedview = sp_document_namedview (doc, NULL);
-        g_signal_connect (G_OBJECT (namedview), "modified", G_CALLBACK (_namedview_modified), this);
+        _modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&_namedview_modified), this));
         number = namedview->getViewCount();
 
         ai = sp_item_invoke_show (SP_ITEM (sp_document_root (doc)),
@@ -1256,8 +1256,10 @@ _reconstruction_finish (SPDesktop * desktop)
  * Namedview_modified callback.
  */
 static void
-_namedview_modified (SPNamedView *nv, guint flags, SPDesktop *desktop)
+_namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
 {
+    SPNamedView *nv=SP_NAMEDVIEW(obj);
+
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
 
         /* Recalculate snap distances */
