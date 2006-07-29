@@ -27,6 +27,9 @@
 #include "sp-pattern.h"
 #include "xml/repr.h"
 
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
+
 /*
  * Pattern
  */
@@ -137,6 +140,8 @@ sp_pattern_init (SPPattern *pat)
 	pat->height.unset();
 
 	pat->viewBox_set = FALSE;
+
+	new (&pat->modified_connection) sigc::connection();
 }
 
 static void
@@ -172,12 +177,13 @@ sp_pattern_release (SPObject *object)
 	}
 
 	if (pat->ref) {
-		if (pat->ref->getObject())
-			sp_signal_disconnect_by_data(pat->ref->getObject(), pat);
+		pat->modified_connection.disconnect();
 		pat->ref->detach();
 		delete pat->ref;
 		pat->ref = NULL;
 	}
+
+	pat->modified_connection.~connection();
 
 	if (((SPObjectClass *) pattern_parent_class)->release)
 		((SPObjectClass *) pattern_parent_class)->release (object);
@@ -403,10 +409,10 @@ static void
 pattern_ref_changed(SPObject *old_ref, SPObject *ref, SPPattern *pat)
 {
 	if (old_ref) {
-		sp_signal_disconnect_by_data(old_ref, pat);
+		pat->modified_connection.disconnect();
 	}
 	if (SP_IS_PATTERN (ref)) {
-		g_signal_connect(G_OBJECT (ref), "modified", G_CALLBACK (pattern_ref_modified), pat);
+		pat->modified_connection = ref->connectModified(sigc::bind<2>(sigc::ptr_fun(&pattern_ref_modified), pat));
 	}
 
 	pattern_ref_modified (ref, 0, pat);

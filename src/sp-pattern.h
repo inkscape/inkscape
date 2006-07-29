@@ -32,6 +32,8 @@ class SPPatternClass;
 #include "sp-paint-server.h"
 #include "uri-references.h"
 
+#include <sigc++/connection.h>
+
 class SPPatternReference : public Inkscape::URIReference {
 public:
         SPPatternReference (SPObject *obj) : URIReference(obj) {}
@@ -70,6 +72,8 @@ struct SPPattern : public SPPaintServer {
 	/* VieBox */
 	NRRect viewBox;
 	guint viewBox_set : 1;
+
+	sigc::connection modified_connection;
 };
 
 struct SPPatternClass {
