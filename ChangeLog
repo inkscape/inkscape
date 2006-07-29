@@ -1,3 +1,9 @@
+2006-06-29  MenTaLguY  <mental@rydia.net>
+
+	* src/widgets/gradient-toolbar.cpp, src/widgets/gradient-toolbar.cpp:
+
+	  switch to sigc++ SPObject signals
+
 2006-06-27  MenTaLguY  <mental@rydia.net>
 
 	* src/dialogs/sp-attribute-widget.cpp,

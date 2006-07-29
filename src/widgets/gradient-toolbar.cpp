@@ -429,12 +429,6 @@ static void gr_disconnect_sigc (GObject *obj, sigc::connection *connection) {
     delete connection;
 }
 
-static void gr_disconnect_gsignal (GObject *widget, gpointer defs) {
-    if (defs && G_IS_OBJECT(defs))
-        sp_signal_disconnect_by_data (defs, widget);
-}
-
-
 static void
 gr_edit (GtkWidget *button, GtkWidget *widget)
 {
@@ -533,12 +527,14 @@ gr_change_widget (SPDesktop *desktop)
     g_signal_connect(G_OBJECT(widget), "destroy", G_CALLBACK(gr_disconnect_sigc), conn3);
 
     // connect to release and modified signals of the defs (i.e. when someone changes gradient)
-    g_signal_connect (G_OBJECT (SP_DOCUMENT_DEFS (document)), "release", G_CALLBACK (gr_defs_release), widget);
-    g_signal_connect (G_OBJECT (SP_DOCUMENT_DEFS (document)), "modified", G_CALLBACK (gr_defs_modified), widget);
+    sigc::connection *release_connection = new sigc::connection();
+    *release_connection = SP_DOCUMENT_DEFS(document)->connectRelease(sigc::bind<1>(sigc::ptr_fun(&gr_defs_release), widget));
+    sigc::connection *modified_connection = new sigc::connection();
+    *modified_connection = SP_DOCUMENT_DEFS(document)->connectModified(sigc::bind<2>(sigc::ptr_fun(&gr_defs_modified), widget));
 
     // when widget is destroyed, disconnect
-    g_signal_connect(G_OBJECT(widget), "destroy", G_CALLBACK(gr_disconnect_gsignal), G_OBJECT (SP_DOCUMENT_DEFS (document)));
-    g_signal_connect(G_OBJECT(widget), "destroy", G_CALLBACK(gr_disconnect_gsignal), G_OBJECT (SP_DOCUMENT_DEFS (document)));
+    g_signal_connect(G_OBJECT(widget), "destroy", G_CALLBACK(gr_disconnect_sigc), release_connection);
+    g_signal_connect(G_OBJECT(widget), "destroy", G_CALLBACK(gr_disconnect_sigc), modified_connection);
 
     gtk_widget_show_all (widget);
     return widget;
