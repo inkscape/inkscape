@@ -2,9 +2,10 @@
 
 	* src/desktop.cpp, src/desktop.h, src/sp-gradient.cpp,
 	  src/sp-gradient.h, src/sp-pattern.cpp, src/sp-pattern.h,
-	  src/widgets/desktop-widget.cpp, src/widgets/desktop-widget.h,
-	  src/widgets/gradient-image.cpp, src/widgets/gradient-image.h,
-	  src/widgets/gradient-toolbar.cpp, src/widgets/gradient-toolbar.cpp:
+	  src/sp-switch.cpp, src/sp-switch.h, src/widgets/desktop-widget.cpp,
+	  src/widgets/desktop-widget.h, src/widgets/gradient-image.cpp,
+	  src/widgets/gradient-image.h, src/widgets/gradient-toolbar.cpp,
+	  src/widgets/gradient-toolbar.cpp:
 
 	  switch to sigc++ SPObject signals
 

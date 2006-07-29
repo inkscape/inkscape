@@ -5,6 +5,7 @@
  *
  * Authors:
  *   Andrius R. <knutux@gmail.com>
+ *   MenTaLguY  <mental@rydia.net>
  *
  * Copyright (C) 2006 authors
  *
@@ -20,6 +21,9 @@
 #include "sp-switch.h"
 #include "display/nr-arena-group.h"
 #include "conditions.h"
+
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
 
 static void sp_switch_class_init (SPSwitchClass *klass);
 static void sp_switch_init (SPSwitch *group);
@@ -60,7 +64,7 @@ static void sp_switch_init (SPSwitch *group)
     group->group = new CSwitch(group);
 }
 
-CSwitch::CSwitch(SPGroup *group) : CGroup(group), _cached_item(NULL), _release_handler_id(0) {
+CSwitch::CSwitch(SPGroup *group) : CGroup(group), _cached_item(NULL) {
 }
 
 CSwitch::~CSwitch() {
@@ -133,10 +137,7 @@ void CSwitch::_reevaluate(bool add_to_arena) {
     }
 
     _cached_item = evaluated_child;
-    _release_handler_id = g_signal_connect(
-                                    G_OBJECT(evaluated_child), "release",
-                                    G_CALLBACK(&CSwitch::_releaseItem),
-                                    this);
+    _release_connection = evaluated_child->connectRelease(sigc::bind(sigc::ptr_fun(&CSwitch::_releaseItem), this));
 
     _group->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
 }
@@ -151,8 +152,7 @@ void CSwitch::_releaseLastItem(SPObject *obj)
     if (NULL == _cached_item || _cached_item != obj)
         return;
 
-    g_signal_handler_disconnect(G_OBJECT(_cached_item), _release_handler_id);
-    _release_handler_id = 0;
+    _release_connection.disconnect();
     _cached_item = NULL;
 }
 

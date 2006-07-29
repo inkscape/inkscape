@@ -14,6 +14,8 @@
 
 #include "sp-item-group.h"
 
+#include <sigc++/connection.h>
+
 #define SP_TYPE_SWITCH            (CSwitch::getType())
 #define SP_SWITCH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SWITCH, SPSwitch))
 #define SP_SWITCH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_SWITCH, SPSwitchClass))
@@ -48,7 +50,7 @@ protected:
 
 private:
     SPObject *_cached_item;
-    gulong _release_handler_id;
+    sigc::connection _release_connection;
 };
 
 struct SPSwitch : public SPGroup {
