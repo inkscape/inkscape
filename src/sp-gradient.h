@@ -20,6 +20,8 @@
 #include "sp-gradient-units.h"
 #include "sp-gradient-vector.h"
 
+#include <sigc++/connection.h>
+
 struct SPGradientReference;
 
 typedef enum {
@@ -69,6 +71,8 @@ struct SPGradient : public SPPaintServer {
 	SPGradientVector vector;
 	/** Rendered color array (4 * 1024 bytes) */
 	guchar *color;
+
+        sigc::connection modified_connection;
 };
 
 /**

@@ -26,6 +26,8 @@
 #include <libnr/nr-matrix-translate-ops.h>
 #include "libnr/nr-scale-translate-ops.h"
 
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
 
 #include "display/nr-gradient-gpl.h"
 #include "svg/svg.h"
@@ -377,6 +379,8 @@ sp_gradient_init(SPGradient *gr)
     gr->vector.stops.clear();
 
     gr->color = NULL;
+
+    new (&gr->modified_connection) sigc::connection();
 }
 
 /**
@@ -425,9 +429,7 @@ sp_gradient_release(SPObject *object)
     }
 
     if (gradient->ref) {
-        if (gradient->ref->getObject()) {
-            sp_signal_disconnect_by_data(gradient->ref->getObject(), gradient);
-        }
+        gradient->modified_connection.disconnect();
         gradient->ref->detach();
         delete gradient->ref;
         gradient->ref = NULL;
@@ -437,6 +439,8 @@ sp_gradient_release(SPObject *object)
         g_free(gradient->color);
         gradient->color = NULL;
     }
+
+    gradient->modified_connection.~connection();
 
     if (((SPObjectClass *) gradient_parent_class)->release)
         ((SPObjectClass *) gradient_parent_class)->release(object);
@@ -518,12 +522,12 @@ static void
 gradient_ref_changed(SPObject *old_ref, SPObject *ref, SPGradient *gr)
 {
     if (old_ref) {
-        sp_signal_disconnect_by_data(old_ref, gr);
+        gr->modified_connection.disconnect();
     }
     if ( SP_IS_GRADIENT(ref)
          && ref != gr )
     {
-        g_signal_connect(G_OBJECT(ref), "modified", G_CALLBACK(gradient_ref_modified), gr);
+        gr->modified_connection = ref->connectModified(sigc::bind<2>(sigc::ptr_fun(&gradient_ref_modified), gr));
     }
     /// \todo Fixme: what should the flags (second) argument be? */
     gradient_ref_modified(ref, 0, gr);
