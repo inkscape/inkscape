@@ -19,6 +19,7 @@ class SPGradient;
 
 #include <glib.h>
 
+#include <sigc++/connection.h>
 
 #define SP_TYPE_GRADIENT_IMAGE (sp_gradient_image_get_type ())
 #define SP_GRADIENT_IMAGE(o) (GTK_CHECK_CAST ((o), SP_TYPE_GRADIENT_IMAGE, SPGradientImage))
@@ -30,6 +31,9 @@ struct SPGradientImage {
 	GtkWidget widget;
 	SPGradient *gradient;
 	guchar *px;
+
+	sigc::connection release_connection;
+	sigc::connection modified_connection;
 };
 
 struct SPGradientImageClass {

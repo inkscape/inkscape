@@ -1,6 +1,7 @@
 2006-06-29  MenTaLguY  <mental@rydia.net>
 
-	* src/widgets/gradient-toolbar.cpp, src/widgets/gradient-toolbar.cpp:
+	* src/widgets/gradient-image.cpp, src/widgets/gradient-image.h,
+	  src/widgets/gradient-toolbar.cpp, src/widgets/gradient-toolbar.cpp:
 
 	  switch to sigc++ SPObject signals
 

@@ -17,7 +17,11 @@
 #include "../display/nr-plain-stuff.h"
 #include "../display/nr-plain-stuff-gdk.h"
 #include "gradient-image.h"
+#include "sp-gradient.h"
 #include "sp-gradient-fns.h"
+
+#include <sigc++/functors/ptr_fun.h>
+#include <sigc++/adaptors/bind.h>
 
 #define VBLOCK 16
 
@@ -31,8 +35,8 @@ static void sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *r
 static void sp_gradient_image_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static gint sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event);
 
-static void sp_gradient_image_gradient_release (SPGradient *gr, SPGradientImage *im);
-static void sp_gradient_image_gradient_modified (SPGradient *gr, guint flags, SPGradientImage *im);
+static void sp_gradient_image_gradient_release (SPObject *, SPGradientImage *im);
+static void sp_gradient_image_gradient_modified (SPObject *, guint flags, SPGradientImage *im);
 static void sp_gradient_image_update (SPGradientImage *img);
 
 static GtkWidgetClass *parent_class;
@@ -82,6 +86,9 @@ sp_gradient_image_init (SPGradientImage *image)
 
 	image->gradient = NULL;
 	image->px = NULL;
+
+	new (&image->release_connection) sigc::connection();
+	new (&image->modified_connection) sigc::connection();
 }
 
 static void
@@ -92,9 +99,13 @@ sp_gradient_image_destroy (GtkObject *object)
 	image = SP_GRADIENT_IMAGE (object);
 
 	if (image->gradient) {
-  		sp_signal_disconnect_by_data (image->gradient, image);
+		image->release_connection.disconnect();
+		image->modified_connection.disconnect();
 		image->gradient = NULL;
 	}
+
+	image->release_connection.~connection();
+	image->modified_connection.~connection();
 
 	if (((GtkObjectClass *) (parent_class))->destroy)
 		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
@@ -217,24 +228,26 @@ void
 sp_gradient_image_set_gradient (SPGradientImage *image, SPGradient *gradient)
 {
 	if (image->gradient) {
-  		sp_signal_disconnect_by_data (image->gradient, image);
+		image->release_connection.disconnect();
+		image->modified_connection.disconnect();
 	}
 
 	image->gradient = gradient;
 
 	if (gradient) {
-		g_signal_connect (G_OBJECT (gradient), "release", G_CALLBACK (sp_gradient_image_gradient_release), image);
-		g_signal_connect (G_OBJECT (gradient), "modified", G_CALLBACK (sp_gradient_image_gradient_modified), image);
+		image->release_connection = gradient->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gradient_image_gradient_release), image));
+		image->modified_connection = gradient->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_gradient_image_gradient_modified), image));
 	}
 
 	sp_gradient_image_update (image);
 }
 
 static void
-sp_gradient_image_gradient_release (SPGradient *gradient, SPGradientImage *image)
+sp_gradient_image_gradient_release (SPObject *, SPGradientImage *image)
 {
 	if (image->gradient) {
-  		sp_signal_disconnect_by_data (image->gradient, image);
+		image->release_connection.disconnect();
+		image->modified_connection.disconnect();
 	}
 
 	image->gradient = NULL;
@@ -243,7 +256,7 @@ sp_gradient_image_gradient_release (SPGradient *gradient, SPGradientImage *image
 }
 
 static void
-sp_gradient_image_gradient_modified (SPGradient *gradient, guint flags, SPGradientImage *image)
+sp_gradient_image_gradient_modified (SPObject *, guint flags, SPGradientImage *image)
 {
 	sp_gradient_image_update (image);
 }
