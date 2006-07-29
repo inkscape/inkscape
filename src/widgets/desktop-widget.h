@@ -19,6 +19,8 @@
 #include "ui/view/view-widget.h"
 #include "ui/view/edit-widget-interface.h"
 
+#include <sigc++/connection.h>
+
 #define SP_TYPE_DESKTOP_WIDGET (sp_desktop_widget_get_type ())
 #define SP_DESKTOP_WIDGET(o) (GTK_CHECK_CAST ((o), SP_TYPE_DESKTOP_WIDGET, SPDesktopWidget))
 #define SP_DESKTOP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), SP_TYPE_DESKTOP_WIDGET, SPDesktopWidgetClass))
@@ -54,6 +56,8 @@ struct SPDesktopWidget {
     SPViewWidget viewwidget;
 
     unsigned int update : 1;
+
+    sigc::connection modified_connection;
 
     GtkTooltips *tt;
 

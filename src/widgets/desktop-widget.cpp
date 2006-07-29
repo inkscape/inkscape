@@ -77,7 +77,7 @@ static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDeskt
 
 
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
-static void sp_desktop_widget_namedview_modified (SPNamedView *nv, guint flags, SPDesktopWidget *dtw);
+static void sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidget *dtw);
 
 static gdouble sp_dtw_zoom_value_to_display (gdouble value);
 static gdouble sp_dtw_zoom_display_to_value (gdouble value);
@@ -162,6 +162,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     GtkWidget *hbox;
     GtkWidget *eventbox;
     GtkStyle *style;
+
+    new (&dtw->modified_connection) sigc::connection();
 
     widget = GTK_WIDGET (dtw);
 
@@ -344,11 +346,13 @@ sp_desktop_widget_destroy (GtkObject *object)
     if (dtw->desktop) {
         dtw->layer_selector->unreference();
         inkscape_remove_desktop (dtw->desktop); // clears selection too
-        sp_signal_disconnect_by_data (G_OBJECT (dtw->desktop->namedview), dtw);
+        dtw->modified_connection.disconnect();
         dtw->desktop->destroy();
         Inkscape::GC::release (dtw->desktop);
         dtw->desktop = NULL;
     }
+
+    dtw->modified_connection.~connection();
 
     if (GTK_OBJECT_CLASS (dtw_parent_class)->destroy) {
         (* GTK_OBJECT_CLASS (dtw_parent_class)->destroy) (object);
@@ -449,7 +453,10 @@ sp_desktop_widget_realize (GtkWidget *widget)
     dtw->desktop->set_display_area (d.x0, d.y0, d.x1, d.y1, 10);
 
     /* Listen on namedview modification */
-    g_signal_connect (G_OBJECT (dtw->desktop->namedview), "modified", G_CALLBACK (sp_desktop_widget_namedview_modified), dtw);
+    // originally (prior to the sigc++ conversion) the signal was simply
+    // connected twice rather than disconnecting the first connection
+    dtw->modified_connection.disconnect();
+    dtw->modified_connection = dtw->desktop->namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_desktop_widget_namedview_modified), dtw));
     sp_desktop_widget_namedview_modified (dtw->desktop->namedview, SP_OBJECT_MODIFIED_FLAG, dtw);
 
     dtw->updateTitle(SP_DOCUMENT_NAME (dtw->desktop->doc()));
@@ -897,7 +904,7 @@ sp_desktop_widget_new (SPNamedView *namedview)
     sp_view_widget_set_view (SP_VIEW_WIDGET (dtw), dtw->desktop);
 
     /* Listen on namedview modification */
-    g_signal_connect (G_OBJECT (namedview), "modified", G_CALLBACK (sp_desktop_widget_namedview_modified), dtw);
+    dtw->modified_connection = namedview->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_desktop_widget_namedview_modified), dtw));
 
     dtw->layer_selector->setDesktop(dtw->desktop);
 
@@ -941,8 +948,9 @@ sp_desktop_widget_update_rulers (SPDesktopWidget *dtw)
 
 
 static void
-sp_desktop_widget_namedview_modified (SPNamedView *nv, guint flags, SPDesktopWidget *dtw)
+sp_desktop_widget_namedview_modified (SPObject *obj, guint flags, SPDesktopWidget *dtw)
 {
+    SPNamedView *nv=SP_NAMEDVIEW(obj);
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         dtw->dt2r = 1.0 / nv->doc_units->unittobase;
         dtw->ruler_origin = nv->gridorigin;
