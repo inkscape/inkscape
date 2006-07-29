@@ -99,8 +99,6 @@ static gchar *sp_object_get_unique_id(SPObject *object, gchar const *defid);
 
 guint update_in_progress = 0; // guard against update-during-update
 
-enum {RELEASE, MODIFIED, LAST_SIGNAL};
-
 Inkscape::XML::NodeEventVector object_event_vector = {
     sp_object_repr_child_added,
     sp_object_repr_child_removed,
@@ -110,7 +108,6 @@ Inkscape::XML::NodeEventVector object_event_vector = {
 };
 
 static GObjectClass *parent_class;
-static guint object_signals[LAST_SIGNAL] = {0};
 
 /**
  * Registers the SPObject class with Gdk and returns its type number.
@@ -146,21 +143,6 @@ sp_object_class_init(SPObjectClass *klass)
     object_class = (GObjectClass *) klass;
 
     parent_class = (GObjectClass *) g_type_class_ref(G_TYPE_OBJECT);
-
-    object_signals[RELEASE] =  g_signal_new("release",
-                                            G_TYPE_FROM_CLASS(klass),
-                                            (GSignalFlags)(G_SIGNAL_RUN_CLEANUP | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS),
-                                            G_STRUCT_OFFSET(SPObjectClass, release),
-                                            NULL, NULL,
-                                            sp_marshal_VOID__VOID,
-                                            G_TYPE_NONE, 0);
-    object_signals[MODIFIED] = g_signal_new("modified",
-                                            G_TYPE_FROM_CLASS(klass),
-                                            G_SIGNAL_RUN_FIRST,
-                                            G_STRUCT_OFFSET(SPObjectClass, modified),
-                                            NULL, NULL,
-                                            sp_marshal_NONE__UINT,
-                                            G_TYPE_NONE, 1, G_TYPE_UINT);
 
     object_class->finalize = sp_object_finalize;
 
@@ -869,7 +851,10 @@ void SPObject::releaseReferences() {
 
     sp_repr_remove_listener_by_data(this->repr, this);
 
-    g_signal_emit(G_OBJECT(this), object_signals[RELEASE], 0);
+    SPObjectClass *klass=(SPObjectClass *)G_OBJECT_GET_CLASS(this);
+    if (klass->release) {
+        klass->release(this);
+    }
     this->_release_signal.emit(this);
 
     /* all hrefs should be released by the "release" handlers */
@@ -1302,7 +1287,10 @@ SPObject::emitModified(unsigned int flags)
     this->mflags = 0;
 
     g_object_ref(G_OBJECT(this));
-    g_signal_emit(G_OBJECT(this), object_signals[MODIFIED], 0, flags);
+    SPObjectClass *klass=(SPObjectClass *)G_OBJECT_GET_CLASS(this);
+    if (klass->modified) {
+        klass->modified(this, flags);
+    }
     _modified_signal.emit(this, flags);
     g_object_unref(G_OBJECT(this));
 }

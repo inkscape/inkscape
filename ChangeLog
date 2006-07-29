@@ -1,5 +1,9 @@
 2006-06-29  MenTaLguY  <mental@rydia.net>
 
+	* src/sp-object.cpp:
+
+	  remove GObject signals from SPObject
+
 	* src/desktop.cpp, src/desktop.h, src/sp-gradient.cpp,
 	  src/sp-gradient.h, src/sp-pattern.cpp, src/sp-pattern.h,
 	  src/sp-switch.cpp, src/sp-switch.h, src/widgets/desktop-widget.cpp,
