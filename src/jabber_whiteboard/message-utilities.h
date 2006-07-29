@@ -18,7 +18,7 @@
 #include "xml/repr.h"
 
 #include "xml/node.h"
-#include "jabber_whiteboard/typedefs.h"
+#include "jabber_whiteboard/defines.h"
 
 using Glib::ustring;
 

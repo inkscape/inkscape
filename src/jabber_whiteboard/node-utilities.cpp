@@ -18,7 +18,6 @@
 #include "xml/repr.h"
 
 #include "jabber_whiteboard/defines.h"
-#include "jabber_whiteboard/typedefs.h"
 #include "jabber_whiteboard/node-utilities.h"
 #include "jabber_whiteboard/node-tracker.h"
 //#include "jabber_whiteboard/node-observer.h"

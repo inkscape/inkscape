@@ -16,7 +16,7 @@
 
 #include "xml/simple-session.h"
 #include "jabber_whiteboard/inkboard-session.h"
-
+#include "jabber_whiteboard/defines.h"
 #include "jabber_whiteboard/session-manager.h"
 
 namespace Inkscape {
@@ -54,11 +54,11 @@ InkboardDocument::startSessionNegotiation()
 	SessionManager& sm = SessionManager::instance();
         switch (_type) {
             case INKBOARD_MUC:
-                sm.sendGroup(_recipient, CHATROOM_SYNCHRONIZE_REQUEST, " ");
+                sm.sendGroup(_recipient, Message::PROTOCOL, " ");
                 break;
             case INKBOARD_PRIVATE:
             default:
-                sm.sendProtocol(_recipient, CONNECT_REQUEST_USER);
+                sm.send(_recipient, Message::PROTOCOL," ");
                 break;
         }
 }
@@ -70,14 +70,31 @@ InkboardDocument::terminateSession()
 }
 
 void
-InkboardDocument::processInkboardEvent(MessageType mtype, unsigned int seqnum, Glib::ustring const& data)
+InkboardDocument::processInkboardEvent(Message::Wrapper mtype, unsigned int seqnum, Glib::ustring const& data)
 {
     g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing Inkboard event: mtype=%d seqnum=%d data=%s\n", mtype, seqnum, data.c_str());
 }
 
+bool
+InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper wrapper, Message::Message message)
+{
+    char *fmt=
+        "<message type='chat' from='%s' to='%s'>"
+            "<wb xmlns='%s'>"
+                "<protocol>"
+                    "%s"
+                "</protocol>"
+            "</wb>"
+        "</message>";
+    //if (!getClient().write(fmt,getClient().getJid().c_str(),destJid.c_str(),Vars::INKBOARD_XMLNS,message))
+    //    return false;
+
+    return true;
 }
 
-}
+} // namespace Whiteboard
+} // namespace Inkscape
+
 
 /*
   Local Variables:

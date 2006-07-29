@@ -21,7 +21,7 @@
 #include "jabber_whiteboard/inkboard-document.h"
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/invitation-confirm-dialog.h"
-
+#include "jabber_whiteboard/defines.h"
 
 namespace Inkscape {
 
@@ -58,7 +58,7 @@ SessionManager::_checkInvitationQueue()
 			{
 				SPDesktop* dt = createInkboardDesktop(from, INKBOARD_PRIVATE);
 				InkboardDocument* idoc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-				send(from, CONNECT_REQUEST_RESPONSE_USER, " ");
+				send(from, Message::PROTOCOL, " ");
 				break;
 			}
 			case DECLINE_INVITATION:
@@ -66,7 +66,7 @@ SessionManager::_checkInvitationQueue()
 				break;
 			}
 			default:
-				send(from, CONNECT_REQUEST_REFUSED_BY_PEER, " ");
+				send(from, Message::PROTOCOL, " ");
 				break;
 		}
 

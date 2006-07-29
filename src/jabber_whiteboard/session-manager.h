@@ -13,16 +13,14 @@
 #ifndef __INKSCAPE_WHITEBOARD_SESSION_MANAGER_H__
 #define __INKSCAPE_WHITEBOARD_SESSION_MANAGER_H__
 
-#include "jabber_whiteboard/pedrogui.h"
-
 #include <glibmm.h>
 
 #include <list>
 #include <bitset>
 
+#include "jabber_whiteboard/pedrogui.h"
 #include "jabber_whiteboard/message-queue.h"
 #include "jabber_whiteboard/defines.h"
-#include "jabber_whiteboard/internal-constants.h"
 #include "jabber_whiteboard/inkboard-session.h"
 
 #include "gc-alloc.h"
@@ -48,16 +46,16 @@ public:
      *
      */
     SessionManager();
-    
+
     /**
      *
      */
     virtual ~SessionManager();
-        
-        
+
+
     static void showClient();
     static SessionManager& instance();
-    
+
     /**
      *
      */
@@ -73,19 +71,14 @@ public:
      *
      */
     virtual bool send(const Glib::ustring &destJid, 
-                      const MessageType type,
+                      const Message::Wrapper type,
                       const Glib::ustring &data);
-    /**
-     *
-     */
-    virtual bool sendProtocol(const Glib::ustring &destJid, 
-                      const MessageType type);
 
     /**
      *
      */
     virtual bool sendGroup(const Glib::ustring &destJid,
-			   const MessageType type,
+			   const Message::Wrapper type,
                            const Glib::ustring &data);
     /**
      *
@@ -209,7 +202,7 @@ private:
 
 	// methods
     void _processInkboardEvent(Pedro::XmppEvent const& event);
-	void _handleSessionEvent(MessageType mtype, Pedro::XmppEvent const& event);
+    void _handleSessionEvent(Message::Wrapper mtype, Pedro::XmppEvent const& event);
     void _handleIncomingInvitation(Glib::ustring const& from);
 	void _handleInvitationResponse(Glib::ustring const& from, InvitationResponses resp);
 

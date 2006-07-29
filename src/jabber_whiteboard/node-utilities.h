@@ -11,7 +11,7 @@
 #ifndef __WHITEBOARD_NODE_UTILITIES_H__
 #define __WHITEBOARD_NODE_UTILITIES_H__
 
-#include "jabber_whiteboard/typedefs.h"
+#include "jabber_whiteboard/defines.h"
 #include "xml/node.h"
 #include <glibmm.h>
 

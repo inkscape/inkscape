@@ -16,7 +16,7 @@
 #include <bitset>
 
 #include "pedro/pedroxmpp.h"
-#include "jabber_whiteboard/internal-constants.h"
+#include "jabber_whiteboard/defines.h"
 
 #include "xml/simple-session.h"
 #include "util/share.h"

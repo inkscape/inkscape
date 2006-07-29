@@ -14,8 +14,6 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/empty.cpp \
 	jabber_whiteboard/keynode.cpp \
 	jabber_whiteboard/keynode.h \
-	jabber_whiteboard/internal-constants.cpp \
-	jabber_whiteboard/internal-constants.h \
 	jabber_whiteboard/message-aggregator.cpp \
 	jabber_whiteboard/message-aggregator.h \
 	jabber_whiteboard/message-node.h \
@@ -40,8 +38,7 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/session-manager.h \
 	jabber_whiteboard/tracker-node.h \
 	jabber_whiteboard/pedrogui.cpp \
-	jabber_whiteboard/pedrogui.h \
-	jabber_whiteboard/typedefs.h 
+	jabber_whiteboard/pedrogui.h 
 
 
 if WITH_INKBOARD

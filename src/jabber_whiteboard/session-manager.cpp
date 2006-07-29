@@ -80,7 +80,7 @@ unsigned long SessionManager::getSequenceNumber()
 
 bool
 SessionManager::send(const Glib::ustring &destJid, 
-					 const MessageType type,
+					 const Message::Wrapper type,
                      const Glib::ustring &data)
 {
     Pedro::DOMString xmlData = Pedro::Parser::encode(data);
@@ -108,33 +108,8 @@ SessionManager::send(const Glib::ustring &destJid,
 }
 
 bool
-SessionManager::sendProtocol(const Glib::ustring &destJid, 
-					 const MessageType type)
-{
-    char *fmt=
-    "<message type='chat' from='%s' to='%s'>"
-        "<wb xmlns='%s'>"
-            "<protocol>"
-                "<%s />"
-            "</protocol>"
-        "</wb>"
-    "</message>";
-    if (!getClient().write(fmt, 
-                           getClient().getJid().c_str(),
-                           destJid.c_str(),
-                           INKBOARD_XMLNS,
-                           MessageString[type]
-                           ))
-        {
-        return false;
-        }
-
-    return true;
-}
-
-bool
 SessionManager::sendGroup(const Glib::ustring &groupJid,
-						  const MessageType type,
+		          const Message::Wrapper type,
                           const Glib::ustring &data)
 {
     Pedro::DOMString xmlData = Pedro::Parser::encode(data);
@@ -414,19 +389,12 @@ SessionManager::_processInkboardEvent(Pedro::XmppEvent const& event)
 //	MessageValidityTestResult res = MessageVerifier::verifyMessageValidity(event, mtype, doc);
 
 	MessageValidityTestResult res = RESULT_INVALID;
-
+        /*
 	switch (res) {
 		case RESULT_VALID:
 		{
 			switch (mtype) {
-				case CONNECT_REQUEST_USER:
-				case CONNECT_REQUEST_REFUSED_BY_PEER:
-				case UNSUPPORTED_PROTOCOL_VERSION:
-				case ALREADY_IN_SESSION:
-					_handleSessionEvent(mtype, event);
-					break;
-				case DISCONNECTED_FROM_USER_SIGNAL:
-					break;
+				case CONNECT_REQUEST:
 				default:
 					if (doc != NULL) {
 						unsigned int seqnum = atoi(seq.c_str());
@@ -442,27 +410,24 @@ SessionManager::_processInkboardEvent(Pedro::XmppEvent const& event)
 			g_warning("Received message in invalid context.");
 			break;
 	}
+        */
 }
 
 void
-SessionManager::_handleSessionEvent(MessageType mtype, Pedro::XmppEvent const& event)
+SessionManager::_handleSessionEvent(Message::Wrapper mtype, Pedro::XmppEvent const& event)
 {
+        /*
 	switch (mtype) {
-		case CONNECT_REQUEST_USER:
+		case CONNECT_REQUEST:
 			_handleIncomingInvitation(event.getFrom());
 			break;
-		case CONNECT_REQUEST_REFUSED_BY_PEER:
+		case INVITATION_DECLINE:
 			_handleInvitationResponse(event.getFrom(), DECLINE_INVITATION);
-			break;
-		case ALREADY_IN_SESSION:
-			_handleInvitationResponse(event.getFrom(), PEER_ALREADY_IN_SESSION);
-			break;
-		case UNSUPPORTED_PROTOCOL_VERSION:
-			_handleInvitationResponse(event.getFrom(), UNSUPPORTED_PROTOCOL);
 			break;
 		default:
 			break;
 	}
+        */
 }
 
 void

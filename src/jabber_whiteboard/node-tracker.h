@@ -14,7 +14,7 @@
 #define __WHITEBOARD_XML_NODE_TRACKER_H__
 
 #include "jabber_whiteboard/tracker-node.h"
-#include "jabber_whiteboard/typedefs.h"
+#include "jabber_whiteboard/defines.h"
 
 #include <bitset>
 #include <cstring>
