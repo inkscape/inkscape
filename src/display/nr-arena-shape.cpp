@@ -801,7 +801,7 @@ nr_arena_shape_clip(NRArenaItem *item, NRRectL *area, NRPixBlock *pb)
             s = NR_PIXBLOCK_PX(&m) + (y - area->y0) * m.rs;
             d = NR_PIXBLOCK_PX(pb) + (y - area->y0) * pb->rs;
             for (int x = area->x0; x < area->x1; x++) {
-                *d = NR_A7_NORMALIZED(*s,*d);
+                *d = NR_COMPOSEA_111(*s, *d);
                 d ++;
                 s ++;
             }
@@ -1148,10 +1148,8 @@ shape_run_A8_OR(raster_info &dest,void */*data*/,int st,float vst,int en,float v
             unsigned int c0_24=(int)sv;
             c0_24&=0xFF;
             while (len > 0) {
-                unsigned int da;
                 /* Draw */
-                da = NR_A7(c0_24,d[0]);
-                d[0] = NR_PREMUL_SINGLE(da);
+                d[0] = NR_COMPOSEA_111(c0_24,d[0]);
                 d += 1;
                 len -= 1;
             }
@@ -1162,10 +1160,8 @@ shape_run_A8_OR(raster_info &dest,void */*data*/,int st,float vst,int en,float v
             sv*=256;
             unsigned int c0_24=(int)sv;
             c0_24&=0xFF;
-            unsigned int da;
             /* Draw */
-            da = NR_A7(c0_24,d[0]);
-            d[0] = NR_PREMUL_SINGLE(da);
+            d[0] = NR_COMPOSEA_111(c0_24,d[0]);
         } else {
             dv/=len;
             sv+=0.5*dv; // correction trapezoidale
@@ -1174,12 +1170,11 @@ shape_run_A8_OR(raster_info &dest,void */*data*/,int st,float vst,int en,float v
             int c0_24 = static_cast<int>(CLAMP(sv, 0, 16777216));
             int s0_24 = static_cast<int>(dv);
             while (len > 0) {
-                unsigned int ca, da;
+                unsigned int ca;
                 /* Draw */
                 ca = c0_24 >> 16;
                 if ( ca > 255 ) ca=255;
-                da = NR_A7(ca,d[0]);
-                d[0] = NR_PREMUL_SINGLE(da);
+                d[0] = NR_COMPOSEA_111(ca,d[0]);
                 d += 1;
                 c0_24 += s0_24;
                 c0_24 = CLAMP(c0_24, 0, 16777216);

@@ -31,26 +31,26 @@ void nr_mmx_R8G8B8_R8G8B8_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, c
 #endif /* __cplusplus */
 #endif
 
+// Naming: nr_RESULT_BACKGROUND_FOREGROUND_extra
+
 void
 nr_R8G8B8A8_N_EMPTY_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
+	for (r = h; r > 0; r--) {
 		if (alpha == 0) {
-			memset (px, 0x0, 4 * w);
+			memset(px, 0x0, 4 * w);
 		} else if (alpha == 255) {
-			memcpy (px, spx, 4 * w);
+			memcpy(px, spx, 4 * w);
 		} else {
-			const unsigned char *s;
-			unsigned char *d;
-			d = px;
-			s = spx;
-			for (c = 0; c < w; c++) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
 				*d++ = *s++;
 				*d++ = *s++;
 				*d++ = *s++;
-				*d++ = NR_PREMUL (*s, alpha);
+				*d++ = NR_PREMUL_111(*s, alpha);
 				s++;
 			}
 		}
@@ -62,23 +62,157 @@ nr_R8G8B8A8_N_EMPTY_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const u
 void
 nr_R8G8B8A8_N_EMPTY_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
+	for (r = h; r > 0; r--) {
 		if (alpha == 0) {
-			memset (px, 0x0, 4 * w);
+			memset(px, 0x0, 4 * w);
 		} else {
-			const unsigned char *s;
-			unsigned char *d;
-			s = spx;
-			d = px;
-			for (c = 0; c < w; c++) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					d[3] = 0;
+				} else if (s[3] == 255) {
+					memcpy(d, s, 4);
+				} else {
+					d[0] = NR_DEMUL_111(s[0], s[3]);
+					d[1] = NR_DEMUL_111(s[1], s[3]);
+					d[2] = NR_DEMUL_111(s[2], s[3]);
+					d[3] = NR_PREMUL_111(s[3], alpha);
+				}
+				d += 4;
+				s += 4;
+			}
+		}
+		px += rs;
+		spx += srs;
+	}
+}
+
+void
+nr_R8G8B8A8_P_EMPTY_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
+{
+	unsigned int r, c;
+
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		if (alpha == 0) {
+			memset(px, 0x0, 4 * w);
+		} else if (alpha == 255) {
+			for (c = w; c > 0; c--) {
+				d[0] = NR_PREMUL_111(s[0], s[3]);
+				d[1] = NR_PREMUL_111(s[1], s[3]);
+				d[2] = NR_PREMUL_111(s[2], s[3]);
+				d[3] = s[3];
+				d += 4;
+				s += 4;
+			}
+		} else {
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					memset(d, 0, 4);
+				} else {
+					unsigned int a;
+					a = NR_PREMUL_112(s[3], alpha);
+					d[0] = NR_PREMUL_121(s[0], a);
+					d[1] = NR_PREMUL_121(s[1], a);
+					d[2] = NR_PREMUL_121(s[2], a);
+					d[3] = NR_NORMALIZE_21(a);
+				}
+				d += 4;
+				s += 4;
+			}
+		}
+		px += rs;
+		spx += srs;
+	}
+}
+
+void
+nr_R8G8B8A8_P_EMPTY_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
+{
+	unsigned int r, c;
+
+	for (r = h; r > 0; r--) {
+		if (alpha == 0) {
+			memset(px, 0x0, 4 * w);
+		} else if (alpha == 255) {
+			memcpy(px, spx, 4 * w);
+		} else {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				d[0] = NR_PREMUL_111(s[0], alpha);
+				d[1] = NR_PREMUL_111(s[1], alpha);
+				d[2] = NR_PREMUL_111(s[2], alpha);
+				d[3] = NR_PREMUL_111(s[3], alpha);
+				d += 4;
+				s += 4;
+			}
+		}
+		px += rs;
+		spx += srs;
+	}
+}
+
+void
+nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
+{
+	unsigned int r, c;
+
+	if (alpha == 0) {
+		/* NOP */
+	} else if (alpha == 255) {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					/* Transparent FG, NOP */
+				} else if ((s[3] == 255) || (d[3] == 0)) {
+					/* Full coverage, COPY */
+					memcpy(d, s, 4);
+				} else {
+					/* Full composition */
+					unsigned int ca;
+					ca = NR_COMPOSEA_112(s[3], d[3]);
+					d[0] = NR_COMPOSENNN_111121(s[0], s[3], d[0], d[3], ca);
+					d[1] = NR_COMPOSENNN_111121(s[1], s[3], d[1], d[3], ca);
+					d[2] = NR_COMPOSENNN_111121(s[2], s[3], d[2], d[3], ca);
+					d[3] = NR_NORMALIZE_21(ca);
+				}
+				d += 4;
+				s += 4;
+			}
+			px += rs;
+			spx += srs;
+		}
+	} else {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
 				unsigned int a;
-				a = NR_PREMUL (s[3], alpha);
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = a;
+				a = NR_PREMUL_112(s[3], alpha);
+				if (a == 0) {
+					/* Transparent FG, NOP */
+				} else if ((a == 255*255) || (d[3] == 0)) {
+					/* Full coverage, COPY */
+					d[0] = s[0];
+					d[1] = s[1];
+					d[2] = s[2];
+					d[3] = NR_NORMALIZE_21(a);
+				} else {
+					/* Full composition */
+					unsigned int ca;
+					ca = NR_COMPOSEA_213(a, d[3]);
+					d[0] = NR_COMPOSENNN_121131(s[0], a, d[0], d[3], ca);
+					d[1] = NR_COMPOSENNN_121131(s[1], a, d[1], d[3], ca);
+					d[2] = NR_COMPOSENNN_121131(s[2], a, d[2], d[3], ca);
+					d[3] = NR_NORMALIZE_31(ca);
+				}
 				d += 4;
 				s += 4;
 			}
@@ -89,222 +223,217 @@ nr_R8G8B8A8_N_EMPTY_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const u
 }
 
 void
-nr_R8G8B8A8_P_EMPTY_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
-{
-	int r, c;
-
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (c = 0; c < w; c++) {
-			unsigned int a;
-			a = (s[3] * alpha + 127) / 255;
-			d[0] = (s[0] * a + 127) / 255;
-			d[1] = (s[1] * a + 127) / 255;
-			d[2] = (s[2] * a + 127) / 255;
-			d[3] = a;
-			d += 4;
-			s += 4;
-		}
-		px += rs;
-		spx += srs;
-	}
-}
-
-void
-nr_R8G8B8A8_P_EMPTY_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
-{
-	int r, c;
-
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (c = 0; c < w; c++) {
-			if (alpha == 255) {
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = s[3];
-			} else {
-				d[0] = NR_PREMUL (s[0], alpha);
-				d[1] = NR_PREMUL (s[1], alpha);
-				d[2] = NR_PREMUL (s[2], alpha);
-				d[3] = NR_PREMUL (s[3], alpha);
-			}
-			d += 4;
-			s += 4;
-		}
-		px += rs;
-		spx += srs;
-	}
-}
-
-void
-nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
-{
-	int r, c;
-
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (c = 0; c < w; c++) {
-			unsigned int a;
-			a = NR_PREMUL (s[3], alpha);
-			if (a == 0) {
-				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
-				/* Full coverage, COPY */
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = a;
-			} else {
-				unsigned int ca;
-				/* Full composition */
-				ca = 65025 - (255 - a) * (255 - d[3]);
-				d[0] = NR_COMPOSENNN_A7 (s[0], a, d[0], d[3], ca);
-				d[1] = NR_COMPOSENNN_A7 (s[1], a, d[1], d[3], ca);
-				d[2] = NR_COMPOSENNN_A7 (s[2], a, d[2], d[3], ca);
-				d[3] = (ca + 127) / 255;
-			}
-			d += 4;
-			s += 4;
-		}
-		px += rs;
-		spx += srs;
-	}
-}
-
-void
 nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (c = 0; c < w; c++) {
-			unsigned int a;
-			a = NR_PREMUL (s[3], alpha);
-			if (a == 0) {
-				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
-				/* Full coverage, demul src */
-				d[0] = (s[0] * 255 + (s[3] >> 1)) / s[3];
-				d[1] = (s[1] * 255 + (s[3] >> 1)) / s[3];
-				d[2] = (s[2] * 255 + (s[3] >> 1)) / s[3];
-				d[3] = a;
-			} else {
-				if (alpha == 255) {
-					unsigned int ca;
-					/* Full composition */
-					ca = 65025 - (255 - s[3]) * (255 - d[3]);
-					d[0] = NR_COMPOSEPNN_A7 (s[0], s[3], d[0], d[3], ca);
-					d[1] = NR_COMPOSEPNN_A7 (s[1], s[3], d[1], d[3], ca);
-					d[2] = NR_COMPOSEPNN_A7 (s[2], s[3], d[2], d[3], ca);
-					d[3] = (65025 - (255 - s[3]) * (255 - d[3]) + 127) / 255;
+	if (alpha == 0) {
+		/* NOP */
+	} else if (alpha == 255) {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					/* Transparent FG, NOP */
+				} else if (s[3] == 255) {
+					/* Full coverage, demul src */
+					//   dc' = ((1 - sa) * da*dc + sc)/da' = sc/da' = sc
+					//   da' = 1 - (1 - sa) * (1 - da) = 1 - 0 * (1 - da) = 1
+					memcpy(d, s, 4);
+				} else if (d[3] == 0) {
+					/* Full coverage, demul src */
+					//   dc' = ((1 - sa) * da*dc + sc)/da' = sc/da' = sc/sa = sc/sa
+					//   da' = 1 - (1 - sa) * (1 - da) = 1 - (1 - sa) = sa
+					d[0] = NR_DEMUL_111(s[0], s[3]);
+					d[1] = NR_DEMUL_111(s[1], s[3]);
+					d[2] = NR_DEMUL_111(s[2], s[3]);
+					d[3] = s[3];
 				} else {
-					// calculate premultiplied from two premultiplieds:
-					d[0] = NR_COMPOSEPPP(NR_PREMUL (s[0], alpha), a, NR_PREMUL (d[0], d[3]), 0); // last parameter not used
-					d[1] = NR_COMPOSEPPP(NR_PREMUL (s[1], alpha), a, NR_PREMUL (d[1], d[3]), 0);
-					d[2] = NR_COMPOSEPPP(NR_PREMUL (s[2], alpha), a, NR_PREMUL (d[2], d[3]), 0);
-					// total opacity:
-					d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
-					// un-premultiply channels:
-					d[0] = d[0]*255/d[3];
-					d[1] = d[1]*255/d[3];
-					d[2] = d[2]*255/d[3];
+					/* Full composition */
+					//   dc' = ((1 - sa) * da*dc + sc)/da' = ((1 - sa) * da*dc + sc)/da'
+					//   da' = 1 - (1 - sa) * (1 - da) = 1 - (1 - sa) * (1 - da)
+					unsigned int da = NR_COMPOSEA_112(s[3], d[3]);
+					d[0] = NR_COMPOSEPNN_111121(s[0], s[3], d[0], d[3], da);
+					d[1] = NR_COMPOSEPNN_111121(s[1], s[3], d[1], d[3], da);
+					d[2] = NR_COMPOSEPNN_111121(s[2], s[3], d[2], d[3], da);
+					d[3] = NR_NORMALIZE_21(da);
 				}
+				d += 4;
+				s += 4;
 			}
-			d += 4;
-			s += 4;
+			px += rs;
+			spx += srs;
 		}
-		px += rs;
-		spx += srs;
+	} else {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				unsigned int a;
+				a = NR_PREMUL_112(s[3], alpha);
+				if (a == 0) {
+					/* Transparent FG, NOP */
+				} else if (d[3] == 0) {
+					/* Full coverage, demul src */
+					//   dc' = ((1 - alpha*sa) * da*dc + alpha*sc)/da' = alpha*sc/da' = alpha*sc/(alpha*sa) = sc/sa
+					//   da' = 1 - (1 - alpha*sa) * (1 - da) = 1 - (1 - alpha*sa) = alpha*sa
+					d[0] = NR_DEMUL_111(s[0], s[3]);
+					d[1] = NR_DEMUL_111(s[1], s[3]);
+					d[2] = NR_DEMUL_111(s[2], s[3]);
+					d[3] = NR_NORMALIZE_21(a);
+				} else {
+					//   dc' = ((1 - alpha*sa) * da*dc + alpha*sc)/da'
+					//   da' = 1 - (1 - alpha*sa) * (1 - da)
+					unsigned int da = NR_COMPOSEA_213(a, d[3]);
+					d[0] = NR_COMPOSEPNN_221131(NR_PREMUL_112(s[0], alpha), a, d[0], d[3], da);
+					d[1] = NR_COMPOSEPNN_221131(NR_PREMUL_112(s[1], alpha), a, d[1], d[3], da);
+					d[2] = NR_COMPOSEPNN_221131(NR_PREMUL_112(s[2], alpha), a, d[2], d[3], da);
+					d[3] = NR_NORMALIZE_31(da);
+				}
+				d += 4;
+				s += 4;
+			}
+			px += rs;
+			spx += srs;
+		}
 	}
 }
 
 void
 nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (c = 0; c < w; c++) {
-			unsigned int a;
-			a = NR_PREMUL (s[3], alpha);
-			if (a == 0) {
-				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
-				/* Transparent BG, premul src */
-				d[0] = NR_PREMUL (s[0], a);
-				d[1] = NR_PREMUL (s[1], a);
-				d[2] = NR_PREMUL (s[2], a);
-				d[3] = a;
-			} else {
-				d[0] = NR_COMPOSENPP (s[0], a, d[0], d[3]);
-				d[1] = NR_COMPOSENPP (s[1], a, d[1], d[3]);
-				d[2] = NR_COMPOSENPP (s[2], a, d[2], d[3]);
-				d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
+	if (alpha == 0) {
+		/* NOP */
+	} else if (alpha == 255) {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					/* Transparent FG, NOP */
+				} else if (s[3] == 255) {
+					/* Opaque FG, COPY */
+					//   dc' = (1 - sa) * dc + sa*sc = sa*sc = sc
+					//   da' = 1 - (1 - sa) * (1 - da) = 1 - 0 * (1 - da) = 1 (= sa)
+					memcpy(d, s, 4);
+				} else if (d[3] == 0) {
+					/* Transparent BG, premul src */
+					//   dc' = (1 - sa) * dc + sa*sc = sa*sc
+					//   da' = 1 - (1 - sa) * (1 - da) = 1 - (1 - sa) = sa
+					d[0] = NR_PREMUL_111(s[0], s[3]);
+					d[1] = NR_PREMUL_111(s[1], s[3]);
+					d[2] = NR_PREMUL_111(s[2], s[3]);
+					d[3] = s[3];
+				} else {
+					//   dc' = (1 - sa) * dc + sa*sc
+					//   da' = 1 - (1 - sa) * (1 - da)
+					d[0] = NR_COMPOSENPP_1111(s[0], s[3], d[0]);
+					d[1] = NR_COMPOSENPP_1111(s[1], s[3], d[1]);
+					d[2] = NR_COMPOSENPP_1111(s[2], s[3], d[2]);
+					d[3] = NR_COMPOSEA_111(s[3], d[3]);
+				}
+				d += 4;
+				s += 4;
 			}
-			d += 4;
-			s += 4;
+			px += rs;
+			spx += srs;
 		}
-		px += rs;
-		spx += srs;
+	} else {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				unsigned int a;
+				a = NR_PREMUL_112 (s[3], alpha);
+				if (a == 0) {
+					/* Transparent FG, NOP */
+				} else if (d[3] == 0) {
+					/* Transparent BG, premul src */
+					//   dc' = (1 - alpha*sa) * dc + alpha*sa*sc = alpha*sa*sc
+					//   da' = 1 - (1 - alpha*sa) * (1 - da) = 1 - (1 - alpha*sa) = alpha*sa
+					d[0] = NR_PREMUL_121(s[0], a);
+					d[1] = NR_PREMUL_121(s[1], a);
+					d[2] = NR_PREMUL_121(s[2], a);
+					d[3] = NR_NORMALIZE_21(a);
+				} else {
+					//   dc' = (1 - alpha*sa) * dc + alpha*sa*sc
+					//   da' = 1 - (1 - alpha*sa) * (1 - da)
+					d[0] = NR_COMPOSENPP_1211(s[0], a, d[0]);
+					d[1] = NR_COMPOSENPP_1211(s[1], a, d[1]);
+					d[2] = NR_COMPOSENPP_1211(s[2], a, d[2]);
+					d[3] = NR_COMPOSEA_211(a, d[3]);
+				}
+				d += 4;
+				s += 4;
+			}
+			px += rs;
+			spx += srs;
+		}
 	}
 }
 
 void
 nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (c = 0; c < w; c++) {
-			unsigned int a;
-			a = NR_PREMUL (s[3], alpha);
-			if (a == 0) {
-				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
-				/* Transparent BG, COPY */
-				d[0] = NR_PREMUL (s[0], alpha);
-				d[1] = NR_PREMUL (s[1], alpha);
-				d[2] = NR_PREMUL (s[2], alpha);
-				d[3] = NR_PREMUL (s[3], alpha);
-			} else {
-				if (alpha == 255) {
-					/* Simple */
-					d[0] = NR_COMPOSEPPP (s[0], s[3], d[0], d[3]);
-					d[1] = NR_COMPOSEPPP (s[1], s[3], d[1], d[3]);
-					d[2] = NR_COMPOSEPPP (s[2], s[3], d[2], d[3]);
-					d[3] = (65025 - (255 - s[3]) * (255 - d[3]) + 127) / 255;
+	if (alpha == 0) {
+		/* Transparent FG, NOP */
+	} else if (alpha == 255) {
+		/* Simple */
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					/* Transparent FG, NOP */
+				} else if ((s[3] == 255) || (d[3] == 0)) {
+					/* Transparent BG, COPY */
+					memcpy(d, s, 4);
 				} else {
-					unsigned int c;
-					c = NR_PREMUL (s[0], alpha);
-					d[0] = NR_COMPOSEPPP (c, a, d[0], d[3]);
-					c = NR_PREMUL (s[1], alpha);
-					d[1] = NR_COMPOSEPPP (c, a, d[1], d[3]);
-					c = NR_PREMUL (s[2], alpha);
-					d[2] = NR_COMPOSEPPP (c, a, d[2], d[3]);
-					d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
+					d[0] = NR_COMPOSEPPP_1111(s[0], s[3], d[0]);
+					d[1] = NR_COMPOSEPPP_1111(s[1], s[3], d[1]);
+					d[2] = NR_COMPOSEPPP_1111(s[2], s[3], d[2]);
+					d[3] = NR_COMPOSEA_111(s[3], d[3]);
 				}
+				d += 4;
+				s += 4;
 			}
-			d += 4;
-			s += 4;
+			px += rs;
+			spx += srs;
 		}
-		px += rs;
-		spx += srs;
+	} else {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				if (s[3] == 0) {
+					/* Transparent FG, NOP */
+				} else if (d[3] == 0) {
+					/* Transparent BG, COPY */
+					d[0] = NR_PREMUL_111(s[0], alpha);
+					d[1] = NR_PREMUL_111(s[1], alpha);
+					d[2] = NR_PREMUL_111(s[2], alpha);
+					d[3] = NR_PREMUL_111(s[3], alpha);
+				} else {
+					//   dc' = (1 - alpha*sa) * dc + alpha*sc
+					//   da' = 1 - (1 - alpha*sa) * (1 - da)
+					unsigned int a;
+					a = NR_PREMUL_112(s[3], alpha);
+					d[0] = NR_COMPOSEPPP_2211(NR_PREMUL_112(alpha, s[0]), a, d[0]);
+					d[1] = NR_COMPOSEPPP_2211(NR_PREMUL_112(alpha, s[1]), a, d[1]);
+					d[2] = NR_COMPOSEPPP_2211(NR_PREMUL_112(alpha, s[2]), a, d[2]);
+					d[3] = NR_COMPOSEA_211(a, d[3]);
+				}
+				d += 4;
+				s += 4;
+			}
+			px += rs;
+			spx += srs;
+		}
 	}
 }
 
@@ -313,18 +442,17 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, co
 void
 nr_R8G8B8A8_N_EMPTY_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int x, y;
+	unsigned int r, c;
 
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (x = 0; x < w; x++) {
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
 			d[0] = s[0];
 			d[1] = s[1];
 			d[2] = s[2];
-			d[3] = (s[3] * m[0] + 127) / 255;
+			d[3] = NR_PREMUL_111(s[3], m[0]);
 			d += 4;
 			s += 4;
 			m += 1;
@@ -338,23 +466,26 @@ nr_R8G8B8A8_N_EMPTY_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, cons
 void
 nr_R8G8B8A8_N_EMPTY_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int x, y;
+	unsigned int r, c;
 
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (x = 0; x < w; x++) {
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
+			a = NR_PREMUL_112 (s[3], m[0]);
 			if (a == 0) {
 				d[3] = 0;
+			} else if (a == 255*255) {
+				memcpy(d, s, 4);
 			} else {
-				d[0] = (s[0] * 255 + (a >> 1)) / a;
-				d[1] = (s[1] * 255 + (a >> 1)) / a;
-				d[2] = (s[2] * 255 + (a >> 1)) / a;
-				d[3] = a;
+				//   dc' = ((1 - m*sa) * da*dc + m*sc)/da' = m*sc/da' = m*sc/(m*sa) = sc/sa
+				//   da' = 1 - (1 - m*sa) * (1 - da) = 1 - (1 - m*sa) = m*sa
+				d[0] = NR_DEMUL_111(s[0], s[3]);
+				d[1] = NR_DEMUL_111(s[1], s[3]);
+				d[2] = NR_DEMUL_111(s[2], s[3]);
+				d[3] = NR_NORMALIZE_21(a);
 			}
 			d += 4;
 			s += 4;
@@ -369,20 +500,25 @@ nr_R8G8B8A8_N_EMPTY_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, cons
 void
 nr_R8G8B8A8_P_EMPTY_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (c = 0; c < w; c++) {
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
-			d[0] = NR_PREMUL (s[0], a);
-			d[1] = NR_PREMUL (s[1], a);
-			d[2] = NR_PREMUL (s[2], a);
-			d[3] = a;
+			a = NR_PREMUL_112(s[3], m[0]);
+			if (a == 0) {
+				memset(d, 0, 4);
+			} else if (a == 255*255) {
+				memcpy(d, s, 4);
+			} else {
+				d[0] = NR_PREMUL_121(s[0], a);
+				d[1] = NR_PREMUL_121(s[1], a);
+				d[2] = NR_PREMUL_121(s[2], a);
+				d[3] = NR_NORMALIZE_21(a);
+			}
 			d += 4;
 			s += 4;
 			m += 1;
@@ -396,25 +532,17 @@ nr_R8G8B8A8_P_EMPTY_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, cons
 void
 nr_R8G8B8A8_P_EMPTY_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (c = 0; c < w; c++) {
-			if (m[0] == 255) {
-				d[0] = s[0];
-				d[1] = s[1];
-				d[2] = s[2];
-				d[3] = s[3];
-			} else {
-				d[0] = NR_PREMUL (s[0], m[0]);
-				d[1] = NR_PREMUL (s[1], m[0]);
-				d[2] = NR_PREMUL (s[2], m[0]);
-				d[3] = NR_PREMUL (s[3], m[0]);
-			}
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
+			d[0] = NR_PREMUL_111(s[0], m[0]);
+			d[1] = NR_PREMUL_111(s[1], m[0]);
+			d[2] = NR_PREMUL_111(s[2], m[0]);
+			d[3] = NR_PREMUL_111(s[3], m[0]);
 			d += 4;
 			s += 4;
 			m += 1;
@@ -428,32 +556,31 @@ nr_R8G8B8A8_P_EMPTY_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, cons
 void
 nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (c = 0; c < w; c++) {
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
+			a = NR_PREMUL_112(s[3], m[0]);
 			if (a == 0) {
 				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
+			} else if ((a == 255*255) || (d[3] == 0)) {
 				/* Full coverage, COPY */
 				d[0] = s[0];
 				d[1] = s[1];
 				d[2] = s[2];
-				d[3] = a;
+				d[3] = NR_NORMALIZE_21(a);
 			} else {
-				unsigned int ca;
 				/* Full composition */
-				ca = 65025 - (255 - a) * (255 - d[3]);
-				d[0] = NR_COMPOSENNN_A7 (s[0], a, d[0], d[3], ca);
-				d[1] = NR_COMPOSENNN_A7 (s[1], a, d[1], d[3], ca);
-				d[2] = NR_COMPOSENNN_A7 (s[2], a, d[2], d[3], ca);
-				d[3] = (ca + 127) / 255;
+				unsigned int ca;
+				ca = NR_COMPOSEA_213(a, d[3]);
+				d[0] = NR_COMPOSENNN_121131(s[0], a, d[0], d[3], ca);
+				d[1] = NR_COMPOSENNN_121131(s[1], a, d[1], d[3], ca);
+				d[2] = NR_COMPOSENNN_121131(s[2], a, d[2], d[3], ca);
+				d[3] = NR_NORMALIZE_31(ca);
 			}
 			d += 4;
 			s += 4;
@@ -468,45 +595,45 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs,
 void
 nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (c = 0; c < w; c++) {
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
+			a = NR_PREMUL_112(s[3], m[0]);
 			if (a == 0) {
 				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
+			} else if (a == 255*255) {
+				/* Opaque FG, COPY */
+				memcpy(d, s, 4);
+			} else if (d[3] == 0) {
 				/* Full coverage, demul src */
-				d[0] = (s[0] * 255 + (s[3] >> 1)) / s[3];
-				d[1] = (s[1] * 255 + (s[3] >> 1)) / s[3];
-				d[2] = (s[2] * 255 + (s[3] >> 1)) / s[3];
-				d[3] = a;
+				//   dc' = ((1 - m*sa) * da*dc + m*sc)/da' = m*sc/da' = m*sc/(m*sa) = sc/sa
+				//   da' = 1 - (1 - m*sa) * (1 - da) = 1 - (1 - m*sa) = m*sa
+				d[0] = NR_DEMUL_111(s[0], s[3]);
+				d[1] = NR_DEMUL_111(s[1], s[3]);
+				d[2] = NR_DEMUL_111(s[2], s[3]);
+				d[3] = NR_NORMALIZE_21(a);
+			} else if (m[0] == 255) {
+				/* Full composition */
+				//   dc' = ((1 - m*sa) * da*dc + m*sc)/da' = ((1 - sa) * da*dc + sc)/da'
+				//   da' = 1 - (1 - m*sa) * (1 - da) = 1 - (1 - sa) * (1 - da)
+				unsigned int da = NR_COMPOSEA_112(s[3], d[3]);
+				d[0] = NR_COMPOSEPNN_111121(s[0], s[3], d[0], d[3], da);
+				d[1] = NR_COMPOSEPNN_111121(s[1], s[3], d[1], d[3], da);
+				d[2] = NR_COMPOSEPNN_111121(s[2], s[3], d[2], d[3], da);
+				d[3] = NR_NORMALIZE_21(da);
 			} else {
-				if (m[0] == 255) {
-					unsigned int ca;
-					/* Full composition */
-					ca = 65025 - (255 - s[3]) * (255 - d[3]);
-					d[0] = NR_COMPOSEPNN_A7 (s[0], s[3], d[0], d[3], ca);
-					d[1] = NR_COMPOSEPNN_A7 (s[1], s[3], d[1], d[3], ca);
-					d[2] = NR_COMPOSEPNN_A7 (s[2], s[3], d[2], d[3], ca);
-					d[3] = (65025 - (255 - s[3]) * (255 - d[3]) + 127) / 255;
-				} else {
-					// calculate premultiplied from two premultiplieds:
-					d[0] = NR_COMPOSEPPP(NR_PREMUL (s[0], m[0]), a, NR_PREMUL (d[0], d[3]), 0); // last parameter not used
-					d[1] = NR_COMPOSEPPP(NR_PREMUL (s[1], m[0]), a, NR_PREMUL (d[1], d[3]), 0);
-					d[2] = NR_COMPOSEPPP(NR_PREMUL (s[2], m[0]), a, NR_PREMUL (d[2], d[3]), 0);
-					// total opacity:
-					d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
-					// un-premultiply channels:
-					d[0] = d[0]*255/d[3];
-					d[1] = d[1]*255/d[3];
-					d[2] = d[2]*255/d[3];
-				}
+				//   dc' = ((1 - m*sa) * da*dc + m*sc)/da'
+				//   da' = 1 - (1 - m*sa) * (1 - da)
+				unsigned int da = NR_COMPOSEA_213(a, d[3]);
+				d[0] = NR_COMPOSEPNN_221131(NR_PREMUL_112(s[0], m[0]), a, d[0], d[3], da);
+				d[1] = NR_COMPOSEPNN_221131(NR_PREMUL_112(s[1], m[0]), a, d[1], d[3], da);
+				d[2] = NR_COMPOSEPNN_221131(NR_PREMUL_112(s[2], m[0]), a, d[2], d[3], da);
+				d[3] = NR_NORMALIZE_31(da);
 			}
 			d += 4;
 			s += 4;
@@ -521,29 +648,24 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs,
 void
 nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (c = 0; c < w; c++) {
+	for (r = h; r>0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c>0; c--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
+			a = NR_PREMUL_112(s[3], m[0]);
 			if (a == 0) {
 				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
-				/* Transparent BG, premul src */
-				d[0] = NR_PREMUL (s[0], a);
-				d[1] = NR_PREMUL (s[1], a);
-				d[2] = NR_PREMUL (s[2], a);
-				d[3] = a;
+			} else if (a == 255*255) {
+				memcpy(d, s, 4);
 			} else {
-				d[0] = NR_COMPOSENPP (s[0], a, d[0], d[3]);
-				d[1] = NR_COMPOSENPP (s[1], a, d[1], d[3]);
-				d[2] = NR_COMPOSENPP (s[2], a, d[2], d[3]);
-				d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
+				d[0] = NR_COMPOSENPP_1211(s[0], a, d[0]);
+				d[1] = NR_COMPOSENPP_1211(s[1], a, d[1]);
+				d[2] = NR_COMPOSENPP_1211(s[2], a, d[2]);
+				d[3] = NR_COMPOSEA_211(a, d[3]);
 			}
 			d += 4;
 			s += 4;
@@ -558,41 +680,35 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs,
 void
 nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (c = 0; c < w; c++) {
+	for (r = h; r > 0; r--) {
+		unsigned char *d = px;
+		const unsigned char *s = spx;
+		const unsigned char *m = mpx;
+		for (c = w; c > 0; c--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
+			a = NR_PREMUL_112 (s[3], m[0]);
 			if (a == 0) {
 				/* Transparent FG, NOP */
-			} else if ((a == 255) || (d[3] == 0)) {
+			} else if (a == 255*255) {
+				/* Opaque FG, COPY */
+				memcpy(d, s, 4);
+			} else if (d[3] == 0) {
 				/* Transparent BG, COPY */
-				d[0] = NR_PREMUL (s[0], m[0]);
-				d[1] = NR_PREMUL (s[1], m[0]);
-				d[2] = NR_PREMUL (s[2], m[0]);
-				d[3] = NR_PREMUL (s[3], m[0]);
+				//   dc' = (1 - m*sa) * dc + m*sc = m*sc
+				//   da' = 1 - (1 - m*sa) * (1 - da) = 1 - (1 - m*sa)  = m*sa
+				d[0] = NR_PREMUL_111 (s[0], m[0]);
+				d[1] = NR_PREMUL_111 (s[1], m[0]);
+				d[2] = NR_PREMUL_111 (s[2], m[0]);
+				d[3] = NR_NORMALIZE_21(a);
 			} else {
-				if (m[0] == 255) {
-					/* Simple */
-					d[0] = NR_COMPOSEPPP (s[0], s[3], d[0], d[3]);
-					d[1] = NR_COMPOSEPPP (s[1], s[3], d[1], d[3]);
-					d[2] = NR_COMPOSEPPP (s[2], s[3], d[2], d[3]);
-					d[3] = NR_A7_NORMALIZED(s[3], d[3]);
-				} else {
-					unsigned int c;
-					c = NR_PREMUL (s[0], m[0]);
-					d[0] = NR_COMPOSEPPP (c, a, d[0], d[3]);
-					c = NR_PREMUL (s[1], m[0]);
-					d[1] = NR_COMPOSEPPP (c, a, d[1], d[3]);
-					c = NR_PREMUL (s[2], m[0]);
-					d[2] = NR_COMPOSEPPP (c, a, d[2], d[3]);
-					d[3] = NR_A7_NORMALIZED(a, d[3]);
-				}
+				//   dc' = (1 - m*sa) * dc + m*sc
+				//   da' = 1 - (1 - m*sa) * (1 - da)
+				d[0] = NR_COMPOSEPPP_2211 (NR_PREMUL_112 (s[0], m[0]), a, d[0]);
+				d[1] = NR_COMPOSEPPP_2211 (NR_PREMUL_112 (s[1], m[0]), a, d[1]);
+				d[2] = NR_COMPOSEPPP_2211 (NR_PREMUL_112 (s[2], m[0]), a, d[2]);
+				d[3] = NR_COMPOSEA_211(a, d[3]);
 			}
 			d += 4;
 			s += 4;
@@ -604,106 +720,33 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs,
 	}
 }
 
+/* FINAL DST MASK COLOR */
+
 void
-nr_R8G8B8A8_N_EMPTY_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned long rgba)
+nr_R8G8B8A8_N_EMPTY_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *mpx, int mrs, unsigned long rgba)
 {
 	unsigned int r, g, b, a;
-	int x, y;
+	unsigned int x, y;
 
 	r = NR_RGBA32_R (rgba);
 	g = NR_RGBA32_G (rgba);
 	b = NR_RGBA32_B (rgba);
 	a = NR_RGBA32_A (rgba);
 
-	if (a == 0) return;
-
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (x = 0; x < w; x++) {
-			d[0] = r;
-			d[1] = g;
-			d[2] = b;
-			d[3] = NR_PREMUL (s[0], a);
-			d += 4;
-			s += 1;
-		}
-		px += rs;
-		spx += srs;
-	}
-}
-
-void
-nr_R8G8B8A8_P_EMPTY_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned long rgba)
-{
-	unsigned int r, g, b, a;
-	int x, y;
-
-	r = NR_RGBA32_R (rgba);
-	g = NR_RGBA32_G (rgba);
-	b = NR_RGBA32_B (rgba);
-	a = NR_RGBA32_A (rgba);
-
-	if (a == 0) return;
-
-#ifdef WITH_MMX
-	if (NR_PIXOPS_MMX) {
-		unsigned char c[4];
-		c[0] = NR_PREMUL (r, a);
-		c[1] = NR_PREMUL (g, a);
-		c[2] = NR_PREMUL (b, a);
-		c[3] = a;
-		/* WARNING: MMX composer REQUIRES w > 0 and h > 0 */
-		nr_mmx_R8G8B8A8_P_EMPTY_A8_RGBAP (px, w, h, rs, spx, srs, c);
-		return;
-	}
-#endif
-
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (x = 0; x < w; x++) {
-			unsigned int ca;
-			ca = s[0] * a;
-			d[0] = (r * ca + 32512) / 65025;
-			d[1] = (g * ca + 32512) / 65025;
-			d[2] = (b * ca + 32512) / 65025;
-			d[3] = (ca + 127) / 255;
-			d += 4;
-			s += 1;
-		}
-		px += rs;
-		spx += srs;
-	}
-}
-
-void
-nr_R8G8B8_R8G8B8_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *mpx, int mrs, unsigned long rgba)
-{
-	unsigned int r, g, b, a;
-	int x, y;
-
-	r = NR_RGBA32_R (rgba);
-	g = NR_RGBA32_G (rgba);
-	b = NR_RGBA32_B (rgba);
-	a = NR_RGBA32_A (rgba);
-
-	if (a == 0) return;
-
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *m;
-		d = (unsigned char *) px;
-		m = (unsigned char *) mpx;
-		for (x = 0; x < w; x++) {
-			unsigned int alpha;
-			alpha = NR_PREMUL (a, m[0]);
-			d[0] = NR_COMPOSEN11 (r, alpha, d[0]);
-			d[1] = NR_COMPOSEN11 (g, alpha, d[1]);
-			d[2] = NR_COMPOSEN11 (b, alpha, d[2]);
-			d += 3;
-			m += 1;
+	for (y = h; y > 0; y--) {
+		if (a == 0) {
+			memset(px, 0, w*4);
+		} else {
+			unsigned char *d = px;
+			const unsigned char *m = mpx;
+			for (x = w; x > 0; x--) {
+				d[0] = r;
+				d[1] = g;
+				d[2] = b;
+				d[3] = NR_PREMUL_111 (m[0], a);
+				d += 4;
+				m += 1;
+			}
 		}
 		px += rs;
 		mpx += mrs;
@@ -711,57 +754,10 @@ nr_R8G8B8_R8G8B8_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsig
 }
 
 void
-nr_R8G8B8A8_N_R8G8B8A8_N_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned long rgba)
+nr_R8G8B8A8_P_EMPTY_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *mpx, int mrs, unsigned long rgba)
 {
 	unsigned int r, g, b, a;
-	int x, y;
-
-	r = NR_RGBA32_R (rgba);
-	g = NR_RGBA32_G (rgba);
-	b = NR_RGBA32_B (rgba);
-	a = NR_RGBA32_A (rgba);
-
-	if (a == 0) return;
-
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (x = 0; x < w; x++) {
-			unsigned int ca;
-			ca = NR_PREMUL (s[0], a);
-			if (ca == 0) {
-				/* Transparent FG, NOP */
-			} else if ((ca == 255) || (d[3] == 0)) {
-				/* Full coverage, COPY */
-				d[0] = r;
-				d[1] = g;
-				d[2] = b;
-				d[3] = ca;
-			} else {
-				unsigned int da;
-				/* Full composition */
-				da = 65025 - (255 - ca) * (255 - d[3]);
-				d[0] = NR_COMPOSENNN_A7 (r, ca, d[0], d[3], da);
-				d[1] = NR_COMPOSENNN_A7 (g, ca, d[1], d[3], da);
-				d[2] = NR_COMPOSENNN_A7 (b, ca, d[2], d[3], da);
-				d[3] = (da + 127) / 255;
-			}
-			d += 4;
-			s += 1;
-		}
-		px += rs;
-		spx += srs;
-	}
-}
-
-void
-nr_R8G8B8A8_P_R8G8B8A8_P_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned long rgba)
-{
-	unsigned int r, g, b, a;
-	int x, y;
-
-	if (!(rgba & 0xff)) return;
+	unsigned int x, y;
 
 	r = NR_RGBA32_R (rgba);
 	g = NR_RGBA32_G (rgba);
@@ -771,9 +767,189 @@ nr_R8G8B8A8_P_R8G8B8A8_P_A8_RGBA32 (unsigned char *px, int w, int h, int rs, con
 #ifdef WITH_MMX
 	if (NR_PIXOPS_MMX) {
 		unsigned char c[4];
-		c[0] = NR_PREMUL (r, a);
-		c[1] = NR_PREMUL (g, a);
-		c[2] = NR_PREMUL (b, a);
+		c[0] = NR_PREMUL_111 (r, a);
+		c[1] = NR_PREMUL_111 (g, a);
+		c[2] = NR_PREMUL_111 (b, a);
+		c[3] = a;
+		/* WARNING: MMX composer REQUIRES w > 0 and h > 0 */
+		nr_mmx_R8G8B8A8_P_EMPTY_A8_RGBAP (px, w, h, rs, mpx, mrs, c);
+		return;
+	}
+#endif
+
+	if ( a != 255 ){
+		// Pre-premultiply color values
+		r *= a;
+		g *= a;
+		b *= a;
+	}
+
+	for (y = h; y > 0; y--) {
+		unsigned char *d = px;
+		const unsigned char *m = mpx;
+		if (a == 0) {
+			memset(px, 0, w*4);
+		} else if (a == 255) {
+			for (x = w; x > 0; x--) {
+				d[0] = NR_PREMUL_111(m[0], r);
+				d[1] = NR_PREMUL_111(m[0], g);
+				d[2] = NR_PREMUL_111(m[0], b);
+				d[3] = m[0];
+				d += 4;
+				m += 1;
+			}
+		} else {
+			for (x = w; x > 0; x--) {
+				// Color values are already premultiplied with a
+				d[0] = NR_PREMUL_121(m[0], r);
+				d[1] = NR_PREMUL_121(m[0], g);
+				d[2] = NR_PREMUL_121(m[0], b);
+				d[3] = NR_PREMUL_111(m[0], a);
+				d += 4;
+				m += 1;
+			}
+		}
+		px += rs;
+		mpx += mrs;
+	}
+}
+
+void
+nr_R8G8B8_R8G8B8_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *mpx, int mrs, unsigned long rgba)
+{
+	unsigned int r, g, b, a;
+	unsigned int x, y;
+
+	r = NR_RGBA32_R (rgba);
+	g = NR_RGBA32_G (rgba);
+	b = NR_RGBA32_B (rgba);
+	a = NR_RGBA32_A (rgba);
+
+	if (a == 0) {
+		/* NOP */
+	} else if (a == 255) {
+		for (y = h; y > 0; y--) {
+			unsigned char *d = px;
+			const unsigned char *m = mpx;
+			for (x = w; x > 0; x--) {
+				d[0] = NR_COMPOSEN11_1111 (r, m[0], d[0]);
+				d[1] = NR_COMPOSEN11_1111 (g, m[0], d[1]);
+				d[2] = NR_COMPOSEN11_1111 (b, m[0], d[2]);
+				d += 3;
+				m += 1;
+			}
+			px += rs;
+			mpx += mrs;
+		}
+	} else {
+		for (y = h; y > 0; y--) {
+			unsigned char *d = px;
+			const unsigned char *m = mpx;
+			for (x = w; x > 0; x--) {
+				//   dc' = (1 - m*sa) * dc + m*sa*sc
+				unsigned int alpha;
+				alpha = NR_PREMUL_112 (a, m[0]);
+				d[0] = NR_COMPOSEN11_1211 (r, alpha, d[0]);
+				d[1] = NR_COMPOSEN11_1211 (g, alpha, d[1]);
+				d[2] = NR_COMPOSEN11_1211 (b, alpha, d[2]);
+				d += 3;
+				m += 1;
+			}
+			px += rs;
+			mpx += mrs;
+		}
+	}
+}
+
+void
+nr_R8G8B8A8_N_R8G8B8A8_N_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *mpx, int mrs, unsigned long rgba)
+{
+	unsigned int r, g, b, a;
+	unsigned int x, y;
+
+	r = NR_RGBA32_R (rgba);
+	g = NR_RGBA32_G (rgba);
+	b = NR_RGBA32_B (rgba);
+	a = NR_RGBA32_A (rgba);
+
+	if (a == 0) {
+		/* NOP */
+	} else if (a == 255) {
+		for (y = h; y > 0; y--) {
+			unsigned char *d = px;
+			const unsigned char *m = mpx;
+			for (x = w; x > 0; x--) {
+				if (m[0] == 0) {
+					/* Transparent FG, NOP */
+				} else if (m[0] == 255 || d[3] == 0) {
+					/* Full coverage, COPY */
+					d[0] = r;
+					d[1] = g;
+					d[2] = b;
+					d[3] = m[0];
+				} else {
+					/* Full composition */
+					unsigned int da = NR_COMPOSEA_112(m[0], d[3]);
+					d[0] = NR_COMPOSENNN_111121(r, m[0], d[0], d[3], da);
+					d[1] = NR_COMPOSENNN_111121(g, m[0], d[1], d[3], da);
+					d[2] = NR_COMPOSENNN_111121(b, m[0], d[2], d[3], da);
+					d[3] = NR_NORMALIZE_21(da);
+				}
+				d += 4;
+				m += 1;
+			}
+			px += rs;
+			mpx += mrs;
+		}
+	} else {
+		for (y = h; y > 0; y--) {
+			unsigned char *d = px;
+			const unsigned char *m = mpx;
+			for (x = w; x > 0; x--) {
+				unsigned int ca;
+				ca = NR_PREMUL_112 (m[0], a);
+				if (ca == 0) {
+					/* Transparent FG, NOP */
+				} else if (d[3] == 0) {
+					/* Full coverage, COPY */
+					d[0] = r;
+					d[1] = g;
+					d[2] = b;
+					d[3] = NR_NORMALIZE_21(ca);
+				} else {
+					/* Full composition */
+					unsigned int da = NR_COMPOSEA_213(ca, d[3]);
+					d[0] = NR_COMPOSENNN_121131(r, ca, d[0], d[3], da);
+					d[1] = NR_COMPOSENNN_121131(g, ca, d[1], d[3], da);
+					d[2] = NR_COMPOSENNN_121131(b, ca, d[2], d[3], da);
+					d[3] = NR_NORMALIZE_31(da);
+				}
+				d += 4;
+				m += 1;
+			}
+			px += rs;
+			mpx += mrs;
+		}
+	}
+}
+
+void
+nr_R8G8B8A8_P_R8G8B8A8_P_A8_RGBA32 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned long rgba)
+{
+	unsigned int r, g, b, a;
+	unsigned int x, y;
+
+	r = NR_RGBA32_R (rgba);
+	g = NR_RGBA32_G (rgba);
+	b = NR_RGBA32_B (rgba);
+	a = NR_RGBA32_A (rgba);
+
+#ifdef WITH_MMX
+	if (NR_PIXOPS_MMX && a != 0) {
+		unsigned char c[4];
+		c[0] = NR_PREMUL_111 (r, a);
+		c[1] = NR_PREMUL_111 (g, a);
+		c[2] = NR_PREMUL_111 (b, a);
 		c[3] = a;
 		/* WARNING: MMX composer REQUIRES w > 0 and h > 0 */
 		nr_mmx_R8G8B8A8_P_R8G8B8A8_P_A8_RGBAP (px, w, h, rs, spx, srs, c);
@@ -781,33 +957,55 @@ nr_R8G8B8A8_P_R8G8B8A8_P_A8_RGBA32 (unsigned char *px, int w, int h, int rs, con
 	}
 #endif
 
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		for (x = 0; x < w; x++) {
-			unsigned int ca;
-			ca = NR_PREMUL (s[0], a);
-			if (ca == 0) {
-				/* Transparent FG, NOP */
-			} else if ((ca == 255) || (d[3] == 0)) {
-				/* Full coverage, COPY */
-				d[0] = NR_PREMUL (r, ca);
-				d[1] = NR_PREMUL (g, ca);
-				d[2] = NR_PREMUL (b, ca);
-				d[3] = ca;
-			} else {
-				/* Full composition */
-				d[0] = NR_COMPOSENPP (r, ca, d[0], d[3]);
-				d[1] = NR_COMPOSENPP (g, ca, d[1], d[3]);
-				d[2] = NR_COMPOSENPP (b, ca, d[2], d[3]);
-				d[3] = (65025 - (255 - ca) * (255 - d[3]) + 127) / 255;
+	if (a == 0) {
+		/* Transparent FG, NOP */
+	} else if (a == 255) {
+		/* Simple */
+		for (y = h; y > 0; y--) {
+			unsigned char *d, *s;
+			d = (unsigned char *) px;
+			s = (unsigned char *) spx;
+			for (x = w; x > 0; x--) {
+				if (s[0] == 0) {
+					/* Transparent FG, NOP */
+				} else {
+					/* Full composition */
+					unsigned int invca = 255-s[0]; // By swapping the arguments GCC can better optimize these calls
+					d[0] = NR_COMPOSENPP_1111(d[0], invca, r);
+					d[1] = NR_COMPOSENPP_1111(d[1], invca, g);
+					d[2] = NR_COMPOSENPP_1111(d[2], invca, b);
+					d[3] = NR_COMPOSEA_111(s[0], d[3]);
+				}
+				d += 4;
+				s += 1;
 			}
-			d += 4;
-			s += 1;
+			px += rs;
+			spx += srs;
 		}
-		px += rs;
-		spx += srs;
+	} else {
+		for (y = h; y > 0; y--) {
+			unsigned char *d, *s;
+			d = (unsigned char *) px;
+			s = (unsigned char *) spx;
+			for (x = w; x > 0; x--) {
+				unsigned int ca;
+				ca = NR_PREMUL_112 (s[0], a);
+				if (ca == 0) {
+					/* Transparent FG, NOP */
+				} else {
+					/* Full composition */
+					unsigned int invca = 255*255-ca; // By swapping the arguments GCC can better optimize these calls
+					d[0] = NR_COMPOSENPP_1211(d[0], invca, r);
+					d[1] = NR_COMPOSENPP_1211(d[1], invca, g);
+					d[2] = NR_COMPOSENPP_1211(d[2], invca, b);
+					d[3] = NR_COMPOSEA_211(ca, d[3]);
+				}
+				d += 4;
+				s += 1;
+			}
+			px += rs;
+			spx += srs;
+		}
 	}
 }
 
@@ -816,25 +1014,24 @@ nr_R8G8B8A8_P_R8G8B8A8_P_A8_RGBA32 (unsigned char *px, int w, int h, int rs, con
 void
 nr_R8G8B8_R8G8B8_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
-
-	if (alpha == 0) return;
+	unsigned int r, c;
 
 #ifdef WITH_MMX
-	if (NR_PIXOPS_MMX) {
+	if (NR_PIXOPS_MMX && alpha != 0) {
 		/* WARNING: MMX composer REQUIRES w > 0 and h > 0 */
 		nr_mmx_R8G8B8_R8G8B8_R8G8B8A8_P (px, w, h, rs, spx, srs, alpha);
 		return;
 	}
 #endif
 
-	for (r = 0; r < h; r++) {
-		const unsigned char *s;
-		unsigned char *d;
-		if (alpha == 255) {
-			d = px;
-			s = spx;
-			for (c = 0; c < w; c++) {
+	if (alpha == 0) {
+		/* NOP */
+	} else if (alpha == 255) {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				//   dc' = (1 - alpha*sa) * dc + alpha*sc = (1 - sa) * dc + sc
 				if (s[3] == 0) {
 					/* NOP */
 				} else if (s[3] == 255) {
@@ -842,50 +1039,54 @@ nr_R8G8B8_R8G8B8_R8G8B8A8_P (unsigned char *px, int w, int h, int rs, const unsi
 					d[1] = s[1];
 					d[2] = s[2];
 				} else {
-					d[0] = NR_COMPOSEP11 (s[0], s[3], d[0]);
-					d[1] = NR_COMPOSEP11 (s[1], s[3], d[1]);
-					d[2] = NR_COMPOSEP11 (s[2], s[3], d[2]);
+					d[0] = NR_COMPOSEP11_1111(s[0], s[3], d[0]);
+					d[1] = NR_COMPOSEP11_1111(s[1], s[3], d[1]);
+					d[2] = NR_COMPOSEP11_1111(s[2], s[3], d[2]);
 				}
 				d += 3;
 				s += 4;
 			}
-		} else {
-			d = px;
-			s = spx;
-			for (c = 0; c < w; c++) {
+			px += rs;
+			spx += srs;
+		}
+	} else {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
 				unsigned int a;
-				a = NR_PREMUL (s[3], alpha);
+				a = NR_PREMUL_112(s[3], alpha);
+				//   dc' = (1 - alpha*sa) * dc + alpha*sc
 				if (a == 0) {
 					/* NOP */
 				} else {
-					d[0] = NR_COMPOSEP11 (s[0], a, d[0]);
-					d[1] = NR_COMPOSEP11 (s[1], a, d[1]);
-					d[2] = NR_COMPOSEP11 (s[2], a, d[2]);
+					d[0] = NR_COMPOSEP11_2211(NR_PREMUL_112(s[0], alpha), a, d[0]);
+					d[1] = NR_COMPOSEP11_2211(NR_PREMUL_112(s[1], alpha), a, d[1]);
+					d[2] = NR_COMPOSEP11_2211(NR_PREMUL_112(s[2], alpha), a, d[2]);
 				}
 				/* a == 255 is impossible, because alpha < 255 */
 				d += 3;
 				s += 4;
 			}
+			px += rs;
+			spx += srs;
 		}
-		px += rs;
-		spx += srs;
 	}
 }
 
 void
 nr_R8G8B8_R8G8B8_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, unsigned int alpha)
 {
-	int r, c;
+	unsigned int r, c;
 
-	for (r = 0; r < h; r++) {
-		const unsigned char *s;
-		unsigned char *d;
-		if (alpha == 0) {
-			/* NOP */
-		} else if (alpha == 255) {
-			d = px;
-			s = spx;
-			for (c = 0; c < w; c++) {
+	if (alpha == 0) {
+		/* NOP */
+	} else if (alpha == 255) {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
+				//   dc' = (1 - alpha*sa) * dc + alpha*sa*sc = (1 - sa) * dc + sa*sc
 				if (s[3] == 0) {
 					/* NOP */
 				} else if (s[3] == 255) {
@@ -893,57 +1094,62 @@ nr_R8G8B8_R8G8B8_R8G8B8A8_N (unsigned char *px, int w, int h, int rs, const unsi
 					d[1] = s[1];
 					d[2] = s[2];
 				} else {
-					d[0] = NR_COMPOSEN11 (s[0], s[3], d[0]);
-					d[1] = NR_COMPOSEN11 (s[1], s[3], d[1]);
-					d[2] = NR_COMPOSEN11 (s[2], s[3], d[2]);
+					d[0] = NR_COMPOSEN11_1111(s[0], s[3], d[0]);
+					d[1] = NR_COMPOSEN11_1111(s[1], s[3], d[1]);
+					d[2] = NR_COMPOSEN11_1111(s[2], s[3], d[2]);
 				}
 				d += 3;
 				s += 4;
 			}
-		} else {
-			d = px;
-			s = spx;
-			for (c = 0; c < w; c++) {
+			px += rs;
+			spx += srs;
+		}
+	} else {
+		for (r = h; r > 0; r--) {
+			unsigned char *d = px;
+			const unsigned char *s = spx;
+			for (c = w; c > 0; c--) {
 				unsigned int a;
-				a = NR_PREMUL (s[3], alpha);
+				a = NR_PREMUL_112(s[3], alpha);
+				//   dc' = (1 - alpha*sa) * dc + alpha*sa*sc
 				if (a == 0) {
 					/* NOP */
 				} else {
-					d[0] = NR_COMPOSEN11 (s[0], a, d[0]);
-					d[1] = NR_COMPOSEN11 (s[1], a, d[1]);
-					d[2] = NR_COMPOSEN11 (s[2], a, d[2]);
+					d[0] = NR_COMPOSEN11_1211(s[0], a, d[0]);
+					d[1] = NR_COMPOSEN11_1211(s[1], a, d[1]);
+					d[2] = NR_COMPOSEN11_1211(s[2], a, d[2]);
 				}
 				/* a == 255 is impossible, because alpha < 255 */
 				d += 3;
 				s += 4;
 			}
+			px += rs;
+			spx += srs;
 		}
-		px += rs;
-		spx += srs;
 	}
 }
 
 void
 nr_R8G8B8_R8G8B8_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int x, y;
+	unsigned int x, y;
 
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (x = 0; x < w; x++) {
+	for (y = h; y > 0; y--) {
+		unsigned char* d = px;
+		const unsigned char* s = spx;
+		const unsigned char* m = mpx;
+		for (x = w; x > 0; x--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
-			if (a != 0) {
-				unsigned int r, g, b;
-				r = NR_PREMUL (s[0], m[0]);
-				d[0] = NR_COMPOSEP11 (r, a, d[0]);
-				g = NR_PREMUL (s[1], m[0]);
-				d[1] = NR_COMPOSEP11 (g, a, d[1]);
-				b = NR_PREMUL (s[2], m[0]);
-				d[2] = NR_COMPOSEP11 (b, a, d[2]);
+			a = NR_PREMUL_112(s[3], m[0]);
+			if (a == 0) {
+				/* NOP */
+			} else if (a == 255*255) {
+				memcpy(d, s, 3);
+			} else {
+				//   dc' = (1 - m*sa) * dc + m*sc
+				d[0] = NR_COMPOSEP11_2211(NR_PREMUL_112(s[0], m[0]), a, d[0]);
+				d[1] = NR_COMPOSEP11_2211(NR_PREMUL_112(s[1], m[0]), a, d[1]);
+				d[2] = NR_COMPOSEP11_2211(NR_PREMUL_112(s[2], m[0]), a, d[2]);
 			}
 			d += 3;
 			s += 4;
@@ -958,20 +1164,24 @@ nr_R8G8B8_R8G8B8_R8G8B8A8_P_A8 (unsigned char *px, int w, int h, int rs, const u
 void
 nr_R8G8B8_R8G8B8_R8G8B8A8_N_A8 (unsigned char *px, int w, int h, int rs, const unsigned char *spx, int srs, const unsigned char *mpx, int mrs)
 {
-	int x, y;
+	unsigned int x, y;
 
-	for (y = 0; y < h; y++) {
-		unsigned char *d, *s, *m;
-		d = (unsigned char *) px;
-		s = (unsigned char *) spx;
-		m = (unsigned char *) mpx;
-		for (x = 0; x < w; x++) {
+	for (y = h; y > 0; y--) {
+		unsigned char* d = px;
+		const unsigned char* s = spx;
+		const unsigned char* m = mpx;
+		for (x = w; x > 0; x--) {
 			unsigned int a;
-			a = NR_PREMUL (s[3], m[0]);
-			if (a != 0) {
-				d[0] = NR_COMPOSEP11 (s[0], a, d[0]);
-				d[1] = NR_COMPOSEP11 (s[1], a, d[1]);
-				d[2] = NR_COMPOSEP11 (s[2], a, d[2]);
+			a = NR_PREMUL_112(s[3], m[0]);
+			if (a == 0) {
+				/* NOP */
+			} else if (a == 255*255) {
+				memcpy(d, s, 3);
+			} else {
+				//   dc' = (1 - m*sa) * dc + m*sa*sc
+				d[0] = NR_COMPOSEN11_1211(s[0], a, d[0]);
+				d[1] = NR_COMPOSEN11_1211(s[1], a, d[1]);
+				d[2] = NR_COMPOSEN11_1211(s[2], a, d[2]);
 			}
 			d += 3;
 			s += 4;

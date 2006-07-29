@@ -52,28 +52,28 @@ nr_pixblock_render_gray_noise (NRPixBlock *pb, NRPixBlock *mask)
 				v = v ^ noise[seed];
 				switch (pb->mode) {
 				case NR_PIXBLOCK_MODE_A8:
-					d[0] = (65025 - (255 - m[0]) * (255 - d[0]) + 127) / 255;
+					d[0] = NR_COMPOSEA_111(m[0], d[0]);
 					break;
 				case NR_PIXBLOCK_MODE_R8G8B8:
-					d[0] = NR_COMPOSEN11 (v, m[0], d[0]);
-					d[1] = NR_COMPOSEN11 (v, m[0], d[1]);
-					d[2] = NR_COMPOSEN11 (v, m[0], d[2]);
+					d[0] = NR_COMPOSEN11_1111 (v, m[0], d[0]);
+					d[1] = NR_COMPOSEN11_1111 (v, m[0], d[1]);
+					d[2] = NR_COMPOSEN11_1111 (v, m[0], d[2]);
 					break;
 				case NR_PIXBLOCK_MODE_R8G8B8A8N:
 					if (m[0] != 0) {
 						unsigned int ca;
-						ca = NR_A7 (m[0], d[3]);
-						d[0] = NR_COMPOSENNN_A7 (v, m[0], d[0], d[3], ca);
-						d[1] = NR_COMPOSENNN_A7 (v, m[0], d[1], d[3], ca);
-						d[2] = NR_COMPOSENNN_A7 (v, m[0], d[2], d[3], ca);
-						d[3] = (ca + 127) / 255;
+						ca = NR_COMPOSEA_112(m[0], d[3]);
+						d[0] = NR_COMPOSENNN_111121 (v, m[0], d[0], d[3], ca);
+						d[1] = NR_COMPOSENNN_111121 (v, m[0], d[1], d[3], ca);
+						d[2] = NR_COMPOSENNN_111121 (v, m[0], d[2], d[3], ca);
+						d[3] = NR_NORMALIZE_21(ca);
 					}
 					break;
 				case NR_PIXBLOCK_MODE_R8G8B8A8P:
-					d[0] = NR_COMPOSENPP (v, m[0], d[0], d[3]);
-					d[1] = NR_COMPOSENPP (v, m[0], d[1], d[3]);
-					d[2] = NR_COMPOSENPP (v, m[0], d[2], d[3]);
-					d[3] = (NR_A7 (d[3], m[0]) + 127) / 255;
+					d[0] = NR_COMPOSENPP_1111 (v, m[0], d[0]);
+					d[1] = NR_COMPOSENPP_1111 (v, m[0], d[1]);
+					d[2] = NR_COMPOSENPP_1111 (v, m[0], d[2]);
+					d[3] = NR_COMPOSEA_111(d[3], m[0]);
 					break;
 				default:
 					break;

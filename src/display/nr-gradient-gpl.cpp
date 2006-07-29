@@ -200,11 +200,11 @@ nr_lgradient_render_R8G8B8A8N (NRLGradientRenderer *lgr, unsigned char *px, int 
 				d[2] = s[2];
 				d[3] = 255;
 			} else if (s[3] != 0) {
-				ca = NR_A7(s[3],d[3]);
-				d[0] = NR_COMPOSENNN_A7 (s[0], s[3], d[0], d[3], ca);
-				d[1] = NR_COMPOSENNN_A7 (s[1], s[3], d[1], d[3], ca);
-				d[2] = NR_COMPOSENNN_A7 (s[2], s[3], d[2], d[3], ca);
-				d[3] = NR_PREMUL_SINGLE(ca);
+				ca = NR_COMPOSEA_112(s[3],d[3]);
+				d[0] = NR_COMPOSENNN_111121 (s[0], s[3], d[0], d[3], ca);
+				d[1] = NR_COMPOSENNN_111121 (s[1], s[3], d[1], d[3], ca);
+				d[2] = NR_COMPOSENNN_111121 (s[2], s[3], d[2], d[3], ca);
+				d[3] = NR_NORMALIZE_21(ca);
 			}
 			d += 4;
 			pos += lgr->dx;
@@ -242,9 +242,9 @@ nr_lgradient_render_R8G8B8 (NRLGradientRenderer *lgr, unsigned char *px, int x0,
 			}
 			/* Full composition */
 			s = lgr->vector + 4 * idx;
-			d[0] = NR_COMPOSEN11 (s[0], s[3], d[0]);
-			d[1] = NR_COMPOSEN11 (s[1], s[3], d[1]);
-			d[2] = NR_COMPOSEN11 (s[2], s[3], d[2]);
+			d[0] = NR_COMPOSEN11_1111 (s[0], s[3], d[0]);
+			d[1] = NR_COMPOSEN11_1111 (s[1], s[3], d[1]);
+			d[2] = NR_COMPOSEN11_1111 (s[2], s[3], d[2]);
 			d += 3;
 			pos += lgr->dx;
 		}

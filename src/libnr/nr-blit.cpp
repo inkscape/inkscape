@@ -270,24 +270,24 @@ nr_blit_pixblock_mask_rgba32 (NRPixBlock *d, NRPixBlock *m, unsigned long rgba)
 				unsigned int da;
 				switch (d->mode) {
 				case NR_PIXBLOCK_MODE_R8G8B8:
-					p[0] = NR_COMPOSEN11 (r, a, p[0]);
-					p[1] = NR_COMPOSEN11 (g, a, p[1]);
-					p[2] = NR_COMPOSEN11 (b, a, p[2]);
+					p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+					p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+					p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
 					p += 3;
 					break;
 				case NR_PIXBLOCK_MODE_R8G8B8A8P:
-					p[0] = NR_COMPOSENPP (r, a, p[0], p[3]);
-					p[1] = NR_COMPOSENPP (g, a, p[1], p[3]);
-					p[2] = NR_COMPOSENPP (b, a, p[2], p[3]);
-					p[3] = (65025 - (255 - a) * (255 - p[3]) + 127) / 255;
+					p[0] = NR_COMPOSENPP_1111 (r, a, p[0]);
+					p[1] = NR_COMPOSENPP_1111 (g, a, p[1]);
+					p[2] = NR_COMPOSENPP_1111 (b, a, p[2]);
+					p[3] = NR_COMPOSEA_111(a, p[3]);
 					p += 4;
 					break;
 				case NR_PIXBLOCK_MODE_R8G8B8A8N:
-					da = 65025 - (255 - a) * (255 - p[3]);
-					p[0] = NR_COMPOSENNN_A7 (r, a, p[0], p[3], da);
-					p[1] = NR_COMPOSENNN_A7 (g, a, p[1], p[3], da);
-					p[2] = NR_COMPOSENNN_A7 (b, a, p[2], p[3], da);
-					p[3] = (da + 127) / 255;
+					da = NR_COMPOSEA_112(a, p[3]);
+					p[0] = NR_COMPOSENNN_111121 (r, a, p[0], p[3], da);
+					p[1] = NR_COMPOSENNN_111121 (g, a, p[1], p[3], da);
+					p[2] = NR_COMPOSENNN_111121 (b, a, p[2], p[3], da);
+					p[3] = NR_NORMALIZE_21(da);
 					p += 4;
 					break;
 				default:

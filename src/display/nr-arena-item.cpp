@@ -627,8 +627,8 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
               d = NR_PIXBLOCK_PX (&mpb) + (y - carea.y0) * mpb.rs;
               for (x = carea.x0; x < carea.x1; x++) {
                 unsigned int m;
-                m = ((s[0] + s[1] + s[2]) * s[3] + 127) / (3 * 255);
-                d[0] = NR_PREMUL (d[0], m);
+                m = NR_PREMUL_112(s[0]+s[1]+s[2], s[3]);
+                d[0] = FAST_DIV_ROUND<3*255*255>(NR_PREMUL_123(d[0], m));
                 s += 4;
                 d += 1;
               }
@@ -641,8 +641,8 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
               d = NR_PIXBLOCK_PX (&mpb) + (y - carea.y0) * mpb.rs;
               for (x = carea.x0; x < carea.x1; x++) {
                 unsigned int m;
-                m = ((s[0] + s[1] + s[2]) * s[3] + 127) / (3 * 255);
-                d[0] = m;
+                m = NR_PREMUL_112(s[0]+s[1]+s[2], s[3]);
+                d[0] = FAST_DIV_ROUND<3*255>(m);
                 s += 4;
                 d += 1;
               }
@@ -660,7 +660,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
             unsigned char *d;
             d = NR_PIXBLOCK_PX (&mpb) + (y - carea.y0) * mpb.rs;
             for (x = carea.x0; x < carea.x1; x++) {
-              d[0] = NR_PREMUL (d[0], a);
+              d[0] = NR_PREMUL_111 (d[0], a);
               d += 1;
             }
           }

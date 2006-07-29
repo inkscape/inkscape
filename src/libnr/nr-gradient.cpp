@@ -161,10 +161,10 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
                     idx = (int) CLAMP(pos, 0, (double) NRG_MASK);
                 }
                 unsigned char const *s = rgr->vector + 4 * idx;
-                d[0] = NR_COMPOSENPP(s[0], s[3], d[0], d[3]);
-                d[1] = NR_COMPOSENPP(s[1], s[3], d[1], d[3]);
-                d[2] = NR_COMPOSENPP(s[2], s[3], d[2], d[3]);
-                d[3] = (255*255 - (255 - s[3]) * (255 - d[3]) + 127) / 255;
+                d[0] = NR_COMPOSENPP_1111(s[0], s[3], d[0]);
+                d[1] = NR_COMPOSENPP_1111(s[1], s[3], d[1]);
+                d[2] = NR_COMPOSENPP_1111(s[2], s[3], d[2]);
+                d[3] = NR_COMPOSEA_111(s[3], d[3]);
                 d += 4;
                 gx += dx;
                 gy += dy;
@@ -193,11 +193,11 @@ nr_rgradient_render_generic_symmetric(NRRGradientRenderer *rgr, NRPixBlock *pb)
                     d[2] = s[2];
                     d[3] = 255;
                 } else if (s[3] != 0) {
-                    unsigned ca = 255*255 - (255 - s[3]) * (255 - d[3]);
-                    d[0] = NR_COMPOSENNN_A7(s[0], s[3], d[0], d[3], ca);
-                    d[1] = NR_COMPOSENNN_A7(s[1], s[3], d[1], d[3], ca);
-                    d[2] = NR_COMPOSENNN_A7(s[2], s[3], d[2], d[3], ca);
-                    d[3] = (ca + 127) / 255;
+                    unsigned ca = NR_COMPOSEA_112(s[3], d[3]);
+                    d[0] = NR_COMPOSENNN_111121(s[0], s[3], d[0], d[3], ca);
+                    d[1] = NR_COMPOSENNN_111121(s[1], s[3], d[1], d[3], ca);
+                    d[2] = NR_COMPOSENNN_111121(s[2], s[3], d[2], d[3], ca);
+                    d[3] = NR_NORMALIZE_21(ca);
                 }
                 d += 4;
                 gx += dx;

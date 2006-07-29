@@ -159,9 +159,9 @@ sp_grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
         x1 = MIN (buf->rect.x1, xe + 1);
         p = buf->buf + (y - buf->rect.y0) * buf->buf_rowstride + (x0 - buf->rect.x0) * 3;
         for (x = x0; x < x1; x++) {
-            p[0] = NR_COMPOSEN11 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11 (b, a, p[2]);
+            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
             p += 3;
         }
     }
@@ -182,9 +182,9 @@ sp_grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
         y1 = MIN (buf->rect.y1, ye + 1);
         p = buf->buf + (y0 - buf->rect.y0) * buf->buf_rowstride + (x - buf->rect.x0) * 3;
         for (y = y0; y < y1; y++) {
-            p[0] = NR_COMPOSEN11 (r, a, p[0]);
-            p[1] = NR_COMPOSEN11 (g, a, p[1]);
-            p[2] = NR_COMPOSEN11 (b, a, p[2]);
+            p[0] = NR_COMPOSEN11_1111 (r, a, p[0]);
+            p[1] = NR_COMPOSEN11_1111 (g, a, p[1]);
+            p[2] = NR_COMPOSEN11_1111 (b, a, p[2]);
             p += buf->buf_rowstride;
         }
     }

@@ -115,9 +115,9 @@ static void sp_guideline_render(SPCanvasItem *item, SPCanvasBuf *buf)
     }
 
     for (int p = p0; p < p1; p++) {
-        d[0] = NR_COMPOSEN11(r, a, d[0]);
-        d[1] = NR_COMPOSEN11(g, a, d[1]);
-        d[2] = NR_COMPOSEN11(b, a, d[2]);
+        d[0] = NR_COMPOSEN11_1111(r, a, d[0]);
+        d[1] = NR_COMPOSEN11_1111(g, a, d[1]);
+        d[2] = NR_COMPOSEN11_1111(b, a, d[2]);
         d += step;
     }
 }

@@ -121,11 +121,11 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 						const unsigned char *s;
 						unsigned int ca;
 						s = spx + sy * srs + sx * 4;
-						ca = NR_PREMUL (s[3], alpha);
-						r += NR_PREMUL (s[0], ca);
-						g += NR_PREMUL (s[1], ca);
-						b += NR_PREMUL (s[2], ca);
-						a += ca;
+						ca = NR_PREMUL_112 (s[3], alpha);
+						r += NR_PREMUL_121 (s[0], ca);
+						g += NR_PREMUL_121 (s[1], ca);
+						b += NR_PREMUL_121 (s[2], ca);
+						a += NR_NORMALIZE_21(ca);
 					}
 				}
 			}
@@ -143,11 +143,11 @@ nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (unsigned char *px, int w, int h, 
 				} else {
 					unsigned int ca;
 					/* Full composition */
-					ca = 65025 - (255 - a) * (255 - d[3]);
-					d[0] = NR_COMPOSENNN_A7 (r, a, d[0], d[3], ca);
-					d[1] = NR_COMPOSENNN_A7 (g, a, d[1], d[3], ca);
-					d[2] = NR_COMPOSENNN_A7 (b, a, d[2], d[3], ca);
-					d[3] = (ca + 127) / 255;
+					ca = NR_COMPOSEA_112(a, d[3]);
+					d[0] = NR_COMPOSENNN_111121 (r, a, d[0], d[3], ca);
+					d[1] = NR_COMPOSENNN_111121 (g, a, d[1], d[3], ca);
+					d[2] = NR_COMPOSENNN_111121 (b, a, d[2], d[3], ca);
+					d[3] = NR_NORMALIZE_21(ca);
 				}
 			}
 			/* Advance pointers */
@@ -193,19 +193,19 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_0 (unsigned char *px, int w, int h
 					const unsigned char *s;
 					unsigned int a;
 					s = spx + sy * srs + sx * 4;
-					a = NR_PREMUL (s[3], alpha);
+					a = NR_PREMUL_112 (s[3], alpha);
 					if (a != 0) {
-						if ((a == 255) || (d[3] == 0)) {
+						if ((a == 255*255) || (d[3] == 0)) {
 							/* Transparent BG, premul src */
-							d[0] = NR_PREMUL (s[0], a);
-							d[1] = NR_PREMUL (s[1], a);
-							d[2] = NR_PREMUL (s[2], a);
-							d[3] = a;
+							d[0] = NR_PREMUL_121 (s[0], a);
+							d[1] = NR_PREMUL_121 (s[1], a);
+							d[2] = NR_PREMUL_121 (s[2], a);
+							d[3] = NR_NORMALIZE_21(a);
 						} else {
-							d[0] = NR_COMPOSENPP (s[0], a, d[0], d[3]);
-							d[1] = NR_COMPOSENPP (s[1], a, d[1], d[3]);
-							d[2] = NR_COMPOSENPP (s[2], a, d[2], d[3]);
-							d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
+							d[0] = NR_COMPOSENPP_1211 (s[0], a, d[0]);
+							d[1] = NR_COMPOSENPP_1211 (s[1], a, d[1]);
+							d[2] = NR_COMPOSENPP_1211 (s[2], a, d[2]);
+							d[3] = NR_COMPOSEA_211(a, d[3]);
 						}
 					}
 				}
@@ -259,10 +259,10 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 						const unsigned char *s;
 						unsigned int ca;
 						s = spx + sy * srs + sx * 4;
-						ca = s[3] * alpha;
-						r += s[0] * ca;
-						g += s[1] * ca;
-						b += s[2] * ca;
+						ca = NR_PREMUL_112(s[3], alpha);
+						r += NR_PREMUL_123(s[0], ca);
+						g += NR_PREMUL_123(s[1], ca);
+						b += NR_PREMUL_123(s[2], ca);
 						a += ca;
 					}
 				}
@@ -279,10 +279,10 @@ nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM_n (unsigned char *px, int w, int h
 					d[2] = b;
 					d[3] = a;
 				} else {
-					d[0] = NR_COMPOSEPPP (r, a, d[0], d[3]);
-					d[1] = NR_COMPOSEPPP (g, a, d[1], d[3]);
-					d[2] = NR_COMPOSEPPP (b, a, d[2], d[3]);
-					d[3] = (65025 - (255 - a) * (255 - d[3]) + 127) / 255;
+					d[0] = NR_COMPOSEPPP_1111 (r, a, d[0]);
+					d[1] = NR_COMPOSEPPP_1111 (g, a, d[1]);
+					d[2] = NR_COMPOSEPPP_1111 (b, a, d[2]);
+					d[3] = NR_COMPOSEA_111(a, d[3]);
 				}
 			}
 			/* Advance pointers */
