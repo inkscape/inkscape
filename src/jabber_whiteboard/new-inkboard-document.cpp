@@ -43,7 +43,7 @@ namespace Inkscape {
 namespace Whiteboard {
 
 SPDocument*
-makeInkboardDocument(int code, gchar const* rootname, SessionType type, Glib::ustring const& to)
+makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, Glib::ustring const& to)
 {
 	SPDocument* doc;
 	InkboardDocument* rdoc = new InkboardDocument(g_quark_from_static_string("xml"), type, to);

@@ -2470,16 +2470,18 @@ void PedroGui::doReceiveFile(
 
 void PedroGui::doShare(const DOMString &jid)
 {
-    Inkscape::Whiteboard::SessionManager& sm = Inkscape::Whiteboard::SessionManager::instance();
-    sm.doShare(jid, Inkscape::Whiteboard::INKBOARD_PRIVATE);
+    Inkscape::Whiteboard::SessionManager& sm =
+         Inkscape::Whiteboard::SessionManager::instance();
+    sm.doShare(jid, Inkscape::Whiteboard::State::WHITEBOARD_PEER);
 
 //  Inkscape::Whiteboard::SessionManager::instance().createInkboardDesktop(jid, Inkscape::Whiteboard::INKBOARD_PRIVATE);
 }
 
 void PedroGui::doGroupShare(const DOMString &groupJid)
 {
-    Inkscape::Whiteboard::SessionManager& sm = Inkscape::Whiteboard::SessionManager::instance();
-    sm.doShare(groupJid, Inkscape::Whiteboard::INKBOARD_MUC);
+    Inkscape::Whiteboard::SessionManager& sm =
+        Inkscape::Whiteboard::SessionManager::instance();
+    sm.doShare(groupJid, Inkscape::Whiteboard::State::WHITEBOARD_MUC);
 
 //  Inkscape::Whiteboard::SessionManager::instance().createInkboardDesktop(groupJid, Inkscape::Whiteboard::INKBOARD_MUC);
 }

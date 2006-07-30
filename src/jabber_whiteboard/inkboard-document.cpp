@@ -23,7 +23,7 @@ namespace Inkscape {
 
 namespace Whiteboard {
 
-InkboardDocument::InkboardDocument(int code, SessionType type, Glib::ustring const& to) :
+InkboardDocument::InkboardDocument(int code, State::SessionType type, Glib::ustring const& to) :
 	XML::SimpleNode(code), _type(type), _recipient(to)
 {
 	_initBindings();
@@ -32,6 +32,7 @@ InkboardDocument::InkboardDocument(int code, SessionType type, Glib::ustring con
 void
 InkboardDocument::_initBindings()
 {
+    this->sm = &SessionManager::instance();
 	_bindDocument(*this);
 	_bindLogger(*(new XML::SimpleSession()));
 }
@@ -51,16 +52,7 @@ InkboardDocument::getRecipient() const
 void
 InkboardDocument::startSessionNegotiation()
 {
-	SessionManager& sm = SessionManager::instance();
-        switch (_type) {
-            case INKBOARD_MUC:
-                sm.sendGroup(_recipient, Message::PROTOCOL, " ");
-                break;
-            case INKBOARD_PRIVATE:
-            default:
-                sm.send(_recipient, Message::PROTOCOL," ");
-                break;
-        }
+    send(_recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
 }
 
 void
@@ -79,15 +71,17 @@ bool
 InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper wrapper, Message::Message message)
 {
     char *fmt=
-        "<message type='chat' from='%s' to='%s'>"
+        "<message type='%s' from='%s' to='%s'>"
             "<wb xmlns='%s'>"
                 "<protocol>"
                     "%s"
                 "</protocol>"
             "</wb>"
         "</message>";
-    //if (!getClient().write(fmt,getClient().getJid().c_str(),destJid.c_str(),Vars::INKBOARD_XMLNS,message))
-    //    return false;
+    if (!sm->getClient().write(
+        fmt,_type,sm->getClient().getJid().c_str(),
+        destJid.c_str(),Vars::INKBOARD_XMLNS,message))
+        return false;
 
     return true;
 }

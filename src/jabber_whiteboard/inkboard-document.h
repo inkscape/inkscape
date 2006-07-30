@@ -27,15 +27,19 @@ namespace Whiteboard {
 class InkboardDocument : public XML::SimpleNode, public XML::Document {
 public:
 	
-    explicit InkboardDocument(int code, SessionType type, Glib::ustring const& to);
+    explicit InkboardDocument(int code, State::SessionType type, Glib::ustring const& to);
 
     XML::NodeType type() const
     {
 	return Inkscape::XML::DOCUMENT_NODE;
     }
 
+    SessionManager *sm;
+
     void setRecipient(Glib::ustring const& val);
     Glib::ustring getRecipient() const;
+
+    void setSession();
 
     void startSessionNegotiation();
     void terminateSession();
@@ -66,7 +70,7 @@ private:
 
     void _initBindings();
 
-    SessionType _type;
+    State::SessionType _type;
     Glib::ustring _recipient;
 
     KeyNodeTable _tracker;

@@ -56,7 +56,7 @@ SessionManager::_checkInvitationQueue()
 		switch (resp) {
 			case ACCEPT_INVITATION:
 			{
-				SPDesktop* dt = createInkboardDesktop(from, INKBOARD_PRIVATE);
+				SPDesktop* dt = createInkboardDesktop(from, State::WHITEBOARD_PEER);
 				InkboardDocument* idoc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
 				send(from, Message::PROTOCOL, " ");
 				break;

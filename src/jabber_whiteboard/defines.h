@@ -98,6 +98,7 @@ namespace State {
     extern SessionType WHITEBOARD_MUC; 
     extern SessionType WHITEBOARD_PEER;
 
+    typedef char const* SessionState;
 }
 
 // message types

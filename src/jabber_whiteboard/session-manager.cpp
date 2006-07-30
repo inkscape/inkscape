@@ -217,16 +217,38 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
  * \param type Type of the session; i.e. private message or group chat.
  */
 void
-SessionManager::doShare(Glib::ustring const& to, SessionType type)
+SessionManager::doShare(Glib::ustring const& to, State::SessionType type)
 {
     InkboardDocument* doc;
     SPDesktop* dt;
 
-    switch (type) 
+    // Just create a new blank canvas for MUC sessions
+    if(type == State::WHITEBOARD_MUC) 
     {
-        // Just create a new blank canvas for MUC sessions
-        case INKBOARD_MUC:
+        dt = createInkboardDesktop(to, type);
 
+        if (dt != NULL) 
+        {
+            doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
+
+            if (doc != NULL) 
+            {
+                doc->startSessionNegotiation();
+            }
+        }
+           
+
+        // Let the user pick the document which to start a peer ro peer session
+        // with, or a blank one, then create a blank document, copy over the contents
+        // and initialise session
+    } else if (type== State::WHITEBOARD_PEER) {
+
+        ChooseDesktop dialog;
+        int result = dialog.run();
+
+        if(result == Gtk::RESPONSE_OK)
+        {
+            SPDesktop *desktop = dialog.getDesktop();
             dt = createInkboardDesktop(to, type);
 
             if (dt != NULL) 
@@ -235,42 +257,17 @@ SessionManager::doShare(Glib::ustring const& to, SessionType type)
 
                 if (doc != NULL) 
                 {
+                    if(desktop != NULL)
+                    {
+                        Inkscape::XML::Document *old_doc =
+                            sp_desktop_document(desktop)->rdoc;
+                        doc->root()->mergeFrom(old_doc->root(),"id");
+                    }
+
                     doc->startSessionNegotiation();
                 }
             }
-            break;
-
-        // Let the user pick the document which to start a peer ro peer session
-        // with, or a blank one, then create a blank document, copy over the contents
-        // and initialise session
-        case INKBOARD_PRIVATE:
-        default:
-
-            ChooseDesktop dialog;
-            int result = dialog.run();
-
-            if(result == Gtk::RESPONSE_OK)
-            {
-                SPDesktop *desktop = dialog.getDesktop();
-                dt = createInkboardDesktop(to, type);
-
-                if (dt != NULL) 
-                {
-                    doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-
-                    if (doc != NULL) 
-                    {
-                        if(desktop != NULL)
-                        {
-                            Inkscape::XML::Document *old_doc = sp_desktop_document(desktop)->rdoc;
-                            doc->root()->mergeFrom(old_doc->root(),"id");
-                        }
-
-                        doc->startSessionNegotiation();
-                    }
-                }
-            }
-        break;
+        }
     }
 }
 
@@ -282,7 +279,7 @@ SessionManager::doShare(Glib::ustring const& to, SessionType type)
  * \return A pointer to the created desktop, or NULL if a new desktop could not be created.
  */
 SPDesktop*
-SessionManager::createInkboardDesktop(Glib::ustring const& to, SessionType type)
+SessionManager::createInkboardDesktop(Glib::ustring const& to, State::SessionType type)
 {
 // Create document (sp_repr_document_new clone)
     SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", type, to);

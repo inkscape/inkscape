@@ -127,7 +127,7 @@ public:
      * \param to The recipient to which this desktop will be linked, specified as a JID.
      * \param type Type of the session; i.e. private message or group chat.
      */
-    virtual void doShare(Glib::ustring const& to, SessionType type);
+    virtual void doShare(Glib::ustring const& to, State::SessionType type);
 
     /**
      * Creates a new desktop with an InkboardDocument.
@@ -141,7 +141,7 @@ public:
      * \param type Type of the session; i.e. private message or group chat.
      * \return A pointer to the created SPDesktop.
      */
-    virtual SPDesktop* createInkboardDesktop(Glib::ustring const& to, SessionType type);
+    virtual SPDesktop* createInkboardDesktop(Glib::ustring const& to, State::SessionType type);
 
     /**
      * Terminates an Inkboard session to a given recipient.  If the session to be

@@ -23,7 +23,7 @@ namespace Inkscape {
 
 namespace Whiteboard {
 
-SPDocument* makeInkboardDocument(int code, gchar const* rootname, SessionType type, Glib::ustring const& to);
+SPDocument* makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, Glib::ustring const& to);
 SPDesktop* makeInkboardDesktop(SPDocument* doc);
 
 }
