@@ -52,7 +52,7 @@ InkboardDocument::getRecipient() const
 void
 InkboardDocument::startSessionNegotiation()
 {
-    send(_recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
+    sendProtocol(_recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
 }
 
 void
@@ -68,19 +68,20 @@ InkboardDocument::processInkboardEvent(Message::Wrapper mtype, unsigned int seqn
 }
 
 bool
-InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper wrapper, Message::Message message)
+InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper wrapper,
+     Message::Message message)
 {
     char *fmt=
         "<message type='%s' from='%s' to='%s'>"
             "<wb xmlns='%s'>"
-                "<protocol>"
+                "<%s>"
                     "%s"
-                "</protocol>"
+                "</%s>"
             "</wb>"
         "</message>";
     if (!sm->getClient().write(
         fmt,_type,sm->getClient().getJid().c_str(),
-        destJid.c_str(),Vars::INKBOARD_XMLNS,message))
+        destJid.c_str(),wrapper,Vars::INKBOARD_XMLNS,message,wrapper))
         return false;
 
     return true;

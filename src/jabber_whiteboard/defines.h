@@ -67,7 +67,7 @@ namespace Whiteboard {
 
 namespace Message {
 
-    typedef int const Wrapper;
+    typedef char const* Wrapper;
     typedef char const* Message;
 
     extern Wrapper PROTOCOL;

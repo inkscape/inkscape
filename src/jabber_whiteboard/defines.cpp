@@ -21,18 +21,18 @@ namespace Whiteboard {
 
 namespace Message {
 
-    Wrapper PROTOCOL =     0;
-    Wrapper NEW =          1;
-    Wrapper REMOVE =       2;
-    Wrapper CONFIGURE =    3;
-    Wrapper MOVE =         4;
+    Wrapper PROTOCOL =     "protocol";
+    Wrapper NEW =          "new";
+    Wrapper REMOVE =       "remove";
+    Wrapper CONFIGURE =    "configure";
+    Wrapper MOVE =         "move";
 
-    Message CONNECT_REQUEST =     "connect-request";
-    Message CONNECTED =           "connected";
-    Message ACCEPT_INVITATION =   "accept-invitation";
-    Message DECLINE_INVITATION =  "decline-invitation";
-    Message DOCUMENT_BEGIN =      "document-begin";
-    Message DOCUMENT_END =        "document-end";
+    Message CONNECT_REQUEST =     "<connect-request />";
+    Message CONNECTED =           "<connected />";
+    Message ACCEPT_INVITATION =   "<accept-invitation />";
+    Message DECLINE_INVITATION =  "<decline-invitation />";
+    Message DOCUMENT_BEGIN =      "<document-begin />";
+    Message DOCUMENT_END =        "<document-end />";
 }
 
 namespace Vars {

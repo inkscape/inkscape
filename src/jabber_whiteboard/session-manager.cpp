@@ -96,7 +96,7 @@ SessionManager::send(const Glib::ustring &destJid,
                            getClient().getMsgId(),
                            INKBOARD_XMLNS,
                            2,
-                           (MessageType)type,
+                           type,
                            getSequenceNumber(),
                            xmlData.c_str()
                            ))

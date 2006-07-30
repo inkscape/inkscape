@@ -34,19 +34,15 @@ public:
 	return Inkscape::XML::DOCUMENT_NODE;
     }
 
-    SessionManager *sm;
-
     void setRecipient(Glib::ustring const& val);
     Glib::ustring getRecipient() const;
-
-    void setSession();
 
     void startSessionNegotiation();
     void terminateSession();
     void processInkboardEvent(Message::Wrapper mtype, unsigned int seqnum, Glib::ustring const& data);
 
-    bool send(const Glib::ustring &destJid, Message::Wrapper mwrapper, Message::Message message);
-    bool send(const Glib::ustring &destJid, Message::Wrapper mwrapper, const Glib::ustring &data);
+    bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper mwrapper, 
+        Message::Message message);
 
 
 protected:
@@ -70,6 +66,7 @@ private:
 
     void _initBindings();
 
+    SessionManager *sm;
     State::SessionType _type;
     Glib::ustring _recipient;
 
