@@ -7821,7 +7821,7 @@ msgstr "keys.svg"
 #. code); otherwise leave as "tutorial-basic.svg".
 #: ../src/verbs.cpp:1677
 msgid "tutorial-basic.svg"
-msgstr "tutorial-basic.svg"
+msgstr "tutorial-basic.it.svg"
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
 #: ../src/verbs.cpp:1681
