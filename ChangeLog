@@ -1,3 +1,10 @@
+2006-07-29  John Bintz  <jcoswell@coswellproductions.org>
+
+  * src/nodepath.cpp:
+  
+    Fix bug where deleting a node broke the symmetry of neighboring
+    smooth nodes and failed to convert those nodes to cusp nodes
+
 2006-06-29  MenTaLguY  <mental@rydia.net>
 
 	* src/sp-object.cpp:

@@ -1975,6 +1975,12 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             gint ret;
             ret = sp_bezier_fit_cubic (bez, adata, data.size(), error);
 
+            //if these nodes are smooth or symmetrical, the endpoints will be thrown out of sync.
+            //make sure these nodes are changed to cusp nodes so that, once the endpoints are moved,
+            //the resulting nodes behave as expected.
+            sp_nodepath_convert_node_type(sample_cursor, Inkscape::NodePath::NODE_CUSP);
+            sp_nodepath_convert_node_type(sample_end, Inkscape::NodePath::NODE_CUSP);
+            
             //adjust endpoints
             sample_cursor->n.pos = bez[1];
             sample_end->p.pos = bez[2];
