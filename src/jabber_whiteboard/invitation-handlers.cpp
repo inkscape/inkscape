@@ -58,7 +58,7 @@ SessionManager::_checkInvitationQueue()
 			{
 				SPDesktop* dt = createInkboardDesktop(from, State::WHITEBOARD_PEER);
 				InkboardDocument* idoc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-				send(from, Message::PROTOCOL, " ");
+				//sendProtocol(from, Message::PROTOCOL, " ");
 				break;
 			}
 			case DECLINE_INVITATION:
@@ -66,7 +66,7 @@ SessionManager::_checkInvitationQueue()
 				break;
 			}
 			default:
-				send(from, Message::PROTOCOL, " ");
+				//sendProtocol(from, Message::PROTOCOL, " ");
 				break;
 		}
 

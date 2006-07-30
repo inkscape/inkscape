@@ -73,73 +73,12 @@ SessionManager::~SessionManager()
     getClient().disconnect();
 }
 
-unsigned long SessionManager::getSequenceNumber()
-{
-    return sequenceNumber++;
-}
-
-bool
-SessionManager::send(const Glib::ustring &destJid, 
-					 const Message::Wrapper type,
-                     const Glib::ustring &data)
-{
-    Pedro::DOMString xmlData = Pedro::Parser::encode(data);
-    char *fmt=
-    "<message type='chat' from='%s' to='%s' id='ink_%d'>"
-    "<w xmlns='%s' "
-    "protocol='%d' type='%d' seq='%d'><x:inkboard-data>%s</x:inkboard-data></inkboard>"
-    "<body></body>"
-    "</message>";
-    if (!getClient().write(fmt, 
-                           getClient().getJid().c_str(),
-                           destJid.c_str(),
-                           getClient().getMsgId(),
-                           INKBOARD_XMLNS,
-                           2,
-                           type,
-                           getSequenceNumber(),
-                           xmlData.c_str()
-                           ))
-        {
-        return false;
-        }
-        
-    return true;
-}
-
-bool
-SessionManager::sendGroup(const Glib::ustring &groupJid,
-		          const Message::Wrapper type,
-                          const Glib::ustring &data)
-{
-    Pedro::DOMString xmlData = Pedro::Parser::encode(data);
-    char *fmt=
-    "<message type='groupchat' from='%s' to='%s' id='ink_%d'>"
-    "<inkboard xmlns='%s' "
-    "protocol='%d' type='%d' seq='%d'><x:inkboard-data>%s</x:inkboard-data></inkboard>"
-    "<body></body>"
-    "</message>";
-    if (!getClient().write(fmt,
-                           getClient().getJid().c_str(),
-                           groupJid.c_str(),
-                           getClient().getMsgId(),
-                           INKBOARD_XMLNS,
-                           2,
-                           type,
-                           getSequenceNumber(),
-                           xmlData.c_str()
-                           ))
-        {
-        return false;
-        }
-        
-    return true;
-}
-
 void
 SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
 {
     int type = event.getType();
+
+    g_warning("recieved pedro");
 
     switch (type) {
         case Pedro::XmppEvent::EVENT_STATUS:

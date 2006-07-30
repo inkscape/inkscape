@@ -59,27 +59,9 @@ public:
     /**
      *
      */
-    unsigned long getSequenceNumber();
-
-    /**
-     *
-     */
     virtual Pedro::XmppClient &getClient()
         { return gui.client; }
 
-    /**
-     *
-     */
-    virtual bool send(const Glib::ustring &destJid, 
-                      const Message::Wrapper type,
-                      const Glib::ustring &data);
-
-    /**
-     *
-     */
-    virtual bool sendGroup(const Glib::ustring &destJid,
-			   const Message::Wrapper type,
-                           const Glib::ustring &data);
     /**
      *
      */
