@@ -24,6 +24,7 @@ tutorial_DATA = \
     tutorial-basic.de.svg \
     tutorial-basic.es.svg \
     tutorial-basic.fr.svg \
+    tutorial-basic.it.svg \
     tutorial-basic.ja.svg \
     tutorial-basic.nn.svg \
     tutorial-basic.pt_BR.svg \
