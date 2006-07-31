@@ -55,9 +55,9 @@
 
 #include "io/sys.h"
 
-#include "cairo.h"
-#include "cairo-pdf.h"
-#include "cairo-ft.h"
+#include <cairo.h>
+#include <cairo-pdf.h>
+#include <cairo-ft.h>
 
 #include <pango/pangofc-fontmap.h>
 

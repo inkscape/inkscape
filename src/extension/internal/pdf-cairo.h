@@ -25,8 +25,7 @@
 #include "svg/stringstream.h"
 #include "sp-gradient.h"
 
-#include "cairo.h"
-#include <pango/pangocairo.h>
+#include <cairo.h>
 
 namespace Inkscape {
 namespace Extension {
