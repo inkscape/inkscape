@@ -74,6 +74,25 @@ public:
 		rect.y2 = element[0][1]*r.x2 + element[1][1]*r.y2 + element[2][1]; 
 		return rect;
 	}
+
+	WPG2TransformMatrix& transformBy(const WPG2TransformMatrix& m)
+	{
+		double result[3][3];
+
+		for(int i = 0; i < 3; i++)
+			for(int j = 0; j < 3; j++)
+			{
+				result[i][j] = 0;
+				for(int k = 0; k < 3; k++)
+					result[i][j] += m.element[i][k]*element[k][j];
+			}
+
+		for(int x = 0; x < 3; x++)
+			for(int y = 0; y < 3; y++)
+				element[x][y] = result[x][y];
+	
+		return *this;
+	}
 };
 
 class WPGCompoundPolygon
@@ -85,6 +104,25 @@ public:
 	bool isClosed;
 
 	WPGCompoundPolygon(): matrix(), isFilled(true), isFramed(true), isClosed(true) {}
+};
+
+class WPGGroupContext
+{
+public:
+	unsigned subIndex;
+	int parentType;
+	WPGPath compoundPath;
+	WPG2TransformMatrix compoundMatrix;
+	bool compoundWindingRule;
+	bool compoundFilled;
+	bool compoundFramed;
+	bool compoundClosed;
+
+	WPGGroupContext(): subIndex(0), parentType(0), 
+	compoundPath(), compoundMatrix(), compoundWindingRule(false),
+	compoundFilled(false), compoundFramed(true), compoundClosed(false)	{}
+
+	bool isCompoundPolygon() const { return parentType == 0x1a; }
 };
 
 class WPG2Parser : public WPGXParser
@@ -124,6 +162,7 @@ private:
 	void handleArc();
 	
 	void resetPalette();
+	void flushCompoundPolygon();
 
 	// parsing context
 	bool m_success;
@@ -143,11 +182,12 @@ private:
 	WPG2TransformMatrix m_matrix;
 	double m_gradientAngle;
 	WPGPoint m_gradientRef;
-	unsigned m_subIndex;
-	std::stack<unsigned> m_indexStack;
-
-	WPGCompoundPolygon m_currentCompound;
-	std::stack<WPGCompoundPolygon> m_compoundStack;
+	std::stack<WPGGroupContext> m_groupStack;
+	WPG2TransformMatrix m_compoundMatrix;
+	bool m_compoundWindingRule;
+	bool m_compoundFilled;
+	bool m_compoundFramed;
+	bool m_compoundClosed;
 
 	class ObjectCharacterization;
 	void parseCharacterization(ObjectCharacterization*);

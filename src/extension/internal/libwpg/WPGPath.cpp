@@ -44,6 +44,7 @@ using namespace libwpg;
 WPGPath::WPGPath()
 {
 	d = new WPGPathPrivate;
+	closed = true;
 }
 	
 WPGPath::~WPGPath()
@@ -103,4 +104,9 @@ void WPGPath::addElement(const WPGPathElement& element)
 {
 	d->elements.push_back(element);
 }
-	
+
+void WPGPath::append(const WPGPath& path)
+{
+	for(unsigned i = 0; i < path.count(); i++)
+		addElement(path.element(i));
+}

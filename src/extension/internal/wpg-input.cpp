@@ -252,6 +252,10 @@ void InkscapePainter::drawPath(const WPGPath& path)
 				break;
 		}
 	}
+	
+	if(path.closed)
+		printf("Z");
+
 	printf("\" \n");
 	writeStyle();
 	printf("/>\n");

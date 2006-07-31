@@ -55,6 +55,8 @@ class WPGPathPrivate;
 class WPGPath
 {
 public:
+
+	bool closed;
 	
 	WPGPath();
 	
@@ -75,6 +77,8 @@ public:
 	void curveTo(const WPGPoint& c1, const WPGPoint& c2, const WPGPoint& endPoint);
 	
 	void addElement(const WPGPathElement& element);
+	
+	void append(const WPGPath& path);
 	
 private:
 	WPGPathPrivate *d;

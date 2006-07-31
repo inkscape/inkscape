@@ -208,8 +208,7 @@ WPG2Parser::WPG2Parser(WPGInputStream *input, WPGPaintInterface* painter):
 	m_xofs(0), m_yofs(0),
 	m_width(0), m_height(0),
 	m_doublePrecision(false),
-	m_layerOpened(false), m_layerId(0),
-	m_subIndex(0)
+	m_layerOpened(false), m_layerId(0)
 {
 }
 
@@ -294,9 +293,12 @@ bool WPG2Parser::parse()
 	m_doublePrecision = false;
 	m_layerOpened = false;
 	m_matrix = WPG2TransformMatrix();
-	m_subIndex = 0;
-	while(!m_indexStack.empty())
-		m_indexStack.pop();
+	m_groupStack = std::stack<WPGGroupContext>();
+	m_compoundMatrix = WPG2TransformMatrix();
+	m_compoundWindingRule = false;
+	m_compoundFilled = false;
+	m_compoundFramed = true;
+	m_compoundClosed = false;
 	
 	// default style
 	m_pen.foreColor = WPGColor(0,0,0);
@@ -319,8 +321,8 @@ bool WPG2Parser::parse()
 		long nextPos = m_input->tell() + length;
 		
 		// inside a subgroup, one less sub record
-		if(m_subIndex > 0)
-			m_subIndex--;
+		if(!m_groupStack.empty())
+			m_groupStack.top().subIndex--;
 
 		// search function to handler this record
 		int index = -1;
@@ -351,11 +353,32 @@ bool WPG2Parser::parse()
 			}
 		}
 
-		// we enter another subgroup, save the index to stack
+		// the last subgroup
+		if(!m_groupStack.empty())
+		{
+			WPGGroupContext& context = m_groupStack.top();
+			if(context.subIndex == 0)
+			{
+				if(context.isCompoundPolygon())
+					flushCompoundPolygon();
+				m_groupStack.pop();
+			}
+		}
+
+		// we enter another subgroup, save the context to stack
 		if(extension > 0)
 		{
-			m_indexStack.push(m_subIndex);
-			m_subIndex = extension;
+			WPGGroupContext context;
+			context.parentType = recordType;
+			context.subIndex = extension;
+			if(context.isCompoundPolygon())
+			{
+				context.compoundMatrix = m_compoundMatrix;
+				context.compoundFilled = m_compoundFilled;
+				context.compoundFramed = m_compoundFramed;
+				context.compoundClosed = m_compoundClosed;
+			}
+			m_groupStack.push(context);
 		}
 
 		//if(m_input->tell() > nextPos)
@@ -513,8 +536,6 @@ void WPG2Parser::handleEndWPG()
 
 	m_painter->endDocument();
 	m_exit = true;
-	
-	WPG_DEBUG_MSG(("EndWPG\n"));
 }
 
 void WPG2Parser::handleLayer()
@@ -528,14 +549,32 @@ void WPG2Parser::handleLayer()
 	m_painter->startLayer(m_layerId);
 	m_layerOpened = true;
 
-	WPG_DEBUG_MSG(("Layer\n"));
-	WPG_DEBUG_MSG(("  Id: %d\n", m_layerId));
+	WPG_DEBUG_MSG(("  Layer Id: %d\n", m_layerId));
 }
 
 void WPG2Parser::handleCompoundPolygon()
 {
 	ObjectCharacterization objCh;
 	parseCharacterization(&objCh);
+
+	m_compoundWindingRule = objCh.windingRule;
+	m_compoundMatrix = objCh.matrix;
+	m_compoundFilled = objCh.filled;
+	m_compoundFramed = objCh.framed;
+	m_compoundClosed = objCh.closed;
+}
+void WPG2Parser::flushCompoundPolygon()
+{
+	WPGGroupContext& context = m_groupStack.top();
+	
+	m_painter->setBrush( context.compoundFilled ? m_brush : WPGBrush() );
+	m_painter->setPen( context.compoundFramed ? m_pen : WPGPen() );
+	if(context.compoundWindingRule)
+		m_painter->setFillRule(WPGPaintInterface::WindingFill);
+	else
+		m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
+	context.compoundPath.closed = context.compoundClosed;
+	m_painter->drawPath(context.compoundPath);
 }
 
 void WPG2Parser::handlePenStyleDefinition()
@@ -544,7 +583,7 @@ void WPG2Parser::handlePenStyleDefinition()
 	unsigned int segments = readU16();
 
 	WPGDashArray dashArray;
-	for(int i = 0; i < segments; i++)
+	for(unsigned i = 0; i < segments; i++)
 	{
 		unsigned int p = (m_doublePrecision) ? readU32() : readU16();
 		unsigned int q = (m_doublePrecision) ? readU32() : readU16();
@@ -553,7 +592,6 @@ void WPG2Parser::handlePenStyleDefinition()
 	}
 	m_penStyles[style] = dashArray;
 
-	WPG_DEBUG_MSG(("PenStyleDefinition\n"));
 	WPG_DEBUG_MSG(("          Style : %d\n", style));
 	WPG_DEBUG_MSG(("  Segment pairs : %d\n", segments));
 }
@@ -569,8 +607,7 @@ void WPG2Parser::handleColorPalette()
 	unsigned startIndex = readU16();
 	unsigned numEntries = readU16();
 
-	WPG_DEBUG_MSG(("Color Palette\n"));
-	for(int i = 0; i < numEntries; i++)
+	for(unsigned i = 0; i < numEntries; i++)
 	{
 		WPGColor color;
 		color.red = readU8();
@@ -587,7 +624,6 @@ void WPG2Parser::handleDPColorPalette()
 	unsigned startIndex = readU16();
 	unsigned numEntries = readU16();
 
-	WPG_DEBUG_MSG(("Color Palette\n"));
 	for(int i = 0; i < numEntries; i++)
 	{
 		WPGColor color;
@@ -609,7 +645,6 @@ void WPG2Parser::handlePenForeColor()
 
 	m_pen.foreColor = WPGColor(red, green, blue, alpha);
 
-	WPG_DEBUG_MSG(("PenForeColor\n"));
 	WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
@@ -623,7 +658,6 @@ void WPG2Parser::handleDPPenForeColor()
 
 	m_pen.foreColor = WPGColor(red, green, blue, alpha);
 
-	WPG_DEBUG_MSG(("PenForeColor\n"));
 	WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
@@ -636,7 +670,6 @@ void WPG2Parser::handlePenBackColor()
 
 	m_pen.backColor = WPGColor(red, green, blue, alpha);
 
-	WPG_DEBUG_MSG(("PenBackColor\n"));
 	WPG_DEBUG_MSG(("   Background color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
@@ -650,7 +683,6 @@ void WPG2Parser::handleDPPenBackColor()
 
 	m_pen.backColor = WPGColor(red, green, blue, alpha);
 
-	WPG_DEBUG_MSG(("PenBackColor\n"));
 	WPG_DEBUG_MSG(("   Background color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
@@ -661,7 +693,6 @@ void WPG2Parser::handlePenStyle()
 	m_pen.dashArray = m_penStyles[style];
 	m_pen.solid = (style == 0);
 
-	WPG_DEBUG_MSG(("PenStyle\n"));
 	WPG_DEBUG_MSG(("   Pen style : %d\n", style));
 	WPG_DEBUG_MSG(("   Segments : %d\n", m_pen.dashArray.count()));
 }
@@ -674,7 +705,6 @@ void WPG2Parser::handlePenSize()
 	m_pen.width = TO_DOUBLE(width) / m_xres;
 	m_pen.height = TO_DOUBLE(height) / m_yres;
 
-	WPG_DEBUG_MSG(("PenSize\n"));
 	WPG_DEBUG_MSG(("   Width: %d\n", width));
 	WPG_DEBUG_MSG(("   Height: %d\n", height));
 }
@@ -687,7 +717,6 @@ void WPG2Parser::handleDPPenSize()
 	m_pen.width = TO_DOUBLE(width) / m_xres / 256;
 	m_pen.height = TO_DOUBLE(height) / m_yres / 256;
 
-	WPG_DEBUG_MSG(("PenSize\n"));
 	WPG_DEBUG_MSG(("   Width: %d\n", width));
 	WPG_DEBUG_MSG(("   Height: %d\n", height));
 }
@@ -699,8 +728,8 @@ void WPG2Parser::handleBrushGradient()
 	unsigned xref = readU16();
 	unsigned yref = readU16();
 	unsigned flag = readU16();
-	bool granular = flag & (1<<6);
-	bool anchor = flag & (1<<7);
+	bool granular = (flag & (1<<6)) == 1;
+	bool anchor = (flag & (1<<7)) == 1;
 	
 	// TODO: get gradient extent
 	
@@ -721,8 +750,8 @@ void WPG2Parser::handleDPBrushGradient()
 	unsigned xref = readU16();
 	unsigned yref = readU16();
 	unsigned flag = readU16();
-	bool granular = flag & (1<<6);
-	bool anchor = flag & (1<<7);
+	bool granular = (flag & (1<<6)) == 1;
+	bool anchor = (flag & (1<<7)) == 1;
 	
 	// TODO: get gradient extent (in double precision)
 	
@@ -750,7 +779,7 @@ void WPG2Parser::handleBrushForeColor()
 		WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 
 		m_brush.foreColor = WPGColor(red, green, blue, alpha);
-		if(m_brush.style == WPGBrush::NoBrush)
+		if(m_brush.style != WPGBrush::Gradient)
 			m_brush.style = WPGBrush::Solid;
 	}
 	else
@@ -802,20 +831,64 @@ void WPG2Parser::handleBrushForeColor()
 void WPG2Parser::handleDPBrushForeColor()
 {
 	unsigned char gradientType = readU8();
-
-	// we just ignore the least significant 8 bits
-	unsigned int red = (m_doublePrecision)   ? readU16()>>8 : readU8();
-	unsigned int green = (m_doublePrecision) ? readU16()>>8 : readU8();
-	unsigned int blue = (m_doublePrecision)  ? readU16()>>8 : readU8();
-	unsigned int alpha = (m_doublePrecision) ? readU16()>>8 : readU8();
-
-	m_brush.foreColor = WPGColor(red, green, blue, alpha);
-	if(m_brush.style == WPGBrush::NoBrush)
-		m_brush.style = WPGBrush::Solid;
-
-	WPG_DEBUG_MSG(("BrushForeColor\n"));
 	WPG_DEBUG_MSG(("   Gradient type : %d (%s)\n", gradientType, describeGradient(gradientType)));
-	WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
+
+	if(gradientType == 0)
+	{
+		unsigned char red = (m_doublePrecision)   ? readU16()>>8 : readU8();
+		unsigned char green = (m_doublePrecision)   ? readU16()>>8 : readU8();
+		unsigned char blue = (m_doublePrecision)   ? readU16()>>8 : readU8();
+		unsigned char alpha = (m_doublePrecision)   ? readU16()>>8 : readU8();
+		WPG_DEBUG_MSG(("   Foreground color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
+
+		m_brush.foreColor = WPGColor(red, green, blue, alpha);
+		if(m_brush.style != WPGBrush::NoBrush)
+			m_brush.style = WPGBrush::Solid;
+	}
+	else
+	{
+		unsigned count = readU16();
+		std::vector<WPGColor> colors;
+		std::vector<double> positions;
+		WPG_DEBUG_MSG(("  Gradient colors : %d\n", count));
+
+		for(unsigned i = 0; i < count; i++)
+		{
+			unsigned char red = (m_doublePrecision)   ? readU16()>>8 : readU8();
+			unsigned char green = (m_doublePrecision)   ? readU16()>>8 : readU8();
+			unsigned char blue = (m_doublePrecision)   ? readU16()>>8 : readU8();
+			unsigned char alpha = (m_doublePrecision)   ? readU16()>>8 : readU8();
+			WPGColor color(red, green, blue, alpha);
+			colors.push_back(color);
+			WPG_DEBUG_MSG(("   Color #%d (RGBA): %d %d %d %d\n", i+1, red, green, blue, alpha));
+		}
+
+		for(unsigned j = 0; j < count-1; j++)
+		{
+			unsigned pos = readU16();
+			positions.push_back(TO_DOUBLE(pos));
+			WPG_DEBUG_MSG(("   Position #%d : %d\n", j+1, pos));
+		}
+		
+		// looks like Corel Presentations only create 2 colors gradient
+		// and they are actually in reverse order
+		if(count == 2)
+		{
+			double xref = (double)m_gradientRef.x/65536.0;
+			double yref = (double)m_gradientRef.y/65536.0;
+			double angle = m_gradientAngle*M_PI/180.0;
+			double tanangle = tan(angle);
+			double ref = (tanangle<1e2) ? (yref+xref*tanangle)/(1+tanangle) : xref;
+			WPGGradient gradient;
+			gradient.setAngle(-m_gradientAngle); // upside down
+			gradient.addStop(0, colors[1]);
+			gradient.addStop(ref, colors[0]);
+			if((m_gradientRef.x != 65535) && (m_gradientRef.y != 65536))
+				gradient.addStop(1, colors[1]);
+			m_brush.gradient = gradient;
+			m_brush.style = WPGBrush::Gradient;
+		}
+	}
 }
 
 void WPG2Parser::handleBrushBackColor()
@@ -829,7 +902,6 @@ void WPG2Parser::handleBrushBackColor()
 	if(m_brush.style == WPGBrush::NoBrush)
 		m_brush.style = WPGBrush::Solid;
 
-	WPG_DEBUG_MSG(("BrushBackColor\n"));
 	WPG_DEBUG_MSG(("   Backround color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
@@ -845,7 +917,6 @@ void WPG2Parser::handleDPBrushBackColor()
 	if(m_brush.style == WPGBrush::NoBrush)
 		m_brush.style = WPGBrush::Solid;
 
-	WPG_DEBUG_MSG(("PenBackColor\n"));
 	WPG_DEBUG_MSG(("   Background color (RGBA): %d %d %d %d\n", red, green, blue, alpha));
 }
 
@@ -855,7 +926,6 @@ void WPG2Parser::handleBrushPattern()
 
 	// TODO
 
-	WPG_DEBUG_MSG(("BrushPattern\n"));
 	WPG_DEBUG_MSG(("   Pattern : %d\n", pattern));
 }
 
@@ -946,6 +1016,13 @@ void WPG2Parser::handlePolyline()
 	parseCharacterization(&objCh);
 	m_matrix = objCh.matrix;
 
+	bool insideCompound = m_groupStack.empty() ? false : 
+		m_groupStack.top().isCompoundPolygon();
+
+	// inside a compound, so take the parent transformation into account
+	if(insideCompound)
+		m_matrix.transformBy(m_groupStack.top().compoundMatrix); 
+
 	unsigned long count = readU16();
 
 	WPGPointArray points;
@@ -958,17 +1035,32 @@ void WPG2Parser::handlePolyline()
 		points.add(p);
 	}
 
-	m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
-	m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
-	if(objCh.windingRule)
-		m_painter->setFillRule(WPGPaintInterface::WindingFill);
+	if(insideCompound)
+	{
+		if(count > 0)
+		{
+			// inside a compound ? convert it into path because for compound 
+			// we will only use paths
+			WPGPath& path = m_groupStack.top().compoundPath;
+			path.moveTo(points[0]);
+			for(unsigned long ii = 1; ii < count; ii++)
+				path.lineTo(points[ii]);
+		}
+	}
 	else
-		m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
-	m_painter->drawPolygon(points);
+	{
+		// otherwise draw directly
+		m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
+		m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
+		if(objCh.windingRule)
+			m_painter->setFillRule(WPGPaintInterface::WindingFill);
+		else
+			m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
+		m_painter->drawPolygon(points);
+	}
 
-	WPG_DEBUG_MSG(("Polyline\n"));
 	WPG_DEBUG_MSG(("   Vertices count : %d\n", count));
-	for(int j = 0; j < count; j++ )
+	for(unsigned int j = 0; j < count; j++ )
 		WPG_DEBUG_MSG(("        Point #%d : %g,%g\n", j+1, points[j].x, points[j].y));
 }
 
@@ -977,6 +1069,13 @@ void WPG2Parser::handlePolycurve()
 	ObjectCharacterization objCh;
 	parseCharacterization(&objCh);
 	m_matrix = objCh.matrix;
+
+	bool insideCompound = m_groupStack.empty() ? false : 
+		m_groupStack.top().isCompoundPolygon();
+
+	// inside a compound, so take the parent transformation into account
+	if(insideCompound)
+		m_matrix.transformBy(m_groupStack.top().compoundMatrix); 
 
 	unsigned int count = readU16();
 
@@ -1006,17 +1105,25 @@ void WPG2Parser::handlePolycurve()
 	}
 
 	WPGPath path;
+	path.closed = objCh.closed;
 	path.moveTo(vertices[0]);
 	for(unsigned j = 1; j < vertices.count(); j++)
 		path.curveTo(controlPoints[j*2-2], controlPoints[j*2-1], vertices[j]);
 
-	m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
-	m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
-	if(objCh.windingRule)
-		m_painter->setFillRule(WPGPaintInterface::WindingFill);
+	if(insideCompound)
+		// inside a compound ? just collect the path together
+		m_groupStack.top().compoundPath.append(path);
 	else
-		m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
-	m_painter->drawPath(path);
+	{
+		// otherwise draw directly
+		m_painter->setBrush( objCh.filled ? m_brush : WPGBrush() );
+		m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
+		if(objCh.windingRule)
+			m_painter->setFillRule(WPGPaintInterface::WindingFill);
+		else
+			m_painter->setFillRule(WPGPaintInterface::AlternatingFill);
+		m_painter->drawPath(path);
+	}
 }
 
 void WPG2Parser::handleRectangle()
@@ -1053,7 +1160,6 @@ void WPG2Parser::handleRectangle()
 	m_painter->setPen( objCh.framed ? m_pen : WPGPen() );
 	m_painter->drawRectangle(rect, roundx, roundy);
 	
-	WPG_DEBUG_MSG(("Rectangle\n"));
 	WPG_DEBUG_MSG(("      X1 : %d\n", x1));
 	WPG_DEBUG_MSG(("      Y1 : %d\n", y1));
 	WPG_DEBUG_MSG(("      X2 : %d\n", x2));
@@ -1095,7 +1201,6 @@ void WPG2Parser::handleArc()
 		m_painter->drawEllipse(center, rx, ry);
 	}
 
-	WPG_DEBUG_MSG(("Arc\n"));
 	WPG_DEBUG_MSG(("   Center point x : %d\n", cx));
 	WPG_DEBUG_MSG(("   Center point y : %d\n", cy));
 	WPG_DEBUG_MSG(("         Radius x : %d\n", radx));
