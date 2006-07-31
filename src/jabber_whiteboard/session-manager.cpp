@@ -99,8 +99,6 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
             g_warning("## SM message:%s\n", event.getFrom().c_str());
             Pedro::Element *root = event.getDOM();
 
-            g_warning("hey %s",root->getTagAttribute("wb", "xmlns"));
-
             if (root)
                 {
                 if (root->getTagAttribute("inkboard", "xmlns") == Vars::INKBOARD_XMLNS)
@@ -118,8 +116,6 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
             {
             g_warning("## SM MUC message:%s\n", event.getFrom().c_str());
             Pedro::Element *root = event.getDOM();
-
-            g_warning("hey %s",root->getTagAttribute("wb", "xmlns"));
 
             if (root)
                 {

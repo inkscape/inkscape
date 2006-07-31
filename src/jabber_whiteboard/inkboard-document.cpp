@@ -90,6 +90,7 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper wr
                     "%s"
                 "</%s>"
             "</wb>"
+            "<body> </body>"
         "</message>";
     if (!_sm->getClient().write(
         fmt,_type,_sm->getClient().getJid().c_str(),destJid.c_str(),
