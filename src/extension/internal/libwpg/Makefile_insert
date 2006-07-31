@@ -1,0 +1,38 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+extension/internal/libwpg/all: extension/internal/libwpg/libwpg.a
+
+extension/internal/libwpg/clean:
+	rm -f extension/internal/libwpg/libwpg.a $(extension_internal_libwpg_libwpg_OBJECTS)
+
+extension_internal_libwpg_libwpg_a_SOURCES =	\
+        extension/internal/libwpg/libwpg.h \
+        extension/internal/libwpg/libwpg_utils.h \
+        extension/internal/libwpg/Makefile_insert \
+        extension/internal/libwpg/WPG1Parser.cpp \
+        extension/internal/libwpg/WPG1Parser.h \
+        extension/internal/libwpg/WPG2Parser.cpp \
+        extension/internal/libwpg/WPG2Parser.h \
+        extension/internal/libwpg/WPGBrush.h \
+        extension/internal/libwpg/WPGColor.h \
+        extension/internal/libwpg/WPGGradient.cpp \
+        extension/internal/libwpg/WPGGradient.h \
+        extension/internal/libwpg/WPGHeader.cpp \
+        extension/internal/libwpg/WPGHeader.h \
+        extension/internal/libwpg/WPGOLEStream.cpp \
+        extension/internal/libwpg/WPGOLEStream.h \
+        extension/internal/libwpg/WPGPaintInterface.h \
+        extension/internal/libwpg/WPGPath.cpp \
+        extension/internal/libwpg/WPGPath.h \
+        extension/internal/libwpg/WPGPen.cpp \
+        extension/internal/libwpg/WPGPen.h \
+        extension/internal/libwpg/WPGPoint.cpp \
+        extension/internal/libwpg/WPGPoint.h \
+        extension/internal/libwpg/WPGraphics.cpp \
+        extension/internal/libwpg/WPGraphics.h \
+        extension/internal/libwpg/WPGRect.h \
+        extension/internal/libwpg/WPGStream.h \
+        extension/internal/libwpg/WPGStreamImplementation.cpp \
+        extension/internal/libwpg/WPGStreamImplementation.h \
+        extension/internal/libwpg/WPGXParser.cpp \
+        extension/internal/libwpg/WPGXParser.h
