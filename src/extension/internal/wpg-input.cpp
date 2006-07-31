@@ -25,14 +25,14 @@
 
 #include <stdio.h>
 
-#include "libwpg.h"
-#include "WPGStreamImplementation.h"
+#include "libwpg/libwpg.h"
+#include "libwpg/WPGStreamImplementation.h"
 
 using namespace libwpg;
 
-class SvgPainter : public libwpg::WPGPaintInterface {
+class InkscapePainter : public libwpg::WPGPaintInterface {
 public:
-	SvgPainter();
+	InkscapePainter();
 
 	void startDocument(double imageWidth, double imageHeight);
 	void endDocument();
@@ -56,11 +56,11 @@ private:
 	void writeStyle();
 };
 
-SvgPainter::SvgPainter(): m_fillRule(AlternatingFill), m_gradientIndex(1)
+InkscapePainter::InkscapePainter(): m_fillRule(AlternatingFill), m_gradientIndex(1)
 {
 }
 
-void SvgPainter::startDocument(double width, double height) 
+void InkscapePainter::startDocument(double width, double height) 
 {
 	printf("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
 	printf("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"");
@@ -75,17 +75,17 @@ void SvgPainter::startDocument(double width, double height)
 	m_gradientIndex = 1;
 }
 
-void SvgPainter::endDocument()
+void InkscapePainter::endDocument()
 {
 	printf("</svg>\n");
 }
 
-void SvgPainter::setPen(const WPGPen& pen)
+void InkscapePainter::setPen(const WPGPen& pen)
 {
 	m_pen = pen;
 }
 
-void SvgPainter::setBrush(const WPGBrush& brush)
+void InkscapePainter::setBrush(const WPGBrush& brush)
 {
 	m_brush = brush;
 	
@@ -121,22 +121,22 @@ void SvgPainter::setBrush(const WPGBrush& brush)
 	}
 }
 
-void SvgPainter::setFillRule(FillRule rule)
+void InkscapePainter::setFillRule(FillRule rule)
 {
 	m_fillRule = rule;
 }
 
-void SvgPainter::startLayer(unsigned int id)
+void InkscapePainter::startLayer(unsigned int id)
 {
 	printf("<g id=\"Layer%d\" >\n", id);
 }
 
-void SvgPainter::endLayer(unsigned int)
+void InkscapePainter::endLayer(unsigned int)
 {
 	printf("</g>\n");
 }
 
-void SvgPainter::drawRectangle(const WPGRect& rect, double rx, double ry)
+void InkscapePainter::drawRectangle(const WPGRect& rect, double rx, double ry)
 {
 	printf("<rect ");
 	printf("x=\"%f\" y=\"%f\" ", 72*rect.x1, 72*rect.y1);
@@ -147,7 +147,7 @@ void SvgPainter::drawRectangle(const WPGRect& rect, double rx, double ry)
 	printf("/>\n");
 }
 
-void SvgPainter::drawEllipse(const WPGPoint& center, double rx, double ry)
+void InkscapePainter::drawEllipse(const WPGPoint& center, double rx, double ry)
 {
 	printf("<ellipse ");
 	printf("cx=\"%f\" cy=\"%f\" ", 72*center.x, 72*center.y);
@@ -156,7 +156,7 @@ void SvgPainter::drawEllipse(const WPGPoint& center, double rx, double ry)
 	printf("/>\n");
 }
 
-void SvgPainter::drawPolygon(const WPGPointArray& vertices)
+void InkscapePainter::drawPolygon(const WPGPointArray& vertices)
 {
 	if(vertices.count() < 2)
 		return;
@@ -186,7 +186,7 @@ void SvgPainter::drawPolygon(const WPGPointArray& vertices)
 	}
 }
 
-void SvgPainter::drawPath(const WPGPath& path)
+void InkscapePainter::drawPath(const WPGPath& path)
 {
 	printf("<path d=\"");
 	for(unsigned i = 0; i < path.count(); i++)
@@ -220,7 +220,7 @@ void SvgPainter::drawPath(const WPGPath& path)
 }
 
 // create "style" attribute based on current pen and brush
-void SvgPainter::writeStyle()
+void InkscapePainter::writeStyle()
 {
 	printf("style=\"");
 
@@ -249,9 +249,9 @@ void SvgPainter::writeStyle()
 	if(m_brush.style == WPGBrush::NoBrush)
 		printf("fill: none; ");
 
-	if(m_fillRule == SvgPainter::WindingFill)
+	if(m_fillRule == InkscapePainter::WindingFill)
 		printf("fill-rule: nonzero; ");
-	else if(m_fillRule == SvgPainter::AlternatingFill)
+	else if(m_fillRule == InkscapePainter::AlternatingFill)
 		printf("fill-rule: evenodd; ");
 
 	if(m_brush.style == WPGBrush::Gradient)
@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	
-	SvgPainter painter;
+	InkscapePainter painter;
 	WPGraphics::parse(input, &painter);
 	
 	return 0;

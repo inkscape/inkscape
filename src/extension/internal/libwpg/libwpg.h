@@ -27,11 +27,6 @@
 #ifndef __LIBWPG_H__
 #define __LIBWPG_H__
 
-#define LIBWPG_VERSION_MAJOR     @WPG_MAJOR_VERSION@
-#define LIBWPG_VERSION_MINOR     @WPG_MINOR_VERSION@
-#define LIBWPG_VERSION_REVISION  @WPG_MICRO_VERSION@
-#define LIBWPG_VERSION_STRING    "@WPG_MAJOR_VERSION@.@WPG_MINOR_VERSION@.@WPG_MICRO_VERSION@"
-
 #include "WPGraphics.h"
 #include "WPGPaintInterface.h"
 #include "WPGStream.h"
