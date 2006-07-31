@@ -67,7 +67,7 @@
 
 #include <pango/pangofc-fontmap.h>
 
-#ifdef HAVE_PANGO_CAIRO
+#ifdef RENDER_WITH_PANGO_CAIRO
 #include <pango/pangocairo.h>
 #endif
 
@@ -749,7 +749,7 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
 
 #define GLYPH_ARRAY_SIZE 64
 
-#ifndef HAVE_PANGO_CAIRO
+#ifndef RENDER_WITH_PANGO_CAIRO
 
 NR::Point
 PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyphString *glyph_string,
@@ -814,7 +814,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
 
     // create pango layout and context if needed
     if (_layout == NULL) {
-#ifdef HAVE_PANGO_CAIRO
+#ifdef RENDER_WITH_PANGO_CAIRO
         //_context = pango_cairo_font_map_create_context(PANGO_CAIRO_FONT_MAP(pango_cairo_font_map_get_default()));
         _layout = pango_cairo_create_layout(cr);
 #else
@@ -837,7 +837,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     pango_font_description_free(adjusted);
     tf->Unref();
 
-#ifdef HAVE_PANGO_CAIRO
+#ifdef RENDER_WITH_PANGO_CAIRO
     pango_cairo_update_layout(cr, _layout);
 #else
     pango_layout_context_changed(_layout);   // is this needed?
@@ -847,7 +847,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     if (line == NULL)
         return 0;
 
-#ifndef HAVE_PANGO_CAIRO
+#ifndef RENDER_WITH_PANGO_CAIRO
     // apply the selected font
     double size;
     PangoLayoutRun *first_run = (PangoLayoutRun *)line->runs->data;
@@ -884,7 +884,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         // set fill style
         print_fill_style(cr, style, NULL);
 
-#ifndef HAVE_PANGO_CAIRO
+#ifndef RENDER_WITH_PANGO_CAIRO
         NR::Point cursor(_last_tx, _last_ty);
         for (GSList *tmpList = line->runs; tmpList && tmpList->data; tmpList = tmpList->next) {
             PangoLayoutRun *run = (PangoLayoutRun *)tmpList->data;
@@ -905,7 +905,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         print_stroke_style(cr, style, NULL);
 
         // paint stroke
-#ifndef HAVE_PANGO_CAIRO
+#ifndef RENDER_WITH_PANGO_CAIRO
         NR::Point cursor(_last_tx, _last_ty);
         for (GSList *tmpList = line->runs; tmpList && tmpList->data; tmpList = tmpList->next) {
             PangoLayoutRun *run = (PangoLayoutRun *)tmpList->data;
@@ -922,7 +922,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
 
     cairo_restore(cr);
 
-#ifndef HAVE_PANGO_CAIRO
+#ifndef RENDER_WITH_PANGO_CAIRO
     cairo_font_face_destroy(font_face);
 
     if (dirty_pattern) {
