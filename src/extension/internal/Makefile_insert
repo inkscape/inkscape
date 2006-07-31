@@ -48,5 +48,7 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/latex-pstricks.h	\
 	extension/internal/latex-pstricks-out.cpp	\
 	extension/internal/latex-pstricks-out.h	\
+	extension/internal/wpg-input.cpp	\
+	extension/internal/wpg-input.h	\
 	$(extension_internal_gnome_print_sources)
 

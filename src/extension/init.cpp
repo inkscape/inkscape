@@ -45,6 +45,7 @@
 #include "internal/bluredge.h"
 #include "internal/gimpgrad.h"
 #include "internal/grid.h"
+#include "internal/wpg-input.h"
 #include "prefs-utils.h"
 #include "io/sys.h"
 
@@ -121,6 +122,7 @@ init()
     Internal::OdfOutput::init();
     Internal::PrintLatex::init();
     Internal::LatexOutput::init();
+    Internal::WpgInput::init();
 
     /* Effects */
     Internal::BlurEdge::init();

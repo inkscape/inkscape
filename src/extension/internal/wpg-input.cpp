@@ -1,3 +1,18 @@
+/* 
+ *  This file came from libwpg as a source, their utility wpg2svg
+ *  specifically.  It has been modified to work as an Inkscape extension.
+ *  The Inkscape extension code is covered by this copyright, but the
+ *  rest is covered by the one bellow.
+ *
+ * Authors:
+ *   Ted Gould <ted@gould.cx>
+ *
+ * Copyright (C) 2006 Authors
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ *
+ */
+
 /* libwpg
  * Copyright (C) 2006 Ariya Hidayat (ariya@kde.org)
  * Copyright (C) 2005 Fridrich Strba (fridrich.strba@bluewin.ch)
@@ -25,10 +40,18 @@
 
 #include <stdio.h>
 
+#include "wpg-input.h"
+#include "extension/system.h"
+#include "extension/input.h"
+
 #include "libwpg/libwpg.h"
 #include "libwpg/WPGStreamImplementation.h"
 
 using namespace libwpg;
+
+namespace Inkscape {
+namespace Extension {
+namespace Internal {
 
 class InkscapePainter : public libwpg::WPGPaintInterface {
 public:
@@ -54,6 +77,9 @@ private:
 	FillRule m_fillRule;
 	int m_gradientIndex;
 	void writeStyle();
+
+public:
+        std::string document;
 };
 
 InkscapePainter::InkscapePainter(): m_fillRule(AlternatingFill), m_gradientIndex(1)
@@ -66,7 +92,7 @@ void InkscapePainter::startDocument(double width, double height)
 	printf("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"");
 	printf(" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
 
-	printf("<!-- Created with wpg2svg/libwpg %s -->\n", LIBWPG_VERSION_STRING);
+//	printf("<!-- Created with wpg2svg/libwpg %s -->\n", LIBWPG_VERSION_STRING);
 
 	printf("<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" ");
 	printf("xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");	
@@ -264,35 +290,57 @@ void InkscapePainter::writeStyle()
 	printf("\""); // style
 }
 
+SPDocument *
+WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
+    WPGInputStream* input = new WPGFileStream(uri);
+    if (input->isOle()) {
+        WPGInputStream* olestream = input->getWPGOleStream();
+        if (olestream) {
+            delete input;
+            input = olestream;
+        }
+    }
 
-int main(int argc, char *argv[])
-{
-	if (argc < 2)
-	{
-		printf("usage: wpg2svg <WordPerfect Graphic>\n");
-		return -1;
-	}
+    if (!WPGraphics::isSupported(input)) {
+        //! \todo Dialog here
+        // fprintf(stderr, "ERROR: Unsupported file format (unsupported version) or file is encrypted!\n");
+        return NULL;
+    }
 
-	const char* filename = argv[1];
-	WPGInputStream* input = new WPGFileStream(filename);
-	if (input->isOle())
-	{
-		WPGInputStream* olestream = input->getWPGOleStream();
-		if (olestream)
-		{
-			delete input;
-			input = olestream;
-		}
-	}
+    InkscapePainter painter;
+    WPGraphics::parse(input, &painter);
 
-	if (!WPGraphics::isSupported(input))
-	{
-		fprintf(stderr, "ERROR: Unsupported file format (unsupported version) or file is encrypted!\n");
-		return 1;
-	}
-	
-	InkscapePainter painter;
-	WPGraphics::parse(input, &painter);
-	
-	return 0;
+    return 0;
 }
+
+#include "clear-n_.h"
+
+void
+WpgInput::init(void) {
+    Inkscape::Extension::Extension * ext;
+
+    ext = Inkscape::Extension::build_from_mem(
+        "<inkscape-extension>\n"
+            "<name>" N_("WPG Input") "</name>\n"
+            "<id>org.inkscape.input.wpg</id>\n"
+            "<input>\n"
+                "<extension>.wpg</extension>\n"
+                "<mimetype>image/x-wpg</mimetype>\n"
+                "<filetypename>" N_("WordPerfect Graphics (*.wpg)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Vector graphics format used by Corel WordPerfect") "</filetypetooltip>\n"
+            "</input>\n"
+        "</inkscape-extension>", new WpgInput());
+} // init
+
+} } }  /* namespace Inkscape, Extension, Implementation */
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
