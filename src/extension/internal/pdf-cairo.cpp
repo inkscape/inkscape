@@ -749,6 +749,8 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
 
 #define GLYPH_ARRAY_SIZE 64
 
+#ifndef HAVE_PANGO_CAIRO
+
 NR::Point
 PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyphString *glyph_string,
                bool vertical, bool stroke)
@@ -791,6 +793,9 @@ PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyph
 
     return NR::Point(x_offset, y_offset);
 }
+#endif
+
+
 
 unsigned int
 PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
@@ -914,11 +919,12 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
         cairo_stroke(cr);
     }
 
-    cairo_font_face_destroy(font_face);
 
     cairo_restore(cr);
 
 #ifndef HAVE_PANGO_CAIRO
+    cairo_font_face_destroy(font_face);
+
     if (dirty_pattern) {
         FcPatternDel(fc_pattern, FC_VERTICAL_LAYOUT);
         FcPatternAddBool(fc_pattern, FC_VERTICAL_LAYOUT, FcFalse);
