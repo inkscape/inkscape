@@ -837,7 +837,7 @@ PrintCairoPDF::text(Inkscape::Extension::Print *mod, char const *text, NR::Point
     pango_font_description_free(adjusted);
     tf->Unref();
 
-#ifdef USE_PANGO_CAIRO
+#ifdef HAVE_PANGO_CAIRO
     pango_cairo_update_layout(cr, _layout);
 #else
     pango_layout_context_changed(_layout);   // is this needed?
