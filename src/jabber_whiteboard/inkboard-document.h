@@ -37,6 +37,9 @@ public:
     void setRecipient(Glib::ustring const& val);
     Glib::ustring getRecipient() const;
 
+    void setSessionIdent(Glib::ustring const& val);
+    Glib::ustring getSessionIdent() const;
+
     void startSessionNegotiation();
     void terminateSession();
     void processInkboardEvent(Message::Wrapper mtype, unsigned int seqnum, Glib::ustring const& data);
@@ -66,8 +69,10 @@ private:
 
     void _initBindings();
 
-    SessionManager *sm;
+    SessionManager *_sm;
     State::SessionType _type;
+
+    Glib::ustring _session;
     Glib::ustring _recipient;
 
     KeyNodeTable _tracker;

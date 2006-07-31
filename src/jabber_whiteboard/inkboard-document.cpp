@@ -26,27 +26,39 @@ namespace Whiteboard {
 InkboardDocument::InkboardDocument(int code, State::SessionType type, Glib::ustring const& to) :
 	XML::SimpleNode(code), _type(type), _recipient(to)
 {
-	_initBindings();
+    _initBindings();
 }
 
 void
 InkboardDocument::_initBindings()
 {
-    this->sm = &SessionManager::instance();
-	_bindDocument(*this);
-	_bindLogger(*(new XML::SimpleSession()));
+    this->_sm = &SessionManager::instance();
+    _bindDocument(*this);
+    _bindLogger(*(new XML::SimpleSession()));
 }
 
 void
 InkboardDocument::setRecipient(Glib::ustring const& val)
 {
-	this->_recipient = val;
+    this->_recipient = val;
 }
 
 Glib::ustring 
 InkboardDocument::getRecipient() const
 {
-	return this->_recipient;
+    return this->_recipient;
+}
+
+void
+InkboardDocument::setSessionIdent(Glib::ustring const& val)
+{
+    this->_session = val;
+}
+
+Glib::ustring 
+InkboardDocument::getSessionIdent() const
+{
+    return this->_session;
 }
 
 void
@@ -64,7 +76,7 @@ InkboardDocument::terminateSession()
 void
 InkboardDocument::processInkboardEvent(Message::Wrapper mtype, unsigned int seqnum, Glib::ustring const& data)
 {
-    g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing Inkboard event: mtype=%d seqnum=%d data=%s\n", mtype, seqnum, data.c_str());
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing Inkboard event: mtype=%s seqnum=%d data=%s\n", mtype, seqnum, data.c_str());
 }
 
 bool
@@ -73,15 +85,15 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper wr
 {
     char *fmt=
         "<message type='%s' from='%s' to='%s'>"
-            "<wb xmlns='%s'>"
+            "<wb xmlns='%s' session='%s'>"
                 "<%s>"
                     "%s"
                 "</%s>"
             "</wb>"
         "</message>";
-    if (!sm->getClient().write(
-        fmt,_type,sm->getClient().getJid().c_str(),
-        destJid.c_str(),wrapper,Vars::INKBOARD_XMLNS,message,wrapper))
+    if (!_sm->getClient().write(
+        fmt,_type,_sm->getClient().getJid().c_str(),destJid.c_str(),
+        Vars::INKBOARD_XMLNS,this->getSessionIdent().c_str(),wrapper,message,wrapper))
         return false;
 
     return true;

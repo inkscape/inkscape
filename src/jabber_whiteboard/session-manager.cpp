@@ -13,6 +13,7 @@
 #include <functional>
 #include <algorithm>
 #include <iostream>
+#include <time.h>
 
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
@@ -32,8 +33,6 @@
 #include "jabber_whiteboard/defines.h"
 
 #include "jabber_whiteboard/dialog/choose-desktop.h"
-
-#define INKBOARD_XMLNS "http://inkscape.org/inkboard"
 
 namespace Inkscape {
 
@@ -78,8 +77,6 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
 {
     int type = event.getType();
 
-    g_warning("recieved pedro");
-
     switch (type) {
         case Pedro::XmppEvent::EVENT_STATUS:
             {
@@ -99,13 +96,14 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
             }
         case Pedro::XmppEvent::EVENT_MESSAGE:
             {
-            printf("## SM message:%s\n", event.getFrom().c_str());
+            g_warning("## SM message:%s\n", event.getFrom().c_str());
             Pedro::Element *root = event.getDOM();
+
+            g_warning("hey %s",root->getTagAttribute("wb", "xmlns"));
 
             if (root)
                 {
-                if (root->getTagAttribute("inkboard", "xmlns") ==
-                               INKBOARD_XMLNS)
+                if (root->getTagAttribute("inkboard", "xmlns") == Vars::INKBOARD_XMLNS)
                     {
                         _processInkboardEvent(event);
                     }
@@ -118,12 +116,14 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
             }
         case Pedro::XmppEvent::EVENT_MUC_MESSAGE:
             {
-            printf("## SM MUC message:%s\n", event.getFrom().c_str());
+            g_warning("## SM MUC message:%s\n", event.getFrom().c_str());
             Pedro::Element *root = event.getDOM();
+
+            g_warning("hey %s",root->getTagAttribute("wb", "xmlns"));
+
             if (root)
                 {
-                if (root->getTagAttribute("inkboard", "xmlns") ==
-                               INKBOARD_XMLNS)
+                if (root->getTagAttribute("inkboard", "xmlns") == Vars::INKBOARD_XMLNS)
                     {
                         _processInkboardEvent(event);
                     }
@@ -158,6 +158,44 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
 void
 SessionManager::doShare(Glib::ustring const& to, State::SessionType type)
 {
+    SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", type, to);
+    if(doc == NULL) return;
+
+    InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
+    if (inkdoc == NULL) return;
+
+
+    if(type == State::WHITEBOARD_PEER) 
+    {
+        ChooseDesktop dialog;
+        int result = dialog.run();
+
+        if(result == Gtk::RESPONSE_OK)
+        {
+            SPDesktop *desktop = dialog.getDesktop();
+
+            if(desktop != NULL)
+            {
+                Inkscape::XML::Document *old_doc =
+                    sp_desktop_document(desktop)->rdoc;
+                inkdoc->root()->mergeFrom(old_doc->root(),"id");
+            }
+        }
+    }else{ return; }
+
+    // Create a random session identifier
+    char * randomString = (char*) malloc (11);
+    for (int n=0; n<11; n++)
+        randomString[n]=rand()%26+'a';
+    randomString[11]='\0';
+
+    inkdoc->setSessionIdent(randomString);
+
+    _inkboards.push_back(Inkboard_record_type(randomString, inkdoc));
+
+    inkdoc->startSessionNegotiation();
+
+    /*
     InkboardDocument* doc;
     SPDesktop* dt;
 
@@ -208,6 +246,7 @@ SessionManager::doShare(Glib::ustring const& to, State::SessionType type)
             }
         }
     }
+    */
 }
 
 /**

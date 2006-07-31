@@ -146,19 +146,20 @@ public:
 
 	}
 private:
+    
 	// types
     typedef std::pair< Glib::ustring, InkboardDocument* > Inkboard_record_type;
     typedef std::vector< Inkboard_record_type, GC::Alloc< Inkboard_record_type, GC::MANUAL > > Inkboards_type;
 
-	typedef std::list< Glib::ustring > Pending_invitations_type;
+    typedef std::list< Glib::ustring > Pending_invitations_type;
 
-	typedef std::pair< Glib::ustring, InvitationResponses > Invitation_response_type;
-	typedef std::list< Invitation_response_type > Invitation_responses_type;
+    typedef std::pair< Glib::ustring, InvitationResponses > Invitation_response_type;
+    typedef std::list< Invitation_response_type > Invitation_responses_type;
 
-	// functors
-	struct CheckInvitationSender {
-	public:
-		CheckInvitationSender(Glib::ustring const& x) : x(x) { }
+    // functors
+    struct CheckInvitationSender {
+        public:
+        	CheckInvitationSender(Glib::ustring const& x) : x(x) { }
 		~CheckInvitationSender() { }
 
 		bool operator()(SessionManager::Invitation_response_type const& y) const {
@@ -166,31 +167,31 @@ private:
 		}
 	private:
 		Glib::ustring const& x;
-	};
+    };
 
-   	// objects 
+    // objects 
     Pedro::PedroGui gui;
     SendMessageQueue sendMessageQueue;
     ReceiveMessageQueue receiveMessageQueue;
 
-	// members
+    // members
     unsigned long sequenceNumber;
     Inkboards_type _inkboards;
-	Pending_invitations_type _pending_invitations;
-	Invitation_responses_type _invitation_responses;
+    Pending_invitations_type _pending_invitations;
+    Invitation_responses_type _invitation_responses;
 
-	sigc::connection _check_pending_invitations;
-	sigc::connection _check_invitation_responses;
+    sigc::connection _check_pending_invitations;
+    sigc::connection _check_invitation_responses;
 
 	// methods
     void _processInkboardEvent(Pedro::XmppEvent const& event);
     void _handleSessionEvent(Message::Wrapper mtype, Pedro::XmppEvent const& event);
     void _handleIncomingInvitation(Glib::ustring const& from);
-	void _handleInvitationResponse(Glib::ustring const& from, InvitationResponses resp);
+    void _handleInvitationResponse(Glib::ustring const& from, InvitationResponses resp);
 
-	// methods handled externally
-	bool _checkInvitationQueue();
-	bool _checkInvitationResponseQueue();
+    // methods handled externally
+    bool _checkInvitationQueue();
+    bool _checkInvitationResponseQueue();
 };
 
 }  // namespace Whiteboard
