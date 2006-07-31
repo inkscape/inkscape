@@ -43,6 +43,7 @@
 #include "wpg-input.h"
 #include "extension/system.h"
 #include "extension/input.h"
+#include "document.h"
 
 #include "libwpg/libwpg.h"
 #include "libwpg/WPGStreamImplementation.h"
@@ -77,9 +78,19 @@ private:
 	FillRule m_fillRule;
 	int m_gradientIndex;
 	void writeStyle();
+        void printf (char * fmt, ...) {
+            va_list args;
+            va_start(args, fmt);
+            gchar * buf = g_strdup_vprintf(fmt, args);
+            va_end(args);
+            if (buf) {
+                document += buf;
+                g_free(buf);
+            }
+        }
 
 public:
-        std::string document;
+        Glib::ustring document;
 };
 
 InkscapePainter::InkscapePainter(): m_fillRule(AlternatingFill), m_gradientIndex(1)
@@ -88,6 +99,7 @@ InkscapePainter::InkscapePainter(): m_fillRule(AlternatingFill), m_gradientIndex
 
 void InkscapePainter::startDocument(double width, double height) 
 {
+        document = "";
 	printf("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
 	printf("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"");
 	printf(" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
@@ -304,13 +316,16 @@ WpgInput::open(Inkscape::Extension::Input * mod, const gchar * uri) {
     if (!WPGraphics::isSupported(input)) {
         //! \todo Dialog here
         // fprintf(stderr, "ERROR: Unsupported file format (unsupported version) or file is encrypted!\n");
+        // printf("I'm giving up not supported\n");
         return NULL;
     }
 
     InkscapePainter painter;
     WPGraphics::parse(input, &painter);
 
-    return 0;
+    //printf("I've got a doc: \n%s", painter.document.c_str());
+
+    return sp_document_new_from_mem(painter.document.c_str(), strlen(painter.document.c_str()), TRUE);
 }
 
 #include "clear-n_.h"
