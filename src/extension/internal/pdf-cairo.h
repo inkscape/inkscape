@@ -55,7 +55,7 @@ class PrintCairoPDF : public Inkscape::Extension::Implementation::Implementation
     void print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect const *pbox);
     void print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect const *pbox);
 
-#ifndef HAVE_PANGO_CAIRO
+#ifndef RENDER_WITH_PANGO_CAIRO
     NR::Point draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyphString *glyph_string,
                           bool vertical, bool stroke);
 #endif
