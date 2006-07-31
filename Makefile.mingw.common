@@ -83,10 +83,10 @@ else
 # NATIVE COMPILER SETTINGS
 ##########################################################################
 
-CC      = mingw32-gcc
-CXX     = mingw32-g++
+CC      = i686-pc-mingw32-gcc
+CXX     = i686-pc-mingw32-g++
 AS      = as
-AR      = mingw32-ar
+AR      = ar
 OBJCOPY = objcopy
 RANLIB  = ranlib
 WINDRES = windres
@@ -131,7 +131,7 @@ endif
 MSGFMT = $(GTKDOS)$(S)bin$(S)msgfmt
 
 ####### change me!!
-DTG := 20050626
+DTG := 200600801
 
 endif
 ##########################################################################
@@ -140,10 +140,10 @@ endif
 
 
 ###### VERSION NUMBER
-# VERSION_NR = 0.41+devel
+# VERSION_NR = 0.45+devel
 # VERSION = \"$(VERSION_NR)-${DTG}\"
 
-VERSION_NR = 0.44+devel
+VERSION_NR = 0.45+devel
 VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
@@ -182,14 +182,12 @@ GTKINC = -DGLIBMM_DLL \
 
 
 ####### Our Gtk libs
-####### we removed the '-Wl,--enable-runtime-pseudo-reloc' option, as
-####### it proved to be very dangerous
-####### with Gtk::TreeViewColumn
 GTKLIB = -L$(GTK)/lib \
 -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4 \
 -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0 \
 -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0 \
--lgdk_pixbuf-2.0 -lm -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0 \
+-lgdk_pixbuf-2.0 \
+-lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0 \
 -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
 
 ####### For PERL
@@ -216,7 +214,7 @@ $(GTK)/lib/iconv.lib	\
 -llcms.dll \
 -lloudmouth-1.dll -lssl -lcrypto \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
--lgc -mwindows -lws2_32 -lintl -lcairo
+-lgc -mwindows -lws2_32 -lintl -lm
 
 
 ##########################################################################
