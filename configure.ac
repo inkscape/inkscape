@@ -513,10 +513,11 @@ dnl *** NOTE: when we move to gtk 2.6 or later, we can remove the
 dnl ********* the override for g_ascii_strtod below...
 dnl sigc++-2.0 >= 2.0.12: using "visit_each" not available in 2.0.10
 if test $cc_vers_major -gt 3; then
-    PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.4.0  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  sigc++-2.0 >= 2.0.12  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2)
+  min_sigc_version=2.0.12
 else
-    PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.4.0  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  sigc++-2.0 >= 2.0.11  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2)
+  min_sigc_version=2.0.11
 fi
+PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.4.0  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2)
 
 dnl Shouldn't we test for libpng and libz?
 INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz"

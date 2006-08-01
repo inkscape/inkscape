@@ -1,3 +1,7 @@
+2006-08-01  MenTaLguY  <mental@rydia.net>
+
+	* configure.ac: refactor pkg-config tests and add explicit cairo test
+
 2006-07-29  John Bintz  <jcoswell@coswellproductions.org>
 
   * src/nodepath.cpp:
