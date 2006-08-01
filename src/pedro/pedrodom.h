@@ -176,6 +176,9 @@ public:
     Element *getParent()
         { return parent; }
 
+    Element *getFirstChild()
+        { return (children.size() == 0) ? NULL : children[0]; }
+
     std::vector<Element *> getChildren()
         { return children; }
 
@@ -196,6 +199,8 @@ public:
 
     void addNamespace(const DOMString &prefix, const DOMString &namespaceURI);
 
+    bool exists(const DOMString &name)
+        { return (findElements(name).size() > 0); }
 
     /**
      * Prettyprint an XML tree to an output stream.  Elements are indented
