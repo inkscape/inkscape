@@ -65,6 +65,7 @@
 #include <cairo-pdf.h>
 #include <cairo-ft.h>
 
+#include <pango/pango.h>
 #include <pango/pangofc-fontmap.h>
 
 #ifdef RENDER_WITH_PANGO_CAIRO
