@@ -1935,7 +1935,7 @@ void sp_node_delete_preserve(GList *nodes_to_delete)
             data.push_back(sample_cursor->pos);
             for (Inkscape::NodePath::Node *curr=sample_cursor; curr; curr=curr->n.other) {
                 //just delete at the end of an open path
-                if (!sp->closed && curr->n.other == sp->last) {
+                if (!sp->closed && curr == sp->last) {
                     just_delete = true;
                     break;
                 }
