@@ -38,6 +38,8 @@
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "document.h"
+#include "document-private.h"
+#include <selection.h>
 #include "xml/repr.h"
 
 static GtkWidget *dlg = NULL;
@@ -50,6 +52,7 @@ static gchar *prefs_path = "dialogs.fillstroke";
 static void sp_fillstroke_selection_modified ( Inkscape::Application *inkscape, Inkscape::Selection *selection, guint flags, GtkObject *base );
 static void sp_fillstroke_selection_changed ( Inkscape::Application *inkscape, Inkscape::Selection *selection, GtkObject *base );
 static void sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg);
+static void sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg);
 
 static void
 sp_object_properties_dialog_destroy (GtkObject *object, gpointer data)
@@ -213,6 +216,39 @@ sp_object_properties_dialog (void)
         g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_fillstroke_selection_modified), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
 
+        
+        /* Blur */
+/* uncomment to display blur slider*/
+/*        GtkWidget *b_vb = gtk_vbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vb), b_vb, FALSE, FALSE, 2);
+        gtk_object_set_data (GTK_OBJECT (dlg), "blur", b_vb);
+
+        GtkWidget *blur_l_hb = gtk_hbox_new (FALSE, 4);
+        GtkWidget *blur_l = gtk_label_new_with_mnemonic (_("_Blur"));
+        gtk_misc_set_alignment (GTK_MISC (blur_l), 0.0, 1.0);
+        gtk_box_pack_start (GTK_BOX (blur_l_hb), blur_l, FALSE, FALSE, 4);
+        gtk_box_pack_start (GTK_BOX (b_vb), blur_l_hb, FALSE, FALSE, 0);
+
+        GtkWidget *blur_hb = gtk_hbox_new (FALSE, 4);
+        gtk_box_pack_start (GTK_BOX (b_vb), blur_hb, FALSE, FALSE, 0);
+
+        GtkObject *blur_a = gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.1, 0.0);
+        gtk_object_set_data(GTK_OBJECT(dlg), "blur_adjustment", blur_a);
+
+        GtkWidget *blur_s = gtk_hscale_new (GTK_ADJUSTMENT (blur_a));
+        gtk_scale_set_draw_value (GTK_SCALE (blur_s), FALSE);
+        gtk_box_pack_start (GTK_BOX (blur_hb), blur_s, TRUE, TRUE, 4);
+        gtk_label_set_mnemonic_widget (GTK_LABEL(blur_l), blur_s);
+
+        GtkWidget *blur_sb = gtk_spin_button_new (GTK_ADJUSTMENT (blur_a), 0.01, 3);
+        gtk_box_pack_start (GTK_BOX (blur_hb), blur_sb, FALSE, FALSE, 0);
+
+        gtk_signal_connect ( blur_a, "value_changed",
+                             GTK_SIGNAL_FUNC (sp_fillstroke_blur_changed),
+                             dlg );
+                             
+        gtk_widget_show_all (b_vb);
+*/
         sp_fillstroke_selection_changed(NULL, NULL, NULL);
 
         gtk_widget_show (dlg);
@@ -311,6 +347,113 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg)
                             /* TODO: annotate */ "object-properties.cpp:311");
 
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
+}
+
+
+
+/**
+ * Creates new private filter for the given vector
+ */
+
+static SPFilter *
+sp_filter_get(SPDocument *document, gdouble stdDeviation)
+{
+    g_return_val_if_fail(document != NULL, NULL);
+
+    SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
+
+    // create a new private filter of the requested type
+    Inkscape::XML::Node *repr;
+    repr = sp_repr_new("svg:filter");
+    // privates are garbage-collectable
+    repr->setAttribute("inkscape:collect", "always");
+    
+    Inkscape::XML::Node *b_repr;
+    b_repr = sp_repr_new("svg:feGaussianBlur");
+    // privates are garbage-collectable
+    b_repr->setAttribute("inkscape:collect", "always");
+    
+    
+    Inkscape::CSSOStringStream os;
+    os << CLAMP (stdDeviation, 0.0, 1.0);
+    b_repr->setAttribute("stdDeviation", os.str().c_str());
+    
+    repr->appendChild(b_repr);
+    Inkscape::GC::release(b_repr);
+    
+    /* Append the new private filter to defs */
+    SP_OBJECT_REPR(defs)->appendChild(repr);
+    Inkscape::GC::release(repr);
+
+    // get corresponding object
+    SPFilter *f = (SPFilter *) document->getObjectByRepr(repr);
+    g_assert(f != NULL);
+    g_assert(SP_IS_FILTER(f));
+
+    return f;
+}
+
+/*
+ * TODO: check if selection has a filter applied and change its parameters instead of creating a new one
+ */
+static void
+sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
+{
+    //if dialog is locked, return 
+    if (gtk_object_get_data (GTK_OBJECT (dlg), "blocked"))
+        return;
+
+     //lock dialog
+    gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (TRUE));
+    
+    //get desktop
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop) {
+        return;
+    }
+    
+    if(a->value==0.0) //blur set to zero, remove filter
+    {
+        //if there is a filter attached, remove it
+        SPCSSAttr *css = sp_repr_css_attr_new ();
+        sp_repr_css_unset_property (css, "filter");
+        sp_desktop_set_style (desktop, css);
+        sp_repr_css_attr_unref (css);
+
+    } else { //blur non-zero
+        
+        //get current selection
+        Inkscape::Selection *selection = sp_desktop_selection (desktop);
+        //get list of selected items
+        GSList const *items = selection->itemList();
+        //get current document
+        SPDocument *document = sp_desktop_document (desktop);
+        
+        
+        //create new filter with feGaussianBlur primitive
+        SPFilter *constructed = sp_filter_get(document, a->value);
+        
+        //apply created filter to every selected item
+        for (GSList const *i = items; i != NULL; i = i->next) {
+            
+            gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(constructed));
+        
+            SPCSSAttr *css = sp_repr_css_attr_new();
+            sp_repr_css_set_property(css, "filter", val);
+            g_free(val);
+            sp_repr_css_change_recursive(SP_OBJECT_REPR(SP_ITEM(i->data)), css, "style");
+            
+            sp_desktop_set_style (SP_ACTIVE_DESKTOP, css);
+            sp_repr_css_attr_unref(css);
+            
+            SP_OBJECT(SP_ITEM(i->data))->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
+                                            SP_OBJECT_STYLE_MODIFIED_FLAG ));
+        }
+    }
+
+        sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:blur", SP_VERB_NONE,  "object-properties.cpp:467");
+
+        gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
 
 

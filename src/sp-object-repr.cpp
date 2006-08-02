@@ -45,6 +45,21 @@
 #include "xml/repr.h"
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
+#include "sp-feblend.h"
+#include "sp-fecolormatrix.h"
+#include "sp-fecomponenttransfer.h"
+#include "sp-fecomposite.h"
+#include "sp-feconvolvematrix.h"
+#include "sp-fediffuselighting.h"
+#include "sp-fedisplacementmap.h"
+#include "sp-feflood.h"
+#include "sp-feimage.h"
+#include "sp-femerge.h"
+#include "sp-femorphology.h"
+#include "sp-feoffset.h"
+#include "sp-fespecularlighting.h"
+#include "sp-fetile.h"
+#include "sp-feturbulence.h"
 
 enum NameType { REPR_NAME, SODIPODI_TYPE };
 static unsigned const N_NAME_TYPES = SODIPODI_TYPE + 1;
@@ -114,7 +129,22 @@ populate_dtables()
         { "svg:flowRoot", SP_TYPE_FLOWTEXT },
         { "svg:flowSpan", SP_TYPE_FLOWTSPAN },
         { "svg:g", SP_TYPE_GROUP },
-        { "svg:gaussianBlur", SP_TYPE_GAUSSIANBLUR },
+        { "feBlend", SP_TYPE_FEBLEND },
+        { "feColorMatrix", SP_TYPE_FECOLORMATRIX },
+        { "feComponentTransfer", SP_TYPE_FECOMPONENTTRANSFER },
+        { "feComposite", SP_TYPE_FECOMPOSITE },
+        { "feConvolveMatrix", SP_TYPE_FECONVOLVEMATRIX },
+        { "feDiffuseLighting", SP_TYPE_FEDIFFUSELIGHTING },
+        { "feDisplacementMap", SP_TYPE_FEDISPLACEMENTMAP },
+        { "feFlood", SP_TYPE_FEFLOOD },
+        { "feGaussianBlur", SP_TYPE_GAUSSIANBLUR },
+        { "feImage", SP_TYPE_FEIMAGE },
+        { "feMerge", SP_TYPE_FEMERGE },
+        { "feMorphology", SP_TYPE_FEMORPHOLOGY },
+        { "feOffset", SP_TYPE_FEOFFSET },
+        { "feSpecularLighting", SP_TYPE_FESPECULARLIGHTING },
+        { "feTile", SP_TYPE_FETILE },
+        { "feTurbulence", SP_TYPE_FETURBULENCE },
         { "svg:image", SP_TYPE_IMAGE },
         { "svg:line", SP_TYPE_LINE },
         { "svg:linearGradient", SP_TYPE_LINEARGRADIENT },

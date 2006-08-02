@@ -175,8 +175,70 @@ enum SPAttributeEnum {
     SP_ATTR_FILTERUNITS,
     SP_ATTR_PRIMITIVEUNITS,
     SP_ATTR_FILTERRES,
-    /* SPGaussianBlur */
+    /*feBlend*/
+    SP_ATTR_MODE,
+    SP_ATTR_IN2,
+    /*feColorMatrix*/
+    SP_ATTR_TYPE,
+    SP_ATTR_VALUES,
+    /*feComponentTransfer*/
+    //SP_ATTR_TYPE,
+    SP_ATTR_TABLEVALUES,
+    SP_ATTR_SLOPE,
+    SP_ATTR_INTERCEPT,
+    SP_ATTR_AMPLITUDE,
+    SP_ATTR_EXPONENT,
+    //SP_ATTR_OFFSET,
+    /*feComposite*/
+    SP_ATTR_OPERATOR,
+    SP_ATTR_K1,
+    SP_ATTR_K2,
+    SP_ATTR_K3,
+    SP_ATTR_K4,
+    //SP_ATTR_IN2,
+    /*feConvolveMatrix*/
+    SP_ATTR_ORDER,
+    SP_ATTR_KERNELMATRIX,
+    SP_ATTR_DIVISOR,
+    SP_ATTR_BIAS,
+    SP_ATTR_TARGETX,
+    SP_ATTR_TARGETY,
+    SP_ATTR_EDGEMODE,
+    SP_ATTR_KERNELUNITLENGTH,
+    SP_ATTR_PRESERVEALPHA,
+    /*feDiffuseLighting*/
+    SP_ATTR_SURFACESCALE,
+    SP_ATTR_DIFFUSECONSTANT,
+    //SP_ATTR_KERNELUNITLENGTH,
+    /*feDisplacementMap*/
+    SP_ATTR_SCALE,
+    SP_ATTR_XCHANNELSELECTOR,
+    SP_ATTR_YCHANNELSELECTOR,
+    //SP_ATTR_IN2,
+    /*feFlood*/
+    SP_ATTR_FLOODCOLOR,
+    SP_ATTR_FLOODOPACITY,
+	/* SPGaussianBlur */
     SP_ATTR_STDDEVIATION,
+    /*feImage*/
+    /*feMerge*/
+    /*feMorphology*/
+    //SP_ATTR_OPERATOR,
+    SP_ATTR_RADIUS,
+    /*feOffset*/
+    //SP_ATTR_DX,
+    //SP_ATTR_DY,
+	/*feSpecularLighting*/
+    //SP_ATTR_SURFACESCALE,
+    SP_ATTR_SPECULARCONSTANT,
+    SP_ATTR_SPECULAREXPONENT,
+    /*feTile*/
+    /*feTurbulence*/
+    SP_ATTR_BASEFREQUENCY,
+	SP_ATTR_NUMOCTAVES,
+    SP_ATTR_SEED,
+    SP_ATTR_STITCHTILES,
+    //SP_ATTR_TYPE,
     /* SPGradient */
     SP_ATTR_GRADIENTUNITS,
     SP_ATTR_GRADIENTTRANSFORM,
@@ -201,7 +263,7 @@ enum SPAttributeEnum {
     SP_ATTR_MARKERHEIGHT,
     SP_ATTR_ORIENT,
     /* SPStyleElem */
-    SP_ATTR_TYPE,
+    //SP_ATTR_TYPE,
     /* Animations */
     SP_ATTR_ATTRIBUTENAME,
     SP_ATTR_ATTRIBUTETYPE,
@@ -215,7 +277,7 @@ enum SPAttributeEnum {
     SP_ATTR_REPEATDUR,
     /* Interpolating animations */
     SP_ATTR_CALCMODE,
-    SP_ATTR_VALUES,
+    //SP_ATTR_VALUES,
     SP_ATTR_KEYTIMES,
     SP_ATTR_KEYSPLINES,
     SP_ATTR_FROM,

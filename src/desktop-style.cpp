@@ -1010,6 +1010,18 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
 }
 
 /**
+ * Write to style_res the average opacity of a list of objects.
+ */
+int
+objects_query_blur (GSList *objects, SPStyle *style_res)
+{
+    /*************temporary**********/
+    //style_res->opacity.value = SP_SCALE24_FROM_FLOAT(0.5);
+    return QUERY_STYLE_MULTIPLE_SAME;
+    /*************temporary**********/
+}
+
+/**
  * Query the given list of objects for the given property, write
  * the result to style, return appropriate flag.
  */
@@ -1039,8 +1051,10 @@ sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property)
         return objects_query_fontstyle (list, style);
     } else if (property == QUERY_STYLE_PROPERTY_FONTNUMBERS) {
         return objects_query_fontnumbers (list, style);
-    }
 
+    } else if (property == QUERY_STYLE_PROPERTY_BLUR) {
+        return objects_query_blur (list, style);
+    }
     return QUERY_STYLE_NOTHING;
 }
 

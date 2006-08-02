@@ -345,6 +345,7 @@ struct SPStyle {
     /// style has hreffed its fill/stroke paintservers, needs to release.
     bool fill_hreffed; 
     bool stroke_hreffed; 
+    bool filter_hreffed; 
 
     sigc::connection release_connection;
 

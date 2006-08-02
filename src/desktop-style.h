@@ -46,7 +46,8 @@ enum { // which property was queried (add when you need more)
     QUERY_STYLE_PROPERTY_FONTFAMILY, // font-family
     QUERY_STYLE_PROPERTY_FONTSTYLE, // font style 
     QUERY_STYLE_PROPERTY_FONTNUMBERS, // size, spacings
-    QUERY_STYLE_PROPERTY_MASTEROPACITY // opacity
+    QUERY_STYLE_PROPERTY_MASTEROPACITY, // opacity
+	QUERY_STYLE_PROPERTY_BLUR // opacity
 };
 
 void sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines);
@@ -71,6 +72,8 @@ int objects_query_strokewidth (GSList *objects, SPStyle *style_res);
 int objects_query_miterlimit (GSList *objects, SPStyle *style_res);
 int objects_query_strokecap (GSList *objects, SPStyle *style_res);
 int objects_query_strokejoin (GSList *objects, SPStyle *style_res);
+
+int objects_query_blur (GSList *objects, SPStyle *style_res);
 
 int sp_desktop_query_style_from_list (GSList *list, SPStyle *style, int property);
 int sp_desktop_query_style(SPDesktop *desktop, SPStyle *style, int property);

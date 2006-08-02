@@ -143,10 +143,40 @@ libinkpre_a_SOURCES =	\
 	sp-cursor.cpp sp-cursor.h	\
 	sp-defs.cpp sp-defs.h	\
 	sp-ellipse.cpp sp-ellipse.h	\
+	sp-feblend.cpp sp-feblend.h	\
+	sp-feblend-fns.h	\
+	sp-fecolormatrix.cpp sp-fecolormatrix.h	\
+	sp-fecolormatrix-fns.h	\
+	sp-fecomponenttransfer.cpp sp-fecomponenttransfer.h	\
+	sp-fecomponenttransfer-fns.h	\
+	sp-fecomposite.cpp sp-fecomposite.h	\
+	sp-fecomposite-fns.h	\
+	sp-feconvolvematrix.cpp sp-feconvolvematrix.h	\
+	sp-feconvolvematrix-fns.h	\
+	sp-fediffuselighting.cpp sp-fediffuselighting.h	\
+	sp-fediffuselighting-fns.h	\
+	sp-fedisplacementmap.cpp sp-fedisplacementmap.h	\
+	sp-fedisplacementmap-fns.h	\
+	sp-feflood.cpp sp-feflood.h	\
+	sp-feflood-fns.h	\
+	sp-feimage.cpp sp-feimage.h	\
+	sp-feimage-fns.h	\
+	sp-femerge.cpp sp-femerge.h	\
+	sp-femerge-fns.h	\
+	sp-femorphology.cpp sp-femorphology.h	\
+	sp-femorphology-fns.h	\
+	sp-feoffset.cpp sp-feoffset.h	\
+	sp-feoffset-fns.h	\
+	sp-fespecularlighting.cpp sp-fespecularlighting.h	\
+	sp-fespecularlighting-fns.h	\
+	sp-fetile.cpp sp-fetile.h	\
+	sp-fetile-fns.h	\
+	sp-feturbulence.cpp sp-feturbulence.h	\
+	sp-feturbulence-fns.h	\	
 	sp-filter-fns.h	\
-	sp-filter-reference.cpp       \
-	sp-filter-reference.h       \
-        sp-filter-units.h       \
+	sp-filter-reference.cpp	\
+	sp-filter-reference.h	\
+	sp-filter-units.h	\
 	sp-filter.cpp sp-filter.h	\
 	sp-flowdiv.h sp-flowdiv.cpp \
 	sp-flowregion.h sp-flowregion.cpp \

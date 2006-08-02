@@ -175,8 +175,70 @@ static SPStyleProp const props[] = {
     {SP_ATTR_FILTERUNITS, "filterUnits"},
     {SP_ATTR_PRIMITIVEUNITS, "primitiveUnits"},
     {SP_ATTR_FILTERRES, "filterRes"},
-    /* SPGaussianBlur */
+    /*feBlend*/
+    {SP_ATTR_MODE, "mode"},
+    {SP_ATTR_IN2, "in2"},
+    /*feColorMatrix*/
+    {SP_ATTR_TYPE, "type"},
+    {SP_ATTR_VALUES, "values"},
+    /*feComponentTransfer*/
+    //{SP_ATTR_TYPE, "type"},
+    {SP_ATTR_TABLEVALUES, "tableValues"},
+    {SP_ATTR_SLOPE, "slope"},
+    {SP_ATTR_INTERCEPT, "intercept"},
+    {SP_ATTR_AMPLITUDE, "amplitude"},
+    {SP_ATTR_EXPONENT, "exponent"},
+    //{SP_ATTR_OFFSET, "offset"},
+    /*feComposite*/
+    {SP_ATTR_OPERATOR, "operator"},
+    {SP_ATTR_K1, "k1"},
+    {SP_ATTR_K2, "k2"},
+    {SP_ATTR_K3, "k3"},
+    {SP_ATTR_K4, "k4"},
+    //{SP_ATTR_IN2, "in2"},
+    /*feConvolveMatrix*/
+    {SP_ATTR_ORDER, "order"},
+    {SP_ATTR_KERNELMATRIX, "kernelMatrix"},
+    {SP_ATTR_DIVISOR, "divisor"},
+    {SP_ATTR_BIAS, "bias"},
+    {SP_ATTR_TARGETX, "targetX"},
+    {SP_ATTR_TARGETY, "targetY"},
+    {SP_ATTR_EDGEMODE, "edgeMode"},
+    {SP_ATTR_KERNELUNITLENGTH, "kernelUnitLength"},
+    {SP_ATTR_PRESERVEALPHA, "preserveAlpha"},
+    /*feDiffuseLighting*/
+    {SP_ATTR_SURFACESCALE, "surfaceScale"},
+    {SP_ATTR_DIFFUSECONSTANT, "diffuseConstant"},
+    //{SP_ATTR_KERNELUNITLENGTH, "kernelUnitLength"},
+    /*feDisplacementMap*/
+    {SP_ATTR_SCALE, "scale"},
+    {SP_ATTR_XCHANNELSELECTOR, "xChannelSelector"},
+    {SP_ATTR_YCHANNELSELECTOR, "yChannelSelector"},
+    //{SP_ATTR_IN2, "in2"},
+    /*feFlood*/
+    {SP_ATTR_FLOODCOLOR, "flood-color"},
+    {SP_ATTR_FLOODOPACITY, "flood-opacity"},
+	/* SPGaussianBlur */
     {SP_ATTR_STDDEVIATION, "stdDeviation"},
+    /*feImage*/
+    /*feMerge*/
+    /*feMorphology*/
+    //{SP_ATTR_OPERATOR, "operator"},
+    {SP_ATTR_RADIUS, "radius"},
+    /*feOffset*/
+    //{SP_ATTR_DX, "dx"},
+    //{SP_ATTR_DY, "dy"},
+	/*feSpecularLighting*/
+    //{SP_ATTR_SURFACESCALE, "surfaceScale"},
+    {SP_ATTR_SPECULARCONSTANT, "specularConstant"},
+    {SP_ATTR_SPECULAREXPONENT, "specularExponent"},
+    /*feTile*/
+    /*feTurbulence*/
+    {SP_ATTR_BASEFREQUENCY, "baseFrequency"},
+	{SP_ATTR_NUMOCTAVES, "numOctaves"},
+    {SP_ATTR_SEED, "seed"},
+    {SP_ATTR_STITCHTILES, "stitchTiles"},
+    //{SP_ATTR_TYPE, "type"},
     /* SPGradient */
     {SP_ATTR_GRADIENTUNITS, "gradientUnits"},
     {SP_ATTR_GRADIENTTRANSFORM, "gradientTransform"},
@@ -201,7 +263,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_MARKERHEIGHT, "markerHeight"},
     {SP_ATTR_ORIENT, "orient"},
     /* SPStyleElem */
-    {SP_ATTR_TYPE, "type"},
+    //{SP_ATTR_TYPE, "type"},
     /* Animations */
     {SP_ATTR_ATTRIBUTENAME, "attributeName"},
     {SP_ATTR_ATTRIBUTETYPE, "attributeType"},
@@ -215,7 +277,7 @@ static SPStyleProp const props[] = {
     {SP_ATTR_REPEATDUR, "repeatDur"},
     /* Interpolating animations */
     {SP_ATTR_CALCMODE, "calcMode"},
-    {SP_ATTR_VALUES, "values"},
+    //{SP_ATTR_VALUES, "values"},
     {SP_ATTR_KEYTIMES, "keyTimes"},
     {SP_ATTR_KEYSPLINES, "keySplines"},
     {SP_ATTR_FROM, "from"},
