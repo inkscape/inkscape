@@ -19,7 +19,7 @@
 
 #include "attributes.h"
 #include "svg/svg.h"
-#include "sp-fecolorMatrix.h"
+#include "sp-fecolormatrix.h"
 #include "xml/repr.h"
 
 //#define SP_MACROS_SILENT

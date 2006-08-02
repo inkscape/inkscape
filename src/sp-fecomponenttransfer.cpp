@@ -19,7 +19,7 @@
 
 #include "attributes.h"
 #include "svg/svg.h"
-#include "sp-fecomponentTransfer.h"
+#include "sp-fecomponenttransfer.h"
 #include "xml/repr.h"
 
 //#define SP_MACROS_SILENT
