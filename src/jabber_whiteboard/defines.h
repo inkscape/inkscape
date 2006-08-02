@@ -101,17 +101,20 @@ namespace State {
     typedef char const* SessionState;
 }
 
+namespace Dialog {
+
+enum DialogReply {
+
+    ACCEPT_INVITATION =     0,
+    DECLINE_INVITATION =    1
+};
+
+}
+
 // message types
 // explicitly numbered to aid protocol description later on
 
 
-// Responses to whiteboard invitations
-enum InvitationResponses {
-	ACCEPT_INVITATION,
-	DECLINE_INVITATION,
-	PEER_ALREADY_IN_SESSION,
-	UNSUPPORTED_PROTOCOL
-};
 
 // Message handler modes
 enum HandlerMode {
@@ -182,6 +185,9 @@ typedef std::list< ReceivedCommitEvent > CommitsQueue;
 // Message serialization
 typedef std::list< Glib::ustring > SerializedEventList;
 
+
+    //typedef std::pair< Glib::ustring, InvitationResponses > Invitation_response_type;
+    //typedef std::list< Invitation_response_type > Invitation_responses_type;
 // Error handling -- someday
 // TODO: finish and integrate this
 //typedef boost::function< LmHandlerResult (unsigned int code) > ErrorHandlerFunctor;

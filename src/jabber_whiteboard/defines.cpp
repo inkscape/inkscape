@@ -27,12 +27,12 @@ namespace Message {
     Wrapper CONFIGURE =    "configure";
     Wrapper MOVE =         "move";
 
-    Message CONNECT_REQUEST =     "<connect-request />";
-    Message CONNECTED =           "<connected />";
-    Message ACCEPT_INVITATION =   "<accept-invitation />";
-    Message DECLINE_INVITATION =  "<decline-invitation />";
-    Message DOCUMENT_BEGIN =      "<document-begin />";
-    Message DOCUMENT_END =        "<document-end />";
+    Message CONNECT_REQUEST =     "connect-request";
+    Message CONNECTED =           "connected";
+    Message ACCEPT_INVITATION =   "accept-invitation";
+    Message DECLINE_INVITATION =  "decline-invitation";
+    Message DOCUMENT_BEGIN =      "document-begin";
+    Message DOCUMENT_END =        "document-end";
 }
 
 namespace Vars {

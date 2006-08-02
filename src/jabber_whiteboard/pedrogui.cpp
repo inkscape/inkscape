@@ -2472,14 +2472,14 @@ void PedroGui::doShare(const DOMString &jid)
 {
     Inkscape::Whiteboard::SessionManager& sm =
          Inkscape::Whiteboard::SessionManager::instance();
-    sm.doShare(jid, Inkscape::Whiteboard::State::WHITEBOARD_PEER);
+    sm.initialiseSession(jid, Inkscape::Whiteboard::State::WHITEBOARD_PEER);
 }
 
 void PedroGui::doGroupShare(const DOMString &groupJid)
 {
     Inkscape::Whiteboard::SessionManager& sm =
         Inkscape::Whiteboard::SessionManager::instance();
-    sm.doShare(groupJid, Inkscape::Whiteboard::State::WHITEBOARD_MUC);
+    sm.initialiseSession(groupJid, Inkscape::Whiteboard::State::WHITEBOARD_MUC);
 }
 
 //##################

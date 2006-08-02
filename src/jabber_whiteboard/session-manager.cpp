@@ -18,18 +18,31 @@
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
 
+#include "xml/node.h"
+#include "xml/repr.h"
+
+#include "util/ucompose.hpp"
+
 #include "xml/node-observer.h"
 
 #include "pedro/pedrodom.h"
 
+#include "ui/view/view-widget.h"
+
+#include "application/application.h"
+#include "application/editor.h"
+
+#include "document-private.h"
+#include "interface.h"
+#include "sp-namedview.h"
 #include "document.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 
+#include "jabber_whiteboard/invitation-confirm-dialog.h"
 #include "jabber_whiteboard/message-verifier.h"
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/inkboard-document.h"
-#include "jabber_whiteboard/new-inkboard-document.h"
 #include "jabber_whiteboard/defines.h"
 
 #include "jabber_whiteboard/dialog/choose-desktop.h"
@@ -59,11 +72,11 @@ SessionManager::instance()
 
 SessionManager::SessionManager() 
 {
-    sequenceNumber = 0L;
     getClient().addXmppEventListener(*this);
 
-	this->_check_pending_invitations = Glib::signal_timeout().connect(sigc::mem_fun(*this, &SessionManager::_checkInvitationQueue), 50);
-	this->_check_invitation_responses = Glib::signal_timeout().connect(sigc::mem_fun(*this, &SessionManager::_checkInvitationResponseQueue), 50);
+    this->CheckPendingInvitations = 
+        Glib::signal_timeout().connect(sigc::mem_fun(
+            *this, &SessionManager::checkInvitationQueue), 50);
 }
 
 SessionManager::~SessionManager()
@@ -94,36 +107,19 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
             {
             break;
             }
+        case Pedro::XmppEvent::EVENT_MUC_MESSAGE:
         case Pedro::XmppEvent::EVENT_MESSAGE:
             {
             g_warning("## SM message:%s\n", event.getFrom().c_str());
             Pedro::Element *root = event.getDOM();
 
-            if (root)
-                {
-                if (root->getTagAttribute("inkboard", "xmlns") == Vars::INKBOARD_XMLNS)
-                    {
-                        _processInkboardEvent(event);
-                    }
-                }
+            if (root && root->getTagAttribute("wb", "xmlns") == Vars::INKBOARD_XMLNS)
+                processWhiteboardEvent(event);
+
             break;
             }
         case Pedro::XmppEvent::EVENT_PRESENCE:
             {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_MUC_MESSAGE:
-            {
-            g_warning("## SM MUC message:%s\n", event.getFrom().c_str());
-            Pedro::Element *root = event.getDOM();
-
-            if (root)
-                {
-                if (root->getTagAttribute("inkboard", "xmlns") == Vars::INKBOARD_XMLNS)
-                    {
-                        _processInkboardEvent(event);
-                    }
-                }
             break;
             }
         case Pedro::XmppEvent::EVENT_MUC_JOIN:
@@ -152,14 +148,12 @@ SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
  * \param type Type of the session; i.e. private message or group chat.
  */
 void
-SessionManager::doShare(Glib::ustring const& to, State::SessionType type)
+SessionManager::initialiseSession(Glib::ustring const& to, State::SessionType type)
 {
+
     SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", type, to);
-    if(doc == NULL) return;
-
     InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
-    if (inkdoc == NULL) return;
-
+    if(inkdoc == NULL) return;
 
     if(type == State::WHITEBOARD_PEER) 
     {
@@ -176,273 +170,231 @@ SessionManager::doShare(Glib::ustring const& to, State::SessionType type)
                     sp_desktop_document(desktop)->rdoc;
                 inkdoc->root()->mergeFrom(old_doc->root(),"id");
             }
-        }
-    }else{ return; }
+        }else { return; }
+    }
 
-    // Create a random session identifier
-    char * randomString = (char*) malloc (11);
-    for (int n=0; n<11; n++)
-        randomString[n]=rand()%26+'a';
-    randomString[11]='\0';
+    char * sessionId = createSessionId(10);
 
-    inkdoc->setSessionIdent(randomString);
+    inkdoc->setSessionIdent(sessionId);
 
-    _inkboards.push_back(Inkboard_record_type(randomString, inkdoc));
+    addSession(WhiteboardRecord(sessionId, inkdoc));
 
     inkdoc->startSessionNegotiation();
 
-    /*
-    InkboardDocument* doc;
-    SPDesktop* dt;
 
-    // Just create a new blank canvas for MUC sessions
-    if(type == State::WHITEBOARD_MUC) 
-    {
-        dt = createInkboardDesktop(to, type);
-
-        if (dt != NULL) 
-        {
-            doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-
-            if (doc != NULL) 
-            {
-                doc->startSessionNegotiation();
-            }
-        }
-           
-
-        // Let the user pick the document which to start a peer ro peer session
-        // with, or a blank one, then create a blank document, copy over the contents
-        // and initialise session
-    } else if (type== State::WHITEBOARD_PEER) {
-
-        ChooseDesktop dialog;
-        int result = dialog.run();
-
-        if(result == Gtk::RESPONSE_OK)
-        {
-            SPDesktop *desktop = dialog.getDesktop();
-            dt = createInkboardDesktop(to, type);
-
-            if (dt != NULL) 
-            {
-                doc = dynamic_cast< InkboardDocument* >(sp_desktop_document(dt)->rdoc);
-
-                if (doc != NULL) 
-                {
-                    if(desktop != NULL)
-                    {
-                        Inkscape::XML::Document *old_doc =
-                            sp_desktop_document(desktop)->rdoc;
-                        doc->root()->mergeFrom(old_doc->root(),"id");
-                    }
-
-                    doc->startSessionNegotiation();
-                }
-            }
-        }
-    }
-    */
-}
-
-/**
- * Clone of sp_file_new and all related subroutines and functions,
- * with appropriate modifications to use the Inkboard document class.
- *
- * \param to The JID to which this Inkboard document will be connected.
- * \return A pointer to the created desktop, or NULL if a new desktop could not be created.
- */
-SPDesktop*
-SessionManager::createInkboardDesktop(Glib::ustring const& to, State::SessionType type)
-{
-// Create document (sp_repr_document_new clone)
-    SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", type, to);
-    g_return_val_if_fail(doc != NULL, NULL);
-
-    InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
-    if (inkdoc == NULL) { // this shouldn't ever happen...
-        return NULL;
-    }
-
-// Create desktop and attach document
-    SPDesktop *dt = makeInkboardDesktop(doc);
-    _inkboards.push_back(Inkboard_record_type(to, inkdoc));
-    return dt;
 }
 
 void
-SessionManager::terminateInkboardSession(Glib::ustring const& to)
+SessionManager::terminateSession(Glib::ustring const& sessionId)
 {
-	std::cout << "Terminating Inkboard session to " << to << std::endl;
-    Inkboards_type::iterator i = _inkboards.begin();
-    for(; i != _inkboards.end(); ++i) {
-        if ((*i).first == to) {
+    WhiteboardList::iterator i = whiteboards.begin();
+    for(; i != whiteboards.end(); ++i) {
+        if ((*i).first == sessionId) 
             break;
-        }
     }
 
-    if (i != _inkboards.end()) {
-		std::cout << "Erasing Inkboard session to " << to << std::endl;
+    if (i != whiteboards.end()) {
         (*i).second->terminateSession();
-        _inkboards.erase(i);
+        whiteboards.erase(i);
     }
 }
 
-InkboardDocument*
-SessionManager::getInkboardSession(Glib::ustring const& to)
+void
+SessionManager::addSession(WhiteboardRecord whiteboard)
 {
-    Inkboards_type::iterator i = _inkboards.begin();
-    for(; i != _inkboards.end(); ++i) {
-        if ((*i).first == to) {
+    whiteboards.push_back(whiteboard);
+}
+
+InkboardDocument*
+SessionManager::getInkboardSession(Glib::ustring const& sessionId)
+{
+    WhiteboardList::iterator i = whiteboards.begin();
+    for(; i != whiteboards.end(); ++i) {
+        if ((*i).first == sessionId) {
             return (*i).second;
         }
     }
     return NULL;
 }
 
+
+/**
+ * Handles all incoming messages from pedro within a valid namespace, CONNECT_REQUEST messages
+ * are handled here, as they have no InkboardDocument to be handled from, all other messages
+ * are passed to their appropriate Inkboard document, which is identified by the 'session' 
+ * attribute of the 'wb' element
+ *
+ */
 void
-SessionManager::_processInkboardEvent(Pedro::XmppEvent const& event)
+SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
 {
     Pedro::Element* root = event.getDOM();
+    if (root == NULL) {
+	g_warning("Received null DOM; ignoring message.");
+	return;
+    }
 
-	if (root == NULL) {
-		g_warning("Received null DOM; ignoring message.");
-		return;
-	}
+    Pedro::DOMString session = root->getTagAttribute("wb", "session");
+    Pedro::DOMString domwrapper = root->getFirstChild()->getFirstChild()->getFirstChild()->getName();
 
-    Pedro::DOMString type = root->getTagAttribute("inkboard", "type");
-    Pedro::DOMString seq = root->getTagAttribute("inkboard", "seq");
-    Pedro::DOMString protover = root->getTagAttribute("inkboard", "protocol");
-
-    if (type.empty() || seq.empty() || protover.empty()) {
-        g_warning("Received incomplete Inkboard message (missing type, protocol, or sequence number); ignoring message.");
+    if (session.empty()) {
+        g_warning("Received incomplete Whiteboard message, missing session identifier; ignoring message.");
         return;
     }
 
-    MessageType mtype = static_cast< MessageType >(atoi(type.c_str()));
+    if(root->exists(Message::CONNECT_REQUEST))
+        handleIncomingInvitation(Invitation(event.getFrom(),session));
 
-	// Messages that deal with the creation and destruction of sessions should be handled
-	// here in the SessionManager.  
-	//
-	// These events are listed below, along with rationale.
-	//
-	// - CONNECT_REQUEST_USER: when we begin to process this message, we will not have an 
-	//   Inkboard session available to send the message to.  Therefore, this message needs
-	//   to be handled by the SessionManager.
-	// 
-	// - CONNECT_REQUEST_REFUSED_BY_PEER: this message means that the recipient of a 
-	//   private invitation refused the invitation.  In this case, we need to destroy the
-	//   Inkboard desktop, document, and session associated with that invitation.
-	//   Destruction of these components seems to be more naturally done in the SessionManager
-	//   than in the Inkboard document itself (especially since the document may be associated
-	//   with multiple desktops).
-	//
-	// - UNSUPPORTED_PROTOCOL_VERSION: this message means that the recipient of an invitation
-	//   does not support the version of the Inkboard protocol we are using.  In this case,
-	//   we have to destroy the Inkboard desktop, document, and session associated with that
-	//   invitation.  The rationale for doing it in the SessionManager is the same as that
-	//   given above.
-	//
-	// - ALREADY_IN_SESSION: similar rationale to above.
-	//
-	// - DISCONNECTED_FROM_USER_SIGNAL: similar rationale to above.
-	//
-	//
-        // All other events can be handled inside an Inkboard session.
-	
-	// The message we are handling will have come from some Jabber ID.  We need to verify
-	// that the Inkboard session associated with that JID is in the correct state for the
-	// incoming message (or, in some cases, that the session correctly exists / does not
-	// exist).
-	InkboardDocument* doc = getInkboardSession(event.getFrom());
-
-//      NOTE: This line refers to a class that hasn't been written yet
-//	MessageValidityTestResult res = MessageVerifier::verifyMessageValidity(event, mtype, doc);
-
-	MessageValidityTestResult res = RESULT_INVALID;
-        /*
-	switch (res) {
-		case RESULT_VALID:
-		{
-			switch (mtype) {
-				case CONNECT_REQUEST:
-				default:
-					if (doc != NULL) {
-						unsigned int seqnum = atoi(seq.c_str());
-						doc->processInkboardEvent(mtype, seqnum, event.getData());
-					}
-					break;
-			}
-			break;
-		}
-		case RESULT_INVALID:
-		default:
-			// FIXME: better warning message
-			g_warning("Received message in invalid context.");
-			break;
-	}
-        */
+    else
+    { 
+        Message::Wrapper wrapper = domwrapper.c_str();
+        InkboardDocument* doc = getInkboardSession(session);
+        doc->processInkboardEvent(wrapper, event.getData());
+    }
 }
 
-void
-SessionManager::_handleSessionEvent(Message::Wrapper mtype, Pedro::XmppEvent const& event)
+char*
+SessionManager::createSessionId(int size)
 {
-        /*
-	switch (mtype) {
-		case CONNECT_REQUEST:
-			_handleIncomingInvitation(event.getFrom());
-			break;
-		case INVITATION_DECLINE:
-			_handleInvitationResponse(event.getFrom(), DECLINE_INVITATION);
-			break;
-		default:
-			break;
-	}
-        */
+    // Create a random session identifier
+    char * randomString = (char*) malloc (size);
+    for (int n=0; n<size; n++)
+        randomString[n]=rand()%26+'a';
+    randomString[size+1]='\0';
+
+    return randomString;
 }
 
+/**
+ * Adds an invitation to a queue to be executed in SessionManager::_checkInvitationQueue()
+ * as when this method is called, we're still executing in Pedro's context, which causes 
+ * issues when we run a dialog main loop.
+ *
+ */
 void
-SessionManager::_handleIncomingInvitation(Glib::ustring const& from)
+SessionManager::handleIncomingInvitation(Invitation invitation)
 {
-	// don't insert duplicate invitations
-	if (std::find(_pending_invitations.begin(), _pending_invitations.end(), from) != _pending_invitations.end()) {
-		return;
-	}
+    // don't insert duplicate invitations
+    if (std::find(invitations.begin(),invitations.end(),invitation) != invitations.end())
+        return;
 
-	// We need to do the invitation confirm/deny dialog elsewhere --
-	// when this method is called, we're still executing in Pedro's context,
-	// which causes issues when we run a dialog main loop.
-	//
-	// The invitation handling is done in a poller timeout that executes approximately
-	// every 50ms.  It calls _checkInvitationQueue.
-	_pending_invitations.push_back(from);
+    invitations.push_back(invitation);
 
 }
 
-void
-SessionManager::_handleInvitationResponse(Glib::ustring const& from, InvitationResponses resp)
+bool
+SessionManager::checkInvitationQueue()
 {
-	// only handle one response per invitation sender
-	//
-	// TODO: this could have one huge bug: say that Alice sends an invite to Bob, but
-	// Bob is doing something else at the moment and doesn't want to get in an Inkboard
-	// session.  Eve intercepts Bob's "reject invitation" message and passes a
-	// "accept invitation" message to Alice that comes before Bob's "reject invitation"
-	// message. 
-	//
-	// Does XMPP prevent this sort of attack?  Need to investigate that.
-	if (std::find_if(_invitation_responses.begin(), _invitation_responses.end(), CheckInvitationSender(from)) != _invitation_responses.end()) {
-		return;
-	}
+    // The user is currently busy with an action.  Defer invitation processing 
+    // until the user is free.
+    int x, y;
+    Gdk::ModifierType mt;
+    Gdk::Display::get_default()->get_pointer(x, y, mt);
+    if (mt & GDK_BUTTON1_MASK) 
+        return true;
 
-	// We need to do the invitation confirm/deny dialog elsewhere --
-	// when this method is called, we're still executing in Pedro's context,
-	// which causes issues when we run a dialog main loop.
-	//
-	// The invitation handling is done in a poller timeout that executes approximately
-	// every 50ms.  It calls _checkInvitationResponseQueue.
-	_invitation_responses.push_back(Invitation_response_type(from, resp));
+    if (invitations.size() > 0) 
+    {
+        // There's an invitation to process; process it.
+	Invitation invitation = invitations.front();
+        Glib::ustring from = invitation.first;
+        Glib::ustring sessionId = invitation.second;
 
+	Glib::ustring primary = 
+            "<span weight=\"bold\" size=\"larger\">" + 
+            String::ucompose(_("<b>%1</b> has invited you to a whiteboard session."), from) + 
+            "</span>\n\n" + 
+            String::ucompose(_("Do you wish to accept <b>%1</b>'s whiteboard session invitation?"), from);
+
+        InvitationConfirmDialog dialog(primary);
+
+        dialog.add_button(_("Accept invitation"), Dialog::ACCEPT_INVITATION);
+        dialog.add_button(_("Decline invitation"), Dialog::DECLINE_INVITATION);
+
+        Dialog::DialogReply reply = static_cast< Dialog::DialogReply >(dialog.run());
+
+
+        SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
+        InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
+        if(inkdoc == NULL) return true;
+
+        addSession(WhiteboardRecord(sessionId, inkdoc));
+
+        switch (reply) {
+
+            case Dialog::ACCEPT_INVITATION:{
+                inkdoc->sendProtocol(from, Message::PROTOCOL,Message::ACCEPT_INVITATION);
+                makeInkboardDesktop(doc);
+                break; }
+
+            case Dialog::DECLINE_INVITATION: default: {
+                inkdoc->sendProtocol(from, Message::PROTOCOL,Message::DECLINE_INVITATION);
+                terminateSession(sessionId);
+                break; }
+        }
+
+        invitations.pop_front();
+
+    }
+
+    return true;
+}
+
+//#########################################################################
+//# HELPER FUNCTIONS
+//#########################################################################
+
+SPDocument*
+makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, Glib::ustring const& to)
+{
+    SPDocument* doc;
+
+    InkboardDocument* rdoc = new InkboardDocument(g_quark_from_static_string("xml"), type, to);
+    rdoc->setAttribute("version", "1.0");
+    rdoc->setAttribute("standalone", "no");
+    XML::Node *comment = sp_repr_new_comment(" Created with Inkscape (http://www.inkscape.org/) ");
+    rdoc->appendChild(comment);
+    GC::release(comment);
+
+    XML::Node* root = sp_repr_new(rootname);
+    rdoc->appendChild(root);
+    GC::release(root);
+
+    Glib::ustring name = String::ucompose(
+        _("Inkboard session (%1 to %2)"), SessionManager::instance().getClient().getJid(), to);
+
+    doc = sp_document_create(rdoc, NULL, NULL, name.c_str(), TRUE);
+    g_return_val_if_fail(doc != NULL, NULL);
+
+    return doc;
+}
+
+// TODO: When the switchover to the new GUI is complete, this function should go away
+// and be replaced with a call to Inkscape::NSApplication::Editor::createDesktop.  
+// It currently only exists to correctly mimic the desktop creation functionality
+// in file.cpp.
+//
+// \see sp_file_new
+SPDesktop*
+makeInkboardDesktop(SPDocument* doc)
+{
+    SPDesktop* dt;
+
+    if (NSApplication::Application::getNewGui()) 
+        dt = NSApplication::Editor::createDesktop(doc);
+
+    else 
+    {
+        SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
+        g_return_val_if_fail(dtw != NULL, NULL);
+        sp_document_unref(doc);
+
+        sp_create_window(dtw, TRUE);
+        dt = static_cast<SPDesktop*>(dtw->view);
+        sp_namedview_window_from_document(dt);
+    }
+
+    return dt;
 }
 
 }  // namespace Whiteboard

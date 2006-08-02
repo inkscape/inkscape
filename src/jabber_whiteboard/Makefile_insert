@@ -23,13 +23,10 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/message-tags.h \
 	jabber_whiteboard/message-utilities.cpp \
 	jabber_whiteboard/message-utilities.h \
-	jabber_whiteboard/new-inkboard-document.cpp \
-	jabber_whiteboard/new-inkboard-document.h \
 	jabber_whiteboard/inkboard-document.cpp \
 	jabber_whiteboard/inkboard-document.h \
 	jabber_whiteboard/invitation-confirm-dialog.cpp \
 	jabber_whiteboard/invitation-confirm-dialog.h \
-	jabber_whiteboard/invitation-handlers.cpp \
 	jabber_whiteboard/session-file-selector.cpp \
 	jabber_whiteboard/session-file-selector.h \
 	jabber_whiteboard/session-manager.cpp \

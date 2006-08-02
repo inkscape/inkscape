@@ -74,9 +74,9 @@ InkboardDocument::terminateSession()
 }
 
 void
-InkboardDocument::processInkboardEvent(Message::Wrapper mtype, unsigned int seqnum, Glib::ustring const& data)
+InkboardDocument::processInkboardEvent(Message::Wrapper mtype, Glib::ustring const& data)
 {
-    g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing Inkboard event: mtype=%s seqnum=%d data=%s\n", mtype, seqnum, data.c_str());
+    g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing Inkboard event: mtype=%s data=%s\n",mtype,data.c_str());
 }
 
 bool
@@ -87,7 +87,7 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper wr
         "<message type='%s' from='%s' to='%s'>"
             "<wb xmlns='%s' session='%s'>"
                 "<%s>"
-                    "%s"
+                    "<%s />"
                 "</%s>"
             "</wb>"
             "<body> </body>"

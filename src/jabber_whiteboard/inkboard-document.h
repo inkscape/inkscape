@@ -16,13 +16,14 @@
 
 #include "xml/document.h"
 #include "xml/simple-node.h"
-
+#include "jabber_whiteboard/defines.h"
 #include "jabber_whiteboard/keynode.h"
 #include "jabber_whiteboard/session-manager.h"
 
 namespace Inkscape {
 
 namespace Whiteboard {
+
 
 class InkboardDocument : public XML::SimpleNode, public XML::Document {
 public:
@@ -42,7 +43,7 @@ public:
 
     void startSessionNegotiation();
     void terminateSession();
-    void processInkboardEvent(Message::Wrapper mtype, unsigned int seqnum, Glib::ustring const& data);
+    void processInkboardEvent(Message::Wrapper mtype, Glib::ustring const& data);
 
     bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper mwrapper, 
         Message::Message message);
