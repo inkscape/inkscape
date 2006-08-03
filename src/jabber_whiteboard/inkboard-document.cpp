@@ -75,14 +75,29 @@ InkboardDocument::terminateSession()
 }
 
 void
-InkboardDocument::processInkboardEvent(Message::Wrapper mtype, Glib::ustring const& data)
+InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element* data)
 {
-    g_log(NULL, G_LOG_LEVEL_DEBUG, "Processing Inkboard event: mtype=%s data=%s\n",mtype,data.c_str());
-    
+    if(this->handleIncomingState(wrapper,data))
+    {
+        if(wrapper == Message::PROTOCOL)
+        {
+            if(data->exists(Message::ACCEPT_INVITATION)); 
+            {
+                // TODO : Would be nice to create the desktop here
+
+                sendProtocol(getRecipient(),Message::PROTOCOL, Message::CONNECTED);
+                sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_BEGIN);
+                sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_END);
+            }
+        }
+    }else{
+        g_warning("Recieved Message in invalid state = %d", this->state);
+        data->print();
+    }
 }
 
 bool
-InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper wrapper,
+InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &wrapper,
      Message::Message message)
 {
     if(this->handleOutgoingState(wrapper,message))
@@ -99,19 +114,22 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper wr
 
         if (!_sm->getClient().write(fmt,
                 _type,_sm->getClient().getJid().c_str(),destJid.c_str(),Vars::INKBOARD_XMLNS,
-                this->getSessionId().c_str(),wrapper,message,wrapper))
-            return false;
+                this->getSessionId().c_str(),wrapper,message,wrapper)) 
+            { return false; }
 
-        return true;
+        else 
+            { return true; }
 
-    }else
-        return false;
+    }else 
+    { 
+        g_warning("Sending Message in invalid state message=%s , state=%d",message,this->state);
+        return false; 
+    }
 }
 
 bool
-InkboardDocument::handleOutgoingState(Message::Wrapper wrapper,Message::Message message)
+InkboardDocument::handleOutgoingState(Message::Wrapper &wrapper, Glib::ustring const& message)
 {
-    g_warning("state %d, message %s",this->state,message);
     if(wrapper == Message::PROTOCOL) 
     {
         if(message == Message::CONNECT_REQUEST) 
@@ -126,8 +144,9 @@ InkboardDocument::handleOutgoingState(Message::Wrapper wrapper,Message::Message 
         else if(message == Message::DOCUMENT_BEGIN)
             return this->handleState(State::CONNECTED,State::SYNCHRONISING);
 
-        else if(message == Message::DOCUMENT_END)
+        else if(message == Message::DOCUMENT_END) { 
             return this->handleState(State::SYNCHRONISING,State::IN_WHITEBOARD);
+        }
 
         else 
             return false;
@@ -140,10 +159,12 @@ InkboardDocument::handleOutgoingState(Message::Wrapper wrapper,Message::Message 
 }
 
 bool
-InkboardDocument::handleIncomingState(Message::Wrapper wrapper,Glib::ustring const& message)
+InkboardDocument::handleIncomingState(Message::Wrapper &wrapper, Pedro::Element* data)
 {
     if(wrapper == Message::PROTOCOL) 
     {
+        Glib::ustring message = data->getFirstChild()->getFirstChild()->getFirstChild()->getName();
+
         // Connect Requests are handled in SessionManager
         if(message == Message::ACCEPT_INVITATION)
             return this->handleState(State::AWAITING_INVITATION_REPLY,State::INVITATION_RECIEVED);

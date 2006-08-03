@@ -85,62 +85,6 @@ SessionManager::~SessionManager()
     getClient().disconnect();
 }
 
-void
-SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
-{
-    int type = event.getType();
-
-    switch (type) {
-        case Pedro::XmppEvent::EVENT_STATUS:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_ERROR:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_CONNECTED:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_DISCONNECTED:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_MUC_MESSAGE:
-        case Pedro::XmppEvent::EVENT_MESSAGE:
-            {
-            g_warning("## SM message:%s\n", event.getFrom().c_str());
-            Pedro::Element *root = event.getDOM();
-
-            if (root && root->getTagAttribute("wb", "xmlns") == Vars::INKBOARD_XMLNS)
-                processWhiteboardEvent(event);
-
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_PRESENCE:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_MUC_JOIN:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_MUC_LEAVE:
-            {
-            break;
-            }
-        case Pedro::XmppEvent::EVENT_MUC_PRESENCE:
-            {
-            break;
-            }
-        default:
-            {
-            break;
-            }
-    }
-}
-
 /**
  * Initiates a shared session with a user or conference room.
  * 
@@ -177,6 +121,7 @@ SessionManager::initialiseSession(Glib::ustring const& to, State::SessionType ty
 
     inkdoc->setSessionId(sessionId);
 
+    makeInkboardDesktop(doc);
     addSession(WhiteboardRecord(sessionId, inkdoc));
 
     inkdoc->startSessionNegotiation();
@@ -217,6 +162,60 @@ SessionManager::getInkboardSession(Glib::ustring const& sessionId)
     return NULL;
 }
 
+void
+SessionManager::processXmppEvent(const Pedro::XmppEvent &event)
+{
+    int type = event.getType();
+
+    switch (type) {
+        case Pedro::XmppEvent::EVENT_STATUS:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_ERROR:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_CONNECTED:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_DISCONNECTED:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_MUC_MESSAGE:
+        case Pedro::XmppEvent::EVENT_MESSAGE:
+            {
+            Pedro::Element *root = event.getDOM();
+
+            if (root && root->getTagAttribute("wb", "xmlns") == Vars::INKBOARD_XMLNS)
+                processWhiteboardEvent(event);
+
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_PRESENCE:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_MUC_JOIN:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_MUC_LEAVE:
+            {
+            break;
+            }
+        case Pedro::XmppEvent::EVENT_MUC_PRESENCE:
+            {
+            break;
+            }
+        default:
+            {
+            break;
+            }
+    }
+}
 
 /**
  * Handles all incoming messages from pedro within a valid namespace, CONNECT_REQUEST messages
@@ -247,9 +246,9 @@ SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
 
     else
     { 
-        Message::Wrapper wrapper = domwrapper.c_str();
+        Message::Wrapper wrapper = static_cast< Message::Wrapper >("protocol");
         InkboardDocument* doc = getInkboardSession(session);
-        doc->processInkboardEvent(wrapper, event.getData());
+        doc->processInkboardEvent(wrapper, root->getFirstChild());
     }
 }
 
@@ -313,8 +312,8 @@ SessionManager::checkInvitationQueue()
 
         Dialog::DialogReply reply = static_cast< Dialog::DialogReply >(dialog.run());
 
-
-        SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
+        SPDocument* doc = makeInkboardDocument(
+            g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
 
         InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
         if(inkdoc == NULL) return true;

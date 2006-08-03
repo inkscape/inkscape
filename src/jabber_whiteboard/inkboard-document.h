@@ -14,6 +14,7 @@
 
 #include <glibmm.h>
 
+#include "document.h"
 #include "xml/document.h"
 #include "xml/simple-node.h"
 #include "jabber_whiteboard/defines.h"
@@ -43,13 +44,13 @@ public:
 
     void startSessionNegotiation();
     void terminateSession();
-    void processInkboardEvent(Message::Wrapper mtype, Glib::ustring const& data);
+    void processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element* data);
 
-    bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper mwrapper, 
+    bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper &mwrapper, 
         Message::Message message);
 
-    bool handleOutgoingState(Message::Wrapper wrapper,Message::Message message);
-    bool handleIncomingState(Message::Wrapper wrapper,Glib::ustring const& message);
+    bool handleOutgoingState(Message::Wrapper &wrapper,Glib::ustring const& message);
+    bool handleIncomingState(Message::Wrapper &wrapper,Pedro::Element* data);
 
     bool handleState(State::SessionState expectedState, State::SessionState newstate);
 
