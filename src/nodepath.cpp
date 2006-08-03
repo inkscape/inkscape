@@ -479,10 +479,6 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
  */
 void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotation)
 {
-    update_repr_internal(np);
-    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
-                     annotation);
-
     if (np->livarot_path) {
         delete np->livarot_path;
         np->livarot_path = NULL;
@@ -493,6 +489,10 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
         if (np->livarot_path)
             np->livarot_path->ConvertWithBackData(0.01);
     }
+
+    update_repr_internal(np);
+    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
+                     annotation);
 }
 
 /**
@@ -3966,11 +3966,32 @@ static void sp_nodepath_node_destroy(Inkscape::NodePath::Node *node)
 
     node->subpath->nodes = g_list_remove(node->subpath->nodes, node);
 
+    g_signal_handlers_disconnect_by_func(G_OBJECT(node->knot), (gpointer) G_CALLBACK(node_event), node);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(node->knot), (gpointer) G_CALLBACK(node_clicked), node);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(node->knot), (gpointer) G_CALLBACK(node_grabbed), node);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(node->knot), (gpointer) G_CALLBACK(node_ungrabbed), node);
+    g_signal_handlers_disconnect_by_func(G_OBJECT(node->knot), (gpointer) G_CALLBACK(node_request), node);
     g_object_unref(G_OBJECT(node->knot));
-    if (node->p.knot)
+
+    if (node->p.knot) {
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_clicked), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_grabbed), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_ungrabbed), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_request), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_moved), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->p.knot), (gpointer) G_CALLBACK(node_handle_event), node);
         g_object_unref(G_OBJECT(node->p.knot));
-    if (node->n.knot)
+    }
+
+    if (node->n.knot) {
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_clicked), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_grabbed), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_ungrabbed), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_request), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_moved), node);
+        g_signal_handlers_disconnect_by_func(G_OBJECT(node->n.knot), (gpointer) G_CALLBACK(node_handle_event), node);
         g_object_unref(G_OBJECT(node->n.knot));
+    }
 
     if (node->p.line)
         gtk_object_destroy(GTK_OBJECT(node->p.line));
