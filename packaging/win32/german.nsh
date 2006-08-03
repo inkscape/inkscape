@@ -5,6 +5,8 @@
 ; Authors:
 ; Adib Taraben theAdib@yahoo.com
 ;
+; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+
 !insertmacro MUI_LANGUAGE "German"
 
 ; Product name
