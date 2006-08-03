@@ -321,6 +321,8 @@ void Inkscape::SelTrans::transform(NR::Matrix const &rel_affine, NR::Point const
 void Inkscape::SelTrans::ungrab()
 {
     g_return_if_fail(_grabbed);
+    _grabbed = false;
+    _show_handles = true;
 
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
     bool updh = true;
@@ -364,9 +366,6 @@ void Inkscape::SelTrans::ungrab()
     }
     _items.clear();
     _items_centers.clear();
-
-    _grabbed = false;
-    _show_handles = true;
 
     sp_canvas_item_hide(_norm);
     sp_canvas_item_hide(_grip);
