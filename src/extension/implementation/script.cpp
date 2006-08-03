@@ -818,8 +818,6 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
             child = child->next()) {
         if (!strcmp("sodipodi:namedview", child->name()))
             continue;
-        if (!strcmp("svg:defs", child->name()))
-            continue;
         delete_list.push_back(child);
     }
     for (unsigned int i = 0; i < delete_list.size(); i++)
@@ -829,8 +827,6 @@ Script::copy_doc (Inkscape::XML::Node * oldroot, Inkscape::XML::Node * newroot)
             child != NULL;
             child = child->next()) {
         if (!strcmp("sodipodi:namedview", child->name()))
-            continue;
-        if (!strcmp("svg:defs", child->name()))
             continue;
         oldroot->appendChild(child->duplicate());
     }
