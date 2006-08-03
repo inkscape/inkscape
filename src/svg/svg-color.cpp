@@ -274,6 +274,7 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
         s = e;
         if (*s == '%') {
             hasp = TRUE;
+            s += 1;
         } else {
             hasd = TRUE;
         }
