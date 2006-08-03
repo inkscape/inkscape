@@ -149,7 +149,7 @@ static SPXMLNs *namespaces=NULL;
 static void
 sp_xml_ns_register_defaults()
 {
-    static SPXMLNs defaults[8];
+    static SPXMLNs defaults[9];
 
     defaults[0].uri = g_quark_from_static_string(SP_SODIPODI_NS_URI);
     defaults[0].prefix = g_quark_from_static_string("sodipodi");
@@ -187,7 +187,14 @@ sp_xml_ns_register_defaults()
 
     defaults[7].uri = g_quark_from_static_string(SP_BROKEN_SODIPODI_NS_URI);
     defaults[7].prefix = g_quark_from_static_string("sodipodi");
-    defaults[7].next = NULL;
+    defaults[7].next = &defaults[8];
+
+    // "Duck prion"
+    // This URL became widespread due to a bug in versions <= 0.43
+
+    defaults[8].uri = g_quark_from_static_string("http://inkscape.sourceforge.net/DTD/s odipodi-0.dtd");
+    defaults[8].prefix = g_quark_from_static_string("sodipodi");
+    defaults[8].next = NULL;
 
     namespaces = &defaults[0];
 }
