@@ -8,9 +8,10 @@
  *   Raph Levien <raph@gimp.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   fred
+ *   bbyak
  *
  * Copyright (C) 1998 The Free Software Foundation
- * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) 2002-2006 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -23,6 +24,8 @@
 
 #include <gtk/gtkmain.h>
 #include <gtk/gtksignal.h>
+
+#include <gtkmm.h>
 
 #include <helper/sp-marshal.h>
 #include <display/sp-canvas.h>
@@ -879,6 +882,7 @@ static GtkWidgetClass *canvas_parent_class;
 
 void sp_canvas_resize_tiles(SPCanvas* canvas,int nl,int nt,int nr,int nb);
 void sp_canvas_dirty_rect(SPCanvas* canvas,int nl,int nt,int nr,int nb);
+static int do_update (SPCanvas *canvas);
 
 /**
  * Registers the SPCanvas class if necessary, and returns the type ID
@@ -966,6 +970,15 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->tiles=NULL;
     canvas->tLeft=canvas->tTop=canvas->tRight=canvas->tBottom=0;
     canvas->tileH=canvas->tileV=0;
+
+    canvas->redraw_aborted.x0 = NR_HUGE_L;
+    canvas->redraw_aborted.x1 = -NR_HUGE_L;
+    canvas->redraw_aborted.y0 = NR_HUGE_L;
+    canvas->redraw_aborted.y1 = -NR_HUGE_L;
+    
+    canvas->redraw_count = 0;
+
+    canvas->slowest_buffer = 0;
 }
 
 /**
@@ -1488,6 +1501,62 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     return emit_event (canvas, (GdkEvent *) event);
 }
 
+static void
+sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1, int draw_x1, int draw_y1, int draw_x2, int draw_y2, int sw)
+{
+    GtkWidget *widget = GTK_WIDGET (canvas);
+
+    SPCanvasBuf buf;
+    if (canvas->rendermode != RENDERMODE_OUTLINE) {
+        buf.buf = nr_pixelstore_256K_new (FALSE, 0);
+    } else {
+        buf.buf = nr_pixelstore_1M_new (FALSE, 0);
+    }
+
+    buf.buf_rowstride = sw * 3;
+    buf.rect.x0 = x0;
+    buf.rect.y0 = y0;
+    buf.rect.x1 = x1;
+    buf.rect.y1 = y1;
+    buf.visible_rect.x0 = draw_x1;
+    buf.visible_rect.y0 = draw_y1;
+    buf.visible_rect.x1 = draw_x2;
+    buf.visible_rect.y1 = draw_y2;
+    GdkColor *color = &widget->style->bg[GTK_STATE_NORMAL];
+    buf.bg_color = (((color->red & 0xff00) << 8)
+                    | (color->green & 0xff00)
+                    | (color->blue >> 8));
+    buf.is_empty = true;
+      
+    if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
+        SP_CANVAS_ITEM_GET_CLASS (canvas->root)->render (canvas->root, &buf);
+    }
+      
+    if (buf.is_empty) {
+        gdk_rgb_gc_set_foreground (canvas->pixmap_gc, buf.bg_color);
+        gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
+                            canvas->pixmap_gc,
+                            TRUE,
+                            x0 - canvas->x0, y0 - canvas->y0,
+                            x1 - x0, y1 - y0);
+    } else {
+        gdk_draw_rgb_image_dithalign (SP_CANVAS_WINDOW (canvas),
+                                      canvas->pixmap_gc,
+                                      x0 - canvas->x0, y0 - canvas->y0,
+                                      x1 - x0, y1 - y0,
+                                      GDK_RGB_DITHER_MAX,
+                                      buf.buf,
+                                      sw * 3,
+                                      x0 - canvas->x0, y0 - canvas->y0);
+    }
+
+    if (canvas->rendermode != RENDERMODE_OUTLINE) {
+        nr_pixelstore_256K_free (buf.buf);
+    } else {
+        nr_pixelstore_1M_free (buf.buf);
+    }
+}
+
 /**
  * Helper that draws a specific rectangular part of the canvas.
  */
@@ -1495,19 +1564,56 @@ static void
 sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 {
     g_return_if_fail (!canvas->need_update);
+ 
+    // Monotonously increment the canvas-global counter on each paint. This will let us find out
+    // when a new paint happened in event processing during this paint, so we can abort it.
+    canvas->redraw_count++;
 
-    GtkWidget *widget = GTK_WIDGET (canvas);
+    NRRectL rect;
+    rect.x0 = xx0;
+    rect.x1 = xx1;
+    rect.y0 = yy0;
+    rect.y1 = yy1;
 
-    int draw_x1 = MAX (xx0, canvas->x0);
-    int draw_y1 = MAX (yy0, canvas->y0);
-    int draw_x2 = MIN (xx1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
-    int draw_y2 = MIN (yy1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+    if (canvas->redraw_aborted.x0 < canvas->redraw_aborted.x1 || canvas->redraw_aborted.y0 < canvas->redraw_aborted.y1) {
+        // There was an aborted redraw last time, now we need to redraw BOTH it and the new rect.
+	
+        // OPTIMIZATION IDEA:
+        //   if (area(rect) + area(redraw_aborted)) * 1.2 > area (union)
+        //   then paint their union (as done below)
+        //   else
+        //   two_rects = true; paint new rect and aborted rect SEPARATELY without unioning.
+        // Without this, when you scroll down and quickly up, the entire screen has to be redrawn,
+        // because the union of the aborted strip at top and the newly exposed strip at bottom
+        // covers the whole screen.
+    
+        // For now, just always do a union.
+        rect.x0 = MIN(rect.x0, canvas->redraw_aborted.x0);
+        rect.x1 = MAX(rect.x1, canvas->redraw_aborted.x1);
+        rect.y0 = MIN(rect.y0, canvas->redraw_aborted.y0);
+        rect.y1 = MAX(rect.y1, canvas->redraw_aborted.y1);
+    }
 
+    // Clip drawable rect by the visible area
+    int draw_x1 = MAX (rect.x0, canvas->x0);
+    int draw_y1 = MAX (rect.y0, canvas->y0);
+    int draw_x2 = MIN (rect.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
+    int draw_y2 = MIN (rect.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+
+    // Here we'll store the time it took to draw the slowest buffer of this paint. 
+    glong slowest_buffer = 0;
+
+    // Initially, the rect to redraw later (in case we're aborted) is the same as the one we're going to draw now.
+    canvas->redraw_aborted.x0 = draw_x1;
+    canvas->redraw_aborted.x1 = draw_x2;
+    canvas->redraw_aborted.y0 = draw_y1;
+    canvas->redraw_aborted.y1 = draw_y2;
+
+    // Find the optimal buffer dimensions
     int bw = draw_x2 - draw_x1;
     int bh = draw_y2 - draw_y1;
     if ((bw < 1) || (bh < 1))
         return;
-
     int sw, sh;
     if (canvas->rendermode != RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
         /* 256K is the cached buffer and we need 3 channels */
@@ -1546,65 +1652,74 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
             sh = 512;
         }
     }
+    
+    // Will this paint require more than one buffer?
+    bool multiple_buffers = (((draw_y2 - draw_y1) > sh) || ((draw_x2 - draw_x1) > sw)); // or two_rects
 
-    // As we can come from expose, we have to tile here 
+    // remember the counter during this paint
+    long this_count = canvas->redraw_count;
+
+    // Time values to measure each buffer's paint time
+    GTimeVal tstart, tfinish;
+
+    // This is the main loop which corresponds to the visible left-to-right, top-to-bottom drawing
+    // of screen blocks (buffers).
     for (int y0 = draw_y1; y0 < draw_y2; y0 += sh) {
         int y1 = MIN (y0 + sh, draw_y2);
         for (int x0 = draw_x1; x0 < draw_x2; x0 += sw) {
             int x1 = MIN (x0 + sw, draw_x2);
 
-            SPCanvasBuf buf;
-	if (canvas->rendermode != RENDERMODE_OUTLINE) {
-            buf.buf = nr_pixelstore_256K_new (FALSE, 0);
-  } else {
-            buf.buf = nr_pixelstore_1M_new (FALSE, 0);
-  }
+            // OPTIMIZATION IDEA: if drawing is really slow (as measured by canvas->slowest
+            // buffer), process some events even BEFORE we do any buffers?
+	    
+            // Paint one buffer; measure how long it takes.
+            g_get_current_time (&tstart);
+            sp_canvas_paint_single_buffer (canvas, x0, y0, x1, y1, draw_x1, draw_y1, draw_x2, draw_y2, sw);
+            g_get_current_time (&tfinish);
 
-            buf.buf_rowstride = sw * 3;
-            buf.rect.x0 = x0;
-            buf.rect.y0 = y0;
-            buf.rect.x1 = x1;
-            buf.rect.y1 = y1;
-            buf.visible_rect.x0 = draw_x1;
-            buf.visible_rect.y0 = draw_y1;
-            buf.visible_rect.x1 = draw_x2;
-            buf.visible_rect.y1 = draw_y2;
-            GdkColor *color = &widget->style->bg[GTK_STATE_NORMAL];
-            buf.bg_color = (((color->red & 0xff00) << 8)
-                            | (color->green & 0xff00)
-                            | (color->blue >> 8));
-            buf.is_empty = true;
-      
-            if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
-                SP_CANVAS_ITEM_GET_CLASS (canvas->root)->render (canvas->root, &buf);
+            // Remember the slowest_buffer of this paint.
+            glong this_buffer = (tfinish.tv_sec - tstart.tv_sec) * 1000000 + (tfinish.tv_usec - tstart.tv_usec);
+            if (this_buffer > slowest_buffer) 
+                slowest_buffer = this_buffer;
+
+            // After each successful buffer, reduce the rect remaining to redraw by what is already redrawn
+            if (x1 >= draw_x2 && canvas->redraw_aborted.y0 < y1)
+                canvas->redraw_aborted.y0 = y1;
+            if (y1 >= draw_y2 && canvas->redraw_aborted.x0 < x1)
+                canvas->redraw_aborted.x0 = x1;
+
+            // INTERRUPTIBLE DISPLAY:
+            // Process events that may have arrived while we were busy drawing;
+            // only if we're drawing multiple buffers, and only if this one was not very fast
+            if (multiple_buffers && this_buffer > 25000) {
+
+                // Run at most max_iterations of the main loop; we cannot process ALL events
+                // here because some things (e.g. rubberband) flood with dirtying events but will
+                // not redraw themselves
+                int max_iterations = 10;
+                int iterations = 0;
+                while (Gtk::Main::events_pending() && iterations++ < max_iterations) {
+                    Gtk::Main::iteration(false);
+                    // If one of the iterations has redrawn by itself, abort
+                    if (this_count != canvas->redraw_count) {
+                        canvas->slowest_buffer = slowest_buffer;
+                        return;
+                    }
+                }
+   
+                // If not aborted so far, check if the events set redraw or update flags; 
+                // if so, force update and abort
+                if (canvas->need_redraw || canvas->need_update) {
+                    canvas->slowest_buffer = slowest_buffer;
+                    do_update (canvas);
+                    return;
+                }
             }
-      
-            if (buf.is_empty) {
-                gdk_rgb_gc_set_foreground (canvas->pixmap_gc, buf.bg_color);
-                gdk_draw_rectangle (SP_CANVAS_WINDOW (canvas),
-                                    canvas->pixmap_gc,
-                                    TRUE,
-                                    x0 - canvas->x0, y0 - canvas->y0,
-                                    x1 - x0, y1 - y0);
-            } else {
-                gdk_draw_rgb_image_dithalign (SP_CANVAS_WINDOW (canvas),
-                                              canvas->pixmap_gc,
-                                              x0 - canvas->x0, y0 - canvas->y0,
-                                              x1 - x0, y1 - y0,
-                                              GDK_RGB_DITHER_MAX,
-                                              buf.buf,
-                                              sw * 3,
-                                              x0 - canvas->x0, y0 - canvas->y0);
-            }
-
-	if (canvas->rendermode != RENDERMODE_OUTLINE) {
-            nr_pixelstore_256K_free (buf.buf);
-  } else {
-            nr_pixelstore_1M_free (buf.buf);
-  }
-
         }
     }
+
+    // Remember the slowest buffer of this paint in canvas
+    canvas->slowest_buffer = slowest_buffer;
 }
 
 /**
@@ -1631,12 +1746,7 @@ sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event)
         rect.x1 = rect.x0 + rects[i].width;
         rect.y1 = rect.y0 + rects[i].height;
 
-        if (canvas->need_update || canvas->need_redraw) {
-            sp_canvas_request_redraw (canvas, rect.x0, rect.y0, rect.x1, rect.y1);
-        } else {
-            /* No pending updates, draw exposed area immediately */
-            sp_canvas_paint_rect (canvas, rect.x0, rect.y0, rect.x1, rect.y1);
-        }
+        sp_canvas_request_redraw (canvas, rect.x0, rect.y0, rect.x1, rect.y1);
     }
 
     if (n_rects > 0)
@@ -1755,9 +1865,9 @@ paint (SPCanvas *canvas)
         }
     }
 
+    canvas->need_redraw = FALSE;
     sp_canvas_paint_rect (canvas, topaint.x0, topaint.y0, topaint.x1, topaint.y1);
 
-    canvas->need_redraw = FALSE;
     return TRUE;
 }
 
@@ -1767,6 +1877,9 @@ paint (SPCanvas *canvas)
 static int
 do_update (SPCanvas *canvas)
 {
+    if (!canvas->root) // canvas may have already be destroyed by closing desktop durring interrupted display!
+        return TRUE;
+
     /* Cause the update if necessary */
     if (canvas->need_update) {
         sp_canvas_item_invoke_update (canvas->root, NR::identity(), 0);
@@ -1935,7 +2048,7 @@ sp_canvas_request_redraw (SPCanvas *canvas, int x0, int y0, int x1, int y1)
 
     nr_rect_l_intersect (&clip, &bbox, &visible);
 
-    sp_canvas_dirty_rect(canvas,x0,y0,x1,y1);
+    sp_canvas_dirty_rect(canvas, clip.x0, clip.y0, clip.x1, clip.y1);
     add_idle (canvas);
 }
 

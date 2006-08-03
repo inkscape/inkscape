@@ -156,6 +156,10 @@ struct SPCanvas {
     unsigned int need_update : 1;
     unsigned int need_redraw : 1;
     unsigned int need_repick : 1;
+
+    NRRectL redraw_aborted;
+    long redraw_count;
+    glong slowest_buffer;
     
     /* For use by internal pick_current_item() function */
     unsigned int left_grabbed_item : 1;
