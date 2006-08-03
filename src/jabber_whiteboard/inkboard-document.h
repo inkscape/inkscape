@@ -75,8 +75,9 @@ private:
 
     void _initBindings();
 
-    SessionManager *_sm;
-    State::SessionType _type;
+    SessionManager      *_sm;
+    SPDocument          *_doc;
+    State::SessionType  _type;
     State::SessionState state;
 
     Glib::ustring _session;

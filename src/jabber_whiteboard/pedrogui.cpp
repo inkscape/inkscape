@@ -2114,19 +2114,22 @@ bool PedroGui::chatDeleteAll()
 
 bool PedroGui::chatMessage(const DOMString &from, const DOMString &data)
 {
-    std::vector<ChatWindow *>::iterator iter;
-    for (iter=chats.begin() ; iter != chats.end() ; iter++)
-        {
-        if (from == (*iter)->getJid())
+    if(data.size() < 1)
+    {
+        std::vector<ChatWindow *>::iterator iter;
+        for (iter=chats.begin() ; iter != chats.end() ; iter++)
             {
-            (*iter)->postMessage(data);
-            return true;
+            if (from == (*iter)->getJid())
+                {
+                (*iter)->postMessage(data);
+                return true;
+                }
             }
-        }
-    ChatWindow *chat = new ChatWindow(*this, from);
-    chat->show();
-    chats.push_back(chat);
-    chat->postMessage(data);
+        ChatWindow *chat = new ChatWindow(*this, from);
+        chat->show();
+        chats.push_back(chat);
+        chat->postMessage(data);
+    }
     return true;
 }
 

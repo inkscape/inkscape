@@ -83,7 +83,7 @@ InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element
         {
             if(data->exists(Message::ACCEPT_INVITATION)); 
             {
-                // TODO : Would be nice to create the desktop here
+                // TODO : Would be nice to create the desktp
 
                 sendProtocol(getRecipient(),Message::PROTOCOL, Message::CONNECTED);
                 sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_BEGIN);
@@ -109,7 +109,6 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &w
                         "<%s />"
                     "</%s>"
                 "</wb>"
-                "<body> </body>"
             "</message>";
 
         if (!_sm->getClient().write(fmt,

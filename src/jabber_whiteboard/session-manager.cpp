@@ -312,8 +312,8 @@ SessionManager::checkInvitationQueue()
 
         Dialog::DialogReply reply = static_cast< Dialog::DialogReply >(dialog.run());
 
-        SPDocument* doc = makeInkboardDocument(
-            g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
+
+        SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
 
         InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
         if(inkdoc == NULL) return true;

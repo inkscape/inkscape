@@ -1035,8 +1035,8 @@ bool XmppClient::processMessage(Element *root)
     DOMString body    = root->getTagValue("body");
     DOMString thread  = root->getTagValue("thread");
     //##rfc 3921, para 2.4.  ignore if no recognizable info
-    if (subject.size() < 1 && body.size()<1 && thread.size()<1)
-        return true;
+    //if (subject.size() < 1 && thread.size()<1)
+    //    return true;
 
     if (type == "groupchat")
         {
