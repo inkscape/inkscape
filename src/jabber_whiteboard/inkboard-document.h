@@ -38,8 +38,8 @@ public:
     void setRecipient(Glib::ustring const& val);
     Glib::ustring getRecipient() const;
 
-    void setSessionIdent(Glib::ustring const& val);
-    Glib::ustring getSessionIdent() const;
+    void setSessionId(Glib::ustring const& val);
+    Glib::ustring getSessionId() const;
 
     void startSessionNegotiation();
     void terminateSession();
@@ -48,6 +48,10 @@ public:
     bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper mwrapper, 
         Message::Message message);
 
+    bool handleOutgoingState(Message::Wrapper wrapper,Message::Message message);
+    bool handleIncomingState(Message::Wrapper wrapper,Glib::ustring const& message);
+
+    bool handleState(State::SessionState expectedState, State::SessionState newstate);
 
 protected:
 	/**
@@ -72,6 +76,7 @@ private:
 
     SessionManager *_sm;
     State::SessionType _type;
+    State::SessionState state;
 
     Glib::ustring _session;
     Glib::ustring _recipient;

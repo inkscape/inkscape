@@ -49,46 +49,46 @@ public:
     virtual void setName(const Glib::ustring &val)
         { _name = val; }
 
-	/**
-	 * Returns status attributes of this session.
-	 *
-	 * \return Status of this session.
-	 */
-	virtual std::bitset< NUM_FLAGS > const& getStatus() const
-	{
-		return status;
-	}
+    /**
+     * Returns status attributes of this session.
+     *
+     * \return Status of this session.
+     */
+    virtual std::bitset< NUM_FLAGS > const& getStatus() const
+    {
+    	return status;
+    }
 
-	//
-	// XML::TransactionLogger methods
-	//
-	Session& session()
-	{
-		return *this;
-	}
+    //
+    // XML::TransactionLogger methods
+    //
+    Session& session()
+    {
+    	return *this;
+    }
 
-	// 
-	// XML::Session methods
-	// 
-	bool inTransaction() 
-	{
-		return _in_transaction;
-	}
+    // 
+    // XML::Session methods
+    // 
+    bool inTransaction() 
+    {
+    	return _in_transaction;
+    }
 
-	void beginTransaction();
-	void rollback();
-	void commit();
+    void beginTransaction();
+    void rollback();
+    void commit();
 
-	XML::Event* commitUndoable();
+    XML::Event* commitUndoable();
 
-	XML::Node* createElementNode(char const* name);
-	XML::Node* createTextNode(char const* content);
-	XML::Node* createCommentNode(char const* content);
+    XML::Node* createElementNode(char const* name);
+    XML::Node* createTextNode(char const* content);
+    XML::Node* createCommentNode(char const* content);
 
-	//
-	// XML::NodeObserver methods
-	// (inherited from XML::TransactionLogger)
-	//
+    //
+    // XML::NodeObserver methods
+    // (inherited from XML::TransactionLogger)
+    //
     void notifyChildAdded(Inkscape::XML::Node &parent, Inkscape::XML::Node &child, Inkscape::XML::Node *prev);
 
     void notifyChildRemoved(Inkscape::XML::Node &parent, Inkscape::XML::Node &child, Inkscape::XML::Node *prev);
@@ -105,13 +105,14 @@ public:
                                 Util::ptr_shared<char> new_value);
 
 private:
+
     InkboardSession(InkboardSession const &); // no copy
     void operator=(InkboardSession const &); // no assign
 
-	bool _in_transaction;
+    bool _in_transaction;
 
     std::bitset< NUM_FLAGS > status;
-	Glib::ustring _name;
+    Glib::ustring _name;
 };
 
 }

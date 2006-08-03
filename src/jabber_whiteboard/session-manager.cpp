@@ -175,7 +175,7 @@ SessionManager::initialiseSession(Glib::ustring const& to, State::SessionType ty
 
     char * sessionId = createSessionId(10);
 
-    inkdoc->setSessionIdent(sessionId);
+    inkdoc->setSessionId(sessionId);
 
     addSession(WhiteboardRecord(sessionId, inkdoc));
 
@@ -315,9 +315,12 @@ SessionManager::checkInvitationQueue()
 
 
         SPDocument* doc = makeInkboardDocument(g_quark_from_static_string("xml"), "svg:svg", State::WHITEBOARD_PEER, from);
+
         InkboardDocument* inkdoc = dynamic_cast< InkboardDocument* >(doc->rdoc);
         if(inkdoc == NULL) return true;
 
+        inkdoc->handleState(State::INITIAL,State::CONNECTING);
+        inkdoc->setSessionId(sessionId);
         addSession(WhiteboardRecord(sessionId, inkdoc));
 
         switch (reply) {

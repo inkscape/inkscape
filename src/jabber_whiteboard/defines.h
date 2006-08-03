@@ -98,16 +98,28 @@ namespace State {
     extern SessionType WHITEBOARD_MUC; 
     extern SessionType WHITEBOARD_PEER;
 
-    typedef char const* SessionState;
+    enum SessionState {
+
+        INITIAL =                   0,
+        AWAITING_INVITATION_REPLY = 1,
+        CONNECTING =                2,
+        INVITATION_RECIEVED =       3,
+        AWAITING_CONNECTED =        4,
+        CONNECTED =                 5,
+        AWAITING_DOCUMENT_BEGIN =   6,
+        SYNCHRONISING =             7,
+        IN_WHITEBOARD =             8
+
+    };
 }
 
 namespace Dialog {
 
-enum DialogReply {
+    enum DialogReply {
 
-    ACCEPT_INVITATION =     0,
-    DECLINE_INVITATION =    1
-};
+        ACCEPT_INVITATION =     0,
+        DECLINE_INVITATION =    1
+    };
 
 }
 
