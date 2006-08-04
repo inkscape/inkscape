@@ -8,7 +8,7 @@
 class SVGColorTest : public CxxTest::TestSuite
 {
     struct simpleIccCase {
-        int numEntries;
+        unsigned numEntries;
         bool shouldPass;
         char const* name;
         char const* str;
