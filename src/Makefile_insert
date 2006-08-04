@@ -172,7 +172,7 @@ libinkpre_a_SOURCES =	\
 	sp-fetile.cpp sp-fetile.h	\
 	sp-fetile-fns.h	\
 	sp-feturbulence.cpp sp-feturbulence.h	\
-	sp-feturbulence-fns.h	\	
+	sp-feturbulence-fns.h	\
 	sp-filter-fns.h	\
 	sp-filter-reference.cpp	\
 	sp-filter-reference.h	\
