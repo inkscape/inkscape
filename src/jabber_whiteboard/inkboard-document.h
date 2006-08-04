@@ -46,8 +46,7 @@ public:
     void terminateSession();
     void processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element* data);
 
-    bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper &mwrapper, 
-        Message::Message message);
+    bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper &mwrapper, Message::Message &message);
 
     bool handleOutgoingState(Message::Wrapper &wrapper,Glib::ustring const& message);
     bool handleIncomingState(Message::Wrapper &wrapper,Pedro::Element* data);

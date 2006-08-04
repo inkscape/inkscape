@@ -21,30 +21,30 @@ namespace Whiteboard {
 
 namespace Message {
 
-    Wrapper PROTOCOL =     "protocol";
-    Wrapper NEW =          "new";
-    Wrapper REMOVE =       "remove";
-    Wrapper CONFIGURE =    "configure";
-    Wrapper MOVE =         "move";
+    Wrapper PROTOCOL       ("protocol");
+    Wrapper NEW            ("new");
+    Wrapper REMOVE         ("remove");
+    Wrapper CONFIGURE      ("configure");
+    Wrapper MOVE           ("move");
 
-    Message CONNECT_REQUEST =     "connect-request";
-    Message CONNECTED =           "connected";
-    Message ACCEPT_INVITATION =   "accept-invitation";
-    Message DECLINE_INVITATION =  "decline-invitation";
-    Message DOCUMENT_BEGIN =      "document-begin";
-    Message DOCUMENT_END =        "document-end";
+    Message CONNECT_REQUEST       ("connect-request");
+    Message CONNECTED             ("connected");
+    Message ACCEPT_INVITATION     ("accept-invitation");
+    Message DECLINE_INVITATION    ("decline-invitation");
+    Message DOCUMENT_BEGIN        ("document-begin");
+    Message DOCUMENT_END          ("document-end");
 }
 
 namespace Vars {
 
-    char const* INKBOARD_XMLNS =    "http://inkscape.org/inkboard"; 
+    const std::string INKBOARD_XMLNS("http://inkscape.org/inkboard"); 
 
 }
 
 namespace State {
 
-    SessionType WHITEBOARD_MUC =    "groupchat"; 
-    SessionType WHITEBOARD_PEER =   "chat";
+    SessionType WHITEBOARD_MUC      ("groupchat"); 
+    SessionType WHITEBOARD_PEER     ("chat");
 
 }
 
@@ -75,23 +75,6 @@ char const* DOCUMENT_NAMEDVIEW_NODE =	"NAMEDVIEW";
 char const* DOCUMENT_ROOT_NAME =		"svg:svg";
 char const* DOCUMENT_NAMEDVIEW_NAME =	"sodipodi:namedview";
 
-// Inkboard client states
-int const IN_WHITEBOARD =				0;
-int const LOGGED_IN	=					1;
-int const IN_CHATROOM =					2;
-int const WAITING_FOR_INVITE_RESPONSE =	3;
-int const CONNECTING_TO_CHAT =			4;
-int const WAITING_TO_SYNC_TO_CHAT =		5;
-int const SYNCHRONIZING_WITH_CHAT =		6;
-int const OPEN_FOR_DOC =				7;
-int const PLAYING_SESSION_FILE =		8;
-
-// TODO: make this user-configurable, within sane limits
-// ("sane" limits being roughly in the range (10, 100], from personal testing)
-// Based on discussions with Ted, it seems that we're going to make the Jabber guys
-// accomodate Inkscape, not the other way around...
-// Dispatch interval (in milliseconds)
-int const SEND_TIMEOUT = 35;
 
 }
 }

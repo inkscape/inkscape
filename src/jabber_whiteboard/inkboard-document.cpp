@@ -65,7 +65,14 @@ InkboardDocument::getSessionId() const
 void
 InkboardDocument::startSessionNegotiation()
 {
-    sendProtocol(_recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
+    if(_type == State::WHITEBOARD_PEER)
+        sendProtocol(_recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
+
+    else if(_type == State::WHITEBOARD_MUC)
+    {
+        // Check that the MUC room is whiteboard enabled, if not no need to send 
+        // anything, just set the room to be whiteboard enabled
+    }
 }
 
 void
@@ -81,13 +88,26 @@ InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element
     {
         if(wrapper == Message::PROTOCOL)
         {
-            if(data->exists(Message::ACCEPT_INVITATION)); 
+            Glib::ustring message = data->getFirstChild()->getFirstChild()->getFirstChild()->getName();
+
+            if(message == Message::CONNECT_REQUEST)
             {
-                // TODO : Would be nice to create the desktp
+                // An MUC member requesting document
+
+            }else if(message == Message::ACCEPT_INVITATION)
+            {
+                // TODO : Would be nice to create the desktop here
 
                 sendProtocol(getRecipient(),Message::PROTOCOL, Message::CONNECTED);
                 sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_BEGIN);
+
+                // Send the Document
+
                 sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_END);
+
+            }else if(message == Message::DECLINE_INVITATION)
+            {
+                this->_sm->terminateSession(this->getSessionId());
             }
         }
     }else{
@@ -98,7 +118,7 @@ InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element
 
 bool
 InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &wrapper,
-     Message::Message message)
+     Message::Message &message)
 {
     if(this->handleOutgoingState(wrapper,message))
     {
@@ -112,8 +132,8 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &w
             "</message>";
 
         if (!_sm->getClient().write(fmt,
-                _type,_sm->getClient().getJid().c_str(),destJid.c_str(),Vars::INKBOARD_XMLNS,
-                this->getSessionId().c_str(),wrapper,message,wrapper)) 
+                _type.c_str(),_sm->getClient().getJid().c_str(),destJid.c_str(),Vars::INKBOARD_XMLNS.c_str(),
+                this->getSessionId().c_str(),wrapper.c_str(),message.c_str(),wrapper.c_str())) 
             { return false; }
 
         else 
@@ -121,7 +141,7 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &w
 
     }else 
     { 
-        g_warning("Sending Message in invalid state message=%s , state=%d",message,this->state);
+        g_warning("Sending Message in invalid state message=%s , state=%d",message.c_str(),this->state);
         return false; 
     }
 }
@@ -164,7 +184,8 @@ InkboardDocument::handleIncomingState(Message::Wrapper &wrapper, Pedro::Element*
     {
         Glib::ustring message = data->getFirstChild()->getFirstChild()->getFirstChild()->getName();
 
-        // Connect Requests are handled in SessionManager
+        if(message == Message::CONNECT_REQUEST)
+            return this->handleState(State::INITIAL,State::CONNECTING);
         if(message == Message::ACCEPT_INVITATION)
             return this->handleState(State::AWAITING_INVITATION_REPLY,State::INVITATION_RECIEVED);
 

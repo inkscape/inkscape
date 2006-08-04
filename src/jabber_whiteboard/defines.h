@@ -67,8 +67,8 @@ namespace Whiteboard {
 
 namespace Message {
 
-    typedef char const* Wrapper;
-    typedef char const* Message;
+    typedef const std::string Wrapper;
+    typedef const std::string Message;
 
     extern Wrapper PROTOCOL;
     extern Wrapper NEW;
@@ -87,13 +87,13 @@ namespace Message {
 
 namespace Vars {
 
-    extern char const* INKBOARD_XMLNS; 
+    extern const std::string INKBOARD_XMLNS; 
 
 }
 
 namespace State {
 
-    typedef char const* SessionType;
+    typedef const std::string SessionType;
 
     extern SessionType WHITEBOARD_MUC; 
     extern SessionType WHITEBOARD_PEER;
@@ -232,26 +232,6 @@ extern char const* DOCUMENT_NAMEDVIEW_NODE;
 // Names of these special nodes
 extern char const* DOCUMENT_ROOT_NAME;
 extern char const* DOCUMENT_NAMEDVIEW_NAME;
-
-// Inkboard client states
-extern int const IN_WHITEBOARD;
-extern int const LOGGED_IN;
-extern int const IN_CHATROOM;
-extern int const WAITING_FOR_INVITE_RESPONSE;
-extern int const CONNECTING_TO_CHAT;
-extern int const WAITING_TO_SYNC_TO_CHAT;
-extern int const SYNCHRONIZING_WITH_CHAT;
-extern int const OPEN_FOR_DOC;
-extern int const PLAYING_SESSION_FILE;
-
-// update this if any other status flags are added
-
-// TODO: make this user-configurable, within sane limits
-// ("sane" limits being roughly in the range (10, 100], from personal testing)
-// Based on discussions with Ted, it seems that we're going to make the Jabber guys
-// accomodate Inkscape, not the other way around...
-// Dispatch interval (in milliseconds)
-extern int const SEND_TIMEOUT;
 
 }
 

@@ -234,6 +234,7 @@ SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
     }
 
     Pedro::DOMString session = root->getTagAttribute("wb", "session");
+    Pedro::DOMString type = root->getTagAttribute("session", "type");
     Pedro::DOMString domwrapper = root->getFirstChild()->getFirstChild()->getFirstChild()->getName();
 
     if (session.empty()) {
@@ -241,15 +242,17 @@ SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
         return;
     }
 
-    if(root->exists(Message::CONNECT_REQUEST))
+    if(root->exists(Message::CONNECT_REQUEST) && type == State::WHITEBOARD_PEER)
+    {
         handleIncomingInvitation(Invitation(event.getFrom(),session));
 
-    else
+    }else
     { 
-        Message::Wrapper wrapper = static_cast< Message::Wrapper >("protocol");
+        Message::Wrapper wrapper = static_cast< Message::Wrapper >(domwrapper);
         InkboardDocument* doc = getInkboardSession(session);
         doc->processInkboardEvent(wrapper, root->getFirstChild());
     }
+
 }
 
 char*
