@@ -41,8 +41,8 @@ class PdfFile {
     
     PdfObject *begin_document(double version = 1.2);
     void end_document(PdfObject *doc_info);
-    PdfObject *begin_page(int x0, int y0, int x1, int y1);
-    PdfObject *begin_page(int w, int h) { return begin_page(0,0, w, h); }
+    PdfObject *begin_page(double x0, double y0, double x1, double y1);
+    PdfObject *begin_page(double w, double h) { return begin_page(0,0, w, h); }
     void end_page(PdfObject *page);
     PdfObject *begin_object();
     void end_object(PdfObject *object);
@@ -238,7 +238,7 @@ void PdfFile::end_document(PdfObject *doc_info) {
     delete obj_info;
 }
 
-PdfObject *PdfFile::begin_page(int x0, int y0, int x1, int y1) {
+PdfObject *PdfFile::begin_page(double x0, double y0, double x1, double y1) {
     Inkscape::SVGOStringStream os;
 
     resources = new PdfXref[11]();

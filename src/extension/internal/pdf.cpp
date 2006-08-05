@@ -361,8 +361,8 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // printf("Page Bounding Box: %s\n", pageBoundingBox ? "TRUE" : "FALSE");
     if (pageBoundingBox) {
         d.x0 = d.y0 = 0;
-        d.x1 = ceil(_width);
-        d.y1 = ceil(_height);
+        d.x1 = _width;
+        d.y1 = _height;
     } else {
         SPItem* doc_item = SP_ITEM(sp_document_root(doc));
         sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
@@ -373,8 +373,7 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
         d.y1 *= PT_PER_PX;
     }
 
-    page_stream = pdf_file->begin_page( (int) d.x0, (int) d.y0,
-                                        (int) d.x1, (int) d.y1 );
+    page_stream = pdf_file->begin_page( d.x0, d.y0, d.x1, d.y1 );
 
     if (!_bitmap) {
         Inkscape::SVGOStringStream os;
