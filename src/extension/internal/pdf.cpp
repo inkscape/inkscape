@@ -1109,48 +1109,8 @@ PrintPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w, uns
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
-
-    return 0;
     
     return print_image(_stream, px, w, h, rs, transform);
-#if 0
-    fprintf(_stream, "gsave\n");
-    fprintf(_stream, "/rowdata %d string def\n", 3 * w);
-    fprintf(_stream, "[%g %g %g %g %g %g] concat\n",
-            transform->c[0],
-            transform->c[1],
-            transform->c[2],
-            transform->c[3],
-            transform->c[4],
-            transform->c[5]);
-    fprintf(_stream, "%d %d 8 [%d 0 0 -%d 0 %d]\n", w, h, w, h, h);
-    fprintf(_stream, "{currentfile rowdata readhexstring pop}\n");
-    fprintf(_stream, "false 3 colorimage\n");
-
-    for (unsigned int r = 0; r < h; r++) {
-        guchar *s;
-        unsigned int c0, c1, c;
-        s = px + r * rs;
-        for (c0 = 0; c0 < w; c0 += 24) {
-            c1 = MIN(w, c0 + 24);
-            for (c = c0; c < c1; c++) {
-                static char const xtab[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-                fputc(xtab[s[0] >> 4], _stream);
-                fputc(xtab[s[0] & 0xf], _stream);
-                fputc(xtab[s[1] >> 4], _stream);
-                fputc(xtab[s[1] & 0xf], _stream);
-                fputc(xtab[s[2] >> 4], _stream);
-                fputc(xtab[s[2] & 0xf], _stream);
-                s += 4;
-            }
-            fputs("\n", _stream);
-        }
-    }
-
-    fprintf(_stream, "grestore\n");
-
-    return 0;
-#endif
 }
 
 char const *
@@ -1475,88 +1435,114 @@ PrintPDF::print_image(FILE *ofp, guchar *px, unsigned int width, unsigned int he
     Inkscape::SVGOStringStream os;
     os.setf(std::ios::fixed);
 
-    return 0;
+    PdfObject *pdf_image = pdf_file->begin_resource(pdf_xobject);
+    PdfObject *pdf_image_len = pdf_file->begin_resource(pdf_none);
     
-    os << "gsave\n";
-    os << "[" << transform->c[0] << " "
+    PdfObject *pdf_smask = pdf_file->begin_resource(pdf_xobject);
+    PdfObject *pdf_smask_len = pdf_file->begin_resource(pdf_none);
+
+
+    os << "q\n";
+    os << transform->c[0] << " "
        << transform->c[1] << " "
        << transform->c[2] << " "
        << transform->c[3] << " "
        << transform->c[4] << " "
-       << transform->c[5] << "] concat\n";
-    os << width << " " << height << " 8 ["
-       << width << " 0 0 -" << height << " 0 " << height << "]\n";
+       << transform->c[5] << " cm\n";
+    os << pdf_image->get_name() << " Do\n";
+    os << "Q\n";
+    pdf_file->puts(os);
 
 
-    /* Write read image procedure */
-    os << "% Strings to hold RGB-samples per scanline\n";
-    os << "/rstr " << width << " string def\n";
-    os << "/gstr " << width << " string def\n";
-    os << "/bstr " << width << " string def\n";
-    os << "{currentfile /ASCII85Decode filter /RunLengthDecode filter rstr readstring pop}\n";
-    os << "{currentfile /ASCII85Decode filter /RunLengthDecode filter gstr readstring pop}\n";
-    os << "{currentfile /ASCII85Decode filter /RunLengthDecode filter bstr readstring pop}\n";
-    os << "true 3\n";
+    *pdf_image << "<< /Type /XObject\n";
+    *pdf_image << "   /Subtype /Image\n";
+    *pdf_image << "   /Width " << width << "\n";
+    *pdf_image << "   /Height " << height << "\n";
+    *pdf_image << "   /ColorSpace /DeviceRGB\n";
+    *pdf_image << "   /BitsPerComponent 8\n";
+    *pdf_image << "   /Length " << pdf_image_len->get_id() << " 0 R\n";
+    *pdf_image << "   /Filter /ASCIIHexDecode\n";
+    *pdf_image << "   /SMask " << pdf_smask->get_id() << " 0 R\n";
+    *pdf_image << ">>\n";
 
-    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    guchar *const packb = (guchar *)g_malloc((width * 105)/100+2);
-    guchar *const plane = (guchar *)g_malloc(width);
+    *pdf_image << "stream\n";
 
-    /* ps_begin_data(ofp); */
-    os << "colorimage\n";
 
-/*#define GET_RGB_TILE(begin)                   \
- *  {int scan_lines;                                                    \
- *    scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
- *    gimp_pixel_rgn_get_rect(&pixel_rgn, begin, 0, i, width, scan_lines); \
- *    src = begin; }
- */
+    *pdf_smask << "<< /Type /XObject\n";
+    *pdf_smask << "   /Subtype /Image\n";
+    *pdf_smask << "   /Width " << width << "\n";
+    *pdf_smask << "   /Height " << height << "\n";
+    *pdf_smask << "   /ColorSpace /DeviceGray\n";
+    *pdf_smask << "   /BitsPerComponent 8\n";
+    *pdf_smask << "   /Length " << pdf_smask_len->get_id() << " 0 R\n";
+    *pdf_smask << "   /Filter /ASCIIHexDecode\n";
+    *pdf_smask << ">>\n";
+
+    *pdf_smask << "stream\n";
+
+
+    unsigned long image_len = pdf_image->get_length();
+    unsigned long smask_len = pdf_smask->get_length();
+
+    int image_chars = 0;
+    int smask_chars = 0;
 
     for (unsigned i = 0; i < height; i++) {
-        /* if ((i % tile_height) == 0) GET_RGB_TILE(data); */ /* Get more data */
         guchar const *const src = px + i * rs;
 
-        /* Iterate over RGB */
-        for (int rgb = 0; rgb < 3; rgb++) {
-            guchar const *src_ptr = src + rgb;
-            guchar *plane_ptr = plane;
-            for (unsigned j = 0; j < width; j++) {
-                *(plane_ptr++) = *src_ptr;
-                src_ptr += 4;
+        for (unsigned j = 0; j < width; j++) {
+            char hex[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+            guchar const *src_ptr = src + 4*j;
+
+            /* Iterate over RGB */
+            for (int rgb = 0; rgb < 3; rgb++) {
+                guchar val = *(src_ptr + rgb);
+
+                *pdf_image << hex[val / 16];
+                *pdf_image << hex[val % 16];
+
+                image_chars += 2;
+                if (image_chars >= 78) {
+                    *pdf_image << "\n";
+                    image_chars = 0;
+                }
             }
 
-            int nout;
-            compress_packbits(width, plane, &nout, packb);
+            guchar alpha = *(src_ptr + 3);
 
-            ascii85_init();
-            ascii85_nout(nout, packb, os);
-            ascii85_out(128, os); /* Write EOD of RunLengthDecode filter */
-            ascii85_done(os);
+            *pdf_smask << hex[alpha / 16];
+            *pdf_smask << hex[alpha % 16];
+            
+            smask_chars += 2;
+            if (smask_chars >= 78) {
+                *pdf_smask << "\n";
+                smask_chars = 0;
+            }
         }
     }
-    /* ps_end_data(ofp); */
 
-#if 0
-    fprintf(ofp, "showpage\n");
-    g_free(data);
-#endif
 
-    g_free(packb);
-    g_free(plane);
+    *pdf_image << ">\n";
+    image_len = pdf_image->get_length() - image_len;
 
-#if 0
-    if (ferror(ofp)) {
-        g_message(_("write error occurred"));
-        return (FALSE);
-    }
-#endif
+    *pdf_image << "endstream\n";
+    pdf_file->end_resource(pdf_image);
 
-    os << "grestore\n";
+    *pdf_image_len << image_len << "\n";
+    pdf_file->end_resource(pdf_image_len);
 
-    fprintf(ofp, "%s", os.str().c_str());
+
+    *pdf_smask << ">\n";
+    smask_len = pdf_smask->get_length() - smask_len;
+
+    *pdf_smask << "endstream\n";
+    pdf_file->end_resource(pdf_smask);
+
+    *pdf_smask_len << smask_len << "\n";
+    pdf_file->end_resource(pdf_smask_len);
+
 
     return 0;
-//#undef GET_RGB_TILE
 }
 
 bool
