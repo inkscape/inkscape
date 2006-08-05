@@ -264,17 +264,17 @@ PdfObject *PdfFile::begin_page(int x0, int y0, int x1, int y1) {
                   << "  /Length " << obj_length->get_id() << " 0 R\n"
                   << ">>\n"
                   << "stream\n";
-    stream_pos = obj_contents->get_length();
+    puts(obj_contents);
+    stream_pos = ftell(fp);
 
     return obj_contents;
 }
 
 void PdfFile::end_page(PdfObject *page) {
-    long stream_length = page->get_length() - stream_pos;
+    long stream_length = ftell(fp) - stream_pos;
     
-    *page << "endstream\n";
-    end_object(page);
-    puts(page);
+    puts("endstream\n");
+    puts("endobj\n");
     
     *obj_length << stream_length << "\n";
     end_object(obj_length);

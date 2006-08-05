@@ -377,10 +377,13 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
                                         (int) d.x1, (int) d.y1 );
 
     if (!_bitmap) {
-        *page_stream << PT_PER_PX << " 0 0 "
-                     << -PT_PER_PX << " 0 " << (int) ceil(_height)
-                     << " cm\n";
+        Inkscape::SVGOStringStream os;
+        os.setf(std::ios::fixed);
+        os << PT_PER_PX << " 0 0 "
+           << -PT_PER_PX << " 0 " << (int) ceil(_height)
+           << " cm\n";
         // from now on we can output px, but they will be treated as pt
+        pdf_file->puts(os);
     }
     
     return 1;
@@ -472,13 +475,16 @@ PrintPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
 
-    *page_stream << "q\n";
-    *page_stream << transform->c[0] << " "
-                 << transform->c[1] << " "
-                 << transform->c[2] << " "
-                 << transform->c[3] << " "
-                 << transform->c[4] << " "
-                 << transform->c[5] << " cm\n";
+    Inkscape::SVGOStringStream os;
+    os.setf(std::ios::fixed);
+    
+    os << "q\n";
+    os << transform->c[0] << " "
+       << transform->c[1] << " "
+       << transform->c[2] << " "
+       << transform->c[3] << " "
+       << transform->c[4] << " "
+       << transform->c[5] << " cm\n";
 
     float alpha = opacity * _pushed_alphas[_curr_alpha];
         
@@ -489,6 +495,7 @@ PrintPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float
     }
     _pushed_alphas[_curr_alpha] = alpha;
 
+    pdf_file->puts(os);
     return 1;
 }
 
@@ -501,7 +508,7 @@ PrintPDF::release(Inkscape::Extension::Print *mod)
     if (_curr_alpha > 0)
         _curr_alpha--;
 
-    *page_stream << "Q\n";
+    pdf_file->puts("Q\n");
 
     return 1;
 }
@@ -511,14 +518,12 @@ PrintPDF::comment(Inkscape::Extension::Print *mod, char const *comment)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
-
-    *page_stream << "% " << comment;
  
     return 1;
 }
 
 void
-PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style, NRRect const *pbox)
+PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRRect const *pbox)
 {
     g_return_if_fail( style->fill.type == SP_PAINT_TYPE_COLOR
                       || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
@@ -536,8 +541,8 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
             *pdf_alpha << "   /AIS false\n";
             *pdf_alpha << ">>\n";
             
-            *page_stream << pdf_alpha->get_name()
-                         << " gs\n";
+            os << pdf_alpha->get_name()
+               << " gs\n";
 
             pdf_file->end_resource(pdf_alpha);
         }
@@ -668,7 +673,7 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
                 
                 *pdf_gstate << ">>\n";
 
-                *page_stream << pdf_gstate->get_name() << " gs\n";
+                os << pdf_gstate->get_name() << " gs\n";
                     
                 pdf_file->end_resource(pdf_gstate);
             }
@@ -798,7 +803,7 @@ PrintPDF::print_fill_alpha(SVGOStringStream &/*os*/, SPStyle const *const style,
                 
                 *pdf_gstate << ">>\n";
                 
-                *page_stream << pdf_gstate->get_name() << " gs\n";
+                os << pdf_gstate->get_name() << " gs\n";
                 
                 pdf_file->end_resource(pdf_gstate);
             }
@@ -817,7 +822,7 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
 
-        *page_stream << rgb[0] << " " << rgb[1] << " " << rgb[2] << " rg\n";
+        os << rgb[0] << " " << rgb[1] << " " << rgb[2] << " rg\n";
     } else {
         g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
                   && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) );
@@ -864,7 +869,7 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
             }
             *pdf_shade << "]\n";
             *pdf_shade << ">>\n>>\n";
-            *page_stream << pdf_shade->get_name() << " ";
+            os << pdf_shade->get_name() << " ";
 
             pdf_file->end_resource(pdf_shade);
         } else if (SP_IS_RADIALGRADIENT (SP_STYLE_FILL_SERVER (style))) {
@@ -913,7 +918,7 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
             *pdf_shade << "]\n";
             *pdf_shade << ">>\n>>\n";
 
-            *page_stream << pdf_shade->get_name() << " ";
+            os << pdf_shade->get_name() << " ";
 
             pdf_file->end_resource(pdf_shade);
         }
@@ -926,7 +931,7 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
     float rgb[3];
     
     sp_color_get_rgb_floatv(&style->stroke.value.color, rgb);
-    *page_stream << rgb[0] << " " << rgb[1] << " " << rgb[2] << " RG\n";
+    os << rgb[0] << " " << rgb[1] << " " << rgb[2] << " RG\n";
         
     float alpha = 1.0;
     alpha *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
@@ -939,7 +944,7 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
         *pdf_alpha << "   /AIS false\n";
         *pdf_alpha << ">>\n";
         
-        *page_stream << pdf_alpha->get_name() << " gs\n";
+        os << pdf_alpha->get_name() << " gs\n";
         
         pdf_file->end_resource(pdf_alpha);
     }
@@ -958,25 +963,25 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
                 i++;
         }
         if (!LineSolid) {
-            *page_stream << "[";
+            os << "[";
             for (i = 0; i < style->stroke_dash.n_dash; i++) {
                 if (i > 0) {
-                    *page_stream << " ";
+                    os << " ";
                 }
-                *page_stream << style->stroke_dash.dash[i];
+                os << style->stroke_dash.dash[i];
             }
-            *page_stream << "] " << style->stroke_dash.offset << " d\n";
+            os << "] " << style->stroke_dash.offset << " d\n";
         } else {
-            *page_stream << "[] 0 d\n";
+            os << "[] 0 d\n";
         }
     } else {
-        *page_stream << "[] 0 d\n";
+        os << "[] 0 d\n";
     }
 
-    *page_stream << style->stroke_width.computed << " w\n";
-    *page_stream << style->stroke_linejoin.computed << " j\n";
-    *page_stream << style->stroke_linecap.computed << " J\n";
-    *page_stream <<
+    os << style->stroke_width.computed << " w\n";
+    os << style->stroke_linejoin.computed << " j\n";
+    os << style->stroke_linecap.computed << " J\n";
+    os <<
         ( style->stroke_miterlimit.value > 1 ?
           style->stroke_miterlimit.value : 1 ) << " M\n";
 }
@@ -993,68 +998,69 @@ PrintPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix c
     if (_bitmap) return 0;
 
     if ( style->fill.type == SP_PAINT_TYPE_COLOR ) {
-        *page_stream << "q\n";
+        os << "q\n";
         print_fill_style(os, style, pbox);
         print_fill_alpha(os, style, pbox);
         print_bpath(os, bpath->path);
         if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
-            *page_stream << "f*\n";
+            os << "f*\n";
         } else {
-            *page_stream << "f\n";
+            os << "f\n";
         }
-        *page_stream << "Q\n";
+        os << "Q\n";
     }
     else if ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
               && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) )
     {
-        *page_stream << "q\n";
+        os << "q\n";
         print_bpath(os, bpath->path);
 
         if (style->fill_rule.value == SP_WIND_RULE_EVENODD) {
             g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
                       && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) );
             SPGradient const *g = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
-            *page_stream << "W* n\n";
+            os << "W* n\n";
             print_fill_alpha(os, style, pbox);
             if (g->gradientTransform_set) {
-                *page_stream << "q\n";
-                *page_stream << g->gradientTransform[0] << " "
-                             << g->gradientTransform[1] << " "
-                             << g->gradientTransform[2] << " "
-                             << g->gradientTransform[3] << " "
-                             << g->gradientTransform[4] << " "
-                             << g->gradientTransform[5] << " cm\n";
+                os << "q\n";
+                os << g->gradientTransform[0] << " "
+                   << g->gradientTransform[1] << " "
+                   << g->gradientTransform[2] << " "
+                   << g->gradientTransform[3] << " "
+                   << g->gradientTransform[4] << " "
+                   << g->gradientTransform[5] << " cm\n";
             }
             print_fill_style(os, style, pbox);
-            *page_stream << "sh\n";
+            os << "sh\n";
             if (g->gradientTransform_set) {
-                *page_stream << "Q\n";
+                os << "Q\n";
             }
         } else {
             g_assert( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
                       && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) );
             SPGradient const *g = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
-            *page_stream << "W n\n";
+            os << "W n\n";
             print_fill_alpha(os, style, pbox);
             if (g->gradientTransform_set) {
-                *page_stream << "q\n";
-                *page_stream << g->gradientTransform[0] << " "
-                             << g->gradientTransform[1] << " "
-                             << g->gradientTransform[2] << " "
-                             << g->gradientTransform[3] << " "
-                             << g->gradientTransform[4] << " "
-                             << g->gradientTransform[5] << " cm\n"; 
+                os << "q\n";
+                os << g->gradientTransform[0] << " "
+                   << g->gradientTransform[1] << " "
+                   << g->gradientTransform[2] << " "
+                   << g->gradientTransform[3] << " "
+                   << g->gradientTransform[4] << " "
+                   << g->gradientTransform[5] << " cm\n"; 
             }
             print_fill_style(os, style, pbox);
-            *page_stream << "sh\n";
+            os << "sh\n";
             if (g->gradientTransform_set) {
-                *page_stream << "Q\n";
+                os << "Q\n";
             }
         }
 
-        *page_stream << "Q\n";
+        os << "Q\n";
     }        
 
+    pdf_file->puts(os);
     return 0;
 }
 
@@ -1070,13 +1076,15 @@ PrintPDF::stroke(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMatrix
         Inkscape::SVGOStringStream os;
         os.setf(std::ios::fixed);
 
-        *page_stream << "q\n";
+        os << "q\n";
 
         print_stroke_style(os, style);
         print_bpath(os, bpath->path);
-        *page_stream << "S\n";
+        os << "S\n";
 
-        *page_stream << "Q\n";
+        os << "Q\n";
+
+        pdf_file->puts(os);
     }
 
     return 0;
@@ -1256,23 +1264,23 @@ PrintPDF::print_bpath(SVGOStringStream &os, NArtBpath const *bp)
         switch (bp->code) {
             case NR_MOVETO:
                 if (closed) {
-                    *page_stream << "h\n";
+                    os << "h\n";
                 }
                 closed = true;
-                *page_stream << bp->x3 << " " << bp->y3 << " m\n";
+                os << bp->x3 << " " << bp->y3 << " m\n";
                 break;
             case NR_MOVETO_OPEN:
                 if (closed) {
-                    *page_stream << "h\n";
+                    os << "h\n";
                 }
                 closed = false;
-                *page_stream << bp->x3 << " " << bp->y3 << " m\n";
+                os << bp->x3 << " " << bp->y3 << " m\n";
                 break;
             case NR_LINETO:
-                *page_stream << bp->x3 << " " << bp->y3 << " l\n";
+                os << bp->x3 << " " << bp->y3 << " l\n";
                 break;
             case NR_CURVETO:
-                *page_stream << bp->x1 << " " << bp->y1 << " "
+                os << bp->x1 << " " << bp->y1 << " "
                    << bp->x2 << " " << bp->y2 << " "
                    << bp->x3 << " " << bp->y3 << " c\n";
                 break;
@@ -1282,7 +1290,7 @@ PrintPDF::print_bpath(SVGOStringStream &os, NArtBpath const *bp)
         bp += 1;
     }
     if (closed) {
-        *page_stream << "h\n";
+        os << "h\n";
     }
 }
 
