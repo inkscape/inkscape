@@ -479,6 +479,9 @@ static void update_repr_internal(Inkscape::NodePath::Path *np)
  */
 void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotation)
 {
+    //fixme: np can be NULL, so check before proceeding
+    g_return_if_fail(np != NULL);
+
     if (np->livarot_path) {
         delete np->livarot_path;
         np->livarot_path = NULL;
@@ -1551,6 +1554,9 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
     //find segment to segment
     Inkscape::NodePath::Node *e = sp_nodepath_get_node_by_index(position.piece);
 
+    //fixme: this can return NULL, so check before proceeding.
+    g_return_if_fail(e != NULL);
+    
     gboolean force = FALSE;
     if (!(e->selected && (!e->p.other || e->p.other->selected))) {
         force = TRUE;
@@ -1604,6 +1610,10 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
 void
 sp_nodepath_curve_drag(Inkscape::NodePath::Node * e, double t, NR::Point delta)
 {
+    //fixme: e and e->p can be NULL, so check for those before proceeding
+    g_return_if_fail(e != NULL);
+    g_return_if_fail(&e->p != NULL);
+    
     /* feel good is an arbitrary parameter that distributes the delta between handles
      * if t of the drag point is less than 1/6 distance form the endpoint only
      * the corresponding hadle is adjusted. This matches the behavior in GIMP

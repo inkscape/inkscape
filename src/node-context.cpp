@@ -527,6 +527,11 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
 
+    // fixme:  nc->nodepath can potentially become NULL after retrieving nc.
+    // A general method for handling this possibility should be created.
+    // For now, the number of checks for a NULL nc->nodepath have been
+    // increased, both here and in the called sp_nodepath_* functions.
+
     SPNodeContext *nc = SP_NODE_CONTEXT(event_context);
     double const nudge = prefs_get_double_attribute_limited("options.nudgedistance", "value", 2, 0, 1000); // in px
     event_context->tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100); // read every time, to make prefs changes really live
@@ -560,6 +565,13 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                      && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
+                
+                // The path went away while dragging; throw away any further motion
+                // events until the mouse pointer is released.
+                if (nc->hit && (nc->nodepath == NULL)) {                  
+                  break;
+                }
+                
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to move the object, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
@@ -625,7 +637,9 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 NR::Maybe<NR::Rect> b = Inkscape::Rubberband::get()->getRectangle();
 
                 if (nc->hit && !event_context->within_tolerance) { //drag curve
-                    sp_nodepath_update_repr (nc->nodepath, _("Drag curve"));
+                    if (nc->nodepath) {
+                        sp_nodepath_update_repr (nc->nodepath, _("Drag curve"));
+                    }
                 } else if (b != NR::Nothing() && !event_context->within_tolerance) { // drag to select
                     if (nc->nodepath) {
                         sp_nodepath_select_rect(nc->nodepath, b.assume(), event->button.state & GDK_SHIFT_MASK);

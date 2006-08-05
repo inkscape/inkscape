@@ -1,3 +1,10 @@
+2006-08-05  John Bintz  <jcoswell@coswellproductions.org>
+
+  * node-context.cpp, nodepath.cpp:
+
+    add checks to make sure given nodepath pointers are not 
+    null before working with them
+
 2006-08-01  MenTaLguY  <mental@rydia.net>
 
 	* configure.ac: refactor pkg-config tests and add explicit cairo test
