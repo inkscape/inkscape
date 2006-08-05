@@ -685,6 +685,13 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
             NR::Point c (rg->cx.computed, rg->cy.computed);
             NR::Point f (rg->fx.computed, rg->fy.computed);
             double r = rg->r.computed;
+
+            NR::Coord const df = hypot(f[NR::X] - c[NR::X], f[NR::Y] - c[NR::Y]);
+            if (df >= r) {
+                f[NR::X] = c[NR::X] + (f[NR::X] - c[NR::X] ) * r / (float) df;
+                f[NR::Y] = c[NR::Y] + (f[NR::Y] - c[NR::Y] ) * r / (float) df;
+            }
+
             if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
                 NR::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
@@ -877,6 +884,13 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
             NR::Point c (rg->cx.computed, rg->cy.computed);
             NR::Point f (rg->fx.computed, rg->fy.computed);
             double r = rg->r.computed;
+
+            NR::Coord const df = hypot(f[NR::X] - c[NR::X], f[NR::Y] - c[NR::Y]);
+            if (df >= r) {
+                f[NR::X] = c[NR::X] + (f[NR::X] - c[NR::X] ) * r / (float) df;
+                f[NR::Y] = c[NR::Y] + (f[NR::Y] - c[NR::Y] ) * r / (float) df;
+            }
+
             if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
                 // convert to userspace
                 NR::Matrix bbox2user(pbox->x1 - pbox->x0, 0, 0, pbox->y1 - pbox->y0, pbox->x0, pbox->y0);
