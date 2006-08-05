@@ -38,7 +38,7 @@ PdfOutput::check (Inkscape::Extension::Extension * module)
 }
 
 
-static void
+static unsigned int
 pdf_print_document_to_file(SPDocument *doc, gchar const *filename)
 {
     Inkscape::Extension::Print *mod;
@@ -62,10 +62,14 @@ pdf_print_document_to_file(SPDocument *doc, gchar const *filename)
     mod->arena = NRArena::create();
     mod->dkey = sp_item_display_key_new(1);
     mod->root = sp_item_invoke_show(mod->base, mod->arena, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+
     /* Print document */
     ret = mod->begin(doc);
-    sp_item_invoke_print(mod->base, &context);
-    ret = mod->finish();
+    if (ret) {
+        sp_item_invoke_print(mod->base, &context);
+        ret = mod->finish();
+    }
+
     /* Release arena */
     sp_item_invoke_hide(mod->base, mod->dkey);
     mod->base = NULL;
@@ -78,7 +82,7 @@ pdf_print_document_to_file(SPDocument *doc, gchar const *filename)
     mod->set_param_string("destination", oldoutput);
     g_free(oldoutput);
 
-    return;
+    return ret;
 }
 
 
@@ -96,6 +100,7 @@ void
 PdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
 {
     Inkscape::Extension::Extension * ext;
+    unsigned int ret;
 
     ext = Inkscape::Extension::db.get(SP_MODULE_KEY_PRINT_PDF);
     if (ext == NULL)
@@ -103,8 +108,11 @@ PdfOutput::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar 
 
 	gchar * final_name;
 	final_name = g_strdup_printf("> %s", uri);
-	pdf_print_document_to_file(doc, final_name);
+	ret = pdf_print_document_to_file(doc, final_name);
 	g_free(final_name);
+
+        if (!ret)
+            throw Inkscape::Extension::Output::save_failed();
 
 	return;
 }

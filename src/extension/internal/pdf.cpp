@@ -465,7 +465,7 @@ PrintPDF::finish(Inkscape::Extension::Print *mod)
     _stream = 0;
     _latin1_encoded_fonts.clear();
 
-    return 0;
+    return 1;
 }
 
 unsigned int
