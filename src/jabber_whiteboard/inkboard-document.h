@@ -29,7 +29,7 @@ namespace Whiteboard {
 class InkboardDocument : public XML::SimpleNode, public XML::Document {
 public:
 	
-    explicit InkboardDocument(int code, State::SessionType type, Glib::ustring const& to);
+    explicit InkboardDocument(int code, State::SessionType sessionType, Glib::ustring const& to);
 
     XML::NodeType type() const
     {
@@ -44,9 +44,11 @@ public:
 
     void startSessionNegotiation();
     void terminateSession();
-    void processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element* data);
 
-    bool sendProtocol(const Glib::ustring &destJid, Message::Wrapper &mwrapper, Message::Message &message);
+    void recieve(Message::Wrapper &wrapper, Pedro::Element* data);
+    bool send(const Glib::ustring &destJid, Message::Wrapper &mwrapper, Message::Message &message);
+
+    void sendDocument();
 
     bool handleOutgoingState(Message::Wrapper &wrapper,Glib::ustring const& message);
     bool handleIncomingState(Message::Wrapper &wrapper,Pedro::Element* data);
@@ -60,7 +62,7 @@ protected:
 	 * \param orig Instance to copy.
 	 */
 	InkboardDocument(InkboardDocument const& orig) :
-		XML::Node(), XML::SimpleNode(orig), XML::Document(), _recipient(orig._recipient)
+		XML::Node(), XML::SimpleNode(orig), XML::Document(), recipient(orig.recipient)
 	{
 		_initBindings();
 	}
@@ -74,15 +76,15 @@ private:
 
     void _initBindings();
 
-    SessionManager      *_sm;
-    SPDocument          *_doc;
-    State::SessionType  _type;
+    SessionManager      *sm;
+
+    State::SessionType  sessionType;
     State::SessionState state;
 
-    Glib::ustring _session;
-    Glib::ustring _recipient;
+    Glib::ustring sessionId;
+    Glib::ustring recipient;
 
-    KeyNodeTable _tracker;
+    KeyNodeTable *tracker;
 };
 
 }

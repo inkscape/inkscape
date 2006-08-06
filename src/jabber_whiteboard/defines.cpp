@@ -39,6 +39,13 @@ namespace Vars {
 
     const std::string INKBOARD_XMLNS("http://inkscape.org/inkboard"); 
 
+    const std::string WHITEBOARD_MESSAGE(
+        "<message type='%1' from='%2' to='%3'>"
+            "<wb xmlns='%4' session='%5'>%6</wb>"
+        "</message>"); 
+
+    const std::string PROTOCOL_MESSAGE("<%1><%2 /></%1>");
+
 }
 
 namespace State {

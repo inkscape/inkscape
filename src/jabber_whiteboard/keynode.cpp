@@ -8,7 +8,7 @@
  * Copyright (c) 2005 Authors
  */
 #include "keynode.h"
-
+#include "util/ucompose.hpp"
 
 namespace Inkscape
 {
@@ -118,6 +118,11 @@ KeyNodePair KeyNodeTable::item(unsigned int index) const
     return items[index];
 }
 
+Glib::ustring 
+KeyNodeTable::generateKey(Glib::ustring jid)
+{
+    return String::ucompose("%1/%2",this->counter++,jid);
+}
 
 
 } // namespace Whiteboard

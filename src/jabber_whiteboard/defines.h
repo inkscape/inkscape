@@ -68,7 +68,7 @@ namespace Whiteboard {
 namespace Message {
 
     typedef const std::string Wrapper;
-    typedef const std::string Message;
+    typedef std::string Message;
 
     extern Wrapper PROTOCOL;
     extern Wrapper NEW;
@@ -88,6 +88,9 @@ namespace Message {
 namespace Vars {
 
     extern const std::string INKBOARD_XMLNS; 
+    extern const std::string WHITEBOARD_MESSAGE; 
+    extern const std::string PROTOCOL_MESSAGE; 
+    extern const std::string NEW_MESSAGE; 
 
 }
 

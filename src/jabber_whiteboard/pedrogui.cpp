@@ -2114,7 +2114,7 @@ bool PedroGui::chatDeleteAll()
 
 bool PedroGui::chatMessage(const DOMString &from, const DOMString &data)
 {
-    if(data.size() < 1)
+    if(data.size() > 0)
     {
         std::vector<ChatWindow *>::iterator iter;
         for (iter=chats.begin() ; iter != chats.end() ; iter++)

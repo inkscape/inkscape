@@ -234,7 +234,7 @@ SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
     }
 
     Pedro::DOMString session = root->getTagAttribute("wb", "session");
-    Pedro::DOMString type = root->getTagAttribute("session", "type");
+    Pedro::DOMString type = root->getTagAttribute("message", "type");
     Pedro::DOMString domwrapper = root->getFirstChild()->getFirstChild()->getFirstChild()->getName();
 
     if (session.empty()) {
@@ -250,9 +250,10 @@ SessionManager::processWhiteboardEvent(Pedro::XmppEvent const& event)
     { 
         Message::Wrapper wrapper = static_cast< Message::Wrapper >(domwrapper);
         InkboardDocument* doc = getInkboardSession(session);
-        doc->processInkboardEvent(wrapper, root->getFirstChild());
-    }
 
+        if(doc != NULL)
+            doc->recieve(wrapper, root->getFirstChild());
+    }
 }
 
 char*
@@ -328,12 +329,12 @@ SessionManager::checkInvitationQueue()
         switch (reply) {
 
             case Dialog::ACCEPT_INVITATION:{
-                inkdoc->sendProtocol(from, Message::PROTOCOL,Message::ACCEPT_INVITATION);
+                inkdoc->send(from, Message::PROTOCOL,Message::ACCEPT_INVITATION);
                 makeInkboardDesktop(doc);
                 break; }
 
             case Dialog::DECLINE_INVITATION: default: {
-                inkdoc->sendProtocol(from, Message::PROTOCOL,Message::DECLINE_INVITATION);
+                inkdoc->send(from, Message::PROTOCOL,Message::DECLINE_INVITATION);
                 terminateSession(sessionId);
                 break; }
         }

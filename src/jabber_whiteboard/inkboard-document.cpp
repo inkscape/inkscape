@@ -14,17 +14,21 @@
 
 #include "jabber_whiteboard/inkboard-document.h"
 
+
+#include "util/ucompose.hpp"
+
 #include "xml/simple-session.h"
 #include "jabber_whiteboard/inkboard-session.h"
 #include "jabber_whiteboard/defines.h"
 #include "jabber_whiteboard/session-manager.h"
+#include "jabber_whiteboard/node-tracker.h"
 
 namespace Inkscape {
 
 namespace Whiteboard {
 
-InkboardDocument::InkboardDocument(int code, State::SessionType type, Glib::ustring const& to) :
-	XML::SimpleNode(code), _type(type), _recipient(to)
+InkboardDocument::InkboardDocument(int code, State::SessionType sessionType, Glib::ustring const& to) :
+	XML::SimpleNode(code), sessionType(sessionType), recipient(to)
 {
     _initBindings();
 }
@@ -32,7 +36,7 @@ InkboardDocument::InkboardDocument(int code, State::SessionType type, Glib::ustr
 void
 InkboardDocument::_initBindings()
 {
-    this->_sm = &SessionManager::instance();
+    this->sm = &SessionManager::instance();
     this->state = State::INITIAL;
     _bindDocument(*this);
     _bindLogger(*(new XML::SimpleSession()));
@@ -41,34 +45,34 @@ InkboardDocument::_initBindings()
 void
 InkboardDocument::setRecipient(Glib::ustring const& val)
 {
-    this->_recipient = val;
+    this->recipient = val;
 }
 
 Glib::ustring 
 InkboardDocument::getRecipient() const
 {
-    return this->_recipient;
+    return this->recipient;
 }
 
 void
 InkboardDocument::setSessionId(Glib::ustring const& val)
 {
-    this->_session = val;
+    this->sessionId = val;
 }
 
 Glib::ustring 
 InkboardDocument::getSessionId() const
 {
-    return this->_session;
+    return this->sessionId;
 }
 
 void
 InkboardDocument::startSessionNegotiation()
 {
-    if(_type == State::WHITEBOARD_PEER)
-        sendProtocol(_recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
+    if(this->sessionType == State::WHITEBOARD_PEER)
+        this->send(recipient, Message::PROTOCOL,Message::CONNECT_REQUEST);
 
-    else if(_type == State::WHITEBOARD_MUC)
+    else if(this->sessionType == State::WHITEBOARD_MUC)
     {
         // Check that the MUC room is whiteboard enabled, if not no need to send 
         // anything, just set the room to be whiteboard enabled
@@ -82,7 +86,7 @@ InkboardDocument::terminateSession()
 }
 
 void
-InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element* data)
+InkboardDocument::recieve(Message::Wrapper &wrapper, Pedro::Element* data)
 {
     if(this->handleIncomingState(wrapper,data))
     {
@@ -98,16 +102,18 @@ InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element
             {
                 // TODO : Would be nice to create the desktop here
 
-                sendProtocol(getRecipient(),Message::PROTOCOL, Message::CONNECTED);
-                sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_BEGIN);
+                this->send(getRecipient(),Message::PROTOCOL, Message::CONNECTED);
+                this->send(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_BEGIN);
 
-                // Send the Document
+                // Send Document
+                this->tracker = new KeyNodeTable();
+                this->sendDocument();
 
-                sendProtocol(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_END);
+                this->send(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_END);
 
             }else if(message == Message::DECLINE_INVITATION)
             {
-                this->_sm->terminateSession(this->getSessionId());
+                this->sm->terminateSession(this->getSessionId());
             }
         }
     }else{
@@ -117,25 +123,22 @@ InkboardDocument::processInkboardEvent(Message::Wrapper &wrapper, Pedro::Element
 }
 
 bool
-InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &wrapper,
-     Message::Message &message)
+InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper &wrapper, Message::Message &message)
 {
     if(this->handleOutgoingState(wrapper,message))
     {
-        char *fmt=
-            "<message type='%s' from='%s' to='%s'>"
-                "<wb xmlns='%s' session='%s'>"
-                    "<%s>"
-                        "<%s />"
-                    "</%s>"
-                "</wb>"
-            "</message>";
+        Glib::ustring mes;
+        if(wrapper == Message::PROTOCOL)
+            mes = String::ucompose(Vars::PROTOCOL_MESSAGE,wrapper,message);
+        else
+            mes = message;
 
-        if (!_sm->getClient().write(fmt,
-                _type.c_str(),_sm->getClient().getJid().c_str(),destJid.c_str(),Vars::INKBOARD_XMLNS.c_str(),
-                this->getSessionId().c_str(),wrapper.c_str(),message.c_str(),wrapper.c_str())) 
+        char *finalmessage = const_cast<char* >(String::ucompose(Vars::WHITEBOARD_MESSAGE,
+            this->sessionType,this->sm->getClient().getJid(),destJid,
+            Vars::INKBOARD_XMLNS,this->getSessionId(),mes).c_str());
+
+        if (!this->sm->getClient().write(finalmessage)) 
             { return false; }
-
         else 
             { return true; }
 
@@ -144,6 +147,12 @@ InkboardDocument::sendProtocol(const Glib::ustring &destJid, Message::Wrapper &w
         g_warning("Sending Message in invalid state message=%s , state=%d",message.c_str(),this->state);
         return false; 
     }
+}
+
+void
+InkboardDocument::sendDocument()
+{
+
 }
 
 bool

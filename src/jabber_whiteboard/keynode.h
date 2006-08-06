@@ -48,38 +48,42 @@ public:
 
     KeyNodeTable()
         {}
-    
+
     KeyNodeTable(const KeyNodeTable &other)
         {
         items = other.items;
         }
-        
+
     virtual ~KeyNodeTable()
         {}
-        
+
     virtual void clear();
-        
+
     virtual void append(const KeyNodeTable &other);
 
     virtual void put(const KeyNodePair &pair);
-    
+
     virtual void put(const Glib::ustring &key, const XML::Node *node);
-    
+
     virtual XML::Node * get(const Glib::ustring &key) const;
-    
+
     virtual void remove(const Glib::ustring &key);
 
     virtual Glib::ustring get(XML::Node *node) const;
-    
+
     virtual void remove(XML::Node *node);
 
     virtual unsigned int size() const;
-    
+
     virtual KeyNodePair item(unsigned int index) const;
+
+    virtual Glib::ustring generateKey(Glib::ustring);
 
 private:
 
     std::vector<KeyNodePair> items;
+
+    unsigned int counter;
 
 };
 
