@@ -771,13 +771,13 @@ PrintCairoPDF::draw_glyphs(cairo_t *cr, NR::Point p, PangoFont *font, PangoGlyph
     int num_invalid_glyphs = 0;
     for (gint i = 0; i < glyph_string->num_glyphs; i++) {
         info = &glyph_string->glyphs[i];
-        // skip empty or unknown glyphs
-#if defined(PANGO_GLYPH_EMPTY) && defined(PANGO_GLYPH_UNKNOWN_FLAG)
-        if (info->glyph == PANGO_GLYPH_EMPTY || info->glyph & PANGO_GLYPH_UNKNOWN_FLAG) {
+        // skip glyphs which are PANGO_GLYPH_EMPTY (0x0FFFFFFF) or have 
+        // the PANGO_GLYPH_UNKNOWN_FLAG (0x10000000) set
+        if (info->glyph == 0x0FFFFFFF || info->glyph & 0x10000000) {
             num_invalid_glyphs++;
             continue;
         }
-#endif
+
         glyphs[i - num_invalid_glyphs].index = info->glyph;
         glyphs[i - num_invalid_glyphs].x = p[NR::X] + (x_offset + info->geometry.x_offset)/PANGO_SCALE;
         glyphs[i - num_invalid_glyphs].y = p[NR::Y] + (y_offset + info->geometry.y_offset)/PANGO_SCALE;
