@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+AUTOMAKE_OPTIONS = foreign
+
 SUBDIRS = src doc share po
 
 appicondir = $(datadir)/pixmaps
