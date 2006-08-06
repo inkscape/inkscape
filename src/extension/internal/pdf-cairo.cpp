@@ -328,8 +328,8 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     // printf("Page Bounding Box: %s\n", pageBoundingBox ? "TRUE" : "FALSE");
     if (pageBoundingBox) {
         d.x0 = d.y0 = 0;
-        d.x1 = ceil(_width);
-        d.y1 = ceil(_height);
+        d.x1 = _width;
+        d.y1 = _height;
     } else {
         SPItem* doc_item = SP_ITEM(sp_document_root(doc));
         sp_item_invoke_bbox(doc_item, &d, sp_item_i2r_affine(doc_item), TRUE);
@@ -375,7 +375,7 @@ PrintCairoPDF::finish(Inkscape::Extension::Print *mod)
     fclose(_stream);
     _stream = 0;
 
-    return 0;
+    return 1;
 }
 
 unsigned int
@@ -426,7 +426,7 @@ PrintCairoPDF::comment(Inkscape::Extension::Print *mod, char const *comment)
 cairo_pattern_t*
 PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, NRRect const *pbox, float alpha)
 {
-	cairo_pattern_t *pattern = NULL;
+    cairo_pattern_t *pattern = NULL;
     bool apply_bbox2user = false;
     
     if (SP_IS_LINEARGRADIENT (paintserver)) {
@@ -462,6 +462,13 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
         NR::Point c (rg->cx.computed, rg->cy.computed);
         NR::Point f (rg->fx.computed, rg->fy.computed);
         double r = rg->r.computed;
+        
+        NR::Coord const df = hypot(f[NR::X] - c[NR::X], f[NR::Y] - c[NR::Y]);
+        if (df >= r) {
+            f[NR::X] = c[NR::X] + (f[NR::X] - c[NR::X] ) * r / (float) df;
+            f[NR::Y] = c[NR::Y] + (f[NR::Y] - c[NR::Y] ) * r / (float) df;
+        }
+        
         if (pbox && SP_GRADIENT(rg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX)
             apply_bbox2user = true;
         
@@ -560,8 +567,6 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
         
         float alpha = 1.0;
         alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-if (alpha != 1.0)
-g_printf( "fa: %f a:%f fa*a = %f\n", alpha, _alpha_stack[_alpha_ptr], alpha*_alpha_stack[_alpha_ptr]);
         alpha *= _alpha_stack[_alpha_ptr];
              	
         cairo_save(cr);
