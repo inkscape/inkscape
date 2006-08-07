@@ -70,52 +70,43 @@ class PdfFile {
 
 class PdfXref {
   public:
-    PdfXref() { size = 10; table = (long*) malloc(size*sizeof(long)); entries = 0; }
-    ~PdfXref() { free(table); }
+    PdfXref() { table.push_back(0); }
+    ~PdfXref() { table.clear(); }
 
-    long get_size() { return entries; }
-    long get_entry(long id) { return table[id]; }
-    
-    long alloc_id()  {
-        entries++;
-        if (entries >= size) {
-            size = size*2;
-            table = (long *) realloc(table, size*sizeof(long));
-        }
-        return entries;
-    }
+    long get_size() { return (long) table.size() - 1; }
+    long get_entry(long id) { return table.at(id); }
     
     void update_entry(long id, long offset) {
-        table[id] = offset;
+        table.at(id) = offset;
     }
     
     long add_entry(long offset = 0) {
-        long id = alloc_id();
-        update_entry(id, offset);
-        return id;
+        table.push_back(offset);
+        return get_size();
     }
 
   protected:
-    long *table;
-    long entries;
-    long size;
+    std::vector<long> table;
 };
 
 
 class PdfObject : public Inkscape::SVGOStringStream {
   public:
-    PdfObject(long i) : next(NULL) { id = i; setf(std::ios::fixed); }
-    ~PdfObject() {}
+    PdfObject(long i) : next(NULL), name(NULL) { id = i; setf(std::ios::fixed); }
+    ~PdfObject() { if (name) g_free(name); }
 
     long get_id() { return id; }
-    const char *get_name() { return name.str().c_str(); }
+    const char *get_name() { return name; }
     long get_length() { return str().length(); }
-    void set_type(enum pdf_resource_type type) { name << "/" << pdf_res_short[type] << id; }
+    void set_type(enum pdf_resource_type type) {
+        if (name) g_free(name);
+        name = g_strdup_printf("/%s%ld", pdf_res_short[type], id);
+    }
     PdfObject *next;
 
   protected:
     long id;
-    Inkscape::SVGOStringStream name;
+    gchar *name;
 };
 
 PdfFile::PdfFile(FILE *_stream) {

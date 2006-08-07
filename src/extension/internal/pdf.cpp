@@ -74,14 +74,10 @@ PrintPDF::PrintPDF() :
     _dpi(72),
     _bitmap(false)
 {
-    _num_alphas = 10;
-    _pushed_alphas = (float*) malloc(_num_alphas*sizeof(float));
 }
 
 PrintPDF::~PrintPDF(void)
 {
-    free(_pushed_alphas);
-
     /* fixme: should really use pclose for popen'd streams */
     if (_stream) fclose(_stream);
 
@@ -237,8 +233,8 @@ PrintPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     FILE *osf = NULL;
     FILE *osp = NULL;
 
-    _curr_alpha = 0;
-    _pushed_alphas[_curr_alpha] = 1.0;
+    _pushed_alphas.clear();
+    _pushed_alphas.push_back(1.0);
 
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
@@ -485,14 +481,8 @@ PrintPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, float
        << transform->c[4] << " "
        << transform->c[5] << " cm\n";
 
-    float alpha = opacity * _pushed_alphas[_curr_alpha];
-        
-    _curr_alpha++;
-    if (_curr_alpha >= _num_alphas) {
-        _num_alphas = _num_alphas*2;
-        _pushed_alphas = (float *) realloc(_pushed_alphas, _num_alphas*sizeof(float));
-    }
-    _pushed_alphas[_curr_alpha] = alpha;
+    float alpha = opacity * _pushed_alphas.back();
+    _pushed_alphas.push_back(alpha);
 
     pdf_file->puts(os);
     return 1;
@@ -504,8 +494,8 @@ PrintPDF::release(Inkscape::Extension::Print *mod)
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
 
-    if (_curr_alpha > 0)
-        _curr_alpha--;
+    _pushed_alphas.pop_back();
+    g_assert( _pushed_alphas.size() > 0 );
 
     pdf_file->puts("Q\n");
 
@@ -531,7 +521,7 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
     if (style->fill.type == SP_PAINT_TYPE_COLOR) {
         float alpha = 1.0;
         alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-        alpha *= _pushed_alphas[_curr_alpha];
+        alpha *= _pushed_alphas.back();
 
         if (alpha != 1.0) {
             PdfObject *pdf_alpha = pdf_file->begin_resource(pdf_extgstate);
@@ -552,7 +542,6 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
         if (SP_IS_LINEARGRADIENT (SP_STYLE_FILL_SERVER (style))) {
             
             SPLinearGradient *lg=SP_LINEARGRADIENT(SP_STYLE_FILL_SERVER (style));
-
             sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
 
             NR::Point p1 (lg->x1.computed, lg->y1.computed);
@@ -569,12 +558,12 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
                 alpha *= lg->vector.stops[i].opacity;
             }
             
-            if (alpha != 1.0 || _pushed_alphas[_curr_alpha] != 1.0) {
+            if (alpha != 1.0 || _pushed_alphas.back() != 1.0) {
                 PdfObject *pdf_gstate = pdf_file->begin_resource(pdf_extgstate);
                 *pdf_gstate << "<< /Type /ExtGState\n";
                 
-                if (_pushed_alphas[_curr_alpha] != 1.0) {
-                    *pdf_gstate << "   /ca " << _pushed_alphas[_curr_alpha] << "\n";
+                if (_pushed_alphas.back() != 1.0) {
+                    *pdf_gstate << "   /ca " << _pushed_alphas.back() << "\n";
                     *pdf_gstate << "   /AIS false\n";
                 }
                 
@@ -634,34 +623,34 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
                     *pdf_xobj << "      /CS /DeviceGray \n";
                     *pdf_xobj << "   >>\n";
                     
-                    Inkscape::SVGOStringStream os;
-                    os.setf(std::ios::fixed);
+                    Inkscape::SVGOStringStream os_tmp;
+                    os_tmp.setf(std::ios::fixed);
                     
-                    os << "q\n"
-                       << pbox->x0 << " " << pbox->y0 << " m\n"
-                       << pbox->x1 << " " << pbox->y0 << " l\n"
-                       << pbox->x1 << " " << pbox->y1 << " l\n"
-                       << pbox->x0 << " " << pbox->y1 << " l\n"
-                       << pbox->x0 << " " << pbox->y0 << " l\n"
-                       << "h\n"
-                       << "W* n\n";
+                    os_tmp << "q\n"
+                           << pbox->x0 << " " << pbox->y0 << " m\n"
+                           << pbox->x1 << " " << pbox->y0 << " l\n"
+                           << pbox->x1 << " " << pbox->y1 << " l\n"
+                           << pbox->x0 << " " << pbox->y1 << " l\n"
+                           << pbox->x0 << " " << pbox->y0 << " l\n"
+                           << "h\n"
+                           << "W* n\n";
                     
                     SPGradient const *g = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
                     if (g->gradientTransform_set) {
-                        os << g->gradientTransform[0] << " "
-                           << g->gradientTransform[1] << " "
-                           << g->gradientTransform[2] << " "
-                           << g->gradientTransform[3] << " "
-                           << g->gradientTransform[4] << " "
-                           << g->gradientTransform[5] << " cm\n"; 
+                        os_tmp << g->gradientTransform[0] << " "
+                               << g->gradientTransform[1] << " "
+                               << g->gradientTransform[2] << " "
+                               << g->gradientTransform[3] << " "
+                               << g->gradientTransform[4] << " "
+                               << g->gradientTransform[5] << " cm\n"; 
                     }
                     
-                    os << pdf_alpha->get_name() << " sh\n";
-                    os << "Q\n";
-                    *pdf_xobj << "   /Length " << strlen(os.str().c_str()) << "\n";
+                    os_tmp << pdf_alpha->get_name() << " sh\n";
+                    os_tmp << "Q\n";
+                    *pdf_xobj << "   /Length " << os_tmp.str().length() << "\n";
                     *pdf_xobj << ">>\n";
                     *pdf_xobj << "stream\n";
-                    *pdf_xobj << os.str().c_str();
+                    *pdf_xobj << os_tmp.str().c_str();
                     *pdf_xobj << "endstream\n";
 
 
@@ -679,7 +668,6 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
         } else if (SP_IS_RADIALGRADIENT (SP_STYLE_FILL_SERVER (style))) {
 
             SPRadialGradient *rg=SP_RADIALGRADIENT(SP_STYLE_FILL_SERVER (style));
-
             sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
 
             NR::Point c (rg->cx.computed, rg->cy.computed);
@@ -705,12 +693,12 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
                 alpha *= rg->vector.stops[i].opacity;
             }
 
-            if (alpha != 1.0 || _pushed_alphas[_curr_alpha] != 1.0) {
+            if (alpha != 1.0 || _pushed_alphas.back() != 1.0) {
                 PdfObject *pdf_gstate = pdf_file->begin_resource(pdf_extgstate);
                 *pdf_gstate << "<< /Type /ExtGState\n";
                 
-                if (_pushed_alphas[_curr_alpha] != 1.0) {
-                    *pdf_gstate << "   /ca " << _pushed_alphas[_curr_alpha] << "\n";
+                if (_pushed_alphas.back() != 1.0) {
+                    *pdf_gstate << "   /ca " << _pushed_alphas.back() << "\n";
                     *pdf_gstate << "   /AIS false\n";
                 }
                 
@@ -771,34 +759,34 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
                     *pdf_xobj << "      /CS /DeviceGray \n";
                     *pdf_xobj << "   >>\n";
                     
-                    Inkscape::SVGOStringStream os;
-                    os.setf(std::ios::fixed);
+                    Inkscape::SVGOStringStream os_tmp;
+                    os_tmp.setf(std::ios::fixed);
                     
-                    os << "q\n"
-                       << pbox->x0 << " " << pbox->y0 << " m\n"
-                       << pbox->x1 << " " << pbox->y0 << " l\n"
-                       << pbox->x1 << " " << pbox->y1 << " l\n"
-                       << pbox->x0 << " " << pbox->y1 << " l\n"
-                       << pbox->x0 << " " << pbox->y0 << " l\n"
-                       << "h\n"
-                       << "W* n\n";
+                    os_tmp << "q\n"
+                           << pbox->x0 << " " << pbox->y0 << " m\n"
+                           << pbox->x1 << " " << pbox->y0 << " l\n"
+                           << pbox->x1 << " " << pbox->y1 << " l\n"
+                           << pbox->x0 << " " << pbox->y1 << " l\n"
+                           << pbox->x0 << " " << pbox->y0 << " l\n"
+                           << "h\n"
+                           << "W* n\n";
                     
                     SPGradient const *g = SP_GRADIENT(SP_STYLE_FILL_SERVER(style));
                     if (g->gradientTransform_set) {
-                        os << g->gradientTransform[0] << " "
-                           << g->gradientTransform[1] << " "
-                           << g->gradientTransform[2] << " "
-                           << g->gradientTransform[3] << " "
-                           << g->gradientTransform[4] << " "
-                           << g->gradientTransform[5] << " cm\n"; 
+                        os_tmp << g->gradientTransform[0] << " "
+                               << g->gradientTransform[1] << " "
+                               << g->gradientTransform[2] << " "
+                               << g->gradientTransform[3] << " "
+                               << g->gradientTransform[4] << " "
+                               << g->gradientTransform[5] << " cm\n"; 
                     }
                     
-                    os << pdf_alpha->get_name() << " sh\n";
-                    os << "Q\n";
-                    *pdf_xobj << "   /Length " << strlen(os.str().c_str()) << "\n";
+                    os_tmp << pdf_alpha->get_name() << " sh\n";
+                    os_tmp << "Q\n";
+                    *pdf_xobj << "   /Length " << os_tmp.str().length() << "\n";
                     *pdf_xobj << ">>\n";
                     *pdf_xobj << "stream\n";
-                    *pdf_xobj << os.str().c_str();
+                    *pdf_xobj << os_tmp.str().c_str();
                     *pdf_xobj << "endstream\n";
 
 
@@ -836,6 +824,8 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
         if (SP_IS_LINEARGRADIENT (SP_STYLE_FILL_SERVER (style))) {
 
             SPLinearGradient *lg=SP_LINEARGRADIENT(SP_STYLE_FILL_SERVER (style));
+            sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
+
             NR::Point p1 (lg->x1.computed, lg->y1.computed);
             NR::Point p2 (lg->x2.computed, lg->y2.computed);
             if (pbox && SP_GRADIENT(lg)->units == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
@@ -853,7 +843,6 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
             *pdf_shade << "/Domain [0 1]\n";
             *pdf_shade << "/Function <<\n/FunctionType 3\n/Functions\n[\n";
 
-            sp_gradient_ensure_vector(SP_GRADIENT(lg)); // when exporting from commandline, vector is not built
             for (gint i = 0; unsigned(i) < lg->vector.stops.size() - 1; i++) {
                 float rgb[3];
                 sp_color_get_rgb_floatv(&lg->vector.stops[i].color, rgb);
@@ -881,6 +870,8 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
         } else if (SP_IS_RADIALGRADIENT (SP_STYLE_FILL_SERVER (style))) {
 
             SPRadialGradient *rg=SP_RADIALGRADIENT(SP_STYLE_FILL_SERVER (style));
+            sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
+
             NR::Point c (rg->cx.computed, rg->cy.computed);
             NR::Point f (rg->fx.computed, rg->fy.computed);
             double r = rg->r.computed;
@@ -907,7 +898,6 @@ PrintPDF::print_fill_style(SVGOStringStream &os, SPStyle const *const style, NRR
             *pdf_shade << "/Domain [0 1]\n";
             *pdf_shade << "/Function <<\n/FunctionType 3\n/Functions\n[\n";
 
-            sp_gradient_ensure_vector(SP_GRADIENT(rg)); // when exporting from commandline, vector is not built
             for (gint i = 0; unsigned(i) < rg->vector.stops.size() - 1; i++) {
                 float rgb[3];
                 sp_color_get_rgb_floatv(&rg->vector.stops[i].color, rgb);
@@ -948,7 +938,7 @@ PrintPDF::print_stroke_style(SVGOStringStream &os, SPStyle const *style)
         
     float alpha = 1.0;
     alpha *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
-    alpha *= _pushed_alphas[_curr_alpha];
+    alpha *= _pushed_alphas.back();
 
     if (alpha != 1.0) {
         PdfObject *pdf_alpha = pdf_file->begin_resource(pdf_extgstate);
@@ -1556,7 +1546,7 @@ PrintPDF::textToPath(Inkscape::Extension::Print * ext)
 void
 PrintPDF::init(void)
 {
-    /* SVG in */
+    /* PDF print */
     (void) Inkscape::Extension::build_from_mem(
         "<inkscape-extension>\n"
         "<name>" N_("PDF Print") "</name>\n"
