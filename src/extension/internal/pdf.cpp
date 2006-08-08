@@ -622,6 +622,13 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
                     *pdf_xobj << "      /S /Transparency\n";
                     *pdf_xobj << "      /CS /DeviceGray \n";
                     *pdf_xobj << "   >>\n";
+                    *pdf_xobj << "   /Resources\n";
+                    *pdf_xobj << "   <<\n";
+                    *pdf_xobj << "      /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n";
+                    *pdf_xobj << "      /Shading << "
+                              << pdf_alpha->get_name() << " "
+                              << pdf_alpha->get_id() << " 0 R >>\n";
+                    *pdf_xobj << "   >>\n";
                     
                     Inkscape::SVGOStringStream os_tmp;
                     os_tmp.setf(std::ios::fixed);
@@ -757,6 +764,13 @@ PrintPDF::print_fill_alpha(SVGOStringStream &os, SPStyle const *const style, NRR
                     *pdf_xobj << "   << /Type /Group\n";
                     *pdf_xobj << "      /S /Transparency\n";
                     *pdf_xobj << "      /CS /DeviceGray \n";
+                    *pdf_xobj << "   >>\n";
+                    *pdf_xobj << "   /Resources\n";
+                    *pdf_xobj << "   <<\n";
+                    *pdf_xobj << "      /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n";
+                    *pdf_xobj << "      /Shading << "
+                              << pdf_alpha->get_name() << " "
+                              << pdf_alpha->get_id() << " 0 R >>\n";
                     *pdf_xobj << "   >>\n";
                     
                     Inkscape::SVGOStringStream os_tmp;
