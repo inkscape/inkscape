@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 20:45+0200\n"
+"POT-Creation-Date: 2006-08-09 20:17+0200\n"
 "PO-Revision-Date: 2006-06-11 13:50+0000\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -823,7 +823,7 @@ msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:55
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "Zabalera:"
@@ -837,7 +837,7 @@ msgid "y_1:"
 msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
-#: ../src/dialogs/object-attributes.cpp:52
+#: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Altuera:"
 
@@ -1150,7 +1150,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1086
 msgid "Selection"
 msgstr "Hautapena"
 
@@ -1308,74 +1308,74 @@ msgstr "_Gehitu"
 msgid "New layer created."
 msgstr "Geruza berria sortuta."
 
-#: ../src/dialogs/object-attributes.cpp:30
+#: ../src/dialogs/object-attributes.cpp:34
 msgid "Href:"
 msgstr "Herf.:"
 
-#: ../src/dialogs/object-attributes.cpp:31
+#: ../src/dialogs/object-attributes.cpp:35
 msgid "Target:"
 msgstr "Helburua:"
 
-#: ../src/dialogs/object-attributes.cpp:32
+#: ../src/dialogs/object-attributes.cpp:36
 msgid "Type:"
 msgstr "Mota:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:35
+#: ../src/dialogs/object-attributes.cpp:39
 msgid "Role:"
 msgstr "Funtzioa:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:38
+#: ../src/dialogs/object-attributes.cpp:42
 msgid "Arcrole:"
 msgstr "Arcrole:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:40
+#: ../src/dialogs/object-attributes.cpp:44
 msgid "Title:"
 msgstr "Titulua:"
 
-#: ../src/dialogs/object-attributes.cpp:41
+#: ../src/dialogs/object-attributes.cpp:45
 msgid "Show:"
 msgstr "Erakutsi:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:43
+#: ../src/dialogs/object-attributes.cpp:47
 msgid "Actuate:"
 msgstr "Eragin:"
 
-#: ../src/dialogs/object-attributes.cpp:48
+#: ../src/dialogs/object-attributes.cpp:52
 msgid "URL:"
 msgstr "URLa:"
 
-#: ../src/dialogs/object-attributes.cpp:49
+#: ../src/dialogs/object-attributes.cpp:53
 msgid "X:"
 msgstr "X:"
 
-#: ../src/dialogs/object-attributes.cpp:50
+#: ../src/dialogs/object-attributes.cpp:54
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/dialogs/object-attributes.cpp:94
+#: ../src/dialogs/object-attributes.cpp:100
 #, c-format
 msgid "%s attributes"
 msgstr "%s atributuak"
 
-#: ../src/dialogs/object-properties.cpp:161
+#: ../src/dialogs/object-properties.cpp:164
 msgid "_Fill"
 msgstr "_Bete"
 
-#: ../src/dialogs/object-properties.cpp:168
+#: ../src/dialogs/object-properties.cpp:171
 msgid "Stroke _paint"
 msgstr "Trazuaren _pintura"
 
-#: ../src/dialogs/object-properties.cpp:175
+#: ../src/dialogs/object-properties.cpp:178
 msgid "Stroke st_yle"
 msgstr "Trazu-e_stiloa"
 
-#: ../src/dialogs/object-properties.cpp:186
+#: ../src/dialogs/object-properties.cpp:189
 msgid "Master _opacity"
 msgstr "_Opakotasun nagusia"
 
@@ -1813,11 +1813,11 @@ msgstr "Elementu-nodo berria"
 msgid "New text node"
 msgstr "Testu-nodo berria"
 
-#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1698
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1708
 msgid "Duplicate node"
 msgstr "Bikoiztu nodoa"
 
-#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2902
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2918
 msgid "Delete node"
 msgstr "Ezabatu nodoa"
 
@@ -2064,7 +2064,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Erakutsi elkarrizketa-koadroa abioan"
 
-#: ../src/extension/implementation/script.cpp:994
+#: ../src/extension/implementation/script.cpp:990
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2074,7 +2074,7 @@ msgstr ""
 "testua behean agertzen da. Inkscape-k lanean jarraituko du, baina eskatutako "
 "ekintza bertan behera utzi da."
 
-#: ../src/extension/implementation/script.cpp:1007
+#: ../src/extension/implementation/script.cpp:1003
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2083,11 +2083,11 @@ msgstr ""
 "Inkscape-ek datu gehigarriak jaso ditu exekutatutako script-etik. Script-ak "
 "ez du errorerik itzuli, baina baliteke emaitzak espero zirenak ez izatea."
 
-#: ../src/extension/init.cpp:169
+#: ../src/extension/init.cpp:175
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "Kanpoko moduloen direktorio-izena hutsik.Moduluak ez dira kargatuko."
 
-#: ../src/extension/init.cpp:183
+#: ../src/extension/init.cpp:189
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -2233,6 +2233,81 @@ msgstr "OpenDocument marrazkia (*.odg)"
 msgid "OpenDocument drawing file"
 msgstr "OpenDocument marrazkia fitxategia"
 
+#: ../src/extension/internal/pdf-cairo.cpp:125
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+msgid "Print Destination"
+msgstr "Inprimatzeko helburua"
+
+#. Print properties frame
+#: ../src/extension/internal/pdf-cairo.cpp:140
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+msgid "Print properties"
+msgstr "Inprimatzeko propietateak"
+
+#: ../src/extension/internal/pdf-cairo.cpp:147
+#: ../src/extension/internal/pdf.cpp:130
+msgid "Print using PDF operators"
+msgstr "Inprimatu PDF eragileak erabiliz"
+
+#: ../src/extension/internal/pdf-cairo.cpp:149
+#: ../src/extension/internal/pdf.cpp:132
+msgid ""
+"Use PDF vector operators. The resulting image is usually smaller in file "
+"size and can be arbitrarily scaled, but patterns will be lost."
+msgstr ""
+"Erabili PDF bektore-eragileak. Lortzen den emaitza normalean txikiagoa da "
+"eta nahi bezala eskala daiteke, baina ereduak galduko dira."
+
+#: ../src/extension/internal/pdf-cairo.cpp:154
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+msgid "Print as bitmap"
+msgstr "Inprimatu bit-mapa gisa"
+
+#: ../src/extension/internal/pdf-cairo.cpp:156
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+msgid ""
+"Print everything as bitmap. The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
+msgstr ""
+"Inprimatu dena bit-mapa gisa. Lortzen den irudia normalean handiagoa da eta "
+"ezin da nahi bezala eskalatu kalitatea galdu gabe, baina objektu guztiak "
+"bistaratu bezalaxe errendatuko dira."
+
+#: ../src/extension/internal/pdf-cairo.cpp:170
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+msgid "Preferred resolution (dots per inch) of bitmap"
+msgstr "Bit-maparen bereizmen hobetsia (puntu hazbeteko)"
+
+#: ../src/extension/internal/pdf-cairo.cpp:184
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+msgid "Resolution:"
+msgstr "Bereizmena:"
+
+#. Print destination frame
+#: ../src/extension/internal/pdf-cairo.cpp:188
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+msgid "Print destination"
+msgstr "Inprimatzeko helburua"
+
+#: ../src/extension/internal/pdf-cairo.cpp:194
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+msgid ""
+"Printer name (as given by lpstat -p);\n"
+"leave empty to use the system default printer.\n"
+"Use '> filename' to print to file.\n"
+"Use '| prog arg...' to pipe to a program."
+msgstr ""
+"Inprimagailuaren izena (lpstat -p adierazten duena);\n"
+"Utzi hutsik sistemako inprimagailu lehenetsia erabiltzeko.\n"
+"Erabili '> fitxategi-izena' fitxategian inprimatzeko.\n"
+"Erabili '| prog arg...' programa batera kanalizatzeko."
+
+#: ../src/extension/internal/pdf-cairo.cpp:1022
+#: ../src/extension/internal/pdf.cpp:1566
+msgid "PDF Print"
+msgstr "PDF inprimaketa"
+
 #: ../src/extension/internal/pov-out.cpp:457
 msgid "PovRay Output"
 msgstr "PovRay irteera"
@@ -2262,15 +2337,6 @@ msgstr "PostScript (*.ps)"
 msgid "Postscript File"
 msgstr "PostScript fitxategia"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
-msgid "Print Destination"
-msgstr "Inprimatzeko helburua"
-
-#. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
-msgid "Print properties"
-msgstr "Inprimatzeko propietateak"
-
 #: ../src/extension/internal/ps.cpp:126
 msgid "Print using PostScript operators"
 msgstr "Inprimatu PostScript eragileak erabiliz"
@@ -2284,45 +2350,6 @@ msgstr ""
 "Erabili PostScript bektore-eragileak. Lortzen den emaitza normalean "
 "txikiagoa da eta nahi bezala eskala daiteke, baina alfa gardentasuna, "
 "gradienteak, markatzaileak eta ereduak galduko dira."
-
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
-msgid "Print as bitmap"
-msgstr "Inprimatu bit-mapa gisa"
-
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
-msgid ""
-"Print everything as bitmap. The resulting image is usually larger in file "
-"size and cannot be arbitrarily scaled without quality loss, but all objects "
-"will be rendered exactly as displayed."
-msgstr ""
-"Inprimatu dena bit-mapa gisa. Lortzen den irudia normalean handiagoa da eta "
-"ezin da nahi bezala eskalatu kalitatea galdu gabe, baina objektu guztiak "
-"bistaratu bezalaxe errendatuko dira."
-
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
-msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "Bit-maparen bereizmen hobetsia (puntu hazbeteko)"
-
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
-msgid "Resolution:"
-msgstr "Bereizmena:"
-
-#. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
-msgid "Print destination"
-msgstr "Inprimatzeko helburua"
-
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
-msgid ""
-"Printer name (as given by lpstat -p);\n"
-"leave empty to use the system default printer.\n"
-"Use '> filename' to print to file.\n"
-"Use '| prog arg...' to pipe to a program."
-msgstr ""
-"Inprimagailuaren izena (lpstat -p adierazten duena);\n"
-"Utzi hutsik sistemako inprimagailu lehenetsia erabiltzeko.\n"
-"Erabili '> fitxategi-izena' fitxategian inprimatzeko.\n"
-"Erabili '| prog arg...' programa batera kanalizatzeko."
 
 #: ../src/extension/internal/ps.cpp:1217
 msgid "Postscript Print"
@@ -2402,25 +2429,20 @@ msgstr "Bektore-grafiko eskalagarri formatua Gzip-ekin konprimitua"
 msgid "Windows 32-bit Print"
 msgstr "W¡ndows 32-bit inprimaketa"
 
-#: ../src/extension/internal/pdf.cpp:134
-msgid "Print using PDF operators"
-msgstr "Inprimatu PDF eragileak erabiliz"
+#: ../src/extension/internal/wpg-input.cpp:343
+#, fuzzy
+msgid "WPG Input"
+msgstr "SVG sarrera"
 
-#: ../src/extension/internal/pdf.cpp:136
-msgid ""
-"Use PDF vector operators. The resulting image is usually smaller in file "
-"size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"Erabili PDF bektore-eragileak. Lortzen den emaitza normalean txikiagoa da "
-"eta nahi bezala eskala daiteke, baina ereduak galduko dira."
+#: ../src/extension/internal/wpg-input.cpp:348
+#, fuzzy
+msgid "WordPerfect Graphics (*.wpg)"
+msgstr "Bektore-grafiko eskalakorra (*.svg)"
 
-#: ../src/extension/internal/pdf.cpp:1528
-msgid "write error occurred"
-msgstr "errorea gertatu da idaztean"
-
-#: ../src/extension/internal/pdf.cpp:1555
-msgid "PDF Print"
-msgstr "PDF inprimaketa"
+#: ../src/extension/internal/wpg-input.cpp:349
+#, fuzzy
+msgid "Vector graphics format used by Corel WordPerfect"
+msgstr "W3C zehaztutako bektore-grafiko eskalagarriaren formatua"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2918,76 +2940,16 @@ msgstr ""
 msgid "_Write session file:"
 msgstr "_Erregistratu saioko fitxategia:"
 
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:46
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b>(e)k gonbidatu egin zaitu arbel zuriko saiora."
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:47
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "<b>%1</b>(e)n arbel zurirako gonbitea onartu nahi duzu?"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:51
-msgid "Accept invitation"
-msgstr "Onartu gonbitea"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:52
-msgid "Decline invitation"
-msgstr "Baztertu gonbitea"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:102
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
-"whiteboard invitation.</span>\n"
-"\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\"><b>%1</b> erabiltzaileak zure arbel "
-"zurirako gonbitea baztertu du.</span>\n"
-"\n"
-
-#. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:105
-msgid ""
-"You are still connected to a Jabber server as <b>%2</b>, and may send an "
-"invitation to <b>%1</b> again, or you may send an invitation to a different "
-"user."
-msgstr ""
-"Jabber zerbitzarian <b>%2</b> gisa konektatuta jarraitzen duzu, gonbitea "
-"bidal dezaiokezu <b>%1</b>(r)i berriro, edo beste erabiltzaile ezberdin "
-"bati. "
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:117
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
-"incompatible version of Inkboard.</span>\n"
-"\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\"><b>%1</b> erabiltzailea jadanik arbel "
-"zuriko saioan dago.</span>\n"
-"\n"
-
-#. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:120
-msgid ""
-"Inkscape cannot connect to <b>%1</b>.\n"
-"\n"
-"You are still connected to a Jabber server as <b>%2</b>."
-msgstr ""
-
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
 #. no way to let the other client(s) uniquely identify this object.
-#: ../src/jabber_whiteboard/message-utilities.cpp:169
+#: ../src/jabber_whiteboard/message-utilities.cpp:168
 msgid ""
 "ID for new object is NULL even after generation and lookup attempts: the new "
 "object will NOT be sent, nor will any of its child objects!"
 msgstr ""
 "Objektu berriaren IDa NULL da, nahiz eta bilatzea eta sortzea saiatu izan. "
 "Objektu berriak EZ da bidaliko, ezta bere objektu umeak ere."
-
-#: ../src/jabber_whiteboard/new-inkboard-document.cpp:60
-msgid "Inkboard session (%1 to %2)"
-msgstr ""
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
@@ -2996,6 +2958,26 @@ msgstr "Hautatu kokalekua eta fitxategi-izena"
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 msgid "Set filename"
 msgstr "Ezarri fitxategi-izena"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:308
+msgid "<b>%1</b> has invited you to a whiteboard session."
+msgstr "<b>%1</b>(e)k gonbidatu egin zaitu arbel zuriko saiora."
+
+#: ../src/jabber_whiteboard/session-manager.cpp:310
+msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
+msgstr "<b>%1</b>(e)n arbel zurirako gonbitea onartu nahi duzu?"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:314
+msgid "Accept invitation"
+msgstr "Onartu gonbitea"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:315
+msgid "Decline invitation"
+msgstr "Baztertu gonbitea"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:370
+msgid "Inkboard session (%1 to %2)"
+msgstr ""
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -3331,32 +3313,31 @@ msgstr ""
 "<b>Alt</b>: blokeatu heldulekuaren luzera; <b>Ktrl+Alt</b>: mugitu "
 "heldulekuetan zehar"
 
-#. drag curve
-#: ../src/node-context.cpp:628
+#: ../src/node-context.cpp:641
 msgid "Drag curve"
 msgstr ""
 
-#: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
+#: ../src/nodepath.cpp:551 ../src/seltrans.cpp:454
 #, fuzzy
 msgid "Stamp"
 msgstr "Atxiki"
 
-#: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
+#: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
 #, fuzzy
 msgid "Move nodes vertically"
 msgstr "Lerrokatu hautatutako nodoak bertikalki"
 
-#: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252
 #, fuzzy
 msgid "Move nodes horizontally"
 msgstr "Lerrokatu hautatutako nodoak horizontalki"
 
-#: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
+#: ../src/nodepath.cpp:1226 ../src/nodepath.cpp:1254 ../src/nodepath.cpp:2999
 #, fuzzy
 msgid "Move nodes"
 msgstr "Beheratu nodoa"
 
-#: ../src/nodepath.cpp:1259
+#: ../src/nodepath.cpp:1262
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3365,65 +3346,65 @@ msgstr ""
 "angelua atxikitzeko; <b>Alt</b> luzera blokeatzeko; <b>Maius</b> bi "
 "heldulekuak biratzeko"
 
-#: ../src/nodepath.cpp:1430
+#: ../src/nodepath.cpp:1433
 #, fuzzy
 msgid "Align nodes"
 msgstr "Lerrokatu goialdeak"
 
-#: ../src/nodepath.cpp:1492
+#: ../src/nodepath.cpp:1495
 #, fuzzy
 msgid "Distribute nodes"
 msgstr "Banatu"
 
-#: ../src/nodepath.cpp:1531
+#: ../src/nodepath.cpp:1534
 #, fuzzy
 msgid "Add nodes"
 msgstr "Gehitu nodoak"
 
-#: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
+#: ../src/nodepath.cpp:1536 ../src/nodepath.cpp:1598
 #, fuzzy
 msgid "Add node"
 msgstr "Gehitu nodoak"
 
-#: ../src/nodepath.cpp:1668
+#: ../src/nodepath.cpp:1678
 #, fuzzy
 msgid "Break path"
 msgstr "_Banandu"
 
-#: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
-#: ../src/nodepath.cpp:1821
+#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
+#: ../src/nodepath.cpp:1831
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Elkartzeko, <b>bi amaiera-nodo</b> eduki behar dira hautatuta. "
 
-#: ../src/nodepath.cpp:1743
+#: ../src/nodepath.cpp:1753
 #, fuzzy
 msgid "Close subpath"
 msgstr "Bidearen itxiera."
 
-#: ../src/nodepath.cpp:1795
+#: ../src/nodepath.cpp:1805
 #, fuzzy
 msgid "Join nodes"
 msgstr "amaierako nodoa"
 
-#: ../src/nodepath.cpp:1842
+#: ../src/nodepath.cpp:1852
 msgid "Close subpath by segment"
 msgstr ""
 
-#: ../src/nodepath.cpp:1896
+#: ../src/nodepath.cpp:1906
 #, fuzzy
 msgid "Join nodes by segment"
 msgstr "Elkartu hautatutako amaiera-nodoak segmentu berriarekin"
 
-#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
+#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
 #, fuzzy
 msgid "Delete nodes"
 msgstr "Ezabatu nodoa"
 
-#: ../src/nodepath.cpp:2020
+#: ../src/nodepath.cpp:2036
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2093
+#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3431,34 +3412,34 @@ msgstr ""
 "<b>Amaiera-punturik gabeko bi nodo</b> hautatu behar dituzu bide batean "
 "haien arteko segmentuak ezabatzeko."
 
-#: ../src/nodepath.cpp:2189
+#: ../src/nodepath.cpp:2205
 msgid "Cannot find path between nodes."
 msgstr "Ezin da biderik aurkitu nodoen artean."
 
-#: ../src/nodepath.cpp:2218
+#: ../src/nodepath.cpp:2234
 #, fuzzy
 msgid "Delete segment"
 msgstr "Ezabatu hautapena"
 
-#: ../src/nodepath.cpp:2240
+#: ../src/nodepath.cpp:2256
 msgid "Change segment type"
 msgstr ""
 
-#: ../src/nodepath.cpp:2256 ../src/nodepath.cpp:2946
+#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
 msgid "Change node type"
 msgstr ""
 
-#: ../src/nodepath.cpp:3214
+#: ../src/nodepath.cpp:3230
 #, fuzzy
 msgid "Retract handle"
 msgstr "Laukizuzena"
 
-#: ../src/nodepath.cpp:3262
+#: ../src/nodepath.cpp:3278
 #, fuzzy
 msgid "Move node handle"
 msgstr "Ausazko nodoen heldulekua"
 
-#: ../src/nodepath.cpp:3402
+#: ../src/nodepath.cpp:3418
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3469,22 +3450,22 @@ msgstr ""
 "angelua atxikitzeko; <b>Alt</b> luzera blokeatzeko; <b>Maius</b> bi "
 "heldulekuak biratzeko"
 
-#: ../src/nodepath.cpp:3580
+#: ../src/nodepath.cpp:3596
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "Goratu nodoa"
 
-#: ../src/nodepath.cpp:3705
+#: ../src/nodepath.cpp:3721
 #, fuzzy
 msgid "Scale nodes"
 msgstr "Goratu nodoa"
 
-#: ../src/nodepath.cpp:3752
+#: ../src/nodepath.cpp:3768
 #, fuzzy
 msgid "Flip nodes"
 msgstr "lerro"
 
-#: ../src/nodepath.cpp:3917
+#: ../src/nodepath.cpp:3933
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3493,39 +3474,39 @@ msgstr ""
 "bertikalean atxikitzeko; <b>Ktrl+Alt</b> heldulekuen norabidean egokitzeko"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4120
+#: ../src/nodepath.cpp:4157
 msgid "end node"
 msgstr "amaierako nodoa"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4125
+#: ../src/nodepath.cpp:4162
 msgid "cusp"
 msgstr "goierpina"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4128
+#: ../src/nodepath.cpp:4165
 msgid "smooth"
 msgstr "leuna"
 
-#: ../src/nodepath.cpp:4130
+#: ../src/nodepath.cpp:4167
 msgid "symmetric"
 msgstr "simetrikoa"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4136
+#: ../src/nodepath.cpp:4173
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "amaierako nodoa, heldulekua uzkurtuta (arrastatu <b>Maius</b> zabaltzeko)"
 
-#: ../src/nodepath.cpp:4138
+#: ../src/nodepath.cpp:4175
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "helduleku bat  uzkurtuta (arrastatu <b>Maius</b> zabaltzeko)"
 
-#: ../src/nodepath.cpp:4141
+#: ../src/nodepath.cpp:4178
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "helduleku biak  uzkurtuta (arrastatu <b>Maius</b> zabaltzeko)"
 
-#: ../src/nodepath.cpp:4153
+#: ../src/nodepath.cpp:4190
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3535,17 +3516,17 @@ msgstr ""
 "zizelkatzeko; teklatuko <b>geziak</b> nodoak lekuz aldatzeko; <b>&lt;&gt;</"
 "b> eskalatzeko; <b>[.]</b> biratzeko"
 
-#: ../src/nodepath.cpp:4154
+#: ../src/nodepath.cpp:4191
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Arrastatu</b> nodoa edo bere heldulekuak; teklatuko <b>geziak</b> nodoak "
 "lekuz aldatzeko"
 
-#: ../src/nodepath.cpp:4177 ../src/nodepath.cpp:4189
+#: ../src/nodepath.cpp:4214 ../src/nodepath.cpp:4226
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Hautatu objektu sinplea bere nodoak edo heldulekuak editatzeko."
 
-#: ../src/nodepath.cpp:4181
+#: ../src/nodepath.cpp:4218
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3560,18 +3541,18 @@ msgstr[1] ""
 "<b>0</b>/<b>%i</b> nodo hautatu dira. Egin <b>klik</b>, <b>Maius+klik</b>, "
 "edo <b>arrastatu nodoen inguruan</b> hautatzeko."
 
-#: ../src/nodepath.cpp:4187
+#: ../src/nodepath.cpp:4224
 msgid "Drag the handles of the object to modify it."
 msgstr "Arrastatu objektuaren heldulekuak modifikatzeko."
 
-#: ../src/nodepath.cpp:4195
+#: ../src/nodepath.cpp:4232
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b>/<b>%i</b> nodo hautatu da; %s. %s."
 msgstr[1] "<b>%i</b>/<b>%i</b> nodo hautatu dira; %s. %s."
 
-#: ../src/nodepath.cpp:4202
+#: ../src/nodepath.cpp:4239
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3582,7 +3563,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<b>%i</b>/<b>%i</b> nodo hautatu dira; <b>%i</b>/<b>%i</b> azpibideetan. %s."
 
-#: ../src/nodepath.cpp:4208
+#: ../src/nodepath.cpp:4245
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3909,7 +3890,7 @@ msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Hautatu <b>objektua(k)</b> bikoizteko."
 
 #: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
-#: ../src/widgets/gradient-toolbar.cpp:488
+#: ../src/widgets/gradient-toolbar.cpp:482
 msgid "Duplicate"
 msgstr "Bikoiztu"
 
@@ -4073,7 +4054,7 @@ msgstr "Biratu _90&#176; EN"
 msgid "Rotate 90&#176; CCW"
 msgstr "Biratu 9_0&#176; EKN"
 
-#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:355
 #, fuzzy
 msgid "Rotate"
 msgstr "_Biratu"
@@ -4082,7 +4063,7 @@ msgstr "_Biratu"
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:352
 #, fuzzy
 msgid "Scale"
 msgstr "_Eskalatu"
@@ -4101,7 +4082,7 @@ msgid "Move horizontally"
 msgstr "_Horizontala"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
-#: ../src/seltrans.cpp:347
+#: ../src/seltrans.cpp:349
 #, fuzzy
 msgid "Move"
 msgstr "_Lekuz aldatu"
@@ -4407,12 +4388,12 @@ msgstr "%s%s. %s."
 msgid "Set center"
 msgstr "Hautatu inprimagailua"
 
-#: ../src/seltrans.cpp:356
+#: ../src/seltrans.cpp:358
 #, fuzzy
 msgid "Skew"
 msgstr "_Okertu"
 
-#: ../src/seltrans.cpp:477
+#: ../src/seltrans.cpp:476
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4420,7 +4401,7 @@ msgstr ""
 "Biraketaren eta okertzearen <b>erdigunea</b>: arrastatu birjartzeko; Maius-"
 "ekin eskalatzeak ere erdigune hau erabiltzen du"
 
-#: ../src/seltrans.cpp:504
+#: ../src/seltrans.cpp:503
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4428,7 +4409,7 @@ msgstr ""
 "<b>Estutzeko edo luzatzeko</b> hautapena; <b>Ktrl</b> uniformeki "
 "eskalatzeko; <b>Maius</b> biraketaren erdigunearekiko eskalatzeko"
 
-#: ../src/seltrans.cpp:505
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4436,7 +4417,7 @@ msgstr ""
 "<b>Eskalatu</b> hautapena; <b>Ktrl</b> uniformeki eskalatzeko; <b>Maius</b> "
 "biraketaren erdigunearekiko eskalatzeko"
 
-#: ../src/seltrans.cpp:509
+#: ../src/seltrans.cpp:508
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4444,7 +4425,7 @@ msgstr ""
 "<b>Okertu</b> hautapena; <b>Ktrl</b> angelua atxikitzeko; <b>Maius</b> "
 "aurkako izkinaren inguruan okertzeko"
 
-#: ../src/seltrans.cpp:510
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4452,36 +4433,36 @@ msgstr ""
 "<b>Biratu</b> hautapena; <b>Ktrl</b> angelua atxikitzeko; <b>Maius</b> "
 "aurkako izkinaren inguruan biratzeko"
 
-#: ../src/seltrans.cpp:641
+#: ../src/seltrans.cpp:640
 #, fuzzy
 msgid "Reset center"
 msgstr "Goratu uneko geruza"
 
-#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
+#: ../src/seltrans.cpp:887 ../src/seltrans.cpp:999
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Eskalatu</b>: %0.2f%% x %0.2f%%x, <b>Ktrl</b> tasa blokeatzeko"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1090
+#: ../src/seltrans.cpp:1089
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Okertu</b>: %0.2f&#176;; <b>Ktrl</b> angelua atxikitzeko"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1139
+#: ../src/seltrans.cpp:1138
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Biratu</b>: %0.2f&#176;; <b>Ktrl</b> angelua atxikitzeko"
 
-#: ../src/seltrans.cpp:1183
+#: ../src/seltrans.cpp:1182
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Eraman <b>erdigunea</b> hona: %s, %s"
 
-#: ../src/seltrans.cpp:1441
+#: ../src/seltrans.cpp:1440
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4588,21 +4569,21 @@ msgid "<b>Line</b>"
 msgstr "<b>Marra</b>"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:423
+#: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr "<b>desplazamendu estekatua</b>, %s x %f ptu"
 
-#: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
 msgid "outset"
 msgstr "luzatu"
 
-#: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
 msgid "inset"
 msgstr "laburtu"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:427
+#: ../src/sp-offset.cpp:434
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Desplazamendu dinamikoa</b>, %s x %f ptu"
@@ -4647,7 +4628,7 @@ msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Poligonoa</b>: erpin %d"
 msgstr[1] "<b>Poligonoa</b>: %d erpin"
 
-#: ../src/sp-switch.cpp:96
+#: ../src/sp-switch.cpp:100
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -5034,19 +5015,19 @@ msgstr "Hautatu irudi bakarra eta forma bat edo gehiago bere gainean"
 msgid "Trace: No active desktop"
 msgstr "Bektorizatu: ez dago dokumentu aktiborik"
 
-#: ../src/trace/trace.cpp:330
+#: ../src/trace/trace.cpp:331
 msgid "Invalid SIOX result"
 msgstr ""
 
-#: ../src/trace/trace.cpp:435
+#: ../src/trace/trace.cpp:436
 msgid "Trace: No active document"
 msgstr "Bektorizatu: ez dago dokumentu aktiborik"
 
-#: ../src/trace/trace.cpp:458
+#: ../src/trace/trace.cpp:459
 msgid "Trace: Image has no bitmap data"
 msgstr "Bektorizatu: irudiak ez du bit-mapa motako daturik"
 
-#: ../src/trace/trace.cpp:570
+#: ../src/trace/trace.cpp:571
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Bektorizatu: eginda. %ld nodo sortuta"
@@ -5320,12 +5301,12 @@ msgstr "Elementu txikiena"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1078
 msgid "Page"
 msgstr "Orria"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
-#: ../src/widgets/desktop-widget.cpp:1074
+#: ../src/widgets/desktop-widget.cpp:1082
 msgid "Drawing"
 msgstr "Marrazkia"
 
@@ -6141,7 +6122,7 @@ msgstr "Nodoa"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
 #: ../src/ui/view/edit-widget.cpp:1064 ../src/verbs.cpp:2184
-#: ../src/widgets/desktop-widget.cpp:275
+#: ../src/widgets/desktop-widget.cpp:277
 msgid "Zoom"
 msgstr "Zooma"
 
@@ -7299,16 +7280,16 @@ msgstr ""
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:241
+#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:243
 msgid "Zoom drawing if window size changes"
 msgstr "Doitu marrazkia leihoaren tamaina aldatzen bada"
 
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:295
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:297
 msgid "Cursor coordinates"
 msgstr "Kurtsorearen koordenatuak"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:327
+#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:329
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7317,7 +7298,7 @@ msgstr ""
 "tresnak objektuak sortzeko; erabili hautatzailea (gezia) objektuak lekuz "
 "aldatzeko edo eraldatzeko."
 
-#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:533
+#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:540
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7331,11 +7312,11 @@ msgstr ""
 "Gorde gabe ixten baduzu, aldaketak baztertu egingo dira."
 
 #: ../src/ui/view/edit-widget.cpp:1204 ../src/ui/view/edit-widget.cpp:1251
-#: ../src/widgets/desktop-widget.cpp:549 ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:556 ../src/widgets/desktop-widget.cpp:620
 msgid "Close _without saving"
 msgstr "Itxi _gorde gabe"
 
-#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:596
+#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:603
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9259,12 +9240,12 @@ msgstr "Marratxo-eredua"
 msgid "Pattern offset"
 msgstr "Ereduaren desplazamendua"
 
-#: ../src/widgets/desktop-widget.cpp:375
+#: ../src/widgets/desktop-widget.cpp:379
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:377
+#: ../src/widgets/desktop-widget.cpp:381
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -9296,7 +9277,7 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
 #: ../src/widgets/gradient-selector.cpp:138
-#: ../src/widgets/gradient-toolbar.cpp:499
+#: ../src/widgets/gradient-toolbar.cpp:493
 msgid "Edit..."
 msgstr "Editatu..."
 
@@ -9341,7 +9322,7 @@ msgstr "<small>Ez dago gradienterik hautapenean</small>"
 msgid "<small>Multiple gradients</small>"
 msgstr "<small>Hainbat gradiente</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:489
+#: ../src/widgets/gradient-toolbar.cpp:483
 msgid ""
 "If the gradient is used by more than one object, create a copy of it for the "
 "selected object(s)"
@@ -9349,11 +9330,11 @@ msgstr ""
 "Gradientea objektu bat baino gehiagotan erabiltzen bada, sortu bere kopia "
 "hautatutako objektuentzako"
 
-#: ../src/widgets/gradient-toolbar.cpp:500
+#: ../src/widgets/gradient-toolbar.cpp:494
 msgid "Edit the stops of the gradient"
 msgstr "Editatu gradienteetako etenak"
 
-#: ../src/widgets/gradient-toolbar.cpp:557 ../src/widgets/toolbox.cpp:1121
+#: ../src/widgets/gradient-toolbar.cpp:553 ../src/widgets/toolbox.cpp:1121
 #: ../src/widgets/toolbox.cpp:1210 ../src/widgets/toolbox.cpp:1509
 #: ../src/widgets/toolbox.cpp:1558 ../src/widgets/toolbox.cpp:1796
 #: ../src/widgets/toolbox.cpp:1831 ../src/widgets/toolbox.cpp:2413
@@ -9361,23 +9342,23 @@ msgstr "Editatu gradienteetako etenak"
 msgid "<b>New:</b>"
 msgstr "<b>Berria</b>:"
 
-#: ../src/widgets/gradient-toolbar.cpp:570
+#: ../src/widgets/gradient-toolbar.cpp:566
 msgid "Create linear gradient"
 msgstr "Sortu gradiente lineala"
 
-#: ../src/widgets/gradient-toolbar.cpp:584
+#: ../src/widgets/gradient-toolbar.cpp:580
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Sortu gradiente erradiala (eliptikoa edo zirkularra)"
 
-#: ../src/widgets/gradient-toolbar.cpp:599
+#: ../src/widgets/gradient-toolbar.cpp:595
 msgid "on"
 msgstr "aktibatuta"
 
-#: ../src/widgets/gradient-toolbar.cpp:612
+#: ../src/widgets/gradient-toolbar.cpp:608
 msgid "Create gradient in the fill"
 msgstr "Sortu gradientea betegarrian"
 
-#: ../src/widgets/gradient-toolbar.cpp:626
+#: ../src/widgets/gradient-toolbar.cpp:622
 msgid "Create gradient in the stroke"
 msgstr "Sortu gradientea trazuan"
 
@@ -9385,7 +9366,7 @@ msgstr "Sortu gradientea trazuan"
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:640 ../src/widgets/toolbox.cpp:1123
+#: ../src/widgets/gradient-toolbar.cpp:636 ../src/widgets/toolbox.cpp:1123
 #: ../src/widgets/toolbox.cpp:1142 ../src/widgets/toolbox.cpp:1517
 #: ../src/widgets/toolbox.cpp:1542 ../src/widgets/toolbox.cpp:1798
 #: ../src/widgets/toolbox.cpp:1817 ../src/widgets/toolbox.cpp:2416
@@ -10699,6 +10680,37 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile sarrera"
+
+#~ msgid "write error occurred"
+#~ msgstr "errorea gertatu da idaztean"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
+#~ "whiteboard invitation.</span>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\"><b>%1</b> erabiltzaileak zure arbel "
+#~ "zurirako gonbitea baztertu du.</span>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "You are still connected to a Jabber server as <b>%2</b>, and may send an "
+#~ "invitation to <b>%1</b> again, or you may send an invitation to a "
+#~ "different user."
+#~ msgstr ""
+#~ "Jabber zerbitzarian <b>%2</b> gisa konektatuta jarraitzen duzu, gonbitea "
+#~ "bidal dezaiokezu <b>%1</b>(r)i berriro, edo beste erabiltzaile ezberdin "
+#~ "bati. "
+
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
+#~ "incompatible version of Inkboard.</span>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\"><b>%1</b> erabiltzailea jadanik "
+#~ "arbel zuriko saioan dago.</span>\n"
+#~ "\n"
 
 #~ msgid "Fit Canvas to Selection"
 #~ msgstr "Doitu oihala hautapenari"

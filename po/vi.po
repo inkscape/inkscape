@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 20:45+0200\n"
+"POT-Creation-Date: 2006-08-09 20:17+0200\n"
 "PO-Revision-Date: 2006-06-19 22:38+0200\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
@@ -813,7 +813,7 @@ msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:55
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "Rộng:"
@@ -827,7 +827,7 @@ msgid "y_1:"
 msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
-#: ../src/dialogs/object-attributes.cpp:52
+#: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Cao :"
 
@@ -1137,7 +1137,7 @@ msgstr "%d × %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1086
 msgid "Selection"
 msgstr "Vùng chọn"
 
@@ -1294,74 +1294,74 @@ msgstr "_Thêm"
 msgid "New layer created."
 msgstr "Lớp mới đã được tạo."
 
-#: ../src/dialogs/object-attributes.cpp:30
+#: ../src/dialogs/object-attributes.cpp:34
 msgid "Href:"
 msgstr "Ngang:"
 
-#: ../src/dialogs/object-attributes.cpp:31
+#: ../src/dialogs/object-attributes.cpp:35
 msgid "Target:"
 msgstr "Đích:"
 
-#: ../src/dialogs/object-attributes.cpp:32
+#: ../src/dialogs/object-attributes.cpp:36
 msgid "Type:"
 msgstr "Kiểu :"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:35
+#: ../src/dialogs/object-attributes.cpp:39
 msgid "Role:"
 msgstr "Loại:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:38
+#: ../src/dialogs/object-attributes.cpp:42
 msgid "Arcrole:"
 msgstr "ĐíchLoại:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:40
+#: ../src/dialogs/object-attributes.cpp:44
 msgid "Title:"
 msgstr "Tựa :"
 
-#: ../src/dialogs/object-attributes.cpp:41
+#: ../src/dialogs/object-attributes.cpp:45
 msgid "Show:"
 msgstr "Hiện:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:43
+#: ../src/dialogs/object-attributes.cpp:47
 msgid "Actuate:"
 msgstr "Thức đẩy:"
 
-#: ../src/dialogs/object-attributes.cpp:48
+#: ../src/dialogs/object-attributes.cpp:52
 msgid "URL:"
 msgstr "URL:"
 
-#: ../src/dialogs/object-attributes.cpp:49
+#: ../src/dialogs/object-attributes.cpp:53
 msgid "X:"
 msgstr "X:"
 
-#: ../src/dialogs/object-attributes.cpp:50
+#: ../src/dialogs/object-attributes.cpp:54
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/dialogs/object-attributes.cpp:94
+#: ../src/dialogs/object-attributes.cpp:100
 #, c-format
 msgid "%s attributes"
 msgstr "thuộc tính %s"
 
-#: ../src/dialogs/object-properties.cpp:161
+#: ../src/dialogs/object-properties.cpp:164
 msgid "_Fill"
 msgstr "_Tô"
 
-#: ../src/dialogs/object-properties.cpp:168
+#: ../src/dialogs/object-properties.cpp:171
 msgid "Stroke _paint"
 msgstr "_Sơn nét"
 
-#: ../src/dialogs/object-properties.cpp:175
+#: ../src/dialogs/object-properties.cpp:178
 msgid "Stroke st_yle"
 msgstr "_Kiểu nét"
 
-#: ../src/dialogs/object-properties.cpp:186
+#: ../src/dialogs/object-properties.cpp:189
 msgid "Master _opacity"
 msgstr "_Mờ đục chính"
 
@@ -1802,11 +1802,11 @@ msgstr "Nút yếu tố mới"
 msgid "New text node"
 msgstr "Nút chữ mới"
 
-#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1698
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1708
 msgid "Duplicate node"
 msgstr "Nhân đôi nút"
 
-#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2902
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2918
 msgid "Delete node"
 msgstr "Xoá bỏ nút"
 
@@ -2051,7 +2051,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Hiện hộp thoại khi khởi chạy"
 
-#: ../src/extension/implementation/script.cpp:994
+#: ../src/extension/implementation/script.cpp:990
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2061,7 +2061,7 @@ msgstr ""
 "lỗi đó được gồm bên dưới. Inkscape sẽ tiếp tục chạy, nhưng hành động bạn yêu "
 "cầu đã bị thôi."
 
-#: ../src/extension/implementation/script.cpp:1007
+#: ../src/extension/implementation/script.cpp:1003
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2070,12 +2070,12 @@ msgstr ""
 "Trình Inkscape đã nhận dữ liệu thêm từ kịch bản được thực hiện. Kịch bản "
 "không trả về lỗi, nhưng dữ liệu thêm có thể ngụ ý kết quả bất thường."
 
-#: ../src/extension/init.cpp:169
+#: ../src/extension/init.cpp:175
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr ""
 "Gặp tên thư mục mô-đun bên ngoài rỗng nên các mô-đun sẽ không được tải."
 
-#: ../src/extension/init.cpp:183
+#: ../src/extension/init.cpp:189
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -2221,6 +2221,81 @@ msgstr "Bản vẽ OpenDocument (*.odg)"
 msgid "OpenDocument drawing file"
 msgstr "Tập tin bản vẽ OpenDocument"
 
+#: ../src/extension/internal/pdf-cairo.cpp:125
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+msgid "Print Destination"
+msgstr "Đích in"
+
+#. Print properties frame
+#: ../src/extension/internal/pdf-cairo.cpp:140
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+msgid "Print properties"
+msgstr "Tài sản in"
+
+#: ../src/extension/internal/pdf-cairo.cpp:147
+#: ../src/extension/internal/pdf.cpp:130
+msgid "Print using PDF operators"
+msgstr "In dùng toán từ PDF"
+
+#: ../src/extension/internal/pdf-cairo.cpp:149
+#: ../src/extension/internal/pdf.cpp:132
+msgid ""
+"Use PDF vector operators. The resulting image is usually smaller in file "
+"size and can be arbitrarily scaled, but patterns will be lost."
+msgstr ""
+"Dùng các toán tử véc-tơ kiểu PDF. Ảnh kết quả thường có kích cỡ tập tin nhỏ "
+"hơn, và có khả năng được co dãn tùy ý, nhưng các mẫu sẽ bị mất."
+
+#: ../src/extension/internal/pdf-cairo.cpp:154
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+msgid "Print as bitmap"
+msgstr "In dạng mảng ảnh"
+
+#: ../src/extension/internal/pdf-cairo.cpp:156
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+msgid ""
+"Print everything as bitmap. The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
+msgstr ""
+"In mọi thứ dưới dạng mảng ảnh. Ảnh kết quả thường có kích cỡ tập tin lớn "
+"hơn, và không thể được co dãn tùy ý và bảo tồn chất lượng, nhưng mọi đối "
+"tượng sẽ được vẽ chính xác như được hiển thị."
+
+#: ../src/extension/internal/pdf-cairo.cpp:170
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+msgid "Preferred resolution (dots per inch) of bitmap"
+msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của mảng ảnh"
+
+#: ../src/extension/internal/pdf-cairo.cpp:184
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+msgid "Resolution:"
+msgstr "Độ phân giải:"
+
+#. Print destination frame
+#: ../src/extension/internal/pdf-cairo.cpp:188
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+msgid "Print destination"
+msgstr "Đích in"
+
+#: ../src/extension/internal/pdf-cairo.cpp:194
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+msgid ""
+"Printer name (as given by lpstat -p);\n"
+"leave empty to use the system default printer.\n"
+"Use '> filename' to print to file.\n"
+"Use '| prog arg...' to pipe to a program."
+msgstr ""
+"Tên máy in (như lệnh « lpstat -p » in ra);\n"
+"bỏ rỗng để dùng máy in mặc định của hệ thống.\n"
+"Dùng « > tên_tập_tin » để in vào tập tin.\n"
+"Dùng « | chương_trình đối_số » để gởi qua ống dẫn cho chương trình."
+
+#: ../src/extension/internal/pdf-cairo.cpp:1022
+#: ../src/extension/internal/pdf.cpp:1566
+msgid "PDF Print"
+msgstr "In PDF"
+
 #: ../src/extension/internal/pov-out.cpp:457
 msgid "PovRay Output"
 msgstr "Kết xuất PovRay"
@@ -2250,15 +2325,6 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Tập tin Postscript"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
-msgid "Print Destination"
-msgstr "Đích in"
-
-#. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
-msgid "Print properties"
-msgstr "Tài sản in"
-
 #: ../src/extension/internal/ps.cpp:126
 msgid "Print using PostScript operators"
 msgstr "In dùng toán tử Postscript"
@@ -2272,45 +2338,6 @@ msgstr ""
 "Dùng toán tử véc-tơ Postscript. Ảnh kết quả thường có kích cỡ tập tin nhỏ "
 "hơn, và có thể được co dãn tùy ý, nhưng độ trong suốt anfa và các mẫu sẽ bị "
 "mất."
-
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
-msgid "Print as bitmap"
-msgstr "In dạng mảng ảnh"
-
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
-msgid ""
-"Print everything as bitmap. The resulting image is usually larger in file "
-"size and cannot be arbitrarily scaled without quality loss, but all objects "
-"will be rendered exactly as displayed."
-msgstr ""
-"In mọi thứ dưới dạng mảng ảnh. Ảnh kết quả thường có kích cỡ tập tin lớn "
-"hơn, và không thể được co dãn tùy ý và bảo tồn chất lượng, nhưng mọi đối "
-"tượng sẽ được vẽ chính xác như được hiển thị."
-
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
-msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "Độ phân giải đã thích (điểm trên mỗi insơ) của mảng ảnh"
-
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
-msgid "Resolution:"
-msgstr "Độ phân giải:"
-
-#. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
-msgid "Print destination"
-msgstr "Đích in"
-
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
-msgid ""
-"Printer name (as given by lpstat -p);\n"
-"leave empty to use the system default printer.\n"
-"Use '> filename' to print to file.\n"
-"Use '| prog arg...' to pipe to a program."
-msgstr ""
-"Tên máy in (như lệnh « lpstat -p » in ra);\n"
-"bỏ rỗng để dùng máy in mặc định của hệ thống.\n"
-"Dùng « > tên_tập_tin » để in vào tập tin.\n"
-"Dùng « | chương_trình đối_số » để gởi qua ống dẫn cho chương trình."
 
 #: ../src/extension/internal/ps.cpp:1217
 msgid "Postscript Print"
@@ -2390,25 +2417,20 @@ msgstr "Dạng thức Đồ họa véc-tơ có khả năng co dãn, được né
 msgid "Windows 32-bit Print"
 msgstr "In 32-bit Windows"
 
-#: ../src/extension/internal/pdf.cpp:134
-msgid "Print using PDF operators"
-msgstr "In dùng toán từ PDF"
+#: ../src/extension/internal/wpg-input.cpp:343
+#, fuzzy
+msgid "WPG Input"
+msgstr "Nhập SVG"
 
-#: ../src/extension/internal/pdf.cpp:136
-msgid ""
-"Use PDF vector operators. The resulting image is usually smaller in file "
-"size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"Dùng các toán tử véc-tơ kiểu PDF. Ảnh kết quả thường có kích cỡ tập tin nhỏ "
-"hơn, và có khả năng được co dãn tùy ý, nhưng các mẫu sẽ bị mất."
+#: ../src/extension/internal/wpg-input.cpp:348
+#, fuzzy
+msgid "WordPerfect Graphics (*.wpg)"
+msgstr "Đồ họa véc-tơ có khả năng co dãn (*.svg)"
 
-#: ../src/extension/internal/pdf.cpp:1528
-msgid "write error occurred"
-msgstr "gặp lỗi ghi"
-
-#: ../src/extension/internal/pdf.cpp:1555
-msgid "PDF Print"
-msgstr "In PDF"
+#: ../src/extension/internal/wpg-input.cpp:349
+#, fuzzy
+msgid "Vector graphics format used by Corel WordPerfect"
+msgstr "Dạng thức Đồ họa véc-tơ có khả năng co dãn như được xác định bởi W3C."
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2902,66 +2924,10 @@ msgstr ""
 msgid "_Write session file:"
 msgstr "_Ghi tập tin buổi hợp:"
 
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:46
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> đã mời bạn vào một buổi hợp bảng trắng."
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:47
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Bạn có muốn chấp nhận lời mời buổi hợp bảng trắng của <b>%1</b> không?"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:51
-msgid "Accept invitation"
-msgstr "Chấp nhận lời mời"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:52
-msgid "Decline invitation"
-msgstr "Từ chối lời mời"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:102
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
-"whiteboard invitation.</span>\n"
-"\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đã từ chối lời "
-"mời bảng trắng của bạn.</span>\n"
-"\n"
-
-#. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:105
-msgid ""
-"You are still connected to a Jabber server as <b>%2</b>, and may send an "
-"invitation to <b>%1</b> again, or you may send an invitation to a different "
-"user."
-msgstr ""
-"Bạn vẫn còn được kết nối đến máy phục vụ Jabber với tư cách là <b>%2</b>, và "
-"có khả năng gởi lại lời mời cho <b>%1</b>, hoặc gởi lời mời cho người dùng "
-"khác."
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:117
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
-"incompatible version of Inkboard.</span>\n"
-"\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đã vào trong một "
-"buổi hợp bảng trắng.</span>\n"
-"\n"
-
-#. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:120
-msgid ""
-"Inkscape cannot connect to <b>%1</b>.\n"
-"\n"
-"You are still connected to a Jabber server as <b>%2</b>."
-msgstr ""
-
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
 #. no way to let the other client(s) uniquely identify this object.
-#: ../src/jabber_whiteboard/message-utilities.cpp:169
+#: ../src/jabber_whiteboard/message-utilities.cpp:168
 msgid ""
 "ID for new object is NULL even after generation and lookup attempts: the new "
 "object will NOT be sent, nor will any of its child objects!"
@@ -2970,10 +2936,6 @@ msgstr ""
 "tìm: đối tượng mới sẽ KHÔNG được gởi, bất cứ đối tượng con nào của nó cũng "
 "vậy !"
 
-#: ../src/jabber_whiteboard/new-inkboard-document.cpp:60
-msgid "Inkboard session (%1 to %2)"
-msgstr ""
-
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
 msgstr "Chọn vị trí và tên tập tin"
@@ -2981,6 +2943,26 @@ msgstr "Chọn vị trí và tên tập tin"
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 msgid "Set filename"
 msgstr "Đặt tên tập tin"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:308
+msgid "<b>%1</b> has invited you to a whiteboard session."
+msgstr "<b>%1</b> đã mời bạn vào một buổi hợp bảng trắng."
+
+#: ../src/jabber_whiteboard/session-manager.cpp:310
+msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
+msgstr "Bạn có muốn chấp nhận lời mời buổi hợp bảng trắng của <b>%1</b> không?"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:314
+msgid "Accept invitation"
+msgstr "Chấp nhận lời mời"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:315
+msgid "Decline invitation"
+msgstr "Từ chối lời mời"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:370
+msgid "Inkboard session (%1 to %2)"
+msgstr ""
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -3308,32 +3290,31 @@ msgstr "<b>Shift</b>: bật/tắt chọn nút, tắt dính, xoay cả hai móc"
 msgid "<b>Alt</b>: lock handle length; <b>Ctrl+Alt</b>: move along handles"
 msgstr "<b>Alt</b>: khoá độ dài móc; <b>Ctrl+Alt</b>: chuyển qua móc"
 
-#. drag curve
-#: ../src/node-context.cpp:628
+#: ../src/node-context.cpp:641
 msgid "Drag curve"
 msgstr ""
 
-#: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
+#: ../src/nodepath.cpp:551 ../src/seltrans.cpp:454
 #, fuzzy
 msgid "Stamp"
 msgstr "Dính"
 
-#: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
+#: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
 #, fuzzy
 msgid "Move nodes vertically"
 msgstr "Canh lề các nút đã chọn theo chiều dọc"
 
-#: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252
 #, fuzzy
 msgid "Move nodes horizontally"
 msgstr "Canh lề các nút đã chọn theo chiều ngang"
 
-#: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
+#: ../src/nodepath.cpp:1226 ../src/nodepath.cpp:1254 ../src/nodepath.cpp:2999
 #, fuzzy
 msgid "Move nodes"
 msgstr "Hạ thấp nút"
 
-#: ../src/nodepath.cpp:1259
+#: ../src/nodepath.cpp:1262
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3341,65 +3322,65 @@ msgstr ""
 "<b>Móc nút</b>: kéo để tạo hình của cung; với phím: <b>Ctrl</b> để dính góc; "
 "<b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai móc"
 
-#: ../src/nodepath.cpp:1430
+#: ../src/nodepath.cpp:1433
 #, fuzzy
 msgid "Align nodes"
 msgstr "Canh bên trên"
 
-#: ../src/nodepath.cpp:1492
+#: ../src/nodepath.cpp:1495
 #, fuzzy
 msgid "Distribute nodes"
 msgstr "Phân phối"
 
-#: ../src/nodepath.cpp:1531
+#: ../src/nodepath.cpp:1534
 #, fuzzy
 msgid "Add nodes"
 msgstr "Thêm nút"
 
-#: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
+#: ../src/nodepath.cpp:1536 ../src/nodepath.cpp:1598
 #, fuzzy
 msgid "Add node"
 msgstr "Thêm nút"
 
-#: ../src/nodepath.cpp:1668
+#: ../src/nodepath.cpp:1678
 #, fuzzy
 msgid "Break path"
 msgstr "Ngắt r_a"
 
-#: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
-#: ../src/nodepath.cpp:1821
+#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
+#: ../src/nodepath.cpp:1831
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Để nối lại, bạn phải chọn <b>hai nút cuối</b>."
 
-#: ../src/nodepath.cpp:1743
+#: ../src/nodepath.cpp:1753
 #, fuzzy
 msgid "Close subpath"
 msgstr "Đang đóng đường dẫn..."
 
-#: ../src/nodepath.cpp:1795
+#: ../src/nodepath.cpp:1805
 #, fuzzy
 msgid "Join nodes"
 msgstr "nút cuối"
 
-#: ../src/nodepath.cpp:1842
+#: ../src/nodepath.cpp:1852
 msgid "Close subpath by segment"
 msgstr ""
 
-#: ../src/nodepath.cpp:1896
+#: ../src/nodepath.cpp:1906
 #, fuzzy
 msgid "Join nodes by segment"
 msgstr "Nối lại các nút cuối đã chọn với một đoạn mới"
 
-#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
+#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
 #, fuzzy
 msgid "Delete nodes"
 msgstr "Xoá bỏ nút"
 
-#: ../src/nodepath.cpp:2020
+#: ../src/nodepath.cpp:2036
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2093
+#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3407,34 +3388,34 @@ msgstr ""
 "Trên đường dẫn, chọn <b>hai nút khác điểm cuỗi</b> giữa chúng cần xoá bỏ "
 "đoạn."
 
-#: ../src/nodepath.cpp:2189
+#: ../src/nodepath.cpp:2205
 msgid "Cannot find path between nodes."
 msgstr "Không tìm thấy đường dẫn giữa nút."
 
-#: ../src/nodepath.cpp:2218
+#: ../src/nodepath.cpp:2234
 #, fuzzy
 msgid "Delete segment"
 msgstr "Xoá bỏ vùng chọn"
 
-#: ../src/nodepath.cpp:2240
+#: ../src/nodepath.cpp:2256
 msgid "Change segment type"
 msgstr ""
 
-#: ../src/nodepath.cpp:2256 ../src/nodepath.cpp:2946
+#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
 msgid "Change node type"
 msgstr ""
 
-#: ../src/nodepath.cpp:3214
+#: ../src/nodepath.cpp:3230
 #, fuzzy
 msgid "Retract handle"
 msgstr "Chữ nhật"
 
-#: ../src/nodepath.cpp:3262
+#: ../src/nodepath.cpp:3278
 #, fuzzy
 msgid "Move node handle"
 msgstr "Ngẫu nhiên hóa móc nút"
 
-#: ../src/nodepath.cpp:3402
+#: ../src/nodepath.cpp:3418
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3444,22 +3425,22 @@ msgstr ""
 "<b>Móc nút</b>: góc %0.2f&#176;, độ dài %s; với phím: <b>Ctrl</b> để dính "
 "góc; <b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai móc"
 
-#: ../src/nodepath.cpp:3580
+#: ../src/nodepath.cpp:3596
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "Nâng nút lên"
 
-#: ../src/nodepath.cpp:3705
+#: ../src/nodepath.cpp:3721
 #, fuzzy
 msgid "Scale nodes"
 msgstr "Nâng nút lên"
 
-#: ../src/nodepath.cpp:3752
+#: ../src/nodepath.cpp:3768
 #, fuzzy
 msgid "Flip nodes"
 msgstr "đường"
 
-#: ../src/nodepath.cpp:3917
+#: ../src/nodepath.cpp:3933
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3468,38 +3449,38 @@ msgstr ""
 "dọc; <b>Ctrl+Alt</b> để dính hướng của móc"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4120
+#: ../src/nodepath.cpp:4157
 msgid "end node"
 msgstr "nút cuối"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4125
+#: ../src/nodepath.cpp:4162
 msgid "cusp"
 msgstr "sắc"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4128
+#: ../src/nodepath.cpp:4165
 msgid "smooth"
 msgstr "mịn"
 
-#: ../src/nodepath.cpp:4130
+#: ../src/nodepath.cpp:4167
 msgid "symmetric"
 msgstr "đối xứng"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4136
+#: ../src/nodepath.cpp:4173
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "nút cuối, móc được rụt (kéo với phím <b>Shift</b> để kéo dài)"
 
-#: ../src/nodepath.cpp:4138
+#: ../src/nodepath.cpp:4175
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "một móc được rụt (kéo với phím <b>Shift</b> để kéo dài)"
 
-#: ../src/nodepath.cpp:4141
+#: ../src/nodepath.cpp:4178
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "cả hai móc được rụt (kéo với phím <b>Shift</b> để kéo dài)"
 
-#: ../src/nodepath.cpp:4153
+#: ../src/nodepath.cpp:4190
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3508,15 +3489,15 @@ msgstr ""
 "<b>Kéo</b> nút hay móc nút; <b>Alt+drag</b> nút để điêu khắc; <b>mũi tên</b> "
 "để di chuyển nút; <b>&lt; &gt;</b> để co dãn; <b>[ ]</b> để xoay"
 
-#: ../src/nodepath.cpp:4154
+#: ../src/nodepath.cpp:4191
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "<b>Kéo</b> nút hay móc của nó; <b>mũi tên</b> để di chuyển nút"
 
-#: ../src/nodepath.cpp:4177 ../src/nodepath.cpp:4189
+#: ../src/nodepath.cpp:4214 ../src/nodepath.cpp:4226
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Chọn một đối tượng riêng để sửa đổi nút hay móc của nó."
 
-#: ../src/nodepath.cpp:4181
+#: ../src/nodepath.cpp:4218
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3531,18 +3512,18 @@ msgstr[1] ""
 "<b>0</b> trên <b>%i</b> nút được chọn. <b>Nhấn</b>, <b>Shift+nhấn</b>, hay "
 "<b>kéo vòng quanh</b> nút để chọn."
 
-#: ../src/nodepath.cpp:4187
+#: ../src/nodepath.cpp:4224
 msgid "Drag the handles of the object to modify it."
 msgstr "Kéo móc của đối tượng để sửa đổi nó."
 
-#: ../src/nodepath.cpp:4195
+#: ../src/nodepath.cpp:4232
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> trên <b>%i</b> nút được chọn; %s. %s."
 msgstr[1] "<b>%i</b> trên <b>%i</b> nút được chọn; %s. %s."
 
-#: ../src/nodepath.cpp:4202
+#: ../src/nodepath.cpp:4239
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3555,7 +3536,7 @@ msgstr[1] ""
 "<b>%i</b> trên <b>%i</b> nút được chọn trong <b>%i</b> trên <b>%i</b> đường "
 "dẫn phụ. %s."
 
-#: ../src/nodepath.cpp:4208
+#: ../src/nodepath.cpp:4245
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3884,7 +3865,7 @@ msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Chọn (các) <b>đối tượng</b> cần nhân đôi."
 
 #: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
-#: ../src/widgets/gradient-toolbar.cpp:488
+#: ../src/widgets/gradient-toolbar.cpp:482
 msgid "Duplicate"
 msgstr "Nhân đôi"
 
@@ -4048,7 +4029,7 @@ msgstr "Xoay _90º xuôi chiều"
 msgid "Rotate 90&#176; CCW"
 msgstr "Xoay 9_0º ngược chiều"
 
-#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:355
 #, fuzzy
 msgid "Rotate"
 msgstr "_Xoay"
@@ -4057,7 +4038,7 @@ msgstr "_Xoay"
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:352
 #, fuzzy
 msgid "Scale"
 msgstr "_Co dãn"
@@ -4076,7 +4057,7 @@ msgid "Move horizontally"
 msgstr "_Ngang"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
-#: ../src/seltrans.cpp:347
+#: ../src/seltrans.cpp:349
 #, fuzzy
 msgid "Move"
 msgstr "_Chuyển"
@@ -4375,12 +4356,12 @@ msgstr "%s%s. %s."
 msgid "Set center"
 msgstr "Chọn máy in"
 
-#: ../src/seltrans.cpp:356
+#: ../src/seltrans.cpp:358
 #, fuzzy
 msgid "Skew"
 msgstr "_Lệch"
 
-#: ../src/seltrans.cpp:477
+#: ../src/seltrans.cpp:476
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4388,7 +4369,7 @@ msgstr ""
 "<b>Tâm</b> của việc xoay và lệch: kéo để đắt lại vị trí; việc co dãn với "
 "phím Shift cũng dùng tâm này"
 
-#: ../src/seltrans.cpp:504
+#: ../src/seltrans.cpp:503
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4396,7 +4377,7 @@ msgstr ""
 "<b>Vắt hay kéo giãn</b> vùng chọn; với phím: <b>Ctrl</b> để co dãn đều đều; "
 "<b>Shift</b> để co dãn vòng quanh tâm xoay."
 
-#: ../src/seltrans.cpp:505
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4404,7 +4385,7 @@ msgstr ""
 "<b>Co dãn</b> vùng chọn; với phím: <b>Ctrl</b> để co dãn đều đều; <b>Shift</"
 "b> để co dãn vòng quanh tâm xoay."
 
-#: ../src/seltrans.cpp:509
+#: ../src/seltrans.cpp:508
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4412,7 +4393,7 @@ msgstr ""
 "<b>Đối xứng lệch</b> vùng chọn; với phím: <b>Ctrl</b> để dính góc; <b>Shift</"
 "b> để đối xứng lệch quanh bên đối diện."
 
-#: ../src/seltrans.cpp:510
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4420,36 +4401,36 @@ msgstr ""
 "<b>Xoay</b> vùng chọn; với phím: <b>Ctrl</b> để dính góc; <b>Shift</b> để "
 "xoay quanh góc đối diện."
 
-#: ../src/seltrans.cpp:641
+#: ../src/seltrans.cpp:640
 #, fuzzy
 msgid "Reset center"
 msgstr "Nâng lên lớp hiện có"
 
-#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
+#: ../src/seltrans.cpp:887 ../src/seltrans.cpp:999
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Co dãn</b>: %0.2f%% x %0.2f%%; với phím: <b>Ctrl</b> để khoá tỷ lệ."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1090
+#: ../src/seltrans.cpp:1089
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Đối xứng lệch</b>: %0.2f&#176;; với phím: <b>Ctrl</b> để dính góc."
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1139
+#: ../src/seltrans.cpp:1138
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Xoay</b> %0.2f&#176;; với phím: <b>Ctrl</b> để dính góc"
 
-#: ../src/seltrans.cpp:1183
+#: ../src/seltrans.cpp:1182
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Chuyển <b>tâm</b> sang %s, %s"
 
-#: ../src/seltrans.cpp:1441
+#: ../src/seltrans.cpp:1440
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4555,21 +4536,21 @@ msgid "<b>Line</b>"
 msgstr "<b>Dòng</b>"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:423
+#: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr "<b>Hiệu số đã liên kết</b>, %s theo %f điểm"
 
-#: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
 msgid "outset"
 msgstr "hiệu ra"
 
-#: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
 msgid "inset"
 msgstr "hiệu vào"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:427
+#: ../src/sp-offset.cpp:434
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>HIệu số động</b>, %s theo %f điểm"
@@ -4613,7 +4594,7 @@ msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Đa giác</b> có %d đỉnh"
 msgstr[1] "<b>Đa giác</b> có %d đỉnh"
 
-#: ../src/sp-switch.cpp:96
+#: ../src/sp-switch.cpp:100
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -5003,19 +4984,19 @@ msgstr "Chọn một ảnh và một hay nhiều hình bên trên nó"
 msgid "Trace: No active desktop"
 msgstr "Đồ lại: không có màn hình nền hoạt động"
 
-#: ../src/trace/trace.cpp:330
+#: ../src/trace/trace.cpp:331
 msgid "Invalid SIOX result"
 msgstr "Kết quả SIOX không hợp lệ"
 
-#: ../src/trace/trace.cpp:435
+#: ../src/trace/trace.cpp:436
 msgid "Trace: No active document"
 msgstr "Đồ lại: không có tài liệu hoạt động"
 
-#: ../src/trace/trace.cpp:458
+#: ../src/trace/trace.cpp:459
 msgid "Trace: Image has no bitmap data"
 msgstr "Đồ lại: ảnh không có dữ liệu mảng ảnh"
 
-#: ../src/trace/trace.cpp:570
+#: ../src/trace/trace.cpp:571
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Đồ lại: đã xong. %ld nút đã được tạo."
@@ -5287,12 +5268,12 @@ msgstr "Mục nhỏ nhất"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1078
 msgid "Page"
 msgstr "Trang"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
-#: ../src/widgets/desktop-widget.cpp:1074
+#: ../src/widgets/desktop-widget.cpp:1082
 msgid "Drawing"
 msgstr "Vẽ"
 
@@ -6102,7 +6083,7 @@ msgstr "Nút"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
 #: ../src/ui/view/edit-widget.cpp:1064 ../src/verbs.cpp:2184
-#: ../src/widgets/desktop-widget.cpp:275
+#: ../src/widgets/desktop-widget.cpp:277
 msgid "Zoom"
 msgstr "Thu phóng"
 
@@ -7257,16 +7238,16 @@ msgstr "PLACEHOLDER, do not translate"
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
-#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:241
+#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:243
 msgid "Zoom drawing if window size changes"
 msgstr "Thu phóng bản vẽ nếu kích cỡ cửa sổ thay đổi"
 
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:295
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:297
 msgid "Cursor coordinates"
 msgstr "Tọa độ con trỏ"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:327
+#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:329
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7274,7 +7255,7 @@ msgstr ""
 "<b>Chúc mừng bạn dùng trình Inkscape !</b> Hãy dùng công cụ hình hay dạng tự "
 "do để táo đối tượng; dùng bộ chọn (mũi tên) để di chuyển hay chuyển dạng mục."
 
-#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:533
+#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:540
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7288,11 +7269,11 @@ msgstr ""
 "Nếu bạn đóng mà không lưu, các thay đổi sẽ bị hủy."
 
 #: ../src/ui/view/edit-widget.cpp:1204 ../src/ui/view/edit-widget.cpp:1251
-#: ../src/widgets/desktop-widget.cpp:549 ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:556 ../src/widgets/desktop-widget.cpp:620
 msgid "Close _without saving"
 msgstr "Đóng mà _không lưu"
 
-#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:596
+#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:603
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9220,13 +9201,13 @@ msgid "Pattern offset"
 msgstr "Hiệu mẫu"
 
 # Variable: don't translate / Biến: đừng dịch
-#: ../src/widgets/desktop-widget.cpp:375
+#: ../src/widgets/desktop-widget.cpp:379
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
 # Variable: don't translate / Biến: đừng dịch
-#: ../src/widgets/desktop-widget.cpp:377
+#: ../src/widgets/desktop-widget.cpp:381
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -9254,7 +9235,7 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "ĂăÂâÊêÔôƯưƠơĐđ₫«»ằẩễốựỡẳữẵỵẴỔỬỴỜ"
 
 #: ../src/widgets/gradient-selector.cpp:138
-#: ../src/widgets/gradient-toolbar.cpp:499
+#: ../src/widgets/gradient-toolbar.cpp:493
 msgid "Edit..."
 msgstr "Sửa..."
 
@@ -9300,7 +9281,7 @@ msgstr "<small>Không có dốc trong vùng chọn</small>"
 msgid "<small>Multiple gradients</small>"
 msgstr "<small>Nhiều dốc</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:489
+#: ../src/widgets/gradient-toolbar.cpp:483
 msgid ""
 "If the gradient is used by more than one object, create a copy of it for the "
 "selected object(s)"
@@ -9309,11 +9290,11 @@ msgstr ""
 "được chọn."
 
 # Stop = phase (pha)
-#: ../src/widgets/gradient-toolbar.cpp:500
+#: ../src/widgets/gradient-toolbar.cpp:494
 msgid "Edit the stops of the gradient"
 msgstr "Sửa đổi các pha của dốc"
 
-#: ../src/widgets/gradient-toolbar.cpp:557 ../src/widgets/toolbox.cpp:1121
+#: ../src/widgets/gradient-toolbar.cpp:553 ../src/widgets/toolbox.cpp:1121
 #: ../src/widgets/toolbox.cpp:1210 ../src/widgets/toolbox.cpp:1509
 #: ../src/widgets/toolbox.cpp:1558 ../src/widgets/toolbox.cpp:1796
 #: ../src/widgets/toolbox.cpp:1831 ../src/widgets/toolbox.cpp:2413
@@ -9321,23 +9302,23 @@ msgstr "Sửa đổi các pha của dốc"
 msgid "<b>New:</b>"
 msgstr "<b>Mới:</b>"
 
-#: ../src/widgets/gradient-toolbar.cpp:570
+#: ../src/widgets/gradient-toolbar.cpp:566
 msgid "Create linear gradient"
 msgstr "Tạo dốc tuyến"
 
-#: ../src/widgets/gradient-toolbar.cpp:584
+#: ../src/widgets/gradient-toolbar.cpp:580
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Tạo dốc xuyên tâm (hình bầu dục hay tròn)"
 
-#: ../src/widgets/gradient-toolbar.cpp:599
+#: ../src/widgets/gradient-toolbar.cpp:595
 msgid "on"
 msgstr "trên"
 
-#: ../src/widgets/gradient-toolbar.cpp:612
+#: ../src/widgets/gradient-toolbar.cpp:608
 msgid "Create gradient in the fill"
 msgstr "Tạo dốc trong vùng tô"
 
-#: ../src/widgets/gradient-toolbar.cpp:626
+#: ../src/widgets/gradient-toolbar.cpp:622
 msgid "Create gradient in the stroke"
 msgstr "Tạo dốc trong nét"
 
@@ -9345,7 +9326,7 @@ msgstr "Tạo dốc trong nét"
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:640 ../src/widgets/toolbox.cpp:1123
+#: ../src/widgets/gradient-toolbar.cpp:636 ../src/widgets/toolbox.cpp:1123
 #: ../src/widgets/toolbox.cpp:1142 ../src/widgets/toolbox.cpp:1517
 #: ../src/widgets/toolbox.cpp:1542 ../src/widgets/toolbox.cpp:1798
 #: ../src/widgets/toolbox.cpp:1817 ../src/widgets/toolbox.cpp:2416
@@ -10655,6 +10636,37 @@ msgstr "Siêu tập tin Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Nhập Siêu tập tin Windows"
+
+#~ msgid "write error occurred"
+#~ msgstr "gặp lỗi ghi"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
+#~ "whiteboard invitation.</span>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đã từ chối lời "
+#~ "mời bảng trắng của bạn.</span>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "You are still connected to a Jabber server as <b>%2</b>, and may send an "
+#~ "invitation to <b>%1</b> again, or you may send an invitation to a "
+#~ "different user."
+#~ msgstr ""
+#~ "Bạn vẫn còn được kết nối đến máy phục vụ Jabber với tư cách là <b>%2</b>, "
+#~ "và có khả năng gởi lại lời mời cho <b>%1</b>, hoặc gởi lời mời cho người "
+#~ "dùng khác."
+
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
+#~ "incompatible version of Inkboard.</span>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đã vào trong "
+#~ "một buổi hợp bảng trắng.</span>\n"
+#~ "\n"
 
 #~ msgid "Fit Canvas to Selection"
 #~ msgstr "Vừa vùng vẽ khít vùng chọn"

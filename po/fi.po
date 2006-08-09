@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-26 20:45+0200\n"
+"POT-Creation-Date: 2006-08-09 20:17+0200\n"
 "PO-Revision-Date: 2006-07-22 15:27+0300\n"
 "Last-Translator: Riku Leino <tsoots@gmail.com>\n"
 "Language-Team: Finnish\n"
@@ -807,7 +807,7 @@ msgid "x_1:"
 msgstr "x_1:"
 
 #. Stroke width
-#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:51
+#: ../src/dialogs/export.cpp:311 ../src/dialogs/object-attributes.cpp:55
 #: ../src/dialogs/stroke-style.cpp:977 ../src/widgets/toolbox.cpp:2041
 msgid "Width:"
 msgstr "Leveys:"
@@ -821,7 +821,7 @@ msgid "y_1:"
 msgstr "y_1:"
 
 #: ../src/dialogs/export.cpp:327 ../src/dialogs/export.cpp:445
-#: ../src/dialogs/object-attributes.cpp:52
+#: ../src/dialogs/object-attributes.cpp:56
 msgid "Height:"
 msgstr "Korkeus:"
 
@@ -1132,7 +1132,7 @@ msgstr "%d &#215; %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1086
 msgid "Selection"
 msgstr "Valinta"
 
@@ -1290,74 +1290,74 @@ msgstr "_Lisää"
 msgid "New layer created."
 msgstr "Uusi taso luotu."
 
-#: ../src/dialogs/object-attributes.cpp:30
+#: ../src/dialogs/object-attributes.cpp:34
 msgid "Href:"
 msgstr "Osoite:"
 
-#: ../src/dialogs/object-attributes.cpp:31
+#: ../src/dialogs/object-attributes.cpp:35
 msgid "Target:"
 msgstr "Kohde:"
 
-#: ../src/dialogs/object-attributes.cpp:32
+#: ../src/dialogs/object-attributes.cpp:36
 msgid "Type:"
 msgstr "Tyyppi:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/dialogs/object-attributes.cpp:35
+#: ../src/dialogs/object-attributes.cpp:39
 msgid "Role:"
 msgstr "Rooli:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/dialogs/object-attributes.cpp:38
+#: ../src/dialogs/object-attributes.cpp:42
 msgid "Arcrole:"
 msgstr "Lisämääritys:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
-#: ../src/dialogs/object-attributes.cpp:40
+#: ../src/dialogs/object-attributes.cpp:44
 msgid "Title:"
 msgstr "Nimi:"
 
-#: ../src/dialogs/object-attributes.cpp:41
+#: ../src/dialogs/object-attributes.cpp:45
 msgid "Show:"
 msgstr "Näytä:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/dialogs/object-attributes.cpp:43
+#: ../src/dialogs/object-attributes.cpp:47
 msgid "Actuate:"
 msgstr "Toimeenpano:"
 
-#: ../src/dialogs/object-attributes.cpp:48
+#: ../src/dialogs/object-attributes.cpp:52
 msgid "URL:"
 msgstr "URL:"
 
-#: ../src/dialogs/object-attributes.cpp:49
+#: ../src/dialogs/object-attributes.cpp:53
 msgid "X:"
 msgstr "X:"
 
-#: ../src/dialogs/object-attributes.cpp:50
+#: ../src/dialogs/object-attributes.cpp:54
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/dialogs/object-attributes.cpp:94
+#: ../src/dialogs/object-attributes.cpp:100
 #, c-format
 msgid "%s attributes"
 msgstr "%s ominaisuudet"
 
-#: ../src/dialogs/object-properties.cpp:161
+#: ../src/dialogs/object-properties.cpp:164
 msgid "_Fill"
 msgstr "_Täyttö"
 
-#: ../src/dialogs/object-properties.cpp:168
+#: ../src/dialogs/object-properties.cpp:171
 msgid "Stroke _paint"
 msgstr "_Viivan väritys"
 
-#: ../src/dialogs/object-properties.cpp:175
+#: ../src/dialogs/object-properties.cpp:178
 msgid "Stroke st_yle"
 msgstr "Viivan t_yyli"
 
-#: ../src/dialogs/object-properties.cpp:186
+#: ../src/dialogs/object-properties.cpp:189
 msgid "Master _opacity"
 msgstr "Täytön peitt_o"
 
@@ -1798,11 +1798,11 @@ msgstr "Uusi elementtisolmu"
 msgid "New text node"
 msgstr "Uusi tekstisolmu"
 
-#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1698
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1708
 msgid "Duplicate node"
 msgstr "Monista solmu"
 
-#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2902
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2918
 msgid "Delete node"
 msgstr "Poista solmu"
 
@@ -2048,7 +2048,7 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr "Näytä ikkuna käynnistettäessä"
 
-#: ../src/extension/implementation/script.cpp:994
+#: ../src/extension/implementation/script.cpp:990
 msgid ""
 "Inkscape has received an error from the script that it called.  The text "
 "returned with the error is included below.  Inkscape will continue working, "
@@ -2058,7 +2058,7 @@ msgstr ""
 "mukana tullut teksti on luettavissa alla. Inkscape jatkaa toimintaansa "
 "normaalisti, mutta pyytämäsi toiminto peruutettiin."
 
-#: ../src/extension/implementation/script.cpp:1007
+#: ../src/extension/implementation/script.cpp:1003
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -2068,11 +2068,11 @@ msgstr ""
 "palauttanut virheilmoitusta, mutta tämä saattaa viitata odottamattomaan "
 "tulokseen."
 
-#: ../src/extension/init.cpp:169
+#: ../src/extension/init.cpp:175
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "Moduulihakemisto on nimeämättä. Moduuleja ei voi ladata."
 
-#: ../src/extension/init.cpp:183
+#: ../src/extension/init.cpp:189
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -2218,6 +2218,82 @@ msgstr "OpenDocument Piirros (*.odg)"
 msgid "OpenDocument drawing file"
 msgstr "OpenDocument Piirros -tiedosto"
 
+#: ../src/extension/internal/pdf-cairo.cpp:125
+#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
+msgid "Print Destination"
+msgstr "Tulosteen kohde"
+
+#. Print properties frame
+#: ../src/extension/internal/pdf-cairo.cpp:140
+#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
+msgid "Print properties"
+msgstr "Tulostuksen ominaisuudet"
+
+#: ../src/extension/internal/pdf-cairo.cpp:147
+#: ../src/extension/internal/pdf.cpp:130
+msgid "Print using PDF operators"
+msgstr "Tulosta käyttäen PDF-operaattoreita"
+
+#: ../src/extension/internal/pdf-cairo.cpp:149
+#: ../src/extension/internal/pdf.cpp:132
+msgid ""
+"Use PDF vector operators. The resulting image is usually smaller in file "
+"size and can be arbitrarily scaled, but patterns will be lost."
+msgstr ""
+"Käytä PDF:n vektorioperaattoreita. Tuloksena saadun tiedoston koko on "
+"yleensä pieni ja tulosteen kokoa voidaan muuttaa laadun kärsimättä, mutta "
+"kuvioinnit menetetään."
+
+#: ../src/extension/internal/pdf-cairo.cpp:154
+#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
+msgid "Print as bitmap"
+msgstr "Tulosta bittikarttana"
+
+#: ../src/extension/internal/pdf-cairo.cpp:156
+#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
+msgid ""
+"Print everything as bitmap. The resulting image is usually larger in file "
+"size and cannot be arbitrarily scaled without quality loss, but all objects "
+"will be rendered exactly as displayed."
+msgstr ""
+"Tulosta kaikki bittikarttana. Tuloksena saatu kuva on usein tiedostokooltaan "
+"suuri eikä sen kokoa voi muuttaa laadun heikkenemättä, mutta kaikki kohteet "
+"piirtyvät täsmälleen samanlaisena kuin ne ovat näytöllä."
+
+#: ../src/extension/internal/pdf-cairo.cpp:170
+#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
+msgid "Preferred resolution (dots per inch) of bitmap"
+msgstr "Haluttu tarkkuus (dpi) bittikartalle"
+
+#: ../src/extension/internal/pdf-cairo.cpp:184
+#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
+msgid "Resolution:"
+msgstr "Tarkkuus:"
+
+#. Print destination frame
+#: ../src/extension/internal/pdf-cairo.cpp:188
+#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
+msgid "Print destination"
+msgstr "Tulosteen kohde"
+
+#: ../src/extension/internal/pdf-cairo.cpp:194
+#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
+msgid ""
+"Printer name (as given by lpstat -p);\n"
+"leave empty to use the system default printer.\n"
+"Use '> filename' to print to file.\n"
+"Use '| prog arg...' to pipe to a program."
+msgstr ""
+"Tulostimen nimi (komennolta lpstat -p);\n"
+"tyhjänä käytetään järjestelmän oletustulostinta. \n"
+"Käytä merkintää \"> Tiedostonimi\" tulostaaksesi tiedostoon. \n"
+"Käytä merkintää \"| ohjelma arg...\" putkittaaksesi ohjelmalle."
+
+#: ../src/extension/internal/pdf-cairo.cpp:1022
+#: ../src/extension/internal/pdf.cpp:1566
+msgid "PDF Print"
+msgstr "PDF-tulostus"
+
 #: ../src/extension/internal/pov-out.cpp:457
 msgid "PovRay Output"
 msgstr "PovRay-tallennus"
@@ -2247,15 +2323,6 @@ msgstr "Postscript (*.ps)"
 msgid "Postscript File"
 msgstr "Postscript-tiedosto"
 
-#: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:112
-msgid "Print Destination"
-msgstr "Tulosteen kohde"
-
-#. Print properties frame
-#: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:127
-msgid "Print properties"
-msgstr "Tulostuksen ominaisuudet"
-
 #: ../src/extension/internal/ps.cpp:126
 msgid "Print using PostScript operators"
 msgstr "Tulosta käyttäen PostScript-operaattoreita"
@@ -2269,45 +2336,6 @@ msgstr ""
 "Käytä vektorien piirtämiseen PostScriptin operaattoreita. Tuloksena saatu "
 "kuva on usein pienempi tiedostokooltaan ja sen kokoa voidaan muuttaa laadun "
 "heikkenemättä, mutta läpinäkyvyys ja kuvioinnit menetetään."
-
-#: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:141
-msgid "Print as bitmap"
-msgstr "Tulosta bittikarttana"
-
-#: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:143
-msgid ""
-"Print everything as bitmap. The resulting image is usually larger in file "
-"size and cannot be arbitrarily scaled without quality loss, but all objects "
-"will be rendered exactly as displayed."
-msgstr ""
-"Tulosta kaikki bittikarttana. Tuloksena saatu kuva on usein tiedostokooltaan "
-"suuri eikä sen kokoa voi muuttaa laadun heikkenemättä, mutta kaikki kohteet "
-"piirtyvät täsmälleen samanlaisena kuin ne ovat näytöllä."
-
-#: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:157
-msgid "Preferred resolution (dots per inch) of bitmap"
-msgstr "Haluttu tarkkuus (dpi) bittikartalle"
-
-#: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:171
-msgid "Resolution:"
-msgstr "Tarkkuus:"
-
-#. Print destination frame
-#: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:175
-msgid "Print destination"
-msgstr "Tulosteen kohde"
-
-#: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:181
-msgid ""
-"Printer name (as given by lpstat -p);\n"
-"leave empty to use the system default printer.\n"
-"Use '> filename' to print to file.\n"
-"Use '| prog arg...' to pipe to a program."
-msgstr ""
-"Tulostimen nimi (komennolta lpstat -p);\n"
-"tyhjänä käytetään järjestelmän oletustulostinta. \n"
-"Käytä merkintää \"> Tiedostonimi\" tulostaaksesi tiedostoon. \n"
-"Käytä merkintää \"| ohjelma arg...\" putkittaaksesi ohjelmalle."
 
 #: ../src/extension/internal/ps.cpp:1217
 msgid "Postscript Print"
@@ -2387,26 +2415,20 @@ msgstr "Scalable Vector Graphics -tiedostomuoto pakattuna GZipillä"
 msgid "Windows 32-bit Print"
 msgstr "Windows 32-bit tulostus"
 
-#: ../src/extension/internal/pdf.cpp:134
-msgid "Print using PDF operators"
-msgstr "Tulosta käyttäen PDF-operaattoreita"
+#: ../src/extension/internal/wpg-input.cpp:343
+#, fuzzy
+msgid "WPG Input"
+msgstr "SVG-tuonti"
 
-#: ../src/extension/internal/pdf.cpp:136
-msgid ""
-"Use PDF vector operators. The resulting image is usually smaller in file "
-"size and can be arbitrarily scaled, but patterns will be lost."
-msgstr ""
-"Käytä PDF:n vektorioperaattoreita. Tuloksena saadun tiedoston koko on "
-"yleensä pieni ja tulosteen kokoa voidaan muuttaa laadun kärsimättä, mutta "
-"kuvioinnit menetetään."
+#: ../src/extension/internal/wpg-input.cpp:348
+#, fuzzy
+msgid "WordPerfect Graphics (*.wpg)"
+msgstr "Scalable Vector Graphic (*.svg)"
 
-#: ../src/extension/internal/pdf.cpp:1528
-msgid "write error occurred"
-msgstr "kirjoitettaessa tapahtui virhe"
-
-#: ../src/extension/internal/pdf.cpp:1555
-msgid "PDF Print"
-msgstr "PDF-tulostus"
+#: ../src/extension/internal/wpg-input.cpp:349
+#, fuzzy
+msgid "Vector graphics format used by Corel WordPerfect"
+msgstr "W3C:n määrittelemä Scalable Vector Grahpics -tiedostomuoto"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -2900,78 +2922,16 @@ msgstr ""
 msgid "_Write session file:"
 msgstr "_Kirjoita istuntotiedosto:"
 
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:46
-msgid "<b>%1</b> has invited you to a whiteboard session."
-msgstr "<b>%1</b> on kutsunut sinut piirtotauluistuntoon."
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:47
-msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
-msgstr "Hyväksytkö piirtotaulukutsun käyttäjältä <b>%1</b>?"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:51
-msgid "Accept invitation"
-msgstr "Hyväksyn"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:52
-msgid "Decline invitation"
-msgstr "En hyväksy"
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:102
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
-"whiteboard invitation.</span>\n"
-"\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Käyttäjä <b>%1</b> on kieltäytynyt "
-"piirtotaulukutsustasi.</span>\n"
-"\n"
-
-#. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:105
-msgid ""
-"You are still connected to a Jabber server as <b>%2</b>, and may send an "
-"invitation to <b>%1</b> again, or you may send an invitation to a different "
-"user."
-msgstr ""
-"Olet yhä yhteydessä Jabber-palvelimeen nimimerkillä <b>%2</b> ja voit "
-"lähettää kutsun käyttäjälle <b>%1</b> uudestaan tai jollekin toiselle "
-"käyttäjälle."
-
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:117
-msgid ""
-"<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
-"incompatible version of Inkboard.</span>\n"
-"\n"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Käyttän <b>%1</b> versio on "
-"yhteensopimaton</span>\n"
-"\n"
-
-#. TRANSLATORS: %1 is the peer whom refused our invitation, %2 is our Jabber identity.
-#: ../src/jabber_whiteboard/invitation-handlers.cpp:120
-msgid ""
-"Inkscape cannot connect to <b>%1</b>.\n"
-"\n"
-"You are still connected to a Jabber server as <b>%2</b>."
-msgstr ""
-"Inkscape ei voi yhdistää käyttäjään <b>%1</b>\n"
-"\n"
-"Olet yhä yhdistettynä Jabber-palvelimeen käyttäjänä <b>%2</b>."
-
 #. if ID is NULL, then we have a real problem -- we were not able to find a key
 #. nor generate one.  The only thing we can really do here is abort, since we have
 #. no way to let the other client(s) uniquely identify this object.
-#: ../src/jabber_whiteboard/message-utilities.cpp:169
+#: ../src/jabber_whiteboard/message-utilities.cpp:168
 msgid ""
 "ID for new object is NULL even after generation and lookup attempts: the new "
 "object will NOT be sent, nor will any of its child objects!"
 msgstr ""
 "Uudella kohteella ei ole tunnusta, vaikka tunnusta yritettiin luoda ja "
 "hakea. Uutta kohdetta tai sen lapsikohteita ei lähetetä!"
-
-#: ../src/jabber_whiteboard/new-inkboard-document.cpp:60
-msgid "Inkboard session (%1 to %2)"
-msgstr "Piirtotauluistunto (%1&#8211;%2)"
 
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
@@ -2980,6 +2940,26 @@ msgstr "Valitse sijainti ja tiedostonimi"
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 msgid "Set filename"
 msgstr "Anna tiedostonimi"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:308
+msgid "<b>%1</b> has invited you to a whiteboard session."
+msgstr "<b>%1</b> on kutsunut sinut piirtotauluistuntoon."
+
+#: ../src/jabber_whiteboard/session-manager.cpp:310
+msgid "Do you wish to accept <b>%1</b>'s whiteboard session invitation?"
+msgstr "Hyväksytkö piirtotaulukutsun käyttäjältä <b>%1</b>?"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:314
+msgid "Accept invitation"
+msgstr "Hyväksyn"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:315
+msgid "Decline invitation"
+msgstr "En hyväksy"
+
+#: ../src/jabber_whiteboard/session-manager.cpp:370
+msgid "Inkboard session (%1 to %2)"
+msgstr "Piirtotauluistunto (%1&#8211;%2)"
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -3303,28 +3283,27 @@ msgstr ""
 "<b>Alt</b>: lukitse hallintapisteen pituus. <b>Ctrl+Alt</b>: siirrä "
 "hallintapisteitä pitkin"
 
-#. drag curve
-#: ../src/node-context.cpp:628
+#: ../src/node-context.cpp:641
 msgid "Drag curve"
 msgstr "Raahaa kaari"
 
-#: ../src/nodepath.cpp:548 ../src/seltrans.cpp:455
+#: ../src/nodepath.cpp:551 ../src/seltrans.cpp:454
 msgid "Stamp"
 msgstr "Leimasin"
 
-#: ../src/nodepath.cpp:1219 ../src/nodepath.cpp:1247
+#: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
 msgid "Move nodes vertically"
 msgstr "Siirrä solmuja pystysuunnassa"
 
-#: ../src/nodepath.cpp:1221 ../src/nodepath.cpp:1249
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252
 msgid "Move nodes horizontally"
 msgstr "Siirrä solmuja vaakasuunnassa"
 
-#: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251 ../src/nodepath.cpp:2983
+#: ../src/nodepath.cpp:1226 ../src/nodepath.cpp:1254 ../src/nodepath.cpp:2999
 msgid "Move nodes"
 msgstr "Siirrä solmuja"
 
-#: ../src/nodepath.cpp:1259
+#: ../src/nodepath.cpp:1262
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3333,56 +3312,56 @@ msgstr ""
 "askeleittain, <b>Alt</b> lukitsee pituuden ja <b>Vaihto</b> kiertää molempia "
 "hallintapisteitä"
 
-#: ../src/nodepath.cpp:1430
+#: ../src/nodepath.cpp:1433
 msgid "Align nodes"
 msgstr "Tasaa solmut"
 
-#: ../src/nodepath.cpp:1492
+#: ../src/nodepath.cpp:1495
 msgid "Distribute nodes"
 msgstr "Jaa solmut"
 
-#: ../src/nodepath.cpp:1531
+#: ../src/nodepath.cpp:1534
 msgid "Add nodes"
 msgstr "Lisää solmuja"
 
-#: ../src/nodepath.cpp:1533 ../src/nodepath.cpp:1592
+#: ../src/nodepath.cpp:1536 ../src/nodepath.cpp:1598
 msgid "Add node"
 msgstr "Lisää solmu"
 
-#: ../src/nodepath.cpp:1668
+#: ../src/nodepath.cpp:1678
 msgid "Break path"
 msgstr "Katkaise polku"
 
-#: ../src/nodepath.cpp:1710 ../src/nodepath.cpp:1722 ../src/nodepath.cpp:1809
-#: ../src/nodepath.cpp:1821
+#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
+#: ../src/nodepath.cpp:1831
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Yhdistämistä varten tarvitaan kaksi valittua <b>päätesolmua</b>."
 
-#: ../src/nodepath.cpp:1743
+#: ../src/nodepath.cpp:1753
 msgid "Close subpath"
 msgstr "Sulje osapolku"
 
-#: ../src/nodepath.cpp:1795
+#: ../src/nodepath.cpp:1805
 msgid "Join nodes"
 msgstr "Yhdistä solmut"
 
-#: ../src/nodepath.cpp:1842
+#: ../src/nodepath.cpp:1852
 msgid "Close subpath by segment"
 msgstr "Sulje osapolku lohkolla"
 
-#: ../src/nodepath.cpp:1896
+#: ../src/nodepath.cpp:1906
 msgid "Join nodes by segment"
 msgstr "Liitä valitut solmut lohkolla"
 
-#: ../src/nodepath.cpp:2018 ../src/nodepath.cpp:2055 ../src/nodepath.cpp:2059
+#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
 msgid "Delete nodes"
 msgstr "Poista solmut"
 
-#: ../src/nodepath.cpp:2020
+#: ../src/nodepath.cpp:2036
 msgid "Delete nodes preserving shape"
 msgstr "Poista solmut säilyttäen muoto"
 
-#: ../src/nodepath.cpp:2079 ../src/nodepath.cpp:2093
+#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3390,31 +3369,31 @@ msgstr ""
 "Valitse polun <b>kaksi solmua, jotka eivät ole päissä</b> ja joiden välistä "
 "lohkot poistetaan."
 
-#: ../src/nodepath.cpp:2189
+#: ../src/nodepath.cpp:2205
 msgid "Cannot find path between nodes."
 msgstr "Solmujen välille ei löydy polkua."
 
-#: ../src/nodepath.cpp:2218
+#: ../src/nodepath.cpp:2234
 msgid "Delete segment"
 msgstr "Poista lohko"
 
-#: ../src/nodepath.cpp:2240
+#: ../src/nodepath.cpp:2256
 msgid "Change segment type"
 msgstr "Muuta lohkon tyyppiä"
 
-#: ../src/nodepath.cpp:2256 ../src/nodepath.cpp:2946
+#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
 msgid "Change node type"
 msgstr "Muuta solmun tyyppiä"
 
-#: ../src/nodepath.cpp:3214
+#: ../src/nodepath.cpp:3230
 msgid "Retract handle"
 msgstr "Palauta hallintapiste"
 
-#: ../src/nodepath.cpp:3262
+#: ../src/nodepath.cpp:3278
 msgid "Move node handle"
 msgstr "Siirrä hallintapistettä"
 
-#: ../src/nodepath.cpp:3402
+#: ../src/nodepath.cpp:3418
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3425,19 +3404,19 @@ msgstr ""
 "askeleittain, <b>Alt</b> lukitsee pituuden ja <b>Vaihto</b> kiertää molempia "
 "hallintapisteitä"
 
-#: ../src/nodepath.cpp:3580
+#: ../src/nodepath.cpp:3596
 msgid "Rotate nodes"
 msgstr "Kierrä solmuja"
 
-#: ../src/nodepath.cpp:3705
+#: ../src/nodepath.cpp:3721
 msgid "Scale nodes"
 msgstr "Muuta solmujen kokoa"
 
-#: ../src/nodepath.cpp:3752
+#: ../src/nodepath.cpp:3768
 msgid "Flip nodes"
 msgstr "Käännä solmuja"
 
-#: ../src/nodepath.cpp:3917
+#: ../src/nodepath.cpp:3933
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3446,44 +3425,44 @@ msgstr ""
 "pystyakselille ja <b>Ctrl+Alt</b> kiinniittää hallintapisteiden suuntiin"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4120
+#: ../src/nodepath.cpp:4157
 msgid "end node"
 msgstr "päätesolmu"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4125
+#: ../src/nodepath.cpp:4162
 msgid "cusp"
 msgstr "terävä"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4128
+#: ../src/nodepath.cpp:4165
 msgid "smooth"
 msgstr "tasainen"
 
-#: ../src/nodepath.cpp:4130
+#: ../src/nodepath.cpp:4167
 msgid "symmetric"
 msgstr "symmetrinen"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4136
+#: ../src/nodepath.cpp:4173
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "päätesolmu, hallintapiste piilotettu (raahaa <b>Vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4138
+#: ../src/nodepath.cpp:4175
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "yksi hallintapiste piilotettu (raahaa <b>vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4141
+#: ../src/nodepath.cpp:4178
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "molemmat hallintapisteet pillotettu (raahaa <b>vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4153
+#: ../src/nodepath.cpp:4190
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3493,17 +3472,17 @@ msgstr ""
 "muotoillaksesi, <b>Nuoli</b>näppäimillä voit siirtää solmuja. <b>&lt; ja &gt;"
 "</b> muuttavat kokoa ja <b>[ ja ]</b> kiertävät"
 
-#: ../src/nodepath.cpp:4154
+#: ../src/nodepath.cpp:4191
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Raahaa</b> solmua tai hallintapisteitä. <b>Nuolinäppäimet</b> siirtävät "
 "solmua"
 
-#: ../src/nodepath.cpp:4177 ../src/nodepath.cpp:4189
+#: ../src/nodepath.cpp:4214 ../src/nodepath.cpp:4226
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Valitse kohde muokataksesi sen solmuja tai hallintapisteitä."
 
-#: ../src/nodepath.cpp:4181
+#: ../src/nodepath.cpp:4218
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3518,18 +3497,18 @@ msgstr[1] ""
 "<b>0</b> (yht. <b>%i</b>) solmua valittuna. <b>Napsauta</b>, <b>Vaihto"
 "+napsauta</b> tai <b>raahaa</b> kohteitten ympäri valitaksesi"
 
-#: ../src/nodepath.cpp:4187
+#: ../src/nodepath.cpp:4224
 msgid "Drag the handles of the object to modify it."
 msgstr "Raahaa kohteen kahvoja muokataksesi sitä."
 
-#: ../src/nodepath.cpp:4195
+#: ../src/nodepath.cpp:4232
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> (yht. <b>%i</b>) solmu valittuna; %s. %s."
 msgstr[1] "<b>%i</b> (yht. <b>%i</b>) solmua valittuna; %s. %s."
 
-#: ../src/nodepath.cpp:4202
+#: ../src/nodepath.cpp:4239
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3542,7 +3521,7 @@ msgstr[1] ""
 "<b>%i</b> (yht. <b>%i</b>) solmua valittuna <b>%i</b> (yht. <b>%i</b>) "
 "osapolussa"
 
-#: ../src/nodepath.cpp:4208
+#: ../src/nodepath.cpp:4245
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3864,7 +3843,7 @@ msgid "Select <b>object(s)</b> to duplicate."
 msgstr "Valitse monistettavat <b>kohteet</b>."
 
 #: ../src/selection-chemistry.cpp:283 ../src/widgets/gradient-selector.cpp:133
-#: ../src/widgets/gradient-toolbar.cpp:488
+#: ../src/widgets/gradient-toolbar.cpp:482
 msgid "Duplicate"
 msgstr "Monista"
 
@@ -4013,7 +3992,7 @@ msgstr "Kierrä 90&#176; myötäp."
 msgid "Rotate 90&#176; CCW"
 msgstr "Kierrä 90&#176; vastap."
 
-#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:353
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:355
 msgid "Rotate"
 msgstr "Kierrä"
 
@@ -4021,7 +4000,7 @@ msgstr "Kierrä"
 msgid "Rotate by pixels"
 msgstr "Kierto pikseleissä"
 
-#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:350
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:352
 msgid "Scale"
 msgstr "Muuta kokoa"
 
@@ -4038,7 +4017,7 @@ msgid "Move horizontally"
 msgstr "Siirrä vaakasuunnassa"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
-#: ../src/seltrans.cpp:347
+#: ../src/seltrans.cpp:349
 msgid "Move"
 msgstr "Siirrä"
 
@@ -4332,11 +4311,11 @@ msgstr "%s%s. %s."
 msgid "Set center"
 msgstr "Aseta keskipiste"
 
-#: ../src/seltrans.cpp:356
+#: ../src/seltrans.cpp:358
 msgid "Skew"
 msgstr "Taita"
 
-#: ../src/seltrans.cpp:477
+#: ../src/seltrans.cpp:476
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4344,7 +4323,7 @@ msgstr ""
 "Kierron ja taiton <b>keskipiste</b>, jonka voi raahata uuteen paikkaan. "
 "Kohteen koon muutoksessa käytetään myös tätä pistettä"
 
-#: ../src/seltrans.cpp:504
+#: ../src/seltrans.cpp:503
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4352,7 +4331,7 @@ msgstr ""
 "<b>Kavenna tai levennä</b> valintaa. <b>Ctrl</b> painettuna sivujen suhteet "
 "säilytetään. <b>Vaihto</b> painettuna suhteessa keskipisteeseen"
 
-#: ../src/seltrans.cpp:505
+#: ../src/seltrans.cpp:504
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4361,7 +4340,7 @@ msgstr ""
 "sivujen suhteet. <b>Vaihto</b> painettuna koon muutos suhteessa "
 "keskipisteeseen"
 
-#: ../src/seltrans.cpp:509
+#: ../src/seltrans.cpp:508
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4369,7 +4348,7 @@ msgstr ""
 "<b>Taivuta</b> valintaa. <b>Ctrl</b> painettuna askeleittain. <b>Vaihto</b> "
 "pohjassa taivuta vastakkaisen sivun ympäri"
 
-#: ../src/seltrans.cpp:510
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4377,11 +4356,11 @@ msgstr ""
 "<b>Kierrä</b> valintaa. <b>Ctrl</b> painettuna askeleittain. <b>Vaihto</b> "
 "pohjassa vastakkaisen kulman ympäri"
 
-#: ../src/seltrans.cpp:641
+#: ../src/seltrans.cpp:640
 msgid "Reset center"
 msgstr "Palauta keskipiste"
 
-#: ../src/seltrans.cpp:888 ../src/seltrans.cpp:1000
+#: ../src/seltrans.cpp:887 ../src/seltrans.cpp:999
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4390,24 +4369,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1090
+#: ../src/seltrans.cpp:1089
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Taivuta</b>: %0.2f&#176;. <b>Crtrl</b> painettuna askeleittain"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1139
+#: ../src/seltrans.cpp:1138
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Kierrä</b>: %0.2f&#176;. <b>Ctrl</b> painettuna askeleittain"
 
-#: ../src/seltrans.cpp:1183
+#: ../src/seltrans.cpp:1182
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Siirrä <b>keskipiste</b> paikkaan %s, %s"
 
-#: ../src/seltrans.cpp:1441
+#: ../src/seltrans.cpp:1440
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4514,21 +4493,21 @@ msgid "<b>Line</b>"
 msgstr "<b>Viiva</b>"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:423
+#: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr "<b>Linkitetty koko</b>, %s %f pt"
 
-#: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
 msgid "outset"
 msgstr "laajenna"
 
-#: ../src/sp-offset.cpp:424 ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
 msgid "inset"
 msgstr "supista"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:427
+#: ../src/sp-offset.cpp:434
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Dynaaminen koko</b>, %s %f pt"
@@ -4573,7 +4552,7 @@ msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>Monikulmio</b>, jossa on %d kärki"
 msgstr[1] "<b>Monikulmio</b>, jossa on %d kärkeä"
 
-#: ../src/sp-switch.cpp:96
+#: ../src/sp-switch.cpp:100
 #, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
@@ -4956,19 +4935,19 @@ msgstr "Valitse yksi kuva ja yksi tai useampi kuvio sen yläpuolella"
 msgid "Trace: No active desktop"
 msgstr "Jäljitys: ei aktiivista työpöytää"
 
-#: ../src/trace/trace.cpp:330
+#: ../src/trace/trace.cpp:331
 msgid "Invalid SIOX result"
 msgstr "Virheellinen SIOX-tulos"
 
-#: ../src/trace/trace.cpp:435
+#: ../src/trace/trace.cpp:436
 msgid "Trace: No active document"
 msgstr "Jäljitys: ei aktiivista asiakirjaa"
 
-#: ../src/trace/trace.cpp:458
+#: ../src/trace/trace.cpp:459
 msgid "Trace: Image has no bitmap data"
 msgstr "Jäljitys: Kuvassa ei ole bittikarttadataa"
 
-#: ../src/trace/trace.cpp:570
+#: ../src/trace/trace.cpp:571
 #, c-format
 msgid "Trace: Done. %ld nodes created"
 msgstr "Jäljitys: Valmis, luotiin %ld solmua"
@@ -5239,12 +5218,12 @@ msgstr "Pienimpään"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1070
+#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1078
 msgid "Page"
 msgstr "Sivu"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
-#: ../src/widgets/desktop-widget.cpp:1074
+#: ../src/widgets/desktop-widget.cpp:1082
 msgid "Drawing"
 msgstr "Piirros"
 
@@ -6046,7 +6025,7 @@ msgstr "Solmu"
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
 #: ../src/ui/view/edit-widget.cpp:1064 ../src/verbs.cpp:2184
-#: ../src/widgets/desktop-widget.cpp:275
+#: ../src/widgets/desktop-widget.cpp:277
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -7179,16 +7158,16 @@ msgstr "PLACEHOLDER, do not translate"
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr "PLACEHOLDER, DO NOT TRANSLATE"
 
-#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:241
+#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:243
 msgid "Zoom drawing if window size changes"
 msgstr "Muuta näkymän kokoa, jos ikkunan koko muuttuu"
 
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:295
+#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:297
 msgid "Cursor coordinates"
 msgstr "Kursorin sijainti"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:327
+#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:329
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7196,7 +7175,7 @@ msgstr ""
 "<b>Tervetuloa Inkscapeen.</b> Luo kohteita kuviotyökaluilla tai piirrä niitä "
 "käsivaraisesti; Valintatyökalulla voit liikutella ja muuntaa kohteita."
 
-#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:533
+#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:540
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7210,11 +7189,11 @@ msgstr ""
 "Jos suljet tallentamatta, muutokset menetetään."
 
 #: ../src/ui/view/edit-widget.cpp:1204 ../src/ui/view/edit-widget.cpp:1251
-#: ../src/widgets/desktop-widget.cpp:549 ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:556 ../src/widgets/desktop-widget.cpp:620
 msgid "Close _without saving"
 msgstr "_Sulje tallentamatta"
 
-#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:596
+#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:603
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9106,12 +9085,12 @@ msgstr "Viivatyyli"
 msgid "Pattern offset"
 msgstr "Siirtymä"
 
-#: ../src/widgets/desktop-widget.cpp:375
+#: ../src/widgets/desktop-widget.cpp:379
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:377
+#: ../src/widgets/desktop-widget.cpp:381
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -9139,7 +9118,7 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr "AaBbCcIiPpQq12369$€¢?.;/()"
 
 #: ../src/widgets/gradient-selector.cpp:138
-#: ../src/widgets/gradient-toolbar.cpp:499
+#: ../src/widgets/gradient-toolbar.cpp:493
 msgid "Edit..."
 msgstr "Muokkaa..."
 
@@ -9183,18 +9162,18 @@ msgstr "<small>Valinnassa ei ole liukuvärejä</small>"
 msgid "<small>Multiple gradients</small>"
 msgstr "<small>Useita liukuvärejä</small>"
 
-#: ../src/widgets/gradient-toolbar.cpp:489
+#: ../src/widgets/gradient-toolbar.cpp:483
 msgid ""
 "If the gradient is used by more than one object, create a copy of it for the "
 "selected object(s)"
 msgstr ""
 "Jos liukuväri on käytössä useammassa kohteessa kopioi se valituille kohteille"
 
-#: ../src/widgets/gradient-toolbar.cpp:500
+#: ../src/widgets/gradient-toolbar.cpp:494
 msgid "Edit the stops of the gradient"
 msgstr "Muokkaa liukuvärin värirajoja"
 
-#: ../src/widgets/gradient-toolbar.cpp:557 ../src/widgets/toolbox.cpp:1121
+#: ../src/widgets/gradient-toolbar.cpp:553 ../src/widgets/toolbox.cpp:1121
 #: ../src/widgets/toolbox.cpp:1210 ../src/widgets/toolbox.cpp:1509
 #: ../src/widgets/toolbox.cpp:1558 ../src/widgets/toolbox.cpp:1796
 #: ../src/widgets/toolbox.cpp:1831 ../src/widgets/toolbox.cpp:2413
@@ -9202,23 +9181,23 @@ msgstr "Muokkaa liukuvärin värirajoja"
 msgid "<b>New:</b>"
 msgstr "<b>Uusi:</b>"
 
-#: ../src/widgets/gradient-toolbar.cpp:570
+#: ../src/widgets/gradient-toolbar.cpp:566
 msgid "Create linear gradient"
 msgstr "Luo suora liukuväri"
 
-#: ../src/widgets/gradient-toolbar.cpp:584
+#: ../src/widgets/gradient-toolbar.cpp:580
 msgid "Create radial (elliptic or circular) gradient"
 msgstr "Luo säteittäinen liukuväri"
 
-#: ../src/widgets/gradient-toolbar.cpp:599
+#: ../src/widgets/gradient-toolbar.cpp:595
 msgid "on"
 msgstr " "
 
-#: ../src/widgets/gradient-toolbar.cpp:612
+#: ../src/widgets/gradient-toolbar.cpp:608
 msgid "Create gradient in the fill"
 msgstr "Tee täytöstä liukuväri"
 
-#: ../src/widgets/gradient-toolbar.cpp:626
+#: ../src/widgets/gradient-toolbar.cpp:622
 msgid "Create gradient in the stroke"
 msgstr "Tee reunasta liukväri"
 
@@ -9226,7 +9205,7 @@ msgstr "Tee reunasta liukväri"
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
 #. FIXME: implement averaging of all parameters for multiple selected
 #. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/gradient-toolbar.cpp:640 ../src/widgets/toolbox.cpp:1123
+#: ../src/widgets/gradient-toolbar.cpp:636 ../src/widgets/toolbox.cpp:1123
 #: ../src/widgets/toolbox.cpp:1142 ../src/widgets/toolbox.cpp:1517
 #: ../src/widgets/toolbox.cpp:1542 ../src/widgets/toolbox.cpp:1798
 #: ../src/widgets/toolbox.cpp:1817 ../src/widgets/toolbox.cpp:2416
@@ -10525,3 +10504,42 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile -tuonti"
+
+#~ msgid "write error occurred"
+#~ msgstr "kirjoitettaessa tapahtui virhe"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has refused your "
+#~ "whiteboard invitation.</span>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Käyttäjä <b>%1</b> on kieltäytynyt "
+#~ "piirtotaulukutsustasi.</span>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "You are still connected to a Jabber server as <b>%2</b>, and may send an "
+#~ "invitation to <b>%1</b> again, or you may send an invitation to a "
+#~ "different user."
+#~ msgstr ""
+#~ "Olet yhä yhteydessä Jabber-palvelimeen nimimerkillä <b>%2</b> ja voit "
+#~ "lähettää kutsun käyttäjälle <b>%1</b> uudestaan tai jollekin toiselle "
+#~ "käyttäjälle."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
+#~ "incompatible version of Inkboard.</span>\n"
+#~ "\n"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Käyttän <b>%1</b> versio on "
+#~ "yhteensopimaton</span>\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "Inkscape cannot connect to <b>%1</b>.\n"
+#~ "\n"
+#~ "You are still connected to a Jabber server as <b>%2</b>."
+#~ msgstr ""
+#~ "Inkscape ei voi yhdistää käyttäjään <b>%1</b>\n"
+#~ "\n"
+#~ "Olet yhä yhdistettynä Jabber-palvelimeen käyttäjänä <b>%2</b>."
