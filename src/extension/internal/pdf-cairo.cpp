@@ -571,7 +571,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
         } else {
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_WINDING);
         }
-        if (0 && alpha != 1.0 &&
+        if (alpha != 1.0 &&
             style->fill.type != SP_PAINT_TYPE_COLOR) {
 
             cairo_clip (cr);
@@ -710,7 +710,7 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
     
     cairo_surface_t *image_surface = cairo_image_surface_create_for_data(px_rgba, CAIRO_FORMAT_ARGB32, w, h, w * 4);
     if (cairo_surface_status(image_surface)) {
-    	g_printf("%s\n", cairo_status_to_string(cairo_surface_status(image_surface)));
+        g_printf("Error: %s\n", cairo_status_to_string(cairo_surface_status(image_surface)));
     	return 0;
     }
     
