@@ -86,8 +86,6 @@ PrintCairoPDF::PrintCairoPDF() :
     _dpi(72),
     _bitmap(false)
 {
-    _num_alphas = 8;
-    _alpha_stack = (float*)malloc(sizeof(float) * _num_alphas);
 }
 
 PrintCairoPDF::~PrintCairoPDF(void)
@@ -96,8 +94,6 @@ PrintCairoPDF::~PrintCairoPDF(void)
     if (pdf_surface) cairo_surface_destroy(pdf_surface);
     if (_layout) g_object_unref(_layout);
     
-    free(_alpha_stack);
-
     /* restore default signal handling for SIGPIPE */
 #if !defined(_WIN32) && !defined(__WIN32__)
     (void) signal(SIGPIPE, SIG_DFL);
@@ -245,8 +241,8 @@ PrintCairoPDF::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
     FILE *osf = NULL;
     FILE *osp = NULL;
 
-    _alpha_ptr = 0;
-    _alpha_stack[_alpha_ptr] = 1.0;
+    _alpha_stack.clear();
+    _alpha_stack.push_back(1.0);
 
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
@@ -391,11 +387,8 @@ PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, 
     _last_tx = transform->c[4];
     _last_ty = transform->c[5];
     
-    if (_num_alphas <= ++_alpha_ptr) {
-        _num_alphas *= 2;
-        _alpha_stack = (float*)realloc((void*)_alpha_stack, sizeof(float) * _num_alphas);
-    }
-    _alpha_stack[_alpha_ptr] = _alpha_stack[_alpha_ptr-1] * opacity;
+    float new_opacity = _alpha_stack.back() * opacity;
+    _alpha_stack.push_back(new_opacity);
     
     return 1;
 }
@@ -408,8 +401,8 @@ PrintCairoPDF::release(Inkscape::Extension::Print *mod)
     
     cairo_restore(cr);
 //    g_printf("release\n");
-    if (_alpha_ptr > 0)
-        _alpha_ptr--;
+    _alpha_stack.pop_back();
+    g_assert(_alpha_stack.size() > 0);
 
     return 1;
 }
@@ -538,7 +531,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
 
         float alpha = 1.0;
         alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-        alpha *= _alpha_stack[_alpha_ptr];
+	alpha *= _alpha_stack.back();
 
         cairo_set_source_rgba(cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
@@ -567,7 +560,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
         
         float alpha = 1.0;
         alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-        alpha *= _alpha_stack[_alpha_ptr];
+	alpha *= _alpha_stack.back();
              	
         cairo_save(cr);
         
@@ -578,7 +571,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
         } else {
             cairo_set_fill_rule(cr, CAIRO_FILL_RULE_WINDING);
         }
-        if (alpha != 1.0 &&
+        if (0 && alpha != 1.0 &&
             style->fill.type != SP_PAINT_TYPE_COLOR) {
 
             cairo_clip (cr);
@@ -598,7 +591,7 @@ PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect cons
 {
     float alpha = 1.0;
     alpha *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
-    alpha *= _alpha_stack[_alpha_ptr];
+    alpha *= _alpha_stack.back();
 
     if ( style->stroke.type == SP_PAINT_TYPE_COLOR ) {
         float rgb[3];
@@ -691,7 +684,7 @@ PrintCairoPDF::image(Inkscape::Extension::Print *mod, guchar *px, unsigned int w
     guchar* px_rgba = (guchar*)g_malloc(4 * w * h);
     if (!px_rgba) return 0;
     
-    float alpha = _alpha_stack[_alpha_ptr];
+    float alpha = _alpha_stack.back();
 
     // make a copy of the original pixbuf with premultiplied alpha
     // if we pass the original pixbuf it will get messed up
