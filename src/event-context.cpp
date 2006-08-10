@@ -801,8 +801,8 @@ sp_event_context_deactivate(SPEventContext *ec)
     g_return_if_fail(ec != NULL);
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
 
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate)
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate(ec);
+    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->deactivate)
+        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->deactivate(ec);
 }
 
 /**
