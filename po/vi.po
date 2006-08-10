@@ -9,19 +9,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-09 20:17+0200\n"
-"PO-Revision-Date: 2006-06-19 22:38+0200\n"
+"POT-Creation-Date: 2006-08-10 20:51+0200\n"
+"PO-Revision-Date: 2006-08-10 14:20+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
-"Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: LocFactoryEditor 1.6b36\n"
+"X-Generator: LocFactoryEditor 1.6bfc1\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "Tạo và hiệu chỉnh ảnh đồ hóa véc-tơ có khả năng co giãn (SVG)"
+msgstr "Tạo và hiệu chỉnh ảnh kiểu đồ hóa véc-tơ có khả năng co giãn (SVG)"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape SVG Vector Illustrator"
@@ -49,22 +49,19 @@ msgstr ""
 "đầu"
 
 #: ../src/arc-context.cpp:437
-#, fuzzy
 msgid "Create ellipse"
-msgstr "_Nhái"
+msgstr "Tạo bầu dục"
 
 #: ../src/connector-context.cpp:523
 msgid "Creating new connector"
 msgstr "Đang tạo bộ kết nối mới..."
 
 #: ../src/connector-context.cpp:717
-#, fuzzy
 msgid "Reroute connector"
-msgstr "Tạo bộ kết nối"
+msgstr "Cập nhật bộ kết nối"
 
 #. Flush pending updates
 #: ../src/connector-context.cpp:924
-#, fuzzy
 msgid "Create connector"
 msgstr "Tạo bộ kết nối"
 
@@ -438,7 +435,7 @@ msgstr "_Màu"
 
 #: ../src/dialogs/clonetiler.cpp:2048
 msgid "Initial color: "
-msgstr "Màu đầu :"
+msgstr "Màu đầu : "
 
 #: ../src/dialogs/clonetiler.cpp:2052
 msgid "Initial color of tiled clones"
@@ -682,7 +679,7 @@ msgstr "Độ cao của hình chữ nhật cần tô"
 
 #: ../src/dialogs/clonetiler.cpp:2487
 msgid "Rows, columns: "
-msgstr "Hàng, cột:"
+msgstr "Hàng, cột: "
 
 #: ../src/dialogs/clonetiler.cpp:2488
 msgid "Create the specified number of rows and columns"
@@ -690,7 +687,7 @@ msgstr "Tạo số hàng và cột được xác định"
 
 #: ../src/dialogs/clonetiler.cpp:2497
 msgid "Width, height: "
-msgstr "Rộng, cao :"
+msgstr "Rộng, cao : "
 
 #: ../src/dialogs/clonetiler.cpp:2498
 msgid "Fill the specified width and height with the tiling"
@@ -710,7 +707,7 @@ msgstr ""
 
 #: ../src/dialogs/clonetiler.cpp:2541
 msgid " <b>_Create</b> "
-msgstr "<b>_Tạo</b>"
+msgstr " <b>_Tạo</b> "
 
 #: ../src/dialogs/clonetiler.cpp:2543
 msgid "Create and tile the clones of the selection"
@@ -723,7 +720,7 @@ msgstr "Tạo và lát các bộ nhái của vùng chọn"
 #. So unclumping is the process of spreading a number of objects out more evenly.
 #: ../src/dialogs/clonetiler.cpp:2558
 msgid " _Unclump "
-msgstr "Tháo _cục"
+msgstr " Tháo _cục "
 
 #: ../src/dialogs/clonetiler.cpp:2559
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
@@ -731,7 +728,7 @@ msgstr "Trải các bộ nhái ra để giảm độ kết thành cục; có th�
 
 #: ../src/dialogs/clonetiler.cpp:2565
 msgid " Re_move "
-msgstr "_Gỡ bỏ"
+msgstr " _Gỡ bỏ "
 
 #: ../src/dialogs/clonetiler.cpp:2566
 msgid "Remove existing tiled clones of the selected object (siblings only)"
@@ -739,7 +736,7 @@ msgstr "Gỡ bỏ các bộ nhái đã lát của đối tượng đã chọn (c
 
 #: ../src/dialogs/clonetiler.cpp:2582
 msgid " R_eset "
-msgstr "Đặt _lại"
+msgstr " Đặt _lại "
 
 #. TRANSLATORS: "change" is a noun here
 #: ../src/dialogs/clonetiler.cpp:2584
@@ -1024,7 +1021,7 @@ msgstr "Bù lại"
 
 #: ../src/dialogs/find.cpp:689
 msgid "_Text: "
-msgstr "_Chữ :"
+msgstr "_Chữ : "
 
 #: ../src/dialogs/find.cpp:689
 msgid "Find objects by their text content (exact or partial match)"
@@ -1041,7 +1038,7 @@ msgstr ""
 
 #: ../src/dialogs/find.cpp:691
 msgid "_Style: "
-msgstr "_Kiểu dáng:"
+msgstr "_Kiểu dáng: "
 
 #: ../src/dialogs/find.cpp:691
 msgid ""
@@ -1052,7 +1049,7 @@ msgstr ""
 
 #: ../src/dialogs/find.cpp:692
 msgid "_Attribute: "
-msgstr "Th_uộc tính:"
+msgstr "Th_uộc tính: "
 
 #: ../src/dialogs/find.cpp:692
 msgid "Find objects by the name of an attribute (exact or partial match)"
@@ -1214,11 +1211,11 @@ msgstr "TCh"
 
 #: ../src/dialogs/item-properties.cpp:392
 msgid "Id invalid! "
-msgstr "ID không hợp lệ !"
+msgstr "ID không hợp lệ ! "
 
 #: ../src/dialogs/item-properties.cpp:394
 msgid "Id exists! "
-msgstr "ID đã có !"
+msgstr "ID đã có ! "
 
 #: ../src/dialogs/layers-panel.cpp:764
 msgid "Opacity:"
@@ -1930,7 +1927,7 @@ msgstr ""
 
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
-msgstr ""
+msgstr "[Chưa thay đổi]"
 
 #. Edit
 #: ../src/event-log.cpp:270 ../src/event-log.cpp:273 ../src/verbs.cpp:1968
@@ -2353,7 +2350,7 @@ msgstr "Đồ họa véc-tơ có khả năng co dãn (*.svg)"
 
 #: ../src/extension/internal/svg.cpp:61
 msgid "Inkscape native file format and W3C standard"
-msgstr "Dạng thức tập tin sở hửu của Inkscape và tiêu chuẩn W3C."
+msgstr "Dạng thức tập tin sở hữu của Inkscape và tiêu chuẩn W3C."
 
 #: ../src/extension/internal/svg.cpp:69
 msgid "SVG Output Inkscape"
@@ -2529,9 +2526,8 @@ msgid "Select file to import"
 msgstr "Chọn tập tin cần nhập"
 
 #: ../src/file.cpp:972
-#, fuzzy
 msgid "Select file to export to"
-msgstr "Chọn tập tin cần nhập"
+msgstr "Chọn tập tin vào đó cần xuất"
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2962,7 +2958,7 @@ msgstr "Từ chối lời mời"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:370
 msgid "Inkboard session (%1 to %2)"
-msgstr ""
+msgstr "Phiên chạy Inkboard (%1 đến %2)"
 
 #: ../src/knot.cpp:425
 msgid "Node or handle drag canceled."
@@ -3108,12 +3104,11 @@ msgstr "Xuất tài liệu dang tập tin PS"
 
 #: ../src/main.cpp:301
 msgid "Export document to an EPS file"
-msgstr "Xuất tài liệu dang tập tin EPS"
+msgstr "Xuất tài liệu dạng tập tin EPS"
 
 #: ../src/main.cpp:306
-#, fuzzy
 msgid "Export document to a PDF file"
-msgstr "Xuất tài liệu dang tập tin PS"
+msgstr "Xuất tài liệu dạng tập tin PDF"
 
 #: ../src/main.cpp:311
 msgid "Convert text object to paths on export (EPS)"
@@ -3129,7 +3124,7 @@ msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
-"Truy vấn tọa độ X của bản vẽ nếu, nếu được xác định, của đối tượng cùng với "
+"Truy vấn toạ độ X của bản vẽ nếu, nếu được xác định, của đối tượng cùng với "
 "« --query-id »"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
@@ -3138,7 +3133,7 @@ msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
-"Truy vấn tọa độ Y của bản vẽ nếu, nếu được xác định, của đối tượng cùng với "
+"Truy vấn toạ độ Y của bản vẽ nếu, nếu được xác định, của đối tượng cùng với "
 "« --query-id »"
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
@@ -3257,9 +3252,8 @@ msgid "_Text"
 msgstr "_Chữ"
 
 #: ../src/menus-skeleton.h:225
-#, fuzzy
 msgid "Effe_cts"
-msgstr "Hiệu ứng"
+msgstr "_Hiệu ứng"
 
 #: ../src/menus-skeleton.h:232
 msgid "Whiteboa_rd"
@@ -3292,27 +3286,23 @@ msgstr "<b>Alt</b>: khoá độ dài móc; <b>Ctrl+Alt</b>: chuyển qua móc"
 
 #: ../src/node-context.cpp:641
 msgid "Drag curve"
-msgstr ""
+msgstr "Kéo cong"
 
 #: ../src/nodepath.cpp:551 ../src/seltrans.cpp:454
-#, fuzzy
 msgid "Stamp"
-msgstr "Dính"
+msgstr "Dấu"
 
 #: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
-#, fuzzy
 msgid "Move nodes vertically"
-msgstr "Canh lề các nút đã chọn theo chiều dọc"
+msgstr "Di chuyển các nút theo chiều dọc"
 
 #: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252
-#, fuzzy
 msgid "Move nodes horizontally"
-msgstr "Canh lề các nút đã chọn theo chiều ngang"
+msgstr "Di chuyển các nút theo chiều ngang"
 
 #: ../src/nodepath.cpp:1226 ../src/nodepath.cpp:1254 ../src/nodepath.cpp:2999
-#, fuzzy
 msgid "Move nodes"
-msgstr "Hạ thấp nút"
+msgstr "Di chuyển các nút"
 
 #: ../src/nodepath.cpp:1262
 msgid ""
@@ -3323,29 +3313,24 @@ msgstr ""
 "<b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai móc"
 
 #: ../src/nodepath.cpp:1433
-#, fuzzy
 msgid "Align nodes"
-msgstr "Canh bên trên"
+msgstr "Canh bên các nút"
 
 #: ../src/nodepath.cpp:1495
-#, fuzzy
 msgid "Distribute nodes"
-msgstr "Phân phối"
+msgstr "Phân phối các nút"
 
 #: ../src/nodepath.cpp:1534
-#, fuzzy
 msgid "Add nodes"
-msgstr "Thêm nút"
+msgstr "Thêm các nút"
 
 #: ../src/nodepath.cpp:1536 ../src/nodepath.cpp:1598
-#, fuzzy
 msgid "Add node"
 msgstr "Thêm nút"
 
 #: ../src/nodepath.cpp:1678
-#, fuzzy
 msgid "Break path"
-msgstr "Ngắt r_a"
+msgstr "Ngắt ra đường dẫn"
 
 #: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
 #: ../src/nodepath.cpp:1831
@@ -3353,39 +3338,35 @@ msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Để nối lại, bạn phải chọn <b>hai nút cuối</b>."
 
 #: ../src/nodepath.cpp:1753
-#, fuzzy
 msgid "Close subpath"
-msgstr "Đang đóng đường dẫn..."
+msgstr "Đóng đường dẫn phụ"
 
 #: ../src/nodepath.cpp:1805
-#, fuzzy
 msgid "Join nodes"
-msgstr "nút cuối"
+msgstr "Nối lại các nút"
 
 #: ../src/nodepath.cpp:1852
 msgid "Close subpath by segment"
-msgstr ""
+msgstr "Đóng đường dẫn phụ theo đoạn"
 
 #: ../src/nodepath.cpp:1906
-#, fuzzy
 msgid "Join nodes by segment"
-msgstr "Nối lại các nút cuối đã chọn với một đoạn mới"
+msgstr "Nối lại các nút theo đoạn"
 
 #: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
-#, fuzzy
 msgid "Delete nodes"
-msgstr "Xoá bỏ nút"
+msgstr "Xoá bỏ các nút"
 
 #: ../src/nodepath.cpp:2036
 msgid "Delete nodes preserving shape"
-msgstr ""
+msgstr "Xoá bỏ các nút, còn bảo tồn hình"
 
 #: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
 msgstr ""
-"Trên đường dẫn, chọn <b>hai nút khác điểm cuỗi</b> giữa chúng cần xoá bỏ "
+"Trên đường dẫn, chọn <b>hai nút khác điểm cuối</b> giữa chúng cần xoá bỏ "
 "đoạn."
 
 #: ../src/nodepath.cpp:2205
@@ -3393,27 +3374,24 @@ msgid "Cannot find path between nodes."
 msgstr "Không tìm thấy đường dẫn giữa nút."
 
 #: ../src/nodepath.cpp:2234
-#, fuzzy
 msgid "Delete segment"
-msgstr "Xoá bỏ vùng chọn"
+msgstr "Xoá bỏ đoạn"
 
 #: ../src/nodepath.cpp:2256
 msgid "Change segment type"
-msgstr ""
+msgstr "Đổi kiểu đoạn"
 
 #: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
 msgid "Change node type"
-msgstr ""
+msgstr "Đổi kiểu nút"
 
 #: ../src/nodepath.cpp:3230
-#, fuzzy
 msgid "Retract handle"
-msgstr "Chữ nhật"
+msgstr "Rụt móc vào"
 
 #: ../src/nodepath.cpp:3278
-#, fuzzy
 msgid "Move node handle"
-msgstr "Ngẫu nhiên hóa móc nút"
+msgstr "Di chuyển móc nút"
 
 #: ../src/nodepath.cpp:3418
 #, c-format
@@ -3426,19 +3404,16 @@ msgstr ""
 "góc; <b>Alt</b> để khoá độ dài; <b>Shift</b> để xoay cả hai móc"
 
 #: ../src/nodepath.cpp:3596
-#, fuzzy
 msgid "Rotate nodes"
-msgstr "Nâng nút lên"
+msgstr "Xoay các nút"
 
 #: ../src/nodepath.cpp:3721
-#, fuzzy
 msgid "Scale nodes"
-msgstr "Nâng nút lên"
+msgstr "Co dãn các nút"
 
 #: ../src/nodepath.cpp:3768
-#, fuzzy
 msgid "Flip nodes"
-msgstr "đường"
+msgstr "Lật các nút"
 
 #: ../src/nodepath.cpp:3933
 msgid ""
@@ -3670,7 +3645,6 @@ msgstr ""
 "Không cho phép bạn kết hợp đối tượng từ <b>nhóm</b> hay <b>lớp</b> khác nhau."
 
 #: ../src/path-chemistry.cpp:139
-#, fuzzy
 msgid "Combine"
 msgstr "Kết hợp"
 
@@ -3679,9 +3653,8 @@ msgid "Select <b>path(s)</b> to break apart."
 msgstr "Chọn (những) <b>đường dẫn</b> cần gấy ra."
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break Apart"
-msgstr "Ngắt r_a"
+msgstr "Ngắt ra"
 
 #: ../src/path-chemistry.cpp:235
 msgid "<b>No path(s)</b> to break apart in the selection."
@@ -3692,9 +3665,8 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Chọn (các) <b>đối tượng</b> cần chuyển đổi sang đường dẫn"
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to Path"
-msgstr "Đối tượng s_ang đường dẫn"
+msgstr "Đối tượng sang đường dẫn"
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
@@ -3818,9 +3790,8 @@ msgstr ""
 "đầu."
 
 #: ../src/rect-context.cpp:490
-#, fuzzy
 msgid "Create rectangle"
-msgstr "Tìm kiếm trong các hình chữ nhật"
+msgstr "Tạo chữ nhật"
 
 #: ../src/select-context.cpp:226
 msgid "Move canceled."
@@ -3847,18 +3818,16 @@ msgid "Selected object is not a group. Cannot enter."
 msgstr "Đối tượng được chọn không phải là nhóm nên không thể vào."
 
 #: ../src/selection-chemistry.cpp:218
-#, fuzzy
 msgid "Delete text"
-msgstr "Xoá bỏ nút"
+msgstr "Xoá bỏ đoạn chữ"
 
 #: ../src/selection-chemistry.cpp:226
 msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Chưa</b> xoá bỏ gì."
 
 #: ../src/selection-chemistry.cpp:244
-#, fuzzy
 msgid "Delete"
-msgstr "_Xóa bỏ"
+msgstr "Xóa bỏ"
 
 #: ../src/selection-chemistry.cpp:258
 msgid "Select <b>object(s)</b> to duplicate."
@@ -3870,9 +3839,8 @@ msgid "Duplicate"
 msgstr "Nhân đôi"
 
 #: ../src/selection-chemistry.cpp:308
-#, fuzzy
 msgid "Delete all"
-msgstr "_Xóa bỏ"
+msgstr "Xóa bỏ hết"
 
 #: ../src/selection-chemistry.cpp:431
 msgid "Select <b>two or more objects</b> to group."
@@ -3892,12 +3860,11 @@ msgstr "Chọn một <b>nhóm</b> cần tách nhóm."
 
 #: ../src/selection-chemistry.cpp:566
 msgid "<b>No groups</b> to ungroup in the selection."
-msgstr "Trong vùng chọn, <b>không có nhóom</b> cần tách nhóm."
+msgstr "Trong vùng chọn, <b>không có nhóm</b> cần tách nhóm."
 
 #: ../src/selection-chemistry.cpp:572
-#, fuzzy
 msgid "Ungroup"
-msgstr "_Rã nhóm"
+msgstr "Rã nhóm"
 
 #: ../src/selection-chemistry.cpp:636
 msgid "Select <b>object(s)</b> to raise."
@@ -3912,36 +3879,32 @@ msgstr ""
 "khác nhau."
 
 #: ../src/selection-chemistry.cpp:674
-#, fuzzy
 msgid "Raise"
-msgstr "Nâng _lên"
+msgstr "Nâng lên"
 
 #: ../src/selection-chemistry.cpp:687
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Chọn (các) <b>đối tượng</b> cần nâng lên trên."
 
 #: ../src/selection-chemistry.cpp:710
-#, fuzzy
 msgid "Raise to top"
-msgstr "Nâng lên _trên"
+msgstr "Nâng lên trên"
 
 #: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Chọn (các) <b>đối tượng</b> cần hạ thấp."
 
 #: ../src/selection-chemistry.cpp:767
-#, fuzzy
 msgid "Lower"
-msgstr "_Hạ thấp"
+msgstr "Hạ thấp"
 
 #: ../src/selection-chemistry.cpp:781
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Chọn (các) <b>đối tượng</b> cần hạ thấp xuống dưới."
 
 #: ../src/selection-chemistry.cpp:816
-#, fuzzy
 msgid "Lower to bottom"
-msgstr "Hạ thấp xuống _dưới"
+msgstr "Hạ thấp xuống dưới"
 
 #: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
@@ -3961,30 +3924,26 @@ msgid "Nothing on the clipboard."
 msgstr "Không có gì trên bảng nháp."
 
 #: ../src/selection-chemistry.cpp:1125
-#, fuzzy
 msgid "Paste"
-msgstr "_Dán"
+msgstr "Dán"
 
 #: ../src/selection-chemistry.cpp:1143
 msgid "Select <b>object(s)</b> to paste style to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kiểu dáng."
 
 #: ../src/selection-chemistry.cpp:1152
-#, fuzzy
 msgid "Paste style"
-msgstr "Dán _kiểu dáng"
+msgstr "Dán kiểu dáng"
 
 #: ../src/selection-chemistry.cpp:1170 ../src/selection-chemistry.cpp:1206
 msgid "Select <b>object(s)</b> to paste size to."
 msgstr "Chọn (các) <b>đối tượng</b> vào đó cần dán kích cỡ."
 
 #: ../src/selection-chemistry.cpp:1188
-#, fuzzy
 msgid "Paste size"
-msgstr "Dán _cỡ"
+msgstr "Dán cỡ"
 
 #: ../src/selection-chemistry.cpp:1229
-#, fuzzy
 msgid "Paste size separately"
 msgstr "Dán riêng kích cỡ"
 
@@ -3993,9 +3952,8 @@ msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr "Chọn (các) <b>đối tượng</b> cần nâng lên lớp bên trên."
 
 #: ../src/selection-chemistry.cpp:1265
-#, fuzzy
 msgid "Raise to next layer"
-msgstr "Được di chuyển sang lớp kế tiếp."
+msgstr "Nâng lên lớp kế tiếp"
 
 #: ../src/selection-chemistry.cpp:1271
 msgid "No more layers above."
@@ -4006,69 +3964,61 @@ msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr "Chọn (các) <b>đối tượng</b> cần hạ thấp xuống lớp bên dưới."
 
 #: ../src/selection-chemistry.cpp:1310
-#, fuzzy
 msgid "Lower to previous layer"
-msgstr "Được di chuyển về lớp trước đó."
+msgstr "Hạ thấp xuống lớp trước đó"
 
 #: ../src/selection-chemistry.cpp:1316
 msgid "No more layers below."
 msgstr "Không có lớp nữa bên dưới."
 
 #: ../src/selection-chemistry.cpp:1458
-#, fuzzy
 msgid "Remove transform"
-msgstr "_Hủy chuyển dạng"
+msgstr "Hủy chuyển dạng"
 
 #: ../src/selection-chemistry.cpp:1567
-#, fuzzy
 msgid "Rotate 90&#176; CW"
-msgstr "Xoay _90º xuôi chiều"
+msgstr "Xoay 90º xuôi chiều"
 
 #: ../src/selection-chemistry.cpp:1595
-#, fuzzy
 msgid "Rotate 90&#176; CCW"
-msgstr "Xoay 9_0º ngược chiều"
+msgstr "Xoay 90º ngược chiều"
 
 #: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:355
-#, fuzzy
 msgid "Rotate"
-msgstr "_Xoay"
+msgstr "Xoay"
 
 #: ../src/selection-chemistry.cpp:1642
 msgid "Rotate by pixels"
-msgstr ""
+msgstr "Xoay theo điểm ảnh"
 
 #: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:352
-#, fuzzy
 msgid "Scale"
-msgstr "_Co dãn"
+msgstr "Co dãn"
 
 #: ../src/selection-chemistry.cpp:1687
 msgid "Scale by whole factor"
-msgstr ""
+msgstr "Co dãn theo nguyên hệ số"
 
 #: ../src/selection-chemistry.cpp:1703
 msgid "Move vertically"
-msgstr ""
+msgstr "Di chuyển theo chiều dọc"
 
 #: ../src/selection-chemistry.cpp:1706
-#, fuzzy
 msgid "Move horizontally"
-msgstr "_Ngang"
+msgstr "Di chuyển theo chiều ngang"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
 #: ../src/seltrans.cpp:349
-#, fuzzy
 msgid "Move"
-msgstr "_Chuyển"
+msgstr "Chuyển"
 
 #: ../src/selection-chemistry.cpp:1731
 msgid "Nudge vertically by pixels"
-msgstr ""
+msgstr "Nhích dọc theo điểm ảnh"
 
 #: ../src/selection-chemistry.cpp:1734
 msgid "Nudge horizontally by pixels"
-msgstr ""
+msgstr "Nhích ngang theo điểm ảnh"
 
 #: ../src/selection-chemistry.cpp:1998 ../src/selection-describer.cpp:65
 msgid "Clone"
@@ -4083,7 +4033,6 @@ msgid "<b>No clones to unlink</b> in the selection."
 msgstr "Trong vùng chọn, <b>không có bộ nhái cần bỏ liên kết</b>."
 
 #: ../src/selection-chemistry.cpp:2050
-#, fuzzy
 msgid "Unlink clone"
 msgstr "Bỏ liên kết nhái"
 
@@ -4117,9 +4066,8 @@ msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr "Chọn (các) <b>đối tượng</b> để chuyển đổi sang mẫu."
 
 #: ../src/selection-chemistry.cpp:2196
-#, fuzzy
 msgid "Objects to pattern"
-msgstr "Đối tượng cần làm _mẫu"
+msgstr "Đối tượng sang mẫu"
 
 #: ../src/selection-chemistry.cpp:2212
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
@@ -4130,18 +4078,16 @@ msgid "<b>No pattern fills</b> in the selection."
 msgstr "Trong vùng chọn, <b>không có mẫu tô</b>."
 
 #: ../src/selection-chemistry.cpp:2268
-#, fuzzy
 msgid "Pattern to objects"
-msgstr "Mẫu _sang đối tượng"
+msgstr "Mẫu sang đối tượng"
 
 #: ../src/selection-chemistry.cpp:2286
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr "Chọn (các) <b>đối tượng</b> để tạo một bản sao mảng ảnh."
 
 #: ../src/selection-chemistry.cpp:2418
-#, fuzzy
 msgid "Create bitmap"
-msgstr "Tạo xoắn ốc"
+msgstr "Tạo mảng ảnh"
 
 #: ../src/selection-chemistry.cpp:2450
 msgid "Select <b>object(s)</b> to create clippath or mask from."
@@ -4154,33 +4100,28 @@ msgstr ""
 "xén hay mặt nạ."
 
 #: ../src/selection-chemistry.cpp:2544
-#, fuzzy
 msgid "Set clipping path"
-msgstr "Đang đóng đường dẫn..."
+msgstr "Đặt đường dẫn xén"
 
 #: ../src/selection-chemistry.cpp:2546
-#, fuzzy
 msgid "Set mask"
-msgstr "Sao"
+msgstr "Đặt mặt nạ"
 
 #: ../src/selection-chemistry.cpp:2559
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr "Chọn (các) <b>đối tượng</b> từ đó cần gỡ bỏ đường dẫn xén hay mặt nạ."
 
 #: ../src/selection-chemistry.cpp:2627
-#, fuzzy
 msgid "Release clipping path"
-msgstr "Gỡ bỏ đường dẫn xén ra vùng chọn"
+msgstr "Buông đường dẫn xén"
 
 #: ../src/selection-chemistry.cpp:2629
-#, fuzzy
 msgid "Release mask"
-msgstr "_Buông"
+msgstr "Buông mặt nạ"
 
 #: ../src/selection-chemistry.cpp:2673
-#, fuzzy
 msgid "Fit page to selection"
-msgstr "_Vừa trang khít vùng chọn"
+msgstr "Vừa trang khít vùng chọn"
 
 #: ../src/selection-describer.cpp:41
 msgid "Link"
@@ -4276,7 +4217,7 @@ msgstr "<i>%s</i>"
 #: ../src/selection-describer.cpp:144
 #, c-format
 msgid " in %s"
-msgstr "trong %s"
+msgstr " trong %s"
 
 #: ../src/selection-describer.cpp:146
 #, c-format
@@ -4352,14 +4293,12 @@ msgid "%s%s. %s."
 msgstr "%s%s. %s."
 
 #: ../src/seltrans.cpp:227
-#, fuzzy
 msgid "Set center"
-msgstr "Chọn máy in"
+msgstr "Đặt tâm"
 
 #: ../src/seltrans.cpp:358
-#, fuzzy
 msgid "Skew"
-msgstr "_Lệch"
+msgstr "Lệch"
 
 #: ../src/seltrans.cpp:476
 msgid ""
@@ -4402,9 +4341,8 @@ msgstr ""
 "xoay quanh góc đối diện."
 
 #: ../src/seltrans.cpp:640
-#, fuzzy
 msgid "Reset center"
-msgstr "Nâng lên lớp hiện có"
+msgstr "Đặt lại tâm"
 
 #: ../src/seltrans.cpp:887 ../src/seltrans.cpp:999
 #, c-format
@@ -4648,34 +4586,28 @@ msgstr ""
 "góc."
 
 #: ../src/splivarot.cpp:66
-#, fuzzy
 msgid "Union"
-msgstr "Hợ_p"
+msgstr "Hợp"
 
 #: ../src/splivarot.cpp:72
-#, fuzzy
 msgid "Intersection"
-msgstr "G_iao"
+msgstr "Giao"
 
 #: ../src/splivarot.cpp:78
-#, fuzzy
 msgid "Difference"
-msgstr "_Hiệu"
+msgstr "Hiệu"
 
 #: ../src/splivarot.cpp:84
-#, fuzzy
 msgid "Exclusion"
-msgstr "L_oại trừ"
+msgstr "Loại trừ"
 
 #: ../src/splivarot.cpp:89
-#, fuzzy
 msgid "Division"
-msgstr "Chi_a"
+msgstr "Chia"
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut Path"
-msgstr "Cắt đường _dẫn"
+msgstr "Cắt đường dẫn"
 
 #: ../src/splivarot.cpp:110
 msgid "Select <b>at least 2 paths</b> to perform a boolean operation."
@@ -4733,9 +4665,8 @@ msgid "Select <b>path(s)</b> to simplify."
 msgstr "Chọn (các) <b>đường dẫn</b> cần đơn giản hoá."
 
 #: ../src/splivarot.cpp:1534
-#, fuzzy
 msgid "Simplify"
-msgstr "_Giản dị hoá"
+msgstr "Giản dị hoá"
 
 #: ../src/splivarot.cpp:1536
 msgid "<b>No paths</b> to simplify in the selection."
@@ -5478,7 +5409,7 @@ msgstr "Màu của nét dẫn nằm dưới con chuột."
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "<b>Grid</b>"
-msgstr "<b>Lượi</b>"
+msgstr "<b>Lưới</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:258
 msgid "<b>Guides</b>"
@@ -5658,53 +5589,47 @@ msgstr "Thêm tự động phần mở rộng tập tin"
 
 #: ../src/ui/dialog/filedialog.cpp:1868
 msgid "Source left bound"
-msgstr ""
+msgstr "Mép trái nguồn"
 
 #: ../src/ui/dialog/filedialog.cpp:1869
 msgid "Source top bound"
-msgstr ""
+msgstr "Mép trên nguồn"
 
 #: ../src/ui/dialog/filedialog.cpp:1870
 msgid "Source right bound"
-msgstr ""
+msgstr "Mép phải nguồn"
 
 #: ../src/ui/dialog/filedialog.cpp:1871
 msgid "Source bottom bound"
-msgstr ""
+msgstr "Mép dưới nguồn"
 
 #: ../src/ui/dialog/filedialog.cpp:1872
-#, fuzzy
 msgid "Source width"
-msgstr "Rộng nét"
+msgstr "Rộng nguồn"
 
 #: ../src/ui/dialog/filedialog.cpp:1873
-#, fuzzy
 msgid "Source height"
-msgstr "Độ cao bằng"
+msgstr "Cao nguồn"
 
 #: ../src/ui/dialog/filedialog.cpp:1874
-#, fuzzy
 msgid "Destination width"
-msgstr "Đích in"
+msgstr "Rộng đích"
 
 #: ../src/ui/dialog/filedialog.cpp:1875
-#, fuzzy
 msgid "Destination height"
-msgstr "Đích in"
+msgstr "Cao đích"
 
 #: ../src/ui/dialog/filedialog.cpp:1876
-#, fuzzy
 msgid "Dots per inch resolution"
-msgstr "Độ phân giải xuất mặc định:"
+msgstr "Độ phân giải theo chấm/insơ"
 
 #. #########################################
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
 #: ../src/ui/dialog/filedialog.cpp:1907
-#, fuzzy
 msgid "Document"
-msgstr "Tài liệu đã được tải."
+msgstr "Tài liệu"
 
 #: ../src/ui/dialog/filedialog.cpp:1919 ../src/ui/widget/page-sizer.cpp:167
 msgid "Custom"
@@ -5712,21 +5637,19 @@ msgstr "Tự chọn"
 
 #: ../src/ui/dialog/filedialog.cpp:1959
 msgid "Cairo"
-msgstr ""
+msgstr "Cairo"
 
 #: ../src/ui/dialog/filedialog.cpp:1962
 msgid "Antialias"
-msgstr ""
+msgstr "Làm trơn"
 
 #: ../src/ui/dialog/filedialog.cpp:1965
-#, fuzzy
 msgid "Background"
-msgstr "_Nền:"
+msgstr "Nền"
 
 #: ../src/ui/dialog/filedialog.cpp:1988
-#, fuzzy
 msgid "Destination"
-msgstr "Đích in"
+msgstr "Đích"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:36
 msgid "Fill"
@@ -6266,8 +6189,8 @@ msgid ""
 "example, a rotated clone will move in a different direction than its "
 "original."
 msgstr ""
-"Mỗi bộ nhái di chuyển tùy theo giá trị của thuộc tính « tranform= » (chuyển "
-"dậng). Lấy thí dụ, một bộ nhái được xoay sẽ di chuyển theo chiều khác với "
+"Mỗi bộ nhái di chuyển tùy theo giá trị của thuộc tính « transform= » (chuyển "
+"dạng). Lấy thí dụ, một bộ nhái được xoay sẽ di chuyển theo chiều khác với "
 "điều gốc của nó."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:448
@@ -6660,9 +6583,8 @@ msgstr "Mở tập tin buổi hợp"
 #. #### SIOX ####
 #. # for now, put at the top of the potrace box.  something better later
 #: ../src/ui/dialog/tracedialog.cpp:348
-#, fuzzy
 msgid "SIOX foreground selection"
-msgstr "Vùng chọn cảnh gần SIOX (thực nghiệm)"
+msgstr "Vùng chọn cảnh gần SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:351
 msgid "Cover the area you want to select as the foreground"
@@ -6753,13 +6675,12 @@ msgstr "Đồ lại số màu bị giảm đã đưa ra"
 
 #. TRANSLATORS: "Layer" refers to one of the stacked paths in the multiscan
 #: ../src/ui/dialog/tracedialog.cpp:468
-#, fuzzy
 msgid "Remove background"
-msgstr "_Nền:"
+msgstr "Gỡ bỏ nền"
 
 #: ../src/ui/dialog/tracedialog.cpp:471
 msgid "Remove bottom (background) layer when done"
-msgstr ""
+msgstr "Gỡ bỏ lớp dưới (nền) một khi làm xong"
 
 #. ---Hbox3
 #: ../src/ui/dialog/tracedialog.cpp:476
@@ -7244,7 +7165,7 @@ msgstr "Thu phóng bản vẽ nếu kích cỡ cửa sổ thay đổi"
 
 #: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:297
 msgid "Cursor coordinates"
-msgstr "Tọa độ con trỏ"
+msgstr "Toạ độ con trỏ"
 
 #. display the initial welcome message in the statusbar
 #: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:329
@@ -7641,14 +7562,12 @@ msgid "Raised layer <b>%s</b>."
 msgstr "Lớp được nâng lên <b>%s</b>."
 
 #: ../src/verbs.cpp:1154
-#, fuzzy
 msgid "Layer to Top"
-msgstr "Lớp lên _trên"
+msgstr "Lớp lên trên"
 
 #: ../src/verbs.cpp:1158
-#, fuzzy
 msgid "Raise Layer"
-msgstr "_Nâng lên lớp"
+msgstr "Nâng lên lớp"
 
 #: ../src/verbs.cpp:1161 ../src/verbs.cpp:1165
 #, c-format
@@ -7656,23 +7575,20 @@ msgid "Lowered layer <b>%s</b>."
 msgstr "Lớp được hạ thấp <b>%s</b>."
 
 #: ../src/verbs.cpp:1162
-#, fuzzy
 msgid "Layer to Bottom"
-msgstr "Lớp _xuống dưới"
+msgstr "Lớp xuống dưới"
 
 #: ../src/verbs.cpp:1166
-#, fuzzy
 msgid "Lower Layer"
-msgstr "_Hạ thấp lớp"
+msgstr "Hạ thấp lớp"
 
 #: ../src/verbs.cpp:1175
 msgid "Cannot move layer any further."
 msgstr "Không thể di chuyển lớp nữa."
 
 #: ../src/verbs.cpp:1203
-#, fuzzy
 msgid "Delete layer"
-msgstr "Lớp bị xoá bỏ."
+msgstr "Xoá bỏ lớp"
 
 #. TRANSLATORS: this means "The layer has been deleted."
 #: ../src/verbs.cpp:1206
@@ -7680,14 +7596,12 @@ msgid "Deleted layer."
 msgstr "Lớp bị xoá bỏ."
 
 #: ../src/verbs.cpp:1263
-#, fuzzy
 msgid "Flip horizontally"
-msgstr "Lật _ngang"
+msgstr "Lật ngang"
 
 #: ../src/verbs.cpp:1272
-#, fuzzy
 msgid "Flip vertically"
-msgstr "Lật _dọc"
+msgstr "Lật dọc"
 
 #. TRANSLATORS: If you have translated the keys.svg file to your language, then
 #. translate this string as "keys.LANG.svg" (where LANG is your language code);
@@ -8495,7 +8409,7 @@ msgstr "_Chuyển đổi sang chữ"
 #: ../src/verbs.cpp:2145
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr ""
-"Chuyển đổi đoạn chữ đã luồng sang đối tượng chữ chuển (bảo tồn diện mạo)."
+"Chuyển đổi đoạn chữ đã luồng sang đối tượng chữ chuẩn (bảo tồn diện mạo)."
 
 #: ../src/verbs.cpp:2147
 msgid "Flip _Horizontal"
@@ -8933,11 +8847,11 @@ msgstr "Canh lề và phân phối đối tượng."
 
 #: ../src/verbs.cpp:2279
 msgid "Undo _History..."
-msgstr ""
+msgstr "Lược sử _Hủy bước..."
 
 #: ../src/verbs.cpp:2280
 msgid "Undo History"
-msgstr ""
+msgstr "Lược sử Hủy bước"
 
 #: ../src/verbs.cpp:2281
 msgid "_Text and Font..."
@@ -9011,13 +8925,12 @@ msgstr ""
 "khác."
 
 #: ../src/verbs.cpp:2300
-#, fuzzy
 msgid "_Instant Messaging..."
-msgstr "_Thông điệp..."
+msgstr "T_in nhắn tức khắc..."
 
 #: ../src/verbs.cpp:2300
 msgid "Jabber Instant Messaging Client"
-msgstr ""
+msgstr "Ứng dụng khách tin nhắn tức khắc Jabber"
 
 #: ../src/verbs.cpp:2302
 msgid "_Input Devices..."
@@ -9103,7 +9016,7 @@ msgstr "Inkscape: Cấp c_ao"
 
 #: ../src/verbs.cpp:2327
 msgid "Advanced Inkscape topics"
-msgstr "Chủ đề Inscape cáp cao"
+msgstr "Chủ đề Inkscape cáp cao"
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
@@ -9161,36 +9074,30 @@ msgstr "Lặp lại hiệu ứng cuối cùng với thiết lập mới"
 
 #. Fit Page
 #: ../src/verbs.cpp:2345
-#, fuzzy
 msgid "Fit Page to Selection"
-msgstr "_Vừa trang khít vùng chọn"
+msgstr "Vừa trang khít vùng chọn"
 
 #: ../src/verbs.cpp:2346
-#, fuzzy
 msgid "Fit the page to the current selection"
-msgstr "Vừa vùng vẽ khít vùng chọn hiện có"
+msgstr "Vừa trang khít vùng chọn hiện có"
 
 #: ../src/verbs.cpp:2347
-#, fuzzy
 msgid "Fit Page to Drawing"
-msgstr "Vừa vùng vẽ khít bản vẽ"
+msgstr "Vừa trang khít bản vẽ"
 
 #: ../src/verbs.cpp:2348
-#, fuzzy
 msgid "Fit the page to the drawing"
-msgstr "Vừa vùng vẽ khít bản vẽ đó"
+msgstr "Vừa trang khít bản vẽ đó"
 
 #: ../src/verbs.cpp:2349
-#, fuzzy
 msgid "Fit Page to Selection or Drawing"
-msgstr "Vừa vùng vẽ khít vùng chọn hay bản vẽ"
+msgstr "Vừa trang khít vùng chọn hay bản vẽ"
 
 #: ../src/verbs.cpp:2350
-#, fuzzy
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
-"Vừa vùng vẽ khít vùng chọn hiện thời, hay khít bản vẽ nếu không có vùng chọn."
+"Vừa trang khít vùng chọn hiện thời, hay khít bản vẽ nếu không có vùng chọn."
 
 #: ../src/widgets/dash-selector.cpp:103
 msgid "Dash pattern"
@@ -9447,11 +9354,12 @@ msgid "No patterns in document"
 msgstr "Không có mẫu trong tài liệu"
 
 #: ../src/widgets/paint-selector.cpp:859
-#, fuzzy
 msgid ""
 "Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new "
 "pattern from selection."
-msgstr "Dùng <b>Sửa → Đối tượng sang Mẫu</b> để tạo một mẫu mới từ vùng chọn."
+msgstr ""
+"Dùng <b>Đối tượng → Mẫu → Đối tượng sang Mẫu</b> để tạo một đường dẫn mới từ "
+"vùng chọn."
 
 #: ../src/widgets/select-toolbar.cpp:338
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
@@ -9520,7 +9428,7 @@ msgstr "X"
 
 #: ../src/widgets/select-toolbar.cpp:434
 msgid "Horizontal coordinate of selection"
-msgstr "Tọa độ ngang của vùng chọn"
+msgstr "Toạ độ ngang của vùng chọn"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -9530,7 +9438,7 @@ msgstr "Y"
 
 #: ../src/widgets/select-toolbar.cpp:439
 msgid "Vertical coordinate of selection"
-msgstr "Tọa độ dọc của vùng chọn"
+msgstr "Toạ độ dọc của vùng chọn"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
@@ -9971,23 +9879,26 @@ msgstr "Làm hình là hình bầu dục hoàn toàn, không phải hình cung h
 
 #: ../src/widgets/toolbox.cpp:2738
 msgid "Pick alpha"
-msgstr ""
+msgstr "Kén anfa"
 
 #: ../src/widgets/toolbox.cpp:2739
 msgid ""
 "Pick both the color and the alpha (transparency) under cursor; otherwise, "
 "pick only the visible color premultiplied by alpha"
 msgstr ""
+"Kén cả màu lẫn anfa (độ trong suốt) bên dưới con trỏ; nếu không, kén chỉ màu "
+"hiển thị được nhân sẵn với anfa"
 
 #: ../src/widgets/toolbox.cpp:2754
-#, fuzzy
 msgid "Set alpha"
-msgstr "Đặt hoãn"
+msgstr "Đặt anfa"
 
 #: ../src/widgets/toolbox.cpp:2755
 msgid ""
 "If alpha was picked, assign it to selection as fill or stroke transparency"
 msgstr ""
+"Nếu anfa đã được kén, gán nó vào vùng chọn như là độ trong suốt khi tô màu "
+"hay nét vẽ"
 
 #: ../src/widgets/toolbox.cpp:3499
 msgid ""
@@ -10047,7 +9958,7 @@ msgstr "Gỡ bỏ cách tự định chỗ"
 
 #: ../src/widgets/toolbox.cpp:3882
 msgid "Change connector spacing distance"
-msgstr ""
+msgstr "Đổi khoảng cách bộ kết nối"
 
 #: ../src/widgets/toolbox.cpp:3991
 msgid "Spacing:"
@@ -10060,22 +9971,20 @@ msgstr ""
 "động"
 
 #: ../src/widgets/toolbox.cpp:4006
-#, fuzzy
 msgid "Length:"
-msgstr "Dài gam"
+msgstr "Dài:"
 
 #: ../src/widgets/toolbox.cpp:4007
 msgid "Ideal length for connectors when layout is applied"
-msgstr ""
+msgstr "Độ dài lý tưởng cho bộ kết nối khi bố trí được áp dụng"
 
 #: ../src/widgets/toolbox.cpp:4022
-#, fuzzy
 msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr "Làm cho bộ kết nối tránh các đối tượng đã chọn"
+msgstr "Làm cho bộ kết nối có đầu mũi tên sẽ chỉ cuối xuống"
 
 #: ../src/widgets/toolbox.cpp:4036
 msgid "Do not allow overlapping shapes"
-msgstr ""
+msgstr "Không cho phép hình"
 
 #.
 #. Local Variables:
@@ -10265,7 +10174,7 @@ msgstr "Trích một ảnh"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Path to save image"
-msgstr "Đường dẫn đến nơi cần lướiu ảnh"
+msgstr "Đường dẫn đến nơi cần lưu ảnh"
 
 #: ../share/extensions/ffmet.inx.h:1 ../share/extensions/ffms.inx.h:1
 #: ../share/extensions/ffset.inx.h:1 ../share/extensions/ffss.inx.h:1
@@ -10658,251 +10567,20 @@ msgstr "Nhập Siêu tập tin Windows"
 #~ "và có khả năng gởi lại lời mời cho <b>%1</b>, hoặc gởi lời mời cho người "
 #~ "dùng khác."
 
-#, fuzzy
 #~ msgid ""
 #~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> is using an "
 #~ "incompatible version of Inkboard.</span>\n"
 #~ "\n"
 #~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đã vào trong "
-#~ "một buổi hợp bảng trắng.</span>\n"
-#~ "\n"
-
-#~ msgid "Fit Canvas to Selection"
-#~ msgstr "Vừa vùng vẽ khít vùng chọn"
-
-#~ msgid ""
-#~ "When pressed, picks visible color without alpha and when not pressed, "
-#~ "picks color including its alpha"
-#~ msgstr ""
-#~ "Khi được bấm, nhặt màu hiển thị không có anfa, còn khi không được bấm, "
-#~ "nhặt màu gồm anfa."
-
-#~ msgid "Jabber connection lost."
-#~ msgstr "Sự kết nối Jabber bị mất"
-
-#~ msgid "Sending message; %u message remaining in send queue."
-#~ msgid_plural "Sending message; %u messages remaining in send queue."
-#~ msgstr[0] "Đang gởi tin nhẳn; %u tin nhẳn còn lại trong hàng đợi gởi."
-#~ msgstr[1] "Đang gởi tin nhẳn; %u tin nhẳn còn lại trong hàng đợi gởi."
-
-#~ msgid "Receive queue empty."
-#~ msgstr "Hàng đợi nhận là rỗng."
-
-#~ msgid "Receiving change; %u change left to process."
-#~ msgid_plural "Receiving change; %u changes left to process."
-#~ msgstr[0] "Đang nhận thay đổi; %u thay đổi còn cần xử lý."
-#~ msgstr[1] "Đang nhận thay đổi; %u thay đổi còn cần xử lý."
-
-#~ msgid "<b>%s</b> has left the chatroom."
-#~ msgstr "<b>%s</b> đã rời khỏi phòng trỏ chuyện."
-
-#~ msgid "Nickname %1 is already in use.  Please choose a different nickname."
-#~ msgstr "Tên hiệu « %1 » đang được dùng. Hãy chọn một tên hiệu khác."
-
-#~ msgid "An error was encountered while attempting to connect to the server."
-#~ msgstr "Gặp lỗi khi cố gắng kết nối đến máy phục vụ."
-
-#~ msgid "<b>An invitation conflict has occurred.</b>"
-#~ msgstr "<b>Có hai lời mời xung đột với nhau.</b>"
-
-#~ msgid ""
-#~ "The Jabber user <b>%1</b> attempted to invite you to a whiteboard session "
-#~ "while you were waiting on an invitation response.\n"
-#~ "\n"
-#~ "The invitation from <b>%1</b> has been rejected."
-#~ msgstr ""
-#~ "Người dùng Jabber <b>%1</b> đã cố gắng mời bạn vào một buổi hợp bảng "
-#~ "trắng trong khi bạn đợi đáp ứng lời mời.\n"
-#~ "\n"
-#~ "Lời mời từ <b>%1</b> đã bị từ chối."
-
-#~ msgid "Incoming whiteboard invitation from %1"
-#~ msgstr "Lời mời bảng trắng đang đến từ %1..."
-
-#~ msgid ""
-#~ "Would you like to accept %1's invitation in a new document window?\n"
-#~ "Accepting the invitation in your current window will discard unsaved "
-#~ "changes."
-#~ msgstr ""
-#~ "Bạn có muốn chấp nhận lời mời của <b>%1</b> trong cửa sổ tài liệu mới "
-#~ "không?\n"
-#~ "Việc chấp nhận lời mời này trong cửa sổ hiện thời sẽ gây ra các thay đổi "
-#~ "chưa lưu bị hủy."
-
-#~ msgid "Accept invitation in new document window"
-#~ msgstr "Chấp nhận lời mời trong cửa sổ tài liệu mới"
-
-#~ msgid ""
-#~ "A new document window could not be opened for a whiteboard session with "
-#~ "<b>%1</b>"
-#~ msgstr ""
-#~ "Không thể mở cửa sổ tài liệu mới cho buổi hợp bảng trắng với <b></b>."
-
-#~ msgid ""
-#~ "You are still connected to a Jabber server as <b>%1</b>, and may send an "
-#~ "invitation to a different user."
-#~ msgstr ""
-#~ "Bạn vẫn còn được kết nối đến máy phục vụ Jabber với tư cách là <b>%2</b>, "
-#~ "và có khả năng gởi lời mời cho người dùng khác."
-
-#~ msgid "<b>%s</b> has joined the chatroom."
-#~ msgstr "<b>%s</b> đã vào phòng trò chuyện."
-
-#~ msgid "%u change in receive queue."
-#~ msgid_plural "%u changes in receive queue."
-#~ msgstr[0] "Có %u thay đổi nằm trong hàng đợi nhận."
-#~ msgstr[1] "Có %u thay đổi nằm trong hàng đợi nhận."
-
-#~ msgid "%u change in send queue."
-#~ msgid_plural "%u changes in send queue."
-#~ msgstr[0] "Có %u thay đổi nằm trong hàng đợi gởi."
-
-#~ msgid "No SSL certificate was found."
-#~ msgstr "Không tìm thấy chứng nhận SSL."
-
-#~ msgid "The SSL certificate provided by the Jabber server is untrusted."
-#~ msgstr "Máy phục vụ Jabber đã cung cấp một chứng nhận SSL không đáng tin."
-
-#~ msgid "The SSL certificate provided by the Jabber server is expired."
-#~ msgstr "Máy phục vụ Jabber đã cung cấp một chứng nhận SSL đã hết hạn dùng."
-
-#~ msgid ""
-#~ "The SSL certificate provided by the Jabber server has not been activated."
-#~ msgstr "Máy phục vụ Jabber đã cung cấp một chứng nhận SSL chưa hoạt động."
-
-#~ msgid ""
-#~ "The SSL certificate provided by the Jabber server contains a hostname "
-#~ "that does not match the Jabber server's hostname."
-#~ msgstr ""
-#~ "Máy phục vụ Jabber đã cung cấp một chứng nhận SSL chứa tên máy không khớp "
-#~ "với tên máy của máy phục vụ Jabber."
-
-#~ msgid ""
-#~ "The SSL certificate provided by the Jabber server contains an invalid "
-#~ "fingerprint."
-#~ msgstr ""
-#~ "Máy phục vụ Jabber đã cung cấp một chứng nhận SSL chứa vân tay không hợp "
-#~ "lệ."
-
-#~ msgid "An unknown error occurred while setting up the SSL connection."
-#~ msgstr "Gặp lỗi lạ trong khi thiết lập kết nối SSL."
-
-#~ msgid ""
-#~ "<span weight=\"bold\" size=\"larger\">%1</span>\n"
-#~ "\n"
-#~ "Do you wish to continue connecting to the Jabber server?"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">%1</span>\n"
-#~ "\n"
-#~ "Bạn có muốn tiếp tục lại kết nối đến máy phục vụ Jabber không?"
-
-#~ msgid "Continue connecting and ignore further errors"
-#~ msgstr "Tiếp tục kết nối và bỏl qua lỗi thêm nào"
-
-#~ msgid "Continue connecting, but warn me of further errors"
-#~ msgstr "Tiếp tục kết nối, nhưng cảnh báo về lỗi thêm nào"
-
-#~ msgid "Cancel connection"
-#~ msgstr "Thôi kết nối"
-
-#~ msgid "Established whiteboard session with <b>%s</b>."
-#~ msgstr "Mới thiết lập buổi hợp bảng trắng với <b>%s</b>."
-
-#~ msgid "<b>%s</b> has <b>left</b> the whiteboard session."
-#~ msgstr "<b>%s</b> đã <b>rời</b> khỏi buổi hợp bảng tráng."
-
-#~ msgid ""
-#~ "<span weight=\"bold\" size=\"larger\">The user <b>%1</b> has left the "
-#~ "whiteboard session.</span>\n"
-#~ "\n"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đã rời khỏi "
-#~ "buổi hợp bảng trắng.</span>\n"
+#~ "<span weight=\"bold\" size=\"larger\">Người dùng <b>%1</b> đang dùng "
+#~ "phiên bản Inkboard không tương thích.</span>\n"
 #~ "\n"
 
 #~ msgid ""
-#~ "You are still connected to a Jabber server as <b>%2</b>, and may "
-#~ "establish a new session to <b>%1</b> or a different user."
-#~ msgstr ""
-#~ "Bạn vẫn còn có kết nối hoạt động đến máy phục vụ Jabber với tư cách là <b>"
-#~ "%2</b>, và có khả năng thiết lập buổi hợp mới với <b>%1</b> hay người "
-#~ "dùng khác."
-
-#~ msgid ""
-#~ "Could not open file %1 for session recording.\n"
-#~ "The error encountered was: %2.\n"
+#~ "Inkscape cannot connect to <b>%1</b>.\n"
 #~ "\n"
-#~ "You may select a different location to record the session, or you may opt "
-#~ "to not record this session."
+#~ "You are still connected to a Jabber server as <b>%2</b>."
 #~ msgstr ""
-#~ "Không thể mở tập tin %1 để ghi buổi hợp.\n"
-#~ "Lỗi được gặp là: %1.\n"
+#~ "Inkscape không thể kết nối đến <b>%1</b>.\n"
 #~ "\n"
-#~ "Bạn có khả năng chọn vị trí khác để ghi buổi hợp này, hoặc chọn không ghi "
-#~ "buổi hợp này."
-
-#~ msgid "Choose a different location"
-#~ msgstr "Chọn vị trí khác"
-
-#~ msgid "Skip session recording"
-#~ msgstr "Bỏ qua ghi buổi hợp"
-
-#~ msgid ""
-#~ "You need to connect to a Jabber server before sharing a document with "
-#~ "another user."
-#~ msgstr ""
-#~ "Bạn cần phải kết nối đến máy phục vụ Jabber để chia sẻ tài liệu với người "
-#~ "dùng khác."
-
-#~ msgid ""
-#~ "You need to connect to a Jabber server before sharing a document with a "
-#~ "chatroom."
-#~ msgstr ""
-#~ "Bạn cần phải kết nối đến máy phục vụ Jabber để chia sẻ tài liệu với phòng "
-#~ "trò chuyện."
-
-#~ msgid "XML node tracker has not been initialized; nothing to dump"
-#~ msgstr "Chưa sở khởi bộ theo dõi nút XML nên không có gì cần đổ."
-
-#~ msgid "_Connect to Jabber server..."
-#~ msgstr "Kết nối đến máy phục vụ _Jabber..."
-
-#~ msgid "Connect to a Jabber server"
-#~ msgstr "Kết nối đến một máy phục vụ Jabber nào đó."
-
-#~ msgid "Share with _user..."
-#~ msgstr "Chia sẻ với người dùng..."
-
-#~ msgid "Establish a whiteboard session with another Jabber user"
-#~ msgstr "Thiết lập một buổi hợp bảng trắng với người dùng Jabber khác."
-
-#~ msgid "Share with _chatroom..."
-#~ msgstr "Chia sẻ với phòng trò _chuyện..."
-
-#~ msgid ""
-#~ "Join a chatroom to start a new whiteboard session or join one in progress"
-#~ msgstr ""
-#~ "Vào một phòng trò chuyện để bắt đầu buổi hợp bảng trắng mới, hay tham gia "
-#~ "điều đang chạy."
-
-#~ msgid "_Dump XML node tracker"
-#~ msgstr "Đổ bộ theo _dõi nút XML"
-
-#~ msgid "Dump the contents of the XML tracker to the console"
-#~ msgstr "Đổ nội dung của bộ theo dõi XML vào bàn giao tiếp."
-
-#~ msgid "_Open session file..."
-#~ msgstr "_Mở tập tin buổi hợp..."
-
-#~ msgid "Open and browse through records of past whiteboard sessions"
-#~ msgstr "Mở và duyệt qua các mục ghi của buổi hợp bảng trắng trước đó."
-
-#~ msgid "Session file playback"
-#~ msgstr "Phát lại tập tin buổi hợp"
-
-#~ msgid "_Disconnect from session"
-#~ msgstr "Ngắt kết nối ra _buổi hợp"
-
-#~ msgid "Disconnect from _server"
-#~ msgstr "Ngắt kết nối ra máy _phục vụ"
+#~ "Vậy bạn vẫn còn được kết nối đến máy phục vụ Jabber dưới <b>%2</b>."
