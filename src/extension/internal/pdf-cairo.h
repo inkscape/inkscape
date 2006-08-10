@@ -42,8 +42,7 @@ class PrintCairoPDF : public Inkscape::Extension::Implementation::Implementation
     cairo_surface_t *pdf_surface;
     PangoLayout *_layout;
 //    PangoContext *_context;
-    float *_alpha_stack;
-    int	_num_alphas, _alpha_ptr;
+    std::vector<float> _alpha_stack;
     double _last_tx, _last_ty;
     
     unsigned short _dpi;
