@@ -44,7 +44,7 @@
 #undef ENABLE_BINRELOC
 
 #define PANGO_ENABLE_ENGINE           1
-#define HAVE_PANGO_CAIRO              1
+#define RENDER_WITH_PANGO_CAIRO       1
 
 #define HAVE_GTK_WINDOW_FULLSCREEN    1
 
