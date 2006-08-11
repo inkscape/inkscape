@@ -6,6 +6,7 @@
 ; helix84 helix84@gmail.com (translation for Inkscape 0.44)
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "Slovak"
 
@@ -119,10 +120,12 @@ LangString lng_LanguagesDesc $(LANG_SLOVAK) "Nainötalovaù Ôalöie jazykovÈ sady $
 LangString lng_am $(LANG_SLOVAK) "am  Amharic"
 LangString lng_az $(LANG_SLOVAK) "az  Azerbaijani"
 LangString lng_be $(LANG_SLOVAK) "be  Byelorussian"
+LangString lng_bg $(LANG_SLOVAK) "bg  Bulgarian"
 LangString lng_ca $(LANG_SLOVAK) "ca  Catalan"
 LangString lng_cs $(LANG_SLOVAK) "cs  Czech"
 LangString lng_da $(LANG_SLOVAK) "da  Danish"
 LangString lng_de $(LANG_SLOVAK) "de  German"
+LangString lng_dz $(LANG_SLOVAK) "dz  Dzongkha"
 LangString lng_el $(LANG_SLOVAK) "el  Greek"
 LangString lng_en $(LANG_SLOVAK) "en  English"
 LangString lng_en_CA $(LANG_SLOVAK) "en_CA Canadian English"

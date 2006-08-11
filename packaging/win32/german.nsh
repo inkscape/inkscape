@@ -6,6 +6,7 @@
 ; Adib Taraben theAdib@yahoo.com
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "German"
 
@@ -122,10 +123,12 @@ LangString lng_LanguagesDesc $(LANG_GERMAN) "Installiert verschiedene ‹bersetzun
 LangString lng_am $(LANG_GERMAN) "am  Amharisch"
 LangString lng_az $(LANG_GERMAN) "az  Aserbaidschanisch"
 LangString lng_be $(LANG_GERMAN) "be  Weiﬂrussisch"
+LangString lng_bg $(LANG_GERMAN) "bg  Bulgarisch"
 LangString lng_ca $(LANG_GERMAN) "ca  Katalanisch"
 LangString lng_cs $(LANG_GERMAN) "cs  Tschechisch"
 LangString lng_da $(LANG_GERMAN) "da  D‰nisch"
 LangString lng_de $(LANG_GERMAN) "de  Deutsch"
+LangString lng_dz $(LANG_GERMAN) "dz  Dzongkha"
 LangString lng_el $(LANG_GERMAN) "el  Griechisch"
 LangString lng_en $(LANG_GERMAN) "en  Englisch"
 LangString lng_en_CA $(LANG_GERMAN) "en_CA  Kanadisch Englisch"

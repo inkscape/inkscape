@@ -7,6 +7,7 @@
 ; matiphas matiphas@free.fr
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "French"
 
@@ -120,10 +121,12 @@ LangString lng_LanguagesDesc $(LANG_FRENCH) "Installer des traductions pour ${PR
 LangString lng_am $(LANG_FRENCH) "am  Amharique"
 LangString lng_az $(LANG_FRENCH) "az  Azerbaïdjanais"
 LangString lng_be $(LANG_FRENCH) "be  Biélorusse"
+LangString lng_bg $(LANG_FRENSH) "bg  Bulgarian"
 LangString lng_ca $(LANG_FRENCH) "ca  Catalan"
 LangString lng_cs $(LANG_FRENCH) "cs  Tchèque"
 LangString lng_da $(LANG_FRENCH) "da  Danois"
 LangString lng_de $(LANG_FRENCH) "de  Allemand"
+LangString lng_dz $(LANG_FRENCH) "dz  Dzongkha"
 LangString lng_el $(LANG_FRENCH) "el  Grec"
 LangString lng_en $(LANG_FRENCH) "en  Anglais"
 LangString lng_en_CA $(LANG_FRENCH) "en_CA Canadian English"

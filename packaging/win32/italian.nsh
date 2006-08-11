@@ -6,6 +6,7 @@
 ; Emanuele Mandola earween@gmail.com
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "Italian"
 
@@ -119,10 +120,12 @@ LangString lng_LanguagesDesc $(LANG_ITALIAN) "Installa altre traduzioni per ${PR
 LangString lng_am $(LANG_ITALIAN) "am  Aramaico"
 LangString lng_az $(LANG_ITALIAN) "az  Azerbaigiano"
 LangString lng_be $(LANG_ITALIAN) "be  Bielorusso"
+LangString lng_bg $(LANG_ITALIAN) "bg  Bulgarian"
 LangString lng_ca $(LANG_ITALIAN) "ca  Catalano"
 LangString lng_cs $(LANG_ITALIAN) "cs  Ceco"
 LangString lng_da $(LANG_ITALIAN) "da  Danese"
 LangString lng_de $(LANG_ITALIAN) "de  Tedesco"
+LangString lng_dz $(LANG_ITALIAN) "dz  Dzongkha"
 LangString lng_el $(LANG_ITALIAN) "el  Greco"
 LangString lng_en $(LANG_ITALIAN) "en  Inglese"
 LangString lng_en_CA $(LANG_ITALIAN) "en_CA Canadian English"

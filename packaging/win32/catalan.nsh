@@ -7,6 +7,7 @@
 ; inkscape@softcatala.net
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "Catalan"
 
@@ -154,6 +155,7 @@ LangString lng_am $(LANG_CATALAN) "am  Amharic"
 LangString lng_az $(LANG_CATALAN) "az  Azerbaijani"
 ; LangString lng_be $(LANG_CATALAN) "be  Byelorussian"
 LangString lng_be $(LANG_CATALAN) "be  Biel·lorús"
+LangString lng_bg $(LANG_CATALAN) "bg  Bulgarian"
 ; LangString lng_ca $(LANG_CATALAN) "ca  Catalan"
 LangString lng_ca $(LANG_CATALAN) "ca  Català"
 ; LangString lng_cs $(LANG_CATALAN) "cs  Czech"
@@ -162,6 +164,7 @@ LangString lng_ca $(LANG_CATALAN) "ca  Català"
   LangString lng_da $(LANG_CATALAN) "da  Danès"
 ; LangString lng_de $(LANG_CATALAN) "de  German"
   LangString lng_de $(LANG_CATALAN) "de  Alemany"
+LangString lng_dz $(LANG_CATALAN) "dz  Dzongkha"
 ; LangString lng_el $(LANG_CATALAN) "el  Greek"
   LangString lng_el $(LANG_CATALAN) "el  Grec"
 ; LangString lng_en $(LANG_CATALAN) "en  English"

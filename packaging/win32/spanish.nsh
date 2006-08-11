@@ -6,6 +6,7 @@
 ; Adib Taraben theAdib@yahoo.com
 ; Lucas Vieites aka basurero
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "Spanish"
 
@@ -119,10 +120,12 @@ LangString lng_LanguagesDesc $(LANG_SPANISH) "Instalar varias traducciones para 
 LangString lng_am $(LANG_SPANISH) "am  Amharic"
 LangString lng_az $(LANG_SPANISH) "az  Azerbaijani"
 LangString lng_be $(LANG_SPANISH) "be  Byelorussian"
+LangString lng_bg $(LANG_SPANISH) "bg  Bulgarian"
 LangString lng_ca $(LANG_SPANISH) "ca  Catalan"
 LangString lng_cs $(LANG_SPANISH) "cs  Czech"
 LangString lng_da $(LANG_SPANISH) "da  Danish"
 LangString lng_de $(LANG_SPANISH) "de  German"
+LangString lng_dz $(LANG_SPANISH) "dz  Dzongkha"
 LangString lng_el $(LANG_SPANISH) "el  Greek"
 LangString lng_en $(LANG_SPANISH) "en  English"
 LangString lng_en_CA $(LANG_SPANISH) "en_CA Canadian English"

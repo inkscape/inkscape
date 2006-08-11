@@ -652,6 +652,10 @@ Section $(lng_be) SecByelorussian
   !insertmacro Language be be
 SectionEnd
 
+Section $(lng_bg) SecBulgarian
+  !insertmacro Language bg bg
+SectionEnd
+
 Section $(lng_ca) SecCatalan
   !insertmacro Language ca ca
 SectionEnd
@@ -666,6 +670,10 @@ SectionEnd
 
 Section $(lng_de) SecGerman
   !insertmacro Language 'de' 'de'
+SectionEnd
+
+Section $(lng_dz) SecDzongkha
+  !insertmacro Language dz dz
 SectionEnd
 
 Section $(lng_el) SecGreek

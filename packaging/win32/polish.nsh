@@ -5,6 +5,9 @@
 ; translator:
 ; Przemys³aw Loesch p_loesch@poczta.onet.pl
 ;
+; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
+
 !insertmacro MUI_LANGUAGE "Polish"
 
 ; Product name
@@ -117,10 +120,12 @@ LangString lng_LanguagesDesc $(LANG_POLISH) "Zainstaluj wybrane t³umaczenia inte
 LangString lng_am $(LANG_POLISH) "am  Amharic"
 LangString lng_az $(LANG_POLISH) "az  Azerbaijani"
 LangString lng_be $(LANG_POLISH) "be  Byelorussian"
+LangString lng_bg $(LANG_POLISH) "bg  Bulgarian"
 LangString lng_ca $(LANG_POLISH) "ca  Catalan"
 LangString lng_cs $(LANG_POLISH) "cs  Czech"
 LangString lng_da $(LANG_POLISH) "da  Danish"
 LangString lng_de $(LANG_POLISH) "de  German"
+LangString lng_dz $(LANG_POLISH) "dz  Dzongkha"
 LangString lng_el $(LANG_POLISH) "el  Greek"
 LangString lng_en $(LANG_POLISH) "en  English"
 LangString lng_en_CA $(LANG_POLISH) "en_CA Canadian English"

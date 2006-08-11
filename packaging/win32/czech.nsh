@@ -7,6 +7,7 @@
 ; Josef Vybíral josef.vybiral@gmail.com (update for Inkscape 0.44)
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
+; 11 august 2006 new languages dz bg
 
 !insertmacro MUI_LANGUAGE "Czech"
 
@@ -120,10 +121,12 @@ LangString lng_LanguagesDesc $(LANG_CZECH) "Nainstalovat další jazykové sady ${P
 LangString lng_am $(LANG_CZECH) "am  Amharic"
 LangString lng_az $(LANG_CZECH) "az  Azerbajdžánština"
 LangString lng_be $(LANG_CZECH) "be  Bìloruština"
+LangString lng_bg $(LANG_CZECH) "bg  Bulgarian"
 LangString lng_ca $(LANG_CZECH) "ca  Katalánština"
 LangString lng_cs $(LANG_CZECH) "cs  Èeština"
 LangString lng_da $(LANG_CZECH) "da  Dánština"
 LangString lng_de $(LANG_CZECH) "de  Nìmèina"
+LangString lng_dz $(LANG_CZECH) "dz  Dzongkha"
 LangString lng_el $(LANG_CZECH) "el  Øeètina"
 LangString lng_en $(LANG_CZECH) "en  Anglièina"
 LangString lng_en_CA $(LANG_CZECH) "en_CA Kanadská Angliètina"
