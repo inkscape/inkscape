@@ -41,6 +41,7 @@ def lexPath(d)
         elsif m = scanner.scan(parameter)
             yield m, false
         else
+            #TODO: create new exception
             raise 'Invalid path data!'
         end
     end
