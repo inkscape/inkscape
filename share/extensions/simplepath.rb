@@ -78,9 +78,9 @@ def parsePath(d)
     lastCommand = nil
 
     lexPath(d) do |token, isCommand|
-        if command
-            raise 'Invalid number of parameters' if isCommand
-        else
+        raise 'Invalid number of parameters' if command and isCommand
+
+        unless command
             if isCommand
                 raise 'Invalid path, must begin with moveto.' \
                   unless lastCommand or token.upcase == 'M'
