@@ -17,7 +17,8 @@ palettes_DATA = \
     Reds.gpl \
     Royal.gpl \
     Topographic.gpl \
-    Ubuntu.gpl
+    Ubuntu.gpl \
+    windows.gpl
     
 
 EXTRA_DIST = $(palettes_DATA)
