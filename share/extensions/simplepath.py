@@ -148,6 +148,7 @@ def parsePath(d):
         #current values become "last" values
         if outputCommand == 'M':
             subPathStart = tuple(params[0:2])
+            pen = subPathStart
         if outputCommand == 'Z':
             pen = subPathStart
         else:
