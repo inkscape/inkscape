@@ -482,6 +482,10 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
     //fixme: np can be NULL, so check before proceeding
     g_return_if_fail(np != NULL);
 
+    update_repr_internal(np);
+    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
+                     annotation);
+
     if (np->livarot_path) {
         delete np->livarot_path;
         np->livarot_path = NULL;
@@ -493,9 +497,6 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
             np->livarot_path->ConvertWithBackData(0.01);
     }
 
-    update_repr_internal(np);
-    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
-                     annotation);
 }
 
 /**
