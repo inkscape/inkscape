@@ -102,8 +102,8 @@ def parsePath(d):
             #use last command's implicit next command
             needParam = False
             if lastCommand:
-                if token.isupper():
-                    command = pathdefs[lastCommand.upper()][0]
+                if lastCommand.isupper():
+                    command = pathdefs[lastCommand][0]
                 else:
                     command = pathdefs[lastCommand.upper()][0].lower()
             else:
