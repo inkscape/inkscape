@@ -36,6 +36,7 @@ extensions = \
 	radiusrand.py \
 	rtree.py \
 	simplepath.py \
+	simplepath.rb \
 	simplestyle.py \
 	straightseg.py \
 	wavy.py \
