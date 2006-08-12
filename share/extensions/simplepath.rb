@@ -80,22 +80,17 @@ def parsePath(d)
     lexPath(d) do |token, isCommand|
         unless command
             if isCommand
-                if lastCommand or token.upcase == 'M'
-                    command = token
-                else
-                    raise 'Invalid path, must begin with moveto.'
-                end
+                raise 'Invalid path, must begin with moveto.' \
+                  unless lastCommand or token.upcase == 'M'
+                command = token
             else
                 #command was omited
                 #use last command's implicit next command
-                if lastCommand
-                    if lastCommand =~ /[A-Z]/
-                        command = PATHDEFS[lastCommand].implicit_next
-                    else
-                        command = PATHDEFS[lastCommand.upcase].implicit_next.downcase
-                    end
+                raise 'Invalid path, no initial command.' unless lastCommand
+                if lastCommand =~ /[A-Z]/
+                    command = PATHDEFS[lastCommand].implicit_next
                 else
-                    raise 'Invalid path, no initial command.'    
+                    command = PATHDEFS[lastCommand.upcase].implicit_next.downcase
                 end
             end
             outputCommand = command.upcase
@@ -165,44 +160,44 @@ def formatPath(a)
     a.map { |cmd,params| "#{cmd} #{params.join(' ')}" }.join
 end
 
-def translatePath(p, x, y)
+def _transformPath(p)
     p.each do |cmd,params|
         coord_types = PATHDEFS[cmd].coord_types
         for i in 0...(params.length)
-            case coord_types[i]
-            when :x: params[i] += x
-            when :y: params[i] += y
-            end
+            yield params, i, coord_types[i]
+        end
+    end
+end
+
+def translatePath(p, x, y)
+    _transformPath(p) do |params, i, coord_type|
+        case coord_type
+        when :x: params[i] += x
+        when :y: params[i] += y
         end
     end
 end
 
 def scalePath(p, x, y)
-    p.each do |cmd,params|
-        coord_types = PATHDEFS[cmd].coord_types
-        for i in 0...(params.length)
-            case coord_types[i]
-            when :x: params[i] *= x
-            when :y: params[i] *= y
-            end
+    _transformPath(p) do |params, i, coord_type|
+        case coord_type
+        when :x: params[i] *= x
+        when :y: params[i] *= y
         end
     end
 end
 
 def rotatePath(p, a, cx = 0, cy = 0)
     return p if a == 0
-    p.each do |cmd,params|
-        coord_types = PATHDEFS[cmd].coord_types
-        for i in 0...(params.length)
-            if coord_types[i] == :x
-                x = params[i] - cx
-                y = params[i + 1] - cy
-                r = Math.sqrt((x**2) + (y**2))
-                unless r.zero?
-                    theta = Math.atan2(y, x) + a
-                    params[i] = (r * Math.cos(theta)) + cx
-                    params[i + 1] = (r * Math.sin(theta)) + cy
-                end
+    _transformPath(p) do |params, i, coord_type|
+        if coord_type == :x
+            x = params[i] - cx
+            y = params[i + 1] - cy
+            r = Math.sqrt((x**2) + (y**2))
+            unless r.zero?
+                theta = Math.atan2(y, x) + a
+                params[i] = (r * Math.cos(theta)) + cx
+                params[i + 1] = (r * Math.sin(theta)) + cy
             end
         end
     end
