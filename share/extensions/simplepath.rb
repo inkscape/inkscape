@@ -96,6 +96,9 @@ def parsePath(d)
             outputCommand = command.upcase
         else
             raise 'Invalid number of parameters' if isCommand
+        end
+
+        unless isCommand
             param = token.send PATHDEFS[outputCommand].casts[params.length]
             if command =~ /[a-z]/
                 case PATHDEFS[outputCommand].coord_types[params.length]
