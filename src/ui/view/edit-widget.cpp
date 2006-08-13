@@ -16,7 +16,9 @@
  *   Derek P. Moore <derekm@hackunix.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
+ *   John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 John Bintz
  * Copyright (C) 1999-2005 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
@@ -74,7 +76,8 @@ EditWidget::EditWidget (SPDocument *doc)
       _act_grp(Gtk::ActionGroup::create()),
       _ui_mgr(Gtk::UIManager::create()),
       _update_s_f(false),
-      _update_a_f(false)
+      _update_a_f(false),
+      _interaction_disabled_counter(0)
 {
     g_warning("Creating new EditWidget");
 
@@ -1300,6 +1303,28 @@ EditWidget::requestCanvasUpdateAndWait()
 
     while (gtk_events_pending()) 
       gtk_main_iteration_do(FALSE);
+}
+
+void
+EditWidget::enableInteraction()
+{
+  g_return_if_fail(_interaction_disabled_counter > 0);
+  
+  _interaction_disabled_counter--;
+  
+  if (_interaction_disabled_counter == 0) {
+    this->set_sensitive(true);
+  }
+}
+
+void
+EditWidget::disableInteraction()
+{
+  if (_interaction_disabled_counter == 0) {
+    this->set_sensitive(false);
+  }
+  
+  _interaction_disabled_counter++;
 }
 
 void

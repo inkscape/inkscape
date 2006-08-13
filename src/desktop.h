@@ -9,7 +9,9 @@
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 John Bintz
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
@@ -92,6 +94,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     unsigned int dkey;
     unsigned int number;
     bool is_fullscreen;
+    unsigned int interaction_disabled_counter;
 
     /// \todo fixme: This has to be implemented in different way */
     guint guides_active : 1;
@@ -225,6 +228,9 @@ struct SPDesktop : public Inkscape::UI::View::View
     bool isToolboxButtonActive (gchar const *id);
     void updateNow();
     void updateCanvasNow();
+    
+    void enableInteraction();
+    void disableInteraction();
     
     void fullscreen();
 

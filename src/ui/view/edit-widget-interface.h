@@ -5,7 +5,9 @@
  *
  * Authors:
  *     Ralf Stephan <ralf@ark.in-berlin.de> 
+ *     John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 John Bintz
  * Copyright (C) 2005 Ralf Stephan
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
@@ -72,6 +74,12 @@ struct EditWidgetInterface
     
     /// Force a redraw of the canvas
     virtual void requestCanvasUpdateAndWait() = 0;
+    
+    /// Enable interaction on this desktop
+    virtual void enableInteraction() = 0;
+    
+    /// Disable interaction on this desktop
+    virtual void disableInteraction() = 0;
     
     /// Update the "active desktop" indicator
     virtual void activateDesktop() = 0;

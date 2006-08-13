@@ -8,7 +8,9 @@
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -171,6 +173,8 @@ sp_desktop_widget_init (SPDesktopWidget *dtw)
     
     dtw->desktop = NULL;
 
+    dtw->_interaction_disabled_counter = 0;
+    
     dtw->tt = gtk_tooltips_new ();
 
     /* Main table */
@@ -667,6 +671,28 @@ SPDesktopWidget::requestCanvasUpdateAndWait() {
     while (gtk_events_pending()) 
       gtk_main_iteration_do(FALSE);
 
+}
+
+void
+SPDesktopWidget::enableInteraction()
+{
+  g_return_if_fail(_interaction_disabled_counter > 0);
+  
+  _interaction_disabled_counter--;
+  
+  if (_interaction_disabled_counter == 0) {
+    gtk_widget_set_sensitive(GTK_WIDGET(this), TRUE);
+  }
+}
+
+void
+SPDesktopWidget::disableInteraction()
+{
+  if (_interaction_disabled_counter == 0) {
+    gtk_widget_set_sensitive(GTK_WIDGET(this), FALSE);
+  }
+  
+  _interaction_disabled_counter++;
 }
 
 void 

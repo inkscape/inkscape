@@ -6,7 +6,9 @@
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Derek P. Moore <derekm@hackunix.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 Bryce Harrington
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
@@ -109,6 +111,8 @@ public:
     virtual void destroy();
     virtual void requestCanvasUpdate();
     virtual void requestCanvasUpdateAndWait();
+    virtual void enableInteraction();
+    virtual void disableInteraction();
     virtual void activateDesktop();
     virtual void deactivateDesktop();
     virtual void viewSetPosition (NR::Point p);
@@ -193,6 +197,7 @@ private:
     void onAdjValueChanged();
 
     bool _update_s_f, _update_a_f;
+    unsigned int _interaction_disabled_counter;
 
     sigc::connection _namedview_modified_connection;
 };

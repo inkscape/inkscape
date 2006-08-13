@@ -8,7 +8,9 @@
  *   MenTaLguY <mental@rydia.net>
  *   bulia byak <buliabyak@users.sf.net>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -1026,6 +1028,17 @@ void
 SPDesktop::updateNow()
 {
   sp_canvas_update_now(canvas);
+}
+
+void
+SPDesktop::enableInteraction()
+{
+  _widget->enableInteraction();
+}
+
+void SPDesktop::disableInteraction()
+{
+  _widget->disableInteraction();
 }
 
 //----------------------------------------------------------------------

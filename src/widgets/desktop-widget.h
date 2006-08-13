@@ -5,6 +5,7 @@
  * SPDesktopWidget: handling Gtk events on a desktop.
  *
  * Authors:
+ *      John Bintz <jcoswell@coswellproductions.org> (c) 2006
  *      Ralf Stephan <ralf@ark.in-berlin.de> (c) 2005, distrib. under GPL2
  *      ? -2004
  */
@@ -92,6 +93,8 @@ struct SPDesktopWidget {
     Inkscape::UI::Widget::SelectedStyle *selected_style;
 
     gint coord_status_id, select_status_id;
+    
+    unsigned int _interaction_disabled_counter;
 
     SPCanvas *canvas;
     NR::Point ruler_origin;
@@ -135,6 +138,10 @@ struct SPDesktopWidget {
             { _dtw->requestCanvasUpdate(); }
         virtual void requestCanvasUpdateAndWait()
             { _dtw->requestCanvasUpdateAndWait(); }
+        virtual void enableInteraction()
+            { _dtw->enableInteraction(); }
+        virtual void disableInteraction()
+            { _dtw->disableInteraction(); }
         virtual void activateDesktop()
             { sp_dtw_desktop_activate (_dtw); }
         virtual void deactivateDesktop()
@@ -186,6 +193,8 @@ struct SPDesktopWidget {
     void setCoordinateStatus(NR::Point p);
     void requestCanvasUpdate();
     void requestCanvasUpdateAndWait();
+    void enableInteraction();
+    void disableInteraction();
     void updateTitle(gchar const *uri);
 };
 
