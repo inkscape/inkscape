@@ -108,6 +108,7 @@ public:
     virtual bool shutdown();
     virtual void destroy();
     virtual void requestCanvasUpdate();
+    virtual void requestCanvasUpdateAndWait();
     virtual void activateDesktop();
     virtual void deactivateDesktop();
     virtual void viewSetPosition (NR::Point p);

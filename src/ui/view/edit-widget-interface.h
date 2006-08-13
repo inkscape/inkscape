@@ -70,6 +70,9 @@ struct EditWidgetInterface
     /// Queue a redraw request with the canvas
     virtual void requestCanvasUpdate() = 0;
     
+    /// Force a redraw of the canvas
+    virtual void requestCanvasUpdateAndWait() = 0;
+    
     /// Update the "active desktop" indicator
     virtual void activateDesktop() = 0;
     

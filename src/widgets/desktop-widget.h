@@ -133,6 +133,8 @@ struct SPDesktopWidget {
         
         virtual void requestCanvasUpdate()
             { _dtw->requestCanvasUpdate(); }
+        virtual void requestCanvasUpdateAndWait()
+            { _dtw->requestCanvasUpdateAndWait(); }
         virtual void activateDesktop()
             { sp_dtw_desktop_activate (_dtw); }
         virtual void deactivateDesktop()
@@ -183,6 +185,7 @@ struct SPDesktopWidget {
     bool isToolboxButtonActive (gchar const *id);
     void setCoordinateStatus(NR::Point p);
     void requestCanvasUpdate();
+    void requestCanvasUpdateAndWait();
     void updateTitle(gchar const *uri);
 };
 

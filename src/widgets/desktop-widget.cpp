@@ -661,6 +661,15 @@ SPDesktopWidget::requestCanvasUpdate() {
 }
 
 void 
+SPDesktopWidget::requestCanvasUpdateAndWait() {
+    requestCanvasUpdate();
+    
+    while (gtk_events_pending()) 
+      gtk_main_iteration_do(FALSE);
+
+}
+
+void 
 SPDesktopWidget::setCoordinateStatus(NR::Point p)
 {
     gchar *cstr;

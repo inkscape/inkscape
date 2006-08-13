@@ -1054,6 +1054,12 @@ SPDesktop::onRedrawRequested ()
     }
 }
 
+void
+SPDesktop::updateCanvasNow()
+{
+  _widget->requestCanvasUpdateAndWait();
+}
+
 /**
  * Associate document with desktop.
  */

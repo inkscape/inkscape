@@ -1294,6 +1294,15 @@ EditWidget::requestCanvasUpdate()
 }
 
 void
+EditWidget::requestCanvasUpdateAndWait()
+{
+    requestCanvasUpdate();
+
+    while (gtk_events_pending()) 
+      gtk_main_iteration_do(FALSE);
+}
+
+void
 EditWidget::activateDesktop()
 {
     /// \todo active_desktop_indicator not implemented

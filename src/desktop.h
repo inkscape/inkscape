@@ -224,6 +224,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setToolboxAdjustmentValue (gchar const* id, double val);
     bool isToolboxButtonActive (gchar const *id);
     void updateNow();
+    void updateCanvasNow();
     
     void fullscreen();
 
