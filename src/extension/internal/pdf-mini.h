@@ -245,6 +245,11 @@ PdfObject *PdfFile::begin_page(double x0, double y0, double x1, double y1) {
               << "  /MediaBox [ " << x0 << " " << y0 << " " << x1 << " " << y1 << " ]\n"
               << "  /Resources " << obj_resources->get_id() << " 0 R\n"
               << "  /Contents " << obj_contents->get_id() << " 0 R\n"
+              << "  /Group\n"
+              << "  << /Type /Group\n"
+              << "     /S /Transparency\n"
+              << "     /CS /DeviceRGB\n"
+              << "  >>\n"
               << ">>\n";
     end_object(obj_page);
     puts(obj_page);
