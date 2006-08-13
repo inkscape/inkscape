@@ -37,6 +37,7 @@ namespace Message {
 
 namespace Vars {
 
+    const std::string DOCUMENT_ROOT_NODE("ROOT"); 
     const std::string INKBOARD_XMLNS("http://inkscape.org/inkboard"); 
 
     const std::string WHITEBOARD_MESSAGE(
@@ -45,7 +46,7 @@ namespace Vars {
         "</message>"); 
 
     const std::string PROTOCOL_MESSAGE("<%1><%2 /></%1>");
-
+    const std::string NEW_MESSAGE("<new parent=\"%1\" id=\"%2\" target=\"%3\">%4</new>");
 }
 
 namespace State {

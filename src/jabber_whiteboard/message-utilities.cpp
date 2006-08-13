@@ -14,6 +14,7 @@
 
 #include "util/share.h"
 #include "util/list.h"
+#include "util/ucompose.hpp"
 
 #include "xml/node.h"
 #include "xml/attribute-record.h"
@@ -37,6 +38,27 @@ namespace Whiteboard {
 // in the maps referenced by newidsbuf and newnodesbuf.  Passing NULL as the message buffer has the same effect.
 //
 // only_collect_nodes defaults to false because most invocations of this method also use the message string.
+
+Glib::ustring
+MessageUtilities::objectToString(Inkscape::XML::Node *element)
+{
+    if(element->type() == Inkscape::XML::TEXT_NODE)
+        return String::ucompose("<text>%1</text>",element->content());
+
+    Glib::ustring attributes;
+
+    for ( Inkscape::Util::List<Inkscape::XML::AttributeRecord const> 
+        iter = element->attributeList() ; iter ; ++iter )
+    {
+        attributes.append(g_quark_to_string(iter->key));
+        attributes.append("=\"");
+        attributes.append(iter->value);
+        attributes.append("\" ");
+    }
+
+    return String::ucompose("<%1 %2/>",element->name(),attributes);
+}
+/*
 void
 MessageUtilities::newObjectMessage(Glib::ustring &msgbuf, 
                        KeyNodeTable& newnodesbuf,
@@ -271,7 +293,7 @@ MessageUtilities::objectDeleteMessage(Glib::ustring &msgbuf,
     parentid = parent.attribute("id");
     if (prev != NULL) {
             previd = prev->attribute("id");
-    }*/
+    }
 
     Glib::ustring parentid, previd, childid;
 
@@ -361,7 +383,7 @@ MessageUtilities::childOrderChangeMessage(Glib::ustring& msgbuf,
     msgbuf = msgbuf + "<" + MESSAGE_OLDVAL + ">";
     msgbuf += (*oldprevid);
     msgbuf = msgbuf + "</" + MESSAGE_OLDVAL + ">";
-    */
+    
 
     // <MESSAGE_NEWVAL>newprevid</MESSAGE_NEWVAL>
     msgbuf = msgbuf + "<" + MESSAGE_NEWVAL + ">";
@@ -451,7 +473,7 @@ MessageUtilities::makeTagWithContent(const Glib::ustring &tagname,
     buf += "</" + tagname + ">";
     return buf;
 }
-
+*/
 
 }
 

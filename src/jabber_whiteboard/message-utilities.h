@@ -44,6 +44,8 @@ class XMLNodeTracker;
 class MessageUtilities {
 public:
     // Message generation utilities
+    static Glib::ustring objectToString(Inkscape::XML::Node *element);
+/*
     static void newObjectMessage(Glib::ustring &msgbuf, 
                            KeyNodeTable& newnodesbuf, 
                            NewChildObjectMessageList& childmsgbuf, 
@@ -81,7 +83,7 @@ public:
     // Message tag generation utilities
     static Glib::ustring makeTagWithContent(const Glib::ustring &tagname,
                                             const Glib::ustring &content);
-
+*/
 private:
     // noncopyable, nonassignable
     MessageUtilities(MessageUtilities const&);

@@ -15,49 +15,37 @@
 #include <glibmm.h>
 #include <bitset>
 
+#include "gc-managed.h"
+
+#include "xml/session.h"
+#include "xml/transaction-logger.h"
+#include "xml/log-builder.h"
+#include "xml/node-observer.h"
+#include "xml/simple-session.h"
+
 #include "pedro/pedroxmpp.h"
+
+#include "jabber_whiteboard/inkboard-document.h"
+#include "jabber_whiteboard/inkboard-node.h"
+
 #include "jabber_whiteboard/defines.h"
 
-#include "xml/simple-session.h"
 #include "util/share.h"
 
 namespace Inkscape {
 
 namespace Whiteboard {
 
-class InkboardSession : public GC::Managed<>,
-						public XML::Session,
-						public XML::TransactionLogger
+class InkboardDocument;
+
+class InkboardSession : public GC::Managed<>, public XML::Session,
+                         public XML::TransactionLogger
 {
 public:
-	InkboardSession() : _in_transaction(false) { }
-	InkboardSession(Glib::ustring const& name) : _in_transaction(false), _name(name) { }
-	virtual ~InkboardSession() { }
-    
-    /**
-     * Returns the name of this session.
-	 * \return The name of this session.
-     */
-    virtual Glib::ustring getName() const
-        { return _name; }
-        
-    /**
-     * Sets the name of this session.
-	 *
-	 * \param val The name to use.
-     */
-    virtual void setName(const Glib::ustring &val)
-        { _name = val; }
 
-    /**
-     * Returns status attributes of this session.
-     *
-     * \return Status of this session.
-     */
-    virtual std::bitset< NUM_FLAGS > const& getStatus() const
-    {
-    	return status;
-    }
+    InkboardSession() : _in_transaction(false) { }
+    InkboardSession(InkboardDocument *document) : _in_transaction(false), doc(document) {}
+    virtual ~InkboardSession() { }
 
     //
     // XML::TransactionLogger methods
@@ -86,7 +74,7 @@ public:
     XML::Node* createCommentNode(char const* content);
 
     //
-    // XML::NodeObserver methods
+    // XML::NodeObserver methodscd ../
     // (inherited from XML::TransactionLogger)
     //
     void notifyChildAdded(Inkscape::XML::Node &parent, Inkscape::XML::Node &child, Inkscape::XML::Node *prev);
@@ -111,8 +99,7 @@ private:
 
     bool _in_transaction;
 
-    std::bitset< NUM_FLAGS > status;
-    Glib::ustring _name;
+    InkboardDocument *doc;
 };
 
 }

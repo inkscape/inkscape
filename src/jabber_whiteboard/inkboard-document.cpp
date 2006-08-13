@@ -19,6 +19,7 @@
 
 #include "xml/simple-session.h"
 #include "jabber_whiteboard/inkboard-session.h"
+#include "jabber_whiteboard/message-utilities.h"
 #include "jabber_whiteboard/defines.h"
 #include "jabber_whiteboard/session-manager.h"
 #include "jabber_whiteboard/node-tracker.h"
@@ -39,7 +40,7 @@ InkboardDocument::_initBindings()
     this->sm = &SessionManager::instance();
     this->state = State::INITIAL;
     _bindDocument(*this);
-    _bindLogger(*(new XML::SimpleSession()));
+    _bindLogger(*(new InkboardSession(this)));
 }
 
 void
@@ -107,7 +108,7 @@ InkboardDocument::recieve(Message::Wrapper &wrapper, Pedro::Element* data)
 
                 // Send Document
                 this->tracker = new KeyNodeTable();
-                this->sendDocument();
+                this->sendDocument(this->root());
 
                 this->send(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_END);
 
@@ -150,9 +151,22 @@ InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper &wrapper, 
 }
 
 void
-InkboardDocument::sendDocument()
+InkboardDocument::sendDocument(Inkscape::XML::Node* root)
 {
+    for(Inkscape::XML::Node *child = root->firstChild();child!=NULL;child=child->next())
+    {
+        Glib::ustring parentKey,tempParentKey,key;
 
+        this->addNodeToTracker(child);
+        Message::Message message = this->composeNewMessage(child);
+
+        this->send(this->getRecipient(),Message::NEW,message);
+
+        if(child->childCount() != 0)
+        {
+            sendDocument(child);
+        }
+    }
 }
 
 bool
@@ -227,6 +241,35 @@ InkboardDocument::handleState(State::SessionState expectedState, State::SessionS
     }
 
     return false;
+}
+
+Glib::ustring
+InkboardDocument::addNodeToTracker(Inkscape::XML::Node *node)
+{
+    Glib::ustring key = this->tracker->generateKey(this->getRecipient());
+    this->tracker->put(key,node);
+    return key;
+}
+
+Message::Message
+InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
+{
+    Glib::ustring parentKey;
+    Glib::ustring key = this->tracker->get(node);
+    Inkscape::XML::Node *parent = node->parent();
+
+    Glib::ustring tempParentKey = this->tracker->get(node->parent());
+    if(tempParentKey.size() < 1)
+        parentKey = Vars::DOCUMENT_ROOT_NODE;
+    else
+        parentKey = tempParentKey;
+
+    unsigned int index = parent->_childPosition(*node);
+
+    Message::Message nodeMessage = MessageUtilities::objectToString(node);
+    Message::Message message = String::ucompose(Vars::NEW_MESSAGE,parentKey,key,index,nodeMessage);
+
+    return message;
 }
 
 

@@ -47,7 +47,7 @@ void KeyNodeTable::put(const Glib::ustring &key, const XML::Node *node)
         else
             iter++;
         }
-        
+
     //add new
     KeyNodePair pair(key, node);
     items.push_back(pair);

@@ -25,7 +25,6 @@ namespace Inkscape {
 
 namespace Whiteboard {
 
-
 class InkboardDocument : public XML::SimpleNode, public XML::Document {
 public:
 	
@@ -35,6 +34,9 @@ public:
     {
 	return Inkscape::XML::DOCUMENT_NODE;
     }
+
+    State::SessionState state;
+    KeyNodeTable *tracker;
 
     void setRecipient(Glib::ustring const& val);
     Glib::ustring getRecipient() const;
@@ -48,12 +50,15 @@ public:
     void recieve(Message::Wrapper &wrapper, Pedro::Element* data);
     bool send(const Glib::ustring &destJid, Message::Wrapper &mwrapper, Message::Message &message);
 
-    void sendDocument();
+    void sendDocument(Inkscape::XML::Node* root);
 
     bool handleOutgoingState(Message::Wrapper &wrapper,Glib::ustring const& message);
     bool handleIncomingState(Message::Wrapper &wrapper,Pedro::Element* data);
 
     bool handleState(State::SessionState expectedState, State::SessionState newstate);
+
+    Glib::ustring addNodeToTracker(Inkscape::XML::Node* node);
+    Message::Message composeNewMessage(Inkscape::XML::Node *node);
 
 protected:
 	/**
@@ -79,12 +84,9 @@ private:
     SessionManager      *sm;
 
     State::SessionType  sessionType;
-    State::SessionState state;
 
     Glib::ustring sessionId;
     Glib::ustring recipient;
-
-    KeyNodeTable *tracker;
 };
 
 }

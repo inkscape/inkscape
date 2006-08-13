@@ -47,11 +47,12 @@ class KeyNodeTable
 public:
 
     KeyNodeTable()
-        {}
+        { this->counter = 0; }
 
     KeyNodeTable(const KeyNodeTable &other)
         {
         items = other.items;
+        this->counter = 0;
         }
 
     virtual ~KeyNodeTable()
