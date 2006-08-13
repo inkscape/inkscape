@@ -1482,12 +1482,24 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
   bool simplifyIndividualPaths =
     (bool) prefs_get_int_attribute("options.simplifyindividualpaths", "value", 0);
   
+  gchar *simplificationType;
+  if (simplifyIndividualPaths) {
+    simplificationType = "individual paths";
+  } else {
+    simplificationType = "as a group";
+  }
+
   bool didSomething = false;
 
   NR::Rect selectionBbox = selection->bounds();
   gdouble selectionSize  = L2(selectionBbox.dimensions());
 
   gdouble simplifySize  = selectionSize;
+  
+  int pathsSimplified = 0;
+  int totalPathCount  = g_slist_length(items);
+  
+  desktop->disableInteraction();
   
   for (; items != NULL; items = items->next) {
       SPItem *item = (SPItem *) items->data;
@@ -1500,10 +1512,25 @@ sp_selected_path_simplify_items(SPDesktop *desktop,
           simplifySize      = L2(itemBbox.dimensions());
       }
 
+
+      pathsSimplified++;
+
+      if (pathsSimplified % 20 == 0) {
+        gchar *message = g_strdup_printf(_("Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."), simplificationType, pathsSimplified, totalPathCount);
+        desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, message);
+        desktop->updateCanvasNow();
+      }
+
       didSomething |= sp_selected_path_simplify_item(desktop, selection, item,
                           threshold, justCoalesce, angleLimit, breakableAngles, simplifySize, modifySelection);
   }
 
+  desktop->enableInteraction();
+  
+  if (pathsSimplified > 20) {
+    desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, g_strdup_printf(_("Done - <b>%d</b> paths simplified."), pathsSimplified));
+  }
+  
   return didSomething;
 }
 
