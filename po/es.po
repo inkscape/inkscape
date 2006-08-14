@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-09 20:17+0200\n"
+"POT-Creation-Date: 2006-08-14 22:31+0200\n"
 "PO-Revision-Date: 2006-06-20 20:26+0200\n"
 "Last-Translator: \n"
 "Language-Team:  <es@li.org>\n"
@@ -115,11 +115,11 @@ msgstr ""
 msgid "%s at %s"
 msgstr "%s en %s"
 
-#: ../src/desktop.cpp:671
+#: ../src/desktop.cpp:673
 msgid "No previous zoom."
 msgstr "No hay menos zoom."
 
-#: ../src/desktop.cpp:696
+#: ../src/desktop.cpp:698
 msgid "No next zoom."
 msgstr "No hay más zoom."
 
@@ -1183,7 +1183,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1086
+#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1121
 msgid "Selection"
 msgstr "Selección"
 
@@ -1397,19 +1397,19 @@ msgstr "Y:"
 msgid "%s attributes"
 msgstr "%s atributos"
 
-#: ../src/dialogs/object-properties.cpp:164
+#: ../src/dialogs/object-properties.cpp:166
 msgid "_Fill"
 msgstr "_Relleno"
 
-#: ../src/dialogs/object-properties.cpp:171
+#: ../src/dialogs/object-properties.cpp:173
 msgid "Stroke _paint"
 msgstr "Color de _trazo"
 
-#: ../src/dialogs/object-properties.cpp:178
+#: ../src/dialogs/object-properties.cpp:180
 msgid "Stroke st_yle"
 msgstr "Est_ilo de trazo"
 
-#: ../src/dialogs/object-properties.cpp:189
+#: ../src/dialogs/object-properties.cpp:191
 msgid "Master _opacity"
 msgstr "_Opacidad maestra"
 
@@ -1857,11 +1857,11 @@ msgstr "Nuevo nodo de elemento"
 msgid "New text node"
 msgstr "Nuevo nodo de texto"
 
-#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1708
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1709
 msgid "Duplicate node"
 msgstr "Duplicar nodo"
 
-#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2918
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2919
 msgid "Delete node"
 msgstr "Borrar nodo"
 
@@ -2282,23 +2282,23 @@ msgstr "Dibujo OpenDocument (*.odg)"
 msgid "OpenDocument drawing file"
 msgstr "Archivo de dibujo OpenDocument"
 
-#: ../src/extension/internal/pdf-cairo.cpp:125
+#: ../src/extension/internal/pdf-cairo.cpp:121
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
 msgid "Print Destination"
 msgstr "Destino de impresión"
 
 #. Print properties frame
-#: ../src/extension/internal/pdf-cairo.cpp:140
+#: ../src/extension/internal/pdf-cairo.cpp:136
 #: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
 msgid "Print properties"
 msgstr "Propiedades de impresión"
 
-#: ../src/extension/internal/pdf-cairo.cpp:147
+#: ../src/extension/internal/pdf-cairo.cpp:143
 #: ../src/extension/internal/pdf.cpp:130
 msgid "Print using PDF operators"
 msgstr "Imprimir usando operadores PDF"
 
-#: ../src/extension/internal/pdf-cairo.cpp:149
+#: ../src/extension/internal/pdf-cairo.cpp:145
 #: ../src/extension/internal/pdf.cpp:132
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
@@ -2308,12 +2308,12 @@ msgstr ""
 "en tamaño de archivo y puede ser escalada arbitrariamente, pero se perderán "
 "los patrones."
 
-#: ../src/extension/internal/pdf-cairo.cpp:154
+#: ../src/extension/internal/pdf-cairo.cpp:150
 #: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
 msgid "Print as bitmap"
 msgstr "Imprimir como mapa de bits"
 
-#: ../src/extension/internal/pdf-cairo.cpp:156
+#: ../src/extension/internal/pdf-cairo.cpp:152
 #: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
@@ -2324,23 +2324,23 @@ msgstr ""
 "y la calidad dependerá del factor de ampliación, pero todos los gráficos "
 "serán renderizados idénticos a la pantalla."
 
-#: ../src/extension/internal/pdf-cairo.cpp:170
+#: ../src/extension/internal/pdf-cairo.cpp:166
 #: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Resolución preferida (puntos por pulgada) de mapa de bits"
 
-#: ../src/extension/internal/pdf-cairo.cpp:184
+#: ../src/extension/internal/pdf-cairo.cpp:180
 #: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
 msgid "Resolution:"
 msgstr "Resolución:"
 
 #. Print destination frame
-#: ../src/extension/internal/pdf-cairo.cpp:188
+#: ../src/extension/internal/pdf-cairo.cpp:184
 #: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
 msgid "Print destination"
 msgstr "Destino de impresión"
 
-#: ../src/extension/internal/pdf-cairo.cpp:194
+#: ../src/extension/internal/pdf-cairo.cpp:190
 #: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
 msgid ""
 "Printer name (as given by lpstat -p);\n"
@@ -2353,7 +2353,7 @@ msgstr ""
 "Utilice  «> archivo» para imprimir en un archivo.\n"
 "Utilice «| prog arg...» para enviar a un programa."
 
-#: ../src/extension/internal/pdf-cairo.cpp:1022
+#: ../src/extension/internal/pdf-cairo.cpp:1015
 #: ../src/extension/internal/pdf.cpp:1566
 msgid "PDF Print"
 msgstr "Impresión PDF"
@@ -2993,18 +2993,6 @@ msgstr ""
 msgid "_Write session file:"
 msgstr "_Guardar archivo de sesión:"
 
-#. if ID is NULL, then we have a real problem -- we were not able to find a key
-#. nor generate one.  The only thing we can really do here is abort, since we have
-#. no way to let the other client(s) uniquely identify this object.
-#: ../src/jabber_whiteboard/message-utilities.cpp:168
-msgid ""
-"ID for new object is NULL even after generation and lookup attempts: the new "
-"object will NOT be sent, nor will any of its child objects!"
-msgstr ""
-"El ID para el objeto nuevo es NULL aún después de los intentos de "
-"localización y generación: el objeto nuevo NO se enviará, ni tampoco ninguno "
-"de sus objetos hijo."
-
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
 msgstr "Seleccione una localización y nombre de archivo"
@@ -3378,27 +3366,27 @@ msgstr ""
 msgid "Drag curve"
 msgstr ""
 
-#: ../src/nodepath.cpp:551 ../src/seltrans.cpp:454
+#: ../src/nodepath.cpp:552 ../src/seltrans.cpp:454
 #, fuzzy
 msgid "Stamp"
 msgstr "Ajuste"
 
-#: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
+#: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251
 #, fuzzy
 msgid "Move nodes vertically"
 msgstr "Alinear los nodos seleccionados verticalmente"
 
-#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252
+#: ../src/nodepath.cpp:1225 ../src/nodepath.cpp:1253
 #, fuzzy
 msgid "Move nodes horizontally"
 msgstr "Alinear los nodos seleccionados horizontalmente"
 
-#: ../src/nodepath.cpp:1226 ../src/nodepath.cpp:1254 ../src/nodepath.cpp:2999
+#: ../src/nodepath.cpp:1227 ../src/nodepath.cpp:1255 ../src/nodepath.cpp:3000
 #, fuzzy
 msgid "Move nodes"
 msgstr "Bajar nodo"
 
-#: ../src/nodepath.cpp:1262
+#: ../src/nodepath.cpp:1263
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3407,65 +3395,65 @@ msgstr ""
 "para ajustar al ángulo; con <b>Alt</b> para mantener la longitud, con "
 "<b>Mayús</b> para girar ambos tiradores"
 
-#: ../src/nodepath.cpp:1433
+#: ../src/nodepath.cpp:1434
 #, fuzzy
 msgid "Align nodes"
 msgstr "Alinear los bordes superiores"
 
-#: ../src/nodepath.cpp:1495
+#: ../src/nodepath.cpp:1496
 #, fuzzy
 msgid "Distribute nodes"
 msgstr "Distribuir"
 
-#: ../src/nodepath.cpp:1534
+#: ../src/nodepath.cpp:1535
 #, fuzzy
 msgid "Add nodes"
 msgstr "Añadir nodos"
 
-#: ../src/nodepath.cpp:1536 ../src/nodepath.cpp:1598
+#: ../src/nodepath.cpp:1537 ../src/nodepath.cpp:1599
 #, fuzzy
 msgid "Add node"
 msgstr "Añadir nodos"
 
-#: ../src/nodepath.cpp:1678
+#: ../src/nodepath.cpp:1679
 #, fuzzy
 msgid "Break path"
 msgstr "Descombin_ar"
 
-#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
-#: ../src/nodepath.cpp:1831
+#: ../src/nodepath.cpp:1721 ../src/nodepath.cpp:1733 ../src/nodepath.cpp:1820
+#: ../src/nodepath.cpp:1832
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Debe seleccionar <b>dos nodos finales</b> para unirlos."
 
-#: ../src/nodepath.cpp:1753
+#: ../src/nodepath.cpp:1754
 #, fuzzy
 msgid "Close subpath"
 msgstr "Cerrar trazo."
 
-#: ../src/nodepath.cpp:1805
+#: ../src/nodepath.cpp:1806
 #, fuzzy
 msgid "Join nodes"
 msgstr "nodo final"
 
-#: ../src/nodepath.cpp:1852
+#: ../src/nodepath.cpp:1853
 msgid "Close subpath by segment"
 msgstr ""
 
-#: ../src/nodepath.cpp:1906
+#: ../src/nodepath.cpp:1907
 #, fuzzy
 msgid "Join nodes by segment"
 msgstr "Unir los nodos finales seleccionados con un segmento nuevo"
 
-#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
+#: ../src/nodepath.cpp:2035 ../src/nodepath.cpp:2072 ../src/nodepath.cpp:2076
 #, fuzzy
 msgid "Delete nodes"
 msgstr "Borrar nodo"
 
-#: ../src/nodepath.cpp:2036
+#: ../src/nodepath.cpp:2037
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
+#: ../src/nodepath.cpp:2096 ../src/nodepath.cpp:2110
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3473,34 +3461,34 @@ msgstr ""
 "Debe seleccionar <b>dos nodos no finales</b> entre los que eliminar "
 "segmentos."
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2206
 msgid "Cannot find path between nodes."
 msgstr "No se ha encontrado un trazo entre los nodos."
 
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2235
 #, fuzzy
 msgid "Delete segment"
 msgstr "Borrar selección"
 
-#: ../src/nodepath.cpp:2256
+#: ../src/nodepath.cpp:2257
 msgid "Change segment type"
 msgstr ""
 
-#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
+#: ../src/nodepath.cpp:2273 ../src/nodepath.cpp:2963
 msgid "Change node type"
 msgstr ""
 
-#: ../src/nodepath.cpp:3230
+#: ../src/nodepath.cpp:3231
 #, fuzzy
 msgid "Retract handle"
 msgstr "Rectángulo"
 
-#: ../src/nodepath.cpp:3278
+#: ../src/nodepath.cpp:3279
 #, fuzzy
 msgid "Move node handle"
 msgstr "Aleatorizar tiradores de nodos"
 
-#: ../src/nodepath.cpp:3418
+#: ../src/nodepath.cpp:3419
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3511,22 +3499,22 @@ msgstr ""
 "para ajustar al ángulo; con <b>Alt</b> para bloquear la longitud, con "
 "<b>Mayús</b> para girar ambos tiradores"
 
-#: ../src/nodepath.cpp:3596
+#: ../src/nodepath.cpp:3597
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "Elevar nodo"
 
-#: ../src/nodepath.cpp:3721
+#: ../src/nodepath.cpp:3722
 #, fuzzy
 msgid "Scale nodes"
 msgstr "Elevar nodo"
 
-#: ../src/nodepath.cpp:3768
+#: ../src/nodepath.cpp:3769
 #, fuzzy
 msgid "Flip nodes"
 msgstr "líneas"
 
-#: ../src/nodepath.cpp:3933
+#: ../src/nodepath.cpp:3934
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3536,39 +3524,39 @@ msgstr ""
 "de los tiradores"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4157
+#: ../src/nodepath.cpp:4158
 msgid "end node"
 msgstr "nodo final"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4162
+#: ../src/nodepath.cpp:4163
 msgid "cusp"
 msgstr "agudo"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4165
+#: ../src/nodepath.cpp:4166
 msgid "smooth"
 msgstr "suave"
 
-#: ../src/nodepath.cpp:4167
+#: ../src/nodepath.cpp:4168
 msgid "symmetric"
 msgstr "simétrico"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4173
+#: ../src/nodepath.cpp:4174
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "nodo final, tirador retraído (arrastre con <b>Mayús</b> para extenderlo)"
 
-#: ../src/nodepath.cpp:4175
+#: ../src/nodepath.cpp:4176
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "un tirador retraído (arrastre con <b>Mayús</b> para extenderlo)"
 
-#: ../src/nodepath.cpp:4178
+#: ../src/nodepath.cpp:4179
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "ambos tiradores retraídos (arrastre con <b>Mayús</b> para extenderlos)"
 
-#: ../src/nodepath.cpp:4190
+#: ../src/nodepath.cpp:4191
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3578,17 +3566,17 @@ msgstr ""
 "esculpir; las teclas de <b>flecha</b> para mover nodos, <b>&lt; &gt;</b> "
 "para escalar, <b>[ ]</b> para rotar"
 
-#: ../src/nodepath.cpp:4191
+#: ../src/nodepath.cpp:4192
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Arrastre</b> el nodo o sus tiradores, use las teclas de <b>flecha</b> "
 "para moverlo"
 
-#: ../src/nodepath.cpp:4214 ../src/nodepath.cpp:4226
+#: ../src/nodepath.cpp:4215 ../src/nodepath.cpp:4227
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Seleccione un objeto para editar sus nodos o tiradores."
 
-#: ../src/nodepath.cpp:4218
+#: ../src/nodepath.cpp:4219
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3603,18 +3591,18 @@ msgstr[1] ""
 "Seleccionados <b>0</b> de <b>%i</b> nodos. <b>Clic</b>, <b>Mayús+clic</b> o "
 "<b>arrastre alrededor</b> de nodos para seleccionarlos."
 
-#: ../src/nodepath.cpp:4224
+#: ../src/nodepath.cpp:4225
 msgid "Drag the handles of the object to modify it."
 msgstr "Arrastre los tiradores del objeto para modificarlo."
 
-#: ../src/nodepath.cpp:4232
+#: ../src/nodepath.cpp:4233
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> de <b>%i</b> nodo seleccionado; %s. %s."
 msgstr[1] "<b>%i</b> de <b>%i</b> nodos seleccionados; %s. %s."
 
-#: ../src/nodepath.cpp:4239
+#: ../src/nodepath.cpp:4240
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3627,7 +3615,7 @@ msgstr[1] ""
 "<b>%i</b> de <b>%i</b> nodos seleccionados en <b>%i</b> de <b>%i</b> "
 "subtrazos. %s."
 
-#: ../src/nodepath.cpp:4245
+#: ../src/nodepath.cpp:4246
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4849,16 +4837,26 @@ msgstr "Seleccione <b>trazos</b> para reducir/ampliar."
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "<b>No hay trazos</b> para reducir/ampliar en la selección."
 
-#: ../src/splivarot.cpp:1520
+#: ../src/splivarot.cpp:1519
+#, c-format
+msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
+msgstr ""
+
+#: ../src/splivarot.cpp:1531
+#, c-format
+msgid "Done - <b>%d</b> paths simplified."
+msgstr ""
+
+#: ../src/splivarot.cpp:1547
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Seleccione <b>trazos</b> para simplificar."
 
-#: ../src/splivarot.cpp:1534
+#: ../src/splivarot.cpp:1561
 #, fuzzy
 msgid "Simplify"
 msgstr "Si_mplificar"
 
-#: ../src/splivarot.cpp:1536
+#: ../src/splivarot.cpp:1563
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "No hay <b>trazos</b> simplificables en la selección."
 
@@ -5392,12 +5390,12 @@ msgstr "Elemento menor"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1113
 msgid "Page"
 msgstr "Página"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
-#: ../src/widgets/desktop-widget.cpp:1082
+#: ../src/widgets/desktop-widget.cpp:1117
 msgid "Drawing"
 msgstr "Dibujo"
 
@@ -6226,8 +6224,8 @@ msgstr "Nodo"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
-#: ../src/ui/view/edit-widget.cpp:1064 ../src/verbs.cpp:2184
-#: ../src/widgets/desktop-widget.cpp:277
+#: ../src/ui/view/edit-widget.cpp:1067 ../src/verbs.cpp:2184
+#: ../src/widgets/desktop-widget.cpp:281
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -7337,64 +7335,64 @@ msgstr "Enviando invitación de pizarra blanca a <b>%1</b>"
 #: ../src/ui/stock-items.cpp:192 ../src/ui/stock-items.cpp:195
 #: ../src/ui/stock-items.cpp:196 ../src/ui/stock-items.cpp:197
 #: ../src/ui/stock-items.cpp:198 ../src/ui/stock-items.cpp:199
-#: ../src/ui/view/edit-widget.cpp:337 ../src/ui/view/edit-widget.cpp:342
-#: ../src/ui/view/edit-widget.cpp:350 ../src/ui/view/edit-widget.cpp:355
-#: ../src/ui/view/edit-widget.cpp:360 ../src/ui/view/edit-widget.cpp:365
-#: ../src/ui/view/edit-widget.cpp:370 ../src/ui/view/edit-widget.cpp:375
-#: ../src/ui/view/edit-widget.cpp:388 ../src/ui/view/edit-widget.cpp:393
-#: ../src/ui/view/edit-widget.cpp:407 ../src/ui/view/edit-widget.cpp:411
-#: ../src/ui/view/edit-widget.cpp:415 ../src/ui/view/edit-widget.cpp:419
-#: ../src/ui/view/edit-widget.cpp:423 ../src/ui/view/edit-widget.cpp:427
-#: ../src/ui/view/edit-widget.cpp:441 ../src/ui/view/edit-widget.cpp:445
-#: ../src/ui/view/edit-widget.cpp:449 ../src/ui/view/edit-widget.cpp:480
-#: ../src/ui/view/edit-widget.cpp:489 ../src/ui/view/edit-widget.cpp:493
-#: ../src/ui/view/edit-widget.cpp:497 ../src/ui/view/edit-widget.cpp:501
-#: ../src/ui/view/edit-widget.cpp:505 ../src/ui/view/edit-widget.cpp:509
-#: ../src/ui/view/edit-widget.cpp:513 ../src/ui/view/edit-widget.cpp:517
-#: ../src/ui/view/edit-widget.cpp:521 ../src/ui/view/edit-widget.cpp:525
-#: ../src/ui/view/edit-widget.cpp:529 ../src/ui/view/edit-widget.cpp:626
-#: ../src/ui/view/edit-widget.cpp:635 ../src/ui/view/edit-widget.cpp:639
-#: ../src/ui/view/edit-widget.cpp:643 ../src/ui/view/edit-widget.cpp:647
-#: ../src/ui/view/edit-widget.cpp:651 ../src/ui/view/edit-widget.cpp:655
-#: ../src/ui/view/edit-widget.cpp:659 ../src/ui/view/edit-widget.cpp:663
-#: ../src/ui/view/edit-widget.cpp:667 ../src/ui/view/edit-widget.cpp:671
-#: ../src/ui/view/edit-widget.cpp:675 ../src/ui/view/edit-widget.cpp:679
-#: ../src/ui/view/edit-widget.cpp:683 ../src/ui/view/edit-widget.cpp:687
-#: ../src/ui/view/edit-widget.cpp:691 ../src/ui/view/edit-widget.cpp:695
-#: ../src/ui/view/edit-widget.cpp:700 ../src/ui/view/edit-widget.cpp:706
-#: ../src/ui/view/edit-widget.cpp:710 ../src/ui/view/edit-widget.cpp:760
-#: ../src/ui/view/edit-widget.cpp:765 ../src/ui/view/edit-widget.cpp:801
-#: ../src/ui/view/edit-widget.cpp:806 ../src/ui/view/edit-widget.cpp:811
-#: ../src/ui/view/edit-widget.cpp:815 ../src/ui/view/edit-widget.cpp:819
-#: ../src/ui/view/edit-widget.cpp:823 ../src/ui/view/edit-widget.cpp:827
-#: ../src/ui/view/edit-widget.cpp:831 ../src/ui/view/edit-widget.cpp:835
-#: ../src/ui/view/edit-widget.cpp:839 ../src/ui/view/edit-widget.cpp:843
-#: ../src/ui/view/edit-widget.cpp:847 ../src/ui/view/edit-widget.cpp:852
-#: ../src/ui/view/edit-widget.cpp:856 ../src/ui/view/edit-widget.cpp:860
-#: ../src/ui/view/edit-widget.cpp:864 ../src/ui/view/edit-widget.cpp:869
-#: ../src/ui/view/edit-widget.cpp:873 ../src/ui/view/edit-widget.cpp:877
-#: ../src/ui/view/edit-widget.cpp:881 ../src/ui/view/edit-widget.cpp:885
-#: ../src/ui/view/edit-widget.cpp:889 ../src/ui/view/edit-widget.cpp:893
-#: ../src/ui/view/edit-widget.cpp:897 ../src/ui/view/edit-widget.cpp:901
-#: ../src/ui/view/edit-widget.cpp:905 ../src/ui/view/edit-widget.cpp:909
+#: ../src/ui/view/edit-widget.cpp:340 ../src/ui/view/edit-widget.cpp:345
+#: ../src/ui/view/edit-widget.cpp:353 ../src/ui/view/edit-widget.cpp:358
+#: ../src/ui/view/edit-widget.cpp:363 ../src/ui/view/edit-widget.cpp:368
+#: ../src/ui/view/edit-widget.cpp:373 ../src/ui/view/edit-widget.cpp:378
+#: ../src/ui/view/edit-widget.cpp:391 ../src/ui/view/edit-widget.cpp:396
+#: ../src/ui/view/edit-widget.cpp:410 ../src/ui/view/edit-widget.cpp:414
+#: ../src/ui/view/edit-widget.cpp:418 ../src/ui/view/edit-widget.cpp:422
+#: ../src/ui/view/edit-widget.cpp:426 ../src/ui/view/edit-widget.cpp:430
+#: ../src/ui/view/edit-widget.cpp:444 ../src/ui/view/edit-widget.cpp:448
+#: ../src/ui/view/edit-widget.cpp:452 ../src/ui/view/edit-widget.cpp:483
+#: ../src/ui/view/edit-widget.cpp:492 ../src/ui/view/edit-widget.cpp:496
+#: ../src/ui/view/edit-widget.cpp:500 ../src/ui/view/edit-widget.cpp:504
+#: ../src/ui/view/edit-widget.cpp:508 ../src/ui/view/edit-widget.cpp:512
+#: ../src/ui/view/edit-widget.cpp:516 ../src/ui/view/edit-widget.cpp:520
+#: ../src/ui/view/edit-widget.cpp:524 ../src/ui/view/edit-widget.cpp:528
+#: ../src/ui/view/edit-widget.cpp:532 ../src/ui/view/edit-widget.cpp:629
+#: ../src/ui/view/edit-widget.cpp:638 ../src/ui/view/edit-widget.cpp:642
+#: ../src/ui/view/edit-widget.cpp:646 ../src/ui/view/edit-widget.cpp:650
+#: ../src/ui/view/edit-widget.cpp:654 ../src/ui/view/edit-widget.cpp:658
+#: ../src/ui/view/edit-widget.cpp:662 ../src/ui/view/edit-widget.cpp:666
+#: ../src/ui/view/edit-widget.cpp:670 ../src/ui/view/edit-widget.cpp:674
+#: ../src/ui/view/edit-widget.cpp:678 ../src/ui/view/edit-widget.cpp:682
+#: ../src/ui/view/edit-widget.cpp:686 ../src/ui/view/edit-widget.cpp:690
+#: ../src/ui/view/edit-widget.cpp:694 ../src/ui/view/edit-widget.cpp:698
+#: ../src/ui/view/edit-widget.cpp:703 ../src/ui/view/edit-widget.cpp:709
+#: ../src/ui/view/edit-widget.cpp:713 ../src/ui/view/edit-widget.cpp:763
+#: ../src/ui/view/edit-widget.cpp:768 ../src/ui/view/edit-widget.cpp:804
+#: ../src/ui/view/edit-widget.cpp:809 ../src/ui/view/edit-widget.cpp:814
+#: ../src/ui/view/edit-widget.cpp:818 ../src/ui/view/edit-widget.cpp:822
+#: ../src/ui/view/edit-widget.cpp:826 ../src/ui/view/edit-widget.cpp:830
+#: ../src/ui/view/edit-widget.cpp:834 ../src/ui/view/edit-widget.cpp:838
+#: ../src/ui/view/edit-widget.cpp:842 ../src/ui/view/edit-widget.cpp:846
+#: ../src/ui/view/edit-widget.cpp:850 ../src/ui/view/edit-widget.cpp:855
+#: ../src/ui/view/edit-widget.cpp:859 ../src/ui/view/edit-widget.cpp:863
+#: ../src/ui/view/edit-widget.cpp:867 ../src/ui/view/edit-widget.cpp:872
+#: ../src/ui/view/edit-widget.cpp:876 ../src/ui/view/edit-widget.cpp:880
+#: ../src/ui/view/edit-widget.cpp:884 ../src/ui/view/edit-widget.cpp:888
+#: ../src/ui/view/edit-widget.cpp:892 ../src/ui/view/edit-widget.cpp:896
+#: ../src/ui/view/edit-widget.cpp:900 ../src/ui/view/edit-widget.cpp:904
+#: ../src/ui/view/edit-widget.cpp:908 ../src/ui/view/edit-widget.cpp:912
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:994
+#: ../src/ui/view/edit-widget.cpp:997
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:243
+#: ../src/ui/view/edit-widget.cpp:1056 ../src/widgets/desktop-widget.cpp:247
 msgid "Zoom drawing if window size changes"
 msgstr "Ajustar el dibujo a la ventana si cambia el tamaño de ésta"
 
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:297
+#: ../src/ui/view/edit-widget.cpp:1077 ../src/widgets/desktop-widget.cpp:301
 msgid "Cursor coordinates"
 msgstr "Coordenadas del cursor"
 
 #  display the initial welcome message in the statusbar
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:329
+#: ../src/ui/view/edit-widget.cpp:1094 ../src/widgets/desktop-widget.cpp:333
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7403,7 +7401,7 @@ msgstr ""
 "alzada para crear objetos; utilice el selector (flecha) para moverlos o "
 "transformarlos."
 
-#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:540
+#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:544
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7416,12 +7414,12 @@ msgstr ""
 "\n"
 "Si cierra sin guardar se perderán los cambios realizados."
 
-#: ../src/ui/view/edit-widget.cpp:1204 ../src/ui/view/edit-widget.cpp:1251
-#: ../src/widgets/desktop-widget.cpp:556 ../src/widgets/desktop-widget.cpp:620
+#: ../src/ui/view/edit-widget.cpp:1207 ../src/ui/view/edit-widget.cpp:1254
+#: ../src/widgets/desktop-widget.cpp:560 ../src/widgets/desktop-widget.cpp:624
 msgid "Close _without saving"
 msgstr "Cerrar _sin guardar"
 
-#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:603
+#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:607
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9353,12 +9351,12 @@ msgstr "Patrón de rayas"
 msgid "Pattern offset"
 msgstr "Desvío del patrón"
 
-#: ../src/widgets/desktop-widget.cpp:379
+#: ../src/widgets/desktop-widget.cpp:383
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:381
+#: ../src/widgets/desktop-widget.cpp:385
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -10790,6 +10788,14 @@ msgstr "Metaarchivo de Windows (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Entrada de metaarchivo de windows"
+
+#~ msgid ""
+#~ "ID for new object is NULL even after generation and lookup attempts: the "
+#~ "new object will NOT be sent, nor will any of its child objects!"
+#~ msgstr ""
+#~ "El ID para el objeto nuevo es NULL aún después de los intentos de "
+#~ "localización y generación: el objeto nuevo NO se enviará, ni tampoco "
+#~ "ninguno de sus objetos hijo."
 
 #~ msgid "write error occurred"
 #~ msgstr "ha ocurrido un error de escritura"

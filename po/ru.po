@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-09 20:17+0200\n"
+"POT-Creation-Date: 2006-08-14 22:31+0200\n"
 "PO-Revision-Date: 2006-06-13 09:45+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -121,11 +121,11 @@ msgstr ""
 msgid "%s at %s"
 msgstr "%s в %s"
 
-#: ../src/desktop.cpp:671
+#: ../src/desktop.cpp:673
 msgid "No previous zoom."
 msgstr "Нет предыдущего масштаба."
 
-#: ../src/desktop.cpp:696
+#: ../src/desktop.cpp:698
 msgid "No next zoom."
 msgstr "Нет следующего масштаба."
 
@@ -1203,7 +1203,7 @@ msgstr "%d x %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
 #: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1086
+#: ../src/ui/dialog/filedialog.cpp:1915 ../src/widgets/desktop-widget.cpp:1121
 msgid "Selection"
 msgstr "Выделение"
 
@@ -1414,19 +1414,19 @@ msgstr "Y:"
 msgid "%s attributes"
 msgstr "%s атрибутов"
 
-#: ../src/dialogs/object-properties.cpp:164
+#: ../src/dialogs/object-properties.cpp:166
 msgid "_Fill"
 msgstr "З_аливка"
 
-#: ../src/dialogs/object-properties.cpp:171
+#: ../src/dialogs/object-properties.cpp:173
 msgid "Stroke _paint"
 msgstr "Цвет штриха"
 
-#: ../src/dialogs/object-properties.cpp:178
+#: ../src/dialogs/object-properties.cpp:180
 msgid "Stroke st_yle"
 msgstr "Стиль штриха"
 
-#: ../src/dialogs/object-properties.cpp:189
+#: ../src/dialogs/object-properties.cpp:191
 msgid "Master _opacity"
 msgstr "Общая прозрачность"
 
@@ -1868,11 +1868,11 @@ msgstr "Создать ветвь элемента"
 msgid "New text node"
 msgstr "Создать ветвь с текстом"
 
-#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1708
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1709
 msgid "Duplicate node"
 msgstr "Дублировать ветвь"
 
-#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2918
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2919
 msgid "Delete node"
 msgstr "Удалить ветвь"
 
@@ -2288,23 +2288,23 @@ msgstr "Рисунок OpenDocument (*.odg)"
 msgid "OpenDocument drawing file"
 msgstr "Файл рисунков OpenDocument"
 
-#: ../src/extension/internal/pdf-cairo.cpp:125
+#: ../src/extension/internal/pdf-cairo.cpp:121
 #: ../src/extension/internal/ps.cpp:104 ../src/extension/internal/pdf.cpp:108
 msgid "Print Destination"
 msgstr "Куда печатать"
 
 #. Print properties frame
-#: ../src/extension/internal/pdf-cairo.cpp:140
+#: ../src/extension/internal/pdf-cairo.cpp:136
 #: ../src/extension/internal/ps.cpp:119 ../src/extension/internal/pdf.cpp:123
 msgid "Print properties"
 msgstr "Свойства печати"
 
-#: ../src/extension/internal/pdf-cairo.cpp:147
+#: ../src/extension/internal/pdf-cairo.cpp:143
 #: ../src/extension/internal/pdf.cpp:130
 msgid "Print using PDF operators"
 msgstr "Печать с использованием операторов PDF"
 
-#: ../src/extension/internal/pdf-cairo.cpp:149
+#: ../src/extension/internal/pdf-cairo.cpp:145
 #: ../src/extension/internal/pdf.cpp:132
 msgid ""
 "Use PDF vector operators. The resulting image is usually smaller in file "
@@ -2313,12 +2313,12 @@ msgstr ""
 "Использовать векторные операторы PDF. Итоговое изображение обычно имеет "
 "меньший размер файла и свободно масштабируемо, но текстуры будут потеряны."
 
-#: ../src/extension/internal/pdf-cairo.cpp:154
+#: ../src/extension/internal/pdf-cairo.cpp:150
 #: ../src/extension/internal/ps.cpp:133 ../src/extension/internal/pdf.cpp:137
 msgid "Print as bitmap"
 msgstr "Печатать как растр"
 
-#: ../src/extension/internal/pdf-cairo.cpp:156
+#: ../src/extension/internal/pdf-cairo.cpp:152
 #: ../src/extension/internal/ps.cpp:135 ../src/extension/internal/pdf.cpp:139
 msgid ""
 "Print everything as bitmap. The resulting image is usually larger in file "
@@ -2330,23 +2330,23 @@ msgstr ""
 "Однако все графические элементы будут напечатаны так, как они выглядят на "
 "экране."
 
-#: ../src/extension/internal/pdf-cairo.cpp:170
+#: ../src/extension/internal/pdf-cairo.cpp:166
 #: ../src/extension/internal/ps.cpp:149 ../src/extension/internal/pdf.cpp:153
 msgid "Preferred resolution (dots per inch) of bitmap"
 msgstr "Обычное разрешение растрового изображения (в точках на дюйм)"
 
-#: ../src/extension/internal/pdf-cairo.cpp:184
+#: ../src/extension/internal/pdf-cairo.cpp:180
 #: ../src/extension/internal/ps.cpp:163 ../src/extension/internal/pdf.cpp:167
 msgid "Resolution:"
 msgstr "Разрешение:"
 
 #. Print destination frame
-#: ../src/extension/internal/pdf-cairo.cpp:188
+#: ../src/extension/internal/pdf-cairo.cpp:184
 #: ../src/extension/internal/ps.cpp:167 ../src/extension/internal/pdf.cpp:171
 msgid "Print destination"
 msgstr "Куда печатать"
 
-#: ../src/extension/internal/pdf-cairo.cpp:194
+#: ../src/extension/internal/pdf-cairo.cpp:190
 #: ../src/extension/internal/ps.cpp:173 ../src/extension/internal/pdf.cpp:177
 msgid ""
 "Printer name (as given by lpstat -p);\n"
@@ -2360,7 +2360,7 @@ msgstr ""
 "Используйте '> filename' для печати в файл. \n"
 "Используйте '| prog arg' для передачи вывода другой программе."
 
-#: ../src/extension/internal/pdf-cairo.cpp:1022
+#: ../src/extension/internal/pdf-cairo.cpp:1015
 #: ../src/extension/internal/pdf.cpp:1566
 msgid "PDF Print"
 msgstr "Печать в PDF"
@@ -2999,17 +2999,6 @@ msgstr "Файл %s существует. Записать в этот файл 
 msgid "_Write session file:"
 msgstr "_Записать файл сессии:"
 
-#. if ID is NULL, then we have a real problem -- we were not able to find a key
-#. nor generate one.  The only thing we can really do here is abort, since we have
-#. no way to let the other client(s) uniquely identify this object.
-#: ../src/jabber_whiteboard/message-utilities.cpp:168
-msgid ""
-"ID for new object is NULL even after generation and lookup attempts: the new "
-"object will NOT be sent, nor will any of its child objects!"
-msgstr ""
-"ID нового объекта является NULL даже после попыток создания и поиска: ни "
-"новый объект, ни его потомки пересланы НЕ будут"
-
 #: ../src/jabber_whiteboard/session-file-selector.cpp:60
 msgid "Select a location and filename"
 msgstr "Укажите местоположение и имя файла"
@@ -3368,27 +3357,27 @@ msgstr ""
 msgid "Drag curve"
 msgstr ""
 
-#: ../src/nodepath.cpp:551 ../src/seltrans.cpp:454
+#: ../src/nodepath.cpp:552 ../src/seltrans.cpp:454
 #, fuzzy
 msgid "Stamp"
 msgstr "Прилипание"
 
-#: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
+#: ../src/nodepath.cpp:1223 ../src/nodepath.cpp:1251
 #, fuzzy
 msgid "Move nodes vertically"
 msgstr "Выровнять выделенные узлы по вертикали"
 
-#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252
+#: ../src/nodepath.cpp:1225 ../src/nodepath.cpp:1253
 #, fuzzy
 msgid "Move nodes horizontally"
 msgstr "Выровнять выделенные узлы по горизонтали"
 
-#: ../src/nodepath.cpp:1226 ../src/nodepath.cpp:1254 ../src/nodepath.cpp:2999
+#: ../src/nodepath.cpp:1227 ../src/nodepath.cpp:1255 ../src/nodepath.cpp:3000
 #, fuzzy
 msgid "Move nodes"
 msgstr "Опустить ветвь"
 
-#: ../src/nodepath.cpp:1262
+#: ../src/nodepath.cpp:1263
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3396,65 +3385,65 @@ msgstr ""
 "<b>Ус узла</b>: перетаскивание с <b>Ctrl</b> ограничивает угол; с <b>Alt</b> "
 "фиксирует длину; с <b>Shift</b> синхронно вращает противоположный ус"
 
-#: ../src/nodepath.cpp:1433
+#: ../src/nodepath.cpp:1434
 #, fuzzy
 msgid "Align nodes"
 msgstr "Выровнять по верхним краям"
 
-#: ../src/nodepath.cpp:1495
+#: ../src/nodepath.cpp:1496
 #, fuzzy
 msgid "Distribute nodes"
 msgstr "Расставить"
 
-#: ../src/nodepath.cpp:1534
+#: ../src/nodepath.cpp:1535
 #, fuzzy
 msgid "Add nodes"
 msgstr "Добавить узлы"
 
-#: ../src/nodepath.cpp:1536 ../src/nodepath.cpp:1598
+#: ../src/nodepath.cpp:1537 ../src/nodepath.cpp:1599
 #, fuzzy
 msgid "Add node"
 msgstr "Добавить узлы"
 
-#: ../src/nodepath.cpp:1678
+#: ../src/nodepath.cpp:1679
 #, fuzzy
 msgid "Break path"
 msgstr "_Разбить"
 
-#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
-#: ../src/nodepath.cpp:1831
+#: ../src/nodepath.cpp:1721 ../src/nodepath.cpp:1733 ../src/nodepath.cpp:1820
+#: ../src/nodepath.cpp:1832
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Для соединения выделите <b>два оконечных узла</b>."
 
-#: ../src/nodepath.cpp:1753
+#: ../src/nodepath.cpp:1754
 #, fuzzy
 msgid "Close subpath"
 msgstr "Закрываем контур"
 
-#: ../src/nodepath.cpp:1805
+#: ../src/nodepath.cpp:1806
 #, fuzzy
 msgid "Join nodes"
 msgstr "оконечный узел"
 
-#: ../src/nodepath.cpp:1852
+#: ../src/nodepath.cpp:1853
 msgid "Close subpath by segment"
 msgstr ""
 
-#: ../src/nodepath.cpp:1906
+#: ../src/nodepath.cpp:1907
 #, fuzzy
 msgid "Join nodes by segment"
 msgstr "Соединить контуры по выделенным оконечным узлам новым сегментом"
 
-#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
+#: ../src/nodepath.cpp:2035 ../src/nodepath.cpp:2072 ../src/nodepath.cpp:2076
 #, fuzzy
 msgid "Delete nodes"
 msgstr "Удалить ветвь"
 
-#: ../src/nodepath.cpp:2036
+#: ../src/nodepath.cpp:2037
 msgid "Delete nodes preserving shape"
 msgstr ""
 
-#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
+#: ../src/nodepath.cpp:2096 ../src/nodepath.cpp:2110
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3462,34 +3451,34 @@ msgstr ""
 "Выделите <b>два неоконечных узла</b> контура, чтобы удалить сегменты между "
 "ними"
 
-#: ../src/nodepath.cpp:2205
+#: ../src/nodepath.cpp:2206
 msgid "Cannot find path between nodes."
 msgstr "Невозможно найти контур между узлами."
 
-#: ../src/nodepath.cpp:2234
+#: ../src/nodepath.cpp:2235
 #, fuzzy
 msgid "Delete segment"
 msgstr "Удалить выделение"
 
-#: ../src/nodepath.cpp:2256
+#: ../src/nodepath.cpp:2257
 msgid "Change segment type"
 msgstr ""
 
-#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
+#: ../src/nodepath.cpp:2273 ../src/nodepath.cpp:2963
 msgid "Change node type"
 msgstr ""
 
-#: ../src/nodepath.cpp:3230
+#: ../src/nodepath.cpp:3231
 #, fuzzy
 msgid "Retract handle"
 msgstr "Прямоугольник"
 
-#: ../src/nodepath.cpp:3278
+#: ../src/nodepath.cpp:3279
 #, fuzzy
 msgid "Move node handle"
 msgstr "Случайно перемешать рычаги узлов"
 
-#: ../src/nodepath.cpp:3418
+#: ../src/nodepath.cpp:3419
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3500,22 +3489,22 @@ msgstr ""
 "ограничивает угол; с <b>Alt</b> фиксирует длину; с <b>Shift</b> синхронно "
 "вращает противоположный ус"
 
-#: ../src/nodepath.cpp:3596
+#: ../src/nodepath.cpp:3597
 #, fuzzy
 msgid "Rotate nodes"
 msgstr "Поднять ветвь"
 
-#: ../src/nodepath.cpp:3721
+#: ../src/nodepath.cpp:3722
 #, fuzzy
 msgid "Scale nodes"
 msgstr "Поднять ветвь"
 
-#: ../src/nodepath.cpp:3768
+#: ../src/nodepath.cpp:3769
 #, fuzzy
 msgid "Flip nodes"
 msgstr "линий"
 
-#: ../src/nodepath.cpp:3933
+#: ../src/nodepath.cpp:3934
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3524,38 +3513,38 @@ msgstr ""
 "по горизонтали/вертикали; с <b>Ctrl+Alt</b> - вдоль усов"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4157
+#: ../src/nodepath.cpp:4158
 msgid "end node"
 msgstr "оконечный узел"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4162
+#: ../src/nodepath.cpp:4163
 msgid "cusp"
 msgstr "острый"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4165
+#: ../src/nodepath.cpp:4166
 msgid "smooth"
 msgstr "гладкий"
 
-#: ../src/nodepath.cpp:4167
+#: ../src/nodepath.cpp:4168
 msgid "symmetric"
 msgstr "симметричный"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4173
+#: ../src/nodepath.cpp:4174
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "оконечный узел, ус втянут (вытаскивается с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4175
+#: ../src/nodepath.cpp:4176
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr "один ус втянут (вытаскивается с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4178
+#: ../src/nodepath.cpp:4179
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr "оба уса втянуты (вытаскиваются с <b>Shift</b>)"
 
-#: ../src/nodepath.cpp:4190
+#: ../src/nodepath.cpp:4191
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3565,15 +3554,15 @@ msgstr ""
 "лепки; клавиши <b>со стрелками</b> для смещения узлов, <b>&lt; &gt;</b> для "
 "масштабирования, <b>[ ]</b> для вращения"
 
-#: ../src/nodepath.cpp:4191
+#: ../src/nodepath.cpp:4192
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr "Перетаскивайте узел или его усы; клавиши-стрелки двигают узел"
 
-#: ../src/nodepath.cpp:4214 ../src/nodepath.cpp:4226
+#: ../src/nodepath.cpp:4215 ../src/nodepath.cpp:4227
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Выберите один объект для изменения его узлов или усов."
 
-#: ../src/nodepath.cpp:4218
+#: ../src/nodepath.cpp:4219
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3591,11 +3580,11 @@ msgstr[2] ""
 "Выделено <b>0</b> из <b>%i</b> узлов. Чтобы выделить узлы, используйте "
 "щелчок, Shift+щелчок, либо обведение рамкой."
 
-#: ../src/nodepath.cpp:4224
+#: ../src/nodepath.cpp:4225
 msgid "Drag the handles of the object to modify it."
 msgstr "Двигайте ручки фигуры, чтобы изменить ее."
 
-#: ../src/nodepath.cpp:4232
+#: ../src/nodepath.cpp:4233
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
@@ -3603,7 +3592,7 @@ msgstr[0] "<b>%i</b> из <b>%i</b> узла выделен; %s. %s."
 msgstr[1] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 msgstr[2] "<b>%i</b> из <b>%i</b> узлов выделено; %s. %s."
 
-#: ../src/nodepath.cpp:4239
+#: ../src/nodepath.cpp:4240
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3618,7 +3607,7 @@ msgstr[2] ""
 "<b>%i</b> из <b>%i</b> узлов выделено в <b>%i</b> из <b>%i</b> субконтуров. %"
 "s."
 
-#: ../src/nodepath.cpp:4245
+#: ../src/nodepath.cpp:4246
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -4830,16 +4819,26 @@ msgstr "Выделите <b>контур</b> для втяжки/растяжк�
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr "В выделении <b>нет контуров</b> для втяжки/растяжки."
 
-#: ../src/splivarot.cpp:1520
+#: ../src/splivarot.cpp:1519
+#, c-format
+msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
+msgstr ""
+
+#: ../src/splivarot.cpp:1531
+#, c-format
+msgid "Done - <b>%d</b> paths simplified."
+msgstr ""
+
+#: ../src/splivarot.cpp:1547
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Выделите <b>контур(ы)</b> для упрощения."
 
-#: ../src/splivarot.cpp:1534
+#: ../src/splivarot.cpp:1561
 #, fuzzy
 msgid "Simplify"
 msgstr "_Упростить"
 
-#: ../src/splivarot.cpp:1536
+#: ../src/splivarot.cpp:1563
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "В выделении <b>нет контуров</b> для упрощения."
 
@@ -5364,12 +5363,12 @@ msgstr "Наименьшего объекта"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:881
 #: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1078
+#: ../src/ui/dialog/filedialog.cpp:1911 ../src/widgets/desktop-widget.cpp:1113
 msgid "Page"
 msgstr "Страница"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:882
-#: ../src/widgets/desktop-widget.cpp:1082
+#: ../src/widgets/desktop-widget.cpp:1117
 msgid "Drawing"
 msgstr "Рисунок"
 
@@ -6189,8 +6188,8 @@ msgstr "Узлы"
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:341
-#: ../src/ui/view/edit-widget.cpp:1064 ../src/verbs.cpp:2184
-#: ../src/widgets/desktop-widget.cpp:277
+#: ../src/ui/view/edit-widget.cpp:1067 ../src/verbs.cpp:2184
+#: ../src/widgets/desktop-widget.cpp:281
 msgid "Zoom"
 msgstr "Масштаб"
 
@@ -7291,63 +7290,63 @@ msgstr ""
 #: ../src/ui/stock-items.cpp:192 ../src/ui/stock-items.cpp:195
 #: ../src/ui/stock-items.cpp:196 ../src/ui/stock-items.cpp:197
 #: ../src/ui/stock-items.cpp:198 ../src/ui/stock-items.cpp:199
-#: ../src/ui/view/edit-widget.cpp:337 ../src/ui/view/edit-widget.cpp:342
-#: ../src/ui/view/edit-widget.cpp:350 ../src/ui/view/edit-widget.cpp:355
-#: ../src/ui/view/edit-widget.cpp:360 ../src/ui/view/edit-widget.cpp:365
-#: ../src/ui/view/edit-widget.cpp:370 ../src/ui/view/edit-widget.cpp:375
-#: ../src/ui/view/edit-widget.cpp:388 ../src/ui/view/edit-widget.cpp:393
-#: ../src/ui/view/edit-widget.cpp:407 ../src/ui/view/edit-widget.cpp:411
-#: ../src/ui/view/edit-widget.cpp:415 ../src/ui/view/edit-widget.cpp:419
-#: ../src/ui/view/edit-widget.cpp:423 ../src/ui/view/edit-widget.cpp:427
-#: ../src/ui/view/edit-widget.cpp:441 ../src/ui/view/edit-widget.cpp:445
-#: ../src/ui/view/edit-widget.cpp:449 ../src/ui/view/edit-widget.cpp:480
-#: ../src/ui/view/edit-widget.cpp:489 ../src/ui/view/edit-widget.cpp:493
-#: ../src/ui/view/edit-widget.cpp:497 ../src/ui/view/edit-widget.cpp:501
-#: ../src/ui/view/edit-widget.cpp:505 ../src/ui/view/edit-widget.cpp:509
-#: ../src/ui/view/edit-widget.cpp:513 ../src/ui/view/edit-widget.cpp:517
-#: ../src/ui/view/edit-widget.cpp:521 ../src/ui/view/edit-widget.cpp:525
-#: ../src/ui/view/edit-widget.cpp:529 ../src/ui/view/edit-widget.cpp:626
-#: ../src/ui/view/edit-widget.cpp:635 ../src/ui/view/edit-widget.cpp:639
-#: ../src/ui/view/edit-widget.cpp:643 ../src/ui/view/edit-widget.cpp:647
-#: ../src/ui/view/edit-widget.cpp:651 ../src/ui/view/edit-widget.cpp:655
-#: ../src/ui/view/edit-widget.cpp:659 ../src/ui/view/edit-widget.cpp:663
-#: ../src/ui/view/edit-widget.cpp:667 ../src/ui/view/edit-widget.cpp:671
-#: ../src/ui/view/edit-widget.cpp:675 ../src/ui/view/edit-widget.cpp:679
-#: ../src/ui/view/edit-widget.cpp:683 ../src/ui/view/edit-widget.cpp:687
-#: ../src/ui/view/edit-widget.cpp:691 ../src/ui/view/edit-widget.cpp:695
-#: ../src/ui/view/edit-widget.cpp:700 ../src/ui/view/edit-widget.cpp:706
-#: ../src/ui/view/edit-widget.cpp:710 ../src/ui/view/edit-widget.cpp:760
-#: ../src/ui/view/edit-widget.cpp:765 ../src/ui/view/edit-widget.cpp:801
-#: ../src/ui/view/edit-widget.cpp:806 ../src/ui/view/edit-widget.cpp:811
-#: ../src/ui/view/edit-widget.cpp:815 ../src/ui/view/edit-widget.cpp:819
-#: ../src/ui/view/edit-widget.cpp:823 ../src/ui/view/edit-widget.cpp:827
-#: ../src/ui/view/edit-widget.cpp:831 ../src/ui/view/edit-widget.cpp:835
-#: ../src/ui/view/edit-widget.cpp:839 ../src/ui/view/edit-widget.cpp:843
-#: ../src/ui/view/edit-widget.cpp:847 ../src/ui/view/edit-widget.cpp:852
-#: ../src/ui/view/edit-widget.cpp:856 ../src/ui/view/edit-widget.cpp:860
-#: ../src/ui/view/edit-widget.cpp:864 ../src/ui/view/edit-widget.cpp:869
-#: ../src/ui/view/edit-widget.cpp:873 ../src/ui/view/edit-widget.cpp:877
-#: ../src/ui/view/edit-widget.cpp:881 ../src/ui/view/edit-widget.cpp:885
-#: ../src/ui/view/edit-widget.cpp:889 ../src/ui/view/edit-widget.cpp:893
-#: ../src/ui/view/edit-widget.cpp:897 ../src/ui/view/edit-widget.cpp:901
-#: ../src/ui/view/edit-widget.cpp:905 ../src/ui/view/edit-widget.cpp:909
+#: ../src/ui/view/edit-widget.cpp:340 ../src/ui/view/edit-widget.cpp:345
+#: ../src/ui/view/edit-widget.cpp:353 ../src/ui/view/edit-widget.cpp:358
+#: ../src/ui/view/edit-widget.cpp:363 ../src/ui/view/edit-widget.cpp:368
+#: ../src/ui/view/edit-widget.cpp:373 ../src/ui/view/edit-widget.cpp:378
+#: ../src/ui/view/edit-widget.cpp:391 ../src/ui/view/edit-widget.cpp:396
+#: ../src/ui/view/edit-widget.cpp:410 ../src/ui/view/edit-widget.cpp:414
+#: ../src/ui/view/edit-widget.cpp:418 ../src/ui/view/edit-widget.cpp:422
+#: ../src/ui/view/edit-widget.cpp:426 ../src/ui/view/edit-widget.cpp:430
+#: ../src/ui/view/edit-widget.cpp:444 ../src/ui/view/edit-widget.cpp:448
+#: ../src/ui/view/edit-widget.cpp:452 ../src/ui/view/edit-widget.cpp:483
+#: ../src/ui/view/edit-widget.cpp:492 ../src/ui/view/edit-widget.cpp:496
+#: ../src/ui/view/edit-widget.cpp:500 ../src/ui/view/edit-widget.cpp:504
+#: ../src/ui/view/edit-widget.cpp:508 ../src/ui/view/edit-widget.cpp:512
+#: ../src/ui/view/edit-widget.cpp:516 ../src/ui/view/edit-widget.cpp:520
+#: ../src/ui/view/edit-widget.cpp:524 ../src/ui/view/edit-widget.cpp:528
+#: ../src/ui/view/edit-widget.cpp:532 ../src/ui/view/edit-widget.cpp:629
+#: ../src/ui/view/edit-widget.cpp:638 ../src/ui/view/edit-widget.cpp:642
+#: ../src/ui/view/edit-widget.cpp:646 ../src/ui/view/edit-widget.cpp:650
+#: ../src/ui/view/edit-widget.cpp:654 ../src/ui/view/edit-widget.cpp:658
+#: ../src/ui/view/edit-widget.cpp:662 ../src/ui/view/edit-widget.cpp:666
+#: ../src/ui/view/edit-widget.cpp:670 ../src/ui/view/edit-widget.cpp:674
+#: ../src/ui/view/edit-widget.cpp:678 ../src/ui/view/edit-widget.cpp:682
+#: ../src/ui/view/edit-widget.cpp:686 ../src/ui/view/edit-widget.cpp:690
+#: ../src/ui/view/edit-widget.cpp:694 ../src/ui/view/edit-widget.cpp:698
+#: ../src/ui/view/edit-widget.cpp:703 ../src/ui/view/edit-widget.cpp:709
+#: ../src/ui/view/edit-widget.cpp:713 ../src/ui/view/edit-widget.cpp:763
+#: ../src/ui/view/edit-widget.cpp:768 ../src/ui/view/edit-widget.cpp:804
+#: ../src/ui/view/edit-widget.cpp:809 ../src/ui/view/edit-widget.cpp:814
+#: ../src/ui/view/edit-widget.cpp:818 ../src/ui/view/edit-widget.cpp:822
+#: ../src/ui/view/edit-widget.cpp:826 ../src/ui/view/edit-widget.cpp:830
+#: ../src/ui/view/edit-widget.cpp:834 ../src/ui/view/edit-widget.cpp:838
+#: ../src/ui/view/edit-widget.cpp:842 ../src/ui/view/edit-widget.cpp:846
+#: ../src/ui/view/edit-widget.cpp:850 ../src/ui/view/edit-widget.cpp:855
+#: ../src/ui/view/edit-widget.cpp:859 ../src/ui/view/edit-widget.cpp:863
+#: ../src/ui/view/edit-widget.cpp:867 ../src/ui/view/edit-widget.cpp:872
+#: ../src/ui/view/edit-widget.cpp:876 ../src/ui/view/edit-widget.cpp:880
+#: ../src/ui/view/edit-widget.cpp:884 ../src/ui/view/edit-widget.cpp:888
+#: ../src/ui/view/edit-widget.cpp:892 ../src/ui/view/edit-widget.cpp:896
+#: ../src/ui/view/edit-widget.cpp:900 ../src/ui/view/edit-widget.cpp:904
+#: ../src/ui/view/edit-widget.cpp:908 ../src/ui/view/edit-widget.cpp:912
 msgid "PLACEHOLDER, do not translate"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:994
+#: ../src/ui/view/edit-widget.cpp:997
 msgid "PLACEHOLDER, DO NOT TRANSLATE"
 msgstr ""
 
-#: ../src/ui/view/edit-widget.cpp:1053 ../src/widgets/desktop-widget.cpp:243
+#: ../src/ui/view/edit-widget.cpp:1056 ../src/widgets/desktop-widget.cpp:247
 msgid "Zoom drawing if window size changes"
 msgstr "Изменять масштаб при изменении размеров окна"
 
-#: ../src/ui/view/edit-widget.cpp:1074 ../src/widgets/desktop-widget.cpp:297
+#: ../src/ui/view/edit-widget.cpp:1077 ../src/widgets/desktop-widget.cpp:301
 msgid "Cursor coordinates"
 msgstr "Координаты курсора"
 
 #. display the initial welcome message in the statusbar
-#: ../src/ui/view/edit-widget.cpp:1091 ../src/widgets/desktop-widget.cpp:329
+#: ../src/ui/view/edit-widget.cpp:1094 ../src/widgets/desktop-widget.cpp:333
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
@@ -7356,7 +7355,7 @@ msgstr ""
 "рисования для создания объектов; используйте селектор (стрелку) для их "
 "перемещения и трансформации."
 
-#: ../src/ui/view/edit-widget.cpp:1193 ../src/widgets/desktop-widget.cpp:540
+#: ../src/ui/view/edit-widget.cpp:1196 ../src/widgets/desktop-widget.cpp:544
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -7369,12 +7368,12 @@ msgstr ""
 "\n"
 "Если вы закроете документ, не сохранив его, все изменения будут потеряны."
 
-#: ../src/ui/view/edit-widget.cpp:1204 ../src/ui/view/edit-widget.cpp:1251
-#: ../src/widgets/desktop-widget.cpp:556 ../src/widgets/desktop-widget.cpp:620
+#: ../src/ui/view/edit-widget.cpp:1207 ../src/ui/view/edit-widget.cpp:1254
+#: ../src/widgets/desktop-widget.cpp:560 ../src/widgets/desktop-widget.cpp:624
 msgid "Close _without saving"
 msgstr "_Не сохранять"
 
-#: ../src/ui/view/edit-widget.cpp:1239 ../src/widgets/desktop-widget.cpp:603
+#: ../src/ui/view/edit-widget.cpp:1242 ../src/widgets/desktop-widget.cpp:607
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -9289,12 +9288,12 @@ msgstr "Пунктир"
 msgid "Pattern offset"
 msgstr "Смещение пунктира"
 
-#: ../src/widgets/desktop-widget.cpp:379
+#: ../src/widgets/desktop-widget.cpp:383
 #, c-format
 msgid "%s: %d - Inkscape"
 msgstr "%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:381
+#: ../src/widgets/desktop-widget.cpp:385
 #, c-format
 msgid "%s - Inkscape"
 msgstr "%s - Inkscape"
@@ -10717,6 +10716,13 @@ msgstr "Файлы Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Импорт файлов Windows Metafile"
+
+#~ msgid ""
+#~ "ID for new object is NULL even after generation and lookup attempts: the "
+#~ "new object will NOT be sent, nor will any of its child objects!"
+#~ msgstr ""
+#~ "ID нового объекта является NULL даже после попыток создания и поиска: ни "
+#~ "новый объект, ни его потомки пересланы НЕ будут"
 
 #~ msgid "write error occurred"
 #~ msgstr "произошла ошибка записи"
