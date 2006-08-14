@@ -16,6 +16,7 @@
 #include "number-opt-number.h"
 #include "sp-object.h"
 #include "sp-filter-units.h"
+#include "sp-filter-fns.h"
 #include "svg/svg-length.h"
 
 /* Filter base class */
@@ -47,13 +48,16 @@ struct SPFilter : public SPObject {
     NumberOptNumber filterRes;
     /** HREF attribute */
     SPFilterReference *href;
+
+	int _primitive_count;
+	int _primitive_table_size;
+	SPFilterPrimitive ** _primitives;
 };
 
 struct SPFilterClass {
     SPObjectClass parent_class;
 };
 
-#include "sp-filter-fns.h"
 
 
 #endif /* !SP_FILTER_H_SEEN */

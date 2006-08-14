@@ -19,13 +19,13 @@
 /* FeDisplacementMap base class */
 class SPFeDisplacementMapClass;
 
-struct SPFeDisplacementMap : public SPFilter {
+struct SPFeDisplacementMap : public SPFilterPrimitive {
     /** DISPLACEMENTMAP ATTRIBUTES HERE */
     
 };
 
 struct SPFeDisplacementMapClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feDisplacementMap_get_type();

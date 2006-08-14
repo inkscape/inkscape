@@ -44,13 +44,33 @@ public:
     }
 
     gfloat getNumber()
-    { return number; }
+    {
+        if(_set)
+            return number;
+        return -1;
+    }
 
     gfloat getOptNumber()
-    { return optNumber; }
+    {
+        if(optNumber_set)
+            return optNumber;
+        return -1;
+    }
+
+    void setOptNumber(gfloat num)
+    {
+        optNumber_set = true;
+        optNumber = num;
+    }
+
+    void setNumber(gfloat num)
+    {
+        _set = true;
+        number = num;
+    }
 
     gchar *getValueString(gchar *str)
-    { 
+    {
         if( _set )
         {
 

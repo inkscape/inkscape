@@ -1,4 +1,4 @@
-#define __SP_FEIMAGE_CPP__
+	#define __SP_FEIMAGE_CPP__
 
 /** \file
  * SVG <feImage> implementation.
@@ -22,19 +22,6 @@
 #include "sp-feimage.h"
 #include "xml/repr.h"
 
-//#define SP_MACROS_SILENT
-//#include "macros.h"
-
-#define DEBUG_FEIMAGE
-#ifdef DEBUG_FEIMAGE
-# define debug(f, a...) { g_print("%s(%d) %s:", \
-                                  __FILE__,__LINE__,__FUNCTION__); \
-                          g_print(f, ## a); \
-                          g_print("\n"); \
-                        }
-#else
-# define debug(f, a...) /**/
-#endif
 
 /* FeImage base class */
 
@@ -47,7 +34,7 @@ static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *valu
 static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feImage_parent_class;
+static SPFilterPrimitiveClass *feImage_parent_class;
 
 GType
 sp_feImage_get_type()
@@ -65,7 +52,7 @@ sp_feImage_get_type()
             (GInstanceInitFunc) sp_feImage_init,
             NULL,    /* value_table */
         };
-        feImage_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeImage", &feImage_info, (GTypeFlags)0);
+        feImage_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeImage", &feImage_info, (GTypeFlags)0);
     }
     return feImage_type;
 }
@@ -75,7 +62,7 @@ sp_feImage_class_init(SPFeImageClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
 
-    feImage_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+    feImage_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feImage_build;
     sp_object_class->release = sp_feImage_release;
@@ -87,7 +74,6 @@ sp_feImage_class_init(SPFeImageClass *klass)
 static void
 sp_feImage_init(SPFeImage *feImage)
 {
-    debug("0x%p",feImage);
 }
 
 /**
@@ -98,7 +84,6 @@ sp_feImage_init(SPFeImage *feImage)
 static void
 sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    debug("0x%p",object);
     if (((SPObjectClass *) feImage_parent_class)->build) {
         ((SPObjectClass *) feImage_parent_class)->build(object, document, repr);
     }
@@ -112,7 +97,6 @@ sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 static void
 sp_feImage_release(SPObject *object)
 {
-    debug("0x%p",object);
 
     if (((SPObjectClass *) feImage_parent_class)->release)
         ((SPObjectClass *) feImage_parent_class)->release(object);
@@ -124,8 +108,6 @@ sp_feImage_release(SPObject *object)
 static void
 sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    debug("0x%p %s(%u): '%s'",object,
-            sp_attribute_name(key),key,value);
     SPFeImage *feImage = SP_FEIMAGE(object);
 
     switch(key) {
@@ -144,8 +126,6 @@ sp_feImage_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    debug("0x%p",object);
-
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -164,8 +144,6 @@ sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feImage_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    debug("0x%p",object);
-
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {

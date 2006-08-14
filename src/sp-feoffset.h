@@ -19,13 +19,13 @@
 /* FeOffset base class */
 class SPFeOffsetClass;
 
-struct SPFeOffset : public SPFilter {
+struct SPFeOffset : public SPFilterPrimitive {
     /** OFFSET ATTRIBUTES HERE */
     
 };
 
 struct SPFeOffsetClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feOffset_get_type();

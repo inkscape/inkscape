@@ -9,6 +9,7 @@
 #include <glib-object.h>
 #include "libnr/nr-forward.h"
 #include "sp-filter-units.h"
+#include "sp-filter-primitive.h"
 
 class SPFilter;
 
@@ -33,6 +34,9 @@ GType sp_filter_get_type();
 void sp_filter_set_filter_units(SPFilter *filter, SPFilterUnits filterUnits);
 //need to define function
 void sp_filter_set_primitive_units(SPFilter *filter, SPFilterUnits filterUnits);
+
+SPFilterPrimitive *add_primitive(SPFilter *filter, SPFilterPrimitive *primitive);
+SPFilterPrimitive *get_primitive(SPFilter *filter, int index);
 
 
 #endif /* !SEEN_SP_FILTER_FNS_H */

@@ -19,13 +19,13 @@
 /* FeMorphology base class */
 class SPFeMorphologyClass;
 
-struct SPFeMorphology : public SPFilter {
+struct SPFeMorphology : public SPFilterPrimitive {
     /** MORPHOLOGY ATTRIBUTES HERE */
     
 };
 
 struct SPFeMorphologyClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feMorphology_get_type();

@@ -22,19 +22,6 @@
 #include "sp-fediffuselighting.h"
 #include "xml/repr.h"
 
-//#define SP_MACROS_SILENT
-//#include "macros.h"
-
-#define DEBUG_FEDIFFUSELIGHTING
-#ifdef DEBUG_FEDIFFUSELIGHTING
-# define debug(f, a...) { g_print("%s(%d) %s:", \
-                                  __FILE__,__LINE__,__FUNCTION__); \
-                          g_print(f, ## a); \
-                          g_print("\n"); \
-                        }
-#else
-# define debug(f, a...) /**/
-#endif
 
 /* FeDiffuseLighting base class */
 
@@ -47,7 +34,7 @@ static void sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar c
 static void sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feDiffuseLighting_parent_class;
+static SPFilterPrimitiveClass *feDiffuseLighting_parent_class;
 
 GType
 sp_feDiffuseLighting_get_type()
@@ -65,7 +52,7 @@ sp_feDiffuseLighting_get_type()
             (GInstanceInitFunc) sp_feDiffuseLighting_init,
             NULL,    /* value_table */
         };
-        feDiffuseLighting_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeDiffuseLighting", &feDiffuseLighting_info, (GTypeFlags)0);
+        feDiffuseLighting_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeDiffuseLighting", &feDiffuseLighting_info, (GTypeFlags)0);
     }
     return feDiffuseLighting_type;
 }
@@ -75,7 +62,7 @@ sp_feDiffuseLighting_class_init(SPFeDiffuseLightingClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
 
-    feDiffuseLighting_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+    feDiffuseLighting_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feDiffuseLighting_build;
     sp_object_class->release = sp_feDiffuseLighting_release;
@@ -87,7 +74,6 @@ sp_feDiffuseLighting_class_init(SPFeDiffuseLightingClass *klass)
 static void
 sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting)
 {
-    debug("0x%p",feDiffuseLighting);
 }
 
 /**
@@ -98,7 +84,6 @@ sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting)
 static void
 sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    debug("0x%p",object);
     if (((SPObjectClass *) feDiffuseLighting_parent_class)->build) {
         ((SPObjectClass *) feDiffuseLighting_parent_class)->build(object, document, repr);
     }
@@ -112,8 +97,6 @@ sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void
 sp_feDiffuseLighting_release(SPObject *object)
 {
-    debug("0x%p",object);
-
     if (((SPObjectClass *) feDiffuseLighting_parent_class)->release)
         ((SPObjectClass *) feDiffuseLighting_parent_class)->release(object);
 }
@@ -124,8 +107,6 @@ sp_feDiffuseLighting_release(SPObject *object)
 static void
 sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    debug("0x%p %s(%u): '%s'",object,
-            sp_attribute_name(key),key,value);
     SPFeDiffuseLighting *feDiffuseLighting = SP_FEDIFFUSELIGHTING(object);
 
     switch(key) {
@@ -144,8 +125,6 @@ sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    debug("0x%p",object);
-
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -164,8 +143,6 @@ sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    debug("0x%p",object);
-
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {

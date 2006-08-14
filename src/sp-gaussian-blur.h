@@ -19,13 +19,13 @@
 /* GaussianBlur base class */
 class SPGaussianBlurClass;
 
-struct SPGaussianBlur : public SPFilter {
+struct SPGaussianBlur : public SPFilterPrimitive {
     /** stdDeviation attribute */
     NumberOptNumber stdDeviation;
 };
 
 struct SPGaussianBlurClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_gaussianBlur_get_type();

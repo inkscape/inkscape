@@ -19,13 +19,13 @@
 /* FeBlend base class */
 class SPFeBlendClass;
 
-struct SPFeBlend : public SPFilter {
+struct SPFeBlend : public SPFilterPrimitive {
     /** BLEND ATTRIBUTES HERE */
     
 };
 
 struct SPFeBlendClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feBlend_get_type();

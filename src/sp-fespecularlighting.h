@@ -19,13 +19,13 @@
 /* FeSpecularLighting base class */
 class SPFeSpecularLightingClass;
 
-struct SPFeSpecularLighting : public SPFilter {
+struct SPFeSpecularLighting : public SPFilterPrimitive {
     /** SPECULARLIGHTING ATTRIBUTES HERE */
     
 };
 
 struct SPFeSpecularLightingClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feSpecularLighting_get_type();

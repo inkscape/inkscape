@@ -22,19 +22,6 @@
 #include "sp-fedisplacementmap.h"
 #include "xml/repr.h"
 
-//#define SP_MACROS_SILENT
-//#include "macros.h"
-
-#define DEBUG_FEDISPLACEMENTMAP
-#ifdef DEBUG_FEDISPLACEMENTMAP
-# define debug(f, a...) { g_print("%s(%d) %s:", \
-                                  __FILE__,__LINE__,__FUNCTION__); \
-                          g_print(f, ## a); \
-                          g_print("\n"); \
-                        }
-#else
-# define debug(f, a...) /**/
-#endif
 
 /* FeDisplacementMap base class */
 
@@ -47,7 +34,7 @@ static void sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar c
 static void sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feDisplacementMap_parent_class;
+static SPFilterPrimitiveClass *feDisplacementMap_parent_class;
 
 GType
 sp_feDisplacementMap_get_type()
@@ -65,7 +52,7 @@ sp_feDisplacementMap_get_type()
             (GInstanceInitFunc) sp_feDisplacementMap_init,
             NULL,    /* value_table */
         };
-        feDisplacementMap_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeDisplacementMap", &feDisplacementMap_info, (GTypeFlags)0);
+        feDisplacementMap_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeDisplacementMap", &feDisplacementMap_info, (GTypeFlags)0);
     }
     return feDisplacementMap_type;
 }
@@ -75,7 +62,7 @@ sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
 
-    feDisplacementMap_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+    feDisplacementMap_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feDisplacementMap_build;
     sp_object_class->release = sp_feDisplacementMap_release;
@@ -87,7 +74,6 @@ sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass)
 static void
 sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
 {
-    debug("0x%p",feDisplacementMap);
 }
 
 /**
@@ -98,7 +84,6 @@ sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
 static void
 sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    debug("0x%p",object);
     if (((SPObjectClass *) feDisplacementMap_parent_class)->build) {
         ((SPObjectClass *) feDisplacementMap_parent_class)->build(object, document, repr);
     }
@@ -112,8 +97,6 @@ sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void
 sp_feDisplacementMap_release(SPObject *object)
 {
-    debug("0x%p",object);
-
     if (((SPObjectClass *) feDisplacementMap_parent_class)->release)
         ((SPObjectClass *) feDisplacementMap_parent_class)->release(object);
 }
@@ -124,8 +107,6 @@ sp_feDisplacementMap_release(SPObject *object)
 static void
 sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    debug("0x%p %s(%u): '%s'",object,
-            sp_attribute_name(key),key,value);
     SPFeDisplacementMap *feDisplacementMap = SP_FEDISPLACEMENTMAP(object);
 
     switch(key) {
@@ -144,8 +125,6 @@ sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    debug("0x%p",object);
-
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -164,8 +143,6 @@ sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    debug("0x%p",object);
-
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {

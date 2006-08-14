@@ -19,13 +19,13 @@
 /* FeMerge base class */
 class SPFeMergeClass;
 
-struct SPFeMerge : public SPFilter {
+struct SPFeMerge : public SPFilterPrimitive {
     /** MERGE ATTRIBUTES HERE */
     
 };
 
 struct SPFeMergeClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feMerge_get_type();

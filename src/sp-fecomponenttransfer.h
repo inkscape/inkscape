@@ -19,13 +19,13 @@
 /* FeComponentTransfer base class */
 class SPFeComponentTransferClass;
 
-struct SPFeComponentTransfer : public SPFilter {
+struct SPFeComponentTransfer : public SPFilterPrimitive {
     /** COMPONENTTRANSFER ATTRIBUTES HERE */
     
 };
 
 struct SPFeComponentTransferClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feComponentTransfer_get_type();

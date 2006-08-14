@@ -19,13 +19,13 @@
 /* FeConvolveMatrix base class */
 class SPFeConvolveMatrixClass;
 
-struct SPFeConvolveMatrix : public SPFilter {
+struct SPFeConvolveMatrix : public SPFilterPrimitive {
     /** CONVOLVEMATRIX ATTRIBUTES HERE */
     
 };
 
 struct SPFeConvolveMatrixClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feConvolveMatrix_get_type();

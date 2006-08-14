@@ -34,10 +34,12 @@ namespace NR {
 
 Filter::Filter()
 {
-    _primitive_count = 1;
+    _primitive_count = 0;
     _primitive_table_size = 1;
     _primitive = new FilterPrimitive*[1];
-    _primitive[0] = new FilterGaussian;
+	_primitive[0] = NULL;
+    //_primitive_count = 1;
+    //_primitive[0] = new FilterGaussian;
     _common_init();
 }
 
@@ -316,6 +318,15 @@ void Filter::clear_primitives()
     }
     _primitive_count = 0;
 }
+
+void Filter::set_x(SVGLength &lenght)
+{ /*write me*/ }
+void Filter::set_y(SVGLength &length)
+{ /*write me*/ }
+void Filter::set_width(SVGLength &length)
+{ /*write me*/ }
+void Filter::set_height(SVGLength &length)
+{ /*write me*/ }
 
 } /* namespace NR */
 

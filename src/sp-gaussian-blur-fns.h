@@ -23,6 +23,8 @@ class SPGaussianBlur;
 #define SP_IS_GAUSSIANBLUR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GAUSSIANBLUR))
 
 GType sp_gaussianBlur_get_type();
+void  sp_gaussianBlur_setDeviation(SPGaussianBlur *blur, float num);
+void  sp_gaussianBlur_setDeviation(SPGaussianBlur *blur, float num, float optnum);
 
 #endif /* !SP_GAUSSIANBLUR_FNS_H */
 

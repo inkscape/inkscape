@@ -19,13 +19,13 @@
 /* FeTurbulence base class */
 class SPFeTurbulenceClass;
 
-struct SPFeTurbulence : public SPFilter {
+struct SPFeTurbulence : public SPFilterPrimitive {
     /** TURBULENCE ATTRIBUTES HERE */
     
 };
 
 struct SPFeTurbulenceClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feTurbulence_get_type();

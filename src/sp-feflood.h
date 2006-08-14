@@ -19,13 +19,13 @@
 /* FeFlood base class */
 class SPFeFloodClass;
 
-struct SPFeFlood : public SPFilter {
+struct SPFeFlood : public SPFilterPrimitive {
     /** FLOOD ATTRIBUTES HERE */
     
 };
 
 struct SPFeFloodClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feFlood_get_type();

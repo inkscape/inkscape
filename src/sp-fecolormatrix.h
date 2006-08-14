@@ -19,13 +19,13 @@
 /* FeColorMatrix base class */
 class SPFeColorMatrixClass;
 
-struct SPFeColorMatrix : public SPFilter {
+struct SPFeColorMatrix : public SPFilterPrimitive {
     /** COLORMATRIX ATTRIBUTES HERE */
     
 };
 
 struct SPFeColorMatrixClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feColorMatrix_get_type();

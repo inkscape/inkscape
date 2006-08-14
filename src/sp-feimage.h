@@ -19,13 +19,13 @@
 /* FeImage base class */
 class SPFeImageClass;
 
-struct SPFeImage : public SPFilter {
+struct SPFeImage : public SPFilterPrimitive {
     /** IMAGE ATTRIBUTES HERE */
     
 };
 
 struct SPFeImageClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feImage_get_type();

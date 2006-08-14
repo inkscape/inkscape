@@ -27,36 +27,6 @@
 #include "macros.h"
 
 
-/*
- * For debugging purposes only
- */
-void printfilter(SPFilter *filter)
-{
-	if(filter->filterUnits==SP_FILTER_UNITS_USERSPACEONUSE)
-		g_print("filterUnits=SP_FILTER_UNITS_USERSPACEONUSE\n");
-	else if(filter->filterUnits==SP_FILTER_UNITS_OBJECTBOUNDINGBOX)
-		g_print("filterUnits=SP_FILTER_UNITS_OBJECTBOUNDINGBOX\n");
-	else
-		g_print("filterUnits=UNKNOWN!!!\n");
-
-	if(filter->primitiveUnits==SP_FILTER_UNITS_USERSPACEONUSE)
-		g_print("primitiveUnits=SP_FILTER_UNITS_USERSPACEONUSE\n");
-	else if(filter->primitiveUnits==SP_FILTER_UNITS_OBJECTBOUNDINGBOX)
-		g_print("primitiveUnits=SP_FILTER_UNITS_OBJECTBOUNDINGBOX\n");
-	else
-		g_print("primitiveUnits=UNKNOWN!!!\n");
-
-//TODO: print X, Y, W and H units
-	g_print("x=%lf\n", filter->x.computed);
-	g_print("y=%lf\n", filter->y.computed);
-	g_print("width=%lf\n", filter->width.computed);
-	g_print("height=%lf\n", filter->height.computed);
-	g_print("filterRes=(%lf %lf)\n", filter->filterRes.getNumber(), filter->filterRes.getOptNumber());
-
-}
-
-
-
 /* Filter base class */
 
 static void sp_filter_class_init(SPFilterClass *klass);
@@ -66,6 +36,10 @@ static void sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XM
 static void sp_filter_release(SPObject *object);
 static void sp_filter_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_filter_update(SPObject *object, SPCtx *ctx, guint flags);
+static void sp_filter_child_added(SPObject *object,
+                                    Inkscape::XML::Node *child,
+                                    Inkscape::XML::Node *ref);
+static void sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static Inkscape::XML::Node *sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
@@ -107,6 +81,8 @@ sp_filter_class_init(SPFilterClass *klass)
     sp_object_class->write = sp_filter_write;
     sp_object_class->set = sp_filter_set;
     sp_object_class->update = sp_filter_update;
+    sp_object_class->child_added = sp_filter_child_added;
+    sp_object_class->remove_child = sp_filter_remove_child;
 }
 
 static void
@@ -124,6 +100,11 @@ sp_filter_init(SPFilter *filter)
     filter->primitiveUnits = SP_FILTER_UNITS_OBJECTBOUNDINGBOX;
     filter->filterUnits_set = FALSE;
     filter->primitiveUnits_set = FALSE;
+    filter->_primitive_count=0;
+    
+    filter->_primitive_table_size = 1;
+    filter->_primitives = new SPFilterPrimitive*[1];
+    filter->_primitives[0] = NULL;
 
 }
 
@@ -219,24 +200,24 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
             }
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_X:
+    case SP_ATTR_X:
             filter->x.readOrUnset(value);
-	    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_Y:
-	    filter->y.readOrUnset(value);
-	    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    case SP_ATTR_Y:
+        filter->y.readOrUnset(value);
+        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_WIDTH:
-	    filter->width.readOrUnset(value);
-	    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    case SP_ATTR_WIDTH:
+        filter->width.readOrUnset(value);
+        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_HEIGHT:
-	    filter->height.readOrUnset(value);
-	    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+    case SP_ATTR_HEIGHT:
+        filter->height.readOrUnset(value);
+        object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
-	case SP_ATTR_FILTERRES:
-		filter->filterRes.set(value);
+    case SP_ATTR_FILTERRES:
+        filter->filterRes.set(value);
             break;
         case SP_ATTR_XLINK_HREF:
             if (value) {
@@ -337,8 +318,8 @@ sp_filter_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
         repr->setAttribute("height", NULL);
     }
 
-    if (filter->filterRes._set) {
-	char filterRes[32];
+    if (filter->filterRes.getNumber()>=0) {
+    char filterRes[32];
         repr->setAttribute("filterRes", filter->filterRes.getValueString(filterRes));
     } else {
         repr->setAttribute("filterRes", NULL);
@@ -381,6 +362,63 @@ static void
 filter_ref_modified(SPObject *href, guint flags, SPFilter *filter)
 {
     SP_OBJECT(filter)->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+
+
+void _enlarge_primitive_table(SPFilter * filter) {
+    SPFilterPrimitive **new_tbl = new SPFilterPrimitive*[filter->_primitive_table_size * 2];
+    for (int i = 0 ; i < filter->_primitive_count ; i++) {
+        new_tbl[i] = filter->_primitives[i];
+    }
+    filter->_primitive_table_size *= 2;
+    for (int i = filter->_primitive_count ; i < filter->_primitive_table_size ; i++) {
+        new_tbl[i] = NULL;
+    }
+    delete[] filter->_primitives;
+    filter->_primitives = new_tbl;
+}
+
+SPFilterPrimitive *add_primitive(SPFilter *filter, SPFilterPrimitive *primitive)
+{
+    if (filter->_primitive_count >= filter->_primitive_table_size) {
+        _enlarge_primitive_table(filter);
+    }
+    filter->_primitives[filter->_primitive_count] = primitive;
+    filter->_primitive_count++;
+    return primitive;
+}
+
+/**
+ * Callback for child_added event.
+ */
+static void
+sp_filter_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
+{/*
+    SPFilter *f = SP_FILTER(object);
+
+    if (((SPObjectClass *) filter_parent_class)->child_added)
+        (* ((SPObjectClass *) filter_parent_class)->child_added)(object, child, ref);
+
+    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+	*/
+}
+
+/**
+ * Callback for remove_child event.
+ */
+static void
+sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child)
+{/*
+    SPFilter *f = SP_FILTER(object);
+
+    if (((SPObjectClass *) filter_parent_class)->remove_child)
+        (* ((SPObjectClass *) filter_parent_class)->remove_child)(object, child);
+
+    SPObject *ochild;
+
+    
+    object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+	*/
 }
 
 

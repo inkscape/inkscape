@@ -19,13 +19,13 @@
 /* FeComposite base class */
 class SPFeCompositeClass;
 
-struct SPFeComposite : public SPFilter {
+struct SPFeComposite : public SPFilterPrimitive {
     /** COMPOSITE ATTRIBUTES HERE */
     
 };
 
 struct SPFeCompositeClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feComposite_get_type();

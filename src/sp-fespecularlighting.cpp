@@ -22,19 +22,6 @@
 #include "sp-fespecularlighting.h"
 #include "xml/repr.h"
 
-//#define SP_MACROS_SILENT
-//#include "macros.h"
-
-#define DEBUG_FESPECULARLIGHTING
-#ifdef DEBUG_FESPECULARLIGHTING
-# define debug(f, a...) { g_print("%s(%d) %s:", \
-                                  __FILE__,__LINE__,__FUNCTION__); \
-                          g_print(f, ## a); \
-                          g_print("\n"); \
-                        }
-#else
-# define debug(f, a...) /**/
-#endif
 
 /* FeSpecularLighting base class */
 
@@ -47,7 +34,7 @@ static void sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar 
 static void sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feSpecularLighting_parent_class;
+static SPFilterPrimitiveClass *feSpecularLighting_parent_class;
 
 GType
 sp_feSpecularLighting_get_type()
@@ -65,7 +52,7 @@ sp_feSpecularLighting_get_type()
             (GInstanceInitFunc) sp_feSpecularLighting_init,
             NULL,    /* value_table */
         };
-        feSpecularLighting_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeSpecularLighting", &feSpecularLighting_info, (GTypeFlags)0);
+        feSpecularLighting_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeSpecularLighting", &feSpecularLighting_info, (GTypeFlags)0);
     }
     return feSpecularLighting_type;
 }
@@ -75,7 +62,7 @@ sp_feSpecularLighting_class_init(SPFeSpecularLightingClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
 
-    feSpecularLighting_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+    feSpecularLighting_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feSpecularLighting_build;
     sp_object_class->release = sp_feSpecularLighting_release;
@@ -87,7 +74,6 @@ sp_feSpecularLighting_class_init(SPFeSpecularLightingClass *klass)
 static void
 sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
 {
-    debug("0x%p",feSpecularLighting);
 }
 
 /**
@@ -98,7 +84,6 @@ sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
 static void
 sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    debug("0x%p",object);
     if (((SPObjectClass *) feSpecularLighting_parent_class)->build) {
         ((SPObjectClass *) feSpecularLighting_parent_class)->build(object, document, repr);
     }
@@ -112,8 +97,6 @@ sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XM
 static void
 sp_feSpecularLighting_release(SPObject *object)
 {
-    debug("0x%p",object);
-
     if (((SPObjectClass *) feSpecularLighting_parent_class)->release)
         ((SPObjectClass *) feSpecularLighting_parent_class)->release(object);
 }
@@ -124,8 +107,6 @@ sp_feSpecularLighting_release(SPObject *object)
 static void
 sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    debug("0x%p %s(%u): '%s'",object,
-            sp_attribute_name(key),key,value);
     SPFeSpecularLighting *feSpecularLighting = SP_FESPECULARLIGHTING(object);
 
     switch(key) {
@@ -144,8 +125,6 @@ sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value
 static void
 sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    debug("0x%p",object);
-
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -164,8 +143,6 @@ sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    debug("0x%p",object);
-
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {

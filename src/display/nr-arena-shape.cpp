@@ -17,6 +17,8 @@
 #include <display/nr-arena.h>
 #include <display/nr-arena-shape.h>
 #include "display/nr-filter.h"
+#include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-types.h"
 #include <libnr/n-art-bpath.h>
 #include <libnr/nr-path.h>
 #include <libnr/nr-pixops.h>
@@ -29,6 +31,8 @@
 #include <style.h>
 /* prefs-utils used for deciding, whether to run filtering test or not */
 #include "prefs-utils.h"
+#include "sp-filter.h"
+#include "sp-gaussian-blur.h"
 
 //int  showRuns=0;
 void nr_pixblock_render_shape_mask_or(NRPixBlock &m,Shape* theS);
@@ -1087,9 +1091,35 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
 
     /* TODO: after SPStyle handles filters, get the correct filter
      * from there. */
-    //if (prefs_get_double_attribute("options.filtertest", "value", 0) != 0)
     if (style->filter.set && style->filter.filter)
+    {
         shape->filter = new NR::Filter();
+        shape->filter->set_x(style->filter.filter->x);
+        shape->filter->set_y(style->filter.filter->y);
+        shape->filter->set_width(style->filter.filter->width);
+        shape->filter->set_height(style->filter.filter->height);
+        
+        //go through all SP filter primitives
+        for(int i=0; i<style->filter.filter->_primitive_count; i++)
+        {
+            SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
+            //if primitive is gaussianblur
+//            if(SP_IS_GAUSSIANBLUR(primitive))
+            {
+                NR::FilterGaussian * gaussian = (NR::FilterGaussian *) shape->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
+                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                float num = spblur->stdDeviation.getNumber();
+                if( num>=0.0 )
+                {
+                    float optnum = spblur->stdDeviation.getOptNumber();
+                    if( optnum>=0.0 )
+                        gaussian->set_deviation((double) num, (double) optnum);
+                    else
+                        gaussian->set_deviation((double) num);
+                }
+            }
+        }
+    }
 
     nr_arena_item_request_update(shape, NR_ARENA_ITEM_STATE_ALL, FALSE);
 }

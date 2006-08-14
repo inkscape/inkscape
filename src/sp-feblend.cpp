@@ -22,19 +22,6 @@
 #include "sp-feblend.h"
 #include "xml/repr.h"
 
-//#define SP_MACROS_SILENT
-//#include "macros.h"
-
-#define DEBUG_FEBLEND
-#ifdef DEBUG_FEBLEND
-# define debug(f, a...) { g_print("%s(%d) %s:", \
-                                  __FILE__,__LINE__,__FUNCTION__); \
-                          g_print(f, ## a); \
-                          g_print("\n"); \
-                        }
-#else
-# define debug(f, a...) /**/
-#endif
 
 /* FeBlend base class */
 
@@ -47,7 +34,7 @@ static void sp_feBlend_set(SPObject *object, unsigned int key, gchar const *valu
 static void sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feBlend_write(SPObject *object, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feBlend_parent_class;
+static SPFilterPrimitiveClass *feBlend_parent_class;
 
 GType
 sp_feBlend_get_type()
@@ -65,7 +52,7 @@ sp_feBlend_get_type()
             (GInstanceInitFunc) sp_feBlend_init,
             NULL,    /* value_table */
         };
-        feBlend_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeBlend", &feBlend_info, (GTypeFlags)0);
+        feBlend_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeBlend", &feBlend_info, (GTypeFlags)0);
     }
     return feBlend_type;
 }
@@ -75,7 +62,7 @@ sp_feBlend_class_init(SPFeBlendClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
 
-    feBlend_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+    feBlend_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feBlend_build;
     sp_object_class->release = sp_feBlend_release;
@@ -87,7 +74,6 @@ sp_feBlend_class_init(SPFeBlendClass *klass)
 static void
 sp_feBlend_init(SPFeBlend *feBlend)
 {
-    debug("0x%p",feBlend);
 }
 
 /**
@@ -98,7 +84,6 @@ sp_feBlend_init(SPFeBlend *feBlend)
 static void
 sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    debug("0x%p",object);
     if (((SPObjectClass *) feBlend_parent_class)->build) {
         ((SPObjectClass *) feBlend_parent_class)->build(object, document, repr);
     }
@@ -112,8 +97,6 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 static void
 sp_feBlend_release(SPObject *object)
 {
-    debug("0x%p",object);
-
     if (((SPObjectClass *) feBlend_parent_class)->release)
         ((SPObjectClass *) feBlend_parent_class)->release(object);
 }
@@ -124,8 +107,6 @@ sp_feBlend_release(SPObject *object)
 static void
 sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    debug("0x%p %s(%u): '%s'",object,
-            sp_attribute_name(key),key,value);
     SPFeBlend *feBlend = SP_FEBLEND(object);
 
     switch(key) {
@@ -144,8 +125,6 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
 static void
 sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    debug("0x%p",object);
-
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG |
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
@@ -164,8 +143,6 @@ sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
 static Inkscape::XML::Node *
 sp_feBlend_write(SPObject *object, Inkscape::XML::Node *repr, guint flags)
 {
-    debug("0x%p",object);
-
     // Inkscape-only object, not copied during an "plain SVG" dump:
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {

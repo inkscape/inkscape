@@ -19,13 +19,13 @@
 /* FeTile base class */
 class SPFeTileClass;
 
-struct SPFeTile : public SPFilter {
+struct SPFeTile : public SPFilterPrimitive {
     /** TILE ATTRIBUTES HERE */
     
 };
 
 struct SPFeTileClass {
-    SPFilterClass parent_class;
+    SPFilterPrimitiveClass parent_class;
 };
 
 GType sp_feTile_get_type();
