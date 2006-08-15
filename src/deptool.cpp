@@ -967,6 +967,7 @@ bool DepTool::generateDependencies()
 
             processDependency(ofile, include, 0);
             }
+        /*
         else if (include->type == FileRec::HFILE)
             {
             String fname     = iter->first;
@@ -979,6 +980,7 @@ bool DepTool::generateDependencies()
 
             processReference(hfile, fname, 0);
             }
+        */
         }
 
       
@@ -997,7 +999,7 @@ bool DepTool::run()
     if (!generateDependencies())
         return false;
     saveDepFile(false);
-    saveRefFile(true);
+    //saveRefFile(true);
     return true;
 }
 
