@@ -12,17 +12,44 @@
 #include <glib.h>
 #include <glibmm.h>
 
-#include "jabber_whiteboard/inkboard-node.h"
+#include "util/ucompose.hpp"
+
+#include "jabber_whiteboard/message-utilities.h"
+#include "jabber_whiteboard/defines.h"
+#include "jabber_whiteboard/inkboard-document.h"
 
 
 namespace Inkscape {
 
 namespace Whiteboard {
 
-InkboardNode::InkboardNode(int code, Inkscape::XML::NodeType type) :
-	XML::SimpleNode(code), version(0), nodetype(type)
+Glib::ustring
+InkboardDocument::addNodeToTracker(Inkscape::XML::Node *node)
 {
+    Glib::ustring key = this->tracker->generateKey(this->getRecipient());
+    this->tracker->put(key,node);
+    return key;
+}
 
+Message::Message
+InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
+{
+    Glib::ustring parentKey;
+    Glib::ustring key = this->tracker->get(node);
+    Inkscape::XML::Node *parent = node->parent();
+
+    Glib::ustring tempParentKey = this->tracker->get(node->parent());
+    if(tempParentKey.size() < 1)
+        parentKey = Vars::DOCUMENT_ROOT_NODE;
+    else
+        parentKey = tempParentKey;
+
+    unsigned int index = parent->_childPosition(*node);
+
+    Message::Message nodeMessage = MessageUtilities::objectToString(node);
+    Message::Message message = String::ucompose(Vars::NEW_MESSAGE,parentKey,key,index,nodeMessage);
+
+    return message;
 }
 
 } // namespace Whiteboard

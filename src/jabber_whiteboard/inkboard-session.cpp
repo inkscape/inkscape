@@ -15,7 +15,6 @@
 
 #include "jabber_whiteboard/inkboard-session.h"
 #include "jabber_whiteboard/inkboard-document.h"
-#include "jabber_whiteboard/inkboard-node.h"
 #include "jabber_whiteboard/defines.h"
 
 #include "xml/node.h"
@@ -25,6 +24,7 @@
 #include "xml/comment-node.h"
 
 #include "util/share.h"
+#include "util/ucompose.hpp"
 
 namespace Inkscape {
 
@@ -64,21 +64,18 @@ InkboardSession::commitUndoable()
 XML::Node*
 InkboardSession::createElementNode(char const* name)
 {
-    g_log(NULL, G_LOG_LEVEL_DEBUG, "InkboardSession::createElementNode");
-    return new InkboardNode(g_quark_from_string(name),Inkscape::XML::ELEMENT_NODE);
+    return new XML::ElementNode(g_quark_from_string(name));
 }
 
 XML::Node*
 InkboardSession::createTextNode(char const* content)
 {
-    g_log(NULL, G_LOG_LEVEL_DEBUG, "InkboardSession::createTextNode");
     return new XML::TextNode(Util::share_string(content));
 }
 
 XML::Node*
 InkboardSession::createCommentNode(char const* content)
 {
-    g_log(NULL, G_LOG_LEVEL_DEBUG, "InkboardSession::createCommentNode");
     return new XML::CommentNode(Util::share_string(content));
 }
 
@@ -89,12 +86,7 @@ void InkboardSession::notifyChildAdded(Node &parent,
 {
     if (_in_transaction && doc->state == State::IN_WHITEBOARD) {
 
-        InkboardNode *node = dynamic_cast< InkboardNode* >((XML::Node *)&child);
-        if(node == NULL)
-        {
-            g_warning("non inkboard node"); 
-            return;
-        }
+        XML::Node *node = (XML::Node *)&child;
 
         this->doc->addNodeToTracker(node);
         Message::Message message = this->doc->composeNewMessage(node);
@@ -107,8 +99,14 @@ void InkboardSession::notifyChildRemoved(Node &parent,
                                        Node &child,
                                        Node *prev)
 {
-    if (_in_transaction && doc->state == State::IN_WHITEBOARD) {
-        g_warning("child removed");
+    if (_in_transaction && doc->state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&child;
+
+        Message::Message message = String::ucompose(Vars::REMOVE_MESSAGE,
+            this->doc->tracker->get(element));
+
+        this->doc->send(this->doc->getRecipient(),Message::REMOVE,message);
    }
 }
 
@@ -117,8 +115,17 @@ void InkboardSession::notifyChildOrderChanged(Node &parent,
                                             Node *old_prev,
                                             Node *new_prev)
 {
-    if (_in_transaction && doc->state == State::IN_WHITEBOARD) {
-        g_warning("child reordered");
+    if (_in_transaction && doc->state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&child;
+        XML::Node *parentElement = (XML::Node *)&parent;
+
+        unsigned int index = parentElement->_childPosition(*element);
+
+        Message::Message message = String::ucompose(Vars::MOVE_MESSAGE,
+                this->doc->tracker->get(element),index);
+
+        this->doc->send(this->doc->getRecipient(),Message::MOVE,message);
     }
 }
 
@@ -126,8 +133,17 @@ void InkboardSession::notifyContentChanged(Node &node,
                                          Util::ptr_shared<char> old_content,
                                          Util::ptr_shared<char> new_content)
 {
-    if (_in_transaction && doc->state == State::IN_WHITEBOARD) {
-        g_warning("content changed");
+    if (_in_transaction && doc->state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&node;
+
+        if(new_content.pointer())
+        {
+            Message::Message message = String::ucompose(Vars::CONFIGURE_TEXT_MESSAGE,
+                this->doc->tracker->get(element),"0",new_content.pointer());
+
+            this->doc->send(this->doc->getRecipient(),Message::CONFIGURE,message);
+        }
     }
 }
 
@@ -136,8 +152,17 @@ void InkboardSession::notifyAttributeChanged(Node &node,
                                            Util::ptr_shared<char> old_value,
                                            Util::ptr_shared<char> new_value)
 {
-    if (_in_transaction && doc->state == State::IN_WHITEBOARD) {
+    if (_in_transaction && doc->state == State::IN_WHITEBOARD) 
+    {
+        XML::Node *element = (XML::Node *)&node;
 
+        if(name && new_value.pointer())
+        {
+            Message::Message message = String::ucompose(Vars::CONFIGURE_MESSAGE,
+                this->doc->tracker->get(element),"0",g_quark_to_string(name),new_value.pointer());
+
+            this->doc->send(this->doc->getRecipient(),Message::CONFIGURE,message);
+        }
     }
 }
 

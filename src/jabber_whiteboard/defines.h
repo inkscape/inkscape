@@ -88,10 +88,19 @@ namespace Message {
 namespace Vars {
 
     extern const std::string DOCUMENT_ROOT_NODE;
+
     extern const std::string INKBOARD_XMLNS; 
+
     extern const std::string WHITEBOARD_MESSAGE; 
     extern const std::string PROTOCOL_MESSAGE; 
     extern const std::string NEW_MESSAGE; 
+    extern const std::string CONFIGURE_MESSAGE; 
+    extern const std::string CONFIGURE_TEXT_MESSAGE; 
+    extern const std::string MOVE_MESSAGE; 
+    extern const std::string REMOVE_MESSAGE; 
+
+
+
 
 }
 

@@ -26,8 +26,6 @@
 #include "pedro/pedroxmpp.h"
 
 #include "jabber_whiteboard/inkboard-document.h"
-#include "jabber_whiteboard/inkboard-node.h"
-
 #include "jabber_whiteboard/defines.h"
 
 #include "util/share.h"

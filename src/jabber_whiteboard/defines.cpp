@@ -45,8 +45,23 @@ namespace Vars {
             "<wb xmlns='%4' session='%5'>%6</wb>"
         "</message>"); 
 
-    const std::string PROTOCOL_MESSAGE("<%1><%2 /></%1>");
-    const std::string NEW_MESSAGE("<new parent=\"%1\" id=\"%2\" target=\"%3\">%4</new>");
+    const std::string PROTOCOL_MESSAGE(
+        "<%1><%2 /></%1>");
+
+    const std::string NEW_MESSAGE(
+        "<new parent=\"%1\" id=\"%2\" target=\"%3\">%4</new>");
+
+    const std::string CONFIGURE_MESSAGE(
+        "<configure target=\"%1\" version=\"%2\" attribute=\"%3\" value=\"%4\" />");
+
+    const std::string CONFIGURE_TEXT_MESSAGE(
+        "<configure target=\"%1\" version=\"%2\"><text>%3</text></configure>");
+
+    const std::string MOVE_MESSAGE(
+        "<move target=\"%1\" n=\"%2\" />");
+
+    const std::string REMOVE_MESSAGE(
+        "<remove target=\"%1\" />");
 }
 
 namespace State {

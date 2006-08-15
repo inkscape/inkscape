@@ -14,7 +14,6 @@
 
 #include "jabber_whiteboard/inkboard-document.h"
 
-
 #include "util/ucompose.hpp"
 
 #include "xml/simple-session.h"
@@ -242,36 +241,6 @@ InkboardDocument::handleState(State::SessionState expectedState, State::SessionS
 
     return false;
 }
-
-Glib::ustring
-InkboardDocument::addNodeToTracker(Inkscape::XML::Node *node)
-{
-    Glib::ustring key = this->tracker->generateKey(this->getRecipient());
-    this->tracker->put(key,node);
-    return key;
-}
-
-Message::Message
-InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
-{
-    Glib::ustring parentKey;
-    Glib::ustring key = this->tracker->get(node);
-    Inkscape::XML::Node *parent = node->parent();
-
-    Glib::ustring tempParentKey = this->tracker->get(node->parent());
-    if(tempParentKey.size() < 1)
-        parentKey = Vars::DOCUMENT_ROOT_NODE;
-    else
-        parentKey = tempParentKey;
-
-    unsigned int index = parent->_childPosition(*node);
-
-    Message::Message nodeMessage = MessageUtilities::objectToString(node);
-    Message::Message message = String::ucompose(Vars::NEW_MESSAGE,parentKey,key,index,nodeMessage);
-
-    return message;
-}
-
 
 } // namespace Whiteboard
 } // namespace Inkscape

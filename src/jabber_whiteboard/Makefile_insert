@@ -24,7 +24,6 @@ jabber_whiteboard_SOURCES = \
 	jabber_whiteboard/message-utilities.cpp \
 	jabber_whiteboard/message-utilities.h \
 	jabber_whiteboard/inkboard-node.cpp \
-	jabber_whiteboard/inkboard-node.h \
 	jabber_whiteboard/inkboard-session.cpp \
 	jabber_whiteboard/inkboard-session.h \
 	jabber_whiteboard/inkboard-document.cpp \
