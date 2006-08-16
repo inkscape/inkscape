@@ -7,6 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
+ *   Bob Jamison <ishmal@users.sf.net> 
  *
  * Copyright (C) 2000 - 2006 Authors
  *
@@ -78,81 +79,88 @@ namespace Widget {
      */
 
 struct PaperSizeRec {
-    char const * const name;
-    double const smaller;
-    double const larger;
-    SPUnitId const unit;
+    char const * const name;  //name
+    double const smaller;     //lesser dimension
+    double const larger;      //greater dimension
+    SPUnitId const unit;      //units
 };
 
 static PaperSizeRec const inkscape_papers[] = {
-    { "A4", 210, 297, SP_UNIT_MM },
-    { "US Letter", 8.5, 11, SP_UNIT_IN },
-    { "US Legal", 8.5, 14, SP_UNIT_IN },
-    { "US Executive", 7.25, 10.5, SP_UNIT_IN },
-    { "A0", 841, 1189, SP_UNIT_MM },
-    { "A1", 594, 841, SP_UNIT_MM },
-    { "A2", 420, 594, SP_UNIT_MM },
-    { "A3", 297, 420, SP_UNIT_MM },
-    { "A5", 148, 210, SP_UNIT_MM },
-    { "A6", 105, 148, SP_UNIT_MM },
-    { "A7", 74, 105, SP_UNIT_MM },
-    { "A8", 52, 74, SP_UNIT_MM },
-    { "A9", 37, 52, SP_UNIT_MM },
-    { "A10", 26, 37, SP_UNIT_MM },
-    { "B0", 1000, 1414, SP_UNIT_MM },
-    { "B1", 707, 1000, SP_UNIT_MM },
-    { "B2", 500, 707, SP_UNIT_MM },
-    { "B3", 353, 500, SP_UNIT_MM },
-    { "B4", 250, 353, SP_UNIT_MM },
-    { "B5", 176, 250, SP_UNIT_MM },
-    { "B6", 125, 176, SP_UNIT_MM },
-    { "B7", 88, 125, SP_UNIT_MM },
-    { "B8", 62, 88, SP_UNIT_MM },
-    { "B9", 44, 62, SP_UNIT_MM },
-    { "B10", 31, 44, SP_UNIT_MM },
+    { "A4",                210,  297, SP_UNIT_MM },
+    { "US Letter",         8.5,   11, SP_UNIT_IN },
+    { "US Legal",          8.5,   14, SP_UNIT_IN },
+    { "US Executive",     7.25, 10.5, SP_UNIT_IN },
+    { "A0",                841, 1189, SP_UNIT_MM },
+    { "A1",                594,  841, SP_UNIT_MM },
+    { "A2",                420,  594, SP_UNIT_MM },
+    { "A3",                297,  420, SP_UNIT_MM },
+    { "A5",                148,  210, SP_UNIT_MM },
+    { "A6",                105,  148, SP_UNIT_MM },
+    { "A7",                 74,  105, SP_UNIT_MM },
+    { "A8",                 52,   74, SP_UNIT_MM },
+    { "A9",                 37,   52, SP_UNIT_MM },
+    { "A10",                26,   37, SP_UNIT_MM },
+    { "B0",               1000, 1414, SP_UNIT_MM },
+    { "B1",                707, 1000, SP_UNIT_MM },
+    { "B2",                500,  707, SP_UNIT_MM },
+    { "B3",                353,  500, SP_UNIT_MM },
+    { "B4",                250,  353, SP_UNIT_MM },
+    { "B5",                176,  250, SP_UNIT_MM },
+    { "B6",                125,  176, SP_UNIT_MM },
+    { "B7",                 88,  125, SP_UNIT_MM },
+    { "B8",                 62,   88, SP_UNIT_MM },
+    { "B9",                 44,   62, SP_UNIT_MM },
+    { "B10",                31,   44, SP_UNIT_MM },
 
-#if 0 /* Whether to include or exclude these depends on how big we mind our page size menu
-         becoming.  C series is used for envelopes; don't know what D and E series are used for. */
-    { "C0", 917, 1297, SP_UNIT_MM },
-    { "C1", 648, 917, SP_UNIT_MM },
-    { "C2", 458, 648, SP_UNIT_MM },
-    { "C3", 324, 458, SP_UNIT_MM },
-    { "C4", 229, 324, SP_UNIT_MM },
-    { "C5", 162, 229, SP_UNIT_MM },
-    { "C6", 114, 162, SP_UNIT_MM },
-    { "C7", 81, 114, SP_UNIT_MM },
-    { "C8", 57, 81, SP_UNIT_MM },
-    { "C9", 40, 57, SP_UNIT_MM },
-    { "C10", 28, 40, SP_UNIT_MM },
-    { "D1", 545, 771, SP_UNIT_MM },
-    { "D2", 385, 545, SP_UNIT_MM },
-    { "D3", 272, 385, SP_UNIT_MM },
-    { "D4", 192, 272, SP_UNIT_MM },
-    { "D5", 136, 192, SP_UNIT_MM },
-    { "D6", 96, 136, SP_UNIT_MM },
-    { "D7", 68, 96, SP_UNIT_MM },
-    { "E3", 400, 560, SP_UNIT_MM },
-    { "E4", 280, 400, SP_UNIT_MM },
-    { "E5", 200, 280, SP_UNIT_MM },
-    { "E6", 140, 200, SP_UNIT_MM },
+#if 0 /* 
+         Whether to include or exclude these depends on how
+         big we mind our page size menu
+         becoming.  C series is used for envelopes;
+		 don't know what D and E series are used for. */
+    { "C0",                917, 1297, SP_UNIT_MM },
+    { "C1",                648,  917, SP_UNIT_MM },
+    { "C2",                458,  648, SP_UNIT_MM },
+    { "C3",                324,  458, SP_UNIT_MM },
+    { "C4",                229,  324, SP_UNIT_MM },
+    { "C5",                162,  229, SP_UNIT_MM },
+    { "C6",                114,  162, SP_UNIT_MM },
+    { "C7",                 81,  114, SP_UNIT_MM },
+    { "C8",                 57,   81, SP_UNIT_MM },
+    { "C9",                 40,   57, SP_UNIT_MM },
+    { "C10",                28,   40, SP_UNIT_MM },
+    { "D1",                545,  771, SP_UNIT_MM },
+    { "D2",                385,  545, SP_UNIT_MM },
+    { "D3",                272,  385, SP_UNIT_MM },
+    { "D4",                192,  272, SP_UNIT_MM },
+    { "D5",                136,  192, SP_UNIT_MM },
+    { "D6",                 96,  136, SP_UNIT_MM },
+    { "D7",                 68,   96, SP_UNIT_MM },
+    { "E3",                400,  560, SP_UNIT_MM },
+    { "E4",                280,  400, SP_UNIT_MM },
+    { "E5",                200,  280, SP_UNIT_MM },
+    { "E6",                140,  200, SP_UNIT_MM },
 #endif
 
-    { "CSE", 462, 649, SP_UNIT_PT },
-    { "US #10 Envelope", 4.125, 9.5, SP_UNIT_IN }, // TODO: Select landscape by default.
+    { "CSE",               462,  649, SP_UNIT_PT },
+    { "US #10 Envelope", 4.125,  9.5, SP_UNIT_IN },
+	 // TODO: Select landscape by default.
     /* See http://www.hbp.com/content/PCR_envelopes.cfm for a much larger list of US envelope
        sizes. */
-    { "DL Envelope", 110, 220, SP_UNIT_MM }, // TODO: Select landscape by default.
-    { "Ledger/Tabloid", 11, 17, SP_UNIT_IN },
+    { "DL Envelope",       110,  220, SP_UNIT_MM },
+	 // TODO: Select landscape by default.
+    { "Ledger/Tabloid",     11,   17, SP_UNIT_IN },
     /* Note that `Folio' (used in QPrinter/KPrinter) is deliberately absent from this list, as it
        means different sizes to different people: different people may expect the width to be
        either 8, 8.25 or 8.5 inches, and the height to be either 13 or 13.5 inches, even
        restricting our interpretation to foolscap folio.  If you wish to introduce a folio-like
        page size to the list, then please consider using a name more specific than just `Folio' or
        `Foolscap Folio'. */
-    { "Banner 468x60", 60, 468, SP_UNIT_PX },  // TODO: Select landscape by default.
-    { "Icon 16x16", 16, 16, SP_UNIT_PX },
-    { "Icon 32x32", 32, 32, SP_UNIT_PX },
-    { NULL, 0, 0, SP_UNIT_PX },
+    { "Banner 468x60",      60,  468, SP_UNIT_PX },
+	  // TODO: Select landscape by default.
+    { "Icon 16x16",         16,   16, SP_UNIT_PX },
+    { "Icon 32x32",         32,   32, SP_UNIT_PX },
+    { "Icon 48x48",         48,   48, SP_UNIT_PX },
+    { NULL,                  0,    0, SP_UNIT_PX },
 };
 
 
