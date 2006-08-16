@@ -19,9 +19,9 @@
 
 #include <cmath>
 #include <gtkmm.h>
-#include <gtkmm/optionmenu.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/table.h>
+//#include <gtkmm/optionmenu.h>
+//#include <gtkmm/frame.h>
+//#include <gtkmm/table.h>
 #include "ui/widget/button.h"
 
 #include "ui/widget/scalar-unit.h"
@@ -40,13 +40,6 @@ using std::pair;
 namespace Inkscape {
 namespace UI {
 namespace Widget {
-
-struct PaperSize {
-    char const * const name;
-    double const smaller;
-    double const larger;
-    SPUnitId const unit;
-};
 
     /** \note
      * The ISO page sizes in the table below differ from ghostscript's idea of page sizes (by
@@ -87,7 +80,14 @@ struct PaperSize {
      * Should we include any of the ISO C, D and E series (see below) ?
      */
 
-static PaperSize const inkscape_papers[] = {
+struct PaperSizeRec {
+    char const * const name;
+    double const smaller;
+    double const larger;
+    SPUnitId const unit;
+};
+
+static PaperSizeRec const inkscape_papers[] = {
     { "A4", 210, 297, SP_UNIT_MM },
     { "US Letter", 8.5, 11, SP_UNIT_IN },
     { "US Legal", 8.5, 14, SP_UNIT_IN },
@@ -159,17 +159,23 @@ static PaperSize const inkscape_papers[] = {
 };
 
 //===================================================
+
+
 static const SPUnit _px_unit = sp_unit_get_by_id (SP_UNIT_PX);
 
+
+/*
 class SizeMenuItem : public Gtk::MenuItem {
 public:
-    SizeMenuItem (PaperSize const * paper, PageSizer * widget)
-    : Gtk::MenuItem (paper ? paper->name : _("Custom")), 
-      _paper(paper), _parent(widget) {}
+    SizeMenuItem (PaperSizeRec const * paper, PageSizer * widget)
+                : Gtk::MenuItem (paper ? paper->name : _("Custom")), 
+                  _paper(paper),
+	              _parent(widget)
+	  {}
 protected:
-    PaperSize const * _paper;
-    PageSizer *_parent;
-    void on_activate();
+    PaperSizeRec const * _paper;
+    PageSizer       *_parent;
+    void            on_activate();
 };
 
 void
@@ -187,8 +193,13 @@ SizeMenuItem::on_activate()
     else
         _parent->setDim (w, h);
 }
+*/
 
 //---------------------------------------------------
+
+
+
+
 
 PageSizer::PageSizer()
 : Gtk::VBox(false,4)
@@ -198,27 +209,32 @@ PageSizer::PageSizer()
     Gtk::Label *label_size = manage (new Gtk::Label (_("P_age size:"), 1.0, 0.5)); 
     label_size->set_use_underline();
     hbox_size->pack_start (*label_size, false, false, 0);
-    _omenu_size = manage (new Gtk::OptionMenu);
-    label_size->set_mnemonic_widget (*_omenu_size);
-    hbox_size->pack_start (*_omenu_size, true, true, 0);
-    Gtk::Menu *menu_size = manage (new Gtk::Menu);
+    label_size->set_mnemonic_widget (_paperSizeList);
+    hbox_size->pack_start (_paperSizeList, true, true, 0);
 
-    for (PaperSize const *paper = inkscape_papers; paper->name; paper++) {
-        SizeMenuItem *item = manage (new SizeMenuItem (paper, this));
-        menu_size->append (*item);
-    }
-    SizeMenuItem *item = manage (new SizeMenuItem (0, 0));
-    menu_size->prepend (*item);
-    _omenu_size->set_menu (*menu_size);
+    //# Set up the Paper Size combo box
+    
+    for (PaperSizeRec const *p = inkscape_papers; p->name; p++)
+	    {
+        Glib::ustring name = p->name;
+        PaperSize paper(name, p->smaller, p->larger, p->unit);
+        paperSizeTable[name] = paper;
+        _paperSizeList.append_text(name);
+        }
+
 }
 
 PageSizer::~PageSizer()
 {
+    _paper_size_list_connection.disconnect();
     _portrait_connection.disconnect();
     _landscape_connection.disconnect();
     _changedw_connection.disconnect();
     _changedh_connection.disconnect();
 }
+
+
+
 
 void
 PageSizer::init (Registry& reg)
@@ -227,13 +243,16 @@ PageSizer::init (Registry& reg)
     pack_start (*hbox_ori, false, false, 0);
     Gtk::Label *label_ori = manage (new Gtk::Label (_("Page orientation:"), 0.0, 0.5)); 
     hbox_ori->pack_start (*label_ori, false, false, 0);
-    _rb_land = manage (new Gtk::RadioButton (_("_Landscape"), true));
-    Gtk::RadioButton::Group group = _rb_land->get_group();
-    hbox_ori->pack_end (*_rb_land, false, false, 5);
-    _rb_port = manage (new Gtk::RadioButton (_("_Portrait"), true));
-    hbox_ori->pack_end (*_rb_port, false, false, 5);
-    _rb_port->set_group (group);
-    _rb_port->set_active (true);
+    
+    _landscapeButton.set_label(_("_Landscape"));
+	_landscapeButton.set_active(true);
+    Gtk::RadioButton::Group group = _landscapeButton.get_group();
+    hbox_ori->pack_end (_landscapeButton, false, false, 5);
+    _portraitButton.set_label(_("_Portrait"));
+	_portraitButton.set_active(true);
+    hbox_ori->pack_end (_portraitButton, false, false, 5);
+    _portraitButton.set_group (group);
+    _portraitButton.set_active (true);
     
     /* Custom paper frame */
     Gtk::Frame *frame = manage (new Gtk::Frame(_("Custom size")));
@@ -243,8 +262,10 @@ PageSizer::init (Registry& reg)
     table->set_row_spacings (4);
     table->set_col_spacings (4);
     
-    Inkscape::UI::Widget::Button* fit_canv = manage(new Inkscape::UI::Widget::Button(_("_Fit page to selection"),
-                    _("Resize the page to fit the current selection, or the entire drawing if there is no selection")));
+    Inkscape::UI::Widget::Button* fit_canv =
+	     manage(new Inkscape::UI::Widget::Button(_("_Fit page to selection"),
+    _("Resize the page to fit the current selection, or the entire drawing if there is no selection")));
+
     // prevent fit_canv from expanding
     Gtk::Alignment *fit_canv_cont = manage(new Gtk::Alignment(1.0,0.5,0.0,0.0));
     fit_canv_cont->add(*fit_canv);
@@ -257,17 +278,30 @@ PageSizer::init (Registry& reg)
     _rusw.init (_("_Width:"), _("Width of paper"), "width", _rum, *_wr);
     _rush.init (_("_Height:"), _("Height of paper"), "height", _rum, *_wr);
 
-    table->attach (*_rum._label, 0,1,0,1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-    table->attach (*_rum._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-    table->attach (*_rusw.getSU(), 0,2,1,2, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-    table->attach (*_rush.getSU(), 0,2,2,3, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-    table->attach (*fit_canv_cont, 0,2,3,4, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+    table->attach (*_rum._label, 0,1,0,1, Gtk::FILL|Gtk::EXPAND,
+	            (Gtk::AttachOptions)0,0,0);
+    table->attach (*_rum._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND,
+	            (Gtk::AttachOptions)0,0,0);
+    table->attach (*_rusw.getSU(), 0,2,1,2, Gtk::FILL|Gtk::EXPAND,
+	            (Gtk::AttachOptions)0,0,0);
+    table->attach (*_rush.getSU(), 0,2,2,3, Gtk::FILL|Gtk::EXPAND,
+	           (Gtk::AttachOptions)0,0,0);
+    table->attach (*fit_canv_cont, 0,2,3,4, Gtk::FILL|Gtk::EXPAND,
+	           (Gtk::AttachOptions)0,0,0);
 
-    _landscape_connection = _rb_land->signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_landscape));
-    _portrait_connection = _rb_port->signal_toggled().connect (sigc::mem_fun (*this, &PageSizer::on_portrait));
-    _changedw_connection = _rusw.getSU()->signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
-    _changedh_connection = _rush.getSU()->signal_value_changed().connect (sigc::mem_fun (*this, &PageSizer::on_value_changed));
-    fit_canv->signal_clicked().connect(sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
+    _paper_size_list_connection = _paperSizeList.signal_changed().connect (
+	        sigc::mem_fun (*this, &PageSizer::on_paper_size_list_changed));
+	        
+    _landscape_connection = _landscapeButton.signal_toggled().connect (
+	        sigc::mem_fun (*this, &PageSizer::on_landscape));
+    _portrait_connection = _portraitButton.signal_toggled().connect (
+	        sigc::mem_fun (*this, &PageSizer::on_portrait));
+    _changedw_connection = _rusw.getSU()->signal_value_changed().connect (
+	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
+    _changedh_connection = _rush.getSU()->signal_value_changed().connect (
+	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
+    fit_canv->signal_clicked().connect(
+	     sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
     
     show_all_children();
 }
@@ -281,14 +315,16 @@ PageSizer::init (Registry& reg)
  * \param w, h given in px
  */
 void
-PageSizer::setDim (double w, double h)
+PageSizer::setDim (double w, double h, bool changeList)
 {
     static bool _called = false;
-    if (_called) return;
+    if (_called)
+	    return;
 
     _called = true;
     
-    _landscape_connection.block();
+    _paper_size_list_connection.block();
+	_landscape_connection.block();
     _portrait_connection.block(); 
     _changedw_connection.block();
     _changedh_connection.block();
@@ -302,16 +338,18 @@ PageSizer::setDim (double w, double h)
     } 
     
     _landscape = w>h;
-    _rb_land->set_active (_landscape ? true : false);
-    _rb_port->set_active (_landscape ? false : true);
+    _landscapeButton.set_active(_landscape ? true : false);
+    _portraitButton.set_active (_landscape ? false : true);
     
-    _omenu_size->set_history (1 + find_paper_size (w, h));
+    if (changeList)
+	    _paperSizeList.set_active (find_paper_size (w, h));
     
     Unit const& unit = _rum._sel->getUnit();
     _rusw.setValue (w / unit.factor);
     _rush.setValue (h / unit.factor);
 
-    _landscape_connection.unblock();
+    _paper_size_list_connection.unblock();
+	_landscape_connection.unblock();
     _portrait_connection.unblock();
     _changedw_connection.unblock();
     _changedh_connection.unblock();
@@ -326,23 +364,29 @@ PageSizer::setDim (double w, double h)
 int
 PageSizer::find_paper_size (double w, double h) const
 {
-    double given[2];
-    if ( w < h ) {
-        given[0] = w; given[1] = h;
-    } else {
-        given[0] = h; given[1] = w;
+    double smaller = w;
+    double larger  = h;
+    if ( h < w ) {
+        smaller = h; larger = w;
     }
-    g_return_val_if_fail(given[0] <= given[1], -1);
-    for (unsigned i = 0; i < G_N_ELEMENTS(inkscape_papers) - 1; ++i) {
-        SPUnit const &i_unit = sp_unit_get_by_id(inkscape_papers[i].unit);
-        double const i_sizes[2] = { sp_units_get_pixels(inkscape_papers[i].smaller, i_unit),
-                                    sp_units_get_pixels(inkscape_papers[i].larger, i_unit) };
-        g_return_val_if_fail(i_sizes[0] <= i_sizes[1], -1);
-        if ((std::abs(given[0] - i_sizes[0]) <= .1) &&
-            (std::abs(given[1] - i_sizes[1]) <= .1)   )
-        {
-            return (int) i;
-        }
+
+    g_return_val_if_fail(smaller <= larger, -1);
+    
+    int index = 0;
+    std::map<Glib::ustring, PaperSize>::const_iterator iter;
+    for (iter = paperSizeTable.begin() ; iter != paperSizeTable.end() ; iter++) {
+        PaperSize paper = iter->second;
+        SPUnit const &i_unit = sp_unit_get_by_id(paper.unit);
+        double smallX = sp_units_get_pixels(paper.smaller, i_unit);
+        double largeX = sp_units_get_pixels(paper.larger,  i_unit);
+        
+        g_return_val_if_fail(smallX <= largeX, -1);
+        
+        if ((std::abs(smaller - smallX) <= 0.1) &&
+            (std::abs(larger  - largeX) <= 0.1)   )
+            return index;
+            
+        index++;
     }
     return -1;
 }
@@ -361,23 +405,48 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing() {
 }
 
 void
+PageSizer::on_paper_size_list_changed()
+{
+    Glib::ustring name = _paperSizeList.get_active_text();
+    std::map<Glib::ustring, PaperSize>::const_iterator iter =
+        paperSizeTable.find(name);
+    if (iter == paperSizeTable.end()) {
+        g_warning("paper size '%s' not found in table", name.c_str());
+        return;
+    }
+    PaperSize paper = iter->second;
+    double w = paper.smaller;
+    double h = paper.larger;
+    SPUnit const &src_unit = sp_unit_get_by_id (paper.unit);
+    sp_convert_distance (&w, &src_unit, &_px_unit);
+    sp_convert_distance (&h, &src_unit, &_px_unit);
+    if (_landscape)
+        setDim (h, w, false);
+    else
+        setDim (w, h, false);
+
+}
+
+void
 PageSizer::on_portrait()
 {
-    if (!_rb_port->get_active())
+    if (!_portraitButton.get_active())
         return;
     double w = _rusw.getSU()->getValue ("px");
     double h = _rush.getSU()->getValue ("px");
-    if (h<w) setDim (h, w);
+    if (h<w)
+	    setDim (h, w);
 }
 
 void
 PageSizer::on_landscape()
 {
-    if (!_rb_land->get_active())
+    if (!_landscapeButton.get_active())
         return;
     double w = _rusw.getSU()->getValue ("px");
     double h = _rush.getSU()->getValue ("px");
-    if (w<h) setDim (h, w);
+    if (w<h)
+	    setDim (h, w);
 }
 
 void
@@ -385,7 +454,8 @@ PageSizer::on_value_changed()
 {
     if (_wr->isUpdating()) return;
 
-    setDim (_rusw.getSU()->getValue("px"), _rush.getSU()->getValue("px"));
+    setDim (_rusw.getSU()->getValue("px"),
+	        _rush.getSU()->getValue("px"));
 }
 
 } // namespace Widget
