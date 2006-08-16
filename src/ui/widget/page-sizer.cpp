@@ -8,7 +8,7 @@
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
  *
- * Copyright (C) 2000 - 2005 Authors
+ * Copyright (C) 2000 - 2006 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
@@ -19,9 +19,6 @@
 
 #include <cmath>
 #include <gtkmm.h>
-//#include <gtkmm/optionmenu.h>
-//#include <gtkmm/frame.h>
-//#include <gtkmm/table.h>
 #include "ui/widget/button.h"
 
 #include "ui/widget/scalar-unit.h"
@@ -158,51 +155,20 @@ static PaperSizeRec const inkscape_papers[] = {
     { NULL, 0, 0, SP_UNIT_PX },
 };
 
-//===================================================
 
 
+//########################################################################
+//# P A G E    S I Z E R
+//########################################################################
+
+//The default unit for this widget and its calculations
 static const SPUnit _px_unit = sp_unit_get_by_id (SP_UNIT_PX);
 
 
-/*
-class SizeMenuItem : public Gtk::MenuItem {
-public:
-    SizeMenuItem (PaperSizeRec const * paper, PageSizer * widget)
-                : Gtk::MenuItem (paper ? paper->name : _("Custom")), 
-                  _paper(paper),
-	              _parent(widget)
-	  {}
-protected:
-    PaperSizeRec const * _paper;
-    PageSizer       *_parent;
-    void            on_activate();
-};
-
-void
-SizeMenuItem::on_activate()
-{
-    if (_parent == 0) // handle Custom entry
-        return;
-        
-    double w = _paper->smaller, h = _paper->larger;
-    SPUnit const &src_unit = sp_unit_get_by_id (_paper->unit);
-    sp_convert_distance (&w, &src_unit, &_px_unit);
-    sp_convert_distance (&h, &src_unit, &_px_unit);
-    if (_parent->_landscape)
-        _parent->setDim (h, w);
-    else
-        _parent->setDim (w, h);
-}
-*/
-
-//---------------------------------------------------
-
-
-
-
-
-PageSizer::PageSizer()
-: Gtk::VBox(false,4)
+/**
+ * Constructor
+ */ 
+PageSizer::PageSizer() : Gtk::VBox(false,4)
 {
     Gtk::HBox *hbox_size = manage (new Gtk::HBox (false, 4));
     pack_start (*hbox_size, false, false, 0);
@@ -224,18 +190,19 @@ PageSizer::PageSizer()
 
 }
 
+
+/**
+ * Destructor
+ */ 
 PageSizer::~PageSizer()
 {
-    _paper_size_list_connection.disconnect();
-    _portrait_connection.disconnect();
-    _landscape_connection.disconnect();
-    _changedw_connection.disconnect();
-    _changedh_connection.disconnect();
 }
 
 
 
-
+/**
+ * Initialize or reset this widget
+ */ 
 void
 PageSizer::init (Registry& reg)
 {
@@ -272,19 +239,22 @@ PageSizer::init (Registry& reg)
 
     frame->add (*table);
     
-    _wr = &reg;
+    _widgetRegistry = &reg;
 
-    _rum.init (_("U_nits:"), "units", *_wr);
-    _rusw.init (_("_Width:"), _("Width of paper"), "width", _rum, *_wr);
-    _rush.init (_("_Height:"), _("Height of paper"), "height", _rum, *_wr);
+    _dimensionUnits.init (_("U_nits:"), "units",
+	                 *_widgetRegistry);
+    _dimensionWidth.init (_("_Width:"), _("Width of paper"), "width",
+	                 _dimensionUnits, *_widgetRegistry);
+    _dimensionHeight.init (_("_Height:"), _("Height of paper"), "height",
+	                 _dimensionUnits, *_widgetRegistry);
 
-    table->attach (*_rum._label, 0,1,0,1, Gtk::FILL|Gtk::EXPAND,
+    table->attach (*_dimensionUnits._label, 0,1,0,1, Gtk::FILL|Gtk::EXPAND,
 	            (Gtk::AttachOptions)0,0,0);
-    table->attach (*_rum._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND,
+    table->attach (*_dimensionUnits._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND,
 	            (Gtk::AttachOptions)0,0,0);
-    table->attach (*_rusw.getSU(), 0,2,1,2, Gtk::FILL|Gtk::EXPAND,
+    table->attach (*_dimensionWidth.getSU(), 0,2,1,2, Gtk::FILL|Gtk::EXPAND,
 	            (Gtk::AttachOptions)0,0,0);
-    table->attach (*_rush.getSU(), 0,2,2,3, Gtk::FILL|Gtk::EXPAND,
+    table->attach (*_dimensionHeight.getSU(), 0,2,2,3, Gtk::FILL|Gtk::EXPAND,
 	           (Gtk::AttachOptions)0,0,0);
     table->attach (*fit_canv_cont, 0,2,3,4, Gtk::FILL|Gtk::EXPAND,
 	           (Gtk::AttachOptions)0,0,0);
@@ -296,9 +266,9 @@ PageSizer::init (Registry& reg)
 	        sigc::mem_fun (*this, &PageSizer::on_landscape));
     _portrait_connection = _portraitButton.signal_toggled().connect (
 	        sigc::mem_fun (*this, &PageSizer::on_portrait));
-    _changedw_connection = _rusw.getSU()->signal_value_changed().connect (
+    _changedw_connection = _dimensionWidth.getSU()->signal_value_changed().connect (
 	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
-    _changedh_connection = _rush.getSU()->signal_value_changed().connect (
+    _changedh_connection = _dimensionHeight.getSU()->signal_value_changed().connect (
 	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
     fit_canv->signal_clicked().connect(
 	     sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
@@ -309,10 +279,12 @@ PageSizer::init (Registry& reg)
 
 /**
  * Set document dimensions (if not called by Doc prop's update()) and
- * set the PageSizer's widgets and text entries accordingly. This is
- * somewhat slow, is there something done too often invisibly?
+ * set the PageSizer's widgets and text entries accordingly. If
+ * 'chageList' is true, then adjust the paperSizeList to show the closest
+ * standard page size.  
  *
  * \param w, h given in px
+ * \param changeList whether to modify the paper size list 
  */
 void
 PageSizer::setDim (double w, double h, bool changeList)
@@ -329,24 +301,24 @@ PageSizer::setDim (double w, double h, bool changeList)
     _changedw_connection.block();
     _changedh_connection.block();
 
-    if (SP_ACTIVE_DESKTOP && !_wr->isUpdating()) {
+    if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         sp_document_set_width (doc, w, &_px_unit);
         sp_document_set_height (doc, h, &_px_unit);
         sp_document_done (doc, SP_VERB_NONE, 
-                          /* TODO: annotate */ "page-sizer.cpp:301");
+        /* TODO: annotate */ "page-sizer.cpp:301");
     } 
     
-    _landscape = w>h;
+    _landscape = ( w > h );
     _landscapeButton.set_active(_landscape ? true : false);
     _portraitButton.set_active (_landscape ? false : true);
     
     if (changeList)
 	    _paperSizeList.set_active (find_paper_size (w, h));
     
-    Unit const& unit = _rum._sel->getUnit();
-    _rusw.setValue (w / unit.factor);
-    _rush.setValue (h / unit.factor);
+    Unit const& unit = _dimensionUnits._sel->getUnit();
+    _dimensionWidth.setValue (w / unit.factor);
+    _dimensionHeight.setValue (h / unit.factor);
 
     _paper_size_list_connection.unblock();
 	_landscape_connection.unblock();
@@ -357,8 +329,9 @@ PageSizer::setDim (double w, double h, bool changeList)
     _called = false;
 }
 
+
 /** 
- * Returns an index into inkscape_papers of a paper of the specified 
+ * Returns an index into paperSizeTable of a paper of the specified 
  * size (specified in px), or -1 if there's no such paper.
  */
 int
@@ -391,19 +364,30 @@ PageSizer::find_paper_size (double w, double h) const
     return -1;
 }
 
+
+
+/**
+ * Tell the desktop to change the page size
+ */ 
 void
-PageSizer::fire_fit_canvas_to_selection_or_drawing() {
+PageSizer::fire_fit_canvas_to_selection_or_drawing()
+{
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (!dt) return;
+    if (!dt)
+	    return;
     Verb *verb = Verb::get( SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING );
     if (verb) {
         SPAction *action = verb->get_action(dt);
-        if (action) {
+        if (action)
             sp_action_perform(action, NULL);        
-        }
     }
 }
 
+
+
+/**
+ * Paper Size list callback for when a user changes the selection
+ */ 
 void
 PageSizer::on_paper_size_list_changed()
 {
@@ -420,6 +404,7 @@ PageSizer::on_paper_size_list_changed()
     SPUnit const &src_unit = sp_unit_get_by_id (paper.unit);
     sp_convert_distance (&w, &src_unit, &_px_unit);
     sp_convert_distance (&h, &src_unit, &_px_unit);
+
     if (_landscape)
         setDim (h, w, false);
     else
@@ -427,36 +412,48 @@ PageSizer::on_paper_size_list_changed()
 
 }
 
+
+/**
+ * Portrait button callback
+ */
 void
 PageSizer::on_portrait()
 {
     if (!_portraitButton.get_active())
         return;
-    double w = _rusw.getSU()->getValue ("px");
-    double h = _rush.getSU()->getValue ("px");
-    if (h<w)
+    double w = _dimensionWidth.getSU()->getValue ("px");
+    double h = _dimensionHeight.getSU()->getValue ("px");
+    if (h < w)
 	    setDim (h, w);
 }
 
+
+/**
+ * Landscape button callback
+ */ 
 void
 PageSizer::on_landscape()
 {
     if (!_landscapeButton.get_active())
         return;
-    double w = _rusw.getSU()->getValue ("px");
-    double h = _rush.getSU()->getValue ("px");
-    if (w<h)
+    double w = _dimensionWidth.getSU()->getValue ("px");
+    double h = _dimensionHeight.getSU()->getValue ("px");
+    if (w < h)
 	    setDim (h, w);
 }
 
+/**
+ * Callback for the dimension widgets
+ */ 
 void
 PageSizer::on_value_changed()
 {
-    if (_wr->isUpdating()) return;
+    if (_widgetRegistry->isUpdating()) return;
 
-    setDim (_rusw.getSU()->getValue("px"),
-	        _rush.getSU()->getValue("px"));
+    setDim (_dimensionWidth.getSU()->getValue("px"),
+	        _dimensionHeight.getSU()->getValue("px"));
 }
+
 
 } // namespace Widget
 } // namespace UI
