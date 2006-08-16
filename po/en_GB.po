@@ -1,23 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# British English translation for Inkscape.
+# Copyright (C) 2000-2003, 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Inkscape package.
+# Kingsley Turner <kingsley@maddogsbreakfast.com.au>, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3695 ../src/widgets/toolbox.cpp:3716
 #: ../src/widgets/toolbox.cpp:3745 ../src/widgets/toolbox.cpp:3766
 #: ../src/widgets/toolbox.cpp:3793
-#, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: 0.44\n"
+"Report-Msgid-Bugs-To: Kingsley Turner <kingsley@maddogsbreakfast.com.au>\n"
 "POT-Creation-Date: 2006-08-14 22:31+0200\n"
-"PO-Revision-Date: 2006-06-19 08:23+GMT+10\n"
+"PO-Revision-Date: 2006-08-17 00:49+0200\n"
 "Last-Translator: Kingsley Turner <kingsley@maddogsbreakfast.com.au>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: en_GB <en_gb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
