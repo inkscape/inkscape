@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-14 22:31+0200\n"
-"PO-Revision-Date: 2006-07-26 23:13+0200\n"
+"PO-Revision-Date: 2006-08-17 00:22+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -102,9 +102,7 @@ msgstr "Objektverbinder ignorieren die ausgewählten Objekte"
 
 #: ../src/context-fns.cpp:33 ../src/context-fns.cpp:62
 msgid "<b>Current layer is hidden</b>. Unhide it to be able to draw on it."
-msgstr ""
-"<b>Aktuelle Ebene ist verborgen</b>. Sichtbar schalten, um darauf zu "
-"zeichnen."
+msgstr "<b>Aktuelle Ebene ist ausgeblendet</b>. Sichtbar schalten, um darauf zu zeichnen."
 
 #: ../src/context-fns.cpp:39 ../src/context-fns.cpp:68
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
@@ -1110,11 +1108,11 @@ msgstr "Suche auf aktuelle Ebene beschränken"
 
 #: ../src/dialogs/find.cpp:724
 msgid "Include _hidden"
-msgstr "einschließlich Verborgene"
+msgstr "einschließlich Ausgeblendete"
 
 #: ../src/dialogs/find.cpp:728
 msgid "Include hidden objects in search"
-msgstr "Verborgene Objekte bei Suche berücksichtigen"
+msgstr "Ausgeblendete Objekte bei Suche berücksichtigen"
 
 #: ../src/dialogs/find.cpp:733
 msgid "Include l_ocked"
@@ -2468,19 +2466,16 @@ msgid "Windows 32-bit Print"
 msgstr "Windows 32-bit-Druck"
 
 #: ../src/extension/internal/wpg-input.cpp:343
-#, fuzzy
 msgid "WPG Input"
-msgstr "SVG einlesen"
+msgstr "WPG einlesen"
 
 #: ../src/extension/internal/wpg-input.cpp:348
-#, fuzzy
 msgid "WordPerfect Graphics (*.wpg)"
-msgstr "Skalierbare Vektorgrafik (*.svg)"
+msgstr "WordPerfect-Grafik (*.wpg)"
 
 #: ../src/extension/internal/wpg-input.cpp:349
-#, fuzzy
 msgid "Vector graphics format used by Corel WordPerfect"
-msgstr "Scalable-Vector-Graphics-Format wie vom W3C definiert"
+msgstr "Vektorgrafik-Format von Corel WordPerfect"
 
 #. We can't call sp_ui_error_dialog because we may be
 #. running from the console, in which case calling sp_ui
@@ -4794,12 +4789,12 @@ msgstr "Die Auswahl enthält <b>keine Pfade</b> zum Schrumpfen/Erweitern."
 #: ../src/splivarot.cpp:1519
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
-msgstr ""
+msgstr "Vereinfache %s - <b>%d</b> von <b>%d</b> Pfaden vereinfacht..."
 
 #: ../src/splivarot.cpp:1531
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
-msgstr ""
+msgstr "Fertig - <b>%d</b> Pfade vereinfacht."
 
 #: ../src/splivarot.cpp:1547
 msgid "Select <b>path(s)</b> to simplify."
@@ -6468,7 +6463,7 @@ msgstr "Nur innerhalb der aktuellen Ebene und Unterebenen auswählen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Ignore hidden objects"
-msgstr "Verborgene Objekte ignorieren"
+msgstr "Ausgeblendete Objekte ignorieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Ignore locked objects"
@@ -6503,9 +6498,7 @@ msgstr ""
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
-msgstr ""
-"Dieses abwählen, damit verborgene Objekte ausgewählt werden können (gilt "
-"auch für Objekte in verborgenen Ebenen/Gruppierungen)"
+msgstr "Dieses abwählen, damit ausgeblendete Objekte ausgewählt werden können (gilt auch für Objekte in ausgeblendeten Ebenen/Gruppierungen)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid ""
