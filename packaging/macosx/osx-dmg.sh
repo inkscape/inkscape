@@ -71,7 +71,7 @@ fi
 # Create a new RW image from the temp directory.
 echo "Creating a new RW disk image..."
 rm -f "$RWNAME"
-/usr/bin/hdiutil create -srcfolder "TMPDIR" -volname "$VOLNAME" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$RWNAME"
+/usr/bin/hdiutil create -srcfolder "$TMPDIR" -volname "$VOLNAME" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$RWNAME"
 
 # We're finished with the temp directory, remove it.
 rm -rf "$TMPDIR"
