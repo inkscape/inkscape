@@ -519,6 +519,11 @@ else
 fi
 PKG_CHECK_MODULES(INKSCAPE, gdkmm-2.4  glibmm-2.4  gtkmm-2.4  gtk+-2.0 >= 2.4.0  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2)
 
+PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf, cairo_pdf=yes, cairo_pdf=no)
+if test "x$cairo_pdf" = "xyes"; then
+  AC_DEFINE(HAVE_CAIRO_PDF, 1, [Whether the Cairo PDF backend is available])
+fi
+
 dnl Shouldn't we test for libpng and libz?
 INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz"
 

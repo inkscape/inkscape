@@ -14,6 +14,9 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#ifdef HAVE_CAIRO_PDF
+
 #include "cairo-pdf-out.h"
 #include <print.h>
 #include "extension/system.h"
@@ -143,3 +146,5 @@ CairoPdfOutput::init (void)
 }
 
 } } }  /* namespace Inkscape, Extension, Implementation */
+
+#endif /* HAVE_CAIRO_PDF */

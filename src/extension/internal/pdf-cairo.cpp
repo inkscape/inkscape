@@ -18,6 +18,8 @@
 # include "config.h"
 #endif
 
+#ifdef HAVE_CAIRO_PDF
+
 #ifndef PANGO_ENABLE_BACKEND
 #define PANGO_ENABLE_BACKEND
 #endif
@@ -1029,6 +1031,8 @@ PrintCairoPDF::init(void)
 }  /* namespace Inkscape */
 
 /* End of GNU GPL code */
+
+#endif /* HAVE_CAIRO_PDF */
 
 
 /*

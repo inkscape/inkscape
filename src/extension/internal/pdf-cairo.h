@@ -17,6 +17,8 @@
 # include "config.h"
 #endif
 
+#ifdef HAVE_CAIRO_PDF
+
 #include "extension/extension.h"
 #include "extension/implementation/implementation.h"
 #include <set>
@@ -93,6 +95,7 @@ public:
 }  /* namespace Extension */
 }  /* namespace Inkscape */
 
+#endif /* HAVE_CAIRO_PDF */
 
 #endif /* !EXTENSION_INTERNAL_PDF_CAIRO_H_SEEN */
 
