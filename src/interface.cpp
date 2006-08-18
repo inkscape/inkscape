@@ -128,12 +128,10 @@ SPActionEventVector menu_item_event_vector = {
 void
 sp_create_window(SPViewWidget *vw, gboolean editable)
 {
-    GtkWidget *w, *hb;
-
     g_return_if_fail(vw != NULL);
     g_return_if_fail(SP_IS_VIEW_WIDGET(vw));
 
-    w = sp_window_new("", TRUE);
+    GtkWidget *w = sp_window_new("", TRUE);
 
     if (editable) {
       g_object_set_data(G_OBJECT(vw), "window", w);
@@ -141,13 +139,8 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
         static_cast<GtkWindow*>((void*)w);
     }
 
-    hb = gtk_hbox_new(FALSE, 0);
-    gtk_widget_show(hb);
-    gtk_container_add(GTK_CONTAINER(w), hb);
-    g_object_set_data(G_OBJECT(w), "hbox", hb);
-
-    /* fixme: */
     if (editable) {
+        /* fixme: */
         gtk_window_set_default_size((GtkWindow *) w, 640, 480);
         g_object_set_data(G_OBJECT(w), "desktop", SP_DESKTOP_WIDGET(vw)->desktop);
         g_object_set_data(G_OBJECT(w), "desktopwidget", vw);
@@ -157,9 +150,8 @@ sp_create_window(SPViewWidget *vw, gboolean editable)
         gtk_window_set_policy(GTK_WINDOW(w), TRUE, TRUE, TRUE);
     }
 
-    gtk_box_pack_end(GTK_BOX(hb), GTK_WIDGET(vw), TRUE, TRUE, 0);
+    gtk_container_add(GTK_CONTAINER(w), GTK_WIDGET(vw));
     gtk_widget_show(GTK_WIDGET(vw));
-
 
     if ( completeDropTargets == 0 || completeDropTargetsCount == 0 )
     {
