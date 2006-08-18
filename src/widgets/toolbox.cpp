@@ -3413,6 +3413,14 @@ cell_data_func  (GtkTreeViewColumn *column,
     free (sample_escaped);
 }
 
+static void delete_completion(GObject *obj, GtkWidget *entry) {
+    GObject *completion = (GObject *) gtk_object_get_data(GTK_OBJECT(entry), "completion");
+    if (completion) {
+        gtk_entry_set_completion (GTK_ENTRY(entry), NULL);
+        g_object_unref (completion);
+    }
+}
+
 GtkWidget*
 sp_text_toolbox_new (SPDesktop *desktop)
 {
@@ -3438,8 +3446,10 @@ sp_text_toolbox_new (SPDesktop *desktop)
     gtk_entry_completion_set_minimum_key_length (completion, 1); 
     g_object_set (G_OBJECT(completion), "inline-completion", TRUE, "popup-completion", TRUE, NULL);
     gtk_entry_set_completion (GTK_ENTRY(entry), completion);
+    gtk_object_set_data(GTK_OBJECT(entry), "completion", completion);
     aux_toolbox_space (tbl, 1);
     gtk_box_pack_start (GTK_BOX (tbl), entry, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(tbl), "destroy", G_CALLBACK(delete_completion), entry);
         
     //Button
     GtkWidget   *button = gtk_button_new ();
