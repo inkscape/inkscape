@@ -297,6 +297,13 @@ void SPDesktop::destroy()
     _sel_modified_connection.disconnect();
     _sel_changed_connection.disconnect();
     _modified_connection.disconnect();
+    _commit_connection.disconnect();
+    _reconstruction_start_connection.disconnect();
+    _reconstruction_finish_connection.disconnect();
+
+    g_signal_handlers_disconnect_by_func(G_OBJECT (acetate), (gpointer) G_CALLBACK(sp_desktop_root_handler), this);
+    g_signal_handlers_disconnect_by_func(G_OBJECT (main), (gpointer) G_CALLBACK(sp_desktop_root_handler), this);
+    g_signal_handlers_disconnect_by_func(G_OBJECT (drawing), (gpointer) G_CALLBACK(_arena_handler), this);
 
     while (event_context) {
         SPEventContext *ec = event_context;
@@ -320,8 +327,6 @@ void SPDesktop::destroy()
 
     delete _guides_message_context;
     _guides_message_context = NULL;
-
-    _modified_connection.disconnect();
 
     g_list_free (zooms_past);
     g_list_free (zooms_future);
