@@ -23,7 +23,6 @@ class SPCanvasItem;
 /* Item handlers */
 
 int sp_desktop_root_handler (SPCanvasItem *item, GdkEvent *event, SPDesktop *desktop);
-int sp_desktop_item_handler (SPCanvasItem *item, GdkEvent *event, gpointer data);
 
 /* Default handlers */
 

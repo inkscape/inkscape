@@ -33,26 +33,9 @@
 
 /* Root item handler */
 
-
 int sp_desktop_root_handler(SPCanvasItem *item, GdkEvent *event, SPDesktop *desktop)
 {
     return sp_event_context_root_handler(desktop->event_context, event);
-}
-
-/*
- * fixme: this conatins a hack, to deal with deleting a view, which is
- * completely on another view, in which case active_desktop will not be updated
- *
- */
-
-int sp_desktop_item_handler(SPCanvasItem *item, GdkEvent *event, gpointer data)
-{
-    gpointer ddata = gtk_object_get_data(GTK_OBJECT(item->canvas), "SPDesktop");
-    g_return_val_if_fail(ddata != NULL, FALSE);
-
-    SPDesktop *desktop = static_cast<SPDesktop*>(ddata);
-
-    return sp_event_context_item_handler(desktop->event_context, SP_ITEM(data), event);
 }
 
 
