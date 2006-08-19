@@ -18,6 +18,8 @@
 # include <config.h>
 #endif
 
+#include <string.h>
+
 #include <cmath>
 #include <gtkmm.h>
 #include "ui/widget/button.h"
@@ -112,11 +114,16 @@ static PaperSizeRec const inkscape_papers[] = {
     { "B9",                 44,   62, SP_UNIT_MM },
     { "B10",                31,   44, SP_UNIT_MM },
 
-#if 0 /* 
+
+
+//#if 0
+         /* 
          Whether to include or exclude these depends on how
          big we mind our page size menu
          becoming.  C series is used for envelopes;
-		 don't know what D and E series are used for. */
+		 don't know what D and E series are used for.
+		 */
+
     { "C0",                917, 1297, SP_UNIT_MM },
     { "C1",                648,  917, SP_UNIT_MM },
     { "C2",                458,  648, SP_UNIT_MM },
@@ -139,7 +146,9 @@ static PaperSizeRec const inkscape_papers[] = {
     { "E4",                280,  400, SP_UNIT_MM },
     { "E5",                200,  280, SP_UNIT_MM },
     { "E6",                140,  200, SP_UNIT_MM },
-#endif
+//#endif
+
+
 
     { "CSE",               462,  649, SP_UNIT_PT },
     { "US #10 Envelope", 4.125,  9.5, SP_UNIT_IN },
@@ -178,23 +187,54 @@ static const SPUnit _px_unit = sp_unit_get_by_id (SP_UNIT_PX);
  */ 
 PageSizer::PageSizer() : Gtk::VBox(false,4)
 {
+
+
+    //# Set up the Paper Size combo box    
+    _paperSizeListStore = Gtk::ListStore::create(_paperSizeColumns);
+    _paperSizeList.set_model(_paperSizeListStore);
+    _paperSizeList.append_column(_("Name"),
+	         _paperSizeColumns.nameColumn);
+    _paperSizeList.append_column(_("Description"),
+	         _paperSizeColumns.descColumn);
+	_paperSizeList.set_headers_visible(false);
+    _paperSizeListSelection = _paperSizeList.get_selection();
+    _paper_size_list_connection = 
+	        _paperSizeListSelection->signal_changed().connect (
+	        sigc::mem_fun (*this, &PageSizer::on_paper_size_list_changed));
+	_paperSizeListScroller.add(_paperSizeList);
+	_paperSizeListScroller.set_shadow_type(Gtk::SHADOW_IN);
+	_paperSizeListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+	        
+    for (PaperSizeRec const *p = inkscape_papers; p->name; p++)
+	    {
+        Glib::ustring name = p->name;
+        char formatBuf[80];
+        snprintf(formatBuf, 79, "%0.2f x %0.2f", p->smaller, p->larger);
+        Glib::ustring desc = formatBuf;
+        if (p->unit == SP_UNIT_IN)
+            desc.append(" in");
+        else if (p->unit == SP_UNIT_MM)
+             desc.append(" mm");
+        else if (p->unit == SP_UNIT_PX)
+            desc.append(" px");
+        PaperSize paper(name, p->smaller, p->larger, p->unit);
+        _paperSizeTable[name] = paper;
+        Gtk::TreeModel::Row row = *(_paperSizeListStore->append());
+        row[_paperSizeColumns.nameColumn] = name;
+        row[_paperSizeColumns.descColumn] = desc;
+        }
+    //Gtk::TreeModel::Row row = _paperSizeListStore->children()[0];
+    //if (row)
+    //    _paperSizeListSelection->select(row);
+
+
     Gtk::HBox *hbox_size = manage (new Gtk::HBox (false, 4));
     pack_start (*hbox_size, false, false, 0);
     Gtk::Label *label_size = manage (new Gtk::Label (_("P_age size:"), 1.0, 0.5)); 
     label_size->set_use_underline();
     hbox_size->pack_start (*label_size, false, false, 0);
     label_size->set_mnemonic_widget (_paperSizeList);
-    hbox_size->pack_start (_paperSizeList, true, true, 0);
-
-    //# Set up the Paper Size combo box
-    
-    for (PaperSizeRec const *p = inkscape_papers; p->name; p++)
-	    {
-        Glib::ustring name = p->name;
-        PaperSize paper(name, p->smaller, p->larger, p->unit);
-        paperSizeTable[name] = paper;
-        _paperSizeList.append_text(name);
-        }
+    hbox_size->pack_start (_paperSizeListScroller, true, true, 0);
 
 }
 
@@ -214,6 +254,7 @@ PageSizer::~PageSizer()
 void
 PageSizer::init (Registry& reg)
 {
+
     Gtk::HBox *hbox_ori = manage (new Gtk::HBox);
     pack_start (*hbox_ori, false, false, 0);
     Gtk::Label *label_ori = manage (new Gtk::Label (_("Page orientation:"), 0.0, 0.5)); 
@@ -267,9 +308,6 @@ PageSizer::init (Registry& reg)
     table->attach (*fit_canv_cont, 0,2,3,4, Gtk::FILL|Gtk::EXPAND,
 	           (Gtk::AttachOptions)0,0,0);
 
-    _paper_size_list_connection = _paperSizeList.signal_changed().connect (
-	        sigc::mem_fun (*this, &PageSizer::on_paper_size_list_changed));
-	        
     _landscape_connection = _landscapeButton.signal_toggled().connect (
 	        sigc::mem_fun (*this, &PageSizer::on_landscape));
     _portrait_connection = _portraitButton.signal_toggled().connect (
@@ -322,7 +360,12 @@ PageSizer::setDim (double w, double h, bool changeList)
     _portraitButton.set_active (_landscape ? false : true);
     
     if (changeList)
-	    _paperSizeList.set_active (find_paper_size (w, h));
+        {
+        int index = find_paper_size(w, h);
+        Gtk::TreeModel::Row row = _paperSizeListStore->children()[index];
+        if (row)
+            _paperSizeListSelection->select(row);
+        }
     
     Unit const& unit = _dimensionUnits._sel->getUnit();
     _dimensionWidth.setValue (w / unit.factor);
@@ -355,7 +398,8 @@ PageSizer::find_paper_size (double w, double h) const
     
     int index = 0;
     std::map<Glib::ustring, PaperSize>::const_iterator iter;
-    for (iter = paperSizeTable.begin() ; iter != paperSizeTable.end() ; iter++) {
+    for (iter = _paperSizeTable.begin() ;
+	     iter != _paperSizeTable.end() ; iter++) {
         PaperSize paper = iter->second;
         SPUnit const &i_unit = sp_unit_get_by_id(paper.unit);
         double smallX = sp_units_get_pixels(paper.smaller, i_unit);
@@ -399,14 +443,22 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
 void
 PageSizer::on_paper_size_list_changed()
 {
-    Glib::ustring name = _paperSizeList.get_active_text();
-    std::map<Glib::ustring, PaperSize>::const_iterator iter =
-        paperSizeTable.find(name);
-    if (iter == paperSizeTable.end()) {
+    //Glib::ustring name = _paperSizeList.get_active_text();
+    Gtk::TreeModel::iterator miter = _paperSizeListSelection->get_selected();
+    if(!miter)
+        {
+        //error?
+        return;
+        }
+    Gtk::TreeModel::Row row = *miter;
+    Glib::ustring name = row[_paperSizeColumns.nameColumn];
+    std::map<Glib::ustring, PaperSize>::const_iterator piter =
+                    _paperSizeTable.find(name);
+    if (piter == _paperSizeTable.end()) {
         g_warning("paper size '%s' not found in table", name.c_str());
         return;
     }
-    PaperSize paper = iter->second;
+    PaperSize paper = piter->second;
     double w = paper.smaller;
     double h = paper.larger;
     SPUnit const &src_unit = sp_unit_get_by_id (paper.unit);

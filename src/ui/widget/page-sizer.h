@@ -147,7 +147,7 @@ protected:
     /**
      * Our handy table of all 'standard' paper sizes.
      */	     
-    std::map<Glib::ustring, PaperSize> paperSizeTable;
+    std::map<Glib::ustring, PaperSize> _paperSizeTable;
 
     /**
      *	Find the closest standard paper size in the table, to the
@@ -166,7 +166,20 @@ protected:
 	sigc::connection    _changedh_connection;
     
     //### The Paper Size selection list
-    Gtk::ComboBoxText _paperSizeList;
+    class PaperSizeColumns : public Gtk::TreeModel::ColumnRecord
+        {
+        public:
+            PaperSizeColumns()
+               { add(nameColumn); add(descColumn);  }
+            Gtk::TreeModelColumn<Glib::ustring> nameColumn;
+            Gtk::TreeModelColumn<Glib::ustring> descColumn;
+        };
+
+    PaperSizeColumns _paperSizeColumns;
+    Glib::RefPtr<Gtk::ListStore> _paperSizeListStore;
+    Gtk::TreeView _paperSizeList;
+    Glib::RefPtr<Gtk::TreeSelection> _paperSizeListSelection;
+    Gtk::ScrolledWindow  _paperSizeListScroller;
     //callback
     void on_paper_size_list_changed();
     sigc::connection    _paper_size_list_connection;
