@@ -2249,7 +2249,7 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_VIEW_MODE_OUTLINE, "ViewModeOutline", N_("_Outline"),
                  N_("Switch to outline (wireframe) display mode"), NULL),
 
-    new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview"),
+    new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview..."),
                  N_("Open a window to preview objects at different icon resolutions"), NULL/*"view_icon_preview"*/),
     new ZoomVerb(SP_VERB_ZOOM_PAGE, "ZoomPage", N_("_Page"),
                  N_("Zoom to fit page in window"), "zoom_page"),
