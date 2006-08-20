@@ -2000,7 +2000,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_UNLINK_CLONE, "EditUnlinkClone", N_("Unlin_k Clone"),
                  N_("Cut the selected clone's link to its original, turning it into a standalone object"), "edit_unlink_clone"),
     new EditVerb(SP_VERB_EDIT_CLONE_ORIGINAL, "EditCloneOriginal", N_("Select _Original"),
-                 N_("Select the object to which the selected clone is linked"), NULL),
+                 N_("Select the object to which the selected clone is linked"), "edit_select_original"),
     // TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
     new EditVerb(SP_VERB_EDIT_TILE, "ObjectsToPattern", N_("Objects to Patter_n"),
                  N_("Convert selection to a rectangle with tiled pattern fill"), NULL),
@@ -2012,13 +2012,13 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_SELECT_ALL, "EditSelectAll", N_("Select Al_l"),
                  N_("Select all objects or all nodes"), "selection_select_all"),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS, "EditSelectAllInAllLayers", N_("Select All in All La_yers"),
-                 N_("Select all objects in all visible and unlocked layers"), NULL),
+                 N_("Select all objects in all visible and unlocked layers"), "selection_select_all_in_all_layers"),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
-                 N_("Invert selection (unselect what is selected and select everything else)"), NULL),
+                 N_("Invert selection (unselect what is selected and select everything else)"), "selection_invert"),
     new EditVerb(SP_VERB_EDIT_INVERT_IN_ALL_LAYERS, "EditInvertInAllLayers", N_("Invert in All Layers"),
                  N_("Invert selection in all visible and unlocked layers"), NULL),
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
-                 N_("Deselect any selected objects or nodes"), NULL),
+                 N_("Deselect any selected objects or nodes"), "selection_deselect"),
 
     /* Selection */
     new SelectionVerb(SP_VERB_SELECTION_TO_FRONT, "SelectionToFront", N_("Raise to _Top"),
@@ -2035,13 +2035,13 @@ Verb *Verb::_base_verbs[] = {
                       N_("Ungroup selected groups"), "selection_ungroup"),
 
     new SelectionVerb(SP_VERB_SELECTION_TEXTTOPATH, "SelectionTextToPath", N_("_Put on Path"),
-                      N_("Put text on path"), NULL),
+                      N_("Put text on path"), "put_on_path"),
     new SelectionVerb(SP_VERB_SELECTION_TEXTFROMPATH, "SelectionTextFromPath", N_("_Remove from Path"),
-                      N_("Remove text from path"), NULL),
+                      N_("Remove text from path"), "remove_from_path"),
     new SelectionVerb(SP_VERB_SELECTION_REMOVE_KERNS, "SelectionTextRemoveKerns", N_("Remove Manual _Kerns"),
                       // TRANSLATORS: "glyph": An image used in the visual representation of characters;
                       //  roughly speaking, how a character looks. A font is a set of glyphs.
-                      N_("Remove all manual kerns and glyph rotations from a text object"), NULL),
+                      N_("Remove all manual kerns and glyph rotations from a text object"), "remove_manual_kerns"),
 
     new SelectionVerb(SP_VERB_SELECTION_UNION, "SelectionUnion", N_("_Union"),
                       N_("Create union of selected paths"), "union"),
@@ -2138,11 +2138,11 @@ Verb *Verb::_base_verbs[] = {
     new ObjectVerb(SP_VERB_OBJECT_TO_CURVE, "ObjectToPath", N_("_Object to Path"),
                    N_("Convert selected object to path"), "object_tocurve"),
     new ObjectVerb(SP_VERB_OBJECT_FLOW_TEXT, "ObjectFlowText", N_("_Flow into Frame"),
-                   N_("Put text into a frame (path or shape), creating a flowed text linked to the frame object"), NULL),
+                   N_("Put text into a frame (path or shape), creating a flowed text linked to the frame object"), "flow_into_frame"),
     new ObjectVerb(SP_VERB_OBJECT_UNFLOW_TEXT, "ObjectUnFlowText", N_("_Unflow"),
-                   N_("Remove text from frame (creates a single-line text object)"), NULL),
+                   N_("Remove text from frame (creates a single-line text object)"), "unflow"),
     new ObjectVerb(SP_VERB_OBJECT_FLOWTEXT_TO_TEXT, "ObjectFlowtextToText", N_("_Convert to Text"),
-                   N_("Convert flowed text to regular text object (preserves appearance)"), NULL),
+                   N_("Convert flowed text to regular text object (preserves appearance)"), "convert_to_text"),
     new ObjectVerb(SP_VERB_OBJECT_FLIP_HORIZONTAL, "ObjectFlipHorizontally",
                    N_("Flip _Horizontal"), N_("Flip selected objects horizontally"),
                    "object_flip_hor"),
@@ -2250,7 +2250,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Switch to outline (wireframe) display mode"), NULL),
 
     new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview..."),
-                 N_("Open a window to preview objects at different icon resolutions"), NULL/*"view_icon_preview"*/),
+                 N_("Open a window to preview objects at different icon resolutions"), "view_icon_preview"),
     new ZoomVerb(SP_VERB_ZOOM_PAGE, "ZoomPage", N_("_Page"),
                  N_("Zoom to fit page in window"), "zoom_page"),
     new ZoomVerb(SP_VERB_ZOOM_PAGE_WIDTH, "ZoomPageWidth", N_("Page _Width"),
@@ -2266,7 +2266,7 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_NAMEDVIEW, "DialogDocumentProperties", N_("_Document Properties..."),
                    N_("Edit properties of this document (to be saved with the document)"), GTK_STOCK_PROPERTIES ),
     new DialogVerb(SP_VERB_DIALOG_METADATA, "DialogMetadata", N_("Document _Metadata..."),
-                   N_("Edit document metadata (to be saved with the document)"), NULL ),
+                   N_("Edit document metadata (to be saved with the document)"), "document_metadata" ),
     new DialogVerb(SP_VERB_DIALOG_FILL_STROKE, "DialogFillStroke", N_("_Fill and Stroke..."),
                    N_("Edit objects' style, such as color or stroke width"), "fill_and_stroke"),
     // TRANSLATORS: "Swatches" means: color samples
@@ -2285,14 +2285,14 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_FIND, "DialogFind", N_("_Find..."),
                    N_("Find objects in document"), GTK_STOCK_FIND ),
     new DialogVerb(SP_VERB_DIALOG_DEBUG, "DialogDebug", N_("_Messages..."),
-                   N_("View debug messages"), NULL),
+                   N_("View debug messages"), "messages"),
     new DialogVerb(SP_VERB_DIALOG_SCRIPT, "DialogScript", N_("S_cripts..."),
-                   N_("Run scripts"), NULL),
+                   N_("Run scripts"), "scripts"),
     new DialogVerb(SP_VERB_DIALOG_TOGGLE, "DialogsToggle", N_("Show/Hide D_ialogs"),
                    N_("Show or hide all open dialogs"), "dialog_toggle"),
     // TRANSLATORS: "Tile Clones" means: "Create tiled clones"
     new DialogVerb(SP_VERB_DIALOG_CLONETILER, "DialogClonetiler", N_("Create Tiled Clones..."),
-                   N_("Create multiple clones of selected object, arranging them into a pattern or scattering"), NULL),
+                   N_("Create multiple clones of selected object, arranging them into a pattern or scattering"), "edit_create_tiled_clones"),
     new DialogVerb(SP_VERB_DIALOG_ITEM, "DialogObjectProperties", N_("_Object Properties..."),
                    N_("Edit the ID, locked and visible status, and other object properties"), "dialog_item_properties"),
 #ifdef WITH_INKBOARD
@@ -2300,11 +2300,11 @@ Verb *Verb::_base_verbs[] = {
                    N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
 #endif
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
-                   N_("Configure extended input devices, such as a graphics tablet"), NULL),
+                   N_("Configure extended input devices, such as a graphics tablet"), "input_devices"),
     new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),
                    N_("Query information about extensions"), NULL),
     new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("Layer_s..."),
-                   N_("View Layers"), NULL),
+                   N_("View Layers"), "layers"),
 
     /* Help */
     new HelpVerb(SP_VERB_HELP_KEYS, "HelpKeys", N_("_Keys and Mouse"),
@@ -2312,7 +2312,7 @@ Verb *Verb::_base_verbs[] = {
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),
                  N_("Information on Inkscape extensions"), NULL),
     new HelpVerb(SP_VERB_HELP_MEMORY, "HelpAboutMemory", N_("About _Memory"),
-                 N_("Memory usage information"), NULL),
+                 N_("Memory usage information"), "about_memory"),
     new HelpVerb(SP_VERB_HELP_ABOUT, "HelpAbout", N_("_About Inkscape"),
                  N_("Inkscape version, authors, license"), /*"help_about"*/"inkscape_options"),
     //new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
