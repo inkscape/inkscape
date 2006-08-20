@@ -13,7 +13,9 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
+//uncomment to display blur slider
+//#define WITH_BLUR
+ 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -218,10 +220,10 @@ sp_object_properties_dialog (void)
         g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_fillstroke_selection_modified), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
 
-        
+
+#ifdef WITH_BLUR        
         /* Blur */
-/* uncomment to display blur slider*/
-/*        GtkWidget *b_vb = gtk_vbox_new (FALSE, 0);
+        GtkWidget *b_vb = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vb), b_vb, FALSE, FALSE, 2);
         gtk_object_set_data (GTK_OBJECT (dlg), "blur", b_vb);
 
@@ -250,7 +252,7 @@ sp_object_properties_dialog (void)
                              dlg );
                              
         gtk_widget_show_all (b_vb);
-*/ 
+#endif
         sp_fillstroke_selection_changed(NULL, NULL, NULL);
 
         gtk_widget_show (dlg);
@@ -323,6 +325,32 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
             break;
     }
 
+
+    GtkWidget *b = GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (dlg), "blur"));
+    GtkAdjustment *bluradjustment = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(dlg), "blur_adjustment"));
+
+#ifdef WITH_BLUR
+    //query now for current average blurring of selection
+    int blur_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLUR);
+
+    switch (blur_result) {
+        case QUERY_STYLE_NOTHING: //no blurring
+//			gtk_widget_set_sensitive (b, FALSE);
+            break;
+        case QUERY_STYLE_SINGLE:
+        case QUERY_STYLE_MULTIPLE_AVERAGED:
+        case QUERY_STYLE_MULTIPLE_SAME: 
+            gtk_widget_set_sensitive (b, TRUE);
+            //update blur widget value
+            SPGaussianBlur * spblur = SP_GAUSSIANBLUR(query->filter.filter->_primitives[0]);
+            gtk_adjustment_set_value(bluradjustment, spblur->stdDeviation.getNumber());
+            break;
+    }
+#endif
+
+    
+    
+    
     g_free (query);
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -353,43 +381,44 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg)
 
 
 /**
- * Creates new private filter for the given vector
+ * Creates a filter with blur primitive of specified stdDeviation
  */
-
 static SPFilter *
-sp_filter_get(SPDocument *document, gdouble stdDeviation)
+sp_fillstroke_get_new_filter(SPDocument *document, gdouble stdDeviation)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
-    // create a new private filter of the requested type
+    // create a new private filter
     Inkscape::XML::Node *repr;
     repr = sp_repr_new("svg:filter");
-    // privates are garbage-collectable
     repr->setAttribute("inkscape:collect", "always");
 
+    //create feGaussianBlur node
     Inkscape::XML::Node *b_repr;
     b_repr = sp_repr_new("svg:feGaussianBlur");
-    // privates are garbage-collectable
-    //b_repr->setAttribute("inkscape:collect", "always");
+    b_repr->setAttribute("inkscape:collect", "always");
     
-    
+    //set stdDeviation attribute
     Inkscape::CSSOStringStream os;
     os << stdDeviation;
     b_repr->setAttribute("stdDeviation", os.str().c_str());
     
+    //set feGaussianBlur as child of filter node
     repr->appendChild(b_repr);
     Inkscape::GC::release(b_repr);
     
-    /* Append the new private filter to defs */
+    // Append the new filter node to defs
     SP_OBJECT_REPR(defs)->appendChild(repr);
     Inkscape::GC::release(repr);
 
     // get corresponding object
     SPFilter *f = SP_FILTER( document->getObjectByRepr(repr) );
     SPGaussianBlur *b = SP_GAUSSIANBLUR( document->getObjectByRepr(b_repr) );
-    add_primitive(f, /*(SPFilterPrimitive * )*/ b);
+    //add blur primitive to SPFilter object
+    add_primitive(f, b); //TODO: this should be triggered in SPFilter.cpp, when a child is added, not here...
+    
     g_assert(f != NULL);
     g_assert(SP_IS_FILTER(f));
     g_assert(b != NULL);
@@ -398,9 +427,7 @@ sp_filter_get(SPDocument *document, gdouble stdDeviation)
     return f;
 }
 
-/*
- * TODO: check if selection has a filter applied and change its parameters instead of creating a new one
- */
+
 static void
 sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
 {
@@ -426,10 +453,9 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
     
     
     //create new filter with feGaussianBlur primitive
-    SPFilter *constructed = sp_filter_get(document, a->value);
+    SPFilter *constructed = sp_fillstroke_get_new_filter(document, a->value);
 
-    
-   //apply created filter to every selected item
+    //apply created filter to every selected item
     for (GSList const *i = items; i != NULL; i = i->next) {
     
         SPItem * item = SP_ITEM(i->data);
@@ -441,7 +467,8 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
             //if there is a filter attached, remove it
             SPCSSAttr *css = sp_repr_css_attr_new ();
             sp_repr_css_unset_property (css, "filter");
-            sp_desktop_set_style (desktop, css);
+            sp_repr_css_change_recursive(SP_OBJECT_REPR(item), css, "style");
+            sp_desktop_set_style (SP_ACTIVE_DESKTOP, css);
             sp_repr_css_attr_unref (css);
         }/* else if( style->filter.filter ) { //item has a filter assigned
             Inkscape::XML::Node *repr = SP_OBJECT_REPR ( style->filter.filter );
@@ -449,6 +476,7 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
             os << a->value;
             repr->firstChild()->setAttribute("stdDeviation", os.str().c_str());
         }*/ else {
+            //add new filter attribute to object style
             gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(constructed));
             SPCSSAttr *css = sp_repr_css_attr_new();
             sp_repr_css_set_property(css, "filter", val);
@@ -457,6 +485,7 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
             sp_desktop_set_style (SP_ACTIVE_DESKTOP, css);
             sp_repr_css_attr_unref(css);
         }
+        //request update
         SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
                                             SP_OBJECT_STYLE_MODIFIED_FLAG ));
     }

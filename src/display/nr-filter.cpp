@@ -131,7 +131,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
     // TODO: loop through the primitives and render them one at a time
-    _primitive[0]->render(slot, trans);
+    if(_primitive[0])
+		_primitive[0]->render(slot, trans);
 
     NRPixBlock *out = slot.get(_output_slot);
 

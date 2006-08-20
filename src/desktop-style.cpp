@@ -24,6 +24,8 @@
 #include "style.h"
 #include "prefs-utils.h"
 #include "sp-use.h"
+#include "sp-filter.h"
+#include "sp-gaussian-blur.h"
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
 #include "sp-flowdiv.h"
@@ -1010,15 +1012,77 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
 }
 
 /**
- * Write to style_res the average opacity of a list of objects.
+ * Write to style_res the average blurring of a list of objects.
  */
 int
 objects_query_blur (GSList *objects, SPStyle *style_res)
 {
-    /*************temporary**********/
-    //style_res->opacity.value = SP_SCALE24_FROM_FLOAT(0.5);
-    return QUERY_STYLE_MULTIPLE_SAME;
-    /*************temporary**********/
+   if (g_slist_length(objects) == 0) {
+        /* No objects, set empty */
+        return QUERY_STYLE_NOTHING;
+    }
+
+    float blur_sum = 0;
+    float blur_prev = -1;
+    bool same_blur = true;
+    guint blur_items = 0;
+    
+    for (GSList const *i = objects; i != NULL; i = i->next) {
+        SPObject *obj = SP_OBJECT (i->data);
+        SPStyle *style = SP_OBJECT_STYLE (obj);
+        if (!style) continue;
+
+        //if object has a filter
+        if (style->filter.set && style->filter.filter) {
+            //cycle through filter primitives
+            for(int i=0; i<style->filter.filter->_primitive_count; i++)
+            {
+                SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
+                //if primitive is gaussianblur
+        //            if(SP_IS_GAUSSIANBLUR(primitive))
+                {
+                    SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                    float num = spblur->stdDeviation.getNumber();
+                    blur_sum += num;
+                    if (blur_prev != -1 && num != blur_prev)
+                        same_blur = false;
+                    blur_prev = num;
+                    //TODO: deal with opt number, for the moment it's not necessary to the ui.
+                    blur_items ++;
+                }
+            }
+        }
+
+    }
+    if (blur_items > 0)
+    {
+        blur_sum /= blur_items;
+        style_res->filter.set = true;
+        style_res->filter.filter = new SPFilter();
+		//TODO: this SPFilter attributes should be set on sp-filter.cpp
+		//      when a new SPFilter is created, not here
+        style_res->filter.filter->_primitive_count=0;
+        style_res->filter.filter->_primitive_table_size = 1;
+        style_res->filter.filter->_primitives = new SPFilterPrimitive*[1];
+        style_res->filter.filter->_primitives[0] = NULL;
+
+        SPGaussianBlur * b = new SPGaussianBlur();
+        add_primitive(style_res->filter.filter, b);
+        sp_gaussianBlur_setDeviation(b, blur_sum);
+    }
+
+
+
+    if (blur_items == 0) {
+        return QUERY_STYLE_NOTHING;
+    } else if (blur_items == 1) {
+        return QUERY_STYLE_SINGLE;
+    } else {
+        if (same_blur)
+            return QUERY_STYLE_MULTIPLE_SAME;
+        else
+            return QUERY_STYLE_MULTIPLE_AVERAGED;
+    }
 }
 
 /**
@@ -1092,8 +1156,9 @@ sp_desktop_query_style_all (SPDesktop *desktop, SPStyle *query)
         int result_strokecap = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKECAP);
         int result_strokejoin = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_STROKEJOIN);
         int result_opacity = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
-
-        return (result_family != QUERY_STYLE_NOTHING && result_fstyle != QUERY_STYLE_NOTHING && result_fnumbers != QUERY_STYLE_NOTHING && result_fill != QUERY_STYLE_NOTHING && result_stroke != QUERY_STYLE_NOTHING && result_opacity != QUERY_STYLE_NOTHING && result_strokewidth != QUERY_STYLE_NOTHING && result_strokemiterlimit != QUERY_STYLE_NOTHING && result_strokecap != QUERY_STYLE_NOTHING && result_strokejoin != QUERY_STYLE_NOTHING);
+        int result_blur = sp_desktop_query_style (desktop, query, QUERY_STYLE_PROPERTY_BLUR);
+        
+        return (result_family != QUERY_STYLE_NOTHING && result_fstyle != QUERY_STYLE_NOTHING && result_fnumbers != QUERY_STYLE_NOTHING && result_fill != QUERY_STYLE_NOTHING && result_stroke != QUERY_STYLE_NOTHING && result_opacity != QUERY_STYLE_NOTHING && result_strokewidth != QUERY_STYLE_NOTHING && result_strokemiterlimit != QUERY_STYLE_NOTHING && result_strokecap != QUERY_STYLE_NOTHING && result_strokejoin != QUERY_STYLE_NOTHING && result_blur != QUERY_STYLE_NOTHING);
 }
 
 

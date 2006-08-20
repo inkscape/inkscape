@@ -14,7 +14,11 @@
 
 #include "display/nr-arena-group.h"
 #include "display/nr-filter.h"
+#include "display/nr-filter-gaussian.h"
+#include "display/nr-filter-types.h"
 #include "style.h"
+#include "sp-filter.h"
+#include "sp-gaussian-blur.h"
 
 static void nr_arena_group_class_init (NRArenaGroupClass *klass);
 static void nr_arena_group_init (NRArenaGroup *group);
@@ -193,9 +197,41 @@ void nr_arena_group_set_style (NRArenaGroup *group, SPStyle *style)
   if (group->style) sp_style_unref(group->style);
   group->style = style;
 
+  //if there is a filter set for this group
   if (style && style->filter.set && style->filter.filter) {
-    group->filter = new NR::Filter();
-  }
+  
+        group->filter = new NR::Filter();
+        group->filter->set_x(style->filter.filter->x);
+        group->filter->set_y(style->filter.filter->y);
+        group->filter->set_width(style->filter.filter->width);
+        group->filter->set_height(style->filter.filter->height);
+        
+        //go through all SP filter primitives
+        for(int i=0; i<style->filter.filter->_primitive_count; i++)
+        {
+            SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
+            //if primitive is gaussianblur
+//            if(SP_IS_GAUSSIANBLUR(primitive))
+            {
+                NR::FilterGaussian * gaussian = (NR::FilterGaussian *) group->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
+                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                float num = spblur->stdDeviation.getNumber();
+                if( num>=0.0 )
+                {
+                    float optnum = spblur->stdDeviation.getOptNumber();
+                    if( optnum>=0.0 )
+                        gaussian->set_deviation((double) num, (double) optnum);
+                    else
+                        gaussian->set_deviation((double) num);
+                }
+            }
+        }
+    }
+    else
+    {
+        //no filter set for this group
+        group->filter = NULL;
+    }
 
   if (style && style->enable_background.set
       && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {

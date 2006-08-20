@@ -47,7 +47,7 @@ enum { // which property was queried (add when you need more)
     QUERY_STYLE_PROPERTY_FONTSTYLE, // font style 
     QUERY_STYLE_PROPERTY_FONTNUMBERS, // size, spacings
     QUERY_STYLE_PROPERTY_MASTEROPACITY, // opacity
-	QUERY_STYLE_PROPERTY_BLUR // opacity
+	QUERY_STYLE_PROPERTY_BLUR // blur
 };
 
 void sp_desktop_apply_css_recursive(SPObject *o, SPCSSAttr *css, bool skip_lines);

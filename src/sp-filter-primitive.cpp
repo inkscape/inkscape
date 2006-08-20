@@ -1,15 +1,8 @@
 #define __SP_FILTER_PRIMITIVE_CPP__
 
 /** \file
- * SVG <filter_primitive> implementation, used as an example for a base starting class
- * when implementing new sp-objects.
+ * Superclass for all the filter primitives
  *
- * In vi, three global search-and-replaces will let you rename everything
- * in this and the .h file:
- *
- *   :%s/FILTER_PRIMITIVE/YOURNAME/g
- *   :%s/FilterPrimitive/Yourname/g
- *   :%s/filter_primitive/yourname/g
  */
 /*
  * Authors:
@@ -95,22 +88,6 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
         ((SPObjectClass *) filter_primitive_parent_class)->build(object, document, repr);
     }
 
-    /*
-       Pay attention to certain settings here
-
-    sp_object_read_attr(object, "xlink:href");
-    sp_object_read_attr(object, "attributeName");
-    sp_object_read_attr(object, "attributeType");
-    sp_object_read_attr(object, "begin");
-    sp_object_read_attr(object, "dur");
-    sp_object_read_attr(object, "end");
-    sp_object_read_attr(object, "min");
-    sp_object_read_attr(object, "max");
-    sp_object_read_attr(object, "restart");
-    sp_object_read_attr(object, "repeatCount");
-    sp_object_read_attr(object, "repeatDur");
-    sp_object_read_attr(object, "fill");
-    */
 }
 
 /**
@@ -119,9 +96,7 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void
 sp_filter_primitive_release(SPObject *object)
 {
-
     /* deal with our children and our selves here */
-
     if (((SPObjectClass *) filter_primitive_parent_class)->release)
         ((SPObjectClass *) filter_primitive_parent_class)->release(object);
 }
@@ -152,7 +127,6 @@ sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags)
                  SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
 
         /* do something to trigger redisplay, updates? */
-
     }
 
     if (((SPObjectClass *) filter_primitive_parent_class)->update) {

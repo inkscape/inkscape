@@ -1089,9 +1089,8 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
     }
     shape->setMitreLimit(style->stroke_miterlimit.value);
 
-    /* TODO: after SPStyle handles filters, get the correct filter
-     * from there. */
-    if (style->filter.set && style->filter.filter)
+    //if shape has a filter
+    if (style->filter.set && style->filter.filter) 
     {
         shape->filter = new NR::Filter();
         shape->filter->set_x(style->filter.filter->x);
@@ -1119,6 +1118,11 @@ nr_arena_shape_set_style(NRArenaShape *shape, SPStyle *style)
                 }
             }
         }
+    }
+    else
+    {
+        //no filter set for this shape
+        shape->filter = NULL;
     }
 
     nr_arena_item_request_update(shape, NR_ARENA_ITEM_STATE_ALL, FALSE);
