@@ -210,7 +210,7 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
 	    {
         Glib::ustring name = p->name;
         char formatBuf[80];
-        snprintf(formatBuf, 79, "%0.2f x %0.2f", p->smaller, p->larger);
+        snprintf(formatBuf, 79, "%0.1f x %0.1f", p->smaller, p->larger);
         Glib::ustring desc = formatBuf;
         if (p->unit == SP_UNIT_IN)
             desc.append(" in");
@@ -224,9 +224,9 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
         row[_paperSizeListColumns.nameColumn] = name;
         row[_paperSizeListColumns.descColumn] = desc;
         }
-    //Gtk::TreeModel::Row row = _paperSizeListStore->children()[0];
-    //if (row)
-    //    _paperSizeListSelection->select(row);
+    //Gtk::TreeModel::iterator iter = _paperSizeListStore->children().begin();
+    //if (iter)
+    //    _paperSizeListSelection->select(iter);
 
 
     pack_start (_paperSizeListBox, false, false, 0);
