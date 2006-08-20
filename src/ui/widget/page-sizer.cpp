@@ -190,12 +190,12 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
 
 
     //# Set up the Paper Size combo box    
-    _paperSizeListStore = Gtk::ListStore::create(_paperSizeColumns);
+    _paperSizeListStore = Gtk::ListStore::create(_paperSizeListColumns);
     _paperSizeList.set_model(_paperSizeListStore);
     _paperSizeList.append_column(_("Name"),
-	         _paperSizeColumns.nameColumn);
+	         _paperSizeListColumns.nameColumn);
     _paperSizeList.append_column(_("Description"),
-	         _paperSizeColumns.descColumn);
+	         _paperSizeListColumns.descColumn);
 	_paperSizeList.set_headers_visible(false);
     _paperSizeListSelection = _paperSizeList.get_selection();
     _paper_size_list_connection = 
@@ -204,6 +204,7 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
 	_paperSizeListScroller.add(_paperSizeList);
 	_paperSizeListScroller.set_shadow_type(Gtk::SHADOW_IN);
 	_paperSizeListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
+	_paperSizeListScroller.set_size_request(-1, 90);
 	        
     for (PaperSizeRec const *p = inkscape_papers; p->name; p++)
 	    {
@@ -220,21 +221,49 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
         PaperSize paper(name, p->smaller, p->larger, p->unit);
         _paperSizeTable[name] = paper;
         Gtk::TreeModel::Row row = *(_paperSizeListStore->append());
-        row[_paperSizeColumns.nameColumn] = name;
-        row[_paperSizeColumns.descColumn] = desc;
+        row[_paperSizeListColumns.nameColumn] = name;
+        row[_paperSizeListColumns.descColumn] = desc;
         }
     //Gtk::TreeModel::Row row = _paperSizeListStore->children()[0];
     //if (row)
     //    _paperSizeListSelection->select(row);
 
 
-    Gtk::HBox *hbox_size = manage (new Gtk::HBox (false, 4));
-    pack_start (*hbox_size, false, false, 0);
-    Gtk::Label *label_size = manage (new Gtk::Label (_("P_age size:"), 1.0, 0.5)); 
-    label_size->set_use_underline();
-    hbox_size->pack_start (*label_size, false, false, 0);
-    label_size->set_mnemonic_widget (_paperSizeList);
-    hbox_size->pack_start (_paperSizeListScroller, true, true, 0);
+    pack_start (_paperSizeListBox, false, false, 0);
+    _paperSizeListLabel.set_label(_("P_age size:"));
+    _paperSizeListLabel.set_use_underline();
+    _paperSizeListBox.pack_start (_paperSizeListLabel, false, false, 0);
+    _paperSizeListLabel.set_mnemonic_widget (_paperSizeList);
+    _paperSizeListBox.pack_start (_paperSizeListScroller, true, true, 0);
+
+    //## Set up orientation radio buttons
+    pack_start (_orientationBox, false, false, 0);
+    _orientationLabel.set_label(_("Page orientation:")); 
+    _orientationBox.pack_start(_orientationLabel, false, false, 0);
+    _landscapeButton.set_label(_("_Landscape"));
+	_landscapeButton.set_active(true);
+    Gtk::RadioButton::Group group = _landscapeButton.get_group();
+    _orientationBox.pack_end (_landscapeButton, false, false, 5);
+    _portraitButton.set_label(_("_Portrait"));
+	_portraitButton.set_active(true);
+    _orientationBox.pack_end (_portraitButton, false, false, 5);
+    _portraitButton.set_group (group);
+    _portraitButton.set_active (true);
+    
+    //## Set up custom size frame
+    _customFrame.set_label(_("Custom size"));
+    pack_start (_customFrame, false, false, 0);
+    _customTable.resize(2, 2);
+    _customTable.set_border_width (4);
+    _customTable.set_row_spacings (4);
+    _customTable.set_col_spacings (4);
+    _customFrame.add(_customTable);
+    
+    _fitPageButton.set_label(_("_Fit page to selection"));
+    _tips.set_tip(_fitPageButton, 
+	_("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
+
+
 
 }
 
@@ -255,38 +284,12 @@ void
 PageSizer::init (Registry& reg)
 {
 
-    Gtk::HBox *hbox_ori = manage (new Gtk::HBox);
-    pack_start (*hbox_ori, false, false, 0);
-    Gtk::Label *label_ori = manage (new Gtk::Label (_("Page orientation:"), 0.0, 0.5)); 
-    hbox_ori->pack_start (*label_ori, false, false, 0);
-    
-    _landscapeButton.set_label(_("_Landscape"));
-	_landscapeButton.set_active(true);
-    Gtk::RadioButton::Group group = _landscapeButton.get_group();
-    hbox_ori->pack_end (_landscapeButton, false, false, 5);
-    _portraitButton.set_label(_("_Portrait"));
-	_portraitButton.set_active(true);
-    hbox_ori->pack_end (_portraitButton, false, false, 5);
-    _portraitButton.set_group (group);
-    _portraitButton.set_active (true);
-    
-    /* Custom paper frame */
-    Gtk::Frame *frame = manage (new Gtk::Frame(_("Custom size")));
-    pack_start (*frame, false, false, 0);
-    Gtk::Table *table = manage (new Gtk::Table (5, 2, false));
-    table->set_border_width (4);
-    table->set_row_spacings (4);
-    table->set_col_spacings (4);
-    
-    Inkscape::UI::Widget::Button* fit_canv =
-	     manage(new Inkscape::UI::Widget::Button(_("_Fit page to selection"),
-    _("Resize the page to fit the current selection, or the entire drawing if there is no selection")));
-
-    // prevent fit_canv from expanding
-    Gtk::Alignment *fit_canv_cont = manage(new Gtk::Alignment(1.0,0.5,0.0,0.0));
-    fit_canv_cont->add(*fit_canv);
-
-    frame->add (*table);
+    /*
+    Note that the registered widgets can only be placed onto a
+    container after they have been init()-ed.  That is why some
+    of the widget creation is in the constructor, and the rest is
+    here.
+    */
     
     _widgetRegistry = &reg;
 
@@ -297,16 +300,10 @@ PageSizer::init (Registry& reg)
     _dimensionHeight.init (_("_Height:"), _("Height of paper"), "height",
 	                 _dimensionUnits, *_widgetRegistry);
 
-    table->attach (*_dimensionUnits._label, 0,1,0,1, Gtk::FILL|Gtk::EXPAND,
-	            (Gtk::AttachOptions)0,0,0);
-    table->attach (*_dimensionUnits._sel, 1,2,0,1, Gtk::FILL|Gtk::EXPAND,
-	            (Gtk::AttachOptions)0,0,0);
-    table->attach (*_dimensionWidth.getSU(), 0,2,1,2, Gtk::FILL|Gtk::EXPAND,
-	            (Gtk::AttachOptions)0,0,0);
-    table->attach (*_dimensionHeight.getSU(), 0,2,2,3, Gtk::FILL|Gtk::EXPAND,
-	           (Gtk::AttachOptions)0,0,0);
-    table->attach (*fit_canv_cont, 0,2,3,4, Gtk::FILL|Gtk::EXPAND,
-	           (Gtk::AttachOptions)0,0,0);
+    _customTable.attach(*(_dimensionWidth.getSU()),  0,1,0,1);
+    _customTable.attach(*(_dimensionUnits._sel),     1,2,0,1);
+    _customTable.attach(*(_dimensionHeight.getSU()), 0,1,1,2);
+    _customTable.attach(_fitPageButton,              1,2,1,2);
 
     _landscape_connection = _landscapeButton.signal_toggled().connect (
 	        sigc::mem_fun (*this, &PageSizer::on_landscape));
@@ -316,10 +313,11 @@ PageSizer::init (Registry& reg)
 	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
     _changedh_connection = _dimensionHeight.getSU()->signal_value_changed().connect (
 	        sigc::mem_fun (*this, &PageSizer::on_value_changed));
-    fit_canv->signal_clicked().connect(
+    _fitPageButton.signal_clicked().connect(
 	     sigc::mem_fun(*this, &PageSizer::fire_fit_canvas_to_selection_or_drawing));
     
     show_all_children();
+
 }
 
 
@@ -451,7 +449,7 @@ PageSizer::on_paper_size_list_changed()
         return;
         }
     Gtk::TreeModel::Row row = *miter;
-    Glib::ustring name = row[_paperSizeColumns.nameColumn];
+    Glib::ustring name = row[_paperSizeListColumns.nameColumn];
     std::map<Glib::ustring, PaperSize>::const_iterator piter =
                     _paperSizeTable.find(name);
     if (piter == _paperSizeTable.end()) {

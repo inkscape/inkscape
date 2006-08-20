@@ -156,16 +156,11 @@ protected:
  
     void fire_fit_canvas_to_selection_or_drawing();
     
-    //### Dimension spinboxes
-    RegisteredUnitMenu   _dimensionUnits;
-    RegisteredScalarUnit _dimensionWidth;
-	RegisteredScalarUnit _dimensionHeight;
-    //callback
-    void on_value_changed();
-    sigc::connection    _changedw_connection;
-	sigc::connection    _changedh_connection;
+    Gtk::Tooltips _tips;
     
     //### The Paper Size selection list
+    Gtk::HBox _paperSizeListBox;
+    Gtk::Label _paperSizeListLabel;
     class PaperSizeColumns : public Gtk::TreeModel::ColumnRecord
         {
         public:
@@ -175,7 +170,7 @@ protected:
             Gtk::TreeModelColumn<Glib::ustring> descColumn;
         };
 
-    PaperSizeColumns _paperSizeColumns;
+    PaperSizeColumns _paperSizeListColumns;
     Glib::RefPtr<Gtk::ListStore> _paperSizeListStore;
     Gtk::TreeView _paperSizeList;
     Glib::RefPtr<Gtk::TreeSelection> _paperSizeListSelection;
@@ -184,17 +179,28 @@ protected:
     void on_paper_size_list_changed();
     sigc::connection    _paper_size_list_connection;
     
-    //### Button to select 'portrait' orientation
+    //### Portrait or landscape orientation
+    Gtk::HBox           _orientationBox;
+    Gtk::Label          _orientationLabel;
     Gtk::RadioButton    _portraitButton;
-    //callback
-    void on_portrait();
-    sigc::connection    _portrait_connection;
-
-    //### Button to select 'landscape' orientation
 	Gtk::RadioButton    _landscapeButton;
-	//callback
+    //callbacks
+    void on_portrait();
     void on_landscape();
+    sigc::connection    _portrait_connection;
 	sigc::connection    _landscape_connection;
+
+    //### Custom size frame
+    Gtk::Frame           _customFrame;
+    Gtk::Table           _customTable;
+    RegisteredUnitMenu   _dimensionUnits;
+    RegisteredScalarUnit _dimensionWidth;
+	RegisteredScalarUnit _dimensionHeight;
+	Gtk::Button          _fitPageButton;
+    //callback
+    void on_value_changed();
+    sigc::connection    _changedw_connection;
+	sigc::connection    _changedh_connection;
 
     Registry            *_widgetRegistry;
 
