@@ -43,6 +43,8 @@
 #define BR_PTHREADS 0
 #undef ENABLE_BINRELOC
 
+/* CairoPDF options */
+#define HAVE_CAIRO_PDF                1
 #define PANGO_ENABLE_ENGINE           1
 #define RENDER_WITH_PANGO_CAIRO       1
 
