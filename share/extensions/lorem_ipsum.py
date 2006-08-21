@@ -191,7 +191,7 @@ class MyEffect(inkex.Effect):
 
   def makePara(self):
     _min=max(1,self.options.sentencecount-self.options.fluctuation)
-    _max=max(2,self.options.sentencecount+2*self.options.fluctuation)
+    _max=max(2,self.options.sentencecount+self.options.fluctuation)
     scount=random.randint(_min,_max)
     text=''
     for i in range(scount):
