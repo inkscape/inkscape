@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<keys name="Adobe Illustrator">
+
+<!--  
+This file contains a profile of keyboard shortcuts for Inkscape 
+in the style of Adobe Illustrator.   
+
+See default.xml for more information.  
+-->
+
+<!-- File -->
+
+  <bind key="n" modifiers="Ctrl" action="FileNew" display="true"/>
+  <bind key="N" modifiers="Ctrl" action="FileNew"/>
+
+<!-- New from template, Shift+Ctrl+N -->
+
+  <bind key="o" modifiers="Ctrl" action="FileOpen" display="true"/>
+  <bind key="O" modifiers="Ctrl" action="FileOpen"/>
+
+<!-- Browse, Alt+Ctrl+O -->
+
+  <bind key="w" modifiers="Ctrl" action="FileClose" display="true"/>
+  <bind key="W" modifiers="Ctrl" action="FileClose" display="true"/>
+
+  <bind key="s" modifiers="Ctrl" action="FileSave" display="true"/>
+  <bind key="S" modifiers="Ctrl" action="FileSave"/>
+
+  <bind key="s" modifiers="Ctrl,Shift" action="FileSaveAs" display="true"/>
+  <bind key="S" modifiers="Ctrl,Shift" action="FileSaveAs"/>
+
+<!-- Save a Copy, Alt+Ctrl+S -->
+
+<!-- Save for Web, Alt+Shift+Ctrl+S -->
+
+  <bind key="F12" action="FileRevert"/>
+  
+<!--  Scripts - Other Script... Ctrl+F12 -->
+
+  <bind key="p" modifiers="Alt,Ctrl" action="DialogDocumentProperties" display="true"/>
+  <bind key="P" modifiers="Alt,Ctrl" action="DialogDocumentProperties"/>
+  
+<!-- File Info..., Alt+Shift+Ctrl+I -->
+
+  <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
+  <bind key="P" modifiers="Ctrl" action="FilePrint"/>
+  
+  <bind key="q" modifiers="Ctrl" action="FileQuit" display="true"/>
+  <bind key="Q" modifiers="Ctrl" action="FileQuit" display="true"/>
+
+  <!-- Edit -->
+  
+  <bind key="z" modifiers="Ctrl" action="EditUndo" display="true"/>
+  <bind key="Z" modifiers="Ctrl" action="EditUndo"/>
+
+  <bind key="z" modifiers="Ctrl,Shift" action="EditRedo" display="true"/>
+  <bind key="Z" modifiers="Ctrl,Shift" action="EditRedo"/>
+
+  <bind key="x" modifiers="Ctrl" action="EditCut" display="true"/>
+  <bind key="X" modifiers="Ctrl" action="EditCut"/>
+
+  <bind key="c" modifiers="Ctrl" action="EditCopy" display="true"/>
+  <bind key="C" modifiers="Ctrl" action="EditCopy"/>
+
+  <bind key="v" modifiers="Ctrl" action="EditPaste" display="true"/>
+  <bind key="V" modifiers="Ctrl" action="EditPaste"/>
+  
+  <!--  Paste in Front, Ctrl+F -->
+  <!-- Paste in Back, Ctrl+B -->
+  <!-- Check Spelling, Ctrl+I -->
+  <!-- Color Settings..., Shift+Ctrl+K -->
+  <!-- Keyboard Shortcuts... Shift+Ctrl+K -->
+  
+  <bind key="k" modifiers="Ctrl" action="DialogPreferences" display="true"/>
+  <bind key="K" modifiers="Ctrl" action="DialogPreferences" />
+
+<!-- Object -->
+
+<!-- 
+Transform - Transform Again Ctrl+б
+Transform - Move Shift+Ctrl+M
+Transform - Transform Each Alt+Shift+Ctrl+D 
+-->
+
+  <bind key="]" modifiers="Shift,Ctrl" action="SelectionToFront" display="true"/>
+  <bind key="]" modifiers="Shift,Ctrl" action="SelectionToFront" />
+
+  <bind key="[" modifiers="Shift,Ctrl" action="SelectionToBack" display="true"/>
+  <bind key="[" modifiers="Shift,Ctrl" action="SelectionToBack" />
+
+  <bind key="]" modifiers="Ctrl" action="SelectionRaise" display="true"/>
+  <bind key="]" modifiers="Ctrl" action="SelectionRaise" />
+
+  <bind key="[" modifiers="Ctrl" action="SelectionLower" display="true"/>
+  <bind key="[" modifiers="Ctrl" action="SelectionLower" />
+
+  <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl" action="SelectionGroup" />
+
+  <bind key="g" modifiers="Ctrl,Shift" action="SelectionUnGroup" display="true"/>
+  <bind key="G" modifiers="Ctrl,Shift" action="SelectionUnGroup" />
+
+<!-- 
+Lock - Selection, Ctrl+2
+Unlock All, Alt+Ctrl+2
+Hide - Selection, Ctrl+3
+Show All, Alt+Ctrl+3
+
+Path - Join, Ctrl+J
+Path - Average, Alt+Ctrl+J
+Blend - Make, Alt+Ctrl+B
+Blend - Release, Alt+Shift+Ctrl+B
+Envelope Distort - Make with Warp, Alt+Shift+Ctrl+W
+Envelope Distort - Make with Mesh, Alt+Ctrl+M
+Envelope Distort - Make with Top Object, Alt+Ctrl+я
+Live Paint - Make, Alt+Ctrl+X
+Clipping Mask - Make, Ctrl+7
+Clipping Mask - Release, Alt+Ctrl+7
+Compound Path - Make, Ctrl+8
+Compound Path - Release, Alt+Shift+Ctrl+8
+-->
+
+<!-- Type 
+Create outlines, Shift+Ctrl+O
+Show Hidden Characters, Alt+Ctrl+I -->
+
+<!-- Select -->
+
+  <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true"/>
+  <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
+
+<!--
+Deselect, Shift+Ctrl+A - this one should work with Esc
+Reselect, Ctrl+6
+Next Object Above, Alt+Ctrl+]
+Next Object Below, Alt+Ctrl+[
+-->
+
+<!-- Filter -->
+
+<!--
+Apply Last Filter Ctrl+E
+Last Filter Alt+Ctrl+E
+-->
+
+<!-- Effect -->
+<!--
+Apply Last Effect Shift+Ctrl+E
+Last Effect Alt+Shift+Ctrl+E
+-->
+
+<!-- View -->
+
+<!-- Outline, Ctrl+Y -->
+<!-- Overprint Preview, Alt+Shift+Ctrl+Y -->
+<!-- Pixel Preview Alt+Ctrl+Y -->
+
+  <bind key="equal" modifiers="Ctrl" action="ZoomIn" display="true"/>
+  <bind key="minus" modifiers="Ctrl" action="ZoomOut" display="true"/>
+  <bind key="0" modifiers="Ctrl" action="ZoomPage" display="true"/>
+  <bind key="1" modifiers="Ctrl" action="Zoom1:0" display="true"/>
+
+<!--
+  Hide Edges, Ctrl+H
+  Hide Template, Shift+Ctrl+W
+  Hide Bounding Box Shift+Ctrl+B
+  Show Transparency Grid Shift+Ctrl+D
+  Show Text Threads Shift+Ctrl+Y
+-->
+
+  <bind key=";" modifiers="Shift" action="ToggleGuides" />
+  <bind key=";" action="ToggleGuides" display="true"/>
+
+<!--
+  Lock Guides, Alt+Ctrl+;
+  Make Guides Ctrl+5
+  Release Guides Alt+Ctrl+5
+  Smart Edges Ctrl+U
+-->
+
+<!--Show Grid Ctrl+" -->
+
+  <bind key="quotedbl" modifiers="Shift" action="ToggleGrid" />
+  <bind key="quotedbl" action="ToggleGrid" display="true"/>
+
+<!--
+Snap To Grid Shift+Ctrl+"
+Snap to Point Alt+Ctrl+"
+-->
+
+  <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true"/>
+  <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
+
+<!-- Window -->
+
+  <bind key="F7" modifiers="Shift" action="DialogAlignDistribute" display="true"/>
+  <bind key="F7" modifiers="Shift" action="DialogAlignDistribute" />
+
+<!-- Appearance Shift+F6 -->
+
+  <bind key="F11" modifiers="Ctrl" action="DialogObjectProperties" display="true"/>
+  <bind key="F11" modifiers="Ctrl" action="DialogObjectProperties" />
+
+<!-- Brushes F5 -->
+
+  <bind key="F6" action="DialogSwatches" display="true"/>
+  <bind key="F6" action="DialogSwatches" />
+
+<!--
+These are partly equivalent to out Fill'n'Stroke dialog:
+Gradient Ctrl+F9
+Stroke Ctrl+F10
+-->
+
+<!-- 
+Graphics Styles Shift+F5
+Info F8
+-->
+
+  <bind key="F7" action="DialogLayers" display="true" />
+
+<!-- 
+Pathfinder Shift+Ctrl+F9
+Symbols Shift+Ctrl+F11
+-->
+
+  <bind key="F8" modifiers="Shift" action="DialogTransform" display="true"/>
+  <bind key="F8" modifiers="Shift" action="DialogTransform" />
+
+<!--
+Transparency Shift+Ctrl+F10
+Type
+  Character Ctrl+T
+  OpenType Alt+Shift+Ctrl+T
+  Paragraph Alt+Ctrl+T
+  Tabs Shift+Ctrl+T
+(Character and Paragraph are equivalent to our Text'n'Font dialog)
+-->
+
+<!--- Help -->
+<!-- Illustrator Help, F1 -->
+
+</keys>
