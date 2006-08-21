@@ -54,7 +54,8 @@ extensions = \
 	measure.py \
 	gimp_xcf.py \
 	eqtexsvg.py \
-	markers_strokepaint.py 
+	markers_strokepaint.py \
+	lorem_ipsum.py
 
 otherstuff = \
     aisvg.xslt
@@ -106,7 +107,9 @@ modules = \
         randompnt.inx \
         randompos.inx \
 	eqtexsvg.inx \
-	markers_strokepaint.inx
+	markers_strokepaint.inx \
+	lorem_ipsum.inx
+
 
 extension_SCRIPTS = \
 	$(extensions)
