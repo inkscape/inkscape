@@ -4,7 +4,8 @@ keysdir = $(datadir)/inkscape/keys
 keys_DATA = \
 	default.xml \
 	inkscape.xml \
-	xara.xml
+	xara.xml \
+	macromedia-freehand.xml
 
 EXTRA_DIST = $(keys_DATA)
 
