@@ -90,13 +90,20 @@ bool sp_file_save (gpointer object, gpointer data);
 bool sp_file_save_as (gpointer object, gpointer data);
 
 /**
+ *  Saves a copy of the given document.  Displays a file select dialog
+ *  to choose a name for the copy.
+ */
+bool sp_file_save_a_copy (gpointer object, gpointer data);
+
+
+/**
  *  Saves the given document.  Displays a file select dialog
  *  if needed.
  */
 bool sp_file_save_document (SPDocument *document);
 
 /* Do the saveas dialog with a document as the parameter */
-bool sp_file_save_dialog (SPDocument *doc);
+bool sp_file_save_dialog (SPDocument *doc, bool bAsCopy = FALSE);
 
 
 /*######################

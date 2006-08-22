@@ -244,10 +244,15 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
         throw Output::no_overwrite();
     }
 
+    // if 'official' save the filename and extension for future saves.
     if (official) {
+        // save the filename for next use
         sp_document_set_uri(doc, fileName);
+        // also save the extension for next use
+        Inkscape::XML::Node *repr = sp_document_repr_root(doc);
+        repr->setAttribute("inkscape:output_extension", omod->get_id());
     }
-
+    
     omod->save(doc, fileName);
 
     g_free(fileName);

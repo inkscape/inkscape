@@ -798,6 +798,9 @@ FileVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_FILE_SAVE_AS:
             sp_file_save_as(NULL, NULL);
             break;
+        case SP_VERB_FILE_SAVE_A_COPY:
+            sp_file_save_a_copy(NULL, NULL);
+            break;
         case SP_VERB_FILE_PRINT:
             sp_file_print();
             break;
@@ -1943,6 +1946,8 @@ Verb *Verb::_base_verbs[] = {
                  GTK_STOCK_SAVE ),
     new FileVerb(SP_VERB_FILE_SAVE_AS, "FileSaveAs", N_("Save _As..."),
                  N_("Save document under a new name"), GTK_STOCK_SAVE_AS ),
+    new FileVerb(SP_VERB_FILE_SAVE_A_COPY, "FileSaveACopy", N_("Save a Cop_y..."),
+                 N_("Save a copy of the document under a new name"), NULL ),
     new FileVerb(SP_VERB_FILE_PRINT, "FilePrint", N_("_Print..."), N_("Print document"),
                  GTK_STOCK_PRINT ),
     // TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)

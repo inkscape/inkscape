@@ -484,10 +484,13 @@ sp_file_vacuum()
 
 /**
  * This 'save' function called by the others below
+ *
+ * \param    official  whether to set :output_module and :modified in the
+ *                     document; is true for normal save, false for temporary saves
  */
 static bool
 file_save(SPDocument *doc, const Glib::ustring &uri,
-          Inkscape::Extension::Extension *key, bool saveas)
+          Inkscape::Extension::Extension *key, bool saveas, bool official)
 {
     if (!doc || uri.size()<1) //Safety check
         return false;
@@ -495,7 +498,7 @@ file_save(SPDocument *doc, const Glib::ustring &uri,
     try {
         Inkscape::Extension::save(key, doc, uri.c_str(),
                  saveas && prefs_get_int_attribute("dialogs.save_as", "append_extension", 1),
-                 saveas, TRUE); // save officially, with inkscape: attributes set
+                 saveas, official); 
     } catch (Inkscape::Extension::Output::no_extension_found &e) {
         gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
         gchar *text = g_strdup_printf(_("No Inkscape extension found to save document (%s).  This may have been caused by an unknown filename extension."), safeUri);
@@ -528,9 +531,11 @@ static Inkscape::UI::Dialog::FileSaveDialog *saveDialogInstance = NULL;
 
 /**
  *  Display a SaveAs dialog.  Save the document if OK pressed.
+ *
+ * \param    ascopy  (optional) wether to set the documents->uri to the new filename or not
  */
 bool
-sp_file_save_dialog(SPDocument *doc)
+sp_file_save_dialog(SPDocument *doc, bool bAsCopy)
 {
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
@@ -600,7 +605,7 @@ sp_file_save_dialog(SPDocument *doc)
              Inkscape::UI::Dialog::FileSaveDialog::create(
                  save_loc,
                  Inkscape::UI::Dialog::SVG_TYPES,
-                 (char const *) _("Select file to save to"),
+                 bAsCopy ? (char const *) _("Select file to save copy to") : (char const *) _("Select file to save to"),
                  default_extension
             );
 
@@ -622,7 +627,7 @@ sp_file_save_dialog(SPDocument *doc)
         else
             g_warning( "Error converting save filename to UTF-8." );
 
-        success = file_save(doc, fileName, selectionType, TRUE);
+        success = file_save(doc, fileName, selectionType, TRUE, !bAsCopy);
 
         if (success)
             prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
@@ -650,14 +655,14 @@ sp_file_save_document(SPDocument *doc)
 
     gchar const *fn = repr->attribute("sodipodi:modified");
     if (fn != NULL) {
-        if (doc->uri == NULL
-            || repr->attribute("inkscape:output_extension") == NULL)
+        if ( doc->uri == NULL
+            || repr->attribute("inkscape:output_extension") == NULL )
         {
-            return sp_file_save_dialog(doc);
+            return sp_file_save_dialog(doc, FALSE);
         } else {
             fn = g_strdup(doc->uri);
             gchar const *ext = repr->attribute("inkscape:output_extension");
-            success = file_save(doc, fn, Inkscape::Extension::db.get(ext), FALSE);
+            success = file_save(doc, fn, Inkscape::Extension::db.get(ext), FALSE, TRUE);
             g_free((void *) fn);
         }
     } else {
@@ -691,10 +696,22 @@ sp_file_save_as(gpointer object, gpointer data)
     if (!SP_ACTIVE_DOCUMENT)
         return false;
     sp_namedview_document_from_window(SP_ACTIVE_DESKTOP);
-    return sp_file_save_dialog(SP_ACTIVE_DOCUMENT);
+    return sp_file_save_dialog(SP_ACTIVE_DOCUMENT, FALSE);
 }
 
 
+
+/**
+ *  Save a copy of a document, always displaying a sort of SaveAs dialog.
+ */
+bool
+sp_file_save_a_copy(gpointer object, gpointer data)
+{
+    if (!SP_ACTIVE_DOCUMENT)
+        return false;
+    sp_namedview_document_from_window(SP_ACTIVE_DESKTOP);
+    return sp_file_save_dialog(SP_ACTIVE_DOCUMENT, TRUE);
+}
 
 
 /*######################
@@ -991,7 +1008,7 @@ sp_file_export_dialog(void *widget)
         else
             g_warning( "Error converting save filename to UTF-8." );
 
-        success = file_save(doc, fileName, selectionType, TRUE);
+        success = file_save(doc, fileName, selectionType, TRUE, FALSE);
 
         if (success)
             prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
