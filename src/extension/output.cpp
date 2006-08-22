@@ -2,6 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2002-2004 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -206,44 +207,16 @@ Output::prefs (void)
 	only used at runtime and shouldn't be saved.  One that may surprise
 	people is the output extension.  This is not saved so that the IDs
 	could be changed, and old files will still work properly.
-
-	After the file is saved by the implmentation the output_extension
-	and dataloss variables are recreated.  The output_extension is set
-	to this extension so that future saves use this extension.  Dataloss
-	is set so that a warning will occur on closing the document that
-	there may be some dataloss from this extension.
 */
 void
 Output::save (SPDocument * doc, const gchar * uri)
 {
-	bool modified = false;
-	Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-
-        gboolean saved = sp_document_get_undo_sensitive(doc);
-	sp_document_set_undo_sensitive (doc, FALSE);
-	//repr->setAttribute("inkscape:output_extension", NULL);
-	repr->setAttribute("inkscape:dataloss", NULL);
-	if (repr->attribute("sodipodi:modified") != NULL)
-		modified = true;
-	repr->setAttribute("sodipodi:modified", NULL);
-	sp_document_set_undo_sensitive (doc, saved);
-
         try {
             imp->save(this, doc, uri);
         }
         catch (...) {
-            if (modified)
-                repr->setAttribute("sodipodi:modified", "true");
             throw;
         }
-
-        saved = sp_document_get_undo_sensitive(doc);
-	sp_document_set_undo_sensitive (doc, FALSE);
-	//repr->setAttribute("inkscape:output_extension", get_id());
-	if (dataloss) {
-		repr->setAttribute("inkscape:dataloss", "true");
-	}
-	sp_document_set_undo_sensitive (doc, saved);
 
 	return;
 }

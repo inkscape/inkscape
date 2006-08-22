@@ -9,6 +9,9 @@
  *   Ted Gould <ted@gould.cx>
  *   David Yip <yipdw@rose-hulman.edu>
  *
+ *  Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ *  Copyright (C) (date unspecified) Authors
+ 
  * This code is in public domain if done by Lauris
  * This code is GPL if done by Ted or David
  */

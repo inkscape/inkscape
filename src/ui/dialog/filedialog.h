@@ -8,6 +8,7 @@
  *   Bob Jamison <rwjj@earthlink.net>
  *   Inkscape Guys
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2004-2006, Inkscape Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -165,6 +166,11 @@ public:
     virtual Inkscape::Extension::Extension * getSelectionType() = 0;
 
     virtual Glib::ustring getFilename () =0;
+
+    /**
+     * Change the window title.
+     */
+    virtual void change_title(const Glib::ustring& title) =0;
 
 
 }; //FileSaveDialog

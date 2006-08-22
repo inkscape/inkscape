@@ -5,6 +5,7 @@
  *   Bob Jamison
  *   Other dudes from The Inkscape Organization
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2004-2006 The Inkscape Organization
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -1136,6 +1137,8 @@ public:
 
     Glib::ustring getFilename();
 
+    void change_title(const Glib::ustring& title);
+
 
 private:
 
@@ -1509,6 +1512,12 @@ FileSaveDialogImpl::getFilename()
     return myFilename;
 }
 
+
+void 
+FileSaveDialogImpl::change_title(const Glib::ustring& title)
+{
+    this->set_title(title);
+}
 
 
 

@@ -17,6 +17,8 @@
  *   David Turner <novalis@gnu.org>
  *   bulia byak <buliabyak@users.sf.net>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) (date unspecified) Authors
  * This code is in public domain.
  */
 

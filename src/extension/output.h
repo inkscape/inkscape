@@ -2,6 +2,7 @@
  * Authors:
  *   Ted Gould <ted@gould.cx>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2002-2004 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -41,6 +42,7 @@ public:
     gchar *      get_extension(void);
     gchar *      get_filetypename(void);
     gchar *      get_filetypetooltip(void);
+    bool         causes_dataloss(void) { return dataloss; };
 };
 
 } }  /* namespace Inkscape, Extension */

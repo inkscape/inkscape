@@ -8,8 +8,9 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Chema Celorio <chema@celorio.com>
  *
- * Copyright (C) 1999-2002 Authors
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2001-2002 Ximian, Inc.
+ * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */

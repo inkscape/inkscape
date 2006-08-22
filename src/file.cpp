@@ -8,9 +8,10 @@
  *   Chema Celorio <chema@celorio.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2005 Authors
- * Copyright (C) 2001-2002 Ximian, Inc.
  * Copyright (C) 2004 David Turner
+ * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -600,15 +601,22 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
         save_loc = save_loc_local;
 
     //# Show the SaveAs dialog
+    char const * dialog_title;
+    if (is_copy) {
+        dialog_title = (char const *) _("Select file to save a copy to");
+    } else {
+        dialog_title = (char const *) _("Select file to save to");
+    }
     if (!saveDialogInstance)
         saveDialogInstance =
              Inkscape::UI::Dialog::FileSaveDialog::create(
                  save_loc,
                  Inkscape::UI::Dialog::SVG_TYPES,
-                 is_copy ? (char const *) _("Select file to save copy to") : (char const *) _("Select file to save to"),
+                 (char const *) _("Select file to save to"),
                  default_extension
             );
-
+    saveDialogInstance->change_title(dialog_title);
+    
     bool success = saveDialogInstance->show();
     if (!success)
         return success;
