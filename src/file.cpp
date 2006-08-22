@@ -535,7 +535,7 @@ static Inkscape::UI::Dialog::FileSaveDialog *saveDialogInstance = NULL;
  * \param    ascopy  (optional) wether to set the documents->uri to the new filename or not
  */
 bool
-sp_file_save_dialog(SPDocument *doc, bool bAsCopy)
+sp_file_save_dialog(SPDocument *doc, bool is_copy)
 {
 
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
@@ -605,7 +605,7 @@ sp_file_save_dialog(SPDocument *doc, bool bAsCopy)
              Inkscape::UI::Dialog::FileSaveDialog::create(
                  save_loc,
                  Inkscape::UI::Dialog::SVG_TYPES,
-                 bAsCopy ? (char const *) _("Select file to save copy to") : (char const *) _("Select file to save to"),
+                 is_copy ? (char const *) _("Select file to save copy to") : (char const *) _("Select file to save to"),
                  default_extension
             );
 
@@ -627,7 +627,7 @@ sp_file_save_dialog(SPDocument *doc, bool bAsCopy)
         else
             g_warning( "Error converting save filename to UTF-8." );
 
-        success = file_save(doc, fileName, selectionType, TRUE, !bAsCopy);
+        success = file_save(doc, fileName, selectionType, TRUE, !is_copy);
 
         if (success)
             prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));

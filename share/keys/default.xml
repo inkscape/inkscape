@@ -55,6 +55,9 @@ override) the bindings in the main default.xml.
   <bind key="s" modifiers="Ctrl,Shift" action="FileSaveAs" display="true"/>
   <bind key="S" modifiers="Ctrl,Shift" action="FileSaveAs" />
 
+  <bind key="s" modifiers="Ctrl,Shift,Alt" action="FileSaveACopy" display="true"/>
+  <bind key="S" modifiers="Ctrl,Shift,Alt" action="FileSaveACopy" />
+
   <bind key="p" modifiers="Ctrl" action="FilePrint" display="true"/>
   <bind key="P" modifiers="Ctrl" action="FilePrint" />
 
