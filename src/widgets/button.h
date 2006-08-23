@@ -53,7 +53,7 @@ GType sp_button_get_type (void);
 
 GtkWidget *sp_button_new (Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action, GtkTooltips *tooltips);
 
-void sp_button_toggle_set_down (SPButton *button, gboolean down);
+void sp_button_toggle_set_down (SPButton *button, bool down);
 
 GtkWidget *sp_button_new_from_data (Inkscape::IconSize size,
 				    SPButtonType type,

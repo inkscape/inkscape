@@ -22,15 +22,15 @@ namespace Inkscape
 class SPSelTransHandle;
 
 // request handlers
-gboolean sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
+bool sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
 				    SPSelTransHandle const &handle, NR::Point &p, guint state);
-gboolean sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
+bool sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
 				      SPSelTransHandle const &handle, NR::Point &p, guint state);
-gboolean sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
+bool sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
 				   SPSelTransHandle const &handle, NR::Point &p, guint state);
-gboolean sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
+bool sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
 				     SPSelTransHandle const &handle, NR::Point &p, guint state);
-gboolean sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
+bool sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
 				     SPSelTransHandle const &handle, NR::Point &p, guint state);
 
 // action handlers
@@ -45,7 +45,7 @@ struct SPSelTransHandle {
 	GdkCursorType cursor;
 	guint control;
 	void (* action) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
-	gboolean (* request) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
+	bool (* request) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, NR::Point &p, guint state);
 	gdouble x, y;
 };
 

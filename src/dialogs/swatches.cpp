@@ -202,7 +202,7 @@ static void dragBegin( GtkWidget *widget, GdkDragContext* dc, gpointer data )
 }
 
 //"drag-drop"
-// gboolean dragDropColorData( GtkWidget *widget,
+// bool dragDropColorData( GtkWidget *widget,
 //                             GdkDragContext *drag_context,
 //                             gint x,
 //                             gint y,

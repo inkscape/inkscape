@@ -311,7 +311,7 @@ sp_rect_position_set(SPRect *rect, gdouble x, gdouble y, gdouble width, gdouble 
 }
 
 void
-sp_rect_set_rx(SPRect *rect, gboolean set, gdouble value)
+sp_rect_set_rx(SPRect *rect, bool set, gdouble value)
 {
     g_return_if_fail(rect != NULL);
     g_return_if_fail(SP_IS_RECT(rect));
@@ -323,7 +323,7 @@ sp_rect_set_rx(SPRect *rect, gboolean set, gdouble value)
 }
 
 void
-sp_rect_set_ry(SPRect *rect, gboolean set, gdouble value)
+sp_rect_set_ry(SPRect *rect, bool set, gdouble value)
 {
     g_return_if_fail(rect != NULL);
     g_return_if_fail(SP_IS_RECT(rect));

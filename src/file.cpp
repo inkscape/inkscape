@@ -1097,7 +1097,7 @@ sp_file_print_preview(gpointer object, gpointer data)
 
 }
 
-void Inkscape::IO::fixupHrefs( SPDocument *doc, const gchar *base, gboolean spns )
+void Inkscape::IO::fixupHrefs( SPDocument *doc, const gchar *base, bool spns )
 {
     //g_message("Inkscape::IO::fixupHrefs( , [%s], )", base );
 
@@ -1125,7 +1125,7 @@ void Inkscape::IO::fixupHrefs( SPDocument *doc, const gchar *base, gboolean spns
             try
             {
                 URI uri(things[i]);
-                gboolean isAbs = g_path_is_absolute( things[i] );
+                bool isAbs = g_path_is_absolute( things[i] );
                 gchar *str = uri.toString();
                 g_message( "abs:%d  isRel:%d  scheme:[%s]  path:[%s][%s]   uri[%s] / [%s]", (int)isAbs,
                            (int)uri.isRelative(),
@@ -1144,7 +1144,7 @@ void Inkscape::IO::fixupHrefs( SPDocument *doc, const gchar *base, gboolean spns
                 if ( redo == NULL )
                 {
                     URI again = URI::fromUtf8( things[i] );
-                    gboolean isAbs = g_path_is_absolute( things[i] );
+                    bool isAbs = g_path_is_absolute( things[i] );
                     gchar *str = again.toString();
                     g_message( "abs:%d  isRel:%d  scheme:[%s]  path:[%s][%s]   uri[%s] / [%s]", (int)isAbs,
                                (int)again.isRelative(),

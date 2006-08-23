@@ -110,7 +110,7 @@ static void on_tree_select_row(GtkCTree *tree, GtkCTreeNode *node, gint column, 
 static void on_tree_unselect_row(GtkCTree *tree, GtkCTreeNode *node, gint column, gpointer data);
 static void after_tree_move(GtkCTree *tree, GtkCTreeNode *node, GtkCTreeNode *new_parent, GtkCTreeNode *new_sibling, gpointer data);
 static void on_destroy(GtkObject *object, gpointer data);
-static gboolean on_delete(GtkObject *object, GdkEvent *event, gpointer data);
+static bool on_delete(GtkObject *object, GdkEvent *event, gpointer data);
 
 static void on_tree_select_row_enable_if_element(GtkCTree *tree, GtkCTreeNode *node, gint column, gpointer data);
 static void on_tree_select_row_enable_if_mutable(GtkCTree *tree, GtkCTreeNode *node, gint column, gpointer data);
@@ -159,7 +159,7 @@ static void cmd_unindent_node(GtkObject *object, gpointer data);
 static void cmd_delete_attr(GtkObject *object, gpointer data);
 static void cmd_set_attr(GtkObject *object, gpointer data);
 
-static gboolean sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event);
+static bool sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event);
 
 
 /*
@@ -625,7 +625,7 @@ void sp_xml_tree_dialog()
 
 } // end of sp_xml_tree_dialog()
 
-static gboolean sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event)
+static bool sp_xml_tree_key_press(GtkWidget *widget, GdkEventKey *event)
 {
 
     unsigned int shortcut = get_group0_keyval(event) |
@@ -913,7 +913,7 @@ static void on_destroy(GtkObject *object, gpointer data)
 
 
 
-static gboolean on_delete(GtkObject *object, GdkEvent *event, gpointer data)
+static bool on_delete(GtkObject *object, GdkEvent *event, gpointer data)
 {
     gtk_window_get_position((GtkWindow *) dlg, &x, &y);
     gtk_window_get_size((GtkWindow *) dlg, &w, &h);
@@ -991,7 +991,7 @@ void on_tree_select_row_show_if_text(GtkCTree *tree, GtkCTreeNode *node,
 }
 
 
-gboolean xml_tree_node_mutable(GtkCTreeNode *node)
+bool xml_tree_node_mutable(GtkCTreeNode *node)
 {
     // top-level is immutable, obviously
     if (!GTK_CTREE_ROW(node)->parent) {
@@ -1141,7 +1141,7 @@ void on_attr_select_row_set_value_content(GtkCList *list, gint row, gint column,
 void on_tree_select_row_enable_if_indentable(GtkCTree *tree, GtkCTreeNode *node,
                                              gint column, gpointer data)
 {
-    gboolean indentable = FALSE;
+    bool indentable = FALSE;
 
     if (xml_tree_node_mutable(node)) {
         Inkscape::XML::Node *repr, *prev;

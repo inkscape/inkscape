@@ -137,7 +137,7 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::No
 }
 
 
-static gboolean polygon_get_value(gchar const **p, gdouble *v)
+static bool polygon_get_value(gchar const **p, gdouble *v)
 {
     while (**p != '\0' && (**p == ',' || **p == '\x20' || **p == '\x9' || **p == '\xD' || **p == '\xA')) {
         (*p)++;
@@ -170,7 +170,7 @@ static void sp_polygon_set(SPObject *object, unsigned int key, const gchar *valu
                 break;
             }
             SPCurve *curve = sp_curve_new();
-            gboolean hascpt = FALSE;
+            bool hascpt = FALSE;
 
             gchar const *cptr = value;
             bool has_error = false;

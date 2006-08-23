@@ -171,7 +171,7 @@ SPColorSpaceType ColorSelector::getColorspace() const
     return type;
 }
 
-gboolean ColorSelector::setColorspace( SPColorSpaceType colorspace )
+bool ColorSelector::setColorspace( SPColorSpaceType colorspace )
 {
     return false;
 }
@@ -262,14 +262,14 @@ void ColorSelector::_released()
 }
 
 // Called from subclasses to update color and broadcast if needed
-void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, gboolean held )
+void ColorSelector::_updateInternals( const SPColor& color, gfloat alpha, bool held )
 {
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
-    gboolean colorDifferent = ( !sp_color_is_close( &color, &_color, _epsilon )
+    bool colorDifferent = ( !sp_color_is_close( &color, &_color, _epsilon )
                                 || ( fabs((_alpha) - (alpha)) >= _epsilon ) );
 
-    gboolean grabbed = held && !_held;
-    gboolean released = !held && _held;
+    bool grabbed = held && !_held;
+    bool released = !held && _held;
 
     // Store these before emmiting any signals
     _held = held;

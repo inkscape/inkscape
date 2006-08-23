@@ -104,7 +104,7 @@ open(Extension *key, gchar const *filename)
     /* This kinda overkill as most of these are already set, but I want
        to make sure for this release -- TJG */
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-    gboolean saved = sp_document_get_undo_sensitive(doc);
+    bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, FALSE);
     repr->setAttribute("sodipodi:modified", NULL);
     sp_document_set_undo_sensitive(doc, saved);

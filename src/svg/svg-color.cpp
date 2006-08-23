@@ -235,7 +235,7 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
             *end_ptr = str + i;
         }
     } else if (strneq(str, "rgb(", 4)) {
-        gboolean hasp, hasd;
+        bool hasp, hasd;
         gchar *s, *e;
         gdouble r, g, b;
 

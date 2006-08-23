@@ -204,7 +204,7 @@ sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPA
 }
 
 void
-sp_button_toggle_set_down (SPButton *button, gboolean down)
+sp_button_toggle_set_down (SPButton *button, bool down)
 {
 	g_return_if_fail (button->type == SP_BUTTON_TYPE_TOGGLE);
 	g_signal_handlers_block_by_func (G_OBJECT (button), (gpointer)G_CALLBACK (sp_button_perform_action), NULL);

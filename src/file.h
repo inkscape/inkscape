@@ -172,7 +172,7 @@ void sp_file_vacuum ();
 namespace Inkscape {
 namespace IO {
 
-void fixupHrefs( SPDocument *doc, const gchar *uri, gboolean spns );
+void fixupHrefs( SPDocument *doc, const gchar *uri, bool spns );
 
 }
 }

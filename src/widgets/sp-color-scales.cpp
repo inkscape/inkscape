@@ -214,7 +214,7 @@ sp_color_scales_new (void)
 	return GTK_WIDGET (csel);
 }
 
-void ColorScales::_recalcColor( gboolean changing )
+void ColorScales::_recalcColor( bool changing )
 {
     if ( changing )
     {

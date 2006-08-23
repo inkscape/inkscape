@@ -60,7 +60,7 @@ public:
 	static void init (void);
 
 	/* Platform detection */
-	static gboolean is_os_wide();
+	static bool is_os_wide();
 
 	/* Print functions */
 	virtual unsigned int setup (Inkscape::Extension::Print * module);

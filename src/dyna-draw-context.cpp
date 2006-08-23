@@ -75,8 +75,8 @@ static void clear_current(SPDynaDrawContext *dc);
 static void set_to_accumulated(SPDynaDrawContext *dc);
 static void accumulate_calligraphic(SPDynaDrawContext *dc);
 
-static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
-static void fit_and_split_calligraphics(SPDynaDrawContext *ddc, gboolean release);
+static void fit_and_split(SPDynaDrawContext *ddc, bool release);
+static void fit_and_split_calligraphics(SPDynaDrawContext *ddc, bool release);
 
 static void sp_dyna_draw_reset(SPDynaDrawContext *ddc, NR::Point p);
 static NR::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, NR::Point v);
@@ -327,7 +327,7 @@ sp_dyna_draw_extinput(SPDynaDrawContext *dc, GdkEvent *event)
 }
 
 
-static gboolean
+static bool
 sp_dyna_draw_apply(SPDynaDrawContext *dc, NR::Point p)
 {
     NR::Point n = sp_dyna_draw_get_npoint(dc, p);
@@ -708,7 +708,7 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
 
 static void
 fit_and_split(SPDynaDrawContext *dc,
-              gboolean release)
+              bool release)
 {
     fit_and_split_calligraphics(dc, release);
 }
@@ -719,7 +719,7 @@ static double square(double const x)
 }
 
 static void
-fit_and_split_calligraphics(SPDynaDrawContext *dc, gboolean release)
+fit_and_split_calligraphics(SPDynaDrawContext *dc, bool release)
 {
     double const tolerance_sq = square( NR::expansion(SP_EVENT_CONTEXT(dc)->desktop->w2d()) * TOLERANCE_CALLIGRAPHIC );
 

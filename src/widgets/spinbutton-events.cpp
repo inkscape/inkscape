@@ -22,7 +22,7 @@
 #include "widget-sizes.h"
 
 
-gboolean
+bool
 spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
 	gdouble *ini;
@@ -51,7 +51,7 @@ void
 spinbutton_defocus (GtkObject *container)
 {
 	// defocus spinbuttons by moving focus to the canvas, unless "stay" is on
-	gboolean stay = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (container), "stay"));
+	bool stay = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (container), "stay"));
 	if (stay) {
 		gtk_object_set_data (GTK_OBJECT (container), "stay", GINT_TO_POINTER (FALSE));
 	} else {
@@ -62,7 +62,7 @@ spinbutton_defocus (GtkObject *container)
 	}
 }
 
-gboolean
+bool
 spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
 	SPWidget *spw = (SPWidget *) data;

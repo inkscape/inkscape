@@ -109,7 +109,7 @@ clonetiler_dialog_destroy (GtkObject *object, gpointer data)
 
 }
 
-static gboolean
+static bool
 clonetiler_dialog_delete (GtkObject *object, GdkEvent * /*event*/, gpointer data)
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);

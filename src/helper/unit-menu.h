@@ -38,7 +38,7 @@ void sp_unit_selector_set_unit(SPUnitSelector *selector, SPUnit const *unit);
 void sp_unit_selector_add_adjustment(SPUnitSelector *selector, GtkAdjustment *adjustment);
 void sp_unit_selector_remove_adjustment(SPUnitSelector *selector, GtkAdjustment *adjustment);
 
-gboolean sp_unit_selector_update_test(SPUnitSelector const *selector);
+bool sp_unit_selector_update_test(SPUnitSelector const *selector);
 
 double sp_unit_selector_get_value_in_pixels(SPUnitSelector const *selector, GtkAdjustment *adj);
 void sp_unit_selector_set_value_in_pixels(SPUnitSelector *selector, GtkAdjustment *adj, double value);

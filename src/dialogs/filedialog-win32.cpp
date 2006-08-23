@@ -25,11 +25,11 @@ namespace Dialogs
 /*#################################
 # U T I L I T Y
 #################################*/
-static gboolean
+static bool
 win32_is_os_wide()
 {
-	static gboolean initialized = FALSE;
-	static gboolean is_wide = FALSE;
+	static bool initialized = FALSE;
+	static bool is_wide = FALSE;
 	static OSVERSIONINFOA osver;
 
 	if ( !initialized )

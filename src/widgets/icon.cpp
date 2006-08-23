@@ -273,7 +273,7 @@ sp_icon_new_full( Inkscape::IconSize lsize, gchar const *name )
     addPreRender( lsize, name );
 
     GtkStockItem stock;
-    gboolean tryLoad = gtk_stock_lookup( name, &stock );
+    bool tryLoad = gtk_stock_lookup( name, &stock );
     if ( !tryLoad && fallback ) {
         tryLoad |= strncmp("gtk-", name, 4 ) == 0;
     }

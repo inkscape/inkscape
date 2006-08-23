@@ -54,9 +54,9 @@ protected:
     void _rgbaEntryChanged( GtkEntry* entry );
     void _updateRgbaEntry( const SPColor& color, gfloat alpha );
 
-    gboolean _updating : 1;
-    gboolean _updatingrgba : 1;
-    gboolean _dragging : 1;
+    bool _updating : 1;
+    bool _updatingrgba : 1;
+    bool _dragging : 1;
     gulong _switchId;
     gulong _entryId;
     GtkWidget *_book;

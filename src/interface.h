@@ -22,7 +22,7 @@
 /**
  *  Create a new document window.
  */
-void sp_create_window (SPViewWidget *vw, gboolean editable);
+void sp_create_window (SPViewWidget *vw, bool editable);
 
 /**
  *

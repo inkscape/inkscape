@@ -405,7 +405,7 @@ reverse_then_unref(SPCurve *orig)
  * Invoke _flush_white to write result back to object.
  */
 void
-spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
+spdc_concat_colors_and_flush(SPDrawContext *dc, bool forceclosed)
 {
     /* Concat RBG */
     SPCurve *c = dc->green_curve;

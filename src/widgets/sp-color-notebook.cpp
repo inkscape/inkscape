@@ -34,8 +34,8 @@ struct SPColorNotebookTracker {
 	const gchar* className;
 	GType type;
 	guint submode;
-	gboolean enabledFull;
-	gboolean enabledBrief;
+	bool enabledFull;
+	bool enabledBrief;
 	SPColorNotebook *backPointer;
 };
 
@@ -154,7 +154,7 @@ gint ColorNotebook::menuHandler( GdkEvent* event )
 
 static void sp_color_notebook_menuitem_response (GtkMenuItem *menuitem, gpointer user_data)
 {
-	gboolean active = FALSE;
+	bool active = FALSE;
 
 	active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (menuitem));
 	SPColorNotebookTracker *entry = reinterpret_cast< SPColorNotebookTracker* > (user_data);
@@ -267,7 +267,7 @@ void ColorNotebook::init()
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (_book), prefs_get_int_attribute ("colorselector", "page", 0));
 
 	{
-		gboolean found = FALSE;
+		bool found = FALSE;
 
 		_popup = gtk_menu_new();
 		GtkMenu *menu = GTK_MENU (_popup);
@@ -493,7 +493,7 @@ void ColorNotebook::_entryGrabbed (SPColorSelector *, SPColorNotebook *colorbook
 
 void ColorNotebook::_entryDragged (SPColorSelector *csel, SPColorNotebook *colorbook)
 {
-	gboolean oldState;
+	bool oldState;
     ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
 
 	oldState = nb->_dragging;
@@ -512,7 +512,7 @@ void ColorNotebook::_entryReleased (SPColorSelector *, SPColorNotebook *colorboo
 
 void ColorNotebook::_entryChanged (SPColorSelector *csel, SPColorNotebook *colorbook)
 {
-	gboolean oldState;
+	bool oldState;
     ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
 
 	oldState = nb->_dragging;

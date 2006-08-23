@@ -825,7 +825,7 @@ sp_object_invoke_build(SPObject *object, SPDocument *document, Inkscape::XML::No
 
             /* Redefine ID, if required */
             if ((id == NULL) || (strcmp(id, realid) != 0)) {
-                gboolean undo_sensitive=sp_document_get_undo_sensitive(document);
+                bool undo_sensitive=sp_document_get_undo_sensitive(document);
                 sp_document_set_undo_sensitive(document, FALSE);
                 object->repr->setAttribute("id", realid);
                 sp_document_set_undo_sensitive(document, undo_sensitive);

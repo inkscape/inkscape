@@ -41,7 +41,7 @@ GType sp_guide_get_type();
 
 void sp_guide_show(SPGuide *guide, SPCanvasGroup *group, GCallback handler);
 void sp_guide_hide(SPGuide *guide, SPCanvas *canvas);
-void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive);
+void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, bool sensitive);
 
 double sp_guide_position_from_pt(SPGuide const *guide, NR::Point const &pt);
 void sp_guide_moveto(SPGuide const &guide, gdouble const position, bool const commit);

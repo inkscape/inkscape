@@ -317,7 +317,7 @@ nodepath_event_attr_changed(Inkscape::XML::Node *repr, gchar const *name,
                             bool is_interactive, gpointer data)
 {
     SPItem *item = NULL;
-    gboolean changed = FALSE;
+    bool changed = FALSE;
 
     g_assert(data);
     SPNodeContext *nc = ((SPNodeContext *) data);

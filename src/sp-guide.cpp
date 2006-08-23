@@ -221,7 +221,7 @@ void sp_guide_hide(SPGuide *guide, SPCanvas *canvas)
     g_assert_not_reached();
 }
 
-void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, gboolean sensitive)
+void sp_guide_sensitize(SPGuide *guide, SPCanvas *canvas, bool sensitive)
 {
     g_assert(guide != NULL);
     g_assert(SP_IS_GUIDE(guide));

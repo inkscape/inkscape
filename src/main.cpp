@@ -157,33 +157,33 @@ static void do_query_dimension (SPDocument *doc, bool extent, NR::Dim2 const axi
 
 
 static gchar *sp_global_printer = NULL;
-static gboolean sp_global_slideshow = FALSE;
+static bool sp_global_slideshow = FALSE;
 static gchar *sp_export_png = NULL;
 static gchar *sp_export_dpi = NULL;
 static gchar *sp_export_area = NULL;
-static gboolean sp_export_area_drawing = FALSE;
-static gboolean sp_export_area_canvas = FALSE;
+static bool sp_export_area_drawing = FALSE;
+static bool sp_export_area_canvas = FALSE;
 static gchar *sp_export_width = NULL;
 static gchar *sp_export_height = NULL;
 static gchar *sp_export_id = NULL;
 static gchar *sp_export_background = NULL;
 static gchar *sp_export_background_opacity = NULL;
-static gboolean sp_export_area_snap = FALSE;
-static gboolean sp_export_use_hints = FALSE;
-static gboolean sp_export_id_only = FALSE;
+static bool sp_export_area_snap = FALSE;
+static bool sp_export_use_hints = FALSE;
+static bool sp_export_id_only = FALSE;
 static gchar *sp_export_svg = NULL;
 static gchar *sp_export_ps = NULL;
 static gchar *sp_export_eps = NULL;
 static gchar *sp_export_pdf = NULL;
-static gboolean sp_export_text_to_path = FALSE;
-static gboolean sp_export_bbox_page = FALSE;
-static gboolean sp_query_x = FALSE;
-static gboolean sp_query_y = FALSE;
-static gboolean sp_query_width = FALSE;
-static gboolean sp_query_height = FALSE;
+static bool sp_export_text_to_path = FALSE;
+static bool sp_export_bbox_page = FALSE;
+static bool sp_query_x = FALSE;
+static bool sp_query_y = FALSE;
+static bool sp_query_width = FALSE;
+static bool sp_query_height = FALSE;
 static gchar *sp_query_id = NULL;
 static int sp_new_gui = FALSE;
-static gboolean sp_vacuum_defs = FALSE;
+static bool sp_vacuum_defs = FALSE;
 
 static gchar *sp_export_png_utf8 = NULL;
 static gchar *sp_export_svg_utf8 = NULL;
@@ -410,7 +410,7 @@ main(int argc, char **argv)
 
     Inkscape::Debug::Logger::init();
 
-    gboolean use_gui;
+    bool use_gui;
 #ifndef WIN32
     use_gui = (getenv("DISPLAY") != NULL);
 #else
@@ -624,7 +624,7 @@ sp_main_gui(int argc, char const **argv)
     filename = 0;
 
     if (!sp_global_slideshow) {
-        gboolean create_new = TRUE;
+        bool create_new = TRUE;
 
         /// \todo FIXME BROKEN - non-UTF-8 sneaks in here.
         inkscape_application_init(argv[0], true);

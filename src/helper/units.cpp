@@ -119,7 +119,7 @@ sp_unit_free_list(GSList *units)
 
 /* These are pure utility */
 /* Return TRUE if conversion is possible */
-gboolean
+bool
 sp_convert_distance(gdouble *distance, SPUnit const *from, SPUnit const *to)
 {
     g_return_val_if_fail(distance != NULL, FALSE);

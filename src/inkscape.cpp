@@ -89,7 +89,7 @@ enum {
 # FORWARD DECLARATIONS
 ################################*/
 
-gboolean inkscape_app_use_gui( Inkscape::Application const * app );
+bool inkscape_app_use_gui( Inkscape::Application const * app );
 
 static void inkscape_class_init (Inkscape::ApplicationClass *klass);
 static void inkscape_init (SPObject *object);
@@ -112,8 +112,8 @@ struct Inkscape::Application {
     GSList *documents;
     GSList *desktops;
     gchar *argv0;
-    gboolean dialogs_toggle;
-    gboolean use_gui;         // may want to consider a virtual function
+    bool dialogs_toggle;
+    bool use_gui;         // may want to consider a virtual function
                               // for overriding things like the warning dlg's
 };
 
@@ -540,7 +540,7 @@ inkscape_segv_handler (int signum)
 
 
 void
-inkscape_application_init (const gchar *argv0, gboolean use_gui)
+inkscape_application_init (const gchar *argv0, bool use_gui)
 {
     inkscape = (Inkscape::Application *)g_object_new (SP_TYPE_INKSCAPE, NULL);
     /* fixme: load application defaults */
@@ -590,7 +590,7 @@ inkscape_get_instance()
         return inkscape;
 }
 
-gboolean inkscape_app_use_gui( Inkscape::Application const * app )
+bool inkscape_app_use_gui( Inkscape::Application const * app )
 {
     return app->use_gui;
 }

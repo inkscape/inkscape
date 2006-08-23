@@ -64,7 +64,7 @@ sp_item_dialog_destroy (GtkObject *object, gpointer data)
     wd.stop = 0;
 }
 
-static gboolean
+static bool
 sp_item_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);

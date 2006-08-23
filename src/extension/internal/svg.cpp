@@ -198,7 +198,7 @@ Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
 
     gchar *save_path = g_path_get_dirname (uri);
 
-    gboolean const spns = (!mod->get_id() 
+    bool const spns = (!mod->get_id() 
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE));
 
@@ -214,7 +214,7 @@ Svg::save (Inkscape::Extension::Output *mod, SPDocument *doc, const gchar *uri)
 
     Inkscape::IO::fixupHrefs( doc, save_path, spns );
 
-    gboolean const s = sp_repr_save_file (sp_repr_document (repr), uri, SP_SVG_NS_URI);
+    bool const s = sp_repr_save_file (sp_repr_document (repr), uri, SP_SVG_NS_URI);
     if (s == FALSE) {
         throw Inkscape::Extension::Output::save_failed();
     }

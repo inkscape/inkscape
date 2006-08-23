@@ -64,8 +64,8 @@ SPColorSpaceType sp_color_get_colorspace_type (const SPColor *color);
 
 void sp_color_copy (SPColor *dst, const SPColor *src);
 
-gboolean sp_color_is_equal (const SPColor *c0, const SPColor *c1);
-gboolean sp_color_is_close (const SPColor *c0, const SPColor *c1, float epsilon);
+bool sp_color_is_equal (const SPColor *c0, const SPColor *c1);
+bool sp_color_is_close (const SPColor *c0, const SPColor *c1, float epsilon);
 
 void sp_color_set_rgb_float (SPColor *color, float r, float g, float b);
 void sp_color_set_rgb_rgba32 (SPColor *color, guint32 value);

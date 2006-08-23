@@ -775,7 +775,7 @@ sp_tb_spinbutton(
     gchar const *path, gchar const *data, gdouble def,
     GtkWidget *us,
     GtkWidget *tbl,
-    gboolean altx, gchar const *altx_mark,
+    bool altx, gchar const *altx_mark,
     gdouble lower, gdouble upper, gdouble step, gdouble page,
     void (*callback)(GtkAdjustment *, GtkWidget *),
     gdouble climb = 0.1, guint digits = 3, double factor = 1.0)
@@ -1155,7 +1155,7 @@ sp_stb_defaults(GtkWidget *widget, GtkWidget *tbl)
     // fixme: make settable in prefs!
     gint mag = 5;
     gdouble prop = 0.5;
-    gboolean flat = FALSE;
+    bool flat = FALSE;
     gdouble randomized = 0;
     gdouble rounded = 0;
 

@@ -32,13 +32,13 @@ public:
     virtual guint getSubmode() const;
 
     virtual SPColorSpaceType getColorspace() const;
-    virtual gboolean setColorspace( SPColorSpaceType colorspace );
+    virtual bool setColorspace( SPColorSpaceType colorspace );
 
 protected:
     void _grabbed();
     void _released();
-    void _updateInternals( const SPColor& color, gfloat alpha, gboolean held );
-    gboolean _isHeld() const { return _held; }
+    void _updateInternals( const SPColor& color, gfloat alpha, bool held );
+    bool _isHeld() const { return _held; }
 
     virtual void _colorChanged( const SPColor& color, gfloat alpha );
 
@@ -53,7 +53,7 @@ private:
     ColorSelector( const ColorSelector& obj );
     ColorSelector& operator=( const ColorSelector& obj );
 
-    gboolean _held;
+    bool _held;
 
     bool virgin; // if true, no color is set yet
 };

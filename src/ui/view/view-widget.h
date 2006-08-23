@@ -61,7 +61,7 @@ class SPViewWidget {
 	sp_view_widget_set_view(this, view);
     }
 
-    gboolean shutdown() {
+    bool shutdown() {
 	return sp_view_widget_shutdown(this);
     }
 
@@ -80,7 +80,7 @@ class SPViewWidgetClass {
     /// Virtual method about view size change
     void (* view_resized) (SPViewWidget *vw, Inkscape::UI::View::View *view, gdouble width, gdouble height);
 
-    gboolean (* shutdown) (SPViewWidget *vw);
+    bool (* shutdown) (SPViewWidget *vw);
 };
 
 #endif

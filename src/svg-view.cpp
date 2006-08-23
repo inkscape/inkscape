@@ -132,7 +132,7 @@ static gint
 arena_handler (SPCanvasArena *arena, NRArenaItem *ai, GdkEvent *event, SPSVGView *svgview)
 {
 	static gdouble x, y;
-	static gboolean active = FALSE;
+	static bool active = FALSE;
 	SPEvent spev;
 
 	SPItem *spitem = (ai) ? (SPItem*)NR_ARENA_ITEM_GET_DATA (ai) : 0;

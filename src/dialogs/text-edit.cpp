@@ -61,7 +61,7 @@ static void sp_text_edit_dialog_set_default (GtkButton *button, GtkWidget *dlg);
 static void sp_text_edit_dialog_apply (GtkButton *button, GtkWidget *dlg);
 static void sp_text_edit_dialog_close (GtkButton *button, GtkWidget *dlg);
 
-static void sp_text_edit_dialog_read_selection (GtkWidget *dlg, gboolean style, gboolean content);
+static void sp_text_edit_dialog_read_selection (GtkWidget *dlg, bool style, bool content);
 
 static void sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg);
 static void sp_text_edit_dialog_font_changed (SPFontSelector *fontsel, font_instance *font, GtkWidget *dlg);
@@ -93,7 +93,7 @@ sp_text_edit_dialog_destroy (GtkObject *object, gpointer data)
 
 
 
-static gboolean
+static bool
 sp_text_edit_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
 {
     gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
@@ -116,7 +116,7 @@ sp_text_edit_dialog_delete (GtkObject *object, GdkEvent *event, gpointer data)
     This flag is used to prevent passing keys from the dialog to canvas, so that the text editor
     can handle keys like Esc and Ctrl+Z itself.
  */
-gboolean
+bool
 text_view_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
     GObject *dlg = (GObject *) data;
@@ -124,7 +124,7 @@ text_view_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data)
     return FALSE;
 }
 
-gboolean
+bool
 text_view_focus_out (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
     GObject *dlg = (GObject *) data;
@@ -452,7 +452,7 @@ sp_text_edit_dialog_selection_modified ( Inkscape::Application *inkscape,
                                        guint flags, 
                                        GtkWidget *dlg )
 {
-    gboolean style, content;
+    bool style, content;
 
     style = 
         ((flags & ( SP_OBJECT_CHILD_MODIFIED_FLAG | 
@@ -645,8 +645,8 @@ sp_text_edit_dialog_close (GtkButton *button, GtkWidget *dlg)
 
 static void
 sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
-                                     gboolean dostyle,
-                                     gboolean docontent )
+                                     bool dostyle,
+                                     bool docontent )
 {
     if (g_object_get_data (G_OBJECT (dlg), "blocked"))
         return;

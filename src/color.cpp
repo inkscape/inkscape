@@ -69,7 +69,7 @@ sp_color_copy(SPColor *dst, SPColor const *src)
 /**
  * Returns TRUE if c0 or c1 is NULL, or if colors/opacities differ.
  */
-gboolean
+bool
 sp_color_is_equal (SPColor const *c0, SPColor const *c1)
 {
     g_return_val_if_fail (c0 != NULL, TRUE);
@@ -89,7 +89,7 @@ sp_color_is_equal (SPColor const *c0, SPColor const *c1)
  * with CMYK aditionally comparing opacity, or if c0 or c1 is NULL.
  * \note Do we want the latter?
  */
-gboolean
+bool
 sp_color_is_close (SPColor const *c0, SPColor const *c1, float epsilon)
 {
     g_return_val_if_fail (c0 != NULL, TRUE);

@@ -24,10 +24,10 @@ struct SPDrawAnchor {
 };
 
 
-SPDrawAnchor *sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start,
+SPDrawAnchor *sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, bool start,
                                  NR::Point delta);
 SPDrawAnchor *sp_draw_anchor_destroy(SPDrawAnchor *anchor);
-SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, NR::Point w, gboolean activate);
+SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, NR::Point w, bool activate);
 
 
 #endif /* !SEEN_DRAW_ANCHOR_H */

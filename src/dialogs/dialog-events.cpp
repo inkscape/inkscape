@@ -31,7 +31,7 @@
 * \brief  This function is called to zero the transientize semaphore by a
 *         timeout.
 */
-gboolean
+bool
 sp_allow_again (gpointer *wd)
 {
     ((win_data *) wd)->stop = 0;
@@ -81,7 +81,7 @@ sp_dialog_defocus_on_enter (GtkWidget *w)
 
 
 
-gboolean
+bool
 sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
 {
 
@@ -91,7 +91,7 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
         return FALSE;
     }
 
-    gboolean ret = FALSE;
+    bool ret = FALSE;
 
     switch (event->type) {
 
@@ -210,7 +210,7 @@ void on_dialog_unhide (GtkWidget *w)
         gtk_widget_show (w);
 }
 
-gboolean
+bool
 sp_dialog_hide (GtkObject *object, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;
@@ -223,7 +223,7 @@ sp_dialog_hide (GtkObject *object, gpointer data)
 
 
 
-gboolean
+bool
 sp_dialog_unhide (GtkObject *object, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;

@@ -63,7 +63,7 @@ struct RSVGParsePathCtx {
     double spx, spy;  /* beginning of current subpath point */
     char cmd;         /* current command (lowercase) */
     int param;        /* parameter number */
-    gboolean rel;     /* true if relative coords */
+    bool rel;     /* true if relative coords */
     double params[7]; /* parameters that have been parsed */
 };
 
@@ -221,7 +221,7 @@ static void rsvg_parse_path_default_xy(RSVGParsePathCtx *ctx, int n_params)
     }
 }
 
-static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, gboolean final)
+static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
 {
     double x1, y1, x2, y2, x3, y3;
 
@@ -455,10 +455,10 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
     int i = 0;
     double val = 0;
     char c = 0;
-    gboolean in_num = FALSE;
-    gboolean in_frac = FALSE;
-    gboolean in_exp = FALSE;
-    gboolean exp_wait_sign = FALSE;
+    bool in_num = FALSE;
+    bool in_frac = FALSE;
+    bool in_exp = FALSE;
+    bool exp_wait_sign = FALSE;
     int sign = 0;
     int exp = 0;
     int exp_sign = 0;
