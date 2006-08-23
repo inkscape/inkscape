@@ -1,7 +1,9 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# English-based dialect pig latin for Inkscape. 
+# Copyright (C) 2006 Jon South
+# Copyright (C) 2006 Jon Phillips
+# This file is distributed under the same license as the Inkscape package.
+# Jon South <striker@lunar-linux.org>, 2006.
+# Jon Phillips <jon@rejon.org>, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3695 ../src/widgets/toolbox.cpp:3716
 #: ../src/widgets/toolbox.cpp:3745 ../src/widgets/toolbox.cpp:3766
