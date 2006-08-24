@@ -38,6 +38,8 @@ static char *get_attr(CRXMLNodePtr n, char const *a)
 }
 
 static char const *get_local_name(CRXMLNodePtr n) { return local_part(static_cast<Node const *>(n)->name()); }
+// JON: Need to keep gboolean to interface with libcroco
+// TODO: convert to bool
 static gboolean is_element_node(CRXMLNodePtr n) { return static_cast<Node const *>(n)->type() == ELEMENT_NODE; }
 }
 

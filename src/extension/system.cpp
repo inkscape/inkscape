@@ -250,7 +250,7 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     if (official) {
         // save the filename for next use
         sp_document_set_uri(doc, fileName);
-        gboolean saved = sp_document_get_undo_sensitive(doc);
+        bool saved = sp_document_get_undo_sensitive(doc);
             // also save the extension for next use
             Inkscape::XML::Node *repr = sp_document_repr_root(doc);
         	sp_document_set_undo_sensitive (doc, FALSE);

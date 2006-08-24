@@ -100,6 +100,8 @@ static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
     gint width = 0;
     gint height = 0;
     EekPreview* preview = EEK_PREVIEW(widget);
+    // JON: keeping this gboolean because it is legacy c-based code
+    // TODO: convert to bool
     gboolean worked = gtk_icon_size_lookup( preview->_size, &width, &height );
     if ( !worked ) {
         width = 16;
@@ -121,7 +123,8 @@ enum {
 
 static guint eek_preview_signals[LAST_SIGNAL] = { 0 };
 
-
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 {
 /*     g_message("Exposed!!!   %s", GTK_WIDGET_HAS_FOCUS(widget) ? "XXX" : "---" ); */
@@ -268,6 +271,8 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 }
 
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_enter_cb( GtkWidget* widget, GdkEventCrossing* event )
 {
     if ( gtk_get_event_widget( (GdkEvent*)event ) == widget ) {
@@ -278,6 +283,8 @@ static gboolean eek_preview_enter_cb( GtkWidget* widget, GdkEventCrossing* event
     return FALSE;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_leave_cb( GtkWidget* widget, GdkEventCrossing* event )
 {
     if ( gtk_get_event_widget( (GdkEvent*)event ) == widget ) {
@@ -289,21 +296,31 @@ static gboolean eek_preview_leave_cb( GtkWidget* widget, GdkEventCrossing* event
 }
 
 /*
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_focus_in_event( GtkWidget* widget, GdkEventFocus* event )
 {
     g_message("focus IN");
+    // JON: keeping this gboolean because it is legacy c-based code
+    // TODO: convert to bool
     gboolean blip = parent_class->focus_in_event ? parent_class->focus_in_event(widget, event) : FALSE;
     return blip;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_focus_out_event( GtkWidget* widget, GdkEventFocus* event )
 {
     g_message("focus OUT");
+    // JON: keeping this gboolean because it is legacy c-based code
+    // TODO: convert to bool
     gboolean blip = parent_class->focus_out_event ? parent_class->focus_out_event(widget, event) : FALSE;
     return blip;
 }
 */
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_button_press_cb( GtkWidget* widget, GdkEventButton* event )
 {
     if ( gtk_get_event_widget( (GdkEvent*)event ) == widget ) {
@@ -324,6 +341,8 @@ static gboolean eek_preview_button_press_cb( GtkWidget* widget, GdkEventButton* 
     return FALSE;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton* event )
 {
     if ( gtk_get_event_widget( (GdkEvent*)event ) == widget ) {
@@ -331,6 +350,8 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
         preview->_hot = FALSE;
         gtk_widget_set_state( widget, GTK_STATE_NORMAL );
         if ( preview->_within && event->button == PRIME_BUTTON_MAGIC_NUMBER ) {
+            // JON: keeping this gboolean because it is legacy c-based code
+            // TODO: convert to bool
             gboolean isAlt = (event->state & GDK_SHIFT_MASK) == GDK_SHIFT_MASK;
 
             if ( isAlt ) {
@@ -343,12 +364,16 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
     return FALSE;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 gboolean eek_preview_key_press_event( GtkWidget* widget, GdkEventKey* event)
 {
     g_message("TICK");
     return FALSE;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 gboolean eek_preview_key_release_event( GtkWidget* widget, GdkEventKey* event)
 {
     g_message("tock");
@@ -387,6 +412,8 @@ static void eek_preview_set_property( GObject *object,
         case FOCUS_PROP_ID:
         {
             EekPreview* preview = EEK_PREVIEW( object );
+            // JON: keeping this gboolean because it is legacy c-based code
+            // TODO: convert to bool
             gboolean val = g_value_get_boolean( value );
             if ( val != preview->_takesFocus ) {
                 preview->_takesFocus = val;
@@ -403,9 +430,13 @@ static void eek_preview_set_property( GObject *object,
 }
 
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 static gboolean eek_preview_popup_menu( GtkWidget* widget )
 {
 /*     g_message("Do the popup!"); */
+    // JON: keeping this gboolean because it is legacy c-based code
+    // TODO: convert to bool
     gboolean blip = parent_class->popup_menu ? parent_class->popup_menu(widget) : FALSE;
     return blip;
 }
@@ -519,11 +550,15 @@ LinkType eek_preview_get_linked( EekPreview* splat )
     return (LinkType)splat->_linked;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 gboolean eek_preview_get_focus_on_click( EekPreview* preview )
 {
     return preview->_takesFocus;
 }
 
+// JON: keeping this gboolean because it is legacy c-based code
+// TODO: convert to bool
 void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_click )
 {
     if ( focus_on_click != preview->_takesFocus ) {

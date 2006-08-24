@@ -155,6 +155,7 @@ private:
 
     Message *_discard(Message *m); ///< frees a message struct and returns the next such struct in the list
     void _emitChanged(); ///< emits the "changed" signal
+    // JON: Have to keep this gboolean for legacy reasons of glib support
     static gboolean _timeout(gpointer data); ///< callback to expire flashed messages
 
     sigc::signal<void, MessageType, gchar const *> _changed_signal;

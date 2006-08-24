@@ -65,7 +65,7 @@ sp_marshal_VOID__POINTER_BOOLEAN (GClosure     *closure,
 {
   typedef void (*GMarshalFunc_VOID__POINTER_BOOLEAN) (gpointer     data1,
                                                       gpointer     arg_1,
-                                                      gboolean     arg_2,
+                                                      bool     arg_2,
                                                       gpointer     data2);
   register GMarshalFunc_VOID__POINTER_BOOLEAN callback;
   register GCClosure *cc = (GCClosure*) closure;
@@ -213,7 +213,7 @@ sp_marshal_VOID__STRING_BOOLEAN (GClosure     *closure,
 {
   typedef void (*GMarshalFunc_VOID__STRING_BOOLEAN) (gpointer     data1,
                                                      gpointer     arg_1,
-                                                     gboolean     arg_2,
+                                                     bool     arg_2,
                                                      gpointer     data2);
   register GMarshalFunc_VOID__STRING_BOOLEAN callback;
   register GCClosure *cc = (GCClosure*) closure;
@@ -248,12 +248,12 @@ sp_marshal_BOOLEAN__VOID (GClosure     *closure,
                           gpointer      invocation_hint,
                           gpointer      marshal_data)
 {
-  typedef gboolean (*GMarshalFunc_BOOLEAN__VOID) (gpointer     data1,
+  typedef bool (*GMarshalFunc_BOOLEAN__VOID) (gpointer     data1,
                                                   gpointer     data2);
   register GMarshalFunc_BOOLEAN__VOID callback;
   register GCClosure *cc = (GCClosure*) closure;
   register gpointer data1, data2;
-  gboolean v_return;
+  bool v_return;
 
   g_return_if_fail (return_value != NULL);
   g_return_if_fail (n_param_values == 1);
@@ -285,13 +285,13 @@ sp_marshal_BOOLEAN__UINT (GClosure     *closure,
                           gpointer      invocation_hint,
                           gpointer      marshal_data)
 {
-  typedef gboolean (*GMarshalFunc_BOOLEAN__UINT) (gpointer     data1,
+  typedef bool (*GMarshalFunc_BOOLEAN__UINT) (gpointer     data1,
                                                   guint        arg_1,
                                                   gpointer     data2);
   register GMarshalFunc_BOOLEAN__UINT callback;
   register GCClosure *cc = (GCClosure*) closure;
   register gpointer data1, data2;
-  gboolean v_return;
+  bool v_return;
 
   g_return_if_fail (return_value != NULL);
   g_return_if_fail (n_param_values == 2);
@@ -324,13 +324,13 @@ sp_marshal_BOOLEAN__POINTER (GClosure     *closure,
                              gpointer      invocation_hint,
                              gpointer      marshal_data)
 {
-  typedef gboolean (*GMarshalFunc_BOOLEAN__POINTER) (gpointer     data1,
+  typedef bool (*GMarshalFunc_BOOLEAN__POINTER) (gpointer     data1,
                                                      gpointer     arg_1,
                                                      gpointer     data2);
   register GMarshalFunc_BOOLEAN__POINTER callback;
   register GCClosure *cc = (GCClosure*) closure;
   register gpointer data1, data2;
-  gboolean v_return;
+  bool v_return;
 
   g_return_if_fail (return_value != NULL);
   g_return_if_fail (n_param_values == 2);
@@ -363,14 +363,14 @@ sp_marshal_BOOLEAN__POINTER_UINT (GClosure     *closure,
                                   gpointer      invocation_hint,
                                   gpointer      marshal_data)
 {
-  typedef gboolean (*GMarshalFunc_BOOLEAN__POINTER_UINT) (gpointer     data1,
+  typedef bool (*GMarshalFunc_BOOLEAN__POINTER_UINT) (gpointer     data1,
                                                           gpointer     arg_1,
                                                           guint        arg_2,
                                                           gpointer     data2);
   register GMarshalFunc_BOOLEAN__POINTER_UINT callback;
   register GCClosure *cc = (GCClosure*) closure;
   register gpointer data1, data2;
-  gboolean v_return;
+  bool v_return;
 
   g_return_if_fail (return_value != NULL);
   g_return_if_fail (n_param_values == 3);
@@ -404,14 +404,14 @@ sp_marshal_BOOLEAN__POINTER_POINTER (GClosure     *closure,
                                      gpointer      invocation_hint,
                                      gpointer      marshal_data)
 {
-  typedef gboolean (*GMarshalFunc_BOOLEAN__POINTER_POINTER) (gpointer     data1,
+  typedef bool (*GMarshalFunc_BOOLEAN__POINTER_POINTER) (gpointer     data1,
                                                              gpointer     arg_1,
                                                              gpointer     arg_2,
                                                              gpointer     data2);
   register GMarshalFunc_BOOLEAN__POINTER_POINTER callback;
   register GCClosure *cc = (GCClosure*) closure;
   register gpointer data1, data2;
-  gboolean v_return;
+  bool v_return;
 
   g_return_if_fail (return_value != NULL);
   g_return_if_fail (n_param_values == 3);

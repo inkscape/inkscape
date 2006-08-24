@@ -138,7 +138,8 @@ void MessageStack::_emitChanged() {
         _changed_signal.emit(NORMAL_MESSAGE, NULL);
     }
 }
-
+// JON: this has o stay this way because of legacy use of glib
+// would like to change this to bool
 gboolean MessageStack::_timeout(gpointer data) {
     Message *m=reinterpret_cast<Message *>(data);
     m->timeout_id = 0;
