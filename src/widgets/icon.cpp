@@ -35,8 +35,6 @@
 
 #include "icon.h"
 
-// JON: keeping legacy gboolean because of old code
-// TODO: replace gboolean with bool
 static gboolean icon_prerender_task(gpointer data);
 
 static void addPreRender( Inkscape::IconSize lsize, gchar const *name );

@@ -188,7 +188,7 @@ public:
     SPObject* _target;
 };
 
-static bool layers_panel_activated( GtkObject *object, GdkEvent * /*event*/, gpointer data )
+static gboolean layers_panel_activated( GtkObject *object, GdkEvent * /*event*/, gpointer data )
 {
     if ( data )
     {

@@ -2941,8 +2941,8 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
         {
             GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-bold"));
 
-            bool active = gtk_toggle_button_get_active (button);
-            bool check  = (query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700); 
+            gboolean active = gtk_toggle_button_get_active (button);
+            gboolean check  = (query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700); 
 
             if (active != check) 
             {
@@ -2955,8 +2955,8 @@ sp_text_toolbox_selection_changed (Inkscape::Selection *selection, GObject *tbl)
         {
             GtkToggleButton *button = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (tbl), "style-italic"));
 
-            bool active = gtk_toggle_button_get_active (button);
-            bool check  = (query->font_style.computed != SP_CSS_FONT_STYLE_NORMAL); 
+            gboolean active = gtk_toggle_button_get_active (button);
+            gboolean check  = (query->font_style.computed != SP_CSS_FONT_STYLE_NORMAL); 
 
             if (active != check)
             {
@@ -3233,7 +3233,7 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
 }
 
-bool
+gboolean
 sp_text_toolbox_size_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -3253,7 +3253,7 @@ sp_text_toolbox_size_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
     return FALSE;
 }
 
-bool
+gboolean
 sp_text_toolbox_family_keypress (GtkWidget *w, GdkEventKey *event, GObject *tbl)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -3269,7 +3269,7 @@ sp_text_toolbox_family_keypress (GtkWidget *w, GdkEventKey *event, GObject *tbl)
     return FALSE;
 }
 
-bool
+gboolean
 sp_text_toolbox_family_list_keypress (GtkWidget *w, GdkEventKey *event, GObject *tbl)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -3364,7 +3364,7 @@ sp_text_toolbox_text_popdown_clicked    (GtkButton          *button,
     }
 }
 
-bool
+gboolean
 sp_text_toolbox_entry_focus_in  (GtkWidget        *entry,
                                  GdkEventFocus    *event,
                                  GObject          *tbl)
@@ -3373,7 +3373,7 @@ sp_text_toolbox_entry_focus_in  (GtkWidget        *entry,
     return FALSE;
 }
 
-bool
+gboolean
 sp_text_toolbox_popdown_focus_out (GtkWidget        *popdown,
                                    GdkEventFocus    *event,
                                    GObject          *tbl)

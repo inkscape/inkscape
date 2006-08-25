@@ -272,7 +272,7 @@ end_font_face_cb(CRDocHandler *a_handler)
 static void
 property_cb(CRDocHandler *const a_handler,
             CRString *const a_name,
-            CRTerm *const a_value, int const a_important)
+            CRTerm *const a_value, gboolean const a_important)
 {
     g_return_if_fail(a_handler && a_name);
     g_return_if_fail(a_handler->app_data != NULL);

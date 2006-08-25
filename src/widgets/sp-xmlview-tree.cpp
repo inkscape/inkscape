@@ -41,8 +41,6 @@ static void comment_content_changed (Inkscape::XML::Node * repr, const gchar * o
 
 static void tree_move (GtkCTree * tree, GtkCTreeNode * node, GtkCTreeNode * new_parent, GtkCTreeNode * new_sibling);
 
-// JON: Must keep this as gboolean legacy
-// TODO: convert to use bool
 static gboolean check_drag (GtkCTree * tree, GtkCTreeNode * node, GtkCTreeNode * new_parent, GtkCTreeNode * new_sibling);
 
 static GtkCTreeNode * ref_to_sibling (GtkCTreeNode * parent, Inkscape::XML::Node * ref);

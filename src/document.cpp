@@ -66,8 +66,6 @@
 
 static gint sp_document_idle_handler(gpointer data);
 
-// JON: This must stay as gboolean because its used as a callback into
-// our legacy c stuff in here. Would like to make bool
 gboolean sp_document_resource_list_free(gpointer key, gpointer value, gpointer data);
 
 static gint doc_count = 0;
@@ -1108,8 +1106,6 @@ sigc::connection sp_document_resources_changed_connect(SPDocument *document,
 
 /* Helpers */
 
-// JON: This must stay this way because it is used as a callback for 
-// legacy glib code which needs to be moved to glibmm
 gboolean
 sp_document_resource_list_free(gpointer key, gpointer value, gpointer data)
 {

@@ -86,9 +86,7 @@ struct _EekPreview
     int _r;
     int _g;
     int _b;
-    
-    // JON: keeping this gboolean because it is legacy c-based code
-    // TODO: convert to bool
+
     gboolean _hot;
     gboolean _within;
     gboolean _takesFocus;
@@ -116,8 +114,6 @@ void eek_preview_set_color( EekPreview* splat, int r, int g, int b );
 void eek_preview_set_linked( EekPreview* splat, LinkType link );
 LinkType eek_preview_get_linked( EekPreview* splat );
 
-// JON: keeping this gboolean because it is legacy c-based code
-// TODO: convert to bool
 gboolean eek_preview_get_focus_on_click( EekPreview* preview );
 void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_click );
 
