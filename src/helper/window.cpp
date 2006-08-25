@@ -19,7 +19,7 @@
 #include "desktop.h"
 #include "event-context.h"
 
-static bool
+static gboolean
 sp_window_key_press (GtkWidget *widget, GdkEventKey *event)
 {
 	unsigned int shortcut;

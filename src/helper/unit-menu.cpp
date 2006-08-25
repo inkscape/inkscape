@@ -46,7 +46,7 @@ struct SPUnitSelector {
 struct SPUnitSelectorClass {
     GtkHBoxClass parent_class;
 
-    bool (* set_unit)(SPUnitSelector *us, SPUnit const *old, SPUnit const *new_unit);
+    gboolean (* set_unit)(SPUnitSelector *us, SPUnit const *old, SPUnit const *new_unit);
 };
 
 enum {SET_UNIT, LAST_SIGNAL};
@@ -175,7 +175,7 @@ spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
 
     us->update = TRUE;
 
-    bool consumed = FALSE;
+    gboolean consumed = FALSE;
     g_signal_emit(G_OBJECT(us), signals[SET_UNIT], 0, old, unit, &consumed);
 
     if ( !consumed
@@ -333,7 +333,7 @@ sp_unit_selector_remove_adjustment(SPUnitSelector *us, GtkAdjustment *adj)
     gtk_object_unref(GTK_OBJECT(adj));
 }
 
-bool
+gboolean
 sp_unit_selector_update_test(SPUnitSelector const *selector)
 {
     g_return_val_if_fail(selector != NULL, FALSE);

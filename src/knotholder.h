@@ -41,7 +41,7 @@ struct SPKnotHolder : GObject {
 
     Inkscape::XML::Node *repr; ///< repr of the item, for setting and releasing listeners.
 
-    bool local_change; ///< if true, no need to recreate knotholder if repr was changed.
+    gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
 };
 
 struct SPKnotHolderClass : GObjectClass {

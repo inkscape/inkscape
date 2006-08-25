@@ -57,13 +57,13 @@ public:
     void scale(NR::Point &pt, guint state);
     void skew(SPSelTransHandle const &handle, NR::Point &pt, guint state);
     void rotate(NR::Point &pt, guint state);
-    bool scaleRequest(NR::Point &pt, guint state);
-    bool stretchRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state);
-    bool skewRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state);
-    bool rotateRequest(NR::Point &pt, guint state);
-    bool centerRequest(NR::Point &pt, guint state);
+    gboolean scaleRequest(NR::Point &pt, guint state);
+    gboolean stretchRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state);
+    gboolean skewRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state);
+    gboolean rotateRequest(NR::Point &pt, guint state);
+    gboolean centerRequest(NR::Point &pt, guint state);
 
-    bool handleRequest(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);
+    gboolean handleRequest(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);
     void handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle);
     void handleClick(SPKnot *knot, guint state, SPSelTransHandle const &handle);
     void handleNewEvent(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle);

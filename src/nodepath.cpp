@@ -94,9 +94,9 @@ static gchar *create_typestr(Inkscape::NodePath::Path *np);
 
 static void sp_node_update_handles(Inkscape::NodePath::Node *node, bool fire_move_signals = true);
 
-static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, bool incremental, bool override);
+static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, gboolean incremental, gboolean override);
 
-static void sp_node_set_selected(Inkscape::NodePath::Node *node, bool selected);
+static void sp_node_set_selected(Inkscape::NodePath::Node *node, gboolean selected);
 
 /* Adjust handle placement, if the node or the other handle is moved */
 static void sp_node_adjust_handle(Inkscape::NodePath::Node *node, gint which_adjust);
@@ -106,15 +106,15 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node);
 static void node_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static bool node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data);
+static gboolean node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data);
 
 /* Handle event callbacks */
 static void node_handle_clicked(SPKnot *knot, guint state, gpointer data);
 static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data);
 static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data);
-static bool node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data);
+static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data);
 static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer data);
-static bool node_handle_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n);
+static gboolean node_handle_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n);
 
 /* Constructors and destructors */
 
@@ -1286,7 +1286,7 @@ static void sp_node_ensure_knot_exists (SPDesktop *desktop, Inkscape::NodePath::
 /**
  * Ensure the given handle of the node is visible/invisible, update its screen position
  */
-static void sp_node_update_handle(Inkscape::NodePath::Node *node, gint which, bool show_handle, bool fire_move_signals)
+static void sp_node_update_handle(Inkscape::NodePath::Node *node, gint which, gboolean show_handle, bool fire_move_signals)
 {
     g_assert(node != NULL);
 
@@ -1351,7 +1351,7 @@ static void sp_node_update_handles(Inkscape::NodePath::Node *node, bool fire_mov
             sp_knot_moveto(node->knot, &node->pos);
     }
 
-    bool show_handles = node->selected;
+    gboolean show_handles = node->selected;
     if (node->p.other != NULL) {
         if (node->p.other->selected) show_handles = TRUE;
     }
@@ -1558,11 +1558,11 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
     //fixme: this can return NULL, so check before proceeding.
     g_return_if_fail(e != NULL);
     
-    bool force = FALSE;
+    gboolean force = FALSE;
     if (!(e->selected && (!e->p.other || e->p.other->selected))) {
         force = TRUE;
     }
-    sp_nodepath_node_select(e, (bool) toggle, force);
+    sp_nodepath_node_select(e, (gboolean) toggle, force);
     if (e->p.other)
         sp_nodepath_node_select(e->p.other, TRUE, force);
 
@@ -2120,7 +2120,7 @@ sp_node_selected_delete_segment(void)
     if (a->subpath->closed) {
 
 
-        bool reversed = FALSE;
+        gboolean reversed = FALSE;
 
         //Since we can go in a circle, we need to find the shorter distance.
         //  a->b or b->a
@@ -2276,7 +2276,7 @@ sp_node_selected_set_type(Inkscape::NodePath::NodeType type)
 /**
  * Change select status of node, update its own and neighbour handles.
  */
-static void sp_node_set_selected(Inkscape::NodePath::Node *node, bool selected)
+static void sp_node_set_selected(Inkscape::NodePath::Node *node, gboolean selected)
 {
     node->selected = selected;
 
@@ -2303,7 +2303,7 @@ static void sp_node_set_selected(Inkscape::NodePath::Node *node, bool selected)
 \param incremental   If true, add to selection, otherwise deselect others
 \param override   If true, always select this node, otherwise toggle selected status
 */
-static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, bool incremental, bool override)
+static void sp_nodepath_node_select(Inkscape::NodePath::Node *node, gboolean incremental, gboolean override)
 {
     Inkscape::NodePath::Path *nodepath = node->subpath->nodepath;
 
@@ -2520,7 +2520,7 @@ void sp_nodepath_select_prev(Inkscape::NodePath::Path *nodepath)
 /**
  * \brief Select all nodes that are within the rectangle.
  */
-void sp_nodepath_select_rect(Inkscape::NodePath::Path *nodepath, NR::Rect const &b, bool incremental)
+void sp_nodepath_select_rect(Inkscape::NodePath::Path *nodepath, NR::Rect const &b, gboolean incremental)
 {
     if (!incremental) {
         sp_nodepath_deselect(nodepath);
@@ -2855,9 +2855,9 @@ static void sp_node_adjust_handles(Inkscape::NodePath::Node *node)
 /**
  * Node event callback.
  */
-static bool node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n)
+static gboolean node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *n)
 {
-    bool ret = FALSE;
+    gboolean ret = FALSE;
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
             active_node = n;
@@ -2902,7 +2902,7 @@ static bool node_event(SPKnot *knot, GdkEvent *event, Inkscape::NodePath::Node *
 /**
  * Handle keypress on node; directly called.
  */
-bool node_key(GdkEvent *event)
+gboolean node_key(GdkEvent *event)
 {
     Inkscape::NodePath::Path *np;
 
@@ -3033,13 +3033,13 @@ static double point_line_distance(NR::Point *p, double a)
  * Callback for node "request" signal.
  * \todo fixme: This goes to "moved" event? (lauris)
  */
-static bool
+static gboolean
 node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
 {
     double yn, xn, yp, xp;
     double an, ap, na, pa;
     double d_an, d_ap, d_na, d_pa;
-    bool collinear = FALSE;
+    gboolean collinear = FALSE;
     NR::Point c;
     NR::Point pr;
 
@@ -3282,7 +3282,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
 /**
  * Node handle "request" signal callback.
  */
-static bool node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
+static gboolean node_handle_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
 {
     Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
@@ -3424,9 +3424,9 @@ static void node_handle_moved(SPKnot *knot, NR::Point *p, guint state, gpointer 
 /**
  * Node handle event callback.
  */
-static bool node_handle_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePath::Node *n)
+static gboolean node_handle_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePath::Node *n)
 {
-    bool ret = FALSE;
+    gboolean ret = FALSE;
     switch (event->type) {
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
@@ -3449,7 +3449,7 @@ static bool node_handle_event(SPKnot *knot, GdkEvent *event,Inkscape::NodePath::
 }
 
 static void node_rotate_one_internal(Inkscape::NodePath::Node const &n, gdouble const angle,
-                                 Radial &rme, Radial &rother, bool const both)
+                                 Radial &rme, Radial &rother, gboolean const both)
 {
     rme.a += angle;
     if ( both
@@ -3461,7 +3461,7 @@ static void node_rotate_one_internal(Inkscape::NodePath::Node const &n, gdouble 
 }
 
 static void node_rotate_one_internal_screen(Inkscape::NodePath::Node const &n, gdouble const angle,
-                                        Radial &rme, Radial &rother, bool const both)
+                                        Radial &rme, Radial &rother, gboolean const both)
 {
     gdouble const norm_angle = angle / n.subpath->nodepath->desktop->current_zoom();
 
@@ -3492,7 +3492,7 @@ static void node_rotate_one_internal_screen(Inkscape::NodePath::Node const &n, g
 /**
  * Rotate one node.
  */
-static void node_rotate_one (Inkscape::NodePath::Node *n, gdouble angle, int which, bool screen)
+static void node_rotate_one (Inkscape::NodePath::Node *n, gdouble angle, int which, gboolean screen)
 {
     Inkscape::NodePath::NodeSide *me, *other;
     bool both = false;

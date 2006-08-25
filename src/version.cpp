@@ -15,7 +15,7 @@
 #include <glib/gstrfuncs.h>
 #include "version.h"
 
-bool sp_version_from_string(const gchar *string, Inkscape::Version *version)
+gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version)
 {
     if (!string) {
         return FALSE;
@@ -34,7 +34,7 @@ gchar *sp_version_to_string(Inkscape::Version version)
     return g_strdup_printf("%u.%u", version.major, version.minor);
 }
 
-bool sp_version_inside_range(Inkscape::Version version,
+gboolean sp_version_inside_range(Inkscape::Version version,
                                  unsigned major_min, unsigned minor_min,
                                  unsigned major_max, unsigned minor_max)
 {

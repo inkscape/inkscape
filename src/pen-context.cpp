@@ -55,7 +55,7 @@ static void spdc_pen_set_subsequent_point(SPPenContext *pc, NR::Point const p, b
 static void spdc_pen_set_ctrl(SPPenContext *pc, NR::Point const p, guint state);
 static void spdc_pen_finish_segment(SPPenContext *pc, NR::Point p, guint state);
 
-static void spdc_pen_finish(SPPenContext *pc, bool closed);
+static void spdc_pen_finish(SPPenContext *pc, gboolean closed);
 
 static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const &bevent);
 static gint pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent);
@@ -1126,7 +1126,7 @@ spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const s
 }
 
 static void
-spdc_pen_finish(SPPenContext *const pc, bool const closed)
+spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
 {
     SPDesktop *const desktop = pc->desktop;
     pc->_message_context->clear();

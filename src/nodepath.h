@@ -147,7 +147,7 @@ class SubPath {
 /**  The parent of this subpath */
 	Path * nodepath;
 /**  Is this path closed (no endpoints) or not?*/
-	bool closed;
+	gboolean closed;
 /**  The nodes in this subpath. */
 	GList * nodes;
 /**  The first node of the subpath (does not imply open/closed)*/
@@ -247,12 +247,12 @@ void sp_nodepath_select_all (Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_all_from_subpath(Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_next (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_select_prev (Inkscape::NodePath::Path *nodepath);
-void sp_nodepath_select_rect (Inkscape::NodePath::Path * nodepath, NR::Rect const &b, bool incremental);
+void sp_nodepath_select_rect (Inkscape::NodePath::Path * nodepath, NR::Rect const &b, gboolean incremental);
 GList *save_nodepath_selection (Inkscape::NodePath::Path *nodepath);
 void restore_nodepath_selection (Inkscape::NodePath::Path *nodepath, GList *r);
-bool nodepath_repr_d_changed (Inkscape::NodePath::Path * np, const char *newd);
-bool nodepath_repr_typestr_changed (Inkscape::NodePath::Path * np, const char *newtypestr);
-bool node_key (GdkEvent * event);
+gboolean nodepath_repr_d_changed (Inkscape::NodePath::Path * np, const char *newd);
+gboolean nodepath_repr_typestr_changed (Inkscape::NodePath::Path * np, const char *newtypestr);
+gboolean node_key (GdkEvent * event);
 void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotation);
 void sp_nodepath_update_statusbar (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_selected_align(Inkscape::NodePath::Path *nodepath, NR::Dim2 axis);

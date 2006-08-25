@@ -175,8 +175,8 @@ void sp_document_set_height (SPDocument * document, gdouble height, const SPUnit
  * Undo & redo
  */
 
-void sp_document_set_undo_sensitive (SPDocument * document, bool sensitive);
-bool sp_document_get_undo_sensitive (SPDocument const * document);
+void sp_document_set_undo_sensitive (SPDocument * document, gboolean sensitive);
+gboolean sp_document_get_undo_sensitive (SPDocument const * document);
 
 void sp_document_clear_undo (SPDocument * document);
 void sp_document_clear_redo (SPDocument * document);
@@ -200,12 +200,12 @@ void sp_document_reset_key (Inkscape::Application *inkscape, SPDesktop *desktop,
 void sp_document_cancel (SPDocument *document);
 
 /* Undo and redo */
-bool sp_document_undo (SPDocument * document);
-bool sp_document_redo (SPDocument * document);
+gboolean sp_document_undo (SPDocument * document);
+gboolean sp_document_redo (SPDocument * document);
 
 /* Resource management */
-bool sp_document_add_resource (SPDocument *document, const gchar *key, SPObject *object);
-bool sp_document_remove_resource (SPDocument *document, const gchar *key, SPObject *object);
+gboolean sp_document_add_resource (SPDocument *document, const gchar *key, SPObject *object);
+gboolean sp_document_remove_resource (SPDocument *document, const gchar *key, SPObject *object);
 const GSList *sp_document_get_resource_list (SPDocument *document, const gchar *key);
 sigc::connection sp_document_resources_changed_connect(SPDocument *document, const gchar *key, SPDocument::ResourcesChangedSignal::slot_type slot);
 
@@ -231,7 +231,7 @@ sigc::connection sp_document_resources_changed_connect(SPDocument *document, con
 GSList * sp_document_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box);
 GSList * sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey, NR::Rect const &box);
 SPItem* sp_document_item_from_list_at_point_bottom (unsigned int dkey, SPGroup *group, const GSList *list, NR::Point const p, bool take_insensitive = false);
-SPItem * sp_document_item_at_point (SPDocument *document, unsigned int key, NR::Point const p, bool into_groups, SPItem *upto = NULL);
+SPItem * sp_document_item_at_point (SPDocument *document, unsigned int key, NR::Point const p, gboolean into_groups, SPItem *upto = NULL);
 SPItem * sp_document_group_at_point (SPDocument *document, unsigned int key,  NR::Point const p);
 
 void sp_document_set_uri (SPDocument *document, const gchar *uri);

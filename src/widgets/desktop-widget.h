@@ -34,7 +34,7 @@ void sp_desktop_widget_destroy (SPDesktopWidget* dtw);
 
 gint sp_desktop_widget_set_focus(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
 
-void sp_desktop_widget_show_decorations(SPDesktopWidget *dtw, bool show);
+void sp_desktop_widget_show_decorations(SPDesktopWidget *dtw, gboolean show);
 void sp_desktop_widget_fullscreen(SPDesktopWidget *dtw);
 void sp_desktop_widget_layout(SPDesktopWidget *dtw);
 void sp_desktop_widget_update_zoom(SPDesktopWidget *dtw);

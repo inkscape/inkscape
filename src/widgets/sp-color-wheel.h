@@ -29,10 +29,10 @@
 struct SPColorWheel {
     GtkWidget widget;
 
-    bool dragging : 1;
+    gboolean dragging : 1;
 
-    bool _inTriangle;
-    bool _triDirty;
+    gboolean _inTriangle;
+    gboolean _triDirty;
     GdkRegion* _triangle;
     GdkPoint _triPoints[3];
     guchar *_triImage;
@@ -64,7 +64,7 @@ GtkWidget *sp_color_wheel_new ();
 void sp_color_wheel_get_color( SPColorWheel *wheel, SPColor* color );
 void sp_color_wheel_set_color( SPColorWheel *wheel, const SPColor* color );
 
-bool sp_color_wheel_is_adjusting( SPColorWheel *wheel );
+gboolean sp_color_wheel_is_adjusting( SPColorWheel *wheel );
 
 #endif
 

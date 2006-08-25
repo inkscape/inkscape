@@ -53,14 +53,14 @@ protected:
     void _getCmykaFloatv(gfloat *cmyka);
     guint32 _getRgba32();
     void _updateSliders(guint channels);
-    void _recalcColor(bool changing);
+    void _recalcColor(gboolean changing);
 
     void _setRangeLimit( gdouble upper );
 
     SPColorScalesMode _mode;
     gdouble _rangeLimit;
-    bool _updating : 1;
-    bool _dragging : 1;
+    gboolean _updating : 1;
+    gboolean _dragging : 1;
     GtkAdjustment *_a[5]; /* Channel adjustments */
     GtkWidget *_s[5]; /* Channel sliders */
     GtkWidget *_b[5]; /* Spinbuttons */

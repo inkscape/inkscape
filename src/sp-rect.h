@@ -47,8 +47,8 @@ GType sp_rect_get_type (void);
 void sp_rect_position_set (SPRect * rect, gdouble x, gdouble y, gdouble width, gdouble height);
 
 /* If SET if FALSE, VALUE is just ignored */
-void sp_rect_set_rx(SPRect * rect, bool set, gdouble value);
-void sp_rect_set_ry(SPRect * rect, bool set, gdouble value);
+void sp_rect_set_rx(SPRect * rect, gboolean set, gdouble value);
+void sp_rect_set_ry(SPRect * rect, gboolean set, gdouble value);
 
 void sp_rect_set_visible_rx (SPRect *rect, gdouble rx);
 void sp_rect_set_visible_ry (SPRect *rect, gdouble ry);

@@ -961,7 +961,7 @@ spcc_connector_finish(SPConnectorContext *const cc)
 }
 
 
-static bool
+static gboolean
 cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 {
     g_assert (knot != NULL);
@@ -971,7 +971,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(
             knot->desktop->event_context);
 
-    bool consumed = FALSE;
+    gboolean consumed = FALSE;
 
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
@@ -1008,12 +1008,12 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 }
 
 
-static bool
+static gboolean
 endpt_handler(SPKnot *knot, GdkEvent *event, SPConnectorContext *cc)
 {
     g_assert( SP_IS_CONNECTOR_CONTEXT(cc) );
 
-    bool consumed = FALSE;
+    gboolean consumed = FALSE;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:

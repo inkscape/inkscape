@@ -31,7 +31,7 @@ typedef struct {
 } win_data;
 
 
-bool sp_dialog_event_handler ( GtkWindow *win, 
+gboolean sp_dialog_event_handler ( GtkWindow *win, 
                                    GdkEvent *event, 
                                    gpointer data );
 
@@ -49,8 +49,8 @@ void sp_transientize_callback    ( Inkscape::Application *inkscape,
 
 void on_dialog_hide (GtkWidget *w);
 void on_dialog_unhide (GtkWidget *w);
-bool sp_dialog_hide (GtkObject *object, gpointer data);
-bool sp_dialog_unhide (GtkObject *object, gpointer data);
+gboolean sp_dialog_hide (GtkObject *object, gpointer data);
+gboolean sp_dialog_unhide (GtkObject *object, gpointer data);
 
 #endif
 

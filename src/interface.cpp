@@ -126,7 +126,7 @@ SPActionEventVector menu_item_event_vector = {
 };
 
 void
-sp_create_window(SPViewWidget *vw, bool editable)
+sp_create_window(SPViewWidget *vw, gboolean editable)
 {
     g_return_if_fail(vw != NULL);
     g_return_if_fail(SP_IS_VIEW_WIDGET(vw));
@@ -346,7 +346,7 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 static GtkWidget *
 sp_ui_menu_append_item( GtkMenu *menu, gchar const *stock,
                         gchar const *label, gchar const *tip, Inkscape::UI::View::View *view, GCallback callback,
-                        gpointer data, bool with_mnemonic = TRUE )
+                        gpointer data, gboolean with_mnemonic = TRUE )
 {
     GtkWidget *item;
 
@@ -569,13 +569,13 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
     else
         pref_path = g_strconcat("window.", pref, NULL);
 
-    bool checked = gtk_check_menu_item_get_active(menuitem);
+    gboolean checked = gtk_check_menu_item_get_active(menuitem);
     prefs_set_int_attribute(pref_path, "state", checked);
 
     reinterpret_cast<SPDesktop*>(view)->layoutWidget();
 }
 
-static bool
+static gboolean
 checkitem_update(GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 {
     GtkCheckMenuItem *menuitem=GTK_CHECK_MENU_ITEM(widget);
@@ -602,7 +602,7 @@ checkitem_update(GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 void
 sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *view, gchar const *label, gchar const *tip, gchar const *pref,
                                        void (*callback_toggle)(GtkCheckMenuItem *, gpointer user_data),
-                                       bool (*callback_update)(GtkWidget *widget, GdkEventExpose *event, gpointer user_data),
+                                       gboolean (*callback_update)(GtkWidget *widget, GdkEventExpose *event, gpointer user_data),
                                        Inkscape::Verb *verb)
 {
     GtkWidget *item;

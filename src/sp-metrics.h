@@ -6,7 +6,7 @@
 #include "sp-metric.h"
 
 gdouble sp_absolute_metric_to_metric (gdouble length_src, const SPMetric metric_src, const SPMetric metric_dst);
-GString * sp_metric_to_metric_string (gdouble length,  const SPMetric metric_src, const SPMetric metric_dst, bool m);
+GString * sp_metric_to_metric_string (gdouble length,  const SPMetric metric_src, const SPMetric metric_dst, gboolean m);
 
 // convenience since we mostly deal with points
 #define SP_METRIC_TO_PT(l,m) sp_absolute_metric_to_metric(l,m,SP_PT);

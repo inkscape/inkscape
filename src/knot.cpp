@@ -290,7 +290,7 @@ static int sp_knot_handler(SPCanvasItem *item, GdkEvent *event, SPKnot *knot)
     g_object_ref(knot);
     tolerance = prefs_get_int_attribute_limited("options.dragtolerance", "value", 0, 0, 100);
 
-    bool consumed = FALSE;
+    gboolean consumed = FALSE;
 
     /* Run client universal event handler, if present */
 
@@ -505,7 +505,7 @@ void sp_knot_request_position(SPKnot *knot, NR::Point *p, guint state)
     g_return_if_fail(knot != NULL);
     g_return_if_fail(SP_IS_KNOT(knot));
 
-    bool done = FALSE;
+    gboolean done = FALSE;
 
     g_signal_emit(knot,
                   knot_signals[REQUEST], 0,

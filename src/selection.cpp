@@ -66,7 +66,7 @@ void Selection::_schedule_modified(SPObject *obj, guint flags) {
     this->_flags |= flags;
 }
 
-bool
+gboolean
 Selection::_emit_modified(Selection *selection)
 {
     /* force new handler to be created if requested before we return */

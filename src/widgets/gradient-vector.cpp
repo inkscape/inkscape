@@ -170,7 +170,7 @@ sp_gradient_vector_selector_new (SPDocument *doc, SPGradient *gr)
 void
 sp_gradient_vector_selector_set_gradient (SPGradientVectorSelector *gvs, SPDocument *doc, SPGradient *gr)
 {
-	static bool suppress = FALSE;
+	static gboolean suppress = FALSE;
 
 	g_return_if_fail (gvs != NULL);
 	g_return_if_fail (SP_IS_GRADIENT_VECTOR_SELECTOR (gvs));
@@ -418,7 +418,7 @@ sp_gvs_defs_modified (SPObject *defs, guint flags, SPGradientVectorSelector *gvs
 static GtkWidget *sp_gradient_vector_widget_new (SPGradient *gradient, SPStop *stop);
 
 static void sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient);
-static bool sp_gradient_vector_dialog_delete (GtkWidget *widget, GdkEvent *event, GtkWidget *dialog);
+static gint sp_gradient_vector_dialog_delete (GtkWidget *widget, GdkEvent *event, GtkWidget *dialog);
 static void sp_gradient_vector_dialog_destroy (GtkObject *object, gpointer data);
 
 static void sp_gradient_vector_widget_destroy (GtkObject *object, gpointer data);
@@ -428,7 +428,7 @@ static void sp_gradient_vector_color_dragged (SPColorSelector *csel, GtkObject *
 static void sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object);
 static void update_stop_list( GtkWidget *mnu, SPGradient *gradient, SPStop *new_stop);
 
-static bool blocked = FALSE;
+static gboolean blocked = FALSE;
 
 static void grad_edit_dia_stop_added_or_removed (Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data)
 {
@@ -1025,7 +1025,7 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
 	// Once the user edits a gradient, it stops being auto-collectable
 	if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
 		SPDocument *document = SP_OBJECT_DOCUMENT (gradient);
-		bool saved = sp_document_get_undo_sensitive(document);
+		gboolean saved = sp_document_get_undo_sensitive(document);
 		sp_document_set_undo_sensitive (document, FALSE);
 		SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);
 		sp_document_set_undo_sensitive (document, saved);
@@ -1042,7 +1042,7 @@ sp_gradient_vector_dialog_destroy (GtkObject *object, gpointer data)
 	wd.stop = 0;
 }
 
-static bool
+static gboolean
 sp_gradient_vector_dialog_delete (GtkWidget *widget, GdkEvent *event, GtkWidget *dialog)
 {
 	gtk_window_get_position ((GtkWindow *) dlg, &x, &y);

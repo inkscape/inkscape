@@ -889,7 +889,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
                      /* TODO: annotate */ "stroke-style.cpp:889");
 }
 
-static bool stroke_width_set_unit(SPUnitSelector *,
+static gboolean stroke_width_set_unit(SPUnitSelector *,
                                                  SPUnit const *old,
                                                  SPUnit const *new_units,
                                                  GObject *spw)

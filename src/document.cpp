@@ -549,7 +549,7 @@ void sp_document_set_uri(SPDocument *document, gchar const *uri)
     // Update saveable repr attributes.
     Inkscape::XML::Node *repr = sp_document_repr_root(document);
     // changing uri in the document repr must not be not undoable
-    bool saved = sp_document_get_undo_sensitive(document);
+    gboolean saved = sp_document_get_undo_sensitive(document);
     sp_document_set_undo_sensitive(document, FALSE);
     if (document->base)
         repr->setAttribute("sodipodi:docbase", document->base);
@@ -914,7 +914,7 @@ upwards in z-order and returns what it has found so far (i.e. the found item is
 guaranteed to be lower than upto).
  */
 SPItem*
-find_item_at_point(unsigned int dkey, SPGroup *group, NR::Point const p, bool into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+find_item_at_point(unsigned int dkey, SPGroup *group, NR::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
     SPItem *seen = NULL, *newseen = NULL;
 
@@ -1015,7 +1015,7 @@ GSList *sp_document_partial_items_in_box(SPDocument *document, unsigned int dkey
 
 SPItem *
 sp_document_item_at_point(SPDocument *document, unsigned const key, NR::Point const p,
-                          bool const into_groups, SPItem *upto)
+                          gboolean const into_groups, SPItem *upto)
 {
     g_return_val_if_fail(document != NULL, NULL);
     g_return_val_if_fail(document->priv != NULL, NULL);
@@ -1035,7 +1035,7 @@ sp_document_group_at_point(SPDocument *document, unsigned int key, NR::Point con
 
 /* Resource management */
 
-bool
+gboolean
 sp_document_add_resource(SPDocument *document, gchar const *key, SPObject *object)
 {
     GSList *rlist;
@@ -1060,7 +1060,7 @@ sp_document_add_resource(SPDocument *document, gchar const *key, SPObject *objec
     return TRUE;
 }
 
-bool
+gboolean
 sp_document_remove_resource(SPDocument *document, gchar const *key, SPObject *object)
 {
     GSList *rlist;

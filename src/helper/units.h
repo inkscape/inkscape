@@ -130,7 +130,7 @@ void sp_unit_free_list (GSList *units);
 
 /* These are pure utility */
 /* Return TRUE if conversion is possible, FALSE if unit bases differ */
-bool sp_convert_distance (gdouble *distance, const SPUnit *from, const SPUnit *to);
+gboolean sp_convert_distance (gdouble *distance, const SPUnit *from, const SPUnit *to);
 
 /* If either one is NULL, transconverting to/from that base fails */
 /* Generic conversion between volatile units would be useless anyways */

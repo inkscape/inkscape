@@ -252,7 +252,7 @@ sp_spiral_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
 static gint
 sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    static bool dragging;
+    static gboolean dragging;
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);

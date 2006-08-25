@@ -23,7 +23,7 @@
  * Creates an anchor object and initializes it.
  */
 SPDrawAnchor *
-sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, bool start, NR::Point delta)
+sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean start, NR::Point delta)
 {
     SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(dc);
 
@@ -67,7 +67,7 @@ sp_draw_anchor_destroy(SPDrawAnchor *anchor)
  * pointer to it or NULL.
  */
 SPDrawAnchor *
-sp_draw_anchor_test(SPDrawAnchor *anchor, NR::Point w, bool activate)
+sp_draw_anchor_test(SPDrawAnchor *anchor, NR::Point w, gboolean activate)
 {
     SPDesktop *dt = SP_EVENT_CONTEXT_DESKTOP(anchor->dc);
 

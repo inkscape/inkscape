@@ -53,11 +53,11 @@ static void sp_sel_trans_handle_grab(SPKnot *knot, guint state, gpointer data);
 static void sp_sel_trans_handle_ungrab(SPKnot *knot, guint state, gpointer data);
 static void sp_sel_trans_handle_click(SPKnot *knot, guint state, gpointer data);
 static void sp_sel_trans_handle_new_event(SPKnot *knot, NR::Point *position, guint32 state, gpointer data);
-static bool sp_sel_trans_handle_request(SPKnot *knot, NR::Point *p, guint state, bool *data);
+static gboolean sp_sel_trans_handle_request(SPKnot *knot, NR::Point *p, guint state, gboolean *data);
 
 extern GdkPixbuf *handles[];
 
-static bool sp_seltrans_handle_event(SPKnot *knot, GdkEvent *event, gpointer)
+static gboolean sp_seltrans_handle_event(SPKnot *knot, GdkEvent *event, gpointer)
 {
     switch (event->type) {
         case GDK_MOTION_NOTIFY:
@@ -609,7 +609,7 @@ static void sp_sel_trans_handle_new_event(SPKnot *knot, NR::Point *position, gui
         );
 }
 
-static bool sp_sel_trans_handle_request(SPKnot *knot, NR::Point *position, guint state, bool *data)
+static gboolean sp_sel_trans_handle_request(SPKnot *knot, NR::Point *position, guint state, gboolean *data)
 {
     return SP_SELECT_CONTEXT(knot->desktop->event_context)->_seltrans->handleRequest(
         knot, position, state, *(SPSelTransHandle const *) data
@@ -688,7 +688,7 @@ void Inkscape::SelTrans::handleNewEvent(SPKnot *knot, NR::Point *position, guint
 }
 
 
-bool Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle)
+gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, NR::Point *position, guint state, SPSelTransHandle const &handle)
 {
     if (!SP_KNOT_IS_GRABBED(knot)) {
         return TRUE;
@@ -752,37 +752,37 @@ static double sign(double const x)
              : 1 );
 }
 
-bool sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
+gboolean sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
                                     SPSelTransHandle const &, NR::Point &pt, guint state)
 {
     return seltrans->scaleRequest(pt, state);
 }
 
-bool sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
+gboolean sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
                                       SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
     return seltrans->stretchRequest(handle, pt, state);
 }
 
-bool sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
+gboolean sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
                                    SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
     return seltrans->skewRequest(handle, pt, state);
 }
 
-bool sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
+gboolean sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
                                      SPSelTransHandle const &, NR::Point &pt, guint state)
 {
     return seltrans->rotateRequest(pt, state);
 }
 
-bool sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
+gboolean sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
                                      SPSelTransHandle const &, NR::Point &pt, guint state)
 {
     return seltrans->centerRequest(pt, state);
 }
 
-bool Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
+gboolean Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
 {
     using NR::X;
     using NR::Y;
@@ -890,7 +890,7 @@ bool Inkscape::SelTrans::scaleRequest(NR::Point &pt, guint state)
     return TRUE;
 }
 
-bool Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state)
+gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
     using NR::X;
     using NR::Y;
@@ -1002,7 +1002,7 @@ bool Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, NR::Poin
     return TRUE;
 }
 
-bool Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state)
+gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Point &pt, guint state)
 {
     using NR::X;
     using NR::Y;
@@ -1092,7 +1092,7 @@ bool Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, NR::Point &
     return TRUE;
 }
 
-bool Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
+gboolean Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
 {
     int snaps = prefs_get_int_attribute("options.rotationsnapsperpi", "value", 12);
 
@@ -1140,7 +1140,7 @@ bool Inkscape::SelTrans::rotateRequest(NR::Point &pt, guint state)
     return TRUE;
 }
 
-bool Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
+gboolean Inkscape::SelTrans::centerRequest(NR::Point &pt, guint state)
 {
     using NR::X;
     using NR::Y;

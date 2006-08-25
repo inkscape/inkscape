@@ -262,7 +262,7 @@ sp_star_context_set (SPEventContext *ec, const gchar *key, const gchar *val)
 
 static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    static bool dragging;
+    static gboolean dragging;
 
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Selection *selection = sp_desktop_selection (desktop);

@@ -34,10 +34,10 @@ struct SPNodeContext {
 
 	Inkscape::NodePath::Path *nodepath;
 
-	bool leftalt;
-	bool rightalt;
-	bool leftctrl;
-	bool rightctrl;
+	gboolean leftalt;
+	gboolean rightalt;
+	gboolean leftctrl;
+	gboolean rightctrl;
 
       /// If true, rubberband was cancelled by esc, so the next button release should not deselect.
 	bool rb_escaped;

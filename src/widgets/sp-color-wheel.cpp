@@ -47,7 +47,8 @@ static void sp_color_wheel_render_hue_wheel (SPColorWheel *wheel);
 static void sp_color_wheel_render_triangle (SPColorWheel *wheel);
 
 
-static gboolean  sp_color_wheel_focus(GtkWidget *widget, GtkDirectionType  direction);
+static gboolean sp_color_wheel_focus(GtkWidget        *widget,
+                                     GtkDirectionType  direction);
 
 static void sp_color_wheel_process_in_triangle( SPColorWheel *wheel, gdouble x, gdouble y );
 
@@ -225,7 +226,7 @@ void sp_color_wheel_set_color( SPColorWheel *wheel, const SPColor* color )
     sp_color_wheel_set_sv(wheel, sat, val);
 }
 
-bool sp_color_wheel_is_adjusting( SPColorWheel *wheel )
+gboolean sp_color_wheel_is_adjusting( SPColorWheel *wheel )
 {
     g_return_val_if_fail( SP_IS_COLOR_WHEEL(wheel), FALSE );
     return wheel->dragging;
@@ -334,7 +335,7 @@ sp_color_wheel_button_press (GtkWidget *widget, GdkEventButton *event)
         gint cx, cw;
         cx = widget->style->xthickness;
         cw = widget->allocation.width - 2 * cx;
-        bool grabbed = FALSE;
+        gboolean grabbed = FALSE;
 
         {
             double dx = event->x - wheel->_center;
@@ -453,7 +454,7 @@ static void sp_color_wheel_set_hue(SPColorWheel *wheel, gdouble hue)
 static void sp_color_wheel_set_sv( SPColorWheel *wheel, gdouble sat, gdouble value )
 {
     static gdouble epsilon = 1e-6;
-    bool changed = FALSE;
+    gboolean changed = FALSE;
 
     if ( ABS( wheel->_sat - sat ) > epsilon )
     {
@@ -1015,7 +1016,7 @@ sp_color_wheel_render_hue_wheel (SPColorWheel *wheel)
     gint x, y;
     guint r, g, b;
     gint size = wheel->_center * 2;
-    bool dirty = FALSE;
+    gboolean dirty = FALSE;
 
     if (wheel->_image && (wheel->_bs < (size * size) )) {
         g_free (wheel->_image);
@@ -1086,10 +1087,10 @@ sp_color_wheel_render_hue_wheel (SPColorWheel *wheel)
 static gboolean sp_color_wheel_focus(GtkWidget        *widget,
                                      GtkDirectionType  direction)
 {
-    bool focusKept = FALSE;
-    bool wasFocused = GTK_WIDGET_HAS_FOCUS(widget);
+    gboolean focusKept = FALSE;
+    gboolean wasFocused = GTK_WIDGET_HAS_FOCUS(widget);
     SPColorWheel* wheel = SP_COLOR_WHEEL(widget);
-    bool goingUp = FALSE;
+    gboolean goingUp = FALSE;
 
     switch ( direction )
     {

@@ -276,7 +276,7 @@ sp_gradient_selector_get_vector (SPGradientSelector *sel)
 static void
 sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, SPGradientSelector *sel)
 {
-	static bool blocked = FALSE;
+	static gboolean blocked = FALSE;
 
 	if (!blocked) {
 		blocked = TRUE;

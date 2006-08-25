@@ -13,9 +13,9 @@
 #include <gtk/gtkstyle.h>      /* GtkWidget */
 #include <gtk/gtktypeutils.h>  /* GtkObject */
 
-bool spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data);
+gboolean spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data);
 void spinbutton_undo (GtkWidget *w);
-bool spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data);
+gboolean spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data);
 void spinbutton_defocus (GtkObject *container);
 
 /*

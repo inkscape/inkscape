@@ -97,11 +97,11 @@ my_timer (HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime)
 
 /* Platform detection */
 
-bool
+gboolean
 PrintWin32::is_os_wide()
 {
-	static bool initialized = FALSE;
-	static bool is_wide = FALSE;
+	static gboolean initialized = FALSE;
+	static gboolean is_wide = FALSE;
 	static OSVERSIONINFOA osver;
 
 	if ( !initialized )

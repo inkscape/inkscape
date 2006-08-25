@@ -230,7 +230,7 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 }
 
 GtkWidget *
-sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, GtkWidget *us, GtkWidget *spw, gchar *tooltip, bool altx)
+sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, GtkWidget *us, GtkWidget *spw, gchar *tooltip, gboolean altx)
 {
     GtkTooltips *tt = gtk_tooltips_new();
 
@@ -262,7 +262,7 @@ sp_select_toolbox_spinbutton(gchar *label, gchar *data, float lower_limit, GtkWi
     return hb;
 }
 
-static bool aux_set_unit(SPUnitSelector *,
+static gboolean aux_set_unit(SPUnitSelector *,
                              SPUnit const *old,
                              SPUnit const *new_units,
                              GObject *dlg)

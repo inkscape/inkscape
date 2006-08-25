@@ -36,9 +36,9 @@ using Inkscape::XML::AttributeRecord;
 static Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns);
 static Node *sp_repr_svg_read_node (xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
 static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map);
-static void sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns);
-static void sp_repr_write_stream (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix);
-static void sp_repr_write_stream_element (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, List<AttributeRecord const> attributes);
+static void sp_repr_write_stream_root_element (Node *repr, Writer &out, gboolean add_whitespace, gchar const *default_ns);
+static void sp_repr_write_stream (Node *repr, Writer &out, gint indent_level, gboolean add_whitespace, Glib::QueryQuark elide_prefix);
+static void sp_repr_write_stream_element (Node *repr, Writer &out, gint indent_level, gboolean add_whitespace, Glib::QueryQuark elide_prefix, List<AttributeRecord const> attributes);
 
 #ifdef HAVE_LIBWMF
 static xmlDocPtr sp_wmf_convert (const char * file_name);
@@ -539,7 +539,7 @@ sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool comp
 
 /* Returns TRUE if file successfully saved; FALSE if not
  */
-bool
+gboolean
 sp_repr_save_file (Document *doc, const gchar *filename,
                    gchar const *default_ns)
 {
@@ -667,7 +667,7 @@ void populate_ns_map(NSMap &ns_map, Node &repr) {
 }
 
 void
-sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns)
+sp_repr_write_stream_root_element (Node *repr, Writer &out, gboolean add_whitespace, gchar const *default_ns)
 {
     using Inkscape::Util::ptr_shared;
     g_assert(repr != NULL);
@@ -710,7 +710,7 @@ sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace,
 
 void
 sp_repr_write_stream (Node *repr, Writer &out, gint indent_level,
-                      bool add_whitespace, Glib::QueryQuark elide_prefix)
+                      gboolean add_whitespace, Glib::QueryQuark elide_prefix)
 {
     if (repr->type() == Inkscape::XML::TEXT_NODE) {
         repr_quote_write (out, repr->content());
@@ -725,12 +725,12 @@ sp_repr_write_stream (Node *repr, Writer &out, gint indent_level,
 
 void
 sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
-                              bool add_whitespace,
+                              gboolean add_whitespace,
                               Glib::QueryQuark elide_prefix,
                               List<AttributeRecord const> attributes)
 {
     Node *child;
-    bool loose;
+    gboolean loose;
     gint i;
 
     g_return_if_fail (repr != NULL);

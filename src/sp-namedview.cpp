@@ -57,9 +57,9 @@ static void sp_namedview_setup_guides(SPNamedView * nv);
 static void sp_namedview_setup_grid(SPNamedView * nv);
 static void sp_namedview_setup_grid_item(SPNamedView * nv, SPCanvasItem * item);
 
-static bool sp_str_to_bool(const gchar *str);
-static bool sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit);
-static bool sp_nv_read_opacity(const gchar *str, guint32 *color);
+static gboolean sp_str_to_bool(const gchar *str);
+static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit);
+static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
 static SPObjectGroupClass * parent_class;
 
@@ -687,7 +687,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     NR::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
-    bool saved = sp_document_get_undo_sensitive(sp_desktop_document(desktop));
+    gboolean saved = sp_document_get_undo_sensitive(sp_desktop_document(desktop));
     sp_document_set_undo_sensitive(sp_desktop_document(desktop), FALSE);
 
     sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
@@ -734,7 +734,7 @@ void SPNamedView::hide(SPDesktop const *desktop)
     gridviews = g_slist_remove(gridviews, l->data);
 }
 
-void SPNamedView::activateGuides(gpointer desktop, bool active)
+void SPNamedView::activateGuides(gpointer desktop, gboolean active)
 {
     g_assert(desktop != NULL);
     g_assert(g_slist_find(views, desktop));
@@ -771,7 +771,7 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
         v = !v;
     }
 
-    bool saved = sp_document_get_undo_sensitive(doc);
+    gboolean saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, FALSE);
 
     sp_repr_set_boolean(repr, "showguides", v);
@@ -786,7 +786,7 @@ void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_repr_get_boolean(repr, "showgrid", &v);
     v = !v;
 
-    bool saved = sp_document_get_undo_sensitive(doc);
+    gboolean saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, FALSE);
 
     sp_repr_set_boolean(repr, "showgrid", v);
@@ -840,7 +840,7 @@ GSList const *SPNamedView::getViewList() const
 
 /* This should be moved somewhere */
 
-static bool sp_str_to_bool(const gchar *str)
+static gboolean sp_str_to_bool(const gchar *str)
 {
     if (str) {
         if (!g_strcasecmp(str, "true") ||
@@ -856,7 +856,7 @@ static bool sp_str_to_bool(const gchar *str)
 
 /* fixme: Collect all these length parsing methods and think common sane API */
 
-static bool sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit)
+static gboolean sp_nv_read_length(const gchar *str, guint base, gdouble *val, const SPUnit **unit)
 {
     if (!str) {
         return FALSE;
@@ -906,7 +906,7 @@ static bool sp_nv_read_length(const gchar *str, guint base, gdouble *val, const 
     return FALSE;
 }
 
-static bool sp_nv_read_opacity(const gchar *str, guint32 *color)
+static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color)
 {
     if (!str) {
         return FALSE;

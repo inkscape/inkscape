@@ -66,7 +66,7 @@ sp_object_properties_dialog_destroy (GtkObject *object, gpointer data)
     wd.stop = 0;
 }
 
-static bool
+static gboolean
 sp_object_properties_dialog_delete ( GtkObject *object,
                                      GdkEvent *event,
                                      gpointer data )

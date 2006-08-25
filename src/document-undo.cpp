@@ -75,13 +75,13 @@
  *   Since undo sensitivity needs to be nested, setting undo sensitivity
  *   should be done like this:
  *\verbatim
-        bool saved = sp_document_get_undo_sensitive(document);
+        gboolean saved = sp_document_get_undo_sensitive(document);
         sp_document_set_undo_sensitive(document, FALSE);
         ... do stuff ...
         sp_document_set_undo_sensitive(document, saved);  \endverbatim
  */
 void
-sp_document_set_undo_sensitive (SPDocument *doc, bool sensitive)
+sp_document_set_undo_sensitive (SPDocument *doc, gboolean sensitive)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
@@ -101,7 +101,7 @@ sp_document_set_undo_sensitive (SPDocument *doc, bool sensitive)
 	doc->priv->sensitive = !!sensitive;
 }
 
-bool sp_document_get_undo_sensitive(SPDocument const *document) {
+gboolean sp_document_get_undo_sensitive(SPDocument const *document) {
 	g_assert(document != NULL);
 	g_assert(document->priv != NULL);
 
@@ -200,13 +200,13 @@ void finish_incomplete_transaction(SPDocument &doc) {
 
 }
 
-bool
+gboolean
 sp_document_undo (SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
 	using Inkscape::Debug::SimpleEvent;
 
-	bool ret;
+	gboolean ret;
 
 	EventTracker<SimpleEvent<Inkscape::Debug::Event::DOCUMENT> > tracker("undo");
 
@@ -244,13 +244,13 @@ sp_document_undo (SPDocument *doc)
 	return ret;
 }
 
-bool
+gboolean
 sp_document_redo (SPDocument *doc)
 {
 	using Inkscape::Debug::EventTracker;
 	using Inkscape::Debug::SimpleEvent;
 
-	bool ret;
+	gboolean ret;
 
 	EventTracker<SimpleEvent<Inkscape::Debug::Event::DOCUMENT> > tracker("redo");
 

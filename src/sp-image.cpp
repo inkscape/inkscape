@@ -119,7 +119,7 @@ namespace IO {
 class PushPull
 {
 public:
-    bool    first;
+    gboolean    first;
     FILE*       fp;
     guchar*     scratch;
     gsize       size;
@@ -135,9 +135,9 @@ public:
                  offset(0),
                  loader(0) {};
 
-    bool readMore()
+    gboolean readMore()
     {
-        bool good = FALSE;
+        gboolean good = FALSE;
         if ( offset )
         {
             g_memmove( scratch, scratch + offset, used - offset );
@@ -211,7 +211,7 @@ void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length )
     PushPull* youme = (PushPull*)png_get_io_ptr(png_ptr);
 
     gsize filled = 0;
-    bool canRead = TRUE;
+    gboolean canRead = TRUE;
 
     while ( filled < length && canRead )
     {
@@ -254,8 +254,8 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
 
             // short buffer
             guchar scratch[1024];
-            bool latter = FALSE;
-            bool isPng = FALSE;
+            gboolean latter = FALSE;
+            gboolean isPng = FALSE;
             png_structp pngPtr = NULL;
             png_infop infoPtr = NULL;
             //png_infop endPtr = NULL;
@@ -375,7 +375,7 @@ GdkPixbuf*  pixbuf_new_from_file( const char *filename, GError **error )
                 }
             }
 
-            bool ok = gdk_pixbuf_loader_close(loader, &err);
+            gboolean ok = gdk_pixbuf_loader_close(loader, &err);
             if ( ok )
             {
                 buf = gdk_pixbuf_loader_get_pixbuf( loader );

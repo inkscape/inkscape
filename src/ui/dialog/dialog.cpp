@@ -36,7 +36,7 @@ namespace UI {
 namespace Dialog {
 
 #ifndef WIN32
-static bool
+static gboolean
 sp_retransientize_again (gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;

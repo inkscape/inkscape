@@ -221,7 +221,7 @@ PrintPS::setup(Inkscape::Extension::Print * mod)
 unsigned int
 PrintPS::begin(Inkscape::Extension::Print *mod, SPDocument *doc)
 {
-    bool epsexport = false;
+    gboolean epsexport = false;
 
     _latin1_encoded_fonts.clear();
     _newlatin1font_proc_defined = false;

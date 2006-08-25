@@ -53,7 +53,7 @@
 #include "prefs-utils.h"
 #include "io/sys.h"
 
-extern bool inkscape_app_use_gui( Inkscape::Application const *app );
+extern gboolean inkscape_app_use_gui( Inkscape::Application const *app );
 
 namespace Inkscape {
 namespace Extension {
@@ -81,7 +81,7 @@ update_pref(gchar const *pref_path, gchar const *pref_attr,
 {
     gchar const *pref = prefs_get_string_attribute(pref_path,pref_attr);
     /*
-    bool missing=TRUE;
+    gboolean missing=TRUE;
     for (GSList *list = extension_family; list; list = g_slist_next(list)) {
 	g_assert( list->data );
 

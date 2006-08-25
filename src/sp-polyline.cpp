@@ -101,7 +101,7 @@ sp_polyline_set (SPObject *object, unsigned int key, const gchar *value)
 		SPCurve * curve;
 		const gchar * cptr;
 		char * eptr;
-		bool hascpt;
+		gboolean hascpt;
 
 		if (!value) break;
 		curve = sp_curve_new ();

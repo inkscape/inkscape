@@ -78,7 +78,7 @@ static void sp_genericellipse_set_shape(SPShape *shape);
 static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::XML::Node *repr,
                                                     guint flags);
 
-static bool sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr);
+static gboolean sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr);
 
 static SPShapeClass *ge_parent_class;
 
@@ -655,7 +655,7 @@ sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
  * See SVG 1.0 Specification W3C Recommendation
  * ``F.6 Ellptical arc implementation notes'' for more detail.
  */
-static bool
+static gboolean
 sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr)
 {
     gint fa, fs;

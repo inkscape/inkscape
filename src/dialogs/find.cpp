@@ -88,7 +88,7 @@ static void sp_find_dialog_destroy(GtkObject *object, gpointer)
 
 
 
-static bool sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer data)
+static gboolean sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer data)
 {
     gtk_window_get_position (GTK_WINDOW (dlg), &x, &y);
     gtk_window_get_size (GTK_WINDOW (dlg), &w, &h);
@@ -476,7 +476,7 @@ toggle_shapes (GtkToggleButton *tb, gpointer data)
 
 
 GtkWidget *
-sp_find_types_checkbox (GtkWidget *w, const gchar *data, bool active,
+sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
                         GtkTooltips *tt, const gchar *tip,
                         const gchar *label,
                         void (*toggled)(GtkToggleButton *, gpointer))
@@ -499,7 +499,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, bool active,
 }
 
 GtkWidget *
-sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, bool active,
+sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean active,
                                  GtkTooltips *tt, const gchar *tip,
                                  const gchar *label,
                                  void (*toggled)(GtkToggleButton *, gpointer), guint indent)

@@ -69,7 +69,7 @@ sp_absolute_metric_to_metric (gdouble length_src, const SPMetric metric_src, con
 GString *
 sp_metric_to_metric_string(gdouble const length,
                            SPMetric const metric_src, SPMetric const metric_dst,
-                           bool const m)
+                           gboolean const m)
 {
     gdouble const len = sp_absolute_metric_to_metric(length, metric_src, metric_dst);
     GString *str = g_string_new("");

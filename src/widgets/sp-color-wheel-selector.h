@@ -36,10 +36,10 @@ protected:
 
     static void _fooChanged( GtkWidget foo, SPColorWheelSelector *cs );
 
-    void _recalcColor( bool changing );
+    void _recalcColor( gboolean changing );
 
-    bool _updating : 1;
-    bool _dragging : 1;
+    gboolean _updating : 1;
+    gboolean _dragging : 1;
     GtkAdjustment* _adj; /* Channel adjustment */
     GtkWidget* _wheel;
     GtkWidget* _slider;

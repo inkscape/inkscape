@@ -85,7 +85,7 @@ struct SPNamedView : public SPObjectGroup {
 
     void show(SPDesktop *desktop);
     void hide(SPDesktop const *desktop);
-    void activateGuides(gpointer desktop, bool active);
+    void activateGuides(gpointer desktop, gboolean active);
     gchar const *getName() const;
     guint getViewCount();
     GSList const *getViewList() const;

@@ -423,7 +423,7 @@ sp_canvas_arena_set_pick_delta (SPCanvasArena *ca, gdouble delta)
 }
 
 void
-sp_canvas_arena_set_sticky (SPCanvasArena *ca, bool sticky)
+sp_canvas_arena_set_sticky (SPCanvasArena *ca, gboolean sticky)
 {
 	g_return_if_fail (ca != NULL);
 	g_return_if_fail (SP_IS_CANVAS_ARENA (ca));

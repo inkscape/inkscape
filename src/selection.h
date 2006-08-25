@@ -317,7 +317,7 @@ private:
     void operator=(Selection const &);
 
     /** @brief Issues modification notification signals */
-    static bool _emit_modified(Selection *selection);
+    static gboolean _emit_modified(Selection *selection);
     /** @brief Schedules an item modification signal to be sent */
     void _schedule_modified(SPObject *obj, guint flags);
 
