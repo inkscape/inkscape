@@ -20,7 +20,7 @@
 #include "attributes.h"
 #include "sp-filter-primitive.h"
 #include "xml/repr.h"
-
+#include "sp-filter.h"
 
 /* FilterPrimitive base class */
 
@@ -88,6 +88,8 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
         ((SPObjectClass *) filter_primitive_parent_class)->build(object, document, repr);
     }
 
+    if (object->parent)
+        add_primitive((SPFilter*)object->parent, (SPFilterPrimitive*)object);
 }
 
 /**
@@ -146,7 +148,7 @@ sp_filter_primitive_write(SPObject *object, Inkscape::XML::Node *repr, guint fla
     if (flags & SP_OBJECT_WRITE_EXT) {
         if (repr) {
             // is this sane?
-            repr->mergeFrom(SP_OBJECT_REPR(object), "id");
+            //repr->mergeFrom(SP_OBJECT_REPR(object), "id");
         } else {
             repr = SP_OBJECT_REPR(object)->duplicate();
         }

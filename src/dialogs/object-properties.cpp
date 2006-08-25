@@ -14,7 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 //uncomment to display blur slider
-//#define WITH_BLUR
+#define WITH_BLUR
  
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -416,8 +416,6 @@ sp_fillstroke_get_new_filter(SPDocument *document, gdouble stdDeviation)
     // get corresponding object
     SPFilter *f = SP_FILTER( document->getObjectByRepr(repr) );
     SPGaussianBlur *b = SP_GAUSSIANBLUR( document->getObjectByRepr(b_repr) );
-    //add blur primitive to SPFilter object
-    add_primitive(f, b); //TODO: this should be triggered in SPFilter.cpp, when a child is added, not here...
     
     g_assert(f != NULL);
     g_assert(SP_IS_FILTER(f));
