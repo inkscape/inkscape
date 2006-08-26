@@ -1025,8 +1025,8 @@ sp_gradient_vector_widget_load_gradient (GtkWidget *widget, SPGradient *gradient
 	// Once the user edits a gradient, it stops being auto-collectable
 	if (SP_OBJECT_REPR(gradient)->attribute("inkscape:collect")) {
 		SPDocument *document = SP_OBJECT_DOCUMENT (gradient);
-		gboolean saved = sp_document_get_undo_sensitive(document);
-		sp_document_set_undo_sensitive (document, FALSE);
+		bool saved = sp_document_get_undo_sensitive(document);
+		sp_document_set_undo_sensitive (document, false);
 		SP_OBJECT_REPR(gradient)->setAttribute("inkscape:collect", NULL);
 		sp_document_set_undo_sensitive (document, saved);
 	}

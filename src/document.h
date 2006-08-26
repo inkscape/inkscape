@@ -175,8 +175,8 @@ void sp_document_set_height (SPDocument * document, gdouble height, const SPUnit
  * Undo & redo
  */
 
-void sp_document_set_undo_sensitive (SPDocument * document, gboolean sensitive);
-gboolean sp_document_get_undo_sensitive (SPDocument const * document);
+void sp_document_set_undo_sensitive (SPDocument * document, bool sensitive);
+bool sp_document_get_undo_sensitive (SPDocument const * document);
 
 void sp_document_clear_undo (SPDocument * document);
 void sp_document_clear_redo (SPDocument * document);

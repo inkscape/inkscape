@@ -180,7 +180,7 @@ inline Inkscape::XML::Node *sp_repr_next(Inkscape::XML::Node *repr) {
 Inkscape::XML::Document *sp_repr_read_file(gchar const *filename, gchar const *default_ns);
 Inkscape::XML::Document *sp_repr_read_mem(gchar const *buffer, int length, gchar const *default_ns);
 void sp_repr_save_stream(Inkscape::XML::Document *doc, FILE *to_file, gchar const *default_ns=NULL, bool compress = false);
-gboolean sp_repr_save_file(Inkscape::XML::Document *doc, gchar const *filename, gchar const *default_ns=NULL);
+bool sp_repr_save_file(Inkscape::XML::Document *doc, gchar const *filename, gchar const *default_ns=NULL);
 
 void sp_repr_print(Inkscape::XML::Node *repr);
 

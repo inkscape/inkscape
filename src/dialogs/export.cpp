@@ -1098,26 +1098,26 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
         case SELECTION_DRAWING: {
             SPDocument * doc = SP_ACTIVE_DOCUMENT;
             Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-            bool modified = FALSE;
+            bool modified = false;
             const gchar * temp_string;
 
             bool saved = sp_document_get_undo_sensitive(doc);
-            sp_document_set_undo_sensitive(doc, FALSE);
+            sp_document_set_undo_sensitive(doc, false);
 
             temp_string = repr->attribute("inkscape:export-filename");
             if (temp_string == NULL || strcmp(temp_string, filename)) {
                 repr->setAttribute("inkscape:export-filename", filename);
-                modified = TRUE;
+                modified = true;
             }
             temp_string = repr->attribute("inkscape:export-xdpi");
             if (temp_string == NULL || xdpi != atof(temp_string)) {
                 sp_repr_set_svg_double(repr, "inkscape:export-xdpi", xdpi);
-                modified = TRUE;
+                modified = true;
             }
             temp_string = repr->attribute("inkscape:export-ydpi");
             if (temp_string == NULL || xdpi != atof(temp_string)) {
                 sp_repr_set_svg_double(repr, "inkscape:export-ydpi", ydpi);
-                modified = TRUE;
+                modified = true;
             }
 
             if (modified)
@@ -1128,10 +1128,10 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
         case SELECTION_SELECTION: {
             const GSList * reprlst;
             SPDocument * doc = SP_ACTIVE_DOCUMENT;
-            bool modified = FALSE;
+            bool modified = false;
 
             bool saved = sp_document_get_undo_sensitive(doc);
-            sp_document_set_undo_sensitive(doc, FALSE);
+            sp_document_set_undo_sensitive(doc, false);
             reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
 
             for(; reprlst != NULL; reprlst = reprlst->next) {
@@ -1145,18 +1145,18 @@ sp_export_export_clicked (GtkButton *button, GtkObject *base)
                     temp_string = repr->attribute("inkscape:export-filename");
                     if (temp_string == NULL || strcmp(temp_string, filename)) {
                         repr->setAttribute("inkscape:export-filename", filename);
-                        modified = TRUE;
+                        modified = true;
                     }
                 }
                 temp_string = repr->attribute("inkscape:export-xdpi");
                 if (temp_string == NULL || xdpi != atof(temp_string)) {
                     sp_repr_set_svg_double(repr, "inkscape:export-xdpi", xdpi);
-                    modified = TRUE;
+                    modified = true;
                 }
                 temp_string = repr->attribute("inkscape:export-ydpi");
                 if (temp_string == NULL || xdpi != atof(temp_string)) {
                     sp_repr_set_svg_double(repr, "inkscape:export-ydpi", ydpi);
-                    modified = TRUE;
+                    modified = true;
                 }
             }
 

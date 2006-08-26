@@ -308,7 +308,7 @@ sp_document_create(Inkscape::XML::Document *rdoc,
         inkscape_ref();
     }
 
-    sp_document_set_undo_sensitive(document, TRUE);
+    sp_document_set_undo_sensitive(document, true);
 
     // reset undo key when selection changes, so that same-key actions on different objects are not coalesced
     if (!Inkscape::NSApplication::Application::getNewGui()) {
@@ -549,8 +549,8 @@ void sp_document_set_uri(SPDocument *document, gchar const *uri)
     // Update saveable repr attributes.
     Inkscape::XML::Node *repr = sp_document_repr_root(document);
     // changing uri in the document repr must not be not undoable
-    gboolean saved = sp_document_get_undo_sensitive(document);
-    sp_document_set_undo_sensitive(document, FALSE);
+    bool saved = sp_document_get_undo_sensitive(document);
+    sp_document_set_undo_sensitive(document, false);
     if (document->base)
         repr->setAttribute("sodipodi:docbase", document->base);
 
@@ -767,7 +767,7 @@ SPDocument::_updateDocument()
             sp_document_setup_viewport (this, &ctx);
 
             bool saved = sp_document_get_undo_sensitive(this);
-            sp_document_set_undo_sensitive(this, FALSE);
+            sp_document_set_undo_sensitive(this, false);
 
             this->root->updateDisplay((SPCtx *)&ctx, 0);
 

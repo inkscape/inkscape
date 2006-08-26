@@ -235,22 +235,22 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
             *end_ptr = str + i;
         }
     } else if (strneq(str, "rgb(", 4)) {
-        gboolean hasp, hasd;
+        bool hasp, hasd;
         gchar *s, *e;
         gdouble r, g, b;
 
         s = (gchar *) str + 4;
-        hasp = FALSE;
-        hasd = FALSE;
+        hasp = false;
+        hasd = false;
 
         r = g_ascii_strtod(s, &e);
         if (s == e) return def;
         s = e;
         if (*s == '%') {
-            hasp = TRUE;
+            hasp = true;
             s += 1;
         } else {
-            hasd = TRUE;
+            hasd = true;
         }
         while (*s && g_ascii_isspace(*s)) s += 1;
         if (*s != ',') return def;
@@ -260,10 +260,10 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
         if (s == e) return def;
         s = e;
         if (*s == '%') {
-            hasp = TRUE;
+            hasp = true;
             s += 1;
         } else {
-            hasd = TRUE;
+            hasd = true;
         }
         while (*s && g_ascii_isspace(*s)) s += 1;
         if (*s != ',') return def;
@@ -273,10 +273,10 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
         if (s == e) return def;
         s = e;
         if (*s == '%') {
-            hasp = TRUE;
+            hasp = true;
             s += 1;
         } else {
-            hasd = TRUE;
+            hasd = true;
         }
         while(*s && g_ascii_isspace(*s)) s += 1;
         if (*s != ')') {

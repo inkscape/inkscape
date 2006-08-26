@@ -165,8 +165,8 @@ Input::open (const gchar *uri)
     
     if (doc != NULL) {
         Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-        gboolean saved = sp_document_get_undo_sensitive(doc);
-        sp_document_set_undo_sensitive (doc, FALSE);
+        bool saved = sp_document_get_undo_sensitive(doc);
+        sp_document_set_undo_sensitive (doc, false);
         repr->setAttribute("inkscape:output_extension", output_extension);
         sp_document_set_undo_sensitive (doc, saved);
     }

@@ -59,7 +59,7 @@ struct SPDocumentPrivate {
   SPDocument::CommitSignal commit_signal;
 
 	/* Undo/Redo state */
-	guint sensitive: 1; /* If we save actions to undo stack */
+	bool sensitive: true; /* If we save actions to undo stack */
 	Inkscape::XML::Event * partial; /* partial undo log when interrupted */
 	int history_size;
 	GSList * undo; /* Undo stack of reprs */

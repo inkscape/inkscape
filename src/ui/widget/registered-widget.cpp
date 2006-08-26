@@ -94,8 +94,8 @@ RegisteredCheckButton::on_toggled()
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     _wr->setUpdating (true);
 
-    gboolean saved = sp_document_get_undo_sensitive (doc);
-    sp_document_set_undo_sensitive (doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive (doc);
+    sp_document_set_undo_sensitive (doc, false);
     sp_repr_set_boolean(repr, _key.c_str(), _button->get_active());
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive (doc, saved);
@@ -152,8 +152,8 @@ RegisteredUnitMenu::on_changed()
     _wr->setUpdating (true);
 
     SPDocument *doc = sp_desktop_document(dt);
-    gboolean saved = sp_document_get_undo_sensitive (doc);
-    sp_document_set_undo_sensitive (doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive (doc);
+    sp_document_set_undo_sensitive (doc, false);
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
@@ -220,8 +220,8 @@ RegisteredScalarUnit::on_value_changed()
     _wr->setUpdating (true);
 
     SPDocument *doc = sp_desktop_document(dt);
-    gboolean saved = sp_document_get_undo_sensitive (doc);
-    sp_document_set_undo_sensitive (doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive (doc);
+    sp_document_set_undo_sensitive (doc, false);
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");
@@ -395,8 +395,8 @@ RegisteredRadioButtonPair::on_value_changed()
     
     bool second = _rb2->get_active();
     SPDocument *doc = sp_desktop_document(dt);
-    gboolean saved = sp_document_get_undo_sensitive (doc);
-    sp_document_set_undo_sensitive (doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive (doc);
+    sp_document_set_undo_sensitive (doc, false);
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), second ? "true" : "false");
     doc->rroot->setAttribute("sodipodi:modified", "true");

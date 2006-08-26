@@ -63,7 +63,7 @@ struct RSVGParsePathCtx {
     double spx, spy;  /* beginning of current subpath point */
     char cmd;         /* current command (lowercase) */
     int param;        /* parameter number */
-    gboolean rel;     /* true if relative coords */
+    bool rel;         /* true if relative coords */
     double params[7]; /* parameters that have been parsed */
 };
 
@@ -221,7 +221,7 @@ static void rsvg_parse_path_default_xy(RSVGParsePathCtx *ctx, int n_params)
     }
 }
 
-static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, gboolean final)
+static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, bool final)
 {
     double x1, y1, x2, y2, x3, y3;
 
@@ -238,8 +238,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, gboolean final)
     switch (ctx->cmd) {
     case 'm':
         /* moveto */
-        if (ctx->param == 2
-            || final)
+        if (ctx->param == 2 || final)
         {
             rsvg_parse_path_default_xy (ctx, 2);
 #ifdef VERBOSE
@@ -256,8 +255,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, gboolean final)
         break;
     case 'l':
         /* lineto */
-        if (ctx->param == 2
-            || final)
+        if (ctx->param == 2 || final)
         {
             rsvg_parse_path_default_xy (ctx, 2);
 #ifdef VERBOSE
@@ -273,8 +271,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, gboolean final)
         break;
     case 'c':
         /* curveto */
-        if ( ( ctx->param == 6 )
-             || final )
+        if (ctx->param == 6 || final )
         {
             rsvg_parse_path_default_xy (ctx, 6);
             x1 = ctx->params[0];
@@ -298,8 +295,7 @@ static void rsvg_parse_path_do_cmd(RSVGParsePathCtx *ctx, gboolean final)
         break;
     case 's':
         /* smooth curveto */
-        if ( ( ctx->param == 4 )
-             || final )
+        if (ctx->param == 4 || final)
         {
             rsvg_parse_path_default_xy (ctx, 4);
             x1 = 2 * ctx->cpx - ctx->rpx;
@@ -455,10 +451,10 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
     int i = 0;
     double val = 0;
     char c = 0;
-    gboolean in_num = FALSE;
-    gboolean in_frac = FALSE;
-    gboolean in_exp = FALSE;
-    gboolean exp_wait_sign = FALSE;
+    bool in_num = false;
+    bool in_frac = false;
+    bool in_exp = false;
+    bool exp_wait_sign = false;
     int sign = 0;
     int exp = 0;
     int exp_sign = 0;
@@ -479,7 +475,7 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
                 if (in_exp)
                 {
                     exp = (exp * 10) + c - '0';
-                    exp_wait_sign = FALSE;
+                    exp_wait_sign = false;
                 }
                 else if (in_frac)
                     val += (frac *= 0.1) * (c - '0');
@@ -488,11 +484,11 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
             }
             else
             {
-                in_num = TRUE;
+                in_num = true;
                 assert(!in_frac && !in_exp);
                 exp = 0;
                 exp_sign = 1;
-                exp_wait_sign = FALSE;
+                exp_wait_sign = false;
                 val = c - '0';
                 sign = 1;
             }
@@ -501,23 +497,23 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
         {
             if (!in_num)
             {
-                in_num = TRUE;
+                in_num = true;
                 assert(!in_exp);
                 exp = 0;
                 exp_sign = 1;
-                exp_wait_sign = FALSE;
+                exp_wait_sign = false;
                 val = 0;
                 sign = 1;
             }
-            in_frac = TRUE;
+            in_frac = true;
             frac = 1;
         }
         else if ((c == 'E' || c == 'e') && in_num)
         {
             /* fixme: Should we add `&& !in_exp' to the above condition?
              * It looks like the current code will parse `1e3e4' (as 1e4). */
-            in_exp = TRUE;
-            exp_wait_sign = TRUE;
+            in_exp = true;
+            exp_wait_sign = true;
             exp = 0;
             exp_sign = 1;
         }
@@ -568,18 +564,18 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
                 }
             }
             ctx->params[ctx->param++] = val;
-            rsvg_parse_path_do_cmd (ctx, FALSE);
+            rsvg_parse_path_do_cmd (ctx, false);
             if (c=='.') {
-                in_num = TRUE;
+                in_num = true;
                 val = 0;
-                in_frac = TRUE;
-                in_exp = FALSE;
+                in_frac = true;
+                in_exp = false;
                 frac = 1;
             }
             else {
-                in_num = FALSE;
-                in_frac = FALSE;
-                in_exp = FALSE;
+                in_num = false;
+                in_frac = false;
+                in_exp = false;
             }
         }
 
@@ -589,17 +585,17 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
         {
             sign = c == '+' ? 1 : -1;;
             val = 0;
-            in_num = TRUE;
-            in_frac = FALSE;
-            in_exp = FALSE;
+            in_num = true;
+            in_frac = false;
+            in_exp = false;
             exp = 0;
             exp_sign = 1;
-            exp_wait_sign = FALSE;
+            exp_wait_sign = false;
         }
         else if (c == 'z' || c == 'Z')
         {
             if (ctx->param)
-                rsvg_parse_path_do_cmd (ctx, TRUE);
+                rsvg_parse_path_do_cmd (ctx, true);
             rsvg_bpath_def_closepath (ctx->bpath);
 
             ctx->cmd = 'm';
@@ -610,16 +606,16 @@ static void rsvg_parse_path_data(RSVGParsePathCtx *ctx, const char *data)
         else if (c >= 'A' && c <= 'Z' && c != 'E')
         {
             if (ctx->param)
-                rsvg_parse_path_do_cmd (ctx, TRUE);
+                rsvg_parse_path_do_cmd (ctx, true);
             ctx->cmd = c + 'a' - 'A';
-            ctx->rel = FALSE;
+            ctx->rel = false;
         }
         else if (c >= 'a' && c <= 'z' && c != 'e')
         {
             if (ctx->param)
-                rsvg_parse_path_do_cmd (ctx, TRUE);
+                rsvg_parse_path_do_cmd (ctx, true);
             ctx->cmd = c;
-            ctx->rel = TRUE;
+            ctx->rel = true;
         }
         /* else c _should_ be whitespace or , */
     }

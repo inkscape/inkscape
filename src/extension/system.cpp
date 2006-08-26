@@ -104,8 +104,8 @@ open(Extension *key, gchar const *filename)
     /* This kinda overkill as most of these are already set, but I want
        to make sure for this release -- TJG */
     Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-    gboolean saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive(doc, false);
     repr->setAttribute("sodipodi:modified", NULL);
     sp_document_set_undo_sensitive(doc, saved);
 
@@ -250,10 +250,10 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     if (official) {
         // save the filename for next use
         sp_document_set_uri(doc, fileName);
-        gboolean saved = sp_document_get_undo_sensitive(doc);
+        bool saved = sp_document_get_undo_sensitive(doc);
+        sp_document_set_undo_sensitive (doc, false);
             // also save the extension for next use
             Inkscape::XML::Node *repr = sp_document_repr_root(doc);
-        	sp_document_set_undo_sensitive (doc, FALSE);
             repr->setAttribute("inkscape:output_extension", omod->get_id());
             // set the "dataloss" attribute if the chosen extension is lossy
     	    repr->setAttribute("inkscape:dataloss", NULL);

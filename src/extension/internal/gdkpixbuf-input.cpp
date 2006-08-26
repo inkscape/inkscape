@@ -21,7 +21,8 @@ SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 {
     SPDocument *doc = sp_document_new(NULL, TRUE, TRUE);
-    sp_document_set_undo_sensitive(doc, FALSE); // no need to undo in this temporary document
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive(doc, false); // no need to undo in this temporary document
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
     Inkscape::XML::Node *rdoc = sp_document_repr_root(doc);
     gchar const *docbase = rdoc->attribute("sodipodi:docbase");
@@ -92,7 +93,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         //alter the canvas size to fit the image size
         fit_canvas_to_drawing(doc);
         // restore undo, as now this document may be shown to the user if a bitmap was opened
-        sp_document_set_undo_sensitive(doc, TRUE);
+        sp_document_set_undo_sensitive(doc, saved);
     } else {
         printf("GdkPixbuf loader failed\n");
     }

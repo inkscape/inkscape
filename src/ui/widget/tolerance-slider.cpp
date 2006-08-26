@@ -163,8 +163,8 @@ ToleranceSlider::update (double val)
     _wr->setUpdating (true);
 
     SPDocument *doc = sp_desktop_document(dt);
-    gboolean saved = sp_document_get_undo_sensitive (doc);
-    sp_document_set_undo_sensitive (doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive (doc);
+    sp_document_set_undo_sensitive (doc, false);
     Inkscape::XML::Node *repr = SP_OBJECT_REPR (sp_desktop_namedview(dt));
     repr->setAttribute(_key.c_str(), os.str().c_str());
     doc->rroot->setAttribute("sodipodi:modified", "true");

@@ -75,18 +75,18 @@
  *   Since undo sensitivity needs to be nested, setting undo sensitivity
  *   should be done like this:
  *\verbatim
-        gboolean saved = sp_document_get_undo_sensitive(document);
-        sp_document_set_undo_sensitive(document, FALSE);
+        bool saved = sp_document_get_undo_sensitive(document);
+        sp_document_set_undo_sensitive(document, false);
         ... do stuff ...
         sp_document_set_undo_sensitive(document, saved);  \endverbatim
  */
 void
-sp_document_set_undo_sensitive (SPDocument *doc, gboolean sensitive)
+sp_document_set_undo_sensitive (SPDocument *doc, bool sensitive)
 {
 	g_assert (doc != NULL);
 	g_assert (doc->priv != NULL);
 
-	if ( !(sensitive) == !(doc->priv->sensitive) )
+	if ( sensitive == doc->priv->sensitive )
 		return;
 
 	if (sensitive) {
@@ -98,10 +98,17 @@ sp_document_set_undo_sensitive (SPDocument *doc, gboolean sensitive)
 		);
 	}
 
-	doc->priv->sensitive = !!sensitive;
+	doc->priv->sensitive = sensitive;
 }
 
-gboolean sp_document_get_undo_sensitive(SPDocument const *document) {
+/*TODO: Throughout the inkscape code tree set/get_undo_sensitive are used for
+ * as is shown above.  Perhaps it makes sense to create new functions,
+ * undo_ignore, and undo_recall to replace the start and end parts of the above.
+ * The main complexity with this is that they have to nest, so you have to store
+ * the saved bools in a stack.  Perhaps this is why the above solution is better.
+ */
+
+bool sp_document_get_undo_sensitive(SPDocument const *document) {
 	g_assert(document != NULL);
 	g_assert(document->priv != NULL);
 

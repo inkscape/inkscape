@@ -687,8 +687,8 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     NR::Rect const r = desktop->get_display_area();
 
     // saving window geometry is not undoable
-    gboolean saved = sp_document_get_undo_sensitive(sp_desktop_document(desktop));
-    sp_document_set_undo_sensitive(sp_desktop_document(desktop), FALSE);
+    bool saved = sp_document_get_undo_sensitive(sp_desktop_document(desktop));
+    sp_document_set_undo_sensitive(sp_desktop_document(desktop), false);
 
     sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
     sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[NR::X]);
@@ -771,8 +771,8 @@ void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr)
         v = !v;
     }
 
-    gboolean saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive(doc, false);
 
     sp_repr_set_boolean(repr, "showguides", v);
 
@@ -786,8 +786,8 @@ void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_repr_get_boolean(repr, "showgrid", &v);
     v = !v;
 
-    gboolean saved = sp_document_get_undo_sensitive(doc);
-    sp_document_set_undo_sensitive(doc, FALSE);
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive(doc, false);
 
     sp_repr_set_boolean(repr, "showgrid", v);
 
