@@ -463,6 +463,9 @@ void Tracer::traceThread()
         return;
         }
 
+    msgStack->flash(Inkscape::NORMAL_MESSAGE, _("Trace: Starting trace..."));
+    desktop->updateCanvasNow();
+    
     std::vector<TracingEngineResult> results =
                 engine->trace(pixbuf);
     //printf("nrPaths:%d\n", results.size());
