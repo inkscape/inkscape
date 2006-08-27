@@ -3699,42 +3699,6 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
 
 private:
 
@@ -3765,10 +3729,6 @@ JSPropertySpec ECMA_UserDataHandler::properties[] =
 
 JSFunctionSpec ECMA_UserDataHandler::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -3845,7 +3805,7 @@ public:
         JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
                  JSConstructor, 0,
                  properties, methods,
-                 NULL, NULL);
+                 staticProperties, NULL);
         return newObj;
         }
 
@@ -3877,49 +3837,23 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
 
 private:
 
     // Standard JS Binding fields
     static JSClass classDef;
+    enum
+        {
+        prop_severity,
+        prop_message,
+        prop_type,
+        prop_relatedException,
+        prop_relatedData,
+        prop_location
+        };
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
+    static JSPropertySpec staticProperties[];
 
 };
 
@@ -3937,18 +3871,37 @@ JSClass ECMA_DOMError::classDef =
 
 JSPropertySpec ECMA_DOMError::properties[] = 
 { 
+    { "severity",          prop_severity, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "message",           prop_message, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "type",              prop_type, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "relatedException",  prop_relatedException, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "relatedData",       prop_relatedData, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "location",          prop_location, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_DOMError::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
-     { 0 }
+    { 0 }
 };
 
+
+JSPropertySpec ECMA_DOMError::staticProperties[] = 
+{ 
+    { "SEVERITY_WARNING",      DOMError::SEVERITY_WARNING, 
+	      JSPROP_READONLY, JSGetEnumProperty },
+    { "SEVERITY_ERROR",        DOMError::SEVERITY_ERROR, 
+	      JSPROP_READONLY, JSGetEnumProperty },
+    { "SEVERITY_FATAL_ERROR",  DOMError::SEVERITY_FATAL_ERROR, 
+	      JSPROP_READONLY, JSGetEnumProperty },
+    { 0 }
+};
 
 
 
@@ -4030,47 +3983,20 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
 
 private:
 
     // Standard JS Binding fields
     static JSClass classDef;
+    enum
+        {
+        prop_lineNumber,
+        prop_columnNumber,
+        prop_byteOffset,
+        prop_utf16Offset,
+        prop_relatedNode,
+        prop_uri,
+        };
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
 
@@ -4090,15 +4016,23 @@ JSClass ECMA_DOMLocator::classDef =
 
 JSPropertySpec ECMA_DOMLocator::properties[] = 
 { 
+    { "lineNumber",   prop_lineNumber, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "columnNumber", prop_columnNumber, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "byteOffset",   prop_byteOffset, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "utf16Offset",  prop_utf16Offset, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "relatedNode",  prop_relatedNode, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "uri",          prop_uri, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_DOMLocator::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -4193,7 +4127,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool setParameter(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -4202,7 +4136,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+    static JSBool getParameter(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -4211,16 +4145,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
+    static JSBool canSetParameter(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -4231,6 +4156,10 @@ private:
 
     // Standard JS Binding fields
     static JSClass classDef;
+    enum
+        {
+        prop_parameterNames
+        };
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
 
@@ -4250,15 +4179,16 @@ JSClass ECMA_DOMConfiguration::classDef =
 
 JSPropertySpec ECMA_DOMConfiguration::properties[] = 
 { 
+    { "parameterNames",  prop_parameterNames, 
+	      JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_DOMConfiguration::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "setParameter",     setParameter,     2, 0, 0 },
+     { "getParameter",     getParameter,     1, 0, 0 },
+     { "canSetParameter",  canSetParameter,  2, 0, 0 },
      { 0 }
 };
 
@@ -4331,42 +4261,6 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
 
 private:
 
@@ -4396,10 +4290,6 @@ JSPropertySpec ECMA_CDATASection::properties[] =
 
 JSFunctionSpec ECMA_CDATASection::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -4487,47 +4377,21 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
 
     // Standard JS Binding fields
     static JSClass classDef;
+    enum
+        {
+        prop_name,         
+        prop_entities,     
+        prop_notations,    
+        prop_systemId,     
+        prop_publicId,     
+        prop_internalSubset
+        };
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
 
@@ -4547,15 +4411,17 @@ JSClass ECMA_DocumentType::classDef =
 
 JSPropertySpec ECMA_DocumentType::properties[] = 
 { 
+    { "name",           prop_name,           JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "entities",       prop_entities,       JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "notations",      prop_notations,      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "systemId",       prop_systemId,       JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "publicId",       prop_publicId,       JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "internalSubset", prop_internalSubset, JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_DocumentType::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -4634,47 +4500,15 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-
 private:
 
     // Standard JS Binding fields
     static JSClass classDef;
+    enum
+        {
+        prop_publicId,
+        prop_systemId
+        };
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
 
@@ -4694,15 +4528,13 @@ JSClass ECMA_Notation::classDef =
 
 JSPropertySpec ECMA_Notation::properties[] = 
 { 
+    { "publicId",      prop_publicId,      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "systemId",      prop_systemId,      JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_Notation::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -4790,47 +4622,20 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
 
 private:
 
     // Standard JS Binding fields
     static JSClass classDef;
+    enum
+        {
+        prop_publicId,
+        prop_systemId,
+        prop_notationName,
+        prop_inputEncoding,
+        prop_xmlEncoding,
+        prop_xmlVersion
+        };
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
 
@@ -4850,15 +4655,17 @@ JSClass ECMA_Entity::classDef =
 
 JSPropertySpec ECMA_Entity::properties[] = 
 { 
+    { "publicId",      prop_publicId,      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "systemId",      prop_systemId,      JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "notationName",  prop_notationName,  JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "inputEncoding", prop_inputEncoding, JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "xmlEncoding",   prop_xmlEncoding,   JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "xmlVersion",    prop_xmlVersion,    JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_Entity::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -4932,41 +4739,6 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
@@ -4997,10 +4769,6 @@ JSPropertySpec ECMA_EntityReference::properties[] =
 
 JSFunctionSpec ECMA_EntityReference::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
@@ -5083,41 +4851,6 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
@@ -5125,6 +4858,11 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_target,
+        prop_data
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -5143,15 +4881,13 @@ JSClass ECMA_ProcessingInstruction::classDef =
 
 JSPropertySpec ECMA_ProcessingInstruction::properties[] = 
 { 
+    { "target",  prop_target, JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "data",    prop_data,   JSPROP_ENUMERATE },
     { 0 }
 };
 
 JSFunctionSpec ECMA_ProcessingInstruction::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 

@@ -1612,9 +1612,9 @@ public:
 
     typedef enum
         {
-        DOMERROR_SEVERITY_WARNING     = 1,
-        DOMERROR_SEVERITY_ERROR       = 2,
-        DOMERROR_SEVERITY_FATAL_ERROR = 3
+        SEVERITY_WARNING     = 1,
+        SEVERITY_ERROR       = 2,
+        SEVERITY_FATAL_ERROR = 3
         } ErrorSeverity;
 
 
