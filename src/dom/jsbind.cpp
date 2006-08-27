@@ -36,13 +36,37 @@
  {
  namespace dom
  {
- 
+
+
  /**
  * To ensure that we at least attempt to bind ECMAScript to DOM as closely as
  * possible, we will include the entire Appendix H of the XML Level 3 Core spec:
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/ecma-script-binding.html
  */
  
+
+//########################################################################
+//# U T I L I T Y
+//########################################################################
+
+
+/**
+ * The name of the property is an enumeration, so just return the value.
+ */
+static JSBool JSGetEnumProperty(JSContext *cx, JSObject *obj,
+                  jsval id, jsval *vp)
+{
+    *vp = id;
+    return JS_TRUE;
+}
+
+
+
+
+//########################################################################
+//# C L A S S E S
+//########################################################################
+
 /**   
  * Appendix H: ECMAScript Language Binding
  * 
@@ -73,6 +97,120 @@
  * 
  * 
  */
+
+class ECMA_DOMImplementationRegistry
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementation(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementationList(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMImplementationRegistry::classDef =
+{
+        "DOMImplementationRegistry",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMImplementationRegistry::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMImplementationRegistry::methods[] = 
+{
+     { "getDOMImplementation",     getDOMImplementation, 1, 0, 0 },
+     { "getDOMImplementationList", getDOMImplementationList, 1, 0, 0 },
+     { 0 }
+};
+
+
+
 
 
 
@@ -128,6 +266,170 @@
  * 
  */
 
+class ECMA_DOMException
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 staticProperties,  NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        if (!JSVAL_IS_INT(id))
+		    return JS_FALSE;
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        switch( JSVAL_TO_INT( id ) )
+            {
+            case code_prop:
+                {
+                *vp = INT_TO_JSVAL(p->code);
+	    	    return JS_TRUE;
+                }
+            }
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        if (!JSVAL_IS_INT(id))
+		    return JS_FALSE;
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        switch( JSVAL_TO_INT( id ) )
+            {
+            case code_prop:
+                {
+                p->code = JSVAL_TO_INT( *vp );
+	    	    return JS_TRUE;
+                }
+            }
+        return JS_FALSE;
+        }
+
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+	enum
+        {
+        code_prop
+        };
+    static JSPropertySpec properties[];
+    static JSPropertySpec staticProperties[];
+	static JSFunctionSpec methods[];
+	static JSFunctionSpec staticMethods[];
+
+};
+
+JSClass ECMA_DOMException::classDef =
+{
+        "Node",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMException::properties[] = 
+{ 
+    { "code",                         code_prop,
+	    JSPROP_ENUMERATE },
+    { 0 }
+};
+
+JSPropertySpec ECMA_DOMException::staticProperties[] = 
+{ 
+    { "INDEX_SIZE_ERR",               DOMException::INDEX_SIZE_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOMSTRING_SIZE_ERR",           DOMException::DOMSTRING_SIZE_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "HIERARCHY_REQUEST_ERR",        DOMException::HIERARCHY_REQUEST_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "WRONG_DOCUMENT_ERR",           DOMException::WRONG_DOCUMENT_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "INVALID_CHARACTER_ERR",        DOMException::INVALID_CHARACTER_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NO_DATA_ALLOWED_ERR",          DOMException::NO_DATA_ALLOWED_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NO_MODIFICATION_ALLOWED_ERR",  DOMException::NO_MODIFICATION_ALLOWED_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NOT_FOUND_ERR",                DOMException::NOT_FOUND_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NOT_SUPPORTED_ERR",            DOMException::NOT_SUPPORTED_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "INUSE_ATTRIBUTE_ERR",          DOMException::INUSE_ATTRIBUTE_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "INVALID_STATE_ERR",            DOMException::INVALID_STATE_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "SYNTAX_ERR",                   DOMException::SYNTAX_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "INVALID_MODIFICATION_ERR",     DOMException::INVALID_MODIFICATION_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NAMESPACE_ERR",                DOMException::NAMESPACE_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "INVALID_ACCESS_ERR",           DOMException::INVALID_ACCESS_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "VALIDATION_ERR",               DOMException::VALIDATION_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "TYPE_MISMATCH_ERR",            DOMException::TYPE_MISMATCH_ERR,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMException::methods[] = 
+{
+     { 0 }
+};
+
+
+
+
 /**
  * Objects that implement the DOMStringList interface:
  * 
@@ -150,6 +452,132 @@
  *             The str parameter is a String. 
  * 
  */
+
+class ECMA_DOMStringList
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMStringList *p = new DOMStringList();
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMStringList *p = (DOMStringList *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        if (JSVAL_IS_INT(id))
+            {
+            DOMStringList *p = (DOMStringList *) JS_GetPrivate(cx, obj);
+            if (JSVAL_TO_INT(id) == prop_length)
+                *vp = JSVAL_TO_INT(p->getLength());
+            return JS_TRUE;
+            }
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool item(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+    enum
+        {
+        prop_length
+        };
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMStringList::classDef =
+{
+        "DOMStringList",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMStringList::properties[] = 
+{ 
+    { "length",  prop_length, JSPROP_READONLY  },
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMStringList::methods[] = 
+{
+     { "item",     item,     1, 0, 0 },
+     { "contains", contains, 1, 0, 0 },
+     { 0 }
+};
+
+
+
 
 
 
@@ -178,6 +606,140 @@
  *             The name parameter is a String. 
  */
 
+class ECMA_NameList
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_NameList::classDef =
+{
+        "NameList",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_NameList::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_NameList::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
+
 
 /**
  * Objects that implement the DOMImplementationList interface:
@@ -199,6 +761,110 @@
  * 
  */
 
+class ECMA_DOMImplementationList
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool item(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMImplementationList::classDef =
+{
+        "DOMImplementationRegistry",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMImplementationList::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMImplementationList::methods[] = 
+{
+     { "item",     item, 1, 0, 0 },
+     { 0 }
+};
+
+
+
+
 /**
  * Objects that implement the DOMImplementationSource interface:
  * 
@@ -212,6 +878,121 @@
  *                 interface.
  *             The features parameter is a String. 
  */
+
+class ECMA_DOMImplementationSource
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementation(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementationList(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMImplementationSource::classDef =
+{
+        "DOMImplementationSource",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMImplementationSource::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMImplementationSource::methods[] = 
+{
+     { "getDOMImplementation",     getDOMImplementation,     1, 0, 0 },
+     { "getDOMImplementationList", getDOMImplementationList, 1, 0, 0 },
+     { 0 }
+};
+
+
+
+
 
 /**
  * Objects that implement the DOMImplementation interface:
@@ -240,12 +1021,258 @@
  *             The version parameter is a String. 
  */
 
+class ECMA_DOMImplementation
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool hasFeature(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createDocumentType(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createDocument(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getFeature(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMImplementation::classDef =
+{
+        "DOMImplementation",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMImplementation::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMImplementation::methods[] = 
+{
+     { "hasFeature",         hasFeature,         2, 0, 0 },
+     { "createDocumentType", createDocumentType, 3, 0, 0 },
+     { "createDocument",     createDocument,     3, 0, 0 },
+     { "getFeature",         getFeature,         2, 0, 0 },
+     { 0 }
+};
+
+
+
+
 /**
  * Objects that implement the DocumentFragment interface:
  *
  * Objects that implement the DocumentFragment interface have all properties and 
  * functions of the Node interface.
  */
+
+class ECMA_DocumentFragment
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementation(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementationList(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DocumentFragment::classDef =
+{
+        "DocumentFragment",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DocumentFragment::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DocumentFragment::methods[] = 
+{
+     { "getDOMImplementation",     getDOMImplementation, 1, 0, 0 },
+     { "getDOMImplementationList", getDOMImplementationList, 1, 0, 0 },
+     { 0 }
+};
+
 
 
 /**
@@ -351,6 +1378,120 @@
  *             The qualifiedName parameter is a String.
  *             This function can raise an object that implements the DOMException interface. 
  */
+
+class ECMA_Document
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementation(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getDOMImplementationList(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Document::classDef =
+{
+        "Document",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Document::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Document::methods[] = 
+{
+     { "getDOMImplementation",     getDOMImplementation, 1, 0, 0 },
+     { "getDOMImplementationList", getDOMImplementationList, 1, 0, 0 },
+     { 0 }
+};
+
+
+
 
 
 /**
@@ -503,7 +1644,7 @@
  * 
  */
 
-class JSNode
+class ECMA_Node
 {
 public:
 
@@ -608,36 +1749,70 @@ private:
 
 };
 
-// JSCustomer.cpp
-JSClass JSNode::classDef =
+JSClass ECMA_Node::classDef =
 {
         "Node",
 		JSCLASS_HAS_PRIVATE,
         JS_PropertyStub,          JS_PropertyStub,
-        JSNode::JSGetProperty,    JSNode::JSSetProperty,
+        JSGetProperty,            JSSetProperty,
         JS_EnumerateStub,         JS_ResolveStub, 
-        JS_ConvertStub,           JSNode::JSDestructor
+        JS_ConvertStub,           JSDestructor
 };
 
-JSPropertySpec JSNode::properties[] = 
+
+
+JSPropertySpec ECMA_Node::properties[] = 
 { 
-    { "name", JSNode::name_prop, JSPROP_ENUMERATE },
-    { "age",  JSNode::age_prop,  JSPROP_ENUMERATE },
+    { "ELEMENT_NODE",               Node::ELEMENT_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "ATTRIBUTE_NODE",              Node::ATTRIBUTE_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "TEXT_NODE",                   Node::TEXT_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "CDATA_SECTION_NODE",          Node::CDATA_SECTION_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "ENTITY_REFERENCE_NODE",       Node::ENTITY_REFERENCE_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "ENTITY_NODE",                 Node::ENTITY_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "PROCESSING_INSTRUCTION_NODE", Node::PROCESSING_INSTRUCTION_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "COMMENT_NODE",                Node::COMMENT_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_NODE",               Node::DOCUMENT_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_TYPE_NODE",          Node::DOCUMENT_TYPE_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_FRAGMENT_NODE",      Node::DOCUMENT_FRAGMENT_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NOTATION_NODE",               Node::NOTATION_NODE,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_POSITION_DISCONNECTED", 0x01,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_POSITION_PRECEDING",    0x02,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_POSITION_FOLLOWING",    0x04,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_POSITION_CONTAINS",     0x08,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_POSITION_CONTAINED_BY", 0x10,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC", 0x20,
+	    JSPROP_READONLY, JSGetEnumProperty  },
     { 0 }
 };
 
-JSPropertySpec JSNode::staticProperties[] = 
+JSPropertySpec ECMA_Node::staticProperties[] = 
 { 
     { 0 }
 };
 
-JSFunctionSpec JSNode::methods[] = 
+JSFunctionSpec ECMA_Node::methods[] = 
 {
-//     { "computeReduction", computeReduction, 1, 0, 0 },
      { 0 }
 };
 
-JSFunctionSpec JSNode::staticMethods[] = 
+JSFunctionSpec ECMA_Node::staticMethods[] = 
 {
      { 0 }
 };
@@ -667,6 +1842,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  * 
  * 
  */
+
+class ECMA_NodeList
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_NodeList::classDef =
+{
+        "NodeList",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_NodeList::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_NodeList::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
 
 /**
  * Objects that implement the NamedNodeMap interface:
@@ -710,6 +2018,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             The localName parameter is a String.
  *             This function can raise an object that implements the DOMException interface. 
  */
+
+
+class ECMA_NamedNodeMap
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_NamedNodeMap::classDef =
+{
+        "NamedNodeMap",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_NamedNodeMap::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_NamedNodeMap::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
 
 
 /**
@@ -756,6 +2197,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             This function can raise an object that implements the DOMException interface. 
  */
 
+class ECMA_CharacterData
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_CharacterData::classDef =
+{
+        "CharacterData",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_CharacterData::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_CharacterData::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Objects that implement the Attr interface:
  * 
@@ -779,6 +2353,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             This read-only property is a Boolean. 
  * 
  */
+
+class ECMA_Attr
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Attr::classDef =
+{
+        "Attr",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Attr::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Attr::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
 
 /**
  * Objects that implement the Element interface:
@@ -877,6 +2584,141 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             This function can raise an object that implements the DOMException interface. 
  */
 
+class ECMA_Element
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Element::classDef =
+{
+        "Element",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Element::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Element::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
+
+
 /**
  * Objects that implement the Text interface:
  * 
@@ -902,6 +2744,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             This function can raise an object that implements the DOMException interface. 
  */
 
+class ECMA_Text
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Text::classDef =
+{
+        "Text",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Text::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Text::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Objects that implement the Comment interface:
  * 
@@ -909,6 +2884,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *     of the CharacterData interface.
  * 
  */
+
+class ECMA_Comment
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Comment::classDef =
+{
+        "Comment",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Comment::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Comment::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
 
 /**
  * Properties of the TypeInfo Constructor function:
@@ -939,6 +3047,140 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             The typeNameArg parameter is a String.
  *             The derivationMethod parameter is a Number. 
  */
+
+class ECMA_TypeInfo
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_TypeInfo::classDef =
+{
+        "TypeInfo",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_TypeInfo::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_TypeInfo::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 
 /**
  * Properties of the UserDataHandler Constructor function:
@@ -971,6 +3213,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  */
 
 
+class ECMA_UserDataHandler
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_UserDataHandler::classDef =
+{
+        "UserDataHandler",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_UserDataHandler::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_UserDataHandler::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Objects that implement the DOMError interface:
  * 
@@ -996,6 +3371,140 @@ JSFunctionSpec JSNode::staticMethods[] =
  * 
  */
 
+class ECMA_DOMError
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMError::classDef =
+{
+        "DOMError",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMError::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMError::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
+
 /**
  * Objects that implement the DOMLocator interface:
  * 
@@ -1014,6 +3523,140 @@ JSFunctionSpec JSNode::staticMethods[] =
  *         uri
  *             This read-only property is a String. 
  */
+
+class ECMA_DOMLocator
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMLocator::classDef =
+{
+        "DOMLocator",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMLocator::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMLocator::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 
 /**
  * Objects that implement the DOMConfiguration interface:
@@ -1041,6 +3684,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  */
 
 
+class ECMA_DOMConfiguration
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DOMConfiguration::classDef =
+{
+        "DOMConfiguration",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DOMConfiguration::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DOMConfiguration::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Objects that implement the CDATASection interface:
  * 
@@ -1048,6 +3824,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *     functions of the Text interface.
  * 
  */
+
+class ECMA_CDATASection
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_CDATASection::classDef =
+{
+        "CDATASection",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_CDATASection::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_CDATASection::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
 
 /**
  * Objects that implement the DocumentType interface:
@@ -1072,6 +3981,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  */
 
 
+class ECMA_DocumentType
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_DocumentType::classDef =
+{
+        "DocumentType",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_DocumentType::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_DocumentType::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Objects that implement the Notation interface:
  * 
@@ -1085,6 +4127,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *         systemId
  *             This read-only property is a String. 
  */
+
+class ECMA_Notation
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Notation::classDef =
+{
+        "Notation",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Notation::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Notation::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
 
 /**
  * Objects that implement the Entity interface:
@@ -1109,6 +4284,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  *             This read-only property is a String. 
  */
 
+class ECMA_Entity
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_Entity::classDef =
+{
+        "Entity",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_Entity::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_Entity::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Objects that implement the EntityReference interface:
  * 
@@ -1116,6 +4424,140 @@ JSFunctionSpec JSNode::staticMethods[] =
  * functions of the Node interface.
  * 
  */
+
+
+class ECMA_EntityReference
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_EntityReference::classDef =
+{
+        "EntityReference",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_EntityReference::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_EntityReference::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
 
 
 /**
@@ -1135,6 +4577,139 @@ JSFunctionSpec JSNode::staticMethods[] =
  */
 
 
+class ECMA_ProcessingInstruction
+{
+public:
+
+	/**
+	 * JSConstructor - Callback for when a this object is created
+	 */
+	static JSBool JSConstructor(JSContext *cx, JSObject *obj, uintN argc,
+                   jsval *argv, jsval *rval)
+	    {
+	    if (argc != 1)
+	        return JS_FALSE;
+	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        if ( ! JS_SetPrivate(cx, obj, p) )
+	        return JS_FALSE;
+        *rval = OBJECT_TO_JSVAL(obj);
+        return JS_TRUE;
+	    }
+	
+	/**
+	 * JSInit - Create a prototype for this class
+	 */
+	static JSObject* JSInit(JSContext *cx, JSObject *obj, JSObject *proto = NULL)
+        {
+        JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
+                 JSConstructor, 0,
+                 properties, methods,
+                 NULL, NULL);
+        return newObj;
+        }
+
+	/**
+	 * JSDestructor - Callback for when a this object is destroyed
+	 */
+	static void JSDestructor(JSContext *cx, JSObject *obj)
+        {
+        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        delete p;
+        p = NULL;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSSetProperty - Callback for setting properties
+	 */
+	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool contains(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool containsNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+
+private:
+
+   // Standard JS Binding fields
+    static JSClass classDef;
+    static JSPropertySpec properties[];
+	static JSFunctionSpec methods[];
+
+};
+
+JSClass ECMA_ProcessingInstruction::classDef =
+{
+        "ProcessingInstruction",
+		JSCLASS_HAS_PRIVATE,
+        JS_PropertyStub,          JS_PropertyStub,
+        JSGetProperty,            JSSetProperty,
+        JS_EnumerateStub,         JS_ResolveStub, 
+        JS_ConvertStub,           JSDestructor
+};
+
+
+
+JSPropertySpec ECMA_ProcessingInstruction::properties[] = 
+{ 
+    { 0 }
+};
+
+JSFunctionSpec ECMA_ProcessingInstruction::methods[] = 
+{
+     { "getName",         getName,         1, 0, 0 },
+     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
+     { "contains",        contains,        1, 0, 0 },
+     { "containsNS",      containsNS,      2, 0, 0 },
+     { 0 }
+};
+
+
+
 /**
  * Note: In addition of having DOMConfiguration parameters exposed to the 
  * application using the setParameter and getParameter, those parameters are also 
@@ -1144,10 +4719,6 @@ JSFunctionSpec JSNode::staticMethods[] =
  * being replaced by its uppercase equivalent.
  */
  
- //########################################################################
-//# C L A S S E S
-//########################################################################
-
 
 
 //########################################################################

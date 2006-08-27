@@ -41,45 +41,47 @@ namespace dom
 {
 
 /**
- *
+ * Encapsulate a Spidermonkey JavaScript interpreter.  Init classes, then
+ * wrap around any objects that are needed. 
  */
 class JavascriptEngine
 {
 public:
 
     /**
-     *
+     *  Constructor
      */
     JavascriptEngine()
         { init(); }
 
     /**
-     *
+     *  Copy constructor
      */
     JavascriptEngine(const JavascriptEngine &other)
         { assign(other); }
 
     /**
-     *
+     *  Assignment operator
      */
     JavascriptEngine &operator=(const JavascriptEngine &other)
         { assign(other); return *this; }
 
     /**
-     *
+     *  Destructor
+     */
+    virtual ~JavascriptEngine()
+        {}
+
+    /**
+     *  Startup the javascript engine
      */
     bool startup();
 
     /**
-     *
+     *  Shutdown the javascript engine
      */
     bool shutdown();
 
-    /**
-     *
-     */
-    virtual ~JavascriptEngine()
-        {}
 
 
 private:
@@ -99,11 +101,18 @@ private:
         }
 
     /**
-     *
+     *  Bind with the basic DOM classes
      */
     bool createClasses();
 
+    /**
+     * Ouput a printf-formatted error message
+     */
     void error(char *fmt, ...);
+
+    /**
+     * Ouput a printf-formatted error message
+     */
     void trace(char *fmt, ...);
 
     JSRuntime *rt;
