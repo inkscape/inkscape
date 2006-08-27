@@ -178,7 +178,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -318,7 +318,7 @@ public:
         DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
         switch( JSVAL_TO_INT( id ) )
             {
-            case code_prop:
+            case prop_code:
                 {
                 *vp = INT_TO_JSVAL(p->code);
 	    	    return JS_TRUE;
@@ -338,7 +338,7 @@ public:
         DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
         switch( JSVAL_TO_INT( id ) )
             {
-            case code_prop:
+            case prop_code:
                 {
                 p->code = JSVAL_TO_INT( *vp );
 	    	    return JS_TRUE;
@@ -351,11 +351,11 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
 	enum
         {
-        code_prop
+        prop_code
         };
     static JSPropertySpec properties[];
     static JSPropertySpec staticProperties[];
@@ -378,8 +378,7 @@ JSClass ECMA_DOMException::classDef =
 
 JSPropertySpec ECMA_DOMException::properties[] = 
 { 
-    { "code",                         code_prop,
-	    JSPROP_ENUMERATE },
+    { "code",  prop_code, JSPROP_ENUMERATE },
     { 0 }
 };
 
@@ -540,7 +539,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
     enum
@@ -618,7 +617,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    NameList *p = new NameList();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -704,7 +703,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -832,7 +831,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -891,7 +890,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    DOMImplementationSource *p = new DOMImplementationSourceImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -915,7 +914,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DOMImplementationSource *p = (DOMImplementationSource *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -959,7 +958,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -1033,7 +1032,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    DOMImplementation *p = new DOMImplementationImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -1057,7 +1056,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DOMImplementation *p = (DOMImplementation *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -1119,7 +1118,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -1174,7 +1173,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    DocumentFragment *p = new DocumentFragmentImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -1198,7 +1197,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DocumentFragment *p = (DocumentFragment *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -1242,7 +1241,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -1391,9 +1390,9 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
-        if ( ! JS_SetPrivate(cx, obj, p) )
-	        return JS_FALSE;
+	    //Document *p = new DocumentImpl();
+        //if ( ! JS_SetPrivate(cx, obj, p) )
+	    //    return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
         return JS_TRUE;
 	    }
@@ -1415,7 +1414,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Document *p = (Document *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -1438,10 +1437,14 @@ public:
         return JS_FALSE;
         }
 
+    //#######################
+    //# M E T H O D S
+    //#######################
+
 	/**
 	 *
 	 */
-    static JSBool getDOMImplementation(JSContext *cx, JSObject *obj,
+    static JSBool createElement(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -1450,7 +1453,142 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getDOMImplementationList(JSContext *cx, JSObject *obj,
+    static JSBool createDocumentFragment(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createTextNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createComment(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createCDATASection(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createProcessingInstruction(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createAttribute(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createEntityReference(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getElementsByTagName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool importNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createElementNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool createAttributeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getElementsByTagNameNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getElementById(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool adoptNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool normalizeDocument(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool renameNode(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -1459,9 +1597,22 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_doctype,
+        prop_implementation,
+        prop_documentElement,
+        prop_inputEncoding,
+        prop_xmlEncoding,
+        prop_xmlStandalone,
+        prop_xmlVersion,
+        prop_strictErrorChecking,
+        prop_documentURI,
+        prop_domConfig
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -1480,13 +1631,48 @@ JSClass ECMA_Document::classDef =
 
 JSPropertySpec ECMA_Document::properties[] = 
 { 
+    { "doctype",              prop_doctype,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "implementation",       prop_implementation,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "documentElement",      prop_documentElement,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "inputEncoding",        prop_inputEncoding,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "xmlEncoding",          prop_xmlEncoding,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "xmlStandalone",        prop_xmlStandalone,
+                JSPROP_ENUMERATE },
+    { "xmlVersion",           prop_xmlVersion,
+                JSPROP_ENUMERATE },
+    { "strictErrorChecking",  prop_strictErrorChecking,
+                JSPROP_ENUMERATE },
+    { "documentURI",          prop_documentURI,
+                JSPROP_ENUMERATE },
+    { "domConfig",            prop_domConfig,
+                JSPROP_ENUMERATE },
     { 0 }
 };
 
 JSFunctionSpec ECMA_Document::methods[] = 
 {
-     { "getDOMImplementation",     getDOMImplementation, 1, 0, 0 },
-     { "getDOMImplementationList", getDOMImplementationList, 1, 0, 0 },
+     { "createElement",               createElement,               1, 0, 0 },
+     { "createDocumentFragment",      createDocumentFragment,      0, 0, 0 },
+     { "createTextNode",              createTextNode,              1, 0, 0 },
+     { "createComment",               createComment,               1, 0, 0 },
+     { "createCDATASection",          createCDATASection,          1, 0, 0 },
+     { "createProcessingInstruction", createProcessingInstruction, 2, 0, 0 },
+     { "createAttribute",             createAttribute,             1, 0, 0 },
+     { "createEntityReference",       createEntityReference,       1, 0, 0 },
+     { "getElementsByTagName",        getElementsByTagName,        1, 0, 0 },
+     { "importNode",                  importNode,                  2, 0, 0 },
+     { "createElementNS",             createElementNS,             2, 0, 0 },
+     { "createAttributeNS",           createAttributeNS,           2, 0, 0 },
+     { "getElementsByTagNameNS",      getElementsByTagNameNS,      2, 0, 0 },
+     { "getElementById",              getElementById,              1, 0, 0 },
+     { "adoptNode",                   adoptNode,                   1, 0, 0 },
+     { "normalizeDocument",           normalizeDocument,           0, 0, 0 },
+     { "renameNode",                  renameNode,                  3, 0, 0 },
      { 0 }
 };
 
@@ -1691,14 +1877,14 @@ public:
         {
         if (!JSVAL_IS_INT(id))
 		    return JS_FALSE;
-        Node *p = (Node *) JS_GetPrivate(cx, obj);
+        //Node *p = (Node *) JS_GetPrivate(cx, obj);
         switch( JSVAL_TO_INT( id ) )
             {
-            case name_prop:
+            case prop_nodeName:
                 {
                 return JS_TRUE;
                 }
-            case age_prop:
+            case prop_nodeValue:
                 {
                 //*vp = INT_TO_JSVAL(priv->getNode()->GetAge());
 	    	    return JS_TRUE;
@@ -1715,14 +1901,14 @@ public:
         {
         if (!JSVAL_IS_INT(id))
 		    return JS_FALSE;
-        Node *p = (Node *) JS_GetPrivate(cx, obj);
+        //Node *p = (Node *) JS_GetPrivate(cx, obj);
         switch( JSVAL_TO_INT( id ) )
             {
-            case name_prop:
+            case prop_nodeValue:
                 {
                 return JS_TRUE;
                 }
-            case age_prop:
+            case prop_prefix:
                 {
                 //*vp = INT_TO_JSVAL(priv->getNode()->GetAge());
 	    	    return JS_TRUE;
@@ -1731,16 +1917,194 @@ public:
         return JS_FALSE;
         }
 
+    //#######################
+    //# M E T H O D S
+    //#######################
 
+	/**
+	 *
+	 */
+    static JSBool insertBefore(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool replaceChild(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool removeChild(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool appendChild(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool hasChildNodes(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool cloneNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool normalize(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool isSupported(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool hasAttributes(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool compareDocumentPosition(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool isSameNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool lookupPrefix(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool isDefaultNamespace(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool lookupNamespaceURI(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool isEqualNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getFeature(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setUserData(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getUserData(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
 	enum
         {
-        name_prop,
-        age_prop
+        prop_nodeName,
+        prop_nodeValue,
+        prop_nodeType,
+        prop_parentNode,
+        prop_childNodes,
+        prop_firstChild,
+        prop_lastChild,
+        prop_previousSibling,
+        prop_nextSibling,
+        prop_attributes,
+        prop_ownerDocument,
+        prop_namespaceURI,
+        prop_prefix,
+        prop_localName,
+        prop_baseURI,
+        prop_textContent
         };
     static JSPropertySpec properties[];
     static JSPropertySpec staticProperties[];
@@ -1762,6 +2126,43 @@ JSClass ECMA_Node::classDef =
 
 
 JSPropertySpec ECMA_Node::properties[] = 
+{ 
+    { "nodeName",               prop_nodeName,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "nodeValue",              prop_nodeValue,
+                JSPROP_ENUMERATE },
+    { "nodeType",               prop_nodeType,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "parentNode",             prop_parentNode,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "childNodes",             prop_childNodes,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "firstChild",             prop_firstChild,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "lastChild",              prop_lastChild,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "previousSibling",        prop_previousSibling,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "nextSibling",            prop_nextSibling,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "attributes",             prop_attributes,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "ownerDocument",          prop_ownerDocument,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "namespaceURI",           prop_namespaceURI,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "prefix",                 prop_prefix,
+                JSPROP_ENUMERATE },
+    { "localName",              prop_localName,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "baseURI",                prop_baseURI,
+                JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "textContent",            prop_textContent,
+                JSPROP_ENUMERATE },
+    { 0 }
+};
+
+JSPropertySpec ECMA_Node::staticProperties[] = 
 { 
     { "ELEMENT_NODE",               Node::ELEMENT_NODE,
 	    JSPROP_READONLY, JSGetEnumProperty  },
@@ -1802,13 +2203,26 @@ JSPropertySpec ECMA_Node::properties[] =
     { 0 }
 };
 
-JSPropertySpec ECMA_Node::staticProperties[] = 
-{ 
-    { 0 }
-};
-
 JSFunctionSpec ECMA_Node::methods[] = 
 {
+     { "insertBefore",               insertBefore,               2, 0, 0 },
+     { "replaceChild",               replaceChild,               2, 0, 0 },
+     { "removeChild",                removeChild,                1, 0, 0 },
+     { "appendChild",                appendChild,                1, 0, 0 },
+     { "hasChildNodes",              hasChildNodes,              0, 0, 0 },
+     { "cloneNode",                  cloneNode,                  1, 0, 0 },
+     { "normalize",                  normalize,                  0, 0, 0 },
+     { "isSupported",                isSupported,                2, 0, 0 },
+     { "hasAttributes",              hasAttributes,              0, 0, 0 },
+     { "compareDocumentPosition",    compareDocumentPosition,    1, 0, 0 },
+     { "isSameNode",                 isSameNode,                 1, 0, 0 },
+     { "lookupPrefix",               lookupPrefix,               1, 0, 0 },
+     { "isDefaultNamespace",         isDefaultNamespace,         1, 0, 0 },
+     { "lookupNamespaceURI",         lookupNamespaceURI,         1, 0, 0 },
+     { "isEqualNode",                isEqualNode,                1, 0, 0 },
+     { "getFeature",                 getFeature,                 2, 0, 0 },
+     { "setUserData",                setUserData,                3, 0, 0 },
+     { "getUserData",                getUserData,                1, 0, 0 },
      { 0 }
 };
 
@@ -1855,7 +2269,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    NodeList *p = new NodeList();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -1879,7 +2293,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        NodeList *p = (NodeList *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -1941,7 +2355,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -2032,7 +2446,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    NamedNodeMap *p = new NamedNodeMap();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -2056,7 +2470,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        NamedNodeMap *p = (NamedNodeMap *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -2118,7 +2532,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -2209,7 +2623,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    CharacterData *p = new CharacterDataImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -2233,7 +2647,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        CharacterData *p = (CharacterData *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -2295,7 +2709,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -2366,9 +2780,9 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
-        if ( ! JS_SetPrivate(cx, obj, p) )
-	        return JS_FALSE;
+	    //Attr *p = new AttrImpl();
+        //if ( ! JS_SetPrivate(cx, obj, p) )
+	    //    return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
         return JS_TRUE;
 	    }
@@ -2390,7 +2804,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Attr *p = (Attr *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -2452,7 +2866,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -2596,7 +3010,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    Element *p = new ElementImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -2620,7 +3034,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Element *p = (Element *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -2682,7 +3096,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -2756,7 +3170,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    Text *p = new TextImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -2780,7 +3194,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Text *p = (Text *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -2842,7 +3256,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -2897,7 +3311,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    Comment *p = new CommentImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -2921,7 +3335,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Comment *p = (Comment *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -2983,7 +3397,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -3060,9 +3474,9 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
-        if ( ! JS_SetPrivate(cx, obj, p) )
-	        return JS_FALSE;
+	    //TypeInfo *p = new TypeInfoImpl();
+        //if ( ! JS_SetPrivate(cx, obj, p) )
+	    //    return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
         return JS_TRUE;
 	    }
@@ -3075,7 +3489,7 @@ public:
         JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
                  JSConstructor, 0,
                  properties, methods,
-                 NULL, NULL);
+                 staticProperties, NULL);
         return newObj;
         }
 
@@ -3084,7 +3498,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        TypeInfo *p = (TypeInfo *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -3146,10 +3560,11 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
+    static JSPropertySpec staticProperties[];
 
 };
 
@@ -3179,6 +3594,18 @@ JSFunctionSpec ECMA_TypeInfo::methods[] =
      { 0 }
 };
 
+JSPropertySpec ECMA_TypeInfo::staticProperties[] = 
+{ 
+    { "DERIVATION_RESTRICTION",   TypeInfo::DERIVATION_RESTRICTION,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DERIVATION_EXTENSION",     TypeInfo::DERIVATION_EXTENSION,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DERIVATION_UNION",         TypeInfo::DERIVATION_UNION,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "DERIVATION_LIST",          TypeInfo::DERIVATION_LIST,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { 0 }
+};
 
 
 
@@ -3225,9 +3652,9 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
-        if ( ! JS_SetPrivate(cx, obj, p) )
-	        return JS_FALSE;
+	    //UserDataHandler *p = new UserDataHandlerImpl();
+        //if ( ! JS_SetPrivate(cx, obj, p) )
+	    //    return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
         return JS_TRUE;
 	    }
@@ -3240,7 +3667,7 @@ public:
         JSObject *newObj = JS_InitClass(cx, obj, proto, &classDef, 
                  JSConstructor, 0,
                  properties, methods,
-                 NULL, NULL);
+                 staticProperties, NULL);
         return newObj;
         }
 
@@ -3249,7 +3676,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        UserDataHandler *p = (UserDataHandler *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -3311,10 +3738,11 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
+    static JSPropertySpec staticProperties[];
 
 };
 
@@ -3343,6 +3771,25 @@ JSFunctionSpec ECMA_UserDataHandler::methods[] =
      { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
+
+
+JSPropertySpec ECMA_UserDataHandler::staticProperties[] = 
+{ 
+    { "NODE_CLONED",      UserDataHandler::NODE_CLONED,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NODE_IMPORTED",    UserDataHandler::NODE_IMPORTED,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NODE_DELETED",     UserDataHandler::NODE_DELETED,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NODE_RENAMED",     UserDataHandler::NODE_RENAMED,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { "NODE_ADOPTED",     UserDataHandler::NODE_ADOPTED,
+	    JSPROP_READONLY, JSGetEnumProperty  },
+    { 0 }
+};
+
+
+
 
 
 
@@ -3383,9 +3830,9 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
-        if ( ! JS_SetPrivate(cx, obj, p) )
-	        return JS_FALSE;
+	    //DOMError *p = new DOMErrorImpl();
+        //if ( ! JS_SetPrivate(cx, obj, p) )
+	    //    return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
         return JS_TRUE;
 	    }
@@ -3407,7 +3854,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DOMError *p = (DOMError *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -3469,7 +3916,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -3536,7 +3983,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    DOMLocator *p = new DOMLocatorImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -3560,7 +4007,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DOMLocator *p = (DOMLocator *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -3622,7 +4069,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -3696,7 +4143,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    DOMConfiguration *p = new DOMConfigurationImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -3720,7 +4167,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DOMConfiguration *p = (DOMConfiguration *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -3782,7 +4229,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -3837,7 +4284,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    CDATASection *p = new CDATASectionImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -3861,7 +4308,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        CDATASection *p = (CDATASection *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -3923,7 +4370,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -3993,7 +4440,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    DocumentType *p = new DocumentTypeImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -4017,7 +4464,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        DocumentType *p = (DocumentType *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -4079,7 +4526,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -4140,7 +4587,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    Notation *p = new NotationImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -4164,7 +4611,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Notation *p = (Notation *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -4226,7 +4673,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -4296,7 +4743,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    Entity *p = new EntityImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -4320,7 +4767,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        Entity *p = (Entity *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -4382,7 +4829,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -4438,7 +4885,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    EntityReference *p = new EntityReferenceImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -4462,7 +4909,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        EntityReference *p = (EntityReference *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -4524,7 +4971,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
@@ -4589,7 +5036,7 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+	    ProcessingInstruction *p = new ProcessingInstructionImpl();
         if ( ! JS_SetPrivate(cx, obj, p) )
 	        return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
@@ -4613,7 +5060,7 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        ProcessingInstruction *p = (ProcessingInstruction *) JS_GetPrivate(cx, obj);
         delete p;
         p = NULL;
         }
@@ -4675,7 +5122,7 @@ public:
 
 private:
 
-   // Standard JS Binding fields
+    // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
 	static JSFunctionSpec methods[];
