@@ -143,6 +143,8 @@ charclass.o       \
 cssparser.o       \
 domimpl.o         \
 domstring.o       \
+jsengine.o        \
+jsbind.o          \
 lsimpl.o          \
 smilimpl.o        \
 uri.o             \
