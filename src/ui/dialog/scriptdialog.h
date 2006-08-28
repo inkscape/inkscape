@@ -35,7 +35,7 @@ class ScriptDialog : public Dialog
      * Constructor
      */
     ScriptDialog() : Dialog ("dialogs.script", SP_VERB_DIALOG_SCRIPT)
-        {}
+    {}
 
 
     /**
@@ -49,6 +49,9 @@ class ScriptDialog : public Dialog
     virtual ~ScriptDialog() {};
 
 
+    private:
+        int _max_dialog_width;
+        int _max_dialog_height;
 
 
 }; // class ScriptDialog

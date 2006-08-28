@@ -214,6 +214,8 @@ ScriptDialogImpl::ScriptDialogImpl()
     errorTextFrame.add(errorTextScroll);
     mainVBox->pack_start(errorTextFrame);
 
+    // sick of this thing shrinking too much
+    set_size_request(350, 400);
     show_all_children();
 
 }

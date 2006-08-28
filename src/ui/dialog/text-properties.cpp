@@ -36,6 +36,9 @@ TextProperties::TextProperties()
     _notebook.append_page(_page_font, _("Font"));
     _notebook.append_page(_page_text, _("Text"));
 
+    set_resizable (true);
+    set_size_request(450, 300);
+    
     show_all_children();
 }
 

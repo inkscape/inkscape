@@ -67,6 +67,9 @@ Messages::Messages()
     textScroll.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_ALWAYS);
     mainVBox->pack_start(textScroll);
 
+    // sick of this thing shrinking too much
+    set_size_request(400, 300);
+    
     show_all_children();
 
     message(_("Ready."));
