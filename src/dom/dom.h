@@ -44,6 +44,11 @@
 #endif
 #endif
 
+//# Unfortunate hack for a name collision
+#ifdef SEVERITY_ERROR
+#undef SEVERITY_ERROR
+#endif
+
 #define XMLNSNAME "http://www.w3.org/2000/xmlns/"
 
 namespace org
