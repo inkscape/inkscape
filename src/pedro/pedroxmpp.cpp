@@ -1550,7 +1550,7 @@ bool XmppClient::inBandRegistrationNew()
     Element *elem = parser.parse(recbuf);
     //elem->print();
 
-    //# does the entity send the "instructions" tag?
+    //# does the entity send the newer "instructions" tag?
     std::vector<Element *> fields = elem->findElements("field");
     std::vector<DOMString> fnames;
     for (unsigned int i=0; i<fields.size() ; i++)
@@ -1562,14 +1562,20 @@ bool XmppClient::inBandRegistrationNew()
         status("field name:%s", fname.c_str());
         }
 
-    delete elem;
-
+    //Do we have any fields?
     if (fnames.size() == 0)
         {
-        error("server did not offer registration");
-        return false;
+        //If no fields, maybe the older method was offered
+        if (elem->findElements("username").size() == 0 ||
+            elem->findElements("password").size() == 0)
+            {
+            error("server did not offer registration");
+            delete elem;
+            return false;
+            }
         }
 
+    delete elem;
 
     fmt =
      "<iq type='set' id='regnew%d'>"
