@@ -1862,8 +1862,9 @@ bool XmppClient::saslMd5Authenticate()
     DOMString realm = attrs["realm"];
     if (realm.size()==0)
         {
-        error("login: no SASL realm sent by server");
-        return false;
+        //Apparently this is not a problem
+        //error("login: no SASL realm sent by server");
+        //return false;
         }
 
     status("SASL recv nonce: '%s' realm:'%s'\n", nonce.c_str(), realm.c_str());
