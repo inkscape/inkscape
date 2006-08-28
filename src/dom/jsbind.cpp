@@ -26,7 +26,23 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+ 
 
+/**
+ * This code provides the ECMAScript (Javascript) binding to the classes
+ * of the DOM Level 3 Core.   This should provide DOM manipulation for
+ * most general-purpose XML and Document-like applications.   More specialized
+ * applications like SVG should inherit from the core C++ classes, and also
+ * use the prototypes in this file as the basis for their bindings.
+ *     
+ * To ensure that we at least attempt to bind ECMAScript to DOM
+ * as closely as possible to the standards, we will include the entire
+ * Appendix H of the XML Level 3 Core spec as annotations in this file.
+ * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/ecma-script-binding.html
+ */
+ 
+ 
+ 
  #include "domimpl.h"
  #include "jsengine.h"
  
@@ -38,12 +54,7 @@
  {
 
 
- /**
- * To ensure that we at least attempt to bind ECMAScript to DOM as closely as
- * possible, we will include the entire Appendix H of the XML Level 3 Core spec:
- * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/ecma-script-binding.html
- */
- 
+
 
 //########################################################################
 //# U T I L I T Y
@@ -74,26 +85,34 @@ static JSBool JSGetEnumProperty(JSContext *cx, JSObject *obj,
  * Level 3 Document Object Model Core definitions. H.1 ECMAScript Binding 
  * Extension
  * 
- * 
+ */
+ 
+ 
+//########################################################################
+//# DOMImplementationRegistry
+//########################################################################
+  
+/** 
  * This section defines the DOMImplementationRegistry object, discussed in 
  * Bootstrapping, for ECMAScript.
  * 
  * 
  * Objects that implements the DOMImplementationRegistry interface
  * 
- *     DOMImplementationRegistry is a global variable which has the following functions:
+ *     DOMImplementationRegistry is a global variable which has the following
+ *      functions:
  * 
  *         getDOMImplementation(features)
- *             This method returns the first registered object that implements the 
- *             DOMImplementation interface and has the desired features, or null if none is 
- *             found. The features parameter is a String. See also 
- *             DOMImplementationSource.getDOMImplementation().
+ *             This method returns the first registered object that implements
+ *             the DOMImplementation interface and has the desired features,
+ *             or null if none is found. The features parameter is a String.
+ *             See also DOMImplementationSource.getDOMImplementation().
  * 
  *         getDOMImplementationList(features)
- *             This method returns a DOMImplementationList list of registered object that 
- *             implements the DOMImplementation interface and has the desired features. The 
- *             features parameter is a String. See also 
- *             DOMImplementationSource.getDOMImplementationList().
+ *             This method returns a DOMImplementationList list of registered
+ *             object that implements the DOMImplementation interface and
+ *             has the desired features. The features parameter is a String.
+ *             See also DOMImplementationSource.getDOMImplementationList().
  * 
  * 
  */
@@ -110,9 +129,9 @@ public:
 	    {
 	    if (argc != 1)
 	        return JS_FALSE;
-	    DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
-        if ( ! JS_SetPrivate(cx, obj, p) )
-	        return JS_FALSE;
+	    //DOMException *p = new DOMException(JSVAL_TO_INT( argv[0] ));
+        //if ( ! JS_SetPrivate(cx, obj, p) )
+	    //    return JS_FALSE;
         *rval = OBJECT_TO_JSVAL(obj);
         return JS_TRUE;
 	    }
@@ -134,9 +153,8 @@ public:
 	 */
 	static void JSDestructor(JSContext *cx, JSObject *obj)
         {
-        DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
-        delete p;
-        p = NULL;
+        //DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
+        //delete p;
         }
 
 	/**
@@ -219,6 +237,12 @@ JSFunctionSpec ECMA_DOMImplementationRegistry::methods[] =
  */
 
 
+
+
+//########################################################################
+//# DOMException
+//########################################################################
+  
 /**
  * Properties of the DOMException Constructor function:
  * 
@@ -304,7 +328,6 @@ public:
         {
         DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -429,6 +452,11 @@ JSFunctionSpec ECMA_DOMException::methods[] =
 
 
 
+
+//########################################################################
+//# DOMStringList
+//########################################################################
+
 /**
  * Objects that implement the DOMStringList interface:
  * 
@@ -442,9 +470,9 @@ JSFunctionSpec ECMA_DOMException::methods[] =
  *         item(index)
  *             This function returns a String.
  *             The index parameter is a Number.
- *             Note: This object can also be dereferenced using square bracket notation
- * 			    (e.g. obj[1]). Dereferencing with an integer index is equivalent
- * 				to invoking the item function with that index.
+ *             Note: This object can also be dereferenced using square bracket
+ *              notation (e.g. obj[1]). Dereferencing with an integer index
+ *              is equivalent to invoking the item function with that index.
  * 
  *         contains(str)
  *             This function returns a Boolean.
@@ -490,7 +518,6 @@ public:
         {
         DOMStringList *p = (DOMStringList *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -579,6 +606,9 @@ JSFunctionSpec ECMA_DOMStringList::methods[] =
 
 
 
+//########################################################################
+//# NameList
+//########################################################################
 
 /**
  * Objects that implement the NameList interface:
@@ -643,7 +673,6 @@ public:
         {
         DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -740,6 +769,10 @@ JSFunctionSpec ECMA_NameList::methods[] =
 
 
 
+//########################################################################
+//# DOMImplementationList
+//########################################################################
+
 /**
  * Objects that implement the DOMImplementationList interface:
  * 
@@ -751,11 +784,12 @@ JSFunctionSpec ECMA_NameList::methods[] =
  *     Functions of objects that implement the DOMImplementationList interface:
  * 
  *         item(index)
- *             This function returns an object that implements the DOMImplementation interface.
+ *             This function returns an object that implements the
+ *               DOMImplementation interface.
  *             The index parameter is a Number.
- *             Note: This object can also be dereferenced using square bracket notation
- * 			    (e.g. obj[1]). Dereferencing with an integer index is equivalent
- * 				to invoking the item function with that index.
+ *             Note: This object can also be dereferenced using square bracket
+ *               notation (e.g. obj[1]). Dereferencing with an integer index
+ *               is equivalent to invoking the item function with that index.
  * 
  * 
  */
@@ -798,7 +832,6 @@ public:
         {
         DOMException *p = (DOMException *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -864,17 +897,24 @@ JSFunctionSpec ECMA_DOMImplementationList::methods[] =
 
 
 
+
+
+//########################################################################
+//# DOMImplementationSource
+//########################################################################
+
 /**
  * Objects that implement the DOMImplementationSource interface:
  * 
  *     Functions of objects that implement the DOMImplementationSource interface:
  * 
  *         getDOMImplementation(features)
- *             This function returns an object that implements the DOMImplementation interface.
+ *             This function returns an object that implements the
+ *               DOMImplementation interface.
  *             The features parameter is a String. 
  *         getDOMImplementationList(features)
- *             This function returns an object that implements the DOMImplementationList 
- *                 interface.
+ *             This function returns an object that implements the
+ *               DOMImplementationList interface.
  *             The features parameter is a String. 
  */
 
@@ -916,7 +956,6 @@ public:
         {
         DOMImplementationSource *p = (DOMImplementationSource *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -936,6 +975,10 @@ public:
         {
         return JS_FALSE;
         }
+
+    //#######################
+    //# M E T H O D S
+    //#######################
 
 	/**
 	 *
@@ -993,6 +1036,10 @@ JSFunctionSpec ECMA_DOMImplementationSource::methods[] =
 
 
 
+//########################################################################
+//# DOMImplementation
+//########################################################################
+
 /**
  * Objects that implement the DOMImplementation interface:
  * 
@@ -1003,19 +1050,25 @@ JSFunctionSpec ECMA_DOMImplementationSource::methods[] =
  *             The feature parameter is a String.
  *             The version parameter is a String. 
  *         createDocumentType(qualifiedName, publicId, systemId)
- *             This function returns an object that implements the DocumentType interface.
+ *             This function returns an object that implements the
+ *               DocumentType interface.
  *             The qualifiedName parameter is a String.
  *             The publicId parameter is a String.
  *             The systemId parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements the
+ *               DOMException interface.
  *         createDocument(namespaceURI, qualifiedName, doctype)
- *             This function returns an object that implements the Document interface.
+ *             This function returns an object that implements the
+ *               Document interface.
  *             The namespaceURI parameter is a String.
  *             The qualifiedName parameter is a String.
- *             The doctype parameter is an object that implements the DocumentType interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             The doctype parameter is an object that implements the
+ *               DocumentType interface.
+ *             This function can raise an object that implements the
+ *               DOMException interface.
  *         getFeature(feature, version)
- *             This function returns an object that implements the Object interface.
+ *             This function returns an object that implements
+ *               the Object interface.
  *             The feature parameter is a String.
  *             The version parameter is a String. 
  */
@@ -1058,7 +1111,6 @@ public:
         {
         DOMImplementation *p = (DOMImplementation *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -1078,6 +1130,10 @@ public:
         {
         return JS_FALSE;
         }
+
+    //#######################
+    //# M E T H O D S
+    //#######################
 
 	/**
 	 *
@@ -1154,11 +1210,15 @@ JSFunctionSpec ECMA_DOMImplementation::methods[] =
 
 
 
+//########################################################################
+//# DocumentFragment
+//########################################################################
+
 /**
  * Objects that implement the DocumentFragment interface:
  *
- * Objects that implement the DocumentFragment interface have all properties and 
- * functions of the Node interface.
+ * Objects that implement the DocumentFragment interface have all
+ * properties and functions of the Node interface.
  */
 
 class ECMA_DocumentFragment
@@ -1199,7 +1259,6 @@ public:
         {
         DocumentFragment *p = (DocumentFragment *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -1216,24 +1275,6 @@ public:
 	 */
 	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
                    jsval id, jsval *vp)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getDOMImplementation(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getDOMImplementationList(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
         }
@@ -1267,115 +1308,153 @@ JSPropertySpec ECMA_DocumentFragment::properties[] =
 
 JSFunctionSpec ECMA_DocumentFragment::methods[] = 
 {
-     { "getDOMImplementation",     getDOMImplementation, 1, 0, 0 },
-     { "getDOMImplementationList", getDOMImplementationList, 1, 0, 0 },
      { 0 }
 };
 
 
 
+
+
+
+
+//########################################################################
+//# Document
+//########################################################################
+
 /**
  * Objects that implement the Document interface:
  * 
- *         Objects that implement the Document interface have all properties and functions 
- *         of the Node interface as well as the properties and functions defined below. 
+ *         Objects that implement the Document interface have all properties
+ *         and functions of the Node interface as well as the properties
+ *           and functions defined below. 
  *         Properties of objects that implement the Document interface:
  * 
  * 
  *         doctype
- *             This read-only property is an object that implements the DocumentType interface.
+ *             This read-only property is an object that implements
+ *               the DocumentType interface.
  *         implementation
- *             This read-only property is an object that implements the DOMImplementation 
- *             interface.
+ *             This read-only property is an object that implements
+ *               the DOMImplementation interface.
  *         documentElement
- *             This read-only property is an object that implements the Element interface.
+ *             This read-only property is an object that implements
+ *               the Element interface.
  *         inputEncoding
  *             This read-only property is a String.
  *         xmlEncoding
  *             This read-only property is a String.
  *         xmlStandalone
- *             This property is a Boolean and can raise an object that implements the 
- *             DOMException interface on setting.
+ *             This property is a Boolean and can raise an object
+ *               that implements the DOMException interface on setting.
  *         xmlVersion
- *             This property is a String and can raise an object that implements the 
- *             DOMException interface on setting.
+ *             This property is a String and can raise an object
+ *               that implements the DOMException interface on setting.
  *         strictErrorChecking
  *             This property is a Boolean.
  *         documentURI
  *             This property is a String.
  *         domConfig
- *             This read-only property is an object that implements the DOMConfiguration 
- *             interface.
+ *             This read-only property is an object that implements
+ *               the DOMConfiguration interface.
  * 
  * 
  *     Functions of objects that implement the Document interface:
  * 
  *         createElement(tagName)
- *             This function returns an object that implements the Element interface.
+ *             This function returns an object that implements
+ *               the Element interface.
  *             The tagName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         createDocumentFragment()
- *             This function returns an object that implements the DocumentFragment interface.
+ *             This function returns an object that implements
+ *               the DocumentFragment interface.
  *         createTextNode(data)
- *             This function returns an object that implements the Text interface.
+ *             This function returns an object that implements
+ *               the Text interface.
  *             The data parameter is a String. 
  *         createComment(data)
- *             This function returns an object that implements the Comment interface.
+ *             This function returns an object that implements
+ *               the Comment interface.
  *             The data parameter is a String. 
  *         createCDATASection(data)
- *             This function returns an object that implements the CDATASection interface.
+ *             This function returns an object that implements
+ *               the CDATASection interface.
  *             The data parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         createProcessingInstruction(target, data)
- *             This function returns an object that implements the ProcessingInstruction interface.
+ *             This function returns an object that implements
+ *               the ProcessingInstruction interface.
  *             The target parameter is a String.
  *             The data parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         createAttribute(name)
- *             This function returns an object that implements the Attr interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
  *             The name parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         createEntityReference(name)
- *             This function returns an object that implements the EntityReference interface.
+ *             This function returns an object that implements
+ *               the EntityReference interface.
  *             The name parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getElementsByTagName(tagname)
- *             This function returns an object that implements the NodeList interface.
+ *             This function returns an object that implements
+ *               the NodeList interface.
  *             The tagname parameter is a String. 
  *         importNode(importedNode, deep)
- *             This function returns an object that implements the Node interface.
- *             The importedNode parameter is an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The importedNode parameter is an object that implements
+ *               the Node interface.
  *             The deep parameter is a Boolean.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         createElementNS(namespaceURI, qualifiedName)
- *             This function returns an object that implements the Element interface.
+ *             This function returns an object that implements
+ *               the Element interface.
  *             The namespaceURI parameter is a String.
  *             The qualifiedName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         createAttributeNS(namespaceURI, qualifiedName)
- *             This function returns an object that implements the Attr interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
  *             The namespaceURI parameter is a String.
  *             The qualifiedName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getElementsByTagNameNS(namespaceURI, localName)
- *             This function returns an object that implements the NodeList interface.
+ *             This function returns an object that implements
+ *               the NodeList interface.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String. 
  *         getElementById(elementId)
- *             This function returns an object that implements the Element interface.
+ *             This function returns an object that implements
+ *               the Element interface.
  *             The elementId parameter is a String. 
  *         adoptNode(source)
- *             This function returns an object that implements the Node interface.
- *             The source parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The source parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         normalizeDocument()
  *             This function has no return value. 
  *         renameNode(n, namespaceURI, qualifiedName)
- *             This function returns an object that implements the Node interface.
- *             The n parameter is an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The n parameter is an object that implements
+ *               the Node interface.
  *             The namespaceURI parameter is a String.
  *             The qualifiedName parameter is a String.
- *             This function can raise an object that implements the DOMException interface. 
+ *             This function can raise an object that implements
+ *               the DOMException interface. 
  */
 
 class ECMA_Document
@@ -1416,7 +1495,6 @@ public:
         {
         Document *p = (Document *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -1436,6 +1514,7 @@ public:
         {
         return JS_FALSE;
         }
+
 
     //#######################
     //# M E T H O D S
@@ -1680,6 +1759,11 @@ JSFunctionSpec ECMA_Document::methods[] =
 
 
 
+
+//########################################################################
+//# Node
+//########################################################################
+
 /**
  * Properties of the Node Constructor function:
  * 
@@ -1708,17 +1792,23 @@ JSFunctionSpec ECMA_Document::methods[] =
  *     Node.NOTATION_NODE
  *         The value of the constant Node.NOTATION_NODE is 12.
  *     Node.DOCUMENT_POSITION_DISCONNECTED
- *         The value of the constant Node.DOCUMENT_POSITION_DISCONNECTED is 0x01.
+ *         The value of the constant Node.DOCUMENT_POSITION_DISCONNECTED
+ *           is 0x01.
  *     Node.DOCUMENT_POSITION_PRECEDING
- *         The value of the constant Node.DOCUMENT_POSITION_PRECEDING is 0x02.
+ *         The value of the constant Node.DOCUMENT_POSITION_PRECEDING
+ *           is 0x02.
  *     Node.DOCUMENT_POSITION_FOLLOWING
- *         The value of the constant Node.DOCUMENT_POSITION_FOLLOWING is 0x04.
+ *         The value of the constant Node.DOCUMENT_POSITION_FOLLOWING
+ *           is 0x04.
  *     Node.DOCUMENT_POSITION_CONTAINS
- *         The value of the constant Node.DOCUMENT_POSITION_CONTAINS is 0x08.
+ *         The value of the constant Node.DOCUMENT_POSITION_CONTAINS
+ *           is 0x08.
  *     Node.DOCUMENT_POSITION_CONTAINED_BY
- *         The value of the constant Node.DOCUMENT_POSITION_CONTAINED_BY is 0x10.
+ *         The value of the constant Node.DOCUMENT_POSITION_CONTAINED_BY
+ *           is 0x10.
  *     Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC
- *         The value of the constant Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC is 0x20. 
+ *         The value of the constant Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC 
+ *          is 0x20. 
  * 
  * Objects that implement the Node interface:
  * 
@@ -1727,66 +1817,92 @@ JSFunctionSpec ECMA_Document::methods[] =
  *         nodeName
  *             This read-only property is a String.
  *         nodeValue
- *             This property is a String, can raise an object that implements the DOMException 
- *             interface on setting and can raise an object that implements the DOMException 
+ *             This property is a String, can raise an object that implements
+ *               the DOMException 
+ *             interface on setting and can raise an object that implements
+ *               the DOMException 
  *             interface on retrieval.
  *         nodeType
  *             This read-only property is a Number.
  *         parentNode
- *             This read-only property is an object that implements the Node interface.
+ *             This read-only property is an object that implements
+ *               the Node interface.
  *         childNodes
- *             This read-only property is an object that implements the NodeList interface.
+ *             This read-only property is an object that implements
+ *               the NodeList interface.
  *         firstChild
- *             This read-only property is an object that implements the Node interface.
+ *             This read-only property is an object that implements
+ *               the Node interface.
  *         lastChild
- *             This read-only property is an object that implements the Node interface.
+ *             This read-only property is an object that implements
+ *               the Node interface.
  *         previousSibling
- *             This read-only property is an object that implements the Node interface.
+ *             This read-only property is an object that implements
+ *               the Node interface.
  *         nextSibling
- *             This read-only property is an object that implements the Node interface.
+ *             This read-only property is an object that implements
+ *               the Node interface.
  *         attributes
- *             This read-only property is an object that implements the NamedNodeMap interface.
+ *             This read-only property is an object that implements
+ *               the NamedNodeMap interface.
  *         ownerDocument
- *             This read-only property is an object that implements the Document interface.
+ *             This read-only property is an object that implements
+ *               the Document interface.
  *         namespaceURI
  *             This read-only property is a String.
  *         prefix
- *             This property is a String and can raise an object that implements the 
- *             DOMException interface on setting.
+ *             This property is a String and can raise an object
+ *               that implements the DOMException interface on setting.
  *         localName
  *             This read-only property is a String.
  *         baseURI
  *             This read-only property is a String.
  *         textContent
- *             This property is a String, can raise an object that implements the DOMException 
- *             interface on setting and can raise an object that implements the DOMException 
- *             interface on retrieval.
+ *             This property is a String, can raise an object that implements
+ *               the DOMException interface on setting and can raise
+ *               an object that implements the DOMException interface
+ *               on retrieval.
  * 
  * 
  *     Functions of objects that implement the Node interface:
  * 
  *         insertBefore(newChild, refChild)
- *             This function returns an object that implements the Node interface.
- *             The newChild parameter is an object that implements the Node interface.
- *             The refChild parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The newChild parameter is an object that implements
+ *               the Node interface.
+ *             The refChild parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         replaceChild(newChild, oldChild)
- *             This function returns an object that implements the Node interface.
- *             The newChild parameter is an object that implements the Node interface.
- *             The oldChild parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The newChild parameter is an object that implements
+ *               the Node interface.
+ *             The oldChild parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         removeChild(oldChild)
- *             This function returns an object that implements the Node interface.
- *             The oldChild parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The oldChild parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         appendChild(newChild)
- *             This function returns an object that implements the Node interface.
- *             The newChild parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The newChild parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         hasChildNodes()
  *             This function returns a Boolean.
  *         cloneNode(deep)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The deep parameter is a Boolean. 
  *         normalize()
  *             This function has no return value. 
@@ -1798,11 +1914,14 @@ JSFunctionSpec ECMA_Document::methods[] =
  *             This function returns a Boolean.
  *         compareDocumentPosition(other)
  *             This function returns a Number.
- *             The other parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             The other parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         isSameNode(other)
  *             This function returns a Boolean.
- *             The other parameter is an object that implements the Node interface. 
+ *             The other parameter is an object that implements
+ *               the Node interface. 
  *         lookupPrefix(namespaceURI)
  *             This function returns a String.
  *             The namespaceURI parameter is a String. 
@@ -1814,18 +1933,24 @@ JSFunctionSpec ECMA_Document::methods[] =
  *             The prefix parameter is a String. 
  *         isEqualNode(arg)
  *             This function returns a Boolean.
- *             The arg parameter is an object that implements the Node interface. 
+ *             The arg parameter is an object that implements
+ *               the Node interface. 
  *         getFeature(feature, version)
- *             This function returns an object that implements the Object interface.
+ *             This function returns an object that implements
+ *               the Object interface.
  *             The feature parameter is a String.
  *             The version parameter is a String. 
  *         setUserData(key, data, handler)
- *             This function returns an object that implements the any type interface.
+ *             This function returns an object that implements
+ *               the any type interface.
  *             The key parameter is a String.
- *             The data parameter is an object that implements the any type interface.
- *             The handler parameter is an object that implements the UserDataHandler interface. 
+ *             The data parameter is an object that implements
+ *               the any type interface.
+ *             The handler parameter is an object that implements
+ *               the UserDataHandler interface. 
  *         getUserData(key)
- *             This function returns an object that implements the any type interface.
+ *             This function returns an object that implements
+ *               the any type interface.
  *             The key parameter is a String. 
  * 
  */
@@ -1866,7 +1991,6 @@ public:
         {
         Node *p = (Node *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -1916,6 +2040,7 @@ public:
             }
         return JS_FALSE;
         }
+
 
     //#######################
     //# M E T H O D S
@@ -2236,6 +2361,9 @@ JSFunctionSpec ECMA_Node::staticMethods[] =
 
 
 
+//########################################################################
+//# NodeList
+//########################################################################
 
 /**
  * Objects that implement the NodeList interface:
@@ -2248,11 +2376,13 @@ JSFunctionSpec ECMA_Node::staticMethods[] =
  *     Functions of objects that implement the NodeList interface:
  * 
  *         item(index)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The index parameter is a Number.
- *             Note: This object can also be dereferenced using square bracket notation
- * 			    (e.g. obj[1]). Dereferencing with an integer index is equivalent
- * 				to invoking the item function with that index.
+ *             Note: This object can also be dereferenced using square
+ *               bracket notation (e.g. obj[1]). Dereferencing with
+ *               an integer index is equivalent	to invoking the item
+ *               function with that index.
  * 
  * 
  */
@@ -2295,13 +2425,22 @@ public:
         {
         NodeList *p = (NodeList *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
-	 * JSGetProperty - Callback for retrieving properties
+	 * JSGetProperty - We are using this one for indexes
 	 */
 	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSGetNamedProperty - Provide a second property getter if
+	 * the default one is delegated to indexes	 
+	 */
+	static JSBool JSGetNamedProperty(JSContext *cx, JSObject *obj,
                    jsval id, jsval *vp)
         {
         return JS_FALSE;
@@ -2316,41 +2455,19 @@ public:
         return JS_FALSE;
         }
 
+    //#######################
+    //# M E T H O D S
+    //#######################
+
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool item(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
@@ -2358,6 +2475,11 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_length,
+        prop_item
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -2376,19 +2498,24 @@ JSClass ECMA_NodeList::classDef =
 
 JSPropertySpec ECMA_NodeList::properties[] = 
 { 
+    { "length",          prop_length,
+        JSPROP_ENUMERATE|JSPROP_READONLY, JSGetNamedProperty },
     { 0 }
 };
 
 JSFunctionSpec ECMA_NodeList::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "item",            item,            1, 0, 0 },
      { 0 }
 };
 
 
+
+
+
+//########################################################################
+//# NamedNodeMap
+//########################################################################
 
 /**
  * Objects that implement the NamedNodeMap interface:
@@ -2401,36 +2528,51 @@ JSFunctionSpec ECMA_NodeList::methods[] =
  *     Functions of objects that implement the NamedNodeMap interface:
  * 
  *         getNamedItem(name)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The name parameter is a String. 
  *         setNamedItem(arg)
- *             This function returns an object that implements the Node interface.
- *             The arg parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The arg parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         removeNamedItem(name)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The name parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         item(index)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The index parameter is a Number.
- *             Note: This object can also be dereferenced using square bracket notation
- * 			    (e.g. obj[1]). Dereferencing with an integer index is equivalent
- * 				to invoking the item function with that index.
+ *             Note: This object can also be dereferenced using square
+ *               bracket notation (e.g. obj[1]). Dereferencing with
+ *               an integer index is equivalent	to invoking the item
+ *               function with that index.
  *         getNamedItemNS(namespaceURI, localName)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         setNamedItemNS(arg)
- *             This function returns an object that implements the Node interface.
- *             The arg parameter is an object that implements the Node interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Node interface.
+ *             The arg parameter is an object that implements
+ *               the Node interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         removeNamedItemNS(namespaceURI, localName)
- *             This function returns an object that implements the Node interface.
+ *             This function returns an object that implements
+ *               the Node interface.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface. 
+ *             This function can raise an object that implements
+ *               the DOMException interface. 
  */
 
 
@@ -2472,13 +2614,21 @@ public:
         {
         NamedNodeMap *p = (NamedNodeMap *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
 	 * JSGetProperty - Callback for retrieving properties
 	 */
 	static JSBool JSGetProperty(JSContext *cx, JSObject *obj,
+                   jsval id, jsval *vp)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 * JSGetProperty - Callback for retrieving properties
+	 */
+	static JSBool JSGetNamedProperty(JSContext *cx, JSObject *obj,
                    jsval id, jsval *vp)
         {
         return JS_FALSE;
@@ -2493,10 +2643,14 @@ public:
         return JS_FALSE;
         }
 
+    //#######################
+    //# M E T H O D S
+    //#######################
+
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool getNamedItem(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2505,7 +2659,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+    static JSBool setNamedItem(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2514,7 +2668,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
+    static JSBool removeNamedItem(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2523,7 +2677,34 @@ public:
 	/**
 	 *
 	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
+    static JSBool item(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getNamedItemNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setNamedItemNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool removeNamedItemNS(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2535,6 +2716,10 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_length
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -2553,31 +2738,43 @@ JSClass ECMA_NamedNodeMap::classDef =
 
 JSPropertySpec ECMA_NamedNodeMap::properties[] = 
 { 
+    { "length",          prop_length,
+        JSPROP_ENUMERATE|JSPROP_READONLY, JSGetNamedProperty },
     { 0 }
 };
 
 JSFunctionSpec ECMA_NamedNodeMap::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "getNamedItem",      getNamedItem,      1, 0, 0 },
+     { "setNamedItem",      setNamedItem,      1, 0, 0 },
+     { "removeNamedItem",   removeNamedItem,   1, 0, 0 },
+     { "item",              item,              1, 0, 0 },
+     { "getNamedItemNS",    getNamedItemNS,    2, 0, 0 },
+     { "setNamedItemNS",    setNamedItemNS,    2, 0, 0 },
+     { "removeNamedItemNS", removeNamedItemNS, 2, 0, 0 },
      { 0 }
 };
 
 
 
+
+//########################################################################
+//# CharacterData
+//########################################################################
+
 /**
  * Objects that implement the CharacterData interface:
  * 
- *     Objects that implement the CharacterData interface have all properties and 
- *     functions of the Node interface as well as the properties and functions defined 
- *     below. Properties of objects that implement the CharacterData interface:
+ *     Objects that implement the CharacterData interface have all
+ *     properties and functions of the Node interface as well as
+ *     the properties and functions defined below. Properties
+ *     of objects that implement the CharacterData interface:
  * 
  * 
  *         data
- *             This property is a String, can raise an object that implements the DOMException 
- *             interface on setting and can raise an object that implements the DOMException 
+ *             This property is a String, can raise an object
+ *             that implements the DOMException interface on setting
+ *             and can raise an object that implements the DOMException 
  *             interface on retrieval.
  *         length
  *             This read-only property is a Number. 
@@ -2588,27 +2785,32 @@ JSFunctionSpec ECMA_NamedNodeMap::methods[] =
  *             This function returns a String.
  *             The offset parameter is a Number.
  *             The count parameter is a Number.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         appendData(arg)
  *             This function has no return value.
  *             The arg parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         insertData(offset, arg)
  *             This function has no return value.
  *             The offset parameter is a Number.
  *             The arg parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         deleteData(offset, count)
  *             This function has no return value.
  *             The offset parameter is a Number.
  *             The count parameter is a Number.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         replaceData(offset, count, arg)
  *             This function has no return value.
  *             The offset parameter is a Number.
  *             The count parameter is a Number.
  *             The arg parameter is a String.
- *             This function can raise an object that implements the DOMException interface. 
+ *             This function can raise an object that implements
+ *               the DOMException interface. 
  */
 
 class ECMA_CharacterData
@@ -2649,7 +2851,6 @@ public:
         {
         CharacterData *p = (CharacterData *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -2670,10 +2871,15 @@ public:
         return JS_FALSE;
         }
 
+
+    //#######################
+    //# M E T H O D S
+    //#######################
+
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool substringData(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2682,7 +2888,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+    static JSBool appendData(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2691,7 +2897,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
+    static JSBool insertData(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2700,7 +2906,16 @@ public:
 	/**
 	 *
 	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
+    static JSBool deleteData(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool replaceData(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -2712,6 +2927,11 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_data,
+        prop_length
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -2730,25 +2950,36 @@ JSClass ECMA_CharacterData::classDef =
 
 JSPropertySpec ECMA_CharacterData::properties[] = 
 { 
+    { "data",            prop_data,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "length",          prop_length,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_CharacterData::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "substringData", substringData, 2, 0, 0 },
+     { "appendData",    appendData,    1, 0, 0 },
+     { "insertData",    insertData,    2, 0, 0 },
+     { "deleteData",    deleteData,    2, 0, 0 },
+     { "replaceData",   replaceData,   3, 0, 0 },
      { 0 }
 };
 
 
 
+
+//########################################################################
+//# Attr
+//########################################################################
+
 /**
  * Objects that implement the Attr interface:
  * 
- *     Objects that implement the Attr interface have all properties and functions of 
- *     the Node interface as well as the properties and functions defined below. 
+ *     Objects that implement the Attr interface have all properties
+ *     and functions of the Node interface as well as the properties
+ *     and functions defined below. 
  *     Properties of objects that implement the Attr interface:
  * 
  * 
@@ -2757,12 +2988,14 @@ JSFunctionSpec ECMA_CharacterData::methods[] =
  *         specified
  *             This read-only property is a Boolean.
  *         value
- *             This property is a String and can raise an object that implements the 
- *             DOMException interface on setting.
+ *             This property is a String and can raise an object
+ *             that implements the DOMException interface on setting.
  *         ownerElement
- *             This read-only property is an object that implements the Element interface.
+ *             This read-only property is an object that implements
+ *               the Element interface.
  *         schemaTypeInfo
- *             This read-only property is an object that implements the TypeInfo interface.
+ *             This read-only property is an object that implements
+ *               the TypeInfo interface.
  *         isId
  *             This read-only property is a Boolean. 
  * 
@@ -2806,7 +3039,6 @@ public:
         {
         Attr *p = (Attr *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -2827,41 +3059,6 @@ public:
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
@@ -2869,6 +3066,15 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_name,
+        prop_specified,
+        prop_value,
+        prop_ownerElement,
+        prop_schemaTypeInfo,
+        prop_isId,
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -2887,32 +3093,48 @@ JSClass ECMA_Attr::classDef =
 
 JSPropertySpec ECMA_Attr::properties[] = 
 { 
+    { "name",            prop_name,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "specified",       prop_specified,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "value",           prop_value,
+        JSPROP_ENUMERATE                 },
+    { "ownerElement",    prop_ownerElement,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "schemaTypeInfo",  prop_schemaTypeInfo,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "isId",            prop_isId,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_Attr::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
 
 
+
+
+//########################################################################
+//# Element
+//########################################################################
+
 /**
  * Objects that implement the Element interface:
  * 
- *     Objects that implement the Element interface have all properties and functions 
- *     of the Node interface as well as the properties and functions defined below. 
+ *     Objects that implement the Element interface have all properties
+ *     and functions of the Node interface as well as the properties
+ *     and functions defined below. 
  *     Properties of objects that implement the Element interface:
  * 
  * 
  *         tagName
  *             This read-only property is a String.
  *         schemaTypeInfo
- *             This read-only property is an object that implements the TypeInfo interface. 
+ *             This read-only property is an object that implements
+ *               the TypeInfo interface. 
  * 
  *     Functions of objects that implement the Element interface:
  * 
@@ -2923,55 +3145,75 @@ JSFunctionSpec ECMA_Attr::methods[] =
  *             This function has no return value.
  *             The name parameter is a String.
  *             The value parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         removeAttribute(name)
  *             This function has no return value.
  *             The name parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getAttributeNode(name)
- *             This function returns an object that implements the Attr interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
  *             The name parameter is a String. 
  *         setAttributeNode(newAttr)
- *             This function returns an object that implements the Attr interface.
- *             The newAttr parameter is an object that implements the Attr interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
+ *             The newAttr parameter is an object that implements
+ *               the Attr interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         removeAttributeNode(oldAttr)
- *             This function returns an object that implements the Attr interface.
- *             The oldAttr parameter is an object that implements the Attr interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
+ *             The oldAttr parameter is an object that implements
+ *               the Attr interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getElementsByTagName(name)
- *             This function returns an object that implements the NodeList interface.
+ *             This function returns an object that implements
+ *               the NodeList interface.
  *             The name parameter is a String. 
  *         getAttributeNS(namespaceURI, localName)
  *             This function returns a String.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         setAttributeNS(namespaceURI, qualifiedName, value)
  *             This function has no return value.
  *             The namespaceURI parameter is a String.
  *             The qualifiedName parameter is a String.
  *             The value parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         removeAttributeNS(namespaceURI, localName)
  *             This function has no return value.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getAttributeNodeNS(namespaceURI, localName)
- *             This function returns an object that implements the Attr interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         setAttributeNodeNS(newAttr)
- *             This function returns an object that implements the Attr interface.
- *             The newAttr parameter is an object that implements the Attr interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function returns an object that implements
+ *               the Attr interface.
+ *             The newAttr parameter is an object that implements
+ *               the Attr interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getElementsByTagNameNS(namespaceURI, localName)
- *             This function returns an object that implements the NodeList interface.
+ *             This function returns an object that implements
+ *               the NodeList interface.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         hasAttribute(name)
  *             This function returns a Boolean.
  *             The name parameter is a String. 
@@ -2979,23 +3221,28 @@ JSFunctionSpec ECMA_Attr::methods[] =
  *             This function returns a Boolean.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         setIdAttribute(name, isId)
  *             This function has no return value.
  *             The name parameter is a String.
  *             The isId parameter is a Boolean.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         setIdAttributeNS(namespaceURI, localName, isId)
  *             This function has no return value.
  *             The namespaceURI parameter is a String.
  *             The localName parameter is a String.
  *             The isId parameter is a Boolean.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         setIdAttributeNode(idAttr, isId)
  *             This function has no return value.
- *             The idAttr parameter is an object that implements the Attr interface.
+ *             The idAttr parameter is an object that implements
+ *               the Attr interface.
  *             The isId parameter is a Boolean.
- *             This function can raise an object that implements the DOMException interface. 
+ *             This function can raise an object that implements
+ *               the DOMException interface. 
  */
 
 class ECMA_Element
@@ -3036,7 +3283,6 @@ public:
         {
         Element *p = (Element *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -3057,10 +3303,14 @@ public:
         return JS_FALSE;
         }
 
+    //############################
+    //# M E T H O D S
+    //############################
+
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool getAttribute(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -3069,7 +3319,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+    static JSBool setAttribute(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -3078,7 +3328,7 @@ public:
 	/**
 	 *
 	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
+    static JSBool removeAttribute(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -3087,7 +3337,133 @@ public:
 	/**
 	 *
 	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
+    static JSBool getAttributeNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setAttributeNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool removeAttributeNode(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getElementsByTagName(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getAttributeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setAttributeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool removeAttributeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getAttributeNodeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setAttributeNodeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool getElementsByTagNameNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool hasAttribute(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool hasAttributeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setIdAttribute(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setIdAttributeNS(JSContext *cx, JSObject *obj,
+                   uintN argc, jsval *argv, jsval *rval)
+        {
+        return JS_FALSE;
+        }
+
+	/**
+	 *
+	 */
+    static JSBool setIdAttributeNode(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -3099,6 +3475,11 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_tagName,
+        prop_schemaTypeInfo
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -3117,15 +3498,33 @@ JSClass ECMA_Element::classDef =
 
 JSPropertySpec ECMA_Element::properties[] = 
 { 
+    { "tagName",            prop_tagName,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "schemaTypeInfo",     prop_schemaTypeInfo,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_Element::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "getAttribute",           getAttribute,           1, 0, 0 },
+     { "setAttribute",           setAttribute,           2, 0, 0 },
+     { "removeAttribute",        removeAttribute,        1, 0, 0 },
+     { "getAttributeNode",       getAttributeNode,       1, 0, 0 },
+     { "setAttributeNode",       setAttributeNode,       1, 0, 0 },
+     { "removeAttributeNode",    removeAttributeNode,    1, 0, 0 },
+     { "getElementsByTagName",   getElementsByTagName,   1, 0, 0 },
+     { "getAttributeNS",         getAttributeNS,         2, 0, 0 },
+     { "setAttributeNS",         setAttributeNS,         3, 0, 0 },
+     { "removeAttributeNS",      removeAttributeNS,      2, 0, 0 },
+     { "getAttributeNodeNS",     getAttributeNodeNS,     2, 0, 0 },
+     { "setAttributeNodeNS",     setAttributeNodeNS,     1, 0, 0 },
+     { "getElementsByTagNameNS", getElementsByTagNameNS, 2, 0, 0 },
+     { "hasAttribute",           hasAttribute,           1, 0, 0 },
+     { "hasAttributeNS",         hasAttributeNS,         2, 0, 0 },
+     { "setIdAttribute",         setIdAttribute,         2, 0, 0 },
+     { "setIdAttributeNS",       setIdAttributeNS,       3, 0, 0 },
+     { "setIdAttributeNode",     setIdAttributeNode,     2, 0, 0 },
      { 0 }
 };
 
@@ -3133,12 +3532,17 @@ JSFunctionSpec ECMA_Element::methods[] =
 
 
 
+//########################################################################
+//# Text
+//########################################################################
+
 /**
  * Objects that implement the Text interface:
  * 
- *     Objects that implement the Text interface have all properties and functions of 
- *     the CharacterData interface as well as the properties and functions defined 
- *     below. Properties of objects that implement the Text interface:
+ *     Objects that implement the Text interface have all properties
+ *     and functions of the CharacterData interface as well as
+ *     the properties and functions defined below. Properties of objects
+ *     that implement the Text interface:
  * 
  * 
  *         isElementContentWhitespace
@@ -3149,13 +3553,17 @@ JSFunctionSpec ECMA_Element::methods[] =
  *     Functions of objects that implement the Text interface:
  * 
  *         splitText(offset)
- *             This function returns an object that implements the Text interface.
+ *             This function returns an object that implements
+ *               the Text interface.
  *             The offset parameter is a Number.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         replaceWholeText(content)
- *             This function returns an object that implements the Text interface.
+ *             This function returns an object that implements
+ *               the Text interface.
  *             The content parameter is a String.
- *             This function can raise an object that implements the DOMException interface. 
+ *             This function can raise an object that implements
+ *               the DOMException interface. 
  */
 
 class ECMA_Text
@@ -3196,7 +3604,6 @@ public:
         {
         Text *p = (Text *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -3217,10 +3624,14 @@ public:
         return JS_FALSE;
         }
 
+    //############################
+    //# M E T H O D S
+    //############################
+
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool splitText(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
@@ -3229,29 +3640,12 @@ public:
 	/**
 	 *
 	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
+    static JSBool replaceWholeText(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
@@ -3259,6 +3653,11 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_isElementContentWhitespace,
+        prop_wholeText
+        };
 	static JSFunctionSpec methods[];
 
 };
@@ -3277,25 +3676,34 @@ JSClass ECMA_Text::classDef =
 
 JSPropertySpec ECMA_Text::properties[] = 
 { 
+    { "isElementContentWhitespace", prop_isElementContentWhitespace,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "wholeText",                  prop_wholeText,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_Text::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "splitText",         splitText,         1, 0, 0 },
+     { "replaceWholeText",  replaceWholeText,  1, 0, 0 },
      { 0 }
 };
 
 
 
+
+
+
+//########################################################################
+//# Comment
+//########################################################################
+
 /**
  * Objects that implement the Comment interface:
  * 
- *     Objects that implement the Comment interface have all properties and functions 
- *     of the CharacterData interface.
+ *     Objects that implement the Comment interface have all properties
+ *     and functions of the CharacterData interface.
  * 
  */
 
@@ -3337,7 +3745,6 @@ public:
         {
         Comment *p = (Comment *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -3354,42 +3761,6 @@ public:
 	 */
 	static JSBool JSSetProperty(JSContext *cx, JSObject *obj,
                    jsval id, jsval *vp)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
         }
@@ -3423,26 +3794,32 @@ JSPropertySpec ECMA_Comment::properties[] =
 
 JSFunctionSpec ECMA_Comment::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
      { 0 }
 };
 
 
 
+
+
+//########################################################################
+//# TypeInfo
+//########################################################################
+
 /**
  * Properties of the TypeInfo Constructor function:
  * 
  *     TypeInfo.DERIVATION_RESTRICTION
- *         The value of the constant TypeInfo.DERIVATION_RESTRICTION is 0x00000001.
+ *         The value of the constant TypeInfo.DERIVATION_RESTRICTION
+ *           is 0x00000001.
  *     TypeInfo.DERIVATION_EXTENSION
- *         The value of the constant TypeInfo.DERIVATION_EXTENSION is 0x00000002.
+ *         The value of the constant TypeInfo.DERIVATION_EXTENSION
+ *           is 0x00000002.
  *     TypeInfo.DERIVATION_UNION
- *         The value of the constant TypeInfo.DERIVATION_UNION is 0x00000004.
+ *         The value of the constant TypeInfo.DERIVATION_UNION
+ *           is 0x00000004.
  *     TypeInfo.DERIVATION_LIST
- *         The value of the constant TypeInfo.DERIVATION_LIST is 0x00000008. 
+ *         The value of the constant TypeInfo.DERIVATION_LIST
+ *           is 0x00000008. 
  * 
  * Objects that implement the TypeInfo interface:
  * 
@@ -3500,7 +3877,6 @@ public:
         {
         TypeInfo *p = (TypeInfo *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -3521,41 +3897,19 @@ public:
         return JS_FALSE;
         }
 
+    //############################
+    //# M E T H O D S
+    //############################
+
 	/**
 	 *
 	 */
-    static JSBool getName(JSContext *cx, JSObject *obj,
+    static JSBool isDerivedFrom(JSContext *cx, JSObject *obj,
                    uintN argc, jsval *argv, jsval *rval)
         {
         return JS_FALSE;
         }
 
-	/**
-	 *
-	 */
-    static JSBool getNamespaceURI(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool contains(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
-
-	/**
-	 *
-	 */
-    static JSBool containsNS(JSContext *cx, JSObject *obj,
-                   uintN argc, jsval *argv, jsval *rval)
-        {
-        return JS_FALSE;
-        }
 
 
 private:
@@ -3563,6 +3917,11 @@ private:
     // Standard JS Binding fields
     static JSClass classDef;
     static JSPropertySpec properties[];
+    enum
+        {
+        prop_typeName,
+        prop_typeNamespace
+        };
 	static JSFunctionSpec methods[];
     static JSPropertySpec staticProperties[];
 
@@ -3582,15 +3941,16 @@ JSClass ECMA_TypeInfo::classDef =
 
 JSPropertySpec ECMA_TypeInfo::properties[] = 
 { 
+    { "typeName", prop_typeName,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
+    { "typeNamespace", prop_typeNamespace,
+        JSPROP_ENUMERATE|JSPROP_READONLY },
     { 0 }
 };
 
 JSFunctionSpec ECMA_TypeInfo::methods[] = 
 {
-     { "getName",         getName,         1, 0, 0 },
-     { "getNamespaceURI", getNamespaceURI, 1, 0, 0 },
-     { "contains",        contains,        1, 0, 0 },
-     { "containsNS",      containsNS,      2, 0, 0 },
+     { "isDerivedFrom", isDerivedFrom, 3, 0, 0 },
      { 0 }
 };
 
@@ -3609,6 +3969,13 @@ JSPropertySpec ECMA_TypeInfo::staticProperties[] =
 
 
 
+
+
+
+//########################################################################
+//# UserDataHandler
+//########################################################################
+
 /**
  * Properties of the UserDataHandler Constructor function:
  * 
@@ -3624,10 +3991,14 @@ JSPropertySpec ECMA_TypeInfo::staticProperties[] =
  *         The value of the constant UserDataHandler.NODE_ADOPTED is 5. 
  * 
  * UserDataHandler function:
- *     This function has no return value. The first parameter is a Number. The second 
- *     parameter is a String. The third parameter is an object that implements the any 
- *     type interface. The fourth parameter is an object that implements the Node 
- *     interface. The fifth parameter is an object that implements the Node interface. 
+ *     This function has no return value.
+ *     The first parameter is a Number.
+ *     The second parameter is a String.
+ *     The third parameter is an object that implements the any 
+ *       type interface.
+ *     The fourth parameter is an object that implements the Node 
+ *       interface.
+ *     The fifth parameter is an object that implements the Node interface. 
  *     Properties of the DOMError Constructor function:
  * 
  * 
@@ -3678,7 +4049,6 @@ public:
         {
         UserDataHandler *p = (UserDataHandler *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -3752,6 +4122,9 @@ JSPropertySpec ECMA_UserDataHandler::staticProperties[] =
 
 
 
+//########################################################################
+//# DOMError
+//########################################################################
 
 /**
  * Objects that implement the DOMError interface:
@@ -3765,15 +4138,19 @@ JSPropertySpec ECMA_UserDataHandler::staticProperties[] =
  *         type
  *             This read-only property is a String.
  *         relatedException
- *             This read-only property is an object that implements the Object interface.
+ *             This read-only property is an object that implements
+ *               the Object interface.
  *         relatedData
- *             This read-only property is an object that implements the Object interface.
+ *             This read-only property is an object that implements
+ *               the Object interface.
  *         location
- *             This read-only property is an object that implements the DOMLocator interface. 
+ *             This read-only property is an object that implements
+ *               the DOMLocator interface. 
  * 
  * DOMErrorHandler function:
- *     This function returns a Boolean. The parameter is an object that implements the 
- *     DOMError interface.
+ *     This function returns a Boolean.
+ *     The parameter is an object that implements the 
+ *       DOMError interface.
  * 
  * 
  */
@@ -3816,7 +4193,6 @@ public:
         {
         DOMError *p = (DOMError *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -3905,6 +4281,12 @@ JSPropertySpec ECMA_DOMError::staticProperties[] =
 
 
 
+
+
+//########################################################################
+//# DOMLocator
+//########################################################################
+
 /**
  * Objects that implement the DOMLocator interface:
  * 
@@ -3919,7 +4301,8 @@ JSPropertySpec ECMA_DOMError::staticProperties[] =
  *         utf16Offset
  *             This read-only property is a Number.
  *         relatedNode
- *             This read-only property is an object that implements the Node interface.
+ *             This read-only property is an object that implements
+ *               the Node interface.
  *         uri
  *             This read-only property is a String. 
  */
@@ -3962,7 +4345,6 @@ public:
         {
         DOMLocator *p = (DOMLocator *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4039,29 +4421,40 @@ JSFunctionSpec ECMA_DOMLocator::methods[] =
 
 
 
+
+//########################################################################
+//# DOMConfiguration
+//########################################################################
+
 /**
  * Objects that implement the DOMConfiguration interface:
  * 
  *     Properties of objects that implement the DOMConfiguration interface:
  * 
  *         parameterNames
- *             This read-only property is an object that implements the DOMStringList interface. 
+ *             This read-only property is an object that implements
+ *               the DOMStringList interface. 
  * 
  *     Functions of objects that implement the DOMConfiguration interface:
  * 
  *         setParameter(name, value)
  *             This function has no return value.
  *             The name parameter is a String.
- *             The value parameter is an object that implements the any type interface.
- *             This function can raise an object that implements the DOMException interface.
+ *             The value parameter is an object that implements
+ *               the any type interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         getParameter(name)
- *             This function returns an object that implements the any type interface.
+ *             This function returns an object that implements
+ *               the any type interface.
  *             The name parameter is a String.
- *             This function can raise an object that implements the DOMException interface.
+ *             This function can raise an object that implements
+ *               the DOMException interface.
  *         canSetParameter(name, value)
  *             This function returns a Boolean.
  *             The name parameter is a String.
- *             The value parameter is an object that implements the any type interface. 
+ *             The value parameter is an object that implements
+ *               the any type interface. 
  */
 
 
@@ -4103,7 +4496,6 @@ public:
         {
         DOMConfiguration *p = (DOMConfiguration *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4123,6 +4515,10 @@ public:
         {
         return JS_FALSE;
         }
+
+    //############################
+    //# M E T H O D S
+    //############################
 
 	/**
 	 *
@@ -4194,11 +4590,18 @@ JSFunctionSpec ECMA_DOMConfiguration::methods[] =
 
 
 
+
+
+
+//########################################################################
+//# CDATASection
+//########################################################################
+
 /**
  * Objects that implement the CDATASection interface:
  * 
- *     Objects that implement the CDATASection interface have all properties and 
- *     functions of the Text interface.
+ *     Objects that implement the CDATASection interface
+ *     have all properties and functions of the Text interface.
  * 
  */
 
@@ -4240,7 +4643,6 @@ public:
         {
         CDATASection *p = (CDATASection *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4295,20 +4697,29 @@ JSFunctionSpec ECMA_CDATASection::methods[] =
 
 
 
+
+
+//########################################################################
+//# DocumentType
+//########################################################################
+
 /**
  * Objects that implement the DocumentType interface:
  * 
- *     Objects that implement the DocumentType interface have all properties and 
- *     functions of the Node interface as well as the properties and functions defined 
- *     below. Properties of objects that implement the DocumentType interface:
+ *     Objects that implement the DocumentType interface have all
+ *     properties and functions of the Node interface as well as
+ *     the properties and functions defined below.
+ *     Properties of objects that implement the DocumentType interface:
  * 
  * 
  *         name
  *             This read-only property is a String.
  *         entities
- *             This read-only property is an object that implements the NamedNodeMap interface.
+ *             This read-only property is an object that implements
+ *               the NamedNodeMap interface.
  *         notations
- *             This read-only property is an object that implements the NamedNodeMap interface.
+ *             This read-only property is an object that implements
+ *               the NamedNodeMap interface.
  *         publicId
  *             This read-only property is a String.
  *         systemId
@@ -4356,7 +4767,6 @@ public:
         {
         DocumentType *p = (DocumentType *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4427,11 +4837,18 @@ JSFunctionSpec ECMA_DocumentType::methods[] =
 
 
 
+
+
+//########################################################################
+//# Notation
+//########################################################################
+
 /**
  * Objects that implement the Notation interface:
  * 
- *     Objects that implement the Notation interface have all properties and functions 
- *     of the Node interface as well as the properties and functions defined below. 
+ *     Objects that implement the Notation interface have all
+ *     properties and functions of the Node interface as well as
+ *     the properties and functions defined below. 
  *     Properties of objects that implement the Notation interface:
  * 
  * 
@@ -4479,7 +4896,6 @@ public:
         {
         Notation *p = (Notation *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4540,13 +4956,19 @@ JSFunctionSpec ECMA_Notation::methods[] =
 
 
 
+
+
+//########################################################################
+//# Entity
+//########################################################################
+
 /**
  * Objects that implement the Entity interface:
  * 
- * Objects that implement the Entity interface have all properties and functions 
- * of the Node interface as well as the properties and functions defined below. 
- * Properties of objects that implement the Entity 
- * interface:
+ *     Objects that implement the Entity interface have all properties
+ *     and functions of the Node interface as well as the properties
+ *     and functions defined below. 
+ *     Properties of objects that implement the Entity interface:
  * 
  * 
  *         publicId
@@ -4601,7 +5023,6 @@ public:
         {
         Entity *p = (Entity *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4671,11 +5092,16 @@ JSFunctionSpec ECMA_Entity::methods[] =
 
 
 
+
+//########################################################################
+//# EntityReference
+//########################################################################
+
 /**
  * Objects that implement the EntityReference interface:
  * 
- * Objects that implement the EntityReference interface have all properties and 
- * functions of the Node interface.
+ *     Objects that implement the EntityReference interface have all
+ *     properties and functions of the Node interface.
  * 
  */
 
@@ -4718,7 +5144,6 @@ public:
         {
         EntityReference *p = (EntityReference *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4775,19 +5200,25 @@ JSFunctionSpec ECMA_EntityReference::methods[] =
 
 
 
+
+//########################################################################
+//# ProcessingInstruction
+//########################################################################
+
 /**
  * Objects that implement the ProcessingInstruction interface:
  *
- * Objects that implement the ProcessingInstruction interface have all properties 
- * and functions of the Node interface as well as the properties and functions 
- * defined below. Properties of objects that implement the ProcessingInstruction 
- * interface:
+ *     Objects that implement the ProcessingInstruction interface
+ *     have all properties and functions of the Node interface
+ *     as well as the properties and functions defined below.
+ *     Properties of objects that implement the ProcessingInstruction 
+ *     interface:
  * 
  *         target
  *             This read-only property is a String.
  *         data
- *             This property is a String and can raise an object that implements the 
- *             DOMException interface on setting.
+ *             This property is a String and can raise an object
+ *             that implements the DOMException interface on setting.
  * 
  */
 
@@ -4830,7 +5261,6 @@ public:
         {
         ProcessingInstruction *p = (ProcessingInstruction *) JS_GetPrivate(cx, obj);
         delete p;
-        p = NULL;
         }
 
 	/**
@@ -4894,14 +5324,19 @@ JSFunctionSpec ECMA_ProcessingInstruction::methods[] =
 
 
 /**
- * Note: In addition of having DOMConfiguration parameters exposed to the 
- * application using the setParameter and getParameter, those parameters are also 
- * exposed as ECMAScript properties on the DOMConfiguration object. The name of 
- * the parameter is converted into a property name using a camel-case convention: 
- * the character '-' (HYPHEN-MINUS) is removed and the following character is 
- * being replaced by its uppercase equivalent.
+ * Note: In addition of having DOMConfiguration parameters
+ * exposed to the application using the setParameter
+ * and getParameter, those parameters are also exposed
+ * as ECMAScript properties on the DOMConfiguration object.
+ * The name of the parameter is converted into a property name
+ * using a camel-case convention: 
+ *         the character '-' (HYPHEN-MINUS) is removed
+ *         and the following character is 
+ *         being replaced by its uppercase equivalent.
  */
  
+
+
 
 
 //########################################################################
