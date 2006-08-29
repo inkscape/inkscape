@@ -1085,7 +1085,12 @@ static void infoCallback(const SSL *ssl, int where, int ret)
 
 bool TcpSocket::startTls()
 {
-#ifdef HAVE_SSL
+#ifndef HAVE_SSL
+    fprintf(stderr,
+	    "SSL starttls() error:  client not compiled with SSL enabled\n");
+    return false;
+#endif /*HAVE_SSL*/
+
     sslStream  = NULL;
     sslContext = NULL;
 
@@ -1095,10 +1100,13 @@ bool TcpSocket::startTls()
     sslContext = SSL_CTX_new(meth);
     //SSL_CTX_set_info_callback(sslContext, infoCallback);
 
-#if 0
+    /**
+     * For now, let's accept all connections.  Ignore this
+     * block of code     
+     * 	     
     char *keyFile  = "client.pem";
     char *caList   = "root.pem";
-    /* Load our keys and certificates*/
+    //#  Load our keys and certificates
     if (!(SSL_CTX_use_certificate_chain_file(sslContext, keyFile)))
         {
         fprintf(stderr, "Can't read certificate file\n");
@@ -1115,14 +1123,14 @@ bool TcpSocket::startTls()
         return false;
         }
 
-    /* Load the CAs we trust*/
+    //## Load the CAs we trust
     if (!(SSL_CTX_load_verify_locations(sslContext, caList, 0)))
         {
         fprintf(stderr, "Can't read CA list\n");
         disconnect();
         return false;
         }
-#endif
+    */
 
     /* Connect the SSL socket */
     sslStream  = SSL_new(sslContext);
@@ -1144,7 +1152,6 @@ bool TcpSocket::startTls()
         }
 
     sslEnabled = true;
-#endif /*HAVE_SSL*/
     return true;
 }
 
