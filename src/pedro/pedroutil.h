@@ -435,6 +435,8 @@ public:
 
     bool getEnableSSL();
 
+    bool getHaveSSL();
+
     bool connect(const std::string &hostname, int portno);
 
     bool connect(const char *hostname, int portno);
