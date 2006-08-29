@@ -30,6 +30,7 @@
  */
 
 
+#include "dom.h"
 #include "js/jsapi.h"
 
 
@@ -52,25 +53,29 @@ public:
      *  Constructor
      */
     JavascriptEngine()
-        { init(); }
+        { startup(); }
 
-    /**
-     *  Copy constructor
-     */
-    JavascriptEngine(const JavascriptEngine &other)
-        { assign(other); }
-
-    /**
-     *  Assignment operator
-     */
-    JavascriptEngine &operator=(const JavascriptEngine &other)
-        { assign(other); return *this; }
 
     /**
      *  Destructor
      */
     virtual ~JavascriptEngine()
-        {}
+        { shutdown(); }
+
+    /**
+     *  Evaluate a script
+     */
+    bool evaluate(const DOMString &script);
+
+    /**
+     *  Evaluate a script from a file
+     */
+    bool evaluateFile(const DOMString &script);
+
+
+    JSObject *wrapDocument(const Document *doc);
+
+private:
 
     /**
      *  Startup the javascript engine
@@ -82,10 +87,6 @@ public:
      */
     bool shutdown();
 
-
-
-private:
-
     void init()
         {
         rt        = NULL;
@@ -93,6 +94,13 @@ private:
         globalObj = NULL;
         }
     
+    /**
+     *  Assignment operator.  Let's keep this private for now,
+     *  as we want one Spidermonkey runtime per c++ shell     
+     */
+    JavascriptEngine &operator=(const JavascriptEngine &other)
+        { assign(other); return *this; }
+
     void assign(const JavascriptEngine &other)
         {
         rt        = other.rt;
@@ -120,6 +128,20 @@ private:
     JSContext *cx;
 
     JSObject *globalObj;
+
+    static void errorReporter(JSContext *cx,
+        const char *message, JSErrorReport *report)
+        {
+        JavascriptEngine *engine = 
+	        (JavascriptEngine *) JS_GetContextPrivate(cx);
+        engine->error((char *)message);
+        }
+
+    JSObject *nodeProto;
+    JSObject *characterDataProto;
+    JSObject *textProto;
+    JSObject *cdataProto;
+    JSObject *documentProto;
 
 };
 

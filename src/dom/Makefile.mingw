@@ -296,7 +296,7 @@ work/testzip.o
 
 OBJ = $(DOMOBJ) $(JSOBJ)
 
-all: testdom.exe testhttp.exe testodf.exe \
+all: testdom.exe testhttp.exe testjs.exe \
 testsvg.exe testuri.exe testxpath.exe testzip.exe
 
 testdom.exe: libdom.a work/testdom.o
@@ -304,6 +304,9 @@ testdom.exe: libdom.a work/testdom.o
 
 testhttp.exe: libdom.a work/testhttp.o
 	$(CXX) -o $@ work/testhttp.o libdom.a $(LIBS)
+
+testjs.exe: libdom.a work/testjs.o
+	$(CXX) -o $@ work/testjs.o libdom.a $(LIBS)
 
 testodf.exe: libdom.a work/testodf.o
 	$(CXX) -o $@ work/testodf.o libdom.a $(LIBS)
@@ -335,8 +338,8 @@ clean:
 	-$(RM) *.gch
 	-$(RM) testdom
 	-$(RM) testdom.exe
-	-$(RM) testodf
-	-$(RM) testodf.exe
+	-$(RM) testjs
+	-$(RM) testjs.exe
 	-$(RM) testsvg
 	-$(RM) testsvg.exe
 	-$(RM) testuri

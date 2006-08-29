@@ -1674,10 +1674,11 @@ public:
         }
 
 
+    static JSClass classDef;
+
 private:
 
     // Standard JS Binding fields
-    static JSClass classDef;
     static JSPropertySpec properties[];
     enum
         {
@@ -5345,8 +5346,35 @@ JSFunctionSpec ECMA_ProcessingInstruction::methods[] =
 
 bool JavascriptEngine::createClasses()
 {
-
+    nodeProto =
+	     ECMA_Node::JSInit(cx, globalObj);
+    characterDataProto =
+	     ECMA_CharacterData::JSInit(cx, globalObj, nodeProto);
+    textProto =
+	     ECMA_Text::JSInit(cx, globalObj, characterDataProto);
+    cdataProto =
+	     ECMA_CDATASection::JSInit(cx, globalObj, textProto);
+    documentProto =
+	     ECMA_CDATASection::JSInit(cx, globalObj, cdataProto);
     return true;
+}
+
+
+JSObject *JavascriptEngine::wrapDocument(const Document *doc)
+{
+    if (!doc)
+        {
+        error("wrapDocument: null document parameter");
+        return NULL;
+        }
+
+    JSObject *jsdoc = JS_NewObject(cx, &ECMA_Document::classDef,
+                    documentProto, NULL);
+
+    //Wrap around the document...  done!
+    JS_SetPrivate(cx, jsdoc, (void *)doc);
+    
+    return jsdoc;
 }
 
 

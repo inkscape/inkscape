@@ -78,6 +78,47 @@ static JSClass globalClass =
 };
 
 
+//A couple of shell functions from js.c
+static JSBool shellf_version(JSContext *cx, JSObject *obj,
+            uintN argc, jsval *argv, jsval *rval)
+{
+    if (argc > 0 && JSVAL_IS_INT(argv[0]))
+        *rval = INT_TO_JSVAL(JS_SetVersion(cx, (JSVersion) JSVAL_TO_INT(argv[0])));
+    else
+        *rval = INT_TO_JSVAL(JS_GetVersion(cx));
+    return JS_TRUE;
+}
+
+
+static JSBool shellf_print(JSContext *cx, JSObject *obj,
+           uintN argc, jsval *argv, jsval *rval)
+{
+    uintN i, n;
+    JSString *str;
+
+    for (i = n = 0; i < argc; i++)
+	    {
+        str = JS_ValueToString(cx, argv[i]);
+        if (!str)
+            return JS_FALSE;
+        fprintf(stdout, "%s%s", i ? " " : "", JS_GetStringBytes(str));
+        }
+    n++;
+    if (n)
+        fputc('\n', stdout);
+    return JS_TRUE;
+}
+
+
+static JSFunctionSpec shell_functions[] =
+{
+    {"version",  shellf_version,   0},
+    {"print",    shellf_print,     0},
+    { 0 }
+};
+
+
+
 bool JavascriptEngine::startup()
 {
     /* You need a runtime and one or more contexts to do anything with JS. */
@@ -94,6 +135,12 @@ bool JavascriptEngine::startup()
         error("can't create JavaScript context");
         return false;
         }
+        
+    JS_SetContextPrivate(cx, (void *)this);
+    
+    
+    JS_SetErrorReporter(cx, errorReporter);
+
     /*
      * The context definitely wants a global object, in order to have standard
      * classes and functions like Date and parseInt.  See below for details on
@@ -101,10 +148,27 @@ bool JavascriptEngine::startup()
      */
 
     globalObj = JS_NewObject(cx, &globalClass, 0, 0);
-    JS_InitStandardClasses(cx, globalObj);
+    if (!globalObj)
+        {
+        error("Could not init global object");
+        return false;
+        }
+    
+    if (!JS_InitStandardClasses(cx, globalObj))
+        {
+        error("Could not init standard classes");
+        return false;
+        }
+
+    if (!JS_DefineFunctions(cx, globalObj, shell_functions))
+        {
+        error("Could not add extra functions");
+        return false;
+        }
 
     if (!createClasses())
         {
+        error("Could not create local classes");
         return false;
         }
         
@@ -119,6 +183,65 @@ bool JavascriptEngine::shutdown()
 
     return true;
 }
+
+
+/**
+ *  Evaluate a script
+ */
+bool JavascriptEngine::evaluate(const DOMString &script)
+{
+    const char *cscript = script.c_str();
+    int length    = script.size();
+    jsval rval;
+    JSBool ret = JS_EvaluateScript(cx, globalObj,
+         cscript, length, "buffer",
+         0, &rval);
+
+    if (ret == JS_FALSE)
+        {
+        return false;
+        }
+        
+    return true;
+}
+
+/**
+ *  Evaluate a script from a file
+ */
+bool JavascriptEngine::evaluateFile(const DOMString &fileName)
+{
+    FILE *f = fopen(fileName.c_str(), "r");
+    if (!f)
+        {
+        error("Could not open '%s' for reading", fileName.c_str());
+        return false;
+        }
+    DOMString script;
+    while (true)
+        {
+        int ch = fgetc(f);
+        if (ch < 0)
+            break;
+        script.push_back((char)ch);
+        }
+    fclose(f);
+
+    const char *cscript = script.c_str();
+    int length    = script.size();
+    jsval rval;
+    JSBool ret = JS_EvaluateScript(cx, globalObj,
+         cscript, length, fileName.c_str(),
+         0, &rval);
+
+    if (ret == JS_FALSE)
+        {
+        return false;
+        }
+        
+    return true;
+}
+
+
 
 
 } // namespace dom
