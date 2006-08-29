@@ -2050,7 +2050,9 @@ bool XmppClient::saslAuthenticate()
             status("login: STARTTLS available");
         }
 
-    if (wantStartTls && !sock->getEnableSSL())
+    //# do we want TLS, are we not already running SSL, and can
+    //# the client actually do an ssl connection?
+    if (wantStartTls && !sock->getEnableSSL() && sock->getHaveSSL())
         {
         delete elem;
         char *fmt =
