@@ -880,13 +880,6 @@ TcpSocket::TcpSocket()
 }
 
 
-TcpSocket::TcpSocket(const char *hostnameArg, int port)
-{
-    init();
-    hostname  = hostnameArg;
-    portno    = port;
-}
-
 TcpSocket::TcpSocket(const std::string &hostnameArg, int port)
 {
     init();
@@ -1023,6 +1016,15 @@ bool TcpSocket::isConnected()
     return true;
 }
 
+bool TcpSocket::getHaveSSL()
+{
+#ifdef HAVE_SSL
+    return true;
+#else
+    return false;
+#endif
+}
+
 void TcpSocket::enableSSL(bool val)
 {
     sslEnabled = val;
@@ -1034,12 +1036,6 @@ bool TcpSocket::getEnableSSL()
 }
 
 
-bool TcpSocket::connect(const char *hostnameArg, int portnoArg)
-{
-    hostname = hostnameArg;
-    portno   = portnoArg;
-    return connect();
-}
 
 bool TcpSocket::connect(const std::string &hostnameArg, int portnoArg)
 {
