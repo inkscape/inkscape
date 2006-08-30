@@ -328,13 +328,13 @@ public:
     /**
      *
      */
-    virtual DOMString getTextContext() throw(DOMException);
+    virtual DOMString getTextContent() throw(DOMException);
 
 
     /**
      *
      */
-    virtual void setTextContext(const DOMString &val) throw(DOMException);
+    virtual void setTextContent(const DOMString &val) throw(DOMException);
 
 
     /**

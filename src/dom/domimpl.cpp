@@ -305,8 +305,34 @@ Node *NodeImpl::insertBefore(const Node *newChild,
                    const Node *refChild)
                    throw(DOMException)
 {
-    Node *node = NULL;
-    return node;
+    if (!newChild)
+        return NULL;
+        
+    //if no ref, then just append
+    if (!refChild)
+        return appendChild(newChild);
+
+    NodeImpl *newChildImpl = dynamic_cast<NodeImpl *>((Node *)newChild);
+    for (NodeImpl *n = firstChild ; n ; n=n->next)
+        {
+        if (n == refChild)
+            {
+            //link to new
+            if (n->prev)
+                n->prev->next = newChildImpl;
+            else
+                firstChild = newChildImpl;
+            n->prev = newChildImpl;
+            //link from new
+            newChildImpl->next = n;
+            newChildImpl->prev = n->prev;
+            //reflect new location
+            newChildImpl->parent        = this;
+            newChildImpl->ownerDocument = ownerDocument;
+            return n;
+            }
+        }
+    return NULL;
 }
 
 /**
@@ -316,8 +342,33 @@ Node *NodeImpl::replaceChild(const Node *newChild,
                    const Node *oldChild)
                    throw(DOMException)
 {
-    Node *node = NULL;
-    return node;
+    if (!oldChild)
+        return NULL;
+
+    NodeImpl *newChildImpl = dynamic_cast<NodeImpl *>((Node *)newChild);
+    for (NodeImpl *n = firstChild ; n ; n=n->next)
+        {
+        if (n == oldChild)
+            {
+            //link to new
+            if (n->prev)
+                n->prev->next = newChildImpl;
+            else
+                firstChild = newChildImpl;
+            if (n->next)
+                n->next->prev = newChildImpl;
+            else
+                lastChild = newChildImpl;
+            //link from new
+            newChildImpl->next = n->next;
+            newChildImpl->prev = n->prev;
+            //reflect new location
+            newChildImpl->parent        = this;
+            newChildImpl->ownerDocument = ownerDocument;
+            return n;
+            }
+        }
+    return NULL;
 }
 
 /**
@@ -326,8 +377,21 @@ Node *NodeImpl::replaceChild(const Node *newChild,
 Node *NodeImpl::removeChild(const Node *oldChild)
                   throw(DOMException)
 {
-    Node *node = NULL;
-    return node;
+    if (!oldChild)
+        return NULL;
+
+    for (NodeImpl *n = firstChild ; n ; n=n->next)
+        {
+        if (n == oldChild)
+            {
+            if (n->prev)
+                n->prev->next = n->next;
+            if (n->next)
+                n->next->prev = n->prev;
+            return n;
+            }
+        }
+    return NULL;
 }
 
 /**
@@ -339,27 +403,27 @@ Node *NodeImpl::appendChild(const Node *newChild)
     if (!newChild)
         return NULL;
 
-    Node *child = (Node *)newChild;
-    NodeImpl *childImpl = dynamic_cast<NodeImpl *> (child);
+    NodeImpl *newChildImpl =
+	     dynamic_cast<NodeImpl *> ((Node *)newChild);
 
-    childImpl->parent        = this;
-    childImpl->ownerDocument = ownerDocument;
+    newChildImpl->parent        = this;
+    newChildImpl->ownerDocument = ownerDocument;
 
     if (!firstChild || !lastChild)
         {
         //Set up our first member
-        firstChild = childImpl;
-        lastChild  = childImpl;
+        firstChild = newChildImpl;
+        lastChild  = newChildImpl;
         }
     else
         {
         //link at the last position
-        lastChild->next = childImpl;
-        childImpl->prev = lastChild;
-        lastChild       = childImpl;
+        lastChild->next    = newChildImpl;
+        newChildImpl->prev = lastChild;
+        lastChild          = newChildImpl;
         }
 
-    return child;
+    return (Node *)newChild;
 }
 
 /**
@@ -538,19 +602,48 @@ unsigned short NodeImpl::compareDocumentPosition(const Node *otherArg)
 /**
  *
  */
-DOMString NodeImpl::getTextContext() throw(DOMException)
+DOMString NodeImpl::getTextContent() throw(DOMException)
 {
-    //no idea
-    return DOMString("");
+    DOMString buf;
+    if (nodeType == TEXT_NODE          ||
+	    nodeType == CDATA_SECTION_NODE ||
+		nodeType == COMMENT_NODE       ||
+		nodeType == PROCESSING_INSTRUCTION_NODE)
+		buf = getNodeValue();
+    else if (nodeType == ELEMENT_NODE      ||
+	         nodeType == ATTRIBUTE_NODE         ||
+		     nodeType == ENTITY_NODE            ||
+		     nodeType == ENTITY_REFERENCE_NODE  ||
+		     nodeType == DOCUMENT_FRAGMENT_NODE)
+		{
+		for (Node *n = getFirstChild() ; n ;
+		     n=n->getNextSibling() )
+		    {
+            if (n->getNodeType() != COMMENT_NODE &&
+		        n->getNodeType() != COMMENT_NODE)
+                buf.append(n->getTextContent());
+		    }
+		}
+    return buf;
 }
 
 
 /**
  *
  */
-void NodeImpl::setTextContext(const DOMString &val) throw(DOMException)
+void NodeImpl::setTextContent(const DOMString &val) throw(DOMException)
 {
-    //no idea
+    //Delete children
+	for (Node *n = getFirstChild() ; n ;
+		     n=n->getNextSibling() )
+        delete n;
+    firstChild = lastChild = NULL;
+
+    //Replace with a single text node
+    NodeImpl *tnode = new NodeImpl(ownerDocument);
+    tnode->nodeType = Node::TEXT_NODE;
+    tnode->setNodeValue(val);
+    appendChild(tnode);
 }
 
 
@@ -1028,6 +1121,10 @@ NodeImpl::~NodeImpl()
 {
     if (userDataEntries)
         delete userDataEntries;
+    //Delete children
+	for (Node *n = getFirstChild() ; n ;
+		     n=n->getNextSibling() )
+        delete n;
 }
 
 

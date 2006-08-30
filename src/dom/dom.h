@@ -435,7 +435,7 @@ public:
     /**
      *
      */
-    virtual DOMImplementation *getDOMImplementation(unsigned long index)
+    virtual DOMImplementation *item(unsigned long index)
         {
         if (index >implementations.size())
             return NULL;
@@ -760,13 +760,13 @@ public:
     /**
      *
      */
-    virtual DOMString getTextContext() throw(DOMException) = 0;
+    virtual DOMString getTextContent() throw(DOMException) = 0;
 
 
     /**
      *
      */
-    virtual void setTextContext(const DOMString &val) throw(DOMException) = 0;
+    virtual void setTextContent(const DOMString &val) throw(DOMException) = 0;
 
 
     /**
