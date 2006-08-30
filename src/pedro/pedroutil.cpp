@@ -1085,7 +1085,7 @@ bool TcpSocket::startTls()
     fprintf(stderr,
 	    "SSL starttls() error:  client not compiled with SSL enabled\n");
     return false;
-#endif /*HAVE_SSL*/
+#else /*HAVE_SSL*/
 
     sslStream  = NULL;
     sslContext = NULL;
@@ -1149,6 +1149,7 @@ bool TcpSocket::startTls()
 
     sslEnabled = true;
     return true;
+#endif /* HAVE_SSL */
 }
 
 
