@@ -75,6 +75,35 @@ public:
 
     JSObject *wrapDocument(const Document *doc);
 
+    JSObject *new_Attr(Attr *obj);
+    JSObject *new_CDATASection(CDATASection *obj);
+    JSObject *new_CharacterData(CharacterData *obj);
+    JSObject *new_Comment(Comment *obj);
+    JSObject *new_Document(Document *obj);
+    JSObject *new_DocumentFragment(DocumentFragment *obj);
+    JSObject *new_DocumentType(DocumentType *obj);
+    JSObject *new_DOMConfiguration(DOMConfiguration *obj);
+    JSObject *new_DOMError(DOMError *obj);
+    JSObject *new_DOMException(DOMException *obj);
+    JSObject *new_DOMImplementation(DOMImplementation *obj);
+    JSObject *new_DOMImplementationList(DOMImplementationList *obj);
+    JSObject *new_DOMImplementationRegistry(DOMImplementationSource *obj);
+    JSObject *new_DOMImplementationSource(DOMImplementationSource *obj);
+    JSObject *new_DOMLocator(DOMLocator *obj);
+    JSObject *new_DOMStringList(DOMStringList *obj);
+    JSObject *new_Element(Element *obj);
+    JSObject *new_Entity(Entity *obj);
+    JSObject *new_EntityReference(EntityReference *obj);
+    JSObject *new_NamedNodeMap(NamedNodeMap *obj);
+    JSObject *new_NameList(NameList *obj);
+    JSObject *new_Node(Node *obj);
+    JSObject *new_NodeList(NodeList *obj);
+    JSObject *new_Notation(Notation *obj);
+    JSObject *new_ProcessingInstruction(ProcessingInstruction *obj);
+    JSObject *new_Text(Text *obj);
+    JSObject *new_TypeInfo(TypeInfo *obj);
+    JSObject *new_UserDataHandler(UserDataHandler *obj);
+
 private:
 
     /**
@@ -137,11 +166,36 @@ private:
         engine->error((char *)message);
         }
 
-    JSObject *nodeProto;
-    JSObject *characterDataProto;
-    JSObject *textProto;
-    JSObject *cdataProto;
-    JSObject *documentProto;
+    JSObject *proto_Attr;
+    JSObject *proto_CDATASection;
+    JSObject *proto_CharacterData;
+    JSObject *proto_Comment;
+    JSObject *proto_Document;
+    JSObject *proto_DocumentFragment;
+    JSObject *proto_DocumentType;
+    JSObject *proto_DOMConfiguration;
+    JSObject *proto_DOMError;
+    JSObject *proto_DOMException;
+    JSObject *proto_DOMImplementation;
+    JSObject *proto_DOMImplementationList;
+    JSObject *proto_DOMImplementationRegistry;
+    JSObject *proto_DOMImplementationSource;
+    JSObject *proto_DOMLocator;
+    JSObject *proto_DOMStringList;
+    JSObject *proto_Element;
+    JSObject *proto_Entity;
+    JSObject *proto_EntityReference;
+    JSObject *proto_NamedNodeMap;
+    JSObject *proto_NameList;
+    JSObject *proto_Node;
+    JSObject *proto_NodeList;
+    JSObject *proto_Notation;
+    JSObject *proto_ProcessingInstruction;
+    JSObject *proto_Text;
+    JSObject *proto_TypeInfo;
+    JSObject *proto_UserDataHandler;
+    
+    
 
 };
 
