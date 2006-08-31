@@ -115,6 +115,10 @@ InkboardDocument::recieve(Message::Wrapper &wrapper, Pedro::Element* data)
             {
                 this->sm->terminateSession(this->getSessionId());
             }
+        }else if(wrapper == Message::NEW || wrapper == Message::CONFIGURE
+                    || wrapper == Message::MOVE || wrapper == Message::REMOVE )
+        {
+            handleChange(wrapper,data->getFirstChild()->getFirstChild());
         }
     }else{
         g_warning("Recieved Message in invalid state = %d", this->state);
@@ -133,9 +137,9 @@ InkboardDocument::send(const Glib::ustring &destJid, Message::Wrapper &wrapper, 
         else
             mes = message;
 
-        char *finalmessage = const_cast<char* >(String::ucompose(Vars::WHITEBOARD_MESSAGE,
-            this->sessionType,this->sm->getClient().getJid(),destJid,
-            Vars::INKBOARD_XMLNS,this->getSessionId(),mes).c_str());
+        char *finalmessage = const_cast<char* >(String::ucompose(
+            Vars::WHITEBOARD_MESSAGE, this->sessionType, this->sm->getClient().getJid(),
+            destJid, Vars::INKBOARD_XMLNS, this->getSessionId(), mes).c_str());
 
         if (!this->sm->getClient().write(finalmessage)) 
             { return false; }
@@ -154,16 +158,21 @@ InkboardDocument::sendDocument(Inkscape::XML::Node* root)
 {
     for(Inkscape::XML::Node *child = root->firstChild();child!=NULL;child=child->next())
     {
-        Glib::ustring parentKey,tempParentKey,key;
+        Glib::ustring name(child->name());
 
-        this->addNodeToTracker(child);
-        Message::Message message = this->composeNewMessage(child);
-
-        this->send(this->getRecipient(),Message::NEW,message);
-
-        if(child->childCount() != 0)
+        if(name != "svg:metadata" && name != "svg:defs" && name != "sodipodi:namedview")
         {
-            sendDocument(child);
+            Glib::ustring parentKey,tempParentKey,key;
+
+            this->addNodeToTracker(child);
+            Message::Message message = this->composeNewMessage(child);
+
+            this->send(this->getRecipient(),Message::NEW,message);
+
+            if(child->childCount() != 0)
+            {
+                sendDocument(child);
+            }
         }
     }
 }
@@ -240,6 +249,42 @@ InkboardDocument::handleState(State::SessionState expectedState, State::SessionS
     }
 
     return false;
+}
+
+
+void
+InkboardDocument::handleChange(Message::Wrapper &wrapper, Pedro::Element* data)
+{
+    if(wrapper == Message::NEW)
+    {
+        Glib::ustring parent =  data->getTagAttribute("new","parent");
+        Glib::ustring id =      data->getTagAttribute("new","id");
+
+        signed int index = atoi
+            (data->getTagAttribute("new","index").c_str());
+
+        Pedro::Element* element = data->getFirstChild();
+
+        if(parent.size() > 0 && id.size() > 0)
+            this->changeNew(parent,id,index,element);
+
+    }else if(wrapper == Message::CONFIGURE)
+    {
+        Glib::ustring target =      data->getTagAttribute("configure","target");
+        Glib::ustring attribute =   data->getTagAttribute("configure","attribute");
+        Glib::ustring value =       data->getTagAttribute("configure","value");
+
+        signed int version = atoi
+            (data->getTagAttribute("configure","version").c_str());
+
+        if(target.size() > 0 && attribute.size() > 0 && value.size() > 0)
+            this->changeConfigure(target,version,attribute,value);
+
+    }else if(wrapper == Message::MOVE)
+    {
+    }else if(wrapper == Message::REMOVE) 
+    {
+    }
 }
 
 } // namespace Whiteboard

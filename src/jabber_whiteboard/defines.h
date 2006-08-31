@@ -99,9 +99,6 @@ namespace Vars {
     extern const std::string MOVE_MESSAGE; 
     extern const std::string REMOVE_MESSAGE; 
 
-
-
-
 }
 
 namespace State {

@@ -52,6 +52,26 @@ InkboardDocument::composeNewMessage(Inkscape::XML::Node *node)
     return message;
 }
 
+void
+InkboardDocument::changeConfigure(Glib::ustring target, signed int version, 
+        Glib::ustring attribute, Glib::ustring value)
+{
+}
+
+void 
+InkboardDocument::changeNew(Glib::ustring target, Glib::ustring, 
+        signed int index, Pedro::Element* data)
+{
+    Glib::ustring name = data->getName();
+
+    if(name == "text")
+    { 
+        //XML::Node* parent = this->tracker->get(target);
+        //parent->setContent(date->getValue());
+    }
+
+}
+
 } // namespace Whiteboard
 } // namespace Inkscape
 
