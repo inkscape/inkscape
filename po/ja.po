@@ -1,5 +1,5 @@
 # translation of ja.po to Japanese
-# sodipodi ja.po.
+# Inkscape ja.po.
 # Copyright (C) 2000-2001, 2004, 2005 Free Software Foundation, Inc.
 # Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.
 # Takeshi Aihana <aihana@muc.biglobe.ne.jp>, 2000-2001.
@@ -8,6 +8,11 @@
 # Mitsuru Oka <oka326@parkcity.ne.jp>, 2002.
 # Masatake YAMATO <jet@gyve.org>, 2002.
 # shivaken <shivaken@owls-nest.net>, 2004, 2005.
+#
+# This file has been modified by Josef Vybiral <cwebb at sf.net> to remove
+# wrong plural forms causing fatal errors. 31.8.2006, SVN revision 12994
+# If you find any errors, please go back to revision 12993.
+#
 #: ../src/widgets/toolbox.cpp:3695 ../src/widgets/toolbox.cpp:3716
 #: ../src/widgets/toolbox.cpp:3745 ../src/widgets/toolbox.cpp:3766
 #: ../src/widgets/toolbox.cpp:3793
@@ -897,7 +902,6 @@ msgstr "エクスポートするファイルを選択"
 msgid "<b>%d</b> object found (out of <b>%d</b>), %s match."
 msgid_plural "<b>%d</b> objects found (out of <b>%d</b>), %s match."
 msgstr[0] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
-msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
 
 #: ../src/dialogs/find.cpp:372
 msgid "exact"
@@ -2476,7 +2480,6 @@ msgstr "開くファイルを選択"
 msgid "Removed <b>%i</b> unused definition in &lt;defs&gt;."
 msgid_plural "Removed <b>%i</b> unused definitions in &lt;defs&gt;."
 msgstr[0] "<b>%i</b>個のオブジェクトを&lt;defs&gt;から削除しました"
-msgstr[1] "<b>%i</b>個のオブジェクトを&lt;defs&gt;から削除しました"
 
 #: ../src/file.cpp:475
 #, fuzzy
@@ -3480,9 +3483,6 @@ msgid_plural ""
 msgstr[0] ""
 "<b>%i</b>のノードが選択可能、クリック、Shift+クリック、ドラッグでノードを選択"
 "してください。"
-msgstr[1] ""
-"<b>%i</b>のノードが選択可能、クリック、Shift+クリック、ドラッグでノードを選択"
-"してください。"
 
 #: ../src/nodepath.cpp:4225
 msgid "Drag the handles of the object to modify it."
@@ -3493,7 +3493,6 @@ msgstr ""
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s. %s."
-msgstr[1] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s. %s."
 
 #: ../src/nodepath.cpp:4240
 #, fuzzy, c-format
@@ -3502,14 +3501,12 @@ msgid ""
 msgid_plural ""
 "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. %s."
 msgstr[0] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s. %s."
-msgstr[1] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s. %s."
 
 #: ../src/nodepath.cpp:4246
 #, fuzzy, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
 msgstr[0] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s"
-msgstr[1] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s"
 
 #: ../src/object-edit.cpp:488
 msgid ""
@@ -4276,7 +4273,6 @@ msgstr "<b>Shift+D</b>でフレームを見付けられます。"
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
 msgstr[0] "%i個のオブジェクトが選択されています。%s。"
-msgstr[1] "%i個のオブジェクトが選択されています。%s。"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:189
@@ -4284,7 +4280,6 @@ msgstr[1] "%i個のオブジェクトが選択されています。%s。"
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
 msgstr[0] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
-msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:194
@@ -4292,7 +4287,6 @@ msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
 msgstr[0] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
-msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:199
@@ -4300,7 +4294,6 @@ msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgstr[0] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
-msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %d個) %s一致"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:204
@@ -4308,7 +4301,6 @@ msgstr[1] "%d個のオブジェクトが見付かりました。(検索対象: %
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
 msgstr[0] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s"
-msgstr[1] "%i個のノードを選択しています。(%i個が選択可能) ノード状態: %s"
 
 #: ../src/selection-describer.cpp:209
 #, c-format
@@ -4488,7 +4480,6 @@ msgstr "<b>画像</b> %d x %d: %s"
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] "%d オブジェクトのグループ"
-msgstr[1] "%d オブジェクトのグループ"
 
 #: ../src/sp-item.cpp:847
 msgid "Object"
@@ -4524,7 +4515,6 @@ msgstr "<b>ダイナミックオフセット</b>, (%s, %f pt)"
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
 msgstr[0] "<b>パス</b> (%iノード)"
-msgstr[1] "<b>パス</b> (%iノード)"
 
 #: ../src/sp-polygon.cpp:233
 msgid "<b>Polygon</b>"
@@ -4551,21 +4541,18 @@ msgstr "<b>螺旋</b>(巻数: %3f)"
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
 msgstr[0] "<b>星</b>(%d点)"
-msgstr[1] "<b>星</b>(%d点)"
 
 #: ../src/sp-star.cpp:283
 #, fuzzy, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
 msgstr[0] "<b>ポリゴン</b>(%d点)"
-msgstr[1] "<b>ポリゴン</b>(%d点)"
 
 #: ../src/sp-switch.cpp:100
 #, fuzzy, c-format
 msgid "<b>Conditional group</b> of <b>%d</b> object"
 msgid_plural "<b>Conditional group</b> of <b>%d</b> objects"
 msgstr[0] "%d オブジェクトのグループ"
-msgstr[1] "%d オブジェクトのグループ"
 
 #. TRANSLATORS: For description of font with no name.
 #: ../src/sp-text.cpp:411
@@ -10676,13 +10663,11 @@ msgstr ""
 #~ msgid "%u change in receive queue."
 #~ msgid_plural "%u changes in receive queue."
 #~ msgstr[0] "保存の必要がありませんでした。"
-#~ msgstr[1] "保存の必要がありませんでした。"
 
 #, fuzzy
 #~ msgid "%u change in send queue."
 #~ msgid_plural "%u changes in send queue."
 #~ msgstr[0] "保存の必要がありませんでした。"
-#~ msgstr[1] "保存の必要がありませんでした。"
 
 #~ msgid ""
 #~ "<span weight=\"bold\" size=\"larger\">%1</span>\n"
