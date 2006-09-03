@@ -2139,6 +2139,8 @@ sp_selection_tile(bool apply)
     // bottommost object, after sorting
     SPObject *parent = SP_OBJECT_PARENT (items->data);
 
+    NR::Matrix parent_transform = sp_item_i2root_affine(SP_ITEM(parent));
+
     // remember the position of the first item
     gint pos = SP_OBJECT_REPR (items->data)->position();
 
@@ -2166,7 +2168,7 @@ sp_selection_tile(bool apply)
     prefs_set_int_attribute("options.clonecompensation", "value", SP_CLONE_COMPENSATION_UNMOVED);
 
     const gchar *pat_id = pattern_tile (repr_copies, bounds, document,
-                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r.min()[NR::X], r.max()[NR::Y])))), move);
+                                        NR::Matrix(NR::translate(desktop->dt2doc(NR::Point(r.min()[NR::X], r.max()[NR::Y])))) * parent_transform.inverse(), parent_transform * move);
 
     // restore compensation setting
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
@@ -2174,10 +2176,14 @@ sp_selection_tile(bool apply)
     if (apply) {
         Inkscape::XML::Node *rect = sp_repr_new ("svg:rect");
         rect->setAttribute("style", g_strdup_printf("stroke:none;fill:url(#%s)", pat_id));
-        sp_repr_set_svg_double(rect, "width", bounds.extent(NR::X));
-        sp_repr_set_svg_double(rect, "height", bounds.extent(NR::Y));
-        sp_repr_set_svg_double(rect, "x", bounds.min()[NR::X]);
-        sp_repr_set_svg_double(rect, "y", bounds.min()[NR::Y]);
+
+        NR::Point min = bounds.min() * parent_transform.inverse();
+        NR::Point max = bounds.max() * parent_transform.inverse();
+
+        sp_repr_set_svg_double(rect, "width", max[NR::X] - min[NR::X]);
+        sp_repr_set_svg_double(rect, "height", max[NR::Y] - min[NR::Y]);
+        sp_repr_set_svg_double(rect, "x", min[NR::X]);
+        sp_repr_set_svg_double(rect, "y", min[NR::Y]);
 
         // restore parent and position
         SP_OBJECT_REPR (parent)->appendChild(rect);
