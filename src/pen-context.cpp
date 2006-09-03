@@ -64,6 +64,8 @@ static gint pen_handle_2button_press(SPPenContext *const pc);
 static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event);
 static void spdc_reset_colors(SPPenContext *pc);
 
+static void pen_disable_events(SPPenContext *const pc);
+static void pen_enable_events(SPPenContext *const pc);
 
 static NR::Point pen_drag_origin_w(0, 0);
 static bool pen_within_tolerance = false;
@@ -141,6 +143,8 @@ sp_pen_context_init(SPPenContext *pc)
     pc->c1 = NULL;
     pc->cl0 = NULL;
     pc->cl1 = NULL;
+    
+    pc->events_disabled = 0;
 }
 
 /**
@@ -335,6 +339,11 @@ sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
  */
 static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const &bevent)
 {
+    if (pc->events_disabled) {
+        // skip event processing if events are disabled
+        return FALSE;
+    }
+
     gint ret = FALSE;
     if (bevent.button == 1) {
 
@@ -473,6 +482,11 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
         // allow middle-button scrolling
         return FALSE;
     }
+    
+    if (pc->events_disabled) {
+        // skip motion events if pen events are disabled
+        return FALSE;
+    }
 
     NR::Point const event_w(mevent.x,
                             mevent.y);
@@ -589,6 +603,11 @@ pen_handle_motion_notify(SPPenContext *const pc, GdkEventMotion const &mevent)
 static gint
 pen_handle_button_release(SPPenContext *const pc, GdkEventButton const &revent)
 {
+    if (pc->events_disabled) {
+        // skip event processing if events are disabled
+        return FALSE;
+    }
+
     gint ret = FALSE;
     if ( revent.button == 1 ) {
 
@@ -906,7 +925,9 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_Return:
         case GDK_KP_Enter:
             if (pc->npoints != 0) {
+                pen_disable_events(pc);
                 spdc_pen_finish(pc, FALSE);
+                pen_enable_events(pc);
                 ret = TRUE;
             }
             break;
@@ -1150,6 +1171,17 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     }
 }
 
+static void
+pen_disable_events(SPPenContext *const pc) {
+  pc->events_disabled++;
+}
+
+static void
+pen_enable_events(SPPenContext *const pc) {
+  g_return_if_fail(pc->events_disabled != 0);
+  
+  pc->events_disabled--;
+}
 
 /*
   Local Variables:

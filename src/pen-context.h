@@ -40,6 +40,8 @@ struct SPPenContext : public SPDrawContext {
     unsigned int onlycurves : 1;
 
     SPCanvasItem *c0, *c1, *cl0, *cl1;
+    
+    unsigned int events_disabled : 1;
 };
 
 /// The SPPenContext vtable (empty).
