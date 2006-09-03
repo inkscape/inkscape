@@ -1,14 +1,17 @@
 <inkscape-extension>
-	<_name>Generate Fill Text</_name>
+	<_name>Lorem ipsum</_name>
 	<id>com.kaioa.lorem_ipsum</id>
 	<dependency type="executable" location="extensions">lorem_ipsum.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
-	<param name="num" type="int" min="1" max="1000" _gui-text="Number of Paragraphs">5</param>
-	<param name="sentencecount" type="int" min="2" max="100" _gui-text="Number of Sentences per Paragraph">16</param>
-	<param name="fluctuation" type="int" min="1" max="100" _gui-text="+/- Sentences (fluctuation)">4</param>
-	<effect>
-		<object-type>Fill Text</object-type>
-	</effect>
+	<param name="num" type="int" min="1" max="1000" _gui-text="Number of paragraphs">5</param>
+	<param name="sentencecount" type="int" min="2" max="100" _gui-text="Sentences per paragraph">16</param>
+	<param name="fluctuation" type="int" min="1" max="100" _gui-text="Paragraph length fluctuation (sentences)">4</param>
+    <effect>
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu _name="Render"/>
+        </effects-menu>
+    </effect>
     <script>
     	<command reldir="extensions" interpreter="python">lorem_ipsum.py</command>
     </script>

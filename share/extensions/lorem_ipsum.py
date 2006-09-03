@@ -24,6 +24,7 @@ import inkex
 import random
 
 foo=[
+'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ',
 'Duis sem velit, ultrices et, fermentum auctor, rhoncus ut, ligula. ',
 'Phasellus at purus sed purus cursus iaculis. ',
 'Suspendisse fermentum. ',
@@ -124,7 +125,6 @@ foo=[
 'Curabitur accumsan felis in erat. ',
 'Curabitur lorem risus, sagittis vitae, accumsan a, iaculis id, metus. ',
 'Nulla sagittis condimentum ligula. ',
-'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ',
 'Aliquam imperdiet lobortis metus. ',
 'Suspendisse molestie sem. ',
 'Ut venenatis. ',
@@ -188,6 +188,7 @@ class MyEffect(inkex.Effect):
       action="store", type="int", 
       dest="fluctuation", default=4,
       help="+/-")
+    self.first_sentence = 1
 
   def makePara(self):
     _min=max(1,self.options.sentencecount-self.options.fluctuation)
@@ -195,7 +196,11 @@ class MyEffect(inkex.Effect):
     scount=random.randint(_min,_max)
     text=''
     for i in range(scount):
-      text+=foo[random.randint(0,len(foo)-1)]
+      if self.first_sentence == 1:
+        text+=foo[0]
+        self.first_sentence = 0
+      else:
+        text+=foo[random.randint(0,len(foo)-1)]
     return text
   
   def addText(self, node):
