@@ -101,6 +101,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     }
 
     _updateVolatileState();
+    _current.set_identity();
 
     _center_is_set = false; // reread _center from items, or set to bbox midpoint
 
@@ -238,6 +239,7 @@ void Inkscape::SelTrans::grab(NR::Point const &p, gdouble x, gdouble y, bool sho
     _grabbed = true;
     _show_handles = show_handles;
     _updateVolatileState();
+    _current.set_identity();
 
     _changed = false;
 
@@ -325,6 +327,29 @@ void Inkscape::SelTrans::ungrab()
     _show_handles = true;
 
     Inkscape::Selection *selection = sp_desktop_selection(_desktop);
+    _updateVolatileState();
+
+    for (unsigned i = 0; i < _items.size(); i++) {
+        sp_object_unref(SP_OBJECT(_items[i].first), NULL);
+    }
+    _items.clear();
+    _items_centers.clear();
+
+    sp_canvas_item_hide(_norm);
+    sp_canvas_item_hide(_grip);
+
+    if (_show == SHOW_OUTLINE) {
+        for (int i = 0; i < 4; i++)
+            sp_canvas_item_hide(_l[i]);
+    }
+
+    if (_stamp_cache) {
+        g_slist_free(_stamp_cache);
+        _stamp_cache = NULL;
+    }
+
+    _message_context.clear();
+
     bool updh = true;
     if (!_empty && _changed) {
         sp_selection_apply_affine(selection, _current, (_show == SHOW_OUTLINE)? true : false);
@@ -361,30 +386,9 @@ void Inkscape::SelTrans::ungrab()
         updh = false;
     }
 
-    for (unsigned i = 0; i < _items.size(); i++) {
-        sp_object_unref(SP_OBJECT(_items[i].first), NULL);
-    }
-    _items.clear();
-    _items_centers.clear();
-
-    sp_canvas_item_hide(_norm);
-    sp_canvas_item_hide(_grip);
-
-    if (_show == SHOW_OUTLINE) {
-        for (int i = 0; i < 4; i++)
-            sp_canvas_item_hide(_l[i]);
-    }
-
-    _updateVolatileState();
     if (updh) {
         _updateHandles();
     }
-    if (_stamp_cache) {
-        g_slist_free(_stamp_cache);
-        _stamp_cache = NULL;
-    }
-
-    _message_context.clear();
 }
 
 /* fixme: This is really bad, as we compare positions for each stamp (Lauris) */
@@ -538,8 +542,6 @@ void Inkscape::SelTrans::_updateVolatileState()
     }
 
     _strokewidth = stroke_average_width (selection->itemList());
-
-    _current.set_identity();
 }
 
 static void sp_remove_handles(SPKnot *knot[], gint num)
@@ -721,6 +723,7 @@ void Inkscape::SelTrans::_selChanged(Inkscape::Selection *selection)
 {
     if (!_grabbed) {
         _updateVolatileState();
+        _current.set_identity();
         _center_is_set = false; // center(s) may have changed
         _updateHandles();
     }
@@ -730,6 +733,7 @@ void Inkscape::SelTrans::_selModified(Inkscape::Selection *selection, guint flag
 {
     if (!_grabbed) {
         _updateVolatileState();
+        _current.set_identity();
 
         // reset internal flag
         _changed = false;
