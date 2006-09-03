@@ -925,9 +925,7 @@ pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
         case GDK_Return:
         case GDK_KP_Enter:
             if (pc->npoints != 0) {
-                pen_disable_events(pc);
                 spdc_pen_finish(pc, FALSE);
-                pen_enable_events(pc);
                 ret = TRUE;
             }
             break;
@@ -1149,6 +1147,8 @@ spdc_pen_finish_segment(SPPenContext *const pc, NR::Point const p, guint const s
 static void
 spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
 {
+    pen_disable_events(pc);
+    
     SPDesktop *const desktop = pc->desktop;
     pc->_message_context->clear();
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Drawing finished"));
@@ -1169,6 +1169,8 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     if (pc->green_anchor) {
         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
     }
+
+    pen_enable_events(pc);
 }
 
 static void
