@@ -441,6 +441,8 @@ static void update_object(Inkscape::NodePath::Path *np)
 
     SPCurve *curve = create_curve(np);
 
+    sp_canvas_force_full_redraws(np->desktop->canvas, 2);
+    
     sp_shape_set_curve(SP_SHAPE(np->path), curve, TRUE);
 
     sp_curve_unref(curve);
@@ -483,6 +485,8 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
     g_return_if_fail(np != NULL);
 
     update_repr_internal(np);
+    sp_canvas_clear_forced_full_redraws(np->desktop->canvas);
+    
     sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
                      annotation);
 
