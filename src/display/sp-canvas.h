@@ -161,6 +161,8 @@ struct SPCanvas {
     long redraw_count;
     glong slowest_buffer;
     
+    unsigned int forced_full_redraw_count;
+    
     /* For use by internal pick_current_item() function */
     unsigned int left_grabbed_item : 1;
     /* For use by internal pick_current_item() function */
@@ -187,6 +189,8 @@ void sp_canvas_scroll_to(SPCanvas *canvas, double cx, double cy, unsigned int cl
 void sp_canvas_update_now(SPCanvas *canvas);
 
 void sp_canvas_request_redraw(SPCanvas *canvas, int x1, int y1, int x2, int y2);
+void sp_canvas_force_full_redraws(SPCanvas *canvas, unsigned int count);
+void sp_canvas_clear_forced_full_redraws(SPCanvas *canvas);
 
 void sp_canvas_window_to_world(SPCanvas const *canvas, double winx, double winy, double *worldx, double *worldy);
 void sp_canvas_world_to_window(SPCanvas const *canvas, double worldx, double worldy, double *winx, double *winy);

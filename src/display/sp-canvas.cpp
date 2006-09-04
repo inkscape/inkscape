@@ -977,6 +977,8 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->redraw_aborted.y1 = -NR_HUGE_L;
     
     canvas->redraw_count = 0;
+    
+    canvas->forced_full_redraw_count = 0;
 
     canvas->slowest_buffer = 0;
 }
@@ -1690,8 +1692,9 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 
             // INTERRUPTIBLE DISPLAY:
             // Process events that may have arrived while we were busy drawing;
-            // only if we're drawing multiple buffers, and only if this one was not very fast
-            if (multiple_buffers && this_buffer > 25000) {
+            // only if we're drawing multiple buffers, and only if this one was not very fast,
+            // and only if we're allowed to interrupt this redraw
+            if (multiple_buffers && this_buffer > 25000 && !canvas->forced_full_redraw_count) {
 
                 // Run at most max_iterations of the main loop; we cannot process ALL events
                 // here because some things (e.g. rubberband) flood with dirtying events but will
@@ -1718,8 +1721,36 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
         }
     }
 
+    // We've finished a redraw; decrement the full redraw counter
+    if (canvas->forced_full_redraw_count > 0) {
+      canvas->forced_full_redraw_count--;
+    }
+
     // Remember the slowest buffer of this paint in canvas
     canvas->slowest_buffer = slowest_buffer;
+}
+
+/**
+ * Force the next several screen redraws to not be interruptible.
+ * Used when having an accurate representation of the drawing canvas
+ * is more important than speed.
+ *
+ * In the future, this should be a toggle switch to be enabled/disabled
+ * when precise object drawing is necessary.
+ */
+void
+sp_canvas_force_full_redraws(SPCanvas *canvas, unsigned int count) {
+  canvas->forced_full_redraw_count += count;
+}
+
+/**
+ * Flush all forced full redraw requests.
+ * Used when accurate representation of the drawing canvas is no
+ * longer needed.
+ */
+void
+sp_canvas_clear_forced_full_redraws(SPCanvas *canvas) {
+  canvas->forced_full_redraw_count = 0;
 }
 
 /**
