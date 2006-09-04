@@ -7,6 +7,7 @@
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   MenTaLguY <mental@rydia.net>
  *
  * The original dynadraw code:
  *   Paul Haeberli <paul@sgi.com>
@@ -14,6 +15,8 @@
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 1999-2005 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
+ * Copyright (C) 2005-2006 bulia byak
+ * Copyright (C) 2006 MenTaLguY
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
