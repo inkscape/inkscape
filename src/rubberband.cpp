@@ -35,6 +35,8 @@ void Inkscape::Rubberband::start(SPDesktop *d, NR::Point const &p)
 
 void Inkscape::Rubberband::stop()
 {
+    sp_canvas_clear_forced_full_redraws(_desktop->canvas);
+
     if (_canvas) {
         gtk_object_destroy((GtkObject *) _canvas);
         _canvas = NULL;
@@ -49,6 +51,8 @@ void Inkscape::Rubberband::move(NR::Point const &p)
 
     _desktop->scroll_to_point(&p);
     _end = p;
+
+    sp_canvas_force_full_redraws(_desktop->canvas, 2);
 
     _canvas->setRectangle(NR::Rect(_start, _end));
 }

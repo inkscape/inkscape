@@ -226,6 +226,8 @@ pen_cancel (SPPenContext *const pc)
     sp_canvas_item_hide(pc->cl1);
     pc->_message_context->clear();
     pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
+
+    sp_canvas_clear_forced_full_redraws(pc->desktop->canvas);
 }
 
 /**
@@ -1034,6 +1036,8 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
     g_assert( pc->npoints != 0 );
     /* todo: Check callers to see whether 2 <= npoints is guaranteed. */
 
+    sp_canvas_force_full_redraws(pc->desktop->canvas, 4);
+
     pc->p[2] = p;
     pc->p[3] = p;
     pc->p[4] = p;
@@ -1050,6 +1054,7 @@ spdc_pen_set_subsequent_point(SPPenContext *const pc, NR::Point const p, bool st
         sp_curve_lineto(pc->red_curve, p);
         is_curve = false;
     }
+
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
 
     if (statusbar) {
@@ -1169,6 +1174,8 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     if (pc->green_anchor) {
         pc->green_anchor = sp_draw_anchor_destroy(pc->green_anchor);
     }
+
+    sp_canvas_clear_forced_full_redraws(desktop->canvas);
 
     pen_enable_events(pc);
 }

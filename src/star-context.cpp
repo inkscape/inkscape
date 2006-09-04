@@ -442,6 +442,8 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
         arg1 = sp_round(arg1, M_PI / snaps);
     }
 
+    sp_canvas_force_full_redraws(desktop->canvas, 1);
+
     sp_star_position_set(star, sc->magnitude, p0, r1, r1 * sc->proportion,
                          arg1, arg1 + M_PI / sides, sc->isflatsided, sc->rounded, sc->randomized);
 
@@ -474,6 +476,8 @@ sp_star_finish (SPStarContext * sc)
                          /* TODO: annotate */ "star-context.cpp:474");
 
         sc->item = NULL;
+
+        sp_canvas_clear_forced_full_redraws(desktop->canvas);
     }
 }
 

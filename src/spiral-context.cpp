@@ -430,6 +430,8 @@ sp_spiral_drag(SPSpiralContext *sc, NR::Point p, guint state)
         arg = sp_round(arg, M_PI/snaps);
     }
 
+    sp_canvas_force_full_redraws(desktop->canvas, 1);
+    
     /* Fixme: these parameters should be got from dialog box */
     sp_spiral_position_set(spiral, p0[NR::X], p0[NR::Y],
                            /*expansion*/ sc->exp,
@@ -462,6 +464,8 @@ sp_spiral_finish(SPSpiralContext *sc)
                          /* TODO: annotate */ "spiral-context.cpp:462");
 
         sc->item = NULL;
+
+        sp_canvas_clear_forced_full_redraws(desktop->canvas);
     }
 }
 

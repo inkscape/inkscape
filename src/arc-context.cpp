@@ -412,6 +412,8 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
 
     NR::Rect const r = Inkscape::snap_rectangular_box(desktop, ac->item, pt, ac->center, state);
 
+    sp_canvas_force_full_redraws(desktop->canvas, 1);
+
     sp_arc_position_set(SP_ARC(ac->item),
                         r.midpoint()[NR::X], r.midpoint()[NR::Y],
                         r.dimensions()[NR::X] / 2, r.dimensions()[NR::Y] / 2);
@@ -437,6 +439,8 @@ static void sp_arc_finish(SPArcContext *ac)
                          _("Create ellipse"));
 
         ac->item = NULL;
+
+        sp_canvas_clear_forced_full_redraws(desktop->canvas);
     }
 }
 
