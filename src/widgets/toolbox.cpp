@@ -1985,6 +1985,13 @@ sp_ddc_tremor_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 }
 
 static void
+sp_ddc_cap_rounding_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
+{
+    prefs_set_double_attribute("tools.calligraphic", "cap_rounding", adj->value);
+    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void
 sp_ddc_pressure_state_changed(GtkWidget *button, gpointer data)
 {
     prefs_set_int_attribute ("tools.calligraphic", "usepressure", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ? 1 : 0);
@@ -2011,7 +2018,8 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *tbl)
         {"width", 15},
         {"thinning", 0.1},
         {"tremor", 0.0},
-        {"flatness", 0.9}
+        {"flatness", 0.9},
+        {"cap_rounding", 0.0}
     };
 
     for (unsigned i = 0; i < G_N_ELEMENTS(key_values); ++i) {
@@ -2091,6 +2099,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
                                          sp_ddc_tremor_value_changed, 0.01, 2);
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
+
     /* Mass */
     {
         GtkWidget *hb = sp_tb_spinbutton(_("Mass:"), _("How much inertia affects the movement of the pen"),
@@ -2109,6 +2118,17 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
                                          sp_ddc_drag_value_changed, 0.01, 2);
+        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+    }
+
+    /* Cap Rounding */
+    {
+        // TRANSLATORS: "cap" means "end" (both start and finish) here
+        GtkWidget *hb = sp_tb_spinbutton(_("Round:"), _("How much the ends of a stroke are rounded"),
+                                         "tools.calligraphic", "cap_rounding", 1,
+                                         NULL, tbl, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_cap_rounding_value_changed, 0.01, 2);
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
 
