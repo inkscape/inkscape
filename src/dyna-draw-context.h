@@ -94,6 +94,7 @@ struct SPDynaDrawContext
     double vel_thin;
     double flatness;
     double tremor;
+    double cap_rounding;
 
     Inkscape::MessageContext *_message_context;
 

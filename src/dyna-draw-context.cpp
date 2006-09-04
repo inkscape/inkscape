@@ -162,6 +162,7 @@ sp_dyna_draw_context_init(SPDynaDrawContext *ddc)
 
     ddc->vel_thin = 0.1;
     ddc->flatness = 0.9;
+    ddc->cap_rounding = 0.0;
 
     ddc->abs_width = false;
     ddc->keep_selected = true;
@@ -228,6 +229,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     sp_event_context_read(ec, "usetilt");
     sp_event_context_read(ec, "abs_width");
     sp_event_context_read(ec, "keep_selected");
+    sp_event_context_read(ec, "cap_rounding");
 
     ddc->is_drawing = false;
 
@@ -268,6 +270,8 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
         ddc->abs_width = (val && strcmp(val, "0"));
     } else if (!strcmp(key, "keep_selected")) {
         ddc->keep_selected = (val && strcmp(val, "0"));
+    } else if (!strcmp(key, "cap_rounding")) {
+        ddc->cap_rounding = ( val ? g_ascii_strtod (val, NULL) : 0.0 );
     }
 
     //g_print("DDC: %g %g %g %g\n", ddc->mass, ddc->drag, ddc->angle, ddc->width);
@@ -690,13 +694,26 @@ set_to_accumulated(SPDynaDrawContext *dc)
 }
 
 static void
+add_cap(SPCurve *curve, NR::Point const &from, NR::Point const &to,
+        double rounding)
+{
+    NR::Point vec = rounding * NR::rot90( ( to - from ) / sqrt(2.0) );
+
+    if ( NR::L2(vec) > DYNA_EPSILON ) {
+        sp_curve_curveto(curve, from + vec, to + vec, to);
+    }
+}
+
+static void
 accumulate_calligraphic(SPDynaDrawContext *dc)
 {
     if ( !sp_curve_empty(dc->cal1) && !sp_curve_empty(dc->cal2) ) {
         sp_curve_reset(dc->accumulated); /*  Is this required ?? */
         SPCurve *rev_cal2 = sp_curve_reverse(dc->cal2);
         sp_curve_append(dc->accumulated, dc->cal1, FALSE);
+        add_cap(dc->accumulated, sp_curve_last_point(dc->cal1), sp_curve_first_point(rev_cal2), dc->cap_rounding);
         sp_curve_append(dc->accumulated, rev_cal2, TRUE);
+        add_cap(dc->accumulated, sp_curve_last_point(rev_cal2), sp_curve_first_point(dc->cal1), dc->cap_rounding);
         sp_curve_closepath(dc->accumulated);
 
         sp_curve_unref(rev_cal2);
