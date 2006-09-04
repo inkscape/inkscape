@@ -124,15 +124,27 @@ void KeyNodeTable::addHistory(XML::Node *node, Glib::ustring attribute, Glib::us
     }
 }
 
-Configure KeyNodeTable::getLastHistory(XML::Node *node)
+Glib::ustring KeyNodeTable::getLastHistory(XML::Node *node, Glib::ustring att)
 {
+    std::list<Configure> hist;
+
     std::vector<KeyNodePair>::iterator iter;
     for (iter = items.begin() ; iter != items.end() ; iter++)
     {
         if (node == iter->node)
-            break;
+            hist = iter->history;
     }
-    return iter->history.back();
+
+    std::list<Configure>::iterator it;
+    for(it = hist.end() ; it != hist.begin() ; it--)
+    {
+        if(it->first == att)
+        {
+            //g_warning("hist %s %s",it->first,it->second);
+            return it->second;
+        }
+    }
+    return "";
 }
 
 void KeyNodeTable::remove(XML::Node *node)

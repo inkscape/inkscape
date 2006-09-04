@@ -66,7 +66,7 @@ InkboardDocument::changeConfigureText(Glib::ustring target, unsigned int version
     XML::Node *node = this->tracker->get(target);
     unsigned int elementVersion = this->tracker->getVersion(node);
 
-    if(node && version == (elementVersion + 1))
+    if(node)// && version == (elementVersion + 1))
     {
         this->tracker->incrementVersion(node);
         this->tracker->addHistory(node, "text", text);
@@ -81,10 +81,13 @@ InkboardDocument::changeConfigure(Glib::ustring target, unsigned int version,
     XML::Node *node = this->tracker->get(target);
     unsigned int elementVersion = this->tracker->getVersion(node);
 
-    if(node && version == (elementVersion + 1))
+    g_warning("got version %d",elementVersion);
+
+    if(node && attribute != "transform")// && version == (elementVersion + 1))
     {
+        //g_warning("adding history %s %s",attribute.c_str(),value.c_str());
         this->tracker->incrementVersion(node);
-        this->tracker->addHistory(node, attribute, node->attribute(attribute.c_str()));
+        this->tracker->addHistory(node, attribute, value.c_str());
         node->setAttribute(attribute.c_str(),value.c_str());
     }
 }

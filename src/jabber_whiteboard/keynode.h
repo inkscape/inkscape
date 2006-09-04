@@ -107,7 +107,7 @@ public:
 
     virtual void addHistory(XML::Node *node, Glib::ustring attribute, Glib::ustring value);
 
-    virtual Configure getLastHistory(XML::Node *node);
+    virtual Glib::ustring getLastHistory(XML::Node *node, Glib::ustring attribute);
 
 private:
 

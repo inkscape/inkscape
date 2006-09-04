@@ -164,9 +164,11 @@ void InkboardSession::notifyAttributeChanged(Node &node,
         Glib::ustring value(new_value.pointer());
         Glib::ustring attribute(g_quark_to_string(name));
 
-        Configure change = this->doc->tracker->getLastHistory(element);
+        Glib::ustring change = this->doc->tracker->getLastHistory(element,attribute);
 
-        if(change.first == attribute && change.second == value)
+        g_warning("change %s %s to %s",attribute.c_str(), change.c_str(), value.c_str());
+
+        if(change.size() > 0 && change == value)
             return;
 
         if(name && new_value.pointer())
