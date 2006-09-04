@@ -228,6 +228,9 @@ class Node {
 
 	/** The pointer to the nodeside which we are dragging out with Shift */
 	NodeSide *dragging_out;
+  
+  /** Boolean.  Am I being dragged? */
+  guint is_dragging : 1;
 };
 
 }  // namespace NodePath

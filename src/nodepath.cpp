@@ -992,7 +992,7 @@ static void sp_nodepath_selected_nodes_move(Inkscape::NodePath::Path *nodepath, 
     }
 
     for (GList *l = nodepath->selected; l != NULL; l = l->next) {
-       Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
+        Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) l->data;
         sp_node_moveto(n, n->pos + best_pt);
     }
 
@@ -2985,6 +2985,8 @@ static void node_grabbed(SPKnot *knot, guint state, gpointer data)
         sp_nodepath_node_select(n, (state & GDK_SHIFT_MASK), FALSE);
     }
 
+    n->is_dragging = true;
+
     sp_nodepath_remember_origins (n->subpath->nodepath);
 }
 
@@ -2996,6 +2998,7 @@ static void node_ungrabbed(SPKnot *knot, guint state, gpointer data)
    Inkscape::NodePath::Node *n = (Inkscape::NodePath::Node *) data;
 
    n->dragging_out = NULL;
+   n->is_dragging = false;
 
    sp_nodepath_update_repr(n->subpath->nodepath, _("Move nodes"));
 }
@@ -3198,14 +3201,16 @@ node_request(SPKnot *knot, NR::Point *p, guint state, gpointer data)
             }
         }
     } else { // move freely
-        if (state & GDK_MOD1_MASK) { // sculpt
-            sp_nodepath_selected_nodes_sculpt(n->subpath->nodepath, n, (*p) - n->origin);
-        } else {
-            sp_nodepath_selected_nodes_move(n->subpath->nodepath,
-                                        (*p)[NR::X] - n->pos[NR::X],
-                                        (*p)[NR::Y] - n->pos[NR::Y],
-                                        (state & GDK_SHIFT_MASK) == 0);
-	}
+        if (n->is_dragging) {
+            if (state & GDK_MOD1_MASK) { // sculpt
+                sp_nodepath_selected_nodes_sculpt(n->subpath->nodepath, n, (*p) - n->origin);
+            } else {
+                sp_nodepath_selected_nodes_move(n->subpath->nodepath,
+                                            (*p)[NR::X] - n->pos[NR::X],
+                                            (*p)[NR::Y] - n->pos[NR::Y],
+                                            (state & GDK_SHIFT_MASK) == 0);
+            }
+        }
     }
 
     n->subpath->nodepath->desktop->scroll_to_point(p);
