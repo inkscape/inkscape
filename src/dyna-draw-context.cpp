@@ -73,6 +73,7 @@ static gint sp_dyna_draw_context_root_handler(SPEventContext *ec, GdkEvent *even
 
 static void clear_current(SPDynaDrawContext *dc);
 static void set_to_accumulated(SPDynaDrawContext *dc);
+static void add_cap(SPCurve *curve, NR::Point const &from, NR::Point const &to, double rounding);
 static void accumulate_calligraphic(SPDynaDrawContext *dc);
 
 static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
@@ -796,6 +797,9 @@ fit_and_split_calligraphics(SPDynaDrawContext *dc, gboolean release)
                 for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
                     sp_curve_curveto(dc->currentcurve, bp2[2], bp2[1], bp2[0]);
                 }
+                if (!dc->segments) {
+                    add_cap(dc->currentcurve, b2[0], b1[0], dc->cap_rounding);
+                }
                 sp_curve_closepath(dc->currentcurve);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
             }
@@ -870,6 +874,7 @@ draw_temporary_box(SPDynaDrawContext *dc)
     for (gint i = dc->npoints-1; i >= 0; i--) {
         sp_curve_lineto(dc->currentcurve, dc->point2[i]);
     }
+    add_cap(dc->currentcurve, dc->point2[0], dc->point1[0], dc->cap_rounding);
     sp_curve_closepath(dc->currentcurve);
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(dc->currentshape), dc->currentcurve);
 }
