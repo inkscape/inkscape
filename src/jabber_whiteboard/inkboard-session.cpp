@@ -140,6 +140,13 @@ void InkboardSession::notifyContentChanged(Node &node,
     {
         XML::Node *element = (XML::Node *)&node;
 
+        Glib::ustring value(new_content.pointer());
+
+        Glib::ustring change = this->doc->tracker->getLastHistory(element,"text");
+
+        if(change.size() > 0 && change == value)
+            return;
+
         if(new_content.pointer())
         {
             unsigned int version = this->doc->tracker->incrementVersion(element);
@@ -166,12 +173,10 @@ void InkboardSession::notifyAttributeChanged(Node &node,
 
         Glib::ustring change = this->doc->tracker->getLastHistory(element,attribute);
 
-        g_warning("change %s %s to %s",attribute.c_str(), change.c_str(), value.c_str());
-
         if(change.size() > 0 && change == value)
             return;
 
-        if(name && new_value.pointer())
+        if(attribute.size() > 0 && value.size() > 0)
         {
             unsigned int version = this->doc->tracker->incrementVersion(element);
 
