@@ -80,7 +80,6 @@ static void add_cap(SPCurve *curve, NR::Point const &from, NR::Point const &to, 
 static void accumulate_calligraphic(SPDynaDrawContext *dc);
 
 static void fit_and_split(SPDynaDrawContext *ddc, gboolean release);
-static void fit_and_split_calligraphics(SPDynaDrawContext *ddc, gboolean release);
 
 static void sp_dyna_draw_reset(SPDynaDrawContext *ddc, NR::Point p);
 static NR::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, NR::Point v);
@@ -727,20 +726,13 @@ accumulate_calligraphic(SPDynaDrawContext *dc)
     }
 }
 
-static void
-fit_and_split(SPDynaDrawContext *dc,
-              gboolean release)
-{
-    fit_and_split_calligraphics(dc, release);
-}
-
 static double square(double const x)
 {
     return x * x;
 }
 
 static void
-fit_and_split_calligraphics(SPDynaDrawContext *dc, gboolean release)
+fit_and_split(SPDynaDrawContext *dc, gboolean release)
 {
     double const tolerance_sq = square( NR::expansion(SP_EVENT_CONTEXT(dc)->desktop->w2d()) * TOLERANCE_CALLIGRAPHIC );
 
@@ -817,7 +809,7 @@ fit_and_split_calligraphics(SPDynaDrawContext *dc, gboolean release)
         } else {
             /* fixme: ??? */
 #ifdef DYNA_DRAW_VERBOSE
-            g_print("[fit_and_split_calligraphics] failed to fit-cubic.\n");
+            g_print("[fit_and_split] failed to fit-cubic.\n");
 #endif
             draw_temporary_box(dc);
 
