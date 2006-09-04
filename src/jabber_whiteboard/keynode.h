@@ -28,28 +28,30 @@ public:
 
     KeyNodePair(const Glib::ustring &keyArg, const XML::Node *nodeArg)
     {
-        key  = keyArg; 
-        node = (XML::Node *)nodeArg;
-        version = 0;
-        index = 0;
+        this->key  = keyArg; 
+        this->node = (XML::Node *)nodeArg;
+        this->version = 0;
+        this->index = 0;
+        this->history.push_back(Configure("",""));
     }
 
     KeyNodePair(const Glib::ustring &keyArg, const XML::Node *nodeArg,
         unsigned int version, signed int index)
     {
-        key  = keyArg; 
-        node = (XML::Node *)nodeArg;
+        this->key  = keyArg; 
+        this->node = (XML::Node *)nodeArg;
         this->version = version;
         this->index = index;
+        this->history.push_back(Configure("",""));
     }
 
     KeyNodePair(const KeyNodePair &other)
     {
-        key  = other.key; 
-        node = other.node;
-        version = other.version;
-        index = other.index;
-        history = other.history;
+        this->key  = other.key; 
+        this->node = other.node;
+        this->version = other.version;
+        this->index = other.index;
+        this->history = other.history;
     }
 
     virtual ~KeyNodePair() {}
@@ -105,7 +107,7 @@ public:
 
     virtual void addHistory(XML::Node *node, Glib::ustring attribute, Glib::ustring value);
 
-    virtual Configure& getLastHistory(XML::Node *node);
+    virtual Configure getLastHistory(XML::Node *node);
 
 private:
 

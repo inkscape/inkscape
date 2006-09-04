@@ -124,7 +124,7 @@ void KeyNodeTable::addHistory(XML::Node *node, Glib::ustring attribute, Glib::us
     }
 }
 
-Configure& KeyNodeTable::getLastHistory(XML::Node *node)
+Configure KeyNodeTable::getLastHistory(XML::Node *node)
 {
     std::vector<KeyNodePair>::iterator iter;
     for (iter = items.begin() ; iter != items.end() ; iter++)
