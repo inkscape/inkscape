@@ -2125,7 +2125,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     {
         // TRANSLATORS: "cap" means "end" (both start and finish) here
         GtkWidget *hb = sp_tb_spinbutton(_("Round:"), _("How much the ends of a stroke are rounded"),
-                                         "tools.calligraphic", "cap_rounding", 1,
+                                         "tools.calligraphic", "cap_rounding", 0.0,
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
                                          sp_ddc_cap_rounding_value_changed, 0.01, 2);
