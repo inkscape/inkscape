@@ -53,7 +53,6 @@ public:
 
     virtual ~SessionManager();
 
-
     static void             showClient();
     static SessionManager&  instance();
 
@@ -119,7 +118,9 @@ private:
 
 };
 
-SPDocument* makeInkboardDocument(int code, gchar const* rootname, State::SessionType type, Glib::ustring const& to);
+SPDocument* makeInkboardDocument(int code, gchar const* rootname, 
+    State::SessionType type, Glib::ustring const& to);
+
 SPDesktop*  makeInkboardDesktop(SPDocument* doc);
 
 }  // namespace Whiteboard

@@ -13,6 +13,7 @@
 #ifndef __INKSCAPE_WHITEBOARD_DEFINES_H__
 #define __INKSCAPE_WHITEBOARD_DEFINES_H__
 
+#include "xml/node.h"
 #include "jabber_whiteboard/message-tags.h"
 
 #include <algorithm>
@@ -25,8 +26,6 @@
 
 #include <glibmm.h>
 #include <sigc++/sigc++.h>
-
-#include "jabber_whiteboard/keynode.h"
 
 #include "gc-alloc.h"
 
@@ -42,10 +41,10 @@ using Inkscape::XML::Node;
 template<>
 struct less< Node* > : public binary_function < Node*, Node*, bool >
 {
-	bool operator()(Node* _x, Node* _y) const
-	{
-		return _x < _y;
-	}
+    bool operator()(Node* _x, Node* _y) const
+    {
+        return _x < _y;
+    }
 
 };
 
@@ -133,10 +132,10 @@ namespace Dialog {
 
 }
 
-// message types
-// explicitly numbered to aid protocol description later on
+class KeyNodePair;
+class KeyNodeTable;
 
-
+typedef std::pair<Glib::ustring, Glib::ustring> Configure;
 
 // Message handler modes
 enum HandlerMode {

@@ -66,11 +66,14 @@ public:
     Glib::ustring addNodeToTracker(Inkscape::XML::Node* node);
     Message::Message composeNewMessage(Inkscape::XML::Node *node);
 
-    void changeConfigure(Glib::ustring target, signed int target,
+    void changeConfigure(Glib::ustring target, unsigned int version,
             Glib::ustring attribute, Glib::ustring value);
 
     void changeNew(Glib::ustring target, Glib::ustring, 
             signed int index, Pedro::Element* data);
+
+    void changeConfigureText(Glib::ustring target, unsigned int version,
+            Glib::ustring text);
 
 
 protected:

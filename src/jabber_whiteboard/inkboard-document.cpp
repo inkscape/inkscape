@@ -38,6 +38,7 @@ InkboardDocument::_initBindings()
 {
     this->sm = &SessionManager::instance();
     this->state = State::INITIAL;
+    this->tracker = new KeyNodeTable();
     _bindDocument(*this);
     _bindLogger(*(new InkboardSession(this)));
 }
@@ -106,7 +107,6 @@ InkboardDocument::recieve(Message::Wrapper &wrapper, Pedro::Element* data)
                 this->send(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_BEGIN);
 
                 // Send Document
-                this->tracker = new KeyNodeTable();
                 this->sendDocument(this->root());
 
                 this->send(getRecipient(),Message::PROTOCOL, Message::DOCUMENT_END);
@@ -270,16 +270,29 @@ InkboardDocument::handleChange(Message::Wrapper &wrapper, Pedro::Element* data)
 
     }else if(wrapper == Message::CONFIGURE)
     {
-        Glib::ustring target =      data->getTagAttribute("configure","target");
-        Glib::ustring attribute =   data->getTagAttribute("configure","attribute");
-        Glib::ustring value =       data->getTagAttribute("configure","value");
+        if(data->exists("text"))
+        {
+            Glib::ustring text =    data->getFirstChild()->getValue();
+            Glib::ustring target =  data->getTagAttribute("configure","target");
 
-        signed int version = atoi
-            (data->getTagAttribute("configure","version").c_str());
+            unsigned int version = atoi
+                (data->getTagAttribute("configure","version").c_str());
 
-        if(target.size() > 0 && attribute.size() > 0 && value.size() > 0)
-            this->changeConfigure(target,version,attribute,value);
+            if(text.size() > 0 && target.size() > 0)
+                this->changeConfigureText(target,version,text);
 
+        }else 
+        {
+            Glib::ustring target =      data->getTagAttribute("configure","target");
+            Glib::ustring attribute =   data->getTagAttribute("configure","attribute");
+            Glib::ustring value =       data->getTagAttribute("configure","value");
+
+            unsigned int version = atoi
+                (data->getTagAttribute("configure","version").c_str());
+
+            if(target.size() > 0 && attribute.size() > 0 && value.size() > 0)
+                this->changeConfigure(target,version,attribute,value);
+        }
     }else if(wrapper == Message::MOVE)
     {
     }else if(wrapper == Message::REMOVE) 

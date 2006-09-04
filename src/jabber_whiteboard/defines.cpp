@@ -49,7 +49,7 @@ namespace Vars {
         "<%1><%2 /></%1>");
 
     const std::string NEW_MESSAGE(
-        "<new parent=\"%1\" id=\"%2\" index=\"%3\">%4</new>");
+        "<new parent=\"%1\" id=\"%2\" index=\"%3\" version=\"%4\">%5</new>");
 
     const std::string CONFIGURE_MESSAGE(
         "<configure target=\"%1\" version=\"%2\" attribute=\"%3\" value=\"%4\" />");

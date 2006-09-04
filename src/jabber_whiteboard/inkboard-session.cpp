@@ -88,10 +88,13 @@ void InkboardSession::notifyChildAdded(Node &parent,
 
         XML::Node *node = (XML::Node *)&child;
 
-        this->doc->addNodeToTracker(node);
-        Message::Message message = this->doc->composeNewMessage(node);
+        if(this->doc->tracker->get(node) == "")
+        {
+            this->doc->addNodeToTracker(node);
+            Message::Message message = this->doc->composeNewMessage(node);
 
-        this->doc->send(this->doc->getRecipient(),Message::NEW,message);
+            this->doc->send(this->doc->getRecipient(),Message::NEW,message);
+        }
     }
 }
 
@@ -139,8 +142,10 @@ void InkboardSession::notifyContentChanged(Node &node,
 
         if(new_content.pointer())
         {
+            unsigned int version = this->doc->tracker->incrementVersion(element);
+
             Message::Message message = String::ucompose(Vars::CONFIGURE_TEXT_MESSAGE,
-                this->doc->tracker->get(element),"0",new_content.pointer());
+                this->doc->tracker->get(element),version,new_content.pointer());
 
             this->doc->send(this->doc->getRecipient(),Message::CONFIGURE,message);
         }
@@ -156,10 +161,20 @@ void InkboardSession::notifyAttributeChanged(Node &node,
     {
         XML::Node *element = (XML::Node *)&node;
 
+        Glib::ustring value(new_value.pointer());
+        Glib::ustring attribute(g_quark_to_string(name));
+
+        Configure change = this->doc->tracker->getLastHistory(element);
+
+        if(change.first == attribute && change.second == value)
+            return;
+
         if(name && new_value.pointer())
         {
+            unsigned int version = this->doc->tracker->incrementVersion(element);
+
             Message::Message message = String::ucompose(Vars::CONFIGURE_MESSAGE,
-                this->doc->tracker->get(element),"0",g_quark_to_string(name),new_value.pointer());
+                this->doc->tracker->get(element),version,attribute.c_str(),value.c_str());
 
             this->doc->send(this->doc->getRecipient(),Message::CONFIGURE,message);
         }

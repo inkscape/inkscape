@@ -199,14 +199,14 @@ public:
 private:
         //common code called by constructors
         void init();
-        
+
 	void createSpecialNodeTables();
 	void _clear();
 	
 	unsigned int _counter;
 	SessionManager* _sm;
-        
-        KeyNodeTable keyNodeTable;
+
+        //KeyNodeTable keyNodeTable;
 
 	std::map< char const*, char const*, strcmpless > _specialnodes;
 

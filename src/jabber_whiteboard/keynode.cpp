@@ -89,6 +89,51 @@ Glib::ustring KeyNodeTable::get(XML::Node *node) const
     return "";
 }
 
+unsigned int KeyNodeTable::incrementVersion(XML::Node *node)
+{
+    std::vector<KeyNodePair>::iterator iter;
+    for (iter = items.begin() ; iter != items.end() ; iter++)
+    {
+        if (node == iter->node)
+            break;
+    }
+    return ++iter->version;
+}
+
+unsigned int KeyNodeTable::getVersion(XML::Node *node)
+{
+    std::vector<KeyNodePair>::iterator iter;
+    for (iter = items.begin() ; iter != items.end() ; iter++)
+    {
+        if (node == iter->node)
+            break;
+    }
+    return iter->version;
+}
+
+void KeyNodeTable::addHistory(XML::Node *node, Glib::ustring attribute, Glib::ustring value)
+{
+    std::vector<KeyNodePair>::iterator iter;
+    for (iter = items.begin() ; iter != items.end() ; iter++)
+    {
+        if (node == iter->node)
+        {
+            Configure pair(attribute, value);
+            iter->history.push_back(pair);
+        }
+    }
+}
+
+Configure& KeyNodeTable::getLastHistory(XML::Node *node)
+{
+    std::vector<KeyNodePair>::iterator iter;
+    for (iter = items.begin() ; iter != items.end() ; iter++)
+    {
+        if (node == iter->node)
+            break;
+    }
+    return iter->history.back();
+}
 
 void KeyNodeTable::remove(XML::Node *node)
 {

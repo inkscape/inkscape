@@ -15,31 +15,50 @@
 #include <vector>
 
 #include "xml/node.h"
-
+#include "jabber_whiteboard/defines.h"
 
 namespace Inkscape
 {
 namespace Whiteboard
 {
 
-
 class KeyNodePair
 {
 public:
-   KeyNodePair(const Glib::ustring &keyArg, const XML::Node *nodeArg)
-       {
-       key  = keyArg; 
-       node = (XML::Node *)nodeArg;
-       }
-   KeyNodePair(const KeyNodePair &other)
-       {
-       key  = other.key; 
-       node = other.node;
-       }
-   virtual ~KeyNodePair()
-       {}
-   Glib::ustring key;
-   XML::Node *node;
+
+    KeyNodePair(const Glib::ustring &keyArg, const XML::Node *nodeArg)
+    {
+        key  = keyArg; 
+        node = (XML::Node *)nodeArg;
+        version = 0;
+        index = 0;
+    }
+
+    KeyNodePair(const Glib::ustring &keyArg, const XML::Node *nodeArg,
+        unsigned int version, signed int index)
+    {
+        key  = keyArg; 
+        node = (XML::Node *)nodeArg;
+        this->version = version;
+        this->index = index;
+    }
+
+    KeyNodePair(const KeyNodePair &other)
+    {
+        key  = other.key; 
+        node = other.node;
+        version = other.version;
+        index = other.index;
+        history = other.history;
+    }
+
+    virtual ~KeyNodePair() {}
+
+    Glib::ustring key;
+    XML::Node *node;
+    unsigned int version;
+    signed int index;
+    std::list< Configure > history;
 };
 
 class KeyNodeTable
@@ -79,6 +98,14 @@ public:
     virtual KeyNodePair item(unsigned int index) const;
 
     virtual Glib::ustring generateKey(Glib::ustring);
+
+    virtual unsigned int getVersion(XML::Node *node);
+
+    virtual unsigned int incrementVersion(XML::Node *node);
+
+    virtual void addHistory(XML::Node *node, Glib::ustring attribute, Glib::ustring value);
+
+    virtual Configure& getLastHistory(XML::Node *node);
 
 private:
 
