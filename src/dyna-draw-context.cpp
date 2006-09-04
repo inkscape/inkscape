@@ -547,8 +547,13 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     case GDK_BUTTON_RELEASE:
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
         dc->is_drawing = false;
+
         if ( dc->dragging && event->button.button == 1 ) {
             dc->dragging = FALSE;
+
+            NR::Point const motion_w(event->button.x, event->button.y);
+            NR::Point const motion_dt(desktop->w2d(motion_w));
+            sp_dyna_draw_apply(dc, motion_dt);
 
             /* Remove all temporary line segments */
             while (dc->segments) {
