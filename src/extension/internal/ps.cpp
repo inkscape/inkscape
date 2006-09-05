@@ -13,8 +13,9 @@
  *
  * Image printing and Ascii85 filter:
  *
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 2006 Johan Engelen
  * Copyright (C) 1997-98 Peter Kirchgessner
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * George White <aa056@chebucto.ns.ca>
  * Austin Donnelly <austin@gimp.org>
  *
@@ -807,9 +808,11 @@ PrintPS::PSFontName(SPStyle const *style)
     char const *n;
     char name_buf[256];
 
+    // PS does not like spaces in fontnames, replace them with the usual dashes.
+
     if (tf) {
         tf->PSName(name_buf, sizeof(name_buf));
-        n = name_buf;
+        n = g_strdelimit(name_buf, " ", '-');
         tf->Unref();
     } else {
         // this system does not have this font, so just use the name from SVG in the hope that PS interpreter will make sense of it
@@ -819,7 +822,7 @@ PrintPS::PSFontName(SPStyle const *style)
             (style->font_weight.value >= SP_CSS_FONT_WEIGHT_500 && style->font_weight.value <= SP_CSS_FONT_WEIGHT_900);
 
         n = g_strdup_printf("%s%s%s%s",
-                            g_strdelimit(style->text->font_family.value, " ", '-'),
+                            g_strdelimit(style->text->font_family.value, " ", '-'), 
                             (b || i || o) ? "-" : "",
                             (b) ? "Bold" : "",
                             (i) ? "Italic" : ((o) ? "Oblique" : "") );
@@ -865,10 +868,10 @@ PrintPS::text(Inkscape::Extension::Print *mod, char const *text, NR::Point p,
                   "definefont} def\n";      // create the new font and leave it on the stack, define the proc
             _newlatin1font_proc_defined = true;
         }
-        os << "/(" << fn << "-ISOLatin1) /(" << fn << ") newlatin1font\n";
+        os << "/" << fn << "-ISOLatin1 /" << fn << " newlatin1font\n";
         _latin1_encoded_fonts.insert(fn);
     } else
-        os << "/(" << fn << "-ISOLatin1) findfont\n";
+        os << "/" << fn << "-ISOLatin1 findfont\n";
     os << style->font_size.computed << " scalefont\n";
     os << "setfont\n";
     g_free((void *) fn);
