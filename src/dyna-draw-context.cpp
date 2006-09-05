@@ -830,7 +830,8 @@ fit_and_split(SPDynaDrawContext *dc, gboolean release)
                 for (NR::Point *bp2 = b2 + BEZIER_SIZE * ( nb2 - 1 ); bp2 >= b2; bp2 -= BEZIER_SIZE) {
                     sp_curve_curveto(dc->currentcurve, bp2[2], bp2[1], bp2[0]);
                 }
-                if (!dc->segments) {
+                // FIXME: dc->segments is always NULL at this point??
+                if (!dc->segments) { // first segment
                     add_cap(dc->currentcurve, b2[1], b2[0], b1[0], b1[1], dc->cap_rounding);
                 }
                 sp_curve_closepath(dc->currentcurve);
