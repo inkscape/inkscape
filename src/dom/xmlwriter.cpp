@@ -82,9 +82,9 @@ void XmlWriter::pos(const DOMString &str)
 /**
  *
  */
-void XmlWriter::write(const Node *nodeArg)
+void XmlWriter::write(const NodePtr nodeArg)
 {
-    Node *node = (Node *)nodeArg;
+    NodePtr node = nodeArg;
 
     indent+=2;
 
@@ -101,7 +101,7 @@ void XmlWriter::write(const Node *nodeArg)
     //### Attributes
     for (int i=0 ; i<nrAttrs ; i++)
         {
-        Node *attr = attributes.item(i);
+        NodePtr attr = attributes.item(i);
         spaces();
         pos(attr->getNodeName());
         po("=\"");
@@ -119,8 +119,8 @@ void XmlWriter::write(const Node *nodeArg)
     pos(node->getNodeValue());
 
     //### Children
-    for (Node *child = node->getFirstChild() ;
-         child ;
+    for (NodePtr child = node->getFirstChild() ;
+         child.get() ;
          child=child->getNextSibling())
         {
         write(child);
@@ -139,7 +139,7 @@ void XmlWriter::write(const Node *nodeArg)
 /**
  *
  */
-void XmlWriter::writeFile(FILE *f, const Node *node)
+void XmlWriter::writeFile(FILE *f, const NodePtr node)
 {
     if (!node)
        {

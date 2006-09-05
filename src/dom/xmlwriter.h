@@ -53,9 +53,9 @@ public:
     virtual ~XmlWriter();
 
 
-    void write(const Node *node);
+    void write(const NodePtr node);
 
-    void writeFile(FILE *f, const Node *node);
+    void writeFile(FILE *f, const NodePtr node);
 
 
 protected:
