@@ -305,7 +305,7 @@ public:
     /**
      *
      */
-    virtual Node *getNodeArg()
+    virtual NodePtr getNodeArg()
         { return nodeArg; }
 
 
@@ -346,7 +346,7 @@ public:
 protected:
 
     DOMString     name;
-    Node          *nodeArg;
+    NodePtr       nodeArg;
     unsigned long offset;
 
 
@@ -369,7 +369,7 @@ public:
     /**
      *
      */
-    virtual Node *getNodeArg()
+    virtual NodePtr getNodeArg()
         { return nodeArg; }
 
     /**
@@ -419,7 +419,7 @@ public:
 
 protected:
 
-    Node *nodeArg;
+    NodePtr nodeArg;
 
     std::vector<Match> matches;
 
@@ -639,7 +639,7 @@ public:
     /**
      *
      */
-    virtual Node *getNodeArg()
+    virtual NodePtr getNodeArg()
         { return nodeArg; }
 
     /**
@@ -676,7 +676,7 @@ public:
 
 protected:
 
-    Node *nodeArg;
+    NodePtr nodeArg;
     long offset;
 
 
@@ -763,7 +763,7 @@ public:
     virtual MatchContent createMatchContent(unsigned short test,
                                           const DOMString &name,
                                           unsigned long offset,
-                                          const Node *nodeArg)
+                                          const NodePtr nodeArg)
         {
         MatchContent ret;
         return ret;
@@ -902,7 +902,7 @@ public:
     /**
      *
      */
-    virtual void select(const Node *boundary,
+    virtual void select(const NodePtr boundary,
                         unsigned long offset,
                         bool extend,
                         bool add)
@@ -960,10 +960,10 @@ public:
     /**
      *
      */
-    virtual Node *getContentPropertyNode(const DOMString &name)
+    virtual NodePtr getContentPropertyNode(const DOMString &name)
                                         throw(dom::DOMException)
         {
-        Node *val = NULL;
+        NodePtr val = NULL;
         return val;
         }
 
@@ -1233,14 +1233,14 @@ public:
     /**
      *
      */
-    virtual Node *getMatchNode()
+    virtual NodePtr getMatchNode()
         { return matchNode; }
 
     /**
      *
      */
-    virtual void setMatchNode(const Node *val)
-        { matchNode = (Node *)val; }
+    virtual void setMatchNode(const NodePtr val)
+        { matchNode = (NodePtr )val; }
 
     /**
      *
@@ -1257,14 +1257,14 @@ public:
     /**
      *
      */
-    virtual Node *getMatchNodeR()
+    virtual NodePtr getMatchNodeR()
         { return matchNodeR; }
 
     /**
      *
      */
-    virtual void setMatchNodeR(const Node *val)
-        { matchNodeR = (Node *)val; }
+    virtual void setMatchNodeR(const NodePtr val)
+        { matchNodeR = (NodePtr )val; }
 
     /**
      *
@@ -1312,7 +1312,7 @@ public:
     /**
      *
      */
-    virtual Node *getStartNode()
+    virtual NodePtr getStartNode()
         { return startNode; }
 
     /**
@@ -1324,7 +1324,7 @@ public:
     /**
      *
      */
-    virtual Node *getEndNode()
+    virtual NodePtr getEndNode()
         { return endNode; }
 
     /**
@@ -1477,16 +1477,16 @@ protected:
     long            matchYR;
     bool            matchContent;
     bool            matchRange;
-    Node *          matchNode;
+    NodePtr         matchNode;
     unsigned long   matchOffset;
-    Node *          matchNodeR;
+    NodePtr         matchNodeR;
     unsigned long   matchOffsetR;
     bool            matchContainsSelected;
     bool            matchContainsVisible;
     bool            exists;
-    Node *          startNode;
+    NodePtr         startNode;
     unsigned long   startOffset;
-    Node *          endNode;
+    NodePtr         endNode;
     unsigned long   endOffset;
     long            topOffset;
     long            bottomOffset;
@@ -1890,7 +1890,7 @@ public:
     /**
      *
      */
-    virtual void select(const Node *boundary,
+    virtual void select(const NodePtr boundary,
                         unsigned long offset,
                         bool extend,
                         bool add)

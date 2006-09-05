@@ -48,7 +48,7 @@ namespace events {
 //Local definitions
 typedef dom::DOMString DOMString;
 typedef dom::DOMTimeStamp DOMTimeStamp;
-typedef dom::Node Node;
+typedef dom::NodePtr  NodePtr ;
 
 
 
@@ -1147,8 +1147,8 @@ public:
     /**
      *
      */
-    virtual Node *getRelatedNode()
-        { return relatedNode; }
+    virtual NodePtr getRelatedNodePtr ()
+        { return relatedNodePtr ; }
 
     /**
      *
@@ -1182,7 +1182,7 @@ public:
     virtual void initMutationEvent(const DOMString &typeArg,
                            bool canBubbleArg,
                            bool cancelableArg,
-                           const Node *relatedNodeArg,
+                           const NodePtr   relatedNodeArg,
                            const DOMString &prevValueArg,
                            const DOMString &newValueArg,
                            const DOMString &attrNameArg,
@@ -1197,7 +1197,7 @@ public:
                            const DOMString &typeArg,
                            bool canBubbleArg,
                            bool cancelableArg,
-                           const Node *relatedNodeArg,
+                           const NodePtr   relatedNodeArg,
                            const DOMString &prevValueArg,
                            const DOMString &newValueArg,
                            const DOMString &attrNameArg,
@@ -1215,7 +1215,7 @@ public:
      */
     MutationEvent()
         {
-        relatedNode = NULL;
+        relatedNodePtr  = NULL;
         }
 
     /**
@@ -1223,7 +1223,7 @@ public:
      */
     MutationEvent(const MutationEvent &other) : Event(other)
         {
-        relatedNode = other.relatedNode;
+        relatedNodePtr  = other.relatedNodePtr ;
         prevValue   = other.prevValue;
         newValue    = other.newValue;
         attrName    = other.attrName;
@@ -1237,7 +1237,7 @@ public:
 
 protected:
 
-    Node *relatedNode;
+    NodePtr   relatedNodePtr ;
     DOMString prevValue;
     DOMString newValue;
     DOMString attrName;
@@ -1277,7 +1277,7 @@ public:
     virtual void initMutationNameEvent(const DOMString &typeArg,
                            bool canBubbleArg,
                            bool cancelableArg,
-                           const Node *relatedNodeArg,
+                           const NodePtr   relatedNodeArg,
                            const DOMString &prevNamespaceURIArg,
                            const DOMString &prevNodeNameArg)
         {
@@ -1291,7 +1291,7 @@ public:
                            const DOMString &typeArg,
                            bool canBubbleArg,
                            bool cancelableArg,
-                           const Node *relatedNodeArg,
+                           const NodePtr   relatedNodeArg,
                            const DOMString &prevNamespaceURIArg,
                            const DOMString &prevNodeNameArg)
         {
@@ -1315,8 +1315,8 @@ public:
     MutationNameEvent(const MutationNameEvent &other) 
                           : Event(other), MutationEvent(other)
         {
-        prevNamespaceURI = other.prevNamespaceURI;
-        prevNodeName     = other.prevNodeName;
+        prevNamespaceURI  = other.prevNamespaceURI;
+        prevNodeName      = other.prevNodeName;
         }
 
 

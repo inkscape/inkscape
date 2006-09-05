@@ -59,7 +59,7 @@ bool doTest1()
     input.setStringData(buf);
 
     printf("######## PARSE ######################################\n");
-    Document *doc = parser.parse(input);
+    DocumentPtr doc = parser.parse(input);
 
     if (!doc)
         {
@@ -82,11 +82,10 @@ bool doTest1()
     printf("Nodes:%d\n", nodeCount);
     for (int i=0; i<nodeCount ; i++)
         {
-        Node *node = list.item(i);
+        NodePtr node = list.item(i);
         serializer.write(node, output);
         }
 
-    delete doc;
     return true;
 }
 

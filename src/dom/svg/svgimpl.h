@@ -59,6 +59,11 @@ typedef dom::NodeList NodeList;
 
 
 class SVGSVGElementImpl;
+typedef Ptr<SVGSVGElementImpl> SVGSVGElementImplPtr;
+class SVGElementImpl;
+typedef Ptr<SVGElementImpl> SVGElementImplPtr;
+class SVGDocumentImpl;
+typedef Ptr<SVGDocumentImpl> SVGDocumentImplPtr;
 
 /*#########################################################################
 ## SVGDocumentImpl
@@ -99,7 +104,7 @@ public:
     /**
      *
      */
-    virtual SVGSVGElement *getRootElement()
+    virtual SVGSVGElementPtr getRootElement()
         { return rootElement; }
 
 
@@ -111,25 +116,25 @@ public:
     /**
      *
      */
-    virtual Element *createElement(const DOMString& tagName)
+    virtual ElementPtr createElement(const DOMString& tagName)
                            throw(DOMException);
 
 
     /**
      *
      */
-    virtual Element *createElementNS(const DOMString& namespaceURI,
-                                     const DOMString& qualifiedName)
-                                     throw(DOMException);
+    virtual ElementPtr createElementNS(const DOMString& namespaceURI,
+                                       const DOMString& qualifiedName)
+                                       throw(DOMException);
 
     //##################
     //# Non-API methods
     //##################
 
     SVGDocumentImpl(const DOMImplementation *domImpl,
-                    const DOMString    &namespaceURI,
-                    const DOMString    &qualifiedName,
-                    const DocumentType *doctype)
+                    const DOMString         &namespaceURI,
+                    const DOMString         &qualifiedName,
+                    const DocumentTypePtr   doctype)
                     : DocumentImpl(domImpl, namespaceURI,
                           qualifiedName, doctype)
         {
@@ -142,8 +147,6 @@ public:
      */
     virtual ~SVGDocumentImpl()
         {
-        if (rootElement)
-            delete rootElement;
         }
 
 protected:
@@ -162,7 +165,7 @@ friend class SvgParser;
     DOMString referrer;
     DOMString domain;
     DOMString url;
-    SVGSVGElement *rootElement;
+    SVGSVGElementPtr rootElement;
 };
 
 
@@ -208,13 +211,13 @@ public:
     /**
      *
      */
-    virtual SVGSVGElement *getOwnerSVGElement()
+    virtual SVGSVGElementPtr getOwnerSVGElement()
         { return ownerSvgElement; }
 
     /**
      *
      */
-    virtual SVGElement *getViewportElement()
+    virtual SVGElementPtr getViewportElement()
         { return viewportElement; }
 
 
@@ -232,14 +235,14 @@ public:
     /**
      *
      */
-    SVGElementImpl(SVGDocumentImpl *owner, const DOMString &tagName)
+    SVGElementImpl(SVGDocumentImplPtr owner, const DOMString &tagName)
                     : ElementImpl(owner, tagName)
         { init(); }
 
     /**
      *
      */
-    SVGElementImpl(SVGDocumentImpl *owner,
+    SVGElementImpl(SVGDocumentImplPtr owner,
                    const DOMString &namespaceURI,
                    const DOMString &tagName)
                    : ElementImpl(owner, namespaceURI, tagName)
@@ -262,10 +265,10 @@ protected:
         viewportElement = NULL;
         }
 
-    DOMString id;
-    DOMString xmlBase;
-    SVGSVGElement *ownerSvgElement;
-    SVGElement *viewportElement;
+    DOMString        id;
+    DOMString        xmlBase;
+    SVGSVGElementPtr ownerSvgElement;
+    SVGElementPtr    viewportElement;
 
 };
 
@@ -456,23 +459,23 @@ public:
      *
      */
     virtual NodeList getIntersectionList (const SVGRect &rect,
-                                          const SVGElement *referenceElement );
+                                          const SVGElementPtr referenceElement );
 
     /**
      *
      */
     virtual NodeList getEnclosureList (const SVGRect &rect,
-                                       const SVGElement *referenceElement );
+                                       const SVGElementPtr referenceElement );
 
     /**
      *
      */
-    virtual bool checkIntersection (const SVGElement *element, const SVGRect &rect );
+    virtual bool checkIntersection (const SVGElementPtr element, const SVGRect &rect );
 
     /**
      *
      */
-    virtual bool checkEnclosure (const SVGElement *element, const SVGRect &rect );
+    virtual bool checkEnclosure (const SVGElementPtr element, const SVGRect &rect );
 
     /**
      *
@@ -556,7 +559,7 @@ public:
     /**
      *
      */
-    virtual Element *getElementById (const DOMString& elementId );
+    virtual ElementPtr getElementById (const DOMString& elementId );
 
 
 
@@ -977,7 +980,7 @@ public:
     /**
      *
      */
-    virtual SVGDocument *getSVGDocument (  )
+    virtual SVGDocumentPtr getSVGDocument (  )
                     throw( DOMException );
 
     //##################
@@ -1705,53 +1708,54 @@ public:
     /**
      *
      */
-    virtual long getNumberOfChars (  );
+    virtual long getNumberOfChars(  );
 
     /**
      *
      */
-    virtual double getComputedTextLength (  );
+    virtual double getComputedTextLength(  );
 
     /**
      *
      */
-    virtual double getSubStringLength (unsigned long charnum, unsigned long nchars )
-                                     throw( DOMException );
-
-    /**
-     *
-     */
-    virtual SVGPoint getStartPositionOfChar (unsigned long charnum )
-                                              throw( DOMException );
-
-    /**
-     *
-     */
-    virtual SVGPoint getEndPositionOfChar (unsigned long charnum )
-                                           throw( DOMException );
-
-    /**
-     *
-     */
-    virtual SVGRect getExtentOfChar (unsigned long charnum )
+    virtual double getSubStringLength(unsigned long charnum,
+	                                  unsigned long nchars )
                                       throw( DOMException );
 
     /**
      *
      */
-    virtual double getRotationOfChar (unsigned long charnum )
+    virtual SVGPoint getStartPositionOfChar(unsigned long charnum )
+                                            throw( DOMException );
+
+    /**
+     *
+     */
+    virtual SVGPoint getEndPositionOfChar(unsigned long charnum )
+                                          throw( DOMException );
+
+    /**
+     *
+     */
+    virtual SVGRect getExtentOfChar(unsigned long charnum )
+                                    throw( DOMException );
+
+    /**
+     *
+     */
+    virtual double getRotationOfChar(unsigned long charnum )
                                      throw( DOMException );
 
     /**
      *
      */
-    virtual long getCharNumAtPosition (const SVGPoint &point );
+    virtual long getCharNumAtPosition(const SVGPoint &point );
 
     /**
      *
      */
-    virtual void selectSubString (unsigned long charnum, unsigned long nchars )
-                                  throw( DOMException );
+    virtual void selectSubString(unsigned long charnum, unsigned long nchars )
+                                 throw( DOMException );
 
 
 
@@ -4453,7 +4457,7 @@ public:
     /**
      *
      */
-    virtual SVGElement *getTargetElement()
+    virtual SVGElementPtr getTargetElement()
         { return targetElement; }
 
 
@@ -4488,7 +4492,7 @@ public:
 
 protected:
 
-    SVGElement *targetElement;
+    SVGElementPtr targetElement;
     double startTime, currentTime, simpleDuration;
 };
 

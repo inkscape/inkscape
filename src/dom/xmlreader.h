@@ -64,18 +64,18 @@ public:
     /**
      *
      */
-    org::w3c::dom::Document *parse(const DOMString &buf,
+    org::w3c::dom::DocumentPtr parse(const DOMString &buf,
                             int offset, int length);
 
     /**
      *
      */
-    org::w3c::dom::Document *parse(const DOMString &buf);
+    org::w3c::dom::DocumentPtr parse(const DOMString &buf);
 
     /**
      *
      */
-    org::w3c::dom::Document *parseFile(char *fileName);
+    org::w3c::dom::DocumentPtr parseFile(char *fileName);
 
 
 protected:
@@ -97,15 +97,15 @@ protected:
     int parseVersion(int pos);
     int parseDoctype(int pos);
 
-    int parseCDATA  (int pos, CDATASection *cdata);
-    int parseComment(int pos, Comment *comment);
-    int parseText(int pos, Text *test);
+    int parseCDATA  (int pos, CDATASectionPtr cdata);
+    int parseComment(int pos, CommentPtr comment);
+    int parseText(int pos, TextPtr text);
 
     int parseEntity(int pos, DOMString &buf);
 
-    int parseAttributes(int p0, Node *node, bool *quickClose);
+    int parseAttributes(int p0, NodePtr node, bool *quickClose);
 
-    int parseNode(int p0, Node *node, int depth);
+    int parseNode(int p0, NodePtr node, int depth);
 
     bool       keepGoing;
     bool       parseAsData;
@@ -118,7 +118,7 @@ protected:
     int        lineNr;
     int        colNr;
 
-    Document *document;
+    DocumentPtr document;
 
 };
 

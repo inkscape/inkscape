@@ -57,7 +57,7 @@ bool doTest(char *filename)
     input.setStringData(buf);
 
     printf("######## PARSE ######################################\n");
-    Document *doc = parser.parse(input);
+    DocumentPtr doc = parser.parse(input);
 
     if (!doc)
         {
@@ -74,7 +74,6 @@ bool doTest(char *filename)
     serializer.write(doc, output);
 
 
-    delete doc;
     return 1;
 }
 

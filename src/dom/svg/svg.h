@@ -68,13 +68,20 @@ namespace svg
 typedef dom::DOMString DOMString;
 typedef dom::DOMException DOMException;
 typedef dom::Element Element;
+typedef dom::ElementPtr ElementPtr;
 typedef dom::Document Document;
+typedef dom::DocumentPtr DocumentPtr;
 typedef dom::NodeList NodeList;
 
 
 
-class SVGSVGElement;
 
+class SVGElement;
+typedef Ptr<SVGElement> SVGElementPtr;
+class SVGSVGElement;
+typedef Ptr<SVGSVGElement> SVGSVGElementPtr;
+class SVGDocument;
+typedef Ptr<SVGDocument> SVGDocumentPtr;
 
 
 /*#########################################################################
@@ -113,12 +120,12 @@ public:
     /**
      *
      */
-    virtual SVGSVGElement *getOwnerSVGElement() = 0;
+    virtual SVGSVGElementPtr getOwnerSVGElement() = 0;
 
     /**
      *
      */
-    virtual SVGElement *getViewportElement() = 0;
+    virtual SVGElementPtr getViewportElement() = 0;
 
 
     //##################
@@ -172,7 +179,7 @@ public:
     /**
      *
      */
-    virtual SVGSVGElement *getRootElement() =0;
+    virtual SVGSVGElementPtr getRootElement() =0;
 
 
     //##################
@@ -362,24 +369,24 @@ public:
     /**
      *
      */
-    virtual NodeList getIntersectionList (const SVGRect &rect,
-                                          const SVGElement *referenceElement ) =0;
+    virtual NodeList getIntersectionList(const SVGRect &rect,
+                                         const SVGElementPtr referenceElement ) =0;
 
     /**
      *
      */
     virtual NodeList getEnclosureList (const SVGRect &rect,
-                                       const SVGElement *referenceElement ) =0;
+                                       const SVGElementPtr referenceElement ) =0;
 
     /**
      *
      */
-    virtual bool checkIntersection (const SVGElement *element, const SVGRect &rect ) =0;
+    virtual bool checkIntersection (const SVGElementPtr element, const SVGRect &rect ) =0;
 
     /**
      *
      */
-    virtual bool checkEnclosure (const SVGElement *element, const SVGRect &rect ) =0;
+    virtual bool checkEnclosure (const SVGElementPtr element, const SVGRect &rect ) =0;
 
     /**
      *
@@ -429,7 +436,7 @@ public:
     /**
      *
      */
-    virtual Element *getElementById (const DOMString& elementId ) =0;
+    virtual ElementPtr getElementById (const DOMString& elementId ) =0;
 
 
 
@@ -777,7 +784,7 @@ public:
     /**
      *
      */
-    virtual SVGDocument *getSVGDocument (  )
+    virtual SVGDocumentPtr getSVGDocument (  )
                     throw( DOMException ) =0;
 
     //##################
@@ -3910,7 +3917,7 @@ public:
     /**
      *
      */
-    virtual SVGElement *getTargetElement() =0;
+    virtual SVGElementPtr getTargetElement() =0;
 
 
     /**

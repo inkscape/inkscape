@@ -1,6 +1,3 @@
-#ifndef __SVGPARSER_H__
-#define __SVGPARSER_H__
-
 /**
  * Phoebe DOM Implementation.
  *
@@ -13,7 +10,7 @@
  * Authors:
  *   Bob Jamison
  *
- * Copyright (C) 2005 Bob Jamison
+ * Copyright (C) 2006 Bob Jamison
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -30,8 +27,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "dom.h"
 
-#include "svgimpl.h"
 
 namespace org
 {
@@ -39,114 +36,51 @@ namespace w3c
 {
 namespace dom
 {
-namespace svg
+
+
+
+
+/*#########################################################################
+## NodePtr
+#########################################################################*/
+
+
+
+/**
+ * Increment the ref counter of the wrapped class instance
+ */
+void incrementRefCount(Node *p)
+{ 
+    if (p)
+	    p->_refCnt++;
+}
+
+/**
+ * Decrement the ref counter of the wrapped class instance.  Delete
+ * the object if the reference count goes to zero 
+ */
+void decrementRefCount(Node *p)
 {
-
-
-class SvgParser
-{
-public:
-
-    /**
-     *
-     */
-    SvgParser()
+    if (p)
         {
+		 if (--(p->_refCnt) < 1)
+            delete p;
         }
-
-    /**
-     *
-     */
-    SvgParser(const SvgParser &other)
-        {
-        }
-
-    /**
-     *
-     */
-    virtual ~SvgParser()
-        {
-        }
-
-    /**
-     *
-     */
-    SVGDocumentPtr parse(const DocumentPtr sourceDoc);
+}
 
 
 
 
-protected:
-
-    /**
-     *  Get the next character in the parse buf,  0 if out
-     *  of range
-     */
-    XMLCh get(int p);
-
-    /**
-     *  Test if the given substring exists at the given position
-     *  in parsebuf.  Use get() in case of out-of-bounds
-     */
-    bool match(int pos, char *str);
-
-    /**
-     *
-     */
-    int skipwhite(int p);
-
-    /**
-     * get a word from the buffer
-     */
-    int getWord(int p, DOMString &result);
-
-    /**
-     * get a word from the buffer
-     */
-    int getNumber(int p0, double &result);
-
-
-    /**
-     *
-     */
-    bool parseTransform(const DOMString &str);
-
-
-    /**
-     *
-     */
-    bool parseElement(SVGElementImplPtr destElem,
-	                  ElementImplPtr sourceElem);
-
-
-    /**
-     *
-     */
-    void error(char *format, ...);
-
-
-
-    DOMString parsebuf;
-    int parselen;
-    int lastPosition;
-
-    SVGDocumentImplPtr doc;
-
-};
-
-
-
-
-
-}  //namespace svg
 }  //namespace dom
 }  //namespace w3c
 }  //namespace org
 
-#endif /* __SVGPARSER_H__ */
+
+
 /*#########################################################################
 ## E N D    O F    F I L E
 #########################################################################*/
+
 
 
 

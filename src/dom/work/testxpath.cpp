@@ -36,16 +36,18 @@
 #include <stdio.h>
 
 
-typedef org::w3c::dom::Node      Node;
-typedef org::w3c::dom::NodeList  NodeList;
-typedef org::w3c::dom::DOMString DOMString;
-typedef org::w3c::dom::Document  Document;
+typedef org::w3c::dom::Node          Node;
+typedef org::w3c::dom::NodePtr       NodePtr;
+typedef org::w3c::dom::NodeList      NodeList;
+typedef org::w3c::dom::DOMString     DOMString;
+typedef org::w3c::dom::Document      Document;
+typedef org::w3c::dom::DocumentPtr   DocumentPtr;
 typedef org::w3c::dom::io::StdWriter StdWriter;
 typedef org::w3c::dom::ls::DOMImplementationLSImpl DOMImplementationLSImpl;
 typedef org::w3c::dom::ls::LSSerializer LSSerializer;
-typedef org::w3c::dom::ls::LSOutput LSOutput;
-typedef org::w3c::dom::ls::LSInput LSInput;
-typedef org::w3c::dom::ls::LSParser LSParser;
+typedef org::w3c::dom::ls::LSOutput  LSOutput;
+typedef org::w3c::dom::ls::LSInput   LSInput;
+typedef org::w3c::dom::ls::LSParser  LSParser;
 typedef org::w3c::dom::xpath::XPathParser XPathParser;
 
 
@@ -1355,7 +1357,7 @@ bool doStringTests()
     return true;
 }
 
-void dumpDoc(Document *doc)
+bool dumpDoc(DocumentPtr doc)
 {
     DOMImplementationLSImpl domImpl;
     LSSerializer &serializer = domImpl.createLSSerializer();
@@ -1363,6 +1365,8 @@ void dumpDoc(Document *doc)
     StdWriter writer;
     output.setCharacterStream(&writer);
     serializer.write(doc, output);
+
+    return true;
 }
 
 
@@ -1375,7 +1379,7 @@ bool doXmlTest(XpathTest *xpt)
     LSInput input = domImpl.createLSInput();
     LSParser &parser = domImpl.createLSParser(0, "");
     input.setStringData(xpt->xml);
-    Document *doc = parser.parse(input);
+    DocumentPtr doc = parser.parse(input);
 
     //### XPATH
     XPathParser xp;
@@ -1385,13 +1389,12 @@ bool doXmlTest(XpathTest *xpt)
     NodeList list = xp.evaluate(doc, xpathStr);
     for (unsigned int i=0 ; i<list.getLength() ; i++)
         {
-        Node *n = list.item(i);
+        NodePtr n = list.item(i);
         printf("@@ node: %s\n", n->getNodeName().c_str());
         }
 
     //dumpDoc(doc);
 
-    delete doc;
     return true;
 }
 

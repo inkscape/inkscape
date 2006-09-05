@@ -142,9 +142,10 @@ DOMOBJ = \
 charclass.o       \
 cssparser.o       \
 domimpl.o         \
+domptr.o          \
 domstring.o       \
 jsengine.o        \
-jsbind.o          \
+jsdombind.o       \
 lsimpl.o          \
 smilimpl.o        \
 uri.o             \

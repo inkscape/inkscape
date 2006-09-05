@@ -72,23 +72,23 @@ public:
     /**
      *
      */
-    virtual Document *parse(const LSInput &input)
-                            throw(dom::DOMException, LSException);
+    virtual DocumentPtr parse(const LSInput &input)
+                              throw(dom::DOMException, LSException);
 
 
     /**
      *
      */
-    virtual Document *parseURI(const DOMString &uri)
-                               throw(dom::DOMException, LSException);
+    virtual DocumentPtr parseURI(const DOMString &uri)
+                                 throw(dom::DOMException, LSException);
 
    /**
      *
      */
-    virtual Node *parseWithContext(const LSInput &input,
-                                   const Node *contextArg,
-                                   unsigned short action)
-                                   throw(dom::DOMException, LSException);
+    virtual NodePtr parseWithContext(const LSInput &input,
+                                     const NodePtr contextArg,
+                                     unsigned short action)
+                                     throw(dom::DOMException, LSException);
 
 
     //##################
@@ -144,13 +144,13 @@ public:
     /**
      *
      */
-    virtual unsigned short startElement(const Element *elementArg)
+    virtual unsigned short startElement(const ElementPtr elementArg)
         { return 0; }
 
     /**
      *
      */
-    virtual unsigned short acceptNode(const Node *nodeArg)
+    virtual unsigned short acceptNode(const NodePtr nodeArg)
         { return 0; }
 
     /**
@@ -188,21 +188,21 @@ public:
     /**
      *
      */
-    virtual bool write(const Node *nodeArg,
+    virtual bool write(const NodePtr nodeArg,
                        const LSOutput &destination)
                        throw (LSException);
 
     /**
      *
      */
-    virtual bool writeToURI(const Node *nodeArg,
+    virtual bool writeToURI(const NodePtr nodeArg,
                             const DOMString &uri)
                             throw(LSException);
 
     /**
      *
      */
-    virtual DOMString writeToString(const Node *nodeArg)
+    virtual DOMString writeToString(const NodePtr nodeArg)
                                     throw(dom::DOMException, LSException);
 
     //##################
@@ -230,7 +230,7 @@ protected:
     /**
      *
      */
-    void writeNode(const Node *nodeArg);
+    void writeNode(const NodePtr nodeArg);
 
 private:
 

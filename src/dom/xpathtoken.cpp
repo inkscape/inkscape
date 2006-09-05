@@ -987,7 +987,7 @@ void TokenExecutor::reset()
  */
 int TokenExecutor::execute(std::vector<Token> &tokens,
                             int position,
-                            const Node *node,
+                            const NodePtr node,
                             NodeList &result)
 {
     Stack stack(*this);
@@ -1005,7 +1005,7 @@ int TokenExecutor::execute(std::vector<Token> &tokens,
             //Do rest of tokens with the nodes we have found so far
             for (unsigned int i = 0 ; i<contextNodes.getLength() ; i++)
                 {
-                Node *contextNode = contextNodes.item(i);
+                NodePtr contextNode = contextNodes.item(i);
                 pos2 = execute(tokens, position, contextNode, result);
                 if (pos2 < 0)
                     {
@@ -1032,7 +1032,7 @@ int TokenExecutor::execute(std::vector<Token> &tokens,
  * Execute the tokens in a TokenList upon a given node
  */
 bool TokenExecutor::execute(TokenList &tokenList,
-                            const Node *node,
+                            const NodePtr node,
                             NodeList &result)
 {
 

@@ -1,2 +1,2 @@
-set PATH=c:\mingw\bin;%PATH%
+set PATH=c:\mingw4\bin;%PATH%
 set RM=del

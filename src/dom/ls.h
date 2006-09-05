@@ -62,8 +62,11 @@ typedef dom::io::Writer       LSWriter;
 typedef dom::DOMString DOMString;
 typedef dom::DOMConfiguration DOMConfiguration;
 typedef dom::Node Node;
+typedef dom::NodePtr NodePtr;
 typedef dom::Document Document;
+typedef dom::DocumentPtr DocumentPtr;
 typedef dom::Element Element;
+typedef dom::ElementPtr ElementPtr;
 
 
 //forward declarations
@@ -155,12 +158,12 @@ public:
     /**
      *
      */
-    virtual unsigned short startElement(const Element *elementArg) =0;
+    virtual unsigned short startElement(const ElementPtr elementArg) =0;
 
     /**
      *
      */
-    virtual unsigned short acceptNode(const Node *nodeArg) =0;
+    virtual unsigned short acceptNode(const NodePtr nodeArg) =0;
 
     /**
      *
@@ -390,16 +393,16 @@ public:
     /**
      *
      */
-    virtual Document *parse(const LSInput &input)
-                            throw(dom::DOMException, LSException)
+    virtual DocumentPtr parse(const LSInput &input)
+                              throw(dom::DOMException, LSException)
         { return NULL; }
 
 
     /**
      *
      */
-    virtual Document *parseURI(const DOMString &uri)
-                               throw(dom::DOMException, LSException)
+    virtual DocumentPtr parseURI(const DOMString &uri)
+                                 throw(dom::DOMException, LSException)
         { return NULL; }
 
     typedef enum
@@ -415,10 +418,10 @@ public:
     /**
      *
      */
-    virtual Node *parseWithContext(const LSInput &input,
-                                   const Node *contextArg,
-                                   unsigned short action)
-                                   throw(dom::DOMException, LSException)
+    virtual NodePtr parseWithContext(const LSInput &input,
+                                     const NodePtr contextArg,
+                                     unsigned short action)
+                                     throw(dom::DOMException, LSException)
         { return NULL; }
 
     /**
@@ -657,7 +660,7 @@ public:
     /**
      *
      */
-    virtual bool write(const Node *nodeArg,
+    virtual bool write(const NodePtr nodeArg,
                        const LSOutput &destination)
                        throw (LSException)
         { return false; }
@@ -665,7 +668,7 @@ public:
     /**
      *
      */
-    virtual bool writeToURI(const Node *nodeArg,
+    virtual bool writeToURI(const NodePtr nodeArg,
                             const DOMString &uri)
                             throw(LSException)
         { return false; }
@@ -673,7 +676,7 @@ public:
     /**
      *
      */
-    virtual DOMString writeToString(const Node *nodeArg)
+    virtual DOMString writeToString(const NodePtr nodeArg)
                                     throw(dom::DOMException, LSException)
         {
         DOMString str;
@@ -798,7 +801,7 @@ public:
     /**
      *
      */
-    virtual Document *getNewDocument()
+    virtual DocumentPtr getNewDocument()
         { return newDocument; }
 
     /**
@@ -814,14 +817,16 @@ public:
     /**
      *
      */
-    LSLoadEvent(const LSInput &inputArg, const Document *docArg)
+    LSLoadEvent(const LSInput &inputArg,
+	            const DocumentPtr docArg)
                   : input((LSInput &)inputArg)
-        { newDocument = (Document *)docArg; }
+        { newDocument = docArg; }
 
     /**
      *
      */
-    LSLoadEvent(const LSLoadEvent &other) : events::Event(other) , input(other.input)
+    LSLoadEvent(const LSLoadEvent &other) 
+	       : events::Event(other) , input(other.input)
         {
         newDocument = other.newDocument;
         }
@@ -833,7 +838,7 @@ public:
 
 protected:
 
-    Document *newDocument;
+    DocumentPtr newDocument;
 
     LSInput &input;
 

@@ -628,14 +628,14 @@ public:
      */
     int execute(std::vector<Token> &tokens,
                 int position,
-                const Node *node,
+                const NodePtr node,
                 NodeList &nodeList);
 
     /**
      * Execute a token list on the stack
      */
     bool execute(TokenList &list,
-                 const Node *node,
+                 const NodePtr node,
                  NodeList &result);
 
 private:

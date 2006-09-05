@@ -82,40 +82,320 @@ typedef unsigned long long DOMTimeStamp;
  */
 typedef void DOMUserData;
 
+/*#########################################################################
+## NodePtr
+#########################################################################*/
+
+/**
+ * A simple Smart Pointer class that handles Nodes and all of its
+ * descendants 
+ */ 
+template<class T> class Ptr
+{
+public:
+
+    /**
+     * Simple constructor
+     */ 
+    Ptr()
+        { _ref = 0; }
+
+    /**
+     * Constructor upon a reference
+     */ 
+    template<class Y> Ptr(const Ptr<Y> &other)
+        {
+        _ref = other._ref;
+	    incrementRefCount(_ref);
+        }
+
+    /**
+     * Constructor upon a reference
+     */ 
+    Ptr(T * refArg, bool addRef = true)
+        {
+        _ref = refArg;
+        if(addRef)
+		    incrementRefCount(_ref);
+        }
+
+
+    /**
+     * Copy constructor
+     */ 
+    Ptr(const Ptr &other)
+        {
+        _ref = other._ref;
+	    incrementRefCount(_ref);
+        }
+
+    /**
+     * Destructor
+     */ 
+    ~Ptr()
+        {
+	    decrementRefCount(_ref);
+        }
+
+
+    /**
+     * Assignment operator
+     */ 
+    template<class Y> Ptr &operator=(const Ptr<Y> &other)
+        {
+        decrementRefCount(_ref);
+        _ref = other._ref;
+        incrementRefCount(_ref);
+        return *this;
+        }
+
+    /**
+     * Assignment operator
+     */ 
+    Ptr &operator=(const Ptr &other)
+        {
+        decrementRefCount(_ref);
+        _ref = other._ref;
+        incrementRefCount(_ref);
+        return *this;
+        }
+
+    /**
+     * Assignment operator
+     */ 
+    template<class Y> Ptr &operator=(Y * ref)
+        {
+        decrementRefCount(_ref);
+        _ref = ref;
+        incrementRefCount(_ref);
+        return *this;
+        }
+
+    /**
+     * Assignment operator
+     */ 
+    template<class Y> Ptr &operator=(const Y * ref)
+        {
+        decrementRefCount(_ref);
+        _ref = (Y *) ref;
+        incrementRefCount(_ref);
+        return *this;
+        }
+
+    /**
+     * Return the reference
+     */ 
+    T * get() const
+        {
+        return _ref;
+        }
+
+    /**
+     * Dereference operator
+     */ 
+    T &operator*() const
+        {
+        return *_ref;
+        }
+
+    /**
+     * Point-to operator
+     */ 
+    T *operator->() const
+        {
+        return _ref;
+        }
+
+    /**
+     * NOT bool operator.  How to check if we are null without a comparison
+     */	     
+    bool operator! () const
+        {
+        return (_ref == 0);
+        }
+
+    /**
+     * Swap what I reference with the other guy
+     */	     
+    void swap(Ptr &other)
+        {
+        T *tmp = _ref;
+        _ref = other._ref;
+        other._ref = tmp;
+        }
+
+    //The referenced item
+    T *_ref;
+};
+
+
+/**
+ * Global definitions.  Many of these are used to mimic behaviour of
+ * a real pointer 
+ */
+
+/**
+ * Equality
+ */ 
+template<class T, class U> inline bool
+   operator==(const Ptr<T> &a, const Ptr<U> &b)
+{
+    return a.get() == b.get();
+}
+
+/**
+ * Inequality
+ */ 
+template<class T, class U> inline bool
+     operator!=(const Ptr<T> &a, const Ptr<U> &b)
+{
+    return a.get() != b.get();
+}
+
+/**
+ * Equality
+ */ 
+template<class T> inline bool
+     operator==(const Ptr<T> &a, T * b)
+{
+    return a.get() == b;
+}
+
+/**
+ * Inequality
+ */ 
+template<class T> inline bool
+     operator!=(const Ptr<T> &a, T * b)
+{
+    return a.get() != b;
+}
+
+/**
+ * Equality
+ */ 
+template<class T> inline bool
+     operator==(T * a, const Ptr<T> &b)
+{
+    return a == b.get();
+}
+
+/**
+ * Inequality
+ */ 
+template<class T> inline bool
+     operator!=(T * a, const Ptr<T> &b)
+{
+    return a != b.get();
+}
+
+
+/**
+ * Less than
+ */ 
+template<class T> inline bool
+     operator<(const Ptr<T> &a, const Ptr<T> &b)
+{
+    return std::less<T *>()(a.get(), b.get());
+}
+
+/**
+ * Swap
+ */ 
+template<class T> void
+     swap(Ptr<T> &a, Ptr<T> &b)
+{
+    a.swap(b);
+}
+
+
+/**
+ * Get the pointer globally, for <algo>
+ */ 
+template<class T> T * 
+    get_pointer(const Ptr<T> &p)
+{
+    return p.get();
+}
+
+/**
+ * Static cast
+ */ 
+template<class T, class U> Ptr<T>
+     static_pointer_cast(const Ptr<U> &p)
+{
+    return static_cast<T *>(p.get());
+}
+
+/**
+ * Const cast
+ */ 
+template<class T, class U> Ptr<T>
+     const_pointer_cast(const Ptr<U> &p)
+{
+    return const_cast<T *>(p.get());
+}
+
+/**
+ * Dynamic cast
+ */ 
+template<class T, class U> Ptr<T>
+     dynamic_pointer_cast(const Ptr<U> &p)
+{
+    return dynamic_cast<T *>(p.get());
+}
+
+
 /**
  *
  */
 typedef void DOMObject;
 
 
+class NodeList;
+class NamedNodeMap;
 class DOMException;
 class DOMStringList;
 class NameList;
 class DOMImplementationList;
 class DOMImplementationSource;
 class DOMImplementation;
-class Node;
-class NodeList;
-class NamedNodeMap;
-class CharacterData;
-class Attr;
-class Element;
-class Text;
-class Comment;
 class TypeInfo;
 class UserDataHandler;
 class DOMError;
 class DOMErrorHandler;
 class DOMLocator;
 class DOMConfiguration;
-class CDATASection;
+
+class Node;
+typedef Ptr<Node> NodePtr;
+class CharacterData;
+typedef Ptr<CharacterData> CharacterDataPtr;
+class Attr;
+typedef Ptr<Attr> AttrPtr;
+class Element;
+typedef Ptr<Element> ElementPtr;
+class Text;
+typedef Ptr<Text> TextPtr;
+class Comment;
+typedef Ptr<Comment> CommentPtr;
 class DocumentType;
+typedef Ptr<DocumentType> DocumentTypePtr;
+class CDATASection;
+typedef Ptr<CDATASection> CDATASectionPtr;
 class Notation;
+typedef Ptr<Notation> NotationPtr;
 class Entity;
+typedef Ptr<Entity> EntityPtr;
 class EntityReference;
+typedef Ptr<EntityReference> EntityReferencePtr;
 class ProcessingInstruction;
+typedef Ptr<ProcessingInstruction> ProcessingInstructionPtr;
 class DocumentFragment;
+typedef Ptr<DocumentFragment> DocumentFragmentPtr;
 class Document;
+typedef Ptr<Document> DocumentPtr;
+
+
 
 
 /**
@@ -543,17 +823,18 @@ public:
     /**
      *
      */
-    virtual DocumentType *createDocumentType(const DOMString& qualifiedName,
-                                     const DOMString& publicId,
-                                     const DOMString& systemId)
-                                     throw(DOMException) = 0;
+    virtual DocumentTypePtr createDocumentType(
+	                               const DOMString& qualifiedName,
+                                   const DOMString& publicId,
+                                   const DOMString& systemId)
+                                   throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Document *createDocument(const DOMString& namespaceURI,
+    virtual DocumentPtr createDocument(const DOMString& namespaceURI,
                              const DOMString& qualifiedName,
-                             DocumentType *doctype)
+                             DocumentTypePtr doctype)
                              throw(DOMException) = 0;
     /**
      *
@@ -576,12 +857,14 @@ public:
 
 
 
+
 /*#########################################################################
 ## Node
 #########################################################################*/
 
 /**
- *
+ *  The basic Node class, which is the root of most other
+ *  classes in DOM.
  */
 class Node
 {
@@ -626,7 +909,7 @@ public:
     /**
      *
      */
-    virtual Node *getParentNode() = 0;
+    virtual NodePtr getParentNode() = 0;
 
     /**
      *
@@ -636,22 +919,22 @@ public:
     /**
      *
      */
-    virtual Node *getFirstChild() = 0;
+    virtual NodePtr getFirstChild() = 0;
 
     /**
      *
      */
-    virtual Node *getLastChild() = 0;
+    virtual NodePtr getLastChild() = 0;
 
     /**
      *
      */
-    virtual Node *getPreviousSibling() = 0;
+    virtual NodePtr getPreviousSibling() = 0;
 
     /**
      *
      */
-    virtual Node *getNextSibling() = 0;
+    virtual NodePtr getNextSibling() = 0;
 
     /**
      *
@@ -662,32 +945,32 @@ public:
     /**
      *
      */
-    virtual Document *getOwnerDocument() = 0;
+    virtual DocumentPtr getOwnerDocument() = 0;
 
     /**
      *
      */
-    virtual Node *insertBefore(const Node *newChild,
-                       const Node *refChild)
+    virtual NodePtr insertBefore(const NodePtr newChild,
+                       const NodePtr refChild)
                        throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Node *replaceChild(const Node *newChild,
-                       const Node *oldChild)
+    virtual NodePtr replaceChild(const NodePtr newChild,
+                       const NodePtr oldChild)
                        throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Node *removeChild(const Node *oldChild)
+    virtual NodePtr removeChild(const NodePtr oldChild)
                       throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Node *appendChild(const Node *newChild)
+    virtual NodePtr appendChild(const NodePtr newChild)
                       throw(DOMException) = 0;
 
     /**
@@ -698,7 +981,7 @@ public:
     /**
      *
      */
-    virtual Node *cloneNode(bool deep) = 0;
+    virtual NodePtr cloneNode(bool deep) = 0;
 
     /**
      *
@@ -755,7 +1038,8 @@ public:
     /**
      *
      */
-    virtual unsigned short compareDocumentPosition(const Node *other) = 0;
+    virtual unsigned short compareDocumentPosition(
+	                         const NodePtr other) = 0;
 
     /**
      *
@@ -790,7 +1074,7 @@ public:
     /**
      *
      */
-    virtual bool isEqualNode(const Node *node) =0;
+    virtual bool isEqualNode(const NodePtr node) =0;
 
 
 
@@ -817,16 +1101,29 @@ public:
     //# Non-API methods
     //##################
 
+    /**
+     *
+     */
+    Node() : _refCnt(0)
+        {}
 
     /**
      *
      */
     virtual ~Node() {}
 
+protected:
 
-
+    friend void incrementRefCount(Node *p);
+    friend void decrementRefCount(Node *p);
+ 
+    /**
+     * For the Ptr smart pointer
+     */	     
+    int _refCnt;
 
 };
+
 
 
 
@@ -843,7 +1140,7 @@ public:
     /**
      *
      */
-    virtual Node *item(unsigned long index)
+    virtual NodePtr item(unsigned long index)
         {
         if (index>=nodes.size())
             return NULL;
@@ -906,14 +1203,14 @@ friend class ElementImpl;
     /*
      *
      */
-    virtual void add(const Node *node)
+    virtual void add(const NodePtr node)
         {
-        nodes.push_back((Node *)node);
+        nodes.push_back(node);
         }
 
 protected:
 
-    std::vector<Node *> nodes;
+    std::vector<NodePtr> nodes;
 
 };
 
@@ -929,11 +1226,11 @@ class NamedNodeMapEntry
 public:
     NamedNodeMapEntry(const DOMString &theNamespaceURI,
                       const DOMString &theName,
-                      const Node      *theNode)
+                      const NodePtr   theNode)
         {
         namespaceURI = theNamespaceURI;
         name         = theName;
-        node         = (Node *)theNode;
+        node         = theNode;
         }
     NamedNodeMapEntry(const NamedNodeMapEntry &other)
         {
@@ -955,7 +1252,7 @@ public:
         }
     DOMString namespaceURI;
     DOMString name;
-    Node      *node;
+    NodePtr   node;
 };
 
 /**
@@ -968,14 +1265,14 @@ public:
     /**
      *
      */
-    virtual Node *getNamedItem(const DOMString& name)
+    virtual NodePtr getNamedItem(const DOMString& name)
         {
         std::vector<NamedNodeMapEntry>::iterator iter;
         for (iter = entries.begin() ; iter!=entries.end() ; iter++)
             {
             if (iter->name == name)
                 {
-                Node *node = iter->node;
+                NodePtr node = iter->node;
                 return node;
                 }
             }
@@ -985,7 +1282,7 @@ public:
     /**
      *
      */
-    virtual Node *setNamedItem(Node *arg) throw(DOMException)
+    virtual NodePtr setNamedItem(NodePtr arg) throw(DOMException)
         {
         if (!arg)
             return NULL;
@@ -996,7 +1293,7 @@ public:
             {
             if (iter->name == name)
                 {
-                Node *node = iter->node;
+                NodePtr node = iter->node;
                 iter->node = arg;
                 return node;
                 }
@@ -1010,14 +1307,14 @@ public:
     /**
      *
      */
-    virtual Node *removeNamedItem(const DOMString& name) throw(DOMException)
+    virtual NodePtr removeNamedItem(const DOMString& name) throw(DOMException)
         {
         std::vector<NamedNodeMapEntry>::iterator iter;
         for (iter = entries.begin() ; iter!=entries.end() ; iter++)
             {
             if (iter->name == name)
                 {
-                Node *node = iter->node;
+                NodePtr node = iter->node;
                 entries.erase(iter);
                 return node;
                 }
@@ -1028,7 +1325,7 @@ public:
     /**
      *
      */
-    virtual Node *item(unsigned long index)
+    virtual NodePtr item(unsigned long index)
         {
         if (index>=entries.size())
             return NULL;
@@ -1046,7 +1343,7 @@ public:
     /**
      *
      */
-    virtual Node *getNamedItemNS(const DOMString& namespaceURI,
+    virtual NodePtr getNamedItemNS(const DOMString& namespaceURI,
                                  const DOMString& localName)
         {
         std::vector<NamedNodeMapEntry>::iterator iter;
@@ -1054,7 +1351,7 @@ public:
             {
             if (iter->namespaceURI == namespaceURI && iter->name == localName)
                 {
-                Node *node = iter->node;
+                NodePtr node = iter->node;
                 return node;
                 }
             }
@@ -1064,7 +1361,7 @@ public:
     /**
      *
      */
-    virtual Node *setNamedItemNS(Node *arg) throw(DOMException)
+    virtual NodePtr setNamedItemNS(NodePtr arg) throw(DOMException)
         {
         if (!arg)
             return NULL;
@@ -1075,7 +1372,7 @@ public:
             {
             if (iter->namespaceURI == namespaceURI && iter->name == name)
                 {
-                Node *node = iter->node;
+                NodePtr node = iter->node;
                 iter->node = arg;
                 return node;
                 }
@@ -1088,7 +1385,7 @@ public:
     /**
      *
      */
-    virtual Node *removeNamedItemNS(const DOMString& namespaceURI,
+    virtual NodePtr removeNamedItemNS(const DOMString& namespaceURI,
                                     const DOMString& localName)
                                     throw(DOMException)
         {
@@ -1097,7 +1394,7 @@ public:
             {
             if (iter->namespaceURI == namespaceURI && iter->name == localName)
                 {
-                Node *node = iter->node;
+                NodePtr node = iter->node;
                 entries.erase(iter);
                 return node;
                 }
@@ -1221,6 +1518,8 @@ public:
 };
 
 
+typedef Ptr<CharacterData> CharacterDataPtr;
+
 
 
 
@@ -1258,13 +1557,13 @@ public:
     /**
      *
      */
-    virtual Element *getOwnerElement() = 0;
+    virtual ElementPtr getOwnerElement() = 0;
 
 
     /**
      *
      */
-    virtual TypeInfo *getSchemaTypeInfo() = 0;
+    virtual TypeInfo &getSchemaTypeInfo() = 0;
 
 
     /**
@@ -1326,18 +1625,18 @@ public:
     /**
      *
      */
-    virtual Attr *getAttributeNode(const DOMString& name) = 0;
+    virtual AttrPtr getAttributeNode(const DOMString& name) = 0;
 
     /**
      *
      */
-    virtual Attr *setAttributeNode(Attr *newAttr)
+    virtual AttrPtr setAttributeNode(AttrPtr newAttr)
                           throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Attr *removeAttributeNode(Attr *oldAttr)
+    virtual AttrPtr removeAttributeNode(AttrPtr oldAttr)
                              throw(DOMException) = 0;
 
     /**
@@ -1369,13 +1668,13 @@ public:
     /**
      *
      */
-    virtual Attr *getAttributeNodeNS(const DOMString& namespaceURI,
+    virtual AttrPtr getAttributeNodeNS(const DOMString& namespaceURI,
                             const DOMString& localName) = 0;
 
     /**
      *
      */
-    virtual Attr *setAttributeNodeNS(Attr *newAttr)
+    virtual AttrPtr setAttributeNodeNS(AttrPtr newAttr)
                             throw(DOMException) = 0;
 
     /**
@@ -1398,7 +1697,7 @@ public:
     /**
      *
      */
-    virtual TypeInfo *getSchemaTypeInto() = 0;
+    virtual TypeInfo &getSchemaTypeInfo() = 0;
 
 
     /**
@@ -1417,7 +1716,7 @@ public:
     /**
      *
      */
-    virtual void setIdAttributeNode(const Attr *idAttr,
+    virtual void setIdAttributeNode(const AttrPtr idAttr,
                                     bool isId) throw (DOMException) = 0;
 
     //##################
@@ -1449,7 +1748,7 @@ public:
     /**
      *
      */
-    virtual Text *splitText(unsigned long offset)
+    virtual TextPtr splitText(unsigned long offset)
                     throw(DOMException) = 0;
 
     /**
@@ -1466,7 +1765,7 @@ public:
     /**
      *
      */
-    virtual Text *replaceWholeText(const DOMString &content)
+    virtual TextPtr replaceWholeText(const DOMString &content)
                                  throw(DOMException) = 0;
 
     //##################
@@ -1523,12 +1822,14 @@ public:
     /**
      *
      */
-    virtual DOMString getTypeName() =0;
+    virtual DOMString getTypeName()
+        { return typeName; }
 
     /**
      *
      */
-    virtual DOMString getTypeNamespace() =0;
+    virtual DOMString getTypeNamespace()
+        { return typeNameSpace; }
 
     typedef enum
         {
@@ -1544,7 +1845,8 @@ public:
      */
     virtual bool isDerivedFrom(const DOMString &typeNamespaceArg,
                                const DOMString &typeNameArg,
-                               DerivationMethod derivationMethod) =0;
+                               DerivationMethod derivationMethod)
+        { return false; }
 
     //##################
     //# Non-API methods
@@ -1554,8 +1856,36 @@ public:
     /**
      *
      */
+    TypeInfo() 
+	    {}
+	    
+    /**
+     *
+     */
+    TypeInfo(const TypeInfo &other)
+        { assign(other); }
+        
+    /**
+     *
+     */
+    TypeInfo &operator=(const TypeInfo &other)
+        { assign(other); return *this; }
+        
+    /**
+     *
+     */
     virtual ~TypeInfo() {}
+    
+private:
 
+    void assign(const TypeInfo &other)
+        {
+        typeName      = other.typeName;
+        typeNameSpace = other.typeNameSpace;
+        }
+
+    DOMString typeName;
+    DOMString typeNameSpace;
 };
 
 
@@ -1588,8 +1918,8 @@ public:
     virtual  void handle(unsigned short operation,
                          const DOMString &key,
                          const DOMUserData *data,
-                         const Node *src,
-                         const Node *dst) =0;
+                         const NodePtr src,
+                         const NodePtr dst) =0;
 
     //##################
     //# Non-API methods
@@ -1731,7 +2061,7 @@ public:
     /**
      *
      */
-    virtual Node *getRelatedNode() =0;
+    virtual NodePtr getRelatedNode() =0;
 
 
     /**
@@ -1765,7 +2095,8 @@ public:
      *
      */
     virtual void setParameter(const DOMString &name,
-                              const DOMUserData *value) throw (DOMException) =0;
+                              const DOMUserData *value)
+							   throw (DOMException) =0;
 
     /**
      *
@@ -2082,7 +2413,7 @@ public:
     /**
      *
      */
-    virtual DocumentType *getDoctype() = 0;
+    virtual DocumentTypePtr getDoctype() = 0;
 
     /**
      *
@@ -2092,52 +2423,53 @@ public:
     /**
      *
      */
-    virtual Element *getDocumentElement() = 0;
+    virtual ElementPtr getDocumentElement() = 0;
 
     /**
      *
      */
-    virtual Element *createElement(const DOMString& tagName)
+    virtual ElementPtr createElement(const DOMString& tagName)
                            throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual DocumentFragment *createDocumentFragment() = 0;
+    virtual DocumentFragmentPtr createDocumentFragment() = 0;
 
     /**
      *
      */
-    virtual Text *createTextNode(const DOMString& data) = 0;
+    virtual TextPtr createTextNode(const DOMString& data) = 0;
 
     /**
      *
      */
-    virtual Comment  *createComment(const DOMString& data) = 0;
+    virtual CommentPtr createComment(const DOMString& data) = 0;
 
     /**
      *
      */
-    virtual CDATASection *createCDATASection(const DOMString& data)
+    virtual CDATASectionPtr createCDATASection(const DOMString& data)
                                      throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual ProcessingInstruction *createProcessingInstruction(const DOMString& target,
-                                                       const DOMString& data)
-                                                       throw(DOMException) = 0;
+    virtual ProcessingInstructionPtr
+	           createProcessingInstruction(const DOMString& target,
+                                           const DOMString& data)
+                                           throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Attr *createAttribute(const DOMString& name)
+    virtual AttrPtr createAttribute(const DOMString& name)
                           throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual EntityReference *createEntityReference(const DOMString& name)
+    virtual EntityReferencePtr createEntityReference(const DOMString& name)
                                            throw(DOMException) = 0;
 
     /**
@@ -2149,21 +2481,21 @@ public:
     /**
      *
      */
-    virtual Node *importNode(const Node *importedNode,
+    virtual NodePtr importNode(const NodePtr importedNode,
                      bool deep)
                      throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Element *createElementNS(const DOMString& namespaceURI,
+    virtual ElementPtr createElementNS(const DOMString& namespaceURI,
                              const DOMString& qualifiedName)
                              throw(DOMException) = 0;
 
     /**
      *
      */
-    virtual Attr *createAttributeNS(const DOMString& namespaceURI,
+    virtual AttrPtr createAttributeNS(const DOMString& namespaceURI,
                             const DOMString& qualifiedName)
                             throw(DOMException) = 0;
 
@@ -2176,7 +2508,7 @@ public:
     /**
      *
      */
-    virtual Element *getElementById(const DOMString& elementId) = 0;
+    virtual ElementPtr getElementById(const DOMString& elementId) = 0;
 
 
     /**
@@ -2208,7 +2540,8 @@ public:
     /**
      *
      */
-    virtual void setXmlVersion(const DOMString &version) throw (DOMException) = 0;
+    virtual void setXmlVersion(const DOMString &version)
+	                           throw (DOMException) = 0;
 
     /**
      *
@@ -2234,7 +2567,7 @@ public:
     /**
      *
      */
-    virtual Node *adoptNode(const Node *source) throw (DOMException) = 0;
+    virtual NodePtr adoptNode(const NodePtr source) throw (DOMException) = 0;
 
     /**
      *
@@ -2249,10 +2582,10 @@ public:
     /**
      *
      */
-    virtual Node *renameNode(const Node *n,
-                             const DOMString &namespaceURI,
-                             const DOMString &qualifiedName)
-                             throw (DOMException) = 0;
+    virtual NodePtr renameNode(const NodePtr n,
+                               const DOMString &namespaceURI,
+                               const DOMString &qualifiedName)
+                               throw (DOMException) = 0;
 
 
     //##################
@@ -2265,9 +2598,6 @@ public:
     virtual ~Document() {}
 
 };
-
-
-
 
 
 

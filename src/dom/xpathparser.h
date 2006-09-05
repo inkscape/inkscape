@@ -402,7 +402,7 @@ public:
      * This is the big one. Called by the xpath-dom api to fetch
      * nodes from a DOM tree.
      */
-    NodeList evaluate(const Node *root, const DOMString &str);
+    NodeList evaluate(const NodePtr root, const DOMString &str);
 
 
 

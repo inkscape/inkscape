@@ -61,8 +61,8 @@ bool LSParserImpl::getBusy()
 /**
  *
  */
-Document *LSParserImpl::parse(const LSInput &input)
-                            throw(dom::DOMException, LSException)
+DocumentPtr LSParserImpl::parse(const LSInput &input)
+                                throw(dom::DOMException, LSException)
 {
 
     //#### Check the various inputs of 'input' in order, according
@@ -79,7 +79,7 @@ Document *LSParserImpl::parse(const LSInput &input)
             buf.push_back((XMLCh)ch);
             }
         XmlReader reader;
-        Document *doc = reader.parse(buf);
+        DocumentPtr doc = reader.parse(buf);
         return doc;
         }
 
@@ -95,15 +95,15 @@ Document *LSParserImpl::parse(const LSInput &input)
             buf.push_back((XMLCh)ch);
             }
         XmlReader reader;
-        Document *doc = reader.parse(buf);
+        DocumentPtr doc = reader.parse(buf);
         return doc;
         }
 
     DOMString stringData = input.getStringData();
     if (stringData.size() > 0)
         {
-         XmlReader reader;
-        Document *doc = reader.parse(stringData);
+        XmlReader reader;
+        DocumentPtr doc = reader.parse(stringData);
         return doc;
         }
 
@@ -128,8 +128,8 @@ Document *LSParserImpl::parse(const LSInput &input)
 /**
  *
  */
-Document *LSParserImpl::parseURI(const DOMString &uri)
-                               throw(dom::DOMException, LSException)
+DocumentPtr LSParserImpl::parseURI(const DOMString &uri)
+                                   throw(dom::DOMException, LSException)
 {
     return NULL;
 }
@@ -137,10 +137,10 @@ Document *LSParserImpl::parseURI(const DOMString &uri)
    /**
  *
  */
-Node *LSParserImpl::parseWithContext(const LSInput &input,
-                                   const Node *contextArg,
-                                   unsigned short action)
-                                   throw(dom::DOMException, LSException)
+NodePtr LSParserImpl::parseWithContext(const LSInput &input,
+                                       const NodePtr contextArg,
+                                       unsigned short action)
+                                       throw(dom::DOMException, LSException)
 {
     return NULL;
 }
@@ -170,7 +170,7 @@ Node *LSParserImpl::parseWithContext(const LSInput &input,
  *
  */
 bool LSSerializerImpl::write(
-                       const Node *nodeArg,
+                       const NodePtr nodeArg,
                        const LSOutput &destination)
                        throw (LSException)
 {
@@ -215,7 +215,7 @@ bool LSSerializerImpl::write(
 /**
  *
  */
-bool LSSerializerImpl::writeToURI(const Node *nodeArg,
+bool LSSerializerImpl::writeToURI(const NodePtr nodeArg,
                                   const DOMString &uriArg)
                                   throw(LSException)
 {
@@ -241,7 +241,7 @@ bool LSSerializerImpl::writeToURI(const Node *nodeArg,
 /**
  *
  */
-DOMString LSSerializerImpl::writeToString(const Node *nodeArg)
+DOMString LSSerializerImpl::writeToString(const NodePtr nodeArg)
                                     throw(dom::DOMException, LSException)
 {
     outbuf = "";
@@ -312,9 +312,9 @@ void LSSerializerImpl::poxml(const DOMString &str)
 /**
  *
  */
-void LSSerializerImpl::writeNode(const Node *nodeArg)
+void LSSerializerImpl::writeNode(const NodePtr nodeArg)
 {
-    Node *node = (Node *)nodeArg;
+    NodePtr node = nodeArg;
 
     int type = node->getNodeType();
 
@@ -326,7 +326,7 @@ void LSSerializerImpl::writeNode(const Node *nodeArg)
         //#############
         case Node::DOCUMENT_NODE:
             {
-            Document *doc = dynamic_cast<Document *>(node);
+            DocumentPtr doc = dynamic_cast<Document *>(node.get());
             writeNode(doc->getDocumentElement());
             }
         break;
@@ -374,7 +374,7 @@ void LSSerializerImpl::writeNode(const Node *nodeArg)
             //### Attributes
             for (int i=0 ; i<nrAttrs ; i++)
                 {
-                Node *attr = attributes.item(i);
+                NodePtr attr = attributes.item(i);
                 spaces();
                 pos(attr->getNodeName());
                 po("=\"");
@@ -394,8 +394,8 @@ void LSSerializerImpl::writeNode(const Node *nodeArg)
             pos(node->getNodeValue());
 
             //### Children
-            for (Node *child = node->getFirstChild() ;
-                 child ;
+            for (NodePtr child = node->getFirstChild() ;
+                 child.get() ;
                  child=child->getNextSibling())
                 {
                 writeNode(child);

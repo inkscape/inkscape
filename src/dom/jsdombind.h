@@ -1,5 +1,5 @@
-#ifndef __JSENGINE_H__
-#define __JSENGINE_H__
+#ifndef __JSDOMBIND_H__
+#define __JSDOMBIND_H__
 /**
  * Phoebe DOM Implementation.
  *
@@ -30,8 +30,7 @@
  */
 
 
-#include "dom.h"
-#include "js/jsapi.h"
+#include "jsengine.h"
 
 
 namespace org
@@ -41,94 +40,88 @@ namespace w3c
 namespace dom
 {
 
+
 /**
- * Encapsulate a Spidermonkey JavaScript interpreter.  Init classes, then
- * wrap around any objects that are needed. 
+ * Wrap the W3C DOM Core classes around a JavascriptEngine.
  */
-class JavascriptEngine
+class JavascriptDOMBinder
 {
 public:
 
     /**
      *  Constructor
      */
-    JavascriptEngine()
-        { startup(); }
+    JavascriptDOMBinder(JavascriptEngine &someEngine)
+                  : engine(someEngine)
+        { init(); }
 
 
     /**
      *  Destructor
      */
-    virtual ~JavascriptEngine()
-        { shutdown(); }
-
-    /**
-     *  Evaluate a script
-     */
-    bool evaluate(const DOMString &script);
-
-    /**
-     *  Evaluate a script from a file
-     */
-    bool evaluateFile(const DOMString &script);
+    virtual ~JavascriptDOMBinder()
+        {  }
 
 
+    JSObject *wrapDocument(const Document *doc);
+
     /**
-     *  Return the runtime of the wrapped JS engine
+     *  Bind with the basic DOM classes
      */
-    JSRuntime *getRuntime()
-	    { return rt; }
-		
-    /**
-     *  Return the current context of the wrapped JS engine
-     */
-	JSContext *getContext()
-	    { return cx; }
-		
-    /**
-     *  Return the current global object of the wrapped JS engine
-     */
-	JSObject *getGlobalObject()
-	    { return globalObj; } 
-    
+    bool createClasses();
+
+    JSObject *proto_Attr;
+    JSObject *proto_CDATASection;
+    JSObject *proto_CharacterData;
+    JSObject *proto_Comment;
+    JSObject *proto_Document;
+    JSObject *proto_DocumentFragment;
+    JSObject *proto_DocumentType;
+    JSObject *proto_DOMConfiguration;
+    JSObject *proto_DOMError;
+    JSObject *proto_DOMException;
+    JSObject *proto_DOMImplementation;
+    JSObject *proto_DOMImplementationList;
+    JSObject *proto_DOMImplementationRegistry;
+    JSObject *proto_DOMImplementationSource;
+    JSObject *proto_DOMLocator;
+    JSObject *proto_DOMStringList;
+    JSObject *proto_Element;
+    JSObject *proto_Entity;
+    JSObject *proto_EntityReference;
+    JSObject *proto_NamedNodeMap;
+    JSObject *proto_NameList;
+    JSObject *proto_Node;
+    JSObject *proto_NodeList;
+    JSObject *proto_Notation;
+    JSObject *proto_ProcessingInstruction;
+    JSObject *proto_Text;
+    JSObject *proto_TypeInfo;
+    JSObject *proto_UserDataHandler;
 
 private:
 
-    /**
-     *  Startup the javascript engine
-     */
-    bool startup();
-
-    /**
-     *  Shutdown the javascript engine
-     */
-    bool shutdown();
-
     void init()
         {
-        rt        = NULL;
-        cx        = NULL;
-        globalObj = NULL;
+        rt        = engine.getRuntime();
+        cx        = engine.getContext();
+        globalObj = engine.getGlobalObject();
         }
     
     /**
      *  Assignment operator.  Let's keep this private for now,
      *  as we want one Spidermonkey runtime per c++ shell     
      */
-    JavascriptEngine &operator=(const JavascriptEngine &other)
+    JavascriptDOMBinder &operator=(const JavascriptDOMBinder &other)
         { assign(other); return *this; }
 
-    void assign(const JavascriptEngine &other)
+    void assign(const JavascriptDOMBinder &other)
         {
         rt        = other.rt;
         cx        = other.cx;
         globalObj = other.globalObj;
         }
 
-    /**
-     *  Bind with the basic DOM classes
-     */
-    bool createClasses();
 
     /**
      * Ouput a printf-formatted error message
@@ -146,17 +139,9 @@ private:
 
     JSObject *globalObj;
 
-    static void errorReporter(JSContext *cx,
-        const char *message, JSErrorReport *report)
-        {
-        JavascriptEngine *engine = 
-	        (JavascriptEngine *) JS_GetContextPrivate(cx);
-        engine->error((char *)message);
-        }
-
     
     
-
+    JavascriptEngine &engine;
 };
 
 
@@ -166,6 +151,6 @@ private:
 } // namespace org
 
 
-#endif /* __JSENGINE_H__ */
+#endif /* __JSDOMBIND_H__ */
 
 

@@ -192,7 +192,7 @@ public:
     /**
      *
      */
-    virtual Node *getOwnerNode()
+    virtual NodePtr getOwnerNode()
         {
         return ownerNode;
         }
@@ -273,7 +273,7 @@ protected:
 
     bool disabled;
 
-    Node *ownerNode;
+    NodePtr ownerNode;
 
     StyleSheet *parentStylesheet;
 

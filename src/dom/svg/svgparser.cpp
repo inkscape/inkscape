@@ -593,7 +593,8 @@ bool SvgParser::parseTransform(const DOMString &str)
 /**
  *
  */
-bool SvgParser::parseElement(ElementImpl *parent, ElementImpl *sourceElem)
+bool SvgParser::parseElement(SVGElementImplPtr parent,
+                             ElementImplPtr sourceElem)
 {
     if (!parent || !sourceElem)
         {
@@ -606,7 +607,7 @@ bool SvgParser::parseElement(ElementImpl *parent, ElementImpl *sourceElem)
     DOMString tagName      = sourceElem->getTagName();
     printf("tag name:%s\n", tagName.c_str());
 
-    ElementImpl *newElement = NULL;
+    ElementImplPtr newElement = NULL;
     if (namespaceURI != SVG_NAMESPACE)
         {
         newElement = new SVGSVGElementImpl();
@@ -700,22 +701,22 @@ bool SvgParser::parseElement(ElementImpl *parent, ElementImpl *sourceElem)
     int nodeCount = children.getLength();
     for (int i=0 ; i<nodeCount ; i++)
         {
-        Node *child = children.item(i);
+        NodePtr child = children.item(i);
         int typ = child->getNodeType();
         if (typ == Node::TEXT_NODE)
             {
-            Node *newNode = doc->createTextNode(child->getNodeValue());
+            NodePtr newNode = doc->createTextNode(child->getNodeValue());
             parent->appendChild(newNode);
             }
         else if (typ == Node::CDATA_SECTION_NODE)
             {
-            Node *newNode = doc->createCDATASection(child->getNodeValue());
+            NodePtr newNode = doc->createCDATASection(child->getNodeValue());
             parent->appendChild(newNode);
             }
-        else if (newElement && typ == Node::ELEMENT_NODE)
+        else if (newElement.get() && typ == Node::ELEMENT_NODE)
             {
-            ElementImpl *childElement = dynamic_cast<ElementImpl *>(child);
-            parseElement(newElement, childElement);
+            //ElementImplPtr childElement = dynamic_cast<ElementImpl *>(child.get());
+            //parseElement(newElement, childElement);
             }
         }
     return true;
@@ -725,23 +726,21 @@ bool SvgParser::parseElement(ElementImpl *parent, ElementImpl *sourceElem)
 /**
  *
  */
-Document *SvgParser::parse(const Document *sourceDoc)
+SVGDocumentPtr SvgParser::parse(const DocumentPtr src)
 {
-    if (!sourceDoc)
+    if (!src)
         {
         error("NULL source document");
         return NULL;
         }
 
-    Document *src = (Document *)sourceDoc;
     DOMImplementationImpl impl;
     doc = new SVGDocumentImpl(&impl, SVG_NAMESPACE, "svg" , NULL);
 
-    ElementImpl *destElem = dynamic_cast<ElementImpl *>(doc->getDocumentElement());
-    ElementImpl *srcElem  = dynamic_cast<ElementImpl *>(src->getDocumentElement());
+    SVGElementImplPtr destElem = dynamic_cast<SVGElementImpl *>(doc->getRootElement().get());
+    ElementImplPtr    srcElem  = dynamic_cast<ElementImpl *>(src->getDocumentElement().get());
     if (!parseElement(destElem, srcElem))
         {
-        delete doc;
         return NULL;
         }
 

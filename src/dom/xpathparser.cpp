@@ -2051,7 +2051,7 @@ bool XPathParser::parse(const DOMString &xpathString)
  * This wraps the two-step call to parse(), then execute() to get a NodeList
  * of matching DOM nodes
  */
-NodeList XPathParser::evaluate(const Node *root,
+NodeList XPathParser::evaluate(const NodePtr root,
                                const DOMString &xpathString)
 {
     NodeList list;

@@ -46,9 +46,12 @@ namespace dom
 class DOMImplementationSourceImpl;
 class DOMImplementationImpl;
 class NodeImpl;
+typedef Ptr<NodeImpl> NodeImplPtr;
 class CharacterDataImpl;
 class AttrImpl;
+typedef Ptr<AttrImpl> AttrImplPtr;
 class ElementImpl;
+typedef Ptr<ElementImpl> ElementImplPtr;
 class TextImpl;
 class CommentImpl;
 class TypeInfoImpl;
@@ -59,12 +62,14 @@ class DOMLocatorImpl;
 class DOMConfigurationImpl;
 class CDATASectionImpl;
 class DocumentTypeImpl;
+typedef Ptr<DocumentTypeImpl> DocumentTypeImplPtr;
 class NotationImpl;
 class EntityImpl;
 class EntityReferenceImpl;
 class ProcessingInstructionImpl;
 class DocumentFragmentImpl;
 class DocumentImpl;
+typedef Ptr<DocumentImpl> DocumentImplPtr;
 
 
 
@@ -142,7 +147,7 @@ public:
     /**
      *
      */
-    virtual DocumentType *createDocumentType(const DOMString& qualifiedName,
+    virtual DocumentTypePtr createDocumentType(const DOMString& qualifiedName,
                                      const DOMString& publicId,
                                      const DOMString& systemId)
                                      throw(DOMException);
@@ -150,9 +155,9 @@ public:
     /**
      *
      */
-    virtual Document *createDocument(const DOMString& namespaceURI,
+    virtual DocumentPtr createDocument(const DOMString& namespaceURI,
                              const DOMString& qualifiedName,
-                             DocumentType *doctype)
+                             DocumentTypePtr doctype)
                              throw(DOMException);
     /**
      *
@@ -205,7 +210,7 @@ public:
     /**
      *
      */
-    virtual Node *getParentNode();
+    virtual NodePtr getParentNode();
 
     /**
      *
@@ -215,22 +220,22 @@ public:
     /**
      *
      */
-    virtual Node *getFirstChild();
+    virtual NodePtr getFirstChild();
 
     /**
      *
      */
-    virtual Node *getLastChild();
+    virtual NodePtr getLastChild();
 
     /**
      *
      */
-    virtual Node *getPreviousSibling();
+    virtual NodePtr getPreviousSibling();
 
     /**
      *
      */
-    virtual Node *getNextSibling();
+    virtual NodePtr getNextSibling();
 
     /**
      *
@@ -241,32 +246,32 @@ public:
     /**
      *
      */
-    virtual Document *getOwnerDocument();
+    virtual DocumentPtr getOwnerDocument();
 
     /**
      *
      */
-    virtual Node *insertBefore(const Node *newChild,
-                       const Node *refChild)
+    virtual NodePtr insertBefore(const NodePtr newChild,
+                       const NodePtr refChild)
                        throw(DOMException);
 
     /**
      *
      */
-    virtual Node *replaceChild(const Node *newChild,
-                       const Node *oldChild)
+    virtual NodePtr replaceChild(const NodePtr newChild,
+                       const NodePtr oldChild)
                        throw(DOMException);
 
     /**
      *
      */
-    virtual Node *removeChild(const Node *oldChild)
+    virtual NodePtr removeChild(const NodePtr oldChild)
                       throw(DOMException);
 
     /**
      *
      */
-    virtual Node *appendChild(const Node *newChild)
+    virtual NodePtr appendChild(const NodePtr newChild)
                       throw(DOMException);
 
     /**
@@ -277,7 +282,7 @@ public:
     /**
      *
      */
-    virtual Node *cloneNode(bool deep);
+    virtual NodePtr cloneNode(bool deep);
 
     /**
      *
@@ -323,7 +328,7 @@ public:
     /**
      *
      */
-    virtual unsigned short compareDocumentPosition(const Node *other);
+    virtual unsigned short compareDocumentPosition(const NodePtr other);
 
     /**
      *
@@ -358,7 +363,7 @@ public:
     /**
      *
      */
-    virtual bool isEqualNode(const Node *node);
+    virtual bool isEqualNode(const NodePtr node);
 
 
 
@@ -411,7 +416,7 @@ public:
             DOMString ret = iter->second;
             return ret;
             }
-        if (parent)
+        if (parent.get())
             {
             DOMString ret = parent->bindingsFind(prefix);
             if (ret.size() > 0)
@@ -434,7 +439,7 @@ public:
      *
      */
     DOMString lookupNamespacePrefix(const DOMString &namespaceURI,
-                                    Node *originalElement);
+                                    NodePtr originalElement);
     /**
      *
      */
@@ -453,17 +458,18 @@ public:
     /**
      *
      */
-    NodeImpl(DocumentImpl *owner);
+    NodeImpl(DocumentImplPtr owner);
 
     /**
      *
      */
-    NodeImpl(DocumentImpl *owner, const DOMString &nodeName);
+    NodeImpl(DocumentImplPtr owner, const DOMString &nodeName);
 
     /**
      *
      */
-    NodeImpl(DocumentImpl *owner, const DOMString &namespaceURI, const DOMString &nodeName);
+    NodeImpl(DocumentImplPtr owner, const DOMString &namespaceURI,
+	               const DOMString &nodeName);
 
     /**
      *
@@ -485,11 +491,11 @@ protected:
 
     unsigned short nodeType;
 
-    NodeImpl *parent;
+    NodeImplPtr parent;
 
-    NodeImpl *prev;
+    NodeImplPtr prev;
 
-    NodeImpl *next;
+    NodeImplPtr next;
 
     DOMUserData *userData;
 
@@ -505,10 +511,10 @@ protected:
 
     DOMString nodeValue;
 
-    NodeImpl *firstChild;
-    NodeImpl *lastChild;
+    NodeImplPtr firstChild;
+    NodeImplPtr lastChild;
 
-    DocumentImpl *ownerDocument;
+    DocumentImplPtr ownerDocument;
 
     NamedNodeMap attributes;
 
@@ -538,6 +544,8 @@ protected:
     };
 
     UserDataEntry *userDataEntries;
+    
+    TypeInfo typeInfo;
 
     //### Our prefix->namespaceURI bindings
 
@@ -622,7 +630,7 @@ public:
     /**
      *
      */
-    CharacterDataImpl(DocumentImpl *owner, const DOMString &value);
+    CharacterDataImpl(DocumentImplPtr owner, const DOMString &value);
 
     /**
      *
@@ -673,13 +681,13 @@ public:
     /**
      *
      */
-    virtual Element *getOwnerElement();
+    virtual ElementPtr getOwnerElement();
 
 
     /**
      *
      */
-    virtual TypeInfo *getSchemaTypeInfo();
+    virtual TypeInfo &getSchemaTypeInfo();
 
 
     /**
@@ -696,17 +704,18 @@ public:
     /**
      *
      */
-    virtual void setOwnerElement(const Element *elem);
+    virtual void setOwnerElement(const ElementPtr elem);
 
     /**
      *
      */
-    AttrImpl(DocumentImpl *owner, const DOMString &name);
+    AttrImpl(DocumentImplPtr owner, const DOMString &name);
 
     /**
      *
      */
-    AttrImpl(DocumentImpl *owner, const DOMString &namespaceURI, const DOMString &name);
+    AttrImpl(DocumentImplPtr owner, const DOMString &namespaceURI,
+	                       const DOMString &name);
 
     /**
      *
@@ -716,7 +725,7 @@ public:
 protected:
 
 
-    Element *ownerElement;
+    ElementPtr ownerElement;
 
 
 };
@@ -762,18 +771,18 @@ public:
     /**
      *
      */
-    virtual Attr *getAttributeNode(const DOMString& name);
+    virtual AttrPtr getAttributeNode(const DOMString& name);
 
     /**
      *
      */
-    virtual Attr *setAttributeNode(Attr *newAttr)
+    virtual AttrPtr setAttributeNode(AttrPtr newAttr)
                           throw(DOMException);
 
     /**
      *
      */
-    virtual Attr *removeAttributeNode(Attr *oldAttr)
+    virtual AttrPtr removeAttributeNode(AttrPtr oldAttr)
                              throw(DOMException);
 
     /**
@@ -805,13 +814,13 @@ public:
     /**
      *
      */
-    virtual Attr *getAttributeNodeNS(const DOMString& namespaceURI,
+    virtual AttrPtr getAttributeNodeNS(const DOMString& namespaceURI,
                             const DOMString& localName);
 
     /**
      *
      */
-    virtual Attr *setAttributeNodeNS(Attr *newAttr)
+    virtual AttrPtr setAttributeNodeNS(AttrPtr newAttr)
                             throw(DOMException);
 
     /**
@@ -834,7 +843,7 @@ public:
     /**
      *
      */
-    virtual TypeInfo *getSchemaTypeInto();
+    virtual TypeInfo &getSchemaTypeInfo();
 
 
     /**
@@ -853,7 +862,7 @@ public:
     /**
      *
      */
-    virtual void setIdAttributeNode(const Attr *idAttr,
+    virtual void setIdAttributeNode(const AttrPtr idAttr,
                                     bool isId) throw (DOMException);
 
 
@@ -871,12 +880,13 @@ public:
     /**
      *
      */
-    ElementImpl(DocumentImpl *owner, const DOMString &tagName);
+    ElementImpl(DocumentImplPtr owner, const DOMString &tagName);
 
     /**
      *
      */
-    ElementImpl(DocumentImpl *owner, const DOMString &namespaceURI, const DOMString &tagName);
+    ElementImpl(DocumentImplPtr owner, const DOMString &namespaceURI,
+	               const DOMString &tagName);
 
     /**
      *
@@ -893,9 +903,10 @@ protected:
 friend class DocumentImpl;
 
     static void getElementsByTagNameRecursive(NodeList &list,
-                        const DOMString& name, Element *elem);
+                        const DOMString& name, ElementPtr elem);
     static void getElementsByTagNameNSRecursive(NodeList &list,
-             const DOMString& namespaceURI, const DOMString& tagName, Element *elem);
+             const DOMString& namespaceURI, const DOMString& tagName,
+			  ElementPtr elem);
 };
 
 
@@ -916,7 +927,7 @@ public:
     /**
      *
      */
-    virtual Text *splitText(unsigned long offset)
+    virtual TextPtr splitText(unsigned long offset)
                     throw(DOMException);
 
     /**
@@ -933,7 +944,7 @@ public:
     /**
      *
      */
-    virtual Text *replaceWholeText(const DOMString &content)
+    virtual TextPtr replaceWholeText(const DOMString &content)
                                  throw(DOMException);
 
     //##################
@@ -949,7 +960,7 @@ public:
     /**
      *
      */
-    TextImpl(DocumentImpl *owner, const DOMString &val);
+    TextImpl(DocumentImplPtr owner, const DOMString &val);
 
     /**
      *
@@ -985,7 +996,7 @@ public:
     /**
      *
      */
-    CommentImpl(DocumentImpl *owner, const DOMString &theValue);
+    CommentImpl(DocumentImplPtr owner, const DOMString &theValue);
 
     /**
      *
@@ -1071,8 +1082,8 @@ public:
     virtual  void handle(unsigned short operation,
                          const DOMString &key,
                          const DOMUserData *data,
-                         const Node *src,
-                         const Node *dst);
+                         const NodePtr src,
+                         const NodePtr dst);
 
     //##################
     //# Non-API methods
@@ -1238,7 +1249,7 @@ public:
     /**
      *
      */
-    virtual Node *getRelatedNode();
+    virtual NodePtr getRelatedNode();
 
 
     /**
@@ -1274,7 +1285,7 @@ protected:
 
     long utf16Offset;
 
-    Node *relatedNode;
+    NodePtr relatedNode;
 
     DOMString uri;
 };
@@ -1361,7 +1372,7 @@ public:
     /**
      *
      */
-    CDATASectionImpl(DocumentImpl *owner, const DOMString &value);
+    CDATASectionImpl(DocumentImplPtr owner, const DOMString &value);
 
     /**
      *
@@ -1483,7 +1494,7 @@ public:
     /**
      *
      */
-    NotationImpl(DocumentImpl *owner);
+    NotationImpl(DocumentImplPtr owner);
 
     /**
      *
@@ -1560,7 +1571,7 @@ public:
     /**
      *
      */
-    EntityImpl(DocumentImpl *owner);
+    EntityImpl(DocumentImplPtr owner);
 
     /**
      *
@@ -1612,7 +1623,7 @@ public:
     /**
      *
      */
-    EntityReferenceImpl(DocumentImpl *owner, const DOMString &theName);
+    EntityReferenceImpl(DocumentImplPtr owner, const DOMString &theName);
 
     /**
      *
@@ -1632,7 +1643,9 @@ public:
 /**
  *
  */
-class ProcessingInstructionImpl : public ProcessingInstruction, public NodeImpl
+class ProcessingInstructionImpl : 
+              public ProcessingInstruction,
+			  public NodeImpl
 {
 public:
 
@@ -1666,7 +1679,7 @@ public:
     /**
      *
      */
-    ProcessingInstructionImpl(DocumentImpl *owner,
+    ProcessingInstructionImpl(DocumentImplPtr owner,
                               const DOMString &target,
                               const DOMString &data);
 
@@ -1713,7 +1726,7 @@ public:
     /**
      *
      */
-    DocumentFragmentImpl(DocumentImpl *owner);
+    DocumentFragmentImpl(DocumentImplPtr owner);
 
     /**
      *
@@ -1741,7 +1754,7 @@ public:
     /**
      *
      */
-    virtual DocumentType *getDoctype();
+    virtual DocumentTypePtr getDoctype();
 
     /**
      *
@@ -1751,52 +1764,53 @@ public:
     /**
      *
      */
-    virtual Element *getDocumentElement();
+    virtual ElementPtr getDocumentElement();
 
     /**
      *
      */
-    virtual Element *createElement(const DOMString& tagName)
+    virtual ElementPtr createElement(const DOMString& tagName)
                            throw(DOMException);
 
     /**
      *
      */
-    virtual DocumentFragment *createDocumentFragment();
+    virtual DocumentFragmentPtr createDocumentFragment();
 
     /**
      *
      */
-    virtual Text *createTextNode(const DOMString& data);
+    virtual TextPtr createTextNode(const DOMString& data);
 
     /**
      *
      */
-    virtual Comment  *createComment(const DOMString& data);
+    virtual CommentPtr createComment(const DOMString& data);
 
     /**
      *
      */
-    virtual CDATASection *createCDATASection(const DOMString& data)
+    virtual CDATASectionPtr createCDATASection(const DOMString& data)
                                      throw(DOMException);
 
     /**
      *
      */
-    virtual ProcessingInstruction *createProcessingInstruction(const DOMString& target,
-                                                       const DOMString& data)
-                                                       throw(DOMException);
+    virtual ProcessingInstructionPtr createProcessingInstruction(
+	                                const DOMString& target,
+                                    const DOMString& data)
+                                    throw(DOMException);
 
     /**
      *
      */
-    virtual Attr *createAttribute(const DOMString& name)
+    virtual AttrPtr createAttribute(const DOMString& name)
                           throw(DOMException);
 
     /**
      *
      */
-    virtual EntityReference *createEntityReference(const DOMString& name)
+    virtual EntityReferencePtr createEntityReference(const DOMString& name)
                                            throw(DOMException);
 
     /**
@@ -1808,21 +1822,21 @@ public:
     /**
      *
      */
-    virtual Node *importNode(const Node *importedNode,
+    virtual NodePtr importNode(const NodePtr importedNode,
                      bool deep)
                      throw(DOMException);
 
     /**
      *
      */
-    virtual Element *createElementNS(const DOMString& namespaceURI,
+    virtual ElementPtr createElementNS(const DOMString& namespaceURI,
                              const DOMString& qualifiedName)
                              throw(DOMException);
 
     /**
      *
      */
-    virtual Attr *createAttributeNS(const DOMString& namespaceURI,
+    virtual AttrPtr createAttributeNS(const DOMString& namespaceURI,
                             const DOMString& qualifiedName)
                             throw(DOMException);
 
@@ -1835,7 +1849,7 @@ public:
     /**
      *
      */
-    virtual Element *getElementById(const DOMString& elementId);
+    virtual ElementPtr getElementById(const DOMString& elementId);
 
 
     /**
@@ -1893,7 +1907,7 @@ public:
     /**
      *
      */
-    virtual Node *adoptNode(const Node *source) throw (DOMException);
+    virtual NodePtr adoptNode(const NodePtr source) throw (DOMException);
 
     /**
      *
@@ -1908,7 +1922,7 @@ public:
     /**
      *
      */
-    virtual Node *renameNode(const Node *n,
+    virtual NodePtr renameNode(const NodePtr n,
                              const DOMString &name,
                              const DOMString &qualifiedName)
                              throw (DOMException);
@@ -1919,9 +1933,9 @@ public:
     //##################
 
     DocumentImpl(const DOMImplementation *domImpl,
-                 const DOMString    &namespaceURI,
-                 const DOMString    &qualifiedName,
-                 const DocumentType *doctype);
+                 const DOMString       &namespaceURI,
+                 const DOMString       &qualifiedName,
+                 const DocumentTypePtr doctype);
 
     virtual ~DocumentImpl();
 
@@ -1934,13 +1948,13 @@ protected:
 
     DOMImplementation *parent;
 
-    DOMString *documentURI;
+    DOMString documentURI;
 
     DOMString qualifiedName;
 
-    DocumentType *doctype;
+    DocumentTypePtr doctype;
 
-    ElementImpl *documentElement;
+    ElementImplPtr documentElement;
 
     class NamedElementItem
     {
@@ -1949,7 +1963,7 @@ protected:
         {
             next = NULL;
         }
-        NamedElementItem(const DOMString &nameArg, Element *elemArg)
+        NamedElementItem(const DOMString &nameArg, ElementPtr elemArg)
         {
             next = NULL;
             name = nameArg;
@@ -1962,7 +1976,7 @@ protected:
         }
         NamedElementItem *next;
         DOMString        name;
-        Element          *elem;
+        ElementPtr       elem;
     };
 
     NamedElementItem elementsById;

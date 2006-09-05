@@ -134,12 +134,12 @@ bool DOMImplementationImpl::hasFeature(const DOMString& feature,
 /**
  *
  */
-DocumentType *DOMImplementationImpl::createDocumentType(const DOMString& qualifiedName,
+DocumentTypePtr DOMImplementationImpl::createDocumentType(const DOMString& qualifiedName,
                                  const DOMString& publicId,
                                  const DOMString& systemId)
                                  throw(DOMException)
 {
-    DocumentTypeImpl *typeImpl = new DocumentTypeImpl(qualifiedName,
+    DocumentTypePtr typeImpl = new DocumentTypeImpl(qualifiedName,
                                          publicId, systemId);
     return typeImpl;
 }
@@ -147,16 +147,16 @@ DocumentType *DOMImplementationImpl::createDocumentType(const DOMString& qualifi
 /**
  *
  */
-Document *DOMImplementationImpl::createDocument(
+DocumentPtr DOMImplementationImpl::createDocument(
                          const DOMString& namespaceURI,
                          const DOMString& qualifiedName,
-                         DocumentType *doctype)
+                         DocumentTypePtr  doctype)
                          throw(DOMException)
 {
-    DocumentImpl *doc = new DocumentImpl(this,
-                                         namespaceURI,
-                                         qualifiedName,
-                                         doctype);
+    DocumentPtr doc = new DocumentImpl(this,
+                                       namespaceURI,
+                                       qualifiedName,
+                                       doctype);
     return doc;
 }
 
@@ -182,13 +182,13 @@ DOMObject *DOMImplementationImpl::getFeature(const DOMString& feature,
  * Utility for finding the first Element above
  * a given node.  Used by several methods below
  */
-static Node *getAncestorElement(Node *node)
+static NodePtr getAncestorElement(NodePtr node)
 {
-    if (!node)
+    if (!node.get())
         return NULL;
     node = node->getParentNode();
     //Either quit because I am an element, or because I am null
-    while (node)
+    while (node.get())
         {
         if (node->getNodeType() == Node::ELEMENT_NODE)
             return node;
@@ -232,7 +232,7 @@ unsigned short NodeImpl::getNodeType()
 /**
  *
  */
-Node *NodeImpl::getParentNode()
+NodePtr NodeImpl::getParentNode()
 {
     return parent;
 }
@@ -243,7 +243,7 @@ Node *NodeImpl::getParentNode()
 NodeList NodeImpl::getChildNodes()
 {
     NodeList list;
-    for (NodeImpl *node = firstChild ; node ; node=node->next)
+    for (NodeImplPtr node = firstChild ; node.get() ; node=node->next)
         list.add(node);
     return list;
 }
@@ -251,7 +251,7 @@ NodeList NodeImpl::getChildNodes()
 /**
  *
  */
-Node *NodeImpl::getFirstChild()
+NodePtr NodeImpl::getFirstChild()
 {
     return firstChild;
 }
@@ -259,7 +259,7 @@ Node *NodeImpl::getFirstChild()
 /**
  *
  */
-Node *NodeImpl::getLastChild()
+NodePtr NodeImpl::getLastChild()
 {
     return lastChild;
 }
@@ -267,7 +267,7 @@ Node *NodeImpl::getLastChild()
 /**
  *
  */
-Node *NodeImpl::getPreviousSibling()
+NodePtr NodeImpl::getPreviousSibling()
 {
     return prev;
 }
@@ -275,7 +275,7 @@ Node *NodeImpl::getPreviousSibling()
 /**
  *
  */
-Node *NodeImpl::getNextSibling()
+NodePtr NodeImpl::getNextSibling()
 {
     return next;
 }
@@ -293,7 +293,7 @@ NamedNodeMap &NodeImpl::getAttributes()
 /**
  *
  */
-Document *NodeImpl::getOwnerDocument()
+DocumentPtr NodeImpl::getOwnerDocument()
 {
     return ownerDocument;
 }
@@ -301,9 +301,9 @@ Document *NodeImpl::getOwnerDocument()
 /**
  *
  */
-Node *NodeImpl::insertBefore(const Node *newChild,
-                   const Node *refChild)
-                   throw(DOMException)
+NodePtr NodeImpl::insertBefore(const NodePtr newChild,
+                               const NodePtr refChild)
+                               throw(DOMException)
 {
     if (!newChild)
         return NULL;
@@ -312,13 +312,13 @@ Node *NodeImpl::insertBefore(const Node *newChild,
     if (!refChild)
         return appendChild(newChild);
 
-    NodeImpl *newChildImpl = dynamic_cast<NodeImpl *>((Node *)newChild);
-    for (NodeImpl *n = firstChild ; n ; n=n->next)
+    NodeImplPtr newChildImpl = dynamic_cast<NodeImpl *>(newChild.get());
+    for (NodeImplPtr n = firstChild ; n.get() ; n=n->next)
         {
         if (n == refChild)
             {
             //link to new
-            if (n->prev)
+            if (n->prev.get())
                 n->prev->next = newChildImpl;
             else
                 firstChild = newChildImpl;
@@ -338,24 +338,24 @@ Node *NodeImpl::insertBefore(const Node *newChild,
 /**
  *
  */
-Node *NodeImpl::replaceChild(const Node *newChild,
-                   const Node *oldChild)
-                   throw(DOMException)
+NodePtr NodeImpl::replaceChild(const NodePtr newChild,
+                               const NodePtr oldChild)
+                               throw(DOMException)
 {
     if (!oldChild)
         return NULL;
 
-    NodeImpl *newChildImpl = dynamic_cast<NodeImpl *>((Node *)newChild);
-    for (NodeImpl *n = firstChild ; n ; n=n->next)
+    NodeImplPtr newChildImpl = dynamic_cast<NodeImpl *>(newChild.get());
+    for (NodeImplPtr n = firstChild ; n.get() ; n=n->next)
         {
         if (n == oldChild)
             {
             //link to new
-            if (n->prev)
+            if (n->prev.get())
                 n->prev->next = newChildImpl;
             else
                 firstChild = newChildImpl;
-            if (n->next)
+            if (n->next.get())
                 n->next->prev = newChildImpl;
             else
                 lastChild = newChildImpl;
@@ -374,19 +374,19 @@ Node *NodeImpl::replaceChild(const Node *newChild,
 /**
  *
  */
-Node *NodeImpl::removeChild(const Node *oldChild)
-                  throw(DOMException)
+NodePtr NodeImpl::removeChild(const NodePtr oldChild)
+                              throw(DOMException)
 {
     if (!oldChild)
         return NULL;
 
-    for (NodeImpl *n = firstChild ; n ; n=n->next)
+    for (NodeImplPtr n = firstChild ; n.get() ; n=n->next)
         {
         if (n == oldChild)
             {
-            if (n->prev)
+            if (n->prev.get())
                 n->prev->next = n->next;
-            if (n->next)
+            if (n->next.get())
                 n->next->prev = n->prev;
             return n;
             }
@@ -397,14 +397,14 @@ Node *NodeImpl::removeChild(const Node *oldChild)
 /**
  *
  */
-Node *NodeImpl::appendChild(const Node *newChild)
-                  throw(DOMException)
+NodePtr NodeImpl::appendChild(const NodePtr newChild)
+                             throw(DOMException)
 {
     if (!newChild)
         return NULL;
 
-    NodeImpl *newChildImpl =
-	     dynamic_cast<NodeImpl *> ((Node *)newChild);
+    NodeImplPtr newChildImpl =
+	     dynamic_cast<NodeImpl *> (newChild.get());
 
     newChildImpl->parent        = this;
     newChildImpl->ownerDocument = ownerDocument;
@@ -423,7 +423,7 @@ Node *NodeImpl::appendChild(const Node *newChild)
         lastChild          = newChildImpl;
         }
 
-    return (Node *)newChild;
+    return newChild;
 }
 
 /**
@@ -431,15 +431,15 @@ Node *NodeImpl::appendChild(const Node *newChild)
  */
 bool NodeImpl::hasChildNodes()
 {
-    return (firstChild != NULL);
+    return (firstChild != (NodeImpl *)0);
 }
 
 /**
  *
  */
-Node *NodeImpl::cloneNode(bool deep)
+NodePtr NodeImpl::cloneNode(bool deep)
 {
-    NodeImpl *node = new NodeImpl(ownerDocument, nodeName);
+    NodeImplPtr node    = new NodeImpl(ownerDocument, nodeName);
     node->parent        = parent;
     node->prev          = prev;
     node->next          = next;
@@ -449,7 +449,7 @@ Node *NodeImpl::cloneNode(bool deep)
     if (deep)
         {
         node->firstChild = node->lastChild = NULL;
-        for (NodeImpl *child = firstChild ; child ; child=child->next)
+        for (NodeImplPtr child = firstChild ; child.get() ; child=child->next)
             {
             node->appendChild(child->cloneNode(deep));
             }
@@ -469,14 +469,14 @@ Node *NodeImpl::cloneNode(bool deep)
 void NodeImpl::normalize()
 {
     //First, concatenate adjoining text nodes
-    NodeImpl *next = NULL;
-    for (NodeImpl *child = firstChild ; child ; child=next)
+    NodeImplPtr next = (NodeImpl *)0;
+    for (NodeImplPtr child = firstChild ; child.get() ; child=next)
         {
         if (child->getNodeType() != Node::TEXT_NODE)
             continue;
         next = NULL;
         DOMString sval = child->getNodeValue();
-        for (NodeImpl *sibling = child->next ; sibling ; sibling=next)
+        for (NodeImplPtr sibling = child->next ; sibling.get() ; sibling=next)
             {
             next = sibling->next;
             if (sibling->getNodeType() != Node::TEXT_NODE)
@@ -484,16 +484,16 @@ void NodeImpl::normalize()
             sval.append(sibling->getNodeValue());
             //unlink and delete
             child->next = sibling->next;
-            if (sibling->next)
+            if (sibling->next.get())
                 sibling->next->prev = child;
-            delete sibling;
+            //delete sibling;
             }
         child->setNodeValue(sval);
         }
 
     //Next, we remove zero-length text subnodes
     next = NULL;
-    for (NodeImpl *child = firstChild ; child ; child=next)
+    for (NodeImplPtr child = firstChild ; child.get() ; child=next)
         {
         next = child->next;
         if (child->getNodeType() != Node::TEXT_NODE)
@@ -501,11 +501,11 @@ void NodeImpl::normalize()
         if (child->getNodeValue().size() == 0)
             {
             //unlink and delete
-            if (child->prev)
+            if (child->prev.get())
                 child->prev->next = child->next;
-            if (child->next)
+            if (child->next.get())
                 child->next->prev = child->prev;
-            delete child;
+            //delete child;
             }
         }
 
@@ -515,7 +515,7 @@ void NodeImpl::normalize()
  *
  */
 bool NodeImpl::isSupported(const DOMString& feature,
-                 const DOMString& version)
+                           const DOMString& version)
 {
     //again, no idea
     return false;
@@ -576,22 +576,22 @@ DOMString NodeImpl::getBaseURI()
 /**
  *
  */
-unsigned short NodeImpl::compareDocumentPosition(const Node *otherArg)
+unsigned short NodeImpl::compareDocumentPosition(const NodePtr otherArg)
 {
-    if (!otherArg || this == otherArg)
+    if (!otherArg || otherArg == (NodePtr )this)
         return 0;//no flags
 
-    Node *node;
-    Node *other = (Node *)otherArg;
+    NodePtr node;
+    NodePtr other = otherArg;
 
     //Look above me
-    for (node=getParentNode() ; node ; node=node->getParentNode())
+    for (node=getParentNode() ; node.get() ; node=node->getParentNode())
         if (node == other)
             return DOCUMENT_POSITION_CONTAINED_BY;
 
     //Look above the other guy. See me?
-    for (node=other->getParentNode() ; node ; node=node->getParentNode())
-        if (node == this)
+    for (node=other->getParentNode() ; node.get() ; node=node->getParentNode())
+        if (node == (NodePtr )this)
             return DOCUMENT_POSITION_CONTAINS;
 
 
@@ -616,7 +616,7 @@ DOMString NodeImpl::getTextContent() throw(DOMException)
 		     nodeType == ENTITY_REFERENCE_NODE  ||
 		     nodeType == DOCUMENT_FRAGMENT_NODE)
 		{
-		for (Node *n = getFirstChild() ; n ;
+		for (NodePtr n = getFirstChild() ; n.get() ;
 		     n=n->getNextSibling() )
 		    {
             if (n->getNodeType() != COMMENT_NODE &&
@@ -634,13 +634,15 @@ DOMString NodeImpl::getTextContent() throw(DOMException)
 void NodeImpl::setTextContent(const DOMString &val) throw(DOMException)
 {
     //Delete children
-	for (Node *n = getFirstChild() ; n ;
-		     n=n->getNextSibling() )
+    /** Not necessary.  Just let smart pointers to their work
+	for (NodePtr n = getFirstChild() ; n.get() ;
+		           n=n->getNextSibling() )
         delete n;
+    */
     firstChild = lastChild = NULL;
 
     //Replace with a single text node
-    NodeImpl *tnode = new NodeImpl(ownerDocument);
+    NodeImplPtr tnode = new NodeImpl(ownerDocument);
     tnode->nodeType = Node::TEXT_NODE;
     tnode->setNodeValue(val);
     appendChild(tnode);
@@ -662,13 +664,13 @@ DOMString NodeImpl::lookupPrefix(const DOMString &theNamespaceURI)
         {
         case Node::ELEMENT_NODE:
             {
-            ElementImpl *elem = (ElementImpl *)this;
+            ElementPtr elem = (Element *)this;
             return lookupNamespacePrefix(theNamespaceURI, elem);
             }
         case Node::DOCUMENT_NODE:
             {
-            Document *doc = (Document *)this;
-            Element *elem = doc->getDocumentElement();
+            DocumentPtr doc = (Document *)this;
+            ElementPtr elem = doc->getDocumentElement();
             return elem->lookupPrefix(theNamespaceURI);
             }
         case Node::ENTITY_NODE :
@@ -678,9 +680,9 @@ DOMString NodeImpl::lookupPrefix(const DOMString &theNamespaceURI)
             return DOMString("");  // type is unknown
         case Node::ATTRIBUTE_NODE:
             {
-            Attr *attr = (Attr *)this;
-            Element *elem = (Element *)attr->getOwnerElement();
-            if ( elem )
+            AttrPtr attr = (Attr *)this;
+            ElementPtr elem = attr->getOwnerElement();
+            if ( elem.get() )
                 {
                 return elem->lookupPrefix(theNamespaceURI);
                 }
@@ -689,7 +691,8 @@ DOMString NodeImpl::lookupPrefix(const DOMString &theNamespaceURI)
         default:
             {
             //Get ancestor element, if any
-            if ( Node *ancestor = getAncestorElement(this) )
+            NodePtr ancestor = getAncestorElement(this);
+            if ( ancestor.get() )
                {
                return ancestor->lookupPrefix(theNamespaceURI);
                }
@@ -708,17 +711,19 @@ bool NodeImpl::isDefaultNamespace(const DOMString &theNamespaceURI)
     switch (nodeType)
         {
         case ELEMENT_NODE:
+            {
             if ( namespaceURI.size()>0 && prefix.size()==0 )
                 {
                 return (namespaceURI == theNamespaceURI);
                 }
-            if ( Node *attr = attributes.getNamedItem("xmlns"))
+            NodePtr attr = attributes.getNamedItem("xmlns");
+            if ( attr.get() )
                 {
-	        return (attr->getNodeValue() == theNamespaceURI);
+                return (attr->getNodeValue() == theNamespaceURI);
                 }
 
-
-            if ( Node *ancestor = getAncestorElement(this) )
+            NodePtr ancestor = getAncestorElement(this);
+            if ( ancestor.get() )
                 {
                 return ancestor->isDefaultNamespace(theNamespaceURI);
                 }
@@ -726,10 +731,11 @@ bool NodeImpl::isDefaultNamespace(const DOMString &theNamespaceURI)
                 {
                 return false;
                 }
+            }
         case DOCUMENT_NODE:
             { //just use braces for local declaration
-            Document *doc = (Document *)this;
-            Element *elem = doc->getDocumentElement();
+            DocumentPtr doc = (Document *)this;
+            ElementPtr elem = doc->getDocumentElement();
             return elem->isDefaultNamespace(theNamespaceURI);
             }
         case ENTITY_NODE:
@@ -738,20 +744,22 @@ bool NodeImpl::isDefaultNamespace(const DOMString &theNamespaceURI)
         case DOCUMENT_FRAGMENT_NODE:
             return false;
         case ATTRIBUTE_NODE:
-           {//braces only for scope
-           Attr *attr = (Attr *)this;
-           Element *ownerElement = attr->getOwnerElement();
-           if ( ownerElement )
+            {//braces only for scope
+            AttrPtr attr = (Attr *)this;
+            ElementPtr ownerElement = attr->getOwnerElement();
+            if ( ownerElement.get() )
                 {
                 return ownerElement->isDefaultNamespace(theNamespaceURI);
                 }
-           else
+            else
                 {
                 return false;
                 }
-           }
+            }
         default:
-            if ( Node *ancestor = getAncestorElement(this) )
+            {
+            NodePtr ancestor = getAncestorElement(this);
+            if ( ancestor.get() )
                 {
                 return ancestor->isDefaultNamespace(theNamespaceURI);
                 }
@@ -759,6 +767,7 @@ bool NodeImpl::isDefaultNamespace(const DOMString &theNamespaceURI)
                 {
                 return false;
                 }
+            }
         }//switch
 
     return false;
@@ -785,7 +794,7 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
                 int nrAttrs = attributes.getLength();
                 for (int i=0 ; i<nrAttrs ; i++)
                     {
-                    Node *attr = attributes.item(i);
+                    NodePtr attr = attributes.item(i);
                     if (attr->getPrefix() == "xmlns" && attr->getLocalName() == thePrefix )
                         { // non default namespace
                         if (attr->getNodeValue().size()>0)
@@ -805,7 +814,8 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
                     }
                 }
 
-            if ( Node *ancestor = getAncestorElement(this) )
+            NodePtr ancestor = getAncestorElement(this);
+            if ( ancestor.get() )
                 {
                 return ancestor->lookupNamespaceURI(thePrefix);
                 }
@@ -813,8 +823,8 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
             }
         case DOCUMENT_NODE:
             {
-            Document *doc = (Document *)this;
-            Element *elem = doc->getDocumentElement();
+            DocumentPtr doc = (Document *)this;
+            ElementPtr elem = doc->getDocumentElement();
             return elem->lookupNamespaceURI(thePrefix);
             }
         case ENTITY_NODE:
@@ -825,7 +835,8 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
 
         case ATTRIBUTE_NODE:
             {
-            if (Element *ownerElement = ((Attr *)this)->getOwnerElement())
+            ElementPtr ownerElement = ((Attr *)this)->getOwnerElement();
+            if ( ownerElement.get() )
                 {
                 return ownerElement->lookupNamespaceURI(thePrefix);
                 }
@@ -835,7 +846,9 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
                 }
             }
         default:
-            if ( Node *ancestor = getAncestorElement(this) )
+            {
+            NodePtr ancestor = getAncestorElement(this);
+            if ( ancestor.get() )
                 {
                 return ancestor->lookupNamespaceURI(thePrefix);
                 }
@@ -843,6 +856,7 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
                 {
                 return DOMString("");
                 }
+            }
         }//switch
 }
 
@@ -850,15 +864,15 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
 /**
  *
  */
-bool NodeImpl::isEqualNode(const Node *nodeArg)
+bool NodeImpl::isEqualNode(const NodePtr nodeArg)
 {
     if (!nodeArg)
         return false;
 
-    if (this == nodeArg)
+    if (nodeArg == (NodePtr )this)
         return true;
 
-    Node *node = (Node *)nodeArg;
+    NodePtr node = nodeArg;
 
     if (getNodeType()     != node->getNodeType()     ||
         getNodeName()     != node->getNodeName()     ||
@@ -973,7 +987,7 @@ void NodeImpl::setNamespaceURI(const DOMString &theNamespaceURI)
  * From DOM3 Namespace algorithms
  */
 DOMString NodeImpl::lookupNamespacePrefix(const DOMString &theNamespaceURI,
-                                Node *originalElement)
+                                          NodePtr originalElement)
 {
     if (!originalElement)
         return DOMString("");
@@ -991,7 +1005,7 @@ DOMString NodeImpl::lookupNamespacePrefix(const DOMString &theNamespaceURI,
         int nrAttrs = attributes.getLength();
         for (int i=0 ; i<nrAttrs ; i++)
             {
-            Node *attr = attributes.item(i);
+            NodePtr attr = attributes.item(i);
             DOMString attrLocalName = attr->getLocalName();
             if (attr->getPrefix()    == "xmlns" &&
                 attr->getNodeValue() == theNamespaceURI &&
@@ -1004,11 +1018,11 @@ DOMString NodeImpl::lookupNamespacePrefix(const DOMString &theNamespaceURI,
         }
 
     //Get ancestor element, if any
-    NodeImpl *ancestor = parent;
-    while (ancestor && ancestor->getNodeType()!= Node::ELEMENT_NODE)
+    NodeImplPtr ancestor = parent;
+    while (ancestor.get() && ancestor->getNodeType()!= Node::ELEMENT_NODE)
         ancestor = ancestor->parent;
 
-    if ( ancestor )
+    if ( ancestor.get() )
         {
         return ancestor->lookupNamespacePrefix(theNamespaceURI, originalElement);
         }
@@ -1049,7 +1063,7 @@ NodeImpl &NodeImpl::operator=(const NodeImpl &other)
 /**
  *
  */
-NodeImpl::NodeImpl(DocumentImpl *owner)
+NodeImpl::NodeImpl(DocumentImplPtr owner) : Node()
 {
     init();
     ownerDocument = owner;
@@ -1058,7 +1072,8 @@ NodeImpl::NodeImpl(DocumentImpl *owner)
 /**
  *
  */
-NodeImpl::NodeImpl(DocumentImpl *owner, const DOMString &nodeName)
+NodeImpl::NodeImpl(DocumentImplPtr owner, const DOMString &nodeName)
+                   : Node()
 {
     init();
     ownerDocument = owner;
@@ -1068,8 +1083,8 @@ NodeImpl::NodeImpl(DocumentImpl *owner, const DOMString &nodeName)
 /**
  *
  */
-NodeImpl::NodeImpl(DocumentImpl *owner, const DOMString &theNamespaceURI,
-                      const DOMString &qualifiedName)
+NodeImpl::NodeImpl(DocumentImplPtr owner, const DOMString &theNamespaceURI,
+                      const DOMString &qualifiedName) : Node()
 {
     init();
     ownerDocument = owner;
@@ -1122,9 +1137,12 @@ NodeImpl::~NodeImpl()
     if (userDataEntries)
         delete userDataEntries;
     //Delete children
-	for (Node *n = getFirstChild() ; n ;
+    /** Use smart pointers.  do not delete explicitly
+	for (NodePtr n = getFirstChild() ; n.get() ;
 		     n=n->getNextSibling() )
         delete n;
+    */
+    firstChild = lastChild = (NodeImpl *)0;
 }
 
 
@@ -1144,7 +1162,7 @@ CharacterDataImpl::CharacterDataImpl() : NodeImpl()
 /**
  *
  */
-CharacterDataImpl::CharacterDataImpl(DocumentImpl *owner,
+CharacterDataImpl::CharacterDataImpl(DocumentImplPtr owner,
                                      const DOMString &theValue) : NodeImpl()
 {
     ownerDocument = owner;
@@ -1275,7 +1293,7 @@ void AttrImpl::setValue(const DOMString& val) throw(DOMException)
 /**
  *
  */
-Element *AttrImpl::getOwnerElement()
+ElementPtr AttrImpl::getOwnerElement()
 {
     return ownerElement;
 }
@@ -1284,9 +1302,9 @@ Element *AttrImpl::getOwnerElement()
 /**
  *
  */
-TypeInfo *AttrImpl::getSchemaTypeInfo()
+TypeInfo &AttrImpl::getSchemaTypeInfo()
 {
-    return NULL;
+    return typeInfo;
 }
 
 
@@ -1305,15 +1323,15 @@ bool AttrImpl::getIsId()
 //##################
 
 
-void AttrImpl::setOwnerElement(const Element *elem)
+void AttrImpl::setOwnerElement(const ElementPtr elem)
 {
-    ownerElement = (Element *)elem;
+    ownerElement = elem;
 }
 
 /**
  *
  */
-AttrImpl::AttrImpl(DocumentImpl *owner, const DOMString &theName)
+AttrImpl::AttrImpl(DocumentImplPtr owner, const DOMString &theName)
                    : NodeImpl()
 {
     nodeType     = ATTRIBUTE_NODE;
@@ -1324,7 +1342,7 @@ AttrImpl::AttrImpl(DocumentImpl *owner, const DOMString &theName)
 /**
  *
  */
-AttrImpl::AttrImpl(DocumentImpl *owner,
+AttrImpl::AttrImpl(DocumentImplPtr owner,
                    const DOMString &theNamespaceURI,
                    const DOMString &theQualifiedName)
                    : NodeImpl()
@@ -1368,10 +1386,10 @@ DOMString ElementImpl::getTagName()
  */
 DOMString ElementImpl::getAttribute(const DOMString& name)
 {
-    Node *node = attributes.getNamedItem(name);
+    NodePtr node = attributes.getNamedItem(name);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return DOMString("");
-    Attr *attr = dynamic_cast<Attr *>(node);
+    AttrPtr attr = dynamic_cast<Attr *>(node.get());
     return attr->getValue();
 }
 
@@ -1382,7 +1400,7 @@ void ElementImpl::setAttribute(const DOMString& name,
                   const DOMString& value)
                   throw(DOMException)
 {
-    AttrImpl *attr = new AttrImpl(ownerDocument, name);
+    AttrImplPtr attr = new AttrImpl(ownerDocument, name);
     attr->setValue(value);
     attr->setOwnerElement(this);
     attributes.setNamedItem(attr);
@@ -1400,19 +1418,19 @@ void ElementImpl::removeAttribute(const DOMString& name)
 /**
  *
  */
-Attr *ElementImpl::getAttributeNode(const DOMString& name)
+AttrPtr ElementImpl::getAttributeNode(const DOMString& name)
 {
-    Node *node = attributes.getNamedItem(name);
+    NodePtr node = attributes.getNamedItem(name);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return NULL;
-    Attr *attr = dynamic_cast<Attr *>(node);
+    AttrPtr attr = dynamic_cast<Attr *>(node.get());
     return attr;
 }
 
 /**
  *
  */
-Attr *ElementImpl::setAttributeNode(Attr *attr)
+AttrPtr ElementImpl::setAttributeNode(AttrPtr attr)
                       throw(DOMException)
 {
     attributes.setNamedItem(attr);
@@ -1422,11 +1440,9 @@ Attr *ElementImpl::setAttributeNode(Attr *attr)
 /**
  *
  */
-Attr *ElementImpl::removeAttributeNode(Attr *attr)
+AttrPtr ElementImpl::removeAttributeNode(AttrPtr attr)
                          throw(DOMException)
 {
-    if (!attr)
-        return NULL;
     attributes.removeNamedItem(attr->getName());
     return attr;
 }
@@ -1436,18 +1452,19 @@ Attr *ElementImpl::removeAttributeNode(Attr *attr)
  *
  */
 void ElementImpl::getElementsByTagNameRecursive(NodeList &list,
-                        const DOMString& name, Element *elem)
+                        const DOMString& name, ElementPtr elem)
 {
     if (!elem)
         return;
 
     if (name == elem->getTagName())
         list.add(elem);
-    for (Node *node = elem->getFirstChild() ; node ; node=node->getNextSibling())
+    for (NodePtr node = elem->getFirstChild() ; node.get() ;
+	               node=node->getNextSibling())
         {
         if (node->getNodeType() != Node::ELEMENT_NODE)
             continue;
-        Element *childElem = dynamic_cast<Element *>(node);
+        ElementPtr childElem = dynamic_cast<Element *>(node.get());
         getElementsByTagNameRecursive(list, name, childElem);
         }
 }
@@ -1469,10 +1486,10 @@ NodeList ElementImpl::getElementsByTagName(const DOMString& tagName)
 DOMString ElementImpl::getAttributeNS(const DOMString& namespaceURI,
                          const DOMString& localName)
 {
-    Node *node = attributes.getNamedItemNS(namespaceURI, localName);
+    NodePtr node = attributes.getNamedItemNS(namespaceURI, localName);
     if (!node || node->getNodeType()!=ATTRIBUTE_NODE)
         return DOMString("");
-    Attr *attr = dynamic_cast<Attr *>(node);
+    AttrPtr attr = dynamic_cast<Attr *>(node.get());
     return attr->getValue();
 }
 
@@ -1484,7 +1501,7 @@ void ElementImpl::setAttributeNS(const DOMString& namespaceURI,
                     const DOMString& value)
                     throw(DOMException)
 {
-    AttrImpl *attr = new AttrImpl(ownerDocument, namespaceURI, qualifiedName);
+    AttrImplPtr attr = new AttrImpl(ownerDocument, namespaceURI, qualifiedName);
     attr->setValue(value);
     attr->setOwnerElement(this);
     attributes.setNamedItemNS(attr);
@@ -1503,20 +1520,20 @@ void ElementImpl::removeAttributeNS(const DOMString& namespaceURI,
 /**
  *
  */
- Attr *ElementImpl::getAttributeNodeNS(const DOMString& namespaceURI,
+ AttrPtr ElementImpl::getAttributeNodeNS(const DOMString& namespaceURI,
                         const DOMString& localName)
 {
-    Node *node = attributes.getNamedItemNS(namespaceURI, localName);
+    NodePtr node = attributes.getNamedItemNS(namespaceURI, localName);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
-        return NULL;
-    Attr *attr = dynamic_cast<Attr *>(node);
+        return (Attr *)0;
+    AttrPtr attr = dynamic_cast<Attr *>(node.get());
     return attr;
 }
 
 /**
  *
  */
-Attr *ElementImpl::setAttributeNodeNS(Attr *attr)
+AttrPtr ElementImpl::setAttributeNodeNS(AttrPtr attr)
                         throw(DOMException)
 {
     attributes.setNamedItemNS(attr);
@@ -1528,18 +1545,19 @@ Attr *ElementImpl::setAttributeNodeNS(Attr *attr)
  *
  */
 void ElementImpl::getElementsByTagNameNSRecursive(NodeList &list,
-             const DOMString& namespaceURI, const DOMString& tagName, Element *elem)
+             const DOMString& namespaceURI,
+			 const DOMString& tagName, ElementPtr elem)
 {
     if (!elem)
         return;
 
     if (namespaceURI == elem->getNamespaceURI() && tagName == elem->getTagName())
         list.add(elem);
-    for (Node *node = elem->getFirstChild() ; node ; node=node->getNextSibling())
+    for (NodePtr node = elem->getFirstChild() ; node.get() ; node=node->getNextSibling())
         {
         if (node->getNodeType() != Node::ELEMENT_NODE)
             continue;
-        Element *childElem = dynamic_cast<Element *>(node);
+        ElementPtr childElem = dynamic_cast<Element *>(node.get());
         getElementsByTagNameNSRecursive(list, namespaceURI, tagName, childElem);
         }
 }
@@ -1560,7 +1578,7 @@ NodeList ElementImpl::getElementsByTagNameNS(const DOMString& namespaceURI,
  */
 bool ElementImpl::hasAttribute(const DOMString& attrName)
 {
-    Node *node = attributes.getNamedItem(attrName);
+    NodePtr node = attributes.getNamedItem(attrName);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return false;
     return true;
@@ -1572,7 +1590,7 @@ bool ElementImpl::hasAttribute(const DOMString& attrName)
 bool ElementImpl::hasAttributeNS(const DOMString& namespaceURI,
                     const DOMString& localName)
 {
-    Node *node = attributes.getNamedItemNS(namespaceURI, localName);
+    NodePtr node = attributes.getNamedItemNS(namespaceURI, localName);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return false;
     return true;
@@ -1581,10 +1599,9 @@ bool ElementImpl::hasAttributeNS(const DOMString& namespaceURI,
 /**
  *
  */
-TypeInfo *ElementImpl::getSchemaTypeInto()
+TypeInfo &ElementImpl::getSchemaTypeInfo()
 {
-    //fixme
-    return NULL;
+    return typeInfo;
 }
 
 
@@ -1610,7 +1627,7 @@ void ElementImpl::setIdAttributeNS(const DOMString &namespaceURI,
 /**
  *
  */
-void ElementImpl::setIdAttributeNode(const Attr *idAttr,
+void ElementImpl::setIdAttributeNode(const AttrPtr idAttr,
                                 bool isId) throw (DOMException)
 {
     //fixme
@@ -1633,7 +1650,7 @@ ElementImpl::ElementImpl() : NodeImpl()
 /**
  *
  */
-ElementImpl::ElementImpl(DocumentImpl *owner, const DOMString &tagName)
+ElementImpl::ElementImpl(DocumentImplPtr owner, const DOMString &tagName)
                                   : NodeImpl()
 {
     nodeType = ELEMENT_NODE;
@@ -1644,7 +1661,7 @@ ElementImpl::ElementImpl(DocumentImpl *owner, const DOMString &tagName)
 /**
  *
  */
-ElementImpl::ElementImpl(DocumentImpl *owner,
+ElementImpl::ElementImpl(DocumentImplPtr owner,
                          const DOMString &theNamespaceURI,
                          const DOMString &qualifiedName) :
                          NodeImpl()
@@ -1679,10 +1696,10 @@ void ElementImpl::normalizeNamespaces()
     int nrAttrs = attrs.getLength();
     for (int i=0; i<nrAttrs ; i++)
         {
-        Node *attrNode = attrs.item(i);
+        NodePtr attrNode = attrs.item(i);
         if (attrNode->getNodeType() != Node::ATTRIBUTE_NODE)
             continue;
-        AttrImpl *attr = dynamic_cast<AttrImpl *>(attrNode);
+        AttrImplPtr attr = dynamic_cast<AttrImpl *>(attrNode.get());
         DOMString attrNS     = attr->getNamespaceURI();
         DOMString attrName   = attr->getLocalName();
         DOMString attrPrefix = attr->getPrefix();
@@ -1802,10 +1819,10 @@ void ElementImpl::normalizeNamespaces()
     nrAttrs = attrs.getLength();
     for (int i=0; i<nrAttrs ; i++)// all non-namespace Attrs of Element
         {
-        Node *attrNode = attrs.item(i);
+        NodePtr attrNode = attrs.item(i);
         if (attrNode->getNodeType() != Node::ATTRIBUTE_NODE)
             continue;
-        Attr *attr = dynamic_cast<Attr *>(attrNode);
+        AttrPtr attr = dynamic_cast<Attr *>(attrNode.get());
         DOMString attrNS     = attr->getNamespaceURI();
         DOMString attrPrefix = attr->getPrefix();
         DOMString attrValue  = attr->getNodeValue();
@@ -1893,11 +1910,11 @@ void ElementImpl::normalizeNamespaces()
     //#######################################
     //# Recursively normalize children
     //#######################################
-    for (Node *child=getFirstChild() ; child ; child=child->getNextSibling())
+    for (NodePtr child=getFirstChild() ; child.get() ; child=child->getNextSibling())
         {
         if (child->getNodeType() != Node::ELEMENT_NODE)
             continue;
-        ElementImpl *childElement = dynamic_cast<ElementImpl *>(child);
+        ElementImplPtr childElement = dynamic_cast<ElementImpl *>(child.get());
         childElement->normalizeNamespaces();
         }
 
@@ -1922,7 +1939,7 @@ TextImpl::TextImpl() : CharacterDataImpl()
 /**
  *
  */
-TextImpl::TextImpl(DocumentImpl *owner, const DOMString &value)
+TextImpl::TextImpl(DocumentImplPtr owner, const DOMString &value)
                                : CharacterDataImpl()
 {
     nodeType      = TEXT_NODE;
@@ -1942,7 +1959,7 @@ TextImpl::~TextImpl()
 /**
  *
  */
-Text *TextImpl::splitText(unsigned long offset)
+TextPtr TextImpl::splitText(unsigned long offset)
                 throw(DOMException)
 {
     return NULL;
@@ -1968,7 +1985,7 @@ DOMString TextImpl::getWholeText()
 /**
  *
  */
-Text *TextImpl::replaceWholeText(const DOMString &content)
+TextPtr TextImpl::replaceWholeText(const DOMString &content)
                              throw(DOMException)
 {
     return NULL;
@@ -1992,7 +2009,7 @@ CommentImpl::CommentImpl() : CharacterDataImpl()
 /**
  *
  */
-CommentImpl::CommentImpl(DocumentImpl *owner, const DOMString &value)
+CommentImpl::CommentImpl(DocumentImplPtr owner, const DOMString &value)
                        : CharacterDataImpl()
 {
     nodeType      = COMMENT_NODE;
@@ -2012,61 +2029,6 @@ CommentImpl::~CommentImpl()
 
 
 
-/*#########################################################################
-## TypeInfoImpl
-#########################################################################*/
-
-
-/**
- *
- */
-TypeInfoImpl::TypeInfoImpl(const DOMString &typeNamespaceArg,
-                 const DOMString &typeNameArg,
-                 const DerivationMethod derivationMethodArg)
-{
-    typeNamespace    = typeNamespaceArg;
-    typeName         = typeNameArg;
-    derivationMethod = derivationMethodArg;
-}
-
-
-/**
- *
- */
-TypeInfoImpl::~TypeInfoImpl()
-{
-}
-
-
-/**
- *
- */
-DOMString TypeInfoImpl::getTypeName()
-{
-    return typeName;
-}
-
-/**
- *
- */
-DOMString TypeInfoImpl::getTypeNamespace()
-{
-    return typeNamespace;
-}
-
-/**
- *
- */
-bool TypeInfoImpl::isDerivedFrom(const DOMString &typeNamespaceArg,
-                           const DOMString &typeNameArg,
-                           const DerivationMethod derivationMethodArg)
-{
-    if (typeNamespaceArg == typeNamespace &&
-        typeName         == typeNameArg &&
-        derivationMethod == derivationMethodArg)
-        return true;
-    return false;
-}
 
 
 
@@ -2097,8 +2059,8 @@ UserDataHandlerImpl::~UserDataHandlerImpl()
 void UserDataHandlerImpl::handle(unsigned short operation,
                      const DOMString &key,
                      const DOMUserData *data,
-                     const Node *src,
-                     const Node *dst)
+                     const NodePtr src,
+                     const NodePtr dst)
 {
     //do nothing.  do we need anything here?
 }
@@ -2269,7 +2231,7 @@ long DOMLocatorImpl::getUtf16Offset()
 /**
  *
  */
-Node *DOMLocatorImpl::getRelatedNode()
+NodePtr DOMLocatorImpl::getRelatedNode()
 {
     return relatedNode;
 }
@@ -2357,7 +2319,7 @@ CDATASectionImpl::CDATASectionImpl() : TextImpl()
 /**
  *
  */
-CDATASectionImpl::CDATASectionImpl(DocumentImpl *owner, const DOMString &theValue)
+CDATASectionImpl::CDATASectionImpl(DocumentImplPtr owner, const DOMString &theValue)
                                  : TextImpl()
 {
     nodeType      = CDATA_SECTION_NODE;
@@ -2465,7 +2427,7 @@ DOMString DocumentTypeImpl::getInternalSubset()
 /**
  *
  */
-NotationImpl::NotationImpl(DocumentImpl *owner) : NodeImpl()
+NotationImpl::NotationImpl(DocumentImplPtr owner) : NodeImpl()
 {
     nodeType = NOTATION_NODE;
     ownerDocument = owner;
@@ -2519,7 +2481,7 @@ EntityImpl::EntityImpl() : NodeImpl()
 /**
  *
  */
-EntityImpl::EntityImpl(DocumentImpl *owner) : NodeImpl()
+EntityImpl::EntityImpl(DocumentImplPtr owner) : NodeImpl()
 {
     nodeType = ENTITY_NODE;
     ownerDocument = owner;
@@ -2604,7 +2566,7 @@ EntityReferenceImpl::EntityReferenceImpl() : NodeImpl()
 /**
  *
  */
-EntityReferenceImpl::EntityReferenceImpl(DocumentImpl *owner,
+EntityReferenceImpl::EntityReferenceImpl(DocumentImplPtr owner,
                                          const DOMString &theName)
                                          : NodeImpl()
 {
@@ -2643,7 +2605,7 @@ ProcessingInstructionImpl::ProcessingInstructionImpl(): NodeImpl()
 /**
  *
  */
-ProcessingInstructionImpl::ProcessingInstructionImpl(DocumentImpl *owner,
+ProcessingInstructionImpl::ProcessingInstructionImpl(DocumentImplPtr owner,
                                                      const DOMString &target,
                                                      const DOMString &data)
                                                      : NodeImpl()
@@ -2712,7 +2674,7 @@ DocumentFragmentImpl::DocumentFragmentImpl() : NodeImpl()
 /**
  *
  */
-DocumentFragmentImpl::DocumentFragmentImpl(DocumentImpl *owner) : NodeImpl()
+DocumentFragmentImpl::DocumentFragmentImpl(DocumentImplPtr owner) : NodeImpl()
 {
     nodeType = DOCUMENT_FRAGMENT_NODE;
     nodeName = "#document-fragment";
@@ -2741,7 +2703,7 @@ DocumentFragmentImpl::~DocumentFragmentImpl()
 /**
  *
  */
-DocumentType *DocumentImpl::getDoctype()
+DocumentTypePtr DocumentImpl::getDoctype()
 {
     return doctype;
 }
@@ -2757,7 +2719,7 @@ DOMImplementation *DocumentImpl::getImplementation()
 /**
  *
  */
-Element *DocumentImpl::getDocumentElement()
+ElementPtr DocumentImpl::getDocumentElement()
 {
     return documentElement;
 }
@@ -2765,79 +2727,80 @@ Element *DocumentImpl::getDocumentElement()
 /**
  *
  */
-Element *DocumentImpl::createElement(const DOMString& tagName)
+ElementPtr DocumentImpl::createElement(const DOMString& tagName)
                        throw(DOMException)
 {
-    ElementImpl *impl = new ElementImpl(this, tagName);
-    return impl;
+    ElementPtr elem = new ElementImpl(this, tagName);
+    return elem;
 }
 
 /**
  *
  */
-DocumentFragment *DocumentImpl::createDocumentFragment()
+DocumentFragmentPtr DocumentImpl::createDocumentFragment()
 {
-    DocumentFragmentImpl *frag = new DocumentFragmentImpl(this);
+    DocumentFragmentPtr frag = new DocumentFragmentImpl(this);
     return frag;
 }
 
 /**
  *
  */
-Text *DocumentImpl::createTextNode(const DOMString& data)
+TextPtr DocumentImpl::createTextNode(const DOMString& data)
 {
-    TextImpl *text = new TextImpl(this, data);
+    TextPtr text = new TextImpl(this, data);
     return text;
 }
 
 /**
  *
  */
-Comment *DocumentImpl::createComment(const DOMString& data)
+CommentPtr DocumentImpl::createComment(const DOMString& data)
 {
-    CommentImpl *comment = new CommentImpl(this, data);
+    CommentPtr comment = new CommentImpl(this, data);
     return comment;
 }
 
 /**
  *
  */
-CDATASection *DocumentImpl::createCDATASection(const DOMString& data)
+CDATASectionPtr DocumentImpl::createCDATASection(const DOMString& data)
                                  throw(DOMException)
 {
-    CDATASectionImpl *cdata = new CDATASectionImpl(this, data);
+    CDATASectionPtr cdata = new CDATASectionImpl(this, data);
     return cdata;
 }
 
 /**
  *
  */
-ProcessingInstruction *DocumentImpl::createProcessingInstruction(const DOMString& target,
-                                                   const DOMString& data)
-                                                   throw(DOMException)
+ProcessingInstructionPtr 
+DocumentImpl::createProcessingInstruction(const DOMString& target,
+                                          const DOMString& data)
+                                          throw(DOMException)
 {
-    ProcessingInstructionImpl *cdata =
+    ProcessingInstructionPtr pi =
         new ProcessingInstructionImpl(this, target, data);
-    return cdata;
+    return pi;
 }
 
 /**
  *
  */
-Attr *DocumentImpl::createAttribute(const DOMString& attrName)
+AttrPtr DocumentImpl::createAttribute(const DOMString& attrName)
                       throw(DOMException)
 {
-    AttrImpl *attr = new AttrImpl(this, attrName);
+    AttrPtr attr = new AttrImpl(this, attrName);
     return attr;
 }
 
 /**
  *
  */
-EntityReference *DocumentImpl::createEntityReference(const DOMString& erName)
+EntityReferencePtr DocumentImpl::createEntityReference(const DOMString& erName)
                                        throw(DOMException)
 {
-    EntityReferenceImpl *ref = new EntityReferenceImpl(this, erName);
+    EntityReferencePtr ref = new EntityReferenceImpl(this, erName);
     return ref;
 }
 
@@ -2857,7 +2820,7 @@ NodeList DocumentImpl::getElementsByTagName(const DOMString& tagname)
 /**
  *
  */
-Node *DocumentImpl::importNode(const Node *importedNode,
+NodePtr DocumentImpl::importNode(const NodePtr importedNode,
                  bool deep)
                  throw(DOMException)
 {
@@ -2867,22 +2830,22 @@ Node *DocumentImpl::importNode(const Node *importedNode,
 /**
  *
  */
-Element *DocumentImpl::createElementNS(const DOMString& namespaceURI,
+ElementPtr DocumentImpl::createElementNS(const DOMString& namespaceURI,
                          const DOMString& qualifiedName)
                          throw(DOMException)
 {
-    ElementImpl *elem = new ElementImpl(this, namespaceURI, qualifiedName);
+    ElementPtr elem = new ElementImpl(this, namespaceURI, qualifiedName);
     return elem;
 }
 
 /**
  *
  */
-Attr *DocumentImpl::createAttributeNS(const DOMString& namespaceURI,
+AttrPtr DocumentImpl::createAttributeNS(const DOMString& namespaceURI,
                         const DOMString& qualifiedName)
                         throw(DOMException)
 {
-    AttrImpl *attr = new AttrImpl(this, namespaceURI, qualifiedName);
+    AttrPtr attr = new AttrImpl(this, namespaceURI, qualifiedName);
     return attr;
 }
 
@@ -2902,7 +2865,7 @@ NodeList DocumentImpl::getElementsByTagNameNS(const DOMString& namespaceURI,
 /**
  *
  */
-Element *DocumentImpl::getElementById(const DOMString& elementId)
+ElementPtr DocumentImpl::getElementById(const DOMString& elementId)
 {
     for (NamedElementItem *entry = elementsById.next; entry ; entry=entry->next)
         if (entry->name == elementId)
@@ -2982,10 +2945,7 @@ void DocumentImpl::setStrictErrorChecking(bool val)
  */
 DOMString DocumentImpl::getDocumentURI()
 {
-    if (!documentURI)
-        return DOMString("");
-    DOMString docURI = *documentURI;
-    return docURI;
+    return documentURI;
 }
 
 /**
@@ -2999,9 +2959,9 @@ void DocumentImpl::setDocumentURI(const DOMString &uri)
 /**
  *
  */
-Node *DocumentImpl::adoptNode(const Node *source) throw (DOMException)
+NodePtr DocumentImpl::adoptNode(const NodePtr source) throw (DOMException)
 {
-    return (Node *)source;
+    return (NodePtr )source;
 }
 
 /**
@@ -3018,21 +2978,19 @@ DOMConfiguration *DocumentImpl::getDomConfig()
 void DocumentImpl::normalizeDocument()
 {
     //i assume that this means adjusting namespaces & prefixes
-    if (documentElement)
+    if (documentElement.get())
         documentElement->normalizeNamespaces();
 }
 
 /**
  *
  */
-Node *DocumentImpl::renameNode(const Node *n,
+NodePtr DocumentImpl::renameNode(const NodePtr node,
                                const DOMString &namespaceURI,
                                const DOMString &qualifiedName)
                                throw (DOMException)
 {
-    Node *node = (Node *) n;
-    NodeImpl *nodeImpl = dynamic_cast<NodeImpl *> (node);
-    //nodeImpl->namespaceURI = stringCache(namespaceURI);
+    NodeImplPtr nodeImpl = dynamic_cast<NodeImpl *> (node.get());
     nodeImpl->setNodeName(qualifiedName);
     return node;
 }
@@ -3049,15 +3007,15 @@ Node *DocumentImpl::renameNode(const Node *n,
 DocumentImpl::DocumentImpl(const DOMImplementation *domImpl,
                  const DOMString &theNamespaceURI,
                  const DOMString &theQualifiedName,
-                 const DocumentType *theDoctype) : NodeImpl()
+                 const DocumentTypePtr theDoctype) : NodeImpl()
 {
     nodeType        = DOCUMENT_NODE;
     nodeName        = "#document";
     parent          = (DOMImplementation *)domImpl;
     //documentURI     = stringCache(theNamespaceURI);
     qualifiedName   = theQualifiedName;
-    if (theDoctype) //only assign if not null.
-        doctype     = (DocumentType *)theDoctype;
+    if (theDoctype.get()) //only assign if not null.
+        doctype     = theDoctype;
     else
         doctype     = new DocumentTypeImpl("", "", "");
     documentElement = new ElementImpl(this, "root");
@@ -3070,7 +3028,7 @@ DocumentImpl::DocumentImpl(const DOMImplementation *domImpl,
  */
 DocumentImpl::~DocumentImpl()
 {
-    delete documentElement;
+    documentElement = NULL;
 }
 
 

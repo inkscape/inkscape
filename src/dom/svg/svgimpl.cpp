@@ -67,22 +67,22 @@ namespace svg
 /**
  *
  */
-Element *SVGDocumentImpl::createElement(const DOMString& tagName)
+ElementPtr SVGDocumentImpl::createElement(const DOMString& tagName)
                            throw(DOMException)
 {
-    SVGElementImpl *impl = new SVGElementImpl(this, tagName);
-    return impl;
+    SVGElementPtr elem = new SVGElementImpl(this, tagName);
+    return elem;
 }
 
 
 /**
  *
  */
-Element *SVGDocumentImpl::createElementNS(const DOMString& namespaceURI,
+ElementPtr SVGDocumentImpl::createElementNS(const DOMString& namespaceURI,
                              const DOMString& qualifiedName)
                              throw(DOMException)
 {
-    SVGElementImpl *elem = new SVGElementImpl(this, namespaceURI, qualifiedName);
+    SVGElementPtr elem = new SVGElementImpl(this, namespaceURI, qualifiedName);
     return elem;
 }
 
@@ -161,7 +161,7 @@ bool SVGSVGElementImpl::animationsPaused(  )
  *
  */
 NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &rect,
-                                           const SVGElement *referenceElement )
+                                           const SVGElementPtr referenceElement )
 {
     NodeList list;
     return list;
@@ -171,7 +171,7 @@ NodeList SVGSVGElementImpl::getIntersectionList(const SVGRect &rect,
  *
  */
 NodeList SVGSVGElementImpl::getEnclosureList(const SVGRect &rect,
-                                        const SVGElement *referenceElement )
+                                        const SVGElementPtr referenceElement )
 {
     NodeList list;
     return list;
@@ -180,7 +180,7 @@ NodeList SVGSVGElementImpl::getEnclosureList(const SVGRect &rect,
 /**
  *
  */
-bool SVGSVGElementImpl::checkIntersection(const SVGElement *element,
+bool SVGSVGElementImpl::checkIntersection(const SVGElementPtr element,
                                           const SVGRect &rect )
 {
     return false;
@@ -189,7 +189,7 @@ bool SVGSVGElementImpl::checkIntersection(const SVGElement *element,
 /**
  *
  */
-bool SVGSVGElementImpl::checkEnclosure(const SVGElement *element,
+bool SVGSVGElementImpl::checkEnclosure(const SVGElementPtr element,
                                        const SVGRect &rect )
 {
     return false;
@@ -205,7 +205,7 @@ void SVGSVGElementImpl::deselectAll(  )
 /**
  *
  */
-Element *SVGSVGElementImpl::getElementById(const DOMString& elementId )
+ElementPtr SVGSVGElementImpl::getElementById(const DOMString& elementId )
 {
     return NULL;
 }
@@ -350,7 +350,7 @@ Element *SVGSVGElementImpl::getElementById(const DOMString& elementId )
 /**
  *
  */
-SVGDocument *GetSVGDocumentImpl::getSVGDocument(  )
+SVGDocumentPtr GetSVGDocumentImpl::getSVGDocument(  )
                     throw ( DOMException )
 {
     return NULL;

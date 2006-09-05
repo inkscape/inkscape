@@ -29,6 +29,7 @@
 
 
 #include "jsengine.h"
+#include "jsdombind.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -241,6 +242,15 @@ bool JavascriptEngine::evaluateFile(const DOMString &fileName)
     return true;
 }
 
+/**
+ *  Bind with the basic DOM classes
+ */
+bool  JavascriptEngine::createClasses()
+{
+    JavascriptDOMBinder binder(*this);
+    binder.createClasses();
+    return true;
+}
 
 
 

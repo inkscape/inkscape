@@ -32,7 +32,6 @@
 #include "xmlreader.h"
 #include "charclass.h"
 #include "domimpl.h"
-#include "svg/svgimpl.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -302,27 +301,26 @@ int XmlReader::parseVersion(int p0)
     colNr += 5;
 
     bool quickCloseDummy;
-    Node *node = new NodeImpl();
+    NodePtr node = new NodeImpl();
     int p2 = parseAttributes(p, node, &quickCloseDummy);
     if (p2 < p)
         {
-        delete node;
+        //smart ptr!!do not delete node;
         return p0;
         }
     p = p2;
 
     //get the attributes that we need
     NamedNodeMap attributes = node->getAttributes();
-    Node *attr = attributes.getNamedItem("version");
-    if (attr)
+    NodePtr attr = attributes.getNamedItem("version");
+    if (attr.get())
         document->setXmlVersion(attr->getNodeValue());
     attr = attributes.getNamedItem("encoding");
-    if (attr)
+    if (attr.get())
         { /*document->setXmlEncoding(attr->getNodeValue());*/ }
     attr = attributes.getNamedItem("standalone");
-    if (attr)
+    if (attr.get())
         document->setXmlStandalone((attr->getNodeValue() == "yes"));
-    delete node;
 
     //#now we should be pointing at '?>'
     if (!match(p, "?>"))
@@ -352,7 +350,7 @@ int XmlReader::parseDoctype(int p0)
     p     += 9;
     colNr += 9;
 
-    DocumentType *doctype = document->getDoctype();
+    DocumentTypePtr doctype = document->getDoctype();
     if (!doctype)
         return p0;
 
@@ -427,7 +425,7 @@ int XmlReader::parseDoctype(int p0)
 /**
  *  Expects '<' on startup, ends on char after '>'
  */
-int XmlReader::parseComment(int p0, Comment *comment)
+int XmlReader::parseComment(int p0, CommentPtr comment)
 {
     int p = p0;
 
@@ -461,7 +459,7 @@ int XmlReader::parseComment(int p0, Comment *comment)
 /**
  *
  */
-int XmlReader::parseCDATA(int p0, CDATASection *cdata)
+int XmlReader::parseCDATA(int p0, CDATASectionPtr cdata)
 {
 
     int p = p0;
@@ -497,7 +495,7 @@ int XmlReader::parseCDATA(int p0, CDATASection *cdata)
 /**
  *
  */
-int XmlReader::parseText(int p0, Text *text)
+int XmlReader::parseText(int p0, TextPtr text)
 {
 
     int p = p0;
@@ -537,7 +535,7 @@ int XmlReader::parseText(int p0, Text *text)
  * Parses attributes of a node.  Should end pointing at either the
  * '?' of a version or doctype tag, or a '>' of a normal tag
  */
-int XmlReader::parseAttributes(int p0, Node *node, bool *quickClose)
+int XmlReader::parseAttributes(int p0, NodePtr node, bool *quickClose)
 {
     *quickClose = false;
 
@@ -595,7 +593,7 @@ int XmlReader::parseAttributes(int p0, Node *node, bool *quickClose)
             namespaceURI = XMLNSNAME;
 
         //## Now let us make the attribute and give it to the node
-        Attr *attr = document->createAttributeNS(namespaceURI, qualifiedName);
+        AttrPtr attr = document->createAttributeNS(namespaceURI, qualifiedName);
         attr->setValue(attrValue);
         node->getAttributes().setNamedItemNS(attr);
 
@@ -634,7 +632,7 @@ int XmlReader::parseEntity(int p0, DOMString &buf)
  *  Parse as a document, preserving the original structure as much as
  *  possible
  */
-int XmlReader::parseNode(int p0, Node *node, int depth)
+int XmlReader::parseNode(int p0, NodePtr node, int depth)
 {
 
     int p = p0;
@@ -677,14 +675,14 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
         //### COMMENT
         if (match(p, "<!--"))
             {
-            Comment *comment = document->createComment("");
+            CommentPtr comment = document->createComment("");
             p2 = parseComment(p, comment);
             if (p2 <= p)
                 return p0;
             p = p2;
             if (parseAsData)
                 { //throw away
-                delete comment;
+                //delete comment;
                 }
             else
                 {
@@ -708,7 +706,7 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
         //### CDATA
         else if (match(p, "<![CDATA["))
             {
-            CDATASection *cdata = document->createCDATASection("");
+            CDATASectionPtr cdata = document->createCDATASection("");
             p2 = parseCDATA(p, cdata);
             if (p2 <= p)
                 return p0;
@@ -716,7 +714,7 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
             if (parseAsData)
                 {
                 nodeValue += cdata->getNodeValue();
-                delete cdata;
+                //delete cdata;
                 }
             else
                 {
@@ -735,7 +733,7 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
             else
                 {
                 /*Add element to tree*/
-                Element *elem = document->createElement(""); //fill in name later
+                ElementPtr elem = document->createElement(""); //fill in name later
                 node->appendChild(elem);
                 p2 = parseNode(p, elem, depth+1);
                 if (p2 <= p)
@@ -749,7 +747,7 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
         //### TEXT
         else
             {
-            Text *text = document->createTextNode("");
+            TextPtr text = document->createTextNode("");
             p2 = parseText(p, text);
             if (p2 <= p)
                 return p0;
@@ -757,7 +755,7 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
             if (parseAsData)
                 {
                 nodeValue += text->getNodeValue();
-                delete text;
+                //delete text;
                 }
             else
                 {
@@ -809,16 +807,16 @@ int XmlReader::parseNode(int p0, Node *node, int depth)
 /**
  *
  */
-org::w3c::dom::Document *
+org::w3c::dom::DocumentPtr
 XmlReader::parse(const DOMString &buf, int bufferOffset, int parseLen)
 {
     len      = parseLen;
     parsebuf = buf;
 
+    keepGoing = true;
+
     DOMImplementationSourceImpl source;
     DOMImplementation *domImpl = source.getDOMImplementation("");
-
-    keepGoing = true;
 
     document = domImpl->createDocument("", "", NULL);
     //document = new svg::SVGDocumentImpl(domImpl, "", "", NULL);
@@ -832,14 +830,14 @@ XmlReader::parse(const DOMString &buf, int bufferOffset, int parseLen)
         //### COMMENT
         if (match(p, "<!--"))
             {
-            Comment *comment = document->createComment("");
+            CommentPtr comment = document->createComment("");
             p2 = parseComment(p, comment);
             if (p2 <= p)
                 return document;
             p = p2;
             if (parseAsData)
                 { //throw away
-                delete comment;
+                //delete comment;
                 }
             else
                 {
@@ -880,11 +878,11 @@ XmlReader::parse(const DOMString &buf, int bufferOffset, int parseLen)
 /**
  *
  */
-org::w3c::dom::Document *
+org::w3c::dom::DocumentPtr
 XmlReader::parse(const DOMString &str)
 {
 
-    Document *doc = parse(str, 0, str.size());
+    DocumentPtr doc = parse(str, 0, str.size());
     doc->normalizeDocument();
 
     return doc;
@@ -893,13 +891,13 @@ XmlReader::parse(const DOMString &str)
 /**
  *
  */
-org::w3c::dom::Document *
+org::w3c::dom::DocumentPtr
 XmlReader::parseFile(char *fileName)
 {
 
     DOMString buf = loadFile(fileName);
 
-    Document *doc = parse(buf, 0, buf.size());
+    DocumentPtr doc = parse(buf, 0, buf.size());
 
     return doc;
 }
