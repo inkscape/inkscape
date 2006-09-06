@@ -441,8 +441,6 @@ static void update_object(Inkscape::NodePath::Path *np)
 
     SPCurve *curve = create_curve(np);
 
-    sp_canvas_force_full_redraws(np->desktop->canvas, 2);
-    
     sp_shape_set_curve(SP_SHAPE(np->path), curve, TRUE);
 
     sp_curve_unref(curve);
@@ -485,7 +483,7 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
     g_return_if_fail(np != NULL);
 
     update_repr_internal(np);
-    sp_canvas_clear_forced_full_redraws(np->desktop->canvas);
+    //sp_canvas_end_forced_full_redraws(np->desktop->canvas);
     
     sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
                      annotation);
@@ -2990,6 +2988,7 @@ static void node_grabbed(SPKnot *knot, guint state, gpointer data)
     }
 
     n->is_dragging = true;
+    //sp_canvas_force_full_redraw_after_interruptions(n->subpath->nodepath->desktop->canvas, 5);
 
     sp_nodepath_remember_origins (n->subpath->nodepath);
 }
@@ -3003,6 +3002,7 @@ static void node_ungrabbed(SPKnot *knot, guint state, gpointer data)
 
    n->dragging_out = NULL;
    n->is_dragging = false;
+   sp_canvas_end_forced_full_redraws(n->subpath->nodepath->desktop->canvas);
 
    sp_nodepath_update_repr(n->subpath->nodepath, _("Move nodes"));
 }
@@ -3265,6 +3265,7 @@ static void node_handle_grabbed(SPKnot *knot, guint state, gpointer data)
         g_assert_not_reached();
     }
 
+    //sp_canvas_force_full_redraw_after_interruptions(n->subpath->nodepath->desktop->canvas, 5);
 }
 
 /**
@@ -3286,6 +3287,7 @@ static void node_handle_ungrabbed(SPKnot *knot, guint state, gpointer data)
     }
 
     sp_nodepath_update_repr(n->subpath->nodepath, _("Move node handle"));
+    //sp_canvas_end_forced_full_redraws(n->subpath->nodepath->desktop->canvas);
 }
 
 /**

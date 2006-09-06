@@ -978,7 +978,8 @@ sp_canvas_init (SPCanvas *canvas)
     
     canvas->redraw_count = 0;
     
-    canvas->forced_full_redraw_count = 0;
+    canvas->forced_redraw_count = 0;
+    canvas->forced_redraw_limit = 0;
 
     canvas->slowest_buffer = 0;
 }
@@ -1694,8 +1695,12 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
             // Process events that may have arrived while we were busy drawing;
             // only if we're drawing multiple buffers, and only if this one was not very fast,
             // and only if we're allowed to interrupt this redraw
-            if (multiple_buffers && this_buffer > 25000 && !canvas->forced_full_redraw_count) {
+            bool ok_to_interrupt = (multiple_buffers && this_buffer > 25000);
+            if (ok_to_interrupt && canvas->forced_redraw_limit) {
+                ok_to_interrupt = (canvas->forced_redraw_count < canvas->forced_redraw_limit);
+            }
 
+            if (ok_to_interrupt) {
                 // Run at most max_iterations of the main loop; we cannot process ALL events
                 // here because some things (e.g. rubberband) flood with dirtying events but will
                 // not redraw themselves
@@ -1714,6 +1719,9 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
                 // if so, force update and abort
                 if (canvas->need_redraw || canvas->need_update) {
                     canvas->slowest_buffer = slowest_buffer;
+                    if (canvas->forced_redraw_limit) {
+                        canvas->forced_redraw_count++;
+                    }
                     do_update (canvas);
                     return;
                 }
@@ -1721,36 +1729,30 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
         }
     }
 
-    // We've finished a redraw; decrement the full redraw counter
-    if (canvas->forced_full_redraw_count > 0) {
-      canvas->forced_full_redraw_count--;
-    }
-
     // Remember the slowest buffer of this paint in canvas
     canvas->slowest_buffer = slowest_buffer;
+
+    // we've had a full redraw, reset the full redraw counter
+    if (canvas->forced_redraw_limit) {
+        canvas->forced_redraw_count = 0;
+    }
 }
 
 /**
- * Force the next several screen redraws to not be interruptible.
- * Used when having an accurate representation of the drawing canvas
- * is more important than speed.
- *
- * In the future, this should be a toggle switch to be enabled/disabled
- * when precise object drawing is necessary.
+ * Force a full redraw after a specified number of interrupted redraws
  */
 void
-sp_canvas_force_full_redraws(SPCanvas *canvas, unsigned int count) {
-  canvas->forced_full_redraw_count += count;
+sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count) {
+  canvas->forced_redraw_limit = count;
+  canvas->forced_redraw_count = 0;
 }
 
 /**
- * Flush all forced full redraw requests.
- * Used when accurate representation of the drawing canvas is no
- * longer needed.
+ * End forced full redraw requests
  */
 void
-sp_canvas_clear_forced_full_redraws(SPCanvas *canvas) {
-  canvas->forced_full_redraw_count = 0;
+sp_canvas_end_forced_full_redraws(SPCanvas *canvas) {
+  canvas->forced_redraw_limit = 0;
 }
 
 /**

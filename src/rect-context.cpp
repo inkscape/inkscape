@@ -455,8 +455,6 @@ static void sp_rect_drag(SPRectContext &rc, NR::Point const pt, guint state)
 
     NR::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
 
-    sp_canvas_force_full_redraws(desktop->canvas, 2);
-
     sp_rect_position_set(SP_RECT(rc.item), r.min()[NR::X], r.min()[NR::Y], r.dimensions()[NR::X], r.dimensions()[NR::Y]);
     if ( rc.rx != 0.0 ) {
         sp_rect_set_rx (SP_RECT(rc.item), TRUE, rc.rx);
@@ -492,8 +490,6 @@ static void sp_rect_finish(SPRectContext *rc)
                          _("Create rectangle"));
 
         rc->item = NULL;
-
-        sp_canvas_clear_forced_full_redraws(dt->canvas);
     }
 }
 
