@@ -2087,6 +2087,17 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
 
+    /* Cap Rounding */
+    {
+        // TRANSLATORS: "cap" means "end" (both start and finish) here
+        GtkWidget *hb = sp_tb_spinbutton(_("Round:"), _("How much the ends of a stroke are rounded"),
+                                         "tools.calligraphic", "cap_rounding", 0.0,
+                                         NULL, tbl, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_cap_rounding_value_changed, 0.01, 2);
+        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+    }
+
     //  interval
     gtk_box_pack_start(GTK_BOX(tbl), gtk_hbox_new(FALSE, 0), FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
@@ -2118,17 +2129,6 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
                                          sp_ddc_drag_value_changed, 0.01, 2);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
-    }
-
-    /* Cap Rounding */
-    {
-        // TRANSLATORS: "cap" means "end" (both start and finish) here
-        GtkWidget *hb = sp_tb_spinbutton(_("Round:"), _("How much the ends of a stroke are rounded"),
-                                         "tools.calligraphic", "cap_rounding", 0.0,
-                                         NULL, tbl, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
-                                         sp_ddc_cap_rounding_value_changed, 0.01, 2);
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
 
