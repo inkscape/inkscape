@@ -851,11 +851,11 @@ void SPObject::releaseReferences() {
 
     sp_repr_remove_listener_by_data(this->repr, this);
 
+    this->_release_signal.emit(this);
     SPObjectClass *klass=(SPObjectClass *)G_OBJECT_GET_CLASS(this);
     if (klass->release) {
         klass->release(this);
     }
-    this->_release_signal.emit(this);
 
     /* all hrefs should be released by the "release" handlers */
     g_assert(this->hrefcount == 0);
