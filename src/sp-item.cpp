@@ -149,16 +149,14 @@ void SPItem::init() {
     this->display = NULL;
 
     this->clip_ref = new SPClipPathReference(this);
-		{
-			sigc::signal<void, SPObject *, SPObject *> cs1=this->clip_ref->changedSignal();
-			sigc::slot2<void,SPObject*, SPObject *> sl1=sigc::bind(sigc::ptr_fun(clip_ref_changed), this);
-			cs1.connect(sl1);
-		}
+		sigc::signal<void, SPObject *, SPObject *> cs1=this->clip_ref->changedSignal();
+		sigc::slot2<void,SPObject*, SPObject *> sl1=sigc::bind(sigc::ptr_fun(clip_ref_changed), this);
+    _clip_ref_connection = cs1.connect(sl1);
 
     this->mask_ref = new SPMaskReference(this);
 		sigc::signal<void, SPObject *, SPObject *> cs2=this->mask_ref->changedSignal();
 		sigc::slot2<void,SPObject*, SPObject *> sl2=sigc::bind(sigc::ptr_fun(mask_ref_changed), this);
-    cs2.connect(sl2);
+    _mask_ref_connection = cs2.connect(sl2);
 
     if (!this->style) this->style = sp_style_new_from_object(this);
 
@@ -401,6 +399,9 @@ static void
 sp_item_release(SPObject *object)
 {
     SPItem *item = (SPItem *) object;
+
+    item->_clip_ref_connection.disconnect();
+    item->_mask_ref_connection.disconnect();
 
     if (item->clip_ref) {
         item->clip_ref->detach();

@@ -143,6 +143,9 @@ struct SPItem : public SPObject {
 
     NR::Rect invokeBbox(NR::Matrix const &transform) const;
 
+    sigc::connection _clip_ref_connection;
+    sigc::connection _mask_ref_connection;
+
     sigc::connection connectTransformed(sigc::slot<void, NR::Matrix const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);
     }
