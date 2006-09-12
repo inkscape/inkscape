@@ -1,8 +1,9 @@
 /*
- * Authors:
+ * Author:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2004 Authors
+ * Copyright (C) 2006 Johan Engelen, johan@shouraizou.nl
+ * Copyright (C) 2004 Author
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
