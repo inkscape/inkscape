@@ -297,6 +297,10 @@ sp_text_context_finish(SPEventContext *ec)
 {
     SPTextContext *tc = SP_TEXT_CONTEXT(ec);
 
+    if (ec->desktop) {
+        sp_signal_disconnect_by_data(sp_desktop_canvas(ec->desktop), tc);
+    }
+
     ec->enableGrDrag(false);
 
     tc->style_set_connection.disconnect();
@@ -337,10 +341,6 @@ sp_text_context_finish(SPEventContext *ec)
         gtk_object_destroy(*it);
     }
     tc->text_selection_quads.clear();
-
-    if (ec->desktop) {
-        sp_signal_disconnect_by_data(sp_desktop_canvas(ec->desktop), tc);
-    }
 }
 
 
@@ -1441,6 +1441,10 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 {
     GdkRectangle im_cursor = { 0, 0, 1, 1 };
 
+    // due to interruptible display, tc may already be destroyed during a display update before
+    // the cursor update (can't do both atomically, alas)
+    if (!tc->desktop) return;
+
     if (tc->text) {
         NR::Point p0, p1;
         sp_te_get_cursor_coords(tc->text, tc->text_sel_end, p0, p1);
@@ -1494,6 +1498,10 @@ sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 
 static void sp_text_context_update_text_selection(SPTextContext *tc)
 {
+    // due to interruptible display, tc may already be destroyed during a display update before
+    // the selection update (can't do both atomically, alas)
+    if (!tc->desktop) return;
+
     for (std::vector<SPCanvasItem*>::iterator it = tc->text_selection_quads.begin() ; it != tc->text_selection_quads.end() ; it++) {
         sp_canvas_item_hide(*it);
         gtk_object_destroy(*it);
