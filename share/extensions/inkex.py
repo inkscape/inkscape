@@ -34,6 +34,7 @@ u'xlink'    :u'http://www.w3.org/1999/xlink'
 
 try:
     import xml.dom.ext
+    import xml.dom.minidom
     import xml.dom.ext.reader.Sax2
     import xml.xpath
 except:
@@ -59,7 +60,7 @@ class InkOption(optparse.Option):
 
 class Effect:
     """A class for creating Inkscape SVG Effects"""
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.id_characters = '0123456789abcdefghijklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.document=None
         self.ctx=None
@@ -67,6 +68,7 @@ class Effect:
         self.doc_ids={}
         self.options=None
         self.args=None
+        self.use_minidom=kwargs.pop("use_minidom", False)
         self.OptionParser = optparse.OptionParser(usage="usage: %prog [options] SVGfile",option_class=InkOption)
         self.OptionParser.add_option("--id",
                         action="append", type="string", dest="ids", default=[], 
@@ -86,7 +88,10 @@ class Effect:
                 stream = open(self.args[-1],'r')
         except:
             stream = sys.stdin
-        self.document = reader.fromStream(stream)
+        if self.use_minidom:
+            self.document = xml.dom.minidom.parse(stream)
+        else:
+            self.document = reader.fromStream(stream)
         self.ctx = xml.xpath.Context.Context(self.document,processorNss=NSS)
         stream.close()
     def getposinlayer(self):
