@@ -21,6 +21,7 @@ extensions = \
 	bezmisc.py \
 	cubicsuperpath.py \
 	dots.py \
+	export_gimp_palette.py \
 	ffgeom.py \
 	ffproc.py \
 	ffscale.py \
@@ -68,6 +69,7 @@ modules = \
 	aisvg.inx \
 	ps_input.inx \
 	eps_input.inx \
+	export_gimp_palette.inx \
 	sk_input.inx \
 	wmf_input.inx \
 	svg_dropshadow.inx \
