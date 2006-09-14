@@ -3,10 +3,11 @@
  */
 
 /*
- * Authors:
+ * Author:
  *   Ted Gould <ted@gould.cx>
  *
- * Copyright (C) 2005-2006 Authors
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2005-2006 Author
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -30,6 +31,7 @@
 #include "sp-object.h"
 
 #include "parameter.h"
+#include "paramnotebook.h"
 
 /** \brief  The root directory in the preferences database for extension
             related parameters. */
@@ -239,6 +241,7 @@ public:
     Glib::ustring * string (void);
 }; /* class ParamEnum */
 
+
 /**
     \return None
     \brief  This function creates a parameter that can be used later.  This
@@ -310,6 +313,8 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
         param = new ParamDescription(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "enum")) {
         param = new ParamEnum(name, guitext, desc, scope, in_ext, in_repr);
+    } else if (!strcmp(type, "notebook")) {
+        param = new ParamNotebook(name, guitext, desc, scope, in_ext, in_repr);
     }
 
     /* Note: param could equal NULL */
