@@ -1,5 +1,5 @@
 <inkscape-extension>
-    <_name>Function Plotter</_name>
+    <_name>Wave Plotter</_name>
     <id>org.ekips.filter.wavy</id>
 	<dependency type="executable" location="extensions">wavy.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
