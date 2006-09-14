@@ -26,6 +26,7 @@ extensions = \
 	ffproc.py \
 	ffscale.py \
 	fretfind.py \
+	funcplot.py \
 	handles.py \
 	inkex.py \
 	interp.py \
@@ -82,7 +83,8 @@ modules = \
 	ffmet.inx \
 	ffms.inx \
 	ffss.inx \
-	ffset.inx \
+	ffset.inx \ 
+	funcplot.inx \
 	handles.inx \
 	interp.inx \
 	kochify.inx \

@@ -19,6 +19,8 @@ extension_libextension_a_SOURCES =	\
 	extension/init.h	\
 	extension/parameter.h \
 	extension/parameter.cpp \
+	extension/paramnotebook.h \
+	extension/paramnotebook.cpp \
 	extension/prefdialog.cpp \
 	extension/prefdialog.h \
 	extension/system.cpp	\
