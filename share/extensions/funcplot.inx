@@ -21,7 +21,7 @@ The constants pi and e are also available. </param>
 	</param>
 	<param name="fofx" type="string" _gui-text="Function">exp(-x*x)</param>
 	<param name="fponum" type="boolean" _gui-text="Calculate first derivative numerically">true</param>
-	<param name="fpofx" type="string" _gui-text="First derivative"></param>
+	<param name="fpofx" type="string" _gui-text="First derivative">x</param>
     <effect>
 		<object-type>rect</object-type>
                 <effects-menu>
