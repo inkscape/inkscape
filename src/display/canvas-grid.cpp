@@ -231,25 +231,22 @@ sp_cgrid_render (SPCanvasItem * item, SPCanvasBuf * buf)
     gdouble y;
     for (y = syg, ylinenum = ylinestart; y < buf->rect.y1; y += grid->sw[NR::Y], ylinenum++) {
         const gint y0 = (gint) Inkscape::round(y);
-        const gint y1 = (gint) Inkscape::round(y + grid->sw[NR::Y]);
 
-        if (!grid->scaled[NR::Y] &&
-                (ylinenum % grid->empspacing) == 0) {
+        if (!grid->scaled[NR::Y] && (ylinenum % grid->empspacing) == 0) {
             sp_grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, grid->empcolor);
         } else {
             sp_grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, grid->color);
         }
+    }     
 
-        gint xlinenum;
-        gdouble x;
-        for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += grid->sw[NR::X], xlinenum++) {
-            const gint ix = (gint) Inkscape::round(x);
-            if (!grid->scaled[NR::X] &&
-                    (xlinenum % grid->empspacing) == 0) {
-                sp_grid_vline (buf, ix, y0 + 1, y1 - 1, grid->empcolor);
-            } else {
-                sp_grid_vline (buf, ix, y0 + 1, y1 - 1, grid->color);
-            }
+    gint xlinenum;
+    gdouble x;
+    for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += grid->sw[NR::X], xlinenum++) {
+        const gint ix = (gint) Inkscape::round(x);
+        if (!grid->scaled[NR::X] && (xlinenum % grid->empspacing) == 0) {
+            sp_grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, grid->empcolor);
+        } else {
+            sp_grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, grid->color);
         }
     }
 }
