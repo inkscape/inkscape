@@ -627,6 +627,19 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                                 _("<b>Ctrl</b>: select in groups, move hor/vert"),
                                                 _("<b>Shift</b>: toggle select, force rubberband, disable snapping"),
                                                 _("<b>Alt</b>: select under, move selected"));
+                    // if Alt then change cursor to moving cursor:
+                    guint keyval = get_group0_keyval(&event->key);
+                    bool alt = ( MOD__ALT
+                                    || (keyval == GDK_Alt_L)
+                                    || (keyval == GDK_Alt_R)
+                                    || (keyval == GDK_Meta_L)
+                                    || (keyval == GDK_Meta_R));
+                    if (alt) {
+                        GdkCursor *cursor = gdk_cursor_new(GDK_FLEUR);
+                        gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, cursor);
+                        gdk_cursor_destroy(cursor);
+                    }
+                    //*/
                     break;
             }
 
@@ -799,6 +812,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_RELEASE:
             if (key_is_a_modifier (get_group0_keyval (&event->key)))
                 event_context->defaultMessageContext()->clear();
+                // set cursor to default.
+                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
             break;
         default:
             break;
