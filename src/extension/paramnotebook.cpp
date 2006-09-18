@@ -337,10 +337,6 @@ ParamNotebook::string (void)
         *param_string += *pageparamstr;
         delete pageparamstr;
     }
-    
-    // this function is called when the user pressed OK. This means the dialog will close
-    // very soon, and we should deactivate the 'switch-page' hook, so the last page is remembered.
-       
 
     return param_string;
 }
