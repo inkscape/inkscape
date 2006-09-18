@@ -32,6 +32,7 @@
 
 #include "parameter.h"
 #include "paramnotebook.h"
+#include "paramenum.h"
 
 /** \brief  The root directory in the preferences database for extension
             related parameters. */
@@ -312,7 +313,7 @@ Parameter::make (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension *
     } else if (!strcmp(type, "description")) {
         param = new ParamDescription(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "enum")) {
-        param = new ParamEnum(name, guitext, desc, scope, in_ext, in_repr);
+        param = new ParamComboBox(name, guitext, desc, scope, in_ext, in_repr);
     } else if (!strcmp(type, "notebook")) {
         param = new ParamNotebook(name, guitext, desc, scope, in_ext, in_repr);
     }
