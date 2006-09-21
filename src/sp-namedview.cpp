@@ -7,6 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2005 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
@@ -16,6 +17,7 @@
 #include "config.h"
 
 #include "display/canvas-grid.h"
+#include "display/canvas-axonomgrid.h"
 #include "helper/units.h"
 #include "svg/svg-color.h"
 #include "xml/repr.h"
@@ -107,6 +109,7 @@ static void sp_namedview_init(SPNamedView *nv)
 {
     nv->editable = TRUE;
     nv->showgrid = FALSE;
+    nv->gridtype = 0;
     nv->showguides = TRUE;
     nv->showborder = TRUE;
     nv->showpageshadow = TRUE;
@@ -133,6 +136,7 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "inkscape:document-units");
     sp_object_read_attr(object, "viewonly");
     sp_object_read_attr(object, "showgrid");
+    sp_object_read_attr(object, "gridtype");
     sp_object_read_attr(object, "showguides");
     sp_object_read_attr(object, "gridtolerance");
     sp_object_read_attr(object, "guidetolerance");
@@ -142,6 +146,8 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     sp_object_read_attr(object, "gridoriginy");
     sp_object_read_attr(object, "gridspacingx");
     sp_object_read_attr(object, "gridspacingy");
+    sp_object_read_attr(object, "gridanglex");
+    sp_object_read_attr(object, "gridanglez");
     sp_object_read_attr(object, "gridempspacing");
     sp_object_read_attr(object, "gridcolor");
     sp_object_read_attr(object, "gridempcolor");
@@ -226,6 +232,11 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             nv->snap_manager.grid.setEnabled(nv->showgrid);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
+	case SP_ATTR_GRIDTYPE:
+            nv->gridtype = sp_str_to_bool(value);
+            sp_namedview_setup_grid(nv);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
 	case SP_ATTR_SHOWGUIDES:
             if (!value) { // show guides if not specified, for backwards compatibility
                 nv->showguides = TRUE;
@@ -290,6 +301,18 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
                 sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &nv->gridspacing[d], &nv->gridunit);
             }
             nv->gridspacing[d] = sp_units_get_pixels(nv->gridspacing[d], *(nv->gridunit));
+            sp_namedview_setup_grid(nv);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+	}
+	case SP_ATTR_GRIDANGLEX:
+	case SP_ATTR_GRIDANGLEZ:
+	{
+            unsigned const d = (key == SP_ATTR_GRIDANGLEZ); // 0=X  1=Z
+            nv->gridangle[d] = 30; // 30 deg default
+            if (value) {
+                nv->gridangle[d] = g_ascii_strtod(value, NULL);
+            }
             sp_namedview_setup_grid(nv);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
@@ -616,11 +639,17 @@ void SPNamedView::show(SPDesktop *desktop)
 
     views = g_slist_prepend(views, desktop);
 
-    SPCanvasItem *item = sp_canvas_item_new(sp_desktop_grid(desktop), SP_TYPE_CGRID, NULL);
+    SPCanvasItem * item = sp_canvas_item_new(sp_desktop_grid(desktop), SP_TYPE_CGRID, NULL);
     // since we're keeping a copy, we need to bump up the ref count
     gtk_object_ref(GTK_OBJECT(item));
     gridviews = g_slist_prepend(gridviews, item);
-    sp_namedview_setup_grid_item(this, item);
+
+    item = sp_canvas_item_new(sp_desktop_grid(desktop), SP_TYPE_CAXONOMGRID, NULL);
+    // since we're keeping a copy, we need to bump up the ref count
+    gtk_object_ref(GTK_OBJECT(item));
+    gridviews = g_slist_prepend(gridviews, item);
+
+    sp_namedview_setup_grid(this);
 }
 
 /*
@@ -723,15 +752,11 @@ void SPNamedView::hide(SPDesktop const *desktop)
     GSList *l;
     for (l = gridviews; l != NULL; l = l->next) {
         if (SP_CANVAS_ITEM(l->data)->canvas == sp_desktop_canvas(desktop)) {
-            break;
+            sp_canvas_item_hide(SP_CANVAS_ITEM(l->data));
+            gtk_object_unref(GTK_OBJECT(l->data));
+            gridviews = g_slist_remove(gridviews, l->data);
         }
     }
-
-    g_assert(l);
-
-    sp_canvas_item_hide(SP_CANVAS_ITEM(l->data));
-    gtk_object_unref(GTK_OBJECT(l->data));
-    gridviews = g_slist_remove(gridviews, l->data);
 }
 
 void SPNamedView::activateGuides(gpointer desktop, gboolean active)
@@ -795,6 +820,17 @@ void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_document_set_undo_sensitive(doc, saved);
 }
 
+void sp_namedview_set_gridtype(bool type, SPDocument *doc, Inkscape::XML::Node *repr)
+{
+    bool saved = sp_document_get_undo_sensitive(doc);
+    sp_document_set_undo_sensitive(doc, false);
+
+    sp_repr_set_boolean(repr, "showgrid", type);
+
+    doc->rroot->setAttribute("sodipodi:modified", "true");
+    sp_document_set_undo_sensitive(doc, saved);
+}
+
 static void sp_namedview_setup_grid(SPNamedView *nv)
 {
     for (GSList *l = nv->gridviews; l != NULL; l = l->next) {
@@ -804,22 +840,40 @@ static void sp_namedview_setup_grid(SPNamedView *nv)
 
 static void sp_namedview_setup_grid_item(SPNamedView *nv, SPCanvasItem *item)
 {
-    if (nv->showgrid) {
+    bool btype = SP_IS_CAXONOMGRID(GTK_OBJECT(item));
+
+    if ( nv->showgrid && (nv->gridtype == btype) ) {
         sp_canvas_item_show(item);
     } else {
         sp_canvas_item_hide(item);
     }
-
-    sp_canvas_item_set((GtkObject *) item,
-                       "color", nv->gridcolor,
-                       "originx", nv->gridorigin[NR::X],
-                       "originy", nv->gridorigin[NR::Y],
-                       "spacingx", nv->gridspacing[NR::X],
-                       "spacingy", nv->gridspacing[NR::Y],
-                       "empcolor", nv->gridempcolor,
-                       "empspacing", nv->gridempspacing,
-                       NULL);
+    
+    if (!btype){
+        // CGRID
+        sp_canvas_item_set((GtkObject *) item,
+                           "color", nv->gridcolor,
+                           "originx", nv->gridorigin[NR::X],
+                           "originy", nv->gridorigin[NR::Y],
+                           "spacingx", nv->gridspacing[NR::X],
+                           "spacingy", nv->gridspacing[NR::Y],
+                           "empcolor", nv->gridempcolor,
+                           "empspacing", nv->gridempspacing,
+                           NULL);
+    } else {
+        // CAXONOMGRID
+        sp_canvas_item_set((GtkObject *) item,
+                           "color", nv->gridcolor,
+                           "originx", nv->gridorigin[NR::X],
+                           "originy", nv->gridorigin[NR::Y],
+                           "spacingy", nv->gridspacing[NR::Y],
+                           "anglex", nv->gridangle[0],
+                           "anglez", nv->gridangle[1],
+                           "empcolor", nv->gridempcolor,
+                           "empspacing", nv->gridempspacing,
+                           NULL);
+    }
 }
+
 
 gchar const *SPNamedView::getName() const
 {

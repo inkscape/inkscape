@@ -7,6 +7,7 @@
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -59,6 +60,7 @@ static SPStyleProp const props[] = {
     /* SPNamedView */
     {SP_ATTR_VIEWONLY, "viewonly"},
     {SP_ATTR_SHOWGRID, "showgrid"},
+    {SP_ATTR_GRIDTYPE, "gridtype"},
     {SP_ATTR_SHOWGUIDES, "showguides"},
     {SP_ATTR_GRIDTOLERANCE, "gridtolerance"},
     {SP_ATTR_GUIDETOLERANCE, "guidetolerance"},
@@ -68,6 +70,8 @@ static SPStyleProp const props[] = {
     {SP_ATTR_GRIDORIGINY, "gridoriginy"},
     {SP_ATTR_GRIDSPACINGX, "gridspacingx"},
     {SP_ATTR_GRIDSPACINGY, "gridspacingy"},
+    {SP_ATTR_GRIDANGLEX, "gridanglex"},
+    {SP_ATTR_GRIDANGLEZ, "gridanglez"},
     {SP_ATTR_GRIDCOLOR, "gridcolor"},
     {SP_ATTR_GRIDOPACITY, "gridopacity"},
     {SP_ATTR_GRIDEMPCOLOR, "gridempcolor"},

@@ -5,6 +5,7 @@
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2004, 2005 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
@@ -61,8 +62,9 @@ protected:
     PageSizer             _page_sizer;
     //---------------------------------------------------------------
     RegisteredCheckButton _rcbgrid, _rcbsnbb, _rcbsnnod;
+    RegisteredRadioButtonPair _rrb_gridtype;
     RegisteredUnitMenu    _rumg, _rums;
-    RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy;
+    RegisteredScalarUnit  _rsu_ox, _rsu_oy, _rsu_sx, _rsu_sy, _rsu_ax, _rsu_az;
     RegisteredColorPicker _rcp_gcol, _rcp_gmcol;
     RegisteredSuffixedInteger _rsi;
     //---------------------------------------------------------------

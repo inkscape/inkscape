@@ -8,6 +8,7 @@
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -60,6 +61,7 @@ enum SPAttributeEnum {
     /* SPNamedView */
     SP_ATTR_VIEWONLY,
     SP_ATTR_SHOWGRID,
+    SP_ATTR_GRIDTYPE,
     SP_ATTR_SHOWGUIDES,
     SP_ATTR_GRIDTOLERANCE,
     SP_ATTR_GUIDETOLERANCE,
@@ -69,6 +71,8 @@ enum SPAttributeEnum {
     SP_ATTR_GRIDORIGINY,
     SP_ATTR_GRIDSPACINGX,
     SP_ATTR_GRIDSPACINGY,
+    SP_ATTR_GRIDANGLEX,
+    SP_ATTR_GRIDANGLEZ,
     SP_ATTR_GRIDCOLOR,
     SP_ATTR_GRIDOPACITY,
     SP_ATTR_GRIDEMPCOLOR,

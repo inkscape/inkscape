@@ -9,6 +9,7 @@
  *   Jon Phillips <jon@rejon.org>
  *   Ralf Stephan <ralf@ark.in-berlin.de> (Gtkmm)
  *
+ * Copyright (C) 2006 Johan Engelen  <johan@shouraizou.nl>
  * Copyright (C) 2000 - 2005 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information
@@ -231,6 +232,11 @@ DocumentProperties::build_grid()
     /// Dissenting view: you want snapping without grid.
     
     _rcbgrid.init (_("_Show grid"), _("Show or hide grid"), "showgrid", _wr);
+    _rrb_gridtype.init (_("Grid type:"), _("Normal (2D)"), _("Axonometric (3D)"),
+                _("The normal grid with vertical and horizontal lines."),
+                _("A grid with vertical lines and two diagonal line groups, each representing the projection of a primary axis."),
+                _("gridtype"), _wr);
+    
     _rumg.init (_("Grid _units:"), "grid_units", _wr);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"), 
                   "gridoriginx", _rumg, _wr);
@@ -240,6 +246,10 @@ DocumentProperties::build_grid()
                   "gridspacingx", _rumg, _wr);
     _rsu_sy.init (_("Spacing _Y:"), _("Distance of horizontal grid lines"), 
                   "gridspacingy", _rumg, _wr);
+    _rsu_ax.init (_("Angle X:"), _("Angle of x-axis of axonometric grid"), 
+                  "gridanglex", _rumg, _wr);
+    _rsu_az.init (_("Angle Z:"), _("Angle of z-axis of axonometric grid"), 
+                  "gridanglez", _rumg, _wr);
     _rcp_gcol.init (_("Grid line _color:"), _("Grid line color"), 
                     _("Color of grid lines"), "gridcolor", "gridopacity", _wr);
     _rcp_gmcol.init (_("Ma_jor grid line color:"), _("Major grid line color"), 
@@ -261,11 +271,14 @@ DocumentProperties::build_grid()
     {
         label_grid,         0,
         0,                  _rcbgrid._button,
+        _rrb_gridtype._hbox,      0,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
         0,                  _rsu_sx.getSU(),
         0,                  _rsu_sy.getSU(),
+        0,                  _rsu_ax.getSU(),
+        0,                  _rsu_az.getSU(),
         _rcp_gcol._label,   _rcp_gcol._cp, 
         0,                  0,
         _rcp_gmcol._label,  _rcp_gmcol._cp,
@@ -386,6 +399,7 @@ DocumentProperties::update()
 
     //-----------------------------------------------------------grid page
     _rcbgrid.setActive (nv->showgrid);
+    _rrb_gridtype.setValue (nv->gridtype);
     _rumg.setUnit (nv->gridunit);
     
     gdouble val;
@@ -401,6 +415,11 @@ DocumentProperties::update()
     val = nv->gridspacing[NR::Y];
     double gridy = sp_pixels_get_units (val, *(nv->gridunit));
     _rsu_sy.setValue (gridy);
+
+    val = nv->gridangle[0];
+    _rsu_ax.setValue (val);
+    val = nv->gridangle[1];
+    _rsu_az.setValue (val);
 
     _rcp_gcol.setRgba32 (nv->gridcolor);
     _rcp_gmcol.setRgba32 (nv->gridempcolor);

@@ -7,6 +7,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000-2002
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -32,6 +33,7 @@ enum {
 struct SPNamedView : public SPObjectGroup {
     unsigned int editable : 1;
     unsigned int showgrid : 1;
+    unsigned int gridtype : 1; // 0=normal 1=axonometric
     unsigned int showguides : 1;
     unsigned int showborder : 1;
     unsigned int showpageshadow : 1;
@@ -51,6 +53,7 @@ struct SPNamedView : public SPObjectGroup {
     /* Grid data is in points regardless of unit */
     NR::Point gridorigin;
     gdouble gridspacing[2];
+    gdouble gridangle[2];   // for axonometric grid
     gint gridempspacing;
 
     SPUnit const *doc_units;
@@ -81,6 +84,7 @@ struct SPNamedView : public SPObjectGroup {
     GSList *guides;
     GSList *views;
     GSList *gridviews;
+    
     gint viewcount;
 
     void show(SPDesktop *desktop);
@@ -105,6 +109,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop);
 
 void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr);
 void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr);
+void sp_namedview_set_gridtype(bool type, SPDocument *doc, Inkscape::XML::Node *repr);
 
 #endif /* !INKSCAPE_SP_NAMEDVIEW_H */
 

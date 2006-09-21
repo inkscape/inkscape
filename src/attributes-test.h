@@ -402,6 +402,7 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     /* SPNamedView */
     {"viewonly", true},
     {"showgrid", true},
+    {"gridtype", true},
     {"showguides", true},
     {"gridtolerance", true},
     {"guidetolerance", true},
@@ -411,6 +412,8 @@ struct {char const *attr; bool supported;} const all_attrs[] = {
     {"gridoriginy", true},
     {"gridspacingx", true},
     {"gridspacingy", true},
+    {"gridanglex", true},
+    {"gridanglez", true},
     {"gridcolor", true},
     {"gridopacity", true},
     {"gridempcolor", true},
