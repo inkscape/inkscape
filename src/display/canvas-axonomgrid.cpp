@@ -149,6 +149,7 @@ sp_caxonomgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
     case ARG_ANGLEX:
         grid->angle_deg[X] = GTK_VALUE_DOUBLE (* arg);
         if (grid->angle_deg[X] < 0.0) grid->angle_deg[X] = 0.0;
+        if (grid->angle_deg[X] > 89.0) grid->angle_deg[X] = 89.0;
         grid->angle_rad[X] = deg_to_rad(grid->angle_deg[X]);
         grid->tan_angle[X] = tan(grid->angle_rad[X]);
         sp_canvas_item_request_update (item);
@@ -161,6 +162,7 @@ sp_caxonomgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
     case ARG_ANGLEZ:
         grid->angle_deg[Z] = GTK_VALUE_DOUBLE (* arg);
         if (grid->angle_deg[Z] < 0.0) grid->angle_deg[Z] = 0.0;
+        if (grid->angle_deg[X] > 89.0) grid->angle_deg[X] = 89.0;
         grid->angle_rad[Z] = deg_to_rad(grid->angle_deg[Z]);
         grid->tan_angle[Z] = tan(grid->angle_rad[Z]);
         sp_canvas_item_request_update (item);
