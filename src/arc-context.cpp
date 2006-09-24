@@ -408,6 +408,8 @@ static void sp_arc_drag(SPArcContext *ac, NR::Point pt, guint state)
         Inkscape::GC::release(repr);
         ac->item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
         ac->item->updateRepr();
+
+        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
     NR::Rect const r = Inkscape::snap_rectangular_box(desktop, ac->item, pt, ac->center, state);
@@ -432,6 +434,8 @@ static void sp_arc_finish(SPArcContext *ac)
 
         SP_OBJECT(ac->item)->updateRepr();
 
+        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        
         sp_desktop_selection(desktop)->set(ac->item);
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC, 
                          _("Create ellipse"));

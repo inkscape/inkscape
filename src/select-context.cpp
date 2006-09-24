@@ -318,6 +318,8 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     sc->dragging = TRUE;
                     sc->moved = FALSE;
 
+                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+                    
                     // remember the clicked item in sc->item:
                     sc->item = sp_event_context_find_item (desktop,
                                               NR::Point(event->button.x, event->button.y), event->button.state & GDK_MOD1_MASK, FALSE);
@@ -330,6 +332,8 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                                         GDK_POINTER_MOTION_MASK,
                                         NULL, event->button.time);
                     sc->grabbed = SP_CANVAS_ITEM(desktop->drawing);
+
+                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
 
                     ret = TRUE;
                 }
@@ -403,6 +407,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                         sp_desktop_selection(desktop)->clear();
                         sc->dragging = false;
+
+                        sp_canvas_end_forced_full_redraws(desktop->canvas);
                     } else { // switch tool
                         tools_switch_by_item (desktop, clicked_item);
                     }
@@ -459,8 +465,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 // motion notify coordinates as given (no snapping back to origin)
                 within_tolerance = false;
 
-                if (sc->button_press_ctrl || sc->button_press_alt) // if ctrl or alt was pressed and it's not click, we want to drag rather than rubberband
+                if (sc->button_press_ctrl || sc->button_press_alt) {
+                    // if ctrl or alt was pressed and it's not click, we want to drag rather than rubberband
                     sc->dragging = TRUE;
+
+                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+                }
 
                 if (sc->dragging) {
                     /* User has dragged fast, so we get events on root (lauris)*/
@@ -498,6 +508,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     } else {
                         sc->dragging = FALSE;
+
+                        sp_canvas_end_forced_full_redraws(desktop->canvas);
                     }
                 } else {
                     Inkscape::Rubberband::get()->move(p);
@@ -535,6 +547,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                     }
                     sc->dragging = FALSE;
+
+                    sp_canvas_end_forced_full_redraws(desktop->canvas);
+
                     if (sc->item) {
                         sp_object_unref( SP_OBJECT(sc->item), NULL);
                     }

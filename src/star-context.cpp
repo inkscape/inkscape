@@ -421,6 +421,8 @@ static void sp_star_drag(SPStarContext *sc, NR::Point p, guint state)
         Inkscape::GC::release(repr);
         sc->item->transform = SP_ITEM(desktop->currentRoot())->getRelativeTransform(desktop->currentLayer());
         sc->item->updateRepr();
+
+        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
     }
 
     NR::Point const p0 = sp_desktop_dt2root_xy_point(desktop, sc->center);
@@ -468,6 +470,8 @@ sp_star_finish (SPStarContext * sc)
         sp_shape_set_shape(SP_SHAPE(sc->item));
 
         object->updateRepr(NULL, SP_OBJECT_WRITE_EXT);
+
+        sp_canvas_end_forced_full_redraws(desktop->canvas);
 
         sp_desktop_selection(desktop)->set(sc->item);
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
