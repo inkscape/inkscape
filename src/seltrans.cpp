@@ -332,8 +332,6 @@ void Inkscape::SelTrans::ungrab()
     for (unsigned i = 0; i < _items.size(); i++) {
         sp_object_unref(SP_OBJECT(_items[i].first), NULL);
     }
-    _items.clear();
-    _items_centers.clear();
 
     sp_canvas_item_hide(_norm);
     sp_canvas_item_hide(_grip);
@@ -389,6 +387,9 @@ void Inkscape::SelTrans::ungrab()
     if (updh) {
         _updateHandles();
     }
+
+    _items.clear();
+    _items_centers.clear();
 }
 
 /* fixme: This is really bad, as we compare positions for each stamp (Lauris) */
