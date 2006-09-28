@@ -211,9 +211,7 @@ Inkscape::NodePath::Path *sp_nodepath_new(SPDesktop *desktop, SPItem *item, bool
     sp_curve_unref(curve);
 
     // create the livarot representation from the same item
-    np->livarot_path = Path_for_item(item, true, true);
-    if (np->livarot_path)
-        np->livarot_path->ConvertWithBackData(0.01);
+    sp_nodepath_ensure_livarot_path(np);
 
     return np;
 }
@@ -244,6 +242,16 @@ void sp_nodepath_destroy(Inkscape::NodePath::Path *np) {
     np->desktop = NULL;
 
     g_free(np);
+}
+
+
+void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np)
+{
+    if (np && np->livarot_path == NULL && np->path && SP_IS_ITEM(np->path)) {
+        np->livarot_path = Path_for_item (np->path, true, true);
+        if (np->livarot_path)
+            np->livarot_path->ConvertWithBackData(0.01);
+    }
 }
 
 
@@ -482,23 +490,16 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
     //fixme: np can be NULL, so check before proceeding
     g_return_if_fail(np != NULL);
 
-    update_repr_internal(np);
-    sp_canvas_end_forced_full_redraws(np->desktop->canvas);
-    
-    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
-                     annotation);
-
     if (np->livarot_path) {
         delete np->livarot_path;
         np->livarot_path = NULL;
     }
 
-    if (np->path && SP_IS_ITEM(np->path)) {
-        np->livarot_path = Path_for_item (np->path, true, true);
-        if (np->livarot_path)
-            np->livarot_path->ConvertWithBackData(0.01);
-    }
-
+    update_repr_internal(np);
+    sp_canvas_end_forced_full_redraws(np->desktop->canvas);
+    
+    sp_document_done(sp_desktop_document(np->desktop), SP_VERB_CONTEXT_NODE, 
+                     annotation);
 }
 
 /**
@@ -506,20 +507,14 @@ void sp_nodepath_update_repr(Inkscape::NodePath::Path *np, const gchar *annotati
  */
 static void sp_nodepath_update_repr_keyed(Inkscape::NodePath::Path *np, gchar const *key, const gchar *annotation)
 {
-    update_repr_internal(np);
-    sp_document_maybe_done(sp_desktop_document(np->desktop), key, SP_VERB_CONTEXT_NODE, 
-                           annotation);
-
     if (np->livarot_path) {
         delete np->livarot_path;
         np->livarot_path = NULL;
     }
 
-    if (np->path && SP_IS_ITEM(np->path)) {
-        np->livarot_path = Path_for_item (np->path, true, true);
-        if (np->livarot_path)
-            np->livarot_path->ConvertWithBackData(0.01);
-    }
+    update_repr_internal(np);
+    sp_document_maybe_done(sp_desktop_document(np->desktop), key, SP_VERB_CONTEXT_NODE, 
+                           annotation);
 }
 
 /**
@@ -1552,6 +1547,7 @@ sp_nodepath_select_segment_near_point(Inkscape::NodePath::Path *nodepath, NR::Po
         return;
     }
 
+    sp_nodepath_ensure_livarot_path(nodepath);
     Path::cut_position position = get_nearest_position_on_Path(nodepath->livarot_path, p);
 
     //find segment to segment
@@ -1583,6 +1579,7 @@ sp_nodepath_add_node_near_point(Inkscape::NodePath::Path *nodepath, NR::Point p)
         return;
     }
 
+    sp_nodepath_ensure_livarot_path(nodepath);
     Path::cut_position position = get_nearest_position_on_Path(nodepath->livarot_path, p);
 
     //find segment to split

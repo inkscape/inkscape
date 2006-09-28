@@ -245,6 +245,7 @@ enum {
 // Do function documentation in nodepath.cpp
 Inkscape::NodePath::Path * sp_nodepath_new (SPDesktop * desktop, SPItem * item, bool show_handles);
 void sp_nodepath_destroy (Inkscape::NodePath::Path * nodepath);
+void sp_nodepath_ensure_livarot_path(Inkscape::NodePath::Path *np);
 void sp_nodepath_deselect (Inkscape::NodePath::Path *nodepath);
 void sp_nodepath_select_all (Inkscape::NodePath::Path *nodepath, bool invert);
 void sp_nodepath_select_all_from_subpath(Inkscape::NodePath::Path *nodepath, bool invert);

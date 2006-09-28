@@ -378,6 +378,7 @@ sp_node_context_is_over_stroke (SPNodeContext *nc, SPItem *item, NR::Point event
     nc->curvepoint_doc *= sp_item_dt2i_affine(item);
     nc->curvepoint_doc *= sp_item_i2doc_affine(item);
 
+    sp_nodepath_ensure_livarot_path(nc->nodepath);
     NR::Maybe<Path::cut_position> position = get_nearest_position_on_Path(nc->nodepath->livarot_path, nc->curvepoint_doc);
     NR::Point nearest = get_point_on_Path(nc->nodepath->livarot_path, position.assume().piece, position.assume().t);
     NR::Point delta = nearest - nc->curvepoint_doc;
