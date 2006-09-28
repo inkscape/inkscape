@@ -77,6 +77,7 @@ ShowUninstDetails hide
 !include "slovak.nsh" 
 !include "polish.nsh" 
 !include "spanish.nsh" 
+!include "slovenian.nsh" 
 
 ReserveFile "inkscape.nsi.uninstall"
 
