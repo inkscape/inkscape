@@ -271,7 +271,7 @@ DocumentProperties::build_grid()
     {
         label_grid,         0,
         0,                  _rcbgrid._button,
-        _rrb_gridtype._hbox,      0,
+       0,_rrb_gridtype._hbox,      //0,
         _rumg._label,       _rumg._sel,
         0,                  _rsu_ox.getSU(),
         0,                  _rsu_oy.getSU(),
