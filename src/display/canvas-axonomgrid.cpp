@@ -135,8 +135,6 @@ sp_caxonomgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
     SPCanvasItem *item = SP_CANVAS_ITEM (object);
     SPCAxonomGrid *grid = SP_CAXONOMGRID (object);
     
-    g_message("arg");
-    
     switch (arg_id) {
     case ARG_ORIGINX:
         grid->origin[NR::X] = GTK_VALUE_DOUBLE (* arg);
