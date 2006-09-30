@@ -1408,6 +1408,8 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
     sp_item_write_transform(item, SP_OBJECT_REPR(item), NR::identity());
 
     gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
+    gchar *mask = g_strdup(SP_OBJECT_REPR(item)->attribute("mask"));
+    gchar *clip_path = g_strdup(SP_OBJECT_REPR(item)->attribute("clip-path"));
 
     Path *orig = Path_for_item(item, false);
     if (orig == NULL) {
@@ -1439,8 +1441,21 @@ sp_selected_path_simplify_item(SPDesktop *desktop,
 
     Inkscape::XML::Node *repr = sp_repr_new("svg:path");
 
+    // restore style, mask and clip-path
     repr->setAttribute("style", style);
+    g_free(style);
 
+    if ( mask ) {
+        repr->setAttribute("mask", mask);
+        g_free(mask);
+    }
+
+    if ( clip_path ) {
+        repr->setAttribute("clip-path", clip_path);
+        g_free(clip_path);
+    }
+
+    // path
     gchar *str = orig->svg_dump_path();
     repr->setAttribute("d", str);
     g_free(str);

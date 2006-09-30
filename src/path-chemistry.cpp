@@ -329,6 +329,17 @@ sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy)
                                                  SP_OBJECT_STYLE(SP_OBJECT_PARENT(item)));
     repr->setAttribute("style", style_str);
     g_free(style_str);
+
+    /* Mask */
+    gchar *mask_str = (gchar *) SP_OBJECT_REPR(item)->attribute("mask");
+    if ( mask_str )
+        repr->setAttribute("mask", mask_str);
+
+    /* Clip path */
+    gchar *clip_path_str = (gchar *) SP_OBJECT_REPR(item)->attribute("clip-path");
+    if ( clip_path_str )
+        repr->setAttribute("clip-path", clip_path_str);
+
     /* Rotation center */
     sp_repr_set_attr(repr, "inkscape:transform-center-x", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-x"));
     sp_repr_set_attr(repr, "inkscape:transform-center-y", SP_OBJECT_REPR(item)->attribute("inkscape:transform-center-y"));
