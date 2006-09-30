@@ -47,7 +47,7 @@ private:
     GSList * parameters; /**< A table to store the parameters for this page.
                               This only gets created if there are parameters on this
                               page */
-    Gtk::Tooltips _tooltips;
+    Gtk::Tooltips * _tooltips;
     
 public:
     static ParamNotebookPage * makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
@@ -65,19 +65,18 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
     Parameter(name, guitext, desc, scope, ext)
 {
     parameters = NULL;
-    
+        
     // Read XML to build page
     if (xml != NULL) {
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (chname[0] == '_') /* Allow _ for translation of tags */
+            if (chname[0] == '_') // Allow _ for translation of tags
                 chname++;
             if (!strcmp(chname, "param") || !strcmp(chname, "_param")) {
                 Parameter * param;
                 param = Parameter::make(child_repr, ext);
-                if (param != NULL)
-                    parameters = g_slist_append(parameters, param);
+                if (param != NULL) parameters = g_slist_append(parameters, param);
             }
             child_repr = sp_repr_next(child_repr);
         }
@@ -88,6 +87,7 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
 
 ParamNotebookPage::~ParamNotebookPage (void)
 {
+    if (_tooltips) delete _tooltips;
     //destroy parameters
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
@@ -188,7 +188,9 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
 */
 Gtk::Widget *
 ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
-{
+{                      
+    if (!_tooltips) _tooltips = new Gtk::Tooltips();
+    
     Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox);
     vbox->set_border_width(5);  
     
@@ -200,8 +202,7 @@ ParamNotebookPage::get_widget (SPDocument * doc, Inkscape::XML::Node * node)
         
         vbox->pack_start(*widg, true, true, 2);
         if (tip != NULL) {
-            _tooltips.set_tip(*widg, Glib::ustring(tip));
-            // printf("Setting tooltip: %s\n", tooltip);
+            _tooltips->set_tip(*widg, Glib::ustring(tip));
         }
     }
         
@@ -224,12 +225,11 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
     pages = NULL;
     
     // Read XML tree to add pages:
-    // printf("Extension Constructor: ");
     if (xml != NULL) {
         Inkscape::XML::Node *child_repr = sp_repr_children(xml);
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-            if (chname[0] == '_') /* Allow _ for translation of tags */
+            if (chname[0] == '_') // Allow _ for translation of tags
                 chname++;
             if (!strcmp(chname, "page")) {
                 ParamNotebookPage * page;

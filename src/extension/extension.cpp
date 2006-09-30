@@ -131,7 +131,15 @@ Extension::~Extension (void)
     delete timer;
     timer = NULL;
     /** \todo Need to do parameters here */
-
+    
+    // delete parameters: 
+    for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
+        Parameter * param = reinterpret_cast<Parameter *>(list->data);
+        delete param;
+    }
+    g_slist_free(parameters);
+    
+    
     for (unsigned int i = 0 ; i < _deps.size(); i++) {
         delete _deps[i];
     }
@@ -600,7 +608,6 @@ public:
         this->pack_start(*widg, true, true, 2);
         if (tooltip != NULL) {
             _tooltips.set_tip(*widg, Glib::ustring(tooltip));
-            // printf("Setting tooltip: %s\n", tooltip);
         }
         return;
     };
