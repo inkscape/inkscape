@@ -42,6 +42,8 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/cairo-renderer.cpp \
 	extension/internal/cairo-renderer-pdf-out.h	\
 	extension/internal/cairo-renderer-pdf-out.cpp	\
+	extension/internal/cairo-png-out.h \
+	extension/internal/cairo-png-out.cpp \
 	extension/internal/eps-out.h	\
 	extension/internal/eps-out.cpp	\
 	extension/internal/gdkpixbuf-input.h	\
