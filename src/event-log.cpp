@@ -16,10 +16,10 @@
 
 namespace Inkscape {
 
-EventLog::EventLog() :
+EventLog::EventLog(SPDocument* document) :
     UndoStackObserver(),
     _connected (false),
-    _document (NULL),
+    _document (document),
     _event_list_store (Gtk::TreeStore::create(_columns)),
     _event_list_selection (NULL),
     _event_list_view (NULL),
@@ -227,15 +227,6 @@ EventLog::notifyUndoCommitEvent(Event* log)
 
     updateUndoVerbs();
 }
-
-
-void
-EventLog::setDocument(SPDocument *document)
-{
-    _document = document;
-    updateUndoVerbs();
-}
-
 
 void 
 EventLog::connectWithDialog(Gtk::TreeView *event_list_view, CallbackMap *callback_connections)

@@ -79,6 +79,7 @@
 #include "xml/repr.h"
 #include "message-context.h"
 #include "layer-manager.h"
+#include "event-log.h"
 
 namespace Inkscape { namespace XML { class Node; }}
 
@@ -287,6 +288,10 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     /* setup LayerManager */
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
+
+    /* setup EventLog */
+    event_log = new Inkscape::EventLog(document);
+    document->addUndoObserver(*event_log);
 }
 
 

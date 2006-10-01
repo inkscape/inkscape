@@ -98,8 +98,9 @@ const CellRendererInt::Filter& CellRendererInt::no_filter = CellRendererInt::NoF
 
 UndoHistory::UndoHistory()
     : Dialog ("dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
+      _desktop (SP_ACTIVE_DESKTOP),
       _document (SP_ACTIVE_DOCUMENT),
-      _event_log (_document ? &_document->getEventLog() : NULL),
+      _event_log (_desktop ? _desktop->event_log : NULL),
       _columns (_event_log ? &_event_log->getColumns() : NULL),
       _event_list_selection (_event_list_view.get_selection())
 { 

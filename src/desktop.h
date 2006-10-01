@@ -52,6 +52,7 @@ namespace Inkscape {
   class Selection; 
   class ObjectHierarchy;
   class LayerManager;
+  class EventLog;
   namespace UI { 
       namespace Dialog { 
           class DialogManager; 
@@ -76,6 +77,7 @@ struct SPDesktop : public Inkscape::UI::View::View
     Inkscape::Selection       *selection;
     SPEventContext            *event_context;
     Inkscape::LayerManager    *layer_manager;
+    Inkscape::EventLog        *event_log;
 
     SPCanvasItem  *acetate;
     SPCanvasGroup *main;

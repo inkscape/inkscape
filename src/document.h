@@ -115,8 +115,6 @@ struct SPDocument : public Inkscape::GC::Managed<>,
 	void addUndoObserver(Inkscape::UndoStackObserver& observer);
 	void removeUndoObserver(Inkscape::UndoStackObserver& observer);
 
-	Inkscape::EventLog& getEventLog() const;
-
         bool _updateDocument();
 
 private:

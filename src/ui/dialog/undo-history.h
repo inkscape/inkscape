@@ -29,6 +29,7 @@
 #include <functional>
 #include <sstream>
 
+#include "desktop.h"
 #include "dialog.h"
 #include "event-log.h"
 
@@ -123,6 +124,7 @@ public:
 
 protected:
 
+    SPDesktop *_desktop;
     SPDocument *_document;
     EventLog *_event_log;
 

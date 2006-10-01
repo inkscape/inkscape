@@ -706,7 +706,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
     }
 
     // FIXME: find a better place to do this
-    sp_desktop_document(desktop)->getEventLog().updateUndoVerbs();
+    desktop->event_log->updateUndoVerbs();
 }
 
 void sp_namedview_document_from_window(SPDesktop *desktop)

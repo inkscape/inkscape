@@ -68,9 +68,6 @@ struct SPDocumentPrivate {
 	/* Undo listener */
 	Inkscape::CompositeUndoStackObserver undoStackObservers;
 
-        /* Event log */
-        Inkscape::EventLog event_log;
-
 	// XXX only for testing!
 	Inkscape::ConsoleOutputUndoObserver console_output_undo_observer;
 };

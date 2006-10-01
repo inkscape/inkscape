@@ -44,7 +44,7 @@ public:
     typedef Gtk::TreeModel::iterator iterator;
     typedef Gtk::TreeModel::const_iterator const_iterator;
 
-    EventLog();
+    EventLog(SPDocument* document);
     ~EventLog();
 
     /**
@@ -84,8 +84,6 @@ public:
     void setCurrEvent(iterator event)          { _curr_event = event; }
     void setCurrEventParent(iterator event)    { _curr_event_parent = event; }
     void blockNotifications(bool status=true)  { _notifications_blocked = status; }
-
-    void setDocument(SPDocument *document);
 
     /* 
      * Callback types for TreeView changes.
