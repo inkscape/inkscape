@@ -172,6 +172,10 @@ public:
      */
     virtual void change_title(const Glib::ustring& title) =0;
 
+    /**
+     * Change the default save path location.
+     */
+    virtual void change_path(const Glib::ustring& path) =0;
 
 }; //FileSaveDialog
 

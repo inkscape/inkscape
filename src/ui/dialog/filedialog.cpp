@@ -1138,6 +1138,7 @@ public:
     Glib::ustring getFilename();
 
     void change_title(const Glib::ustring& title);
+    void change_path(const Glib::ustring& dir);
 
 
 private:
@@ -1355,7 +1356,7 @@ FileSaveDialogImpl::FileSaveDialogImpl(const Glib::ustring &dir,
         // leaving a trailing backslash on the directory name leads to the infamous
         // double-directory bug on win32
         if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
-        set_current_folder(udir.c_str());
+        myFilename = udir;
         }
 
     //###### Add the file types menu
@@ -1455,10 +1456,7 @@ FileSaveDialogImpl::~FileSaveDialogImpl()
 bool
 FileSaveDialogImpl::show()
 {
-    Glib::ustring s = Glib::filename_to_utf8 (get_current_folder());
-    if (s.length() == 0) 
-        s = getcwd (NULL, 0);
-    set_current_folder(Glib::filename_from_utf8(s)); //hack to force initial dir listing
+    change_path(myFilename);
     set_modal (TRUE);                      //Window
     sp_transientize((GtkWidget *)gobj());  //Make transient
     gint b = run();                        //Dialog
@@ -1519,6 +1517,24 @@ FileSaveDialogImpl::change_title(const Glib::ustring& title)
     this->set_title(title);
 }
 
+/**
+  * Change the default save path location.
+  */
+void 
+FileSaveDialogImpl::change_path(const Glib::ustring& path)
+{
+    myFilename = path;
+    if (Glib::file_test(myFilename, Glib::FILE_TEST_IS_DIR)) {
+        //fprintf(stderr,"set_current_folder(%s)\n",myFilename.c_str());
+        set_current_folder(myFilename);
+    } else {
+        //fprintf(stderr,"set_filename(%s)\n",myFilename.c_str());
+        set_filename(myFilename);
+        Glib::ustring basename = Glib::path_get_basename(myFilename);
+        //fprintf(stderr,"set_current_name(%s)\n",basename.c_str());
+        set_current_name(basename);
+    }
+}
 
 
 

@@ -589,7 +589,8 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
             save_loc.append(formatBuf);
         }
     } else {
-        save_loc = Glib::path_get_dirname(doc->uri);
+        save_loc = Glib::build_filename(Glib::path_get_dirname(doc->uri),
+                                        Glib::path_get_basename(doc->uri));
     }
 
     // convert save_loc from utf-8 to locale
@@ -615,6 +616,8 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
                  (char const *) _("Select file to save to"),
                  default_extension
             );
+    else
+        saveDialogInstance->change_path(save_loc);
     saveDialogInstance->change_title(dialog_title);
     
     bool success = saveDialogInstance->show();
@@ -640,7 +643,7 @@ sp_file_save_dialog(SPDocument *doc, bool is_copy)
         if (success)
             prefs_set_recent_file(SP_DOCUMENT_URI(doc), SP_DOCUMENT_NAME(doc));
 
-        save_path = fileName;
+        save_path = Glib::path_get_dirname(fileName);
         prefs_set_string_attribute("dialogs.save_as", "path", save_path.c_str());
 
         return success;
