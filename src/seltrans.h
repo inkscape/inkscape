@@ -80,6 +80,9 @@ public:
     bool isEmpty() {
         return _empty;
     }
+    bool isGrabbed() {
+        return _grabbed;    
+    }
     
 private:
     void _updateHandles();

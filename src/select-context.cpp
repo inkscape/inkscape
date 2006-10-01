@@ -637,6 +637,10 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
             if (!key_is_a_modifier (get_group0_keyval (&event->key))) {
                     event_context->defaultMessageContext()->clear();
+            } else if (sc->grabbed || seltrans->isGrabbed()) {
+                // do not change the statusbar text when mousekey is down to move or transform the object,
+                // because the statusbar text is already updated somewhere else.
+                   break;
             } else {
                     sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
                                                 _("<b>Ctrl</b>: select in groups, move hor/vert"),
