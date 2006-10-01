@@ -19,6 +19,19 @@
 #include "libnr/nr-scale-matrix-ops.h"
 #include "font-instance.h"
 #include "svg/svg-length.h"
+#include "extension/internal/cairo-render-context.h"
+
+namespace Inkscape {
+    namespace Extension {
+        namespace Internal {
+            class CairoRenderContext;
+            class CairoGlyphInfo;
+        }
+    }
+}
+
+using Inkscape::Extension::Internal::CairoRenderContext;
+using Inkscape::Extension::Internal::CairoGlyphInfo;
 
 namespace Inkscape {
 namespace Text {
@@ -192,6 +205,116 @@ void Layout::print(SPPrintContext *ctx,
         }
     }
 }
+
+#ifdef HAVE_CAIRO_PDF
+void Layout::showGlyphs(CairoRenderContext *ctx) const
+{
+    if (_input_stream.empty()) return;
+    
+    bool clip_mode = false;//(ctx->getRenderMode() == CairoRenderContext::RENDER_MODE_CLIP);
+    std::vector<CairoGlyphInfo> glyphtext;
+
+    for (unsigned glyph_index = 0 ; glyph_index < _glyphs.size() ; ) {
+        if (_characters[_glyphs[glyph_index].in_character].in_glyph == -1) {
+            // invisible glyphs
+            unsigned same_character = _glyphs[glyph_index].in_character;
+            while (_glyphs[glyph_index].in_character == same_character)
+                glyph_index++;
+            continue;
+        }
+        Span const &span = _spans[_characters[_glyphs[glyph_index].in_character].in_span];
+        InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_input_stream[span.in_input_stream_item]);
+
+        NRMatrix glyph_matrix;
+        _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
+        if (clip_mode) {
+            NArtBpath *bpath = (NArtBpath*)span.font->ArtBPath(_glyphs[glyph_index].glyph);
+            if (bpath) {
+                NArtBpath *abp = nr_artpath_affine(bpath, glyph_matrix);
+                NRBPath bpath;
+                bpath.path = abp;
+                SPStyle const *style = text_source->style;
+                ctx->renderPath(&bpath, style, NULL);
+                g_free(abp);
+            }
+            glyph_index++;
+            continue;
+        }
+
+        NRMatrix font_matrix;
+        if (_path_fitted == NULL) {
+            font_matrix = glyph_matrix;
+            font_matrix[4] = 0;
+            font_matrix[5] = 0;
+        } else {
+            nr_matrix_set_identity(&font_matrix);
+        }
+
+        Glib::ustring::const_iterator span_iter = span.input_stream_first_character;
+        unsigned char_index = _glyphs[glyph_index].in_character;
+        unsigned original_span = _characters[char_index].in_span;
+        while (char_index && _characters[char_index - 1].in_span == original_span) {
+            char_index--;
+            span_iter++;
+        }
+
+        // try to output as many characters as possible in one go
+        Glib::ustring span_string;
+        unsigned this_span_index = _characters[_glyphs[glyph_index].in_character].in_span;
+        unsigned int first_index = glyph_index;
+        glyphtext.clear();
+        do {
+            span_string += *span_iter;
+            span_iter++;
+
+            unsigned same_character = _glyphs[glyph_index].in_character;
+            while (glyph_index < _glyphs.size() && _glyphs[glyph_index].in_character == same_character) {
+                if (glyph_index != first_index)
+                    _getGlyphTransformMatrix(glyph_index, &glyph_matrix);
+
+                CairoGlyphInfo info;
+                info.index = _glyphs[glyph_index].glyph;
+                if (_path_fitted == NULL) {
+	            info.x = glyph_matrix.c[4];
+                    info.y = glyph_matrix.c[5];
+                } else {
+                    info.x = 0;
+                    info.y = 0;                    
+                }
+                glyphtext.push_back(info);
+
+                glyph_index++;
+            }
+        } while (glyph_index < _glyphs.size()
+                 && _path_fitted == NULL
+                 && nr_matrix_test_transform_equal(&font_matrix, &glyph_matrix, NR_EPSILON)
+                 && _characters[_glyphs[glyph_index].in_character].in_span == this_span_index);
+         
+        // remove vertical flip
+        font_matrix[3] *= -1.0;
+
+        SPStyle const *style = text_source->style;
+        float opacity = SP_SCALE24_TO_FLOAT(style->opacity.value);
+        
+        if (_path_fitted) {
+            ctx->pushState();
+            ctx->transform(&glyph_matrix);
+        } else if (opacity != 1.0) {
+            ctx->pushState();
+            ctx->setStateForStyle(style);
+            ctx->pushLayer();
+        }
+        if (glyph_index - first_index > 0)
+            ctx->renderGlyphtext(span.font->pFont, &font_matrix, glyphtext, style);
+        if (_path_fitted)
+            ctx->popState();
+        else if (opacity != 1.0) {
+            ctx->popLayer();
+            ctx->popState();
+        }
+    }
+}
+#endif
 
 // these functions are for dumpAsText() only. No need to translate
 static char const *direction_to_text(Layout::Direction d)
