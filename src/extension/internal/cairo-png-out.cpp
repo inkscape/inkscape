@@ -14,6 +14,9 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#ifdef HAVE_CAIRO_PDF
+
 #include "cairo-png-out.h"
 #include "cairo-render-context.h"
 #include "cairo-renderer.h"
@@ -126,3 +129,5 @@ CairoRendererOutput::init (void)
 }
 
 } } }  /* namespace Inkscape, Extension, Implementation */
+
+#endif /* HAVE_CAIRO_PDF */
