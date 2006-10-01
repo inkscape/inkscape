@@ -14,7 +14,7 @@ endif
 extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/bluredge.h	\
 	extension/internal/bluredge.cpp	\
-  extension/internal/clear-n_.h   \
+	extension/internal/clear-n_.h   \
 	extension/internal/grid.h	\
 	extension/internal/grid.cpp	\
 	extension/internal/gimpgrad.h	\
@@ -36,6 +36,12 @@ extension_internal_libinternal_a_SOURCES =	\
 	extension/internal/pdf-cairo.h \
 	extension/internal/cairo-pdf-out.h	\
 	extension/internal/cairo-pdf-out.cpp	\
+	extension/internal/cairo-render-context.h	\
+	extension/internal/cairo-render-context.cpp	\
+	extension/internal/cairo-renderer.h \
+	extension/internal/cairo-renderer.cpp \
+	extension/internal/cairo-renderer-pdf-out.h	\
+	extension/internal/cairo-renderer-pdf-out.cpp	\
 	extension/internal/eps-out.h	\
 	extension/internal/eps-out.cpp	\
 	extension/internal/gdkpixbuf-input.h	\
