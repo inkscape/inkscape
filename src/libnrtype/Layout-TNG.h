@@ -19,6 +19,18 @@
 #include <pango/pango-break.h>
 #include <vector>
 
+#ifdef HAVE_CAIRO_PDF
+namespace Inkscape {
+        namespace Extension {
+                namespace Internal {
+                        class CairoRenderContext;
+                }
+        }
+}
+
+using Inkscape::Extension::Internal::CairoRenderContext;
+#endif
+
 class SPStyle;
 class Shape;
 class NRArenaGroup;
@@ -325,6 +337,13 @@ public:
      \param ctm   do yet
     */
     void print(SPPrintContext *ctx, NRRect const *pbox, NRRect const *dbox, NRRect const *bbox, NRMatrix const &ctm) const;
+
+#ifdef HAVE_CAIRO_PDF    
+    /** Renders all the glyphs to the given Cairo rendering context.
+     \param ctx   The Cairo rendering context to be used
+     */
+    void showGlyphs(CairoRenderContext *ctx) const;
+#endif
 
     /** debug and unit test method. Creates a textual representation of the
     contents of this object. The output is designed to be both human-readable
