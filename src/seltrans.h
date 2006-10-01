@@ -8,6 +8,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information

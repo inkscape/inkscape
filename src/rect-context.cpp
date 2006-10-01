@@ -7,6 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2005 authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
@@ -373,10 +374,12 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_Shift_R:
         case GDK_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
         case GDK_Meta_R:
-            sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
-                                        _("<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"),
-                                        _("<b>Shift</b>: draw around the starting point"),
-                                        NULL);
+            if (!dragging){
+                sp_event_show_modifier_tip (event_context->defaultMessageContext(), event,
+                                            _("<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"),
+                                            _("<b>Shift</b>: draw around the starting point"),
+                                            NULL);
+            }
             break;
         case GDK_Up:
         case GDK_Down:

@@ -8,9 +8,10 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2002      Mitsuru Oka
  * Copyright (C) 2000-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
- * Copyright (C) 2002 Mitsuru Oka
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -331,10 +332,12 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                 case GDK_Shift_R:
                 case GDK_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
                 case GDK_Meta_R:
-                    sp_event_show_modifier_tip(event_context->defaultMessageContext(), event,
-                                               _("<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"),
-                                               _("<b>Shift</b>: draw around the starting point"),
-                                               NULL);
+                    if (!dragging) {
+                        sp_event_show_modifier_tip(event_context->defaultMessageContext(), event,
+                                                   _("<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"),
+                                                   _("<b>Shift</b>: draw around the starting point"),
+                                                   NULL);
+                    }
                     break;
                 case GDK_Up:
                 case GDK_Down:
