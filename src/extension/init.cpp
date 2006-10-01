@@ -39,6 +39,7 @@
 #include "internal/pdf-out.h"
 #ifdef HAVE_CAIRO_PDF
 # include "internal/cairo-pdf-out.h"
+# include "internal/cairo-renderer-pdf-out.h"
 #endif
 #include "internal/pov-out.h"
 #include "internal/odf.h"
@@ -117,6 +118,7 @@ init()
 #ifdef HAVE_CAIRO_PDF
     Internal::CairoPdfOutput::init();
     Internal::PrintCairoPDF::init();
+    Internal::CairoRendererPdfOutput::init();
 #endif
 #ifdef WITH_GNOME_PRINT
     Internal::PrintGNOME::init();
