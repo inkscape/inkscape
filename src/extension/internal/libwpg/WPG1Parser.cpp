@@ -191,6 +191,9 @@ bool WPG1Parser::parse()
 		int recordType = readU8();
 		int length = readVariableLengthInteger();
 		long nextPos = m_input->tell() + length;
+#if !defined(DEBUG)
+		(void)recordPos;
+#endif // !defined(DEBUG)
 
 		// search function to handler this record
 		int index = -1;
@@ -236,6 +239,8 @@ void WPG1Parser::handleStartWPG()
 {
 	unsigned char version = readU8();
 	unsigned char bitFlags = readU8();
+	(void)version;
+	(void)bitFlags;
 	m_width = readU16();
 	m_height = readU16();
 
@@ -260,7 +265,7 @@ void WPG1Parser::handleColormap()
 	unsigned numEntries = readU16();
 
 	WPG_DEBUG_MSG(("Colormap\n"));
-	for(int i = 0; i < numEntries; i++)
+	for(int i = 0; i < static_cast<int>(numEntries); i++)
 	{
 		WPGColor color;
 		color.red = readU8();

@@ -181,12 +181,12 @@ public:
 		rotate(false),
 		hasObjectId(false),
 		editLock(false),
-		objectId(0),
-		lockFlags(0),
 		windingRule(false),
 		filled(false),
 		closed(false),
 		framed(true),
+		objectId(0),
+		lockFlags(0),
 		rotationAngle(0),
 		sxcos(0),
 		sycos(0),
@@ -319,6 +319,10 @@ bool WPG2Parser::parse()
 		int extension = readVariableLengthInteger();
 		int length = readVariableLengthInteger();
 		long nextPos = m_input->tell() + length;
+#if !defined(DEBUG)
+		(void)recordPos;
+		(void)recordClass;
+#endif // !defined(DEBUG)
 		
 		// inside a subgroup, one less sub record
 		if(!m_groupStack.empty())
@@ -395,6 +399,7 @@ bool WPG2Parser::parse()
 	return m_success;
 }
 
+#if defined(DEBUG)
 static const char* describePrecision(unsigned char precision)
 {
 	const char* result = "Unknown";
@@ -427,6 +432,7 @@ static const char* describeGradient(unsigned char gradientType)
 	}
 	return result;
 }
+#endif // defined(DEBUG)
 
 #define TO_DOUBLE(x) ( (m_doublePrecision) ? ((double)(x)/65536.0) : (double)(x) )
 #define TRANSFORM_XY(x,y) { m_matrix.transform((x),(y)); (x)-= m_xofs; (y)-= m_yofs; (y)=m_height-(y); }
@@ -460,6 +466,12 @@ void WPG2Parser::handleStartWPG()
 	long viewportY1 = (m_doublePrecision) ? readS32() : readS16();
 	long viewportX2 = (m_doublePrecision) ? readS32() : readS16();
 	long viewportY2 = (m_doublePrecision) ? readS32() : readS16();
+#if !defined(DEBUG)
+	(void)viewportX1;
+	(void)viewportY1;
+	(void)viewportX2;
+	(void)viewportY2;
+#endif // !defined(DEBUG)
 	
 	long imageX1 = (m_doublePrecision) ? readS32() : readS16();
 	long imageY1 = (m_doublePrecision) ? readS32() : readS16();
@@ -516,7 +528,7 @@ void WPG2Parser::handleStartWPG()
 	
 	// create default pen styles
 	int styleNo = 0;
-	for(int i = 0; i < sizeof(WPG2_defaultPenDashes)/sizeof(WPG2_defaultPenDashes[0]);)
+	for(int i = 0; i < static_cast<int>(sizeof(WPG2_defaultPenDashes)/sizeof(WPG2_defaultPenDashes[0]));)
 	{
 		int segments = 2 * WPG2_defaultPenDashes[i++];
 		if(segments == 0) break;
@@ -624,7 +636,7 @@ void WPG2Parser::handleDPColorPalette()
 	unsigned startIndex = readU16();
 	unsigned numEntries = readU16();
 
-	for(int i = 0; i < numEntries; i++)
+	for(int i = 0; i < static_cast<int>(numEntries); i++)
 	{
 		WPGColor color;
 		color.red = readU16() >> 8 ;
@@ -730,6 +742,10 @@ void WPG2Parser::handleBrushGradient()
 	unsigned flag = readU16();
 	bool granular = (flag & (1<<6)) == 1;
 	bool anchor = (flag & (1<<7)) == 1;
+#if !defined(DEBUG)
+	(void)granular;
+	(void)anchor;
+#endif // !defined(DEBUG)
 	
 	// TODO: get gradient extent
 	
@@ -752,6 +768,10 @@ void WPG2Parser::handleDPBrushGradient()
 	unsigned flag = readU16();
 	bool granular = (flag & (1<<6)) == 1;
 	bool anchor = (flag & (1<<7)) == 1;
+#if !defined(DEBUG)
+	(void)granular;
+	(void)anchor;
+#endif // !defined(DEBUG)
 	
 	// TODO: get gradient extent (in double precision)
 	
@@ -923,6 +943,9 @@ void WPG2Parser::handleDPBrushBackColor()
 void WPG2Parser::handleBrushPattern()
 {
 	unsigned int pattern = readU16();
+#if !defined(DEBUG)
+	(void)pattern;
+#endif // !defined(DEBUG)
 
 	// TODO
 
@@ -1081,7 +1104,7 @@ void WPG2Parser::handlePolycurve()
 
 	WPGPointArray vertices;
 	WPGPointArray controlPoints;
-	for(int i = 0; i < count; i++ )
+	for(int i = 0; i < static_cast<int>(count); i++ )
 	{
 		long ix = (m_doublePrecision) ? readS32() : readS16();
 		long iy = (m_doublePrecision) ? readS32() : readS16();

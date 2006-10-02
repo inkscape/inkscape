@@ -32,6 +32,7 @@ namespace libwpg
 class WPGInputStream
 {
 public:
+	virtual ~WPGInputStream() {}
 	virtual unsigned char getc() = 0;
 	virtual long read(long n, char* buffer) = 0;
 	virtual long tell() = 0;

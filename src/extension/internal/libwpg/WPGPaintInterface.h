@@ -38,6 +38,7 @@ namespace libwpg
 
 class WPGPaintInterface {
 public:
+	virtual ~WPGPaintInterface() {}
 
 	// none of the other callback functions will be called before this function is called
 	virtual void startDocument(double width, double height) = 0;

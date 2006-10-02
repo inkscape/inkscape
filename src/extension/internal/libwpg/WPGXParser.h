@@ -40,6 +40,7 @@ class WPGXParser
 {
 public:
 	WPGXParser(WPGInputStream *input, WPGPaintInterface* painter);
+	virtual ~WPGXParser() {}
 	virtual bool parse() = 0;
 	
 	unsigned char readU8();
