@@ -279,6 +279,7 @@ FilterPrimitive *Filter::add_primitive(FilterPrimitiveType type)
     }
 
     _primitive[_primitive_count] = created;
+    _primitive_count++;
     return created;
 }
 
