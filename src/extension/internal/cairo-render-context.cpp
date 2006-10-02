@@ -76,9 +76,9 @@
 #include <pango/pangofc-fontmap.h>
 
 //#define TRACE(_args) g_printf _args
-#define TRACE
+#define TRACE(_args)
 //#define TEST(_args) _args
-#define TEST
+#define TEST(_args)
 
 // FIXME: expose these from sp-clippath/mask.cpp
 struct SPClipPathView {
@@ -102,19 +102,19 @@ namespace Internal {
 static cairo_status_t _write_callback(void *closure, const unsigned char *data, unsigned int length);
 
 CairoRenderContext::CairoRenderContext(CairoRenderer *parent) :
-    _renderer(parent),
-    _is_valid(FALSE),
-    _vector_based_target(FALSE),
-    _target(CAIRO_SURFACE_TYPE_IMAGE),
-    _target_format(CAIRO_FORMAT_ARGB32),
-    _clip_mode(CLIP_MODE_MASK),
-    _render_mode(RENDER_MODE_NORMAL),
     _dpi(72),
     _stream(NULL),
+    _is_valid(FALSE),
+    _vector_based_target(FALSE),
     _cr(NULL),
     _surface(NULL),
+    _target(CAIRO_SURFACE_TYPE_IMAGE),
+    _target_format(CAIRO_FORMAT_ARGB32),
     _layout(NULL),
-    _state(NULL)
+    _state(NULL),
+    _renderer(parent),
+    _render_mode(RENDER_MODE_NORMAL),
+    _clip_mode(CLIP_MODE_MASK)
 {}
 
 CairoRenderContext::~CairoRenderContext(void)
@@ -1224,8 +1224,9 @@ CairoRenderContext::_showGlyphs(cairo_t *cr, PangoFont *font, std::vector<CairoG
     unsigned int num_invalid_glyphs = 0;
     unsigned int i = 0;
     for (std::vector<CairoGlyphInfo>::const_iterator it_info = glyphtext.begin() ; it_info != glyphtext.end() ; it_info++) {
-        // skip empty or unknown glyphs
-        if (it_info->index == PANGO_GLYPH_EMPTY || it_info->index & PANGO_GLYPH_UNKNOWN_FLAG) {
+        // skip glyphs which are PANGO_GLYPH_EMPTY (0x0FFFFFFF)
+        // or have the PANGO_GLYPH_UNKNOWN_FLAG (0x10000000) set
+        if (it_info->index == 0x0FFFFFFF || it_info->index & 0x10000000) {
             TRACE(("INVALID GLYPH found\n"));
             num_invalid_glyphs++;
             continue;
