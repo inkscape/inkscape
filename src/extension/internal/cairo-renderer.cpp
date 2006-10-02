@@ -81,7 +81,7 @@
 #endif
 
 //#define TRACE(_args) g_printf _args
-#define TRACE
+#define TRACE(_args)
 
 // FIXME: expose these from sp-clippath/mask.cpp
 struct SPClipPathView {
