@@ -1743,6 +1743,8 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
  */
 void
 sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count) {
+  g_return_if_fail(canvas != NULL);
+  
   canvas->forced_redraw_limit = count;
   canvas->forced_redraw_count = 0;
 }
@@ -1752,6 +1754,8 @@ sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int c
  */
 void
 sp_canvas_end_forced_full_redraws(SPCanvas *canvas) {
+  g_return_if_fail(canvas != NULL);
+
   canvas->forced_redraw_limit = 0;
 }
 
