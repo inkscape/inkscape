@@ -756,15 +756,17 @@ dnl Override the default g_ascii_strtod
 AC_DEFINE(g_ascii_strtod, fixed_g_ascii_strtod, [Pre-1.107 gstrfuncs.c version of g_ascii_strtod is broken])
 
 dnl Figure out where the datadir actually is
-if test "x${datadir}" = 'x${prefix}/share'; then
-  if test "x${prefix}" = "xNONE"; then
-    runtime_datadir="${ac_default_prefix}/share"
-  else
-    runtime_datadir="${prefix}/share"
-  fi
-else
-  runtime_datadir="${datadir}"
-fi
+dnl http://autoconf-archive.cryp.to/ac_define_dir.html
+prefix_NONE=
+exec_prefix_NONE=
+test "x$prefix" = xNONE && prefix_NONE=yes && prefix=$ac_default_prefix
+test "x$exec_prefix" = xNONE && exec_prefix_NONE=yes && exec_prefix=$prefix
+dnl In Autoconf 2.60, ${datadir} refers to ${datarootdir}, which in turn
+dnl refers to ${prefix}.  Thus we have to use `eval' twice.
+eval runtime_datadir="${datadir}"
+eval runtime_datadir="${runtime_datadir}"
+test "$prefix_NONE" && prefix=NONE
+test "$exec_prefix_NONE" && exec_prefix=NONE
 
 inkscape_sharedir="${runtime_datadir}/${PACKAGE_NAME}"
 
