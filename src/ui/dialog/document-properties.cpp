@@ -27,6 +27,7 @@
 
 #include "xml/node-event-vector.h"
 #include "helper/units.h"
+#include "prefs-utils.h"
 
 #include "inkscape.h"
 #include "verbs.h"
@@ -124,6 +125,12 @@ DocumentProperties::init()
                      G_CALLBACK(on_deactivate_desktop), 0);
     
     show_all_children();
+    if (prefs_get_int_attribute("dialogs.documentoptions", "axonomgrid_enabled", 0) != 1) {
+        _rrb_gridtype._hbox->hide();
+        _rsu_ax.getSU()->hide();
+        _rsu_az.getSU()->hide();
+    }
+
     present();
 }
 
