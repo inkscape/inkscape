@@ -1943,9 +1943,9 @@ sp_ddc_mass_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 }
 
 static void
-sp_ddc_drag_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
+sp_ddc_wiggle_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
-    prefs_set_double_attribute("tools.calligraphic", "drag", adj->value);
+    prefs_set_double_attribute("tools.calligraphic", "wiggle", adj->value);
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
@@ -2013,7 +2013,7 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *tbl)
         double value;
     } const key_values[] = {
         {"mass", 0.02},
-        {"drag", 1.0},
+        {"wiggle", 0.0},
         {"angle", 30.0},
         {"width", 15},
         {"thinning", 0.1},
@@ -2079,7 +2079,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     /* Fixation */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Fixation:"), _("How fixed is the pen angle (0 = always perpendicular to stroke direction, 1 = fixed)"),
+        GtkWidget *hb = sp_tb_spinbutton(_("Fixation:"), _("Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"),
                                          "tools.calligraphic", "flatness", 0.9,
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
@@ -2090,7 +2090,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     /* Cap Rounding */
     {
         // TRANSLATORS: "cap" means "end" (both start and finish) here
-        GtkWidget *hb = sp_tb_spinbutton(_("Round:"), _("How much the ends of a stroke are rounded"),
+        GtkWidget *hb = sp_tb_spinbutton(_("Round:"), _("Increase to round the ends of strokes"),
                                          "tools.calligraphic", "cap_rounding", 0.0,
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
@@ -2103,7 +2103,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
 
     /* Tremor */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Tremor:"), _("How uneven or trembling is the pen stroke"),
+        GtkWidget *hb = sp_tb_spinbutton(_("Tremor:"), _("Increase to make strokes rugged and trembling"),
                                          "tools.calligraphic", "tremor", 0.0,
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
@@ -2111,24 +2111,24 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
 
+    /* Wiggle */
+    {
+        GtkWidget *hb = sp_tb_spinbutton(_("Wiggle:"), _("Increase to make the pen waver and wiggle"),
+                                         "tools.calligraphic", "wiggle", 0.0,
+                                         NULL, tbl, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_wiggle_value_changed, 0.01, 2);
+        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
+    }
+
+
     /* Mass */
     {
-        GtkWidget *hb = sp_tb_spinbutton(_("Mass:"), _("How much inertia affects the movement of the pen"),
+        GtkWidget *hb = sp_tb_spinbutton(_("Mass:"), _("Increase to make the pen drag behind, as if slowed by inertia"),
                                          "tools.calligraphic", "mass", 0.02,
                                          NULL, tbl, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
                                          sp_ddc_mass_value_changed, 0.01, 2);
-        gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
-    }
-
-    /* Drag */
-    {
-        // TRANSLATORS: "drag" means "resistance" here
-        GtkWidget *hb = sp_tb_spinbutton(_("Drag:"), _("How much resistance affects the movement of the pen"),
-                                         "tools.calligraphic", "drag", 1,
-                                         NULL, tbl, FALSE, NULL,
-                                         0.0, 1.0, 0.01, 0.1,
-                                         sp_ddc_drag_value_changed, 0.01, 2);
         gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_SPACING);
     }
 

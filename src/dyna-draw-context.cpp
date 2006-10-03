@@ -222,7 +222,7 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
     g_signal_connect(G_OBJECT(ddc->currentshape), "event", G_CALLBACK(sp_desktop_root_handler), ec->desktop);
 
     sp_event_context_read(ec, "mass");
-    sp_event_context_read(ec, "drag");
+    sp_event_context_read(ec, "wiggle");
     sp_event_context_read(ec, "angle");
     sp_event_context_read(ec, "width");
     sp_event_context_read(ec, "thinning");
@@ -247,9 +247,9 @@ sp_dyna_draw_context_set(SPEventContext *ec, gchar const *key, gchar const *val)
     if (!strcmp(key, "mass")) {
         double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.2 );
         ddc->mass = CLAMP(dval, -1000.0, 1000.0);
-    } else if (!strcmp(key, "drag")) {
-        double const dval = ( val ? g_ascii_strtod (val, NULL) : DRAG_DEFAULT );
-        ddc->drag = CLAMP(dval, DRAG_MIN, DRAG_MAX);
+    } else if (!strcmp(key, "wiggle")) {
+        double const dval = ( val ? g_ascii_strtod (val, NULL) : (1 - DRAG_DEFAULT));
+        ddc->drag = CLAMP((1 - dval), DRAG_MIN, DRAG_MAX); // drag is inverse to wiggle
     } else if (!strcmp(key, "angle")) {
         double const dval = ( val ? g_ascii_strtod (val, NULL) : 0.0);
         ddc->angle = CLAMP (dval, -90, 90);
