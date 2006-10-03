@@ -512,7 +512,7 @@ sp_text_context_setup_text(SPTextContext *tc)
     text_item->transform = SP_ITEM(ec->desktop->currentRoot())->getRelativeTransform(ec->desktop->currentLayer());
     text_item->updateRepr();
     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                     /* TODO: annotate */ "text-context.cpp:515");
+                     _("Create text"));
 }
 
 /**
@@ -551,7 +551,7 @@ insert_uni_char(SPTextContext *const tc)
         sp_text_context_update_cursor(tc);
         sp_text_context_update_text_selection(tc);
         sp_document_done(sp_desktop_document(tc->desktop), SP_VERB_DIALOG_TRANSFORM, 
-                         /* TODO: annotate */ "text-context.cpp:554");
+                         _("Insert Unicode character"));
     }
 }
 
@@ -715,7 +715,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                         sp_desktop_selection(desktop)->set(ft);
                         ec->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Flowed text is created."));
                         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                                         /* TODO: annotate */ "text-context.cpp:718");
+                                         _("Create flowed text"));
                     } else {
                         ec->desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("The frame is <b>too small</b> for the current font size. Flowed text not created."));
                     }
@@ -845,7 +845,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     sp_text_context_update_text_selection(tc);
                                     ec->desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("No-break space"));
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                                                     /* TODO: annotate */ "text-context.cpp:848");
+                                                     _("Insert no-break space"));
                                     return TRUE;
                                 }
                                 break;
@@ -882,7 +882,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                                                     /* TODO: annotate */ "text-context.cpp:885");
+                                                     _("Make bold"));
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
                                     return TRUE;
@@ -900,7 +900,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
                                     sp_repr_css_attr_unref(css);
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                                                     /* TODO: annotate */ "text-context.cpp:903");
+                                                     _("Make italic"));
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
                                     return TRUE;
@@ -932,7 +932,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 sp_text_context_update_cursor(tc);
                                 sp_text_context_update_text_selection(tc);
                                 sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                                                 /* TODO: annotate */ "text-context.cpp:935");
+                                                 _("New line"));
                                 return TRUE;
                             case GDK_BackSpace:
                                 if (tc->text) { // if nascent_object, do nothing, but return TRUE; same for all other delete and move keys
@@ -942,7 +942,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                                                     /* TODO: annotate */ "text-context.cpp:945");
+                                                     _("Backspace"));
                                 }
                                 return TRUE;
                             case GDK_Delete:
@@ -954,7 +954,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                     sp_text_context_update_cursor(tc);
                                     sp_text_context_update_text_selection(tc);
                                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                                                     /* TODO: annotate */ "text-context.cpp:957");
+                                                     _("Delete"));
                                 }
                                 return TRUE;
                             case GDK_Left:
@@ -969,7 +969,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:left", SP_VERB_CONTEXT_TEXT, 
-                                                               /* TODO: annotate */ "text-context.cpp:972");
+                                                               _("Kern to the left"));
                                     } else {
                                         cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorLeftWithControl
                                                                              : &Inkscape::Text::Layout::iterator::cursorLeft;
@@ -989,7 +989,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:right", SP_VERB_CONTEXT_TEXT, 
-                                                               /* TODO: annotate */ "text-context.cpp:992");
+                                                               _("Kern to the right"));
                                     } else {
                                         cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorRightWithControl
                                                                              : &Inkscape::Text::Layout::iterator::cursorRight;
@@ -1009,7 +1009,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:up", SP_VERB_CONTEXT_TEXT, 
-                                                               /* TODO: annotate */ "text-context.cpp:1012");
+                                                               _("Kern up"));
 
                                     } else {
                                         cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorUpWithControl
@@ -1030,7 +1030,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         sp_document_maybe_done(sp_desktop_document(ec->desktop), "kern:down", SP_VERB_CONTEXT_TEXT, 
-                                                               /* TODO: annotate */ "text-context.cpp:1033");
+                                                               _("Kern down"));
 
                                     } else {
                                         cursor_movement_operator = MOD__CTRL ? &Inkscape::Text::Layout::iterator::cursorDownWithControl
@@ -1086,7 +1086,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                             sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -90);
                                         }
                                         sp_document_maybe_done(sp_desktop_document(ec->desktop), "textrot:ccw", SP_VERB_CONTEXT_TEXT, 
-                                                               /* TODO: annotate */ "text-context.cpp:1089");
+                                                               _("Rotate counterclockwise"));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         return TRUE;
@@ -1107,7 +1107,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                             sp_te_adjust_rotation(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 90);
                                         }
                                         sp_document_maybe_done(sp_desktop_document(ec->desktop), "textrot:cw", SP_VERB_CONTEXT_TEXT, 
-                                                               /* TODO: annotate */ "text-context.cpp:1110");
+                                                                _("Rotate clockwise"));
                                         sp_text_context_update_cursor(tc);
                                         sp_text_context_update_text_selection(tc);
                                         return TRUE;
@@ -1124,7 +1124,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                             else
                                                 sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -1);
                                             sp_document_maybe_done(sp_desktop_document(ec->desktop), "linespacing:dec", SP_VERB_CONTEXT_TEXT, 
-                                                                   /* TODO: annotate */ "text-context.cpp:1127");
+                                                                    _("Contract line spacing"));
 
                                         } else {
                                             if (MOD__SHIFT)
@@ -1132,7 +1132,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                             else
                                                 sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, -1);
                                             sp_document_maybe_done(sp_desktop_document(ec->desktop), "letterspacing:dec", SP_VERB_CONTEXT_TEXT, 
-                                                                   /* TODO: annotate */ "text-context.cpp:1135");
+                                                                    _("Contract letter spacing"));
 
                                         }
                                         sp_text_context_update_cursor(tc);
@@ -1151,7 +1151,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                             else
                                                 sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 1);
                                             sp_document_maybe_done(sp_desktop_document(ec->desktop), "linespacing:inc", SP_VERB_CONTEXT_TEXT, 
-                                                                   /* TODO: annotate */ "text-context.cpp:1154");
+                                                                    _("Expand line spacing"));
 
                                         } else {
                                             if (MOD__SHIFT)
@@ -1159,7 +1159,7 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                             else
                                                 sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, ec->desktop, 1);
                                             sp_document_maybe_done(sp_desktop_document(ec->desktop), "letterspacing:inc", SP_VERB_CONTEXT_TEXT, 
-                                                                   /* TODO: annotate */ "text-context.cpp:1162");
+                                                                    _("Expand letter spacing"));
 
                                         }
                                         sp_text_context_update_cursor(tc);
@@ -1263,7 +1263,7 @@ sp_text_paste_inline(SPEventContext *ec)
                 begin = end + 1;
             }
             sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_TEXT, 
-                             /* TODO: annotate */ "text-context.cpp:1266");
+                             _("Paste text"));
 
             return true;
         }
@@ -1377,7 +1377,7 @@ sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc)
 
     sp_te_apply_style(tc->text, tc->text_sel_start, tc->text_sel_end, css);
     sp_document_done(sp_desktop_document(tc->desktop), SP_VERB_CONTEXT_TEXT, 
-                     /* TODO: annotate */ "text-context.cpp:1380");
+                     _("Set text style"));
     sp_text_context_update_cursor(tc);
     sp_text_context_update_text_selection(tc);
 
@@ -1584,7 +1584,7 @@ sptc_commit(GtkIMContext *imc, gchar *string, SPTextContext *tc)
     sp_text_context_update_text_selection(tc);
 
     sp_document_done(SP_OBJECT_DOCUMENT(tc->text), SP_VERB_CONTEXT_TEXT, 
-                     /* TODO: annotate */ "text-context.cpp:1579");
+                     _("Type text"));
 }
 
 
