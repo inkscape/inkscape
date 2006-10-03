@@ -83,7 +83,7 @@ modules = \
 	ffmet.inx \
 	ffms.inx \
 	ffss.inx \
-	ffset.inx \ 
+	ffset.inx \
 	funcplot.inx \
 	handles.inx \
 	interp.inx \
