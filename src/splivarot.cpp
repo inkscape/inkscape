@@ -432,8 +432,10 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
     }
     gint pos = repr_source->position();
     Inkscape::XML::Node *parent = sp_repr_parent(repr_source);
-    char const *id = repr_source->attribute("id");
-    char const *style = repr_source->attribute("style");
+    gchar const *id = repr_source->attribute("id");
+    gchar const *style = repr_source->attribute("style");
+    gchar const *mask = repr_source->attribute("mask");
+    gchar const *clip_path = repr_source->attribute("clip-path");
 
 
     // remove source paths
@@ -487,6 +489,11 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
 
             Inkscape::XML::Node *repr = sp_repr_new("svg:path");
             repr->setAttribute("style", style);
+            if (mask)
+                repr->setAttribute("mask", mask);
+            if (clip_path)
+                repr->setAttribute("clip-path", clip_path);
+
             repr->setAttribute("d", d);
             g_free(d);
 
@@ -527,6 +534,12 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
 
         Inkscape::XML::Node *repr = sp_repr_new("svg:path");
         repr->setAttribute("style", style);
+
+        if ( mask )
+            repr->setAttribute("mask", mask);
+
+        if ( clip_path )
+            repr->setAttribute("clip-path", clip_path);
 
         repr->setAttribute("d", d);
         g_free(d);
