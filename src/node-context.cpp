@@ -587,10 +587,12 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     nc->curvepoint_event[NR::Y] = (gint) event->motion.y;
                     gobble_motion_events(GDK_BUTTON1_MASK);
                 } else {
-                    NR::Point const motion_w(event->motion.x,
-                                         event->motion.y);
-                    NR::Point const motion_dt(desktop->w2d(motion_w));
-                    Inkscape::Rubberband::get()->move(motion_dt);
+                    if (Inkscape::Rubberband::get()->is_started()) {
+                        NR::Point const motion_w(event->motion.x,
+                                            event->motion.y);
+                        NR::Point const motion_dt(desktop->w2d(motion_w));
+                        Inkscape::Rubberband::get()->move(motion_dt);
+                    }
                 }
                 nc->drag = TRUE;
                 ret = TRUE;
