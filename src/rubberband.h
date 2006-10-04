@@ -34,6 +34,7 @@ public:
     void move(NR::Point const &p);
     NR::Maybe<NR::Rect> getRectangle() const;
     void stop();
+    bool is_started();
 
     static Rubberband* get();
 
@@ -46,6 +47,7 @@ private:
     NR::Point _start;
     NR::Point _end;
     CtrlRect *_canvas;
+    bool _started;
 };
 
 }

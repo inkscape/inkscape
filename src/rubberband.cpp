@@ -21,7 +21,7 @@
 Inkscape::Rubberband *Inkscape::Rubberband::_instance = NULL;
 
 Inkscape::Rubberband::Rubberband()
-    : _desktop(SP_ACTIVE_DESKTOP), _canvas(NULL)
+    : _desktop(SP_ACTIVE_DESKTOP), _canvas(NULL), _started(false)
 {
 
 }
@@ -31,6 +31,7 @@ void Inkscape::Rubberband::start(SPDesktop *d, NR::Point const &p)
     stop();
     _desktop = d;
     _start = p;
+    _started = true;
 
     sp_canvas_force_full_redraw_after_interruptions(_desktop->canvas, 5);
 }
@@ -42,6 +43,8 @@ void Inkscape::Rubberband::stop()
         _canvas = NULL;
         sp_canvas_end_forced_full_redraws(_desktop->canvas);
     }
+    
+    _started = false;
 }
 
 void Inkscape::Rubberband::move(NR::Point const &p)
@@ -72,6 +75,11 @@ Inkscape::Rubberband *Inkscape::Rubberband::get()
     }
 
     return _instance;
+}
+
+bool Inkscape::Rubberband::is_started()
+{
+    return _started;
 }
 
 /*
