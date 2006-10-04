@@ -1026,11 +1026,14 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
     float blur_prev = -1;
     bool same_blur = true;
     guint blur_items = 0;
+    guint items = 0;
     
     for (GSList const *i = objects; i != NULL; i = i->next) {
         SPObject *obj = SP_OBJECT (i->data);
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
+
+        items ++;
 
         //if object has a filter
         if (style->filter.set && style->filter.filter) {
@@ -1039,8 +1042,7 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
             {
                 SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
                 //if primitive is gaussianblur
-        //            if(SP_IS_GAUSSIANBLUR(primitive))
-                {
+                if(SP_IS_GAUSSIANBLUR(primitive)) {
                     SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                     float num = spblur->stdDeviation.getNumber();
                     blur_sum += num;
@@ -1054,28 +1056,16 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         }
 
     }
-    if (blur_items > 0)
-    {
-        blur_sum /= blur_items;
-        style_res->filter.set = true;
-        style_res->filter.filter = new SPFilter();
-		//TODO: this SPFilter attributes should be set on sp-filter.cpp
-		//      when a new SPFilter is created, not here
-        style_res->filter.filter->_primitive_count=0;
-        style_res->filter.filter->_primitive_table_size = 1;
-        style_res->filter.filter->_primitives = new SPFilterPrimitive*[1];
-        style_res->filter.filter->_primitives[0] = NULL;
 
-        SPGaussianBlur * b = new SPGaussianBlur();
-        add_primitive(style_res->filter.filter, b);
-        sp_gaussianBlur_setDeviation(b, blur_sum);
+    if (items > 0) {
+        if (blur_items > 0)
+            blur_sum /= blur_items;
+        style_res->filter_gaussianBlur_deviation.value = blur_sum;
     }
 
-
-
-    if (blur_items == 0) {
+    if (items == 0) {
         return QUERY_STYLE_NOTHING;
-    } else if (blur_items == 1) {
+    } else if (items == 1) {
         return QUERY_STYLE_SINGLE;
     } else {
         if (same_blur)

@@ -13,9 +13,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-//uncomment to display blur slider
-#define WITH_BLUR
- 
+
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -183,6 +181,39 @@ sp_object_properties_dialog (void)
                                       INKSCAPE_STOCK_PROPERTIES_STROKE_PAGE);
         }
 
+
+        /* Blur */
+        GtkWidget *b_vb = gtk_vbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vb), b_vb, FALSE, FALSE, 2);
+        gtk_object_set_data (GTK_OBJECT (dlg), "blur", b_vb);
+
+        GtkWidget *blur_l_hb = gtk_hbox_new (FALSE, 4);
+        GtkWidget *blur_l = gtk_label_new_with_mnemonic (_("_Blur"));
+        gtk_misc_set_alignment (GTK_MISC (blur_l), 0.0, 1.0);
+        gtk_box_pack_start (GTK_BOX (blur_l_hb), blur_l, FALSE, FALSE, 4);
+        gtk_box_pack_start (GTK_BOX (b_vb), blur_l_hb, FALSE, FALSE, 0);
+
+        GtkWidget *blur_hb = gtk_hbox_new (FALSE, 4);
+        gtk_box_pack_start (GTK_BOX (b_vb), blur_hb, FALSE, FALSE, 0);
+
+        GtkObject *blur_a = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 1.0, 0.0);
+        gtk_object_set_data(GTK_OBJECT(dlg), "blur_adjustment", blur_a);
+
+        GtkWidget *blur_s = gtk_hscale_new (GTK_ADJUSTMENT (blur_a));
+        gtk_scale_set_draw_value (GTK_SCALE (blur_s), FALSE);
+        gtk_box_pack_start (GTK_BOX (blur_hb), blur_s, TRUE, TRUE, 4);
+        gtk_label_set_mnemonic_widget (GTK_LABEL(blur_l), blur_s);
+
+        GtkWidget *blur_sb = gtk_spin_button_new (GTK_ADJUSTMENT (blur_a), 0.01, 3);
+        gtk_box_pack_start (GTK_BOX (blur_hb), blur_sb, FALSE, FALSE, 0);
+
+        gtk_signal_connect ( blur_a, "value_changed",
+                             GTK_SIGNAL_FUNC (sp_fillstroke_blur_changed),
+                             dlg );
+                             
+        gtk_widget_show_all (b_vb);
+
+
         /* Opacity */
 
         GtkWidget *o_vb = gtk_vbox_new (FALSE, 0);
@@ -220,39 +251,6 @@ sp_object_properties_dialog (void)
         g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_fillstroke_selection_modified), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
 
-
-#ifdef WITH_BLUR        
-        /* Blur */
-        GtkWidget *b_vb = gtk_vbox_new (FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (vb), b_vb, FALSE, FALSE, 2);
-        gtk_object_set_data (GTK_OBJECT (dlg), "blur", b_vb);
-
-        GtkWidget *blur_l_hb = gtk_hbox_new (FALSE, 4);
-        GtkWidget *blur_l = gtk_label_new_with_mnemonic (_("_Blur"));
-        gtk_misc_set_alignment (GTK_MISC (blur_l), 0.0, 1.0);
-        gtk_box_pack_start (GTK_BOX (blur_l_hb), blur_l, FALSE, FALSE, 4);
-        gtk_box_pack_start (GTK_BOX (b_vb), blur_l_hb, FALSE, FALSE, 0);
-
-        GtkWidget *blur_hb = gtk_hbox_new (FALSE, 4);
-        gtk_box_pack_start (GTK_BOX (b_vb), blur_hb, FALSE, FALSE, 0);
-
-        GtkObject *blur_a = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-        gtk_object_set_data(GTK_OBJECT(dlg), "blur_adjustment", blur_a);
-
-        GtkWidget *blur_s = gtk_hscale_new (GTK_ADJUSTMENT (blur_a));
-        gtk_scale_set_draw_value (GTK_SCALE (blur_s), FALSE);
-        gtk_box_pack_start (GTK_BOX (blur_hb), blur_s, TRUE, TRUE, 4);
-        gtk_label_set_mnemonic_widget (GTK_LABEL(blur_l), blur_s);
-
-        GtkWidget *blur_sb = gtk_spin_button_new (GTK_ADJUSTMENT (blur_a), 1.0, 3);
-        gtk_box_pack_start (GTK_BOX (blur_hb), blur_sb, FALSE, FALSE, 0);
-
-        gtk_signal_connect ( blur_a, "value_changed",
-                             GTK_SIGNAL_FUNC (sp_fillstroke_blur_changed),
-                             dlg );
-                             
-        gtk_widget_show_all (b_vb);
-#endif
         sp_fillstroke_selection_changed(NULL, NULL, NULL);
 
         gtk_widget_show (dlg);
@@ -329,26 +327,22 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
     GtkWidget *b = GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (dlg), "blur"));
     GtkAdjustment *bluradjustment = GTK_ADJUSTMENT(gtk_object_get_data(GTK_OBJECT(dlg), "blur_adjustment"));
 
-#ifdef WITH_BLUR
     //query now for current average blurring of selection
     int blur_result = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BLUR);
-
     switch (blur_result) {
         case QUERY_STYLE_NOTHING: //no blurring
-//			gtk_widget_set_sensitive (b, FALSE);
+            gtk_widget_set_sensitive (b, FALSE);
             break;
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED:
         case QUERY_STYLE_MULTIPLE_SAME: 
             gtk_widget_set_sensitive (b, TRUE);
             //update blur widget value
-            SPGaussianBlur * spblur = SP_GAUSSIANBLUR(query->filter.filter->_primitives[0]);
-            gtk_adjustment_set_value(bluradjustment, spblur->stdDeviation.getNumber());
+            float radius = query->filter_gaussianBlur_deviation.value;
+            // TODO: divide by bbox diagonal
+            gtk_adjustment_set_value(bluradjustment, radius);
             break;
     }
-#endif
-
-    
     
     
     g_free (query);
