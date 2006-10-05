@@ -1094,7 +1094,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             if (next) {
                 dt->setCurrentLayer(next);
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_NEXT, 
-                                 /* TODO: annotate */ "verbs.cpp:1077");
+                                 _("Move to next layer"));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to next layer."));
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past last layer."));
@@ -1106,7 +1106,7 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
             if (prev) {
                 dt->setCurrentLayer(prev);
                 sp_document_done(sp_desktop_document(dt), SP_VERB_LAYER_PREV, 
-                                 /* TODO: annotate */ "verbs.cpp:1089");
+                                 _("Move to previous layer"));
                 dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Moved to previous layer."));
             } else {
                 dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Cannot move past first layer."));
@@ -1156,19 +1156,19 @@ LayerVerb::perform(SPAction *action, void *data, void *pdata)
                 switch (verb) {
                     case SP_VERB_LAYER_TO_TOP:
                         message = g_strdup_printf(_("Raised layer <b>%s</b>."), layer->defaultLabel());
-                        description = _("Layer to Top");
+                        description = _("Layer to top");
                         break;
                     case SP_VERB_LAYER_RAISE:
                         message = g_strdup_printf(_("Raised layer <b>%s</b>."), layer->defaultLabel());
-                        description = _("Raise Layer");
+                        description = _("Raise layer");
                         break;
                     case SP_VERB_LAYER_TO_BOTTOM:
                         message = g_strdup_printf(_("Lowered layer <b>%s</b>."), layer->defaultLabel());
-                        description = _("Layer to Bottom");
+                        description = _("Layer to bottom");
                         break;
                     case SP_VERB_LAYER_LOWER:
                         message = g_strdup_printf(_("Lowered layer <b>%s</b>."), layer->defaultLabel());
-                        description = _("Lower Layer");
+                        description = _("Lower layer");
                         break;
                 };
                 sp_document_done(sp_desktop_document(dt), verb, description);

@@ -154,7 +154,7 @@ text_put_on_path()
     SP_OBJECT_REPR(text)->setAttribute("y", NULL);
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                     /* TODO: annotate */ "text-chemistry.cpp:157");
+                     _("Put text on path"));
     g_slist_free(text_reprs);
 }
 
@@ -192,7 +192,7 @@ text_remove_from_path()
     } else {
         selection->setList(g_slist_copy((GSList *) selection->itemList())); // reselect to update statusbar description
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                         /* TODO: annotate */ "text-chemistry.cpp:195");
+                         _("Remove text from path"));
     }
 }
 
@@ -240,7 +240,7 @@ text_remove_all_kerns()
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("Select <b>text(s)</b> to remove kerns from."));
     } else {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, 
-                         /* TODO: annotate */ "text-chemistry.cpp:243");
+                         _("Remove manual kerns"));
     }
 }
 
@@ -309,7 +309,7 @@ text_flow_into_shape()
     SP_OBJECT(text)->deleteObject (true);
 
     sp_document_done(doc, SP_VERB_CONTEXT_TEXT,
-                     /* TODO: annotate */ "text-chemistry.cpp:312");
+                     _("Flow text into shape"));
 
     sp_desktop_selection(desktop)->set(SP_ITEM(root_object));
 
@@ -395,7 +395,7 @@ text_unflow ()
     g_slist_free (new_objs);
 
     sp_document_done(doc, SP_VERB_CONTEXT_TEXT, 
-                     /* TODO: annotate */ "text-chemistry.cpp:398");
+                     _("Unflow flowed text"));
 }
 
 

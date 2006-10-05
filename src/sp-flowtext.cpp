@@ -614,7 +614,7 @@ void SPFlowtext::convert_to_text()
     item->deleteObject();
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                     /* TODO: annotate */ "sp-flowtext.cpp:617");
+                     _("Convert flowed text to text"));
 }
 
 SPItem *SPFlowtext::get_frame(SPItem *after)

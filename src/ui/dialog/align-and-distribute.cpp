@@ -216,7 +216,7 @@ private :
 
         if (changed) {
             sp_document_done ( sp_desktop_document (desktop) , SP_VERB_DIALOG_ALIGN_DISTRIBUTE,
-                               /* TODO: annotate */ "align-and-distribute.cpp:219" );
+                               _("Align"));
         }
 
 
@@ -376,7 +376,7 @@ private :
 
         if (changed) {
             sp_document_done ( sp_desktop_document (desktop), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
-                               /* TODO: annotate */ "align-and-distribute.cpp:379");
+                               _("Distribute"));
         }
     }
     guint _index;
@@ -487,7 +487,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
-                         /* TODO: annotate */ "align-and-distribute.cpp:490");
+                         _("Remove overlaps"));
     }
 };
 
@@ -517,7 +517,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
-                         /* TODO: annotate */ "align-and-distribute.cpp:520");
+                         _("Arrange connector network"));
     }
 };
 
@@ -547,7 +547,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
-                          /* TODO: annotate */ "align-and-distribute.cpp:550");
+                          _("Unclump"));
     }
 };
 
@@ -611,7 +611,7 @@ private :
         prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
         sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
-                          /* TODO: annotate */ "align-and-distribute.cpp:614");
+                          _("Randomize positions"));
     }
 };
 
@@ -706,6 +706,11 @@ private :
                 changed = true;
             }
 
+            if (changed) {
+                sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                                  _("Distribute text baselines"));
+            }
+
         } else {
             for (std::list<SPItem *>::iterator it(selected.begin());
                  it != selected.end();
@@ -720,11 +725,11 @@ private :
                     changed = true;
                 }
             }
-        }
 
-        if (changed) {
-            sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
-                              /* TODO: annotate */ "align-and-distribute.cpp:727");
+            if (changed) {
+                sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, 
+                                  _("Align text baselines"));
+            }
         }
     }
 };

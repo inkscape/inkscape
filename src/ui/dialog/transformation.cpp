@@ -582,7 +582,7 @@ Transformation::applyPageMove(Inkscape::Selection *selection)
     }
 
     sp_document_done ( sp_desktop_document (selection->desktop()) , SP_VERB_DIALOG_TRANSFORM, 
-                       /* TODO: annotate */ "transformation.cpp:585");
+                       _("Move"));
 }
 
 void
@@ -634,7 +634,7 @@ Transformation::applyPageScale(Inkscape::Selection *selection)
     }
 
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
-                     /* TODO: annotate */ "transformation.cpp:637");
+                     _("Scale"));
 }
 
 void
@@ -653,7 +653,7 @@ Transformation::applyPageRotate(Inkscape::Selection *selection)
     }
 
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
-                     /* TODO: annotate */ "transformation.cpp:656");
+                     _("Rotate"));
 }
 
 void
@@ -706,7 +706,7 @@ Transformation::applyPageSkew(Inkscape::Selection *selection)
     }
 
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
-                     /* TODO: annotate */ "transformation.cpp:709");
+                     _("Skew"));
 }
 
 
@@ -733,7 +733,7 @@ Transformation::applyPageTransform(Inkscape::Selection *selection)
     }
 
     sp_document_done(sp_desktop_document(selection->desktop()), SP_VERB_DIALOG_TRANSFORM, 
-                     /* TODO: annotate */ "transformation.cpp:736");
+                     _("Edit transformation matrix"));
 }
 
 

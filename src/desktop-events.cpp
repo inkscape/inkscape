@@ -107,7 +107,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     SP_OBJECT_REPR(desktop->namedview)->appendChild(repr);
                     Inkscape::GC::release(repr);
                     sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                                     /* TODO: annotate */ "desktop-events.cpp:127");
+                                     _("Create guide"));
                 }
                 desktop->set_coordinate_status(event_dt);
             }
@@ -180,14 +180,16 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     NR::Point const event_dt(desktop->w2d(event_w));
                     if (sp_canvas_world_pt_inside_window(item->canvas, event_w)) {
                         sp_guide_moveto(*guide, sp_guide_position_from_pt(guide, event_dt), true);
+                        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
+                                     _("Move guide"));
                     } else {
                         /* Undo movement of any attached shapes. */
                         sp_guide_moveto(*guide, guide->position, false);
                         sp_guide_remove(guide);
+                        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE,
+                                     _("Delete guide"));
                     }
                     moved = false;
-                    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                                     /* TODO: annotate */ "desktop-events.cpp:207");
                     desktop->set_coordinate_status(event_dt);
                     desktop->setPosition (event_dt);
                 }
