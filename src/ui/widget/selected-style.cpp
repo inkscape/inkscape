@@ -427,7 +427,7 @@ void SelectedStyle::dragDataReceived( GtkWidget *widget,
                 sp_desktop_set_style( tracker->parent->_desktop, css );
                 sp_repr_css_attr_unref( css );
                 sp_document_done( sp_desktop_document(tracker->parent->_desktop) , SP_VERB_NONE, 
-                                  /* TODO: annotate */ "selected-style.cpp:429");
+                                  _("Drop color"));
             }
         }
         break;
@@ -440,7 +440,7 @@ void SelectedStyle::on_fill_remove() {
     sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:442");
+                      _("Remove fill"));
 }
 
 void SelectedStyle::on_stroke_remove() {
@@ -449,7 +449,7 @@ void SelectedStyle::on_stroke_remove() {
     sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:451");
+                      _("Remove stroke"));
 }
 
 void SelectedStyle::on_fill_unset() {
@@ -458,7 +458,7 @@ void SelectedStyle::on_fill_unset() {
     sp_desktop_set_style (_desktop, css, true, true); 
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:460");
+                      _("Unset fill"));
 }
 
 void SelectedStyle::on_stroke_unset() {
@@ -467,7 +467,7 @@ void SelectedStyle::on_stroke_unset() {
     sp_desktop_set_style (_desktop, css, true, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:469");
+                      _("Unset stroke"));
 }
 
 void SelectedStyle::on_fill_opaque() {
@@ -476,7 +476,7 @@ void SelectedStyle::on_fill_opaque() {
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:478");
+                      _("Make fill opaque"));
 }
 
 void SelectedStyle::on_stroke_opaque() {
@@ -485,7 +485,7 @@ void SelectedStyle::on_stroke_opaque() {
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:487");
+                      _("Make fill opaque"));
 }
 
 void SelectedStyle::on_fill_lastused() {
@@ -497,7 +497,7 @@ void SelectedStyle::on_fill_lastused() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:499");
+                      _("Apply last set color to fill"));
 }
 
 void SelectedStyle::on_stroke_lastused() {
@@ -509,7 +509,7 @@ void SelectedStyle::on_stroke_lastused() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:511");
+                      _("Apply last set color to stroke"));
 }
 
 void SelectedStyle::on_fill_lastselected() {
@@ -520,7 +520,7 @@ void SelectedStyle::on_fill_lastselected() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:522");
+                      _("Apply last selected color to fill"));
 }
 
 void SelectedStyle::on_stroke_lastselected() {
@@ -531,7 +531,7 @@ void SelectedStyle::on_stroke_lastselected() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:533");
+                      _("Apply last selected color to stroke"));
 }
 
 void SelectedStyle::on_fill_invert() {
@@ -551,7 +551,7 @@ void SelectedStyle::on_fill_invert() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:553");
+                      _("Invert fill"));
 }
 
 void SelectedStyle::on_stroke_invert() {
@@ -571,7 +571,7 @@ void SelectedStyle::on_stroke_invert() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:573");
+                      _("Invert stroke"));
 } 
 
 void SelectedStyle::on_fill_white() {
@@ -583,7 +583,7 @@ void SelectedStyle::on_fill_white() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                      /* TODO: annotate */ "selected-style.cpp:585");
+                      _("White fill"));
 }
 
 void SelectedStyle::on_stroke_white() {
@@ -595,7 +595,7 @@ void SelectedStyle::on_stroke_white() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:597");
+                      _("White stroke"));
 }
 
 void SelectedStyle::on_fill_black() {
@@ -607,7 +607,7 @@ void SelectedStyle::on_fill_black() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:609");
+                      _("Black fill"));
 }
 
 void SelectedStyle::on_stroke_black() {
@@ -619,7 +619,7 @@ void SelectedStyle::on_stroke_black() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:621");
+                      _("Black stroke"));
 }
 
 void SelectedStyle::on_fill_copy() {
@@ -662,7 +662,7 @@ void SelectedStyle::on_fill_paste() {
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
         sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                          /* TODO: annotate */ "selected-style.cpp:664");
+                      _("Paste fill"));
     }
 }
 
@@ -680,14 +680,12 @@ void SelectedStyle::on_stroke_paste() {
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
         sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                          /* TODO: annotate */ "selected-style.cpp:682");
+                      _("Paste stroke"));
     }
 }
 
 void SelectedStyle::on_fillstroke_swap() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
-
-    g_message("on_fillstroke_swap()");
 
     switch (_mode[SS_FILL]) {
     case SS_NA:
@@ -736,7 +734,7 @@ void SelectedStyle::on_fillstroke_swap() {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "selected-style.cpp:738");
+                      _("Swap fill and stroke"));
 }
 
 void SelectedStyle::on_fill_edit() {
@@ -804,7 +802,7 @@ SelectedStyle::on_opacity_click(GdkEventButton *event)
         sp_desktop_set_style (_desktop, css);
         sp_repr_css_attr_unref (css);
         sp_document_done (sp_desktop_document (_desktop), SP_VERB_DIALOG_FILL_STROKE,
-                          /* TODO: annotate */ "selected-style.cpp:806");
+                      _("Change opacity"));
         return true;
     }
 
@@ -838,7 +836,7 @@ void SelectedStyle::on_popup_preset(int i) {
     sp_desktop_set_style (_desktop, css, true);
     sp_repr_css_attr_unref (css);
     sp_document_done (sp_desktop_document(_desktop), SP_VERB_DIALOG_SWATCHES,
-                      /* TODO: annotate */ "selected-style.cpp:840");
+                      _("Change opacity"));
 }
 
 void
@@ -1079,7 +1077,7 @@ void SelectedStyle::on_opacity_changed () {
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_maybe_done (sp_desktop_document (_desktop), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
-                            /* TODO: annotate */ "selected-style.cpp:1082");
+                      _("Change opacity"));
     spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }

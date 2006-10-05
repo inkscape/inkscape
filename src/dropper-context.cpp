@@ -392,7 +392,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
                 if (!(sp_desktop_selection(ec->desktop)->isEmpty())) {
                     sp_document_done(sp_desktop_document(ec->desktop), SP_VERB_CONTEXT_DROPPER, 
-                                     /* TODO: annotate */ "dropper-context.cpp:389");
+                                     _("Set picked color"));
                 }
 
                 ret = TRUE;

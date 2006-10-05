@@ -463,7 +463,7 @@ sp_file_vacuum()
     unsigned int diff = vacuum_document (doc);
 
     sp_document_done(doc, SP_VERB_FILE_VACUUM, 
-                     /* TODO: annotate */ "file.cpp:515");
+                     _("Vacuum &lt;defs&gt;"));
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     if (diff > 0) {
@@ -849,7 +849,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         sp_document_unref(doc);
         sp_document_done(in_doc, SP_VERB_FILE_IMPORT,
-                         /* TODO: annotate */ "file.cpp:900");
+                         _("Import"));
 
     } else {
         gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), uri.c_str());

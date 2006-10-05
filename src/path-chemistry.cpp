@@ -230,7 +230,7 @@ sp_selected_path_break_apart(void)
 
     if (did) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_BREAK_APART, 
-                         _("Break Apart"));
+                         _("Break apart"));
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No path(s)</b> to break apart in the selection."));
         return;
@@ -297,7 +297,7 @@ sp_selected_path_to_curves0(gboolean interactive, guint32 text_grouping_policy)
     if (interactive) {
         if (did) {
             sp_document_done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 
-                             _("Object to Path"));
+                             _("Object to path"));
         } else {
             sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No objects</b> to convert to path in the selection."));
             return;
@@ -386,7 +386,7 @@ sp_selected_path_reverse()
 
     if (did) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_SELECTION_REVERSE,
-                         /* TODO: annotate */ "path-chemistry.cpp:378");
+                         _("Reverse path"));
     } else {
         sp_desktop_message_stack(desktop)->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to reverse in the selection."));
     }

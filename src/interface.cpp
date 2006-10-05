@@ -1040,7 +1040,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
                     SPDocument *doc = SP_ACTIVE_DOCUMENT;
                     sp_document_done( doc , SP_VERB_NONE, 
-                                      /* TODO: annotate */ "interface.cpp:1047");
+                                      _("Drop color"));
 
                     if ( srgbProf ) {
                         cmsCloseProfile( srgbProf );
@@ -1082,7 +1082,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
                     SPDocument *doc = SP_ACTIVE_DOCUMENT;
                     sp_document_done( doc , SP_VERB_NONE, 
-                                      /* TODO: annotate */ "interface.cpp:1089");
+                                      _("Drop color"));
                 }
             }
         }
@@ -1136,7 +1136,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
             Inkscape::GC::release(newgroup);
             sp_document_done(doc, SP_VERB_NONE, 
-                             /* TODO: annotate */ "interface.cpp:1143");
+                             _("Drop SVG"));
             break;
         }
 
@@ -1196,7 +1196,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
             Inkscape::GC::release(newImage);
             sp_document_done( doc , SP_VERB_NONE, 
-                              /* TODO: annotate */ "interface.cpp:1203");
+                              _("Drop bitmap image"));
             break;
         }
     }

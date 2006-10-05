@@ -475,7 +475,7 @@ sp_star_finish (SPStarContext * sc)
 
         sp_desktop_selection(desktop)->set(sc->item);
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                         /* TODO: annotate */ "star-context.cpp:474");
+                         _("Create star"));
 
         sc->item = NULL;
     }

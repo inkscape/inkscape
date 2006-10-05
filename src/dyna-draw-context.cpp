@@ -27,6 +27,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#include <glibmm/i18n.h>
 
 #include "svg/svg.h"
 #include "display/canvas-bpath.h"
@@ -698,7 +699,7 @@ set_to_accumulated(SPDynaDrawContext *dc)
     }
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_CALLIGRAPHIC, 
-                     /* TODO: annotate */ "dyna-draw-context.cpp:689");
+                     _("Create calligraphic stroke"));
 }
 
 static void

@@ -169,7 +169,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     repr->addChild(child, NULL);
     child->setAttribute("id", id);
     sp_document_done(SP_OBJECT_DOCUMENT(object), SP_VERB_NONE, 
-                     /* TODO: annotate */ "context-menu.cpp:172");
+                     _("Create link"));
 
     sp_object_attributes_dialog(object, "SPAnchor");
 

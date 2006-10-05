@@ -444,8 +444,8 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
 		items = g_slist_remove (items, items->data);
 	}
 
-	if (do_done) sp_document_done (doc, SP_VERB_NONE, 
-				       /* TODO: annotate */ "sp-item-group.cpp:448");
+	if (do_done) 
+		sp_document_done (doc, SP_VERB_NONE, _("Ungroup"));
 }
 
 /*

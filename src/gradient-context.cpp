@@ -161,7 +161,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
             }
 
             sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                              /* TODO: annotate */ "gradient-context.cpp:164");
+                              _("Create default gradient"));
 
             ret = TRUE;
         }
@@ -367,7 +367,7 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
                 }
                 // we did an undoable action
                 sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                                  /* TODO: annotate */ "gradient-context.cpp:370");
+                                  _("Invert gradient"));
                 ret = TRUE;
             }
             break;

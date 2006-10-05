@@ -463,7 +463,7 @@ sp_spiral_finish(SPSpiralContext *sc)
 
         sp_desktop_selection(desktop)->set(sc->item);
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL, 
-                         /* TODO: annotate */ "spiral-context.cpp:462");
+                         _("Create spiral"));
 
         sc->item = NULL;
     }

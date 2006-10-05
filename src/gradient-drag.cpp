@@ -383,7 +383,7 @@ gr_knot_moved_handler(SPKnot *knot, NR::Point const *ppointer, guint state, gpoi
                 d_new->updateTip ();
                 d_new->updateDependencies(true);
                 sp_document_done (sp_desktop_document (d_new->parent->desktop), SP_VERB_CONTEXT_GRADIENT,
-                                  /* TODO: annotate */ "gradient-drag.cpp:386");
+                                  _("Merge gradient handles"));
                 return;
             }
         }
@@ -515,7 +515,7 @@ gr_knot_ungrabbed_handler (SPKnot *knot, unsigned int state, gpointer data)
 
     // we did an undoable action
     sp_document_done (sp_desktop_document (dragger->parent->desktop), SP_VERB_CONTEXT_GRADIENT, 
-                      /* TODO: annotate */ "gradient-drag.cpp:518");
+                      _("Move gradient handle"));
 }
 
 /**
@@ -1068,7 +1068,7 @@ GrDrag::selected_move (double x, double y)
 
     // we did an undoable action
     sp_document_done (sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                      /* TODO: annotate */ "gradient-drag.cpp:1071");
+                      _("Move gradient handle"));
 }
 
 void
