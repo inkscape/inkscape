@@ -288,10 +288,6 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
     /* setup LayerManager */
     //   (Setting up after the connections are all in place, as it may use some of them)
     layer_manager = new Inkscape::LayerManager( this );
-
-    /* setup EventLog */
-    event_log = new Inkscape::EventLog(document);
-    document->addUndoObserver(*event_log);
 }
 
 
@@ -1104,6 +1100,10 @@ SPDesktop::setDocument (SPDocument *doc)
     _layer_hierarchy->connectRemoved(sigc::bind(sigc::ptr_fun(_layer_deactivated), this));
     _layer_hierarchy->connectChanged(sigc::bind(sigc::ptr_fun(_layer_hierarchy_changed), this));
     _layer_hierarchy->setTop(SP_DOCUMENT_ROOT(doc));
+
+    /* setup EventLog */
+    event_log = new Inkscape::EventLog(doc);
+    doc->addUndoObserver(*event_log);
 
     _commit_connection.disconnect();
     _commit_connection = doc->connectCommit(sigc::mem_fun(*this, &SPDesktop::updateNow));

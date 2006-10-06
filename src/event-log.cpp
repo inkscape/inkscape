@@ -77,7 +77,7 @@ EventLog::notifyUndoEvent(Event* log)
             Gtk::TreePath curr_path = _event_list_store->get_path(_curr_event);
             _event_list_view->expand_to_path(curr_path);
             _event_list_selection->select(curr_path);
-            _event_list_view->scroll_to_row(curr_path);  
+            _event_list_view->scroll_to_row(curr_path);
 
             (*_callback_connections)[CALLB_EXPAND].block(false);
             (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
@@ -135,7 +135,7 @@ EventLog::notifyRedoEvent(Event* log)
 
             _event_list_view->expand_to_path(curr_path);
             _event_list_selection->select(curr_path);
-            _event_list_view->scroll_to_row(curr_path);  
+            _event_list_view->scroll_to_row(curr_path);
 
             (*_callback_connections)[CALLB_EXPAND].block(false);
             (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
@@ -219,7 +219,7 @@ EventLog::notifyUndoCommitEvent(Event* log)
 
         _event_list_view->expand_to_path(curr_path);
         _event_list_selection->select(curr_path);
-        _event_list_view->scroll_to_row(curr_path);  
+        _event_list_view->scroll_to_row(curr_path);
 
         (*_callback_connections)[CALLB_EXPAND].block(false);
         (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);

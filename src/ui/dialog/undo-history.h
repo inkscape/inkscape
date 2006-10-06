@@ -120,7 +120,10 @@ class UndoHistory : public Dialog {
 public:
     virtual ~UndoHistory();
 
-    static UndoHistory *create() { return new UndoHistory(); }
+    static UndoHistory *create();
+    void setDesktop(SPDesktop* desktop);
+
+    sigc::connection _document_replaced_connection;
 
 protected:
 
@@ -157,7 +160,6 @@ private:
 
     static const CellRendererInt::Filter& greater_than_1;
 };
-
 
 } // namespace Dialog
 } // namespace UI

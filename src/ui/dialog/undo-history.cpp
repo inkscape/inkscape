@@ -84,17 +84,52 @@ CellRendererInt::render_vfunc(const Glib::RefPtr<Gdk::Drawable>& window,
                               const Gdk::Rectangle& expose_area,
                               Gtk::CellRendererState flags)
 {
-   if( _filter(_property_number) ) {
+    if( _filter(_property_number) ) {
         std::ostringstream s;
         s << _property_number << std::flush;
         property_text() = s.str();
         Gtk::CellRendererText::render_vfunc(window, widget, background_area, 
                                             cell_area, expose_area, flags);
-   }
+    }
 }
 
 const CellRendererInt::Filter& CellRendererInt::no_filter = CellRendererInt::NoFilter();
 
+static UndoHistory *_instance = 0;
+
+/* local desktop event handlers */
+static void on_document_replaced(SPDesktop* desktop, SPDocument*);
+static void on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, void*);
+static void on_deactivate_desktop(Inkscape::Application*, SPDesktop* desktop, void*);
+
+UndoHistory*
+UndoHistory::create()
+{
+    if (_instance) return _instance;
+    _instance = new UndoHistory;
+    return _instance;
+}
+
+void
+UndoHistory::setDesktop(SPDesktop* desktop)
+{
+    if (!desktop || !SP_ACTIVE_DOCUMENT) return;
+
+    _document = SP_ACTIVE_DOCUMENT;
+
+    _event_log = desktop->event_log;
+
+    _callback_connections[EventLog::CALLB_SELECTION_CHANGE].block();
+
+    _event_list_store = _event_log->getEventListStore();
+    _event_list_view.set_model(_event_list_store);
+    _event_list_selection = _event_list_view.get_selection();
+
+    _event_log->connectWithDialog(&_event_list_view, &_callback_connections);
+    _event_list_view.scroll_to_row(_event_list_store->get_path(_event_list_selection->get_selected()));
+
+    _callback_connections[EventLog::CALLB_SELECTION_CHANGE].block(false);
+}
 
 UndoHistory::UndoHistory()
     : Dialog ("dialogs.undo-history", SP_VERB_DIALOG_UNDO_HISTORY),
@@ -146,7 +181,12 @@ UndoHistory::UndoHistory()
 
     _scrolled_window.add(_event_list_view);
 
-    // connect callbacks
+    // connect desktop event callbacks
+    _document_replaced_connection = _desktop->connectDocumentReplaced(sigc::ptr_fun(on_document_replaced));
+    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(on_activate_desktop), 0);
+    g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop", G_CALLBACK(on_deactivate_desktop), 0);
+
+    // connect EventLog callbacks
     _callback_connections[EventLog::CALLB_SELECTION_CHANGE] =
         _event_list_selection->signal_changed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::UndoHistory::_onListSelectionChange));
 
@@ -156,13 +196,13 @@ UndoHistory::UndoHistory()
     _callback_connections[EventLog::CALLB_COLLAPSE] =
         _event_list_view.signal_row_collapsed().connect(sigc::mem_fun(*this, &Inkscape::UI::Dialog::UndoHistory::_onCollapseEvent));
 
-    // connect with the event log
+    // connect with the EventLog
     _event_log->connectWithDialog(&_event_list_view, &_callback_connections);
-
-    _event_list_view.scroll_to_row(_event_list_store->get_path(_event_list_selection->get_selected()));
 
     show_all_children();
 
+    // scroll to the selected row
+    _event_list_view.set_cursor(_event_list_store->get_path(_event_log->getCurrEvent()));
 }
 
 UndoHistory::~UndoHistory()
@@ -308,6 +348,33 @@ UndoHistory::_onCollapseEvent(const Gtk::TreeModel::iterator &iter, const Gtk::T
 }
 
 const CellRendererInt::Filter& UndoHistory::greater_than_1 = UndoHistory::GreaterThan(1);
+
+static void 
+on_activate_desktop(Inkscape::Application*, SPDesktop* desktop, void*)
+{
+    if (!_instance) return;
+
+    _instance->_document_replaced_connection = 
+        SP_ACTIVE_DESKTOP->connectDocumentReplaced(sigc::ptr_fun(on_document_replaced));
+
+    _instance->setDesktop(desktop);
+}
+
+static void 
+on_deactivate_desktop(Inkscape::Application*, SPDesktop* desktop, void*)
+{
+    if (!_instance) return;
+
+    _instance->_document_replaced_connection.disconnect();
+}
+
+static void 
+on_document_replaced(SPDesktop* desktop, SPDocument*)
+{
+    if (!_instance) return;
+
+    _instance->setDesktop(desktop);
+}
 
 } // namespace Dialog
 } // namespace UI
