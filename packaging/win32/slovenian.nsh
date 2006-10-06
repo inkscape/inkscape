@@ -8,7 +8,8 @@
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
 
-!insertmacro MUI_LANGUAGE "Slovenšèina"
+; !insertmacro MUI_LANGUAGE "Slovenšèina"
+!insertmacro MUI_LANGUAGE "Slovenian"
 
 ; Product name
 LangString lng_Caption   ${LANG_SLOVENIAN} "${PRODUCT_NAME} -- Odprtokodni urejevalnik vektorskih slik"
