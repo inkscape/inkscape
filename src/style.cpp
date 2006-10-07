@@ -3693,6 +3693,31 @@ sp_style_filter_clear(SPStyle *style, SPIFilter *f)
 }
 
 
+// FIXME: Everything below this line belongs in a different file - css-chemistry?
+
+void
+sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *linked, bool recursive)
+{
+    Inkscape::XML::Node *repr = SP_OBJECT_REPR(item);
+
+    if (repr == NULL) return;
+
+    g_return_if_fail(linked != NULL);
+
+    gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(linked));
+
+    SPCSSAttr *css = sp_repr_css_attr_new();
+    sp_repr_css_set_property(css, property, val);
+    g_free(val);
+    if (recursive) {
+        sp_repr_css_change_recursive(repr, css, "style");
+    } else {
+        sp_repr_css_change(repr, css, "style");
+    }
+    sp_repr_css_attr_unref(css);
+}
+
+
 /**
  * Clear all style property attributes in object.
  */

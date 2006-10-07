@@ -536,6 +536,8 @@ SPCSSAttr *sp_css_attr_scale(SPCSSAttr *css, double ex);
 
 void sp_style_unset_property_attrs(SPObject *o);
 
+void sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *linked, bool recursive);
+
 #endif
 
 
