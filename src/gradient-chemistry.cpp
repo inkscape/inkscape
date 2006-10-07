@@ -42,8 +42,6 @@
 // object. It is either linear or radial.
 
 static void sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *gr);
-static void sp_item_repr_set_style_gradient(Inkscape::XML::Node *repr, gchar const *property,
-                                            SPGradient *gr, bool recursive);
 
 SPGradient *
 sp_gradient_ensure_vector_normalized(SPGradient *gr)
@@ -404,9 +402,9 @@ sp_gradient_convert_to_userspace(SPGradient *gr, SPItem *item, gchar const *prop
     // refer to one gradient, hence the recursive call for text (because we can't/don't
     // want to access tspans and set gradients on them separately)
     if (SP_IS_TEXT(item))
-        sp_item_repr_set_style_gradient(SP_OBJECT_REPR(item), property, gr, true);
+        sp_style_set_property_url(SP_OBJECT(item), property, SP_OBJECT(gr), true);
     else
-        sp_item_repr_set_style_gradient(SP_OBJECT_REPR(item), property, gr, false);
+        sp_style_set_property_url(SP_OBJECT(item), property, SP_OBJECT(gr), false);
 
     return gr;
 }
@@ -966,7 +964,7 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
 
                 /* We have to change object style here; recursive because this is used from
                  * fill&stroke and must work for groups etc. */
-                sp_item_repr_set_style_gradient(SP_OBJECT_REPR(item), is_fill? "fill" : "stroke", normalized, true);
+                sp_style_set_property_url(SP_OBJECT(item), is_fill? "fill" : "stroke", SP_OBJECT(normalized), true);
             }
             SP_OBJECT(item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             return normalized;
@@ -976,9 +974,7 @@ sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_
         /* Current fill style is not a gradient or wrong type, so construct everything */
         SPGradient *constructed = sp_gradient_get_private_normalized(SP_OBJECT_DOCUMENT(item), gr, type);
         constructed = sp_gradient_reset_to_userspace(constructed, item);
-        sp_item_repr_set_style_gradient(SP_OBJECT_REPR(item),
-                                        ( is_fill ? "fill" : "stroke" ),
-                                        constructed, true);
+        sp_style_set_property_url(SP_OBJECT(item), ( is_fill ? "fill" : "stroke" ), SP_OBJECT(constructed), true);
         SP_OBJECT(item)->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
                                                 SP_OBJECT_STYLE_MODIFIED_FLAG ));
         return constructed;
@@ -1004,27 +1000,6 @@ sp_gradient_repr_set_link(Inkscape::XML::Node *repr, SPGradient *link)
     }
 
     repr->setAttribute("xlink:href", ref);
-}
-
-static void
-sp_item_repr_set_style_gradient(Inkscape::XML::Node *repr, gchar const *property,
-                                SPGradient *gr, bool recursive)
-{
-    g_return_if_fail(repr != NULL);
-    g_return_if_fail(gr != NULL);
-    g_return_if_fail(SP_IS_GRADIENT(gr));
-
-    gchar *val = g_strdup_printf("url(#%s)", SP_OBJECT_ID(gr));
-
-    SPCSSAttr *css = sp_repr_css_attr_new();
-    sp_repr_css_set_property(css, property, val);
-    g_free(val);
-    if (recursive) {
-        sp_repr_css_change_recursive(repr, css, "style");
-    } else {
-        sp_repr_css_change(repr, css, "style");
-    }
-    sp_repr_css_attr_unref(css);
 }
 
 /*
