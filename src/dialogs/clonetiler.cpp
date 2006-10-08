@@ -57,6 +57,9 @@
 
 #include "ui/widget/color-picker.h"
 
+#include "../sp-filter.h"
+#include "../filter-chemistry.h"
+
 static GtkWidget *dlg = NULL;
 static win_data wd;
 
@@ -1006,6 +1009,12 @@ clonetiler_apply (GtkWidget *widget, void *)
     int alternate_roty = prefs_get_int_attribute (prefs_path, "alternate_roty", 0);
     double rand_rot = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_rot", 0, 0, 100);
 
+    double d_blur_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_blur_per_y", 0, 0, 100);
+    double d_blur_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_blur_per_x", 0, 0, 100);
+    int alternate_blury = prefs_get_int_attribute (prefs_path, "alternate_blury", 0);
+    int alternate_blurx = prefs_get_int_attribute (prefs_path, "alternate_blurx", 0);
+    double rand_blur = 0.01 * prefs_get_double_attribute_limited (prefs_path, "rand_blur", 0, 0, 100);
+
     double d_opacity_per_y = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_opacity_per_y", 0, 0, 100);
     double d_opacity_per_x = 0.01 * prefs_get_double_attribute_limited (prefs_path, "d_opacity_per_x", 0, 0, 100);
     int alternate_opacityy = prefs_get_int_attribute (prefs_path, "alternate_opacityy", 0);
@@ -1081,6 +1090,7 @@ clonetiler_apply (GtkWidget *widget, void *)
 
     NR::Point cur = NR::Point (0, 0);
     NR::Rect bbox_original = NR::Rect (NR::Point (c[NR::X] - w/2, c[NR::Y] - h/2), NR::Point (c[NR::X] + w/2, c[NR::Y] + h/2));
+    double diag_original = sqrt(w*w + h*h);
 
     for (int x = 0;
          fillrect?
@@ -1134,12 +1144,23 @@ clonetiler_apply (GtkWidget *widget, void *)
                 sp_svg_write_color(color_string, 32, SP_RGBA32_F_COMPOSE(rgb[0], rgb[1], rgb[2], 1.0));
             }
 
-            // Opacity tab
+            // Blur
+            double blur = 0.0;
+            {
+            int eff_x = (alternate_blurx? (x%2) : (x));
+            int eff_y = (alternate_blury? (y%2) : (y));
+            blur =  (d_blur_per_x * eff_x + d_blur_per_y * eff_y + rand_blur * g_random_double_range (-1, 1));
+            blur = CLAMP (blur, 0, 1);
+            }
+
+            // Opacity
             double opacity = 1.0;
+            {
             int eff_x = (alternate_opacityx? (x%2) : (x));
             int eff_y = (alternate_opacityy? (y%2) : (y));
             opacity = 1 - (d_opacity_per_x * eff_x + d_opacity_per_y * eff_y + rand_opacity * g_random_double_range (-1, 1));
             opacity = CLAMP (opacity, 0, 1);
+            }
 
             // Trace tab
             if (dotrace) {
@@ -1275,6 +1296,14 @@ clonetiler_apply (GtkWidget *widget, void *)
 
             // add the new clone to the top of the original's parent
             SP_OBJECT_REPR(parent)->appendChild(clone);
+
+            if (blur > 0.0) {
+                SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
+                double diag = diag_original * t.expansion();
+                double radius = blur * diag;
+                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius);
+                sp_style_set_property_url (clone_object, "filter", SP_OBJECT(constructed), false);
+            }
 
             if (center_set) {
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
@@ -1982,38 +2011,39 @@ clonetiler_dialog (void)
         }
 
 
-// Opacity
+// Blur and opacity
         {
-            GtkWidget *vb = clonetiler_new_tab (nb, _("_Opacity"));
+            GtkWidget *vb = clonetiler_new_tab (nb, _("_Blur & opacity"));
 
             GtkWidget *table = clonetiler_table_x_y_rand (1);
             gtk_box_pack_start (GTK_BOX (vb), table, FALSE, FALSE, 0);
 
-            // Dissolve
+
+            // Blur
             {
                 GtkWidget *l = gtk_label_new ("");
-                gtk_label_set_markup (GTK_LABEL(l), _("<b>Fade out:</b>"));
+                gtk_label_set_markup (GTK_LABEL(l), _("<b>Blur:</b>"));
                 gtk_size_group_add_widget(table_row_labels, l);
                 clonetiler_table_attach (table, l, 1, 2, 1);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Decrease tile opacity by this percentage for each row"), "d_opacity_per_y",
+                                                   _("Blur tiles by this percentage for each row"), "d_blur_per_y",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 2);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Decrease tile opacity by this percentage for each column"), "d_opacity_per_x",
+                                                   _("Blur tiles by this percentage for each column"), "d_blur_per_x",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 3);
             }
 
             {
                 GtkWidget *l = clonetiler_spinbox (tt,
-                                                   _("Randomize the tile opacity by this percentage"), "rand_opacity",
+                                                   _("Randomize the tile blur by this percentage"), "rand_blur",
                                                    0, 100, "%");
                 clonetiler_table_attach (table, l, 0, 2, 4);
             }
@@ -2027,13 +2057,62 @@ clonetiler_dialog (void)
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each row"), "alternate_opacityy");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each row"), "alternate_blury");
                 clonetiler_table_attach (table, l, 0, 3, 2);
             }
 
             {
-                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each column"), "alternate_opacityx");
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of blur change for each column"), "alternate_blurx");
                 clonetiler_table_attach (table, l, 0, 3, 3);
+            }
+
+
+
+            // Dissolve
+            {
+                GtkWidget *l = gtk_label_new ("");
+                gtk_label_set_markup (GTK_LABEL(l), _("<b>Fade out:</b>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 4, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Decrease tile opacity by this percentage for each row"), "d_opacity_per_y",
+                                                   0, 100, "%");
+                clonetiler_table_attach (table, l, 0, 4, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Decrease tile opacity by this percentage for each column"), "d_opacity_per_x",
+                                                   0, 100, "%");
+                clonetiler_table_attach (table, l, 0, 4, 3);
+            }
+
+            {
+                GtkWidget *l = clonetiler_spinbox (tt,
+                                                   _("Randomize the tile opacity by this percentage"), "rand_opacity",
+                                                   0, 100, "%");
+                clonetiler_table_attach (table, l, 0, 4, 4);
+            }
+
+            { // alternates
+                GtkWidget *l = gtk_label_new ("");
+                // TRANSLATORS: "Alternate" is a verb here
+                gtk_label_set_markup (GTK_LABEL(l), _("<small>Alternate:</small>"));
+                gtk_size_group_add_widget(table_row_labels, l);
+                clonetiler_table_attach (table, l, 1, 5, 1);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each row"), "alternate_opacityy");
+                clonetiler_table_attach (table, l, 0, 5, 2);
+            }
+
+            {
+                GtkWidget *l = clonetiler_checkbox (tt, _("Alternate the sign of opacity change for each column"), "alternate_opacityx");
+                clonetiler_table_attach (table, l, 0, 5, 3);
             }
         }
 
