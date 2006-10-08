@@ -71,7 +71,10 @@
 #include <cairo-ps.h>
 #endif
 
+
+#ifndef PANGO_ENABLE_BACKEND
 #include <cairo-ft.h>
+#endif
 
 #include <pango/pangofc-fontmap.h>
 
@@ -1259,6 +1262,8 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
     
     cairo_save(_cr);
 
+#ifndef PANGO_ENABLE_BACKEND
+
     cairo_font_face_t *font_face = cairo_ft_font_face_create_for_pattern(fc_pattern);
     cairo_set_font_face(_cr, font_face);
     
@@ -1308,7 +1313,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, NRMatrix const *font_matrix
     cairo_restore(_cr);
 
     cairo_font_face_destroy(font_face);
-    
+#endif    
     return true;
 }
 
