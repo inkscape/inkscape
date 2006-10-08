@@ -1458,7 +1458,7 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     }
 
     /* Filter effects */
-    if(style->filter.set && style->filter.inherit) {
+    if (style->filter.inherit) {
         sp_style_merge_ifilter(style, &style->filter, &parent->filter);
     }
 
@@ -1930,6 +1930,17 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
             style->enable_background.value = parent->enable_background.value;
         }
 
+        if (!style->filter.set || style->filter.inherit)
+        {
+            // FIXME: (1) this is a temp hack, as it must correctly handle ->filter_hreffed; (2)
+            // instead of just copying over, we need to _merge_ the two filters by combining their
+            // filter primitives
+            style->filter.set = parent->filter.set;
+            style->filter.inherit = parent->filter.inherit;
+            style->filter.filter = parent->filter.filter;
+            style->filter.uri = parent->filter.uri;
+        }
+
         /** \todo
          * fixme: Check that we correctly handle all properties that don't
          * inherit by default (as shown in
@@ -1987,8 +1998,6 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
          * represent it as a normal SPILength; though will need to do something about existing
          * users of stroke_dash.offset and stroke_dashoffset_set. */
     }
-
-    /* TODO: deal with filters */
 }
 
 
