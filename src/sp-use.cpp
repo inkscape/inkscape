@@ -333,6 +333,7 @@ sp_use_show(SPItem *item, NRArena *arena, unsigned key, unsigned flags)
 
     NRArenaItem *ai = NRArenaGroup::create(arena);
     nr_arena_group_set_transparent(NR_ARENA_GROUP(ai), FALSE);
+    nr_arena_group_set_style(NR_ARENA_GROUP(ai), SP_OBJECT_STYLE(item));
 
     if (use->child) {
         NRArenaItem *ac = sp_item_invoke_show(SP_ITEM(use->child), arena, key, flags);
@@ -566,6 +567,12 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     flags &= SP_OBJECT_MODIFIED_CASCADE;
 
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+      for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
+	nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+      }
+    }
+
     /* Set up child viewport */
     if (use->x.unit == SVGLength::PERCENT) {
         use->x.computed = use->x.value * (ictx->vp.x1 - ictx->vp.x0);
@@ -618,6 +625,12 @@ sp_use_modified(SPObject *object, guint flags)
         flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
     }
     flags &= SP_OBJECT_MODIFIED_CASCADE;
+
+    if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
+      for (SPItemView *v = SP_ITEM(object)->display; v != NULL; v = v->next) {
+	nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
+      }
+    }
 
     SPObject *child = use_obj->child;
     if (child) {
