@@ -28,6 +28,7 @@
 #include <sp-item.h>
 #include <sp-root.h>
 #include <sp-defs.h>
+#include "prefs-utils.h"
 
 /* This is an example of how to use libpng to read and write PNG files.
  * The file libpng.txt is much more verbose then this.  If you have not
@@ -327,6 +328,10 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
         return FALSE;
     }
 
+    // export with maximum blur rendering quality
+    int saved_quality = prefs_get_int_attribute ("options.blurquality", "value", 0);
+    prefs_set_int_attribute ("options.blurquality", "value", 2);
+
     sp_document_ensure_up_to_date(doc);
 
     /* Go to document coordinates */
@@ -403,6 +408,10 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     /* Free Arena and ArenaItem */
     nr_arena_item_unref(ebp.root);
     nr_object_unref((NRObject *) arena);
+
+    // restore saved blur quality
+    prefs_set_int_attribute ("options.blurquality", "value", saved_quality);
+
     return write_status;
 }
 
