@@ -242,7 +242,7 @@ DocumentProperties::build_grid()
     _rrb_gridtype.init (_("Grid type:"), _("Normal (2D)"), _("Axonometric (3D)"),
                 _("The normal grid with vertical and horizontal lines."),
                 _("A grid with vertical lines and two diagonal line groups, each representing the projection of a primary axis."),
-                _("gridtype"), _wr);
+                "gridtype", _wr);
     
     _rumg.init (_("Grid _units:"), "grid_units", _wr);
     _rsu_ox.init (_("_Origin X:"), _("X coordinate of grid origin"), 
