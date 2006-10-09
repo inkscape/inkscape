@@ -32,6 +32,8 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
     if (!strcmp(this->get_id(), "org.inkscape.filter.dropshadow"))
         return;
 
+    bool hidden = false;
+
     if (repr != NULL) {
         Inkscape::XML::Node * child_repr;
 
@@ -41,6 +43,9 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                     if (!strcmp(child_repr->name(), "effects-menu")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
                         local_effects_menu = sp_repr_children(child_repr);
+                        if (child_repr->attribute("hidden") && !strcmp(child_repr->attribute("hidden"), "yes")) {
+                            hidden = true;
+                        }
                     }
                     if (!strcmp(child_repr->name(), "menu-name") ||
                             !strcmp(child_repr->name(), "_menu-name")) {
@@ -65,7 +70,8 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
         _menu_node = sp_repr_new("verb");
         _menu_node->setAttribute("verb-id", this->get_id(), false);
 
-        merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
+        if (!hidden)
+            merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
     }
 
     return;
