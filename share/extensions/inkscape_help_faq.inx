@@ -1,0 +1,12 @@
+<inkscape-extension>
+    <_name>FAQ</_name>
+    <id>org.inkscape.help.faq</id>
+	<dependency type="executable" location="extensions">webbrowser_faq.py</dependency>
+    <effect>
+		<object-type>all</object-type>
+		<effects-menu hidden="yes"/>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">webbrowser_faq.py</command>
+    </script>
+</inkscape-extension>

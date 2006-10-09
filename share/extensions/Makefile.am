@@ -61,7 +61,9 @@ extensions = \
 	webbrowser_manual.py \
 	webbrowser_relnotes.py \
 	webbrowser_reportabug.py \
-	webbrowser_svgspec.py
+	webbrowser_svgspec.py \
+	webbrowser_commandline.py \
+	webbrowser_faq.py
 
 otherstuff = \
     aisvg.xslt
@@ -120,7 +122,9 @@ modules = \
 	inkscape_help_manual.inx \
 	inkscape_help_relnotes.inx \
 	inkscape_help_reportabug.inx \
-	inkscape_help_svgspec.inx
+	inkscape_help_svgspec.inx \
+	inkscape_help_commandline.inx \
+	inkscape_help_faq.inx
 
 
 extension_SCRIPTS = \
