@@ -235,6 +235,7 @@ static char const menus_skeleton[] =
 "	</submenu>\n"
 #endif
 "   <submenu name=\"" N_("_Help") "\">\n"
+"       <verb verb-id=\"org.inkscape.help.manual\" />\n"
 "       <verb verb-id=\"HelpKeys\" />\n"
 "       <submenu name=\"" N_("Tutorials") "\">\n"
 "           <verb verb-id=\"TutorialsBasic\" />\n"
@@ -246,6 +247,10 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"TutorialsTips\" />\n"
 "       </submenu>\n"
 //"       <verb verb-id=\"org.inkscape.dialogs.extensioneditor\" />\n"
+"       <verb verb-id=\"org.inkscape.help.relnotes\" />\n"
+"       <verb verb-id=\"org.inkscape.help.reportabug\" />\n"
+"       <verb verb-id=\"org.inkscape.help.svgspec\" />\n"
+"       <separator/>\n"
 "       <verb verb-id=\"HelpAboutMemory\" />\n"
 "       <verb verb-id=\"HelpAbout\" />\n"
 //"       <verb verb-id=\"ShowLicense\" />\n"
