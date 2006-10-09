@@ -57,7 +57,11 @@ extensions = \
 	gimp_xcf.py \
 	eqtexsvg.py \
 	markers_strokepaint.py \
-	lorem_ipsum.py
+	lorem_ipsum.py \
+	webbrowser_manual.py \
+	webbrowser_relnotes.py \
+	webbrowser_reportabug.py \
+	webbrowser_svgspec.py
 
 otherstuff = \
     aisvg.xslt
@@ -108,11 +112,15 @@ modules = \
 	flatten.inx \
 	measure.inx \
 	gimp_xcf.inx \
-        randompnt.inx \
-        randompos.inx \
+	randompnt.inx \
+	randompos.inx \
 	eqtexsvg.inx \
 	markers_strokepaint.inx \
-	lorem_ipsum.inx
+	lorem_ipsum.inx \
+	inkscape_help_manual.inx \
+	inkscape_help_relnotes.inx \
+	inkscape_help_reportabug.inx \
+	inkscape_help_svgspec.inx
 
 
 extension_SCRIPTS = \
