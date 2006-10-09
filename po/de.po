@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-08-17 00:22+0200\n"
+"PO-Revision-Date: 2006-10-09 22:10+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1444,9 +1444,8 @@ msgid "Stroke st_yle"
 msgstr "_Muster der Konturlinie"
 
 #: ../src/dialogs/object-properties.cpp:192
-#, fuzzy
 msgid "_Blur"
-msgstr "Blau"
+msgstr "_Weichzeichner"
 
 #: ../src/dialogs/object-properties.cpp:225
 msgid "Master _opacity"
@@ -1454,7 +1453,7 @@ msgstr "Gesamtdeckkraft"
 
 #: ../src/dialogs/object-properties.cpp:421
 msgid "Change blur"
-msgstr ""
+msgstr "Weichzeichner ändern"
 
 #: ../src/dialogs/rdf.cpp:178
 msgid "CC Attribution"
@@ -3850,7 +3849,6 @@ msgid "Select <b>path(s)</b> to break apart."
 msgstr "<b>Pfad</b>muss zum Zerlegen ausgewählt sein."
 
 #: ../src/path-chemistry.cpp:233
-#, fuzzy
 msgid "Break apart"
 msgstr "Zerlegen"
 
@@ -3863,7 +3861,6 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "<b>Objekte</b> auswählen, die in einen Pfad umgewandelt werden sollen."
 
 #: ../src/path-chemistry.cpp:300
-#, fuzzy
 msgid "Object to path"
 msgstr "Objekt in Pfad umwandeln"
 
@@ -3878,9 +3875,8 @@ msgid "Select <b>path(s)</b> to reverse."
 msgstr "Mindestens <b>einen Pfad</b> zum Umkehren auswählen."
 
 #: ../src/path-chemistry.cpp:389
-#, fuzzy
 msgid "Reverse path"
-msgstr "_Richtung umkehren"
+msgstr "Pfadrichtung umkehren"
 
 #: ../src/path-chemistry.cpp:391
 msgid "<b>No paths</b> to reverse in the selection."
@@ -4685,9 +4681,8 @@ msgstr[0] "<b>Verknüpfter Fließtext</b> (%d Zeichen)"
 msgstr[1] "<b>Verknüpfter Fließtext</b> (%d Zeichen)"
 
 #: ../src/sp-flowtext.cpp:617
-#, fuzzy
 msgid "Convert flowed text to text"
-msgstr "Text in Pfade umwandeln"
+msgstr "Fließtext in Text umwandeln"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -4849,9 +4844,8 @@ msgstr ""
 "<b>Spirale</b>: Radius %s, Winkel %5g&#176;; Winkel mit <b>Strg</b> einrasten"
 
 #: ../src/spiral-context.cpp:466
-#, fuzzy
 msgid "Create spiral"
-msgstr "Spiralen erstellen"
+msgstr "Spirale erstellen"
 
 #: ../src/splivarot.cpp:66
 msgid "Union"
@@ -4874,7 +4868,6 @@ msgid "Division"
 msgstr "Division"
 
 #: ../src/splivarot.cpp:94
-#, fuzzy
 msgid "Cut path"
 msgstr "Pfad zerschneiden"
 
@@ -4908,21 +4901,17 @@ msgstr ""
 "wird nicht ausgeführt."
 
 #: ../src/splivarot.cpp:571
-#, fuzzy
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "<b>Objekte</b> auswählen, die in einen Pfad umgewandelt werden sollen."
+msgstr "<b>Pfade mit Konturlinie</b> auswählen, um Konturlinie in Pfad umzuwandeln."
 
 #: ../src/splivarot.cpp:847
-#, fuzzy
 msgid "Convert stroke to path"
-msgstr "Text in Pfade umwandeln"
+msgstr "Konturlinie in Pfad umwandeln"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:850
-#, fuzzy
 msgid "<b>No stroked paths</b> in the selection."
-msgstr ""
-"In der Auswahl befindet sich <b>keine Kontur</b>, die erweitert werden kann."
+msgstr "<b>Keine Pfade mit Konturlinien</b> in der Auswahl."
 
 #: ../src/splivarot.cpp:934
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
@@ -4931,18 +4920,16 @@ msgstr ""
 "erweitern."
 
 #: ../src/splivarot.cpp:1052 ../src/splivarot.cpp:1117
-#, fuzzy
 msgid "Create offset object"
-msgstr "Ein Objekt mit dynamischem Versatz erstellen"
+msgstr "Objekt mit Versatz erstellen"
 
 #: ../src/splivarot.cpp:1144
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "<b>Pfad</b> zum Schrumpfen/Erweitern auswählen."
 
 #: ../src/splivarot.cpp:1360
-#, fuzzy
 msgid "Inset/outset path"
-msgstr "Schrumpfen/Erweitern um:"
+msgstr "Pfad schrumpfen/erweitern"
 
 #: ../src/splivarot.cpp:1362
 msgid "<b>No paths</b> to inset/outset in the selection."
@@ -4988,9 +4975,8 @@ msgstr ""
 "<b>Stern</b>: Radius %s, Winkel %5g&#176;; Winkel mit <b>Strg</b> einrasten"
 
 #: ../src/star-context.cpp:478
-#, fuzzy
 msgid "Create star"
-msgstr "Bitmap erstellen"
+msgstr "Stern erstellen"
 
 #: ../src/text-chemistry.cpp:94
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -5051,20 +5037,17 @@ msgstr ""
 "Einen <b>Text</b> und <b>Pfad</b> oder <b>Form</b> zum Erzeugen eines "
 "Fließtextes auswählen."
 
-# !!! Frame, not form?
 #: ../src/text-chemistry.cpp:312
-#, fuzzy
 msgid "Flow text into shape"
-msgstr "Umbruch an Form anpassen"
+msgstr "Text in Form fließen lassen"
 
 #: ../src/text-chemistry.cpp:335
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "<b>Fließtext</b> zum Aufheben auswählen."
 
 #: ../src/text-chemistry.cpp:398
-#, fuzzy
 msgid "Unflow flowed text"
-msgstr "Fließtext"
+msgstr "Fließtext aufheben"
 
 #: ../src/text-context.cpp:460
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -5080,9 +5063,8 @@ msgstr ""
 "Textes zu ändern."
 
 #: ../src/text-context.cpp:515
-#, fuzzy
 msgid "Create text"
-msgstr "Text löschen"
+msgstr "Text erstellen"
 
 #: ../src/text-context.cpp:539
 msgid "Non-printable character"
@@ -5090,7 +5072,7 @@ msgstr "Nicht druckbares Zeichen"
 
 #: ../src/text-context.cpp:554
 msgid "Insert Unicode character"
-msgstr ""
+msgstr "Unicode-Zeichen einfügen"
 
 #: ../src/text-context.cpp:589
 #, c-format
@@ -5115,9 +5097,8 @@ msgid "Flowed text is created."
 msgstr "Fließtext wird erzeugt."
 
 #: ../src/text-context.cpp:718
-#, fuzzy
 msgid "Create flowed text"
-msgstr "Fließtext"
+msgstr "Fließtext erstellen"
 
 #: ../src/text-context.cpp:720
 msgid ""
@@ -5132,84 +5113,72 @@ msgid "No-break space"
 msgstr "Untrennbares Leerzeichen"
 
 #: ../src/text-context.cpp:848
-#, fuzzy
 msgid "Insert no-break space"
-msgstr "Untrennbares Leerzeichen"
+msgstr "Untrennbares Leerzeichen einfügen"
 
 #: ../src/text-context.cpp:885
-#, fuzzy
 msgid "Make bold"
-msgstr "Schließen"
+msgstr "Fett"
 
 #: ../src/text-context.cpp:903
 msgid "Make italic"
-msgstr ""
+msgstr "Kursiv"
 
 #: ../src/text-context.cpp:935
-#, fuzzy
 msgid "New line"
-msgstr "Linien"
+msgstr "Neue Zeile"
 
 #: ../src/text-context.cpp:945
-#, fuzzy
 msgid "Backspace"
-msgstr "Untrennbares Leerzeichen"
+msgstr "Rückschritt"
 
 #: ../src/text-context.cpp:972
 msgid "Kern to the left"
-msgstr ""
+msgstr "Unterschneidung nach links"
 
 #: ../src/text-context.cpp:992
-#, fuzzy
 msgid "Kern to the right"
-msgstr "Zielhöhe"
+msgstr "Unterschneidung nach rechts"
 
 #: ../src/text-context.cpp:1012
 msgid "Kern up"
-msgstr ""
+msgstr "Unterschneidung nach oben"
 
 #: ../src/text-context.cpp:1033
 msgid "Kern down"
-msgstr ""
+msgstr "Unterschneidung nach unten"
 
 #: ../src/text-context.cpp:1089
-#, fuzzy
 msgid "Rotate counterclockwise"
-msgstr "Drehung im Uhrzeigersinn"
+msgstr "Entgegen Uhrzeigersinn drehen"
 
 #: ../src/text-context.cpp:1110
-#, fuzzy
 msgid "Rotate clockwise"
-msgstr "Drehung im Uhrzeigersinn"
+msgstr "Im Uhrzeigersinn drehen"
 
 #: ../src/text-context.cpp:1127
-#, fuzzy
 msgid "Contract line spacing"
-msgstr "Spaltenabstand:"
+msgstr "Zeilenabstand vermindern"
 
 #: ../src/text-context.cpp:1135
 msgid "Contract letter spacing"
-msgstr ""
+msgstr "Zeichenabstand vermindern"
 
 #: ../src/text-context.cpp:1154
-#, fuzzy
 msgid "Expand line spacing"
-msgstr "Zeilenabstand:"
+msgstr "Zeilenabstand vergrößern"
 
 #: ../src/text-context.cpp:1162
-#, fuzzy
 msgid "Expand letter spacing"
-msgstr "Abstand setzen:"
+msgstr "Zeichenabstand vergrößern"
 
 #: ../src/text-context.cpp:1266
-#, fuzzy
 msgid "Paste text"
-msgstr "Stil anwenden"
+msgstr "Text einfügen"
 
 #: ../src/text-context.cpp:1380
-#, fuzzy
 msgid "Set text style"
-msgstr "_Muster der Konturlinie"
+msgstr "Textstil setzen"
 
 #: ../src/text-context.cpp:1479
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
@@ -5225,9 +5194,8 @@ msgstr ""
 "um Fließtext zu erstellen; anschließend schreiben."
 
 #: ../src/text-context.cpp:1587
-#, fuzzy
 msgid "Type text"
-msgstr "T_yp: "
+msgstr "Text eingeben"
 
 #: ../src/tools-switch.cpp:133
 msgid ""
@@ -5353,9 +5321,8 @@ msgid "Trace: Image has no bitmap data"
 msgstr "Vektorisieren: Bild enthält keine Pixelinformation"
 
 #: ../src/trace/trace.cpp:466
-#, fuzzy
 msgid "Trace: Starting trace..."
-msgstr "Bitmap _vektorisieren…"
+msgstr "Vektorisieren: Gestartet…"
 
 #: ../src/trace/trace.cpp:574
 #, c-format
@@ -5378,7 +5345,6 @@ msgid "_Create Link"
 msgstr "Verknüpfung erzeugen"
 
 #: ../src/ui/context-menu.cpp:172
-#, fuzzy
 msgid "Create link"
 msgstr "Verknüpfung erzeugen"
 
@@ -5486,30 +5452,25 @@ msgid "Remove overlaps"
 msgstr "Überlappungen entfernen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:520
-#, fuzzy
 msgid "Arrange connector network"
-msgstr "Das gewählte Netzwerk von Objektverbindern gefällig anordnen"
+msgstr "Netzwerk von Objektverbindern anordnen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:550
-#, fuzzy
 msgid "Unclump"
-msgstr " Entkl_umpen"
+msgstr " Entklumpen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:614
-#, fuzzy
 msgid "Randomize positions"
-msgstr "Zufällige Position"
+msgstr "Positionen zufällig machen"
 
 # CHECK
 #: ../src/ui/dialog/align-and-distribute.cpp:711
-#, fuzzy
 msgid "Distribute text baselines"
-msgstr "Knoten ausgleichen"
+msgstr "Grundlinien von Text ausgleichen"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:731
-#, fuzzy
 msgid "Align text baselines"
-msgstr "Linksbündig ausrichten"
+msgstr "Grundlinien von Text ausrichten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:762
 msgid "Connector network layout"
@@ -5787,28 +5748,26 @@ msgid "Show or hide grid"
 msgstr "Gitter anzeigen oder ausblenden"
 
 #: ../src/ui/dialog/document-properties.cpp:242
-#, fuzzy
 msgid "Grid type:"
-msgstr "  Typ: "
+msgstr "Gittertyp:"
 
 #: ../src/ui/dialog/document-properties.cpp:242
-#, fuzzy
 msgid "Normal (2D)"
-msgstr "Normal"
+msgstr "Normal (2D)"
 
 #: ../src/ui/dialog/document-properties.cpp:242
 msgid "Axonometric (3D)"
-msgstr ""
+msgstr "Axonometrisch (3D)"
 
 #: ../src/ui/dialog/document-properties.cpp:243
 msgid "The normal grid with vertical and horizontal lines."
-msgstr ""
+msgstr "Das normale Gitter mit vertikalen und horizontalen Linien"
 
 #: ../src/ui/dialog/document-properties.cpp:244
 msgid ""
 "A grid with vertical lines and two diagonal line groups, each representing "
 "the projection of a primary axis."
-msgstr ""
+msgstr "Ein Gitter mit vertikalen Linien und zwei diagonalen Liniengruppen, von denen jede der Projektion einer Hauptachse entspricht."
 
 #: ../src/ui/dialog/document-properties.cpp:245
 msgid "gridtype"
@@ -5851,22 +5810,20 @@ msgid "Distance of horizontal grid lines"
 msgstr "Abstand der horizontalen Gitterlinien"
 
 #: ../src/ui/dialog/document-properties.cpp:256
-#, fuzzy
 msgid "Angle X:"
-msgstr "Winkel:"
+msgstr "Winkel X:"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "Angle of x-axis of axonometric grid"
-msgstr ""
+msgstr "Winkel der X-Achse des axonometrischen Gitters"
 
 #: ../src/ui/dialog/document-properties.cpp:258
-#, fuzzy
 msgid "Angle Z:"
-msgstr "Winkel:"
+msgstr "Winkel Z:"
 
 #: ../src/ui/dialog/document-properties.cpp:258
 msgid "Angle of z-axis of axonometric grid"
-msgstr ""
+msgstr "Winkel der Z-Achse des axonometrischen Gitters"
 
 #: ../src/ui/dialog/document-properties.cpp:260
 msgid "Grid line _color:"
@@ -6825,56 +6782,54 @@ msgstr "Transformationen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:487
 msgid "Best quality (slowest)"
-msgstr ""
+msgstr "Beste Qualität (am langsamsten)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:489
 msgid "Better quality (slower)"
-msgstr ""
+msgstr "Gute Qualität (langsamer)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:491
 msgid "Average quality"
-msgstr ""
+msgstr "Durchschnittliche Qualität"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:493
-#, fuzzy
 msgid "Lower quality (faster)"
-msgstr "Ebene absenken"
+msgstr "Niedrigere Qualität (schneller)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:495
 msgid "Lowest quality (fastest)"
-msgstr ""
+msgstr "Niedrigste Qualität (am schnellsten)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:498
 msgid "Gaussian blur quality for display:"
-msgstr ""
+msgstr "Qualität des Gaußschen Weichzeichners für die Anzeige:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:500
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
-msgstr ""
+msgstr "Beste Qualität, aber die Anzeige kann bei hohen Zoomstufen sehr langsam sein (Bitmap-Export verwendet immer diese Einstellung)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:502
 msgid "Better quality, but slower display"
-msgstr ""
+msgstr "Bessere Qualität, aber langsamere Anzeige"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:504
 msgid "Average quality, acceptable display speed"
-msgstr ""
+msgstr "Durchschnittliche Qualität, akzeptable Geschwindigkeit der Anzeige"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:506
 msgid "Lower quality (some artefacts), but display is faster"
-msgstr ""
+msgstr "Niedrigere Qualität (einige Artefakte), aber schnellere Anzeige"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:508
 msgid "Lowest quality (considerable artefacts), but display is fastest"
-msgstr ""
+msgstr "Niedrigste Qualität (beträchtliche Artefakte), aber schnellste Anzeige"
 
 # !!!
 #: ../src/ui/dialog/inkscape-preferences.cpp:510
-#, fuzzy
 msgid "Filters"
-msgstr "Flachheit"
+msgstr "Filter"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Select in all layers"
@@ -7316,7 +7271,7 @@ msgstr "Glätten"
 
 #: ../src/ui/dialog/tracedialog.cpp:491
 msgid "Apply Gaussian blur to the bitmap before tracing"
-msgstr "Gauß'schen Weichzeichner vor dem Nachzeichnen anwenden"
+msgstr "Gaußschen Weichzeichner vor dem Nachzeichnen anwenden"
 
 #: ../src/ui/dialog/tracedialog.cpp:496
 msgid "Multiple Scanning"
@@ -7517,9 +7472,8 @@ msgid "Apply transformation to selection"
 msgstr "Transformation auf Auswahl anwenden"
 
 #: ../src/ui/dialog/transformation.cpp:736
-#, fuzzy
 msgid "Edit transformation matrix"
-msgstr "Abbildungsmatrix, Element F"
+msgstr "Abbildungsmatrix ändern"
 
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
@@ -10537,13 +10491,12 @@ msgstr ""
 
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
 #: ../src/widgets/toolbox.cpp:2093
-#, fuzzy
 msgid "Round:"
 msgstr "Abrundung:"
 
 #: ../src/widgets/toolbox.cpp:2093
 msgid "Increase to round the ends of strokes"
-msgstr ""
+msgstr "Erhöhen, um die Enden von Strichen abzurunden"
 
 #: ../src/widgets/toolbox.cpp:2106
 msgid "Tremor:"
@@ -10551,16 +10504,15 @@ msgstr "Zittern:"
 
 #: ../src/widgets/toolbox.cpp:2106
 msgid "Increase to make strokes rugged and trembling"
-msgstr ""
+msgstr "Erhöhen, um Striche zittrig und ausgefranst zu machen"
 
 #: ../src/widgets/toolbox.cpp:2116
-#, fuzzy
 msgid "Wiggle:"
-msgstr "Title:"
+msgstr "Wackeln:"
 
 #: ../src/widgets/toolbox.cpp:2116
 msgid "Increase to make the pen waver and wiggle"
-msgstr ""
+msgstr "Erhöhen, um den Füller wacklig zu machen"
 
 #: ../src/widgets/toolbox.cpp:2127
 msgid "Mass:"
@@ -10568,7 +10520,7 @@ msgstr "Masse:"
 
 #: ../src/widgets/toolbox.cpp:2127
 msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
+msgstr "Erhöhen, um den Füller nachzuschleppen, wie durch Trägheit verlangsamt"
 
 #: ../src/widgets/toolbox.cpp:2147
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -11248,7 +11200,7 @@ msgstr "Perioden (jede 2*Pi)"
 
 #: ../share/extensions/wavy.inx.h:7
 msgid "Wave Plotter"
-msgstr ""
+msgstr "Kurven-Plotter"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
