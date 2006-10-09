@@ -4,10 +4,11 @@
 /*
  * Gaussian blur renderer
  *
- * Author:
+ * Authors:
  *   Niko Kiirala <niko@kiirala.com>
+ *   bulia byak
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,6 +17,14 @@
 #include "display/nr-filter-slot.h"
 #include "libnr/nr-pixblock.h"
 #include "libnr/nr-matrix.h"
+
+enum {
+    BLUR_QUALITY_BEST = 2,
+    BLUR_QUALITY_BETTER = 1,
+    BLUR_QUALITY_NORMAL = 0,
+    BLUR_QUALITY_WORSE = -1,
+    BLUR_QUALITY_WORST = -2
+};
 
 namespace NR {
 
@@ -53,8 +62,8 @@ private:
     void _make_kernel(double *kernel, double deviation, double expansion);
     int _effect_area_scr_x(Matrix const &trans);
     int _effect_area_scr_y(Matrix const &trans);
-    int _effect_subsample_step(int scr_len_x);
-    int _effect_subsample_step_log2(int scr_len_x);
+    int _effect_subsample_step(int scr_len_x, int quality);
+    int _effect_subsample_step_log2(int scr_len_x, int quality);
 
     inline int _min(int const a, int const b)
     {

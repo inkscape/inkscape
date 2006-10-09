@@ -53,6 +53,7 @@ enum {
     PREFS_PAGE_TOOLS_DROPPER,
     PREFS_PAGE_WINDOWS,
     PREFS_PAGE_CLONES,
+    PREFS_PAGE_FILTERS,
     PREFS_PAGE_TRANSFORMS,
     PREFS_PAGE_SELECTING,
     PREFS_PAGE_MISC
@@ -93,7 +94,7 @@ protected:
     Gtk::TreeModel::Path _path_shapes;
 
     DialogPage _page_mouse, _page_scrolling, _page_steps, _page_tools, _page_windows,
-               _page_clones, _page_transforms, _page_select, _page_misc;
+               _page_clones, _page_transforms, _page_filters, _page_select, _page_misc;
     DialogPage _page_selector, _page_node, _page_zoom, _page_shapes, _page_pencil, _page_pen,
                _page_calligraphy, _page_text, _page_gradient, _page_connector, _page_dropper;
     DialogPage _page_rectangle, _page_ellipse, _page_star, _page_spiral;
@@ -121,6 +122,8 @@ protected:
     
     PrefRadioButton _clone_option_parallel, _clone_option_stay, _clone_option_transform,
                     _clone_option_unlink, _clone_option_delete;
+
+    PrefRadioButton _blur_quality_best, _blur_quality_better, _blur_quality_normal, _blur_quality_worse, _blur_quality_worst;
 
     PrefCheckButton _trans_scale_stroke, _trans_scale_corner, _trans_gradient,_trans_pattern;
     PrefRadioButton _trans_optimized, _trans_preserved;
@@ -159,6 +162,7 @@ protected:
     void initPageWindows();
     void initPageClones();
     void initPageTransforms();
+    void initPageFilters();
     void initPageSelecting();
     void initPageMisc();
 

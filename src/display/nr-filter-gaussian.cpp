@@ -3,10 +3,11 @@
 /*
  * Gaussian blur renderer
  *
- * Author:
+ * Authors:
  *   Niko Kiirala <niko@kiirala.com>
+ *   bulia byak
  *
- * Copyright (C) 2006 Niko Kiirala
+ * Copyright (C) 2006 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -81,45 +82,171 @@ int FilterGaussian::_effect_area_scr_y(Matrix const &trans)
     return ret;
 }
 
-int FilterGaussian::_effect_subsample_step(int scr_len_x)
+int FilterGaussian::_effect_subsample_step(int scr_len_x, int quality)
 {
-    if (scr_len_x < 16) {
-        return 1;
-    } else if (scr_len_x < 80) {
-        return 4;
-    } else if (scr_len_x < 160) {
-        return 8;
-    } else if (scr_len_x < 320) {
-        return 32;
-    } else if (scr_len_x < 640) {
-        return 64;
-    } else if (scr_len_x < 1280) {
-        return 256;
-    } else if (scr_len_x < 2560) {
-        return 1024; 
-    } else {
-        return 65536;
+    switch (quality) {
+        case BLUR_QUALITY_WORST:
+            if (scr_len_x < 8) {
+                return 1;
+            } else if (scr_len_x < 32) {
+                return 4;
+            } else if (scr_len_x < 64) {
+                return 8;
+            } else if (scr_len_x < 128) {
+                return 32;
+            } else if (scr_len_x < 256) {
+                return 128;
+            } else if (scr_len_x < 512) {
+                return 512;
+            } else if (scr_len_x < 1024) {
+                return 4096; 
+            } else {
+                return 65536;
+            }
+            break;
+        case BLUR_QUALITY_WORSE:
+            if (scr_len_x < 16) {
+                return 1;
+            } else if (scr_len_x < 64) {
+                return 4;
+            } else if (scr_len_x < 120) {
+                return 8;
+            } else if (scr_len_x < 200) {
+                return 32;
+            } else if (scr_len_x < 400) {
+                return 64;
+            } else if (scr_len_x < 800) {
+                return 256;
+            } else if (scr_len_x < 1200) {
+                return 1024; 
+            } else {
+                return 65536;
+            }
+            break;
+        case BLUR_QUALITY_BETTER:
+            if (scr_len_x < 32) {
+                return 1;
+            } else if (scr_len_x < 160) {
+                return 4;
+            } else if (scr_len_x < 320) {
+                return 8;
+            } else if (scr_len_x < 640) {
+                return 32;
+            } else if (scr_len_x < 1280) {
+                return 64;
+            } else if (scr_len_x < 2560) {
+                return 256;
+            } else {
+                return 1024;
+            }
+            break;
+        case BLUR_QUALITY_BEST:
+            return 1; // no subsampling at all
+            break;
+        case BLUR_QUALITY_NORMAL:
+        default: 
+            if (scr_len_x < 16) {
+                return 1;
+            } else if (scr_len_x < 80) {
+                return 4;
+            } else if (scr_len_x < 160) {
+                return 8;
+            } else if (scr_len_x < 320) {
+                return 32;
+            } else if (scr_len_x < 640) {
+                return 64;
+            } else if (scr_len_x < 1280) {
+                return 256;
+            } else if (scr_len_x < 2560) {
+                return 1024; 
+            } else {
+                return 65536;
+            }
+            break;
     }
 }
 
-int FilterGaussian::_effect_subsample_step_log2(int scr_len_x)
+int FilterGaussian::_effect_subsample_step_log2(int scr_len_x, int quality)
 {
-    if (scr_len_x < 16) {
-        return 0;
-    } else if (scr_len_x < 80) {
-        return 2;
-    } else if (scr_len_x < 160) {
-        return 3;
-    } else if (scr_len_x < 320) {
-        return 5;
-    } else if (scr_len_x < 640) {
-        return 6;
-    } else if (scr_len_x < 1280) {
-        return 8;
-    } else if (scr_len_x < 2560) {
-        return 10; 
-    } else {
-        return 16;
+    switch (quality) {
+        case BLUR_QUALITY_WORST:
+            if (scr_len_x < 8) {
+                return 0;
+            } else if (scr_len_x < 32) {
+                return 2;
+            } else if (scr_len_x < 64) {
+                return 3;
+            } else if (scr_len_x < 128) {
+                return 5;
+            } else if (scr_len_x < 256) {
+                return 7;
+            } else if (scr_len_x < 512) {
+                return 9;
+            } else if (scr_len_x < 1024) {
+                return 12; 
+            } else {
+                return 16;
+            }
+            break;
+        case BLUR_QUALITY_WORSE:
+            if (scr_len_x < 16) {
+                return 0;
+            } else if (scr_len_x < 64) {
+                return 2;
+            } else if (scr_len_x < 120) {
+                return 3;
+            } else if (scr_len_x < 200) {
+                return 5;
+            } else if (scr_len_x < 400) {
+                return 6;
+            } else if (scr_len_x < 800) {
+                return 8;
+            } else if (scr_len_x < 1200) {
+                return 10; 
+            } else {
+                return 16;
+            }
+            break;
+        case BLUR_QUALITY_BETTER:
+            if (scr_len_x < 32) {
+                return 0;
+            } else if (scr_len_x < 160) {
+                return 2;
+            } else if (scr_len_x < 320) {
+                return 3;
+            } else if (scr_len_x < 640) {
+                return 5;
+            } else if (scr_len_x < 1280) {
+                return 6;
+            } else if (scr_len_x < 2560) {
+                return 8;
+            } else {
+                return 10;
+            }
+            break;
+        case BLUR_QUALITY_BEST:
+            return 0; // no subsampling at all
+            break;
+        case BLUR_QUALITY_NORMAL:
+        default:
+            if (scr_len_x < 16) {
+                return 0;
+            } else if (scr_len_x < 80) {
+                return 2;
+            } else if (scr_len_x < 160) {
+                return 3;
+            } else if (scr_len_x < 320) {
+                return 5;
+            } else if (scr_len_x < 640) {
+                return 6;
+            } else if (scr_len_x < 1280) {
+                return 8;
+            } else if (scr_len_x < 2560) {
+                return 10; 
+            } else {
+                return 16;
+            }
+            break;
     }
 }
 
@@ -130,7 +257,7 @@ int FilterGaussian::_effect_subsample_step_log2(int scr_len_x)
  */
 inline void _check_index(NRPixBlock const * const pb, int const location, int const line)
 {
-    if(true) {
+    if (false) {
         int max_loc = pb->rs * (pb->area.y1 - pb->area.y0);
         if (location < 0 || location >= max_loc)
             g_warning("Location %d out of bounds (0 ... %d) at line %d", location, max_loc, line);
@@ -164,11 +291,13 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     int scr_len_y = _effect_area_scr_y(trans);
 
     // subsampling step; it depends on the radius, but somewhat nonlinearly, to make high zooms
-    // workable
-    int stepx = _effect_subsample_step(scr_len_x);
-    int stepx_l2 = _effect_subsample_step_log2(scr_len_x);
-    int stepy = _effect_subsample_step(scr_len_y);
-    int stepy_l2 = _effect_subsample_step_log2(scr_len_y);
+    // workable; is adjustable by quality in -2..2; 0 is the default; 2 is the best quality with no
+    // subsampling
+    int quality = prefs_get_int_attribute ("options.blurquality", "value", 0);
+    int stepx = _effect_subsample_step(scr_len_x, quality);
+    int stepx_l2 = _effect_subsample_step_log2(scr_len_x, quality);
+    int stepy = _effect_subsample_step(scr_len_y, quality);
+    int stepy_l2 = _effect_subsample_step_log2(scr_len_y, quality);
     int stepx2 = stepx >> 1;
     int stepy2 = stepy >> 1;
 

@@ -34,6 +34,7 @@
 #include "selection-chemistry.h"
 #include "xml/repr.h"
 #include "ui/widget/style-swatch.h"
+#include "display/nr-filter-gaussian.h"
 
 namespace Inkscape {
 namespace UI {
@@ -95,6 +96,7 @@ InkscapePreferences::InkscapePreferences()
     initPageWindows();
     initPageClones();
     initPageTransforms();
+    initPageFilters();
     initPageSelecting();
     initPageMisc();
 
@@ -479,6 +481,35 @@ void InkscapePreferences::initPageTransforms()
 
     this->AddPage(_page_transforms, _("Transforms"), PREFS_PAGE_TRANSFORMS);
 }
+
+void InkscapePreferences::initPageFilters()
+{
+    _blur_quality_best.init ( _("Best quality (slowest)"), "options.blurquality", "value", 
+                                  BLUR_QUALITY_BEST, false, 0);
+    _blur_quality_better.init ( _("Better quality (slower)"), "options.blurquality", "value", 
+                                  BLUR_QUALITY_BETTER, false, &_blur_quality_best);
+    _blur_quality_normal.init ( _("Average quality"), "options.blurquality", "value", 
+                                  BLUR_QUALITY_NORMAL, true, &_blur_quality_best);
+    _blur_quality_worse.init ( _("Lower quality (faster)"), "options.blurquality", "value", 
+                                  BLUR_QUALITY_WORSE, false, &_blur_quality_best);
+    _blur_quality_worst.init ( _("Lowest quality (fastest)"), "options.blurquality", "value", 
+                                  BLUR_QUALITY_WORST, false, &_blur_quality_best);
+
+    _page_filters.add_group_header( _("Gaussian blur quality for display:"));
+    _page_filters.add_line( true, "", _blur_quality_best, "", 
+                           _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
+    _page_filters.add_line( true, "", _blur_quality_better, "", 
+                           _("Better quality, but slower display"));
+    _page_filters.add_line( true, "", _blur_quality_normal, "", 
+                           _("Average quality, acceptable display speed"));
+    _page_filters.add_line( true, "", _blur_quality_worse, "", 
+                           _("Lower quality (some artefacts), but display is faster"));
+    _page_filters.add_line( true, "", _blur_quality_worst, "", 
+                           _("Lowest quality (considerable artefacts), but display is fastest"));
+
+    this->AddPage(_page_filters, _("Filters"), PREFS_PAGE_FILTERS);
+}
+
 
 void InkscapePreferences::initPageSelecting()
 {
