@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 08:56+0200\n"
+"POT-Creation-Date: 2006-10-09 19:24+0200\n"
 "PO-Revision-Date: 2006-08-12 10:11+0300\n"
 "Last-Translator: Riku Leino <tsoots@gmail.com>\n"
 "Language-Team: Finnish\n"
@@ -27,18 +27,18 @@ msgstr "Luo ja muokkaa Scalable Vector Graphics -kuvia"
 msgid "Inkscape SVG Vector Illustrator"
 msgstr "Inkscape SVG-piirtotyökalu"
 
-#: ../src/arc-context.cpp:335
+#: ../src/arc-context.cpp:337
 msgid ""
 "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr ""
 "<b>Ctrl</b>: tee ympyrä tai kokonaislukusuhteinen ellipsi, kaaren tai lohkon "
 "kierto askeleittain"
 
-#: ../src/arc-context.cpp:336 ../src/rect-context.cpp:378
+#: ../src/arc-context.cpp:338 ../src/rect-context.cpp:380
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: piirrä aloituspisteen ympäri"
 
-#: ../src/arc-context.cpp:421
+#: ../src/arc-context.cpp:426
 #, c-format
 msgid ""
 "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make circle or integer-"
@@ -47,7 +47,7 @@ msgstr ""
 "<b>Ellipsi</b>: %s &#215; %s.  <b>Ctrl</b> painettuna kokonaislukusuhteinen "
 "ympyrä tai ellipsi. <b>Vaihto</b> painettuna piirrä aloituspisteen ympäri"
 
-#: ../src/arc-context.cpp:437
+#: ../src/arc-context.cpp:444
 msgid "Create ellipse"
 msgstr "Luo ellipsi"
 
@@ -99,49 +99,64 @@ msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr ""
 "<b>Nykyinen taso on lukittu</b>. Avaa lukitus voidaksesi piirtää sille."
 
-#: ../src/desktop-events.cpp:206
+#: ../src/desktop-events.cpp:110
+#, fuzzy
+msgid "Create guide"
+msgstr "Luo ellipsi"
+
+#: ../src/desktop-events.cpp:184
+#, fuzzy
+msgid "Move guide"
+msgstr "Siirrä solmuja"
+
+#: ../src/desktop-events.cpp:190
+#, fuzzy
+msgid "Delete guide"
+msgstr "Poista solmu"
+
+#: ../src/desktop-events.cpp:208
 #, c-format
 msgid "%s at %s"
 msgstr "%s %s"
 
-#: ../src/desktop.cpp:678
+#: ../src/desktop.cpp:679
 msgid "No previous zoom."
 msgstr "Ei aikaisempaa näkymän koon muutosta."
 
-#: ../src/desktop.cpp:703
+#: ../src/desktop.cpp:704
 msgid "No next zoom."
 msgstr "Ei seuraavaa näkymän koon muutosta."
 
-#: ../src/dialogs/clonetiler.cpp:162
+#: ../src/dialogs/clonetiler.cpp:165
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Mitään ei ole valittuna</small>"
 
-#: ../src/dialogs/clonetiler.cpp:168
+#: ../src/dialogs/clonetiler.cpp:171
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Useampi kuin yksi kohde valittuna</small>"
 
-#: ../src/dialogs/clonetiler.cpp:175
+#: ../src/dialogs/clonetiler.cpp:178
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>Kohteella on <b>%d</b> laattakloonia.</small>"
 
-#: ../src/dialogs/clonetiler.cpp:180
+#: ../src/dialogs/clonetiler.cpp:183
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>Kohteella ei ole laattaklooneja</small>"
 
-#: ../src/dialogs/clonetiler.cpp:845
+#: ../src/dialogs/clonetiler.cpp:848
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Valitse <b>kohde</b>, jonka laattakloonit hajautetaan."
 
-#: ../src/dialogs/clonetiler.cpp:897
+#: ../src/dialogs/clonetiler.cpp:900
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Valitse <b>kohde</b>, jonka laattakloonit poistetaan."
 
-#: ../src/dialogs/clonetiler.cpp:966 ../src/selection-chemistry.cpp:1964
+#: ../src/dialogs/clonetiler.cpp:969 ../src/selection-chemistry.cpp:1964
 msgid "Select an <b>object</b> to clone."
 msgstr "Valitse kloonattava <b>kohde</b>."
 
-#: ../src/dialogs/clonetiler.cpp:972
+#: ../src/dialogs/clonetiler.cpp:975
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
@@ -149,19 +164,19 @@ msgstr ""
 "Jos haluat kloonata useita kohteita, <b>ryhmitä</b> ne ja <b>kloonaa ryhmä</"
 "b>."
 
-#: ../src/dialogs/clonetiler.cpp:1483
+#: ../src/dialogs/clonetiler.cpp:1512
 msgid "<small>Per row:</small>"
 msgstr "<small>Rivillä:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1496
+#: ../src/dialogs/clonetiler.cpp:1525
 msgid "<small>Per column:</small>"
 msgstr "<small>Sarakkeessa:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1504
+#: ../src/dialogs/clonetiler.cpp:1533
 msgid "<small>Randomize:</small>"
 msgstr "<small>Satunnainen:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1658
+#: ../src/dialogs/clonetiler.cpp:1687
 msgid "_Symmetry"
 msgstr "_Symmetria"
 
@@ -170,271 +185,302 @@ msgstr "_Symmetria"
 #. * http://www.clarku.edu/~djoyce/wallpaper/seventeen.html (English vocabulary); or
 #. * http://membres.lycos.fr/villemingerard/Geometri/Sym1D.htm (French vocabulary).
 #.
-#: ../src/dialogs/clonetiler.cpp:1666
+#: ../src/dialogs/clonetiler.cpp:1695
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Valitse laatoitusta varten yksi 17 symmetriaryhmästä"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/dialogs/clonetiler.cpp:1677
+#: ../src/dialogs/clonetiler.cpp:1706
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: yksinkertainen siirto"
 
-#: ../src/dialogs/clonetiler.cpp:1678
+#: ../src/dialogs/clonetiler.cpp:1707
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: 180&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1679
+#: ../src/dialogs/clonetiler.cpp:1708
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: peilaus"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/dialogs/clonetiler.cpp:1682
+#: ../src/dialogs/clonetiler.cpp:1711
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: siirtopeilaus"
 
-#: ../src/dialogs/clonetiler.cpp:1683
+#: ../src/dialogs/clonetiler.cpp:1712
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: peilaus + siirtopeilaus"
 
-#: ../src/dialogs/clonetiler.cpp:1684
+#: ../src/dialogs/clonetiler.cpp:1713
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: peilaus + peilaus"
 
-#: ../src/dialogs/clonetiler.cpp:1685
+#: ../src/dialogs/clonetiler.cpp:1714
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: peilaus + 180&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1686
+#: ../src/dialogs/clonetiler.cpp:1715
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: siirtopeilaus + 180&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1687
+#: ../src/dialogs/clonetiler.cpp:1716
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: peilaus + peilaus + 180&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1688
+#: ../src/dialogs/clonetiler.cpp:1717
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: 90&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1689
+#: ../src/dialogs/clonetiler.cpp:1718
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: 90&#176;:n kierto + 45&#176;:n peilaus"
 
-#: ../src/dialogs/clonetiler.cpp:1690
+#: ../src/dialogs/clonetiler.cpp:1719
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: 90&#176;:n kierto + 90&#176;:n peilaus"
 
-#: ../src/dialogs/clonetiler.cpp:1691
+#: ../src/dialogs/clonetiler.cpp:1720
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: 120&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1692
+#: ../src/dialogs/clonetiler.cpp:1721
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: peilaus + 120&#176;:n kierto, tiheä"
 
-#: ../src/dialogs/clonetiler.cpp:1693
+#: ../src/dialogs/clonetiler.cpp:1722
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P3M1</b>: peilaus + 120&#176;:n kierto, harva"
 
-#: ../src/dialogs/clonetiler.cpp:1694
+#: ../src/dialogs/clonetiler.cpp:1723
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: 60&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1695
+#: ../src/dialogs/clonetiler.cpp:1724
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: peilaus + 60&#176;:n kierto"
 
-#: ../src/dialogs/clonetiler.cpp:1723
+#: ../src/dialogs/clonetiler.cpp:1752
 msgid "S_hift"
 msgstr "_Siirto"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/dialogs/clonetiler.cpp:1733
+#: ../src/dialogs/clonetiler.cpp:1762
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>Vaakasiirto:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1741
+#: ../src/dialogs/clonetiler.cpp:1770
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Vaakasuora siirtymä riville (prosentteina laatan leveydestä)"
 
-#: ../src/dialogs/clonetiler.cpp:1749
+#: ../src/dialogs/clonetiler.cpp:1778
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Vaakasuora siirtymä sarakkeille (prosentteina laatan leveydestä)"
 
-#: ../src/dialogs/clonetiler.cpp:1756
+#: ../src/dialogs/clonetiler.cpp:1785
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "Käytä satunnaista vaakasuoraa siirtymää (maksimi on valittu prosentti)"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/dialogs/clonetiler.cpp:1766
+#: ../src/dialogs/clonetiler.cpp:1795
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Pystysiirto:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1774
+#: ../src/dialogs/clonetiler.cpp:1803
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Pystysuora siirtymä riville (prosentteina laatan korkeudesta)"
 
-#: ../src/dialogs/clonetiler.cpp:1782
+#: ../src/dialogs/clonetiler.cpp:1811
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Pystysuora siirtymä sarakkeelle (prosentteina laatan korkeudesta)"
 
-#: ../src/dialogs/clonetiler.cpp:1789
+#: ../src/dialogs/clonetiler.cpp:1818
 msgid "Randomize the vertical shift by this percentage"
 msgstr "Käytä satunnaista pystysuoraa siirtymää (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:1797
+#: ../src/dialogs/clonetiler.cpp:1826
 msgid "<b>Exponent:</b>"
 msgstr "<b>Hajautus:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1804
+#: ../src/dialogs/clonetiler.cpp:1833
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Rivien väli on tasainen (1), suppeneva (< 1) tai hajaantuva (> 1)"
 
-#: ../src/dialogs/clonetiler.cpp:1811
+#: ../src/dialogs/clonetiler.cpp:1840
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Sarakkeiden väli on tasainen (1), suppeneva (< 1) tai hajaantuva (> 1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/dialogs/clonetiler.cpp:1819 ../src/dialogs/clonetiler.cpp:1909
-#: ../src/dialogs/clonetiler.cpp:1968 ../src/dialogs/clonetiler.cpp:2024
-#: ../src/dialogs/clonetiler.cpp:2155
+#: ../src/dialogs/clonetiler.cpp:1848 ../src/dialogs/clonetiler.cpp:1938
+#: ../src/dialogs/clonetiler.cpp:1997 ../src/dialogs/clonetiler.cpp:2054
+#: ../src/dialogs/clonetiler.cpp:2103 ../src/dialogs/clonetiler.cpp:2234
 msgid "<small>Alternate:</small>"
 msgstr "<small>Vaihda:</small>"
 
-#: ../src/dialogs/clonetiler.cpp:1825
+#: ../src/dialogs/clonetiler.cpp:1854
 msgid "Alternate the sign of shifts for each row"
 msgstr "Vaihda siirtymän etumerkkiä joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:1830
+#: ../src/dialogs/clonetiler.cpp:1859
 msgid "Alternate the sign of shifts for each column"
 msgstr "Vaihda siirtymän etumerkkiä joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:1839
+#: ../src/dialogs/clonetiler.cpp:1868
 msgid "Sc_ale"
 msgstr "Muut_a kokoa"
 
-#: ../src/dialogs/clonetiler.cpp:1847
+#: ../src/dialogs/clonetiler.cpp:1876
 msgid "<b>Scale X:</b>"
 msgstr "<b>Leveys:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1855
+#: ../src/dialogs/clonetiler.cpp:1884
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Leveyden muutos riviä kohti (prosentteina laatan leveydestä)"
 
-#: ../src/dialogs/clonetiler.cpp:1863
+#: ../src/dialogs/clonetiler.cpp:1892
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Leveyden muutos saraketta kohti (prosentteina laatan leveydestä)"
 
-#: ../src/dialogs/clonetiler.cpp:1870
+#: ../src/dialogs/clonetiler.cpp:1899
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "Satunnainen leveyden muutos riviä kohti (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:1878
+#: ../src/dialogs/clonetiler.cpp:1907
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Korkeus:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1886
+#: ../src/dialogs/clonetiler.cpp:1915
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Korkeuden muutos riviä kohti (prosentteina laatan korkeudesta)"
 
-#: ../src/dialogs/clonetiler.cpp:1894
+#: ../src/dialogs/clonetiler.cpp:1923
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Korkeuden muutos saraketta kohti (prosentteina laatan korkeudesta)"
 
-#: ../src/dialogs/clonetiler.cpp:1901
+#: ../src/dialogs/clonetiler.cpp:1930
 msgid "Randomize the vertical scale by this percentage"
 msgstr "Satunnainen korkeuden muutos (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:1915
+#: ../src/dialogs/clonetiler.cpp:1944
 msgid "Alternate the sign of scales for each row"
 msgstr "Vaihda koon muutoksen etumerkkiä joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:1920
+#: ../src/dialogs/clonetiler.cpp:1949
 msgid "Alternate the sign of scales for each column"
 msgstr "Vaihda koon muutoksen etumerkkiä joka sarakkeessa"
 
-#: ../src/dialogs/clonetiler.cpp:1929
+#: ../src/dialogs/clonetiler.cpp:1958
 msgid "_Rotation"
 msgstr "Kie_rto"
 
-#: ../src/dialogs/clonetiler.cpp:1937
+#: ../src/dialogs/clonetiler.cpp:1966
 msgid "<b>Angle:</b>"
 msgstr "<b>Kulma:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:1945
+#: ../src/dialogs/clonetiler.cpp:1974
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Laattojen kierto riviä kohti"
 
-#: ../src/dialogs/clonetiler.cpp:1953
+#: ../src/dialogs/clonetiler.cpp:1982
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Laattojen kierto saraketta kohti"
 
-#: ../src/dialogs/clonetiler.cpp:1960
+#: ../src/dialogs/clonetiler.cpp:1989
 msgid "Randomize the rotation angle by this percentage"
 msgstr "Käytä satunnaista kiertokulmaa (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:1974
+#: ../src/dialogs/clonetiler.cpp:2003
 msgid "Alternate the rotation direction for each row"
 msgstr "Vaihda kiertosuunta joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:1979
+#: ../src/dialogs/clonetiler.cpp:2008
 msgid "Alternate the rotation direction for each column"
 msgstr "Vaihda kiertosuunta joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:1987
-msgid "_Opacity"
-msgstr "_Läpinäkyvyys"
+#: ../src/dialogs/clonetiler.cpp:2016
+#, fuzzy
+msgid "_Blur & opacity"
+msgstr "Täytön peitto"
 
-#: ../src/dialogs/clonetiler.cpp:1995
+#: ../src/dialogs/clonetiler.cpp:2025
+#, fuzzy
+msgid "<b>Blur:</b>"
+msgstr "<b>L:</b>"
+
+#: ../src/dialogs/clonetiler.cpp:2032
+#, fuzzy
+msgid "Blur tiles by this percentage for each row"
+msgstr "Kasvata läpinäkyvyyttä jokaisella rivillä valitulla prosentilla"
+
+#: ../src/dialogs/clonetiler.cpp:2039
+#, fuzzy
+msgid "Blur tiles by this percentage for each column"
+msgstr "Kasvata läpinäkyvyyttä jokaisella sarakkeella valitulla prosentilla"
+
+#: ../src/dialogs/clonetiler.cpp:2046
+#, fuzzy
+msgid "Randomize the tile blur by this percentage"
+msgstr "Käytä satunnaista värisävyä (maksimi on valittu prosentti)"
+
+#: ../src/dialogs/clonetiler.cpp:2060
+#, fuzzy
+msgid "Alternate the sign of blur change for each row"
+msgstr "Vaihda värin kirkkauden etumerkkiä joka rivillä"
+
+#: ../src/dialogs/clonetiler.cpp:2065
+#, fuzzy
+msgid "Alternate the sign of blur change for each column"
+msgstr "Vaihda värin kirkkauden etumerkkiä joka sarakkeella"
+
+#: ../src/dialogs/clonetiler.cpp:2074
 msgid "<b>Fade out:</b>"
 msgstr "<b>Häivytä:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2002
+#: ../src/dialogs/clonetiler.cpp:2081
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "Kasvata läpinäkyvyyttä jokaisella rivillä valitulla prosentilla"
 
-#: ../src/dialogs/clonetiler.cpp:2009
+#: ../src/dialogs/clonetiler.cpp:2088
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "Kasvata läpinäkyvyyttä jokaisella sarakkeella valitulla prosentilla"
 
-#: ../src/dialogs/clonetiler.cpp:2016
+#: ../src/dialogs/clonetiler.cpp:2095
 msgid "Randomize the tile opacity by this percentage"
 msgstr "Käytä satunnaista läpinäkyvyyttä (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:2030
+#: ../src/dialogs/clonetiler.cpp:2109
 msgid "Alternate the sign of opacity change for each row"
 msgstr "Vaihda läpinäkyvyyden etumerkkiä joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:2035
+#: ../src/dialogs/clonetiler.cpp:2114
 msgid "Alternate the sign of opacity change for each column"
 msgstr "Vaihda läpinäkyvyyden etumerkkiä joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:2043
+#: ../src/dialogs/clonetiler.cpp:2122
 msgid "Co_lor"
 msgstr "_Väri"
 
-#: ../src/dialogs/clonetiler.cpp:2048
+#: ../src/dialogs/clonetiler.cpp:2127
 msgid "Initial color: "
 msgstr "Aloitusväri: "
 
-#: ../src/dialogs/clonetiler.cpp:2052
+#: ../src/dialogs/clonetiler.cpp:2131
 msgid "Initial color of tiled clones"
 msgstr "Laattojen aloitusväri"
 
-#: ../src/dialogs/clonetiler.cpp:2052
+#: ../src/dialogs/clonetiler.cpp:2131
 msgid ""
 "Initial color for clones (works only if the original has unset fill or "
 "stroke)"
@@ -442,190 +488,190 @@ msgstr ""
 "Laattojen aloitusväri (toimii ainoastaan, jos alkuperäisellä kohteella ei "
 "ole täyttöä tai reunaviivaa)"
 
-#: ../src/dialogs/clonetiler.cpp:2067
+#: ../src/dialogs/clonetiler.cpp:2146
 msgid "<b>H:</b>"
 msgstr "<b>H:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2074
+#: ../src/dialogs/clonetiler.cpp:2153
 msgid "Change the tile hue by this percentage for each row"
 msgstr "Vaihda laatan värisävyä valitulla prosentilla joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:2081
+#: ../src/dialogs/clonetiler.cpp:2160
 msgid "Change the tile hue by this percentage for each column"
 msgstr "Vaihda laatan värisävyä valitulla prosentilla joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:2088
+#: ../src/dialogs/clonetiler.cpp:2167
 msgid "Randomize the tile hue by this percentage"
 msgstr "Käytä satunnaista värisävyä (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:2097
+#: ../src/dialogs/clonetiler.cpp:2176
 msgid "<b>S:</b>"
 msgstr "<b>S:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2104
+#: ../src/dialogs/clonetiler.cpp:2183
 msgid "Change the color saturation by this percentage for each row"
 msgstr "Vaihda värikylläisyyttä valitulla prosentilla joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:2111
+#: ../src/dialogs/clonetiler.cpp:2190
 msgid "Change the color saturation by this percentage for each column"
 msgstr "Vaihda värikylläisyyttä valitulla prosentilla joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:2118
+#: ../src/dialogs/clonetiler.cpp:2197
 msgid "Randomize the color saturation by this percentage"
 msgstr "Käytä satunnaista värikylläisyyttä (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:2126
+#: ../src/dialogs/clonetiler.cpp:2205
 msgid "<b>L:</b>"
 msgstr "<b>L:</b>"
 
-#: ../src/dialogs/clonetiler.cpp:2133
+#: ../src/dialogs/clonetiler.cpp:2212
 msgid "Change the color lightness by this percentage for each row"
 msgstr "Vaihda värin kirkkautta valitulla prosentilla joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:2140
+#: ../src/dialogs/clonetiler.cpp:2219
 msgid "Change the color lightness by this percentage for each column"
 msgstr "Vaihda värin kirkkautta valitulla prosentilla joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:2147
+#: ../src/dialogs/clonetiler.cpp:2226
 msgid "Randomize the color lightness by this percentage"
 msgstr "Käytä satunnaista värin kirkkautta (maksimi on valittu prosentti)"
 
-#: ../src/dialogs/clonetiler.cpp:2161
+#: ../src/dialogs/clonetiler.cpp:2240
 msgid "Alternate the sign of color changes for each row"
 msgstr "Vaihda värin kirkkauden etumerkkiä joka rivillä"
 
-#: ../src/dialogs/clonetiler.cpp:2166
+#: ../src/dialogs/clonetiler.cpp:2245
 msgid "Alternate the sign of color changes for each column"
 msgstr "Vaihda värin kirkkauden etumerkkiä joka sarakkeella"
 
-#: ../src/dialogs/clonetiler.cpp:2174
+#: ../src/dialogs/clonetiler.cpp:2253
 msgid "_Trace"
 msgstr "Jälji_tä"
 
-#: ../src/dialogs/clonetiler.cpp:2181
+#: ../src/dialogs/clonetiler.cpp:2260
 msgid "Trace the drawing under the tiles"
 msgstr "Jäljitä laatoituksen alla oleva piirros"
 
-#: ../src/dialogs/clonetiler.cpp:2185
+#: ../src/dialogs/clonetiler.cpp:2264
 msgid ""
 "For each clone, pick a value from the drawing in that clone's location and "
 "apply it to the clone"
 msgstr "Valitse arvo kloonille sen alla olevasta piirroksen kohdasta"
 
-#: ../src/dialogs/clonetiler.cpp:2199
+#: ../src/dialogs/clonetiler.cpp:2278
 msgid "1. Pick from the drawing:"
 msgstr "1. Valitse piirroksesta:"
 
 #. ----Hbox2
-#: ../src/dialogs/clonetiler.cpp:2210 ../src/dialogs/clonetiler.cpp:2357
+#: ../src/dialogs/clonetiler.cpp:2289 ../src/dialogs/clonetiler.cpp:2436
 #: ../src/ui/dialog/tracedialog.cpp:461
 msgid "Color"
 msgstr "Väri"
 
-#: ../src/dialogs/clonetiler.cpp:2211
+#: ../src/dialogs/clonetiler.cpp:2290
 msgid "Pick the visible color and opacity"
 msgstr "Valitse väri ja läpinäkyvyys"
 
-#: ../src/dialogs/clonetiler.cpp:2218 ../src/dialogs/clonetiler.cpp:2367
+#: ../src/dialogs/clonetiler.cpp:2297 ../src/dialogs/clonetiler.cpp:2446
 #: ../share/extensions/svg_dropshadow.inx.h:3
 msgid "Opacity"
 msgstr "Läpinäkyvyys"
 
-#: ../src/dialogs/clonetiler.cpp:2219
+#: ../src/dialogs/clonetiler.cpp:2298
 msgid "Pick the total accumulated opacity"
 msgstr "Valitse yhteenlaskettu läpinäkyvyys"
 
-#: ../src/dialogs/clonetiler.cpp:2226
+#: ../src/dialogs/clonetiler.cpp:2305
 msgid "R"
 msgstr "R"
 
-#: ../src/dialogs/clonetiler.cpp:2227
+#: ../src/dialogs/clonetiler.cpp:2306
 msgid "Pick the Red component of the color"
 msgstr "Valitse värin punainen komponentti"
 
-#: ../src/dialogs/clonetiler.cpp:2234
+#: ../src/dialogs/clonetiler.cpp:2313
 msgid "G"
 msgstr "G"
 
-#: ../src/dialogs/clonetiler.cpp:2235
+#: ../src/dialogs/clonetiler.cpp:2314
 msgid "Pick the Green component of the color"
 msgstr "Valitse värin vihreä komponentti"
 
-#: ../src/dialogs/clonetiler.cpp:2242
+#: ../src/dialogs/clonetiler.cpp:2321
 msgid "B"
 msgstr "B"
 
-#: ../src/dialogs/clonetiler.cpp:2243
+#: ../src/dialogs/clonetiler.cpp:2322
 msgid "Pick the Blue component of the color"
 msgstr "Valitse värin sininen komponentti"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2252
+#: ../src/dialogs/clonetiler.cpp:2331
 msgid "clonetiler|H"
 msgstr "H"
 
-#: ../src/dialogs/clonetiler.cpp:2253
+#: ../src/dialogs/clonetiler.cpp:2332
 msgid "Pick the hue of the color"
 msgstr "Valitse värisävy"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2262
+#: ../src/dialogs/clonetiler.cpp:2341
 msgid "clonetiler|S"
 msgstr "S"
 
-#: ../src/dialogs/clonetiler.cpp:2263
+#: ../src/dialogs/clonetiler.cpp:2342
 msgid "Pick the saturation of the color"
 msgstr "Valitse värikylläisyys"
 
 #. TRANSLATORS: only translate "string" in "context|string".
 #. For more details, see http://developer.gnome.org/doc/API/2.0/glib/glib-I18N.html#Q-:CAPS
-#: ../src/dialogs/clonetiler.cpp:2272
+#: ../src/dialogs/clonetiler.cpp:2351
 msgid "clonetiler|L"
 msgstr "L"
 
-#: ../src/dialogs/clonetiler.cpp:2273
+#: ../src/dialogs/clonetiler.cpp:2352
 msgid "Pick the lightness of the color"
 msgstr "Valitse värin kirkkaus"
 
-#: ../src/dialogs/clonetiler.cpp:2283
+#: ../src/dialogs/clonetiler.cpp:2362
 msgid "2. Tweak the picked value:"
 msgstr "2. Muokkaa valittuja arvoja:"
 
-#: ../src/dialogs/clonetiler.cpp:2293
+#: ../src/dialogs/clonetiler.cpp:2372
 msgid "Gamma-correct:"
 msgstr "Gamma-korjaus:"
 
-#: ../src/dialogs/clonetiler.cpp:2298
+#: ../src/dialogs/clonetiler.cpp:2377
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Siirrä valitun arvon keskialuetta ylös- (> 0) tai alaspäin (< 0)"
 
-#: ../src/dialogs/clonetiler.cpp:2305
+#: ../src/dialogs/clonetiler.cpp:2384
 msgid "Randomize:"
 msgstr "Satunnainen:"
 
-#: ../src/dialogs/clonetiler.cpp:2310
+#: ../src/dialogs/clonetiler.cpp:2389
 msgid "Randomize the picked value by this percentage"
 msgstr "Määritä arvo satunnaisesti valitun prosentin perusteella"
 
-#: ../src/dialogs/clonetiler.cpp:2317
+#: ../src/dialogs/clonetiler.cpp:2396
 msgid "Invert:"
 msgstr "Käännä:"
 
-#: ../src/dialogs/clonetiler.cpp:2321
+#: ../src/dialogs/clonetiler.cpp:2400
 msgid "Invert the picked value"
 msgstr "Käännä valittu arvo"
 
-#: ../src/dialogs/clonetiler.cpp:2327
+#: ../src/dialogs/clonetiler.cpp:2406
 msgid "3. Apply the value to the clones':"
 msgstr "3. Käytä arvoa klooneihin:"
 
-#: ../src/dialogs/clonetiler.cpp:2337
+#: ../src/dialogs/clonetiler.cpp:2416
 msgid "Presence"
 msgstr "Olemus"
 
-#: ../src/dialogs/clonetiler.cpp:2340
+#: ../src/dialogs/clonetiler.cpp:2419
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
@@ -633,16 +679,16 @@ msgstr ""
 "Jokainen klooni luodaan todennäköisyydellä, joka saadaan valitusta arvosta "
 "kloonin sijainnin mukaan"
 
-#: ../src/dialogs/clonetiler.cpp:2347
+#: ../src/dialogs/clonetiler.cpp:2426
 msgid "Size"
 msgstr "Koko"
 
-#: ../src/dialogs/clonetiler.cpp:2350
+#: ../src/dialogs/clonetiler.cpp:2429
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr ""
 "Jokaisen kloonin koko määräytyy valitusta pisteestä saadun arvon mukaan"
 
-#: ../src/dialogs/clonetiler.cpp:2360
+#: ../src/dialogs/clonetiler.cpp:2439
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
@@ -650,49 +696,49 @@ msgstr ""
 "Jokaisen kloonin väritys määräytyy valitun värin mukaan (alkuperäisestä "
 "täytyy puuttua täyttö tai reunaviiva)"
 
-#: ../src/dialogs/clonetiler.cpp:2370
+#: ../src/dialogs/clonetiler.cpp:2449
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr ""
 "Jokaisen kloonin läpinäkyvyys määräytyy valitusta pisteestä saadun arvon "
 "perusteella"
 
-#: ../src/dialogs/clonetiler.cpp:2397
+#: ../src/dialogs/clonetiler.cpp:2476
 msgid "How many rows in the tiling"
 msgstr "Laatoituksen rivien lukumäärä"
 
-#: ../src/dialogs/clonetiler.cpp:2417
+#: ../src/dialogs/clonetiler.cpp:2496
 msgid "How many columns in the tiling"
 msgstr "Laatoituksen sarakkeiden lukumäärä"
 
-#: ../src/dialogs/clonetiler.cpp:2447
+#: ../src/dialogs/clonetiler.cpp:2526
 msgid "Width of the rectangle to be filled"
 msgstr "Täytettävän suorakulmion leveys"
 
-#: ../src/dialogs/clonetiler.cpp:2472
+#: ../src/dialogs/clonetiler.cpp:2551
 msgid "Height of the rectangle to be filled"
 msgstr "Täytettävän suorakulmion korkeus"
 
-#: ../src/dialogs/clonetiler.cpp:2487
+#: ../src/dialogs/clonetiler.cpp:2566
 msgid "Rows, columns: "
 msgstr "Rivit, sarakkeet: "
 
-#: ../src/dialogs/clonetiler.cpp:2488
+#: ../src/dialogs/clonetiler.cpp:2567
 msgid "Create the specified number of rows and columns"
 msgstr "Anna rivien ja sarakkeiden lukumäärät"
 
-#: ../src/dialogs/clonetiler.cpp:2497
+#: ../src/dialogs/clonetiler.cpp:2576
 msgid "Width, height: "
 msgstr "Leveys, korkeus: "
 
-#: ../src/dialogs/clonetiler.cpp:2498
+#: ../src/dialogs/clonetiler.cpp:2577
 msgid "Fill the specified width and height with the tiling"
 msgstr "Täytä määritetty alue laatoilla"
 
-#: ../src/dialogs/clonetiler.cpp:2514
+#: ../src/dialogs/clonetiler.cpp:2593
 msgid "Use saved size and position of the tile"
 msgstr "Käytä laatan tallennettua kokoa ja sijaintia"
 
-#: ../src/dialogs/clonetiler.cpp:2517
+#: ../src/dialogs/clonetiler.cpp:2596
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
@@ -700,11 +746,11 @@ msgstr ""
 "Käytä laatan kokona ja sijaintina nykyisen koon sijaan samoja arvoja, joita "
 "viimeksi käytettiin laatoitusta luotaessa"
 
-#: ../src/dialogs/clonetiler.cpp:2541
+#: ../src/dialogs/clonetiler.cpp:2620
 msgid " <b>_Create</b> "
 msgstr "<b>_Luo</b> "
 
-#: ../src/dialogs/clonetiler.cpp:2543
+#: ../src/dialogs/clonetiler.cpp:2622
 msgid "Create and tile the clones of the selection"
 msgstr "Luo laatoitus valinnasta"
 
@@ -713,30 +759,30 @@ msgstr "Luo laatoitus valinnasta"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/dialogs/clonetiler.cpp:2558
+#: ../src/dialogs/clonetiler.cpp:2637
 msgid " _Unclump "
 msgstr " Haja_uta "
 
-#: ../src/dialogs/clonetiler.cpp:2559
+#: ../src/dialogs/clonetiler.cpp:2638
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr ""
 "Levitä klooneja välttääksesi kasaantumista (toiminto voidaan toistaa useita "
 "kertoja)"
 
-#: ../src/dialogs/clonetiler.cpp:2565
+#: ../src/dialogs/clonetiler.cpp:2644
 msgid " Re_move "
 msgstr "_Poista"
 
-#: ../src/dialogs/clonetiler.cpp:2566
+#: ../src/dialogs/clonetiler.cpp:2645
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "Poista valitun kohteen laattakloonit (ainoastaan sisarukset)"
 
-#: ../src/dialogs/clonetiler.cpp:2582
+#: ../src/dialogs/clonetiler.cpp:2661
 msgid " R_eset "
 msgstr " _Palauta "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/dialogs/clonetiler.cpp:2584
+#: ../src/dialogs/clonetiler.cpp:2663
 msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
@@ -840,7 +886,7 @@ msgstr "pikseleitä"
 msgid "dp_i"
 msgstr "dp_i"
 
-#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/dialogs/export.cpp:458 ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "dpi"
 msgstr "dpi"
 
@@ -994,7 +1040,7 @@ msgstr "Ryhmät"
 msgid "Search clones"
 msgstr "Etsi kloonit"
 
-#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:454
+#: ../src/dialogs/find.cpp:615 ../src/ui/dialog/inkscape-preferences.cpp:456
 msgid "Clones"
 msgstr "Kloonit"
 
@@ -1130,8 +1176,8 @@ msgid "%d x %d"
 msgstr "%d &#215; %d"
 
 #: ../src/dialogs/iconpreview.cpp:191
-#: ../src/ui/dialog/align-and-distribute.cpp:883
-#: ../src/ui/dialog/filedialog.cpp:1924 ../src/widgets/desktop-widget.cpp:1128
+#: ../src/ui/dialog/align-and-distribute.cpp:888
+#: ../src/ui/dialog/filedialog.cpp:1940 ../src/widgets/desktop-widget.cpp:1128
 msgid "Selection"
 msgstr "Valinta"
 
@@ -1345,26 +1391,30 @@ msgstr "Y:"
 msgid "%s attributes"
 msgstr "%s ominaisuudet"
 
-#: ../src/dialogs/object-properties.cpp:168
+#: ../src/dialogs/object-properties.cpp:167
 msgid "_Fill"
 msgstr "_Täyttö"
 
-#: ../src/dialogs/object-properties.cpp:175
+#: ../src/dialogs/object-properties.cpp:174
 msgid "Stroke _paint"
 msgstr "_Viivan väritys"
 
-#: ../src/dialogs/object-properties.cpp:182
+#: ../src/dialogs/object-properties.cpp:181
 msgid "Stroke st_yle"
 msgstr "Viivan t_yyli"
 
-#: ../src/dialogs/object-properties.cpp:193
-msgid "Master _opacity"
-msgstr "Täyt_ön peittävyys"
-
-#: ../src/dialogs/object-properties.cpp:231
+#: ../src/dialogs/object-properties.cpp:192
 #, fuzzy
 msgid "_Blur"
 msgstr "Sininen"
+
+#: ../src/dialogs/object-properties.cpp:225
+msgid "Master _opacity"
+msgstr "Täyt_ön peittävyys"
+
+#: ../src/dialogs/object-properties.cpp:421
+msgid "Change blur"
+msgstr ""
 
 #: ../src/dialogs/rdf.cpp:178
 msgid "CC Attribution"
@@ -1472,7 +1522,7 @@ msgstr "Identifiointitunnus"
 msgid "Unique URI to reference this document."
 msgstr "Tunnus, joka yksiselitteisesti identifioi asiakirjan (URI)."
 
-#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1948
+#: ../src/dialogs/rdf.cpp:266 ../src/ui/dialog/filedialog.cpp:1964
 msgid "Source"
 msgstr "Lähde"
 
@@ -1563,10 +1613,10 @@ msgid "No document selected"
 msgstr "Asiakirjaa ei ole valittuna"
 
 #: ../src/dialogs/stroke-style.cpp:782 ../src/interface.cpp:756
-#: ../src/ui/dialog/inkscape-preferences.cpp:188
-#: ../src/ui/dialog/inkscape-preferences.cpp:320
-#: ../src/ui/dialog/inkscape-preferences.cpp:405
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:190
+#: ../src/ui/dialog/inkscape-preferences.cpp:322
+#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 #: ../src/ui/widget/selected-style.cpp:136
 #: ../src/ui/widget/style-swatch.cpp:298 ../src/verbs.cpp:1938
 msgid "None"
@@ -1705,7 +1755,7 @@ msgstr "Riviväli:"
 
 #. Text
 #: ../src/dialogs/text-edit.cpp:361 ../src/selection-describer.cpp:63
-#: ../src/ui/dialog/inkscape-preferences.cpp:381
+#: ../src/ui/dialog/inkscape-preferences.cpp:383
 #: ../src/ui/dialog/text-properties.cpp:37 ../src/verbs.cpp:2187
 msgid "Text"
 msgstr "Teksti"
@@ -1803,11 +1853,11 @@ msgstr "Uusi elementtisolmu"
 msgid "New text node"
 msgstr "Uusi tekstisolmu"
 
-#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1711
+#: ../src/dialogs/xml-tree.cpp:344 ../src/nodepath.cpp:1708
 msgid "Duplicate node"
 msgstr "Monista solmu"
 
-#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2921
+#: ../src/dialogs/xml-tree.cpp:365 ../src/nodepath.cpp:2918
 msgid "Delete node"
 msgstr "Poista solmu"
 
@@ -1873,17 +1923,17 @@ msgstr ""
 "Ei voi asettaa elementtiä <b>%s</b>: Toinen elementti arvolla <b>%s</b> on "
 "jo olemassa!"
 
-#: ../src/document.cpp:369
+#: ../src/document.cpp:366
 #, c-format
 msgid "New document %d"
 msgstr "Uusi asiakirja %d"
 
-#: ../src/document.cpp:401
+#: ../src/document.cpp:398
 #, c-format
 msgid "Memory document %d"
 msgstr "Asiakirja muistissa %d"
 
-#: ../src/document.cpp:544
+#: ../src/document.cpp:541
 #, c-format
 msgid "Unnamed document %d"
 msgstr "Nimeämätön asiakirja %d"
@@ -1897,6 +1947,11 @@ msgstr "Polku on suljettu."
 #: ../src/draw-context.cpp:453
 msgid "Closing path."
 msgstr "Suljetaan polkua."
+
+#: ../src/draw-context.cpp:561
+#, fuzzy
+msgid "Draw path"
+msgstr "Katkaise polku"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -1930,16 +1985,26 @@ msgstr ""
 "<b>Raahaus</b> hakee värin keskiarvon. <b>Alt</b> hakee vastakkaisen värin. "
 "<b>Ctrl+C</b> kopioi osoittemen alla olevan värin leikepöydälle"
 
+#: ../src/dropper-context.cpp:395
+#, fuzzy
+msgid "Set picked color"
+msgstr "Viimeksi valittu väri"
+
+#: ../src/dyna-draw-context.cpp:702
+#, fuzzy
+msgid "Create calligraphic stroke"
+msgstr "Piirrä kalligrafisia viivoja"
+
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
 msgstr "[Muuttumaton]"
 
 #. Edit
-#: ../src/event-log.cpp:270 ../src/event-log.cpp:273 ../src/verbs.cpp:1975
+#: ../src/event-log.cpp:261 ../src/event-log.cpp:264 ../src/verbs.cpp:1975
 msgid "_Undo"
 msgstr "_Kumoa"
 
-#: ../src/event-log.cpp:280 ../src/event-log.cpp:284 ../src/verbs.cpp:1977
+#: ../src/event-log.cpp:271 ../src/event-log.cpp:275 ../src/verbs.cpp:1977
 msgid "_Redo"
 msgstr "_Tee uudelleen"
 
@@ -1965,7 +2030,7 @@ msgstr "  kuvaus: "
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
-#: ../src/extension/extension.cpp:241
+#: ../src/extension/extension.cpp:249
 msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
@@ -1973,61 +2038,61 @@ msgstr ""
 "  Tämän aiheuttaa virheellinen inx-tiedosto laajennukselle. Virheellinen inx-"
 "tiedosto saattaa johtua Inkscapen virheellisestä asennuksesta."
 
-#: ../src/extension/extension.cpp:244
+#: ../src/extension/extension.cpp:252
 msgid "an ID was not defined for it."
 msgstr " sille ei ole annettu ID:tä."
 
-#: ../src/extension/extension.cpp:248
+#: ../src/extension/extension.cpp:256
 msgid "there was no name defined for it."
 msgstr " sille ei ole annettu nimeä."
 
-#: ../src/extension/extension.cpp:252
+#: ../src/extension/extension.cpp:260
 msgid "the XML description of it got lost."
 msgstr "sen XML-kuvaus hukkui."
 
-#: ../src/extension/extension.cpp:256
+#: ../src/extension/extension.cpp:264
 msgid "no implementation was defined for the extension."
 msgstr "laajennukselle ei oltu määritelty toteutusta."
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
-#: ../src/extension/extension.cpp:263
+#: ../src/extension/extension.cpp:271
 msgid "a dependency was not met."
 msgstr "riippuvuutta ei täytetty."
 
-#: ../src/extension/extension.cpp:283
+#: ../src/extension/extension.cpp:291
 msgid "Extension \""
 msgstr "Laajennuksen \""
 
-#: ../src/extension/extension.cpp:283
+#: ../src/extension/extension.cpp:291
 msgid "\" failed to load because "
 msgstr "\" lataus epäonnistui, koska "
 
-#: ../src/extension/extension.cpp:570
+#: ../src/extension/extension.cpp:578
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr "Laajennuksen virhelokitiedostoa %s ei voitu luoda"
 
-#: ../src/extension/extension.cpp:677
+#: ../src/extension/extension.cpp:684
 msgid "Name:"
 msgstr "Nimi:"
 
-#: ../src/extension/extension.cpp:678
+#: ../src/extension/extension.cpp:685
 msgid "ID:"
 msgstr "ID:"
 
-#: ../src/extension/extension.cpp:679
+#: ../src/extension/extension.cpp:686
 msgid "State:"
 msgstr "Tila:"
 
-#: ../src/extension/extension.cpp:679
+#: ../src/extension/extension.cpp:686
 msgid "Loaded"
 msgstr "Ladattu"
 
-#: ../src/extension/extension.cpp:679
+#: ../src/extension/extension.cpp:686
 msgid "Unloaded"
 msgstr "Vapautettu"
 
-#: ../src/extension/extension.cpp:679
+#: ../src/extension/extension.cpp:686
 msgid "Deactivated"
 msgstr "Poistettu käytöstä"
 
@@ -2073,11 +2138,11 @@ msgstr ""
 "palauttanut virheilmoitusta, mutta tämä saattaa viitata odottamattomaan "
 "tulokseen."
 
-#: ../src/extension/init.cpp:181
+#: ../src/extension/init.cpp:185
 msgid "Null external module directory name.  Modules will not be loaded."
 msgstr "Moduulihakemisto on nimeämättä. Moduuleja ei voi ladata."
 
-#: ../src/extension/init.cpp:195
+#: ../src/extension/init.cpp:199
 #, c-format
 msgid ""
 "Modules directory (%s) is unavailable.  External modules in that directory "
@@ -2450,7 +2515,7 @@ msgstr ""
 msgid "default.svg"
 msgstr "default.fi.svg"
 
-#: ../src/file.cpp:215 ../src/file.cpp:852
+#: ../src/file.cpp:215 ../src/file.cpp:855
 #, c-format
 msgid "Failed to load the requested file %s"
 msgstr "Halutun tiedoston %s lataus epäonnistui"
@@ -2475,6 +2540,11 @@ msgstr "Asiakirjaa ei palautettu."
 #: ../src/file.cpp:389
 msgid "Select file to open"
 msgstr "Valitse avattava tiedosto"
+
+#: ../src/file.cpp:466
+#, fuzzy
+msgid "Vacuum &lt;defs&gt;"
+msgstr "_Siisti määritykset"
 
 #: ../src/file.cpp:471
 #, c-format
@@ -2511,7 +2581,7 @@ msgstr "Tiedostoa %s ei voitu tallentaa."
 msgid "Document saved."
 msgstr "Asiakirja tallennettu."
 
-#: ../src/file.cpp:582 ../src/file.cpp:975
+#: ../src/file.cpp:582 ../src/file.cpp:978
 #, c-format
 msgid "drawing%s"
 msgstr "piirros %s"
@@ -2521,26 +2591,36 @@ msgstr "piirros %s"
 msgid "drawing-%d%s"
 msgstr "piirros %d%s"
 
-#: ../src/file.cpp:606
+#: ../src/file.cpp:607
 #, fuzzy
 msgid "Select file to save a copy to"
 msgstr "Valitse tiedosto, johon tallennetaan"
 
-#: ../src/file.cpp:608 ../src/file.cpp:615
+#: ../src/file.cpp:609 ../src/file.cpp:616
 msgid "Select file to save to"
 msgstr "Valitse tiedosto, johon tallennetaan"
 
-#: ../src/file.cpp:677
+#: ../src/file.cpp:680
 msgid "No changes need to be saved."
 msgstr "Tallennettavia muutoksia ei ole."
 
-#: ../src/file.cpp:880
+#: ../src/file.cpp:852
+#, fuzzy
+msgid "Import"
+msgstr "T_uo..."
+
+#: ../src/file.cpp:883
 msgid "Select file to import"
 msgstr "Valitse tuotava tiedosto"
 
-#: ../src/file.cpp:997
+#: ../src/file.cpp:1000
 msgid "Select file to export to"
 msgstr "Valitse tallennustiedosto"
+
+#: ../src/gradient-context.cpp:164
+#, fuzzy
+msgid "Create default gradient"
+msgstr "Luo suora liukuväri"
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2549,6 +2629,11 @@ msgstr "<b>Ctrl</b>: liikuta liukuväriä askeleittain"
 #: ../src/gradient-context.cpp:261
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: piirrä liukuväri aloituspisteen ympäri"
+
+#: ../src/gradient-context.cpp:370
+#, fuzzy
+msgid "Invert gradient"
+msgstr "Suora liukuväri"
 
 #: ../src/gradient-context.cpp:462
 #, c-format
@@ -2581,6 +2666,16 @@ msgstr "Säteittäisen liukuvärin <b>säde</b>"
 #: ../src/gradient-drag.cpp:66
 msgid "Radial gradient <b>focus</b>"
 msgstr "Säteittäisen liukuvärin <b>kohdistus</b>"
+
+#: ../src/gradient-drag.cpp:386
+#, fuzzy
+msgid "Merge gradient handles"
+msgstr "Siirrä hallintapistettä"
+
+#: ../src/gradient-drag.cpp:518 ../src/gradient-drag.cpp:1071
+#, fuzzy
+msgid "Move gradient handle"
+msgstr "Siirrä hallintapistettä"
 
 #: ../src/gradient-drag.cpp:657
 #, c-format
@@ -2644,9 +2739,9 @@ msgstr "Pt"
 msgid "Pixel"
 msgstr "Pikseli"
 
-#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:176
-#: ../src/ui/dialog/inkscape-preferences.cpp:179
-#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/helper/units.cpp:38 ../src/ui/dialog/inkscape-preferences.cpp:178
+#: ../src/ui/dialog/inkscape-preferences.cpp:181
+#: ../src/ui/dialog/inkscape-preferences.cpp:184
 #: ../src/ui/widget/selected-style.cpp:254
 msgid "px"
 msgstr "px"
@@ -2664,7 +2759,7 @@ msgstr "Px"
 msgid "Percent"
 msgstr "Prosentti"
 
-#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:195
+#: ../src/helper/units.cpp:40 ../src/ui/dialog/inkscape-preferences.cpp:197
 msgid "%"
 msgstr "%"
 
@@ -2907,9 +3002,24 @@ msgstr "Siirry ryhmään #%s"
 msgid "Go to parent"
 msgstr "Siirry vanhempaan"
 
+#: ../src/interface.cpp:1043 ../src/interface.cpp:1085
+#: ../src/ui/widget/selected-style.cpp:430
+#, fuzzy
+msgid "Drop color"
+msgstr "Kopioi väri"
+
 #: ../src/interface.cpp:1100
 msgid "Could not parse SVG data"
 msgstr "SVG-dataa ei voitu jäsentää"
+
+#: ../src/interface.cpp:1139
+msgid "Drop SVG"
+msgstr ""
+
+#: ../src/interface.cpp:1199
+#, fuzzy
+msgid "Drop bitmap image"
+msgstr "Tuo bittikartta <image>-tagina"
 
 #: ../src/interface.cpp:1265
 #, c-format
@@ -3278,27 +3388,27 @@ msgstr ""
 "<b>Alt</b>: lukitse hallintapisteen pituus. <b>Ctrl+Alt</b>: siirrä "
 "hallintapisteitä pitkin"
 
-#: ../src/node-context.cpp:641
+#: ../src/node-context.cpp:644
 msgid "Drag curve"
 msgstr "Raahaa kaari"
 
-#: ../src/nodepath.cpp:554 ../src/seltrans.cpp:458
+#: ../src/nodepath.cpp:549 ../src/seltrans.cpp:459
 msgid "Stamp"
 msgstr "Leimasin"
 
-#: ../src/nodepath.cpp:1225 ../src/nodepath.cpp:1253
+#: ../src/nodepath.cpp:1220 ../src/nodepath.cpp:1248
 msgid "Move nodes vertically"
 msgstr "Siirrä solmuja pystysuunnassa"
 
-#: ../src/nodepath.cpp:1227 ../src/nodepath.cpp:1255
+#: ../src/nodepath.cpp:1222 ../src/nodepath.cpp:1250
 msgid "Move nodes horizontally"
 msgstr "Siirrä solmuja vaakasuunnassa"
 
-#: ../src/nodepath.cpp:1229 ../src/nodepath.cpp:1257 ../src/nodepath.cpp:3007
+#: ../src/nodepath.cpp:1224 ../src/nodepath.cpp:1252 ../src/nodepath.cpp:3004
 msgid "Move nodes"
 msgstr "Siirrä solmuja"
 
-#: ../src/nodepath.cpp:1265
+#: ../src/nodepath.cpp:1260
 msgid ""
 "<b>Node handle</b>: drag to shape the curve; with <b>Ctrl</b> to snap angle; "
 "with <b>Alt</b> to lock length; with <b>Shift</b> to rotate both handles"
@@ -3307,56 +3417,56 @@ msgstr ""
 "askeleittain, <b>Alt</b> lukitsee pituuden ja <b>Vaihto</b> kiertää molempia "
 "hallintapisteitä"
 
-#: ../src/nodepath.cpp:1436
+#: ../src/nodepath.cpp:1431
 msgid "Align nodes"
 msgstr "Tasaa solmut"
 
-#: ../src/nodepath.cpp:1498
+#: ../src/nodepath.cpp:1493
 msgid "Distribute nodes"
 msgstr "Jaa solmut"
 
-#: ../src/nodepath.cpp:1537
+#: ../src/nodepath.cpp:1532
 msgid "Add nodes"
 msgstr "Lisää solmuja"
 
-#: ../src/nodepath.cpp:1539 ../src/nodepath.cpp:1601
+#: ../src/nodepath.cpp:1534 ../src/nodepath.cpp:1598
 msgid "Add node"
 msgstr "Lisää solmu"
 
-#: ../src/nodepath.cpp:1681
+#: ../src/nodepath.cpp:1678
 msgid "Break path"
 msgstr "Katkaise polku"
 
-#: ../src/nodepath.cpp:1723 ../src/nodepath.cpp:1735 ../src/nodepath.cpp:1822
-#: ../src/nodepath.cpp:1834
+#: ../src/nodepath.cpp:1720 ../src/nodepath.cpp:1732 ../src/nodepath.cpp:1819
+#: ../src/nodepath.cpp:1831
 msgid "To join, you must have <b>two endnodes</b> selected."
 msgstr "Yhdistämistä varten tarvitaan kaksi valittua <b>päätesolmua</b>."
 
-#: ../src/nodepath.cpp:1756
+#: ../src/nodepath.cpp:1753
 msgid "Close subpath"
 msgstr "Sulje osapolku"
 
-#: ../src/nodepath.cpp:1808
+#: ../src/nodepath.cpp:1805
 msgid "Join nodes"
 msgstr "Yhdistä solmut"
 
-#: ../src/nodepath.cpp:1855
+#: ../src/nodepath.cpp:1852
 msgid "Close subpath by segment"
 msgstr "Sulje osapolku lohkolla"
 
-#: ../src/nodepath.cpp:1909
+#: ../src/nodepath.cpp:1906
 msgid "Join nodes by segment"
 msgstr "Liitä valitut solmut lohkolla"
 
-#: ../src/nodepath.cpp:2037 ../src/nodepath.cpp:2074 ../src/nodepath.cpp:2078
+#: ../src/nodepath.cpp:2034 ../src/nodepath.cpp:2071 ../src/nodepath.cpp:2075
 msgid "Delete nodes"
 msgstr "Poista solmut"
 
-#: ../src/nodepath.cpp:2039
+#: ../src/nodepath.cpp:2036
 msgid "Delete nodes preserving shape"
 msgstr "Poista solmut säilyttäen muoto"
 
-#: ../src/nodepath.cpp:2098 ../src/nodepath.cpp:2112
+#: ../src/nodepath.cpp:2095 ../src/nodepath.cpp:2109
 msgid ""
 "Select <b>two non-endpoint nodes</b> on a path between which to delete "
 "segments."
@@ -3364,31 +3474,31 @@ msgstr ""
 "Valitse polun <b>kaksi solmua, jotka eivät ole päissä</b> ja joiden välistä "
 "lohkot poistetaan."
 
-#: ../src/nodepath.cpp:2208
+#: ../src/nodepath.cpp:2205
 msgid "Cannot find path between nodes."
 msgstr "Solmujen välille ei löydy polkua."
 
-#: ../src/nodepath.cpp:2237
+#: ../src/nodepath.cpp:2234
 msgid "Delete segment"
 msgstr "Poista lohko"
 
-#: ../src/nodepath.cpp:2259
+#: ../src/nodepath.cpp:2256
 msgid "Change segment type"
 msgstr "Muuta lohkon tyyppiä"
 
-#: ../src/nodepath.cpp:2275 ../src/nodepath.cpp:2965
+#: ../src/nodepath.cpp:2272 ../src/nodepath.cpp:2962
 msgid "Change node type"
 msgstr "Muuta solmun tyyppiä"
 
-#: ../src/nodepath.cpp:3240
+#: ../src/nodepath.cpp:3237
 msgid "Retract handle"
 msgstr "Palauta hallintapiste"
 
-#: ../src/nodepath.cpp:3289
+#: ../src/nodepath.cpp:3286
 msgid "Move node handle"
 msgstr "Siirrä hallintapistettä"
 
-#: ../src/nodepath.cpp:3430
+#: ../src/nodepath.cpp:3427
 #, c-format
 msgid ""
 "<b>Node handle</b>: angle %0.2f&#176;, length %s; with <b>Ctrl</b> to snap "
@@ -3399,19 +3509,19 @@ msgstr ""
 "askeleittain, <b>Alt</b> lukitsee pituuden ja <b>Vaihto</b> kiertää molempia "
 "hallintapisteitä"
 
-#: ../src/nodepath.cpp:3608
+#: ../src/nodepath.cpp:3605
 msgid "Rotate nodes"
 msgstr "Kierrä solmuja"
 
-#: ../src/nodepath.cpp:3733
+#: ../src/nodepath.cpp:3730
 msgid "Scale nodes"
 msgstr "Muuta solmujen kokoa"
 
-#: ../src/nodepath.cpp:3780
+#: ../src/nodepath.cpp:3777
 msgid "Flip nodes"
 msgstr "Käännä solmuja"
 
-#: ../src/nodepath.cpp:3945
+#: ../src/nodepath.cpp:3942
 msgid ""
 "<b>Node</b>: drag to edit the path; with <b>Ctrl</b> to snap to horizontal/"
 "vertical; with <b>Ctrl+Alt</b> to snap to handles' directions"
@@ -3420,44 +3530,44 @@ msgstr ""
 "pystyakselille ja <b>Ctrl+Alt</b> kiinniittää hallintapisteiden suuntiin"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4169
+#: ../src/nodepath.cpp:4166
 msgid "end node"
 msgstr "päätesolmu"
 
 #. TRANSLATORS: "cusp" means "sharp" (cusp node); see also the Advanced Tutorial
-#: ../src/nodepath.cpp:4174
+#: ../src/nodepath.cpp:4171
 msgid "cusp"
 msgstr "terävä"
 
 #. TRANSLATORS: "smooth" is an adjective here
-#: ../src/nodepath.cpp:4177
+#: ../src/nodepath.cpp:4174
 msgid "smooth"
 msgstr "tasainen"
 
-#: ../src/nodepath.cpp:4179
+#: ../src/nodepath.cpp:4176
 msgid "symmetric"
 msgstr "symmetrinen"
 
 #. TRANSLATORS: "end" is an adjective here (NOT a verb)
-#: ../src/nodepath.cpp:4185
+#: ../src/nodepath.cpp:4182
 msgid "end node, handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "päätesolmu, hallintapiste piilotettu (raahaa <b>Vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4187
+#: ../src/nodepath.cpp:4184
 msgid "one handle retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "yksi hallintapiste piilotettu (raahaa <b>vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4190
+#: ../src/nodepath.cpp:4187
 msgid "both handles retracted (drag with <b>Shift</b> to extend)"
 msgstr ""
 "molemmat hallintapisteet pillotettu (raahaa <b>vaihtonäppäimen</b> kanssa "
 "avataksesi)"
 
-#: ../src/nodepath.cpp:4202
+#: ../src/nodepath.cpp:4199
 msgid ""
 "<b>Drag</b> nodes or node handles; <b>Alt+drag</b> nodes to sculpt; "
 "<b>arrow</b> keys to move nodes, <b>&lt; &gt;</b> to scale, <b>[ ]</b> to "
@@ -3467,17 +3577,17 @@ msgstr ""
 "muotoillaksesi, <b>Nuoli</b>näppäimillä voit siirtää solmuja. <b>&lt; ja &gt;"
 "</b> muuttavat kokoa ja <b>[ ja ]</b> kiertävät"
 
-#: ../src/nodepath.cpp:4203
+#: ../src/nodepath.cpp:4200
 msgid "<b>Drag</b> the node or its handles; <b>arrow</b> keys to move the node"
 msgstr ""
 "<b>Raahaa</b> solmua tai hallintapisteitä. <b>Nuolinäppäimet</b> siirtävät "
 "solmua"
 
-#: ../src/nodepath.cpp:4226 ../src/nodepath.cpp:4238
+#: ../src/nodepath.cpp:4223 ../src/nodepath.cpp:4235
 msgid "Select a single object to edit its nodes or handles."
 msgstr "Valitse kohde muokataksesi sen solmuja tai hallintapisteitä."
 
-#: ../src/nodepath.cpp:4230
+#: ../src/nodepath.cpp:4227
 #, c-format
 msgid ""
 "<b>0</b> out of <b>%i</b> node selected. <b>Click</b>, <b>Shift+click</b>, "
@@ -3492,18 +3602,18 @@ msgstr[1] ""
 "<b>0</b> (yht. <b>%i</b>) solmua valittuna. <b>Napsauta</b>, <b>Vaihto"
 "+napsauta</b> tai <b>raahaa</b> kohteitten ympäri valitaksesi"
 
-#: ../src/nodepath.cpp:4236
+#: ../src/nodepath.cpp:4233
 msgid "Drag the handles of the object to modify it."
 msgstr "Raahaa kohteen kahvoja muokataksesi sitä."
 
-#: ../src/nodepath.cpp:4244
+#: ../src/nodepath.cpp:4241
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected; %s. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected; %s. %s."
 msgstr[0] "<b>%i</b> (yht. <b>%i</b>) solmu valittuna; %s. %s."
 msgstr[1] "<b>%i</b> (yht. <b>%i</b>) solmua valittuna; %s. %s."
 
-#: ../src/nodepath.cpp:4251
+#: ../src/nodepath.cpp:4248
 #, c-format
 msgid ""
 "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %s."
@@ -3516,7 +3626,7 @@ msgstr[1] ""
 "<b>%i</b> (yht. <b>%i</b>) solmua valittuna <b>%i</b> (yht. <b>%i</b>) "
 "osapolussa"
 
-#: ../src/nodepath.cpp:4257
+#: ../src/nodepath.cpp:4254
 #, c-format
 msgid "<b>%i</b> of <b>%i</b> node selected. %s."
 msgid_plural "<b>%i</b> of <b>%i</b> nodes selected. %s."
@@ -3654,7 +3764,8 @@ msgid "Select <b>path(s)</b> to break apart."
 msgstr "Valitse katkaistavat <b>polut</b>."
 
 #: ../src/path-chemistry.cpp:233
-msgid "Break Apart"
+#, fuzzy
+msgid "Break apart"
 msgstr "Erota"
 
 #: ../src/path-chemistry.cpp:235
@@ -3666,18 +3777,24 @@ msgid "Select <b>object(s)</b> to convert to path."
 msgstr "Valitse <b>kohteet</b>, jotka haluat muuttaa poluiksi."
 
 #: ../src/path-chemistry.cpp:300
-msgid "Object to Path"
+#, fuzzy
+msgid "Object to path"
 msgstr "Kohde poluksi"
 
 #: ../src/path-chemistry.cpp:302
 msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "Valinnassa <b>ei ole kohteita</b>, jotka voitaisiin muuntaa poluiksi."
 
-#: ../src/path-chemistry.cpp:353
+#: ../src/path-chemistry.cpp:364
 msgid "Select <b>path(s)</b> to reverse."
 msgstr "Valitse käännettävät <b>polut</b>."
 
-#: ../src/path-chemistry.cpp:380
+#: ../src/path-chemistry.cpp:389
+#, fuzzy
+msgid "Reverse path"
+msgstr "_Käännä"
+
+#: ../src/path-chemistry.cpp:391
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr "Valinnassa <b>ei ole polkuja</b>, jotka voitaisiin kääntää."
 
@@ -3773,7 +3890,7 @@ msgstr ""
 "Inkscape ajetaan oletusasetuksilla.\n"
 "Uusia asetuksia ei tallenneta."
 
-#: ../src/rect-context.cpp:377
+#: ../src/rect-context.cpp:379
 msgid ""
 "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner "
 "circular"
@@ -3781,7 +3898,7 @@ msgstr ""
 "<b>Ctrl</b>: tee neliö tai kokonaislukusuhteinen suorakulmio, lukitse "
 "pyöristetty kulma säännölliseksi"
 
-#: ../src/rect-context.cpp:472
+#: ../src/rect-context.cpp:477
 #, c-format
 msgid ""
 "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-"
@@ -3791,33 +3908,33 @@ msgstr ""
 "kokonaislukusuhteisen suorakulmion. <b>Vaihto</b> painettuna piirtää "
 "aloituspisteen ympäri"
 
-#: ../src/rect-context.cpp:490
+#: ../src/rect-context.cpp:497
 msgid "Create rectangle"
 msgstr "Luo suorakulmio"
 
-#: ../src/select-context.cpp:226
+#: ../src/select-context.cpp:227
 msgid "Move canceled."
 msgstr "Siirto peruttu."
 
-#: ../src/select-context.cpp:234
+#: ../src/select-context.cpp:235
 msgid "Selection canceled."
 msgstr "Valinta peruttu."
 
-#: ../src/select-context.cpp:627
+#: ../src/select-context.cpp:647
 msgid "<b>Ctrl</b>: select in groups, move hor/vert"
 msgstr "<b>Ctrl</b>: valitse ryhmästä tai siirrä vaaka- tai pystysuoraa"
 
-#: ../src/select-context.cpp:628
+#: ../src/select-context.cpp:648
 msgid "<b>Shift</b>: toggle select, force rubberband, disable snapping"
 msgstr ""
 "<b>Vaihto</b>: valitse ja poista valinta, pakota kuminauha, älä kiinnitä "
 "kohteita"
 
-#: ../src/select-context.cpp:629
+#: ../src/select-context.cpp:649
 msgid "<b>Alt</b>: select under, move selected"
 msgstr "<b>Alt</b>: valitse alta, siirrä valittua"
 
-#: ../src/select-context.cpp:796
+#: ../src/select-context.cpp:816
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Valittu kohde ei ole ryhmä. Ei voi siirtyä."
 
@@ -3829,7 +3946,7 @@ msgstr "Poista teksti"
 msgid "<b>Nothing</b> was deleted."
 msgstr "Mitään <b>ei</b> poistettu."
 
-#: ../src/selection-chemistry.cpp:244
+#: ../src/selection-chemistry.cpp:244 ../src/text-context.cpp:957
 msgid "Delete"
 msgstr "Poista"
 
@@ -3866,7 +3983,7 @@ msgstr "Valitse <b>ryhmä</b> purkaaksesi ryhmityksen."
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "Valinnassa <b>ei ole ryhmiä</b>, joita voisi purkaa."
 
-#: ../src/selection-chemistry.cpp:572
+#: ../src/selection-chemistry.cpp:572 ../src/sp-item-group.cpp:448
 msgid "Ungroup"
 msgstr "Pura ryhmitys"
 
@@ -3987,7 +4104,8 @@ msgstr "Kierrä 90&#176; myötäp."
 msgid "Rotate 90&#176; CCW"
 msgstr "Kierrä 90&#176; vastap."
 
-#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:380
+#: ../src/selection-chemistry.cpp:1613 ../src/seltrans.cpp:378
+#: ../src/ui/dialog/transformation.cpp:656
 msgid "Rotate"
 msgstr "Kierrä"
 
@@ -3995,7 +4113,8 @@ msgstr "Kierrä"
 msgid "Rotate by pixels"
 msgstr "Kierto pikseleissä"
 
-#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:377
+#: ../src/selection-chemistry.cpp:1668 ../src/seltrans.cpp:375
+#: ../src/ui/dialog/transformation.cpp:637
 msgid "Scale"
 msgstr "Muuta kokoa"
 
@@ -4012,7 +4131,7 @@ msgid "Move horizontally"
 msgstr "Siirrä vaakasuunnassa"
 
 #: ../src/selection-chemistry.cpp:1709 ../src/selection-chemistry.cpp:1737
-#: ../src/seltrans.cpp:374
+#: ../src/seltrans.cpp:372 ../src/ui/dialog/transformation.cpp:585
 msgid "Move"
 msgstr "Siirrä"
 
@@ -4140,7 +4259,7 @@ msgstr "Ympyrä"
 
 #. ellipse
 #: ../src/selection-describer.cpp:45 ../src/selection-describer.cpp:67
-#: ../src/ui/dialog/inkscape-preferences.cpp:353 ../src/verbs.cpp:2175
+#: ../src/ui/dialog/inkscape-preferences.cpp:355 ../src/verbs.cpp:2175
 msgid "Ellipse"
 msgstr "Ellipsi"
 
@@ -4170,7 +4289,7 @@ msgstr "Viivaketju"
 
 #. Rectangle
 #: ../src/selection-describer.cpp:61
-#: ../src/ui/dialog/inkscape-preferences.cpp:350 ../src/verbs.cpp:2173
+#: ../src/ui/dialog/inkscape-preferences.cpp:352 ../src/verbs.cpp:2173
 msgid "Rectangle"
 msgstr "Suorakulmio"
 
@@ -4180,13 +4299,13 @@ msgstr "Polun siirtymä"
 
 #. spiral
 #: ../src/selection-describer.cpp:71
-#: ../src/ui/dialog/inkscape-preferences.cpp:359 ../src/verbs.cpp:2179
+#: ../src/ui/dialog/inkscape-preferences.cpp:361 ../src/verbs.cpp:2179
 msgid "Spiral"
 msgstr "Spiraali"
 
 #. star
 #: ../src/selection-describer.cpp:73
-#: ../src/ui/dialog/inkscape-preferences.cpp:356 ../src/verbs.cpp:2177
+#: ../src/ui/dialog/inkscape-preferences.cpp:358 ../src/verbs.cpp:2177
 msgid "Star"
 msgstr "Tähti"
 
@@ -4306,11 +4425,11 @@ msgstr "%s%s. %s."
 msgid "Set center"
 msgstr "Aseta keskipiste"
 
-#: ../src/seltrans.cpp:383
+#: ../src/seltrans.cpp:381 ../src/ui/dialog/transformation.cpp:709
 msgid "Skew"
 msgstr "Taita"
 
-#: ../src/seltrans.cpp:480
+#: ../src/seltrans.cpp:481
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
@@ -4318,7 +4437,7 @@ msgstr ""
 "Kierron ja taiton <b>keskipiste</b>, jonka voi raahata uuteen paikkaan. "
 "Kohteen koon muutoksessa käytetään myös tätä pistettä"
 
-#: ../src/seltrans.cpp:507
+#: ../src/seltrans.cpp:508
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
@@ -4326,7 +4445,7 @@ msgstr ""
 "<b>Kavenna tai levennä</b> valintaa. <b>Ctrl</b> painettuna sivujen suhteet "
 "säilytetään. <b>Vaihto</b> painettuna suhteessa keskipisteeseen"
 
-#: ../src/seltrans.cpp:508
+#: ../src/seltrans.cpp:509
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
@@ -4335,7 +4454,7 @@ msgstr ""
 "sivujen suhteet. <b>Vaihto</b> painettuna koon muutos suhteessa "
 "keskipisteeseen"
 
-#: ../src/seltrans.cpp:512
+#: ../src/seltrans.cpp:513
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
@@ -4343,7 +4462,7 @@ msgstr ""
 "<b>Taivuta</b> valintaa. <b>Ctrl</b> painettuna askeleittain. <b>Vaihto</b> "
 "pohjassa taivuta vastakkaisen sivun ympäri"
 
-#: ../src/seltrans.cpp:513
+#: ../src/seltrans.cpp:514
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
@@ -4351,11 +4470,11 @@ msgstr ""
 "<b>Kierrä</b> valintaa. <b>Ctrl</b> painettuna askeleittain. <b>Vaihto</b> "
 "pohjassa vastakkaisen kulman ympäri"
 
-#: ../src/seltrans.cpp:642
+#: ../src/seltrans.cpp:643
 msgid "Reset center"
 msgstr "Palauta keskipiste"
 
-#: ../src/seltrans.cpp:891 ../src/seltrans.cpp:1003
+#: ../src/seltrans.cpp:892 ../src/seltrans.cpp:1004
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
@@ -4364,24 +4483,24 @@ msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1093
+#: ../src/seltrans.cpp:1094
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Taivuta</b>: %0.2f&#176;. <b>Crtrl</b> painettuna askeleittain"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1142
+#: ../src/seltrans.cpp:1143
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Kierrä</b>: %0.2f&#176;. <b>Ctrl</b> painettuna askeleittain"
 
-#: ../src/seltrans.cpp:1186
+#: ../src/seltrans.cpp:1187
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Siirrä <b>keskipiste</b> paikkaan %s, %s"
 
-#: ../src/seltrans.cpp:1444
+#: ../src/seltrans.cpp:1445
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -4445,6 +4564,11 @@ msgid "<b>Linked flowed text</b> (%d character)"
 msgid_plural "<b>Linked flowed text</b> (%d characters)"
 msgstr[0] "<b>Linkitetty rivittyvä teksti</b> (%d merkki)"
 msgstr[1] "<b>Linkitetty rivittyvä teksti</b> (%d merkkiä)"
+
+#: ../src/sp-flowtext.cpp:617
+#, fuzzy
+msgid "Convert flowed text to text"
+msgstr "Muunna teksti poluksi"
 
 #: ../src/sp-guide.cpp:287
 msgid "vertical guideline"
@@ -4592,13 +4716,18 @@ msgstr "<b>Ctrl</b>: askeleittain"
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: lukitse spiraalin säde"
 
-#: ../src/spiral-context.cpp:443
+#: ../src/spiral-context.cpp:445
 #, c-format
 msgid ""
 "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Spiraali</b>: säde %s, kulma %5g&#176;. <b>Ctrl</b> painettuna "
 "askeleittain"
+
+#: ../src/spiral-context.cpp:466
+#, fuzzy
+msgid "Create spiral"
+msgstr "Luo spiraaleja"
 
 #: ../src/splivarot.cpp:66
 msgid "Union"
@@ -4621,7 +4750,8 @@ msgid "Division"
 msgstr "Jako"
 
 #: ../src/splivarot.cpp:94
-msgid "Cut Path"
+#, fuzzy
+msgid "Cut path"
 msgstr "Leikkaa polku"
 
 #: ../src/splivarot.cpp:110
@@ -4650,50 +4780,66 @@ msgid ""
 msgstr ""
 "Yksi kohteista <b>ei ole polku</b>. Boolen operaatiota ei voida suorittaa."
 
-#. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:559
-msgid "Select <b>path(s)</b> to outline."
-msgstr "Valitse <b>viivat</b>, jotka muutetaan poluiksi."
+#: ../src/splivarot.cpp:571
+#, fuzzy
+msgid "Select <b>stroked path(s)</b> to convert stroke to path."
+msgstr "Valitse <b>kohteet</b>, jotka haluat muuttaa poluiksi."
+
+#: ../src/splivarot.cpp:847
+#, fuzzy
+msgid "Convert stroke to path"
+msgstr "Muunna teksti poluksi"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
-#: ../src/splivarot.cpp:838
-msgid "<b>No stroked paths</b> to outline in the selection."
+#: ../src/splivarot.cpp:850
+#, fuzzy
+msgid "<b>No stroked paths</b> in the selection."
 msgstr ""
 "Valinnassa <b>ei ole reunaviivallisia polkuja</b> jotka voisi muuttaa "
 "poluiksi."
 
-#: ../src/splivarot.cpp:922
+#: ../src/splivarot.cpp:934
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
 msgstr "Valittu kohde <b>ei ole polku</b>. Sitä ei voi supistaa tai laajentaa."
 
-#: ../src/splivarot.cpp:1132
+#: ../src/splivarot.cpp:1052 ../src/splivarot.cpp:1117
+#, fuzzy
+msgid "Create offset object"
+msgstr "Luo viitekohde dynaamisella koolla"
+
+#: ../src/splivarot.cpp:1144
 msgid "Select <b>path(s)</b> to inset/outset."
 msgstr "Valitse supistettavat tai laajennettavat <b>polut</b>."
 
-#: ../src/splivarot.cpp:1350
+#: ../src/splivarot.cpp:1360
+#, fuzzy
+msgid "Inset/outset path"
+msgstr "Kutista tai laajenna:"
+
+#: ../src/splivarot.cpp:1362
 msgid "<b>No paths</b> to inset/outset in the selection."
 msgstr ""
 "Valinnassa <b>ei ole</b> supistettavia tai laajennettavia <b>polkuja</b>."
 
-#: ../src/splivarot.cpp:1519
+#: ../src/splivarot.cpp:1546
 #, c-format
 msgid "Simplifying %s - <b>%d</b> of <b>%d</b> paths simplified..."
 msgstr ""
 
-#: ../src/splivarot.cpp:1531
+#: ../src/splivarot.cpp:1558
 #, c-format
 msgid "Done - <b>%d</b> paths simplified."
 msgstr ""
 
-#: ../src/splivarot.cpp:1547
+#: ../src/splivarot.cpp:1574
 msgid "Select <b>path(s)</b> to simplify."
 msgstr "Valitse pelkistettävät <b>polut</b>."
 
-#: ../src/splivarot.cpp:1561
+#: ../src/splivarot.cpp:1588
 msgid "Simplify"
 msgstr "Pelkistä"
 
-#: ../src/splivarot.cpp:1563
+#: ../src/splivarot.cpp:1590
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Valinnassa <b>ei ole polkuja</b>, joita voisi pelkistää."
 
@@ -4701,7 +4847,7 @@ msgstr "Valinnassa <b>ei ole polkuja</b>, joita voisi pelkistää."
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: askeleittain, pidä säteet suorina"
 
-#: ../src/star-context.cpp:452
+#: ../src/star-context.cpp:454
 #, c-format
 msgid ""
 "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
@@ -4709,11 +4855,16 @@ msgstr ""
 "<b>Monikulmio</b>: säde %s, kulma %5g&#176;. <b>Ctrl</b> painettuna "
 "askeleittain"
 
-#: ../src/star-context.cpp:453
+#: ../src/star-context.cpp:455
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 "<b>Tähti</b>: säde %s, kulma %5g&#176;. <b>Ctrl</b> painettuna askeleittain"
+
+#: ../src/star-context.cpp:478
+#, fuzzy
+msgid "Create star"
+msgstr "Luo bittikartta"
 
 #: ../src/text-chemistry.cpp:94
 msgid "Select <b>a text and a path</b> to put text on path."
@@ -4742,6 +4893,10 @@ msgstr ""
 "Suorakulmioon ei voi asettaa tekstiä tässä versiossa. Muuta suorakulmio "
 "poluksi ensin."
 
+#: ../src/text-chemistry.cpp:157 ../src/verbs.cpp:2045
+msgid "Put text on path"
+msgstr "Aseta teksti polulle"
+
 #: ../src/text-chemistry.cpp:169
 msgid "Select <b>a text on path</b> to remove it from path."
 msgstr "Valitse <b>polulle kiinnitetty teksti</b> poistaaksesi sen polulta."
@@ -4750,9 +4905,17 @@ msgstr "Valitse <b>polulle kiinnitetty teksti</b> poistaaksesi sen polulta."
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr "Valinta ei sisällä <b>polulla olevaa tekstiä</b>."
 
+#: ../src/text-chemistry.cpp:195 ../src/verbs.cpp:2047
+msgid "Remove text from path"
+msgstr "Poista teksti polulta"
+
 #: ../src/text-chemistry.cpp:220 ../src/text-chemistry.cpp:240
 msgid "Select <b>text(s)</b> to remove kerns from."
 msgstr "Valitse <b>tekstit</b>, joista kirjainvälit poistetaan."
+
+#: ../src/text-chemistry.cpp:243 ../src/widgets/toolbox.cpp:3844
+msgid "Remove manual kerns"
+msgstr "Poista lisätyt välistykset"
 
 #: ../src/text-chemistry.cpp:262
 msgid ""
@@ -4762,9 +4925,19 @@ msgstr ""
 "Valitse <b>teksti</b> ja yksi tai useampi <b>polku tai kuvio</b> tuodaksesi "
 "tekstin kehykseen."
 
+#: ../src/text-chemistry.cpp:312
+#, fuzzy
+msgid "Flow text into shape"
+msgstr "_Vie kehykseen"
+
 #: ../src/text-chemistry.cpp:335
 msgid "Select <b>a flowed text</b> to unflow it."
 msgstr "Valitse <b>rivittyvä teksti</b> poistaaksesi rivityksen."
+
+#: ../src/text-chemistry.cpp:398
+#, fuzzy
+msgid "Unflow flowed text"
+msgstr "Rivittyvä teksti"
 
 #: ../src/text-context.cpp:460
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
@@ -4779,9 +4952,18 @@ msgstr ""
 "<b>Napsauta</b> valitaksesi rivittyvän tekstin. <b>Raahaa</b> valitaksesi "
 "osan tekstistä."
 
+#: ../src/text-context.cpp:515
+#, fuzzy
+msgid "Create text"
+msgstr "Poista teksti"
+
 #: ../src/text-context.cpp:539
 msgid "Non-printable character"
 msgstr "Tulostumaton merkki"
+
+#: ../src/text-context.cpp:554
+msgid "Insert Unicode character"
+msgstr ""
 
 #: ../src/text-context.cpp:589
 #, c-format
@@ -4805,6 +4987,11 @@ msgstr "Kirjoita teksti. <b>Enter</b> aloittaa uuden rivin."
 msgid "Flowed text is created."
 msgstr "Rivittyvä teksti luotu."
 
+#: ../src/text-context.cpp:718
+#, fuzzy
+msgid "Create flowed text"
+msgstr "Rivittyvä teksti"
+
 #: ../src/text-context.cpp:720
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
@@ -4817,6 +5004,86 @@ msgstr ""
 msgid "No-break space"
 msgstr "Sitova välilyönti"
 
+#: ../src/text-context.cpp:848
+#, fuzzy
+msgid "Insert no-break space"
+msgstr "Sitova välilyönti"
+
+#: ../src/text-context.cpp:885
+#, fuzzy
+msgid "Make bold"
+msgstr "Tee yhtenäinen"
+
+#: ../src/text-context.cpp:903
+msgid "Make italic"
+msgstr ""
+
+#: ../src/text-context.cpp:935
+#, fuzzy
+msgid "New line"
+msgstr "rivi"
+
+#: ../src/text-context.cpp:945
+#, fuzzy
+msgid "Backspace"
+msgstr "Sitova välilyönti"
+
+#: ../src/text-context.cpp:972
+msgid "Kern to the left"
+msgstr ""
+
+#: ../src/text-context.cpp:992
+#, fuzzy
+msgid "Kern to the right"
+msgstr "Kohteen korkeus"
+
+#: ../src/text-context.cpp:1012
+msgid "Kern up"
+msgstr ""
+
+#: ../src/text-context.cpp:1033
+msgid "Kern down"
+msgstr ""
+
+#: ../src/text-context.cpp:1089
+#, fuzzy
+msgid "Rotate counterclockwise"
+msgstr "Kierto on myötäpäivään"
+
+#: ../src/text-context.cpp:1110
+#, fuzzy
+msgid "Rotate clockwise"
+msgstr "Kierto on myötäpäivään"
+
+#: ../src/text-context.cpp:1127
+#, fuzzy
+msgid "Contract line spacing"
+msgstr "Riviväli:"
+
+#: ../src/text-context.cpp:1135
+msgid "Contract letter spacing"
+msgstr ""
+
+#: ../src/text-context.cpp:1154
+#, fuzzy
+msgid "Expand line spacing"
+msgstr "Riviväli:"
+
+#: ../src/text-context.cpp:1162
+#, fuzzy
+msgid "Expand letter spacing"
+msgstr "Aseta välit:"
+
+#: ../src/text-context.cpp:1266
+#, fuzzy
+msgid "Paste text"
+msgstr "Liitä tyyli"
+
+#: ../src/text-context.cpp:1380
+#, fuzzy
+msgid "Set text style"
+msgstr "Viivan t_yyli"
+
 #: ../src/text-context.cpp:1479
 msgid "Type flowed text; <b>Enter</b> to start new paragraph."
 msgstr "Kirjoita rivittyvä teksti. <b>Enter</b> aloittaa uuden kappaleen."
@@ -4828,6 +5095,11 @@ msgid ""
 msgstr ""
 "<b>Napsauta</b> luodaksesi tai valitaksesi tekstin. <b>Raahaa</b> luodaksesi "
 "rivittyvän tekstin. Tämän jälkeen voit kirjoittaa."
+
+#: ../src/text-context.cpp:1587
+#, fuzzy
+msgid "Type text"
+msgstr "T_yyppi: "
 
 #: ../src/tools-switch.cpp:133
 msgid ""
@@ -4977,6 +5249,11 @@ msgstr "Valit_se tämä"
 msgid "_Create Link"
 msgstr "_Luo linkki"
 
+#: ../src/ui/context-menu.cpp:172
+#, fuzzy
+msgid "Create link"
+msgstr "_Luo linkki"
+
 #. "Ungroup"
 #: ../src/ui/context-menu.cpp:190 ../src/verbs.cpp:2041
 msgid "_Ungroup"
@@ -5042,6 +5319,16 @@ msgstr "_Lisenssi"
 msgid "about.svg"
 msgstr "about.svg"
 
+#: ../src/ui/dialog/align-and-distribute.cpp:219
+#: ../src/ui/dialog/align-and-distribute.cpp:759
+msgid "Align"
+msgstr "Tasaa"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:379
+#: ../src/ui/dialog/align-and-distribute.cpp:760
+msgid "Distribute"
+msgstr "Jaa"
+
 #: ../src/ui/dialog/align-and-distribute.cpp:450
 msgid "Minimum horizontal gap (in px units) between bounding boxes"
 msgstr "Pienin vaakasuora väli (pikseleinä) rajausalueiden välissä"
@@ -5061,178 +5348,196 @@ msgstr "Pienin pystysuora väli (pikseleinä) rajausalueiden välissä"
 msgid "V:"
 msgstr "V:"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:754
-msgid "Align"
-msgstr "Tasaa"
-
-#: ../src/ui/dialog/align-and-distribute.cpp:755
-msgid "Distribute"
-msgstr "Jaa"
-
-#: ../src/ui/dialog/align-and-distribute.cpp:756
+#: ../src/ui/dialog/align-and-distribute.cpp:490
+#: ../src/ui/dialog/align-and-distribute.cpp:761
 msgid "Remove overlaps"
 msgstr "Poista päällekkäisyydet"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:757
+#: ../src/ui/dialog/align-and-distribute.cpp:520
+#, fuzzy
+msgid "Arrange connector network"
+msgstr "Järjestä liitinverkosto"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:550
+#, fuzzy
+msgid "Unclump"
+msgstr " Haja_uta "
+
+#: ../src/ui/dialog/align-and-distribute.cpp:614
+#, fuzzy
+msgid "Randomize positions"
+msgstr "Satunnainen sijainti"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:711
+#, fuzzy
+msgid "Distribute text baselines"
+msgstr "Jaa solmut"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:731
+#, fuzzy
+msgid "Align text baselines"
+msgstr "Tasaa vasemmat sivut"
+
+#: ../src/ui/dialog/align-and-distribute.cpp:762
 msgid "Connector network layout"
 msgstr "Liitinverkoston asettelu"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:758
+#: ../src/ui/dialog/align-and-distribute.cpp:763
 msgid "Nodes"
 msgstr "Solmut"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:764
+#: ../src/ui/dialog/align-and-distribute.cpp:769
 msgid "Relative to: "
 msgstr "Suhteessa: "
 
-#: ../src/ui/dialog/align-and-distribute.cpp:769
+#: ../src/ui/dialog/align-and-distribute.cpp:774
 msgid "Align right sides of objects to left side of anchor"
 msgstr "Tasaa kohteen oikeat sivut ankkurin vasemmalle sivulle"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:772
+#: ../src/ui/dialog/align-and-distribute.cpp:777
 msgid "Align left sides"
 msgstr "Tasaa vasemmat sivut"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:775
+#: ../src/ui/dialog/align-and-distribute.cpp:780
 msgid "Center on vertical axis"
 msgstr "Keskitä pystysuoralle akselille"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:778
+#: ../src/ui/dialog/align-and-distribute.cpp:783
 msgid "Align right sides"
 msgstr "Tasaa oikeat reunat"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:781
+#: ../src/ui/dialog/align-and-distribute.cpp:786
 msgid "Align left sides of objects to right side of anchor"
 msgstr "Tasaa kohteitten vasemmat reunat ankkurin oikealle sivulle"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:784
+#: ../src/ui/dialog/align-and-distribute.cpp:789
 msgid "Align bottoms of objects to top of anchor"
 msgstr "Tasaa kohteitten alareunat ankkurin yläreunaan"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:787
+#: ../src/ui/dialog/align-and-distribute.cpp:792
 msgid "Align tops"
 msgstr "Tasaa yläreunat"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:790
+#: ../src/ui/dialog/align-and-distribute.cpp:795
 msgid "Center on horizontal axis"
 msgstr "Keskitä vaakasuoralle akselille"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:793
+#: ../src/ui/dialog/align-and-distribute.cpp:798
 msgid "Align bottoms"
 msgstr "Tasaa alareunat"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:796
+#: ../src/ui/dialog/align-and-distribute.cpp:801
 msgid "Align tops of objects to bottom of anchor"
 msgstr "Tasaa kohteitten yläreunat valinnan alapuolelle"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:801
+#: ../src/ui/dialog/align-and-distribute.cpp:806
 msgid "Align baseline anchors of texts vertically"
 msgstr "Tasaa tekstin peruslinjan ankkurit pystytasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:804
+#: ../src/ui/dialog/align-and-distribute.cpp:809
 msgid "Align baseline anchors of texts horizontally"
 msgstr "Tasaa tekstin peruslinjan ankkurit vaakatasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:809
+#: ../src/ui/dialog/align-and-distribute.cpp:814
 msgid "Make horizontal gaps between objects equal"
 msgstr "Jaa kohteitten vaakavälit yhtä suuriksi"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:813
+#: ../src/ui/dialog/align-and-distribute.cpp:818
 msgid "Distribute left sides equidistantly"
 msgstr "Jaa vasemmat sivut tasaisesti"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:816
+#: ../src/ui/dialog/align-and-distribute.cpp:821
 msgid "Distribute centers equidistantly horizontally"
 msgstr "Jaa keskikohdat tasaisesti"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:819
+#: ../src/ui/dialog/align-and-distribute.cpp:824
 msgid "Distribute right sides equidistantly"
 msgstr "Jaa oikeat sivut tasaisesti"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:823
+#: ../src/ui/dialog/align-and-distribute.cpp:828
 msgid "Make vertical gaps between objects equal"
 msgstr "Jaa kohteitten pystyvälit yhtä suuriksi"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:827
+#: ../src/ui/dialog/align-and-distribute.cpp:832
 msgid "Distribute tops equidistantly"
 msgstr "Jaa yläreunat tasaisesti"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:830
+#: ../src/ui/dialog/align-and-distribute.cpp:835
 msgid "Distribute centers equidistantly vertically"
 msgstr "Jaa keskikohdat tasaisesti pystytasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:833
+#: ../src/ui/dialog/align-and-distribute.cpp:838
 msgid "Distribute bottoms equidistantly"
 msgstr "Jaa alareunat tasaisesti"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:838
+#: ../src/ui/dialog/align-and-distribute.cpp:843
 msgid "Distribute baseline anchors of texts horizontally"
 msgstr "Jaa tekstin peruslinjan ankkurit vaakatasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:841
+#: ../src/ui/dialog/align-and-distribute.cpp:846
 msgid "Distribute baseline anchors of texts vertically"
 msgstr "Jaa tekstin peruslinjan ankkurit pystytasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:846
+#: ../src/ui/dialog/align-and-distribute.cpp:851
 msgid "Randomize centers in both dimensions"
 msgstr "Jaa keskikohdat satunnaisesti molemmissa suunnissa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:849
+#: ../src/ui/dialog/align-and-distribute.cpp:854
 msgid "Unclump objects: try to equalize edge-to-edge distances"
 msgstr "Hajauta kohteet: ja yritä tasata sivujen väliset etäisyydet"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:854
+#: ../src/ui/dialog/align-and-distribute.cpp:859
 msgid ""
 "Move objects as little as possible so that their bounding boxes do not "
 "overlap"
 msgstr ""
 "Siirrä kohteita pienin mahdollinen määrä, jotteivät rajausalueet limittyisi"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:858
+#: ../src/ui/dialog/align-and-distribute.cpp:863
 #: ../src/widgets/toolbox.cpp:4033
 msgid "Nicely arrange selected connector network"
 msgstr "Järjestä liitinverkosto"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:863
+#: ../src/ui/dialog/align-and-distribute.cpp:868
 msgid "Align selected nodes horizontally"
 msgstr "Tasaa valitut solmut vaakatasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:866
+#: ../src/ui/dialog/align-and-distribute.cpp:871
 msgid "Align selected nodes vertically"
 msgstr "Tasaa valitut solmut pystytasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:869
+#: ../src/ui/dialog/align-and-distribute.cpp:874
 msgid "Distribute selected nodes horizontally"
 msgstr "Jaa valitut solmut vaakatasossa"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:872
+#: ../src/ui/dialog/align-and-distribute.cpp:877
 msgid "Distribute selected nodes vertically"
 msgstr "Jaa valitut solmut pystytasossa"
 
 #. Rest of the widgetry
-#: ../src/ui/dialog/align-and-distribute.cpp:877
+#: ../src/ui/dialog/align-and-distribute.cpp:882
 msgid "Last selected"
 msgstr "Viimeksi valittuun"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:878
+#: ../src/ui/dialog/align-and-distribute.cpp:883
 msgid "First selected"
 msgstr "Ensimmäiseksi valittuun"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:879
+#: ../src/ui/dialog/align-and-distribute.cpp:884
 msgid "Biggest item"
 msgstr "Suurimpaan"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:880
+#: ../src/ui/dialog/align-and-distribute.cpp:885
 msgid "Smallest item"
 msgstr "Pienimpään"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:881
-#: ../src/ui/dialog/document-properties.cpp:98
-#: ../src/ui/dialog/filedialog.cpp:1920 ../src/widgets/desktop-widget.cpp:1120
+#: ../src/ui/dialog/align-and-distribute.cpp:886
+#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/filedialog.cpp:1936 ../src/widgets/desktop-widget.cpp:1120
 msgid "Page"
 msgstr "Sivu"
 
-#: ../src/ui/dialog/align-and-distribute.cpp:882
+#: ../src/ui/dialog/align-and-distribute.cpp:887
 #: ../src/widgets/desktop-widget.cpp:1124
 msgid "Drawing"
 msgstr "Piirros"
@@ -5253,280 +5558,326 @@ msgstr "<b>Dublin Core -entiteetit</b>"
 msgid "<b>License</b>"
 msgstr "<b>Lisenssi</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:99
+#: ../src/ui/dialog/document-properties.cpp:101
 msgid "Grid/Guides"
 msgstr "Ruudukko ja apuviivat"
 
-#: ../src/ui/dialog/document-properties.cpp:100
+#: ../src/ui/dialog/document-properties.cpp:102
 msgid "Snap"
 msgstr "Kiinnitä"
 
-#: ../src/ui/dialog/document-properties.cpp:188
+#: ../src/ui/dialog/document-properties.cpp:196
 msgid "Back_ground:"
 msgstr "_Tausta:"
 
-#: ../src/ui/dialog/document-properties.cpp:188
+#: ../src/ui/dialog/document-properties.cpp:196
 msgid "Background color"
 msgstr "Taustaväri"
 
-#: ../src/ui/dialog/document-properties.cpp:188
+#: ../src/ui/dialog/document-properties.cpp:196
 msgid ""
 "Color and transparency of the page background (also used for bitmap export)"
 msgstr ""
 "Sivun taustan väri ja läpinäkyvyys (käytetään myös bittikarttakuvia "
 "tallennettaessa)"
 
-#: ../src/ui/dialog/document-properties.cpp:190
+#: ../src/ui/dialog/document-properties.cpp:198
 msgid "Show page _border"
 msgstr "_Näytä sivun reuna"
 
-#: ../src/ui/dialog/document-properties.cpp:190
+#: ../src/ui/dialog/document-properties.cpp:198
 msgid "If set, rectangular page border is shown"
 msgstr "Näytä piirtoalueen reunat"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:199
 msgid "Border on _top of drawing"
 msgstr "_Reuna piirroksen yläpuolella"
 
-#: ../src/ui/dialog/document-properties.cpp:191
+#: ../src/ui/dialog/document-properties.cpp:199
 msgid "If set, border is always on top of the drawing"
 msgstr "Reuna on aina piirroksen yläpuolella"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:200
 msgid "Border _color:"
 msgstr "_Reunan väri:"
 
-#: ../src/ui/dialog/document-properties.cpp:192
+#: ../src/ui/dialog/document-properties.cpp:200
 msgid "Page border color"
 msgstr "Sivun reunan väri"
 
-#: ../src/ui/dialog/document-properties.cpp:193
+#: ../src/ui/dialog/document-properties.cpp:201
 msgid "Color of the page border"
 msgstr "Sivun reunan väri"
 
-#: ../src/ui/dialog/document-properties.cpp:195
+#: ../src/ui/dialog/document-properties.cpp:203
 msgid "_Show border shadow"
 msgstr "_Näytä reunan varjo"
 
-#: ../src/ui/dialog/document-properties.cpp:195
+#: ../src/ui/dialog/document-properties.cpp:203
 msgid "If set, page border shows a shadow on its right and lower side"
 msgstr "Piirtoalueen kehyksen varjo piirretään reunan oikealle ja alapuolelle"
 
-#: ../src/ui/dialog/document-properties.cpp:196
+#: ../src/ui/dialog/document-properties.cpp:204
 msgid "Default _units:"
 msgstr "Olet_usyksikkö:"
 
-#: ../src/ui/dialog/document-properties.cpp:199
+#: ../src/ui/dialog/document-properties.cpp:207
 msgid "<b>General</b>"
 msgstr "<b>Yleinen</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:201
+#: ../src/ui/dialog/document-properties.cpp:209
 msgid "<b>Border</b>"
 msgstr "<b>Reuna</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:203
+#: ../src/ui/dialog/document-properties.cpp:211
 msgid "<b>Format</b>"
 msgstr "<b>Koko ja suunta</b>"
 
 #. / \todo FIXME: gray out snapping when grid is off.
 #. / Dissenting view: you want snapping without grid.
-#: ../src/ui/dialog/document-properties.cpp:233
+#: ../src/ui/dialog/document-properties.cpp:241
 msgid "_Show grid"
 msgstr "_Näytä ruudukko"
 
-#: ../src/ui/dialog/document-properties.cpp:233
+#: ../src/ui/dialog/document-properties.cpp:241
 msgid "Show or hide grid"
 msgstr "Näytä tai piilota ruudukko"
 
-#: ../src/ui/dialog/document-properties.cpp:234
+#: ../src/ui/dialog/document-properties.cpp:242
+#, fuzzy
+msgid "Grid type:"
+msgstr "  tyyppi: "
+
+#: ../src/ui/dialog/document-properties.cpp:242
+#, fuzzy
+msgid "Normal (2D)"
+msgstr "Normaali"
+
+#: ../src/ui/dialog/document-properties.cpp:242
+msgid "Axonometric (3D)"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:243
+msgid "The normal grid with vertical and horizontal lines."
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:244
+msgid ""
+"A grid with vertical lines and two diagonal line groups, each representing "
+"the projection of a primary axis."
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:245
+msgid "gridtype"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:247
 msgid "Grid _units:"
 msgstr "R_uudukon yksikkö:"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "_Origin X:"
 msgstr "_Alku X:"
 
-#: ../src/ui/dialog/document-properties.cpp:235
+#: ../src/ui/dialog/document-properties.cpp:248
 msgid "X coordinate of grid origin"
 msgstr "Ruudukon aloituspisteen X-koordinaatti"
 
-#: ../src/ui/dialog/document-properties.cpp:237
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "O_rigin Y:"
 msgstr "A_lku Y:"
 
-#: ../src/ui/dialog/document-properties.cpp:237
+#: ../src/ui/dialog/document-properties.cpp:250
 msgid "Y coordinate of grid origin"
 msgstr "Ruudukon aloituspisteen Y-koordinaatti"
 
-#: ../src/ui/dialog/document-properties.cpp:239
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Spacing _X:"
 msgstr "Välistys _X:"
 
-#: ../src/ui/dialog/document-properties.cpp:239
+#: ../src/ui/dialog/document-properties.cpp:252
 msgid "Distance of vertical grid lines"
 msgstr "Pystysuorien ruudukon viivojen etäisyys toisistaan"
 
-#: ../src/ui/dialog/document-properties.cpp:241
+#: ../src/ui/dialog/document-properties.cpp:254
 msgid "Spacing _Y:"
 msgstr "Välistys _Y:"
 
-#: ../src/ui/dialog/document-properties.cpp:241
+#: ../src/ui/dialog/document-properties.cpp:254
 msgid "Distance of horizontal grid lines"
 msgstr "Vaakasuorien ruudukon viivojen etäisyys toisistaan"
 
-#: ../src/ui/dialog/document-properties.cpp:243
+#: ../src/ui/dialog/document-properties.cpp:256
+#, fuzzy
+msgid "Angle X:"
+msgstr "Kulma:"
+
+#: ../src/ui/dialog/document-properties.cpp:256
+msgid "Angle of x-axis of axonometric grid"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:258
+#, fuzzy
+msgid "Angle Z:"
+msgstr "Kulma:"
+
+#: ../src/ui/dialog/document-properties.cpp:258
+msgid "Angle of z-axis of axonometric grid"
+msgstr ""
+
+#: ../src/ui/dialog/document-properties.cpp:260
 msgid "Grid line _color:"
 msgstr "_Ruudukon väri:"
 
-#: ../src/ui/dialog/document-properties.cpp:243
+#: ../src/ui/dialog/document-properties.cpp:260
 msgid "Grid line color"
 msgstr "Ruudukon väri"
 
-#: ../src/ui/dialog/document-properties.cpp:244
+#: ../src/ui/dialog/document-properties.cpp:261
 msgid "Color of grid lines"
 msgstr "Ruudukon väri"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:262
 msgid "Ma_jor grid line color:"
 msgstr "_Pääruudukon väri:"
 
-#: ../src/ui/dialog/document-properties.cpp:245
+#: ../src/ui/dialog/document-properties.cpp:262
 msgid "Major grid line color"
 msgstr "Pääruudukon väri"
 
-#: ../src/ui/dialog/document-properties.cpp:246
+#: ../src/ui/dialog/document-properties.cpp:263
 msgid "Color of the major (highlighted) grid lines"
 msgstr "Pääruudukon väri"
 
-#: ../src/ui/dialog/document-properties.cpp:248
+#: ../src/ui/dialog/document-properties.cpp:265
 msgid "_Major grid line every:"
 msgstr "_Ruudukon pääviivoitus joka:"
 
-#: ../src/ui/dialog/document-properties.cpp:248
+#: ../src/ui/dialog/document-properties.cpp:265
 msgid "lines"
 msgstr "rivi"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:266
 msgid "Show _guides"
 msgstr "Näytä _apuviivat"
 
-#: ../src/ui/dialog/document-properties.cpp:249
+#: ../src/ui/dialog/document-properties.cpp:266
 msgid "Show or hide guides"
 msgstr "Näytä tai piilota apuviivat"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:267
 msgid "Guide co_lor:"
 msgstr "_Apuviivojen väri:"
 
-#: ../src/ui/dialog/document-properties.cpp:250
+#: ../src/ui/dialog/document-properties.cpp:267
 msgid "Guideline color"
 msgstr "Apuviivojen väri"
 
-#: ../src/ui/dialog/document-properties.cpp:251
+#: ../src/ui/dialog/document-properties.cpp:268
 msgid "Color of guidelines"
 msgstr "Apuviivojen väri"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:269
 msgid "_Highlight color:"
 msgstr "_Valinnan väri:"
 
-#: ../src/ui/dialog/document-properties.cpp:252
+#: ../src/ui/dialog/document-properties.cpp:269
 msgid "Highlighted guideline color"
 msgstr "Valitun apuviivan väri"
 
-#: ../src/ui/dialog/document-properties.cpp:253
+#: ../src/ui/dialog/document-properties.cpp:270
 msgid "Color of a guideline when it is under mouse"
 msgstr "Apuviivan väri sen ollessa osoittimen alla"
 
-#: ../src/ui/dialog/document-properties.cpp:256
+#: ../src/ui/dialog/document-properties.cpp:273
 msgid "<b>Grid</b>"
 msgstr "<b>Ruudukko</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:258
+#: ../src/ui/dialog/document-properties.cpp:275
 msgid "<b>Guides</b>"
 msgstr "<b>Apuviivat</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:288
+#: ../src/ui/dialog/document-properties.cpp:308
 msgid "_Snap bounding boxes to objects"
 msgstr "Rajau_salueet tarttuvat kohteeisiin"
 
-#: ../src/ui/dialog/document-properties.cpp:289
+#: ../src/ui/dialog/document-properties.cpp:309
 msgid "Snap the edges of the object bounding boxes to other objects"
 msgstr "Kohteen rajausalueen reunat tarttuvat toisiin kohteisiin"
 
-#: ../src/ui/dialog/document-properties.cpp:291
+#: ../src/ui/dialog/document-properties.cpp:311
 msgid "Snap nodes _to objects"
 msgstr "Solmu_t tarttuvat kohteisiin"
 
-#: ../src/ui/dialog/document-properties.cpp:292
+#: ../src/ui/dialog/document-properties.cpp:312
 msgid "Snap the nodes of objects to other objects"
 msgstr "Kohteitten solmut tarttuvat toisiin kohteisiin"
 
-#: ../src/ui/dialog/document-properties.cpp:294
+#: ../src/ui/dialog/document-properties.cpp:314
 msgid "Snap to object _paths"
 msgstr "Tartu kohteen _polkuihin"
 
-#: ../src/ui/dialog/document-properties.cpp:295
+#: ../src/ui/dialog/document-properties.cpp:315
 msgid "Snap to other object paths"
 msgstr "Tartu toisiin kohteen polkuihin"
 
-#: ../src/ui/dialog/document-properties.cpp:297
+#: ../src/ui/dialog/document-properties.cpp:317
 msgid "Snap to object _nodes"
 msgstr "Tartu kohtee_n solmuihin"
 
-#: ../src/ui/dialog/document-properties.cpp:298
+#: ../src/ui/dialog/document-properties.cpp:318
 msgid "Snap to other object nodes"
 msgstr "Tartu toisiin kohteen solmuihin"
 
-#: ../src/ui/dialog/document-properties.cpp:300
+#: ../src/ui/dialog/document-properties.cpp:320
 msgid "Snap s_ensitivity:"
 msgstr "Tartuntah_erkkyys:"
 
-#: ../src/ui/dialog/document-properties.cpp:300
-#: ../src/ui/dialog/document-properties.cpp:310
 #: ../src/ui/dialog/document-properties.cpp:320
+#: ../src/ui/dialog/document-properties.cpp:330
+#: ../src/ui/dialog/document-properties.cpp:340
 msgid "Always snap"
 msgstr "Tartu aina"
 
-#: ../src/ui/dialog/document-properties.cpp:301
+#: ../src/ui/dialog/document-properties.cpp:321
 msgid "Controls max. snapping distance from object"
 msgstr "Suurin etäisyys, jolta kohteeseen voi tarttua"
 
-#: ../src/ui/dialog/document-properties.cpp:302
+#: ../src/ui/dialog/document-properties.cpp:322
 msgid ""
 "If set, objects snap to the nearest object when moved, regardless of distance"
 msgstr ""
 "Kohteet tarttuvat lähimpään kohteeseen liikutettaessa etäisyydestä "
 "välittämättä"
 
-#: ../src/ui/dialog/document-properties.cpp:304
+#: ../src/ui/dialog/document-properties.cpp:324
 msgid "Snap _bounding boxes to grid"
 msgstr "_Rajausalue tarttuu ruudukkoon"
 
-#: ../src/ui/dialog/document-properties.cpp:305
-#: ../src/ui/dialog/document-properties.cpp:315
+#: ../src/ui/dialog/document-properties.cpp:325
+#: ../src/ui/dialog/document-properties.cpp:335
 msgid "Snap the edges of the object bounding boxes"
 msgstr "Kohteen rajausalueen reunat tarttuvat"
 
-#: ../src/ui/dialog/document-properties.cpp:307
+#: ../src/ui/dialog/document-properties.cpp:327
 msgid "Snap nodes to _grid"
 msgstr "_Solmut tarttuvat ruudukkoon"
 
-#: ../src/ui/dialog/document-properties.cpp:308
-#: ../src/ui/dialog/document-properties.cpp:318
+#: ../src/ui/dialog/document-properties.cpp:328
+#: ../src/ui/dialog/document-properties.cpp:338
 msgid "Snap path nodes, text baselines, ellipse centers, etc."
 msgstr ""
 "Polun solmut, tekstin peruslinjat, ellipsin keskipisteet, ym. tarttuvat"
 
-#: ../src/ui/dialog/document-properties.cpp:310
+#: ../src/ui/dialog/document-properties.cpp:330
 msgid "Snap sens_itivity:"
 msgstr "_Tartuntaherkkyys:"
 
-#: ../src/ui/dialog/document-properties.cpp:311
+#: ../src/ui/dialog/document-properties.cpp:331
 msgid "Controls max. snapping distance from grid"
 msgstr "Suurin etäisyys, jolta ruudukkoon voi tarttua"
 
-#: ../src/ui/dialog/document-properties.cpp:312
+#: ../src/ui/dialog/document-properties.cpp:332
 msgid ""
 "If set, objects snap to the nearest grid line when moved, regardless of "
 "distance"
@@ -5534,38 +5885,38 @@ msgstr ""
 "Kohteet kiinnittyvät lähimpään ruudukon viivaan niitä siirrettäessä "
 "etäisyydedestä riippumatta"
 
-#: ../src/ui/dialog/document-properties.cpp:314
+#: ../src/ui/dialog/document-properties.cpp:334
 msgid "Snap bounding boxes to g_uides"
 msgstr "Raja_usalueet tarttuvat apuviivoihin"
 
-#: ../src/ui/dialog/document-properties.cpp:317
+#: ../src/ui/dialog/document-properties.cpp:337
 msgid "Snap p_oints to guides"
 msgstr "Pisteet tarttuvat apuviiv_oihin"
 
-#: ../src/ui/dialog/document-properties.cpp:320
+#: ../src/ui/dialog/document-properties.cpp:340
 msgid "Snap sensiti_vity:"
 msgstr "_Tartuntaherkkyys:"
 
-#: ../src/ui/dialog/document-properties.cpp:321
+#: ../src/ui/dialog/document-properties.cpp:341
 msgid "Controls max. snapping distance from guides"
 msgstr "Suurin etäisyys, jolta apuviivoihin voi tarttua"
 
-#: ../src/ui/dialog/document-properties.cpp:322
+#: ../src/ui/dialog/document-properties.cpp:342
 msgid ""
 "If set, objects snap to the nearest guide when moved, regardless of distance"
 msgstr ""
 "Kohteet tarttuvat lähimpään apuviivaan liikutettaessa etäisyydestä "
 "riippumatta"
 
-#: ../src/ui/dialog/document-properties.cpp:329
+#: ../src/ui/dialog/document-properties.cpp:349
 msgid "<b>Object Snapping</b>"
 msgstr "<b>Kohteisiin tarttuminen</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:331
+#: ../src/ui/dialog/document-properties.cpp:351
 msgid "<b>Grid Snapping</b>"
 msgstr "<b>Ruudukkoon tarttuminen</b>"
 
-#: ../src/ui/dialog/document-properties.cpp:333
+#: ../src/ui/dialog/document-properties.cpp:353
 msgid "<b>Guide Snapping</b>"
 msgstr "<b>Apuviivoihin tarttuminen</b>"
 
@@ -5605,7 +5956,7 @@ msgstr "Kaikki tiedostot"
 msgid "All Inkscape Files"
 msgstr "Kaikki Inkscape-tiedostot"
 
-#: ../src/ui/dialog/filedialog.cpp:1314 ../src/ui/dialog/filedialog.cpp:1857
+#: ../src/ui/dialog/filedialog.cpp:1315 ../src/ui/dialog/filedialog.cpp:1873
 msgid "Guess from extension"
 msgstr "Arvaa päätteestä"
 
@@ -5614,43 +5965,43 @@ msgstr "Arvaa päätteestä"
 #. ###### Do we want the .xxx extension automatically added?
 #. ###### File options
 #. ###### Do we want the .xxx extension automatically added?
-#: ../src/ui/dialog/filedialog.cpp:1365 ../src/ui/dialog/filedialog.cpp:1985
+#: ../src/ui/dialog/filedialog.cpp:1366 ../src/ui/dialog/filedialog.cpp:2001
 msgid "Append filename extension automatically"
 msgstr "Lisää tiedostopääte automaattisesti"
 
-#: ../src/ui/dialog/filedialog.cpp:1877
+#: ../src/ui/dialog/filedialog.cpp:1893
 msgid "Source left bound"
 msgstr "Lähteen vasen reuna"
 
-#: ../src/ui/dialog/filedialog.cpp:1878
+#: ../src/ui/dialog/filedialog.cpp:1894
 msgid "Source top bound"
 msgstr "Lähteen yläreuna"
 
-#: ../src/ui/dialog/filedialog.cpp:1879
+#: ../src/ui/dialog/filedialog.cpp:1895
 msgid "Source right bound"
 msgstr "Lähteen oikea reuna"
 
-#: ../src/ui/dialog/filedialog.cpp:1880
+#: ../src/ui/dialog/filedialog.cpp:1896
 msgid "Source bottom bound"
 msgstr "Lähteen alareuna"
 
-#: ../src/ui/dialog/filedialog.cpp:1881
+#: ../src/ui/dialog/filedialog.cpp:1897
 msgid "Source width"
 msgstr "Lähteen leveys"
 
-#: ../src/ui/dialog/filedialog.cpp:1882
+#: ../src/ui/dialog/filedialog.cpp:1898
 msgid "Source height"
 msgstr "Lähteen korkeus"
 
-#: ../src/ui/dialog/filedialog.cpp:1883
+#: ../src/ui/dialog/filedialog.cpp:1899
 msgid "Destination width"
 msgstr "Kohteen leveys"
 
-#: ../src/ui/dialog/filedialog.cpp:1884
+#: ../src/ui/dialog/filedialog.cpp:1900
 msgid "Destination height"
 msgstr "Kohteen korkeus"
 
-#: ../src/ui/dialog/filedialog.cpp:1885
+#: ../src/ui/dialog/filedialog.cpp:1901
 msgid "Dots per inch resolution"
 msgstr "Tarkkuus pistettä tuumalle"
 
@@ -5658,27 +6009,27 @@ msgstr "Tarkkuus pistettä tuumalle"
 #. ## EXTRA WIDGET -- SOURCE SIDE
 #. #########################################
 #. ##### Export options buttons/spinners, etc
-#: ../src/ui/dialog/filedialog.cpp:1916
+#: ../src/ui/dialog/filedialog.cpp:1932
 msgid "Document"
 msgstr "Asiakirja"
 
-#: ../src/ui/dialog/filedialog.cpp:1928
+#: ../src/ui/dialog/filedialog.cpp:1944
 msgid "Custom"
 msgstr "Oma"
 
-#: ../src/ui/dialog/filedialog.cpp:1968
+#: ../src/ui/dialog/filedialog.cpp:1984
 msgid "Cairo"
 msgstr "Cairo"
 
-#: ../src/ui/dialog/filedialog.cpp:1971
+#: ../src/ui/dialog/filedialog.cpp:1987
 msgid "Antialias"
 msgstr "Reunanpehmennys"
 
-#: ../src/ui/dialog/filedialog.cpp:1974
+#: ../src/ui/dialog/filedialog.cpp:1990
 msgid "Background"
 msgstr "Tausta"
 
-#: ../src/ui/dialog/filedialog.cpp:1997
+#: ../src/ui/dialog/filedialog.cpp:2013
 msgid "Destination"
 msgstr "Kohde"
 
@@ -5698,23 +6049,23 @@ msgstr "Reunan tyyli"
 msgid "Find"
 msgstr "Etsi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:140
+#: ../src/ui/dialog/inkscape-preferences.cpp:142
 msgid "Mouse"
 msgstr "Hiiri"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:142
+#: ../src/ui/dialog/inkscape-preferences.cpp:144
 msgid "Grab sensitivity:"
 msgstr "Tartunnan herkkyys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:142
-#: ../src/ui/dialog/inkscape-preferences.cpp:145
-#: ../src/ui/dialog/inkscape-preferences.cpp:153
-#: ../src/ui/dialog/inkscape-preferences.cpp:157
-#: ../src/ui/dialog/inkscape-preferences.cpp:167
+#: ../src/ui/dialog/inkscape-preferences.cpp:144
+#: ../src/ui/dialog/inkscape-preferences.cpp:147
+#: ../src/ui/dialog/inkscape-preferences.cpp:155
+#: ../src/ui/dialog/inkscape-preferences.cpp:159
+#: ../src/ui/dialog/inkscape-preferences.cpp:169
 msgid "pixels"
 msgstr "pikseliä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:143
+#: ../src/ui/dialog/inkscape-preferences.cpp:145
 msgid ""
 "How close on the screen you need to be to an object to be able to grab it "
 "with mouse (in screen pixels)"
@@ -5722,25 +6073,25 @@ msgstr ""
 "Miten lähellä kohdetta täytyy olla, jotta siihen voi tarttua hiirellä "
 "(pikseleinä)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:145
+#: ../src/ui/dialog/inkscape-preferences.cpp:147
 msgid "Click/drag threshold:"
 msgstr "Napsautus- ja raahausherkkyys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:146
+#: ../src/ui/dialog/inkscape-preferences.cpp:148
 msgid ""
 "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
 msgstr ""
 "Suurin hiiren raahaus (pikseleinä), joka lasketaan vielä napsautukseksi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:151
+#: ../src/ui/dialog/inkscape-preferences.cpp:153
 msgid "Scrolling"
 msgstr "Vieritys"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:153
+#: ../src/ui/dialog/inkscape-preferences.cpp:155
 msgid "Mouse wheel scrolls by:"
 msgstr "Hiiren rulla siirtää:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:154
+#: ../src/ui/dialog/inkscape-preferences.cpp:156
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -5748,23 +6099,23 @@ msgstr ""
 "Yksi hiiren rullan napsautus siirtää valitun etäisyyden pikseleinä (Vaihto-"
 "näppäimen kanssa siirto tapahtuu vaakasuoraan)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:155
+#: ../src/ui/dialog/inkscape-preferences.cpp:157
 msgid "Ctrl+arrows"
 msgstr "Ctrl+nuolinäppäimet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:157
+#: ../src/ui/dialog/inkscape-preferences.cpp:159
 msgid "Scroll by:"
 msgstr "Siirtää:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:158
+#: ../src/ui/dialog/inkscape-preferences.cpp:160
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr "Painamalla Ctrl+nuolinäppäin siirtää valitun etäisyyden pikseleinä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:160
+#: ../src/ui/dialog/inkscape-preferences.cpp:162
 msgid "Acceleration:"
 msgstr "Kiihdytys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:161
+#: ../src/ui/dialog/inkscape-preferences.cpp:163
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -5772,15 +6123,15 @@ msgstr ""
 "Ctrl+nuolinäppäimen pohjassa pitäminen kiihdyttää siirtoa asteittain (0 ei "
 "kiihdytä)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:162
+#: ../src/ui/dialog/inkscape-preferences.cpp:164
 msgid "Autoscrolling"
 msgstr "Automaattinen vieritys"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:164
+#: ../src/ui/dialog/inkscape-preferences.cpp:166
 msgid "Speed:"
 msgstr "Nopeus:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:165
+#: ../src/ui/dialog/inkscape-preferences.cpp:167
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -5788,12 +6139,12 @@ msgstr ""
 "Miten nopeasti piirtoalusta siirtyy, kun raahaat kohteen sen reunan yli "
 "(automaattinen siirtymisen voi estää arvolla 0)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:167
+#: ../src/ui/dialog/inkscape-preferences.cpp:169
 #: ../src/ui/dialog/tracedialog.cpp:373 ../src/ui/dialog/tracedialog.cpp:406
 msgid "Threshold:"
 msgstr "Raja-arvo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:168
+#: ../src/ui/dialog/inkscape-preferences.cpp:170
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -5802,15 +6153,15 @@ msgstr ""
 "automaattinen siirtyminen aktivoituu. Positiivinen arvo on piirtoalustan "
 "ulkopuolella, negatiivinen alustalla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:173
+#: ../src/ui/dialog/inkscape-preferences.cpp:175
 msgid "Steps"
 msgstr "Askeleet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:176
+#: ../src/ui/dialog/inkscape-preferences.cpp:178
 msgid "Arrow keys move by:"
 msgstr "Nuolinäppäimet siirtävät:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:177
+#: ../src/ui/dialog/inkscape-preferences.cpp:179
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance "
 "(in px units)"
@@ -5818,32 +6169,32 @@ msgstr ""
 "Nuolinäppäimen painaminen siirtää valittuja kohteita tai solmuja valitun "
 "määrän pikseleitä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:179
+#: ../src/ui/dialog/inkscape-preferences.cpp:181
 msgid "> and < scale by:"
 msgstr "> ja < muuttavat kokoa:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:180
+#: ../src/ui/dialog/inkscape-preferences.cpp:182
 msgid ""
 "Pressing > or < scales selection up or down by this increment (in px units)"
 msgstr ""
 "> tai < suurentaa tai pienentää valinnan kokoa valitulla määrällä pikseleitä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:182
+#: ../src/ui/dialog/inkscape-preferences.cpp:184
 msgid "Inset/Outset by:"
 msgstr "Kutista tai laajenna:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:183
+#: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
 msgstr ""
 "Kutistus- ja laajennustominnot siirtävät polkua valitulla etäisyydellä "
 "pikseleinä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:184
+#: ../src/ui/dialog/inkscape-preferences.cpp:186
 msgid "Compass-like display of angles"
 msgstr "Näytä kulmat kompassin tapaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:186
+#: ../src/ui/dialog/inkscape-preferences.cpp:188
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -5853,15 +6204,15 @@ msgstr ""
 "on myötäpäivään; muutoin 0 on itä ja väli -180&#8211;180 ja positiivinen on "
 "vastapäivään"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:192
+#: ../src/ui/dialog/inkscape-preferences.cpp:194
 msgid "Rotation snaps every:"
 msgstr "Kierto tarttuu joka:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:192
+#: ../src/ui/dialog/inkscape-preferences.cpp:194
 msgid "degrees"
 msgstr "aste"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:193
+#: ../src/ui/dialog/inkscape-preferences.cpp:195
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -5869,11 +6220,11 @@ msgstr ""
 "Kierto Ctrl painettuna kiinnittyy valitun astemäärän välein. Myös [ tai ]-"
 "näppäimen painaminen kiertää valitun astemäärän"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:195
+#: ../src/ui/dialog/inkscape-preferences.cpp:197
 msgid "Zoom in/out by:"
 msgstr "Loitonna tai lähennä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:196
+#: ../src/ui/dialog/inkscape-preferences.cpp:198
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -5881,28 +6232,28 @@ msgstr ""
 "Zoom-työkalun napsauttaminen, + ja - -näppäimet ja keskimmäinen näppäin "
 "muuttavat näkymän kokoa valitulla kertoimella"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:202
+#: ../src/ui/dialog/inkscape-preferences.cpp:204
 msgid "Show selection cue"
 msgstr "Näytä valintavihje"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:203
+#: ../src/ui/dialog/inkscape-preferences.cpp:205
 msgid ""
 "Whether selected objects display a selection cue (the same as in selector)"
 msgstr "Näytetäänkö valituista kohteista vihje (sama kuin valintatyökalussa)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:209
+#: ../src/ui/dialog/inkscape-preferences.cpp:211
 msgid "Enable gradient editing"
 msgstr "Salli liukuvärin muokkaus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:210
+#: ../src/ui/dialog/inkscape-preferences.cpp:212
 msgid "Whether selected objects display gradient editing controls"
 msgstr "Näyttävätkö valitut kohteet liukuvärien muokkauksen kontrollit"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:223
+#: ../src/ui/dialog/inkscape-preferences.cpp:225
 msgid "<b>No objects selected</b> to take the style from."
 msgstr "Valittuna <b>ei ole kohteita</b>, joilta voisi ottaa tyylin."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:232
+#: ../src/ui/dialog/inkscape-preferences.cpp:234
 msgid ""
 "<b>More than one object selected.</b>  Cannot take style from multiple "
 "objects."
@@ -5910,23 +6261,23 @@ msgstr ""
 "<b>Useampi kuin yksi kohde</b> valittuna. Tyyliä ei voi ottaa useasta "
 "kohteesta."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:266
+#: ../src/ui/dialog/inkscape-preferences.cpp:268
 msgid "Create new objects with:"
 msgstr "Luo uudet kohteet:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:268
+#: ../src/ui/dialog/inkscape-preferences.cpp:270
 msgid "Last used style"
 msgstr "Viimeksi käytetty tyyli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:270
+#: ../src/ui/dialog/inkscape-preferences.cpp:272
 msgid "Apply the style you last set on an object"
 msgstr "Käytä viimeksi käyttämääsi tyyliä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:275
+#: ../src/ui/dialog/inkscape-preferences.cpp:277
 msgid "This tool's own style:"
 msgstr "Työkalun oma tyyli:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:279
+#: ../src/ui/dialog/inkscape-preferences.cpp:281
 msgid ""
 "Each tool may store its own style to apply to the newly created objects. Use "
 "the button below to set it."
@@ -5934,126 +6285,126 @@ msgstr ""
 "Jokainen työkalu säilyttää oman tyylinsä, jota käytetään uusiin kohteiisiin. "
 "Käytä alapuolella olevaa painiketta asettaaksesi sen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:284
+#: ../src/ui/dialog/inkscape-preferences.cpp:286
 msgid "Take from selection"
 msgstr "Ota valinnasta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:296
+#: ../src/ui/dialog/inkscape-preferences.cpp:298
 msgid "Remember the style of the (first) selected object as this tool's style"
 msgstr "Tallenna (ensimmäiseksi) valitun kohteen tyyli tämän työkalun tyyliksi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:301
+#: ../src/ui/dialog/inkscape-preferences.cpp:303
 msgid "Tools"
 msgstr "Työkalut"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:304
+#: ../src/ui/dialog/inkscape-preferences.cpp:306
 msgid "Width is in absolute units"
 msgstr "Leveys on absoluuttisina yksikköinä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:305
+#: ../src/ui/dialog/inkscape-preferences.cpp:307
 msgid "Keep selected"
 msgstr "Pidä valittu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:306
+#: ../src/ui/dialog/inkscape-preferences.cpp:308
 msgid "Don't attach connectors to text objects"
 msgstr "Älä kiinnitä liittimiä tekstikohteisiin"
 
 #. Selector
-#: ../src/ui/dialog/inkscape-preferences.cpp:309
+#: ../src/ui/dialog/inkscape-preferences.cpp:311
 msgid "Selector"
 msgstr "Valintatyökalu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:312
+#: ../src/ui/dialog/inkscape-preferences.cpp:314
 msgid "When transforming, show:"
 msgstr "Muunnettaessa, näytä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:313
+#: ../src/ui/dialog/inkscape-preferences.cpp:315
 msgid "Objects"
 msgstr "Kohteet"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:315
+#: ../src/ui/dialog/inkscape-preferences.cpp:317
 msgid "Show the actual objects when moving or transforming"
 msgstr "Näytä kohteet siirron ja muunnoksen aikana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:316
+#: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "Box outline"
 msgstr "Kehyksen ääriviivat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:318
+#: ../src/ui/dialog/inkscape-preferences.cpp:320
 msgid "Show only a box outline of the objects when moving or transforming"
 msgstr "Näytä kohteitten kehyksen ääriviivat siirron ja muunnoksen aikana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:319
+#: ../src/ui/dialog/inkscape-preferences.cpp:321
 msgid "Per-object selection cue:"
 msgstr "Kohdekohtainen valintavihje:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:322
+#: ../src/ui/dialog/inkscape-preferences.cpp:324
 msgid "No per-object selection indication"
 msgstr "Ei kohdekohtaista valintahuomautusta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:323
+#: ../src/ui/dialog/inkscape-preferences.cpp:325
 msgid "Mark"
 msgstr "Merkki"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:325
+#: ../src/ui/dialog/inkscape-preferences.cpp:327
 msgid "Each selected object has a diamond mark in the top left corner"
 msgstr "Jokaisella kohteella on salmiakkikuvio vasemmassa yläkulmassa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:326
+#: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "Box"
 msgstr "Alue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:328
+#: ../src/ui/dialog/inkscape-preferences.cpp:330
 msgid "Each selected object displays its bounding box"
 msgstr "Jokaisella kohteella on näkyvä rajausalue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:329
+#: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Default scale origin:"
 msgstr "Koon muutoksen keskipiste:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:330
+#: ../src/ui/dialog/inkscape-preferences.cpp:332
 msgid "Opposite bounding box edge"
 msgstr "Rajausalueen reuna"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:332
+#: ../src/ui/dialog/inkscape-preferences.cpp:334
 msgid "Default scale origin will be on the bounding box of the item"
 msgstr "Koon muutoksen keskipiste on kohteen rajausalue"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:333
+#: ../src/ui/dialog/inkscape-preferences.cpp:335
 msgid "Farthest opposite node"
 msgstr "Kauimmaisin vastakkainen solmu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:335
+#: ../src/ui/dialog/inkscape-preferences.cpp:337
 msgid "Default scale origin will be on the bounding box of the item's points"
 msgstr "Koon muutoksen keskipiste on kohteen pisteitten rajausalue"
 
 #. Node
-#: ../src/ui/dialog/inkscape-preferences.cpp:337
+#: ../src/ui/dialog/inkscape-preferences.cpp:339
 msgid "Node"
 msgstr "Solmu"
 
 #. Zoom
-#: ../src/ui/dialog/inkscape-preferences.cpp:341
+#: ../src/ui/dialog/inkscape-preferences.cpp:343
 #: ../src/ui/view/edit-widget.cpp:1067 ../src/verbs.cpp:2191
 #: ../src/widgets/desktop-widget.cpp:281
 msgid "Zoom"
 msgstr "Näkymän koko"
 
 #. Shapes
-#: ../src/ui/dialog/inkscape-preferences.cpp:345
+#: ../src/ui/dialog/inkscape-preferences.cpp:347
 msgid "Shapes"
 msgstr "Kuviot"
 
 #. Pencil
-#: ../src/ui/dialog/inkscape-preferences.cpp:362 ../src/verbs.cpp:2181
+#: ../src/ui/dialog/inkscape-preferences.cpp:364 ../src/verbs.cpp:2181
 msgid "Pencil"
 msgstr "Kynä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:365
+#: ../src/ui/dialog/inkscape-preferences.cpp:367
 msgid "Tolerance:"
 msgstr "Raja-arvo:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:366
+#: ../src/ui/dialog/inkscape-preferences.cpp:368
 msgid ""
 "This value affects the amount of smoothing applied to freehand lines; lower "
 "values produce more uneven paths with more nodes"
@@ -6062,16 +6413,16 @@ msgstr ""
 "arvoilla polut ovat epätasaisia ja sisältävät useita solmuja"
 
 #. Pen
-#: ../src/ui/dialog/inkscape-preferences.cpp:370 ../src/verbs.cpp:2183
+#: ../src/ui/dialog/inkscape-preferences.cpp:372 ../src/verbs.cpp:2183
 msgid "Pen"
 msgstr "Täytekynä"
 
 #. Calligraphy
-#: ../src/ui/dialog/inkscape-preferences.cpp:374 ../src/verbs.cpp:2185
+#: ../src/ui/dialog/inkscape-preferences.cpp:376 ../src/verbs.cpp:2185
 msgid "Calligraphy"
 msgstr "Kalligrafia"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:377
+#: ../src/ui/dialog/inkscape-preferences.cpp:379
 msgid ""
 "If on, pen width is in absolute units (px) independent of zoom; otherwise "
 "pen width depends on zoom so that it looks the same at any zoom"
@@ -6080,7 +6431,7 @@ msgstr ""
 "kynän leveys suhteutetaan näkymän kokoon siten, että se näyttää aina saman "
 "levyiseltä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:379
+#: ../src/ui/dialog/inkscape-preferences.cpp:381
 msgid ""
 "If on, each object created with this tool will remain selected after you "
 "finish drawing it"
@@ -6088,49 +6439,49 @@ msgstr ""
 "Tällä työkalulla luodut kohteet pysyvät valittuina niiden piirtämisen jälkeen"
 
 #. Gradient
-#: ../src/ui/dialog/inkscape-preferences.cpp:386 ../src/verbs.cpp:2189
+#: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2189
 msgid "Gradient"
 msgstr "Liukuväri"
 
 #. Connector
-#: ../src/ui/dialog/inkscape-preferences.cpp:389 ../src/verbs.cpp:2195
+#: ../src/ui/dialog/inkscape-preferences.cpp:391 ../src/verbs.cpp:2195
 msgid "Connector"
 msgstr "Liitin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:392
+#: ../src/ui/dialog/inkscape-preferences.cpp:394
 msgid "If on, connector attachment points will not be shown for text objects"
 msgstr "Tekstikohteille ei näytetä liitospisteitä"
 
 #. Dropper
-#: ../src/ui/dialog/inkscape-preferences.cpp:394 ../src/verbs.cpp:2193
+#: ../src/ui/dialog/inkscape-preferences.cpp:396 ../src/verbs.cpp:2193
 msgid "Dropper"
 msgstr "Värivalitsin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:401
+#: ../src/ui/dialog/inkscape-preferences.cpp:403
 msgid "Save window geometry"
 msgstr "Tallenna ikkunan sijainti- ja paikkatiedot"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:402
+#: ../src/ui/dialog/inkscape-preferences.cpp:404
 msgid "Dialogs are hidden in taskbar"
 msgstr "Valintaikkunat piilotetaan tehtäväpalkkiin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:403
+#: ../src/ui/dialog/inkscape-preferences.cpp:405
 msgid "Zoom when window is resized"
 msgstr "Muuta näkymän kokoa, kun ikkunan kokoa muutetaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:404
+#: ../src/ui/dialog/inkscape-preferences.cpp:406
 msgid "Show close button on dialogs"
 msgstr "Näytä sulje-painike valintaikkunoissa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:406
+#: ../src/ui/dialog/inkscape-preferences.cpp:408
 msgid "Normal"
 msgstr "Normaali"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:407
+#: ../src/ui/dialog/inkscape-preferences.cpp:409
 msgid "Aggressive"
 msgstr "Aggressiivinen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:410
+#: ../src/ui/dialog/inkscape-preferences.cpp:412
 msgid ""
 "Save the window size and position with each document (only for Inkscape SVG "
 "format)"
@@ -6138,11 +6489,11 @@ msgstr ""
 "Tallenna ikkunan koko ja sijainti jokaisen asiakirjan mukana (ainoastaan "
 "Inkscapen SVG-tiedostomuodolle)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:412
+#: ../src/ui/dialog/inkscape-preferences.cpp:414
 msgid "Whether dialog windows are to be hidden in the window manager taskbar"
 msgstr "Piilotetaanko valintaikkunat ikkunamanagerin tehtäväpalkkiin"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:414
+#: ../src/ui/dialog/inkscape-preferences.cpp:416
 msgid ""
 "Zoom drawing when document window is resized, to keep the same area visible "
 "(this is the default which can be changed in any window using the button "
@@ -6152,65 +6503,65 @@ msgstr ""
 "alueen näkyvissä (tämä on oletustoiminta, jonka voi muuttaa kaikissa "
 "ikkunoissa oikean vierityspalkin yläpuolella olevasta painikkeesta)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:416
+#: ../src/ui/dialog/inkscape-preferences.cpp:418
 msgid "Whether dialog windows have a close button (requires restart)"
 msgstr "Onko valintaikkunoilla sulje-painike (vaatii uudelleenkäynnistyksen)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:417
+#: ../src/ui/dialog/inkscape-preferences.cpp:419
 msgid "Dialogs on top:"
 msgstr "Valintaikkunat päällimmäisinä:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:419
+#: ../src/ui/dialog/inkscape-preferences.cpp:421
 msgid "Dialogs are treated as regular windows"
 msgstr "Valintaikkunoita käsitellään kuin ne olisivat tavallisia ikkunoita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:421
+#: ../src/ui/dialog/inkscape-preferences.cpp:423
 msgid "Dialogs stay on top of document windows"
 msgstr "Valintaikkunat pysyvät asiakirjaikkunoiden päällä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:423
+#: ../src/ui/dialog/inkscape-preferences.cpp:425
 msgid "Same as Normal but may work better with some window managers"
 msgstr ""
 "Sama kuin normaali, mutta saattaa toimia paremmin joidenkin ikkunamanagerien "
 "kanssa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:425
+#: ../src/ui/dialog/inkscape-preferences.cpp:427
 msgid "Windows"
 msgstr "Ikkunat"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:430
+#: ../src/ui/dialog/inkscape-preferences.cpp:432
 msgid "Move in parallel"
 msgstr "Siirrä samansuuntaisesti"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:432
+#: ../src/ui/dialog/inkscape-preferences.cpp:434
 msgid "Stay unmoved"
 msgstr "Pidä paikallaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:434
+#: ../src/ui/dialog/inkscape-preferences.cpp:436
 msgid "Move according to transform"
 msgstr "Siirrä muunnoksen mukaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:436
+#: ../src/ui/dialog/inkscape-preferences.cpp:438
 msgid "Are unlinked"
 msgstr "menettävät linkityksen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:438
+#: ../src/ui/dialog/inkscape-preferences.cpp:440
 msgid "Are deleted"
 msgstr "poistetaan"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:441
+#: ../src/ui/dialog/inkscape-preferences.cpp:443
 msgid "When the original moves, its clones and linked offsets:"
 msgstr "Kun alkuperäinen siirtyy, sen kloonit ja kokoon linkitetyt kohteet:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:443
+#: ../src/ui/dialog/inkscape-preferences.cpp:445
 msgid "Clones are translated by the same vector as their original."
 msgstr "Klooneja muokataan samalla vektorilla kuin alkuperäistä."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:445
+#: ../src/ui/dialog/inkscape-preferences.cpp:447
 msgid "Clones preserve their positions when their original is moved."
 msgstr "Kloonit säilyttävät paikkansa, kun alkuperäistä siirretään."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:447
+#: ../src/ui/dialog/inkscape-preferences.cpp:449
 msgid ""
 "Each clone moves according to the value of its transform= attribute. For "
 "example, a rotated clone will move in a different direction than its "
@@ -6219,120 +6570,172 @@ msgstr ""
 "Jokainen klooni siirtyy oman transform-attribuuttinsa mukaan. Esimerkiksi "
 "kierretty klooni liikkuu eri suuntaan kuin alkuperäinen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:448
+#: ../src/ui/dialog/inkscape-preferences.cpp:450
 msgid "When the original is deleted, its clones:"
 msgstr "Kun alkuperäinen poistetaan, sen kloonit:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:450
+#: ../src/ui/dialog/inkscape-preferences.cpp:452
 msgid "Orphaned clones are converted to regular objects."
 msgstr "Orvoiksi jääneet kloonit muutetaan tavallisiksi kohteiksi."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:452
+#: ../src/ui/dialog/inkscape-preferences.cpp:454
 msgid "Orphaned clones are deleted along with their original."
 msgstr "Orvot kloonit poistetaan alkuperäisten kanssa."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:459
+#: ../src/ui/dialog/inkscape-preferences.cpp:461
 msgid "Scale stroke width"
 msgstr "Muuta viivan leveyttä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:460
+#: ../src/ui/dialog/inkscape-preferences.cpp:462
 msgid "Scale rounded corners in rectangles"
 msgstr "Muuta suorakulmion pyöristettyjen kulmien kokoa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:463
 msgid "Transform gradients"
 msgstr "Muunna liukuvärejä"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:462
+#: ../src/ui/dialog/inkscape-preferences.cpp:464
 msgid "Transform patterns"
 msgstr "Muunna kuviointeja"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:463
+#: ../src/ui/dialog/inkscape-preferences.cpp:465
 msgid "Optimized"
 msgstr "Optimoitu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:464
+#: ../src/ui/dialog/inkscape-preferences.cpp:466
 msgid "Preserved"
 msgstr "Säilytetty"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:467
+#: ../src/ui/dialog/inkscape-preferences.cpp:469
 #: ../src/widgets/select-toolbar.cpp:497
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "Kohteen koon muuttuessa muuta reunaviivan kokoa samassa suhteessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:469
+#: ../src/ui/dialog/inkscape-preferences.cpp:471
 #: ../src/widgets/select-toolbar.cpp:509
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "Suorakulmion koon muuttuessa muuta pyöristettyjen kulmien sädettä samassa "
 "suhteessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:471
+#: ../src/ui/dialog/inkscape-preferences.cpp:473
 #: ../src/widgets/select-toolbar.cpp:521
 msgid "Transform gradients (in fill or stroke) along with the objects"
 msgstr "Muunna liukuvärejä (täytössä tai reunaviivassa) kohteitten mukana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:473
+#: ../src/ui/dialog/inkscape-preferences.cpp:475
 #: ../src/widgets/select-toolbar.cpp:533
 msgid "Transform patterns (in fill or stroke) along with the objects"
 msgstr "Muunna täytön tai viivan kuviointeja kohteitten mukana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:474
+#: ../src/ui/dialog/inkscape-preferences.cpp:476
 msgid "Store transformation:"
 msgstr "Säilytä muunnokset:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:476
+#: ../src/ui/dialog/inkscape-preferences.cpp:478
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
 msgstr ""
 "Jos mahdollista, älä lisää transform-attribuuttia kohdetta muunnettaessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:478
+#: ../src/ui/dialog/inkscape-preferences.cpp:480
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "Säilytä muunnokset aina kohteitten transform-attribuuttina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:480
+#: ../src/ui/dialog/inkscape-preferences.cpp:482
 msgid "Transforms"
 msgstr "Muunnokset"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:485
+#: ../src/ui/dialog/inkscape-preferences.cpp:487
+msgid "Best quality (slowest)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:489
+msgid "Better quality (slower)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:491
+msgid "Average quality"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:493
+#, fuzzy
+msgid "Lower quality (faster)"
+msgstr "Laske tasoa"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:495
+msgid "Lowest quality (fastest)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:498
+msgid "Gaussian blur quality for display:"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:500
+msgid ""
+"Best quality, but display may be very slow at high zooms (bitmap export "
+"always uses best quality)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:502
+msgid "Better quality, but slower display"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:504
+msgid "Average quality, acceptable display speed"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:506
+msgid "Lower quality (some artefacts), but display is faster"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:508
+msgid "Lowest quality (considerable artefacts), but display is fastest"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:510
+#, fuzzy
+msgid "Filters"
+msgstr "Tasaisuus"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:516
 msgid "Select in all layers"
 msgstr "Valitse kaikilla tasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:486
+#: ../src/ui/dialog/inkscape-preferences.cpp:517
 msgid "Select only within current layer"
 msgstr "Valitse ainoastaan nykyisellä tasolla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:487
+#: ../src/ui/dialog/inkscape-preferences.cpp:518
 msgid "Select in current layer and sublayers"
 msgstr "Valitse nykyisellä ja sen alitasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:488
+#: ../src/ui/dialog/inkscape-preferences.cpp:519
 msgid "Ignore hidden objects"
 msgstr "Älä käsittele piilotettuja kohteita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:489
+#: ../src/ui/dialog/inkscape-preferences.cpp:520
 msgid "Ignore locked objects"
 msgstr "Älä käsittele lukittuja kohteita"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:490
+#: ../src/ui/dialog/inkscape-preferences.cpp:521
 msgid "Deselect upon layer change"
 msgstr "Poista valinnat tason vaihtuessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:492
+#: ../src/ui/dialog/inkscape-preferences.cpp:523
 msgid "Ctrl+A, Tab, Shift+Tab:"
 msgstr "Ctrl+A, Sarkain, Vaihto+Sarkain:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:494
+#: ../src/ui/dialog/inkscape-preferences.cpp:525
 msgid "Make keyboard selection commands work on objects in all layers"
 msgstr "Näppäimistön valintakomennot toimivat kohteisiin kaikilla tasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:496
+#: ../src/ui/dialog/inkscape-preferences.cpp:527
 msgid "Make keyboard selection commands work on objects in current layer only"
 msgstr "Näppäimistön valintakomennot toimivat ainoastaan nykyisellä tasolla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:498
+#: ../src/ui/dialog/inkscape-preferences.cpp:529
 msgid ""
 "Make keyboard selection commands work on objects in current layer and all "
 "its sublayers"
@@ -6340,7 +6743,7 @@ msgstr ""
 "Näppäimistön valintakomennot toimivat nykyisellä tasolla ja kaikilla sen "
 "alitasoilla"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:500
+#: ../src/ui/dialog/inkscape-preferences.cpp:531
 msgid ""
 "Uncheck this to be able to select objects that are hidden (either by "
 "themselves or by being in a hidden group or layer)"
@@ -6348,7 +6751,7 @@ msgstr ""
 "Poista valinta tästä, jos haluat valita piilotettuja kohteita (yksitellen, "
 "ryhmän tai tason mukana piilotettuja)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:502
+#: ../src/ui/dialog/inkscape-preferences.cpp:533
 msgid ""
 "Uncheck this to be able to select objects that are locked (either by "
 "themselves or by being in a locked group or layer)"
@@ -6356,29 +6759,29 @@ msgstr ""
 "Poista valinta tästä, jos haluat valita lukittuja kohteita (yksitellen, "
 "ryhmän tai tason mukana lukittuja)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:505
+#: ../src/ui/dialog/inkscape-preferences.cpp:536
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
 msgstr "Poista valinta tästä, jos haluat säilyttää valinnan tason vaihtuessa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:507
+#: ../src/ui/dialog/inkscape-preferences.cpp:538
 msgid "Selecting"
 msgstr "Valinta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:514
+#: ../src/ui/dialog/inkscape-preferences.cpp:545
 msgid "Default export resolution:"
 msgstr "Oletustarkkuus bittikartoille:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:515
+#: ../src/ui/dialog/inkscape-preferences.cpp:546
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "Oletustarkkuus bittikarttakuville (dpi) tallennusikkunassa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:516
+#: ../src/ui/dialog/inkscape-preferences.cpp:547
 msgid "Import bitmap as <image>"
 msgstr "Tuo bittikartta <image>-tagina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:518
+#: ../src/ui/dialog/inkscape-preferences.cpp:549
 msgid ""
 "When on, an imported bitmap creates an <image> element; otherwise it is a "
 "rectangle with bitmap fill"
@@ -6386,29 +6789,29 @@ msgstr ""
 "Kuva tuodaan <image>-elementtiin, muuten kuva sijoitetaan suorakulmion "
 "täytöksi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:519
+#: ../src/ui/dialog/inkscape-preferences.cpp:550
 msgid "Add label comments to printing output"
 msgstr "Lisää nimi kommenttina tulostukseen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:521
+#: ../src/ui/dialog/inkscape-preferences.cpp:552
 msgid ""
 "When on, a comment will be added to the raw print output, marking the "
 "rendered output for an object with its label"
 msgstr "Tulosteeseen lisätään nimi kommenttina merkitsemään kohde"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:523
+#: ../src/ui/dialog/inkscape-preferences.cpp:554
 msgid "Max recent documents:"
 msgstr "Viimeaikaisia asiakirjoja enintään:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:524
+#: ../src/ui/dialog/inkscape-preferences.cpp:555
 msgid "The maximum length of the Open Recent list in the File menu"
 msgstr "Enimmäismäärä viimeaikaisia asiakirjoja Tiedosto-valikon listassa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:526
+#: ../src/ui/dialog/inkscape-preferences.cpp:557
 msgid "Simplification threshold:"
 msgstr "Pelkistyksen herkkyys:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:527
+#: ../src/ui/dialog/inkscape-preferences.cpp:558
 msgid ""
 "How strong is the Simplify command by default. If you invoke this command "
 "several times in quick succession, it will act more and more aggressively; "
@@ -6418,53 +6821,53 @@ msgstr ""
 "useita kertoja peräkkäin vaikuttaa voimakkaammin. Suorittaminen tauon "
 "jälkeen palauttaa oletusherkkyyden."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "2x2"
 msgstr "2×2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "4x4"
 msgstr "4×4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "8x8"
 msgstr "8×8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:529
+#: ../src/ui/dialog/inkscape-preferences.cpp:560
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:533
+#: ../src/ui/dialog/inkscape-preferences.cpp:564
 msgid "Oversample bitmaps:"
 msgstr "Ylinäytteistä bittikartat:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:535
+#: ../src/ui/dialog/inkscape-preferences.cpp:566
 msgid "Clipping and masking:"
 msgstr "Syväys ja maski:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:536
+#: ../src/ui/dialog/inkscape-preferences.cpp:567
 msgid "Use the topmost selected object as a clipping path or mask"
 msgstr "Käytä ylintä kohdetta syväyspolkuna tai maskina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:538
+#: ../src/ui/dialog/inkscape-preferences.cpp:569
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Poista valinta tästä käyttääksesi alinta valittua kohdetta syväyspolkuna tai "
 "maskina"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:539
+#: ../src/ui/dialog/inkscape-preferences.cpp:570
 msgid "Remove clipping path or mask after applying"
 msgstr "Poista syväyspolku tai maski käytön jälkeen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:541
+#: ../src/ui/dialog/inkscape-preferences.cpp:572
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 "Poista syväyksessä tai maskin luomisessa käytetty kohde operaation jälkeen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:543
+#: ../src/ui/dialog/inkscape-preferences.cpp:574
 msgid "Misc"
 msgstr "Muut"
 
@@ -6920,6 +7323,11 @@ msgstr "Palauta oletusarvot nykyiselle sivulle"
 msgid "Apply transformation to selection"
 msgstr "Käytä muunnosta valintaan"
 
+#: ../src/ui/dialog/transformation.cpp:736
+#, fuzzy
+msgid "Edit transformation matrix"
+msgstr "Muunnosmatriisin elementti F"
+
 #: ../src/ui/dialog/whiteboard-connect.cpp:44
 msgid "_Use SSL"
 msgstr "_Käytä SSL:ää"
@@ -7267,7 +7675,7 @@ msgid "N/A"
 msgstr "Ei saatavilla"
 
 #: ../src/ui/widget/selected-style.cpp:134
-#: ../src/ui/widget/selected-style.cpp:971
+#: ../src/ui/widget/selected-style.cpp:969
 msgid "Nothing selected"
 msgstr "EI valintaa"
 
@@ -7346,12 +7754,14 @@ msgstr "Poista"
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
+#: ../src/ui/widget/selected-style.cpp:461
 #: ../src/ui/widget/style-swatch.cpp:305
 msgid "Unset fill"
 msgstr "Poista täyttö"
 
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
+#: ../src/ui/widget/selected-style.cpp:470
 #: ../src/ui/widget/style-swatch.cpp:305
 msgid "Unset stroke"
 msgstr "Poista viiva"
@@ -7425,10 +7835,13 @@ msgid "Paste color"
 msgstr "Liitä väri"
 
 #: ../src/ui/widget/selected-style.cpp:213
+#: ../src/ui/widget/selected-style.cpp:737
 msgid "Swap fill and stroke"
 msgstr "Vaihda täyttö ja viiva"
 
 #: ../src/ui/widget/selected-style.cpp:217
+#: ../src/ui/widget/selected-style.cpp:479
+#: ../src/ui/widget/selected-style.cpp:488
 msgid "Make fill opaque"
 msgstr "Tee täytöstä läpinäkymätön"
 
@@ -7437,10 +7850,12 @@ msgid "Make stroke opaque"
 msgstr "Tee viivasta läpinäkymätön"
 
 #: ../src/ui/widget/selected-style.cpp:226
+#: ../src/ui/widget/selected-style.cpp:443
 msgid "Remove fill"
 msgstr "Poista täyttö"
 
 #: ../src/ui/widget/selected-style.cpp:226
+#: ../src/ui/widget/selected-style.cpp:452
 msgid "Remove stroke"
 msgstr "Poista viiva"
 
@@ -7448,24 +7863,91 @@ msgstr "Poista viiva"
 msgid "Remove"
 msgstr "Poista"
 
-#: ../src/ui/widget/selected-style.cpp:977
+#: ../src/ui/widget/selected-style.cpp:500
+#, fuzzy
+msgid "Apply last set color to fill"
+msgstr "Tasainen täyttö"
+
+#: ../src/ui/widget/selected-style.cpp:512
+#, fuzzy
+msgid "Apply last set color to stroke"
+msgstr "Tasainen viiva"
+
+#: ../src/ui/widget/selected-style.cpp:523
+#, fuzzy
+msgid "Apply last selected color to fill"
+msgstr "Viimeksi valittu väri"
+
+#: ../src/ui/widget/selected-style.cpp:534
+#, fuzzy
+msgid "Apply last selected color to stroke"
+msgstr "Viimeksi valittu väri"
+
+#: ../src/ui/widget/selected-style.cpp:554
+#, fuzzy
+msgid "Invert fill"
+msgstr "Poista täyttö"
+
+#: ../src/ui/widget/selected-style.cpp:574
+#, fuzzy
+msgid "Invert stroke"
+msgstr "Poista viiva"
+
+#: ../src/ui/widget/selected-style.cpp:586
+#, fuzzy
+msgid "White fill"
+msgstr "Valkoinen"
+
+#: ../src/ui/widget/selected-style.cpp:598
+#, fuzzy
+msgid "White stroke"
+msgstr "Muokkaa viivaa..."
+
+#: ../src/ui/widget/selected-style.cpp:610
+#, fuzzy
+msgid "Black fill"
+msgstr "Musta"
+
+#: ../src/ui/widget/selected-style.cpp:622
+#, fuzzy
+msgid "Black stroke"
+msgstr "Tasainen viiva"
+
+#: ../src/ui/widget/selected-style.cpp:665
+#, fuzzy
+msgid "Paste fill"
+msgstr "Täyttö kuvioinnilla"
+
+#: ../src/ui/widget/selected-style.cpp:683
+#, fuzzy
+msgid "Paste stroke"
+msgstr "Viivan kuviointi"
+
+#: ../src/ui/widget/selected-style.cpp:805
+#: ../src/ui/widget/selected-style.cpp:839
+#: ../src/ui/widget/selected-style.cpp:1080
+#, fuzzy
+msgid "Change opacity"
+msgstr "Täytön peitto"
+
+#: ../src/ui/widget/selected-style.cpp:975
 msgid "Master opacity"
 msgstr "Täytön peitto"
 
-#: ../src/ui/widget/selected-style.cpp:1007
+#: ../src/ui/widget/selected-style.cpp:1005
 #, c-format
 msgid "Stroke width: %.5g%s%s"
 msgstr "Viivan leveys: %.5g%s%s"
 
-#: ../src/ui/widget/selected-style.cpp:1011
+#: ../src/ui/widget/selected-style.cpp:1009
 msgid " (averaged)"
 msgstr " (keskiarvo)"
 
-#: ../src/ui/widget/selected-style.cpp:1039
+#: ../src/ui/widget/selected-style.cpp:1037
 msgid "0 (transparent)"
 msgstr "0 (läpinäkyvä)"
 
-#: ../src/ui/widget/selected-style.cpp:1063
+#: ../src/ui/widget/selected-style.cpp:1061
 msgid "1.0 (opaque)"
 msgstr "1,0 (läpinakymätön)"
 
@@ -7543,7 +8025,11 @@ msgstr "O:.%d"
 msgid "Opacity: %.3g"
 msgstr "Läpinäkyvyys: %.3g"
 
-#. TODO: annotate
+#: ../src/verbs.cpp:1097
+#, fuzzy
+msgid "Move to next layer"
+msgstr "Siirrettiin seuraavalle tasolle."
+
 #: ../src/verbs.cpp:1098
 msgid "Moved to next layer."
 msgstr "Siirrettiin seuraavalle tasolle."
@@ -7552,7 +8038,11 @@ msgstr "Siirrettiin seuraavalle tasolle."
 msgid "Cannot move past last layer."
 msgstr "Taso on jo alin."
 
-#. TODO: annotate
+#: ../src/verbs.cpp:1109
+#, fuzzy
+msgid "Move to previous layer"
+msgstr "Siirrettiin edelliselle tasolle."
+
 #: ../src/verbs.cpp:1110
 msgid "Moved to previous layer."
 msgstr "Siirrettiin edelliselle tasolle."
@@ -7571,11 +8061,13 @@ msgid "Raised layer <b>%s</b>."
 msgstr "Nostettiin taso <b>%s</b>."
 
 #: ../src/verbs.cpp:1159
-msgid "Layer to Top"
+#, fuzzy
+msgid "Layer to top"
 msgstr "Taso ylimmäiseksi"
 
 #: ../src/verbs.cpp:1163
-msgid "Raise Layer"
+#, fuzzy
+msgid "Raise layer"
 msgstr "Nosta tasoa"
 
 #: ../src/verbs.cpp:1166 ../src/verbs.cpp:1170
@@ -7584,11 +8076,13 @@ msgid "Lowered layer <b>%s</b>."
 msgstr "Laskettiin taso <b>%s</b>."
 
 #: ../src/verbs.cpp:1167
-msgid "Layer to Bottom"
+#, fuzzy
+msgid "Layer to bottom"
 msgstr "Laske alimmaiseksi"
 
 #: ../src/verbs.cpp:1171
-msgid "Lower Layer"
+#, fuzzy
+msgid "Lower layer"
 msgstr "Laske tasoa"
 
 #: ../src/verbs.cpp:1180
@@ -8054,17 +8548,9 @@ msgstr "Pura valitut ryhmät"
 msgid "_Put on Path"
 msgstr "Aseta _polulle"
 
-#: ../src/verbs.cpp:2045
-msgid "Put text on path"
-msgstr "Aseta teksti polulle"
-
 #: ../src/verbs.cpp:2046
 msgid "_Remove from Path"
 msgstr "P_oista polulta"
-
-#: ../src/verbs.cpp:2047
-msgid "Remove text from path"
-msgstr "Poista teksti polulta"
 
 #: ../src/verbs.cpp:2048
 msgid "Remove Manual _Kerns"
@@ -9795,9 +10281,10 @@ msgid "Fixation:"
 msgstr "Jäykkyys:"
 
 #: ../src/widgets/toolbox.cpp:2082
+#, fuzzy
 msgid ""
-"How fixed is the pen angle (0 = always perpendicular to stroke direction, 1 "
-"= fixed)"
+"Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
+"angle)"
 msgstr "Miten jäykkä kynän kulma on (0 = viivan mukainen, 1 = jäykkä)"
 
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
@@ -9807,7 +10294,7 @@ msgid "Round:"
 msgstr "Pyöristetty:"
 
 #: ../src/widgets/toolbox.cpp:2093
-msgid "How much the ends of a stroke are rounded"
+msgid "Increase to round the ends of strokes"
 msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2106
@@ -9815,25 +10302,25 @@ msgid "Tremor:"
 msgstr "Tärinä:"
 
 #: ../src/widgets/toolbox.cpp:2106
-msgid "How uneven or trembling is the pen stroke"
-msgstr "Miten tasainen on kynän jälki"
+msgid "Increase to make strokes rugged and trembling"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2116
+#, fuzzy
+msgid "Wiggle:"
+msgstr "Nimi:"
+
+#: ../src/widgets/toolbox.cpp:2116
+msgid "Increase to make the pen waver and wiggle"
+msgstr ""
+
+#: ../src/widgets/toolbox.cpp:2127
 msgid "Mass:"
 msgstr "Massa:"
 
-#: ../src/widgets/toolbox.cpp:2116
-msgid "How much inertia affects the movement of the pen"
-msgstr "Miten paljon hitaus vaikuttaa kynän liikkuvuuteen"
-
-#. TRANSLATORS: "drag" means "resistance" here
 #: ../src/widgets/toolbox.cpp:2127
-msgid "Drag:"
-msgstr "Veto:"
-
-#: ../src/widgets/toolbox.cpp:2127
-msgid "How much resistance affects the movement of the pen"
-msgstr "Miten paljon vastustus vaikuttaa kynän liikkuvuuteen"
+msgid "Increase to make the pen drag behind, as if slowed by inertia"
+msgstr ""
 
 #: ../src/widgets/toolbox.cpp:2147
 msgid "Use the pressure of the input device to alter the width of the pen"
@@ -9950,10 +10437,6 @@ msgstr "Pystysuora välistys"
 #: ../src/widgets/toolbox.cpp:3823
 msgid "Letter rotation"
 msgstr "Kirjaimen kierto"
-
-#: ../src/widgets/toolbox.cpp:3844
-msgid "Remove manual kerns"
-msgstr "Poista lisätyt välistykset"
 
 #: ../src/widgets/toolbox.cpp:3912
 msgid "Change connector spacing distance"
@@ -10539,6 +11022,24 @@ msgstr "Windows Metafile (*.wmf)"
 #: ../share/extensions/wmf_input.inx.h:3
 msgid "Windows Metafile Input"
 msgstr "Windows Metafile -tuonti"
+
+#~ msgid "_Opacity"
+#~ msgstr "_Läpinäkyvyys"
+
+#~ msgid "Select <b>path(s)</b> to outline."
+#~ msgstr "Valitse <b>viivat</b>, jotka muutetaan poluiksi."
+
+#~ msgid "How uneven or trembling is the pen stroke"
+#~ msgstr "Miten tasainen on kynän jälki"
+
+#~ msgid "How much inertia affects the movement of the pen"
+#~ msgstr "Miten paljon hitaus vaikuttaa kynän liikkuvuuteen"
+
+#~ msgid "Drag:"
+#~ msgstr "Veto:"
+
+#~ msgid "How much resistance affects the movement of the pen"
+#~ msgstr "Miten paljon vastustus vaikuttaa kynän liikkuvuuteen"
 
 #~ msgid "Function Plotter"
 #~ msgstr "Funktiopiirturi"
