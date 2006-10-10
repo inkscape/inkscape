@@ -368,8 +368,8 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg)
 
     sp_repr_css_attr_unref (css);
 
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:opacity", SP_VERB_NONE, 
-                            /* TODO: annotate */ "object-properties.cpp:311");
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE, 
+                            _("Change opacity"));
 
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -418,7 +418,7 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
                                             SP_OBJECT_STYLE_MODIFIED_FLAG ));
     }
 
-    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:blur", SP_VERB_NONE,  _("Change blur"));
+    sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
 

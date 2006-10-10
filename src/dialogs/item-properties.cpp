@@ -345,8 +345,8 @@ sp_item_widget_sensitivity_toggled (GtkWidget *widget, SPWidget *spw)
 
     item->setLocked(gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 
-    sp_document_maybe_done (SP_ACTIVE_DOCUMENT,  "ItemDialog:insensitive", SP_VERB_NONE, 
-                            /* TODO: annotate */ "item-properties.cpp:349");
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+             gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))? _("Lock object") : _("Unlock object"));
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -364,8 +364,8 @@ sp_item_widget_hidden_toggled(GtkWidget *widget, SPWidget *spw)
 
     item->setExplicitlyHidden(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)));
 
-    sp_document_maybe_done (SP_ACTIVE_DOCUMENT,  "ItemDialog:visiblity", SP_VERB_NONE, 
-                            /* TODO: annotate */ "item-properties.cpp:368");
+    sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+             gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))? _("Hide object") : _("Unhide object"));
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -397,8 +397,8 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_Id"));
         SP_EXCEPTION_INIT (&ex);
         sp_object_setAttribute (SP_OBJECT (item), "id", id, &ex);
-        sp_document_maybe_done (SP_ACTIVE_DOCUMENT, "ItemDialog:id", SP_VERB_NONE, 
-                                /* TODO: annotate */ "item-properties.cpp:401");
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+                                _("Set object ID"));
     }
 
     /* Retrieve the label widget for the object's label */
@@ -412,8 +412,8 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
     SPObject *obj = (SPObject*)item;
     if (strcmp (label, obj->defaultLabel())) {
         obj->setLabel(label);
-        sp_document_maybe_done (SP_ACTIVE_DOCUMENT, "inkscape:label", SP_VERB_NONE,
-                                /* TODO: annotate */ "item-properties.cpp:416");
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+                                _("Set object label"));
     }
 
     /* Retrieve the title */
@@ -421,16 +421,16 @@ sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw)
     gchar *title = (gchar *)gtk_entry_get_text (GTK_ENTRY (w));
     if (title != NULL) {
         obj->setTitle(title);
-        sp_document_maybe_done (SP_ACTIVE_DOCUMENT, "title", SP_VERB_NONE, 
-                                /* TODO: annotate */ "item-properties.cpp:425");
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+                                _("Set object title"));
     }
 
     /* Retrieve the description */
     gchar *desc = NULL; /* TODO:  get text from text buffer */
     if (desc != NULL) {
         obj->setDesc(desc);
-        sp_document_maybe_done (SP_ACTIVE_DOCUMENT, "desc", SP_VERB_NONE, 
-                                /* TODO: annotate */ "item-properties.cpp:433");
+        sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, 
+                                _("Set object description"));
     }
 
     gtk_object_set_data (GTK_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));

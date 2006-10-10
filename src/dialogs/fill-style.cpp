@@ -34,6 +34,7 @@
 #include <inkscape.h>
 #include <document-private.h>
 #include <xml/repr.h>
+#include <glibmm/i18n.h>
 
 
 // These can be deleted once we sort out the libart dependence.
@@ -286,7 +287,7 @@ sp_fill_style_widget_fillrule_changed ( SPPaintSelector *psel,
     sp_repr_css_attr_unref (css);
 
     sp_document_done (SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_FILL_STROKE, 
-                      /* TODO: annotate */ "fill-style.cpp:289");
+                      _("Change fill rule"));
 }
 
 static gchar *undo_label_1 = "fill:flatcolor:1";
@@ -326,7 +327,7 @@ sp_fill_style_widget_paint_dragged (SPPaintSelector *psel, SPWidget *spw)
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "fill", "fill-opacity");
             sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
-                                    /* TODO: annotate */ "fill-style.cpp:329");
+                                    _("Set fill color"));
             g_object_set_data (G_OBJECT (spw), "local", GINT_TO_POINTER (TRUE)); // local change, do not update from selection
             break;
         }
@@ -388,7 +389,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
             sp_repr_css_attr_unref (css);
 
             sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
-                              /* TODO: annotate */ "fill-style.cpp:391");
+                              _("Remove fill"));
             break;
         }
 
@@ -397,7 +398,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
         {
             sp_paint_selector_set_flat_color (psel, desktop, "fill", "fill-opacity");
             sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE,
-                                    /* TODO: annotate */ "fill-style.cpp:400");
+                                    _("Set fill color"));
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
@@ -464,7 +465,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                 sp_repr_css_attr_unref (css);
 
                 sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
-                                  /* TODO: annotate */ "fill-style.cpp:467");
+                                  _("Set gradient on fill"));
             }
             break;
 
@@ -511,7 +512,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                 } // end if
 
                 sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
-                                  /* TODO: annotate */ "fill-style.cpp:514");
+                                  _("Set pattern on fill"));
 
             } // end if
 
@@ -526,7 +527,7 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
                     sp_repr_css_attr_unref (css);
 
                     sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
-                                      /* TODO: annotate */ "fill-style.cpp:529");
+                                      _("Unset fill"));
             }
             break;
 

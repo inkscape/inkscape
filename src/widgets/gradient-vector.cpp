@@ -358,6 +358,7 @@ sp_gvs_gradient_activate (GtkMenuItem *mi, SPGradientVectorSelector *gvs)
 	if (norm != gr) {
 		/* We do extra undo push here */
 		/* If handler has already done it, it is just NOP */
+		// FIXME: looks like this is never a valid undo step, consider removing this
 	    sp_document_done (SP_OBJECT_DOCUMENT (norm), SP_VERB_CONTEXT_GRADIENT,
 			      /* TODO: annotate */ "gradient-vector.cpp:350");
 	}
@@ -655,7 +656,7 @@ offadjustmentChanged( GtkAdjustment *adjustment, GtkWidget *vb)
     sp_repr_set_css_double(SP_OBJECT_REPR(stop), "offset", stop->offset);
 
     sp_document_done (SP_OBJECT_DOCUMENT (stop), SP_VERB_CONTEXT_GRADIENT,
-		      /* TODO: annotate */ "gradient-vector.cpp:642");
+							_("Change gradient stop offset"));
 
 	blocked = FALSE;
 }
@@ -728,7 +729,7 @@ sp_grd_ed_add_stop (GtkWidget *widget,  GtkWidget *vb)
 	gtk_widget_set_sensitive (offslide, TRUE);
 	gtk_widget_set_sensitive (GTK_WIDGET (offspin), TRUE);
 	sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT, 
-			  /* TODO: annotate */ "gradient-vector.cpp:715");
+			  _("Add gradient stop"));
 }
 
 static void
@@ -760,7 +761,7 @@ sp_grd_ed_del_stop (GtkWidget *widget,  GtkWidget *vb)
 		sp_gradient_vector_widget_load_gradient (vb, gradient);
 		update_stop_list(GTK_WIDGET(mnu), gradient, NULL);
 		sp_document_done (SP_OBJECT_DOCUMENT (gradient), SP_VERB_CONTEXT_GRADIENT, 
-				  /* TODO: annotate */ "gradient-vector.cpp:747");
+				  _("Delete gradient stop"));
 	}
 
 }
@@ -1168,7 +1169,7 @@ sp_gradient_vector_color_changed (SPColorSelector *csel, GtkObject *object)
 		//SP_OBJECT_REPR (stop)->setAttribute("style", c);
 
 	sp_document_done (SP_OBJECT_DOCUMENT (ngr), SP_VERB_CONTEXT_GRADIENT,
-			  /* TODO: annotate */ "gradient-vector.cpp:1124");
+			  _("Change gradient stop color"));
 
 	blocked = FALSE;
 }

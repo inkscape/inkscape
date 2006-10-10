@@ -17,6 +17,7 @@
 #include "desktop-handles.h"
 #include "document-private.h"
 #include "inkscape.h"
+#include <glibmm/i18n.h>
 
 static void sp_xmlview_content_class_init (SPXMLViewContentClass * klass);
 static void sp_xmlview_content_init (SPXMLViewContent * text);
@@ -160,7 +161,7 @@ sp_xmlview_content_changed (GtkTextBuffer *tb, SPXMLViewContent *text)
 		text->repr->setContent(data);
 		g_free (data);
 		text->blocked = FALSE;
-		sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_NONE, 
-				  /* TODO: annotate */ "sp-xmlview-content.cpp:164");
+		sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_XML_EDITOR, 
+									_("Type text in a text node"));
 	}
 }

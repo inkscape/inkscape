@@ -852,7 +852,7 @@ sp_stb_magnitude_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
         }
     }
     if (modmade)  sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                                   /* TODO: annotate */ "toolbox.cpp:854");
+                                   _("Star: Change number of corners"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -897,7 +897,7 @@ sp_stb_proportion_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
     }
 
     if (modmade) sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                                  /* TODO: annotate */ "toolbox.cpp:899");
+                                   _("Star: Change spike ratio"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -951,7 +951,7 @@ sp_stb_sides_flat_state_changed(GtkWidget *widget, GtkObject *tbl)
         }
     }
     if (modmade) sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                                  /* TODO: annotate */ "toolbox.cpp:953");
+                                  gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))? _("Make polygon") : _("Make star"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -988,7 +988,7 @@ sp_stb_rounded_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
         }
     }
     if (modmade)  sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                                   /* TODO: annotate */ "toolbox.cpp:990");
+                                   _("Star: Change rounding"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -1026,7 +1026,7 @@ sp_stb_randomized_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
         }
     }
     if (modmade)  sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR, 
-                                   /* TODO: annotate */ "toolbox.cpp:1028");
+                                   _("Star: Change randomization"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 
@@ -1366,7 +1366,7 @@ sp_rtb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_name
 
     if (modmade) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT, 
-                         /* TODO: annotate */ "toolbox.cpp:1368");
+                                   _("Change rectangle"));
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -1683,7 +1683,7 @@ sp_spl_tb_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const *value_n
 
     if (modmade) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL, 
-                         /* TODO: annotate */ "toolbox.cpp:1685");
+                                   _("Change spiral"));
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -2265,7 +2265,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GtkWidget *tbl, gchar const 
 
     if (modmade) {
         sp_document_maybe_done(sp_desktop_document(desktop), value_name, SP_VERB_CONTEXT_ARC, 
-                               /* TODO: annotate */ "toolbox.cpp:2247");
+                                   _("Arc: Change start/end"));
     }
 
     // defocus spinbuttons by moving focus to the canvas, unless "stay" is on
@@ -2338,7 +2338,7 @@ sp_arctb_open_state_changed(GtkWidget *widget, GtkObject *tbl)
 
     if (modmade) {
         sp_document_done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC, 
-                         /* TODO: annotate */ "toolbox.cpp:2320");
+                                   _("Arc: Change open/closed"));
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
@@ -3071,7 +3071,7 @@ sp_text_toolbox_family_changed (GtkTreeSelection    *selection,
     }
 
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT, 
-                      /* TODO: annotate */ "toolbox.cpp:3024");
+                                   _("Text: Change font family"));
     sp_repr_css_attr_unref (css);
     free (family);
     gtk_widget_hide (GTK_WIDGET (g_object_get_data (G_OBJECT(tbl), "warning-image")));        
@@ -3154,7 +3154,7 @@ sp_text_toolbox_anchoring_toggled (GtkRadioButton   *button,
 
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT, 
-                      /* TODO: annotate */ "toolbox.cpp:3107");
+                                   _("Text: Change alignment"));
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
@@ -3200,7 +3200,7 @@ sp_text_toolbox_style_toggled (GtkToggleButton  *button,
 
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT, 
-                      /* TODO: annotate */ "toolbox.cpp:3153");
+                                   _("Text: Change font style"));
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
@@ -3247,7 +3247,7 @@ sp_text_toolbox_orientation_toggled (GtkRadioButton  *button,
 
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_done (sp_desktop_document (SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT, 
-                      /* TODO: annotate */ "toolbox.cpp:3200");
+                                   _("Text: Change orientation"));
     sp_repr_css_attr_unref (css);
 
     gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas));
@@ -3343,7 +3343,7 @@ sp_text_toolbox_size_changed  (GtkComboBox *cbox,
 
     sp_desktop_set_style (desktop, css, true, true);
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "ttb:size", SP_VERB_NONE, 
-                            /* TODO: annotate */ "toolbox.cpp:3296");
+                                   _("Text: Change font size"));
     sp_repr_css_attr_unref (css);
 
 
@@ -3909,7 +3909,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GtkWidget *tbl)
     }
     
     sp_document_done(doc, SP_VERB_CONTEXT_CONNECTOR, 
-            _("Change connector spacing distance"));
+            _("Change connector spacing"));
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
     
@@ -3928,7 +3928,7 @@ static void sp_connector_graph_layout(void)
 
     prefs_set_int_attribute("options.clonecompensation", "value", saved_compensation);
 
-    sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, /* TODO: annotate */ "toolbox.cpp:129");
+    sp_document_done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
 }
 
 static void

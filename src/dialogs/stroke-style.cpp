@@ -261,8 +261,8 @@ sp_stroke_style_paint_dragged(SPPaintSelector *psel, SPWidget *spw)
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
             sp_paint_selector_set_flat_color (psel, SP_ACTIVE_DESKTOP, "stroke", "stroke-opacity");
-            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_NONE, 
-                                    /* TODO: annotate */ "stroke-style.cpp:265");
+            sp_document_maybe_done (sp_desktop_document(SP_ACTIVE_DESKTOP), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
+                                    _("Set stroke color"));
             break;
         }
 
@@ -308,7 +308,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
             sp_repr_css_attr_unref(css);
 
             sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
-                             /* TODO: annotate */ "stroke-style.cpp:311");
+                             _("Remove stroke"));
             break;
         }
 
@@ -317,7 +317,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
         {
             sp_paint_selector_set_flat_color (psel, desktop, "stroke", "stroke-opacity");
             sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE, 
-                                    /* TODO: annotate */ "stroke-style.cpp:320");
+                                    _("Set stroke color"));
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
@@ -369,7 +369,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                 }
 
                 sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
-                                 /* TODO: annotate */ "stroke-style.cpp:372");
+                                 _("Set gradient on stroke"));
             }
             break;
 
@@ -413,7 +413,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                 } // end if
 
                 sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
-                                  /* TODO: annotate */ "stroke-style.cpp:416");
+                                  _("Set pattern on stroke"));
             } // end if
 
             break;
@@ -427,7 +427,7 @@ sp_stroke_style_paint_changed(SPPaintSelector *psel, SPWidget *spw)
                     sp_repr_css_attr_unref (css);
 
                     sp_document_done (document, SP_VERB_DIALOG_FILL_STROKE, 
-                                      /* TODO: annotate */ "stroke-style.cpp:430");
+                                      _("Unset stroke"));
             }
             break;
 
@@ -886,7 +886,7 @@ sp_marker_select(GtkOptionMenu *mnu, GtkWidget *spw)
     sp_repr_css_attr_unref(css);
 
     sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
-                     /* TODO: annotate */ "stroke-style.cpp:889");
+                     _("Set markers"));
 }
 
 static gboolean stroke_width_set_unit(SPUnitSelector *,
@@ -1459,7 +1459,7 @@ sp_stroke_style_scale_line(SPWidget *spw)
     sp_repr_css_attr_unref(css);
 
     sp_document_done(document, SP_VERB_DIALOG_FILL_STROKE, 
-                     /* TODO: annotate */ "stroke-style.cpp:1462");
+                     _("Set stroke style"));
 
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
 }
@@ -1546,7 +1546,7 @@ sp_stroke_style_any_toggled(GtkToggleButton *tb, SPWidget *spw)
         sp_repr_css_attr_unref(css);
 
         sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_FILL_STROKE,
-                         /* TODO: annotate */ "stroke-style.cpp:1549");
+                         _("Set stroke style"));
     }
 }
 

@@ -867,7 +867,7 @@ clonetiler_unclump (GtkWidget *widget, void *)
     g_slist_free (to_unclump);
 
     sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER, 
-                      /* TODO: annotate */ "clonetiler.cpp:867");
+                      _("Unclump tiled clones"));
 }
 
 static guint
@@ -920,7 +920,7 @@ clonetiler_remove (GtkWidget *widget, void *, bool do_undo = true)
 
     if (do_undo)
         sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_CLONETILER, 
-                          /* TODO: annotate */ "clonetiler.cpp:920");
+                          _("Delete tiled clones"));
 }
 
 static NR::Rect
@@ -1326,7 +1326,7 @@ clonetiler_apply (GtkWidget *widget, void *)
     clonetiler_change_selection (NULL, selection, dlg);
 
     sp_document_done(sp_desktop_document(desktop), SP_VERB_DIALOG_CLONETILER, 
-                     /* TODO: annotate */ "clonetiler.cpp:1300");
+                     _("Create tiled clones"));
 }
 
 static GtkWidget *

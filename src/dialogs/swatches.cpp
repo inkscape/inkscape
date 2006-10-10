@@ -418,7 +418,7 @@ void ColorItem::_colorDefChanged(void* data)
 
                         if ( bruteForce( document, rroot, paletteName, item->def.getR(), item->def.getG(), item->def.getB() ) ) {
                             sp_document_done( document , SP_VERB_DIALOG_SWATCHES, 
-                                              /* TODO: annotate */ "swatches.cpp:421");
+                                              _("Change color definition"));
                         }
                     }
                 }
@@ -553,7 +553,7 @@ void ColorItem::buttonClicked(bool secondary)
 
         sp_repr_css_attr_unref(css);
         sp_document_done (sp_desktop_document (desktop), SP_VERB_DIALOG_SWATCHES, 
-                          /* TODO: annotate */ "swatches.cpp:556");
+                          secondary? _("Set stroke color from swatch") : _("Set fill color from swatch"));
     }
 }
 

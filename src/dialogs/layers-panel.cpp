@@ -588,7 +588,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 item->setHidden( !newValue  );
                 item->updateRepr();
                 sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS, 
-                                  /* TODO: annotate */ "layers-panel.cpp:591");
+                                  newValue? _("Unhide layer") : _("Hide layer"));
             }
             break;
 
@@ -599,7 +599,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
                 item->setLocked( newValue );
                 item->updateRepr();
                 sp_document_done( _desktop->doc() , SP_VERB_DIALOG_LAYERS, 
-                                  /* TODO: annotate */ "layers-panel.cpp:602");
+                                  newValue? _("Lock layer") : _("Unlock layer"));
             }
             break;
         }
@@ -695,8 +695,8 @@ void LayersPanel::_opacityChanged()
 
         sp_repr_css_attr_unref( css );
 
-        sp_document_maybe_done( _desktop->doc(), "layers:opacity", SP_VERB_NONE, 
-                                /* TODO: annotate */ "layers-panel.cpp:699" );
+        sp_document_maybe_done( _desktop->doc(), "layers:opacity", SP_VERB_DIALOG_LAYERS, 
+                                _("Change layer opacity"));
 
         _opacityConnection.unblock();
     }
