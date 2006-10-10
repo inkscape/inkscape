@@ -15,6 +15,11 @@
 #include <libnr/nr-compose-transform.h>
 #include "../prefs-utils.h"
 #include "nr-arena-image.h"
+#include "style.h"
+#include "display/nr-filter.h"
+#include "display/nr-filter-gaussian.h"
+#include "sp-filter.h"
+#include "sp-gaussian-blur.h"
 
 int nr_arena_image_x_sample = 1;
 int nr_arena_image_y_sample = 1;
@@ -79,6 +84,8 @@ nr_arena_image_init (NRArenaImage *image)
 	image->height = 256.0;
 
 	nr_matrix_set_identity (&image->grid2px);
+
+	image->style = 0;
 }
 
 static void
@@ -256,3 +263,53 @@ nr_arena_image_set_geometry (NRArenaImage *image, double x, double y, double wid
 	nr_arena_item_request_update (NR_ARENA_ITEM (image), NR_ARENA_ITEM_STATE_ALL, FALSE);
 }
 
+void nr_arena_image_set_style (NRArenaImage *image, SPStyle *style)
+{
+  g_return_if_fail(image != NULL);
+  g_return_if_fail(NR_IS_ARENA_IMAGE(image));
+
+  if (style) sp_style_ref(style);
+  if (image->style) sp_style_unref(image->style);
+  image->style = style;
+
+  //if there is a filter set for this group
+  if (style && style->filter.set && style->filter.filter) {
+  
+        image->filter = new NR::Filter();
+        image->filter->set_x(style->filter.filter->x);
+        image->filter->set_y(style->filter.filter->y);
+        image->filter->set_width(style->filter.filter->width);
+        image->filter->set_height(style->filter.filter->height);
+        
+        //go through all SP filter primitives
+        for(int i=0; i<style->filter.filter->_primitive_count; i++)
+        {
+            SPFilterPrimitive *primitive = style->filter.filter->_primitives[i];
+            //if primitive is gaussianblur
+//            if(SP_IS_GAUSSIANBLUR(primitive))
+            {
+                NR::FilterGaussian * gaussian = (NR::FilterGaussian *) image->filter->add_primitive(NR::NR_FILTER_GAUSSIANBLUR);
+                SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
+                float num = spblur->stdDeviation.getNumber();
+                if( num>=0.0 )
+                {
+                    float optnum = spblur->stdDeviation.getOptNumber();
+                    if( optnum>=0.0 )
+                        gaussian->set_deviation((double) num, (double) optnum);
+                    else
+                        gaussian->set_deviation((double) num);
+                }
+            }
+        }
+    }
+    else
+    {
+        //no filter set for this group
+        image->filter = NULL;
+    }
+
+  if (style && style->enable_background.set
+      && style->enable_background.value == SP_CSS_BACKGROUND_NEW) {
+    image->background_new = true;
+  }
+}

@@ -996,6 +996,7 @@ sp_image_show (SPItem *item, NRArena *arena, unsigned int key, unsigned int flag
 	if (image->pixbuf) {
 	        pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
 		rs = gdk_pixbuf_get_rowstride (image->pixbuf);
+                nr_arena_image_set_style(NR_ARENA_IMAGE(ai), SP_OBJECT_STYLE(SP_OBJECT(item)));
 	        if (image->aspect_align == SP_ASPECT_NONE)
 			nr_arena_image_set_pixels (NR_ARENA_IMAGE (ai),
 					   gdk_pixbuf_get_pixels (image->pixbuf),
@@ -1116,6 +1117,7 @@ sp_image_update_canvas_image (SPImage *image)
 	for (v = item->display; v != NULL; v = v->next) {
 	        pixskip = gdk_pixbuf_get_n_channels (image->pixbuf) * gdk_pixbuf_get_bits_per_sample (image->pixbuf) / 8;
 		rs = gdk_pixbuf_get_rowstride (image->pixbuf);
+                nr_arena_image_set_style (NR_ARENA_IMAGE(v->arenaitem), SP_OBJECT_STYLE(SP_OBJECT(image)));
 		if (image->aspect_align == SP_ASPECT_NONE) {
 			nr_arena_image_set_pixels (NR_ARENA_IMAGE (v->arenaitem),
 					   gdk_pixbuf_get_pixels (image->pixbuf),

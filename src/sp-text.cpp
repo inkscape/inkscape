@@ -248,6 +248,7 @@ sp_text_update (SPObject *object, SPCtx *ctx, guint flags)
         sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
+            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
             // pass the bbox of the text object as paintbox (used for paintserver fills)
             text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
         }
@@ -273,6 +274,7 @@ sp_text_modified (SPObject *object, guint flags)
         sp_item_invoke_bbox(text, &paintbox, NR::identity(), TRUE);
         for (SPItemView* v = text->display; v != NULL; v = v->next) {
             text->_clearFlow(NR_ARENA_GROUP(v->arenaitem));
+            nr_arena_group_set_style(NR_ARENA_GROUP(v->arenaitem), SP_OBJECT_STYLE(object));
             text->layout.show(NR_ARENA_GROUP(v->arenaitem), &paintbox);
         }
     }
