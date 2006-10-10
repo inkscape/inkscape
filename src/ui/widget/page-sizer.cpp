@@ -349,8 +349,7 @@ PageSizer::setDim (double w, double h, bool changeList)
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         sp_document_set_width (doc, w, &_px_unit);
         sp_document_set_height (doc, h, &_px_unit);
-        sp_document_done (doc, SP_VERB_NONE, 
-        /* TODO: annotate */ "page-sizer.cpp:301");
+        sp_document_done (doc, SP_VERB_NONE, _("Set page size"));
     } 
     
     _landscape = ( w > h );

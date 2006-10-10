@@ -1048,8 +1048,11 @@ sp_selected_path_create_offset_object(int expand, bool updating)
     {
         // pas vraiment de points sur le resultat
         // donc il ne reste rien
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                         _("Create offset object"));
+        sp_document_done(sp_desktop_document(desktop), 
+                         (updating ? SP_VERB_SELECTION_LINKED_OFFSET 
+                          : SP_VERB_SELECTION_DYNAMIC_OFFSET),
+                         (updating ? _("Create linked offset")
+                          : _("Create dynamic offset")));
         selection->clear();
 
         delete res;
@@ -1113,8 +1116,11 @@ sp_selected_path_create_offset_object(int expand, bool updating)
         selection->set(nitem);
     }
 
-    sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                     _("Create offset object"));
+    sp_document_done(sp_desktop_document(desktop), 
+                     (updating ? SP_VERB_SELECTION_LINKED_OFFSET 
+                      : SP_VERB_SELECTION_DYNAMIC_OFFSET),
+                     (updating ? _("Create linked offset")
+                      : _("Create dynamic offset")));
 
     delete res;
     delete orig;
@@ -1356,8 +1362,9 @@ sp_selected_path_do_offset(bool expand, double prefOffset)
     }
 
     if (did) {
-        sp_document_done(sp_desktop_document(desktop), SP_VERB_NONE, 
-                         _("Inset/outset path"));
+        sp_document_done(sp_desktop_document(desktop), 
+                         (expand ? SP_VERB_SELECTION_OFFSET : SP_VERB_SELECTION_INSET),
+                         (expand ? _("Outset path") : _("Inset path")));
     } else {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("<b>No paths</b> to inset/outset in the selection."));
         return;
