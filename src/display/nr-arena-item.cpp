@@ -297,6 +297,8 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 	NRPixBlock cpb;
 	unsigned int state;
 
+	bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
+
 	nr_return_val_if_fail (item != NULL, NR_ARENA_ITEM_STATE_INVALID);
 	nr_return_val_if_fail (NR_IS_ARENA_ITEM (item), NR_ARENA_ITEM_STATE_INVALID);
 	nr_return_val_if_fail (item->state & NR_ARENA_ITEM_STATE_BBOX, item->state);
@@ -313,7 +315,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
 	if (!item->visible) return item->state | NR_ARENA_ITEM_STATE_RENDER;
 	nr_rect_l_intersect (&carea, area, &item->bbox);
 	if (nr_rect_l_test_empty (&carea)) return item->state | NR_ARENA_ITEM_STATE_RENDER;
-	if(item->filter) {
+	if(item->filter && !outline) {
 	  nr_rect_l_enlarge(&carea, item->filter->get_enlarge(item->ctm));
 	  nr_rect_l_intersect(&carea, &carea, &item->bbox);
 	}
@@ -493,7 +495,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
         nr_pixblock_release (&tpb);
       }
       /* Multiply with opacity if needed */
-      if ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE) {
+      if ((item->opacity != 255) && !item->render_opacity && !outline) {
         int x, y;
         unsigned int a;
         a = item->opacity;
@@ -521,7 +523,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
       } else {
         nr_pixblock_release (&ipb);
       }
-    } else if ( ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE) ) {
+    } else if ( ((item->opacity != 255) && !item->render_opacity && !outline) ) {
       /* Opacity only */
       // gettimeofday(&end_time,NULL);
       g_get_current_time (&end_time);
@@ -555,8 +557,8 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
   } else {
     /* Determine, whether we need temporary buffer */
     if (item->clip || item->mask
-	|| ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE)
-	|| item->filter || item->background_new
+	|| ((item->opacity != 255) && !item->render_opacity && !outline)
+	|| (item->filter && !outline) || item->background_new
 	|| (item->parent && item->parent->background_pb) )
       {
       NRPixBlock ipb, mpb;
@@ -581,8 +583,8 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
       ipb.empty = FALSE;
 
       /* Run filtering, if a filter is set for this object */
-      if(item->filter) {
-	item->filter->render(item, &ipb);
+      if(item->filter && !outline) {
+        item->filter->render(item, &ipb);
       }
 
       if (item->clip || item->mask) {
@@ -652,7 +654,7 @@ unsigned int nr_arena_item_invoke_render(NRArenaItem *item, NRRectL const *area,
           nr_pixblock_release (&tpb);
         }
         /* Multiply with opacity if needed */
-        if ((item->opacity != 255) && !item->render_opacity && item->arena->rendermode != RENDERMODE_OUTLINE) {
+        if ((item->opacity != 255) && !item->render_opacity && !outline) {
           int x, y;
           unsigned int a;
           a = item->opacity;
