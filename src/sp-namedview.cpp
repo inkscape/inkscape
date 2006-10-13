@@ -848,28 +848,24 @@ static void sp_namedview_setup_grid_item(SPNamedView *nv, SPCanvasItem *item)
         sp_canvas_item_hide(item);
     }
     
+    sp_canvas_item_set((GtkObject *) item,
+                       "color", nv->gridcolor,
+                       "originx", nv->gridorigin[NR::X],
+                       "originy", nv->gridorigin[NR::Y],
+                       "spacingy", nv->gridspacing[NR::Y],
+                       "empcolor", nv->gridempcolor,
+                       "empspacing", nv->gridempspacing,
+                       NULL);
     if (!btype){
         // CGRID
         sp_canvas_item_set((GtkObject *) item,
-                           "color", nv->gridcolor,
-                           "originx", nv->gridorigin[NR::X],
-                           "originy", nv->gridorigin[NR::Y],
                            "spacingx", nv->gridspacing[NR::X],
-                           "spacingy", nv->gridspacing[NR::Y],
-                           "empcolor", nv->gridempcolor,
-                           "empspacing", nv->gridempspacing,
                            NULL);
     } else {
         // CAXONOMGRID
         sp_canvas_item_set((GtkObject *) item,
-                           "color", nv->gridcolor,
-                           "originx", nv->gridorigin[NR::X],
-                           "originy", nv->gridorigin[NR::Y],
-                           "spacingy", nv->gridspacing[NR::Y],
                            "anglex", nv->gridangle[0],
                            "anglez", nv->gridangle[1],
-                           "empcolor", nv->gridempcolor,
-                           "empspacing", nv->gridempspacing,
                            NULL);
     }
 }
