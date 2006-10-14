@@ -147,12 +147,12 @@ VERSION_NR = 0.45+devel
 VERSION = \"$(VERSION_NR)\"
 
 ####### the XP_WIN def is necessary for libjs.a
-CFLAGS = -Wall -O3 -g -mms-bitfields -DVERSION=$(VERSION) \
+CFLAGS = -Wall -g -O3 -mms-bitfields -DVERSION=$(VERSION) \
 -DXP_WIN -D_INTL_REDIRECT_INLINE -DHAVE_CONFIG_H
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-CFLAGS += -DWITH_INKBOARD
+CFLAGS += -DWITH_INKBOARD -DHAVE_SSL
 
 ####### IMPLICIT RULES
 .cpp.o:
