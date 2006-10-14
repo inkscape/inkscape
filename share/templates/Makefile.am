@@ -7,8 +7,14 @@ templates_DATA = \
 	A4_landscape.svg \
 	A4.svg \
 	black_opaque.svg \
+	white_opaque.svg \
+	business_card_85x54mm.svg \
 	business_card_90x50mm.svg \
 	CD_cover_300dpi.svg \
+	DVD_cover_regular_300dpi.svg \
+	DVD_cover_slim_300dpi.svg \
+	DVD_cover_superslim_300dpi.svg \
+	DVD_cover_ultraslim_300dpi.svg \
 	default.svg \
 	default.cs.svg \
 	default.de.svg \
@@ -17,7 +23,8 @@ templates_DATA = \
 	default.fr.svg \
 	default.hu.svg \
 	default.it.svg \
-	default.pl.svg \
+	default.lt.svg \
+        default.pl.svg \
 	default_mm.svg \
 	default_pt.svg \
 	desktop_1024x768.svg \
@@ -32,8 +39,11 @@ templates_DATA = \
 	Letter.svg \
 	no_borders.svg \
 	no_layers.svg \
+	video_HDTV_1920_1080.svg \
+	video_NTSC_720_486.svg \
+	video_PAL_720_576.svg \
 	web_banner_468x60.svg \
-	web_banner_728x90.svg \
-	white_opaque.svg
+	web_banner_728x90.svg
+
 
 EXTRA_DIST = $(templates_DATA)
