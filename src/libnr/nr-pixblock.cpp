@@ -59,7 +59,18 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
 		pb->data.px = nr_pixelstore_1M_new (clear, 0x0);
 	} else {
 		pb->size = NR_PIXBLOCK_SIZE_BIG;
-		pb->data.px = g_new (unsigned char, size);
+             pb->data.px = NULL;
+		if (size > 100000000) { // Don't even try to allocate more than 100Mb (5000x5000 RGBA
+                            // pixels). It'll just bog the system down even if successful. FIXME:
+                            // Can anyone suggest something better than the magic number?
+                g_warning ("%lu bytes requested for pixel buffer, I won't try to allocate that.", (long unsigned) size);
+                return;
+             }
+		pb->data.px = g_try_new (unsigned char, size);
+		if (pb->data.px == NULL) { // memory allocation failed
+                g_warning ("Could not allocate %lu bytes for pixel buffer!", (long unsigned) size);
+                return;
+             }
 		if (clear) memset (pb->data.px, 0x0, size);
 	}
 
@@ -80,6 +91,7 @@ nr_pixblock_setup_fast (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, i
  * \param mode Indicates grayscale/RGB/RGBA.
  * \param clear True if buffer should be cleared.
  * \pre x1>=x0 && y1>=y0 && pb!=NULL
+ FIXME: currently unused except for nr_pixblock_new and pattern tiles, replace with _fast and delete?
  */
 void
 nr_pixblock_setup (NRPixBlock *pb, NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear)
@@ -198,6 +210,7 @@ nr_pixblock_release (NRPixBlock *pb)
  *
  * \return Pointer to fresh pixblock.
  * Calls g_new() and nr_pixblock_setup().
+FIXME: currently unused, delete?
  */
 NRPixBlock *
 nr_pixblock_new (NR_PIXBLOCK_MODE mode, int x0, int y0, int x1, int y1, bool clear)
