@@ -281,8 +281,10 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
         }
         nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
                                in->area.x1, in->area.y1, true);
-        out->empty = false;
-        slot.set(_output, out);
+        if (out->data.px != NULL) {
+            out->empty = false;
+            slot.set(_output, out);
+        }
         return 0;
     }
 
@@ -315,6 +317,9 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     // set up subsampled buffers
     nr_pixblock_setup_fast(bufx, in->mode, xd0, yd0, xd1, yd1, true);
     nr_pixblock_setup_fast(bufy, in->mode, xd0, yd0, xd1, yd1, true);
+    if (bufx->data.px == NULL || bufy->data.px == NULL) { // no memory
+        return 0;
+    }
 
     //mid->visible_area = in->visible_area;
     //out->visible_area = in->visible_area;
@@ -484,6 +489,10 @@ int FilterGaussian::render(FilterSlot &slot, Matrix const &trans)
     NRPixBlock *out = new NRPixBlock;
     nr_pixblock_setup_fast(out, in->mode, in->area.x0, in->area.y0,
                            in->area.x1, in->area.y1, true);
+    if (out->data.px == NULL) {
+        // alas, we've accomplished a lot, but ran out of memory - so abort
+        return 0;
+    }
 
     for ( int y = yd0 ; y < yd1 - 1; y++ ) {
         for ( int x = xd0 ; x < xd1 - 1; x++ ) {

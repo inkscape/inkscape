@@ -116,6 +116,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         }
         if (y_len < 1) y_len = 1;
         nr_pixblock_setup_fast(in, pb->mode, 0, 0, x_len, y_len, true);
+        if (in->data.px == NULL) // memory allocation failed
+            return 0;
         scale_bicubic(in, pb);
         scale res_scaling(x_len / (double)(pb->area.x1 - pb->area.x0),
                           y_len / (double)(pb->area.y1 - pb->area.y0));
@@ -125,6 +127,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
         nr_pixblock_setup_fast(in, pb->mode,
                                pb->area.x0, pb->area.y0,
                                pb->area.x1, pb->area.y1, true);
+        if (in->data.px == NULL) // memory allocation failed
+            return 0;
         nr_blit_pixblock_pixblock(in, pb);
     }
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
