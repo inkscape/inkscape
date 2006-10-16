@@ -55,6 +55,14 @@ inline bool empty(NRRect const &r)
          !((r0) && (r1) && !NR_RECT_DFLS_TEST_INTERSECT(r0, r1)))
 
 #define nr_rect_d_point_d_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DF_TEST_EMPTY(r) && NR_RECT_DF_POINT_DF_TEST_INSIDE(r,p))))
+#define nr_rect_l_point_l_test_inside(r,p) ((p) && (!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_POINT_LS_TEST_INSIDE(r,p))))
+#define nr_rect_l_test_inside(r,x,y) ((!(r) || (!NR_RECT_DFLS_TEST_EMPTY(r) && NR_RECT_LS_TEST_INSIDE(r,x,y))))
+
+// returns minimal rect which covers all of r0 not covered by r1
+NRRectL *nr_rect_l_subtract(NRRectL *d, NRRectL const *r0, NRRectL const *r1);
+
+// returns the area of r
+NR::ICoord nr_rect_l_area(NRRectL *r);
 
 /* NULL values are OK for r0 and r1, but not for d */
 NRRect *nr_rect_d_intersect(NRRect *d, NRRect const *r0, NRRect const *r1);

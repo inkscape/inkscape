@@ -60,6 +60,7 @@
 #define NR_RECT_DFLS_TEST_INTERSECT(a,b) (((a)->x0 < (b)->x1) && ((a)->x1 > (b)->x0) && ((a)->y0 < (b)->y1) && ((a)->y1 > (b)->y0))
 #define NR_RECT_DF_POINT_DF_TEST_INSIDE(r,p) (((p)->x >= (r)->x0) && ((p)->x < (r)->x1) && ((p)->y >= (r)->y0) && ((p)->y < (r)->y1))
 #define NR_RECT_LS_POINT_LS_TEST_INSIDE(r,p) (((p)->x >= (r)->x0) && ((p)->x < (r)->x1) && ((p)->y >= (r)->y0) && ((p)->y < (r)->y1))
+#define NR_RECT_LS_TEST_INSIDE(r,x,y) ((x >= (r)->x0) && (x < (r)->x1) && (y >= (r)->y0) && (y < (r)->y1))
 
 #define NR_MATRIX_D_TO_DOUBLE(m) ((m)->c)
 #define NR_MATRIX_D_FROM_DOUBLE(d) ((NRMatrix *) &(d)[0])

@@ -45,6 +45,60 @@ nr_rect_d_intersect (NRRect *d, const NRRect *r0, const NRRect *r1)
 	return d;
 }
 
+// returns minimal rect which covers all of r0 not covered by r1
+NRRectL *
+nr_rect_l_subtract(NRRectL *d, NRRectL const *r0, NRRectL const *r1)
+{
+    bool inside1 = nr_rect_l_test_inside(r1, r0->x0, r0->y0);
+    bool inside2 = nr_rect_l_test_inside(r1, r0->x1, r0->y0);
+    bool inside3 = nr_rect_l_test_inside(r1, r0->x1, r0->y1);
+    bool inside4 = nr_rect_l_test_inside(r1, r0->x0, r0->y1);
+
+    if (inside1 && inside2 && inside3) {
+        nr_rect_l_set_empty (d);
+
+    } else if (inside1 && inside2) {
+        d->x0 = r0->x0;
+        d->y0 = r1->y1;
+
+        d->x1 = r0->x1;
+        d->y1 = r0->y1;
+    } else if (inside2 && inside3) {
+        d->x0 = r0->x0;
+        d->y0 = r0->y0;
+
+        d->x1 = r1->x0;
+        d->y1 = r0->y1;
+    } else if (inside3 && inside4) {
+        d->x0 = r0->x0;
+        d->y0 = r0->y0;
+
+        d->x1 = r0->x1;
+        d->y1 = r1->y0;
+    } else if (inside4 && inside1) {
+        d->x0 = r1->x1;
+        d->y0 = r0->y0;
+
+        d->x1 = r0->x1;
+        d->y1 = r0->y1;
+    } else {
+        d->x0 = r0->x0;
+        d->y0 = r0->y0;
+
+        d->x1 = r0->x1;
+        d->y1 = r0->y1;
+    }
+    return d;
+}
+
+NR::ICoord nr_rect_l_area(NRRectL *r)
+{
+  if (!r || NR_RECT_DFLS_TEST_EMPTY (r)) {
+      return 0;
+  }
+  return ((r->x1 - r->x0) * (r->y1 - r->y0));
+}
+
 NRRect *
 nr_rect_d_union (NRRect *d, const NRRect *r0, const NRRect *r1)
 {
