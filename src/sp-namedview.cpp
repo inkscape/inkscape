@@ -230,6 +230,7 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             sp_namedview_setup_grid(nv);
             /* Disable grid snaps if the grid is turned off */
             nv->snap_manager.grid.setEnabled(nv->showgrid);
+            nv->snap_manager.axonomgrid.setEnabled(nv->showgrid);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_GRIDTYPE:
@@ -459,10 +460,12 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
 	case SP_ATTR_INKSCAPE_GRID_BBOX:
             nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
+            nv->snap_manager.axonomgrid.setSnapTo(Inkscape::Snapper::BBOX_POINT, value ? sp_str_to_bool(value) : TRUE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_GRID_POINTS:
             nv->snap_manager.grid.setSnapTo(Inkscape::Snapper::SNAP_POINT, value ? sp_str_to_bool(value) : FALSE);
+            nv->snap_manager.axonomgrid.setSnapTo(Inkscape::Snapper::SNAP_POINT, value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	case SP_ATTR_INKSCAPE_GUIDE_BBOX:

@@ -10,6 +10,7 @@
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   John Bintz <jcoswell@coswellproductions.org>
  *
+ * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2006 John Bintz
  * Copyright (C) 2004 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -1361,6 +1362,9 @@ _update_snap_distances (SPDesktop *desktop)
     SPNamedView &nv = *desktop->namedview;
 
     nv.snap_manager.grid.setDistance(sp_convert_distance_full(nv.gridtolerance,
+                                                                      *nv.gridtoleranceunit,
+                                                                      px));
+    nv.snap_manager.axonomgrid.setDistance(sp_convert_distance_full(nv.gridtolerance,
                                                                       *nv.gridtoleranceunit,
                                                                       px));
     nv.snap_manager.guide.setDistance(sp_convert_distance_full(nv.guidetolerance,

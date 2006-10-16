@@ -9,6 +9,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 1999-2002 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -26,7 +27,7 @@
  *  \param v `Owning' SPNamedView.
  */
 
-SnapManager::SnapManager(SPNamedView const *v) : grid(v, 0), guide(v, 0), object(v, 0)
+SnapManager::SnapManager(SPNamedView const *v) : _named_view(v), grid(v, 0), axonomgrid(v, 0), guide(v, 0), object(v, 0)
 {
 
 }
@@ -39,7 +40,11 @@ SnapManager::SnapManager(SPNamedView const *v) : grid(v, 0), guide(v, 0), object
 SnapManager::SnapperList SnapManager::getSnappers() const
 {
     SnapManager::SnapperList s;
-    s.push_back(&grid);
+    if (_named_view->gridtype == 0) {
+      s.push_back(&grid);
+    } else {
+      s.push_back(&axonomgrid);
+    }
     s.push_back(&guide);
     s.push_back(&object);
     return s;

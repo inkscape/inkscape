@@ -10,6 +10,7 @@
  *   Frank Felfe <innerspace@iname.com>
  *   Carl Hetherington <inkscape@carlh.net>
  *
+ * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2002 Lauris Kaplinski
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -99,12 +100,16 @@ public:
                                             NR::Point const &o,
                                             NR::Dim2 d) const;
 
-    Inkscape::GridSnapper grid;     ///< grid snapper
-    Inkscape::GuideSnapper guide;   ///< guide snapper
-    Inkscape::ObjectSnapper object; ///< snapper to other objects
+    Inkscape::GridSnapper grid;        ///< grid snapper
+    Inkscape::AxonomGridSnapper axonomgrid;  ///< axonometricgrid snapper
+    Inkscape::GuideSnapper guide;      ///< guide snapper
+    Inkscape::ObjectSnapper object;    ///< snapper to other objects
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
     SnapperList getSnappers() const;
+
+protected:
+    SPNamedView const *_named_view;
 
 private:
 
