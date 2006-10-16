@@ -1560,63 +1560,26 @@ sp_canvas_paint_single_buffer (SPCanvas *canvas, int x0, int y0, int x1, int y1,
     }
 }
 
-/**
- * Helper that draws a specific rectangular part of the canvas.
+/* Paint the given rect, while updating canvas->redraw_aborted and running iterations after each
+ * buffer; make sure canvas->redraw_aborted never goes past aborted_limit (used for 2-rect
+ * optimized repaint)
  */
-static void
-sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
+static int
+sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_aborted_limit, NR::ICoord *y_aborted_limit)
 {
-    g_return_if_fail (!canvas->need_update);
- 
-    // Monotonously increment the canvas-global counter on each paint. This will let us find out
-    // when a new paint happened in event processing during this paint, so we can abort it.
-    canvas->redraw_count++;
-
-    NRRectL rect;
-    rect.x0 = xx0;
-    rect.x1 = xx1;
-    rect.y0 = yy0;
-    rect.y1 = yy1;
-
-    if (canvas->redraw_aborted.x0 < canvas->redraw_aborted.x1 || canvas->redraw_aborted.y0 < canvas->redraw_aborted.y1) {
-        // There was an aborted redraw last time, now we need to redraw BOTH it and the new rect.
-	
-        // OPTIMIZATION IDEA:
-        //   if (area(rect) + area(redraw_aborted)) * 1.2 > area (union)
-        //   then paint their union (as done below)
-        //   else
-        //   two_rects = true; paint new rect and aborted rect SEPARATELY without unioning.
-        // Without this, when you scroll down and quickly up, the entire screen has to be redrawn,
-        // because the union of the aborted strip at top and the newly exposed strip at bottom
-        // covers the whole screen.
-    
-        // For now, just always do a union.
-        rect.x0 = MIN(rect.x0, canvas->redraw_aborted.x0);
-        rect.x1 = MAX(rect.x1, canvas->redraw_aborted.x1);
-        rect.y0 = MIN(rect.y0, canvas->redraw_aborted.y0);
-        rect.y1 = MAX(rect.y1, canvas->redraw_aborted.y1);
-    }
-
-    // Clip drawable rect by the visible area
-    int draw_x1 = MAX (rect.x0, canvas->x0);
-    int draw_y1 = MAX (rect.y0, canvas->y0);
-    int draw_x2 = MIN (rect.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
-    int draw_y2 = MIN (rect.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+    int draw_x1 = rect->x0;
+    int draw_x2 = rect->x1;
+    int draw_y1 = rect->y0;
+    int draw_y2 = rect->y1;
 
     // Here we'll store the time it took to draw the slowest buffer of this paint. 
     glong slowest_buffer = 0;
-
-    // Initially, the rect to redraw later (in case we're aborted) is the same as the one we're going to draw now.
-    canvas->redraw_aborted.x0 = draw_x1;
-    canvas->redraw_aborted.x1 = draw_x2;
-    canvas->redraw_aborted.y0 = draw_y1;
-    canvas->redraw_aborted.y1 = draw_y2;
 
     // Find the optimal buffer dimensions
     int bw = draw_x2 - draw_x1;
     int bh = draw_y2 - draw_y1;
     if ((bw < 1) || (bh < 1))
-        return;
+        return 0;
     int sw, sh;
     if (canvas->rendermode != RENDERMODE_OUTLINE) { // use 256K as a compromise to not slow down gradients
         /* 256K is the cached buffer and we need 3 channels */
@@ -1686,10 +1649,15 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
                 slowest_buffer = this_buffer;
 
             // After each successful buffer, reduce the rect remaining to redraw by what is already redrawn
-            if (x1 >= draw_x2 && canvas->redraw_aborted.y0 < y1)
+            if (x1 >= draw_x2 && canvas->redraw_aborted.y0 < y1) 
                 canvas->redraw_aborted.y0 = y1;
+            if (y_aborted_limit != NULL && canvas->redraw_aborted.y0 > *y_aborted_limit)
+                canvas->redraw_aborted.y0 = *y_aborted_limit;
+
             if (y1 >= draw_y2 && canvas->redraw_aborted.x0 < x1)
                 canvas->redraw_aborted.x0 = x1;
+            if (x_aborted_limit != NULL && canvas->redraw_aborted.x0 > *x_aborted_limit)
+                canvas->redraw_aborted.x0 = *x_aborted_limit;
 
             // INTERRUPTIBLE DISPLAY:
             // Process events that may have arrived while we were busy drawing;
@@ -1711,7 +1679,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
                     // If one of the iterations has redrawn by itself, abort
                     if (this_count != canvas->redraw_count) {
                         canvas->slowest_buffer = slowest_buffer;
-                        return;
+                        return 1; // interrupted
                     }
                 }
    
@@ -1723,7 +1691,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
                         canvas->forced_redraw_count++;
                     }
                     do_update (canvas);
-                    return;
+                    return 1; // interrupted
                 }
             }
         }
@@ -1732,7 +1700,121 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     // Remember the slowest buffer of this paint in canvas
     canvas->slowest_buffer = slowest_buffer;
 
-    // we've had a full redraw, reset the full redraw counter
+    return 0; // finished
+}
+
+
+/**
+ * Helper that draws a specific rectangular part of the canvas.
+ */
+static void
+sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
+{
+    g_return_if_fail (!canvas->need_update);
+ 
+    // Monotonously increment the canvas-global counter on each paint. This will let us find out
+    // when a new paint happened in event processing during this paint, so we can abort it.
+    canvas->redraw_count++;
+
+    NRRectL rect;
+    rect.x0 = xx0;
+    rect.x1 = xx1;
+    rect.y0 = yy0;
+    rect.y1 = yy1;
+
+    // Clip rect-to-draw by the current visible area
+    rect.x0 = MAX (rect.x0, canvas->x0);
+    rect.y0 = MAX (rect.y0, canvas->y0);
+    rect.x1 = MIN (rect.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
+    rect.y1 = MIN (rect.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+
+    // Clip rect-aborted-last-time by the current visible area
+    canvas->redraw_aborted.x0 = MAX (canvas->redraw_aborted.x0, canvas->x0);
+    canvas->redraw_aborted.y0 = MAX (canvas->redraw_aborted.y0, canvas->y0);
+    canvas->redraw_aborted.x1 = MIN (canvas->redraw_aborted.x1, canvas->x0/*draw_x1*/ + GTK_WIDGET (canvas)->allocation.width);
+    canvas->redraw_aborted.y1 = MIN (canvas->redraw_aborted.y1, canvas->y0/*draw_y1*/ + GTK_WIDGET (canvas)->allocation.height);
+
+    if (canvas->redraw_aborted.x0 < canvas->redraw_aborted.x1 && canvas->redraw_aborted.y0 < canvas->redraw_aborted.y1) {
+        // There was an aborted redraw last time, now we need to redraw BOTH it and the new rect.
+
+        // save the old aborted rect in case we decide to paint it separately (see below)
+        NRRectL aborted = canvas->redraw_aborted;
+
+        // calculate the rectangle union of the both rects (the smallest rectangle which covers both) 
+        NRRectL nion;
+        nr_rect_l_union (&nion, &rect, &aborted);
+
+        // subtract one of the rects-to-draw from the other (the smallest rectangle which covers
+        // all of the first not covered by the second)
+        NRRectL rect_minus_aborted;
+        nr_rect_l_subtract (&rect_minus_aborted, &rect, &aborted);
+
+        // Initially, the rect to redraw later (in case we're aborted) is the same as the union of both rects
+        canvas->redraw_aborted = nion;
+
+        // calculate areas of the three rects
+        if ((nr_rect_l_area(&rect_minus_aborted) + nr_rect_l_area(&aborted)) * 1.2 < nr_rect_l_area(&nion)) {
+            // If the summary area of the two rects is significantly (at least by 20%) less than
+            // the area of their rectangular union, it makes sense to paint the two rects
+            // separately instead of painting their union. This gives a significant speedup when,
+            // for example, your current canvas is almost painted, with only a strip at bottom
+            // left, and at that moment you abort it by scrolling down which reveals a new strip at
+            // the top. Straightforward painting of the union of the aborted rect and the new rect
+            // will have to repaint the entire canvas! By contrast, the optimized approach below
+            // paints the two narrow strips in order which is much faster.
+
+            // find out which rect to draw first - compare them first by y then by x of the top left corners
+            NRRectL *first;
+            NRRectL *second;
+            if (rect.y0 == aborted.y0) {
+                if (rect.x0 < aborted.x0) {
+                    first = &rect;
+                    second = &aborted;
+                } else {
+                    second = &rect;
+                    first = &aborted;
+                }
+            } else if (rect.y0 < aborted.y0) {
+                first = &rect;
+                second = &aborted;
+            } else {
+                second = &rect;
+                first = &aborted;
+            }
+
+            NRRectL second_minus_first;
+            nr_rect_l_subtract (&second_minus_first, second, first);
+
+            // paint the first rect;
+            if (sp_canvas_paint_rect_internal (canvas, first, &(second_minus_first.x0), &(second_minus_first.y0))) {
+                // aborted!
+                return;
+            }
+
+            // if not aborted, assign (second rect minus first) as the new redraw_aborted and paint the same
+            canvas->redraw_aborted = second_minus_first;
+            if (sp_canvas_paint_rect_internal (canvas, &second_minus_first, NULL, NULL)) {
+                return; // aborted
+            }
+
+        } else {
+            // no need for separate drawing, just draw the union as one rect
+            if (sp_canvas_paint_rect_internal (canvas, &nion, NULL, NULL)) {
+                return; // aborted
+            }
+        }
+    } else {
+        // Nothing was aborted last time, just draw the rect we're given
+
+        // Initially, the rect to redraw later (in case we're aborted) is the same as the one we're going to draw now.
+        canvas->redraw_aborted = rect;
+
+        if (sp_canvas_paint_rect_internal (canvas, &rect, NULL, NULL)) {
+            return; // aborted
+        }
+    }
+
+    // we've had a full unaborted redraw, reset the full redraw counter
     if (canvas->forced_redraw_limit) {
         canvas->forced_redraw_count = 0;
     }
