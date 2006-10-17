@@ -103,10 +103,6 @@ sp_canvas_arena_init (SPCanvasArena *arena)
 	arena->root = NRArenaGroup::create(arena->arena);
 	nr_arena_group_set_transparent (NR_ARENA_GROUP (arena->root), TRUE);
 
-#ifdef arena_item_tile_cache
-  arena->root->skipCaching=true;
-#endif
-  
 	arena->active = NULL;
 
 	nr_active_object_add_listener ((NRActiveObject *) arena->arena, (NRObjectEventVector *) &carenaev, sizeof (carenaev), arena);
@@ -186,10 +182,6 @@ sp_canvas_arena_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned i
 	}
 }
 
-#ifdef arena_item_tile_cache
-extern void age_cache(void);
-#endif
-
 static void
 sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
@@ -204,9 +196,6 @@ sp_canvas_arena_render (SPCanvasItem *item, SPCanvasBuf *buf)
 
 	sp_canvas_prepare_buffer(buf);
   
-#ifdef arena_item_tile_cache
-  age_cache();
-#endif
 	bw = buf->rect.x1 - buf->rect.x0;
 	bh = buf->rect.y1 - buf->rect.y0;
 	if ((bw < 1) || (bh < 1)) return;

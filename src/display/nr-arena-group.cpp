@@ -83,11 +83,6 @@ nr_arena_group_init (NRArenaGroup *group)
 	group->last = NULL;
 	group->style = NULL;
 	nr_matrix_set_identity (&group->child_transform);
-  
-#ifdef arena_item_tile_cache
-  group->skipCaching=true;
-#endif
-
 }
 
 static NRArenaItem *
