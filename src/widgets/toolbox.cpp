@@ -2155,7 +2155,7 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *tbl)
 static GtkWidget *
 sp_calligraphy_toolbox_new(SPDesktop *desktop)
 {
-  if ( prefs_get_int_attribute_limited( "options.stocktoolbars", "value", 0, 0, 1 ) ) {
+  if ( prefs_get_int_attribute_limited( "options.stocktoolbars", "value", 1, 0, 1 ) ) {
     GtkWidget *toolBar = 0;
     GtkWidget* holder = gtk_table_new( 1, 2, FALSE );
 
