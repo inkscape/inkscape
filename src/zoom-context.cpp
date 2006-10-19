@@ -21,8 +21,6 @@
 #include "desktop.h"
 #include "pixmaps/cursor-zoom.xpm"
 #include "pixmaps/cursor-zoom-out.xpm"
-#include "pixmaps/cursor-zoom.pixbuf"
-#include "pixmaps/cursor-zoom-out.pixbuf"
 #include "prefs-utils.h"
 
 #include "zoom-context.h"
@@ -81,13 +79,8 @@ static void sp_zoom_context_init (SPZoomContext *zoom_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(zoom_context);
 
     event_context->cursor_shape = cursor_zoom_xpm;
-    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-            -1,
-            cursor_zoom_pixbuf,
-            FALSE,
-            NULL);    
-    event_context->hot_x = 9;
-    event_context->hot_y = 9;
+    event_context->hot_x = 6;
+    event_context->hot_y = 6;
 }
 
 static void
@@ -206,34 +199,24 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                 case GDK_Shift_L:
                 case GDK_Shift_R:
                     event_context->cursor_shape = cursor_zoom_out_xpm;
-                    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-                            -1,
-                            cursor_zoom_out_pixbuf,
-                            FALSE,
-                            NULL);    
                     sp_event_context_update_cursor(event_context);
                     break;
                 default:
-                    break;
-            }
-            break;
-        case GDK_KEY_RELEASE:
+			break;
+		}
+		break;
+	case GDK_KEY_RELEASE:
             switch (get_group0_keyval (&event->key)) {
-                case GDK_Shift_L:
-                case GDK_Shift_R:
+		case GDK_Shift_L:
+		case GDK_Shift_R:
                     event_context->cursor_shape = cursor_zoom_xpm;
-                    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-                            -1,
-                            cursor_zoom_pixbuf,
-                            FALSE,
-                            NULL);
                     sp_event_context_update_cursor(event_context);
                     break;
-                default:
+		default:
                     break;
-            }
+		}
             break;
-        default:
+	default:
             break;
     }
 

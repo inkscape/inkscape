@@ -29,7 +29,6 @@
 #include "prefs-utils.h"
 #include "snap.h"
 #include "pixmaps/cursor-pencil.xpm"
-#include "pixmaps/cursor-pencil.pixbuf"
 #include "display/bezier-utils.h"
 #include "display/canvas-bpath.h"
 #include <glibmm/i18n.h>
@@ -110,11 +109,6 @@ sp_pencil_context_init(SPPencilContext *pc)
     SPEventContext *event_context = SP_EVENT_CONTEXT(pc);
 
     event_context->cursor_shape = cursor_pencil_xpm;
-    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-            -1,
-            cursor_pencil_pixbuf,
-            FALSE,
-            NULL);  
     event_context->hot_x = 4;
     event_context->hot_y = 4;
 

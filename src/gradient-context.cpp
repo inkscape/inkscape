@@ -26,7 +26,6 @@
 #include "message-context.h"
 #include "message-stack.h"
 #include "pixmaps/cursor-gradient.xpm"
-#include "pixmaps/cursor-gradient.pixbuf"
 #include "gradient-context.h"
 #include <glibmm/i18n.h>
 #include "prefs-utils.h"
@@ -85,11 +84,6 @@ static void sp_gradient_context_init(SPGradientContext *gr_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(gr_context);
 
     event_context->cursor_shape = cursor_gradient_xpm;
-    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-            -1,
-            cursor_gradient_pixbuf,
-            FALSE,
-            NULL);  
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;

@@ -31,7 +31,6 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-star.xpm"
-#include "pixmaps/cursor-star.pixbuf"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
 #include "prefs-utils.h"
@@ -96,11 +95,6 @@ sp_star_context_init (SPStarContext * star_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT (star_context);
 
     event_context->cursor_shape = cursor_star_xpm;
-    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-            -1,
-            cursor_star_pixbuf,
-            FALSE,
-            NULL);      
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;

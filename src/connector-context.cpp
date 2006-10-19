@@ -45,7 +45,6 @@
 
 #include "connector-context.h"
 #include "pixmaps/cursor-connector.xpm"
-#include "pixmaps/cursor-connector.pixbuf"
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 #include "svg/svg.h"
@@ -181,11 +180,6 @@ sp_connector_context_init(SPConnectorContext *cc)
     SPEventContext *ec = SP_EVENT_CONTEXT(cc);
 
     ec->cursor_shape = cursor_connector_xpm;
-    ec->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-            -1,
-            cursor_connector_pixbuf,
-            FALSE,
-            NULL);  
     ec->hot_x = 1;
     ec->hot_y = 1;
     ec->xp = 0;

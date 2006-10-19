@@ -23,8 +23,8 @@
 #include "selection.h"
 #include "seltrans-handles.h"
 #include "sp-cursor.h"
-//#include "pixmaps/cursor-select-m.xpm" // These aren't used
-//#include "pixmaps/cursor-select-d.xpm"
+#include "pixmaps/cursor-select-m.xpm"
+#include "pixmaps/cursor-select-d.xpm"
 #include "pixmaps/handles.xpm"
 #include <glibmm/i18n.h>
 
@@ -97,8 +97,8 @@ sp_select_context_class_init(SPSelectContextClass *klass)
     event_context_class->item_handler = sp_select_context_item_handler;
 
     // cursors in select context
-//    CursorSelectMouseover = sp_cursor_new_from_xpm(cursor_select_m_xpm , 1, 1);
-//    CursorSelectDragging = sp_cursor_new_from_xpm(cursor_select_d_xpm , 1, 1);
+    CursorSelectMouseover = sp_cursor_new_from_xpm(cursor_select_m_xpm , 1, 1);
+    CursorSelectDragging = sp_cursor_new_from_xpm(cursor_select_d_xpm , 1, 1);
     // selection handles
     handles[0]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_scale_nw_xpm);
     handles[1]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_scale_ne_xpm);

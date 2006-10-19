@@ -20,7 +20,6 @@
 #include <glib-object.h>
 #include <gdk/gdktypes.h>
 #include <gdk/gdkevents.h>
-#include <gdk/gdkpixbuf.h>
 
 struct GrDrag;
 struct SPDesktop;
@@ -52,7 +51,6 @@ struct SPEventContext : public GObject {
     SPDesktop *desktop;
     Inkscape::XML::Node *prefs_repr;
     gchar **cursor_shape;
-    GdkPixbuf *cursor_pixbuf;
     gint hot_x, hot_y;
     GdkCursor *cursor;
 

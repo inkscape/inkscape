@@ -30,7 +30,6 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-rect.xpm"
-#include "pixmaps/cursor-rect.pixbuf"
 #include "rect-context.h"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
@@ -95,11 +94,6 @@ static void sp_rect_context_init(SPRectContext *rect_context)
     SPEventContext *event_context = SP_EVENT_CONTEXT(rect_context);
 
     event_context->cursor_shape = cursor_rect_xpm;
-    event_context->cursor_pixbuf = gdk_pixbuf_new_from_inline(
-            -1,
-            cursor_rect_pixbuf,
-            FALSE,
-            NULL);    
     event_context->hot_x = 4;
     event_context->hot_y = 4;
     event_context->xp = 0;
