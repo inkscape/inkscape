@@ -270,6 +270,8 @@ libinkpost_a_SOURCES =	\
 	color.cpp color.h	\
 	decimal-round.h	\
 	dir-util.cpp dir-util.h	\
+	ege-adjustment-action.cpp	\
+	ege-adjustment-action.h	\
 	fill-or-stroke.h	\
 	filter-chemistry.cpp filter-chemistry.h \
 	fixes.cpp \
@@ -281,6 +283,8 @@ libinkpost_a_SOURCES =	\
 	gc-soft-ptr.h	\
 	gc.cpp	\
 	gradient-chemistry.cpp gradient-chemistry.h	\
+	ink-action.cpp	\
+	ink-action.h	\
 	memeq.h	\
 	round.h	\
 	streq.h	\

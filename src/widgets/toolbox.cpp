@@ -15,10 +15,11 @@
 *   John Cliff <simarilius@yahoo.com>
 *   David Turner <novalis@gnu.org>
 *   Josh Andler <scislac@scislac.com>
+*   Jon A. Cruz <jon@joncruz.org>
 *
 * Copyright (C) 2004 David Turner
 * Copyright (C) 2003 MenTaLguY
-* Copyright (C) 1999-2005 authors
+* Copyright (C) 1999-2006 authors
 * Copyright (C) 2001-2002 Ximian, Inc.
 *
 * Released under GNU GPL, read the file 'COPYING' for more information
@@ -81,6 +82,9 @@
 #include "mod360.h"
 
 #include "toolbox.h"
+
+#include "ink-action.h"
+#include "ege-adjustment-action.h"
 
 typedef void (*SetupFunction)(GtkWidget *toolbox, SPDesktop *desktop);
 typedef void (*UpdateFunction)(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -810,6 +814,32 @@ sp_tb_spinbutton(
 
     return hb;
 }
+
+static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
+                                                       gchar const *label, gchar const *tooltip,
+                                                       gchar const *path, gchar const *data, gdouble def,
+                                                       GtkWidget *us,
+                                                       GtkWidget *dataKludge,
+                                                       gboolean altx, gchar const *altx_mark,
+                                                       gdouble lower, gdouble upper, gdouble step, gdouble page,
+                                                       void (*callback)(GtkAdjustment *, GtkWidget *),
+                                                       gdouble climb = 0.1, guint digits = 3, double factor = 1.0 )
+{
+    GtkAdjustment* adj = GTK_ADJUSTMENT( gtk_adjustment_new( prefs_get_double_attribute(path, data, def) * factor,
+                                                             lower, upper, step, page, page ) );
+    if (us) {
+        sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us), adj );
+    }
+
+    gtk_signal_connect( GTK_OBJECT(adj), "value-changed", GTK_SIGNAL_FUNC(callback), dataKludge );
+
+    EgeAdjustmentAction* act = ege_adjustment_action_new( adj, name, label, tooltip, 0 );
+
+    gtk_object_set_data( GTK_OBJECT(dataKludge), data, adj );
+
+    return act;
+}
+
 
 #define MODE_LABEL_WIDTH 70
 
@@ -1935,6 +1965,94 @@ sp_pencil_toolbox_new(SPDesktop *desktop)
 //##     Calligraphy    ##
 //########################
 
+static void sp_ddc_mass_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "mass", adj->value );
+    //spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_wiggle_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "wiggle", adj->value );
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_angle_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "angle", adj->value );
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_width_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "width", adj->value * 0.01 );
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_velthin_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute("tools.calligraphic", "thinning", adj->value);
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_flatness_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "flatness", adj->value );
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_tremor_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "tremor", adj->value );
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_cap_rounding_value_changed2( GtkAdjustment *adj, GtkWidget *tbl )
+{
+    prefs_set_double_attribute( "tools.calligraphic", "cap_rounding", adj->value );
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
+static void sp_ddc_pressure_state_changed2( GtkToggleAction *act, gpointer data )
+{
+    prefs_set_int_attribute( "tools.calligraphic", "usepressure", gtk_toggle_action_get_active( act ) ? 1 : 0);
+}
+
+static void sp_ddc_tilt_state_changed2( GtkToggleAction *act, GtkAction *calligraphy_angle )
+{
+    prefs_set_int_attribute( "tools.calligraphic", "usetilt", gtk_toggle_action_get_active( act ) ? 1 : 0 );
+
+    gtk_action_set_sensitive( calligraphy_angle, gtk_toggle_action_get_active( act ) );
+}
+
+static void sp_ddc_defaults2(GtkWidget *, GtkWidget *dataKludge)
+{
+    // FIXME: make defaults settable via Inkscape Options
+    struct KeyValue {
+        char const *key;
+        double value;
+    } const key_values[] = {
+        {"mass", 0.02},
+        {"wiggle", 0.0},
+        {"angle", 30.0},
+        {"width", 15},
+        {"thinning", 0.1},
+        {"tremor", 0.0},
+        {"flatness", 0.9},
+        {"cap_rounding", 0.0}
+    };
+
+    for (unsigned i = 0; i < G_N_ELEMENTS(key_values); ++i) {
+        KeyValue const &kv = key_values[i];
+        GtkAdjustment* adj = static_cast<GtkAdjustment *>(gtk_object_get_data(GTK_OBJECT(dataKludge), kv.key));
+        if ( adj ) {
+            gtk_adjustment_set_value(adj, kv.value);
+        }
+    }
+
+//    spinbutton_defocus(GTK_OBJECT(tbl));
+}
+
 static void
 sp_ddc_mass_value_changed(GtkAdjustment *adj, GtkWidget *tbl)
 {
@@ -2031,9 +2149,186 @@ static void sp_ddc_defaults(GtkWidget *, GtkWidget *tbl)
     spinbutton_defocus(GTK_OBJECT(tbl));
 }
 
+
+
+
 static GtkWidget *
 sp_calligraphy_toolbox_new(SPDesktop *desktop)
 {
+  if ( prefs_get_int_attribute_limited( "options.stocktoolbars", "value", 0, 0, 1 ) ) {
+    GtkWidget *toolBar = 0;
+    GtkWidget* holder = gtk_table_new( 1, 2, FALSE );
+
+    gchar const * descr =
+        "<ui>"
+        "  <toolbar name='CalligraphyToolbar'>"
+        "    <separator />"
+        "    <toolitem name='Width' action='WidthAction' />"
+        "    <toolitem name='Thinning' action='ThinningAction' />"
+        "    <separator />"
+        "    <toolitem name='Angle' action='AngleAction' />"
+        "    <toolitem action='FixationAction' />"
+        "    <toolitem action='CapRoundingAction' />"
+        "    <separator />"
+        "    <toolitem action='TremorAction' />"
+        "    <toolitem action='WiggleAction' />"
+        "    <toolitem action='MassAction' />"
+        "    <separator />"
+        "    <toolitem action='PressureAction' />"
+        "    <toolitem action='TiltAction' />"
+        "    <toolitem action='ResetAction' />"
+        "  </toolbar>"
+        "</ui>";
+    GtkUIManager* mgr = gtk_ui_manager_new();
+    GError* errVal = 0;
+    GtkActionGroup* mainActions = gtk_action_group_new("main");
+
+    {
+        EgeAdjustmentAction* calligraphy_angle = 0;
+        EgeAdjustmentAction* eact = 0;
+
+        /* Width */
+        eact = create_adjustment_action( "WidthAction",
+                                         _("Width:"), _("The width of the calligraphic pen (relative to the visible canvas area)"),
+                                         "tools.calligraphic", "width", 15,
+                                         NULL, holder, TRUE, "altx-calligraphy",
+                                         1, 100, 1.0, 10.0,
+                                         sp_ddc_width_value_changed2,  0.01, 0, 100 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+        /* Thinning */
+        eact = create_adjustment_action( "ThinningAction",
+                                         _("Thinning:"), _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
+                                         "tools.calligraphic", "thinning", 0.1,
+                                         NULL, holder, FALSE, NULL,
+                                         -1.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_velthin_value_changed2, 0.01, 2);
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+        /* Angle */
+        eact = create_adjustment_action( "AngleAction",
+                                         _("Angle:"), _("The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"),
+                                         "tools.calligraphic", "angle", 30,
+                                         NULL, holder, TRUE, "calligraphy-angle",
+                                         -90.0, 90.0, 1.0, 10.0,
+                                         sp_ddc_angle_value_changed2, 1, 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+        calligraphy_angle = eact;
+
+        /* Fixation */
+        eact = create_adjustment_action( "FixationAction",
+                                         _("Fixation:"), _("Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed angle)"),
+                                         "tools.calligraphic", "flatness", 0.9,
+                                         NULL, holder, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_flatness_value_changed2, 0.01, 2 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+        /* Cap Rounding */
+        // TRANSLATORS: "cap" means "end" (both start and finish) here
+        eact = create_adjustment_action( "CapRoundingAction",
+                                         _("Round:"), _("Increase to round the ends of strokes"),
+                                         "tools.calligraphic", "cap_rounding", 0.0,
+                                         NULL, holder, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_cap_rounding_value_changed2, 0.01, 2 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+        /* Tremor */
+        eact = create_adjustment_action( "TremorAction",
+                                         _("Tremor:"), _("Increase to make strokes rugged and trembling"),
+                                         "tools.calligraphic", "tremor", 0.0,
+                                         NULL, holder, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_tremor_value_changed2, 0.01, 2 );
+
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+        /* Wiggle */
+        eact = create_adjustment_action( "WiggleAction",
+                                         _("Wiggle:"), _("Increase to make the pen waver and wiggle"),
+                                         "tools.calligraphic", "wiggle", 0.0,
+                                         NULL, holder, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_wiggle_value_changed2, 0.01, 2 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+        /* Mass */
+        eact = create_adjustment_action( "MassAction",
+                                         _("Mass:"), _("Increase to make the pen drag behind, as if slowed by inertia"),
+                                         "tools.calligraphic", "mass", 0.02,
+                                         NULL, holder, FALSE, NULL,
+                                         0.0, 1.0, 0.01, 0.1,
+                                         sp_ddc_mass_value_changed2, 0.01, 2 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(eact) );
+        gtk_action_set_sensitive( GTK_ACTION(eact), TRUE );
+
+
+        /* Use Pressure button */
+        {
+            InkToggleAction* act = ink_toggle_action_new( "PressureAction",
+                                                          "Pressure",
+                                                          "Use the pressure of the input device to alter the width of the pen",
+                                                          "use_pressure",
+                                                          Inkscape::ICON_SIZE_DECORATION );
+            gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_pressure_state_changed2), NULL);
+            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "usepressure", 1 ) );
+        }
+
+        /* Use Tilt button */
+        {
+            InkToggleAction* act = ink_toggle_action_new( "TiltAction",
+                                                          "Tilt",
+                                                          "Use the tilt of the input device to alter the angle of the pen's nib",
+                                                          "use_tilt",
+                                                          Inkscape::ICON_SIZE_DECORATION );
+            gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
+            g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_ddc_tilt_state_changed2), calligraphy_angle );
+            gtk_action_set_sensitive( GTK_ACTION(calligraphy_angle), prefs_get_int_attribute( "tools.calligraphic", "usetilt", 1 ) );
+            gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs_get_int_attribute( "tools.calligraphic", "usetilt", 1 ) );
+        }
+
+        /* Reset */
+        {
+            GtkAction* act = gtk_action_new( "ResetAction",
+                                             _("Defaults"),
+                                             _("Reset shape parameters to defaults (use Inkscape Preferences > Tools to change defaults)"),
+                                             GTK_STOCK_CLEAR );
+            g_signal_connect_after( G_OBJECT(act), "activate", G_CALLBACK(sp_ddc_defaults2), holder );
+            gtk_action_group_add_action( mainActions, act );
+            gtk_action_set_sensitive( act, TRUE );
+        }
+    }
+
+
+    gtk_ui_manager_insert_action_group( mgr, mainActions, 0 );
+    gtk_ui_manager_add_ui_from_string( mgr, descr, -1, &errVal );
+
+    toolBar = gtk_ui_manager_get_widget( mgr, "/ui/CalligraphyToolbar" );
+    gtk_toolbar_set_style( GTK_TOOLBAR(toolBar), GTK_TOOLBAR_ICONS );
+    gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), GTK_ICON_SIZE_SMALL_TOOLBAR );
+
+
+    gtk_table_attach( GTK_TABLE(holder), toolBar, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0 );
+
+    Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch(NULL);
+    swatch->setWatchedTool ("tools.calligraphic", true);
+    GtkWidget *swatch_ = GTK_WIDGET(swatch->gobj());
+    gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, 0 );
+
+    gtk_widget_show_all(holder);
+    //sp_set_font_size_smaller (tbl);
+
+    return holder;
+  } else {
     GtkWidget *tbl = gtk_hbox_new(FALSE, 0);
     gtk_object_set_data(GTK_OBJECT(tbl), "dtw", desktop->canvas);
     gtk_object_set_data(GTK_OBJECT(tbl), "desktop", desktop);
@@ -2189,6 +2484,7 @@ sp_calligraphy_toolbox_new(SPDesktop *desktop)
     sp_set_font_size_smaller (tbl);
 
     return tbl;
+  }
 }
 
 
