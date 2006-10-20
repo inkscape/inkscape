@@ -509,10 +509,9 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             /* This pointer wouldn't be valid outside this block, so clear it */
             item->background_pb = NULL;
         } else {
-            if (item->filter && !outline) {
+            if (item->render_opacity) { // opacity was already rendered in, just copy to dpb here
                 nr_blit_pixblock_pixblock(dpb, &ipb);
-            } else {
-                /* Opacity only */
+            } else { // copy while multiplying by opacity
                 nr_blit_pixblock_pixblock_alpha (dpb, &ipb, item->opacity);
             }
         }
