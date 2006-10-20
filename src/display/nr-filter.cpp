@@ -85,6 +85,10 @@ Filter::~Filter()
 
 int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
 {
+    if(!_primitive[0]) { // if there are no primitives, do nothing
+       return 0; 
+    }
+
     Matrix trans = *item->ctm;
     FilterSlot slot(_slot_count, item);
     NRPixBlock *in = new NRPixBlock;
@@ -134,10 +138,8 @@ int Filter::render(NRArenaItem const *item, NRPixBlock *pb)
     slot.set(NR_FILTER_SOURCEGRAPHIC, in);
     in = NULL; // in is now handled by FilterSlot, we should not touch it
 
-    // TODO: loop through the primitives and render them one at a time
-    if(_primitive[0])
-		_primitive[0]->render(slot, trans);
-
+    // TODO: loop through ALL the primitives and render them one at a time
+    _primitive[0]->render(slot, trans);
     NRPixBlock *out = slot.get(_output_slot);
 
     // Clear the pixblock, where the output will be put
