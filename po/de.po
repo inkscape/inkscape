@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-10-09 22:10+0200\n"
+"PO-Revision-Date: 2006-10-20 21:12+0200\n"
 "Last-Translator: Colin Marquardt <colin@marquardt-home.de>\n"
 "Language-Team: <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,19 +111,16 @@ msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>Aktuelle Ebene ist gesperrt</b>. Entsperren, um darauf zu zeichnen."
 
 #: ../src/desktop-events.cpp:110
-#, fuzzy
 msgid "Create guide"
-msgstr "Ellipse erzeugen"
+msgstr "Führungslinie erzeugen"
 
 #: ../src/desktop-events.cpp:184
-#, fuzzy
 msgid "Move guide"
-msgstr "Knoten verschieben"
+msgstr "Führungslinie verschieben"
 
 #: ../src/desktop-events.cpp:190
-#, fuzzy
 msgid "Delete guide"
-msgstr "Knoten löschen"
+msgstr "Führungslinie löschen"
 
 #: ../src/desktop-events.cpp:208
 #, c-format
@@ -432,42 +429,33 @@ msgid "Alternate the rotation direction for each column"
 msgstr "Vorzeichenumkehr des Rotationsfaktors bei jeder Spalte"
 
 #: ../src/dialogs/clonetiler.cpp:2016
-#, fuzzy
 msgid "_Blur & opacity"
-msgstr "Gesamtdeckkraft"
+msgstr "_Weichzeichner und Deckkraft"
 
 # !!!
 #: ../src/dialogs/clonetiler.cpp:2025
-#, fuzzy
 msgid "<b>Blur:</b>"
-msgstr "<b>L:</b>"
+msgstr "<b>Weichzeichner:</b>"
 
 #: ../src/dialogs/clonetiler.cpp:2032
-#, fuzzy
 msgid "Blur tiles by this percentage for each row"
-msgstr ""
-"Verringern der Deckkraft der Kacheln um diesen Prozentsatz für jede Reihe"
+msgstr "Weichzeichnen der Kacheln um diesen Prozentsatz für jede Reihe"
 
 #: ../src/dialogs/clonetiler.cpp:2039
-#, fuzzy
 msgid "Blur tiles by this percentage for each column"
-msgstr ""
-"Verringern der Deckkraft der Kacheln um diesen Prozentsatz für jede Spalte"
+msgstr "Weichzeichnen der Kacheln um diesen Prozentsatz für jede Spalte"
 
 #: ../src/dialogs/clonetiler.cpp:2046
-#, fuzzy
 msgid "Randomize the tile blur by this percentage"
-msgstr "Farbton der Kachel zufällig um diesen Prozentsatz verändern"
+msgstr "Kachel-Weichzeichnung zufällig um diesen Prozentsatz verändern"
 
 #: ../src/dialogs/clonetiler.cpp:2060
-#, fuzzy
 msgid "Alternate the sign of blur change for each row"
-msgstr "Vorzeichen der Farbänderungen bei jeder Reihe umkehren"
+msgstr "Vorzeichen der Weichzeichnungs-Änderungen bei jeder Reihe umkehren"
 
 #: ../src/dialogs/clonetiler.cpp:2065
-#, fuzzy
 msgid "Alternate the sign of blur change for each column"
-msgstr "Vorzeichen der Farbänderungen bei jeder Spalte umkehren"
+msgstr "Vorzeichen der Weichzeichnungs-Änderungen bei jeder Spalte umkehren"
 
 # !!!
 #: ../src/dialogs/clonetiler.cpp:2074
@@ -2001,9 +1989,8 @@ msgid "Closing path."
 msgstr "Geschlossener Pfad."
 
 #: ../src/draw-context.cpp:561
-#, fuzzy
 msgid "Draw path"
-msgstr "Pfad zerlegen"
+msgstr "Pfad zeichnen"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -2038,14 +2025,12 @@ msgstr ""
 "Zwischenablage"
 
 #: ../src/dropper-context.cpp:395
-#, fuzzy
 msgid "Set picked color"
-msgstr "Zuletzt gewählte Farbe"
+msgstr "Übernommene Farbe setzen"
 
 #: ../src/dyna-draw-context.cpp:702
-#, fuzzy
 msgid "Create calligraphic stroke"
-msgstr "Kalligrafische Linien zeichnen"
+msgstr "Kalligrafischen Strich erzeugen"
 
 #: ../src/event-log.cpp:34
 msgid "[Unchanged]"
@@ -2598,9 +2583,8 @@ msgid "Select file to open"
 msgstr "Wählen Sie die zu öffnende Datei"
 
 #: ../src/file.cpp:466
-#, fuzzy
 msgid "Vacuum &lt;defs&gt;"
-msgstr "Leere Defs aufräumen"
+msgstr "Leere &lt;defs&gt; aufräumen"
 
 #: ../src/file.cpp:471
 #, c-format
@@ -2646,22 +2630,20 @@ msgid "drawing-%d%s"
 msgstr "Zeichnung-%d%s"
 
 #: ../src/file.cpp:607
-#, fuzzy
 msgid "Select file to save a copy to"
-msgstr "Wählen Sie die zu speichernde Datei"
+msgstr "Datei wählen, in die eine Kopie gespeichert werden soll"
 
 #: ../src/file.cpp:609 ../src/file.cpp:616
 msgid "Select file to save to"
-msgstr "Wählen Sie die zu speichernde Datei"
+msgstr "Datei wählen, in die gespeichert werden soll"
 
 #: ../src/file.cpp:680
 msgid "No changes need to be saved."
 msgstr "Es müssen keine Änderungen gespeichert werden."
 
 #: ../src/file.cpp:852
-#, fuzzy
 msgid "Import"
-msgstr "_Importieren…"
+msgstr "Importieren"
 
 #: ../src/file.cpp:883
 msgid "Select file to import"
@@ -2672,9 +2654,8 @@ msgid "Select file to export to"
 msgstr "Wählen Sie die Datei, in die exportiert werden soll"
 
 #: ../src/gradient-context.cpp:164
-#, fuzzy
 msgid "Create default gradient"
-msgstr "Linearen Farbverlauf erzeugen"
+msgstr "Standard-Farbverlauf erzeugen"
 
 #: ../src/gradient-context.cpp:260
 msgid "<b>Ctrl</b>: snap gradient angle"
@@ -2685,9 +2666,8 @@ msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Umschalt</b>: Farbverlauf ausgehend vom Mittelpunkt zeichnen"
 
 #: ../src/gradient-context.cpp:370
-#, fuzzy
 msgid "Invert gradient"
-msgstr "Linearer Farbverlauf"
+msgstr "Farbverlauf invertieren"
 
 #: ../src/gradient-context.cpp:462
 #, c-format
@@ -2722,14 +2702,12 @@ msgid "Radial gradient <b>focus</b>"
 msgstr "<b>Fokus</b> des radialen Farbverlaufs"
 
 #: ../src/gradient-drag.cpp:386
-#, fuzzy
 msgid "Merge gradient handles"
-msgstr "Knotenanfasser verschieben"
+msgstr "Farbverlaufs-Anfasser vereinigen"
 
 #: ../src/gradient-drag.cpp:518 ../src/gradient-drag.cpp:1071
-#, fuzzy
 msgid "Move gradient handle"
-msgstr "Knotenanfasser verschieben"
+msgstr "Farbverlaufs-Anfasser verschieben"
 
 #: ../src/gradient-drag.cpp:657
 #, c-format
@@ -8019,71 +7997,58 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: ../src/ui/widget/selected-style.cpp:500
-#, fuzzy
 msgid "Apply last set color to fill"
-msgstr "Einfache Farbe der Füllung"
+msgstr "Zuletzt gesetzte Farbe auf Füllung anwenden"
 
 #: ../src/ui/widget/selected-style.cpp:512
-#, fuzzy
 msgid "Apply last set color to stroke"
-msgstr "Einfache Farbe der Kontur"
+msgstr "Zuletzt gesetzte Farbe auf Konturlinie anwenden"
 
 #: ../src/ui/widget/selected-style.cpp:523
-#, fuzzy
 msgid "Apply last selected color to fill"
-msgstr "Zuletzt gewählte Farbe"
+msgstr "Zuletzt gewählte Farbe auf Füllung anwenden"
 
 #: ../src/ui/widget/selected-style.cpp:534
-#, fuzzy
 msgid "Apply last selected color to stroke"
-msgstr "Zuletzt gewählte Farbe"
+msgstr "Zuletzt gewählte Farbe auf Konturlinie anwenden"
 
 #: ../src/ui/widget/selected-style.cpp:554
-#, fuzzy
 msgid "Invert fill"
-msgstr "Füllung aufheben"
+msgstr "Füllung invertieren"
 
 #: ../src/ui/widget/selected-style.cpp:574
-#, fuzzy
 msgid "Invert stroke"
-msgstr "Konturlinie aufheben"
+msgstr "Konturlinie invertieren"
 
 #: ../src/ui/widget/selected-style.cpp:586
-#, fuzzy
 msgid "White fill"
-msgstr "Weiß"
+msgstr "Weiße Füllung"
 
 #: ../src/ui/widget/selected-style.cpp:598
-#, fuzzy
 msgid "White stroke"
-msgstr "Konturlinie bearbeiten…"
+msgstr "Weiße Konturlinie"
 
 #: ../src/ui/widget/selected-style.cpp:610
-#, fuzzy
 msgid "Black fill"
-msgstr "Schwarz"
+msgstr "Schwarze Füllung"
 
 #: ../src/ui/widget/selected-style.cpp:622
-#, fuzzy
 msgid "Black stroke"
-msgstr "Einfache Farbe der Kontur"
+msgstr "Schwarze Konturlinie"
 
 #: ../src/ui/widget/selected-style.cpp:665
-#, fuzzy
 msgid "Paste fill"
-msgstr "Füllmuster"
+msgstr "Füllmuster einfügen"
 
 #: ../src/ui/widget/selected-style.cpp:683
-#, fuzzy
 msgid "Paste stroke"
-msgstr "Konturlinie des Musters"
+msgstr "Konturlinie einfügen"
 
 #: ../src/ui/widget/selected-style.cpp:805
 #: ../src/ui/widget/selected-style.cpp:839
 #: ../src/ui/widget/selected-style.cpp:1080
-#, fuzzy
 msgid "Change opacity"
-msgstr "Gesamtdeckkraft"
+msgstr "Deckkraft ändern"
 
 #: ../src/ui/widget/selected-style.cpp:975
 msgid "Master opacity"
@@ -8108,9 +8073,8 @@ msgid "1.0 (opaque)"
 msgstr "1.0 (undurchsichtig)"
 
 #: ../src/ui/widget/page-sizer.cpp:195
-#, fuzzy
 msgid "Name"
-msgstr "Name:"
+msgstr "Name"
 
 #: ../src/ui/widget/page-sizer.cpp:233
 msgid "P_age size:"
@@ -8182,9 +8146,8 @@ msgid "Opacity: %.3g"
 msgstr "Deckkraft: %.3g"
 
 #: ../src/verbs.cpp:1097
-#, fuzzy
 msgid "Move to next layer"
-msgstr "Auf nächste Ebene verschoben."
+msgstr "Auf nächste Ebene verschieben"
 
 #: ../src/verbs.cpp:1098
 msgid "Moved to next layer."
@@ -8195,9 +8158,8 @@ msgid "Cannot move past last layer."
 msgstr "Kann nicht hinter letzte Ebene verschieben."
 
 #: ../src/verbs.cpp:1109
-#, fuzzy
 msgid "Move to previous layer"
-msgstr "Zur vorherigen Ebene verschoben"
+msgstr "Zur vorherigen Ebene verschieben"
 
 #: ../src/verbs.cpp:1110
 msgid "Moved to previous layer."
@@ -8217,12 +8179,10 @@ msgid "Raised layer <b>%s</b>."
 msgstr "Ebene <b>%s</b> angehoben."
 
 #: ../src/verbs.cpp:1159
-#, fuzzy
 msgid "Layer to top"
 msgstr "Ebene nach ganz oben"
 
 #: ../src/verbs.cpp:1163
-#, fuzzy
 msgid "Raise layer"
 msgstr "Ebene anheben"
 
@@ -8232,12 +8192,10 @@ msgid "Lowered layer <b>%s</b>."
 msgstr "Ebene <b>%s</b> abgesenkt."
 
 #: ../src/verbs.cpp:1167
-#, fuzzy
 msgid "Layer to bottom"
 msgstr "Ebene nach ganz unten"
 
 #: ../src/verbs.cpp:1171
-#, fuzzy
 msgid "Lower layer"
 msgstr "Ebene absenken"
 
@@ -8354,14 +8312,12 @@ msgid "Save document under a new name"
 msgstr "Dokument unter einem anderen Namen speichern"
 
 #: ../src/verbs.cpp:1951
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "Speichern _unter…"
+msgstr "_Kopie speichern unter…"
 
 #: ../src/verbs.cpp:1952
-#, fuzzy
 msgid "Save a copy of the document under a new name"
-msgstr "Dokument unter einem anderen Namen speichern"
+msgstr "Eine Kopie des Dokuments unter einem anderen Namen speichern"
 
 #: ../src/verbs.cpp:1953
 msgid "_Print..."
@@ -9430,9 +9386,8 @@ msgid "Switch to outline (wireframe) display mode"
 msgstr "In den Umriss-(Drahtgitter)-Anzeigemodus wechseln"
 
 #: ../src/verbs.cpp:2259
-#, fuzzy
 msgid "Ico_n Preview..."
-msgstr "_Icon-Vorschaufenster"
+msgstr "_Icon-Vorschaufenster…"
 
 #: ../src/verbs.cpp:2260
 msgid "Open a window to preview objects at different icon resolutions"
@@ -10482,12 +10437,10 @@ msgid "Fixation:"
 msgstr "Fixierung:"
 
 #: ../src/widgets/toolbox.cpp:2082
-#, fuzzy
 msgid ""
 "Angle behavior (0 = nib always perpendicular to stroke direction, 1 = fixed "
 "angle)"
-msgstr ""
-"Fixierung des Stiftwinkels (0 = immer senkrecht zur Strichrichtung, 1 = fest)"
+msgstr "Winkelverhalten (0 = Stift immer senkrecht zur Strichrichtung, 1 = fester Winkel)"
 
 #. TRANSLATORS: "cap" means "end" (both start and finish) here
 #: ../src/widgets/toolbox.cpp:2093
