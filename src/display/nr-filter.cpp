@@ -325,14 +325,26 @@ void Filter::clear_primitives()
     _primitive_count = 0;
 }
 
-void Filter::set_x(SVGLength &lenght)
-{ /*write me*/ }
+void Filter::set_x(SVGLength &length)
+{ 
+  if (length._set)
+      _region_x = length;
+}
 void Filter::set_y(SVGLength &length)
-{ /*write me*/ }
+{
+  if (length._set)
+      _region_y = length;
+}
 void Filter::set_width(SVGLength &length)
-{ /*write me*/ }
+{
+  if (length._set)
+      _region_width = length;
+}
 void Filter::set_height(SVGLength &length)
-{ /*write me*/ }
+{ 
+  if (length._set)
+      _region_height = length;
+}
 
 } /* namespace NR */
 
