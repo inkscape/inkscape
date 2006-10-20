@@ -27,16 +27,28 @@
  * Creates a filter with blur primitive of specified stdDeviation
  */
 SPFilter *
-new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation)
+new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double width, double height)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
     SPDefs *defs = (SPDefs *) SP_DOCUMENT_DEFS(document);
 
-    // create a new private filter
+    // create a new filter
     Inkscape::XML::Node *repr;
     repr = sp_repr_new("svg:filter");
     repr->setAttribute("inkscape:collect", "always");
+
+    if (width != 0 && height != 0 && (2 * stdDeviation > width * 0.1 || 2 * stdDeviation > height * 0.1)) {
+        // If not within the default 10% margin (see
+        // http://www.w3.org/TR/SVG11/filters.html#FilterEffectsRegion), specify margins
+        double xmargin = 2 * stdDeviation / width;
+        double ymargin = 2 * stdDeviation / height;
+
+        sp_repr_set_svg_double(repr, "x", -xmargin);
+        sp_repr_set_svg_double(repr, "width", 1 + 2 * xmargin);
+        sp_repr_set_svg_double(repr, "y", -ymargin);
+        sp_repr_set_svg_double(repr, "height", 1 + 2 * ymargin);
+    }
 
     //create feGaussianBlur node
     Inkscape::XML::Node *b_repr;
@@ -44,9 +56,7 @@ new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation)
     b_repr->setAttribute("inkscape:collect", "always");
     
     //set stdDeviation attribute
-    Inkscape::CSSOStringStream os;
-    os << stdDeviation;
-    b_repr->setAttribute("stdDeviation", os.str().c_str());
+    sp_repr_set_svg_double(b_repr, "stdDeviation", stdDeviation);
     
     //set feGaussianBlur as child of filter node
     repr->appendChild(b_repr);

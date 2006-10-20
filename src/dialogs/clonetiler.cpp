@@ -1301,7 +1301,10 @@ clonetiler_apply (GtkWidget *widget, void *)
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
                 double diag = diag_original * t.expansion();
                 double radius = blur * diag;
-                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius);
+                // it's hard to figure out exact width/height of the tile without having an object
+                // that we can take bbox of; however here we only need a lower bound so that blur
+                // margins are not too small, and diag/2 should work
+                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, diag/2, diag/2);
                 sp_style_set_property_url (clone_object, "filter", SP_OBJECT(constructed), false);
             }
 

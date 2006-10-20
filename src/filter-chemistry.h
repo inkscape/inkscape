@@ -16,7 +16,7 @@
 #include "forward.h"
 #include "sp-filter.h"
 
-SPFilter *new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation);
+SPFilter *new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double width, double height);
 void remove_filter (SPObject *item, bool recursive);
 
 #endif

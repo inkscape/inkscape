@@ -205,7 +205,7 @@ sp_object_properties_dialog (void)
         gtk_box_pack_start (GTK_BOX (blur_hb), blur_s, TRUE, TRUE, 4);
         gtk_label_set_mnemonic_widget (GTK_LABEL(blur_l), blur_s);
 
-        GtkWidget *blur_sb = gtk_spin_button_new (GTK_ADJUSTMENT (blur_a), 0.01, 3);
+        GtkWidget *blur_sb = gtk_spin_button_new (GTK_ADJUSTMENT (blur_a), 0.01, 1);
         gtk_box_pack_start (GTK_BOX (blur_hb), blur_sb, FALSE, FALSE, 0);
 
         gtk_signal_connect ( blur_a, "value_changed",
@@ -221,7 +221,7 @@ sp_object_properties_dialog (void)
         gtk_box_pack_start (GTK_BOX (vb), o_vb, FALSE, FALSE, 2);
         gtk_object_set_data (GTK_OBJECT (dlg), "master_opacity", o_vb);
 
-        GtkWidget *l_hb = gtk_hbox_new (FALSE, 4);
+        GtkWidget *l_hb = gtk_hbox_new (FALSE, 0);
         GtkWidget *l = gtk_label_new_with_mnemonic (_("Master _opacity"));
         gtk_misc_set_alignment (GTK_MISC (l), 0.0, 1.0);
         gtk_box_pack_start (GTK_BOX (l_hb), l, FALSE, FALSE, 4);
@@ -230,7 +230,7 @@ sp_object_properties_dialog (void)
         GtkWidget *hb = gtk_hbox_new (FALSE, 4);
         gtk_box_pack_start (GTK_BOX (o_vb), hb, FALSE, FALSE, 0);
 
-        GtkObject *a = gtk_adjustment_new (1.0, 0.0, 1.0, 0.01, 0.1, 0.0);
+        GtkObject *a = gtk_adjustment_new (1.0, 0.0, 100.0, 1.0, 1.0, 0.0);
         gtk_object_set_data(GTK_OBJECT(dlg), "master_opacity_adjustment", a);
 
         GtkWidget *s = gtk_hscale_new (GTK_ADJUSTMENT (a));
@@ -238,7 +238,7 @@ sp_object_properties_dialog (void)
         gtk_box_pack_start (GTK_BOX (hb), s, TRUE, TRUE, 4);
         gtk_label_set_mnemonic_widget (GTK_LABEL(l), s);
 
-        GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.01, 3);
+        GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.01, 1);
         gtk_box_pack_start (GTK_BOX (hb), sb, FALSE, FALSE, 0);
 
         gtk_signal_connect ( a, "value_changed",
@@ -252,7 +252,7 @@ sp_object_properties_dialog (void)
         g_signal_connect ( G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_fillstroke_selection_modified), dlg );
         g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_fillstroke_selection_changed), dlg );
 
-        sp_fillstroke_selection_changed(NULL, NULL, NULL);
+        sp_fillstroke_selection_changed(INKSCAPE, sp_desktop_selection(SP_ACTIVE_DESKTOP), NULL);
 
         gtk_widget_show (dlg);
 
@@ -320,7 +320,7 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently
         case QUERY_STYLE_MULTIPLE_SAME: 
             gtk_widget_set_sensitive (opa, TRUE);
-            gtk_adjustment_set_value(a, SP_SCALE24_TO_FLOAT(query->opacity.value));
+            gtk_adjustment_set_value(a, 100 * SP_SCALE24_TO_FLOAT(query->opacity.value));
             break;
     }
 
@@ -337,11 +337,13 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED:
         case QUERY_STYLE_MULTIPLE_SAME: 
+            NR::Rect bbox = selection->bounds();
+            double perimeter = bbox.extent(NR::X) + bbox.extent(NR::Y);
             gtk_widget_set_sensitive (b, TRUE);
             //update blur widget value
             float radius = query->filter_gaussianBlur_deviation.value;
-            // TODO: divide by bbox diagonal
-            gtk_adjustment_set_value(bluradjustment, radius);
+            float percent = radius * 400 / perimeter; // so that for a square, 100% == half side
+            gtk_adjustment_set_value(bluradjustment, percent);
             break;
     }
     
@@ -351,7 +353,7 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
 }
 
 static void
-sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg)
+sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *base)
 {
     if (gtk_object_get_data (GTK_OBJECT (dlg), "blocked"))
         return;
@@ -361,7 +363,7 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg)
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
     Inkscape::CSSOStringStream os;
-    os << CLAMP (a->value, 0.0, 1.0);
+    os << CLAMP (a->value / 100, 0.0, 1.0);
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
 
     sp_desktop_set_style (SP_ACTIVE_DESKTOP, css);
@@ -376,7 +378,7 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *dlg)
 
 
 static void
-sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
+sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *base)
 {
     //if dialog is locked, return 
     if (gtk_object_get_data (GTK_OBJECT (dlg), "blocked"))
@@ -397,10 +399,11 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
     GSList const *items = selection->itemList();
     //get current document
     SPDocument *document = sp_desktop_document (desktop);
-        
-    //create new filter with feGaussianBlur primitive
-    SPFilter *constructed = new_filter_gaussian_blur(document, a->value);
 
+    NR::Rect bbox = selection->bounds();
+    double perimeter = bbox.extent(NR::X) + bbox.extent(NR::Y);
+    double radius = a->value * perimeter / 400;
+        
     //apply created filter to every selected item
     for (GSList const *i = items; i != NULL; i = i->next) {
     
@@ -408,9 +411,13 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *dlg)
         SPStyle *style = SP_OBJECT_STYLE(item);
         g_assert(style != NULL);
 
-        if (a->value == 0.0) {
+        if (radius == 0.0) {
             remove_filter (item, true);
         } else {
+            NR::Rect const r = sp_item_bbox_desktop(item);
+            double width = r.extent(NR::X);
+            double height = r.extent(NR::Y);
+            SPFilter *constructed = new_filter_gaussian_blur(document, radius, width, height); 
             sp_style_set_property_url (SP_OBJECT(item), "filter", SP_OBJECT(constructed), false);
         }
         //request update
