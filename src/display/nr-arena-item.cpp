@@ -509,8 +509,12 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             /* This pointer wouldn't be valid outside this block, so clear it */
             item->background_pb = NULL;
         } else {
-            /* Opacity only */
-            nr_blit_pixblock_pixblock_alpha (dpb, &ipb, item->opacity);
+            if (item->filter && !outline) {
+                nr_blit_pixblock_pixblock(dpb, &ipb);
+            } else {
+                /* Opacity only */
+                nr_blit_pixblock_pixblock_alpha (dpb, &ipb, item->opacity);
+            }
         }
         nr_pixblock_release (&ipb);
         dpb->empty = FALSE;
