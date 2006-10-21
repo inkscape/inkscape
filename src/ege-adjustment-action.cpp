@@ -43,6 +43,7 @@
 
 #include <string.h>
 
+#include <gdk/gdkkeysyms.h>
 #include <gtk/gtktoolitem.h>
 #include <gtk/gtkspinbutton.h>
 #include <gtk/gtkhbox.h>
@@ -63,7 +64,11 @@ static void connect_proxy( GtkAction *action, GtkWidget *proxy );
 static void disconnect_proxy( GtkAction *action, GtkWidget *proxy );
 
 static gboolean focus_in_cb( GtkWidget *widget, GdkEventKey *event, gpointer data );
+static gboolean focus_out_cb( GtkWidget *widget, GdkEventKey *event, gpointer data );
 static gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data );
+
+static void ege_adjustment_action_defocus( EgeAdjustmentAction* action );
+
 
 static GtkActionClass* gParentClass = 0;
 
@@ -72,15 +77,21 @@ struct _EgeAdjustmentActionPrivate
 {
     GtkAdjustment* adj;
     GtkWidget* focusWidget;
+    gdouble climbRate;
+    guint digits;
     gdouble lastVal;
-    gboolean keepFocus;
+    gdouble step;
+    gdouble page;
+    gboolean transferFocus;
 };
 
 #define EGE_ADJUSTMENT_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), EGE_ADJUSTMENT_ACTION_TYPE, EgeAdjustmentActionPrivate ) )
 
 enum {
     PROP_ADJUSTMENT = 1,
-    PROP_FOCUS_WIDGET
+    PROP_FOCUS_WIDGET,
+    PROP_CLIMB_RATE,
+    PROP_DIGITS
 };
 
 GType ege_adjustment_action_get_type( void )
@@ -123,10 +134,11 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
 
         g_object_class_install_property( objClass,
                                          PROP_ADJUSTMENT,
-                                         g_param_spec_pointer( "adjustment",
-                                                               "Adjustment",
-                                                               "The adjustment to change",
-                                                               (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+                                         g_param_spec_object( "adjustment",
+                                                              "Adjustment",
+                                                              "The adjustment to change",
+                                                              GTK_TYPE_ADJUSTMENT,
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_object_class_install_property( objClass,
                                          PROP_FOCUS_WIDGET,
@@ -134,6 +146,22 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
                                                                "Focus Widget",
                                                                "The widget to return focus to",
                                                                (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_CLIMB_RATE,
+                                         g_param_spec_double( "climb-rate",
+                                                              "Climb Rate",
+                                                              "The acelleraton rate",
+                                                              0.0, G_MAXDOUBLE, 0.0,
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
+        g_object_class_install_property( objClass,
+                                         PROP_DIGITS,
+                                         g_param_spec_uint( "digits",
+                                                            "Digits",
+                                                            "The number of digits to show",
+                                                            0, 20, 0,
+                                                            (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
@@ -144,15 +172,21 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data = EGE_ADJUSTMENT_ACTION_GET_PRIVATE( action );
     action->private_data->adj = 0;
     action->private_data->focusWidget = 0;
+    action->private_data->climbRate = 0.0;
+    action->private_data->digits = 2;
     action->private_data->lastVal = 0.0;
-    action->private_data->keepFocus = FALSE;
+    action->private_data->step = 0.0;
+    action->private_data->page = 0.0;
+    action->private_data->transferFocus = FALSE;
 }
 
 EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                                 const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
-                                                const gchar *stock_id )
+                                                const gchar *stock_id,
+                                                gdouble climb_rate,
+                                                guint digits )
 {
     GObject* obj = (GObject*)g_object_new( EGE_ADJUSTMENT_ACTION_TYPE,
                                            "name", name,
@@ -160,6 +194,8 @@ EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                            "tooltip", tooltip,
                                            "stock_id", stock_id,
                                            "adjustment", adjustment,
+					   "climb-rate", climb_rate,
+					   "digits", digits,
                                            NULL );
 
     EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( obj );
@@ -172,16 +208,20 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
     EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( obj );
     switch ( propId ) {
         case PROP_ADJUSTMENT:
-        {
-            g_value_set_pointer( value, action->private_data->adj );
-        }
-        break;
+            g_value_set_object( value, action->private_data->adj );
+            break;
 
         case PROP_FOCUS_WIDGET:
-        {
             g_value_set_pointer( value, action->private_data->focusWidget );
-        }
-        break;
+            break;
+
+        case PROP_CLIMB_RATE:
+            g_value_set_double( value, action->private_data->climbRate );
+            break;
+
+        case PROP_DIGITS:
+            g_value_set_uint( value, action->private_data->digits );
+            break;
 
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID( obj, propId, pspec );
@@ -194,7 +234,11 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
     switch ( propId ) {
         case PROP_ADJUSTMENT:
         {
-            action->private_data->adj = (GtkAdjustment*)g_value_get_pointer( value );
+            action->private_data->adj = GTK_ADJUSTMENT( g_value_get_object( value ) );
+            g_object_get( G_OBJECT(action->private_data->adj),
+                          "step-increment", &action->private_data->step,
+                          "page-increment", &action->private_data->page,
+                          NULL );
         }
         break;
 
@@ -202,6 +246,20 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
         {
             /* TODO unhook prior */
             action->private_data->focusWidget = (GtkWidget*)g_value_get_pointer( value );
+        }
+        break;
+
+        case PROP_CLIMB_RATE:
+        {
+            /* TODO pass on */
+            action->private_data->climbRate = g_value_get_double( value );
+        }
+        break;
+
+        case PROP_DIGITS:
+        {
+            /* TODO pass on */
+            action->private_data->digits = g_value_get_uint( value );
         }
         break;
 
@@ -242,22 +300,20 @@ static GtkWidget* create_menu_item( GtkAction* action )
     return item;
 }
 
-/* void flippy(GtkAdjustment *adj, GtkWidget *) */
-/* { */
-/*     g_message("flippy  on %p to %f", adj, gtk_adjustment_get_value(adj) ); */
-/* } */
-
-/* void floppy(GtkSpinButton *spin, GtkWidget *) */
-/* { */
-/*     g_message("f__ppy  on %p to %f", spin, gtk_spin_button_get_value(spin) ); */
-/* } */
+void value_changed_cb( GtkSpinButton* spin, EgeAdjustmentAction* act )
+{
+    if ( GTK_WIDGET_HAS_FOCUS( GTK_WIDGET(spin) ) ) {
+        ege_adjustment_action_defocus( act );
+    }
+}
 
 static GtkWidget* create_tool_item( GtkAction* action )
 {
     GtkWidget* item = 0;
 
     if ( IS_EGE_ADJUSTMENT_ACTION(action) ) {
-        GtkWidget* spinbutton = gtk_spin_button_new( EGE_ADJUSTMENT_ACTION(action)->private_data->adj, 0.1, 2 );
+        EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
+        GtkWidget* spinbutton = gtk_spin_button_new( act->private_data->adj, act->private_data->climbRate, act->private_data->digits );
         GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
         GValue value;
 
@@ -276,9 +332,10 @@ static GtkWidget* create_tool_item( GtkAction* action )
         gtk_container_add( GTK_CONTAINER(item), hb );
 
         g_signal_connect( G_OBJECT(spinbutton), "focus-in-event", G_CALLBACK(focus_in_cb), action );
+        g_signal_connect( G_OBJECT(spinbutton), "focus-out-event", G_CALLBACK(focus_out_cb), action );
         g_signal_connect( G_OBJECT(spinbutton), "key-press-event", G_CALLBACK(keypress_cb), action );
 
-/*      g_signal_connect( G_OBJECT(spinbutton), "value-changed", G_CALLBACK(floppy), action ); */
+        g_signal_connect( G_OBJECT(spinbutton), "value-changed", G_CALLBACK(value_changed_cb), action );
 /*      g_signal_connect( G_OBJECT(EGE_ADJUSTMENT_ACTION(action)->private_data->adj), "value-changed", G_CALLBACK(flippy), action ); */
 
 
@@ -302,9 +359,7 @@ static void disconnect_proxy( GtkAction *action, GtkWidget *proxy )
 
 void ege_adjustment_action_defocus( EgeAdjustmentAction* action )
 {
-    if ( action->private_data->keepFocus ) {
-        action->private_data->keepFocus = FALSE;
-    } else {
+    if ( action->private_data->transferFocus ) {
         if ( action->private_data->focusWidget ) {
             gtk_widget_grab_focus( action->private_data->focusWidget );
         }
@@ -313,16 +368,115 @@ void ege_adjustment_action_defocus( EgeAdjustmentAction* action )
 
 gboolean focus_in_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
 {
+    (void)event;
     if ( IS_EGE_ADJUSTMENT_ACTION(data) ) {
         EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( data );
         action->private_data->lastVal = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+        action->private_data->transferFocus = TRUE;
     }
 
     return FALSE; /* report event not consumed */
 }
 
-gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
+static gboolean focus_out_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
 {
+    (void)widget;
+    (void)event;
+    if ( IS_EGE_ADJUSTMENT_ACTION(data) ) {
+        EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( data );
+        action->private_data->transferFocus = FALSE;
+    }
 
     return FALSE; /* report event not consumed */
+}
+
+
+gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
+{
+    gboolean wasConsumed = FALSE; /* default to report event not consumed */
+    EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION(data);
+    guint key = 0;
+    gdk_keymap_translate_keyboard_state( gdk_keymap_get_for_display( gdk_display_get_default() ),
+                                         event->hardware_keycode, (GdkModifierType)event->state,
+                                         0, &key, 0, 0, 0 );
+
+    switch ( key ) {
+        case GDK_Escape:
+        {
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
+            action->private_data->transferFocus = TRUE;
+            ege_adjustment_action_defocus( action );
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_Return:
+        case GDK_KP_Enter:
+        {
+            action->private_data->transferFocus = TRUE;
+            ege_adjustment_action_defocus( action );
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_Tab:
+        case GDK_ISO_Left_Tab:
+        {
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = FALSE;
+        }
+        break;
+
+        case GDK_Up:
+        case GDK_KP_Up:
+        {
+            gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val + action->private_data->step );
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_Down:
+        case GDK_KP_Down:
+        {
+            gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val - action->private_data->step );
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_Page_Up:
+        case GDK_KP_Page_Up:
+        {
+            gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val + action->private_data->page );
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_Page_Down:
+        case GDK_KP_Page_Down:
+        {
+            gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val - action->private_data->page );
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_z:
+        case GDK_Z:
+        {
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = TRUE;
+        }
+        break;
+
+    }
+
+    return wasConsumed;
 }

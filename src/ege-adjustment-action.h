@@ -39,6 +39,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/* Note: this file should be kept compliable as both .cpp and .c */
 
 #include <glib.h>
 #include <gtk/gtkaction.h>
@@ -75,14 +76,14 @@ EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                                 const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
-                                                const gchar *stock_id );
+                                                const gchar *stock_id,
+                                                gdouble climb_rate,
+                                                guint digits );
 
 GtkAdjustment* ege_adjustment_action_get_adjustment( EgeAdjustmentAction* action );
 
 void ege_adjustment_action_set_focuswidget( EgeAdjustmentAction* action, GtkWidget* widget );
 GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action );
-
-void ege_adjustment_action_defocus( EgeAdjustmentAction* action );
 
 G_END_DECLS
 
