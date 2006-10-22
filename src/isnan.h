@@ -43,6 +43,8 @@
 
 #if defined(__isfinite)
 # define isFinite(_a) (__isfinite(_a))	/* MacOSX/Darwin definition < 10.4 */
+#elif defined(__sgi)
+# define isFinite(_a) (_isfinite(_a))
 #elif defined(isfinite)
 # define isFinite(_a) (isfinite(_a))
 #else
