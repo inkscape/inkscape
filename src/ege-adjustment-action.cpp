@@ -49,6 +49,7 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmisc.h>
+#include <gtk/gtktoolbar.h>
 
 #include "ege-adjustment-action.h"
 
@@ -79,6 +80,7 @@ struct _EgeAdjustmentActionPrivate
     GtkWidget* focusWidget;
     gdouble climbRate;
     guint digits;
+    gchar* selfId;
     gdouble lastVal;
     gdouble step;
     gdouble page;
@@ -91,7 +93,8 @@ enum {
     PROP_ADJUSTMENT = 1,
     PROP_FOCUS_WIDGET,
     PROP_CLIMB_RATE,
-    PROP_DIGITS
+    PROP_DIGITS,
+    PROP_SELFID
 };
 
 GType ege_adjustment_action_get_type( void )
@@ -163,6 +166,14 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
                                                             0, 20, 0,
                                                             (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
+        g_object_class_install_property( objClass,
+                                         PROP_SELFID,
+                                         g_param_spec_string( "self-id",
+                                                              "Self ID",
+                                                              "Marker for self pointer",
+                                                              0,
+                                                              (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
 }
@@ -174,6 +185,7 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->focusWidget = 0;
     action->private_data->climbRate = 0.0;
     action->private_data->digits = 2;
+    action->private_data->selfId = 0;
     action->private_data->lastVal = 0.0;
     action->private_data->step = 0.0;
     action->private_data->page = 0.0;
@@ -194,8 +206,8 @@ EgeAdjustmentAction* ege_adjustment_action_new( GtkAdjustment* adjustment,
                                            "tooltip", tooltip,
                                            "stock_id", stock_id,
                                            "adjustment", adjustment,
-					   "climb-rate", climb_rate,
-					   "digits", digits,
+                                           "climb-rate", climb_rate,
+                                           "digits", digits,
                                            NULL );
 
     EgeAdjustmentAction* action = EGE_ADJUSTMENT_ACTION( obj );
@@ -221,6 +233,10 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
 
         case PROP_DIGITS:
             g_value_set_uint( value, action->private_data->digits );
+            break;
+
+        case PROP_SELFID:
+            g_value_set_string( value, action->private_data->selfId );
             break;
 
         default:
@@ -260,6 +276,15 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
         {
             /* TODO pass on */
             action->private_data->digits = g_value_get_uint( value );
+        }
+        break;
+
+        case PROP_SELFID:
+        {
+            /* TODO pass on */
+            gchar* prior = action->private_data->selfId;
+            action->private_data->selfId = g_value_dup_string( value );
+            g_free( prior );
         }
         break;
 
@@ -331,6 +356,10 @@ static GtkWidget* create_tool_item( GtkAction* action )
         gtk_box_pack_end( GTK_BOX(hb), spinbutton, FALSE, FALSE, 0 );
         gtk_container_add( GTK_CONTAINER(item), hb );
 
+        if ( act->private_data->selfId ) {
+            gtk_object_set_data( GTK_OBJECT(spinbutton), act->private_data->selfId, spinbutton );
+        }
+
         g_signal_connect( G_OBJECT(spinbutton), "focus-in-event", G_CALLBACK(focus_in_cb), action );
         g_signal_connect( G_OBJECT(spinbutton), "focus-out-event", G_CALLBACK(focus_out_cb), action );
         g_signal_connect( G_OBJECT(spinbutton), "key-press-event", G_CALLBACK(keypress_cb), action );
@@ -391,6 +420,50 @@ static gboolean focus_out_cb( GtkWidget *widget, GdkEventKey *event, gpointer da
 }
 
 
+static gboolean process_tab( GtkWidget* widget, int direction )
+{
+    gboolean handled = FALSE;
+    GtkWidget* parent = gtk_widget_get_parent(widget);
+    GtkWidget* gp = parent ? gtk_widget_get_parent(parent) : 0;
+    GtkWidget* ggp = gp ? gtk_widget_get_parent(gp) : 0;
+
+    if ( ggp && GTK_IS_TOOLBAR(ggp) ) {
+        GList* kids = gtk_container_get_children( GTK_CONTAINER(ggp) );
+        if ( kids ) {
+            GtkWidget* curr = widget;
+            while ( curr && (gtk_widget_get_parent(curr) != ggp) ) {
+                curr = gtk_widget_get_parent( curr );
+            }
+            if ( curr ) {
+                GList* mid = g_list_find( kids, curr );
+                while ( mid ) {
+                    mid = ( direction < 0 ) ? g_list_previous(mid) : g_list_next(mid);
+                    if ( mid && GTK_IS_TOOL_ITEM(mid->data) ) {
+                        /* potential target */
+                        GtkWidget* child = gtk_bin_get_child( GTK_BIN(mid->data) );
+                        if ( child && GTK_IS_HBOX(child) ) { /* could be ours */
+                            GList* subChildren = gtk_container_get_children( GTK_CONTAINER(child) );
+                            if ( subChildren ) {
+                                GList* last = g_list_last(subChildren);
+                                if ( last && GTK_IS_SPIN_BUTTON(last->data) && GTK_WIDGET_IS_SENSITIVE( GTK_WIDGET(last->data) ) ) {
+                                    gtk_widget_grab_focus( GTK_WIDGET(last->data) );
+                                    handled = TRUE;
+                                    mid = 0; /* to stop loop */
+                                }
+
+                                g_list_free(subChildren);
+                            }
+                        }
+                    }
+                }
+            }
+            g_list_free( kids );
+        }
+    }
+
+    return handled;
+}
+
 gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
 {
     gboolean wasConsumed = FALSE; /* default to report event not consumed */
@@ -420,10 +493,16 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         break;
 
         case GDK_Tab:
+        {
+            action->private_data->transferFocus = FALSE;
+            wasConsumed = process_tab( widget, 1 );
+        }
+        break;
+
         case GDK_ISO_Left_Tab:
         {
             action->private_data->transferFocus = FALSE;
-            wasConsumed = FALSE;
+            wasConsumed = process_tab( widget, -1 );
         }
         break;
 

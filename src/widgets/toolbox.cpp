@@ -840,6 +840,10 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
         ege_adjustment_action_set_focuswidget( act, focusTarget );
     }
 
+    if ( altx && altx_mark ) {
+        g_object_set( G_OBJECT(act), "self-id", altx_mark, NULL );
+    }
+
     if ( dataKludge ) {
         gtk_object_set_data( GTK_OBJECT(dataKludge), data, adj );
     }
