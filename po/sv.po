@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
 "PO-Revision-Date: 2006-06-04 20:11+0200\n"
-"Last-Translator: Mattias Hultgren <mattias_hultgren@tele2.se>\n"
+"Last-Translator: Henrik Larsson <henrik.p.larsson@gmail.com>\n"
 "Language-Team: Svenska <C@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1212,9 +1212,8 @@ msgstr ""
 #. Button for setting the object's id, label, title and description.
 #: ../src/dialogs/item-properties.cpp:141 ../src/verbs.cpp:2159
 #: ../src/verbs.cpp:2163
-#, fuzzy
 msgid "_Set"
-msgstr "Markera"
+msgstr "Sätt"
 
 #. Create the label for the object label
 #: ../src/dialogs/item-properties.cpp:150
@@ -1925,13 +1924,12 @@ msgstr "Attributnamn"
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/xml-tree.cpp:530
 msgid "Set attribute"
-msgstr "Ställ in attribut"
+msgstr "Sätt attribut"
 
 #. TRANSLATORS: "Set" is a verb here
 #: ../src/dialogs/xml-tree.cpp:532
-#, fuzzy
 msgid "Set"
-msgstr "Markera"
+msgstr "Sätt"
 
 #. TRANSLATORS: "Attribute" is a noun here
 #: ../src/dialogs/xml-tree.cpp:555
@@ -2175,9 +2173,8 @@ msgid ""
 msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:131
-#, fuzzy
 msgid "Blur Edge"
-msgstr "Blå"
+msgstr "Suddiga kanter"
 
 #: ../src/extension/internal/bluredge.cpp:133
 #, fuzzy
@@ -2198,9 +2195,8 @@ msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:138
 #: ../share/extensions/interp.inx.h:3 ../share/extensions/motion.inx.h:3
-#, fuzzy
 msgid "Generate from Path"
-msgstr "Ta bort transformering"
+msgstr "Generera från slinga"
 
 #: ../src/extension/internal/eps-out.cpp:84
 msgid "Encapsulated Postscript Output"
@@ -2259,7 +2255,7 @@ msgstr "GNOME Print"
 
 #: ../src/extension/internal/grid.cpp:214 ../src/ui/widget/panel.cpp:118
 msgid "Grid"
-msgstr "Rutnät"
+msgstr "Stödraster"
 
 #: ../src/extension/internal/grid.cpp:216
 msgid "Line Width"
@@ -2288,9 +2284,8 @@ msgstr "Vertikalt mittpunktsvärde"
 #: ../src/extension/internal/grid.cpp:224 ../share/extensions/eqtexsvg.inx.h:3
 #: ../share/extensions/lindenmayer.inx.h:9 ../share/extensions/rtree.inx.h:4
 #: ../share/extensions/wavy.inx.h:6
-#, fuzzy
 msgid "Render"
-msgstr "Röd"
+msgstr "Rendera"
 
 #: ../src/extension/internal/grid.cpp:226
 msgid "Draw a path which is a grid"
@@ -2757,9 +2752,8 @@ msgid ""
 msgstr ""
 
 #: ../src/gradient-drag.cpp:660
-#, fuzzy
 msgid " (stroke)"
-msgstr "Är genomstruket"
+msgstr "(kantlinje)"
 
 #: ../src/gradient-drag.cpp:663
 msgid ""
@@ -3106,7 +3100,7 @@ msgstr ""
 #: ../src/jabber_whiteboard/session-file-selector.cpp:62
 #, fuzzy
 msgid "Set filename"
-msgstr "Namn på png-fil"
+msgstr "Sätt filnamn"
 
 #: ../src/jabber_whiteboard/session-manager.cpp:308
 msgid "<b>%1</b> has invited you to a whiteboard session."
@@ -3402,32 +3396,28 @@ msgid "_Object"
 msgstr "_Objekt"
 
 #: ../src/menus-skeleton.h:164
-#, fuzzy
 msgid "Cli_p"
-msgstr "Städa"
+msgstr "Klipp"
 
 #: ../src/menus-skeleton.h:168
-#, fuzzy
 msgid "Mas_k"
-msgstr "Massa:"
+msgstr "Maskera"
 
 #: ../src/menus-skeleton.h:172
 msgid "Patter_n"
 msgstr "Mönster"
 
 #: ../src/menus-skeleton.h:191
-#, fuzzy
 msgid "_Path"
-msgstr "Klistra _in"
+msgstr "Slinga"
 
 #: ../src/menus-skeleton.h:214
 msgid "_Text"
 msgstr "_Text"
 
 #: ../src/menus-skeleton.h:226
-#, fuzzy
 msgid "Effe_cts"
-msgstr "Objekt"
+msgstr "Effekter"
 
 #: ../src/menus-skeleton.h:233
 msgid "Whiteboa_rd"
@@ -3439,7 +3429,7 @@ msgstr "_Hjälp"
 
 #: ../src/menus-skeleton.h:239
 msgid "Tutorials"
-msgstr ""
+msgstr "Handledningar"
 
 #: ../src/node-context.cpp:366
 msgid ""
@@ -3497,9 +3487,8 @@ msgid "Distribute nodes"
 msgstr "Distribuera"
 
 #: ../src/nodepath.cpp:1532
-#, fuzzy
 msgid "Add nodes"
-msgstr "Noder"
+msgstr "Lägg till noder"
 
 #: ../src/nodepath.cpp:1534 ../src/nodepath.cpp:1598
 #, fuzzy
@@ -4044,7 +4033,6 @@ msgstr ""
 "Du kan inte höja/sänka objekt från <b>olika grupper</b> eller <b>lager</b>."
 
 #: ../src/selection-chemistry.cpp:674
-#, fuzzy
 msgid "Raise"
 msgstr "Höj"
 
@@ -4053,16 +4041,14 @@ msgid "Select <b>object(s)</b> to raise to top."
 msgstr "Markera <b>objekt</b> att höja till toppen."
 
 #: ../src/selection-chemistry.cpp:710
-#, fuzzy
 msgid "Raise to top"
-msgstr "Placera markeringen överst"
+msgstr "Lägg överst"
 
 #: ../src/selection-chemistry.cpp:724
 msgid "Select <b>object(s)</b> to lower."
 msgstr "Markera <b>objekt</b> att sänka."
 
 #: ../src/selection-chemistry.cpp:767
-#, fuzzy
 msgid "Lower"
 msgstr "Sänk"
 
@@ -4071,9 +4057,8 @@ msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr "Markera <b>objekt</b> att sänka till botten."
 
 #: ../src/selection-chemistry.cpp:816
-#, fuzzy
 msgid "Lower to bottom"
-msgstr "placera markeringen nederst"
+msgstr "Lägg underst"
 
 #: ../src/selection-chemistry.cpp:823
 msgid "Nothing to undo."
@@ -4290,12 +4275,11 @@ msgstr "Konvertera markerat objekt till slinga"
 
 #: ../src/selection-chemistry.cpp:2550
 msgid "Set clipping path"
-msgstr ""
+msgstr "Sätt klippväg"
 
 #: ../src/selection-chemistry.cpp:2552
-#, fuzzy
 msgid "Set mask"
-msgstr "Spara som:"
+msgstr "Sätt mask"
 
 #: ../src/selection-chemistry.cpp:2565
 #, fuzzy
@@ -4304,12 +4288,11 @@ msgstr "Höj markerade objekt överst"
 
 #: ../src/selection-chemistry.cpp:2633
 msgid "Release clipping path"
-msgstr ""
+msgstr "Frisläpp klippväg"
 
 #: ../src/selection-chemistry.cpp:2635
-#, fuzzy
 msgid "Release mask"
-msgstr "Filter"
+msgstr "Frisläpp maskering"
 
 #: ../src/selection-chemistry.cpp:2679
 #, fuzzy
@@ -4492,9 +4475,8 @@ msgid "%s%s. %s."
 msgstr ""
 
 #: ../src/seltrans.cpp:228
-#, fuzzy
 msgid "Set center"
-msgstr "Välj skrivare"
+msgstr "Sätt mittpunkt"
 
 #: ../src/seltrans.cpp:381 ../src/ui/dialog/transformation.cpp:709
 #, fuzzy
@@ -4679,45 +4661,40 @@ msgstr "Ändra"
 #: ../src/sp-offset.cpp:430
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
-msgstr ""
+msgstr "<b>Länkad förskjutning</b>, %s med %f pt"
 
 #: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
-#, fuzzy
 msgid "outset"
-msgstr "Slå samman markerade slingor"
+msgstr "utskjutning"
 
 #: ../src/sp-offset.cpp:431 ../src/sp-offset.cpp:435
-#, fuzzy
 msgid "inset"
-msgstr "tum"
+msgstr "inskjutning"
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
 #: ../src/sp-offset.cpp:434
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
-msgstr ""
+msgstr "<b>Dynamisk förskjutning</b>, %s med %f pt"
 
 #: ../src/sp-path.cpp:121
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
-msgstr[0] "Länk till %s"
-msgstr[1] "Länk till %s"
+msgstr[0] "<b>Slinga</b> (%i nod)"
+msgstr[1] "<b>Slinga</b> (%i noder)"
 
 #: ../src/sp-polygon.cpp:233
-#, fuzzy
 msgid "<b>Polygon</b>"
-msgstr "Ändra"
+msgstr "<b>Polygon</b>"
 
 #: ../src/sp-polyline.cpp:176
-#, fuzzy
 msgid "<b>Polyline</b>"
-msgstr "Ellips"
+msgstr "<b>Multilinje</b>"
 
 #: ../src/sp-rect.cpp:234
-#, fuzzy
 msgid "<b>Rectangle</b>"
-msgstr "Ändra"
+msgstr "<b>Rektangel</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
@@ -4730,15 +4707,15 @@ msgstr "<b>Spiral</b> med %3f varv"
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>Stjärna</b> med %d spetsar"
+msgstr[1] "<b>Stjärna</b> med %d spetsar"
 
 #: ../src/sp-star.cpp:283
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>Polygon</b> med %d hörn"
+msgstr[1] "<b>Polygon</b> med %d hörn"
 
 #: ../src/sp-switch.cpp:100
 #, fuzzy, c-format
@@ -4867,19 +4844,17 @@ msgid "<b>No stroked paths</b> in the selection."
 msgstr "Klipp ut markerade objekt till urklipp"
 
 #: ../src/splivarot.cpp:934
-#, fuzzy
 msgid "Selected object is <b>not a path</b>, cannot inset/outset."
-msgstr "Konvertera markerat objekt till slinga"
+msgstr "Markerat objekt är <b>inte en slinga</b>, kan inte förskjuta."
 
 #: ../src/splivarot.cpp:1052 ../src/splivarot.cpp:1117
-#, fuzzy
 msgid "Create offset object"
 msgstr "Skapa och redigera textobjekt"
 
 #: ../src/splivarot.cpp:1144
 #, fuzzy
 msgid "Select <b>path(s)</b> to inset/outset."
-msgstr "Klipp ut markerade objekt till urklipp"
+msgstr "Markera <b>slinga</b> att förskjuta."
 
 #: ../src/splivarot.cpp:1360
 #, fuzzy
@@ -4888,7 +4863,7 @@ msgstr "Slå samman markerade slingor"
 
 #: ../src/splivarot.cpp:1362
 msgid "<b>No paths</b> to inset/outset in the selection."
-msgstr ""
+msgstr "<b>Inga slingor</b> att förskjuta i markeringen."
 
 #: ../src/splivarot.cpp:1546
 #, c-format
@@ -5633,7 +5608,7 @@ msgstr "Ändra"
 
 #: ../src/ui/dialog/document-properties.cpp:101
 msgid "Grid/Guides"
-msgstr "Rutnät/Hjälplinjer"
+msgstr "Stödraster/Stödlinjer"
 
 #: ../src/ui/dialog/document-properties.cpp:102
 #, fuzzy
@@ -5722,11 +5697,11 @@ msgstr "Ändra"
 #: ../src/ui/dialog/document-properties.cpp:241
 #, fuzzy
 msgid "_Show grid"
-msgstr "Visa rutnät"
+msgstr "Visa stödraster"
 
 #: ../src/ui/dialog/document-properties.cpp:241
 msgid "Show or hide grid"
-msgstr "Visa eller dölj rutnät"
+msgstr "Visa eller dölj stödraster"
 
 #: ../src/ui/dialog/document-properties.cpp:242
 #, fuzzy
@@ -5860,11 +5835,11 @@ msgstr "Stäng"
 
 #: ../src/ui/dialog/document-properties.cpp:266
 msgid "Show _guides"
-msgstr "Visa hjälplinjer"
+msgstr "Visa stödlinjer"
 
 #: ../src/ui/dialog/document-properties.cpp:266
 msgid "Show or hide guides"
-msgstr "Visa eller göm hjälplinjer"
+msgstr "Visa eller göm stödlinjer"
 
 #: ../src/ui/dialog/document-properties.cpp:267
 #, fuzzy
@@ -5896,11 +5871,11 @@ msgstr ""
 #: ../src/ui/dialog/document-properties.cpp:273
 #, fuzzy
 msgid "<b>Grid</b>"
-msgstr "Ändra"
+msgstr "<b>Stödraster</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:275
 msgid "<b>Guides</b>"
-msgstr "Hjälplinjer"
+msgstr "<b>Stödlinjer</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:308
 #, fuzzy
@@ -6293,12 +6268,13 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:184
 msgid "Inset/Outset by:"
-msgstr ""
+msgstr "Förskjutning med:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:185
 msgid ""
 "Inset and Outset commands displace the path by this distance (in px units)"
-msgstr ""
+msgstr "Inskjutning och Utskjutning kommandon förflyttar slingan med detta"
+" avstånd (i px enheter)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:186
 msgid "Compass-like display of angles"
@@ -7089,9 +7065,8 @@ msgid "Open new file"
 msgstr "Öppna SVG-fil"
 
 #: ../src/ui/dialog/session-player.cpp:96
-#, fuzzy
 msgid "Set delay"
-msgstr "Ställ in attribut"
+msgstr "Sätt fördröjning"
 
 #: ../src/ui/dialog/session-player.cpp:138
 #, fuzzy
@@ -7804,12 +7779,12 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:89
 #: ../src/ui/widget/style-swatch.cpp:104
 msgid "F:"
-msgstr ""
+msgstr "F:"
 
 #: ../src/ui/widget/selected-style.cpp:90
 #: ../src/ui/widget/style-swatch.cpp:105
 msgid "S:"
-msgstr ""
+msgstr "L:"
 
 #: ../src/ui/widget/selected-style.cpp:91
 msgid "O:"
@@ -7817,13 +7792,12 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:131
 msgid "N/A"
-msgstr ""
+msgstr "Gäller inte"
 
 #: ../src/ui/widget/selected-style.cpp:134
 #: ../src/ui/widget/selected-style.cpp:969
-#, fuzzy
 msgid "Nothing selected"
-msgstr "Ta bort markerade objekt"
+msgstr "Inget markerat"
 
 #: ../src/ui/widget/selected-style.cpp:139
 #: ../src/ui/widget/style-swatch.cpp:300
@@ -7838,9 +7812,8 @@ msgstr "Är genomstruket"
 
 #: ../src/ui/widget/selected-style.cpp:141
 #: ../src/ui/widget/style-swatch.cpp:292 ../src/widgets/paint-selector.cpp:176
-#, fuzzy
 msgid "Pattern"
-msgstr "Mönster:"
+msgstr "Mönster"
 
 #: ../src/ui/widget/selected-style.cpp:144
 #: ../src/ui/widget/style-swatch.cpp:294 ../src/widgets/paint-selector.cpp:872
@@ -7856,9 +7829,8 @@ msgstr "Mönsterfyllning"
 
 #: ../src/ui/widget/selected-style.cpp:146
 #: ../src/ui/widget/style-swatch.cpp:284
-#, fuzzy
 msgid "L Gradient"
-msgstr "Toningsfyllning"
+msgstr "L toning"
 
 #: ../src/ui/widget/selected-style.cpp:149
 #: ../src/ui/widget/style-swatch.cpp:286
@@ -7874,9 +7846,8 @@ msgstr "Linjär toning"
 
 #: ../src/ui/widget/selected-style.cpp:151
 #: ../src/ui/widget/style-swatch.cpp:288
-#, fuzzy
 msgid "R Gradient"
-msgstr "Toningsfyllning"
+msgstr "R toning"
 
 #: ../src/ui/widget/selected-style.cpp:154
 #: ../src/ui/widget/style-swatch.cpp:290
@@ -7907,36 +7878,31 @@ msgstr "Grad"
 
 #: ../src/ui/widget/selected-style.cpp:161
 #: ../src/ui/widget/style-swatch.cpp:303
-#, fuzzy
 msgid "Unset"
-msgstr "tum"
+msgstr "Obestämmd"
 
 #. TRANSLATORS COMMENT: unset is a verb here
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
 #: ../src/ui/widget/selected-style.cpp:461
 #: ../src/ui/widget/style-swatch.cpp:305
-#, fuzzy
 msgid "Unset fill"
-msgstr "Namnlös"
+msgstr "Obestämmd fyllning"
 
 #: ../src/ui/widget/selected-style.cpp:164
 #: ../src/ui/widget/selected-style.cpp:222
 #: ../src/ui/widget/selected-style.cpp:470
 #: ../src/ui/widget/style-swatch.cpp:305
-#, fuzzy
 msgid "Unset stroke"
-msgstr "Är genomstruket"
+msgstr "Obestämmd kantlinje"
 
 #: ../src/ui/widget/selected-style.cpp:167
-#, fuzzy
 msgid "Flat color fill"
-msgstr "Enfärgad"
+msgstr "Enfärgad fyllning"
 
 #: ../src/ui/widget/selected-style.cpp:167
-#, fuzzy
 msgid "Flat color stroke"
-msgstr "Enfärgad"
+msgstr "Enfärgad kantlinje"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:170
@@ -8416,7 +8382,7 @@ msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
-"Ta bort oanvända definitioner (som övergångar eller beskäringsstigar) från "
+"Ta bort oanvända definitioner (som övergångar eller beskäringsslingor) från "
 "dokumentets &lt;defs&gt;"
 
 #: ../src/verbs.cpp:1958
@@ -8635,23 +8601,21 @@ msgstr "Markera objektet som klonen är länkad till"
 
 #. TRANSLATORS: Convert selection to a rectangle with tiled pattern fill
 #: ../src/verbs.cpp:2012
-#, fuzzy
 msgid "Objects to Patter_n"
-msgstr "Objekttransformering"
+msgstr "Objekt till mönster"
 
 #: ../src/verbs.cpp:2013
 msgid "Convert selection to a rectangle with tiled pattern fill"
-msgstr ""
+msgstr "Konvertera markering till en rektangel fylld med brickmönster"
 
 #. TRANSLATORS: Extract objects from a tiled pattern fill
 #: ../src/verbs.cpp:2015
-#, fuzzy
 msgid "Pattern to _Objects"
-msgstr "Platta till objekt"
+msgstr "Mönster till objekt"
 
 #: ../src/verbs.cpp:2016
 msgid "Extract objects from a tiled pattern fill"
-msgstr ""
+msgstr "Extrahera objekt från en fyllning med brickmönster"
 
 #: ../src/verbs.cpp:2017
 #, fuzzy
@@ -8705,22 +8669,20 @@ msgstr "Avmarkerar alla markerade objekt eller punkter"
 
 #. Selection
 #: ../src/verbs.cpp:2031
-#, fuzzy
 msgid "Raise to _Top"
-msgstr "Placera markeringen överst"
+msgstr "Lägg överst"
 
 #: ../src/verbs.cpp:2032
 msgid "Raise selection to top"
 msgstr "Placera markeringen överst"
 
 #: ../src/verbs.cpp:2033
-#, fuzzy
 msgid "Lower to _Bottom"
-msgstr "placera markeringen nederst"
+msgstr "Lägg underst"
 
 #: ../src/verbs.cpp:2034
 msgid "Lower selection to bottom"
-msgstr "Placera markeringen nederst"
+msgstr "Placera markeringen underst"
 
 #: ../src/verbs.cpp:2035
 msgid "_Raise"
@@ -8747,214 +8709,183 @@ msgid "Group selected objects"
 msgstr "Gruppera markerade objekt"
 
 #: ../src/verbs.cpp:2042
-#, fuzzy
 msgid "Ungroup selected groups"
 msgstr "Avgruppera markerad(e) grupp(er)"
 
 #: ../src/verbs.cpp:2044
-#, fuzzy
 msgid "_Put on Path"
-msgstr "Konvertera markerat objekt till slinga"
+msgstr "Placera på slinga"
 
 #: ../src/verbs.cpp:2046
-#, fuzzy
 msgid "_Remove from Path"
-msgstr "Ta bort transformering"
+msgstr "Ta bort från slinga"
 
 #: ../src/verbs.cpp:2048
 msgid "Remove Manual _Kerns"
-msgstr ""
+msgstr "Ta bort manuell kerning"
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
 #: ../src/verbs.cpp:2051
-#, fuzzy
 msgid "Remove all manual kerns and glyph rotations from a text object"
-msgstr "Ta bort transformeringar från objekt"
+msgstr "Ta bort all manuell kerning och roterade tecken från ett textobjekt"
 
 #: ../src/verbs.cpp:2053
-#, fuzzy
 msgid "_Union"
-msgstr "ingen"
+msgstr "Union"
 
 #: ../src/verbs.cpp:2054
-#, fuzzy
 msgid "Create union of selected paths"
-msgstr "Slå samman markerade slingor"
+msgstr "Skapa en union av markerade slingor"
 
 #: ../src/verbs.cpp:2055
-#, fuzzy
 msgid "_Intersection"
-msgstr "_Interaktiv"
+msgstr "Snitt"
 
 #: ../src/verbs.cpp:2056
-#, fuzzy
 msgid "Create intersection of selected paths"
-msgstr "Ta bort markerade objekt"
+msgstr "Skapa ett snitt av markerade slingor"
 
 #: ../src/verbs.cpp:2057
-#, fuzzy
 msgid "_Difference"
-msgstr "Grad"
+msgstr "Differens"
 
 #: ../src/verbs.cpp:2058
-#, fuzzy
 msgid "Create difference of selected paths (bottom minus top)"
-msgstr "Ta bort markerade objekt"
+msgstr "Skapa en differens av markerade slingor (understa minus översta)"
 
 #: ../src/verbs.cpp:2059
-#, fuzzy
 msgid "E_xclusion"
-msgstr "Expansion"
+msgstr "Exklusion"
 
 #: ../src/verbs.cpp:2060
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
-msgstr ""
+msgstr "Skapa exklusivt ELLER av markerade slingor (de delar som endast tillhör en)"
 
 #: ../src/verbs.cpp:2061
-#, fuzzy
 msgid "Di_vision"
-msgstr "Mått"
+msgstr "Delning"
 
 #: ../src/verbs.cpp:2062
 msgid "Cut the bottom path into pieces"
-msgstr ""
+msgstr "Dela upp nedre slingan i delar"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2065
-#, fuzzy
 msgid "Cut _Path"
-msgstr "Slå samman markerade slingor"
+msgstr "Dela i slingor"
 
 #: ../src/verbs.cpp:2066
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr ""
+msgstr "Dela upp nedre slingans linje i delar och ta bort fyllningen"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2070
-#, fuzzy
 msgid "Outs_et"
-msgstr "Slå samman markerade slingor"
+msgstr "Utskjutning"
 
 #: ../src/verbs.cpp:2071
-#, fuzzy
 msgid "Outset selected paths"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut ut markerade slingor"
 
 #: ../src/verbs.cpp:2073
-#, fuzzy
 msgid "O_utset Path by 1 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut ut slinga med 1 px"
 
 #: ../src/verbs.cpp:2074
-#, fuzzy
 msgid "Outset selected paths by 1 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut ut markerade slingor med 1 px"
 
 #: ../src/verbs.cpp:2076
-#, fuzzy
 msgid "O_utset Path by 10 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut ut slinga med 10 px"
 
 #: ../src/verbs.cpp:2077
-#, fuzzy
 msgid "Outset selected paths by 10 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut ut markerade slingor med 10 px"
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2081
 msgid "I_nset"
-msgstr ""
+msgstr "Inskjutning"
 
 #: ../src/verbs.cpp:2082
-#, fuzzy
 msgid "Inset selected paths"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut in markerade slingor"
 
 #: ../src/verbs.cpp:2084
-#, fuzzy
 msgid "I_nset Path by 1 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut in slinga med 1 px"
 
 #: ../src/verbs.cpp:2085
-#, fuzzy
 msgid "Inset selected paths by 1 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut in markerade slingor med 1 px"
 
 #: ../src/verbs.cpp:2087
-#, fuzzy
 msgid "I_nset Path by 10 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut in slinga med 10 px"
 
 #: ../src/verbs.cpp:2088
-#, fuzzy
 msgid "Inset selected paths by 10 px"
-msgstr "Slå samman markerade slingor"
+msgstr "Skjut in markerade slingor med 10 px"
 
 #: ../src/verbs.cpp:2090
-#, fuzzy
 msgid "D_ynamic Offset"
-msgstr "Dynamisk ifyllning"
+msgstr "Dynamisk förskjutning"
 
 #: ../src/verbs.cpp:2090
-#, fuzzy
 msgid "Create a dynamic offset object"
-msgstr "Skapa och redigera textobjekt"
+msgstr "Skapa ett dynamiskt förskjutet objekt"
 
 #: ../src/verbs.cpp:2092
 msgid "_Linked Offset"
-msgstr ""
+msgstr "Länkad förskjutning"
 
 #: ../src/verbs.cpp:2093
 msgid "Create a dynamic offset object linked to the original path"
-msgstr ""
+msgstr "Skapa ett dynamiskt förskjutet objekt som är länkat till den"
+" ursprungliga slingan"
 
 #: ../src/verbs.cpp:2095
-#, fuzzy
 msgid "_Stroke to Path"
-msgstr "Genomstrykningsmålning"
+msgstr "Kantlinje till slinga"
 
 #: ../src/verbs.cpp:2096
-#, fuzzy
 msgid "Convert selected object's stroke to paths"
-msgstr "Konvertera markerat objekt till slinga"
+msgstr "Konvertera markerat objekts kantlinje till slinga"
 
 #: ../src/verbs.cpp:2097
-#, fuzzy
 msgid "Si_mplify"
-msgstr "Slå samman markerade slingor"
+msgstr "Förenkla"
 
 #: ../src/verbs.cpp:2098
-#, fuzzy
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr "Slå samman markerade slingor"
+msgstr "Förenkla markerade slingor (ta bort extra noder)"
 
 #: ../src/verbs.cpp:2099
-#, fuzzy
 msgid "_Reverse"
-msgstr "Filter"
+msgstr "Vänd rikting"
 
 #: ../src/verbs.cpp:2100
-#, fuzzy
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
-msgstr "Ta bort markerade objekt"
+msgstr "Vänd riktning på markerade slingor (användbart för vändbara"
+" markeringar)"
 
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
 #: ../src/verbs.cpp:2102
-#, fuzzy
 msgid "_Trace Bitmap..."
-msgstr "Trasig bitmappsbild"
+msgstr "Kalkera bitmappsbild"
 
 #: ../src/verbs.cpp:2103
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr ""
+msgstr "Skapa en eller fler slingor från bitmappsbild med kalkering"
 
 #: ../src/verbs.cpp:2104
 msgid "_Make a Bitmap Copy"
@@ -8967,33 +8898,29 @@ msgstr "Importera bitmappsbild eller SVG-bild till dokument"
 
 #: ../src/verbs.cpp:2106
 msgid "_Combine"
-msgstr "_Slå samman"
+msgstr "Sammanfoga"
 
 #: ../src/verbs.cpp:2107
 msgid "Combine several paths into one"
-msgstr ""
+msgstr "Sammanfoga flera slingor till en"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2110
-#, fuzzy
 msgid "Break _Apart"
 msgstr "Dela upp"
 
 #: ../src/verbs.cpp:2111
-#, fuzzy
 msgid "Break selected paths into subpaths"
-msgstr "Dela upp markerad slinga till underslingor"
+msgstr "Dela upp markerade slingor till underslingor"
 
 #: ../src/verbs.cpp:2112
-#, fuzzy
 msgid "Gri_d Arrange..."
 msgstr "_Arrangera"
 
 #: ../src/verbs.cpp:2113
-#, fuzzy
 msgid "Arrange selected objects in a grid pattern"
-msgstr "Gruppera markerade objekt"
+msgstr "Arrangera markerade objekt i ett rutnätsmönster"
 
 #. Layer
 #: ../src/verbs.cpp:2115
@@ -9002,7 +8929,7 @@ msgstr "Lägg till lager"
 
 #: ../src/verbs.cpp:2116
 msgid "Create a new layer"
-msgstr "Skapar ett nytt lager"
+msgstr "Skapa ett nytt lager"
 
 #: ../src/verbs.cpp:2117
 msgid "Re_name Layer..."
@@ -9111,84 +9038,77 @@ msgstr "Ta bort transformeringar från objekt"
 
 #: ../src/verbs.cpp:2145
 msgid "_Object to Path"
-msgstr ""
+msgstr "Objekt till slinga"
 
 #: ../src/verbs.cpp:2146
-#, fuzzy
 msgid "Convert selected object to path"
 msgstr "Konvertera markerat objekt till slinga"
 
 #: ../src/verbs.cpp:2147
 msgid "_Flow into Frame"
-msgstr ""
+msgstr "Flöde in i ram"
 
 #: ../src/verbs.cpp:2148
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
-msgstr ""
+msgstr "Placera text i en ram (slinga eller figur) för att skapa textflöde "
+"länkat till ramobjektet"
 
 #: ../src/verbs.cpp:2149
-#, fuzzy
 msgid "_Unflow"
-msgstr "_Ångra"
+msgstr "Ta bort flöde"
 
 #: ../src/verbs.cpp:2150
 msgid "Remove text from frame (creates a single-line text object)"
-msgstr ""
+msgstr "Ta bort text från ram (skapar ett enradigt textobjekt)"
 
 #: ../src/verbs.cpp:2151
-#, fuzzy
 msgid "_Convert to Text"
-msgstr "Konvertera markerat objekt till slinga"
+msgstr "Konvertera till text"
 
 #: ../src/verbs.cpp:2152
-#, fuzzy
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr "Konvertera markerade segment till linjer"
+msgstr "Konvertera textflöde to vanligt textobjekt (bevarar utseende)"
 
 #: ../src/verbs.cpp:2154
-#, fuzzy
 msgid "Flip _Horizontal"
 msgstr "Vänd horisontellt"
 
 #: ../src/verbs.cpp:2154
-#, fuzzy
 msgid "Flip selected objects horizontally"
 msgstr "Vänd markerade objekt horisontellt"
 
 #: ../src/verbs.cpp:2157
-#, fuzzy
 msgid "Flip _Vertical"
 msgstr "Vänd vertikalt"
 
 #: ../src/verbs.cpp:2157
-#, fuzzy
 msgid "Flip selected objects vertically"
 msgstr "Vänd markerade objekt vertikalt"
 
 #: ../src/verbs.cpp:2160
 msgid "Apply mask to selection (using the topmost object as mask)"
-msgstr ""
+msgstr "Tillämpa mask på markering (genom att använda det översta"
+" objektet som mask)"
 
 #: ../src/verbs.cpp:2161 ../src/verbs.cpp:2165
-#, fuzzy
 msgid "_Release"
-msgstr "Filter"
+msgstr "Frigör"
 
 #: ../src/verbs.cpp:2162
-#, fuzzy
 msgid "Remove mask from selection"
-msgstr "Transformera markering"
+msgstr "Ta bort mask från markering"
 
 #: ../src/verbs.cpp:2164
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
-msgstr ""
+msgstr "Tillämpa klippväg på markering (genom att använda det översta"
+" objektet som klippväg)"
 
 #: ../src/verbs.cpp:2166
 msgid "Remove clipping path from selection"
-msgstr ""
+msgstr "Ta bort klippväg från markering"
 
 #. Tools
 #: ../src/verbs.cpp:2169
@@ -9205,7 +9125,7 @@ msgstr "Redigera noder"
 
 #: ../src/verbs.cpp:2172
 msgid "Edit path nodes or control handles"
-msgstr "Redigera stigpunkter eller styrhandtag"
+msgstr "Redigera slingpunkter eller riktningshandtag"
 
 #: ../src/verbs.cpp:2174
 msgid "Create rectangles and squares"
@@ -9229,7 +9149,7 @@ msgstr "Rita frihandslinje"
 
 #: ../src/verbs.cpp:2184
 msgid "Draw Bezier curves and straight lines"
-msgstr "Rita Bezier kurvor och raka linjer"
+msgstr "Rita Bezierkurvor och raka linjer"
 
 #: ../src/verbs.cpp:2186
 msgid "Draw calligraphic lines"
@@ -9429,21 +9349,21 @@ msgstr "Visa eller dölj rullningslister för ritduken"
 
 #: ../src/verbs.cpp:2233
 msgid "_Grid"
-msgstr "Rutnät"
+msgstr "Stödraster"
 
 #: ../src/verbs.cpp:2233
 msgid "Show or hide the grid"
-msgstr "Visa eller göm rutnät"
+msgstr "Visa eller dölj stödraster"
 
 #: ../src/verbs.cpp:2234
 msgid "G_uides"
-msgstr "Hjälplinjer"
+msgstr "Stödlinjer"
 
 #: ../src/verbs.cpp:2234
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
-"Visa eller dölj hjälplinjer (dra ut från en linjal för att skapa en "
-"hjälplinje)"
+"Visa eller dölj stödlinjer (dra ut från en linjal för att skapa en "
+"stödlinje)"
 
 #: ../src/verbs.cpp:2235
 msgid "Nex_t Zoom"
@@ -9584,43 +9504,37 @@ msgid "Edit document metadata (to be saved with the document)"
 msgstr "Ändra detta dokuments metadata (kommer att sparas med dokumentet)"
 
 #: ../src/verbs.cpp:2277
-#, fuzzy
 msgid "_Fill and Stroke..."
-msgstr "Fyllning och genomstrykning..."
+msgstr "Fyllning och linje..."
 
 #: ../src/verbs.cpp:2278
 msgid "Edit objects' style, such as color or stroke width"
-msgstr ""
+msgstr "Ändra objektets stil, som t ex färg och linjebredd"
 
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2280
-#, fuzzy
 msgid "S_watches..."
 msgstr "Färgprover..."
 
 #: ../src/verbs.cpp:2281
 msgid "Select colors from a swatches palette"
-msgstr "Välj färger från en färgpalette"
+msgstr "Välj färger från en färgpalett"
 
 #: ../src/verbs.cpp:2282
-#, fuzzy
 msgid "Transfor_m..."
-msgstr "Transform:"
+msgstr "Transformera..."
 
 #: ../src/verbs.cpp:2283
-#, fuzzy
 msgid "Precisely control objects' transformations"
-msgstr "Objekttransformeringar"
+msgstr "Transformera objekt"
 
 #: ../src/verbs.cpp:2284
-#, fuzzy
 msgid "_Align and Distribute..."
 msgstr "Justera och distribuera"
 
 #: ../src/verbs.cpp:2285
-#, fuzzy
 msgid "Align and distribute objects"
-msgstr "Justera och distribuera"
+msgstr "Justera och distribuera objekt"
 
 #: ../src/verbs.cpp:2286
 msgid "Undo _History..."
@@ -9636,7 +9550,7 @@ msgstr "Text och typsnitt..."
 
 #: ../src/verbs.cpp:2289
 msgid "View and select font family, font size and other text properties"
-msgstr ""
+msgstr "Visa och välj typsnittsfamilj, storlek på typsnitt samt andra textegenskaper"
 
 #: ../src/verbs.cpp:2290
 msgid "_XML Editor..."
@@ -9692,13 +9606,12 @@ msgstr ""
 "eller sprid ut dem"
 
 #: ../src/verbs.cpp:2303
-#, fuzzy
 msgid "_Object Properties..."
-msgstr "objektegenskaper"
+msgstr "Objektegenskaper..."
 
 #: ../src/verbs.cpp:2304
 msgid "Edit the ID, locked and visible status, and other object properties"
-msgstr ""
+msgstr "Ändra objekt id, låsnings och synlighetsstatus och andra objektegenskaper"
 
 #: ../src/verbs.cpp:2307
 msgid "_Instant Messaging..."
@@ -9727,7 +9640,6 @@ msgid "Query information about extensions"
 msgstr "Format för skalbar vektorgrafik med sodipodi-tillägg"
 
 #: ../src/verbs.cpp:2313
-#, fuzzy
 msgid "Layer_s..."
 msgstr "Lager..."
 
@@ -9738,11 +9650,11 @@ msgstr "Visa lager"
 #. Help
 #: ../src/verbs.cpp:2317
 msgid "_Keys and Mouse"
-msgstr ""
+msgstr "Tangenter och mus"
 
 #: ../src/verbs.cpp:2318
 msgid "Keys and mouse shortcuts reference"
-msgstr ""
+msgstr "Förteckning över kortkommandon för tangenter och mus"
 
 #: ../src/verbs.cpp:2319
 #, fuzzy
@@ -9759,9 +9671,8 @@ msgid "About _Memory"
 msgstr "Om _Minne"
 
 #: ../src/verbs.cpp:2322
-#, fuzzy
 msgid "Memory usage information"
-msgstr "Återställ transformering"
+msgstr "Information om minnesanvändning"
 
 #: ../src/verbs.cpp:2323
 msgid "_About Inkscape"
@@ -9851,15 +9762,15 @@ msgstr "Föregående effekt"
 
 #: ../src/verbs.cpp:2347
 msgid "Repeat the last effect with the same settings"
-msgstr ""
+msgstr "Repetera den förra effekten med samma inställningar"
 
 #: ../src/verbs.cpp:2348
 msgid "Previous Effect Settings..."
-msgstr ""
+msgstr "Föregående effekt med inställningar..."
 
 #: ../src/verbs.cpp:2349
 msgid "Repeat the last effect with new settings"
-msgstr ""
+msgstr "Repetera den förra effekten med nya inställningar"
 
 #. Fit Page
 #: ../src/verbs.cpp:2352
@@ -10085,19 +9996,16 @@ msgid "Gradient editor"
 msgstr "Toningseditor"
 
 #: ../src/widgets/layer-selector.cpp:113
-#, fuzzy
 msgid "Toggle current layer visibility"
-msgstr "Dokumentnamn:"
+msgstr "Växla synlighet för aktuellt lager"
 
 #: ../src/widgets/layer-selector.cpp:133
-#, fuzzy
 msgid "Lock or unlock current layer"
-msgstr "Dokumentnamn:"
+msgstr "Lås eller lås upp aktuellt lager"
 
 #: ../src/widgets/layer-selector.cpp:136
-#, fuzzy
 msgid "Current layer"
-msgstr "Dokumentnamn:"
+msgstr "Aktuellt lager:"
 
 #: ../src/widgets/layer-selector.cpp:561
 msgid "(root)"
@@ -10108,7 +10016,6 @@ msgid "No paint"
 msgstr "Ingen målning"
 
 #: ../src/widgets/paint-selector.cpp:170 ../src/widgets/paint-selector.cpp:617
-#, fuzzy
 msgid "Flat color"
 msgstr "Enfärgad"
 
@@ -10795,9 +10702,8 @@ msgstr ""
 #.
 #. vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
 #: ../share/extensions/addnodes.inx.h:1
-#, fuzzy
 msgid "Add Nodes"
-msgstr "Noder"
+msgstr "Lägg till noder"
 
 #: ../share/extensions/addnodes.inx.h:2
 msgid "Maximum segment length"
@@ -10810,7 +10716,7 @@ msgstr ""
 #: ../share/extensions/straightseg.inx.h:2
 #: ../share/extensions/summersnight.inx.h:2 ../share/extensions/whirl.inx.h:4
 msgid "Modify Path"
-msgstr ""
+msgstr "Ändra slinga"
 
 #: ../share/extensions/ai_input.inx.h:1
 #, fuzzy
@@ -10888,12 +10794,12 @@ msgstr "Typsnittsstorlek:"
 
 #: ../share/extensions/dots.inx.h:3
 msgid "Number Nodes"
-msgstr ""
+msgstr "Numrera noder"
 
 #: ../share/extensions/dots.inx.h:4 ../share/extensions/handles.inx.h:2
 #: ../share/extensions/measure.inx.h:3
 msgid "Visualize Path"
-msgstr ""
+msgstr "Visualisera slinga"
 
 #: ../share/extensions/dxf_input.inx.h:1
 #: ../share/extensions/dxf_output.inx.h:1
@@ -10938,9 +10844,8 @@ msgid "pstoedit must be installed to run see http://www.pstoedit.net/pstoedit"
 msgstr ""
 
 #: ../share/extensions/embedimage.inx.h:1
-#, fuzzy
 msgid "Embed All Images"
-msgstr "Bilder"
+msgstr "Kapsla in alla bilder"
 
 #: ../share/extensions/eps_input.inx.h:1
 #, fuzzy
@@ -10974,7 +10879,7 @@ msgstr ""
 
 #: ../share/extensions/extractimage.inx.h:1
 msgid "Extract One Image"
-msgstr ""
+msgstr "Extrahera en bild"
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Path to save image"
@@ -10993,7 +10898,7 @@ msgstr ""
 #: ../share/extensions/ffmet.inx.h:3 ../share/extensions/ffms.inx.h:3
 #: ../share/extensions/ffset.inx.h:2 ../share/extensions/ffss.inx.h:2
 msgid "Fretboard Designer"
-msgstr ""
+msgstr "Konstruera greppbräda"
 
 #: ../share/extensions/ffmet.inx.h:4 ../share/extensions/ffms.inx.h:4
 #: ../share/extensions/ffset.inx.h:3 ../share/extensions/ffss.inx.h:3
@@ -11100,9 +11005,8 @@ msgid "GIMP XCF maintaining layers (*.XCF)"
 msgstr ""
 
 #: ../share/extensions/handles.inx.h:1
-#, fuzzy
 msgid "Draw Handles"
-msgstr "Rita frihand-linje"
+msgstr "Rita handtag"
 
 #: ../share/extensions/interp.inx.h:1
 #, fuzzy
@@ -11116,7 +11020,7 @@ msgstr "Exportera"
 
 #: ../share/extensions/interp.inx.h:4
 msgid "Interpolate"
-msgstr ""
+msgstr "Interpolera"
 
 #: ../share/extensions/interp.inx.h:5
 msgid "Interpolate style (experimental)"
@@ -11183,7 +11087,7 @@ msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
 msgid "Measure Path"
-msgstr ""
+msgstr "Mät slinga"
 
 #: ../share/extensions/motion.inx.h:1
 msgid "Angle"
@@ -11191,7 +11095,7 @@ msgstr "Vinkel"
 
 #: ../share/extensions/motion.inx.h:2
 msgid "Extrude"
-msgstr ""
+msgstr "Pressa ut"
 
 #: ../share/extensions/motion.inx.h:4
 #, fuzzy
@@ -11341,7 +11245,7 @@ msgstr ""
 
 #: ../share/extensions/wavy.inx.h:7
 msgid "Wave Plotter"
-msgstr ""
+msgstr "Vågformsplottning"
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Amount of whirl"
