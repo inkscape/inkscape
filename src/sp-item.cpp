@@ -1219,11 +1219,16 @@ sp_item_write_transform(SPItem *item, Inkscape::XML::Node *repr, NR::Matrix cons
         sp_item_adjust_paint_recursive (item, NR::identity(), NR::identity(), false);
     }
 
-    // run the object's set_transform if transforms are stored optimized and there's no clippath or mask
     gint preserve = prefs_get_int_attribute("options.preservetransform", "value", 0);
     NR::Matrix transform_attr (transform);
-    if (((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform 
-                && !preserve && !item->clip_ref->getObject() && !item->mask_ref->getObject()) {
+    if ( // run the object's set_transform (i.e. embed transform) only if:
+         ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform && // it does have a set_transform method
+             !preserve && // user did not chose to preserve all transforms
+             !item->clip_ref->getObject() && // the object does not have a clippath
+             !item->mask_ref->getObject() && // the object does not have a mask
+             !(!transform.is_translation() && SP_OBJECT_STYLE(item) && SP_OBJECT_STYLE(item)->filter.filter) 
+             // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
+        ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(item))->set_transform(item, transform);
     }
     sp_item_set_item_transform(item, transform_attr);
