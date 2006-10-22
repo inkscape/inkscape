@@ -60,7 +60,9 @@ sub doMakeFiles
             {
             $line = $_;
             #Trim whitespace from ends
-            $line =~ s/^\s|\t|\n//;
+            # $line =~ s/^\s|\t|\n//;
++           $line =~ s/^\s+//;
++           $line =~ s/\s+$//;
             #Ignore if no text in line
             next if ( length($line) < 1 );
             #Ignore if starts with '#'
