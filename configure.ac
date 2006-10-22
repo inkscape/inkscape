@@ -80,7 +80,7 @@ GETTEXT_PACKAGE="AC_PACKAGE_NAME"
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[Translation domain used])
 dnl Add the languages which your application supports here.
-ALL_LINGUAS="am az be bg ca cs da de dz el en_GB en_CA en_US@piglatin es es_MX et fi fr ga gl hr hu it ja ko lt mk mn nb ne nl nn pa pl pt pt_BR ru rw sk sl sq sr sr@Latn sv tr uk vi zh_CN zh_TW"
+ALL_LINGUAS="am az be bg ca cs da de dz el en_GB en_CA en_US@piglatin es es_MX et fi fr ga gl hr hu it ja ko lt mk mn nb ne nl nn pa pl pt pt_BR ru rw sk sl sq sr sr@Latn sv th tr uk vi zh_CN zh_TW"
 AM_GLIB_GNU_GETTEXT
 
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
