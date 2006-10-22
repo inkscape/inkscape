@@ -34,6 +34,9 @@ namespace Widget {
 const struct rdf_license_t _proprietary_license = 
   {_("Proprietary"), "", 0};
 
+const struct rdf_license_t _other_license = 
+  {_("Other"), "", 0};
+
 class LicenseItem : public Gtk::RadioButton {
 public:
     LicenseItem (struct rdf_license_t const* license, EntityEntry* entity, Registry &wr);
@@ -92,12 +95,17 @@ Licensor::init (Gtk::Tooltips& tt, Registry& wr)
     i = manage (new LicenseItem (&_proprietary_license, _eentry, wr));
     add (*i);
     LicenseItem *pd = i;
+
     for (struct rdf_license_t * license = rdf_licenses;
              license && license->name;
              license++) {
         i = manage (new LicenseItem (license, _eentry, wr));
         add(*i);
     }
+    // add Other at the end before the URI field for the confused ppl.
+    LicenseItem *io = manage (new LicenseItem (&_other_license, _eentry, wr));
+    add (*io);
+
     pd->set_active();
     wr.setUpdating (false);
 
