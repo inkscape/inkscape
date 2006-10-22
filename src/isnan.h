@@ -30,7 +30,7 @@
 # define isNaN(_a) (__isnan(_a))	/* MacOSX/Darwin definition < 10.4 */
 #elif defined(WIN32) || defined(_isnan)
 # define isNaN(_a) (_isnan(_a)) 	/* Win32 definition */
-#elif defined(isnan) || defined(__FreeBSD__)
+#elif defined(isnan) || defined(__FreeBSD__) || defined(__osf__)
 # define isNaN(_a) (isnan(_a))		/* GNU definition */
 #else
 # define isNaN(_a) (std::isnan(_a))
@@ -47,6 +47,8 @@
 # define isFinite(_a) (_isfinite(_a))
 #elif defined(isfinite)
 # define isFinite(_a) (isfinite(_a))
+#elif defined(__osf__)
+# define isFinite(_a) (finite(_a) && !isNaN(_a))
 #else
 # define isFinite(_a) (std::isfinite(_a))
 #endif
