@@ -42,6 +42,7 @@ tutorial_DATA = \
     tutorial-calligraphy.ru.svg \
     tutorial-calligraphy.sl.svg \
     tutorial-elements.svg \
+    tutorial-elements.ca.svg \
     tutorial-elements.de.svg \
     tutorial-elements.es.svg \
     tutorial-elements.fr.svg \
