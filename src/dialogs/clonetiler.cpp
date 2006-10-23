@@ -1090,7 +1090,7 @@ clonetiler_apply (GtkWidget *widget, void *)
 
     NR::Point cur = NR::Point (0, 0);
     NR::Rect bbox_original = NR::Rect (NR::Point (c[NR::X] - w/2, c[NR::Y] - h/2), NR::Point (c[NR::X] + w/2, c[NR::Y] + h/2));
-    double diag_original = sqrt(w*w + h*h);
+    double perimeter_original = (w + h)/4;
 
     for (int x = 0;
          fillrect?
@@ -1299,12 +1299,12 @@ clonetiler_apply (GtkWidget *widget, void *)
 
             if (blur > 0.0) {
                 SPObject *clone_object = sp_desktop_document(desktop)->getObjectByRepr(clone);
-                double diag = diag_original * t.expansion();
-                double radius = blur * diag;
+                double perimeter = perimeter_original * t.expansion();
+                double radius = blur * perimeter;
                 // it's hard to figure out exact width/height of the tile without having an object
                 // that we can take bbox of; however here we only need a lower bound so that blur
-                // margins are not too small, and diag/2 should work
-                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, diag/2, diag/2);
+                // margins are not too small, and the perimeter should work
+                SPFilter *constructed = new_filter_gaussian_blur(sp_desktop_document(desktop), radius, t.expansion(), perimeter, perimeter);
                 sp_style_set_property_url (clone_object, "filter", SP_OBJECT(constructed), false);
             }
 
