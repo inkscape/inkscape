@@ -24,10 +24,10 @@
 #include "xml/repr.h"
 
 /**
- * Creates a filter with blur primitive of specified stdDeviation
+ * Creates a filter with blur primitive of specified radius for an item with the given matrix expansion, width and height
  */
 SPFilter *
-new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double width, double height)
+new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion, double width, double height)
 {
     g_return_val_if_fail(document != NULL, NULL);
 
@@ -38,12 +38,13 @@ new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double wid
     repr = sp_repr_new("svg:filter");
     repr->setAttribute("inkscape:collect", "always");
 
-    if (width != 0 && height != 0 && (2 * stdDeviation > width * 0.1 || 2 * stdDeviation > height * 0.1)) {
+    if (width != 0 && height != 0 && (2 * radius > width * 0.1 || 2 * radius > height * 0.1)) {
         // If not within the default 10% margin (see
         // http://www.w3.org/TR/SVG11/filters.html#FilterEffectsRegion), specify margins
-        double xmargin = 2 * stdDeviation / width;
-        double ymargin = 2 * stdDeviation / height;
+        double xmargin = 2 * radius / width;
+        double ymargin = 2 * radius / height;
 
+        // TODO: set it in UserSpaceOnUse instead?
         sp_repr_set_svg_double(repr, "x", -xmargin);
         sp_repr_set_svg_double(repr, "width", 1 + 2 * xmargin);
         sp_repr_set_svg_double(repr, "y", -ymargin);
@@ -55,6 +56,10 @@ new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double wid
     b_repr = sp_repr_new("svg:feGaussianBlur");
     b_repr->setAttribute("inkscape:collect", "always");
     
+    double stdDeviation = radius;
+    if (expansion != 0)
+        stdDeviation /= expansion;
+
     //set stdDeviation attribute
     sp_repr_set_svg_double(b_repr, "stdDeviation", stdDeviation);
     
@@ -76,6 +81,21 @@ new_filter_gaussian_blur (SPDocument *document, gdouble stdDeviation, double wid
     g_assert(SP_IS_GAUSSIANBLUR(b));
 
     return f;
+}
+
+/**
+ * Creates a filter with blur primitive of specified radius for the given item
+ */
+SPFilter *
+new_filter_gaussian_blur_from_item (SPDocument *document, SPItem *item, gdouble radius)
+{
+    NR::Rect const r = sp_item_bbox_desktop(item);
+    double width = r.extent(NR::X);
+    double height = r.extent(NR::Y);
+
+    NR::Matrix i2d = sp_item_i2d_affine (item);
+
+    return (new_filter_gaussian_blur (document, radius, i2d.expansion(), width, height));
 }
 
 void remove_filter (SPObject *item, bool recursive)
