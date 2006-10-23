@@ -27,7 +27,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 """
 
-import inkex, os, tempfile
+import inkex, os, tempfile, xml.dom.ext, xml.dom.ext.reader.Sax
+import sys
+from xml.dom import Node
 
 def create_equation_tex(filename, equation):
     tex = open(filename, 'w')
@@ -43,43 +45,40 @@ def create_equation_tex(filename, equation):
     tex.write("\end{document}\n")
     tex.close()
 
+def add_paths(self,group,node):
+    next = node.firstChild
+    while next is not None:
+        child = next
+        next = child.nextSibling
+
+        if child.nodeType is not Node.ELEMENT_NODE: continue
+        if child.nodeName == "title": continue
+        if child.nodeName == "desc": continue
+        if child.nodeName == "rect" and child.getAttribute("id") == "background": continue
+
+        if child.nodeName == "g":
+            svg_group = self.document.createElement('svg:g')
+            if child.hasAttribute("transform"):
+                svg_group.setAttribute("transform",child.getAttribute("transform"))
+            group.appendChild(svg_group)
+            add_paths(self,svg_group,child)
+	else:
+            group.appendChild(self.document.importNode(child,1))
+
 def svg_open(self,filename):
     # parsing of SVG file with the equation 
-    # real parsing XML to use!!!! it will be easier !!!
-    svg = open(filename, 'r')
-    svg_lines = svg.readlines()
-    
-    # trip top/bottom lines from svg file
-    svg_lines.pop(0)
-    svg_lines.pop(1)
-    svg_lines.pop(len(svg_lines)-1)
+    reader = xml.dom.ext.reader.Sax.Reader()
+    stream = open(filename,'r')
+    svgdoc = reader.fromStream(stream)
 
     group = self.document.createElement('svg:g')
     self.current_layer.appendChild(group)
+    child = svgdoc.firstChild
+    while child is not None:
+	if child.nodeName == "svg" and child.nodeType == Node.ELEMENT_NODE:
+            add_paths(self,group,child)
+        child = child.nextSibling
 
-    # deleting "<g... >" "</g>" "<path d=" and "/>" from svg_lines
-    nodegroup=''
-    s_nodegroup_path=''
-        
-    for i in range(1,len(svg_lines)):
-        if svg_lines[i].find("<g") != -1:
-            nodegroup=svg_lines[i].split("<g")
-            nodegroup=nodegroup[1].split(" >")
-            nodegroup=nodegroup[0]+'\n'
-        elif svg_lines[i].find("<path d=") != -1:
-            s_nodegroup_path=svg_lines[i].split("<path d=")
-            s_nodegroup_path=s_nodegroup_path[1]                
-        elif svg_lines[i].find("/>") != -1:
-            s_nodegroup_path=s_nodegroup_path+'"\n'
-        elif svg_lines[i].find("</g>") != -1:
-            nodegroup_svg = self.document.createElement('svg:g')
-            nodegroup_svg.setAttribute('style',nodegroup)
-            nodegroup_path = self.document.createElement('svg:path')
-            nodegroup_path.setAttribute('d',s_nodegroup_path)
-            group.appendChild(nodegroup_svg)                
-            nodegroup_svg.appendChild(nodegroup_path)
-        else:
-            s_nodegroup_path=s_nodegroup_path+svg_lines[i]
 
 class EQTEXSVG(inkex.Effect):
     def __init__(self):
@@ -89,7 +88,6 @@ class EQTEXSVG(inkex.Effect):
                         dest="formule", default=10.0,
                         help="Formule LaTeX")
     def effect(self):
-        
         base_file = os.path.join(tempfile.gettempdir(), "inkscape-latex.tmp")
         latex_file = base_file + ".tex"
         create_equation_tex(latex_file, self.options.formule)
@@ -100,8 +98,8 @@ class EQTEXSVG(inkex.Effect):
         ps_file = base_file + ".ps"
         dvi_file = base_file + ".dvi"
         svg_file = base_file + ".svg"
-        os.system('dvips -q -f -E -D 600 -y 5000 -o ' + ps_file + ' ' + dvi_file)
-        os.system('pstoedit -f svg -dt -ssp ' + ps_file + ' ' + svg_file + '>> ' + out_file)
+        os.system('dvips -q -f -E -D 600 -y 50000 -o ' + ps_file + ' ' + dvi_file)
+        os.system('pstoedit -f plot-svg -centered -dt -ssp ' + ps_file + ' ' + svg_file + '>> ' + out_file + ' 2>&1')
 
         # ouvrir le svg et remplacer #7F7F7F par #000000
         svg_open(self, svg_file)
@@ -116,6 +114,11 @@ class EQTEXSVG(inkex.Effect):
         os.remove(ps_file)
         os.remove(svg_file)
         os.remove(out_file)
-        
-e = EQTEXSVG()
-e.affect()
+
+#e = EQTEXSVG()
+#e.affect()
+try:        
+    e = EQTEXSVG()
+    e.affect()
+except Exception, inst:
+    sys.stderr.write(str(inst) + "\n")
