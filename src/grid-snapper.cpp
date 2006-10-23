@@ -127,12 +127,13 @@ Inkscape::AxonomGridSnapper::_getSnapLines(NR::Point const &p) const
 
     NR::Coord const rounded = round_to_nearest_multiple_plus(p[0], scaled_spacing, griditem->origin[0]);
     
+    /*
     int a = round(scaled_spacing);
     int b = round(p[0]);
     int c = round(rounded);
     
     g_message("hier %d; %d; %d",a,b,c);
-
+    */
 
     s.push_back(std::make_pair(NR::Dim2(0), rounded));
     
