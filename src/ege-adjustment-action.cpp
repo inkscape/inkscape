@@ -476,8 +476,8 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
     switch ( key ) {
         case GDK_Escape:
         {
-            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
             action->private_data->transferFocus = TRUE;
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
             ege_adjustment_action_defocus( action );
             wasConsumed = TRUE;
         }
@@ -509,9 +509,9 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         case GDK_Up:
         case GDK_KP_Up:
         {
+            action->private_data->transferFocus = FALSE;
             gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
             gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val + action->private_data->step );
-            action->private_data->transferFocus = FALSE;
             wasConsumed = TRUE;
         }
         break;
@@ -519,9 +519,9 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         case GDK_Down:
         case GDK_KP_Down:
         {
+            action->private_data->transferFocus = FALSE;
             gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
             gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val - action->private_data->step );
-            action->private_data->transferFocus = FALSE;
             wasConsumed = TRUE;
         }
         break;
@@ -529,9 +529,9 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         case GDK_Page_Up:
         case GDK_KP_Page_Up:
         {
+            action->private_data->transferFocus = FALSE;
             gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
             gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val + action->private_data->page );
-            action->private_data->transferFocus = FALSE;
             wasConsumed = TRUE;
         }
         break;
@@ -539,9 +539,9 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         case GDK_Page_Down:
         case GDK_KP_Page_Down:
         {
+            action->private_data->transferFocus = FALSE;
             gdouble val = gtk_spin_button_get_value( GTK_SPIN_BUTTON(widget) );
             gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), val - action->private_data->page );
-            action->private_data->transferFocus = FALSE;
             wasConsumed = TRUE;
         }
         break;
@@ -549,8 +549,8 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
         case GDK_z:
         case GDK_Z:
         {
-            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
             action->private_data->transferFocus = FALSE;
+            gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
             wasConsumed = TRUE;
         }
         break;
