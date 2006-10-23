@@ -1033,6 +1033,8 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
         SPStyle *style = SP_OBJECT_STYLE (obj);
         if (!style) continue;
 
+        NR::Matrix i2d = sp_item_i2d_affine (SP_ITEM(obj));
+
         items ++;
 
         //if object has a filter
@@ -1045,8 +1047,8 @@ objects_query_blur (GSList *objects, SPStyle *style_res)
                 if(SP_IS_GAUSSIANBLUR(primitive)) {
                     SPGaussianBlur * spblur = SP_GAUSSIANBLUR(primitive);
                     float num = spblur->stdDeviation.getNumber();
-                    blur_sum += num;
-                    if (blur_prev != -1 && num != blur_prev)
+                    blur_sum += num * NR::expansion(i2d);
+                    if (blur_prev != -1 && fabs (num - blur_prev) > 1e-2) // rather low tolerance because difference in blur radii is much harder to notice than e.g. difference in sizes
                         same_blur = false;
                     blur_prev = num;
                     //TODO: deal with opt number, for the moment it's not necessary to the ui.
