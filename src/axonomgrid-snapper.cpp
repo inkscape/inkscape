@@ -15,7 +15,7 @@
 #include "sp-namedview.h"
 #include "inkscape.h"
 #include "desktop.h"
-#include "display/canvas-grid.h"
+#include "display/canvas-axonomgrid.h"
 
 /**
  * \return x rounded to the nearest multiple of c1 plus c0.
@@ -27,10 +27,7 @@
  */
 
 /* FIXME: move this somewhere else, perhaps */
-static double round_to_nearest_multiple_plus(double x, double const c1, double const c0)
-{
-    return floor((x - c0) / c1 + .5) * c1 + c0;
-}
+static 
 
 Inkscape::AxonomGridSnapper::AxonomGridSnapper(SPNamedView const *nv, NR::Coord const d) : LineSnapper(nv, d)
 {
@@ -40,20 +37,25 @@ Inkscape::AxonomGridSnapper::AxonomGridSnapper(SPNamedView const *nv, NR::Coord 
 Inkscape::LineSnapper::LineList 
 Inkscape::AxonomGridSnapper::_getSnapLines(NR::Point const &p) const
 {
+    double round_to_nearest_multiple_plus(double x, double const c1, double const c0)
+    {
+        return floor((x - c0) / c1 + .5) * c1 + c0;
+    }    
+    
     LineList s;
 
     if ( NULL == _named_view ) {
         return s;
     }
 
-    SPCGrid *griditem = NULL;
+    SPCAxonomGrid *griditem = NULL;
     for (GSList *l = _named_view->gridviews; l != NULL; l = l->next) {
         // FIXME : this is a hack since there is only one view for now
         //                 but when we'll handle multiple views, snapping should
         //                 must be rethought and maybe only the current view
         //                 should give back it's SHOWN lines to snap to
         //                 For now, the last SPCGrid in _named_view->gridviews will be used.
-        griditem = SP_CGRID(l->data);
+        griditem = SP_CAXONOMGRID(l->data);
     }
 
     g_assert(griditem != NULL);
