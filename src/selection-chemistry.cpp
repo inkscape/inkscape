@@ -934,6 +934,13 @@ void sp_copy_stuff_used_by_item (GSList **defs_clip, SPItem *item, const GSList 
         }
     }
 
+    if (style->filter.filter) {
+        SPObject *filter = style->filter.filter;
+        if (SP_IS_FILTER(filter)) {
+            sp_copy_single (defs_clip, filter);
+        }
+    }
+
     // recurse
     for (SPObject *o = SP_OBJECT(item)->children; o != NULL; o = o->next) {
         if (SP_IS_ITEM(o))
