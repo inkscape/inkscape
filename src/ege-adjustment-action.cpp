@@ -81,6 +81,7 @@ struct _EgeAdjustmentActionPrivate
     gdouble climbRate;
     guint digits;
     gchar* selfId;
+    EgeWidgetFixup toolPost;
     gdouble lastVal;
     gdouble step;
     gdouble page;
@@ -94,7 +95,8 @@ enum {
     PROP_FOCUS_WIDGET,
     PROP_CLIMB_RATE,
     PROP_DIGITS,
-    PROP_SELFID
+    PROP_SELFID,
+    PROP_TOOL_POST
 };
 
 GType ege_adjustment_action_get_type( void )
@@ -174,6 +176,13 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
                                                               0,
                                                               (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
 
+        g_object_class_install_property( objClass,
+                                         PROP_TOOL_POST,
+                                         g_param_spec_pointer( "tool-post",
+                                                               "Tool Widget post process",
+                                                               "Function for final adjustments",
+                                                               (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
         g_type_class_add_private( klass, sizeof(EgeAdjustmentActionClass) );
     }
 }
@@ -186,6 +195,7 @@ static void ege_adjustment_action_init( EgeAdjustmentAction* action )
     action->private_data->climbRate = 0.0;
     action->private_data->digits = 2;
     action->private_data->selfId = 0;
+    action->private_data->toolPost = 0;
     action->private_data->lastVal = 0.0;
     action->private_data->step = 0.0;
     action->private_data->page = 0.0;
@@ -239,6 +249,10 @@ static void ege_adjustment_action_get_property( GObject* obj, guint propId, GVal
             g_value_set_string( value, action->private_data->selfId );
             break;
 
+        case PROP_TOOL_POST:
+            g_value_set_pointer( value, (void*)action->private_data->toolPost );
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID( obj, propId, pspec );
     }
@@ -285,6 +299,12 @@ void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValu
             gchar* prior = action->private_data->selfId;
             action->private_data->selfId = g_value_dup_string( value );
             g_free( prior );
+        }
+        break;
+
+        case PROP_TOOL_POST:
+        {
+            action->private_data->toolPost = (EgeWidgetFixup)g_value_get_pointer( value );
         }
         break;
 
@@ -369,6 +389,11 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
 
         gtk_widget_show_all( item );
+
+        /* Shrink or whatnot after shown */
+        if ( act->private_data->toolPost ) {
+            act->private_data->toolPost( item );
+        }
     } else {
         item = gParentClass->create_tool_item( action );
     }

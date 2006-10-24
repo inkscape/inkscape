@@ -848,6 +848,9 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
         gtk_object_set_data( GTK_OBJECT(dataKludge), data, adj );
     }
 
+    // Using a cast just to make sure we pass in the right kind of function pointer
+    g_object_set( G_OBJECT(act), "tool-post", static_cast<EgeWidgetFixup>(sp_set_font_size_smaller), NULL );
+
     return act;
 }
 

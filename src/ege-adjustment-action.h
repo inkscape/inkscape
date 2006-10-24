@@ -85,6 +85,10 @@ GtkAdjustment* ege_adjustment_action_get_adjustment( EgeAdjustmentAction* action
 void ege_adjustment_action_set_focuswidget( EgeAdjustmentAction* action, GtkWidget* widget );
 GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action );
 
+
+typedef void (*EgeWidgetFixup)(GtkWidget *widget);
+
+
 G_END_DECLS
 
 #endif /* SEEN_EGE_ADJUSTMENT_ACTION */
