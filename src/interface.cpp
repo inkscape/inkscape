@@ -691,7 +691,7 @@ sp_menu_append_new_templates(GtkWidget *menu, Inkscape::UI::View::View *view)
 
             if (dir) {
                 for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
-                    if (!g_str_has_suffix(file, ".svg"))
+                    if (!g_str_has_suffix(file, ".svg") && !g_str_has_suffix(file, ".svgz"))
                         continue; // skip non-svg files
 
                     gchar *basename = g_path_get_basename(file);
