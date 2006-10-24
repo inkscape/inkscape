@@ -8,6 +8,7 @@
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
+; 24 october 2006 new languages en_US@piglatin, th
 
 !insertmacro MUI_LANGUAGE "French"
 
@@ -131,9 +132,10 @@ LangString lng_el $(LANG_FRENCH) "el  Grec"
 LangString lng_en $(LANG_FRENCH) "en  Anglais"
 LangString lng_en_CA $(LANG_FRENCH) "en_CA Canadian English"
 LangString lng_en_GB $(LANG_FRENCH) "en_GB British English"
+LangString lng_en_US@piglatin $(LANG_FRENCH) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_FRENCH) "es  Espagnol"
 LangString lng_es_MX $(LANG_FRENCH) "es_MX  Espagnol Mexique"
-LangString lng_et $(LANG_FRENCH) "es  Estonien"
+LangString lng_et $(LANG_FRENCH) "et  Estonien"
 LangString lng_fi $(LANG_FRENCH) "fi  Finish"
 LangString lng_fr $(LANG_FRENCH) "fr  French"
 LangString lng_ga $(LANG_FRENCH) "ga  Irlandais"
@@ -162,6 +164,7 @@ LangString lng_sq $(LANG_FRENCH) "sq  Albanian"
 LangString lng_sr $(LANG_FRENCH) "sr  Serbe"
 LangString lng_sr@Latn $(LANG_FRENCH) "sr@Latn  Serbe en notation latine"
 LangString lng_sv $(LANG_FRENCH) "sv  Suédois"
+LangString lng_th $(LANG_FRENCH) "th  Thai"
 LangString lng_tr $(LANG_FRENCH) "tr  Turc"
 LangString lng_uk $(LANG_FRENCH) "uk  Ukrainien"
 LangString lng_vi $(LANG_FRENCH) "vi  Vietnamese"

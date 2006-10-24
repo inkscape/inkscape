@@ -7,6 +7,7 @@
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
+; 24 october 2006 new languages en_US@piglatin, th
 
 !insertmacro MUI_LANGUAGE "Polish"
 
@@ -130,6 +131,7 @@ LangString lng_el $(LANG_POLISH) "el  Greek"
 LangString lng_en $(LANG_POLISH) "en  English"
 LangString lng_en_CA $(LANG_POLISH) "en_CA Canadian English"
 LangString lng_en_GB $(LANG_POLISH) "en_GB British English"
+LangString lng_en_US@piglatin $(LANG_POLISH) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_POLISH) "es  Spanish"
 LangString lng_es_MX $(LANG_POLISH) "es_MX  Mexican Spanish"
 LangString lng_et $(LANG_POLISH) "et  Estonian"
@@ -161,6 +163,7 @@ LangString lng_sq $(LANG_POLISH) "sq  Albanian"
 LangString lng_sr $(LANG_POLISH) "sr  Serbian"
 LangString lng_sr@Latn $(LANG_POLISH) "sr@Latn  Serbian in Latin script"
 LangString lng_sv $(LANG_POLISH) "sv  Swedish"
+LangString lng_th $(LANG_POLISH) "th  Thai"
 LangString lng_tr $(LANG_POLISH) "tr  Turkish"
 LangString lng_uk $(LANG_POLISH) "uk  Ukrainian"
 LangString lng_vi $(LANG_POLISH) "vi  Vietnamese"

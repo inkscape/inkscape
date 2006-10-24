@@ -693,6 +693,10 @@ Section $(lng_en_GB) SecEnglishBritain
   !insertmacro Language en_GB en_GB
 SectionEnd
 
+Section $(lng_en_US@piglatin) SecEnglishPiglatin
+  !insertmacro Language en_US@piglatin en_US@Piglatin
+SectionEnd
+
 Section $(lng_es) SecSpanish
   !insertmacro Language 'es' 'es'
 SectionEnd
@@ -819,6 +823,10 @@ SectionEnd
 
 Section $(lng_sv) SecSwedish
   !insertmacro Language sv sv
+SectionEnd
+
+Section $(lng_th) SecThai
+  !insertmacro Language th th
 SectionEnd
 
 Section $(lng_tr) SecTurkish

@@ -8,6 +8,7 @@
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
+; 24 october 2006 new languages en_US@piglatin, th
 
 !insertmacro MUI_LANGUAGE "Czech"
 
@@ -131,6 +132,7 @@ LangString lng_el $(LANG_CZECH) "el  Øeètina"
 LangString lng_en $(LANG_CZECH) "en  Anglièina"
 LangString lng_en_CA $(LANG_CZECH) "en_CA Kanadská Angliètina"
 LangString lng_en_GB $(LANG_CZECH) "en_GB Britská Angliètina"
+LangString lng_en_US@piglatin $(LANG_CZECH) "en_US@piglatin Pig Latin"
 LangString lng_es $(LANG_CZECH) "es  Španìlština"
 LangString lng_es_MX $(LANG_CZECH) "es_MX  Mexická Španìlština"
 LangString lng_et $(LANG_CZECH) "et  Estonština"
@@ -162,6 +164,7 @@ LangString lng_sq $(LANG_CZECH) "sq  Albánština"
 LangString lng_sr $(LANG_CZECH) "sr  Srbština"
 LangString lng_sr@Latn $(LANG_CZECH) "sr@Latn  Srbština v latince"
 LangString lng_sv $(LANG_CZECH) "sv  Švédština"
+LangString lng_th $(LANG_CZECH) "th  Thai"
 LangString lng_tr $(LANG_CZECH) "tr  Tureètina"
 LangString lng_uk $(LANG_CZECH) "uk  Ukrajinština"
 LangString lng_vi $(LANG_CZECH) "vi  Vietnamština"

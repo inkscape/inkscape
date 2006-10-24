@@ -7,6 +7,7 @@
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
+; 24 october 2006 new languages en_US@piglatin, th
 
 ; !insertmacro MUI_LANGUAGE "Slovenšèina"
 !insertmacro MUI_LANGUAGE "Slovenian"
@@ -131,6 +132,7 @@ LangString lng_el $(LANG_SLOVENIAN) "grški (el)"
 LangString lng_en $(LANG_SLOVENIAN) "angleški (en)"
 LangString lng_en_CA $(LANG_SLOVENIAN) "kanadsko angleški (en_CA)"
 LangString lng_en_GB $(LANG_SLOVENIAN) "britansko angleški (en_GB)"
+LangString lng_en_US@piglatin $(LANG_SLOVENIAN) "Pig Latin (en_US@piglatin)"
 LangString lng_es $(LANG_SLOVENIAN) "španski (es)"
 LangString lng_es_MX $(LANG_SLOVENIAN) "mehiško španski (es_MX)"
 LangString lng_et $(LANG_SLOVENIAN) "estonski (et)"
@@ -162,6 +164,7 @@ LangString lng_sq $(LANG_SLOVENIAN) "albanski (sq)"
 LangString lng_sr $(LANG_SLOVENIAN) "srbski (sr)"
 LangString lng_sr@Latn $(LANG_SLOVENIAN) "sr@Latn  srbski v latinici (sr@Latn)"
 LangString lng_sv $(LANG_SLOVENIAN) "švedski (sv)"
+LangString lng_th $(LANG_SLOVENIAN) "Thai (th)"
 LangString lng_tr $(LANG_SLOVENIAN) "turški (tr)"
 LangString lng_uk $(LANG_SLOVENIAN) "ukrajinski (uk)"
 LangString lng_vi $(LANG_SLOVENIAN) "vietnamski (vi)"

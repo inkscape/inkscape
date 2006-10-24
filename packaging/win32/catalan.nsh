@@ -8,6 +8,7 @@
 ;
 ; 27 july 2006 new languages en_CA, en_GB, fi, hr, mn, ne, rw, sq
 ; 11 august 2006 new languages dz bg
+; 24 october 2006 new languages en_US@piglatin, th
 
 !insertmacro MUI_LANGUAGE "Catalan"
 
@@ -171,6 +172,7 @@ LangString lng_dz $(LANG_CATALAN) "dz  Dzongkha"
   LangString lng_en $(LANG_CATALAN) "en  Anglès"
 LangString lng_en_CA $(LANG_CATALAN) "en_CA Canadian English"
 LangString lng_en_GB $(LANG_CATALAN) "en_GB British English"
+LangString lng_en_US@piglatin $(LANG_CATALAN) "en_US@piglatin Pig Latin"
 ; LangString lng_es $(LANG_CATALAN) "es  Spanish"
   LangString lng_es $(LANG_CATALAN) "es  Espanyol"
 ; LangString lng_es_MX $(LANG_CATALAN) "es_MX  Mexican Spanish"
@@ -226,6 +228,7 @@ LangString lng_sr $(LANG_CATALAN) "sr  Serbi"
 LangString lng_sr@Latn $(LANG_CATALAN) "sr@Latn  Serbi en alfabet llatí"
 ; LangString lng_sv $(LANG_CATALAN) "sv  Swedish"
 LangString lng_sv $(LANG_CATALAN) "sv  Suec"
+LangString lng_th $(LANG_CATALAN) "th  Thai"
 ; LangString lng_tr $(LANG_CATALAN) "tr  Turkish"
 LangString lng_tr $(LANG_CATALAN) "tr  Turc"
 ; LangString lng_uk $(LANG_CATALAN) "uk  Ukrainian"
