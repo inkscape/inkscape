@@ -50,6 +50,7 @@
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmisc.h>
 #include <gtk/gtktoolbar.h>
+#include <gtk/gtkradiomenuitem.h>
 
 #include "ege-adjustment-action.h"
 
@@ -72,7 +73,7 @@ static void ege_adjustment_action_defocus( EgeAdjustmentAction* action );
 
 
 static GtkActionClass* gParentClass = 0;
-
+static GQuark gDataName = 0;
 
 struct _EgeAdjustmentActionPrivate
 {
@@ -97,6 +98,16 @@ enum {
     PROP_DIGITS,
     PROP_SELFID,
     PROP_TOOL_POST
+};
+
+enum {
+    BUMP_TOP = 0,
+    BUMP_PAGE_UP,
+    BUMP_UP,
+    BUMP_NONE,
+    BUMP_DOWN,
+    BUMP_PAGE_DOWN,
+    BUMP_BOTTOM
 };
 
 GType ege_adjustment_action_get_type( void )
@@ -128,6 +139,8 @@ static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
     if ( klass ) {
         gParentClass = GTK_ACTION_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass * objClass = G_OBJECT_CLASS( klass );
+
+        gDataName = g_quark_from_string("ege-adj-action");
 
         objClass->get_property = ege_adjustment_action_get_property;
         objClass->set_property = ege_adjustment_action_set_property;
@@ -336,11 +349,142 @@ GtkWidget* ege_adjustment_action_get_focuswidget( EgeAdjustmentAction* action )
     return action->private_data->focusWidget;
 }
 
+static void process_menu_action( GtkWidget* obj, gpointer data )
+{
+    GtkCheckMenuItem* item = GTK_CHECK_MENU_ITEM(obj);
+    if ( item->active ) {
+        EgeAdjustmentAction* act = (EgeAdjustmentAction*)g_object_get_qdata( G_OBJECT(obj), gDataName );
+        gint what = GPOINTER_TO_INT(data);
+
+
+        gdouble base = gtk_adjustment_get_value( act->private_data->adj );
+        gdouble lower = 0.0;
+        gdouble upper = 0.0;
+        gdouble step = 0.0;
+        gdouble page = 0.0;
+        g_object_get( G_OBJECT(act->private_data->adj),
+                      "lower", &lower,
+                      "upper", &upper,
+                      "step-increment", &step,
+                      "page-increment", &page,
+                      NULL );
+
+        switch ( what ) {
+            case BUMP_TOP:
+                gtk_adjustment_set_value( act->private_data->adj, upper );
+                break;
+
+            case BUMP_PAGE_UP:
+                gtk_adjustment_set_value( act->private_data->adj, base + page );
+                break;
+
+            case BUMP_UP:
+                gtk_adjustment_set_value( act->private_data->adj, base + step );
+                break;
+
+            case BUMP_DOWN:
+                gtk_adjustment_set_value( act->private_data->adj, base - step );
+                break;
+
+            case BUMP_PAGE_DOWN:
+                gtk_adjustment_set_value( act->private_data->adj, base - page );
+                break;
+
+            case BUMP_BOTTOM:
+                gtk_adjustment_set_value( act->private_data->adj, lower );
+                break;
+        }
+    }
+}
+
+static void create_single_menu( GCallback toggleCb, int val, GtkWidget* menu, EgeAdjustmentAction* act, GtkWidget** dst, GSList** group, gdouble num, gboolean active )
+{
+    char* fmt = g_strdup_printf("%%0.%df", act->private_data->digits);
+    char *str = g_strdup_printf ( fmt, num );
+
+    *dst = gtk_radio_menu_item_new_with_label( *group, str );
+    if ( !*group) {
+        *group = gtk_radio_menu_item_get_group( GTK_RADIO_MENU_ITEM(*dst) );
+    }
+    if ( active ) {
+        gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(*dst), TRUE );
+    }
+    gtk_menu_shell_append( GTK_MENU_SHELL(menu), *dst );
+    g_object_set_qdata( G_OBJECT(*dst), gDataName, act );
+
+    g_signal_connect( G_OBJECT(*dst), "toggled", toggleCb, GINT_TO_POINTER(val) );
+
+    g_free(str);
+    g_free(fmt);
+}
+
+static GtkWidget* create_popup_number_menu( EgeAdjustmentAction* act )
+{
+    GtkWidget* menu = gtk_menu_new();
+
+    GSList* group = 0;
+    GtkWidget* single = 0;
+
+    gdouble base = gtk_adjustment_get_value( act->private_data->adj );
+    gdouble lower = 0.0;
+    gdouble upper = 0.0;
+    gdouble step = 0.0;
+    gdouble page = 0.0;
+    g_object_get( G_OBJECT(act->private_data->adj),
+                  "lower", &lower,
+                  "upper", &upper,
+                  "step-increment", &step,
+                  "page-increment", &page,
+                  NULL );
+
+    if ( base < upper ) {
+        create_single_menu( G_CALLBACK(process_menu_action), BUMP_TOP, menu, act, &single, &group, upper, FALSE );
+        if ( (base + page) < upper ) {
+            create_single_menu( G_CALLBACK(process_menu_action), BUMP_PAGE_UP, menu, act, &single, &group, base + page, FALSE );
+        }
+        if ( (base + step) < upper ) {
+            create_single_menu( G_CALLBACK(process_menu_action), BUMP_UP, menu, act, &single, &group, base + step, FALSE );
+        }
+    }
+
+    create_single_menu( G_CALLBACK(process_menu_action), BUMP_NONE, menu, act, &single, &group, base, TRUE );
+    if ( base > lower ) {
+        if ( (base - step) > lower ) {
+            create_single_menu( G_CALLBACK(process_menu_action), BUMP_DOWN, menu, act, &single, &group, base - step, FALSE );
+        }
+        if ( (base - page) > lower ) {
+            create_single_menu( G_CALLBACK(process_menu_action), BUMP_PAGE_DOWN, menu, act, &single, &group, base - page, FALSE );
+        }
+        create_single_menu( G_CALLBACK(process_menu_action), BUMP_BOTTOM, menu, act, &single, &group, lower, FALSE );
+    }
+
+    return menu;
+}
+
 static GtkWidget* create_menu_item( GtkAction* action )
 {
     GtkWidget* item = 0;
 
-    item = gParentClass->create_menu_item( action );
+    if ( IS_EGE_ADJUSTMENT_ACTION(action) ) {
+        EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
+        GValue value;
+        const gchar*  sss = 0;
+        GtkWidget*  subby = 0;
+
+        memset( &value, 0, sizeof(value) );
+        g_value_init( &value, G_TYPE_STRING );
+        g_object_get_property( G_OBJECT(action), "label", &value );
+
+        sss = g_value_get_string( &value );
+
+        item = gtk_menu_item_new_with_label( sss );
+
+        subby = create_popup_number_menu( act );
+        gtk_menu_item_set_submenu( GTK_MENU_ITEM(item), subby );
+        gtk_widget_show_all( subby );
+    } else {
+        item = gParentClass->create_menu_item( action );
+    }
 
     return item;
 }
@@ -350,6 +494,24 @@ void value_changed_cb( GtkSpinButton* spin, EgeAdjustmentAction* act )
     if ( GTK_WIDGET_HAS_FOCUS( GTK_WIDGET(spin) ) ) {
         ege_adjustment_action_defocus( act );
     }
+}
+
+static gboolean event_cb( EgeAdjustmentAction* act, GdkEvent* evt )
+{
+    gboolean handled = FALSE;
+    if ( evt->type == GDK_BUTTON_PRESS ) {
+        if ( evt->button.button == 3 ) {
+            if ( IS_EGE_ADJUSTMENT_ACTION(act) ) {
+                GdkEventButton* btnevt = (GdkEventButton*)evt;
+                GtkWidget* menu = create_popup_number_menu(act);
+                gtk_widget_show_all( menu );
+                gtk_menu_popup( GTK_MENU(menu), NULL, NULL, NULL, NULL, btnevt->button, btnevt->time );
+            }
+            handled = TRUE;
+        }
+    }
+
+    return handled;
 }
 
 static GtkWidget* create_tool_item( GtkAction* action )
@@ -377,7 +539,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
         gtk_container_add( GTK_CONTAINER(item), hb );
 
         if ( act->private_data->selfId ) {
-            gtk_object_set_data( GTK_OBJECT(spinbutton), act->private_data->selfId, spinbutton );
+            g_object_set_data( G_OBJECT(spinbutton), act->private_data->selfId, spinbutton );
         }
 
         g_signal_connect( G_OBJECT(spinbutton), "focus-in-event", G_CALLBACK(focus_in_cb), action );
@@ -385,8 +547,8 @@ static GtkWidget* create_tool_item( GtkAction* action )
         g_signal_connect( G_OBJECT(spinbutton), "key-press-event", G_CALLBACK(keypress_cb), action );
 
         g_signal_connect( G_OBJECT(spinbutton), "value-changed", G_CALLBACK(value_changed_cb), action );
-/*      g_signal_connect( G_OBJECT(EGE_ADJUSTMENT_ACTION(action)->private_data->adj), "value-changed", G_CALLBACK(flippy), action ); */
 
+        g_signal_connect_swapped( G_OBJECT(spinbutton), "event", G_CALLBACK(event_cb), action );
 
         gtk_widget_show_all( item );
 
