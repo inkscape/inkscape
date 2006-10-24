@@ -337,7 +337,7 @@ sp_fillstroke_selection_changed ( Inkscape::Application *inkscape,
         case QUERY_STYLE_SINGLE:
         case QUERY_STYLE_MULTIPLE_AVERAGED:
         case QUERY_STYLE_MULTIPLE_SAME: 
-            NR::Rect bbox = selection->bounds();
+            NR::Rect bbox = sp_desktop_selection(SP_ACTIVE_DESKTOP)->bounds();
             double perimeter = bbox.extent(NR::X) + bbox.extent(NR::Y);
             gtk_widget_set_sensitive (b, TRUE);
             //update blur widget value
