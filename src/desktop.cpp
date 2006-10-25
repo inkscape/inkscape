@@ -1344,9 +1344,9 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
              SP_RGBA32_G_U(nv->pagecolor) +
              SP_RGBA32_B_U(nv->pagecolor)) >= 384) {
             // the background color is light or transparent, use black outline
-            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = 0xff;
+            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "onlight", 0xff);
         } else { // use white outline
-            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = 0xffffffff;
+            SP_CANVAS_ARENA (desktop->drawing)->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "ondark", 0xffffffff);
         }
     }
 }

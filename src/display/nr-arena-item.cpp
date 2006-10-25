@@ -402,7 +402,7 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             item->filter->render (item, &ipb);
         }
 
-        if (item->clip || item->mask) {
+        if ((item->clip || item->mask) && !outline) {
             /* Setup mask pixblock */
             NRPixBlock mpb;
             nr_pixblock_setup_fast (&mpb, NR_PIXBLOCK_MODE_A8, carea.x0,
@@ -508,6 +508,33 @@ nr_arena_item_invoke_render (NRArenaItem *item, NRRectL const *area,
             nr_pixblock_release (&mpb);
             /* This pointer wouldn't be valid outside this block, so clear it */
             item->background_pb = NULL;
+
+        } else if ((item->clip || item->mask) && outline) {
+            // Render clipped or masked object in outline mode:
+
+            // First, render the object itself 
+            unsigned int state = NR_ARENA_ITEM_VIRTUAL (item, render) (item, &carea, dpb, flags);
+            if (state & NR_ARENA_ITEM_STATE_INVALID) {
+                /* Clean up and return error */
+                if (dpb != pb)
+                    nr_pixblock_release (dpb);
+                item->state |= NR_ARENA_ITEM_STATE_INVALID;
+                return item->state;
+            }
+
+            guint32 saved_rgba = item->arena->outlinecolor; // save current outline color
+            // render clippath as an object, using a different color
+            if (item->clip) {
+                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "clips", 0x00ff00ff); // green clips
+                NR_ARENA_ITEM_VIRTUAL (item->clip, render) (item->clip, &carea, dpb, flags);
+            } 
+            // render mask as an object, using a different color
+            if (item->mask) {
+                item->arena->outlinecolor = prefs_get_int_attribute("options.wireframecolors", "masks", 0x0000ffff); // blue masks
+                NR_ARENA_ITEM_VIRTUAL (item->mask, render) (item->mask, &carea, dpb, flags);
+            }
+            item->arena->outlinecolor = saved_rgba; // restore outline color
+
         } else {
             if (item->render_opacity) { // opacity was already rendered in, just copy to dpb here
                 nr_blit_pixblock_pixblock(dpb, &ipb);
