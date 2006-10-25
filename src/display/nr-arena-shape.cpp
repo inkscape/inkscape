@@ -243,6 +243,8 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     bbox.x0 = bbox.y0 = NR_HUGE;
     bbox.x1 = bbox.y1 = -NR_HUGE;
 
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+
     if (shape->curve) {
         NRBPath bp;
         /* fixme: */
@@ -250,7 +252,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
         bbox.x1 = bbox.y1 = -NR_HUGE;
         bp.path = SP_CURVE_BPATH(shape->curve);
         nr_path_matrix_bbox_union(&bp, gc->transform, &bbox);
-        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
+        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             float width, scale;
             scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
             width = MAX(0.125, shape->_stroke.width * scale);
@@ -302,7 +304,7 @@ nr_arena_shape_update(NRArenaItem *item, NRRectL *area, NRGC *gc, guint state, g
     if (!shape->curve || !shape->style) return NR_ARENA_ITEM_STATE_ALL;
     if (sp_curve_is_empty(shape->curve)) return NR_ARENA_ITEM_STATE_ALL;
     if ( ( shape->_fill.paint.type() == NRArenaShape::Paint::NONE ) &&
-         ( shape->_stroke.paint.type() == NRArenaShape::Paint::NONE ) )
+         ( shape->_stroke.paint.type() == NRArenaShape::Paint::NONE && !outline) )
     {
         return NR_ARENA_ITEM_STATE_ALL;
     }
@@ -486,12 +488,14 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
 
     float const scale = NR_MATRIX_DF_EXPANSION(&gc->transform);
 
-    if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE ||
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+
+    if (outline ||
         ((shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) &&
          ( fabs(shape->_stroke.width * scale) > 0.01 ))) { // sinon c'est 0=oon veut pas de bord
 
         float width = MAX(0.125, shape->_stroke.width * scale);
-        if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE)
+        if (outline)
             width = 0.5; // 1 pixel wide, independent of zoom
 
         NR::Matrix  cached_to_new = NR::identity();
@@ -524,16 +528,16 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             padded_area.x1 += (NR::ICoord)width;
             padded_area.y0 -= (NR::ICoord)width;
             padded_area.y1 += (NR::ICoord)width;
-            if ((style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) || is_inner_area(padded_area, NR_ARENA_ITEM(shape)->bbox)) {
-                thePath->Convert((NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) ? 1.0 : 4.0);
+            if ((style->stroke_dash.n_dash && !outline) || is_inner_area(padded_area, NR_ARENA_ITEM(shape)->bbox)) {
+                thePath->Convert((outline) ? 4.0 : 1.0);
                 shape->cached_spartialy = false;
             }
             else {
-                thePath->Convert(&padded_area, (NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) ? 1.0 : 4.0);
+                thePath->Convert(&padded_area, (outline) ? 4.0 : 1.0);
                 shape->cached_spartialy = true;
             }
 
-            if (style->stroke_dash.n_dash && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {
+            if (style->stroke_dash.n_dash && !outline) {
                 thePath->DashPolylineFromStyle(style, scale, 1.0);
             }
 
@@ -562,7 +566,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
                     break;
             }
 
-            if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
+            if (outline) {
                 butt = butt_straight;
                 join = join_straight;
             }
@@ -571,7 +575,7 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
                             0.5*width*shape->_stroke.mitre_limit);
 
 
-            if (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
+            if (outline) {
                 // speeds it up, but uses evenodd for the stroke shape (which does not matter for 1-pixel wide outline)
                 shape->cached_stroke->Copy(theShape);
             } else {
@@ -701,8 +705,10 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         }
     }
 
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+
     SPStyle const *style = shape->style;
-    if ( shape->fill_shp && NR_ARENA_ITEM(shape)->arena->rendermode != RENDERMODE_OUTLINE) {
+    if ( shape->fill_shp && !outline) {
         NRPixBlock m;
         guint32 rgba;
 
@@ -756,9 +762,8 @@ nr_arena_shape_render(NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigned
         nr_pixblock_render_shape_mask_or(m, shape->stroke_shp);
         m.empty = FALSE;
 
-        if (shape->_stroke.paint.type() == NRArenaShape::Paint::COLOR ||
-            NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
-            if ( NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE) {
+        if (shape->_stroke.paint.type() == NRArenaShape::Paint::COLOR || outline) {
+            if (outline) {
                 rgba = NR_ARENA_ITEM(shape)->arena->outlinecolor;
             } else if ( item->render_opacity ) {
                 rgba = sp_color_get_rgba32_falpha(&shape->_stroke.paint.color(),
@@ -878,18 +883,20 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
         }
     }
 
+    bool outline = (NR_ARENA_ITEM(shape)->arena->rendermode == RENDERMODE_OUTLINE);
+
     if (item->state & NR_ARENA_ITEM_STATE_RENDER) {
         if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
             if (shape->fill_shp->PtWinding(p) > 0 ) return item;
         }
-        if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)) {
+        if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline)) {
             if (shape->stroke_shp->PtWinding(p) > 0 ) return item;
         }
         if (delta > 1e-3) {
             if (shape->fill_shp && (shape->_fill.paint.type() != NRArenaShape::Paint::NONE)) {
                 if (distanceLessThanOrEqual(shape->fill_shp, p, delta)) return item;
             }
-            if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE)) {
+            if (shape->stroke_shp && (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline)) {
                 if (distanceLessThanOrEqual(shape->stroke_shp, p, delta)) return item;
             }
         }
@@ -906,7 +913,7 @@ nr_arena_shape_pick(NRArenaItem *item, NR::Point p, double delta, unsigned int /
                 if (wind & 0x1) return item;
             }
         }
-        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) {
+        if (shape->_stroke.paint.type() != NRArenaShape::Paint::NONE || outline) {
             /* fixme: We do not take stroke width into account here (Lauris) */
             if (dist < delta) return item;
         }
