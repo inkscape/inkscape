@@ -631,6 +631,8 @@ sp_selected_path_outline()
         float const scale = transform.expansion();
         gchar *style = g_strdup(SP_OBJECT_REPR(item)->attribute("style"));
         SPStyle *i_style = SP_OBJECT(item)->style;
+        gchar const *mask = SP_OBJECT_REPR(item)->attribute("mask");
+        gchar const *clip_path = SP_OBJECT_REPR(item)->attribute("clip-path");
 
         float o_width, o_miter;
         JoinType o_join;
@@ -762,6 +764,10 @@ sp_selected_path_outline()
             repr->setAttribute("d", str);
             g_free(str);
 
+            if (mask)
+                repr->setAttribute("mask", mask);
+            if (clip_path)
+                repr->setAttribute("clip-path", clip_path);
 
             if (SP_IS_SHAPE(item) && sp_shape_has_markers (SP_SHAPE(item))) {
 
