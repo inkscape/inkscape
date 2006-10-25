@@ -17,6 +17,7 @@ example_DATA = \
 	eastern-motive-P4G.svg \
 	l-systems.svgz \
 	glass.svg \
-	car.svgz
+	car.svgz \
+	gallardo.svgz
 
 EXTRA_DIST = $(example_DATA)
