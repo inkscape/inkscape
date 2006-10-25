@@ -319,7 +319,7 @@ double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, char const *key, 
     return g_ascii_strtod(result, NULL);
 }
 
-int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *key, int def)
+long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *key, long long int def)
 {
     char *result;
 
@@ -330,7 +330,7 @@ int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *key, int de
 
     if (result == NULL) return def;
 
-    return atoi(result);
+    return atoll(result);
 }
 
 /** 

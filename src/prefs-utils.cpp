@@ -19,7 +19,7 @@
 
 
 void
-prefs_set_int_attribute(gchar const *path, gchar const *attr, gint value)
+prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value)
 {
     Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
     if (repr) {
@@ -27,8 +27,8 @@ prefs_set_int_attribute(gchar const *path, gchar const *attr, gint value)
     }
 }
 
-gint
-prefs_get_int_attribute(gchar const *path, gchar const *attr, gint def)
+long long int
+prefs_get_int_attribute(gchar const *path, gchar const *attr, long long int def)
 {
     Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
     if (repr) {
@@ -41,12 +41,12 @@ prefs_get_int_attribute(gchar const *path, gchar const *attr, gint def)
 /**
 \brief Retrieves an int attribute guarding against screwed-up data; if the value is beyond limits, default is returned
 */
-gint
-prefs_get_int_attribute_limited(gchar const *path, gchar const *attr, gint def, gint min, gint max)
+long long int
+prefs_get_int_attribute_limited(gchar const *path, gchar const *attr, long long int def, long long int min, long long int max)
 {
     Inkscape::XML::Node *repr = inkscape_get_repr(INKSCAPE, path);
     if (repr) {
-        gint const v = sp_repr_get_int_attribute(repr, attr, def);
+        long long int const v = sp_repr_get_int_attribute(repr, attr, def);
         if (v >= min && v <= max) {
             return v;
         } else {

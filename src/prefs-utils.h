@@ -14,9 +14,9 @@
 
 #include <glib/gtypes.h>
 
-void prefs_set_int_attribute(gchar const *path, gchar const *attr, gint value);
-gint prefs_get_int_attribute(gchar const *path, gchar const *attr, gint def);
-gint prefs_get_int_attribute_limited(gchar const *path, gchar const *attr, gint def, gint min, gint max);
+void prefs_set_int_attribute(gchar const *path, gchar const *attr, long long int value);
+long long int prefs_get_int_attribute(gchar const *path, gchar const *attr, long long int def);
+long long int prefs_get_int_attribute_limited(gchar const *path, gchar const *attr, long long int def, long long int min, long long int max);
 
 void prefs_set_double_attribute(gchar const *path, gchar const *attr, double value);
 double prefs_get_double_attribute(gchar const *path, gchar const *attr, double def);

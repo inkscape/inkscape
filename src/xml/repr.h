@@ -227,7 +227,7 @@ unsigned sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, dou
 /// \deprecated !
 double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key, double def);
 /// \deprecated !
-int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, gchar const *key, int def);
+long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, gchar const *key, long long int def);
 /* End Deprecated? */
 
 int sp_repr_compare_position(Inkscape::XML::Node *first, Inkscape::XML::Node *second);
