@@ -152,7 +152,7 @@ CFLAGS = -Wall -g -O3 -mms-bitfields -DVERSION=$(VERSION) \
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-CFLAGS += -DWITH_INKBOARD -DHAVE_SSL
+CFLAGS += -DWITH_INKBOARD
 
 ####### IMPLICIT RULES
 .cpp.o:
