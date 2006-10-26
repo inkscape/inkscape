@@ -979,7 +979,7 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->redraw_count = 0;
     
     canvas->forced_redraw_count = 0;
-    canvas->forced_redraw_limit = 0;
+    canvas->forced_redraw_limit = -1;
 
     canvas->slowest_buffer = 0;
 }
@@ -1664,7 +1664,7 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
             // only if we're drawing multiple buffers, and only if this one was not very fast,
             // and only if we're allowed to interrupt this redraw
             bool ok_to_interrupt = (multiple_buffers && this_buffer > 25000);
-            if (ok_to_interrupt && canvas->forced_redraw_limit) {
+            if (ok_to_interrupt && (canvas->forced_redraw_limit != -1)) {
                 ok_to_interrupt = (canvas->forced_redraw_count < canvas->forced_redraw_limit);
             }
 
@@ -1679,6 +1679,9 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
                     // If one of the iterations has redrawn by itself, abort
                     if (this_count != canvas->redraw_count) {
                         canvas->slowest_buffer = slowest_buffer;
+                        if (canvas->forced_redraw_limit != -1) {
+                            canvas->forced_redraw_count++;
+                        }
                         return 1; // interrupted
                     }
                 }
@@ -1687,7 +1690,7 @@ sp_canvas_paint_rect_internal (SPCanvas *canvas, NRRectL *rect, NR::ICoord *x_ab
                 // if so, force update and abort
                 if (canvas->need_redraw || canvas->need_update) {
                     canvas->slowest_buffer = slowest_buffer;
-                    if (canvas->forced_redraw_limit) {
+                    if (canvas->forced_redraw_limit != -1) {
                         canvas->forced_redraw_count++;
                     }
                     do_update (canvas);
@@ -1815,7 +1818,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     }
 
     // we've had a full unaborted redraw, reset the full redraw counter
-    if (canvas->forced_redraw_limit) {
+    if (canvas->forced_redraw_limit != -1) {
         canvas->forced_redraw_count = 0;
     }
 }
@@ -1838,7 +1841,7 @@ void
 sp_canvas_end_forced_full_redraws(SPCanvas *canvas) {
   g_return_if_fail(canvas != NULL);
 
-  canvas->forced_redraw_limit = 0;
+  canvas->forced_redraw_limit = -1;
 }
 
 /**

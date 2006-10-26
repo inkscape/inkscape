@@ -161,8 +161,8 @@ struct SPCanvas {
     long redraw_count;
     glong slowest_buffer;
     
-    unsigned int forced_redraw_count;
-    unsigned int forced_redraw_limit;
+    int forced_redraw_count;
+    int forced_redraw_limit;
     
     /* For use by internal pick_current_item() function */
     unsigned int left_grabbed_item : 1;
