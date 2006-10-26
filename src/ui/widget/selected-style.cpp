@@ -36,6 +36,7 @@
 #include "svg/css-ostringstream.h"
 #include "helper/units.h"
 #include "verbs.h"
+#include <display/sp-canvas.h>
 
 static gdouble const _sw_presets[]     = { 32 ,  16 ,  10 ,  8 ,  6 ,  4 ,  3 ,  2 ,  1.5 ,  1 ,  0.75 ,  0.5 ,  0.25 ,  0.1 };
 static gchar* const _sw_presets_str[] = {"32", "16", "10", "8", "6", "4", "3", "2", "1.5", "1", "0.75", "0.5", "0.25", "0.1"};
@@ -973,6 +974,7 @@ SelectedStyle::update()
     case QUERY_STYLE_MULTIPLE_AVERAGED:
     case QUERY_STYLE_MULTIPLE_SAME:
         _tooltips.set_tip(_opacity_place, _("Master opacity"));
+        if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
         _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query->opacity.value));
@@ -1074,10 +1076,20 @@ void SelectedStyle::on_opacity_changed () {
     Inkscape::CSSOStringStream os;
     os << CLAMP (_opacity_adjustment.get_value(), 0.0, 1.0);
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
+    // FIXME: workaround for GTK breakage: display interruptibility sometimes results in GTK
+    // sending multiple value-changed events. As if when Inkscape interrupts redraw for main loop
+    // iterations, GTK discovers that this callback hasn't finished yet, and for some weird reason
+    // decides to add yet another value-changed event to the queue. Totally braindead if you ask
+    // me. As a result, scrolling the spinbutton once results in runaway change until it hits 1.0
+    // or 0.0. (And no, this is not a race with ::update, I checked that.)
+    // Sigh. So we disable interruptibility while we're setting the new value.
+    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(_desktop), 0);
     sp_desktop_set_style (_desktop, css);
     sp_repr_css_attr_unref (css);
     sp_document_maybe_done (sp_desktop_document (_desktop), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE,
                       _("Change opacity"));
+    // resume interruptibility
+    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(_desktop));
     spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }

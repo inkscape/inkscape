@@ -44,6 +44,7 @@
 #include "document-private.h"
 #include <selection.h>
 #include "xml/repr.h"
+#include "display/sp-canvas.h"
 
 static GtkWidget *dlg = NULL;
 static win_data wd;
@@ -360,6 +361,9 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *base)
 
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (TRUE));
 
+    // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
+    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(SP_ACTIVE_DESKTOP), 0);
+
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
     Inkscape::CSSOStringStream os;
@@ -372,6 +376,9 @@ sp_fillstroke_opacity_changed (GtkAdjustment *a, SPWidget *base)
 
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:opacity", SP_VERB_DIALOG_FILL_STROKE, 
                             _("Change opacity"));
+
+    // resume interruptibility
+    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(SP_ACTIVE_DESKTOP));
 
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
@@ -386,12 +393,15 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *base)
 
      //lock dialog
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (TRUE));
-    
+  
     //get desktop
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (!desktop) {
         return;
     }
+
+    // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in crash 1580903
+    sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
     
     //get current selection
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -423,6 +433,10 @@ sp_fillstroke_blur_changed (GtkAdjustment *a, SPWidget *base)
     }
 
     sp_document_maybe_done (sp_desktop_document (SP_ACTIVE_DESKTOP), "fillstroke:blur", SP_VERB_DIALOG_FILL_STROKE,  _("Change blur"));
+
+    // resume interruptibility
+    sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
+
     gtk_object_set_data (GTK_OBJECT (dlg), "blocked", GUINT_TO_POINTER (FALSE));
 }
 

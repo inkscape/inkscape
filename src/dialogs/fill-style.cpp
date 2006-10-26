@@ -35,6 +35,7 @@
 #include <document-private.h>
 #include <xml/repr.h>
 #include <glibmm/i18n.h>
+#include <display/sp-canvas.h>
 
 
 // These can be deleted once we sort out the libart dependence.
@@ -396,9 +397,14 @@ sp_fill_style_widget_paint_changed ( SPPaintSelector *psel,
         case SP_PAINT_SELECTOR_MODE_COLOR_RGB:
         case SP_PAINT_SELECTOR_MODE_COLOR_CMYK:
         {
+            // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed; here it results in losing release events
+            sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
+
             sp_paint_selector_set_flat_color (psel, desktop, "fill", "fill-opacity");
             sp_document_maybe_done (sp_desktop_document(desktop), undo_label, SP_VERB_DIALOG_FILL_STROKE,
                                     _("Set fill color"));
+            // resume interruptibility
+            sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
 
             // on release, toggle undo_label so that the next drag will not be lumped with this one
             if (undo_label == undo_label_1)
