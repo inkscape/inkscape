@@ -48,15 +48,15 @@ Inkscape::GridSnapper::_getSnapLines(NR::Point const &p) const
         return s;
     }
 
-    SPCGrid *griditem = NULL;
+    CXYGrid *griditem = NULL;
     for (GSList *l = _named_view->gridviews; l != NULL; l = l->next) {
         // FIXME : this is a hack since there is only one view for now
         //                 but when we'll handle multiple views, snapping should
         //                 must be rethought and maybe only the current view
         //                 should give back it's SHOWN lines to snap to
-        //                 For now, the last SPCGrid in _named_view->gridviews will be used.
-        if ( SP_IS_CGRID(GTK_OBJECT(l->data)) ) {
-            griditem = SP_CGRID(l->data);
+        //                 For now, the last CXYGrid in _named_view->gridviews will be used.
+        if ( INKSCAPE_IS_CXYGRID(GTK_OBJECT(l->data)) ) {
+            griditem = INKSCAPE_CXYGRID(l->data);
         }
     }
 

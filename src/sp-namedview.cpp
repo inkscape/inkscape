@@ -642,7 +642,7 @@ void SPNamedView::show(SPDesktop *desktop)
 
     views = g_slist_prepend(views, desktop);
 
-    SPCanvasItem * item = sp_canvas_item_new(sp_desktop_grid(desktop), SP_TYPE_CGRID, NULL);
+    SPCanvasItem * item = sp_canvas_item_new(sp_desktop_grid(desktop), INKSCAPE_TYPE_CXYGRID, NULL);
     // since we're keeping a copy, we need to bump up the ref count
     gtk_object_ref(GTK_OBJECT(item));
     gridviews = g_slist_prepend(gridviews, item);
@@ -860,7 +860,7 @@ static void sp_namedview_setup_grid_item(SPNamedView *nv, SPCanvasItem *item)
                        "empspacing", nv->gridempspacing,
                        NULL);
     if (!btype){
-        // CGRID
+        // CXYGRID
         sp_canvas_item_set((GtkObject *) item,
                            "spacingx", nv->gridspacing[NR::X],
                            NULL);

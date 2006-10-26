@@ -1,8 +1,9 @@
-#define SP_CANVAS_GRID_C
+#define INKSCAPE_CANVAS_GRID_C
 
 /*
- * SPCGrid
+ * CXYGrid
  *
+ * Copyright (C) Johan Engelen 2006 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000
  *
  */
@@ -12,6 +13,8 @@
 #include "canvas-grid.h"
 #include "display-forward.h"
 #include <libnr/nr-pixops.h>
+
+namespace Inkscape {
 
 enum {
     ARG_0,
@@ -25,38 +28,38 @@ enum {
 };
 
 
-static void sp_cgrid_class_init (SPCGridClass *klass);
-static void sp_cgrid_init (SPCGrid *grid);
-static void sp_cgrid_destroy (GtkObject *object);
-static void sp_cgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id);
+static void cxygrid_class_init (CXYGridClass *klass);
+static void cxygrid_init (CXYGrid *grid);
+static void cxygrid_destroy (GtkObject *object);
+static void cxygrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id);
 
-static void sp_cgrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
-static void sp_cgrid_render (SPCanvasItem *item, SPCanvasBuf *buf);
+static void cxygrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags);
+static void cxygrid_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static SPCanvasItemClass * parent_class;
 
 GtkType
-sp_cgrid_get_type (void)
+cxygrid_get_type (void)
 {
-    static GtkType cgrid_type = 0;
+    static GtkType cxygrid_type = 0;
 
-    if (!cgrid_type) {
-        GtkTypeInfo cgrid_info = {
-            "SPCGrid",
-            sizeof (SPCGrid),
-            sizeof (SPCGridClass),
-            (GtkClassInitFunc) sp_cgrid_class_init,
-            (GtkObjectInitFunc) sp_cgrid_init,
+    if (!cxygrid_type) {
+        GtkTypeInfo cxygrid_info = {
+            "CXYGrid",
+            sizeof (CXYGrid),
+            sizeof (CXYGridClass),
+            (GtkClassInitFunc) cxygrid_class_init,
+            (GtkObjectInitFunc) cxygrid_init,
             NULL, NULL,
             (GtkClassInitFunc) NULL
         };
-        cgrid_type = gtk_type_unique (sp_canvas_item_get_type (), &cgrid_info);
+        cxygrid_type = gtk_type_unique (sp_canvas_item_get_type (), &cxygrid_info);
     }
-    return cgrid_type;
+    return cxygrid_type;
 }
 
 static void
-sp_cgrid_class_init (SPCGridClass *klass)
+cxygrid_class_init (CXYGridClass *klass)
 {
     GtkObjectClass *object_class;
     SPCanvasItemClass *item_class;
@@ -66,23 +69,23 @@ sp_cgrid_class_init (SPCGridClass *klass)
 
     parent_class = (SPCanvasItemClass*)gtk_type_class (sp_canvas_item_get_type ());
 
-    gtk_object_add_arg_type ("SPCGrid::originx", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ORIGINX);
-    gtk_object_add_arg_type ("SPCGrid::originy", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ORIGINY);
-    gtk_object_add_arg_type ("SPCGrid::spacingx", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_SPACINGX);
-    gtk_object_add_arg_type ("SPCGrid::spacingy", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_SPACINGY);
-    gtk_object_add_arg_type ("SPCGrid::color", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_COLOR);
-    gtk_object_add_arg_type ("SPCGrid::empcolor", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_EMPCOLOR);
-    gtk_object_add_arg_type ("SPCGrid::empspacing", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_EMPSPACING);
+    gtk_object_add_arg_type ("CXYGrid::originx", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ORIGINX);
+    gtk_object_add_arg_type ("CXYGrid::originy", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_ORIGINY);
+    gtk_object_add_arg_type ("CXYGrid::spacingx", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_SPACINGX);
+    gtk_object_add_arg_type ("CXYGrid::spacingy", GTK_TYPE_DOUBLE, GTK_ARG_WRITABLE, ARG_SPACINGY);
+    gtk_object_add_arg_type ("CXYGrid::color", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_COLOR);
+    gtk_object_add_arg_type ("CXYGrid::empcolor", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_EMPCOLOR);
+    gtk_object_add_arg_type ("CXYGrid::empspacing", GTK_TYPE_INT, GTK_ARG_WRITABLE, ARG_EMPSPACING);
 
-    object_class->destroy = sp_cgrid_destroy;
-    object_class->set_arg = sp_cgrid_set_arg;
+    object_class->destroy = cxygrid_destroy;
+    object_class->set_arg = cxygrid_set_arg;
 
-    item_class->update = sp_cgrid_update;
-    item_class->render = sp_cgrid_render;
+    item_class->update = cxygrid_update;
+    item_class->render = cxygrid_render;
 }
 
 static void
-sp_cgrid_init (SPCGrid *grid)
+cxygrid_init (CXYGrid *grid)
 {
     grid->origin[NR::X] = grid->origin[NR::Y] = 0.0;
     grid->spacing[NR::X] = grid->spacing[NR::Y] = 8.0;
@@ -92,20 +95,20 @@ sp_cgrid_init (SPCGrid *grid)
 }
 
 static void
-sp_cgrid_destroy (GtkObject *object)
+cxygrid_destroy (GtkObject *object)
 {
     g_return_if_fail (object != NULL);
-    g_return_if_fail (SP_IS_CGRID (object));
+    g_return_if_fail (INKSCAPE_IS_CXYGRID (object));
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
 static void
-sp_cgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
+cxygrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
 {
     SPCanvasItem *item = SP_CANVAS_ITEM (object);
-    SPCGrid *grid = SP_CGRID (object);
+    CXYGrid *grid = INKSCAPE_CXYGRID (object);
 
     switch (arg_id) {
     case ARG_ORIGINX:
@@ -145,7 +148,7 @@ sp_cgrid_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
 }
 
 static void
-sp_grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
+grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
 {
     if ((y >= buf->rect.y0) && (y < buf->rect.y1)) {
         guint r, g, b, a;
@@ -168,7 +171,7 @@ sp_grid_hline (SPCanvasBuf *buf, gint y, gint xs, gint xe, guint32 rgba)
 }
 
 static void
-sp_grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
+grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
 {
     if ((x >= buf->rect.x0) && (x < buf->rect.x1)) {
         guint r, g, b, a;
@@ -216,9 +219,9 @@ sp_grid_vline (SPCanvasBuf *buf, gint x, gint ys, gint ye, guint32 rgba)
     lines, then that line is drawn in the emphisis color.
 */
 static void
-sp_cgrid_render (SPCanvasItem * item, SPCanvasBuf * buf)
+cxygrid_render (SPCanvasItem * item, SPCanvasBuf * buf)
 {
-    SPCGrid *grid = SP_CGRID (item);
+    CXYGrid *grid = INKSCAPE_CXYGRID (item);
 
     sp_canvas_prepare_buffer (buf);
 
@@ -233,9 +236,9 @@ sp_cgrid_render (SPCanvasItem * item, SPCanvasBuf * buf)
         const gint y0 = (gint) Inkscape::round(y);
 
         if (!grid->scaled[NR::Y] && (ylinenum % grid->empspacing) == 0) {
-            sp_grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, grid->empcolor);
+            grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, grid->empcolor);
         } else {
-            sp_grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, grid->color);
+            grid_hline (buf, y0, buf->rect.x0, buf->rect.x1 - 1, grid->color);
         }
     }     
 
@@ -244,17 +247,17 @@ sp_cgrid_render (SPCanvasItem * item, SPCanvasBuf * buf)
     for (x = sxg, xlinenum = xlinestart; x < buf->rect.x1; x += grid->sw[NR::X], xlinenum++) {
         const gint ix = (gint) Inkscape::round(x);
         if (!grid->scaled[NR::X] && (xlinenum % grid->empspacing) == 0) {
-            sp_grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, grid->empcolor);
+            grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, grid->empcolor);
         } else {
-            sp_grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, grid->color);
+            grid_vline (buf, ix, buf->rect.y0, buf->rect.y1, grid->color);
         }
     }
 }
 
 static void
-sp_cgrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
+cxygrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flags)
 {
-    SPCGrid *grid = SP_CGRID (item);
+    CXYGrid *grid = INKSCAPE_CXYGRID (item);
 
     if (parent_class->update)
         (* parent_class->update) (item, affine, flags);
@@ -291,7 +294,10 @@ sp_cgrid_update (SPCanvasItem *item, NR::Matrix const &affine, unsigned int flag
                      
     item->x1 = item->y1 = -1000000;
     item->x2 = item->y2 = 1000000;
-}
+}        
+
+
+}; /* namespace Inkscape */
 
 /*
   Local Variables:

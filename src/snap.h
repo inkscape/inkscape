@@ -107,6 +107,7 @@ public:
 
     typedef std::list<const Inkscape::Snapper*> SnapperList;
     SnapperList getSnappers() const;
+    SnapperList gridSnappers;          ///< List of grid snappers to enable multiple grids
 
 protected:
     SPNamedView const *_named_view;

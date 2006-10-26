@@ -21,7 +21,7 @@
 namespace Inkscape
 {
 
-/// Snap to grid
+/// Normal 2D grid
 class GridSnapper : public LineSnapper
 {
 public:

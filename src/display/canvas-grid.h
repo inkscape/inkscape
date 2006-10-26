@@ -1,29 +1,30 @@
-#ifndef SP_CANVAS_GRID_H
-#define SP_CANVAS_GRID_H
+#ifndef INKSCAPE_CANVAS_GRID_H
+#define INKSCAPE_CANVAS_GRID_H
 
 /*
- * SPCGrid
+ * Inkscape::CXYGrid
  *
  * Generic (and quite unintelligent) grid item for gnome canvas
  *
+ * Copyright (C) Johan Engelen 2006 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000
  *
  */
 
 #include <display/sp-canvas.h>
 
+namespace Inkscape {
 
-
-#define SP_TYPE_CGRID            (sp_cgrid_get_type ())
-#define SP_CGRID(obj)            (GTK_CHECK_CAST ((obj), SP_TYPE_CGRID, SPCGrid))
-#define SP_CGRID_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), SP_TYPE_CGRID, SPCGridClass))
-#define SP_IS_CGRID(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_CGRID))
-#define SP_IS_CGRID_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_CGRID))
+#define INKSCAPE_TYPE_CXYGRID            (Inkscape::cxygrid_get_type ())
+#define INKSCAPE_CXYGRID(obj)            (GTK_CHECK_CAST ((obj), INKSCAPE_TYPE_CXYGRID, CXYGrid))
+#define INKSCAPE_CXYGRID_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), INKSCAPE_TYPE_CXYGRID, CXYGridClass))
+#define INKSCAPE_IS_CXYGRID(obj)         (GTK_CHECK_TYPE ((obj), INKSCAPE_TYPE_CXYGRID))
+#define INKSCAPE_IS_CXYGRID_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), INKSCAPE_TYPE_CXYGRID))
 
 
 /** \brief  All the variables that are tracked for a grid specific
             canvas item. */
-struct SPCGrid : public SPCanvasItem{
+struct CXYGrid : public SPCanvasItem{
 	NR::Point origin;  /**< Origin of the grid */
 	NR::Point spacing; /**< Spacing between elements of the grid */
 	guint32 color;     /**< Color for normal lines */
@@ -36,13 +37,15 @@ struct SPCGrid : public SPCanvasItem{
 	NR::Point sw;      /**< Transformed spacing by the affine for the zoom */
 };
 
-struct SPCGridClass {
+struct CXYGridClass {
 	SPCanvasItemClass parent_class;
 };
 
-
 /* Standard Gtk function */
-GtkType sp_cgrid_get_type (void);
+GtkType cxygrid_get_type (void);
+
+}; /* namespace Inkscape */
+
 
 
 
