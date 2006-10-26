@@ -109,7 +109,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop);
 
 void sp_namedview_toggle_guides(SPDocument *doc, Inkscape::XML::Node *repr);
 void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr);
-void sp_namedview_set_gridtype(bool type, SPDocument *doc, Inkscape::XML::Node *repr);
+void sp_namedview_set_gridtype(unsigned int type, SPDocument *doc, Inkscape::XML::Node *repr);
 
 #endif /* !INKSCAPE_SP_NAMEDVIEW_H */
 

@@ -823,12 +823,12 @@ void sp_namedview_toggle_grid(SPDocument *doc, Inkscape::XML::Node *repr)
     sp_document_set_undo_sensitive(doc, saved);
 }
 
-void sp_namedview_set_gridtype(bool type, SPDocument *doc, Inkscape::XML::Node *repr)
+void sp_namedview_set_gridtype(unsigned int type, SPDocument *doc, Inkscape::XML::Node *repr)
 {
     bool saved = sp_document_get_undo_sensitive(doc);
     sp_document_set_undo_sensitive(doc, false);
 
-    sp_repr_set_boolean(repr, "showgrid", type);
+    sp_repr_set_int(repr, "gridtype", (gint)type);
 
     doc->rroot->setAttribute("sodipodi:modified", "true");
     sp_document_set_undo_sensitive(doc, saved);
