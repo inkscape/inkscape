@@ -188,9 +188,15 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
     SP_CANVAS_ARENA (drawing)->arena->delta = prefs_get_double_attribute ("options.cursortolerance", "value", 1.0); // default is 1 px
 
-    // Start always in normal mode
-    SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_NORMAL;
-    canvas->rendermode = RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
+    if (prefs_get_int_attribute("options.startmode", "outline", 0)) {
+        // Start in outline mode
+        SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_OUTLINE;
+        canvas->rendermode = RENDERMODE_OUTLINE; // canvas needs that for choosing the best buffer size
+    } else {
+        // Start in normal mode, default
+        SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_NORMAL;
+        canvas->rendermode = RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
+    }
 
     grid = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
     guides = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
