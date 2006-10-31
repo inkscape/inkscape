@@ -99,7 +99,7 @@ static unsigned sp_svg_number_write_d(gchar *buf, double val, unsigned int tprec
     }
     
     /* Determine the actual number of fractional digits */
-    fprec = MAX(fprec, tprec - idigits);
+    fprec = MAX(fprec, tprec - idigits - 1);
     /* Round value */
     val += 0.5 * pow(10.0, - ((double) fprec));
     /* Extract integral and fractional parts */
