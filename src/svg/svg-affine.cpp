@@ -27,6 +27,7 @@
 #include <libnr/nr-translate-matrix-ops.h>
 #include <libnr/nr-translate-rotate-ops.h>
 #include "svg.h"
+#include "prefs-utils.h"
 
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -174,6 +175,8 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 	}
 
 	e = 0.000001 * NR_MATRIX_DF_EXPANSION (transform);
+	int prec = prefs_get_int_attribute("options.svgoutput", "numericprecision", 8);
+	int min_exp = prefs_get_int_attribute("options.svgoutput", "minimumexponent", -8);
 
 	/* fixme: We could use t1 * t1 + t2 * t2 here instead */
 	if (NR_DF_TEST_CLOSE (transform->c[1], 0.0, e) && NR_DF_TEST_CLOSE (transform->c[2], 0.0, e)) {
@@ -188,9 +191,9 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 				unsigned p = 0;
 				strcpy (c + p, "scale(");
 				p += 6;
-				p += sp_svg_number_write_de (c + p, transform->c[0], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[0], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[3], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
 				c[p++] = ')';
 				g_assert( p <= sizeof(c) );
 				p = MIN (p, size - 1 );
@@ -205,9 +208,9 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 				unsigned p = 0;
 				strcpy (c + p, "translate(");
 				p += 10;
-				p += sp_svg_number_write_de (c + p, transform->c[4], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[4], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[5], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
 				c[p++] = ')';
 				g_assert( p <= sizeof(c) );
 				p = MIN(p, size - 1);
@@ -219,17 +222,17 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 				unsigned p = 0;
 				strcpy (c + p, "matrix(");
 				p += 7;
-				p += sp_svg_number_write_de (c + p, transform->c[0], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[0], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[1], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[1], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[2], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[2], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[3], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[4], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[4], prec, min_exp, FALSE);
 				c[p++] = ',';
-				p += sp_svg_number_write_de (c + p, transform->c[5], 6, -8, FALSE);
+				p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
 				c[p++] = ')';
 				g_assert( p <= sizeof(c) );
 				p = MIN(p, size - 1);
@@ -243,17 +246,17 @@ sp_svg_transform_write(gchar str[], unsigned const size, NRMatrix const *transfo
 		unsigned p = 0;
 		strcpy (c + p, "matrix(");
 		p += 7;
-		p += sp_svg_number_write_de (c + p, transform->c[0], 6, -8, FALSE);
+		p += sp_svg_number_write_de (c + p, transform->c[0], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[1], 6, -8, FALSE);
+		p += sp_svg_number_write_de (c + p, transform->c[1], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[2], 6, -8, FALSE);
+		p += sp_svg_number_write_de (c + p, transform->c[2], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[3], 6, -8, FALSE);
+		p += sp_svg_number_write_de (c + p, transform->c[3], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[4], 6, -8, FALSE);
+		p += sp_svg_number_write_de (c + p, transform->c[4], prec, min_exp, FALSE);
 		c[p++] = ',';
-		p += sp_svg_number_write_de (c + p, transform->c[5], 6, -8, FALSE);
+		p += sp_svg_number_write_de (c + p, transform->c[5], prec, min_exp, FALSE);
 		c[p++] = ')';
 		g_assert( p <= sizeof(c) );
 		p = MIN(p, size - 1);

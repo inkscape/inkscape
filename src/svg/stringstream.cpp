@@ -1,5 +1,6 @@
 #include "svg/stringstream.h"
 #include "svg/strip-trailing-zeros.h"
+#include "prefs-utils.h"
 
 Inkscape::SVGOStringStream::SVGOStringStream()
 {
@@ -11,7 +12,7 @@ Inkscape::SVGOStringStream::SVGOStringStream()
     /* This one is (currently) needed though, as we currently use ostr.precision as a sort of
        variable for storing the desired precision: see our two precision methods and our operator<<
        methods for float and double. */
-    ostr.precision(8);
+    ostr.precision(prefs_get_int_attribute("options.svgoutput", "numericprecision", 8));
 }
 
 Inkscape::SVGOStringStream &

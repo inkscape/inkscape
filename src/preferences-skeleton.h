@@ -199,6 +199,7 @@ static char const preferences_skeleton[] =
 "           ondark=\"4294967295\"" //ffffffff
 "           clips=\"16711935\"" // 00ff00ff
 "           masks=\"65535\"/>\n" // 0x0000ffff
+"    <group id=\"svgoutput\" usenamedcolors=\"0\" numericprecision=\"8\" minimumexponent=\"-8\"/>\n"
 "  </group>\n"
 "\n"
 "  <group id=\"extensions\">"

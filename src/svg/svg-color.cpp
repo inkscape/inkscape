@@ -17,6 +17,7 @@
 # include "config.h"
 #endif
 
+#include "prefs-utils.h"
 #include "svg-color.h"
 #include "svg-icc-color.h"
 #include <cassert>
@@ -409,7 +410,7 @@ rgb24_to_css(char *const buf, unsigned const rgb24)
         strcpy(buf, src);
     }
 
-    assert(sp_svg_read_color(buf, 0xff) == (rgb24 << 8));
+    // assert(sp_svg_read_color(buf, 0xff) == (rgb24 << 8));
 }
 
 /**
@@ -425,7 +426,11 @@ sp_svg_write_color(gchar *buf, unsigned const buflen, guint32 const rgba32)
     g_assert(8 <= buflen);
 
     unsigned const rgb24 = rgba32 >> 8;
-    rgb24_to_css(buf, rgb24);
+    if (prefs_get_int_attribute("options.svgoutput", "usenamedcolors", 0)) {
+        rgb24_to_css(buf, rgb24);
+    } else {
+        g_snprintf(buf, buflen, "#%06x", rgb24);
+    }
 }
 
 static GHashTable *

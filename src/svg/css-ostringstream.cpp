@@ -1,5 +1,6 @@
 #include "svg/css-ostringstream.h"
 #include "svg/strip-trailing-zeros.h"
+#include "prefs-utils.h"
 #include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 
@@ -13,21 +14,26 @@ Inkscape::CSSOStringStream::CSSOStringStream()
     /* This one is (currently) needed though, as we currently use ostr.precision as a sort of
        variable for storing the desired precision: see our two precision methods and our operator<<
        methods for float and double. */
-    ostr.precision(8);
+    ostr.precision(prefs_get_int_attribute("options.svgoutput", "numericprecision", 8));
 }
 
 static void
 write_num(Inkscape::CSSOStringStream &os, unsigned const prec, double const d)
 {
     char buf[32];  // haven't thought about how much is really required.
-    if (prec != 8) {
-        static bool warned;
-        if (!warned) {
-            g_warning("Using precision of 8 instead of the requested %u.  Won't re-warn.", prec);
-            warned = true;
-        }
+    switch (prec) {
+        case 10: g_ascii_formatd(buf, sizeof(buf), "%.10f", d);
+        case 9: g_ascii_formatd(buf, sizeof(buf), "%.9f", d);
+        case 8: g_ascii_formatd(buf, sizeof(buf), "%.8f", d);
+        case 7: g_ascii_formatd(buf, sizeof(buf), "%.7f", d);
+        case 6: g_ascii_formatd(buf, sizeof(buf), "%.6f", d);
+        case 5: g_ascii_formatd(buf, sizeof(buf), "%.5f", d);
+        case 4: g_ascii_formatd(buf, sizeof(buf), "%.4f", d);
+        case 3: g_ascii_formatd(buf, sizeof(buf), "%.3f", d);
+        case 2: g_ascii_formatd(buf, sizeof(buf), "%.2f", d);
+        case 1: g_ascii_formatd(buf, sizeof(buf), "%.1f", d);
+        case 0: g_ascii_formatd(buf, sizeof(buf), "%.0f", d);
     }
-    g_ascii_formatd(buf, sizeof(buf), "%.8f", d);
     os << strip_trailing_zeros(buf);
 }
 
