@@ -1,14 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Translation of Inkscape into Dzongkha.
+# Copyright (C) 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the inkscape package.
 # Dorji Tashi <dorjee_doss@hotmail.com>, 2006.
+# Jurmey Rabgay <jur_gay@yahoo.com>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: inscape\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-27 15:47+0600\n"
-"PO-Revision-Date: 2006-10-30 23:29+0530\n"
+"PO-Revision-Date: 2006-11-01 12:33+0100\n"
 "Last-Translator: Jurmey Rabgay <jur_gay@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
