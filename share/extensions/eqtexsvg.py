@@ -35,7 +35,7 @@ def create_equation_tex(filename, equation):
     tex = open(filename, 'w')
     tex.write("""%% processed with EqTeXSVG.py
 \documentclass{article}
-    
+\usepackage{amsmath}    
 \\thispagestyle{empty}
 \\begin{document}
 """)
