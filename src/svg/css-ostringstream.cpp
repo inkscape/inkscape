@@ -22,17 +22,17 @@ write_num(Inkscape::CSSOStringStream &os, unsigned const prec, double const d)
 {
     char buf[32];  // haven't thought about how much is really required.
     switch (prec) {
-        case 10: g_ascii_formatd(buf, sizeof(buf), "%.10f", d);
-        case 9: g_ascii_formatd(buf, sizeof(buf), "%.9f", d);
-        case 8: g_ascii_formatd(buf, sizeof(buf), "%.8f", d);
-        case 7: g_ascii_formatd(buf, sizeof(buf), "%.7f", d);
-        case 6: g_ascii_formatd(buf, sizeof(buf), "%.6f", d);
-        case 5: g_ascii_formatd(buf, sizeof(buf), "%.5f", d);
-        case 4: g_ascii_formatd(buf, sizeof(buf), "%.4f", d);
-        case 3: g_ascii_formatd(buf, sizeof(buf), "%.3f", d);
-        case 2: g_ascii_formatd(buf, sizeof(buf), "%.2f", d);
-        case 1: g_ascii_formatd(buf, sizeof(buf), "%.1f", d);
-        case 0: g_ascii_formatd(buf, sizeof(buf), "%.0f", d);
+        case 9: g_ascii_formatd(buf, sizeof(buf), "%.9f", d); break;
+        case 8: g_ascii_formatd(buf, sizeof(buf), "%.8f", d); break;
+        case 7: g_ascii_formatd(buf, sizeof(buf), "%.7f", d); break;
+        case 6: g_ascii_formatd(buf, sizeof(buf), "%.6f", d); break;
+        case 5: g_ascii_formatd(buf, sizeof(buf), "%.5f", d); break;
+        case 4: g_ascii_formatd(buf, sizeof(buf), "%.4f", d); break;
+        case 3: g_ascii_formatd(buf, sizeof(buf), "%.3f", d); break;
+        case 2: g_ascii_formatd(buf, sizeof(buf), "%.2f", d); break;
+        case 1: g_ascii_formatd(buf, sizeof(buf), "%.1f", d); break;
+        case 0: g_ascii_formatd(buf, sizeof(buf), "%.0f", d); break;
+        case 10: default: g_ascii_formatd(buf, sizeof(buf), "%.10f", d); break;
     }
     os << strip_trailing_zeros(buf);
 }
