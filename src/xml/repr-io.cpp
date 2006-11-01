@@ -25,6 +25,7 @@
 #include "io/uristream.h"
 #include "io/gzipstream.h"
 
+#include "prefs-utils.h"
 
 using Inkscape::IO::Writer;
 using Inkscape::Util::List;
@@ -36,9 +37,9 @@ using Inkscape::XML::AttributeRecord;
 static Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns);
 static Node *sp_repr_svg_read_node (xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map);
 static gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar *default_ns, GHashTable *prefix_map);
-static void sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns);
-static void sp_repr_write_stream (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix);
-static void sp_repr_write_stream_element (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, List<AttributeRecord const> attributes);
+static void sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns, int inlineattrs, int indent);
+static void sp_repr_write_stream (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, int inlineattrs, int indent);
+static void sp_repr_write_stream_element (Node *repr, Writer &out, gint indent_level, bool add_whitespace, Glib::QueryQuark elide_prefix, List<AttributeRecord const> attributes, int inlineattrs, int indent);
 
 #ifdef HAVE_LIBWMF
 static xmlDocPtr sp_wmf_convert (const char * file_name);
@@ -505,8 +506,10 @@ sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool comp
     Inkscape::IO::GzipOutputStream *gout = compress ? new Inkscape::IO::GzipOutputStream(bout) : NULL;
     Inkscape::IO::OutputStreamWriter *out  = compress ? new Inkscape::IO::OutputStreamWriter( *gout ) : new Inkscape::IO::OutputStreamWriter( bout );
 
-    /* fixme: do this The Right Way */
+    int inlineattrs = prefs_get_int_attribute("options.svgoutput", "inlineattrs", 0);
+    int indent = prefs_get_int_attribute("options.svgoutput", "indent", 2);
 
+    /* fixme: do this The Right Way */
     out->writeString( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" );
 
     str = ((Node *)doc)->attribute("doctype");
@@ -519,12 +522,12 @@ sp_repr_save_stream (Document *doc, FILE *fp, gchar const *default_ns, bool comp
           repr ; repr = sp_repr_next(repr) )
     {
         if ( repr->type() == Inkscape::XML::ELEMENT_NODE ) {
-            sp_repr_write_stream_root_element(repr, *out, TRUE, default_ns);
+            sp_repr_write_stream_root_element(repr, *out, TRUE, default_ns, inlineattrs, indent);
         } else if ( repr->type() == Inkscape::XML::COMMENT_NODE ) {
-            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0));
+            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent);
             out->writeChar( '\n' );
         } else {
-            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0));
+            sp_repr_write_stream(repr, *out, 0, TRUE, GQuark(0), inlineattrs, indent);
         }
     }
     if ( out ) {
@@ -581,7 +584,7 @@ sp_repr_print (Node * repr)
     Inkscape::IO::StdOutputStream bout;
     Inkscape::IO::OutputStreamWriter out(bout);
 
-    sp_repr_write_stream (repr, out, 0, TRUE, GQuark(0));
+    sp_repr_write_stream (repr, out, 0, TRUE, GQuark(0), 0, 2);
 
     return;
 }
@@ -667,7 +670,8 @@ void populate_ns_map(NSMap &ns_map, Node &repr) {
 }
 
 void
-sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns)
+sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace, gchar const *default_ns, 
+                                   int inlineattrs, int indent)
 {
     using Inkscape::Util::ptr_shared;
     g_assert(repr != NULL);
@@ -705,19 +709,19 @@ sp_repr_write_stream_root_element (Node *repr, Writer &out, bool add_whitespace,
         }
     }
 
-    return sp_repr_write_stream_element(repr, out, 0, add_whitespace, elide_prefix, attributes);
+    return sp_repr_write_stream_element(repr, out, 0, add_whitespace, elide_prefix, attributes, inlineattrs, indent);
 }
 
 void
 sp_repr_write_stream (Node *repr, Writer &out, gint indent_level,
-                      bool add_whitespace, Glib::QueryQuark elide_prefix)
+                      bool add_whitespace, Glib::QueryQuark elide_prefix, int inlineattrs, int indent)
 {
     if (repr->type() == Inkscape::XML::TEXT_NODE) {
         repr_quote_write (out, repr->content());
     } else if (repr->type() == Inkscape::XML::COMMENT_NODE) {
         out.printf( "<!--%s-->", repr->content() );
     } else if (repr->type() == Inkscape::XML::ELEMENT_NODE) {
-        sp_repr_write_stream_element(repr, out, indent_level, add_whitespace, elide_prefix, repr->attributeList());
+        sp_repr_write_stream_element(repr, out, indent_level, add_whitespace, elide_prefix, repr->attributeList(), inlineattrs, indent);
     } else {
         g_assert_not_reached();
     }
@@ -727,20 +731,22 @@ void
 sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
                               bool add_whitespace,
                               Glib::QueryQuark elide_prefix,
-                              List<AttributeRecord const> attributes)
+                              List<AttributeRecord const> attributes, 
+                              int inlineattrs, int indent)
 {
     Node *child;
     bool loose;
-    gint i;
 
     g_return_if_fail (repr != NULL);
 
     if ( indent_level > 16 )
         indent_level = 16;
 
-    if (add_whitespace) {
-        for ( i = 0 ; i < indent_level ; i++ ) {
-            out.writeString( "  " );
+    if (add_whitespace && indent) {
+        for (gint i = 0; i < indent_level; i++) {
+            for (gint j = 0; j < indent; j++) {
+                out.writeString(" ");
+            }
         }
     }
 
@@ -763,9 +769,15 @@ sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
     for ( List<AttributeRecord const> iter = attributes ;
           iter ; ++iter )
     {
-        out.writeString("\n");
-        for ( i = 0 ; i < indent_level + 1 ; i++ ) {
-            out.writeString("  ");
+        if (!inlineattrs) {
+            out.writeString("\n");
+            if (indent) {
+                for ( gint i = 0 ; i < indent_level + 1 ; i++ ) {
+                    for ( gint j = 0 ; j < indent ; j++ ) {
+                        out.writeString(" ");
+                    }
+                }
+            }
         }
         out.printf(" %s=\"", g_quark_to_string(iter->key));
         repr_quote_write(out, iter->value);
@@ -785,12 +797,14 @@ sp_repr_write_stream_element (Node * repr, Writer & out, gint indent_level,
             out.writeString( "\n" );
         }
         for (child = repr->firstChild(); child != NULL; child = child->next()) {
-            sp_repr_write_stream (child, out, (loose) ? (indent_level + 1) : 0, add_whitespace, elide_prefix);
+            sp_repr_write_stream (child, out, (loose) ? (indent_level + 1) : 0, add_whitespace, elide_prefix, inlineattrs, indent);
         }
 
-        if (loose && add_whitespace) {
-            for (i = 0; i < indent_level; i++) {
-                out.writeString( "  " );
+        if (loose && add_whitespace && indent) {
+            for (gint i = 0; i < indent_level; i++) {
+                for ( gint j = 0 ; j < indent ; j++ ) {
+                    out.writeString(" ");
+                }
             }
         }
         out.printf( "</%s>", element_name );
