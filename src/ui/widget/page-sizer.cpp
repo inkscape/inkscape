@@ -240,10 +240,12 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
     pack_start (_orientationBox, false, false, 0);
     _orientationLabel.set_label(_("Page orientation:")); 
     _orientationBox.pack_start(_orientationLabel, false, false, 0);
+    _landscapeButton.set_use_underline();
     _landscapeButton.set_label(_("_Landscape"));
 	_landscapeButton.set_active(true);
     Gtk::RadioButton::Group group = _landscapeButton.get_group();
     _orientationBox.pack_end (_landscapeButton, false, false, 5);
+    _portraitButton.set_use_underline();
     _portraitButton.set_label(_("_Portrait"));
 	_portraitButton.set_active(true);
     _orientationBox.pack_end (_portraitButton, false, false, 5);
@@ -259,6 +261,7 @@ PageSizer::PageSizer() : Gtk::VBox(false,4)
     _customTable.set_col_spacings (4);
     _customFrame.add(_customTable);
     
+    _fitPageButton.set_use_underline();
     _fitPageButton.set_label(_("_Fit page to selection"));
     _tips.set_tip(_fitPageButton, 
 	_("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
