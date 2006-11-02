@@ -38,6 +38,7 @@
 #include <glibmm/ustring.h>
 #include <glibmm/convert.h>
 
+#include <stdexcept>
 #include <sstream>
 #include <string>
 #include <list>
