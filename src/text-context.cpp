@@ -574,9 +574,9 @@ show_curr_uni_char(SPTextContext *const tc)
             }
         }
         tc->defaultMessageContext()->setF(Inkscape::NORMAL_MESSAGE,
-                                          _("Unicode: %s: %s"), tc->uni, utf8);
+                                          _("Unicode (<b>Enter</b> to finish): %s: %s"), tc->uni, utf8);
     } else {
-        tc->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode: "));
+        tc->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode (<b>Enter</b> to finish): "));
     }
 }
 
@@ -834,14 +834,14 @@ sp_text_context_root_handler(SPEventContext *const ec, GdkEvent *const event)
                                 break;
                             case GDK_U:
                             case GDK_u:
-                                if (MOD__CTRL_ONLY) {
+                                if (MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT)) {
                                     if (tc->unimode) {
                                         tc->unimode = false;
                                         ec->defaultMessageContext()->clear();
                                     } else {
                                         tc->unimode = true;
                                         tc->unipos = 0;
-                                        ec->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode: "));
+                                        ec->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("Unicode (<b>Enter</b> to finish): "));
                                     }
                                     if (tc->imc) {
                                         gtk_im_context_reset(tc->imc);
