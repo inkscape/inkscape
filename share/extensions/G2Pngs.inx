@@ -1,0 +1,22 @@
+<inkscape-extension>
+    <_name>Groups to Pngs</_name>
+    <id>org.ekips.filter.G2Pngs</id>
+	<dependency type="extension">org.inkscape.output.svg.inkscape</dependency>
+	<dependency type="executable" location="extensions">G2Pngs.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+        <param name="directory" type="string" _gui-text="Directory">/home/</param>
+        <param name="layers" type="boolean" _gui-text="Save layers only"></param>
+    <effect>
+                <extension>.png</extension>
+                <mimetype>application/x-png</mimetype>
+                <_filetypename>Export each group to a png</_filetypename>
+                <_filetypetooltip>Export each group to a png</_filetypetooltip>
+                <dataloss>TRUE</dataloss>
+                <effects-menu>
+                    <submenu _name="Recursive actions"/>
+                </effects-menu>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">G2Pngs.py</command>
+    </script>
+</inkscape-extension>
