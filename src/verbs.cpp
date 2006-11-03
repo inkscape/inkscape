@@ -1535,6 +1535,9 @@ ZoomVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_VIEW_MODE_OUTLINE:
             dt->setDisplayModeOutline();
             break;
+        case SP_VERB_VIEW_MODE_TOGGLE:
+            dt->displayModeToggle();
+            break;
         case SP_VERB_VIEW_ICON_PREVIEW:
             show_panel( Inkscape::UI::Dialogs::IconPreviewPanel::getInstance(), "dialogs.iconpreview", SP_VERB_VIEW_ICON_PREVIEW );
             break;
@@ -2255,6 +2258,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Switch to normal display mode"), NULL),
     new ZoomVerb(SP_VERB_VIEW_MODE_OUTLINE, "ViewModeOutline", N_("_Outline"),
                  N_("Switch to outline (wireframe) display mode"), NULL),
+    new ZoomVerb(SP_VERB_VIEW_MODE_TOGGLE, "ViewModeToggle", N_("Toggle Display Mode"),
+                 N_("Toggle between normal and outline display modes"), NULL),
 
     new ZoomVerb(SP_VERB_VIEW_ICON_PREVIEW, "ViewIconPreview", N_("Ico_n Preview..."),
                  N_("Open a window to preview objects at different icon resolutions"), "view_icon_preview"),

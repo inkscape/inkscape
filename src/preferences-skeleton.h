@@ -194,6 +194,8 @@ static char const preferences_skeleton[] =
 "    <group id=\"compassangledisplay\" value=\"0\"/>\n"
 "    <group id=\"maskobject\" topmost=\"1\" remove=\"1\"/>\n"
 "    <group id=\"blurquality\" value=\"0\"/>\n"
+"    <group id=\"startmode\" outline=\"0\"/>\n"
+"    <group id=\"outlinemode\" value=\"0\"/>\n"
 "    <group id=\"wireframecolors\" "
 "           onlight=\"255\"" // 000000ff
 "           ondark=\"4294967295\"" //ffffffff

@@ -190,12 +190,10 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas)
 
     if (prefs_get_int_attribute("options.startmode", "outline", 0)) {
         // Start in outline mode
-        SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_OUTLINE;
-        canvas->rendermode = RENDERMODE_OUTLINE; // canvas needs that for choosing the best buffer size
+        setDisplayModeOutline();
     } else {
         // Start in normal mode, default
-        SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_NORMAL;
-        canvas->rendermode = RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
+        setDisplayModeNormal();
     }
 
     grid = (SPCanvasGroup *) sp_canvas_item_new (main, SP_TYPE_CANVAS_GROUP, NULL);
@@ -347,6 +345,7 @@ SPDesktop::~SPDesktop() {}
 
 void SPDesktop::setDisplayModeNormal()
 {
+    prefs_set_int_attribute("options.outlinemode", "value", 0);
     SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_NORMAL;
     canvas->rendermode = RENDERMODE_NORMAL; // canvas needs that for choosing the best buffer size
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
@@ -354,9 +353,18 @@ void SPDesktop::setDisplayModeNormal()
 
 void SPDesktop::setDisplayModeOutline()
 {
+    prefs_set_int_attribute("options.outlinemode", "value", 1);
     SP_CANVAS_ARENA (drawing)->arena->rendermode = RENDERMODE_OUTLINE;
     canvas->rendermode = RENDERMODE_OUTLINE; // canvas needs that for choosing the best buffer size
     sp_canvas_item_affine_absolute (SP_CANVAS_ITEM (main), _d2w); // redraw
+}
+
+void SPDesktop::displayModeToggle()
+{
+    if (prefs_get_int_attribute("options.outlinemode", "value", prefs_get_int_attribute("options.startmode", "outline", 0)))
+        setDisplayModeNormal();
+    else 
+        setDisplayModeOutline();
 }
 
 /**
