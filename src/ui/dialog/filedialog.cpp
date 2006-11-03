@@ -624,6 +624,10 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
     gchar *fName = (gchar *)fileName.c_str();
     //g_message("fname:%s\n", fName);
 
+    if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
+        showNoPreview();
+        return false;
+    }
 
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR))
         {
@@ -646,23 +650,18 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
 
     if ((dialogType == SVG_TYPES || dialogType == IMPORT_TYPES) &&
            (hasSuffix(fileName, svg) || hasSuffix(fileName, svgz)   )
-         )
-        {
+        ) {
         bool retval = setFileName(fileName);
         showingNoPreview = false;
         return retval;
-        }
-    else if (isValidImageFile(fileName))
-        {
+    } else if (isValidImageFile(fileName)) {
         showImage(fileName);
         showingNoPreview = false;
         return true;
-        }
-    else
-        {
+    } else {
         showNoPreview();
         return false;
-        }
+    }
 }
 
 
