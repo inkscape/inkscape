@@ -37,6 +37,7 @@
 #include "prefs-utils.h"
 #include "file.h"
 #include "display/canvas-arena.h"
+#include "display/nr-arena.h"
 #include <extension/db.h>
 #include "helper/units.h"
 #include "widgets/button.h"
@@ -387,9 +388,17 @@ SPDesktopWidget::updateTitle(gchar const* uri)
                                : g_basename(uri) );
         GString *name = g_string_new ("");
         if (this->desktop->number > 1) {
-            g_string_printf (name, _("%s: %d - Inkscape"), fname, this->desktop->number);
+            if (this->desktop->getMode() == RENDERMODE_OUTLINE) {
+                g_string_printf (name, _("%s: %d (outline) - Inkscape"), fname, this->desktop->number);
+            } else {
+                g_string_printf (name, _("%s: %d - Inkscape"), fname, this->desktop->number);
+            }
         } else {
-            g_string_printf (name, _("%s - Inkscape"), fname);
+            if (this->desktop->getMode() == RENDERMODE_OUTLINE) {
+                g_string_printf (name, _("%s (outline) - Inkscape"), fname);
+            } else {
+                g_string_printf (name, _("%s - Inkscape"), fname);
+            }
         }
         gtk_window_set_title (window, name->str);
         g_string_free (name, TRUE);
