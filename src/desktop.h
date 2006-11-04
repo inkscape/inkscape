@@ -162,6 +162,8 @@ struct SPDesktop : public Inkscape::UI::View::View
     void setDisplayModeNormal();
     void setDisplayModeOutline();
     void displayModeToggle();
+    int displayMode;
+    int getMode() const { return displayMode; }
 
     void set_active (bool new_active);
     SPObject *currentRoot() const;
