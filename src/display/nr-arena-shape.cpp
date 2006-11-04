@@ -494,9 +494,13 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
         ((shape->_stroke.paint.type() != NRArenaShape::Paint::NONE) &&
          ( fabs(shape->_stroke.width * scale) > 0.01 ))) { // sinon c'est 0=oon veut pas de bord
 
-        float width = MAX(0.125, shape->_stroke.width * scale);
-        if (outline)
+        float style_width = MAX(0.125, shape->_stroke.width * scale);
+        float width;
+        if (outline) {
             width = 0.5; // 1 pixel wide, independent of zoom
+        } else {
+            width = style_width;
+        }
 
         NR::Matrix  cached_to_new = NR::identity();
 
@@ -510,6 +514,10 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             }
             if (0 != isometry && !is_inner_area(shape->cached_sarea, *area))
                 isometry = 0;
+            if (0 != isometry && width != shape->cached_width) { 
+                // if this happens without setting style, we have just switched to outline or back
+                isometry = 0; 
+            } 
         }
 
         if ( isometry == 0 ) {
@@ -581,6 +589,8 @@ nr_arena_shape_update_stroke(NRArenaShape *shape,NRGC* gc, NRRectL *area)
             } else {
                 shape->cached_stroke->ConvertToShape(theShape, fill_nonZero);
             }
+
+            shape->cached_width = width;
 
             shape->cached_sctm=gc->transform;
             shape->cached_sarea = *area;

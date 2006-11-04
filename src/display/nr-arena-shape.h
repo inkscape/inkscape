@@ -122,6 +122,8 @@ struct NRArenaShape : public NRArenaItem {
 	// the 2 cached polygons, for rasterizations uses
 	Shape *fill_shp;
 	Shape *stroke_shp;
+	// the stroke width of stroke_shp, to detect when it changes (on normal/outline switching) and rebuild
+	float cached_width; 
 	// delayed_shp=true means the *_shp polygons are not computed yet
 	// they'll be computed on demand in *_render(), *_pick() or *_clip()
 	// the goal is to not uncross polygons that are outside the viewing region
