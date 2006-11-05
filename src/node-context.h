@@ -24,6 +24,10 @@ namespace Inkscape { class Selection; }
 #define SP_IS_NODE_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), SP_TYPE_NODE_CONTEXT))
 #define SP_IS_NODE_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), SP_TYPE_NODE_CONTEXT))
 
+enum { SP_NODE_CONTEXT_INACTIVE,
+       SP_NODE_CONTEXT_NODE_DRAGGING,
+       SP_NODE_CONTEXT_RUBBERBAND_DRAGGING };
+
 class SPNodeContext;
 class SPNodeContextClass;
 
@@ -54,6 +58,8 @@ struct SPNodeContext {
 	bool cursor_drag;
 
 	bool added_node;
+  
+  unsigned int current_state;
 };
 
 struct SPNodeContextClass {

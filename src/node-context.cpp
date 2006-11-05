@@ -105,7 +105,7 @@ sp_node_context_init(SPNodeContext *node_context)
     node_context->rightalt = FALSE;
     node_context->leftctrl = FALSE;
     node_context->rightctrl = FALSE;
-
+    
     new (&node_context->sel_changed_connection) sigc::connection();
 }
 
@@ -172,6 +172,8 @@ sp_node_context_setup(SPEventContext *ec)
     nc->cursor_drag = false;
 
     nc->added_node = false;
+
+    nc->current_state = SP_NODE_CONTEXT_INACTIVE;
 
     if (item) {
         nc->nodepath = sp_nodepath_new(ec->desktop, item, (prefs_get_int_attribute("tools.nodes", "show_handles", 1) != 0));
@@ -547,6 +549,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                          event->button.y);
                 NR::Point const button_dt(desktop->w2d(button_w));
                 Inkscape::Rubberband::get()->start(desktop, button_dt);
+                nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                 desktop->updateNow();
                 ret = TRUE;
             }
@@ -559,34 +562,51 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                      && ( abs( (gint) event->motion.y - event_context->yp ) < event_context->tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
-                
+
                 // The path went away while dragging; throw away any further motion
                 // events until the mouse pointer is released.
                 if (nc->hit && (nc->nodepath == NULL)) {                  
                   break;
                 }
-                
+
                 // Once the user has moved farther than tolerance from the original location
                 // (indicating they intend to move the object, not click), then always process the
                 // motion notify coordinates as given (no snapping back to origin)
                 event_context->within_tolerance = false;
 
-                if (nc->nodepath && nc->hit) {
-                    NR::Point const delta_w(event->motion.x - nc->curvepoint_event[NR::X],
-                                         event->motion.y - nc->curvepoint_event[NR::Y]);
-                    NR::Point const delta_dt(desktop->w2d(delta_w));
-                    sp_nodepath_curve_drag (nc->grab_node, nc->grab_t, delta_dt);
-                    nc->curvepoint_event[NR::X] = (gint) event->motion.x;
-                    nc->curvepoint_event[NR::Y] = (gint) event->motion.y;
-                    gobble_motion_events(GDK_BUTTON1_MASK);
-                } else {
-                    if (Inkscape::Rubberband::get()->is_started()) {
-                        NR::Point const motion_w(event->motion.x,
-                                            event->motion.y);
-                        NR::Point const motion_dt(desktop->w2d(motion_w));
-                        Inkscape::Rubberband::get()->move(motion_dt);
+                // Once we determine what the user is doing (dragging either a node or the
+                // selection rubberband), make sure we continue to perform that operation
+                // until the mouse pointer is lifted.
+                if (nc->current_state == SP_NODE_CONTEXT_INACTIVE) {
+                    if (nc->nodepath && nc->hit) {
+                        nc->current_state = SP_NODE_CONTEXT_NODE_DRAGGING;
+                    } else {
+                        nc->current_state = SP_NODE_CONTEXT_RUBBERBAND_DRAGGING;
                     }
                 }
+
+                switch (nc->current_state) {
+                    case SP_NODE_CONTEXT_NODE_DRAGGING:
+                        {
+                            NR::Point const delta_w(event->motion.x - nc->curvepoint_event[NR::X],
+                                                event->motion.y - nc->curvepoint_event[NR::Y]);
+                            NR::Point const delta_dt(desktop->w2d(delta_w));
+                            sp_nodepath_curve_drag (nc->grab_node, nc->grab_t, delta_dt);
+                            nc->curvepoint_event[NR::X] = (gint) event->motion.x;
+                            nc->curvepoint_event[NR::Y] = (gint) event->motion.y;
+                            gobble_motion_events(GDK_BUTTON1_MASK);
+                            break;
+                        }
+                    case SP_NODE_CONTEXT_RUBBERBAND_DRAGGING:
+                        if (Inkscape::Rubberband::get()->is_started()) {
+                            NR::Point const motion_w(event->motion.x,
+                                                event->motion.y);
+                            NR::Point const motion_dt(desktop->w2d(motion_w));
+                            Inkscape::Rubberband::get()->move(motion_dt);
+                        }
+                        break;
+                }
+
                 nc->drag = TRUE;
                 ret = TRUE;
             } else {
@@ -644,6 +664,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 nc->rb_escaped = false;
                 nc->drag = FALSE;
                 nc->hit = false;
+                nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                 break;
             }
             break;
@@ -808,6 +829,7 @@ sp_node_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     NR::Maybe<NR::Rect> const b = Inkscape::Rubberband::get()->getRectangle();
                     if (b != NR::Nothing()) {
                         Inkscape::Rubberband::get()->stop();
+                        nc->current_state = SP_NODE_CONTEXT_INACTIVE;
                         nc->rb_escaped = true;
                     } else {
                         if (nc->nodepath && nc->nodepath->selected) {
