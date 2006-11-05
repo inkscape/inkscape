@@ -231,26 +231,34 @@ nr_arena_image_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigne
 		thePath->Reset ();
 
 		thePath->MoveTo (image->c00);
+		// the box
 		thePath->LineTo (image->c10);
 		thePath->LineTo (image->c11);
 		thePath->LineTo (image->c01);
 		thePath->LineTo (image->c00);
+		// the diagonals
+		thePath->LineTo (image->c11);
+		thePath->MoveTo (image->c10);
+		thePath->LineTo (image->c01);
 
+		// livarot black magic - exactly this sequnce of conversions to get stable rendering of the shape
 		thePath->Convert(1.0);
-
 		Shape* theShape = new Shape;
 		thePath->Stroke(theShape, true, 0.25, join_pointy, butt_straight, 5);
+		Shape* theShape1 = new Shape;
+		theShape1->ConvertToShape(theShape, fill_nonZero);
 
 		NRPixBlock m;
 		nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
 		m.visible_area = pb->visible_area; 
-		nr_pixblock_render_shape_mask_or(m, theShape);
+		nr_pixblock_render_shape_mask_or(m, theShape1);
 		m.empty = FALSE;
 		guint32 rgba = prefs_get_int_attribute("options.wireframecolors", "images", 0xff0000ff);
 		nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
 		pb->empty = FALSE;
 		nr_pixblock_release(&m);
 		delete theShape;
+		delete theShape1;
 		delete thePath;
 	}
 
