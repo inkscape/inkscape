@@ -28,7 +28,7 @@ PKG_CONFIG_PATH=/usr/local/src/inkscape/extra/static/lib/pkgconfig:/usr/local/li
 CPPFLAGS="-I/usr/local/src/inkscape/extra/static/include"
 LDFLAGS="-L/usr/local/src/inkscape/extra/static/lib"
 export PATH PKG_CONFIG_PATH CPPFLAGS LDFLAGS
-prepareBuild --enable-binreloc --with-gnome-vfs=no --enable-lcms
+prepareBuild --enable-binreloc --with-gnome-vfs=no --enable-lcms --enable-inkboard
 
 [BuildUnprepare]
 unprepareBuild
