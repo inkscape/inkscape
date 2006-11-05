@@ -51,15 +51,13 @@ Shape::~Shape (void)
 
 void Shape::Affiche(void)
 {
-  /*
-  printf("sh=%p nbPt=%i nbAr=%i\n",this,nbPt,nbAr); // localizing ok
-  for (int i=0;i<nbPt;i++) {
-    printf("pt %i : x=(%f %f) dI=%i dO=%i\n",i,pts[i].x[0],pts[i].x[1],pts[i].dI,pts[i].dO); // localizing ok
+  printf("sh=%p nbPt=%i nbAr=%i\n",this, _pts.size(), _aretes.size()); // localizing ok
+  for (unsigned int i=0; i<_pts.size(); i++) {
+    printf("pt %i : x=(%f %f) dI=%i dO=%i\n",i, _pts[i].x[0], _pts[i].x[1], _pts[i].dI, _pts[i].dO); // localizing ok
   }
-  for (int i=0;i<nbAr;i++) {
-    printf("ar %i : dx=(%f %f) st=%i en=%i\n",i,aretes[i].dx[0],aretes[i].dx[1],aretes[i].st,aretes[i].en); // localizing ok
+  for (unsigned int i=0; i<_aretes.size(); i++) {
+    printf("ar %i : dx=(%f %f) st=%i en=%i\n",i, _aretes[i].dx[0], _aretes[i].dx[1], _aretes[i].st, _aretes[i].en); // localizing ok
   }
-  */
 }
 
 /**
