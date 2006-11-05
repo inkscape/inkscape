@@ -479,10 +479,12 @@ Section -removeInkscape
   Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
   RMDir  "$SMPROGRAMS\Inkscape"
+  Delete "$SMPROGRAMS\Inkscape.lnk"
   SetShellVarContext all
   Delete "$SMPROGRAMS\Inkscape\Uninstall Inkscape.lnk"
   Delete "$SMPROGRAMS\Inkscape\Inkscape.lnk"
   RMDir  "$SMPROGRAMS\Inkscape"
+  Delete "$SMPROGRAMS\Inkscape.lnk"
   
 SectionEnd
 
@@ -551,16 +553,14 @@ SectionEnd
 
 SectionGroup $(lng_Shortcuts) SecShortcuts
 
-Section $(lng_Desktop) SecDesktop
-  SectionIn 1 2 3
+Section /o $(lng_Desktop) SecDesktop
   ClearErrors
   CreateShortCut "$DESKTOP\Inkscape.lnk" "$INSTDIR\inkscape.exe"
   IfErrors 0 +2
     DetailPrint "Uups! Problems creating desktop shortcuts"
 SectionEnd
 
-Section $(lng_Quicklaunch) SecQuicklaunch
-  SectionIn 1 2 3
+Section /o $(lng_Quicklaunch) SecQuicklaunch
   ClearErrors
   StrCmp $QUICKLAUNCH $TEMP +2
     CreateShortCut "$QUICKLAUNCH\Inkscape.lnk" "$INSTDIR\inkscape.exe"
