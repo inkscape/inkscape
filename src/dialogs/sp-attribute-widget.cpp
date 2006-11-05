@@ -577,7 +577,7 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
         spat->num_attr = num_attr;
 
         spat->modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), spat));
-        spat->modified_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), spat));
+        spat->release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), spat));
 
         /* Create table */
         spat->table = gtk_table_new (num_attr, 2, FALSE);
