@@ -1,5 +1,5 @@
-# translation of ja.po to Japanese
-# Inkscape ja.po.
+# Translation of Inkscape to Japanese.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2000-2001, 2004, 2005 Free Software Foundation, Inc.
 # Yukihiro Nakai <nakai@gnome.gr.jp>, 2000, 2003.
 # Takeshi Aihana <aihana@muc.biglobe.ne.jp>, 2000-2001.
@@ -18,10 +18,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: ja\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2005-11-16 00:21+0900\n"
+"PO-Revision-Date: 2006-11-05 18:37+0100\n"
 "Last-Translator: shivaken <shivaken@owls-nest.net>\n"
 "Language-Team: Japanese <shivaken@owls-nest.net>\n"
 "MIME-Version: 1.0\n"

@@ -1,8 +1,9 @@
 # Inkscape translation to Catalan.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright © 2000-2006 Free Software Foundation, Inc.
 # Quico Llach <quico@softcatala.org>, 2000. Traducció sodipodi.
 # Francesc Dorca <f.dorca@filnet.es>, 2003. Traducció sodipodi.
-# Xavier Conde Rueda <xavi.conde@gmail.com>, 2004-2006
+# Xavier Conde Rueda <xavi.conde@gmail.com>, 2004-2006.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-09-27 13:32+0200\n"
+"PO-Revision-Date: 2006-11-05 18:36+0100\n"
 "Last-Translator: Xavier Conde Rueda <xavi.conde@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"

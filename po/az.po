@@ -1,17 +1,17 @@
-# sodipodi.HEAD.az.po faylının Azərbaycan Dilinə tərcüməsi
-# sodipodi.HEAD.az.po faylının Azərbaycan dilinə tərcüməsi
+# Inkscape faylının Azərbaycan dilinə tərcüməsi
+# This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2003 Free Software Foundation, Inc.
-# Mətin Əmirov <metin@karegen.com>, 2003
+# Mətin Əmirov <metin@karegen.com>, 2003.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi.HEAD.az\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2003-10-23 19:23+0300\n"
+"PO-Revision-Date: 2006-11-05 18:36+0100\n"
 "Last-Translator: Mətin Əmirov <metin@karegen.com>\n"
 "Language-Team: Azərbaycan Dili <gnome@azətt.com>\n"
 "MIME-Version: 1.0\n"

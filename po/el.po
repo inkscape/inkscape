@@ -1,5 +1,6 @@
 # Greek translation for Inkscape.
-# Copyright (C) 2001,2006 Free Software Foundation.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2001, 2006 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001.
 # Spyros Blanas <cid_e@users.sourceforge.net>, 2006.
 #
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-06-03 12:53+0200\n"
+"PO-Revision-Date: 2006-11-05 18:36+0100\n"
 "Last-Translator: Spyros Blanas <cid_e@users.sourceforge.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"

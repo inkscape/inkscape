@@ -1,18 +1,17 @@
 # Translations into the Amharic Language.
 # Copyright (C) 2002 Free Software Foundation, Inc.
-# This file is distributed under the same license as the sodipodi package.
+# This file is distributed under the same license as the Inkscape package.
 # Ge'ez Frontier Foundation <locales@geez.org>, 2002.
-#
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2003-02-01 10:13+EDT\n"
+"PO-Revision-Date: 2006-11-05 18:10+0100\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"

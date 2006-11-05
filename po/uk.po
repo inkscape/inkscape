@@ -1,8 +1,9 @@
-# Ukrainian translation of inkscape.
+# Ukrainian translation of Inkscape.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
-# Maxim Dziumanenko <mvd@mylinux.com.ua>, 2004-2005
-# Alex <pilipchukap@rambler.ru>, 2005
+# Maxim Dziumanenko <mvd@mylinux.com.ua>, 2004-2005.
+# Alex <pilipchukap@rambler.ru>, 2005.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2005-10-21 13:33+0300\n"
+"PO-Revision-Date: 2006-11-05 18:41+0100\n"
 "Last-Translator: Maxim V. Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"

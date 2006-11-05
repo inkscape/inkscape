@@ -1,7 +1,8 @@
 # Vietnamese translation for Inkscape.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright © 2006 Free Software Foundation, Inc.
 # Clytie Siddall <clytie@riverland.net.au>, 2006.
-# 
+#
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: inkscape TRUNK\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-08-10 14:20+0930\n"
+"PO-Revision-Date: 2006-11-05 18:42+0100\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>>\n"
 "MIME-Version: 1.0\n"

@@ -1,21 +1,21 @@
-# translation of inkscape to Spanish
-# Copyright (C) 2000,2003,2004 Free Software Foundation, Inc.
-# Traducido por Jose Antonio Salgueiro <developer@telefonica.net>. Agradecimientos: zert, softcatala
-# 2002-2003
-# Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003
-# Francisco Javier F. Serrador <serrador@arrakis.es>, 2003
-# Lucas Vieites <lucas@asixinformatica.com>, 2003
-# Daniel Díaz <yosoy@danieldiaz.org>, 2004
+# Translation of Inkscape to Mexican Spanish.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2000, 2003, 2004 Free Software Foundation, Inc.
+# Traducido por Jose Antonio Salgueiro <developer@telefonica.net>. Agradecimientos: zert, softcatala, 2002-2003
+# Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003.
+# Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
+# Lucas Vieites <lucas@asixinformatica.com>, 2003.
+# Daniel Díaz <yosoy@danieldiaz.org>, 2004.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape.HEAD.es\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2004-04-05 01:29-0600\n"
+"PO-Revision-Date: 2006-11-05 18:37+0100\n"
 "Last-Translator: Daniel Díaz <yosoy@danieldiaz.org>\n"
 "Language-Team: none <none>\n"
 "MIME-Version: 1.0\n"

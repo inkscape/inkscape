@@ -1,6 +1,6 @@
-# Translation of nn to Norwegian Nynorsk
 # Norwegian Nynorsk translation of Inkscape.
 # Omsetjing av Inkscape til nynorsk.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright © 2004 Karl Ove Hufthammer.
 #
 # Merk: Alle statuslinjemeldingar skal slutta på «.» på nynorsk,
@@ -13,10 +13,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: nn\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-04-30 19:00+0200\n"
+"PO-Revision-Date: 2006-11-05 18:13+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"

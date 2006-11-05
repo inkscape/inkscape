@@ -1,18 +1,19 @@
 # Dutch translation of Inkscape.
-# Copyright (C) 2003 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2003-2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Inkscape package.
 # Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>, 2003.
 # Jeroen van der Vegt <ajvdvegt (at) 123mail.org>, 2003, 2005.
+# Ruud Steltenpool <svg@steltenpower.com>, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkscape cvs\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-09-01 07:04+0100\n"
+"PO-Revision-Date: 2006-11-05 17:57+0100\n"
 "Last-Translator: Ruud Steltenpool <svg@steltenpower.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"

@@ -8,10 +8,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.44\n"
+"Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-08-17 00:49+0200\n"
+"PO-Revision-Date: 2006-11-05 18:17+0100\n"
 "Last-Translator: Kingsley Turner <kingsley@maddogsbreakfast.com.au>\n"
 "Language-Team: en_GB <en_gb@li.org>\n"
 "MIME-Version: 1.0\n"

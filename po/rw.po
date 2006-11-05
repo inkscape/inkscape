@@ -1,31 +1,22 @@
-# translation of sodipodi to Kinyarwanda.
+# Translation of Inkscape to Kinyarwanda.
 # Copyright (C) 2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the sodipodi package.
-# Steve Murphy <murf@e-tools.com>, 2005
-# Steve performed initial rough translation from compendium built from translations provided by the following translators:
-# Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
-# Viateur MUGENZI <muvia1@yahoo.fr>, 2005.
-# Noëlla Mupole <s24211045@tuks.co.za>, 2005.
-# Carole Karema <karemacarole@hotmail.com>, 2005.
-# JEAN BAPTISTE NGENDAHAYO <ngenda_denis@yahoo.co.uk>, 2005.
-# Augustin KIBERWA  <akiberwa@yahoo.co.uk>, 2005.
-# Donatien NSENGIYUMVA <ndonatienuk@yahoo.co.uk>, 2005..
+# This file is distributed under the same license as the Inkscape package.
+# Steve Murphy <murf@e-tools.com>, 2005.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi HEAD\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2005-03-31 20:55-0700\n"
+"PO-Revision-Date: 2006-11-05 18:09+0100\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"ULL NAME <EMAIL@ADDRESS>\n"
 
 #: ../inkscape.desktop.in.h:1
 #, fuzzy

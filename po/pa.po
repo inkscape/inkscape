@@ -1,6 +1,6 @@
-# translation of pa.po to Punjabi
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Translation of Inkscape to Punjabi.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2003-2006 Free Software Foundation, Inc.
 # Amanpreet Singh Brar Alamwalia <apbrar@gmail.com>, 2005.
 # Amanpreet Singh Brar <amanpreetalam@yahoo.com>, 2005.
 #
@@ -9,10 +9,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: pa\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2005-09-11 18:09+0530\n"
+"PO-Revision-Date: 2006-11-05 17:58+0100\n"
 "Last-Translator: Amanpreet Singh Brar <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
 "MIME-Version: 1.0\n"

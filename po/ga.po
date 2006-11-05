@@ -1,5 +1,6 @@
-# Irish language translation of sodipodi
-# Copyright (C) 2000,2004 Free Software Foundation, Inc.
+# Irish language translation of Inkscape.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2000, 2004 Free Software Foundation, Inc.
 # Alastair McKinstry <mckinstry@computer.org>, 2000.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
@@ -7,10 +8,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi 0.24\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2004-02-03 08:18+0000\n"
+"PO-Revision-Date: 2006-11-05 18:37+0100\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"

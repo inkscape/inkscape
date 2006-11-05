@@ -1,4 +1,5 @@
 # French translation of Inkscape.
+# This file is distributed under the same license as the Inkscape package.
 #
 # Please see http://live.gnome.org/GnomeFr/Traduire for translation guidelines.
 #
@@ -15,10 +16,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-07-26 17:04+0100\n"
+"PO-Revision-Date: 2006-11-05 18:22+0100\n"
 "Last-Translator: matiphas <matiphas@free.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"

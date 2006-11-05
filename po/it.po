@@ -11,10 +11,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.44\n"
+"Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-06-01 15:26+0200\n"
+"PO-Revision-Date: 2006-11-05 18:27+0100\n"
 "Last-Translator: Luca Bruno <luca.br@uno.it>>\n"
 "Language-Team:  Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"

@@ -2,15 +2,16 @@
 # Copyright (C) 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the inkscape package.
 # Riku Leino <tsoots@gmail.com>, 2006.
+#
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkscape\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-08-12 10:11+0300\n"
+"PO-Revision-Date: 2006-11-05 18:22+0100\n"
 "Last-Translator: Riku Leino <tsoots@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"

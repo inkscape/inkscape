@@ -1,18 +1,18 @@
-# English/Canada translation of sodipodi.
+# English/Canada translation of Inkscape.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
-# This file is distributed under the same licence as the sodipodi package.
 # Adam Weinberger <adamw@gnome.org>, 2004.
-# 
-# 
+#
+#
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2004-09-12 19:54-0400\n"
+"PO-Revision-Date: 2006-11-05 18:35+0100\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"

@@ -1,8 +1,8 @@
-# Traditional Chinese Messages for inkscape
-# Copyright (C) 2004, 06 Free Software Foundation, Inc.
-# This file is distributed under the same license as the inkscape package.
-# tad <tad@mail.tnc.edu.tw>, 2004
-# Wei-Lun Chao <william.chao@ossii.com.tw>, 2006
+# Traditional Chinese Messages for Inkscape.
+# Copyright (C) 2004, 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Inkscape package.
+# tad <tad@mail.tnc.edu.tw>, 2004.
+# Wei-Lun Chao <william.chao@ossii.com.tw>, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.44\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-06-06 16:34+0800\n"
+"PO-Revision-Date: 2006-11-05 18:06+0100\n"
 "Last-Translator: Wei-Lun Chao <william.chao@ossii.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"

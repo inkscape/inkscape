@@ -1,11 +1,9 @@
-# translation of inkscape.po to Nepali
-# translation of inkscape.po to
-# Nepali translations for PACKAGE package.
-# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Nepali translation for the Inkscape package.
+# Copyright (C) 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the Inkscape package.
 # Morphix User <pchitrakar@gmail.com>, 2006.
 # Shyam Krishna Bal <shyamkrishna_bal@yahoo.com>, 2006.
-# Mahesh subedi <submanesh@hotmail.com>, 2006.
+# Mahesh Subedi <submanesh@hotmail.com>, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
@@ -15,7 +13,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-07-27 18:06+0545\n"
+"PO-Revision-Date: 2006-11-05 17:47+0100\n"
 "Last-Translator: Mahesh subedi <submanesh@hotmail.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
 "MIME-Version: 1.0\n"

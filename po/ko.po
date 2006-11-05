@@ -1,18 +1,17 @@
 # Korean translation of Inkscape.
-# Copyright (C) 2006 THE Inkscape'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Inkscape package.
-# Kitae Kim<bluetux@gmail.com>, 2006.
-# 
-# 
+# Copyright (C) 2006 Free Software Foundation, Inc.
+# Kitae Kim <bluetux@gmail.com>, 2006.
+#
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: Inkscape VERSION\n"
+"Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-06-02 14:26+0900\n"
+"PO-Revision-Date: 2006-11-05 17:52+0100\n"
 "Last-Translator: Kitae <bluetux@gmail.com>\n"
 "Language-Team:  <linuxaz@azerimal.net>\n"
 "MIME-Version: 1.0\n"

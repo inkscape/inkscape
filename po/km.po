@@ -1,18 +1,19 @@
 # Khmer translation for Inkscape.
+# This file is distributed under the same license as the Inkscape package.
 # Copyright © 2006 Free Software Foundation, Inc.
-#: ../src/widgets/toolbox.cpp:3694 ../src/widgets/toolbox.cpp:3715
-#: ../src/widgets/toolbox.cpp:3744 ../src/widgets/toolbox.cpp:3765
-#: ../src/widgets/toolbox.cpp:3792
 # Poch Sokun  <sokun_poch@khmeros.info>, 2006.
 # Auk Piseth <piseth_dv@khmeros.info>, 2006.
 # Khoem Sokhem <khoemsokhem@khmeros.info>, 2006.
 #
+#: ../src/widgets/toolbox.cpp:3694 ../src/widgets/toolbox.cpp:3715
+#: ../src/widgets/toolbox.cpp:3744 ../src/widgets/toolbox.cpp:3765
+#: ../src/widgets/toolbox.cpp:3792
 msgid ""
 msgstr ""
-"Project-Id-Version: km\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-10 18:22-0500\n"
-"PO-Revision-Date: 2006-10-18 09:30+0700\n"
+"PO-Revision-Date: 2006-11-05 18:29+0100\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"

@@ -1,6 +1,6 @@
-# translation of sodipodi.HEAD.po to Albanian
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Translation of Inkscape to Albanian.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2000-2006 Free Software Foundation, Inc.
 # Laurent Dhima <laurenti@alblinux.net>, 2004.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
@@ -8,10 +8,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi.HEAD\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2004-07-05 19:30+0200\n"
+"PO-Revision-Date: 2006-11-05 18:03+0100\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"

@@ -1,22 +1,21 @@
-# translation of es.po to Español
-# translation of es.po to
-# Copyright (C) 2000,2003, 2005, 2006 Free Software Foundation, Inc.
+# Translation of Inkscape to Spanish.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2000, 2003, 2005, 2006 Free Software Foundation, Inc.
 # Traducido por Jose Antonio Salgueiro <developer@telefonica.net>.
 # Agradecimientos: zert, softcatala, 2002-2003
 # Jose Antonio Salgueiro Aquino <developer@telefonica.net>, 2003.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
-# Lucas Vieites Fariña<lucas@asixinformatica.com>, 2003-2005, 2006.
-#
+# Lucas Vieites Fariña <lucas@asixinformatica.com>, 2003-2005, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3725 ../src/widgets/toolbox.cpp:3746
 #: ../src/widgets/toolbox.cpp:3775 ../src/widgets/toolbox.cpp:3796
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 20:47+0200\n"
-"PO-Revision-Date: 2006-11-03 23:22+0100\n"
+"PO-Revision-Date: 2006-11-05 18:37+0100\n"
 "Last-Translator: Lucas Vieites <lucas@asixinformatica.com>\n"
 "Language-Team: Español <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"

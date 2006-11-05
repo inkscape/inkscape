@@ -1,10 +1,8 @@
-# translation of sv.po to Svenska
-# Swedish messages for Inkscape.
-# Copyright (C) 2000, 2001, 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
-#
-# $Id$
+# Translation of Inkscape to Swedish.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2000-2006 Free Software Foundation, Inc.
 # Andreas Hyden <a.hyden@cyberpoint.se>, 2000.
-# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
+# Christian Rose <menthos@menthos.com>, 2000-2003.
 # Mattias Hultgren <mattias_hultgren@tele2.se>, 2005, 2006.
 # Henrik Larsson <henrik.p.larsson@gmail.com>, 2006.
 #
@@ -13,12 +11,12 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sv\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-06-04 20:11+0200\n"
+"PO-Revision-Date: 2006-11-05 18:05+0100\n"
 "Last-Translator: Henrik Larsson <henrik.p.larsson@gmail.com>\n"
-"Language-Team: Svenska <C@li.org>\n"
+"Language-Team: Svenska <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

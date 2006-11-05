@@ -1,4 +1,5 @@
 # Norwegian translation of Inkscape (bokmål dialect).
+# This file is distributed under the same license as the Inkscape package.
 # Copyright © 2000-2002 Free Software Foundation, Inc.
 # Kjartan Maraas <kmaraas@gnome.org>, 2000-2002.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2006-09-14 13:46+0100\n"
+"PO-Revision-Date: 2006-11-05 18:37+0100\n"
 "Last-Translator: Steinar H. Gunderson <sesse@debian.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"

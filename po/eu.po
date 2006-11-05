@@ -1,11 +1,7 @@
-# translation of eu.po to Basque
-# translation of eu3.po to Basque
-# translation of inkscape.po to Basque
-# translation of inkscape-zuzenduta.po to Basque
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Translation of Inkscape to Basque
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) 2006 Free Software Foundation, Inc.
 # Hizkuntza Politikarako Sailburuordetza <hizkpol@ej-gv.es>, 2005.
-# Iñaki Larrañaga <dooteo@euskalgnu.org>, 2006.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2006.
 #
 #: ../src/widgets/toolbox.cpp:3695 ../src/widgets/toolbox.cpp:3716
@@ -13,10 +9,10 @@
 #: ../src/widgets/toolbox.cpp:3793
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-14 22:31+0200\n"
-"PO-Revision-Date: 2006-06-11 13:50+0000\n"
+"PO-Revision-Date: 2006-11-05 18:21+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"

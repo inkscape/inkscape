@@ -1,9 +1,6 @@
-# translation of sodipodi.po to Mongolian
-# translation of sodipodi.po to
-# translation of sodipodi.po to
-# translation of sodipodi.po to
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Translation of Inkscape to Mongolian.
+# This file is distributed under the same license as the Inkscape package.
+# Copyright (C) Free Software Foundation, Inc.
 # Mungun <d_mungun2000@yahoo.com>, 2004.
 # Sanlig Badral <badral@openmn.org>, 2004.
 #
@@ -12,10 +9,10 @@
 #: ../src/widgets/toolbox.cpp:3823
 msgid ""
 msgstr ""
-"Project-Id-Version: sodipodi\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-09 19:24+0200\n"
-"PO-Revision-Date: 2004-02-14 18:55+0100\n"
+"PO-Revision-Date: 2006-11-05 17:55+0100\n"
 "Last-Translator: Sanlig Badral <badral@openmn.org>\n"
 "Language-Team: Mongolian <openmn-gnome@lists.sf.net>\n"
 "MIME-Version: 1.0\n"

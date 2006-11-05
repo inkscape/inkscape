@@ -1,19 +1,18 @@
 # Bulgarian translation of inkscape.
 # Copyright (C) 2006 Free Software Foundation, Inc.
-# This file is distributed under the same license as the inkscape package.
+# This file is distributed under the same license as the Inkscape package.
 # Alexander Shopov <ash@contact.bg>, 2006.
 # Victor Dachev <vdachev@gmail.com>, 2006.
-# 
-# 
+#
 #: ../src/widgets/toolbox.cpp:4028 ../src/widgets/toolbox.cpp:4049
 #: ../src/widgets/toolbox.cpp:4078 ../src/widgets/toolbox.cpp:4099
 #: ../src/widgets/toolbox.cpp:4126
 msgid ""
 msgstr ""
-"Project-Id-Version: inkscape trunk\n"
+"Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-21 22:07-0700\n"
-"PO-Revision-Date: 2006-10-17 08:48+0300\n"
+"PO-Revision-Date: 2006-11-05 18:15+0100\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
