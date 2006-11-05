@@ -32,6 +32,8 @@ struct NRArenaImage : public NRArenaItem {
 	double x, y;
 	double width, height;
 
+	NR::Point c00, c01, c11, c10; // all 4 corners of the image, for outline mode rect
+
 	/* From GRID to PIXELS */
 	NR::Matrix grid2px;
 

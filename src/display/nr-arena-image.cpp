@@ -13,11 +13,15 @@
  */
 
 #include <libnr/nr-compose-transform.h>
+#include <libnr/nr-blit.h>
 #include "../prefs-utils.h"
 #include "nr-arena-image.h"
 #include "style.h"
+#include "display/nr-arena.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-gaussian.h"
+#include <livarot/Path.h>
+#include <livarot/Shape.h>
 #include "sp-filter.h"
 #include "sp-gaussian-blur.h"
 
@@ -28,6 +32,9 @@ int nr_arena_image_y_sample = 1;
  * NRArenaCanvasImage
  *
  */
+
+// defined in nr-arena-shape.cpp
+void nr_pixblock_render_shape_mask_or(NRPixBlock &m, Shape *theS);
 
 static void nr_arena_image_class_init (NRArenaImageClass *klass);
 static void nr_arena_image_init (NRArenaImage *image);
@@ -137,6 +144,12 @@ nr_arena_image_update (NRArenaItem *item, NRRectL *area, NRGC *gc, unsigned int 
 		bbox.y0 = image->y;
 		bbox.x1 = image->x + image->width;
 		bbox.y1 = image->y + image->height;
+
+		image->c00 = (NR::Point(bbox.x0, bbox.y0) * gc->transform);
+		image->c01 = (NR::Point(bbox.x0, bbox.y1) * gc->transform);
+		image->c10 = (NR::Point(bbox.x1, bbox.y0) * gc->transform);
+		image->c11 = (NR::Point(bbox.x1, bbox.y1) * gc->transform);
+
 		nr_rect_d_matrix_transform (&bbox, &bbox, &gc->transform);
 
 		item->bbox.x0 = (int) floor (bbox.x0);
@@ -164,22 +177,9 @@ nr_arena_image_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigne
 	nr_arena_image_x_sample = prefs_get_int_attribute ("options.bitmapoversample", "value", 1);
 	nr_arena_image_y_sample = nr_arena_image_x_sample;
 
+	bool outline = (item->arena->rendermode == RENDERMODE_OUTLINE);
+
 	NRArenaImage *image = NR_ARENA_IMAGE (item);
-
-	if (!image->px) return item->state;
-
-	guint32 Falpha = item->opacity;
-	if (Falpha < 1) return item->state;
-
-	unsigned char * dpx = NR_PIXBLOCK_PX (pb);
-	const int drs = pb->rs;
-	const int dw = pb->area.x1 - pb->area.x0;
-	const int dh = pb->area.y1 - pb->area.y0;
-
-	unsigned char * spx = image->px;
-	const int srs = image->pxrs;
-	const int sw = image->pxw;
-	const int sh = image->pxh;
 
 	NR::Matrix d2s;
 
@@ -190,22 +190,69 @@ nr_arena_image_render (NRArenaItem *item, NRRectL *area, NRPixBlock *pb, unsigne
 	d2s[4] = b2i[0] * pb->area.x0 + b2i[2] * pb->area.y0 + b2i[4];
 	d2s[5] = b2i[1] * pb->area.x0 + b2i[3] * pb->area.y0 + b2i[5];
 
-	if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8) {
-		/* fixme: This is not implemented yet (Lauris) */
-		/* nr_R8G8B8_R8G8B8_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample); */
-	} else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
-		nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
-	} else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) {
+	if (!outline) {
 
-		//FIXME: The _N_N_N_ version gives a gray border around images, see bug 906376
-		// This mode is only used when exporting, screen rendering always has _P_P_P_, so I decided to simply replace it for now
-		// Feel free to propose a better fix
+		if (!image->px) return item->state;
 
-		//nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
-		nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
+		guint32 Falpha = item->opacity;
+		if (Falpha < 1) return item->state;
+
+		unsigned char * dpx = NR_PIXBLOCK_PX (pb);
+		const int drs = pb->rs;
+		const int dw = pb->area.x1 - pb->area.x0;
+		const int dh = pb->area.y1 - pb->area.y0;
+
+		unsigned char * spx = image->px;
+		const int srs = image->pxrs;
+		const int sw = image->pxw;
+		const int sh = image->pxh;
+
+		if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8) {
+			/* fixme: This is not implemented yet (Lauris) */
+			/* nr_R8G8B8_R8G8B8_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample); */
+		} else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8P) {
+			nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
+		} else if (pb->mode == NR_PIXBLOCK_MODE_R8G8B8A8N) {
+
+			//FIXME: The _N_N_N_ version gives a gray border around images, see bug 906376
+			// This mode is only used when exporting, screen rendering always has _P_P_P_, so I decided to simply replace it for now
+			// Feel free to propose a better fix
+
+			//nr_R8G8B8A8_N_R8G8B8A8_N_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
+			nr_R8G8B8A8_P_R8G8B8A8_P_R8G8B8A8_N_TRANSFORM (dpx, dw, dh, drs, spx, sw, sh, srs, d2s, Falpha, nr_arena_image_x_sample, nr_arena_image_y_sample);
+		}
+
+		pb->empty = FALSE;
+
+	} else { // outline; draw a rect instead
+
+		Path*  thePath = new Path;
+		thePath->SetBackData (false);
+		thePath->Reset ();
+
+		thePath->MoveTo (image->c00);
+		thePath->LineTo (image->c10);
+		thePath->LineTo (image->c11);
+		thePath->LineTo (image->c01);
+		thePath->LineTo (image->c00);
+
+		thePath->Convert(1.0);
+
+		Shape* theShape = new Shape;
+		thePath->Stroke(theShape, true, 0.25, join_pointy, butt_straight, 5);
+
+		NRPixBlock m;
+		nr_pixblock_setup_fast(&m, NR_PIXBLOCK_MODE_A8, area->x0, area->y0, area->x1, area->y1, TRUE);
+		m.visible_area = pb->visible_area; 
+		nr_pixblock_render_shape_mask_or(m, theShape);
+		m.empty = FALSE;
+		guint32 rgba = prefs_get_int_attribute("options.wireframecolors", "images", 0xff0000ff);
+		nr_blit_pixblock_mask_rgba32(pb, &m, rgba);
+		pb->empty = FALSE;
+		nr_pixblock_release(&m);
+		delete theShape;
+		delete thePath;
 	}
-
-	pb->empty = FALSE;
 
 	return item->state;
 }

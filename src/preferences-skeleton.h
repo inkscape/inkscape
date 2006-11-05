@@ -199,6 +199,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"wireframecolors\" "
 "           onlight=\"255\"" // 000000ff
 "           ondark=\"4294967295\"" //ffffffff
+"           images=\"4278190335\"" //ff0000ff
 "           clips=\"16711935\"" // 00ff00ff
 "           masks=\"65535\"/>\n" // 0x0000ffff
 "    <group id=\"svgoutput\" usenamedcolors=\"0\" numericprecision=\"8\" minimumexponent=\"-8\" inlineattrs=\"0\" indent=\"2\"/>\n"
