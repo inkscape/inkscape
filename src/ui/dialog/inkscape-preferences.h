@@ -1,5 +1,5 @@
 /**
- * \brief Inkscape Preferences dialog
+ * brief Inkscape Preferences dialog
  *
  * Authors:
  *   Carl Hetherington
@@ -139,6 +139,7 @@ protected:
     PrefCombo       _misc_overs_bitmap;
     PrefCheckButton _misc_mask_on_top;
     PrefCheckButton _misc_mask_remove;
+    PrefCheckButton _misc_use_ext_input;
 
     int _max_dialog_width;
     int _max_dialog_height;

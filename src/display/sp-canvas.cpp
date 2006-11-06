@@ -33,6 +33,7 @@
 #include <libnr/nr-matrix-fns.h>
 #include <libnr/nr-matrix-ops.h>
 #include <libnr/nr-convex-hull.h>
+#include "prefs-utils.h"
 
 enum {
 	RENDERMODE_NORMAL,
@@ -1086,7 +1087,9 @@ sp_canvas_realize (GtkWidget *widget)
 
     widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
     gdk_window_set_user_data (widget->window, widget);
-    gtk_widget_set_events(widget, attributes.event_mask);
+
+    if ( prefs_get_int_attribute ("options.useextinput", "value", 1) )
+        gtk_widget_set_events(widget, attributes.event_mask);
 
     GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 

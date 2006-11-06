@@ -163,6 +163,7 @@ static char const preferences_skeleton[] =
 "  </group>\n"
 "\n"
 "  <group id=\"options\">\n"
+"    <group id=\"useextinput\" value=\"1\" />"
 "    <group id=\"nudgedistance\" value=\"2\"/>\n"
 "    <group id=\"rotationsnapsperpi\" value=\"12\"/>\n"
 "    <group id=\"cursortolerance\" value=\"8.0\"/>\n"
