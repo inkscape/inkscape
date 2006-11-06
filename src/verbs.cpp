@@ -846,7 +846,6 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
     SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
     if (!dt)
         return;
-
     SPEventContext *ec = dt->event_context;
 
     switch (reinterpret_cast<std::size_t>(data)) {
@@ -941,6 +940,22 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
                 sp_edit_invert_in_all_layers();
             }
             break;
+
+        case SP_VERB_EDIT_SELECT_NEXT: 
+            if (tools_isactive(dt, TOOLS_NODES)) {
+                sp_nodepath_select_next(SP_NODE_CONTEXT(ec)->nodepath);
+            } else {
+                sp_selection_item_next();
+            }
+            break;
+        case SP_VERB_EDIT_SELECT_PREV: 
+            if (tools_isactive(dt, TOOLS_NODES)) {
+                sp_nodepath_select_prev(SP_NODE_CONTEXT(ec)->nodepath);
+            } else {
+                sp_selection_item_prev();
+            }
+            break;
+
         case SP_VERB_EDIT_DESELECT:
             if (tools_isactive(dt, TOOLS_NODES)) {
                 sp_nodepath_deselect(SP_NODE_CONTEXT(ec)->nodepath);
@@ -2027,6 +2042,10 @@ Verb *Verb::_base_verbs[] = {
                  N_("Invert selection (unselect what is selected and select everything else)"), "selection_invert"),
     new EditVerb(SP_VERB_EDIT_INVERT_IN_ALL_LAYERS, "EditInvertInAllLayers", N_("Invert in All Layers"),
                  N_("Invert selection in all visible and unlocked layers"), NULL),
+    new EditVerb(SP_VERB_EDIT_SELECT_NEXT, "EditSelectNext", N_("Select Next"),
+                 N_("Select next object or node"), NULL),
+    new EditVerb(SP_VERB_EDIT_SELECT_PREV, "EditSelectPrev", N_("Select Previous"),
+                 N_("Select previous object or node"), NULL),
     new EditVerb(SP_VERB_EDIT_DESELECT, "EditDeselect", N_("D_eselect"),
                  N_("Deselect any selected objects or nodes"), "selection_deselect"),
 

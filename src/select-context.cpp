@@ -736,18 +736,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         ret = TRUE;
                     }
                     break;
-                case GDK_Tab: // Tab - cycle selection forward
-                    if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                        sp_selection_item_next();
-                        ret = TRUE;
-                    }
-                    break;
-                case GDK_ISO_Left_Tab: // Shift Tab - cycle selection backward
-                    if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                        sp_selection_item_prev();
-                        ret = TRUE;
-                    }
-                    break;
                 case GDK_space:
                     /* stamping mode: show outline mode moving */
                     /* FIXME: Is next condition ok? (lauris) */

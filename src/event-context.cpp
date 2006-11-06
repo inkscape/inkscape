@@ -479,9 +479,13 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
             break;
         case GDK_KEY_PRESS:
             switch (get_group0_keyval(&event->key)) {
+                // GDK insists on stealing these keys (F1 for no idea what, tab for cycling widgets
+                // in the editing window). So we resteal them back and run our regular shortcut
+                // invoker on them.
                 unsigned int shortcut;
+                case GDK_Tab: 
+                case GDK_ISO_Left_Tab: 
                 case GDK_F1:
-                    /* Grab it away from Gtk */
                     shortcut = get_group0_keyval(&event->key);
                     if (event->key.state & GDK_SHIFT_MASK)
                         shortcut |= SP_SHORTCUT_SHIFT_MASK;
@@ -492,22 +496,6 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
                     ret = sp_shortcut_invoke(shortcut, desktop);
                     break;
 
-                case GDK_Tab: // disable tab/shift-tab which cycle widget focus
-                case GDK_ISO_Left_Tab: // they will get different functions
-                    if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                        ret = TRUE;
-                    } else {
-                        /* Grab it away from Gtk */
-                        shortcut = get_group0_keyval(&event->key);
-                        if (event->key.state & GDK_SHIFT_MASK)
-                            shortcut |= SP_SHORTCUT_SHIFT_MASK;
-                        if (event->key.state & GDK_CONTROL_MASK)
-                            shortcut |= SP_SHORTCUT_CONTROL_MASK;
-                        if (event->key.state & GDK_MOD1_MASK)
-                            shortcut |= SP_SHORTCUT_ALT_MASK;
-                        ret = sp_shortcut_invoke(shortcut, desktop);
-                    }
-                    break;
                 case GDK_W:
                 case GDK_w:
                 case GDK_F4:
