@@ -29,7 +29,8 @@ See default.xml for more information.
   <bind key="s" modifiers="Ctrl,Shift" action="FileSaveAs" display="true"/>
   <bind key="S" modifiers="Ctrl,Shift" action="FileSaveAs"/>
 
-<!-- Save a Copy, Alt+Ctrl+S -->
+  <bind key="s" modifiers="Ctrl,Alt" action="FileSaveACopy" display="true"/>
+  <bind key="S" modifiers="Ctrl,Alt" action="FileSaveACopy" />
 
 <!-- Save for Web, Alt+Shift+Ctrl+S -->
 
@@ -66,6 +67,10 @@ See default.xml for more information.
   <bind key="V" modifiers="Ctrl" action="EditPaste"/>
   
   <!--  Paste in Front, Ctrl+F -->
+
+  <bind key="f" modifiers="Ctrl" action="EditPaste" display="true"/>
+  <bind key="F" modifiers="Ctrl" action="EditPaste"/>
+
   <!-- Paste in Back, Ctrl+B -->
   <!-- Check Spelling, Ctrl+I -->
   <!-- Color Settings..., Shift+Ctrl+K -->
@@ -114,15 +119,18 @@ Envelope Distort - Make with Warp, Alt+Shift+Ctrl+W
 Envelope Distort - Make with Mesh, Alt+Ctrl+M
 Envelope Distort - Make with Top Object, Alt+Ctrl+я
 Live Paint - Make, Alt+Ctrl+X
-Clipping Mask - Make, Ctrl+7
-Clipping Mask - Release, Alt+Ctrl+7
 Compound Path - Make, Ctrl+8
 Compound Path - Release, Alt+Shift+Ctrl+8
 -->
 
+  <bind key="7" modifiers="Ctrl" action="ObjectSetClipPath" />
+  <bind key="7" modifiers="Ctrl,Alt" action="ObjectUnSetClipPath" />
+
 <!-- Type 
-Create outlines, Shift+Ctrl+O
 Show Hidden Characters, Alt+Ctrl+I -->
+
+  <bind key="o" modifiers="Ctrl,Shift" action="ObjectToPath"/>
+  <bind key="O" modifiers="Ctrl,Shift" action="ObjectToPath" display="true"/>
 
 <!-- Select -->
 
@@ -132,9 +140,13 @@ Show Hidden Characters, Alt+Ctrl+I -->
 <!--
 Deselect, Shift+Ctrl+A - this one should work with Esc
 Reselect, Ctrl+6
+-->
+
+<!-- FIXME: tab
 Next Object Above, Alt+Ctrl+]
 Next Object Below, Alt+Ctrl+[
 -->
+
 
 <!-- Filter -->
 
@@ -151,10 +163,12 @@ Last Effect Alt+Shift+Ctrl+E
 
 <!-- View -->
 
-<!-- Outline, Ctrl+Y -->
 <!-- Overprint Preview, Alt+Shift+Ctrl+Y -->
 <!-- Pixel Preview Alt+Ctrl+Y -->
 
+  <bind key="y" modifiers="Ctrl" action="ViewModeToggle" />
+  <bind key="Y" modifiers="Ctrl" action="ViewModeToggle" display="true" />
+    
   <bind key="equal" modifiers="Ctrl" action="ZoomIn" display="true"/>
   <bind key="minus" modifiers="Ctrl" action="ZoomOut" display="true"/>
   <bind key="0" modifiers="Ctrl" action="ZoomPage" display="true"/>
@@ -180,8 +194,8 @@ Last Effect Alt+Shift+Ctrl+E
 
 <!--Show Grid Ctrl+" -->
 
-  <bind key="quotedbl" modifiers="Shift" action="ToggleGrid" />
-  <bind key="quotedbl" action="ToggleGrid" display="true"/>
+  <bind key="quotedbl" modifiers="Ctrl,Shift" action="ToggleGrid" />
+  <bind key="quotedbl" modifiers="Ctrl" action="ToggleGrid" display="true"/>
 
 <!--
 Snap To Grid Shift+Ctrl+"
@@ -212,6 +226,9 @@ Gradient Ctrl+F9
 Stroke Ctrl+F10
 -->
 
+  <bind key="F9" modifiers="Ctrl" action="DialogFillStroke"/>
+  <bind key="F10" modifiers="Ctrl" action="DialogFillStroke" display="true"/>
+
 <!-- 
 Graphics Styles Shift+F5
 Info F8
@@ -229,6 +246,10 @@ Symbols Shift+Ctrl+F11
 
 <!--
 Transparency Shift+Ctrl+F10
+-->
+  <bind key="F10" modifiers="Ctrl,Shift" action="DialogFillStroke" display="true"/>
+
+<--
 Type
   Character Ctrl+T
   OpenType Alt+Shift+Ctrl+T
@@ -236,6 +257,11 @@ Type
   Tabs Shift+Ctrl+T
 (Character and Paragraph are equivalent to our Text'n'Font dialog)
 -->
+
+  <bind key="t" modifiers="Ctrl" action="DialogText" display="true"/>
+  <bind key="T" modifiers="Ctrl" action="DialogText" display="true"/>
+  <bind key="t" modifiers="Alt,Ctrl" action="DialogText" display="true"/>
+  <bind key="T" modifiers="Alt,Ctrl" action="DialogText" display="true"/>
 
 <!--- Help -->
 <!-- Illustrator Help, F1 -->
