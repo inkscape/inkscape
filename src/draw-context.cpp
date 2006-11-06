@@ -221,18 +221,6 @@ sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
                     sp_desktop_selection(desktop)->clear();
                     ret = TRUE;
                     break;
-                case GDK_Tab: // Tab - cycle selection forward
-                    if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                        sp_selection_item_next();
-                        ret = TRUE;
-                    }
-                    break;
-                case GDK_ISO_Left_Tab: // Shift Tab - cycle selection backward
-                    if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                        sp_selection_item_prev();
-                        ret = TRUE;
-                    }
-                    break;
                 case GDK_Up:
                 case GDK_Down:
                 case GDK_KP_Up:
