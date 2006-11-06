@@ -24,7 +24,7 @@ and tooltips. Only one binding for each action may have this attribute.
 Note that the current file lists ALL Inkscape actions, even those that do not have any
 keys in the default mapping (those don't have "key" or "modifiers" attributes). You can
 assign any keys to these actions by adding "key" and "modifiers" attributes to
-them. Please add here all new verbs you create!
+them. Developers: Please add here any new verbs you create!
 
 This file is inkscape.xml, and in the original installation it is also copied as
 default.xml. The latter is the file that Inkscape reads on startup. If you overwrite
