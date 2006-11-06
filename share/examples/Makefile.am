@@ -18,6 +18,7 @@ example_DATA = \
 	l-systems.svgz \
 	glass.svg \
 	car.svgz \
-	gallardo.svgz
+	gallardo.svgz \
+	gradient-mesh-experimental.svgz
 
 EXTRA_DIST = $(example_DATA)
