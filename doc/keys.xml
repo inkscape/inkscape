@@ -192,6 +192,7 @@ RFE</a>).</p>
 <keys><key><ctrl/>P</key>	 <action>print document</action></keys>
 <keys><key><ctrl/>S</key>	 <action>save document</action></keys>
 <keys><key><shift/><ctrl/>S</key>	 <action>save under a new name</action></keys>
+<keys><key><shift/><ctrl/><alt/>S</key>	 <action>save a copy</action></keys>
 <keys><key><ctrl/>Q</key>	 <action>exit Inkscape</action></keys>
 </group>
 
