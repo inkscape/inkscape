@@ -124,6 +124,24 @@ static void sp_gradient_context_setup(SPEventContext *ec)
     rc->_message_context = new Inkscape::MessageContext(sp_desktop_message_stack(ec->desktop));
 }
 
+void 
+sp_gradient_context_select_next (SPEventContext *event_context)
+{
+    GrDrag *drag = event_context->_grdrag;
+    g_assert (drag);
+
+    drag->select_next();
+}
+
+void 
+sp_gradient_context_select_prev (SPEventContext *event_context)
+{
+    GrDrag *drag = event_context->_grdrag;
+    g_assert (drag);
+
+    drag->select_prev();
+}
+
 static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     static bool dragging;
@@ -272,19 +290,6 @@ static gint sp_gradient_context_root_handler(SPEventContext *event_context, GdkE
             }
             ret = TRUE;
             //TODO: make dragging escapable by Esc
-            break;
-
-        case GDK_Tab: // Tab - cycle selection forward
-            if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                drag->select_next();
-                ret = TRUE;
-            }
-            break;
-        case GDK_ISO_Left_Tab:  // Shift Tab - cycle selection backward
-            if (!(MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT))) {
-                drag->select_prev();
-                ret = TRUE;
-            }
             break;
 
         case GDK_Left: // move handle left

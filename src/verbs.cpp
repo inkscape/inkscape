@@ -76,6 +76,7 @@
 #include "sp-flowtext.h"
 #include "layer-fns.h"
 #include "node-context.h"
+#include "gradient-context.h"
 
 
 /**
@@ -944,6 +945,8 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_SELECT_NEXT: 
             if (tools_isactive(dt, TOOLS_NODES)) {
                 sp_nodepath_select_next(SP_NODE_CONTEXT(ec)->nodepath);
+            } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
+                sp_gradient_context_select_next (ec);
             } else {
                 sp_selection_item_next();
             }
@@ -951,6 +954,8 @@ EditVerb::perform(SPAction *action, void *data, void *pdata)
         case SP_VERB_EDIT_SELECT_PREV: 
             if (tools_isactive(dt, TOOLS_NODES)) {
                 sp_nodepath_select_prev(SP_NODE_CONTEXT(ec)->nodepath);
+            } else if (tools_isactive(dt, TOOLS_GRADIENT)) {
+                sp_gradient_context_select_prev (ec);
             } else {
                 sp_selection_item_prev();
             }
