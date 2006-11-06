@@ -195,9 +195,9 @@ override) the bindings in the main default.xml.
   <bind key="F11" action="FullScreen" display="true"/> 
 
   <bind key="Tab" modifiers="Ctrl" action="NextWindow" display="true"/>
-  <bind key="ISO_Left_Tab" modifiers="Ctrl,Shift" action="NextWindow" />
+  <bind key="ISO_Left_Tab" modifiers="Ctrl" action="NextWindow" />
   <bind key="Tab" modifiers="Ctrl,Shift" action="PrevWindow" display="true"/>
-  <bind key="ISO_Left_Tab" modifiers="Ctrl" action="PrevWindow" />
+  <bind key="ISO_Left_Tab" modifiers="Ctrl,Shift" action="PrevWindow" />
 
   <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true"/>
   <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
@@ -287,6 +287,11 @@ override) the bindings in the main default.xml.
 
   <bind key="exclam" modifiers="Alt" action="EditInvertInAllLayers" display="true"/>
   <bind key="exclam" modifiers="Alt,Shift" action="EditInvertInAllLayers" />
+
+  <bind key="Tab" action="EditSelectNext" display="true"/>
+  <bind key="ISO_Left_Tab" action="EditSelectNext" />
+  <bind key="Tab" modifiers="Shift" action="EditSelectPrev" display="true"/>
+  <bind key="ISO_Left_Tab" modifiers="Shift" action="EditSelectPrev" />
 
   <bind action="EditDeselect" /> <!-- FIXME: currently deselecting is bypassing the verb, so it's not bound to Esc as it should be -->
 
