@@ -154,6 +154,11 @@ RFE</a>).</p>
 <note>If you want to have different values for grid visibility and snapping, set them via the Document Options dialog.</note>
 <note>Note that only the 3 key on the main keyboard works, not on the keypad.</note>
 </group>
+
+<group>
+<title>Display mode</title>
+<keys><key><ctrl/><misc-wide f="keypad 5"/></key>  <action>toggle normal/outline mode</action></keys>
+</group>
 </section>
 
 *<section title="Palette" color="efcfdf">
@@ -1079,7 +1084,7 @@ RFE</a>).</p>
 <note>Enter in regular text creates new line; in flowed text it creates a new paragraph</note>
 <keys><key><ctrl/>U</key> <action>toggle Unicode entry</action></keys> 
 <note>To insert an arbitrary Unicode character, type Ctrl+U, then the hexadecimal code point, then Enter.</note>
-<note>For example, Ctrl+U 2 0 1 4 Enter inserts an em-dash.</note>
+<note>For example, type Ctrl+U 2 0 1 4 Enter for an em-dash; Ctrl+U a 9 Enter for a copyright sign.</note>
 <note>To stay in Unicode mode after inserting the character, press Space instead of Enter.</note>
 <note>Press Esc or another Ctrl+U to cancel Unicode mode without inserting the character.</note>
 <keys><key><ctrl/><misc-wide f="Space"/></key> <action>insert no-break space</action></keys>
