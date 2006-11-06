@@ -230,7 +230,10 @@ Future improvements:
   <bind action="ViewModeNormal"/>
   <bind action="ViewModeOutline"/>
 
-<!-- Edit -->
+  <bind key="KP_5" modifiers="Ctrl" action="ViewModeToggle" display="true" />
+  <bind key="KP_Begin" modifiers="Ctrl" action="ViewModeToggle" />
+
+  <!-- Edit -->
 
   <bind key="z" modifiers="Ctrl" action="EditUndo" display="true"/>
   <bind key="Z" modifiers="Ctrl" action="EditUndo" />
