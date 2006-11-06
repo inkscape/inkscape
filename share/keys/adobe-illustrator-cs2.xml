@@ -87,17 +87,17 @@ Transform - Move Shift+Ctrl+M
 Transform - Transform Each Alt+Shift+Ctrl+D 
 -->
 
-  <bind key="]" modifiers="Shift,Ctrl" action="SelectionToFront" display="true"/>
-  <bind key="]" modifiers="Shift,Ctrl" action="SelectionToFront" />
+  <bind key="bracketright" modifiers="Shift,Ctrl" action="SelectionToFront" display="true"/>
+  <bind key="bracketright" modifiers="Shift,Ctrl" action="SelectionToFront" />
 
-  <bind key="[" modifiers="Shift,Ctrl" action="SelectionToBack" display="true"/>
-  <bind key="[" modifiers="Shift,Ctrl" action="SelectionToBack" />
+  <bind key="bracketleft" modifiers="Shift,Ctrl" action="SelectionToBack" display="true"/>
+  <bind key="bracketleft" modifiers="Shift,Ctrl" action="SelectionToBack" />
 
-  <bind key="]" modifiers="Ctrl" action="SelectionRaise" display="true"/>
-  <bind key="]" modifiers="Ctrl" action="SelectionRaise" />
+  <bind key="bracketright" modifiers="Ctrl" action="SelectionRaise" display="true"/>
+  <bind key="bracketright" modifiers="Ctrl" action="SelectionRaise" />
 
-  <bind key="[" modifiers="Ctrl" action="SelectionLower" display="true"/>
-  <bind key="[" modifiers="Ctrl" action="SelectionLower" />
+  <bind key="bracketleft" modifiers="Ctrl" action="SelectionLower" display="true"/>
+  <bind key="bracketleft" modifiers="Ctrl" action="SelectionLower" />
 
   <bind key="g" modifiers="Ctrl" action="SelectionGroup" display="true"/>
   <bind key="G" modifiers="Ctrl" action="SelectionGroup" />
@@ -142,11 +142,8 @@ Deselect, Shift+Ctrl+A - this one should work with Esc
 Reselect, Ctrl+6
 -->
 
-<!-- FIXME: tab
-Next Object Above, Alt+Ctrl+]
-Next Object Below, Alt+Ctrl+[
--->
-
+  <bind key="bracketright" modifiers="Ctrl,Alt" action="EditSelectNext" display="true"/>
+  <bind key="bracketleft" modifiers="Ctrl,Alt" action="EditSelectPrev" display="true"/>
 
 <!-- Filter -->
 
@@ -182,8 +179,8 @@ Last Effect Alt+Shift+Ctrl+E
   Show Text Threads Shift+Ctrl+Y
 -->
 
-  <bind key=";" modifiers="Shift" action="ToggleGuides" />
-  <bind key=";" action="ToggleGuides" display="true"/>
+  <bind key="semicolon" modifiers="Shift" action="ToggleGuides" />
+  <bind key="semicolon" action="ToggleGuides" display="true"/>
 
 <!--
   Lock Guides, Alt+Ctrl+;
