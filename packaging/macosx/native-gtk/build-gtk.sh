@@ -4,6 +4,14 @@
 #
 # Inkscape build additions by Michael Wybrow <mjwybrow@users.sf.net>
 #
+# See the following page for build instructions:
+# http://developer.imendio.com/projects/gtk-macosx/build-instructions
+#
+# Usage:
+# export PREFIX=/your/install/prefix
+# ./build-gtk bootstrap
+# ./build-gtk inkscape
+#
 
 version=1.1-inkscape
 
