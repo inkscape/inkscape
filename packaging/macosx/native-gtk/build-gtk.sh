@@ -10,7 +10,7 @@
 # Usage:
 # export PREFIX=/your/install/prefix
 # ./build-gtk bootstrap
-# ./build-gtk inkscape
+# ./build-gtk build inkscape
 #
 
 version=1.1-inkscape
