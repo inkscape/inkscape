@@ -503,9 +503,9 @@ void InkscapePreferences::initPageFilters()
     _page_filters.add_line( true, "", _blur_quality_normal, "", 
                            _("Average quality, acceptable display speed"));
     _page_filters.add_line( true, "", _blur_quality_worse, "", 
-                           _("Lower quality (some artefacts), but display is faster"));
+                           _("Lower quality (some artifacts), but display is faster"));
     _page_filters.add_line( true, "", _blur_quality_worst, "", 
-                           _("Lowest quality (considerable artefacts), but display is fastest"));
+                           _("Lowest quality (considerable artifacts), but display is fastest"));
 
     this->AddPage(_page_filters, _("Filters"), PREFS_PAGE_FILTERS);
 }
