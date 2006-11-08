@@ -566,8 +566,7 @@ void Tracer::traceThread()
         }
 
     //## inform the document, so we can undo
-    sp_document_done(doc, SP_VERB_NONE, 
-		     /* TODO: annotate */ "trace.cpp:567");
+    sp_document_done(doc, SP_VERB_SELECTION_TRACE, _("Trace bitmap"));
 
     engine = NULL;
 

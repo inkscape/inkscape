@@ -228,8 +228,7 @@ Effect::effect (Inkscape::UI::View::View * doc)
     set_last_effect(this);
     imp->effect(this, doc);
 
-    sp_document_done(doc->doc(), SP_VERB_NONE, 
-                     /* TODO: annotate */ "effect.cpp:226");
+    sp_document_done(doc->doc(), SP_VERB_NONE, _(this->get_name()));
 
     return;
 }
