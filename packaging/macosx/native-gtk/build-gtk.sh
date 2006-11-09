@@ -13,7 +13,8 @@
 # ./build-gtk build inkscape
 #
 
-version=1.1-inkscape
+
+version=1.2-inkscape
 
 export PREFIX=${PREFIX-/opt/gtk}
 export PATH=$PREFIX/bin:$PATH
@@ -56,8 +57,9 @@ if [ $# -eq 0 -o "x`echo "$*" | grep shell`" = xshell ]; then
 fi
 
 CORE_MODULES="cairo gnome-common glib pango atk gtk+"
-EXTRA_MODULES="libxml2 libxslt loudmouth libglade gossip gtk-engines gc lcms libsig++ doxygen glibmm cairomm gtkmm popt"
+EXTRA_MODULES="libxml2 libxslt loudmouth libglade gossip gtk-engines"
 PYGTK_MODULES=" pycairo pygobject pygtk"
+INKSCAPE_MODULES="$CORE_MODULES libxml2 libxslt gc lcms libsig++ doxygen glibmm cairomm gtkmm popt inkscape"
 
 # Could add those (orbit requires popt though)
 MORE_MODULES="libIDL ORBit2 gconf"
@@ -72,6 +74,7 @@ function print_usage
     echo " Core: $CORE_MODULES"
     echo " Extra: $EXTRA_MODULES"
     echo " Python: $PYGTK_MODULES"
+    echo " Inkscape: $INKSCAPE_MODULES"
     echo
     echo "Setup: This script defaults to downloading source to ~/Source/gtk and"
     echo "installing in /opt/gtk. Make sure your user has write access to the"
@@ -187,7 +190,7 @@ function cpan_get_and_build
 	cd $DIRNAME && \
 	perl Makefile.PL $2 && \
 	make && \
-	(echo "Enter your password to istall $BASENAME"; sudo make install) && \
+	(echo "Enter your password to istall $BASENAME"; make install) && \
 	touch BUILT
 }
 
@@ -298,6 +301,10 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
 	echo "You need the cogito to get cairo from git. It's available e.g. in Darwin ports."
 	exit 1
     fi
+    if [ "x`which svn 2>/dev/null`" == "x" ]; then
+	echo "You need the svn client to get inkscape."
+	exit 1
+    fi
     
     mkdir -p $SOURCE 2>/dev/null || (echo "Error: Couldn't create source checkout dir $SOURCE"; exit 1)
     mkdir -p $PREFIX/bin 2>/dev/null || (echo "Error: Couldn't create bin dir $PREFIX/bin"; exit 1)
@@ -318,7 +325,7 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
 	http://heanet.dl.sourceforge.net/sourceforge/freetype/freetype-2.1.10.tar.bz2 \
 	http://fontconfig.org/release/fontconfig-2.3.2.tar.gz \
 	http://people.imendio.com/richard/gtk-osx/files/docbook-files-1.tar.gz \
-	http://people.imendio.com/richard/gtk-osx/files/gnome-doc-utils-fake-1.tar.gz \
+	http://www.cs.mu.oz.au/~mjwybrow/gtk-osx/gnome-doc-utils-fake-1.tar.gz \
 	"
 
 	#http://people.imendio.com/richard/gtk-osx/files/popt-1.7.tar.gz
@@ -331,7 +338,7 @@ if (echo "$*" | grep bootstrap) >/dev/null; then
     tarball_get_and_build $PACKAGE "--with-xml-catalog=$PREFIX/etc/xml/catalog" || exit 1
     
     PACKAGE=ftp://ftp4.freebsd.org/pub/FreeBSD/ports/distfiles/XML-Parser-2.34.tar.gz
-    # cpan_get_and_build $PACKAGE "EXPATLIBPATH=$PREFIX/lib EXPATINCPATH=$PREFIX/include" || exit 1
+    cpan_get_and_build $PACKAGE "PREFIX=$PREFIX INSTALLDIRS=perl EXPATLIBPATH=$PREFIX/lib EXPATINCPATH=$PREFIX/include" || exit 1
 
     PACKAGES=" \
 	http://ftp.gnome.org/pub/GNOME/sources/intltool/0.35/intltool-0.35.0.tar.bz2 \
@@ -375,8 +382,8 @@ elif [ "x$1" = xall ]; then
     echo "Building core+extra+python modules."
     MODULES="$CORE_MODULES $EXTRA_MODULES $PYGTK_MODULES"
 elif [ "x$1" = xinkscape ]; then
-    echo "Building core+extra+inkscape modules."
-    MODULES="$CORE_MODULES $EXTRA_MODULES inkscape"
+    echo "Building inkscape modules."
+    MODULES="$INKSCAPE_MODULES"
 fi
 
 git_get_and_build git://git.cairographics.org/git cairo "--enable-pdf --enable-atsui --enable-quartz --disable-xlib" || exit 1
@@ -397,6 +404,7 @@ cvs_get_and_build $GNOMECVSROOT gtk+ "--with-gdktarget=quartz" || exit 1
 cvs_get_and_build $GNOMECVSROOT gtk-engines || exit 1
 cvs_get_and_build $GNOMECVSROOT loudmouth "--with-ssl=openssl" || exit 1
 cvs_get_and_build $GNOMECVSROOT libglade || exit 1
+# gossip needs xml2po from gnome-doc-utils.
 cvs_get_and_build $GNOMECVSROOT gossip "--with-backend=cocoa" || exit 1
 cvs_get_and_build $CAIROCVSROOT pycairo || exit 1
 cvs_get_and_build $GNOMECVSROOT pygobject "--disable-docs" || exit 1
