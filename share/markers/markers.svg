@@ -23,6 +23,36 @@ The order in the file is reverse relative to the order of the menu.
        orient="auto"
        refY="0"
        refX="0"
+       id="InfiniteLineStart"
+       inkscape:stockid="InfiniteLineStart"
+       style="overflow:visible">
+       
+    <g transform="translate(-13,0)">
+       <circle cx="3" cy="0" r="0.8" />
+       <circle cx="6.5" cy="0" r="0.8" />
+       <circle cx="10" cy="0" r="0.8" />
+    </g>
+    </marker>
+
+    <marker
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="InfiniteLineEnd"
+       inkscape:stockid="InfiniteLineEnd"
+       style="overflow:visible">
+       
+    <g>
+       <circle cx="3" cy="0" r="0.8" />
+       <circle cx="6.5" cy="0" r="0.8" />
+       <circle cx="10" cy="0" r="0.8" />
+    </g>
+    </marker>
+
+    <marker
+       orient="auto"
+       refY="0"
+       refX="0"
        id="RazorWire"
        inkscape:stockid="RazorWire">
        style="overflow:visible">
