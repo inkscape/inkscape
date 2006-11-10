@@ -115,8 +115,10 @@ init()
 #ifdef HAVE_CAIRO_PDF
     Internal::CairoPdfOutput::init();
     Internal::PrintCairoPDF::init();
+    if (0) {
     Internal::CairoRendererPdfOutput::init();
     Internal::CairoRendererOutput::init();
+    }
 #endif
 #ifdef WITH_GNOME_PRINT
     Internal::PrintGNOME::init();
