@@ -106,7 +106,7 @@ sp_selected_path_boolop(bool_op bop, const unsigned int verb, const Glib::ustrin
 
     GSList *il = (GSList *) selection->itemList();
 
-    if (g_slist_length(il) < 2) {
+    if (g_slist_length(il) < 2 && bop != bool_op_union) {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Select <b>at least 2 paths</b> to perform a boolean operation."));
         return;
     }
