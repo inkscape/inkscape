@@ -382,15 +382,18 @@ PrintCairoPDF::bind(Inkscape::Extension::Print *mod, NRMatrix const *transform, 
     if (!_stream) return 0;  // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
     
-    cairo_save(cr);
+    if (opacity < 1.0) {
+        cairo_push_group(cr);
+    } else {
+        cairo_save(cr);
+    }
     _concat_transform(cr, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
 //    g_printf("bind: (%f) %f %f %f %f %f %f\n", opacity, transform->c[0], transform->c[1], transform->c[2], transform->c[3], transform->c[4], transform->c[5]);
     // remember these to be able to undo them when outputting text
     _last_tx = transform->c[4];
     _last_ty = transform->c[5];
     
-    float new_opacity = _alpha_stack.back() * opacity;
-    _alpha_stack.push_back(new_opacity);
+    _alpha_stack.push_back(opacity);
     
     return 1;
 }
@@ -400,8 +403,15 @@ PrintCairoPDF::release(Inkscape::Extension::Print *mod)
 {
     if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
     if (_bitmap) return 0;
+
+    float opacity = _alpha_stack.back();
     
-    cairo_restore(cr);
+    if (opacity < 1.0) {
+        cairo_pop_group_to_source(cr);
+        cairo_paint_with_alpha(cr, opacity);
+    } else {
+        cairo_restore(cr);
+    }
 //    g_printf("release\n");
     _alpha_stack.pop_back();
     g_assert(_alpha_stack.size() > 0);
@@ -531,9 +541,7 @@ PrintCairoPDF::print_fill_style(cairo_t *cr, SPStyle const *const style, NRRect 
         float rgb[3];
         sp_color_get_rgb_floatv(&style->fill.value.color, rgb);
 
-        float alpha = 1.0;
-        alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-	alpha *= _alpha_stack.back();
+        float alpha = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
 
         cairo_set_source_rgba(cr, rgb[0], rgb[1], rgb[2], alpha);
     } else {
@@ -560,9 +568,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
         || ( style->fill.type == SP_PAINT_TYPE_PAINTSERVER
              && SP_IS_GRADIENT(SP_STYLE_FILL_SERVER(style)) ) ) {
         
-        float alpha = 1.0;
-        alpha *= SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
-	alpha *= _alpha_stack.back();
+        float alpha = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
              	
         cairo_save(cr);
         
@@ -591,9 +597,7 @@ PrintCairoPDF::fill(Inkscape::Extension::Print *mod, NRBPath const *bpath, NRMat
 void
 PrintCairoPDF::print_stroke_style(cairo_t *cr, SPStyle const *style, NRRect const *pbox)
 {
-    float alpha = 1.0;
-    alpha *= SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
-    alpha *= _alpha_stack.back();
+    float alpha = SP_SCALE24_TO_FLOAT(style->stroke_opacity.value);
 
     if ( style->stroke.type == SP_PAINT_TYPE_COLOR ) {
         float rgb[3];
