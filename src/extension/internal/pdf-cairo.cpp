@@ -497,12 +497,12 @@ PrintCairoPDF::create_pattern_for_paint(SPPaintServer const *const paintserver, 
        		case SP_GRADIENT_SPREAD_REPEAT:
        			cairo_pattern_set_extend(pattern, CAIRO_EXTEND_REPEAT);
        			break;
-       		case SP_GRADIENT_SPREAD_REFLECT:	// not supported by cairo-pdf yet
-       			//cairo_pattern_set_extend(pattern, CAIRO_EXTEND_REFLECT);
-       			//break;
+       		case SP_GRADIENT_SPREAD_REFLECT:
+       			cairo_pattern_set_extend(pattern, CAIRO_EXTEND_REFLECT);
+       			break;
        		case SP_GRADIENT_SPREAD_PAD:
             default:
-       			cairo_pattern_set_extend(pattern, CAIRO_EXTEND_NONE);	// PAD not supported by cairo-pdf yet
+       			cairo_pattern_set_extend(pattern, CAIRO_EXTEND_PAD);
        			break;
        	}
 
