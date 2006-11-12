@@ -21,7 +21,7 @@ LangString lng_LICENSE_BUTTON   ${LANG_FINNISH} "Seuraava >"
 LangString lng_LICENSE_BOTTOM_TEXT   ${LANG_FINNISH} "$(^Name) on julkaistu GNU General Public License (GPL) -lisenssillä. $_CLICK"
 
 ;has been installed by different user
-LangString lng_DIFFERENT_USER ${LANG_FINNISH} "Käyttäjä $0.$\r$ on asentanut Inkscapen\nJos jatkat, asennus saattaa epäonnistua.!$\r$\nKirjaudu sisään käyttäjänä $0 ja yritä uudestaan."
+LangString lng_DIFFERENT_USER ${LANG_FINNISH} "Käyttäjä $0.$\r$\n on asentanut Inkscapen\nJos jatkat, asennus saattaa epäonnistua.!$\r$\nKirjaudu sisään käyttäjänä $0 ja yritä uudestaan."
 
 ;you have no admin rigths
 LangString lng_NO_ADMIN ${LANG_FINNISH} "Sinulla ei ole pääkäyttäjän oikeuksia.$\r$\nInkscapen asennus kaikille käyttäjille saattaa epäonnistua.$\r$\nÄlä käytä kaikille käyttäjille -ominaisuutta."
