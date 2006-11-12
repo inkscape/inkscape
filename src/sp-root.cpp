@@ -385,7 +385,6 @@ static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child)
         }
         if (!iter) {
             /* we should probably create a new <defs> here? */
-            g_critical("Last <defs> removed");
             root->defs = NULL;
         }
     }
