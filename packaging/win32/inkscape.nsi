@@ -71,6 +71,7 @@ ShowUninstDetails hide
 !include "english.nsh" 
 !include "catalan.nsh" 
 !include "czech.nsh" 
+!include "finnish.nsh" 
 !include "french.nsh" 
 !include "german.nsh" 
 !include "italian.nsh" 
