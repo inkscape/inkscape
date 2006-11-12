@@ -42,7 +42,7 @@
 #include "selection-chemistry.h"
 #include "sp-item-transform.h"
 #include "message-stack.h"
-
+#include "display/sp-canvas.h"
 
 static void
 sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
@@ -213,6 +213,10 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
                                      sv > 5e-4 ? "selector:toolbar:scale:vertical" : NULL );
 
     if (actionkey != NULL) {
+
+        // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed
+        sp_canvas_force_full_redraw_after_interruptions(sp_desktop_canvas(desktop), 0);
+
         gdouble strokewidth = stroke_average_width (selection->itemList());
         int transform_stroke = prefs_get_int_attribute ("options.transform", "stroke", 1);
 
@@ -224,6 +228,9 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 
         // defocus spinbuttons by moving focus to the canvas, unless "stay" is on
         spinbutton_defocus(GTK_OBJECT(spw));
+
+        // resume interruptibility
+        sp_canvas_end_forced_full_redraws(sp_desktop_canvas(desktop));
     }
 
     gtk_object_set_data(GTK_OBJECT(spw), "update", GINT_TO_POINTER(FALSE));
