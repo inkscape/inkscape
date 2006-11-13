@@ -152,7 +152,7 @@ CFLAGS = -Wall -g -O3 -mms-bitfields -DVERSION=$(VERSION) \
 
 ####### Inkboard abilities.
 ####### You must 'make -f Makefile.mingw clean' when turning this on or off
-CFLAGS += -DWITH_INKBOARD
+CFLAGS += -DWITH_INKBOARD -DHAVE_SSL
 
 ####### IMPLICIT RULES
 .cpp.o:
@@ -202,7 +202,7 @@ PYTHONLIB = -L$(GTK)/python/libs -lpython24
 
 ####### remove -DLIBXML_STATIC
 INC = -I. -I.. -I../.. -I../cxxtest $(GTKINC) -I$(GTK)/include \
-$(PERLINC) $(PYTHONINC) -I$(GTK)/include/loudmouth-1.0 \
+$(PERLINC) $(PYTHONINC) \
 -I$(GTK)/include/libxml2 -I$(GTK)/include/freetype2 \
 
 
@@ -212,7 +212,7 @@ $(GTK)/bin/libxml2.dll \
 $(GTK)/lib/iconv.lib	\
 -lfreetype.dll -lfontconfig.dll  \
 -llcms.dll \
--lloudmouth-1.dll -lssl -lcrypto \
+-lssl -lcrypto \
 -lpng -lpopt $(GTK)/lib/zdll.lib \
 -lgc -mwindows -lws2_32 -lintl -lm
 
