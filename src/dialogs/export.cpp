@@ -43,6 +43,7 @@
 #include "file.h"
 #include "macros.h"
 #include "sp-namedview.h"
+#include "selection-chemistry.h"
 
 #include "dialog-events.h"
 #include "../prefs-utils.h"
@@ -818,22 +819,7 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             case SELECTION_PAGE:
             case SELECTION_DRAWING: {
                 SPDocument * doc = SP_ACTIVE_DOCUMENT;
-                Inkscape::XML::Node * repr = sp_document_repr_root(doc);
-                const gchar * dpi_string;
-
-                filename = repr->attribute("inkscape:export-filename");
-
-                dpi_string = NULL;
-                dpi_string = repr->attribute("inkscape:export-xdpi");
-                if (dpi_string != NULL) {
-                    xdpi = atof(dpi_string);
-                }
-
-                dpi_string = NULL;
-                dpi_string = repr->attribute("inkscape:export-ydpi");
-                if (dpi_string != NULL) {
-                    ydpi = atof(dpi_string);
-                }
+                sp_document_get_export_hints (doc, &filename, &xdpi, &ydpi);
 
                 if (filename == NULL) {
                     if (doc_export_name != NULL) {
@@ -846,50 +832,14 @@ sp_export_area_toggled (GtkToggleButton *tb, GtkObject *base)
             }
             case SELECTION_SELECTION:
                 if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                    const GSList * reprlst;
-                    bool filename_search = TRUE;
-                    bool xdpi_search = TRUE;
-                    bool ydpi_search = TRUE;
 
-                    reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
-                    for(; reprlst != NULL &&
-                            filename_search &&
-                            xdpi_search &&
-                            ydpi_search;
-                            reprlst = reprlst->next) {
-                        const gchar * dpi_string;
-                        Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
-
-                        if (filename_search) {
-                            filename = repr->attribute("inkscape:export-filename");
-                            if (filename != NULL)
-                                filename_search = FALSE;
-                        }
-
-                        if (xdpi_search) {
-                            dpi_string = NULL;
-                            dpi_string = repr->attribute("inkscape:export-xdpi");
-                            if (dpi_string != NULL) {
-                                xdpi = atof(dpi_string);
-                                xdpi_search = FALSE;
-                            }
-                        }
-
-                        if (ydpi_search) {
-                            dpi_string = NULL;
-                            dpi_string = repr->attribute("inkscape:export-ydpi");
-                            if (dpi_string != NULL) {
-                                ydpi = atof(dpi_string);
-                                ydpi_search = FALSE;
-                            }
-                        }
-                    }
+                    sp_selection_get_export_hints (sp_desktop_selection(SP_ACTIVE_DESKTOP), &filename, &xdpi, &ydpi);
 
                     /* If we still don't have a filename -- let's build
                        one that's nice */
                     if (filename == NULL) {
                         const gchar * id = NULL;
-                        reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
+                        const GSList * reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
                         for(; reprlst != NULL; reprlst = reprlst->next) {
                             Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
                             if (repr->attribute("id")) {

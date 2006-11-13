@@ -71,6 +71,7 @@
 #include <map>
 #include "helper/units.h"
 #include "sp-item.h"
+#include "unit-constants.h"
 using NR::X;
 using NR::Y;
 
@@ -2284,6 +2285,73 @@ sp_selection_untile()
 }
 
 void
+sp_selection_get_export_hints (Inkscape::Selection *selection, const char **filename, float *xdpi, float *ydpi) 
+{
+    if (selection->isEmpty()) {
+        return;
+    }
+
+    const GSList * reprlst = selection->reprList();
+    bool filename_search = TRUE;
+    bool xdpi_search = TRUE;
+    bool ydpi_search = TRUE;
+
+    for(; reprlst != NULL &&
+            filename_search &&
+            xdpi_search &&
+            ydpi_search;
+        reprlst = reprlst->next) {
+        const gchar * dpi_string;
+        Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
+
+        if (filename_search) {
+            *filename = repr->attribute("inkscape:export-filename");
+            if (*filename != NULL)
+                filename_search = FALSE;
+        }
+
+        if (xdpi_search) {
+            dpi_string = NULL;
+            dpi_string = repr->attribute("inkscape:export-xdpi");
+            if (dpi_string != NULL) {
+                *xdpi = atof(dpi_string);
+                xdpi_search = FALSE;
+            }
+        }
+
+        if (ydpi_search) {
+            dpi_string = NULL;
+            dpi_string = repr->attribute("inkscape:export-ydpi");
+            if (dpi_string != NULL) {
+                *ydpi = atof(dpi_string);
+                ydpi_search = FALSE;
+            }
+        }
+    }
+}
+
+void
+sp_document_get_export_hints (SPDocument * doc, const char **filename, float *xdpi, float *ydpi) 
+{
+    Inkscape::XML::Node * repr = sp_document_repr_root(doc);
+    const gchar * dpi_string;
+
+    *filename = repr->attribute("inkscape:export-filename");
+
+    dpi_string = NULL;
+    dpi_string = repr->attribute("inkscape:export-xdpi");
+    if (dpi_string != NULL) {
+        *xdpi = atof(dpi_string);
+    }
+
+    dpi_string = NULL;
+    dpi_string = repr->attribute("inkscape:export-ydpi");
+    if (dpi_string != NULL) {
+        *ydpi = atof(dpi_string);
+    }
+}
+
+void
 sp_selection_create_bitmap_copy ()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -2338,18 +2406,35 @@ sp_selection_create_bitmap_copy ()
     // Calculate resolution
     double res;
     int const prefs_res = prefs_get_int_attribute ("options.createbitmap", "resolution", 0);
+    int const prefs_min = prefs_get_int_attribute ("options.createbitmap", "minsize", 0);
     if (0 < prefs_res) {
         // If it's given explicitly in prefs, take it
         res = prefs_res;
+    } else if (0 < prefs_min) {
+        // If minsize is given, look up minimum bitmap size (default 250 pixels) and calculate resolution from it
+        res = PX_PER_IN * prefs_min / MIN ((bbox.x1 - bbox.x0), (bbox.y1 - bbox.y0));
     } else {
-        // Otherwise look up minimum bitmap size (default 250 pixels) and calculate resolution from it
-        int const prefs_min = prefs_get_int_attribute ("options.createbitmap", "minsize", 250);
-        res = prefs_min / MIN ((bbox.x1 - bbox.x0), (bbox.y1 - bbox.y0));
+        float hint_xdpi = 0, hint_ydpi = 0;
+        const char *hint_filename;
+        // take resolution hint from the selected objects
+        sp_selection_get_export_hints (selection, &hint_filename, &hint_xdpi, &hint_ydpi);
+        if (hint_xdpi != 0) {
+            res = hint_xdpi;
+        } else {
+            // take resolution hint from the document
+            sp_document_get_export_hints (document, &hint_filename, &hint_xdpi, &hint_ydpi);
+            if (hint_xdpi != 0) {
+                res = hint_xdpi;
+            } else {
+                // if all else fails, take the default 90 dpi
+                res = PX_PER_IN;
+            }
+        }
     }
 
     // The width and height of the bitmap in pixels
-    unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * res);
-    unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * res);
+    unsigned width = (unsigned) floor ((bbox.x1 - bbox.x0) * res / PX_PER_IN);
+    unsigned height =(unsigned) floor ((bbox.y1 - bbox.y0) * res / PX_PER_IN);
 
     // Find out if we have to run a filter
     const gchar *run = NULL;
@@ -2377,7 +2462,12 @@ sp_selection_create_bitmap_copy ()
 
     // Calculate the matrix that will be applied to the image so that it exactly overlaps the source objects
     NR::Matrix eek = sp_item_i2d_affine (SP_ITEM(parent_object));
-    NR::Matrix t = NR::scale (1/res, -1/res) * NR::translate (bbox.x0, bbox.y1) * eek.inverse();
+    NR::Matrix t;
+    if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
+        t = NR::scale (1, -1) * NR::translate ((unsigned) (bbox.x0 + 0.5), (unsigned) (bbox.y1 + 0.5)) * eek.inverse();
+    } else {
+        t = NR::scale (1, -1) * NR::translate (bbox.x0, bbox.y1) * eek.inverse();
+    }
 
     // Do the export
     sp_export_png_file(document, filepath,
@@ -2403,8 +2493,13 @@ sp_selection_create_bitmap_copy ()
         Inkscape::XML::Node * repr = sp_repr_new ("svg:image");
         repr->setAttribute("xlink:href", filename);
         repr->setAttribute("sodipodi:absref", filepath);
-        sp_repr_set_svg_double(repr, "width", gdk_pixbuf_get_width(pb));
-        sp_repr_set_svg_double(repr, "height", gdk_pixbuf_get_height(pb));
+        if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
+            sp_repr_set_svg_double(repr, "width", width);
+            sp_repr_set_svg_double(repr, "height", height);
+        } else {
+            sp_repr_set_svg_double(repr, "width", (bbox.x1 - bbox.x0));
+            sp_repr_set_svg_double(repr, "height", (bbox.y1 - bbox.y0));
+        }
 
         // Write transform
         gchar c[256];
@@ -2476,6 +2571,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
     // create a list of duplicates
     GSList *mask_items = NULL;
     GSList *apply_to_items = NULL;
+    GSList *items_to_delete = NULL;
     bool topmost = prefs_get_int_attribute ("options.maskobject", "topmost", 1);
     bool remove_original = prefs_get_int_attribute ("options.maskobject", "remove", 1);
     
@@ -2489,7 +2585,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
 
             if (remove_original) {
                 SPObject *item = SP_OBJECT (i->data);
-                item->deleteObject (false);
+                items_to_delete = g_slist_prepend (items_to_delete, item);
             }
         }
     } else if (!topmost) {
@@ -2500,7 +2596,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
 
         if (remove_original) {
             SPObject *item = SP_OBJECT (i->data);
-            item->deleteObject (false);
+            items_to_delete = g_slist_prepend (items_to_delete, item);
         }
         
         for (i = i->next; i != NULL; i = i->next) {
@@ -2517,7 +2613,7 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
 
         if (remove_original) {
             SPObject *item = SP_OBJECT (i->data);
-            item->deleteObject (false);
+            items_to_delete = g_slist_prepend (items_to_delete, item);
         }
     }
     
@@ -2552,6 +2648,12 @@ sp_selection_set_mask(bool apply_clip_path, bool apply_to_layer)
 
     g_slist_free (mask_items);
     g_slist_free (apply_to_items);
+
+    for (GSList *i = items_to_delete; NULL != i; i = i->next) {
+        SPObject *item = SP_OBJECT (i->data);
+        item->deleteObject (false);
+    }
+    g_slist_free (items_to_delete);
 
     if (apply_clip_path) 
         sp_document_done (document, SP_VERB_OBJECT_SET_CLIPPATH, _("Set clipping path"));
