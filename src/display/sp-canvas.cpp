@@ -1276,6 +1276,9 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
     int button_down = 0;
     double x, y;
 
+    if (!canvas->root) // canvas may have already be destroyed by closing desktop durring interrupted display!
+        return FALSE;
+
     int retval = FALSE;
 
     if (canvas->gen_all_enter_events == false) {
