@@ -452,6 +452,7 @@ static gint sp_event_context_private_root_handler(SPEventContext *event_context,
         case GDK_BUTTON_RELEASE:
             if (within_tolerance && (panning || zoom_rb)) {
                 dontgrab ++;
+                zoom_rb = 0;
                 NR::Point const event_w(event->button.x, event->button.y);
                 NR::Point const event_dt(desktop->w2d(event_w));
                 double const zoom_power = ( (event->button.state & GDK_SHIFT_MASK)
