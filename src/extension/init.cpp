@@ -33,6 +33,8 @@
 #endif
 #ifdef WIN32
 # include "internal/win32.h"
+# include "internal/emf-win32-inout.h"
+# include "internal/emf-win32-print.h"
 #endif
 #include "internal/ps-out.h"
 #ifdef HAVE_CAIRO_PDF
@@ -125,6 +127,8 @@ init()
 #endif
 #ifdef WIN32
     Internal::PrintWin32::init();
+    Internal::PrintEmfWin32::init();
+    Internal::EmfWin32::init();
 #endif
     Internal::PovOutput::init();
     Internal::OdfOutput::init();
