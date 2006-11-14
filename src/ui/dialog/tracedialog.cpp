@@ -3,10 +3,11 @@
  * bitmap <image> into an svg <path>
  *
  * Authors:
- *   Bob Jamison
+ *   Bob Jamison <rjamison@titan.com>
+ *   Stéphane Gimenez <dev@gim.name>
  *   Other dudes from The Inkscape Organization
  *
- * Copyright (C) 2004, 2005 Authors
+ * Copyright (C) 2004-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -97,6 +98,22 @@ class TraceDialogImpl : public TraceDialog
     Gtk::HBox             potraceInvertBox;
     Gtk::Button           *potraceOkButton;
     Gtk::Button           *potraceCancelButton;
+
+    //params
+    Gtk::Frame            potraceParamsFrame;
+    Gtk::VBox             potraceParamsVBox;
+    Gtk::HBox             potraceParamsSpecklesBox;
+    Gtk::CheckButton      potraceParamsSpecklesButton;
+    Gtk::Label            potraceParamsSpecklesSizeLabel;
+    Gtk::SpinButton       potraceParamsSpecklesSizeSpinner;
+    Gtk::HBox             potraceParamsCornersBox;
+    Gtk::CheckButton      potraceParamsCornersButton;
+    Gtk::Label            potraceParamsCornersThresholdLabel;
+    Gtk::SpinButton       potraceParamsCornersThresholdSpinner;
+    Gtk::HBox             potraceParamsOptimBox;
+    Gtk::CheckButton      potraceParamsOptimButton;
+    Gtk::Label            potraceParamsOptimToleranceLabel;
+    Gtk::SpinButton       potraceParamsOptimToleranceSpinner;
 
     //brightness
     Gtk::Frame            potraceBrightnessFrame;
@@ -211,7 +228,24 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
         pte.setInvert(false);
         }
 
+    /* params */
+    int paramsSpecklesSize =
+      potraceParamsSpecklesButton.get_active() ?
+      potraceParamsSpecklesSizeSpinner.get_value_as_int() :
+      0;
+    pte.setParamsTurdSize(paramsSpecklesSize);
+    double paramsCornersThreshold =
+      potraceParamsCornersButton.get_active() ?
+      potraceParamsCornersThresholdSpinner.get_value() :
+      0.;
+    pte.setParamsAlphaMax(paramsCornersThreshold);
+    bool paramsOptim = potraceParamsOptimButton.get_active();
+    pte.setParamsOptiCurve(paramsOptim);
+    double paramsOptimTolerance = potraceParamsOptimToleranceSpinner.get_value();
+    pte.setParamsOptTolerance(paramsOptimTolerance);
+
     //##### Get the single-scan settings
+
     /* brightness */
     double brightnessThreshold = potraceBrightnessSpinner.get_value();
     pte.setBrightnessThreshold(brightnessThreshold);
@@ -356,6 +390,57 @@ TraceDialogImpl::TraceDialogImpl()
 
 
     //##Set up the Potrace panel
+
+    /*#### params ####*/
+    potraceParamsSpecklesButton.set_label(_("Speckles Filtering"));
+    potraceParamsSpecklesButton.set_active(true);
+    //tips.set_tip(potraceParamsSpecklesButton, _(""));
+    potraceParamsSpecklesBox.pack_start(potraceParamsSpecklesButton, false, false, MARGIN);
+    potraceParamsSpecklesSizeSpinner.set_digits(0);
+    potraceParamsSpecklesSizeSpinner.set_increments(1, 10);
+    potraceParamsSpecklesSizeSpinner.set_range(0, 1000);
+    potraceParamsSpecklesSizeSpinner.set_value(2);
+    tips.set_tip(potraceParamsSpecklesSizeSpinner,
+		 _("Suppress speckles of up to this many pixels"));
+    potraceParamsSpecklesBox.pack_end(potraceParamsSpecklesSizeSpinner, false, false, MARGIN);
+    potraceParamsSpecklesSizeLabel.set_label(_("Size:"));
+    potraceParamsSpecklesBox.pack_end(potraceParamsSpecklesSizeLabel, false, false, MARGIN);
+
+    potraceParamsCornersButton.set_label(_("Corner Smoothing"));
+    potraceParamsCornersButton.set_active(true);
+    //tips.set_tip(potraceParamsCornersButton, _(""));
+    potraceParamsCornersBox.pack_start(potraceParamsCornersButton, false, false, MARGIN);
+    potraceParamsCornersThresholdSpinner.set_digits(2);
+    potraceParamsCornersThresholdSpinner.set_increments(0.01, 0.1);
+    potraceParamsCornersThresholdSpinner.set_range(0.0, 1.34);
+    potraceParamsCornersThresholdSpinner.set_value(1.0);
+    potraceParamsCornersBox.pack_end(potraceParamsCornersThresholdSpinner, false, false, MARGIN);
+    tips.set_tip(potraceParamsCornersThresholdSpinner,
+		 _("The higher this value, the smoother corners will be produced"));
+    potraceParamsCornersThresholdLabel.set_label(_("Threshold:"));
+    potraceParamsCornersBox.pack_end(potraceParamsCornersThresholdLabel, false, false, MARGIN);
+
+    potraceParamsOptimButton.set_label(_("Curve Optimization"));
+    potraceParamsOptimButton.set_active(true);
+    tips.set_tip(potraceParamsOptimButton,
+		 _("Try to join adjacent Bezier curve segments"));
+    potraceParamsOptimBox.pack_start(potraceParamsOptimButton, false, false, MARGIN);
+    potraceParamsOptimToleranceSpinner.set_digits(2);
+    potraceParamsOptimToleranceSpinner.set_increments(0.05, 0.25);
+    potraceParamsOptimToleranceSpinner.set_range(0.0, 5.0);
+    potraceParamsOptimToleranceSpinner.set_value(0.2);
+    potraceParamsOptimBox.pack_end(potraceParamsOptimToleranceSpinner, false, false, MARGIN);
+    tips.set_tip(potraceParamsOptimToleranceSpinner,
+		 _("Set the curve optimization tolerance"));
+    potraceParamsOptimToleranceLabel.set_label(_("Tolerance:"));
+    potraceParamsOptimBox.pack_end(potraceParamsOptimToleranceLabel, false, false, MARGIN);
+
+    potraceParamsVBox.pack_start(potraceParamsSpecklesBox, false, false, MARGIN);
+    potraceParamsVBox.pack_start(potraceParamsCornersBox, false, false, MARGIN);
+    potraceParamsVBox.pack_start(potraceParamsOptimBox, false, false, MARGIN);
+    potraceParamsFrame.set_label(_("Parameters"));
+    potraceParamsFrame.add(potraceParamsVBox);
+    potraceBox.pack_start(potraceParamsFrame, false, false, 0);
 
     /*#### brightness ####*/
     potraceBrightnessRadioButton.set_label(_("Brightness"));

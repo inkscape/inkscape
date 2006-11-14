@@ -3,8 +3,9 @@
  *
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
+ *   Stéphane Gimenez <dev@gim.name>
  *
- * Copyright (C) 2004 Bob Jamison
+ * Copyright (C) 2004-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -19,6 +20,8 @@
 #include <gtkmm.h>
 #include <trace/trace.h>
 #include <trace/imagemap.h>
+
+#include "potracelib.h"
 
 namespace Inkscape {
 
@@ -50,8 +53,47 @@ class PotraceTracingEngine : public TracingEngine
     /**
      *
      */
-    virtual ~PotraceTracingEngine()
-        {}
+    ~PotraceTracingEngine();
+
+
+    /**
+     * Sets/gets potrace parameters
+     */
+    void setParamsTurdSize(int val)
+        {
+        potraceParams->turdsize = val;
+        }
+    int getParamsTurdSize()
+        {
+        return potraceParams->turdsize;
+        }
+
+    void setParamsAlphaMax(double val)
+        {
+        potraceParams->alphamax = val;
+        }
+    double getParamsAlphaMax()
+        {
+        return potraceParams->alphamax;
+        }
+
+    void setParamsOptiCurve(bool val)
+        {
+        potraceParams->opticurve = val;
+        }
+    bool getParamsOptiCurve()
+        {
+        return potraceParams->opticurve;
+        }
+
+    void setParamsOptTolerance(double val)
+        {
+        potraceParams->opttolerance = val;
+        }
+    double getParamsOptTolerance()
+        {
+        return potraceParams->opttolerance;
+        }
 
     void setTraceType(TraceType val)
         {
@@ -199,6 +241,7 @@ class PotraceTracingEngine : public TracingEngine
 
     private:
 
+    potrace_param_t *potraceParams;
     TraceType traceType;
 
     //## do i invert at the end?

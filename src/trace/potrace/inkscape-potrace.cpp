@@ -3,8 +3,9 @@
  *
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
+ *   Stéphane Gimenez <dev@gim.name>
  *
- * Copyright (C) 2004 Bob Jamison
+ * Copyright (C) 2004-2006 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -70,18 +71,23 @@ namespace Potrace {
  */
 PotraceTracingEngine::PotraceTracingEngine()
 {
+    /* get default parameters */
+    potraceParams = potrace_param_default();
+    potraceParams->progress.callback = potraceStatusCallback;
+    potraceParams->progress.data = (void *)this;
 
     //##### Our defaults
     invert    = false;
     traceType = TRACE_BRIGHTNESS;
-
     quantizationNrColors = 8;
-
     brightnessThreshold  = 0.45;
-
     cannyHighThreshold   = 0.65;
 
+}
 
+PotraceTracingEngine::~PotraceTracingEngine()
+{
+    potrace_param_free(potraceParams);
 }
 
 
@@ -366,13 +372,6 @@ PotraceTracingEngine::preview(Glib::RefPtr<Gdk::Pixbuf> thePixbuf)
 std::string
 PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 {
-
-    /* get default parameters */
-    potrace_param_t *potraceParams = potrace_param_default();
-
-    potraceParams->progress.callback = potraceStatusCallback;
-    potraceParams->progress.data     = (void *)this;
-
     potrace_bitmap_t *potraceBitmap = bm_new(grayMap->width, grayMap->height);
     bm_clear(potraceBitmap, 0);
 
@@ -410,7 +409,6 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
         {
         g_warning("aborted");
         potrace_state_free(potraceState);
-        potrace_param_free(potraceParams);
         return "";
         }
 
@@ -424,7 +422,6 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 
     /* free a potrace items */
     potrace_state_free(potraceState);
-    potrace_param_free(potraceParams);
 
     if (!keepGoing)
         return "";
