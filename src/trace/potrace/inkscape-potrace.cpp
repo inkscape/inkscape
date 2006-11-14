@@ -531,7 +531,6 @@ PotraceTracingEngine::traceBrightnessMulti(GdkPixbuf * thePixbuf)
     //# Remove the bottom-most scan, if requested
     if (results.size() > 1 && multiScanRemoveBackground)
         {
-        g_message("remove background");
         results.erase(results.end() - 1);
         }
 
@@ -616,7 +615,6 @@ PotraceTracingEngine::traceQuant(GdkPixbuf * thePixbuf)
     //# Remove the bottom-most scan, if requested
     if (results.size() > 1 && multiScanRemoveBackground)
         {
-        g_message("remove background");
         results.erase(results.end() - 1);
         }
 
