@@ -143,7 +143,6 @@ enum {
     SP_ARG_QUERY_HEIGHT,
     SP_ARG_QUERY_ID,
     SP_ARG_VERSION,
-    SP_ARG_NEW_GUI,
     SP_ARG_VACUUM_DEFS,
     SP_ARG_LAST
 };
@@ -356,11 +355,6 @@ struct poptOption options[] = {
      N_("Show given files one-by-one, switch to next on any key/mouse event"),
      NULL},
 
-    {"new-gui", 'G',
-     POPT_ARG_NONE, &sp_new_gui, SP_ARG_NEW_GUI,
-     N_("Use the new Gtkmm GUI interface"),
-     NULL},
-
     {"vacuum-defs", 0,
      POPT_ARG_NONE, &sp_vacuum_defs, SP_ARG_VACUUM_DEFS,
      N_("Remove unused definitions from the defs section(s) of the document"),
@@ -466,9 +460,6 @@ main(int argc, char **argv)
             break;
         } else if (!strcmp(argv[i], "-g") || !strcmp(argv[i], "--with-gui")) {
             use_gui = TRUE;
-            break;
-        } else if (!strcmp(argv[i], "-G") || !strcmp(argv[i], "--new-gui")) {
-            sp_new_gui = TRUE;
             break;
         }
     }
