@@ -40,9 +40,7 @@
 CRNum *
 cr_num_new (void)
 {
-        CRNum *result = NULL;
-
-        result = g_try_malloc (sizeof (CRNum));
+        CRNum *result = (CRNum *)g_try_malloc (sizeof (CRNum));
 
         if (result == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -104,13 +102,13 @@ cr_num_to_string (CRNum * a_this)
         test_val = a_this->val - (glong) a_this->val;
 
         if (!test_val) {
-                tmp_char1 = g_strdup_printf ("%ld", (glong) a_this->val);
+                tmp_char1 = (guchar *)g_strdup_printf ("%ld", (glong) a_this->val);
         } else {
                 /* We can't use g_ascii_dtostr, because that sometimes uses
                    e notation (which wouldn't be a valid number in CSS). */
                 size_t const buflen = 35;  /* fairly arbitrary. */
-                tmp_char1 = g_malloc (buflen);
-                g_ascii_formatd (tmp_char1, buflen, "%.17f", a_this->val);
+                tmp_char1 = (guchar *)g_malloc (buflen);
+                g_ascii_formatd ((gchar *)tmp_char1, buflen, "%.17f", a_this->val);
         }
 
         g_return_val_if_fail (tmp_char1, NULL);
@@ -194,7 +192,8 @@ cr_num_to_string (CRNum * a_this)
         }
 
         if (tmp_char2) {
-                result = g_strconcat (tmp_char1, tmp_char2, NULL);
+                result = (guchar *)g_strconcat (
+				    (gchar *)tmp_char1, (gchar *)tmp_char2, NULL);
                 g_free (tmp_char1);
         } else {
                 result = tmp_char1;

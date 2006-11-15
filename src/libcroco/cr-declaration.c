@@ -41,11 +41,9 @@
 static void
 dump (CRDeclaration * a_this, FILE * a_fp, glong a_indent)
 {
-        guchar *str = NULL;
-
         g_return_if_fail (a_this);
 
-        str = cr_declaration_to_string (a_this, a_indent);
+        gchar *str = cr_declaration_to_string (a_this, a_indent);
         if (str) {
                 fprintf (a_fp, "%s", str);
                 g_free (str);
@@ -64,8 +62,6 @@ CRDeclaration *
 cr_declaration_new (CRStatement * a_statement,
                     CRString * a_property, CRTerm * a_value)
 {
-        CRDeclaration *result = NULL;
-
         g_return_val_if_fail (a_property, NULL);
 
         if (a_statement)
@@ -76,7 +72,7 @@ cr_declaration_new (CRStatement * a_statement,
                                           || (a_statement->type
                                               == AT_PAGE_RULE_STMT)), NULL);
 
-        result = g_try_malloc (sizeof (CRDeclaration));
+        CRDeclaration * result = (CRDeclaration *)g_try_malloc (sizeof (CRDeclaration));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -111,7 +107,6 @@ cr_declaration_parse_from_buf (CRStatement * a_statement,
         CRTerm *value = NULL;
         CRString *property = NULL;
         CRDeclaration *result = NULL;
-        CRParser *parser = NULL;
         gboolean important = FALSE;
 
         g_return_val_if_fail (a_str, NULL);
@@ -119,7 +114,9 @@ cr_declaration_parse_from_buf (CRStatement * a_statement,
                 g_return_val_if_fail (a_statement->type == RULESET_STMT,
                                       NULL);
 
-        parser = cr_parser_new_from_buf ((guchar*)a_str, strlen (a_str), a_enc, FALSE);
+        CRParser *parser = (CRParser *)
+		        cr_parser_new_from_buf ((guchar*)a_str,
+				  strlen ((char *)a_str), a_enc, FALSE);
         g_return_val_if_fail (parser, NULL);
 
         status = cr_parser_try_to_skip_spaces_and_comments (parser);
@@ -175,13 +172,13 @@ cr_declaration_parse_list_from_buf (const guchar * a_str,
         CRString *property = NULL;
         CRDeclaration *result = NULL,
                 *cur_decl = NULL;
-        CRParser *parser = NULL;
         CRTknzr *tokenizer = NULL;
         gboolean important = FALSE;
 
         g_return_val_if_fail (a_str, NULL);
 
-        parser = cr_parser_new_from_buf ((guchar*)a_str, strlen (a_str), a_enc, FALSE);
+        CRParser *parser = (CRParser *)cr_parser_new_from_buf
+		      ((guchar*)a_str, strlen ((char *)a_str), a_enc, FALSE);
         g_return_val_if_fail (parser, NULL);
         status = cr_parser_get_tknzr (parser, &tokenizer);
         if (status != CR_OK || !tokenizer) {
@@ -468,7 +465,7 @@ cr_declaration_to_string (CRDeclaration * a_this, gulong a_indent)
 {
         GString *stringue = NULL;
 
-        guchar *str = NULL,
+        gchar *str = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this, NULL);
@@ -535,7 +532,7 @@ cr_declaration_list_to_string (CRDeclaration * a_this, gulong a_indent)
 {
         CRDeclaration *cur = NULL;
         GString *stringue = NULL;
-        guchar *str = NULL,
+        gchar *str = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this, NULL);
@@ -555,7 +552,7 @@ cr_declaration_list_to_string (CRDeclaration * a_this, gulong a_indent)
                 g_string_free (stringue, FALSE);
         }
 
-        return result;
+        return (guchar *)result;
 }
 
 /**
@@ -570,7 +567,7 @@ cr_declaration_list_to_string2 (CRDeclaration * a_this,
 {
         CRDeclaration *cur = NULL;
         GString *stringue = NULL;
-        guchar *str = NULL,
+        gchar *str = NULL,
                 *result = NULL;
 
         g_return_val_if_fail (a_this, NULL);
@@ -604,7 +601,7 @@ cr_declaration_list_to_string2 (CRDeclaration * a_this,
                 g_string_free (stringue, FALSE);
         }
 
-        return result;
+        return (guchar *)result;
 }
 
 /**
@@ -666,7 +663,7 @@ cr_declaration_get_by_prop_name (CRDeclaration * a_this,
 		    && cur->property->stryng
 		    && cur->property->stryng->str) {
 			if (!strcmp (cur->property->stryng->str, 
-				     a_prop)) {
+				     (char *)a_prop)) {
 				return cur;
 			}
 		}

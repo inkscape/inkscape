@@ -30,7 +30,7 @@ static enum CRStatus
 cr_font_family_to_string_real (CRFontFamily * a_this,
                                gboolean a_walk_list, GString ** a_string)
 {
-        guchar *name = NULL;
+        gchar *name = NULL;
         enum CRStatus result = CR_OK;
 
         if (!*a_string) {
@@ -46,31 +46,31 @@ cr_font_family_to_string_real (CRFontFamily * a_this,
 
         switch (a_this->type) {
         case FONT_FAMILY_SANS_SERIF:
-                name = (guchar *) "sans-serif";
+                name = (gchar *) "sans-serif";
                 break;
 
         case FONT_FAMILY_SERIF:
-                name = (guchar *) "sans-serif";
+                name = (gchar *) "sans-serif";
                 break;
 
         case FONT_FAMILY_CURSIVE:
-                name = (guchar *) "cursive";
+                name = (gchar *) "cursive";
                 break;
 
         case FONT_FAMILY_FANTASY:
-                name = (guchar *) "fantasy";
+                name = (gchar *) "fantasy";
                 break;
 
         case FONT_FAMILY_MONOSPACE:
-                name = (guchar *) "monospace";
+                name = (gchar *) "monospace";
                 break;
 
         case FONT_FAMILY_NON_GENERIC:
-                name = (guchar *) a_this->name;
+                name = (gchar *) a_this->name;
                 break;
 
         default:
-                name = (guchar *) NULL;
+                name = (gchar *) NULL;
                 break;
         }
 
@@ -144,9 +144,7 @@ cr_relative_font_size_to_string (enum CRRelativeFontSize a_code)
 CRFontFamily *
 cr_font_family_new (enum CRFontFamilyType a_type, guchar * a_name)
 {
-        CRFontFamily *result = NULL;
-
-        result = g_try_malloc (sizeof (CRFontFamily));
+        CRFontFamily *result = (CRFontFamily *)g_try_malloc (sizeof (CRFontFamily));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -166,13 +164,13 @@ cr_font_family_to_string (CRFontFamily * a_this,
                           gboolean a_walk_font_family_list)
 {
         enum CRStatus status = CR_OK;
-        guchar *result = NULL;
+        gchar *result = NULL;
         GString *stringue = NULL;
 
         if (!a_this) {
                 result = g_strdup ("NULL");
                 g_return_val_if_fail (result, NULL);
-                return result;
+                return (guchar *)result;
         }
         status = cr_font_family_to_string_real (a_this,
                                                 a_walk_font_family_list,
@@ -190,7 +188,7 @@ cr_font_family_to_string (CRFontFamily * a_this,
                 }
         }
 
-        return result;
+        return (guchar *)result;
 }
 enum CRStatus
 cr_font_family_set_name (CRFontFamily * a_this, guchar * a_name)
@@ -246,7 +244,7 @@ cr_font_family_prepend (CRFontFamily * a_this,
         a_family_to_prepend->next = a_this;
         a_this->prev = a_family_to_prepend;
 
-        return CR_OK;
+        return a_family_to_prepend;
 }
 
 enum CRStatus
@@ -284,9 +282,7 @@ cr_font_family_destroy (CRFontFamily * a_this)
 CRFontSize *
 cr_font_size_new (void)
 {
-        CRFontSize *result = NULL;
-
-        result = g_try_malloc (sizeof (CRFontSize));
+        CRFontSize *result = (CRFontSize *)g_try_malloc (sizeof (CRFontSize));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -422,7 +418,7 @@ cr_font_size_to_string (CRFontSize * a_this)
                                 (a_this->value.predefined));
                 break;
         case ABSOLUTE_FONT_SIZE:
-                str = cr_num_to_string (&a_this->value.absolute);
+                str = (gchar *)cr_num_to_string (&a_this->value.absolute);
                 break;
         case RELATIVE_FONT_SIZE:
                 str = g_strdup (cr_relative_font_size_to_string
@@ -551,7 +547,7 @@ cr_font_size_adjust_to_string (CRFontSizeAdjust * a_this)
                 break;
         case FONT_SIZE_ADJUST_NUMBER:
                 if (a_this->num)
-                        str = cr_num_to_string (a_this->num);
+                        str = (gchar *)cr_num_to_string (a_this->num);
                 else
                         str = g_strdup ("unknow font-size-adjust property value"); // Should raise an error no?
                 break;
@@ -617,7 +613,7 @@ cr_font_weight_get_bolder (enum CRFontWeight a_weight)
                 cr_utils_trace_info ("FONT_WEIGHT_BOLDER or FONT_WEIGHT_LIGHTER should not appear here") ;
                 return FONT_WEIGHT_NORMAL ;
         } else {
-                return a_weight << 1 ;
+                return (CRFontWeight)(a_weight << 1) ;
         }
 }
 
@@ -737,9 +733,8 @@ cr_font_size_destroy (CRFontSize * a_font_size)
 CRFontSizeAdjust *
 cr_font_size_adjust_new (void)
 {
-        CRFontSizeAdjust *result = NULL;
-
-        result = g_try_malloc (sizeof (CRFontSizeAdjust));
+        CRFontSizeAdjust *result =
+		     (CRFontSizeAdjust *)g_try_malloc (sizeof (CRFontSizeAdjust));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;

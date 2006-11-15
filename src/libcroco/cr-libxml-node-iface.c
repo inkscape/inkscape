@@ -44,7 +44,7 @@ static char const *
 libxml_getLocalName(CRXMLNodePtr cnode)
 {
 	xmlNode const *xnode = (xmlNode const *) cnode;
-	return local_part(xnode->name);
+	return local_part((char *)xnode->name);
 }
 
 static char *
@@ -52,7 +52,7 @@ libxml_getProp(CRXMLNodePtr cnode, char const *cprop)
 {
 	xmlNodePtr xnode = (xmlNodePtr) cnode;
 	xmlChar const *xprop = (xmlChar const *) cprop;
-	return xmlGetProp(xnode, xprop);
+	return (char *)xmlGetProp(xnode, xprop);
 }
 
 static gboolean

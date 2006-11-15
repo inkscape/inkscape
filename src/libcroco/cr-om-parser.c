@@ -112,9 +112,8 @@ struct _ParsingContext {
 static ParsingContext *
 new_parsing_context (void)
 {
-        ParsingContext *result = NULL;
-
-        result = g_try_malloc (sizeof (ParsingContext));
+        ParsingContext *result = 
+		    (ParsingContext *)g_try_malloc (sizeof (ParsingContext));
         if (!result) {
                 cr_utils_trace_info ("Out of Memory");
                 return NULL;
@@ -778,10 +777,9 @@ unrecoverable_error (CRDocHandler * a_this)
 CROMParser *
 cr_om_parser_new (CRInput * a_input)
 {
-        CROMParser *result = NULL;
         enum CRStatus status = CR_OK;
 
-        result = g_try_malloc (sizeof (CROMParser));
+        CROMParser *result = (CROMParser *)g_try_malloc (sizeof (CROMParser));
 
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
@@ -789,7 +787,7 @@ cr_om_parser_new (CRInput * a_input)
         }
 
         memset (result, 0, sizeof (CROMParser));
-        PRIVATE (result) = g_try_malloc (sizeof (CROMParserPriv));
+        PRIVATE (result) = (CROMParserPriv *)g_try_malloc (sizeof (CROMParserPriv));
 
         if (!PRIVATE (result)) {
                 cr_utils_trace_info ("Out of memory");

@@ -38,9 +38,8 @@
 CRParsingLocation * 
 cr_parsing_location_new (void)
 {
-	CRParsingLocation * result = NULL ;
-
-	result = g_try_malloc (sizeof (CRParsingLocation)) ;
+	CRParsingLocation *result = 
+	    (CRParsingLocation *)g_try_malloc (sizeof (CRParsingLocation)) ;
 	if (!result) {
 		cr_utils_trace_info ("Out of memory error") ;
 		return NULL ;
@@ -91,15 +90,15 @@ gchar *
 cr_parsing_location_to_string (CRParsingLocation *a_this,
 			       enum CRParsingLocationSerialisationMask a_mask)
 {
-	GString *result = NULL ;
 	gchar *str = NULL ;
 
 	g_return_val_if_fail (a_this, NULL) ;
 
 	if (!a_mask) {
-		a_mask = DUMP_LINE | DUMP_COLUMN | DUMP_BYTE_OFFSET ;
+		a_mask = (CRParsingLocationSerialisationMask)
+		    ((int)DUMP_LINE | (int)DUMP_COLUMN | (int)DUMP_BYTE_OFFSET) ;
 	}
-	result =g_string_new (NULL) ;
+	GString *result = (GString *)g_string_new (NULL) ;
 	if (!result)
 		return NULL ;
 	if (a_mask & DUMP_LINE) {

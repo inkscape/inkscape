@@ -33,9 +33,7 @@
 CRSimpleSel *
 cr_simple_sel_new (void)
 {
-        CRSimpleSel *result = NULL;
-
-        result = g_try_malloc (sizeof (CRSimpleSel));
+        CRSimpleSel *result = (CRSimpleSel *)g_try_malloc (sizeof (CRSimpleSel));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
@@ -103,7 +101,7 @@ cr_simple_sel_to_string (CRSimpleSel * a_this)
         str_buf = g_string_new (NULL);
         for (cur = a_this; cur; cur = cur->next) {
                 if (cur->name) {
-                        guchar *str = g_strndup (cur->name->stryng->str,
+                        gchar *str = g_strndup (cur->name->stryng->str,
                                                  cur->name->stryng->len);
 
                         if (str) {
@@ -131,9 +129,8 @@ cr_simple_sel_to_string (CRSimpleSel * a_this)
                 }
 
                 if (cur->add_sel) {
-                        guchar *tmp_str = NULL;
 
-                        tmp_str = cr_additional_sel_to_string (cur->add_sel);
+                        gchar *tmp_str = (gchar *)cr_additional_sel_to_string (cur->add_sel);
                         if (tmp_str) {
                                 g_string_append (str_buf, tmp_str);
                                 g_free (tmp_str);
@@ -143,7 +140,7 @@ cr_simple_sel_to_string (CRSimpleSel * a_this)
         }
 
         if (str_buf) {
-                result = str_buf->str;
+                result = (guchar *)str_buf->str;
                 g_string_free (str_buf, FALSE);
                 str_buf = NULL;
         }
@@ -162,7 +159,7 @@ cr_simple_sel_one_to_string (CRSimpleSel * a_this)
 
         str_buf = g_string_new (NULL);
         if (a_this->name) {
-                guchar *str = g_strndup (a_this->name->stryng->str,
+                gchar *str = g_strndup (a_this->name->stryng->str,
                                          a_this->name->stryng->len);
 
                 if (str) {
@@ -173,9 +170,8 @@ cr_simple_sel_one_to_string (CRSimpleSel * a_this)
         }
 
         if (a_this->add_sel) {
-                guchar *tmp_str = NULL;
 
-                tmp_str = cr_additional_sel_to_string (a_this->add_sel);
+                gchar *tmp_str = (gchar *)cr_additional_sel_to_string (a_this->add_sel);
                 if (tmp_str) {
                         g_string_append_printf
                                 (str_buf, "%s", tmp_str);
@@ -185,7 +181,7 @@ cr_simple_sel_one_to_string (CRSimpleSel * a_this)
         }
 
         if (str_buf) {
-                result = str_buf->str;
+                result = (guchar *)str_buf->str;
                 g_string_free (str_buf, FALSE);
                 str_buf = NULL;
         }

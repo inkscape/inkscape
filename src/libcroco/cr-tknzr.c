@@ -195,7 +195,7 @@ CHECK_PARSING_STATUS (status, TRUE) ;
  */
 #define SKIP_CHARS(a_tknzr, a_nb_chars) \
 { \
-glong nb_chars = a_nb_chars ; \
+gulong nb_chars = a_nb_chars ; \
 status = cr_input_consume_chars \
      (PRIVATE (a_tknzr)->input,0, &nb_chars) ; \
 CHECK_PARSING_STATUS (status, TRUE) ; \
@@ -408,7 +408,7 @@ cr_tknzr_try_to_skip_spaces (CRTknzr * a_this)
         }
 
         if (cr_utils_is_white_space (cur_char) == TRUE) {
-                glong nb_chars = -1; /*consume all spaces */
+                gulong nb_chars = -1; /*consume all spaces */
 
                 status = cr_input_consume_white_spaces
                         (PRIVATE (a_this)->input, &nb_chars);
@@ -1292,7 +1292,7 @@ cr_tknzr_parse_rgb (CRTknzr * a_this, CRRgb ** a_rgb)
         status = cr_tknzr_parse_num (a_this, &num);
         ENSURE_PARSING_COND ((status == CR_OK) && (num != NULL));
 
-        red = num->val;
+        red = (glong)num->val;
         cr_num_destroy (num);
         num = NULL;
 
@@ -1318,9 +1318,9 @@ cr_tknzr_parse_rgb (CRTknzr * a_this, CRRgb ** a_rgb)
                 }
 
                 if (i == 0) {
-                        green = num->val;
+                        green = (glong)num->val;
                 } else if (i == 1) {
-                        blue = num->val;
+                        blue = (glong)num->val;
                 }
 
                 if (num) {
@@ -1582,9 +1582,7 @@ cr_tknzr_parse_num (CRTknzr * a_this,
 CRTknzr *
 cr_tknzr_new (CRInput * a_input)
 {
-        CRTknzr *result = NULL;
-
-        result = g_try_malloc (sizeof (CRTknzr));
+        CRTknzr *result = (CRTknzr *)g_try_malloc (sizeof (CRTknzr));
 
         if (result == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -1593,7 +1591,7 @@ cr_tknzr_new (CRInput * a_input)
 
         memset (result, 0, sizeof (CRTknzr));
 
-        result->priv = g_try_malloc (sizeof (CRTknzrPriv));
+        result->priv = (CRTknzrPriv *)g_try_malloc (sizeof (CRTknzrPriv));
 
         if (result->priv == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -1634,9 +1632,7 @@ cr_tknzr_new_from_uri (const guchar * a_file_uri,
                        enum CREncoding a_enc)
 {
         CRTknzr *result = NULL;
-        CRInput *input = NULL;
-
-        input = cr_input_new_from_uri (a_file_uri, a_enc);
+        CRInput *input = cr_input_new_from_uri ((gchar *)a_file_uri, a_enc);
         g_return_val_if_fail (input != NULL, NULL);
 
         result = cr_tknzr_new (input);
@@ -1909,7 +1905,7 @@ cr_tknzr_consume_chars (CRTknzr * a_this, guint32 a_char, glong * a_nb_char)
         }
 
         return cr_input_consume_chars (PRIVATE (a_this)->input,
-                                       a_char, a_nb_char);
+                                       a_char, (gulong *)a_nb_char);
 }
 
 enum CRStatus

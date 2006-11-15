@@ -32,9 +32,7 @@
 CRString *
 cr_string_new (void)
 {
-	CRString *result = NULL ;
-
-	result = g_try_malloc (sizeof (CRString)) ;
+	CRString *result = (CRString *)g_try_malloc (sizeof (CRString)) ;
 	if (!result) {
 		cr_utils_trace_info ("Out of memory") ;
 		return NULL ;
@@ -53,9 +51,7 @@ cr_string_new (void)
 CRString  *
 cr_string_new_from_string (const gchar * a_string)
 {
-	CRString *result = NULL ;
-
-	result = cr_string_new () ;
+	CRString *result = cr_string_new () ;
 	if (!result) {
 		cr_utils_trace_info ("Out of memory") ;
 		return NULL ;
@@ -74,9 +70,7 @@ cr_string_new_from_string (const gchar * a_string)
 CRString *
 cr_string_new_from_gstring (GString *a_string)
 {
-	CRString *result = NULL ;
-
-	result = cr_string_new () ;
+	CRString *result = cr_string_new () ;
 	if (!result) {
 		cr_utils_trace_info ("Out of memory") ;
 		return NULL ;
@@ -93,10 +87,9 @@ cr_string_new_from_gstring (GString *a_string)
 CRString *
 cr_string_dup (CRString *a_this)
 {
-	CRString *result = NULL ;
 	g_return_val_if_fail (a_this, NULL) ;
 
-	result = cr_string_new_from_gstring (a_this->stryng) ;
+	CRString *result = cr_string_new_from_gstring (a_this->stryng) ;
 	if (!result) {
 		cr_utils_trace_info ("Out of memory") ;
 		return NULL ;

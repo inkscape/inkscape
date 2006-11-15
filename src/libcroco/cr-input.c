@@ -87,16 +87,14 @@ static CRInput *cr_input_new_real (void);
 static CRInput *
 cr_input_new_real (void)
 {
-        CRInput *result = NULL;
-
-        result = g_try_malloc (sizeof (CRInput));
+        CRInput *result = (CRInput *)g_try_malloc (sizeof (CRInput));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
         }
         memset (result, 0, sizeof (CRInput));
 
-        PRIVATE (result) = g_try_malloc (sizeof (CRInputPriv));
+        PRIVATE (result) = (CRInputPriv *)g_try_malloc (sizeof (CRInputPriv));
         if (!PRIVATE (result)) {
                 cr_utils_trace_info ("Out of memory");
                 g_free (result);
@@ -236,7 +234,7 @@ cr_input_new_from_uri (const gchar * a_file_uri, enum CREncoding a_enc)
 
                 if (status == CR_OK) {
                         /*read went well */
-                        buf = g_realloc (buf, len + CR_INPUT_MEM_CHUNK_SIZE);
+                        buf = (guchar *)g_realloc (buf, len + CR_INPUT_MEM_CHUNK_SIZE);
                         memcpy (buf + len, tmp_buf, nb_read);
                         len += nb_read;
                         buf_size += CR_INPUT_MEM_CHUNK_SIZE;
@@ -723,7 +721,7 @@ cr_input_peek_char (CRInput * a_this, guint32 * a_char)
         status = cr_utils_read_char_from_utf8_buf
                 (PRIVATE (a_this)->in_buf +
                  PRIVATE (a_this)->next_byte_index,
-                 nb_bytes_left, a_char, &consumed);
+                 nb_bytes_left, a_char, (gulong *)&consumed);
 
         return status;
 }

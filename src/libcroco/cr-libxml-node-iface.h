@@ -6,7 +6,7 @@
 
 G_BEGIN_DECLS
 
-CRNodeIface const cr_libxml_node_iface;
+extern CRNodeIface const cr_libxml_node_iface;
 
 G_END_DECLS
 

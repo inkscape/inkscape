@@ -409,9 +409,7 @@ static enum CRStatus
 static CRParserError *
 cr_parser_error_new (const guchar * a_msg, enum CRStatus a_status)
 {
-        CRParserError *result = NULL;
-
-        result = g_try_malloc (sizeof (CRParserError));
+        CRParserError *result = (CRParserError *)g_try_malloc (sizeof (CRParserError));
 
         if (result == NULL) {
                 cr_utils_trace_info ("Out of memory");
@@ -440,7 +438,7 @@ cr_parser_error_set_msg (CRParserError * a_this, const guchar * a_msg)
                 g_free (a_this->msg);
         }
 
-        a_this->msg = g_strdup (a_msg);
+        a_this->msg = (guchar *)g_strdup ((gchar *)a_msg);
 }
 
 /**
@@ -727,7 +725,7 @@ cr_parser_parse_stylesheet_core (CRParser * a_this)
 
  error:
         cr_parser_push_error
-                (a_this, "could not recognize next production", CR_ERROR);
+                (a_this, (guchar *)"could not recognize next production", CR_ERROR);
 
         cr_parser_dump_err_stack (a_this, TRUE);
 
@@ -1676,12 +1674,16 @@ cr_parser_parse_simple_selector (CRParser * a_this, CRSimpleSel ** a_sel)
 
         if (token && token->type == DELIM_TK 
             && token->u.unichar == '*') {
-                sel->type_mask |= UNIVERSAL_SELECTOR;
+                int comb = (int)sel->type_mask | (int) UNIVERSAL_SELECTOR;
+                sel->type_mask = (SimpleSelectorType)comb;
+                //sel->type_mask |= UNIVERSAL_SELECTOR;
                 sel->name = cr_string_new_from_string ("*");
                 found_sel = TRUE;
         } else if (token && token->type == IDENT_TK) {
                 sel->name = token->u.str;
-                sel->type_mask |= TYPE_SELECTOR;
+                int comb = (int)sel->type_mask | (int) TYPE_SELECTOR;
+                sel->type_mask = (SimpleSelectorType)comb;
+                //sel->type_mask |= TYPE_SELECTOR;
                 token->u.str = NULL;
                 found_sel = TRUE;
         } else {
@@ -1936,7 +1938,7 @@ cr_parser_parse_simple_sels (CRParser * a_this,
 
         for (;;) {
                 guint32 next_char = 0;
-                enum Combinator comb = 0;
+                int comb = 0;
 
                 sel = NULL;
 
@@ -1959,7 +1961,7 @@ cr_parser_parse_simple_sels (CRParser * a_this,
                         break;
 
                 if (comb && sel) {
-                        sel->combinator = comb;
+                        sel->combinator = (Combinator)comb;
                         comb = 0;
                 }
                 if (sel) {
@@ -2443,7 +2445,7 @@ cr_parser_parse_stylesheet (CRParser * a_this)
                                 /*free the medium list */
                                 for (cur = media_list; cur; cur = cur->next) {
                                         if (cur->data) {
-                                                cr_string_destroy (cur->data);
+                                                cr_string_destroy ((CRString *)cur->data);
                                         }
                                 }
 
@@ -2683,7 +2685,7 @@ cr_parser_parse_stylesheet (CRParser * a_this)
         }
 
         cr_parser_push_error
-                (a_this, "could not recognize next production", CR_ERROR);
+                (a_this, (guchar *)"could not recognize next production", CR_ERROR);
 
         if (PRIVATE (a_this)->sac_handler
             && PRIVATE (a_this)->sac_handler->unrecoverable_error) {
@@ -2730,12 +2732,11 @@ cr_parser_parse_stylesheet (CRParser * a_this)
 CRParser *
 cr_parser_new (CRTknzr * a_tknzr)
 {
-        CRParser *result = NULL;
         enum CRStatus status = CR_OK;
 
-        result = g_malloc0 (sizeof (CRParser));
+        CRParser *result = (CRParser *)g_malloc0 (sizeof (CRParser));
 
-        PRIVATE (result) = g_malloc0 (sizeof (CRParserPriv));
+        PRIVATE (result) = (CRParserPriv *)g_malloc0 (sizeof (CRParserPriv));
 
         if (a_tknzr) {
                 status = cr_parser_set_tknzr (result, a_tknzr);
@@ -2957,7 +2958,7 @@ cr_parser_parse_expr (CRParser * a_this, CRTerm ** a_expr)
         CHECK_PARSING_STATUS (status, FALSE);
 
         for (;;) {
-                guchar operator = 0;
+                guchar operatr = 0;
 
                 status = cr_tknzr_peek_byte (PRIVATE (a_this)->tknzr,
                                              1, &next_byte);
@@ -2977,7 +2978,7 @@ cr_parser_parse_expr (CRParser * a_this, CRTerm ** a_expr)
                 }
 
                 if (next_byte == '/' || next_byte == ',') {
-                        READ_NEXT_BYTE (a_this, &operator);
+                        READ_NEXT_BYTE (a_this, &operatr);
                 }
 
                 cr_parser_try_to_skip_spaces_and_comments (a_this);
@@ -2989,7 +2990,7 @@ cr_parser_parse_expr (CRParser * a_this, CRTerm ** a_expr)
                         break;
                 }
 
-                switch (operator) {
+                switch (operatr) {
                 case '/':
                         expr2->the_operator = DIVIDE;
                         break;
@@ -3002,7 +3003,7 @@ cr_parser_parse_expr (CRParser * a_this, CRTerm ** a_expr)
 
                 expr = cr_term_append_term (expr, expr2);
                 expr2 = NULL;
-                operator = 0;
+                operatr = 0;
                 nb_terms++;
         }
 
@@ -3113,7 +3114,7 @@ cr_parser_parse_declaration (CRParser * a_this,
 
         CHECK_PARSING_STATUS_ERR
                 (a_this, status, FALSE,
-                 "while parsing declaration: next property is malformed",
+                 (guchar *)"while parsing declaration: next property is malformed",
                  CR_SYNTAX_ERROR);
 
         READ_NEXT_CHAR (a_this, &cur_char);
@@ -3122,7 +3123,7 @@ cr_parser_parse_declaration (CRParser * a_this,
                 status = CR_PARSING_ERROR;
                 cr_parser_push_error
                         (a_this,
-                         "while parsing declaration: this char must be ':'",
+                         (guchar *)"while parsing declaration: this char must be ':'",
                          CR_SYNTAX_ERROR);
                 goto error;
         }
@@ -3133,7 +3134,7 @@ cr_parser_parse_declaration (CRParser * a_this,
 
         CHECK_PARSING_STATUS_ERR
                 (a_this, status, FALSE,
-                 "while parsing declaration: next expression is malformed",
+                 (guchar *)"while parsing declaration: next expression is malformed",
                  CR_SYNTAX_ERROR);
 
         cr_parser_try_to_skip_spaces_and_comments (a_this);
@@ -3266,7 +3267,7 @@ cr_parser_parse_ruleset (CRParser * a_this)
 
         ENSURE_PARSING_COND_ERR
                 (a_this, cur_char == '{',
-                 "while parsing rulset: current char should be '{'",
+                 (guchar *)"while parsing rulset: current char should be '{'",
                  CR_SYNTAX_ERROR);
 
         if (PRIVATE (a_this)->sac_handler
@@ -3330,7 +3331,7 @@ cr_parser_parse_ruleset (CRParser * a_this)
         }
         CHECK_PARSING_STATUS_ERR
                 (a_this, status, FALSE,
-                 "while parsing ruleset: next construction should be a declaration",
+                 (guchar *)"while parsing ruleset: next construction should be a declaration",
                  CR_SYNTAX_ERROR);
 
         for (;;) {
@@ -3371,7 +3372,7 @@ cr_parser_parse_ruleset (CRParser * a_this)
         READ_NEXT_CHAR (a_this, &cur_char);
         ENSURE_PARSING_COND_ERR
                 (a_this, cur_char == '}',
-                 "while parsing rulset: current char must be a '}'",
+                 (guchar *)"while parsing rulset: current char must be a '}'",
                  CR_SYNTAX_ERROR);
 
         if (PRIVATE (a_this)->sac_handler
@@ -3577,7 +3578,7 @@ cr_parser_parse_import (CRParser * a_this,
                  */
                 for (cur = *a_media_list; cur; cur = cur->next) {
                         if (cur->data) {
-                                cr_string_destroy (cur->data);
+                                cr_string_destroy ((CRString *)cur->data);
                         }
                 }
 
@@ -3728,7 +3729,7 @@ cr_parser_parse_media (CRParser * a_this)
                 GList *cur = NULL;
 
                 for (cur = media_list; cur; cur = cur->next) {
-                        cr_string_destroy (cur->data);
+                        cr_string_destroy ((CRString *)cur->data);
                 }
 
                 g_list_free (media_list);
@@ -3756,7 +3757,7 @@ cr_parser_parse_media (CRParser * a_this)
                 GList *cur = NULL;
 
                 for (cur = media_list; cur; cur = cur->next) {
-                        cr_string_destroy (cur->data);
+                        cr_string_destroy ((CRString *)cur->data);
                 }
 
                 g_list_free (media_list);

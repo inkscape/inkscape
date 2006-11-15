@@ -41,15 +41,13 @@ static CRPropList *cr_prop_list_allocate (void);
 static CRPropList *
 cr_prop_list_allocate (void)
 {
-        CRPropList *result = NULL;
-
-        result = g_try_malloc (sizeof (CRPropList));
+        CRPropList *result = (CRPropList *)g_try_malloc (sizeof (CRPropList));
         if (!result) {
                 cr_utils_trace_info ("could not allocate CRPropList");
                 return NULL;
         }
         memset (result, 0, sizeof (CRPropList));
-        PRIVATE (result) = g_try_malloc (sizeof (CRPropListPriv));
+        PRIVATE (result) = (CRPropListPriv *)g_try_malloc (sizeof (CRPropListPriv));
         if (!result) {
                 cr_utils_trace_info ("could not allocate CRPropListPriv");
                 g_free (result);

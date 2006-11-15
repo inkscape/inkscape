@@ -61,16 +61,14 @@ CRCascade *
 cr_cascade_new (CRStyleSheet * a_author_sheet,
                 CRStyleSheet * a_user_sheet, CRStyleSheet * a_ua_sheet)
 {
-        CRCascade *result = NULL;
-
-        result = g_try_malloc (sizeof (CRCascade));
+        CRCascade *result = (CRCascade *)g_try_malloc (sizeof (CRCascade));
         if (!result) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
         }
         memset (result, 0, sizeof (CRCascade));
 
-        PRIVATE (result) = g_try_malloc (sizeof (CRCascadePriv));
+        PRIVATE (result) = (CRCascadePriv *)g_try_malloc (sizeof (CRCascadePriv));
         if (!PRIVATE (result)) {
                 cr_utils_trace_info ("Out of memory");
                 return NULL;
