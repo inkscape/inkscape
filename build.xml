@@ -1,0 +1,267 @@
+<project name="Sands" default="dist" basedir=".">
+    <description>
+        Build file for Sands office data tool
+    </description>
+
+  <!-- set global properties for this build -->
+  <property name="version"     location="0.45"/>
+  <property name="src"         location="src"/>
+  <property name="gtk"         location="c:/gtk28"/>
+  <property name="lib"         location="lib"/>
+  <property name="build"       location="build"/>
+  <property name="dist"        location="dist"/>
+
+  <target name="init">
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <copy file="config.h.mingw" tofile="config.h"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile from source to build -->
+    <cc cc="gcc" cxx="g++" destdir="${build}/obj">
+	    <fileset dir="${src}">
+            <!-- THINGS TO EXCLUDE -->
+	        <exclude name="ast"/>
+	        <exclude name="bonobo"/>
+	        <exclude name="deptool.cpp"/>
+	        <exclude name="dialogs/filedialog-win32.cpp"/>
+	        <exclude name="display/testnr.cpp"/>
+	        <exclude name="display/bezier-utils-test.cpp"/>
+	        <exclude name="dom/work"/>
+	        <exclude name="dom/odf/SvgOdg.cpp"/>
+	        <exclude name="extension/api.cpp"/>
+	        <exclude name="extension/dxf2svg"/>
+	        <exclude name="extension/internal/gnome.cpp"/>
+	        <exclude name="extension/script/bindtest.cpp"/>
+	        <exclude name="extension/script/cpptest.cpp"/>
+	        <exclude name="extension/plugin"/>
+	        <exclude name="extract-uri-test.cpp"/>
+	        <exclude name="helper/units-test.cpp"/>
+	        <exclude name="inkview.cpp"/>
+	        <exclude name="libnr/in-svg-plane-test.cpp"/>
+	        <exclude name="libnr/nr-compose-reference.cpp"/>
+	        <exclude name="libnr/nr-compose-test.cpp"/>
+	        <exclude name="libnr/nr-matrix-test.cpp"/>
+	        <exclude name="libnr/nr-point-fns-test.cpp"/>
+	        <exclude name="libnr/nr-rotate-fns-test.cpp"/>
+	        <exclude name="libnr/nr-rotate-test.cpp"/>
+	        <exclude name="libnr/nr-scale-test.cpp"/>
+	        <exclude name="libnr/nr-translate-test.cpp"/>
+	        <exclude name="libnr/nr-types-test.cpp"/>
+	        <exclude name="livarot/Path-test.cpp"/>
+	        <exclude name="mod360-test.cpp"/>
+	        <exclude name="trace/potrace/potest.cpp"/>
+	        <exclude name="round-test.cpp"/>
+	        <exclude name="sp-gradient-test.cpp"/>
+	        <exclude name="svg/ftos.cpp"/>
+	        <exclude name="utest"/>
+	        <exclude name="widgets/test-widgets.cpp"/>
+	        <exclude name="xml/quote-test.cpp"/>
+	        <exclude name="xml/repr-action-test.cpp"/>
+	        <exclude name="io/streamtest.cpp"/>
+            <!--JABBER-->
+	        <exclude name="pedro/pedrogui.cpp"/>
+	        <exclude name="pedro/pedrogui.h"/>
+	        <exclude name="pedro/work"/>
+            <!--WHITEBOARD-->
+	        <exclude name="ui/dialog/session-player.cpp"/>
+	        <exclude name="ui/dialog/whiteboard-connect.cpp"/>
+	        <exclude name="ui/dialog/whiteboard-sharewithchat.cpp"/>
+	        <exclude name="ui/dialog/whiteboard-sharewithuser.cpp"/>
+	        <exclude name="dialogs/whiteboard-connect-dialog.cpp"/>
+	        <exclude name="dialogs/whiteboard-common-dialog.cpp"/>
+	        <exclude name="dialogs/whiteboard-sharewithchat-dialog.cpp"/>
+	        <exclude name="dialogs/whiteboard-sharewithuser-dialog.cpp"/>
+	        <exclude name="jabber_whiteboard/node-tracker.cpp"/>
+	        <exclude name="jabber_whiteboard/node-utilities.cpp"/>
+            <!--WHITEBOARD-->
+	        <exclude name="removeoverlap/placement_SolveVPSC.cpp"/>
+	        <exclude name="removeoverlap/placement_SolveVPSC.h"/>
+	        <exclude name="removeoverlap/test.cpp"/>
+	        <exclude name="removeoverlap/remove_rectangle_overlap-test.cpp"/>
+	        <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
+	    </fileset>
+        <flags>
+            -Wall -g -O3
+			-mms-bitfields
+        </flags>
+        <defines>
+            -DVERSION=\"${version}\"
+            -DHAVE_CONFIG_H
+            -DXP_WIN <!-- for JS -->
+			-D_INTL_REDIRECT_INLINE
+            -DWITH_INKBOARD -DHAVE_SSL <!-- inkboard -->
+        </defines>
+        <includes>
+            -I${gtk}/include
+			<!-- GTK / GTKMM -->
+            -I${gtk}/include/glibmm-2.4
+		    -I${gtk}/lib/glibmm-2.4/include
+            -I${gtk}/include/gtkmm-2.4
+		    -I${gtk}/lib/gtkmm-2.4/include
+            -I${gtk}/include/gdkmm-2.4
+		    -I${gtk}/lib/gdkmm-2.4/include
+            -I${gtk}/include/pangomm-1.4
+            -I${gtk}/include/atkmm-1.6
+            -I${gtk}/include/sigc++-2.0
+		    -I${gtk}/lib/sigc++-2.0/include
+            -I${gtk}/include/gtk-2.0
+		    -I${gtk}/lib/gtk-2.0/include
+            -I${gtk}/include/atk-1.0
+		    -I${gtk}/include/pango-1.0
+            -I${gtk}/include/glib-2.0
+		    -I${gtk}/lib/glib-2.0/include
+		    <!-- OTHER -->
+            -I${gtk}/include/libxml2 
+			-I${gtk}/include/freetype2
+		    -I${gtk}/include/cairo
+		    <!-- PERL -->
+		    -Wno-comment -I${gtk}/perl/lib/CORE
+		    <!-- PYTHON -->
+		    -I${gtk}/python/include
+        </includes>
+	</cc>
+  </target>
+  
+  <target name="lib" depends="compile">
+    <ar file="${build}/libinkscape.a">
+	   <fileset dir="${build}/obj">
+	       <exclude name="main,o"/>
+	       <exclude name="winmain,o"/>
+	   </fileset>
+	</ar>
+  </target>
+
+  <target name="i18n" depends="compile">
+    <msgfmt todir="${build}/po">
+	   <fileset dir="po">
+	   </fileset>
+	</msgfmt>
+  </target>
+
+  <target name="link" depends="lib">
+    <rc command="windres -o" 
+	    file="${src}/inkscape.rc"
+	    out="${build}/inkres.o">
+		<flags>
+		--include-dir=${src}
+		</flags>
+	</rc>
+    <link command="g++" out="${build}/inkscape.exe">
+       <flags>
+       </flags>
+	   <fileset>
+	       <include name="${build}/inkres.o"/>
+	       <include name="${build}/obj/main.o"/>
+	       <include name="${build}/obj/winmain.o"/>
+	       <include name="${build}/libinkscape.a"/>
+	   </fileset>
+	   <libs>
+	       -L${gtk}/lib
+           -lgtkmm-2.4 -lgdkmm-2.4 -lglibmm-2.4
+           -latkmm-1.6 -lpangomm-1.4 -lsigc-2.0
+           -lgtk-win32-2.0 -lgdk-win32-2.0 -latk-1.0
+           -lgdk_pixbuf-2.0
+           -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lpango-1.0
+           -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lglib-2.0 -lcairo
+           <!-- PERL -->
+		   -L${gtk}/perl/lib/CORE -lperl58
+           <!-- PYTHON -->
+           -L${gtk}/python/libs -lpython24
+           ${gtk}/bin/libxml2.dll
+           ${gtk}/lib/iconv.lib
+           -lfreetype.dll -lfontconfig.dll
+           -llcms.dll
+           -lssl -lcrypto
+           -lpng -lpopt ${gtk}/lib/zdll.lib
+           -lgc -mwindows -lws2_32 -lintl -lm
+	   </libs>
+	</link>
+  </target>
+
+  <target name="dist" depends="link"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <copy file="${build}/inkscape.exe" todir="${dist}"/>
+    <copy file="AUTHORS" todir="${dist}"/>
+    <copy file="COPYING" todir="${dist}"/>
+    <copy file="COPYING.LIB" todir="${dist}"/>
+    <copy file="NEWS" todir="${dist}"/>
+    <copy file="README" todir="${dist}"/>
+    <copy file="TRANSLATORS" todir="${dist}"/>
+    <copy file="${gtk}/bin/libatkmm-1.6-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libglibmm-2.4-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgtkmm-2.4-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgdkmm-2.4-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpangomm-1.4-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libsigc-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libatk-1.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgdk-win32-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgdk_pixbuf-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libglib-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgmodule-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgobject-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgtk-win32-2.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgthread-2.0-0.dlll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libcairo-2.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpangocairo-1.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpango-1.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpangoft2-1.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpangowin32-1.0-0.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libfontconfig-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/xmlparse.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libintl-2.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libintl-2.dll" tofile="${dist}/intl.dll"/>
+    <copy file="${gtk}/bin/libpng13.dlll" todir="${dist}"/>
+    <copy file="${gtk}/bin/msvcr70.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/msvcr71.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/zlib1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/iconv.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/popt1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/liblcms-1.dll" todir="${dist}"/>
+
+    <!-- MSGFMT files -->
+    <copy todir="${dist}"> <fileset dir="${build}/po"/> </copy>
+
+    <!-- GTK -->
+    <copy todir="${dist}"> <fileset dir="${gtk}/etc"/> </copy>
+    <copy file="${gtk}/share/themes/MS-Windows/gtk-2.0/gtkrc" todir="${dist}/etc/gtk-2.0"/>
+    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/gtk-2.0"/> </copy>
+    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/glib-2.0"/> </copy>
+    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/locale"/> </copy>
+    <copy todir="${dist}/lib"> <fileset dir="${gtk}/lib/pango"/> </copy>
+    <copy todir="${dist}"> <fileset dir="share"/> </copy>
+    <copy todir="${dist}/share"> <fileset dir="${gtk}/share/themes"/> </copy>
+    <mkdir dir="${dist}/data"/>
+    <mkdir dir="${dist}/locale"/>
+    <mkdir dir="${dist}/modules"/>
+    <mkdir dir="${dist}/plugins"/>
+    <copy file="${gtk}/bin/gdb.exe" todir="${dist}"/>
+
+    <!-- PERL -->
+    <copy file="${gtk}/perl/bin/perl58.dll" todir="${dist}"/>
+
+    <!-- PYTHON -->
+    <copy file="${gtk}/python/python24.dll" todir="${dist}"/>
+    <copy file="${gtk}/python/python.exe" todir="${dist}/python"/>
+    <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Lib"/> </copy>
+    <copy todir="${dist}/python"> <fileset dir="${gtk}/python/DLLs"/> </copy>
+    <copy todir="${dist}/python"> <fileset dir="${gtk}/python/Scripts"/> </copy>
+
+
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
+
