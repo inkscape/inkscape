@@ -29,6 +29,7 @@
 	        <exclude name="dialogs/filedialog-win32.cpp"/>
 	        <exclude name="display/testnr.cpp"/>
 	        <exclude name="display/bezier-utils-test.cpp"/>
+	        <exclude name="dom/jsdombind.cpp"/>
 	        <exclude name="dom/work"/>
 	        <exclude name="dom/odf/SvgOdg.cpp"/>
 	        <exclude name="extension/api.cpp"/>

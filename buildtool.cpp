@@ -2129,7 +2129,7 @@ void MakeBase::status(char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
-    fprintf(stdout, "Make: ");
+    fprintf(stdout, "-");
     vfprintf(stdout, fmt, args);
     fprintf(stdout, "\n");
     va_end(args) ;
@@ -2435,7 +2435,7 @@ bool MakeBase::executeCommand(const String &command,
             {
             DWORD bytesRead = 0;
             char readBuf[1025];
-           if (avail>1024) avail = 1024;
+            if (avail>1024) avail = 1024;
             if (!ReadFile(stdoutRead, readBuf, avail, &bytesRead, NULL)
                 || bytesRead==0)
                 {
@@ -2448,7 +2448,7 @@ bool MakeBase::executeCommand(const String &command,
         GetExitCodeProcess(piProcessInfo.hProcess, &exitCode);
         if (exitCode != STILL_ACTIVE)
             break;
-        Sleep(500);
+        Sleep(100);
         }	
     //trace("outbuf:%s", outbuf.c_str());
     if (!CloseHandle(stdoutRead))
@@ -4599,7 +4599,7 @@ public:
             if (isNewerThan(fullName, fullOut))
                 doit = true;
             }
-        trace("Needs it:%d", doit);
+        //trace("Needs it:%d", doit);
         if (!doit)
             {
             return true;
@@ -4622,7 +4622,7 @@ public:
             cmd.append(" ");
             cmd.append(fullName);
             }
-        trace("AR %d: %s", fileSet.size(), cmd.c_str());
+        //trace("AR %d: %s", fileSet.size(), cmd.c_str());
         String outString, errString;
         if (!executeCommand(cmd.c_str(), "", outString, errString))
             {
@@ -5266,12 +5266,12 @@ public:
             }
         cmd.append(" ");
         cmd.append(libs);
-        trace("LINK cmd:%s", cmd.c_str());
         if (!doit)
             {
-            trace("link not needed");
+            //trace("link not needed");
             return true;
             }
+        //trace("LINK cmd:%s", cmd.c_str());
 
         String outString, errString;
         if (!executeCommand(cmd.c_str(), "", outString, errString))
@@ -5936,7 +5936,7 @@ public:
     /**
      *
      */
-    bool run(const std::vector<String> &targets);
+    bool run(const String &target);
 
 
 
@@ -5966,7 +5966,8 @@ private:
     /**
      *
      */
-    bool executeTarget(Target &target);
+    bool executeTarget(Target &target,
+	         std::set<String> &targetsCompleted);
 
 
     /**
@@ -6013,18 +6014,17 @@ private:
 
     String projectName;
 
+    String currentTarget;
+
     String defaultTarget;
 
-    String currentTarget;
+    String specifiedTarget;
 
     String baseDir;
 
     String description;
     
     String envAlias;
-
-
-    std::vector<String> specifiedTargets;
 
     //std::vector<Property> properties;
     
@@ -6047,14 +6047,13 @@ void Make::init()
 {
     uri             = "build.xml";
     projectName     = "";
-    defaultTarget   = "";
     currentTarget   = "";
+    defaultTarget   = "";
+    specifiedTarget = "";
     baseDir         = "";
     description     = "";
     envAlias        = "";
-    specifiedTargets.clear();
     properties.clear();
-    targets.clear();
     for (unsigned int i = 0 ; i < allTasks.size() ; i++)
         delete allTasks[i];
     allTasks.clear();
@@ -6081,13 +6080,12 @@ void Make::assign(const Make &other)
 {
     uri              = other.uri;
     projectName      = other.projectName;
-    specifiedTargets = other.specifiedTargets;
-    defaultTarget    = other.defaultTarget;
     currentTarget    = other.currentTarget;
+    defaultTarget    = other.defaultTarget;
+    specifiedTarget  = other.specifiedTarget;
     baseDir          = other.baseDir;
     description      = other.description;
     properties       = other.properties;
-    targets          = other.targets;
 }
 
 
@@ -6115,7 +6113,8 @@ std::vector<String> Make::glob(const String &pattern)
 /**
  *
  */
-bool Make::executeTarget(Target &target)
+bool Make::executeTarget(Target &target,
+             std::set<String> &targetsCompleted)
 {
 
     String name = target.getName();
@@ -6125,6 +6124,10 @@ bool Make::executeTarget(Target &target)
     for (unsigned int i=0 ; i<deps.size() ; i++)
         {
         String dep = deps[i];
+        //Did we do it already?  Skip
+        if (targetsCompleted.find(dep)!=targetsCompleted.end())
+            continue;
+            
         std::map<String, Target> &tgts =
                target.getParent().getTargets();
         std::map<String, Target>::iterator iter =
@@ -6136,68 +6139,74 @@ bool Make::executeTarget(Target &target)
             return false;
             }
         Target depTarget = iter->second;
-        if (!executeTarget(depTarget))
+        if (!executeTarget(depTarget, targetsCompleted))
             {
             return false;
             }
         }
 
-    trace("##### Target : %s", name.c_str());
+    status("##### Target : %s", name.c_str());
 
     //Now let's do the tasks
     std::vector<Task *> &tasks = target.getTasks();
     for (unsigned int i=0 ; i<tasks.size() ; i++)
         {
         Task *task = tasks[i];
-        trace("----- Task : %s", task->getName().c_str());
+        status("----- Task : %s", task->getName().c_str());
         if (!task->execute())
             {
             return false;
             }
         }
+        
+    targetsCompleted.insert(name);
+    
     return true;
 }
 
 
 
 /**
- *
+ *  Main execute() method.  Start here and work
+ *  up the dependency tree 
  */
 bool Make::execute()
 {
-    trace("##### EXECUTE");
-    //# First let us list what targets have been requested
-    std::vector<String> tgts = specifiedTargets;
-    if (tgts.size() == 0)
+    status("######## EXECUTE");
+
+    //Determine initial target
+    if (specifiedTarget.size()>0)
         {
-        trace("getting default targets");
-        if (defaultTarget.size() == 0)
-            {
-            error("No target specified");
-            return false;
-            }
-        else
-            tgts.push_back(defaultTarget);
+        currentTarget = specifiedTarget;
+        }
+    else if (defaultTarget.size()>0)
+        {
+        currentTarget = defaultTarget;
+        }
+    else
+        {
+        error("execute: no specified or default target requested");
+        return false;
         }
 
-    //# Now let us execute them (probably just 1)
-    for (unsigned int i=0 ; i<tgts.size() ; i++)
+    std::map<String, Target>::iterator iter =
+	           targets.find(currentTarget);
+    if (iter == targets.end())
         {
-        currentTarget = tgts[i];
-        std::map<String, Target>::iterator iter = targets.find(currentTarget);
-        if (iter == targets.end())
-            {
-            error("Target '%s' not found", currentTarget.c_str());
-            return false;
-            }
-        Target target = iter->second;
-        if (!executeTarget(target))
-            {
-            return false;
-            }
+        error("Initial target '%s' not found",
+		         currentTarget.c_str());
+        return false;
+        }
+        
+    //Now run
+    Target target = iter->second;
+    std::set<String> targetsCompleted;
+    if (!executeTarget(target, targetsCompleted))
+        {
+        return false;
         }
 
-    status("Done executing");
+    status("######## EXECUTE COMPLETE");
     return true;
 }
 
@@ -6420,6 +6429,8 @@ bool Make::parseProperty(Element *elem)
  */
 bool Make::parseFile()
 {
+    status("######## PARSE");
+
     Parser parser;
     Element *root = parser.parseFile(uri.getNativePath());
     if (!root)
@@ -6526,7 +6537,7 @@ bool Make::parseFile()
 
 
     delete root;
-    status("Done parsing");
+    status("######## PARSE COMPLETE");
     return true;
 }
 
@@ -6547,11 +6558,18 @@ bool Make::run()
 /**
  *
  */
-bool Make::run(const std::vector<String> &targets)
+bool Make::run(const String &target)
 {
-    specifiedTargets = targets;
+    status("##################################");
+    status("#   BuildTool");
+    status("#   version 0.2");
+    status("##################################");
+    specifiedTarget = target;
     if (!run())
         return false;
+    status("##################################");
+    status("#   BuildTool Completed");
+    status("##################################");
     return true;
 }
 
@@ -6603,7 +6621,7 @@ static bool parseOptions(int argc, char **argv)
         }
 
     buildtool::String buildFile;
-    std::vector<buildtool::String> targets;
+    buildtool::String target;
 
     //char *progName = argv[0];
     for (int i=1 ; i<argc ; i++)
@@ -6638,8 +6656,7 @@ static bool parseOptions(int argc, char **argv)
             }
         else
             {
-            buildtool::String target = arg;
-            targets.push_back(target);
+            target = arg;
             }
         }
 
@@ -6649,7 +6666,7 @@ static bool parseOptions(int argc, char **argv)
         {
         make.setURI(buildFile);
         }
-    if (!make.run(targets))
+    if (!make.run(target))
         return false;
 
     return true;
