@@ -57,7 +57,7 @@ static struct CREncAlias gv_default_aliases[] = {
         {"UCS-4", CR_UCS_4},
         {"UCS_4", CR_UCS_4},
         {"ASCII", CR_ASCII},
-        {(char *)0, (CREncoding)0}
+        {(char *)0, (enum CREncoding)0}
 };
 
 static CREncHandler gv_default_enc_handlers[] = {
@@ -70,7 +70,7 @@ static CREncHandler gv_default_enc_handlers[] = {
         {CR_ASCII, cr_utils_ucs1_to_utf8, cr_utils_utf8_to_ucs1,
          cr_utils_ucs1_str_len_as_utf8, cr_utils_utf8_str_len_as_ucs1},
 
-        {(CREncoding)0, NULL, NULL, NULL, NULL}
+        {(enum CREncoding)0, NULL, NULL, NULL, NULL}
 };
 
 /**

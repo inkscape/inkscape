@@ -95,7 +95,7 @@ cr_parsing_location_to_string (CRParsingLocation *a_this,
 	g_return_val_if_fail (a_this, NULL) ;
 
 	if (!a_mask) {
-		a_mask = (CRParsingLocationSerialisationMask)
+		a_mask = (enum CRParsingLocationSerialisationMask)
 		    ((int)DUMP_LINE | (int)DUMP_COLUMN | (int)DUMP_BYTE_OFFSET) ;
 	}
 	GString *result = (GString *)g_string_new (NULL) ;

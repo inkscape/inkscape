@@ -1675,14 +1675,14 @@ cr_parser_parse_simple_selector (CRParser * a_this, CRSimpleSel ** a_sel)
         if (token && token->type == DELIM_TK 
             && token->u.unichar == '*') {
                 int comb = (int)sel->type_mask | (int) UNIVERSAL_SELECTOR;
-                sel->type_mask = (SimpleSelectorType)comb;
+                sel->type_mask = (enum SimpleSelectorType)comb;
                 //sel->type_mask |= UNIVERSAL_SELECTOR;
                 sel->name = cr_string_new_from_string ("*");
                 found_sel = TRUE;
         } else if (token && token->type == IDENT_TK) {
                 sel->name = token->u.str;
                 int comb = (int)sel->type_mask | (int) TYPE_SELECTOR;
-                sel->type_mask = (SimpleSelectorType)comb;
+                sel->type_mask = (enum SimpleSelectorType)comb;
                 //sel->type_mask |= TYPE_SELECTOR;
                 token->u.str = NULL;
                 found_sel = TRUE;
@@ -1961,7 +1961,7 @@ cr_parser_parse_simple_sels (CRParser * a_this,
                         break;
 
                 if (comb && sel) {
-                        sel->combinator = (Combinator)comb;
+                        sel->combinator = (enum Combinator)comb;
                         comb = 0;
                 }
                 if (sel) {

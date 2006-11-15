@@ -613,7 +613,7 @@ cr_font_weight_get_bolder (enum CRFontWeight a_weight)
                 cr_utils_trace_info ("FONT_WEIGHT_BOLDER or FONT_WEIGHT_LIGHTER should not appear here") ;
                 return FONT_WEIGHT_NORMAL ;
         } else {
-                return (CRFontWeight)(a_weight << 1) ;
+                return (enum CRFontWeight)(a_weight << 1) ;
         }
 }
 
