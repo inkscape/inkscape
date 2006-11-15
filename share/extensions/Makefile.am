@@ -63,7 +63,22 @@ extensions = \
 	webbrowser_reportabug.py \
 	webbrowser_svgspec.py \
 	webbrowser_commandline.py \
-	webbrowser_faq.py
+	webbrowser_faq.py\
+	color_custom.py\
+	color_desaturate.py\
+	coloreffect.py\
+	color_grayscale.py\
+	color_brighter.py\
+	color_darker.py\
+	color_keepblue.py\
+	color_keepgreen.py\
+	color_keepred.py\
+	color_negative.py\
+	color_removeblue.py\
+	color_removegreen.py\
+	color_removered.py\
+	color_rgbbarrel.py
+
 
 otherstuff = \
     aisvg.xslt
@@ -124,7 +139,20 @@ modules = \
 	inkscape_help_reportabug.inx \
 	inkscape_help_svgspec.inx \
 	inkscape_help_commandline.inx \
-	inkscape_help_faq.inx
+	inkscape_help_faq.inx\
+	color_brighter.inx\
+	color_darker.inx\
+	color_desaturate.inx\
+	color_grayscale.inx\
+	color_negative.inx\
+	color_keepblue.inx\
+	color_keepgreen.inx\
+	color_keepred.inx\
+	color_removeblue.inx\
+	color_removegreen.inx\
+	color_removered.inx\
+	color_rgbbarrel.inx\
+	color_custom.inx 
 
 
 extension_SCRIPTS = \

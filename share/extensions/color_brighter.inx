@@ -1,0 +1,16 @@
+<inkscape-extension>
+	<_name>Brighter</_name>
+	<id>com.kaioa.brighter</id>
+	<dependency type="executable" location="extensions">coloreffect.py</dependency>
+	<dependency type="executable" location="extensions">color_brighter.py</dependency>
+	<dependency type="executable" location="extensions">simplestyle.py</dependency>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Color"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">color_brighter.py</command>
+	</script>
+</inkscape-extension>

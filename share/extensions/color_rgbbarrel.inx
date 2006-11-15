@@ -1,0 +1,16 @@
+<inkscape-extension>
+	<_name>RGB Barrel</_name>
+	<id>com.kaioa.rgbbarrel</id>
+	<dependency type="executable" location="extensions">coloreffect.py</dependency>
+	<dependency type="executable" location="extensions">color_rgbbarrel.py</dependency>
+	<dependency type="executable" location="extensions">simplestyle.py</dependency>
+	<effect>
+		<object-type>all</object-type>
+		<effects-menu>
+			<submenu _name="Color"/>
+		</effects-menu>
+	</effect>
+	<script>
+		<command reldir="extensions" interpreter="python">color_rgbbarrel.py</command>
+	</script>
+</inkscape-extension>
