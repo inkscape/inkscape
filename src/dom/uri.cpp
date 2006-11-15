@@ -332,13 +332,15 @@ URI URI::resolve(const URI &other) const
             }
         else
             {
-            unsigned int pos = path.rfind('/');
+            unsigned int pos = path.find_last_of('/');
             if (pos != path.npos)
                 {
                 DOMString tpath = path.substr(0, pos+1);
                 tpath.append(other.path);
                 newUri.path = tpath;
                 }
+            else
+                newUri.path = other.path;
             }
         }
 
