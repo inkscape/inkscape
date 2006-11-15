@@ -2323,6 +2323,10 @@ bool MakeBase::executeCommand(const String &command,
 							  String &outbuf,
 							  String &errbuf)
 {
+
+    status("-------- cmd --------\n%s\n---------------------",
+	            command.c_str());
+
 #ifdef __WIN32__
 
     bool ret = true;
@@ -4622,7 +4626,7 @@ public:
             cmd.append(" ");
             cmd.append(fullName);
             }
-        //trace("AR %d: %s", fileSet.size(), cmd.c_str());
+
         String outString, errString;
         if (!executeCommand(cmd.c_str(), "", outString, errString))
             {
@@ -4786,7 +4790,7 @@ public:
 			cmd.append(destFullName);
 
             //## Execute the command
-            trace("cmd: %s", cmd.c_str());
+
             String outString, errString;
             if (!executeCommand(cmd.c_str(), "", outString, errString))
                 {
@@ -4892,6 +4896,7 @@ public:
                {
                if (fileName.size()>0)
                    {
+                   status("          : %s", fileName.c_str());
                    String fullSource = parent.resolve(fileName);
                    String fullDest = parent.resolve(toFileName);
                    //trace("copy %s to file %s", fullSource.c_str(),
@@ -4902,6 +4907,7 @@ public:
                        }
                    if (!copyFile(fullSource, fullDest))
                        return false;
+                   status("          : 1 file copied");
                    }
                return true;
                }
@@ -4909,6 +4915,8 @@ public:
                {
                if (haveFileSet)
                    {
+                   int nrFiles = 0;
+                   status("          : %s", fileSetDir.c_str());
                    for (unsigned int i=0 ; i<fileSet.size() ; i++)
                        {
                        String fileName = fileSet[i];
@@ -4953,12 +4961,15 @@ public:
                            }
                        if (!copyFile(fullSource, fullDest))
                            return false;
+                       nrFiles++;
                        }
+                   status("          : %d file(s) copied", nrFiles);
                    }
                else //file source
                    {
                    //For file->dir we want only the basename of
                    //the source appended to the dest dir
+                   status("          : %s", fileName.c_str());
                    String baseName = fileName;
                    int pos = baseName.find_last_of('/');
                    if (pos > 0 && pos<baseName.size()-1)
@@ -4980,6 +4991,7 @@ public:
                        }
                    if (!copyFile(fullSource, fullDest))
                        return false;
+                   status("          : 1 file copied");
                    }
                return true;
                }
@@ -5101,6 +5113,7 @@ public:
             {
             case DEL_FILE:
                 {
+                status("          : %s", fileName.c_str());
                 String fullName = parent.resolve(fileName);
                 char *fname = (char *)fullName.c_str();
                 //does not exist
@@ -5122,6 +5135,7 @@ public:
                 }
             case DEL_DIR:
                 {
+                status("          : %s", dirName.c_str());
                 String fullDir = parent.resolve(dirName);
                 char *dname = (char *)fullDir.c_str();
                 if (!removeDirectory(fullDir))
@@ -5273,6 +5287,7 @@ public:
             }
         //trace("LINK cmd:%s", cmd.c_str());
 
+
         String outString, errString;
         if (!executeCommand(cmd.c_str(), "", outString, errString))
             {
@@ -5341,6 +5356,7 @@ public:
 
     virtual bool execute()
         {
+        status("          : %s", dirName.c_str());
         String fullDir = parent.resolve(dirName);
         //trace("fullDir:%s", fullDir.c_str());
         if (!createDirectory(fullDir))
@@ -5436,6 +5452,8 @@ public:
                     return false;
                 }
 
+
+
             String outString, errString;
             if (!executeCommand(cmd.c_str(), "", outString, errString))
                 {
@@ -5498,7 +5516,6 @@ public:
         //trace("fullDir:%s", fullDir.c_str());
         String cmd = "ranlib ";
         cmd.append(fullName);
-		trace("<ranlib> cmd:%s", cmd.c_str());        
         String outbuf, errbuf;
         if (!executeCommand(cmd, "", outbuf, errbuf))
             return false;
@@ -5554,7 +5571,6 @@ public:
         cmd.append(" ");
         cmd.append(fullFile);
 
-        trace("cmd: %s", cmd.c_str());
         String outString, errString;
         if (!executeCommand(cmd.c_str(), "", outString, errString))
             {
@@ -5616,7 +5632,7 @@ public:
         //trace("fullDir:%s", fullDir.c_str());
         String cmd = "strip ";
         cmd.append(fullName);
-		trace("<strip> cmd:%s", cmd.c_str());        
+
         String outbuf, errbuf;
         if (!executeCommand(cmd, "", outbuf, errbuf))
             return false;
@@ -6145,14 +6161,14 @@ bool Make::executeTarget(Target &target,
             }
         }
 
-    status("##### Target : %s", name.c_str());
+    status("## Target : %s", name.c_str());
 
     //Now let's do the tasks
     std::vector<Task *> &tasks = target.getTasks();
     for (unsigned int i=0 ; i<tasks.size() ; i++)
         {
         Task *task = tasks[i];
-        status("----- Task : %s", task->getName().c_str());
+        status("---- task : %s", task->getName().c_str());
         if (!task->execute())
             {
             return false;
