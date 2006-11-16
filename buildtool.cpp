@@ -42,7 +42,6 @@
 #include <sys/time.h>
 #include <dirent.h>
 
-
 #include <string>
 #include <map>
 #include <set>
@@ -1181,7 +1180,7 @@ public:
     /**
      *
      */
-    ~URI()
+    virtual ~URI()
         {}
 
 
@@ -2129,7 +2128,7 @@ void MakeBase::status(char *fmt, ...)
 {
     va_list args;
     va_start(args,fmt);
-    fprintf(stdout, "-");
+    //fprintf(stdout, " ");
     vfprintf(stdout, fmt, args);
     fprintf(stdout, "\n");
     va_end(args) ;
@@ -2316,7 +2315,8 @@ static String win32LastError()
 
 
 /**
- * Execute a system call via the shell
+ * Execute a system call, using pipes to send data to the
+ * program's stdin,  and reading stdout and stderr.
  */
 bool MakeBase::executeCommand(const String &command,
                               const String &inbuf,
@@ -2324,10 +2324,16 @@ bool MakeBase::executeCommand(const String &command,
 							  String &errbuf)
 {
 
-    status("-------- cmd --------\n%s\n---------------------",
+    status("============ cmd ============\n%s\n=============================",
 	            command.c_str());
 
 #ifdef __WIN32__
+
+    /*
+    I really hate having win32 code in this program, but the
+    read buffer in command.com and cmd.exe are just too small
+    for the large commands we need for compiling and linking.
+    */
 
     bool ret = true;
 
@@ -2429,7 +2435,7 @@ bool MakeBase::executeCommand(const String &command,
                 {
                 break;
                 }
-            for (int i=0 ; i<bytesRead ; i++)
+            for (unsigned int i=0 ; i<bytesRead ; i++)
                 errbuf.push_back(readBuf[i]);
             }
         //trace("## stdout");
@@ -2445,7 +2451,7 @@ bool MakeBase::executeCommand(const String &command,
                 {
                 break;
                 }
-            for (int i=0 ; i<bytesRead ; i++)
+            for (unsigned int i=0 ; i<bytesRead ; i++)
                 outbuf.push_back(readBuf[i]);
             }
 		DWORD exitCode;
@@ -2830,7 +2836,6 @@ bool MakeBase::getFileSet(Element *elem,
 
     //Now do the stuff
     //Get the base directory for reading file names
-    bool doDir = true;
     if (!propRef.getAttribute(elem, "dir", dir))
         return false;
 
@@ -4406,7 +4411,29 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
                     depObject.files.push_back(depName);
                     }
                 }
-            result.push_back(depObject);
+            //Insert into the result list, in a sorted manner
+            bool inserted = false;
+            std::vector<DepRec>::iterator iter;
+            for (iter = result.begin() ; iter != result.end() ; iter++)
+                {
+                if (iter->path > depObject.path)
+                    {
+                    inserted = true;
+                    iter = result.insert(iter, depObject);
+                    break;
+                    }
+                else if (iter->path == depObject.path)
+                    {
+                    if (iter->name > depObject.name)
+                        {
+                        inserted = true;
+                        iter = result.insert(iter, depObject);
+                        break;
+                        }
+                    }
+                }
+            if (!inserted)
+                result.push_back(depObject);
             }
         }
 
@@ -4932,8 +4959,9 @@ public:
                        
                        //Get the immediate parent directory's base name
                        String baseFileSetDir = fileSetDir;
-                       int pos = baseFileSetDir.find_last_of('/');
-                       if (pos>0 && pos < baseFileSetDir.size()-1)
+                       unsigned int pos = baseFileSetDir.find_last_of('/');
+                       if (pos!=baseFileSetDir.npos &&
+					              pos < baseFileSetDir.size()-1)
                            baseFileSetDir =
 						      baseFileSetDir.substr(pos+1,
 							       baseFileSetDir.size());
@@ -4971,8 +4999,8 @@ public:
                    //the source appended to the dest dir
                    status("          : %s", fileName.c_str());
                    String baseName = fileName;
-                   int pos = baseName.find_last_of('/');
-                   if (pos > 0 && pos<baseName.size()-1)
+                   unsigned int pos = baseName.find_last_of('/');
+                   if (pos!=baseName.npos && pos<baseName.size()-1)
                        baseName = baseName.substr(pos+1, baseName.size());
                    String fullSource = parent.resolve(fileName);
                    String destPath;
@@ -5137,7 +5165,6 @@ public:
                 {
                 status("          : %s", dirName.c_str());
                 String fullDir = parent.resolve(dirName);
-                char *dname = (char *)fullDir.c_str();
                 if (!removeDirectory(fullDir))
                     return false;
                 return true;
@@ -5404,10 +5431,6 @@ public:
     virtual bool execute()
         {
         //trace("msgfmt: %d", fileSet.size());
-        bool doit = false;
-        
-        String fullDest = parent.resolve(toDirName);
-
         for (unsigned int i=0 ; i<fileSet.size() ; i++)
             {
             String fileName = fileSet[i];
@@ -5995,7 +6018,7 @@ private:
      *
      */
     bool checkTargetDependencies(Target &prop,
-                    std::set<String> &depList);
+                    std::vector<String> &depList);
 
     /**
      *
@@ -6233,20 +6256,25 @@ bool Make::execute()
  *
  */
 bool Make::checkTargetDependencies(Target &target, 
-                            std::set<String> &depList)
+                            std::vector<String> &depList)
 {
     String tgtName = target.getName().c_str();
-    depList.insert(tgtName);
+    depList.push_back(tgtName);
 
     std::vector<String> deps = target.getDependencies();
     for (unsigned int i=0 ; i<deps.size() ; i++)
         {
         String dep = deps[i];
-        std::set<String>::iterator diter = depList.find(dep);
-        if (diter != depList.end())
+        //First thing entered was the starting Target
+        if (dep == depList[0])
             {
             error("Circular dependency '%s' found at '%s'",
                       dep.c_str(), tgtName.c_str());
+            std::vector<String>::iterator diter;
+            for (diter=depList.begin() ; diter!=depList.end() ; diter++)
+                {
+                error("  %s", diter->c_str());
+                }
             return false;
             }
 
@@ -6544,7 +6572,7 @@ bool Make::parseFile()
     for (iter = targets.begin() ; iter!= targets.end() ; iter++)
         {
         Target tgt = iter->second;
-        std::set<String> depList;
+        std::vector<String> depList;
         if (!checkTargetDependencies(tgt, depList))
             {
             return false;
@@ -6627,7 +6655,10 @@ static bool sequ(const buildtool::String &buf, char *key)
     return true;
 }
 
-
+/**
+ * Parse the command-line args, get our options,
+ * and run this thing
+ */   
 static bool parseOptions(int argc, char **argv)
 {
     if (argc < 1)
@@ -6688,6 +6719,10 @@ static bool parseOptions(int argc, char **argv)
     return true;
 }
 
+
+
+
+/*
 static bool runMake()
 {
     buildtool::Make make;
@@ -6696,7 +6731,7 @@ static bool runMake()
     return true;
 }
 
-/*
+
 static bool pkgConfigTest()
 {
     buildtool::PkgConfig pkgConfig;
