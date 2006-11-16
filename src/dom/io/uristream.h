@@ -37,7 +37,7 @@
  */
 
 
-#include "dom/uri.h"
+#include "../uri.h"
 #include "domstream.h"
 #include "httpclient.h"
 
