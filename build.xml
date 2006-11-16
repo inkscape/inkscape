@@ -6,10 +6,10 @@
   <!-- set global properties for this build -->
   <property name="version"     location="0.45"/>
   <property name="src"         location="src"/>
-  <property name="gtk"         location="c:/gtk28"/>
+  <property name="gtk"         location="c:/gtk210"/>
   <property name="lib"         location="lib"/>
   <property name="build"       location="build"/>
-  <property name="dist"        location="dist"/>
+  <property name="dist"        location="inkscape"/>
 
   <target name="init">
     <!-- Create the build directory structure used by compile -->
@@ -85,7 +85,7 @@
 	        <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
 	    </fileset>
         <flags>
-            -Wall -g -O3
+            -Wall -O3
 			-mms-bitfields
         </flags>
         <defines>
@@ -106,6 +106,7 @@
 		    -I${gtk}/lib/gdkmm-2.4/include
             -I${gtk}/include/pangomm-1.4
             -I${gtk}/include/atkmm-1.6
+            -I${gtk}/include/cairomm-1.0
             -I${gtk}/include/sigc++-2.0
 		    -I${gtk}/lib/sigc++-2.0/include
             -I${gtk}/include/gtk-2.0
@@ -180,9 +181,10 @@
            -lgc -mwindows -lws2_32 -lintl -lm
 	   </libs>
 	</link>
+	<strip file="${build}/inkscape.exe"/>
   </target>
 
-  <target name="dist" depends="link"
+  <target name="dist" depends="link,i18n"
         description="generate the distribution" >
     <!-- Create the distribution directory -->
     <copy file="${build}/inkscape.exe" todir="${dist}"/>
@@ -197,6 +199,7 @@
     <copy file="${gtk}/bin/libgtkmm-2.4-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libgdkmm-2.4-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpangomm-1.4-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libcairomm-1.0-1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libsigc-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/freetype6.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libatk-1.0-0.dll" todir="${dist}"/>
@@ -226,6 +229,7 @@
     <copy file="${gtk}/bin/iconv.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/popt1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/liblcms-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
 
     <!-- MSGFMT files -->
     <copy todir="${dist}"> <fileset dir="${build}/po"/> </copy>
