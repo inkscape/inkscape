@@ -118,7 +118,7 @@ static void sp_style_clear(SPStyle *style);
 static void sp_style_merge_property(SPStyle *style, gint id, gchar const *val);
 
 static void sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent);
-static void sp_style_merge_ifilter(SPStyle *style, SPIFilter *child, SPIFilter const *parent);
+static void sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent);
 static void sp_style_read_dash(SPStyle *style, gchar const *str);
 
 static SPTextStyle *sp_text_style_new(void);
@@ -138,7 +138,7 @@ static void sp_style_read_itextdecoration(SPITextDecoration *val, gchar const *s
 static void sp_style_read_icolor(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
 static void sp_style_read_ipaint(SPIPaint *paint, gchar const *str, SPStyle *style, SPDocument *document);
 static void sp_style_read_ifontsize(SPIFontSize *val, gchar const *str);
-static void sp_style_read_ifilter(SPIFilter *f, gchar const *str, SPStyle *style, SPDocument *document);
+static void sp_style_read_ifilter(gchar const *str, SPStyle *style, SPDocument *document);
 
 static void sp_style_read_penum(SPIEnum *val, Inkscape::XML::Node *repr, gchar const *key, SPStyleEnum const *dict, bool can_explicitly_inherit);
 static void sp_style_read_plength(SPILength *val, Inkscape::XML::Node *repr, gchar const *key);
@@ -160,7 +160,7 @@ static void css2_unescape_unquote(SPIString *val);
 
 static void sp_style_paint_clear(SPStyle *style, SPIPaint *paint);
 
-static void sp_style_filter_clear(SPStyle *style, SPIFilter *filter);
+static void sp_style_filter_clear(SPStyle *style);
 
 #define SPS_READ_IENUM_IF_UNSET(v,s,d,i) if (!(v)->set) {sp_style_read_ienum((v), (s), (d), (i));}
 #define SPS_READ_PENUM_IF_UNSET(v,r,k,d,i) if (!(v)->set) {sp_style_read_penum((v), (r), (k), (d), (i));}
@@ -421,6 +421,9 @@ sp_style_new()
     new (&style->stroke_release_connection) sigc::connection();
     new (&style->stroke_modified_connection) sigc::connection();
 
+    new (&style->filter_release_connection) sigc::connection();
+    new (&style->filter_modified_connection) sigc::connection();
+
     return style;
 }
 
@@ -478,7 +481,7 @@ sp_style_unref(SPStyle *style)
         if (style->text) sp_text_style_unref(style->text);
         sp_style_paint_clear(style, &style->fill);
         sp_style_paint_clear(style, &style->stroke);
-        sp_style_filter_clear(style, &style->filter);
+        sp_style_filter_clear(style);
         style->fill_release_connection.disconnect();
         style->fill_release_connection.~connection();
         style->fill_modified_connection.disconnect();
@@ -487,6 +490,10 @@ sp_style_unref(SPStyle *style)
         style->stroke_release_connection.~connection();
         style->stroke_modified_connection.disconnect();
         style->stroke_modified_connection.~connection();
+        style->filter_modified_connection.disconnect();
+        style->filter_modified_connection.~connection();
+        style->filter_release_connection.disconnect();
+        style->filter_release_connection.~connection();
         g_free(style->stroke_dash.dash);
         g_free(style);
     }
@@ -680,7 +687,7 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     if (!style->filter.set) {
         val = repr->attribute("filter");
         if (val) {
-		sp_style_read_ifilter(&style->filter, val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
+		sp_style_read_ifilter(val, style, (object) ? SP_OBJECT_DOCUMENT(object) : NULL);
         }
     }
     SPS_READ_PENUM_IF_UNSET(&style->enable_background, repr,
@@ -920,7 +927,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             /* Filter */
         case SP_PROP_FILTER:
             if (!style->filter.set && !style->filter.inherit) {
-                sp_style_read_ifilter(&style->filter, val, style, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL);
+                sp_style_read_ifilter(val, style, (style->object) ? SP_OBJECT_DOCUMENT(style->object) : NULL);
             }
             break;
         case SP_PROP_FLOOD_COLOR:
@@ -1459,7 +1466,7 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
 
     /* Filter effects */
     if (style->filter.inherit) {
-        sp_style_merge_ifilter(style, &style->filter, &parent->filter);
+        sp_style_merge_ifilter(style, &parent->filter);
     }
 
     if(style->enable_background.inherit) {
@@ -1932,13 +1939,10 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
 
         if (!style->filter.set || style->filter.inherit)
         {
-            // FIXME: (1) this is a temp hack, as it must correctly handle ->filter_hreffed; (2)
-            // instead of just copying over, we need to _merge_ the two filters by combining their
+            // FIXME: 
+            // instead of just copying over, we need to _really merge_ the two filters by combining their
             // filter primitives
-            style->filter.set = parent->filter.set;
-            style->filter.inherit = parent->filter.inherit;
-            style->filter.filter = parent->filter.filter;
-            style->filter.uri = parent->filter.uri;
+            sp_style_merge_ifilter(style, &parent->filter);
         }
 
         /** \todo
@@ -2062,6 +2066,36 @@ sp_style_paint_server_modified(SPObject *obj, guint flags, SPStyle *style)
 
 
 /**
+ * Disconnects from filter.
+ */
+static void
+sp_style_filter_release(SPObject *obj, SPStyle *style)
+{
+    SPFilter *filter=static_cast<SPFilter *>(obj);
+    if (style->filter.filter == filter)
+    {
+        sp_style_filter_clear(style);
+    }
+}
+
+
+/**
+ * Emit style modified signal on style's object if the filter changed.
+ */
+static void
+sp_style_filter_modified(SPObject *obj, guint flags, SPStyle *style)
+{
+    SPFilter *filter=static_cast<SPFilter *>(obj);
+    if (style->filter.filter == filter)
+    {
+        if (style->object) {
+            style->object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+        }
+    } 
+}
+
+
+/**
  *
  */
 static void
@@ -2125,15 +2159,26 @@ sp_style_merge_ipaint(SPStyle *style, SPIPaint *paint, SPIPaint const *parent)
  * Filter effects do not inherit by default
  */
 static void
-sp_style_merge_ifilter(SPStyle *style, SPIFilter *child, SPIFilter const *parent)
+sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
 {
-    sp_style_filter_clear(style, child);
-    child->set = parent->set;
-    child->inherit = parent->inherit;
-    child->filter = parent->filter;
-    child->uri = parent->uri;
-    sp_object_href(SP_OBJECT(child), style);
-    style->filter_hreffed = true;
+    sp_style_filter_clear(style);
+    style->filter.set = parent->set;
+    style->filter.inherit = parent->inherit;
+    style->filter.filter = parent->filter;
+    style->filter.uri = parent->uri;
+    if (style->filter.filter) {
+        if (style->object && !style->cloned) { // href filter for style of non-clones only
+            sp_object_href(SP_OBJECT(style->filter.filter), style);
+            style->filter_hreffed = true;
+        }
+        if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
+            SPObject *filter = style->filter.filter;
+            style->filter_release_connection
+                = filter->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_filter_release), style));
+            style->filter_modified_connection
+                = filter->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_filter_modified), style));
+        }
+    }
 }
 
 /**
@@ -2412,7 +2457,7 @@ sp_style_clear(SPStyle *style)
 
     sp_style_paint_clear(style, &style->fill);
     sp_style_paint_clear(style, &style->stroke);
-    sp_style_filter_clear(style, &style->filter);
+    sp_style_filter_clear(style);
     if (style->stroke_dash.dash) {
         g_free(style->stroke_dash.dash);
     }
@@ -2534,10 +2579,8 @@ sp_style_clear(SPStyle *style)
     }
 
     style->filter.set = FALSE;
-    //Are these really needed?
-    style->filter.inherit = FALSE;
     style->filter.uri = NULL;
-    style->filter.filter = FALSE;
+    style->filter.filter = NULL;
 
     style->enable_background.value = SP_CSS_BACKGROUND_ACCUMULATE;
     style->enable_background.set = false;
@@ -3116,8 +3159,9 @@ sp_style_read_ifontsize(SPIFontSize *val, gchar const *str)
  * Set SPIFilter object from string.
  */
 static void
-sp_style_read_ifilter( SPIFilter *f, gchar const *str, SPStyle * style, SPDocument *document)
+sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
 {
+    SPIFilter *f = &(style->filter);
     /* Try all possible values: inherit, none, uri */
     if (streq(str, "inherit")) {
         f->set = TRUE;
@@ -3140,16 +3184,20 @@ sp_style_read_ifilter( SPIFilter *f, gchar const *str, SPStyle * style, SPDocume
         f->inherit = FALSE;
         f->filter = NULL;
         if (document) {
-            SPObject *obj;
-            obj = sp_uri_reference_resolve(document, str);
+            SPObject *obj = sp_uri_reference_resolve(document, str);
             if (SP_IS_FILTER(obj)) {
                 f->filter = SP_FILTER(obj);
-                sp_object_href(SP_OBJECT(f->filter), style);  
-                style->filter_hreffed = true;
-                //g_signal_connect(G_OBJECT(f->filter), "release",
-                    //                 G_CALLBACK(sp_style_filter_release), style);
-                //g_signal_connect(G_OBJECT(f->filter), "modified",
-                    //                 G_CALLBACK(sp_style_filter_modified), style);
+                if (style->object && !style->cloned) {
+                    sp_object_href(obj, style);
+                    style->filter_hreffed = true;
+                }
+                if (style->object || style->cloned) { // connect to signals for style of real objects or clones (this excludes temp styles)
+                    SPObject *filter = style->filter.filter;
+                    style->filter_release_connection
+                        = filter->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_filter_release), style));
+                    style->filter_modified_connection
+                        = filter->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_style_filter_modified), style));
+                }
             } else {
                 g_warning("Element '%s' not found or is not a filter", f->uri);
             }
@@ -3687,18 +3735,17 @@ sp_style_paint_clear(SPStyle *style, SPIPaint *paint)
  * Clear filter object, and disconnect style from paintserver (if present).
  */
 static void
-sp_style_filter_clear(SPStyle *style, SPIFilter *f)
+sp_style_filter_clear(SPStyle *style)
 {
 
     if (style->filter_hreffed) {
-        sp_object_hunref(SP_OBJECT(f->filter), style);
+        sp_object_hunref(SP_OBJECT(style->filter.filter), style);
         style->filter_hreffed = false;
     }
-    //style->fill_release_connection.disconnect();
-    //style->fill_modified_connection.disconnect();
+    style->filter_release_connection.disconnect();
+    style->filter_modified_connection.disconnect();
 
-    f->filter = NULL;
-    
+    style->filter.filter = NULL;
 }
 
 

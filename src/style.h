@@ -358,6 +358,9 @@ struct SPStyle {
 
     sigc::connection stroke_release_connection;
     sigc::connection stroke_modified_connection;
+
+    sigc::connection filter_release_connection;
+    sigc::connection filter_modified_connection;
 };
 
 SPStyle *sp_style_new();
