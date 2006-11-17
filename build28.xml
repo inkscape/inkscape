@@ -183,7 +183,7 @@
 	<strip file="${build}/inkscape.exe"/>
   </target>
 
-  <target name="dist" depends="link"
+  <target name="dist" depends="link,i18n"
         description="generate the distribution" >
     <!-- Create the distribution directory -->
     <copy file="${build}/inkscape.exe" todir="${dist}"/>
@@ -207,7 +207,7 @@
     <copy file="${gtk}/bin/libgmodule-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libgobject-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libgtk-win32-2.0-0.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libgthread-2.0-0.dlll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libgthread-2.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libcairo-2.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpangocairo-1.0-0.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/libpango-1.0-0.dll" todir="${dist}"/>

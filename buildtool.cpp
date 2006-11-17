@@ -2088,6 +2088,16 @@ protected:
     bool copyFile(const String &srcFile, const String &destFile);
 
     /**
+     * Tests if the file exists and is a regular file
+     */ 
+    bool isRegularFile(const String &fileName);
+
+    /**
+     * Tests if the file exists and is a directory
+     */ 
+    bool isDirectory(const String &fileName);
+
+    /**
      * Tests is the modification date of fileA is newer than fileB
      */ 
     bool isNewerThan(const String &fileA, const String &fileB);
@@ -3030,6 +3040,8 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
         }
 
     //# 3 do the data copy
+#ifndef __WIN32__
+
     FILE *srcf = fopen(srcNative.c_str(), "rb");
     if (!srcf)
         {
@@ -3054,7 +3066,59 @@ bool MakeBase::copyFile(const String &srcFile, const String &destFile)
     fclose(destf);
     fclose(srcf);
 
+#else
+    
+    if (!CopyFile(srcNative.c_str(), destNative.c_str(), false))
+        {
+        error("copyFile from %s to %s failed",
+		     srcNative.c_str(), destNative.c_str());
+        return false;
+        }
+        
+#endif /* __WIN32__ */
 
+
+    return true;
+}
+
+
+
+/**
+ * Tests if the file exists and is a regular file
+ */ 
+bool MakeBase::isRegularFile(const String &fileName)
+{
+    String native = getNativePath(fileName);
+    struct stat finfo;
+    
+    //Exists?
+    if (stat(native.c_str(), &finfo)<0)
+		return false;
+
+
+    //check the file mode
+    if (!S_ISREG(finfo.st_mode))
+		return false;
+
+    return true;
+}
+
+/**
+ * Tests if the file exists and is a directory
+ */ 
+bool MakeBase::isDirectory(const String &fileName)
+{
+    String native = getNativePath(fileName);
+    struct stat finfo;
+    
+    //Exists?
+    if (stat(native.c_str(), &finfo)<0)
+		return false;
+
+
+    //check the file mode
+    if (!S_ISDIR(finfo.st_mode))
+		return false;
 
     return true;
 }
@@ -4925,6 +4989,11 @@ public:
                    String fullDest = parent.resolve(toFileName);
                    //trace("copy %s to file %s", fullSource.c_str(),
 				   //                       fullDest.c_str());
+				   if (!isRegularFile(fullSource))
+				       {
+                       error("copy : file %s does not exist", fullSource.c_str());
+				       return false;
+				       }
                    if (!isNewerThan(fullSource, fullDest))
                        {
                        return true;
@@ -5010,6 +5079,11 @@ public:
                    String fullDest = parent.resolve(destPath);
                    //trace("copy %s to new dir : %s", fullSource.c_str(),
 				   //                       fullDest.c_str());
+				   if (!isRegularFile(fullSource))
+				       {
+                       error("copy : file %s does not exist", fullSource.c_str());
+				       return false;
+				       }
                    if (!isNewerThan(fullSource, fullDest))
                        {
                        return true;
