@@ -771,25 +771,9 @@ private:
     void updatePreviewCallback();
 
     /**
-     * Fix to allow the user to type the file name
-     */
-    Gtk::Entry fileNameEntry;
-
-    /**
      *  Create a filter menu for this type of dialog
      */
     void createFilterMenu();
-
-    /**
-     * Callback for user input into fileNameEntry
-     */
-    void fileNameEntryChangedCallback();
-
-    /**
-     * Callback for user changing which item is selected on the list
-     */
-    void fileSelectedCallback();
-
 
     /**
      * Filter name->extension lookup
@@ -825,60 +809,6 @@ void FileOpenDialogImpl::updatePreviewCallback()
 
 
 
-
-
-/**
- * Callback for fileNameEntry widget
- */
-void FileOpenDialogImpl::fileNameEntryChangedCallback()
-{
-    Glib::ustring rawFileName = fileNameEntry.get_text();
-
-    Glib::ustring fileName = Glib::filename_from_utf8(rawFileName);
-
-    //g_message("User hit return.  Text is '%s'\n", fileName.c_str());
-
-    if (!Glib::path_is_absolute(fileName)) {
-        //try appending to the current path
-        // not this way: fileName = get_current_folder() + "/" + fName;
-        std::vector<Glib::ustring> pathSegments;
-        pathSegments.push_back( get_current_folder() );
-        pathSegments.push_back( fileName );
-        fileName = Glib::build_filename(pathSegments);
-    }
-
-    //g_message("path:'%s'\n", fName.c_str());
-
-    if (Glib::file_test(fileName, Glib::FILE_TEST_IS_DIR)) {
-        set_current_folder(fileName);
-    } else if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR)) {
-        //dialog with either (1) select a regular file or (2) cd to dir
-        //simulate an 'OK'
-        set_filename(fileName);
-        response(Gtk::RESPONSE_OK);
-    }
-}
-
-
-
-
-
-/**
- * Callback for fileNameEntry widget
- */
-void FileOpenDialogImpl::fileSelectedCallback()
-{
-    Glib::ustring fileName     = get_filename();
-    if (!Glib::get_charset()) //If we are not utf8
-        fileName = Glib::filename_to_utf8(fileName);
-    //g_message("User selected '%s'\n",
-    //       filename().c_str());
-
-#ifdef INK_DUMP_FILENAME_CONV
-    ::dump_ustr( get_filename() );
-#endif
-    fileNameEntry.set_text(fileName);
-}
 
 
 
@@ -981,20 +911,6 @@ FileOpenDialogImpl::FileOpenDialogImpl(const Glib::ustring &dir,
     //Catch selection-changed events, so we can adjust the text widget
     signal_update_preview().connect(
          sigc::mem_fun(*this, &FileOpenDialogImpl::updatePreviewCallback) );
-
-
-    //###### Add a text entry bar, and tie it to file chooser events
-    fileNameEntry.set_text(get_current_folder());
-    set_extra_widget(fileNameEntry);
-    fileNameEntry.grab_focus();
-
-    //Catch when user hits [return] on the text field
-    fileNameEntry.signal_activate().connect(
-         sigc::mem_fun(*this, &FileOpenDialogImpl::fileNameEntryChangedCallback) );
-
-    //Catch selection-changed events, so we can adjust the text widget
-    signal_selection_changed().connect(
-         sigc::mem_fun(*this, &FileOpenDialogImpl::fileSelectedCallback) );
 
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
     add_button(Gtk::Stock::OPEN,   Gtk::RESPONSE_OK);
