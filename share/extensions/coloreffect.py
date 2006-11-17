@@ -27,6 +27,7 @@ color_props = color_props_fill + color_props_stroke
 class ColorEffect(inkex.Effect):
   def __init__(self):
     inkex.Effect.__init__(self,use_minidom=True)
+    self.visited = []
 
   def effect(self):
     if len(self.selected)==0:
@@ -81,6 +82,14 @@ class ColorEffect(inkex.Effect):
     return col
 
   def process_gradient(self, node):
+    if node.hasAttributes():				
+       this_id=node.getAttribute('id')
+       if this_id in self.visited:
+         # prevent multiple processing of the same gradient if it is used by more than one selected object
+         #inkex.debug("already had: " + this_id)
+         return
+       self.visited.append(this_id)
+       #inkex.debug("visited: " + str(self.visited))
     self.changeStyle(node)
     if node.hasChildNodes():
       for child in node.childNodes:
