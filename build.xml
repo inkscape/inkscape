@@ -85,7 +85,7 @@
 	        <exclude name="removeoverlap/remove_rectangle_overlap-test.h"/>
 	    </fileset>
         <flags>
-            -Wall -O3
+            -Wall -g -O3
 			-mms-bitfields
         </flags>
         <defines>
@@ -181,7 +181,7 @@
            -lgc -mwindows -lws2_32 -lintl -lm
 	   </libs>
 	</link>
-	<strip file="${build}/inkscape.exe"/>
+	<!--<strip file="${build}/inkscape.exe"/>-->
   </target>
 
   <target name="dist" depends="link,i18n"
@@ -220,15 +220,14 @@
     <copy file="${gtk}/bin/libxml2.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/xmlparse.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/jpeg62.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libintl-2.dll" todir="${dist}"/>
-    <copy file="${gtk}/bin/libintl-2.dll" tofile="${dist}/intl.dll"/>
-    <copy file="${gtk}/bin/libpng13.dlll" todir="${dist}"/>
+    <copy file="${gtk}/bin/libpng13.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/msvcr70.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/msvcr71.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/zlib1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/iconv.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/popt1.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/liblcms-1.dll" todir="${dist}"/>
+    <copy file="${gtk}/bin/intl.dll" todir="${dist}"/>
     <copy file="${gtk}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
 
     <!-- MSGFMT files -->

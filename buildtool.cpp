@@ -4416,20 +4416,17 @@ std::vector<DepRec> DepTool::loadDepFile(const String &depFile)
             std::vector<DepRec>::iterator iter;
             for (iter = result.begin() ; iter != result.end() ; iter++)
                 {
-                if (iter->path > depObject.path)
+                String vpath = iter->path;
+                vpath.append("/");
+                vpath.append(iter->name);
+                String opath = depObject.path;
+                opath.append("/");
+                opath.append(depObject.name);
+                if (vpath > opath)
                     {
                     inserted = true;
                     iter = result.insert(iter, depObject);
                     break;
-                    }
-                else if (iter->path == depObject.path)
-                    {
-                    if (iter->name > depObject.name)
-                        {
-                        inserted = true;
-                        iter = result.insert(iter, depObject);
-                        break;
-                        }
                     }
                 }
             if (!inserted)
