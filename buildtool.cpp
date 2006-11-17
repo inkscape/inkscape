@@ -21,18 +21,18 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/*
+/**
+ * To use this file, compile with:
+ * <pre>
+ * g++ -O3 buildtool.cpp -o build.exe
+ * (or whatever your compiler might be) 
+ * Then
+ * build
+ * or 
+ * build {target}
+ */  
 
 
-
-
-
-
-
-
-
-
-*/
 
 #include <stdio.h>
 #include <unistd.h>
@@ -1991,6 +1991,16 @@ protected:
 	                      const String &delimiters);
 
     /**
+     *  replace runs of whitespace with a space
+     */
+    String strip(const String &s);
+
+    /**
+     *  remove leading whitespace from each line
+     */
+    String leftJustify(const String &s);
+
+    /**
      *  remove leading and trailing whitespace from string
      */
     String trim(const String &s);
@@ -2231,6 +2241,78 @@ std::vector<String> MakeBase::tokenize(const String &str,
     return res;
 }
 
+
+
+/**
+ *  replace runs of whitespace with a single space
+ */
+String MakeBase::strip(const String &s)
+{
+    int len = s.size();
+    String stripped;
+    for (int i = 0 ; i<len ; i++)
+        {
+        char ch = s[i];
+        if (isspace(ch))
+            {
+            stripped.push_back(' ');
+            for ( ; i<len ; i++)
+                {
+                ch = s[i];
+                if (!isspace(ch))
+                    {
+                    stripped.push_back(ch);
+                    break;
+                    }
+                }
+            }
+        else
+            {
+            stripped.push_back(ch);
+            }
+        }
+    return stripped;
+}
+
+/**
+ *  remove leading whitespace from each line
+ */
+String MakeBase::leftJustify(const String &s)
+{
+    String out;
+    int len = s.size();
+    for (int i = 0 ; i<len ; )
+        {
+        char ch;
+        //Skip to first visible character
+        while (i<len)
+            {
+			ch = s[i];
+			if (ch == '\n' || ch == '\r'
+			  || !isspace(ch))
+			      break;
+			i++;
+			}
+        //Copy the rest of the line
+		while (i<len)
+		    {
+		    ch = s[i];
+            if (ch == '\n' || ch == '\r')
+                {
+                if (ch != '\r')
+                    out.push_back('\n');
+                i++;
+                break;
+                }
+            else
+                {
+                out.push_back(ch);
+                }
+            i++;
+            }
+        }
+    return out;
+}
 
 
 /**
@@ -2718,31 +2800,8 @@ bool MakeBase::getAttribute(Element *elem, const String &name,
 bool MakeBase::getValue(Element *elem, String &result)
 {
     String s = elem->getValue();
-    int len = s.size();
     //Replace all runs of whitespace with a single space
-    String stripped; 
-    for (int i = 0 ; i<len ; i++)
-        {
-        char ch = s[i];
-        if (isspace(ch))
-            {
-            stripped.push_back(' ');
-            for ( ; i<len ; i++)
-                {
-                ch = s[i];
-                if (!isspace(ch))
-                    {
-                    stripped.push_back(ch);
-                    break;
-                    }
-                }
-            }
-        else
-            {
-            stripped.push_back(ch);
-            }
-        }
-    return getSubstitutions(stripped, result);
+    return getSubstitutions(s, result);
 }
 
 
@@ -4546,6 +4605,7 @@ public:
         TASK_JAR,
         TASK_JAVAC,
         TASK_LINK,
+        TASK_MAKEFILE,
         TASK_MKDIR,
         TASK_MSGFMT,
         TASK_RANLIB,
@@ -4915,16 +4975,19 @@ public:
                 {
                 if (!parent.getValue(child, flags))
                     return false;
+                flags = strip(flags);
                 }
             else if (tagName == "includes")
                 {
                 if (!parent.getValue(child, includes))
                     return false;
+                includes = strip(includes);
                 }
             else if (tagName == "defines")
                 {
                 if (!parent.getValue(child, defines))
                     return false;
+                defines = strip(defines);
                 }
             else if (tagName == "fileset")
                 {
@@ -5416,11 +5479,13 @@ public:
                 {
                 if (!parent.getValue(child, flags))
                     return false;
+                flags = strip(flags);
                 }
             else if (tagName == "libs")
                 {
                 if (!parent.getValue(child, libs))
                     return false;
+                libs = strip(libs);
                 }
             }
         return true;
@@ -5435,6 +5500,66 @@ private:
     String fileSetDir;
     std::vector<String> fileSet;
 
+};
+
+
+
+/**
+ * Create a named directory
+ */
+class TaskMakeFile : public Task
+{
+public:
+
+    TaskMakeFile(MakeBase &par) : Task(par)
+        { type = TASK_MAKEFILE; name = "makefile"; }
+
+    virtual ~TaskMakeFile()
+        {}
+
+    virtual bool execute()
+        {
+        status("          : %s", fileName.c_str());
+        String fullName = parent.resolve(fileName);
+        if (!isNewerThan(parent.getURI().getPath(), fullName))
+            {
+            //trace("skipped <makefile>");
+            return true;
+            }
+        //trace("fullName:%s", fullName.c_str());
+        FILE *f = fopen(fullName.c_str(), "w");
+        if (!f)
+            {
+            error("<makefile> could not open %s for writing : %s",
+                fullName.c_str(), strerror(errno));
+            return false;
+            }
+        for (unsigned int i=0 ; i<text.size() ; i++)
+            fputc(text[i], f);
+        fclose(f);
+        return true;
+        }
+
+    virtual bool parse(Element *elem)
+        {
+        if (!parent.getAttribute(elem, "file", fileName))
+            return false;
+        if (fileName.size() == 0)
+            {
+            error("<makefile> requires 'file=\"filename\"' attribute");
+            return false;
+            }
+        if (!parent.getValue(elem, text))
+            return false;
+        text = leftJustify(text);
+        //trace("dirname:%s", dirName.c_str());
+        return true;
+        }
+
+private:
+
+    String fileName;
+    String text;
 };
 
 
@@ -5800,6 +5925,8 @@ Task *Task::createTask(Element *elem)
         task = new TaskJavac(parent);
     else if (tagName == "link")
         task = new TaskLink(parent);
+    else if (tagName == "makefile")
+        task = new TaskMakeFile(parent);
     else if (tagName == "mkdir")
         task = new TaskMkDir(parent);
     else if (tagName == "msgfmt")
